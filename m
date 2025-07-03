@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C210D2DE6F1;
-	Thu,  3 Jul 2025 15:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C202DE6F1;
+	Thu,  3 Jul 2025 15:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556113; cv=none; b=N00KUvmt1euQkOiwm8QNG0gW2Yt/kNV48ESETcsVQQP43v4tyJqc3JrrrQo1hzQo4S7WgrFrGcamOKDJJQv2p2X/6WtGEFN5524DUim10Dnb1PnzRXmn9ffQGPvc81WUcG+8f5dAblxEGdx8TZgiw0GeHR+5HHDr+X9LjugVEts=
+	t=1751556116; cv=none; b=L+SEq/bnXzKJciOmVzPJuiIQJkky2fTJfIMInnX0xzIWXyJhcmDs7CLXIGaF5AtZr0pXs4jc4QbHjLLtBytch/15XSGMPW0QV9rt91dOB58J137u1OCDnSZjL4yTWa6Uovfg5HxbDIUpjadtmnlEdOPQEY492++0ulxLNoFU/5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556113; c=relaxed/simple;
-	bh=VqriyrAv1yGIRTUoKxili9LxC2iCDn1dKtnAa+5bx74=;
+	s=arc-20240116; t=1751556116; c=relaxed/simple;
+	bh=rlwGl8MYN6JYZXnnPFuRfGTYY3Md4mPs2uH8e0iCgnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tCDEGTlkGvCzR3AvWb/T6dcUq016yGdO/BxB9V6Xif6SqETxXKACH6+Zi9mDn8qvto48WKY/MiEpzrn3lFuDgM51GqAefIo9MXOsrOX8zrU+qTtQjQthza4IGwwTl1+mlJn67pTKEVbw0+4w5eK6p1aV+i18DD8YEhnbQGDDU7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FI4TQqvo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oo2cUvEpxZcg3vr/Miqc/NRd2vcpVhBS6l3gVWJQZiPE7WHPNRqvhxQS6jJJ8Ihm+5Frxk5XBt075X84fLCL+IkaAfG41KEp6gPICCb9JsTaWnpiUmsSG3Y5Idz5NtzjJKcZn7ksWoQ0WSeijqa2anm4Dif0RHE0xiGshBLlngo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwxGkaku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FI4TQqvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BF0C4CEE3;
-	Thu,  3 Jul 2025 15:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwxGkaku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C52C4CEE3;
+	Thu,  3 Jul 2025 15:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556113;
-	bh=VqriyrAv1yGIRTUoKxili9LxC2iCDn1dKtnAa+5bx74=;
+	s=korg; t=1751556116;
+	bh=rlwGl8MYN6JYZXnnPFuRfGTYY3Md4mPs2uH8e0iCgnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FI4TQqvoNYbpEJBsp8AUEkpRHD/6nVY2TqaCq9rTKONQrgDqcA/XWzLK9TuTdzJ5C
-	 srNFSG+MgiQTIcMGzee7V4ebDO3XbGne160IAU2VXCIwD33+MrQ4vU0Nbflv9oU0Pu
-	 AUuU+hX58nKPKZM4n6eRXu+zrosEw8SpqnjGViMQ=
+	b=pwxGkakuceUBSJNghc41No0EZEBtTPP99gcprNCSntLv8+73KibBcau6ZuUfbmXvJ
+	 lJQzaE4bo4jdq01Ngo1qaMjgopiQY6DxTSEr6M2tEFaTE5ptO5WbzqBfgcVGEM8GHx
+	 5LODhytKPGK/NTX1ti0fcjelO1Y8wBRp1A1pFadM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/132] PCI: apple: Use helper function for_each_child_of_node_scoped()
-Date: Thu,  3 Jul 2025 16:42:30 +0200
-Message-ID: <20250703143941.811500259@linuxfoundation.org>
+Subject: [PATCH 6.1 079/132] libbpf: Fix null pointer dereference in btf_dump__free on allocation failure
+Date: Thu,  3 Jul 2025 16:42:48 +0200
+Message-ID: <20250703143942.512388297@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -47,61 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit f60b4e06a945f25d463ae065c6e41c6e24faee0a ]
+[ Upstream commit aa485e8789d56a4573f7c8d000a182b749eaa64d ]
 
-The for_each_available_child_of_node_scoped() helper provides
-a scope-based clean-up functionality to put the device_node
-automatically, and as such, there is no need to call of_node_put()
-directly.
+When btf_dump__new() fails to allocate memory for the internal hashmap
+(btf_dump->type_names), it returns an error code. However, the cleanup
+function btf_dump__free() does not check if btf_dump->type_names is NULL
+before attempting to free it. This leads to a null pointer dereference
+when btf_dump__free() is called on a btf_dump object.
 
-Thus, use this helper to simplify the code.
-
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240831040413.126417-6-zhangzekun11@huawei.com
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Stable-dep-of: 751bec089c4e ("PCI: apple: Set only available ports up")
+Fixes: 351131b51c7a ("libbpf: add btf_dump API for BTF-to-C conversion")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250618011933.11423-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-apple.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tools/lib/bpf/btf_dump.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-index fbe59139ab8fb..b1f32e4c65989 100644
---- a/drivers/pci/controller/pcie-apple.c
-+++ b/drivers/pci/controller/pcie-apple.c
-@@ -767,7 +767,6 @@ static int apple_pcie_init(struct pci_config_window *cfg)
- {
- 	struct device *dev = cfg->parent;
- 	struct platform_device *platform = to_platform_device(dev);
--	struct device_node *of_port;
- 	struct apple_pcie *pcie;
- 	int ret;
+diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
+index cfdee656789b2..72334cc14d737 100644
+--- a/tools/lib/bpf/btf_dump.c
++++ b/tools/lib/bpf/btf_dump.c
+@@ -224,6 +224,9 @@ static void btf_dump_free_names(struct hashmap *map)
+ 	size_t bkt;
+ 	struct hashmap_entry *cur;
  
-@@ -790,11 +789,10 @@ static int apple_pcie_init(struct pci_config_window *cfg)
- 	if (ret)
- 		return ret;
++	if (!map)
++		return;
++
+ 	hashmap__for_each_entry(map, cur, bkt)
+ 		free((void *)cur->key);
  
--	for_each_child_of_node(dev->of_node, of_port) {
-+	for_each_child_of_node_scoped(dev->of_node, of_port) {
- 		ret = apple_pcie_setup_port(pcie, of_port);
- 		if (ret) {
- 			dev_err(pcie->dev, "Port %pOF setup fail: %d\n", of_port, ret);
--			of_node_put(of_port);
- 			return ret;
- 		}
- 	}
 -- 
 2.39.5
 
