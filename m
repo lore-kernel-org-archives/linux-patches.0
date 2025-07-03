@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A062E339E;
-	Thu,  3 Jul 2025 15:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473F638F91;
+	Thu,  3 Jul 2025 15:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554912; cv=none; b=Lyq3MKqwgmNjmWEBIS/afF3ZL/SZy6ampUogQhmETx0d0qegPlW4yMEJDINFTT2oiMRNPTcqzG4uBtgi8EVpfZ/cA+JsmIoxctrUnko4UOnIgXB3/zt59lYvJZrx0tD8ItHgS+Hw3D1XsP4xMKc/nFgJ22QNaFCTl8Eq8unFNOs=
+	t=1751554915; cv=none; b=TfWAz2AmDdXb6ddBvXIj5vCuqffBrTckscMY/Mfl2eIjUO60qwodzz0o3KLXpRc2qNxwnsPX4VUUDoxs8Dv7K03KWhZpioMEK5VAYonFVRTJHeCBdRS0/Rb+7vpie9jD0xEQo1mI4bW11aGM8eq1NUJRdPd7SwzvUk0epU9iWc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554912; c=relaxed/simple;
-	bh=iHX4JR3RkhOev3vaEqiA4bDxi+ROGP+WBeonqAMuYkw=;
+	s=arc-20240116; t=1751554915; c=relaxed/simple;
+	bh=98v3aOt1yABcPc/Miy/zNvx6el3GTa6CbIi2Z1srxT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ihm8PFub36SW604Z8P6M4yjfwNFf+M9WRRIhpILggLYX746Qe8LIKjr7TGup5jA3pm0y5IF4Y0XDLD6fFs0gmqv6ii/ViZ4PI/sAICidmF7FpbOEzwU3hXS+iM0idz428JujVJ7eQYFVJqWhj3eVW+2fqmWw59wkMQMnWbWSDuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTc5gydC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYxG8lzLHUKOFcvkLYEV359IQyUItFQ848WL67PHNHGBq516yfs0xbwuvouEc4YpmdQ6wvkAQiAu36cz5auLP/baYJRHLWZGrJsaljDschYdXa4eI4dAkg8zJm5ziNLRhZ2E6lNu4xwE93p+Omz1pA696GlsLDu8OuVIspNkTdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHgNHrNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTc5gydC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FAFC4CEED;
-	Thu,  3 Jul 2025 15:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHgNHrNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEBCC4CEE3;
+	Thu,  3 Jul 2025 15:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554912;
-	bh=iHX4JR3RkhOev3vaEqiA4bDxi+ROGP+WBeonqAMuYkw=;
+	s=korg; t=1751554915;
+	bh=98v3aOt1yABcPc/Miy/zNvx6el3GTa6CbIi2Z1srxT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTc5gydC9Ga7lT5VW0gy7WwtgTHa16oEzuuHIqByVibNq06XQ1qeXbXE+GNsor3bq
-	 qUWkegXkrODfhCjHUyeRJ804hcnnxh0Uo/4JsQbjRqcv1jqcFe3mvgniOUMSUO5u4n
-	 GA157JFRqUa+uOEmecM0SFQW62/2NzRamdTbFfWc=
+	b=GHgNHrNgB/Oct/YE3K7O2usZu0Qj0dBBRF1iw359i8irWz2ryJlBCzi9VG7juNsZi
+	 qD5SXspVbmqiR3pALfJDRXtctAmHKRkD43CgrvUgUUjjpD884p/YxFpFAmKOOsHZ3H
+	 kRMK9o2elw1Ax/BpK+G57CszNuhBw9s2LYc21wg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d335893772467199ab6@syzkaller.appspotmail.com,
+	David Hildenbrand <david@redhat.com>,
 	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	David Hildenbrand <david@redhat.com>
-Subject: [PATCH 6.15 117/263] io_uring/rsrc: fix folio unpinning
-Date: Thu,  3 Jul 2025 16:40:37 +0200
-Message-ID: <20250703144009.041867916@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.15 118/263] io_uring/rsrc: dont rely on user vaddr alignment
+Date: Thu,  3 Jul 2025 16:40:38 +0200
+Message-ID: <20250703144009.088988253@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -54,75 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 5afb4bf9fc62d828647647ec31745083637132e4 upstream.
+commit 3a3c6d61577dbb23c09df3e21f6f9eda1ecd634b upstream.
 
-syzbot complains about an unmapping failure:
-
-[  108.070381][   T14] kernel BUG at mm/gup.c:71!
-[  108.070502][   T14] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-[  108.123672][   T14] Hardware name: QEMU KVM Virtual Machine, BIOS edk2-20250221-8.fc42 02/21/2025
-[  108.127458][   T14] Workqueue: iou_exit io_ring_exit_work
-[  108.174205][   T14] Call trace:
-[  108.175649][   T14]  sanity_check_pinned_pages+0x7cc/0x7d0 (P)
-[  108.178138][   T14]  unpin_user_page+0x80/0x10c
-[  108.180189][   T14]  io_release_ubuf+0x84/0xf8
-[  108.182196][   T14]  io_free_rsrc_node+0x250/0x57c
-[  108.184345][   T14]  io_rsrc_data_free+0x148/0x298
-[  108.186493][   T14]  io_sqe_buffers_unregister+0x84/0xa0
-[  108.188991][   T14]  io_ring_ctx_free+0x48/0x480
-[  108.191057][   T14]  io_ring_exit_work+0x764/0x7d8
-[  108.193207][   T14]  process_one_work+0x7e8/0x155c
-[  108.195431][   T14]  worker_thread+0x958/0xed8
-[  108.197561][   T14]  kthread+0x5fc/0x75c
-[  108.199362][   T14]  ret_from_fork+0x10/0x20
-
-We can pin a tail page of a folio, but then io_uring will try to unpin
-the head page of the folio. While it should be fine in terms of keeping
-the page actually alive, mm folks say it's wrong and triggers a debug
-warning. Use unpin_user_folio() instead of unpin_user_page*.
+There is no guaranteed alignment for user pointers, however the
+calculation of an offset of the first page into a folio after coalescing
+uses some weird bit mask logic, get rid of it.
 
 Cc: stable@vger.kernel.org
-Debugged-by: David Hildenbrand <david@redhat.com>
-Reported-by: syzbot+1d335893772467199ab6@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/683f1551.050a0220.55ceb.0017.GAE@google.com
+Reported-by: David Hildenbrand <david@redhat.com>
 Fixes: a8edbb424b139 ("io_uring/rsrc: enable multi-hugepage buffer coalescing")
 Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/io-uring/a28b0f87339ac2acf14a645dad1e95bbcbf18acd.1750771718.git.asml.silence@gmail.com/
-[axboe: adapt to current tree, massage commit message]
+Link: https://lore.kernel.org/io-uring/e387b4c78b33f231105a601d84eefd8301f57954.1750771718.git.asml.silence@gmail.com/
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ io_uring/rsrc.c |    7 ++++++-
+ io_uring/rsrc.h |    1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 --- a/io_uring/rsrc.c
 +++ b/io_uring/rsrc.c
-@@ -112,8 +112,11 @@ static void io_release_ubuf(void *priv)
- 	struct io_mapped_ubuf *imu = priv;
- 	unsigned int i;
+@@ -738,6 +738,7 @@ bool io_check_coalesce_buffer(struct pag
  
--	for (i = 0; i < imu->nr_bvecs; i++)
--		unpin_user_page(imu->bvec[i].bv_page);
-+	for (i = 0; i < imu->nr_bvecs; i++) {
-+		struct folio *folio = page_folio(imu->bvec[i].bv_page);
+ 	data->nr_pages_mid = folio_nr_pages(folio);
+ 	data->folio_shift = folio_shift(folio);
++	data->first_folio_page_idx = folio_page_idx(folio, page_array[0]);
+ 
+ 	/*
+ 	 * Check if pages are contiguous inside a folio, and all folios have
+@@ -831,7 +832,11 @@ static struct io_rsrc_node *io_sqe_buffe
+ 	if (coalesced)
+ 		imu->folio_shift = data.folio_shift;
+ 	refcount_set(&imu->refs, 1);
+-	off = (unsigned long) iov->iov_base & ((1UL << imu->folio_shift) - 1);
 +
-+		unpin_user_folio(folio, 1);
-+	}
- }
++	off = (unsigned long)iov->iov_base & ~PAGE_MASK;
++	if (coalesced)
++		off += data.first_folio_page_idx << PAGE_SHIFT;
++
+ 	node->buf = imu;
+ 	ret = 0;
  
- static struct io_mapped_ubuf *io_alloc_imu(struct io_ring_ctx *ctx,
-@@ -844,8 +847,10 @@ done:
- 	if (ret) {
- 		if (imu)
- 			io_free_imu(ctx, imu);
--		if (pages)
--			unpin_user_pages(pages, nr_pages);
-+		if (pages) {
-+			for (i = 0; i < nr_pages; i++)
-+				unpin_user_folio(page_folio(pages[i]), 1);
-+		}
- 		io_cache_free(&ctx->node_cache, node);
- 		node = ERR_PTR(ret);
- 	}
+--- a/io_uring/rsrc.h
++++ b/io_uring/rsrc.h
+@@ -49,6 +49,7 @@ struct io_imu_folio_data {
+ 	unsigned int	nr_pages_mid;
+ 	unsigned int	folio_shift;
+ 	unsigned int	nr_folios;
++	unsigned long	first_folio_page_idx;
+ };
+ 
+ bool io_rsrc_cache_init(struct io_ring_ctx *ctx);
 
 
