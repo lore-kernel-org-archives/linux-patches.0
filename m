@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE412ED168;
-	Thu,  3 Jul 2025 15:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAEA2EE97A;
+	Thu,  3 Jul 2025 15:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555489; cv=none; b=Fqu8jZS/q+DabrWPiTqCu/KqINfm9eavRdug+EWhCT8VCIFsMp+8e2FiIUGBIdUZQkaS4WjjswW41LdgMbsIB2plAWS51mVNwxV0+5pC1nQGNS0GfdlEREqdAs6uTHhPFEo1vewFP7MFKpLqMOBRon1yKZotIAHREr583L2TzW4=
+	t=1751555493; cv=none; b=elAokwa0OJ8KbKJT9SyN2WOQdeWQ1SJxkHfF03Icbl7sZxysB3TydI8a/YaXwS04QKQPmrXZgToOAvVrw8ikwFFZtvGa/5HEzRtwO5AmqMhBPTgHQDt12BJdEVYcOCULzobiwoM1R88u6XmsoQYe5Ww+kQ4rSCNqoHlDFCCGIPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555489; c=relaxed/simple;
-	bh=IeAWCSk8rDEbbk9zJJAOu6+rYFtjz0LDzinz/b7+6ck=;
+	s=arc-20240116; t=1751555493; c=relaxed/simple;
+	bh=r2jIh7U2mRvNPdIDNp7I18PD0NWTUZMpWpM0/a+L/es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCNZKoeMmZMJgDrDe5syUFiMEYjA+97VDx0HmrI1vvJvx3sKcY4m7FZwlYO914NOwWSUO6j1TTjJzc3L4BUMzJOsYnNAje4xw/njMUwLvpqKUUIkpqniiIKrFIFRh9PZZZ1rrHo1b+uQYBR8P4DeX1cEKIxlTc10cVH2bYbubB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjQlWv+y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XvSOKZjc9qChxaH2JKzlc6qZ8/ScjhYGZ5RI3a8r9Ixkosb5UtfSinZKsrc0GAp5Bpx76ZMf5GoaHEtpvmruyANvId+yVaq/r99mpSI3icdJKBalVkFbCSlYkkFFpmCKvdMQuTXejZJgvozzazUY57ldaJa//9VPsGgtcUV7hOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciU4nixE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjQlWv+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD75BC4CEF3;
-	Thu,  3 Jul 2025 15:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciU4nixE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F967C4CEEE;
+	Thu,  3 Jul 2025 15:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555489;
-	bh=IeAWCSk8rDEbbk9zJJAOu6+rYFtjz0LDzinz/b7+6ck=;
+	s=korg; t=1751555493;
+	bh=r2jIh7U2mRvNPdIDNp7I18PD0NWTUZMpWpM0/a+L/es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjQlWv+yexltl5B/YR9Nc4UMjTWLp3FMN6l/md1SIkh7yBwRNvK+jhWlFcEC/jBZm
-	 GYEeSu4apRaY9Wl++huLc3z1l8343o9KWfw4dPbdyaMLzN54KLOw+cfwMnfXhPLcIl
-	 UpxNxastDD+Tj4zeNQXg34ANNT3fY+mD5IgmFiSE=
+	b=ciU4nixEl2LqhwJxO2GILQtnGBXPQ0luypE0sIe1yMqBeOoMMjBfxpniyMK0Za5+J
+	 VMOF5FnIUaB5mmR97jqQvoGUeMIPkQU/qGgFrMjdvyf6ZPwl5LGBX3iBYY/ADUBZvj
+	 0Thfzb//DWGy/tl78h+g2p04Vrr6LSQohE9fFtnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/139] coresight: Only check bottom two claim bits
-Date: Thu,  3 Jul 2025 16:41:32 +0200
-Message-ID: <20250703143942.326397736@linuxfoundation.org>
+Subject: [PATCH 6.6 003/139] cifs: Fix encoding of SMB1 Session Setup NTLMSSP Request in non-UNICODE mode
+Date: Thu,  3 Jul 2025 16:41:06 +0200
+Message-ID: <20250703143941.317070443@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -47,59 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit a4e65842e1142aa18ef36113fbd81d614eaefe5a ]
+[ Upstream commit 6510ef4230b68c960309e0c1d6eb3e32eb785142 ]
 
-The use of the whole register and == could break the claim mechanism if
-any of the other bits are used in the future. The referenced doc "PSCI -
-ARM DEN 0022D" also says to only read and clear the bottom two bits.
+SMB1 Session Setup NTLMSSP Request in non-UNICODE mode is similar to
+UNICODE mode, just strings are encoded in ASCII and not in UTF-16.
 
-Use FIELD_GET() to extract only the relevant part.
+With this change it is possible to setup SMB1 session with NTLM
+authentication in non-UNICODE mode with Windows SMB server.
 
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250325-james-coresight-claim-tags-v4-2-dfbd3822b2e5@linaro.org
+This change fixes mounting SMB1 servers with -o nounicode mount option
+together with -o sec=ntlmssp mount option (which is the default sec=).
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-core.c | 3 ++-
- drivers/hwtracing/coresight/coresight-priv.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/client/sess.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index 783e259c37612..3b57851869eaa 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -135,7 +135,8 @@ coresight_find_out_connection(struct coresight_device *src_dev,
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index 81ac4196bb743..c351da8c3e2ea 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -1740,22 +1740,22 @@ _sess_auth_rawntlmssp_assemble_req(struct sess_data *sess_data)
+ 	pSMB = (SESSION_SETUP_ANDX *)sess_data->iov[0].iov_base;
  
- static inline u32 coresight_read_claim_tags(struct coresight_device *csdev)
- {
--	return csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR);
-+	return FIELD_GET(CORESIGHT_CLAIM_MASK,
-+			 csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR));
- }
+ 	capabilities = cifs_ssetup_hdr(ses, server, pSMB);
+-	if ((pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) == 0) {
+-		cifs_dbg(VFS, "NTLMSSP requires Unicode support\n");
+-		return -ENOSYS;
+-	}
+-
+ 	pSMB->req.hdr.Flags2 |= SMBFLG2_EXT_SEC;
+ 	capabilities |= CAP_EXTENDED_SECURITY;
+ 	pSMB->req.Capabilities |= cpu_to_le32(capabilities);
  
- static inline bool coresight_is_claimed_self_hosted(struct coresight_device *csdev)
-diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-index 30c051055e54b..b758a42ed8c73 100644
---- a/drivers/hwtracing/coresight/coresight-priv.h
-+++ b/drivers/hwtracing/coresight/coresight-priv.h
-@@ -32,6 +32,7 @@
-  * Coresight device CLAIM protocol.
-  * See PSCI - ARM DEN 0022D, Section: 6.8.1 Debug and Trace save and restore.
-  */
-+#define CORESIGHT_CLAIM_MASK		GENMASK(1, 0)
- #define CORESIGHT_CLAIM_SELF_HOSTED	BIT(1)
+ 	bcc_ptr = sess_data->iov[2].iov_base;
+-	/* unicode strings must be word aligned */
+-	if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
+-		*bcc_ptr = 0;
+-		bcc_ptr++;
++
++	if (pSMB->req.hdr.Flags2 & SMBFLG2_UNICODE) {
++		/* unicode strings must be word aligned */
++		if (!IS_ALIGNED(sess_data->iov[0].iov_len + sess_data->iov[1].iov_len, 2)) {
++			*bcc_ptr = 0;
++			bcc_ptr++;
++		}
++		unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
++	} else {
++		ascii_oslm_strings(&bcc_ptr, sess_data->nls_cp);
+ 	}
+-	unicode_oslm_strings(&bcc_ptr, sess_data->nls_cp);
  
- #define TIMEOUT_US		100
+ 	sess_data->iov[2].iov_len = (long) bcc_ptr -
+ 					(long) sess_data->iov[2].iov_base;
 -- 
 2.39.5
 
