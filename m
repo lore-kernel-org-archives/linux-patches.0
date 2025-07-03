@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAC82B9A6;
-	Thu,  3 Jul 2025 15:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED012B9A6;
+	Thu,  3 Jul 2025 15:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555028; cv=none; b=N43yrm+P8s5SLhZXoKTJEgG0xPvj0DjTvAtn8b6GlvL7bCgVIcT8nlWMsREipCQpnhjMgHHQGus4PYHsQ7o14zI2XwTKP70DYfXD2CX53owe/Ngbib0wveWOqrqR+x83D2GdMkU39fxqryoLez9XFsnFEdyZES258SqcCj/XxAY=
+	t=1751555031; cv=none; b=l0jaQRFoFnBGUBHgoAO37Knx0Ed8xCmTg28kq64INnBDNDW5svvGu/QmeT+18zEjAfps4Jg6VT9AylPwGPCmIIiyrTQpAhhEWFWwlMBoSjjE0ZTTb4ODpv1dzeOTec8h1hlaFO8KuvtocuIiSSxEqO/D3rR8an32acEsa+7xzYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555028; c=relaxed/simple;
-	bh=yG18Dr5taKJKxPVplmBf14jWrWBiZOIYwW4XWTNP2GY=;
+	s=arc-20240116; t=1751555031; c=relaxed/simple;
+	bh=J0D0eIhsh1Jo9Day2HSbmTCmJWceYWnZEEJiTudB8l8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrg5Ouxys+vR3Z+CraGRm3gnBUJourhUCvPqU8eungsfDwfeIQL/UOGSNoo+9A2BBfAv2T+FlXJ8ix9votT+GJSS3ZTTu8aB5OEdrkcZJrQMZimyM/Lczxkk9Pyvb4J4OPqdROwYlzjlTHFN4UBD7kuBzwemGXNx7YJNpCQv/L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVxyR7+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E0OpwAZzCjN2AYGGYSdxmM2BtLM5MJZS3b0ZCA0zt0ODGrnvWYziYVoeIoIXB1lf1JLfPQfu0FNjidjbDGkx/YP4kSEZDBfVv/tAvIiaFN9v9NgJWD8BlfR7n870RclTYtKWU4hw/mIy60S3mWslGAdy+LGmqHN+kCyg3D71moA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ka8WYOyG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVxyR7+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5590AC4CEE3;
-	Thu,  3 Jul 2025 15:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ka8WYOyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7F3C4CEE3;
+	Thu,  3 Jul 2025 15:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555027;
-	bh=yG18Dr5taKJKxPVplmBf14jWrWBiZOIYwW4XWTNP2GY=;
+	s=korg; t=1751555030;
+	bh=J0D0eIhsh1Jo9Day2HSbmTCmJWceYWnZEEJiTudB8l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVxyR7+Y5MAS7pIsCKmrtqDClULwsrJ4zAxZ1huEFfIBB9S2v0OZO5rK8L86TOoW3
-	 wUPkbXQ3N6p8V/I7iF6r83AxCGcHBU/pDb7fxOdAIeGvxGt2BQP50w1DUAb8JNKqz1
-	 9pJJyQOv0B/e5SnEYMTc/HLr+EtqA6/E/nYN4wO4=
+	b=ka8WYOyG+bZ3jfGTusl797PdcRIHqhZoPv7Y3H7mEVa3PhGCDDjih4mAHnQ3HHnwQ
+	 FwaMVlJYkPC7Zg1nKfTiVmBHkmAgwGSIEs8OpN5UMbXgcZj92tWH1pI00sZUEvP88h
+	 nbvvhv3e6OY0VmsELfwN71X4ZTLuEJnEO6rY/XGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shaoyun Liu <shaoyun.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.15 126/263] drm/amdgpu/mes: add compatibility checks for set_hw_resource_1
-Date: Thu,  3 Jul 2025 16:40:46 +0200
-Message-ID: <20250703144009.408780724@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 153/263] io_uring/net: mark iov as dynamically allocated even for single segments
+Date: Thu,  3 Jul 2025 16:41:13 +0200
+Message-ID: <20250703144010.498828697@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -50,58 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 99579c55c3d6132a5236926652c0a72a526b809d upstream.
+[ Upstream commit 9a709b7e98e6fa51600b5f2d24c5068efa6d39de ]
 
-Seems some older MES firmware versions do not properly support
-this packet.  Add back some the compatibility checks.
+A bigger array of vecs could've been allocated, but
+io_ring_buffers_peek() still decided to cap the mapped range depending
+on how much data was available. Hence don't rely on the segment count
+to know if the request should be marked as needing cleanup, always
+check upfront if the iov array is different than the fast_iov array.
 
-v2: switch to fw version check (Shaoyun)
-
-Fixes: f81cd793119e ("drm/amd/amdgpu: Fix MES init sequence")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4295
-Cc: Shaoyun Liu <shaoyun.liu@amd.com>
-Reviewed-by: shaoyun.liu <shaoyun.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0180e0a5dd5c6ff118043ee42dbbbddaf881f283)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 26ec15e4b0c1 ("io_uring/kbuf: don't truncate end buffer for multiple buffer peeks")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c |   10 ++++++----
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c |    3 ++-
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ io_uring/net.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -1649,10 +1649,12 @@ static int mes_v11_0_hw_init(struct amdg
- 	if (r)
- 		goto failure;
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 3feceb2b5b97e..adfdcea01e39b 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1084,6 +1084,12 @@ static int io_recv_buf_select(struct io_kiocb *req, struct io_async_msghdr *kmsg
+ 		if (unlikely(ret < 0))
+ 			return ret;
  
--	r = mes_v11_0_set_hw_resources_1(&adev->mes);
--	if (r) {
--		DRM_ERROR("failed mes_v11_0_set_hw_resources_1, r=%d\n", r);
--		goto failure;
-+	if ((adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x50) {
-+		r = mes_v11_0_set_hw_resources_1(&adev->mes);
-+		if (r) {
-+			DRM_ERROR("failed mes_v11_0_set_hw_resources_1, r=%d\n", r);
-+			goto failure;
++		if (arg.iovs != &kmsg->fast_iov && arg.iovs != kmsg->vec.iovec) {
++			kmsg->vec.nr = ret;
++			kmsg->vec.iovec = arg.iovs;
++			req->flags |= REQ_F_NEED_CLEANUP;
 +		}
- 	}
++
+ 		/* special case 1 vec, can be a fast path */
+ 		if (ret == 1) {
+ 			sr->buf = arg.iovs[0].iov_base;
+@@ -1092,11 +1098,6 @@ static int io_recv_buf_select(struct io_kiocb *req, struct io_async_msghdr *kmsg
+ 		}
+ 		iov_iter_init(&kmsg->msg.msg_iter, ITER_DEST, arg.iovs, ret,
+ 				arg.out_len);
+-		if (arg.iovs != &kmsg->fast_iov && arg.iovs != kmsg->vec.iovec) {
+-			kmsg->vec.nr = ret;
+-			kmsg->vec.iovec = arg.iovs;
+-			req->flags |= REQ_F_NEED_CLEANUP;
+-		}
+ 	} else {
+ 		void __user *buf;
  
- 	r = mes_v11_0_query_sched_status(&adev->mes);
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -1761,7 +1761,8 @@ static int mes_v12_0_hw_init(struct amdg
- 	if (r)
- 		goto failure;
- 
--	mes_v12_0_set_hw_resources_1(&adev->mes, AMDGPU_MES_SCHED_PIPE);
-+	if ((adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x4b)
-+		mes_v12_0_set_hw_resources_1(&adev->mes, AMDGPU_MES_SCHED_PIPE);
- 
- 	mes_v12_0_init_aggregated_doorbell(&adev->mes);
- 
+-- 
+2.39.5
+
 
 
