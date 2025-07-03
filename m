@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37632E62CD;
-	Thu,  3 Jul 2025 14:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DB82E4242;
+	Thu,  3 Jul 2025 14:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553893; cv=none; b=Lnm0/smzW0PoHJLa4Cjy3Oc2aleAyKycH6+EASqZ8xrGO8B+biTic+ATcSKRMDiK8S5sYlm+sJAWUWn1T2HxfkcRgy0tEQth5K0ZCPS9VfE7JLK0LeiH7vXvpskFU13sG4dmJzVV4GKJAaW+yG4QCkiC/vuqRM7CYbr9ApM4n4I=
+	t=1751553897; cv=none; b=YIO0rascKHMQPESR9skVmho3LmFCeGzp42BfyrrClq/wh7fofyQbrVjV9yDIN6c6vVP1K8PzB4RCqp+liFPGs5BjP57raR3WpMKVau2Nh/q9mRj4QxnIk/H7cl8Yq0r20tDj8XmAet8VnhQKzYIlWNOxbI+Pyl25qRcjzYPRRHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553893; c=relaxed/simple;
-	bh=F/QnQEIIbDNUM2m0MR2YI6M7UDbeXq5NXcNUp2ReOf0=;
+	s=arc-20240116; t=1751553897; c=relaxed/simple;
+	bh=q9/VgZCsaAEq3EoHBVgBOcyle9DcD/Q3Bh8DQlEEg0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApACLv55Fy+3lACFMYpNSmOeoHQw6iOHibUUm47C3fgEReeZe4x/46Ifw3Mfe5ZrdtkoupgGaVzSvbzUseGTaB2AyzMRuUNzZMtbXwJOGGBKo5YSoB/gXcd7/gVRK0whLNLpGnmrPzNogDg3s7X0n/cFlzSf3YNjz3RNQPENuQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVmC4QCZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y3V3ZnjA0ZZAYS8dvRa2MyXmy3Bii4F3+wyw+fz3hGOdB+NViDzRcutQyUojFDpBGQOATxe7C2YNwxlC3xG0Y+D9Yv9eixn72S2C8+W9+HnXf4RwttCIAMk9pEIC4BnD1KfWOpPoHUAyHlBSxY5EbaWoevhi5QtNxrCXsxiaoqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pFIiGKR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVmC4QCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFC9C4CEF0;
-	Thu,  3 Jul 2025 14:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pFIiGKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5CBAC4CEED;
+	Thu,  3 Jul 2025 14:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553893;
-	bh=F/QnQEIIbDNUM2m0MR2YI6M7UDbeXq5NXcNUp2ReOf0=;
+	s=korg; t=1751553897;
+	bh=q9/VgZCsaAEq3EoHBVgBOcyle9DcD/Q3Bh8DQlEEg0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVmC4QCZQ3D79bdOoz1uZDHTovpty0CJCEXUyJpP3GzttY4n5sXk9RCaHsnbGb+Wa
-	 XYWASF9Q8216V8+WHMsp5ss2V6aLdGbKrDpwxyUwFsDIuxFq9TVCJeY/izQFhBzTsL
-	 pzFpCd6KmbBqxKp+lnlRzbqHzRbx2Gl3bZ/nne6w=
+	b=2pFIiGKRU2QSPnWoD86xdnuRySNjU9R3vSOr20TvMGHVpP15Gdei3oEu4SgHbSpVg
+	 UuAjD4ZQIeTJUcd8v+SG0vkaHuK1gO6O6+/7tA8wZO6iAdaY7u0m3SGM3hpvUyt88r
+	 hjWqmO21C7gJT9jpS8O1n96Wmbp0gVM/mHhCIzR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Kerling <pkerling@casix.org>,
+	Justin Turner Arthur <justinarthur@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/218] ksmbd: allow a filename to contain special characters on SMB3.1.1 posix extension
-Date: Thu,  3 Jul 2025 16:39:24 +0200
-Message-ID: <20250703143956.608510525@linuxfoundation.org>
+Subject: [PATCH 6.12 017/218] ksmbd: provide zero as a unique ID to the Mac client
+Date: Thu,  3 Jul 2025 16:39:25 +0200
+Message-ID: <20250703143956.647967374@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -54,104 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit dc3e0f17f74558e8a2fce00608855f050de10230 ]
+[ Upstream commit 571781eb7ffefa65b0e922c8031e42b4411a40d4 ]
 
-If client send SMB2_CREATE_POSIX_CONTEXT to ksmbd, Allow a filename
-to contain special characters.
+The Mac SMB client code seems to expect the on-disk file identifier
+to have the semantics of HFS+ Catalog Node Identifier (CNID).
+ksmbd provides the inode number as a unique ID to the client,
+but in the case of subvolumes of btrfs, there are cases where different
+files have the same inode number, so the mac smb client treats it
+as an error. There is a report that a similar problem occurs
+when the share is ZFS.
+Returning UniqueId of zero will make the Mac client to stop using and
+trusting the file id returned from the server.
 
-Reported-by: Philipp Kerling <pkerling@casix.org>
+Reported-by: Justin Turner Arthur <justinarthur@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 53 +++++++++++++++++++++--------------------
- 1 file changed, 27 insertions(+), 26 deletions(-)
+ fs/smb/server/connection.h |  1 +
+ fs/smb/server/smb2pdu.c    | 19 +++++++++++++++++--
+ fs/smb/server/smb2pdu.h    |  3 +++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
+diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
+index 572102098c108..dd3e0e3f7bf04 100644
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -108,6 +108,7 @@ struct ksmbd_conn {
+ 	__le16				signing_algorithm;
+ 	bool				binding;
+ 	atomic_t			refcnt;
++	bool				is_aapl;
+ };
+ 
+ struct ksmbd_conn_ops {
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 6537ffd2b9651..ef921a370cb98 100644
+index ef921a370cb98..5d2324c09a070 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2871,7 +2871,7 @@ int smb2_open(struct ksmbd_work *work)
- 	int req_op_level = 0, open_flags = 0, may_flags = 0, file_info = 0;
- 	int rc = 0;
- 	int contxt_cnt = 0, query_disk_id = 0;
--	int maximal_access_ctxt = 0, posix_ctxt = 0;
-+	bool maximal_access_ctxt = false, posix_ctxt = false;
- 	int s_type = 0;
- 	int next_off = 0;
- 	char *name = NULL;
-@@ -2898,6 +2898,27 @@ int smb2_open(struct ksmbd_work *work)
- 		return create_smb2_pipe(work);
+@@ -3535,6 +3535,15 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB, "get query on disk id context\n");
+ 			query_disk_id = 1;
+ 		}
++
++		if (conn->is_aapl == false) {
++			context = smb2_find_context_vals(req, SMB2_CREATE_AAPL, 4);
++			if (IS_ERR(context)) {
++				rc = PTR_ERR(context);
++				goto err_out1;
++			} else if (context)
++				conn->is_aapl = true;
++		}
  	}
  
-+	if (req->CreateContextsOffset && tcon->posix_extensions) {
-+		context = smb2_find_context_vals(req, SMB2_CREATE_TAG_POSIX, 16);
-+		if (IS_ERR(context)) {
-+			rc = PTR_ERR(context);
-+			goto err_out2;
-+		} else if (context) {
-+			struct create_posix *posix = (struct create_posix *)context;
-+
-+			if (le16_to_cpu(context->DataOffset) +
-+				le32_to_cpu(context->DataLength) <
-+			    sizeof(struct create_posix) - 4) {
-+				rc = -EINVAL;
-+				goto err_out2;
-+			}
-+			ksmbd_debug(SMB, "get posix context\n");
-+
-+			posix_mode = le32_to_cpu(posix->Mode);
-+			posix_ctxt = true;
-+		}
-+	}
-+
- 	if (req->NameLength) {
- 		name = smb2_get_name((char *)req + le16_to_cpu(req->NameOffset),
- 				     le16_to_cpu(req->NameLength),
-@@ -2920,9 +2941,11 @@ int smb2_open(struct ksmbd_work *work)
- 				goto err_out2;
- 		}
+ 	rc = ksmbd_vfs_getattr(&path, &stat);
+@@ -3974,7 +3983,10 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
+ 		if (dinfo->EaSize)
+ 			dinfo->ExtFileAttributes = FILE_ATTRIBUTE_REPARSE_POINT_LE;
+ 		dinfo->Reserved = 0;
+-		dinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
++		if (conn->is_aapl)
++			dinfo->UniqueId = 0;
++		else
++			dinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
+ 		if (d_info->hide_dot_file && d_info->name[0] == '.')
+ 			dinfo->ExtFileAttributes |= FILE_ATTRIBUTE_HIDDEN_LE;
+ 		memcpy(dinfo->FileName, conv_name, conv_len);
+@@ -3991,7 +4003,10 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
+ 			smb2_get_reparse_tag_special_file(ksmbd_kstat->kstat->mode);
+ 		if (fibdinfo->EaSize)
+ 			fibdinfo->ExtFileAttributes = FILE_ATTRIBUTE_REPARSE_POINT_LE;
+-		fibdinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
++		if (conn->is_aapl)
++			fibdinfo->UniqueId = 0;
++		else
++			fibdinfo->UniqueId = cpu_to_le64(ksmbd_kstat->kstat->ino);
+ 		fibdinfo->ShortNameLength = 0;
+ 		fibdinfo->Reserved = 0;
+ 		fibdinfo->Reserved2 = cpu_to_le16(0);
+diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
+index 17a0b18a8406b..16ae8a10490be 100644
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -63,6 +63,9 @@ struct preauth_integrity_info {
  
--		rc = ksmbd_validate_filename(name);
--		if (rc < 0)
--			goto err_out2;
-+		if (posix_ctxt == false) {
-+			rc = ksmbd_validate_filename(name);
-+			if (rc < 0)
-+				goto err_out2;
-+		}
+ #define SMB2_SESSION_TIMEOUT		(10 * HZ)
  
- 		if (ksmbd_share_veto_filename(share, name)) {
- 			rc = -ENOENT;
-@@ -3080,28 +3103,6 @@ int smb2_open(struct ksmbd_work *work)
- 			rc = -EBADF;
- 			goto err_out2;
- 		}
--
--		if (tcon->posix_extensions) {
--			context = smb2_find_context_vals(req,
--							 SMB2_CREATE_TAG_POSIX, 16);
--			if (IS_ERR(context)) {
--				rc = PTR_ERR(context);
--				goto err_out2;
--			} else if (context) {
--				struct create_posix *posix =
--					(struct create_posix *)context;
--				if (le16_to_cpu(context->DataOffset) +
--				    le32_to_cpu(context->DataLength) <
--				    sizeof(struct create_posix) - 4) {
--					rc = -EINVAL;
--					goto err_out2;
--				}
--				ksmbd_debug(SMB, "get posix context\n");
--
--				posix_mode = le32_to_cpu(posix->Mode);
--				posix_ctxt = 1;
--			}
--		}
- 	}
- 
- 	if (ksmbd_override_fsids(work)) {
++/* Apple Defined Contexts */
++#define SMB2_CREATE_AAPL		"AAPL"
++
+ struct create_durable_req_v2 {
+ 	struct create_context_hdr ccontext;
+ 	__u8   Name[8];
 -- 
 2.39.5
 
