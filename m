@@ -1,52 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9C82EE286;
-	Thu,  3 Jul 2025 15:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF73E2D9492;
+	Thu,  3 Jul 2025 15:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555419; cv=none; b=pMWt4Ncz+fTLtqUetES5mHz4rG8p5QilNMhdCTnvX+XVsX5n2m1z4RdHdk3vp5zRA24c83DKuKtPNpNh6gYn5wfXzYNl9zSeQ3tA/9pt8+6ohKJE21A8mYNm72If87xwh3iaAWtK8MVWcjnCT5ummfkEwQVoVcoWMI6iiNWM0fA=
+	t=1751555422; cv=none; b=k2/BdOAUTSGbnzvtiypZHQC/IhaKP+U/XtyTHYdxXvCVJjfX7sO6plPTwjjjvp9Oli7g8aGQHj5torYnUaWq/sWOYL4lqRAkIWaaEPh4ZJ5Hs4WFd1YnAdI2tfP4jc9HNnRe/uKyirUR7QBWGK4k1EdXDgu8WSv4VfMQxSt2pgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555419; c=relaxed/simple;
-	bh=tmCZopcRxJnqw79Ey0tgO7XW7wObyljoXIHyzXZkg6E=;
+	s=arc-20240116; t=1751555422; c=relaxed/simple;
+	bh=l/cOQmtqTZUlRP8zV5DmUb94F2mkPBpS3Ru0ZrZrdt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXo/cukvh3rtE/3IKyOH7SkLVFtTa1LuD0IYEfxBTItKUZufZxiGype+Kv3CU9rBZvCITfTbOhiRhKesaEfGNdpwcE3maolki5OIyK1l4z4I08KTLRJg78Mq77J1rN1/GcRgwCb1RG2eNNO5GkQ/ToaHl+IfXAjAaKhEJnRMj08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEIOG9Xp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dmmwL5M6O/HhiXwQ7WgMTGRk5u9rUJlqMT3m5AHmzC4ADeE1xZPl9RDr787I3po80jpgdVyLDFmEDB3r9pv2GlxG4YJnP3oo7Xzeq3FrkSDbegLmKbmHkCtLqMIs7mWxT3zf/2eWXdtMbrf/TIiWwBBFF5fYVgxJJ9D1xcDhjAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QrRifO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEIOG9Xp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039C3C4CEE3;
-	Thu,  3 Jul 2025 15:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QrRifO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60232C4CEE3;
+	Thu,  3 Jul 2025 15:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555418;
-	bh=tmCZopcRxJnqw79Ey0tgO7XW7wObyljoXIHyzXZkg6E=;
+	s=korg; t=1751555421;
+	bh=l/cOQmtqTZUlRP8zV5DmUb94F2mkPBpS3Ru0ZrZrdt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEIOG9XpDUQnC+EO5GTnAzbpK+oBA7AfzCr0snMUjTXeDn3Xa6fo4S4d6REa9DBAe
-	 OMIrYDt2GG4xBDITahDpw4EvZ9gPusnaV6QqE7HtFxw6159Om3U8vwcVu4eyLsO8m7
-	 KVHs1QV30kNrkJABB6dMLaBGqQdRS1fvAgvoC6pQ=
+	b=1QrRifO7iMfTgc9Z/gKQWutu5ZSHPbJ7nIu4TP9PR8fpCIlsFv7NCCZ25itlAN/XK
+	 Weyh3tJSyknbzrjMtu4DPD85LsT59OzWHHbi6gWKojxyVncnRHZ7aaOT9WDH/bCIh1
+	 BQzZO13a+alHzNgsyKWOyF9L7W1Z8NJ5YC/8t8rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.15 254/263] rust: completion: implement initial abstraction
-Date: Thu,  3 Jul 2025 16:42:54 +0200
-Message-ID: <20250703144014.596129841@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/139] cifs: Correctly set SMB1 SessionKey field in Session Setup Request
+Date: Thu,  3 Jul 2025 16:41:04 +0200
+Message-ID: <20250703143941.242060472@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
-References: <20250703144004.276210867@linuxfoundation.org>
+In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
+References: <20250703143941.182414597@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -56,212 +45,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Pali Rohár <pali@kernel.org>
 
-commit 1b56e765bf8990f1f60e124926c11fc4ac63d752 upstream.
+[ Upstream commit 89381c72d52094988e11d23ef24a00066a0fa458 ]
 
-Implement a minimal abstraction for the completion synchronization
-primitive.
+[MS-CIFS] specification in section 2.2.4.53.1 where is described
+SMB_COM_SESSION_SETUP_ANDX Request, for SessionKey field says:
 
-This initial abstraction only adds complete_all() and
-wait_for_completion(), since that is what is required for the subsequent
-Devres patch.
+    The client MUST set this field to be equal to the SessionKey field in
+    the SMB_COM_NEGOTIATE Response for this SMB connection.
 
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Ben Segall <bsegall@google.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-Reviewed-by: Benno Lossin <lossin@kernel.org>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://lore.kernel.org/r/20250612121817.1621-2-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Linux SMB client currently set this field to zero. This is working fine
+against Windows NT SMB servers thanks to [MS-CIFS] product behavior <94>:
+
+    Windows NT Server ignores the client's SessionKey.
+
+For compatibility with [MS-CIFS], set this SessionKey field in Session
+Setup Request to value retrieved from Negotiate response.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/bindings/bindings_helper.h |    1 
- rust/helpers/completion.c       |    8 ++
- rust/helpers/helpers.c          |    1 
- rust/kernel/sync.rs             |    2 
- rust/kernel/sync/completion.rs  |  112 ++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 124 insertions(+)
- create mode 100644 rust/helpers/completion.c
- create mode 100644 rust/kernel/sync/completion.rs
+ fs/smb/client/cifsglob.h | 1 +
+ fs/smb/client/cifspdu.h  | 6 +++---
+ fs/smb/client/cifssmb.c  | 1 +
+ fs/smb/client/sess.c     | 1 +
+ 4 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/rust/bindings/bindings_helper.h
-+++ b/rust/bindings/bindings_helper.h
-@@ -10,6 +10,7 @@
- #include <linux/blk-mq.h>
- #include <linux/blk_types.h>
- #include <linux/blkdev.h>
-+#include <linux/completion.h>
- #include <linux/cpumask.h>
- #include <linux/cred.h>
- #include <linux/device/faux.h>
---- /dev/null
-+++ b/rust/helpers/completion.c
-@@ -0,0 +1,8 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/completion.h>
-+
-+void rust_helper_init_completion(struct completion *x)
-+{
-+	init_completion(x);
-+}
---- a/rust/helpers/helpers.c
-+++ b/rust/helpers/helpers.c
-@@ -11,6 +11,7 @@
- #include "bug.c"
- #include "build_assert.c"
- #include "build_bug.c"
-+#include "completion.c"
- #include "cpumask.c"
- #include "cred.c"
- #include "device.c"
---- a/rust/kernel/sync.rs
-+++ b/rust/kernel/sync.rs
-@@ -10,6 +10,7 @@ use crate::types::Opaque;
- use pin_init;
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 6a4ed99e162c5..c7da6bf2f44be 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -739,6 +739,7 @@ struct TCP_Server_Info {
+ 	char workstation_RFC1001_name[RFC1001_NAME_LEN_WITH_NULL];
+ 	__u32 sequence_number; /* for signing, protected by srv_mutex */
+ 	__u32 reconnect_instance; /* incremented on each reconnect */
++	__le32 session_key_id; /* retrieved from negotiate response and send in session setup request */
+ 	struct session_key session_key;
+ 	unsigned long lstrp; /* when we got last response from this server */
+ 	struct cifs_secmech secmech; /* crypto sec mech functs, descriptors */
+diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
+index ca33f6cd6a800..763178b774542 100644
+--- a/fs/smb/client/cifspdu.h
++++ b/fs/smb/client/cifspdu.h
+@@ -557,7 +557,7 @@ typedef union smb_com_session_setup_andx {
+ 		__le16 MaxBufferSize;
+ 		__le16 MaxMpxCount;
+ 		__le16 VcNumber;
+-		__u32 SessionKey;
++		__le32 SessionKey;
+ 		__le16 SecurityBlobLength;
+ 		__u32 Reserved;
+ 		__le32 Capabilities;	/* see below */
+@@ -576,7 +576,7 @@ typedef union smb_com_session_setup_andx {
+ 		__le16 MaxBufferSize;
+ 		__le16 MaxMpxCount;
+ 		__le16 VcNumber;
+-		__u32 SessionKey;
++		__le32 SessionKey;
+ 		__le16 CaseInsensitivePasswordLength; /* ASCII password len */
+ 		__le16 CaseSensitivePasswordLength; /* Unicode password length*/
+ 		__u32 Reserved;	/* see below */
+@@ -614,7 +614,7 @@ typedef union smb_com_session_setup_andx {
+ 		__le16 MaxBufferSize;
+ 		__le16 MaxMpxCount;
+ 		__le16 VcNumber;
+-		__u32 SessionKey;
++		__le32 SessionKey;
+ 		__le16 PasswordLength;
+ 		__u32 Reserved; /* encrypt key len and offset */
+ 		__le16 ByteCount;
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index c36ab20050c16..db35e68e8a583 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -479,6 +479,7 @@ CIFSSMBNegotiate(const unsigned int xid,
+ 	server->max_rw = le32_to_cpu(pSMBr->MaxRawSize);
+ 	cifs_dbg(NOISY, "Max buf = %d\n", ses->server->maxBuf);
+ 	server->capabilities = le32_to_cpu(pSMBr->Capabilities);
++	server->session_key_id = pSMBr->SessionKey;
+ 	server->timeAdj = (int)(__s16)le16_to_cpu(pSMBr->ServerTimeZone);
+ 	server->timeAdj *= 60;
  
- mod arc;
-+pub mod completion;
- mod condvar;
- pub mod lock;
- mod locked_by;
-@@ -17,6 +18,7 @@ pub mod poll;
- pub mod rcu;
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index 8959206a0353e..81ac4196bb743 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -683,6 +683,7 @@ static __u32 cifs_ssetup_hdr(struct cifs_ses *ses,
+ 					USHRT_MAX));
+ 	pSMB->req.MaxMpxCount = cpu_to_le16(server->maxReq);
+ 	pSMB->req.VcNumber = cpu_to_le16(1);
++	pSMB->req.SessionKey = server->session_key_id;
  
- pub use arc::{Arc, ArcBorrow, UniqueArc};
-+pub use completion::Completion;
- pub use condvar::{new_condvar, CondVar, CondVarTimeoutResult};
- pub use lock::global::{global_lock, GlobalGuard, GlobalLock, GlobalLockBackend, GlobalLockedBy};
- pub use lock::mutex::{new_mutex, Mutex, MutexGuard};
---- /dev/null
-+++ b/rust/kernel/sync/completion.rs
-@@ -0,0 +1,112 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+//! Completion support.
-+//!
-+//! Reference: <https://docs.kernel.org/scheduler/completion.html>
-+//!
-+//! C header: [`include/linux/completion.h`](srctree/include/linux/completion.h)
-+
-+use crate::{bindings, prelude::*, types::Opaque};
-+
-+/// Synchronization primitive to signal when a certain task has been completed.
-+///
-+/// The [`Completion`] synchronization primitive signals when a certain task has been completed by
-+/// waking up other tasks that have been queued up to wait for the [`Completion`] to be completed.
-+///
-+/// # Examples
-+///
-+/// ```
-+/// use kernel::sync::{Arc, Completion};
-+/// use kernel::workqueue::{self, impl_has_work, new_work, Work, WorkItem};
-+///
-+/// #[pin_data]
-+/// struct MyTask {
-+///     #[pin]
-+///     work: Work<MyTask>,
-+///     #[pin]
-+///     done: Completion,
-+/// }
-+///
-+/// impl_has_work! {
-+///     impl HasWork<Self> for MyTask { self.work }
-+/// }
-+///
-+/// impl MyTask {
-+///     fn new() -> Result<Arc<Self>> {
-+///         let this = Arc::pin_init(pin_init!(MyTask {
-+///             work <- new_work!("MyTask::work"),
-+///             done <- Completion::new(),
-+///         }), GFP_KERNEL)?;
-+///
-+///         let _ = workqueue::system().enqueue(this.clone());
-+///
-+///         Ok(this)
-+///     }
-+///
-+///     fn wait_for_completion(&self) {
-+///         self.done.wait_for_completion();
-+///
-+///         pr_info!("Completion: task complete\n");
-+///     }
-+/// }
-+///
-+/// impl WorkItem for MyTask {
-+///     type Pointer = Arc<MyTask>;
-+///
-+///     fn run(this: Arc<MyTask>) {
-+///         // process this task
-+///         this.done.complete_all();
-+///     }
-+/// }
-+///
-+/// let task = MyTask::new()?;
-+/// task.wait_for_completion();
-+/// # Ok::<(), Error>(())
-+/// ```
-+#[pin_data]
-+pub struct Completion {
-+    #[pin]
-+    inner: Opaque<bindings::completion>,
-+}
-+
-+// SAFETY: `Completion` is safe to be send to any task.
-+unsafe impl Send for Completion {}
-+
-+// SAFETY: `Completion` is safe to be accessed concurrently.
-+unsafe impl Sync for Completion {}
-+
-+impl Completion {
-+    /// Create an initializer for a new [`Completion`].
-+    pub fn new() -> impl PinInit<Self> {
-+        pin_init!(Self {
-+            inner <- Opaque::ffi_init(|slot: *mut bindings::completion| {
-+                // SAFETY: `slot` is a valid pointer to an uninitialized `struct completion`.
-+                unsafe { bindings::init_completion(slot) };
-+            }),
-+        })
-+    }
-+
-+    fn as_raw(&self) -> *mut bindings::completion {
-+        self.inner.get()
-+    }
-+
-+    /// Signal all tasks waiting on this completion.
-+    ///
-+    /// This method wakes up all tasks waiting on this completion; after this operation the
-+    /// completion is permanently done, i.e. signals all current and future waiters.
-+    pub fn complete_all(&self) {
-+        // SAFETY: `self.as_raw()` is a pointer to a valid `struct completion`.
-+        unsafe { bindings::complete_all(self.as_raw()) };
-+    }
-+
-+    /// Wait for completion of a task.
-+    ///
-+    /// This method waits for the completion of a task; it is not interruptible and there is no
-+    /// timeout.
-+    ///
-+    /// See also [`Completion::complete_all`].
-+    pub fn wait_for_completion(&self) {
-+        // SAFETY: `self.as_raw()` is a pointer to a valid `struct completion`.
-+        unsafe { bindings::wait_for_completion(self.as_raw()) };
-+    }
-+}
+ 	/* Now no need to set SMBFLG_CASELESS or obsolete CANONICAL PATH */
+ 
+-- 
+2.39.5
+
 
 
