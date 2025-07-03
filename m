@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE11719DF4A;
-	Thu,  3 Jul 2025 15:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D034086348;
+	Thu,  3 Jul 2025 15:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555903; cv=none; b=Ou/hSa+Z7VT40zHl7SYNB/jieSQKL8RK3wMtRzyt8IZuPW65QwE5Bnhwnv14slJwkVNYSSm6pQkK/GGbsEaPBlYwxirEcgSpnQMwQ3eLs0PwB3kfsspvBEmgze94cI4fNRhirxFnBSeOSy5H9hecrgSU9ku+OWUraRWqdwxSGkU=
+	t=1751555906; cv=none; b=C5iXGbb36EVlEzorQXpK9Nw+4yt3oRd0WOPG59EG53fjEQyzpCHZ7cFQPuILJMkNDnfx1fggHlwdmNWRSS+8ib1xC0NH8GFz49k8jlzD6uq49/I6ykiF1D3eajGRlbxnYXwwkFHZj2UKbz97yGdwKUxlxVByT9xxaROK5BO1qCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555903; c=relaxed/simple;
-	bh=/9X4KssAFnCFhecD2ZUfK/CBYlxMDMQZsxwaDreqln0=;
+	s=arc-20240116; t=1751555906; c=relaxed/simple;
+	bh=FGE3h5gZwBcw1Yvb3nQsuERROcP88fGc5AlaQB1emck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSq9TqQB1Xvy8n9DiVMisP+SaRfIIKLV3dL71oa78D+7KJIFa9/PL1h/9k5lERjg+86WiGiJHRu3N9NC/T2SekeA3kIqiP+OvnqSXgWusCMINr47jpSWfzCzQDt9bUSWl2/yZGz/7HPLMnA+CEeG1LviLyQCOiwHgHKXkuzwDMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQg/wuwD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aj4wIqG/IFcRIe/++LJM5xx+Q3NKQQXEOmqfh7+i49LU2Z7Mj6PkoY8DIH4NtHfP3llb3VIH50c/xWineqV0Lx6zFhbtkpn8v7fkPWBeDLOUGMRPBOdksIXsnKJRmK4oaxixTw5iSYcxK6Roju/PHMnFXd3W6Buggdq43dVDCxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwrA4CWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQg/wuwD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC41C4CEE3;
-	Thu,  3 Jul 2025 15:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwrA4CWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57578C4CEE3;
+	Thu,  3 Jul 2025 15:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555903;
-	bh=/9X4KssAFnCFhecD2ZUfK/CBYlxMDMQZsxwaDreqln0=;
+	s=korg; t=1751555906;
+	bh=FGE3h5gZwBcw1Yvb3nQsuERROcP88fGc5AlaQB1emck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQg/wuwDQFsmjG/StMxINeI1ZYVzPShx5Io8jdH/3KENQWzv7cvDlFfrBtHS90GLu
-	 FA+eWTTq1e/xlf2s43Ah/vsQgAuYJ3ZxSqh/euxbA1y4ahvQXS4X9hs3aODUNxkxLR
-	 JoX/mj189+w0EGmeiq7fbbrDowShPzQMjcTsW+3c=
+	b=GwrA4CWQ8bT2cVmpy0UBCvfXTKSTdX2S5k+MRZBlFnEQHUEj+6v2MRtGtVA47qQEG
+	 v5/Yw/E08oHCnjlcRzMtsREPHP4a+Nm5JRHyuNdCqeC+X6ZBUsjCpsq89LdjIYI/9N
+	 GK5TjhpX30ETczEpoullG2LYi1Jwoa8/DW6DeqZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Marc Zyngier <maz@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Janne Grunau <j@jannau.net>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/132] PCI: apple: Fix missing OF node reference in apple_pcie_setup_port
-Date: Thu,  3 Jul 2025 16:41:43 +0200
-Message-ID: <20250703143939.951698524@linuxfoundation.org>
+Subject: [PATCH 6.1 015/132] md/md-bitmap: fix dm-raid max_write_behind setting
+Date: Thu,  3 Jul 2025 16:41:44 +0200
+Message-ID: <20250703143939.998345033@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -55,42 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 7fa9fbf39116b061f8a41cd84f1884c545f322c4 ]
+[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
 
-In the success path, we hang onto a reference to the node, so make sure
-to grab one. The caller iterator puts our borrowed reference when we
-return.
+It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Link: https://patch.msgid.link/20250401091713.2765724-9-maz@kernel.org
+Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-apple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/md-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-index 487d01f6b4f56..fbe59139ab8fb 100644
---- a/drivers/pci/controller/pcie-apple.c
-+++ b/drivers/pci/controller/pcie-apple.c
-@@ -585,6 +585,9 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
- 	list_add_tail(&port->entry, &pcie->ports);
- 	init_completion(&pcie->event);
- 
-+	/* In the success path, we keep a reference to np around */
-+	of_node_get(np);
-+
- 	ret = apple_pcie_port_register_irqs(port);
- 	WARN_ON(ret);
- 
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 02629516748e4..dac27206cd3df 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -546,7 +546,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
+ 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
+ 	 */
+ 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
+-	if (write_behind > COUNTER_MAX)
++	if (write_behind > COUNTER_MAX / 2)
+ 		write_behind = COUNTER_MAX / 2;
+ 	sb->write_behind = cpu_to_le32(write_behind);
+ 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
 -- 
 2.39.5
 
