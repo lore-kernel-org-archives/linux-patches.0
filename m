@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B9A2E7620;
-	Thu,  3 Jul 2025 14:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9770B1DB124;
+	Thu,  3 Jul 2025 14:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554026; cv=none; b=E1VdfoRCXDvHA+AUwZEeBCA61K8SyyY+7GBar/rz9vzWWUqEOucvBgrO/AquGiGhfq6J8yX6Fk5iaxF7dNW/83H4TOGNaV/eeIh2sYVwKfUUFquc/yh9SdLvrS0q3q8XqvSDzD0YGLrJEj8QzrMrxCRQos/jpD0bDzQb8dqXRro=
+	t=1751554029; cv=none; b=ufmGPhMwT+MAjuCSmcH+g07EKf/wMG7aKR9NG39qtcsVf2T6ydKPz2mvFE4uForJpP3GMh/Y6LLcAYigPqfkfTTXnTzaRomx3MBnTc/VUsHmYLsjwm40U8SZxRvPAwYLK49Ow9OOaFJOOferKc1BO8I1zTixt8Xf+acuJvlO50Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554026; c=relaxed/simple;
-	bh=BLK34IAbezjgCSqGcl+8ff75j0LrZiwNy2iCLDXJiGs=;
+	s=arc-20240116; t=1751554029; c=relaxed/simple;
+	bh=YQ3dTYpn/gd0Ud4yPdsV4bj7AFfXq2NOa2CbURC2zRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=At6BrMcihPl3XRDHyMyErBsamd7YrKD6aFEyOaVon5hOzvAyEjpo+nw5MU/1OkFbEOc7lZuheA4lV8XUByLZhiIy4NKEygfy1UStxNNnjGcAtTdfa7WWt/+hbUlhU2PRqJRtyVap3RZ3S6drUuyXlfpTNXt4t3L3qnerQ18gaNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVpHq7Io; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JdROvvKGi/BN7/e3R0EinR/RJC0i0DZ8qP1oE/WXQVUWBy31YzRdi5qMqnV5vRZt2Sqt7Evpv2YVZO1gj9JKxe8bW8CnTXL2Tm675wUEaDpAEzFKO+kI4GFsB1gzgVwWSi/mRYaq37naW275WknpxkOEYrEqabyXriY5iZuo/lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM1mjI2d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVpHq7Io"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC3EC4CEE3;
-	Thu,  3 Jul 2025 14:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM1mjI2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC72C4CEE3;
+	Thu,  3 Jul 2025 14:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554026;
-	bh=BLK34IAbezjgCSqGcl+8ff75j0LrZiwNy2iCLDXJiGs=;
+	s=korg; t=1751554029;
+	bh=YQ3dTYpn/gd0Ud4yPdsV4bj7AFfXq2NOa2CbURC2zRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVpHq7IoY3mArZ0SYuyiPILSWRidK29jny55av5DRWqN2TFeb05INw2Aae3/rlY7a
-	 T5BakOVKhP+210FugchU+VTff6dgCT58nvSO4Ta5FCzpINaxL/6FiEgHejp3TcGalc
-	 ow75+abpcne1yHpvmpCES3IAwSFMBjr9qtwCSqQM=
+	b=mM1mjI2d2OShrczK2cvKm459b0mNYjWRK+PgBoBT3DGASIxu4Pza/1/UMxFM+55gn
+	 ejJFqlR4Vq2eiQP5XVQIYV9/uQadoK4YPKUPpOWx0DP+OQwpinZRAORJA5XHy/388w
+	 rWAqlOPvbbvpDhZCtrx5tItU7qhXhHeQdbKkpPqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Kees Cook <kees@kernel.org>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/218] ovl: Check for NULL d_inode() in ovl_dentry_upper()
-Date: Thu,  3 Jul 2025 16:40:04 +0200
-Message-ID: <20250703143958.180899611@linuxfoundation.org>
+Subject: [PATCH 6.12 027/218] nvme-tcp: sanitize request list handling
+Date: Thu,  3 Jul 2025 16:39:35 +0200
+Message-ID: <20250703143957.048721018@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,66 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit 8a39f1c870e9d6fbac5638f3a42a6a6363829c49 ]
+[ Upstream commit 0bf04c874fcb1ae46a863034296e4b33d8fbd66c ]
 
-In ovl_path_type() and ovl_is_metacopy_dentry() GCC notices that it is
-possible for OVL_E() to return NULL (which implies that d_inode(dentry)
-may be NULL). This would result in out of bounds reads via container_of(),
-seen with GCC 15's -Warray-bounds -fdiagnostics-details. For example:
+Validate the request in nvme_tcp_handle_r2t() to ensure it's not part of
+any list, otherwise a malicious R2T PDU might inject a loop in request
+list processing.
 
-In file included from arch/x86/include/generated/asm/rwonce.h:1,
-                 from include/linux/compiler.h:339,
-                 from include/linux/export.h:5,
-                 from include/linux/linkage.h:7,
-                 from include/linux/fs.h:5,
-                 from fs/overlayfs/util.c:7:
-In function 'ovl_upperdentry_dereference',
-    inlined from 'ovl_dentry_upper' at ../fs/overlayfs/util.c:305:9,
-    inlined from 'ovl_path_type' at ../fs/overlayfs/util.c:216:6:
-include/asm-generic/rwonce.h:44:26: error: array subscript 0 is outside array bounds of 'struct inode[7486503276667837]' [-Werror=array-bounds=]
-   44 | #define __READ_ONCE(x)  (*(const volatile __unqual_scalar_typeof(x) *)&(x))
-      |                         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-include/asm-generic/rwonce.h:50:9: note: in expansion of macro '__READ_ONCE'
-   50 |         __READ_ONCE(x);                                                 \
-      |         ^~~~~~~~~~~
-fs/overlayfs/ovl_entry.h:195:16: note: in expansion of macro 'READ_ONCE'
-  195 |         return READ_ONCE(oi->__upperdentry);
-      |                ^~~~~~~~~
-  'ovl_path_type': event 1
-  185 |         return inode ? OVL_I(inode)->oe : NULL;
-  'ovl_path_type': event 2
-
-Avoid this by allowing ovl_dentry_upper() to return NULL if d_inode() is
-NULL, as that means the problematic dereferencing can never be reached.
-Note that this fixes the over-eager compiler warning in an effort to
-being able to enable -Warray-bounds globally. There is no known
-behavioral bug here.
-
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/util.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index 8f080046c59d9..99571de665dde 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -300,7 +300,9 @@ enum ovl_path_type ovl_path_realdata(struct dentry *dentry, struct path *path)
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 13ede6e309092..25e486e6e8054 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -453,7 +453,8 @@ nvme_tcp_fetch_request(struct nvme_tcp_queue *queue)
+ 			return NULL;
+ 	}
  
- struct dentry *ovl_dentry_upper(struct dentry *dentry)
- {
--	return ovl_upperdentry_dereference(OVL_I(d_inode(dentry)));
-+	struct inode *inode = d_inode(dentry);
-+
-+	return inode ? ovl_upperdentry_dereference(OVL_I(inode)) : NULL;
+-	list_del(&req->entry);
++	list_del_init(&req->entry);
++	init_llist_node(&req->lentry);
+ 	return req;
  }
  
- struct dentry *ovl_dentry_lower(struct dentry *dentry)
+@@ -561,6 +562,8 @@ static int nvme_tcp_init_request(struct blk_mq_tag_set *set,
+ 	req->queue = queue;
+ 	nvme_req(rq)->ctrl = &ctrl->ctrl;
+ 	nvme_req(rq)->cmd = &pdu->cmd;
++	init_llist_node(&req->lentry);
++	INIT_LIST_HEAD(&req->entry);
+ 
+ 	return 0;
+ }
+@@ -765,6 +768,14 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
+ 		return -EPROTO;
+ 	}
+ 
++	if (llist_on_list(&req->lentry) ||
++	    !list_empty(&req->entry)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"req %d unexpected r2t while processing request\n",
++			rq->tag);
++		return -EPROTO;
++	}
++
+ 	req->pdu_len = 0;
+ 	req->h2cdata_left = r2t_length;
+ 	req->h2cdata_offset = r2t_offset;
+@@ -2599,6 +2610,8 @@ static void nvme_tcp_submit_async_event(struct nvme_ctrl *arg)
+ 	ctrl->async_req.offset = 0;
+ 	ctrl->async_req.curr_bio = NULL;
+ 	ctrl->async_req.data_len = 0;
++	init_llist_node(&ctrl->async_req.lentry);
++	INIT_LIST_HEAD(&ctrl->async_req.entry);
+ 
+ 	nvme_tcp_queue_request(&ctrl->async_req, true, true);
+ }
 -- 
 2.39.5
 
