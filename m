@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E752F0C58;
-	Thu,  3 Jul 2025 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5742EF672;
+	Thu,  3 Jul 2025 15:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555561; cv=none; b=baWrOWR8rgKsULl5uBWpYUXDIZDeGwd8NnfBscDAdX8JDdr/i6fcF8ZBOJ9T7vFkJ9/AfRRvTAGwdFh9IOoYE9H6O/F3+Exd/bfgiuNhRXV8DGHpwouKJpWUBIw6jmD3Sh7I2lS+IUk+KsSJibM6G/m0SSBrvLkuEYQJpXwjt88=
+	t=1751555564; cv=none; b=j4kpytXZGv3A4DZyLBgx+4IUzlT3FH259OwloncfIr8HNP+pWQ1bu+2pFj9qkJ/CPCT6TNTcLAhBxmkAOtsxs7PknKkPA+60MQfn2zu5buIItZQtcCQSlHtLHPdkZ+6Fig8eFlx1zsnQCOKMZnRV+V+TSFrndmsSaOQHieEsesg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555561; c=relaxed/simple;
-	bh=BvN+HMWR4rfp3pc7ApLZweKLG6HUcus3un3uXpEhgBk=;
+	s=arc-20240116; t=1751555564; c=relaxed/simple;
+	bh=GipkuSzoJFwRhSWaVkOEglBq/uZFGKnpcM69ENxhgvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JeGbM+ju0SNZWl8Buv8qj18M4MRmuwegO6znh6X/lbl5tW8uWQ6spCHtqH1qIBb4WgQ39AC3p9nJVA690HIH4++cbv62YpQqgIPCX62rRsMozNXJqgk+MoVkovjtYUljjA+l6X+oZ5rr8UjCgR1VJA7UtJN+21DrOWPKWTFrOsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLD7/kY6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=omPEfdb9yG4RYWFHsG+RixiKMPTzLE1C2h9N0lVYm+pb8MRu73M25OOFJN+DJW2rSz0iFzAj8qo+HfyAqQtzzLp5eDO4xlYJcPkH44heQDWKLNTiN016N4L9GMYvXEsjkwbbKryECGGJPQqkKeG69oiY3vaXObU5LPPnRH3AEvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HC9+jwCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLD7/kY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A154BC4CEE3;
-	Thu,  3 Jul 2025 15:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC9+jwCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E540C4CEE3;
+	Thu,  3 Jul 2025 15:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555561;
-	bh=BvN+HMWR4rfp3pc7ApLZweKLG6HUcus3un3uXpEhgBk=;
+	s=korg; t=1751555563;
+	bh=GipkuSzoJFwRhSWaVkOEglBq/uZFGKnpcM69ENxhgvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLD7/kY6CFk2wJUz6G0S5UEYyMq4tBq4Eh2A4sUahCvbHRIs4OEcYuLu7URvoGeNW
-	 p2iggnal8DELlK5/7L6ESibzCe8IHR4yHRbW6Un4dwSYLcikmGbIBbDL2Bj7b9yR3o
-	 KOXuasc0oe9fXTcSCVjnImadgruGt6bofAEYfEdE=
+	b=HC9+jwCV+d1Xlg7d7M9Ztowv+CHSGfNUdLtOFCG/EBZPBJjSXA93+vONcwu8ZZ6st
+	 D2JqSRbxY8FHdQggUMH4m8s3s7k4AirnJBVUE8ec3jfg21jYBheYtonYv+0rFTBjGG
+	 Sgh3xFB/FjwgwSUmvsWPzoMaURLmPerpSL2/R3vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Lewalski <jakub.lewalski@nokia.com>,
-	Elodie Decerle <elodie.decerle@nokia.com>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/139] tty: serial: uartlite: register uart driver in init
-Date: Thu,  3 Jul 2025 16:41:37 +0200
-Message-ID: <20250703143942.518332472@linuxfoundation.org>
+Subject: [PATCH 6.6 052/139] f2fs: dont over-report free space or inodes in statvfs
+Date: Thu,  3 Jul 2025 16:41:55 +0200
+Message-ID: <20250703143943.201972437@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -51,99 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Lewalski <jakub.lewalski@nokia.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 6bd697b5fc39fd24e2aa418c7b7d14469f550a93 ]
+[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
 
-When two instances of uart devices are probing, a concurrency race can
-occur. If one thread calls uart_register_driver function, which first
-allocates and assigns memory to 'uart_state' member of uart_driver
-structure, the other instance can bypass uart driver registration and
-call ulite_assign. This calls uart_add_one_port, which expects the uart
-driver to be fully initialized. This leads to a kernel panic due to a
-null pointer dereference:
+This fixes an analogus bug that was fixed in modern filesystems:
+a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
+inodes in statvfs")
+b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
+or inodes in statvfs")
+where statfs can report misleading / incorrect information where
+project quota is enabled, and the free space is less than the
+remaining quota.
 
-[    8.143581] BUG: kernel NULL pointer dereference, address: 00000000000002b8
-[    8.156982] #PF: supervisor write access in kernel mode
-[    8.156984] #PF: error_code(0x0002) - not-present page
-[    8.156986] PGD 0 P4D 0
-...
-[    8.180668] RIP: 0010:mutex_lock+0x19/0x30
-[    8.188624] Call Trace:
-[    8.188629]  ? __die_body.cold+0x1a/0x1f
-[    8.195260]  ? page_fault_oops+0x15c/0x290
-[    8.209183]  ? __irq_resolve_mapping+0x47/0x80
-[    8.209187]  ? exc_page_fault+0x64/0x140
-[    8.209190]  ? asm_exc_page_fault+0x22/0x30
-[    8.209196]  ? mutex_lock+0x19/0x30
-[    8.223116]  uart_add_one_port+0x60/0x440
-[    8.223122]  ? proc_tty_register_driver+0x43/0x50
-[    8.223126]  ? tty_register_driver+0x1ca/0x1e0
-[    8.246250]  ulite_probe+0x357/0x4b0 [uartlite]
+This commit will resolve a test failure in generic/762 which tests
+for this bug.
 
-To prevent it, move uart driver registration in to init function. This
-will ensure that uart_driver is always registered when probe function
-is called.
+generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
+#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
+#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
+#    @@ -6,8 +6,10 @@
+#     root blocks2 is in range
+#     dir blocks2 is in range
+#     root bavail2 is in range
+#    -dir bavail2 is in range
+#    +dir bavail2 has value of 1539066
+#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
+#     root blocks3 is in range
+#    ...
+#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
 
-Signed-off-by: Jakub Lewalski <jakub.lewalski@nokia.com>
-Signed-off-by: Elodie Decerle <elodie.decerle@nokia.com>
-Link: https://lore.kernel.org/r/20250331160732.2042-1-elodie.decerle@nokia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+HINT: You _MAY_ be missing kernel fix:
+      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
+
+Cc: stable@kernel.org
+Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/uartlite.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ fs/f2fs/super.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/tty/serial/uartlite.c b/drivers/tty/serial/uartlite.c
-index b225a78f6175f..9f39bafa7fa96 100644
---- a/drivers/tty/serial/uartlite.c
-+++ b/drivers/tty/serial/uartlite.c
-@@ -872,16 +872,6 @@ static int ulite_probe(struct platform_device *pdev)
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 702137eafaa67..b9913ab526fd1 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1774,26 +1774,32 @@ static int f2fs_statfs_project(struct super_block *sb,
  
--	if (!ulite_uart_driver.state) {
--		dev_dbg(&pdev->dev, "uartlite: calling uart_register_driver()\n");
--		ret = uart_register_driver(&ulite_uart_driver);
--		if (ret < 0) {
--			dev_err(&pdev->dev, "Failed to register driver\n");
--			clk_disable_unprepare(pdata->clk);
--			return ret;
--		}
--	}
--
- 	ret = ulite_assign(&pdev->dev, id, res->start, irq, pdata);
- 
- 	pm_runtime_mark_last_busy(&pdev->dev);
-@@ -922,16 +912,25 @@ static struct platform_driver ulite_platform_driver = {
- 
- static int __init ulite_init(void)
- {
-+	int ret;
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
+ 					dquot->dq_dqb.dqb_bhardlimit);
+-	if (limit)
+-		limit >>= sb->s_blocksize_bits;
++	limit >>= sb->s_blocksize_bits;
 +
-+	pr_debug("uartlite: calling uart_register_driver()\n");
-+	ret = uart_register_driver(&ulite_uart_driver);
-+	if (ret)
-+		return ret;
++	if (limit) {
++		uint64_t remaining = 0;
  
- 	pr_debug("uartlite: calling platform_driver_register()\n");
--	return platform_driver_register(&ulite_platform_driver);
-+	ret = platform_driver_register(&ulite_platform_driver);
-+	if (ret)
-+		uart_unregister_driver(&ulite_uart_driver);
+-	if (limit && buf->f_blocks > limit) {
+ 		curblock = (dquot->dq_dqb.dqb_curspace +
+ 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
+-		buf->f_blocks = limit;
+-		buf->f_bfree = buf->f_bavail =
+-			(buf->f_blocks > curblock) ?
+-			 (buf->f_blocks - curblock) : 0;
++		if (limit > curblock)
++			remaining = limit - curblock;
 +
-+	return ret;
- }
++		buf->f_blocks = min(buf->f_blocks, limit);
++		buf->f_bfree = min(buf->f_bfree, remaining);
++		buf->f_bavail = min(buf->f_bavail, remaining);
+ 	}
  
- static void __exit ulite_exit(void)
- {
- 	platform_driver_unregister(&ulite_platform_driver);
--	if (ulite_uart_driver.state)
--		uart_unregister_driver(&ulite_uart_driver);
-+	uart_unregister_driver(&ulite_uart_driver);
- }
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
+ 					dquot->dq_dqb.dqb_ihardlimit);
  
- module_init(ulite_init);
+-	if (limit && buf->f_files > limit) {
+-		buf->f_files = limit;
+-		buf->f_ffree =
+-			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
+-			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
++	if (limit) {
++		uint64_t remaining = 0;
++
++		if (limit > dquot->dq_dqb.dqb_curinodes)
++			remaining = limit - dquot->dq_dqb.dqb_curinodes;
++
++		buf->f_files = min(buf->f_files, limit);
++		buf->f_ffree = min(buf->f_ffree, remaining);
+ 	}
+ 
+ 	spin_unlock(&dquot->dq_dqb_lock);
 -- 
 2.39.5
 
