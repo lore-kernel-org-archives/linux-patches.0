@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A91B15442C;
-	Thu,  3 Jul 2025 15:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8D815442C;
+	Thu,  3 Jul 2025 15:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555325; cv=none; b=dP0I6kvd5aMc3wGmD1UpzNxVURAZXsyJXzFzs9/5XXnoOb/nlu+eKsRGLt5ufFep9QZqStKZRRPPCXxAB259PIW2fxmBn6tdvEsxT+1AN+0hAq21RQoC707gasFWJHtSijypsRbYS8VZ5Xf1Q7bwACwJMzm3VmL/4MIBH0LbPK0=
+	t=1751555328; cv=none; b=pdKmbuO4mVZmQnPqsiYkceyG5ckjIHWk+RF0bERb+oeFagLBSeIS5eCQqU1zruYICNPbdmWuqXsO4aJAEEH675neq2XQ0CNBqljRrv2RoAeFRTQv6a9ThXTk0oIYujFSY42UxsLjMz+NNc8d/ua8muTHHFwDxyskeim543zZsrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555325; c=relaxed/simple;
-	bh=XOJE+An7LTwRJWjdjFIAg4KArWnnL2nIeVeDdqfYZ1Q=;
+	s=arc-20240116; t=1751555328; c=relaxed/simple;
+	bh=PtVuJok8uHKE6gFX92WyYklDlUbtgVl5aL3u1drfqec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWWWRayACawcte5PRbleMoaDe/MLIOLacwIZ99Pvwi6TBUK69tnwde33X/kIXQR6oZHdRd/waVQ5N6LNqPZxrQwr80tFIOd3nrG9r0jqFIY/lysEPdLbWmaYW6aqPIo8QQDWMqu9+s/UMJUngJYsuSzgK3PTJw+0AqEOMSWWmig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QADKw/8U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eQrLo18dbpBpqa1Bbnx7gNl0K8wQrNpFRRPpS9GxxE+w5253heyGYX2q7s2YT27LLbR6PEspuQ9KskQeYx7+ICDkoBSOH9Bge/CsCe/wOufvCh65RZLXsZqixpIhTWTjnT+5e8m7pud2pJ/UhhKF5PjrhonYzMJprmkCwC1c7yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmjIfari; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QADKw/8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD96C4CEE3;
-	Thu,  3 Jul 2025 15:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmjIfari"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02439C4CEE3;
+	Thu,  3 Jul 2025 15:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555325;
-	bh=XOJE+An7LTwRJWjdjFIAg4KArWnnL2nIeVeDdqfYZ1Q=;
+	s=korg; t=1751555328;
+	bh=PtVuJok8uHKE6gFX92WyYklDlUbtgVl5aL3u1drfqec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QADKw/8U0GjNRlUMssCkPlZcisq9upwXnkli1Io068tYYDjo0q//JTm1Dv93ecorK
-	 c+diUblIKGAWJYippCP/eFDBxYaqp2UTudn0hnSHmJAsr123dlSGKbwYqaKQOPf2lJ
-	 pv/JHsPDXpr7RezVD1kTkGC36KOdm+iVruURc274=
+	b=hmjIfarif2YJPkxjC0qEEvMEVjiQJmbYaGBZyNhmlgWx6qqTse1FhgJW7+YPz7OOB
+	 jqp0kDyvzZMWZhjuO9kCFnRuO2h9gD8M4/Oy98Fq8w0ohIRbfNVQIqrQjKW9784vcJ
+	 IDoEn5vhJLkKKY08HtboWabIhcPthscjd+NPh5T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 243/263] arm64: dts: qcom: x1-crd: Fix vreg_l2j_1p2 voltage
-Date: Thu,  3 Jul 2025 16:42:43 +0200
-Message-ID: <20250703144014.153456454@linuxfoundation.org>
+Subject: [PATCH 6.15 244/263] crypto: powerpc/poly1305 - add depends on BROKEN for now
+Date: Thu,  3 Jul 2025 16:42:44 +0200
+Message-ID: <20250703144014.199811202@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -54,42 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 5ce920e6a8db40e4b094c0d863cbd19fdcfbbb7a ]
+[ Upstream commit bc8169003b41e89fe7052e408cf9fdbecb4017fe ]
 
-In the ACPI DSDT table, PPP_RESOURCE_ID_LDO2_J is configured with 1256000
-uV instead of the 1200000 uV we have currently in the device tree. Use the
-same for consistency and correctness.
+As discussed in the thread containing
+https://lore.kernel.org/linux-crypto/20250510053308.GB505731@sol/, the
+Power10-optimized Poly1305 code is currently not safe to call in softirq
+context.  Disable it for now.  It can be re-enabled once it is fixed.
 
+Fixes: ba8f8624fde2 ("crypto: poly1305-p10 - Glue code for optmized Poly1305 implementation for ppc64le")
 Cc: stable@vger.kernel.org
-Fixes: bd50b1f5b6f3 ("arm64: dts: qcom: x1e80100: Add Compute Reference Device")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250423-x1e-vreg-l2j-voltage-v1-1-24b6a2043025@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1-crd.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/crypto/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1-crd.dtsi b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-index 780852fb87360..60f0b32baded3 100644
---- a/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-@@ -674,8 +674,8 @@ vreg_l1j_0p8: ldo1 {
- 
- 		vreg_l2j_1p2: ldo2 {
- 			regulator-name = "vreg_l2j_1p2";
--			regulator-min-microvolt = <1200000>;
--			regulator-max-microvolt = <1200000>;
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1256000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
+diff --git a/arch/powerpc/crypto/Kconfig b/arch/powerpc/crypto/Kconfig
+index 370db8192ce62..7b785c8664f5d 100644
+--- a/arch/powerpc/crypto/Kconfig
++++ b/arch/powerpc/crypto/Kconfig
+@@ -110,6 +110,7 @@ config CRYPTO_CHACHA20_P10
+ config CRYPTO_POLY1305_P10
+ 	tristate "Hash functions: Poly1305 (P10 or later)"
+ 	depends on PPC64 && CPU_LITTLE_ENDIAN && VSX
++	depends on BROKEN # Needs to be fixed to work in softirq context
+ 	select CRYPTO_HASH
+ 	select CRYPTO_LIB_POLY1305_GENERIC
+ 	help
 -- 
 2.39.5
 
