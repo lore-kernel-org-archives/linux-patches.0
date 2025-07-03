@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADA72EACE1;
-	Thu,  3 Jul 2025 14:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA1472610;
+	Thu,  3 Jul 2025 14:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554084; cv=none; b=H9Kq2vG/0GMoZ71QyBRy7vrgZX9C4oSToJ3jTAh3PEGqtv9dxfqE/oHw4ZY+ojA4wfbkjZr4GMTvzSMXSBy/OkZhbEg1lGUZL88QLgX8XvOQulLq6xbhfqC5+3JsFaFznJHNY1IEmdTeltIuTbsVBUAesRedlPqyRzwqjQYAFLQ=
+	t=1751554087; cv=none; b=NorZRo8vHAI6+k1LlFbmcOhw6PVzeduvlWo73wPL/6mEN5waRutEkeipqJNaC6z+W0W//i/T/vpvsiaPY3pQh/mhH66ppMqEI5EptkjkvP/nKMZXOIOnCTKsUFGfigHMiEl3dqQ8tuxod6Fmp5kCn2QtLk3+62JbhX+bD4jQHPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554084; c=relaxed/simple;
-	bh=kEfslG6dqRbu3ZMjsxaPHVbO+nVKer7Eo0IhkCuq8bY=;
+	s=arc-20240116; t=1751554087; c=relaxed/simple;
+	bh=eDHxOLUn6KWcpKw5VJbTS0+dj42du5Pmam/1uX89iis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sdhfq8pgAAI3f/GIzI0OzrLPufxgZ3qjRd6gPKOJxJEf2Fbu9s4nCJpS/IURwxOPJvrZCyhlFqrt/M89T5JHg3uXIOgPyLN9/JQVWhIQscam2VDZ7UMm+2XCHeshvSeW2JFm39WdIG+D2M4bMwxacHspEGjkxoylpCvWC7L4RCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeXNwCEX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YCGSjXwDJjeOS9cj6Ns7rKd9+hKlCk8p0+mT9DcToRgcDm1fIltKnvXxo0G3L/9N/iVfQlAo4BPzttIoqnivrMY/Z1LXO7xLnZzwtIRxRfKd0DYficA5rr6Dzf/lqSGr4Fa4GW7c2WuwujU1dFI+CS66BkwkoqN5jYI7eKH8Pyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJDu61Ze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeXNwCEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F572C4CEE3;
-	Thu,  3 Jul 2025 14:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJDu61Ze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10F8C4CEE3;
+	Thu,  3 Jul 2025 14:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554084;
-	bh=kEfslG6dqRbu3ZMjsxaPHVbO+nVKer7Eo0IhkCuq8bY=;
+	s=korg; t=1751554087;
+	bh=eDHxOLUn6KWcpKw5VJbTS0+dj42du5Pmam/1uX89iis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BeXNwCEXP6bd1pL8Qj5GBlHDIU3eRQRSA8FLslZYZfcYNIXD0oOu5jDdgGWZPW2ra
-	 2sqKjQl9smOfW7u/4HRhS2aMEE8Ikpq6yU6hm4U2QyI338Ajb82ZWbI4fEQQgUP/HV
-	 nat43ex3ipuKoxwPIOT0sy0diyEU0MkJCgnilS2U=
+	b=dJDu61Zevw67ayOkAaVGsv96vsG+h4GQ4jJjJKJnHrkpFGnOjkjnv2PCO3+vYQang
+	 dEzAEKVVjDmDDdNJli5yEZP3roZt13+JpGMVuSgFuzBfxBcWyqAs3bGr7nbya51t+h
+	 GIRHGw3j84K25XLff5bbkXng6tKPzLJlfwTSetZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/218] af_unix: Dont leave consecutive consumed OOB skbs.
-Date: Thu,  3 Jul 2025 16:40:24 +0200
-Message-ID: <20250703143958.976008268@linuxfoundation.org>
+Subject: [PATCH 6.12 059/218] Revert "drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1"
+Date: Thu,  3 Jul 2025 16:40:07 +0200
+Message-ID: <20250703143958.304605702@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -46,207 +50,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-[ Upstream commit 32ca245464e1479bfea8592b9db227fdc1641705 ]
+[ Upstream commit ed5915cfce2abb9a553c3737badebd4a11d6c9c7 ]
 
-Jann Horn reported a use-after-free in unix_stream_read_generic().
+This reverts commit d6e020819612a4a06207af858e0978be4d3e3140.
 
-The following sequences reproduce the issue:
+The IS_DGFX check was put in place because error capture of buffer
+objects is expected to be broken on devices with VRAM.
 
-  $ python3
-  from socket import *
-  s1, s2 = socketpair(AF_UNIX, SOCK_STREAM)
-  s1.send(b'x', MSG_OOB)
-  s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
-  s1.send(b'y', MSG_OOB)
-  s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
-  s1.send(b'z', MSG_OOB)
-  s2.recv(1)              # recv 'z' illegally
-  s2.recv(1, MSG_OOB)     # access 'z' skb (use-after-free)
+Userspace fix[1] to the impacted media driver has been submitted, merged
+and a new driver release is out as 25.2.3 where the capture flag is
+dropped on DG1 thus unblocking the usage of media driver on DG1.
 
-Even though a user reads OOB data, the skb holding the data stays on
-the recv queue to mark the OOB boundary and break the next recv().
+[1] https://github.com/intel/media-driver/commit/93c07d9b4b96a78bab21f6acd4eb863f4313ea4a
 
-After the last send() in the scenario above, the sk2's recv queue has
-2 leading consumed OOB skbs and 1 real OOB skb.
-
-Then, the following happens during the next recv() without MSG_OOB
-
-  1. unix_stream_read_generic() peeks the first consumed OOB skb
-  2. manage_oob() returns the next consumed OOB skb
-  3. unix_stream_read_generic() fetches the next not-yet-consumed OOB skb
-  4. unix_stream_read_generic() reads and frees the OOB skb
-
-, and the last recv(MSG_OOB) triggers KASAN splat.
-
-The 3. above occurs because of the SO_PEEK_OFF code, which does not
-expect unix_skb_len(skb) to be 0, but this is true for such consumed
-OOB skbs.
-
-  while (skip >= unix_skb_len(skb)) {
-    skip -= unix_skb_len(skb);
-    skb = skb_peek_next(skb, &sk->sk_receive_queue);
-    ...
-  }
-
-In addition to this use-after-free, there is another issue that
-ioctl(SIOCATMARK) does not function properly with consecutive consumed
-OOB skbs.
-
-So, nothing good comes out of such a situation.
-
-Instead of complicating manage_oob(), ioctl() handling, and the next
-ECONNRESET fix by introducing a loop for consecutive consumed OOB skbs,
-let's not leave such consecutive OOB unnecessarily.
-
-Now, while receiving an OOB skb in unix_stream_recv_urg(), if its
-previous skb is a consumed OOB skb, it is freed.
-
-[0]:
-BUG: KASAN: slab-use-after-free in unix_stream_read_actor (net/unix/af_unix.c:3027)
-Read of size 4 at addr ffff888106ef2904 by task python3/315
-
-CPU: 2 UID: 0 PID: 315 Comm: python3 Not tainted 6.16.0-rc1-00407-gec315832f6f9 #8 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.fc42 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:122)
- print_report (mm/kasan/report.c:409 mm/kasan/report.c:521)
- kasan_report (mm/kasan/report.c:636)
- unix_stream_read_actor (net/unix/af_unix.c:3027)
- unix_stream_read_generic (net/unix/af_unix.c:2708 net/unix/af_unix.c:2847)
- unix_stream_recvmsg (net/unix/af_unix.c:3048)
- sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
- __sys_recvfrom (net/socket.c:2278)
- __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
- do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-RIP: 0033:0x7f8911fcea06
-Code: 5d e8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 75 19 83 e2 39 83 fa 08 75 11 e8 26 ff ff ff 66 0f 1f 44 00 00 48 8b 45 10 0f 05 <48> 8b 5d f8 c9 c3 0f 1f 40 00 f3 0f 1e fa 55 48 89 e5 48 83 ec 08
-RSP: 002b:00007fffdb0dccb0 EFLAGS: 00000202 ORIG_RAX: 000000000000002d
-RAX: ffffffffffffffda RBX: 00007fffdb0dcdc8 RCX: 00007f8911fcea06
-RDX: 0000000000000001 RSI: 00007f8911a5e060 RDI: 0000000000000006
-RBP: 00007fffdb0dccd0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000202 R12: 00007f89119a7d20
-R13: ffffffffc4653600 R14: 0000000000000000 R15: 0000000000000000
- </TASK>
-
-Allocated by task 315:
- kasan_save_stack (mm/kasan/common.c:48)
- kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
- __kasan_slab_alloc (mm/kasan/common.c:348)
- kmem_cache_alloc_node_noprof (./include/linux/kasan.h:250 mm/slub.c:4148 mm/slub.c:4197 mm/slub.c:4249)
- __alloc_skb (net/core/skbuff.c:660 (discriminator 4))
- alloc_skb_with_frags (./include/linux/skbuff.h:1336 net/core/skbuff.c:6668)
- sock_alloc_send_pskb (net/core/sock.c:2993)
- unix_stream_sendmsg (./include/net/sock.h:1847 net/unix/af_unix.c:2256 net/unix/af_unix.c:2418)
- __sys_sendto (net/socket.c:712 (discriminator 20) net/socket.c:727 (discriminator 20) net/socket.c:2226 (discriminator 20))
- __x64_sys_sendto (net/socket.c:2233 (discriminator 1) net/socket.c:2229 (discriminator 1) net/socket.c:2229 (discriminator 1))
- do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Freed by task 315:
- kasan_save_stack (mm/kasan/common.c:48)
- kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
- kasan_save_free_info (mm/kasan/generic.c:579 (discriminator 1))
- __kasan_slab_free (mm/kasan/common.c:271)
- kmem_cache_free (mm/slub.c:4643 (discriminator 3) mm/slub.c:4745 (discriminator 3))
- unix_stream_read_generic (net/unix/af_unix.c:3010)
- unix_stream_recvmsg (net/unix/af_unix.c:3048)
- sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
- __sys_recvfrom (net/socket.c:2278)
- __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
- do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-The buggy address belongs to the object at ffff888106ef28c0
- which belongs to the cache skbuff_head_cache of size 224
-The buggy address is located 68 bytes inside of
- freed 224-byte region [ffff888106ef28c0, ffff888106ef29a0)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888106ef3cc0 pfn:0x106ef2
-head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-flags: 0x200000000000040(head|node=0|zone=2)
-page_type: f5(slab)
-raw: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
-raw: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
-head: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
-head: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
-head: 0200000000000001 ffffea00041bbc81 00000000ffffffff 00000000ffffffff
-head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff888106ef2800: 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc
- ffff888106ef2880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
->ffff888106ef2900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                   ^
- ffff888106ef2980: fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc
- ffff888106ef2a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20250619041457.1132791-2-kuni1840@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org # v6.0+
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/20250522064127.24293-1-joonas.lahtinen@linux.intel.com
+[Joonas: Update message to point out the merged userspace fix]
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+(cherry picked from commit d2dc30e0aa252830f908c8e793d3139d51321370)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 6b17623004439..2dfd3b70a7178 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2613,11 +2613,11 @@ struct unix_stream_read_state {
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- static int unix_stream_recv_urg(struct unix_stream_read_state *state)
- {
-+	struct sk_buff *oob_skb, *read_skb = NULL;
- 	struct socket *sock = state->socket;
- 	struct sock *sk = sock->sk;
- 	struct unix_sock *u = unix_sk(sk);
- 	int chunk = 1;
--	struct sk_buff *oob_skb;
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+index 841438301d802..a3b83cfe17267 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -2014,7 +2014,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
+ 			continue;
  
- 	mutex_lock(&u->iolock);
- 	unix_state_lock(sk);
-@@ -2632,9 +2632,16 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
+ 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
+-		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
++		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
+ 			return -EINVAL;
  
- 	oob_skb = u->oob_skb;
- 
--	if (!(state->flags & MSG_PEEK))
-+	if (!(state->flags & MSG_PEEK)) {
- 		WRITE_ONCE(u->oob_skb, NULL);
- 
-+		if (oob_skb->prev != (struct sk_buff *)&sk->sk_receive_queue &&
-+		    !unix_skb_len(oob_skb->prev)) {
-+			read_skb = oob_skb->prev;
-+			__skb_unlink(read_skb, &sk->sk_receive_queue);
-+		}
-+	}
-+
- 	spin_unlock(&sk->sk_receive_queue.lock);
- 	unix_state_unlock(sk);
- 
-@@ -2645,6 +2652,8 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
- 
- 	mutex_unlock(&u->iolock);
- 
-+	consume_skb(read_skb);
-+
- 	if (chunk < 0)
- 		return -EFAULT;
- 
+ 		for_each_batch_create_order(eb, j) {
 -- 
 2.39.5
 
