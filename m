@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF9CEEBA;
-	Thu,  3 Jul 2025 15:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D808F2DE6F1;
+	Thu,  3 Jul 2025 15:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556263; cv=none; b=V6iW1mYRAdosu0x5m7JD3Z5toD1C/jZHYxWEsBR1/7dNwu8u/V76kXRLM4RyisO7cDTmuU7bWNUgcMADMoqNXA7xBOQ8viBlGRlv/NnzdZSEecPy2t68un9spmWZZkXLuUriswo9dL4eU4lnrWXOhSohLP3kKgLvb3g5pCd5bhM=
+	t=1751556266; cv=none; b=IgRvnV7sFvBiGo9QVHI16iPMPKKYu5wQoR5eNpzL1yGIJ09X/PrG1Ihz6MajAzrCCHWyyB1fJDKnAmwqFsF6xKQt6TClrTcWnOZiGygcxWkti6DqlzyKdnl86lt2CscM8tRUJg9YWeOTPu9nyxD+atDoH2jIFoa43a32TGqFnus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556263; c=relaxed/simple;
-	bh=gXgO5CO9fi0cWIm5ml1bgsovFuf1WLgKWZuwnOi+bc4=;
+	s=arc-20240116; t=1751556266; c=relaxed/simple;
+	bh=K84xhwxNX1nXPEqpCGCPE9JBRtfvuPTT+My+JN6IGoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ht7SrVPYByhl1QXgBKskmmqslTcgI2G4QGuKw+FRGznwx/grwNcq3wYxdVxhjhNuTDP2qx/1yV40AnCke31KprECTnbekDiWIc1jZNe+wLsVgkWeZLTHcZ+6+LKTE8ZxZGxRaypekl9a+jzmjmaMpkZ8iHH0Bs70cdqvex1ex6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CecCLDJf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sb6v2BCYVp0ytxChppmu2ByBef/3yImIipWzsr5mxjOFDLqcMkhvpVNkZzcblsyCsgzPFecmw6Pql3vhxhklAGRyHpPaJv37SN4T0aNPoaR8Li5MVpMRZjlowrtjdG4OcGU17Tatv9yuKDK7tJ7SUZDSJqZ/mgu6u/Y6YhvQhAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hewYhM+r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CecCLDJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07577C4CEE3;
-	Thu,  3 Jul 2025 15:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hewYhM+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7A2C4CEE3;
+	Thu,  3 Jul 2025 15:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556263;
-	bh=gXgO5CO9fi0cWIm5ml1bgsovFuf1WLgKWZuwnOi+bc4=;
+	s=korg; t=1751556266;
+	bh=K84xhwxNX1nXPEqpCGCPE9JBRtfvuPTT+My+JN6IGoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CecCLDJfDfC9ITuQd5ppvk16hclg6X1EAGst/d8VZJInD6eTXv4drn0oC85uZB4vz
-	 30Dxbs9soXVUuRH61tPm3/bhYY0kW+HgmNWHhll5IHb/xRfn4wmaYnUwJo28vQj/1Z
-	 dIq5rzl/P098pVfAr1cqNS3r3VWquS54ZVnMjf1A=
+	b=hewYhM+raJ6dgBQimwAEFFw4W7J2za91C7Ffshrh35bCU/UtHXCnuUL1Squ86gfP2
+	 2spEjSdhcoruUw0s6522ifR4cnat0mZzJsCL7cFxi3zfYw/20ZLGW6R5nb/eV2lVhN
+	 PDmPSAs4RkFBy6VZTuzo+yQYcyFY9rVEthZBxP9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <maharmstone@fb.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 096/132] btrfs: update superblocks device bytes_used when dropping chunk
-Date: Thu,  3 Jul 2025 16:43:05 +0200
-Message-ID: <20250703143943.167655970@linuxfoundation.org>
+	Iusico Maxim <iusico.maxim@libero.it>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 097/132] HID: lenovo: Restrict F7/9/11 mode to compact keyboards only
+Date: Thu,  3 Jul 2025 16:43:06 +0200
+Message-ID: <20250703143943.208184911@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,66 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <maharmstone@fb.com>
+From: Iusico Maxim <iusico.maxim@libero.it>
 
-commit ae4477f937569d097ca5dbce92a89ba384b49bc6 upstream.
+commit 9327e3ee5b077c4ab4495a09b67624f670ed88b6 upstream.
 
-Each superblock contains a copy of the device item for that device. In a
-transaction which drops a chunk but doesn't create any new ones, we were
-correctly updating the device item in the chunk tree but not copying
-over the new bytes_used value to the superblock.
+Commit 2f2bd7cbd1d1 ("hid: lenovo: Resend all settings on reset_resume
+for compact keyboards") introduced a regression for ThinkPad TrackPoint
+Keyboard II by removing the conditional check for enabling F7/9/11 mode
+needed for compact keyboards only. As a result, the non-compact
+keyboards can no longer toggle Fn-lock via Fn+Esc, although it can be
+controlled via sysfs knob that directly sends raw commands.
 
-This can be seen by doing the following:
+This patch restores the previous conditional check without any
+additions.
 
-  # dd if=/dev/zero of=test bs=4096 count=2621440
-  # mkfs.btrfs test
-  # mount test /root/temp
-
-  # cd /root/temp
-  # for i in {00..10}; do dd if=/dev/zero of=$i bs=4096 count=32768; done
-  # sync
-  # rm *
-  # sync
-  # btrfs balance start -dusage=0 .
-  # sync
-
-  # cd
-  # umount /root/temp
-  # btrfs check test
-
-For btrfs-check to detect this, you will also need my patch at
-https://github.com/kdave/btrfs-progs/pull/991.
-
-Change btrfs_remove_dev_extents() so that it adds the devices to the
-fs_info->post_commit_list if they're not there already. This causes
-btrfs_commit_device_sizes() to be called, which updates the bytes_used
-value in the superblock.
-
-Fixes: bbbf7243d62d ("btrfs: combine device update operations during transaction commit")
-CC: stable@vger.kernel.org # 5.10+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <maharmstone@fb.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 2f2bd7cbd1d1 ("hid: lenovo: Resend all settings on reset_resume for compact keyboards")
+Signed-off-by: Iusico Maxim <iusico.maxim@libero.it>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-lenovo.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3203,6 +3203,12 @@ int btrfs_remove_chunk(struct btrfs_tran
- 					device->bytes_used - dev_extent_len);
- 			atomic64_add(dev_extent_len, &fs_info->free_chunk_space);
- 			btrfs_clear_space_info_full(fs_info);
-+
-+			if (list_empty(&device->post_commit_list)) {
-+				list_add_tail(&device->post_commit_list,
-+					      &trans->transaction->dev_update_list);
-+			}
-+
- 			mutex_unlock(&fs_info->chunk_mutex);
- 		}
- 	}
+--- a/drivers/hid/hid-lenovo.c
++++ b/drivers/hid/hid-lenovo.c
+@@ -529,11 +529,14 @@ static void lenovo_features_set_cptkbd(s
+ 
+ 	/*
+ 	 * Tell the keyboard a driver understands it, and turn F7, F9, F11 into
+-	 * regular keys
++	 * regular keys (Compact only)
+ 	 */
+-	ret = lenovo_send_cmd_cptkbd(hdev, 0x01, 0x03);
+-	if (ret)
+-		hid_warn(hdev, "Failed to switch F7/9/11 mode: %d\n", ret);
++	if (hdev->product == USB_DEVICE_ID_LENOVO_CUSBKBD ||
++	    hdev->product == USB_DEVICE_ID_LENOVO_CBTKBD) {
++		ret = lenovo_send_cmd_cptkbd(hdev, 0x01, 0x03);
++		if (ret)
++			hid_warn(hdev, "Failed to switch F7/9/11 mode: %d\n", ret);
++	}
+ 
+ 	/* Switch middle button to native mode */
+ 	ret = lenovo_send_cmd_cptkbd(hdev, 0x09, 0x01);
 
 
