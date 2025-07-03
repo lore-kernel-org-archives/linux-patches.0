@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8195619DF4A;
-	Thu,  3 Jul 2025 15:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6864519DF4A;
+	Thu,  3 Jul 2025 15:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556026; cv=none; b=acnOoWumdwNomRBn3IkaT7t5aGxRGwBj2/5+GunGQyDd3jG+AjgoZFXOYMPoBdqJj9OUOQ6CQgQgDcAPtTpVsWImsOZhZhlWZQabUEOkGL2A1FT18jP9OXHsP9VQWyomNsx7iXj33I/Gy4fKdHvIHCn5BRyllzbLEYQ0UCfAAmY=
+	t=1751556029; cv=none; b=a8URbbaL+mExWStTSvTGpYWJOqdM/R68S14aLVUsi5Qy5FYYhuYNo6+PrEZu8wYORMfnXeEGwmBSZ58dTgwCafAx/67pWz/R+ytNZKARLfCtnLG+0Cukit54kstQ+/++glcD24E3Rst/QV8cz3rQ1se5Z0P4BK3Kkio0qa+srfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556026; c=relaxed/simple;
-	bh=2RqOaF/T7MMrY/XYgnyHdZB7hQ4Euh576YsEcPM2znk=;
+	s=arc-20240116; t=1751556029; c=relaxed/simple;
+	bh=rXD2kj0Z7opCPvXPC/qjMEDApj4g6r+l54Wb614o65k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhiynksaCqoFbOL31Jd8g0pgnn5AiDsFEHLi+wS/cqBskFp2u/eEZgvOw4oBFsdexIJkgDHEPaam1bojH0x1K1cYGY6w4J1/ZwMmnUu1K4H6EpoAJIlpmrb0IO826N1N8VqWb1S/nZX+r6EfRkNHjGSs8Pm7WnQV/ydL+qVCfuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPsPK9+G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=stn8Dh9lpVKwagTkPiy3GHO7v8Yn6+zrGkhstC9ew38V17X7HakMyKqezrYeVh4wFb+1iOd8NH2xRkQtsvRgY4uWtDc7thOYVsKXeur+W7PpbpRqLaD3C99Sbadbdio8mrq605/S3rjNlwSGukGbGK2XygJw8x5ytp6JvTrs2/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwBBDBfb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPsPK9+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37A0C4CEE3;
-	Thu,  3 Jul 2025 15:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwBBDBfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3343C4CEE3;
+	Thu,  3 Jul 2025 15:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556026;
-	bh=2RqOaF/T7MMrY/XYgnyHdZB7hQ4Euh576YsEcPM2znk=;
+	s=korg; t=1751556029;
+	bh=rXD2kj0Z7opCPvXPC/qjMEDApj4g6r+l54Wb614o65k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPsPK9+GT7WjsNfjvW53gkQBsKcXsD+SmpqHSdb6g9P+Gg3+JBO1AptQsc9+r22xk
-	 yOb8UoI1Rrssxm8G9selqCs2BF/q69rNepN+sZusfKGGhCels8l8jg4ZZsQ6sEbnho
-	 wgjSRAHtp8EJHIi3pDsIYQ+af+QJoSSJccqciCtg=
+	b=JwBBDBfbuqP7q3rviux3CO1NnD4ktJt73JFZUwc+2OZVASFb786gTBEagnltuTjvz
+	 pMcXeELYsl/ybrizby1tJI22j3SdvBWdGdcPbCZRrOkS9nyObo2nHGge3XQRUgUFKe
+	 UpZ/rRBEXttB0kTsm9Ac0e+Lv/PK8hiTOGlfY04c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
-	Helge Deller <deller@gmx.de>,
+	"Andrea Parri (Microsoft)" <parri.andrea@gmail.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Stephen Hemminger <sthemmin@microsoft.com>,
+	Tianyu Lan <Tianyu.Lan@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Fabio A M Martins <fabiomirmar@gmail.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/132] fbdev: Fix do_register_framebuffer to prevent null-ptr-deref in fb_videomode_to_var
-Date: Thu,  3 Jul 2025 16:42:20 +0200
-Message-ID: <20250703143941.423327326@linuxfoundation.org>
+Subject: [PATCH 6.1 052/132] drivers: hv, hyperv_fb: Untangle and refactor Hyper-V panic notifiers
+Date: Thu,  3 Jul 2025 16:42:21 +0200
+Message-ID: <20250703143941.462126826@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,109 +60,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit 17186f1f90d34fa701e4f14e6818305151637b9e ]
+[ Upstream commit d786e00d19f9fc80c2239a07643b08ea75b8b364 ]
 
-If fb_add_videomode() in do_register_framebuffer() fails to allocate
-memory for fb_videomode, it will later lead to a null-ptr dereference in
-fb_videomode_to_var(), as the fb_info is registered while not having the
-mode in modelist that is expected to be there, i.e. the one that is
-described in fb_info->var.
+Currently Hyper-V guests are among the most relevant users of the panic
+infrastructure, like panic notifiers, kmsg dumpers, etc. The reasons rely
+both in cleaning-up procedures (closing hypervisor <-> guest connection,
+disabling some paravirtualized timer) as well as to data collection
+(sending panic information to the hypervisor) and framebuffer management.
 
-================================================================
-general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 1 PID: 30371 Comm: syz-executor.1 Not tainted 5.10.226-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:fb_videomode_to_var+0x24/0x610 drivers/video/fbdev/core/modedb.c:901
-Call Trace:
- display_to_var+0x3a/0x7c0 drivers/video/fbdev/core/fbcon.c:929
- fbcon_resize+0x3e2/0x8f0 drivers/video/fbdev/core/fbcon.c:2071
- resize_screen drivers/tty/vt/vt.c:1176 [inline]
- vc_do_resize+0x53a/0x1170 drivers/tty/vt/vt.c:1263
- fbcon_modechanged+0x3ac/0x6e0 drivers/video/fbdev/core/fbcon.c:2720
- fbcon_update_vcs+0x43/0x60 drivers/video/fbdev/core/fbcon.c:2776
- do_fb_ioctl+0x6d2/0x740 drivers/video/fbdev/core/fbmem.c:1128
- fb_ioctl+0xe7/0x150 drivers/video/fbdev/core/fbmem.c:1203
- vfs_ioctl fs/ioctl.c:48 [inline]
- __do_sys_ioctl fs/ioctl.c:753 [inline]
- __se_sys_ioctl fs/ioctl.c:739 [inline]
- __x64_sys_ioctl+0x19a/0x210 fs/ioctl.c:739
- do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x67/0xd1
-================================================================
+The thing is: some notifiers are related to others, ordering matters, some
+functionalities are duplicated and there are lots of conditionals behind
+sending panic information to the hypervisor. As part of an effort to
+clean-up the panic notifiers mechanism and better document things, we
+hereby address some of the issues/complexities of Hyper-V panic handling
+through the following changes:
 
-Even though fbcon_init() checks beforehand if fb_match_mode() in
-var_to_display() fails, it can not prevent the panic because fbcon_init()
-does not return error code. Considering this and the comment in the code
-about fb_match_mode() returning NULL - "This should not happen" - it is
-better to prevent registering the fb_info if its mode was not set
-successfully. Also move fb_add_videomode() closer to the beginning of
-do_register_framebuffer() to avoid having to do the cleanup on fail.
+(a) We have die and panic notifiers on vmbus_drv.c and both have goals of
+sending panic information to the hypervisor, though the panic notifier is
+also responsible for a cleaning-up procedure.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+This commit clears the code by splitting the panic notifier in two, one
+for closing the vmbus connection whereas the other is only for sending
+panic info to hypervisor. With that, it was possible to merge the die and
+panic notifiers in a single/well-documented function, and clear some
+conditional complexities on sending such information to the hypervisor.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
+(b) There is a Hyper-V framebuffer panic notifier, which relies in doing
+a vmbus operation that demands a valid connection. So, we must order this
+notifier with the panic notifier from vmbus_drv.c, to guarantee that the
+framebuffer code executes before the vmbus connection is unloaded.
+
+Also, this commit removes a useless header.
+
+Although there is code rework and re-ordering, we expect that this change
+has no functional regressions but instead optimize the path and increase
+panic reliability on Hyper-V. This was tested on Hyper-V with success.
+
+Cc: Andrea Parri (Microsoft) <parri.andrea@gmail.com>
+Cc: Dexuan Cui <decui@microsoft.com>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: "K. Y. Srinivasan" <kys@microsoft.com>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Stephen Hemminger <sthemmin@microsoft.com>
+Cc: Tianyu Lan <Tianyu.Lan@microsoft.com>
+Cc: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Tested-by: Fabio A M Martins <fabiomirmar@gmail.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Tested-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20220819221731.480795-11-gpiccoli@igalia.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Stable-dep-of: 09eea7ad0b8e ("Drivers: hv: Allocate interrupt and monitor pages aligned to system page boundary")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbmem.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/hv/vmbus_drv.c          | 105 +++++++++++++++++++-------------
+ drivers/video/fbdev/hyperv_fb.c |   8 +++
+ 2 files changed, 72 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index 7355a299cdb5f..f8c32c58b5b2c 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -1536,7 +1536,7 @@ static int fb_check_foreignness(struct fb_info *fi)
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index dfbfdbf9cbd72..5f6415214a1e4 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -25,7 +25,6 @@
+ #include <linux/sched/task_stack.h>
  
- static int do_register_framebuffer(struct fb_info *fb_info)
+ #include <linux/delay.h>
+-#include <linux/notifier.h>
+ #include <linux/panic_notifier.h>
+ #include <linux/ptrace.h>
+ #include <linux/screen_info.h>
+@@ -68,53 +67,74 @@ static int hyperv_report_reg(void)
+ 	return !sysctl_record_panic_msg || !hv_panic_page;
+ }
+ 
+-static int hyperv_panic_event(struct notifier_block *nb, unsigned long val,
++/*
++ * The panic notifier below is responsible solely for unloading the
++ * vmbus connection, which is necessary in a panic event.
++ *
++ * Notice an intrincate relation of this notifier with Hyper-V
++ * framebuffer panic notifier exists - we need vmbus connection alive
++ * there in order to succeed, so we need to order both with each other
++ * [see hvfb_on_panic()] - this is done using notifiers' priorities.
++ */
++static int hv_panic_vmbus_unload(struct notifier_block *nb, unsigned long val,
+ 			      void *args)
  {
--	int i;
-+	int i, err = 0;
- 	struct fb_videomode mode;
- 
- 	if (fb_check_foreignness(fb_info))
-@@ -1545,10 +1545,18 @@ static int do_register_framebuffer(struct fb_info *fb_info)
- 	if (num_registered_fb == FB_MAX)
- 		return -ENXIO;
- 
--	num_registered_fb++;
- 	for (i = 0 ; i < FB_MAX; i++)
- 		if (!registered_fb[i])
- 			break;
-+
-+	if (!fb_info->modelist.prev || !fb_info->modelist.next)
-+		INIT_LIST_HEAD(&fb_info->modelist);
-+
-+	fb_var_to_videomode(&mode, &fb_info->var);
-+	err = fb_add_videomode(&mode, &fb_info->modelist);
-+	if (err < 0)
-+		return err;
-+
- 	fb_info->node = i;
- 	refcount_set(&fb_info->count, 1);
- 	mutex_init(&fb_info->lock);
-@@ -1581,16 +1589,12 @@ static int do_register_framebuffer(struct fb_info *fb_info)
- 	if (!fb_info->pixmap.blit_y)
- 		fb_info->pixmap.blit_y = ~(u32)0;
- 
--	if (!fb_info->modelist.prev || !fb_info->modelist.next)
--		INIT_LIST_HEAD(&fb_info->modelist);
+-	struct pt_regs *regs;
 -
- 	if (fb_info->skip_vt_switch)
- 		pm_vt_switch_required(fb_info->dev, false);
- 	else
- 		pm_vt_switch_required(fb_info->dev, true);
+ 	vmbus_initiate_unload(true);
+-
+-	/*
+-	 * Hyper-V should be notified only once about a panic.  If we will be
+-	 * doing hv_kmsg_dump() with kmsg data later, don't do the notification
+-	 * here.
+-	 */
+-	if (ms_hyperv.misc_features & HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE
+-	    && hyperv_report_reg()) {
+-		regs = current_pt_regs();
+-		hyperv_report_panic(regs, val, false);
+-	}
+ 	return NOTIFY_DONE;
+ }
++static struct notifier_block hyperv_panic_vmbus_unload_block = {
++	.notifier_call	= hv_panic_vmbus_unload,
++	.priority	= INT_MIN + 1, /* almost the latest one to execute */
++};
++
++static int hv_die_panic_notify_crash(struct notifier_block *self,
++				     unsigned long val, void *args);
++
++static struct notifier_block hyperv_die_report_block = {
++	.notifier_call = hv_die_panic_notify_crash,
++};
++static struct notifier_block hyperv_panic_report_block = {
++	.notifier_call = hv_die_panic_notify_crash,
++};
  
--	fb_var_to_videomode(&mode, &fb_info->var);
--	fb_add_videomode(&mode, &fb_info->modelist);
-+	num_registered_fb++;
- 	registered_fb[i] = fb_info;
+-static int hyperv_die_event(struct notifier_block *nb, unsigned long val,
+-			    void *args)
++/*
++ * The following callback works both as die and panic notifier; its
++ * goal is to provide panic information to the hypervisor unless the
++ * kmsg dumper is used [see hv_kmsg_dump()], which provides more
++ * information but isn't always available.
++ *
++ * Notice that both the panic/die report notifiers are registered only
++ * if we have the capability HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE set.
++ */
++static int hv_die_panic_notify_crash(struct notifier_block *self,
++				     unsigned long val, void *args)
+ {
+-	struct die_args *die = args;
+-	struct pt_regs *regs = die->regs;
++	struct pt_regs *regs;
++	bool is_die;
  
- #ifdef CONFIG_GUMSTIX_AM200EPD
+-	/* Don't notify Hyper-V if the die event is other than oops */
+-	if (val != DIE_OOPS)
+-		return NOTIFY_DONE;
++	/* Don't notify Hyper-V unless we have a die oops event or panic. */
++	if (self == &hyperv_panic_report_block) {
++		is_die = false;
++		regs = current_pt_regs();
++	} else { /* die event */
++		if (val != DIE_OOPS)
++			return NOTIFY_DONE;
++
++		is_die = true;
++		regs = ((struct die_args *)args)->regs;
++	}
+ 
+ 	/*
+-	 * Hyper-V should be notified only once about a panic.  If we will be
+-	 * doing hv_kmsg_dump() with kmsg data later, don't do the notification
+-	 * here.
++	 * Hyper-V should be notified only once about a panic/die. If we will
++	 * be calling hv_kmsg_dump() later with kmsg data, don't do the
++	 * notification here.
+ 	 */
+ 	if (hyperv_report_reg())
+-		hyperv_report_panic(regs, val, true);
++		hyperv_report_panic(regs, val, is_die);
++
+ 	return NOTIFY_DONE;
+ }
+ 
+-static struct notifier_block hyperv_die_block = {
+-	.notifier_call = hyperv_die_event,
+-};
+-static struct notifier_block hyperv_panic_block = {
+-	.notifier_call = hyperv_panic_event,
+-};
+-
+ static const char *fb_mmio_name = "fb_range";
+ static struct resource *fb_mmio;
+ static struct resource *hyperv_mmio;
+@@ -1538,16 +1558,17 @@ static int vmbus_bus_init(void)
+ 		if (hyperv_crash_ctl & HV_CRASH_CTL_CRASH_NOTIFY_MSG)
+ 			hv_kmsg_dump_register();
+ 
+-		register_die_notifier(&hyperv_die_block);
++		register_die_notifier(&hyperv_die_report_block);
++		atomic_notifier_chain_register(&panic_notifier_list,
++						&hyperv_panic_report_block);
+ 	}
+ 
+ 	/*
+-	 * Always register the panic notifier because we need to unload
+-	 * the VMbus channel connection to prevent any VMbus
+-	 * activity after the VM panics.
++	 * Always register the vmbus unload panic notifier because we
++	 * need to shut the VMbus channel connection on panic.
+ 	 */
+ 	atomic_notifier_chain_register(&panic_notifier_list,
+-			       &hyperv_panic_block);
++			       &hyperv_panic_vmbus_unload_block);
+ 
+ 	vmbus_request_offers();
+ 
+@@ -2814,15 +2835,17 @@ static void __exit vmbus_exit(void)
+ 
+ 	if (ms_hyperv.misc_features & HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE) {
+ 		kmsg_dump_unregister(&hv_kmsg_dumper);
+-		unregister_die_notifier(&hyperv_die_block);
++		unregister_die_notifier(&hyperv_die_report_block);
++		atomic_notifier_chain_unregister(&panic_notifier_list,
++						&hyperv_panic_report_block);
+ 	}
+ 
+ 	/*
+-	 * The panic notifier is always registered, hence we should
++	 * The vmbus panic notifier is always registered, hence we should
+ 	 * also unconditionally unregister it here as well.
+ 	 */
+ 	atomic_notifier_chain_unregister(&panic_notifier_list,
+-					 &hyperv_panic_block);
++					&hyperv_panic_vmbus_unload_block);
+ 
+ 	free_page((unsigned long)hv_panic_page);
+ 	unregister_sysctl_table(hv_ctl_table_hdr);
+diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
+index 41c496ff55cc4..f3f30ee6cc95a 100644
+--- a/drivers/video/fbdev/hyperv_fb.c
++++ b/drivers/video/fbdev/hyperv_fb.c
+@@ -1209,7 +1209,15 @@ static int hvfb_probe(struct hv_device *hdev,
+ 	par->fb_ready = true;
+ 
+ 	par->synchronous_fb = false;
++
++	/*
++	 * We need to be sure this panic notifier runs _before_ the
++	 * vmbus disconnect, so order it by priority. It must execute
++	 * before the function hv_panic_vmbus_unload() [drivers/hv/vmbus_drv.c],
++	 * which is almost at the end of list, with priority = INT_MIN + 1.
++	 */
+ 	par->hvfb_panic_nb.notifier_call = hvfb_on_panic;
++	par->hvfb_panic_nb.priority = INT_MIN + 10,
+ 	atomic_notifier_chain_register(&panic_notifier_list,
+ 				       &par->hvfb_panic_nb);
+ 
 -- 
 2.39.5
 
