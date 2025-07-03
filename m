@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDF82E62CD;
-	Thu,  3 Jul 2025 14:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F362EAB95;
+	Thu,  3 Jul 2025 14:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553957; cv=none; b=K60rotmzWposdLEJ3gV9cx059lYgm/tsZYG2k3feNmI6vttdrOWdCbSNeVYKSByxBEO6296Hob0nNaPQYUG1Poyi1EpjAF28mLiT0qaGCAOZMU+xSeouzDW6lw1uR2m6ocrONREI1g1d3MypRCOfZJl0PTlQOZlFvKc77TzWJ/o=
+	t=1751553960; cv=none; b=PncdoKmUMCr5bM/L6d/c7tU0rnzH6/2hfejBH9oMwb5KtuNLLK9AYwbzVKrM/HLWoI+uKJ62atuUHCH/pkmFao2FK0TG1Rluoq54Qyi+HFvmgMhPXMdVK5Mm9GABKj0tDsKfdzS36qpWIbC0OfJj8MZ9przwYrGUuWZznlZ8pxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553957; c=relaxed/simple;
-	bh=p2qqZXXTGG/OFaf/nwmEWhn5IAKDbgaKe73sZcMl9jE=;
+	s=arc-20240116; t=1751553960; c=relaxed/simple;
+	bh=gkF0yz8HWNTb+fjk4SeQWqdXUWGRq9lCNd9B2Pdv6Ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fto509DAt4mEIW4+C+0dAjSXkciEoKct6tVrW7HlP/z1tOh+C/vR0hQqH5+wx1O/Ip92TTrfJhH5I9YELUryFeMWle3lRc+0PBueqEt3wa8BxCmiRtBee5EkhCxMOKzSqaeHCXzo81/AoxSs53rkJ/7iaJBWEa6qbPQDajvFw4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVGqd+Tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JPryQL7wvitOG/ZTAIIG95w6maDu8XRpNQV4RsZ+wTw66CPBhCt4VF6EeF7L7kZh6k5nMUkvh67ue4TC7s9x8pixvRv3OSWM8ZFkXGoQlY1g138VnqXJgR8PUeimrNSHsx8EJ4lMGCQXah9vOdiMmgIlkpipw891auyTiX0x+8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDZSRAqf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVGqd+Tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DF8C4CEE3;
-	Thu,  3 Jul 2025 14:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDZSRAqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5327C4CEE3;
+	Thu,  3 Jul 2025 14:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553957;
-	bh=p2qqZXXTGG/OFaf/nwmEWhn5IAKDbgaKe73sZcMl9jE=;
+	s=korg; t=1751553960;
+	bh=gkF0yz8HWNTb+fjk4SeQWqdXUWGRq9lCNd9B2Pdv6Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVGqd+TxbwgIxVkQciglQFEUAtmycdqfaoV4GbxuyC2zrxJOG4k/t28XXk6jIkO0p
-	 7JyLZN+3cZ5ebx6EN6BMaK9uH3wxGVu2PjTlFypKS+//yh3FQOG24bQztDbPIAd7bZ
-	 UD3xjCoYFWkljsQTxhoVNwgtAjQXsw/39m12Y8uA=
+	b=pDZSRAqfjQOu/9RBvf6kJpGHEZCuB+Tx5faOCy+EGqRI3LbR8SPbgjw9wETCGbmtm
+	 KJ2lppcy2NsyblmnRJfSGjXCrXrpQAqOMCn9WZ7JMkil+AzF/QBiI6QiOBgP2gAX/I
+	 tk6xA0H23fEqh13EofZkwTt7CDgo8iTcsz4REDWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/218] 8250: microchip: pci1xxxx: Add PCIe Hot reset disable support for Rev C0 and later devices
-Date: Thu,  3 Jul 2025 16:39:44 +0200
-Message-ID: <20250703143957.393156603@linuxfoundation.org>
+Subject: [PATCH 6.12 037/218] coresight: Only check bottom two claim bits
+Date: Thu,  3 Jul 2025 16:39:45 +0200
+Message-ID: <20250703143957.432091154@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,65 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit c40b91e38eb8d4489def095d62ab476d45871323 ]
+[ Upstream commit a4e65842e1142aa18ef36113fbd81d614eaefe5a ]
 
-Systems that issue PCIe hot reset requests during a suspend/resume
-cycle cause PCI1XXXX device revisions prior to C0 to get its UART
-configuration registers reset to hardware default values. This results
-in device inaccessibility and data transfer failures. Starting with
-Revision C0, support was added in the device hardware (via the Hot
-Reset Disable Bit) to allow resetting only the PCIe interface and its
-associated logic, but preserving the UART configuration during a hot
-reset. This patch enables the hot reset disable feature during suspend/
-resume for C0 and later revisions of the device.
+The use of the whole register and == could break the claim mechanism if
+any of the other bits are used in the future. The referenced doc "PSCI -
+ARM DEN 0022D" also says to only read and clear the bottom two bits.
 
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20250425145500.29036-1-rengarajan.s@microchip.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use FIELD_GET() to extract only the relevant part.
+
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250325-james-coresight-claim-tags-v4-2-dfbd3822b2e5@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci1xxxx.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hwtracing/coresight/coresight-core.c | 3 ++-
+ drivers/hwtracing/coresight/coresight-priv.h | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_pci1xxxx.c b/drivers/tty/serial/8250/8250_pci1xxxx.c
-index f462b3d1c104c..d6b01e015a96b 100644
---- a/drivers/tty/serial/8250/8250_pci1xxxx.c
-+++ b/drivers/tty/serial/8250/8250_pci1xxxx.c
-@@ -115,6 +115,7 @@
+diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+index c7e35a431ab00..b7941d8abbfe7 100644
+--- a/drivers/hwtracing/coresight/coresight-core.c
++++ b/drivers/hwtracing/coresight/coresight-core.c
+@@ -97,7 +97,8 @@ coresight_find_out_connection(struct coresight_device *src_dev,
  
- #define UART_RESET_REG				0x94
- #define UART_RESET_D3_RESET_DISABLE		BIT(16)
-+#define UART_RESET_HOT_RESET_DISABLE		BIT(17)
+ static inline u32 coresight_read_claim_tags(struct coresight_device *csdev)
+ {
+-	return csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR);
++	return FIELD_GET(CORESIGHT_CLAIM_MASK,
++			 csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR));
+ }
  
- #define UART_BURST_STATUS_REG			0x9C
- #define UART_TX_BURST_FIFO			0xA0
-@@ -620,6 +621,10 @@ static int pci1xxxx_suspend(struct device *dev)
- 	}
+ static inline bool coresight_is_claimed_self_hosted(struct coresight_device *csdev)
+diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
+index 05f891ca6b5c9..cc7ff1e36ef42 100644
+--- a/drivers/hwtracing/coresight/coresight-priv.h
++++ b/drivers/hwtracing/coresight/coresight-priv.h
+@@ -35,6 +35,7 @@ extern const struct device_type coresight_dev_type[];
+  * Coresight device CLAIM protocol.
+  * See PSCI - ARM DEN 0022D, Section: 6.8.1 Debug and Trace save and restore.
+  */
++#define CORESIGHT_CLAIM_MASK		GENMASK(1, 0)
+ #define CORESIGHT_CLAIM_SELF_HOSTED	BIT(1)
  
- 	data = readl(p + UART_RESET_REG);
-+
-+	if (priv->dev_rev >= 0xC0)
-+		data |= UART_RESET_HOT_RESET_DISABLE;
-+
- 	writel(data | UART_RESET_D3_RESET_DISABLE, p + UART_RESET_REG);
- 
- 	if (wakeup)
-@@ -647,7 +652,12 @@ static int pci1xxxx_resume(struct device *dev)
- 	}
- 
- 	data = readl(p + UART_RESET_REG);
-+
-+	if (priv->dev_rev >= 0xC0)
-+		data &= ~UART_RESET_HOT_RESET_DISABLE;
-+
- 	writel(data & ~UART_RESET_D3_RESET_DISABLE, p + UART_RESET_REG);
-+
- 	iounmap(p);
- 
- 	for (i = 0; i < priv->nr; i++) {
+ #define TIMEOUT_US		100
 -- 
 2.39.5
 
