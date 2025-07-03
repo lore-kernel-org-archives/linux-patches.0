@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560EC2EF9AB;
-	Thu,  3 Jul 2025 14:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662DF126BFF;
+	Thu,  3 Jul 2025 14:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554286; cv=none; b=eBv2RYOEI6diidZ5SoEjbDYeEMG85GNj7HVOPv0KRkeM6QwJTqTgxIPSGC1AF6tRFuviQGXbmBERcRI6yw2xoa367R5ql1d28bekpTDdzHuL6EhrC+92Lbfw+83t6fGivaf2AD/x5WZetimAplGdpab6gZuOp7w7QDCx5R3Be3w=
+	t=1751554289; cv=none; b=e+B6dnPQ9ymeCHOHrZMWi44eDYw/MmRPXDVppBc0dXkq8J0BuuTGGOe8cvxcCjzO5pj87KnS1t1PR57aa9PAbSh6RcreO9kNjGLKImrmXK4Ha8sXzghBGPNdOA52kklGxBaWBvjJHBBboyBWsW/gWmVLXs46LrKosMmIry4WWWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554286; c=relaxed/simple;
-	bh=cavueHo695vvV5Lbw9p+prlZUEa2xlI/BiQ2VGLDFnA=;
+	s=arc-20240116; t=1751554289; c=relaxed/simple;
+	bh=4JPHWYs6lUOTJYsFDUaoTt8lwojOYSGldx2eqgYZSEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhzkJWA+0tleKgAADxHO6fVFmsknSX0H9aPtP/I6YXezFSHfswIcFgTbG+obmz23WMz+6NL9FkzRbxlMUTtYDPdgmEQ1O2Dqf7kFxfnJwmE5x70vSNRJuJ0bCO3btPudVPtYa0/CdYV1AMiB/9qtlh5NSZAAK72YbjvXykXC64g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reiFu03U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/oAeEjwiknuOALC8eAsPsdbsWVAeaGzjWzCgFqKfnKHIfiiVOEskR9miZyNP7/n6kNe0BsPUPhY9FY1F0TOajtliOcbVvhGhlRb7dvqppJWFsDt5iK5U0II3b4OMUwaY9TYBQOhT/PPk2FKP5oMwSYSVxjvl8WvVokEhbES8Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOpvAYzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reiFu03U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D60C4CEE3;
-	Thu,  3 Jul 2025 14:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOpvAYzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA379C4CEE3;
+	Thu,  3 Jul 2025 14:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554286;
-	bh=cavueHo695vvV5Lbw9p+prlZUEa2xlI/BiQ2VGLDFnA=;
+	s=korg; t=1751554289;
+	bh=4JPHWYs6lUOTJYsFDUaoTt8lwojOYSGldx2eqgYZSEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=reiFu03UY/L2JRRNClr3JHqCsBZPp7Quv9pV5kCU7teW3JxQYbcFKn1bfrN02ep0A
-	 chaJmBMuz9szWSCVNa5beyOtoIvVFrezcsovZy5MWG+O8L53MDVjJl0QY3sStpQf/I
-	 htM+JvMAIZ6rMeQZqHBpihXyP2gvHzUm57Nq94LE=
+	b=iOpvAYzo5xu6eGIdsWtM7v265cJCPVQqsS6agDA3cnN8XBwu52ECEgsCCdTSkbbd1
+	 WRACKcX7jxDl52gP2r0k85cVchDi6NVAGgrPVEuOwt+u98A9wP4TzQ4Pt0qlbpzcTv
+	 J8NjclvabL7skKgigFUdwPYs8NbBta0i9jJ93fXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hyesoo Yu <hyesoo.yu@samsung.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Peter Xu <peterx@redhat.com>,
 	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	Hailong Liu <hailong.liu@oppo.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"zhangpeng.00@bytedance.com" <zhangpeng.00@bytedance.com>,
-	Steve Kang <Steve.Kang@unisoc.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Aijun Sun <aijun.sun@unisoc.com>,
+	Alistair Popple <apopple@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 139/218] maple_tree: fix MA_STATE_PREALLOC flag in mas_preallocate()
-Date: Thu,  3 Jul 2025 16:41:27 +0200
-Message-ID: <20250703144001.687154991@linuxfoundation.org>
+Subject: [PATCH 6.12 140/218] mm/gup: revert "mm: gup: fix infinite loop within __get_longterm_locked"
+Date: Thu,  3 Jul 2025 16:41:28 +0200
+Message-ID: <20250703144001.725325792@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -58,68 +57,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit fba46a5d83ca8decb338722fb4899026d8d9ead2 upstream.
+commit 517f496e1e61bd169d585dab4dd77e7147506322 upstream.
 
-Temporarily clear the preallocation flag when explicitly requesting
-allocations.  Pre-existing allocations are already counted against the
-request through mas_node_count_gfp(), but the allocations will not happen
-if the MA_STATE_PREALLOC flag is set.  This flag is meant to avoid
-re-allocating in bulk allocation mode, and to detect issues with
-preallocation calculations.
+After commit 1aaf8c122918 ("mm: gup: fix infinite loop within
+__get_longterm_locked") we are able to longterm pin folios that are not
+supposed to get longterm pinned, simply because they temporarily have the
+LRU flag cleared (esp.  temporarily isolated).
 
-The MA_STATE_PREALLOC flag should also always be set on zero allocations
-so that detection of underflow allocations will print a WARN_ON() during
-consumption.
+For example, two __get_longterm_locked() callers can race, or
+__get_longterm_locked() can race with anything else that temporarily
+isolates folios.
 
-User visible effect of this flaw is a WARN_ON() followed by a null pointer
-dereference when subsequent requests for larger number of nodes is
-ignored, such as the vma merge retry in mmap_region() caused by drivers
-altering the vma flags (which happens in v6.6, at least)
+The introducing commit mentions the use case of a driver that uses
+vm_ops->fault to insert pages allocated through cma_alloc() into the page
+tables, assuming they can later get longterm pinned.  These pages/ folios
+would never have the LRU flag set and consequently cannot get isolated.
+There is no known in-tree user making use of that so far, fortunately.
 
-Link: https://lkml.kernel.org/r/20250616184521.3382795-3-Liam.Howlett@oracle.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-Reported-by: Hailong Liu <hailong.liu@oppo.com>
-Link: https://lore.kernel.org/all/1652f7eb-a51b-4fee-8058-c73af63bacd1@oppo.com/
-Link: https://lore.kernel.org/all/20250428184058.1416274-1-Liam.Howlett@oracle.com/
-Link: https://lore.kernel.org/all/20250429014754.1479118-1-Liam.Howlett@oracle.com/
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Hailong Liu <hailong.liu@oppo.com>
-Cc: zhangpeng.00@bytedance.com <zhangpeng.00@bytedance.com>
-Cc: Steve Kang <Steve.Kang@unisoc.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+To handle that in the future -- and avoid retrying forever to
+isolate/migrate them -- we will need a different mechanism for the CMA
+area *owner* to indicate that it actually already allocated the page and
+is fine with longterm pinning it.  The LRU flag is not suitable for that.
+
+Probably we can lookup the relevant CMA area and query the bitmap; we only
+have have to care about some races, probably.  If already allocated, we
+could just allow longterm pinning)
+
+Anyhow, let's fix the "must not be longterm pinned" problem first by
+reverting the original commit.
+
+Link: https://lkml.kernel.org/r/20250611131314.594529-1-david@redhat.com
+Fixes: 1aaf8c122918 ("mm: gup: fix infinite loop within __get_longterm_locked")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Closes: https://lore.kernel.org/all/20250522092755.GA3277597@tiffany/
+Reported-by: Hyesoo Yu <hyesoo.yu@samsung.com>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Cc: Aijun Sun <aijun.sun@unisoc.com>
+Cc: Alistair Popple <apopple@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/gup.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -5542,8 +5542,9 @@ int mas_preallocate(struct ma_state *mas
- 	mas_wr_store_type(&wr_mas);
- 	request = mas_prealloc_calc(mas, entry);
- 	if (!request)
--		return ret;
-+		goto set_flag;
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2326,13 +2326,13 @@ static void pofs_unpin(struct pages_or_f
+ /*
+  * Returns the number of collected folios. Return value is always >= 0.
+  */
+-static void collect_longterm_unpinnable_folios(
++static unsigned long collect_longterm_unpinnable_folios(
+ 		struct list_head *movable_folio_list,
+ 		struct pages_or_folios *pofs)
+ {
++	unsigned long i, collected = 0;
+ 	struct folio *prev_folio = NULL;
+ 	bool drain_allow = true;
+-	unsigned long i;
  
-+	mas->mas_flags &= ~MA_STATE_PREALLOC;
- 	mas_node_count_gfp(mas, request, gfp);
- 	if (mas_is_err(mas)) {
- 		mas_set_alloc_req(mas, 0);
-@@ -5553,6 +5554,7 @@ int mas_preallocate(struct ma_state *mas
- 		return ret;
+ 	for (i = 0; i < pofs->nr_entries; i++) {
+ 		struct folio *folio = pofs_get_folio(pofs, i);
+@@ -2344,6 +2344,8 @@ static void collect_longterm_unpinnable_
+ 		if (folio_is_longterm_pinnable(folio))
+ 			continue;
+ 
++		collected++;
++
+ 		if (folio_is_device_coherent(folio))
+ 			continue;
+ 
+@@ -2365,6 +2367,8 @@ static void collect_longterm_unpinnable_
+ 				    NR_ISOLATED_ANON + folio_is_file_lru(folio),
+ 				    folio_nr_pages(folio));
  	}
- 
-+set_flag:
- 	mas->mas_flags |= MA_STATE_PREALLOC;
- 	return ret;
++
++	return collected;
  }
+ 
+ /*
+@@ -2441,9 +2445,11 @@ static long
+ check_and_migrate_movable_pages_or_folios(struct pages_or_folios *pofs)
+ {
+ 	LIST_HEAD(movable_folio_list);
++	unsigned long collected;
+ 
+-	collect_longterm_unpinnable_folios(&movable_folio_list, pofs);
+-	if (list_empty(&movable_folio_list))
++	collected = collect_longterm_unpinnable_folios(&movable_folio_list,
++						       pofs);
++	if (!collected)
+ 		return 0;
+ 
+ 	return migrate_longterm_unpinnable_folios(&movable_folio_list, pofs);
 
 
