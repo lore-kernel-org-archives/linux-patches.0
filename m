@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09852DE6F1;
-	Thu,  3 Jul 2025 15:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6242DE6F1;
+	Thu,  3 Jul 2025 15:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556101; cv=none; b=Z06hPOuq/MBkoyNkVS/NP5ydXfzh2CaVMfJM6J+BaLdoo/2YDmrHsbzNwgDTniBassJsk5taiuKoRr7j3+OL/Zwx2BEMB1PcfsZCRPqXdEBzovOo2TwYDapvxLub79BoQCf6bgOhnDfUbzcaaZaL8DO0JD6WcHpHi2SEZ7WSUR0=
+	t=1751556103; cv=none; b=Mkc9u2bjW7180Bva4uxBqJ1OK6vD9aa3upwBqyVNUyQL3XaQa9N6EreA0xc0V/iXODw31Z4eM3unKS4OslBH1YmWQ09viK4aEcEjjMtCdojmEJ+rRkdoyoZLkQbDBIAuo01iOQwOeycUsONDamyH2Bw7w/aYB6Iqd7Z0fesFRCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556101; c=relaxed/simple;
-	bh=q5sCbzYhOrILQeS+2GEhFrSDBqipHM084yGGxjIxI0s=;
+	s=arc-20240116; t=1751556103; c=relaxed/simple;
+	bh=sH7m0M7bc/0uleufpSY1ZSrk2yEkLBwP9r3VG5JqG8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ba5hMghjRqCCVsJ7ZocIe9dSqjF6aglaGG3gxKmQZ1zqHGwZvYK7DGbhfn0iJ6de7MKvVv56EG0IUezmrwEFosS54UVghR5eSOOgEFwzutakgChBH8F88IVkN6Jx9AzR9NZMpVZkzl8rDNyn89ql+5RePjrnZ+OG3LZXt9ipzlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDlruePk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WP4eBluKpbDJmLsxiOKxLt9Yzxf7Jca6D7QGyjuIQ9gW7o93vWT/5I0cM/47j2giamhuAub7TpkWNNqAlo4I9CvCZ2G7AGp1OY2KTnHtEdkUao0IByBwVXR6H22kYQdv6vXq6u+mKlkCHtTHCwL/Swrdh2XOeVw2Di/dYap7U8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sH7PQz+g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDlruePk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC420C4CEE3;
-	Thu,  3 Jul 2025 15:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sH7PQz+g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7ACC4CEE3;
+	Thu,  3 Jul 2025 15:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556100;
-	bh=q5sCbzYhOrILQeS+2GEhFrSDBqipHM084yGGxjIxI0s=;
+	s=korg; t=1751556103;
+	bh=sH7m0M7bc/0uleufpSY1ZSrk2yEkLBwP9r3VG5JqG8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDlruePkOypgR1BNpuHZCKn+GCvufl6VrQyHeb+3A9/5+J1HvEDq8AtrxZ1Aq5kuI
-	 4kxNlOEOUXja02IMI39FhlTK9Xk4A/POUWVn6zbtUKoFe6AWof/NUidHeR2xwNbl4z
-	 yLUdRf+pu4U19PeQS1LB65JWB/o7sbFGvKJuQ48g=
+	b=sH7PQz+gbQ0xrJXuGUyaHVYKjHCKhD/vWGmR5xBR0jhiCGUFEumSsPpbm3yugHgA5
+	 xWR8d7hsdja7BKK2XtY5oSXKu7ZiWyaA97qRLWtZM78w7+/to2T77TQyDoPNgn/MNl
+	 OdiBhM5oOy5fgX331uvqX6vPIzMqSNx0qxurNsvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.1 075/132] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
-Date: Thu,  3 Jul 2025 16:42:44 +0200
-Message-ID: <20250703143942.360601573@linuxfoundation.org>
+	syzbot+1316233c4c6803382a8b@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Gengming Liu <l.dmxcsnsbh@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 076/132] atm: clip: prevent NULL deref in clip_push()
+Date: Thu,  3 Jul 2025 16:42:45 +0200
+Message-ID: <20250703143942.399934711@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -47,54 +49,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a3ef3c2da675a8a564c8bea1a511cdd0a2a9aa49 upstream.
+[ Upstream commit b993ea46b3b601915ceaaf3c802adf11e7d6bac6 ]
 
-Reading DPCD registers has side-effects in general. In particular
-accessing registers outside of the link training register range
-(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
-forbidden by the DP v2.1 Standard, see
+Blamed commit missed that vcc_destroy_socket() calls
+clip_push() with a NULL skb.
 
-3.6.5.1 DPTX AUX Transaction Handling Mandates
-3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
+If clip_devs is NULL, clip_push() then crashes when reading
+skb->truesize.
 
-Based on my tests, accessing the DPCD_REV register during the link
-training of an UHBR TBT DP tunnel sink leads to link training failures.
-
-Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
-DPCD register access quirk.
-
-Cc: <stable@vger.kernel.org>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
-(cherry picked from commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 93a2014afbac ("atm: fix a UAF in lec_arp_clear_vccs()")
+Reported-by: syzbot+1316233c4c6803382a8b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68556f59.a00a0220.137b3.004e.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Gengming Liu <l.dmxcsnsbh@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/atm/clip.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -663,7 +663,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
- 	 * monitor doesn't power down exactly after the throw away read.
- 	 */
- 	if (!aux->is_remote) {
--		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
-+		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
- 		if (ret < 0)
- 			return ret;
+diff --git a/net/atm/clip.c b/net/atm/clip.c
+index 294cb9efe3d38..511467bb7fe40 100644
+--- a/net/atm/clip.c
++++ b/net/atm/clip.c
+@@ -193,12 +193,6 @@ static void clip_push(struct atm_vcc *vcc, struct sk_buff *skb)
+ 
+ 	pr_debug("\n");
+ 
+-	if (!clip_devs) {
+-		atm_return(vcc, skb->truesize);
+-		kfree_skb(skb);
+-		return;
+-	}
+-
+ 	if (!skb) {
+ 		pr_debug("removing VCC %p\n", clip_vcc);
+ 		if (clip_vcc->entry)
+@@ -208,6 +202,11 @@ static void clip_push(struct atm_vcc *vcc, struct sk_buff *skb)
+ 		return;
  	}
+ 	atm_return(vcc, skb->truesize);
++	if (!clip_devs) {
++		kfree_skb(skb);
++		return;
++	}
++
+ 	skb->dev = clip_vcc->entry ? clip_vcc->entry->neigh->dev : clip_devs;
+ 	/* clip_vcc->entry == NULL if we don't have an IP address yet */
+ 	if (!skb->dev) {
+-- 
+2.39.5
+
 
 
