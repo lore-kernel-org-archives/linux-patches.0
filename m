@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73831126BFF;
-	Thu,  3 Jul 2025 14:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49C372610;
+	Thu,  3 Jul 2025 14:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554151; cv=none; b=tFL7+qipAJ9oRf9Ra9mR5rc4yjue4P2P90nnp/3ThpHPOumLhBBFl8owP53iojbu7kftiWBHrmomhyaTMY6l033ldZbP1g+yvCD+zqGu5OXeWX4qSljydasDYBtg53R5vIPGfaDU/B2n8/hYqzoZsejd8g9JILY9PqWv5K1W7ks=
+	t=1751554155; cv=none; b=cM7ZKq3RWz6DxacfBi90bZH+maWDmEmXPfARdPX6G3g8fa4H/lfuJJ/W9udvocE+tSzJtwnxdVd1xD0hWKYsK+wXhVW7N5jSeFTLUHaT6tXEoNRZtmRfQtCRhBV/6k2dQAG8Uo5T1DZUHrnKHPqgW3zqY3qh9rpDfa24JCwYDJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554151; c=relaxed/simple;
-	bh=gc9tdhgwYTKw8E2/hShM//1O9HqFgieL5lXeA5a/AgY=;
+	s=arc-20240116; t=1751554155; c=relaxed/simple;
+	bh=Wy+LzNdjo/Xg6g02vm6ph+CfXw0yluBBIXyJBQKsnms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QA2PdCBBSUhaw3+y1HOZDYInN+7ynSfxzKaqWTr83Nap+Cq1VVyQZVIHPZ+f5YDFxfsXEUnzApUpl3pRMMaWGDtKYVq0UC050RPo0xNdwHHVQGEwMJzo/20dicZfJXisdna3ZKeu5DNCFPO4eBc5eKAZAcH4MmXrWqxvdwBYQbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hev32Faz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+BSQ666luqAB2+d4HfiMuxgmpmoNltjEJSpo544G8QQDBZ90QUnxjN07fnREfs4Cvv3xv9/9+Dp92gUXsrEvlrRaOHrPM2VG4iyxdzF1W2P2GmfEZZXV1hziFo4+7+tCZLhvgoFBsYbxbrd4HCcvxV3gdlXa84xz8/rx5ETN/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgfS9ve9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hev32Faz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA81C4CEE3;
-	Thu,  3 Jul 2025 14:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgfS9ve9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE52C4CEE3;
+	Thu,  3 Jul 2025 14:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554151;
-	bh=gc9tdhgwYTKw8E2/hShM//1O9HqFgieL5lXeA5a/AgY=;
+	s=korg; t=1751554154;
+	bh=Wy+LzNdjo/Xg6g02vm6ph+CfXw0yluBBIXyJBQKsnms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hev32FazaDcgyV/uoT7P0UPLyoyhsQqQzmEqNy82qRhrOoR63XfHFktFH40B8XHup
-	 XTWzHz+DrxBGCs8kJUYJpp29GA6uLBYHxZNvyTEyCklGPg341SztRbyp7icIaiQ7e5
-	 MJA3zDYl9+9YBp4VjeHO9NOsFCeF3UqNOaxjMcg4=
+	b=rgfS9ve9QGLldxre32U7uYBJ0uMIPHK1uuWYdnqyn/19y7P5Pby5gb6GP/U7Zs1SJ
+	 0YjPhVxh/ozBzddS+Ljs5MTeLcLHa7sZ9FewgjNYAbM7WkZTlHN0M+4GrZBHhwFvGm
+	 ZGS/ANEC2cMsr7w8omBp1bdiT/HGGVqOljxwtjBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Zhiyu Zhang <zhiyuzhang999@gmail.com>,
+	Longxing Li <coregee2000@gmail.com>,
+	David Sterba <dsterba@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/218] ASoC: codecs: wcd9335: Fix missing free of regulator supplies
-Date: Thu,  3 Jul 2025 16:40:14 +0200
-Message-ID: <20250703143958.582010274@linuxfoundation.org>
+Subject: [PATCH 6.12 057/218] btrfs: handle csum tree error with rescue=ibadroots correctly
+Date: Thu,  3 Jul 2025 16:40:05 +0200
+Message-ID: <20250703143958.219666142@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,86 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 9079db287fc3e38e040b0edeb0a25770bb679c8e ]
+[ Upstream commit 547e836661554dcfa15c212a3821664e85b4191a ]
 
-Driver gets and enables all regulator supplies in probe path
-(wcd9335_parse_dt() and wcd9335_power_on_reset()), but does not cleanup
-in final error paths and in unbind (missing remove() callback).  This
-leads to leaked memory and unbalanced regulator enable count during
-probe errors or unbind.
+[BUG]
+There is syzbot based reproducer that can crash the kernel, with the
+following call trace: (With some debug output added)
 
-Fix this by converting entire code into devm_regulator_bulk_get_enable()
-which also greatly simplifies the code.
+ DEBUG: rescue=ibadroots parsed
+ BTRFS: device fsid 14d642db-7b15-43e4-81e6-4b8fac6a25f8 devid 1 transid 8 /dev/loop0 (7:0) scanned by repro (1010)
+ BTRFS info (device loop0): first mount of filesystem 14d642db-7b15-43e4-81e6-4b8fac6a25f8
+ BTRFS info (device loop0): using blake2b (blake2b-256-generic) checksum algorithm
+ BTRFS info (device loop0): using free-space-tree
+ BTRFS warning (device loop0): checksum verify failed on logical 5312512 mirror 1 wanted 0xb043382657aede36608fd3386d6b001692ff406164733d94e2d9a180412c6003 found 0x810ceb2bacb7f0f9eb2bf3b2b15c02af867cb35ad450898169f3b1f0bd818651 level 0
+ DEBUG: read tree root path failed for tree csum, ret=-5
+ BTRFS warning (device loop0): checksum verify failed on logical 5328896 mirror 1 wanted 0x51be4e8b303da58e6340226815b70e3a93592dac3f30dd510c7517454de8567a found 0x51be4e8b303da58e634022a315b70e3a93592dac3f30dd510c7517454de8567a level 0
+ BTRFS warning (device loop0): checksum verify failed on logical 5292032 mirror 1 wanted 0x1924ccd683be9efc2fa98582ef58760e3848e9043db8649ee382681e220cdee4 found 0x0cb6184f6e8799d9f8cb335dccd1d1832da1071d12290dab3b85b587ecacca6e level 0
+ process 'repro' launched './file2' with NULL argv: empty string added
+ DEBUG: no csum root, idatacsums=0 ibadroots=134217728
+ Oops: general protection fault, probably for non-canonical address 0xdffffc0000000041: 0000 [#1] SMP KASAN NOPTI
+ KASAN: null-ptr-deref in range [0x0000000000000208-0x000000000000020f]
+ CPU: 5 UID: 0 PID: 1010 Comm: repro Tainted: G           OE       6.15.0-custom+ #249 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+ RIP: 0010:btrfs_lookup_csum+0x93/0x3d0 [btrfs]
+ Call Trace:
+  <TASK>
+  btrfs_lookup_bio_sums+0x47a/0xdf0 [btrfs]
+  btrfs_submit_bbio+0x43e/0x1a80 [btrfs]
+  submit_one_bio+0xde/0x160 [btrfs]
+  btrfs_readahead+0x498/0x6a0 [btrfs]
+  read_pages+0x1c3/0xb20
+  page_cache_ra_order+0x4b5/0xc20
+  filemap_get_pages+0x2d3/0x19e0
+  filemap_read+0x314/0xde0
+  __kernel_read+0x35b/0x900
+  bprm_execve+0x62e/0x1140
+  do_execveat_common.isra.0+0x3fc/0x520
+  __x64_sys_execveat+0xdc/0x130
+  do_syscall_64+0x54/0x1d0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ ---[ end trace 0000000000000000 ]---
 
-Fixes: 20aedafdf492 ("ASoC: wcd9335: add support to wcd9335 codec")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-1-0b8a2993b7d3@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[CAUSE]
+Firstly the fs has a corrupted csum tree root, thus to mount the fs we
+have to go "ro,rescue=ibadroots" mount option.
+
+Normally with that mount option, a bad csum tree root should set
+BTRFS_FS_STATE_NO_DATA_CSUMS flag, so that any future data read will
+ignore csum search.
+
+But in this particular case, we have the following call trace that
+caused NULL csum root, but not setting BTRFS_FS_STATE_NO_DATA_CSUMS:
+
+load_global_roots_objectid():
+
+		ret = btrfs_search_slot();
+		/* Succeeded */
+		btrfs_item_key_to_cpu()
+		found = true;
+		/* We found the root item for csum tree. */
+		root = read_tree_root_path();
+		if (IS_ERR(root)) {
+			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS))
+			/*
+			 * Since we have rescue=ibadroots mount option,
+			 * @ret is still 0.
+			 */
+			break;
+	if (!found || ret) {
+		/* @found is true, @ret is 0, error handling for csum
+		 * tree is skipped.
+		 */
+	}
+
+This means we completely skipped to set BTRFS_FS_STATE_NO_DATA_CSUMS if
+the csum tree is corrupted, which results unexpected later csum lookup.
+
+[FIX]
+If read_tree_root_path() failed, always populate @ret to the error
+number.
+
+As at the end of the function, we need @ret to determine if we need to
+do the extra error handling for csum tree.
+
+Fixes: abed4aaae4f7 ("btrfs: track the csum, extent, and free space trees in a rb tree")
+Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Reported-by: Longxing Li <coregee2000@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd9335.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ fs/btrfs/disk-io.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index db6a1facf8a92..1375ac571fbf3 100644
---- a/sound/soc/codecs/wcd9335.c
-+++ b/sound/soc/codecs/wcd9335.c
-@@ -330,7 +330,6 @@ struct wcd9335_codec {
- 
- 	int intr1;
- 	struct gpio_desc *reset_gpio;
--	struct regulator_bulk_data supplies[WCD9335_MAX_SUPPLY];
- 
- 	unsigned int rx_port_value[WCD9335_RX_MAX];
- 	unsigned int tx_port_value[WCD9335_TX_MAX];
-@@ -353,6 +352,10 @@ struct wcd9335_irq {
- 	char *name;
- };
- 
-+static const char * const wcd9335_supplies[] = {
-+	"vdd-buck", "vdd-buck-sido", "vdd-tx", "vdd-rx", "vdd-io",
-+};
-+
- static const struct wcd9335_slim_ch wcd9335_tx_chs[WCD9335_TX_MAX] = {
- 	WCD9335_SLIM_TX_CH(0),
- 	WCD9335_SLIM_TX_CH(1),
-@@ -4987,30 +4990,16 @@ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
- 	if (IS_ERR(wcd->native_clk))
- 		return dev_err_probe(dev, PTR_ERR(wcd->native_clk), "slimbus clock not found\n");
- 
--	wcd->supplies[0].supply = "vdd-buck";
--	wcd->supplies[1].supply = "vdd-buck-sido";
--	wcd->supplies[2].supply = "vdd-tx";
--	wcd->supplies[3].supply = "vdd-rx";
--	wcd->supplies[4].supply = "vdd-io";
--
--	ret = regulator_bulk_get(dev, WCD9335_MAX_SUPPLY, wcd->supplies);
-+	ret = devm_regulator_bulk_get_enable(dev, ARRAY_SIZE(wcd9335_supplies),
-+					     wcd9335_supplies);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to get supplies\n");
-+		return dev_err_probe(dev, ret, "Failed to get and enable supplies\n");
- 
- 	return 0;
- }
- 
- static int wcd9335_power_on_reset(struct wcd9335_codec *wcd)
- {
--	struct device *dev = wcd->dev;
--	int ret;
--
--	ret = regulator_bulk_enable(WCD9335_MAX_SUPPLY, wcd->supplies);
--	if (ret) {
--		dev_err(dev, "Failed to get supplies: err = %d\n", ret);
--		return ret;
--	}
--
- 	/*
- 	 * For WCD9335, it takes about 600us for the Vout_A and
- 	 * Vout_D to be ready after BUCK_SIDO is powered up.
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 147c50ef912ac..96282bf28b19c 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2168,8 +2168,7 @@ static int load_global_roots_objectid(struct btrfs_root *tree_root,
+ 		found = true;
+ 		root = read_tree_root_path(tree_root, path, &key);
+ 		if (IS_ERR(root)) {
+-			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS))
+-				ret = PTR_ERR(root);
++			ret = PTR_ERR(root);
+ 			break;
+ 		}
+ 		set_bit(BTRFS_ROOT_TRACK_DIRTY, &root->state);
 -- 
 2.39.5
 
