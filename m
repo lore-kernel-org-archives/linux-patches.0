@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBD52EF9BC;
-	Thu,  3 Jul 2025 15:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B062EE97A;
+	Thu,  3 Jul 2025 15:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554831; cv=none; b=ugW1MkXsK6U/wPYVTwiqdgdYlVcCHmkzOTE6PPN2EhXp0h55JUCpBCibddhdgkYcEVZq1MmHPoq1QrC/mrdgXdaBBq44RlZvGtPWD/q9JWbi67Cijm9gKKTqutYL+Ld03JiCu2P6f2vmoSn5dERamhxw8m+bPp4icAMWInVu1UE=
+	t=1751554835; cv=none; b=mpWjNYFe6XfSdU6hKOQ42ckxjDAbtWb/x64403BnEzE5jE258468rETqdY7EH7Czhx8uMpcraR8YtcrSEoChW45lpK3rIQ87XrA1i9gUlmJn2W/EcXkqhI4/8VId6UMtbHnPawsEav2MdzIxmVYXGaDyrJ5s4L6k2sTf4CSZN6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554831; c=relaxed/simple;
-	bh=dES3D7HfvDVdMW5xeXm3w2biPcVktBlfCNSH4HhZWjY=;
+	s=arc-20240116; t=1751554835; c=relaxed/simple;
+	bh=oknGgImAYoUPEMZkKwV985zpXkgrw/LAdP+eOS43GJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6TdOlOZxbwzPXdL6Cyo9dn9xd5M0zPbVamkAXv6WeSyuBTDiGqdiMQkUhR+eGkdonjLMqwfCNlWIC1YUBvoC40P023LHKbrCdVr3ugQUWMR/ZB0bbBM/oOUvJffvPCtBVXLSg82X9YMTXu7b0bwI5Nbwf5SoMyQDJpjONdVr1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRM6djUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J+Nz6cje1a1Ay19c4f4I/tTNNxjqodWfFRBdGsPFMZPb70bjhUW+wUmso4wevl1qMnGuFcd9Zw3UIg94RU9IZUaO4uc1LfpNRFnWzlQlEAl3Y989ma0N3x1I88+sOEguXAYVKqj3sNjKhkVrjxYANlSBmmbet4X5oVAQD6eSUDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMd/yivZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRM6djUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D137C4CEED;
-	Thu,  3 Jul 2025 15:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMd/yivZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6895CC4CEE3;
+	Thu,  3 Jul 2025 15:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554831;
-	bh=dES3D7HfvDVdMW5xeXm3w2biPcVktBlfCNSH4HhZWjY=;
+	s=korg; t=1751554834;
+	bh=oknGgImAYoUPEMZkKwV985zpXkgrw/LAdP+eOS43GJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VRM6djUimZYH6v4Gw9xgEVa0lfpNa9T4ga2JMHSGaFfrZvs62dcddRop6XMAUB9xn
-	 lv3jvEabmv3wctcsom06IJ3L/twoghlKBR0Ad8N8/y9WaG8NmZmwFY4MjjmUXn7A4L
-	 gtXSM4jYtmkClvaGJTX6kz9h2osgOQMKDqA03ME4=
+	b=aMd/yivZY5CppjcMR5Gu7C2+nOhYn0ABUvem7DTl6H5Sn9A0vlcLEQZ3DbGG02kxD
+	 U+JRe6AWxTymiFon/CI6gtrpioPvOyN53Xq3s7Q7883tF+MwbRQ6QhveizHAnMEPNM
+	 VFwxkGt3Qt+uiPpn2G6fXt0+fexCql+UBqTGv0AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Korsgaard <peter@korsgaard.com>,
+	Jos Wang <joswang@lenovo.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 062/263] usb: gadget: f_hid: wake up readers on disable/unbind
-Date: Thu,  3 Jul 2025 16:39:42 +0200
-Message-ID: <20250703144006.793166064@linuxfoundation.org>
+Subject: [PATCH 6.15 063/263] usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode
+Date: Thu,  3 Jul 2025 16:39:43 +0200
+Message-ID: <20250703144006.832645269@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -44,96 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Korsgaard <peter@korsgaard.com>
+From: Jos Wang <joswang@lenovo.com>
 
-[ Upstream commit 937a8a3a8d46a3377b4195cd8f2aa656666ebc8b ]
+[ Upstream commit b4b38ffb38c91afd4dc387608db26f6fc34ed40b ]
 
-Similar to how it is done in the write path.
+Although some Type-C DRD devices that do not support the DP Sink
+function (such as Huawei Mate 40Pro), the Source Port initiates
+Enter Mode CMD, but the device responds to Enter Mode ACK, the
+Source port then initiates DP Status Update CMD, and the device
+responds to DP Status Update NAK.
 
-Add a disabled flag to track the function state and use it to exit the read
-loops to ensure no readers get stuck when the function is disabled/unbound,
-protecting against corruption when the waitq and spinlocks are reinitialized
-in hidg_bind().
+As PD2.0 spec ("6.4.4.3.4 Enter Mode Command")，A DR_Swap Message
+Shall Not be sent during Modal Operation between the Port Partners.
+At this time, the source port initiates DR_Swap message through the
+"echo device > /sys/class/typec/port0/data_role" command to switch
+the data role from host to device. The device will initiate a Hard
+Reset for recovery, resulting in the failure of data role swap.
 
-Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/20250318152207.330997-1-peter@korsgaard.com
+Therefore, when DP Status Update NAK is received, Exit Mode CMD is
+initiated to exit the currently entered DP altmode.
+
+Signed-off-by: Jos Wang <joswang@lenovo.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250209071926.69625-1-joswang1221@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index c7a05f842745b..d8bd2d82e9ec6 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -75,6 +75,7 @@ struct f_hidg {
- 	/* recv report */
- 	spinlock_t			read_spinlock;
- 	wait_queue_head_t		read_queue;
-+	bool				disabled;
- 	/* recv report - interrupt out only (use_out_ep == 1) */
- 	struct list_head		completed_out_req;
- 	unsigned int			qlen;
-@@ -329,7 +330,7 @@ static ssize_t f_hidg_intout_read(struct file *file, char __user *buffer,
- 
- 	spin_lock_irqsave(&hidg->read_spinlock, flags);
- 
--#define READ_COND_INTOUT (!list_empty(&hidg->completed_out_req))
-+#define READ_COND_INTOUT (!list_empty(&hidg->completed_out_req) || hidg->disabled)
- 
- 	/* wait for at least one buffer to complete */
- 	while (!READ_COND_INTOUT) {
-@@ -343,6 +344,11 @@ static ssize_t f_hidg_intout_read(struct file *file, char __user *buffer,
- 		spin_lock_irqsave(&hidg->read_spinlock, flags);
- 	}
- 
-+	if (hidg->disabled) {
-+		spin_unlock_irqrestore(&hidg->read_spinlock, flags);
-+		return -ESHUTDOWN;
-+	}
-+
- 	/* pick the first one */
- 	list = list_first_entry(&hidg->completed_out_req,
- 				struct f_hidg_req_list, list);
-@@ -387,7 +393,7 @@ static ssize_t f_hidg_intout_read(struct file *file, char __user *buffer,
- 	return count;
- }
- 
--#define READ_COND_SSREPORT (hidg->set_report_buf != NULL)
-+#define READ_COND_SSREPORT (hidg->set_report_buf != NULL || hidg->disabled)
- 
- static ssize_t f_hidg_ssreport_read(struct file *file, char __user *buffer,
- 				    size_t count, loff_t *ptr)
-@@ -1012,6 +1018,11 @@ static void hidg_disable(struct usb_function *f)
- 	}
- 	spin_unlock_irqrestore(&hidg->get_report_spinlock, flags);
- 
-+	spin_lock_irqsave(&hidg->read_spinlock, flags);
-+	hidg->disabled = true;
-+	spin_unlock_irqrestore(&hidg->read_spinlock, flags);
-+	wake_up(&hidg->read_queue);
-+
- 	spin_lock_irqsave(&hidg->write_spinlock, flags);
- 	if (!hidg->write_pending) {
- 		free_ep_req(hidg->in_ep, hidg->req);
-@@ -1097,6 +1108,10 @@ static int hidg_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
- 		}
- 	}
- 
-+	spin_lock_irqsave(&hidg->read_spinlock, flags);
-+	hidg->disabled = false;
-+	spin_unlock_irqrestore(&hidg->read_spinlock, flags);
-+
- 	if (hidg->in_ep != NULL) {
- 		spin_lock_irqsave(&hidg->write_spinlock, flags);
- 		hidg->req = req_in;
+diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+index ac84a6d64c2fb..b09b58d7311de 100644
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -393,6 +393,10 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
+ 		break;
+ 	case CMDT_RSP_NAK:
+ 		switch (cmd) {
++		case DP_CMD_STATUS_UPDATE:
++			if (typec_altmode_exit(alt))
++				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
++			break;
+ 		case DP_CMD_CONFIGURE:
+ 			dp->data.conf = 0;
+ 			ret = dp_altmode_configured(dp);
 -- 
 2.39.5
 
