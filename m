@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394742E7BB6;
-	Thu,  3 Jul 2025 14:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B75F2EAD1B;
+	Thu,  3 Jul 2025 14:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554387; cv=none; b=n6ava10WHAQif9Gsw6VXXd6EQEDdEOf0wFLqdVNA6Sc2K7UVpmaQ9bpzEs6kv7wY64ozmfMLCgG2tXM6PiO7393wGaMFrfs3E4iUAOoO4pk6wVa5+6PSb5pzQMZv4INg9HSXfwoow2/MWsT8ytuUpZ9fgK0JNRSQbAVz/BM3tuI=
+	t=1751554389; cv=none; b=X+BJyPqHAZ0nFVdpWNo9bwcz81dkQQ/tI7r42sX8Tjp49/euTb76qqh3NbBANQBm5ait9ZsprSUODrCR1pk9jHNJD1T/pkGs/kRxG/PPX0TZoMVObp0s8PrXQPMoQgeFnn9gwOFTyOk2MTr9f4pnHcsDAISKcSq7SMcqxkBpD/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554387; c=relaxed/simple;
-	bh=L8VR7rEtbvrxmkU8ZlKvY9KI+Tei6hx3/RK3wX7EM+k=;
+	s=arc-20240116; t=1751554389; c=relaxed/simple;
+	bh=cJllJ3KsUXd9H7d77B7pWHBYuC1x85sCTLa2Hawxdkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOWtyZ0Y6qoSqvswjm3CBMtx9EEtXdkgiTVH98yE/BwRw2G51gYtXgNK+8tG/6+XquJLRKSxxCHqBb/G5c1nJFwsZfmAU+70pWx+wd1D0uyehtVEgM8R9oobPPBxeDBaFiuv9WHDlUSIM83+c2NziXHxs16+AqWDFyrzS7KCsx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/6Tv1iY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KLAGCt4+3MFalpYvXXKeDQ74djmTIwPjICuEh9pllyx3tgFVNcInfg0/+vSJmnJWQIKBzeaFwaX4tP6jmxdVRsYKz3yEtc+HMDJ1f+MlBkTXjDMnfJlWoY2kwluywWSfQN6GEgyLTYwyVP1u2COhTf/ERVlmcaRrl+9IXhfR1AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1PFO5qc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/6Tv1iY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798B0C4CEE3;
-	Thu,  3 Jul 2025 14:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1PFO5qc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E88C4CEED;
+	Thu,  3 Jul 2025 14:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554386;
-	bh=L8VR7rEtbvrxmkU8ZlKvY9KI+Tei6hx3/RK3wX7EM+k=;
+	s=korg; t=1751554389;
+	bh=cJllJ3KsUXd9H7d77B7pWHBYuC1x85sCTLa2Hawxdkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/6Tv1iY+lDlfUorWnONy9Z5xXdzbAIDfQuSd5V3ZZIj2RVy045VoadvU6PXF3ngm
-	 IBm6afK1COOkKz0nbVtPDFB+R/5fYYcUL62sDrk/X1j85PMwNO/szt05UBBSKNdga8
-	 GfFTAcFSPrOlIvFbMFp9ievAYDqCDTT8UHHLDM9w=
+	b=x1PFO5qcXPLu+AArKhQ0cvALb4vilVCfL/RaIq1m1wNgajf0XjNoH2kLtDgkwarhB
+	 lsyqwot4uB1E+0Eit/rmTD2chWa1PBuT0jQDuykfRkAWC3p2efW6XpGdD9k7jSDlyi
+	 4Faq3YwqVwbT4dj2Wi3xMUccdGRPQFRsPS0Z3DIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.12 171/218] drm/xe: Fix taking invalid lock on wedge
-Date: Thu,  3 Jul 2025 16:41:59 +0200
-Message-ID: <20250703144003.010119691@linuxfoundation.org>
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Zhanjun Dong <zhanjun.dong@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 172/218] drm/xe: Fix early wedge on GuC load failure
+Date: Thu,  3 Jul 2025 16:42:00 +0200
+Message-ID: <20250703144003.049775306@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -44,76 +49,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-commit 1e1981b16bb1bbe2fafa57ed439b45cb5b34e32d upstream.
+commit a39d082c3553d35b4fe5585e1e2fb221c130cae8 upstream.
 
-If device wedges on e.g. GuC upload, the submission is not yet enabled
-and the state is not even initialized. Protect the wedge call so it does
-nothing in this case. It fixes the following splat:
+When the GuC fails to load we declare the device wedged. However, the
+very first GuC load attempt on GT0 (from xe_gt_init_hwconfig) is done
+before the GT1 GuC objects are initialized, so things go bad when the
+wedge code attempts to cleanup GT1. To fix this, check the initialization
+status in the functions called during wedge.
 
-	[] xe 0000:bf:00.0: [drm] device wedged, needs recovery
-	[] ------------[ cut here ]------------
-	[] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-	[] WARNING: CPU: 48 PID: 312 at kernel/locking/mutex.c:564 __mutex_lock+0x8a1/0xe60
-	...
-	[] RIP: 0010:__mutex_lock+0x8a1/0xe60
-	[]  mutex_lock_nested+0x1b/0x30
-	[]  xe_guc_submit_wedge+0x80/0x2b0 [xe]
-
-Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Link: https://lore.kernel.org/r/20250402-warn-after-wedge-v1-1-93e971511fa5@intel.com
+Fixes: 7dbe8af13c18 ("drm/xe: Wedge the entire device")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Zhanjun Dong <zhanjun.dong@intel.com>
+Cc: stable@vger.kernel.org # v6.12+: 1e1981b16bb1: drm/xe: Fix taking invalid lock on wedge
+Cc: stable@vger.kernel.org # v6.12+
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://lore.kernel.org/r/20250611214453.1159846-2-daniele.ceraolospurio@intel.com
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 0b93b7dcd9eb888a6ac7546560877705d4ad61bf)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c |    9 +++++++++
- drivers/gpu/drm/xe/xe_guc_types.h  |    5 +++++
- 2 files changed, 14 insertions(+)
+ drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c |    8 ++++++++
+ drivers/gpu/drm/xe/xe_guc_ct.c              |    7 +++++--
+ drivers/gpu/drm/xe/xe_guc_ct.h              |    5 +++++
+ drivers/gpu/drm/xe/xe_guc_submit.c          |    3 +++
+ 4 files changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -309,6 +309,8 @@ int xe_guc_submit_init(struct xe_guc *gu
+--- a/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
++++ b/drivers/gpu/drm/xe/xe_gt_tlb_invalidation.c
+@@ -138,6 +138,14 @@ void xe_gt_tlb_invalidation_reset(struct
+ 	int pending_seqno;
  
- 	primelockdep(guc);
- 
-+	guc->submission_state.initialized = true;
-+
- 	return drmm_add_action_or_reset(&xe->drm, guc_submit_fini, guc);
- }
- 
-@@ -837,6 +839,13 @@ void xe_guc_submit_wedge(struct xe_guc *
- 
- 	xe_gt_assert(guc_to_gt(guc), guc_to_xe(guc)->wedged.mode);
- 
-+	/*
-+	 * If device is being wedged even before submission_state is
-+	 * initialized, there's nothing to do here.
+ 	/*
++	 * we can get here before the CTs are even initialized if we're wedging
++	 * very early, in which case there are not going to be any pending
++	 * fences so we can bail immediately.
 +	 */
-+	if (!guc->submission_state.initialized)
++	if (!xe_guc_ct_initialized(&gt->uc.guc.ct))
 +		return;
 +
- 	err = devm_add_action_or_reset(guc_to_xe(guc)->drm.dev,
- 				       guc_submit_wedged_fini, guc);
- 	if (err) {
---- a/drivers/gpu/drm/xe/xe_guc_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_types.h
-@@ -74,6 +74,11 @@ struct xe_guc {
- 		struct mutex lock;
- 		/** @submission_state.enabled: submission is enabled */
- 		bool enabled;
-+		/**
-+		 * @submission_state.initialized: mark when submission state is
-+		 * even initialized - before that not even the lock is valid
-+		 */
-+		bool initialized;
- 		/** @submission_state.fini_wq: submit fini wait queue */
- 		wait_queue_head_t fini_wq;
- 	} submission_state;
++	/*
+ 	 * CT channel is already disabled at this point. No new TLB requests can
+ 	 * appear.
+ 	 */
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -454,6 +454,9 @@ void xe_guc_ct_disable(struct xe_guc_ct
+  */
+ void xe_guc_ct_stop(struct xe_guc_ct *ct)
+ {
++	if (!xe_guc_ct_initialized(ct))
++		return;
++
+ 	xe_guc_ct_set_state(ct, XE_GUC_CT_STATE_STOPPED);
+ 	stop_g2h_handler(ct);
+ }
+@@ -638,7 +641,7 @@ static int __guc_ct_send_locked(struct x
+ 	u16 seqno;
+ 	int ret;
+ 
+-	xe_gt_assert(gt, ct->state != XE_GUC_CT_STATE_NOT_INITIALIZED);
++	xe_gt_assert(gt, xe_guc_ct_initialized(ct));
+ 	xe_gt_assert(gt, !g2h_len || !g2h_fence);
+ 	xe_gt_assert(gt, !num_g2h || !g2h_fence);
+ 	xe_gt_assert(gt, !g2h_len || num_g2h);
+@@ -1209,7 +1212,7 @@ static int g2h_read(struct xe_guc_ct *ct
+ 	u32 action;
+ 	u32 *hxg;
+ 
+-	xe_gt_assert(gt, ct->state != XE_GUC_CT_STATE_NOT_INITIALIZED);
++	xe_gt_assert(gt, xe_guc_ct_initialized(ct));
+ 	lockdep_assert_held(&ct->fast_lock);
+ 
+ 	if (ct->state == XE_GUC_CT_STATE_DISABLED)
+--- a/drivers/gpu/drm/xe/xe_guc_ct.h
++++ b/drivers/gpu/drm/xe/xe_guc_ct.h
+@@ -23,6 +23,11 @@ void xe_guc_ct_snapshot_print(struct xe_
+ void xe_guc_ct_snapshot_free(struct xe_guc_ct_snapshot *snapshot);
+ void xe_guc_ct_print(struct xe_guc_ct *ct, struct drm_printer *p, bool atomic);
+ 
++static inline bool xe_guc_ct_initialized(struct xe_guc_ct *ct)
++{
++	return ct->state != XE_GUC_CT_STATE_NOT_INITIALIZED;
++}
++
+ static inline bool xe_guc_ct_enabled(struct xe_guc_ct *ct)
+ {
+ 	return ct->state == XE_GUC_CT_STATE_ENABLED;
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -1722,6 +1722,9 @@ int xe_guc_submit_reset_prepare(struct x
+ {
+ 	int ret;
+ 
++	if (!guc->submission_state.initialized)
++		return 0;
++
+ 	/*
+ 	 * Using an atomic here rather than submission_state.lock as this
+ 	 * function can be called while holding the CT lock (engine reset
 
 
