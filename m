@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4822EE5EB;
-	Thu,  3 Jul 2025 15:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851582B9A6;
+	Thu,  3 Jul 2025 15:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555037; cv=none; b=BXEZCRwqrDRxstkQkP12FJA2TCcQuSwWCcTpWt66wE2/4/23P9Hg9N0cVAo1ZC6bF7gxSqtsjgJVAg3ayZgHIzEp+JnxA9TAjgkwor4qWk4Lk18IMegNqBoYhMmsoZ9rl4q5DS08xH823TW+xwQzvCMHvrRF2hR0gZOdaU26qAk=
+	t=1751555041; cv=none; b=rC/PeZvTUjg98F6J5dYHm+R5Q1AvuzS5u1XevZE0nEoDudpa6Aq9XiRUAQgpL0LpVyHZOUfNggzkXp1w8RHu4h8O0ZBbna64WK6sVYXcGaS4ozgbU6f035ifaA0v/rSs+h37Chlr+xifJ67y9rYmzgg4M/wiBkAnlYOibGDU9So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555037; c=relaxed/simple;
-	bh=eyP+IT1HCNILN2tIvdwXFtKG0A4gpSNHR6BRwHgpANI=;
+	s=arc-20240116; t=1751555041; c=relaxed/simple;
+	bh=AY7xhSTNd9jy2SpoNZFfn9Dlu/rbm5nfUbcKWN9T8pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2hd8L8LOfUiuwti+z0rt73kVSfsD3Gz4x5BaaNnVqozbjVyGhu/P0vDjNOZ/fcbzBq0vw3yw7dGSbrkzBBJ6fG9K9KOM7yvW7cWAZibea7euZi9vRVoE/dBi5z8mjx6z2qieYg7bfDq1e5kmFRaRlRmQ2fkzoYl+JO7rDNtzvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnReLJCN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L3IlqGSeevo3twixQqEuVq7J1iueyaGhGT2zMVOM9PW1wsmbXlXMTTcayHHnfq9bjtS+RU0HW4+efXR7c7N4uvrQKLDC/sWu0t1k1Mm5iAxhP9rRsdtTvATFeR6NgRMwKNU1i8GVhnDu0zKXdG/1bstzrS33NM9Gb8HBDGKgM7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp+7piym; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnReLJCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF07C4CEED;
-	Thu,  3 Jul 2025 15:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp+7piym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C206C4CEE3;
+	Thu,  3 Jul 2025 15:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555037;
-	bh=eyP+IT1HCNILN2tIvdwXFtKG0A4gpSNHR6BRwHgpANI=;
+	s=korg; t=1751555041;
+	bh=AY7xhSTNd9jy2SpoNZFfn9Dlu/rbm5nfUbcKWN9T8pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnReLJCN+5Fd6lhBAZQh5qcIFBqS6l5Qc8dMdqsFDyIInwPAwWSGNVMicUz2gzl51
-	 uwTt7pvP1VQsX2DVK0F7+F8eAMhZaNG2A4kg2aWhP2Z8sBGgbqiuuXs9UIRBm/liq5
-	 wF8TOEQnJhADRNGKvAZeyCC0cMu/BA+bwuA/nibQ=
+	b=xp+7piymMES1xRdMa8VeRUdipGCdPJf/dxidSNajDNoRsyqYmfhfvQkz8hWmcPHW0
+	 bdTGR50NUQY+HiKcW3LT2JbYNMSnIG7IlqQ8S7Nh2Hwh605tcbi0s3jwwR3eLnRoz4
+	 ZBV3ppYICWyVfJDUQSH3WXjLAxV23HDE1Xsb9owg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Wei Fang <wei.fang@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 155/263] net: enetc: Correct endianness handling in _enetc_rd_reg64
-Date: Thu,  3 Jul 2025 16:41:15 +0200
-Message-ID: <20250703144010.579907752@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.15 127/263] drm/xe/display: Add check for alloc_ordered_workqueue()
+Date: Thu,  3 Jul 2025 16:40:47 +0200
+Message-ID: <20250703144009.447952637@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -46,66 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 7b515f35a911fdc31fbde6531828dcd6ae9803d3 ]
+commit 62207293479e6c03ef498a70f2914c51f4d31d2c upstream.
 
-enetc_hw.h provides two versions of _enetc_rd_reg64.
-One which simply calls ioread64() when available.
-And another that composes the 64-bit result from ioread32() calls.
+Add check for the return value of alloc_ordered_workqueue()
+in xe_display_create() to catch potential exception.
 
-In the second case the code appears to assume that each ioread32() call
-returns a little-endian value. However both the shift and logical or
-used to compose the return value would not work correctly on big endian
-systems if this were the case. Moreover, this is inconsistent with the
-first case where the return value of ioread64() is assumed to be in host
-byte order.
-
-It appears that the correct approach is for both versions to treat the
-return value of ioread*() functions as being in host byte order. And
-this patch corrects the ioread32()-based version to do so.
-
-This is a bug but would only manifest on big endian systems
-that make use of the ioread32-based implementation of _enetc_rd_reg64.
-While all in-tree users of this driver are little endian and
-make use of the ioread64-based implementation of _enetc_rd_reg64.
-Thus, no in-tree user of this driver is affected by this bug.
-
-Flagged by Sparse.
-Compile tested only.
-
-Fixes: 16eb4c85c964 ("enetc: Add ethtool statistics")
-Closes: https://lore.kernel.org/all/AM9PR04MB850500D3FC24FE23DEFCEA158879A@AM9PR04MB8505.eurprd04.prod.outlook.com/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20250624-etnetc-le-v1-1-a73a95d96e4e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/4ee1b0e5d1626ce1dde2e82af05c2edaed50c3aa.1747397638.git.jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 5b62d63395d5b7d4094e7cd380bccae4b25415cb)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_hw.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/display/xe_display.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_hw.h b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-index 4098f01479bc0..53e8d18c7a34a 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-@@ -507,7 +507,7 @@ static inline u64 _enetc_rd_reg64(void __iomem *reg)
- 		tmp = ioread32(reg + 4);
- 	} while (high != tmp);
+--- a/drivers/gpu/drm/xe/display/xe_display.c
++++ b/drivers/gpu/drm/xe/display/xe_display.c
+@@ -104,6 +104,8 @@ int xe_display_create(struct xe_device *
+ 	spin_lock_init(&xe->display.fb_tracking.lock);
  
--	return le64_to_cpu((__le64)high << 32 | low);
-+	return (u64)high << 32 | low;
+ 	xe->display.hotplug.dp_wq = alloc_ordered_workqueue("xe-dp", 0);
++	if (!xe->display.hotplug.dp_wq)
++		return -ENOMEM;
+ 
+ 	return drmm_add_action_or_reset(&xe->drm, display_destroy, NULL);
  }
- #endif
- 
--- 
-2.39.5
-
 
 
