@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FB02EA730;
-	Thu,  3 Jul 2025 14:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CF82EE96B;
+	Thu,  3 Jul 2025 14:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554786; cv=none; b=UyiXAk/eppAtZW7JhEtrx3h9R/4Ni38x162DTuN7svjrZp0OoJ1sQtS0qpUDFLhHW54qw4Z32panU7QbnNw3O/8Yd+LdeICdTMh8DQstIVxCO9elGIiqNEmqnckyBTR8nfqC1AufvrHYHnxIqMCeJI5QZsKtepmnN4oqdW9hC+g=
+	t=1751554790; cv=none; b=PDNSQPWDRlC5yFyBdw99pbfcLNzrUgr8c/NTYKoX4E/dF7sS2sRRdiQmH3/WVYYUr6/S5iZ1FsQ/lMPcjoBaiC/iDnmXXg9wx1hFnf/ZrapJKu6g0s/LrJGqvc5OSo03FN47GhReo2W/71bsMribHfSAntdYAoKSIoENdTr0x/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554786; c=relaxed/simple;
-	bh=xgVoa1FjWd8OTQHnE1wvYGLkd8kyn7KEJg9CRTAhFeU=;
+	s=arc-20240116; t=1751554790; c=relaxed/simple;
+	bh=UaChHF/UcbesRsdNxf22DRLEEhaqQxN8mtKtJrb/6ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnQKgewh4IZzcVEGHw7If6TgQ6fYR4L15cm5pfe0cj1aJhmSygLwPIxGu9pV5LXk7ADw4GPcvzr7yFZOwWl1nNlmPH2zpAJPobFtcdrcgzjzRheroyQXHFSvKrfywIpcgwF+9417F7Pki4ZfctVw35ujLh6rBznk1mP+6rwuBo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jns6Pm4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rw+VcwPmEjrgco52DcUAO+SHXcVkiA3eXHtDSjWI/jwS7rMliY7tBTgY0B3LcmCBdtict0m7gyRtTHJfBjSmcJteLTXM7u5X02a+aWn3vciOmzk25ZeiYXfmDA4Cd6HmznHa7j0wkwCNeVkPKTRQClZppcD/vncEQvl3PLNceL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9ELKPRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jns6Pm4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5476CC4CEE3;
-	Thu,  3 Jul 2025 14:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9ELKPRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D92C4CEE3;
+	Thu,  3 Jul 2025 14:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554786;
-	bh=xgVoa1FjWd8OTQHnE1wvYGLkd8kyn7KEJg9CRTAhFeU=;
+	s=korg; t=1751554789;
+	bh=UaChHF/UcbesRsdNxf22DRLEEhaqQxN8mtKtJrb/6ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jns6Pm4tq4PMzlcFHCpQcs3Hhsk1Sa6ncxbQEVI2nngsf1hFYekbcjlRgN9TjAhUk
-	 feAJSWO3atagykxRIW2tQcIv8lIioaLhTfEXF6kVI7aU9qRlQfvX2H6YODWep5sGdm
-	 tO4yBDd2oA9AZaT4iOmo4cutKni4HJsV+HFiMxYk=
+	b=F9ELKPRWVFLLUCCSWwwsj+sKcEVBl4kCEC9XBqG1Ufa3jbj0yMEysAz9Q2guv5zDk
+	 vhF/Fh7/PWesSPW9QGqUn+3gGrObKg35crlqjqIBbDSbTSVdXJmgFAiF+qEp2otoTn
+	 zKaY/S6QA07eq22pHNPCCfFTbLUKweAog4B30KIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ed30ad435bf6f5b7a42@syzkaller.appspotmail.com,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
+	Zhiyu Zhang <zhiyuzhang999@gmail.com>,
+	Longxing Li <coregee2000@gmail.com>,
 	David Sterba <dsterba@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 078/263] btrfs: fix race between async reclaim worker and close_ctree()
-Date: Thu,  3 Jul 2025 16:39:58 +0200
-Message-ID: <20250703144007.429303679@linuxfoundation.org>
+Subject: [PATCH 6.15 079/263] btrfs: handle csum tree error with rescue=ibadroots correctly
+Date: Thu,  3 Jul 2025 16:39:59 +0200
+Message-ID: <20250703144007.466691943@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,145 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit a26bf338cdad3643a6e7c3d78a172baadba15c1a ]
+[ Upstream commit 547e836661554dcfa15c212a3821664e85b4191a ]
 
-Syzbot reported an assertion failure due to an attempt to add a delayed
-iput after we have set BTRFS_FS_STATE_NO_DELAYED_IPUT in the fs_info
-state:
+[BUG]
+There is syzbot based reproducer that can crash the kernel, with the
+following call trace: (With some debug output added)
 
-  WARNING: CPU: 0 PID: 65 at fs/btrfs/inode.c:3420 btrfs_add_delayed_iput+0x2f8/0x370 fs/btrfs/inode.c:3420
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 65 Comm: kworker/u8:4 Not tainted 6.15.0-next-20250530-syzkaller #0 PREEMPT(full)
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-  Workqueue: btrfs-endio-write btrfs_work_helper
-  RIP: 0010:btrfs_add_delayed_iput+0x2f8/0x370 fs/btrfs/inode.c:3420
-  Code: 4e ad 5d (...)
-  RSP: 0018:ffffc9000213f780 EFLAGS: 00010293
-  RAX: ffffffff83c635b7 RBX: ffff888058920000 RCX: ffff88801c769e00
-  RDX: 0000000000000000 RSI: 0000000000000100 RDI: 0000000000000000
-  RBP: 0000000000000001 R08: ffff888058921b67 R09: 1ffff1100b12436c
-  R10: dffffc0000000000 R11: ffffed100b12436d R12: 0000000000000001
-  R13: dffffc0000000000 R14: ffff88807d748000 R15: 0000000000000100
-  FS:  0000000000000000(0000) GS:ffff888125c53000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00002000000bd038 CR3: 000000006a142000 CR4: 00000000003526f0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   <TASK>
-   btrfs_put_ordered_extent+0x19f/0x470 fs/btrfs/ordered-data.c:635
-   btrfs_finish_one_ordered+0x11d8/0x1b10 fs/btrfs/inode.c:3312
-   btrfs_work_helper+0x399/0xc20 fs/btrfs/async-thread.c:312
-   process_one_work kernel/workqueue.c:3238 [inline]
-   process_scheduled_works+0xae1/0x17b0 kernel/workqueue.c:3321
-   worker_thread+0x8a0/0xda0 kernel/workqueue.c:3402
-   kthread+0x70e/0x8a0 kernel/kthread.c:464
-   ret_from_fork+0x3fc/0x770 arch/x86/kernel/process.c:148
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
+ DEBUG: rescue=ibadroots parsed
+ BTRFS: device fsid 14d642db-7b15-43e4-81e6-4b8fac6a25f8 devid 1 transid 8 /dev/loop0 (7:0) scanned by repro (1010)
+ BTRFS info (device loop0): first mount of filesystem 14d642db-7b15-43e4-81e6-4b8fac6a25f8
+ BTRFS info (device loop0): using blake2b (blake2b-256-generic) checksum algorithm
+ BTRFS info (device loop0): using free-space-tree
+ BTRFS warning (device loop0): checksum verify failed on logical 5312512 mirror 1 wanted 0xb043382657aede36608fd3386d6b001692ff406164733d94e2d9a180412c6003 found 0x810ceb2bacb7f0f9eb2bf3b2b15c02af867cb35ad450898169f3b1f0bd818651 level 0
+ DEBUG: read tree root path failed for tree csum, ret=-5
+ BTRFS warning (device loop0): checksum verify failed on logical 5328896 mirror 1 wanted 0x51be4e8b303da58e6340226815b70e3a93592dac3f30dd510c7517454de8567a found 0x51be4e8b303da58e634022a315b70e3a93592dac3f30dd510c7517454de8567a level 0
+ BTRFS warning (device loop0): checksum verify failed on logical 5292032 mirror 1 wanted 0x1924ccd683be9efc2fa98582ef58760e3848e9043db8649ee382681e220cdee4 found 0x0cb6184f6e8799d9f8cb335dccd1d1832da1071d12290dab3b85b587ecacca6e level 0
+ process 'repro' launched './file2' with NULL argv: empty string added
+ DEBUG: no csum root, idatacsums=0 ibadroots=134217728
+ Oops: general protection fault, probably for non-canonical address 0xdffffc0000000041: 0000 [#1] SMP KASAN NOPTI
+ KASAN: null-ptr-deref in range [0x0000000000000208-0x000000000000020f]
+ CPU: 5 UID: 0 PID: 1010 Comm: repro Tainted: G           OE       6.15.0-custom+ #249 PREEMPT(full)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+ RIP: 0010:btrfs_lookup_csum+0x93/0x3d0 [btrfs]
+ Call Trace:
+  <TASK>
+  btrfs_lookup_bio_sums+0x47a/0xdf0 [btrfs]
+  btrfs_submit_bbio+0x43e/0x1a80 [btrfs]
+  submit_one_bio+0xde/0x160 [btrfs]
+  btrfs_readahead+0x498/0x6a0 [btrfs]
+  read_pages+0x1c3/0xb20
+  page_cache_ra_order+0x4b5/0xc20
+  filemap_get_pages+0x2d3/0x19e0
+  filemap_read+0x314/0xde0
+  __kernel_read+0x35b/0x900
+  bprm_execve+0x62e/0x1140
+  do_execveat_common.isra.0+0x3fc/0x520
+  __x64_sys_execveat+0xdc/0x130
+  do_syscall_64+0x54/0x1d0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ ---[ end trace 0000000000000000 ]---
 
-This can happen due to a race with the async reclaim worker like this:
+[CAUSE]
+Firstly the fs has a corrupted csum tree root, thus to mount the fs we
+have to go "ro,rescue=ibadroots" mount option.
 
-1) The async metadata reclaim worker enters shrink_delalloc(), which calls
-   btrfs_start_delalloc_roots() with an nr_pages argument that has a value
-   less than LONG_MAX, and that in turn enters start_delalloc_inodes(),
-   which sets the local variable 'full_flush' to false because
-   wbc->nr_to_write is less than LONG_MAX;
+Normally with that mount option, a bad csum tree root should set
+BTRFS_FS_STATE_NO_DATA_CSUMS flag, so that any future data read will
+ignore csum search.
 
-2) There it finds inode X in a root's delalloc list, grabs a reference for
-   inode X (with igrab()), and triggers writeback for it with
-   filemap_fdatawrite_wbc(), which creates an ordered extent for inode X;
+But in this particular case, we have the following call trace that
+caused NULL csum root, but not setting BTRFS_FS_STATE_NO_DATA_CSUMS:
 
-3) The unmount sequence starts from another task, we enter close_ctree()
-   and we flush the workqueue fs_info->endio_write_workers, which waits
-   for the ordered extent for inode X to complete and when dropping the
-   last reference of the ordered extent, with btrfs_put_ordered_extent(),
-   when we call btrfs_add_delayed_iput() we don't add the inode to the
-   list of delayed iputs because it has a refcount of 2, so we decrement
-   it to 1 and return;
+load_global_roots_objectid():
 
-4) Shortly after at close_ctree() we call btrfs_run_delayed_iputs() which
-   runs all delayed iputs, and then we set BTRFS_FS_STATE_NO_DELAYED_IPUT
-   in the fs_info state;
+		ret = btrfs_search_slot();
+		/* Succeeded */
+		btrfs_item_key_to_cpu()
+		found = true;
+		/* We found the root item for csum tree. */
+		root = read_tree_root_path();
+		if (IS_ERR(root)) {
+			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS))
+			/*
+			 * Since we have rescue=ibadroots mount option,
+			 * @ret is still 0.
+			 */
+			break;
+	if (!found || ret) {
+		/* @found is true, @ret is 0, error handling for csum
+		 * tree is skipped.
+		 */
+	}
 
-5) The async reclaim worker, after calling filemap_fdatawrite_wbc(), now
-   calls btrfs_add_delayed_iput() for inode X and there we trigger an
-   assertion failure since the fs_info state has the flag
-   BTRFS_FS_STATE_NO_DELAYED_IPUT set.
+This means we completely skipped to set BTRFS_FS_STATE_NO_DATA_CSUMS if
+the csum tree is corrupted, which results unexpected later csum lookup.
 
-Fix this by setting BTRFS_FS_STATE_NO_DELAYED_IPUT only after we wait for
-the async reclaim workers to finish, after we call cancel_work_sync() for
-them at close_ctree(), and by running delayed iputs after wait for the
-reclaim workers to finish and before setting the bit.
+[FIX]
+If read_tree_root_path() failed, always populate @ret to the error
+number.
 
-This race was recently introduced by commit 19e60b2a95f5 ("btrfs: add
-extra warning if delayed iput is added when it's not allowed"). Without
-the new validation at btrfs_add_delayed_iput(), this described scenario
-was safe because close_ctree() later calls btrfs_commit_super(). That
-will run any final delayed iputs added by reclaim workers in the window
-between the btrfs_run_delayed_iputs() and the the reclaim workers being
-shut down.
+As at the end of the function, we need @ret to determine if we need to
+do the extra error handling for csum tree.
 
-Reported-by: syzbot+0ed30ad435bf6f5b7a42@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/6840481c.a00a0220.d4325.000c.GAE@google.com/T/#u
-Fixes: 19e60b2a95f5 ("btrfs: add extra warning if delayed iput is added when it's not allowed")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Fixes: abed4aaae4f7 ("btrfs: track the csum, extent, and free space trees in a rb tree")
+Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Reported-by: Longxing Li <coregee2000@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ fs/btrfs/disk-io.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index aa58e0663a5d7..87501762d81fb 100644
+index 87501762d81fb..321feb99c1797 100644
 --- a/fs/btrfs/disk-io.c
 +++ b/fs/btrfs/disk-io.c
-@@ -4385,8 +4385,8 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
- 	 *
- 	 * So wait for all ongoing ordered extents to complete and then run
- 	 * delayed iputs. This works because once we reach this point no one
--	 * can either create new ordered extents nor create delayed iputs
--	 * through some other means.
-+	 * can create new ordered extents, but delayed iputs can still be added
-+	 * by a reclaim worker (see comments further below).
- 	 *
- 	 * Also note that btrfs_wait_ordered_roots() is not safe here, because
- 	 * it waits for BTRFS_ORDERED_COMPLETE to be set on an ordered extent,
-@@ -4397,15 +4397,29 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
- 	btrfs_flush_workqueue(fs_info->endio_write_workers);
- 	/* Ordered extents for free space inodes. */
- 	btrfs_flush_workqueue(fs_info->endio_freespace_worker);
-+	/*
-+	 * Run delayed iputs in case an async reclaim worker is waiting for them
-+	 * to be run as mentioned above.
-+	 */
- 	btrfs_run_delayed_iputs(fs_info);
--	/* There should be no more workload to generate new delayed iputs. */
--	set_bit(BTRFS_FS_STATE_NO_DELAYED_IPUT, &fs_info->fs_state);
- 
- 	cancel_work_sync(&fs_info->async_reclaim_work);
- 	cancel_work_sync(&fs_info->async_data_reclaim_work);
- 	cancel_work_sync(&fs_info->preempt_reclaim_work);
- 	cancel_work_sync(&fs_info->em_shrinker_work);
- 
-+	/*
-+	 * Run delayed iputs again because an async reclaim worker may have
-+	 * added new ones if it was flushing delalloc:
-+	 *
-+	 * shrink_delalloc() -> btrfs_start_delalloc_roots() ->
-+	 *    start_delalloc_inodes() -> btrfs_add_delayed_iput()
-+	 */
-+	btrfs_run_delayed_iputs(fs_info);
-+
-+	/* There should be no more workload to generate new delayed iputs. */
-+	set_bit(BTRFS_FS_STATE_NO_DELAYED_IPUT, &fs_info->fs_state);
-+
- 	/* Cancel or finish ongoing discard work */
- 	btrfs_discard_cleanup(fs_info);
- 
+@@ -2164,8 +2164,7 @@ static int load_global_roots_objectid(struct btrfs_root *tree_root,
+ 		found = true;
+ 		root = read_tree_root_path(tree_root, path, &key);
+ 		if (IS_ERR(root)) {
+-			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS))
+-				ret = PTR_ERR(root);
++			ret = PTR_ERR(root);
+ 			break;
+ 		}
+ 		set_bit(BTRFS_ROOT_TRACK_DIRTY, &root->state);
 -- 
 2.39.5
 
