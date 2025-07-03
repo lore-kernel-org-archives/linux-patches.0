@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69817126BFF;
-	Thu,  3 Jul 2025 14:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACCC72610;
+	Thu,  3 Jul 2025 14:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554164; cv=none; b=PVEIKhN+Gdr/nHPlRPFIV8r5DYWFb+Iqhl4u9OuxjBnYz9EJ7MMDbprQZmWXK5QmBNHehyTPdKHDvUS+PDFCuTzZMupr17VPYSoLmPxL7ePCnYWg/CK6TWJ7cHSd5fGQcryRPoxPj2QpyVbkvacqDlLdCrqZoeS4sc02Q0AWspU=
+	t=1751554167; cv=none; b=uFU3QXfc9wGVVTb2D562bRotS3opCJesLchu0TOU9vOE37DmYEPkinxVWdaRyhJ2IBAV85fYPNJDoItpMkA6pXWEM8KP2zGLMSgqykHNY+Z7wif2INVaAmmJH4yr7viIySMSbcqEo1kTzyDOpu1qatzCqXFiSMCo22Uk6Zu4IbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554164; c=relaxed/simple;
-	bh=sGW7PdNdXuc/NhITC097AhFXIwrpw15mPiMA1wSpyFQ=;
+	s=arc-20240116; t=1751554167; c=relaxed/simple;
+	bh=Ed2z0YVNguD5DaEKVzBXhMQI0YFDYYFwOh0yXJagC94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jg74yq1E8qhCwcIimtGP6/nUB15XtdxIbnf/7pD8rxhD9OwO1rBH+72woeEhKl2BpxidoZZc7yfS9UrZ3yUOD5fIueSRKdT8qBjyE+hFIQgLp9H0hDBeqyZgZ+FOW0+mbQJjFJvBPRm7qIyw6fhDAVIWoeMXiHxES0kfs0k0/Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krhVg6Yt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hbOXH2xHYcFJpPwqhuop0bXGcF9S5ON5u2yGAJlz8DuosGM92YrqbDpcmLXKVf9LNTpK2Tpj/GoZ83ZWfC7vAceXB3HO7WJkJAHBo/YHKfxgmaGlfIy/ztZvMnBvam6x5iXxuKmPaiETvFWcOWp55+OTwdFMCOQq7oK7sx73XCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Le9pPPPi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krhVg6Yt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3962C4CEE3;
-	Thu,  3 Jul 2025 14:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Le9pPPPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1204EC4CEE3;
+	Thu,  3 Jul 2025 14:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554164;
-	bh=sGW7PdNdXuc/NhITC097AhFXIwrpw15mPiMA1wSpyFQ=;
+	s=korg; t=1751554167;
+	bh=Ed2z0YVNguD5DaEKVzBXhMQI0YFDYYFwOh0yXJagC94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krhVg6YtQxegpZo1nPmFzCMBETtby2RmdbEEgj+jeeuktN7vIZIt9JRcGahu/S7hw
-	 GgEZrHSJRqFII8wdm15m9zyScdQ7kD4MF5CfTkkYWUvsX/jh7nNWG8zTRwdB0MAHgj
-	 zKCHvDAdmfh9knUGGX/vbhosocFBWvEJQgB/U9FY=
+	b=Le9pPPPizvMBKbFjpwBlEFqOnXyDPsHjkJ6lxpN7/dAnGjQuWD6pxtEEX7THvcpwh
+	 5/9vQ+5NB6ko4gtxsHn3d4/wi5+b28hFByQNoxUEPu8D/9S8e38vP7p4EvYSugfnXX
+	 D3TRn1YqdjiNXrfxTPaYqvAXJtQo4si0CNve3mHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Daan De Meyer <daan.j.demeyer@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/218] wifi: mac80211: finish link init before RCU publish
-Date: Thu,  3 Jul 2025 16:40:49 +0200
-Message-ID: <20250703143959.980630849@linuxfoundation.org>
+Subject: [PATCH 6.12 102/218] vsock/uapi: fix linux/vm_sockets.h userspace compilation errors
+Date: Thu,  3 Jul 2025 16:40:50 +0200
+Message-ID: <20250703144000.019507149@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -44,52 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit d87c3ca0f8f1ca4c25f2ed819e954952f4d8d709 ]
+[ Upstream commit 22bbc1dcd0d6785fb390c41f0dd5b5e218d23bdd ]
 
-Since the link/conf pointers can be accessed without any
-protection other than RCU, make sure the data is actually
-set up before publishing the structures.
+If a userspace application just include <linux/vm_sockets.h> will fail
+to build with the following errors:
 
-Fixes: b2e8434f1829 ("wifi: mac80211: set up/tear down client vif links properly")
-Link: https://patch.msgid.link/20250624130749.9a308b713c74.I4a80f5eead112a38730939ea591d2e275c721256@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+    /usr/include/linux/vm_sockets.h:182:39: error: invalid application of ‘sizeof’ to incomplete type ‘struct sockaddr’
+      182 |         unsigned char svm_zero[sizeof(struct sockaddr) -
+          |                                       ^~~~~~
+    /usr/include/linux/vm_sockets.h:183:39: error: ‘sa_family_t’ undeclared here (not in a function)
+      183 |                                sizeof(sa_family_t) -
+          |
+
+Include <sys/socket.h> for userspace (guarded by ifndef __KERNEL__)
+where `struct sockaddr` and `sa_family_t` are defined.
+We already do something similar in <linux/mptcp.h> and <linux/if.h>.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250623100053.40979-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/link.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/uapi/linux/vm_sockets.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/mac80211/link.c b/net/mac80211/link.c
-index 0525f9e44c37b..9484449d6a347 100644
---- a/net/mac80211/link.c
-+++ b/net/mac80211/link.c
-@@ -93,9 +93,6 @@ void ieee80211_link_init(struct ieee80211_sub_if_data *sdata,
- 	if (link_id < 0)
- 		link_id = 0;
+diff --git a/include/uapi/linux/vm_sockets.h b/include/uapi/linux/vm_sockets.h
+index ed07181d4eff9..e05280e415228 100644
+--- a/include/uapi/linux/vm_sockets.h
++++ b/include/uapi/linux/vm_sockets.h
+@@ -17,6 +17,10 @@
+ #ifndef _UAPI_VM_SOCKETS_H
+ #define _UAPI_VM_SOCKETS_H
  
--	rcu_assign_pointer(sdata->vif.link_conf[link_id], link_conf);
--	rcu_assign_pointer(sdata->link[link_id], link);
--
- 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN) {
- 		struct ieee80211_sub_if_data *ap_bss;
- 		struct ieee80211_bss_conf *ap_bss_conf;
-@@ -142,6 +139,9 @@ void ieee80211_link_init(struct ieee80211_sub_if_data *sdata,
- 
- 		ieee80211_link_debugfs_add(link);
- 	}
++#ifndef __KERNEL__
++#include <sys/socket.h>        /* for struct sockaddr and sa_family_t */
++#endif
 +
-+	rcu_assign_pointer(sdata->vif.link_conf[link_id], link_conf);
-+	rcu_assign_pointer(sdata->link[link_id], link);
- }
+ #include <linux/socket.h>
+ #include <linux/types.h>
  
- void ieee80211_link_stop(struct ieee80211_link_data *link)
 -- 
 2.39.5
 
