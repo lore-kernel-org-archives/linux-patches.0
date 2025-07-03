@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008A42ED86F;
-	Thu,  3 Jul 2025 14:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244EB2ED86F;
+	Thu,  3 Jul 2025 14:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553945; cv=none; b=khQOEbHIxWdQWdJnmqH66Y2LbjQ3KuBDArE4ZMgMA20BEzOJtmDw9KTkJx7W6wct/nl6YkpdGlYWazg7ypO67rKdv1Md8uvrjQhnPfXsMjMzBaWQ1Q/L49UwPwvKlRlU2N7dZjL+3ZmT/VAKN6wl7l/ibLrCGMA0QtCtegeo4Ac=
+	t=1751553948; cv=none; b=rx1hgh64O0wgoXJAFN3I+LSvNB97pypc+tR5pc4lADTZ2xXS6IzXPAZS05gl6D7BqTG+nC3bUGF8I67bH6qKyTd4RwUmaDOGFWV6YBSyIVFUv44YmxTC9teb9xkz051F1FYdiRMj623Z+gp4J/PdyLCwBeRkztUK7ZGRw2QubZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553945; c=relaxed/simple;
-	bh=41HttYmQNZrR44rZn9KkRuwN/qxCngmvHPk9yycEgf8=;
+	s=arc-20240116; t=1751553948; c=relaxed/simple;
+	bh=dfpj9sXZSvV7VkEKVPXjW2TxPLcicNTpZ+dfwaIcg2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9VtEEVVQlXqA56yNcYiq2zWNAX9/mMIQdX7E5nAaVi7a7m2zQreRWHlWEt+rvK6Z/OQCxKZ6NF8o3qk23vz012PcEe+KZrP42tDIinzK+mY2ZMKBQeyqqrCOxK3mdt9+f7yo9Ewzguh96yqTZ3JRTl3EMf0nNDiCDcI0Hl3wYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dikWHS4c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eivHWvqOdDlDR67wajeC6xgCvnDjv3V0WULGL1lal6PZgce6b+o/B2lZTr0KuMVCCe2Tp3bac6L55Cp7mGevuj9ZgM2/xh6+Qn5TeS+2yX7+2oswmHdwYbUOieGjHptyM1mg9MkHBWf+dnnRkrv1D1RtvutTUHIwDoRKV0vZ9uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJ+ORxNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dikWHS4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B226C4CEE3;
-	Thu,  3 Jul 2025 14:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJ+ORxNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE97C4CEE3;
+	Thu,  3 Jul 2025 14:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751553944;
-	bh=41HttYmQNZrR44rZn9KkRuwN/qxCngmvHPk9yycEgf8=;
+	s=korg; t=1751553947;
+	bh=dfpj9sXZSvV7VkEKVPXjW2TxPLcicNTpZ+dfwaIcg2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dikWHS4clXilllaOBpkUfiLMhifMPBXJFaBZJdLKijAd0MfTnzLEfsmIDYy42jSFz
-	 t66ykITPCZ+VdpG3K2L4bFF7J59hwY+h6skjLCIBY82dCI4vBeKKe0zRQVl+WvKFKT
-	 QC1dhYcWXk3CeVyeMcqh64UZes9jOPXQdl7Cmg1o=
+	b=OJ+ORxNam1f1rxQPqwTU9bcRLkhBbDziwYT2NDlsXYdkbzRkxHL4KI9KWPjiXYWQ4
+	 nw2+xzQqwux9n6gf7A2RKarx03c5vPEq91KDUdxeyLO3YNeYt9F33W33GGmkYZ81dk
+	 LY5JMmxCeNvknETYPfed1DVI1QbtiV3duhoTX37w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Marc Zyngier <maz@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Janne Grunau <j@jannau.net>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/218] PCI: apple: Fix missing OF node reference in apple_pcie_setup_port
-Date: Thu,  3 Jul 2025 16:39:32 +0200
-Message-ID: <20250703143956.934156275@linuxfoundation.org>
+Subject: [PATCH 6.12 033/218] iio: pressure: zpa2326: Use aligned_s64 for the timestamp
+Date: Thu,  3 Jul 2025 16:39:41 +0200
+Message-ID: <20250703143957.278625070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -55,41 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 7fa9fbf39116b061f8a41cd84f1884c545f322c4 ]
+[ Upstream commit 886a446b76afddfad307488e95e87f23a08ffd51 ]
 
-In the success path, we hang onto a reference to the node, so make sure
-to grab one. The caller iterator puts our borrowed reference when we
-return.
+On x86_32 s64 fields are only 32-bit aligned.  Hence force the alignment of
+the field and padding in the structure by using aligned_s64 instead.
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Link: https://patch.msgid.link/20250401091713.2765724-9-maz@kernel.org
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250413103443.2420727-19-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-apple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/pressure/zpa2326.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-index ddc65368e77d1..7f02fe198d41c 100644
---- a/drivers/pci/controller/pcie-apple.c
-+++ b/drivers/pci/controller/pcie-apple.c
-@@ -585,6 +585,9 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
- 	list_add_tail(&port->entry, &pcie->ports);
- 	init_completion(&pcie->event);
- 
-+	/* In the success path, we keep a reference to np around */
-+	of_node_get(np);
-+
- 	ret = apple_pcie_port_register_irqs(port);
- 	WARN_ON(ret);
+diff --git a/drivers/iio/pressure/zpa2326.c b/drivers/iio/pressure/zpa2326.c
+index b4c6c7c472569..8fae58db1d639 100644
+--- a/drivers/iio/pressure/zpa2326.c
++++ b/drivers/iio/pressure/zpa2326.c
+@@ -582,7 +582,7 @@ static int zpa2326_fill_sample_buffer(struct iio_dev               *indio_dev,
+ 	struct {
+ 		u32 pressure;
+ 		u16 temperature;
+-		u64 timestamp;
++		aligned_s64 timestamp;
+ 	}   sample;
+ 	int err;
  
 -- 
 2.39.5
