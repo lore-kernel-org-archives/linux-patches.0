@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9770B1DB124;
-	Thu,  3 Jul 2025 14:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E135213A258;
+	Thu,  3 Jul 2025 14:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554029; cv=none; b=ufmGPhMwT+MAjuCSmcH+g07EKf/wMG7aKR9NG39qtcsVf2T6ydKPz2mvFE4uForJpP3GMh/Y6LLcAYigPqfkfTTXnTzaRomx3MBnTc/VUsHmYLsjwm40U8SZxRvPAwYLK49Ow9OOaFJOOferKc1BO8I1zTixt8Xf+acuJvlO50Q=
+	t=1751554033; cv=none; b=TJF8YfRp8HBcZ4e469TnENqo3O5qmUzefXXPsUCxX2DiXAkIllfZ3Va/DJRg4wdhxcl75KQRflve3IILqUVaIn7an0dKlle9+pcSSeAj8u3ZnY60483k9dsqM+609adAtYvpP+vrDq03jDwx2QRw3oL6kvwNwd18bp5C8tUUKfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554029; c=relaxed/simple;
-	bh=YQ3dTYpn/gd0Ud4yPdsV4bj7AFfXq2NOa2CbURC2zRU=;
+	s=arc-20240116; t=1751554033; c=relaxed/simple;
+	bh=0aSlaV3xrqzXIbqEtxuqO2dyVDqWIZwTIc90T8UIMQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdROvvKGi/BN7/e3R0EinR/RJC0i0DZ8qP1oE/WXQVUWBy31YzRdi5qMqnV5vRZt2Sqt7Evpv2YVZO1gj9JKxe8bW8CnTXL2Tm675wUEaDpAEzFKO+kI4GFsB1gzgVwWSi/mRYaq37naW275WknpxkOEYrEqabyXriY5iZuo/lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM1mjI2d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u7A5Sf3PxLWt6zyWuQd52R1sptRwEVk8xDI+4+j0tSLLW8DAB5B4pFTxdkHSyMn6hi9PNB3ACNyuUTegvwM05HTQzhuT9l0CthrRh8U0/qZIQBlm9Z+VjALoVLttzz8KRcBEIKNWxmTuPJKiF+47YXUoEsrgcT79QsO4s97RpIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0vvxnR5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM1mjI2d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC72C4CEE3;
-	Thu,  3 Jul 2025 14:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0vvxnR5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4F5C4CEF0;
+	Thu,  3 Jul 2025 14:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554029;
-	bh=YQ3dTYpn/gd0Ud4yPdsV4bj7AFfXq2NOa2CbURC2zRU=;
+	s=korg; t=1751554032;
+	bh=0aSlaV3xrqzXIbqEtxuqO2dyVDqWIZwTIc90T8UIMQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mM1mjI2d2OShrczK2cvKm459b0mNYjWRK+PgBoBT3DGASIxu4Pza/1/UMxFM+55gn
-	 ejJFqlR4Vq2eiQP5XVQIYV9/uQadoK4YPKUPpOWx0DP+OQwpinZRAORJA5XHy/388w
-	 rWAqlOPvbbvpDhZCtrx5tItU7qhXhHeQdbKkpPqY=
+	b=d0vvxnR53RdIdC+Be30jRkBQRS9NiuSN9scF922ySTNmPG2i4BvUXQLdIULN07c1Q
+	 BD+ZB58zUIZp/FbzHvzEgMcSnuM8RROt41sFMDnIKFLCunJoUEEPlATNfzffODHx2e
+	 MKmg5L8ZR1VOBUhakNRQAgR4qYsk0hSG5FIBOMds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/218] nvme-tcp: sanitize request list handling
-Date: Thu,  3 Jul 2025 16:39:35 +0200
-Message-ID: <20250703143957.048721018@linuxfoundation.org>
+Subject: [PATCH 6.12 028/218] md/md-bitmap: fix dm-raid max_write_behind setting
+Date: Thu,  3 Jul 2025 16:39:36 +0200
+Message-ID: <20250703143957.085773508@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,69 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@kernel.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 0bf04c874fcb1ae46a863034296e4b33d8fbd66c ]
+[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
 
-Validate the request in nvme_tcp_handle_r2t() to ensure it's not part of
-any list, otherwise a malicious R2T PDU might inject a loop in request
-list processing.
+It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
 
-Signed-off-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/md/md-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 13ede6e309092..25e486e6e8054 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -453,7 +453,8 @@ nvme_tcp_fetch_request(struct nvme_tcp_queue *queue)
- 			return NULL;
- 	}
- 
--	list_del(&req->entry);
-+	list_del_init(&req->entry);
-+	init_llist_node(&req->lentry);
- 	return req;
- }
- 
-@@ -561,6 +562,8 @@ static int nvme_tcp_init_request(struct blk_mq_tag_set *set,
- 	req->queue = queue;
- 	nvme_req(rq)->ctrl = &ctrl->ctrl;
- 	nvme_req(rq)->cmd = &pdu->cmd;
-+	init_llist_node(&req->lentry);
-+	INIT_LIST_HEAD(&req->entry);
- 
- 	return 0;
- }
-@@ -765,6 +768,14 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
- 		return -EPROTO;
- 	}
- 
-+	if (llist_on_list(&req->lentry) ||
-+	    !list_empty(&req->entry)) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"req %d unexpected r2t while processing request\n",
-+			rq->tag);
-+		return -EPROTO;
-+	}
-+
- 	req->pdu_len = 0;
- 	req->h2cdata_left = r2t_length;
- 	req->h2cdata_offset = r2t_offset;
-@@ -2599,6 +2610,8 @@ static void nvme_tcp_submit_async_event(struct nvme_ctrl *arg)
- 	ctrl->async_req.offset = 0;
- 	ctrl->async_req.curr_bio = NULL;
- 	ctrl->async_req.data_len = 0;
-+	init_llist_node(&ctrl->async_req.lentry);
-+	INIT_LIST_HEAD(&ctrl->async_req.entry);
- 
- 	nvme_tcp_queue_request(&ctrl->async_req, true, true);
- }
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index fbb4f57010da6..c12359fd3a420 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -787,7 +787,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
+ 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
+ 	 */
+ 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
+-	if (write_behind > COUNTER_MAX)
++	if (write_behind > COUNTER_MAX / 2)
+ 		write_behind = COUNTER_MAX / 2;
+ 	sb->write_behind = cpu_to_le32(write_behind);
+ 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
 -- 
 2.39.5
 
