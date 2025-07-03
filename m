@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49B12ED143;
-	Thu,  3 Jul 2025 15:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420A52ED143;
+	Thu,  3 Jul 2025 15:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555143; cv=none; b=Mn0XrlJxE0M7829Nxehqjc71mMzgw4Z+a4ahjnMgxUpSeVohPHm8CWEIKt5xN5Djx/QgZo6/VqDko97A9GlUxhONb+uUAkBBM2OASqobUpr8CpwS74IMziij8165ZhALiR0iuA7Cb6XvJInY6BiqxXSSW+1fn5qpJv7WjGsJ6yA=
+	t=1751555146; cv=none; b=PaFDpsWrue1r85XRhELoRVxCmFkq6IuP1Qcb7cFR0HuUHqxGqBgoqzmNzOTZfJHjZgj6SHRgOB5FUWYam/1X30Gocqv30WnxzAbwcWaScGBApJ/elNZ4fBHdlfjYe+6fTPz044ADuuqGg1I1XYsJpDjTimkgN56lYtfLwonvpHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555143; c=relaxed/simple;
-	bh=C8RCy3NirBWMXCAuOqR/5B69OvxMwDFfRCnrgGs0+ys=;
+	s=arc-20240116; t=1751555146; c=relaxed/simple;
+	bh=kU1I7uJs761zqxDX2P+sXWh6j5XVB7EwSrsWHahGzt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCnpiQTYGQoz+sm69tlw0YsuSBEQB0pBqFCc3D3pRuWLMlThYl2dJK5twrO1EtCdHIcxnrI4Sxsn1+eYX5yC4YbVAYt5gP+Z7gMHPIW6BIfKA+h0XVqlcBP57GSxvhRqItyeQbc5ztR0oJpLYMTKqBq5Quvzrece+NiK2I+Ddbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOilGCkf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SzYVYpEkza7qOjirun41Bc/b80pTsCsJCqFECmBeHZaYqmcVvj3emxAWBPXRAuSEXryNFsgJeyMekXMoNGkxo6XnHNkXDJeDyy4g39mPXeOdHQQ4uXyK84kaXU8T4TewtPbPhd/pbIhuUyQUqalMFXqQsJTqtjovf2wvLsiiddw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9jfOi/Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOilGCkf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55261C4CEE3;
-	Thu,  3 Jul 2025 15:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9jfOi/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F07C4CEE3;
+	Thu,  3 Jul 2025 15:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555142;
-	bh=C8RCy3NirBWMXCAuOqR/5B69OvxMwDFfRCnrgGs0+ys=;
+	s=korg; t=1751555146;
+	bh=kU1I7uJs761zqxDX2P+sXWh6j5XVB7EwSrsWHahGzt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZOilGCkfAnt/6GwjLEc+HNLPfSd+0FWUYK2RXbE47Aoi+Xwx4q6ar126rfQhUXlz3
-	 GzLNXapQ9vGrd2zzqfRqW0qsPTXQgcLLt3HsRhFka6TPna8TSCworT2g+p+ofGndH8
-	 W72GPQGS29zvwUkKUzyktl+nhR7H1xpkZ8OP9jMQ=
+	b=W9jfOi/ZatOdL4qj15rBqHoDxm2HuMDBJ8qYqgyfexd/cNxbWx1gNZ5tVoZhNykLs
+	 FMHycBD8rGgyHSUDjN75RiPbPLlG2VVCa19KMDobXHIkvZ+WzM+r79Mkiuv2BCiIwM
+	 5NmLRp1uB2+ktjhfP6nT8hl3xrq3cHK48LTjZRRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	Mina Almasry <almasrymina@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.15 187/263] net: libwx: fix the creation of page_pool
-Date: Thu,  3 Jul 2025 16:41:47 +0200
-Message-ID: <20250703144011.840937566@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 160/263] nvme: refactor the atomic write unit detection
+Date: Thu,  3 Jul 2025 16:41:20 +0200
+Message-ID: <20250703144010.777447980@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -52,41 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 85720e04d9af0b77f8092b12a06661a8d459d4a0 upstream.
+[ Upstream commit b2e607fecac15e07f50269c080e2e71b5049dfa2 ]
 
-'rx_ring->size' means the count of ring descriptors multiplied by the
-size of one descriptor. When increasing the count of ring descriptors,
-it may exceed the limit of pool size.
+Move all the code out of nvme_update_disk_info into the helper, and
+rename the helper to have a somewhat less clumsy name.
 
-[ 864.209610] page_pool_create_percpu() gave up with errno -7
-[ 864.209613] txgbe 0000:11:00.0: Page pool creation failed: -7
-
-Fix to set the pool_size to the count of ring descriptors.
-
-Fixes: 850b971110b2 ("net: libwx: Allocate Rx and Tx resources")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/434C72BFB40E350A+20250625023924.21821-1-jiawenwu@trustnetic.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Stable-dep-of: f46d273449ba ("nvme: fix atomic write size validation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 72 +++++++++++++++++++++-------------------
+ 1 file changed, 38 insertions(+), 34 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -2496,7 +2496,7 @@ static int wx_alloc_page_pool(struct wx_
- 	struct page_pool_params pp_params = {
- 		.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV,
- 		.order = 0,
--		.pool_size = rx_ring->size,
-+		.pool_size = rx_ring->count,
- 		.nid = dev_to_node(rx_ring->dev),
- 		.dev = rx_ring->dev,
- 		.dma_dir = DMA_FROM_DEVICE,
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 93a8119ad5ca6..1c853c5b8169b 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1996,21 +1996,51 @@ static void nvme_configure_metadata(struct nvme_ctrl *ctrl,
+ }
+ 
+ 
+-static void nvme_update_atomic_write_disk_info(struct nvme_ns *ns,
+-			struct nvme_id_ns *id, struct queue_limits *lim,
+-			u32 bs, u32 atomic_bs)
++static u32 nvme_configure_atomic_write(struct nvme_ns *ns,
++		struct nvme_id_ns *id, struct queue_limits *lim, u32 bs)
+ {
+-	unsigned int boundary = 0;
++	u32 atomic_bs, boundary = 0;
+ 
+-	if (id->nsfeat & NVME_NS_FEAT_ATOMICS && id->nawupf) {
+-		if (le16_to_cpu(id->nabspf))
++	/*
++	 * We do not support an offset for the atomic boundaries.
++	 */
++	if (id->nabo)
++		return bs;
++
++	if ((id->nsfeat & NVME_NS_FEAT_ATOMICS) && id->nawupf) {
++		/*
++		 * Use the per-namespace atomic write unit when available.
++		 */
++		atomic_bs = (1 + le16_to_cpu(id->nawupf)) * bs;
++		if (id->nabspf)
+ 			boundary = (le16_to_cpu(id->nabspf) + 1) * bs;
++	} else {
++		/*
++		 * Use the controller wide atomic write unit.  This sucks
++		 * because the limit is defined in terms of logical blocks while
++		 * namespaces can have different formats, and because there is
++		 * no clear language in the specification prohibiting different
++		 * values for different controllers in the subsystem.
++		 */
++		atomic_bs = (1 + ns->ctrl->awupf) * bs;
++	}
++
++	if (!ns->ctrl->subsys->atomic_bs) {
++		ns->ctrl->subsys->atomic_bs = atomic_bs;
++	} else if (ns->ctrl->subsys->atomic_bs != atomic_bs) {
++		dev_err_ratelimited(ns->ctrl->device,
++			"%s: Inconsistent Atomic Write Size, Namespace will not be added: Subsystem=%d bytes, Controller/Namespace=%d bytes\n",
++			ns->disk ? ns->disk->disk_name : "?",
++			ns->ctrl->subsys->atomic_bs,
++			atomic_bs);
+ 	}
++
+ 	lim->atomic_write_hw_max = atomic_bs;
+ 	lim->atomic_write_hw_boundary = boundary;
+ 	lim->atomic_write_hw_unit_min = bs;
+ 	lim->atomic_write_hw_unit_max = rounddown_pow_of_two(atomic_bs);
+ 	lim->features |= BLK_FEAT_ATOMIC_WRITES;
++	return atomic_bs;
+ }
+ 
+ static u32 nvme_max_drv_segments(struct nvme_ctrl *ctrl)
+@@ -2048,34 +2078,8 @@ static bool nvme_update_disk_info(struct nvme_ns *ns, struct nvme_id_ns *id,
+ 		valid = false;
+ 	}
+ 
+-	atomic_bs = phys_bs = bs;
+-	if (id->nabo == 0) {
+-		/*
+-		 * Bit 1 indicates whether NAWUPF is defined for this namespace
+-		 * and whether it should be used instead of AWUPF. If NAWUPF ==
+-		 * 0 then AWUPF must be used instead.
+-		 */
+-		if (id->nsfeat & NVME_NS_FEAT_ATOMICS && id->nawupf)
+-			atomic_bs = (1 + le16_to_cpu(id->nawupf)) * bs;
+-		else
+-			atomic_bs = (1 + ns->ctrl->awupf) * bs;
+-
+-		/*
+-		 * Set subsystem atomic bs.
+-		 */
+-		if (ns->ctrl->subsys->atomic_bs) {
+-			if (atomic_bs != ns->ctrl->subsys->atomic_bs) {
+-				dev_err_ratelimited(ns->ctrl->device,
+-					"%s: Inconsistent Atomic Write Size, Namespace will not be added: Subsystem=%d bytes, Controller/Namespace=%d bytes\n",
+-					ns->disk ? ns->disk->disk_name : "?",
+-					ns->ctrl->subsys->atomic_bs,
+-					atomic_bs);
+-			}
+-		} else
+-			ns->ctrl->subsys->atomic_bs = atomic_bs;
+-
+-		nvme_update_atomic_write_disk_info(ns, id, lim, bs, atomic_bs);
+-	}
++	phys_bs = bs;
++	atomic_bs = nvme_configure_atomic_write(ns, id, lim, bs);
+ 
+ 	if (id->nsfeat & NVME_NS_FEAT_IO_OPT) {
+ 		/* NPWG = Namespace Preferred Write Granularity */
+-- 
+2.39.5
+
 
 
