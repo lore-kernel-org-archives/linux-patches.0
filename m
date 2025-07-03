@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47E82E7F0A;
-	Thu,  3 Jul 2025 15:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154CA2D6639;
+	Thu,  3 Jul 2025 15:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555785; cv=none; b=Ci1KWQXTd8xVtkNgUeJrBp3d8LoGk3XyZ321w2OxzXHawstFk/D7ju3A3y1A/l87RB5bNkbl5fUj3KyonYH71OYtIQQkBMonUaXK9VVLuZAMjRIiCpmYEM5/K0EMoJX1Q5bHWpN2n5vqFxDFSObw/pTwC1a3I7n02RbopAUt+4c=
+	t=1751555789; cv=none; b=gnZzB0nieM8VfYiMAoEIfDLZmJpuS/utNuk8wuZV73zf+MVUfFR0Ax6VYWoE7Z2JeWm61VwkJF2oLMZivThSq9mgtEtomc3rTmYmzoPAjpbUduRcCy+tXiybKd2AAYvb4fdLhIef7hSIIRerKz56H0aF8fVQh/Y7YC70e5D1RZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555785; c=relaxed/simple;
-	bh=m0610Ez2CnE9mxDpG8yMnWFiVxIeXwaLw2yIYAHUOlU=;
+	s=arc-20240116; t=1751555789; c=relaxed/simple;
+	bh=2sdy/QDlQ4bKAnlHmhRps/lpFGsugFJ01y4AxvlBbeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfKK+HpEwzJlqgBrZhP4D6OVDbCqmdN5Y+RUUIOZsfmEQusfHw7HqDQBzpzQoa7XqNbjiU+7WPJwZjXpDJ++GMWr06d8iT6QZml++d9/sUTVb9k1nrJ8SWnu/Cach8+eWNEjCzXCBgwVnVeK8c5kfTqisqWMdxq2jBUuMJQ/Ciw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zu6OSVky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O32WL52Xaohm4HWE4J/mTZcsCDyeHurCLXclgj9hWo8ExJFXwyGCE5wZwy7Mvu2b0rIcbePb/II/K1LPaBZnH96fC4KMqUfTPSToDcjm7sPuOBCVvye7K1BJLAm6/GP3YbCsnklm6hxKcgnmGJZJ4EYPVXXKiKObblwROL3V3m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fi+E5gvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zu6OSVky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD3CC4CEE3;
-	Thu,  3 Jul 2025 15:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fi+E5gvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79921C4CEE3;
+	Thu,  3 Jul 2025 15:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555785;
-	bh=m0610Ez2CnE9mxDpG8yMnWFiVxIeXwaLw2yIYAHUOlU=;
+	s=korg; t=1751555789;
+	bh=2sdy/QDlQ4bKAnlHmhRps/lpFGsugFJ01y4AxvlBbeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zu6OSVkyMOyYR7tTLbnRjE1wxAwTSm8tw50uMNYp9disVbh/uyvOU5h6E0il2+d05
-	 mwErTxbIUdCG7iz1fY1S+QPq3s6uXP1DE5MrRAUsDhmCTeXqNAfs/CCJ0xMKDe8fhh
-	 K6iugA79S0KimKSHa/Co2WCDtgTY6VrLq9Tdhj4s=
+	b=fi+E5gvUtXAGXEpndMJ8Br0Sgq7KIVxtLA3ubtWQPSQY3XlyGXXCvVHDq2IjaYMnI
+	 iOeumJIQWj+U29Z8RQWcLYZOJ223MbYrNlH6gOwyhWbifb5JnVxytG6eXeBE5ifrY2
+	 UWl4BVMWRfBtZAIp78qs7p5vitxw0NH6KRCJ/sXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Haller <d.haller@phytec.de>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.6 121/139] drm/bridge: cdns-dsi: Wait for Clk and Data Lanes to be ready
-Date: Thu,  3 Jul 2025 16:43:04 +0200
-Message-ID: <20250703143945.915484555@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 122/139] drm/amd/display: Add null pointer check for get_first_active_display()
+Date: Thu,  3 Jul 2025 16:43:05 +0200
+Message-ID: <20250703143945.954586951@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -53,70 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aradhya Bhatia <a-bhatia1@ti.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 47c03e6660e96cbba0239125b1d4a9db3c724b1d upstream.
+commit c3e9826a22027a21d998d3e64882fa377b613006 upstream.
 
-Once the DSI Link and DSI Phy are initialized, the code needs to wait
-for Clk and Data Lanes to be ready, before continuing configuration.
-This is in accordance with the DSI Start-up procedure, found in the
-Technical Reference Manual of Texas Instrument's J721E SoC[0] which
-houses this DSI TX controller.
+The function mod_hdcp_hdcp1_enable_encryption() calls the function
+get_first_active_display(), but does not check its return value.
+The return value is a null pointer if the display list is empty.
+This will lead to a null pointer dereference in
+mod_hdcp_hdcp2_enable_encryption().
 
-If the previous bridge (or crtc/encoder) are configured pre-maturely,
-the input signal FIFO gets corrupt. This introduces a color-shift on the
-display.
+Add a null pointer check for get_first_active_display() and return
+MOD_HDCP_STATUS_DISPLAY_NOT_FOUND if the function return null.
 
-Allow the driver to wait for the clk and data lanes to get ready during
-DSI enable.
-
-[0]: See section 12.6.5.7.3 "Start-up Procedure" in J721E SoC TRM
-     TRM Link: http://www.ti.com/lit/pdf/spruil1
-
-Fixes: e19233955d9e ("drm/bridge: Add Cadence DSI driver")
-Cc: stable@vger.kernel.org
-Tested-by: Dominik Haller <d.haller@phytec.de>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Tested-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Link: https://lore.kernel.org/r/20250329113925.68204-6-aradhya.bhatia@linux.dev
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 2deade5ede56 ("drm/amd/display: Remove hdcp display state with mst fix")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # v5.8
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-@@ -769,7 +769,7 @@ static void cdns_dsi_bridge_enable(struc
- 	struct phy_configure_opts_mipi_dphy *phy_cfg = &output->phy_opts.mipi_dphy;
- 	unsigned long tx_byte_period;
- 	struct cdns_dsi_cfg dsi_cfg;
--	u32 tmp, reg_wakeup, div;
-+	u32 tmp, reg_wakeup, div, status;
- 	int nlanes;
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
+@@ -368,6 +368,9 @@ enum mod_hdcp_status mod_hdcp_hdcp1_enab
+ 	struct mod_hdcp_display *display = get_first_active_display(hdcp);
+ 	enum mod_hdcp_status status = MOD_HDCP_STATUS_SUCCESS;
  
- 	if (WARN_ON(pm_runtime_get_sync(dsi->base.dev) < 0))
-@@ -786,6 +786,19 @@ static void cdns_dsi_bridge_enable(struc
- 	cdns_dsi_hs_init(dsi);
- 	cdns_dsi_init_link(dsi);
- 
-+	/*
-+	 * Now that the DSI Link and DSI Phy are initialized,
-+	 * wait for the CLK and Data Lanes to be ready.
-+	 */
-+	tmp = CLK_LANE_RDY;
-+	for (int i = 0; i < nlanes; i++)
-+		tmp |= DATA_LANE_RDY(i);
++	if (!display)
++		return MOD_HDCP_STATUS_DISPLAY_NOT_FOUND;
 +
-+	if (readl_poll_timeout(dsi->regs + MCTL_MAIN_STS, status,
-+			       (tmp == (status & tmp)), 100, 500000))
-+		dev_err(dsi->base.dev,
-+			"Timed Out: DSI-DPhy Clock and Data Lanes not ready.\n");
-+
- 	writel(HBP_LEN(dsi_cfg.hbp) | HSA_LEN(dsi_cfg.hsa),
- 	       dsi->regs + VID_HSIZE1);
- 	writel(HFP_LEN(dsi_cfg.hfp) | HACT_LEN(dsi_cfg.hact),
+ 	mutex_lock(&psp->hdcp_context.mutex);
+ 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
+ 	memset(hdcp_cmd, 0, sizeof(struct ta_hdcp_shared_memory));
 
 
