@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342FB2EE299;
-	Thu,  3 Jul 2025 15:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B0C2EF67F;
+	Thu,  3 Jul 2025 15:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554886; cv=none; b=HT1DpmJcV1ZIFYWGPKp2YpB7iRSzKiUeMTHykqdYHF/ZxCBOf86KMxqvggzRPuKmrnJWAmvRSeOT0A1YMEd7zW8EAfh/3yt0EtzR1+5sLny5V0CssGnQODV7FDbMn8VgdGgDazd2Yk0YbiJm9KTCqYyWnP37r0D2ftvE20sFFOQ=
+	t=1751554889; cv=none; b=gD0fIkby4bfONHOpqFZS9/QfyF8KZUhLxAOFu6oDco1c28TD742sz5Y1CT7Ik3IkNuLOFqAiLc5hjPa+Stu/LFdAPcPTjck7MhAeAB+i6LMwKZz41iAhFoDYWVDqhPp7z4tIOXFTMTEDOwhDGmV3kCU4xtwmW8Qhtk+/Qo1aCmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554886; c=relaxed/simple;
-	bh=zDiY1dJmBbkdMgCvkK4WhP0prqEQgybr6k/WuLrnwbg=;
+	s=arc-20240116; t=1751554889; c=relaxed/simple;
+	bh=qdDZ7Z70yq18vvG8Ji2f1Q2ngptSUu3rFgrnnD8bO8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvryxYGE27IQNnMqqyy8L3C5z0t68Pciuddy3gKBP7DziATmtAh1lCB/jVfeTl7EtWwzgdJrwufr9w9XiYyZQ+BuWDbkxjxxJ6Nzp2uBM90vDrcUVyHgQQOFRN/d8hq2v8BajAqNJqw9+InVy8QCm/AVbdLMbg7OqpXB5bDMdRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eITiMBV0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZVT/MLQVPeQUFkACw6BNSn1SzryFVAz1XOFqC5ojv6hQdU65BmI/AYw6ktlvCgIokYgFxkAye9tYHGICaaGsAWOQ3gsxfzq5WDCQ8oSgGrG80huiw5dASeES8GSESgHWs0CEQaWWlw/YMuqj2wqXaUJkNDGdpHYCyQZWbyK00s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGa3uJBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eITiMBV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEF4C4CEF3;
-	Thu,  3 Jul 2025 15:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGa3uJBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C220BC4CEEE;
+	Thu,  3 Jul 2025 15:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554886;
-	bh=zDiY1dJmBbkdMgCvkK4WhP0prqEQgybr6k/WuLrnwbg=;
+	s=korg; t=1751554889;
+	bh=qdDZ7Z70yq18vvG8Ji2f1Q2ngptSUu3rFgrnnD8bO8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eITiMBV0FtGDOCx5713S/Kl4QdZtUcq65FBSYM6Dsd5TzWirH+qMp6Tnru5rb4ue6
-	 CaCwKtUaDcuyLW0Ap5b4uJbJPY3K3xrKumVxQF90usReBl3IUuDzEfcHSq+F56/mtW
-	 G3AX+L0XUI7i/igE+ysuHzxs88v15kFizZKzblHg=
+	b=KGa3uJBUQd0/1EUEBXlzdAh/bJIWUlpy8IvfGtcrMnarr1bwEjDoS1VB+lsnhXfzP
+	 lJISKp8lwkUHvUxu9BltADJeTo4SmOpyk0VDA9j1gVEhv98oSfrfosTsY/LYyW6IPq
+	 lJk1p0Um97puxYchyvkVcC+3uY9syR3JnJ3EZLcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 092/263] io_uring/zcrx: improve area validation
-Date: Thu,  3 Jul 2025 16:40:12 +0200
-Message-ID: <20250703144007.986197276@linuxfoundation.org>
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 110/263] smb: client: remove \t from TP_printk statements
+Date: Thu,  3 Jul 2025 16:40:30 +0200
+Message-ID: <20250703144008.753118243@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,116 +50,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit d760d3f59f0d8d0df2895db30d36cf23106d6b05 ]
+commit e97f9540ce001503a4539f337da742c1dfa7d86a upstream.
 
-dmabuf backed area will be taking an offset instead of addresses, and
-io_buffer_validate() is not flexible enough to facilitate it. It also
-takes an iovec, which may truncate the u64 length zcrx takes. Add a new
-helper function for validation.
+The generate '[FAILED TO PARSE]' strings in trace-cmd report output like this:
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/0b3b735391a0a8f8971bf0121c19765131fddd3b.1746097431.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 0ec33c81d9c7 ("io_uring/zcrx: fix area release on registration failure")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  rm-5298  [001]  6084.533748493: smb3_exit_err:        [FAILED TO PARSE] xid=972 func_name=cifs_rmdir rc=-39
+  rm-5298  [001]  6084.533959234: smb3_enter:           [FAILED TO PARSE] xid=973 func_name=cifs_closedir
+  rm-5298  [001]  6084.533967630: smb3_close_enter:     [FAILED TO PARSE] xid=973 fid=94489281833 tid=1 sesid=96758029877361
+  rm-5298  [001]  6084.534004008: smb3_cmd_enter:       [FAILED TO PARSE] tid=1 sesid=96758029877361 cmd=6 mid=566
+  rm-5298  [001]  6084.552248232: smb3_cmd_done:        [FAILED TO PARSE] tid=1 sesid=96758029877361 cmd=6 mid=566
+  rm-5298  [001]  6084.552280542: smb3_close_done:      [FAILED TO PARSE] xid=973 fid=94489281833 tid=1 sesid=96758029877361
+  rm-5298  [001]  6084.552316034: smb3_exit_done:       [FAILED TO PARSE] xid=973 func_name=cifs_closedir
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c | 27 +++++++++++++++------------
- io_uring/rsrc.h |  2 +-
- io_uring/zcrx.c |  7 +++----
- 3 files changed, 19 insertions(+), 17 deletions(-)
+ fs/smb/client/trace.h |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
-index 794d4ae6f0bc8..6d61683223870 100644
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -80,10 +80,21 @@ static int io_account_mem(struct io_ring_ctx *ctx, unsigned long nr_pages)
- 	return 0;
- }
+--- a/fs/smb/client/trace.h
++++ b/fs/smb/client/trace.h
+@@ -140,7 +140,7 @@ DECLARE_EVENT_CLASS(smb3_rw_err_class,
+ 		__entry->len = len;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\tR=%08x[%x] xid=%u sid=0x%llx tid=0x%x fid=0x%llx offset=0x%llx len=0x%x rc=%d",
++	TP_printk("R=%08x[%x] xid=%u sid=0x%llx tid=0x%x fid=0x%llx offset=0x%llx len=0x%x rc=%d",
+ 		  __entry->rreq_debug_id, __entry->rreq_debug_index,
+ 		  __entry->xid, __entry->sesid, __entry->tid, __entry->fid,
+ 		  __entry->offset, __entry->len, __entry->rc)
+@@ -190,7 +190,7 @@ DECLARE_EVENT_CLASS(smb3_other_err_class
+ 		__entry->len = len;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x fid=0x%llx offset=0x%llx len=0x%x rc=%d",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x fid=0x%llx offset=0x%llx len=0x%x rc=%d",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->fid,
+ 		__entry->offset, __entry->len, __entry->rc)
+ )
+@@ -247,7 +247,7 @@ DECLARE_EVENT_CLASS(smb3_copy_range_err_
+ 		__entry->len = len;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x source fid=0x%llx source offset=0x%llx target fid=0x%llx target offset=0x%llx len=0x%x rc=%d",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x source fid=0x%llx source offset=0x%llx target fid=0x%llx target offset=0x%llx len=0x%x rc=%d",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->target_fid,
+ 		__entry->src_offset, __entry->target_fid, __entry->target_offset, __entry->len, __entry->rc)
+ )
+@@ -298,7 +298,7 @@ DECLARE_EVENT_CLASS(smb3_copy_range_done
+ 		__entry->target_offset = target_offset;
+ 		__entry->len = len;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x source fid=0x%llx source offset=0x%llx target fid=0x%llx target offset=0x%llx len=0x%x",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x source fid=0x%llx source offset=0x%llx target fid=0x%llx target offset=0x%llx len=0x%x",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->target_fid,
+ 		__entry->src_offset, __entry->target_fid, __entry->target_offset, __entry->len)
+ )
+@@ -482,7 +482,7 @@ DECLARE_EVENT_CLASS(smb3_fd_class,
+ 		__entry->tid = tid;
+ 		__entry->sesid = sesid;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x fid=0x%llx",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x fid=0x%llx",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->fid)
+ )
  
--int io_buffer_validate(struct iovec *iov)
-+int io_validate_user_buf_range(u64 uaddr, u64 ulen)
- {
--	unsigned long tmp, acct_len = iov->iov_len + (PAGE_SIZE - 1);
-+	unsigned long tmp, base = (unsigned long)uaddr;
-+	unsigned long acct_len = (unsigned long)PAGE_ALIGN(ulen);
+@@ -521,7 +521,7 @@ DECLARE_EVENT_CLASS(smb3_fd_err_class,
+ 		__entry->sesid = sesid;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x fid=0x%llx rc=%d",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x fid=0x%llx rc=%d",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->fid,
+ 		__entry->rc)
+ )
+@@ -794,7 +794,7 @@ DECLARE_EVENT_CLASS(smb3_cmd_err_class,
+ 		__entry->status = status;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\tsid=0x%llx tid=0x%x cmd=%u mid=%llu status=0x%x rc=%d",
++	TP_printk("sid=0x%llx tid=0x%x cmd=%u mid=%llu status=0x%x rc=%d",
+ 		__entry->sesid, __entry->tid, __entry->cmd, __entry->mid,
+ 		__entry->status, __entry->rc)
+ )
+@@ -829,7 +829,7 @@ DECLARE_EVENT_CLASS(smb3_cmd_done_class,
+ 		__entry->cmd = cmd;
+ 		__entry->mid = mid;
+ 	),
+-	TP_printk("\tsid=0x%llx tid=0x%x cmd=%u mid=%llu",
++	TP_printk("sid=0x%llx tid=0x%x cmd=%u mid=%llu",
+ 		__entry->sesid, __entry->tid,
+ 		__entry->cmd, __entry->mid)
+ )
+@@ -867,7 +867,7 @@ DECLARE_EVENT_CLASS(smb3_mid_class,
+ 		__entry->when_sent = when_sent;
+ 		__entry->when_received = when_received;
+ 	),
+-	TP_printk("\tcmd=%u mid=%llu pid=%u, when_sent=%lu when_rcv=%lu",
++	TP_printk("cmd=%u mid=%llu pid=%u, when_sent=%lu when_rcv=%lu",
+ 		__entry->cmd, __entry->mid, __entry->pid, __entry->when_sent,
+ 		__entry->when_received)
+ )
+@@ -898,7 +898,7 @@ DECLARE_EVENT_CLASS(smb3_exit_err_class,
+ 		__assign_str(func_name);
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\t%s: xid=%u rc=%d",
++	TP_printk("%s: xid=%u rc=%d",
+ 		__get_str(func_name), __entry->xid, __entry->rc)
+ )
  
-+	/* arbitrary limit, but we need something */
-+	if (ulen > SZ_1G || !ulen)
-+		return -EFAULT;
-+	if (check_add_overflow(base, acct_len, &tmp))
-+		return -EOVERFLOW;
-+	return 0;
-+}
-+
-+static int io_buffer_validate(struct iovec *iov)
-+{
- 	/*
- 	 * Don't impose further limits on the size and buffer
- 	 * constraints here, we'll -EINVAL later when IO is
-@@ -91,17 +102,9 @@ int io_buffer_validate(struct iovec *iov)
- 	 */
- 	if (!iov->iov_base)
- 		return iov->iov_len ? -EFAULT : 0;
--	if (!iov->iov_len)
--		return -EFAULT;
--
--	/* arbitrary limit, but we need something */
--	if (iov->iov_len > SZ_1G)
--		return -EFAULT;
+@@ -924,7 +924,7 @@ DECLARE_EVENT_CLASS(smb3_sync_err_class,
+ 		__entry->ino = ino;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\tino=%lu rc=%d",
++	TP_printk("ino=%lu rc=%d",
+ 		__entry->ino, __entry->rc)
+ )
  
--	if (check_add_overflow((unsigned long)iov->iov_base, acct_len, &tmp))
--		return -EOVERFLOW;
--
--	return 0;
-+	return io_validate_user_buf_range((unsigned long)iov->iov_base,
-+					  iov->iov_len);
- }
+@@ -950,7 +950,7 @@ DECLARE_EVENT_CLASS(smb3_enter_exit_clas
+ 		__entry->xid = xid;
+ 		__assign_str(func_name);
+ 	),
+-	TP_printk("\t%s: xid=%u",
++	TP_printk("%s: xid=%u",
+ 		__get_str(func_name), __entry->xid)
+ )
  
- static void io_release_ubuf(void *priv)
-diff --git a/io_uring/rsrc.h b/io_uring/rsrc.h
-index b52242852ff34..4373524f993c7 100644
---- a/io_uring/rsrc.h
-+++ b/io_uring/rsrc.h
-@@ -83,7 +83,7 @@ int io_register_rsrc_update(struct io_ring_ctx *ctx, void __user *arg,
- 			    unsigned size, unsigned type);
- int io_register_rsrc(struct io_ring_ctx *ctx, void __user *arg,
- 			unsigned int size, unsigned int type);
--int io_buffer_validate(struct iovec *iov);
-+int io_validate_user_buf_range(u64 uaddr, u64 ulen);
- 
- bool io_check_coalesce_buffer(struct page **page_array, int nr_pages,
- 			      struct io_imu_folio_data *data);
-diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
-index ecb59182d9b2c..0771a57d81a5b 100644
---- a/io_uring/zcrx.c
-+++ b/io_uring/zcrx.c
-@@ -205,7 +205,6 @@ static int io_zcrx_create_area(struct io_zcrx_ifq *ifq,
- {
- 	struct io_zcrx_area *area;
- 	int i, ret, nr_pages, nr_iovs;
--	struct iovec iov;
- 
- 	if (area_reg->flags || area_reg->rq_area_token)
- 		return -EINVAL;
-@@ -214,11 +213,11 @@ static int io_zcrx_create_area(struct io_zcrx_ifq *ifq,
- 	if (area_reg->addr & ~PAGE_MASK || area_reg->len & ~PAGE_MASK)
- 		return -EINVAL;
- 
--	iov.iov_base = u64_to_user_ptr(area_reg->addr);
--	iov.iov_len = area_reg->len;
--	ret = io_buffer_validate(&iov);
-+	ret = io_validate_user_buf_range(area_reg->addr, area_reg->len);
- 	if (ret)
- 		return ret;
-+	if (!area_reg->addr)
-+		return -EFAULT;
- 
- 	ret = -ENOMEM;
- 	area = kzalloc(sizeof(*area), GFP_KERNEL);
--- 
-2.39.5
-
 
 
