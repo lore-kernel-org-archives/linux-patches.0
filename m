@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492252EE281;
-	Thu,  3 Jul 2025 15:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2EE2E7BD6;
+	Thu,  3 Jul 2025 15:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555133; cv=none; b=ktWppuzc9fs+sGVC9z6sLHfG3nZB7ONaDbhE285UsZ/U0nzItipOhNcKHQ+swUg0K9qoaLV/elni4vuEhEoLEKDpNssJpZm9b8KX8ZRRgu7UtYltZLev6C4qGT4YoDENgRtdndbQ+0FtGPTXT7pKRcmNMya5IySMiC7KVaDDskY=
+	t=1751555136; cv=none; b=hKZg7n9vL0iOkHzHlF8ia5n27kIDNKMLKmxE4XU2+KpX8rRBNA0sL+YnpWKw2A363z0o26dZO22yMrf3hNSfCo00rnedBcx0hs+v9w7vjz36nwpeZemPJ3pcyqQF0zbE/mjZ8yCShgQBN7wzneZ8tmpnkSNsW4BqwYH6Q0nQKeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555133; c=relaxed/simple;
-	bh=9LFNUqzj/hFQhM+nrJJEBA9irFkQ8gbqM5oxf4NmsBc=;
+	s=arc-20240116; t=1751555136; c=relaxed/simple;
+	bh=gTRMkt/ZBojIGXMu3P9MJvsjKGy5XxLkCBTm9IobMr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sgmFzDb6MJZHtac8tXPU27muMkgz/OA1UuhoTnkXAg4R4ZEPJ5Sn2moa64+McsCnlMMRKopajHJTZ52PkVcq+sADLeZ55O+gXA11OMt5WUeEG044aH9E0vn3/KgR/ULeco2S1+w6qGQMr8kT503xShbvRKIOhVmFQI0IQVzsUII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxRihC7F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rd33TbBT1QnWu49vWOyqK5AYQCKj/qAksQno+0xnwPuTaiPauJ7JdmIpfcsfP8/+GLHKiDU+MPUayCEFZoGHfINyjXHem+4YPnMQasGDvX9n+bildMrXRZUQlOF8iHb88bvYH5Ph5HN46U0s0zteQ0p1Uq87y5PzCP99vU2+bG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5wcm0Ho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxRihC7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FA7C4CEE3;
-	Thu,  3 Jul 2025 15:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5wcm0Ho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E16C4CEE3;
+	Thu,  3 Jul 2025 15:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555133;
-	bh=9LFNUqzj/hFQhM+nrJJEBA9irFkQ8gbqM5oxf4NmsBc=;
+	s=korg; t=1751555136;
+	bh=gTRMkt/ZBojIGXMu3P9MJvsjKGy5XxLkCBTm9IobMr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cxRihC7Fg43bogjd4nHEx8VciNEH0ksgi5FW6WPYhUjrVpzeHu7OUVq3nmCw+xVmL
-	 /wTS4lruP8Rs3rO4wQCYX3orkYJeAtpSko4AMbRfS1V8EjA7ZNK3aouo46C/WmCHX3
-	 ih4XhZZkglzy+w2B9Rd/6Q05NDmf7eU7I6NNmxNs=
+	b=G5wcm0Ho+5oseaSjTdQAqZ/s9ogcTdcp7am/4PmEeG6vmmVItzgVlG68Xwa5hK9kb
+	 CETmY0RSrLBZ5C4NruswPEMe5OSFBgVH6lY4kvVPDw8dHYu/v5XGMw/Nvvg9EWr1Hw
+	 zHVczYXrShk5B+fRRK/F7Z3ULkuTQRDydWMNEO8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guido Trentalancia <guido@trentalancia.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.15 185/263] selinux: change security_compute_sid to return the ssid or tsid on match
-Date: Thu,  3 Jul 2025 16:41:45 +0200
-Message-ID: <20250703144011.758733118@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 159/263] net: selftests: fix TCP packet checksum
+Date: Thu,  3 Jul 2025 16:41:19 +0200
+Message-ID: <20250703144010.735911727@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,50 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit fde46f60f6c5138ee422087addbc5bf5b4968bf1 upstream.
+[ Upstream commit 8d89661a36dd3bb8c9902cff36dc0c144dce3faf ]
 
-If the end result of a security_compute_sid() computation matches the
-ssid or tsid, return that SID rather than looking it up again. This
-avoids the problem of multiple initial SIDs that map to the same
-context.
+The length in the pseudo header should be the length of the L3 payload
+AKA the L4 header+payload. The selftest code builds the packet from
+the lower layers up, so all the headers are pushed already when it
+constructs L4. We need to subtract the lower layer headers from skb->len.
 
-Cc: stable@vger.kernel.org
-Reported-by: Guido Trentalancia <guido@trentalancia.com>
-Fixes: ae254858ce07 ("selinux: introduce an initial SID for early boot processes")
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Tested-by: Guido Trentalancia <guido@trentalancia.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3e1e58d64c3d ("net: add generic selftest support")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Reported-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20250624183258.3377740-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/ss/services.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ net/core/selftests.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/security/selinux/ss/services.c
-+++ b/security/selinux/ss/services.c
-@@ -1909,11 +1909,17 @@ retry:
- 			goto out_unlock;
- 	}
- 	/* Obtain the sid for the context. */
--	rc = sidtab_context_to_sid(sidtab, &newcontext, out_sid);
--	if (rc == -ESTALE) {
--		rcu_read_unlock();
--		context_destroy(&newcontext);
--		goto retry;
-+	if (context_equal(scontext, &newcontext))
-+		*out_sid = ssid;
-+	else if (context_equal(tcontext, &newcontext))
-+		*out_sid = tsid;
-+	else {
-+		rc = sidtab_context_to_sid(sidtab, &newcontext, out_sid);
-+		if (rc == -ESTALE) {
-+			rcu_read_unlock();
-+			context_destroy(&newcontext);
-+			goto retry;
-+		}
- 	}
- out_unlock:
- 	rcu_read_unlock();
+diff --git a/net/core/selftests.c b/net/core/selftests.c
+index 35f807ea99523..406faf8e5f3f9 100644
+--- a/net/core/selftests.c
++++ b/net/core/selftests.c
+@@ -160,8 +160,9 @@ static struct sk_buff *net_test_get_skb(struct net_device *ndev,
+ 	skb->csum = 0;
+ 	skb->ip_summed = CHECKSUM_PARTIAL;
+ 	if (attr->tcp) {
+-		thdr->check = ~tcp_v4_check(skb->len, ihdr->saddr,
+-					    ihdr->daddr, 0);
++		int l4len = skb->len - skb_transport_offset(skb);
++
++		thdr->check = ~tcp_v4_check(l4len, ihdr->saddr, ihdr->daddr, 0);
+ 		skb->csum_start = skb_transport_header(skb) - skb->head;
+ 		skb->csum_offset = offsetof(struct tcphdr, check);
+ 	} else {
+-- 
+2.39.5
+
 
 
