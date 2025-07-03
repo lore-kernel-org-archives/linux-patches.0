@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA87D101DE;
-	Thu,  3 Jul 2025 14:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD7F126BFF;
+	Thu,  3 Jul 2025 14:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554138; cv=none; b=L0v8c5M4NTyh6O8gge8zXVTB5d6hITf8MmOG0GPorFPUd2qBg1+Ni8UsokwIhdyaC8wNs3x30vzH7918qL76YAqoU4dsWf7/76cQ4I4tFTheZxnsO5ClWQNaZlhKwi5azFNVRBH5DvMK81kI5aFrQePrF7gz0n/Wwqu+ose6pts=
+	t=1751554141; cv=none; b=N2kAUyt/hr5rjQGJ/YB8VcDqAZbDb/csKngFbyFhWR7Oa/ZBtp/lIWVtsNCumPLFTCjUMzUYvEZOCWKB2VLHWEIOkge3INAEm7ICf8hc+mPXckOifn8RV/91+chdf0L4v+oJhJLARLypFnKOp0GzR+A+5Hc3CAZ0p825Zg6UfgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554138; c=relaxed/simple;
-	bh=ct3KJ2rfBWewiA+CgBHtsBenWcaVWLpA1tiaRZU8MJc=;
+	s=arc-20240116; t=1751554141; c=relaxed/simple;
+	bh=frAGtIk1GJm2kSlEZmGeLyBxksirpTnR+RgZW+Xg1uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwohpMRXLV0h5z7DObrNh68EUlkSryM4k8FwVVvcT5jdlYre3P5j4fo78a8mV6oz0Pzal/jnmjqMHUp6FxjjkA5E/iWurnIX1qOzlMR660lNP19tJZZF2llqxGXAk+WK8Dp1iMkYAYg4YBQTIFp/JijTNbRzbOR8masypcxt6sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoKgJIDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JDjn/peXwvFFA/XQQiPCL+Ip8qOwLPtPYvIgOg2rGb7v6XDTuh6cGMjRLuDPfdqbvAWimdUMYigc2/vsuAeBr9yNs380JwoeM6dPDmO90I9nKik6yxZWFw+3GzFwZqCfMuEj1ATlOolGxkLHfTtUIMokDNMfRpKo9TX3ReEQVkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwB68rUl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoKgJIDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A8BC4CEE3;
-	Thu,  3 Jul 2025 14:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwB68rUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D43C4CEE3;
+	Thu,  3 Jul 2025 14:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554137;
-	bh=ct3KJ2rfBWewiA+CgBHtsBenWcaVWLpA1tiaRZU8MJc=;
+	s=korg; t=1751554141;
+	bh=frAGtIk1GJm2kSlEZmGeLyBxksirpTnR+RgZW+Xg1uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qoKgJIDHslj0QTedZhVq9YuYI5LbcBv4An917nPmrknI25ivj86WsJuH3BHu7XfaA
-	 wi/ktKc8vzVlWYaZzTznFXawaRcbGbKLJQ2hF/aFtMFw6drk1Mh+eKHIrrgSgLu5JR
-	 hnqmhplYYLA4D4w9WwVYWeMdWuXeTedNntBGuMfw=
+	b=HwB68rUlbo49nBk4bf7JSIR9bIdt7GEhgpNwTf2p1DvKkhLQK2R2TlC5QJEdzFX8F
+	 OkXSEu5wVvBdxZRJbyhW/zNpnvzWoO3SLJW3BZNXX6Y04Smc7UpchLbOXmKZRr20Na
+	 9R2TeDE455kWu+VIF2/jwpiJj2WKLI/AcWV6yBPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/218] btrfs: fix qgroup reservation leak on failure to allocate ordered extent
-Date: Thu,  3 Jul 2025 16:40:10 +0200
-Message-ID: <20250703143958.421272574@linuxfoundation.org>
+Subject: [PATCH 6.12 063/218] fs/jfs: consolidate sanity checking in dbMount
+Date: Thu,  3 Jul 2025 16:40:11 +0200
+Message-ID: <20250703143958.463390911@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -53,62 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-[ Upstream commit 1f2889f5594a2bc4c6a52634c4a51b93e785def5 ]
+[ Upstream commit 0d250b1c52484d489e31df2cf9118b7c4bd49d31 ]
 
-If we fail to allocate an ordered extent for a COW write we end up leaking
-a qgroup data reservation since we called btrfs_qgroup_release_data() but
-we didn't call btrfs_qgroup_free_refroot() (which would happen when
-running the respective data delayed ref created by ordered extent
-completion or when finishing the ordered extent in case an error happened).
+Sanity checks have been added to dbMount as individual if clauses with
+identical error handling. Move these all into one clause.
 
-So make sure we call btrfs_qgroup_free_refroot() if we fail to allocate an
-ordered extent for a COW write.
-
-Fixes: 7dbeaad0af7d ("btrfs: change timing for qgroup reserved space for ordered extents to fix reserved space leak")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Stable-dep-of: 37bfb464ddca ("jfs: validate AG parameters in dbMount() to prevent crashes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ordered-data.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/jfs/jfs_dmap.c | 37 +++++++++----------------------------
+ 1 file changed, 9 insertions(+), 28 deletions(-)
 
-diff --git a/fs/btrfs/ordered-data.c b/fs/btrfs/ordered-data.c
-index 7baee52cac184..880f9553d79d3 100644
---- a/fs/btrfs/ordered-data.c
-+++ b/fs/btrfs/ordered-data.c
-@@ -153,9 +153,10 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
- 	struct btrfs_ordered_extent *entry;
- 	int ret;
- 	u64 qgroup_rsv = 0;
-+	const bool is_nocow = (flags &
-+	       ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC)));
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 0e1019382cf51..26e89d0c69b61 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -178,45 +178,26 @@ int dbMount(struct inode *ipbmap)
+ 	dbmp_le = (struct dbmap_disk *) mp->data;
+ 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
+-
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+-	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE ||
+-		bmp->db_l2nbperpage < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+-	if (!bmp->db_numag || bmp->db_numag > MAXAG) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+ 	bmp->db_maxag = le32_to_cpu(dbmp_le->dn_maxag);
+ 	bmp->db_agpref = le32_to_cpu(dbmp_le->dn_agpref);
+-	if (bmp->db_maxag >= MAXAG || bmp->db_maxag < 0 ||
+-		bmp->db_agpref >= MAXAG || bmp->db_agpref < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_aglevel = le32_to_cpu(dbmp_le->dn_aglevel);
+ 	bmp->db_agheight = le32_to_cpu(dbmp_le->dn_agheight);
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+-	if (!bmp->db_agwidth) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
+-	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
+-	    bmp->db_agl2size < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
  
--	if (flags &
--	    ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC))) {
-+	if (is_nocow) {
- 		/* For nocow write, we can release the qgroup rsv right now */
- 		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
- 		if (ret < 0)
-@@ -170,8 +171,13 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
- 			return ERR_PTR(ret);
+-	if (((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
++	if ((bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) ||
++	    (bmp->db_l2nbperpage < 0) ||
++	    !bmp->db_numag || (bmp->db_numag > MAXAG) ||
++	    (bmp->db_maxag >= MAXAG) || (bmp->db_maxag < 0) ||
++	    (bmp->db_agpref >= MAXAG) || (bmp->db_agpref < 0) ||
++	    !bmp->db_agwidth ||
++	    (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) ||
++	    (bmp->db_agl2size < 0) ||
++	    ((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
  	}
- 	entry = kmem_cache_zalloc(btrfs_ordered_extent_cache, GFP_NOFS);
--	if (!entry)
-+	if (!entry) {
-+		if (!is_nocow)
-+			btrfs_qgroup_free_refroot(inode->root->fs_info,
-+						  btrfs_root_id(inode->root),
-+						  qgroup_rsv, BTRFS_QGROUP_RSV_DATA);
- 		return ERR_PTR(-ENOMEM);
-+	}
- 
- 	entry->file_offset = file_offset;
- 	entry->num_bytes = num_bytes;
 -- 
 2.39.5
 
