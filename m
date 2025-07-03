@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C422E7BB6;
-	Thu,  3 Jul 2025 14:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8F62EE978;
+	Thu,  3 Jul 2025 14:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554500; cv=none; b=bmScGmPJdxdhymRsC1BkL8QcG1hF23D4oPLVfbqQ0GbD0Fc1yOUWfPbawg+ewtzhxndLXtbwKL8tY70e1Ixj9+XflE/xZOSW/Q32MqlfPGt3+qOeXjyLkHXNFCgr9r5q4l2+bOuoO1gwNkLAU/ZrsHTtUtJMht3SaB5K7ryr4hY=
+	t=1751554504; cv=none; b=UND0gK7B270gXeN061lLDp5yFvbUc38kjHLF3MU3WiJ4BP5/d6qiFN4RPitRvSU9DxWta7eXnpe+BvW0VKDwPVfm2H0mNzCNYlkNca7H7yV8SoEdEuYHlarWyl7i738ZLjVewC0tsHybV5CxJKcq/J1VtBnL3plloCLL9B2QgMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554500; c=relaxed/simple;
-	bh=0ZNedpu9aeENyeEqy+z9lN8hrpKPGoad/cZ0o0XVAYc=;
+	s=arc-20240116; t=1751554504; c=relaxed/simple;
+	bh=TBxzDXQRpKPYuFGwlo72tsaDeKy9NUG26r/xDxS19HE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFlHyiwQLw6aYEMY1eBsSfnACesq1svhzzJcpMKfyxb7XxVh0i5H+lhZtgLNJYS6wVsJWQoLNLJuYz200uGc3TfFGnqMyxrEfvpfI+Atjrfx2jBlHEo8AHhOQYiIR2Bxb7YrHRtOYdiJuhYsAiVoEwq1CbSwOdnboTQIu/8GO5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAQSVR9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f6ZKzxc5+LekpN+mUeRAkfhev5s6imYfb+KVYLwMtC6k/Hj2nxQBQFwzHtFvne3XvCtRc4VtsR54KI59aJ6qUdNsnWJN3oYFRX0O9nyN900LwEdZI2OS6KElGX3GwfeRZb/ltpIFrxxBjZpwDMQk6lbErTKxz+yZq/2391U4hvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U92sV2eE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAQSVR9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148B8C4CEE3;
-	Thu,  3 Jul 2025 14:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U92sV2eE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709EDC4CEE3;
+	Thu,  3 Jul 2025 14:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554500;
-	bh=0ZNedpu9aeENyeEqy+z9lN8hrpKPGoad/cZ0o0XVAYc=;
+	s=korg; t=1751554503;
+	bh=TBxzDXQRpKPYuFGwlo72tsaDeKy9NUG26r/xDxS19HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAQSVR9T+/PGeiKjCEi9MCXBDZs2/0JRawFuz8k/RdOlHI9Qy1GHipU3S3udl41gR
-	 8986C4ccG71ekXW4IfnQvvmtFhRaXTR9UKtnYkT8PlXXBrgKHx9OgTiYwl5c2pX01E
-	 2g7+aoonwAlnzppJIHzYP4ArrWIyAV4/8IzJjpdw=
+	b=U92sV2eEVrprf2xBtKmS6fOQxAM+0A7gEGiSpMrtPHuxllknGo+p9KStGrsGkXjw5
+	 RSykqD1CxJg37ED6sSwQ5e5UcDm0euYjQ1NIK2vyOiapU4bCbcddW+JLvvbqvOLUfF
+	 0GFN5mwHTwb6UVvyUu7Z13hdHm/jEFGvgFpwOdhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andres Traumann <andres.traumann.01@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 208/218] ALSA: hda/realtek: Bass speaker fixup for ASUS UM5606KA
-Date: Thu,  3 Jul 2025 16:42:36 +0200
-Message-ID: <20250703144004.535367227@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Mathieu Tortuyaux <mtortuyaux@microsoft.com>
+Subject: [PATCH 6.12 191/218] r8169: add support for RTL8125D
+Date: Thu,  3 Jul 2025 16:42:19 +0200
+Message-ID: <20250703144003.843116537@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,43 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andres Traumann <andres.traumann.01@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit be8cd366beb80c709adbc7688ee72750f5aee3ff ]
+commit f75d1fbe7809bc5ed134204b920fd9e2fc5db1df upstream.
 
-This patch applies the ALC294 bass speaker fixup (ALC294_FIXUP_BASS_SPEAKER_15),
-previously introduced in commit a7df7f909cec ("ALSA: hda: improve bass
-speaker support for ASUS Zenbook UM5606WA"), to the ASUS Zenbook UM5606KA.
-This hardware configuration matches ASUS Zenbook UM5606WA, where DAC NID
-0x06 was removed from the bass speaker (NID 0x15), routing both speaker
-pins to DAC NID 0x03.
+This adds support for new chip version RTL8125D, which can be found on
+boards like Gigabyte X870E AORUS ELITE WIFI7. Firmware rtl8125d-1.fw
+for this chip version is available in linux-firmware already.
 
-This resolves the bass speaker routing issue, ensuring correct audio
-output on ASUS UM5606KA.
-
-Signed-off-by: Andres Traumann <andres.traumann.01@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250325102535.8172-1-andres.traumann.01@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/d0306912-e88e-4c25-8b5d-545ae8834c0c@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mathieu Tortuyaux <mtortuyaux@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/realtek/r8169.h            |    1 +
+ drivers/net/ethernet/realtek/r8169_main.c       |   23 ++++++++++++++++-------
+ drivers/net/ethernet/realtek/r8169_phy_config.c |   10 ++++++++++
+ 3 files changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 94c5151c456d6..30e9e26c5b2a7 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10859,6 +10859,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1204, "ASUS Strix G615JHR_JMR_JPR", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x1214, "ASUS Strix G615LH_LM_LP", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x125e, "ASUS Q524UQK", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1043, 0x1264, "ASUS UM5606KA", ALC294_FIXUP_BASS_SPEAKER_15),
- 	SND_PCI_QUIRK(0x1043, 0x1271, "ASUS X430UN", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1290, "ASUS X441SA", ALC233_FIXUP_EAPD_COEF_AND_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1294, "ASUS B3405CVA", ALC245_FIXUP_CS35L41_SPI_2),
--- 
-2.39.5
-
+--- a/drivers/net/ethernet/realtek/r8169.h
++++ b/drivers/net/ethernet/realtek/r8169.h
+@@ -68,6 +68,7 @@ enum mac_version {
+ 	/* support for RTL_GIGA_MAC_VER_60 has been removed */
+ 	RTL_GIGA_MAC_VER_61,
+ 	RTL_GIGA_MAC_VER_63,
++	RTL_GIGA_MAC_VER_64,
+ 	RTL_GIGA_MAC_VER_65,
+ 	RTL_GIGA_MAC_VER_66,
+ 	RTL_GIGA_MAC_NONE
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -55,6 +55,7 @@
+ #define FIRMWARE_8107E_2	"rtl_nic/rtl8107e-2.fw"
+ #define FIRMWARE_8125A_3	"rtl_nic/rtl8125a-3.fw"
+ #define FIRMWARE_8125B_2	"rtl_nic/rtl8125b-2.fw"
++#define FIRMWARE_8125D_1	"rtl_nic/rtl8125d-1.fw"
+ #define FIRMWARE_8126A_2	"rtl_nic/rtl8126a-2.fw"
+ #define FIRMWARE_8126A_3	"rtl_nic/rtl8126a-3.fw"
+ 
+@@ -138,6 +139,7 @@ static const struct {
+ 	[RTL_GIGA_MAC_VER_61] = {"RTL8125A",		FIRMWARE_8125A_3},
+ 	/* reserve 62 for CFG_METHOD_4 in the vendor driver */
+ 	[RTL_GIGA_MAC_VER_63] = {"RTL8125B",		FIRMWARE_8125B_2},
++	[RTL_GIGA_MAC_VER_64] = {"RTL8125D",		FIRMWARE_8125D_1},
+ 	[RTL_GIGA_MAC_VER_65] = {"RTL8126A",		FIRMWARE_8126A_2},
+ 	[RTL_GIGA_MAC_VER_66] = {"RTL8126A",		FIRMWARE_8126A_3},
+ };
+@@ -707,6 +709,7 @@ MODULE_FIRMWARE(FIRMWARE_8168FP_3);
+ MODULE_FIRMWARE(FIRMWARE_8107E_2);
+ MODULE_FIRMWARE(FIRMWARE_8125A_3);
+ MODULE_FIRMWARE(FIRMWARE_8125B_2);
++MODULE_FIRMWARE(FIRMWARE_8125D_1);
+ MODULE_FIRMWARE(FIRMWARE_8126A_2);
+ MODULE_FIRMWARE(FIRMWARE_8126A_3);
+ 
+@@ -2098,10 +2101,7 @@ static void rtl_set_eee_txidle_timer(str
+ 		tp->tx_lpi_timer = timer_val;
+ 		r8168_mac_ocp_write(tp, 0xe048, timer_val);
+ 		break;
+-	case RTL_GIGA_MAC_VER_61:
+-	case RTL_GIGA_MAC_VER_63:
+-	case RTL_GIGA_MAC_VER_65:
+-	case RTL_GIGA_MAC_VER_66:
++	case RTL_GIGA_MAC_VER_61 ... RTL_GIGA_MAC_VER_66:
+ 		tp->tx_lpi_timer = timer_val;
+ 		RTL_W16(tp, EEE_TXIDLE_TIMER_8125, timer_val);
+ 		break;
+@@ -2233,6 +2233,9 @@ static enum mac_version rtl8169_get_mac_
+ 		{ 0x7cf, 0x64a,	RTL_GIGA_MAC_VER_66 },
+ 		{ 0x7cf, 0x649,	RTL_GIGA_MAC_VER_65 },
+ 
++		/* 8125D family. */
++		{ 0x7cf, 0x688,	RTL_GIGA_MAC_VER_64 },
++
+ 		/* 8125B family. */
+ 		{ 0x7cf, 0x641,	RTL_GIGA_MAC_VER_63 },
+ 
+@@ -2500,9 +2503,7 @@ static void rtl_init_rxcfg(struct rtl816
+ 	case RTL_GIGA_MAC_VER_61:
+ 		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST);
+ 		break;
+-	case RTL_GIGA_MAC_VER_63:
+-	case RTL_GIGA_MAC_VER_65:
+-	case RTL_GIGA_MAC_VER_66:
++	case RTL_GIGA_MAC_VER_63 ... RTL_GIGA_MAC_VER_66:
+ 		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST |
+ 			RX_PAUSE_SLOT_ON);
+ 		break;
+@@ -3840,6 +3841,12 @@ static void rtl_hw_start_8125b(struct rt
+ 	rtl_hw_start_8125_common(tp);
+ }
+ 
++static void rtl_hw_start_8125d(struct rtl8169_private *tp)
++{
++	rtl_set_def_aspm_entry_latency(tp);
++	rtl_hw_start_8125_common(tp);
++}
++
+ static void rtl_hw_start_8126a(struct rtl8169_private *tp)
+ {
+ 	rtl_disable_zrxdc_timeout(tp);
+@@ -3889,6 +3896,7 @@ static void rtl_hw_config(struct rtl8169
+ 		[RTL_GIGA_MAC_VER_53] = rtl_hw_start_8117,
+ 		[RTL_GIGA_MAC_VER_61] = rtl_hw_start_8125a_2,
+ 		[RTL_GIGA_MAC_VER_63] = rtl_hw_start_8125b,
++		[RTL_GIGA_MAC_VER_64] = rtl_hw_start_8125d,
+ 		[RTL_GIGA_MAC_VER_65] = rtl_hw_start_8126a,
+ 		[RTL_GIGA_MAC_VER_66] = rtl_hw_start_8126a,
+ 	};
+@@ -3906,6 +3914,7 @@ static void rtl_hw_start_8125(struct rtl
+ 	/* disable interrupt coalescing */
+ 	switch (tp->mac_version) {
+ 	case RTL_GIGA_MAC_VER_61:
++	case RTL_GIGA_MAC_VER_64:
+ 		for (i = 0xa00; i < 0xb00; i += 4)
+ 			RTL_W32(tp, i, 0);
+ 		break;
+--- a/drivers/net/ethernet/realtek/r8169_phy_config.c
++++ b/drivers/net/ethernet/realtek/r8169_phy_config.c
+@@ -1104,6 +1104,15 @@ static void rtl8125b_hw_phy_config(struc
+ 	rtl8125b_config_eee_phy(phydev);
+ }
+ 
++static void rtl8125d_hw_phy_config(struct rtl8169_private *tp,
++				   struct phy_device *phydev)
++{
++	r8169_apply_firmware(tp);
++	rtl8125_legacy_force_mode(phydev);
++	rtl8168g_disable_aldps(phydev);
++	rtl8125b_config_eee_phy(phydev);
++}
++
+ static void rtl8126a_hw_phy_config(struct rtl8169_private *tp,
+ 				   struct phy_device *phydev)
+ {
+@@ -1160,6 +1169,7 @@ void r8169_hw_phy_config(struct rtl8169_
+ 		[RTL_GIGA_MAC_VER_53] = rtl8117_hw_phy_config,
+ 		[RTL_GIGA_MAC_VER_61] = rtl8125a_2_hw_phy_config,
+ 		[RTL_GIGA_MAC_VER_63] = rtl8125b_hw_phy_config,
++		[RTL_GIGA_MAC_VER_64] = rtl8125d_hw_phy_config,
+ 		[RTL_GIGA_MAC_VER_65] = rtl8126a_hw_phy_config,
+ 		[RTL_GIGA_MAC_VER_66] = rtl8126a_hw_phy_config,
+ 	};
 
 
