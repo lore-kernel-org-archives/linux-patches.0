@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26BB2E54BF;
-	Thu,  3 Jul 2025 15:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8D02EF66C;
+	Thu,  3 Jul 2025 15:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555839; cv=none; b=jsOSwqwWZ3sfl8WvrG6mGy+dwTsHruJdCdxQUmMOuCXsKz9vl9kzK77Oe/oPNpphXlIJkQ+ayw9KU1tT3kCYVbhZrGFwf2qcZXd22DpKjj8OjUuNopllBuoeD2Sh+nu34MEXrRvKjApGTeDVUXXm7rrP7D/UBkgS25m2yqKfkfw=
+	t=1751555841; cv=none; b=TNWqa/NmuN2gO/BOps5OoR+94EI3FmK0U/7cBOIvnwkm92AQn8cWnMuyLTyOCOzcVKbYwBRyAeq+CoFlTcf08wExFX0keSvKSV+jwUgC0ZXGiSqnj5KlQ3mPMGX4hPlKN/bulZvOHl4Dj0b9vsb1g7y7pAA/c9aDIqg1EXmRbb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555839; c=relaxed/simple;
-	bh=X/433jfgped8gGnnfhmuPwN7IBymV7Cspat2RVCAHHc=;
+	s=arc-20240116; t=1751555841; c=relaxed/simple;
+	bh=FOQgfTWBu16Y7JDXb1Kx3gO91xBkFkWJtqnpSG0LS6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWFEEgwnrrP7479h9b/laGTtwF/t5GmeUSkZ8rAl2kNVoN0rByWS4UQb4pwV8dyxVHZXmIviwcJO2Wh9cWWA3pUI8z3R6tHxzywn5ESUMuMRLg5EBPhWrGsCimLAn8/8xaXhGSKcQh0rBtSwW54s0gqdouJyPOi60ttBgJAVM7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mTxwt+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vBbKL4itjrM3Z6mDOSb/gQ73hr1ZjRcEtEOdw4zXi4UQxHQsLWS3G4fccBZ/is0OFhXv6uuqJghfJB8v1q6TkAp9V2by53gNVh+mx8atTQtDxZ6KkmUBslKTS6NzcEcm6kQwHIjYt5ifhUe/AfExL3ggiMEu+m4OvSk2r8qhnDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIgBc/0k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mTxwt+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F798C4CEE3;
-	Thu,  3 Jul 2025 15:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIgBc/0k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9FFC4CEE3;
+	Thu,  3 Jul 2025 15:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555837;
-	bh=X/433jfgped8gGnnfhmuPwN7IBymV7Cspat2RVCAHHc=;
+	s=korg; t=1751555840;
+	bh=FOQgfTWBu16Y7JDXb1Kx3gO91xBkFkWJtqnpSG0LS6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mTxwt+ZCRSie9kjpw5vLmOHZymS5fys2az8NjdYRTEYUvlwzjYQqpN8i1Yd0ADQ4
-	 cqfBQ3D2hvsLYd1iluWzN6jMqVbgI4RblwKfCXx9k8cr7hx9ZlVfz8UVE2JhFlB4JF
-	 poErOM5J94Ob1wmmyYaiGxqCLnOI2YzFETiIvC4Y=
+	b=CIgBc/0kjZbw9aWupewhdLdQjOwjo3yw8EcXp4YxUTguU86EjqKG7cYlHfQv9XY1q
+	 8vq3OhltLmWfu9YgDONunY1ydsKcOnE+o5LpVJxwhuyZw1AMDeRBQ8Sc6ufkT8dpU5
+	 2s55PEdnkc9gW+knnl77LSZ8Cav9/47JOAExOLck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ping Cheng <ping.cheng@wacom.com>,
 	Qasim Ijaz <qasdev00@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 105/139] HID: wacom: fix memory leak on kobject creation failure
-Date: Thu,  3 Jul 2025 16:42:48 +0200
-Message-ID: <20250703143945.283601381@linuxfoundation.org>
+Subject: [PATCH 6.6 106/139] HID: wacom: fix memory leak on sysfs attribute creation failure
+Date: Thu,  3 Jul 2025 16:42:49 +0200
+Message-ID: <20250703143945.321770322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -53,18 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit 5ae416c5b1e2e816aee7b3fc8347adf70afabb4c upstream.
+commit 1a19ae437ca5d5c7d9ec2678946fb339b1c706bf upstream.
 
-During wacom_initialize_remotes() a fifo buffer is allocated
-with kfifo_alloc() and later a cleanup action is registered
-during devm_add_action_or_reset() to clean it up.
+When sysfs_create_files() fails during wacom_initialize_remotes() the
+fifo buffer is not freed leading to a memory leak.
 
-However if the code fails to create a kobject and register it
-with sysfs the code simply returns -ENOMEM before the cleanup
-action is registered leading to a memory leak.
-
-Fix this by ensuring the fifo is freed when the kobject creation
-and registration process fails.
+Fix this by calling kfifo_free() before returning.
 
 Fixes: 83e6b40e2de6 ("HID: wacom: EKR: have the wacom resources dynamically allocated")
 Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
@@ -73,22 +67,18 @@ Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hid/wacom_sys.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/hid/wacom_sys.c
 +++ b/drivers/hid/wacom_sys.c
-@@ -2012,8 +2012,10 @@ static int wacom_initialize_remotes(stru
- 
- 	remote->remote_dir = kobject_create_and_add("wacom_remote",
- 						    &wacom->hdev->dev.kobj);
--	if (!remote->remote_dir)
-+	if (!remote->remote_dir) {
+@@ -2022,6 +2022,7 @@ static int wacom_initialize_remotes(stru
+ 	if (error) {
+ 		hid_err(wacom->hdev,
+ 			"cannot create sysfs group err: %d\n", error);
 +		kfifo_free(&remote->remote_fifo);
- 		return -ENOMEM;
-+	}
- 
- 	error = sysfs_create_files(remote->remote_dir, remote_unpair_attrs);
+ 		return error;
+ 	}
  
 
 
