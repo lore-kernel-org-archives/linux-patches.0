@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2EE2E7BD6;
-	Thu,  3 Jul 2025 15:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B882ED168;
+	Thu,  3 Jul 2025 15:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555136; cv=none; b=hKZg7n9vL0iOkHzHlF8ia5n27kIDNKMLKmxE4XU2+KpX8rRBNA0sL+YnpWKw2A363z0o26dZO22yMrf3hNSfCo00rnedBcx0hs+v9w7vjz36nwpeZemPJ3pcyqQF0zbE/mjZ8yCShgQBN7wzneZ8tmpnkSNsW4BqwYH6Q0nQKeM=
+	t=1751555139; cv=none; b=FM8gm2bdDTGTi0ogoCk0Pb1zo8Yq9sWjsUe/Krx/nq4ix3lOrLYpPtVZYrmkJ0wpAHattkZTQJZnuApAf7kce70bh18Q79IezIgIDEEN9VLkoMZxhoNj2Un3jiFh0pNomm2hwge9w7N3v0uwutdHZhQSZJFUQvzhPPcGqFWcCMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555136; c=relaxed/simple;
-	bh=gTRMkt/ZBojIGXMu3P9MJvsjKGy5XxLkCBTm9IobMr0=;
+	s=arc-20240116; t=1751555139; c=relaxed/simple;
+	bh=Fk65W1f2+l62oT3dOo8gebEssj+U1Y4WWIBvCz8s/Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rd33TbBT1QnWu49vWOyqK5AYQCKj/qAksQno+0xnwPuTaiPauJ7JdmIpfcsfP8/+GLHKiDU+MPUayCEFZoGHfINyjXHem+4YPnMQasGDvX9n+bildMrXRZUQlOF8iHb88bvYH5Ph5HN46U0s0zteQ0p1Uq87y5PzCP99vU2+bG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5wcm0Ho; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SrnobJkS3emxcbnq3goiSfMFsQKdK4vhFCShKcMiKDE6cLS1goHMgASLQ5VmEYG0M+W+YV77jzcPaOqCor+KlZ6AoFNBwGFWsNLUckeest1xu8JWACkqXgLKiNo+seBoJGMASqQEU6bnPPWiXS56yYfwLqFYRkO8WVGXtDIcRIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npaexhmW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5wcm0Ho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E16C4CEE3;
-	Thu,  3 Jul 2025 15:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npaexhmW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B3AC4CEE3;
+	Thu,  3 Jul 2025 15:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555136;
-	bh=gTRMkt/ZBojIGXMu3P9MJvsjKGy5XxLkCBTm9IobMr0=;
+	s=korg; t=1751555139;
+	bh=Fk65W1f2+l62oT3dOo8gebEssj+U1Y4WWIBvCz8s/Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5wcm0Ho+5oseaSjTdQAqZ/s9ogcTdcp7am/4PmEeG6vmmVItzgVlG68Xwa5hK9kb
-	 CETmY0RSrLBZ5C4NruswPEMe5OSFBgVH6lY4kvVPDw8dHYu/v5XGMw/Nvvg9EWr1Hw
-	 zHVczYXrShk5B+fRRK/F7Z3ULkuTQRDydWMNEO8k=
+	b=npaexhmWZ/koXjhirFquzkwOsPp1rtkE8uwr0cvx5uP7RmyEr0XLDNhkODRcrygh3
+	 Ypr3tLduAGnrI+YxlieoKkFCWTYHUVlmhc1d0TyZcCArrVVvBZTtNZl+159aYzmGfi
+	 fsumNLQ9t003JbVJfTdgSRw+yhLXuZi6swREQFR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 159/263] net: selftests: fix TCP packet checksum
-Date: Thu,  3 Jul 2025 16:41:19 +0200
-Message-ID: <20250703144010.735911727@linuxfoundation.org>
+	Khairul Anuar Romli <khairul.anuar.romli@altera.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.15 186/263] spi: spi-cadence-quadspi: Fix pm runtime unbalance
+Date: Thu,  3 Jul 2025 16:41:46 +0200
+Message-ID: <20250703144011.798367838@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,46 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
 
-[ Upstream commit 8d89661a36dd3bb8c9902cff36dc0c144dce3faf ]
+commit b07f349d1864abe29436f45e3047da2bdd476462 upstream.
 
-The length in the pseudo header should be the length of the L3 payload
-AKA the L4 header+payload. The selftest code builds the packet from
-the lower layers up, so all the headers are pushed already when it
-constructs L4. We need to subtract the lower layer headers from skb->len.
+Having PM put sync in remove function is causing PM underflow during
+remove operation. This is caused by the function, runtime_pm_get_sync,
+not being called anywhere during the op. Ensure that calls to
+pm_runtime_enable()/pm_runtime_disable() and
+pm_runtime_get_sync()/pm_runtime_put_sync() match.
 
-Fixes: 3e1e58d64c3d ("net: add generic selftest support")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Reported-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250624183258.3377740-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+echo 108d2000.spi > /sys/bus/platform/drivers/cadence-qspi/unbind
+[   49.644256] Deleting MTD partitions on "108d2000.spi.0":
+[   49.649575] Deleting u-boot MTD partition
+[   49.684087] Deleting root MTD partition
+[   49.724188] cadence-qspi 108d2000.spi: Runtime PM usage count underflow!
+
+Continuous bind/unbind will result in an "Unbalanced pm_runtime_enable" error.
+Subsequent unbind attempts will return a "No such device" error, while bind
+attempts will return a "Resource temporarily unavailable" error.
+
+[   47.592434] cadence-qspi 108d2000.spi: Runtime PM usage count underflow!
+[   49.592233] cadence-qspi 108d2000.spi: detected FIFO depth (1024) different from config (128)
+[   53.232309] cadence-qspi 108d2000.spi: Runtime PM usage count underflow!
+[   55.828550] cadence-qspi 108d2000.spi: detected FIFO depth (1024) different from config (128)
+[   57.940627] cadence-qspi 108d2000.spi: Runtime PM usage count underflow!
+[   59.912490] cadence-qspi 108d2000.spi: detected FIFO depth (1024) different from config (128)
+[   61.876243] cadence-qspi 108d2000.spi: Runtime PM usage count underflow!
+[   61.883000] platform 108d2000.spi: Unbalanced pm_runtime_enable!
+[  532.012270] cadence-qspi 108d2000.spi: probe with driver cadence-qspi failed1
+
+Also, change clk_disable_unprepare() to clk_disable() since continuous
+bind and unbind operations will trigger a warning indicating that the clock is
+already unprepared.
+
+Fixes: 4892b374c9b7 ("mtd: spi-nor: cadence-quadspi: Add runtime PM support")
+cc: stable@vger.kernel.org # 6.6+
+Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Link: https://patch.msgid.link/4e7a4b8aba300e629b45a04f90bddf665fbdb335.1749601877.git.khairul.anuar.romli@altera.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/selftests.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/selftests.c b/net/core/selftests.c
-index 35f807ea99523..406faf8e5f3f9 100644
---- a/net/core/selftests.c
-+++ b/net/core/selftests.c
-@@ -160,8 +160,9 @@ static struct sk_buff *net_test_get_skb(struct net_device *ndev,
- 	skb->csum = 0;
- 	skb->ip_summed = CHECKSUM_PARTIAL;
- 	if (attr->tcp) {
--		thdr->check = ~tcp_v4_check(skb->len, ihdr->saddr,
--					    ihdr->daddr, 0);
-+		int l4len = skb->len - skb_transport_offset(skb);
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1958,10 +1958,10 @@ static int cqspi_probe(struct platform_d
+ 			goto probe_setup_failed;
+ 	}
+ 
+-	ret = devm_pm_runtime_enable(dev);
+-	if (ret) {
+-		if (cqspi->rx_chan)
+-			dma_release_channel(cqspi->rx_chan);
++	pm_runtime_enable(dev);
 +
-+		thdr->check = ~tcp_v4_check(l4len, ihdr->saddr, ihdr->daddr, 0);
- 		skb->csum_start = skb_transport_header(skb) - skb->head;
- 		skb->csum_offset = offsetof(struct tcphdr, check);
- 	} else {
--- 
-2.39.5
-
++	if (cqspi->rx_chan) {
++		dma_release_channel(cqspi->rx_chan);
+ 		goto probe_setup_failed;
+ 	}
+ 
+@@ -1981,6 +1981,7 @@ static int cqspi_probe(struct platform_d
+ 	return 0;
+ probe_setup_failed:
+ 	cqspi_controller_enable(cqspi, 0);
++	pm_runtime_disable(dev);
+ probe_reset_failed:
+ 	if (cqspi->is_jh7110)
+ 		cqspi_jh7110_disable_clk(pdev, cqspi);
+@@ -1999,7 +2000,8 @@ static void cqspi_remove(struct platform
+ 	if (cqspi->rx_chan)
+ 		dma_release_channel(cqspi->rx_chan);
+ 
+-	clk_disable_unprepare(cqspi->clk);
++	if (pm_runtime_get_sync(&pdev->dev) >= 0)
++		clk_disable(cqspi->clk);
+ 
+ 	if (cqspi->is_jh7110)
+ 		cqspi_jh7110_disable_clk(pdev, cqspi);
 
 
