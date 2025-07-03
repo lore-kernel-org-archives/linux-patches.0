@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AFB1DC98B;
-	Thu,  3 Jul 2025 14:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6473A1DC98B;
+	Thu,  3 Jul 2025 14:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554106; cv=none; b=avxLXA/nkEjM2uZVMoJGTXBmrW6RKZB+lOHhqq9XEGGfJVAeYAxQK33WzNqVnBoY1fRxgW4JqtAEUvvdWNzYJ5FHvJWcQ+S/5q2qV2Hohqyo4XXbdNJfyTNKmM5XOFWtDzzCt01jyVlgeFf9n47+erFYlqQq+lkcBY1Ar50HVZY=
+	t=1751554109; cv=none; b=g1IVcH8cKPPik/p87p9l+YnVvlmHZG6gffj7/Tvq2Vl+7JTx4UhL1sj1oQd9YSjsiSJQrBn5pIeNKtujgdBbZKbnzQChmdizmOFgwY5+b8RFaN6JCkypQfz25dg9itw6WKwMmsQHxdGdO90/yBliK8zuQtSsBFiNNIA3qguUsWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554106; c=relaxed/simple;
-	bh=NngKOKZJMV5eAFDq+mE+jYhDlAPPXA/vCBq5cOkZkcQ=;
+	s=arc-20240116; t=1751554109; c=relaxed/simple;
+	bh=njeCqricUY07ApOgxxGd44+YCWGglwY1WIJFrcnx+Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zo/9UhuorkAl02hH0wZSDugquxW8tN18wvipL1EMvuXlBO80DhadBpyd7+dP85rCWWXFycJjX3JMA58OczqDK/TX7nOoJOnamj+ev31PUa+rEk6HtCu9nvvqnZNcmkQq8HLBa68al70fQxrxmH3uPjMfGCi4GosPQG6qEidXCUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcjM2zgL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lgm/XMG31bqGgYwt/RcrayrUpiiIVLol4wzGklVk4RMsTT/NIzdC5q+e7E4UJWCJZNgu/7N9slcIEGyF8hpPOZTwujXA9wMZNTlnnTtMCY+QVAWWEbMYjaB7M+NRaDWpX2APQYOEHnMMV9J9dhK2aYZj4I1gLvXBpslMV9DGx/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWT1L81/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcjM2zgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD366C4CEEE;
-	Thu,  3 Jul 2025 14:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWT1L81/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D593FC4CEE3;
+	Thu,  3 Jul 2025 14:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554106;
-	bh=NngKOKZJMV5eAFDq+mE+jYhDlAPPXA/vCBq5cOkZkcQ=;
+	s=korg; t=1751554109;
+	bh=njeCqricUY07ApOgxxGd44+YCWGglwY1WIJFrcnx+Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LcjM2zgLFnMokOLaBp8U7ZuKGaPKs/+tfPYHT0ETGB0oRm7E6S5RhHl8qg9tjqBlt
-	 pAl9uWxFx7Nm8X9173Nmt5DskJKVduk5wYmlR8WiWVEZ6fv/BXlsHl5vh5RCrEztGD
-	 azdEYI89UEzMrXtG4YneVmIC94Q9kRQLOwvCrTas=
+	b=zWT1L81/0b8lfbkepbOtsQJX7YWgnxyRcUhqcn0fXwwXI7EKSaEtv/ZfjRFOipUcF
+	 iUiGiigC4ywxQbJOBRZu8FFoTjW9cPQWl5CihQXSZQWvyR85jlrZKcuiVPmplBteml
+	 Ralaz5jXmUTDFMuWO+JXRKZ+pqbdKocynC6Hqf6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Schramm <oliver.schramm97@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 082/218] ASoC: amd: yc: Add DMI quirk for Lenovo IdeaPad Slim 5 15
-Date: Thu,  3 Jul 2025 16:40:30 +0200
-Message-ID: <20250703143959.221726684@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.12 083/218] s390/pkey: Prevent overflow in size calculation for memdup_user()
+Date: Thu,  3 Jul 2025 16:40:31 +0200
+Message-ID: <20250703143959.261960069@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -50,37 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Schramm <oliver.schramm97@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit bf39286adc5e10ce3e32eb86ad316ae56f3b52a0 upstream.
+commit 7360ee47599af91a1d5f4e74d635d9408a54e489 upstream.
 
-It's smaller brother has already received the patch to enable the microphone,
-now add it too to the DMI quirk table.
+Number of apqn target list entries contained in 'nr_apqns' variable is
+determined by userspace via an ioctl call so the result of the product in
+calculation of size passed to memdup_user() may overflow.
 
+In this case the actual size of the allocated area and the value
+describing it won't be in sync leading to various types of unpredictable
+behaviour later.
+
+Use a proper memdup_array_user() helper which returns an error if an
+overflow is detected. Note that it is different from when nr_apqns is
+initially zero - that case is considered valid and should be handled in
+subsequent pkey_handler implementations.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: f2bbc96e7cfa ("s390/pkey: add CCA AES cipher key support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Schramm <oliver.schramm97@gmail.com>
-Link: https://patch.msgid.link/20250621223000.11817-2-oliver.schramm97@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250611192011.206057-1-pchelkin@ispras.ru
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/s390/crypto/pkey_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -356,6 +356,13 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83J3"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
- 		}
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -85,7 +85,7 @@ static void *_copy_apqns_from_user(void
+ 	if (!uapqns || nr_apqns == 0)
+ 		return NULL;
+ 
+-	return memdup_user(uapqns, nr_apqns * sizeof(struct pkey_apqn));
++	return memdup_array_user(uapqns, nr_apqns, sizeof(struct pkey_apqn));
+ }
+ 
+ static int pkey_ioctl_genseck(struct pkey_genseck __user *ugs)
 
 
