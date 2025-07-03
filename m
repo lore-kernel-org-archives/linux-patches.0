@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFEC2EF656;
-	Thu,  3 Jul 2025 15:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B89B2ED143;
+	Thu,  3 Jul 2025 15:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556180; cv=none; b=P5XBFJquQyotfx6DhHFWMf63hxtfakfvAEgkfoDNuztpvH8LDIUzKkBJRfAEOoX6Z21OtobC4bcdDQh7jqODPLpYdogiknsOtmkdtbmbUPZ4WGbjEbrpQMeQhkvIlbPUcQpFZSE7aWSK9p4WFGUewOiFkXyKK5/Si3DLPb2kWq0=
+	t=1751556184; cv=none; b=Yp566E3qrG8secy8eg60zVUOJmNsRjjXmfayEa1NHjWXYrJAbXpJGrEas/Lg9MilRptQJG+kApIgAgZo3PRQG7huUy9Ylbz6ryGK1rbvHULxAyhCGyHP32KMH2+K7bZuaMfjIoriZMCd7eqvsvaKNFT1+aUhShJv9RBnZop3DCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556180; c=relaxed/simple;
-	bh=2LPxBqQo3d6XMiXcKrt5a0bHqIlnOW9q5xcbn45L6ZI=;
+	s=arc-20240116; t=1751556184; c=relaxed/simple;
+	bh=BE3QxL6R2/rwIaJqcxe13pPOR2f948PZHX4jUqp0FUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojhvAtMbKgNwVNUpl5OAjLbVVydWwT0nsw1ZZp0DeqqJn+lFno6Z9R/W5QYeNLEebW3l6C2U92uO1yRPc/EBZ3WZ3ko73tekiqaS4+2ST2GWyBFl9olVIiH3SYllECoT3T5mFC2dq6yBTrD44SOAbZesDyiTjRB5q1LdeE36fHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jf15oCXg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZDYb3JRju/irvtmLyOhg9Qg7SscY7SVxKx2Ed1FbttoZLEUIypgV5APEucxEvabcMast1tDMZ2jcLMFtZEs3PVwXZ5OEpwWZ8scbHVWykD4K3nWJJFYuQ9BtnajgV9/u1Wrcp1CDLcNw+DTBrKsgBBxRptQV9FpZieZ68YFpw/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+TsHuio; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jf15oCXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1DDC4CEE3;
-	Thu,  3 Jul 2025 15:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+TsHuio"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26675C4CEE3;
+	Thu,  3 Jul 2025 15:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556180;
-	bh=2LPxBqQo3d6XMiXcKrt5a0bHqIlnOW9q5xcbn45L6ZI=;
+	s=korg; t=1751556183;
+	bh=BE3QxL6R2/rwIaJqcxe13pPOR2f948PZHX4jUqp0FUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jf15oCXgWxZ9Y1pK2mGXmNSrPUZryRSiMgMYSTW+MLB0izPqv4IBwk1/zmOYSOskj
-	 00zZM3eCVrfQBepuZn9vdjA5eRBbQK//EMHb/qL95cvRgft03/EtUKHOrMv9RljA0R
-	 K/6uLyZyDi14mSuaar7bdctCTTxFXLdWedrRofLY=
+	b=A+TsHuiopAeX9dkir38l1wGE1+Pf3vXhrerYvrf7JdjoGpTsP5fEoGtbICief5aEx
+	 +uI+CNBeujylCHsv1ZRMzmKW3lIcomAoRxlvFczKeajeZ5f8dNh05kyj4Ylp/5cnkD
+	 JJS+gndMVWnaaNBR6vXeTVfUtifVGZRraqQEN4cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Fabio Estevam <festevam@gmail.com>,
-	Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH 6.1 092/132] serial: imx: Restore original RXTL for console to fix data loss
-Date: Thu,  3 Jul 2025 16:43:01 +0200
-Message-ID: <20250703143943.013794097@linuxfoundation.org>
+	Chen Yu <yu.c.chen@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 101/132] scsi: megaraid_sas: Fix invalid node index
+Date: Thu,  3 Jul 2025 16:43:10 +0200
+Message-ID: <20250703143943.360499710@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,107 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@gmail.com>
+From: Chen Yu <yu.c.chen@intel.com>
 
-commit f23c52aafb1675ab1d1f46914556d8e29cbbf7b3 upstream.
+commit 752eb816b55adb0673727ba0ed96609a17895654 upstream.
 
-Commit 7a637784d517 ("serial: imx: reduce RX interrupt frequency")
-introduced a regression on the i.MX6UL EVK board. The issue can be
-reproduced with the following steps:
+On a system with DRAM interleave enabled, out-of-bound access is
+detected:
 
-- Open vi on the board.
-- Paste a text file (~150 characters).
-- Save the file, then repeat the process.
-- Compare the sha256sum of the saved files.
+megaraid_sas 0000:3f:00.0: requested/available msix 128/128 poll_queue 0
+------------[ cut here ]------------
+UBSAN: array-index-out-of-bounds in ./arch/x86/include/asm/topology.h:72:28
+index -1 is out of range for type 'cpumask *[1024]'
+dump_stack_lvl+0x5d/0x80
+ubsan_epilogue+0x5/0x2b
+__ubsan_handle_out_of_bounds.cold+0x46/0x4b
+megasas_alloc_irq_vectors+0x149/0x190 [megaraid_sas]
+megasas_probe_one.cold+0xa4d/0x189c [megaraid_sas]
+local_pci_probe+0x42/0x90
+pci_device_probe+0xdc/0x290
+really_probe+0xdb/0x340
+__driver_probe_device+0x78/0x110
+driver_probe_device+0x1f/0xa0
+__driver_attach+0xba/0x1c0
+bus_for_each_dev+0x8b/0xe0
+bus_add_driver+0x142/0x220
+driver_register+0x72/0xd0
+megasas_init+0xdf/0xff0 [megaraid_sas]
+do_one_initcall+0x57/0x310
+do_init_module+0x90/0x250
+init_module_from_file+0x85/0xc0
+idempotent_init_module+0x114/0x310
+__x64_sys_finit_module+0x65/0xc0
+do_syscall_64+0x82/0x170
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-The checksums do not match due to missing characters or entire lines.
+Fix it accordingly.
 
-Fix this by restoring the RXTL value to 1 when the UART is used as a
-console.
-
-This ensures timely RX interrupts and reliable data reception in console
-mode.
-
-With this change, pasted content is saved correctly, and checksums are
-always consistent.
-
-Cc: stable <stable@kernel.org>
-Fixes: 7a637784d517 ("serial: imx: reduce RX interrupt frequency")
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20250619114617.2791939-1-festevam@gmail.com
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Link: https://lore.kernel.org/r/20250604042556.3731059-1-yu.c.chen@intel.com
+Fixes: 8049da6f3943 ("scsi: megaraid_sas: Use irq_set_affinity_and_hint()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/imx.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas_base.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -239,6 +239,7 @@ struct imx_port {
- 	enum imx_tx_state	tx_state;
- 	struct hrtimer		trigger_start_tx;
- 	struct hrtimer		trigger_stop_tx;
-+	unsigned int		rxtl;
- };
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -5909,7 +5909,11 @@ megasas_set_high_iops_queue_affinity_and
+ 	const struct cpumask *mask;
  
- struct imx_port_ucrs {
-@@ -1320,6 +1321,7 @@ static void imx_uart_clear_rx_errors(str
- 
- #define TXTL_DEFAULT 8
- #define RXTL_DEFAULT 8 /* 8 characters or aging timer */
-+#define RXTL_CONSOLE_DEFAULT 1
- #define TXTL_DMA 8 /* DMA burst setting */
- #define RXTL_DMA 9 /* DMA burst setting */
- 
-@@ -1432,7 +1434,7 @@ static void imx_uart_disable_dma(struct
- 	ucr1 &= ~(UCR1_RXDMAEN | UCR1_TXDMAEN | UCR1_ATDMAEN);
- 	imx_uart_writel(sport, ucr1, UCR1);
- 
--	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
-+	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
- 
- 	sport->dma_is_enabled = 0;
- }
-@@ -1457,7 +1459,12 @@ static int imx_uart_startup(struct uart_
- 		return retval;
- 	}
- 
--	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
-+	if (uart_console(&sport->port))
-+		sport->rxtl = RXTL_CONSOLE_DEFAULT;
-+	else
-+		sport->rxtl = RXTL_DEFAULT;
+ 	if (instance->perf_mode == MR_BALANCED_PERF_MODE) {
+-		mask = cpumask_of_node(dev_to_node(&instance->pdev->dev));
++		int nid = dev_to_node(&instance->pdev->dev);
 +
-+	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
++		if (nid == NUMA_NO_NODE)
++			nid = 0;
++		mask = cpumask_of_node(nid);
  
- 	/* disable the DREN bit (Data Ready interrupt enable) before
- 	 * requesting IRQs
-@@ -1906,7 +1913,7 @@ static int imx_uart_poll_init(struct uar
- 	if (retval)
- 		clk_disable_unprepare(sport->clk_ipg);
- 
--	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
-+	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
- 
- 	spin_lock_irqsave(&sport->port.lock, flags);
- 
-@@ -1998,7 +2005,7 @@ static int imx_uart_rs485_config(struct
- 		/* If the receiver trigger is 0, set it to a default value */
- 		ufcr = imx_uart_readl(sport, UFCR);
- 		if ((ufcr & UFCR_RXTL_MASK) == 0)
--			imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
-+			imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
- 		imx_uart_start_rx(port);
- 	}
- 
-@@ -2183,7 +2190,7 @@ imx_uart_console_setup(struct console *c
- 	else
- 		imx_uart_console_get_options(sport, &baud, &parity, &bits);
- 
--	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
-+	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
- 
- 	retval = uart_set_options(&sport->port, co, baud, parity, bits, flow);
- 
+ 		for (i = 0; i < instance->low_latency_index_start; i++) {
+ 			irq = pci_irq_vector(instance->pdev, i);
 
 
