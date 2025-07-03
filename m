@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18D22E7BD6;
-	Thu,  3 Jul 2025 14:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684FF2EFDA2;
+	Thu,  3 Jul 2025 14:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554458; cv=none; b=syCtJXYXJuAsg2xpaN7r0mTi7tXPywLN5emeB2IUPmQhoHkVlcQf18l3Bpp6epjlvEBbRtrmJM9Vyf2CiMjCvdZe8xYPbsgCYX3t01RY7TN9BtgrDFxnx5el6yvlfeYCOcvofbT6Io3QAeGIuIjnRVZvrd5COuf0wXLivAtOPfo=
+	t=1751554459; cv=none; b=eCwQWVw2tbAqK0hZ22bRJNv1QMTrvnMFAZ/xkH+FJkoU7tgZB6hzfQ5m/bOlgNWc8znEyJiZaDSnlFujS6Fv/88pEW+Km1iywFDdpPGTAkqooWm6+B8Qrp+rvT6kfqZg18ClglSEe8BjOsr1cP553XhzNmo4f0kEkCdOhT0syQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554458; c=relaxed/simple;
-	bh=YHKbfGJzI/02sMPU/Dfr67hqrR2Fio1ApPxOhM5mb5Y=;
+	s=arc-20240116; t=1751554459; c=relaxed/simple;
+	bh=07zrUXu/0D3mQq4uPfaQQhRF4O5+Ds9XsixFMP+WNrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVJUwWuDk4bsgsoRZB3sTCsncHJgZm03mVWTvLKRjG4Hm3o3xtYLz8m5k+wVfAPt+4kaik09DsoQJv8dFqghZBOnbO4y9gOYwIgJ47MgTa7U3LIdMjSPC5+1LNwSC41cIJPI30iEQ4fq91RLF5M6X2iRu1t21E5EI+UE+HtCvxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ufia+7/6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HD4/zAKb2AO/pDGDQcBj+bCLzZKFUP4qhVTo9XEIxYrmUB2E2/hFwAr3oe0zKCvjVO7kW1ehpHMcmKbn6kH36C0gjaaITEAAciK2NWihPPgtzivo2uxFPcG6GJg+75W2qWfnis221j+cd9a5KGgj0h+Vo+CR4aPf6Y+a5xXqqMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yc0nWBM1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ufia+7/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD20C4CEE3;
-	Thu,  3 Jul 2025 14:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yc0nWBM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E86C4CEED;
+	Thu,  3 Jul 2025 14:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554455;
-	bh=YHKbfGJzI/02sMPU/Dfr67hqrR2Fio1ApPxOhM5mb5Y=;
+	s=korg; t=1751554459;
+	bh=07zrUXu/0D3mQq4uPfaQQhRF4O5+Ds9XsixFMP+WNrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ufia+7/6sPoHTpOB3kZUdw7/Ghh3ywOQpo21JTgKsUNZk6lCnfeZSNB9goKD9YFtw
-	 4wb+2HjHk4GNKsp/tn2pUr8PzOlUectRTAtcT8tp0rz5G4aZXNchRwUbSnlKgPGbDS
-	 N+yK2dhgo4ZbY8c3kBEMsmbYbOe/VACp1VNTLWCA=
+	b=yc0nWBM1tvhrFKQo15rI0w9IwAdpyxHZkGKg5/t22PAQy5MT1v2khlHO1/N6EGUXd
+	 2gjStcDG0xK7bmINYpJHdjkDDqbTRngp3WtF7nYVfj92Bfm0+3xNqwsFkt/mSAGyf0
+	 jDd2/eMceUx1aErM1m2neoTg0v9/Dlg0o6b4HUbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Zhongwei Zhang <Zhongwei.Zhang@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.12 163/218] drm/amd/display: Correct non-OLED pre_T11_delay.
-Date: Thu,  3 Jul 2025 16:41:51 +0200
-Message-ID: <20250703144002.674951939@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 164/218] drm/xe/vm: move rebind_work init earlier
+Date: Thu,  3 Jul 2025 16:41:52 +0200
+Message-ID: <20250703144002.712437844@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -48,59 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongwei Zhang <Zhongwei.Zhang@amd.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 893f07452bca56ff146a6be02b3294a9ea23d18a upstream.
+commit a63e99b4d6d3a0353ef47146dd5bd562f08e1786 upstream.
 
-[Why]
-Only OLED panels require non-zero pre_T11_delay defaultly.
-Others should be controlled by power sequence.
+In xe_vm_close_and_put() we need to be able to call
+flush_work(rebind_work), however during vm creation we can call this on
+the error path, before having actually set up the worker, leading to a
+splat from flush_work().
 
-[How]
-For non OLED, pre_T11_delay delay in code should be zero.
-Also post_T7_delay.
+It looks like we can simply move the worker init step earlier to fix
+this.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Zhongwei Zhang <Zhongwei.Zhang@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250514152424.149591-3-matthew.auld@intel.com
+(cherry picked from commit 96af397aa1a2d1032a6e28ff3f4bc0ab4be40e1d)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_vm.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -951,8 +951,8 @@ void dce110_edp_backlight_control(
- 	struct dc_context *ctx = link->ctx;
- 	struct bp_transmitter_control cntl = { 0 };
- 	uint8_t pwrseq_instance = 0;
--	unsigned int pre_T11_delay = OLED_PRE_T11_DELAY;
--	unsigned int post_T7_delay = OLED_POST_T7_DELAY;
-+	unsigned int pre_T11_delay = (link->dpcd_sink_ext_caps.bits.oled ? OLED_PRE_T11_DELAY : 0);
-+	unsigned int post_T7_delay = (link->dpcd_sink_ext_caps.bits.oled ? OLED_POST_T7_DELAY : 0);
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -1477,8 +1477,10 @@ struct xe_vm *xe_vm_create(struct xe_dev
+ 	 * scheduler drops all the references of it, hence protecting the VM
+ 	 * for this case is necessary.
+ 	 */
+-	if (flags & XE_VM_FLAG_LR_MODE)
++	if (flags & XE_VM_FLAG_LR_MODE) {
++		INIT_WORK(&vm->preempt.rebind_work, preempt_rebind_work_func);
+ 		xe_pm_runtime_get_noresume(xe);
++	}
  
- 	if (dal_graphics_object_id_get_connector_id(link->link_enc->connector)
- 		!= CONNECTOR_ID_EDP) {
-@@ -1067,7 +1067,8 @@ void dce110_edp_backlight_control(
- 	if (!enable) {
- 		/*follow oem panel config's requirement*/
- 		pre_T11_delay += link->panel_config.pps.extra_pre_t11_ms;
--		msleep(pre_T11_delay);
-+		if (pre_T11_delay)
-+			msleep(pre_T11_delay);
+ 	vm_resv_obj = drm_gpuvm_resv_object_alloc(&xe->drm);
+ 	if (!vm_resv_obj) {
+@@ -1523,10 +1525,8 @@ struct xe_vm *xe_vm_create(struct xe_dev
+ 		vm->batch_invalidate_tlb = true;
  	}
- }
  
+-	if (vm->flags & XE_VM_FLAG_LR_MODE) {
+-		INIT_WORK(&vm->preempt.rebind_work, preempt_rebind_work_func);
++	if (vm->flags & XE_VM_FLAG_LR_MODE)
+ 		vm->batch_invalidate_tlb = false;
+-	}
+ 
+ 	/* Fill pt_root after allocating scratch tables */
+ 	for_each_tile(tile, xe, id) {
 
 
