@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5742EF672;
-	Thu,  3 Jul 2025 15:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75D42F0C69;
+	Thu,  3 Jul 2025 15:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555564; cv=none; b=j4kpytXZGv3A4DZyLBgx+4IUzlT3FH259OwloncfIr8HNP+pWQ1bu+2pFj9qkJ/CPCT6TNTcLAhBxmkAOtsxs7PknKkPA+60MQfn2zu5buIItZQtcCQSlHtLHPdkZ+6Fig8eFlx1zsnQCOKMZnRV+V+TSFrndmsSaOQHieEsesg=
+	t=1751555566; cv=none; b=IZ293agvcvIOPUa15muzhuDkIS1U+zaR7szKwISETyVHttY/bDRVejx6pZhhvw44mCcSih0Xz/J8LUKnIb3bL7UIoskFVCpRhkrCz8ZefQsLZZ2vMckiKmcuagsaecVy9viOjqwKOKVsqaPcZe5Mk2D8L2QGIBhCyn5OtjMWtOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555564; c=relaxed/simple;
-	bh=GipkuSzoJFwRhSWaVkOEglBq/uZFGKnpcM69ENxhgvM=;
+	s=arc-20240116; t=1751555566; c=relaxed/simple;
+	bh=jy7BmY6YCxdDhudWTbP+9nCsn9/spcZNddz3lxHCTKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omPEfdb9yG4RYWFHsG+RixiKMPTzLE1C2h9N0lVYm+pb8MRu73M25OOFJN+DJW2rSz0iFzAj8qo+HfyAqQtzzLp5eDO4xlYJcPkH44heQDWKLNTiN016N4L9GMYvXEsjkwbbKryECGGJPQqkKeG69oiY3vaXObU5LPPnRH3AEvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HC9+jwCV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ym54RNkqXxl2/C4IErd3wpevhDQFmJqZKebRHV1OsCP5j7tC1gM82HVh82Bpqsutc5QxLKxKsFeMygy+BqHP9bKCJdxQACyZizo/Guaz31F+wwCS9BI6ZUNu6vaAwqpyYGQc2FmSrjqJTVXRRJjzhrKQdZvTaZCDjWjxo75hh9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6FGG8o9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HC9+jwCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E540C4CEE3;
-	Thu,  3 Jul 2025 15:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6FGG8o9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF25C4CEE3;
+	Thu,  3 Jul 2025 15:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555563;
-	bh=GipkuSzoJFwRhSWaVkOEglBq/uZFGKnpcM69ENxhgvM=;
+	s=korg; t=1751555566;
+	bh=jy7BmY6YCxdDhudWTbP+9nCsn9/spcZNddz3lxHCTKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HC9+jwCV+d1Xlg7d7M9Ztowv+CHSGfNUdLtOFCG/EBZPBJjSXA93+vONcwu8ZZ6st
-	 D2JqSRbxY8FHdQggUMH4m8s3s7k4AirnJBVUE8ec3jfg21jYBheYtonYv+0rFTBjGG
-	 Sgh3xFB/FjwgwSUmvsWPzoMaURLmPerpSL2/R3vg=
+	b=W6FGG8o9DVR5hrqq7YrsrOVqB45gZNYQFz0SSsnmOpOXsJpkWOluCQEu04SXr/X0c
+	 P71TYiJl/KteYqcUGZCWUSPaa+i2s3N0FudofUHuKbM/MIXjyWA5Y4rgWC7CjOnT8C
+	 8F9ZkEMG/Syoj2CnjrrkATb803JOvAblG/cCUvUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Long Li <longli@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/139] f2fs: dont over-report free space or inodes in statvfs
-Date: Thu,  3 Jul 2025 16:41:55 +0200
-Message-ID: <20250703143943.201972437@linuxfoundation.org>
+Subject: [PATCH 6.6 053/139] Drivers: hv: vmbus: Add utility function for querying ring size
+Date: Thu,  3 Jul 2025 16:41:56 +0200
+Message-ID: <20250703143943.240786977@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -52,97 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
+[ Upstream commit e8c4bd6c6e6b7e7b416c42806981c2a81370001e ]
 
-This fixes an analogus bug that was fixed in modern filesystems:
-a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
-inodes in statvfs")
-b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
-or inodes in statvfs")
-where statfs can report misleading / incorrect information where
-project quota is enabled, and the free space is less than the
-remaining quota.
+Add a function to query for the preferred ring buffer size of VMBus
+device. This will allow the drivers (eg. UIO) to allocate the most
+optimized ring buffer size for devices.
 
-This commit will resolve a test failure in generic/762 which tests
-for this bug.
-
-generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
-#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
-#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
-#    @@ -6,8 +6,10 @@
-#     root blocks2 is in range
-#     dir blocks2 is in range
-#     root bavail2 is in range
-#    -dir bavail2 is in range
-#    +dir bavail2 has value of 1539066
-#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
-#     root blocks3 is in range
-#    ...
-#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
-
-HINT: You _MAY_ be missing kernel fix:
-      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
-
-Cc: stable@kernel.org
-Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Link: https://lore.kernel.org/r/1711788723-8593-2-git-send-email-ssengar@linux.microsoft.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/hv/channel_mgmt.c | 15 ++++++++++++---
+ drivers/hv/hyperv_vmbus.h |  5 +++++
+ include/linux/hyperv.h    |  2 ++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 702137eafaa67..b9913ab526fd1 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1774,26 +1774,32 @@ static int f2fs_statfs_project(struct super_block *sb,
+diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
+index 2f4d09ce027a3..3c6011a48dabe 100644
+--- a/drivers/hv/channel_mgmt.c
++++ b/drivers/hv/channel_mgmt.c
+@@ -120,7 +120,9 @@ const struct vmbus_device vmbus_devs[] = {
+ 	},
  
- 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
- 					dquot->dq_dqb.dqb_bhardlimit);
--	if (limit)
--		limit >>= sb->s_blocksize_bits;
-+	limit >>= sb->s_blocksize_bits;
+ 	/* File copy */
+-	{ .dev_type = HV_FCOPY,
++	/* fcopy always uses 16KB ring buffer size and is working well for last many years */
++	{ .pref_ring_size = 0x4000,
++	  .dev_type = HV_FCOPY,
+ 	  HV_FCOPY_GUID,
+ 	  .perf_device = false,
+ 	  .allowed_in_isolated = false,
+@@ -140,12 +142,19 @@ const struct vmbus_device vmbus_devs[] = {
+ 	  .allowed_in_isolated = false,
+ 	},
+ 
+-	/* Unknown GUID */
+-	{ .dev_type = HV_UNKNOWN,
++	/*
++	 * Unknown GUID
++	 * 64 KB ring buffer + 4 KB header should be sufficient size for any Hyper-V device apart
++	 * from HV_NIC and HV_SCSI. This case avoid the fallback for unknown devices to allocate
++	 * much bigger (2 MB) of ring size.
++	 */
++	{ .pref_ring_size = 0x11000,
++	  .dev_type = HV_UNKNOWN,
+ 	  .perf_device = false,
+ 	  .allowed_in_isolated = false,
+ 	},
+ };
++EXPORT_SYMBOL_GPL(vmbus_devs);
+ 
+ static const struct {
+ 	guid_t guid;
+diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
+index 787b150686418..34b60009114a6 100644
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -419,6 +419,11 @@ static inline bool hv_is_perf_channel(struct vmbus_channel *channel)
+ 	return vmbus_devs[channel->device_id].perf_device;
+ }
+ 
++static inline size_t hv_dev_ring_size(struct vmbus_channel *channel)
++{
++	return vmbus_devs[channel->device_id].pref_ring_size;
++}
 +
-+	if (limit) {
-+		uint64_t remaining = 0;
+ static inline bool hv_is_allocated_cpu(unsigned int cpu)
+ {
+ 	struct vmbus_channel *channel, *sc;
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index b5bf5315ca8c1..e4ad9760774e1 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -820,6 +820,8 @@ struct vmbus_requestor {
+ #define VMBUS_RQST_RESET (U64_MAX - 3)
  
--	if (limit && buf->f_blocks > limit) {
- 		curblock = (dquot->dq_dqb.dqb_curspace +
- 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
--		buf->f_blocks = limit;
--		buf->f_bfree = buf->f_bavail =
--			(buf->f_blocks > curblock) ?
--			 (buf->f_blocks - curblock) : 0;
-+		if (limit > curblock)
-+			remaining = limit - curblock;
-+
-+		buf->f_blocks = min(buf->f_blocks, limit);
-+		buf->f_bfree = min(buf->f_bfree, remaining);
-+		buf->f_bavail = min(buf->f_bavail, remaining);
- 	}
- 
- 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
- 					dquot->dq_dqb.dqb_ihardlimit);
- 
--	if (limit && buf->f_files > limit) {
--		buf->f_files = limit;
--		buf->f_ffree =
--			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
--			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
-+	if (limit) {
-+		uint64_t remaining = 0;
-+
-+		if (limit > dquot->dq_dqb.dqb_curinodes)
-+			remaining = limit - dquot->dq_dqb.dqb_curinodes;
-+
-+		buf->f_files = min(buf->f_files, limit);
-+		buf->f_ffree = min(buf->f_ffree, remaining);
- 	}
- 
- 	spin_unlock(&dquot->dq_dqb_lock);
+ struct vmbus_device {
++	/* preferred ring buffer size in KB, 0 means no preferred size for this device */
++	size_t pref_ring_size;
+ 	u16  dev_type;
+ 	guid_t guid;
+ 	bool perf_device;
 -- 
 2.39.5
 
