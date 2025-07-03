@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00AF2ED17E;
-	Thu,  3 Jul 2025 15:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769542ED143;
+	Thu,  3 Jul 2025 15:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555512; cv=none; b=qov1hIeRzBw2nuaOqhQ0y/XQ/1zPsN0BcxhCKdREyGSvzm8AAkr46/AhCws5f4RsAjgP0cvTvkw3scbxQwFSeG083KM/b0H6/iiQnNJtgRM9WAh5/UnYCfPQy3BL0z8ZMJWU6tHK6CbIRegPDX6m8bKnG1m1HqfTH6nqge0BBt4=
+	t=1751555515; cv=none; b=GfyyFrZPNHY4WR0bj1Lt0ysX9NEu29BnqwwYTV004yJcU7AbhoyKU1huQNrSk1HIkoxrrBn23Pg3+6PzEFtI8Smoh5vmHZTt+slZ8MuEBdJe9d1Pjp7pS8bNM0Kq70UOfAJL+KmD8ADuhOv82fY00lkz/ELdoTM8fGVHqr9YH/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555512; c=relaxed/simple;
-	bh=gqdzqfU5XuZI7pbEYzOt/cebTNXRCNT6IkqIHYi1M2w=;
+	s=arc-20240116; t=1751555515; c=relaxed/simple;
+	bh=q3c7+OqGsjdIFWkzmezD/uQOa7L1V+Bg4mbjZ+mxYoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shhthAYoqaC7ZnCuPEAf0rCV5K9iX0fXSIz+Lx6knRg9/kAwySu6z9Ao6qkWrRgXAUzIGjE/DTl1KKBZOfdkdZgS4xidtp4VqPCfoXneuO+yng8RK4hNsWruXpzdN0mN17Rrg643zU6bjLXk1iKkfDeAU/NRl5SpehbCRujDfrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idRWf99J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCJygcWjJHwN+nkhm+eJBQBPK9W+/bKsd/70g2ZyUNHfUeIQ3KjEiGR6zFXPdKntmHdJocvOqoPhh8bxVJpeZkVAzhDM4080NxZ1/UpStFcfTB+4F7A0p3+pzqIloBS/IlyvPtEC1JZneHd6HjhSPsjjKKbtiCN1bDkaJ/BrHS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEievK2s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idRWf99J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB66C4CEF2;
-	Thu,  3 Jul 2025 15:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEievK2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC5AC4CEE3;
+	Thu,  3 Jul 2025 15:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555512;
-	bh=gqdzqfU5XuZI7pbEYzOt/cebTNXRCNT6IkqIHYi1M2w=;
+	s=korg; t=1751555515;
+	bh=q3c7+OqGsjdIFWkzmezD/uQOa7L1V+Bg4mbjZ+mxYoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idRWf99JWoySbgCw20FKWpZ1g2Q9tI23kS5gy9/iF8FK0/snxHDW1j8cx8NjdPnEK
-	 InntKD+aMzZYpdz2e5bxHsDHDOf9A/vqTx90w2RMGNdhkolPazU2HIeaeN8WA6ehyl
-	 v2riFiMDx0Kppx0gXseNwWs88yAbQi8SfzVyUMdg=
+	b=vEievK2sm3KdSHR2BY4dXmkLaOjSfnWpTAzUiIDAhvm5TnTxksvOIYd71iuUJcQ2g
+	 eEehfwKln5VFsatbYv++OJI4G1a/rqsPwXuV8SuW0nblaFULL1VBaYRJJuRmiBSCGR
+	 McHc9noGzm1oLwG6L0OHWw/mUekHV8CQbYwlkE3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	Nikhil Jha <njha@janestreet.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/139] mfd: max14577: Fix wakeup source leaks on device unbind
-Date: Thu,  3 Jul 2025 16:41:10 +0200
-Message-ID: <20250703143941.466615907@linuxfoundation.org>
+Subject: [PATCH 6.6 008/139] sunrpc: dont immediately retransmit on seqno miss
+Date: Thu,  3 Jul 2025 16:41:11 +0200
+Message-ID: <20250703143941.504307874@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -51,33 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Nikhil Jha <njha@janestreet.com>
 
-[ Upstream commit d905d06e64b0eb3da43af6186c132f5282197998 ]
+[ Upstream commit fadc0f3bb2de8c570ced6d9c1f97222213d93140 ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.
+RFC2203 requires that retransmitted messages use a new gss sequence
+number, but the same XID. This means that if the server is just slow
+(e.x. overloaded), the client might receive a response using an older
+seqno than the one it has recorded.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-3-318e14bdba0a@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Currently, Linux's client immediately retransmits in this case. However,
+this leads to a lot of wasted retransmits until the server eventually
+responds faster than the client can resend.
+
+Client -> SEQ 1 -> Server
+Client -> SEQ 2 -> Server
+Client <- SEQ 1 <- Server (misses, expecting seqno = 2)
+Client -> SEQ 3 -> Server (immediate retransmission on miss)
+Client <- SEQ 2 <- Server (misses, expecting seqno = 3)
+Client -> SEQ 4 -> Server (immediate retransmission on miss)
+... and so on ...
+
+This commit makes it so that we ignore messages with bad checksums
+due to seqnum mismatch, and rely on the usual timeout behavior for
+retransmission instead of doing so immediately.
+
+Signed-off-by: Nikhil Jha <njha@janestreet.com>
+Acked-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/max14577.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/clnt.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/max14577.c b/drivers/mfd/max14577.c
-index 1f4f5002595c0..17672eeb1732a 100644
---- a/drivers/mfd/max14577.c
-+++ b/drivers/mfd/max14577.c
-@@ -463,6 +463,7 @@ static void max14577_i2c_remove(struct i2c_client *i2c)
- {
- 	struct max14577 *max14577 = i2c_get_clientdata(i2c);
- 
-+	device_init_wakeup(max14577->dev, false);
- 	mfd_remove_devices(max14577->dev);
- 	regmap_del_irq_chip(max14577->irq, max14577->irq_data);
- 	if (max14577->dev_type == MAXIM_DEVICE_TYPE_MAX77836)
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 4ffb2bcaf3648..63756607f6327 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2733,8 +2733,13 @@ rpc_decode_header(struct rpc_task *task, struct xdr_stream *xdr)
+ 	case -EPROTONOSUPPORT:
+ 		goto out_err;
+ 	case -EACCES:
+-		/* Re-encode with a fresh cred */
+-		fallthrough;
++		/* possible RPCSEC_GSS out-of-sequence event (RFC2203),
++		 * reset recv state and keep waiting, don't retransmit
++		 */
++		task->tk_rqstp->rq_reply_bytes_recvd = 0;
++		task->tk_status = xprt_request_enqueue_receive(task);
++		task->tk_action = call_transmit_status;
++		return -EBADMSG;
+ 	default:
+ 		goto out_garbage;
+ 	}
 -- 
 2.39.5
 
