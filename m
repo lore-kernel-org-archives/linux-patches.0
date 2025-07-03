@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E203819F43A;
-	Thu,  3 Jul 2025 14:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6A42EFD80;
+	Thu,  3 Jul 2025 14:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554318; cv=none; b=auw+WuN0qwAjKWO3TV71mZCcGc/dr6o76fSkt30UEeZqxUNUuSdUo4YQ55HCy31fZgHmAm+E4WlDH5WiOuDPiIi8xzKi1cM4+ONyNIdWWlqhj/gdMkxl0Of2hu2hqaMDFv4O6exni0G2g+zDGy5d9AVpu1gpyQAP0k32noc+vc8=
+	t=1751554320; cv=none; b=WxFKUx7b+I2pWKQiTXgWdWEI54RbPtW2GiC4O1Hjfge72LpxoZd5pM+Wdti/EwHZ+m+gbGlFaQEr8prQ8GEBhsqMWtd7Lvid1KCmMO4CNpyteFLp4a5majrsPjyGQqEiczIYktT6rUcgQRWWHtiMKO0E8MCVO5Hfj/PUhPtQwDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554318; c=relaxed/simple;
-	bh=6lgh4b0rr5pqpOWKdnkeRkdXMdBwVrgwFtbkk3fP1m4=;
+	s=arc-20240116; t=1751554320; c=relaxed/simple;
+	bh=iC2HhdSMp5MWXp5rAtcsMswtTcm05lCFZexuMKNkkcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thtuI5UEc1d0R5d5jrVwxntxUMwpeE/7E1ET4WQHzrbj/yBBSDZmhPCsBC9nkHdDfATXarwYE+P0oDqoNii2oll05A4gKkn/rDZ26Aj8uMcHspMJmIFKy//HdS7IGe1XMjFNVNOcazcHGuqsRIAksUuKvIgr1fguY9aYr1/amZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uC6UZPRd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OCh4LcuuS5tMzdHgNRu5scH1kPNXKnRl0XfuUjtKT7ubJiJiDib3TUuZ2vhBu1HbtpFsVMpRWxv2m0PVWHzwvTbvAiS/UpZ8VtCRCfGYkwV9x3sGUflsnJn2v+MgW84mBFlu5dQ/l2B62EtSs5po5xrxGMxgMqWzIyc7v8/5Sfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIgzOrF/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uC6UZPRd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D11C4CEE3;
-	Thu,  3 Jul 2025 14:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIgzOrF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA5DC4CEED;
+	Thu,  3 Jul 2025 14:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554317;
-	bh=6lgh4b0rr5pqpOWKdnkeRkdXMdBwVrgwFtbkk3fP1m4=;
+	s=korg; t=1751554320;
+	bh=iC2HhdSMp5MWXp5rAtcsMswtTcm05lCFZexuMKNkkcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uC6UZPRdb8qPDk/Nu9Wu72DxPOcgfvFUf7tW+4a/AZ7cf1JvO9Nj/gux2VLAhjhkx
-	 QEGvzVpQEWa5IM/W3YC8/qC184JsTGMKwzhds5J9zsyTIg8SAlfpgR0hGlnE76aB+l
-	 ybsBHhjQLXvKdNCdDyM+unU4bUprdh4l+4KITOW8=
+	b=MIgzOrF/L7eJxCaY1K+gBK+mSBU0VEZ24+vg9Bl2rehulOCPbH6S8XmyjN/q9zYJo
+	 JwQDNkBmRoGdQM1EimR9dmgbYD8qGpGdgr/Ub/m4Q+qAo3Ha5Rci4bNETtEoR7mFCi
+	 DVyP6HbgBKNzYxNd3DJ4RQXZii6Od+nDwSEUOyYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Adam Jackson <ajax@redhat.com>,
 	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.12 148/218] drm/ast: Fix comment on modeset lock
-Date: Thu,  3 Jul 2025 16:41:36 +0200
-Message-ID: <20250703144002.059245614@linuxfoundation.org>
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 6.12 149/218] drm/cirrus-qemu: Fix pitch programming
+Date: Thu,  3 Jul 2025 16:41:37 +0200
+Message-ID: <20250703144002.098731241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -54,41 +56,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 7cce65f3789e04c0f7668a66563e680d81d54493 upstream.
+commit 4bfb389a0136a13f0802eeb5e97a0e76d88f77ae upstream.
 
-The ast driver protects the commit tail against concurrent reads
-of the display modes by acquiring a lock. The comment is misleading
-as the lock is not released in atomic_flush, but at the end of the
-commit-tail helper. Rewrite the comment.
+Do not set CR1B[6] when programming the pitch. The bit effects VGA
+text mode and is not interpreted by qemu. [1] It has no affect on
+the scanline pitch.
+
+The scanline bit that is set into CR1B[6] belongs into CR13[7], which
+the driver sets up correctly.
+
+This bug goes back to the driver's initial commit.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 1fe182154984 ("drm/ast: Acquire I/O-register lock in atomic_commit_tail function")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Link: https://gitlab.com/qemu-project/qemu/-/blob/stable-9.2/hw/display/cirrus_vga.c?ref_type=heads#L1112 # 1
+Fixes: f9aa76a85248 ("drm/kms: driver for virtual cirrus under qemu")
+Cc: Adam Jackson <ajax@redhat.com>
 Cc: Dave Airlie <airlied@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.2+
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20250324094520.192974-2-tzimmermann@suse.de
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: <stable@vger.kernel.org> # v3.5+
+Link: https://lore.kernel.org/r/20250328091821.195061-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_mode.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/tiny/cirrus.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/ast/ast_mode.c
-+++ b/drivers/gpu/drm/ast/ast_mode.c
-@@ -1319,9 +1319,9 @@ static void ast_mode_config_helper_atomi
+--- a/drivers/gpu/drm/tiny/cirrus.c
++++ b/drivers/gpu/drm/tiny/cirrus.c
+@@ -318,7 +318,6 @@ static void cirrus_pitch_set(struct cirr
+ 	/* Enable extended blanking and pitch bits, and enable full memory */
+ 	cr1b = 0x22;
+ 	cr1b |= (pitch >> 7) & 0x10;
+-	cr1b |= (pitch >> 6) & 0x40;
+ 	wreg_crt(cirrus, 0x1b, cr1b);
  
- 	/*
- 	 * Concurrent operations could possibly trigger a call to
--	 * drm_connector_helper_funcs.get_modes by trying to read the
--	 * display modes. Protect access to I/O registers by acquiring
--	 * the I/O-register lock. Released in atomic_flush().
-+	 * drm_connector_helper_funcs.get_modes by reading the display
-+	 * modes. Protect access to registers by acquiring the modeset
-+	 * lock.
- 	 */
- 	mutex_lock(&ast->modeset_lock);
- 	drm_atomic_helper_commit_tail(state);
+ 	cirrus_set_start_address(cirrus, 0);
 
 
