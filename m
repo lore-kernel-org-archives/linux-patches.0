@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261682F0C6B;
-	Thu,  3 Jul 2025 15:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E7E2F0E3B;
+	Thu,  3 Jul 2025 15:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555403; cv=none; b=bmqP5sS7Pfr4yjKcow45NXucmOh3LNJroXdh6cazjmTNb8OxhkdXF0WuOHLnaQT0LUOrpKDJgH3U05EojHoiVQUDEfWX0pzwa2xiBIkUF7L5ALsc6YvIuMM15sA4rz9dGiVFuBimYTyoxJpZJns8BgR+fpzSUW28QtW4OsIeaAk=
+	t=1751555406; cv=none; b=psV7XxnFWuWgNfdg2ehERehCCjlCEMnsmbasY5TM6OE7Vn0o9KWN/T0Feux9BH7jwOGQgaa9p6EfifIr4G+29yYwZXqw6xxLmkTmqfUlSlo6bNiQpfC0JXghUAzk1pQuttOVTtTrh7Vzqu/HTY8W3+H4D+wYd6MkePPXx9lo6SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555403; c=relaxed/simple;
-	bh=YrxKQ9Mhuv7nUhXy0zqv4+NMFgygRTlb8IzYS6saKWs=;
+	s=arc-20240116; t=1751555406; c=relaxed/simple;
+	bh=yciM341p9PUUprAugzs4IABXjibDKAP15QMyuau51v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqS7ErLbSbvia9MqK64F29Jq7ZXkPIMzW1ihoReQ9FP3Z/E2LVu2eI6zt2aoZiMXJbyS4uXQejyo6dlzLXJ5yk+rwXtXTvaPMw6f8ufzrgd9lcVeuZn0+daQlTh0zHXbND3nwett377chrFOT9KgTfe5YxAziFCXH1//TgzFyhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEEh7+47; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eo0RoI0PiiEVoMYCUuwfPnc05aAdpFWQ3hqB4O/dsn9vDFbEsZpw8/H6H6FMqQOaIDIFRiKuJMDm3C6stAARKyoGH9FVlI/OUjgaNxu+lGmqkNOnUq/9tVq6zWfJR9lPuBC/i4Om+nd8mXPG9FfQbMWVesd4YupmYKonjqGbSts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yngGJ2xu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEEh7+47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA40C4CEEE;
-	Thu,  3 Jul 2025 15:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yngGJ2xu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF55C4CEE3;
+	Thu,  3 Jul 2025 15:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555403;
-	bh=YrxKQ9Mhuv7nUhXy0zqv4+NMFgygRTlb8IzYS6saKWs=;
+	s=korg; t=1751555405;
+	bh=yciM341p9PUUprAugzs4IABXjibDKAP15QMyuau51v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dEEh7+47Lxp3vehbSIKNX91ZYkvcywiF+9pFsUmr0qc/b/wXPTjjYI1LEXTg+TGc6
-	 6TfL6ha4SVkecB/9+u0IHgQfUZJeY90Mr1byJ9ZxN35gZ8//0pLfH1xhoxF6QMnt3H
-	 FJbdZHN8mb9TdxzWxmJiLtcNVfgybqj+sDuycjGk=
+	b=yngGJ2xuidEieI0LU1L+7PnO7GvcsHrYTeYMvhXjkIRGM771lbTlIgW1+yMNXWxUC
+	 YcRVawrmK9/c/MAxqWBs+jS0AwGAnsJvMyz8v0M3ZZ7oI4sEozKf4LPTKLZkwJGRBO
+	 ZOt/LY33QPtnJ12Qti+hAk/CbU66DttFFgti5OYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH 6.15 259/263] x86/pkeys: Simplify PKRU update in signal frame
-Date: Thu,  3 Jul 2025 16:42:59 +0200
-Message-ID: <20250703144014.792323706@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.15 260/263] s390/ptrace: Fix pointer dereferencing in regs_get_kernel_stack_nth()
+Date: Thu,  3 Jul 2025 16:43:00 +0200
+Message-ID: <20250703144014.841721780@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -58,69 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chang S. Bae <chang.seok.bae@intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit d1e420772cd1eb0afe5858619c73ce36f3e781a1 upstream.
+commit 7f8073cfb04a97842fe891ca50dad60afd1e3121 upstream.
 
-The signal delivery logic was modified to always set the PKRU bit in
-xregs_state->header->xfeatures by this commit:
+The recent change which added READ_ONCE_NOCHECK() to read the nth entry
+from the kernel stack incorrectly dropped dereferencing of the stack
+pointer in order to read the requested entry.
 
-    ae6012d72fa6 ("x86/pkeys: Ensure updated PKRU value is XRSTOR'd")
+In result the address of the entry is returned instead of its content.
 
-However, the change derives the bitmask value using XGETBV(1), rather
-than simply updating the buffer that already holds the value. Thus, this
-approach induces an unnecessary dependency on XGETBV1 for PKRU handling.
+Dereference the pointer again to fix this.
 
-Eliminate the dependency by using the established helper function.
-Subsequently, remove the now-unused 'mask' argument.
-
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/r/20250416021720.12305-9-chang.seok.bae@intel.com
-Cc: Ben Hutchings <ben@decadent.org.uk>
+Reported-by: Will Deacon <will@kernel.org>
+Closes: https://lore.kernel.org/r/20250612163331.GA13384@willie-the-truck
+Fixes: d93a855c31b7 ("s390/ptrace: Avoid KASAN false positives in regs_get_kernel_stack_nth()")
+Cc: stable@vger.kernel.org
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/xstate.h |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ arch/s390/kernel/ptrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/fpu/xstate.h
-+++ b/arch/x86/kernel/fpu/xstate.h
-@@ -85,18 +85,15 @@ static inline int set_xfeature_in_sigfra
- /*
-  * Update the value of PKRU register that was already pushed onto the signal frame.
-  */
--static inline int update_pkru_in_sigframe(struct xregs_state __user *buf, u64 mask, u32 pkru)
-+static inline int update_pkru_in_sigframe(struct xregs_state __user *buf, u32 pkru)
- {
--	u64 xstate_bv;
- 	int err;
- 
- 	if (unlikely(!cpu_feature_enabled(X86_FEATURE_OSPKE)))
+--- a/arch/s390/kernel/ptrace.c
++++ b/arch/s390/kernel/ptrace.c
+@@ -1574,5 +1574,5 @@ unsigned long regs_get_kernel_stack_nth(
+ 	addr = kernel_stack_pointer(regs) + n * sizeof(long);
+ 	if (!regs_within_kernel_stack(regs, addr))
  		return 0;
- 
- 	/* Mark PKRU as in-use so that it is restored correctly. */
--	xstate_bv = (mask & xfeatures_in_use()) | XFEATURE_MASK_PKRU;
--
--	err =  __put_user(xstate_bv, &buf->header.xfeatures);
-+	err = set_xfeature_in_sigframe(buf, XFEATURE_MASK_PKRU);
- 	if (err)
- 		return err;
- 
-@@ -320,7 +317,7 @@ static inline int xsave_to_user_sigframe
- 	clac();
- 
- 	if (!err)
--		err = update_pkru_in_sigframe(buf, mask, pkru);
-+		err = update_pkru_in_sigframe(buf, pkru);
- 
- 	return err;
+-	return READ_ONCE_NOCHECK(addr);
++	return READ_ONCE_NOCHECK(*(unsigned long *)addr);
  }
 
 
