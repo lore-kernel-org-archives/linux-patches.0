@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F10B6F53E;
-	Thu,  3 Jul 2025 15:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1125E6F53E;
+	Thu,  3 Jul 2025 15:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554820; cv=none; b=C8kJ9XA/2CGS7z3LjGz8FXQpSGhsVM3MSh4l3tcPMs4lfHVpaMb06vW1rrR/dxGNy0YU92KZYiTyXAiV00UD7dw93n8200cHb0MQbqPIzaLQFrUJHfQ3g0dGJv+WYeQg06yUDuERYMn69E9A/hkaXP7zTi/1YhhxZo4jhrFZ5iE=
+	t=1751554822; cv=none; b=Ke+37CWbCmLlXm02DQ5nkKGErWhVz2toDazeAkljHwdc+cbIWCVv0ol5Au0niSyn0n6wXR2ixWe44R524gYecQw/wPOh1nJXSIpavQGSaPYS7cCVW7K0swXQBY7WNAr1dVKoe/pytGLuWOcNMD6IL1HamY13LDaX3oZdNwpF3g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554820; c=relaxed/simple;
-	bh=WSZxIENh+rpNYtpyFMqektCrYwZaNcH7NgFjQHhJgOQ=;
+	s=arc-20240116; t=1751554822; c=relaxed/simple;
+	bh=Yvu3X0LTjQPFYzbmXmDOCVfFNmK9HD2Mk3bqYLGLwX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPclOynskoLPmSSzOGIfvW0RWeYqXauNV6VeCHTpZmJQiBLAgnURCIe9O2LEOLkezqWxiykfwimC/A/nHKEv+On6kamMxyXFN4uwADugEKbV832KggP0fsA9/zT1zhRz7zbw/xvX+30OzeGmLnGBxhscFyjzn7aXpgJOYOan9AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdxTfK96; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NUC13wW2V8JFTsT0wM/c4tXIYdFc01e0CLTfWhG/et1g21BFB8prme1sUqfzM7oxn0rOX0gso69zmqF0hLpcZkGcbS/x8+YHYtGqNy/anMUWPjxJLBmLhkXnzOcZeG8RtbLn7SkDaY/KQuoGsB+ShBzH0OPolftfJoFB3Dw8jno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hx/yGChm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdxTfK96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D7EC4CEE3;
-	Thu,  3 Jul 2025 15:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hx/yGChm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B4CC4CEE3;
+	Thu,  3 Jul 2025 15:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554818;
-	bh=WSZxIENh+rpNYtpyFMqektCrYwZaNcH7NgFjQHhJgOQ=;
+	s=korg; t=1751554821;
+	bh=Yvu3X0LTjQPFYzbmXmDOCVfFNmK9HD2Mk3bqYLGLwX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdxTfK967CitQsup/ZUzD6f81xZVthQS+1aQHvGNq6smDDD0tH630ScH9XLQizuVu
-	 H3E/4LnVpg8kQ0Ai7ExDOHjw+UPCyIBXEKfg7lMdn2zh4gbZIp5Cuz7l140YnmmyLm
-	 +/Jv/PrMmlb/HvYPFsILANcFVVoPy+urJ5r8J+5g=
+	b=hx/yGChmqZiKsygLW7ksYCFr0EO+yzJlrFGpZQ4k79QxybOo/hKlmCpL5r48qS9fS
+	 LdSvTwoD3vdd1hDK8HTCFZMWN3Zlq2C5QkVJ7dakzz0JXx3Oo2kBYsU5619Dg5uIjA
+	 0UXVx5dzivpDXxwcuqhcpzAt55rruV91yz43dp3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 087/263] media: uvcvideo: Rollback non processed entities on error
-Date: Thu,  3 Jul 2025 16:40:07 +0200
-Message-ID: <20250703144007.792391733@linuxfoundation.org>
+Subject: [PATCH 6.15 088/263] ASoC: codec: wcd9335: Convert to GPIO descriptors
+Date: Thu,  3 Jul 2025 16:40:08 +0200
+Message-ID: <20250703144007.831669798@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,110 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit a70705d3c020d0d5c3ab6a5cc93e011ac35e7d48 ]
+[ Upstream commit d5099bc1b56417733f4cccf10c61ee74dadd5562 ]
 
-If we fail to commit an entity, we need to restore the
-UVC_CTRL_DATA_BACKUP for the other uncommitted entities. Otherwise the
-control cache and the device would be out of sync.
+of_gpio.h is deprecated, update the driver to use GPIO descriptors.
+- Use dev_gpiod_get to get GPIO descriptor.
+- Use gpiod_set_value to configure output value.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Closes: https://lore.kernel.org/linux-media/fe845e04-9fde-46ee-9763-a6f00867929a@redhat.com/
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-3-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+With legacy of_gpio API, the driver set gpio value 0 to assert reset,
+and 1 to deassert reset. And the reset-gpios use GPIO_ACTIVE_LOW flag in
+DTS, so set GPIOD_OUT_LOW when get GPIO descriptors, and set value 1 means
+output low, set value 0 means output high with gpiod API.
+
+The in-tree DTS files have the right polarity set up already so we can
+expect this to "just work"
+
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20250324-wcd-gpiod-v2-3-773f67ce3b56@nxp.com
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 9079db287fc3 ("ASoC: codecs: wcd9335: Fix missing free of regulator supplies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ sound/soc/codecs/wcd9335.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 636ce1eb2a6bf..44b6513c52642 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -2119,7 +2119,7 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
- 	unsigned int processed_ctrls = 0;
- 	struct uvc_control *ctrl;
- 	unsigned int i;
--	int ret;
-+	int ret = 0;
+diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
+index 7cef43bb2a880..8ee4360aff929 100644
+--- a/sound/soc/codecs/wcd9335.c
++++ b/sound/soc/codecs/wcd9335.c
+@@ -17,7 +17,7 @@
+ #include <sound/soc.h>
+ #include <sound/pcm_params.h>
+ #include <sound/soc-dapm.h>
+-#include <linux/of_gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/of.h>
+ #include <linux/of_irq.h>
+ #include <sound/tlv.h>
+@@ -331,7 +331,7 @@ struct wcd9335_codec {
+ 	int comp_enabled[COMPANDER_MAX];
  
- 	if (entity == NULL)
- 		return 0;
-@@ -2148,8 +2148,6 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
- 				dev->intfnum, ctrl->info.selector,
- 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 				ctrl->info.size);
--		else
--			ret = 0;
+ 	int intr1;
+-	int reset_gpio;
++	struct gpio_desc *reset_gpio;
+ 	struct regulator_bulk_data supplies[WCD9335_MAX_SUPPLY];
  
- 		if (!ret)
- 			processed_ctrls++;
-@@ -2165,13 +2163,20 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			ret = uvc_ctrl_set_handle(handle, ctrl, handle);
+ 	unsigned int rx_port_value[WCD9335_RX_MAX];
+@@ -4975,12 +4975,11 @@ static const struct regmap_irq_chip wcd9335_regmap_irq1_chip = {
+ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
+ {
+ 	struct device *dev = wcd->dev;
+-	struct device_node *np = dev->of_node;
+ 	int ret;
  
--		if (ret < 0) {
-+		if (ret < 0 && !rollback) {
- 			if (err_ctrl)
- 				*err_ctrl = ctrl;
--			return ret;
-+			/*
-+			 * If we fail to set a control, we need to rollback
-+			 * the next ones.
-+			 */
-+			rollback = 1;
- 		}
- 	}
+-	wcd->reset_gpio = of_get_named_gpio(np,	"reset-gpios", 0);
+-	if (wcd->reset_gpio < 0)
+-		return dev_err_probe(dev, wcd->reset_gpio, "Reset GPIO missing from DT\n");
++	wcd->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	if (IS_ERR(wcd->reset_gpio))
++		return dev_err_probe(dev, PTR_ERR(wcd->reset_gpio), "Reset GPIO missing from DT\n");
  
-+	if (ret)
-+		return ret;
-+
- 	return processed_ctrls;
- }
+ 	wcd->mclk = devm_clk_get(dev, "mclk");
+ 	if (IS_ERR(wcd->mclk))
+@@ -5023,9 +5022,9 @@ static int wcd9335_power_on_reset(struct wcd9335_codec *wcd)
+ 	 */
+ 	usleep_range(600, 650);
  
-@@ -2202,7 +2207,8 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
- 	struct uvc_video_chain *chain = handle->chain;
- 	struct uvc_control *err_ctrl;
- 	struct uvc_entity *entity;
--	int ret = 0;
-+	int ret_out = 0;
-+	int ret;
+-	gpio_direction_output(wcd->reset_gpio, 0);
++	gpiod_set_value(wcd->reset_gpio, 1);
+ 	msleep(20);
+-	gpio_set_value(wcd->reset_gpio, 1);
++	gpiod_set_value(wcd->reset_gpio, 0);
+ 	msleep(20);
  
- 	/* Find the control. */
- 	list_for_each_entry(entity, &chain->entities, chain) {
-@@ -2213,17 +2219,23 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
- 				ctrls->error_idx =
- 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
- 							       err_ctrl);
--			goto done;
-+			/*
-+			 * When we fail to commit an entity, we need to
-+			 * restore the UVC_CTRL_DATA_BACKUP for all the
-+			 * controls in the other entities, otherwise our cache
-+			 * and the hardware will be out of sync.
-+			 */
-+			rollback = 1;
-+
-+			ret_out = ret;
- 		} else if (ret > 0 && !rollback) {
- 			uvc_ctrl_send_events(handle, entity,
- 					     ctrls->controls, ctrls->count);
- 		}
- 	}
- 
--	ret = 0;
--done:
- 	mutex_unlock(&chain->ctrl_mutex);
--	return ret;
-+	return ret_out;
- }
- 
- static int uvc_mapping_get_xctrl_compound(struct uvc_video_chain *chain,
+ 	return 0;
 -- 
 2.39.5
 
