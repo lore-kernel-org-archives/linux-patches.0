@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4542E7BD6;
-	Thu,  3 Jul 2025 15:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457802E7BD6;
+	Thu,  3 Jul 2025 15:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555083; cv=none; b=oTcFKSwzMIjLBOmONvWxSncinyMoObTewsypSGHvLJw6NPx3gjjmvNkiKMHZD7ZfwvgCjzg6fjgDk0iNA0Rq6+iymGGgrIWhsuwYIHZnE46XwM9XAg3r1UbBfpLU0heXoxInwo9fz6KgWJQXy77gQhwQfL+M2NzPNrioYMDgpQY=
+	t=1751555087; cv=none; b=S+NOOxvF0FP93u/iIXNkyZ12OA0GSW+c6dKl4uPMp0c15l5OLXcfp/cdIrn7P353VF1nGhc2z+JA94E6NzsIIXj+rwMTMm5wcFd+Ip5EOvhnxliaDQXOXtHnoEWtdBl4CDqiBnHov/AraTt9CwJlHfmj2MgtRczNsJnnT8UqaLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555083; c=relaxed/simple;
-	bh=2VmoEoqX320taLWqPdckWyhy3SwR0LCzIa6YL7Ef+sA=;
+	s=arc-20240116; t=1751555087; c=relaxed/simple;
+	bh=cQEuCi+If8WnwTF2N7v6kME3ku1WsomWvuwJKj8kIcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nhnQj9AXarFvLEFNBaIHfK7rLLEGNnz1ZXLLG07iNS/QKxxA1bAEoPDDZfAqV20DLLSzQ257wWi0CwAdiqDvwu+ZbaZUs3Ncg8txgtCvcVNT/dRwqcBWEYw1CC6BAw0hp52SBagY5zW1l7bZLwmMrhgCSZmvj/jejIZbEcyFbJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dls6DjEH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBocNVMTVCm/Q9Kbu1BSsCbipcmcTHra6XNdZtDv+PeOF10luRVisYwVsqMtiFvyWYr5UTeTd4IN+T4as3woG5d6PfYYg1pt4Eyu5Zh+sILEkTanp6Nhv1/uhTGAR35iN4HZNP4crlB61LUafKH6MBJ/+1/+8YUqOsAwtgRcOl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFJJ6mMQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dls6DjEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16765C4CEE3;
-	Thu,  3 Jul 2025 15:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFJJ6mMQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF1BC4CEE3;
+	Thu,  3 Jul 2025 15:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555083;
-	bh=2VmoEoqX320taLWqPdckWyhy3SwR0LCzIa6YL7Ef+sA=;
+	s=korg; t=1751555087;
+	bh=cQEuCi+If8WnwTF2N7v6kME3ku1WsomWvuwJKj8kIcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dls6DjEH9/nY1GC/vytKK8/eQRUOS8Tn4wwSKlQnKEfKwn3t5mQgwDJy4cnXIkysR
-	 RV5kpJYcM1VtT2VHJcDfysuluRAEWTkuuLQihM/jidqPiGgV2ErAuV0y5kpXaqxSs7
-	 hkdbHZ1XRwqnNO09uJctNjYWxb4jGVP3VP9AC0Ds=
+	b=cFJJ6mMQn73byN8asiGLoXyXnUHkRMHx/9XAr1qRdbGL7k+3NEF+9OB3MQi/9tAUl
+	 ckranR5Mmg7aFezOjUuDTSrGkYA/wQrBmiu8guaB+jlAYKfsFKD9hYrkgyp1z23CDu
+	 0pjytSsTaPN+r4wMmcXgeUfLYongkfgDstlpy698=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=BDilvinas=20=C5=BDaltiena?= <zilvinas@natrix.lt>,
-	Avadhut Naik <avadhut.naik@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Yazen Ghannam <yazen.ghannam@amd.com>
-Subject: [PATCH 6.15 171/263] EDAC/amd64: Fix size calculation for Non-Power-of-Two DIMMs
-Date: Thu,  3 Jul 2025 16:41:31 +0200
-Message-ID: <20250703144011.209348906@linuxfoundation.org>
+	Sohil Mehta <sohil.mehta@intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.15 172/263] x86/traps: Initialize DR6 by writing its architectural reset value
+Date: Thu,  3 Jul 2025 16:41:32 +0200
+Message-ID: <20250703144011.248488608@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -46,165 +47,212 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Avadhut Naik <avadhut.naik@amd.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-commit a3f3040657417aeadb9622c629d4a0c2693a0f93 upstream.
+commit 5f465c148c61e876b6d6eacd8e8e365f2d47758f upstream.
 
-Each Chip-Select (CS) of a Unified Memory Controller (UMC) on AMD Zen-based
-SOCs has an Address Mask and a Secondary Address Mask register associated with
-it. The amd64_edac module logs DIMM sizes on a per-UMC per-CS granularity
-during init using these two registers.
+Initialize DR6 by writing its architectural reset value to avoid
+incorrectly zeroing DR6 to clear DR6.BLD at boot time, which leads
+to a false bus lock detected warning.
 
-Currently, the module primarily considers only the Address Mask register for
-computing DIMM sizes. The Secondary Address Mask register is only considered
-for odd CS. Additionally, if it has been considered, the Address Mask register
-is ignored altogether for that CS. For power-of-two DIMMs i.e. DIMMs whose
-total capacity is a power of two (32GB, 64GB, etc), this is not an issue
-since only the Address Mask register is used.
+The Intel SDM says:
 
-For non-power-of-two DIMMs i.e., DIMMs whose total capacity is not a power of
-two (48GB, 96GB, etc), however, the Secondary Address Mask register is used
-in conjunction with the Address Mask register. However, since the module only
-considers either of the two registers for a CS, the size computed by the
-module is incorrect. The Secondary Address Mask register is not considered for
-even CS, and the Address Mask register is not considered for odd CS.
+  1) Certain debug exceptions may clear bits 0-3 of DR6.
 
-Introduce a new helper function so that both Address Mask and Secondary
-Address Mask registers are considered, when valid, for computing DIMM sizes.
-Furthermore, also rename some variables for greater clarity.
+  2) BLD induced #DB clears DR6.BLD and any other debug exception
+     doesn't modify DR6.BLD.
 
-Fixes: 81f5090db843 ("EDAC/amd64: Support asymmetric dual-rank DIMMs")
-Closes: https://lore.kernel.org/dbec22b6-00f2-498b-b70d-ab6f8a5ec87e@natrix.lt
-Reported-by: Žilvinas Žaltiena <zilvinas@natrix.lt>
-Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Tested-by: Žilvinas Žaltiena <zilvinas@natrix.lt>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250529205013.403450-1-avadhut.naik@amd.com
+  3) RTM induced #DB clears DR6.RTM and any other debug exception
+     sets DR6.RTM.
+
+  To avoid confusion in identifying debug exceptions, debug handlers
+  should set DR6.BLD and DR6.RTM, and clear other DR6 bits before
+  returning.
+
+The DR6 architectural reset value 0xFFFF0FF0, already defined as
+macro DR6_RESERVED, satisfies these requirements, so just use it to
+reinitialize DR6 whenever needed.
+
+Since clear_all_debug_regs() no longer zeros all debug registers,
+rename it to initialize_debug_regs() to better reflect its current
+behavior.
+
+Since debug_read_clear_dr6() no longer clears DR6, rename it to
+debug_read_reset_dr6() to better reflect its current behavior.
+
+Fixes: ebb1064e7c2e9 ("x86/traps: Handle #DB for bus lock")
+Reported-by: Sohil Mehta <sohil.mehta@intel.com>
+Suggested-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Link: https://lore.kernel.org/lkml/06e68373-a92b-472e-8fd9-ba548119770c@intel.com/
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250620231504.2676902-2-xin%40zytor.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/amd64_edac.c |   57 +++++++++++++++++++++++++++++-----------------
- 1 file changed, 36 insertions(+), 21 deletions(-)
+ arch/x86/include/uapi/asm/debugreg.h |   21 ++++++++++++++++++++-
+ arch/x86/kernel/cpu/common.c         |   24 ++++++++++--------------
+ arch/x86/kernel/traps.c              |   34 +++++++++++++++++++++-------------
+ 3 files changed, 51 insertions(+), 28 deletions(-)
 
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -1209,7 +1209,9 @@ static int umc_get_cs_mode(int dimm, u8
- 	if (csrow_enabled(2 * dimm + 1, ctrl, pvt))
- 		cs_mode |= CS_ODD_PRIMARY;
+--- a/arch/x86/include/uapi/asm/debugreg.h
++++ b/arch/x86/include/uapi/asm/debugreg.h
+@@ -15,7 +15,26 @@
+    which debugging register was responsible for the trap.  The other bits
+    are either reserved or not of interest to us. */
  
--	/* Asymmetric dual-rank DIMM support. */
-+	if (csrow_sec_enabled(2 * dimm, ctrl, pvt))
-+		cs_mode |= CS_EVEN_SECONDARY;
-+
- 	if (csrow_sec_enabled(2 * dimm + 1, ctrl, pvt))
- 		cs_mode |= CS_ODD_SECONDARY;
+-/* Define reserved bits in DR6 which are always set to 1 */
++/*
++ * Define bits in DR6 which are set to 1 by default.
++ *
++ * This is also the DR6 architectural value following Power-up, Reset or INIT.
++ *
++ * Note, with the introduction of Bus Lock Detection (BLD) and Restricted
++ * Transactional Memory (RTM), the DR6 register has been modified:
++ *
++ * 1) BLD flag (bit 11) is no longer reserved to 1 if the CPU supports
++ *    Bus Lock Detection.  The assertion of a bus lock could clear it.
++ *
++ * 2) RTM flag (bit 16) is no longer reserved to 1 if the CPU supports
++ *    restricted transactional memory.  #DB occurred inside an RTM region
++ *    could clear it.
++ *
++ * Apparently, DR6.BLD and DR6.RTM are active low bits.
++ *
++ * As a result, DR6_RESERVED is an incorrect name now, but it is kept for
++ * compatibility.
++ */
+ #define DR6_RESERVED	(0xFFFF0FF0)
  
-@@ -1230,12 +1232,13 @@ static int umc_get_cs_mode(int dimm, u8
- 	return cs_mode;
+ #define DR_TRAP0	(0x1)		/* db0 */
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2205,20 +2205,16 @@ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard)
+ #endif
+ #endif
+ 
+-/*
+- * Clear all 6 debug registers:
+- */
+-static void clear_all_debug_regs(void)
++static void initialize_debug_regs(void)
+ {
+-	int i;
+-
+-	for (i = 0; i < 8; i++) {
+-		/* Ignore db4, db5 */
+-		if ((i == 4) || (i == 5))
+-			continue;
+-
+-		set_debugreg(0, i);
+-	}
++	/* Control register first -- to make sure everything is disabled. */
++	set_debugreg(0, 7);
++	set_debugreg(DR6_RESERVED, 6);
++	/* dr5 and dr4 don't exist */
++	set_debugreg(0, 3);
++	set_debugreg(0, 2);
++	set_debugreg(0, 1);
++	set_debugreg(0, 0);
  }
  
--static int __addr_mask_to_cs_size(u32 addr_mask_orig, unsigned int cs_mode,
--				  int csrow_nr, int dimm)
-+static int calculate_cs_size(u32 mask, unsigned int cs_mode)
- {
--	u32 msb, weight, num_zero_bits;
--	u32 addr_mask_deinterleaved;
--	int size = 0;
-+	int msb, weight, num_zero_bits;
-+	u32 deinterleaved_mask;
-+
-+	if (!mask)
-+		return 0;
+ #ifdef CONFIG_KGDB
+@@ -2379,7 +2375,7 @@ void cpu_init(void)
  
+ 	load_mm_ldt(&init_mm);
+ 
+-	clear_all_debug_regs();
++	initialize_debug_regs();
+ 	dbg_restore_debug_regs();
+ 
+ 	doublefault_init_cpu_tss();
+--- a/arch/x86/kernel/traps.c
++++ b/arch/x86/kernel/traps.c
+@@ -1021,24 +1021,32 @@ static bool is_sysenter_singlestep(struc
+ #endif
+ }
+ 
+-static __always_inline unsigned long debug_read_clear_dr6(void)
++static __always_inline unsigned long debug_read_reset_dr6(void)
+ {
+ 	unsigned long dr6;
+ 
++	get_debugreg(dr6, 6);
++	dr6 ^= DR6_RESERVED; /* Flip to positive polarity */
++
  	/*
- 	 * The number of zero bits in the mask is equal to the number of bits
-@@ -1248,19 +1251,30 @@ static int __addr_mask_to_cs_size(u32 ad
- 	 * without swapping with the most significant bit. This can be handled
- 	 * by keeping the MSB where it is and ignoring the single zero bit.
+ 	 * The Intel SDM says:
+ 	 *
+-	 *   Certain debug exceptions may clear bits 0-3. The remaining
+-	 *   contents of the DR6 register are never cleared by the
+-	 *   processor. To avoid confusion in identifying debug
+-	 *   exceptions, debug handlers should clear the register before
+-	 *   returning to the interrupted task.
++	 *   Certain debug exceptions may clear bits 0-3 of DR6.
++	 *
++	 *   BLD induced #DB clears DR6.BLD and any other debug
++	 *   exception doesn't modify DR6.BLD.
+ 	 *
+-	 * Keep it simple: clear DR6 immediately.
++	 *   RTM induced #DB clears DR6.RTM and any other debug
++	 *   exception sets DR6.RTM.
++	 *
++	 *   To avoid confusion in identifying debug exceptions,
++	 *   debug handlers should set DR6.BLD and DR6.RTM, and
++	 *   clear other DR6 bits before returning.
++	 *
++	 * Keep it simple: write DR6 with its architectural reset
++	 * value 0xFFFF0FF0, defined as DR6_RESERVED, immediately.
  	 */
--	msb = fls(addr_mask_orig) - 1;
--	weight = hweight_long(addr_mask_orig);
-+	msb = fls(mask) - 1;
-+	weight = hweight_long(mask);
- 	num_zero_bits = msb - weight - !!(cs_mode & CS_3R_INTERLEAVE);
+-	get_debugreg(dr6, 6);
+ 	set_debugreg(DR6_RESERVED, 6);
+-	dr6 ^= DR6_RESERVED; /* Flip to positive polarity */
  
- 	/* Take the number of zero bits off from the top of the mask. */
--	addr_mask_deinterleaved = GENMASK_ULL(msb - num_zero_bits, 1);
-+	deinterleaved_mask = GENMASK(msb - num_zero_bits, 1);
-+	edac_dbg(1, "  Deinterleaved AddrMask: 0x%x\n", deinterleaved_mask);
-+
-+	return (deinterleaved_mask >> 2) + 1;
-+}
-+
-+static int __addr_mask_to_cs_size(u32 addr_mask, u32 addr_mask_sec,
-+				  unsigned int cs_mode, int csrow_nr, int dimm)
-+{
-+	int size;
- 
- 	edac_dbg(1, "CS%d DIMM%d AddrMasks:\n", csrow_nr, dimm);
--	edac_dbg(1, "  Original AddrMask: 0x%x\n", addr_mask_orig);
--	edac_dbg(1, "  Deinterleaved AddrMask: 0x%x\n", addr_mask_deinterleaved);
-+	edac_dbg(1, "  Primary AddrMask: 0x%x\n", addr_mask);
- 
- 	/* Register [31:1] = Address [39:9]. Size is in kBs here. */
--	size = (addr_mask_deinterleaved >> 2) + 1;
-+	size = calculate_cs_size(addr_mask, cs_mode);
-+
-+	edac_dbg(1, "  Secondary AddrMask: 0x%x\n", addr_mask_sec);
-+	size += calculate_cs_size(addr_mask_sec, cs_mode);
- 
- 	/* Return size in MBs. */
- 	return size >> 10;
-@@ -1269,8 +1283,8 @@ static int __addr_mask_to_cs_size(u32 ad
- static int umc_addr_mask_to_cs_size(struct amd64_pvt *pvt, u8 umc,
- 				    unsigned int cs_mode, int csrow_nr)
+ 	return dr6;
+ }
+@@ -1238,13 +1246,13 @@ out:
+ /* IST stack entry */
+ DEFINE_IDTENTRY_DEBUG(exc_debug)
  {
-+	u32 addr_mask = 0, addr_mask_sec = 0;
- 	int cs_mask_nr = csrow_nr;
--	u32 addr_mask_orig;
- 	int dimm, size = 0;
- 
- 	/* No Chip Selects are enabled. */
-@@ -1308,13 +1322,13 @@ static int umc_addr_mask_to_cs_size(stru
- 	if (!pvt->flags.zn_regs_v2)
- 		cs_mask_nr >>= 1;
- 
--	/* Asymmetric dual-rank DIMM support. */
--	if ((csrow_nr & 1) && (cs_mode & CS_ODD_SECONDARY))
--		addr_mask_orig = pvt->csels[umc].csmasks_sec[cs_mask_nr];
--	else
--		addr_mask_orig = pvt->csels[umc].csmasks[cs_mask_nr];
-+	if (cs_mode & (CS_EVEN_PRIMARY | CS_ODD_PRIMARY))
-+		addr_mask = pvt->csels[umc].csmasks[cs_mask_nr];
-+
-+	if (cs_mode & (CS_EVEN_SECONDARY | CS_ODD_SECONDARY))
-+		addr_mask_sec = pvt->csels[umc].csmasks_sec[cs_mask_nr];
- 
--	return __addr_mask_to_cs_size(addr_mask_orig, cs_mode, csrow_nr, dimm);
-+	return __addr_mask_to_cs_size(addr_mask, addr_mask_sec, cs_mode, csrow_nr, dimm);
+-	exc_debug_kernel(regs, debug_read_clear_dr6());
++	exc_debug_kernel(regs, debug_read_reset_dr6());
  }
  
- static void umc_debug_display_dimm_sizes(struct amd64_pvt *pvt, u8 ctrl)
-@@ -3512,9 +3526,10 @@ static void gpu_get_err_info(struct mce
- static int gpu_addr_mask_to_cs_size(struct amd64_pvt *pvt, u8 umc,
- 				    unsigned int cs_mode, int csrow_nr)
+ /* User entry, runs on regular task stack */
+ DEFINE_IDTENTRY_DEBUG_USER(exc_debug)
  {
--	u32 addr_mask_orig = pvt->csels[umc].csmasks[csrow_nr];
-+	u32 addr_mask		= pvt->csels[umc].csmasks[csrow_nr];
-+	u32 addr_mask_sec	= pvt->csels[umc].csmasks_sec[csrow_nr];
- 
--	return __addr_mask_to_cs_size(addr_mask_orig, cs_mode, csrow_nr, csrow_nr >> 1);
-+	return __addr_mask_to_cs_size(addr_mask, addr_mask_sec, cs_mode, csrow_nr, csrow_nr >> 1);
+-	exc_debug_user(regs, debug_read_clear_dr6());
++	exc_debug_user(regs, debug_read_reset_dr6());
  }
  
- static void gpu_debug_display_dimm_sizes(struct amd64_pvt *pvt, u8 ctrl)
+ #ifdef CONFIG_X86_FRED
+@@ -1263,7 +1271,7 @@ DEFINE_FREDENTRY_DEBUG(exc_debug)
+ {
+ 	/*
+ 	 * FRED #DB stores DR6 on the stack in the format which
+-	 * debug_read_clear_dr6() returns for the IDT entry points.
++	 * debug_read_reset_dr6() returns for the IDT entry points.
+ 	 */
+ 	unsigned long dr6 = fred_event_data(regs);
+ 
+@@ -1278,7 +1286,7 @@ DEFINE_FREDENTRY_DEBUG(exc_debug)
+ /* 32 bit does not have separate entry points. */
+ DEFINE_IDTENTRY_RAW(exc_debug)
+ {
+-	unsigned long dr6 = debug_read_clear_dr6();
++	unsigned long dr6 = debug_read_reset_dr6();
+ 
+ 	if (user_mode(regs))
+ 		exc_debug_user(regs, dr6);
 
 
