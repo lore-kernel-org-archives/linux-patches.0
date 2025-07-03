@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935902EBB8D;
-	Thu,  3 Jul 2025 15:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50962EF67F;
+	Thu,  3 Jul 2025 15:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555610; cv=none; b=YJ/z4dUbs/SErcSpSqIrwqNezmsF2SQbb+30c6bUSZ4wO0+qPRNRsoho3iJbeaK8DHIhIRXmelmf8kB7pj2VpcbcQlp2O4cO4sZ8Y4OKSVACuGxJ/OsW0ZZVmy7zzjM5vrpjov56Mw1Bww2FipABC9vtMbTNS4u70sQ0EhHu6oI=
+	t=1751555613; cv=none; b=B6MLlE3a4h861ixgd/ibcfxjFEM3lAK3arzYmnxOJXB4FkOb0BSnZVg07WvCYa8M0cfOYOxyreaCuMmFwvLK3zv8o8BuE1OR+PQRqZj87Jn1Bz/5/VKwdMbaBjpZYhvP0esl3e9tInBOE7ZYYUwz5KgjhA7FglXbBLo6QAyz+Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555610; c=relaxed/simple;
-	bh=3iz7ti98M0KgQrGxBGt4BEIzmLw+4PUCNnkwN8DBPwk=;
+	s=arc-20240116; t=1751555613; c=relaxed/simple;
+	bh=s3BXem6d4DcHUgbH93b6UJrvmVjbJDeNlj88yyJdrrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Il/a5iLqGYW27V7/VAjIe0Gzl6oPh3adw8ZkFQkXnl3qAKZQQBot+epSdYkjSIQ1Q9KK9jILIqi/uLgKpTPeJjMoZYmWuDgnSEPDKFviZULSil3GP4PCUHfFGn00gg5lh+IC1cHvJMKU1MokW6n9i/l18heAiWll1GADZNaYkEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0GYR/ug; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PM4suE8Jlyr8McqslCgJ5lV9KbhTfWaO7qCvz7/t+yjEln3tAXv2tXvuIhcNohqDR/dd2HWBH2PlCbHMTOnGDMThjiA5N8493Tlvs6S6yy0LTpf0oTnnRtowkgODt3+oW0rDaPpH4bY/HGErQ4ks+O3i8uwelfSNJeBTrrtygCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oknbb+7H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0GYR/ug"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05970C4CEE3;
-	Thu,  3 Jul 2025 15:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oknbb+7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1510EC4CEE3;
+	Thu,  3 Jul 2025 15:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555610;
-	bh=3iz7ti98M0KgQrGxBGt4BEIzmLw+4PUCNnkwN8DBPwk=;
+	s=korg; t=1751555613;
+	bh=s3BXem6d4DcHUgbH93b6UJrvmVjbJDeNlj88yyJdrrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0GYR/ugBoti/TCf1NVPzx0NBgjyslBbrwdbeud7IWRiSS/c5BNSXAqbvH0QaTSOp
-	 lpoT6GH3CGLBkouhZDRMyoKW/pg3X4ODOAwnrfSqkWdXH1VGEfwDLaaHTAocoH81et
-	 eI8kp0ZeLu/7wlGLa1TkCAQIVfsoR7yW5lYOc/V4=
+	b=oknbb+7HQzNvZAwl4Kd2WnJhk1EG8+65vipc6IJMnLVeKkq8Szb8+SyMDEpADo6tX
+	 OtowQd4Ygum++HNx4GblqRqUxkbS3NCMytvhyJI1+o3eq5gc19SenzmDgNnoNXqhdp
+	 zDTNE3altqHWs1Ztyjc6bR1/KItBb6dNtAz3y1DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jos Wang <joswang@lenovo.com>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/139] usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode
-Date: Thu,  3 Jul 2025 16:41:41 +0200
-Message-ID: <20250703143942.669718788@linuxfoundation.org>
+Subject: [PATCH 6.6 039/139] usb: typec: mux: do not return on EOPNOTSUPP in {mux, switch}_set
+Date: Thu,  3 Jul 2025 16:41:42 +0200
+Message-ID: <20250703143942.708580898@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -45,57 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jos Wang <joswang@lenovo.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-[ Upstream commit b4b38ffb38c91afd4dc387608db26f6fc34ed40b ]
+[ Upstream commit 0f7bbef1794dc87141897f804e5871a293aa174b ]
 
-Although some Type-C DRD devices that do not support the DP Sink
-function (such as Huawei Mate 40Pro), the Source Port initiates
-Enter Mode CMD, but the device responds to Enter Mode ACK, the
-Source port then initiates DP Status Update CMD, and the device
-responds to DP Status Update NAK.
+Since the typec connectors can have many muxes or switches for different
+lanes (sbu, usb2, usb3) going into different modal states (usb2, usb3,
+audio, debug) all of them will be called on typec_switch_set and
+typec_mux_set. But not all of them will be handling the expected mode.
 
-As PD2.0 spec ("6.4.4.3.4 Enter Mode Command")，A DR_Swap Message
-Shall Not be sent during Modal Operation between the Port Partners.
-At this time, the source port initiates DR_Swap message through the
-"echo device > /sys/class/typec/port0/data_role" command to switch
-the data role from host to device. The device will initiate a Hard
-Reset for recovery, resulting in the failure of data role swap.
+If one of the mux or switch will come back with EOPTNOSUPP this is no
+reason to stop running through the next ones. Therefor we skip this
+particular error value and continue calling the next.
 
-Therefore, when DP Status Update NAK is received, Exit Mode CMD is
-initiated to exit the currently entered DP altmode.
-
-Signed-off-by: Jos Wang <joswang@lenovo.com>
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250209071926.69625-1-joswang1221@gmail.com
+Link: https://lore.kernel.org/r/20250404-ml-topic-typec-mux-v1-1-22c0526381ba@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/altmodes/displayport.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/typec/mux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index ccff838ab89e1..5f6fc5b79212e 100644
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -323,6 +323,10 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
- 		break;
- 	case CMDT_RSP_NAK:
- 		switch (cmd) {
-+		case DP_CMD_STATUS_UPDATE:
-+			if (typec_altmode_exit(alt))
-+				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
-+			break;
- 		case DP_CMD_CONFIGURE:
- 			dp->data.conf = 0;
- 			ret = dp_altmode_configured(dp);
+diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
+index 80dd91938d960..a5b2a6f9c5795 100644
+--- a/drivers/usb/typec/mux.c
++++ b/drivers/usb/typec/mux.c
+@@ -214,7 +214,7 @@ int typec_switch_set(struct typec_switch *sw,
+ 		sw_dev = sw->sw_devs[i];
+ 
+ 		ret = sw_dev->set(sw_dev, orientation);
+-		if (ret)
++		if (ret && ret != -EOPNOTSUPP)
+ 			return ret;
+ 	}
+ 
+@@ -378,7 +378,7 @@ int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state)
+ 		mux_dev = mux->mux_devs[i];
+ 
+ 		ret = mux_dev->set(mux_dev, state);
+-		if (ret)
++		if (ret && ret != -EOPNOTSUPP)
+ 			return ret;
+ 	}
+ 
 -- 
 2.39.5
 
