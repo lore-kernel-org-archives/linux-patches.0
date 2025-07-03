@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECA986348;
-	Thu,  3 Jul 2025 15:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270791DA23;
+	Thu,  3 Jul 2025 15:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556036; cv=none; b=JPdaIE10/C5pbs2kmqZo2rTvNJeEA+tb7A09B3inpZax2EUI58XElMIEHNax8WR76K1LBSTJ0xotIGSFMj6pBcN5acl6fN1/mL5qdCFfUBPgz7mC1HC5ZucIU9rkkkdgvyMzigcXFqxu2TrhACYLIFwXS/oVI0tP8n5U6OfoFdk=
+	t=1751556039; cv=none; b=WMjE87aCwa7NuvzG/55MVv51VHbP9SuOLNDFvIWApV12pFf5TVJp/CL0Oh2GfbJdGQ1PShjndiYbwnWO+arv0eqDVGtcYPYyHyOCcutJsPQTsav83Xu/nnpbKkKu/PbGqNvdeqGDjkK+dm/knmaBx02sozId2nBHEILg7QWtGbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556036; c=relaxed/simple;
-	bh=k3NwctpvR1u+UwZqpLfYiUuACApWF97+wjp9WnL+VhU=;
+	s=arc-20240116; t=1751556039; c=relaxed/simple;
+	bh=BlJKlORyZdqbPJ1UC1wF2BobK2QKWLChb2Xf4lV8HrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QnyYLQvhjcV4G34EtbnaRYw5JAYoR4gY3U1C/zpjnfa7C97Xk3fGpOuSAeI8gJ9HU5HHa1QHdXAin5q5+cQYbTwqo+Vcf0BdCJq9lXWVYkEwGzDElyTjOkoAKeavA8RR8eq5Q9UtYTFxLBz7lpyk4C6hw3WjCAGxAbja0/J7JQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzxG815/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wz3FtIUQbnxD/SOfCgMko3I3p0Z04oolGfwgXyivzSfSe5pD/tFPBtCJUO+egAQjFW7icMx+h2hmVWfFZGDVMROvRPT/e2FOj5eh/Uh26WPL53M+lUnjyXe9Wut/PhZWzaEL+VPJyFvhsEe5YZRU0z4RS9cvZyngGctPTpXade0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kjyroke; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzxG815/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E84DC4CEE3;
-	Thu,  3 Jul 2025 15:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kjyroke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A323DC4CEE3;
+	Thu,  3 Jul 2025 15:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556035;
-	bh=k3NwctpvR1u+UwZqpLfYiUuACApWF97+wjp9WnL+VhU=;
+	s=korg; t=1751556039;
+	bh=BlJKlORyZdqbPJ1UC1wF2BobK2QKWLChb2Xf4lV8HrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZzxG815/sO3HlKYCa5hGl9EPPIeyXaB+Cz9KrPIgNSxMmJZtfn6VbK02v/oQ7Qy8D
-	 l//k92EcinnCoQ7dqAllgTVQonthHm9TDUV+i/+50PwWpApeddz9tCgQUlKMjeu7A/
-	 opvGpLZ4i6J5XX6nCBHFSKKpQPg5Ud8B/qTg1S3I=
+	b=0kjyrokebkR7RGVy3idWAsRPzbcT57HTNPaCBfPa/FHDuPftIdRz+NkDXr7VxX59k
+	 qAF4dD9pzWtQfThFAq2HZ23/mzx0poiRr3B8n4jo98CyivfF00bejyLQVUFsweDhOc
+	 rotZFuKHGzHv5vVXUQxjOv7HpRwjUkm1jPyFrjyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
+	Kameron Carr <kameroncarr@linux.microsoft.com>,
+	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/132] Drivers: hv: move panic report code from vmbus to hv early init code
-Date: Thu,  3 Jul 2025 16:42:23 +0200
-Message-ID: <20250703143941.537153668@linuxfoundation.org>
+Subject: [PATCH 6.1 055/132] Drivers: hv: Change hv_free_hyperv_page() to take void * argument
+Date: Thu,  3 Jul 2025 16:42:24 +0200
+Message-ID: <20250703143941.584078964@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -52,623 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Kameron Carr <kameroncarr@linux.microsoft.com>
 
-[ Upstream commit 9c318a1d9b5000c77527011f158a75c5483510f5 ]
+[ Upstream commit a6fe043880820981f6e4918240f967ea79bb063e ]
 
-The panic reporting code was added in commit 81b18bce48af
-("Drivers: HV: Send one page worth of kmsg dump over Hyper-V during panic")
+Currently hv_free_hyperv_page() takes an unsigned long argument, which
+is inconsistent with the void * return value from the corresponding
+hv_alloc_hyperv_page() function and variants. This creates unnecessary
+extra casting.
 
-It was added to the vmbus driver. The panic reporting has no dependence
-on vmbus, and can be enabled at an earlier boot time when Hyper-V is
-initialized.
+Change the hv_free_hyperv_page() argument type to void *.
+Also remove redundant casts from invocations of
+hv_alloc_hyperv_page() and variants.
 
-This patch moves the panic reporting code out of vmbus. There is no
-functionality changes. During moving, also refactored some cleanup
-functions into hv_kmsg_dump_unregister().
-
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1682030946-6372-1-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Kameron Carr <kameroncarr@linux.microsoft.com>
+Reviewed-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Link: https://lore.kernel.org/r/1687558189-19734-1-git-send-email-kameroncarr@linux.microsoft.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Stable-dep-of: 09eea7ad0b8e ("Drivers: hv: Allocate interrupt and monitor pages aligned to system page boundary")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/hv.c        |  36 -------
- drivers/hv/hv_common.c | 231 +++++++++++++++++++++++++++++++++++++++++
- drivers/hv/vmbus_drv.c | 199 -----------------------------------
- 3 files changed, 231 insertions(+), 235 deletions(-)
+ drivers/hv/connection.c        | 13 ++++++-------
+ drivers/hv/hv_common.c         | 10 +++++-----
+ include/asm-generic/mshyperv.h |  2 +-
+ 3 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/hv/hv.c b/drivers/hv/hv.c
-index 4d6480d57546d..d1a3be24396f0 100644
---- a/drivers/hv/hv.c
-+++ b/drivers/hv/hv.c
-@@ -38,42 +38,6 @@ int hv_init(void)
- 	return 0;
- }
+diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
+index 5978e9dbc286f..ebf15f31d97e3 100644
+--- a/drivers/hv/connection.c
++++ b/drivers/hv/connection.c
+@@ -209,8 +209,7 @@ int vmbus_connect(void)
+ 	 * Setup the vmbus event connection for channel interrupt
+ 	 * abstraction stuff
+ 	 */
+-	vmbus_connection.int_page =
+-	(void *)hv_alloc_hyperv_zeroed_page();
++	vmbus_connection.int_page = hv_alloc_hyperv_zeroed_page();
+ 	if (vmbus_connection.int_page == NULL) {
+ 		ret = -ENOMEM;
+ 		goto cleanup;
+@@ -225,8 +224,8 @@ int vmbus_connect(void)
+ 	 * Setup the monitor notification facility. The 1st page for
+ 	 * parent->child and the 2nd page for child->parent
+ 	 */
+-	vmbus_connection.monitor_pages[0] = (void *)hv_alloc_hyperv_page();
+-	vmbus_connection.monitor_pages[1] = (void *)hv_alloc_hyperv_page();
++	vmbus_connection.monitor_pages[0] = hv_alloc_hyperv_page();
++	vmbus_connection.monitor_pages[1] = hv_alloc_hyperv_page();
+ 	if ((vmbus_connection.monitor_pages[0] == NULL) ||
+ 	    (vmbus_connection.monitor_pages[1] == NULL)) {
+ 		ret = -ENOMEM;
+@@ -333,15 +332,15 @@ void vmbus_disconnect(void)
+ 		destroy_workqueue(vmbus_connection.work_queue);
  
--/*
-- * Functions for allocating and freeing memory with size and
-- * alignment HV_HYP_PAGE_SIZE. These functions are needed because
-- * the guest page size may not be the same as the Hyper-V page
-- * size. We depend upon kmalloc() aligning power-of-two size
-- * allocations to the allocation size boundary, so that the
-- * allocated memory appears to Hyper-V as a page of the size
-- * it expects.
-- */
--
--void *hv_alloc_hyperv_page(void)
--{
--	BUILD_BUG_ON(PAGE_SIZE <  HV_HYP_PAGE_SIZE);
--
--	if (PAGE_SIZE == HV_HYP_PAGE_SIZE)
--		return (void *)__get_free_page(GFP_KERNEL);
--	else
--		return kmalloc(HV_HYP_PAGE_SIZE, GFP_KERNEL);
--}
--
--void *hv_alloc_hyperv_zeroed_page(void)
--{
--	if (PAGE_SIZE == HV_HYP_PAGE_SIZE)
--		return (void *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
--	else
--		return kzalloc(HV_HYP_PAGE_SIZE, GFP_KERNEL);
--}
--
--void hv_free_hyperv_page(unsigned long addr)
--{
--	if (PAGE_SIZE == HV_HYP_PAGE_SIZE)
--		free_page(addr);
--	else
--		kfree((void *)addr);
--}
--
- /*
-  * hv_post_message - Post a message using the hypervisor message IPC.
-  *
+ 	if (vmbus_connection.int_page) {
+-		hv_free_hyperv_page((unsigned long)vmbus_connection.int_page);
++		hv_free_hyperv_page(vmbus_connection.int_page);
+ 		vmbus_connection.int_page = NULL;
+ 	}
+ 
+ 	set_memory_encrypted((unsigned long)vmbus_connection.monitor_pages[0], 1);
+ 	set_memory_encrypted((unsigned long)vmbus_connection.monitor_pages[1], 1);
+ 
+-	hv_free_hyperv_page((unsigned long)vmbus_connection.monitor_pages[0]);
+-	hv_free_hyperv_page((unsigned long)vmbus_connection.monitor_pages[1]);
++	hv_free_hyperv_page(vmbus_connection.monitor_pages[0]);
++	hv_free_hyperv_page(vmbus_connection.monitor_pages[1]);
+ 	vmbus_connection.monitor_pages[0] = NULL;
+ 	vmbus_connection.monitor_pages[1] = NULL;
+ }
 diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
-index ae68298c0dcac..07338f6ec1e2c 100644
+index 07338f6ec1e2c..2bc1aea070468 100644
 --- a/drivers/hv/hv_common.c
 +++ b/drivers/hv/hv_common.c
-@@ -17,8 +17,11 @@
- #include <linux/export.h>
- #include <linux/bitfield.h>
- #include <linux/cpumask.h>
-+#include <linux/sched/task_stack.h>
- #include <linux/panic_notifier.h>
- #include <linux/ptrace.h>
-+#include <linux/kdebug.h>
-+#include <linux/kmsg_dump.h>
- #include <linux/slab.h>
- #include <linux/dma-map-ops.h>
- #include <asm/hyperv-tlfs.h>
-@@ -51,6 +54,10 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
- void * __percpu *hyperv_pcpu_output_arg;
- EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
+@@ -112,12 +112,12 @@ void *hv_alloc_hyperv_zeroed_page(void)
+ }
+ EXPORT_SYMBOL_GPL(hv_alloc_hyperv_zeroed_page);
  
-+static void hv_kmsg_dump_unregister(void);
-+
-+static struct ctl_table_header *hv_ctl_table_hdr;
-+
- /*
-  * Hyper-V specific initialization and shutdown code that is
-  * common across all architectures.  Called from architecture
-@@ -59,6 +66,12 @@ EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
- 
- void __init hv_common_free(void)
+-void hv_free_hyperv_page(unsigned long addr)
++void hv_free_hyperv_page(void *addr)
  {
-+	unregister_sysctl_table(hv_ctl_table_hdr);
-+	hv_ctl_table_hdr = NULL;
-+
-+	if (ms_hyperv.misc_features & HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE)
-+		hv_kmsg_dump_unregister();
-+
- 	kfree(hv_vp_index);
- 	hv_vp_index = NULL;
- 
-@@ -69,10 +82,203 @@ void __init hv_common_free(void)
- 	hyperv_pcpu_input_arg = NULL;
+ 	if (PAGE_SIZE == HV_HYP_PAGE_SIZE)
+-		free_page(addr);
++		free_page((unsigned long)addr);
+ 	else
+-		kfree((void *)addr);
++		kfree(addr);
  }
+ EXPORT_SYMBOL_GPL(hv_free_hyperv_page);
  
-+/*
-+ * Functions for allocating and freeing memory with size and
-+ * alignment HV_HYP_PAGE_SIZE. These functions are needed because
-+ * the guest page size may not be the same as the Hyper-V page
-+ * size. We depend upon kmalloc() aligning power-of-two size
-+ * allocations to the allocation size boundary, so that the
-+ * allocated memory appears to Hyper-V as a page of the size
-+ * it expects.
-+ */
-+
-+void *hv_alloc_hyperv_page(void)
-+{
-+	BUILD_BUG_ON(PAGE_SIZE <  HV_HYP_PAGE_SIZE);
-+
-+	if (PAGE_SIZE == HV_HYP_PAGE_SIZE)
-+		return (void *)__get_free_page(GFP_KERNEL);
-+	else
-+		return kmalloc(HV_HYP_PAGE_SIZE, GFP_KERNEL);
-+}
-+EXPORT_SYMBOL_GPL(hv_alloc_hyperv_page);
-+
-+void *hv_alloc_hyperv_zeroed_page(void)
-+{
-+	if (PAGE_SIZE == HV_HYP_PAGE_SIZE)
-+		return (void *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
-+	else
-+		return kzalloc(HV_HYP_PAGE_SIZE, GFP_KERNEL);
-+}
-+EXPORT_SYMBOL_GPL(hv_alloc_hyperv_zeroed_page);
-+
-+void hv_free_hyperv_page(unsigned long addr)
-+{
-+	if (PAGE_SIZE == HV_HYP_PAGE_SIZE)
-+		free_page(addr);
-+	else
-+		kfree((void *)addr);
-+}
-+EXPORT_SYMBOL_GPL(hv_free_hyperv_page);
-+
-+static void *hv_panic_page;
-+
-+/*
-+ * Boolean to control whether to report panic messages over Hyper-V.
-+ *
-+ * It can be set via /proc/sys/kernel/hyperv_record_panic_msg
-+ */
-+static int sysctl_record_panic_msg = 1;
-+
-+/*
-+ * sysctl option to allow the user to control whether kmsg data should be
-+ * reported to Hyper-V on panic.
-+ */
-+static struct ctl_table hv_ctl_table[] = {
-+	{
-+		.procname	= "hyperv_record_panic_msg",
-+		.data		= &sysctl_record_panic_msg,
-+		.maxlen		= sizeof(int),
-+		.mode		= 0644,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= SYSCTL_ONE
-+	},
-+	{}
-+};
-+
-+static int hv_die_panic_notify_crash(struct notifier_block *self,
-+				     unsigned long val, void *args);
-+
-+static struct notifier_block hyperv_die_report_block = {
-+	.notifier_call = hv_die_panic_notify_crash,
-+};
-+
-+static struct notifier_block hyperv_panic_report_block = {
-+	.notifier_call = hv_die_panic_notify_crash,
-+};
-+
-+/*
-+ * The following callback works both as die and panic notifier; its
-+ * goal is to provide panic information to the hypervisor unless the
-+ * kmsg dumper is used [see hv_kmsg_dump()], which provides more
-+ * information but isn't always available.
-+ *
-+ * Notice that both the panic/die report notifiers are registered only
-+ * if we have the capability HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE set.
-+ */
-+static int hv_die_panic_notify_crash(struct notifier_block *self,
-+				     unsigned long val, void *args)
-+{
-+	struct pt_regs *regs;
-+	bool is_die;
-+
-+	/* Don't notify Hyper-V unless we have a die oops event or panic. */
-+	if (self == &hyperv_panic_report_block) {
-+		is_die = false;
-+		regs = current_pt_regs();
-+	} else { /* die event */
-+		if (val != DIE_OOPS)
-+			return NOTIFY_DONE;
-+
-+		is_die = true;
-+		regs = ((struct die_args *)args)->regs;
-+	}
-+
-+	/*
-+	 * Hyper-V should be notified only once about a panic/die. If we will
-+	 * be calling hv_kmsg_dump() later with kmsg data, don't do the
-+	 * notification here.
-+	 */
-+	if (!sysctl_record_panic_msg || !hv_panic_page)
-+		hyperv_report_panic(regs, val, is_die);
-+
-+	return NOTIFY_DONE;
-+}
-+
-+/*
-+ * Callback from kmsg_dump. Grab as much as possible from the end of the kmsg
-+ * buffer and call into Hyper-V to transfer the data.
-+ */
-+static void hv_kmsg_dump(struct kmsg_dumper *dumper,
-+			 enum kmsg_dump_reason reason)
-+{
-+	struct kmsg_dump_iter iter;
-+	size_t bytes_written;
-+
-+	/* We are only interested in panics. */
-+	if (reason != KMSG_DUMP_PANIC || !sysctl_record_panic_msg)
-+		return;
-+
-+	/*
-+	 * Write dump contents to the page. No need to synchronize; panic should
-+	 * be single-threaded.
-+	 */
-+	kmsg_dump_rewind(&iter);
-+	kmsg_dump_get_buffer(&iter, false, hv_panic_page, HV_HYP_PAGE_SIZE,
-+			     &bytes_written);
-+	if (!bytes_written)
-+		return;
-+	/*
-+	 * P3 to contain the physical address of the panic page & P4 to
-+	 * contain the size of the panic data in that page. Rest of the
-+	 * registers are no-op when the NOTIFY_MSG flag is set.
-+	 */
-+	hv_set_register(HV_REGISTER_CRASH_P0, 0);
-+	hv_set_register(HV_REGISTER_CRASH_P1, 0);
-+	hv_set_register(HV_REGISTER_CRASH_P2, 0);
-+	hv_set_register(HV_REGISTER_CRASH_P3, virt_to_phys(hv_panic_page));
-+	hv_set_register(HV_REGISTER_CRASH_P4, bytes_written);
-+
-+	/*
-+	 * Let Hyper-V know there is crash data available along with
-+	 * the panic message.
-+	 */
-+	hv_set_register(HV_REGISTER_CRASH_CTL,
-+			(HV_CRASH_CTL_CRASH_NOTIFY |
-+			 HV_CRASH_CTL_CRASH_NOTIFY_MSG));
-+}
-+
-+static struct kmsg_dumper hv_kmsg_dumper = {
-+	.dump = hv_kmsg_dump,
-+};
-+
-+static void hv_kmsg_dump_unregister(void)
-+{
-+	kmsg_dump_unregister(&hv_kmsg_dumper);
-+	unregister_die_notifier(&hyperv_die_report_block);
-+	atomic_notifier_chain_unregister(&panic_notifier_list,
-+					 &hyperv_panic_report_block);
-+
-+	hv_free_hyperv_page((unsigned long)hv_panic_page);
-+	hv_panic_page = NULL;
-+}
-+
-+static void hv_kmsg_dump_register(void)
-+{
-+	int ret;
-+
-+	hv_panic_page = hv_alloc_hyperv_zeroed_page();
-+	if (!hv_panic_page) {
-+		pr_err("Hyper-V: panic message page memory allocation failed\n");
-+		return;
-+	}
-+
-+	ret = kmsg_dump_register(&hv_kmsg_dumper);
-+	if (ret) {
-+		pr_err("Hyper-V: kmsg dump register error 0x%x\n", ret);
-+		hv_free_hyperv_page((unsigned long)hv_panic_page);
-+		hv_panic_page = NULL;
-+	}
-+}
-+
- int __init hv_common_init(void)
- {
- 	int i;
- 
-+	if (hv_is_isolation_supported())
-+		sysctl_record_panic_msg = 0;
-+
- 	/*
- 	 * Hyper-V expects to get crash register data or kmsg when
- 	 * crash enlightment is available and system crashes. Set
-@@ -81,8 +287,33 @@ int __init hv_common_init(void)
- 	 * kernel.
- 	 */
- 	if (ms_hyperv.misc_features & HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE) {
-+		u64 hyperv_crash_ctl;
-+
- 		crash_kexec_post_notifiers = true;
- 		pr_info("Hyper-V: enabling crash_kexec_post_notifiers\n");
-+
-+		/*
-+		 * Panic message recording (sysctl_record_panic_msg)
-+		 * is enabled by default in non-isolated guests and
-+		 * disabled by default in isolated guests; the panic
-+		 * message recording won't be available in isolated
-+		 * guests should the following registration fail.
-+		 */
-+		hv_ctl_table_hdr = register_sysctl("kernel", hv_ctl_table);
-+		if (!hv_ctl_table_hdr)
-+			pr_err("Hyper-V: sysctl table register error");
-+
-+		/*
-+		 * Register for panic kmsg callback only if the right
-+		 * capability is supported by the hypervisor.
-+		 */
-+		hyperv_crash_ctl = hv_get_register(HV_REGISTER_CRASH_CTL);
-+		if (hyperv_crash_ctl & HV_CRASH_CTL_CRASH_NOTIFY_MSG)
-+			hv_kmsg_dump_register();
-+
-+		register_die_notifier(&hyperv_die_report_block);
-+		atomic_notifier_chain_register(&panic_notifier_list,
-+					       &hyperv_panic_report_block);
- 	}
- 
- 	/*
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 5f6415214a1e4..074168f34afd7 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -28,7 +28,6 @@
- #include <linux/panic_notifier.h>
- #include <linux/ptrace.h>
- #include <linux/screen_info.h>
--#include <linux/kdebug.h>
- #include <linux/efi.h>
- #include <linux/random.h>
- #include <linux/kernel.h>
-@@ -47,26 +46,12 @@ static struct acpi_device  *hv_acpi_dev;
- 
- static int hyperv_cpuhp_online;
- 
--static void *hv_panic_page;
--
- static long __percpu *vmbus_evt;
- 
- /* Values parsed from ACPI DSDT */
- int vmbus_irq;
- int vmbus_interrupt;
- 
--/*
-- * Boolean to control whether to report panic messages over Hyper-V.
-- *
-- * It can be set via /proc/sys/kernel/hyperv_record_panic_msg
-- */
--static int sysctl_record_panic_msg = 1;
--
--static int hyperv_report_reg(void)
--{
--	return !sysctl_record_panic_msg || !hv_panic_page;
--}
--
- /*
-  * The panic notifier below is responsible solely for unloading the
-  * vmbus connection, which is necessary in a panic event.
-@@ -87,54 +72,6 @@ static struct notifier_block hyperv_panic_vmbus_unload_block = {
- 	.priority	= INT_MIN + 1, /* almost the latest one to execute */
- };
- 
--static int hv_die_panic_notify_crash(struct notifier_block *self,
--				     unsigned long val, void *args);
--
--static struct notifier_block hyperv_die_report_block = {
--	.notifier_call = hv_die_panic_notify_crash,
--};
--static struct notifier_block hyperv_panic_report_block = {
--	.notifier_call = hv_die_panic_notify_crash,
--};
--
--/*
-- * The following callback works both as die and panic notifier; its
-- * goal is to provide panic information to the hypervisor unless the
-- * kmsg dumper is used [see hv_kmsg_dump()], which provides more
-- * information but isn't always available.
-- *
-- * Notice that both the panic/die report notifiers are registered only
-- * if we have the capability HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE set.
-- */
--static int hv_die_panic_notify_crash(struct notifier_block *self,
--				     unsigned long val, void *args)
--{
--	struct pt_regs *regs;
--	bool is_die;
--
--	/* Don't notify Hyper-V unless we have a die oops event or panic. */
--	if (self == &hyperv_panic_report_block) {
--		is_die = false;
--		regs = current_pt_regs();
--	} else { /* die event */
--		if (val != DIE_OOPS)
--			return NOTIFY_DONE;
--
--		is_die = true;
--		regs = ((struct die_args *)args)->regs;
--	}
--
--	/*
--	 * Hyper-V should be notified only once about a panic/die. If we will
--	 * be calling hv_kmsg_dump() later with kmsg data, don't do the
--	 * notification here.
--	 */
--	if (hyperv_report_reg())
--		hyperv_report_panic(regs, val, is_die);
--
--	return NOTIFY_DONE;
--}
--
- static const char *fb_mmio_name = "fb_range";
- static struct resource *fb_mmio;
- static struct resource *hyperv_mmio;
-@@ -1376,98 +1313,6 @@ static irqreturn_t vmbus_percpu_isr(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
- 
--/*
-- * Callback from kmsg_dump. Grab as much as possible from the end of the kmsg
-- * buffer and call into Hyper-V to transfer the data.
-- */
--static void hv_kmsg_dump(struct kmsg_dumper *dumper,
--			 enum kmsg_dump_reason reason)
--{
--	struct kmsg_dump_iter iter;
--	size_t bytes_written;
--
--	/* We are only interested in panics. */
--	if ((reason != KMSG_DUMP_PANIC) || (!sysctl_record_panic_msg))
--		return;
--
--	/*
--	 * Write dump contents to the page. No need to synchronize; panic should
--	 * be single-threaded.
--	 */
--	kmsg_dump_rewind(&iter);
--	kmsg_dump_get_buffer(&iter, false, hv_panic_page, HV_HYP_PAGE_SIZE,
--			     &bytes_written);
--	if (!bytes_written)
--		return;
--	/*
--	 * P3 to contain the physical address of the panic page & P4 to
--	 * contain the size of the panic data in that page. Rest of the
--	 * registers are no-op when the NOTIFY_MSG flag is set.
--	 */
--	hv_set_register(HV_REGISTER_CRASH_P0, 0);
--	hv_set_register(HV_REGISTER_CRASH_P1, 0);
--	hv_set_register(HV_REGISTER_CRASH_P2, 0);
--	hv_set_register(HV_REGISTER_CRASH_P3, virt_to_phys(hv_panic_page));
--	hv_set_register(HV_REGISTER_CRASH_P4, bytes_written);
--
--	/*
--	 * Let Hyper-V know there is crash data available along with
--	 * the panic message.
--	 */
--	hv_set_register(HV_REGISTER_CRASH_CTL,
--	       (HV_CRASH_CTL_CRASH_NOTIFY | HV_CRASH_CTL_CRASH_NOTIFY_MSG));
--}
--
--static struct kmsg_dumper hv_kmsg_dumper = {
--	.dump = hv_kmsg_dump,
--};
--
--static void hv_kmsg_dump_register(void)
--{
--	int ret;
--
--	hv_panic_page = hv_alloc_hyperv_zeroed_page();
--	if (!hv_panic_page) {
--		pr_err("Hyper-V: panic message page memory allocation failed\n");
--		return;
--	}
--
--	ret = kmsg_dump_register(&hv_kmsg_dumper);
--	if (ret) {
--		pr_err("Hyper-V: kmsg dump register error 0x%x\n", ret);
--		hv_free_hyperv_page((unsigned long)hv_panic_page);
--		hv_panic_page = NULL;
--	}
--}
--
--static struct ctl_table_header *hv_ctl_table_hdr;
--
--/*
-- * sysctl option to allow the user to control whether kmsg data should be
-- * reported to Hyper-V on panic.
-- */
--static struct ctl_table hv_ctl_table[] = {
--	{
--		.procname       = "hyperv_record_panic_msg",
--		.data           = &sysctl_record_panic_msg,
--		.maxlen         = sizeof(int),
--		.mode           = 0644,
--		.proc_handler   = proc_dointvec_minmax,
--		.extra1		= SYSCTL_ZERO,
--		.extra2		= SYSCTL_ONE
--	},
--	{}
--};
--
--static struct ctl_table hv_root_table[] = {
--	{
--		.procname	= "kernel",
--		.mode		= 0555,
--		.child		= hv_ctl_table
--	},
--	{}
--};
--
- /*
-  * vmbus_bus_init -Main vmbus driver initialization routine.
-  *
-@@ -1531,38 +1376,6 @@ static int vmbus_bus_init(void)
- 	if (ret)
- 		goto err_connect;
- 
--	if (hv_is_isolation_supported())
--		sysctl_record_panic_msg = 0;
--
--	/*
--	 * Only register if the crash MSRs are available
--	 */
--	if (ms_hyperv.misc_features & HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE) {
--		u64 hyperv_crash_ctl;
--		/*
--		 * Panic message recording (sysctl_record_panic_msg)
--		 * is enabled by default in non-isolated guests and
--		 * disabled by default in isolated guests; the panic
--		 * message recording won't be available in isolated
--		 * guests should the following registration fail.
--		 */
--		hv_ctl_table_hdr = register_sysctl_table(hv_root_table);
--		if (!hv_ctl_table_hdr)
--			pr_err("Hyper-V: sysctl table register error");
--
--		/*
--		 * Register for panic kmsg callback only if the right
--		 * capability is supported by the hypervisor.
--		 */
--		hyperv_crash_ctl = hv_get_register(HV_REGISTER_CRASH_CTL);
--		if (hyperv_crash_ctl & HV_CRASH_CTL_CRASH_NOTIFY_MSG)
--			hv_kmsg_dump_register();
--
--		register_die_notifier(&hyperv_die_report_block);
--		atomic_notifier_chain_register(&panic_notifier_list,
--						&hyperv_panic_report_block);
--	}
--
- 	/*
- 	 * Always register the vmbus unload panic notifier because we
- 	 * need to shut the VMbus channel connection on panic.
-@@ -1586,8 +1399,6 @@ static int vmbus_bus_init(void)
- 	}
- err_setup:
- 	bus_unregister(&hv_bus);
--	unregister_sysctl_table(hv_ctl_table_hdr);
--	hv_ctl_table_hdr = NULL;
- 	return ret;
- }
- 
-@@ -2833,13 +2644,6 @@ static void __exit vmbus_exit(void)
- 	vmbus_free_channels();
- 	kfree(vmbus_connection.channels);
- 
--	if (ms_hyperv.misc_features & HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE) {
--		kmsg_dump_unregister(&hv_kmsg_dumper);
--		unregister_die_notifier(&hyperv_die_report_block);
--		atomic_notifier_chain_unregister(&panic_notifier_list,
--						&hyperv_panic_report_block);
--	}
--
- 	/*
- 	 * The vmbus panic notifier is always registered, hence we should
- 	 * also unconditionally unregister it here as well.
-@@ -2847,9 +2651,6 @@ static void __exit vmbus_exit(void)
+@@ -250,7 +250,7 @@ static void hv_kmsg_dump_unregister(void)
  	atomic_notifier_chain_unregister(&panic_notifier_list,
- 					&hyperv_panic_vmbus_unload_block);
+ 					 &hyperv_panic_report_block);
  
--	free_page((unsigned long)hv_panic_page);
--	unregister_sysctl_table(hv_ctl_table_hdr);
--	hv_ctl_table_hdr = NULL;
- 	bus_unregister(&hv_bus);
+-	hv_free_hyperv_page((unsigned long)hv_panic_page);
++	hv_free_hyperv_page(hv_panic_page);
+ 	hv_panic_page = NULL;
+ }
  
- 	cpuhp_remove_state(hyperv_cpuhp_online);
+@@ -267,7 +267,7 @@ static void hv_kmsg_dump_register(void)
+ 	ret = kmsg_dump_register(&hv_kmsg_dumper);
+ 	if (ret) {
+ 		pr_err("Hyper-V: kmsg dump register error 0x%x\n", ret);
+-		hv_free_hyperv_page((unsigned long)hv_panic_page);
++		hv_free_hyperv_page(hv_panic_page);
+ 		hv_panic_page = NULL;
+ 	}
+ }
+diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
+index bfb9eb9d7215b..a9b52845335c0 100644
+--- a/include/asm-generic/mshyperv.h
++++ b/include/asm-generic/mshyperv.h
+@@ -187,7 +187,7 @@ int hv_common_cpu_die(unsigned int cpu);
+ 
+ void *hv_alloc_hyperv_page(void);
+ void *hv_alloc_hyperv_zeroed_page(void);
+-void hv_free_hyperv_page(unsigned long addr);
++void hv_free_hyperv_page(void *addr);
+ 
+ /**
+  * hv_cpu_number_to_vp_number() - Map CPU to VP.
 -- 
 2.39.5
 
