@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CEE2EE5F3;
-	Thu,  3 Jul 2025 14:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB1722578A;
+	Thu,  3 Jul 2025 14:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554482; cv=none; b=GSpVcBZKY1RuXV2KZLq44YVZnRK0thKpi2wTaQMQM7xcwGy9AGddPIsfALZQg8iGCmEaRUQ2N1z+shkzbbdGqC9lutXcMjrCDlFx+lxEm0yJ62SCOlI8IYo3OvsJR3OYbzMt4W6IfzW3lt4ifUZU2pkpZM1k2TujsYG5mRvvHS8=
+	t=1751554485; cv=none; b=gB785fBbi3Fv0LqmbVODT0YZEp62ckhn8prP9q7ZN+3g9WjtlA8mguaYIm2XIF1UQ6senz6m5SSflzn9ta3pRtk4L8fgNsYo9kSYa6vHpiAG8YCUDQ21SLxQ3YfI8qmQEkBuFZZ9pNiYGKrtD1lnJQCvalWiTYDWPOLn7ll/73I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554482; c=relaxed/simple;
-	bh=Xl8/croTMAR5ZIFJRyqzVZvfaMw/UNZ9XzdQ4/1A3Es=;
+	s=arc-20240116; t=1751554485; c=relaxed/simple;
+	bh=ZUe12KWkqja4q9zScKFvOAZrjo8R6ztpJFRju3b7pQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rw+TCyBe1kwiFJQMXCIu0mavz3eg9ctFGkZCajE/gWzZ5Jjmk8FHVKnLtkyAANosWPgG6Hd6MT148xfq2VvHj+RkuvX4UgUM8G2gReoI++LxToeqMjM6z7/W+ziob76OR0yfbXrUf6brEwcvZG5EVDgp3LbLp6CVWUXw5Tv3nYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOnknggR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOPktrEyg6H+CaI7FWD3GduhAjZTLkWfdbbZPcQ7TmiK2NnpXF/jKNIe9DgjvXy5d1swut50jRNcE/C4Ug7CiPOl5sdOY2TqkYCDrn0g+6KOY+H9Ak+JngZgDmLd06jJMeNqnpGZLEzq2Lc9gLSj6wIHySNt4YCb9ADQPt8odaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4dE4I88; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOnknggR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53248C4CEED;
-	Thu,  3 Jul 2025 14:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4dE4I88"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E50EC4CEE3;
+	Thu,  3 Jul 2025 14:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554481;
-	bh=Xl8/croTMAR5ZIFJRyqzVZvfaMw/UNZ9XzdQ4/1A3Es=;
+	s=korg; t=1751554485;
+	bh=ZUe12KWkqja4q9zScKFvOAZrjo8R6ztpJFRju3b7pQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mOnknggRtU9/N0k1dYCzWAdX+sBLuwqUXgpShfcj3Vi13clibXMm50Vt0rGr2wcOa
-	 rtvi/a6DjT4g3O+9vG376NtHQix5bKLANIve246QJPNghKLmgHZRMEpMSNybatx2Fb
-	 cUpL0OL71QAL5/2O/chnwrjeX6CEVnQev+CHpl9s=
+	b=J4dE4I88/fzrnoG73ljgjscLHhdr0o0g3A5qNHb6v7WlBwlp9FdrvEUaONe9kFCht
+	 UkLznJNrFpnfHf1pCoTU45L/chIs8Z60nG/Je7my9VZTseLFNrG8GVcd6hu6HKINp/
+	 toiaRYa1QD0LlboqAw96uNUE/KIdSeDel/pMz93Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Shapovalov <intelfx@intelfx.name>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 202/218] btrfs: skip inodes without loaded extent maps when shrinking extent maps
-Date: Thu,  3 Jul 2025 16:42:30 +0200
-Message-ID: <20250703144004.301677993@linuxfoundation.org>
+Subject: [PATCH 6.12 203/218] btrfs: make the extent map shrinker run asynchronously as a work queue job
+Date: Thu,  3 Jul 2025 16:42:31 +0200
+Message-ID: <20250703144004.340406402@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -56,156 +54,238 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit c6c9c4d56483d941f567eb921434c25fc6086dfa ]
+[ Upstream commit 1020443840569535f6025a855958f07ea3eebf71 ]
 
-If there are inodes that don't have any loaded extent maps, we end up
-grabbing a reference on them and later adding a delayed iput, which wakes
-up the cleaner and makes it do unnecessary work. This is common when for
-example the inodes were open only to run stat(2) or all their extent maps
-were already released through the folio release callback
-(btrfs_release_folio()) or released by a previous run of the shrinker, or
-directories which never have extent maps.
+Currently the extent map shrinker is run synchronously for kswapd tasks
+that end up calling the fs shrinker (fs/super.c:super_cache_scan()).
+This has some disadvantages and for some heavy workloads with memory
+pressure it can cause some delays and stalls that make a machine
+unresponsive for some periods. This happens because:
 
-Reported-by: Ivan Shapovalov <intelfx@intelfx.name>
-Tested-by: Ivan Shapovalov <intelfx@intelfx.name>
-Link: https://lore.kernel.org/linux-btrfs/0414d690ac5680d0d77dfc930606cdc36e42e12f.camel@intelfx.name/
-CC: stable@vger.kernel.org # 6.13+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
+1) We can have several kswapd tasks on machines with multiple NUMA zones,
+   and running the extent map shrinker concurrently can cause high
+   contention on some spin locks, namely the spin locks that protect
+   the radix tree that tracks roots, the per root xarray that tracks
+   open inodes and the list of delayed iputs. This not only delays the
+   shrinker but also causes high CPU consumption and makes the task
+   running the shrinker monopolize a core, resulting in the symptoms
+   of an unresponsive system. This was noted in previous commits such as
+   commit ae1e766f623f ("btrfs: only run the extent map shrinker from
+   kswapd tasks");
+
+2) The extent map shrinker's iteration over inodes can often be slow, even
+   after changing the data structure that tracks open inodes for a root
+   from a red black tree (up to kernel 6.10) to an xarray (kernel 6.10+).
+   The transition to the xarray while it made things a bit faster, it's
+   still somewhat slow - for example in a test scenario with 10000 inodes
+   that have no extent maps loaded, the extent map shrinker took between
+   5ms to 8ms, using a release, non-debug kernel. Iterating over the
+   extent maps of an inode can also be slow if have an inode with many
+   thousands of extent maps, since we use a red black tree to track and
+   search extent maps. So having the extent map shrinker run synchronously
+   adds extra delay for other things a kswapd task does.
+
+So make the extent map shrinker run asynchronously as a job for the
+system unbounded workqueue, just like what we do for data and metadata
+space reclaim jobs.
+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_map.c | 78 +++++++++++++++++++++++++++++++------------
- 1 file changed, 57 insertions(+), 21 deletions(-)
+ fs/btrfs/disk-io.c    |  2 ++
+ fs/btrfs/extent_map.c | 51 ++++++++++++++++++++++++++++++++++++-------
+ fs/btrfs/extent_map.h |  3 ++-
+ fs/btrfs/fs.h         |  2 ++
+ fs/btrfs/super.c      | 13 +++--------
+ 5 files changed, 52 insertions(+), 19 deletions(-)
 
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 96282bf28b19c..e655fa3bfd9be 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2785,6 +2785,7 @@ void btrfs_init_fs_info(struct btrfs_fs_info *fs_info)
+ 	btrfs_init_scrub(fs_info);
+ 	btrfs_init_balance(fs_info);
+ 	btrfs_init_async_reclaim_work(fs_info);
++	btrfs_init_extent_map_shrinker_work(fs_info);
+ 
+ 	rwlock_init(&fs_info->block_group_cache_lock);
+ 	fs_info->block_group_cache_tree = RB_ROOT_CACHED;
+@@ -4334,6 +4335,7 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
+ 	cancel_work_sync(&fs_info->async_reclaim_work);
+ 	cancel_work_sync(&fs_info->async_data_reclaim_work);
+ 	cancel_work_sync(&fs_info->preempt_reclaim_work);
++	cancel_work_sync(&fs_info->extent_map_shrinker_work);
+ 
+ 	/* Cancel or finish ongoing discard work */
+ 	btrfs_discard_cleanup(fs_info);
 diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
-index 1d93e1202c339..d67abf5f97a77 100644
+index d67abf5f97a77..61477cb69a6fd 100644
 --- a/fs/btrfs/extent_map.c
 +++ b/fs/btrfs/extent_map.c
-@@ -1133,6 +1133,8 @@ static long btrfs_scan_inode(struct btrfs_inode *inode, struct btrfs_em_shrink_c
+@@ -1128,7 +1128,8 @@ struct btrfs_em_shrink_ctx {
+ 
+ static long btrfs_scan_inode(struct btrfs_inode *inode, struct btrfs_em_shrink_ctx *ctx)
+ {
+-	const u64 cur_fs_gen = btrfs_get_fs_generation(inode->root->fs_info);
++	struct btrfs_fs_info *fs_info = inode->root->fs_info;
++	const u64 cur_fs_gen = btrfs_get_fs_generation(fs_info);
+ 	struct extent_map_tree *tree = &inode->extent_tree;
  	long nr_dropped = 0;
  	struct rb_node *node;
- 
-+	lockdep_assert_held_write(&tree->lock);
-+
- 	/*
- 	 * Take the mmap lock so that we serialize with the inode logging phase
- 	 * of fsync because we may need to set the full sync flag on the inode,
-@@ -1144,28 +1146,12 @@ static long btrfs_scan_inode(struct btrfs_inode *inode, struct btrfs_em_shrink_c
- 	 * to find new extents, which may not be there yet because ordered
- 	 * extents haven't completed yet.
- 	 *
--	 * We also do a try lock because otherwise we could deadlock. This is
--	 * because the shrinker for this filesystem may be invoked while we are
--	 * in a path that is holding the mmap lock in write mode. For example in
--	 * a reflink operation while COWing an extent buffer, when allocating
--	 * pages for a new extent buffer and under memory pressure, the shrinker
--	 * may be invoked, and therefore we would deadlock by attempting to read
--	 * lock the mmap lock while we are holding already a write lock on it.
-+	 * We also do a try lock because we don't want to block for too long and
-+	 * we are holding the extent map tree's lock in write mode.
- 	 */
- 	if (!down_read_trylock(&inode->i_mmap_lock))
- 		return 0;
- 
--	/*
--	 * We want to be fast so if the lock is busy we don't want to spend time
--	 * waiting for it - either some task is about to do IO for the inode or
--	 * we may have another task shrinking extent maps, here in this code, so
--	 * skip this inode.
--	 */
--	if (!write_trylock(&tree->lock)) {
--		up_read(&inode->i_mmap_lock);
--		return 0;
--	}
--
- 	node = rb_first(&tree->root);
- 	while (node) {
- 		struct rb_node *next = rb_next(node);
-@@ -1205,21 +1191,71 @@ static long btrfs_scan_inode(struct btrfs_inode *inode, struct btrfs_em_shrink_c
+@@ -1187,7 +1188,8 @@ static long btrfs_scan_inode(struct btrfs_inode *inode, struct btrfs_em_shrink_c
+ 		 * lock. This is to avoid slowing other tasks trying to take the
+ 		 * lock.
+ 		 */
+-		if (need_resched() || rwlock_needbreak(&tree->lock))
++		if (need_resched() || rwlock_needbreak(&tree->lock) ||
++		    btrfs_fs_closing(fs_info))
  			break;
  		node = next;
  	}
--	write_unlock(&tree->lock);
- 	up_read(&inode->i_mmap_lock);
+@@ -1261,7 +1263,8 @@ static long btrfs_scan_root(struct btrfs_root *root, struct btrfs_em_shrink_ctx
+ 		ctx->last_ino = btrfs_ino(inode);
+ 		btrfs_add_delayed_iput(inode);
  
+-		if (ctx->scanned >= ctx->nr_to_scan)
++		if (ctx->scanned >= ctx->nr_to_scan ||
++		    btrfs_fs_closing(inode->root->fs_info))
+ 			break;
+ 
+ 		cond_resched();
+@@ -1290,16 +1293,19 @@ static long btrfs_scan_root(struct btrfs_root *root, struct btrfs_em_shrink_ctx
  	return nr_dropped;
  }
  
-+static struct btrfs_inode *find_first_inode_to_shrink(struct btrfs_root *root,
-+						      u64 min_ino)
-+{
-+	struct btrfs_inode *inode;
-+	unsigned long from = min_ino;
-+
-+	xa_lock(&root->inodes);
-+	while (true) {
-+		struct extent_map_tree *tree;
-+
-+		inode = xa_find(&root->inodes, &from, ULONG_MAX, XA_PRESENT);
-+		if (!inode)
-+			break;
-+
-+		tree = &inode->extent_tree;
-+
-+		/*
-+		 * We want to be fast so if the lock is busy we don't want to
-+		 * spend time waiting for it (some task is about to do IO for
-+		 * the inode).
-+		 */
-+		if (!write_trylock(&tree->lock))
-+			goto next;
-+
-+		/*
-+		 * Skip inode if it doesn't have loaded extent maps, so we avoid
-+		 * getting a reference and doing an iput later. This includes
-+		 * cases like files that were opened for things like stat(2), or
-+		 * files with all extent maps previously released through the
-+		 * release folio callback (btrfs_release_folio()) or released in
-+		 * a previous run, or directories which never have extent maps.
-+		 */
-+		if (RB_EMPTY_ROOT(&tree->root)) {
-+			write_unlock(&tree->lock);
-+			goto next;
-+		}
-+
-+		if (igrab(&inode->vfs_inode))
-+			break;
-+
-+		write_unlock(&tree->lock);
-+next:
-+		from = btrfs_ino(inode) + 1;
-+		cond_resched_lock(&root->inodes.xa_lock);
-+	}
-+	xa_unlock(&root->inodes);
-+
-+	return inode;
-+}
-+
- static long btrfs_scan_root(struct btrfs_root *root, struct btrfs_em_shrink_ctx *ctx)
+-long btrfs_free_extent_maps(struct btrfs_fs_info *fs_info, long nr_to_scan)
++static void btrfs_extent_map_shrinker_worker(struct work_struct *work)
  {
- 	struct btrfs_inode *inode;
++	struct btrfs_fs_info *fs_info;
+ 	struct btrfs_em_shrink_ctx ctx;
+ 	u64 start_root_id;
+ 	u64 next_root_id;
+ 	bool cycled = false;
  	long nr_dropped = 0;
- 	u64 min_ino = ctx->last_ino + 1;
  
--	inode = btrfs_find_first_inode(root, min_ino);
-+	inode = find_first_inode_to_shrink(root, min_ino);
- 	while (inode) {
- 		nr_dropped += btrfs_scan_inode(inode, ctx);
-+		write_unlock(&inode->extent_tree.lock);
++	fs_info = container_of(work, struct btrfs_fs_info, extent_map_shrinker_work);
++
+ 	ctx.scanned = 0;
+-	ctx.nr_to_scan = nr_to_scan;
++	ctx.nr_to_scan = atomic64_read(&fs_info->extent_map_shrinker_nr_to_scan);
  
- 		min_ino = btrfs_ino(inode) + 1;
- 		ctx->last_ino = btrfs_ino(inode);
-@@ -1230,7 +1266,7 @@ static long btrfs_scan_root(struct btrfs_root *root, struct btrfs_em_shrink_ctx
+ 	/*
+ 	 * In case we have multiple tasks running this shrinker, make the next
+@@ -1317,12 +1323,12 @@ long btrfs_free_extent_maps(struct btrfs_fs_info *fs_info, long nr_to_scan)
+ 	if (trace_btrfs_extent_map_shrinker_scan_enter_enabled()) {
+ 		s64 nr = percpu_counter_sum_positive(&fs_info->evictable_extent_maps);
  
- 		cond_resched();
- 
--		inode = btrfs_find_first_inode(root, min_ino);
-+		inode = find_first_inode_to_shrink(root, min_ino);
+-		trace_btrfs_extent_map_shrinker_scan_enter(fs_info, nr_to_scan,
++		trace_btrfs_extent_map_shrinker_scan_enter(fs_info, ctx.nr_to_scan,
+ 							   nr, ctx.last_root,
+ 							   ctx.last_ino);
  	}
  
- 	if (inode) {
+-	while (ctx.scanned < ctx.nr_to_scan) {
++	while (ctx.scanned < ctx.nr_to_scan && !btrfs_fs_closing(fs_info)) {
+ 		struct btrfs_root *root;
+ 		unsigned long count;
+ 
+@@ -1380,5 +1386,34 @@ long btrfs_free_extent_maps(struct btrfs_fs_info *fs_info, long nr_to_scan)
+ 							  ctx.last_ino);
+ 	}
+ 
+-	return nr_dropped;
++	atomic64_set(&fs_info->extent_map_shrinker_nr_to_scan, 0);
++}
++
++void btrfs_free_extent_maps(struct btrfs_fs_info *fs_info, long nr_to_scan)
++{
++	/*
++	 * Do nothing if the shrinker is already running. In case of high memory
++	 * pressure we can have a lot of tasks calling us and all passing the
++	 * same nr_to_scan value, but in reality we may need only to free
++	 * nr_to_scan extent maps (or less). In case we need to free more than
++	 * that, we will be called again by the fs shrinker, so no worries about
++	 * not doing enough work to reclaim memory from extent maps.
++	 * We can also be repeatedly called with the same nr_to_scan value
++	 * simply because the shrinker runs asynchronously and multiple calls
++	 * to this function are made before the shrinker does enough progress.
++	 *
++	 * That's why we set the atomic counter to nr_to_scan only if its
++	 * current value is zero, instead of incrementing the counter by
++	 * nr_to_scan.
++	 */
++	if (atomic64_cmpxchg(&fs_info->extent_map_shrinker_nr_to_scan, 0, nr_to_scan) != 0)
++		return;
++
++	queue_work(system_unbound_wq, &fs_info->extent_map_shrinker_work);
++}
++
++void btrfs_init_extent_map_shrinker_work(struct btrfs_fs_info *fs_info)
++{
++	atomic64_set(&fs_info->extent_map_shrinker_nr_to_scan, 0);
++	INIT_WORK(&fs_info->extent_map_shrinker_work, btrfs_extent_map_shrinker_worker);
+ }
+diff --git a/fs/btrfs/extent_map.h b/fs/btrfs/extent_map.h
+index 5154a8f1d26c9..cd123b266b641 100644
+--- a/fs/btrfs/extent_map.h
++++ b/fs/btrfs/extent_map.h
+@@ -189,6 +189,7 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode,
+ int btrfs_replace_extent_map_range(struct btrfs_inode *inode,
+ 				   struct extent_map *new_em,
+ 				   bool modified);
+-long btrfs_free_extent_maps(struct btrfs_fs_info *fs_info, long nr_to_scan);
++void btrfs_free_extent_maps(struct btrfs_fs_info *fs_info, long nr_to_scan);
++void btrfs_init_extent_map_shrinker_work(struct btrfs_fs_info *fs_info);
+ 
+ #endif
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index bb822e425d7fa..374843aca60d8 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -639,6 +639,8 @@ struct btrfs_fs_info {
+ 	spinlock_t extent_map_shrinker_lock;
+ 	u64 extent_map_shrinker_last_root;
+ 	u64 extent_map_shrinker_last_ino;
++	atomic64_t extent_map_shrinker_nr_to_scan;
++	struct work_struct extent_map_shrinker_work;
+ 
+ 	/* Protected by 'trans_lock'. */
+ 	struct list_head dirty_cowonly_roots;
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index bcb8def4ade20..6119a06b05693 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -28,7 +28,6 @@
+ #include <linux/btrfs.h>
+ #include <linux/security.h>
+ #include <linux/fs_parser.h>
+-#include <linux/swap.h>
+ #include "messages.h"
+ #include "delayed-inode.h"
+ #include "ctree.h"
+@@ -2399,16 +2398,10 @@ static long btrfs_free_cached_objects(struct super_block *sb, struct shrink_cont
+ 	const long nr_to_scan = min_t(unsigned long, LONG_MAX, sc->nr_to_scan);
+ 	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
+ 
+-	/*
+-	 * We may be called from any task trying to allocate memory and we don't
+-	 * want to slow it down with scanning and dropping extent maps. It would
+-	 * also cause heavy lock contention if many tasks concurrently enter
+-	 * here. Therefore only allow kswapd tasks to scan and drop extent maps.
+-	 */
+-	if (!current_is_kswapd())
+-		return 0;
++	btrfs_free_extent_maps(fs_info, nr_to_scan);
+ 
+-	return btrfs_free_extent_maps(fs_info, nr_to_scan);
++	/* The extent map shrinker runs asynchronously, so always return 0. */
++	return 0;
+ }
+ 
+ static const struct super_operations btrfs_super_ops = {
 -- 
 2.39.5
 
