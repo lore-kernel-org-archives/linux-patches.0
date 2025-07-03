@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AA815442C;
-	Thu,  3 Jul 2025 15:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3161D15442C;
+	Thu,  3 Jul 2025 15:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555296; cv=none; b=TCrP2vTvqEiyVpZ2HxLaiXB0HiTJdEWMKWgrWmqrkF/Dj6sUn6Hbp/zd48f49oKG/mJLQ9x3RSYC+B0Qbo82OUQ5IA55ViM6MPyqRtMF2YWrBbYD7e1KofP1BM6+fhws2a3seGAnXHNp2qaLMwDNJ2OsnuYXx+xkg+UUQci6Lfo=
+	t=1751555299; cv=none; b=fwgCJ46cvFSMGKvdUuDZA20aK6IIkYkojRUnwe12B2tz/9/o/nU9BBq2QLLrrqpbUso8g6w7ds6xgNyth/fVUMs9N2izVQeDyRcFXDlh+bjlaaJi+Ugh17JslEk6TiqE91+aqvxEu6p8nyweUXA6lAvfLIZed5uJcVXwGC+DSfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555296; c=relaxed/simple;
-	bh=WGYhwY0NKCikBG8lhjp1jpP4069SHvYmj7AGYVhUW+A=;
+	s=arc-20240116; t=1751555299; c=relaxed/simple;
+	bh=VafeRBccrZTP7zhGrRMVdWgoYWH3eZ3wQ9NMID4jUbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QMmbERAKPz0lYJwG/dvT6XSjcjHA6aa0SsHdhhfXU3oRc/rxvXwDNUkCzGFlP1n9K43ev27uRMk0GfPcv5PZ+vNgElQ8FaZD+s5hQdw7yYIkIaqfvCAD5oyfiXSrg6GK5XswcpejKwDuwCPj5D2it6t0ziW5LCCYqRiJ7EKV3TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xb3o1Swe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOsKsK+RgDLhrIynRYclqG0ZQwO7i6wtcMPdBOc4pF6h1rtUv1uD57HGfR0QQ0Evcr5dumrMcOSyKyztnO0pVzUfgpWE7b3evr2wSkJ62zy+5zVxTaZKzTZlezkeAzSAqJTloC//B142fGRItP2QeLIR+UhJ0mHgl4FA4CNfqhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgGyKc3m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xb3o1Swe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52700C4CEE3;
-	Thu,  3 Jul 2025 15:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgGyKc3m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96367C4CEE3;
+	Thu,  3 Jul 2025 15:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555295;
-	bh=WGYhwY0NKCikBG8lhjp1jpP4069SHvYmj7AGYVhUW+A=;
+	s=korg; t=1751555299;
+	bh=VafeRBccrZTP7zhGrRMVdWgoYWH3eZ3wQ9NMID4jUbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xb3o1Swexs1Vcqpl4xU2Kz5BKm4n8tZAzcYnfSu+9d2LJ2snoj6i8MSmHCRjbv8mL
-	 XzG2feK5Um1FUBysVrFUZjf3+zjYvgjGNGZXmrer9dBPfKaLcBKCO0wgQ7qAH6e9tr
-	 tZsHZoQB56ZfwmZo87WfrEp1VVE6mr/4RNxmGW78=
+	b=XgGyKc3mJ/opFxiq50/HEF3XMcg2PfU+X9KTkVIvappfmzl+ZLFGRaiirZMWxjhUP
+	 dL2IKBx6xqtiGdzFE4XOcsY65NvPcSInZQzFnSxkE54DzQYy7rSbhzykYbTCzVcdhI
+	 j7+9VF1UjXkSAl0oZc3jBIWTp6riyIe80fsSATPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Frank Min <Frank.Min@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.15 235/263] drm/amdgpu: switch job hw_fence to amdgpu_fence
-Date: Thu,  3 Jul 2025 16:42:35 +0200
-Message-ID: <20250703144013.823706239@linuxfoundation.org>
+Subject: [PATCH 6.15 236/263] drm/amdgpu: add kicker fws loading for gfx11/smu13/psp13
+Date: Thu,  3 Jul 2025 16:42:36 +0200
+Message-ID: <20250703144013.861124459@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -44,210 +45,162 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Frank Min <Frank.Min@amd.com>
 
-commit ebe43542702c3d15d1a1d95e8e13b1b54076f05a upstream.
+commit 854171405e7f093532b33d8ed0875b9e34fc55b4 upstream.
 
-Use the amdgpu fence container so we can store additional
-data in the fence.  This also fixes the start_time handling
-for MCBP since we were casting the fence to an amdgpu_fence
-and it wasn't.
+1. Add kicker firmwares loading for gfx11/smu13/psp13
+2. Register additional MODULE_FIRMWARE entries for kicker fws
+   - gc_11_0_0_rlc_kicker.bin
+   - gc_11_0_0_imu_kicker.bin
+   - psp_13_0_0_sos_kicker.bin
+   - psp_13_0_0_ta_kicker.bin
+   - smu_13_0_0_kicker.bin
 
-Fixes: 3f4c175d62d8 ("drm/amdgpu: MCBP based on DRM scheduler (v9)")
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Frank Min <Frank.Min@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit bf1cd14f9e2e1fdf981eed273ddd595863f5288c)
+(cherry picked from commit fb5ec2174d70a8989bc207d257db90ffeca3b163)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c  |    2 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c   |   30 ++++++----------------------
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c     |   12 +++++------
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.h     |    2 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h    |   16 ++++++++++++++
- 6 files changed, 32 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c        |   16 ++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c         |    5 +++++
+ drivers/gpu/drm/amd/amdgpu/imu_v11_0.c         |    9 +++++++--
+ drivers/gpu/drm/amd/amdgpu/psp_v13_0.c         |    2 ++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |   12 +++++++++---
+ 5 files changed, 35 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -1902,7 +1902,7 @@ no_preempt:
- 			continue;
- 		}
- 		job = to_amdgpu_job(s_job);
--		if (preempted && (&job->hw_fence) == fence)
-+		if (preempted && (&job->hw_fence.base) == fence)
- 			/* mark the job as preempted */
- 			job->preemption_status |= AMDGPU_IB_PREEMPTED;
- 	}
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -6083,7 +6083,7 @@ int amdgpu_device_gpu_recover(struct amd
- 	 *
- 	 * job->base holds a reference to parent fence
- 	 */
--	if (job && dma_fence_is_signaled(&job->hw_fence)) {
-+	if (job && dma_fence_is_signaled(&job->hw_fence.base)) {
- 		job_signaled = true;
- 		dev_info(adev->dev, "Guilty job already signaled, skipping HW reset");
- 		goto skip_hw_reset;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-@@ -41,22 +41,6 @@
- #include "amdgpu_trace.h"
- #include "amdgpu_reset.h"
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -3521,8 +3521,12 @@ int psp_init_sos_microcode(struct psp_co
+ 	uint8_t *ucode_array_start_addr;
+ 	int err = 0;
  
--/*
-- * Fences mark an event in the GPUs pipeline and are used
-- * for GPU/CPU synchronization.  When the fence is written,
-- * it is expected that all buffers associated with that fence
-- * are no longer in use by the associated ring on the GPU and
-- * that the relevant GPU caches have been flushed.
-- */
--
--struct amdgpu_fence {
--	struct dma_fence base;
--
--	/* RB, DMA, etc. */
--	struct amdgpu_ring		*ring;
--	ktime_t				start_timestamp;
--};
--
- static struct kmem_cache *amdgpu_fence_slab;
+-	err = amdgpu_ucode_request(adev, &adev->psp.sos_fw, AMDGPU_UCODE_REQUIRED,
+-				   "amdgpu/%s_sos.bin", chip_name);
++	if (amdgpu_is_kicker_fw(adev))
++		err = amdgpu_ucode_request(adev, &adev->psp.sos_fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s_sos_kicker.bin", chip_name);
++	else
++		err = amdgpu_ucode_request(adev, &adev->psp.sos_fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s_sos.bin", chip_name);
+ 	if (err)
+ 		goto out;
  
- int amdgpu_fence_slab_init(void)
-@@ -151,12 +135,12 @@ int amdgpu_fence_emit(struct amdgpu_ring
- 		am_fence = kmem_cache_alloc(amdgpu_fence_slab, GFP_ATOMIC);
- 		if (am_fence == NULL)
- 			return -ENOMEM;
--		fence = &am_fence->base;
--		am_fence->ring = ring;
- 	} else {
- 		/* take use of job-embedded fence */
--		fence = &job->hw_fence;
-+		am_fence = &job->hw_fence;
- 	}
-+	fence = &am_fence->base;
-+	am_fence->ring = ring;
+@@ -3798,8 +3802,12 @@ int psp_init_ta_microcode(struct psp_con
+ 	struct amdgpu_device *adev = psp->adev;
+ 	int err;
  
- 	seq = ++ring->fence_drv.sync_seq;
- 	if (job && job->job_run_counter) {
-@@ -718,7 +702,7 @@ void amdgpu_fence_driver_clear_job_fence
- 			 * it right here or we won't be able to track them in fence_drv
- 			 * and they will remain unsignaled during sa_bo free.
- 			 */
--			job = container_of(old, struct amdgpu_job, hw_fence);
-+			job = container_of(old, struct amdgpu_job, hw_fence.base);
- 			if (!job->base.s_fence && !dma_fence_is_signaled(old))
- 				dma_fence_signal(old);
- 			RCU_INIT_POINTER(*ptr, NULL);
-@@ -780,7 +764,7 @@ static const char *amdgpu_fence_get_time
+-	err = amdgpu_ucode_request(adev, &adev->psp.ta_fw, AMDGPU_UCODE_REQUIRED,
+-				   "amdgpu/%s_ta.bin", chip_name);
++	if (amdgpu_is_kicker_fw(adev))
++		err = amdgpu_ucode_request(adev, &adev->psp.ta_fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s_ta_kicker.bin", chip_name);
++	else
++		err = amdgpu_ucode_request(adev, &adev->psp.ta_fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s_ta.bin", chip_name);
+ 	if (err)
+ 		return err;
  
- static const char *amdgpu_job_fence_get_timeline_name(struct dma_fence *f)
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -83,6 +83,7 @@ MODULE_FIRMWARE("amdgpu/gc_11_0_0_pfp.bi
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_me.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_mec.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_rlc.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_0_rlc_kicker.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_rlc_1.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_toc.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_1_pfp.bin");
+@@ -744,6 +745,10 @@ static int gfx_v11_0_init_microcode(stru
+ 			err = amdgpu_ucode_request(adev, &adev->gfx.rlc_fw,
+ 						   AMDGPU_UCODE_REQUIRED,
+ 						   "amdgpu/gc_11_0_0_rlc_1.bin");
++		else if (amdgpu_is_kicker_fw(adev))
++			err = amdgpu_ucode_request(adev, &adev->gfx.rlc_fw,
++						   AMDGPU_UCODE_REQUIRED,
++						   "amdgpu/%s_rlc_kicker.bin", ucode_prefix);
+ 		else
+ 			err = amdgpu_ucode_request(adev, &adev->gfx.rlc_fw,
+ 						   AMDGPU_UCODE_REQUIRED,
+--- a/drivers/gpu/drm/amd/amdgpu/imu_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/imu_v11_0.c
+@@ -32,6 +32,7 @@
+ #include "gc/gc_11_0_0_sh_mask.h"
+ 
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_imu.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_0_imu_kicker.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_1_imu.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_2_imu.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_3_imu.bin");
+@@ -51,8 +52,12 @@ static int imu_v11_0_init_microcode(stru
+ 	DRM_DEBUG("\n");
+ 
+ 	amdgpu_ucode_ip_version_decode(adev, GC_HWIP, ucode_prefix, sizeof(ucode_prefix));
+-	err = amdgpu_ucode_request(adev, &adev->gfx.imu_fw, AMDGPU_UCODE_REQUIRED,
+-				   "amdgpu/%s_imu.bin", ucode_prefix);
++	if (amdgpu_is_kicker_fw(adev))
++		err = amdgpu_ucode_request(adev, &adev->gfx.imu_fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s_imu_kicker.bin", ucode_prefix);
++	else
++		err = amdgpu_ucode_request(adev, &adev->gfx.imu_fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s_imu.bin", ucode_prefix);
+ 	if (err)
+ 		goto out;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/psp_v13_0.c
+@@ -42,7 +42,9 @@ MODULE_FIRMWARE("amdgpu/psp_13_0_5_ta.bi
+ MODULE_FIRMWARE("amdgpu/psp_13_0_8_toc.bin");
+ MODULE_FIRMWARE("amdgpu/psp_13_0_8_ta.bin");
+ MODULE_FIRMWARE("amdgpu/psp_13_0_0_sos.bin");
++MODULE_FIRMWARE("amdgpu/psp_13_0_0_sos_kicker.bin");
+ MODULE_FIRMWARE("amdgpu/psp_13_0_0_ta.bin");
++MODULE_FIRMWARE("amdgpu/psp_13_0_0_ta_kicker.bin");
+ MODULE_FIRMWARE("amdgpu/psp_13_0_7_sos.bin");
+ MODULE_FIRMWARE("amdgpu/psp_13_0_7_ta.bin");
+ MODULE_FIRMWARE("amdgpu/psp_13_0_10_sos.bin");
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -58,6 +58,7 @@
+ 
+ MODULE_FIRMWARE("amdgpu/aldebaran_smc.bin");
+ MODULE_FIRMWARE("amdgpu/smu_13_0_0.bin");
++MODULE_FIRMWARE("amdgpu/smu_13_0_0_kicker.bin");
+ MODULE_FIRMWARE("amdgpu/smu_13_0_7.bin");
+ MODULE_FIRMWARE("amdgpu/smu_13_0_10.bin");
+ 
+@@ -92,7 +93,7 @@ const int pmfw_decoded_link_width[7] = {
+ int smu_v13_0_init_microcode(struct smu_context *smu)
  {
--	struct amdgpu_job *job = container_of(f, struct amdgpu_job, hw_fence);
-+	struct amdgpu_job *job = container_of(f, struct amdgpu_job, hw_fence.base);
+ 	struct amdgpu_device *adev = smu->adev;
+-	char ucode_prefix[15];
++	char ucode_prefix[30];
+ 	int err = 0;
+ 	const struct smc_firmware_header_v1_0 *hdr;
+ 	const struct common_firmware_header *header;
+@@ -103,8 +104,13 @@ int smu_v13_0_init_microcode(struct smu_
+ 		return 0;
  
- 	return (const char *)to_amdgpu_ring(job->base.sched)->name;
- }
-@@ -810,7 +794,7 @@ static bool amdgpu_fence_enable_signalin
-  */
- static bool amdgpu_job_fence_enable_signaling(struct dma_fence *f)
- {
--	struct amdgpu_job *job = container_of(f, struct amdgpu_job, hw_fence);
-+	struct amdgpu_job *job = container_of(f, struct amdgpu_job, hw_fence.base);
- 
- 	if (!timer_pending(&to_amdgpu_ring(job->base.sched)->fence_drv.fallback_timer))
- 		amdgpu_fence_schedule_fallback(to_amdgpu_ring(job->base.sched));
-@@ -845,7 +829,7 @@ static void amdgpu_job_fence_free(struct
- 	struct dma_fence *f = container_of(rcu, struct dma_fence, rcu);
- 
- 	/* free job if fence has a parent job */
--	kfree(container_of(f, struct amdgpu_job, hw_fence));
-+	kfree(container_of(f, struct amdgpu_job, hw_fence.base));
- }
- 
- /**
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -272,8 +272,8 @@ void amdgpu_job_free_resources(struct am
- 	/* Check if any fences where initialized */
- 	if (job->base.s_fence && job->base.s_fence->finished.ops)
- 		f = &job->base.s_fence->finished;
--	else if (job->hw_fence.ops)
--		f = &job->hw_fence;
-+	else if (job->hw_fence.base.ops)
-+		f = &job->hw_fence.base;
- 	else
- 		f = NULL;
- 
-@@ -290,10 +290,10 @@ static void amdgpu_job_free_cb(struct dr
- 	amdgpu_sync_free(&job->explicit_sync);
- 
- 	/* only put the hw fence if has embedded fence */
--	if (!job->hw_fence.ops)
-+	if (!job->hw_fence.base.ops)
- 		kfree(job);
- 	else
--		dma_fence_put(&job->hw_fence);
-+		dma_fence_put(&job->hw_fence.base);
- }
- 
- void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
-@@ -322,10 +322,10 @@ void amdgpu_job_free(struct amdgpu_job *
- 	if (job->gang_submit != &job->base.s_fence->scheduled)
- 		dma_fence_put(job->gang_submit);
- 
--	if (!job->hw_fence.ops)
-+	if (!job->hw_fence.base.ops)
- 		kfree(job);
- 	else
--		dma_fence_put(&job->hw_fence);
-+		dma_fence_put(&job->hw_fence.base);
- }
- 
- struct dma_fence *amdgpu_job_submit(struct amdgpu_job *job)
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-@@ -48,7 +48,7 @@ struct amdgpu_job {
- 	struct drm_sched_job    base;
- 	struct amdgpu_vm	*vm;
- 	struct amdgpu_sync	explicit_sync;
--	struct dma_fence	hw_fence;
-+	struct amdgpu_fence	hw_fence;
- 	struct dma_fence	*gang_submit;
- 	uint32_t		preamble_status;
- 	uint32_t                preemption_status;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-@@ -127,6 +127,22 @@ struct amdgpu_fence_driver {
- 	struct dma_fence		**fences;
- };
- 
-+/*
-+ * Fences mark an event in the GPUs pipeline and are used
-+ * for GPU/CPU synchronization.  When the fence is written,
-+ * it is expected that all buffers associated with that fence
-+ * are no longer in use by the associated ring on the GPU and
-+ * that the relevant GPU caches have been flushed.
-+ */
+ 	amdgpu_ucode_ip_version_decode(adev, MP1_HWIP, ucode_prefix, sizeof(ucode_prefix));
+-	err = amdgpu_ucode_request(adev, &adev->pm.fw, AMDGPU_UCODE_REQUIRED,
+-				   "amdgpu/%s.bin", ucode_prefix);
 +
-+struct amdgpu_fence {
-+	struct dma_fence base;
-+
-+	/* RB, DMA, etc. */
-+	struct amdgpu_ring		*ring;
-+	ktime_t				start_timestamp;
-+};
-+
- extern const struct drm_sched_backend_ops amdgpu_sched_ops;
++	if (amdgpu_is_kicker_fw(adev))
++		err = amdgpu_ucode_request(adev, &adev->pm.fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s_kicker.bin", ucode_prefix);
++	else
++		err = amdgpu_ucode_request(adev, &adev->pm.fw, AMDGPU_UCODE_REQUIRED,
++					   "amdgpu/%s.bin", ucode_prefix);
+ 	if (err)
+ 		goto out;
  
- void amdgpu_fence_driver_clear_job_fences(struct amdgpu_ring *ring);
 
 
