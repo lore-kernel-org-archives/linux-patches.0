@@ -1,173 +1,117 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF3B2EE299
-	for <patches@lists.linux.dev>; Thu,  3 Jul 2025 14:46:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1459F2EF2AF;
+	Thu,  3 Jul 2025 14:46:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751553976; cv=none; b=fZ4xm9e8yQ+zVxTkPdsbROWXnSJCHprTmAafjqVjqI/nyMN9V5tgN9r5i5q0/rnflCyhgT8MXeY590It0RXhLoWbOCR68TntvNv+D1uSx+auB8UYI310v/k7W1sbTHkYhzSckDipV9cUIggBy3vTP6bfD7WZSeGxhLK8GxPL6a0=
+	t=1751553979; cv=none; b=Y64xF8zPZtVX5vrp2/4M9WhdEdTVivCWL87z1CHQ1Dt6Xj7fSww3BiEwXfZ7t6G0r5ulJ/tFUVsyUsJ/e4dQ+IMgfHgx3WMsbeFqL5EF+JYVtMr7w+kuOR0N2eyfP4mCUsYYAfD44HufQ58JBYvYaaUNYjb35suBUylqbujgXWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751553976; c=relaxed/simple;
-	bh=072pcCvBMR7vtDKQsCrYBJuqlkcEW2Q3tlczFa12bes=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tGAEteBrenqCnBkcIzP37rF5odnMvUW4Pik64ZENs/H8piLHDv9wBq+6LI7vMVGq2Pw62ypouocbKUlNVE63of3+c6+t1FSD3ajQ8Rz6oMMHy26Go5Op4cS0+ieSVHac02gV3g0osN1HGtfxdWztuSABcoqsKMxwpMc4P4FGcCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CwCggacK; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1751553979; c=relaxed/simple;
+	bh=y8A8ZjVKuaDCmyp5q3dnxmiJEzgrw1jvMGW7qXvIn/A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=V75pMJM7V5MShl8QLBe5LgseCta31JqoehqcLr3TNpAtqe46JrNhG5EmQaY9GYeQ4d1Nuv/RKMrTWoo+bImPoAU1fBqcmMuY23MWOSlqXTbhLfFAktwaUgjr6SGJf4epX/Mj6I1GUgxZFz112AyGFmKwQeja9zIMKthdIiV1v2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdpRzMOF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CwCggacK"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-237f18108d2so205925ad.0
-        for <patches@lists.linux.dev>; Thu, 03 Jul 2025 07:46:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1751553973; x=1752158773; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZyBqVSoupq82KbFVVt6LJyI9rbtpg1wvjlbr52oP/Zs=;
-        b=CwCggacK6rzpjDgBYhKGKfNfm//jMc5nOB3lTIEQXHIitPVR0fxrxRgRXFowwtBCHc
-         FeGH50LDz9rYc8eZKXXdmnvINuPiY4JVXjVdW8buZlJ2R127Wm3BtwoeHMsMeBjxdTBw
-         dFkJ9LO4XuexPYqbcBRIIVV0dqNIhwf3/FGSp+kLEOatsDLMBYrHrUaYUPnN/Sxao5XS
-         QiD8t+RWeLKd6wXEpLfNZihM4cBPJ8Xe5wFLzuOoVV6OqRJfirOTX59tWEJ8tTj8TZQ7
-         g282WJvdcKnCnc71nUHmpsfPXxgwiXeJs37hbljKBATMn4wCWMQahfkZBoMmLPJ2fhWd
-         tzLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751553973; x=1752158773;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZyBqVSoupq82KbFVVt6LJyI9rbtpg1wvjlbr52oP/Zs=;
-        b=GmCP9zzVDcXTfC8ucQt099q6T/1r6G7w4aRRmL/2EaOAGd+NsYwWEox5lr/3AKkVuE
-         mF7kOeAIaKdLotNwpIidqkBkSKnOrQAIQ7/uGRhKqSeVtu2MRHOaho+lSJtQcfLSVSDU
-         aTJfPInjPxq75SVwl/1zeBSA6nLhKFMb7W+oDC7qTZ0ypCEzkEiYOrF60AGu3ot8l7Pn
-         rYYXFNWu9V2j9SqeJpT1kZXyRwTqBUUT5cNdxt8XzJ2nTIiFB01NTElQt8XuatsbA0nF
-         mpqAPdJZfTKF5aKof14sM+aTR9Cm0Z9JwEQ5K814kiVVr2AsCKFJvCYDQ8eM7tI1eDhU
-         9YFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVMmB8N1Q3m3X0t0Mqb3mOm4wcAU0OPUyQYP6J7f8EKhmkTpF+ksERKCbY7/aIN6fYVh9dEWCcd@lists.linux.dev
-X-Gm-Message-State: AOJu0YzWoGD7HTFgMk2a9Qobvur+M5CJGGmOCmY7UfIfj88LHx8gfJ82
-	hxu5APyH334px3zHmtZoOHgycgYqP5MGVZN9CL64i07hDi51mzQ7b0Z4GE/kh3V4kQ==
-X-Gm-Gg: ASbGncvhK6ngEbGi9a+aLM42PUfYjxQLHEk2wzXq2q/atUtm1La1RqkQsYtP5XnyFBE
-	3gL49KGDqotexOIDLRQ/9TTqx2qDcAa/u85IRx4FfyWV+kyYfdP3RyzC6V/cTW65MIO1kNtpTz7
-	tpWE9At9HI7TZCHbzMPW5sgahkhJjoUUBIkhuJxNQm+Y2TOHRZ6/Ieo/bMatAEeo4cwjZh1WYMD
-	4LlLmP+35hSXJU7OfQW2hrh+JrV1C8XUBwOah15vRhxxD2Bk/VLp9MDSTqTvS0qQFKFtoTWr1fy
-	E5k8kOsuv7AH23vc2s83av1bs0ABMnp0mdbkVTvRdDxOZ3Wj0pcfbXNGTvKmy3qxc/Nrf17mWLC
-	z/nXH1h1DDDxZzGYAUFDbv6EtI02cOWw=
-X-Google-Smtp-Source: AGHT+IE+IjimVm/cNBTQKKRIynsqnkmviMOQfy4mliRYK2mww3VHnjujL8mKkHcoqxy9cwNV6ZMlng==
-X-Received: by 2002:a17:902:c941:b0:22c:3cda:df11 with SMTP id d9443c01a7336-23c79b3ab97mr3276285ad.10.1751553972827;
-        Thu, 03 Jul 2025 07:46:12 -0700 (PDT)
-Received: from google.com (232.98.126.34.bc.googleusercontent.com. [34.126.98.232])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb2e39d4sm158508935ad.18.2025.07.03.07.46.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jul 2025 07:46:12 -0700 (PDT)
-Date: Thu, 3 Jul 2025 14:46:03 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Nicolin Chen <nicolinc@nvidia.com>, kevin.tian@intel.com,
-	corbet@lwn.net, will@kernel.org, bagasdotme@gmail.com,
-	robin.murphy@arm.com, joro@8bytes.org, thierry.reding@gmail.com,
-	vdumpa@nvidia.com, jonathanh@nvidia.com, shuah@kernel.org,
-	jsnitsel@redhat.com, nathan@kernel.org, peterz@infradead.org,
-	yi.l.liu@intel.com, mshavit@google.com, zhangzekun11@huawei.com,
-	iommu@lists.linux.dev, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
-	patches@lists.linux.dev, mochs@nvidia.com, alok.a.tiwari@oracle.com,
-	vasant.hegde@amd.com, dwmw2@infradead.org, baolu.lu@linux.intel.com
-Subject: Re: [PATCH v7 27/28] iommu/tegra241-cmdqv: Add user-space use support
-Message-ID: <aGaXqwzfLwsgCH6n@google.com>
-References: <aGQ_F7Qx3scbbA-J@google.com>
- <aGRDtYRXFLoT+PrI@Asurada-Nvidia>
- <aGRIctg4T6cQECx4@google.com>
- <aGRcPSwaJkTeUrMx@Asurada-Nvidia>
- <aGRmaOORg-YDfncY@google.com>
- <aGRozoIDIlgl9H9x@Asurada-Nvidia>
- <aGR55PUBnwb8qT8U@google.com>
- <aGSBTpY0nkdp2TTL@Asurada-Nvidia>
- <aGSNmf5Q82xEbDpX@google.com>
- <20250702180541.GD1139770@nvidia.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdpRzMOF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8EFC4CEE3;
+	Thu,  3 Jul 2025 14:46:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1751553978;
+	bh=y8A8ZjVKuaDCmyp5q3dnxmiJEzgrw1jvMGW7qXvIn/A=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=BdpRzMOF2G59e/uDeowk1Kc6GCLhS102TQyFA7bEh0U7aUTgLPSPt+R9vG80oOOaz
+	 NU6i6Y0zx/FPsRZmkvlkfXdkC76kqopFhAtrup3YqYsESO9Dwp3X3Req8iJs9f5hDZ
+	 DPM3aZGsqjL2OAMQ45b7Qt2gfFX3yH3i1u8luW8A=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 025/218] PCI: imx6: Add workaround for errata ERR051624
+Date: Thu,  3 Jul 2025 16:39:33 +0200
+Message-ID: <20250703143956.972343529@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
+References: <20250703143955.956569535@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250702180541.GD1139770@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 02, 2025 at 03:05:41PM -0300, Jason Gunthorpe wrote:
-> On Wed, Jul 02, 2025 at 01:38:33AM +0000, Pranjal Shrivastava wrote:
-> > On Tue, Jul 01, 2025 at 05:46:06PM -0700, Nicolin Chen wrote:
-> > > On Wed, Jul 02, 2025 at 12:14:28AM +0000, Pranjal Shrivastava wrote:
-> > > > Thus, coming back to the two initial points:
-> > > > 
-> > > > 1) Issuing "non-invalidation" commands through .cache_invalidate could
-> > > >    be confusing, I'm not asking to change the op name here, but if we
-> > > >    plan to label it, let's label them as "Trapped commands" OR
-> > > >    "non-accelerated" commands as you suggested.
-> > > 
-> > > VCMDQ only accelerates limited invalidation commands, not all of
-> > > them: STE cache invalidation and CD cache invalidation commands
-> > > still go down to that op.
-> > > 
-> > 
-> > Right, I'm just saying the "other" non-accelerated commands that are
-> > NOT invalidations also go down that op. So, if we add a comment, let's 
-> > not call them "non-invalidation" commands.
-> 
-> There are no non-invalidation commands:
-> 
-> static int arm_vsmmu_convert_user_cmd(struct arm_vsmmu *vsmmu,
-> 				      struct arm_vsmmu_invalidation_cmd *cmd)
-> {
-> 	switch (cmd->cmd[0] & CMDQ_0_OP) {
-> 	case CMDQ_OP_TLBI_NSNH_ALL:
-> 	case CMDQ_OP_TLBI_NH_VA:
-> 	case CMDQ_OP_TLBI_NH_VAA:
-> 	case CMDQ_OP_TLBI_NH_ALL:
-> 	case CMDQ_OP_TLBI_NH_ASID:
-> 	case CMDQ_OP_ATC_INV:
-> 	case CMDQ_OP_CFGI_CD:
-> 	case CMDQ_OP_CFGI_CD_ALL:
-> 
-> Those are only invalidations.
-> 
-> CD invalidation can't go through the vCMDQ path.
-> 
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-Right.. I was however hoping we'd also trap commands like CMD_PRI_RESP
-and CMD_RESUME...I'm not sure if they should be accelerated via CMDQV..
-I guess I'll need to look and understand a little more if they are..
+------------------
 
-> > > > 2) The "FIXME" confusion: The comment in arm_vsmmu_cache_invalidate
-> > > >    mentions we'd like to "fix" the issuing of commands through the main
-> > > >    cmdq and instead like to group by "type", if that "type" is the queue
-> > > >    type (which I assume it is because IOMMU_TYPE has to be arm-smmu-v3),
-> > > 
-> > > I recall that FIXME is noted by Jason at that time. And it should
-> > > be interpreted as "group by opcode", IIUIC.
-> > 
-> > I see.. I misunderstood that..
-> 
-> Yes, we could use the vCMDQ in the SMMU driver for invalidations which
-> would give some minor locking advantage. But it is not really
-> important to anyone.
-> 
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-Alright, I see. Makes sense. Thanks for the clarification.
+[ Upstream commit ce0c43e855c7f652b6351110aaaabf9b521debd7 ]
 
-> > > The thing is that for a host kernel that enabled in-kernel VCMDQs,
-> > > those trapped user commands can be just issued to the smmu->cmdq
-> > > or a vcmdq (picked via the get_secondary_cmdq impl_op).
-> > 
-> > Ohh.. so maybe some sort of a load balancing thing?
-> 
-> The goal of the SMMU driver when it detects CMDQV support is to route
-> all supported invalidations to CMDQV queues and then balance those
-> queues across CPUs to reduce lock contention.
-> 
+ERR051624: The Controller Without Vaux Cannot Exit L23 Ready Through Beacon
+or PERST# De-assertion
 
-I see.. that makes sense.. so it's a relatively small gain (but a nice
-one). Thanks for clarifying!
+When the auxiliary power is not available, the controller cannot exit from
+L23 Ready with beacon or PERST# de-assertion when main power is not
+removed. So the workaround is to set SS_RW_REG_1[SYS_AUX_PWR_DET] to 1.
 
-> Jason
+This workaround is required irrespective of whether Vaux is supplied to the
+link partner or not.
 
-Praan
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+[mani: subject and description rewording]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://patch.msgid.link/20250416081314.3929794-5-hongxing.zhu@nxp.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pci/controller/dwc/pci-imx6.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+index ad3028b755d16..3b24fed3177de 100644
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -48,6 +48,8 @@
+ #define IMX95_PCIE_SS_RW_REG_0			0xf0
+ #define IMX95_PCIE_REF_CLKEN			BIT(23)
+ #define IMX95_PCIE_PHY_CR_PARA_SEL		BIT(9)
++#define IMX95_PCIE_SS_RW_REG_1			0xf4
++#define IMX95_PCIE_SYS_AUX_PWR_DET		BIT(31)
+ 
+ #define IMX95_PE0_GEN_CTRL_1			0x1050
+ #define IMX95_PCIE_DEVICE_TYPE			GENMASK(3, 0)
+@@ -206,6 +208,19 @@ static unsigned int imx_pcie_grp_offset(const struct imx_pcie *imx_pcie)
+ 
+ static int imx95_pcie_init_phy(struct imx_pcie *imx_pcie)
+ {
++	/*
++	 * ERR051624: The Controller Without Vaux Cannot Exit L23 Ready
++	 * Through Beacon or PERST# De-assertion
++	 *
++	 * When the auxiliary power is not available, the controller
++	 * cannot exit from L23 Ready with beacon or PERST# de-assertion
++	 * when main power is not removed.
++	 *
++	 * Workaround: Set SS_RW_REG_1[SYS_AUX_PWR_DET] to 1.
++	 */
++	regmap_set_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_1,
++			IMX95_PCIE_SYS_AUX_PWR_DET);
++
+ 	regmap_update_bits(imx_pcie->iomuxc_gpr,
+ 			IMX95_PCIE_SS_RW_REG_0,
+ 			IMX95_PCIE_PHY_CR_PARA_SEL,
+-- 
+2.39.5
+
+
+
