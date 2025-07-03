@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917E02DE6F9;
-	Thu,  3 Jul 2025 15:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57E615442C;
+	Thu,  3 Jul 2025 15:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555162; cv=none; b=ZUsJ96iFTcK7nypK8PODYcoH9Z6ZSX5P5p/WFK2AkCxM3c0ci8jGUqT9miFEQQyhoKYr+BDygxMXEk47adbCM2AKU7Jeil9h9GHEpEhI3ibd1hjAxg83NVFxgPK0L/UTQWiacNiVP0RaPmCoAqb9ZPSmeO1KzyGKj6aWwwK2d/k=
+	t=1751555165; cv=none; b=GEOPCQncaKTY38H31raHF6rFq6ubXSIdKPITdrqfceQ5ofvdkR6AKJKToioztzzG3BkRfrQZ3gBG2QgG/wcHkCgrZQaKHErHWwD3LQmizm+GgAX9WoBYkow0BnyeGfqB+X2FVJv6tB+SnUzvu3rVDuhW8ftKenu7gWouFZMGHk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555162; c=relaxed/simple;
-	bh=hmuFSSAOxJRC05Ogti9ljlYQQo5YrKnstUzRBmGRa24=;
+	s=arc-20240116; t=1751555165; c=relaxed/simple;
+	bh=s6nRi7MQrKWX9IU+z7DzB6ixT+QwuVfmh5oenphuiXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dFfCYtj5336tkINTEvjP+nxbMx2bXDmhe0942KU7XppYz29w5YHOnw77aTAVqMAGhJaF5ErmuYfGSmN7VczFbsLOih0V3sE1UswIHWvYCTzOnqQeieo9jpeK8thPYroZn++WuXRm7jU9jOtDRfhmd0tkbYKnfM5jN6ASOY3HOEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDjoH+I1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DUsjGm/XfV+fwCO59K4ynUGxYsnTJOcVmWNnDfj3iOa+OmeiyOV5g7AsYPT7YABi6hDLstFhQXHTkN41zPqwYTlyN4zTn43Zsr7ekPbNxetbWTxw+W3XJPLm6Q/Q+HI+j9TVRCC5Joe7jrtzn/Jx2h+4djByZn+WFCOzPVF17oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMgpP+Da; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDjoH+I1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4706C4CEE3;
-	Thu,  3 Jul 2025 15:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMgpP+Da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E22C4CEE3;
+	Thu,  3 Jul 2025 15:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555162;
-	bh=hmuFSSAOxJRC05Ogti9ljlYQQo5YrKnstUzRBmGRa24=;
+	s=korg; t=1751555165;
+	bh=s6nRi7MQrKWX9IU+z7DzB6ixT+QwuVfmh5oenphuiXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDjoH+I1b1m0xETJRdXMstpYJJBOPGUwiFA7zVawfkPEBPQ0+x8aEZ8fiCB5oV/aP
-	 /bqLnIzE2c5b4YTIPWmCm+hOq0LgCJScXv2U96EaaTmWac3GIayqYNfG7xPRGTa+Cc
-	 WRLNNXuTj0mLt593qJNc7oNb4QLD44WYKT2bsh1w=
+	b=PMgpP+Daivkucenp5WRvljnsPqIKo7nD5gVhaxJPcMv6yQEH0xAr4DnIB+R84w6CD
+	 Np7cp4I9fyANLR3fZWmF63wMfCws88q2yb4tX9dI+ZEejtKWyFbHyUu7aSc0Vz1XXf
+	 kAdAznqwaekv6XAr5vMpv1Ah/MeyCn3xYTAkkL8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 165/263] drm/i915: fix build error some more
-Date: Thu,  3 Jul 2025 16:41:25 +0200
-Message-ID: <20250703144010.977661315@linuxfoundation.org>
+Subject: [PATCH 6.15 156/263] netlink: specs: tc: replace underscores with dashes in names
+Date: Thu,  3 Jul 2025 16:41:16 +0200
+Message-ID: <20250703144010.617751490@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -52,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit d02b2103a08b6d6908f1d3d8e8783d3f342555ac ]
+[ Upstream commit eef0eaeca7fa8e358a31e89802f564451b797718 ]
 
-An earlier patch fixed a build failure with clang, but I still see the
-same problem with some configurations using gcc:
+We're trying to add a strict regexp for the name format in the spec.
+Underscores will not be allowed, dashes should be used instead.
+This makes no difference to C (codegen, if used, replaces special
+chars in names) but it gives more uniform naming in Python.
 
-drivers/gpu/drm/i915/i915_pmu.c: In function 'config_mask':
-include/linux/compiler_types.h:568:38: error: call to '__compiletime_assert_462' declared with attribute error: BUILD_BUG_ON failed: bit > BITS_PER_TYPE(typeof_member(struct i915_pmu, enable)) - 1
-drivers/gpu/drm/i915/i915_pmu.c:116:3: note: in expansion of macro 'BUILD_BUG_ON'
-  116 |   BUILD_BUG_ON(bit >
-
-As I understand it, the problem is that the function is not always fully
-inlined, but the __builtin_constant_p() can still evaluate the argument
-as being constant.
-
-Marking it as __always_inline so far works for me in all configurations.
-
-Fixes: a7137b1825b5 ("drm/i915/pmu: Fix build error with GCOV and AutoFDO enabled")
-Fixes: a644fde77ff7 ("drm/i915/pmu: Change bitmask of enabled events to u32")
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20250620111824.3395007-1-arnd@kernel.org
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit ef69f9dd1cd7301cdf04ba326ed28152a3affcf6)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: a1bcfde83669 ("doc/netlink/specs: Add a spec for tc")
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+Link: https://patch.msgid.link/20250624211002.3475021-10-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/netlink/specs/tc.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_pmu.c b/drivers/gpu/drm/i915/i915_pmu.c
-index 990bfaba3ce4e..5bc696bfbb0fe 100644
---- a/drivers/gpu/drm/i915/i915_pmu.c
-+++ b/drivers/gpu/drm/i915/i915_pmu.c
-@@ -108,7 +108,7 @@ static unsigned int config_bit(const u64 config)
- 		return other_bit(config);
- }
- 
--static u32 config_mask(const u64 config)
-+static __always_inline u32 config_mask(const u64 config)
- {
- 	unsigned int bit = config_bit(config);
- 
+diff --git a/Documentation/netlink/specs/tc.yaml b/Documentation/netlink/specs/tc.yaml
+index 953aa837958b3..5702a6d21038c 100644
+--- a/Documentation/netlink/specs/tc.yaml
++++ b/Documentation/netlink/specs/tc.yaml
+@@ -227,7 +227,7 @@ definitions:
+         type: u8
+         doc: log(P_max / (qth-max - qth-min))
+       -
+-        name: Scell_log
++        name: Scell-log
+         type: u8
+         doc: cell size for idle damping
+       -
+@@ -248,7 +248,7 @@ definitions:
+         name: DPs
+         type: u32
+       -
+-        name: def_DP
++        name: def-DP
+         type: u32
+       -
+         name: grio
 -- 
 2.39.5
 
