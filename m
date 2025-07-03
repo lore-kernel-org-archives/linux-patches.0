@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A213D2E7649;
-	Thu,  3 Jul 2025 15:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A712E339E;
+	Thu,  3 Jul 2025 15:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554931; cv=none; b=LXp0jEGWl3U0FhfbIU1YmA/cVSSkldiKxfert1TEp7OvOqvbnEUEFBqwMm6VVDt4R/ykRIQ6WsY9FcIisksmuAUBahuUK2jxgy7kDSywblchyByufQPC+7Oru5KS5DHL009Hb+eBgXSvi9TRdzQXk9G6s2m2xn/CXddhjMmu770=
+	t=1751554934; cv=none; b=qsBegSE6KckLmGnDP/+B6GI1UWB5+29sp7WUGtKtX8DeBSBKU33+zqblS+pOequIsKDEvYqJ64OByPBNkLzx996cZeXWgiPyw/T3ar+SU8ELo0XRpwLPwHHURzjqOQpEYLrdpNnuFNP3xlCrAmI7URycQQpsMbNs5jrIfhCmIKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554931; c=relaxed/simple;
-	bh=Jf6n4+AZO3mYERWxWmsMPrSzOtXwx+ODykdWPOjLP9I=;
+	s=arc-20240116; t=1751554934; c=relaxed/simple;
+	bh=pe+pmp1J4l5DNaG7S6O4Exqsbf0n9yyQ2bruNyVrPOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApzDytJNdxU1YH7b/6047ipSIZre3MXe2ZOgsTvDHV2cz58f/yhCmnkrCtYn4ZkjlMzf3/ukj2H6dHJtmE3cw0Z0QKapxpB05FeurAZ8qGlsCbtarT+38Y4y4NFVstEuxvAyF8E/ch+KXKhxf9fZriEXGktlA44tBV3yyNpDnHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxE30ZpI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBl4ZlMMB0xZ/v2kNFhNgkuwQ96n6RK1VwukNM9qcCrJ1usx8zMRN/SbV0FRp+w3Cydkc67MfTDufLHZ8Ym1bw513wRyAS5u+6zy5Zm/8XxhpxODF7KamKWeV/v/zoc+v8OHEug3yVd1hbTAT6kF0FiBVl3OfouRHo1963fgosw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpfpAVfI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxE30ZpI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02D6C4CEEE;
-	Thu,  3 Jul 2025 15:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpfpAVfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F38C4CEE3;
+	Thu,  3 Jul 2025 15:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554931;
-	bh=Jf6n4+AZO3mYERWxWmsMPrSzOtXwx+ODykdWPOjLP9I=;
+	s=korg; t=1751554934;
+	bh=pe+pmp1J4l5DNaG7S6O4Exqsbf0n9yyQ2bruNyVrPOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AxE30ZpIV3Gd2sbZ3a/p3km2Oy+PHseXPM9BFmLdtQ8xgQdcFpOkoFt00ccJaLmGZ
-	 +AyJaMxPnFIcRoRsqlRIbFMIaLvmF3H6hn1n3aS3GO8YG7nVrzWtStXfiosA0xqH9K
-	 gF8zY5K7QbQ+RIxNDb38mk3abXsQ7XTXxgjGeFyU=
+	b=dpfpAVfILT7+yauyzJ0sZtqJImyYNlOC74UM+oi55eN2ymJbfYaTM6nhzfO219T3c
+	 TS6tbUt5OG2V1yoUhmfcPWOCj9hgwYFNg+wfiX2lM4VmJ1UQVJj8Ij0RG4bKTcexM5
+	 QodBRgmii1IcQwa+zM/3K68vvr79ZpC1TTUfIt7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rtm@csail.mit.edu,
-	Nam Cao <namcao@linutronix.de>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 6.15 122/263] Revert "riscv: Define TASK_SIZE_MAX for __access_ok()"
-Date: Thu,  3 Jul 2025 16:40:42 +0200
-Message-ID: <20250703144009.245056181@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 094/263] io_uring/zcrx: fix area release on registration failure
+Date: Thu,  3 Jul 2025 16:40:14 +0200
+Message-ID: <20250703144008.064147616@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -52,58 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 890ba5be6335dbbbc99af14ea007befb5f83f174 upstream.
+[ Upstream commit 0ec33c81d9c7342f03864101ddb2e717a0cce03e ]
 
-This reverts commit ad5643cf2f69 ("riscv: Define TASK_SIZE_MAX for
-__access_ok()").
+On area registration failure there might be no ifq set and it's not safe
+to access area->ifq in the release path without checking it first.
 
-This commit changes TASK_SIZE_MAX to be LONG_MAX to optimize access_ok(),
-because the previous TASK_SIZE_MAX (default to TASK_SIZE) requires some
-computation.
-
-The reasoning was that all user addresses are less than LONG_MAX, and all
-kernel addresses are greater than LONG_MAX. Therefore access_ok() can
-filter kernel addresses.
-
-Addresses between TASK_SIZE and LONG_MAX are not valid user addresses, but
-access_ok() let them pass. That was thought to be okay, because they are
-not valid addresses at hardware level.
-
-Unfortunately, one case is missed: get_user_pages_fast() happily accepts
-addresses between TASK_SIZE and LONG_MAX. futex(), for instance, uses
-get_user_pages_fast(). This causes the problem reported by Robert [1].
-
-Therefore, revert this commit. TASK_SIZE_MAX is changed to the default:
-TASK_SIZE.
-
-This unfortunately reduces performance, because TASK_SIZE is more expensive
-to compute compared to LONG_MAX. But correctness first, we can think about
-optimization later, if required.
-
-Reported-by: <rtm@csail.mit.edu>
-Closes: https://lore.kernel.org/linux-riscv/77605.1750245028@localhost/
-Signed-off-by: Nam Cao <namcao@linutronix.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Fixes: ad5643cf2f69 ("riscv: Define TASK_SIZE_MAX for __access_ok()")
-Link: https://lore.kernel.org/r/20250619155858.1249789-1-namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f12ecf5e1c5ec ("io_uring/zcrx: fix late dma unmap for a dead dev")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/bc02878678a5fec28bc77d33355cdba735418484.1748365640.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable.h |    1 -
- 1 file changed, 1 deletion(-)
+ io_uring/zcrx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -980,7 +980,6 @@ static inline pte_t pte_swp_clear_exclus
-  */
- #ifdef CONFIG_64BIT
- #define TASK_SIZE_64	(PGDIR_SIZE * PTRS_PER_PGD / 2)
--#define TASK_SIZE_MAX	LONG_MAX
+diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
+index 7214236c14882..a53058dd6b7a1 100644
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -222,7 +222,8 @@ static void io_free_rbuf_ring(struct io_zcrx_ifq *ifq)
  
- #ifdef CONFIG_COMPAT
- #define TASK_SIZE_32	(_AC(0x80000000, UL) - PAGE_SIZE)
+ static void io_zcrx_free_area(struct io_zcrx_area *area)
+ {
+-	io_zcrx_unmap_area(area->ifq, area);
++	if (area->ifq)
++		io_zcrx_unmap_area(area->ifq, area);
+ 	io_release_area_mem(&area->mem);
+ 
+ 	kvfree(area->freelist);
+-- 
+2.39.5
+
 
 
