@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662DF126BFF;
-	Thu,  3 Jul 2025 14:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2A12EF9BC;
+	Thu,  3 Jul 2025 14:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554289; cv=none; b=e+B6dnPQ9ymeCHOHrZMWi44eDYw/MmRPXDVppBc0dXkq8J0BuuTGGOe8cvxcCjzO5pj87KnS1t1PR57aa9PAbSh6RcreO9kNjGLKImrmXK4Ha8sXzghBGPNdOA52kklGxBaWBvjJHBBboyBWsW/gWmVLXs46LrKosMmIry4WWWw=
+	t=1751554293; cv=none; b=KGaQaaUviWIl4qMYd3XnAc/zhfPVQLawGniFRqk6iUq/IMVBdem1azu/Jrl5v/Gjd1SAzW40tP7KckgeqBStUgWgDn2BCorGRbiN+5n7fcUUwgAN/byEY3BURVYWdpjbwpFjP19zyDr4yFb+Lr3XQLCf3dhbISNPJlssjuFAy6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554289; c=relaxed/simple;
-	bh=4JPHWYs6lUOTJYsFDUaoTt8lwojOYSGldx2eqgYZSEw=;
+	s=arc-20240116; t=1751554293; c=relaxed/simple;
+	bh=lImzfI5cnr6zPr7bPXCrtFzDrJeHD8KuKpIVXC9od/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/oAeEjwiknuOALC8eAsPsdbsWVAeaGzjWzCgFqKfnKHIfiiVOEskR9miZyNP7/n6kNe0BsPUPhY9FY1F0TOajtliOcbVvhGhlRb7dvqppJWFsDt5iK5U0II3b4OMUwaY9TYBQOhT/PPk2FKP5oMwSYSVxjvl8WvVokEhbES8Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOpvAYzo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n/SeOG0G7gj9jythWT0fOdb3Sz2P40wcN0Qw/eVWlXHdB24+WwDeHeHi3evU1E/IX9Jdg3GpbLyO1s9QIlKZKdVN2Rmopav/mo5x/KQcZdC3zb+6/diKRDN2ry0LX1dddFHRQYyHTJHzDCPgElWI4flSZ1ff4PF/qS9zbCE5u9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWM1QBlw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOpvAYzo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA379C4CEE3;
-	Thu,  3 Jul 2025 14:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWM1QBlw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEF9C4CEE3;
+	Thu,  3 Jul 2025 14:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554289;
-	bh=4JPHWYs6lUOTJYsFDUaoTt8lwojOYSGldx2eqgYZSEw=;
+	s=korg; t=1751554292;
+	bh=lImzfI5cnr6zPr7bPXCrtFzDrJeHD8KuKpIVXC9od/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOpvAYzo5xu6eGIdsWtM7v265cJCPVQqsS6agDA3cnN8XBwu52ECEgsCCdTSkbbd1
-	 WRACKcX7jxDl52gP2r0k85cVchDi6NVAGgrPVEuOwt+u98A9wP4TzQ4Pt0qlbpzcTv
-	 J8NjclvabL7skKgigFUdwPYs8NbBta0i9jJ93fXY=
+	b=zWM1QBlw1blkeFSukF4gfhx4RO3+WiPxyXZWeX3+1mK9Sdgt8XgfwdVjB+I3NarRz
+	 Fh69PqfYm1AiELYj4fZUwGVKWpuKtVhbBgoJFj+QDvfafL/Z4CfTsJAL+6itrMK8W4
+	 SvJkMcydKNdFbGcncCtTPraeWGN53m/to1uGcOTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Hyesoo Yu <hyesoo.yu@samsung.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Peter Xu <peterx@redhat.com>,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	Aijun Sun <aijun.sun@unisoc.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 140/218] mm/gup: revert "mm: gup: fix infinite loop within __get_longterm_locked"
-Date: Thu,  3 Jul 2025 16:41:28 +0200
-Message-ID: <20250703144001.725325792@linuxfoundation.org>
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 141/218] f2fs: fix to zero post-eof page
+Date: Thu,  3 Jul 2025 16:41:29 +0200
+Message-ID: <20250703144001.763641635@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,110 +46,169 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 517f496e1e61bd169d585dab4dd77e7147506322 upstream.
+commit ba8dac350faf16afc129ce6303ca4feaf083ccb1 upstream.
 
-After commit 1aaf8c122918 ("mm: gup: fix infinite loop within
-__get_longterm_locked") we are able to longterm pin folios that are not
-supposed to get longterm pinned, simply because they temporarily have the
-LRU flag cleared (esp.  temporarily isolated).
+fstest reports a f2fs bug:
 
-For example, two __get_longterm_locked() callers can race, or
-__get_longterm_locked() can race with anything else that temporarily
-isolates folios.
+#generic/363 42s ... [failed, exit status 1]- output mismatch (see /share/git/fstests/results//generic/363.out.bad)
+#    --- tests/generic/363.out   2025-01-12 21:57:40.271440542 +0800
+#    +++ /share/git/fstests/results//generic/363.out.bad 2025-05-19 19:55:58.000000000 +0800
+#    @@ -1,2 +1,78 @@
+#     QA output created by 363
+#     fsx -q -S 0 -e 1 -N 100000
+#    +READ BAD DATA: offset = 0xd6fb, size = 0xf044, fname = /mnt/f2fs/junk
+#    +OFFSET      GOOD    BAD     RANGE
+#    +0x1540d     0x0000  0x2a25  0x0
+#    +operation# (mod 256) for the bad data may be 37
+#    +0x1540e     0x0000  0x2527  0x1
+#    ...
+#    (Run 'diff -u /share/git/fstests/tests/generic/363.out /share/git/fstests/results//generic/363.out.bad'  to see the entire diff)
+Ran: generic/363
+Failures: generic/363
+Failed 1 of 1 tests
 
-The introducing commit mentions the use case of a driver that uses
-vm_ops->fault to insert pages allocated through cma_alloc() into the page
-tables, assuming they can later get longterm pinned.  These pages/ folios
-would never have the LRU flag set and consequently cannot get isolated.
-There is no known in-tree user making use of that so far, fortunately.
+The root cause is user can update post-eof page via mmap [1], however, f2fs
+missed to zero post-eof page in below operations, so, once it expands i_size,
+then it will include dummy data locates previous post-eof page, so during
+below operations, we need to zero post-eof page.
 
-To handle that in the future -- and avoid retrying forever to
-isolate/migrate them -- we will need a different mechanism for the CMA
-area *owner* to indicate that it actually already allocated the page and
-is fine with longterm pinning it.  The LRU flag is not suitable for that.
+Operations which can include dummy data after previous i_size after expanding
+i_size:
+- write
+- mapwrite [1]
+- truncate
+- fallocate
+ * preallocate
+ * zero_range
+ * insert_range
+ * collapse_range
+- clone_range (doesn’t support in f2fs)
+- copy_range (doesn’t support in f2fs)
 
-Probably we can lookup the relevant CMA area and query the bitmap; we only
-have have to care about some races, probably.  If already allocated, we
-could just allow longterm pinning)
+[1] https://man7.org/linux/man-pages/man2/mmap.2.html 'BUG section'
 
-Anyhow, let's fix the "must not be longterm pinned" problem first by
-reverting the original commit.
-
-Link: https://lkml.kernel.org/r/20250611131314.594529-1-david@redhat.com
-Fixes: 1aaf8c122918 ("mm: gup: fix infinite loop within __get_longterm_locked")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Closes: https://lore.kernel.org/all/20250522092755.GA3277597@tiffany/
-Reported-by: Hyesoo Yu <hyesoo.yu@samsung.com>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-Cc: Aijun Sun <aijun.sun@unisoc.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@kernel.org
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/f2fs/file.c |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -2326,13 +2326,13 @@ static void pofs_unpin(struct pages_or_f
- /*
-  * Returns the number of collected folios. Return value is always >= 0.
-  */
--static void collect_longterm_unpinnable_folios(
-+static unsigned long collect_longterm_unpinnable_folios(
- 		struct list_head *movable_folio_list,
- 		struct pages_or_folios *pofs)
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -35,6 +35,17 @@
+ #include <trace/events/f2fs.h>
+ #include <uapi/linux/f2fs.h>
+ 
++static void f2fs_zero_post_eof_page(struct inode *inode, loff_t new_size)
++{
++	loff_t old_size = i_size_read(inode);
++
++	if (old_size >= new_size)
++		return;
++
++	/* zero or drop pages only in range of [old_size, new_size] */
++	truncate_pagecache(inode, old_size);
++}
++
+ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
  {
-+	unsigned long i, collected = 0;
- 	struct folio *prev_folio = NULL;
- 	bool drain_allow = true;
--	unsigned long i;
+ 	struct inode *inode = file_inode(vmf->vma->vm_file);
+@@ -103,8 +114,13 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
  
- 	for (i = 0; i < pofs->nr_entries; i++) {
- 		struct folio *folio = pofs_get_folio(pofs, i);
-@@ -2344,6 +2344,8 @@ static void collect_longterm_unpinnable_
- 		if (folio_is_longterm_pinnable(folio))
- 			continue;
+ 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
  
-+		collected++;
++	filemap_invalidate_lock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT);
++	filemap_invalidate_unlock(inode->i_mapping);
 +
- 		if (folio_is_device_coherent(folio))
- 			continue;
- 
-@@ -2365,6 +2367,8 @@ static void collect_longterm_unpinnable_
- 				    NR_ISOLATED_ANON + folio_is_file_lru(folio),
- 				    folio_nr_pages(folio));
- 	}
+ 	file_update_time(vmf->vma->vm_file);
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
 +
-+	return collected;
+ 	folio_lock(folio);
+ 	if (unlikely(folio->mapping != inode->i_mapping ||
+ 			folio_pos(folio) > i_size_read(inode) ||
+@@ -1064,6 +1080,8 @@ int f2fs_setattr(struct mnt_idmap *idmap
+ 		f2fs_down_write(&fi->i_gc_rwsem[WRITE]);
+ 		filemap_invalidate_lock(inode->i_mapping);
+ 
++		if (attr->ia_size > old_size)
++			f2fs_zero_post_eof_page(inode, attr->ia_size);
+ 		truncate_setsize(inode, attr->ia_size);
+ 
+ 		if (attr->ia_size <= old_size)
+@@ -1182,6 +1200,10 @@ static int f2fs_punch_hole(struct inode
+ 	if (ret)
+ 		return ret;
+ 
++	filemap_invalidate_lock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, offset + len);
++	filemap_invalidate_unlock(inode->i_mapping);
++
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+ 
+@@ -1465,6 +1487,8 @@ static int f2fs_do_collapse(struct inode
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
++	f2fs_zero_post_eof_page(inode, offset + len);
++
+ 	f2fs_lock_op(sbi);
+ 	f2fs_drop_extent_tree(inode);
+ 	truncate_pagecache(inode, offset);
+@@ -1586,6 +1610,10 @@ static int f2fs_zero_range(struct inode
+ 	if (ret)
+ 		return ret;
+ 
++	filemap_invalidate_lock(mapping);
++	f2fs_zero_post_eof_page(inode, offset + len);
++	filemap_invalidate_unlock(mapping);
++
+ 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
+ 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
+ 
+@@ -1717,6 +1745,8 @@ static int f2fs_insert_range(struct inod
+ 	/* avoid gc operation during block exchange */
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(mapping);
++
++	f2fs_zero_post_eof_page(inode, offset + len);
+ 	truncate_pagecache(inode, offset);
+ 
+ 	while (!ret && idx > pg_start) {
+@@ -1774,6 +1804,10 @@ static int f2fs_expand_inode_data(struct
+ 	if (err)
+ 		return err;
+ 
++	filemap_invalidate_lock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, offset + len);
++	filemap_invalidate_unlock(inode->i_mapping);
++
+ 	f2fs_balance_fs(sbi, true);
+ 
+ 	pg_start = ((unsigned long long)offset) >> PAGE_SHIFT;
+@@ -4715,6 +4749,10 @@ static ssize_t f2fs_write_checks(struct
+ 	err = file_modified(file);
+ 	if (err)
+ 		return err;
++
++	filemap_invalidate_lock(inode->i_mapping);
++	f2fs_zero_post_eof_page(inode, iocb->ki_pos + iov_iter_count(from));
++	filemap_invalidate_unlock(inode->i_mapping);
+ 	return count;
  }
  
- /*
-@@ -2441,9 +2445,11 @@ static long
- check_and_migrate_movable_pages_or_folios(struct pages_or_folios *pofs)
- {
- 	LIST_HEAD(movable_folio_list);
-+	unsigned long collected;
- 
--	collect_longterm_unpinnable_folios(&movable_folio_list, pofs);
--	if (list_empty(&movable_folio_list))
-+	collected = collect_longterm_unpinnable_folios(&movable_folio_list,
-+						       pofs);
-+	if (!collected)
- 		return 0;
- 
- 	return migrate_longterm_unpinnable_folios(&movable_folio_list, pofs);
 
 
