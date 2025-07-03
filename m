@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFDF2E7F0B;
-	Thu,  3 Jul 2025 14:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5352EF672;
+	Thu,  3 Jul 2025 14:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554406; cv=none; b=jQewHiG59EfXRKAWVH85ux/IVFcP04WJibzoQu2IYZt7ro8mSlb5vcUPDbV/W13T4JrzRbK6DVjjo3ghR/A7weIsxDCwxR9NBFacJicJFsuHqHNsuO+5OrgMOBJ6bSa78cI/HBKiERkhqQy3YZidpYETJHHk9w3jYd9s4ArLvlw=
+	t=1751554409; cv=none; b=Fie4S/lSVtKEpNSFXdDUWu8kCZHMB+n4kt5fd92mZlGuXxnnqFOoZl5j4lV+Moiep2nEahwvkO6hiMZp+DNlBHucwgpcLetETCFDVCymQna1qPqQPjbTCsJcZP8YNSH1PUpPyAGe7Oh60sDgLE7km4X62BhjpNn4j7W+1xM7y94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554406; c=relaxed/simple;
-	bh=UttUDwjPr0Qu3nNsPanIJFT6hzw8Eaybv2++PAkxHKc=;
+	s=arc-20240116; t=1751554409; c=relaxed/simple;
+	bh=rplAOk9FeIbzKJONL3+Sga+ZOFFcDlu16cCWW8M2b9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gnTfajtU9UPC/Ji1bxLGGzGbmdbgaV6cLIZUf07WvooGdW/9ZIQ9FpShmtMx2RO+AZzXvXMhCHQrP08Ly3XkE0heWFjPyD5hZ1TW0ugzUCtDKnnGiZqQUa2GN4UcLTf4/hrzXj+yHtmOMg0q9D8Y3NWdjjnYx2dbN/oXDDYEv6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N40yjrWN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jW0EeBuPpRDDiHIAZJ7yuLv/vLhjskKlOdAkqF+KU1ZQn/F4Xl3QiLGCJulzqlYqcbuauOSbL4RHwyNEY+1MajcDToqWgQqkgP6gVx0IMOGVoJQPukqTWaX9jsoSmWTPKaSiydO9O56wlUAKssa0Lvuq9qOoKmx4yp0nJHQM7lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGz+gSRK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N40yjrWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437F7C4CEE3;
-	Thu,  3 Jul 2025 14:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGz+gSRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB5EC4CEE3;
+	Thu,  3 Jul 2025 14:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554406;
-	bh=UttUDwjPr0Qu3nNsPanIJFT6hzw8Eaybv2++PAkxHKc=;
+	s=korg; t=1751554409;
+	bh=rplAOk9FeIbzKJONL3+Sga+ZOFFcDlu16cCWW8M2b9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N40yjrWN7j22FHS2vWx6vO+KBtaHHzy4Rdj5vBWhBxl2icC91Hd4PCD3T/MpUPFgE
-	 nSADPJh+3UKs4t6kBWJ5seFZ+xVeXFl/8N/I2qqrG8sC/JhRi3Z1/ZogHiPr9N94mc
-	 MUwhEpNTbHgfoCcaHsbcvxot4oPIB8y+Q4Wepn7A=
+	b=FGz+gSRKNXVRL1M7bPpQ25x1OlXWn50a3n2wSTx/IA4TqLviC5/pFTg3v+rLKg/X+
+	 iy78TtVyerXsVNQfiGx1OBw95hUXSlwTAJPaayQdp/CBIDbug3gwMUa78QRAlu09aT
+	 fZjp6CHZEalvuWMcx/aCJP+hAAvzBcgq3bjrs2HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 177/218] media: uvcvideo: Rollback non processed entities on error
-Date: Thu,  3 Jul 2025 16:42:05 +0200
-Message-ID: <20250703144003.254767479@linuxfoundation.org>
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 6.12 178/218] x86/fpu: Refactor xfeature bitmask update code for sigframe XSAVE
+Date: Thu,  3 Jul 2025 16:42:06 +0200
+Message-ID: <20250703144003.293716786@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,113 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Chang S. Bae <chang.seok.bae@intel.com>
 
-commit a70705d3c020d0d5c3ab6a5cc93e011ac35e7d48 upstream.
+commit 64e54461ab6e8524a8de4e63b7d1a3e4481b5cf3 upstream.
 
-If we fail to commit an entity, we need to restore the
-UVC_CTRL_DATA_BACKUP for the other uncommitted entities. Otherwise the
-control cache and the device would be out of sync.
+Currently, saving register states in the signal frame, the legacy feature
+bits are always set in xregs_state->header->xfeatures. This code sequence
+can be generalized for reuse in similar cases.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Closes: https://lore.kernel.org/linux-media/fe845e04-9fde-46ee-9763-a6f00867929a@redhat.com/
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-3-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Refactor the logic to ensure a consistent approach across similar usages.
+
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20250416021720.12305-8-chang.seok.bae@intel.com
+Cc: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   34 +++++++++++++++++++++++-----------
- 1 file changed, 23 insertions(+), 11 deletions(-)
+ arch/x86/kernel/fpu/signal.c |   11 +----------
+ arch/x86/kernel/fpu/xstate.h |   13 +++++++++++++
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1848,7 +1848,7 @@ static int uvc_ctrl_commit_entity(struct
- 	unsigned int processed_ctrls = 0;
- 	struct uvc_control *ctrl;
- 	unsigned int i;
--	int ret;
-+	int ret = 0;
+--- a/arch/x86/kernel/fpu/signal.c
++++ b/arch/x86/kernel/fpu/signal.c
+@@ -119,7 +119,6 @@ static inline bool save_xstate_epilog(vo
+ {
+ 	struct xregs_state __user *x = buf;
+ 	struct _fpx_sw_bytes sw_bytes = {};
+-	u32 xfeatures;
+ 	int err;
  
- 	if (entity == NULL)
- 		return 0;
-@@ -1877,8 +1877,6 @@ static int uvc_ctrl_commit_entity(struct
- 				dev->intfnum, ctrl->info.selector,
- 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 				ctrl->info.size);
--		else
--			ret = 0;
+ 	/* Setup the bytes not touched by the [f]xsave and reserved for SW. */
+@@ -133,12 +132,6 @@ static inline bool save_xstate_epilog(vo
+ 			  (__u32 __user *)(buf + fpstate->user_size));
  
- 		if (!ret)
- 			processed_ctrls++;
-@@ -1890,17 +1888,24 @@ static int uvc_ctrl_commit_entity(struct
+ 	/*
+-	 * Read the xfeatures which we copied (directly from the cpu or
+-	 * from the state in task struct) to the user buffers.
+-	 */
+-	err |= __get_user(xfeatures, (__u32 __user *)&x->header.xfeatures);
+-
+-	/*
+ 	 * For legacy compatible, we always set FP/SSE bits in the bit
+ 	 * vector while saving the state to the user context. This will
+ 	 * enable us capturing any changes(during sigreturn) to
+@@ -149,9 +142,7 @@ static inline bool save_xstate_epilog(vo
+ 	 * header as well as change any contents in the memory layout.
+ 	 * xrestore as part of sigreturn will capture all the changes.
+ 	 */
+-	xfeatures |= XFEATURE_MASK_FPSSE;
+-
+-	err |= __put_user(xfeatures, (__u32 __user *)&x->header.xfeatures);
++	err |= set_xfeature_in_sigframe(x, XFEATURE_MASK_FPSSE);
  
- 		ctrl->dirty = 0;
- 
--		if (ret < 0) {
-+		if (ret < 0 && !rollback) {
- 			if (err_ctrl)
- 				*err_ctrl = ctrl;
--			return ret;
-+			/*
-+			 * If we fail to set a control, we need to rollback
-+			 * the next ones.
-+			 */
-+			rollback = 1;
- 		}
- 
--		if (!rollback && handle &&
-+		if (!rollback && handle && !ret &&
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			uvc_ctrl_set_handle(handle, ctrl, handle);
- 	}
- 
-+	if (ret)
-+		return ret;
-+
- 	return processed_ctrls;
+ 	return !err;
+ }
+--- a/arch/x86/kernel/fpu/xstate.h
++++ b/arch/x86/kernel/fpu/xstate.h
+@@ -69,6 +69,19 @@ static inline u64 xfeatures_mask_indepen
+ 	return fpu_kernel_cfg.independent_features;
  }
  
-@@ -1931,7 +1936,8 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 	struct uvc_video_chain *chain = handle->chain;
- 	struct uvc_control *err_ctrl;
- 	struct uvc_entity *entity;
--	int ret = 0;
-+	int ret_out = 0;
-+	int ret;
- 
- 	/* Find the control. */
- 	list_for_each_entry(entity, &chain->entities, chain) {
-@@ -1942,17 +1948,23 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 				ctrls->error_idx =
- 					uvc_ctrl_find_ctrl_idx(entity, ctrls,
- 							       err_ctrl);
--			goto done;
-+			/*
-+			 * When we fail to commit an entity, we need to
-+			 * restore the UVC_CTRL_DATA_BACKUP for all the
-+			 * controls in the other entities, otherwise our cache
-+			 * and the hardware will be out of sync.
-+			 */
-+			rollback = 1;
++static inline int set_xfeature_in_sigframe(struct xregs_state __user *xbuf, u64 mask)
++{
++	u64 xfeatures;
++	int err;
 +
-+			ret_out = ret;
- 		} else if (ret > 0 && !rollback) {
- 			uvc_ctrl_send_events(handle, entity,
- 					     ctrls->controls, ctrls->count);
- 		}
- 	}
- 
--	ret = 0;
--done:
- 	mutex_unlock(&chain->ctrl_mutex);
--	return ret;
-+	return ret_out;
- }
- 
- int uvc_ctrl_get(struct uvc_video_chain *chain,
++	/* Read the xfeatures value already saved in the user buffer */
++	err  = __get_user(xfeatures, &xbuf->header.xfeatures);
++	xfeatures |= mask;
++	err |= __put_user(xfeatures, &xbuf->header.xfeatures);
++
++	return err;
++}
++
+ /*
+  * Update the value of PKRU register that was already pushed onto the signal frame.
+  */
 
 
