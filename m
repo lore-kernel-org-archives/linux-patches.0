@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F77F2EACE1;
-	Thu,  3 Jul 2025 14:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC522E62CD;
+	Thu,  3 Jul 2025 14:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554594; cv=none; b=QCpLDuz4tbwRDuGC8pYWHEDjGuhCGvpIanIAV8lVkE/HbpGviIf2gkm2A5S6hhC8QftEjiqhmc/E2FnUPSvkJnzQs7NYsjOYPEXueFLyjLCD+pSCy+Zc7Ma2OlGSSR1SPPeycVA6OKDqAb7HZVtQ8RIWtdGPfPbjrSrIq/9VdVU=
+	t=1751554597; cv=none; b=BBTPniR6KeCLJzIqtGiJ0Nxa6+Eiy7P9u9Y83YbMKs1LwU/0XZ62ez24CitqWcL30FHUW64kFRrl4Tj6SXjM2KsHSgEA62isFHD/23OXJGVlWerGPltm//NlamXzS5FydKdLhi2zBohXdTpip1/IzpJ1vAVL0ifqL7JMLAhkW+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554594; c=relaxed/simple;
-	bh=1ybA2YKoVKxtkiep5o0aNp5zR9FOYTtcZkh0KyEcKlg=;
+	s=arc-20240116; t=1751554597; c=relaxed/simple;
+	bh=8bcZQofDo4je4SF5yegmTKN/xYY/dIoAcfoBOBJFHq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRPIdAo8yVFjsyIuUOPfKSBj+wZLlOr7Sc6zfDP5YDZo2AZ0AfI3u6eSeyli354sFxx1R3y0y3krEQ9iyiGx070rYYGhh3GBpPpmi4qgApPNOIF3H/pRez8npZ64dAPmtkxjr1A+KjIR8Dl/cEK9h5eBcVrMNTY40cmTvZyfLDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqTufh1Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AzTdcWGsIiDdfm0uDMLCJZVksSPiLgnYYBVEMD+ZYCNKTMO1JveBY3ZOG4qZTOSTPw4uQA8ZkwCdLAyGGy717y5T9+63mzZmUhkSuuzO18qHhpSKi4zSgoJZDlzrtQAVQRY055AEjG0ghbALJhsBzfdeHWRqZESDYo+87bUXK/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfmEJs8m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqTufh1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33C8C4CEE3;
-	Thu,  3 Jul 2025 14:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfmEJs8m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE29C4CEE3;
+	Thu,  3 Jul 2025 14:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554594;
-	bh=1ybA2YKoVKxtkiep5o0aNp5zR9FOYTtcZkh0KyEcKlg=;
+	s=korg; t=1751554597;
+	bh=8bcZQofDo4je4SF5yegmTKN/xYY/dIoAcfoBOBJFHq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqTufh1ZDFyRNK6Yi4lO+muDzo9Z9bwdkNzitnwLtxZp7IU2tdFs3ClOunQ9anE4t
-	 iaxgiSQI9c80RaHrH3C/PNj7zlICexB20HsLiakElPk7dhd91UcCph/Soa0qWxbmlN
-	 FmpLVe8JIYEv8wro4aBYA5MeysfWS9wqfIR851VE=
+	b=XfmEJs8mBnRXEyyw2KrKaC/jCDeYGpW8vs6UbNmhNLoSO58IoTUAGJIU7bUm0R4la
+	 rzxV9x+hVcENWJOpfB75JEGqx9PVGaiNdPqAWGQqph+lyqrq93oiDFB/aHlJCpZ5Ez
+	 pski+BGAmWl069hcqTwGNPkQKo0niVen5aCJpRYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 019/263] cxl: core/region - ignore interleave granularity when ways=1
-Date: Thu,  3 Jul 2025 16:38:59 +0200
-Message-ID: <20250703144005.064149810@linuxfoundation.org>
+Subject: [PATCH 6.15 002/263] cifs: Fix cifs_query_path_info() for Windows NT servers
+Date: Thu,  3 Jul 2025 16:38:42 +0200
+Message-ID: <20250703144004.378623862@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -49,69 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit ce32b0c9c522e5a69ef9c62a56d6ca08fb036d67 ]
+[ Upstream commit a3e771afbb3bce91c8296828304903e7348003fe ]
 
-When validating decoder IW/IG when setting up regions, the granularity
-is irrelevant when iw=1 - all accesses will always route to the only
-target anyway - so all ig values are "correct". Loosen the requirement
-that `ig = (parent_iw * parent_ig)` when iw=1.
+For TRANS2 QUERY_PATH_INFO request when the path does not exist, the
+Windows NT SMB server returns error response STATUS_OBJECT_NAME_NOT_FOUND
+or ERRDOS/ERRbadfile without the SMBFLG_RESPONSE flag set. Similarly it
+returns STATUS_DELETE_PENDING when the file is being deleted. And looks
+like that any error response from TRANS2 QUERY_PATH_INFO does not have
+SMBFLG_RESPONSE flag set.
 
-On some Zen5 platforms, the platform BIOS specifies a 256-byte
-interleave granularity window for host bridges when there is only
-one target downstream.  This leads to Linux rejecting the configuration
-of a region with a x2 root with two x1 hostbridges.
+So relax check in check_smb_hdr() for detecting if the packet is response
+for this special case.
 
-Decoder Programming:
-   root - iw:2 ig:256
-   hb1  - iw:1 ig:256  (Linux expects 512)
-   hb2  - iw:1 ig:256  (Linux expects 512)
-   ep1  - iw:2 ig:256
-   ep2  - iw:2 ig:256
+This change fixes stat() operation against Windows NT SMB servers and also
+all operations which depends on -ENOENT result from stat like creat() or
+mkdir().
 
-This change allows all decoders downstream of a passthrough decoder to
-also be configured as passthrough (iw:1 ig:X), but still disallows
-downstream decoders from applying subsequent interleaves.
-
-e.g. in the above example if there was another decoder south of hb1
-attempting to interleave 2 endpoints - Linux would enforce hb1.ig=512
-because the southern decoder would have iw:2 and require ig=pig*piw.
-
-[DJ: Fixed up against 6.15-rc1]
-
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Tested-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20250402232552.999634-1-gourry@gourry.net
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/misc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 24b161c7749f9..7585f0302f3a2 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1446,7 +1446,7 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 7b6ed9b23e713..e77017f470845 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -326,6 +326,14 @@ check_smb_hdr(struct smb_hdr *smb)
+ 	if (smb->Command == SMB_COM_LOCKING_ANDX)
+ 		return 0;
  
- 	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
- 		if (cxld->interleave_ways != iw ||
--		    cxld->interleave_granularity != ig ||
-+		    (iw > 1 && cxld->interleave_granularity != ig) ||
- 		    !region_res_match_cxl_range(p, &cxld->hpa_range) ||
- 		    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
- 			dev_err(&cxlr->dev,
++	/*
++	 * Windows NT server returns error resposne (e.g. STATUS_DELETE_PENDING
++	 * or STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other)
++	 * for some TRANS2 requests without the RESPONSE flag set in header.
++	 */
++	if (smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
++		return 0;
++
+ 	cifs_dbg(VFS, "Server sent request, not response. mid=%u\n",
+ 		 get_mid(smb));
+ 	return 1;
 -- 
 2.39.5
 
