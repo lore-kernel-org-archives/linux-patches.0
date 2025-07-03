@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB343101DE;
-	Thu,  3 Jul 2025 14:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5D2101DE;
+	Thu,  3 Jul 2025 14:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554001; cv=none; b=oyNHqABlMFhXBrun7loWBMa3KRuw4GkHXMSga+jsilKeG13rptMZrXTVCmtwx78VYXhVXUoB2RU5s3FFaA5Ru3GrK5oN1V0rJpdY9rrVkx1SFS8JQa3asGfT9ZDd4QD3aNtPTa3KBb03yg67tyC/VewesZEBj8sP3hCXbQKf4ks=
+	t=1751554003; cv=none; b=pxpHh8Eyj+FQUfw1eKnUPRPfO1KWK4iTECrCg+8w5gaG//l8JdooGkrkPIvO1efGkZQ8XxrIB58VLjJ4NIGX6sHPhzerGOyy5G1xNAQ9UhloRMkGCCQCmB2a3LWl5nPUT0jDybs5EjbyH1GVmBzzWOQYhrCHcjWM3dWFcm5e0yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554001; c=relaxed/simple;
-	bh=geAYmXh4GPQJedRYoGB9CEtYR28VjKUcdFU0H2hFYjU=;
+	s=arc-20240116; t=1751554003; c=relaxed/simple;
+	bh=hgmduiHdTHvWil+y73QjP6lXH2r9+24LBa5arl75BCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AI/euhJQ1N5gNjTehRhPgPE7XVEkQ14KdtzRxFh7IDFQywaDXNU+cHWqjg0uHPWDX6HwuJ9UYyqb10vUZGM5EOYzhxG+U9+jg9UhiNTEzsvQO84ShWDSQ+SRtU97Jz/s2QYE+Z+c0O1PeUUDlFJUoPL+gjyn+6D6t+DVxt+OxVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw3T6pyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P/usEj+VAmJT5PSl0syle8102z4OpT8xJeNiDhA9cSytHrdMvoxXTKqB4oZe0klB9oNQmgvKldMEJheq1LVnFC2LlwbYosgLadGqQ0HYCbK8tqTm9ZLt96rXmrKNAG5B08MZ/yrZO3xTq5yIWrruhKD2B19r5jCTq9FN3hIT4sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qq2D13uO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw3T6pyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B21C4CEE3;
-	Thu,  3 Jul 2025 14:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qq2D13uO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36ED5C4CEE3;
+	Thu,  3 Jul 2025 14:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554000;
-	bh=geAYmXh4GPQJedRYoGB9CEtYR28VjKUcdFU0H2hFYjU=;
+	s=korg; t=1751554003;
+	bh=hgmduiHdTHvWil+y73QjP6lXH2r9+24LBa5arl75BCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qw3T6pyw4uEOml2sofzrhMDmHC1PAY2HU0GG4xyvtuYBCJuNg0s63sFTdj5lt4YfD
-	 SMbn/9z4H1BDZ//fJT7+GteKwhULAz1o2CWuoPCstNGGqYfrsYBOo8ik7Vug4OyoX3
-	 M8Nh8k5dixNwwkm+XU9zh+rhBljWbm27nFYNoOlU=
+	b=qq2D13uORiTU2gaSwvpcdmRpsm7eyvgJ2yX6VpNWXFIs+ipmmGXkLY7XMzLvXNyLD
+	 9EfetmKnkxwxSV91x2hfEkhbgpltTslwTOZ/MVkVQH5eVfmGt2Gc9zsY1MDwLj54Gf
+	 CqzNgjt2SG3Zuj86JeOu2pbdsgduO/Fjnj2QJ0YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chiu <andybnac@gmail.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/218] riscv: add a data fence for CMODX in the kernel mode
-Date: Thu,  3 Jul 2025 16:39:57 +0200
-Message-ID: <20250703143957.896860886@linuxfoundation.org>
+Subject: [PATCH 6.12 050/218] ALSA: hda: Ignore unsol events for cards being shut down
+Date: Thu,  3 Jul 2025 16:39:58 +0200
+Message-ID: <20250703143957.935288110@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -54,62 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Chiu <andybnac@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit ca358692de41b273468e625f96926fa53e13bd8c ]
+[ Upstream commit 3f100f524e75586537e337b34d18c8d604b398e7 ]
 
-RISC-V spec explicitly calls out that a local fence.i is not enough for
-the code modification to be visble from a remote hart. In fact, it
-states:
+For the classic snd_hda_intel driver, codec->card and bus->card point to
+the exact same thing. When snd_card_diconnect() fires, bus->shutdown is
+set thanks to azx_dev_disconnect(). card->shutdown is already set when
+that happens but both provide basically the same functionality.
 
-To make a store to instruction memory visible to all RISC-V harts, the
-writing hart also has to execute a data FENCE before requesting that all
-remote RISC-V harts execute a FENCE.I.
+For the DSP snd_soc_avs driver where multiple codecs are located on
+multiple cards, bus->shutdown 'shortcut' is not sufficient. One codec
+card may be unregistered while other codecs are still operational.
+Proper check in form of card->shutdown must be used to verify whether
+the codec's card is being shut down.
 
-Although current riscv drivers for IPI use ordered MMIO when sending IPIs
-in order to synchronize the action between previous csd writes, riscv
-does not restrict itself to any particular flavor of IPI. Any driver or
-firmware implementation that does not order data writes before the IPI
-may pose a risk for code-modifying race.
-
-Thus, add a fence here to order data writes before making the IPI.
-
-Signed-off-by: Andy Chiu <andybnac@gmail.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Link: https://lore.kernel.org/r/20250407180838.42877-8-andybnac@gmail.com
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141309.2943404-1-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/cacheflush.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_bind.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/mm/cacheflush.c b/arch/riscv/mm/cacheflush.c
-index b816727298872..b2e4b81763f88 100644
---- a/arch/riscv/mm/cacheflush.c
-+++ b/arch/riscv/mm/cacheflush.c
-@@ -24,7 +24,20 @@ void flush_icache_all(void)
+diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
+index 90633970b59f7..f8f1b1f6b1382 100644
+--- a/sound/pci/hda/hda_bind.c
++++ b/sound/pci/hda/hda_bind.c
+@@ -44,7 +44,7 @@ static void hda_codec_unsol_event(struct hdac_device *dev, unsigned int ev)
+ 	struct hda_codec *codec = container_of(dev, struct hda_codec, core);
  
- 	if (num_online_cpus() < 2)
+ 	/* ignore unsol events during shutdown */
+-	if (codec->bus->shutdown)
++	if (codec->card->shutdown || codec->bus->shutdown)
  		return;
--	else if (riscv_use_sbi_for_rfence())
-+
-+	/*
-+	 * Make sure all previous writes to the D$ are ordered before making
-+	 * the IPI. The RISC-V spec states that a hart must execute a data fence
-+	 * before triggering a remote fence.i in order to make the modification
-+	 * visable for remote harts.
-+	 *
-+	 * IPIs on RISC-V are triggered by MMIO writes to either CLINT or
-+	 * S-IMSIC, so the fence ensures previous data writes "happen before"
-+	 * the MMIO.
-+	 */
-+	RISCV_FENCE(w, o);
-+
-+	if (riscv_use_sbi_for_rfence())
- 		sbi_remote_fence_i(NULL);
- 	else
- 		on_each_cpu(ipi_remote_fence_i, NULL, 1);
+ 
+ 	/* ignore unsol events during system suspend/resume */
 -- 
 2.39.5
 
