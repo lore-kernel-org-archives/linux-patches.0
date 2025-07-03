@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0472E7BD6;
-	Thu,  3 Jul 2025 15:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2A02E7BBF;
+	Thu,  3 Jul 2025 15:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554954; cv=none; b=Zo8XbLcpJrZKt033BNflPsly+otzFDSwcj1l2TnLliIPlTQbvAJs4oK+7vITL3CdiiG3Vqw8wvCBAOOTBGldSMmtDZ6CVIXpY2mSVFI6DPORXEGbkb9pRfWc7gesC8T8w2S7omo0lVjuxZ8rNuDdA9WPBniVuoe18O8wS/5HtWE=
+	t=1751554957; cv=none; b=kRaLFQmJXMfk5pbuwHMhxfkzThk5qaNuFjTqSE86pM86DjqZmYG7hnFJK4SBmoF3dtup9YvXKI8UBoynflAvE6ZwjU6bBaZRSXBn7PUZrTdiO6ncgVNFzurmMfQ1Y5n35aShZO4VVEEyR+09c1NW+riubxpj3SKTQvlndg7EtAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554954; c=relaxed/simple;
-	bh=xiTqJ2ni8x9mSci9dp9aYIvfFSBDWWoLeW7naNDAKzY=;
+	s=arc-20240116; t=1751554957; c=relaxed/simple;
+	bh=JldWJHydv/9FSB0KnhTd8wlLhQHxiQipRHNBf6567K0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzUUpKTTnKc+RVI/VmOShkIquWFAlRUiK4FY9dr2uhYatw+NfbAUuCBNzmHxhXhkRIywhV4smYti2K86MB1Sy6nko4X8uxiHXeu1nPezIKA95EL9Vozb8ozYJDqJXeagrNIYuKh2Jf5L789WtH9CVPSqPurHRH3hCv9i8HYZ80c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqlzvYW2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fKUAZx3zBO0eQdcU9Ixwc6nV8M6PTyY0b1ZSnjCg4+fZZvNDGo6mqwlZMUPNjZaZ1xbVNWAP2tkH2zIQhazmu63AW4Ld9jwTdFTULhF0CGOkWQ0gW/ezSx/0XmsfwAwmxKf7TgAl4IhSJgbgA4b3bMFDJZn0m8s0LrP4pYMhZ3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0nSbxEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqlzvYW2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E41DC4CEE3;
-	Thu,  3 Jul 2025 15:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0nSbxEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1037C4CEE3;
+	Thu,  3 Jul 2025 15:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554954;
-	bh=xiTqJ2ni8x9mSci9dp9aYIvfFSBDWWoLeW7naNDAKzY=;
+	s=korg; t=1751554957;
+	bh=JldWJHydv/9FSB0KnhTd8wlLhQHxiQipRHNBf6567K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqlzvYW26T8faUao0Je2DQ+MMPHF+M9Z61Xjg1GV+LPlR3wENEULOaMT/Uo+UyMSb
-	 KggE4QFmGUSGp2JYzxrFG1e1npIrfpG0fmCrVKq1PCgWAjOmVV8j9tvXdW8i3kqtOR
-	 ZeRWJuYIVuUsGyn3cJ7HEs/sGdiANh0o+5blXyqc=
+	b=q0nSbxEMAnsI8/EuQ5m/2HrjVrTBsujDBActF8M3rTeJJ5trtPXbOBg8b26iqwYC3
+	 +2UA9H8paUYY60tSoLo2le9fBNOsa3HP886AgKQnHMbl1hY/9OtXp+9W79381lgXTq
+	 ceoQZNqYZAFuD82pQ3NZR6zchUGNL13+cbSGDNh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 090/263] f2fs: dont over-report free space or inodes in statvfs
-Date: Thu,  3 Jul 2025 16:40:10 +0200
-Message-ID: <20250703144007.909684268@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.15 124/263] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
+Date: Thu,  3 Jul 2025 16:40:44 +0200
+Message-ID: <20250703144009.328001957@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -46,105 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
+commit a3ef3c2da675a8a564c8bea1a511cdd0a2a9aa49 upstream.
 
-This fixes an analogus bug that was fixed in modern filesystems:
-a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
-inodes in statvfs")
-b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
-or inodes in statvfs")
-where statfs can report misleading / incorrect information where
-project quota is enabled, and the free space is less than the
-remaining quota.
+Reading DPCD registers has side-effects in general. In particular
+accessing registers outside of the link training register range
+(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
+forbidden by the DP v2.1 Standard, see
 
-This commit will resolve a test failure in generic/762 which tests
-for this bug.
+3.6.5.1 DPTX AUX Transaction Handling Mandates
+3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
 
-generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
-#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
-#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
-#    @@ -6,8 +6,10 @@
-#     root blocks2 is in range
-#     dir blocks2 is in range
-#     root bavail2 is in range
-#    -dir bavail2 is in range
-#    +dir bavail2 has value of 1539066
-#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
-#     root blocks3 is in range
-#    ...
-#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
+Based on my tests, accessing the DPCD_REV register during the link
+training of an UHBR TBT DP tunnel sink leads to link training failures.
 
-HINT: You _MAY_ be missing kernel fix:
-      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
+Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
+DPCD register access quirk.
 
-Cc: stable@kernel.org
-Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
+(cherry picked from commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/super.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index bc510c91f3eba..86dd30eb50b1d 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1806,26 +1806,32 @@ static int f2fs_statfs_project(struct super_block *sb,
- 
- 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
- 					dquot->dq_dqb.dqb_bhardlimit);
--	if (limit)
--		limit >>= sb->s_blocksize_bits;
-+	limit >>= sb->s_blocksize_bits;
-+
-+	if (limit) {
-+		uint64_t remaining = 0;
- 
--	if (limit && buf->f_blocks > limit) {
- 		curblock = (dquot->dq_dqb.dqb_curspace +
- 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
--		buf->f_blocks = limit;
--		buf->f_bfree = buf->f_bavail =
--			(buf->f_blocks > curblock) ?
--			 (buf->f_blocks - curblock) : 0;
-+		if (limit > curblock)
-+			remaining = limit - curblock;
-+
-+		buf->f_blocks = min(buf->f_blocks, limit);
-+		buf->f_bfree = min(buf->f_bfree, remaining);
-+		buf->f_bavail = min(buf->f_bavail, remaining);
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -723,7 +723,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * monitor doesn't power down exactly after the throw away read.
+ 	 */
+ 	if (!aux->is_remote) {
+-		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
++		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
+ 		if (ret < 0)
+ 			return ret;
  	}
- 
- 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
- 					dquot->dq_dqb.dqb_ihardlimit);
- 
--	if (limit && buf->f_files > limit) {
--		buf->f_files = limit;
--		buf->f_ffree =
--			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
--			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
-+	if (limit) {
-+		uint64_t remaining = 0;
-+
-+		if (limit > dquot->dq_dqb.dqb_curinodes)
-+			remaining = limit - dquot->dq_dqb.dqb_curinodes;
-+
-+		buf->f_files = min(buf->f_files, limit);
-+		buf->f_ffree = min(buf->f_ffree, remaining);
- 	}
- 
- 	spin_unlock(&dquot->dq_dqb_lock);
--- 
-2.39.5
-
 
 
