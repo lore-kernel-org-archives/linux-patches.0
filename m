@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEB42E7BB6;
-	Thu,  3 Jul 2025 14:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACFF2EAD1B;
+	Thu,  3 Jul 2025 14:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554381; cv=none; b=KnoaLW5MzPM8CqBC01NyPNtQuAGfZGGJAIUTdqHLDK6RDvZ1Ok62UVr6gkPkwER7DLMhlFfGMiTR5cDjhYw0FPBtCWnvIphVv3iinaigAjWC93BkiiJdUKyUhD6UNXra8dqqNxeFN4WDIvueAw6LG6x+A3rWRGTLE2fe9SExFpU=
+	t=1751554384; cv=none; b=T9J2PBT2WoeKPr6a+qp2lxklbN8g2Y6F2wlzvjJY03GVIRA1iLckclb3sFV+c7h5BFroyQg43VAjSsz3Wimbr3XdYgWPhlRc+f2QJ2ZzFK/RkpathvQaNl+/LDSZ3C6Hu5vMTSjzKytIoZ2ii3Z5RNDuGsoaqZgQJc+gKdKKLOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554381; c=relaxed/simple;
-	bh=iub757Lc+QtSzu1sli2uj0eGteGpsUNJizkCXnlzUJs=;
+	s=arc-20240116; t=1751554384; c=relaxed/simple;
+	bh=5BcUljdeGtahIFt1UsuwPDE2LEQ0j70yhJo3zuB4e+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pE6AqBfwbgDHpGFGifiRv9TqpIrhIGD4bHvC+yXZP44p0PdXnLF1JsKaO9YqYZRTS929PYU6SeJ1GBGEt3D4FNjOCXdAzL5jAo4oCvrnh4E+wE6FcL8pAq8zWEkQ1DPM3ysY0BMClYUVQ+119zo/tqLKZSfNTi9hEIvNsHessBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WThqofSx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hplSYRPotoBsdPGrNZ6FwRorzbZVYg2WT4ujDTrbfXewXN7y7c1b9Fxh/h+PHaAwyxfhEIzAOVTMjKAFmgUM+ha3U+M+JMVxkD3FT968T1K/Cxx9pgTRUrHYKnGkSQ+e+eVForI/K9lSEkuMmneqJVR76NIl2divj2IIlJpq6BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O18bDbt/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WThqofSx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4233FC4CEE3;
-	Thu,  3 Jul 2025 14:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O18bDbt/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B73C4CEE3;
+	Thu,  3 Jul 2025 14:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554380;
-	bh=iub757Lc+QtSzu1sli2uj0eGteGpsUNJizkCXnlzUJs=;
+	s=korg; t=1751554383;
+	bh=5BcUljdeGtahIFt1UsuwPDE2LEQ0j70yhJo3zuB4e+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WThqofSx/epybD8rcezx44ErEPd0msdxDcNdbFBuAQCe91/WqgL1SX76yWqwzbrRa
-	 6F6N7/jsQT8C5OU8NS/wNntkMpuuQuNpqXgxyDKw7lt4i3Ltj0Hqp6HYL5giO6lfGY
-	 9FWWp8tQ1iBZPKfsPbtYyMzfoVoplWUSmPBIxFPw=
+	b=O18bDbt/3Awk6va95jzJ6t+FmZaWlwtLzqoelIYMH4p4pVHEU3yP10yPM7AMfH4Nr
+	 0EvtGPQLaZZeUSYPKo/Vj9WZuNzdatVka5+s5vNHPzubjzSY/PcLOHITmS5BiafI6p
+	 Df5lGFHtNgLIoKLwZD81jSmcpHoazyZEZ1sO1FqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 6.12 169/218] drm/amd/display: Check dce_hwseq before dereferencing it
-Date: Thu,  3 Jul 2025 16:41:57 +0200
-Message-ID: <20250703144002.925508974@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 170/218] drm/xe: Fix memset on iomem
+Date: Thu,  3 Jul 2025 16:41:58 +0200
+Message-ID: <20250703144002.971457681@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -46,44 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-commit b669507b637eb6b1aaecf347f193efccc65d756e upstream.
+commit 87a15c89d8c7b00b0fc94e0d4f554f7ee2fe6961 upstream.
 
-[WHAT]
+It should rather use xe_map_memset() as the BO is created with
+XE_BO_FLAG_VRAM_IF_DGFX in xe_guc_pc_init().
 
-hws was checked for null earlier in dce110_blank_stream, indicating hws
-can be null, and should be checked whenever it is used.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 79db43611ff61280b6de58ce1305e0b2ecf675ad)
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
 Cc: stable@vger.kernel.org
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250612-vmap-vaddr-v1-1-26238ed443eb@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 21cf47d89fba353b2d5915ba4718040c4cb955d3)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c |    2 +-
+ drivers/gpu/drm/xe/xe_guc_pc.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1217,7 +1217,7 @@ void dce110_blank_stream(struct pipe_ctx
- 	struct dce_hwseq *hws = link->dc->hwseq;
- 
- 	if (link->local_sink && link->local_sink->sink_signal == SIGNAL_TYPE_EDP) {
--		if (!link->skip_implict_edp_power_control)
-+		if (!link->skip_implict_edp_power_control && hws)
- 			hws->funcs.edp_backlight_control(link, false);
- 		link->dc->hwss.set_abm_immediate_disable(pipe_ctx);
+--- a/drivers/gpu/drm/xe/xe_guc_pc.c
++++ b/drivers/gpu/drm/xe/xe_guc_pc.c
+@@ -975,7 +975,7 @@ int xe_guc_pc_start(struct xe_guc_pc *pc
+ 		goto out;
  	}
+ 
+-	memset(pc->bo->vmap.vaddr, 0, size);
++	xe_map_memset(xe, &pc->bo->vmap, 0, 0, size);
+ 	slpc_shared_data_write(pc, header.size, size);
+ 
+ 	ret = pc_action_reset(pc);
 
 
