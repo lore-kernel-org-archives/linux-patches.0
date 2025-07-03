@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F382E2D781F;
-	Thu,  3 Jul 2025 15:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B7B1DA23;
+	Thu,  3 Jul 2025 15:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555920; cv=none; b=hvbSMo3wKbmpBCCJup9m2SQwo1KnqO1I54qhTqAY2Uk1t8THLexYMSOvIkCYBUpNHIseDuxw8jjpp+YWK04obIBiyG5kaFQuC/k6jSMbDZsW0AMkBJlzfpgwShdXxHdLZoiZub1LdjCg3hQ6JEleO704S9NDnQQR0iJAsnaGqLQ=
+	t=1751555923; cv=none; b=rV453geSKyv/n/1SZzVt7u233d/wLkq4S/uGqRGCIzBwJ20cSIbx4OvPMT8JKklhdNyMlry1mIaaAlN5euLyYWZ2ZGmUfNeDH0NvuHizsLKpqsGvMxcJUFw3HkvV1JL1L3nNlH3uWayPaoz08F1vlOWYxcY6kxIImIFqORz5+rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555920; c=relaxed/simple;
-	bh=S6uvD4PCYAu1Y4zCdF65tfqi3Za6w4hqbrS0+FSRhEU=;
+	s=arc-20240116; t=1751555923; c=relaxed/simple;
+	bh=FqM7NSlq38pHeafzZPenQjHIN69EYxNhlT6QD1ljiQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1WxGgZG9VDlXl7XEtizTHLTN4oPPrIT52qAQCiIMQqRAViJFZVsCaR6VVwOY+Fb3yys9f9bHGK5RxHAHMYXSyro9BIjZ3r5Eb3wW4HIcjHimzLTQidWugslwUQgDM4H/NS80UHuRPD19bYQRYzqsYkhzWI6vjV1afKE7SFAG5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3S4lIrm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QPkfFQlj+UPqNQhlgNzIL46mrRVjAATijJDiC7aWaxXdZX8krLHJswuyDIQDb2GoWUIaeCbbsDolLv1Cmb3Nd8YFPVWceL9DNXbUkpZbEBEts+O76WIdYgmj7KhyKQ0HAk4EorQrsEWmWhwDjUe3cr0dwywn00+YyWbGHpnGGRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8EJtguE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3S4lIrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A205C4CEE3;
-	Thu,  3 Jul 2025 15:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8EJtguE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E1EC4CEE3;
+	Thu,  3 Jul 2025 15:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555919;
-	bh=S6uvD4PCYAu1Y4zCdF65tfqi3Za6w4hqbrS0+FSRhEU=;
+	s=korg; t=1751555923;
+	bh=FqM7NSlq38pHeafzZPenQjHIN69EYxNhlT6QD1ljiQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3S4lIrmg6UObK+zjLcHckHEGyLDCR6FaFC26bO6+ltpQDyRHZkslemZ667dXN8GH
-	 YW5oRmGCv2OJmMH+Dv6TRyANamC78Y+PV81TOCVbGP9ar86WkHqxIbACseOfjH08eh
-	 JsBRuRUkSvAvVrYXfexQ7FgNQe/2scY82mGJFQZU=
+	b=s8EJtguEsOmg38dbX2DzT69u3gvqjj6qYu/2iE3NM/4IO+hObxIH7WJipolcsfpwM
+	 98ZKtv797a5vga3GxduNvf6v9NzIoqGEakdvxN+8lgsgLJO/4Wc83Kw6VIQp3OGrHT
+	 xjWx6tELm+MC5DL/lm/Jxgcx7sJfpO77/pZeg3qI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	linux-kbuild@vger.kernel.org,
-	kernel test robot <lkp@intel.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/132] um: Add cmpxchg8b_emu and checksum functions to asm-prototypes.h
-Date: Thu,  3 Jul 2025 16:41:48 +0200
-Message-ID: <20250703143940.152978689@linuxfoundation.org>
+Subject: [PATCH 6.1 002/132] cifs: Fix cifs_query_path_info() for Windows NT servers
+Date: Thu,  3 Jul 2025 16:41:31 +0200
+Message-ID: <20250703143939.480107720@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -48,59 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 674d03f6bd6b0f8327f1a4920ff5893557facfbd ]
+[ Upstream commit a3e771afbb3bce91c8296828304903e7348003fe ]
 
-With CONFIG_GENDWARFKSYMS, um builds fail due to missing prototypes
-in asm/asm-prototypes.h. Add declarations for cmpxchg8b_emu and the
-exported checksum functions, including csum_partial_copy_generic as
-it's also exported.
+For TRANS2 QUERY_PATH_INFO request when the path does not exist, the
+Windows NT SMB server returns error response STATUS_OBJECT_NAME_NOT_FOUND
+or ERRDOS/ERRbadfile without the SMBFLG_RESPONSE flag set. Similarly it
+returns STATUS_DELETE_PENDING when the file is being deleted. And looks
+like that any error response from TRANS2 QUERY_PATH_INFO does not have
+SMBFLG_RESPONSE flag set.
 
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: linux-kbuild@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202503251216.lE4t9Ikj-lkp@intel.com/
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://patch.msgid.link/20250326190500.847236-2-samitolvanen@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So relax check in check_smb_hdr() for detecting if the packet is response
+for this special case.
+
+This change fixes stat() operation against Windows NT SMB servers and also
+all operations which depends on -ENOENT result from stat like creat() or
+mkdir().
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/asm/asm-prototypes.h | 5 +++++
- arch/x86/um/asm/checksum.h           | 3 +++
- 2 files changed, 8 insertions(+)
+ fs/smb/client/misc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/um/include/asm/asm-prototypes.h b/arch/um/include/asm/asm-prototypes.h
-index 5898a26daa0dd..408b31d591279 100644
---- a/arch/um/include/asm/asm-prototypes.h
-+++ b/arch/um/include/asm/asm-prototypes.h
-@@ -1 +1,6 @@
- #include <asm-generic/asm-prototypes.h>
-+#include <asm/checksum.h>
-+
-+#ifdef CONFIG_UML_X86
-+extern void cmpxchg8b_emu(void);
-+#endif
-diff --git a/arch/x86/um/asm/checksum.h b/arch/x86/um/asm/checksum.h
-index b07824500363f..ddc144657efad 100644
---- a/arch/x86/um/asm/checksum.h
-+++ b/arch/x86/um/asm/checksum.h
-@@ -20,6 +20,9 @@
-  */
- extern __wsum csum_partial(const void *buff, int len, __wsum sum);
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 3826f71766086..99a0a1fe66187 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -307,6 +307,14 @@ check_smb_hdr(struct smb_hdr *smb)
+ 	if (smb->Command == SMB_COM_LOCKING_ANDX)
+ 		return 0;
  
-+/* Do not call this directly. Declared for export type visibility. */
-+extern __visible __wsum csum_partial_copy_generic(const void *src, void *dst, int len);
++	/*
++	 * Windows NT server returns error resposne (e.g. STATUS_DELETE_PENDING
++	 * or STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other)
++	 * for some TRANS2 requests without the RESPONSE flag set in header.
++	 */
++	if (smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
++		return 0;
 +
- /**
-  * csum_fold - Fold and invert a 32bit checksum.
-  * sum: 32bit unfolded sum
+ 	cifs_dbg(VFS, "Server sent request, not response. mid=%u\n",
+ 		 get_mid(smb));
+ 	return 1;
 -- 
 2.39.5
 
