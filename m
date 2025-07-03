@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAD92EF29C;
-	Thu,  3 Jul 2025 14:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38922EAB95;
+	Thu,  3 Jul 2025 14:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554337; cv=none; b=FUYye20olD6tJszYBtfWV8g71I0ZkAVIsCjZMQpoyrzqjrNmA88N6YSqC9eO8IGLSF2jLWW6HBzodV+wvc8AdwVy/sGoSuJ3KukXA0KhhSpFBpw2ynz8l7LXKUE2vgkc7M97bIn0sQMWoqTk5nbPnWVUx+k4kNc5fNYR5D+bKvE=
+	t=1751554339; cv=none; b=nhOpQijba2Lf47HKmFiyzY35QWCCUabwifyKlMcnWWxbIbvqT8d+hCk/lBDshZzui6mvHRez/YS8pIPO1Hevi+YpGCM32RculIXmAJuuML5Uo7uQCmz+uE+XAnU/Ebh311tOjQ6N65ZpN/olXYeAjpJCPpRVDCcHTfofSXiGQpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554337; c=relaxed/simple;
-	bh=5+wj4n+tiLJiMQbvNLOZaDRccKn/1ag9CrvSt5VYvl4=;
+	s=arc-20240116; t=1751554339; c=relaxed/simple;
+	bh=ORltWrBIjDCkjfEYOPIcTk0YWwWS8j9IPMyGzwbVpkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+qpyhDhxZwg6tvaC9ss9OeAaMx7x2pfPlPz2RRq5UDSkStoKa05UpUW7YWsQvm8Ky4ohiFZiMS5aL9fVVe4YU2b5kT1SZTU5bdhJxrjNanOJgXhD+Z91UE4S/FtrotvGOg3/dQL73ylkINFA+Aq7AnpU1wjTwe0ur0YJKS1DY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWpHACwW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQH+dcKW2lmYwLY6MbvRF8VS3Tcw0A1VJkyAroo1K5Ey649YVCsPiooAJ2aH1cn/4nX+qLLH2V9KIsEhPoVevulTEPgMjmwmMB879cNeGlF+LVsQqxkNcRPR3i5hpUNUYZF0n+ogkGE5DgTLbP+TGpDlf2Qo42oLy7HeunF5eUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxls/EuT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWpHACwW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0997FC4CEE3;
-	Thu,  3 Jul 2025 14:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxls/EuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DFBC4CEED;
+	Thu,  3 Jul 2025 14:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554336;
-	bh=5+wj4n+tiLJiMQbvNLOZaDRccKn/1ag9CrvSt5VYvl4=;
+	s=korg; t=1751554339;
+	bh=ORltWrBIjDCkjfEYOPIcTk0YWwWS8j9IPMyGzwbVpkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWpHACwWsLR8yH2t5k+NUBJE9KVRQvAHchK5+DgKBO48lduPhGqdJte8FR0WNcZCz
-	 LcPIJoBTcMf3/ebfFVCt3W509GAFFDk4RFcFtp1dG7QvT3y7am/1lv6unDqAHXrHnG
-	 lQP5MMLplwbd37irK3vZtd7j4UBZ6wNiOr7myJ4I=
+	b=fxls/EuTGfZgMgSHFvV4OwHv0qVN6yIk91SZpTSZ6oZgZwny5NkqYlAzkjrfhZYTU
+	 a6nmQ7ZvriFJ6xe2YRQlB4gNn4TDHn9w6i1Q7GCJDIKxS15LErN1wGT/qxavd3Hfl8
+	 VKKWHz7mebSbYzOcksy8esjAjoQmxdEGWYACSgzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	dri-devel@lists.freedesktop.org,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Subject: [PATCH 6.12 153/218] drm/udl: Unregister device before cleaning up on disconnect
-Date: Thu,  3 Jul 2025 16:41:41 +0200
-Message-ID: <20250703144002.269762376@linuxfoundation.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.12 154/218] drm/msm/gpu: Fix crash when throttling GPU immediately during boot
+Date: Thu,  3 Jul 2025 16:41:42 +0200
+Message-ID: <20250703144002.309529691@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -51,48 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit ff9cb6d2035c586ea7c8f1754d4409eec7a2d26d upstream.
+commit b71717735be48d7743a34897e9e44a0b53e30c0e upstream.
 
-Disconnecting a DisplayLink device results in the following kernel
-error messages
+There is a small chance that the GPU is already hot during boot. In that
+case, the call to of_devfreq_cooling_register() will immediately try to
+apply devfreq cooling, as seen in the following crash:
 
-[   93.041748] [drm:udl_urb_completion [udl]] *ERROR* udl_urb_completion - nonzero write bulk status received: -115
-[   93.055299] [drm:udl_submit_urb [udl]] *ERROR* usb_submit_urb error fffffffe
-[   93.065363] [drm:udl_urb_completion [udl]] *ERROR* udl_urb_completion - nonzero write bulk status received: -115
-[   93.078207] [drm:udl_submit_urb [udl]] *ERROR* usb_submit_urb error fffffffe
+  Unable to handle kernel paging request at virtual address 0000000000014110
+  pc : a6xx_gpu_busy+0x1c/0x58 [msm]
+  lr : msm_devfreq_get_dev_status+0xbc/0x140 [msm]
+  Call trace:
+   a6xx_gpu_busy+0x1c/0x58 [msm] (P)
+   devfreq_simple_ondemand_func+0x3c/0x150
+   devfreq_update_target+0x44/0xd8
+   qos_max_notifier_call+0x30/0x84
+   blocking_notifier_call_chain+0x6c/0xa0
+   pm_qos_update_target+0xd0/0x110
+   freq_qos_apply+0x3c/0x74
+   apply_constraint+0x88/0x148
+   __dev_pm_qos_update_request+0x7c/0xcc
+   dev_pm_qos_update_request+0x38/0x5c
+   devfreq_cooling_set_cur_state+0x98/0xf0
+   __thermal_cdev_update+0x64/0xb4
+   thermal_cdev_update+0x4c/0x58
+   step_wise_manage+0x1f0/0x318
+   __thermal_zone_device_update+0x278/0x424
+   __thermal_cooling_device_register+0x2bc/0x308
+   thermal_of_cooling_device_register+0x10/0x1c
+   of_devfreq_cooling_register_power+0x240/0x2bc
+   of_devfreq_cooling_register+0x14/0x20
+   msm_devfreq_init+0xc4/0x1a0 [msm]
+   msm_gpu_init+0x304/0x574 [msm]
+   adreno_gpu_init+0x1c4/0x2e0 [msm]
+   a6xx_gpu_init+0x5c8/0x9c8 [msm]
+   adreno_bind+0x2a8/0x33c [msm]
+   ...
 
-coming from KMS poll helpers. Shutting down poll helpers runs them
-one final time when the USB device is already gone.
+At this point we haven't initialized the GMU at all yet, so we cannot read
+the GMU registers inside a6xx_gpu_busy(). A similar issue was fixed before
+in commit 6694482a70e9 ("drm/msm: Avoid unclocked GMU register access in
+6xx gpu_busy"): msm_devfreq_init() does call devfreq_suspend_device(), but
+unlike msm_devfreq_suspend(), it doesn't set the df->suspended flag
+accordingly. This means the df->suspended flag does not match the actual
+devfreq state after initialization and msm_devfreq_get_dev_status() will
+end up accessing GMU registers, causing the crash.
 
-Run drm_dev_unplug() first in udl's USB disconnect handler. Udl's
-polling code already handles disconnects gracefully if the device has
-been marked as unplugged.
+Fix this by setting df->suspended correctly during initialization.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: b1a981bd5576 ("drm/udl: drop drm_driver.release hook")
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250303145604.62962-2-tzimmermann@suse.de
+Cc: stable@vger.kernel.org
+Fixes: 6694482a70e9 ("drm/msm: Avoid unclocked GMU register access in 6xx gpu_busy")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/650772/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/udl/udl_drv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/udl/udl_drv.c
-+++ b/drivers/gpu/drm/udl/udl_drv.c
-@@ -126,9 +126,9 @@ static void udl_usb_disconnect(struct us
- {
- 	struct drm_device *dev = usb_get_intfdata(interface);
+--- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
++++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+@@ -156,6 +156,7 @@ void msm_devfreq_init(struct msm_gpu *gp
+ 	priv->gpu_devfreq_config.downdifferential = 10;
  
-+	drm_dev_unplug(dev);
- 	drm_kms_helper_poll_fini(dev);
- 	udl_drop_usb(dev);
--	drm_dev_unplug(dev);
- }
+ 	mutex_init(&df->lock);
++	df->suspended = true;
  
- /*
+ 	ret = dev_pm_qos_add_request(&gpu->pdev->dev, &df->boost_freq,
+ 				     DEV_PM_QOS_MIN_FREQUENCY, 0);
 
 
