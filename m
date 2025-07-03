@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231E42E62CD;
-	Thu,  3 Jul 2025 14:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D439126C02;
+	Thu,  3 Jul 2025 14:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554667; cv=none; b=jUIMX7Izd5rtkiIcfkmJJY9PavJqknigfIxjneNOsPEX/wB6QG4o829jnJ3ZX6oSQFGvnGLT3EQJ3mJmuERzSWtO2IGUT5ncL9Jzcmm7Hc50jry2FPojRkGakS55Z3xS0+XkgG2HZypc4vUXA4gVIEdRAdgnohX6Su9E1mFWOzY=
+	t=1751554670; cv=none; b=V3M6r9BM0yJwN3zfPoeLR4qwnr/kI2USNtyxxoUzb19qALNWuBXW3KuXQNkXD2GntjXjFNVa3lnWcH+NVN6+xNKYrCWilm65gb4buoHu+xMi0pYSfVp3ja5/XXwq+s5aeHiRoCwMuGVtjYiJNxREq0FUwYxewvEjUSQso0P7IVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554667; c=relaxed/simple;
-	bh=1Z8M5JJReOoGgDwiM+kc6jT2DPoZHry5ItJH2j4zUAI=;
+	s=arc-20240116; t=1751554670; c=relaxed/simple;
+	bh=nGQ88mAj+9BcBaeRKBCKA+vN90bTzvuCXkVHn3m8xFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XbGvhYTih9szEfH/vilmHKMk7WHEZPvV1QUL3keLyJ+yGrgk6isADjKLEcXW+DvQ/kiPUTuDk6RVqllQycLJjPyw27xlsv60blz8K6fcadtvQD5yVEQgTKMC5S45f1M9cvawSr+Zu55yRcRnlb5u2YXW69eK5jgcpya648eGrJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhcwODox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XBAuVMywHgyLOCJmkNyFLAP0hYHLxxDDHZpsAjLex/eVDI18fAkY9BHLA3+zdUCqOb+ffnauVP9MptY1XBXnrELtYYQGWnqHWqVh+snwzcDyPiC4S3mDGGYxxZga3MOZntcumNOPN7wKsXHbedeyLv0C3qK8CnbtRdV5UmotpJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3rlKAV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhcwODox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8389C4CEE3;
-	Thu,  3 Jul 2025 14:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3rlKAV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF996C4CEE3;
+	Thu,  3 Jul 2025 14:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554667;
-	bh=1Z8M5JJReOoGgDwiM+kc6jT2DPoZHry5ItJH2j4zUAI=;
+	s=korg; t=1751554670;
+	bh=nGQ88mAj+9BcBaeRKBCKA+vN90bTzvuCXkVHn3m8xFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhcwODoxJ9G+VUUFLzeSEuzg7G2EAUz+g0eFffo17PP/9CvvFGc6mlkvoyVhXDucz
-	 ZZqsQG4nhb+Wb5c2A9eH0X/VYYWhVDuQ1hbNAN6lroyVknlrob6yAVJ0oQUUTCSVBZ
-	 MLAEsn1OA/Pozxr9IHW30vzIR/JoQ6wOY/Y7uGtg=
+	b=S3rlKAV3TwkmQ9qxVRi5RqKZFOzy88gJBkQu7rcMwFD1HK3VH0cq4WyqvlRFk+MfW
+	 7oduev6ms705lM1Q5R2/pIsa/QG/3IBtaZYv2z2ZkxB4QdmQzSEy7HY4V9/ig7//eX
+	 0rpD94LFDnbCRKbyhmT/AkTq1VPjncZmsqDuaqfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin.Cao" <lincao12@amd.com>,
-	Philipp Stanner <phasta@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 043/263] drm/scheduler: signal scheduled fence when kill job
-Date: Thu,  3 Jul 2025 16:39:23 +0200
-Message-ID: <20250703144006.034794120@linuxfoundation.org>
+Subject: [PATCH 6.15 026/263] Revert "iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices"
+Date: Thu,  3 Jul 2025 16:39:06 +0200
+Message-ID: <20250703144005.349963238@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -53,43 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin.Cao <lincao12@amd.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 471db2c2d4f80ee94225a1ef246e4f5011733e50 ]
+[ Upstream commit 3be5fa236649da6404f1bca1491bf02d4b0d5cce ]
 
-When an entity from application B is killed, drm_sched_entity_kill()
-removes all jobs belonging to that entity through
-drm_sched_entity_kill_jobs_work(). If application A's job depends on a
-scheduled fence from application B's job, and that fence is not properly
-signaled during the killing process, application A's dependency cannot be
-cleared.
+Commit 991de2e59090 ("PCI, x86: Implement pcibios_alloc_irq() and
+pcibios_free_irq()") changed IRQ handling on PCI driver probing.
+It inadvertently broke resume from system sleep on AMD platforms:
 
-This leads to application A hanging indefinitely while waiting for a
-dependency that will never be resolved. Fix this issue by ensuring that
-scheduled fences are properly signaled when an entity is killed, allowing
-dependent applications to continue execution.
+  https://lore.kernel.org/r/20150926164651.GA3640@pd.tnic/
 
-Signed-off-by: Lin.Cao <lincao12@amd.com>
-Reviewed-by: Philipp Stanner <phasta@kernel.org>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20250515020713.1110476-1-lincao12@amd.com
+This was fixed by two independent commits:
+
+* 8affb487d4a4 ("x86/PCI: Don't alloc pcibios-irq when MSI is enabled")
+* cbbc00be2ce3 ("iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices")
+
+The breaking change and one of these two fixes were subsequently reverted:
+
+* fe25d078874f ("Revert "x86/PCI: Don't alloc pcibios-irq when MSI is enabled"")
+* 6c777e8799a9 ("Revert "PCI, x86: Implement pcibios_alloc_irq() and pcibios_free_irq()"")
+
+This rendered the second fix unnecessary, so revert it as well.  It used
+the match_driver flag in struct pci_dev, which is internal to the PCI core
+and not supposed to be touched by arbitrary drivers.
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Joerg Roedel <jroedel@suse.de>
+Link: https://patch.msgid.link/9a3ddff5cc49512044f963ba0904347bd404094d.1745572340.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd/init.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
-index bd39db7bb2408..e671aa2417206 100644
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -176,6 +176,7 @@ static void drm_sched_entity_kill_jobs_work(struct work_struct *wrk)
- {
- 	struct drm_sched_job *job = container_of(wrk, typeof(*job), work);
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 14aa0d77df26d..f9037dad53f31 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -2030,9 +2030,6 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
+ 	if (!iommu->dev)
+ 		return -ENODEV;
  
-+	drm_sched_fence_scheduled(job->s_fence, NULL);
- 	drm_sched_fence_finished(job->s_fence, -ESRCH);
- 	WARN_ON(job->s_fence->parent);
- 	job->sched->ops->free_job(job);
+-	/* Prevent binding other PCI device drivers to IOMMU devices */
+-	iommu->dev->match_driver = false;
+-
+ 	/* ACPI _PRT won't have an IRQ for IOMMU */
+ 	iommu->dev->irq_managed = 1;
+ 
 -- 
 2.39.5
 
