@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4C62EE99C;
-	Thu,  3 Jul 2025 14:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE512F0030;
+	Thu,  3 Jul 2025 14:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554368; cv=none; b=EK9JXML2hbEL/WRTKaHIjd74vYcdZLT2sl6hVJHIZ35fZDz1j8byLFg+EjKee5gMwMPHhCwcraj2ITxSUcL57tw0/gckBriippHmd8n74y9HNr01SNJEJuotzonvPbld8RjHeHunDFRd5IedNgfm4Fv/bqEK/FVjGdoFcMdUZN0=
+	t=1751554371; cv=none; b=SAWOExc65pRaA4OyqdLyttY7DDzO8oldurI4ghMn6wncdAqb+7HFgZqrUPVwIriaNrhpWCu8+Hz318orYASSpM7K6yF/tgd2O8bYYeT9MBfFcGdYOkAAt1pQlhBXoe3G1meuoyFy+Q+Qt4N3C3mBBC1o7MasLdzjJAhmy0ZezDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554368; c=relaxed/simple;
-	bh=g8JQYJmEEp689Azks5dHpOLLHvG2WKJk3+N+HSQhuzQ=;
+	s=arc-20240116; t=1751554371; c=relaxed/simple;
+	bh=+TcYuGUBXPgVHmQZLoZGMAYGsI/9xytFsGOBw79oxI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfpqzuRBfgFijAb+hlZcCfPBTAgHJwxMmz07MuT1s1r7F/WUfPc0YF4Z7ekBYdtwbqOcgztyxW7noVBqKLLLlOePbGmK0qGz8z5b6uVfZaaJKkoKZz4LrXVyAhCWsVmA6wonUFF6pCQmImMIxWbRsi4GvNUoQ0wzr/D+7BD/AGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQxm81Yv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KrzJ16aPaA19MJPgv8MFNUeZwKDwWgR/NXgHuMirrZUbNMVXH55Kel7gRHOZvuIpIIdlIgf2LDI54jsE9LF0PG0DVjyAnZQcoRQo0zN/acCnMc2mDKxareqlr/PMYW9VPwn4bA6NjvIIj9sEVU+puD3LOWcJ6Ru0pRH/QEk9X9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0SeSHIc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQxm81Yv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E97EC4CEE3;
-	Thu,  3 Jul 2025 14:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0SeSHIc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7656C4CEE3;
+	Thu,  3 Jul 2025 14:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554368;
-	bh=g8JQYJmEEp689Azks5dHpOLLHvG2WKJk3+N+HSQhuzQ=;
+	s=korg; t=1751554371;
+	bh=+TcYuGUBXPgVHmQZLoZGMAYGsI/9xytFsGOBw79oxI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQxm81YvfRmSY4Rf4NxNvBtzODkEHsmT6hxu8U/0K6l0R/t5RFjx6U2LYqSZwPNQt
-	 Lk6DOAtmJGTnvTCtcXocyNVA9XdjPFECYShK+wmUGW+gydsUixZSzy/pi9clQroiP6
-	 wWEGXgc1xc1V3bDntbPzkdMrYXLrk1O/YWxj++Sk=
+	b=V0SeSHIcc1xcHEGnecVvClace9dKc1k289EXuITTrN3b4FftdYgEJ59ApJXAtksvn
+	 1GwEfgNYcImPbAnhT709aKHucoE5z7CQ7Yg03ATNM1bFk4D0vXeMyP41EKIo8+l4Du
+	 +nntjvGwChb5NLRCUBTZfhhVGR2pPatdXZHnOopI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.12 157/218] drm/bridge: cdns-dsi: Fix phy de-init and flag it so
-Date: Thu,  3 Jul 2025 16:41:45 +0200
-Message-ID: <20250703144002.428082137@linuxfoundation.org>
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 166/218] drm/xe/guc_submit: add back fix
+Date: Thu,  3 Jul 2025 16:41:54 +0200
+Message-ID: <20250703144002.797711168@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -47,62 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aradhya Bhatia <a-bhatia1@ti.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit fd2611c13f69cbbc6b81d9fc7502abf4f7031d21 upstream.
+commit 2e824747cfbdf1fba88df5e5800d284b2602ae8f upstream.
 
-The driver code doesn't have a Phy de-initialization path as yet, and so
-it does not clear the phy_initialized flag while suspending. This is a
-problem because after resume the driver looks at this flag to determine
-if a Phy re-initialization is required or not. It is in fact required
-because the hardware is resuming from a suspend, but the driver does not
-carry out any re-initialization causing the D-Phy to not work at all.
+Daniele noticed that the fix in commit 2d2be279f1ca ("drm/xe: fix UAF
+around queue destruction") looks to have been unintentionally removed as
+part of handling a conflict in some past merge commit. Add it back.
 
-Call the counterparts of phy_init() and phy_power_on(), that are
-phy_exit() and phy_power_off(), from _bridge_post_disable(), and clear
-the flags so that the Phy can be initialized again when required.
-
-Fixes: fced5a364dee ("drm/bridge: cdns: Convert to phy framework")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Tested-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Link: https://lore.kernel.org/r/20250329113925.68204-3-aradhya.bhatia@linux.dev
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: ac44ff7cec33 ("Merge tag 'drm-xe-fixes-2024-10-10' of https://gitlab.freedesktop.org/drm/xe/kernel into drm-fixes")
+Reported-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.12+
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250603174213.1543579-2-matthew.auld@intel.com
+(cherry picked from commit 9d9fca62dc49d96f97045b6d8e7402a95f8cf92a)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_guc_submit.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-@@ -681,6 +681,11 @@ static void cdns_dsi_bridge_post_disable
- 	struct cdns_dsi_input *input = bridge_to_cdns_dsi_input(bridge);
- 	struct cdns_dsi *dsi = input_to_dsi(input);
- 
-+	dsi->phy_initialized = false;
-+	dsi->link_initialized = false;
-+	phy_power_off(dsi->dphy);
-+	phy_exit(dsi->dphy);
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -227,6 +227,17 @@ static bool exec_queue_killed_or_banned_
+ static void guc_submit_fini(struct drm_device *drm, void *arg)
+ {
+ 	struct xe_guc *guc = arg;
++	struct xe_device *xe = guc_to_xe(guc);
++	struct xe_gt *gt = guc_to_gt(guc);
++	int ret;
 +
- 	pm_runtime_put(dsi->base.dev);
- }
++	ret = wait_event_timeout(guc->submission_state.fini_wq,
++				 xa_empty(&guc->submission_state.exec_queue_lookup),
++				 HZ * 5);
++
++	drain_workqueue(xe->destroy_wq);
++
++	xe_gt_assert(gt, ret);
  
-@@ -1153,7 +1158,6 @@ static int __maybe_unused cdns_dsi_suspe
- 	clk_disable_unprepare(dsi->dsi_sys_clk);
- 	clk_disable_unprepare(dsi->dsi_p_clk);
- 	reset_control_assert(dsi->dsi_p_rst);
--	dsi->link_initialized = false;
- 	return 0;
+ 	xa_destroy(&guc->submission_state.exec_queue_lookup);
  }
- 
 
 
