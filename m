@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509792E7BD6;
-	Thu,  3 Jul 2025 15:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B712B9A6;
+	Thu,  3 Jul 2025 15:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554970; cv=none; b=PmsOPvdiP3z25vHXIwpzIxwv3RnA+Ydg42AyzbQ47DValMnr9f1f5GJpVNZCuNFchjjAQC50QPFS3V/VqNPQRqEYTQWPt4DJzLX1qi3JVBKBcSpDrfht4lm4PU5SFvHr1saLhtw8FbXtKw7YN+62VDIOB3NFh10O4zMiXkX6RLQ=
+	t=1751554974; cv=none; b=EjrlhUss5dl1vXpZ3gzInnMR3qktTeGlaVgcoCwE+kuIc6dHClCrwebDQ5OEZJPXdnvrfIBBfwLvPaFv4IRs5J7+5Gu7TIejr2wG6CFBtBZYawbmsUDrO4AStg7OlC7+/ZGAGXCCK/bRsEyh0n+F/D6/pIgo91wsUVt2e8mblf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554970; c=relaxed/simple;
-	bh=CdzzFSIY88IwEe+zDb9Pdn3m0fQuWcBzo9RqcvqHzd8=;
+	s=arc-20240116; t=1751554974; c=relaxed/simple;
+	bh=SY4AvRtfh5MdRvuaBM+lcyarihb/sCBfZDMTYwRxv8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fncgWwuJ2kdXIkbRkjS/h7hXuULiXopV8VG2Oum73dlejV0ashu6Jturv3Jmd69YEztu6lTJyuRK+z7ppUe8HsT0QerHlQE5mqYsioNWrzROJI19jJhcorej8r8PZMHHoCstsDaKGorOw284eCoO4uEM4jDbigrdxA24AmdfSI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhiIiiEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SDCGcLagZ36W2n+6fRfC84efA8onxwjztxI5csooMiACCKAqbkaHKJyZV5OTaH+PBb7zEA5HyqrWWhhKnExA7QYuzLDtJZ7qcOVg+mpSe5HTMpM7aIv64FH0qLIocLap6WG77Ks53LvonU1M4ERx84fxYiEbQU8xcfR1UWgA4mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omJ1lJHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhiIiiEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2F6C4CEE3;
-	Thu,  3 Jul 2025 15:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omJ1lJHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63273C4CEE3;
+	Thu,  3 Jul 2025 15:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554969;
-	bh=CdzzFSIY88IwEe+zDb9Pdn3m0fQuWcBzo9RqcvqHzd8=;
+	s=korg; t=1751554973;
+	bh=SY4AvRtfh5MdRvuaBM+lcyarihb/sCBfZDMTYwRxv8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhiIiiEwK76cgeyY18AU/lqP6z0VGBtpAeKuOH8YW8P1dpLhzMf+XOXVyuJZeew62
-	 FLMuuOVdAhyC/bXSCOh6Njw5WEZ8YX5kgS59er2ATqlBCsMDkCCXzHjf04Ds/NRsn7
-	 Rlj+1P+fL8ygMCIutmM3Wc8NLjUtwebRYFfrHC3U=
+	b=omJ1lJHaoV8uzWs4ZXjXyGU6nNt3uzhQJjo/jzOrVy4E6lk/dYUPs0thZexYYDela
+	 TEXpZZUh3MGgjbabVFF0VqNuFeItQEIJ/ESyRSjqHo0gSI1Sm/v2t/FOMqd+yD7Sqn
+	 g/ThENsHhd55xMvJNBwBDXlrmv+bt8mqCJK+5zRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+2faa4825e556199361f9@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 136/263] ASoC: amd: ps: fix for soundwire failures during hibernation exit sequence
-Date: Thu,  3 Jul 2025 16:40:56 +0200
-Message-ID: <20250703144009.812978574@linuxfoundation.org>
+Subject: [PATCH 6.15 137/263] Bluetooth: hci_core: Fix use-after-free in vhci_flush()
+Date: Thu,  3 Jul 2025 16:40:57 +0200
+Message-ID: <20250703144009.852781593@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,120 +53,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit dc6458ed95e40146699f9c523e34cb13ff127170 ]
+[ Upstream commit 1d6123102e9fbedc8d25bf4731da6d513173e49e ]
 
-During the hibernate entry sequence, ACP registers will be reset to
-default values and acp ip will be completely powered off including acp
-SoundWire pads. During resume sequence, if acp SoundWire pad keeper enable
-register is not restored along with pad pulldown control register value,
-then SoundWire manager links won't be powered on correctly results in
-peripheral register access failures and completely audio function is
-broken.
+syzbot reported use-after-free in vhci_flush() without repro. [0]
 
-Add code to store the acp SoundWire pad keeper enable register and acp pad
-pulldown ctrl register values before entering into suspend state and
-restore the register values during resume sequence based on condition check
-for acp SoundWire pad keeper enable register for ACP6.3, ACP7.0 & ACP7.1
-platforms.
+>From the splat, a thread close()d a vhci file descriptor while
+its device was being used by iotcl() on another thread.
 
-Fixes: 491628388005 ("ASoC: amd: ps: add callback functions for acp pci driver pm ops")
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20250623084630.3100279-1-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Once the last fd refcnt is released, vhci_release() calls
+hci_unregister_dev(), hci_free_dev(), and kfree() for struct
+vhci_data, which is set to hci_dev->dev->driver_data.
+
+The problem is that there is no synchronisation after unlinking
+hdev from hci_dev_list in hci_unregister_dev().  There might be
+another thread still accessing the hdev which was fetched before
+the unlink operation.
+
+We can use SRCU for such synchronisation.
+
+Let's run hci_dev_reset() under SRCU and wait for its completion
+in hci_unregister_dev().
+
+Another option would be to restore hci_dev->destruct(), which was
+removed in commit 587ae086f6e4 ("Bluetooth: Remove unused
+hci-destruct cb").  However, this would not be a good solution, as
+we should not run hci_unregister_dev() while there are in-flight
+ioctl() requests, which could lead to another data-race KCSAN splat.
+
+Note that other drivers seem to have the same problem, for exmaple,
+virtbt_remove().
+
+[0]:
+BUG: KASAN: slab-use-after-free in skb_queue_empty_lockless include/linux/skbuff.h:1891 [inline]
+BUG: KASAN: slab-use-after-free in skb_queue_purge_reason+0x99/0x360 net/core/skbuff.c:3937
+Read of size 8 at addr ffff88807cb8d858 by task syz.1.219/6718
+
+CPU: 1 UID: 0 PID: 6718 Comm: syz.1.219 Not tainted 6.16.0-rc1-syzkaller-00196-g08207f42d3ff #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xd2/0x2b0 mm/kasan/report.c:521
+ kasan_report+0x118/0x150 mm/kasan/report.c:634
+ skb_queue_empty_lockless include/linux/skbuff.h:1891 [inline]
+ skb_queue_purge_reason+0x99/0x360 net/core/skbuff.c:3937
+ skb_queue_purge include/linux/skbuff.h:3368 [inline]
+ vhci_flush+0x44/0x50 drivers/bluetooth/hci_vhci.c:69
+ hci_dev_do_reset net/bluetooth/hci_core.c:552 [inline]
+ hci_dev_reset+0x420/0x5c0 net/bluetooth/hci_core.c:592
+ sock_do_ioctl+0xd9/0x300 net/socket.c:1190
+ sock_ioctl+0x576/0x790 net/socket.c:1311
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:907 [inline]
+ __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fcf5b98e929
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fcf5c7b9038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007fcf5bbb6160 RCX: 00007fcf5b98e929
+RDX: 0000000000000000 RSI: 00000000400448cb RDI: 0000000000000009
+RBP: 00007fcf5ba10b39 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007fcf5bbb6160 R15: 00007ffd6353d528
+ </TASK>
+
+Allocated by task 6535:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __kmalloc_cache_noprof+0x230/0x3d0 mm/slub.c:4359
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ kzalloc_noprof include/linux/slab.h:1039 [inline]
+ vhci_open+0x57/0x360 drivers/bluetooth/hci_vhci.c:635
+ misc_open+0x2bc/0x330 drivers/char/misc.c:161
+ chrdev_open+0x4c9/0x5e0 fs/char_dev.c:414
+ do_dentry_open+0xdf0/0x1970 fs/open.c:964
+ vfs_open+0x3b/0x340 fs/open.c:1094
+ do_open fs/namei.c:3887 [inline]
+ path_openat+0x2ee5/0x3830 fs/namei.c:4046
+ do_filp_open+0x1fa/0x410 fs/namei.c:4073
+ do_sys_openat2+0x121/0x1c0 fs/open.c:1437
+ do_sys_open fs/open.c:1452 [inline]
+ __do_sys_openat fs/open.c:1468 [inline]
+ __se_sys_openat fs/open.c:1463 [inline]
+ __x64_sys_openat+0x138/0x170 fs/open.c:1463
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 6535:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
+ kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
+ poison_slab_object mm/kasan/common.c:247 [inline]
+ __kasan_slab_free+0x62/0x70 mm/kasan/common.c:264
+ kasan_slab_free include/linux/kasan.h:233 [inline]
+ slab_free_hook mm/slub.c:2381 [inline]
+ slab_free mm/slub.c:4643 [inline]
+ kfree+0x18e/0x440 mm/slub.c:4842
+ vhci_release+0xbc/0xd0 drivers/bluetooth/hci_vhci.c:671
+ __fput+0x44c/0xa70 fs/file_table.c:465
+ task_work_run+0x1d1/0x260 kernel/task_work.c:227
+ exit_task_work include/linux/task_work.h:40 [inline]
+ do_exit+0x6ad/0x22e0 kernel/exit.c:955
+ do_group_exit+0x21c/0x2d0 kernel/exit.c:1104
+ __do_sys_exit_group kernel/exit.c:1115 [inline]
+ __se_sys_exit_group kernel/exit.c:1113 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1113
+ x64_sys_call+0x21ba/0x21c0 arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The buggy address belongs to the object at ffff88807cb8d800
+ which belongs to the cache kmalloc-1k of size 1024
+The buggy address is located 88 bytes inside of
+ freed 1024-byte region [ffff88807cb8d800, ffff88807cb8dc00)
+
+Fixes: bf18c7118cf8 ("Bluetooth: vhci: Free driver_data on file release")
+Reported-by: syzbot+2faa4825e556199361f9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f62d64848fc4c7c30cd6
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/ps/acp63.h     |  4 ++++
- sound/soc/amd/ps/ps-common.c | 18 ++++++++++++++++++
- 2 files changed, 22 insertions(+)
+ include/net/bluetooth/hci_core.h |  2 ++
+ net/bluetooth/hci_core.c         | 34 ++++++++++++++++++++++++++++----
+ 2 files changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/ps/acp63.h b/sound/soc/amd/ps/acp63.h
-index 85feae45c44c5..d7c994e26e4df 100644
---- a/sound/soc/amd/ps/acp63.h
-+++ b/sound/soc/amd/ps/acp63.h
-@@ -334,6 +334,8 @@ struct acp_hw_ops {
-  * @addr: pci ioremap address
-  * @reg_range: ACP reigister range
-  * @acp_rev: ACP PCI revision id
-+ * @acp_sw_pad_keeper_en: store acp SoundWire pad keeper enable register value
-+ * @acp_pad_pulldown_ctrl: store acp pad pulldown control register value
-  * @acp63_sdw0-dma_intr_stat: DMA interrupt status array for ACP6.3 platform SoundWire
-  * manager-SW0 instance
-  * @acp63_sdw_dma_intr_stat: DMA interrupt status array for ACP6.3 platform SoundWire
-@@ -367,6 +369,8 @@ struct acp63_dev_data {
- 	u32 addr;
- 	u32 reg_range;
- 	u32 acp_rev;
-+	u32 acp_sw_pad_keeper_en;
-+	u32 acp_pad_pulldown_ctrl;
- 	u16 acp63_sdw0_dma_intr_stat[ACP63_SDW0_DMA_MAX_STREAMS];
- 	u16 acp63_sdw1_dma_intr_stat[ACP63_SDW1_DMA_MAX_STREAMS];
- 	u16 acp70_sdw0_dma_intr_stat[ACP70_SDW0_DMA_MAX_STREAMS];
-diff --git a/sound/soc/amd/ps/ps-common.c b/sound/soc/amd/ps/ps-common.c
-index 1c89fb5fe1da5..7b4966b75dc67 100644
---- a/sound/soc/amd/ps/ps-common.c
-+++ b/sound/soc/amd/ps/ps-common.c
-@@ -160,6 +160,8 @@ static int __maybe_unused snd_acp63_suspend(struct device *dev)
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index d15316bffd70b..6e9d2a856a6b0 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -29,6 +29,7 @@
+ #include <linux/idr.h>
+ #include <linux/leds.h>
+ #include <linux/rculist.h>
++#include <linux/srcu.h>
  
- 	adata = dev_get_drvdata(dev);
- 	if (adata->is_sdw_dev) {
-+		adata->acp_sw_pad_keeper_en = readl(adata->acp63_base + ACP_SW0_PAD_KEEPER_EN);
-+		adata->acp_pad_pulldown_ctrl = readl(adata->acp63_base + ACP_PAD_PULLDOWN_CTRL);
- 		adata->sdw_en_stat = check_acp_sdw_enable_status(adata);
- 		if (adata->sdw_en_stat) {
- 			writel(1, adata->acp63_base + ACP_ZSC_DSP_CTRL);
-@@ -197,6 +199,7 @@ static int __maybe_unused snd_acp63_runtime_resume(struct device *dev)
- static int __maybe_unused snd_acp63_resume(struct device *dev)
+ #include <net/bluetooth/hci.h>
+ #include <net/bluetooth/hci_sync.h>
+@@ -345,6 +346,7 @@ struct adv_monitor {
+ 
+ struct hci_dev {
+ 	struct list_head list;
++	struct srcu_struct srcu;
+ 	struct mutex	lock;
+ 
+ 	struct ida	unset_handle_ida;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index af30a420bab75..abff4690cb88f 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -64,7 +64,7 @@ static DEFINE_IDA(hci_index_ida);
+ 
+ /* Get HCI device by index.
+  * Device is held on return. */
+-struct hci_dev *hci_dev_get(int index)
++static struct hci_dev *__hci_dev_get(int index, int *srcu_index)
  {
- 	struct acp63_dev_data *adata;
-+	u32 acp_sw_pad_keeper_en;
- 	int ret;
+ 	struct hci_dev *hdev = NULL, *d;
  
- 	adata = dev_get_drvdata(dev);
-@@ -209,6 +212,12 @@ static int __maybe_unused snd_acp63_resume(struct device *dev)
- 	if (ret)
- 		dev_err(dev, "ACP init failed\n");
- 
-+	acp_sw_pad_keeper_en = readl(adata->acp63_base + ACP_SW0_PAD_KEEPER_EN);
-+	dev_dbg(dev, "ACP_SW0_PAD_KEEPER_EN:0x%x\n", acp_sw_pad_keeper_en);
-+	if (!acp_sw_pad_keeper_en) {
-+		writel(adata->acp_sw_pad_keeper_en, adata->acp63_base + ACP_SW0_PAD_KEEPER_EN);
-+		writel(adata->acp_pad_pulldown_ctrl, adata->acp63_base + ACP_PAD_PULLDOWN_CTRL);
-+	}
- 	return ret;
+@@ -77,6 +77,8 @@ struct hci_dev *hci_dev_get(int index)
+ 	list_for_each_entry(d, &hci_dev_list, list) {
+ 		if (d->id == index) {
+ 			hdev = hci_dev_hold(d);
++			if (srcu_index)
++				*srcu_index = srcu_read_lock(&d->srcu);
+ 			break;
+ 		}
+ 	}
+@@ -84,6 +86,22 @@ struct hci_dev *hci_dev_get(int index)
+ 	return hdev;
  }
  
-@@ -408,6 +417,8 @@ static int __maybe_unused snd_acp70_suspend(struct device *dev)
++struct hci_dev *hci_dev_get(int index)
++{
++	return __hci_dev_get(index, NULL);
++}
++
++static struct hci_dev *hci_dev_get_srcu(int index, int *srcu_index)
++{
++	return __hci_dev_get(index, srcu_index);
++}
++
++static void hci_dev_put_srcu(struct hci_dev *hdev, int srcu_index)
++{
++	srcu_read_unlock(&hdev->srcu, srcu_index);
++	hci_dev_put(hdev);
++}
++
+ /* ---- Inquiry support ---- */
  
- 	adata = dev_get_drvdata(dev);
- 	if (adata->is_sdw_dev) {
-+		adata->acp_sw_pad_keeper_en = readl(adata->acp63_base + ACP_SW0_PAD_KEEPER_EN);
-+		adata->acp_pad_pulldown_ctrl = readl(adata->acp63_base + ACP_PAD_PULLDOWN_CTRL);
- 		adata->sdw_en_stat = check_acp_sdw_enable_status(adata);
- 		if (adata->sdw_en_stat) {
- 			writel(1, adata->acp63_base + ACP_ZSC_DSP_CTRL);
-@@ -445,6 +456,7 @@ static int __maybe_unused snd_acp70_runtime_resume(struct device *dev)
- static int __maybe_unused snd_acp70_resume(struct device *dev)
+ bool hci_discovery_active(struct hci_dev *hdev)
+@@ -568,9 +586,9 @@ static int hci_dev_do_reset(struct hci_dev *hdev)
+ int hci_dev_reset(__u16 dev)
  {
- 	struct acp63_dev_data *adata;
-+	u32 acp_sw_pad_keeper_en;
- 	int ret;
+ 	struct hci_dev *hdev;
+-	int err;
++	int err, srcu_index;
  
- 	adata = dev_get_drvdata(dev);
-@@ -459,6 +471,12 @@ static int __maybe_unused snd_acp70_resume(struct device *dev)
- 	if (ret)
- 		dev_err(dev, "ACP init failed\n");
+-	hdev = hci_dev_get(dev);
++	hdev = hci_dev_get_srcu(dev, &srcu_index);
+ 	if (!hdev)
+ 		return -ENODEV;
  
-+	acp_sw_pad_keeper_en = readl(adata->acp63_base + ACP_SW0_PAD_KEEPER_EN);
-+	dev_dbg(dev, "ACP_SW0_PAD_KEEPER_EN:0x%x\n", acp_sw_pad_keeper_en);
-+	if (!acp_sw_pad_keeper_en) {
-+		writel(adata->acp_sw_pad_keeper_en, adata->acp63_base + ACP_SW0_PAD_KEEPER_EN);
-+		writel(adata->acp_pad_pulldown_ctrl, adata->acp63_base + ACP_PAD_PULLDOWN_CTRL);
-+	}
- 	return ret;
+@@ -592,7 +610,7 @@ int hci_dev_reset(__u16 dev)
+ 	err = hci_dev_do_reset(hdev);
+ 
+ done:
+-	hci_dev_put(hdev);
++	hci_dev_put_srcu(hdev, srcu_index);
+ 	return err;
  }
  
+@@ -2419,6 +2437,11 @@ struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
+ 	if (!hdev)
+ 		return NULL;
+ 
++	if (init_srcu_struct(&hdev->srcu)) {
++		kfree(hdev);
++		return NULL;
++	}
++
+ 	hdev->pkt_type  = (HCI_DM1 | HCI_DH1 | HCI_HV1);
+ 	hdev->esco_type = (ESCO_HV1);
+ 	hdev->link_mode = (HCI_LM_ACCEPT);
+@@ -2664,6 +2687,9 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 	list_del(&hdev->list);
+ 	write_unlock(&hci_dev_list_lock);
+ 
++	synchronize_srcu(&hdev->srcu);
++	cleanup_srcu_struct(&hdev->srcu);
++
+ 	disable_work_sync(&hdev->rx_work);
+ 	disable_work_sync(&hdev->cmd_work);
+ 	disable_work_sync(&hdev->tx_work);
 -- 
 2.39.5
 
