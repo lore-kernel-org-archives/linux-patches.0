@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE5522B8AB;
-	Thu,  3 Jul 2025 15:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD0723A99E;
+	Thu,  3 Jul 2025 15:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555733; cv=none; b=J74/q8sfQQH5begaFIIjfG5kDdySruffI4eJooAravgA60F23eJogMJQiNLxt22KWTsKWkUjcpRN57DJx60b+EN8Jh6Wkr30qejbS3xtskAo0quP6qhTlWiJwigpZurtvXz9P9rkmvsQQ5Ils6epJYD5yYYYVDQ8KlqhqqX+nEo=
+	t=1751555736; cv=none; b=spNP/5QwwJUr3hB8L/QwlSfQK292Oh3pmVeiqPYjI/y+z7dQ010P+kSTZvfODqPHru+53TzZZooBdkZelozxLD5ZpPf14fwENKWH/SSf01pSjM8tnWV3zcn+2OXCBU7lzoDYzUAe8diw6I88BxCEdeOBQ9lkjk7i36MQKRD/NxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555733; c=relaxed/simple;
-	bh=K/n8zeHwSccs13NNe7qQ5fOtdApmfKGnqca4sIzbFu4=;
+	s=arc-20240116; t=1751555736; c=relaxed/simple;
+	bh=pqW5Nb9Jibmiijznop8vyldFimYL0AxBXzWIACIaLFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hD7IVZe4sniNIIsmO/KvCrxGU3gd12dmXFMd2FggcH8rs9dY0lqZsg6Z+P5o+IOjlXhXLAXUvip9y8VQKc6BD7tae7iWWuq3DY7y7KynmzfmG9+S2Rwc+8tj5wGEsBiWIVYu4Rt+amWGysxbd533c3M+Qmf2izto9RUomaqng4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1o4SINYl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I6pUGZnrVu5cReEZOQX9OwfukjbUObW71R3JpSy/llw8mY8OleUurtMtiL9yyCT1prIqaHWo5c1dJMFYVTGwOq2SECEV3ihW9azmNfnGpVI8IENsB3LRa2IApehCCeRH62+uVM/kWROEGjPuV6xXV03buheNYU6dMF/bUzkQ7G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIBWnBzn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1o4SINYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA828C4CEE3;
-	Thu,  3 Jul 2025 15:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIBWnBzn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB196C4CEE3;
+	Thu,  3 Jul 2025 15:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555733;
-	bh=K/n8zeHwSccs13NNe7qQ5fOtdApmfKGnqca4sIzbFu4=;
+	s=korg; t=1751555736;
+	bh=pqW5Nb9Jibmiijznop8vyldFimYL0AxBXzWIACIaLFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1o4SINYlLXwDl7Gq2F/I1SCqj5Xeb2Wv3LGJ++G22GEKPN9K1DFcGCY9Y2i4uYR5G
-	 rXVrAxQsKwVFk4VaFJJ5WUOUPmrJ9b+7bUeWPhqCvgMoXuYCg4TyHPNKMsYc9Olcjw
-	 5ZPmEEC+jax4XymMWXJhwz4U8UAjPwp4mGt/oYQs=
+	b=EIBWnBznam0ahssdKY4SIyoEnON5tZTsCdZi82Z5dgHgH24KW1DvSJwAuI+P0IjEV
+	 5Kvk5Xb42WP9/GDkdCVNppbKuG1Rm1y9O4oTOR3HH8sk4Ob0eFifL8DFYRF2TBMoy2
+	 xO5bGhi6ZcrqIV5Nuig3V8MaG5MN2rHpgjyXCfXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/139] platform/x86: ideapad-laptop: move ACPI helpers from header to source file
-Date: Thu,  3 Jul 2025 16:42:07 +0200
-Message-ID: <20250703143943.668727834@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Stefan Wahren <wahrenst@gmx.net>
+Subject: [PATCH 6.6 098/139] serial: imx: Restore original RXTL for console to fix data loss
+Date: Thu,  3 Jul 2025 16:42:41 +0200
+Message-ID: <20250703143945.001958275@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -46,365 +45,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Fabio Estevam <festevam@gmail.com>
 
-[ Upstream commit 6c1fa8edfef815a97db57f30216265bfa152792d ]
+commit f23c52aafb1675ab1d1f46914556d8e29cbbf7b3 upstream.
 
-Since moving ymc_trigger_ec from lenovo-ymc to ideapad-laptop, only the
-latter uses these definitions and functions.
+Commit 7a637784d517 ("serial: imx: reduce RX interrupt frequency")
+introduced a regression on the i.MX6UL EVK board. The issue can be
+reproduced with the following steps:
 
-Move them back to source file.
+- Open vi on the board.
+- Paste a text file (~150 characters).
+- Save the file, then repeat the process.
+- Compare the sha256sum of the saved files.
 
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/57a48d2582b567f6c6fbcd3b379e17aee0fb5a94.1721898747.git.soyer@irl.hu
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Stable-dep-of: 5808c3421695 ("platform/x86: ideapad-laptop: use usleep_range() for EC polling")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The checksums do not match due to missing characters or entire lines.
+
+Fix this by restoring the RXTL value to 1 when the UART is used as a
+console.
+
+This ensures timely RX interrupts and reliable data reception in console
+mode.
+
+With this change, pasted content is saved correctly, and checksums are
+always consistent.
+
+Cc: stable <stable@kernel.org>
+Fixes: 7a637784d517 ("serial: imx: reduce RX interrupt frequency")
+Signed-off-by: Fabio Estevam <festevam@gmail.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20250619114617.2791939-1-festevam@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/ideapad-laptop.c | 136 +++++++++++++++++++++++++
- drivers/platform/x86/ideapad-laptop.h | 139 --------------------------
- 2 files changed, 136 insertions(+), 139 deletions(-)
+ drivers/tty/serial/imx.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
-index 3d23c4f908426..db8256cde34aa 100644
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -21,6 +21,7 @@
- #include <linux/init.h>
- #include <linux/input.h>
- #include <linux/input/sparse-keymap.h>
-+#include <linux/jiffies.h>
- #include <linux/kernel.h>
- #include <linux/leds.h>
- #include <linux/module.h>
-@@ -86,6 +87,34 @@ enum {
- 	SALS_FNLOCK_OFF       = 0xf,
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -234,6 +234,7 @@ struct imx_port {
+ 	enum imx_tx_state	tx_state;
+ 	struct hrtimer		trigger_start_tx;
+ 	struct hrtimer		trigger_stop_tx;
++	unsigned int		rxtl;
  };
  
-+enum {
-+	VPCCMD_R_VPC1 = 0x10,
-+	VPCCMD_R_BL_MAX,
-+	VPCCMD_R_BL,
-+	VPCCMD_W_BL,
-+	VPCCMD_R_WIFI,
-+	VPCCMD_W_WIFI,
-+	VPCCMD_R_BT,
-+	VPCCMD_W_BT,
-+	VPCCMD_R_BL_POWER,
-+	VPCCMD_R_NOVO,
-+	VPCCMD_R_VPC2,
-+	VPCCMD_R_TOUCHPAD,
-+	VPCCMD_W_TOUCHPAD,
-+	VPCCMD_R_CAMERA,
-+	VPCCMD_W_CAMERA,
-+	VPCCMD_R_3G,
-+	VPCCMD_W_3G,
-+	VPCCMD_R_ODD, /* 0x21 */
-+	VPCCMD_W_FAN,
-+	VPCCMD_R_RF,
-+	VPCCMD_W_RF,
-+	VPCCMD_W_YMC = 0x2A,
-+	VPCCMD_R_FAN = 0x2B,
-+	VPCCMD_R_SPECIAL_BUTTONS = 0x31,
-+	VPCCMD_W_BL_POWER = 0x33,
-+};
-+
- /*
-  * These correspond to the number of supported states - 1
-  * Future keyboard types may need a new system, if there's a collision
-@@ -234,6 +263,7 @@ static void ideapad_shared_exit(struct ideapad_private *priv)
- /*
-  * ACPI Helpers
-  */
-+#define IDEAPAD_EC_TIMEOUT 200 /* in ms */
+ struct imx_port_ucrs {
+@@ -1337,6 +1338,7 @@ static void imx_uart_clear_rx_errors(str
  
- static int eval_int(acpi_handle handle, const char *name, unsigned long *res)
- {
-@@ -249,6 +279,29 @@ static int eval_int(acpi_handle handle, const char *name, unsigned long *res)
- 	return 0;
+ #define TXTL_DEFAULT 8
+ #define RXTL_DEFAULT 8 /* 8 characters or aging timer */
++#define RXTL_CONSOLE_DEFAULT 1
+ #define TXTL_DMA 8 /* DMA burst setting */
+ #define RXTL_DMA 9 /* DMA burst setting */
+ 
+@@ -1449,7 +1451,7 @@ static void imx_uart_disable_dma(struct
+ 	ucr1 &= ~(UCR1_RXDMAEN | UCR1_TXDMAEN | UCR1_ATDMAEN);
+ 	imx_uart_writel(sport, ucr1, UCR1);
+ 
+-	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
++	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
+ 
+ 	sport->dma_is_enabled = 0;
  }
+@@ -1474,7 +1476,12 @@ static int imx_uart_startup(struct uart_
+ 		return retval;
+ 	}
  
-+static int eval_int_with_arg(acpi_handle handle, const char *name, unsigned long arg,
-+			     unsigned long *res)
-+{
-+	struct acpi_object_list params;
-+	unsigned long long result;
-+	union acpi_object in_obj;
-+	acpi_status status;
+-	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
++	if (uart_console(&sport->port))
++		sport->rxtl = RXTL_CONSOLE_DEFAULT;
++	else
++		sport->rxtl = RXTL_DEFAULT;
 +
-+	params.count = 1;
-+	params.pointer = &in_obj;
-+	in_obj.type = ACPI_TYPE_INTEGER;
-+	in_obj.integer.value = arg;
-+
-+	status = acpi_evaluate_integer(handle, (char *)name, &params, &result);
-+	if (ACPI_FAILURE(status))
-+		return -EIO;
-+
-+	if (res)
-+		*res = result;
-+
-+	return 0;
-+}
-+
- static int exec_simple_method(acpi_handle handle, const char *name, unsigned long arg)
- {
- 	acpi_status status = acpi_execute_simple_method(handle, (char *)name, arg);
-@@ -291,6 +344,89 @@ static int eval_dytc(acpi_handle handle, unsigned long cmd, unsigned long *res)
- 	return eval_int_with_arg(handle, "DYTC", cmd, res);
- }
++	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
  
-+static int eval_vpcr(acpi_handle handle, unsigned long cmd, unsigned long *res)
-+{
-+	return eval_int_with_arg(handle, "VPCR", cmd, res);
-+}
-+
-+static int eval_vpcw(acpi_handle handle, unsigned long cmd, unsigned long data)
-+{
-+	struct acpi_object_list params;
-+	union acpi_object in_obj[2];
-+	acpi_status status;
-+
-+	params.count = 2;
-+	params.pointer = in_obj;
-+	in_obj[0].type = ACPI_TYPE_INTEGER;
-+	in_obj[0].integer.value = cmd;
-+	in_obj[1].type = ACPI_TYPE_INTEGER;
-+	in_obj[1].integer.value = data;
-+
-+	status = acpi_evaluate_object(handle, "VPCW", &params, NULL);
-+	if (ACPI_FAILURE(status))
-+		return -EIO;
-+
-+	return 0;
-+}
-+
-+static int read_ec_data(acpi_handle handle, unsigned long cmd, unsigned long *data)
-+{
-+	unsigned long end_jiffies, val;
-+	int err;
-+
-+	err = eval_vpcw(handle, 1, cmd);
-+	if (err)
-+		return err;
-+
-+	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
-+
-+	while (time_before(jiffies, end_jiffies)) {
-+		schedule();
-+
-+		err = eval_vpcr(handle, 1, &val);
-+		if (err)
-+			return err;
-+
-+		if (val == 0)
-+			return eval_vpcr(handle, 0, data);
-+	}
-+
-+	acpi_handle_err(handle, "timeout in %s\n", __func__);
-+
-+	return -ETIMEDOUT;
-+}
-+
-+static int write_ec_cmd(acpi_handle handle, unsigned long cmd, unsigned long data)
-+{
-+	unsigned long end_jiffies, val;
-+	int err;
-+
-+	err = eval_vpcw(handle, 0, data);
-+	if (err)
-+		return err;
-+
-+	err = eval_vpcw(handle, 1, cmd);
-+	if (err)
-+		return err;
-+
-+	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
-+
-+	while (time_before(jiffies, end_jiffies)) {
-+		schedule();
-+
-+		err = eval_vpcr(handle, 1, &val);
-+		if (err)
-+			return err;
-+
-+		if (val == 0)
-+			return 0;
-+	}
-+
-+	acpi_handle_err(handle, "timeout in %s\n", __func__);
-+
-+	return -ETIMEDOUT;
-+}
-+
- /*
-  * debugfs
-  */
-diff --git a/drivers/platform/x86/ideapad-laptop.h b/drivers/platform/x86/ideapad-laptop.h
-index 948cc61800a95..1e52f2aa0aac3 100644
---- a/drivers/platform/x86/ideapad-laptop.h
-+++ b/drivers/platform/x86/ideapad-laptop.h
-@@ -9,9 +9,6 @@
- #ifndef _IDEAPAD_LAPTOP_H_
- #define _IDEAPAD_LAPTOP_H_
+ 	/* disable the DREN bit (Data Ready interrupt enable) before
+ 	 * requesting IRQs
+@@ -1887,7 +1894,7 @@ static int imx_uart_poll_init(struct uar
+ 	if (retval)
+ 		clk_disable_unprepare(sport->clk_ipg);
  
--#include <linux/acpi.h>
--#include <linux/jiffies.h>
--#include <linux/errno.h>
- #include <linux/notifier.h>
+-	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
++	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
  
- enum ideapad_laptop_notifier_actions {
-@@ -22,140 +19,4 @@ int ideapad_laptop_register_notifier(struct notifier_block *nb);
- int ideapad_laptop_unregister_notifier(struct notifier_block *nb);
- void ideapad_laptop_call_notifier(unsigned long action, void *data);
+ 	spin_lock_irqsave(&sport->port.lock, flags);
  
--enum {
--	VPCCMD_R_VPC1 = 0x10,
--	VPCCMD_R_BL_MAX,
--	VPCCMD_R_BL,
--	VPCCMD_W_BL,
--	VPCCMD_R_WIFI,
--	VPCCMD_W_WIFI,
--	VPCCMD_R_BT,
--	VPCCMD_W_BT,
--	VPCCMD_R_BL_POWER,
--	VPCCMD_R_NOVO,
--	VPCCMD_R_VPC2,
--	VPCCMD_R_TOUCHPAD,
--	VPCCMD_W_TOUCHPAD,
--	VPCCMD_R_CAMERA,
--	VPCCMD_W_CAMERA,
--	VPCCMD_R_3G,
--	VPCCMD_W_3G,
--	VPCCMD_R_ODD, /* 0x21 */
--	VPCCMD_W_FAN,
--	VPCCMD_R_RF,
--	VPCCMD_W_RF,
--	VPCCMD_W_YMC = 0x2A,
--	VPCCMD_R_FAN = 0x2B,
--	VPCCMD_R_SPECIAL_BUTTONS = 0x31,
--	VPCCMD_W_BL_POWER = 0x33,
--};
--
--static inline int eval_int_with_arg(acpi_handle handle, const char *name, unsigned long arg, unsigned long *res)
--{
--	struct acpi_object_list params;
--	unsigned long long result;
--	union acpi_object in_obj;
--	acpi_status status;
--
--	params.count = 1;
--	params.pointer = &in_obj;
--	in_obj.type = ACPI_TYPE_INTEGER;
--	in_obj.integer.value = arg;
--
--	status = acpi_evaluate_integer(handle, (char *)name, &params, &result);
--	if (ACPI_FAILURE(status))
--		return -EIO;
--
--	if (res)
--		*res = result;
--
--	return 0;
--}
--
--static inline int eval_vpcr(acpi_handle handle, unsigned long cmd, unsigned long *res)
--{
--	return eval_int_with_arg(handle, "VPCR", cmd, res);
--}
--
--static inline int eval_vpcw(acpi_handle handle, unsigned long cmd, unsigned long data)
--{
--	struct acpi_object_list params;
--	union acpi_object in_obj[2];
--	acpi_status status;
--
--	params.count = 2;
--	params.pointer = in_obj;
--	in_obj[0].type = ACPI_TYPE_INTEGER;
--	in_obj[0].integer.value = cmd;
--	in_obj[1].type = ACPI_TYPE_INTEGER;
--	in_obj[1].integer.value = data;
--
--	status = acpi_evaluate_object(handle, "VPCW", &params, NULL);
--	if (ACPI_FAILURE(status))
--		return -EIO;
--
--	return 0;
--}
--
--#define IDEAPAD_EC_TIMEOUT 200 /* in ms */
--
--static inline int read_ec_data(acpi_handle handle, unsigned long cmd, unsigned long *data)
--{
--	unsigned long end_jiffies, val;
--	int err;
--
--	err = eval_vpcw(handle, 1, cmd);
--	if (err)
--		return err;
--
--	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
--
--	while (time_before(jiffies, end_jiffies)) {
--		schedule();
--
--		err = eval_vpcr(handle, 1, &val);
--		if (err)
--			return err;
--
--		if (val == 0)
--			return eval_vpcr(handle, 0, data);
--	}
--
--	acpi_handle_err(handle, "timeout in %s\n", __func__);
--
--	return -ETIMEDOUT;
--}
--
--static inline int write_ec_cmd(acpi_handle handle, unsigned long cmd, unsigned long data)
--{
--	unsigned long end_jiffies, val;
--	int err;
--
--	err = eval_vpcw(handle, 0, data);
--	if (err)
--		return err;
--
--	err = eval_vpcw(handle, 1, cmd);
--	if (err)
--		return err;
--
--	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
--
--	while (time_before(jiffies, end_jiffies)) {
--		schedule();
--
--		err = eval_vpcr(handle, 1, &val);
--		if (err)
--			return err;
--
--		if (val == 0)
--			return 0;
--	}
--
--	acpi_handle_err(handle, "timeout in %s\n", __func__);
--
--	return -ETIMEDOUT;
--}
--
--#undef IDEAPAD_EC_TIMEOUT
- #endif /* !_IDEAPAD_LAPTOP_H_ */
--- 
-2.39.5
-
+@@ -1979,7 +1986,7 @@ static int imx_uart_rs485_config(struct
+ 		/* If the receiver trigger is 0, set it to a default value */
+ 		ufcr = imx_uart_readl(sport, UFCR);
+ 		if ((ufcr & UFCR_RXTL_MASK) == 0)
+-			imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
++			imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
+ 		imx_uart_start_rx(port);
+ 	}
+ 
+@@ -2164,7 +2171,7 @@ imx_uart_console_setup(struct console *c
+ 	else
+ 		imx_uart_console_get_options(sport, &baud, &parity, &bits);
+ 
+-	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, RXTL_DEFAULT);
++	imx_uart_setup_ufcr(sport, TXTL_DEFAULT, sport->rxtl);
+ 
+ 	retval = uart_set_options(&sport->port, co, baud, parity, bits, flow);
+ 
 
 
