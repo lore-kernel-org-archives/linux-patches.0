@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C202DE6F1;
-	Thu,  3 Jul 2025 15:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853652DE6F8;
+	Thu,  3 Jul 2025 15:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556116; cv=none; b=L+SEq/bnXzKJciOmVzPJuiIQJkky2fTJfIMInnX0xzIWXyJhcmDs7CLXIGaF5AtZr0pXs4jc4QbHjLLtBytch/15XSGMPW0QV9rt91dOB58J137u1OCDnSZjL4yTWa6Uovfg5HxbDIUpjadtmnlEdOPQEY492++0ulxLNoFU/5w=
+	t=1751556119; cv=none; b=G5p0ICbx0LzcUIKNvNTLJKYYn4ntZDqGljdEe4M8WXws7EyCVjVBktn2gGzdkUIHUe4hcLTu2YFbuhfkatpng9ZA1WZd7VT9Fpy5DkFMM+FgymYRO2Yh+TM1DMhSUNO/1vp1McDZiHNbCsiV+fyVDfucUQO/hVVq7x9Ine1K54o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556116; c=relaxed/simple;
-	bh=rlwGl8MYN6JYZXnnPFuRfGTYY3Md4mPs2uH8e0iCgnY=;
+	s=arc-20240116; t=1751556119; c=relaxed/simple;
+	bh=WYY5JNWiRKVLqTjhZqxfvOlECWuLWFYvUf5VIBOL/24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oo2cUvEpxZcg3vr/Miqc/NRd2vcpVhBS6l3gVWJQZiPE7WHPNRqvhxQS6jJJ8Ihm+5Frxk5XBt075X84fLCL+IkaAfG41KEp6gPICCb9JsTaWnpiUmsSG3Y5Idz5NtzjJKcZn7ksWoQ0WSeijqa2anm4Dif0RHE0xiGshBLlngo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwxGkaku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M1U9rPNMnPZ1XhzdKb3+iDJpiomxOF+0A7x2dey/CxnBM7KThbuLKBEFqSqC12HpUGcL2JU5i+Rzo1HVirbM/L94uewSLeRUVd+mcZtz9clZ1KEWTxBHGKeWtrWJosw85pRsv2BvXy4dBI2QjWRGnPpA2QsUOHzmGTDMspAjXmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q740dLVR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwxGkaku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C52C4CEE3;
-	Thu,  3 Jul 2025 15:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q740dLVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3155C4CEED;
+	Thu,  3 Jul 2025 15:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556116;
-	bh=rlwGl8MYN6JYZXnnPFuRfGTYY3Md4mPs2uH8e0iCgnY=;
+	s=korg; t=1751556119;
+	bh=WYY5JNWiRKVLqTjhZqxfvOlECWuLWFYvUf5VIBOL/24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwxGkakuceUBSJNghc41No0EZEBtTPP99gcprNCSntLv8+73KibBcau6ZuUfbmXvJ
-	 lJQzaE4bo4jdq01Ngo1qaMjgopiQY6DxTSEr6M2tEFaTE5ptO5WbzqBfgcVGEM8GHx
-	 5LODhytKPGK/NTX1ti0fcjelO1Y8wBRp1A1pFadM=
+	b=q740dLVRNrRgRmh4yfMA5eZS3avyOMmjH5PnywBnaZE7oGEanh7PwBufuzoMARob7
+	 yHCvnvG2fjWl9VGIsoyoMKOwGSMiI/ekT4dYlJMRhM1vWlMH1Buz1AI1FdKin/lJHJ
+	 /M//adwEAsTeM8HseTAWJEtFJM+RgUOrtCITbww4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/132] libbpf: Fix null pointer dereference in btf_dump__free on allocation failure
-Date: Thu,  3 Jul 2025 16:42:48 +0200
-Message-ID: <20250703143942.512388297@linuxfoundation.org>
+Subject: [PATCH 6.1 080/132] wifi: mac80211: fix beacon interval calculation overflow
+Date: Thu,  3 Jul 2025 16:42:49 +0200
+Message-ID: <20250703143942.551158217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -51,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit aa485e8789d56a4573f7c8d000a182b749eaa64d ]
+[ Upstream commit 7a3750ff0f2e8fee338a9c168f429f6c37f0e820 ]
 
-When btf_dump__new() fails to allocate memory for the internal hashmap
-(btf_dump->type_names), it returns an error code. However, the cleanup
-function btf_dump__free() does not check if btf_dump->type_names is NULL
-before attempting to free it. This leads to a null pointer dereference
-when btf_dump__free() is called on a btf_dump object.
+As we are converting from TU to usecs, a beacon interval of
+100*1024 usecs will lead to integer wrapping. To fix change
+to use a u32.
 
-Fixes: 351131b51c7a ("libbpf: add btf_dump API for BTF-to-C conversion")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250618011933.11423-1-chenyuan_fl@163.com
+Fixes: 057d5f4ba1e4 ("mac80211: sync dtim_count to TSF")
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20250621123209.511796-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/util.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index cfdee656789b2..72334cc14d737 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -224,6 +224,9 @@ static void btf_dump_free_names(struct hashmap *map)
- 	size_t bkt;
- 	struct hashmap_entry *cur;
- 
-+	if (!map)
-+		return;
-+
- 	hashmap__for_each_entry(map, cur, bkt)
- 		free((void *)cur->key);
- 
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index e8326e09d1b37..e60c8607e4b64 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -4452,7 +4452,7 @@ void ieee80211_recalc_dtim(struct ieee80211_local *local,
+ {
+ 	u64 tsf = drv_get_tsf(local, sdata);
+ 	u64 dtim_count = 0;
+-	u16 beacon_int = sdata->vif.bss_conf.beacon_int * 1024;
++	u32 beacon_int = sdata->vif.bss_conf.beacon_int * 1024;
+ 	u8 dtim_period = sdata->vif.bss_conf.dtim_period;
+ 	struct ps_data *ps;
+ 	u8 bcns_from_dtim;
 -- 
 2.39.5
 
