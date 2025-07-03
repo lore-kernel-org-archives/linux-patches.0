@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A5219F43A;
-	Thu,  3 Jul 2025 14:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432B123AB86;
+	Thu,  3 Jul 2025 14:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554122; cv=none; b=alEbjgai6+tVV9I55TtdbB4rgvey5oyDUZ4tnBFzHdM1uZW65KDa/F2KplpiVRKAL4zh2loEwqP7aiEVUt5VmgGdXq4DNehwQItmu9CNMdlehiJJVdE+9k0DpMgyNEmH78pMEtIccP98KCxxvh9fJRylIX5jWZ0mi3byHzfM4Vk=
+	t=1751554125; cv=none; b=bXXcd6pi0srra768flrTkaXT8oNhMWtEyK3JszqlSSzRErnrGIOVWle1NOHyqgM0d093APfcQt2Fq4MQgc3ksvhirOiOkQKtws8T3w8HxL7nt/KxJTMknS/gcNCBZj8qXRU0xoYnZJJLkP3gTGVblbZU/C7MmPieCzV448wQY2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554122; c=relaxed/simple;
-	bh=UXlIQHWsl50hh5KnJYUbtE/E+qIGLUxIEdk7BiN5Ctk=;
+	s=arc-20240116; t=1751554125; c=relaxed/simple;
+	bh=T/jUc8ugZxQVd63Ek6YpknsXMWvbybaInTh6spL9AgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WEKly08EXfPRjSBjzJsIrZY4JOV0Ry3pNN4zOTSuW0dSRp0oLkDLB1D65UE6h4EIDHKU1cRCDHR+gPuFXGiRPJz7OXhT7d9mmPHn2FMe9ZP5UdjdkfIIBlEdjOvDSGSknb9AmyrzMIKm5gJH7LMaCtVDoKq/3/cSkDeHjr8NOdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t14cXiln; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k5FLPHguc2EE9Nbt6TNrzSfzwXlj9RgABU+UzFn/ZhomXxs3ZjZQmJlWWmrJoY1nX44hnAqfwLQZ5PkRFl+RAMfON1upqCLoPNf1m8QD7EpPg90sdaZzs8/D8nPfikHyG2ofwB7T3f9z8oKktCQXoti64cy6tSrX+kZgtwGgyyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVCvwpBO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t14cXiln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B708C4CEE3;
-	Thu,  3 Jul 2025 14:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVCvwpBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A0BC4CEE3;
+	Thu,  3 Jul 2025 14:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554121;
-	bh=UXlIQHWsl50hh5KnJYUbtE/E+qIGLUxIEdk7BiN5Ctk=;
+	s=korg; t=1751554125;
+	bh=T/jUc8ugZxQVd63Ek6YpknsXMWvbybaInTh6spL9AgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t14cXilnYG4O4UTZPqwB4CF0kAM5aOLwzTgjRPLZ03g2fB/1gVUrYIhu5XXH6NrIB
-	 3PB+2MQxZU+SxQxPX5X7bMPpcHzvOm4LYv1MHIZd8AykUMWTHIs5KY3bU/kneqFov/
-	 whQKevfa4v8K7ccdRpVBVc+uuwr+4uqodyyI8zXc=
+	b=LVCvwpBOpSe+S41c/sjomDkxOleQA9VD0sxGA9rKh8wE0eL70Y/bBpGYU+kkzUgvh
+	 ztYK3fer0WN6bLEc01DCACA3ATkx3jcF1KkdBk1QnbvZ1LfMUWKSFdy6HLfw+vxAHO
+	 m2b8bQ22j2fBLs8x7WjEqelEAW0Y8/BtBuIwq6/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/218] btrfs: factor out nocow ordered extent and extent map generation into a helper
-Date: Thu,  3 Jul 2025 16:40:08 +0200
-Message-ID: <20250703143958.344019730@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH 6.12 087/218] Revert "riscv: misaligned: fix sleeping function called during misaligned access handling"
+Date: Thu,  3 Jul 2025 16:40:35 +0200
+Message-ID: <20250703143959.419550251@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -46,196 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Nam Cao <namcao@linutronix.de>
 
-[ Upstream commit 10326fdcb3ace2f2dcbc8b9fc50b87e5cab93345 ]
+commit 2f73c62d4e13df67380ff6faca39eec2bf08dd93 upstream.
 
-Currently we're doing all the ordered extent and extent map generation
-inside a while() loop of run_delalloc_nocow().  This makes it pretty
-hard to read, nor doing proper error handling.
+This reverts commit 61a74ad25462 ("riscv: misaligned: fix sleeping function
+called during misaligned access handling"). The commit addresses a sleeping
+in atomic context problem, but it is not the correct fix as explained by
+Clément:
 
-So move that part of code into a helper, nocow_one_range().
+"Using nofault would lead to failure to read from user memory that is paged
+out for instance. This is not really acceptable, we should handle user
+misaligned access even at an address that would generate a page fault."
 
-This should not change anything, but there is a tiny timing change where
-btrfs_dec_nocow_writers() is only called after nocow_one_range() helper
-exits.
+This bug has been properly fixed by commit 453805f0a28f ("riscv:
+misaligned: enable IRQs while handling misaligned accesses").
 
-This timing change is small, and makes error handling easier, thus
-should be fine.
+Revert this improper fix.
 
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 1f2889f5594a ("btrfs: fix qgroup reservation leak on failure to allocate ordered extent")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-riscv/b779beed-e44e-4a5e-9551-4647682b0d21@rivosinc.com/
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Cc: stable@vger.kernel.org
+Reviewed-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Fixes: 61a74ad25462 ("riscv: misaligned: fix sleeping function called during misaligned access handling")
+Link: https://lore.kernel.org/r/20250620110939.1642735-1-namcao@linutronix.de
+Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c | 122 +++++++++++++++++++++++------------------------
- 1 file changed, 61 insertions(+), 61 deletions(-)
+ arch/riscv/kernel/traps_misaligned.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 1ab5b0c1b9b76..65517efd3433e 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2055,6 +2055,63 @@ static void cleanup_dirty_folios(struct btrfs_inode *inode,
- 	mapping_set_error(mapping, error);
- }
+--- a/arch/riscv/kernel/traps_misaligned.c
++++ b/arch/riscv/kernel/traps_misaligned.c
+@@ -429,7 +429,7 @@ int handle_misaligned_load(struct pt_reg
  
-+static int nocow_one_range(struct btrfs_inode *inode, struct folio *locked_folio,
-+			   struct extent_state **cached,
-+			   struct can_nocow_file_extent_args *nocow_args,
-+			   u64 file_pos, bool is_prealloc)
-+{
-+	struct btrfs_ordered_extent *ordered;
-+	u64 len = nocow_args->file_extent.num_bytes;
-+	u64 end = file_pos + len - 1;
-+	int ret = 0;
-+
-+	lock_extent(&inode->io_tree, file_pos, end, cached);
-+
-+	if (is_prealloc) {
-+		struct extent_map *em;
-+
-+		em = btrfs_create_io_em(inode, file_pos, &nocow_args->file_extent,
-+					BTRFS_ORDERED_PREALLOC);
-+		if (IS_ERR(em)) {
-+			unlock_extent(&inode->io_tree, file_pos, end, cached);
-+			return PTR_ERR(em);
-+		}
-+		free_extent_map(em);
-+	}
-+
-+	ordered = btrfs_alloc_ordered_extent(inode, file_pos, &nocow_args->file_extent,
-+					     is_prealloc
-+					     ? (1 << BTRFS_ORDERED_PREALLOC)
-+					     : (1 << BTRFS_ORDERED_NOCOW));
-+	if (IS_ERR(ordered)) {
-+		if (is_prealloc)
-+			btrfs_drop_extent_map_range(inode, file_pos, end, false);
-+		unlock_extent(&inode->io_tree, file_pos, end, cached);
-+		return PTR_ERR(ordered);
-+	}
-+
-+	if (btrfs_is_data_reloc_root(inode->root))
-+		/*
-+		 * Errors are handled later, as we must prevent
-+		 * extent_clear_unlock_delalloc() in error handler from freeing
-+		 * metadata of the created ordered extent.
-+		 */
-+		ret = btrfs_reloc_clone_csums(ordered);
-+	btrfs_put_ordered_extent(ordered);
-+
-+	extent_clear_unlock_delalloc(inode, file_pos, end, locked_folio, cached,
-+				     EXTENT_LOCKED | EXTENT_DELALLOC |
-+				     EXTENT_CLEAR_DATA_RESV,
-+				     PAGE_UNLOCK | PAGE_SET_ORDERED);
-+
-+	/*
-+	 * btrfs_reloc_clone_csums() error, now we're OK to call error handler,
-+	 * as metadata for created ordered extent will only be freed by
-+	 * btrfs_finish_ordered_io().
-+	 */
-+	return ret;
-+}
-+
- /*
-  * when nowcow writeback call back.  This checks for snapshots or COW copies
-  * of the extents that exist in the file, and COWs the file as required.
-@@ -2099,15 +2156,12 @@ static noinline int run_delalloc_nocow(struct btrfs_inode *inode,
+ 	val.data_u64 = 0;
+ 	if (user_mode(regs)) {
+-		if (copy_from_user_nofault(&val, (u8 __user *)addr, len))
++		if (copy_from_user(&val, (u8 __user *)addr, len))
+ 			return -1;
+ 	} else {
+ 		memcpy(&val, (u8 *)addr, len);
+@@ -530,7 +530,7 @@ int handle_misaligned_store(struct pt_re
+ 		return -EOPNOTSUPP;
  
- 	while (cur_offset <= end) {
- 		struct btrfs_block_group *nocow_bg = NULL;
--		struct btrfs_ordered_extent *ordered;
- 		struct btrfs_key found_key;
- 		struct btrfs_file_extent_item *fi;
- 		struct extent_buffer *leaf;
- 		struct extent_state *cached_state = NULL;
- 		u64 extent_end;
--		u64 nocow_end;
- 		int extent_type;
--		bool is_prealloc;
- 
- 		ret = btrfs_lookup_file_extent(NULL, root, path, ino,
- 					       cur_offset, 0);
-@@ -2242,67 +2296,13 @@ static noinline int run_delalloc_nocow(struct btrfs_inode *inode,
- 			}
- 		}
- 
--		nocow_end = cur_offset + nocow_args.file_extent.num_bytes - 1;
--		lock_extent(&inode->io_tree, cur_offset, nocow_end, &cached_state);
--
--		is_prealloc = extent_type == BTRFS_FILE_EXTENT_PREALLOC;
--		if (is_prealloc) {
--			struct extent_map *em;
--
--			em = btrfs_create_io_em(inode, cur_offset,
--						&nocow_args.file_extent,
--						BTRFS_ORDERED_PREALLOC);
--			if (IS_ERR(em)) {
--				unlock_extent(&inode->io_tree, cur_offset,
--					      nocow_end, &cached_state);
--				btrfs_dec_nocow_writers(nocow_bg);
--				ret = PTR_ERR(em);
--				goto error;
--			}
--			free_extent_map(em);
--		}
--
--		ordered = btrfs_alloc_ordered_extent(inode, cur_offset,
--				&nocow_args.file_extent,
--				is_prealloc
--				? (1 << BTRFS_ORDERED_PREALLOC)
--				: (1 << BTRFS_ORDERED_NOCOW));
-+		ret = nocow_one_range(inode, locked_folio, &cached_state,
-+				      &nocow_args, cur_offset,
-+				      extent_type == BTRFS_FILE_EXTENT_PREALLOC);
- 		btrfs_dec_nocow_writers(nocow_bg);
--		if (IS_ERR(ordered)) {
--			if (is_prealloc) {
--				btrfs_drop_extent_map_range(inode, cur_offset,
--							    nocow_end, false);
--			}
--			unlock_extent(&inode->io_tree, cur_offset,
--				      nocow_end, &cached_state);
--			ret = PTR_ERR(ordered);
-+		if (ret < 0)
- 			goto error;
--		}
--
--		if (btrfs_is_data_reloc_root(root))
--			/*
--			 * Error handled later, as we must prevent
--			 * extent_clear_unlock_delalloc() in error handler
--			 * from freeing metadata of created ordered extent.
--			 */
--			ret = btrfs_reloc_clone_csums(ordered);
--		btrfs_put_ordered_extent(ordered);
--
--		extent_clear_unlock_delalloc(inode, cur_offset, nocow_end,
--					     locked_folio, &cached_state,
--					     EXTENT_LOCKED | EXTENT_DELALLOC |
--					     EXTENT_CLEAR_DATA_RESV,
--					     PAGE_UNLOCK | PAGE_SET_ORDERED);
--
- 		cur_offset = extent_end;
--
--		/*
--		 * btrfs_reloc_clone_csums() error, now we're OK to call error
--		 * handler, as metadata for created ordered extent will only
--		 * be freed by btrfs_finish_ordered_io().
--		 */
--		if (ret)
--			goto error;
- 	}
- 	btrfs_release_path(path);
- 
--- 
-2.39.5
-
+ 	if (user_mode(regs)) {
+-		if (copy_to_user_nofault((u8 __user *)addr, &val, len))
++		if (copy_to_user((u8 __user *)addr, &val, len))
+ 			return -1;
+ 	} else {
+ 		memcpy((u8 *)addr, &val, len);
 
 
