@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1394414;
-	Thu,  3 Jul 2025 15:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAC82B9A6;
+	Thu,  3 Jul 2025 15:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555024; cv=none; b=ZcnqKnoaTRXlsN2b1Nwk8RTdpKuI2CZxkdcg934hZYKv+V4uvbnw6k1kvP+G2NOaOCGmBEec3ctelFo37dMdCcs2jL7ALwbOWNEU3a0ll5zGDGTqgzD8E+B5Zeq1zwKuQHch3QmMiqIigky7im8vZB8/ZuYIXVlcW34DOS2yttg=
+	t=1751555028; cv=none; b=N43yrm+P8s5SLhZXoKTJEgG0xPvj0DjTvAtn8b6GlvL7bCgVIcT8nlWMsREipCQpnhjMgHHQGus4PYHsQ7o14zI2XwTKP70DYfXD2CX53owe/Ngbib0wveWOqrqR+x83D2GdMkU39fxqryoLez9XFsnFEdyZES258SqcCj/XxAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555024; c=relaxed/simple;
-	bh=4uxrc+POXLDZv6te9l0xL4gXwcAiTugPfOdRU+wBm2A=;
+	s=arc-20240116; t=1751555028; c=relaxed/simple;
+	bh=yG18Dr5taKJKxPVplmBf14jWrWBiZOIYwW4XWTNP2GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akHlrCn0HNMs4jDTAtLH8BfhX/yfO09ZqsieeQw3VhO9MabEw81PZCIG9O7oWEyA20y9KwHk/hUGmMVRPfMvi4VU7JCdclI3eiOdvm6cxjMPdv1jev4A2nemtgabQF1HIPhf5NVZilhO3qsu//HdcusVJWeY5LSwb7kYpKe4t9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVqzVYF2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrg5Ouxys+vR3Z+CraGRm3gnBUJourhUCvPqU8eungsfDwfeIQL/UOGSNoo+9A2BBfAv2T+FlXJ8ix9votT+GJSS3ZTTu8aB5OEdrkcZJrQMZimyM/Lczxkk9Pyvb4J4OPqdROwYlzjlTHFN4UBD7kuBzwemGXNx7YJNpCQv/L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVxyR7+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVqzVYF2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6B7C4CEEE;
-	Thu,  3 Jul 2025 15:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVxyR7+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5590AC4CEE3;
+	Thu,  3 Jul 2025 15:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555024;
-	bh=4uxrc+POXLDZv6te9l0xL4gXwcAiTugPfOdRU+wBm2A=;
+	s=korg; t=1751555027;
+	bh=yG18Dr5taKJKxPVplmBf14jWrWBiZOIYwW4XWTNP2GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVqzVYF2f7rCx/xWGRVA7G7sV4wid9c71OgU+MuZ7ni6dGZvfNgx8evs+FO3X6XXp
-	 xzJ+/nyMQJZE/zidTK4kl5AlPUZY6hABCTuxN4f2q9Nr+uCHO2IGMi+4yEJTwRUS4z
-	 83DqJ2smwtsHZrDOQ/m8GaKOMFKdSQdeK/+kUH0Q=
+	b=aVxyR7+Y5MAS7pIsCKmrtqDClULwsrJ4zAxZ1huEFfIBB9S2v0OZO5rK8L86TOoW3
+	 wUPkbXQ3N6p8V/I7iF6r83AxCGcHBU/pDb7fxOdAIeGvxGt2BQP50w1DUAb8JNKqz1
+	 9pJJyQOv0B/e5SnEYMTc/HLr+EtqA6/E/nYN4wO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 152/263] um: ubd: Add missing error check in start_io_thread()
-Date: Thu,  3 Jul 2025 16:41:12 +0200
-Message-ID: <20250703144010.450337947@linuxfoundation.org>
+	Shaoyun Liu <shaoyun.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.15 126/263] drm/amdgpu/mes: add compatibility checks for set_hw_resource_1
+Date: Thu,  3 Jul 2025 16:40:46 +0200
+Message-ID: <20250703144009.408780724@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,37 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit c55c7a85e02a7bfee20a3ffebdff7cbeb41613ef ]
+commit 99579c55c3d6132a5236926652c0a72a526b809d upstream.
 
-The subsequent call to os_set_fd_block() overwrites the previous
-return value. OR the two return values together to fix it.
+Seems some older MES firmware versions do not properly support
+this packet.  Add back some the compatibility checks.
 
-Fixes: f88f0bdfc32f ("um: UBD Improvements")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20250606124428.148164-2-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+v2: switch to fw version check (Shaoyun)
+
+Fixes: f81cd793119e ("drm/amd/amdgpu: Fix MES init sequence")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4295
+Cc: Shaoyun Liu <shaoyun.liu@amd.com>
+Reviewed-by: shaoyun.liu <shaoyun.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0180e0a5dd5c6ff118043ee42dbbbddaf881f283)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/ubd_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c |   10 ++++++----
+ drivers/gpu/drm/amd/amdgpu/mes_v12_0.c |    3 ++-
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/arch/um/drivers/ubd_user.c b/arch/um/drivers/ubd_user.c
-index c5e6545f6fcf6..8e8a8bf518b63 100644
---- a/arch/um/drivers/ubd_user.c
-+++ b/arch/um/drivers/ubd_user.c
-@@ -41,7 +41,7 @@ int start_io_thread(struct os_helper_thread **td_out, int *fd_out)
- 	*fd_out = fds[1];
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -1649,10 +1649,12 @@ static int mes_v11_0_hw_init(struct amdg
+ 	if (r)
+ 		goto failure;
  
- 	err = os_set_fd_block(*fd_out, 0);
--	err = os_set_fd_block(kernel_fd, 0);
-+	err |= os_set_fd_block(kernel_fd, 0);
- 	if (err) {
- 		printk("start_io_thread - failed to set nonblocking I/O.\n");
- 		goto out_close;
--- 
-2.39.5
-
+-	r = mes_v11_0_set_hw_resources_1(&adev->mes);
+-	if (r) {
+-		DRM_ERROR("failed mes_v11_0_set_hw_resources_1, r=%d\n", r);
+-		goto failure;
++	if ((adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x50) {
++		r = mes_v11_0_set_hw_resources_1(&adev->mes);
++		if (r) {
++			DRM_ERROR("failed mes_v11_0_set_hw_resources_1, r=%d\n", r);
++			goto failure;
++		}
+ 	}
+ 
+ 	r = mes_v11_0_query_sched_status(&adev->mes);
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
+@@ -1761,7 +1761,8 @@ static int mes_v12_0_hw_init(struct amdg
+ 	if (r)
+ 		goto failure;
+ 
+-	mes_v12_0_set_hw_resources_1(&adev->mes, AMDGPU_MES_SCHED_PIPE);
++	if ((adev->mes.sched_version & AMDGPU_MES_VERSION_MASK) >= 0x4b)
++		mes_v12_0_set_hw_resources_1(&adev->mes, AMDGPU_MES_SCHED_PIPE);
+ 
+ 	mes_v12_0_init_aggregated_doorbell(&adev->mes);
+ 
 
 
