@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2C12EA49E;
-	Thu,  3 Jul 2025 14:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51892E7F1A;
+	Thu,  3 Jul 2025 14:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554730; cv=none; b=fivZMNELym/rcJ/cBER2Qr96sEJdZXnHV4AZOqnubzml+uhdW+08pNI8cGWC8T5UYRJYB1lHPHNCjNPpHHumw0cFVkPqQB7NZi4S+NtM+XEiq5v8qvYAFyJ3lDQ97BVmWSZiP4teS2V1v+KDxfViX4AtfpWgW0RCUS/lqxc7eBE=
+	t=1751554733; cv=none; b=cXqNR14AkVyIR4HNpE/XWtNou9kWhhsSP5W38scBNHkfZm2U9oXhDAmvdcJ+VRGMpG52xIH569vnpz/5xtorQcFiyLw9TJ7xYmCZRuJllVDyrJk+Oabm0onufmMxcHaufyQ55S4CCT0FWJ+zPSA78S2n2I21EsrahdWj4ew3nKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554730; c=relaxed/simple;
-	bh=CxnY0dmZaIwRaRQZ/EYl3OFkasYW1GNG60sBBgvVX10=;
+	s=arc-20240116; t=1751554733; c=relaxed/simple;
+	bh=LI+Jy1iWp/cnUYIELtoHNJkZDKjp2KtBm8SfZVhpHEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShAXVGDVa+HofmwQolB5RsdWX7iyHMtU+CXVZzKHQDgD8pp1HIAKLwhejm/MYaKyNG1EmByjdO+P3c1zqCUkmSEVh8rZw5WkjM/x8MDNSHdwg7NHbPznmtcW5WeMJmqUyu/+SeSwKCvyVJbw0U1yzCM02pfPbXbGyrOBmTWw6hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PsFTj5z5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e/xsY2UvEQ2ZExF0a5fR6mxC3Horh6vdg7+R7cHEITZ87PrrET55Eo2A5XmvYmINVy1rZ7+Emjd5o4YdaiJHN3xCiBSYZd2gOquc1346UdEdd4t000Y2R+Tba1Jwl7mjL2vED5qGjN7FRz20advmEcFwKP2SmJeuq8BPOjzocGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0whISYQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsFTj5z5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB09C4CEE3;
-	Thu,  3 Jul 2025 14:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0whISYQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D70DC4CEE3;
+	Thu,  3 Jul 2025 14:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554730;
-	bh=CxnY0dmZaIwRaRQZ/EYl3OFkasYW1GNG60sBBgvVX10=;
+	s=korg; t=1751554733;
+	bh=LI+Jy1iWp/cnUYIELtoHNJkZDKjp2KtBm8SfZVhpHEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PsFTj5z5riPvU6A6za2vGbqmTXZNpQT8+Z76D4EJUNN9krYrH6KpXEabGoCV/gmom
-	 2Up3a6ASiTUv8op0oIbWBnAxPVbeavDb4Yg89T04G2eBMBHfBcaPFMSv9KGmljdgMt
-	 JBG4PT9D0r921kVprhLv99Z+KS9nokMJAgAtnKAw=
+	b=0whISYQt2KYWcfM2UIQA+zlDuZccr2L+Mt6AmwR7VxXy2HS1V8Yn7g5/4PZBSNNil
+	 kDBU8s08vuYl2bUjFpWGpo8X+ECei3vdbBdueLwCSsf4pZ96JzN62HvOiPxcYL/2ni
+	 PkNvHHc974H0LfegroOkKRDzUZ9YSBmgL+ay6UdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Marc Zyngier <maz@kernel.org>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Janne Grunau <j@jannau.net>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 030/263] PCI: apple: Fix missing OF node reference in apple_pcie_setup_port
-Date: Thu,  3 Jul 2025 16:39:10 +0200
-Message-ID: <20250703144005.506411511@linuxfoundation.org>
+Subject: [PATCH 6.15 031/263] PCI: imx6: Add workaround for errata ERR051624
+Date: Thu,  3 Jul 2025 16:39:11 +0200
+Message-ID: <20250703144005.545719736@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -55,42 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit 7fa9fbf39116b061f8a41cd84f1884c545f322c4 ]
+[ Upstream commit ce0c43e855c7f652b6351110aaaabf9b521debd7 ]
 
-In the success path, we hang onto a reference to the node, so make sure
-to grab one. The caller iterator puts our borrowed reference when we
-return.
+ERR051624: The Controller Without Vaux Cannot Exit L23 Ready Through Beacon
+or PERST# De-assertion
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+When the auxiliary power is not available, the controller cannot exit from
+L23 Ready with beacon or PERST# de-assertion when main power is not
+removed. So the workaround is to set SS_RW_REG_1[SYS_AUX_PWR_DET] to 1.
+
+This workaround is required irrespective of whether Vaux is supplied to the
+link partner or not.
+
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+[mani: subject and description rewording]
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Alyssa Rosenzweig <alyssa@rosenzweig.io>
-Link: https://patch.msgid.link/20250401091713.2765724-9-maz@kernel.org
+Link: https://patch.msgid.link/20250416081314.3929794-5-hongxing.zhu@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-apple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pci/controller/dwc/pci-imx6.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-index 32f57b8a6ecbd..8f7fc9161760c 100644
---- a/drivers/pci/controller/pcie-apple.c
-+++ b/drivers/pci/controller/pcie-apple.c
-@@ -584,6 +584,9 @@ static int apple_pcie_setup_port(struct apple_pcie *pcie,
- 	list_add_tail(&port->entry, &pcie->ports);
- 	init_completion(&pcie->event);
+diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+index ea5c06371171f..1b6fbf507166f 100644
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -48,6 +48,8 @@
+ #define IMX95_PCIE_SS_RW_REG_0			0xf0
+ #define IMX95_PCIE_REF_CLKEN			BIT(23)
+ #define IMX95_PCIE_PHY_CR_PARA_SEL		BIT(9)
++#define IMX95_PCIE_SS_RW_REG_1			0xf4
++#define IMX95_PCIE_SYS_AUX_PWR_DET		BIT(31)
  
-+	/* In the success path, we keep a reference to np around */
-+	of_node_get(np);
+ #define IMX95_PE0_GEN_CTRL_1			0x1050
+ #define IMX95_PCIE_DEVICE_TYPE			GENMASK(3, 0)
+@@ -231,6 +233,19 @@ static unsigned int imx_pcie_grp_offset(const struct imx_pcie *imx_pcie)
+ 
+ static int imx95_pcie_init_phy(struct imx_pcie *imx_pcie)
+ {
++	/*
++	 * ERR051624: The Controller Without Vaux Cannot Exit L23 Ready
++	 * Through Beacon or PERST# De-assertion
++	 *
++	 * When the auxiliary power is not available, the controller
++	 * cannot exit from L23 Ready with beacon or PERST# de-assertion
++	 * when main power is not removed.
++	 *
++	 * Workaround: Set SS_RW_REG_1[SYS_AUX_PWR_DET] to 1.
++	 */
++	regmap_set_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_1,
++			IMX95_PCIE_SYS_AUX_PWR_DET);
 +
- 	ret = apple_pcie_port_register_irqs(port);
- 	WARN_ON(ret);
- 
+ 	regmap_update_bits(imx_pcie->iomuxc_gpr,
+ 			IMX95_PCIE_SS_RW_REG_0,
+ 			IMX95_PCIE_PHY_CR_PARA_SEL,
 -- 
 2.39.5
 
