@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2D52F270C;
-	Thu,  3 Jul 2025 15:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25FB2EFD8B;
+	Thu,  3 Jul 2025 15:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556074; cv=none; b=PDydkXkTkqjSwpXijrxb5PAsOSlyoEFoArLMfNcVYKbBCCziWHeNdFNRaKmLvzxes9buxbrGiqT3gywKKTWxfp8Q9URCwQUXNH+4sCqO3XW61dJlSDc+7W0Dkrx0v2tNK+mcjGReTjRzTQkDenAUJiJmqkD4uLz6FbiI9wsGPMQ=
+	t=1751556077; cv=none; b=axwC4BUL/WkPAP4SrunfcxZFrZOTv+bdtlRXH+hvD83fW4gCB4ceiaSgK+p1LxWarrFueo6aSdGE352wVgthW1S2Es6IopydZn2Og4BX1EUvukhdXUtXL9B3dDEQH1HRgh2WFV3O8mMjU6a9efzrY1tTK4AoGr32YoaKUkS+jSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556074; c=relaxed/simple;
-	bh=4D1vBgMPwJXz+GeegKdtzuOvgQvBwVA4xRGlZaTtqxk=;
+	s=arc-20240116; t=1751556077; c=relaxed/simple;
+	bh=8vqwsErNCD8HcTa4Gj0/ilWsOvaLRTlPfNIx4LrJzxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0ZLs3fAotEoiewlkMi0zG5Iqrklu5URCI4VnR1lWtBG4FhQvi9YA5BOTmIAk4uED8wDYg+4nEb4txYLDnSrv9ldRKnlFB2oMxC6SiWIXlwswVeaWysqXr4UMNMvd6NvTlJM0D1T0bEpEPpFcmVRqTmT7ZhJJ4Bh0HUON/0IeWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xeda3q8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=II7ATJGL8SwDhNZp+DaoJdAC9YFHRkvAngP8Orn5E6r4CWubYjA8Youu3xcY5moPNxGCMBI2WoXw7Xswj7CgJUAd9Ie2iLwwMvy+kFq4JZH3dsHVjxcAk6t3haWjPlPq4oMWmQi36vcSvzFr0Up+63RBHe7Ol04lh99NLgPH9sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzBWcaRn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xeda3q8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F00C4CEED;
-	Thu,  3 Jul 2025 15:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzBWcaRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4245EC4CEE3;
+	Thu,  3 Jul 2025 15:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556074;
-	bh=4D1vBgMPwJXz+GeegKdtzuOvgQvBwVA4xRGlZaTtqxk=;
+	s=korg; t=1751556077;
+	bh=8vqwsErNCD8HcTa4Gj0/ilWsOvaLRTlPfNIx4LrJzxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xeda3q8tvmIr4VmjInD1cpGsoxYs7Mg9l1glXieXCiUX4GxEScM15yJNZI2SoI3Ra
-	 hXkyaC7RGkwd/K/Vzw2jVIqnYd3QgoVZblo8a9eqoUiYgOajVV5gjQ0GU/++5w9PZY
-	 UFeluZmIlCJE05sA5F68bJsg4qmmzIHEl9RR3dnY=
+	b=IzBWcaRn4moHYrZnIL8Xd6A6aSo+x3Ti+IsdfBjaLfBKWsf33gCjpXfvXIq4BOofJ
+	 PvXpsc86ODAgvXGKbbcrNZamcm5eY+I7slWDhQQNvp26c4Lqeou/RHnce+5Id60oAe
+	 aH/uBP1n3FVzEvwrH7rwwKlSgBySLytop+Tdc1XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chance Yang <chance.yang@kneron.us>,
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/132] usb: common: usb-conn-gpio: use a unique name for usb connector device
-Date: Thu,  3 Jul 2025 16:41:55 +0200
-Message-ID: <20250703143940.426640498@linuxfoundation.org>
+Subject: [PATCH 6.1 060/132] uio_hv_generic: Align ring size to system page
+Date: Thu,  3 Jul 2025 16:42:29 +0200
+Message-ID: <20250703143941.773341427@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -50,90 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chance Yang <chance.yang@kneron.us>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit d4e5b10c55627e2f3fc9e5b337a28b4e2f02a55e ]
+[ Upstream commit 0315fef2aff9f251ddef8a4b53db9187429c3553 ]
 
-The current implementation of the usb-conn-gpio driver uses a fixed
-"usb-charger" name for all USB connector devices. This causes conflicts
-in the power supply subsystem when multiple USB connectors are present,
-as duplicate names are not allowed.
+Following the ring header, the ring data should align to system page
+boundary. Adjust the size if necessary.
 
-Use IDA to manage unique IDs for naming usb connectors (e.g.,
-usb-charger-0, usb-charger-1).
-
-Signed-off-by: Chance Yang <chance.yang@kneron.us>
-Link: https://lore.kernel.org/r/20250411-work-next-v3-1-7cd9aa80190c@kneron.us
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1746492997-4599-4-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1746492997-4599-4-git-send-email-longli@linuxonhyperv.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/common/usb-conn-gpio.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/uio/uio_hv_generic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/common/usb-conn-gpio.c b/drivers/usb/common/usb-conn-gpio.c
-index 3f5180d64931b..91461c744fcdd 100644
---- a/drivers/usb/common/usb-conn-gpio.c
-+++ b/drivers/usb/common/usb-conn-gpio.c
-@@ -20,6 +20,9 @@
- #include <linux/power_supply.h>
- #include <linux/regulator/consumer.h>
- #include <linux/usb/role.h>
-+#include <linux/idr.h>
+diff --git a/drivers/uio/uio_hv_generic.c b/drivers/uio/uio_hv_generic.c
+index 8cb724095be6d..2cfe0087abc19 100644
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -260,6 +260,9 @@ hv_uio_probe(struct hv_device *dev,
+ 	if (!ring_size)
+ 		ring_size = HV_RING_SIZE * PAGE_SIZE;
+ 
++	/* Adjust ring size if necessary to have it page aligned */
++	ring_size = VMBUS_RING_SIZE(ring_size);
 +
-+static DEFINE_IDA(usb_conn_ida);
- 
- #define USB_GPIO_DEB_MS		20	/* ms */
- #define USB_GPIO_DEB_US		((USB_GPIO_DEB_MS) * 1000)	/* us */
-@@ -29,6 +32,7 @@
- 
- struct usb_conn_info {
- 	struct device *dev;
-+	int conn_id; /* store the IDA-allocated ID */
- 	struct usb_role_switch *role_sw;
- 	enum usb_role last_role;
- 	struct regulator *vbus;
-@@ -160,7 +164,17 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
- 		.of_node = dev->of_node,
- 	};
- 
--	desc->name = "usb-charger";
-+	info->conn_id = ida_alloc(&usb_conn_ida, GFP_KERNEL);
-+	if (info->conn_id < 0)
-+		return info->conn_id;
-+
-+	desc->name = devm_kasprintf(dev, GFP_KERNEL, "usb-charger-%d",
-+				    info->conn_id);
-+	if (!desc->name) {
-+		ida_free(&usb_conn_ida, info->conn_id);
-+		return -ENOMEM;
-+	}
-+
- 	desc->properties = usb_charger_properties;
- 	desc->num_properties = ARRAY_SIZE(usb_charger_properties);
- 	desc->get_property = usb_charger_get_property;
-@@ -168,8 +182,10 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
- 	cfg.drv_data = info;
- 
- 	info->charger = devm_power_supply_register(dev, desc, &cfg);
--	if (IS_ERR(info->charger))
--		dev_err(dev, "Unable to register charger\n");
-+	if (IS_ERR(info->charger)) {
-+		dev_err(dev, "Unable to register charger %d\n", info->conn_id);
-+		ida_free(&usb_conn_ida, info->conn_id);
-+	}
- 
- 	return PTR_ERR_OR_ZERO(info->charger);
- }
-@@ -277,6 +293,9 @@ static int usb_conn_remove(struct platform_device *pdev)
- 
- 	cancel_delayed_work_sync(&info->dw_det);
- 
-+	if (info->charger)
-+		ida_free(&usb_conn_ida, info->conn_id);
-+
- 	if (info->last_role == USB_ROLE_HOST && info->vbus)
- 		regulator_disable(info->vbus);
- 
+ 	pdata = devm_kzalloc(&dev->device, sizeof(*pdata), GFP_KERNEL);
+ 	if (!pdata)
+ 		return -ENOMEM;
 -- 
 2.39.5
 
