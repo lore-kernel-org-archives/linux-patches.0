@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66C92ED143;
-	Thu,  3 Jul 2025 15:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD0022069F;
+	Thu,  3 Jul 2025 15:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555348; cv=none; b=dBqJP9rlXrqin+7nUdzEuPpcuVqCP9yEhKzwN/Sh3ADvw5gTjSGhmD3e53g39uYOJQ3eTzjMUXgvBOo/WXTTCjoAHqDyHqsNzdai6S8AGwiO8Jkc2e9Zm59XjALH0rhvd8uoOUbPobUzYLhJ05cJlrNsYyfCNBimKo+PWPQBlss=
+	t=1751555351; cv=none; b=N8j8njgl69ozbZYtfVbySLfhKTo12yTpSrPxD10L+oVrg7BmjWf53Oc1hS74pAOG3FGJcoHoYrTVXBqvY08ct0g3xjVwXGZRWbx9rvfU1aMzmg1AlYGU0BmqWK7CaI2bKrFZng1lEwNuPrpBjl9G0BkLlhWMZC6Oqe8H/FYGruk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555348; c=relaxed/simple;
-	bh=GNjlUlDA480m1+vw4hFYcPzcOTKkp5xDLmF0LpP1mz0=;
+	s=arc-20240116; t=1751555351; c=relaxed/simple;
+	bh=NV/PU24PJ7db0L6xL8lgrym6HxL7wt7XQ/HX7zh6/w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVx3Q6xeWGG8LkYD2Jby4a/eoFJ3KYK4FqeMOkCfd23Ma7MivW+usMXoYf+JNwYevf7pPdaviJ0j4McxCxGKO1N9JMAnEN+RQ7KPKLTYidXsyvN95I7VH6DM2Cx0N1oH+4iekVSODNjutCtWLWbWdogEIe92uycMIWz3TcKlF/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjeaMdY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mLfrF3frKPR5Fbgbi6smk0KLOR/EdTTMhjQH5a4wmbbeBXgd/RVWy5HB6zmhclXwl6bWuZU7Pt2dey82GUp8sVYXp9GRn4NClh9tNdVVHb19mVCSwQPi8vjfWNSaFbHcwgihb7/V02oG0GYUxbbxPK0ofoxnCW8m8HbQo/RK0AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bkbgljln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjeaMdY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56440C4CEE3;
-	Thu,  3 Jul 2025 15:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bkbgljln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82135C4CEF1;
+	Thu,  3 Jul 2025 15:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555347;
-	bh=GNjlUlDA480m1+vw4hFYcPzcOTKkp5xDLmF0LpP1mz0=;
+	s=korg; t=1751555351;
+	bh=NV/PU24PJ7db0L6xL8lgrym6HxL7wt7XQ/HX7zh6/w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjeaMdY5JumFxZNTIabGw9N7AtX8e7conxwy2bx1W+lgI++btL4nQSgRqrLA104A0
-	 l3IYCbk4LOPac+pELbCjEojvPC7CbfxxY07WWq9w3uZRY6FBjwRiiCcnDClkMbPPMN
-	 2l6GukDvQ0+fap/T41nG1l3qcn7aZyMjzj0AX6/E=
+	b=BkbgljlnyqFLGBbb60/MluPAF53jeZZvHxOVVBjwp9gKr7aJy1DFOA2EFBHz5rB0O
+	 RmaguLtqmcEpG84dnFr5uybjx2hX6JVgpFCexQxb1ucHjwhQPJ51ELoCF2erl3umFY
+	 +iNwhZo9+K+r7Bo2bqO5kmPw/H6oxJjn2WLD9TfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 250/263] drm/amd/display: Fix default DC and AC levels
-Date: Thu,  3 Jul 2025 16:42:50 +0200
-Message-ID: <20250703144014.438570401@linuxfoundation.org>
+Subject: [PATCH 6.15 251/263] drm/amd/display: Only read ACPI backlight caps once
+Date: Thu,  3 Jul 2025 16:42:51 +0200
+Message-ID: <20250703144014.476434238@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -56,56 +56,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 8b5f3a229a70d242322b78c8e13744ca00212def ]
+[ Upstream commit ffcaed1d7ecef31198000dfbbea791f30f7ca437 ]
 
-[Why]
-DC and AC levels are advertised in a percentage, not a luminance.
+[WHY]
+Backlight caps are read already in amdgpu_dm_update_backlight_caps().
+They may be updated by update_connector_ext_caps(). Reading again when
+registering backlight device may cause wrong values to be used.
 
-[How]
-Scale DC and AC levels to supported values.
+[HOW]
+Use backlight caps already registered to the dm.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4221
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 148144f6d2f14b02eaaa39b86bbe023cbff350bd)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 96118a0e1ffeb..389748c420b02 100644
+index 389748c420b02..e61166a8230b6 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4834,6 +4834,7 @@ amdgpu_dm_register_backlight_device(struct amdgpu_dm_connector *aconnector)
+@@ -4832,7 +4832,7 @@ amdgpu_dm_register_backlight_device(struct amdgpu_dm_connector *aconnector)
+ 	struct drm_device *drm = aconnector->base.dev;
+ 	struct amdgpu_display_manager *dm = &drm_to_adev(drm)->dm;
  	struct backlight_properties props = { 0 };
- 	struct amdgpu_dm_backlight_caps caps = { 0 };
+-	struct amdgpu_dm_backlight_caps caps = { 0 };
++	struct amdgpu_dm_backlight_caps *caps;
  	char bl_name[16];
-+	int min, max;
+ 	int min, max;
  
- 	if (aconnector->bl_idx == -1)
+@@ -4846,20 +4846,20 @@ amdgpu_dm_register_backlight_device(struct amdgpu_dm_connector *aconnector)
  		return;
-@@ -4846,11 +4847,15 @@ amdgpu_dm_register_backlight_device(struct amdgpu_dm_connector *aconnector)
  	}
  
- 	amdgpu_acpi_get_backlight_caps(&caps);
--	if (caps.caps_valid) {
-+	if (caps.caps_valid && get_brightness_range(&caps, &min, &max)) {
+-	amdgpu_acpi_get_backlight_caps(&caps);
+-	if (caps.caps_valid && get_brightness_range(&caps, &min, &max)) {
++	caps = &dm->backlight_caps[aconnector->bl_idx];
++	if (get_brightness_range(caps, &min, &max)) {
  		if (power_supply_is_system_supplied() > 0)
--			props.brightness = caps.ac_level;
-+			props.brightness = (max - min) * DIV_ROUND_CLOSEST(caps.ac_level, 100);
+-			props.brightness = (max - min) * DIV_ROUND_CLOSEST(caps.ac_level, 100);
++			props.brightness = (max - min) * DIV_ROUND_CLOSEST(caps->ac_level, 100);
  		else
--			props.brightness = caps.dc_level;
-+			props.brightness = (max - min) * DIV_ROUND_CLOSEST(caps.dc_level, 100);
-+		/* min is zero, so max needs to be adjusted */
-+		props.max_brightness = max - min;
-+		drm_dbg(drm, "Backlight caps: min: %d, max: %d, ac %d, dc %d\n", min, max,
-+			caps.ac_level, caps.dc_level);
+-			props.brightness = (max - min) * DIV_ROUND_CLOSEST(caps.dc_level, 100);
++			props.brightness = (max - min) * DIV_ROUND_CLOSEST(caps->dc_level, 100);
+ 		/* min is zero, so max needs to be adjusted */
+ 		props.max_brightness = max - min;
+ 		drm_dbg(drm, "Backlight caps: min: %d, max: %d, ac %d, dc %d\n", min, max,
+-			caps.ac_level, caps.dc_level);
++			caps->ac_level, caps->dc_level);
  	} else
  		props.brightness = AMDGPU_MAX_BL_LEVEL;
  
+-	if (caps.data_points && !(amdgpu_dc_debug_mask & DC_DISABLE_CUSTOM_BRIGHTNESS_CURVE))
++	if (caps->data_points && !(amdgpu_dc_debug_mask & DC_DISABLE_CUSTOM_BRIGHTNESS_CURVE))
+ 		drm_info(drm, "Using custom brightness curve\n");
+ 	props.max_brightness = AMDGPU_MAX_BL_LEVEL;
+ 	props.type = BACKLIGHT_RAW;
 -- 
 2.39.5
 
