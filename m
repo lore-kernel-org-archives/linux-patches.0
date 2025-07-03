@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244912F19AD;
-	Thu,  3 Jul 2025 15:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B402F3620;
+	Thu,  3 Jul 2025 15:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555604; cv=none; b=p9rYlnC2Lwu+MY8u+pGH16b2NM7XWZB7Zdk7GSUDI4lkH+imPxvX2GjlS6CWxiV9jgfyIcTgzHf68qzX9ZlM4YaItgutcB4zAt3M69AJScPVg8qiQ4f68gaW7Avj5o8hoG8wB6kLPiqXxT1GJt93Fjx88sCtpksfWYvOcu9Z2mQ=
+	t=1751555607; cv=none; b=Dq1wfRI/bzWvzud7ZtdqveoVZNc4jiKb7QDxXp+TwrYYe3QlTvxvPQgf0JAJl3Y9+w20B+CM/qF3v0TVsVBTLm29dV1GoA04hbAfE9fY8A2SHbZ4zm2jSnkVzLpuD3KVnOF6bnrEpII0wrBOquai94ZLGPxB3kpIe6si6xqXIhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555604; c=relaxed/simple;
-	bh=omI2RQz+7ecdotxcaXvS6P93SU3cC8yUyRTuiHe1RtQ=;
+	s=arc-20240116; t=1751555607; c=relaxed/simple;
+	bh=tkt3UkS9Az6SZzAAMJtooR8SENdManq4nqt4FmF9SXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J2QCa1VuvpqQ7gQcpOhFhFMVDC+HGpmy+tmeiYb9OGoX1nENPnlXGF4w0kklA8gvNUWgpPkJUZ3ESEIRI9gD6U4DWplv7SD5aKWxqBVxgxesRWMWrW1o1/tZlU/1q5MgewZZb0kMhgdmJpcdMN0YMaZuO19XG4OLAJo1ulQoiAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yymrhi78; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RC3DGYfYNn9q8vwmMn4S5FyvpRfrKTc7Z0AVjGUQIiuDqmXlEoWnu2zluY7ScxZ/71/YP3av1cLIgWwkAOqEAMPFzsETsEE8baFQjmz6qyyC8Jwd/qHoNBeB5Wi/LfODLatt8URCXnsDmQx8ArUJlZIZOlb1GuGoyF7edxmJkJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6yvE91l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yymrhi78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10BCC4CEED;
-	Thu,  3 Jul 2025 15:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6yvE91l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD94C4CEE3;
+	Thu,  3 Jul 2025 15:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555604;
-	bh=omI2RQz+7ecdotxcaXvS6P93SU3cC8yUyRTuiHe1RtQ=;
+	s=korg; t=1751555607;
+	bh=tkt3UkS9Az6SZzAAMJtooR8SENdManq4nqt4FmF9SXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yymrhi78sibJwVygrSPUv36jdFZ/05JA+WatJz/Z4d1WukmbdPGAQlJkD0IhlHO1n
-	 /Ut3yXkPbHlttutendXuQkqgF3pubqi9rw1bx9147KsT93oJ85TKEEq6K2szW+cR9i
-	 AgC2QvcC8GPY5Fw5IApmHkdXY+ITgaXbd3suN2kM=
+	b=x6yvE91lmLC5hBePcT2Hogy7jM+YCUd5Ck/MM5WK9CrCdtpetnLAoqcj382FvrUtf
+	 q2OGXSDoi+xXIDvlYvmmpCtKRNBX9aNPRqkOk+LniPzZc+x+ERuqGkm0HiV9rsBmU/
+	 0T7iukqvRieCHcU4wA++wUhAG+cGJlQaCSo8WDSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Robert Hodaszi <robert.hodaszi@digi.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/139] usb: Add checks for snprintf() calls in usb_alloc_dev()
-Date: Thu,  3 Jul 2025 16:41:39 +0200
-Message-ID: <20250703143942.592733626@linuxfoundation.org>
+Subject: [PATCH 6.6 037/139] usb: cdc-wdm: avoid setting WDM_READ for ZLP-s
+Date: Thu,  3 Jul 2025 16:41:40 +0200
+Message-ID: <20250703143942.631371456@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -44,74 +45,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Robert Hodaszi <robert.hodaszi@digi.com>
 
-[ Upstream commit 82fe5107fa3d21d6c3fba091c9dbc50495588630 ]
+[ Upstream commit 387602d8a75574fafb451b7a8215e78dfd67ee63 ]
 
-When creating a device path in the driver the snprintf() takes
-up to 16 characters long argument along with the additional up to
-12 characters for the signed integer (as it can't see the actual limits)
-and tries to pack this into 16 bytes array. GCC complains about that
-when build with `make W=1`:
+Don't set WDM_READ flag in wdm_in_callback() for ZLP-s, otherwise when
+userspace tries to poll for available data, it might - incorrectly -
+believe there is something available, and when it tries to non-blocking
+read it, it might get stuck in the read loop.
 
-  drivers/usb/core/usb.c:705:25: note: ‘snprintf’ output between 3 and 28 bytes into a destination of size 16
+For example this is what glib does for non-blocking read (briefly):
 
-Since everything works until now, let's just check for the potential
-buffer overflow and bail out. It is most likely a never happen situation,
-but at least it makes GCC happy.
+  1. poll()
+  2. if poll returns with non-zero, starts a read data loop:
+    a. loop on poll() (EINTR disabled)
+    b. if revents was set, reads data
+      I. if read returns with EINTR or EAGAIN, goto 2.a.
+      II. otherwise return with data
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20250321164949.423957-1-andriy.shevchenko@linux.intel.com
+So if ZLP sets WDM_READ (#1), we expect data, and try to read it (#2).
+But as that was a ZLP, and we are doing non-blocking read, wdm_read()
+returns with EAGAIN (#2.b.I), so loop again, and try to read again
+(#2.a.).
+
+With glib, we might stuck in this loop forever, as EINTR is disabled
+(#2.a).
+
+Signed-off-by: Robert Hodaszi <robert.hodaszi@digi.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250403144004.3889125-1-robert.hodaszi@digi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/usb.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/usb/class/cdc-wdm.c | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/usb/core/usb.c b/drivers/usb/core/usb.c
-index 2a938cf47ccd6..da6d5e5f79e7a 100644
---- a/drivers/usb/core/usb.c
-+++ b/drivers/usb/core/usb.c
-@@ -695,15 +695,16 @@ struct usb_device *usb_alloc_dev(struct usb_device *parent,
- 		device_set_of_node_from_dev(&dev->dev, bus->sysdev);
- 		dev_set_name(&dev->dev, "usb%d", bus->busnum);
- 	} else {
-+		int n;
-+
- 		/* match any labeling on the hubs; it's one-based */
- 		if (parent->devpath[0] == '0') {
--			snprintf(dev->devpath, sizeof dev->devpath,
--				"%d", port1);
-+			n = snprintf(dev->devpath, sizeof(dev->devpath), "%d", port1);
- 			/* Root ports are not counted in route string */
- 			dev->route = 0;
- 		} else {
--			snprintf(dev->devpath, sizeof dev->devpath,
--				"%s.%d", parent->devpath, port1);
-+			n = snprintf(dev->devpath, sizeof(dev->devpath), "%s.%d",
-+				     parent->devpath, port1);
- 			/* Route string assumes hubs have less than 16 ports */
- 			if (port1 < 15)
- 				dev->route = parent->route +
-@@ -712,6 +713,11 @@ struct usb_device *usb_alloc_dev(struct usb_device *parent,
- 				dev->route = parent->route +
- 					(15 << ((parent->level - 1)*4));
- 		}
-+		if (n >= sizeof(dev->devpath)) {
-+			usb_put_hcd(bus_to_hcd(bus));
-+			usb_put_dev(dev);
-+			return NULL;
-+		}
+diff --git a/drivers/usb/class/cdc-wdm.c b/drivers/usb/class/cdc-wdm.c
+index 559c121f09230..600ad9412c146 100644
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -92,7 +92,6 @@ struct wdm_device {
+ 	u16			wMaxCommand;
+ 	u16			wMaxPacketSize;
+ 	__le16			inum;
+-	int			reslength;
+ 	int			length;
+ 	int			read;
+ 	int			count;
+@@ -214,6 +213,11 @@ static void wdm_in_callback(struct urb *urb)
+ 	if (desc->rerr == 0 && status != -EPIPE)
+ 		desc->rerr = status;
  
- 		dev->dev.parent = &parent->dev;
- 		dev_set_name(&dev->dev, "%d-%s", bus->busnum, dev->devpath);
++	if (length == 0) {
++		dev_dbg(&desc->intf->dev, "received ZLP\n");
++		goto skip_zlp;
++	}
++
+ 	if (length + desc->length > desc->wMaxCommand) {
+ 		/* The buffer would overflow */
+ 		set_bit(WDM_OVERFLOW, &desc->flags);
+@@ -222,18 +226,18 @@ static void wdm_in_callback(struct urb *urb)
+ 		if (!test_bit(WDM_OVERFLOW, &desc->flags)) {
+ 			memmove(desc->ubuf + desc->length, desc->inbuf, length);
+ 			desc->length += length;
+-			desc->reslength = length;
+ 		}
+ 	}
+ skip_error:
+ 
+ 	if (desc->rerr) {
+ 		/*
+-		 * Since there was an error, userspace may decide to not read
+-		 * any data after poll'ing.
++		 * If there was a ZLP or an error, userspace may decide to not
++		 * read any data after poll'ing.
+ 		 * We should respond to further attempts from the device to send
+ 		 * data, so that we can get unstuck.
+ 		 */
++skip_zlp:
+ 		schedule_work(&desc->service_outs_intr);
+ 	} else {
+ 		set_bit(WDM_READ, &desc->flags);
+@@ -585,15 +589,6 @@ static ssize_t wdm_read
+ 			goto retry;
+ 		}
+ 
+-		if (!desc->reslength) { /* zero length read */
+-			dev_dbg(&desc->intf->dev, "zero length - clearing WDM_READ\n");
+-			clear_bit(WDM_READ, &desc->flags);
+-			rv = service_outstanding_interrupt(desc);
+-			spin_unlock_irq(&desc->iuspin);
+-			if (rv < 0)
+-				goto err;
+-			goto retry;
+-		}
+ 		cntr = desc->length;
+ 		spin_unlock_irq(&desc->iuspin);
+ 	}
+@@ -1016,7 +1011,7 @@ static void service_interrupt_work(struct work_struct *work)
+ 
+ 	spin_lock_irq(&desc->iuspin);
+ 	service_outstanding_interrupt(desc);
+-	if (!desc->resp_count) {
++	if (!desc->resp_count && (desc->length || desc->rerr)) {
+ 		set_bit(WDM_READ, &desc->flags);
+ 		wake_up(&desc->wait);
+ 	}
 -- 
 2.39.5
 
