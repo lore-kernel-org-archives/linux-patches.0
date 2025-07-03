@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D06B2E7620;
-	Thu,  3 Jul 2025 14:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B9A2E7620;
+	Thu,  3 Jul 2025 14:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554023; cv=none; b=atxe1eeCF7E5Lt2T3ZyXyGaEB+7AczryVjWolNBU/MQ4yR9jRb8ZNRCDTUK+ajO9X87/8sxdobAdrcHdiaAsDJrV4E+HXmsbMRx49x4I7iNEKAj7yEJRINaFiYQyqSoJuJq1tI0EZAEDn4EpyzTAQiOae0eJetJy3xcYsBrIJFs=
+	t=1751554026; cv=none; b=E1VdfoRCXDvHA+AUwZEeBCA61K8SyyY+7GBar/rz9vzWWUqEOucvBgrO/AquGiGhfq6J8yX6Fk5iaxF7dNW/83H4TOGNaV/eeIh2sYVwKfUUFquc/yh9SdLvrS0q3q8XqvSDzD0YGLrJEj8QzrMrxCRQos/jpD0bDzQb8dqXRro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554023; c=relaxed/simple;
-	bh=klaSOp20f6oz8Fr9dU4WPz9V95UDEw/7sAtG+ZvYzJY=;
+	s=arc-20240116; t=1751554026; c=relaxed/simple;
+	bh=BLK34IAbezjgCSqGcl+8ff75j0LrZiwNy2iCLDXJiGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E0p5ZrZM6LTW7aGjBqDQ2AKIOmCGJebHadqwkL611qyFlym5l2kfLyt750THKQJDopAiCInAa4PmEAb1uy+PcXStI/CZexVDgo0tyktACBuYVz2Yf4tNEES0SAkfD37AH75/t7o7wzJZJyToEQCAiGyvF8q8xGvgVRbbMTXE9tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFZIWyrJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=At6BrMcihPl3XRDHyMyErBsamd7YrKD6aFEyOaVon5hOzvAyEjpo+nw5MU/1OkFbEOc7lZuheA4lV8XUByLZhiIy4NKEygfy1UStxNNnjGcAtTdfa7WWt/+hbUlhU2PRqJRtyVap3RZ3S6drUuyXlfpTNXt4t3L3qnerQ18gaNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVpHq7Io; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFZIWyrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86C3C4CEE3;
-	Thu,  3 Jul 2025 14:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVpHq7Io"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC3EC4CEE3;
+	Thu,  3 Jul 2025 14:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554023;
-	bh=klaSOp20f6oz8Fr9dU4WPz9V95UDEw/7sAtG+ZvYzJY=;
+	s=korg; t=1751554026;
+	bh=BLK34IAbezjgCSqGcl+8ff75j0LrZiwNy2iCLDXJiGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFZIWyrJzrwtf69+tdJcF4JtU11uHlHIOpd1G+wQ/4+7sTUJwDjHAb7NE32s+nukr
-	 P0ylSZ/nz7U9wBreiQrOKS9Onr/e/oRjgPLe6IBGmwrGA0P0N2geNsD6pHE7CzxX8U
-	 FM+jf/xCf+uvYou8h8J/u3jwrZtm7RKxuT3hdWYY=
+	b=cVpHq7IoY3mArZ0SYuyiPILSWRidK29jny55av5DRWqN2TFeb05INw2Aae3/rlY7a
+	 T5BakOVKhP+210FugchU+VTff6dgCT58nvSO4Ta5FCzpINaxL/6FiEgHejp3TcGalc
+	 ow75+abpcne1yHpvmpCES3IAwSFMBjr9qtwCSqQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Guo <quic_cang@quicinc.com>,
-	Ziqi Chen <quic_ziqichen@quicinc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/218] scsi: ufs: core: Dont perform UFS clkscaling during host async scan
-Date: Thu,  3 Jul 2025 16:40:03 +0200
-Message-ID: <20250703143958.134578773@linuxfoundation.org>
+Subject: [PATCH 6.12 056/218] ovl: Check for NULL d_inode() in ovl_dentry_upper()
+Date: Thu,  3 Jul 2025 16:40:04 +0200
+Message-ID: <20250703143958.180899611@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -53,66 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziqi Chen <quic_ziqichen@quicinc.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit e97633492f5a3eca7b3ff03b4ef6f993017f7955 ]
+[ Upstream commit 8a39f1c870e9d6fbac5638f3a42a6a6363829c49 ]
 
-When preparing for UFS clock scaling, the UFS driver will quiesce all
-sdevs queues in the UFS SCSI host tagset list and then unquiesce them in
-ufshcd_clock_scaling_unprepare(). If the UFS SCSI host async scan is in
-progress at this time, some LUs may be added to the tagset list between
-UFS clkscale prepare and unprepare. This can cause two issues:
+In ovl_path_type() and ovl_is_metacopy_dentry() GCC notices that it is
+possible for OVL_E() to return NULL (which implies that d_inode(dentry)
+may be NULL). This would result in out of bounds reads via container_of(),
+seen with GCC 15's -Warray-bounds -fdiagnostics-details. For example:
 
-1. During clock scaling, there may be I/O requests issued through new
-added queues that have not been quiesced, leading to task abort issue.
+In file included from arch/x86/include/generated/asm/rwonce.h:1,
+                 from include/linux/compiler.h:339,
+                 from include/linux/export.h:5,
+                 from include/linux/linkage.h:7,
+                 from include/linux/fs.h:5,
+                 from fs/overlayfs/util.c:7:
+In function 'ovl_upperdentry_dereference',
+    inlined from 'ovl_dentry_upper' at ../fs/overlayfs/util.c:305:9,
+    inlined from 'ovl_path_type' at ../fs/overlayfs/util.c:216:6:
+include/asm-generic/rwonce.h:44:26: error: array subscript 0 is outside array bounds of 'struct inode[7486503276667837]' [-Werror=array-bounds=]
+   44 | #define __READ_ONCE(x)  (*(const volatile __unqual_scalar_typeof(x) *)&(x))
+      |                         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+include/asm-generic/rwonce.h:50:9: note: in expansion of macro '__READ_ONCE'
+   50 |         __READ_ONCE(x);                                                 \
+      |         ^~~~~~~~~~~
+fs/overlayfs/ovl_entry.h:195:16: note: in expansion of macro 'READ_ONCE'
+  195 |         return READ_ONCE(oi->__upperdentry);
+      |                ^~~~~~~~~
+  'ovl_path_type': event 1
+  185 |         return inode ? OVL_I(inode)->oe : NULL;
+  'ovl_path_type': event 2
 
-2. These new added queues that have not been quiesced will be unquiesced
-as well when UFS clkscale is unprepared, resulting in warning prints.
+Avoid this by allowing ovl_dentry_upper() to return NULL if d_inode() is
+NULL, as that means the problematic dereferencing can never be reached.
+Note that this fixes the over-eager compiler warning in an effort to
+being able to enable -Warray-bounds globally. There is no known
+behavioral bug here.
 
-Therefore, use the mutex lock scan_mutex in
-ufshcd_clock_scaling_prepare() and ufshcd_clock_scaling_unprepare() to
-protect it.
-
-Co-developed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
-Link: https://lore.kernel.org/r/20250522081233.2358565-1-quic_ziqichen@quicinc.com
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/overlayfs/util.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 374f505fec3d1..c5cef57e64ce3 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -1392,6 +1392,7 @@ static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba, u64 timeout_us)
- 	 * make sure that there are no outstanding requests when
- 	 * clock scaling is in progress
- 	 */
-+	mutex_lock(&hba->host->scan_mutex);
- 	blk_mq_quiesce_tagset(&hba->host->tag_set);
- 	mutex_lock(&hba->wb_mutex);
- 	down_write(&hba->clk_scaling_lock);
-@@ -1402,6 +1403,7 @@ static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba, u64 timeout_us)
- 		up_write(&hba->clk_scaling_lock);
- 		mutex_unlock(&hba->wb_mutex);
- 		blk_mq_unquiesce_tagset(&hba->host->tag_set);
-+		mutex_unlock(&hba->host->scan_mutex);
- 		goto out;
- 	}
+diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
+index 8f080046c59d9..99571de665dde 100644
+--- a/fs/overlayfs/util.c
++++ b/fs/overlayfs/util.c
+@@ -300,7 +300,9 @@ enum ovl_path_type ovl_path_realdata(struct dentry *dentry, struct path *path)
  
-@@ -1423,6 +1425,7 @@ static void ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, int err, bool sc
- 	mutex_unlock(&hba->wb_mutex);
- 
- 	blk_mq_unquiesce_tagset(&hba->host->tag_set);
-+	mutex_unlock(&hba->host->scan_mutex);
- 	ufshcd_release(hba);
+ struct dentry *ovl_dentry_upper(struct dentry *dentry)
+ {
+-	return ovl_upperdentry_dereference(OVL_I(d_inode(dentry)));
++	struct inode *inode = d_inode(dentry);
++
++	return inode ? ovl_upperdentry_dereference(OVL_I(inode)) : NULL;
  }
  
+ struct dentry *ovl_dentry_lower(struct dentry *dentry)
 -- 
 2.39.5
 
