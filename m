@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F5F2EFDBE;
-	Thu,  3 Jul 2025 15:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8344A2EE993;
+	Thu,  3 Jul 2025 15:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751556193; cv=none; b=pvdfjyCPQdzaeBZF5CKjLBYBwEAHZEUYB/2th6Dn8EpIiFQFuLDr2757t1owiMB0RoaQ0DGKEtw3Yk6Np87CwN02841ii8dsAIQcCWCtrv9DpsArwepNhDZ2bhWkA8bjKcrJwa2I58mD4VMSPUWo1LKVUHAHcLqAxRVnNmCInos=
+	t=1751556196; cv=none; b=ijL8YdA+3Wm3pv1GHzTiqRz8InI6/hkAJwlIl1sgXVs31fnWK+tOb/t/36MyFSESFGNRAmZHeJ88GG3aBwcmSKJ9Lo846uXc9/ogu9enAfRMd35G47KG5Rf5nywRWVU4Ld3b5Dg7QUHTB/1K4ytAhBIbVb+hHd8lhp7PY/Yau2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751556193; c=relaxed/simple;
-	bh=70ymnXdB+LaNjkX1JK0hKq9AcCePcS3MfIlrWjK7uWQ=;
+	s=arc-20240116; t=1751556196; c=relaxed/simple;
+	bh=bo4JHpO+8H54Gh16GSwsQyZr4wWQhvoO3EF9S440kW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8C+jhDAoBcfPF7oeoXtYbKfjDQSP1WYJA0z2fUJAA+uHb2QwU7uZ4AP7Iu17U8tpmO5bBBX1ob2BjqaWR3JrPPvqU9YSwi/jIFViz6V3Is0qU97W9t6JQSDvXSxVpOlIlZNAXfXiJh0ZWFUDF/esNp1HQmMYDNPDzf7CyJ4w0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFx+En58; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5oRYxfKrDm6GLJ+R2+KPPy9v9/+ai1CZxQMdaq/j5wzmjPzOpAnFKur+pvRpKA2jkHZUmMuLTlqA9KNR4walgu8unC4hb8LQSItbnbBmLdNocUhRsi+1UpN4VAoZ52bQuelJCIYY/HTYX3hX11Nib/klu5NXOTD4+T8vzeFLcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb3z/WuU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFx+En58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE193C4CEED;
-	Thu,  3 Jul 2025 15:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb3z/WuU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93CCC4CEE3;
+	Thu,  3 Jul 2025 15:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751556193;
-	bh=70ymnXdB+LaNjkX1JK0hKq9AcCePcS3MfIlrWjK7uWQ=;
+	s=korg; t=1751556196;
+	bh=bo4JHpO+8H54Gh16GSwsQyZr4wWQhvoO3EF9S440kW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFx+En586tGBigJzM1168K4lE1lhqBZHYhkaef3dyA5J6+HRFwRSapblTCzpQJOKl
-	 xp/TlUcYKWfuPnZZEJ/4BwliEjTLHiM2tTy5opBzn2aofIpaif1dpJObVU+aAG6FIF
-	 fhYRrCfBrnQPDaWZQAKNoa2fOS4DYhybVDZgvhFI=
+	b=vb3z/WuUDna3BSrmtw/yTq+RI5geM05ic9DyPXntdRI/bmgrs3deu5Oq1KgQJFzBo
+	 08vdF0dCN9QvvecbDYVU3HzpyDjV8FgfPvmSnC+T5xGsHJfawEMhx6SyAg4o+61Zsp
+	 DoEs6XSbQd2LPLMMlGVexkeQc9IuBsEC6hjnn3Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiu-ji Chen <chenqiuji666@gmail.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.1 104/132] drm/tegra: Fix a possible null pointer dereference
-Date: Thu,  3 Jul 2025 16:43:13 +0200
-Message-ID: <20250703143943.473463683@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	dri-devel@lists.freedesktop.org,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Subject: [PATCH 6.1 105/132] drm/udl: Unregister device before cleaning up on disconnect
+Date: Thu,  3 Jul 2025 16:43:14 +0200
+Message-ID: <20250703143943.512999170@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -50,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiu-ji Chen <chenqiuji666@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 780351a5f61416ed2ba1199cc57e4a076fca644d upstream.
+commit ff9cb6d2035c586ea7c8f1754d4409eec7a2d26d upstream.
 
-In tegra_crtc_reset(), new memory is allocated with kzalloc(), but
-no check is performed. Before calling __drm_atomic_helper_crtc_reset,
-state should be checked to prevent possible null pointer dereference.
+Disconnecting a DisplayLink device results in the following kernel
+error messages
 
-Fixes: b7e0b04ae450 ("drm/tegra: Convert to using __drm_atomic_helper_crtc_reset() for reset.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20241106095906.15247-1-chenqiuji666@gmail.com
+[   93.041748] [drm:udl_urb_completion [udl]] *ERROR* udl_urb_completion - nonzero write bulk status received: -115
+[   93.055299] [drm:udl_submit_urb [udl]] *ERROR* usb_submit_urb error fffffffe
+[   93.065363] [drm:udl_urb_completion [udl]] *ERROR* udl_urb_completion - nonzero write bulk status received: -115
+[   93.078207] [drm:udl_submit_urb [udl]] *ERROR* usb_submit_urb error fffffffe
+
+coming from KMS poll helpers. Shutting down poll helpers runs them
+one final time when the USB device is already gone.
+
+Run drm_dev_unplug() first in udl's USB disconnect handler. Udl's
+polling code already handles disconnects gracefully if the device has
+been marked as unplugged.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: b1a981bd5576 ("drm/udl: drop drm_driver.release hook")
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250303145604.62962-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tegra/dc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/udl/udl_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/tegra/dc.c
-+++ b/drivers/gpu/drm/tegra/dc.c
-@@ -1391,7 +1391,10 @@ static void tegra_crtc_reset(struct drm_
- 	if (crtc->state)
- 		tegra_crtc_atomic_destroy_state(crtc, crtc->state);
+--- a/drivers/gpu/drm/udl/udl_drv.c
++++ b/drivers/gpu/drm/udl/udl_drv.c
+@@ -126,9 +126,9 @@ static void udl_usb_disconnect(struct us
+ {
+ 	struct drm_device *dev = usb_get_intfdata(interface);
  
--	__drm_atomic_helper_crtc_reset(crtc, &state->base);
-+	if (state)
-+		__drm_atomic_helper_crtc_reset(crtc, &state->base);
-+	else
-+		__drm_atomic_helper_crtc_reset(crtc, NULL);
++	drm_dev_unplug(dev);
+ 	drm_kms_helper_poll_fini(dev);
+ 	udl_drop_usb(dev);
+-	drm_dev_unplug(dev);
  }
  
- static struct drm_crtc_state *
+ /*
 
 
