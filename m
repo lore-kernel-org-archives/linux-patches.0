@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED0D2D6639;
-	Thu,  3 Jul 2025 15:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAA32D6639;
+	Thu,  3 Jul 2025 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555792; cv=none; b=i3d8NTfkihN24L6sOzJcdx9vpWk4nYNUaT0Kxf64so2YpgW+Vm/R3c6Zf4txgdGxcnHqt7Q/y/fz7oNZ7LvhFUhAt4pdi5vG7mBZGtnzidcSPkj3m9j5UejklSS79aiv2hCXoa4L0sOvmpKIlsJC93MV/j26yQCH4vEmr00IPd0=
+	t=1751555795; cv=none; b=q4nyQ6Vs2Wln4ecB3c9y4sMZiQRJ69KVTLPHAe/G7fJVg/WfKQPKCkNP4gpfCY1m0X/u+rnupsiQx5eICWt0h0M/Ns8YtG9DqfRU9Wh8NtV809AdQ0r9Vmp9S0vsFinmpWgpl1KVFLgDWFRIoj39qD5m7HoHU5I0fuckpblrWkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555792; c=relaxed/simple;
-	bh=levAjfTVaEpWOeqkByA++j3K42y3Bfl81oyj5/7Z71w=;
+	s=arc-20240116; t=1751555795; c=relaxed/simple;
+	bh=4npm4VZ0cAs9tieB2Hpxg3cjBA2Qdt4AOdwaYBkoqU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PilS7X47iBY7rUG4ZqaSikGm59Lktvms89JFKMu3NgpgaE3oU+d8Rldw+o2Gbrjf+E9wswgWl0tEwa0ykPQvAB2P6rC3vEybl7Ji6veUeQeiS4OYGXvXPWHu343t3Awwm780kt7AegWgiBQcLFE0VZxcOF1JqJaJcag8wQLgjYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyvsczo4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=THZrmEZIin0vw5ivB/bQni7YhbvlWajXc7W98aVosIqTuR10vveyvl44a4ZvBN2e5JRF/kgQZ47vVZIrQKcMhb+b7O/S5OY1o7XFrtDSuQyVuNPC9AERbuHsH6lTihZyiGdcOSgBESGV50zeih1odVPWKhRbOqe3Rmsui7QvYJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrHeJ4Q6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyvsczo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88DDC4CEE3;
-	Thu,  3 Jul 2025 15:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrHeJ4Q6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DC9C4CEF3;
+	Thu,  3 Jul 2025 15:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555792;
-	bh=levAjfTVaEpWOeqkByA++j3K42y3Bfl81oyj5/7Z71w=;
+	s=korg; t=1751555795;
+	bh=4npm4VZ0cAs9tieB2Hpxg3cjBA2Qdt4AOdwaYBkoqU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gyvsczo41Qz1JVHQbMOfLRZjhoz5YRweR4Z7xq5vs3DlyhwpxBDVMPAOHRjbbEmFg
-	 Oaui3/iRxRKkisoYW9CJIic000pGMn3dnofANapiqy2U9HF4C49cDNjbDP3mIc6Geb
-	 X7iHa3wdYE+Sy36OtiTYB39Wevu8N2CmlDPIOA2U=
+	b=BrHeJ4Q6xSLRnUaXG1+RXWKpLkysYXVgKl1MbCP4m1i1fqXPM04t2D5UuAauImNHV
+	 3GdJ87EECtZcEBBAAhpfmpo7RDajoVH8ug3Hcr8ItrMfhSQrKgWNV8v3+Vd3GJeZIn
+	 2s6IafdJcjTJb5SD71jLWQTtRAJR3qFDt/Gzhoug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Olender <john.olender@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Subject: [PATCH 6.6 123/139] drm/amdgpu: amdgpu_vram_mgr_new(): Clamp lpfn to total vram
-Date: Thu,  3 Jul 2025 16:43:06 +0200
-Message-ID: <20250703143945.993326069@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.6 124/139] drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1
+Date: Thu,  3 Jul 2025 16:43:07 +0200
+Message-ID: <20250703143946.031173292@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -45,42 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Olender <john.olender@gmail.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 4d2f6b4e4c7ed32e7fa39fcea37344a9eab99094 upstream.
+commit 25eeba495b2fc16037647c1a51bcdf6fc157af5c upstream.
 
-The drm_mm allocator tolerated being passed end > mm->size, but the
-drm_buddy allocator does not.
+The intel-media-driver is currently broken on DG1 because
+it uses EXEC_CAPTURE with recovarable contexts. Relax the
+check to allow that.
 
-Restore the pre-buddy-allocator behavior of allowing such placements.
+I've also submitted a fix for the intel-media-driver:
+https://github.com/intel/media-driver/pull/1920
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3448
-Signed-off-by: John Olender <john.olender@gmail.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v6.0+
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Testcase: igt/gem_exec_capture/capture-invisible
+Fixes: 71b1669ea9bd ("drm/i915/uapi: tweak error capture on recoverable contexts")
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250411144313.11660-2-ville.syrjala@linux.intel.com
+(cherry picked from commit d6e020819612a4a06207af858e0978be4d3e3140)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c |    2 +-
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -435,7 +435,7 @@ static int amdgpu_vram_mgr_new(struct tt
- 	int r;
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -2013,7 +2013,7 @@ static int eb_capture_stage(struct i915_
+ 			continue;
  
- 	lpfn = (u64)place->lpfn << PAGE_SHIFT;
--	if (!lpfn)
-+	if (!lpfn || lpfn > man->size)
- 		lpfn = man->size;
+ 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
+-		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
++		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
+ 			return -EINVAL;
  
- 	fpfn = (u64)place->fpfn << PAGE_SHIFT;
+ 		for_each_batch_create_order(eb, j) {
 
 
