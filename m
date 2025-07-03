@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D98A2F003A;
-	Thu,  3 Jul 2025 15:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828E32F002D;
+	Thu,  3 Jul 2025 15:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555881; cv=none; b=uXoO5J6ca9SloN6HgLvvgATCRzniHMnHZldjmL0S4QFT+mpjsiNV4v1h0fxbosuVuH/tCk50UrM+RAsjWrgnBjZWAB1HEW1vWfujZpIhbTIrif718DmnMJupzGYb3xdQKQGurBDCv7aMWOb5l2aQqJawvneabCNik0vt+bp0lOo=
+	t=1751555884; cv=none; b=jOjuPJ29jSfV8DCWUBx2kHioxdSkrvNxD0+L6G4YDmtiMjo6PuEgP8fCUKoEFyWb1/0VxdqcaFhyjaommgYznhth0M4tc3Bqvf+blIgEUxX/oOEwGOsl5mo7wyf8gQetl1OhYzBLqTgTSZfHhnIuvAxeVCjRMLWrH94+FxFVSEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555881; c=relaxed/simple;
-	bh=3I25Dy4gEiNii7cbFNaUgdDCRePs4G6PufoK2MCFZzI=;
+	s=arc-20240116; t=1751555884; c=relaxed/simple;
+	bh=GiLHJ6goNef+5sSWNQatN9orHRHyKBgu7BTji+pXQBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+mOQg2P6VFUm0kgNypmdhrWKXoz+gRM2vCXbIIV6J2nRLTSJuEDD+DKgB8s/v3Lwc2qFXt9Vif2DxedNwlDxlR49ZyQH7IHR1Ky4qYWJ0EhRfRwRE2EglBSnQZVVfbKs8rUHU2eJ6AYSWg+XvCZIeyR512XhnXk1IkrCoZfbSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i05ggkb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDzo2SUsFtkvOtjQcWm/rIYyDuT3FVPfgWrysCyrzssqFJTUqBmiUA/so0iOlmp0fIFo/iK7lqA3U2IVhFDXYEJrjEAztNFd6d/P1uirV9A6hOrzLRRA/5+p53JVKbAFXOoUh9DlgKqAeo6jxwfiZQUQviqOXOLQxp/mYsW2LC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCmL/O+4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i05ggkb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1476C4CEE3;
-	Thu,  3 Jul 2025 15:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCmL/O+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E31C4CEE3;
+	Thu,  3 Jul 2025 15:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555881;
-	bh=3I25Dy4gEiNii7cbFNaUgdDCRePs4G6PufoK2MCFZzI=;
+	s=korg; t=1751555884;
+	bh=GiLHJ6goNef+5sSWNQatN9orHRHyKBgu7BTji+pXQBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i05ggkb1xK1U7ko1HJQgZ/KkhDtkQIZDbal9yn1dSfTHL0BVpnV8USy7D0gPw+cqK
-	 iXRRzOtJORTcj3OWu7GtIIazqfPpSoFpfewHxt4vUjV8+KFmbQBfNF1SPgRMWf8qE6
-	 /uikOw011W/+RV19EeBgusS500qzoNxXklD7iIEU=
+	b=jCmL/O+4oQy7oohKLQUFM0bdv/107kW5f19msUUhLTYqrj1OmWarnXxGjKrK/KzGJ
+	 Py4OJV21XrLtXTftFagjVYNWAWSw2xtrGi0Uabno9r7tWjc8NXin65Nb6vlrBHT68q
+	 EGFBBoXa9T3a1j2LCOpUQAL69dnScxc37K0VRbmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.6 138/139] firmware: arm_scmi: Add a common helper to check if a message is supported
-Date: Thu,  3 Jul 2025 16:43:21 +0200
-Message-ID: <20250703143946.574282468@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 129/139] scripts: clean up IA-64 code
+Date: Thu,  3 Jul 2025 16:43:12 +0200
+Message-ID: <20250703143946.229154383@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143941.182414597@linuxfoundation.org>
 References: <20250703143941.182414597@linuxfoundation.org>
@@ -50,88 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 637b6d6cae9c42db5a9525da67c991294924d2cd upstream.
+commit 0df8e97085946dd79c06720678a845778b6d6bf8 upstream.
 
-A common helper is provided to check if a specific protocol message is
-supported or not.
+A little more janitorial work after commit cf8e8658100d ("arch: Remove
+Itanium (IA-64) architecture").
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20240212123233.1230090-3-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/driver.c    |   34 ++++++++++++++++++++++++++++++++++
- drivers/firmware/arm_scmi/protocols.h |    4 ++++
- 2 files changed, 38 insertions(+)
+ scripts/checkstack.pl        |    3 ---
+ scripts/gdb/linux/tasks.py   |   15 +++------------
+ scripts/head-object-list.txt |    1 -
+ scripts/kconfig/mconf.c      |    2 +-
+ scripts/kconfig/nconf.c      |    2 +-
+ scripts/package/kernel.spec  |    6 ------
+ scripts/package/mkdebian     |    2 +-
+ scripts/recordmcount.c       |    1 -
+ scripts/recordmcount.pl      |    7 -------
+ scripts/xz_wrap.sh           |    1 -
+ 10 files changed, 6 insertions(+), 34 deletions(-)
 
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -1820,10 +1820,44 @@ static void scmi_common_fastchannel_db_r
- #endif
- }
+--- a/scripts/checkstack.pl
++++ b/scripts/checkstack.pl
+@@ -68,9 +68,6 @@ my (@stack, $re, $dre, $sub, $x, $xs, $f
+ 		#    2f60:    48 81 ec e8 05 00 00       sub    $0x5e8,%rsp
+ 		$re = qr/^.*[as][du][db]    \$(0x$x{1,8}),\%(e|r)sp$/o;
+ 		$dre = qr/^.*[as][du][db]    (%.*),\%(e|r)sp$/o;
+-	} elsif ($arch eq 'ia64') {
+-		#e0000000044011fc:       01 0f fc 8c     adds r12=-384,r12
+-		$re = qr/.*adds.*r12=-(([0-9]{2}|[3-9])[0-9]{2}),r12/o;
+ 	} elsif ($arch eq 'm68k') {
+ 		#    2b6c:       4e56 fb70       linkw %fp,#-1168
+ 		#  1df770:       defc ffe4       addaw #-28,%sp
+--- a/scripts/gdb/linux/tasks.py
++++ b/scripts/gdb/linux/tasks.py
+@@ -86,21 +86,12 @@ LxPs()
  
-+/**
-+ * scmi_protocol_msg_check  - Check protocol message attributes
-+ *
-+ * @ph: A reference to the protocol handle.
-+ * @message_id: The ID of the message to check.
-+ * @attributes: A parameter to optionally return the retrieved message
-+ *		attributes, in case of Success.
-+ *
-+ * An helper to check protocol message attributes for a specific protocol
-+ * and message pair.
-+ *
-+ * Return: 0 on SUCCESS
-+ */
-+static int scmi_protocol_msg_check(const struct scmi_protocol_handle *ph,
-+				   u32 message_id, u32 *attributes)
-+{
-+	int ret;
-+	struct scmi_xfer *t;
-+
-+	ret = xfer_get_init(ph, PROTOCOL_MESSAGE_ATTRIBUTES,
-+			    sizeof(__le32), 0, &t);
-+	if (ret)
-+		return ret;
-+
-+	put_unaligned_le32(message_id, t->tx.buf);
-+	ret = do_xfer(ph, t);
-+	if (!ret && attributes)
-+		*attributes = get_unaligned_le32(t->rx.buf);
-+	xfer_put(ph, t);
-+
-+	return ret;
-+}
-+
- static const struct scmi_proto_helpers_ops helpers_ops = {
- 	.extended_name_get = scmi_common_extended_name_get,
- 	.iter_response_init = scmi_iterator_init,
- 	.iter_response_run = scmi_iterator_run,
-+	.protocol_msg_check = scmi_protocol_msg_check,
- 	.fastchannel_init = scmi_common_fastchannel_init,
- 	.fastchannel_db_ring = scmi_common_fastchannel_db_ring,
- };
---- a/drivers/firmware/arm_scmi/protocols.h
-+++ b/drivers/firmware/arm_scmi/protocols.h
-@@ -250,6 +250,8 @@ struct scmi_fc_info {
-  *			provided in @ops.
-  * @iter_response_run: A common helper to trigger the run of a previously
-  *		       initialized iterator.
-+ * @protocol_msg_check: A common helper to check is a specific protocol message
-+ *			is supported.
-  * @fastchannel_init: A common helper used to initialize FC descriptors by
-  *		      gathering FC descriptions from the SCMI platform server.
-  * @fastchannel_db_ring: A common helper to ring a FC doorbell.
-@@ -262,6 +264,8 @@ struct scmi_proto_helpers_ops {
- 				    unsigned int max_resources, u8 msg_id,
- 				    size_t tx_size, void *priv);
- 	int (*iter_response_run)(void *iter);
-+	int (*protocol_msg_check)(const struct scmi_protocol_handle *ph,
-+				  u32 message_id, u32 *attributes);
- 	void (*fastchannel_init)(const struct scmi_protocol_handle *ph,
- 				 u8 describe_id, u32 message_id,
- 				 u32 valid_size, u32 domain,
+ thread_info_type = utils.CachedType("struct thread_info")
+ 
+-ia64_task_size = None
+-
+ 
+ def get_thread_info(task):
+     thread_info_ptr_type = thread_info_type.get_type().pointer()
+-    if utils.is_target_arch("ia64"):
+-        global ia64_task_size
+-        if ia64_task_size is None:
+-            ia64_task_size = gdb.parse_and_eval("sizeof(struct task_struct)")
+-        thread_info_addr = task.address + ia64_task_size
+-        thread_info = thread_info_addr.cast(thread_info_ptr_type)
+-    else:
+-        if task.type.fields()[0].type == thread_info_type.get_type():
+-            return task['thread_info']
+-        thread_info = task['stack'].cast(thread_info_ptr_type)
++    if task.type.fields()[0].type == thread_info_type.get_type():
++        return task['thread_info']
++    thread_info = task['stack'].cast(thread_info_ptr_type)
+     return thread_info.dereference()
+ 
+ 
+--- a/scripts/head-object-list.txt
++++ b/scripts/head-object-list.txt
+@@ -17,7 +17,6 @@ arch/arm/kernel/head-nommu.o
+ arch/arm/kernel/head.o
+ arch/csky/kernel/head.o
+ arch/hexagon/kernel/head.o
+-arch/ia64/kernel/head.o
+ arch/loongarch/kernel/head.o
+ arch/m68k/68000/head.o
+ arch/m68k/coldfire/head.o
+--- a/scripts/kconfig/mconf.c
++++ b/scripts/kconfig/mconf.c
+@@ -247,7 +247,7 @@ search_help[] =
+ 	"      -> PCI support (PCI [=y])\n"
+ 	"(1)     -> PCI access mode (<choice> [=y])\n"
+ 	"  Defined at drivers/pci/Kconfig:47\n"
+-	"  Depends on: X86_LOCAL_APIC && X86_IO_APIC || IA64\n"
++	"  Depends on: X86_LOCAL_APIC && X86_IO_APIC\n"
+ 	"  Selects: LIBCRC32\n"
+ 	"  Selected by: BAR [=n]\n"
+ 	"-----------------------------------------------------------------\n"
+--- a/scripts/kconfig/nconf.c
++++ b/scripts/kconfig/nconf.c
+@@ -216,7 +216,7 @@ search_help[] =
+ "Symbol: FOO [ = m]\n"
+ "Prompt: Foo bus is used to drive the bar HW\n"
+ "Defined at drivers/pci/Kconfig:47\n"
+-"Depends on: X86_LOCAL_APIC && X86_IO_APIC || IA64\n"
++"Depends on: X86_LOCAL_APIC && X86_IO_APIC\n"
+ "Location:\n"
+ "  -> Bus options (PCI, PCMCIA, EISA, ISA)\n"
+ "    -> PCI support (PCI [ = y])\n"
+--- a/scripts/package/kernel.spec
++++ b/scripts/package/kernel.spec
+@@ -56,13 +56,7 @@ patch -p1 < %{SOURCE2}
+ 
+ %install
+ mkdir -p %{buildroot}/boot
+-%ifarch ia64
+-mkdir -p %{buildroot}/boot/efi
+-cp $(%{make} %{makeflags} -s image_name) %{buildroot}/boot/efi/vmlinuz-%{KERNELRELEASE}
+-ln -s efi/vmlinuz-%{KERNELRELEASE} %{buildroot}/boot/
+-%else
+ cp $(%{make} %{makeflags} -s image_name) %{buildroot}/boot/vmlinuz-%{KERNELRELEASE}
+-%endif
+ %{make} %{makeflags} INSTALL_MOD_PATH=%{buildroot} modules_install
+ %{make} %{makeflags} INSTALL_HDR_PATH=%{buildroot}/usr headers_install
+ cp System.map %{buildroot}/boot/System.map-%{KERNELRELEASE}
+--- a/scripts/package/mkdebian
++++ b/scripts/package/mkdebian
+@@ -26,7 +26,7 @@ set_debarch() {
+ 
+ 	# Attempt to find the correct Debian architecture
+ 	case "$UTS_MACHINE" in
+-	i386|ia64|alpha|m68k|riscv*)
++	i386|alpha|m68k|riscv*)
+ 		debarch="$UTS_MACHINE" ;;
+ 	x86_64)
+ 		debarch=amd64 ;;
+--- a/scripts/recordmcount.c
++++ b/scripts/recordmcount.c
+@@ -590,7 +590,6 @@ static int do_file(char const *const fna
+ 		ideal_nop = ideal_nop4_arm64;
+ 		is_fake_mcount64 = arm64_is_fake_mcount;
+ 		break;
+-	case EM_IA_64:	reltype = R_IA64_IMM64; break;
+ 	case EM_MIPS:	/* reltype: e_class    */ break;
+ 	case EM_LOONGARCH:	/* reltype: e_class    */ break;
+ 	case EM_PPC:	reltype = R_PPC_ADDR32; break;
+--- a/scripts/recordmcount.pl
++++ b/scripts/recordmcount.pl
+@@ -275,13 +275,6 @@ if ($arch eq "x86_64") {
+     $section_type = '%progbits';
+     $mcount_regex = "^\\s*([0-9a-fA-F]+):\\s*R_AARCH64_CALL26\\s+_mcount\$";
+     $type = ".quad";
+-} elsif ($arch eq "ia64") {
+-    $mcount_regex = "^\\s*([0-9a-fA-F]+):.*\\s_mcount\$";
+-    $type = "data8";
+-
+-    if ($is_module eq "0") {
+-	$cc .= " -mconstant-gp";
+-    }
+ } elsif ($arch eq "sparc64") {
+     # In the objdump output there are giblets like:
+     # 0000000000000000 <igmp_net_exit-0x18>:
+--- a/scripts/xz_wrap.sh
++++ b/scripts/xz_wrap.sh
+@@ -15,7 +15,6 @@ LZMA2OPTS=
+ case $SRCARCH in
+ 	x86)            BCJ=--x86 ;;
+ 	powerpc)        BCJ=--powerpc ;;
+-	ia64)           BCJ=--ia64; LZMA2OPTS=pb=4 ;;
+ 	arm)            BCJ=--arm ;;
+ 	sparc)          BCJ=--sparc ;;
+ esac
 
 
