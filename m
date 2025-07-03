@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C182EA49E;
-	Thu,  3 Jul 2025 14:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F1A2EA49E;
+	Thu,  3 Jul 2025 14:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554708; cv=none; b=kvPezvDWHEO3jYE3uEx5Vql0aUxcbawNOzI/rxN4waZm4rssYT7ab+vRsmRPFJTA0O4XPq6+/SkxqroNs/6SOovvJjeP65K2QILOW+8HR2MuZlwvsIUqS21YRrVkwNW5JaFCcKCC95zWHevd3yAlc6/Z66jJzOW7t6Lws1lmd8g=
+	t=1751554711; cv=none; b=TFt4SasrLUEGbaB7vuaBdSgH6jryodT+Erekg9LRdRbFNCoRbmacEUjyMQpINeOXORfHVLCPJBW3R/giMHL2d/+8kG8WCEk/ZB7r67T3/fq2RHc4v9D5rdOZ+Wt4oPS4QyeDZOFjO/IEccDtVS96+cQT1uxBvqSDreEJtasmXzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554708; c=relaxed/simple;
-	bh=203bzRHtAdotDUrRZx8I0y/ZfObkMA5Ggnf9iaLC8Vg=;
+	s=arc-20240116; t=1751554711; c=relaxed/simple;
+	bh=nD3SFQsx00FBrCG9MOqfyUp7nt0NJOmj/OPlQ/gGnZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn4F4QWLf660vDEWihsTeHoIRapWl3EdeVOMU3DJ21rh49r0KpMwF2Ezhr8DnVIcU0iM/L1v5uZ+rHzclQU1ei2ZIlEG/WBnKG6x2uZUNtXp5Uj23JUBDUcDIaB1Z7p1OhPMMqNM4ifRroiHzOA1b5L+qXswRCA/xn8srne9eeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfdVjnNb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e/H7CljAi5ere7dpReeuUheDrtbwGYBLy7V9c30GmOOhrcyrGjykEf0zCGM7FEgKvZuGB/k6zMS617NgRUCfDmTYXZI2bOF+l0hMiU1tQxtZZzcV6ToS8WGl8Pi4nWIaGmTdlV5S6qzSzClIWQSJBCtXyaM0Qoi0HNhlhPIV4m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbCnt2MM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfdVjnNb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541B4C4CEE3;
-	Thu,  3 Jul 2025 14:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbCnt2MM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7464AC4CEE3;
+	Thu,  3 Jul 2025 14:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554707;
-	bh=203bzRHtAdotDUrRZx8I0y/ZfObkMA5Ggnf9iaLC8Vg=;
+	s=korg; t=1751554710;
+	bh=nD3SFQsx00FBrCG9MOqfyUp7nt0NJOmj/OPlQ/gGnZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfdVjnNbUCIQTyLlleWO3uCvXHcFSkVKjBZIbhLhydgE2rq4xhrR9CXlFc0SCnG4G
-	 Zcb4UjQZ27mysNZsU4drnwf1aZOALfBQn/1P4RGEy3pZTWwpipdBIkYExgKNyqN1MM
-	 LlLhGJRRqsqAYTHjf0+EUVRMfVeQ5JICLRm4r6NQ=
+	b=GbCnt2MMfhGD2dXfsa6KjEUmFT4d1qjFM2xlhMcgP8hg+ZMjLeI7G5x0nu8Fl/qn+
+	 NkwwQ8b6haMmSucsOoX95WXa/2sK27Pl9fcRBRvCwjH3rle/gysnFwKATCZlIeyW9P
+	 JXOOu2kprTL98npD7GZhmxVUVVFp096/OZSkU4Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yi Sun <yi.sun@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 053/263] iio: light: al3000a: Fix an error handling path in al3000a_probe()
-Date: Thu,  3 Jul 2025 16:39:33 +0200
-Message-ID: <20250703144006.434391656@linuxfoundation.org>
+Subject: [PATCH 6.15 027/263] dmaengine: idxd: Check availability of workqueue allocated by idxd wq driver before using
+Date: Thu,  3 Jul 2025 16:39:07 +0200
+Message-ID: <20250703144005.388806015@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,56 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Yi Sun <yi.sun@intel.com>
 
-[ Upstream commit c0461f8e842495041c18b2c67647501d55c17441 ]
+[ Upstream commit 17502e7d7b7113346296f6758324798d536c31fd ]
 
-If regmap_write() fails in al3000a_init(), al3000a_set_pwr_off is
-not called.
+Running IDXD workloads in a container with the /dev directory mounted can
+trigger a call trace or even a kernel panic when the parent process of the
+container is terminated.
 
-In order to avoid such a situation, move the devm_add_action_or_reset()
-which calls al3000a_set_pwr_off right after a successful
-al3000a_set_pwr_on.
+This issue occurs because, under certain configurations, Docker does not
+properly propagate the mount replica back to the original mount point.
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20250402-al3010-iio-regmap-v4-2-d189bea87261@ixit.cz
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+In this case, when the user driver detaches, the WQ is destroyed but it
+still calls destroy_workqueue() attempting to completes all pending work.
+It's necessary to check wq->wq and skip the drain if it no longer exists.
+
+Signed-off-by: Yi Sun <yi.sun@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>
+
+Link: https://lore.kernel.org/r/20250509000304.1402863-1-yi.sun@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/al3000a.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/dma/idxd/cdev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/al3000a.c b/drivers/iio/light/al3000a.c
-index e2fbb1270040f..6d5115b2a06c5 100644
---- a/drivers/iio/light/al3000a.c
-+++ b/drivers/iio/light/al3000a.c
-@@ -85,12 +85,17 @@ static void al3000a_set_pwr_off(void *_data)
- 
- static int al3000a_init(struct al3000a_data *data)
- {
-+	struct device *dev = regmap_get_device(data->regmap);
- 	int ret;
- 
- 	ret = al3000a_set_pwr_on(data);
- 	if (ret)
- 		return ret;
- 
-+	ret = devm_add_action_or_reset(dev, al3000a_set_pwr_off, data);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to add action\n");
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 6d12033649f81..bc934bc249df1 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -349,7 +349,9 @@ static void idxd_cdev_evl_drain_pasid(struct idxd_wq *wq, u32 pasid)
+ 			set_bit(h, evl->bmap);
+ 		h = (h + 1) % size;
+ 	}
+-	drain_workqueue(wq->wq);
++	if (wq->wq)
++		drain_workqueue(wq->wq);
 +
- 	ret = regmap_write(data->regmap, AL3000A_REG_SYSTEM, AL3000A_CONFIG_RESET);
- 	if (ret)
- 		return ret;
-@@ -157,10 +162,6 @@ static int al3000a_probe(struct i2c_client *client)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to init ALS\n");
- 
--	ret = devm_add_action_or_reset(dev, al3000a_set_pwr_off, data);
--	if (ret)
--		return dev_err_probe(dev, ret, "failed to add action\n");
--
- 	return devm_iio_device_register(dev, indio_dev);
+ 	mutex_unlock(&evl->lock);
  }
  
 -- 
