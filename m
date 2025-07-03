@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF122E7F0B;
-	Thu,  3 Jul 2025 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FF62D948F;
+	Thu,  3 Jul 2025 14:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554067; cv=none; b=EKcAKu6NnYUHUqZ3jwrYRZKklb/0kuVl4ARAHCX7pWVAt0bdMKNt3hBbIv1bz+7aInIdSaPBxzf0swXkmJT1S62ajQo+kLMt6qFLliTHN59FDh84e1ec9aFUW8qbGmChHg/+0HHxxQzCByNeOOOXHKCOwczsIlMwUNb5jRkW8CE=
+	t=1751554071; cv=none; b=YTbAi68VcRoS2bqtfHsz0q/O2GzmBPZmiuwO1CBnY7z9dgqpsE1GHFn0U26/QgIdq3JxdIJhbNwICOHhQmb689Adc5eXN/zApDMTdz+Bgnks64txOVW/JZn18gJ68HJnCNgkUlK10ZPGTUHgJCh/QiimfR/kObY0LmMGSztIZ4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554067; c=relaxed/simple;
-	bh=4QoLjxOf/NxqbT8WWBjd5lnBh9Q9yqODhJNg5CGFKms=;
+	s=arc-20240116; t=1751554071; c=relaxed/simple;
+	bh=J1TWLEs0rbt6wFu9fuBRjUJuyBcL2JNHfpGWS7Asg2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHGr7LkEZ3rMULNTnBQniybw5wb4K9FsI6xF2Uy8y/LAfpHw5WW9BGahnDi4i2k26unbhzIxGU3JZKLFYFuNMXi8cdNENSJ5G9bf+MQeH4mxDytCmUArr0Rz6qUeCCfGy9nU04j0YIw1BfQuIHRSQk5RByCTXZy8KZmr46oIZy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmzuavFn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D067t1qz89Lzw+murpmSn92WwDsGQkJY13sZq8dVcnVKaFxKWb9wm0CCzOxp9ntRIM3YGWaJ1oiLZbeGdj4chVCQs/FZRSysn0tmuhAZg+6XWDlV9aOAtARtsvVEfwhlemShSygsoi/HlW4ekKtZfA0PL2VQ22dmc6AXq5ODtYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgjtHwbe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmzuavFn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383B7C4CEE3;
-	Thu,  3 Jul 2025 14:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgjtHwbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312D0C4CEED;
+	Thu,  3 Jul 2025 14:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554067;
-	bh=4QoLjxOf/NxqbT8WWBjd5lnBh9Q9yqODhJNg5CGFKms=;
+	s=korg; t=1751554070;
+	bh=J1TWLEs0rbt6wFu9fuBRjUJuyBcL2JNHfpGWS7Asg2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NmzuavFni9rRUK2Zbh1tZuZ2x0qmk5CndsO6WnVZOBfu2/9Z03/NMrxOS4LcO7v6T
-	 36rti6VIGMka3HG0R/vYlPU0XlnCHxgYj2g8w5jYL0v4baxD8QU/PAB/DezeiN60w8
-	 OShToPcuAiQpZVylnii9It0bx09isi1mkEKAqZsk=
+	b=KgjtHwbeEUFhaKkOe/CCAtYpXc4L1JQDyySG93eg8fL+wDnEcP6gvGrvGKM2Jm0Tx
+	 aqnQTcItT/lz8SCDWP3x1iATO69uva+IlzjODU4DqeQA+/9nnYXbdqgLvCI+lZ7dTo
+	 CIt37W4pIoKa0NLHVNIGckRIbkty2HwRw9fW07PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>,
+	Karol Wachowski <karol.wachowski@intel.com>,
 	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
 	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/218] accel/ivpu: Remove copy engine support
-Date: Thu,  3 Jul 2025 16:40:19 +0200
-Message-ID: <20250703143958.780400320@linuxfoundation.org>
+Subject: [PATCH 6.12 072/218] accel/ivpu: Make command queue ID allocated on XArray
+Date: Thu,  3 Jul 2025 16:40:20 +0200
+Message-ID: <20250703143958.819867708@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,224 +52,325 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
+From: Karol Wachowski <karol.wachowski@intel.com>
 
-[ Upstream commit 94b2a2c0e7cba3f163609dbd94120ee533ad2a07 ]
+[ Upstream commit 76ad741ec7349bb1112f3a0ff27adf1ca75cf025 ]
 
-Copy engine was deprecated by the FW and is no longer supported.
-Compute engine includes all copy engine functionality and should be used
-instead.
+Use XArray for dynamic command queue ID allocations instead of fixed
+ones. This is required by upcoming changes to UAPI that will allow to
+manage command queues by user space instead of having predefined number
+of queues in a context.
 
-This change does not affect user space as the copy engine was never
-used outside of a couple of tests.
-
-Signed-off-by: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@intel.com>
 Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241017145817.121590-4-jacek.lawrynowicz@linux.intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241017145817.121590-8-jacek.lawrynowicz@linux.intel.com
 Stable-dep-of: a47e36dc5d90 ("accel/ivpu: Trigger device recovery on engine reset/resume failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_drv.h     |  5 +---
- drivers/accel/ivpu/ivpu_job.c     | 43 +++++++++++--------------------
- drivers/accel/ivpu/ivpu_jsm_msg.c |  8 +++---
- include/uapi/drm/ivpu_accel.h     |  6 +----
- 4 files changed, 21 insertions(+), 41 deletions(-)
+ drivers/accel/ivpu/ivpu_drv.c |  6 +++
+ drivers/accel/ivpu/ivpu_drv.h |  7 ++-
+ drivers/accel/ivpu/ivpu_job.c | 91 ++++++++++++++++++-----------------
+ drivers/accel/ivpu/ivpu_job.h |  2 +
+ 4 files changed, 60 insertions(+), 46 deletions(-)
 
+diff --git a/drivers/accel/ivpu/ivpu_drv.c b/drivers/accel/ivpu/ivpu_drv.c
+index 67d56a944d549..00208c4a65807 100644
+--- a/drivers/accel/ivpu/ivpu_drv.c
++++ b/drivers/accel/ivpu/ivpu_drv.c
+@@ -102,6 +102,8 @@ static void file_priv_release(struct kref *ref)
+ 	pm_runtime_get_sync(vdev->drm.dev);
+ 	mutex_lock(&vdev->context_list_lock);
+ 	file_priv_unbind(vdev, file_priv);
++	drm_WARN_ON(&vdev->drm, !xa_empty(&file_priv->cmdq_xa));
++	xa_destroy(&file_priv->cmdq_xa);
+ 	mutex_unlock(&vdev->context_list_lock);
+ 	pm_runtime_put_autosuspend(vdev->drm.dev);
+ 
+@@ -261,6 +263,10 @@ static int ivpu_open(struct drm_device *dev, struct drm_file *file)
+ 	file_priv->job_limit.min = FIELD_PREP(IVPU_JOB_ID_CONTEXT_MASK, (file_priv->ctx.id - 1));
+ 	file_priv->job_limit.max = file_priv->job_limit.min | IVPU_JOB_ID_JOB_MASK;
+ 
++	xa_init_flags(&file_priv->cmdq_xa, XA_FLAGS_ALLOC1);
++	file_priv->cmdq_limit.min = IVPU_CMDQ_MIN_ID;
++	file_priv->cmdq_limit.max = IVPU_CMDQ_MAX_ID;
++
+ 	mutex_unlock(&vdev->context_list_lock);
+ 	drm_dev_exit(idx);
+ 
 diff --git a/drivers/accel/ivpu/ivpu_drv.h b/drivers/accel/ivpu/ivpu_drv.h
-index 1fe6a3bd4e36b..4519c93fb377c 100644
+index 4519c93fb377c..f2ba3ed8b3fc5 100644
 --- a/drivers/accel/ivpu/ivpu_drv.h
 +++ b/drivers/accel/ivpu/ivpu_drv.h
-@@ -50,11 +50,8 @@
- #define IVPU_JOB_ID_JOB_MASK		GENMASK(7, 0)
- #define IVPU_JOB_ID_CONTEXT_MASK	GENMASK(31, 8)
- 
--#define IVPU_NUM_ENGINES       2
+@@ -53,6 +53,9 @@
  #define IVPU_NUM_PRIORITIES    4
--#define IVPU_NUM_CMDQS_PER_CTX (IVPU_NUM_ENGINES * IVPU_NUM_PRIORITIES)
--
--#define IVPU_CMDQ_INDEX(engine, priority) ((engine) * IVPU_NUM_PRIORITIES + (priority))
-+#define IVPU_NUM_CMDQS_PER_CTX (IVPU_NUM_PRIORITIES)
+ #define IVPU_NUM_CMDQS_PER_CTX (IVPU_NUM_PRIORITIES)
  
++#define IVPU_CMDQ_MIN_ID 1
++#define IVPU_CMDQ_MAX_ID 255
++
  #define IVPU_PLATFORM_SILICON 0
  #define IVPU_PLATFORM_SIMICS  2
+ #define IVPU_PLATFORM_FPGA    3
+@@ -171,13 +174,15 @@ struct ivpu_file_priv {
+ 	struct kref ref;
+ 	struct ivpu_device *vdev;
+ 	struct mutex lock; /* Protects cmdq */
+-	struct ivpu_cmdq *cmdq[IVPU_NUM_CMDQS_PER_CTX];
++	struct xarray cmdq_xa;
+ 	struct ivpu_mmu_context ctx;
+ 	struct mutex ms_lock; /* Protects ms_instance_list, ms_info_bo */
+ 	struct list_head ms_instance_list;
+ 	struct ivpu_bo *ms_info_bo;
+ 	struct xa_limit job_limit;
+ 	u32 job_id_next;
++	struct xa_limit cmdq_limit;
++	u32 cmdq_id_next;
+ 	bool has_mmu_faults;
+ 	bool bound;
+ 	bool aborted;
 diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
-index 58d64a221a1e0..ed3f60d809bc0 100644
+index ed3f60d809bc0..5eaf219170eee 100644
 --- a/drivers/accel/ivpu/ivpu_job.c
 +++ b/drivers/accel/ivpu/ivpu_job.c
-@@ -224,8 +224,7 @@ static int ivpu_cmdq_fini(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cm
- static struct ivpu_cmdq *ivpu_cmdq_acquire(struct ivpu_file_priv *file_priv, u16 engine,
- 					   u8 priority)
+@@ -93,9 +93,16 @@ static struct ivpu_cmdq *ivpu_cmdq_alloc(struct ivpu_file_priv *file_priv)
+ 		goto err_free_cmdq;
+ 	}
+ 
++	ret = xa_alloc_cyclic(&file_priv->cmdq_xa, &cmdq->id, cmdq, file_priv->cmdq_limit,
++			      &file_priv->cmdq_id_next, GFP_KERNEL);
++	if (ret < 0) {
++		ivpu_err(vdev, "Failed to allocate command queue id: %d\n", ret);
++		goto err_erase_db_xa;
++	}
++
+ 	cmdq->mem = ivpu_bo_create_global(vdev, SZ_4K, DRM_IVPU_BO_WC | DRM_IVPU_BO_MAPPABLE);
+ 	if (!cmdq->mem)
+-		goto err_erase_xa;
++		goto err_erase_cmdq_xa;
+ 
+ 	ret = ivpu_preemption_buffers_create(vdev, file_priv, cmdq);
+ 	if (ret)
+@@ -103,7 +110,9 @@ static struct ivpu_cmdq *ivpu_cmdq_alloc(struct ivpu_file_priv *file_priv)
+ 
+ 	return cmdq;
+ 
+-err_erase_xa:
++err_erase_cmdq_xa:
++	xa_erase(&file_priv->cmdq_xa, cmdq->id);
++err_erase_db_xa:
+ 	xa_erase(&vdev->db_xa, cmdq->db_id);
+ err_free_cmdq:
+ 	kfree(cmdq);
+@@ -127,13 +136,13 @@ static int ivpu_hws_cmdq_init(struct ivpu_file_priv *file_priv, struct ivpu_cmdq
+ 	struct ivpu_device *vdev = file_priv->vdev;
+ 	int ret;
+ 
+-	ret = ivpu_jsm_hws_create_cmdq(vdev, file_priv->ctx.id, file_priv->ctx.id, cmdq->db_id,
++	ret = ivpu_jsm_hws_create_cmdq(vdev, file_priv->ctx.id, file_priv->ctx.id, cmdq->id,
+ 				       task_pid_nr(current), engine,
+ 				       cmdq->mem->vpu_addr, ivpu_bo_size(cmdq->mem));
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = ivpu_jsm_hws_set_context_sched_properties(vdev, file_priv->ctx.id, cmdq->db_id,
++	ret = ivpu_jsm_hws_set_context_sched_properties(vdev, file_priv->ctx.id, cmdq->id,
+ 							priority);
+ 	if (ret)
+ 		return ret;
+@@ -147,20 +156,21 @@ static int ivpu_register_db(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *
+ 	int ret;
+ 
+ 	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW)
+-		ret = ivpu_jsm_hws_register_db(vdev, file_priv->ctx.id, cmdq->db_id, cmdq->db_id,
++		ret = ivpu_jsm_hws_register_db(vdev, file_priv->ctx.id, cmdq->id, cmdq->db_id,
+ 					       cmdq->mem->vpu_addr, ivpu_bo_size(cmdq->mem));
+ 	else
+ 		ret = ivpu_jsm_register_db(vdev, file_priv->ctx.id, cmdq->db_id,
+ 					   cmdq->mem->vpu_addr, ivpu_bo_size(cmdq->mem));
+ 
+ 	if (!ret)
+-		ivpu_dbg(vdev, JOB, "DB %d registered to ctx %d\n", cmdq->db_id, file_priv->ctx.id);
++		ivpu_dbg(vdev, JOB, "DB %d registered to cmdq %d ctx %d\n",
++			 cmdq->db_id, cmdq->id, file_priv->ctx.id);
+ 
+ 	return ret;
+ }
+ 
+ static int
+-ivpu_cmdq_init(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cmdq, u16 engine, u8 priority)
++ivpu_cmdq_init(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cmdq, u8 priority)
  {
--	int cmdq_idx = IVPU_CMDQ_INDEX(engine, priority);
--	struct ivpu_cmdq *cmdq = file_priv->cmdq[cmdq_idx];
-+	struct ivpu_cmdq *cmdq = file_priv->cmdq[priority];
+ 	struct ivpu_device *vdev = file_priv->vdev;
+ 	struct vpu_job_queue_header *jobq_header;
+@@ -176,13 +186,13 @@ ivpu_cmdq_init(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cmdq, u16 eng
+ 
+ 	cmdq->jobq = (struct vpu_job_queue *)ivpu_bo_vaddr(cmdq->mem);
+ 	jobq_header = &cmdq->jobq->header;
+-	jobq_header->engine_idx = engine;
++	jobq_header->engine_idx = VPU_ENGINE_COMPUTE;
+ 	jobq_header->head = 0;
+ 	jobq_header->tail = 0;
+ 	wmb(); /* Flush WC buffer for jobq->header */
+ 
+ 	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
+-		ret = ivpu_hws_cmdq_init(file_priv, cmdq, engine, priority);
++		ret = ivpu_hws_cmdq_init(file_priv, cmdq, VPU_ENGINE_COMPUTE, priority);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -209,9 +219,9 @@ static int ivpu_cmdq_fini(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cm
+ 	cmdq->db_registered = false;
+ 
+ 	if (vdev->fw->sched_mode == VPU_SCHEDULING_MODE_HW) {
+-		ret = ivpu_jsm_hws_destroy_cmdq(vdev, file_priv->ctx.id, cmdq->db_id);
++		ret = ivpu_jsm_hws_destroy_cmdq(vdev, file_priv->ctx.id, cmdq->id);
+ 		if (!ret)
+-			ivpu_dbg(vdev, JOB, "Command queue %d destroyed\n", cmdq->db_id);
++			ivpu_dbg(vdev, JOB, "Command queue %d destroyed\n", cmdq->id);
+ 	}
+ 
+ 	ret = ivpu_jsm_unregister_db(vdev, cmdq->db_id);
+@@ -221,51 +231,46 @@ static int ivpu_cmdq_fini(struct ivpu_file_priv *file_priv, struct ivpu_cmdq *cm
+ 	return 0;
+ }
+ 
+-static struct ivpu_cmdq *ivpu_cmdq_acquire(struct ivpu_file_priv *file_priv, u16 engine,
+-					   u8 priority)
++static struct ivpu_cmdq *ivpu_cmdq_acquire(struct ivpu_file_priv *file_priv, u8 priority)
+ {
+-	struct ivpu_cmdq *cmdq = file_priv->cmdq[priority];
++	struct ivpu_cmdq *cmdq;
++	unsigned long cmdq_id;
  	int ret;
  
  	lockdep_assert_held(&file_priv->lock);
-@@ -234,7 +233,7 @@ static struct ivpu_cmdq *ivpu_cmdq_acquire(struct ivpu_file_priv *file_priv, u16
+ 
++	xa_for_each(&file_priv->cmdq_xa, cmdq_id, cmdq)
++		if (cmdq->priority == priority)
++			break;
++
+ 	if (!cmdq) {
  		cmdq = ivpu_cmdq_alloc(file_priv);
  		if (!cmdq)
  			return NULL;
--		file_priv->cmdq[cmdq_idx] = cmdq;
-+		file_priv->cmdq[priority] = cmdq;
+-		file_priv->cmdq[priority] = cmdq;
++		cmdq->priority = priority;
  	}
  
- 	ret = ivpu_cmdq_init(file_priv, cmdq, engine, priority);
-@@ -244,15 +243,14 @@ static struct ivpu_cmdq *ivpu_cmdq_acquire(struct ivpu_file_priv *file_priv, u16
+-	ret = ivpu_cmdq_init(file_priv, cmdq, engine, priority);
++	ret = ivpu_cmdq_init(file_priv, cmdq, priority);
+ 	if (ret)
+ 		return NULL;
+ 
  	return cmdq;
  }
  
--static void ivpu_cmdq_release_locked(struct ivpu_file_priv *file_priv, u16 engine, u8 priority)
-+static void ivpu_cmdq_release_locked(struct ivpu_file_priv *file_priv, u8 priority)
+-static void ivpu_cmdq_release_locked(struct ivpu_file_priv *file_priv, u8 priority)
++void ivpu_cmdq_release_all_locked(struct ivpu_file_priv *file_priv)
  {
--	int cmdq_idx = IVPU_CMDQ_INDEX(engine, priority);
--	struct ivpu_cmdq *cmdq = file_priv->cmdq[cmdq_idx];
-+	struct ivpu_cmdq *cmdq = file_priv->cmdq[priority];
+-	struct ivpu_cmdq *cmdq = file_priv->cmdq[priority];
++	struct ivpu_cmdq *cmdq;
++	unsigned long cmdq_id;
  
  	lockdep_assert_held(&file_priv->lock);
  
- 	if (cmdq) {
--		file_priv->cmdq[cmdq_idx] = NULL;
-+		file_priv->cmdq[priority] = NULL;
+-	if (cmdq) {
+-		file_priv->cmdq[priority] = NULL;
++	xa_for_each(&file_priv->cmdq_xa, cmdq_id, cmdq) {
++		xa_erase(&file_priv->cmdq_xa, cmdq_id);
  		ivpu_cmdq_fini(file_priv, cmdq);
  		ivpu_cmdq_free(file_priv, cmdq);
  	}
-@@ -260,14 +258,12 @@ static void ivpu_cmdq_release_locked(struct ivpu_file_priv *file_priv, u16 engin
- 
- void ivpu_cmdq_release_all_locked(struct ivpu_file_priv *file_priv)
- {
--	u16 engine;
- 	u8 priority;
- 
- 	lockdep_assert_held(&file_priv->lock);
- 
--	for (engine = 0; engine < IVPU_NUM_ENGINES; engine++)
--		for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++)
--			ivpu_cmdq_release_locked(file_priv, engine, priority);
-+	for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++)
-+		ivpu_cmdq_release_locked(file_priv, priority);
  }
  
+-void ivpu_cmdq_release_all_locked(struct ivpu_file_priv *file_priv)
+-{
+-	u8 priority;
+-
+-	lockdep_assert_held(&file_priv->lock);
+-
+-	for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++)
+-		ivpu_cmdq_release_locked(file_priv, priority);
+-}
+-
  /*
-@@ -278,19 +274,15 @@ void ivpu_cmdq_release_all_locked(struct ivpu_file_priv *file_priv)
+  * Mark the doorbell as unregistered
+  * This function needs to be called when the VPU hardware is restarted
+@@ -274,16 +279,13 @@ void ivpu_cmdq_release_all_locked(struct ivpu_file_priv *file_priv)
   */
  static void ivpu_cmdq_reset(struct ivpu_file_priv *file_priv)
  {
--	u16 engine;
- 	u8 priority;
+-	u8 priority;
++	struct ivpu_cmdq *cmdq;
++	unsigned long cmdq_id;
  
  	mutex_lock(&file_priv->lock);
  
--	for (engine = 0; engine < IVPU_NUM_ENGINES; engine++) {
--		for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++) {
--			int cmdq_idx = IVPU_CMDQ_INDEX(engine, priority);
--			struct ivpu_cmdq *cmdq = file_priv->cmdq[cmdq_idx];
-+	for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++) {
-+		struct ivpu_cmdq *cmdq = file_priv->cmdq[priority];
- 
--			if (cmdq)
--				cmdq->db_registered = false;
--		}
-+		if (cmdq)
-+			cmdq->db_registered = false;
- 	}
+-	for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++) {
+-		struct ivpu_cmdq *cmdq = file_priv->cmdq[priority];
+-
+-		if (cmdq)
+-			cmdq->db_registered = false;
+-	}
++	xa_for_each(&file_priv->cmdq_xa, cmdq_id, cmdq)
++		cmdq->db_registered = false;
  
  	mutex_unlock(&file_priv->lock);
-@@ -311,16 +303,11 @@ void ivpu_cmdq_reset_all_contexts(struct ivpu_device *vdev)
+ }
+@@ -303,12 +305,11 @@ void ivpu_cmdq_reset_all_contexts(struct ivpu_device *vdev)
  
  static void ivpu_cmdq_fini_all(struct ivpu_file_priv *file_priv)
  {
--	u16 engine;
- 	u8 priority;
+-	u8 priority;
++	struct ivpu_cmdq *cmdq;
++	unsigned long cmdq_id;
  
--	for (engine = 0; engine < IVPU_NUM_ENGINES; engine++) {
--		for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++) {
--			int cmdq_idx = IVPU_CMDQ_INDEX(engine, priority);
--
--			if (file_priv->cmdq[cmdq_idx])
--				ivpu_cmdq_fini(file_priv, file_priv->cmdq[cmdq_idx]);
--		}
-+	for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++) {
-+		if (file_priv->cmdq[priority])
-+			ivpu_cmdq_fini(file_priv, file_priv->cmdq[priority]);
- 	}
+-	for (priority = 0; priority < IVPU_NUM_PRIORITIES; priority++) {
+-		if (file_priv->cmdq[priority])
+-			ivpu_cmdq_fini(file_priv, file_priv->cmdq[priority]);
+-	}
++	xa_for_each(&file_priv->cmdq_xa, cmdq_id, cmdq)
++		ivpu_cmdq_fini(file_priv, cmdq);
  }
  
-@@ -703,7 +690,7 @@ int ivpu_submit_ioctl(struct drm_device *dev, void *data, struct drm_file *file)
- 	int idx, ret;
- 	u8 priority;
+ void ivpu_context_abort_locked(struct ivpu_file_priv *file_priv)
+@@ -335,8 +336,8 @@ static int ivpu_cmdq_push_job(struct ivpu_cmdq *cmdq, struct ivpu_job *job)
  
--	if (params->engine > DRM_IVPU_ENGINE_COPY)
-+	if (params->engine != DRM_IVPU_ENGINE_COMPUTE)
- 		return -EINVAL;
+ 	/* Check if there is space left in job queue */
+ 	if (next_entry == header->head) {
+-		ivpu_dbg(vdev, JOB, "Job queue full: ctx %d engine %d db %d head %d tail %d\n",
+-			 job->file_priv->ctx.id, job->engine_idx, cmdq->db_id, header->head, tail);
++		ivpu_dbg(vdev, JOB, "Job queue full: ctx %d cmdq %d db %d head %d tail %d\n",
++			 job->file_priv->ctx.id, cmdq->id, cmdq->db_id, header->head, tail);
+ 		return -EBUSY;
+ 	}
  
- 	if (params->priority > DRM_IVPU_JOB_PRIORITY_REALTIME)
-diff --git a/drivers/accel/ivpu/ivpu_jsm_msg.c b/drivers/accel/ivpu/ivpu_jsm_msg.c
-index ae91ad24d10d8..33d597b2a7f53 100644
---- a/drivers/accel/ivpu/ivpu_jsm_msg.c
-+++ b/drivers/accel/ivpu/ivpu_jsm_msg.c
-@@ -132,7 +132,7 @@ int ivpu_jsm_get_heartbeat(struct ivpu_device *vdev, u32 engine, u64 *heartbeat)
- 	struct vpu_jsm_msg resp;
- 	int ret;
+@@ -550,7 +551,7 @@ static int ivpu_job_submit(struct ivpu_job *job, u8 priority)
+ 	mutex_lock(&vdev->submitted_jobs_lock);
+ 	mutex_lock(&file_priv->lock);
  
--	if (engine > VPU_ENGINE_COPY)
-+	if (engine != VPU_ENGINE_COMPUTE)
- 		return -EINVAL;
- 
- 	req.payload.query_engine_hb.engine_idx = engine;
-@@ -155,7 +155,7 @@ int ivpu_jsm_reset_engine(struct ivpu_device *vdev, u32 engine)
- 	struct vpu_jsm_msg resp;
- 	int ret;
- 
--	if (engine > VPU_ENGINE_COPY)
-+	if (engine != VPU_ENGINE_COMPUTE)
- 		return -EINVAL;
- 
- 	req.payload.engine_reset.engine_idx = engine;
-@@ -174,7 +174,7 @@ int ivpu_jsm_preempt_engine(struct ivpu_device *vdev, u32 engine, u32 preempt_id
- 	struct vpu_jsm_msg resp;
- 	int ret;
- 
--	if (engine > VPU_ENGINE_COPY)
-+	if (engine != VPU_ENGINE_COMPUTE)
- 		return -EINVAL;
- 
- 	req.payload.engine_preempt.engine_idx = engine;
-@@ -346,7 +346,7 @@ int ivpu_jsm_hws_resume_engine(struct ivpu_device *vdev, u32 engine)
- 	struct vpu_jsm_msg resp;
- 	int ret;
- 
--	if (engine >= VPU_ENGINE_NB)
-+	if (engine != VPU_ENGINE_COMPUTE)
- 		return -EINVAL;
- 
- 	req.payload.hws_resume_engine.engine_idx = engine;
-diff --git a/include/uapi/drm/ivpu_accel.h b/include/uapi/drm/ivpu_accel.h
-index 13001da141c33..4b261eb705bc0 100644
---- a/include/uapi/drm/ivpu_accel.h
-+++ b/include/uapi/drm/ivpu_accel.h
-@@ -261,7 +261,7 @@ struct drm_ivpu_bo_info {
- 
- /* drm_ivpu_submit engines */
- #define DRM_IVPU_ENGINE_COMPUTE 0
--#define DRM_IVPU_ENGINE_COPY    1
-+#define DRM_IVPU_ENGINE_COPY    1 /* Deprecated */
+-	cmdq = ivpu_cmdq_acquire(file_priv, job->engine_idx, priority);
++	cmdq = ivpu_cmdq_acquire(file_priv, priority);
+ 	if (!cmdq) {
+ 		ivpu_warn_ratelimited(vdev, "Failed to get job queue, ctx %d engine %d prio %d\n",
+ 				      file_priv->ctx.id, job->engine_idx, priority);
+diff --git a/drivers/accel/ivpu/ivpu_job.h b/drivers/accel/ivpu/ivpu_job.h
+index 0ae77f0638fad..af1ed039569cd 100644
+--- a/drivers/accel/ivpu/ivpu_job.h
++++ b/drivers/accel/ivpu/ivpu_job.h
+@@ -28,8 +28,10 @@ struct ivpu_cmdq {
+ 	struct ivpu_bo *secondary_preempt_buf;
+ 	struct ivpu_bo *mem;
+ 	u32 entry_count;
++	u32 id;
+ 	u32 db_id;
+ 	bool db_registered;
++	u8 priority;
+ };
  
  /**
-  * struct drm_ivpu_submit - Submit commands to the VPU
-@@ -292,10 +292,6 @@ struct drm_ivpu_submit {
- 	 * %DRM_IVPU_ENGINE_COMPUTE:
- 	 *
- 	 * Performs Deep Learning Neural Compute Inference Operations
--	 *
--	 * %DRM_IVPU_ENGINE_COPY:
--	 *
--	 * Performs memory copy operations to/from system memory allocated for VPU
- 	 */
- 	__u32 engine;
- 
 -- 
 2.39.5
 
