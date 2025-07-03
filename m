@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E4F2B9A6;
-	Thu,  3 Jul 2025 15:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8225F2E7BBF;
+	Thu,  3 Jul 2025 15:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554976; cv=none; b=Q7U+EwqOS4fZl+ksbjPQptFYJKPHT5BVYh8ptTZ+gtmdyztZ/3YPF9DFJWQe9f3wJTdegCMrQ13twRUcyRvMkGAoTAErQZ8abS3p1kL4v0b/0NdUAn/2h+MAxXUj60j0le7lYkafEv62OzabztZPZ6i3ecwfeuf3r5Oj9K48Vfs=
+	t=1751554979; cv=none; b=OtKoyAzYlZamCGs/mh+m/4qDlgd4RPbDC26rgXHPNMmbsbmAvK1YvX0eMOAjpuhHe2iQ/nD8Mx8wmaGmxzdq7q+SJ7h0ObKKb5lZSgNH7NbSCzz0whqEJ4kLaqmlUeL+r5jFGCKe4PzolKBcGIvjd2PpbCmLL3sVMSCTPRLWzGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554976; c=relaxed/simple;
-	bh=Gw80lKoGLSMmi4vR72rNesd/PYR2HWEDeQK33LpU4VM=;
+	s=arc-20240116; t=1751554979; c=relaxed/simple;
+	bh=97VTEJQZ+mRnhw6axTjNBkIsbpJA7xM5C2sk9Uh9+jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrOpWYB6PjTDZnIrfd5KB/jM5NlbmIJflkPZe5xfdya7iKFvqnBg7iDMobwWx7TZfRvLEbVDOnaixVWyBbB6kUAejtp5TSykP5wTzcEdDZ3pTe+l7EepMP/pVYsQrFAXRRQ2l2GIMUoaTuA/mfdDS29hDtdGn2HjsJ8XKezYlXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iyr7UjmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ry/gZcsk6GmyR5zgknRTwVJkIFZbJp111dGoEM+9R3U3cUcEFHE5ILwi0haZk4nBLs/FszKdYq0FhqAIKbX6NacXxy5RVLydcsg4/ZHAAMyMV0TEVd/mdY0oSIG+AdK3Yo36g1zuqCFqAt1LUkQUTORbjiF4RyIgi1LXnjo+kPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGJvUmzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iyr7UjmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C086C4CEE3;
-	Thu,  3 Jul 2025 15:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGJvUmzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB65C4CEE3;
+	Thu,  3 Jul 2025 15:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554976;
-	bh=Gw80lKoGLSMmi4vR72rNesd/PYR2HWEDeQK33LpU4VM=;
+	s=korg; t=1751554979;
+	bh=97VTEJQZ+mRnhw6axTjNBkIsbpJA7xM5C2sk9Uh9+jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iyr7UjmJVL6LDD7mE1J3YDjjIK3SDdQNSUfOMJ9indaa22fHlYVbdEPmdWaeqhm/Z
-	 djxszhtWXsAMINj+TgpaX0/shPVGuPelVWR78esvpn9hX6TX13HOuig49iJhg5fTYX
-	 IwsygtuarI9rVwzRaGD+lTqlK0bB43V+iLjp6Rak=
+	b=xGJvUmzFWP/deBmaxB6mSMN/8yMXG3l/tVBQBUuyLAVGHRuQtWEn65S7DZzyu2yJB
+	 3dNxIfIRHzI7O4X8ah5FX9yRIF0fGpmWTeKcDwprKp9pMMSpzopSf3Z3bSYywpnDnZ
+	 Q/wkWfNtvTUiTpgzk+fk/Na29FQwebua8i4s7R8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngjun Lee <yjjuny.lee@samsung.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 138/263] ALSA: usb-audio: Fix out-of-bounds read in snd_usb_get_audioformat_uac3()
-Date: Thu,  3 Jul 2025 16:40:58 +0200
-Message-ID: <20250703144009.892354266@linuxfoundation.org>
+Subject: [PATCH 6.15 139/263] attach_recursive_mnt(): do not lock the covering tree when sliding something under it
+Date: Thu,  3 Jul 2025 16:40:59 +0200
+Message-ID: <20250703144009.930671954@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,44 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngjun Lee <yjjuny.lee@samsung.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit fb4e2a6e8f28a3c0ad382e363aeb9cd822007b8a ]
+[ Upstream commit ce7df19686530920f2f6b636e71ce5eb1d9303ef ]
 
-In snd_usb_get_audioformat_uac3(), the length value returned from
-snd_usb_ctl_msg() is used directly for memory allocation without
-validation. This length is controlled by the USB device.
+If we are propagating across the userns boundary, we need to lock the
+mounts added there.  However, in case when something has already
+been mounted there and we end up sliding a new tree under that,
+the stuff that had been there before should not get locked.
 
-The allocated buffer is cast to a uac3_cluster_header_descriptor
-and its fields are accessed without verifying that the buffer
-is large enough. If the device returns a smaller than expected
-length, this leads to an out-of-bounds read.
+IOW, lock_mnt_tree() should be called before we reparent the
+preexisting tree on top of what we are adding.
 
-Add a length check to ensure the buffer is large enough for
-uac3_cluster_header_descriptor.
-
-Signed-off-by: Youngjun Lee <yjjuny.lee@samsung.com>
-Fixes: 9a2fe9b801f5 ("ALSA: usb: initial USB Audio Device Class 3.0 support")
-Link: https://patch.msgid.link/20250623-uac3-oob-fix-v1-1-527303eaf40a@samsung.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3bd045cc9c4b ("separate copying and locking mount tree on cross-userns copies")
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/stream.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/namespace.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/stream.c b/sound/usb/stream.c
-index c1ea8844a46fc..aa91d63749f2c 100644
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -987,6 +987,8 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
- 	 * and request Cluster Descriptor
- 	 */
- 	wLength = le16_to_cpu(hc_header.wLength);
-+	if (wLength < sizeof(cluster))
-+		return NULL;
- 	cluster = kzalloc(wLength, GFP_KERNEL);
- 	if (!cluster)
- 		return ERR_PTR(-ENOMEM);
+diff --git a/fs/namespace.c b/fs/namespace.c
+index d6ac7e533b021..24b087ba88159 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2765,14 +2765,14 @@ static int attach_recursive_mnt(struct mount *source_mnt,
+ 	hlist_for_each_entry_safe(child, n, &tree_list, mnt_hash) {
+ 		struct mount *q;
+ 		hlist_del_init(&child->mnt_hash);
+-		q = __lookup_mnt(&child->mnt_parent->mnt,
+-				 child->mnt_mountpoint);
+-		if (q)
+-			mnt_change_mountpoint(child, smp, q);
+ 		/* Notice when we are propagating across user namespaces */
+ 		if (child->mnt_parent->mnt_ns->user_ns != user_ns)
+ 			lock_mnt_tree(child);
+ 		child->mnt.mnt_flags &= ~MNT_LOCKED;
++		q = __lookup_mnt(&child->mnt_parent->mnt,
++				 child->mnt_mountpoint);
++		if (q)
++			mnt_change_mountpoint(child, smp, q);
+ 		commit_tree(child);
+ 	}
+ 	put_mountpoint(smp);
 -- 
 2.39.5
 
