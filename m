@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BB91C68A6;
-	Thu,  3 Jul 2025 15:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B55D19F120;
+	Thu,  3 Jul 2025 15:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555894; cv=none; b=EcyA//TQNAeNQ32qW9FO9+0zcUS8ZPCbp+Nc05O4XoXv+BcjCTOiaiyx4O+3PYq+ugcvf+Fxh0dTCsRE+WQpmBPSNQ0+dOmdMhp0xbk5pOQKogmLSEEH85hM+FgWz1x4q0Z3RkKEZJDcmWfm72eAjBXSYoTpm9scdtDEtUaTpe0=
+	t=1751555897; cv=none; b=KDwLxL5IlvWSci0/wqev4vtul/etgO+IvT9y/aJHNhOrtzuSh01C7tIFf3616ajrzrM4IUacnIk2s61AcOHHDMakccaUxKIxtO5BrbxRs+xY+D6vbEXhmGVq4phS26Hg9tifo/W9eafOhC+eUBPgzmXmQHhKfSia/dogrKimKbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555894; c=relaxed/simple;
-	bh=E/uySTLFX0uAYP4/hAPq/0C8iVfl7jStp1heUNQIhdU=;
+	s=arc-20240116; t=1751555897; c=relaxed/simple;
+	bh=07vSGT+vdbSMiT2WHNZV07THnJIUcIAx2oskhtD5CIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqWbv2LUNFIcrVzuvbSiUylnYxCj3kbe5xW7AYaPMo7isEIQUrNh1w5IX4zTVinlqiEJQKcdx6PkozMUa33CF8X8pKYTXTKUEunh5TJyYoB37BkHNXyvfDucYEMmCXW5nUg1VCFGq/ok1qKOgm8jJ68/kFu4dLpbe6QyzCMvcp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BE5aRAWz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eN3Wn5llKtmieeOwd13IH/08KPPP1iXS20eyMo79EnTY9QqrrxGNkvWLRxnh3gnArPmUBXvLFU1szWMUZkYQJ0GUbhct9kprA9a+3tq67y40S8PzhNyXi3thgmGlWnSmkSescFGXA/3e4lhLZ527j2r+umc6qy4Ii5PLi3JYsYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMVKZTC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BE5aRAWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3F5C4CEE3;
-	Thu,  3 Jul 2025 15:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMVKZTC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5B0C4CEE3;
+	Thu,  3 Jul 2025 15:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555894;
-	bh=E/uySTLFX0uAYP4/hAPq/0C8iVfl7jStp1heUNQIhdU=;
+	s=korg; t=1751555897;
+	bh=07vSGT+vdbSMiT2WHNZV07THnJIUcIAx2oskhtD5CIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BE5aRAWz357QeLKMNxkBwGRJatMK7tX9r5cPkw6jBUxRGYhYArZ+c/6OQNTIoqIAx
-	 sFDRVx8THv+WUp2hFurq1eTlAB53mxblftF8Z34ONIOFn7pBeq5E2gINjh6doMsZna
-	 d+b9a3k2oS7jOTPaQTd2RbE8yzg7VLhCBzwgwjyE=
+	b=yMVKZTC3PoIGv1UbjFUlaqA57ggDjC/1FL4KlH3RSjVhXtCyDesIVVn70M+zu0MtK
+	 33GzYALvqq0w+pV7EUGw5pT1UoOlDZ6Cszz6ZFvFtgxbQfXwZcFB+jxdM3Im1gOz0O
+	 d685R1X0m5YSXvaNlLcwk9J8Fxc/PwrcpdzlFmjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/132] rust: module: place cleanup_module() in .exit.text section
-Date: Thu,  3 Jul 2025 16:41:40 +0200
-Message-ID: <20250703143939.837943478@linuxfoundation.org>
+Subject: [PATCH 6.1 012/132] Revert "iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices"
+Date: Thu,  3 Jul 2025 16:41:41 +0200
+Message-ID: <20250703143939.876189552@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
 References: <20250703143939.370927276@linuxfoundation.org>
@@ -46,65 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: FUJITA Tomonori <fujita.tomonori@gmail.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 249c3a0e53acefc2b06d3b3e1fc28fb2081f878d ]
+[ Upstream commit 3be5fa236649da6404f1bca1491bf02d4b0d5cce ]
 
-Place cleanup_module() in .exit.text section. Currently,
-cleanup_module() is likely placed in the .text section. It's
-inconsistent with the layout of C modules, where cleanup_module() is
-placed in .exit.text.
+Commit 991de2e59090 ("PCI, x86: Implement pcibios_alloc_irq() and
+pcibios_free_irq()") changed IRQ handling on PCI driver probing.
+It inadvertently broke resume from system sleep on AMD platforms:
 
-[ Boqun asked for an example of how the section changed to be
-  put in the log. Tomonori provided the following examples:
+  https://lore.kernel.org/r/20150926164651.GA3640@pd.tnic/
 
-    C module:
+This was fixed by two independent commits:
 
-      $ objdump -t ~/build/x86/drivers/block/loop.o|grep clean
-      0000000000000000 l     O .exit.data    0000000000000008 __UNIQUE_ID___addressable_cleanup_module412
-      0000000000000000 g     F .exit.text    000000000000009c cleanup_module
+* 8affb487d4a4 ("x86/PCI: Don't alloc pcibios-irq when MSI is enabled")
+* cbbc00be2ce3 ("iommu/amd: Prevent binding other PCI drivers to IOMMU PCI devices")
 
-    Rust module without this patch:
+The breaking change and one of these two fixes were subsequently reverted:
 
-      $ objdump -t ~/build/x86/samples/rust/rust_minimal.o|grep clean
-      00000000000002b0 g     F .text         00000000000000c6 cleanup_module
-      0000000000000000 g     O .exit.data    0000000000000008 _R...___UNIQUE_ID___addressable_cleanup_module
+* fe25d078874f ("Revert "x86/PCI: Don't alloc pcibios-irq when MSI is enabled"")
+* 6c777e8799a9 ("Revert "PCI, x86: Implement pcibios_alloc_irq() and pcibios_free_irq()"")
 
-    Rust module with this patch:
+This rendered the second fix unnecessary, so revert it as well.  It used
+the match_driver flag in struct pci_dev, which is internal to the PCI core
+and not supposed to be touched by arbitrary drivers.
 
-      $ objdump -t ~/build/x86/samples/rust/rust_minimal.o|grep clean
-      0000000000000000 g     F .exit.text    00000000000000c6 cleanup_module
-      0000000000000000 g     O .exit.data    0000000000000008 _R...___UNIQUE_ID___addressable_cleanup_module
-
-  - Miguel ]
-
-Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20250308044506.14458-1-fujita.tomonori@gmail.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Joerg Roedel <jroedel@suse.de>
+Link: https://patch.msgid.link/9a3ddff5cc49512044f963ba0904347bd404094d.1745572340.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/macros/module.rs | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd/init.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/rust/macros/module.rs b/rust/macros/module.rs
-index 94a92ab82b6b3..eeca6b2d5160a 100644
---- a/rust/macros/module.rs
-+++ b/rust/macros/module.rs
-@@ -229,6 +229,7 @@ pub(crate) fn module(ts: TokenStream) -> TokenStream {
-                     #[cfg(MODULE)]
-                     #[doc(hidden)]
-                     #[no_mangle]
-+                    #[link_section = \".exit.text\"]
-                     pub extern \"C\" fn cleanup_module() {{
-                         // SAFETY:
-                         // - This function is inaccessible to the outside due to the double
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index bc78e86655516..02e3167b02717 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -2053,9 +2053,6 @@ static int __init iommu_init_pci(struct amd_iommu *iommu)
+ 	if (!iommu->dev)
+ 		return -ENODEV;
+ 
+-	/* Prevent binding other PCI device drivers to IOMMU devices */
+-	iommu->dev->match_driver = false;
+-
+ 	/* ACPI _PRT won't have an IRQ for IOMMU */
+ 	iommu->dev->irq_managed = 1;
+ 
 -- 
 2.39.5
 
