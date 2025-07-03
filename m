@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBD672610;
-	Thu,  3 Jul 2025 14:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C4072610;
+	Thu,  3 Jul 2025 14:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554090; cv=none; b=W6Tf2ibhVCs0MHp64gAGwrskuyl3V/MT7UwEmGZb6ES1HPIR0zx4agHjvuYErAAKxJ15YqonSYjrWd6Efg8dqZT/oHyK6AStifV4G1ACEg8k3L7QQrMvKVqsRvxgeUgb3tkCXgcIL122/ZtgNpNiN44nXP+Mvq1GBBB88YdcwJ8=
+	t=1751554093; cv=none; b=UoXkHhNWjN0O3xyiEi2qgxgg1mfo5Yb83kQrQg3eZNx4oppusnBB5x5MfDWtXOposWdcT4LNQMfb6wZYwtTSUG31Qs8wDK8i9nI7TAewNZShsZBDkC8zjkE6myPZwfu4vTmVfrfsOxCIh9AOM+EZrJ5OgZ+rber+e4HbiLkkqvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554090; c=relaxed/simple;
-	bh=Aju9xFu+B9x86U8FAKUMtpToXeP6D6Lv2jw17+4+7eU=;
+	s=arc-20240116; t=1751554093; c=relaxed/simple;
+	bh=k8IdaZFTvrWdtKUGL3S8A1Bs3RGuHDMNl5OifYOF3ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEbQE37gWd6aRVbOXmcBFLwpm70Eoc0RSc4eiCUfYfImf/WUyVBT5WsmJt9ztdLB3XYZ0UraLQKQrqv/kmX/y0ltWcnwPii3Qug1HjhRUHcc/WrJm1DsYCU4SFi7lno1MjInAsR5jfHsH+gGiMonOqbc3d9yWPPEqKvY8yjUwWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUYfJrZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ia5VGBh6ZwcaJP4rLiQdFlzAqBTZQ91Xr3ZVIYaWCTzN8fsId4cb/ySdARHgkwPn04sCc0eDSMWiTdjBoERpTwfsnqk0H3Lymbhc+d1P8DzdDr+5Ju8DtjgFjJKDz2QDxUI25hzuVOXcQkeQZ0IfiEYEji3A/giNpWSBI6HiGTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hImOfr3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUYfJrZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D507EC4CEE3;
-	Thu,  3 Jul 2025 14:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hImOfr3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226E7C4CEE3;
+	Thu,  3 Jul 2025 14:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554090;
-	bh=Aju9xFu+B9x86U8FAKUMtpToXeP6D6Lv2jw17+4+7eU=;
+	s=korg; t=1751554093;
+	bh=k8IdaZFTvrWdtKUGL3S8A1Bs3RGuHDMNl5OifYOF3ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUYfJrZT4MMWK/S3TVE5uDnpuSEDi19OcsuBBdzFlXuOXhqnQWUmdZ2S6jebvtBzQ
-	 3cn8JEEZBTsO0V8pM5TgthAKBZTMav0jmHlJf9AuB/7BDEJJIXKw1x1YCTto/P5VKn
-	 vkokKpMb+y4TGLeagiHegj5RrCDd6GttflEbkJ7U=
+	b=hImOfr3f01iGEh/GjER45+cUs8FlNZE+h+XTtrXTr4NW4z7pKB0LTAnRDyMrxzF3t
+	 DvcxQbUfCwofzdnuLtsukgw/wa0ut+aufSrgE/ZJhCetWUiz9PJskYWXIFwI8TPEqv
+	 x+j2/4bk1e9tWgXTVp52LqGd8Xw0Ra1y16HuDFLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 077/218] i2c: tiny-usb: disable zero-length read messages
-Date: Thu,  3 Jul 2025 16:40:25 +0200
-Message-ID: <20250703143959.021323511@linuxfoundation.org>
+Subject: [PATCH 6.12 078/218] i2c: robotfuzz-osif: disable zero-length read messages
+Date: Thu,  3 Jul 2025 16:40:26 +0200
+Message-ID: <20250703143959.060561279@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
 References: <20250703143955.956569535@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit cbdb25ccf7566eee0c2b945e35cb98baf9ed0aa6 upstream.
+commit 56ad91c1aa9c18064348edf69308080b03c9dc48 upstream.
 
 This driver passes the length of an i2c_msg directly to
 usb_control_msg(). If the message is now a read and of length 0, it
@@ -60,37 +60,37 @@ violates the USB protocol and a warning will be printed. Enable the
 I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
 read messages altogether.
 
-Fixes: e8c76eed2ecd ("i2c: New i2c-tiny-usb bus driver")
+Fixes: 83e53a8f120f ("i2c: Add bus driver for for OSIF USB i2c device.")
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: <stable@vger.kernel.org> # v2.6.22+
+Cc: <stable@vger.kernel.org> # v3.14+
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250522064349.3823-2-wsa+renesas@sang-engineering.com
+Link: https://lore.kernel.org/r/20250522064234.3721-2-wsa+renesas@sang-engineering.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-tiny-usb.c |    6 ++++++
+ drivers/i2c/busses/i2c-robotfuzz-osif.c |    6 ++++++
  1 file changed, 6 insertions(+)
 
---- a/drivers/i2c/busses/i2c-tiny-usb.c
-+++ b/drivers/i2c/busses/i2c-tiny-usb.c
-@@ -138,6 +138,11 @@ out:
- 	return ret;
+--- a/drivers/i2c/busses/i2c-robotfuzz-osif.c
++++ b/drivers/i2c/busses/i2c-robotfuzz-osif.c
+@@ -111,6 +111,11 @@ static u32 osif_func(struct i2c_adapter
+ 	return I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL;
  }
  
 +/* prevent invalid 0-length usb_control_msg */
-+static const struct i2c_adapter_quirks usb_quirks = {
++static const struct i2c_adapter_quirks osif_quirks = {
 +	.flags = I2C_AQ_NO_ZERO_LEN_READ,
 +};
 +
- /* This is the actual algorithm we define */
- static const struct i2c_algorithm usb_algorithm = {
- 	.xfer = usb_xfer,
-@@ -246,6 +251,7 @@ static int i2c_tiny_usb_probe(struct usb
- 	/* setup i2c adapter description */
- 	dev->adapter.owner = THIS_MODULE;
- 	dev->adapter.class = I2C_CLASS_HWMON;
-+	dev->adapter.quirks = &usb_quirks;
- 	dev->adapter.algo = &usb_algorithm;
- 	dev->adapter.algo_data = dev;
- 	snprintf(dev->adapter.name, sizeof(dev->adapter.name),
+ static const struct i2c_algorithm osif_algorithm = {
+ 	.xfer = osif_xfer,
+ 	.functionality = osif_func,
+@@ -143,6 +148,7 @@ static int osif_probe(struct usb_interfa
+ 
+ 	priv->adapter.owner = THIS_MODULE;
+ 	priv->adapter.class = I2C_CLASS_HWMON;
++	priv->adapter.quirks = &osif_quirks;
+ 	priv->adapter.algo = &osif_algorithm;
+ 	priv->adapter.algo_data = priv;
+ 	snprintf(priv->adapter.name, sizeof(priv->adapter.name),
 
 
