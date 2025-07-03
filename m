@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9F31E9B3D;
-	Thu,  3 Jul 2025 15:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B1F22069F;
+	Thu,  3 Jul 2025 15:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555213; cv=none; b=iI3UEoCXO0veGNHFEXv7lX62B/7JyIwpxp0izMy+KPsPebE4Dy+SC0bgUacEbmGogZ4YJvd7Lo44t8wAoJUIazZyaIjHjBVm4yjj+xkVXOI4rLwn2COOOXeGlZe2n7sD4VbiQcgKGrqcHvvmUH4ZrW41q7Peiizyj+kyKTKZ60U=
+	t=1751555216; cv=none; b=A2+TxibgAe5BiVtiOQdBqA0iTZk+tztk30SfbzjYSNB0HXfMRKd/GD1E7pJc6mWLDH/h1PfcePqt5uEC1jVa3ZfJocfYNSfbGcGVRL7VBJc4mXfw4iZ7EPSJFFgJyGmb07Ahqi8w8iVCuNkXtbX1bkLAnDRMGvUr5ADQQeZ/V/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555213; c=relaxed/simple;
-	bh=PwBUs7aeQU6ZI+N4C5U9cZlcBKdX94it7KHFz1ZLYYI=;
+	s=arc-20240116; t=1751555216; c=relaxed/simple;
+	bh=ysnSyECkftrwFPR4zsdC51FnlG3cy4alkqgxv4tvBAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMNpwXBOIGltv/43Kov9mJ4j6FX43oSeHGY3x5wxsgjPKjp3nx44Pf93juJH6FTDAj6oQRmRm+WkzKfBPgZk8eya7o1qR3Lchl2q/edSkd3MTZ/jaIiJ6cPHRWvAHlUS7Lb1UuKkiDNBT5CG3tkOyAh1rhNQdUbVaDjJdILXMwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=if9CZ3Ea; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vFqFA/ovQNV2lmuv5Hmb0EE4unSMw2Bb53rHokULeI1eNdufNJsxyPC065bDmtzIvVGiCB+mdDQ+8ThbYWBgzWaxCFWrMnC1rlLPyPeGAv4xIdcPg5OMqQxpGVYNwO0UIq54uLAH6Izv9fk8G1oKwEkc/ZM76B65f/5kbs70pOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d56jTUs3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="if9CZ3Ea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB24AC4CEE3;
-	Thu,  3 Jul 2025 15:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d56jTUs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12684C4CEE3;
+	Thu,  3 Jul 2025 15:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555213;
-	bh=PwBUs7aeQU6ZI+N4C5U9cZlcBKdX94it7KHFz1ZLYYI=;
+	s=korg; t=1751555216;
+	bh=ysnSyECkftrwFPR4zsdC51FnlG3cy4alkqgxv4tvBAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=if9CZ3EaoTMkTfW9mNPf/DapYbEnaK1V81eVB4ZZXoJVuQFSxX8p3cCMovZqntTeh
-	 Fl2HX8uXxKxF+hW4+H/PqI2Ko0cc5nkGoqEIEJG1ywqoqj06WuyNgsM4qPrWor7dPB
-	 S3ymNkIUfFb3wPyyMKiBQnQFMRHe6vdH9x8FzwRQ=
+	b=d56jTUs3s5vsqfe0TRXpyrNVeM/eh0tKqgm+cERdKzKTovqdfEtfv8YcSKbuIxxrj
+	 JUzuFf5rgwQU0UDebBrzriBx4MuGqAWHyuCLe0x8alv6rjFC4XDgKl8CJl03UeffTv
+	 JdWIzxvgMCK/PjvU1YHYMi/r86X8j6t8qEZd5xus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 6.15 210/263] drm/msm/gpu: Fix crash when throttling GPU immediately during boot
-Date: Thu,  3 Jul 2025 16:42:10 +0200
-Message-ID: <20250703144012.808209673@linuxfoundation.org>
+	Jay Cornwall <jay.cornwall@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.15 211/263] drm/amdkfd: Fix race in GWS queue scheduling
+Date: Thu,  3 Jul 2025 16:42:11 +0200
+Message-ID: <20250703144012.850680070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -52,76 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Jay Cornwall <jay.cornwall@amd.com>
 
-commit b71717735be48d7743a34897e9e44a0b53e30c0e upstream.
+commit cfb05257ae168a0496c7637e1d9e3ab8a25cbffe upstream.
 
-There is a small chance that the GPU is already hot during boot. In that
-case, the call to of_devfreq_cooling_register() will immediately try to
-apply devfreq cooling, as seen in the following crash:
+q->gws is not updated atomically with qpd->mapped_gws_queue. If a
+runlist is created between pqm_set_gws and update_queue it will
+contain a queue which uses GWS in a process with no GWS allocated.
+This will result in a scheduler hang.
 
-  Unable to handle kernel paging request at virtual address 0000000000014110
-  pc : a6xx_gpu_busy+0x1c/0x58 [msm]
-  lr : msm_devfreq_get_dev_status+0xbc/0x140 [msm]
-  Call trace:
-   a6xx_gpu_busy+0x1c/0x58 [msm] (P)
-   devfreq_simple_ondemand_func+0x3c/0x150
-   devfreq_update_target+0x44/0xd8
-   qos_max_notifier_call+0x30/0x84
-   blocking_notifier_call_chain+0x6c/0xa0
-   pm_qos_update_target+0xd0/0x110
-   freq_qos_apply+0x3c/0x74
-   apply_constraint+0x88/0x148
-   __dev_pm_qos_update_request+0x7c/0xcc
-   dev_pm_qos_update_request+0x38/0x5c
-   devfreq_cooling_set_cur_state+0x98/0xf0
-   __thermal_cdev_update+0x64/0xb4
-   thermal_cdev_update+0x4c/0x58
-   step_wise_manage+0x1f0/0x318
-   __thermal_zone_device_update+0x278/0x424
-   __thermal_cooling_device_register+0x2bc/0x308
-   thermal_of_cooling_device_register+0x10/0x1c
-   of_devfreq_cooling_register_power+0x240/0x2bc
-   of_devfreq_cooling_register+0x14/0x20
-   msm_devfreq_init+0xc4/0x1a0 [msm]
-   msm_gpu_init+0x304/0x574 [msm]
-   adreno_gpu_init+0x1c4/0x2e0 [msm]
-   a6xx_gpu_init+0x5c8/0x9c8 [msm]
-   adreno_bind+0x2a8/0x33c [msm]
-   ...
+Use q->properties.is_gws which is changed while holding the DQM lock.
 
-At this point we haven't initialized the GMU at all yet, so we cannot read
-the GMU registers inside a6xx_gpu_busy(). A similar issue was fixed before
-in commit 6694482a70e9 ("drm/msm: Avoid unclocked GMU register access in
-6xx gpu_busy"): msm_devfreq_init() does call devfreq_suspend_device(), but
-unlike msm_devfreq_suspend(), it doesn't set the df->suspended flag
-accordingly. This means the df->suspended flag does not match the actual
-devfreq state after initialization and msm_devfreq_get_dev_status() will
-end up accessing GMU registers, causing the crash.
-
-Fix this by setting df->suspended correctly during initialization.
-
+Signed-off-by: Jay Cornwall <jay.cornwall@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b98370220eb3110e82248e3354e16a489a492cfb)
 Cc: stable@vger.kernel.org
-Fixes: 6694482a70e9 ("drm/msm: Avoid unclocked GMU register access in 6xx gpu_busy")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/650772/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_gpu_devfreq.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_packet_manager_v9.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -156,6 +156,7 @@ void msm_devfreq_init(struct msm_gpu *gp
- 	priv->gpu_devfreq_config.downdifferential = 10;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_packet_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_packet_manager_v9.c
+@@ -237,7 +237,7 @@ static int pm_map_queues_v9(struct packe
  
- 	mutex_init(&df->lock);
-+	df->suspended = true;
- 
- 	ret = dev_pm_qos_add_request(&gpu->pdev->dev, &df->boost_freq,
- 				     DEV_PM_QOS_MIN_FREQUENCY, 0);
+ 	packet->bitfields2.engine_sel =
+ 		engine_sel__mes_map_queues__compute_vi;
+-	packet->bitfields2.gws_control_queue = q->gws ? 1 : 0;
++	packet->bitfields2.gws_control_queue = q->properties.is_gws ? 1 : 0;
+ 	packet->bitfields2.extended_engine_sel =
+ 		extended_engine_sel__mes_map_queues__legacy_engine_sel;
+ 	packet->bitfields2.queue_type =
 
 
