@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DC32E7F1A;
-	Thu,  3 Jul 2025 14:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B3F2EAB95;
+	Thu,  3 Jul 2025 14:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751554765; cv=none; b=mghILZRGUNvjzMlE/96OvVbcKd1aBlA+IZ+gcNcW4UGmtNDJMW4HbVgRMAGFK/rbMThR6tSi7bcLFzJjmaXPTpENkZkpwKPJk5ywCzJdXAMCaqWq/20pmBzvSalXqPHDrJCIBzL68F5Yt85drZOrRi9BS671+DHIHOY3LDe6+/c=
+	t=1751554768; cv=none; b=dKXlxo5kIDst2UENSP0Z+mKDpicOZv65TIqh7ZbPLIKuMjVBcExwN0h7HdLdggvIRrOVLqNVaII77NPjITQ123x4dHV3snnddpuJqc0enD+EEGeo1hWGpNxUJ4DFGrMJf6swypidTCwLYL5LTTm0hrLWpuNACUA72VAAUw9FZYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751554765; c=relaxed/simple;
-	bh=qDTUt7QcVUlUF87HOv/Ws8YpzkGbUgT6PBZv1PIyc5I=;
+	s=arc-20240116; t=1751554768; c=relaxed/simple;
+	bh=pbkQtkfrkuvu2QvsOcNP+HqzHUa9/8qaYj3VCISfozI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHeJs/jjuapJVq8KBLT8jYsfGrxfYg3o46Fxg+4UjuLs6VGswB8jEQaGnzHN1/QMkqk5W7f84sbR+woc2mhcXghQv5WHiQ+3HIe1GTFuajfJS+JIjV+KoOch6CcBxeADfSBAJpIQhyeVtx37pWHb1P6/RWafFWw63QdXckn+6Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6yhQIO0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9dMotfkKeEcYIyBsb0P5zsLrzdohwGSZs0kqaF7nixK/nOPc+h8f5MF1Vr6P3GghUGxzDgM+/lsKyEFbJeIEDZ0TuaNbLSRFPcfybzFYVUc69ziLlmD63r9ne5vzYgl1+guYWES9La9Q7i9TfIdBaP3zI9sBkG9Wjfz2E3bfXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMkbRPxM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6yhQIO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD4BC4CEE3;
-	Thu,  3 Jul 2025 14:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMkbRPxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8787C4CEE3;
+	Thu,  3 Jul 2025 14:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751554765;
-	bh=qDTUt7QcVUlUF87HOv/Ws8YpzkGbUgT6PBZv1PIyc5I=;
+	s=korg; t=1751554768;
+	bh=pbkQtkfrkuvu2QvsOcNP+HqzHUa9/8qaYj3VCISfozI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6yhQIO0LxmWeJ90qTyMP5qNOljc0S3Yl7bEhpwmaiEsWTNwlkfsZ87htQM39EtNs
-	 IcA5xvYO6RlOH+dCfCI1e4/oMToS6h16zww/rCpfAmO7nc64JI9NJ/hgBTkqVDqxZj
-	 Ks18Oh9JXI1Momm8N54wEVcLNZ+dyb/DGAJdkJUY=
+	b=zMkbRPxMd/TH+py09Z4JV5y5qQst0X1uozwduZYgqvjxBorzIz2GWkU81ddAQuuoZ
+	 7GBpPF5t+QcSUCQf5tZy0hSO8fG1ZQuyUmdSTSArp2fXZ5ySIREy3g7vYFG4O8RQfb
+	 DumJXEJWc68Q1tGr88YFQFjJXLVNpl26uhF8/KJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Shuming Fan <shumingf@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 072/263] ALSA: usb-audio: Add a quirk for Lenovo Thinkpad Thunderbolt 3 dock
-Date: Thu,  3 Jul 2025 16:39:52 +0200
-Message-ID: <20250703144007.196492401@linuxfoundation.org>
+Subject: [PATCH 6.15 073/263] ASoC: rt1320: fix speaker noise when volume bar is 100%
+Date: Thu,  3 Jul 2025 16:39:53 +0200
+Message-ID: <20250703144007.234409013@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -51,37 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Shuming Fan <shumingf@realtek.com>
 
-[ Upstream commit 4919353c7789b8047e06a9b2b943f775a8f72883 ]
+[ Upstream commit 9adf2de86611ac108d07e769a699556d87f052e2 ]
 
-The audio controller in the Lenovo Thinkpad Thunderbolt 3 dock doesn't
-support reading the sampling rate.
+This patch updates the settings to fix the speaker noise.
 
-Add a quirk for it.
-
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20250527172657.1972565-1-superm1@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Shuming Fan <shumingf@realtek.com>
+Link: https://patch.msgid.link/20250602085851.4081886-1-shumingf@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/rt1320-sdw.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index dbbc9eb935a4b..f302bcebaa9d0 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2284,6 +2284,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
-+	DEVICE_FLG(0x17ef, 0x3083, /* Lenovo TBT3 dock */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x1852, 0x5062, /* Luxman D-08u */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1852, 0x5065, /* Luxman DA-06 */
+diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
+index f51ba345a16e6..015cc710e6dc0 100644
+--- a/sound/soc/codecs/rt1320-sdw.c
++++ b/sound/soc/codecs/rt1320-sdw.c
+@@ -204,7 +204,7 @@ static const struct reg_sequence rt1320_vc_blind_write[] = {
+ 	{ 0x3fc2bfc0, 0x03 },
+ 	{ 0x0000d486, 0x43 },
+ 	{ SDW_SDCA_CTL(FUNC_NUM_AMP, RT1320_SDCA_ENT_PDE23, RT1320_SDCA_CTL_REQ_POWER_STATE, 0), 0x00 },
+-	{ 0x1000db00, 0x04 },
++	{ 0x1000db00, 0x07 },
+ 	{ 0x1000db01, 0x00 },
+ 	{ 0x1000db02, 0x11 },
+ 	{ 0x1000db03, 0x00 },
+@@ -225,6 +225,21 @@ static const struct reg_sequence rt1320_vc_blind_write[] = {
+ 	{ 0x1000db12, 0x00 },
+ 	{ 0x1000db13, 0x00 },
+ 	{ 0x1000db14, 0x45 },
++	{ 0x1000db15, 0x0d },
++	{ 0x1000db16, 0x01 },
++	{ 0x1000db17, 0x00 },
++	{ 0x1000db18, 0x00 },
++	{ 0x1000db19, 0xbf },
++	{ 0x1000db1a, 0x13 },
++	{ 0x1000db1b, 0x09 },
++	{ 0x1000db1c, 0x00 },
++	{ 0x1000db1d, 0x00 },
++	{ 0x1000db1e, 0x00 },
++	{ 0x1000db1f, 0x12 },
++	{ 0x1000db20, 0x09 },
++	{ 0x1000db21, 0x00 },
++	{ 0x1000db22, 0x00 },
++	{ 0x1000db23, 0x00 },
+ 	{ 0x0000d540, 0x01 },
+ 	{ 0x0000c081, 0xfc },
+ 	{ 0x0000f01e, 0x80 },
 -- 
 2.39.5
 
