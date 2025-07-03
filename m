@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A2F15442C;
-	Thu,  3 Jul 2025 15:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD0D15442C;
+	Thu,  3 Jul 2025 15:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751555232; cv=none; b=XfHQ1yAG8v6B3YjErzfv1ciY6cVbUGBhTzH98EQ0L8qXlFoI4ijSu1+aD+z8XQ5LENSb9eAWTTq5+ZBU+Ao4GhpSIlyHDase6TuZeGh6w8YDMZUylRkBfq7n0iEsIFespktyiu254w8h2epYYtOObMs6ueWCZWmLzeloInChk3k=
+	t=1751555236; cv=none; b=CvnHNuFIapIswm/OXrvYkRONuRo27uQIyLEx8K7dbJpjJm8SpTDjfOncWzf6Ab/R6Z4bczyTJDV+35mRHdYjil+f7xaSuG6btTGDXJ5tg2KDfC4nDdpUDCZ7HrJ3wgShGg2jYl017pXjHP/TGk1QqspTDc/fjZ9ODOneSxUJq08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751555232; c=relaxed/simple;
-	bh=knde+VEcxS1NxzUOaqlrpOMygIp5TS2QtdCOaqah0NY=;
+	s=arc-20240116; t=1751555236; c=relaxed/simple;
+	bh=UQf4AtCEAkdPGf/w2713fYO0Vd0Gb9qBgqM5YbhLqMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0s444MPnL7riyvl53PknVZfPDe+MunOMdkUF13rEE5NiKBao/2fIFK/N+vtU0rrSvb+vaDcC5g0lEB59Jjxv9J8+QP5XwYfSOpSK8jY6ooZpf4dqQ4REGOxygSOeefpqpF7BEzvncSJerza9aTYeE0n6xz6qX1D4oABx03bvco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=go9YUxQQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwxDTauhj5bJqplfyffqYCnLJdXRPOSpEDl86FSfXKkYZEQEDijuM+1ktcePwCokZlvMOEmYBGy2t+7PVGmhCmExUNwh7kntQfp0zj5m/GpQpr2PbOZhuZcg9Ne0XGyNF+BowDbua0WCpPVWfclyYLaap+dQyUMXSXM1/poSdSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTpvBlpH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="go9YUxQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EADC4CEE3;
-	Thu,  3 Jul 2025 15:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTpvBlpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2D2C4CEE3;
+	Thu,  3 Jul 2025 15:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751555232;
-	bh=knde+VEcxS1NxzUOaqlrpOMygIp5TS2QtdCOaqah0NY=;
+	s=korg; t=1751555236;
+	bh=UQf4AtCEAkdPGf/w2713fYO0Vd0Gb9qBgqM5YbhLqMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=go9YUxQQVFnGzZdOxpCA11aOodzbJNlnRNL5Y932u98PzKpe4+ErkYGHv0CHNWuVS
-	 q/btHXSlUlk0UBFAc21xNioCuR2BYX3e0kcxlsAWKCVWfDwsZUoXZd65aDUp26Rehe
-	 a/OlWazPYvzuaCBPC2uwSyvqs+b0mgEMYfaiNA8Y=
+	b=CTpvBlpHIIjkzOCaN5AVSTmfS1uPDQlNzALMGHhjf0bXydN8O+KdB1jxsaMKPjsu/
+	 yyap2opdSQcQaVfYvmBafvNWdzvis5GFiMvJbgFPgw7JOXyZwC6dD+zP+NBDxox9v4
+	 dZZqb7gb+50hB/xts8DVjzuEdl0HpUqCWXMe6Gyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Aradhya Bhatia <a-bhatia1@ti.com>,
 	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.15 216/263] drm/bridge: cdns-dsi: Fix connecting to next bridge
-Date: Thu,  3 Jul 2025 16:42:16 +0200
-Message-ID: <20250703144013.046158132@linuxfoundation.org>
+Subject: [PATCH 6.15 217/263] drm/bridge: cdns-dsi: Check return value when getting default PHY config
+Date: Thu,  3 Jul 2025 16:42:17 +0200
+Message-ID: <20250703144013.085893381@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703144004.276210867@linuxfoundation.org>
 References: <20250703144004.276210867@linuxfoundation.org>
@@ -55,45 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Aradhya Bhatia <a-bhatia1@ti.com>
 
-commit 688eb4d465484bc2a3471a6a6f06f833b58c7867 upstream.
+commit c6a7ef0d4856b9629df390e9935d7fd67fe39f81 upstream.
 
-Fix the OF node pointer passed to the of_drm_find_bridge() call to find
-the next bridge in the display chain.
+Check for the return value of the phy_mipi_dphy_get_default_config()
+call, and in case of an error, return back the same.
 
-The code to find the next panel (and create its panel-bridge) works
-fine, but to find the next (non-panel) bridge does not.
-
-To find the next bridge in the pipeline, we need to pass "np" - the OF
-node pointer of the next entity in the devicetree chain. Passing
-"of_node" to of_drm_find_bridge (which is what the code does currently)
-will fetch the bridge for the cdns-dsi which is not what's required.
-
-Fix that.
-
-Fixes: e19233955d9e ("drm/bridge: Add Cadence DSI driver")
+Fixes: fced5a364dee ("drm/bridge: cdns: Convert to phy framework")
 Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Tested-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Aradhya Bhatia <a-bhatia1@ti.com>
 Signed-off-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Link: https://lore.kernel.org/r/20250329113925.68204-2-aradhya.bhatia@linux.dev
+Link: https://lore.kernel.org/r/20250329113925.68204-5-aradhya.bhatia@linux.dev
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 --- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
 +++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-@@ -958,7 +958,7 @@ static int cdns_dsi_attach(struct mipi_d
- 		bridge = drm_panel_bridge_add_typed(panel,
- 						    DRM_MODE_CONNECTOR_DSI);
- 	} else {
--		bridge = of_drm_find_bridge(dev->dev.of_node);
-+		bridge = of_drm_find_bridge(np);
- 		if (!bridge)
- 			bridge = ERR_PTR(-EINVAL);
- 	}
+@@ -575,9 +575,11 @@ static int cdns_dsi_check_conf(struct cd
+ 	if (ret)
+ 		return ret;
+ 
+-	phy_mipi_dphy_get_default_config(mode_clock * 1000,
+-					 mipi_dsi_pixel_format_to_bpp(output->dev->format),
+-					 nlanes, phy_cfg);
++	ret = phy_mipi_dphy_get_default_config(mode_clock * 1000,
++					       mipi_dsi_pixel_format_to_bpp(output->dev->format),
++					       nlanes, phy_cfg);
++	if (ret)
++		return ret;
+ 
+ 	ret = cdns_dsi_adjust_phy_config(dsi, dsi_cfg, phy_cfg, mode, mode_valid_check);
+ 	if (ret)
 
 
