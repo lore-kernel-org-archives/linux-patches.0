@@ -1,162 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3237A19F40A;
-	Fri,  4 Jul 2025 15:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA33315531
+	for <patches@lists.linux.dev>; Fri,  4 Jul 2025 16:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751643945; cv=none; b=stL9ZdSprs+h8LV6hHyT8cKql1bdIGhg481aEMPsPHkbedUxEk8dGUdRkVKhrjFNqTClVPoHY+x5bFTWjvfFY1hKj5AncOuUj0DeUf2tkKNGaxH7pRIBZ09h0sKQwq5Np70s7rA02UqjRoyBbWhCLAKsIzTKmSkXq0ffV5K8864=
+	t=1751645318; cv=none; b=suHWcJgpVzNHnmshJWGSYEc/mE1oyKtm43QRFo8ZBmAkFqQMaHmVT80LoEEdU3J1O41APazRFiEq2pMlmov+9g34do8fUjCCJyMVaybF4uNxfIRzwafnsd5poWGVU1p2sqCd17TWVm1ryfP0DBzmV2UgaWLIFp4OADi9O5llPD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751643945; c=relaxed/simple;
-	bh=9lm9zh+rY3R25ZONGP1EZ6ZiDrYnHo9tcgTDZ4Ofr5k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ort8FmM1w8JKzvJkA7qFc890UFp7Gd+bPfACkHiyVCTi7I1+46wu800lSLqqbJvwQZzzfcNITv6h8rccULgJzyDcTtQ1nc6CZtUPUqMGpmsrDxQYK6KLsboXWMeHtLLTIJfHnrwewEdChwE3agde8NzpX/COifrLukSBpxU5awc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eyOPmbex; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751645318; c=relaxed/simple;
+	bh=IQSgTvu22z4jTaDwUlpFakllNJA2GFU2ZRgOrcqMBtU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GKi9i7AzhZ3UVYdwhNc7Xo743KA0qMqk0EWZkBdWz3XMyObISjb8a7qTrQX+DMMUafVmWMk0hkZFbuSCjH6v2JUS0JUHPkLQrgGOf8d91AN4VLCVIDQadEuTZoq5Yhd0eUziYequvS/ghTDARa9m941A6aVK//V1M1Og+tR/vtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=H/Urj6gs; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eyOPmbex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612F6C4CEE3;
-	Fri,  4 Jul 2025 15:45:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751643943;
-	bh=9lm9zh+rY3R25ZONGP1EZ6ZiDrYnHo9tcgTDZ4Ofr5k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=eyOPmbexiptgTyQ0KyjgcW+VJXH6njYzNNYQ6Cu+I50j+cF+Qx67IQC5KovURYIOB
-	 kL7Y4X7r+XmKR3gm+5Esz7YQGrY0lM/VHETOQuyxt1oCstm6izsMu2JeE2xDxDjwgq
-	 pD/h0nARxBwX38aNI6zZOhj/226OjundB8coQzWQAG01Vpr6hgtBGQb8qZmbAwtZCB
-	 C/lNYHgj/MKlNvq7R8V0vwsA++Jb+p5p85bZWFE/xE1/XCGbomIMH/f8vr6dv4+SMK
-	 OtaApUoBS9l3ZtNZKIgKwCg042mbjAediFnRISCNfXqNcETCM+F0J/vkuHmlAV3kp8
-	 u7EAZaFhMmV2w==
-From: Pratyush Yadav <pratyush@kernel.org>
+	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="H/Urj6gs"
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id DF2E61C00AB; Fri,  4 Jul 2025 18:08:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+	t=1751645311;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=s9iZagXbgeik5aaC+851EKPeAc4Tqrh9L/My33iJMYY=;
+	b=H/Urj6gsjU5qY8q0XrsdPU31uI6Q2hUx6ukRIUyEBSgHLNpdeB9ysDNH7KXpOj94YL/KwM
+	zzBVMP6MaRZ6bZPqnFjpOwO2thfHF3/AAj+YGw7WQsPZih5xWBju/WREsyVdRikyuVEby3
+	hPGarU7bZQvaW6gzfe9FZyjuLPt6Plw=
+Date: Fri, 4 Jul 2025 18:08:31 +0200
+From: Pavel Machek <pavel@ucw.cz>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Pratyush Yadav <pratyush@kernel.org>,  stable@vger.kernel.org,
-  patches@lists.linux.dev,  Miquel Raynal <miquel.raynal@bootlin.com>,
-  Mark Brown <broonie@kernel.org>,  Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 212/218] spi: spi-mem: Extend spi-mem operations
- with a per-operation maximum frequency
-In-Reply-To: <2025070449-scruffy-difficult-5852@gregkh>
-References: <20250703143955.956569535@linuxfoundation.org>
-	<20250703144004.692234510@linuxfoundation.org>
-	<mafs04ivs186o.fsf@kernel.org> <2025070449-scruffy-difficult-5852@gregkh>
-Date: Fri, 04 Jul 2025 17:45:41 +0200
-Message-ID: <mafs0zfdkyn6i.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Sven Schuchmann <schuchmann@schleissheimer.de>,
+	Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
+	Lee Jones <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 007/132] leds: multicolor: Fix intensity setting
+ while SW blinking
+Message-ID: <aGf8fwdvCgr4jVjr@duo.ucw.cz>
+References: <20250703143939.370927276@linuxfoundation.org>
+ <20250703143939.681590816@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6/9YvccF99rIB7pV"
+Content-Disposition: inline
+In-Reply-To: <20250703143939.681590816@linuxfoundation.org>
 
-On Fri, Jul 04 2025, Greg Kroah-Hartman wrote:
 
-> On Fri, Jul 04, 2025 at 01:55:59PM +0200, Pratyush Yadav wrote:
->> Hi Greg,
->> 
->> On Thu, Jul 03 2025, Greg Kroah-Hartman wrote:
->> 
->> > 6.12-stable review patch.  If anyone has any objections, please let me know.
->> 
->> This and patches 213, 214, and 215 seem to be new features. So why are
->> they being added to a stable release?
->
-> It was to get commit 40369bfe717e ("spi: fsl-qspi: use devm function
-> instead of driver remove") to apply cleanly.  I'll try removing these to
-> see if that commit can still apply somehow...
+--6/9YvccF99rIB7pV
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The conflict resolution seems simple. Perhaps the patch below? (**not
-even compile tested**):
+On Thu 2025-07-03 16:41:36, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
 
---- 8< ---
-From 6edae14f9e968fbb5c566dda8055e92cd491a3a6 Mon Sep 17 00:00:00 2001
-From: Han Xu <han.xu@nxp.com>
-Date: Wed, 26 Mar 2025 17:41:51 -0500
-Subject: [PATCH] spi: fsl-qspi: use devm function instead of driver remove
+Let's not do that. Blinking at wrong intensity is not nearly
+significant enough bug to risk regressions.
 
-Driver use devm APIs to manage clk/irq/resources and register the spi
-controller, but the legacy remove function will be called first during
-device detach and trigger kernel panic. Drop the remove function and use
-devm_add_action_or_reset() for driver cleanup to ensure the release
-sequence.
+And please stop using bots for patch selection.
+							Pavel
 
-Trigger kernel panic on i.MX8MQ by
-echo 30bb0000.spi >/sys/bus/platform/drivers/fsl-quadspi/unbind
+> ------------------
+>=20
+> From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+>=20
+> [ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
+>=20
+> When writing to the multi_intensity file, don't unconditionally call
+> led_set_brightness. By only doing this if blinking is inactive we
+> prevent blinking from stopping if the blinking is in its off phase while
+> the file is written.
+>=20
+> Instead, if blinking is active, the changed intensity values are applied
+> upon the next blink. This is consistent with changing the brightness on
+> monochrome LEDs with active blinking.
+>=20
+> Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+> Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+> Acked-by: Pavel Machek <pavel@ucw.cz>
+> Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
+> Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+> Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+> Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwerme=
+r.de
+> Signed-off-by: Lee Jones <lee@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/leds/led-class-multicolor.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class=
+-multicolor.c
+> index ec62a48116135..e0785935f4ba6 100644
+> --- a/drivers/leds/led-class-multicolor.c
+> +++ b/drivers/leds/led-class-multicolor.c
+> @@ -61,7 +61,8 @@ static ssize_t multi_intensity_store(struct device *dev,
+>  	for (i =3D 0; i < mcled_cdev->num_colors; i++)
+>  		mcled_cdev->subled_info[i].intensity =3D intensity_value[i];
+> =20
+> -	led_set_brightness(led_cdev, led_cdev->brightness);
+> +	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
+> +		led_set_brightness(led_cdev, led_cdev->brightness);
+>  	ret =3D size;
+>  err_out:
+>  	mutex_unlock(&led_cdev->led_access);
 
-Cc: stable@vger.kernel.org
-Fixes: 8fcb830a00f0 ("spi: spi-fsl-qspi: use devm_spi_register_controller")
-Reported-by: Kevin Hao <haokexin@gmail.com>
-Signed-off-by: Han Xu <han.xu@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250326224152.2147099-1-han.xu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
----
- drivers/spi/spi-fsl-qspi.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+--=20
+I don't work for Nazis and criminals, and neither should you.
+Boycott Putin, Trump, and Musk!
 
-diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
-index 79bac30e79af6..310350d2c5302 100644
---- a/drivers/spi/spi-fsl-qspi.c
-+++ b/drivers/spi/spi-fsl-qspi.c
-@@ -839,6 +839,19 @@ static const struct spi_controller_mem_ops fsl_qspi_mem_ops = {
- 	.get_name = fsl_qspi_get_name,
- };
- 
-+static void fsl_qspi_cleanup(void *data)
-+{
-+	struct fsl_qspi *q = data;
-+
-+	/* disable the hardware */
-+	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
-+	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
-+
-+	fsl_qspi_clk_disable_unprep(q);
-+
-+	mutex_destroy(&q->lock);
-+}
-+
- static int fsl_qspi_probe(struct platform_device *pdev)
- {
- 	struct spi_controller *ctlr;
-@@ -928,6 +941,10 @@ static int fsl_qspi_probe(struct platform_device *pdev)
- 
- 	ctlr->dev.of_node = np;
- 
-+	ret = devm_add_action_or_reset(dev, fsl_qspi_cleanup, q);
-+	if (ret)
-+		goto err_destroy_mutex;
-+
- 	ret = devm_spi_register_controller(dev, ctlr);
- 	if (ret)
- 		goto err_destroy_mutex;
-@@ -947,19 +964,6 @@ static int fsl_qspi_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static void fsl_qspi_remove(struct platform_device *pdev)
--{
--	struct fsl_qspi *q = platform_get_drvdata(pdev);
--
--	/* disable the hardware */
--	qspi_writel(q, QUADSPI_MCR_MDIS_MASK, q->iobase + QUADSPI_MCR);
--	qspi_writel(q, 0x0, q->iobase + QUADSPI_RSER);
--
--	fsl_qspi_clk_disable_unprep(q);
--
--	mutex_destroy(&q->lock);
--}
--
- static int fsl_qspi_suspend(struct device *dev)
- {
- 	return 0;
-@@ -997,7 +1001,6 @@ static struct platform_driver fsl_qspi_driver = {
- 		.pm =   &fsl_qspi_pm_ops,
- 	},
- 	.probe          = fsl_qspi_probe,
--	.remove_new	= fsl_qspi_remove,
- };
- module_platform_driver(fsl_qspi_driver);
- 
--- 
-Regards,
-Pratyush Yadav
+--6/9YvccF99rIB7pV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaGf8fwAKCRAw5/Bqldv6
+8hX2AJ9MFM0JXfD3C+Tna4T1SuREtpYTYgCfUtT2BtwLhVE6Q59HSDMRwkb3DIs=
+=nzeT
+-----END PGP SIGNATURE-----
+
+--6/9YvccF99rIB7pV--
