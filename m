@@ -1,82 +1,64 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DA82857EE;
-	Fri,  4 Jul 2025 12:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFD2226CF8;
+	Fri,  4 Jul 2025 12:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751631328; cv=none; b=eT8iCph9GO1reuW08ayhQt/0unDCTmGTu4qhQOJlrjMmDwVuA62jSnHS7efSREtOQOSj0ZTJBf9fbkzW5QXrp1PMLfwIwQJQ3/CyPpnP0sFz5Fuy0st7yE7EwTae8fPF7hOe7V/dTYLESgSW8VChoIrZz3YigAUwMwuQ134+d+U=
+	t=1751631442; cv=none; b=SVqQKPWji4eSl432ZoxSQj2ThE3YPlU1oqmcyLyqMyd0B7lzSlAltlxqorVhp/r3Mn/ELvZTMaQTSvWwO4Iy7MuvRDl6NAkw0IZMV+I/JF2f/bUihJ8BjJev9jK9vklEXJvA8wS8KV2kMyVMED22NcdwP2Tw7nU6h4zpS/Kz2ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751631328; c=relaxed/simple;
-	bh=uQ39KWmMNSgWe0AFSr/COBXYR+8KMfLXxHjF/pYzn7U=;
+	s=arc-20240116; t=1751631442; c=relaxed/simple;
+	bh=b6DmQUOnUnxb+8+INRF3vIrQO26qGuTsbK5EYLGcbKw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nfaKCmTqzblmj/zzHw+WCtfzcUdSn03WwbJQmkGiVyyMw3088RazfuKBqxfIJ9shrP8urIyAHIF98/8I20kGte07sItnJBOMwv8x9jr/f99EBTzcqyKwAjyYc2KNpM8crW5LyUBSc11q1chQGXdoaog0Who4fyVxygEkW70GVuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q8gr7tv9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=qBQcU3/MOIJsvnx6pxan4q/1WGFH8M9nRhENa2FGbWap+EdDRlgYnh0ZutFm1pqEjnp3su9y/weuwu3vWEd9vHBoRAx1CgZpVgnn1+EpFukaa6ZCf4TXTZOLrX0boMlgSCnPc+6hJXfUOn/Z40A/KkRPlNGtfSfmCBhVhfUDFks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTbUOuqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q8gr7tv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31905C4CEE3;
-	Fri,  4 Jul 2025 12:15:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751631328;
-	bh=uQ39KWmMNSgWe0AFSr/COBXYR+8KMfLXxHjF/pYzn7U=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTbUOuqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACECAC4CEE3;
+	Fri,  4 Jul 2025 12:17:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1751631441;
+	bh=b6DmQUOnUnxb+8+INRF3vIrQO26qGuTsbK5EYLGcbKw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=q8gr7tv9Hv+PSswH9FZQArd6QZjYc/MabvRl3fRga9oVgi7JatobLHyXzCHNcM9/T
-	 k3iKwcYSjKcnT+GGTz2D3pJrosNdYMzEYRhfTsOpscKb/xl8upN2WmHuSTFNX8TFSP
-	 PEOwbCEt05I/2nO2ZOr3vURocVxuHyPVd9WSHB4ik2acIed6eAqbYpCz116xdCTeJz
-	 KokXovjwVUejuS0WjB1AtsHmG4sqgwb7TicJ/XoG9iyuFNivkACZaTtd1m1/Lb5Ak6
-	 eEEgWc0pWFdk4Lz4mCchqG0RgM2GzdMip6E81BjyWfM7urxoCdeu7CweLzt4PcKhb6
-	 7w8/Px5LeI0Sw==
-Date: Fri, 4 Jul 2025 13:15:21 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	b=KTbUOuqah6/h6zGuqpk3aManWWqd7i0CuMoaItJLF+hkG/H7+ZLBt2dHAXG+7lmf4
+	 MnOr4BqhzTaTT7reBehwQ7hq6XX+HBEiO6YxT0vJv2KkmHxGz1uA2IaBiw9/pdsdIb
+	 TtnQBlBWJ4PyrIY2bGLtvjc5kbarEJpJFIjmONbQ=
+Date: Fri, 4 Jul 2025 14:17:18 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Pratyush Yadav <pratyush@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com
-Subject: Re: [PATCH 6.1 000/132] 6.1.143-rc1 review
-Message-ID: <ca035b8b-92fb-4ac9-87a6-7687084dc86f@sirena.org.uk>
-References: <20250703143939.370927276@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 212/218] spi: spi-mem: Extend spi-mem operations
+ with a per-operation maximum frequency
+Message-ID: <2025070449-scruffy-difficult-5852@gregkh>
+References: <20250703143955.956569535@linuxfoundation.org>
+ <20250703144004.692234510@linuxfoundation.org>
+ <mafs04ivs186o.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5Nryp2I+j3L5TYOK"
-Content-Disposition: inline
-In-Reply-To: <20250703143939.370927276@linuxfoundation.org>
-X-Cookie: VMS must die!
-
-
---5Nryp2I+j3L5TYOK
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <mafs04ivs186o.fsf@kernel.org>
 
-On Thu, Jul 03, 2025 at 04:41:29PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.143 release.
-> There are 132 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Jul 04, 2025 at 01:55:59PM +0200, Pratyush Yadav wrote:
+> Hi Greg,
+> 
+> On Thu, Jul 03 2025, Greg Kroah-Hartman wrote:
+> 
+> > 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> This and patches 213, 214, and 215 seem to be new features. So why are
+> they being added to a stable release?
 
-Tested-by: Mark Brown <broonie@kernel.org>
+It was to get commit 40369bfe717e ("spi: fsl-qspi: use devm function
+instead of driver remove") to apply cleanly.  I'll try removing these to
+see if that commit can still apply somehow...
 
---5Nryp2I+j3L5TYOK
-Content-Type: application/pgp-signature; name="signature.asc"
+thanks,
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhnxdgACgkQJNaLcl1U
-h9AhJAf/Z8F3L6UFt+E4t4fKlGxpPz8fWfVAAaoHCJBVq1OiTwHRuVzZGGdNtOpn
-q3Qo8PQ6LHZCzTQooLlvLQ+dr7pXjIFxgXaWMoGj8Qs21FGQWGWQ6R6USb/C50dO
-vQeEEXrgi6zBQc9NtokCMh0n2Z6C2qBHzC7l67a4rR2so+sae+hJDJ7K4DfAYaYt
-/PzJu3a4uOG5QZEmapEqPWJdstRoFivZPmHj8CHNqHNhhXBupjIoGMSftafZNjoV
-iuktwAru5qPK718EEVIGpcOPijVbON+vskxsae9iajhZs/ALkjLZC669r8+JNnIE
-EEHq6ZwQVSAavtu6So5QLDk/ovum7Q==
-=c7/F
------END PGP SIGNATURE-----
-
---5Nryp2I+j3L5TYOK--
+greg k-h
