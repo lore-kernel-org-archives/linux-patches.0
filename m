@@ -1,130 +1,67 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA33315531
-	for <patches@lists.linux.dev>; Fri,  4 Jul 2025 16:08:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011842E36E7;
+	Fri,  4 Jul 2025 16:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751645318; cv=none; b=suHWcJgpVzNHnmshJWGSYEc/mE1oyKtm43QRFo8ZBmAkFqQMaHmVT80LoEEdU3J1O41APazRFiEq2pMlmov+9g34do8fUjCCJyMVaybF4uNxfIRzwafnsd5poWGVU1p2sqCd17TWVm1ryfP0DBzmV2UgaWLIFp4OADi9O5llPD0=
+	t=1751647390; cv=none; b=kBxrZj5eu06sGaQU8gnnyn11/hZd+nmZqeVu8r6oi0LLki5paLDuG844JpVmK6PDn/DEwezsT9sV5fMOi1EMaqBb6EHHX3YRAJL1HcKK+0R/VYtmcgkKKS5HrWvcXJEFt5TNcEBuFVmQe2tFaQRr2WO2/LcT8HfVti60eCWqY0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751645318; c=relaxed/simple;
-	bh=IQSgTvu22z4jTaDwUlpFakllNJA2GFU2ZRgOrcqMBtU=;
+	s=arc-20240116; t=1751647390; c=relaxed/simple;
+	bh=4qoTOIwb2Ll+YmW6erKwLALL2nw11zW1PeP14pgP/Xs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GKi9i7AzhZ3UVYdwhNc7Xo743KA0qMqk0EWZkBdWz3XMyObISjb8a7qTrQX+DMMUafVmWMk0hkZFbuSCjH6v2JUS0JUHPkLQrgGOf8d91AN4VLCVIDQadEuTZoq5Yhd0eUziYequvS/ghTDARa9m941A6aVK//V1M1Og+tR/vtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=H/Urj6gs; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
+	 Content-Type:Content-Disposition:In-Reply-To; b=GCLY3aF0+Ng1urkhxf5sGmsQBdeghMc1WhpEaniLxGHNiNvHpRTVXy2g4YSPTECNkS0+UQyAaOxhh4riZLde8Lg4hWaVQt9fast4HWoEPSyfL+m9ZPo10WrNJis/+y0DxuN0M73RvabJVz3EN7V5sMFWzNOQDqtHy0yZ6Lg+/tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afLu0Vsl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="H/Urj6gs"
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id DF2E61C00AB; Fri,  4 Jul 2025 18:08:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-	t=1751645311;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=s9iZagXbgeik5aaC+851EKPeAc4Tqrh9L/My33iJMYY=;
-	b=H/Urj6gsjU5qY8q0XrsdPU31uI6Q2hUx6ukRIUyEBSgHLNpdeB9ysDNH7KXpOj94YL/KwM
-	zzBVMP6MaRZ6bZPqnFjpOwO2thfHF3/AAj+YGw7WQsPZih5xWBju/WREsyVdRikyuVEby3
-	hPGarU7bZQvaW6gzfe9FZyjuLPt6Plw=
-Date: Fri, 4 Jul 2025 18:08:31 +0200
-From: Pavel Machek <pavel@ucw.cz>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
-	Sven Schuchmann <schuchmann@schleissheimer.de>,
-	Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
-	Lee Jones <lee@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 007/132] leds: multicolor: Fix intensity setting
- while SW blinking
-Message-ID: <aGf8fwdvCgr4jVjr@duo.ucw.cz>
-References: <20250703143939.370927276@linuxfoundation.org>
- <20250703143939.681590816@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afLu0Vsl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D5DC4CEE3;
+	Fri,  4 Jul 2025 16:43:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1751647389;
+	bh=4qoTOIwb2Ll+YmW6erKwLALL2nw11zW1PeP14pgP/Xs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=afLu0VslGJv7PPphYIsD2MxOmCvNTdXzx2L4ebspd4c++lQ9wbPscsBRFoyJf9oU4
+	 4b7P3miACn4IbRXfgAMtsOaSM/ez/yErO0Qv7AHOTThqWbt2f+2yV46f9BuApVv/iz
+	 4qOocp18UC+R0Tte601u6YOn1pfsGn43XcoX+/As=
+Date: Fri, 4 Jul 2025 18:43:06 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Mark Brown <broonie@kernel.org>
+Cc: Pratyush Yadav <pratyush@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 212/218] spi: spi-mem: Extend spi-mem operations
+ with a per-operation maximum frequency
+Message-ID: <2025070400-reshuffle-unreached-d650@gregkh>
+References: <20250703143955.956569535@linuxfoundation.org>
+ <20250703144004.692234510@linuxfoundation.org>
+ <mafs04ivs186o.fsf@kernel.org>
+ <2025070449-scruffy-difficult-5852@gregkh>
+ <0e8c4016-3584-4db6-badb-0d6d0dc66dbe@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6/9YvccF99rIB7pV"
-Content-Disposition: inline
-In-Reply-To: <20250703143939.681590816@linuxfoundation.org>
-
-
---6/9YvccF99rIB7pV
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <0e8c4016-3584-4db6-badb-0d6d0dc66dbe@sirena.org.uk>
 
-On Thu 2025-07-03 16:41:36, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me kno=
-w.
+On Fri, Jul 04, 2025 at 03:39:05PM +0100, Mark Brown wrote:
+> On Fri, Jul 04, 2025 at 02:17:18PM +0200, Greg Kroah-Hartman wrote:
+> > On Fri, Jul 04, 2025 at 01:55:59PM +0200, Pratyush Yadav wrote:
+> > > On Thu, Jul 03 2025, Greg Kroah-Hartman wrote:
+> 
+> > > > 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> > > This and patches 213, 214, and 215 seem to be new features. So why are
+> > > they being added to a stable release?
+> 
+> > It was to get commit 40369bfe717e ("spi: fsl-qspi: use devm function
+> > instead of driver remove") to apply cleanly.  I'll try removing these to
+> > see if that commit can still apply somehow...
+> 
+> It feels like if this is important for stable it's much safer to do a
+> specific backport rather than pull in new feature enablement?
 
-Let's not do that. Blinking at wrong intensity is not nearly
-significant enough bug to risk regressions.
-
-And please stop using bots for patch selection.
-							Pavel
-
-> ------------------
->=20
-> From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
->=20
-> [ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
->=20
-> When writing to the multi_intensity file, don't unconditionally call
-> led_set_brightness. By only doing this if blinking is inactive we
-> prevent blinking from stopping if the blinking is in its off phase while
-> the file is written.
->=20
-> Instead, if blinking is active, the changed intensity values are applied
-> upon the next blink. This is consistent with changing the brightness on
-> monochrome LEDs with active blinking.
->=20
-> Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-> Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-> Acked-by: Pavel Machek <pavel@ucw.cz>
-> Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-> Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
-> Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
-> Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwerme=
-r.de
-> Signed-off-by: Lee Jones <lee@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/leds/led-class-multicolor.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class=
--multicolor.c
-> index ec62a48116135..e0785935f4ba6 100644
-> --- a/drivers/leds/led-class-multicolor.c
-> +++ b/drivers/leds/led-class-multicolor.c
-> @@ -61,7 +61,8 @@ static ssize_t multi_intensity_store(struct device *dev,
->  	for (i =3D 0; i < mcled_cdev->num_colors; i++)
->  		mcled_cdev->subled_info[i].intensity =3D intensity_value[i];
-> =20
-> -	led_set_brightness(led_cdev, led_cdev->brightness);
-> +	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
-> +		led_set_brightness(led_cdev, led_cdev->brightness);
->  	ret =3D size;
->  err_out:
->  	mutex_unlock(&led_cdev->led_access);
-
---=20
-I don't work for Nazis and criminals, and neither should you.
-Boycott Putin, Trump, and Musk!
-
---6/9YvccF99rIB7pV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaGf8fwAKCRAw5/Bqldv6
-8hX2AJ9MFM0JXfD3C+Tna4T1SuREtpYTYgCfUtT2BtwLhVE6Q59HSDMRwkb3DIs=
-=nzeT
------END PGP SIGNATURE-----
-
---6/9YvccF99rIB7pV--
+I've already dropped them, thanks!
