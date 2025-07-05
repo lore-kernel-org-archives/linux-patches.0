@@ -1,87 +1,62 @@
-Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE802E370A
-	for <patches@lists.linux.dev>; Sat,  5 Jul 2025 13:50:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DC11A76D0;
+	Sat,  5 Jul 2025 14:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751723446; cv=none; b=XJ5r26klOTkK2q4qAwrtjKuvqzMiuGyroZBPk2oLG7LZtAN0ejtB5kmZqiAT33hcoVj6FKpAOmTlyGp6B67b+sTkEzEALsyM89uyeQpTtejTCFvc5YQTLMcxeWvetqctUzwjROEWhqhDR+9AYxkWBpBJJZRsnNAmKfINserdMSc=
+	t=1751726047; cv=none; b=E2nZS0GLG28RlP0u48egO412PhlQvY1Ng9ol/S4O590Ej22fVv1/VleHvzJBajl5GXRMpyBxxKiqbPwj8tUYw2+hg/NXYriBzOWk+uHg4m73CH6+twqtcZVOPQpp6VLyvYGwUDysgGwxIDjM1frDEmLv7wdCnk//f3r3bsn+DFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751723446; c=relaxed/simple;
-	bh=KTD4FLxcO6O3F0Uz06MomQx86VnuH+P6EQI0R4x2o38=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tB/BEUB4Zx+OrnRsIPlVV5wjcHEH1mmAng+bKWgFEN9dfJ8n7VteqwoRzeg+eXMWnHcMKLKAj8h3agJ48/IFL5w+jTPWSKcLPBwVONpbAhfparbC2kzcCT9elRC0zpP7TVSrEPDZb/NTBKizQCqzZSEJK/lqt2KdlrFFGQzQzgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=Cq2sO6mj; arc=none smtp.client-ip=213.190.28.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
+	s=arc-20240116; t=1751726047; c=relaxed/simple;
+	bh=lRZGacEf1U61/v/lSG1JH8NSvvCW1KtAwoa6CdbjUxc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uFw85ireNjxOjjZQxjb+v6ZFjicN8/pDM/Qm/Pel34i3fJ9uZpNIzqIpjNzHBJUFh/Fl96J8w659WQtR/99AuaOEeyU5kaLbO5qQKpeptNaFQaUOxCOy+qInYFWoMUCwKe07opKJOLBUgQOewmB4nYRObZy1qOf7qak5nmH69k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nZ/YK8hO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="Cq2sO6mj"
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
-	s=dkim_2024-02-03; t=1751723434;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9LH4y+MMMjaudgXUUhlq8KLlA1S4bGHYgtofYcKGx1Y=;
-	b=Cq2sO6mjQJLVOIgUh58Iy9krdhDPfz92QS2Mp53xGH1B8n+pytHwpuwmz1eX7k5MKMSnN0
-	5kzxIkn3vXqDt9CA==
-Message-ID: <3ca03800-3d4e-41ca-897d-a0d05d6499ba@hardfalcon.net>
-Date: Sat, 5 Jul 2025 15:50:32 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nZ/YK8hO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CADA8C4CEE7;
+	Sat,  5 Jul 2025 14:34:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751726047;
+	bh=lRZGacEf1U61/v/lSG1JH8NSvvCW1KtAwoa6CdbjUxc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nZ/YK8hOX0Glh/aJvUVn1/BVUCTvMVNRmQK7cXrLuwlhf7tkU5dPc0fo+GTUnxvGZ
+	 B0pKm6LlNJJ/J+p+maHNBGCJAg2ib1qzT0PpgyG4SoPoDHHkggYFmm2azZP9+vSHkA
+	 3tBPpC6sviG9jmL2M3iA6cyNb5JLt1EPZfJQFENkSYjkbR/9QpV58A/Ntpo1ErEj9u
+	 FKMPE+9wpuEbLabm7tFOl7+Ov7RwZStU4jtHPQztyqvRCZI6YaojVwVHZ4b4OXmzIY
+	 kkZoYrFJNfOjyAaPCSy7NsfFd2KJpZ382PP59R+hV2P3LPJgf4i+csD1r5UjeU0aps
+	 CXhb3M/cLus0Q==
+Date: Sat, 5 Jul 2025 10:34:05 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: gregkh@linuxfoundation.org, chenhuacai@loongson.cn, maobibo@loongson.cn,
+	patches@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH 6.12 206/218] LoongArch: Set hugetlb mmap base address
+ aligned with pmd size
+Message-ID: <aGk33Qg5AlrWIg6d@lappy>
+References: <20250703144004.457285463@linuxfoundation.org>
+ <20250705114500.360382-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 6.12 000/218] 6.12.36-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250703143955.956569535@linuxfoundation.org>
-Content-Language: en-US, de-DE, en-US-large
-From: Pascal Ernster <git@hardfalcon.net>
-In-Reply-To: <20250703143955.956569535@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250705114500.360382-1-ojeda@kernel.org>
 
-[2025-07-03 16:39] Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.36 release.
-> There are 218 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 05 Jul 2025 14:39:10 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.36-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+On Sat, Jul 05, 2025 at 01:45:00PM +0200, Miguel Ojeda wrote:
+>On Thu, 03 Jul 2025 16:42:34 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>>
+>> Cc: stable@vger.kernel.org  # 6.13+
+>
+>This line makes sense -- it sounds like it was indeed not meant for v6.12:
+>
+>    https://lore.kernel.org/stable/20250704231046.332586-1-ojeda@kernel.org/
 
+Yup, now dropped. Thanks!
 
-Hi Greg,
-
-
-there seems to be a divergence between 6.12.36-rc1 and the current state of queue/6.12 or stable-queue/queue-6.12 (five patches dropped and two modified), but there doesn't seem to be an rc2 - is this intentional?
-
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/diff/?id2=08de5e8741606608ca5489679ec1604bb7f3d777&id=4c3f7f0935ba0c1ca54be4e82cc8f27595ab8e61
-
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.12?id=c0bc2de2a5416da11ffadb0d10da975d1bdb1ada&id2=e1bd69ff09807d5bf80f17f3279240cb223145a6
-
-
-In any case, I've applied all patches from the current version of stable-queue/queue-6.12 (commit id c0bc2de2a5416da11ffadb0d10da975d1bdb1ada) applied on top of a 6.12.35 kernel, compiled the result with GCC 15.1.0 as part of OpenWRT images for various platforms, and I've booted and tested those images on the following platforms without noticing any issues:
-
-- x86_64: Intel Haswell VM
-- MIPS 4KEc V7.0: Netgear GS108T v3 (SoC: Realtek RTL8380M)
-- MIPS 4KEc V7.0: Netgear GS310TP v1 (SoC: Realtek RTL8380M)
-- MIPS 74Kc V5.0: TP-Link Archer C7 v4 (SoC: Qualcomm QCA956X)
-
-Not sure it that qualifies for a "Tested-by" though because of the divergence to 6.12.36-rc1.
-
-
-Regards
-Pascal
+-- 
+Thanks,
+Sasha
