@@ -1,138 +1,86 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752992E36E6
-	for <patches@lists.linux.dev>; Sat,  5 Jul 2025 19:37:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FC42E371C
+	for <patches@lists.linux.dev>; Sat,  5 Jul 2025 20:12:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751744276; cv=none; b=OgXgjJu+3sramXksxFbnj/7tqsLWqLyf3lY/yJwdhPAfc2Wj9M7XUhgl838xSjDSo3jFku1db1lmZPbP8ut1Mb2o3n6E2B4cIkRS0izSgVK1qII4Uw7qRg1VkOWsLnJS6QZeSzKidBXAWzZRiOO51K6qWBIo4UxF4cTFYbldETk=
+	t=1751746344; cv=none; b=SzYE3wVIfUWZjquSXbKGT/0yFVew4KFBSlL/AapubuECgGXqATyx4rSYCX80ZzOUxom0brSTep+3rysvuvVF9T6pzN4cKaC/7F+d7x+MDJ3Vd//+0ItEMxHFzAujskPnHBnK9rv8O0lcxI+C5k24Wjxme6ZXIvqbCG6YDuNpdh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751744276; c=relaxed/simple;
-	bh=rhkYdI0qaK2SWqPGukgpUJQl2Y1xf63RjS+xGlf+ENo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zt3BfkwK5MATSObZcjjh8UdVZ6NXEPbWecA8iRM08r5EZ4zSOelQ5Nl1Renk8X1fi2PjOL95uot/in96/qzDt4vzivN+R+7anUmzATuUrilQLNQ7b/UVllrSpZrDy1tfMQQq4n1Ia/dSXo3VfMPT+vPyRPhF46ZmtoIxj8xPWjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UZ9YnKAh; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751746344; c=relaxed/simple;
+	bh=9z08aVLb91ru0Ot02TohgmJftasWTWVr+dxaYwP4DqM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gOWGY/O75xqmjGwbZdoBN470XpoJQ8ETKvTSgzpHG35XnPJHyn9EY8C8nNxOUY4REfC8qlghHzmvNmZF+uiO9AlPVkKKBy7YpzU7NZJAqQnF5Q80uNVfOvdCXpgfymGZTmfTt84tVEhpXPAfxpMuyLvyQmGhCQVJ2gnV36CDDrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Y4LiTK+j; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZ9YnKAh"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-879d2e419b9so1250905a12.2
-        for <patches@lists.linux.dev>; Sat, 05 Jul 2025 12:37:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Y4LiTK+j"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5f438523d6fso23160a12.1
+        for <patches@lists.linux.dev>; Sat, 05 Jul 2025 13:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751744274; x=1752349074; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UdsPWIihv5HWhO3SsoK85fdkL/eyjqb/7Z3okGZnaXE=;
-        b=UZ9YnKAhm3kcY1IZ8BSurkj2UBnwdx2wLuRLvTQDe1vzNIDNGM/veOPMFxVaUZJ6Hh
-         hb78Ypdjzoon6LNKWPLEdHV+UFtZCGgWZ9On4SPg3cjhoEbSeSeG9WvKiYtNIxdGnQjZ
-         IuySu/V9ecY4YWUFPgb8ZFxeYwyQZGep9/4fU/dKYsOvfif9MOwF/mcNzZPcY1IvVzVo
-         lvudl1dq/mQQO6y9YfW09n2RF6LH5UpTg6yoQbqiRhO26yeu9dvi32XHSDLxlV26lqI6
-         A1mdaTB6epmDNJ6WMQmrWkkgpqwjmEsyIIABInpCtOxFn+8wyJ4J5SyF1pprKthLPguL
-         LCiA==
+        d=google.com; s=20230601; t=1751746341; x=1752351141; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9z08aVLb91ru0Ot02TohgmJftasWTWVr+dxaYwP4DqM=;
+        b=Y4LiTK+j+4LcVfZYCdZCs/2IVy0Y9IbhiitUhDqxwEQ2qCjPfOfTZO6U3vDdjhYAdI
+         rfglyf0N3/cAW9/1xvRAhP/80s0RUuJXviH0IBPYPayyudbaLNGNm1B3fkKZGna4Qj6b
+         /oBin9qjSyP6z4YBAvGA3omMd+1q7VhkWYdzDfDY/JebRFMzeaRI5KFjVBDj0JUh1hCT
+         K5xhX7avhvUiHm55abay6Lv00zE6O48sr5HEIiGzJovZybajfWUKtwXgOsav8NHtO00V
+         9MloKGUxlfIuqlV854ftX7mqZqvoLXUnoSG3/rFJLCMmddkeSVzTkfChGGGD0jQ5bHjZ
+         R98A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751744274; x=1752349074;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UdsPWIihv5HWhO3SsoK85fdkL/eyjqb/7Z3okGZnaXE=;
-        b=jT2WSsJzYlHlP8M3ugq4yNzQ7zHpzNf+irvjoETe0Vtgfhn5Gj3E5lRNLVQG3YBLz4
-         QpvlBv/Nwxrivz+e6vPCuZUFniX+xPaVG0PkFLt+lP3GqmBA5+2ImYYpRlJgf66Q9UEM
-         4jd+zFtaURN6znM9EQCUTfE5UX42Sl/ahGF2bzYV1spNp33fS5JtVkFQxsPnf/HjZnVv
-         VGVI85SWm+HRQgdhXFvdbDDjKnt5d67W/XLDY5/4aCw4Ukjf0JnAeHXDErxKW/gIlYcM
-         jE+O7KAk4ZcsGCuOA80kdqy05IitNr7WvgJC3XU8+Yd3IToFZvD3fgmckPBSUDXjHfHb
-         bqVA==
-X-Forwarded-Encrypted: i=1; AJvYcCWgtcBU20T2+se4NbCh8V3NpY94UXkNGviZ/SV7PUStOV+LcShe2BGmxS+vNNQFUuppAn/KO9Ph@lists.linux.dev
-X-Gm-Message-State: AOJu0YzPPs3brcJDxUcOf5EOooA2igGVnOJaYGAZ/O56z589lS/XaPxU
-	XIdj27L+5HU8StOPDy4UYw4Y/lSAC2P40/nYKAmS0GlOiZ2chArVXgTD
-X-Gm-Gg: ASbGncuRhLwsyVR/eGS9schS4NKhlaAXoRMXEWEMaqKk/U00/2KMOkNB2bbwc9oeWCK
-	XIWWt9yGnqt9GzOQxRZOzhecDh0+R3Gos6Mu5F43a5d9B0lvkEIE2K+AbbGxIoK5MlZMCtiaAKK
-	rJXyXRQ5tMbhEmQV15xrt7Dr5/+QWIyXuUWfe70jehbqcTNwhwKwWzxVw2n+/Q1nUPysL5qB4gk
-	a5mSoedY++SBJbjBJig6GNohYsJ1qud16UIcYwUw77QbvI03eFHE0ZIXa1nQZ+yD82vWmysSab9
-	dvYe9d1CF+nikjzsGcqRyViJQ1JNtfxDBzu3uZdY4ogG9PKTJRn6Ocmtwuyb1MpYZE88gPs6WLc
-	=
-X-Google-Smtp-Source: AGHT+IGfY3WUKLQ4Yk5uf0Fkrth6sHY9ow0rMP3Y/0jgNKH6keGdaw88vCvOFt9UHv0SUx6yzeFNuQ==
-X-Received: by 2002:a17:90a:fc4c:b0:315:b07a:ac12 with SMTP id 98e67ed59e1d1-31aba84b709mr5335559a91.14.1751744273648;
-        Sat, 05 Jul 2025 12:37:53 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31aaaf5ae08sm5305720a91.41.2025.07.05.12.37.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jul 2025 12:37:53 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Sat, 5 Jul 2025 12:37:52 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/413] 6.12.35-rc2 review
-Message-ID: <3037c3e6-558b-4824-8c78-a36990f4e4d6@roeck-us.net>
-References: <20250624121426.466976226@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1751746341; x=1752351141;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9z08aVLb91ru0Ot02TohgmJftasWTWVr+dxaYwP4DqM=;
+        b=JO2OX2fmgIpWWZdAzb2Ef0xUDw+ArvighcXmNm6n8TR7eDF7K0gnosD2RxsL97Xwrx
+         gXg8pjV9TxTY1V84ZBYDcA6o8npf/S5pgb29N8pOjki/k8RroG+JX5bpxsoJP2NjiFsF
+         4HtzE7lpEjiskN47zbVV+/HQhjcknWfdJxNizHPd0GDwm9QHuVXQsxoTFyb8rAm9LH/3
+         XcJVjaN62ZS0ldoW4JRyFA3lO7YPIrrA7B9iYfGqyqd59Fovvjx6MbxZXPfauWn4+b9W
+         wFjYxJ3/Ftyk6ZNCG9knAVGqVmio1UBQIVT+l2yYZsmjLc5k3HA/5D+T+xKtyeUMvjuT
+         JLSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVoLr1qW79DpjbZxxeBjahEyDcgk7DuRfWfwFi62pt1ffyTGSNm0Mpg0OrgBmmHBq5ByC1TF1ZE@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyeug1rEI3rPh8Z2qqZ/9gz1wsm/FhySPec8dnDM+DytIkXrE7r
+	DlUf6wc5KnfwhlOaxCLq3e96tugHAuec30FQ4qNktygu4xBSMWdFo8Dl8UJa0m/4FTbPpK0AD5t
+	xMQzA7XfsZGm8+30lm6YJDITKklwYyGhJbwyUwF18
+X-Gm-Gg: ASbGncuB2sa0I5Whu1fmuAYQgsHTGw/v06TaSCj+TScBeOKwMEeFWkotcqpJke99iK7
+	2msULoXbioIioPT5CjV8tOg/BEp/B0bzj1NF6VzRVG03Ax+LwDnxAwkaFcE+k3U8GMIak3G8mXa
+	oiNw28ZJSc5RYkUJO0lTC0CGussdPDDOcDdGUwJUQs
+X-Google-Smtp-Source: AGHT+IGJer1bSae1hTy+VdVDgBmIxrnrLy6/1vEbuh3ihuiTHeYj5NRruSmZ30W23oHspApAquJQsquajOdAT1S7J30=
+X-Received: by 2002:a05:6402:5107:b0:60c:bf83:65fd with SMTP id
+ 4fb4d7f45d1cf-60e73d1b918mr259571a12.7.1751746340448; Sat, 05 Jul 2025
+ 13:12:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250624121426.466976226@linuxfoundation.org>
+References: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
+ <20241101134005.GA109739@nvidia.com> <20241104113237.GA11481@willie-the-truck>
+In-Reply-To: <20241104113237.GA11481@willie-the-truck>
+From: Daniel Mentz <danielmentz@google.com>
+Date: Sat, 5 Jul 2025 13:12:09 -0700
+X-Gm-Features: Ac12FXzjkeaKni9wvVsiCi9BzDFbIznXFt9RbbGeY2UoHjBPMAYPOLioSuEBQ6M
+Message-ID: <CAE2F3rDcq-BQYM1yYq6RNSYSOovdoyRcbYw8Jy+BXCHLkrWN3g@mail.gmail.com>
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Remove split on unmap behavior
+To: Will Deacon <will@kernel.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
+	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
+	Boris Brezillon <boris.brezillon@collabora.com>, dri-devel@lists.freedesktop.org, 
+	Liviu Dudau <liviu.dudau@arm.com>, patches@lists.linux.dev, 
+	Steven Price <steven.price@arm.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Greg,
+With the removal of arm_lpae_split_blk_unmap, I believe the following
+macros are now unused. Is there any interest in removing those as
+well? If so, I can draft a patch.
 
-On Tue, Jun 24, 2025 at 01:29:53PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.35 release.
-> There are 413 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 26 Jun 2025 12:13:28 +0000.
-> Anything received after that time might be too late.
-> 
-
-Some subsequent fixes are missing:
-
-> Tzung-Bi Shih <tzungbi@kernel.org>
->     drm/i915/pmu: Fix build error with GCOV and AutoFDO enabled
-> 
-
-Fixed by commit d02b2103a08b ("drm/i915: fix build error some more").
-
-> Shyam Prasad N <sprasad@microsoft.com>
->     cifs: do not disable interface polling on failure
-> 
-
-Fixed by commit 3bbe46716092 ("smb: client: fix warning when reconnecting
-channel") in linux-next (not yet in mainline as of right now).
-
-> Jens Axboe <axboe@kernel.dk>
->     io_uring/kbuf: don't truncate end buffer for multiple buffer peeks
-> 
-
-Fixed by commit 9a709b7e98e6 ("io_uring/net: mark iov as dynamically
-allocated even for single segments") and commit 178b8ff66ff8 ("io_uring/kbuf:
-flag partial buffer mappings").
-
-> Yong Wang <yongwang@nvidia.com>
->     net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions
-> 
-
-Fixed by commit 7544f3f5b0b5 ("bridge: mcast: Fix use-after-free during
-router port configuration").
-
-> Niklas Cassel <cassel@kernel.org>
->     ata: ahci: Disallow LPM for ASUSPRO-D840SA motherboard
-> 
-
-Fixed by commit 3e0809b1664b ("ata: ahci: Use correct DMI identifier
-for ASUSPRO-D840SA LPM quirk").
-
-I assume the missing fixes will be queued in one of the next LTS releases.
-If not, please let me know.
-
-Thanks,
-Guenter
+#define ARM_LPAE_PTE_ATTR_LO_MASK (((arm_lpae_iopte)0x3ff) << 2)
+/* Ignore the contiguous bit for block splitting */
+#define ARM_LPAE_PTE_ATTR_HI_MASK (ARM_LPAE_PTE_XN | ARM_LPAE_PTE_DBM)
+#define ARM_LPAE_PTE_ATTR_MASK (ARM_LPAE_PTE_ATTR_LO_MASK | \
+ARM_LPAE_PTE_ATTR_HI_MASK)
+#define iopte_prot(pte) ((pte) & ARM_LPAE_PTE_ATTR_MASK)
