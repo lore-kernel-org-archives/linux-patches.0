@@ -1,103 +1,117 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B456C299A9C
-	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 12:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FE7202C50
+	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 15:50:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751892611; cv=none; b=Mz6xGSzKCYu999B8YF5AUKSGVBW3QGfeLrrPFn2IEj+gpJcHRdyfQu+e62CGgymhtmOSj8KILhRp+RCjwBmMKXVRAFpypDeKWzfjjUKNiE7MuXngRMjWXiNp7QHRfoQQKwPhA+DfZk4LmlipJ+eK87ihk5TFojZYM2pHSnZhQZY=
+	t=1751903438; cv=none; b=Dn12EczCB0nmaemOEYanqJFyxFdp349hALjjpuDYlhAXg/GMFeV1jFio2SrNxpYOAE5bgV+0uUQtD8jSEBXVYeMbFQEaN+d2/RAN4eMVfmn74gTJ1DgSObpDWJ/QB4qVLxjYPz+mvCF50X+CdHU++A7XMv6u8yrcWaJDYFm0owo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751892611; c=relaxed/simple;
-	bh=TlGVc2vlqFVb5SNdiOg16XM/hn4x/ChX9J75203gx1I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FhValSBxHtjSvFmocSn4AIVkoq8wyFKW8OWwwJktoFG3gExMy+zl4QQ2UVH2hL+f4g5qqmTRQg44DmQ26z1YmDPEuE1zev4Rv09ntNwcw/5M83OlEW9sX75ST0FEWgNxGqXNbZHAz+NtQMQE8j8uzVDmVx3h7kLFBlvIveCtBYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3EpUvES9; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1751903438; c=relaxed/simple;
+	bh=OE6ekrnC4M0MwVxy/wI21VNyfuRcjDfh+dlzwyWinDM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kQZaw4ajyGEbtwuXGOoZHxKLBxYQwPS6fw+/z+XY8EbhaIqP/R+U/PMroOEmP9CbvXl9B76cJywi0u/5ztLA4G+hsFLqIMgtw6BAvY1XxmFduW4qAmlSumbuL3YOy4oltxnigi1n4ASbZN7k9n8ymEkx7CHo0V6rpHikb/4Nfwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KDvDwZtZ; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3EpUvES9"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so27779315e9.3
-        for <patches@lists.linux.dev>; Mon, 07 Jul 2025 05:50:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KDvDwZtZ"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-748feca4a61so1792897b3a.3
+        for <patches@lists.linux.dev>; Mon, 07 Jul 2025 08:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1751892607; x=1752497407; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QNdhzW/Y8MjvnDjqqg8r50YbwUFzxxNmO6sjtPUADNk=;
-        b=3EpUvES960Rn5dK4l2vDTGs8Kc+yqsUu7q2xzVFKGjJ1LKzwbky8WOqDlYbcocty1c
-         Os1Ixy02fhmlxw360IhoN33QjZDwvgWTznEhq76n99FTQAqnK7L8GIoTAuiYEYi/6TEm
-         e+U6QDGyS8LQRRj4XJySjoeq21j5BJdeFVA+wV5MveKkBTUlCvoCDl2jQG70YZ99gLKO
-         mej2Vfu1Ap2tf67G8mDkewG7ebMafUlJadrd/M8AZRofrr7UdIMqGbFG+KF9tx/K9YPO
-         6SI1ky7FhZ62KjYevhZoK7vlst9pjxKwuX/cpS5c0FI+V6+dGbQcsgKbUBviQK+m1yVj
-         UocQ==
+        d=gmail.com; s=20230601; t=1751903436; x=1752508236; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uZ6Mv0OEaOEWA+/kiIxbnT++kjT9MBnuUPvznp0dthI=;
+        b=KDvDwZtZ5Ej2YsCKhjrB3nsmNvCzLpmoQByksmvfDXysp1jCfPyl1hSllqigw4VmNT
+         1PmWvTP1rWE7aGuduKbWW9uJ5J2Qyk5aEkBvSfG0CEu/rzIMMb4HB918psOK0mnc93k4
+         pEvc4lmIDMXY/PSO2C+WP7FVYoiOCH+GNj02VaKR0cWHRrtA7seKHYdtRXj3NplUcCDP
+         LrncixGzRxoBuPaBFBgfsk2r8gkjeb2C7ReFv00c0WtqcCg2O+WniYrEZRclru0BolPR
+         nsGjF/+mP0I8sgDdGQS7rxs4VWWlMjvhvrcckNgwjFXqrj8FBxaNA1z0DKIjNG7GUo8m
+         4UEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751892607; x=1752497407;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1751903436; x=1752508236;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QNdhzW/Y8MjvnDjqqg8r50YbwUFzxxNmO6sjtPUADNk=;
-        b=kNdDJOQ8PzGLFlES0qJf2OM9AuxofiUad7qoRLGOa4fUtcZNzujdfuCzAfyfATl3oz
-         0dvuXatikrafNEbyyekLeq6LAyYcco/u4B0a2nvbFHvY1LkoSnaed9iQH4rFncTQ4+FF
-         y3/+nqkOKi2wGWsTF3XlBaw81DTeZrr31W4FqgWv4ydNDl9ritSMk/eZSnL0Yr8SlEDw
-         0dn99X2ygOiO8eZJ29Cls7/xmL+ODw/cuxgRwvc8Az5BJrSv47JOQC4HPitNBrOcocWQ
-         gIs1QYJBeGxKtwyBtbnfcNPe9A+qbQZdFDDfDBfOXjE5fUUTK6tBWDvvy4Big+AcZNs+
-         S7qA==
-X-Forwarded-Encrypted: i=1; AJvYcCXUcxo++PnLWQBZPqbmXJZa3y3FuOAsfcHbMT9gepq/qMYM2OSgLq/npjytuwmhtk1x8gCbsXZL@lists.linux.dev
-X-Gm-Message-State: AOJu0YzWdQsmT4XK8Grjf2lexMsUE5jgiqz7w3u+uhHfiPGKxH27BcPA
-	dkXIcX/gyUqFHeEmMHZuVGhnhVwD66VOfshpOfE0UP37RZs15Ad8B61dQU/3LmlYPUy2kGTUVk9
-	1CtvZ4lS+pkaA61h419rylbHW9lmtiwZ83fBsqhnl
-X-Gm-Gg: ASbGncvfDAYouy3kbktxL2T4rXhd3UPldFMbuIQkQHGHxx0TZdOGQoEqP/i9jM7qmmc
-	mAFY+bxD09NTDawwMsEg09+kiadMyX3g6AuAGAax/meoKoVN2cy3xzxwqfPNQR+2iKpYzGgHgii
-	IAkKoJAug/zwf3J8KBR6WoOkXGSQL3FTa4hfeZegPhVrTcK/ymkrDvHLQOE1/OxacZXRXQtZE=
-X-Google-Smtp-Source: AGHT+IHsMXBAD8GA+B5LxiAfDAfLtY6TvZ5FvEHyZmOChFA1YhgQJ0ZWJ5lgZJTqiFSe6ZNS/+jU9jf/Us1OmmZWM4c=
-X-Received: by 2002:a05:600c:83c4:b0:450:d04e:22d6 with SMTP id
- 5b1f17b1804b1-454b4e6bbdcmr104358265e9.7.1751892606844; Mon, 07 Jul 2025
- 05:50:06 -0700 (PDT)
+        bh=uZ6Mv0OEaOEWA+/kiIxbnT++kjT9MBnuUPvznp0dthI=;
+        b=GNXGgbxUShZNzzi9gvOlyKMZPL6QqZR0z1p40kiN/yerTUiTTtpYwX4pX9w63WKky2
+         nkB6Ew2BMpML4ns8LhfgUwX/i5uCqNy48FCrYDQOqqxm56QIIFWrsoXzmyNSP9HUS7wJ
+         c0QikSOXBHQTwU7CgC1++8EfRtTIP0o0+zhxfIof6c0s5pd+EDga/fgJOMyr+KJ583NG
+         a4fTUPVKuxtHR3vgb7r6avLuPmrSmvJIT1i12XANdapgkgYMCCwt/iG8Co1y/w32drNV
+         Y060FXVZTC726M/W+UjaRTL3mhXwujR4Z1Is0mNPZ7qI27ck2Lww7Fbk2wP/qiS8+xFg
+         8rUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU9v9xUWYSx12oW64ZU/rJy128a+RrZ9KFJ4g02u1TQ9+zTlwBh9lnKL1M0Kmy0M02TEmSwyDQF@lists.linux.dev
+X-Gm-Message-State: AOJu0YxbWezen0HzXJVSI1dxZeiWz7gXDSHjnWwbRq9szxgMC6lGYq+o
+	4+DxZbNeFlxRW9IPr1H7vcwSPxxE5237OYuRNFyoQYirdFzBZMVk4TJw
+X-Gm-Gg: ASbGncuQUuk0EbcIWHG7PPXxh+hV27cTQh7mlmf3ix0C/rkuDhcZhkx6exocW9BOskU
+	6z2hmQ/T46Zw/LSNPv3ENYu4v5g/GRIbwtKzFHATGnRcPi2ZuICCnNyTtk8e+UaDQET5/JB1/Ec
+	9oeRQ9KR+nkfGm2tpW3EShhz/MEQs1a0iGOBmwDMF+ZnLpXxFB4Xn22PNKx9iEDzfy/B0mKmiug
+	y6vK2PqtpAROP8nZUdF+4WrHtbRFN9sD+69q8peQ1tB2yclDmUYpux2Nfy+iJM3NVZPiaqBEi6r
+	SrEQRVhjdOjN3XZeMY6XDArCP+yH9GKZCaM4rpf/C4Yrm/fYMz8Y1030ehtWOqkfHCV/yvL+ucI
+	8ZtyM0vWmDw==
+X-Google-Smtp-Source: AGHT+IGgkpmjbxpxYXCE/TsDZmOdCnZuD6FKwplAAj1F8D7VIhBlJe3WEWwr2tw871m5IwR8avA+vg==
+X-Received: by 2002:a05:6a00:17a5:b0:740:afda:a742 with SMTP id d2e1a72fcca58-74ce86d45b6mr17451540b3a.0.1751903436355;
+        Mon, 07 Jul 2025 08:50:36 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce429f5adsm9598045b3a.132.2025.07.07.08.50.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Jul 2025 08:50:35 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 7 Jul 2025 08:50:34 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 5.4 000/215] 5.4.295-rc2 review
+Message-ID: <b648e51d-2244-4295-a917-fe1b0f391074@roeck-us.net>
+References: <20250625085227.279764371@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250701174656.62205-1-ojeda@kernel.org>
-In-Reply-To: <20250701174656.62205-1-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 7 Jul 2025 14:49:54 +0200
-X-Gm-Features: Ac12FXzQ5ck03QQHYzFLsSFTLp2hRsyOexA643YmM2tCIERUaEuSJWfO_lmHndc
-Message-ID: <CAH5fLghD5eU-YUkq0M4gFK1tXOGHz3Py4m_+xTnYzLxT_ru0xw@mail.gmail.com>
-Subject: Re: [PATCH] rust: acpi: remove unneeded cast to clean future Clippy warning
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Danilo Krummrich <dakr@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Len Brown <lenb@kernel.org>, 
-	linux-acpi@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250625085227.279764371@linuxfoundation.org>
 
-On Tue, Jul 1, 2025 at 7:48=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
->
-> A future Clippy warning, `clippy::as_underscore`, is getting enabled in
-> parallel in the rust-next tree:
->
->     error: using `as _` conversion
->       --> rust/kernel/acpi.rs:25:9
->        |
->     25 |         self.0.driver_data as _
->        |         ^^^^^^^^^^^^^^^^^^^^^^-
->        |                               |
->        |                               help: consider giving the type exp=
-licitly: `usize`
->
-> The type is already `ulong`, which nowadays is always `usize`, so the
-> cast is unneeded. Thus remove it, which in turn will avoid the warning
-> in the future.
->
-> Other abstractions of device tables do not use a cast here either.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Wed, Jun 25, 2025 at 09:53:55AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.295 release.
+> There are 215 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 27 Jun 2025 08:52:04 +0000.
+> Anything received after that time might be too late.
+> 
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Building nios2:allnoconfig ... failed
+Building nios2:tinyconfig ... failed
+Building nios2:3c120_defconfig ... failed
+--------------
+Error log:
+In file included from include/linux/mm.h:102,
+                 from include/linux/pid_namespace.h:7,
+                 from include/linux/ptrace.h:10,
+                 from arch/nios2/kernel/asm-offsets.c:9:
+arch/nios2/include/asm/pgtable.h:303:19: error: static declaration of 'ptep_set_access_flags' follows non-static declaration
+
+In file included from include/linux/mm.h:102,
+                 from include/linux/pid_namespace.h:7,
+                 from include/linux/ptrace.h:10,
+                 from arch/nios2/kernel/asm-offsets.c:9:
+arch/nios2/include/asm/pgtable.h: In function 'ptep_set_access_flags':
+arch/nios2/include/asm/pgtable.h:308:17: error: implicit declaration of function 'set_ptes'; did you mean 'set_pte'?
+
+The problem also affects v5.10.y and v5.15.y. It is caused by the backport
+of "nios2: force update_mmu_cache on spurious tlb-permission--related
+pagefaults".
+
+Guenter
