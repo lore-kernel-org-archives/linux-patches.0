@@ -1,285 +1,494 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2060.outbound.protection.outlook.com [40.107.236.60])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56B61F30AD
-	for <patches@lists.linux.dev>; Sun,  6 Jul 2025 10:20:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751797216; cv=none; b=AUBjkHhH7uRayY4Fh0Alo3LHWxLC2bXIGRApLaGrEGOdh7lJm5uwpIsjFNYLuEXJf56YrcJahRXXKDX1C6hYdis2wTuA5HD+O5Ucaogg0R4tFeCrQjkQHMkk4Gi/ChZVLcPNi0WlI9D/LNaLrCMBun4FMOy6ClwJ00d6B/DvQoI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751797216; c=relaxed/simple;
-	bh=3i4oNzoxPApaR7jJuESFYKij3qYI8FDE7ecJ4O4s6v4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iiRnbIr6sVOD9KA8KTurg7Qm6gbd/OQ4VV7bs+gLRLrtXmBdRL6UZQcJMIo7nI7AK4KGywE/dnftyB44Kn1tstTYYN3XQSPp0HHKeOn9VqrM4o0010WSABQhiFnf/Q2fNTqKhOL24ZWL7V0AdE/VORHzCAd25k9lZjnz+jxhs0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NSLw3A+v; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC602777E4;
+	Mon,  7 Jul 2025 07:41:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.60
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751874081; cv=fail; b=eq2eK4Ie9/Sb6MPzuJwp7LQLqaFnPNqhjzedaO9Ev/bNZ+2c6vDkpctTEuC77LhZVaI6RJ2VgDJmhPgQLcH4rpSVp91CKQRdAjFZ0HjUN96x2/SG5hT5C/kuJOtDFyA/QWWTclwy/uKlRcHPq57rDBb5fgnlcquenSkSrXJ0dJs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751874081; c=relaxed/simple;
+	bh=B4PMfFhB9xbbnUPX5bl6a+NbiaFO0X0UhKTmBrBhhTc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=N99HTGq8rSn7zRpvcjsAg5D/IKRHYGdoryR15aP/cPYFWajkIY888UVnbsyFpEbs9FIRH/pR70h9PTilOWU+QLS09fGYXqoF5vsQ9WGw8GqX7F3akAFrZ/7yfzyhbhVnI1/mVB7PzkpK/sm66wmRweX4nFioOZ1Cw5luEUVQCoI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=Vi2wDCXs; arc=fail smtp.client-ip=40.107.236.60
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NSLw3A+v"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3138e64b42aso2981090a91.0
-        for <patches@lists.linux.dev>; Sun, 06 Jul 2025 03:20:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751797213; x=1752402013; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nJC1YnqRsI/+BxDwAPn1fBTIKeVMKtwCwKSxFcD1Pmc=;
-        b=NSLw3A+vOhJ8pvYCKBT854scfq4prKtXXGwi62FM/c40j2UN919fdWTR+vjsWkVW/C
-         wxEGuR0aoGrc0LPAjp+Do0ejoLbO2dnybj8oXIiTRfu6IEWwIK4lN52xpUQljhbnb+AU
-         SLgcwwV1Pt0eBqUIlCUg/1MvrHaSfK+7/pnlW9pSniGkmbz6Fyij7XE4EjdBT2CjOp72
-         wr62xATdwcWG7ZMmHpqgthsmLMxVMRWNmXVlI4hpiXrpoPD1bn6eHUD9fAoHn/g+vp6Q
-         qpHl4zbVHZqRrBIrzQTtxfGeC6+lDMgfWrSz48P9orn8DOiUSi8IGasHXK5ZoLDpzUxs
-         5vxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751797213; x=1752402013;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nJC1YnqRsI/+BxDwAPn1fBTIKeVMKtwCwKSxFcD1Pmc=;
-        b=QLTjl3j25T/+ODhG8p6/Vr4/K+4MxEq3WyXBA5iMVxR3nlWQs/mElf5g2hiVSn1Vcd
-         RhqZ1bHLTMtvUh6g2Hs3exstZHwWWiChQX4UgBqR+qq7iXZyKrN445Ep/JxHcbjGmkM3
-         clu5usbz0aQp8ueYAlIg79rA/lXrO2nq6XCEsdxDrd9b/RTgz39jxp/B2WeVU4FhCY41
-         BArps1ea9slCoPDoNItM+hTwvE7yh8CGI69j7vr8VwCO6AHm2EDtia7M3VpFTWsgYLzj
-         Elm65fBXjYLlS8T6+TzNXQPA5pwi2l0t1qLoR/JxLf+xnPVCJB0pS2K7hB3jR7364+w1
-         X5jQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWnIE0YWP/loZbw03otK4+ZfAXWs0tf8wnuRYvg2afqbXgzTs8ZtTVf8vSZ+ljVBz3rRK7JLIp2@lists.linux.dev
-X-Gm-Message-State: AOJu0YyPMTr6A20NYpeg+BBE6PzsNHbmKGL1+cw/E8UeayEuhxdhnIfK
-	OtS4nw1opynyuD/esM3Pv10+O7b77JARnlCmnL9ht3ox6/0GIDEnQh6GIEs3+2eaapMyLgGdF5i
-	S9LxHE58mZqSo55f7yLyDM0kneD+cS7kIVVhgbLK3cA==
-X-Gm-Gg: ASbGnct3gCivAP7tjp7v4RAE+4222T8CF36a0f/syU5rxCVxhDZVirnJ8NIeqJtsF9D
-	xTnMRuOfiMKuC3D6Bg8/5Q9yzgQ97xs0pBc0Mbyna9zH7JTjS8sHXRf+2HKtJBAlHVQCHDPRdLa
-	UCHb6y2WVeVw64RCLdnjg200ZeeXBBZb6XxuJVaAGwfH8OIA==
-X-Google-Smtp-Source: AGHT+IFQ/yDgnJfWcTEvzzr/hLpoYvYM+BA8AZGWWKSHWa4EZGYJ4x258RaKhie34g761N9q4rOdXTFzMTulgstLuuc=
-X-Received: by 2002:a17:90b:2f43:b0:311:9c1f:8516 with SMTP id
- 98e67ed59e1d1-31aba85c314mr8110906a91.15.1751797212944; Sun, 06 Jul 2025
- 03:20:12 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="Vi2wDCXs"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mImHEGzEJFgAhC6xm222rkjAys9setcfwtAgEAHYckv2+IE21AS4nO7fX25HAAd2CtiFbiajxhvtKo1JqmIIzBnLH4lsFgYYLLSsF4FBRTiKVszBDd5kIiJNDpw2TpTpJNhFRq8xvT58mXEiyYO+tDu5cPRqu/GkzbKmcm4kuOHrTlYhwgi8wHKQT0Y3B04ZtYH+Ox81CXLVf77z3MBrvHBQxDS8Wx/FuB4la2atVcP2GuSJeMK5t7fdbvENf8CHnnVAaZm8SqgHMJx96BRcOw5Kijxn+eeDZmeK/cGstUK0hG7u3CcFbsvTWgmr9xRzptj1DQZtsqrAFH3c6uOy+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iwTQe4gD2q8C0CNnXKBBzjOx9f1TZaoez635t+0Ukws=;
+ b=cik+U4EaRdc60MICSZN5NC5XRi60OMinryYBgkj4L3jRfeB4j56MbUUYqdAAv1/PID6L9dfFBWisOYagdFeIqLwqUIFxKTpxCEZxgrq0hG1lHDj5bb0J3oe8nopM+t6K3Jir8iH9PXqvpvs1AqOMzF8y26tdTkzc09w52xdTjvt7aDGzpU9t+65YeHMF4I4BFCM+Iyltvuyr0eVoOGoggisTiuDLLOwEirHt7TeK5GFVdpV4/ZrAHUhjjiGEhuLH6JvHYOjKpASyW7DJdIw/2nwZ6GgXXGxvPf+JivUqorPySK8i3yxrCEjZRGNa1yT1ckUWkv4ejmxv2Aqp1qT5gQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iwTQe4gD2q8C0CNnXKBBzjOx9f1TZaoez635t+0Ukws=;
+ b=Vi2wDCXsLvdZEwy9hYPtqeyzS4fNSvSqlXB3Bs0yvthJQ+7pM4cPtfcemgLuvEAqjCHhkZmKom0rHFkj2Lj8KCtDlKIQXC47LjfOsBVFefhCHWGxf9m6Enr3Nbd09vP+PQRVMdiaOCiuh3RZixIYYZELDTtU/SbGSnWgO5qRLSc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ DM6PR12MB4337.namprd12.prod.outlook.com (2603:10b6:5:2a9::12) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8901.24; Mon, 7 Jul 2025 07:41:14 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.8901.018; Mon, 7 Jul 2025
+ 07:41:14 +0000
+Message-ID: <1f18d7a3-b515-4096-aff5-1aea31ce4f7e@amd.com>
+Date: Mon, 7 Jul 2025 13:11:00 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 14/29] iommufd/viommu: Add IOMMUFD_CMD_HW_QUEUE_ALLOC
+ ioctl
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ corbet@lwn.net, will@kernel.org
+Cc: bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+ thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+ shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+ peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+ praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, patches@lists.linux.dev, mochs@nvidia.com,
+ alok.a.tiwari@oracle.com, dwmw2@infradead.org, baolu.lu@linux.intel.com
+References: <cover.1751677708.git.nicolinc@nvidia.com>
+ <49a93d92ce657cf6a0d588d2b31ad3600ace21f7.1751677708.git.nicolinc@nvidia.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <49a93d92ce657cf6a0d588d2b31ad3600ace21f7.1751677708.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN4PR01CA0102.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:2ac::7) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250704125604.759558342@linuxfoundation.org>
-In-Reply-To: <20250704125604.759558342@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sun, 6 Jul 2025 15:50:01 +0530
-X-Gm-Features: Ac12FXyH1VcLc-KLE5gEDuJ2sOEzP3oBxjxO9umnS5MCIQGy6hwVYE4nMG3n24Q
-Message-ID: <CA+G9fYvidpyHTQ179dAJ4TSdhthC-Mtjuks5iQjMf+ovfPQbTg@mail.gmail.com>
-Subject: Re: [PATCH 6.15 000/263] 6.15.5-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, Dan Carpenter <dan.carpenter@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Anders Roxell <anders.roxell@linaro.org>, jakub.lewalski@nokia.com, 
-	Elodie Decerle <elodie.decerle@nokia.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|DM6PR12MB4337:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3b0751d8-3441-4dc5-047e-08ddbd29a609
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|1800799024|366016|376014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?UnhNSzJYdXA3eWpxc2Y5S2c1RVJ1UHY0VCtFS0dmby9nUVJLQU1tL1F5U2NC?=
+ =?utf-8?B?WkdEUEozNFk4M0V6aFhMTDFRQXo1ck0zWnlSL2pRS202dXFSejRKU2RVSHhv?=
+ =?utf-8?B?bGlWWDFtVXl2VG9nZXNGbUVmT0N0RzRRTlFFUW9nZmw1UVJ3bHhzNVNSTE00?=
+ =?utf-8?B?M3RLazl2TXM5Zno4TjhURHBXMi91YlRwZ3JiNUFSVHl1KysyekJVRWdMb0Vy?=
+ =?utf-8?B?cWpXUng1U2tVYk1ESCtzRWJBY2Z0bUNHUHlSa3dZckgzRzkzYjVtUzFOb3l2?=
+ =?utf-8?B?cmFuS0VsUWt1YzBRcGk1ZUQzeC81SktJZXVvcEpqQlFDTFdRWDR5QXM3YUtC?=
+ =?utf-8?B?RThzMkxPYmFyNjNNQmgyRElPOTg0UENaUEp2V0E1SytrNHFwZ2pESFJsT2dB?=
+ =?utf-8?B?d0hxaGR0LzEvTStGMDhEdG1XYnNacHp3ZklHekxDWDZaTFVxWnB6Z3JDMDAv?=
+ =?utf-8?B?MXNwZnhiTll0QzlMU0hnTGY2K3ZzSWVuWWpDeWtJWSszclVQcFNjRGV2QTVa?=
+ =?utf-8?B?bHpjZFZKa0dVWXhDUGZjZmN4cjR2YzZOV09JaWxZSUdYZW83Vm5OeXVrSE9q?=
+ =?utf-8?B?SnpZaHMxSWhsZjgwYjV2Yk5rd1ZTVWV1enB5QUxpeHo5Q3JZY05BYjdrUEww?=
+ =?utf-8?B?MWZMSmQ2RVhEaFVtdUVNYnVoRVU3T3F1WUVUelUrK3NBc0JjbUJLZE96SElR?=
+ =?utf-8?B?d0ZpMURVZ015SnUxWmZxMlNjeUNJV1lMdmlOYkpsNVBDeFc2R1BHUk43ajkr?=
+ =?utf-8?B?THRHcm95RENSQ3RRQzJ5QjVWTUV6RExKaU56anc2aHFCWmVJc3dLRjFQcjdC?=
+ =?utf-8?B?Qk9WNGRkaTYrdndkdkdwbTJJRWhZejFvUkYxbTkxV3pRWTdwTndmREg0VVFN?=
+ =?utf-8?B?TUs5bTNvMDlJcTkrMnR0RGFyeU9VTWRNMU40YkJYV0FDaFR5T2hkQ2ZTZTZG?=
+ =?utf-8?B?TlJBeW9sL3JDMlJIVHIyeHZmNFQ4a3pvdmpBaFg4Y1N1TmYrQkt1SkpDbi9F?=
+ =?utf-8?B?RXg3WklFdmdHNDFoLzZLRlhvVDY0NzVDUVJlNVRzd2lyMU8wNDBjTWpnUG1W?=
+ =?utf-8?B?SWNNYmZCeEF5aEJqSTRXN0o3ZkUrNzVCYjJYZ202WVFqZWZzWk5IajNOQXBp?=
+ =?utf-8?B?UmFMVWJPbXJhRFdpWjQya0RqaHdHSVpKYkk0K2lKOGdXek9rQlBZbm9ZM09v?=
+ =?utf-8?B?c3R6RkdWaGpnekNBS2R1dWZkRXJIQTVINHRTNm52aDdkQlAzRG1kLzBrNU01?=
+ =?utf-8?B?SERRR0RML1ZrenVBT0Z0QnhqZFkvMkxTUlNTWXNEMVRBeUk5VS96bndIMHpL?=
+ =?utf-8?B?cVZ0a3NQcklTYldMYXBEL0krZmZYSGhiRi84K1E3Y1FMbTQ2SDgxa24rUjhU?=
+ =?utf-8?B?Wmw1dWVnbzM2am1MRUtqN3NtQk0xU3NMVnR6UVZvcWNNb2FoZUM2QU5RaWJZ?=
+ =?utf-8?B?SGVjb2NhSTJIMGhrS2hJNzlCK2psdmtMd25zZ3NYemVPeG95azhDODVyRjFK?=
+ =?utf-8?B?UmdSTjAzSXZiVU96TDdRWDJHbUhmWEhaV3V2cTNMQkR5bGtKeXkwQzY5c28v?=
+ =?utf-8?B?MFI5bEFqWkpFUmdwWUNrRlVzUVFycFY2U3AwczlWK1UrSWdhQVZnV2hpZzhO?=
+ =?utf-8?B?OGlIMVVUR3ZtUVMvdEhrTHgxMkN4RXBObnhCbUl2dnc2VU95M054dEVvdlB0?=
+ =?utf-8?B?YmhNbEVpcE1zZnd2QVZ0U2hRT1FOT2V4MlpGaXhEMzNGMW5SSHpoeHZKWGp1?=
+ =?utf-8?B?TDJVc0ZmWjl5bmpONi9DSVozMTlQeGVkSVpzVmo0L0JJWVh4amYwQmhUOXhw?=
+ =?utf-8?B?aTUybTBFOUUwK2VJemJsQ0JGdGZtbXFmVmxXbDhvYUJPc25rdGl4NzByNlZO?=
+ =?utf-8?B?ODlkZkZTdVNoVHFQZjBLdDVFa1N4bWJEVDZlSUdPSUhjS2psQmVtRGt4YnJw?=
+ =?utf-8?Q?Lki01KOK6EA=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB6048.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(366016)(376014)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?aTBxMTBaZXlpODBCYm5FVTdVYjY3NzhZLzZVOFNwQ3gvQmp3eEJ5OU16MXlm?=
+ =?utf-8?B?aEtuT3VpaVcrL1cwYUFacjZTTGlNKzZpbGhaYW9FTm5MaTVUaXFQb01qLzN3?=
+ =?utf-8?B?NUIxWFB3Q2U1V0psbjhuSnhUNitZdFdwbmVnMGhLbE0yU2pOTjl1NHM1bE55?=
+ =?utf-8?B?UlVnNWlOTVU4bTRNcHJqWHdwWW1NbEhuWkpTQlNQODhNZVZiVk0vZ0FKck5S?=
+ =?utf-8?B?OXVhZGRIa3RHUkR0bXFlWk9hQ1g4cGlhRk13RDVBdW4vbGtXWUpobEh0bDRY?=
+ =?utf-8?B?amFxMmNsUDJITWVRUllzVzZwZDNFTFVBenZEL0t3ZHliQ3hRTUc4NjZORkVp?=
+ =?utf-8?B?MjB3eXdJM0R2NFhkWVJOWVVFcWgxcDZzN2NQL3JTVlhjSXVOK2dvVGZ2alF6?=
+ =?utf-8?B?M2lmUnVUOFFpMzBjOUpRenZFZzNsbDd3RnBTZ1pROHU0RllIOEVLVGY5YndH?=
+ =?utf-8?B?cGxCSk4xWDdLR0QzOFN1L2F4VXVZMFNvd1c3eGtFa0J2ZFFWMFBSdWk4Vml2?=
+ =?utf-8?B?VUgyRzhDQkl5MEpRK3pIM2VnUml3cDNKS3lMTCtsSUVIZ3NkOFRaUEpwc25n?=
+ =?utf-8?B?ODNyOXczSVp0MG5sT2VVSFlCMHNFWnRycHNFbHVIS3FzdTVrcHRMRVB5NU1U?=
+ =?utf-8?B?eUx1YU85Qmk4RDRaYUhKUlVCdTBwRzhHL3VaY00zVHVISnZPU1NaeUtUdlBQ?=
+ =?utf-8?B?SE4rdnZQM0FZS0JLc3MxOFgzdmFNUElqV0V6UkZUNllFTDhxakNkNHczdnRr?=
+ =?utf-8?B?TGFwdENjYUN2TGhQYmpEZHdVdnphREFNa3lpWDYzNTEwNzZKMWVrRVFOWFl1?=
+ =?utf-8?B?Q0psdWF3dE92ZFBTTlFNcC9qT2VldHdreFpNbFBxMm5Rc1VWd0xzemJyN3px?=
+ =?utf-8?B?RGNrblJYTDVQa21Ma1ZDYitXU08rUmNiOHZQTkkyWTlGa0JWOXZJbmtXZmkz?=
+ =?utf-8?B?L0I5aWpCT21jOU9GL1BkQVhacCtya2NnMk9LWTVQUlRPUmU3ZWI5N3U0R0tx?=
+ =?utf-8?B?UGU3ZmhIeUZ6emRsLzNvQnNoRzJDaTBpQWgwaVdsVGdBMlJwUVl2UXptTG5J?=
+ =?utf-8?B?aVFDODg1SSt0N0lGVW9HUHV0OGxjQW5OeUk2VkxxaExxdmd0TFMzalQwWUg3?=
+ =?utf-8?B?U0xEVy9RTnRET3hPM0Q2ZUZxZ1hrYm52dHlYVnQ5WUtwUm1Yc2dKOXhobVNw?=
+ =?utf-8?B?N3pTeVZyanhQa0FvSkFOTVhSZDgraTFLMTBISWU3bTk4MzVkdnJjUnJveWNx?=
+ =?utf-8?B?R1paQmpUdUg0eUgvOUplOFNrVXVaWWY4M1U0bXgyblNzZmdsVnFTenB0K2U2?=
+ =?utf-8?B?emFLQVorQWZGVG5LWlhaRWcyN1QvaHVMWmJ5dzAxcUs3T1pETlMrNmdzMFp6?=
+ =?utf-8?B?NFVRV3k4Wk5JZkh1b0FRMWlGcll5ejNpYTI1a21ZU000Y1F2K2dhU2FvK0VH?=
+ =?utf-8?B?Y1pSaEtnOS9WbVpXbmpZVWN2eEthWHV5ZnBtZG9ENWczVWF2NnN4S0lzOFZ5?=
+ =?utf-8?B?amh1MXpFU0RSZjRRZFcrU2RSR0l3NjJZWVZUcHVrUlM3TFNjWkwwcVZWVVNh?=
+ =?utf-8?B?R0NpUW4zb0pMb0VITHBtUlkwMWphOE0wM2RvUDVsdFBMZE10eFVjbnp1OTFh?=
+ =?utf-8?B?dElzTStPdU1ZSDJ6Mm5nV1l5RG5DZXVIRit3R1pLOEVDY2JCMkR0dzRtaXF0?=
+ =?utf-8?B?WEtIWUxzZjRkd00rVDQ4clBsUGhsd0FuUmxjM0g4SkZsRy83RVMra3B3MmZs?=
+ =?utf-8?B?cjB2R21BbFowU3ZTR2ZWbzBQT2o4QlR5SEJpMm9Ld1RyV1AvOENjbmlzZzht?=
+ =?utf-8?B?OVhYc3d1V3RZOTQrMjc2Ky9UR2hIOUJEWFFoMVVlMkYzQm9JbTZ4eFpEMVNj?=
+ =?utf-8?B?YzVNMm5OM2RyREZtOThpQmVGUmJlM2VwaHFsOXFxV1ZxWldqb0JRTkZIeWtG?=
+ =?utf-8?B?N3dQRGZqV0tNVkZNcSszYk5mam5oTEdwcUlKaDdjcGJidXZyb1FWaVFNckUy?=
+ =?utf-8?B?MjU5eXptN21wUkxhcTltQmt2V3BHSnVQYXlBOW5GNnZVVGVlRjNicFJCa2FW?=
+ =?utf-8?B?Y05Ld2pCZ0R2d0ZHRmJDaU1tem1HcHhoQ3dCTkw4QllCS1JLWE1FeHVmaVRu?=
+ =?utf-8?Q?3axzj01Eirv/ceJRdZqDBaEeX?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b0751d8-3441-4dc5-047e-08ddbd29a609
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jul 2025 07:41:13.9373
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qZnm960t1b/fOefuH4M35hgTvfoA8W5bYQ+1YDSg0D5NA/TdDiRj70Mz9FDIEOVImvvedstdFbdlqXsCCeruTg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4337
 
-On Fri, 4 Jul 2025 at 20:14, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.15.5 release.
-> There are 263 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 06 Jul 2025 12:55:09 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.5-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi ,
 
-Approximately 20% of devices are experiencing intermittent boot failures
-with this kernel version. The issue appears to be related to auto login
-failures, where an incorrect password is being detected on the serial
-console during the login process.
 
-We are investigating this problem.
+On 7/5/2025 6:43 AM, Nicolin Chen wrote:
+> Introduce a new IOMMUFD_CMD_HW_QUEUE_ALLOC ioctl for user space to allocate
+> a HW QUEUE object for a vIOMMU specific HW-accelerated queue, e.g.:
+>  - NVIDIA's Virtual Command Queue
+>  - AMD vIOMMU's Command Buffer, Event Log Buffers, and PPR Log Buffers
+> 
+> Since this is introduced with NVIDIA's VCMDQs that access the guest memory
+> in the physical address space, add an iommufd_hw_queue_alloc_phys() helper
+> that will create an access object to the queue memory in the IOAS, to avoid
+> the mappings of the guest memory from being unmapped, during the life cycle
+> of the HW queue object.
+> 
+> AMD's HW will need an hw_queue_init op that is mutually exclusive with the
+> hw_queue_init_phys op, and their case will bypass the access part, i.e. no
+> iommufd_hw_queue_alloc_phys() call.
 
-Test environments:
- - dragonboard-410c
- - dragonboard-845c
- - e850-96
- - juno-r2
- - rk3399-rock-pi-4b
- - x86
+Thanks. We will implement hw_queue_init[_iova] to support AMD driver and fixup
+iommufd_hw_queue_alloc_ioctl(). Is that the correct understanding?
 
-Regression Analysis:
-- New regression? Yes
-- Reproducibility? 20% only
+-Vasant
 
-Test regression: 6.15.5-rc2 auto login failed Login incorrect
+> 
+> Reviewed-by: Pranjal Shrivastava <praan@google.com>
+> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> --->  drivers/iommu/iommufd/iommufd_private.h |   2 +
+>  include/linux/iommufd.h                 |   1 +
+>  include/uapi/linux/iommufd.h            |  33 +++++
+>  drivers/iommu/iommufd/main.c            |   6 +
+>  drivers/iommu/iommufd/viommu.c          | 177 ++++++++++++++++++++++++
+>  5 files changed, 219 insertions(+)
+> 
+> diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
+> index 06b8c2e2d9e6..dcd609573244 100644
+> --- a/drivers/iommu/iommufd/iommufd_private.h
+> +++ b/drivers/iommu/iommufd/iommufd_private.h
+> @@ -652,6 +652,8 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd);
+>  void iommufd_viommu_destroy(struct iommufd_object *obj);
+>  int iommufd_vdevice_alloc_ioctl(struct iommufd_ucmd *ucmd);
+>  void iommufd_vdevice_destroy(struct iommufd_object *obj);
+> +int iommufd_hw_queue_alloc_ioctl(struct iommufd_ucmd *ucmd);
+> +void iommufd_hw_queue_destroy(struct iommufd_object *obj);
+>  
+>  #ifdef CONFIG_IOMMUFD_TEST
+>  int iommufd_test(struct iommufd_ucmd *ucmd);
+> diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
+> index f13f3ca6adb5..ce4011a2fc27 100644
+> --- a/include/linux/iommufd.h
+> +++ b/include/linux/iommufd.h
+> @@ -123,6 +123,7 @@ struct iommufd_vdevice {
+>  struct iommufd_hw_queue {
+>  	struct iommufd_object obj;
+>  	struct iommufd_viommu *viommu;
+> +	struct iommufd_access *access;
+>  
+>  	u64 base_addr; /* in guest physical address space */
+>  	size_t length;
+> diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+> index 640a8b5147c2..55459b9eee31 100644
+> --- a/include/uapi/linux/iommufd.h
+> +++ b/include/uapi/linux/iommufd.h
+> @@ -56,6 +56,7 @@ enum {
+>  	IOMMUFD_CMD_VDEVICE_ALLOC = 0x91,
+>  	IOMMUFD_CMD_IOAS_CHANGE_PROCESS = 0x92,
+>  	IOMMUFD_CMD_VEVENTQ_ALLOC = 0x93,
+> +	IOMMUFD_CMD_HW_QUEUE_ALLOC = 0x94,
+>  };
+>  
+>  /**
+> @@ -1156,4 +1157,36 @@ enum iommu_hw_queue_type {
+>  	IOMMU_HW_QUEUE_TYPE_DEFAULT = 0,
+>  };
+>  
+> +/**
+> + * struct iommu_hw_queue_alloc - ioctl(IOMMU_HW_QUEUE_ALLOC)
+> + * @size: sizeof(struct iommu_hw_queue_alloc)
+> + * @flags: Must be 0
+> + * @viommu_id: Virtual IOMMU ID to associate the HW queue with
+> + * @type: One of enum iommu_hw_queue_type
+> + * @index: The logical index to the HW queue per virtual IOMMU for a multi-queue
+> + *         model
+> + * @out_hw_queue_id: The ID of the new HW queue
+> + * @nesting_parent_iova: Base address of the queue memory in the guest physical
+> + *                       address space
+> + * @length: Length of the queue memory
+> + *
+> + * Allocate a HW queue object for a vIOMMU-specific HW-accelerated queue, which
+> + * allows HW to access a guest queue memory described using @nesting_parent_iova
+> + * and @length.
+> + *
+> + * A vIOMMU can allocate multiple queues, but it must use a different @index per
+> + * type to separate each allocation, e.g.
+> + *     Type1 HW queue0, Type1 HW queue1, Type2 HW queue0, ...
+> + */
+> +struct iommu_hw_queue_alloc {
+> +	__u32 size;
+> +	__u32 flags;
+> +	__u32 viommu_id;
+> +	__u32 type;
+> +	__u32 index;
+> +	__u32 out_hw_queue_id;
+> +	__aligned_u64 nesting_parent_iova;
+> +	__aligned_u64 length;
+> +};
+> +#define IOMMU_HW_QUEUE_ALLOC _IO(IOMMUFD_TYPE, IOMMUFD_CMD_HW_QUEUE_ALLOC)
+>  #endif
+> diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
+> index 778694d7c207..4e8dbbfac890 100644
+> --- a/drivers/iommu/iommufd/main.c
+> +++ b/drivers/iommu/iommufd/main.c
+> @@ -354,6 +354,7 @@ union ucmd_buffer {
+>  	struct iommu_destroy destroy;
+>  	struct iommu_fault_alloc fault;
+>  	struct iommu_hw_info info;
+> +	struct iommu_hw_queue_alloc hw_queue;
+>  	struct iommu_hwpt_alloc hwpt;
+>  	struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap;
+>  	struct iommu_hwpt_invalidate cache;
+> @@ -396,6 +397,8 @@ static const struct iommufd_ioctl_op iommufd_ioctl_ops[] = {
+>  		 struct iommu_fault_alloc, out_fault_fd),
+>  	IOCTL_OP(IOMMU_GET_HW_INFO, iommufd_get_hw_info, struct iommu_hw_info,
+>  		 __reserved),
+> +	IOCTL_OP(IOMMU_HW_QUEUE_ALLOC, iommufd_hw_queue_alloc_ioctl,
+> +		 struct iommu_hw_queue_alloc, length),
+>  	IOCTL_OP(IOMMU_HWPT_ALLOC, iommufd_hwpt_alloc, struct iommu_hwpt_alloc,
+>  		 __reserved),
+>  	IOCTL_OP(IOMMU_HWPT_GET_DIRTY_BITMAP, iommufd_hwpt_get_dirty_bitmap,
+> @@ -559,6 +562,9 @@ static const struct iommufd_object_ops iommufd_object_ops[] = {
+>  	[IOMMUFD_OBJ_FAULT] = {
+>  		.destroy = iommufd_fault_destroy,
+>  	},
+> +	[IOMMUFD_OBJ_HW_QUEUE] = {
+> +		.destroy = iommufd_hw_queue_destroy,
+> +	},
+>  	[IOMMUFD_OBJ_HWPT_PAGING] = {
+>  		.destroy = iommufd_hwpt_paging_destroy,
+>  		.abort = iommufd_hwpt_paging_abort,
+> diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
+> index 081ee6697a11..00641204efb2 100644
+> --- a/drivers/iommu/iommufd/viommu.c
+> +++ b/drivers/iommu/iommufd/viommu.c
+> @@ -201,3 +201,180 @@ int iommufd_vdevice_alloc_ioctl(struct iommufd_ucmd *ucmd)
+>  	iommufd_put_object(ucmd->ictx, &viommu->obj);
+>  	return rc;
+>  }
+> +
+> +static void iommufd_hw_queue_destroy_access(struct iommufd_ctx *ictx,
+> +					    struct iommufd_access *access,
+> +					    u64 base_iova, size_t length)
+> +{
+> +	iommufd_access_unpin_pages(access, base_iova, length);
+> +	iommufd_access_detach_internal(access);
+> +	iommufd_access_destroy_internal(ictx, access);
+> +}
+> +
+> +void iommufd_hw_queue_destroy(struct iommufd_object *obj)
+> +{
+> +	struct iommufd_hw_queue *hw_queue =
+> +		container_of(obj, struct iommufd_hw_queue, obj);
+> +
+> +	if (hw_queue->destroy)
+> +		hw_queue->destroy(hw_queue);
+> +	if (hw_queue->access)
+> +		iommufd_hw_queue_destroy_access(hw_queue->viommu->ictx,
+> +						hw_queue->access,
+> +						hw_queue->base_addr,
+> +						hw_queue->length);
+> +	if (hw_queue->viommu)
+> +		refcount_dec(&hw_queue->viommu->obj.users);
+> +}
+> +
+> +/*
+> + * When the HW accesses the guest queue via physical addresses, the underlying
+> + * physical pages of the guest queue must be contiguous. Also, for the security
+> + * concern that IOMMUFD_CMD_IOAS_UNMAP could potentially remove the mappings of
+> + * the guest queue from the nesting parent iopt while the HW is still accessing
+> + * the guest queue memory physically, such a HW queue must require an access to
+> + * pin the underlying pages and prevent that from happening.
+> + */
+> +static struct iommufd_access *
+> +iommufd_hw_queue_alloc_phys(struct iommu_hw_queue_alloc *cmd,
+> +			    struct iommufd_viommu *viommu, phys_addr_t *base_pa)
+> +{
+> +	struct iommufd_access *access;
+> +	struct page **pages;
+> +	size_t max_npages;
+> +	size_t length;
+> +	u64 offset;
+> +	size_t i;
+> +	int rc;
+> +
+> +	offset =
+> +		cmd->nesting_parent_iova - PAGE_ALIGN(cmd->nesting_parent_iova);
+> +	/* DIV_ROUND_UP(offset + cmd->length, PAGE_SIZE) */
+> +	if (check_add_overflow(offset, cmd->length, &length))
+> +		return ERR_PTR(-ERANGE);
+> +	if (check_add_overflow(length, PAGE_SIZE - 1, &length))
+> +		return ERR_PTR(-ERANGE);
+> +	max_npages = length / PAGE_SIZE;
+> +
+> +	/*
+> +	 * Use kvcalloc() to avoid memory fragmentation for a large page array.
+> +	 * Set __GFP_NOWARN to avoid syzkaller blowups
+> +	 */
+> +	pages = kvcalloc(max_npages, sizeof(*pages), GFP_KERNEL | __GFP_NOWARN);
+> +	if (!pages)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	access = iommufd_access_create_internal(viommu->ictx);
+> +	if (IS_ERR(access)) {
+> +		rc = PTR_ERR(access);
+> +		goto out_free;
+> +	}
+> +
+> +	rc = iommufd_access_attach_internal(access, viommu->hwpt->ioas);
+> +	if (rc)
+> +		goto out_destroy;
+> +
+> +	rc = iommufd_access_pin_pages(access, cmd->nesting_parent_iova,
+> +				      cmd->length, pages, 0);
+> +	if (rc)
+> +		goto out_detach;
+> +
+> +	/* Validate if the underlying physical pages are contiguous */
+> +	for (i = 1; i < max_npages; i++) {
+> +		if (page_to_pfn(pages[i]) == page_to_pfn(pages[i - 1]) + 1)
+> +			continue;
+> +		rc = -EFAULT;
+> +		goto out_unpin;
+> +	}
+> +
+> +	*base_pa = page_to_pfn(pages[0]) << PAGE_SHIFT;
+> +	kfree(pages);
+> +	return access;
+> +
+> +out_unpin:
+> +	iommufd_access_unpin_pages(access, cmd->nesting_parent_iova,
+> +				   cmd->length);
+> +out_detach:
+> +	iommufd_access_detach_internal(access);
+> +out_destroy:
+> +	iommufd_access_destroy_internal(viommu->ictx, access);
+> +out_free:
+> +	kfree(pages);
+> +	return ERR_PTR(rc);
+> +}
+> +
+> +int iommufd_hw_queue_alloc_ioctl(struct iommufd_ucmd *ucmd)
+> +{
+> +	struct iommu_hw_queue_alloc *cmd = ucmd->cmd;
+> +	struct iommufd_hw_queue *hw_queue;
+> +	struct iommufd_viommu *viommu;
+> +	struct iommufd_access *access;
+> +	size_t hw_queue_size;
+> +	phys_addr_t base_pa;
+> +	u64 last;
+> +	int rc;
+> +
+> +	if (cmd->flags || cmd->type == IOMMU_HW_QUEUE_TYPE_DEFAULT)
+> +		return -EOPNOTSUPP;
+> +	if (!cmd->length)
+> +		return -EINVAL;
+> +	if (check_add_overflow(cmd->nesting_parent_iova, cmd->length - 1,
+> +			       &last))
+> +		return -EOVERFLOW;
+> +
+> +	viommu = iommufd_get_viommu(ucmd, cmd->viommu_id);
+> +	if (IS_ERR(viommu))
+> +		return PTR_ERR(viommu);
+> +
+> +	if (!viommu->ops || !viommu->ops->get_hw_queue_size ||
+> +	    !viommu->ops->hw_queue_init_phys) {
+> +		rc = -EOPNOTSUPP;
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	hw_queue_size = viommu->ops->get_hw_queue_size(viommu, cmd->type);
+> +	if (!hw_queue_size) {
+> +		rc = -EOPNOTSUPP;
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	/*
+> +	 * It is a driver bug for providing a hw_queue_size smaller than the
+> +	 * core HW queue structure size
+> +	 */
+> +	if (WARN_ON_ONCE(hw_queue_size < sizeof(*hw_queue))) {
+> +		rc = -EOPNOTSUPP;
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	hw_queue = (struct iommufd_hw_queue *)_iommufd_object_alloc_ucmd(
+> +		ucmd, hw_queue_size, IOMMUFD_OBJ_HW_QUEUE);
+> +	if (IS_ERR(hw_queue)) {
+> +		rc = PTR_ERR(hw_queue);
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	access = iommufd_hw_queue_alloc_phys(cmd, viommu, &base_pa);
+> +	if (IS_ERR(access)) {
+> +		rc = PTR_ERR(access);
+> +		goto out_put_viommu;
+> +	}
+> +
+> +	hw_queue->viommu = viommu;
+> +	refcount_inc(&viommu->obj.users);
+> +	hw_queue->access = access;
+> +	hw_queue->type = cmd->type;
+> +	hw_queue->length = cmd->length;
+> +	hw_queue->base_addr = cmd->nesting_parent_iova;
+> +
+> +	rc = viommu->ops->hw_queue_init_phys(hw_queue, cmd->index, base_pa);
+> +	if (rc)
+> +		goto out_put_viommu;
+> +
+> +	cmd->out_hw_queue_id = hw_queue->obj.id;
+> +	rc = iommufd_ucmd_respond(ucmd, sizeof(*cmd));
+> +
+> +out_put_viommu:
+> +	iommufd_put_object(ucmd->ictx, &viommu->obj);
+> +	return rc;
+> +}
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## log in problem
-
-runner-ns46nmmj-project-40964107-concurrent-0 login: #
-Password:
-Login incorrect
-runner-ns46nmmj-project-40964107-concurrent-0 login:
-
-* log 1: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.15.y/build/v6.15.4-264-gf6977c36decb/testrun/29021685/suite/boot/test/clang-20-lkftconfig/log
-* log 2: https://qa-reports.linaro.org/api/testruns/29021720/log_file/
-* Boot test: https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.4-264-gf6977c36decb/boot/clang-20-lkftconfig/
-* LAVA jobs 1: https://lkft.validation.linaro.org/scheduler/job/8344153#L1186
-* LAVA jobs 2: https://lkft.validation.linaro.org/scheduler/job/8343870#L1266
-
-## Build
-* kernel: 6.15.5-rc2
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: f6977c36decb0875e78bdb8599749bce1e84c753
-* git describe: v6.15.4-264-gf6977c36decb
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.15.y/build/v6.15.4-264-gf6977c36decb
-
-## Test Regressions (compared to v6.15.3-590-gd93bc5feded1)
-* dragonboard-410c, boot
-  - clang-20-lkftconfig
-  - clang-nightly-lkftconfig-kselftest
-  - gcc-13-lkftconfig-debug
-
-* dragonboard-845c, boot
-  - clang-20-lkftconfig
-  - korg-clang-20-lkftconfig-lto-thing
-
-* dragonboard-845c-compat, boot
-  - gcc-13-lkftconfig-compat
-
-* e850-96, boot
-  - gcc-13-lkftconfig-no-kselftest-frag
-
-* juno-r2, boot
-  - clang-20-lkftconfig
-  - gcc-13-lkftconfig-debug
-  - gcc-13-lkftconfig-kselftest
-
-* rk3399-rock-pi-4b, boot
-  - clang-20-lkftconfig
-
-* x86, boot
-  - clang-20-lkftconfig
-  - clang-20-lkftconfig-no-kselftest-frag
-  - clang-nightly-lkftconfig-kselftest
-  - clang-nightly-lkftconfig-lto-thing
-  - gcc-13-defconfig-preempt_rt
-  - gcc-13-lkftconfig-no-kselftest-frag
-
-## Metric Regressions (compared to v6.15.3-590-gd93bc5feded1)
-
-## Test Fixes (compared to v6.15.3-590-gd93bc5feded1)
-
-## Metric Fixes (compared to v6.15.3-590-gd93bc5feded1)
-
-## Test result summary
-total: 259237, pass: 235906, fail: 6376, skip: 16955, xfail: 0
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 139 total, 138 passed, 1 failed
-* arm64: 57 total, 57 passed, 0 failed
-* i386: 18 total, 18 passed, 0 failed
-* mips: 34 total, 27 passed, 7 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 40 total, 39 passed, 1 failed
-* riscv: 25 total, 25 passed, 0 failed
-* s390: 22 total, 22 passed, 0 failed
-* sh: 5 total, 5 passed, 0 failed
-* sparc: 4 total, 3 passed, 1 failed
-* x86_64: 49 total, 49 passed, 0 failed
-
-## Test suites summary
-* boot
-* commands
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-rust
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* lava
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* modules
-* perf
-* rcutorture
-* rt-tests-cyclicdeadline
-* rt-tests-pi-stress
-* rt-tests-pmqtest
-* rt-tests-rt-migrate-test
-* rt-tests-signaltest
-
---
-Linaro LKFT
-https://lkft.linaro.org
