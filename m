@@ -1,126 +1,103 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826D0278E63
-	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 09:16:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B456C299A9C
+	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 12:50:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751879776; cv=none; b=iPjQUfNKQSBA6oF+yLVWYFX57e6fonSMvG/C7jthQizxH9HtwVHdfI3NdMCyVycYEGp5BLU3yLOixUZ8cmfWflB7uRUJkV9H6uxTK73lD6Dzwackn9Q/3B0SXX/o18FzHICk2RV2igHPCtDRSN3SRV77gx60AcalkFEDMjCJBW4=
+	t=1751892611; cv=none; b=Mz6xGSzKCYu999B8YF5AUKSGVBW3QGfeLrrPFn2IEj+gpJcHRdyfQu+e62CGgymhtmOSj8KILhRp+RCjwBmMKXVRAFpypDeKWzfjjUKNiE7MuXngRMjWXiNp7QHRfoQQKwPhA+DfZk4LmlipJ+eK87ihk5TFojZYM2pHSnZhQZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751879776; c=relaxed/simple;
-	bh=2N0U1EDqI/jQKzqP2h1Jsj1CKcBZm2BCirQSwgH6hIc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Uj7hvtJjLeUthLv8G3F75N7qg4N1bEgt5bN8YL5AgexnsVFD5nw7DSPOBVr5nJi7BzO3yJeHFewuSeRcwpirZ7B4x7BM1hrUK8tA9FkYX0TEZKO+enlKSDJ/WWv2rTkXnfrGNpCSj/I51srBVXOKE8yMjSh4RmQWfpa/k6q0f1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c2D6l9QQ; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1751892611; c=relaxed/simple;
+	bh=TlGVc2vlqFVb5SNdiOg16XM/hn4x/ChX9J75203gx1I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FhValSBxHtjSvFmocSn4AIVkoq8wyFKW8OWwwJktoFG3gExMy+zl4QQ2UVH2hL+f4g5qqmTRQg44DmQ26z1YmDPEuE1zev4Rv09ntNwcw/5M83OlEW9sX75ST0FEWgNxGqXNbZHAz+NtQMQE8j8uzVDmVx3h7kLFBlvIveCtBYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3EpUvES9; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c2D6l9QQ"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3b45edf2303so2666513f8f.2
-        for <patches@lists.linux.dev>; Mon, 07 Jul 2025 02:16:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3EpUvES9"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so27779315e9.3
+        for <patches@lists.linux.dev>; Mon, 07 Jul 2025 05:50:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751879773; x=1752484573; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PSMRH5QDvCqW5KnIuvKRJN2G/mVFdVuXbgUbVefRVkM=;
-        b=c2D6l9QQn/Fo6A6bB4CsJrJSedtYcX9WHtypledRi7iCp5TdWX9oBQrFIEVvZ9ibDP
-         E/zZXJyKK0NI9UzquSidQVHEYCJdPcmcpYeRZCb+AyzsdAoFCbJo5aCg2JWjhIAn957m
-         3hBLehAuGrDEp7fhVnCKj4IxrkGVkDbs7+vgZsas+lFMM5rSvCm6qWDvIuQvkJguop6m
-         tndIdvkYU+TVP4rIYjMxlSXorGXEtSBkwOk4H8F5HUWX5LdFHzA2CRXjjxhLamUXKSgM
-         AXMd7JuZ9BQTycX0RpCYKj7EpFwqo6dJyk6/B2tiZOgdCHU6gxcISgg7mAP+Z7t7XpAV
-         2uRA==
+        d=google.com; s=20230601; t=1751892607; x=1752497407; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QNdhzW/Y8MjvnDjqqg8r50YbwUFzxxNmO6sjtPUADNk=;
+        b=3EpUvES960Rn5dK4l2vDTGs8Kc+yqsUu7q2xzVFKGjJ1LKzwbky8WOqDlYbcocty1c
+         Os1Ixy02fhmlxw360IhoN33QjZDwvgWTznEhq76n99FTQAqnK7L8GIoTAuiYEYi/6TEm
+         e+U6QDGyS8LQRRj4XJySjoeq21j5BJdeFVA+wV5MveKkBTUlCvoCDl2jQG70YZ99gLKO
+         mej2Vfu1Ap2tf67G8mDkewG7ebMafUlJadrd/M8AZRofrr7UdIMqGbFG+KF9tx/K9YPO
+         6SI1ky7FhZ62KjYevhZoK7vlst9pjxKwuX/cpS5c0FI+V6+dGbQcsgKbUBviQK+m1yVj
+         UocQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751879773; x=1752484573;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PSMRH5QDvCqW5KnIuvKRJN2G/mVFdVuXbgUbVefRVkM=;
-        b=j4gfeb9dBiS4213UrSB7Diiml9fxfrxKFkoBiD9FcyYAqDvfxYDUZuk+2M1vAC3QbE
-         gtvuauJUmXmprTdz4Kv4RB4Ap0r+pmi9h7ToyPQH9inmkMKOiZu8MRAqDcXU3F98OHEn
-         jCtoQZDGvUX7rwyAzGv+L3MjLfJ8AWE2ouqjSVgPe/o/l0qlqLm0pnvBJuJnIDBUwUHu
-         OzqIWlp5gCwz/FPPI8U6HJ7l2RCgJRkIomSs0Fikq5vYV5fGYOVZGDVUDdAxEfou0Ynq
-         rHFCXIFGr6K14TCBQXQ57YeNn/EXKWQrsg34W70ahCRs+Ma6w8NgcgMkdrfHab2d/8hz
-         qoAA==
-X-Forwarded-Encrypted: i=1; AJvYcCXgkEbfj8puNt9ZIFdi6gGTl20UJFUoEcydgXNwCbVr5DPZJWXJkTFR/lOm1+fDkRaEY5G+b8uC@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw8U1IpbKgbAvUbkjmXIKj6GBM8ccxsLGXlOFE5HTYzxGWBFAxv
-	Yh/O8ay1ix7g6b2DMmx5czlGHOnjuMnm04fxsv7RbXhOwo1nxP0yohAIjFDtDYEiGHQ=
-X-Gm-Gg: ASbGncuP2xAUNWod0eoaIJi30d0d/shxPpItgBQZi6Keq656e0BOpMdDKPMMzF+k9aE
-	U/Okfnmqz4M3XmGZJ00SnuleeMlpX+ciimROqrE3ucMly9VpdMRfuLsHy8rXK2xr6iH8ht98/xk
-	CjdYHnTBAvRqmDFfhE1OmBS70nApJLluA7vbVAb9qaxGHul3iSARfKVNesnSyjTWtI73hn0SdX/
-	jPwbNeVdj1ndGvPT4VSWOCumup0UBvFn7h+JO3o3O6GgdqGvtsGZwsjBzMVksvZtr6FKrN9h+aN
-	uGhEAAKiCaC7paHMR0vabeTOy9/sS+LOZ+fVi2XSm/J7+zbMgX64kQWbgfj1MSuLW8o=
-X-Google-Smtp-Source: AGHT+IGGCWZfAUj4VNzkhRD8HfhSu3KCxQFzzdO1XpeV+D2rkMvRTzngh9EBKomoGoCaM7fN+nIbCA==
-X-Received: by 2002:a5d:6f1c:0:b0:3a5:527b:64c6 with SMTP id ffacd0b85a97d-3b49aa0e8e8mr6353994f8f.1.1751879772702;
-        Mon, 07 Jul 2025 02:16:12 -0700 (PDT)
-Received: from [192.168.1.3] ([37.18.136.128])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b471b9671asm9687980f8f.53.2025.07.07.02.16.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Jul 2025 02:16:12 -0700 (PDT)
-Message-ID: <207d1f3a-60f6-4a8d-8adc-e03e95f198e7@linaro.org>
-Date: Mon, 7 Jul 2025 10:16:10 +0100
+        d=1e100.net; s=20230601; t=1751892607; x=1752497407;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QNdhzW/Y8MjvnDjqqg8r50YbwUFzxxNmO6sjtPUADNk=;
+        b=kNdDJOQ8PzGLFlES0qJf2OM9AuxofiUad7qoRLGOa4fUtcZNzujdfuCzAfyfATl3oz
+         0dvuXatikrafNEbyyekLeq6LAyYcco/u4B0a2nvbFHvY1LkoSnaed9iQH4rFncTQ4+FF
+         y3/+nqkOKi2wGWsTF3XlBaw81DTeZrr31W4FqgWv4ydNDl9ritSMk/eZSnL0Yr8SlEDw
+         0dn99X2ygOiO8eZJ29Cls7/xmL+ODw/cuxgRwvc8Az5BJrSv47JOQC4HPitNBrOcocWQ
+         gIs1QYJBeGxKtwyBtbnfcNPe9A+qbQZdFDDfDBfOXjE5fUUTK6tBWDvvy4Big+AcZNs+
+         S7qA==
+X-Forwarded-Encrypted: i=1; AJvYcCXUcxo++PnLWQBZPqbmXJZa3y3FuOAsfcHbMT9gepq/qMYM2OSgLq/npjytuwmhtk1x8gCbsXZL@lists.linux.dev
+X-Gm-Message-State: AOJu0YzWdQsmT4XK8Grjf2lexMsUE5jgiqz7w3u+uhHfiPGKxH27BcPA
+	dkXIcX/gyUqFHeEmMHZuVGhnhVwD66VOfshpOfE0UP37RZs15Ad8B61dQU/3LmlYPUy2kGTUVk9
+	1CtvZ4lS+pkaA61h419rylbHW9lmtiwZ83fBsqhnl
+X-Gm-Gg: ASbGncvfDAYouy3kbktxL2T4rXhd3UPldFMbuIQkQHGHxx0TZdOGQoEqP/i9jM7qmmc
+	mAFY+bxD09NTDawwMsEg09+kiadMyX3g6AuAGAax/meoKoVN2cy3xzxwqfPNQR+2iKpYzGgHgii
+	IAkKoJAug/zwf3J8KBR6WoOkXGSQL3FTa4hfeZegPhVrTcK/ymkrDvHLQOE1/OxacZXRXQtZE=
+X-Google-Smtp-Source: AGHT+IHsMXBAD8GA+B5LxiAfDAfLtY6TvZ5FvEHyZmOChFA1YhgQJ0ZWJ5lgZJTqiFSe6ZNS/+jU9jf/Us1OmmZWM4c=
+X-Received: by 2002:a05:600c:83c4:b0:450:d04e:22d6 with SMTP id
+ 5b1f17b1804b1-454b4e6bbdcmr104358265e9.7.1751892606844; Mon, 07 Jul 2025
+ 05:50:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/139] 6.6.96-rc1 review
-To: Leo Yan <leo.yan@arm.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Yeoreum Yun <yeoreum.yun@arm.com>, Suzuki K Poulose
- <suzuki.poulose@arm.com>, Anders Roxell <anders.roxell@linaro.org>,
- Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>
-References: <20250703143941.182414597@linuxfoundation.org>
- <CA+G9fYu=JdHJdZo0aO+kK-TBNMv3dy-cLyO7KF4RMB20KyDuAg@mail.gmail.com>
- <CA+G9fYv4UUmNpoJ77q7F5K20XGiNcO+ZfOzYNLQ=h7S3uTEc8g@mail.gmail.com>
- <2025070605-stuffy-pointy-fd64@gregkh>
- <20250707090308.GA2182465@e132581.arm.com>
-Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <20250707090308.GA2182465@e132581.arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250701174656.62205-1-ojeda@kernel.org>
+In-Reply-To: <20250701174656.62205-1-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Mon, 7 Jul 2025 14:49:54 +0200
+X-Gm-Features: Ac12FXzQ5ck03QQHYzFLsSFTLp2hRsyOexA643YmM2tCIERUaEuSJWfO_lmHndc
+Message-ID: <CAH5fLghD5eU-YUkq0M4gFK1tXOGHz3Py4m_+xTnYzLxT_ru0xw@mail.gmail.com>
+Subject: Re: [PATCH] rust: acpi: remove unneeded cast to clean future Clippy warning
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Len Brown <lenb@kernel.org>, 
+	linux-acpi@vger.kernel.org, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Jul 1, 2025 at 7:48=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
+e:
+>
+> A future Clippy warning, `clippy::as_underscore`, is getting enabled in
+> parallel in the rust-next tree:
+>
+>     error: using `as _` conversion
+>       --> rust/kernel/acpi.rs:25:9
+>        |
+>     25 |         self.0.driver_data as _
+>        |         ^^^^^^^^^^^^^^^^^^^^^^-
+>        |                               |
+>        |                               help: consider giving the type exp=
+licitly: `usize`
+>
+> The type is already `ulong`, which nowadays is always `usize`, so the
+> cast is unneeded. Thus remove it, which in turn will avoid the warning
+> in the future.
+>
+> Other abstractions of device tables do not use a cast here either.
+>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-
-On 07/07/2025 10:03 am, Leo Yan wrote:
-> On Sun, Jul 06, 2025 at 08:55:32AM +0200, Greg Kroah-Hartman wrote:
-> 
-> [...]
-> 
->>> Bisection results pointing to,
->>>
->>>      coresight: Only check bottom two claim bits
->>>       [ Upstream commit a4e65842e1142aa18ef36113fbd81d614eaefe5a ]
->>>
->>> The following patch needs to be back ported ?
->>>     b36e78b216e6 ("ARM: 9354/1: ptrace: Use bitfield helpers")
->>
->> Thanks, that makes sense, and is easier than me fixing this up by hand
->> like I had tried to in one of the branches :)
->>
->> Now queued up.
-> 
-> I built for the Arm target in my local environment and confirmed that
-> the build failure has been fixed on the linux-6.6.y branch.
-> 
-> Thanks for reporting and resolving the issue.
-> 
-> Leo
-
-That commit only fixes it by transitively including the header though. 
-I'll send a proper fix to include it in coresight-core.c so it doesn't 
-break again in the future.
-
-Thanks
-James
-
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
