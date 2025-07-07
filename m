@@ -1,117 +1,75 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FE7202C50
-	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 15:50:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E13422264A3
+	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 16:06:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751903438; cv=none; b=Dn12EczCB0nmaemOEYanqJFyxFdp349hALjjpuDYlhAXg/GMFeV1jFio2SrNxpYOAE5bgV+0uUQtD8jSEBXVYeMbFQEaN+d2/RAN4eMVfmn74gTJ1DgSObpDWJ/QB4qVLxjYPz+mvCF50X+CdHU++A7XMv6u8yrcWaJDYFm0owo=
+	t=1751904371; cv=none; b=q36pP32Ng+NVUARiB6FG1VmtLvopZT8CmWXSj3xInyD5z6ITQF17gsd2FioOt+jDTC1UTZBjqD3XsDZzlrQOyLJZLnVV9XGLorYmU7+2F/FPr6CCFkzxWqImiWPn04dY4Up766QQ205uFj9Q/4HBbVU943MbPHKt+2VHu6TZtYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751903438; c=relaxed/simple;
-	bh=OE6ekrnC4M0MwVxy/wI21VNyfuRcjDfh+dlzwyWinDM=;
+	s=arc-20240116; t=1751904371; c=relaxed/simple;
+	bh=A3pseN+cWjBhNJbptOxyEiyi3xCPHOMrgZ1hDobGS/8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kQZaw4ajyGEbtwuXGOoZHxKLBxYQwPS6fw+/z+XY8EbhaIqP/R+U/PMroOEmP9CbvXl9B76cJywi0u/5ztLA4G+hsFLqIMgtw6BAvY1XxmFduW4qAmlSumbuL3YOy4oltxnigi1n4ASbZN7k9n8ymEkx7CHo0V6rpHikb/4Nfwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KDvDwZtZ; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KDvDwZtZ"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-748feca4a61so1792897b3a.3
-        for <patches@lists.linux.dev>; Mon, 07 Jul 2025 08:50:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751903436; x=1752508236; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uZ6Mv0OEaOEWA+/kiIxbnT++kjT9MBnuUPvznp0dthI=;
-        b=KDvDwZtZ5Ej2YsCKhjrB3nsmNvCzLpmoQByksmvfDXysp1jCfPyl1hSllqigw4VmNT
-         1PmWvTP1rWE7aGuduKbWW9uJ5J2Qyk5aEkBvSfG0CEu/rzIMMb4HB918psOK0mnc93k4
-         pEvc4lmIDMXY/PSO2C+WP7FVYoiOCH+GNj02VaKR0cWHRrtA7seKHYdtRXj3NplUcCDP
-         LrncixGzRxoBuPaBFBgfsk2r8gkjeb2C7ReFv00c0WtqcCg2O+WniYrEZRclru0BolPR
-         nsGjF/+mP0I8sgDdGQS7rxs4VWWlMjvhvrcckNgwjFXqrj8FBxaNA1z0DKIjNG7GUo8m
-         4UEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751903436; x=1752508236;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uZ6Mv0OEaOEWA+/kiIxbnT++kjT9MBnuUPvznp0dthI=;
-        b=GNXGgbxUShZNzzi9gvOlyKMZPL6QqZR0z1p40kiN/yerTUiTTtpYwX4pX9w63WKky2
-         nkB6Ew2BMpML4ns8LhfgUwX/i5uCqNy48FCrYDQOqqxm56QIIFWrsoXzmyNSP9HUS7wJ
-         c0QikSOXBHQTwU7CgC1++8EfRtTIP0o0+zhxfIof6c0s5pd+EDga/fgJOMyr+KJ583NG
-         a4fTUPVKuxtHR3vgb7r6avLuPmrSmvJIT1i12XANdapgkgYMCCwt/iG8Co1y/w32drNV
-         Y060FXVZTC726M/W+UjaRTL3mhXwujR4Z1Is0mNPZ7qI27ck2Lww7Fbk2wP/qiS8+xFg
-         8rUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU9v9xUWYSx12oW64ZU/rJy128a+RrZ9KFJ4g02u1TQ9+zTlwBh9lnKL1M0Kmy0M02TEmSwyDQF@lists.linux.dev
-X-Gm-Message-State: AOJu0YxbWezen0HzXJVSI1dxZeiWz7gXDSHjnWwbRq9szxgMC6lGYq+o
-	4+DxZbNeFlxRW9IPr1H7vcwSPxxE5237OYuRNFyoQYirdFzBZMVk4TJw
-X-Gm-Gg: ASbGncuQUuk0EbcIWHG7PPXxh+hV27cTQh7mlmf3ix0C/rkuDhcZhkx6exocW9BOskU
-	6z2hmQ/T46Zw/LSNPv3ENYu4v5g/GRIbwtKzFHATGnRcPi2ZuICCnNyTtk8e+UaDQET5/JB1/Ec
-	9oeRQ9KR+nkfGm2tpW3EShhz/MEQs1a0iGOBmwDMF+ZnLpXxFB4Xn22PNKx9iEDzfy/B0mKmiug
-	y6vK2PqtpAROP8nZUdF+4WrHtbRFN9sD+69q8peQ1tB2yclDmUYpux2Nfy+iJM3NVZPiaqBEi6r
-	SrEQRVhjdOjN3XZeMY6XDArCP+yH9GKZCaM4rpf/C4Yrm/fYMz8Y1030ehtWOqkfHCV/yvL+ucI
-	8ZtyM0vWmDw==
-X-Google-Smtp-Source: AGHT+IGgkpmjbxpxYXCE/TsDZmOdCnZuD6FKwplAAj1F8D7VIhBlJe3WEWwr2tw871m5IwR8avA+vg==
-X-Received: by 2002:a05:6a00:17a5:b0:740:afda:a742 with SMTP id d2e1a72fcca58-74ce86d45b6mr17451540b3a.0.1751903436355;
-        Mon, 07 Jul 2025 08:50:36 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce429f5adsm9598045b3a.132.2025.07.07.08.50.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jul 2025 08:50:35 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Mon, 7 Jul 2025 08:50:34 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 5.4 000/215] 5.4.295-rc2 review
-Message-ID: <b648e51d-2244-4295-a917-fe1b0f391074@roeck-us.net>
-References: <20250625085227.279764371@linuxfoundation.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=deCphyiCpjegtlayBppcH/hPDgdtODtjhgWY2IJHIdEQLPpO2xrbLMIIj2KFMGL8ZrhOlyEXo29jtefgkPQ3iQJka3u//M72nU8KXTn0Pb2r2PIpGGJo9C2v/rWs4spE67BnbKKHW4e1xzAsHMCbqrANbEz1p4TBzETdjeW0gmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 876631BCB
+	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 09:05:56 -0700 (PDT)
+Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id B95193F694
+	for <patches@lists.linux.dev>; Mon,  7 Jul 2025 09:06:08 -0700 (PDT)
+Date: Mon, 7 Jul 2025 17:05:58 +0100
+From: Liviu Dudau <liviu.dudau@arm.com>
+To: Daniel Mentz <danielmentz@google.com>
+Cc: Will Deacon <will@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	dri-devel@lists.freedesktop.org, patches@lists.linux.dev,
+	Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Remove split on unmap behavior
+Message-ID: <aGvwZn_EZNnwtxpZ@e110455-lin.cambridge.arm.com>
+References: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
+ <20241101134005.GA109739@nvidia.com>
+ <20241104113237.GA11481@willie-the-truck>
+ <CAE2F3rDcq-BQYM1yYq6RNSYSOovdoyRcbYw8Jy+BXCHLkrWN3g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250625085227.279764371@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE2F3rDcq-BQYM1yYq6RNSYSOovdoyRcbYw8Jy+BXCHLkrWN3g@mail.gmail.com>
 
-On Wed, Jun 25, 2025 at 09:53:55AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.295 release.
-> There are 215 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Sat, Jul 05, 2025 at 01:12:09PM -0700, Daniel Mentz wrote:
+> With the removal of arm_lpae_split_blk_unmap, I believe the following
+> macros are now unused. Is there any interest in removing those as
+> well? If so, I can draft a patch.
 > 
-> Responses should be made by Fri, 27 Jun 2025 08:52:04 +0000.
-> Anything received after that time might be too late.
-> 
+> #define ARM_LPAE_PTE_ATTR_LO_MASK (((arm_lpae_iopte)0x3ff) << 2)
+> /* Ignore the contiguous bit for block splitting */
+> #define ARM_LPAE_PTE_ATTR_HI_MASK (ARM_LPAE_PTE_XN | ARM_LPAE_PTE_DBM)
+> #define ARM_LPAE_PTE_ATTR_MASK (ARM_LPAE_PTE_ATTR_LO_MASK | \
+> ARM_LPAE_PTE_ATTR_HI_MASK)
+> #define iopte_prot(pte) ((pte) & ARM_LPAE_PTE_ATTR_MASK)
 
-Building nios2:allnoconfig ... failed
-Building nios2:tinyconfig ... failed
-Building nios2:3c120_defconfig ... failed
---------------
-Error log:
-In file included from include/linux/mm.h:102,
-                 from include/linux/pid_namespace.h:7,
-                 from include/linux/ptrace.h:10,
-                 from arch/nios2/kernel/asm-offsets.c:9:
-arch/nios2/include/asm/pgtable.h:303:19: error: static declaration of 'ptep_set_access_flags' follows non-static declaration
+Yes, I think these can be removed as I cannot find any users.
 
-In file included from include/linux/mm.h:102,
-                 from include/linux/pid_namespace.h:7,
-                 from include/linux/ptrace.h:10,
-                 from arch/nios2/kernel/asm-offsets.c:9:
-arch/nios2/include/asm/pgtable.h: In function 'ptep_set_access_flags':
-arch/nios2/include/asm/pgtable.h:308:17: error: implicit declaration of function 'set_ptes'; did you mean 'set_pte'?
+Thanks for offering to clean it up!
 
-The problem also affects v5.10.y and v5.15.y. It is caused by the backport
-of "nios2: force update_mmu_cache on spurious tlb-permission--related
-pagefaults".
+Best regards,
+Liviu
 
-Guenter
+-- 
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
