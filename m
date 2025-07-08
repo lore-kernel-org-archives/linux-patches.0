@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED19B2E041C;
-	Tue,  8 Jul 2025 16:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7012E0411;
+	Tue,  8 Jul 2025 16:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992645; cv=none; b=rO4lt0G7Vv6MZhPpJkd14nPxUsCY0EHbJb9TxktGE9ddZqs1YcIbcDlmcLXDxQBZ96BjHTEsS+k7H5batQ7iU7bkA8Y7SdrNZbU0XAkmWmjgdHD/2bNIgRihMPPpKkb6Dp/756pSAn8srthza6SkYm8AJs6q+OTID6Yf1UPH9GU=
+	t=1751992647; cv=none; b=kXCsIk6rIizxdXUUbeS+kI0yF8BEMMb4Bm10qjACzO7qHFpB95VrLTjz+a2Vabx597eM3UyMF7aU8vcejIb0X1APAbf7H9E5dzVokQDyTpgEn5npyEQXncP74Hev/nO6zu94Uodz6QVKSTxvIo5ml6xHvPb/qyYH7Z40r7Kjoqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992645; c=relaxed/simple;
-	bh=4jzMJ22TmJi1dgpBN9ok9xdVgAvvJ9PMYH3tIvnfoss=;
+	s=arc-20240116; t=1751992647; c=relaxed/simple;
+	bh=ey2gRT+nNqNh6DaJHBCCJnjpGjMJ4gvEsOCzNO8okFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JaXDBJQqWFkU/yJFxz6WCNqRNBV0q9HhCmWWeEHQknzQGdDFRl7C9iKxp00vJ8tuDoLvGiGF8XlbVGGl1iMAYhrWkMUGV9hGyEP/iymwzMS6vYCQkrhcF1jQQDGQQYqYMFBGslDMuNCQpqebNnILp56WL4i5etT0ysbAFdpaltw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmtKUVDp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IcAmlFRzVRS+2iUMXrJ6sZP6eN++wOdbW/y2U1vhMTi8CKwCDJEUo9SSXlXl0V70Y9FPQAFKWTsZRjlQPMTIfPjWx5kPJVBxHjXcsgRISXplqDs6YQ5U9VoLUjTapjCNsZJUAmLOSy7TZaPQZAIwGWxUfAT2yXXKCnoba6pOk6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKq5Fng5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmtKUVDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1217CC4CEED;
-	Tue,  8 Jul 2025 16:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKq5Fng5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88F6C4CEED;
+	Tue,  8 Jul 2025 16:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992644;
-	bh=4jzMJ22TmJi1dgpBN9ok9xdVgAvvJ9PMYH3tIvnfoss=;
+	s=korg; t=1751992647;
+	bh=ey2gRT+nNqNh6DaJHBCCJnjpGjMJ4gvEsOCzNO8okFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmtKUVDpGddbs+8KrNvOT9/1cm18KlqZ3uIVJydjpmdNc3cVoc57TfJbMcIMXNO+4
-	 J3ZzCQePnSrsk4DJvvv5SfJ6m0+J5uFJh1FK04J6K0M4TWaLD4lqwp2KzPG1D9rCPx
-	 p+9c9vbHPMerm/j63IUhk/agzeLDVjen3w1FCUpg=
+	b=iKq5Fng5thLk290JYAJ+gkkp/23mF6PP04cHfA0+DcL8yJNYs1f1KsigVYut+7uth
+	 UPgPxHs82VHI9ulo+S6W2M1To8/9R8+lmc3xaUv83DZ8PrG3nzT1h73cv9FQvEPMMa
+	 IgQs/muatbIR0KnWeQRdi/FF+ThzQxFJMTjoBkSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 008/232] net: txgbe: request MISC IRQ in ndo_open
-Date: Tue,  8 Jul 2025 18:20:04 +0200
-Message-ID: <20250708162241.649993830@linuxfoundation.org>
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	virtualization@lists.linux.dev,
+	netdev@vger.kernel.org,
+	stable <stable@kernel.org>,
+	HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+Subject: [PATCH 6.12 009/232] vsock/vmci: Clear the vmci transport packet properly when initializing it
+Date: Tue,  8 Jul 2025 18:20:05 +0200
+Message-ID: <20250708162241.675908657@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,135 +60,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
 
-commit cc9f7f65cd2f31150b10e6956f1f0882e1bbae49 upstream.
+commit 223e2288f4b8c262a864e2c03964ffac91744cd5 upstream.
 
-Move the creating of irq_domain for MISC IRQ from .probe to .ndo_open,
-and free it in .ndo_stop, to maintain consistency with the queue IRQs.
-This it for subsequent adjustments to the IRQ vectors.
+In vmci_transport_packet_init memset the vmci_transport_packet before
+populating the fields to avoid any uninitialised data being left in the
+structure.
 
-Fixes: aefd013624a1 ("net: txgbe: use irq_domain for interrupt controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250701063030.59340-2-jiawenwu@trustnetic.com
+Cc: Bryan Tan <bryan-bt.tan@broadcom.com>
+Cc: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Cc: Broadcom internal kernel review list
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: virtualization@lists.linux.dev
+Cc: netdev@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Signed-off-by: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250701122254.2397440-1-gregkh@linuxfoundation.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c  |    2 +-
- drivers/net/ethernet/wangxun/txgbe/txgbe_main.c |   22 ++++++++++------------
- 2 files changed, 11 insertions(+), 13 deletions(-)
+ net/vmw_vsock/vmci_transport.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-@@ -68,7 +68,6 @@ free_queue_irqs:
- 		free_irq(wx->msix_q_entries[vector].vector,
- 			 wx->q_vector[vector]);
- 	}
--	wx_reset_interrupt_capability(wx);
- 	return err;
- }
- 
-@@ -169,6 +168,7 @@ void txgbe_free_misc_irq(struct txgbe *t
- 	free_irq(txgbe->link_irq, txgbe);
- 	free_irq(txgbe->misc.irq, txgbe);
- 	txgbe_del_irq_domain(txgbe);
-+	txgbe->wx->misc_irq_domain = false;
- }
- 
- int txgbe_setup_misc_irq(struct txgbe *txgbe)
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
-@@ -308,10 +308,14 @@ static int txgbe_open(struct net_device
- 
- 	wx_configure(wx);
- 
--	err = txgbe_request_queue_irqs(wx);
-+	err = txgbe_setup_misc_irq(wx->priv);
- 	if (err)
- 		goto err_free_resources;
- 
-+	err = txgbe_request_queue_irqs(wx);
-+	if (err)
-+		goto err_free_misc_irq;
-+
- 	/* Notify the stack of the actual queue counts. */
- 	err = netif_set_real_num_tx_queues(netdev, wx->num_tx_queues);
- 	if (err)
-@@ -327,6 +331,9 @@ static int txgbe_open(struct net_device
- 
- err_free_irq:
- 	wx_free_irq(wx);
-+err_free_misc_irq:
-+	txgbe_free_misc_irq(wx->priv);
-+	wx_reset_interrupt_capability(wx);
- err_free_resources:
- 	wx_free_resources(wx);
- err_reset:
-@@ -365,6 +372,7 @@ static int txgbe_close(struct net_device
- 
- 	txgbe_down(wx);
- 	wx_free_irq(wx);
-+	txgbe_free_misc_irq(wx->priv);
- 	wx_free_resources(wx);
- 	txgbe_fdir_filter_exit(wx);
- 	wx_control_hw(wx, false);
-@@ -410,7 +418,6 @@ static void txgbe_shutdown(struct pci_de
- int txgbe_setup_tc(struct net_device *dev, u8 tc)
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -119,6 +119,8 @@ vmci_transport_packet_init(struct vmci_t
+ 			   u16 proto,
+ 			   struct vmci_handle handle)
  {
- 	struct wx *wx = netdev_priv(dev);
--	struct txgbe *txgbe = wx->priv;
++	memset(pkt, 0, sizeof(*pkt));
++
+ 	/* We register the stream control handler as an any cid handle so we
+ 	 * must always send from a source address of VMADDR_CID_ANY
+ 	 */
+@@ -131,8 +133,6 @@ vmci_transport_packet_init(struct vmci_t
+ 	pkt->type = type;
+ 	pkt->src_port = src->svm_port;
+ 	pkt->dst_port = dst->svm_port;
+-	memset(&pkt->proto, 0, sizeof(pkt->proto));
+-	memset(&pkt->_reserved2, 0, sizeof(pkt->_reserved2));
  
- 	/* Hardware has to reinitialize queues and interrupts to
- 	 * match packet buffer alignment. Unfortunately, the
-@@ -421,7 +428,6 @@ int txgbe_setup_tc(struct net_device *de
- 	else
- 		txgbe_reset(wx);
- 
--	txgbe_free_misc_irq(txgbe);
- 	wx_clear_interrupt_scheme(wx);
- 
- 	if (tc)
-@@ -430,7 +436,6 @@ int txgbe_setup_tc(struct net_device *de
- 		netdev_reset_tc(dev);
- 
- 	wx_init_interrupt_scheme(wx);
--	txgbe_setup_misc_irq(txgbe);
- 
- 	if (netif_running(dev))
- 		txgbe_open(dev);
-@@ -677,13 +682,9 @@ static int txgbe_probe(struct pci_dev *p
- 
- 	txgbe_init_fdir(txgbe);
- 
--	err = txgbe_setup_misc_irq(txgbe);
--	if (err)
--		goto err_release_hw;
--
- 	err = txgbe_init_phy(txgbe);
- 	if (err)
--		goto err_free_misc_irq;
-+		goto err_release_hw;
- 
- 	err = register_netdev(netdev);
- 	if (err)
-@@ -711,8 +712,6 @@ static int txgbe_probe(struct pci_dev *p
- 
- err_remove_phy:
- 	txgbe_remove_phy(txgbe);
--err_free_misc_irq:
--	txgbe_free_misc_irq(txgbe);
- err_release_hw:
- 	wx_clear_interrupt_scheme(wx);
- 	wx_control_hw(wx, false);
-@@ -746,7 +745,6 @@ static void txgbe_remove(struct pci_dev
- 	unregister_netdev(netdev);
- 
- 	txgbe_remove_phy(txgbe);
--	txgbe_free_misc_irq(txgbe);
- 	wx_free_isb_resources(wx);
- 
- 	pci_release_selected_regions(pdev,
+ 	switch (pkt->type) {
+ 	case VMCI_TRANSPORT_PACKET_TYPE_INVALID:
 
 
