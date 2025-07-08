@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0C21714B7;
-	Tue,  8 Jul 2025 16:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9943A2E0910;
+	Tue,  8 Jul 2025 16:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992903; cv=none; b=E9D/udDk5cIRTK7f4qZ1eum4b7fTm9OmW5Lql67KqJDtgJZJXeZii2nWt0T2EhiYV8M02uMMomcT5zTntvgMB9JFJWuCBf6TvQBkwl5RpPwQOyYciEk9UEFB/8YWNiRbAR5EOmF4WqMzggkzS7ZA/ICAtuujodYzOqrNEacdCJ0=
+	t=1751992906; cv=none; b=YaA4W/C/VENx0Sc6sQVP+GJK8GeSwrDVWKNJ9IV/GQfax/J6rukOJIn40GWU9sgjioHsPasWoGeEwTzOYYHAJmJxntl1oiDv4h50fxlv/DIFS8/8MfnCRZc0LIXwZ1PH5pX1n2ZngZl6FOkVYRxNFdm0mhom+OCMkbhz2eTzyuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992903; c=relaxed/simple;
-	bh=nroM5GMJOuT5cYdOyQFbQmuafdDAgAtOWr544bUxhQM=;
+	s=arc-20240116; t=1751992906; c=relaxed/simple;
+	bh=j2gEYmWEnFPM/xn0+Ic8y7A8f5H5CW/BjJaLSuSA1I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uAatDm2elgouo0yOZ2m6/HMI77KKTLvTOHHapRY+hKwRQznRjyMQdRwrvSMQrLs8HyjzUuEriP/M87lGhsGjqnoROQ5iU9VPr+ZJ46hlM1INy11T5RqWoG3LBe/oT1EMwqe3X2YZ64nOX2b2j4YkS8gzdXL+egq2zih3I0FGDnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Zl0nQAw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwCzGmyqCxZVNzm9lT/b/6hSLRjuRG9VtbJZQ8J/fQQ34MbqnAQCbOi3m03Qe+GtdR5UmisPRHDIOblBWqsA4AOyaIj9EIW9rioMyGMSUw+p/jxGgZuxQR6FikdO+fSxmjbwNn37TUmGdvY1+9y6TcmS78OkhS7/Rl5wHXW1O4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zf10XBJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Zl0nQAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4BBC4CEED;
-	Tue,  8 Jul 2025 16:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zf10XBJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA369C4CEED;
+	Tue,  8 Jul 2025 16:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992903;
-	bh=nroM5GMJOuT5cYdOyQFbQmuafdDAgAtOWr544bUxhQM=;
+	s=korg; t=1751992906;
+	bh=j2gEYmWEnFPM/xn0+Ic8y7A8f5H5CW/BjJaLSuSA1I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Zl0nQAwR4K1IplwLLRlVZyQBIvklrpSVSC47jV70Bth9g/Vnc+OLUEp+ibkgvFHU
-	 GzuMOE4g41yVnp3QvrkLQ+bO5ModZTmzLyHiEqmjYT7r49OdbC/mWJExYG22v0BTUH
-	 tDqPMMC9x9MKg2MXjSIV1OGkRdfnHZiooZ+S4wEM=
+	b=zf10XBJA6fg0o//hfxm4qaQcxernLM+mzTpQjy2jmNsNp69YOtuVJzupfvyme5hNx
+	 wcDqJGH8Xb3MocqT5PtSUkD3Eqbn8WRmq5lUonibzDVabY9zkSmvTxZqMeXKAbqdxE
+	 fTQFp/mfwmSYjhWoBtZ3p2qjbe5ko8AYdpV70ARs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xueqin Luo <luoxueqin@kylinos.cn>,
+	Armin Wolf <W_Armin@gmx.de>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/232] ACPI: thermal: Fix stale comment regarding trip points
-Date: Tue,  8 Jul 2025 18:21:56 +0200
-Message-ID: <20250708162244.581252227@linuxfoundation.org>
+Subject: [PATCH 6.12 121/232] ACPI: thermal: Execute _SCP before reading trip points
+Date: Tue,  8 Jul 2025 18:21:57 +0200
+Message-ID: <20250708162244.608013378@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,39 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xueqin Luo <luoxueqin@kylinos.cn>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 01ca2846338d314cdcd3da1aca7f290ec380542c ]
+[ Upstream commit 3f7cd28ae3d1a1d6f151178469cfaef1b07fdbcc ]
 
-Update the comment next to acpi_thermal_get_trip_points() call site
-in acpi_thermal_add() to reflect what the code does.
+As specified in section 11.4.13 of the ACPI specification the
+operating system is required to evaluate the _ACx and _PSV objects
+after executing the _SCP control method.
 
-It has diverged from the code after changes that removed the _CRT
-evaluation from acpi_thermal_get_trip_points() among other things.
+Move the execution of the _SCP control method before the invocation
+of acpi_thermal_get_trip_points() to avoid missing updates to the
+_ACx and _PSV objects.
 
-Signed-off-by: xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://patch.msgid.link/20250208013335.126343-1-luoxueqin@kylinos.cn
-[ rjw: Subject and changelog edits ]
+Fixes: b09872a652d3 ("ACPI: thermal: Fold acpi_thermal_get_info() into its caller")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20250410165456.4173-3-W_Armin@gmx.de
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 3f7cd28ae3d1 ("ACPI: thermal: Execute _SCP before reading trip points")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/thermal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/thermal.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/acpi/thermal.c b/drivers/acpi/thermal.c
-index 78db38c7076e4..dbc371ac2fa66 100644
+index dbc371ac2fa66..125d7df8f30ae 100644
 --- a/drivers/acpi/thermal.c
 +++ b/drivers/acpi/thermal.c
-@@ -803,7 +803,7 @@ static int acpi_thermal_add(struct acpi_device *device)
+@@ -803,6 +803,12 @@ static int acpi_thermal_add(struct acpi_device *device)
  
  	acpi_thermal_aml_dependency_fix(tz);
  
--	/* Get trip points [_CRT, _PSV, etc.] (required). */
-+	/* Get trip points [_ACi, _PSV, etc.] (required). */
++	/*
++	 * Set the cooling mode [_SCP] to active cooling. This needs to happen before
++	 * we retrieve the trip point values.
++	 */
++	acpi_execute_simple_method(tz->device->handle, "_SCP", ACPI_THERMAL_MODE_ACTIVE);
++
+ 	/* Get trip points [_ACi, _PSV, etc.] (required). */
  	acpi_thermal_get_trip_points(tz);
  
- 	crit_temp = acpi_thermal_get_critical_trip(tz);
+@@ -814,10 +820,6 @@ static int acpi_thermal_add(struct acpi_device *device)
+ 	if (result)
+ 		goto free_memory;
+ 
+-	/* Set the cooling mode [_SCP] to active cooling. */
+-	acpi_execute_simple_method(tz->device->handle, "_SCP",
+-				   ACPI_THERMAL_MODE_ACTIVE);
+-
+ 	/* Determine the default polling frequency [_TZP]. */
+ 	if (tzp)
+ 		tz->polling_frequency = tzp;
 -- 
 2.39.5
 
