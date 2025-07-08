@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393C82E2F0D;
-	Tue,  8 Jul 2025 16:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632EB2E3B03;
+	Tue,  8 Jul 2025 16:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992665; cv=none; b=K/pzytW7evJA8i2Uy446wCT09Cl9dlmgjS9IIAkE+T+HRWUNoi/ScpMT4Hz9v9t+joenK9rSKQU1T/TD1ZM4acaAFUL3qd2TDAt5SjDhvz1vuyKJSSkToDvkMSuB8GbbisWwfATUJMiqTj5YXOZr8z6uSNuIBe+UvuEl3IEnE0Y=
+	t=1751992668; cv=none; b=bcvG0x90SoaS+8AurlfrpLj8qGFb2IVrg8E5C0J55U9McvRKwcZwiagtf/F2t3zWE0M4cv50wDIY5Lh62VehE++nuCgJVw3OQSZ1unQ0y5/QqEU/1lbeCQI0yH0V4o72xRTeDEh92jQLEICHo4YbWVbTeozKncJ9kNb0V7DxYnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992665; c=relaxed/simple;
-	bh=SxNBcCZechgbOe/s8pHlvD5M5WB0OHYdwwvVFCMdvwg=;
+	s=arc-20240116; t=1751992668; c=relaxed/simple;
+	bh=a2G4sg0telHy33RhtzVtds4nKUtA14ZQ6LAwS4FdJes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIADTVQUywmTYxBMy8dRlkxItt43s6d9R5fatb/oGP7ofkmQ3owaTRL5DR+07NM4mZ1AsB4vLJUh0s84AmBwYsZghKku81p1q2TX6EXfA7a5unmRBwVVPwRf7YPNGqxKr1QhewMQDPK6cdxNaKgBQDHcIxUK6Ug+nuCDBmfbMH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdeiB6kF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVFeX6nO87ryCNKhukKIJFJDqYsp6124RUpwiIT7QXDzlGoBeBU8AGIoeDKfpfgahe9kY3gd7fWD0X6UVkZrTsPVls3FPxbTYXNeOavKB8QAEkdwP0zmEf2wKRevAnT4aK1zY2geaMfjbsmuRq0s5ta6aujl3XqpSOQww77gbiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnB8zYJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdeiB6kF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD586C4CEED;
-	Tue,  8 Jul 2025 16:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnB8zYJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE89C4CEED;
+	Tue,  8 Jul 2025 16:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992665;
-	bh=SxNBcCZechgbOe/s8pHlvD5M5WB0OHYdwwvVFCMdvwg=;
+	s=korg; t=1751992668;
+	bh=a2G4sg0telHy33RhtzVtds4nKUtA14ZQ6LAwS4FdJes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdeiB6kFqYme4mbakLH/6n0/1+hA8LU/XvTpwcz3xAlG9S4oPlSLtfQxG2tO9WofB
-	 gofwFvbpxPB06ijfZSImkoKT88f/kBakz2PuhOkurLVL+67rdiYwgv7oIz1KJ1nc1B
-	 ouiS8bLzAXkzTYwdRDHgLhqXw9gslojHKgDQGnuk=
+	b=YnB8zYJ+weHfB63/CJ8Qw1Rq3vdAxN/yTIlJUWqZCTHqTtYJPDCiUNGRfR61GsE3l
+	 19ZTAv+rlkdJtYxwEDnX5Fgd5v89YEFI/dvYI7CxSebJ6MmKZ/qFZsXzgBq525I2u4
+	 c3qDPW8j4MzPb0qDNuUlUpwj4GTbTx2iBpPg0jdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Sven Peter <sven@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Avri Altman <avri.altman@sandisk.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/232] arm64: dts: apple: t8103: Fix PCIe BCM4377 nodename
-Date: Tue,  8 Jul 2025 18:20:27 +0200
-Message-ID: <20250708162242.248570140@linuxfoundation.org>
+Subject: [PATCH 6.12 040/232] scsi: ufs: core: Fix spelling of a sysfs attribute name
+Date: Tue,  8 Jul 2025 18:20:36 +0200
+Message-ID: <20250708162242.479520283@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,40 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit ac1daa91e9370e3b88ef7826a73d62a4d09e2717 ]
+[ Upstream commit 021f243627ead17eb6500170256d3d9be787dad8 ]
 
-Fix the following `make dtbs_check` warnings for all t8103 based devices:
+Change "resourse" into "resource" in the name of a sysfs attribute.
 
-arch/arm64/boot/dts/apple/t8103-j274.dtb: network@0,0: $nodename:0: 'network@0,0' does not match '^wifi(@.*)?$'
-        from schema $id: http://devicetree.org/schemas/net/wireless/brcm,bcm4329-fmac.yaml#
-arch/arm64/boot/dts/apple/t8103-j274.dtb: network@0,0: Unevaluated properties are not allowed ('local-mac-address' was unexpected)
-        from schema $id: http://devicetree.org/schemas/net/wireless/brcm,bcm4329-fmac.yaml#
-
-Fixes: bf2c05b619ff ("arm64: dts: apple: t8103: Expose PCI node for the WiFi MAC address")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Sven Peter <sven@kernel.org>
-Link: https://lore.kernel.org/r/20250611-arm64_dts_apple_wifi-v1-1-fb959d8e1eb4@jannau.net
-Signed-off-by: Sven Peter <sven@kernel.org>
+Fixes: d829fc8a1058 ("scsi: ufs: sysfs: unit descriptor")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20250624181658.336035-1-bvanassche@acm.org
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/apple/t8103-jxxx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/ABI/testing/sysfs-driver-ufs | 2 +-
+ drivers/ufs/core/ufs-sysfs.c               | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/apple/t8103-jxxx.dtsi b/arch/arm64/boot/dts/apple/t8103-jxxx.dtsi
-index 5988a4eb6efaa..cb78ce7af0b38 100644
---- a/arch/arm64/boot/dts/apple/t8103-jxxx.dtsi
-+++ b/arch/arm64/boot/dts/apple/t8103-jxxx.dtsi
-@@ -71,7 +71,7 @@ hpm1: usb-pd@3f {
-  */
- &port00 {
- 	bus-range = <1 1>;
--	wifi0: network@0,0 {
-+	wifi0: wifi@0,0 {
- 		compatible = "pci14e4,4425";
- 		reg = <0x10000 0x0 0x0 0x0 0x0>;
- 		/* To be filled by the loader */
+diff --git a/Documentation/ABI/testing/sysfs-driver-ufs b/Documentation/ABI/testing/sysfs-driver-ufs
+index 5fa6655aee840..16f17e91ee496 100644
+--- a/Documentation/ABI/testing/sysfs-driver-ufs
++++ b/Documentation/ABI/testing/sysfs-driver-ufs
+@@ -711,7 +711,7 @@ Description:	This file shows the thin provisioning type. This is one of
+ 
+ 		The file is read only.
+ 
+-What:		/sys/class/scsi_device/*/device/unit_descriptor/physical_memory_resourse_count
++What:		/sys/class/scsi_device/*/device/unit_descriptor/physical_memory_resource_count
+ Date:		February 2018
+ Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+ Description:	This file shows the total physical memory resources. This is
+diff --git a/drivers/ufs/core/ufs-sysfs.c b/drivers/ufs/core/ufs-sysfs.c
+index 796e37a1d859f..f8397ef3cf8df 100644
+--- a/drivers/ufs/core/ufs-sysfs.c
++++ b/drivers/ufs/core/ufs-sysfs.c
+@@ -1608,7 +1608,7 @@ UFS_UNIT_DESC_PARAM(logical_block_size, _LOGICAL_BLK_SIZE, 1);
+ UFS_UNIT_DESC_PARAM(logical_block_count, _LOGICAL_BLK_COUNT, 8);
+ UFS_UNIT_DESC_PARAM(erase_block_size, _ERASE_BLK_SIZE, 4);
+ UFS_UNIT_DESC_PARAM(provisioning_type, _PROVISIONING_TYPE, 1);
+-UFS_UNIT_DESC_PARAM(physical_memory_resourse_count, _PHY_MEM_RSRC_CNT, 8);
++UFS_UNIT_DESC_PARAM(physical_memory_resource_count, _PHY_MEM_RSRC_CNT, 8);
+ UFS_UNIT_DESC_PARAM(context_capabilities, _CTX_CAPABILITIES, 2);
+ UFS_UNIT_DESC_PARAM(large_unit_granularity, _LARGE_UNIT_SIZE_M1, 1);
+ UFS_UNIT_DESC_PARAM(wb_buf_alloc_units, _WB_BUF_ALLOC_UNITS, 4);
+@@ -1625,7 +1625,7 @@ static struct attribute *ufs_sysfs_unit_descriptor[] = {
+ 	&dev_attr_logical_block_count.attr,
+ 	&dev_attr_erase_block_size.attr,
+ 	&dev_attr_provisioning_type.attr,
+-	&dev_attr_physical_memory_resourse_count.attr,
++	&dev_attr_physical_memory_resource_count.attr,
+ 	&dev_attr_context_capabilities.attr,
+ 	&dev_attr_large_unit_granularity.attr,
+ 	&dev_attr_wb_buf_alloc_units.attr,
 -- 
 2.39.5
 
