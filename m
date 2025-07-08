@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367E3264F9C;
-	Tue,  8 Jul 2025 16:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB292A1BA;
+	Tue,  8 Jul 2025 16:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992126; cv=none; b=E79vyFo2xSArABH8SgiEtvdqS4xdXtHF98fscePnjMzyRDvaXyLg1nmiDtVuJhZMquOlcA5WzhuylYkbvHS8KQCX0RsRCa7jo+OpCYQh4tqR90cIbEd4TN0Ir9L+F3/U4RqLIYBJi7ADQjunhdQoh7MqEHlLrvzPWjlUmJ9y9CM=
+	t=1751992129; cv=none; b=ll9Lq0/Tx17ekmLwBEVLR1MsawuJo7V0BvJR9Xxe+TRQey/w3i/El0wwQ+cGOSQWWHYcIsumzSIAXPIcbN+OvIxTW6zQk9WolBuf0i20eQo4rxHHwkARrakRmZbmL4qiGoibB1+jAfUfxZ/eOCEQd5frici9q0FlH6rMsR7eZrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992126; c=relaxed/simple;
-	bh=3wYeay9j9Sbbb9EWlZ2ipEfaNEu6yg26o38sm+ZKmHo=;
+	s=arc-20240116; t=1751992129; c=relaxed/simple;
+	bh=TNLO7LAjNeLheDeY4IN75pIzeHAcAH3kPlBI7kFM6YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJTC633uH2QWsgM6HlocDC901jizKd1gC+bXRpg3KeviO3g9HqhdBscNHJ1Bum+tKoL06kmSdnFgceBhYJscqZH8pGLogJcn90Fz4KKAxRQMzafnAly2w/bWQ+gjWt1XN8gKo/e5evVyUuvieXhkYpcCe+tQaZk2elWgelRWSrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbtbRR5I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qyuvA1DkCnlFT0dL98gqtyl/VMICfNQ5M8z0Vrkcrc288ngYdtONYDJEfB9eW9nJT4tDd4BagXCkn4MMb03rJ/gNz3xYW0IWuw+8xyPMxtOpfTK7rin8oh2pEOh+aJd00IIQ58geTPDiOBNg+PHcZZ3+CTc/+FmctCf/8Fzm4Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chvoo4Vr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbtbRR5I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4E2C4CEF5;
-	Tue,  8 Jul 2025 16:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chvoo4Vr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D55C4CEED;
+	Tue,  8 Jul 2025 16:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992126;
-	bh=3wYeay9j9Sbbb9EWlZ2ipEfaNEu6yg26o38sm+ZKmHo=;
+	s=korg; t=1751992129;
+	bh=TNLO7LAjNeLheDeY4IN75pIzeHAcAH3kPlBI7kFM6YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbtbRR5ILIg5tqEjtFcqQRpaJfPw2oQLJWYF8ohQ9gu8wsDWwXf6mEWtt81pNBmq8
-	 KzPrHGJrUEGCQ2KFowiuh0S06pDKi44R1xw65SO0kCKSoeAnMPH4QfrV1rzP5klijx
-	 bMR4JmTkkc48ir+WGKQcq3P51DYhCFX2Hn6XyVA4=
+	b=chvoo4VrTVwGu2A2abR5d2RhZqnRKpxvO99uAjB2oYZ7bkx6z7zwY+C6xNWQ2pLub
+	 BmMgwCEucFRGlneEWOrSQPRg1ajscQRxa3DfTWZWKDCUN8/XS1RnDdvYcHnS8a8lzV
+	 F6vcVF0DiuGIf5id1InahYaSOKZcKLgEfcF9pQpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Tulio Magno <tuliom@ascii.art.br>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Justin M. Forbes" <jforbes@fedoraproject.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 67/81] net: usb: lan78xx: fix WARN in __netif_napi_del_locked on disconnect
-Date: Tue,  8 Jul 2025 18:23:59 +0200
-Message-ID: <20250708162227.095654021@linuxfoundation.org>
+Subject: [PATCH 6.1 50/81] powerpc: Fix struct termio related ioctl macros
+Date: Tue,  8 Jul 2025 18:23:42 +0200
+Message-ID: <20250708162226.606034414@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -51,94 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit 6c7ffc9af7186ed79403a3ffee9a1e5199fc7450 ]
+[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
 
-Remove redundant netif_napi_del() call from disconnect path.
+Since termio interface is now obsolete, include/uapi/asm/ioctls.h
+has some constant macros referring to "struct termio", this caused
+build failure at userspace.
 
-A WARN may be triggered in __netif_napi_del_locked() during USB device
-disconnect:
+In file included from /usr/include/asm/ioctl.h:12,
+                 from /usr/include/asm/ioctls.h:5,
+                 from tst-ioctls.c:3:
+tst-ioctls.c: In function 'get_TCGETA':
+tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+   12 |   return TCGETA;
+      |          ^~~~~~
 
-  WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
+Even though termios.h provides "struct termio", trying to juggle definitions around to
+make it compile could introduce regressions. So better to open code it.
 
-This happens because netif_napi_del() is called in the disconnect path while
-NAPI is still enabled. However, it is not necessary to call netif_napi_del()
-explicitly, since unregister_netdev() will handle NAPI teardown automatically
-and safely. Removing the redundant call avoids triggering the warning.
-
-Full trace:
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x000000c4. ret = -ENODEV
- lan78xx 1-1:1.0 enu1: Failed to set MAC down with error -ENODEV
- lan78xx 1-1:1.0 enu1: Link is Down
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x00000120. ret = -ENODEV
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
- Modules linked in: flexcan can_dev fuse
- CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.0-rc2-00624-ge926949dab03 #9 PREEMPT
- Hardware name: SKOV IMX8MP CPU revC - bd500 (DT)
- Workqueue: usb_hub_wq hub_event
- pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __netif_napi_del_locked+0x2b4/0x350
- lr : __netif_napi_del_locked+0x7c/0x350
- sp : ffffffc085b673c0
- x29: ffffffc085b673c0 x28: ffffff800b7f2000 x27: ffffff800b7f20d8
- x26: ffffff80110bcf58 x25: ffffff80110bd978 x24: 1ffffff0022179eb
- x23: ffffff80110bc000 x22: ffffff800b7f5000 x21: ffffff80110bc000
- x20: ffffff80110bcf38 x19: ffffff80110bcf28 x18: dfffffc000000000
- x17: ffffffc081578940 x16: ffffffc08284cee0 x15: 0000000000000028
- x14: 0000000000000006 x13: 0000000000040000 x12: ffffffb0022179e8
- x11: 1ffffff0022179e7 x10: ffffffb0022179e7 x9 : dfffffc000000000
- x8 : 0000004ffdde8619 x7 : ffffff80110bcf3f x6 : 0000000000000001
- x5 : ffffff80110bcf38 x4 : ffffff80110bcf38 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 1ffffff0022179e7 x0 : 0000000000000000
- Call trace:
-  __netif_napi_del_locked+0x2b4/0x350 (P)
-  lan78xx_disconnect+0xf4/0x360
-  usb_unbind_interface+0x158/0x718
-  device_remove+0x100/0x150
-  device_release_driver_internal+0x308/0x478
-  device_release_driver+0x1c/0x30
-  bus_remove_device+0x1a8/0x368
-  device_del+0x2e0/0x7b0
-  usb_disable_device+0x244/0x540
-  usb_disconnect+0x220/0x758
-  hub_event+0x105c/0x35e0
-  process_one_work+0x760/0x17b0
-  worker_thread+0x768/0xce8
-  kthread+0x3bc/0x690
-  ret_from_fork+0x10/0x20
- irq event stamp: 211604
- hardirqs last  enabled at (211603): [<ffffffc0828cc9ec>] _raw_spin_unlock_irqrestore+0x84/0x98
- hardirqs last disabled at (211604): [<ffffffc0828a9a84>] el1_dbg+0x24/0x80
- softirqs last  enabled at (211296): [<ffffffc080095f10>] handle_softirqs+0x820/0xbc8
- softirqs last disabled at (210993): [<ffffffc080010288>] __do_softirq+0x18/0x20
- ---[ end trace 0000000000000000 ]---
- lan78xx 1-1:1.0 enu1: failed to kill vid 0081/0
-
-Fixes: ec4c7e12396b ("lan78xx: Introduce NAPI polling support")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250627051346.276029-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Tulio Magno <tuliom@ascii.art.br>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
+Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index feff1265cad6f..0f1c9009d793e 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -4231,8 +4231,6 @@ static void lan78xx_disconnect(struct usb_interface *intf)
+diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
+index 2c145da3b774a..b5211e413829a 100644
+--- a/arch/powerpc/include/uapi/asm/ioctls.h
++++ b/arch/powerpc/include/uapi/asm/ioctls.h
+@@ -23,10 +23,10 @@
+ #define TCSETSW		_IOW('t', 21, struct termios)
+ #define TCSETSF		_IOW('t', 22, struct termios)
  
- 	set_bit(EVENT_DEV_DISCONNECT, &dev->flags);
+-#define TCGETA		_IOR('t', 23, struct termio)
+-#define TCSETA		_IOW('t', 24, struct termio)
+-#define TCSETAW		_IOW('t', 25, struct termio)
+-#define TCSETAF		_IOW('t', 28, struct termio)
++#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
++#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
++#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
++#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
  
--	netif_napi_del(&dev->napi);
--
- 	udev = interface_to_usbdev(intf);
- 	net = dev->net;
- 
+ #define TCSBRK		_IO('t', 29)
+ #define TCXONC		_IO('t', 30)
 -- 
 2.39.5
 
