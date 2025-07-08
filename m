@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0A1B672;
-	Tue,  8 Jul 2025 16:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024D01754B;
+	Tue,  8 Jul 2025 16:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993309; cv=none; b=FA5MK7wy07B2uQ4Ir7PwdIqDWvVVsikLd/aYDR1k93uhV9Co8kBNBhT/sbgt4peKsD1q9Hj5p4bKU/t5aHQUFe2uisz9n2frUlQNP/a0BPxA4ty7XRI33SL1objdLtRTqIjOgJ2KNtsVBwFfg8AvaKhcHDmX6jts29O+//Ug8Xw=
+	t=1751993312; cv=none; b=ZgZPwPgTWVfC8KViPlBUoTNYcDtouBgYvtWYYmY8V0lqZrLS0lbMsI0VU/vPJzA/JW3s/mc3UWyemLmof8LJ5CNtdmNQA4eLKJgRNslXfwllU71A/z4ZOIywKgV5qansvQsfeEGJe4RVyTMYrpUwKYnF70RYcwbgHiXvoa38vCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993309; c=relaxed/simple;
-	bh=Zp6/JGm4yAa34jSTpxyx1Xyo2Xu4k7nmJxR9L7g3jJE=;
+	s=arc-20240116; t=1751993312; c=relaxed/simple;
+	bh=1Y0E2UJQ47HDIswoxHXjz15N9OjtpX4mTU4/d3BLHFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0HnGJ4pkeNgnc8x/hA3ROJqArv8AQ5X6c5dmBO/9GY8YRTdexd+e41X7vGdkERpbSqv+NCxJVg89y/S4TWT8HpPH3kifRkiDQtwEA4fxkH35+rB7uz4vTv7BdqRMN2dtdgIZCBZeceq6ZY25aOuvC5FPMdqMLGw0reZfEkO2jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4Hw73I+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTCpv8WUL85c4tqVERwUtaIjJA6CsqU2Hl+4Vk1/K/uD+pSGb8O2mWyXx0fDLAEap8wgI26MVoJC+pZimzIb4tgFrce0pXdWNDj3d2zGKxiQvxcdCVMJoS1W/b1PiI5bjXmVR6rll4YcCtxzSFh0N4VwvfZkLIG7lECnMfRTuik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXjj9RTL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4Hw73I+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F25EC4CEED;
-	Tue,  8 Jul 2025 16:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXjj9RTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8D3C4CEED;
+	Tue,  8 Jul 2025 16:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993309;
-	bh=Zp6/JGm4yAa34jSTpxyx1Xyo2Xu4k7nmJxR9L7g3jJE=;
+	s=korg; t=1751993311;
+	bh=1Y0E2UJQ47HDIswoxHXjz15N9OjtpX4mTU4/d3BLHFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4Hw73I+iM7ewli7rtlwyyOY+hF+QrfRoz9v6HeNGFPB5vnzlB2Wkt2DCBPpHypW0
-	 RtxA5iSnpuH7fxAb5KmI11fkgsO7Z9ffvYILPXfGYkAiIbMmVyFhi+uKlKTYn/nNQs
-	 m00hGLDPO5JgW8UbjX0kKU8nvk8g71JQtaJMewdc=
+	b=fXjj9RTLUWKOtKR/yTRN4Ws8TYy/lSCnohlY0pTRi6lxjnZehuYGy/NAOP+3pMSwn
+	 53EeJSL4AxvYbrlw36RHwwxPzVCFVA8jMHxed14aPBVTmYet5SO5iY9JtBkGrlMWwN
+	 MX2a4xTl3/AU6G6N429rVZU0YFobQnsNiVTJo1vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.15 029/178] mtk-sd: Fix a pagefault in dma_unmap_sg() for not prepared data
-Date: Tue,  8 Jul 2025 18:21:06 +0200
-Message-ID: <20250708162237.311228858@linuxfoundation.org>
+Subject: [PATCH 6.15 030/178] mtk-sd: Prevent memory corruption from DMA map failure
+Date: Tue,  8 Jul 2025 18:21:07 +0200
+Message-ID: <20250708162237.335112414@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -54,52 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 539d80575b810c7a5987c7ac8915e3bc99c03695 upstream.
+commit f5de469990f19569627ea0dd56536ff5a13beaa3 upstream.
 
-When swiotlb buffer is full, the dma_map_sg() returns 0 to
-msdc_prepare_data(), but it does not check it and sets the
-MSDC_PREPARE_FLAG.
+If msdc_prepare_data() fails to map the DMA region, the request is
+not prepared for data receiving, but msdc_start_data() proceeds
+the DMA with previous setting.
+Since this will lead a memory corruption, we have to stop the
+request operation soon after the msdc_prepare_data() fails to
+prepare it.
 
-swiotlb_tbl_map_single() /* prints "swiotlb buffer is full" */
-  <-swiotlb_map()
-    <-dma_direct_map_page()
-      <-dma_direct_map_sg()
-        <-__dma_map_sg_attrs()
-          <-dma_map_sg_attrs()
-            <-dma_map_sg()  /* returns 0 (pages mapped) */
-              <-msdc_prepare_data()
-
-Then, the msdc_unprepare_data() checks MSDC_PREPARE_FLAG and calls
-dma_unmap_sg() with unmapped pages. It causes a page fault.
-
-To fix this problem, Do not set MSDC_PREPARE_FLAG if dma_map_sg()
-fails because this is not prepared.
-
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/174908565814.4056588.769599127120955383.stgit@mhiramat.tok.corp.google.com
+Link: https://lore.kernel.org/r/174972756982.3337526.6755001617701603082.stgit@mhiramat.tok.corp.google.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mtk-sd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mtk-sd.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 --- a/drivers/mmc/host/mtk-sd.c
 +++ b/drivers/mmc/host/mtk-sd.c
-@@ -827,9 +827,10 @@ static inline void msdc_dma_setup(struct
- static void msdc_prepare_data(struct msdc_host *host, struct mmc_data *data)
- {
- 	if (!(data->host_cookie & MSDC_PREPARE_FLAG)) {
--		data->host_cookie |= MSDC_PREPARE_FLAG;
- 		data->sg_count = dma_map_sg(host->dev, data->sg, data->sg_len,
- 					    mmc_get_dma_dir(data));
-+		if (data->sg_count)
-+			data->host_cookie |= MSDC_PREPARE_FLAG;
+@@ -834,6 +834,11 @@ static void msdc_prepare_data(struct msd
  	}
  }
  
++static bool msdc_data_prepared(struct mmc_data *data)
++{
++	return data->host_cookie & MSDC_PREPARE_FLAG;
++}
++
+ static void msdc_unprepare_data(struct msdc_host *host, struct mmc_data *data)
+ {
+ 	if (data->host_cookie & MSDC_ASYNC_FLAG)
+@@ -1466,8 +1471,18 @@ static void msdc_ops_request(struct mmc_
+ 	WARN_ON(!host->hsq_en && host->mrq);
+ 	host->mrq = mrq;
+ 
+-	if (mrq->data)
++	if (mrq->data) {
+ 		msdc_prepare_data(host, mrq->data);
++		if (!msdc_data_prepared(mrq->data)) {
++			/*
++			 * Failed to prepare DMA area, fail fast before
++			 * starting any commands.
++			 */
++			mrq->cmd->error = -ENOSPC;
++			mmc_request_done(mmc_from_priv(host), mrq);
++			return;
++		}
++	}
+ 
+ 	/* if SBC is required, we have HW option and SW option.
+ 	 * if HW option is enabled, and SBC does not have "special" flags,
 
 
