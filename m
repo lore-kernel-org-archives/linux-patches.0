@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9878F5B;
-	Tue,  8 Jul 2025 16:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476701714B7;
+	Tue,  8 Jul 2025 16:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992964; cv=none; b=azJ0+mrX7sgOpPFpLCnHZmgm0EADp9f9NNCxYCy6hmtMApe3yrwuXy3U5iaMvS9FERZWaLF+rMp79PxJovgVWtbwibQngUgT5L9BWsiFgsxE1YwmFbjSoZwk4eqI1chV+H5nH+rgpD5QDIvF8yYymbjniJYPOEgIrAO0QaC0URk=
+	t=1751992967; cv=none; b=fyrgidMJv09RbL+NPLAzJBJ+kBe3XsG5AtiHdlfumIJD/5tMWFgxbxNAqg467UEl6/3qjyXrpGU15cwejRWjtRU430U0hcS87x46BgjrLN4GReGJBD7vOWXnednkXSNalhNHEf5q7K9fJ7aS+397t0LqYgp8j0EUr7KimYOcUX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992964; c=relaxed/simple;
-	bh=BwHeBEZ7lOwXvg5NNAGBW+ccl0lDm3ytNdCi5dL6Bg8=;
+	s=arc-20240116; t=1751992967; c=relaxed/simple;
+	bh=3SOD7Y/PwWpVWT7OS2IDDmdmi76GIRWjkQsoSVZ5XMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IAEs7aMCe8+y1EngRQBvPp4IIPUDqSbpcluYPmi8Qho79+oMVHi8QkPKJkrp5HU6+pL1SNe6ZmigZZ2K2v9+Fdh+p/z/72FKjeqyr/uaIciTLzmNSNH0pPx4uEMy00UrMYkl+iaJFl8YhQ76tuIFuiVYOZG1VDQVz9aSvXoYTMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxicGePc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ReMcxXvdpuPsWMj3n+DKtD+uSQxPyBHYwatDZ671WHGHWynBJz6JoWdMZF4ww5M0UWxeI49+aGD2OSY2StPZiaUO4t/tTtZXYq11+GvXdGhAuXEzGl9YzKRS5B5lA1AIKTLNXh8RfkHT4L8rXfg+F+Uq0Fab3OYjX9T048hQ1Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLJe6ZA2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxicGePc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E093FC4CEED;
-	Tue,  8 Jul 2025 16:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLJe6ZA2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37CCC4CEED;
+	Tue,  8 Jul 2025 16:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992964;
-	bh=BwHeBEZ7lOwXvg5NNAGBW+ccl0lDm3ytNdCi5dL6Bg8=;
+	s=korg; t=1751992967;
+	bh=3SOD7Y/PwWpVWT7OS2IDDmdmi76GIRWjkQsoSVZ5XMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxicGePccMSlT/B34Ea8ZSKoHmxRN/+XpAgS1/Kc2xpsV0P+sTlzJ+DoRbvKVbuZW
-	 UXiJ0kt+I5/+fJ78MkCDYqrFeN2F4lTCwcipX+68mwx0E95XLCPtaxAkAhRb+O8jEZ
-	 6k1vBnQRLpMkwJw0r2K04AlNZni2u6AD/X9hAgt8=
+	b=uLJe6ZA2x+RPyJmXe7otaBV1LzNBzt/0ydusl6rVwksmMuoU9BGMjTVxDeW+3i2an
+	 8kCum1VLUvB7KdfWDQhHuoz2fRqUVSJkB9nd+x08O0ytQJFlgNB1epEZHbBzfKzAK4
+	 PhTfewKbBNxbXSpdUVmSwzKnXHjKLMzxFC/u94MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/232] arm64: dts: renesas: white-hawk-single: Improve Ethernet TSN description
-Date: Tue,  8 Jul 2025 18:22:18 +0200
-Message-ID: <20250708162245.158828157@linuxfoundation.org>
+Subject: [PATCH 6.12 143/232] arm64: dts: qcom: sm8650: add the missing l2 cache node
+Date: Tue,  8 Jul 2025 18:22:19 +0200
+Message-ID: <20250708162245.186984878@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -45,66 +47,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Pengyu Luo <mitltlatltl@gmail.com>
 
-[ Upstream commit 8ffec7d62c6956199f442dac3b2d5d02231c3977 ]
+[ Upstream commit 4becd72352b6861de0c24074a8502ca85080fd63 ]
 
-  - Add the missing "ethernet3" alias for the Ethernet TSN port, so
-    U-Boot will fill its local-mac-address property based on the
-    "eth3addr" environment variable (if set), avoiding a random MAC
-    address being assigned by the OS,
-  - Rename the numerical Ethernet PHY label to "tsn0_phy", to avoid
-    future conflicts, and for consistency with the "avbN_phy" labels.
+Only two little a520s share the same L2, every a720 has their own L2
+cache.
 
-Fixes: 3d8e475bd7a724a9 ("arm64: dts: renesas: white-hawk-single: Wire-up Ethernet TSN")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://lore.kernel.org/367f10a18aa196ff1c96734dd9bd5634b312c421.1746624368.git.geert+renesas@glider.be
+Fixes: d2350377997f ("arm64: dts: qcom: add initial SM8650 dtsi")
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250405105529.309711-1-mitltlatltl@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/white-hawk-single.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/white-hawk-single.dtsi b/arch/arm64/boot/dts/renesas/white-hawk-single.dtsi
-index 20e8232f2f323..976a3ab44e5a5 100644
---- a/arch/arm64/boot/dts/renesas/white-hawk-single.dtsi
-+++ b/arch/arm64/boot/dts/renesas/white-hawk-single.dtsi
-@@ -11,6 +11,10 @@
- / {
- 	model = "Renesas White Hawk Single board";
- 	compatible = "renesas,white-hawk-single";
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 72e3dcd495c3b..bd91624bd3bfc 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -159,13 +159,20 @@ cpu3: cpu@300 {
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&l2_200>;
++			next-level-cache = <&l2_300>;
+ 			capacity-dmips-mhz = <1792>;
+ 			dynamic-power-coefficient = <238>;
+ 
+ 			qcom,freq-domain = <&cpufreq_hw 3>;
+ 
+ 			#cooling-cells = <2>;
 +
-+	aliases {
-+		ethernet3 = &tsn0;
-+	};
- };
++			l2_300: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_0>;
++			};
+ 		};
  
- &hscif0 {
-@@ -53,7 +57,7 @@ &tsn0 {
- 	pinctrl-0 = <&tsn0_pins>;
- 	pinctrl-names = "default";
- 	phy-mode = "rgmii";
--	phy-handle = <&phy3>;
-+	phy-handle = <&tsn0_phy>;
- 	status = "okay";
- 
- 	mdio {
-@@ -63,7 +67,7 @@ mdio {
- 		reset-gpios = <&gpio1 23 GPIO_ACTIVE_LOW>;
- 		reset-post-delay-us = <4000>;
- 
--		phy3: ethernet-phy@0 {
-+		tsn0_phy: ethernet-phy@0 {
- 			compatible = "ethernet-phy-id002b.0980",
- 				     "ethernet-phy-ieee802.3-c22";
- 			reg = <0>;
+ 		cpu4: cpu@400 {
 -- 
 2.39.5
 
