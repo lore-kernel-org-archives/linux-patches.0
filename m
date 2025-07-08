@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B733F9E8;
-	Tue,  8 Jul 2025 16:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D9AF9E8;
+	Tue,  8 Jul 2025 16:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992782; cv=none; b=dbdKYOLXXdzTr6pIo3ZHmhGlwnZ7ugXfR9e0ujcAWNzSi/lOIrgSg+gKbdPTKHhigZ2vjRoe8q5+sJ5H5w5qsrADg6RIhMKXA68twiqrKyI/ddldQTthiCg3CvqagSOM4P7aWCVeORHpkD84p2L8TjeVmi45TAiaV0ptyCgUbzU=
+	t=1751992785; cv=none; b=DdZpJpi1eP3/Bgtz31pGqtXV2NGKKkXKyP5omGtHI6aqNXKdeSK+pKh/KGE6NJ5GipETCPZLAZXC0ZnwIgzoAzNzC5bSyuTUNAVY3qWjPPdqmCcIUeJYYwk/4e1XrRu5LUGGdkKeLT2fxgvun0uBreBU09Psydpq2ZDhETw2lDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992782; c=relaxed/simple;
-	bh=Anej8zQcEt9ZfX/UzHpwpgXGv/tpfGfP2jLepBNsce8=;
+	s=arc-20240116; t=1751992785; c=relaxed/simple;
+	bh=uKF3ESQFwUY3wvYyowaTuEgDpsyh0l3RSYnQ3WfjQ0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9tW2jEuz6ohh45s3eDiCtbLdP9V6NzFYRnrOpJm54Vr8gMLMjgVFz0DShsVEqXfHNFGrIX81/n6cuTIDHui1+568uFYa5hdMVwyHzN3YgUid0rwt9VR23Qgfzkr3f/rPK+f9JQRWqlUzKbcsSyIIRGZ23DNOWPjMhFLbNnih/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktFstm2E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TYYUbkyb2UQhc5fuzj3vqa+IaWCuTJstJm0MA7iUnfFfjYjZCEwfbLbCCZO4ya5/8r2GR7wAnVVy0OoNxD2EhyW1VZwg6zaiuQlXBz5mngd6iE2BajxzD8gALArWqo97wtRcXNT+EAcJq+SzQqHMOZeQsOGaPNOlR1b7mdqC+h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOnwItbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktFstm2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958ECC4CEED;
-	Tue,  8 Jul 2025 16:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOnwItbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D127C4CEED;
+	Tue,  8 Jul 2025 16:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992782;
-	bh=Anej8zQcEt9ZfX/UzHpwpgXGv/tpfGfP2jLepBNsce8=;
+	s=korg; t=1751992784;
+	bh=uKF3ESQFwUY3wvYyowaTuEgDpsyh0l3RSYnQ3WfjQ0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktFstm2EKqxtzW00g+yxbxPqB+MVwhLh9OyqfC3XGYPGV/Y/hZHYZXgwLtvuz+KrR
-	 hms17QM3EyMZgaFitLH1DOjVFCs5zgNK93F5xmWgW9aIQX9qkTe4wcHNUG5AisnmV1
-	 KAYuX04fuwyGHnBxYi4uqrbnivjR7wvC5u5HHyJM=
+	b=nOnwItbTZyWc6oZsADs9r6x+ZPxfjWvmu4WDGbgRQPZTQaLMe0b9JudHOW/zH2gti
+	 xdpBdoKKX/tMV2/eT3dbMLMlIERAsX7vgoszvd5j4PgxCY0UN6jPXUfflmmkomY6+1
+	 1g4xon5WUgCX6PG7ABRja65hX51/l5P25vZbID7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/232] idpf: convert control queue mutex to a spinlock
-Date: Tue,  8 Jul 2025 18:21:15 +0200
-Message-ID: <20250708162243.521574318@linuxfoundation.org>
+Subject: [PATCH 6.12 080/232] igc: disable L1.2 PCI-E link substate to avoid performance issue
+Date: Tue,  8 Jul 2025 18:21:16 +0200
+Message-ID: <20250708162243.545859458@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -54,230 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Zaki <ahmed.zaki@intel.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-[ Upstream commit b2beb5bb2cd90d7939e470ed4da468683f41baa3 ]
+[ Upstream commit 0325143b59c6c6d79987afc57d2456e7a20d13b7 ]
 
-With VIRTCHNL2_CAP_MACFILTER enabled, the following warning is generated
-on module load:
+I226 devices advertise support for the PCI-E link L1.2 substate. However,
+due to a hardware limitation, the exit latency from this low-power state
+is longer than the packet buffer can tolerate under high traffic
+conditions. This can lead to packet loss and degraded performance.
 
-[  324.701677] BUG: sleeping function called from invalid context at kernel/locking/mutex.c:578
-[  324.701684] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1582, name: NetworkManager
-[  324.701689] preempt_count: 201, expected: 0
-[  324.701693] RCU nest depth: 0, expected: 0
-[  324.701697] 2 locks held by NetworkManager/1582:
-[  324.701702]  #0: ffffffff9f7be770 (rtnl_mutex){....}-{3:3}, at: rtnl_newlink+0x791/0x21e0
-[  324.701730]  #1: ff1100216c380368 (_xmit_ETHER){....}-{2:2}, at: __dev_open+0x3f0/0x870
-[  324.701749] Preemption disabled at:
-[  324.701752] [<ffffffff9cd23b9d>] __dev_open+0x3dd/0x870
-[  324.701765] CPU: 30 UID: 0 PID: 1582 Comm: NetworkManager Not tainted 6.15.0-rc5+ #2 PREEMPT(voluntary)
-[  324.701771] Hardware name: Intel Corporation M50FCP2SBSTD/M50FCP2SBSTD, BIOS SE5C741.86B.01.01.0001.2211140926 11/14/2022
-[  324.701774] Call Trace:
-[  324.701777]  <TASK>
-[  324.701779]  dump_stack_lvl+0x5d/0x80
-[  324.701788]  ? __dev_open+0x3dd/0x870
-[  324.701793]  __might_resched.cold+0x1ef/0x23d
-<..>
-[  324.701818]  __mutex_lock+0x113/0x1b80
-<..>
-[  324.701917]  idpf_ctlq_clean_sq+0xad/0x4b0 [idpf]
-[  324.701935]  ? kasan_save_track+0x14/0x30
-[  324.701941]  idpf_mb_clean+0x143/0x380 [idpf]
-<..>
-[  324.701991]  idpf_send_mb_msg+0x111/0x720 [idpf]
-[  324.702009]  idpf_vc_xn_exec+0x4cc/0x990 [idpf]
-[  324.702021]  ? rcu_is_watching+0x12/0xc0
-[  324.702035]  idpf_add_del_mac_filters+0x3ed/0xb50 [idpf]
-<..>
-[  324.702122]  __hw_addr_sync_dev+0x1cf/0x300
-[  324.702126]  ? find_held_lock+0x32/0x90
-[  324.702134]  idpf_set_rx_mode+0x317/0x390 [idpf]
-[  324.702152]  __dev_open+0x3f8/0x870
-[  324.702159]  ? __pfx___dev_open+0x10/0x10
-[  324.702174]  __dev_change_flags+0x443/0x650
-<..>
-[  324.702208]  netif_change_flags+0x80/0x160
-[  324.702218]  do_setlink.isra.0+0x16a0/0x3960
-<..>
-[  324.702349]  rtnl_newlink+0x12fd/0x21e0
+To mitigate this, disable the L1.2 substate. The increased power draw
+between L1.1 and L1.2 is insignificant.
 
-The sequence is as follows:
-	rtnl_newlink()->
-	__dev_change_flags()->
-	__dev_open()->
-	dev_set_rx_mode() - >  # disables BH and grabs "dev->addr_list_lock"
-	idpf_set_rx_mode() ->  # proceed only if VIRTCHNL2_CAP_MACFILTER is ON
-	__dev_uc_sync() ->
-	idpf_add_mac_filter ->
-	idpf_add_del_mac_filters ->
-	idpf_send_mb_msg() ->
-	idpf_mb_clean() ->
-	idpf_ctlq_clean_sq()   # mutex_lock(cq_lock)
-
-Fix by converting cq_lock to a spinlock. All operations under the new
-lock are safe except freeing the DMA memory, which may use vunmap(). Fix
-by requesting a contiguous physical memory for the DMA mapping.
-
-Fixes: a251eee62133 ("idpf: add SRIOV support and other ndo_ops")
+Fixes: 43546211738e ("igc: Add new device ID's")
+Link: https://lore.kernel.org/intel-wired-lan/15248b4f-3271-42dd-8e35-02bfc92b25e1@intel.com
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/idpf/idpf_controlq.c   | 23 +++++++++----------
- .../ethernet/intel/idpf/idpf_controlq_api.h   |  2 +-
- drivers/net/ethernet/intel/idpf/idpf_lib.c    | 12 ++++++----
- 3 files changed, 20 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_controlq.c b/drivers/net/ethernet/intel/idpf/idpf_controlq.c
-index b28991dd18703..48b8e184f3db6 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_controlq.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_controlq.c
-@@ -96,7 +96,7 @@ static void idpf_ctlq_init_rxq_bufs(struct idpf_ctlq_info *cq)
-  */
- static void idpf_ctlq_shutdown(struct idpf_hw *hw, struct idpf_ctlq_info *cq)
- {
--	mutex_lock(&cq->cq_lock);
-+	spin_lock(&cq->cq_lock);
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 082b0baf5d37c..2a0c5a343e472 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6987,6 +6987,10 @@ static int igc_probe(struct pci_dev *pdev,
+ 	adapter->port_num = hw->bus.func;
+ 	adapter->msg_enable = netif_msg_init(debug, DEFAULT_MSG_ENABLE);
  
- 	/* free ring buffers and the ring itself */
- 	idpf_ctlq_dealloc_ring_res(hw, cq);
-@@ -104,8 +104,7 @@ static void idpf_ctlq_shutdown(struct idpf_hw *hw, struct idpf_ctlq_info *cq)
- 	/* Set ring_size to 0 to indicate uninitialized queue */
- 	cq->ring_size = 0;
++	/* Disable ASPM L1.2 on I226 devices to avoid packet loss */
++	if (igc_is_device_id_i226(hw))
++		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
++
+ 	err = pci_save_state(pdev);
+ 	if (err)
+ 		goto err_ioremap;
+@@ -7368,6 +7372,9 @@ static int igc_resume(struct device *dev)
+ 	pci_enable_wake(pdev, PCI_D3hot, 0);
+ 	pci_enable_wake(pdev, PCI_D3cold, 0);
  
--	mutex_unlock(&cq->cq_lock);
--	mutex_destroy(&cq->cq_lock);
-+	spin_unlock(&cq->cq_lock);
- }
++	if (igc_is_device_id_i226(hw))
++		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
++
+ 	if (igc_init_interrupt_scheme(adapter, true)) {
+ 		netdev_err(netdev, "Unable to allocate memory for queues\n");
+ 		return -ENOMEM;
+@@ -7480,6 +7487,9 @@ static pci_ers_result_t igc_io_slot_reset(struct pci_dev *pdev)
+ 		pci_enable_wake(pdev, PCI_D3hot, 0);
+ 		pci_enable_wake(pdev, PCI_D3cold, 0);
  
- /**
-@@ -173,7 +172,7 @@ int idpf_ctlq_add(struct idpf_hw *hw,
- 
- 	idpf_ctlq_init_regs(hw, cq, is_rxq);
- 
--	mutex_init(&cq->cq_lock);
-+	spin_lock_init(&cq->cq_lock);
- 
- 	list_add(&cq->cq_list, &hw->cq_list_head);
- 
-@@ -272,7 +271,7 @@ int idpf_ctlq_send(struct idpf_hw *hw, struct idpf_ctlq_info *cq,
- 	int err = 0;
- 	int i;
- 
--	mutex_lock(&cq->cq_lock);
-+	spin_lock(&cq->cq_lock);
- 
- 	/* Ensure there are enough descriptors to send all messages */
- 	num_desc_avail = IDPF_CTLQ_DESC_UNUSED(cq);
-@@ -332,7 +331,7 @@ int idpf_ctlq_send(struct idpf_hw *hw, struct idpf_ctlq_info *cq,
- 	wr32(hw, cq->reg.tail, cq->next_to_use);
- 
- err_unlock:
--	mutex_unlock(&cq->cq_lock);
-+	spin_unlock(&cq->cq_lock);
- 
- 	return err;
- }
-@@ -364,7 +363,7 @@ int idpf_ctlq_clean_sq(struct idpf_ctlq_info *cq, u16 *clean_count,
- 	if (*clean_count > cq->ring_size)
- 		return -EBADR;
- 
--	mutex_lock(&cq->cq_lock);
-+	spin_lock(&cq->cq_lock);
- 
- 	ntc = cq->next_to_clean;
- 
-@@ -397,7 +396,7 @@ int idpf_ctlq_clean_sq(struct idpf_ctlq_info *cq, u16 *clean_count,
- 
- 	cq->next_to_clean = ntc;
- 
--	mutex_unlock(&cq->cq_lock);
-+	spin_unlock(&cq->cq_lock);
- 
- 	/* Return number of descriptors actually cleaned */
- 	*clean_count = i;
-@@ -435,7 +434,7 @@ int idpf_ctlq_post_rx_buffs(struct idpf_hw *hw, struct idpf_ctlq_info *cq,
- 	if (*buff_count > 0)
- 		buffs_avail = true;
- 
--	mutex_lock(&cq->cq_lock);
-+	spin_lock(&cq->cq_lock);
- 
- 	if (tbp >= cq->ring_size)
- 		tbp = 0;
-@@ -524,7 +523,7 @@ int idpf_ctlq_post_rx_buffs(struct idpf_hw *hw, struct idpf_ctlq_info *cq,
- 		wr32(hw, cq->reg.tail, cq->next_to_post);
- 	}
- 
--	mutex_unlock(&cq->cq_lock);
-+	spin_unlock(&cq->cq_lock);
- 
- 	/* return the number of buffers that were not posted */
- 	*buff_count = *buff_count - i;
-@@ -552,7 +551,7 @@ int idpf_ctlq_recv(struct idpf_ctlq_info *cq, u16 *num_q_msg,
- 	u16 i;
- 
- 	/* take the lock before we start messing with the ring */
--	mutex_lock(&cq->cq_lock);
-+	spin_lock(&cq->cq_lock);
- 
- 	ntc = cq->next_to_clean;
- 
-@@ -614,7 +613,7 @@ int idpf_ctlq_recv(struct idpf_ctlq_info *cq, u16 *num_q_msg,
- 
- 	cq->next_to_clean = ntc;
- 
--	mutex_unlock(&cq->cq_lock);
-+	spin_unlock(&cq->cq_lock);
- 
- 	*num_q_msg = i;
- 	if (*num_q_msg == 0)
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_controlq_api.h b/drivers/net/ethernet/intel/idpf/idpf_controlq_api.h
-index e8e046ef2f0d7..5890d8adca4a8 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_controlq_api.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_controlq_api.h
-@@ -99,7 +99,7 @@ struct idpf_ctlq_info {
- 
- 	enum idpf_ctlq_type cq_type;
- 	int q_id;
--	struct mutex cq_lock;		/* control queue lock */
-+	spinlock_t cq_lock;		/* control queue lock */
- 	/* used for interrupt processing */
- 	u16 next_to_use;
- 	u16 next_to_clean;
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index ba645ab22d394..746b655337275 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -2315,8 +2315,12 @@ void *idpf_alloc_dma_mem(struct idpf_hw *hw, struct idpf_dma_mem *mem, u64 size)
- 	struct idpf_adapter *adapter = hw->back;
- 	size_t sz = ALIGN(size, 4096);
- 
--	mem->va = dma_alloc_coherent(&adapter->pdev->dev, sz,
--				     &mem->pa, GFP_KERNEL);
-+	/* The control queue resources are freed under a spinlock, contiguous
-+	 * pages will avoid IOMMU remapping and the use vmap (and vunmap in
-+	 * dma_free_*() path.
-+	 */
-+	mem->va = dma_alloc_attrs(&adapter->pdev->dev, sz, &mem->pa,
-+				  GFP_KERNEL, DMA_ATTR_FORCE_CONTIGUOUS);
- 	mem->size = sz;
- 
- 	return mem->va;
-@@ -2331,8 +2335,8 @@ void idpf_free_dma_mem(struct idpf_hw *hw, struct idpf_dma_mem *mem)
- {
- 	struct idpf_adapter *adapter = hw->back;
- 
--	dma_free_coherent(&adapter->pdev->dev, mem->size,
--			  mem->va, mem->pa);
-+	dma_free_attrs(&adapter->pdev->dev, mem->size,
-+		       mem->va, mem->pa, DMA_ATTR_FORCE_CONTIGUOUS);
- 	mem->size = 0;
- 	mem->va = NULL;
- 	mem->pa = 0;
++		if (igc_is_device_id_i226(hw))
++			pci_disable_link_state_locked(pdev, PCIE_LINK_STATE_L1_2);
++
+ 		/* In case of PCI error, adapter loses its HW address
+ 		 * so we should re-assign it here.
+ 		 */
 -- 
 2.39.5
 
