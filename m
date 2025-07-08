@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446F5881E;
-	Tue,  8 Jul 2025 16:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3885D2E3701;
+	Tue,  8 Jul 2025 16:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992256; cv=none; b=sPtw4aajo2Y4evjTAfBCdZ3IR+mJM4nkaWTTkMET2YZarG3vCpXRRGP6AtrAkTOc985E6hOofQ2ykCJIKmjFg4CG323YQ2+2k3RniNs97UX7glVB3Ix4zdOShPEuoVkIho67yeA4jf7RrdTHjNX2lHajC1l1k9TZOi8WyIZiSPU=
+	t=1751992259; cv=none; b=BKb7Jox3wNuKKlvanq+6wILhnpRgeRVzF+vspY1HfZWkdknbF2vVc9lClflJ0vDyzO98QGWYanRWaq1HdMc+TyafPd5tqTAf3OWZwFDCEB+9CLESKD2APV7ZSnG887zmNslyRRNTcHzY+PEkqFAqaHfwyd0H8AlKvnfl9oxkOls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992256; c=relaxed/simple;
-	bh=wTbi3bEfoorzezTPww3DydNKMLa1iBcasl8H/wPuLHY=;
+	s=arc-20240116; t=1751992259; c=relaxed/simple;
+	bh=djvJisH2C6/akxM6Nu7Sg8Ds4DY10CEqzA9eAzNN+6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lqGmIniT6Hd2hAzD+ZZwsAuNsCppjVEdjA9DqnpehqP3VwYZ/XaheCHXX/4V6ynLdv/w1mlyjj0cValqMl0xYb2+biKy6k7bAY67VDlZeRt8dshKWyduQBll0eiWBNbndnjd27fP2Pr6TRMz1+nK0MUt70gAJLA/Gg43nIC1Ovg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KuEh4BVn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jm7LivnZ1ZbwsJBIdOXz8bnt55Nd7b64yemC2T5gq1CSYZcWJoRpc8/BNCkdCw1VCXLRsv8G7gCJXso7wVi9egcs5sVL6XQk8c5D93TKcGT7SYoBYTDOQSWMiOyauEAddeOBaLV/WBiSQrPkrWRUFBcoOkfP7Dp9DMplsIwYAgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anJ8YudY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuEh4BVn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AAFC4CEED;
-	Tue,  8 Jul 2025 16:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anJ8YudY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B701AC4CEED;
+	Tue,  8 Jul 2025 16:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992256;
-	bh=wTbi3bEfoorzezTPww3DydNKMLa1iBcasl8H/wPuLHY=;
+	s=korg; t=1751992259;
+	bh=djvJisH2C6/akxM6Nu7Sg8Ds4DY10CEqzA9eAzNN+6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KuEh4BVn5poxG4gDyJ+wHagVPkGncBBo3pINiLURSbecv5frDzQAFiCxkA9wnU8yd
-	 4lGud2Vjy9BqUsN7k47qhAXKjST1bj0AUtxXlDUuKVabL8qr0F4CtO93lhUqzrfHTR
-	 TTBb3whglLqlqKLNQ5PmZl56BrAEM4ATFuyyv1GA=
+	b=anJ8YudY6OiBIVI5Ym7p6upZSTld3nn1sTdGOvSsrB4SYwru4wyyNuhD7mFHR71on
+	 SHYhCBngudjbAGJBJz2EoqC6yv/Qdu/Yy/eVlB5snnw9Bsqus1XMxHVvzlDRZZVNEh
+	 kFsTDx3uULjjSZB08ICNOhhGZfOfaJgyq+hnq69k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 013/132] regulator: gpio: Fix the out-of-bounds access to drvdata::gpiods
-Date: Tue,  8 Jul 2025 18:22:04 +0200
-Message-ID: <20250708162231.125472327@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 031/132] btrfs: fix missing error handling when searching for inode refs during log replay
+Date: Tue,  8 Jul 2025 18:22:22 +0200
+Message-ID: <20250708162231.618524669@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -50,52 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <mani@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit c9764fd88bc744592b0604ccb6b6fc1a5f76b4e3 upstream.
+[ Upstream commit 6561a40ceced9082f50c374a22d5966cf9fc5f5c ]
 
-drvdata::gpiods is supposed to hold an array of 'gpio_desc' pointers. But
-the memory is allocated for only one pointer. This will lead to
-out-of-bounds access later in the code if 'config::ngpios' is > 1. So
-fix the code to allocate enough memory to hold 'config::ngpios' of GPIO
-descriptors.
+During log replay, at __add_inode_ref(), when we are searching for inode
+ref keys we totally ignore if btrfs_search_slot() returns an error. This
+may make a log replay succeed when there was an actual error and leave
+some metadata inconsistency in a subvolume tree. Fix this by checking if
+an error was returned from btrfs_search_slot() and if so, return it to
+the caller.
 
-While at it, also move the check for memory allocation failure to be below
-the allocation to make it more readable.
-
-Cc: stable@vger.kernel.org # 5.0
-Fixes: d6cd33ad7102 ("regulator: gpio: Convert to use descriptors")
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20250703103549.16558-1-mani@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e02119d5a7b4 ("Btrfs: Add a write ahead tree log to optimize synchronous operations")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/gpio-regulator.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/btrfs/tree-log.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/regulator/gpio-regulator.c
-+++ b/drivers/regulator/gpio-regulator.c
-@@ -260,8 +260,10 @@ static int gpio_regulator_probe(struct p
- 		return -ENOMEM;
- 	}
- 
--	drvdata->gpiods = devm_kzalloc(dev, sizeof(struct gpio_desc *),
--				       GFP_KERNEL);
-+	drvdata->gpiods = devm_kcalloc(dev, config->ngpios,
-+				       sizeof(struct gpio_desc *), GFP_KERNEL);
-+	if (!drvdata->gpiods)
-+		return -ENOMEM;
- 
- 	if (config->input_supply) {
- 		drvdata->desc.supply_name = devm_kstrdup(&pdev->dev,
-@@ -274,8 +276,6 @@ static int gpio_regulator_probe(struct p
- 		}
- 	}
- 
--	if (!drvdata->gpiods)
--		return -ENOMEM;
- 	for (i = 0; i < config->ngpios; i++) {
- 		drvdata->gpiods[i] = devm_gpiod_get_index(dev,
- 							  NULL,
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index cc9a2f8a4ae3b..6dbb62f83f8c8 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1087,7 +1087,9 @@ static inline int __add_inode_ref(struct btrfs_trans_handle *trans,
+ 	search_key.type = BTRFS_INODE_REF_KEY;
+ 	search_key.offset = parent_objectid;
+ 	ret = btrfs_search_slot(NULL, root, &search_key, path, 0, 0);
+-	if (ret == 0) {
++	if (ret < 0) {
++		return ret;
++	} else if (ret == 0) {
+ 		struct btrfs_inode_ref *victim_ref;
+ 		unsigned long ptr;
+ 		unsigned long ptr_end;
+-- 
+2.39.5
+
 
 
