@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6571521B199;
-	Tue,  8 Jul 2025 16:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098D2217722;
+	Tue,  8 Jul 2025 16:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992023; cv=none; b=PUlIfgOGgUaPuI9p5+PlFxL/0i4zmkdWDkka+AlAU1lafBujh6DF/xExRL0kTr17tj0LFlEk2vxpoADOiM/vubkIfcDMMpCax5L+5XOguvtMzEMwmxUzB/0n7a4ZekttvLoyOl+zDlio3SMITmy0GI64uifBCBoMs4y+IAxKjfU=
+	t=1751992027; cv=none; b=UuKtAZuuqGuHECXjf4xL4IzWjOPXt8tDXTSTr4IUw6Ti2IGvtSbtgBDJJsCklgUtdoHNaew1SKe83Ed70qv12iTpG3V+rhizEs/uSZV9mhVwVlM7N1kmz0tgSMY5bOLlPWSs9siB1JPDb/6U0wg2VvTgkjOfYf0P23HHk/j/QDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992023; c=relaxed/simple;
-	bh=F4XouhNbhjEbGgpw3uGew/EZIL10nWQBnMFHk6Kh678=;
+	s=arc-20240116; t=1751992027; c=relaxed/simple;
+	bh=bw8aTxkXz0YXkxFMgYqltlVozn/ZuqXXslEi50nTkXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLi5RT9PvjIMPr/7kNNEupfaN9gTqX70Udy/WfTMowWl3+PCD4FN6/bkoN+vHA98pB8ib6kgwqZFQbtTccCUkmhnCC57RlCtaeIccQO6tp+zkXsv0EXavvz+rc7ZvQStZ58s+7yKufG7h9poIynf/3MEx3yFW+pQZZPnGUYhEL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1bhwU7E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ofd2BZtaqvo2U8Nd6zGfsXF37MdCsCxH70vlJFHHivo8exjUqskkVT4FQCAIvonEWDhHU/VRH5WiP4aTXtMV5xMQ07cPKnTDrihibrlLOEIMX3OpZhO2/sRH4l05hjeKHRi8lnnHGFauZh/CWCr8o7Zl9qimHCKjJrn/tSKZj+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVykRwnE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1bhwU7E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05E9C4CEED;
-	Tue,  8 Jul 2025 16:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVykRwnE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1F4C4CEED;
+	Tue,  8 Jul 2025 16:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992023;
-	bh=F4XouhNbhjEbGgpw3uGew/EZIL10nWQBnMFHk6Kh678=;
+	s=korg; t=1751992026;
+	bh=bw8aTxkXz0YXkxFMgYqltlVozn/ZuqXXslEi50nTkXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z1bhwU7Eb352cgTdxW71BdqqxkNF8Gljr9KFt/489n7KWiqld7o0ovaMww/1bk7/E
-	 klyZ9/s1FqOJP1DC9/29AOQJwsJ1tO8bJHUMtN87DNnkqlK+CRvUjDaL1cnKmFguoP
-	 TjmffsBIiixYy0HLiPyQ7jfFNaHo2XaI0RaMuu7A=
+	b=gVykRwnEYeKDSpkQiRFxto21Em/WJkkGFXxVA1P56rQhImbopueO7b3rWBRpR7I7M
+	 UuEiGsYEe/bQQY0Y+KWNcn3Il5xH3lf7zgtHyVuQ6fAc59MJ5nN7V2vK9O3gNAKTzc
+	 jOxLtyaAM+NhSbdRc549iG74NgTV3YxzvAtNVxcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Furong Zhou <furong.zhou@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/81] RDMA/mlx5: Initialize obj_event->obj_sub_list before xa_insert
-Date: Tue,  8 Jul 2025 18:23:09 +0200
-Message-ID: <20250708162225.460340313@linuxfoundation.org>
+Subject: [PATCH 6.1 35/81] drm/i915/gsc: mei interrupt top half should be in irq disabled context
+Date: Tue,  8 Jul 2025 18:23:27 +0200
+Message-ID: <20250708162226.080746784@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -52,98 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Junxiao Chang <junxiao.chang@intel.com>
 
-[ Upstream commit 8edab8a72d67742f87e9dc2e2b0cdfddda5dc29a ]
+[ Upstream commit 8cadce97bf264ed478669c6f32d5603b34608335 ]
 
-The obj_event may be loaded immediately after inserted, then if the
-list_head is not initialized then we may get a poisonous pointer.  This
-fixes the crash below:
+MEI GSC interrupt comes from i915. It has top half and bottom half.
+Top half is called from i915 interrupt handler. It should be in
+irq disabled context.
 
- mlx5_core 0000:03:00.0: MLX5E: StrdRq(1) RqSz(8) StrdSz(2048) RxCqeCmprss(0 enhanced)
- mlx5_core.sf mlx5_core.sf.4: firmware version: 32.38.3056
- mlx5_core 0000:03:00.0 en3f0pf0sf2002: renamed from eth0
- mlx5_core.sf mlx5_core.sf.4: Rate limit: 127 rates are supported, range: 0Mbps to 195312Mbps
- IPv6: ADDRCONF(NETDEV_CHANGE): en3f0pf0sf2002: link becomes ready
- Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
- Mem abort info:
-   ESR = 0x96000006
-   EC = 0x25: DABT (current EL), IL = 32 bits
-   SET = 0, FnV = 0
-   EA = 0, S1PTW = 0
- Data abort info:
-   ISV = 0, ISS = 0x00000006
-   CM = 0, WnR = 0
- user pgtable: 4k pages, 48-bit VAs, pgdp=00000007760fb000
- [0000000000000060] pgd=000000076f6d7003, p4d=000000076f6d7003, pud=0000000777841003, pmd=0000000000000000
- Internal error: Oops: 96000006 [#1] SMP
- Modules linked in: ipmb_host(OE) act_mirred(E) cls_flower(E) sch_ingress(E) mptcp_diag(E) udp_diag(E) raw_diag(E) unix_diag(E) tcp_diag(E) inet_diag(E) binfmt_misc(E) bonding(OE) rdma_ucm(OE) rdma_cm(OE) iw_cm(OE) ib_ipoib(OE) ib_cm(OE) isofs(E) cdrom(E) mst_pciconf(OE) ib_umad(OE) mlx5_ib(OE) ipmb_dev_int(OE) mlx5_core(OE) kpatch_15237886(OEK) mlxdevm(OE) auxiliary(OE) ib_uverbs(OE) ib_core(OE) psample(E) mlxfw(OE) tls(E) sunrpc(E) vfat(E) fat(E) crct10dif_ce(E) ghash_ce(E) sha1_ce(E) sbsa_gwdt(E) virtio_console(E) ext4(E) mbcache(E) jbd2(E) xfs(E) libcrc32c(E) mmc_block(E) virtio_net(E) net_failover(E) failover(E) sha2_ce(E) sha256_arm64(E) nvme(OE) nvme_core(OE) gpio_mlxbf3(OE) mlx_compat(OE) mlxbf_pmc(OE) i2c_mlxbf(OE) sdhci_of_dwcmshc(OE) pinctrl_mlxbf3(OE) mlxbf_pka(OE) gpio_generic(E) i2c_core(E) mmc_core(E) mlxbf_gige(OE) vitesse(E) pwr_mlxbf(OE) mlxbf_tmfifo(OE) micrel(E) mlxbf_bootctl(OE) virtio_ring(E) virtio(E) ipmi_devintf(E) ipmi_msghandler(E)
-  [last unloaded: mst_pci]
- CPU: 11 PID: 20913 Comm: rte-worker-11 Kdump: loaded Tainted: G           OE K   5.10.134-13.1.an8.aarch64 #1
- Hardware name: https://www.mellanox.com BlueField-3 SmartNIC Main Card/BlueField-3 SmartNIC Main Card, BIOS 4.2.2.12968 Oct 26 2023
- pstate: a0400089 (NzCv daIf +PAN -UAO -TCO BTYPE=--)
- pc : dispatch_event_fd+0x68/0x300 [mlx5_ib]
- lr : devx_event_notifier+0xcc/0x228 [mlx5_ib]
- sp : ffff80001005bcf0
- x29: ffff80001005bcf0 x28: 0000000000000001
- x27: ffff244e0740a1d8 x26: ffff244e0740a1d0
- x25: ffffda56beff5ae0 x24: ffffda56bf911618
- x23: ffff244e0596a480 x22: ffff244e0596a480
- x21: ffff244d8312ad90 x20: ffff244e0596a480
- x19: fffffffffffffff0 x18: 0000000000000000
- x17: 0000000000000000 x16: ffffda56be66d620
- x15: 0000000000000000 x14: 0000000000000000
- x13: 0000000000000000 x12: 0000000000000000
- x11: 0000000000000040 x10: ffffda56bfcafb50
- x9 : ffffda5655c25f2c x8 : 0000000000000010
- x7 : 0000000000000000 x6 : ffff24545a2e24b8
- x5 : 0000000000000003 x4 : ffff80001005bd28
- x3 : 0000000000000000 x2 : 0000000000000000
- x1 : ffff244e0596a480 x0 : ffff244d8312ad90
- Call trace:
-  dispatch_event_fd+0x68/0x300 [mlx5_ib]
-  devx_event_notifier+0xcc/0x228 [mlx5_ib]
-  atomic_notifier_call_chain+0x58/0x80
-  mlx5_eq_async_int+0x148/0x2b0 [mlx5_core]
-  atomic_notifier_call_chain+0x58/0x80
-  irq_int_handler+0x20/0x30 [mlx5_core]
-  __handle_irq_event_percpu+0x60/0x220
-  handle_irq_event_percpu+0x3c/0x90
-  handle_irq_event+0x58/0x158
-  handle_fasteoi_irq+0xfc/0x188
-  generic_handle_irq+0x34/0x48
-  ...
+With RT kernel, by default i915 IRQ handler is in threaded IRQ. MEI GSC
+top half might be in threaded IRQ context. generic_handle_irq_safe API
+could be called from either IRQ or process context, it disables local
+IRQ then calls MEI GSC interrupt top half.
 
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Link: https://patch.msgid.link/r/3ce7f20e0d1a03dc7de6e57494ec4b8eaf1f05c2.1750147949.git.leon@kernel.org
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This change fixes A380/A770 GPU boot hang issue with RT kernel.
+
+Fixes: 1e3dc1d8622b ("drm/i915/gsc: add gsc as a mei auxiliary device")
+Tested-by: Furong Zhou <furong.zhou@intel.com>
+Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
+Link: https://lore.kernel.org/r/20250425151108.643649-1-junxiao.chang@intel.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit dccf655f69002d496a527ba441b4f008aa5bebbf)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 2 +-
+ drivers/gpu/drm/i915/gt/intel_gsc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index 7013ce20549bd..cc126e62643a0 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -1914,6 +1914,7 @@ subscribe_event_xa_alloc(struct mlx5_devx_event_table *devx_event_table,
- 			/* Level1 is valid for future use, no need to free */
- 			return -ENOMEM;
+diff --git a/drivers/gpu/drm/i915/gt/intel_gsc.c b/drivers/gpu/drm/i915/gt/intel_gsc.c
+index 7af6db3194ddb..0f83e1cedf781 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gsc.c
++++ b/drivers/gpu/drm/i915/gt/intel_gsc.c
+@@ -273,7 +273,7 @@ static void gsc_irq_handler(struct intel_gt *gt, unsigned int intf_id)
+ 	if (gt->gsc.intf[intf_id].irq < 0)
+ 		return;
  
-+		INIT_LIST_HEAD(&obj_event->obj_sub_list);
- 		err = xa_insert(&event->object_ids,
- 				key_level2,
- 				obj_event,
-@@ -1922,7 +1923,6 @@ subscribe_event_xa_alloc(struct mlx5_devx_event_table *devx_event_table,
- 			kfree(obj_event);
- 			return err;
- 		}
--		INIT_LIST_HEAD(&obj_event->obj_sub_list);
- 	}
- 
- 	return 0;
+-	ret = generic_handle_irq(gt->gsc.intf[intf_id].irq);
++	ret = generic_handle_irq_safe(gt->gsc.intf[intf_id].irq);
+ 	if (ret)
+ 		drm_err_ratelimited(&gt->i915->drm, "error handling GSC irq: %d\n", ret);
+ }
 -- 
 2.39.5
 
