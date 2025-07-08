@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E331E2E1C74;
-	Tue,  8 Jul 2025 17:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCD32E5B2C;
+	Tue,  8 Jul 2025 17:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994107; cv=none; b=eEwOFuvJxgLxCTH3btp4Vabupp4SFtiEJUlDkVVTWqqPSiTE1+D4G11ntFmAQoel9tOh8PnvVKd/U5bLWcvoL4FcwF2iW1r7VIebk3rop0KWyjKE2LgvyIjsuiRpBjrwLEM/LriaTSYJU1Ukbg+hzcftmyLqLk5K4F3ts1QcJec=
+	t=1751994109; cv=none; b=lzPk+5T45jQ7Un0UfzyoDTyJe2GNb2XTYtQ5nglwrgVKlV6dmQf4hZ+1f2t0OOC7WXSZ7Dr+BmL3AX2kcafk/nl4mzlPWnoiKTqb476INdjeTrnuu5vIkycsrmoYN9g2hgUh+m0yom4FYNFyOxIOcB18e3n+Sf2OTKKATvkZqrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994107; c=relaxed/simple;
-	bh=S39Szx6ynpHAiaIZnIxTIwfM1xANFT5ShqNCw8sBwIM=;
+	s=arc-20240116; t=1751994109; c=relaxed/simple;
+	bh=zSOIrGZiMZMY/JWWwqBaJjb5WhSzUhEVJDlBFmKcgBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BzTVT2fWdCoP6cIubSMWuTyoxfSiqy18b7vyhHhXGTUfUVUP0mvwTgjrg/4lUCbseJB6PgIhNtatElCsZN3et8mHxtxuQg5kOvyOZlGr6Rwu0uwUAuhFCnKd9shUFKS3G9bc2pA3sNL9MqnWeJsW02IX56I78LUbDk521gTDtok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5lRj09O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5hJKo6owKCD02/qbpWpiYu0z9ZS2ej1/5o4AibWk9xlJd81NhhFD6Dw0lJlUV3zROb2Jzdja6HC4+hYsB/pyHMk6FQ9pDYTHWf6AJhJ4VA+ULG7RBaEQYebEwBwoqcIRHO2+LsbTr8HZtc/aZWCRXlzBO31CGFsBFq2EsmkXUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvxSUxvz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5lRj09O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7266EC4CEF6;
-	Tue,  8 Jul 2025 17:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvxSUxvz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DB3C4CEF6;
+	Tue,  8 Jul 2025 17:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994106;
-	bh=S39Szx6ynpHAiaIZnIxTIwfM1xANFT5ShqNCw8sBwIM=;
+	s=korg; t=1751994109;
+	bh=zSOIrGZiMZMY/JWWwqBaJjb5WhSzUhEVJDlBFmKcgBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i5lRj09OovttdBOLgfAWpdAwxDGks0QLbHbvqYv76L/4HTchZLCdf8ksXdTlZK4fe
-	 iJ8/PmoG4/73BxGfUKNKb5PHg2jqiRfh59GSlgg9A09D8oIrUuCcTuCUiXXyDiNUlG
-	 o2sB4QIboLz5a37eVhYhnMGNy/FEcssS9lcX+DcQ=
+	b=TvxSUxvzwZehCMo3TSupJk+9nHPra1LFn9atlPyLv7MLDAcTXfZMZGtnL1rzS0mYv
+	 JyWIUkI9hAI0v8S2V1WGqr0R76kJMsA3Vfue+EAcVSjWkmteK7yhGk9yBoQ+ffUDip
+	 3+ViosPeTPQg8/dgFoRtdQ+UCopeO+RKT+C/AfnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 127/160] ALSA: sb: Dont allow changing the DMA mode during operations
-Date: Tue,  8 Jul 2025 18:22:44 +0200
-Message-ID: <20250708162234.936337337@linuxfoundation.org>
+Subject: [PATCH 5.15 128/160] ALSA: sb: Force to disable DMAs once when DMA mode is changed
+Date: Tue,  8 Jul 2025 18:22:45 +0200
+Message-ID: <20250708162234.958433879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,34 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ed29e073ba93f2d52832804cabdd831d5d357d33 ]
+[ Upstream commit 4c267ae2ef349639b4d9ebf00dd28586a82fdbe6 ]
 
-When a PCM stream is already running, one shouldn't change the DMA
-mode via kcontrol, which may screw up the hardware.  Return -EBUSY
-instead.
+When the DMA mode is changed on the (still real!) SB AWE32 after
+playing a stream and closing, the previous DMA setup was still
+silently kept, and it can confuse the hardware, resulting in the
+unexpected noises.  As a workaround, enforce the disablement of DMA
+setups when the DMA setup is changed by the kcontrol.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218185
-Link: https://patch.msgid.link/20250610064322.26787-1-tiwai@suse.de
+https://bugzilla.kernel.org/show_bug.cgi?id=218185
+Link: https://patch.msgid.link/20250610064322.26787-2-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sb/sb16_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/isa/sb/sb16_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/sound/isa/sb/sb16_main.c b/sound/isa/sb/sb16_main.c
-index a9b87e159b2d1..5efbd0a41312b 100644
+index 5efbd0a41312b..1497a7822eee6 100644
 --- a/sound/isa/sb/sb16_main.c
 +++ b/sound/isa/sb/sb16_main.c
-@@ -703,6 +703,9 @@ static int snd_sb16_dma_control_put(struct snd_kcontrol *kcontrol, struct snd_ct
- 	unsigned char nval, oval;
- 	int change;
- 	
-+	if (chip->mode & (SB_MODE_PLAYBACK | SB_MODE_CAPTURE))
-+		return -EBUSY;
-+
- 	nval = ucontrol->value.enumerated.item[0];
- 	if (nval > 2)
- 		return -EINVAL;
+@@ -714,6 +714,10 @@ static int snd_sb16_dma_control_put(struct snd_kcontrol *kcontrol, struct snd_ct
+ 	change = nval != oval;
+ 	snd_sb16_set_dma_mode(chip, nval);
+ 	spin_unlock_irqrestore(&chip->reg_lock, flags);
++	if (change) {
++		snd_dma_disable(chip->dma8);
++		snd_dma_disable(chip->dma16);
++	}
+ 	return change;
+ }
+ 
 -- 
 2.39.5
 
