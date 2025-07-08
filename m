@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098372D9ECD;
-	Tue,  8 Jul 2025 16:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA28A2DCC02;
+	Tue,  8 Jul 2025 16:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992535; cv=none; b=aYFSylKQGgiA5NjsSHweWNXOMeD3jeVwdHMLeJQUbHW2JmCgl7SQ767ohLtKTHx6o9RW3hncZYSicCZv5y/xcHkpvf9PsR4YbMth9xzQLy3rz/WZtfx1oDvNIlP8MSqJHB+3F93TCItebOSNSxuPlGQOccCMnVn1XIWF6fl7KvM=
+	t=1751992538; cv=none; b=qhCuj8Q20g4icjv0xuWVh191VLC2UyiIOQ03rvQAd/s/59wQRGjmImzPJO1Y3Wjk9iO+TPlYh+mH2hjo4w97NReX74y2EH0bPptEnT1u7xyiqPxMCR/qlyg5jiG6fYxy6IV0QlaUmRGsE+8NErjqqMLYhXS09jJZz/jCms8TlRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992535; c=relaxed/simple;
-	bh=1bN7hXUmfwBxla0Ro1aCLqo3ZDdFrdp5Hgh9bb+zmaQ=;
+	s=arc-20240116; t=1751992538; c=relaxed/simple;
+	bh=+Ca/04lR2oONIl3+DHdFr1Y1ssfSIHT2hQ7AD/ExJEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dnBVDZzXeGAZ87coiuiFzFTDp1MMnHYv0UKKW2+lcom79kx+Ljg68H4YHo3pRF2Qy7uyTZS5uCJoodQxtuk+/l1Q7CzZVH3USkn7BOnjEGdgdbPSxoobyuqTlYBbkDRDRXNt9j1IufTAVr9Id1h19Du5qYk/kxGKIIHy24zwERk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVDwZRHy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCPjiEkyB0/H+BCe+Ip/wKrSlepTGW9+zwmby4P76UIL5bReK1ts4U7cnsUK61jlNCAPeJ4mixTDap8kYn4aTluEAgC6+AkTB2BF1qcZVkydnCi4wF/8KbCBWjosCmcBGbnCBCwTzoSt8fAcogC+g6O4jHgcYQYnqv0J1wApYF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEX+cFNo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVDwZRHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866D4C4CEF0;
-	Tue,  8 Jul 2025 16:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEX+cFNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72202C4CEED;
+	Tue,  8 Jul 2025 16:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992534;
-	bh=1bN7hXUmfwBxla0Ro1aCLqo3ZDdFrdp5Hgh9bb+zmaQ=;
+	s=korg; t=1751992537;
+	bh=+Ca/04lR2oONIl3+DHdFr1Y1ssfSIHT2hQ7AD/ExJEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVDwZRHyTNVAN7+RSsEO7zBQTpTAEMlAlkQpSaZT8UycgJs3N8Wtfo9r2Pl9YsFMV
-	 1AyPbDDijW76RqZW7QyIYOjbtDtwllMAdqVQjjYkttjSX27EinYC+Z/9g3xWpipb2N
-	 8vVRzrtMPR6VRG0alO83QynfOIw2gzZCIE1qx5Mc=
+	b=EEX+cFNomi3aD20R/4AvIlKtH9qgw7YZIpH63y3MTeNhxYsYALQTND2FHMIMbTsHc
+	 Mu9PKJjUShvLDrYmKLNrthBe9H0XDArqd/KmgvB06kYj88kqMNH2NPnZblnWeiz2Dk
+	 koM6VNgpl5I2AFbMjCd1IWBhCpMPtsqOxBXZSQFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Kurt Borja <kuurtb@gmail.com>
-Subject: [PATCH 6.6 125/132] platform/x86: think-lmi: Fix sysfs group cleanup
-Date: Tue,  8 Jul 2025 18:23:56 +0200
-Message-ID: <20250708162234.193107462@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 126/132] usb: typec: displayport: Fix potential deadlock
+Date: Tue,  8 Jul 2025 18:23:57 +0200
+Message-ID: <20250708162234.216240363@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -45,159 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit 4f30f946f27b7f044cf8f3f1f353dee1dcd3517a upstream.
+commit 099cf1fbb8afc3771f408109f62bdec66f85160e upstream.
 
-Many error paths in tlmi_sysfs_init() lead to sysfs groups being removed
-when they were not even created.
+The deadlock can occur due to a recursive lock acquisition of
+`cros_typec_altmode_data::mutex`.
+The call chain is as follows:
+1. cros_typec_altmode_work() acquires the mutex
+2. typec_altmode_vdm() -> dp_altmode_vdm() ->
+3. typec_altmode_exit() -> cros_typec_altmode_exit()
+4. cros_typec_altmode_exit() attempts to acquire the mutex again
 
-Fix this by letting the kobject core manage these groups through their
-kobj_type's defult_groups.
+To prevent this, defer the `typec_altmode_exit()` call by scheduling
+it rather than calling it directly from within the mutex-protected
+context.
 
-Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250630-lmi-fix-v3-3-ce4f81c9c481@gmail.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: stable <stable@kernel.org>
+Fixes: b4b38ffb38c9 ("usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode")
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250624133246.3936737-1-akuchynski@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/think-lmi.c |   43 +++------------------------------------
- 1 file changed, 4 insertions(+), 39 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -916,6 +916,7 @@ static const struct attribute_group auth
- 	.is_visible = auth_attr_is_visible,
- 	.attrs = auth_attrs,
- };
-+__ATTRIBUTE_GROUPS(auth_attr);
- 
- /* ---- Attributes sysfs --------------------------------------------------------- */
- static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *attr,
-@@ -1119,6 +1120,7 @@ static const struct attribute_group tlmi
- 	.is_visible = attr_is_visible,
- 	.attrs = tlmi_attrs,
- };
-+__ATTRIBUTE_GROUPS(tlmi_attr);
- 
- static void tlmi_attr_setting_release(struct kobject *kobj)
- {
-@@ -1138,11 +1140,13 @@ static void tlmi_pwd_setting_release(str
- static const struct kobj_type tlmi_attr_setting_ktype = {
- 	.release        = &tlmi_attr_setting_release,
- 	.sysfs_ops	= &kobj_sysfs_ops,
-+	.default_groups = tlmi_attr_groups,
- };
- 
- static const struct kobj_type tlmi_pwd_setting_ktype = {
- 	.release        = &tlmi_pwd_setting_release,
- 	.sysfs_ops	= &kobj_sysfs_ops,
-+	.default_groups = auth_attr_groups,
- };
- 
- static ssize_t pending_reboot_show(struct kobject *kobj, struct kobj_attribute *attr,
-@@ -1213,14 +1217,8 @@ static struct kobj_attribute debug_cmd =
- static void tlmi_release_attr(void)
- {
- 	struct kobject *pos, *n;
--	int i;
- 
- 	/* Attribute structures */
--	for (i = 0; i < TLMI_SETTINGS_COUNT; i++) {
--		if (tlmi_priv.setting[i]) {
--			sysfs_remove_group(&tlmi_priv.setting[i]->kobj, &tlmi_attr_group);
--		}
--	}
- 	sysfs_remove_file(&tlmi_priv.attribute_kset->kobj, &pending_reboot.attr);
- 	if (tlmi_priv.can_debug_cmd && debug_support)
- 		sysfs_remove_file(&tlmi_priv.attribute_kset->kobj, &debug_cmd.attr);
-@@ -1235,15 +1233,6 @@ static void tlmi_release_attr(void)
- 	kfree(tlmi_priv.pwd_admin->save_signature);
- 
- 	/* Authentication structures */
--	sysfs_remove_group(&tlmi_priv.pwd_admin->kobj, &auth_attr_group);
--	sysfs_remove_group(&tlmi_priv.pwd_power->kobj, &auth_attr_group);
--
--	if (tlmi_priv.opcode_support) {
--		sysfs_remove_group(&tlmi_priv.pwd_system->kobj, &auth_attr_group);
--		sysfs_remove_group(&tlmi_priv.pwd_hdd->kobj, &auth_attr_group);
--		sysfs_remove_group(&tlmi_priv.pwd_nvme->kobj, &auth_attr_group);
--	}
--
- 	list_for_each_entry_safe(pos, n, &tlmi_priv.authentication_kset->list, entry)
- 		kobject_put(pos);
- 
-@@ -1314,10 +1303,6 @@ static int tlmi_sysfs_init(void)
- 					   NULL, "%s", tlmi_priv.setting[i]->display_name);
- 		if (ret)
- 			goto fail_create_attr;
--
--		ret = sysfs_create_group(&tlmi_priv.setting[i]->kobj, &tlmi_attr_group);
--		if (ret)
--			goto fail_create_attr;
- 	}
- 
- 	ret = sysfs_create_file(&tlmi_priv.attribute_kset->kobj, &pending_reboot.attr);
-@@ -1337,20 +1322,12 @@ static int tlmi_sysfs_init(void)
- 	if (ret)
- 		goto fail_create_attr;
- 
--	ret = sysfs_create_group(&tlmi_priv.pwd_admin->kobj, &auth_attr_group);
--	if (ret)
--		goto fail_create_attr;
--
- 	tlmi_priv.pwd_power->kobj.kset = tlmi_priv.authentication_kset;
- 	ret = kobject_init_and_add(&tlmi_priv.pwd_power->kobj, &tlmi_pwd_setting_ktype,
- 				   NULL, "%s", "Power-on");
- 	if (ret)
- 		goto fail_create_attr;
- 
--	ret = sysfs_create_group(&tlmi_priv.pwd_power->kobj, &auth_attr_group);
--	if (ret)
--		goto fail_create_attr;
--
- 	if (tlmi_priv.opcode_support) {
- 		tlmi_priv.pwd_system->kobj.kset = tlmi_priv.authentication_kset;
- 		ret = kobject_init_and_add(&tlmi_priv.pwd_system->kobj, &tlmi_pwd_setting_ktype,
-@@ -1358,29 +1335,17 @@ static int tlmi_sysfs_init(void)
- 		if (ret)
- 			goto fail_create_attr;
- 
--		ret = sysfs_create_group(&tlmi_priv.pwd_system->kobj, &auth_attr_group);
--		if (ret)
--			goto fail_create_attr;
--
- 		tlmi_priv.pwd_hdd->kobj.kset = tlmi_priv.authentication_kset;
- 		ret = kobject_init_and_add(&tlmi_priv.pwd_hdd->kobj, &tlmi_pwd_setting_ktype,
- 					   NULL, "%s", "HDD");
- 		if (ret)
- 			goto fail_create_attr;
- 
--		ret = sysfs_create_group(&tlmi_priv.pwd_hdd->kobj, &auth_attr_group);
--		if (ret)
--			goto fail_create_attr;
--
- 		tlmi_priv.pwd_nvme->kobj.kset = tlmi_priv.authentication_kset;
- 		ret = kobject_init_and_add(&tlmi_priv.pwd_nvme->kobj, &tlmi_pwd_setting_ktype,
- 					   NULL, "%s", "NVMe");
- 		if (ret)
- 			goto fail_create_attr;
--
--		ret = sysfs_create_group(&tlmi_priv.pwd_nvme->kobj, &auth_attr_group);
--		if (ret)
--			goto fail_create_attr;
- 	}
- 
- 	return ret;
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -324,8 +324,7 @@ static int dp_altmode_vdm(struct typec_a
+ 	case CMDT_RSP_NAK:
+ 		switch (cmd) {
+ 		case DP_CMD_STATUS_UPDATE:
+-			if (typec_altmode_exit(alt))
+-				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
++			dp->state = DP_STATE_EXIT;
+ 			break;
+ 		case DP_CMD_CONFIGURE:
+ 			dp->data.conf = 0;
 
 
