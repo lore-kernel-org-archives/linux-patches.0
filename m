@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C73A2E1C74;
-	Tue,  8 Jul 2025 16:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668F72DCC03;
+	Tue,  8 Jul 2025 16:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993958; cv=none; b=Wh3yQlRQQAM899LDC6MbT6Fu+ajj334Y70Us/kKntkZ7SOyem3uXidePSHzDE+chtVUoi9HvXL7hMeCX/4GOYh4JlF48QAXF7FZ/qx9GpWky8HDbKADTGoOyEM/0kJUYeAbhZCHm0U6UU2xi8644MutNtK2GrYBIsIokRJR5XUY=
+	t=1751993961; cv=none; b=H+xMr3ymlVi2jv2mU+76mdqS1Twb+0BHG8DdJ93UMtWL7M7yFS7sdsBmtKLwY2gNmDFYoNe4+QgtohgnOpCgPP7DT4InIOslETW8tjg7xSJXsw2F25qQpnkZQ1riNGytXZ7FdIJ1Og7kfKAs2TTlQKkzy2xeMfap0NzR8cz8dzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993958; c=relaxed/simple;
-	bh=/ZMbop5PjzH9eCz9wiJEN9GTVSgmYwyZuxK3i3AD12Q=;
+	s=arc-20240116; t=1751993961; c=relaxed/simple;
+	bh=lsbGeY06uz+VHmuR/2JW8q58XY5fGp7wrlg8N61xiDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijhix8SBZAvFTXXiuKO+wOniPtCgBBY6nRR37Y6C+4iu49pM7UiC8XApsrRlLuGwhZs2obABM06YFxCd5ZLRrU91HSHL/9HLskxCmv9JthtlQK/6stHIP9Rf+Tk/np1Dx6NGhYln6drzxR2bCsN3zd1yM95tHyt6sxok6Aq9gXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRPDQkeW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbAZ9wPgD0SVZUe5ux13tNwwnoj9Rn+xwbo6LJs69GDVR6tcsMEN86DOy80Yp1QmOMtcob3lSPEhDwYo8WxUe+3pGg+yf8BpOngHdG2sLYI7sYyEXa+mC72TVfNkS0CzhFLfhCAJKAhVI96v+jZNKJi/UcUhifdLZ08N6jOlfUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=er5fqLjB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRPDQkeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CD2C4CEF0;
-	Tue,  8 Jul 2025 16:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="er5fqLjB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4436C4CEED;
+	Tue,  8 Jul 2025 16:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993958;
-	bh=/ZMbop5PjzH9eCz9wiJEN9GTVSgmYwyZuxK3i3AD12Q=;
+	s=korg; t=1751993961;
+	bh=lsbGeY06uz+VHmuR/2JW8q58XY5fGp7wrlg8N61xiDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qRPDQkeWEVsL+Z3ln7yPk6Os1jo48Aqjbf46mOtMCtWEYGLTym9OGgHV/9PZgFVel
-	 OnsT1Gbgm9DQ0dUQUv/Nl1N7Fj/i6U5qNB7u5Ne60PYnfzLZSbAXcrd9BM6mqVhE4Y
-	 Qz6QkBLwLxuQzlqA1UZHkId+kR8VM9/yD937jZkA=
+	b=er5fqLjBKHM6TU+c9KTUmLEbDMfJM5kaay0ybX7HG8xmHVyD0ikJS5xfdTtBPkKgF
+	 XnPRAq0c2/Ldkdk3HLvOKMClgMOZTPKXcl6wm6vqrfHGOA8j6NZo60WmXsK1HXMnZd
+	 PaCsJGX5W+21LtoGddwWuUtdVtOhUqT8Ur6/kAO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Wei Fang <wei.fang@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/160] net: enetc: Correct endianness handling in _enetc_rd_reg64
-Date: Tue,  8 Jul 2025 18:21:46 +0200
-Message-ID: <20250708162233.461366756@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.15 078/160] HID: wacom: fix memory leak on sysfs attribute creation failure
+Date: Tue,  8 Jul 2025 18:21:55 +0200
+Message-ID: <20250708162233.704538640@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,60 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-[ Upstream commit 7b515f35a911fdc31fbde6531828dcd6ae9803d3 ]
+commit 1a19ae437ca5d5c7d9ec2678946fb339b1c706bf upstream.
 
-enetc_hw.h provides two versions of _enetc_rd_reg64.
-One which simply calls ioread64() when available.
-And another that composes the 64-bit result from ioread32() calls.
+When sysfs_create_files() fails during wacom_initialize_remotes() the
+fifo buffer is not freed leading to a memory leak.
 
-In the second case the code appears to assume that each ioread32() call
-returns a little-endian value. However both the shift and logical or
-used to compose the return value would not work correctly on big endian
-systems if this were the case. Moreover, this is inconsistent with the
-first case where the return value of ioread64() is assumed to be in host
-byte order.
+Fix this by calling kfifo_free() before returning.
 
-It appears that the correct approach is for both versions to treat the
-return value of ioread*() functions as being in host byte order. And
-this patch corrects the ioread32()-based version to do so.
-
-This is a bug but would only manifest on big endian systems
-that make use of the ioread32-based implementation of _enetc_rd_reg64.
-While all in-tree users of this driver are little endian and
-make use of the ioread64-based implementation of _enetc_rd_reg64.
-Thus, no in-tree user of this driver is affected by this bug.
-
-Flagged by Sparse.
-Compile tested only.
-
-Fixes: 16eb4c85c964 ("enetc: Add ethtool statistics")
-Closes: https://lore.kernel.org/all/AM9PR04MB850500D3FC24FE23DEFCEA158879A@AM9PR04MB8505.eurprd04.prod.outlook.com/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20250624-etnetc-le-v1-1-a73a95d96e4e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 83e6b40e2de6 ("HID: wacom: EKR: have the wacom resources dynamically allocated")
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_hw.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/wacom_sys.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_hw.h b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-index 0f5f081a5bafe..392348e285571 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
-@@ -459,7 +459,7 @@ static inline u64 _enetc_rd_reg64(void __iomem *reg)
- 		tmp = ioread32(reg + 4);
- 	} while (high != tmp);
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2030,6 +2030,7 @@ static int wacom_initialize_remotes(stru
+ 	if (error) {
+ 		hid_err(wacom->hdev,
+ 			"cannot create sysfs group err: %d\n", error);
++		kfifo_free(&remote->remote_fifo);
+ 		return error;
+ 	}
  
--	return le64_to_cpu((__le64)high << 32 | low);
-+	return (u64)high << 32 | low;
- }
- #endif
- 
--- 
-2.39.5
-
 
 
