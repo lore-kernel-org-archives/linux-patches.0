@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0895D7263B;
-	Tue,  8 Jul 2025 17:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92852E5B1A;
+	Tue,  8 Jul 2025 17:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994223; cv=none; b=MIcNjxWy+/W8iDcrwSdFcqZuRcVlZ+3oIcx0ywwSoe0KkfZ7YQ007J/eu2UhM69eNVKPXGTsj8tdlykKzXCzxE8Gq/3vtsR8GODzGtCziGjfETz+lwCYgGxaYlTum8LHUbKCVAwYFB3N+FK91HEj9FWfcSRtumC6aT3uEoMOTbE=
+	t=1751994225; cv=none; b=qN7h20G9EUNcA9YK77xmjA0dGGCWmyvV4n8L2x2mMBeGbIdjyNrL6CfboV0GBBSEKrqDbaxywTGGmDbcx3neE5+0Ez0TaPCX9Yo/w9MT6z2sgSWj176rlZMYHhLaXGPzkAFUJzPvkTV5aXmvkpPcCh7DqhOahHziZDWJMOstmBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994223; c=relaxed/simple;
-	bh=gGIQPgwL8RkjyVaWaL4bmKUDP1VUYGMbzyZdtTpErqg=;
+	s=arc-20240116; t=1751994225; c=relaxed/simple;
+	bh=iX7Al+ESAsdB+1AbvIUd1FmFlz9gB25oaIfOPkk5wn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzxQ/uPyZvwxm5+dMSxudl0QYlbSdTwLTCvUiVVQqyzaINAMoLS6RFfBa7IRkGecz+4m2Q0uNZ4VHbMbXpSetVc0rdTJqg7rpGCjOZbQzsWdcZBwIJTwReaLu8QhOZTDeFsqnsCiesVKGXMzxnQq9IPf4Vk4d2itas+sZLjiqV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9YA0Bzr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tO+17L/KzCVxfbJEUEqXo3Jo9FKhfIUyww9pKSUp0vvVOw1ZPmRj1WlpDVzMykRRekNMIoHgYlVZjFJvWzEVja6+uH+OGu23jjXEKB+IvQ+TGwLz8849IazHc7e7jAbaU6dx5ZXDv8Hl+wkyJ+0Jg72P67KoEXt5w8vgifIzAWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zi1DUair; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9YA0Bzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD5CC4CEED;
-	Tue,  8 Jul 2025 17:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zi1DUair"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A42C4CEED;
+	Tue,  8 Jul 2025 17:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994222;
-	bh=gGIQPgwL8RkjyVaWaL4bmKUDP1VUYGMbzyZdtTpErqg=;
+	s=korg; t=1751994225;
+	bh=iX7Al+ESAsdB+1AbvIUd1FmFlz9gB25oaIfOPkk5wn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9YA0BzrxopchqQTs1wpQRrcOC5V8x7XeiBgj4zY80FHQrdLme1xQQ1eV2eI1oOm5
-	 K9oUoBSSCi8l3yFCy0C1h+Y5MIgar9KF9hzwuSBtaqyPDX5fUrCGtZ4zkTAV9yJKl4
-	 ZH431mWvoQ5SUZ9OWc/dCk21q3R8Ffuaj/Ouf4EE=
+	b=Zi1DUairDiAOzcpn+z0DZwM+9ZCfzHnirGebfV9oZI1IGF4g6tXCU3RxkB0mxERc/
+	 s4uzA+vggMjpxuRj5Vlln5CDRbCs7are7zJQjzgB2i6aO08Fpkcp6HsyZ4BFJzuvzI
+	 Ohpn3yv1+2dJRdlgDHqUttcQgbqnyOADuwmhLbRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 141/160] NFSv4/flexfiles: Fix handling of NFS level errors in I/O
-Date: Tue,  8 Jul 2025 18:22:58 +0200
-Message-ID: <20250708162235.268473517@linuxfoundation.org>
+Subject: [PATCH 5.15 142/160] ethernet: atl1: Add missing DMA mapping error checks and count errors
+Date: Tue,  8 Jul 2025 18:22:59 +0200
+Message-ID: <20250708162235.291638017@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,248 +51,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 38074de35b015df5623f524d6f2b49a0cd395c40 ]
+[ Upstream commit d72411d20905180cdc452c553be17481b24463d2 ]
 
-Allow the flexfiles error handling to recognise NFS level errors (as
-opposed to RPC level errors) and handle them separately. The main
-motivator is the NFSERR_PERM errors that get returned if the NFS client
-connects to the data server through a port number that is lower than
-1024. In that case, the client should disconnect and retry a READ on a
-different data server, or it should retry a WRITE after reconnecting.
+The `dma_map_XXX()` functions can fail and must be checked using
+`dma_mapping_error()`.  This patch adds proper error handling for all
+DMA mapping calls.
 
-Reviewed-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+In `atl1_alloc_rx_buffers()`, if DMA mapping fails, the buffer is
+deallocated and marked accordingly.
+
+In `atl1_tx_map()`, previously mapped buffers are unmapped and the
+packet is dropped on failure.
+
+If `atl1_xmit_frame()` drops the packet, increment the tx_error counter.
+
+Fixes: f3cc28c79760 ("Add Attansic L1 ethernet driver.")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250625141629.114984-2-fourier.thomas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 121 ++++++++++++++++++-------
- 1 file changed, 87 insertions(+), 34 deletions(-)
+ drivers/net/ethernet/atheros/atlx/atl1.c | 78 +++++++++++++++++-------
+ 1 file changed, 56 insertions(+), 22 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index a55eec241657d..7a568d2de472e 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1099,6 +1099,7 @@ static void ff_layout_reset_read(struct nfs_pgio_header *hdr)
- }
+diff --git a/drivers/net/ethernet/atheros/atlx/atl1.c b/drivers/net/ethernet/atheros/atlx/atl1.c
+index 68f6c0bbd945c..ca8d7a82407b6 100644
+--- a/drivers/net/ethernet/atheros/atlx/atl1.c
++++ b/drivers/net/ethernet/atheros/atlx/atl1.c
+@@ -1861,14 +1861,21 @@ static u16 atl1_alloc_rx_buffers(struct atl1_adapter *adapter)
+ 			break;
+ 		}
  
- static int ff_layout_async_handle_error_v4(struct rpc_task *task,
-+					   u32 op_status,
- 					   struct nfs4_state *state,
- 					   struct nfs_client *clp,
- 					   struct pnfs_layout_segment *lseg,
-@@ -1109,32 +1110,42 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
- 	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
- 
--	switch (task->tk_status) {
--	case -NFS4ERR_BADSESSION:
--	case -NFS4ERR_BADSLOT:
--	case -NFS4ERR_BAD_HIGH_SLOT:
--	case -NFS4ERR_DEADSESSION:
--	case -NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
--	case -NFS4ERR_SEQ_FALSE_RETRY:
--	case -NFS4ERR_SEQ_MISORDERED:
-+	switch (op_status) {
-+	case NFS4_OK:
-+	case NFS4ERR_NXIO:
-+		break;
-+	case NFSERR_PERM:
-+		if (!task->tk_xprt)
+-		buffer_info->alloced = 1;
+-		buffer_info->skb = skb;
+-		buffer_info->length = (u16) adapter->rx_buffer_len;
+ 		page = virt_to_page(skb->data);
+ 		offset = offset_in_page(skb->data);
+ 		buffer_info->dma = dma_map_page(&pdev->dev, page, offset,
+ 						adapter->rx_buffer_len,
+ 						DMA_FROM_DEVICE);
++		if (dma_mapping_error(&pdev->dev, buffer_info->dma)) {
++			kfree_skb(skb);
++			adapter->soft_stats.rx_dropped++;
 +			break;
-+		xprt_force_disconnect(task->tk_xprt);
-+		goto out_retry;
-+	case NFS4ERR_BADSESSION:
-+	case NFS4ERR_BADSLOT:
-+	case NFS4ERR_BAD_HIGH_SLOT:
-+	case NFS4ERR_DEADSESSION:
-+	case NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
-+	case NFS4ERR_SEQ_FALSE_RETRY:
-+	case NFS4ERR_SEQ_MISORDERED:
- 		dprintk("%s ERROR %d, Reset session. Exchangeid "
- 			"flags 0x%x\n", __func__, task->tk_status,
- 			clp->cl_exchange_flags);
- 		nfs4_schedule_session_recovery(clp->cl_session, task->tk_status);
--		break;
--	case -NFS4ERR_DELAY:
--	case -NFS4ERR_GRACE:
-+		goto out_retry;
-+	case NFS4ERR_DELAY:
-+		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
-+		fallthrough;
-+	case NFS4ERR_GRACE:
- 		rpc_delay(task, FF_LAYOUT_POLL_RETRY_MAX);
--		break;
--	case -NFS4ERR_RETRY_UNCACHED_REP:
--		break;
-+		goto out_retry;
-+	case NFS4ERR_RETRY_UNCACHED_REP:
-+		goto out_retry;
- 	/* Invalidate Layout errors */
--	case -NFS4ERR_PNFS_NO_LAYOUT:
--	case -ESTALE:           /* mapped NFS4ERR_STALE */
--	case -EBADHANDLE:       /* mapped NFS4ERR_BADHANDLE */
--	case -EISDIR:           /* mapped NFS4ERR_ISDIR */
--	case -NFS4ERR_FHEXPIRED:
--	case -NFS4ERR_WRONG_TYPE:
-+	case NFS4ERR_PNFS_NO_LAYOUT:
-+	case NFS4ERR_STALE:
-+	case NFS4ERR_BADHANDLE:
-+	case NFS4ERR_ISDIR:
-+	case NFS4ERR_FHEXPIRED:
-+	case NFS4ERR_WRONG_TYPE:
- 		dprintk("%s Invalid layout error %d\n", __func__,
- 			task->tk_status);
- 		/*
-@@ -1147,6 +1158,11 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 		pnfs_destroy_layout(NFS_I(inode));
- 		rpc_wake_up(&tbl->slot_tbl_waitq);
- 		goto reset;
-+	default:
-+		break;
-+	}
++		}
 +
-+	switch (task->tk_status) {
- 	/* RPC connection errors */
- 	case -ECONNREFUSED:
- 	case -EHOSTDOWN:
-@@ -1162,26 +1178,56 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
- 				&devid->deviceid);
- 		rpc_wake_up(&tbl->slot_tbl_waitq);
--		fallthrough;
-+		break;
- 	default:
--		if (ff_layout_avoid_mds_available_ds(lseg))
--			return -NFS4ERR_RESET_TO_PNFS;
--reset:
--		dprintk("%s Retry through MDS. Error %d\n", __func__,
--			task->tk_status);
--		return -NFS4ERR_RESET_TO_MDS;
-+		break;
- 	}
++		buffer_info->alloced = 1;
++		buffer_info->skb = skb;
++		buffer_info->length = (u16)adapter->rx_buffer_len;
 +
-+	if (ff_layout_avoid_mds_available_ds(lseg))
-+		return -NFS4ERR_RESET_TO_PNFS;
-+reset:
-+	dprintk("%s Retry through MDS. Error %d\n", __func__,
-+		task->tk_status);
-+	return -NFS4ERR_RESET_TO_MDS;
-+
-+out_retry:
- 	task->tk_status = 0;
- 	return -EAGAIN;
+ 		rfd_desc->buffer_addr = cpu_to_le64(buffer_info->dma);
+ 		rfd_desc->buf_len = cpu_to_le16(adapter->rx_buffer_len);
+ 		rfd_desc->coalese = 0;
+@@ -2180,8 +2187,8 @@ static int atl1_tx_csum(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	return 0;
  }
  
- /* Retry all errors through either pNFS or MDS except for -EJUKEBOX */
- static int ff_layout_async_handle_error_v3(struct rpc_task *task,
-+					   u32 op_status,
-+					   struct nfs_client *clp,
- 					   struct pnfs_layout_segment *lseg,
- 					   u32 idx)
+-static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+-	struct tx_packet_desc *ptpd)
++static bool atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
++			struct tx_packet_desc *ptpd)
  {
- 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
+ 	struct atl1_tpd_ring *tpd_ring = &adapter->tpd_ring;
+ 	struct atl1_buffer *buffer_info;
+@@ -2191,6 +2198,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	unsigned int nr_frags;
+ 	unsigned int f;
+ 	int retval;
++	u16 first_mapped;
+ 	u16 next_to_use;
+ 	u16 data_len;
+ 	u8 hdr_len;
+@@ -2198,6 +2206,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	buf_len -= skb->data_len;
+ 	nr_frags = skb_shinfo(skb)->nr_frags;
+ 	next_to_use = atomic_read(&tpd_ring->next_to_use);
++	first_mapped = next_to_use;
+ 	buffer_info = &tpd_ring->buffer_info[next_to_use];
+ 	BUG_ON(buffer_info->skb);
+ 	/* put skb in last TPD */
+@@ -2213,6 +2222,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
+ 						offset, hdr_len,
+ 						DMA_TO_DEVICE);
++		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
++			goto dma_err;
  
-+	switch (op_status) {
-+	case NFS_OK:
-+	case NFSERR_NXIO:
-+		break;
-+	case NFSERR_PERM:
-+		if (!task->tk_xprt)
-+			break;
-+		xprt_force_disconnect(task->tk_xprt);
-+		goto out_retry;
-+	case NFSERR_ACCES:
-+	case NFSERR_BADHANDLE:
-+	case NFSERR_FBIG:
-+	case NFSERR_IO:
-+	case NFSERR_NOSPC:
-+	case NFSERR_ROFS:
-+	case NFSERR_STALE:
-+		goto out_reset_to_pnfs;
-+	case NFSERR_JUKEBOX:
-+		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
-+		goto out_retry;
-+	default:
-+		break;
-+	}
-+
- 	switch (task->tk_status) {
- 	/* File access problems. Don't mark the device as unavailable */
- 	case -EACCES:
-@@ -1200,6 +1246,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
- 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
- 				&devid->deviceid);
+ 		if (++next_to_use == tpd_ring->count)
+ 			next_to_use = 0;
+@@ -2239,6 +2250,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 								page, offset,
+ 								buffer_info->length,
+ 								DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      buffer_info->dma))
++					goto dma_err;
+ 				if (++next_to_use == tpd_ring->count)
+ 					next_to_use = 0;
+ 			}
+@@ -2251,6 +2265,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
+ 						offset, buf_len,
+ 						DMA_TO_DEVICE);
++		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
++			goto dma_err;
+ 		if (++next_to_use == tpd_ring->count)
+ 			next_to_use = 0;
  	}
-+out_reset_to_pnfs:
- 	/* FIXME: Need to prevent infinite looping here. */
- 	return -NFS4ERR_RESET_TO_PNFS;
- out_retry:
-@@ -1210,6 +1257,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
+@@ -2274,6 +2290,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 			buffer_info->dma = skb_frag_dma_map(&adapter->pdev->dev,
+ 				frag, i * ATL1_MAX_TX_BUF_LEN,
+ 				buffer_info->length, DMA_TO_DEVICE);
++			if (dma_mapping_error(&adapter->pdev->dev,
++					      buffer_info->dma))
++				goto dma_err;
+ 
+ 			if (++next_to_use == tpd_ring->count)
+ 				next_to_use = 0;
+@@ -2282,6 +2301,22 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 
+ 	/* last tpd's buffer-info */
+ 	buffer_info->skb = skb;
++
++	return true;
++
++ dma_err:
++	while (first_mapped != next_to_use) {
++		buffer_info = &tpd_ring->buffer_info[first_mapped];
++		dma_unmap_page(&adapter->pdev->dev,
++			       buffer_info->dma,
++			       buffer_info->length,
++			       DMA_TO_DEVICE);
++		buffer_info->dma = 0;
++
++		if (++first_mapped == tpd_ring->count)
++			first_mapped = 0;
++	}
++	return false;
  }
  
- static int ff_layout_async_handle_error(struct rpc_task *task,
-+					u32 op_status,
- 					struct nfs4_state *state,
- 					struct nfs_client *clp,
- 					struct pnfs_layout_segment *lseg,
-@@ -1228,10 +1276,11 @@ static int ff_layout_async_handle_error(struct rpc_task *task,
+ static void atl1_tx_queue(struct atl1_adapter *adapter, u16 count,
+@@ -2352,10 +2387,8 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
  
- 	switch (vers) {
- 	case 3:
--		return ff_layout_async_handle_error_v3(task, lseg, idx);
--	case 4:
--		return ff_layout_async_handle_error_v4(task, state, clp,
-+		return ff_layout_async_handle_error_v3(task, op_status, clp,
- 						       lseg, idx);
-+	case 4:
-+		return ff_layout_async_handle_error_v4(task, op_status, state,
-+						       clp, lseg, idx);
- 	default:
- 		/* should never happen */
- 		WARN_ON_ONCE(1);
-@@ -1284,6 +1333,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 	switch (status) {
- 	case NFS4ERR_DELAY:
- 	case NFS4ERR_GRACE:
-+	case NFS4ERR_PERM:
- 		break;
- 	case NFS4ERR_NXIO:
- 		ff_layout_mark_ds_unreachable(lseg, idx);
-@@ -1316,7 +1366,8 @@ static int ff_layout_read_done_cb(struct rpc_task *task,
- 		trace_ff_layout_read_error(hdr);
+ 	len = skb_headlen(skb);
+ 
+-	if (unlikely(skb->len <= 0)) {
+-		dev_kfree_skb_any(skb);
+-		return NETDEV_TX_OK;
+-	}
++	if (unlikely(skb->len <= 0))
++		goto drop_packet;
+ 
+ 	nr_frags = skb_shinfo(skb)->nr_frags;
+ 	for (f = 0; f < nr_frags; f++) {
+@@ -2369,10 +2402,8 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
+ 		if (skb->protocol == htons(ETH_P_IP)) {
+ 			proto_hdr_len = (skb_transport_offset(skb) +
+ 					 tcp_hdrlen(skb));
+-			if (unlikely(proto_hdr_len > len)) {
+-				dev_kfree_skb_any(skb);
+-				return NETDEV_TX_OK;
+-			}
++			if (unlikely(proto_hdr_len > len))
++				goto drop_packet;
+ 			/* need additional TPD ? */
+ 			if (proto_hdr_len != len)
+ 				count += (len - proto_hdr_len +
+@@ -2404,23 +2435,26 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
  	}
  
--	err = ff_layout_async_handle_error(task, hdr->args.context->state,
-+	err = ff_layout_async_handle_error(task, hdr->res.op_status,
-+					   hdr->args.context->state,
- 					   hdr->ds_clp, hdr->lseg,
- 					   hdr->pgio_mirror_idx);
+ 	tso = atl1_tso(adapter, skb, ptpd);
+-	if (tso < 0) {
+-		dev_kfree_skb_any(skb);
+-		return NETDEV_TX_OK;
+-	}
++	if (tso < 0)
++		goto drop_packet;
  
-@@ -1483,7 +1534,8 @@ static int ff_layout_write_done_cb(struct rpc_task *task,
- 		trace_ff_layout_write_error(hdr);
+ 	if (!tso) {
+ 		ret_val = atl1_tx_csum(adapter, skb, ptpd);
+-		if (ret_val < 0) {
+-			dev_kfree_skb_any(skb);
+-			return NETDEV_TX_OK;
+-		}
++		if (ret_val < 0)
++			goto drop_packet;
  	}
  
--	err = ff_layout_async_handle_error(task, hdr->args.context->state,
-+	err = ff_layout_async_handle_error(task, hdr->res.op_status,
-+					   hdr->args.context->state,
- 					   hdr->ds_clp, hdr->lseg,
- 					   hdr->pgio_mirror_idx);
+-	atl1_tx_map(adapter, skb, ptpd);
++	if (!atl1_tx_map(adapter, skb, ptpd))
++		goto drop_packet;
++
+ 	atl1_tx_queue(adapter, count, ptpd);
+ 	atl1_update_mailbox(adapter);
+ 	return NETDEV_TX_OK;
++
++drop_packet:
++	adapter->soft_stats.tx_errors++;
++	dev_kfree_skb_any(skb);
++	return NETDEV_TX_OK;
+ }
  
-@@ -1529,8 +1581,9 @@ static int ff_layout_commit_done_cb(struct rpc_task *task,
- 		trace_ff_layout_commit_error(data);
- 	}
- 
--	err = ff_layout_async_handle_error(task, NULL, data->ds_clp,
--					   data->lseg, data->ds_commit_index);
-+	err = ff_layout_async_handle_error(task, data->res.op_status,
-+					   NULL, data->ds_clp, data->lseg,
-+					   data->ds_commit_index);
- 
- 	trace_nfs4_pnfs_commit_ds(data, err);
- 	switch (err) {
+ static int atl1_rings_clean(struct napi_struct *napi, int budget)
 -- 
 2.39.5
 
