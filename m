@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE73176ADB;
-	Tue,  8 Jul 2025 16:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9169D176ADB;
+	Tue,  8 Jul 2025 16:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992180; cv=none; b=JIrNP50cP+y59ltgb74b3b1yzPJ6FqsO6xsuG2tR2EYtDjuvC0Lgj9KmoddBQCNJJ6xyULfdjbLqr+fT3EwuCNUGSuV3vb2ycad7Eo1GpF8RJCSSSYRAzbrby5sIgslErJVNze6mq3uVZx2lkN+drkSAZUFPt62kAi+ap3ExXhA=
+	t=1751992183; cv=none; b=ffg7yEcLzIorf6evT/xAH5fuw0IVKXuTlUm5diiMD2TBiNMfFKfY9+uvK3BOGEd+KlowzZIfykOvSuVbODdfJ1+Jyxx0N6HtfL7CFPXUA3qUgcxQnfY9TBhUHx9g+VmY23uHTKgGr+Bvva9OQg14w20PbsGZ812o91uWRUPoEI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992180; c=relaxed/simple;
-	bh=KPV6zNLNVaem2vy866CI1FDLJ0fKwHrv4cMTeDl0cJ4=;
+	s=arc-20240116; t=1751992183; c=relaxed/simple;
+	bh=vucAiO+TKqkcNI+ZtXy6Wa/bKpO/pmnDS7jQy5xZMzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Od6/GnxWJVgEGoGab6NEK9oeG/wa91CMMXcw0FEfnQB405cASKwK5LJeUF/KC6HRq90bRPX1B1uDp5YhWqy+zJq2cgF0IbEinLuo9iZkRznu3myrUUzGnHKGGYz5CGdpSamJo4WxsDNfHvWD3hAqWRV4Wr0KJWSDVMTFNAojKLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6WfdHqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XiugIQy9U1jKBbnwkvVLqylS0c0nzIlmOM57PVJTC+SEIvtL8eiyavGBuRmUJx39kjy8zk1SNsMi8l4r4P3eS7naNXj7hNjO9fOdGdStf3eMrSjKqwiSjzvitCD+Rtu5oZepb660fuQdysrQd06ye/dPTb3CIIcbh3RNoBSEoBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIBPU9iw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6WfdHqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B48C4CEED;
-	Tue,  8 Jul 2025 16:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIBPU9iw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9FFC4CEED;
+	Tue,  8 Jul 2025 16:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992180;
-	bh=KPV6zNLNVaem2vy866CI1FDLJ0fKwHrv4cMTeDl0cJ4=;
+	s=korg; t=1751992183;
+	bh=vucAiO+TKqkcNI+ZtXy6Wa/bKpO/pmnDS7jQy5xZMzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u6WfdHqu/Lam/fqSzro9zIyOfQrzbqwaSz89dslcMeE2wnZ+S3IIUZ3bKJarlCJhE
-	 6L9Z+gZfpM9x7oQ52CKwfahxljnCW5JCvXlMBRc8xASSsGyrVH9sFkMe72BK0WhiU5
-	 l7yJG6cazG8bqT01hQNhz8UQViVFkE8ZchfmX5iM=
+	b=FIBPU9iwdVfZiTG1TEWmZS4j63nHbdsAEb/GlamLq+siSlAzrZywKFoM1vnPvN1cC
+	 Qc6D/2vlxrX1salVvPkCzWMw7ShUGDuTrd2Z65H58sXPOG0DzJvNmLbMAugJzJGMm4
+	 J6MTfAj0MXh3e8+8qHe9NG5KFkDa2e+EUGVvO2Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com,
+	syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 54/81] wifi: mac80211: drop invalid source address OCB frames
-Date: Tue,  8 Jul 2025 18:23:46 +0200
-Message-ID: <20250708162226.720975029@linuxfoundation.org>
+Subject: [PATCH 6.1 55/81] wifi: ath6kl: remove WARN on bad firmware input
+Date: Tue,  8 Jul 2025 18:23:47 +0200
+Message-ID: <20250708162226.752565827@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -53,38 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit d1b1a5eb27c4948e8811cf4dbb05aaf3eb10700c ]
+[ Upstream commit e7417421d89358da071fd2930f91e67c7128fbff ]
 
-In OCB, don't accept frames from invalid source addresses
-(and in particular don't try to create stations for them),
-drop the frames instead.
+If the firmware gives bad input, that's nothing to do with
+the driver's stack at this point etc., so the WARN_ON()
+doesn't add any value. Additionally, this is one of the
+top syzbot reports now. Just print a message, and as an
+added bonus, print the sizes too.
 
-Reported-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6788d2d9.050a0220.20d369.0028.GAE@google.com/
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Tested-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20250616171838.7433379cab5d.I47444d63c72a0bd58d2e2b67bb99e1fea37eec6f@changeid
+Reported-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
+Tested-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
+Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250617114529.031a677a348e.I58bf1eb4ac16a82c546725ff010f3f0d2b0cca49@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath6kl/bmi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index b6077a97af1dc..8c9267acb227b 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4336,6 +4336,10 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
- 		if (!multicast &&
- 		    !ether_addr_equal(sdata->dev->dev_addr, hdr->addr1))
- 			return false;
-+		/* reject invalid/our STA address */
-+		if (!is_valid_ether_addr(hdr->addr2) ||
-+		    ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
-+			return false;
- 		if (!rx->sta) {
- 			int rate_idx;
- 			if (status->encoding != RX_ENC_LEGACY)
+diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
+index af98e871199d3..5a9e93fd1ef42 100644
+--- a/drivers/net/wireless/ath/ath6kl/bmi.c
++++ b/drivers/net/wireless/ath/ath6kl/bmi.c
+@@ -87,7 +87,9 @@ int ath6kl_bmi_get_target_info(struct ath6kl *ar,
+ 		 * We need to do some backwards compatibility to make this work.
+ 		 */
+ 		if (le32_to_cpu(targ_info->byte_count) != sizeof(*targ_info)) {
+-			WARN_ON(1);
++			ath6kl_err("mismatched byte count %d vs. expected %zd\n",
++				   le32_to_cpu(targ_info->byte_count),
++				   sizeof(*targ_info));
+ 			return -EINVAL;
+ 		}
+ 
 -- 
 2.39.5
 
