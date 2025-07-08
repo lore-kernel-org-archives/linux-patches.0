@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9C62DAFAE;
-	Tue,  8 Jul 2025 16:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C08BE46;
+	Tue,  8 Jul 2025 16:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993702; cv=none; b=tTV6coD6t/0Ubnz0LDGvCeeLQ8+5ihthLT9foUJhQfZMh5t3wVTuVIRsU6HgAVTNI4HiuBPirwRHlEHvj0g6UFh+fqGZ20GWbO2p2dhDV9R2ldJZFTtzT8V7SxKXgyiFBCd7WS0X8HVkzypcCP+XAcrg9smP7i9F4ZmK9iuS75c=
+	t=1751993705; cv=none; b=DBnDv31Re1Z0EGSpvvFNz3nB2slC1n31gWfzWkziVYxz5U+QTvcE7rJnTscx2rtR0Czv2TavL6a8BU008H6QLOSJ+OZ31G36FK5HhzQUhIFdPuogINoAca6/gykys26joGZxSyBJ/MeBySpaM5BSXpb7OpnH9xbfxh2Lyz10sG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993702; c=relaxed/simple;
-	bh=+wRBvGEERmGix20yjir88w6XQfwKsIHhLZtEXyiH4gA=;
+	s=arc-20240116; t=1751993705; c=relaxed/simple;
+	bh=vYKU5/F3QcilwL5E0uxwh9As+pWoCuML8CYM8jjC70k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRgOuTZGWkIFS07EUrClWE07IIFHUygTu8sxzUamiRAdQnjJO99fEcVEzveAlaGf0v5zZL1gVPGWg9bbMsoOVXN2uTENNodo6BKbgbmHpnNLFABEq8UcPvFwzUHDRf28hmDVKjuE/K4K7SypKsUsvLOX/U09bUP78rRGJRk6NiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyN0njWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovD1r3LlB+zOdU5KCLsAEo0McB2q91xTpEqA6CQR9NAR8DHm14UHOLmoKvzJ4qG475Rt4CXFKIP7cN1157yRKgpDcjCvKL/x3hldqx5/2wsS6DPXyjKtdCZVIxH3V3/+Xx+H/Jc8RGKpc3pMNi/WloQc0xVHJjNLEU76TCMER5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKhg4ny/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyN0njWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD14AC4CEED;
-	Tue,  8 Jul 2025 16:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKhg4ny/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C304C4CEED;
+	Tue,  8 Jul 2025 16:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993702;
-	bh=+wRBvGEERmGix20yjir88w6XQfwKsIHhLZtEXyiH4gA=;
+	s=korg; t=1751993704;
+	bh=vYKU5/F3QcilwL5E0uxwh9As+pWoCuML8CYM8jjC70k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyN0njWWcQxW2wNU0UPVVetrJCzAoLlLe0vqAnAu4F/+jNYXo0oQ3cLno99hsC9dR
-	 f6ACzNbC3oB1zr+8KjSQis068D5whsw+vrCX+m2H61ABf5er3S8m1C37ZtpUfHHzMk
-	 49mI9+gclRSfjhALuiyatei2f0gJptwB0nvOcynQ=
+	b=jKhg4ny/kbouroqCccV0Jn8GheP8+AVH3sURfd938Za5H+YMOSQhgpRXgYB3QbAiv
+	 rK1ARDd2EdlkngoV+cg1w9PLXNBI2huAkUSwWiqC7IfsTGdJJeg0EGcBv2Emlz55CK
+	 ttkmmE4hxV1MZZ8JWydmgL1GnfRCjwTiYRHGZDOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Xue <xxm@rock-chips.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.15 164/178] iommu/rockchip: prevent iommus dead loop when two masters share one IOMMU
-Date: Tue,  8 Jul 2025 18:23:21 +0200
-Message-ID: <20250708162240.760603465@linuxfoundation.org>
+	Peter Williams <peter@newton.cx>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 138/178] ACPICA: Refuse to evaluate a method if arguments are missing
+Date: Tue,  8 Jul 2025 18:22:55 +0200
+Message-ID: <20250708162240.156255931@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,46 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Xue <xxm@rock-chips.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 62e062a29ad5133f67c20b333ba0a952a99161ae upstream.
+[ Upstream commit 6fcab2791543924d438e7fa49276d0998b0a069f ]
 
-When two masters share an IOMMU, calling ops->of_xlate during
-the second master's driver init may overwrite iommu->domain set
-by the first. This causes the check if (iommu->domain == domain)
-in rk_iommu_attach_device() to fail, resulting in the same
-iommu->node being added twice to &rk_domain->iommus, which can
-lead to an infinite loop in subsequent &rk_domain->iommus operations.
+As reported in [1], a platform firmware update that increased the number
+of method parameters and forgot to update a least one of its callers,
+caused ACPICA to crash due to use-after-free.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 25c2325575cc ("iommu/rockchip: Add missing set_platform_dma_ops callback")
-Signed-off-by: Simon Xue <xxm@rock-chips.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20250623020018.584802-1-xxm@rock-chips.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since this a result of a clear AML issue that arguably cannot be fixed
+up by the interpreter (it cannot produce missing data out of thin air),
+address it by making ACPICA refuse to evaluate a method if the caller
+attempts to pass fewer arguments than expected to it.
+
+Closes: https://github.com/acpica/acpica/issues/1027 [1]
+Reported-by: Peter Williams <peter@newton.cx>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Tested-by: Hans de Goede <hansg@kernel.org> # Dell XPS 9640 with BIOS 1.12.0
+Link: https://patch.msgid.link/5909446.DvuYhMxLoT@rjwysocki.net
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/dsmethod.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -1155,7 +1155,6 @@ static int rk_iommu_of_xlate(struct devi
- 		return -ENOMEM;
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index e809c2aed78ae..a232746d150a7 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -483,6 +483,13 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 		return_ACPI_STATUS(AE_NULL_OBJECT);
+ 	}
  
- 	data->iommu = platform_get_drvdata(iommu_dev);
--	data->iommu->domain = &rk_identity_domain;
- 	dev_iommu_priv_set(dev, data);
- 
- 	platform_device_put(iommu_dev);
-@@ -1193,6 +1192,8 @@ static int rk_iommu_probe(struct platfor
- 	if (!iommu)
- 		return -ENOMEM;
- 
-+	iommu->domain = &rk_identity_domain;
++	if (this_walk_state->num_operands < obj_desc->method.param_count) {
++		ACPI_ERROR((AE_INFO, "Missing argument for method [%4.4s]",
++			    acpi_ut_get_node_name(method_node)));
 +
- 	platform_set_drvdata(pdev, iommu);
- 	iommu->dev = dev;
- 	iommu->num_mmu = 0;
++		return_ACPI_STATUS(AE_AML_UNINITIALIZED_ARG);
++	}
++
+ 	/* Init for new method, possibly wait on method mutex */
+ 
+ 	status =
+-- 
+2.39.5
+
 
 
