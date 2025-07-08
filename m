@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08361DB127;
-	Tue,  8 Jul 2025 16:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F658F5E;
+	Tue,  8 Jul 2025 16:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993437; cv=none; b=HkC9HJjTuN7s9CsjMDr9MZsfKRZmKYAsNqV4zu8zsb69KpClR5rDNu5Id6jbGPIWyZujGka0lGiQGOPNtDRCiJd4PJekJfa4dJZzdUL53Mj0FHD3lVsAAcXefOkvb+E++aCudnHkOBiH+VQ1/5bofd61wSwYytg7Ftif4pnDscg=
+	t=1751993440; cv=none; b=Verz2bGtGovHYK6PV5WLX09qtwKPWqtk6h+WG6afwv5/qXgA2ZBi6gzDgrgTKmx6jvQaOtn6fk4ROMKyo6s8Xwc4GHUfX+bghH5P/SPdwqugyX8X+iRxBPd8V/hjcN+leAK26ERmnvpCiEhZLjjdPgAlizlHnk9MaoLi7GcugD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993437; c=relaxed/simple;
-	bh=Of5tTqS0zSSvQTuNJf+5F2gY5R1dTtbPel5v6giVQfw=;
+	s=arc-20240116; t=1751993440; c=relaxed/simple;
+	bh=uhkaudExw0j/g8N1ZI/cqvnv5EucMvaTGIsItMIuH/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcKvH6Jb7jdpFpPrHFJw/rCHbulhDGJmvmNhLx6CcVwF82oBLjSncRKFAKBZ5Z7AvOYfY14FD75CV4z3STbiNKuNyzaCYlzhSPkNztOdfkyYNFTohzjkq0RpyimupvTY+FqovaDK0pY0jNRlGXCHoUvgG14lUiSYYRPu7OCyKY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9SPs9vg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AWCdF3S/jYU0/oF/a0dUzZcdavr46LnopHc5XlwctRz5IBOucx+0Dtx37Z9qVE957J848I7Ydj9Xr9Eu9cdCDTH2SxJGGJPHxAlozrfd/TiNj33B9jsrPGhEix8eVS+0glFa3Mtne7xkLcS8SP+Ppr4OrWcKwXw9ybj+q/Wjrlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxx06poi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9SPs9vg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73ECC4CEED;
-	Tue,  8 Jul 2025 16:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxx06poi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF98C4CEED;
+	Tue,  8 Jul 2025 16:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993437;
-	bh=Of5tTqS0zSSvQTuNJf+5F2gY5R1dTtbPel5v6giVQfw=;
+	s=korg; t=1751993440;
+	bh=uhkaudExw0j/g8N1ZI/cqvnv5EucMvaTGIsItMIuH/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9SPs9vgA8y5bELeDQ3GA+iK0118CaKgq62Lt0sKwhsRITfOEJIncaz24Cjn+mZZm
-	 YMMPzJkYVLBYlx6IXbkppHAZnjODhbUZkPPmFb+mw1Ecz29QgpseRdMAB2Z9VB9Uj5
-	 68r/32LaDHdyLL4P52FvFLJu7pHRvwM5QbwzuMyQ=
+	b=yxx06poiRsiIq+1UU68h56mFlIF/3Xr4VuV1/GO9y5w7WXDy90n9IsErGPVLO7XFH
+	 WQwVVEWQMmsQqZ6DWha3KbegMR3IcOj8/+IA2ynFSlCVU0CVBzqudq0g96FyC6xHtM
+	 LcKcIzePrGxdCULbr8HNuVZFfb8/90J3w/Z8Nlxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 044/178] RDMA/mlx5: Initialize obj_event->obj_sub_list before xa_insert
-Date: Tue,  8 Jul 2025 18:21:21 +0200
-Message-ID: <20250708162237.830661529@linuxfoundation.org>
+Subject: [PATCH 6.15 045/178] module: Provide EXPORT_SYMBOL_GPL_FOR_MODULES() helper
+Date: Tue,  8 Jul 2025 18:21:22 +0200
+Message-ID: <20250708162237.857850056@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,98 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 8edab8a72d67742f87e9dc2e2b0cdfddda5dc29a ]
+[ Upstream commit 707f853d7fa3ce323a6875487890c213e34d81a0 ]
 
-The obj_event may be loaded immediately after inserted, then if the
-list_head is not initialized then we may get a poisonous pointer.  This
-fixes the crash below:
+Helper macro to more easily limit the export of a symbol to a given
+list of modules.
 
- mlx5_core 0000:03:00.0: MLX5E: StrdRq(1) RqSz(8) StrdSz(2048) RxCqeCmprss(0 enhanced)
- mlx5_core.sf mlx5_core.sf.4: firmware version: 32.38.3056
- mlx5_core 0000:03:00.0 en3f0pf0sf2002: renamed from eth0
- mlx5_core.sf mlx5_core.sf.4: Rate limit: 127 rates are supported, range: 0Mbps to 195312Mbps
- IPv6: ADDRCONF(NETDEV_CHANGE): en3f0pf0sf2002: link becomes ready
- Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
- Mem abort info:
-   ESR = 0x96000006
-   EC = 0x25: DABT (current EL), IL = 32 bits
-   SET = 0, FnV = 0
-   EA = 0, S1PTW = 0
- Data abort info:
-   ISV = 0, ISS = 0x00000006
-   CM = 0, WnR = 0
- user pgtable: 4k pages, 48-bit VAs, pgdp=00000007760fb000
- [0000000000000060] pgd=000000076f6d7003, p4d=000000076f6d7003, pud=0000000777841003, pmd=0000000000000000
- Internal error: Oops: 96000006 [#1] SMP
- Modules linked in: ipmb_host(OE) act_mirred(E) cls_flower(E) sch_ingress(E) mptcp_diag(E) udp_diag(E) raw_diag(E) unix_diag(E) tcp_diag(E) inet_diag(E) binfmt_misc(E) bonding(OE) rdma_ucm(OE) rdma_cm(OE) iw_cm(OE) ib_ipoib(OE) ib_cm(OE) isofs(E) cdrom(E) mst_pciconf(OE) ib_umad(OE) mlx5_ib(OE) ipmb_dev_int(OE) mlx5_core(OE) kpatch_15237886(OEK) mlxdevm(OE) auxiliary(OE) ib_uverbs(OE) ib_core(OE) psample(E) mlxfw(OE) tls(E) sunrpc(E) vfat(E) fat(E) crct10dif_ce(E) ghash_ce(E) sha1_ce(E) sbsa_gwdt(E) virtio_console(E) ext4(E) mbcache(E) jbd2(E) xfs(E) libcrc32c(E) mmc_block(E) virtio_net(E) net_failover(E) failover(E) sha2_ce(E) sha256_arm64(E) nvme(OE) nvme_core(OE) gpio_mlxbf3(OE) mlx_compat(OE) mlxbf_pmc(OE) i2c_mlxbf(OE) sdhci_of_dwcmshc(OE) pinctrl_mlxbf3(OE) mlxbf_pka(OE) gpio_generic(E) i2c_core(E) mmc_core(E) mlxbf_gige(OE) vitesse(E) pwr_mlxbf(OE) mlxbf_tmfifo(OE) micrel(E) mlxbf_bootctl(OE) virtio_ring(E) virtio(E) ipmi_devintf(E) ipmi_msghandler(E)
-  [last unloaded: mst_pci]
- CPU: 11 PID: 20913 Comm: rte-worker-11 Kdump: loaded Tainted: G           OE K   5.10.134-13.1.an8.aarch64 #1
- Hardware name: https://www.mellanox.com BlueField-3 SmartNIC Main Card/BlueField-3 SmartNIC Main Card, BIOS 4.2.2.12968 Oct 26 2023
- pstate: a0400089 (NzCv daIf +PAN -UAO -TCO BTYPE=--)
- pc : dispatch_event_fd+0x68/0x300 [mlx5_ib]
- lr : devx_event_notifier+0xcc/0x228 [mlx5_ib]
- sp : ffff80001005bcf0
- x29: ffff80001005bcf0 x28: 0000000000000001
- x27: ffff244e0740a1d8 x26: ffff244e0740a1d0
- x25: ffffda56beff5ae0 x24: ffffda56bf911618
- x23: ffff244e0596a480 x22: ffff244e0596a480
- x21: ffff244d8312ad90 x20: ffff244e0596a480
- x19: fffffffffffffff0 x18: 0000000000000000
- x17: 0000000000000000 x16: ffffda56be66d620
- x15: 0000000000000000 x14: 0000000000000000
- x13: 0000000000000000 x12: 0000000000000000
- x11: 0000000000000040 x10: ffffda56bfcafb50
- x9 : ffffda5655c25f2c x8 : 0000000000000010
- x7 : 0000000000000000 x6 : ffff24545a2e24b8
- x5 : 0000000000000003 x4 : ffff80001005bd28
- x3 : 0000000000000000 x2 : 0000000000000000
- x1 : ffff244e0596a480 x0 : ffff244d8312ad90
- Call trace:
-  dispatch_event_fd+0x68/0x300 [mlx5_ib]
-  devx_event_notifier+0xcc/0x228 [mlx5_ib]
-  atomic_notifier_call_chain+0x58/0x80
-  mlx5_eq_async_int+0x148/0x2b0 [mlx5_core]
-  atomic_notifier_call_chain+0x58/0x80
-  irq_int_handler+0x20/0x30 [mlx5_core]
-  __handle_irq_event_percpu+0x60/0x220
-  handle_irq_event_percpu+0x3c/0x90
-  handle_irq_event+0x58/0x158
-  handle_fasteoi_irq+0xfc/0x188
-  generic_handle_irq+0x34/0x48
-  ...
+Eg:
 
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Link: https://patch.msgid.link/r/3ce7f20e0d1a03dc7de6e57494ec4b8eaf1f05c2.1750147949.git.leon@kernel.org
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+  EXPORT_SYMBOL_GPL_FOR_MODULES(preempt_notifier_inc, "kvm");
+
+will limit the use of said function to kvm.ko, any other module trying
+to use this symbol will refure to load (and get modpost build
+failures).
+
+Requested-by: Masahiro Yamada <masahiroy@kernel.org>
+Requested-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Peter Zijlstra <peterz@infradead.org>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: cbe4134ea4bc ("fs: export anon_inode_make_secure_inode() and fix secretmem LSM bypass")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/core-api/symbol-namespaces.rst | 22 ++++++++++++++++++++
+ include/linux/export.h                       | 12 +++++++++--
+ 2 files changed, 32 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index bceae1c1f9801..843dcd3122424 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -1958,6 +1958,7 @@ subscribe_event_xa_alloc(struct mlx5_devx_event_table *devx_event_table,
- 			/* Level1 is valid for future use, no need to free */
- 			return -ENOMEM;
+diff --git a/Documentation/core-api/symbol-namespaces.rst b/Documentation/core-api/symbol-namespaces.rst
+index 06f766a6aab24..c6f59c5e25648 100644
+--- a/Documentation/core-api/symbol-namespaces.rst
++++ b/Documentation/core-api/symbol-namespaces.rst
+@@ -28,6 +28,9 @@ kernel. As of today, modules that make use of symbols exported into namespaces,
+ are required to import the namespace. Otherwise the kernel will, depending on
+ its configuration, reject loading the module or warn about a missing import.
  
-+		INIT_LIST_HEAD(&obj_event->obj_sub_list);
- 		err = xa_insert(&event->object_ids,
- 				key_level2,
- 				obj_event,
-@@ -1966,7 +1967,6 @@ subscribe_event_xa_alloc(struct mlx5_devx_event_table *devx_event_table,
- 			kfree(obj_event);
- 			return err;
- 		}
--		INIT_LIST_HEAD(&obj_event->obj_sub_list);
- 	}
++Additionally, it is possible to put symbols into a module namespace, strictly
++limiting which modules are allowed to use these symbols.
++
+ 2. How to define Symbol Namespaces
+ ==================================
  
- 	return 0;
+@@ -83,6 +86,22 @@ unit as preprocessor statement. The above example would then read::
+ within the corresponding compilation unit before the #include for
+ <linux/export.h>. Typically it's placed before the first #include statement.
+ 
++2.3 Using the EXPORT_SYMBOL_GPL_FOR_MODULES() macro
++===================================================
++
++Symbols exported using this macro are put into a module namespace. This
++namespace cannot be imported.
++
++The macro takes a comma separated list of module names, allowing only those
++modules to access this symbol. Simple tail-globs are supported.
++
++For example:
++
++  EXPORT_SYMBOL_GPL_FOR_MODULES(preempt_notifier_inc, "kvm,kvm-*")
++
++will limit usage of this symbol to modules whoes name matches the given
++patterns.
++
+ 3. How to use Symbols exported in Namespaces
+ ============================================
+ 
+@@ -154,3 +173,6 @@ in-tree modules::
+ You can also run nsdeps for external module builds. A typical usage is::
+ 
+ 	$ make -C <path_to_kernel_src> M=$PWD nsdeps
++
++Note: it will happily generate an import statement for the module namespace;
++which will not work and generates build and runtime failures.
+diff --git a/include/linux/export.h b/include/linux/export.h
+index a8c23d945634b..f35d03b4113b1 100644
+--- a/include/linux/export.h
++++ b/include/linux/export.h
+@@ -24,11 +24,17 @@
+ 	.long sym
+ #endif
+ 
+-#define ___EXPORT_SYMBOL(sym, license, ns)		\
++/*
++ * LLVM integrated assembler cam merge adjacent string literals (like
++ * C and GNU-as) passed to '.ascii', but not to '.asciz' and chokes on:
++ *
++ *   .asciz "MODULE_" "kvm" ;
++ */
++#define ___EXPORT_SYMBOL(sym, license, ns...)		\
+ 	.section ".export_symbol","a"		ASM_NL	\
+ 	__export_symbol_##sym:			ASM_NL	\
+ 		.asciz license			ASM_NL	\
+-		.asciz ns			ASM_NL	\
++		.ascii ns "\0"			ASM_NL	\
+ 		__EXPORT_SYMBOL_REF(sym)	ASM_NL	\
+ 	.previous
+ 
+@@ -85,4 +91,6 @@
+ #define EXPORT_SYMBOL_NS(sym, ns)	__EXPORT_SYMBOL(sym, "", ns)
+ #define EXPORT_SYMBOL_NS_GPL(sym, ns)	__EXPORT_SYMBOL(sym, "GPL", ns)
+ 
++#define EXPORT_SYMBOL_GPL_FOR_MODULES(sym, mods) __EXPORT_SYMBOL(sym, "GPL", "module:" mods)
++
+ #endif /* _LINUX_EXPORT_H */
 -- 
 2.39.5
 
