@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413631DB127;
-	Tue,  8 Jul 2025 16:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1048F5E;
+	Tue,  8 Jul 2025 16:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993775; cv=none; b=TYjj0/aCKsqfHCuXJFjTO3fdP6BIVSFJM9mck/uTjPz2ceUQMJ8W3pCPXEhUHU8t2mG9M+BV9tGkcBP5VXR7SHW4lkOEaAGZzA3uAQTWlJqbzN5BtIYQh9sb5UHH+XkRsr61Cv82TpeFksg5Xb5+/RcXrvCWR5NrsOX9NYnykjE=
+	t=1751993778; cv=none; b=RT7T/vYSrI3m/7bxE1g0LTpVMNH7SfpXHz8VScVFsshAkDwuA9MwvrVlI9VT0IaQRdRZl6/VRLIXKjT63xMXOQzZ2QeXpN8r2tDVtmrucPFlkfEgH0Nhy3TXsRQNmxcj+N6Jt/z+RRW8dji9RM9jVtVlDnMjeQ3e7Met+WG2/x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993775; c=relaxed/simple;
-	bh=j17j+zV80cw6Q4SQsP7Pq7ybwbQluq1nlR6h7YPtuXQ=;
+	s=arc-20240116; t=1751993778; c=relaxed/simple;
+	bh=BFwVwBMDzkNs5aOlV5wZWt/D2CjGnwmiK9FLtK8B+Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrTV/0NlwNQjGkKkj2L/koKc4IZdf9TqahNrg+Dj0W9hof6A1SmOWEx3NU3BcSvEo+VilmXf4lsxSKbjHP1cKgWbKpYlKq7OoeL5IlMgVJQHRPGbQup65WB5fcUT4YtRSKCo5Jiq5Kpr9VE4IGxDAJUA0r9o+Osci/AT4yZTHXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRKs0TH6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fqHQuG0rw1sPx5tqDfAW+se7HXPmeKpllBTCFaGvrhpWNX2LowiXSay7HU0D9b7yjP7v0Q2QD+ytv5jgq5YGCID6+0dIqpYFLbrtDy2Mli0pyevLrRm9BKv69sCtFmqE+95AFMUY0+nffmx7gyAuKpm+j88A/jMjk3GOiepW+Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fs5cm3SA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRKs0TH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC84BC4CEED;
-	Tue,  8 Jul 2025 16:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fs5cm3SA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81A3C4CEED;
+	Tue,  8 Jul 2025 16:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993775;
-	bh=j17j+zV80cw6Q4SQsP7Pq7ybwbQluq1nlR6h7YPtuXQ=;
+	s=korg; t=1751993778;
+	bh=BFwVwBMDzkNs5aOlV5wZWt/D2CjGnwmiK9FLtK8B+Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRKs0TH6Vw0XT4RI0HJirO5oNRmZviucncwIjhoIMMYFvaKJyW6hi4ccHW9WIcdm2
-	 xUUDGrwyqmGwft9SAcPq/Q/5ZrTO/IfUtInY1DmNM4iIFAMF+bkyjWox+Ha2TU6abN
-	 6n+I+yl8QLxDGQbwg19hBT2raQD1XCNKj/iLsnQY=
+	b=fs5cm3SAAjfiKSbnux6VRMkeE3dF7RmngMVXxKxvZqJxdpIPNDuA0Kku7LfgUkNfk
+	 SI09ZysGBt0ha+ermG7yD7wNlYycnKBT1Qv5Mrd1O+LTIUA3MLxuLqEOEf6kj1V8F+
+	 CffQdlQbh2NsCUR6B/s4gv91Eg1MPEqak+8BkHpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
-	Sven Schuchmann <schuchmann@schleissheimer.de>,
-	Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
-	Lee Jones <lee@kernel.org>,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Minas Harutyunyan <hminas@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/160] leds: multicolor: Fix intensity setting while SW blinking
-Date: Tue,  8 Jul 2025 18:20:43 +0200
-Message-ID: <20250708162231.684669682@linuxfoundation.org>
+Subject: [PATCH 5.15 015/160] usb: dwc2: also exit clock_gating when stopping udc while suspended
+Date: Tue,  8 Jul 2025 18:20:52 +0200
+Message-ID: <20250708162231.929277214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -55,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-[ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
+[ Upstream commit af076a41f8a28faf9ceb9dd2d88aef2c202ef39a ]
 
-When writing to the multi_intensity file, don't unconditionally call
-led_set_brightness. By only doing this if blinking is inactive we
-prevent blinking from stopping if the blinking is in its off phase while
-the file is written.
+It is possible that the gadget will be disabled, while the udc is
+suspended. When enabling the udc in that case, the clock gating
+will not be enabled again. Leaving the phy unclocked. Even when the
+udc is not enabled, connecting this powered but not clocked phy leads
+to enumeration errors on the host side.
 
-Instead, if blinking is active, the changed intensity values are applied
-upon the next blink. This is consistent with changing the brightness on
-monochrome LEDs with active blinking.
+To ensure that the clock gating will be in an valid state, we ensure
+that the clock gating will be enabled before stopping the udc.
 
-Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
-Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
-Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwermer.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Acked-by: Minas Harutyunyan <hminas@synopsys.com>
+Link: https://lore.kernel.org/r/20250417-dwc2_clock_gating-v1-1-8ea7c4d53d73@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-class-multicolor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc2/gadget.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
-index ec62a48116135..e0785935f4ba6 100644
---- a/drivers/leds/led-class-multicolor.c
-+++ b/drivers/leds/led-class-multicolor.c
-@@ -61,7 +61,8 @@ static ssize_t multi_intensity_store(struct device *dev,
- 	for (i = 0; i < mcled_cdev->num_colors; i++)
- 		mcled_cdev->subled_info[i].intensity = intensity_value[i];
+diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
+index 7d8523398e191..525d1d0cfc249 100644
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -4602,6 +4602,12 @@ static int dwc2_hsotg_udc_stop(struct usb_gadget *gadget)
+ 	if (!hsotg)
+ 		return -ENODEV;
  
--	led_set_brightness(led_cdev, led_cdev->brightness);
-+	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
-+		led_set_brightness(led_cdev, led_cdev->brightness);
- 	ret = size;
- err_out:
- 	mutex_unlock(&led_cdev->led_access);
++	/* Exit clock gating when driver is stopped. */
++	if (hsotg->params.power_down == DWC2_POWER_DOWN_PARAM_NONE &&
++	    hsotg->bus_suspended && !hsotg->params.no_clock_gating) {
++		dwc2_gadget_exit_clock_gating(hsotg, 0);
++	}
++
+ 	/* all endpoints should be shutdown */
+ 	for (ep = 1; ep < hsotg->num_of_eps; ep++) {
+ 		if (hsotg->eps_in[ep])
 -- 
 2.39.5
 
