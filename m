@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C4B2E49BD;
-	Tue,  8 Jul 2025 17:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86BC2E49BD;
+	Tue,  8 Jul 2025 17:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994139; cv=none; b=pAnayHiDcSgwMLJXrxW8Sv+FfnBBKu0gsWDk9hlj3z1vjXIC7/RZwJz4lJFwV79Dex7/EVb3wlmQIRu73wigfG5sNe9iYH8N6R/RFmxEzd3u+KYW9mRArtGeE8vZIhBfpMebruAGd+lgqt6K9Iy6h/JUrSjEUg9xQzjgmHiSK1U=
+	t=1751994142; cv=none; b=Xu6CQfXEhPKiEfl+nkgNbmmFATOrJ7/PNiUK9j/2lYR/wThN9DC+QPBbvi9TvXNAlXTSg+m2AJChFBjQioVgYyxFA+X6Lfa4KUPXbr4Nch+sfO7o3MpRGCFolXY1FVBV9ydU5vOZaOw5sSAuGZNkGDfV7xwrwJOMsfhKoGgFsFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994139; c=relaxed/simple;
-	bh=mqWJ8wAeSEC9NkFV/r99Go2c4ly0xMb8H240P3e7NnE=;
+	s=arc-20240116; t=1751994142; c=relaxed/simple;
+	bh=MTb+yEDDtsiHnZ+3/1eue8UXyBNf8QMUVxxUP/qOz/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mn5mLq5giMigiscrv3rfyKdxtqS6+Xbn1+nJ9SzYDw9pjxQoqWgxNyeuG7Gkh8EGMp+z4GyLl8c3OCRrS8DKVArQDncZPg2nXaG36Ap4MpBcY4pd7UOFzt9UWzqHgmQUGldjaGFLTz0ITlnA/LrEeQaIdI5qMc5Df1R8ipaiYDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh1qrsWY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmgmilHVNbPO6QROjHXRGnuHv52OdTljoo2I8zOzBU7a8N0fdeAY7cn0Sp2CH08M8IXAKgDM5NMbfHn6Q+X3blREsTRNi1BbHfnD8naAhsjwRsRcoH3pfWaSnkqp/h4V3uU6UqeuxX+Gpsy9QhFFKZOGbiOBE9qDaVeG20YrOxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wT9Y3lfJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh1qrsWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AB9C4CEED;
-	Tue,  8 Jul 2025 17:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wT9Y3lfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F0DC4CEED;
+	Tue,  8 Jul 2025 17:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994139;
-	bh=mqWJ8wAeSEC9NkFV/r99Go2c4ly0xMb8H240P3e7NnE=;
+	s=korg; t=1751994142;
+	bh=MTb+yEDDtsiHnZ+3/1eue8UXyBNf8QMUVxxUP/qOz/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rh1qrsWYLLUG15P1j//KkFvKiSBRyaEmJzkHt2m1C6pDp/D15V0545znQ8CVAbCwE
-	 /2bTalM4ltswdgHzYtqLWtqvXOJAxzrB43GG3aNWt5Kvb4lVEHmQc+FnE5JWXACGmP
-	 a4s96JvpU+1HxW8K9lRI/DB4SGMoDWGgV3+FfP2I=
+	b=wT9Y3lfJ+KBqx4f5zaQbvxBHYmPlFZRYqK3Pz8BRYYF5VV9S1zvt619thzUGAAIj3
+	 rIVTNhUJpeDonN7pYKQ3zMi7ZhKXImXoJUO/fG9uQdC37PlFOmP27svtYV+E5JBqNS
+	 IVdco7a7OIfczZn/IyMIoAPWc/Qfmjy3gT6kSmaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/160] NFSv4/pNFS: Fix a race to wake on NFS_LAYOUT_DRAIN
-Date: Tue,  8 Jul 2025 18:22:25 +0200
-Message-ID: <20250708162234.470956944@linuxfoundation.org>
+Subject: [PATCH 5.15 109/160] scsi: qla2xxx: Fix DMA mapping test in qla24xx_get_port_database()
+Date: Tue,  8 Jul 2025 18:22:26 +0200
+Message-ID: <20250708162234.499284401@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,43 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit c01776287414ca43412d1319d2877cbad65444ac ]
+[ Upstream commit c3b214719a87735d4f67333a8ef3c0e31a34837c ]
 
-We found a few different systems hung up in writeback waiting on the same
-page lock, and one task waiting on the NFS_LAYOUT_DRAIN bit in
-pnfs_update_layout(), however the pnfs_layout_hdr's plh_outstanding count
-was zero.
+dma_map_XXX() functions return as error values DMA_MAPPING_ERROR which is
+often ~0.  The error value should be tested with dma_mapping_error() like
+it was done in qla26xx_dport_diagnostics().
 
-It seems most likely that this is another race between the waiter and waker
-similar to commit ed0172af5d6f ("SUNRPC: Fix a race to wake a sync task").
-Fix it up by applying the advised barrier.
-
-Fixes: 880265c77ac4 ("pNFS: Avoid a live lock condition in pnfs_update_layout()")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: 818c7f87a177 ("scsi: qla2xxx: Add changes in preparation for vendor extended FDMI/RDP")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://lore.kernel.org/r/20250617161115.39888-2-fourier.thomas@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_mbx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 83935bb1719ad..b41c6fced75ac 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1927,8 +1927,10 @@ static void nfs_layoutget_begin(struct pnfs_layout_hdr *lo)
- static void nfs_layoutget_end(struct pnfs_layout_hdr *lo)
- {
- 	if (atomic_dec_and_test(&lo->plh_outstanding) &&
--	    test_and_clear_bit(NFS_LAYOUT_DRAIN, &lo->plh_flags))
-+	    test_and_clear_bit(NFS_LAYOUT_DRAIN, &lo->plh_flags)) {
-+		smp_mb__after_atomic();
- 		wake_up_bit(&lo->plh_flags, NFS_LAYOUT_DRAIN);
-+	}
- }
+diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
+index d2ff54beb7cd7..7a28582b1f73a 100644
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -2141,7 +2141,7 @@ qla24xx_get_port_database(scsi_qla_host_t *vha, u16 nport_handle,
  
- static bool pnfs_is_first_layoutget(struct pnfs_layout_hdr *lo)
+ 	pdb_dma = dma_map_single(&vha->hw->pdev->dev, pdb,
+ 	    sizeof(*pdb), DMA_FROM_DEVICE);
+-	if (!pdb_dma) {
++	if (dma_mapping_error(&vha->hw->pdev->dev, pdb_dma)) {
+ 		ql_log(ql_log_warn, vha, 0x1116, "Failed to map dma buffer.\n");
+ 		return QLA_MEMORY_ALLOC_FAILED;
+ 	}
 -- 
 2.39.5
 
