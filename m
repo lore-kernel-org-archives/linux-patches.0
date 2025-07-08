@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7AB1DB127;
-	Tue,  8 Jul 2025 16:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1642E5411;
+	Tue,  8 Jul 2025 16:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993524; cv=none; b=qtpH30PcAA2B5XLvIqpm/HGAak7SXpEXRuM2CvOzidijNLSASpDfjYAbubT/OW3fEfd4VuyI8RDqW7JJsu6K0qgC0oSiNLmh/bOW97jSD/bPpawC4FXJklAdYXFD/Fnk3atbktoXQ5S8Zc/6clXCWNsuF/9LNGBVBSr3r8+F3xY=
+	t=1751993527; cv=none; b=TASmyUKk1Wphm6eVzUH0o507nv4mOhxUf7m84mB3UQeZ6n60bb+YbLoIWbfN8GiHdNiHSjJo4EPwUi+KqgGx8Vyqpbvk3zTjCd3Q0WaMoosi8VUyjSjJiRIQtGxJZbKxDfBWTgaBJ5P2sHTjpLGioMv2qmqt+hsEEfxSSwonuNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993524; c=relaxed/simple;
-	bh=luYFYyIrWges2POr0lQK2E6k+9pEZR67vk2d+I+aJK8=;
+	s=arc-20240116; t=1751993527; c=relaxed/simple;
+	bh=Yjfk15MsjFXBjNBQYtJz7PuGALF3BX3OIm0Z79ee2f0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reXdQ9nkrLO986gOCz92OkGfRShOiS5cA753SsNuo97IfvWHWjwGEBCLb64cUcJ/g9VMffqeOQ7VB1bjbyXFhKrq+rVDL5WrkUOK9bfgatdnnMTDPHh0+9dOmM70G5eBqsEOOplZOPAy+K/qXSNAxWFMWHcDE7CC/KOBPb9MW8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgUEG2NT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kML5WfG6LyYcO51eEahOCeGMYs4pKfjejDxmXblb59flo1bBRdU8q9vNkqAzFZcoSpU4k1bHcVCtKuT6I/Kwt4HL+ECoe4QDRXEUTV0npn4MF2eqOt88brTypDkJ2B9r/EPupQjBtM/H/aSiROTl9KVC4bQx0UG9hg09PjCHOgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz7lnUry; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgUEG2NT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2373DC4CEF0;
-	Tue,  8 Jul 2025 16:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz7lnUry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0580AC4CEED;
+	Tue,  8 Jul 2025 16:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993524;
-	bh=luYFYyIrWges2POr0lQK2E6k+9pEZR67vk2d+I+aJK8=;
+	s=korg; t=1751993527;
+	bh=Yjfk15MsjFXBjNBQYtJz7PuGALF3BX3OIm0Z79ee2f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgUEG2NTZ0mHdTGIv9RWo+povElY3Qdtk+bwvnsOzqs/HOP4tkYDkysxq19ZSkK9v
-	 xT6engnAc3jzebcEZFTXuelW3/eSFMoRvKRNlo8EIH4/5Kh6Z+LFNYhTvEqsQkzm2y
-	 VXWr72Ov2HMhLTyo0nk1Ctriqvxp9/KhIltbGF5s=
+	b=Vz7lnUryR7MQIeUbnEAGO/fcfrQojteC0hYF9YnLRuWkEgTaHgxzwZZdtNxs1CA2G
+	 Oaaa3WuqGCCNMSp4dGqUJ4Ks5YakiqeT2UI3VDNmVozcrFPW/JKqLSMSzIIv3tlrUH
+	 qB7XFEftBv9zrIEwaeOIYW2bKkCyLf5MQLRo1xvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Inki Dae <inki.dae@samsung.com>,
+	Md Sadre Alam <quic_mdalam@quicinc.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 073/178] drm/exynos: fimd: Guard display clock control with runtime PM calls
-Date: Tue,  8 Jul 2025 18:21:50 +0200
-Message-ID: <20250708162238.582478896@linuxfoundation.org>
+Subject: [PATCH 6.15 074/178] spi: spi-qpic-snand: reallocate BAM transactions
+Date: Tue,  8 Jul 2025 18:21:51 +0200
+Message-ID: <20250708162238.609019913@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,65 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 5d91394f236167ac624b823820faf4aa928b889e ]
+[ Upstream commit d85d0380292a7e618915069c3579ae23c7c80339 ]
 
-Commit c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable
-and post-disable") changed the call sequence to the CRTC enable/disable
-and bridge pre_enable/post_disable methods, so those bridge methods are
-now called when CRTC is not yet enabled.
+Using the mtd_nandbiterrs module for testing the driver occasionally
+results in weird things like below.
 
-This causes a lockup observed on Samsung Peach-Pit/Pi Chromebooks. The
-source of this lockup is a call to fimd_dp_clock_enable() function, when
-FIMD device is not yet runtime resumed. It worked before the mentioned
-commit only because the CRTC implemented by the FIMD driver was always
-enabled what guaranteed the FIMD device to be runtime resumed.
+1. swiotlb mapping fails with the following message:
 
-This patch adds runtime PM guards to the fimd_dp_clock_enable() function
-to enable its proper operation also when the CRTC implemented by FIMD is
-not yet enabled.
+  [   85.926216] qcom_snand 79b0000.spi: swiotlb buffer is full (sz: 4294967294 bytes), total 512 (slots), used 0 (slots)
+  [   85.932937] qcom_snand 79b0000.spi: failure in mapping desc
+  [   87.999314] qcom_snand 79b0000.spi: failure to write raw page
+  [   87.999352] mtd_nandbiterrs: error: write_oob failed (-110)
 
-Fixes: 196e059a8a6a ("drm/exynos: convert clock_enable crtc callback to pipeline clock")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+  Rebooting the board after this causes a panic due to a NULL pointer
+  dereference.
+
+2. If the swiotlb mapping does not fail, rebooting the board may result
+   in a different panic due to a bad spinlock magic:
+
+  [  256.104459] BUG: spinlock bad magic on CPU#3, procd/2241
+  [  256.104488] Unable to handle kernel paging request at virtual address ffffffff0000049b
+  ...
+
+Investigating the issue revealed that these symptoms are results of
+memory corruption which is caused by out of bounds access within the
+driver.
+
+The driver uses a dynamically allocated structure for BAM transactions,
+which structure must have enough space for all possible variations of
+different flash operations initiated by the driver. The required space
+heavily depends on the actual number of 'codewords' which is calculated
+from the pagesize of the actual NAND chip.
+
+Although the qcom_nandc_alloc() function allocates memory for the BAM
+transactions during probe, but since the actual number of 'codewords'
+is not yet know the allocation is done for one 'codeword' only.
+
+Because of this, whenever the driver does a flash operation, and the
+number of the required transactions exceeds the size of the allocated
+arrays the driver accesses memory out of the allocated range.
+
+To avoid this, change the code to free the initially allocated BAM
+transactions memory, and allocate a new one once the actual number of
+'codewords' required for a given NAND chip is known.
+
+Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
+Reviewed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://patch.msgid.link/20250618-qpic-snand-avoid-mem-corruption-v3-1-319c71296cda@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_fimd.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/spi/spi-qpic-snand.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-index c394cc702d7d4..205c238cc73a6 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-@@ -187,6 +187,7 @@ struct fimd_context {
- 	u32				i80ifcon;
- 	bool				i80_if;
- 	bool				suspended;
-+	bool				dp_clk_enabled;
- 	wait_queue_head_t		wait_vsync_queue;
- 	atomic_t			wait_vsync_event;
- 	atomic_t			win_updated;
-@@ -1047,7 +1048,18 @@ static void fimd_dp_clock_enable(struct exynos_drm_clk *clk, bool enable)
- 	struct fimd_context *ctx = container_of(clk, struct fimd_context,
- 						dp_clk);
- 	u32 val = enable ? DP_MIE_CLK_DP_ENABLE : DP_MIE_CLK_DISABLE;
-+
-+	if (enable == ctx->dp_clk_enabled)
-+		return;
-+
-+	if (enable)
-+		pm_runtime_resume_and_get(ctx->dev);
-+
-+	ctx->dp_clk_enabled = enable;
- 	writel(val, ctx->regs + DP_MIE_CLKCON);
-+
-+	if (!enable)
-+		pm_runtime_put(ctx->dev);
- }
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index d3a4e091dca4e..80856d2fa35c6 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -316,6 +316,22 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
  
- static const struct exynos_drm_crtc_ops fimd_crtc_ops = {
+ 	mtd_set_ooblayout(mtd, &qcom_spi_ooblayout);
+ 
++	/*
++	 * Free the temporary BAM transaction allocated initially by
++	 * qcom_nandc_alloc(), and allocate a new one based on the
++	 * updated max_cwperpage value.
++	 */
++	qcom_free_bam_transaction(snandc);
++
++	snandc->max_cwperpage = cwperpage;
++
++	snandc->bam_txn = qcom_alloc_bam_transaction(snandc);
++	if (!snandc->bam_txn) {
++		dev_err(snandc->dev, "failed to allocate BAM transaction\n");
++		ret = -ENOMEM;
++		goto err_free_ecc_cfg;
++	}
++
+ 	ecc_cfg->cfg0 = FIELD_PREP(CW_PER_PAGE_MASK, (cwperpage - 1)) |
+ 			FIELD_PREP(UD_SIZE_BYTES_MASK, ecc_cfg->cw_data) |
+ 			FIELD_PREP(DISABLE_STATUS_AFTER_WRITE, 1) |
 -- 
 2.39.5
 
