@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6146618EAB;
-	Tue,  8 Jul 2025 16:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC572045B5;
+	Tue,  8 Jul 2025 16:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993367; cv=none; b=QHvoUlH4IBiGmMOiF/w94Wu3OULIXDN23Ou2ST3L8OJ9CpdnLxnzs+wUtbv/9wo+Al+ytUaFhp6+SzNIVymdGOmqArIK4Ccx6nfFnQLdqDD4+SSMR9yP2ZDIG6fTkazFC/ilOQXbLoRp5/5aLABh0ImWRdKxtjxcCmJZTmDODHc=
+	t=1751993370; cv=none; b=YoI2vrkkCMsv2PLk6ZTCBvlXsnb+nX+6jGDo5Po19DcJdmUl5DIMRp067dH5081d3d3eNiVnPVpWPg0v70bEmG8f0p5dE8GbuSlCpQPQoBGvTrQwjbzJGd9nnm6RQ68Hf3Rsb08FIo/qLiT4ajjUEQfKpTHXiAcqQn8wRiOWNqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993367; c=relaxed/simple;
-	bh=dX/38ODd1F9Q2zsvracwsEotWBU23U1zj2MmJx0nPu8=;
+	s=arc-20240116; t=1751993370; c=relaxed/simple;
+	bh=REN3WwYQh3BYhKrnkO+4BHCFd1aRrOI5SEGFh+T7mhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYokf0jfMJp103H7PvJ+WvTNh5rrTbiwlf3wYp+ZgLL57smSR6wsRoMb19SyFEyvGDOWgXeQ7U8t4wnsO3q7z0OljKWcl51rXYLGYoUFQJbqhts466CQnUVZEuXzMqbYEe+rvSds+cgBO4S+yt7qZlprTAjxb71Sbt9ckxgfgL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxQGj+nj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KeSvyon3ujrqMZ8+rxtN80WuoqA3ePgfwc4gvvm6/DPw4x4EC46I7RwfOcAswB5ZQk3xb8aYXIf+FMIj7h2nFjTPOE7DyaWX7HeixsSTVw8yaZDMOH2Y72gvjllbSPLllrmwedKS+0cB2sVcUv31OwMQr4yNHrfFwjPAM20ql8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iz9ALWsL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxQGj+nj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFE0C4CEF5;
-	Tue,  8 Jul 2025 16:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iz9ALWsL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEC5C4CEED;
+	Tue,  8 Jul 2025 16:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993367;
-	bh=dX/38ODd1F9Q2zsvracwsEotWBU23U1zj2MmJx0nPu8=;
+	s=korg; t=1751993370;
+	bh=REN3WwYQh3BYhKrnkO+4BHCFd1aRrOI5SEGFh+T7mhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxQGj+nj1uGS/nS0G3V0729Gg7eQkX1XduQFgDpPIEfEkqYGhn8/p66kpelmcpWcb
-	 mKLhiSvJ7ToPdk53jBeOMHtHOt++McQ63/DB/tAz27GLxe2w3g1/siqcXJjMNCKBMt
-	 viCpzKe3H2EVcAnEijE3dROUDjm8c6jykcl+7llI=
+	b=iz9ALWsLiCYugOiQM8+p9giDi9Gm8OrV0QsB0DXZ+ju/kfSCnWUf5yY9werqEG8Mo
+	 +ldbyjuH8KrI5xwX5N1imW02j6VPbI1erHwGOD9z7QIsjKFB7tjSL3grZZzxizQULp
+	 wPkNBQXjlXBB20QYURzeor5H+LyB9PuFKZBboP9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	jackysliu <1972843537@qq.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 050/178] scsi: qla4xxx: Fix missing DMA mapping error in qla4xxx_alloc_pdu()
-Date: Tue,  8 Jul 2025 18:21:27 +0200
-Message-ID: <20250708162237.991842006@linuxfoundation.org>
+Subject: [PATCH 6.15 051/178] scsi: sd: Fix VPD page 0xb7 length check
+Date: Tue,  8 Jul 2025 18:21:28 +0200
+Message-ID: <20250708162238.016304365@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,35 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: jackysliu <1972843537@qq.com>
 
-[ Upstream commit 00f452a1b084efbe8dcb60a29860527944a002a1 ]
+[ Upstream commit 8889676cd62161896f1d861ce294adc29c4f2cb5 ]
 
-dma_map_XXX() can fail and should be tested for errors with
-dma_mapping_error().
+sd_read_block_limits_ext() currently assumes that vpd->len excludes the
+size of the page header. However, vpd->len describes the size of the entire
+VPD page, therefore the sanity check is incorrect.
 
-Fixes: b3a271a94d00 ("[SCSI] qla4xxx: support iscsiadm session mgmt")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250618071742.21822-2-fourier.thomas@gmail.com
+In practice this is not really a problem since we don't attach VPD
+pages unless they actually report data trailing the header. But fix
+the length check regardless.
+
+This issue was identified by Wukong-Agent (formerly Tencent Woodpecker), a
+code security AI agent, through static code analysis.
+
+[mkp: rewrote patch description]
+
+Signed-off-by: jackysliu <1972843537@qq.com>
+Link: https://lore.kernel.org/r/tencent_ADA5210D1317EEB6CD7F3DE9FE9DA4591D05@qq.com
+Fixes: 96b171d6dba6 ("scsi: core: Query the Block Limits Extension VPD page")
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index d540d66e6ffc4..80c4b4e7526b1 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -3420,6 +3420,8 @@ static int qla4xxx_alloc_pdu(struct iscsi_task *task, uint8_t opcode)
- 		task_data->data_dma = dma_map_single(&ha->pdev->dev, task->data,
- 						     task->data_count,
- 						     DMA_TO_DEVICE);
-+		if (dma_mapping_error(&ha->pdev->dev, task_data->data_dma))
-+			return -ENOMEM;
- 	}
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 950d8c9fb8843..89d5c4b17bc46 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3384,7 +3384,7 @@ static void sd_read_block_limits_ext(struct scsi_disk *sdkp)
  
- 	DEBUG2(ql4_printk(KERN_INFO, ha, "%s: MaxRecvLen %u, iscsi hrd %d\n",
+ 	rcu_read_lock();
+ 	vpd = rcu_dereference(sdkp->device->vpd_pgb7);
+-	if (vpd && vpd->len >= 2)
++	if (vpd && vpd->len >= 6)
+ 		sdkp->rscs = vpd->data[5] & 1;
+ 	rcu_read_unlock();
+ }
 -- 
 2.39.5
 
