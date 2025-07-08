@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278D22DFA22;
-	Tue,  8 Jul 2025 16:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FADA2DC34C;
+	Tue,  8 Jul 2025 16:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993443; cv=none; b=N2oETJs6lCGzArFxJIP0z1lM2KCnWmYW7rNc9nynfAOkDVO2zJOPXG9U5tMEYmlNwMknLrscEoTshomuf1cx/HokjcoF0N1HklTWx/R5Md73cFijUCb7xqJU8Xel//AkHaFPtVRvsQXQshB65rHTkfzN4ZnFm9t5maYGRCUktbo=
+	t=1751993446; cv=none; b=Z7R4lFGBwKBf04UkZ3zY8jiuUE3CTKVHkweQY60/ZcRXKFnUfNiZqMaOXNMtLKutjIxut1dhV+Hrx/97+64gOXqEF/qwBngqyEjbjvqeW2tc5nyK0WSrhmoF+qAM8iZJFbiLt9nbkg/y0idWeEYbsYO2aE6R+dJunFJIP9qjEhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993443; c=relaxed/simple;
-	bh=tV+mMAAWlvRD/3fESGFsOqpiTy09Oo2JwT4McET0OoY=;
+	s=arc-20240116; t=1751993446; c=relaxed/simple;
+	bh=9PjNrjpE33n14o7fnd4XvUw9aTWIQtOS2p4Rz+s4MfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAoB5CqjIgO0mEY73C9j9RDIRIVkYdoPj7+Ziih9YLI70i0TQdytbhQDkVtR3FiRdKcLO8TQ+7JMmYCbb6a4Wuu4P/3BN4zFN1usqViSVjHpx2xDeVmcVICKnrOS5ftL4xh/+aFz8nOn5A4RXHnJFcn+74PIS6nwFgFSBqzi44A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KABz33j8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OMoPVxY+Go+HI05j5oOGMfoQ71RWsIM+pJyeJzHV/T+CxwE5uJLSV63Tx+t1lXuBFc9rboGqMDaVwbzoIt3edYMjygKzqSPmJ0KohQ1h+XC+MQyXPAQqLLC2mJ0+wFVxZrQ1D27ulYmX6BiyvpSwjK4J1mqHxl6xlsyT2xIfEU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDC+hlmc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KABz33j8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F66C4CEED;
-	Tue,  8 Jul 2025 16:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDC+hlmc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897D2C4CEF6;
+	Tue,  8 Jul 2025 16:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993443;
-	bh=tV+mMAAWlvRD/3fESGFsOqpiTy09Oo2JwT4McET0OoY=;
+	s=korg; t=1751993445;
+	bh=9PjNrjpE33n14o7fnd4XvUw9aTWIQtOS2p4Rz+s4MfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KABz33j8qcjdAP+d3Tvs1UDpCFuI9X5npgzrKxHLHf7dUEtNqpSrUML4r0gm5ywdY
-	 WtEQ85cdiaJKcYOu3F9+KpfXQCkk6Bel+ioaruHvBGwsJPG+pnRW9SAEMYvaZrSfUt
-	 glmHAjOBrFWBof3fFPXMVfDs5saIZOQAYli+E1ME=
+	b=PDC+hlmc0OXCphiohw4BFipPZR/YkcK3ShRyU5asH/aXLJHOkcRzj8Y633YtXBXwd
+	 Lbjqz1cM3UIcj8b46RR/oU26fRxrQUWd9Dj6lFWgoTFvayF3wdZRAvGm2W5jeajAyn
+	 xZ94+cMkYxkjoTfVdQzfIw6/NTAbOjynpuzQo2qA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shivank Garg <shivankg@amd.com>,
-	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 046/178] fs: export anon_inode_make_secure_inode() and fix secretmem LSM bypass
-Date: Tue,  8 Jul 2025 18:21:23 +0200
-Message-ID: <20250708162237.889805541@linuxfoundation.org>
+Subject: [PATCH 6.15 037/178] firmware: exynos-acpm: fix timeouts on xfers handling
+Date: Tue,  8 Jul 2025 18:21:14 +0200
+Message-ID: <20250708162237.651624669@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -47,133 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shivank Garg <shivankg@amd.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit cbe4134ea4bc493239786220bd69cb8a13493190 ]
+[ Upstream commit 8d2c2fa2209e83d0eb10f7330d8a0bbdc1df32ff ]
 
-Export anon_inode_make_secure_inode() to allow KVM guest_memfd to create
-anonymous inodes with proper security context. This replaces the current
-pattern of calling alloc_anon_inode() followed by
-inode_init_security_anon() for creating security context manually.
+The mailbox framework has a single inflight request at a time. If
+a request is sent while another is still active, it will be queued
+to the mailbox core ring buffer.
 
-This change also fixes a security regression in secretmem where the
-S_PRIVATE flag was not cleared after alloc_anon_inode(), causing
-LSM/SELinux checks to be bypassed for secretmem file descriptors.
+ACPM protocol did not serialize the calls to the mailbox subsystem so we
+could start the timeout ticks in parallel for multiple requests, while
+just one was being inflight.
 
-As guest_memfd currently resides in the KVM module, we need to export this
-symbol for use outside the core kernel. In the future, guest_memfd might be
-moved to core-mm, at which point the symbols no longer would have to be
-exported. When/if that happens is still unclear.
+Consider a hypothetical case where the xfer timeout is 100ms and an ACPM
+transaction takes 90ms:
+      | 0ms: Message #0 is queued in mailbox layer and sent out, then sits
+      |      at acpm_dequeue_by_polling() with a timeout of 100ms
+      | 1ms: Message #1 is queued in mailbox layer but not sent out yet.
+      |      Since send_message() doesn't block, it also sits at
+      |      acpm_dequeue_by_polling() with a timeout of 100ms
+      |  ...
+      | 90ms: Message #0 is completed, txdone is called and message #1 is sent
+      | 101ms: Message #1 times out since the count started at 1ms. Even though
+      |       it has only been inflight for 11ms.
 
-Fixes: 2bfe15c52612 ("mm: create security context for memfd_secret inodes")
-Suggested-by: David Hildenbrand <david@redhat.com>
-Suggested-by: Mike Rapoport <rppt@kernel.org>
-Signed-off-by: Shivank Garg <shivankg@amd.com>
-Link: https://lore.kernel.org/20250620070328.803704-3-shivankg@amd.com
-Acked-by: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fix the problem by moving mbox_send_message() and mbox_client_txdone()
+immediately after the message has been written to the TX queue and while
+still keeping the ACPM TX queue lock. We thus tie together the TX write
+with the doorbell ring and mark the TX as done after the doorbell has
+been rung. This guarantees that the doorbell has been rang before
+starting the timeout ticks. We should also see some performance
+improvement as we no longer wait to receive a response before ringing
+the doorbell for the next request, so the ACPM firmware shall be able to
+drain faster the TX queue. Another benefit is that requests are no
+longer able to ring the doorbell one for the other, so it eases
+debugging. Finally, the mailbox software queue will always contain a
+single doorbell request due to the serialization done at the ACPM TX
+queue level. Protocols like ACPM, that handle their own hardware queues
+need a passthrough mailbox API, where they are able to just ring the
+doorbell or flip a bit directly into the mailbox controller. The mailbox
+software queue mechanism, the locking done into the mailbox core is not
+really needed, so hopefully this lays the foundation for a passthrough
+mailbox API.
+
+Reported-by: André Draszik <andre.draszik@linaro.org>
+Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20250606-acpm-timeout-v2-1-306b1aa07a6c@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/anon_inodes.c   | 23 ++++++++++++++++++-----
- include/linux/fs.h |  2 ++
- mm/secretmem.c     |  9 +--------
- 3 files changed, 21 insertions(+), 13 deletions(-)
+ drivers/firmware/samsung/exynos-acpm.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/fs/anon_inodes.c b/fs/anon_inodes.c
-index e51e7d88980a2..1d847a939f29a 100644
---- a/fs/anon_inodes.c
-+++ b/fs/anon_inodes.c
-@@ -98,14 +98,25 @@ static struct file_system_type anon_inode_fs_type = {
- 	.kill_sb	= kill_anon_super,
- };
- 
--static struct inode *anon_inode_make_secure_inode(
--	const char *name,
--	const struct inode *context_inode)
-+/**
-+ * anon_inode_make_secure_inode - allocate an anonymous inode with security context
-+ * @sb:		[in]	Superblock to allocate from
-+ * @name:	[in]	Name of the class of the newfile (e.g., "secretmem")
-+ * @context_inode:
-+ *		[in]	Optional parent inode for security inheritance
-+ *
-+ * The function ensures proper security initialization through the LSM hook
-+ * security_inode_init_security_anon().
-+ *
-+ * Return:	Pointer to new inode on success, ERR_PTR on failure.
-+ */
-+struct inode *anon_inode_make_secure_inode(struct super_block *sb, const char *name,
-+					   const struct inode *context_inode)
- {
- 	struct inode *inode;
- 	int error;
- 
--	inode = alloc_anon_inode(anon_inode_mnt->mnt_sb);
-+	inode = alloc_anon_inode(sb);
- 	if (IS_ERR(inode))
- 		return inode;
- 	inode->i_flags &= ~S_PRIVATE;
-@@ -118,6 +129,7 @@ static struct inode *anon_inode_make_secure_inode(
+diff --git a/drivers/firmware/samsung/exynos-acpm.c b/drivers/firmware/samsung/exynos-acpm.c
+index e80cb7a8da8f2..520a9fd3b0fd3 100644
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -430,6 +430,9 @@ int acpm_do_xfer(const struct acpm_handle *handle, const struct acpm_xfer *xfer)
+ 		return -EOPNOTSUPP;
  	}
- 	return inode;
- }
-+EXPORT_SYMBOL_GPL_FOR_MODULES(anon_inode_make_secure_inode, "kvm");
  
- static struct file *__anon_inode_getfile(const char *name,
- 					 const struct file_operations *fops,
-@@ -132,7 +144,8 @@ static struct file *__anon_inode_getfile(const char *name,
- 		return ERR_PTR(-ENOENT);
++	msg.chan_id = xfer->acpm_chan_id;
++	msg.chan_type = EXYNOS_MBOX_CHAN_TYPE_DOORBELL;
++
+ 	scoped_guard(mutex, &achan->tx_lock) {
+ 		tx_front = readl(achan->tx.front);
+ 		idx = (tx_front + 1) % achan->qlen;
+@@ -446,25 +449,15 @@ int acpm_do_xfer(const struct acpm_handle *handle, const struct acpm_xfer *xfer)
  
- 	if (make_inode) {
--		inode =	anon_inode_make_secure_inode(name, context_inode);
-+		inode =	anon_inode_make_secure_inode(anon_inode_mnt->mnt_sb,
-+						     name, context_inode);
- 		if (IS_ERR(inode)) {
- 			file = ERR_CAST(inode);
- 			goto err;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index ef41a8213a6fa..1fe7bf10d442c 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3552,6 +3552,8 @@ extern int simple_write_begin(struct file *file, struct address_space *mapping,
- extern const struct address_space_operations ram_aops;
- extern int always_delete_dentry(const struct dentry *);
- extern struct inode *alloc_anon_inode(struct super_block *);
-+struct inode *anon_inode_make_secure_inode(struct super_block *sb, const char *name,
-+					   const struct inode *context_inode);
- extern int simple_nosetlease(struct file *, int, struct file_lease **, void **);
- extern const struct dentry_operations simple_dentry_operations;
- 
-diff --git a/mm/secretmem.c b/mm/secretmem.c
-index 1b0a214ee5580..4662f2510ae5f 100644
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -195,18 +195,11 @@ static struct file *secretmem_file_create(unsigned long flags)
- 	struct file *file;
- 	struct inode *inode;
- 	const char *anon_name = "[secretmem]";
--	int err;
- 
--	inode = alloc_anon_inode(secretmem_mnt->mnt_sb);
-+	inode = anon_inode_make_secure_inode(secretmem_mnt->mnt_sb, anon_name, NULL);
- 	if (IS_ERR(inode))
- 		return ERR_CAST(inode);
- 
--	err = security_inode_init_security_anon(inode, &QSTR(anon_name), NULL);
--	if (err) {
--		file = ERR_PTR(err);
--		goto err_free_inode;
+ 		/* Advance TX front. */
+ 		writel(idx, achan->tx.front);
 -	}
+ 
+-	msg.chan_id = xfer->acpm_chan_id;
+-	msg.chan_type = EXYNOS_MBOX_CHAN_TYPE_DOORBELL;
+-	ret = mbox_send_message(achan->chan, (void *)&msg);
+-	if (ret < 0)
+-		return ret;
 -
- 	file = alloc_file_pseudo(inode, secretmem_mnt, "secretmem",
- 				 O_RDWR, &secretmem_fops);
- 	if (IS_ERR(file))
+-	ret = acpm_wait_for_message_response(achan, xfer);
++		ret = mbox_send_message(achan->chan, (void *)&msg);
++		if (ret < 0)
++			return ret;
+ 
+-	/*
+-	 * NOTE: we might prefer not to need the mailbox ticker to manage the
+-	 * transfer queueing since the protocol layer queues things by itself.
+-	 * Unfortunately, we have to kick the mailbox framework after we have
+-	 * received our message.
+-	 */
+-	mbox_client_txdone(achan->chan, ret);
++		mbox_client_txdone(achan->chan, 0);
++	}
+ 
+-	return ret;
++	return acpm_wait_for_message_response(achan, xfer);
+ }
+ 
+ /**
 -- 
 2.39.5
 
