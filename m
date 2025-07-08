@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3058F5E;
-	Tue,  8 Jul 2025 16:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56838F5E;
+	Tue,  8 Jul 2025 16:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993893; cv=none; b=Ym/8jsXMx0kWn9+Hn9VVkJIpzpPAvUDUAPShjZTBze7/WQPLni1fFl1CgCxgQZ2XxtlGkvG6GiqwS63w5tr40515HnKHk0jKlT7XWRgKhnU4fteaYrIzKJrPe/uPV7NYqESXQwJdHgf5BpVG8+6tQvMQ0PADanNQYczLSLCWErw=
+	t=1751993895; cv=none; b=PROEydPmaufBJtmwrALyMOq8SOIrp2X6QYZvrKNDOhGTTsajq2sZQj+N5o7d8gLZI6sEn33m9NJ35m5IwIrS3wbqdzFbWGSVp7bpA82EKA39VLihOMWn1dCiHcPisjWwAA9C4YrkCm/Gu35TZvAdYYeclRCFdBEi7R8IGom667A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993893; c=relaxed/simple;
-	bh=EeEMgCSnp4cF6QPEGdcY1HvK4Zlc8qKiYJpz2mS+mcQ=;
+	s=arc-20240116; t=1751993895; c=relaxed/simple;
+	bh=vlyi0JtrDk+oJyuz1DxtvDhnzVU+jt8TCIM2MyrLNgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GDHeyyEFx/Hjppjts4toenmZ7dwFdO0XnfNGaiIBPFB/gcTkGy7Ej8KZsyKGIhh6GF2uFho+aY/Aw5wDzwT8P654ulGLgKhFLHg9va9DSX0qqP3O5CelkzNUqLRI2SE3ycKGZdqcsOqleolQ2KTWl1pVky9hUDmd3vf0+5EJm7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DT6vYbo4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUNbxmK5MzAVbRMZOJ8qdfCDQn7dP5/3cS6/Bit3RynaAvnb48YcU5vO4gYObT3Hn7yNtmKIX2TpjUESpfYgBeSDW9tDWjiWlgOHL/3va4u/0ejvShR1mE8FZ4ivviwIScqdca9a21mYcad9U6JevPGi21jRlrF9uw8mrUIrIA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Je5DBRGI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DT6vYbo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494CEC4CEF5;
-	Tue,  8 Jul 2025 16:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Je5DBRGI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F439C4CEED;
+	Tue,  8 Jul 2025 16:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993892;
-	bh=EeEMgCSnp4cF6QPEGdcY1HvK4Zlc8qKiYJpz2mS+mcQ=;
+	s=korg; t=1751993895;
+	bh=vlyi0JtrDk+oJyuz1DxtvDhnzVU+jt8TCIM2MyrLNgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DT6vYbo4wvdNTuYRfg8XPUHXRy+n4P3U0ijpANvv0on3gXrc/S57H8hA/bDSMgBkh
-	 YBbG1cmlJYj2vP2xIL5H90B1WWB+2xGtT4I7VLM4+uxF0ay67v2+dXjn1ydsawKPP5
-	 nCS/7R35LfztlB1EoD5dDtI5lCdEYOngFrgfPCzI=
+	b=Je5DBRGIxQgk24gdQ61zGMZa92LX+TFB84lopXFTLh3I8t2gRHoTjga0x+oEnh9d9
+	 Et3pN1Wif3QeGq8Vg8CTgfE6XwKh7GAUJLWH22B0nf1U+a3M6S7HoHjco9UW/Z8x6W
+	 J6GItjOEB9qz1NP6Dx/cvMt70ZGfhHfgaAEu+PPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Helge Deller <deller@gmx.de>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-parisc@vger.kernel.org,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/160] tty: vt: make consw::con_switch() return a bool
-Date: Tue,  8 Jul 2025 18:21:32 +0200
-Message-ID: <20250708162233.072507233@linuxfoundation.org>
+Subject: [PATCH 5.15 038/160] f2fs: dont over-report free space or inodes in statvfs
+Date: Tue,  8 Jul 2025 18:21:15 +0200
+Message-ID: <20250708162232.588311860@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -56,191 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8d5cc8eed738e3202379722295c626cba0849785 ]
+[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
 
-The non-zero (true) return value from consw::con_switch() means a redraw
-is needed. So make this return type a bool explicitly instead of int.
-The latter might imply that -Eerrors are expected. They are not.
+This fixes an analogus bug that was fixed in modern filesystems:
+a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
+inodes in statvfs")
+b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
+or inodes in statvfs")
+where statfs can report misleading / incorrect information where
+project quota is enabled, and the free space is less than the
+remaining quota.
 
-And document the hook.
+This commit will resolve a test failure in generic/762 which tests
+for this bug.
 
-Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Cc: Helge Deller <deller@gmx.de>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-parisc@vger.kernel.org
-Tested-by: Helge Deller <deller@gmx.de> # parisc STI console
-Link: https://lore.kernel.org/r/20240122110401.7289-31-jirislaby@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 03bcbbb3995b ("dummycon: Trigger redraw when switching consoles with deferred takeover")
+generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
+#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
+#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
+#    @@ -6,8 +6,10 @@
+#     root blocks2 is in range
+#     dir blocks2 is in range
+#     root bavail2 is in range
+#    -dir bavail2 is in range
+#    +dir bavail2 has value of 1539066
+#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
+#     root blocks3 is in range
+#    ...
+#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
+
+HINT: You _MAY_ be missing kernel fix:
+      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
+
+Cc: stable@kernel.org
+Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vt.c                 | 2 +-
- drivers/video/console/dummycon.c    | 4 ++--
- drivers/video/console/mdacon.c      | 4 ++--
- drivers/video/console/newport_con.c | 4 ++--
- drivers/video/console/sticon.c      | 4 ++--
- drivers/video/console/vgacon.c      | 4 ++--
- drivers/video/fbdev/core/fbcon.c    | 6 +++---
- include/linux/console.h             | 4 +++-
- 8 files changed, 17 insertions(+), 15 deletions(-)
+ fs/f2fs/super.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index 765db5a7d5f52..a6e0c803e96ec 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -1014,7 +1014,7 @@ void redraw_screen(struct vc_data *vc, int is_switch)
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 194d3f93ac5f2..b9da3074a1af8 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1737,26 +1737,32 @@ static int f2fs_statfs_project(struct super_block *sb,
+ 
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
+ 					dquot->dq_dqb.dqb_bhardlimit);
+-	if (limit)
+-		limit >>= sb->s_blocksize_bits;
++	limit >>= sb->s_blocksize_bits;
++
++	if (limit) {
++		uint64_t remaining = 0;
+ 
+-	if (limit && buf->f_blocks > limit) {
+ 		curblock = (dquot->dq_dqb.dqb_curspace +
+ 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
+-		buf->f_blocks = limit;
+-		buf->f_bfree = buf->f_bavail =
+-			(buf->f_blocks > curblock) ?
+-			 (buf->f_blocks - curblock) : 0;
++		if (limit > curblock)
++			remaining = limit - curblock;
++
++		buf->f_blocks = min(buf->f_blocks, limit);
++		buf->f_bfree = min(buf->f_bfree, remaining);
++		buf->f_bavail = min(buf->f_bavail, remaining);
  	}
  
- 	if (redraw) {
--		int update;
-+		bool update;
- 		int old_was_color = vc->vc_can_do_color;
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
+ 					dquot->dq_dqb.dqb_ihardlimit);
  
- 		set_origin(vc);
-diff --git a/drivers/video/console/dummycon.c b/drivers/video/console/dummycon.c
-index 6918014b02408..d701f2b51f5b1 100644
---- a/drivers/video/console/dummycon.c
-+++ b/drivers/video/console/dummycon.c
-@@ -119,9 +119,9 @@ static bool dummycon_scroll(struct vc_data *vc, unsigned int top,
- 	return false;
- }
- 
--static int dummycon_switch(struct vc_data *vc)
-+static bool dummycon_switch(struct vc_data *vc)
- {
--	return 0;
-+	return false;
- }
- 
- /*
-diff --git a/drivers/video/console/mdacon.c b/drivers/video/console/mdacon.c
-index 1ddbb6cd5b0ca..26b41a8f36c87 100644
---- a/drivers/video/console/mdacon.c
-+++ b/drivers/video/console/mdacon.c
-@@ -454,9 +454,9 @@ static void mdacon_clear(struct vc_data *c, unsigned int y, unsigned int x,
- 	scr_memsetw(dest, eattr, width * 2);
- }
- 
--static int mdacon_switch(struct vc_data *c)
-+static bool mdacon_switch(struct vc_data *c)
- {
--	return 1;	/* redrawing needed */
-+	return true;	/* redrawing needed */
- }
- 
- static int mdacon_blank(struct vc_data *c, int blank, int mode_switch)
-diff --git a/drivers/video/console/newport_con.c b/drivers/video/console/newport_con.c
-index 5dac00c825946..1ebb18bf10983 100644
---- a/drivers/video/console/newport_con.c
-+++ b/drivers/video/console/newport_con.c
-@@ -462,7 +462,7 @@ static void newport_cursor(struct vc_data *vc, int mode)
- 	}
- }
- 
--static int newport_switch(struct vc_data *vc)
-+static bool newport_switch(struct vc_data *vc)
- {
- 	static int logo_drawn = 0;
- 
-@@ -476,7 +476,7 @@ static int newport_switch(struct vc_data *vc)
- 		}
+-	if (limit && buf->f_files > limit) {
+-		buf->f_files = limit;
+-		buf->f_ffree =
+-			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
+-			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
++	if (limit) {
++		uint64_t remaining = 0;
++
++		if (limit > dquot->dq_dqb.dqb_curinodes)
++			remaining = limit - dquot->dq_dqb.dqb_curinodes;
++
++		buf->f_files = min(buf->f_files, limit);
++		buf->f_ffree = min(buf->f_ffree, remaining);
  	}
  
--	return 1;
-+	return true;
- }
- 
- static int newport_blank(struct vc_data *c, int blank, int mode_switch)
-diff --git a/drivers/video/console/sticon.c b/drivers/video/console/sticon.c
-index 58e983b18f1f4..6b82194a8ef36 100644
---- a/drivers/video/console/sticon.c
-+++ b/drivers/video/console/sticon.c
-@@ -309,9 +309,9 @@ static void sticon_clear(struct vc_data *conp, unsigned int sy, unsigned int sx,
- 	      conp->vc_video_erase_char, font_data[conp->vc_num]);
- }
- 
--static int sticon_switch(struct vc_data *conp)
-+static bool sticon_switch(struct vc_data *conp)
- {
--    return 1;	/* needs refreshing */
-+    return true;	/* needs refreshing */
- }
- 
- static int sticon_blank(struct vc_data *c, int blank, int mode_switch)
-diff --git a/drivers/video/console/vgacon.c b/drivers/video/console/vgacon.c
-index 54d79edbe85e1..448aede31b946 100644
---- a/drivers/video/console/vgacon.c
-+++ b/drivers/video/console/vgacon.c
-@@ -616,7 +616,7 @@ static int vgacon_doresize(struct vc_data *c,
- 	return 0;
- }
- 
--static int vgacon_switch(struct vc_data *c)
-+static bool vgacon_switch(struct vc_data *c)
- {
- 	int x = c->vc_cols * VGA_FONTWIDTH;
- 	int y = c->vc_rows * c->vc_cell_height;
-@@ -645,7 +645,7 @@ static int vgacon_switch(struct vc_data *c)
- 			vgacon_doresize(c, c->vc_cols, c->vc_rows);
- 	}
- 
--	return 0;		/* Redrawing not needed */
-+	return false;		/* Redrawing not needed */
- }
- 
- static void vga_set_palette(struct vc_data *vc, const unsigned char *table)
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 7467b7a27ce2f..1ce767de96c11 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2043,7 +2043,7 @@ static int fbcon_resize(struct vc_data *vc, unsigned int width,
- 	return 0;
- }
- 
--static int fbcon_switch(struct vc_data *vc)
-+static bool fbcon_switch(struct vc_data *vc)
- {
- 	struct fb_info *info, *old_info = NULL;
- 	struct fbcon_ops *ops;
-@@ -2166,9 +2166,9 @@ static int fbcon_switch(struct vc_data *vc)
- 			      vc->vc_origin + vc->vc_size_row * vc->vc_top,
- 			      vc->vc_size_row * (vc->vc_bottom -
- 						 vc->vc_top) / 2);
--		return 0;
-+		return false;
- 	}
--	return 1;
-+	return true;
- }
- 
- static void fbcon_generic_blank(struct vc_data *vc, struct fb_info *info,
-diff --git a/include/linux/console.h b/include/linux/console.h
-index bd7f3a6a64cd0..e2862542a162d 100644
---- a/include/linux/console.h
-+++ b/include/linux/console.h
-@@ -40,6 +40,8 @@ enum vc_intensity;
-  * @con_scroll: move lines from @top to @bottom in direction @dir by @lines.
-  *		Return true if no generic handling should be done.
-  *		Invoked by csi_M and printing to the console.
-+ * @con_switch: notifier about the console switch; it is supposed to return
-+ *		true if a redraw is needed.
-  * @con_set_palette: sets the palette of the console to @table (optional)
-  * @con_scrolldelta: the contents of the console should be scrolled by @lines.
-  *		     Invoked by user. (optional)
-@@ -58,7 +60,7 @@ struct consw {
- 	bool	(*con_scroll)(struct vc_data *vc, unsigned int top,
- 			unsigned int bottom, enum con_scroll dir,
- 			unsigned int lines);
--	int	(*con_switch)(struct vc_data *vc);
-+	bool	(*con_switch)(struct vc_data *vc);
- 	int	(*con_blank)(struct vc_data *vc, int blank, int mode_switch);
- 	int	(*con_font_set)(struct vc_data *vc, struct console_font *font,
- 			unsigned int flags);
+ 	spin_unlock(&dquot->dq_dqb_lock);
 -- 
 2.39.5
 
