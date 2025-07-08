@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CF22DECBD;
-	Tue,  8 Jul 2025 16:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720152DC34C;
+	Tue,  8 Jul 2025 16:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993908; cv=none; b=RkHhs4iM5Y0TbdtH80LAegiKZwKJxKsqjJ7jJ746CPdB0hwrVdAIkDQhSoHInTNRBrf8xirz+J6r781y0yK/X0YXHZMJsudUrsx/5hZYObiaFkW+JnRB2Fsk6agYJIOAVOTiLNHrltJuxsOrHqCIGG65YaLiZsz11oRQDYUamL0=
+	t=1751993911; cv=none; b=kXrfaPRkLYFWaFId1RwViXBVXW6w6i7IkNW3nkhUj/crDNvm03W7PBc4KmGgP/uYsT6rnN3Ry+C88XsPMScp/VHCCuk4X1gV4WCUFXyMAcbVDFySahtV2o0rdCshOyVQEQrt4PBZruhMFt6VHn71Jo+0AWp5dpXSbz/pSePGEG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993908; c=relaxed/simple;
-	bh=D3TavQ9uIqTIwhWQrj1ois90ieOo4GCxheptripsoiI=;
+	s=arc-20240116; t=1751993911; c=relaxed/simple;
+	bh=S9BlATTaOfhzkEZpMKLkx27SHTSQgGjxINl/FT7Ip3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmKGEEQtyuEj5f/Qv3BWpIHe1xgPnGXWsjb76V+ujR+hLIVt3ARaJSKWpkFyL+/QEdOvLXnJbPA40yoYklimo2MMhlQ4lsQP9yk3tK4T09Mx5f08m5c2Zvx1DfrfcgwegNWMjViHWVEq5ZFhk0u4frBguJ3pINYF+20ZjI/otfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqbIxdxA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6KtJD36jRHDkNKZcn6HjoHSHFoGZAF8BmthJjld9H7+JHhnJexf+D731OggGs/qTI+QmAiXgSAaw5ZhHsZ8sh1M6Q2yRHi8Ha3RAYzHA6KxBfE6YsFZ8wiCPnXU3kJW6aSuvgk2wuYUo8hva/lGGC1cExP8+9McnAXN4TRlA1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHhCbaRQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqbIxdxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97F4C4CEED;
-	Tue,  8 Jul 2025 16:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHhCbaRQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1ECFC4CEED;
+	Tue,  8 Jul 2025 16:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993908;
-	bh=D3TavQ9uIqTIwhWQrj1ois90ieOo4GCxheptripsoiI=;
+	s=korg; t=1751993911;
+	bh=S9BlATTaOfhzkEZpMKLkx27SHTSQgGjxINl/FT7Ip3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SqbIxdxAvCM9tc4oweTgdnYrUP7u2H6jwY78DUVThoq8dNbR94LxsZ5IUZv7XsA8i
-	 7ZS90LInh+4Nt4bMvsvs4yxgNux29YwVh4cKpm8JjaNzwtvBf0+fZZDguu4VkM5UIc
-	 6vW8327bgRkKa2k7vPz29wZV2o3nRU7dq5dGKi14=
+	b=dHhCbaRQ5RaWspQonu8tCj2EQn/GBhFjwzcsmqcbNH6q1acxUUx1QxRMLg9+D5072
+	 ffHEp5DVOCLhL8YG84duIzeALafRGMpt1q6dt1xpeFW2+YugTKRhtfW3bZJcOVM5yw
+	 ZPhk1yBxeSjZMJlfJ8E5MXuGndDH4JCFwLaMkoG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 059/160] i2c: robotfuzz-osif: disable zero-length read messages
-Date: Tue,  8 Jul 2025 18:21:36 +0200
-Message-ID: <20250708162233.185130115@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.15 060/160] s390/pkey: Prevent overflow in size calculation for memdup_user()
+Date: Tue,  8 Jul 2025 18:21:37 +0200
+Message-ID: <20250708162233.212561374@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -50,47 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 56ad91c1aa9c18064348edf69308080b03c9dc48 upstream.
+commit 7360ee47599af91a1d5f4e74d635d9408a54e489 upstream.
 
-This driver passes the length of an i2c_msg directly to
-usb_control_msg(). If the message is now a read and of length 0, it
-violates the USB protocol and a warning will be printed. Enable the
-I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
-read messages altogether.
+Number of apqn target list entries contained in 'nr_apqns' variable is
+determined by userspace via an ioctl call so the result of the product in
+calculation of size passed to memdup_user() may overflow.
 
-Fixes: 83e53a8f120f ("i2c: Add bus driver for for OSIF USB i2c device.")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: <stable@vger.kernel.org> # v3.14+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250522064234.3721-2-wsa+renesas@sang-engineering.com
+In this case the actual size of the allocated area and the value
+describing it won't be in sync leading to various types of unpredictable
+behaviour later.
+
+Use a proper memdup_array_user() helper which returns an error if an
+overflow is detected. Note that it is different from when nr_apqns is
+initially zero - that case is considered valid and should be handled in
+subsequent pkey_handler implementations.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: f2bbc96e7cfa ("s390/pkey: add CCA AES cipher key support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250611192011.206057-1-pchelkin@ispras.ru
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-robotfuzz-osif.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/s390/crypto/pkey_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-robotfuzz-osif.c
-+++ b/drivers/i2c/busses/i2c-robotfuzz-osif.c
-@@ -111,6 +111,11 @@ static u32 osif_func(struct i2c_adapter
- 	return I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL;
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -1134,7 +1134,7 @@ static void *_copy_apqns_from_user(void
+ 	if (!uapqns || nr_apqns == 0)
+ 		return NULL;
+ 
+-	return memdup_user(uapqns, nr_apqns * sizeof(struct pkey_apqn));
++	return memdup_array_user(uapqns, nr_apqns, sizeof(struct pkey_apqn));
  }
  
-+/* prevent invalid 0-length usb_control_msg */
-+static const struct i2c_adapter_quirks osif_quirks = {
-+	.flags = I2C_AQ_NO_ZERO_LEN_READ,
-+};
-+
- static const struct i2c_algorithm osif_algorithm = {
- 	.master_xfer	= osif_xfer,
- 	.functionality	= osif_func,
-@@ -143,6 +148,7 @@ static int osif_probe(struct usb_interfa
- 
- 	priv->adapter.owner = THIS_MODULE;
- 	priv->adapter.class = I2C_CLASS_HWMON;
-+	priv->adapter.quirks = &osif_quirks;
- 	priv->adapter.algo = &osif_algorithm;
- 	priv->adapter.algo_data = priv;
- 	snprintf(priv->adapter.name, sizeof(priv->adapter.name),
+ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
 
 
