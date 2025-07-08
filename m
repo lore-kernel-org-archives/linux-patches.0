@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C70F2A1BA;
-	Tue,  8 Jul 2025 16:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C4B2A1BA;
+	Tue,  8 Jul 2025 16:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992101; cv=none; b=HP1jGxWEmzd9i2Q6IdxwUK+Pgxp24E6mnCDOuXXnmKKyJeRDtd0Ftghpj0vjSUid+zQmYZcsCIIo/IQoNSBLLf5p/k5RAT1RbKWlW2xoZO29/CLsZzaN1frX/nuGTWpPPVWU2RdA7DN+4m06suXvJAiWgbiGSBHOO/bVrP38o+4=
+	t=1751992104; cv=none; b=kPJyJ1kt2upaVDqNDNT/Wg9D0dwj4EUjSX7UKGKNM2j6njjGRKAAqKeyDifL9ILNo5ozK/EgcqUoqu+Wr0ontvFQyyU9VZnHZuG7AsiFmvNCFhusgv2RnmetxLZ4v6bcFVcKSVt9u3JKfiEF2SKK/s7hC/jstEu8DQ6j7uDxSVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992101; c=relaxed/simple;
-	bh=INUKDURqRsZ1xqUnlQrVVXJJOhcGaS448tx3V41CJe0=;
+	s=arc-20240116; t=1751992104; c=relaxed/simple;
+	bh=K1qx208vhqLS0VRIGhGteYTM3cuRdeeRDrw7OjCYYuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/0ZukooCZqheguYi0kgPaqGxVvz9OSgE/Giys3OxgXHaHi9NPKw1YgebUrg7vCaRHbHJlZode1Ik0Soz267o+ep9pmXsVSwgIx59Wsg+p7lDKCWUOGToYWHM65thAwKfQm/tLRrP0RrRHnTR+m5f5SAXQue14+Bt+MxZGU4cMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IioyN/wa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yi64LWTOGxPmA7/Ym63YR1b6ILXy/+dbCK3JyzAD73mPHPjfPE4cNIwD6ZRTKPcgfRgR/Wzxk5NxBpi2+Q/PR+B54B1TNc0h6kiyIgnAOboLZG17SkVduPs1V4hh4LD+wzG4tlZbE8yzkh1kefZKYw5gqrqkvrLmcN5XS06WpOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGTioVvI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IioyN/wa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2382AC4CEED;
-	Tue,  8 Jul 2025 16:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGTioVvI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E96FC4CEED;
+	Tue,  8 Jul 2025 16:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992101;
-	bh=INUKDURqRsZ1xqUnlQrVVXJJOhcGaS448tx3V41CJe0=;
+	s=korg; t=1751992104;
+	bh=K1qx208vhqLS0VRIGhGteYTM3cuRdeeRDrw7OjCYYuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IioyN/waAUMI1wwaGXfN2II48QkAPA4S4d0OyUoNY1d3pLmO3TCR3y+EC1gglAFg5
-	 ALBm7PzYawBRV/7P83vGZQnngS37OcPFwH3evdBc6TiPjps2UX82/FNrAHmMbPu+gK
-	 8r2XL9hB6eOrDhMIHmyhyufB7Rbs1hMdN2qEaViI=
+	b=AGTioVvIek6PJ2JTR8P5/FWXVf7r/KxX0fGLKeH26aH1jYLz04SYh8h0ND6bAgXmc
+	 Mc09tiMye8Cf0j+IcSlCMxoJdQg6iSH0LlS8DRBFNO+M+JfxC99Svb6luCLXKrBhKH
+	 FEUElQlJXyfXK0D/TS3cSChESeMcPzYOyDJCcxPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Quang Minh <minhquangbui99@gmail.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Julian Ruess <julianr@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 59/81] virtio-net: ensure the received length does not exceed allocated size
-Date: Tue,  8 Jul 2025 18:23:51 +0200
-Message-ID: <20250708162226.863492515@linuxfoundation.org>
+Subject: [PATCH 6.1 60/81] s390/pci: Fix stale function handles in error handling
+Date: Tue,  8 Jul 2025 18:23:52 +0200
+Message-ID: <20250708162226.893789793@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -52,113 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Quang Minh <minhquangbui99@gmail.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 315dbdd7cdf6aa533829774caaf4d25f1fd20e73 ]
+[ Upstream commit 45537926dd2aaa9190ac0fac5a0fbeefcadfea95 ]
 
-In xdp_linearize_page, when reading the following buffers from the ring,
-we forget to check the received length with the true allocate size. This
-can lead to an out-of-bound read. This commit adds that missing check.
+The error event information for PCI error events contains a function
+handle for the respective function. This handle is generally captured at
+the time the error event was recorded. Due to delays in processing or
+cascading issues, it may happen that during firmware recovery multiple
+events are generated. When processing these events in order Linux may
+already have recovered an affected function making the event information
+stale. Fix this by doing an unconditional CLP List PCI function
+retrieving the current function handle with the zdev->state_lock held
+and ignoring the event if its function handle is stale.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 4941d472bf95 ("virtio-net: do not reset during XDP set")
-Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://patch.msgid.link/20250630144212.48471-2-minhquangbui99@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 4cdf2f4e24ff ("s390/pci: implement minimal PCI error recovery")
+Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 38 ++++++++++++++++++++++++++++++++++----
- 1 file changed, 34 insertions(+), 4 deletions(-)
+ arch/s390/pci/pci_event.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 11aa0a7d54cd7..1b4cf8eb7e136 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -440,6 +440,26 @@ static unsigned int mergeable_ctx_to_truesize(void *mrg_ctx)
- 	return (unsigned long)mrg_ctx & ((1 << MRG_CTX_HEADER_SHIFT) - 1);
- }
+diff --git a/arch/s390/pci/pci_event.c b/arch/s390/pci/pci_event.c
+index d969f36bf186f..dc512c8f82324 100644
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -257,6 +257,8 @@ static void __zpci_event_error(struct zpci_ccdf_err *ccdf)
+ 	struct zpci_dev *zdev = get_zdev_by_fid(ccdf->fid);
+ 	struct pci_dev *pdev = NULL;
+ 	pci_ers_result_t ers_res;
++	u32 fh = 0;
++	int rc;
  
-+static int check_mergeable_len(struct net_device *dev, void *mrg_ctx,
-+			       unsigned int len)
-+{
-+	unsigned int headroom, tailroom, room, truesize;
-+
-+	truesize = mergeable_ctx_to_truesize(mrg_ctx);
-+	headroom = mergeable_ctx_to_headroom(mrg_ctx);
-+	tailroom = headroom ? sizeof(struct skb_shared_info) : 0;
-+	room = SKB_DATA_ALIGN(headroom + tailroom);
-+
-+	if (len > truesize - room) {
-+		pr_debug("%s: rx error: len %u exceeds truesize %lu\n",
-+			 dev->name, len, (unsigned long)(truesize - room));
-+		DEV_STATS_INC(dev, rx_length_errors);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
- /* Called from bottom half context */
- static struct sk_buff *page_to_skb(struct virtnet_info *vi,
- 				   struct receive_queue *rq,
-@@ -719,7 +739,8 @@ static unsigned int virtnet_get_headroom(struct virtnet_info *vi)
-  * across multiple buffers (num_buf > 1), and we make sure buffers
-  * have enough headroom.
-  */
--static struct page *xdp_linearize_page(struct receive_queue *rq,
-+static struct page *xdp_linearize_page(struct net_device *dev,
-+				       struct receive_queue *rq,
- 				       u16 *num_buf,
- 				       struct page *p,
- 				       int offset,
-@@ -739,18 +760,27 @@ static struct page *xdp_linearize_page(struct receive_queue *rq,
- 	memcpy(page_address(page) + page_off, page_address(p) + offset, *len);
- 	page_off += *len;
+ 	zpci_dbg(3, "err fid:%x, fh:%x, pec:%x\n",
+ 		 ccdf->fid, ccdf->fh, ccdf->pec);
+@@ -264,9 +266,23 @@ static void __zpci_event_error(struct zpci_ccdf_err *ccdf)
+ 	zpci_err_hex(ccdf, sizeof(*ccdf));
  
-+	/* Only mergeable mode can go inside this while loop. In small mode,
-+	 * *num_buf == 1, so it cannot go inside.
-+	 */
- 	while (--*num_buf) {
- 		unsigned int buflen;
- 		void *buf;
-+		void *ctx;
- 		int off;
- 
--		buf = virtqueue_get_buf(rq->vq, &buflen);
-+		buf = virtqueue_get_buf_ctx(rq->vq, &buflen, &ctx);
- 		if (unlikely(!buf))
- 			goto err_buf;
- 
- 		p = virt_to_head_page(buf);
- 		off = buf - page_address(p);
- 
-+		if (check_mergeable_len(dev, ctx, buflen)) {
-+			put_page(p);
-+			goto err_buf;
+ 	if (zdev) {
++		mutex_lock(&zdev->state_lock);
++		rc = clp_refresh_fh(zdev->fid, &fh);
++		if (rc) {
++			mutex_unlock(&zdev->state_lock);
++			goto no_pdev;
 +		}
-+
- 		/* guard against a misconfigured or uncooperative backend that
- 		 * is sending packet larger than the MTU.
- 		 */
-@@ -831,7 +861,7 @@ static struct sk_buff *receive_small(struct net_device *dev,
- 			headroom = vi->hdr_len + header_offset;
- 			buflen = SKB_DATA_ALIGN(GOOD_PACKET_LEN + headroom) +
- 				 SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
--			xdp_page = xdp_linearize_page(rq, &num_buf, page,
-+			xdp_page = xdp_linearize_page(dev, rq, &num_buf, page,
- 						      offset, header_offset,
- 						      &tlen);
- 			if (!xdp_page)
-@@ -1006,7 +1036,7 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
- 		if (unlikely(num_buf > 1 ||
- 			     headroom < virtnet_get_headroom(vi))) {
- 			/* linearize data for XDP */
--			xdp_page = xdp_linearize_page(rq, &num_buf,
-+			xdp_page = xdp_linearize_page(dev, rq, &num_buf,
- 						      page, offset,
- 						      VIRTIO_XDP_HEADROOM,
- 						      &len);
++		if (!fh || ccdf->fh != fh) {
++			/* Ignore events with stale handles */
++			zpci_dbg(3, "err fid:%x, fh:%x (stale %x)\n",
++				 ccdf->fid, fh, ccdf->fh);
++			mutex_unlock(&zdev->state_lock);
++			goto no_pdev;
++		}
+ 		zpci_update_fh(zdev, ccdf->fh);
+ 		if (zdev->zbus->bus)
+ 			pdev = pci_get_slot(zdev->zbus->bus, zdev->devfn);
++		mutex_unlock(&zdev->state_lock);
+ 	}
+ 
+ 	pr_err("%s: Event 0x%x reports an error for PCI function 0x%x\n",
 -- 
 2.39.5
 
