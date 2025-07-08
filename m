@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E83A2E1C74;
-	Tue,  8 Jul 2025 17:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5622A2DD5EF;
+	Tue,  8 Jul 2025 17:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994098; cv=none; b=MF2/2Gb6LC6yGpJ7btHrgaE7a6cxvsAtq9peGeAfBALyhlrzb0E2LoaAORepTmSV2d4dD+kvq8+oEGBOQJcES0G0XB6fxJPjmmbeqhuY542/GwyseVxOJQE+pvUIE1ZzLxyZa01n9HTK1gqzKSzhvHe03ddTp9+b3JaVrUslzSQ=
+	t=1751994101; cv=none; b=HrptvRkm46uW/SY7oCRfqKmaMG+2OvKaG6CY1rsEwzPcZTwQ5KAE5NG8k8rAd4vzzkw8bZTvK631uV2kFYH/tqgSa/kxinPlMYH59UESmChcD+Tu8K5riqjkUVjc7ZGYI9XR+u6OhleOtM8WUShex7D5cbhEODiS+7tcrHzUmps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994098; c=relaxed/simple;
-	bh=TZeeP8+h054JPpUkpD0MU7DBCwcCqKcdRYhIUdgtHIc=;
+	s=arc-20240116; t=1751994101; c=relaxed/simple;
+	bh=THb4lH6pxW8NTYy+Pb69RX08CIhq3q5fM4vqDGPayHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfBm5dLHm/AjJl1BlqKKxX6hFOH59HmUArjn/DCTVFYMjkTGkxdZ62Bb5dbWA5rr4LmD63gC/xmXl+ExoY4/ZG3It8ePIPkJrTy3jnV8Vb3zhDUuhDLBk+JrYoQ6k9adaIFP/TLO68Dz4VkIwSE9s+wdau19nFOP+/z0NMNCEzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqbXuGHS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YqgeFa01tYxOB/RehdBuPCnWCAYSNLUpqE3DPWzCO55DDx5vj4mlAJfSw442i4+hI3KPFh5agl8PPy3gVYnv/1bPU9u09zlIJqNWAAuG4ULdVPK/uJAGNY4VukUjOE8jwq4lSonhu4Tu3S/cKAuhhY2udIfX1HiJB6+AcocGEOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8HQJ/NZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqbXuGHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6EDC4CEED;
-	Tue,  8 Jul 2025 17:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8HQJ/NZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D556DC4CEED;
+	Tue,  8 Jul 2025 17:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994098;
-	bh=TZeeP8+h054JPpUkpD0MU7DBCwcCqKcdRYhIUdgtHIc=;
+	s=korg; t=1751994101;
+	bh=THb4lH6pxW8NTYy+Pb69RX08CIhq3q5fM4vqDGPayHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqbXuGHSyAUU4DHqyCyIbmizBWJdY81CzoSFqoMzTVoWBCOjZdP2ZqOIBzHgXt9E0
-	 Tce+99J6vgBxgIpO++KhkyHb0vL2wQRdyORmTFNlJ5EJSVdrZwDygfgZTjlZ6rpYSV
-	 phqxv1rSfBRV/MvP6psa3qqAqnoCvtg2wVo4XPjg=
+	b=m8HQJ/NZ2RnuxiyEcLYdsK/RddMksCl9iyPfGP+KbuaIl4QJ51U69YnqThEFY+Ts3
+	 /2DAUWZ6dN/TPVM10kJf4QSZTjuzOEXaLtfj/giozxsmcJGDMXV49x5/9UtUqpgzfc
+	 B1XwTaJOWiINq51zqJ2eQyGKf/nGr98aNN0smfsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lion Ackermann <nnamrec@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/160] nui: Fix dma_mapping_error() check
-Date: Tue,  8 Jul 2025 18:22:41 +0200
-Message-ID: <20250708162234.866268141@linuxfoundation.org>
+Subject: [PATCH 5.15 125/160] net/sched: Always pass notifications when child class becomes empty
+Date: Tue,  8 Jul 2025 18:22:42 +0200
+Message-ID: <20250708162234.889868325@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,141 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Lion Ackermann <nnamrec@gmail.com>
 
-[ Upstream commit 561aa0e22b70a5e7246b73d62a824b3aef3fc375 ]
+[ Upstream commit 103406b38c600fec1fe375a77b27d87e314aea09 ]
 
-dma_map_XXX() functions return values DMA_MAPPING_ERROR as error values
-which is often ~0.  The error value should be tested with
-dma_mapping_error().
+Certain classful qdiscs may invoke their classes' dequeue handler on an
+enqueue operation. This may unexpectedly empty the child qdisc and thus
+make an in-flight class passive via qlen_notify(). Most qdiscs do not
+expect such behaviour at this point in time and may re-activate the
+class eventually anyways which will lead to a use-after-free.
 
-This patch creates a new function in niu_ops to test if the mapping
-failed.  The test is fixed in niu_rbr_add_page(), added in
-niu_start_xmit() and the successfully mapped pages are unmaped upon error.
+The referenced fix commit attempted to fix this behavior for the HFSC
+case by moving the backlog accounting around, though this turned out to
+be incomplete since the parent's parent may run into the issue too.
+The following reproducer demonstrates this use-after-free:
 
-Fixes: ec2deec1f352 ("niu: Fix to check for dma mapping errors.")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    tc qdisc add dev lo root handle 1: drr
+    tc filter add dev lo parent 1: basic classid 1:1
+    tc class add dev lo parent 1: classid 1:1 drr
+    tc qdisc add dev lo parent 1:1 handle 2: hfsc def 1
+    tc class add dev lo parent 2: classid 2:1 hfsc rt m1 8 d 1 m2 0
+    tc qdisc add dev lo parent 2:1 handle 3: netem
+    tc qdisc add dev lo parent 3:1 handle 4: blackhole
+
+    echo 1 | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888
+    tc class delete dev lo classid 1:1
+    echo 1 | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888
+
+Since backlog accounting issues leading to a use-after-frees on stale
+class pointers is a recurring pattern at this point, this patch takes
+a different approach. Instead of trying to fix the accounting, the patch
+ensures that qdisc_tree_reduce_backlog always calls qlen_notify when
+the child qdisc is empty. This solves the problem because deletion of
+qdiscs always involves a call to qdisc_reset() and / or
+qdisc_purge_queue() which ultimately resets its qlen to 0 thus causing
+the following qdisc_tree_reduce_backlog() to report to the parent. Note
+that this may call qlen_notify on passive classes multiple times. This
+is not a problem after the recent patch series that made all the
+classful qdiscs qlen_notify() handlers idempotent.
+
+Fixes: 3f981138109f ("sch_hfsc: Fix qlen accounting bug when using peek in hfsc_enqueue()")
+Signed-off-by: Lion Ackermann <nnamrec@gmail.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/d912cbd7-193b-4269-9857-525bee8bbb6a@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/niu.c | 31 ++++++++++++++++++++++++++++++-
- drivers/net/ethernet/sun/niu.h |  4 ++++
- 2 files changed, 34 insertions(+), 1 deletion(-)
+ net/sched/sch_api.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
-index 3fdc7c9824a39..8795063432838 100644
---- a/drivers/net/ethernet/sun/niu.c
-+++ b/drivers/net/ethernet/sun/niu.c
-@@ -3317,7 +3317,7 @@ static int niu_rbr_add_page(struct niu *np, struct rx_ring_info *rp,
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index d9ce273ba43d8..222921b4751f3 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -768,15 +768,12 @@ static u32 qdisc_alloc_handle(struct net_device *dev)
  
- 	addr = np->ops->map_page(np->device, page, 0,
- 				 PAGE_SIZE, DMA_FROM_DEVICE);
--	if (!addr) {
-+	if (np->ops->mapping_error(np->device, addr)) {
- 		__free_page(page);
- 		return -ENOMEM;
- 	}
-@@ -6654,6 +6654,8 @@ static netdev_tx_t niu_start_xmit(struct sk_buff *skb,
- 	len = skb_headlen(skb);
- 	mapping = np->ops->map_single(np->device, skb->data,
- 				      len, DMA_TO_DEVICE);
-+	if (np->ops->mapping_error(np->device, mapping))
-+		goto out_drop;
- 
- 	prod = rp->prod;
- 
-@@ -6695,6 +6697,8 @@ static netdev_tx_t niu_start_xmit(struct sk_buff *skb,
- 		mapping = np->ops->map_page(np->device, skb_frag_page(frag),
- 					    skb_frag_off(frag), len,
- 					    DMA_TO_DEVICE);
-+		if (np->ops->mapping_error(np->device, mapping))
-+			goto out_unmap;
- 
- 		rp->tx_buffs[prod].skb = NULL;
- 		rp->tx_buffs[prod].mapping = mapping;
-@@ -6719,6 +6723,19 @@ static netdev_tx_t niu_start_xmit(struct sk_buff *skb,
- out:
- 	return NETDEV_TX_OK;
- 
-+out_unmap:
-+	while (i--) {
-+		const skb_frag_t *frag;
-+
-+		prod = PREVIOUS_TX(rp, prod);
-+		frag = &skb_shinfo(skb)->frags[i];
-+		np->ops->unmap_page(np->device, rp->tx_buffs[prod].mapping,
-+				    skb_frag_size(frag), DMA_TO_DEVICE);
-+	}
-+
-+	np->ops->unmap_single(np->device, rp->tx_buffs[rp->prod].mapping,
-+			      skb_headlen(skb), DMA_TO_DEVICE);
-+
- out_drop:
- 	rp->tx_errors++;
- 	kfree_skb(skb);
-@@ -9612,6 +9629,11 @@ static void niu_pci_unmap_single(struct device *dev, u64 dma_address,
- 	dma_unmap_single(dev, dma_address, size, direction);
- }
- 
-+static int niu_pci_mapping_error(struct device *dev, u64 addr)
-+{
-+	return dma_mapping_error(dev, addr);
-+}
-+
- static const struct niu_ops niu_pci_ops = {
- 	.alloc_coherent	= niu_pci_alloc_coherent,
- 	.free_coherent	= niu_pci_free_coherent,
-@@ -9619,6 +9641,7 @@ static const struct niu_ops niu_pci_ops = {
- 	.unmap_page	= niu_pci_unmap_page,
- 	.map_single	= niu_pci_map_single,
- 	.unmap_single	= niu_pci_unmap_single,
-+	.mapping_error	= niu_pci_mapping_error,
- };
- 
- static void niu_driver_version(void)
-@@ -9985,6 +10008,11 @@ static void niu_phys_unmap_single(struct device *dev, u64 dma_address,
- 	/* Nothing to do.  */
- }
- 
-+static int niu_phys_mapping_error(struct device *dev, u64 dma_address)
-+{
-+	return false;
-+}
-+
- static const struct niu_ops niu_phys_ops = {
- 	.alloc_coherent	= niu_phys_alloc_coherent,
- 	.free_coherent	= niu_phys_free_coherent,
-@@ -9992,6 +10020,7 @@ static const struct niu_ops niu_phys_ops = {
- 	.unmap_page	= niu_phys_unmap_page,
- 	.map_single	= niu_phys_map_single,
- 	.unmap_single	= niu_phys_unmap_single,
-+	.mapping_error	= niu_phys_mapping_error,
- };
- 
- static int niu_of_probe(struct platform_device *op)
-diff --git a/drivers/net/ethernet/sun/niu.h b/drivers/net/ethernet/sun/niu.h
-index 04c215f91fc08..0b169c08b0f2d 100644
---- a/drivers/net/ethernet/sun/niu.h
-+++ b/drivers/net/ethernet/sun/niu.h
-@@ -2879,6 +2879,9 @@ struct tx_ring_info {
- #define NEXT_TX(tp, index) \
- 	(((index) + 1) < (tp)->pending ? ((index) + 1) : 0)
- 
-+#define PREVIOUS_TX(tp, index) \
-+	(((index) - 1) >= 0 ? ((index) - 1) : (((tp)->pending) - 1))
-+
- static inline u32 niu_tx_avail(struct tx_ring_info *tp)
+ void qdisc_tree_reduce_backlog(struct Qdisc *sch, int n, int len)
  {
- 	return (tp->pending -
-@@ -3140,6 +3143,7 @@ struct niu_ops {
- 			  enum dma_data_direction direction);
- 	void (*unmap_single)(struct device *dev, u64 dma_address,
- 			     size_t size, enum dma_data_direction direction);
-+	int (*mapping_error)(struct device *dev, u64 dma_address);
- };
+-	bool qdisc_is_offloaded = sch->flags & TCQ_F_OFFLOADED;
+ 	const struct Qdisc_class_ops *cops;
+ 	unsigned long cl;
+ 	u32 parentid;
+ 	bool notify;
+ 	int drops;
  
- struct niu_link_config {
+-	if (n == 0 && len == 0)
+-		return;
+ 	drops = max_t(int, n, 0);
+ 	rcu_read_lock();
+ 	while ((parentid = sch->parent)) {
+@@ -785,17 +782,8 @@ void qdisc_tree_reduce_backlog(struct Qdisc *sch, int n, int len)
+ 
+ 		if (sch->flags & TCQ_F_NOPARENT)
+ 			break;
+-		/* Notify parent qdisc only if child qdisc becomes empty.
+-		 *
+-		 * If child was empty even before update then backlog
+-		 * counter is screwed and we skip notification because
+-		 * parent class is already passive.
+-		 *
+-		 * If the original child was offloaded then it is allowed
+-		 * to be seem as empty, so the parent is notified anyway.
+-		 */
+-		notify = !sch->q.qlen && !WARN_ON_ONCE(!n &&
+-						       !qdisc_is_offloaded);
++		/* Notify parent qdisc only if child qdisc becomes empty. */
++		notify = !sch->q.qlen;
+ 		/* TODO: perform the search on a per txq basis */
+ 		sch = qdisc_lookup(qdisc_dev(sch), TC_H_MAJ(parentid));
+ 		if (sch == NULL) {
+@@ -804,6 +792,9 @@ void qdisc_tree_reduce_backlog(struct Qdisc *sch, int n, int len)
+ 		}
+ 		cops = sch->ops->cl_ops;
+ 		if (notify && cops->qlen_notify) {
++			/* Note that qlen_notify must be idempotent as it may get called
++			 * multiple times.
++			 */
+ 			cl = cops->find(sch, parentid);
+ 			cops->qlen_notify(sch, cl);
+ 		}
 -- 
 2.39.5
 
