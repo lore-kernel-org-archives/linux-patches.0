@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D722E54C3;
-	Tue,  8 Jul 2025 16:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09D92E5B07;
+	Tue,  8 Jul 2025 16:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992504; cv=none; b=nc6y0jbW0gMzH38+SYqcFSzDXvqr9fGwl3iJm6nApXTdXgXWaT5eakmwWe4uZJVOGPg/4us4kZrqxJMzT/ZsOywpqu8oXItz+LLWSzv95ovk21ZFwwL1wvo1AL5mzPugQ+9SE0CS8+jG9UBwYVymjM+7VQDoOYYu3mEadSlisJ8=
+	t=1751992507; cv=none; b=BSP6Qbp9+UtzUKEKgVvo0/AMMVgkFIz8/UdLaQe7EExxmWWg7BBmfUxVFBg43oj+mzpa8WERhDV5N5FEuwzk47/6XBFttcKlxnpUzW/wbZZltLo7B+JtXOHAl80KCdDjvcPNaNgu/N9Wl6v0fVSneVEapg5dmv9jYTRbCZLnC68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992504; c=relaxed/simple;
-	bh=JYPICu3oMh+of94nzeg2LiCeLkNpEa9MrCoyRhaV1uQ=;
+	s=arc-20240116; t=1751992507; c=relaxed/simple;
+	bh=BAXOkVnoPMw9nrgOfZEoSV9CRSdZyl487TyE6mxu7NA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWoRML7/5zvqQ/dC8V8cH7Y2akjO0Dfukds/5o6uTcJ/HTC3MsZhb5bn5xuZ3fpLxboB33RL/7Cxee9M6h46HpSDQPhtZyzUn7RJIe9W6JvIawPWwXp3bv4ylQ13NLZAXM/OYPZPKWKsqyL5bGGZ8f81vaMR1/8kjN5nqDvO8Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eegaI0AH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEeYnVTGuj29XAjT7CxgSyY6q7Xrj2OH/LmdLF3QyCJXsw/2l7x5tOiv5493h7w34MZ/eMwV2Fn0YMen8EBxMwtn+YMTOmlWSxwnKziZ77B7AeO/yeJ8HE3KWOM8v59P2gB+VmmwmXHc0qALr5bmr6k9oQVOPgl/pI8PjKEqcuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVhLnp/I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eegaI0AH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41851C4CEF8;
-	Tue,  8 Jul 2025 16:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVhLnp/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199DCC4CEED;
+	Tue,  8 Jul 2025 16:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992503;
-	bh=JYPICu3oMh+of94nzeg2LiCeLkNpEa9MrCoyRhaV1uQ=;
+	s=korg; t=1751992506;
+	bh=BAXOkVnoPMw9nrgOfZEoSV9CRSdZyl487TyE6mxu7NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eegaI0AH108bfEVX5jXxHcuM0PNkawvdTTpBPUbDfO3Z7FAdrd9Kc0uUStkJhlmh4
-	 LMMhR4X0ALQwyPM8IAIVKOLlGTrh7DPsYj56kXSQnkZZsuwSdk9ib18zcgbm4qTx0s
-	 QoGJo/t0CHLaHLBVzCNIqOucCqecmV1AYcqdzykA=
+	b=BVhLnp/I0tNkRN4cwfKtKdXmMlez3JuQFMAfi7YQeUVDyjkHDesKQWU8mo7Y0CLzG
+	 Xrx6O7Cou3QTgtlG6PnaqhOL25sQCuuoLpXGDEf8HkfdL3RkNfUnXVglZJtx0VWs+w
+	 bk7u0+eWcO4QS4ntn4ruk94rg+mfFmVGI8xlut3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/132] drm/msm: Fix another leak in the submit error path
-Date: Tue,  8 Jul 2025 18:23:14 +0200
-Message-ID: <20250708162233.061110445@linuxfoundation.org>
+Subject: [PATCH 6.6 084/132] ALSA: sb: Dont allow changing the DMA mode during operations
+Date: Tue,  8 Jul 2025 18:23:15 +0200
+Message-ID: <20250708162233.091337706@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -51,55 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f681c2aa8676a890eacc84044717ab0fd26e058f ]
+[ Upstream commit ed29e073ba93f2d52832804cabdd831d5d357d33 ]
 
-put_unused_fd() doesn't free the installed file, if we've already done
-fd_install().  So we need to also free the sync_file.
+When a PCM stream is already running, one shouldn't change the DMA
+mode via kcontrol, which may screw up the hardware.  Return -EBUSY
+instead.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/653583/
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218185
+Link: https://patch.msgid.link/20250610064322.26787-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/isa/sb/sb16_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 27366304f5d59..bbe4f1665b603 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -763,6 +763,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	struct msm_ringbuffer *ring;
- 	struct msm_submit_post_dep *post_deps = NULL;
- 	struct drm_syncobj **syncobjs_to_reset = NULL;
-+	struct sync_file *sync_file = NULL;
- 	int out_fence_fd = -1;
- 	bool has_ww_ticket = false;
- 	unsigned i;
-@@ -979,7 +980,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	}
- 
- 	if (ret == 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
--		struct sync_file *sync_file = sync_file_create(submit->user_fence);
-+		sync_file = sync_file_create(submit->user_fence);
- 		if (!sync_file) {
- 			ret = -ENOMEM;
- 		} else {
-@@ -1012,8 +1013,11 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- out_unlock:
- 	mutex_unlock(&queue->lock);
- out_post_unlock:
--	if (ret && (out_fence_fd >= 0))
-+	if (ret && (out_fence_fd >= 0)) {
- 		put_unused_fd(out_fence_fd);
-+		if (sync_file)
-+			fput(sync_file->file);
-+	}
- 
- 	if (!IS_ERR_OR_NULL(submit)) {
- 		msm_gem_submit_put(submit);
+diff --git a/sound/isa/sb/sb16_main.c b/sound/isa/sb/sb16_main.c
+index a9b87e159b2d1..5efbd0a41312b 100644
+--- a/sound/isa/sb/sb16_main.c
++++ b/sound/isa/sb/sb16_main.c
+@@ -703,6 +703,9 @@ static int snd_sb16_dma_control_put(struct snd_kcontrol *kcontrol, struct snd_ct
+ 	unsigned char nval, oval;
+ 	int change;
+ 	
++	if (chip->mode & (SB_MODE_PLAYBACK | SB_MODE_CAPTURE))
++		return -EBUSY;
++
+ 	nval = ucontrol->value.enumerated.item[0];
+ 	if (nval > 2)
+ 		return -EINVAL;
 -- 
 2.39.5
 
