@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE088F5B;
-	Tue,  8 Jul 2025 16:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152952DECC4;
+	Tue,  8 Jul 2025 16:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992950; cv=none; b=vFc6e5YBhSVF94iPjKC1vFKc59kfBXnKD30M5r9Jg2zAEbIndSyrfj3C43F5bcV8B51xJqY8AJO8sIshXxVPt3jo8xC+r5FQ87IjTjc7FQu62uMndXQjRXgTXKA0d8RoKPb9D0foJvyzJCH7yVe+ay0VeakCKmubGivy+vBTLOg=
+	t=1751992953; cv=none; b=SHGcWllnMuV4/fHYWH8AbUTjH171CojzRrhzn7uRgUlwh6Wx078U/Ow+REPcKlIkmUlxL+GXiBSZA59ATeAx9wgErI0yO5aLqXOTVptcG6NYqk+w2GYCSDSUmvnthoQoVzHMjYbsEeoELUOscPzV/UGOybOnix/z3pTCrjSqLMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992950; c=relaxed/simple;
-	bh=N7StNm1qv7d2/w9Af7scDGUvKVzYouezUmoLlwDyzD0=;
+	s=arc-20240116; t=1751992953; c=relaxed/simple;
+	bh=bpy/Dif0cQoiz8ABDYfmmDHF9U5r3X07o0pjKjD7hW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fY8lUsEjy+av0YL+/YTf2JjUy+rr4GkXs++tHqaBXF6DRv0ylUcIMy8aQZsuuDzgzmwYK9SaDlKi5tR1ozwK0DyNFfbAASf4kmoqybi66tX3zBaMUtaBX2O1mVf4AR4U31fEvf6xBc6TnWarRb3+wzF864iEcG9fu7to5yuEXCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSFRiFyC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OKU+Ut9liR//TXDMfZm8Dfax2yEi7fMcW8jV1TbkQVt8zHeQyj+JIDCz1blW7TLvnlZP6cQggecUFAA3lA4e8j96iqkG0BEfYNoT0SsZyD1yOlcUoCPJsI2C11zfptA9QkDvqqbEfkmkxlOSYop01RSM/9Fg2GE/OD09YVvBo20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2j1I1+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSFRiFyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC74C4CEED;
-	Tue,  8 Jul 2025 16:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2j1I1+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941CAC4CEED;
+	Tue,  8 Jul 2025 16:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992950;
-	bh=N7StNm1qv7d2/w9Af7scDGUvKVzYouezUmoLlwDyzD0=;
+	s=korg; t=1751992953;
+	bh=bpy/Dif0cQoiz8ABDYfmmDHF9U5r3X07o0pjKjD7hW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSFRiFyC6nFCjwBNNHXNeLTYG6TjFKeQysdnoKaJ8p9ge8QYCfIu2Ie1XFaAPBazU
-	 bSdUB9EsEsU+eD7GXYLqJ7TDjgAmgWE6f5vUSAxxUIJS2s3I5OmkOwasHrcblNwiDe
-	 I9G845iEjleckbtNGQzEcfmZjdraDJ5Uf9Iwm7XA=
+	b=I2j1I1+iuBPXYdUH8TbmbMBUWaCcZc3N5EJmDDeQncpWBw75qf0uUDp8V6g0RMbsI
+	 j0ClltxAtuwHuqAQ4wVfIUjObso4ZG+wt4xI5zH1JWtBpvzPi6fE7siJpW8wg+OHm2
+	 H1QMzi9YN4EUjc3HKL3o1BN4sUrni+FtsfrWOJak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/232] f2fs: zone: introduce first_zoned_segno in f2fs_sb_info
-Date: Tue,  8 Jul 2025 18:22:05 +0200
-Message-ID: <20250708162244.816756575@linuxfoundation.org>
+Subject: [PATCH 6.12 138/232] arm64: dts: qcom: sm8650: change labels to lower-case
+Date: Tue,  8 Jul 2025 18:22:14 +0200
+Message-ID: <20250708162245.053022749@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,107 +52,457 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 5bc5aae843128aefb1c55d769d057c92dd8a32c9 ]
+[ Upstream commit 20eb2057b3e46feb0c2b517bcff3acfbba28320f ]
 
-first_zoned_segno() returns a fixed value, let's cache it in
-structure f2fs_sb_info to avoid redundant calculation.
+DTS coding style expects labels to be lowercase.  No functional impact.
+Verified with comparing decompiled DTB (dtx_diff and fdtdump+diff).
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: dc6d9ef57fcf ("f2fs: zone: fix to calculate first_zoned_segno correctly")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20241022-dts-qcom-label-v3-14-0505bc7d2c56@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 9bb5ca464100 ("arm64: dts: qcom: sm8650: Fix domain-idle-state for CPU2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h    |  1 +
- fs/f2fs/segment.c |  4 ++--
- fs/f2fs/segment.h | 10 ----------
- fs/f2fs/super.c   | 13 +++++++++++++
- 4 files changed, 16 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 156 +++++++++++++--------------
+ 1 file changed, 78 insertions(+), 78 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 61b715cc2e231..08b0f35be76bc 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1762,6 +1762,7 @@ struct f2fs_sb_info {
- 	unsigned int dirty_device;		/* for checkpoint data flush */
- 	spinlock_t dev_lock;			/* protect dirty_device */
- 	bool aligned_blksize;			/* all devices has the same logical blksize */
-+	unsigned int first_zoned_segno;		/* first zoned segno */
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index edde21972f5ac..3a7daeb2c12e3 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -68,18 +68,18 @@ cpus {
+ 		#address-cells = <2>;
+ 		#size-cells = <0>;
  
- 	/* For write statistics */
- 	u64 sectors_written_start;
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 3db89becdbfcd..c7919b9cebcd0 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2719,7 +2719,7 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
- 		if (sbi->blkzone_alloc_policy == BLKZONE_ALLOC_PRIOR_CONV || pinning)
- 			segno = 0;
- 		else
--			segno = max(first_zoned_segno(sbi), *newseg);
-+			segno = max(sbi->first_zoned_segno, *newseg);
- 		hint = GET_SEC_FROM_SEG(sbi, segno);
- 	}
- #endif
-@@ -2731,7 +2731,7 @@ static int get_new_segment(struct f2fs_sb_info *sbi,
- 	if (secno >= MAIN_SECS(sbi) && f2fs_sb_has_blkzoned(sbi)) {
- 		/* Write only to sequential zones */
- 		if (sbi->blkzone_alloc_policy == BLKZONE_ALLOC_ONLY_SEQ) {
--			hint = GET_SEC_FROM_SEG(sbi, first_zoned_segno(sbi));
-+			hint = GET_SEC_FROM_SEG(sbi, sbi->first_zoned_segno);
- 			secno = find_next_zero_bit(free_i->free_secmap, MAIN_SECS(sbi), hint);
- 		} else
- 			secno = find_first_zero_bit(free_i->free_secmap,
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 05a342933f98f..52bb1a2819357 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -992,13 +992,3 @@ static inline void wake_up_discard_thread(struct f2fs_sb_info *sbi, bool force)
- 	dcc->discard_wake = true;
- 	wake_up_interruptible_all(&dcc->discard_wait_queue);
- }
--
--static inline unsigned int first_zoned_segno(struct f2fs_sb_info *sbi)
--{
--	int devi;
--
--	for (devi = 0; devi < sbi->s_ndevs; devi++)
--		if (bdev_is_zoned(FDEV(devi).bdev))
--			return GET_SEGNO(sbi, FDEV(devi).start_blk);
--	return 0;
--}
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index f0e83ea56e38c..0508527ebe115 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4260,6 +4260,16 @@ static void f2fs_record_error_work(struct work_struct *work)
- 	f2fs_record_stop_reason(sbi);
- }
+-		CPU0: cpu@0 {
++		cpu0: cpu@0 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a520";
+ 			reg = <0 0>;
  
-+static inline unsigned int get_first_zoned_segno(struct f2fs_sb_info *sbi)
-+{
-+	int devi;
-+
-+	for (devi = 0; devi < sbi->s_ndevs; devi++)
-+		if (bdev_is_zoned(FDEV(devi).bdev))
-+			return GET_SEGNO(sbi, FDEV(devi).start_blk);
-+	return 0;
-+}
-+
- static int f2fs_scan_devices(struct f2fs_sb_info *sbi)
- {
- 	struct f2fs_super_block *raw_super = F2FS_RAW_SUPER(sbi);
-@@ -4660,6 +4670,9 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
- 	/* For write statistics */
- 	sbi->sectors_written_start = f2fs_get_sectors_written(sbi);
+ 			clocks = <&cpufreq_hw 0>;
  
-+	/* get segno of first zoned block device */
-+	sbi->first_zoned_segno = get_first_zoned_segno(sbi);
-+
- 	/* Read accumulated write IO statistics if exists */
- 	seg_i = CURSEG_I(sbi, CURSEG_HOT_NODE);
- 	if (__exist_node_summaries(sbi))
+-			power-domains = <&CPU_PD0>;
++			power-domains = <&cpu_pd0>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_0>;
++			next-level-cache = <&l2_0>;
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 
+@@ -87,13 +87,13 @@ CPU0: cpu@0 {
+ 
+ 			#cooling-cells = <2>;
+ 
+-			L2_0: l2-cache {
++			l2_0: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+-				next-level-cache = <&L3_0>;
++				next-level-cache = <&l3_0>;
+ 
+-				L3_0: l3-cache {
++				l3_0: l3-cache {
+ 					compatible = "cache";
+ 					cache-level = <3>;
+ 					cache-unified;
+@@ -101,18 +101,18 @@ L3_0: l3-cache {
+ 			};
+ 		};
+ 
+-		CPU1: cpu@100 {
++		cpu1: cpu@100 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a520";
+ 			reg = <0 0x100>;
+ 
+ 			clocks = <&cpufreq_hw 0>;
+ 
+-			power-domains = <&CPU_PD1>;
++			power-domains = <&cpu_pd1>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_0>;
++			next-level-cache = <&l2_0>;
+ 			capacity-dmips-mhz = <1024>;
+ 			dynamic-power-coefficient = <100>;
+ 
+@@ -121,18 +121,18 @@ CPU1: cpu@100 {
+ 			#cooling-cells = <2>;
+ 		};
+ 
+-		CPU2: cpu@200 {
++		cpu2: cpu@200 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x200>;
+ 
+ 			clocks = <&cpufreq_hw 3>;
+ 
+-			power-domains = <&CPU_PD2>;
++			power-domains = <&cpu_pd2>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_200>;
++			next-level-cache = <&l2_200>;
+ 			capacity-dmips-mhz = <1792>;
+ 			dynamic-power-coefficient = <238>;
+ 
+@@ -140,26 +140,26 @@ CPU2: cpu@200 {
+ 
+ 			#cooling-cells = <2>;
+ 
+-			L2_200: l2-cache {
++			l2_200: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+-				next-level-cache = <&L3_0>;
++				next-level-cache = <&l3_0>;
+ 			};
+ 		};
+ 
+-		CPU3: cpu@300 {
++		cpu3: cpu@300 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x300>;
+ 
+ 			clocks = <&cpufreq_hw 3>;
+ 
+-			power-domains = <&CPU_PD3>;
++			power-domains = <&cpu_pd3>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_200>;
++			next-level-cache = <&l2_200>;
+ 			capacity-dmips-mhz = <1792>;
+ 			dynamic-power-coefficient = <238>;
+ 
+@@ -168,18 +168,18 @@ CPU3: cpu@300 {
+ 			#cooling-cells = <2>;
+ 		};
+ 
+-		CPU4: cpu@400 {
++		cpu4: cpu@400 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x400>;
+ 
+ 			clocks = <&cpufreq_hw 3>;
+ 
+-			power-domains = <&CPU_PD4>;
++			power-domains = <&cpu_pd4>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_400>;
++			next-level-cache = <&l2_400>;
+ 			capacity-dmips-mhz = <1792>;
+ 			dynamic-power-coefficient = <238>;
+ 
+@@ -187,26 +187,26 @@ CPU4: cpu@400 {
+ 
+ 			#cooling-cells = <2>;
+ 
+-			L2_400: l2-cache {
++			l2_400: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+-				next-level-cache = <&L3_0>;
++				next-level-cache = <&l3_0>;
+ 			};
+ 		};
+ 
+-		CPU5: cpu@500 {
++		cpu5: cpu@500 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x500>;
+ 
+ 			clocks = <&cpufreq_hw 1>;
+ 
+-			power-domains = <&CPU_PD5>;
++			power-domains = <&cpu_pd5>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_500>;
++			next-level-cache = <&l2_500>;
+ 			capacity-dmips-mhz = <1792>;
+ 			dynamic-power-coefficient = <238>;
+ 
+@@ -214,26 +214,26 @@ CPU5: cpu@500 {
+ 
+ 			#cooling-cells = <2>;
+ 
+-			L2_500: l2-cache {
++			l2_500: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+-				next-level-cache = <&L3_0>;
++				next-level-cache = <&l3_0>;
+ 			};
+ 		};
+ 
+-		CPU6: cpu@600 {
++		cpu6: cpu@600 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x600>;
+ 
+ 			clocks = <&cpufreq_hw 1>;
+ 
+-			power-domains = <&CPU_PD6>;
++			power-domains = <&cpu_pd6>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_600>;
++			next-level-cache = <&l2_600>;
+ 			capacity-dmips-mhz = <1792>;
+ 			dynamic-power-coefficient = <238>;
+ 
+@@ -241,26 +241,26 @@ CPU6: cpu@600 {
+ 
+ 			#cooling-cells = <2>;
+ 
+-			L2_600: l2-cache {
++			l2_600: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+-				next-level-cache = <&L3_0>;
++				next-level-cache = <&l3_0>;
+ 			};
+ 		};
+ 
+-		CPU7: cpu@700 {
++		cpu7: cpu@700 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-x4";
+ 			reg = <0 0x700>;
+ 
+ 			clocks = <&cpufreq_hw 2>;
+ 
+-			power-domains = <&CPU_PD7>;
++			power-domains = <&cpu_pd7>;
+ 			power-domain-names = "psci";
+ 
+ 			enable-method = "psci";
+-			next-level-cache = <&L2_700>;
++			next-level-cache = <&l2_700>;
+ 			capacity-dmips-mhz = <1894>;
+ 			dynamic-power-coefficient = <588>;
+ 
+@@ -268,46 +268,46 @@ CPU7: cpu@700 {
+ 
+ 			#cooling-cells = <2>;
+ 
+-			L2_700: l2-cache {
++			l2_700: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+-				next-level-cache = <&L3_0>;
++				next-level-cache = <&l3_0>;
+ 			};
+ 		};
+ 
+ 		cpu-map {
+ 			cluster0 {
+ 				core0 {
+-					cpu = <&CPU0>;
++					cpu = <&cpu0>;
+ 				};
+ 
+ 				core1 {
+-					cpu = <&CPU1>;
++					cpu = <&cpu1>;
+ 				};
+ 
+ 				core2 {
+-					cpu = <&CPU2>;
++					cpu = <&cpu2>;
+ 				};
+ 
+ 				core3 {
+-					cpu = <&CPU3>;
++					cpu = <&cpu3>;
+ 				};
+ 
+ 				core4 {
+-					cpu = <&CPU4>;
++					cpu = <&cpu4>;
+ 				};
+ 
+ 				core5 {
+-					cpu = <&CPU5>;
++					cpu = <&cpu5>;
+ 				};
+ 
+ 				core6 {
+-					cpu = <&CPU6>;
++					cpu = <&cpu6>;
+ 				};
+ 
+ 				core7 {
+-					cpu = <&CPU7>;
++					cpu = <&cpu7>;
+ 				};
+ 			};
+ 		};
+@@ -315,7 +315,7 @@ core7 {
+ 		idle-states {
+ 			entry-method = "psci";
+ 
+-			SILVER_CPU_SLEEP_0: cpu-sleep-0-0 {
++			silver_cpu_sleep_0: cpu-sleep-0-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "silver-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+@@ -325,7 +325,7 @@ SILVER_CPU_SLEEP_0: cpu-sleep-0-0 {
+ 				local-timer-stop;
+ 			};
+ 
+-			GOLD_CPU_SLEEP_0: cpu-sleep-1-0 {
++			gold_cpu_sleep_0: cpu-sleep-1-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "gold-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+@@ -335,7 +335,7 @@ GOLD_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 				local-timer-stop;
+ 			};
+ 
+-			GOLD_PLUS_CPU_SLEEP_0: cpu-sleep-2-0 {
++			gold_plus_cpu_sleep_0: cpu-sleep-2-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "gold-plus-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+@@ -347,7 +347,7 @@ GOLD_PLUS_CPU_SLEEP_0: cpu-sleep-2-0 {
+ 		};
+ 
+ 		domain-idle-states {
+-			CLUSTER_SLEEP_0: cluster-sleep-0 {
++			cluster_sleep_0: cluster-sleep-0 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x41000044>;
+ 				entry-latency-us = <750>;
+@@ -355,7 +355,7 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 				min-residency-us = <9144>;
+ 			};
+ 
+-			CLUSTER_SLEEP_1: cluster-sleep-1 {
++			cluster_sleep_1: cluster-sleep-1 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x4100c344>;
+ 				entry-latency-us = <2800>;
+@@ -411,58 +411,58 @@ psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
+ 
+-		CPU_PD0: power-domain-cpu0 {
++		cpu_pd0: power-domain-cpu0 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&SILVER_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&silver_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD1: power-domain-cpu1 {
++		cpu_pd1: power-domain-cpu1 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&SILVER_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&silver_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD2: power-domain-cpu2 {
++		cpu_pd2: power-domain-cpu2 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&SILVER_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&silver_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD3: power-domain-cpu3 {
++		cpu_pd3: power-domain-cpu3 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&GOLD_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&gold_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD4: power-domain-cpu4 {
++		cpu_pd4: power-domain-cpu4 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&GOLD_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&gold_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD5: power-domain-cpu5 {
++		cpu_pd5: power-domain-cpu5 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&GOLD_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&gold_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD6: power-domain-cpu6 {
++		cpu_pd6: power-domain-cpu6 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&GOLD_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&gold_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD7: power-domain-cpu7 {
++		cpu_pd7: power-domain-cpu7 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&GOLD_PLUS_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&gold_plus_cpu_sleep_0>;
+ 		};
+ 
+-		CLUSTER_PD: power-domain-cluster {
++		cluster_pd: power-domain-cluster {
+ 			#power-domain-cells = <0>;
+-			domain-idle-states = <&CLUSTER_SLEEP_0>,
+-					     <&CLUSTER_SLEEP_1>;
++			domain-idle-states = <&cluster_sleep_0>,
++					     <&cluster_sleep_1>;
+ 		};
+ 	};
+ 
+@@ -5233,7 +5233,7 @@ apps_rsc: rsc@17a00000 {
+ 				     <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
+ 
+-			power-domains = <&CLUSTER_PD>;
++			power-domains = <&cluster_pd>;
+ 
+ 			qcom,tcs-offset = <0xd00>;
+ 			qcom,drv-id = <2>;
 -- 
 2.39.5
 
