@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E432E2EE4;
-	Tue,  8 Jul 2025 16:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AA02A1BA;
+	Tue,  8 Jul 2025 16:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992433; cv=none; b=sAJ6675Twze+ISciKT3XWHSxHkqWea25HRZ0Ll0arZeeeWYqgkFOZpAcRUNvqW+oiYaftkTrwtV+gFXntmxME4Nn3bDhS1bjSbQn1G95DDQvWcJsdkBaEAilYJusoeChAWrqtgpNvE/6aieB2dCl+SxzdyNuUCBUUJ7xU+Enk6A=
+	t=1751992435; cv=none; b=GTscp7car7JF05f/EImAkj9MvVBjWDeg4IN1daihNNlxpCCKMgzDwYnEPRzCM7DutYRyu067EFI2Zo1nQcpVoGOR+CtbZ6rvN51BogRrqcQSyrmQgJKAxjRCGKMgITsyEd5gBWxc82V+eNMTFnG53tjJOoFAhRUPC8gZx0VMmvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992433; c=relaxed/simple;
-	bh=VJjMoUIHMxS1zB22pihIH33CVMWIhtTj5SU84X91Aww=;
+	s=arc-20240116; t=1751992435; c=relaxed/simple;
+	bh=Sk10YMh7IGvxa5UhQoiR2x6BVURfUyM0Xc74MR4OV1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzoT6RbU1rQGK8BLSxxCObPLe5fw8Bv9WGHPE8kA5i7wAw0Q6O/Jrwn1BkCOfGslYm/TW4h4oq1KhEz1GvCeZNzWvGq+h2bvKZcByEzQ91KRJuPr9vMIxrc9+/zOFmwhhJTFxJ+nyyKg6tm94wGVaV49/mxwUNvdxBY65vyNof4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYH6t/6C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TEShMvZFJ0OMLuWCHsK++cH1fR4G61XIE/f2DZg9q86EyIxquGSODknqMHDprSOptnME9EjSriMlIvxk4lFVjh0x5gAmNM8DAHOLnS0S4GxDbmz0qQemMdOp+6nHUX11YgNYukXatzYtZcu1INOJVYW40FXmHARJLw2COIBZ63g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/46etRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYH6t/6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D70BC4CEED;
-	Tue,  8 Jul 2025 16:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/46etRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42140C4CEED;
+	Tue,  8 Jul 2025 16:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992432;
-	bh=VJjMoUIHMxS1zB22pihIH33CVMWIhtTj5SU84X91Aww=;
+	s=korg; t=1751992435;
+	bh=Sk10YMh7IGvxa5UhQoiR2x6BVURfUyM0Xc74MR4OV1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYH6t/6CPC6+p68Q0fOL2wruKiSKlXHQw2/CseAhO6oitDLkkv0REHa7RssT4hWUs
-	 0Lgd5mEbG4rfa9eb9ShXEvkPFQNooe4ySEgc+b9jXpPaEu2twVtgVF3ZxlVAB5rCpm
-	 LhJM6W5hPLEkZB7RtxNHpJUaRd5z5uYrxEmIIPEw=
+	b=v/46etRkENHOD3zSHxIaKoWVzfJfVLA28INIrWPxBdXbwuq21GCVLp3QnUOxUaAdE
+	 ck/fFwUqAheSo2NJlv7zBSseO1sMhoONzRRmNDvvQP49ldGr/r09UGpXcCadr3xTgl
+	 DLTmdTNkpDW0TaRyId068RV9e+6ar5d2w/xtvdi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tulio Magno <tuliom@ascii.art.br>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Justin M. Forbes" <jforbes@fedoraproject.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Raven Black <ravenblack@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/132] powerpc: Fix struct termio related ioctl macros
-Date: Tue,  8 Jul 2025 18:23:21 +0200
-Message-ID: <20250708162233.258036356@linuxfoundation.org>
+Subject: [PATCH 6.6 091/132] ASoC: amd: yc: update quirk data for HP Victus
+Date: Tue,  8 Jul 2025 18:23:22 +0200
+Message-ID: <20250708162233.284295594@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -54,56 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Raven Black <ravenblack@gmail.com>
 
-[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
+[ Upstream commit 13b86ea92ebf0fa587fbadfb8a60ca2e9993203f ]
 
-Since termio interface is now obsolete, include/uapi/asm/ioctls.h
-has some constant macros referring to "struct termio", this caused
-build failure at userspace.
+Make the internal microphone work on HP Victus laptops.
 
-In file included from /usr/include/asm/ioctl.h:12,
-                 from /usr/include/asm/ioctls.h:5,
-                 from tst-ioctls.c:3:
-tst-ioctls.c: In function 'get_TCGETA':
-tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
-   12 |   return TCGETA;
-      |          ^~~~~~
-
-Even though termios.h provides "struct termio", trying to juggle definitions around to
-make it compile could introduce regressions. So better to open code it.
-
-Reported-by: Tulio Magno <tuliom@ascii.art.br>
-Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
-Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
+Signed-off-by: Raven Black <ravenblack@gmail.com>
+Link: https://patch.msgid.link/20250613-support-hp-victus-microphone-v1-1-bebc4c3a2041@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
-index 2c145da3b774a..b5211e413829a 100644
---- a/arch/powerpc/include/uapi/asm/ioctls.h
-+++ b/arch/powerpc/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
- 
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
-+#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
-+#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
-+#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
- 
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 1547cf8b46b13..429e61d47ffbb 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -521,6 +521,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb2xxx"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
