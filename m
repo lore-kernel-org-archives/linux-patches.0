@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885DD1DF74F;
-	Tue,  8 Jul 2025 16:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B4F2E5432;
+	Tue,  8 Jul 2025 16:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992286; cv=none; b=pQmEODjuzhBlmmv3+sBceiEigCIsODqDnsDY/JGnL7Vx8epu6vH/oyO/A8oTXwNiktFgEZikHZMNF+G7vTBELJps6ECjl26/Y9KFVh1CHxx1oGaRRMnZYm8Zq/u9Met1/vjZfokrrf5MjJWkEDuhwOeBFy6YXIKdABTt3XcwSbk=
+	t=1751992289; cv=none; b=JvvHUl0SXXnqSSpTLz84LWgV+qi0ziHB+B2NA2hq0r4RaE+UKpWicGUwh6NhjfeDj6l9lxchdMCtBo5xQctgRhozv65RBhuizoftoersjk5GQwk8TFLWZKZ7FAojqm+tO6+LNaGHBO35SISRv/HjYQOf5PqZwkfNIVblXM8m9/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992286; c=relaxed/simple;
-	bh=w9w8Dzcfu4pchOKlP21jOV0/YibDDxicX8ebagsCmQg=;
+	s=arc-20240116; t=1751992289; c=relaxed/simple;
+	bh=a55HmOkHonpzLWWHtKxCxXJMEFyerS0J3qL4TrBkltg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eT28MLTMeZLe3w2cNSHmnrYiFcW4V87dbWd1gMsjq0Sxu6QTHPE+/PY0hWS6LLlPA+rvpsm6beSaMyM2jQUtjFu8KsLw1SOs4gYL6z5sXYo4DG0M9+u9ZxMzC9EahHAOG4/BQhBQFFqr9UBfg1e9U6D40XLQ9zTX2iJNfGPiIFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uoiK27Zp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PwOGW7Ar/+8qkJB4RdYvfpr6RCUXkwTvgIvHRqa7nMaCJWwKbs+saedmC72TNZR37/eM48EGErvgopQTba2E2lMx8hwaCBiXRYRkwYlY7vrEgdoukKbURAOKgGKG+xtoNjqltWd4XgiG0LSkuwn8lyNyO1wk0OUbdj5Y96jl3q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHd2HNaB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uoiK27Zp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12786C4CEF5;
-	Tue,  8 Jul 2025 16:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHd2HNaB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01282C4CEF0;
+	Tue,  8 Jul 2025 16:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992286;
-	bh=w9w8Dzcfu4pchOKlP21jOV0/YibDDxicX8ebagsCmQg=;
+	s=korg; t=1751992289;
+	bh=a55HmOkHonpzLWWHtKxCxXJMEFyerS0J3qL4TrBkltg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uoiK27ZplikwBXQUG907q3Q0FdUG8RrcBYou2peXg/eGqrBoI9RgX8k16Ocs0D+yq
-	 EqlnWMvUX29mTNIDW3hObnhN1XYmwJFBTMpA5VmZhV0XKiBGq5KGYsfpBgsMHF8nkS
-	 wgnfpNL4jYqzrx3qG1q8VvXN+UFcjzchsQNrKNlM=
+	b=wHd2HNaBKXY1uwghuZfzhcMAiSHZblnH51iReCNhqxH9xLcDCYpkRRN5LJEqVTeAs
+	 ulJyl8/7AVBQLYLdmlxp0kBgCkpIs2CiYw+bctOXcKzTutp56S51v8orLx1CsRD9I3
+	 0hZiW9ciulzxIMg03S19yuXXq7sRU5O6GS724Jzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/132] drm/i915/selftests: Change mock_request() to return error pointers
-Date: Tue,  8 Jul 2025 18:22:31 +0200
-Message-ID: <20250708162231.856030448@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	RD Babiera <rdbabiera@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 014/132] usb: typec: altmodes/displayport: do not index invalid pin_assignments
+Date: Tue,  8 Jul 2025 18:22:05 +0200
+Message-ID: <20250708162231.152143725@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -52,107 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: RD Babiera <rdbabiera@google.com>
 
-[ Upstream commit caa7c7a76b78ce41d347003f84975125383e6b59 ]
+commit af4db5a35a4ef7a68046883bfd12468007db38f1 upstream.
 
-There was an error pointer vs NULL bug in __igt_breadcrumbs_smoketest().
-The __mock_request_alloc() function implements the
-smoketest->request_alloc() function pointer.  It was supposed to return
-error pointers, but it propogates the NULL return from mock_request()
-so in the event of a failure, it would lead to a NULL pointer
-dereference.
+A poorly implemented DisplayPort Alt Mode port partner can indicate
+that its pin assignment capabilities are greater than the maximum
+value, DP_PIN_ASSIGN_F. In this case, calls to pin_assignment_show
+will cause a BRK exception due to an out of bounds array access.
 
-To fix this, change the mock_request() function to return error pointers
-and update all the callers to expect that.
+Prevent for loop in pin_assignment_show from accessing
+invalid values in pin_assignments by adding DP_PIN_ASSIGN_MAX
+value in typec_dp.h and using i < DP_PIN_ASSIGN_MAX as a loop
+condition.
 
-Fixes: 52c0fdb25c7c ("drm/i915: Replace global breadcrumbs with per-context interrupt tracking")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://lore.kernel.org/r/685c1417.050a0220.696f5.5c05@mx.google.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 778fa8ad5f0f23397d045c7ebca048ce8def1c43)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
+Cc: stable <stable@kernel.org>
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250618224943.3263103-2-rdbabiera@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/selftests/i915_request.c | 20 +++++++++----------
- drivers/gpu/drm/i915/selftests/mock_request.c |  2 +-
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c |    2 +-
+ include/linux/usb/typec_dp.h             |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/selftests/i915_request.c b/drivers/gpu/drm/i915/selftests/i915_request.c
-index a9b79888c1931..c7ce2c570ad1f 100644
---- a/drivers/gpu/drm/i915/selftests/i915_request.c
-+++ b/drivers/gpu/drm/i915/selftests/i915_request.c
-@@ -73,8 +73,8 @@ static int igt_add_request(void *arg)
- 	/* Basic preliminary test to create a request and let it loose! */
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -528,7 +528,7 @@ static ssize_t pin_assignment_show(struc
  
- 	request = mock_request(rcs0(i915)->kernel_context, HZ / 10);
--	if (!request)
--		return -ENOMEM;
-+	if (IS_ERR(request))
-+		return PTR_ERR(request);
+ 	assignments = get_current_pin_assignments(dp);
  
- 	i915_request_add(request);
+-	for (i = 0; assignments; assignments >>= 1, i++) {
++	for (i = 0; assignments && i < DP_PIN_ASSIGN_MAX; assignments >>= 1, i++) {
+ 		if (assignments & 1) {
+ 			if (i == cur)
+ 				len += sprintf(buf + len, "[%s] ",
+--- a/include/linux/usb/typec_dp.h
++++ b/include/linux/usb/typec_dp.h
+@@ -56,6 +56,7 @@ enum {
+ 	DP_PIN_ASSIGN_D,
+ 	DP_PIN_ASSIGN_E,
+ 	DP_PIN_ASSIGN_F, /* Not supported after v1.0b */
++	DP_PIN_ASSIGN_MAX,
+ };
  
-@@ -91,8 +91,8 @@ static int igt_wait_request(void *arg)
- 	/* Submit a request, then wait upon it */
- 
- 	request = mock_request(rcs0(i915)->kernel_context, T);
--	if (!request)
--		return -ENOMEM;
-+	if (IS_ERR(request))
-+		return PTR_ERR(request);
- 
- 	i915_request_get(request);
- 
-@@ -160,8 +160,8 @@ static int igt_fence_wait(void *arg)
- 	/* Submit a request, treat it as a fence and wait upon it */
- 
- 	request = mock_request(rcs0(i915)->kernel_context, T);
--	if (!request)
--		return -ENOMEM;
-+	if (IS_ERR(request))
-+		return PTR_ERR(request);
- 
- 	if (dma_fence_wait_timeout(&request->fence, false, T) != -ETIME) {
- 		pr_err("fence wait success before submit (expected timeout)!\n");
-@@ -219,8 +219,8 @@ static int igt_request_rewind(void *arg)
- 	GEM_BUG_ON(IS_ERR(ce));
- 	request = mock_request(ce, 2 * HZ);
- 	intel_context_put(ce);
--	if (!request) {
--		err = -ENOMEM;
-+	if (IS_ERR(request)) {
-+		err = PTR_ERR(request);
- 		goto err_context_0;
- 	}
- 
-@@ -237,8 +237,8 @@ static int igt_request_rewind(void *arg)
- 	GEM_BUG_ON(IS_ERR(ce));
- 	vip = mock_request(ce, 0);
- 	intel_context_put(ce);
--	if (!vip) {
--		err = -ENOMEM;
-+	if (IS_ERR(vip)) {
-+		err = PTR_ERR(vip);
- 		goto err_context_1;
- 	}
- 
-diff --git a/drivers/gpu/drm/i915/selftests/mock_request.c b/drivers/gpu/drm/i915/selftests/mock_request.c
-index 09f747228dff5..1b0cf073e9643 100644
---- a/drivers/gpu/drm/i915/selftests/mock_request.c
-+++ b/drivers/gpu/drm/i915/selftests/mock_request.c
-@@ -35,7 +35,7 @@ mock_request(struct intel_context *ce, unsigned long delay)
- 	/* NB the i915->requests slab cache is enlarged to fit mock_request */
- 	request = intel_context_create_request(ce);
- 	if (IS_ERR(request))
--		return NULL;
-+		return request;
- 
- 	request->mock.delay = delay;
- 	return request;
--- 
-2.39.5
-
+ /* DisplayPort alt mode specific commands */
 
 
