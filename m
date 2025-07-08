@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C38A7E9;
-	Tue,  8 Jul 2025 16:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6F3289E2C;
+	Tue,  8 Jul 2025 16:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993042; cv=none; b=trZHhI6c7/0Ef98g8lROGMRW9dcAsxB/lMUbJTN3TsxhTEJeQ3DI2Lsjn3PrY230HRudVkJqo3cEmzT4NPEaWo1/UuGlas0cp8jY0n0ptF3zsbIIdpszgsnSSI8Hhxjzy+TWAUNtnPU9RqQY3EMqeqIZk7P6V23+qHDLYhNAz6Q=
+	t=1751993045; cv=none; b=s9eAaN1qELTDX2CANmMKL4PIlfeyAhzEI7+/oNdyhxC5XvvejhC/JJujkD5gWcA+8CpITEmSOeY7RJ3FIFANW7EBFqrMvljS9j4oQ0VtusFhrYMmFh3lM3ATxP/spKLzxQQkFc+2lbvQ5ieL+nLp4uAf4/jO9ETSi7TIbOlpMjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993042; c=relaxed/simple;
-	bh=e+WqUhSRkqd15S1Pur/MZJ5aIUOCMrkSgmIRRZriB9Y=;
+	s=arc-20240116; t=1751993045; c=relaxed/simple;
+	bh=e5f6HMkk3vdKdBxWRi/GAGbF3F6OtojJMUNcGPZqTU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6fm28Jps9rQb6HlSgI3yVQ7W596vAHqZVDzaRPP2mLtKHxm3QZHhdx/by0yUFf42XZks7NJge7xrQ95UyCwGqQvMnnyTWJD9nByu+0ZrdEKvM+zfgebgtc4jWMItS2AJ2/MfYNPx1PYEtpcJjuAOAUZeEt6Ch+PHaTdSgXNLqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mmp4Gc+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KfkttqODI3/lv7V+0603YIVKCVTw2jrF3rWpZxXltKfzBg2JHeTBGOx9jlM+d2DauvDld8TrIDyyF36TS3DfUuAr6aMmHDcD0tsbtZFgq5iKmRsihMUHF40biX3mLNuZPzFS6U7oPBk/YFOsnTsp3GC4PacYuUW7yERoDY5fVco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aelo45Hw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mmp4Gc+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BBAC4CEED;
-	Tue,  8 Jul 2025 16:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aelo45Hw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA42C4CEED;
+	Tue,  8 Jul 2025 16:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993042;
-	bh=e+WqUhSRkqd15S1Pur/MZJ5aIUOCMrkSgmIRRZriB9Y=;
+	s=korg; t=1751993044;
+	bh=e5f6HMkk3vdKdBxWRi/GAGbF3F6OtojJMUNcGPZqTU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mmp4Gc+JZTD+3Kek0or/4fKua9NuaqIzKKkYE49RBeAQm76aYV4GbCgW2Xmq3zTMj
-	 MHWzo+pQeQY76qMHmEYYN+xKy2uAnIbuH9yYaSVs3yUJAb9TvPL3pk6vk3K3bH0LuR
-	 5WdRd+LsjeMFP2Ou00oE1CoDXgsxkxoUQ5M9kWoo=
+	b=Aelo45HwLwewWMmjKkInBaEZ7GXQcbu9xYDBDCwp6NlmYsfhDWSAg4rmZadxUfE3d
+	 fxW3QkQoJxwpT2vgS8ZoE9PgL9dlzksxUxCnoZ8YrX3Olljzilgtb6dhpTzBl5d0yf
+	 eZFH2u8Mtu+wXDCktqF+X9cq/iOOgsf5CnREMS7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/232] bpf: Do not include stack ptr register in precision backtracking bookkeeping
-Date: Tue,  8 Jul 2025 18:22:13 +0200
-Message-ID: <20250708162245.026022942@linuxfoundation.org>
+Subject: [PATCH 6.12 128/232] f2fs: decrease spare area for pinned files for zoned devices
+Date: Tue,  8 Jul 2025 18:22:04 +0200
+Message-ID: <20250708162244.791951864@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,206 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit e2d2115e56c4a02377189bfc3a9a7933552a7b0f ]
+[ Upstream commit fa08972bcb7baaf5f1f4fdf251dc08bdd3ab1cf0 ]
 
-Yi Lai reported an issue ([1]) where the following warning appears
-in kernel dmesg:
-  [   60.643604] verifier backtracking bug
-  [   60.643635] WARNING: CPU: 10 PID: 2315 at kernel/bpf/verifier.c:4302 __mark_chain_precision+0x3a6c/0x3e10
-  [   60.648428] Modules linked in: bpf_testmod(OE)
-  [   60.650471] CPU: 10 UID: 0 PID: 2315 Comm: test_progs Tainted: G           OE       6.15.0-rc4-gef11287f8289-dirty #327 PREEMPT(full)
-  [   60.654385] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-  [   60.656682] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-  [   60.660475] RIP: 0010:__mark_chain_precision+0x3a6c/0x3e10
-  [   60.662814] Code: 5a 30 84 89 ea e8 c4 d9 01 00 80 3d 3e 7d d8 04 00 0f 85 60 fa ff ff c6 05 31 7d d8 04
-                       01 48 c7 c7 00 58 30 84 e8 c4 06 a5 ff <0f> 0b e9 46 fa ff ff 48 ...
-  [   60.668720] RSP: 0018:ffff888116cc7298 EFLAGS: 00010246
-  [   60.671075] RAX: 54d70e82dfd31900 RBX: ffff888115b65e20 RCX: 0000000000000000
-  [   60.673659] RDX: 0000000000000001 RSI: 0000000000000004 RDI: 00000000ffffffff
-  [   60.676241] RBP: 0000000000000400 R08: ffff8881f6f23bd3 R09: 1ffff1103ede477a
-  [   60.678787] R10: dffffc0000000000 R11: ffffed103ede477b R12: ffff888115b60ae8
-  [   60.681420] R13: 1ffff11022b6cbc4 R14: 00000000fffffff2 R15: 0000000000000001
-  [   60.684030] FS:  00007fc2aedd80c0(0000) GS:ffff88826fa8a000(0000) knlGS:0000000000000000
-  [   60.686837] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [   60.689027] CR2: 000056325369e000 CR3: 000000011088b002 CR4: 0000000000370ef0
-  [   60.691623] Call Trace:
-  [   60.692821]  <TASK>
-  [   60.693960]  ? __pfx_verbose+0x10/0x10
-  [   60.695656]  ? __pfx_disasm_kfunc_name+0x10/0x10
-  [   60.697495]  check_cond_jmp_op+0x16f7/0x39b0
-  [   60.699237]  do_check+0x58fa/0xab10
-  ...
+Now we reclaim too much space before allocating pinned space for zoned
+devices.
 
-Further analysis shows the warning is at line 4302 as below:
-
-  4294                 /* static subprog call instruction, which
-  4295                  * means that we are exiting current subprog,
-  4296                  * so only r1-r5 could be still requested as
-  4297                  * precise, r0 and r6-r10 or any stack slot in
-  4298                  * the current frame should be zero by now
-  4299                  */
-  4300                 if (bt_reg_mask(bt) & ~BPF_REGMASK_ARGS) {
-  4301                         verbose(env, "BUG regs %x\n", bt_reg_mask(bt));
-  4302                         WARN_ONCE(1, "verifier backtracking bug");
-  4303                         return -EFAULT;
-  4304                 }
-
-With the below test (also in the next patch):
-  __used __naked static void __bpf_jmp_r10(void)
-  {
-	asm volatile (
-	"r2 = 2314885393468386424 ll;"
-	"goto +0;"
-	"if r2 <= r10 goto +3;"
-	"if r1 >= -1835016 goto +0;"
-	"if r2 <= 8 goto +0;"
-	"if r3 <= 0 goto +0;"
-	"exit;"
-	::: __clobber_all);
-  }
-
-  SEC("?raw_tp")
-  __naked void bpf_jmp_r10(void)
-  {
-	asm volatile (
-	"r3 = 0 ll;"
-	"call __bpf_jmp_r10;"
-	"r0 = 0;"
-	"exit;"
-	::: __clobber_all);
-  }
-
-The following is the verifier failure log:
-  0: (18) r3 = 0x0                      ; R3_w=0
-  2: (85) call pc+2
-  caller:
-   R10=fp0
-  callee:
-   frame1: R1=ctx() R3_w=0 R10=fp0
-  5: frame1: R1=ctx() R3_w=0 R10=fp0
-  ; asm volatile ("                                 \ @ verifier_precision.c:184
-  5: (18) r2 = 0x20202000256c6c78       ; frame1: R2_w=0x20202000256c6c78
-  7: (05) goto pc+0
-  8: (bd) if r2 <= r10 goto pc+3        ; frame1: R2_w=0x20202000256c6c78 R10=fp0
-  9: (35) if r1 >= 0xffe3fff8 goto pc+0         ; frame1: R1=ctx()
-  10: (b5) if r2 <= 0x8 goto pc+0
-  mark_precise: frame1: last_idx 10 first_idx 0 subseq_idx -1
-  mark_precise: frame1: regs=r2 stack= before 9: (35) if r1 >= 0xffe3fff8 goto pc+0
-  mark_precise: frame1: regs=r2 stack= before 8: (bd) if r2 <= r10 goto pc+3
-  mark_precise: frame1: regs=r2,r10 stack= before 7: (05) goto pc+0
-  mark_precise: frame1: regs=r2,r10 stack= before 5: (18) r2 = 0x20202000256c6c78
-  mark_precise: frame1: regs=r10 stack= before 2: (85) call pc+2
-  BUG regs 400
-
-The main failure reason is due to r10 in precision backtracking bookkeeping.
-Actually r10 is always precise and there is no need to add it for the precision
-backtracking bookkeeping.
-
-One way to fix the issue is to prevent bt_set_reg() if any src/dst reg is
-r10. Andrii suggested to go with push_insn_history() approach to avoid
-explicitly checking r10 in backtrack_insn().
-
-This patch added push_insn_history() support for cond_jmp like 'rX <op> rY'
-operations. In check_cond_jmp_op(), if any of rX or rY is a stack pointer,
-push_insn_history() will record such information, and later backtrack_insn()
-will do bt_set_reg() properly for those register(s).
-
-  [1] https://lore.kernel.org/bpf/Z%2F8q3xzpU59CIYQE@ly-workstation/
-
-Reported by: Yi Lai <yi1.lai@linux.intel.com>
-
-Fixes: 407958a0e980 ("bpf: encapsulate precision backtracking bookkeeping")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250524041335.4046126-1-yonghong.song@linux.dev
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: dc6d9ef57fcf ("f2fs: zone: fix to calculate first_zoned_segno correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h | 12 ++++++++----
- kernel/bpf/verifier.c        | 18 ++++++++++++++++--
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ fs/f2fs/file.c    | 3 ++-
+ fs/f2fs/gc.h      | 1 +
+ fs/f2fs/segment.c | 3 ++-
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index b82ff91916e42..fb33458f2fc77 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -361,7 +361,11 @@ enum {
- 	INSN_F_SPI_MASK = 0x3f, /* 6 bits */
- 	INSN_F_SPI_SHIFT = 3, /* shifted 3 bits to the left */
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 02f438cd6bfaf..d9037e74631c0 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1828,7 +1828,8 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
  
--	INSN_F_STACK_ACCESS = BIT(9), /* we need 10 bits total */
-+	INSN_F_STACK_ACCESS = BIT(9),
-+
-+	INSN_F_DST_REG_STACK = BIT(10), /* dst_reg is PTR_TO_STACK */
-+	INSN_F_SRC_REG_STACK = BIT(11), /* src_reg is PTR_TO_STACK */
-+	/* total 12 bits are used now. */
- };
+ 		map.m_len = sec_blks;
+ next_alloc:
+-		if (has_not_enough_free_secs(sbi, 0,
++		if (has_not_enough_free_secs(sbi, 0, f2fs_sb_has_blkzoned(sbi) ?
++			ZONED_PIN_SEC_REQUIRED_COUNT :
+ 			GET_SEC_FROM_SEG(sbi, overprovision_segments(sbi)))) {
+ 			f2fs_down_write(&sbi->gc_lock);
+ 			stat_inc_gc_call_count(sbi, FOREGROUND);
+diff --git a/fs/f2fs/gc.h b/fs/f2fs/gc.h
+index 2914b678bf8fb..5c1eaf55e1277 100644
+--- a/fs/f2fs/gc.h
++++ b/fs/f2fs/gc.h
+@@ -35,6 +35,7 @@
+ #define LIMIT_BOOST_ZONED_GC	25 /* percentage over total user space of boosted gc for zoned devices */
+ #define DEF_MIGRATION_WINDOW_GRANULARITY_ZONED	3
+ #define BOOST_GC_MULTIPLE	5
++#define ZONED_PIN_SEC_REQUIRED_COUNT	1
  
- static_assert(INSN_F_FRAMENO_MASK + 1 >= MAX_CALL_FRAMES);
-@@ -370,9 +374,9 @@ static_assert(INSN_F_SPI_MASK + 1 >= MAX_BPF_STACK / 8);
- struct bpf_insn_hist_entry {
- 	u32 idx;
- 	/* insn idx can't be bigger than 1 million */
--	u32 prev_idx : 22;
--	/* special flags, e.g., whether insn is doing register stack spill/load */
--	u32 flags : 10;
-+	u32 prev_idx : 20;
-+	/* special INSN_F_xxx flags */
-+	u32 flags : 12;
- 	/* additional registers that need precision tracking when this
- 	 * jump is backtracked, vector of six 10-bit records
- 	 */
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 7f00dc993041b..f01477cecf393 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4066,8 +4066,10 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 			 * before it would be equally necessary to
- 			 * propagate it to dreg.
- 			 */
--			bt_set_reg(bt, dreg);
--			bt_set_reg(bt, sreg);
-+			if (!hist || !(hist->flags & INSN_F_SRC_REG_STACK))
-+				bt_set_reg(bt, sreg);
-+			if (!hist || !(hist->flags & INSN_F_DST_REG_STACK))
-+				bt_set_reg(bt, dreg);
- 		} else if (BPF_SRC(insn->code) == BPF_K) {
- 			 /* dreg <cond> K
- 			  * Only dreg still needs precision before
-@@ -15415,6 +15417,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	struct bpf_reg_state *eq_branch_regs;
- 	struct linked_regs linked_regs = {};
- 	u8 opcode = BPF_OP(insn->code);
-+	int insn_flags = 0;
- 	bool is_jmp32;
- 	int pred = -1;
- 	int err;
-@@ -15474,6 +15477,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 				insn->src_reg);
- 			return -EACCES;
- 		}
-+
-+		if (src_reg->type == PTR_TO_STACK)
-+			insn_flags |= INSN_F_SRC_REG_STACK;
- 	} else {
- 		if (insn->src_reg != BPF_REG_0) {
- 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
-@@ -15485,6 +15491,14 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 		__mark_reg_known(src_reg, insn->imm);
- 	}
+ #define DEF_GC_FAILED_PINNED_FILES	2048
+ #define MAX_GC_FAILED_PINNED_FILES	USHRT_MAX
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 449c0acbfabc0..3db89becdbfcd 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3250,7 +3250,8 @@ int f2fs_allocate_pinning_section(struct f2fs_sb_info *sbi)
  
-+	if (dst_reg->type == PTR_TO_STACK)
-+		insn_flags |= INSN_F_DST_REG_STACK;
-+	if (insn_flags) {
-+		err = push_insn_history(env, this_branch, insn_flags, 0);
-+		if (err)
-+			return err;
-+	}
-+
- 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
- 	pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
- 	if (pred >= 0) {
+ 	if (f2fs_sb_has_blkzoned(sbi) && err == -EAGAIN && gc_required) {
+ 		f2fs_down_write(&sbi->gc_lock);
+-		err = f2fs_gc_range(sbi, 0, GET_SEGNO(sbi, FDEV(0).end_blk), true, 1);
++		err = f2fs_gc_range(sbi, 0, GET_SEGNO(sbi, FDEV(0).end_blk),
++				true, ZONED_PIN_SEC_REQUIRED_COUNT);
+ 		f2fs_up_write(&sbi->gc_lock);
+ 
+ 		gc_required = false;
 -- 
 2.39.5
 
