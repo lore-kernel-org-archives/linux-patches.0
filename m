@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDAE2E54C3;
-	Tue,  8 Jul 2025 16:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC302DD5EF;
+	Tue,  8 Jul 2025 16:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993510; cv=none; b=E3j5tQ6MsiWp+kzBTabA4ZHJSiLFNE+yz50CuT0ZAN8eWmp4eirtayw4EiE9J6M2+CBXllk4RaIZRUoLYgXBh1sIMIktZt67nYnDJDpbqA8cmOXBqxA1NIp2GMywQAJZHbsyXtLJCCC3/I7ETzV4taXFC6ZunP5H0wtgg8wLklA=
+	t=1751993513; cv=none; b=CZa0doXYmcDNtxaYY2nkAUHMqlYNo6YbUt3eDnDYcP0mZ9HjHqs++epnjemCBg/a7s+lGx5qC9mU4UVFp3Rwm8tANXTgdeo1UndA6Hqc+OHVvZTWFYA7FZhREHQxtLE1Ye4Gz1wsWd4wIplcd95FPDL9ieGl90lRT5V56wXy9LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993510; c=relaxed/simple;
-	bh=bhIAbamWKyn9yledia7qxwF7JvPYu8BScFWI4uzWh/c=;
+	s=arc-20240116; t=1751993513; c=relaxed/simple;
+	bh=/2gG1QHchDu1ZsvQoNBMseQYUaHPRH3t1GwzorgSBfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7LNcbpGbfQrpnRA+mjEvYSENtUwllSnHQjrVHnMe7qqCTu0bSMlKDhooXUJhIceJxvxbP30Y7j2gvCT/Q/CRz+Sz5+i55sDKEhgo3aLIdfxuqeslC5R0SJRkz4bQkTffPWkM+bXrTG8l2n11IjuDLvrr5DaqBx1NIqtWR/U0JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mW7biP2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TnfQfmqbuK7/nEdI9W7Hv6p7W832H+i76hR3x5uDR+Caz64gTNjD7brAoqMb0h11IvZuiFn9v3k5XLV1RoDb2li1aCcMJRuh7XzOVbaZadnjr88iahhq9NguWhAV6tpJtZPILBWgP67f8i5Ihd3wt+kcYtbfbXjmBBxyFxHP2RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVc8emLt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mW7biP2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D0FC4CEF0;
-	Tue,  8 Jul 2025 16:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVc8emLt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FBEC4CEF5;
+	Tue,  8 Jul 2025 16:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993510;
-	bh=bhIAbamWKyn9yledia7qxwF7JvPYu8BScFWI4uzWh/c=;
+	s=korg; t=1751993513;
+	bh=/2gG1QHchDu1ZsvQoNBMseQYUaHPRH3t1GwzorgSBfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mW7biP2gtUp5ElZoGpWSbMXStSwDpz8dmldUlvcgAds1adkV7JckohVaqqVbafznx
-	 CxOZdquld9RM04PqRVW0keOZICia6ePLpkOPOile6oCzrNM9kFBlD3JRnYtFs46dZA
-	 DnKlEtK43qFhuoLQsSlZVFPH3qx7pZwlnKTVBfng=
+	b=OVc8emLtYjia92dEE8I7KyKnlJG9E+5CgWoWlFVdasZAyR+N/omsmQWDkIHnuYu+i
+	 xz8/LxzDTWeOZHhBIfSkcjIqJbbZFWTVhfJCa2KWQilAVzFBg3z8dBWUJsQPHjj0Bi
+	 nFx6QY+UKBDbO/dhvQmToUCixWY40zuIUTcVW4C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Steve French <sfrench@samba.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	Simon Horman <horms@kernel.org>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 098/178] netfs: Fix looping in wait functions
-Date: Tue,  8 Jul 2025 18:22:15 +0200
-Message-ID: <20250708162239.211969217@linuxfoundation.org>
+Subject: [PATCH 6.15 072/178] dpaa2-eth: fix xdp_rxq_info leak
+Date: Tue,  8 Jul 2025 18:21:49 +0200
+Message-ID: <20250708162238.555710965@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -55,86 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-[ Upstream commit 09623e3a14c1c5465124350cd227457c2b0fb017 ]
+[ Upstream commit 2def09ead4ad5907988b655d1e1454003aaf8297 ]
 
-netfs_wait_for_request() and netfs_wait_for_pause() can loop forever if
-netfs_collect_in_app() returns 2, indicating that it wants to repeat
-because the ALL_QUEUED flag isn't yet set and there are no subreqs left
-that haven't been collected.
+The driver registered xdp_rxq_info structures via xdp_rxq_info_reg()
+but failed to properly unregister them in error paths and during
+removal.
 
-The problem is that, unless collection is offloaded (OFFLOAD_COLLECTION),
-we have to return to the application thread to continue and eventually set
-ALL_QUEUED after pausing to deal with a retry - but we never get there.
-
-Fix this by inserting checks for the IN_PROGRESS and PAUSE flags as
-appropriate before cycling round - and add cond_resched() for good measure.
-
-Fixes: 2b1424cd131c ("netfs: Fix wait/wake to be consistent about the waitqueue used")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/20250701163852.2171681-5-dhowells@redhat.com
-Tested-by: Steve French <sfrench@samba.org>
-Reviewed-by: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: d678be1dc1ec ("dpaa2-eth: add XDP_REDIRECT support")
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20250626133003.80136-1-wangfushuai@baidu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/misc.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ .../net/ethernet/freescale/dpaa2/dpaa2-eth.c  | 26 +++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/fs/netfs/misc.c b/fs/netfs/misc.c
-index 0a54b12034868..d8b1a279dbda9 100644
---- a/fs/netfs/misc.c
-+++ b/fs/netfs/misc.c
-@@ -425,8 +425,8 @@ static int netfs_collect_in_app(struct netfs_io_request *rreq,
- /*
-  * Wait for a request to complete, successfully or otherwise.
-  */
--static ssize_t netfs_wait_for_request(struct netfs_io_request *rreq,
--				      bool (*collector)(struct netfs_io_request *rreq))
-+static ssize_t netfs_wait_for_in_progress(struct netfs_io_request *rreq,
-+					  bool (*collector)(struct netfs_io_request *rreq))
- {
- 	DEFINE_WAIT(myself);
- 	ssize_t ret;
-@@ -442,6 +442,9 @@ static ssize_t netfs_wait_for_request(struct netfs_io_request *rreq,
- 			case 1:
- 				goto all_collected;
- 			case 2:
-+				if (!netfs_check_rreq_in_progress(rreq))
-+					break;
-+				cond_resched();
- 				continue;
- 			}
- 		}
-@@ -480,12 +483,12 @@ static ssize_t netfs_wait_for_request(struct netfs_io_request *rreq,
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index 29886a8ba73f3..efd0048acd3b2 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -3928,6 +3928,7 @@ static int dpaa2_eth_setup_rx_flow(struct dpaa2_eth_priv *priv,
+ 					 MEM_TYPE_PAGE_ORDER0, NULL);
+ 	if (err) {
+ 		dev_err(dev, "xdp_rxq_info_reg_mem_model failed\n");
++		xdp_rxq_info_unreg(&fq->channel->xdp_rxq);
+ 		return err;
+ 	}
  
- ssize_t netfs_wait_for_read(struct netfs_io_request *rreq)
- {
--	return netfs_wait_for_request(rreq, netfs_read_collection);
-+	return netfs_wait_for_in_progress(rreq, netfs_read_collection);
+@@ -4421,17 +4422,25 @@ static int dpaa2_eth_bind_dpni(struct dpaa2_eth_priv *priv)
+ 			return -EINVAL;
+ 		}
+ 		if (err)
+-			return err;
++			goto out;
+ 	}
+ 
+ 	err = dpni_get_qdid(priv->mc_io, 0, priv->mc_token,
+ 			    DPNI_QUEUE_TX, &priv->tx_qdid);
+ 	if (err) {
+ 		dev_err(dev, "dpni_get_qdid() failed\n");
+-		return err;
++		goto out;
+ 	}
+ 
+ 	return 0;
++
++out:
++	while (i--) {
++		if (priv->fq[i].type == DPAA2_RX_FQ &&
++		    xdp_rxq_info_is_reg(&priv->fq[i].channel->xdp_rxq))
++			xdp_rxq_info_unreg(&priv->fq[i].channel->xdp_rxq);
++	}
++	return err;
  }
  
- ssize_t netfs_wait_for_write(struct netfs_io_request *rreq)
- {
--	return netfs_wait_for_request(rreq, netfs_write_collection);
-+	return netfs_wait_for_in_progress(rreq, netfs_write_collection);
+ /* Allocate rings for storing incoming frame descriptors */
+@@ -4814,6 +4823,17 @@ static void dpaa2_eth_del_ch_napi(struct dpaa2_eth_priv *priv)
+ 	}
  }
  
- /*
-@@ -509,6 +512,10 @@ static void netfs_wait_for_pause(struct netfs_io_request *rreq,
- 			case 1:
- 				goto all_collected;
- 			case 2:
-+				if (!netfs_check_rreq_in_progress(rreq) ||
-+				    !test_bit(NETFS_RREQ_PAUSE, &rreq->flags))
-+					break;
-+				cond_resched();
- 				continue;
- 			}
- 		}
++static void dpaa2_eth_free_rx_xdp_rxq(struct dpaa2_eth_priv *priv)
++{
++	int i;
++
++	for (i = 0; i < priv->num_fqs; i++) {
++		if (priv->fq[i].type == DPAA2_RX_FQ &&
++		    xdp_rxq_info_is_reg(&priv->fq[i].channel->xdp_rxq))
++			xdp_rxq_info_unreg(&priv->fq[i].channel->xdp_rxq);
++	}
++}
++
+ static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
+ {
+ 	struct device *dev;
+@@ -5017,6 +5037,7 @@ static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
+ 	free_percpu(priv->percpu_stats);
+ err_alloc_percpu_stats:
+ 	dpaa2_eth_del_ch_napi(priv);
++	dpaa2_eth_free_rx_xdp_rxq(priv);
+ err_bind:
+ 	dpaa2_eth_free_dpbps(priv);
+ err_dpbp_setup:
+@@ -5069,6 +5090,7 @@ static void dpaa2_eth_remove(struct fsl_mc_device *ls_dev)
+ 	free_percpu(priv->percpu_extras);
+ 
+ 	dpaa2_eth_del_ch_napi(priv);
++	dpaa2_eth_free_rx_xdp_rxq(priv);
+ 	dpaa2_eth_free_dpbps(priv);
+ 	dpaa2_eth_free_dpio(priv);
+ 	dpaa2_eth_free_dpni(priv);
 -- 
 2.39.5
 
