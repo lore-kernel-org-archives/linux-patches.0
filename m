@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCD32E5B2C;
-	Tue,  8 Jul 2025 17:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A3C2E6D26;
+	Tue,  8 Jul 2025 17:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994109; cv=none; b=lzPk+5T45jQ7Un0UfzyoDTyJe2GNb2XTYtQ5nglwrgVKlV6dmQf4hZ+1f2t0OOC7WXSZ7Dr+BmL3AX2kcafk/nl4mzlPWnoiKTqb476INdjeTrnuu5vIkycsrmoYN9g2hgUh+m0yom4FYNFyOxIOcB18e3n+Sf2OTKKATvkZqrc=
+	t=1751994112; cv=none; b=C6hCnsO062631ncMNPXIKkPgpktMZMCBErLRyolBNCbGBIYw/lm02FkrzQ6cwy9ylYqRbPSaXTBE1Gnvl4s9S9nQ5da5epEeMgWIwJbtlpuvkXwdcg9T7ygl/0O41ip0qjKftdts7QpoIoiYzrHmDrzqgeUHNWsYMyVKh+YqyrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994109; c=relaxed/simple;
-	bh=zSOIrGZiMZMY/JWWwqBaJjb5WhSzUhEVJDlBFmKcgBA=;
+	s=arc-20240116; t=1751994112; c=relaxed/simple;
+	bh=k24SWQRlYMxrIoK7TFkIg+CQ/MQheAszvPTB59hQxgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5hJKo6owKCD02/qbpWpiYu0z9ZS2ej1/5o4AibWk9xlJd81NhhFD6Dw0lJlUV3zROb2Jzdja6HC4+hYsB/pyHMk6FQ9pDYTHWf6AJhJ4VA+ULG7RBaEQYebEwBwoqcIRHO2+LsbTr8HZtc/aZWCRXlzBO31CGFsBFq2EsmkXUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvxSUxvz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuB4MqYbrtMZz9Rh33uXXCfE+X8Nq7myisDcwCBqNVOrD9FDE6LExUcp99FPGK8YONSrOBkzlwgWnH2QmQPDj+Dbmu7vyJyd1A4CGCKdqBtpUpWGa6Z1c1w/EYw6aPNvws5CSw4+BxSFQXk+Pzn2BiBJRQt0FlgiGK9Ipdfd0ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E13wUXfE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvxSUxvz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DB3C4CEF6;
-	Tue,  8 Jul 2025 17:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E13wUXfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEA5C4CEF5;
+	Tue,  8 Jul 2025 17:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994109;
-	bh=zSOIrGZiMZMY/JWWwqBaJjb5WhSzUhEVJDlBFmKcgBA=;
+	s=korg; t=1751994112;
+	bh=k24SWQRlYMxrIoK7TFkIg+CQ/MQheAszvPTB59hQxgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvxSUxvzwZehCMo3TSupJk+9nHPra1LFn9atlPyLv7MLDAcTXfZMZGtnL1rzS0mYv
-	 JyWIUkI9hAI0v8S2V1WGqr0R76kJMsA3Vfue+EAcVSjWkmteK7yhGk9yBoQ+ffUDip
-	 3+ViosPeTPQg8/dgFoRtdQ+UCopeO+RKT+C/AfnA=
+	b=E13wUXfEENhGRJmR/WpzySOS9DdHFjybI/Hw6fRTbx3Ukxk6IeQ4zOeHXU5JW3vKo
+	 h8yU1gxjyuKhqpJ12hjMaZpP7Nd2dfZsViUD/effJiUU+zQ9IvLf8T1qBdt9mRUns7
+	 Puk2BNMweTIDSfjxeNw5Dooa4CC0omu+T/VEKKSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/160] ALSA: sb: Force to disable DMAs once when DMA mode is changed
-Date: Tue,  8 Jul 2025 18:22:45 +0200
-Message-ID: <20250708162234.958433879@linuxfoundation.org>
+Subject: [PATCH 5.15 129/160] ata: pata_cs5536: fix build on 32-bit UML
+Date: Tue,  8 Jul 2025 18:22:46 +0200
+Message-ID: <20250708162234.982717111@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -50,39 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 4c267ae2ef349639b4d9ebf00dd28586a82fdbe6 ]
+[ Upstream commit fe5b391fc56f77cf3c22a9dd4f0ce20db0e3533f ]
 
-When the DMA mode is changed on the (still real!) SB AWE32 after
-playing a stream and closing, the previous DMA setup was still
-silently kept, and it can confuse the hardware, resulting in the
-unexpected noises.  As a workaround, enforce the disablement of DMA
-setups when the DMA setup is changed by the kcontrol.
+On 32-bit ARCH=um, CONFIG_X86_32 is still defined, so it
+doesn't indicate building on real X86 machines. There's
+no MSR on UML though, so add a check for CONFIG_X86.
 
-https://bugzilla.kernel.org/show_bug.cgi?id=218185
-Link: https://patch.msgid.link/20250610064322.26787-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/20250606090110.15784-2-johannes@sipsolutions.net
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sb/sb16_main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/pata_cs5536.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/isa/sb/sb16_main.c b/sound/isa/sb/sb16_main.c
-index 5efbd0a41312b..1497a7822eee6 100644
---- a/sound/isa/sb/sb16_main.c
-+++ b/sound/isa/sb/sb16_main.c
-@@ -714,6 +714,10 @@ static int snd_sb16_dma_control_put(struct snd_kcontrol *kcontrol, struct snd_ct
- 	change = nval != oval;
- 	snd_sb16_set_dma_mode(chip, nval);
- 	spin_unlock_irqrestore(&chip->reg_lock, flags);
-+	if (change) {
-+		snd_dma_disable(chip->dma8);
-+		snd_dma_disable(chip->dma16);
-+	}
- 	return change;
- }
+diff --git a/drivers/ata/pata_cs5536.c b/drivers/ata/pata_cs5536.c
+index 760ac6e65216f..3737d1bf1539d 100644
+--- a/drivers/ata/pata_cs5536.c
++++ b/drivers/ata/pata_cs5536.c
+@@ -27,7 +27,7 @@
+ #include <scsi/scsi_host.h>
+ #include <linux/dmi.h>
  
+-#ifdef CONFIG_X86_32
++#if defined(CONFIG_X86) && defined(CONFIG_X86_32)
+ #include <asm/msr.h>
+ static int use_msr;
+ module_param_named(msr, use_msr, int, 0644);
 -- 
 2.39.5
 
