@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269C72D9ECD;
-	Tue,  8 Jul 2025 16:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098372D9ECD;
+	Tue,  8 Jul 2025 16:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992532; cv=none; b=nzKRO7zpZFR8n1np5sbkHIsqO7J/cHaJXW6waawTNmePWwP5jiSPgv/I6iwACZL7M2/iCWcjI5hMGobw9T8dP5NeVPmpVu4nDo8bKGsyEjk+sW7HiJ20+KVqudaSdO8ngwTgcfsH5ocneW/1qIusqcxqClFC1RugkXi5kh17HWQ=
+	t=1751992535; cv=none; b=aYFSylKQGgiA5NjsSHweWNXOMeD3jeVwdHMLeJQUbHW2JmCgl7SQ767ohLtKTHx6o9RW3hncZYSicCZv5y/xcHkpvf9PsR4YbMth9xzQLy3rz/WZtfx1oDvNIlP8MSqJHB+3F93TCItebOSNSxuPlGQOccCMnVn1XIWF6fl7KvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992532; c=relaxed/simple;
-	bh=Ecntw/4z8aazIE8bQD2NlB05DTJ6OmjazQS2oe2LYqU=;
+	s=arc-20240116; t=1751992535; c=relaxed/simple;
+	bh=1bN7hXUmfwBxla0Ro1aCLqo3ZDdFrdp5Hgh9bb+zmaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XeGS1BCeVPJGcsPREjl539Zc5BAFo79GWtkofasYEAn/CZVHxnIzz36v+4HVSURV8dnCjuI2BMGrD9mDoRU5ad2dyUml4p+aSbSEPJcjp1G2GJ194d12O6lvfEtxyug3EvlVgq9RmgeTjQc/ve1rB9YTiuamZC6X+TrMtBtgl3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azDcHzKU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dnBVDZzXeGAZ87coiuiFzFTDp1MMnHYv0UKKW2+lcom79kx+Ljg68H4YHo3pRF2Qy7uyTZS5uCJoodQxtuk+/l1Q7CzZVH3USkn7BOnjEGdgdbPSxoobyuqTlYBbkDRDRXNt9j1IufTAVr9Id1h19Du5qYk/kxGKIIHy24zwERk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVDwZRHy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azDcHzKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC804C4CEED;
-	Tue,  8 Jul 2025 16:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVDwZRHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866D4C4CEF0;
+	Tue,  8 Jul 2025 16:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992532;
-	bh=Ecntw/4z8aazIE8bQD2NlB05DTJ6OmjazQS2oe2LYqU=;
+	s=korg; t=1751992534;
+	bh=1bN7hXUmfwBxla0Ro1aCLqo3ZDdFrdp5Hgh9bb+zmaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azDcHzKUCvQkdzJAO9+vngnYFGb6sI4lOJWfCdV6UpW7CghEJfPvCKHpq19Lcsp3Z
-	 1pYyTg6tXozzJ5aToAPfIqTMuO2AxfqYZz6Z1ivOFwFNEe/gmqJ7Wpydles1pWcGpk
-	 OAg6bLNVfj32Kq1a4nGYhvNv3LHrTxjTC75rcRWc=
+	b=uVDwZRHyTNVAN7+RSsEO7zBQTpTAEMlAlkQpSaZT8UycgJs3N8Wtfo9r2Pl9YsFMV
+	 1AyPbDDijW76RqZW7QyIYOjbtDtwllMAdqVQjjYkttjSX27EinYC+Z/9g3xWpipb2N
+	 8vVRzrtMPR6VRG0alO83QynfOIw2gzZCIE1qx5Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Kurt Borja <kuurtb@gmail.com>
-Subject: [PATCH 6.6 124/132] platform/x86: think-lmi: Fix kobject cleanup
-Date: Tue,  8 Jul 2025 18:23:55 +0200
-Message-ID: <20250708162234.167059078@linuxfoundation.org>
+Subject: [PATCH 6.6 125/132] platform/x86: think-lmi: Fix sysfs group cleanup
+Date: Tue,  8 Jul 2025 18:23:56 +0200
+Message-ID: <20250708162234.193107462@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -54,154 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Kurt Borja <kuurtb@gmail.com>
 
-commit 9110056fe10b0519529bdbbac37311a5037ea0c2 upstream.
+commit 4f30f946f27b7f044cf8f3f1f353dee1dcd3517a upstream.
 
-In tlmi_analyze(), allocated structs with an embedded kobject are freed
-in error paths after the they were already initialized.
+Many error paths in tlmi_sysfs_init() lead to sysfs groups being removed
+when they were not even created.
 
-Fix this by first by avoiding the initialization of kobjects in
-tlmi_analyze() and then by correctly cleaning them up in
-tlmi_release_attr() using their kset's kobject list.
+Fix this by letting the kobject core manage these groups through their
+kobj_type's defult_groups.
 
 Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
-Fixes: 30e78435d3bf ("platform/x86: think-lmi: Split kobject_init() and kobject_add() calls")
 Cc: stable@vger.kernel.org
 Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250630-lmi-fix-v3-2-ce4f81c9c481@gmail.com
+Link: https://lore.kernel.org/r/20250630-lmi-fix-v3-3-ce4f81c9c481@gmail.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/think-lmi.c |   35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ drivers/platform/x86/think-lmi.c |   43 +++------------------------------------
+ 1 file changed, 4 insertions(+), 39 deletions(-)
 
 --- a/drivers/platform/x86/think-lmi.c
 +++ b/drivers/platform/x86/think-lmi.c
-@@ -1212,19 +1212,22 @@ static struct kobj_attribute debug_cmd =
- /* ---- Initialisation --------------------------------------------------------- */
+@@ -916,6 +916,7 @@ static const struct attribute_group auth
+ 	.is_visible = auth_attr_is_visible,
+ 	.attrs = auth_attrs,
+ };
++__ATTRIBUTE_GROUPS(auth_attr);
+ 
+ /* ---- Attributes sysfs --------------------------------------------------------- */
+ static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *attr,
+@@ -1119,6 +1120,7 @@ static const struct attribute_group tlmi
+ 	.is_visible = attr_is_visible,
+ 	.attrs = tlmi_attrs,
+ };
++__ATTRIBUTE_GROUPS(tlmi_attr);
+ 
+ static void tlmi_attr_setting_release(struct kobject *kobj)
+ {
+@@ -1138,11 +1140,13 @@ static void tlmi_pwd_setting_release(str
+ static const struct kobj_type tlmi_attr_setting_ktype = {
+ 	.release        = &tlmi_attr_setting_release,
+ 	.sysfs_ops	= &kobj_sysfs_ops,
++	.default_groups = tlmi_attr_groups,
+ };
+ 
+ static const struct kobj_type tlmi_pwd_setting_ktype = {
+ 	.release        = &tlmi_pwd_setting_release,
+ 	.sysfs_ops	= &kobj_sysfs_ops,
++	.default_groups = auth_attr_groups,
+ };
+ 
+ static ssize_t pending_reboot_show(struct kobject *kobj, struct kobj_attribute *attr,
+@@ -1213,14 +1217,8 @@ static struct kobj_attribute debug_cmd =
  static void tlmi_release_attr(void)
  {
-+	struct kobject *pos, *n;
- 	int i;
+ 	struct kobject *pos, *n;
+-	int i;
  
  	/* Attribute structures */
- 	for (i = 0; i < TLMI_SETTINGS_COUNT; i++) {
- 		if (tlmi_priv.setting[i]) {
- 			sysfs_remove_group(&tlmi_priv.setting[i]->kobj, &tlmi_attr_group);
--			kobject_put(&tlmi_priv.setting[i]->kobj);
- 		}
- 	}
+-	for (i = 0; i < TLMI_SETTINGS_COUNT; i++) {
+-		if (tlmi_priv.setting[i]) {
+-			sysfs_remove_group(&tlmi_priv.setting[i]->kobj, &tlmi_attr_group);
+-		}
+-	}
  	sysfs_remove_file(&tlmi_priv.attribute_kset->kobj, &pending_reboot.attr);
  	if (tlmi_priv.can_debug_cmd && debug_support)
  		sysfs_remove_file(&tlmi_priv.attribute_kset->kobj, &debug_cmd.attr);
- 
-+	list_for_each_entry_safe(pos, n, &tlmi_priv.attribute_kset->list, entry)
-+		kobject_put(pos);
-+
- 	kset_unregister(tlmi_priv.attribute_kset);
- 
- 	/* Free up any saved signatures */
-@@ -1233,19 +1236,17 @@ static void tlmi_release_attr(void)
+@@ -1235,15 +1233,6 @@ static void tlmi_release_attr(void)
+ 	kfree(tlmi_priv.pwd_admin->save_signature);
  
  	/* Authentication structures */
- 	sysfs_remove_group(&tlmi_priv.pwd_admin->kobj, &auth_attr_group);
--	kobject_put(&tlmi_priv.pwd_admin->kobj);
- 	sysfs_remove_group(&tlmi_priv.pwd_power->kobj, &auth_attr_group);
--	kobject_put(&tlmi_priv.pwd_power->kobj);
+-	sysfs_remove_group(&tlmi_priv.pwd_admin->kobj, &auth_attr_group);
+-	sysfs_remove_group(&tlmi_priv.pwd_power->kobj, &auth_attr_group);
+-
+-	if (tlmi_priv.opcode_support) {
+-		sysfs_remove_group(&tlmi_priv.pwd_system->kobj, &auth_attr_group);
+-		sysfs_remove_group(&tlmi_priv.pwd_hdd->kobj, &auth_attr_group);
+-		sysfs_remove_group(&tlmi_priv.pwd_nvme->kobj, &auth_attr_group);
+-	}
+-
+ 	list_for_each_entry_safe(pos, n, &tlmi_priv.authentication_kset->list, entry)
+ 		kobject_put(pos);
  
- 	if (tlmi_priv.opcode_support) {
- 		sysfs_remove_group(&tlmi_priv.pwd_system->kobj, &auth_attr_group);
--		kobject_put(&tlmi_priv.pwd_system->kobj);
- 		sysfs_remove_group(&tlmi_priv.pwd_hdd->kobj, &auth_attr_group);
--		kobject_put(&tlmi_priv.pwd_hdd->kobj);
- 		sysfs_remove_group(&tlmi_priv.pwd_nvme->kobj, &auth_attr_group);
--		kobject_put(&tlmi_priv.pwd_nvme->kobj);
- 	}
- 
-+	list_for_each_entry_safe(pos, n, &tlmi_priv.authentication_kset->list, entry)
-+		kobject_put(pos);
-+
- 	kset_unregister(tlmi_priv.authentication_kset);
- }
- 
-@@ -1309,8 +1310,8 @@ static int tlmi_sysfs_init(void)
- 
- 		/* Build attribute */
- 		tlmi_priv.setting[i]->kobj.kset = tlmi_priv.attribute_kset;
--		ret = kobject_add(&tlmi_priv.setting[i]->kobj, NULL,
--				  "%s", tlmi_priv.setting[i]->display_name);
-+		ret = kobject_init_and_add(&tlmi_priv.setting[i]->kobj, &tlmi_attr_setting_ktype,
-+					   NULL, "%s", tlmi_priv.setting[i]->display_name);
+@@ -1314,10 +1303,6 @@ static int tlmi_sysfs_init(void)
+ 					   NULL, "%s", tlmi_priv.setting[i]->display_name);
  		if (ret)
  			goto fail_create_attr;
+-
+-		ret = sysfs_create_group(&tlmi_priv.setting[i]->kobj, &tlmi_attr_group);
+-		if (ret)
+-			goto fail_create_attr;
+ 	}
  
-@@ -1331,7 +1332,8 @@ static int tlmi_sysfs_init(void)
- 
- 	/* Create authentication entries */
- 	tlmi_priv.pwd_admin->kobj.kset = tlmi_priv.authentication_kset;
--	ret = kobject_add(&tlmi_priv.pwd_admin->kobj, NULL, "%s", "Admin");
-+	ret = kobject_init_and_add(&tlmi_priv.pwd_admin->kobj, &tlmi_pwd_setting_ktype,
-+				   NULL, "%s", "Admin");
+ 	ret = sysfs_create_file(&tlmi_priv.attribute_kset->kobj, &pending_reboot.attr);
+@@ -1337,20 +1322,12 @@ static int tlmi_sysfs_init(void)
  	if (ret)
  		goto fail_create_attr;
  
-@@ -1340,7 +1342,8 @@ static int tlmi_sysfs_init(void)
- 		goto fail_create_attr;
- 
+-	ret = sysfs_create_group(&tlmi_priv.pwd_admin->kobj, &auth_attr_group);
+-	if (ret)
+-		goto fail_create_attr;
+-
  	tlmi_priv.pwd_power->kobj.kset = tlmi_priv.authentication_kset;
--	ret = kobject_add(&tlmi_priv.pwd_power->kobj, NULL, "%s", "Power-on");
-+	ret = kobject_init_and_add(&tlmi_priv.pwd_power->kobj, &tlmi_pwd_setting_ktype,
-+				   NULL, "%s", "Power-on");
+ 	ret = kobject_init_and_add(&tlmi_priv.pwd_power->kobj, &tlmi_pwd_setting_ktype,
+ 				   NULL, "%s", "Power-on");
  	if (ret)
  		goto fail_create_attr;
  
-@@ -1350,7 +1353,8 @@ static int tlmi_sysfs_init(void)
- 
+-	ret = sysfs_create_group(&tlmi_priv.pwd_power->kobj, &auth_attr_group);
+-	if (ret)
+-		goto fail_create_attr;
+-
  	if (tlmi_priv.opcode_support) {
  		tlmi_priv.pwd_system->kobj.kset = tlmi_priv.authentication_kset;
--		ret = kobject_add(&tlmi_priv.pwd_system->kobj, NULL, "%s", "System");
-+		ret = kobject_init_and_add(&tlmi_priv.pwd_system->kobj, &tlmi_pwd_setting_ktype,
-+					   NULL, "%s", "System");
+ 		ret = kobject_init_and_add(&tlmi_priv.pwd_system->kobj, &tlmi_pwd_setting_ktype,
+@@ -1358,29 +1335,17 @@ static int tlmi_sysfs_init(void)
  		if (ret)
  			goto fail_create_attr;
  
-@@ -1359,7 +1363,8 @@ static int tlmi_sysfs_init(void)
- 			goto fail_create_attr;
- 
- 		tlmi_priv.pwd_hdd->kobj.kset = tlmi_priv.authentication_kset;
--		ret = kobject_add(&tlmi_priv.pwd_hdd->kobj, NULL, "%s", "HDD");
-+		ret = kobject_init_and_add(&tlmi_priv.pwd_hdd->kobj, &tlmi_pwd_setting_ktype,
-+					   NULL, "%s", "HDD");
- 		if (ret)
- 			goto fail_create_attr;
- 
-@@ -1368,7 +1373,8 @@ static int tlmi_sysfs_init(void)
- 			goto fail_create_attr;
- 
- 		tlmi_priv.pwd_nvme->kobj.kset = tlmi_priv.authentication_kset;
--		ret = kobject_add(&tlmi_priv.pwd_nvme->kobj, NULL, "%s", "NVMe");
-+		ret = kobject_init_and_add(&tlmi_priv.pwd_nvme->kobj, &tlmi_pwd_setting_ktype,
-+					   NULL, "%s", "NVMe");
- 		if (ret)
- 			goto fail_create_attr;
- 
-@@ -1405,8 +1411,6 @@ static struct tlmi_pwd_setting *tlmi_cre
- 	new_pwd->maxlen = tlmi_priv.pwdcfg.core.max_length;
- 	new_pwd->index = 0;
- 
--	kobject_init(&new_pwd->kobj, &tlmi_pwd_setting_ktype);
+-		ret = sysfs_create_group(&tlmi_priv.pwd_system->kobj, &auth_attr_group);
+-		if (ret)
+-			goto fail_create_attr;
 -
- 	return new_pwd;
- }
+ 		tlmi_priv.pwd_hdd->kobj.kset = tlmi_priv.authentication_kset;
+ 		ret = kobject_init_and_add(&tlmi_priv.pwd_hdd->kobj, &tlmi_pwd_setting_ktype,
+ 					   NULL, "%s", "HDD");
+ 		if (ret)
+ 			goto fail_create_attr;
  
-@@ -1510,7 +1514,6 @@ static int tlmi_analyze(void)
- 		if (setting->possible_values)
- 			strreplace(setting->possible_values, ',', ';');
- 
--		kobject_init(&setting->kobj, &tlmi_attr_setting_ktype);
- 		tlmi_priv.setting[i] = setting;
- 		kfree(item);
+-		ret = sysfs_create_group(&tlmi_priv.pwd_hdd->kobj, &auth_attr_group);
+-		if (ret)
+-			goto fail_create_attr;
+-
+ 		tlmi_priv.pwd_nvme->kobj.kset = tlmi_priv.authentication_kset;
+ 		ret = kobject_init_and_add(&tlmi_priv.pwd_nvme->kobj, &tlmi_pwd_setting_ktype,
+ 					   NULL, "%s", "NVMe");
+ 		if (ret)
+ 			goto fail_create_attr;
+-
+-		ret = sysfs_create_group(&tlmi_priv.pwd_nvme->kobj, &auth_attr_group);
+-		if (ret)
+-			goto fail_create_attr;
  	}
+ 
+ 	return ret;
 
 
