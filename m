@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140482E5B26;
-	Tue,  8 Jul 2025 16:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80522E613A;
+	Tue,  8 Jul 2025 16:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993801; cv=none; b=S/xpyt4QU6VAjOGuZQcBldU7n/mqWlDNwSItmMN16eHHeMLX4oe2wqMWbcDikfiOU1Up6zdsmtWRIShdwgDwpiN0gtTYU78Kz9bTOHRV861zTgvvbI2c/nY8Z3tmi9dSRnnSnpqeiZaQ73rdDDX1Rle8v8/WCge6jYJYA98Qqxo=
+	t=1751993804; cv=none; b=V0Mn6QshqdcjuTLTJwgGfyGRJJS8CRd0uQpx+lWhRBrG4P3g2qndTNV0k0JsmHnN+N7UZ7SSu6ux+Dcu47IzLR8S4etQMSpSGq2dPk3MKOVGcVveDuFKmK+fmJmBSyCPg9N0TxADLAebhgE/uNDKdiuZ8fHB0sIGPl2tbE0ZOdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993801; c=relaxed/simple;
-	bh=O5TDb5HNP4ftS15x1BQqy0bxrNkVEa1jM2ejQBkdH8c=;
+	s=arc-20240116; t=1751993804; c=relaxed/simple;
+	bh=k/ZVTmiumx+U16qe+IZpsNiDM1Mc6HGTetf0nznwxcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRoqy5GvYXEyaG0RFt3vQsOrVD1Zonoa9T+Op3DN2QtioU8F83SgNVL3u/hP6NotEDo/wg6DduqcaRr8Oeuqw5e2pZAPN5jRPsdXF3yqFHhI7tmE7hdHzhN8r9R29XYEQOLZzdNEiK+pi5JpJMBdv1j/N7ovJZwiY+OoaM3XMpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo6IPg51; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2QqYNSG3bg82oD96BB6PaXbvfP9Frr0m2xQSNoDqSx3GYOl57w54LTwCmh6/98JHsOaliWbAnu/fwsRkQF7UwtQtgPBzMgBhq2gS4fJREe0ZwZ4Qpq26wsiXyQQK2Is3Qaeaz7W9HVLNLcJTlDFPgLO6x4jr58fP5qYYj3H2+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUu92QhG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo6IPg51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C8FC4CEF5;
-	Tue,  8 Jul 2025 16:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUu92QhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EF5C4CEF5;
+	Tue,  8 Jul 2025 16:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993801;
-	bh=O5TDb5HNP4ftS15x1BQqy0bxrNkVEa1jM2ejQBkdH8c=;
+	s=korg; t=1751993803;
+	bh=k/ZVTmiumx+U16qe+IZpsNiDM1Mc6HGTetf0nznwxcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mo6IPg51StaqJqcndk5VtQmE02e8YmHAEM3j5BvcmDCbiUw0xh9bqdQm9RASLAdHl
-	 se9TPikM/gomhRNq3UXfbL5uKSEh9+4DOXR++w+Q8f4lhbr0j/697+wHYfPhzp9O9p
-	 +82XgCdCsp5W51gR1CALjewo5GpAy8sYyatW5ZNM=
+	b=oUu92QhG9zhDLgeyioNlqbVa6DbzCdE7QTTxBbayNZ5XmKgeMYWXVqZG1IP1xXwin
+	 h7VYe45AsK0YX8eYwaJzKasVn0O8f7nYdFw7uS70z/GceRRZrtwC40IAHB0mT90QHV
+	 8AIbLB1iUumQXMu5UaoZ9e6BcmL61NJKPw4WATYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
 	Takashi Iwai <tiwai@suse.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/160] ALSA: hda: Add new pci id for AMD GPU display HD audio controller
-Date: Tue,  8 Jul 2025 18:21:00 +0200
-Message-ID: <20250708162232.151514696@linuxfoundation.org>
+Subject: [PATCH 5.15 024/160] ALSA: usb-audio: Add a quirk for Lenovo Thinkpad Thunderbolt 3 dock
+Date: Tue,  8 Jul 2025 18:21:01 +0200
+Message-ID: <20250708162232.180131613@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,35 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit ab72bfce7647522e01a181e3600c3d14ff5c143e ]
+[ Upstream commit 4919353c7789b8047e06a9b2b943f775a8f72883 ]
 
-Add new pci id for AMD GPU display HD audio controller(device id- 0xab40).
+The audio controller in the Lenovo Thinkpad Thunderbolt 3 dock doesn't
+support reading the sampling rate.
 
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://patch.msgid.link/20250529053838.2350071-1-Vijendar.Mukunda@amd.com
+Add a quirk for it.
+
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250527172657.1972565-1-superm1@kernel.org
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index cc8c066327b6c..c69f4e5989d4f 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2731,6 +2731,9 @@ static const struct pci_device_id azx_ids[] = {
- 	{ PCI_DEVICE(0x1002, 0xab38),
- 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
- 	  AZX_DCAPS_PM_RUNTIME },
-+	{ PCI_VDEVICE(ATI, 0xab40),
-+	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
-+	  AZX_DCAPS_PM_RUNTIME },
- 	/* GLENFLY */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_GLENFLY, PCI_ANY_ID),
- 	  .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 488fcdbb6a2d4..f24a334316a29 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1877,6 +1877,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
+ 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
+ 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
++	DEVICE_FLG(0x17ef, 0x3083, /* Lenovo TBT3 dock */
++		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x1852, 0x5062, /* Luxman D-08u */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x1852, 0x5065, /* Luxman DA-06 */
 -- 
 2.39.5
 
