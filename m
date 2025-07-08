@@ -1,77 +1,153 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 625012192F1
-	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 19:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05D5C223DCE
+	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 19:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752003252; cv=none; b=VwlgBCsdT+RF/J4Db4EY+a14YOyQ/m8BmAQtcEC+r4JweKOLhghlygGjCu7gRJeyDcTVJr89iEA4ILM67yxLtpx2YIJvXn87QVCwbwD3J7hjGW8G+PXwBcXW/xNPAAxe4DymWTyC/nRXFArBxTRG/9hM5X1bbs+eH4R1UMJlj0Y=
+	t=1752003756; cv=none; b=YBGWhV2V3mVhHVp+x4mxAzZldYYFwDnjpHZTQgITGYx1TwNIabkYgnOKB98fQvVr4s7O/uiJk1i0X712y6gx2rQblozC2c7DQlo8imTap64bc9R96vHbAcTRvgmg26h7WsbKAG2Fv7krTO4/CLpkNCgKLwxeAVTbHMcLgm2zrT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752003252; c=relaxed/simple;
-	bh=AQfKFFSCMJAWtmBuZ+9fLxNHqJT04PXBw4n0+6KL4+o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O0f+r9D0ZtnBwm26B1QPWhobf7IEXGA5qGrXS14bwLA34h5UZ0OoKxP5AWish3wvhGa2B4XW/05Uu/W9SsvRNodCfvi+sRe47hTAIanZ07W2y4oVi7yN/JZLzWMGSll9nPA2QnwtdDG7j6bcSZxFot7IsEGMJeiFWJl0od6fok8=
+	s=arc-20240116; t=1752003756; c=relaxed/simple;
+	bh=DBFmFiYB9lulGbuBOZkEYD5XG9xgS/d+lvhvBh0X+QE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Uviuzlb6y1ehqAQT/mFcOd4T2Ksk5Fjw4jQaPO9uBmlt97fHd5xElsJFJOJK2PYI5XXC6yBeHx4EIofJpBoYvNT+VOhsuUzWXvwXAICguli96y9nukbKYOFQc/m6tGcaaz1gg/ycRd7wMDfyhRTXmyk2LgQh1o8EqoW8v1QGCjI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com; spf=none smtp.mailfrom=foss.arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=foss.arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C6443152B;
-	Tue,  8 Jul 2025 12:33:58 -0700 (PDT)
-Received: from bogus (unknown [10.57.51.18])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5D49D3F66E;
-	Tue,  8 Jul 2025 12:34:08 -0700 (PDT)
-Date: Tue, 8 Jul 2025 20:34:00 +0100
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8B143153B;
+	Tue,  8 Jul 2025 12:42:21 -0700 (PDT)
+Received: from usa.arm.com (e133711.arm.com [10.1.196.55])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 63D1D3F66E;
+	Tue,  8 Jul 2025 12:42:32 -0700 (PDT)
 From: Sudeep Holla <sudeep.holla@arm.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 029/232] firmware: arm_ffa: Add support for
- {un,}registration of framework notifications
-Message-ID: <20250708-jumping-strange-lemming-1bfc92@sudeepholla>
-References: <20250708162241.426806072@linuxfoundation.org>
- <20250708162242.198209294@linuxfoundation.org>
+Cc: Sudeep Holla <sudeep.holla@arm.com>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Sasha Levin <sashal@kernel.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [BACKPORT][PATCH 6.12.y 1/2] firmware: arm_ffa: Move memory allocation outside the mutex locking
+Date: Tue,  8 Jul 2025 20:42:22 +0100
+Message-Id: <20250708194223.937108-1-sudeep.holla@arm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250708162242.198209294@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 08, 2025 at 06:20:25PM +0200, Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Sudeep Holla <sudeep.holla@arm.com>
-> 
-> [ Upstream commit c10debfe7f028c11f7a501a0f8e937c9be9e5327 ]
-> 
-> Framework notifications are doorbells that are rung by the partition
-> managers to signal common events to an endpoint. These doorbells cannot
-> be rung by an endpoint directly. A partition manager can signal a
-> Framework notification in response to an FF-A ABI invocation by an
-> endpoint.
-> 
-> Two additional notify_ops interface is being added for any FF-A device/
-> driver to register and unregister for such a framework notifications.
-> 
-> Tested-by: Viresh Kumar <viresh.kumar@linaro.org>
-> Message-Id: <20250217-ffa_updates-v3-16-bd1d9de615e7@arm.com>
-> Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-> Stable-dep-of: 27e850c88df0 ("firmware: arm_ffa: Move memory allocation outside the mutex locking")
+[ Upstream commit 27e850c88df0e25474a8caeb2903e2e90b62c1dc ]
 
-I understand these are being added in order to resolve the dependency
-from 27e850c88df0, but this patch adds new feature. I would like to
-drop 027/232, 028/232 and 029/232 from the queue. I already knew this and
-had backports ready for
+The notifier callback node allocation is currently done while holding
+the notify_lock mutex. While this is safe even if memory allocation may
+sleep, we need to move the allocation outside the locked region in
+preparation to move from using muxtes to rwlocks.
 
-Upstream commit 27e850c88df0e25474a8caeb2903e2e90b62c1dc - 030/232 here
-Upstream commit 9ca7a421229bbdfbe2e1e628cff5cfa782720a10 - 190/232 here
+Move the memory allocation to avoid potential sleeping in atomic context
+once the locks are moved from mutex to rwlocks.
 
-I will send then now.
+Fixes: e0573444edbf ("firmware: arm_ffa: Add interfaces to request notification callbacks")
+Message-Id: <20250528-ffa_notif_fix-v1-2-5ed7bc7f8437@arm.com>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+---
+ drivers/firmware/arm_ffa/driver.c | 40 ++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index c0f3b7cdb6ed..b0d92f411334 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -1141,12 +1141,11 @@ notifier_hash_node_get(u16 notify_id, enum notify_type type)
+ 	return NULL;
+ }
+ 
+-static int
+-update_notifier_cb(int notify_id, enum notify_type type, ffa_notifier_cb cb,
+-		   void *cb_data, bool is_registration)
++static int update_notifier_cb(int notify_id, enum notify_type type,
++			      struct notifier_cb_info *cb)
+ {
+ 	struct notifier_cb_info *cb_info = NULL;
+-	bool cb_found;
++	bool cb_found, is_registration = !!cb;
+ 
+ 	cb_info = notifier_hash_node_get(notify_id, type);
+ 	cb_found = !!cb_info;
+@@ -1155,15 +1154,7 @@ update_notifier_cb(int notify_id, enum notify_type type, ffa_notifier_cb cb,
+ 		return -EINVAL;
+ 
+ 	if (is_registration) {
+-		cb_info = kzalloc(sizeof(*cb_info), GFP_KERNEL);
+-		if (!cb_info)
+-			return -ENOMEM;
+-
+-		cb_info->type = type;
+-		cb_info->cb = cb;
+-		cb_info->cb_data = cb_data;
+-
+-		hash_add(drv_info->notifier_hash, &cb_info->hnode, notify_id);
++		hash_add(drv_info->notifier_hash, &cb->hnode, notify_id);
+ 	} else {
+ 		hash_del(&cb_info->hnode);
+ 		kfree(cb_info);
+@@ -1193,7 +1184,7 @@ static int ffa_notify_relinquish(struct ffa_device *dev, int notify_id)
+ 
+ 	mutex_lock(&drv_info->notify_lock);
+ 
+-	rc = update_notifier_cb(notify_id, type, NULL, NULL, false);
++	rc = update_notifier_cb(notify_id, type, NULL);
+ 	if (rc) {
+ 		pr_err("Could not unregister notification callback\n");
+ 		mutex_unlock(&drv_info->notify_lock);
+@@ -1212,6 +1203,7 @@ static int ffa_notify_request(struct ffa_device *dev, bool is_per_vcpu,
+ {
+ 	int rc;
+ 	u32 flags = 0;
++	struct notifier_cb_info *cb_info = NULL;
+ 	enum notify_type type = ffa_notify_type_get(dev->vm_id);
+ 
+ 	if (ffa_notifications_disabled())
+@@ -1220,24 +1212,34 @@ static int ffa_notify_request(struct ffa_device *dev, bool is_per_vcpu,
+ 	if (notify_id >= FFA_MAX_NOTIFICATIONS)
+ 		return -EINVAL;
+ 
++	cb_info = kzalloc(sizeof(*cb_info), GFP_KERNEL);
++	if (!cb_info)
++		return -ENOMEM;
++
++	cb_info->type = type;
++	cb_info->cb_data = cb_data;
++	cb_info->cb = cb;
++
+ 	mutex_lock(&drv_info->notify_lock);
+ 
+ 	if (is_per_vcpu)
+ 		flags = PER_VCPU_NOTIFICATION_FLAG;
+ 
+ 	rc = ffa_notification_bind(dev->vm_id, BIT(notify_id), flags);
+-	if (rc) {
+-		mutex_unlock(&drv_info->notify_lock);
+-		return rc;
+-	}
++	if (rc)
++		goto out_unlock_free;
+ 
+-	rc = update_notifier_cb(notify_id, type, cb, cb_data, true);
++	rc = update_notifier_cb(notify_id, type, cb_info);
+ 	if (rc) {
+ 		pr_err("Failed to register callback for %d - %d\n",
+ 		       notify_id, rc);
+ 		ffa_notification_unbind(dev->vm_id, BIT(notify_id));
+ 	}
++
++out_unlock_free:
+ 	mutex_unlock(&drv_info->notify_lock);
++	if (rc)
++		kfree(cb_info);
+ 
+ 	return rc;
+ }
 -- 
-Regards,
-Sudeep
+2.34.1
+
