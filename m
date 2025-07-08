@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521EF2F37;
-	Tue,  8 Jul 2025 16:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44878BE46;
+	Tue,  8 Jul 2025 16:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993611; cv=none; b=qRLKUbe36QUfPm9Gi/HjT0olm7xLfaCD4jxVUF/zx5mYXV8hl4HJSEpZbq/ylzbNhZXyA2yr/mgTMZpvDb4Xsq8dFc1rdjLW5XnI60iEBlAyxV8LQxq4+ogoSxAiRnYI9/egqA8hEvW/7Anl8GtLLXjVMjhsrRHvp2TWHQBLkfU=
+	t=1751993614; cv=none; b=iTeRQmQtS5qqHbENg1c7fT2UglcctoAPI8w8w8qvv91/pZjJqQvulPfuzE2AeDc911Ej4/7/J6RK/3WYZ/1H0U7jFA1T53ffUKScCOvb6EA/6JnodLcy5GOeOxcO9weXqUG3IJ6f1rMvP6Sbj//j5v1mMI/CH4QV63+jMs//pTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993611; c=relaxed/simple;
-	bh=TUapS6L4JL1Wl84IaBf8c/u/IiLRhJxkQqVO/hmV5RA=;
+	s=arc-20240116; t=1751993614; c=relaxed/simple;
+	bh=fzyrJR09ZpvTPAOPvfSsUIcOBXFeHclf6tE1gI8Fvm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oI6tb+8E7VtOai6LoqPDPxM0Pm0gjaQsHOLwHeRPye1tPYj1m50TRcaQtFQ4XvKVXPPgFyJPtiRCBeLDlizQu0vhDA8HeZQmDB39dHfxGub5w/5Vw8r4J4BD9Vq7M7XOX95ug3IMKzZthahnrqPFUy5uFFl0d5UzfKC0KQ+kHUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLxTteyH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHZplrXxMrj0/JLXvwe2HARe3Kf9tOXBn97KuY7lLHID/AgNlmKFCYtaDgaonBqz2AclVYfFYzwuoPqJbZEG/0/8X54HI4+mJMfDkzzwUM0P47FfWMIlYJCz7+UBjDBjqfduDqzqJnLHaZAd9Ha8FYNc5o/G/t9MpZEYgx4Imjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBYiFhEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLxTteyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE45C4CEED;
-	Tue,  8 Jul 2025 16:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBYiFhEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBF9C4CEED;
+	Tue,  8 Jul 2025 16:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993611;
-	bh=TUapS6L4JL1Wl84IaBf8c/u/IiLRhJxkQqVO/hmV5RA=;
+	s=korg; t=1751993613;
+	bh=fzyrJR09ZpvTPAOPvfSsUIcOBXFeHclf6tE1gI8Fvm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLxTteyHhSCLlKxwdWrMCLWbkqEGVhhZhKwnl/HdDfzrAnNgVvRWO98yuq+HFIKKN
-	 a7pAYQnmKKviAtaDLmRtYOuAfklhNAEjLhRjFxh1tWOG6RZxlBtj3rzRRdlOvfP3gX
-	 9qTDibHBEe7Tc72MYnJLhbYzBr+HS+Erq/UgCUUE=
+	b=lBYiFhEMmd4w7w5ODWgSC9YkaVJRqkxuduOu0wk9qNs5fpwWV6x6dhfFm6A+58iJm
+	 V9/XboLHzwgD5Ev9rpo7/9Tdc3Xn3gopNO5MrSSPjpo1nkWjW6az9RVMGzo0KKcfIz
+	 E1bnrfV49mj1qPJVjkEBmC5ImW0C/beybBs0XIZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raven Black <ravenblack@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 132/178] ASoC: amd: yc: update quirk data for HP Victus
-Date: Tue,  8 Jul 2025 18:22:49 +0200
-Message-ID: <20250708162240.014148896@linuxfoundation.org>
+Subject: [PATCH 6.15 133/178] regulator: fan53555: add enable_time support and soft-start times
+Date: Tue,  8 Jul 2025 18:22:50 +0200
+Message-ID: <20250708162240.035206306@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,38 +51,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raven Black <ravenblack@gmail.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 13b86ea92ebf0fa587fbadfb8a60ca2e9993203f ]
+[ Upstream commit 8acfb165a492251a08a22a4fa6497a131e8c2609 ]
 
-Make the internal microphone work on HP Victus laptops.
+The datasheets for all the fan53555 variants (and clones using the same
+interface) define so called soft start times, from enabling the regulator
+until at least some percentage of the output (i.e. 92% for the rk860x
+types) are available.
 
-Signed-off-by: Raven Black <ravenblack@gmail.com>
-Link: https://patch.msgid.link/20250613-support-hp-victus-microphone-v1-1-bebc4c3a2041@gmail.com
+The regulator framework supports this with the enable_time property
+but currently the fan53555 driver does not define enable_times for any
+variant.
+
+I ran into a problem with this while testing the new driver for the
+Rockchip NPUs (rocket), which does runtime-pm including disabling and
+enabling a rk8602 as needed. When reenabling the regulator while running
+a load, fatal hangs could be observed while enabling the associated
+power-domain, which the regulator supplies.
+
+Experimentally setting the regulator to always-on, made the issue
+disappear, leading to the missing delay to let power stabilize.
+And as expected, setting the enable-time to a non-zero value
+according to the datasheet also resolved the regulator-issue.
+
+The datasheets in nearly all cases only specify "typical" values,
+except for the fan53555 type 08. There both a typical and maximum
+value are listed - 40uS apart.
+
+For all typical values I've added 100uS to be on the safe side.
+Individual details for the relevant regulators below:
+
+- fan53526:
+  The datasheet for all variants lists a typical value of 150uS, so
+  make that 250uS with safety margin.
+- fan53555:
+  types 08 and 18 (unsupported) are given a typical enable time of 135uS
+  but also a maximum of 175uS so use that value. All the other types only
+  have a typical time in the datasheet of 300uS, so give a bit margin by
+  setting it to 400uS.
+- rk8600 + rk8602:
+  Datasheet reports a typical value of 260us, so use 360uS to be safe.
+- syr82x + syr83x:
+  All datasheets report typical soft-start values of 300uS for these
+  regulators, so use 400uS.
+- tcs452x:
+  Datasheet sadly does not report a soft-start time, so I've not set
+  an enable-time
+
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20250606190418.478633-1-heiko@sntech.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/regulator/fan53555.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 4f8481c6802b1..723cb7bc12851 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -521,6 +521,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb2xxx"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/regulator/fan53555.c b/drivers/regulator/fan53555.c
+index bd9447dac5967..c282236959b18 100644
+--- a/drivers/regulator/fan53555.c
++++ b/drivers/regulator/fan53555.c
+@@ -147,6 +147,7 @@ struct fan53555_device_info {
+ 	unsigned int slew_mask;
+ 	const unsigned int *ramp_delay_table;
+ 	unsigned int n_ramp_values;
++	unsigned int enable_time;
+ 	unsigned int slew_rate;
+ };
+ 
+@@ -282,6 +283,7 @@ static int fan53526_voltages_setup_fairchild(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 250;
+ 	di->vsel_count = FAN53526_NVOLTAGES;
+ 
+ 	return 0;
+@@ -296,10 +298,12 @@ static int fan53555_voltages_setup_fairchild(struct fan53555_device_info *di)
+ 		case FAN53555_CHIP_REV_00:
+ 			di->vsel_min = 600000;
+ 			di->vsel_step = 10000;
++			di->enable_time = 400;
+ 			break;
+ 		case FAN53555_CHIP_REV_13:
+ 			di->vsel_min = 800000;
+ 			di->vsel_step = 10000;
++			di->enable_time = 400;
+ 			break;
+ 		default:
+ 			dev_err(di->dev,
+@@ -311,13 +315,19 @@ static int fan53555_voltages_setup_fairchild(struct fan53555_device_info *di)
+ 	case FAN53555_CHIP_ID_01:
+ 	case FAN53555_CHIP_ID_03:
+ 	case FAN53555_CHIP_ID_05:
++		di->vsel_min = 600000;
++		di->vsel_step = 10000;
++		di->enable_time = 400;
++		break;
+ 	case FAN53555_CHIP_ID_08:
+ 		di->vsel_min = 600000;
+ 		di->vsel_step = 10000;
++		di->enable_time = 175;
+ 		break;
+ 	case FAN53555_CHIP_ID_04:
+ 		di->vsel_min = 603000;
+ 		di->vsel_step = 12826;
++		di->enable_time = 400;
+ 		break;
+ 	default:
+ 		dev_err(di->dev,
+@@ -350,6 +360,7 @@ static int fan53555_voltages_setup_rockchip(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 360;
+ 	di->vsel_count = FAN53555_NVOLTAGES;
+ 
+ 	return 0;
+@@ -372,6 +383,7 @@ static int rk8602_voltages_setup_rockchip(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 360;
+ 	di->vsel_count = RK8602_NVOLTAGES;
+ 
+ 	return 0;
+@@ -395,6 +407,7 @@ static int fan53555_voltages_setup_silergy(struct fan53555_device_info *di)
+ 	di->slew_mask = CTL_SLEW_MASK;
+ 	di->ramp_delay_table = slew_rates;
+ 	di->n_ramp_values = ARRAY_SIZE(slew_rates);
++	di->enable_time = 400;
+ 	di->vsel_count = FAN53555_NVOLTAGES;
+ 
+ 	return 0;
+@@ -594,6 +607,7 @@ static int fan53555_regulator_register(struct fan53555_device_info *di,
+ 	rdesc->ramp_mask = di->slew_mask;
+ 	rdesc->ramp_delay_table = di->ramp_delay_table;
+ 	rdesc->n_ramp_values = di->n_ramp_values;
++	rdesc->enable_time = di->enable_time;
+ 	rdesc->owner = THIS_MODULE;
+ 
+ 	rdev = devm_regulator_register(di->dev, &di->desc, config);
 -- 
 2.39.5
 
