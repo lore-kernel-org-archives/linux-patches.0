@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E769D2E542E;
-	Tue,  8 Jul 2025 16:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FB12E091E;
+	Tue,  8 Jul 2025 16:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993870; cv=none; b=h38DJc6qNyFtm68pn5i2bER9FzaCxizBqMo0zihP8/IXgw5PhoaYfK1yus1kclv8/DSdzCn4zG9nuhuKfwCmRwcSLjqnH5zLETWtZ3nMYusHihciRsvfu3f960FR2sUTrHSQYRCOMon6njp8F0Nwbd/IMkNLkTmeo3e1rX6fwec=
+	t=1751993872; cv=none; b=SZhQzUg0ShKRpuQvLXpgRHPExmeNl+oUz4W7TxjJefdcTp6YKjU+x8DcUhV/Kdn62MEOW7RvFbIhmmMjHKfCerP7h3TCNkaryVGlwjmCE8oe3CjWssGyaXc+ZZ5/xtqY+GNqe4BNwgNXtbV53Fso+QoL2ELQmbXBIodHP5UV0+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993870; c=relaxed/simple;
-	bh=+HZyJfTSJQ4TG4ezhWmY7HJIyaVSjGnNB4SJhqJYKtg=;
+	s=arc-20240116; t=1751993872; c=relaxed/simple;
+	bh=ce+mnEmqVsPR5MoZFEtkRDVpBBcyz4TiZcqnNamlrEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2yUO73Ni6NQIYhmn5+lG3fbe5FRqAkApXMPwBE9BJPccDzSVSfOlA4Kd8yuGS4seQD5KLH9mFO7fZusDsSN4FN3nv6IHYPUkgjP32ctfz2uFEIHJnf7r/rE/Q425rBppmU42F6/HTJIEbO16ylSVYh5XBq9uPNmyaT0T1GGF9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxicwzMu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shpjcXAvnL7rMt2TuFDSJilo0R6obM0gP6rXQ/Kx7kl6CiF1j3mGIkttxnmfkLBL3QSuc2L4pjVJWbLKVCC3vTCgF60oHLISf5L7rmCvscRAjqG0XdRgCDm2FFmmJpEnjh7rfCAGOjPurVC7OPxbRJn2ibvtoi1s9THmdkx8g0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8BEyhgn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxicwzMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5A9C4CEED;
-	Tue,  8 Jul 2025 16:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8BEyhgn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83A9C4CEED;
+	Tue,  8 Jul 2025 16:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993869;
-	bh=+HZyJfTSJQ4TG4ezhWmY7HJIyaVSjGnNB4SJhqJYKtg=;
+	s=korg; t=1751993872;
+	bh=ce+mnEmqVsPR5MoZFEtkRDVpBBcyz4TiZcqnNamlrEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxicwzMu8vm0RizooAGcpxdbkX9kuemKECTG9+Ki2MeCwgp2kENso39J52gJF676M
-	 ppoCJJHxnLCXpv4H1kcAbOJ19EZFRA8qvFLBrj/bpOcBoKPZK4btEN0Patf9lS4kJH
-	 D3ep9w8i9x5FrRrzTe50qVJwO8zgEx8WVE2a1kU4=
+	b=k8BEyhgn46y76L4BGAHi7RiOxi3SVgwT16j9DP+qfvrCGCHcdRRWoJCd40imaArV5
+	 Uvfb+2kSn0AT0Un0mz/APUnFBOgiseZ4P4TDhdduoNZkF8NiD6XnjhhFb1Z151Zbnr
+	 WeGMKMJuwUZx3v6AOIQR+gUO3KgFSR9pJ6WNJRhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
 	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/160] uio_hv_generic: Query the ringbuffer size for device
-Date: Tue,  8 Jul 2025 18:21:24 +0200
-Message-ID: <20250708162232.841070482@linuxfoundation.org>
+Subject: [PATCH 5.15 048/160] uio_hv_generic: Align ring size to system page
+Date: Tue,  8 Jul 2025 18:21:25 +0200
+Message-ID: <20250708162232.868238349@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit e566ed5b64177a0c07b677568f623ed31d23406d ]
+[ Upstream commit 0315fef2aff9f251ddef8a4b53db9187429c3553 ]
 
-Query the ring buffer size from pre defined table per device
-and use that value for allocating the ring buffer for that
-device. Keep the size as current default which is 2 MB if
-the device doesn't have any preferred ring size.
+Following the ring header, the ring data should align to system page
+boundary. Adjust the size if necessary.
 
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Link: https://lore.kernel.org/r/1711788723-8593-3-git-send-email-ssengar@linux.microsoft.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
+Cc: stable@vger.kernel.org
+Fixes: 95096f2fbd10 ("uio-hv-generic: new userspace i/o driver for VMBus")
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1746492997-4599-4-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1746492997-4599-4-git-send-email-longli@linuxonhyperv.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_hv_generic.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/uio/uio_hv_generic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/uio/uio_hv_generic.c b/drivers/uio/uio_hv_generic.c
-index 9daa1afbf9dbf..db8a450b5a19b 100644
+index db8a450b5a19b..865a5b289e0a5 100644
 --- a/drivers/uio/uio_hv_generic.c
 +++ b/drivers/uio/uio_hv_generic.c
-@@ -249,6 +249,7 @@ hv_uio_probe(struct hv_device *dev,
- 	struct hv_uio_private_data *pdata;
- 	void *ring_buffer;
- 	int ret;
-+	size_t ring_size = hv_dev_ring_size(channel);
+@@ -260,6 +260,9 @@ hv_uio_probe(struct hv_device *dev,
+ 	if (!ring_size)
+ 		ring_size = HV_RING_SIZE * PAGE_SIZE;
  
- 	/* Communicating with host has to be via shared memory not hypercall */
- 	if (!channel->offermsg.monitor_allocated) {
-@@ -256,12 +257,14 @@ hv_uio_probe(struct hv_device *dev,
- 		return -ENOTSUPP;
- 	}
- 
-+	if (!ring_size)
-+		ring_size = HV_RING_SIZE * PAGE_SIZE;
++	/* Adjust ring size if necessary to have it page aligned */
++	ring_size = VMBUS_RING_SIZE(ring_size);
 +
  	pdata = devm_kzalloc(&dev->device, sizeof(*pdata), GFP_KERNEL);
  	if (!pdata)
  		return -ENOMEM;
- 
--	ret = vmbus_alloc_ring(channel, HV_RING_SIZE * PAGE_SIZE,
--			       HV_RING_SIZE * PAGE_SIZE);
-+	ret = vmbus_alloc_ring(channel, ring_size, ring_size);
- 	if (ret)
- 		return ret;
- 
 -- 
 2.39.5
 
