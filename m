@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5602E3385;
-	Tue,  8 Jul 2025 16:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F9C8F5B;
+	Tue,  8 Jul 2025 16:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993001; cv=none; b=kzKqtLxvltNpaZFosVJSpZ2YY7yGVXy2KwYFcaQNB6w/qT5t9bmrfunjt4reZaaYXxtLXMT3YKt2JMVOeS6xbGOSDjHdyxXLztLa5Zi3NxRWB2U19N5Wl3M1KYnqGGQxJu9UzB3CfJ8fmW+UDa5T20eUd7XzED7H1SisJgU7jAU=
+	t=1751993004; cv=none; b=OCNI2A2tvsU3MI1wwwmll+SN6FK1F2pxKYGnzAKAbN6fVXd/+V61NtJ3kigY1Ee8FE/wL+c4apV76FhNYyYXLUmmkoha0QCEg3SNX2rMO6TrL9+wSXghy2X1/3cWk8fIheHxibGs/zyYS+lmjQYp9c+5HgwcKk/bWsiKbuQJOLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993001; c=relaxed/simple;
-	bh=BdPepcYax6llQW7m0c9DcduqH0Qao0HxAC9MBrZl3Yw=;
+	s=arc-20240116; t=1751993004; c=relaxed/simple;
+	bh=FEDs2bFYZz9wD4eCrEEc387rxqhzmhYp0KZAVkI3vhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S5nb/s8t+GobPsf+RsPV8wujklvwU2PRk2L9Vucg0/JWi1dFXe8B5x1IbI3M+g2TceZoHQ7AbP8MN7EwB2TIPdR3GFLqZ8uQrmpvJzkF76vjxJnT+UNy873424J6HIokFX/F+eFTMgHOgRwy82rQBbMYHj1yRNnPMIAnaxM/b+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKhSrxyq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nK5wPlpvb02FBwol0cWk8xsaUZSXF7S69h4RYkbFIh/SetoQYaMvsQP8r7rGKeU43OHe0BpSqyNCTe4PNww4Hq+0jlLxUNnmd0gAFmrvRyowomvRPzZvH/m/buxpqGJBCkY03IGXKV3z4/onO5Wqf3aWydRa7woPe7v8VC1LrwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u51oUnks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKhSrxyq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA930C4CEED;
-	Tue,  8 Jul 2025 16:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u51oUnks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36B8C4CEED;
+	Tue,  8 Jul 2025 16:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993001;
-	bh=BdPepcYax6llQW7m0c9DcduqH0Qao0HxAC9MBrZl3Yw=;
+	s=korg; t=1751993004;
+	bh=FEDs2bFYZz9wD4eCrEEc387rxqhzmhYp0KZAVkI3vhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QKhSrxyqiGTy8+ByHryb6dAemcuGMZVuNbWwafsfvqSXieb84h0PClPUhXzCAXSnt
-	 ujXguDxMwlAvgb67F7KpHUf8yYmAYTo6V4yVTwKvAmom2oKQpBK81VtT5BSLpB1ADJ
-	 MY5ohN1UY6sMeTxJTAndn8JoRYFsJ4JAjk6akgMw=
+	b=u51oUnksI+G6IhxvuVBpWAalH4DJA9n605Kf0mNm12nNuvjeRUXHBnigmMN7Es23O
+	 HacQyEY2ujM4I3COLmc/DoOXFx1oj8SNzzbRmLxE/d18EWIE8a9vvhH2E76r3IROCm
+	 85O6XCJjyNqiJ1gfOKxgx/RpFfaA1legH8rVZ2lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 153/232] drm/xe: Fix DSB buffer coherency
-Date: Tue,  8 Jul 2025 18:22:29 +0200
-Message-ID: <20250708162245.440687283@linuxfoundation.org>
+Subject: [PATCH 6.12 154/232] drm/xe: Move DSB l2 flush to a more sensible place
+Date: Tue,  8 Jul 2025 18:22:30 +0200
+Message-ID: <20250708162245.466846708@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -55,49 +57,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 
-[ Upstream commit 71a3161e9d7d2229cb4eefd4c49effb97caf3db3 ]
+[ Upstream commit a4b1b51ae132ac199412028a2df7b6c267888190 ]
 
-Add the scanout flag to force WC caching, and add the memory barrier
-where needed.
+Flushing l2 is only needed after all data has been written.
 
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240913114754.7956-2-maarten.lankhorst@linux.intel.com
+Fixes: 01570b446939 ("drm/xe/bmg: implement Wa_16023588340")
 Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Stable-dep-of: a4b1b51ae132 ("drm/xe: Move DSB l2 flush to a more sensible place")
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: stable@vger.kernel.org # v6.12+
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://lore.kernel.org/r/20250606104546.1996818-3-matthew.auld@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 0dd2dd0182bc444a62652e89d08c7f0e4fde15ba)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/display/xe_dsb_buffer.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/display/xe_dsb_buffer.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/display/xe_dsb_buffer.c b/drivers/gpu/drm/xe/display/xe_dsb_buffer.c
-index f99d901a3214f..f95375451e2fa 100644
+index f95375451e2fa..9f941fc2e36bb 100644
 --- a/drivers/gpu/drm/xe/display/xe_dsb_buffer.c
 +++ b/drivers/gpu/drm/xe/display/xe_dsb_buffer.c
-@@ -48,11 +48,12 @@ bool intel_dsb_buffer_create(struct intel_crtc *crtc, struct intel_dsb_buffer *d
- 	if (!vma)
- 		return false;
+@@ -17,10 +17,7 @@ u32 intel_dsb_buffer_ggtt_offset(struct intel_dsb_buffer *dsb_buf)
  
-+	/* Set scanout flag for WC mapping */
- 	obj = xe_bo_create_pin_map(xe, xe_device_get_root_tile(xe),
- 				   NULL, PAGE_ALIGN(size),
- 				   ttm_bo_type_kernel,
- 				   XE_BO_FLAG_VRAM_IF_DGFX(xe_device_get_root_tile(xe)) |
--				   XE_BO_FLAG_GGTT);
-+				   XE_BO_FLAG_SCANOUT | XE_BO_FLAG_GGTT);
- 	if (IS_ERR(obj)) {
- 		kfree(vma);
- 		return false;
-@@ -73,5 +74,9 @@ void intel_dsb_buffer_cleanup(struct intel_dsb_buffer *dsb_buf)
+ void intel_dsb_buffer_write(struct intel_dsb_buffer *dsb_buf, u32 idx, u32 val)
+ {
+-	struct xe_device *xe = dsb_buf->vma->bo->tile->xe;
+-
+ 	iosys_map_wr(&dsb_buf->vma->bo->vmap, idx * 4, u32, val);
+-	xe_device_l2_flush(xe);
+ }
+ 
+ u32 intel_dsb_buffer_read(struct intel_dsb_buffer *dsb_buf, u32 idx)
+@@ -30,12 +27,9 @@ u32 intel_dsb_buffer_read(struct intel_dsb_buffer *dsb_buf, u32 idx)
+ 
+ void intel_dsb_buffer_memset(struct intel_dsb_buffer *dsb_buf, u32 idx, u32 val, size_t size)
+ {
+-	struct xe_device *xe = dsb_buf->vma->bo->tile->xe;
+-
+ 	WARN_ON(idx > (dsb_buf->buf_size - size) / sizeof(*dsb_buf->cmd_buf));
+ 
+ 	iosys_map_memset(&dsb_buf->vma->bo->vmap, idx * 4, val, size);
+-	xe_device_l2_flush(xe);
+ }
+ 
+ bool intel_dsb_buffer_create(struct intel_crtc *crtc, struct intel_dsb_buffer *dsb_buf, size_t size)
+@@ -74,9 +68,12 @@ void intel_dsb_buffer_cleanup(struct intel_dsb_buffer *dsb_buf)
  
  void intel_dsb_buffer_flush_map(struct intel_dsb_buffer *dsb_buf)
  {
--	/* TODO: add xe specific flush_map() for dsb buffer object. */
-+	/*
-+	 * The memory barrier here is to ensure coherency of DSB vs MMIO,
-+	 * both for weak ordering archs and discrete cards.
-+	 */
-+	xe_device_wmb(dsb_buf->vma->bo->tile->xe);
++	struct xe_device *xe = dsb_buf->vma->bo->tile->xe;
++
+ 	/*
+ 	 * The memory barrier here is to ensure coherency of DSB vs MMIO,
+ 	 * both for weak ordering archs and discrete cards.
+ 	 */
+-	xe_device_wmb(dsb_buf->vma->bo->tile->xe);
++	xe_device_wmb(xe);
++	xe_device_l2_flush(xe);
  }
 -- 
 2.39.5
