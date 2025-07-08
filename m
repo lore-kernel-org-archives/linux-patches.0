@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAACD2E5B19;
-	Tue,  8 Jul 2025 16:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23182E54B2;
+	Tue,  8 Jul 2025 16:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992807; cv=none; b=SWQK7lofc4Jw1vc0SHmeJ89nwXarusF+pigB4jVPUjgIK/Pcu/Doie9JL2SJcRdoO0+kZCU5vvc/eJCZpeiqz40ipIID+Wmb6WYElair5pGdU6sqCiQQzTlXFE5104SK4HD6Hfk2UPVaMVBYrpTgrOxiKvZFMIOF2I4ou8KiI+0=
+	t=1751992810; cv=none; b=VQG4ftVEiul6rXHQY1biwuk8C6SZA3EMBezx1etdGTGM5mN/l0RzfRDVxYvjK6MDzzXQW88nGZK/G4UIbrBzKN/ddcQGhqajaNmfSBDOIDLjaDW+AhxDVfJzw2nGPMFIf+vjDMjSABV6e/hbCBs8L+prGGhrLxyIc9/5Hk9wXy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992807; c=relaxed/simple;
-	bh=NC7EgCcL8AQw42II8N9L7yhpUpbjyy2iBRdhKpUGy+g=;
+	s=arc-20240116; t=1751992810; c=relaxed/simple;
+	bh=d9lMM8tdlXaR66J1pfgxUHD1K/COC72KEWbC6m5IN4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APX+ORgnem+XQ3U/NUhnbAFViM6tHRv4/XBG59+H6B4FK36ShyewC6KomUy5XJMQSFQBFEEajpL4bFYNsmOPm+YTVSkNY3Hds53I8Ba9HrQ1Lnm8FUaykGhHFF/gU6tI9lUxDu3FweQ7r/5xRbHtRABlgurWTn0dhPxY3lgGygY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkgTStNI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TuFahPXk0K0FJsgOJGmGUD6famYjbw8PLBPKVnUi3jnFOLmKW1fRpaq5KUiQC32s0sv/7Z5hiK/bbyrzTZfaXP7bQ02CjZyMR9XFJovFX7Ctt02Seyv2AP6H+UmcbRoh+i57PtOyNinqyP3IzfM69xQzDB44dd+/V+j54cktKW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0Tk+byq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkgTStNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C394C4CEF0;
-	Tue,  8 Jul 2025 16:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0Tk+byq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EBAC4CEED;
+	Tue,  8 Jul 2025 16:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992807;
-	bh=NC7EgCcL8AQw42II8N9L7yhpUpbjyy2iBRdhKpUGy+g=;
+	s=korg; t=1751992810;
+	bh=d9lMM8tdlXaR66J1pfgxUHD1K/COC72KEWbC6m5IN4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkgTStNICD5x3uNGILKbut6jSUauMOeVvty6q9epaZzXGGNYCBepdGoydTMNjd0Gh
-	 OXq61qvGhEff3JvWKRAVdqEaYTx2NCO1VlvnnDDpEcUsALjC4HZr18GFBxEJLPTPkg
-	 bFGQYgq27H5nAoTkqkdI6qEfADnifN78cUGxbvvM=
+	b=J0Tk+byqdjCPdH0o6oVFe+GlJdbIPheVzGDbIAvAz/GxJZZlWIUCtSMGB/MHp941C
+	 XGnYA0wGmnACqQwW+5LCUJrHNgjeG/OfRb6jEe4+7FYvhO29TAfqsjBmmGsGgDyzIM
+	 XqwVZbjjTqGOSsxxVa004zyoj8l8eoVmmONlTDa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	John Daley <johndale@cisco.com>,
+	syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com,
+	Kohei Enju <enjuk@amazon.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/232] enic: fix incorrect MTU comparison in enic_change_mtu()
-Date: Tue,  8 Jul 2025 18:21:23 +0200
-Message-ID: <20250708162243.726383444@linuxfoundation.org>
+Subject: [PATCH 6.12 088/232] rose: fix dangling neighbour pointers in rose_rt_device_down()
+Date: Tue,  8 Jul 2025 18:21:24 +0200
+Message-ID: <20250708162243.753316786@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -53,45 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit aaf2b2480375099c022a82023e1cd772bf1c6a5d ]
+[ Upstream commit 34a500caf48c47d5171f4aa1f237da39b07c6157 ]
 
-The comparison in enic_change_mtu() incorrectly used the current
-netdev->mtu instead of the new new_mtu value when warning about
-an MTU exceeding the port MTU. This could suppress valid warnings
-or issue incorrect ones.
+There are two bugs in rose_rt_device_down() that can cause
+use-after-free:
 
-Fix the condition and log to properly reflect the new_mtu.
+1. The loop bound `t->count` is modified within the loop, which can
+   cause the loop to terminate early and miss some entries.
 
-Fixes: ab123fe071c9 ("enic: handle mtu change for vf properly")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Acked-by: John Daley <johndale@cisco.com>
+2. When removing an entry from the neighbour array, the subsequent entries
+   are moved up to fill the gap, but the loop index `i` is still
+   incremented, causing the next entry to be skipped.
+
+For example, if a node has three neighbours (A, A, B) with count=3 and A
+is being removed, the second A is not checked.
+
+    i=0: (A, A, B) -> (A, B) with count=2
+          ^ checked
+    i=1: (A, B)    -> (A, B) with count=2
+             ^ checked (B, not A!)
+    i=2: (doesn't occur because i < count is false)
+
+This leaves the second A in the array with count=2, but the rose_neigh
+structure has been freed. Code that accesses these entries assumes that
+the first `count` entries are valid pointers, causing a use-after-free
+when it accesses the dangling pointer.
+
+Fix both issues by iterating over the array in reverse order with a fixed
+loop bound. This ensures that all entries are examined and that the removal
+of an entry doesn't affect subsequent iterations.
+
+Reported-by: syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e04e2c007ba2c80476cb
+Tested-by: syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250628145612.476096-1-alok.a.tiwari@oracle.com
+Link: https://patch.msgid.link/20250629030833.6680-1-enjuk@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cisco/enic/enic_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/rose/rose_route.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
-index ffed14b63d41d..a432783756d8c 100644
---- a/drivers/net/ethernet/cisco/enic/enic_main.c
-+++ b/drivers/net/ethernet/cisco/enic/enic_main.c
-@@ -2127,10 +2127,10 @@ static int enic_change_mtu(struct net_device *netdev, int new_mtu)
- 	if (enic_is_dynamic(enic) || enic_is_sriov_vf(enic))
- 		return -EOPNOTSUPP;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index fee772b4637c8..a7054546f52df 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -497,22 +497,15 @@ void rose_rt_device_down(struct net_device *dev)
+ 			t         = rose_node;
+ 			rose_node = rose_node->next;
  
--	if (netdev->mtu > enic->port_mtu)
-+	if (new_mtu > enic->port_mtu)
- 		netdev_warn(netdev,
- 			    "interface MTU (%d) set higher than port MTU (%d)\n",
--			    netdev->mtu, enic->port_mtu);
-+			    new_mtu, enic->port_mtu);
+-			for (i = 0; i < t->count; i++) {
++			for (i = t->count - 1; i >= 0; i--) {
+ 				if (t->neighbour[i] != s)
+ 					continue;
  
- 	return _enic_change_mtu(netdev, new_mtu);
- }
+ 				t->count--;
+ 
+-				switch (i) {
+-				case 0:
+-					t->neighbour[0] = t->neighbour[1];
+-					fallthrough;
+-				case 1:
+-					t->neighbour[1] = t->neighbour[2];
+-					break;
+-				case 2:
+-					break;
+-				}
++				memmove(&t->neighbour[i], &t->neighbour[i + 1],
++					sizeof(t->neighbour[0]) *
++						(t->count - i));
+ 			}
+ 
+ 			if (t->count <= 0)
 -- 
 2.39.5
 
