@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1642E5411;
-	Tue,  8 Jul 2025 16:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD681DB127;
+	Tue,  8 Jul 2025 16:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993527; cv=none; b=TASmyUKk1Wphm6eVzUH0o507nv4mOhxUf7m84mB3UQeZ6n60bb+YbLoIWbfN8GiHdNiHSjJo4EPwUi+KqgGx8Vyqpbvk3zTjCd3Q0WaMoosi8VUyjSjJiRIQtGxJZbKxDfBWTgaBJ5P2sHTjpLGioMv2qmqt+hsEEfxSSwonuNI=
+	t=1751993530; cv=none; b=HKl063jk3d682qx7W+WzTXYce9ewMO+9AU4ps/c6cOGFZyIvg4gzn/Si/gZH9VYs0CPeHPy52/m2aoOhk4w4Jc5nm6i6A6WDLuYL3p8w0lh8bB3WkIXzotrNNEZdaqzQNYRYo3bJ3p40xHcSHDIP5MLSu3roUp/wXKOpukgvapk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993527; c=relaxed/simple;
-	bh=Yjfk15MsjFXBjNBQYtJz7PuGALF3BX3OIm0Z79ee2f0=;
+	s=arc-20240116; t=1751993530; c=relaxed/simple;
+	bh=ei5b1tOuwZOFqYEh5Pt8diWNp0cFiGp6W9ImTA65VyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kML5WfG6LyYcO51eEahOCeGMYs4pKfjejDxmXblb59flo1bBRdU8q9vNkqAzFZcoSpU4k1bHcVCtKuT6I/Kwt4HL+ECoe4QDRXEUTV0npn4MF2eqOt88brTypDkJ2B9r/EPupQjBtM/H/aSiROTl9KVC4bQx0UG9hg09PjCHOgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz7lnUry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UbtR6TUuxpb973q8u8he1wEG0HKxrF8fzsWpHuWQKzBmAKx2spQCrB+UDA2JoEXvR9L4u1Zkpro5GpUzrjHIMLanPpWrKGOQliUZOI0cqf/pwiDbvMWnvraWPeZNCq6jXW8Hv5Tbkud/UcvH/zJcEOGAQivOlUr/asUs7snxGhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+mKFx8w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz7lnUry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0580AC4CEED;
-	Tue,  8 Jul 2025 16:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+mKFx8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF77C4CEED;
+	Tue,  8 Jul 2025 16:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993527;
-	bh=Yjfk15MsjFXBjNBQYtJz7PuGALF3BX3OIm0Z79ee2f0=;
+	s=korg; t=1751993530;
+	bh=ei5b1tOuwZOFqYEh5Pt8diWNp0cFiGp6W9ImTA65VyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vz7lnUryR7MQIeUbnEAGO/fcfrQojteC0hYF9YnLRuWkEgTaHgxzwZZdtNxs1CA2G
-	 Oaaa3WuqGCCNMSp4dGqUJ4Ks5YakiqeT2UI3VDNmVozcrFPW/JKqLSMSzIIv3tlrUH
-	 qB7XFEftBv9zrIEwaeOIYW2bKkCyLf5MQLRo1xvk=
+	b=O+mKFx8wKuQlXhjtB6zAt3SQUS9d2mGzHv2h+Afzzl8OC3xcjoDZFx9yt5caz4LPW
+	 +YbaotjnesHZC0DhAc69DTuHhwVc35XIrscbK4DS+5mWIJb3IZAm9i8k39djzT6aIb
+	 gnL0vbLHNftaGUXDuDCUXaBhPGFTYaTbe73F6sPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Gabor Juhos <j4g8y7@gmail.com>,
+	James Clark <james.clark@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 074/178] spi: spi-qpic-snand: reallocate BAM transactions
-Date: Tue,  8 Jul 2025 18:21:51 +0200
-Message-ID: <20250708162238.609019913@linuxfoundation.org>
+Subject: [PATCH 6.15 075/178] spi: spi-fsl-dspi: Clear completion counter before initiating transfer
+Date: Tue,  8 Jul 2025 18:21:52 +0200
+Message-ID: <20250708162238.636279955@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,89 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit d85d0380292a7e618915069c3579ae23c7c80339 ]
+[ Upstream commit fa60c094c19b97e103d653f528f8d9c178b6a5f5 ]
 
-Using the mtd_nandbiterrs module for testing the driver occasionally
-results in weird things like below.
+In target mode, extra interrupts can be received between the end of a
+transfer and halting the module if the host continues sending more data.
+If the interrupt from this occurs after the reinit_completion() then the
+completion counter is left at a non-zero value. The next unrelated
+transfer initiated by userspace will then complete immediately without
+waiting for the interrupt or writing to the RX buffer.
 
-1. swiotlb mapping fails with the following message:
+Fix it by resetting the counter before the transfer so that lingering
+values are cleared. This is done after clearing the FIFOs and the
+status register but before the transfer is initiated, so no interrupts
+should be received at this point resulting in other race conditions.
 
-  [   85.926216] qcom_snand 79b0000.spi: swiotlb buffer is full (sz: 4294967294 bytes), total 512 (slots), used 0 (slots)
-  [   85.932937] qcom_snand 79b0000.spi: failure in mapping desc
-  [   87.999314] qcom_snand 79b0000.spi: failure to write raw page
-  [   87.999352] mtd_nandbiterrs: error: write_oob failed (-110)
-
-  Rebooting the board after this causes a panic due to a NULL pointer
-  dereference.
-
-2. If the swiotlb mapping does not fail, rebooting the board may result
-   in a different panic due to a bad spinlock magic:
-
-  [  256.104459] BUG: spinlock bad magic on CPU#3, procd/2241
-  [  256.104488] Unable to handle kernel paging request at virtual address ffffffff0000049b
-  ...
-
-Investigating the issue revealed that these symptoms are results of
-memory corruption which is caused by out of bounds access within the
-driver.
-
-The driver uses a dynamically allocated structure for BAM transactions,
-which structure must have enough space for all possible variations of
-different flash operations initiated by the driver. The required space
-heavily depends on the actual number of 'codewords' which is calculated
-from the pagesize of the actual NAND chip.
-
-Although the qcom_nandc_alloc() function allocates memory for the BAM
-transactions during probe, but since the actual number of 'codewords'
-is not yet know the allocation is done for one 'codeword' only.
-
-Because of this, whenever the driver does a flash operation, and the
-number of the required transactions exceeds the size of the allocated
-arrays the driver accesses memory out of the allocated range.
-
-To avoid this, change the code to free the initially allocated BAM
-transactions memory, and allocate a new one once the actual number of
-'codewords' required for a given NAND chip is known.
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Reviewed-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://patch.msgid.link/20250618-qpic-snand-avoid-mem-corruption-v3-1-319c71296cda@gmail.com
+Fixes: 4f5ee75ea171 ("spi: spi-fsl-dspi: Replace interruptible wait queue with a simple completion")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250627-james-nxp-spi-dma-v4-1-178dba20c120@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qpic-snand.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/spi/spi-fsl-dspi.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index d3a4e091dca4e..80856d2fa35c6 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -316,6 +316,22 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 863781ba6c160..0dcd491140950 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -983,11 +983,20 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ 		if (dspi->devtype_data->trans_mode == DSPI_DMA_MODE) {
+ 			status = dspi_dma_xfer(dspi);
+ 		} else {
++			/*
++			 * Reinitialize the completion before transferring data
++			 * to avoid the case where it might remain in the done
++			 * state due to a spurious interrupt from a previous
++			 * transfer. This could falsely signal that the current
++			 * transfer has completed.
++			 */
++			if (dspi->irq)
++				reinit_completion(&dspi->xfer_done);
++
+ 			dspi_fifo_write(dspi);
  
- 	mtd_set_ooblayout(mtd, &qcom_spi_ooblayout);
- 
-+	/*
-+	 * Free the temporary BAM transaction allocated initially by
-+	 * qcom_nandc_alloc(), and allocate a new one based on the
-+	 * updated max_cwperpage value.
-+	 */
-+	qcom_free_bam_transaction(snandc);
-+
-+	snandc->max_cwperpage = cwperpage;
-+
-+	snandc->bam_txn = qcom_alloc_bam_transaction(snandc);
-+	if (!snandc->bam_txn) {
-+		dev_err(snandc->dev, "failed to allocate BAM transaction\n");
-+		ret = -ENOMEM;
-+		goto err_free_ecc_cfg;
-+	}
-+
- 	ecc_cfg->cfg0 = FIELD_PREP(CW_PER_PAGE_MASK, (cwperpage - 1)) |
- 			FIELD_PREP(UD_SIZE_BYTES_MASK, ecc_cfg->cw_data) |
- 			FIELD_PREP(DISABLE_STATUS_AFTER_WRITE, 1) |
+ 			if (dspi->irq) {
+ 				wait_for_completion(&dspi->xfer_done);
+-				reinit_completion(&dspi->xfer_done);
+ 			} else {
+ 				do {
+ 					status = dspi_poll(dspi);
 -- 
 2.39.5
 
