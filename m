@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063592A1BA;
-	Tue,  8 Jul 2025 16:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306682DEA78;
+	Tue,  8 Jul 2025 16:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992136; cv=none; b=JQcgw8ESchtmdySxk5q+hwKSZLHay92ZWz+zh04Y+bPDp3KbPVTx1nabti2KDYxqaGrikorIvrKH47j8EHV07e6EnBwQGN8LG/XsnBjqiWVLSngp9XdLI7YyHOZBmHoPgHLjiTaFa3xp7CmClIAu8XIhQRer280TWK7h1167K5w=
+	t=1751992139; cv=none; b=aSd7pO1QhVLT8tup12KdK7VGXDNjzTqvm+53MhAlNZ9MQZBOcjCks4Hsyu6Ye2AhzJ7SGDQmZVnTc8GFWPgtbwNu3iN1hA/GO2UhftQ0iNubvV1nFR790oS5LbvCwoCrjpf/+0gLcz2tdBCb5SBRHNKNPg3/HJDTotQCL4JUw6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992136; c=relaxed/simple;
-	bh=jfhMFws98up3FtXK7dC+H0PTlZkTRgX4opuzmnMFXRc=;
+	s=arc-20240116; t=1751992139; c=relaxed/simple;
+	bh=zLPfmc18zX0Jr0gch/vMDDh//iOebMZZEB7sIm3YdKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hc0Ii0sajpoYs010esO5hKyA4s/b8z5R0TfrnlHe9mkxye2nxwyK9ig/qQs9FqU1xN3owOqdqpnSfROROqYV6QfS4ulLclF2UFneuxl96X+NnPzDZzZnsWgg8ajqpmj/TzOrFGfNLs+Gu6M1d6pTHWzC6qmeWUVJBQpkQfSZp3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l65qmBZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o2YHBHBxNI1nRacsLEvRRI8chGjdkF8fmE0l9mJmxl0WB/0sY7l92xgv4qbch56kEhdlANIfyH8V3shLEciS2e4jiaGluWDUYEjpPasZWe3YhRenxez2IHCs+LTJ4qpcoU3IBbKYWxa3rSce/vpa0Onwr6d6/RaN9PNyhAe4gYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=joFyZfAt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l65qmBZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81933C4CEED;
-	Tue,  8 Jul 2025 16:28:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="joFyZfAt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE97C4CEED;
+	Tue,  8 Jul 2025 16:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992135;
-	bh=jfhMFws98up3FtXK7dC+H0PTlZkTRgX4opuzmnMFXRc=;
+	s=korg; t=1751992139;
+	bh=zLPfmc18zX0Jr0gch/vMDDh//iOebMZZEB7sIm3YdKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l65qmBZVVjoIYEcAUs2YS2nrk6X/a5eAQ9dO0zfS3pSUjJOs3DLAzUccEHaBQrVSD
-	 NybnS6eCynmZQNpmBSZwvdefvgp201TCBkuTrtASVdj3XA7mOtFHNmzAZqHK+2zHKO
-	 +NgssmYQ+7MFetp3MlmZYxvrbD31oHfUMzIRBG+c=
+	b=joFyZfAtmuNlDcEwJlsurVgmgesyEjscISbD3rpywbutFLtuyPygswvzC4ZdgGyPP
+	 3+Zc0bMnrxzVb6d/TpZRGzHQXQaRhOp5ChTVfoqnUO/+OqwCA534ZaBeKDx9FZitNw
+	 v0ZcAxbhbUojOESs8Ia/84Pr4GMJkr0gJeLeuS98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
+	Hongyu Xie <xiehongyu1@kylinos.cn>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 69/81] xhci: dbc: Flush queued requests before stopping dbc
-Date: Tue,  8 Jul 2025 18:24:01 +0200
-Message-ID: <20250708162227.152204404@linuxfoundation.org>
+Subject: [PATCH 6.1 70/81] xhci: Disable stream for xHC controller with XHCI_BROKEN_STREAMS
+Date: Tue,  8 Jul 2025 18:24:02 +0200
+Message-ID: <20250708162227.181021454@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -50,37 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Hongyu Xie <xiehongyu1@kylinos.cn>
 
-commit efe3e3ae5a66cb38ef29c909e951b4039044bae9 upstream.
+commit cd65ee81240e8bc3c3119b46db7f60c80864b90b upstream.
 
-Flush dbc requests when dbc is stopped and transfer rings are freed.
-Failure to flush them lead to leaking memory and dbc completing odd
-requests after resuming from suspend, leading to error messages such as:
+Disable stream for platform xHC controller with broken stream.
 
-[   95.344392] xhci_hcd 0000:00:0d.0: no matched request
-
+Fixes: 14aec589327a6 ("storage: accept some UAS devices if streams are unavailable")
 Cc: stable <stable@kernel.org>
-Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
+Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250627144127.3889714-5-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20250627144127.3889714-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgcap.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci-plat.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-dbgcap.c
-+++ b/drivers/usb/host/xhci-dbgcap.c
-@@ -639,6 +639,10 @@ static void xhci_dbc_stop(struct xhci_db
- 	case DS_DISABLED:
- 		return;
- 	case DS_CONFIGURED:
-+		spin_lock(&dbc->lock);
-+		xhci_dbc_flush_requests(dbc);
-+		spin_unlock(&dbc->lock);
-+
- 		if (dbc->driver->disconnect)
- 			dbc->driver->disconnect(dbc);
- 		break;
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -351,7 +351,8 @@ static int xhci_plat_probe(struct platfo
+ 	}
+ 
+ 	usb3_hcd = xhci_get_usb3_hcd(xhci);
+-	if (usb3_hcd && HCC_MAX_PSA(xhci->hcc_params) >= 4)
++	if (usb3_hcd && HCC_MAX_PSA(xhci->hcc_params) >= 4 &&
++	    !(xhci->quirks & XHCI_BROKEN_STREAMS))
+ 		usb3_hcd->can_do_streams = 1;
+ 
+ 	if (xhci->shared_hcd) {
 
 
