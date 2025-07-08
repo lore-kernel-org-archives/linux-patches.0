@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD742E091E;
-	Tue,  8 Jul 2025 16:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F35C2E091E;
+	Tue,  8 Jul 2025 16:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993875; cv=none; b=bF/lxJmxbM1OV2VlqTdx5Fj0U+XGF3rZuZhQzudm0UijGXMfSW7TuWh3/fOROU8p1Pua6VRNyxF4HecNNmzOz0LLnmyxbGTbeF1pENTc5uBvRbx9L6SvnCtxsCcHFGTTZ6NCq+qg9SjO71E7lQeBJr9uT5dAkMmlmU85Sepz8uY=
+	t=1751993878; cv=none; b=eiIEVIjFAM4jBQgh319lZIroR4r54KGVBF2wShpDgZxE4coOxvembDca7JKyd6dvmMej42WOuU/rNhThsW+zikzmbzN9ckOfrKdLWcX5QrRyhKQjKYpLNrK36ENPvZ3dr3JR78Tb1ls1opZXSkcAgjHw9l621KOVzAmCVtmfA2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993875; c=relaxed/simple;
-	bh=QExwU6hDBf3KBOnQ6yi21yYw1qH97DEMAvtuPLu1VcQ=;
+	s=arc-20240116; t=1751993878; c=relaxed/simple;
+	bh=nhvbr2WvRLbuzWlUQENTWqIXJuhT3qAOZvYJxbk1jVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HddVr92+Bbb+O9Tpg68o0Qs617YpI/4xm3qW78OBwpSYyCts56IRmh8Kp8lZPwukMfgh7jbARuyWkpYqCkUXEPdf/GdEadALko9M9JUZ+NRtY+D0/VFPqYmZ2ECIZElA6LUkAl3Z3Ba6dvkDIE3lWAmad8STZm5tFPKl9vhg2/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjym/d43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZeOr8nsqbxD+dqEu3UOOvYGmRxn/yjJSBWvC/NdMDE97K7migoCBQxsPPkPc4UBpoFyJzeWi67S0BzWC4RJhsx2IzHxQnYDk2J+a9o9u9QWlTVB7L8XykwrAqeKwn3GhX6HywrBJKh7cLON2R6PQYLCrPBSTlRi/w4gmWYtCso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIoJNjLu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjym/d43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FF3C4CEF5;
-	Tue,  8 Jul 2025 16:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIoJNjLu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E86EC4CEED;
+	Tue,  8 Jul 2025 16:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993875;
-	bh=QExwU6hDBf3KBOnQ6yi21yYw1qH97DEMAvtuPLu1VcQ=;
+	s=korg; t=1751993878;
+	bh=nhvbr2WvRLbuzWlUQENTWqIXJuhT3qAOZvYJxbk1jVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjym/d43TnBG2zhNYJlvdZxLWeWql+sj1cFKpVEi51gtmV4E1vg6mE5lwPODUGkkr
-	 qtB4KX6zPnuoWeudpDXBZOEzuF71daqpJje0pVLC4jJItN/xXUlyVqF3TE2YM95twE
-	 yro+PJwZI8ckcn55y9GpFM7ePIt09u+x5JPfrfw0=
+	b=zIoJNjLuPybAgDYn1CYhkTjF/MXXJ8XoTxFSUxKHR7O+radRUHoikR2Fs9LnHfIM/
+	 ri74rUyUYKHWuK9DLXVr25v5vEn4p8L/n9b4oV9fqW+d2gi+9lO4aPQRxKm2nhlnYy
+	 8rImQZvNi9gH2apB8xTwDOHf94tbypSpgz89/w8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Daniel Vetter <daniel.vetter@intel.com>,
-	Helge Deller <deller@gmx.de>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Du Cheng <ducheng2@gmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Claudio Suarez <cssk@net-c.es>,
-	Sasha Levin <sashal@kernel.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 5.15 049/160] fbcon: delete a few unneeded forward decl
-Date: Tue,  8 Jul 2025 18:21:26 +0200
-Message-ID: <20250708162232.897517456@linuxfoundation.org>
+	Jiri Slaby <jslaby@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 050/160] tty/vt: consolemap: rename and document struct uni_pagedir
+Date: Tue,  8 Jul 2025 18:21:27 +0200
+Message-ID: <20250708162232.928467277@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -58,77 +50,240 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vetter <daniel.vetter@ffwll.ch>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 9ad7acdad1d91545b99bf9fda3de4b86cf48b272 ]
+[ Upstream commit 4173f018aae16b6496d292c234b858241f85254f ]
 
-I didn't bother with any code movement to fix the others, these just
-got a bit in the way.
+struct uni_pagedir contains 32 unicode page directories, so the name of
+the structure is a bit misleading. Rename the structure to uni_pagedict,
+so it looks like this:
+struct uni_pagedict
+  -> 32 page dirs
+     -> 32 rows
+       -> 64 glyphs
 
-v2: Rebase on top of Helge's reverts.
-
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Sam Ravnborg <sam@ravnborg.org> (v1)
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org> (v1)
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Du Cheng <ducheng2@gmail.com>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Cc: Claudio Suarez <cssk@net-c.es>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220405210335.3434130-2-daniel.vetter@ffwll.ch
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20220607104946.18710-2-jslaby@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 03bcbbb3995b ("dummycon: Trigger redraw when switching consoles with deferred takeover")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 17 +----------------
- 1 file changed, 1 insertion(+), 16 deletions(-)
+ drivers/tty/vt/consolemap.c    | 47 ++++++++++++++++++++--------------
+ drivers/video/console/vgacon.c |  4 +--
+ include/linux/console_struct.h |  6 ++---
+ 3 files changed, 33 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index a67f982fe2ec0..a3af7aacfaf11 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -163,29 +163,14 @@ static int fbcon_cursor_noblink;
-  *  Interface used by the world
+diff --git a/drivers/tty/vt/consolemap.c b/drivers/tty/vt/consolemap.c
+index d815ac98b39e3..32fa4df121dab 100644
+--- a/drivers/tty/vt/consolemap.c
++++ b/drivers/tty/vt/consolemap.c
+@@ -186,17 +186,26 @@ static unsigned short translations[][256] = {
+ 
+ static int inv_translate[MAX_NR_CONSOLES];
+ 
+-struct uni_pagedir {
+-	u16 		**uni_pgdir[32];
++/**
++ * struct uni_pagedict -- unicode directory
++ *
++ * @uni_pgdir: 32*32*64 table with glyphs
++ * @refcount: reference count of this structure
++ * @sum: checksum
++ * @inverse_translations: best-effort inverse mapping
++ * @inverse_trans_unicode: best-effort inverse mapping to unicode
++ */
++struct uni_pagedict {
++	u16		**uni_pgdir[32];
+ 	unsigned long	refcount;
+ 	unsigned long	sum;
+ 	unsigned char	*inverse_translations[4];
+ 	u16		*inverse_trans_unicode;
+ };
+ 
+-static struct uni_pagedir *dflt;
++static struct uni_pagedict *dflt;
+ 
+-static void set_inverse_transl(struct vc_data *conp, struct uni_pagedir *p, int i)
++static void set_inverse_transl(struct vc_data *conp, struct uni_pagedict *p, int i)
+ {
+ 	int j, glyph;
+ 	unsigned short *t = translations[i];
+@@ -221,7 +230,7 @@ static void set_inverse_transl(struct vc_data *conp, struct uni_pagedir *p, int
+ }
+ 
+ static void set_inverse_trans_unicode(struct vc_data *conp,
+-				      struct uni_pagedir *p)
++				      struct uni_pagedict *p)
+ {
+ 	int i, j, k, glyph;
+ 	u16 **p1, *p2;
+@@ -270,7 +279,7 @@ unsigned short *set_translate(int m, struct vc_data *vc)
   */
+ u16 inverse_translate(const struct vc_data *conp, int glyph, int use_unicode)
+ {
+-	struct uni_pagedir *p;
++	struct uni_pagedict *p;
+ 	int m;
+ 	if (glyph < 0 || glyph >= MAX_GLYPH)
+ 		return 0;
+@@ -297,7 +306,7 @@ EXPORT_SYMBOL_GPL(inverse_translate);
+ static void update_user_maps(void)
+ {
+ 	int i;
+-	struct uni_pagedir *p, *q = NULL;
++	struct uni_pagedict *p, *q = NULL;
+ 	
+ 	for (i = 0; i < MAX_NR_CONSOLES; i++) {
+ 		if (!vc_cons_allocated(i))
+@@ -393,7 +402,7 @@ int con_get_trans_new(ushort __user * arg)
+ extern u8 dfont_unicount[];	/* Defined in console_defmap.c */
+ extern u16 dfont_unitable[];
  
--static const char *fbcon_startup(void);
--static void fbcon_init(struct vc_data *vc, int init);
--static void fbcon_deinit(struct vc_data *vc);
--static void fbcon_clear(struct vc_data *vc, int sy, int sx, int height,
--			int width);
--static void fbcon_putc(struct vc_data *vc, int c, int ypos, int xpos);
--static void fbcon_putcs(struct vc_data *vc, const unsigned short *s,
--			int count, int ypos, int xpos);
- static void fbcon_clear_margins(struct vc_data *vc, int bottom_only);
--static void fbcon_cursor(struct vc_data *vc, int mode);
- static void fbcon_bmove(struct vc_data *vc, int sy, int sx, int dy, int dx,
- 			int height, int width);
--static int fbcon_switch(struct vc_data *vc);
--static int fbcon_blank(struct vc_data *vc, int blank, int mode_switch);
- static void fbcon_set_palette(struct vc_data *vc, const unsigned char *table);
+-static void con_release_unimap(struct uni_pagedir *p)
++static void con_release_unimap(struct uni_pagedict *p)
+ {
+ 	u16 **p1;
+ 	int i, j;
+@@ -419,7 +428,7 @@ static void con_release_unimap(struct uni_pagedir *p)
+ /* Caller must hold the console lock */
+ void con_free_unimap(struct vc_data *vc)
+ {
+-	struct uni_pagedir *p;
++	struct uni_pagedict *p;
  
- /*
-  *  Internal routines
+ 	p = *vc->vc_uni_pagedir_loc;
+ 	if (!p)
+@@ -431,10 +440,10 @@ void con_free_unimap(struct vc_data *vc)
+ 	kfree(p);
+ }
+   
+-static int con_unify_unimap(struct vc_data *conp, struct uni_pagedir *p)
++static int con_unify_unimap(struct vc_data *conp, struct uni_pagedict *p)
+ {
+ 	int i, j, k;
+-	struct uni_pagedir *q;
++	struct uni_pagedict *q;
+ 	
+ 	for (i = 0; i < MAX_NR_CONSOLES; i++) {
+ 		if (!vc_cons_allocated(i))
+@@ -472,7 +481,7 @@ static int con_unify_unimap(struct vc_data *conp, struct uni_pagedir *p)
+ }
+ 
+ static int
+-con_insert_unipair(struct uni_pagedir *p, u_short unicode, u_short fontpos)
++con_insert_unipair(struct uni_pagedict *p, u_short unicode, u_short fontpos)
+ {
+ 	int i, n;
+ 	u16 **p1, *p2;
+@@ -503,7 +512,7 @@ con_insert_unipair(struct uni_pagedir *p, u_short unicode, u_short fontpos)
+ /* Caller must hold the lock */
+ static int con_do_clear_unimap(struct vc_data *vc)
+ {
+-	struct uni_pagedir *p, *q;
++	struct uni_pagedict *p, *q;
+ 
+ 	p = *vc->vc_uni_pagedir_loc;
+ 	if (!p || --p->refcount) {
+@@ -536,7 +545,7 @@ int con_clear_unimap(struct vc_data *vc)
+ int con_set_unimap(struct vc_data *vc, ushort ct, struct unipair __user *list)
+ {
+ 	int err = 0, err1, i;
+-	struct uni_pagedir *p, *q;
++	struct uni_pagedict *p, *q;
+ 	struct unipair *unilist, *plist;
+ 
+ 	if (!ct)
+@@ -569,7 +578,7 @@ int con_set_unimap(struct vc_data *vc, ushort ct, struct unipair __user *list)
+ 		
+ 		/*
+ 		 * Since refcount was > 1, con_clear_unimap() allocated a
+-		 * a new uni_pagedir for this vc.  Re: p != q
++		 * a new uni_pagedict for this vc.  Re: p != q
+ 		 */
+ 		q = *vc->vc_uni_pagedir_loc;
+ 
+@@ -660,7 +669,7 @@ int con_set_default_unimap(struct vc_data *vc)
+ {
+ 	int i, j, err = 0, err1;
+ 	u16 *q;
+-	struct uni_pagedir *p;
++	struct uni_pagedict *p;
+ 
+ 	if (dflt) {
+ 		p = *vc->vc_uni_pagedir_loc;
+@@ -714,7 +723,7 @@ EXPORT_SYMBOL(con_set_default_unimap);
   */
--static __inline__ void ywrap_up(struct vc_data *vc, int count);
--static __inline__ void ywrap_down(struct vc_data *vc, int count);
--static __inline__ void ypan_up(struct vc_data *vc, int count);
--static __inline__ void ypan_down(struct vc_data *vc, int count);
- static void fbcon_bmove_rec(struct vc_data *vc, struct fbcon_display *p, int sy, int sx,
- 			    int dy, int dx, int height, int width, u_int y_break);
- static void fbcon_set_disp(struct fb_info *info, struct fb_var_screeninfo *var,
-@@ -194,8 +179,8 @@ static void fbcon_redraw_move(struct vc_data *vc, struct fbcon_display *p,
- 			      int line, int count, int dy);
- static void fbcon_modechanged(struct fb_info *info);
- static void fbcon_set_all_vcs(struct fb_info *info);
--static void fbcon_start(void);
- static void fbcon_exit(void);
-+
- static struct device *fbcon_device;
+ int con_copy_unimap(struct vc_data *dst_vc, struct vc_data *src_vc)
+ {
+-	struct uni_pagedir *q;
++	struct uni_pagedict *q;
  
- #ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
+ 	if (!*src_vc->vc_uni_pagedir_loc)
+ 		return -EINVAL;
+@@ -739,7 +748,7 @@ int con_get_unimap(struct vc_data *vc, ushort ct, ushort __user *uct, struct uni
+ 	int i, j, k, ret = 0;
+ 	ushort ect;
+ 	u16 **p1, *p2;
+-	struct uni_pagedir *p;
++	struct uni_pagedict *p;
+ 	struct unipair *unilist;
+ 
+ 	unilist = kvmalloc_array(ct, sizeof(struct unipair), GFP_KERNEL);
+@@ -810,7 +819,7 @@ conv_uni_to_pc(struct vc_data *conp, long ucs)
+ {
+ 	int h;
+ 	u16 **p1, *p2;
+-	struct uni_pagedir *p;
++	struct uni_pagedict *p;
+   
+ 	/* Only 16-bit codes supported at this time */
+ 	if (ucs > 0xffff)
+diff --git a/drivers/video/console/vgacon.c b/drivers/video/console/vgacon.c
+index 63a6944ebb190..7bce5a174f388 100644
+--- a/drivers/video/console/vgacon.c
++++ b/drivers/video/console/vgacon.c
+@@ -75,7 +75,7 @@ static void vgacon_scrolldelta(struct vc_data *c, int lines);
+ static int vgacon_set_origin(struct vc_data *c);
+ static void vgacon_save_screen(struct vc_data *c);
+ static void vgacon_invert_region(struct vc_data *c, u16 * p, int count);
+-static struct uni_pagedir *vgacon_uni_pagedir;
++static struct uni_pagedict *vgacon_uni_pagedir;
+ static int vgacon_refcount;
+ 
+ /* Description of the hardware situation */
+@@ -363,7 +363,7 @@ static const char *vgacon_startup(void)
+ 
+ static void vgacon_init(struct vc_data *c, int init)
+ {
+-	struct uni_pagedir *p;
++	struct uni_pagedict *p;
+ 
+ 	/*
+ 	 * We cannot be loaded as a module, therefore init will be 1
+diff --git a/include/linux/console_struct.h b/include/linux/console_struct.h
+index d5b9c8d40c18e..f75033f0277fc 100644
+--- a/include/linux/console_struct.h
++++ b/include/linux/console_struct.h
+@@ -17,7 +17,7 @@
+ #include <linux/vt.h>
+ #include <linux/workqueue.h>
+ 
+-struct uni_pagedir;
++struct uni_pagedict;
+ struct uni_screen;
+ 
+ #define NPAR 16
+@@ -157,8 +157,8 @@ struct vc_data {
+ 	unsigned int	vc_bell_duration;	/* Console bell duration */
+ 	unsigned short	vc_cur_blink_ms;	/* Cursor blink duration */
+ 	struct vc_data **vc_display_fg;		/* [!] Ptr to var holding fg console for this display */
+-	struct uni_pagedir *vc_uni_pagedir;
+-	struct uni_pagedir **vc_uni_pagedir_loc; /* [!] Location of uni_pagedir variable for this console */
++	struct uni_pagedict *vc_uni_pagedir;
++	struct uni_pagedict **vc_uni_pagedir_loc; /* [!] Location of uni_pagedict variable for this console */
+ 	struct uni_screen *vc_uni_screen;	/* unicode screen content */
+ 	/* additional information is in vt_kern.h */
+ };
 -- 
 2.39.5
 
