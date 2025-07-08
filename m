@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78D82DAFA3;
-	Tue,  8 Jul 2025 16:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44AF2DA77B;
+	Tue,  8 Jul 2025 16:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993640; cv=none; b=kZuyzC8MvW5svUURa8nrASHk6Hzus713NimcURbl6bcdUv9iwsATiRoudi3ix6uKIrP3ztgXwfiUV+svmOi+kv2BWSk3htYr3Jx42OFknPVojcEyrmLGONw+P1RsjEaaFppc3aBGHLyZKVqLg/W1WM6cldHOiRa5pBs5HdsYQK4=
+	t=1751993644; cv=none; b=PBvfbP7yRpJD3S2OfAhA0K5u/LsUrKByEJFhSkUiLidyKV3uR0QEHiqoy9hDnaNS+LYVlgSNy9aBfFPtuuYtalV2ol8+J1QyHfrKre8KCJ2mTx7ZURMJ6UckuASns3MmxNkKQHjsG1JzqNoFe9EuC4RCMF1Ch48GXaByf8Q1McQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993640; c=relaxed/simple;
-	bh=0wZ2vreWAhGymFsym2k0cVHxMWvZV5s+9KUCd1O9SwY=;
+	s=arc-20240116; t=1751993644; c=relaxed/simple;
+	bh=FCcN88b4M/E+3p/N4nOfxXFpDOS13/zmEF+PbNDV1Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkCmkdFQ2BOmBVE0FIDcYtMoU/QnrG/6hW5p0m7h7IZb28EgMhwXdx8+5BrHPvzMRKhvMdATJNRDw3oka8x6NgS9ZTAsRTkq0oZleQJLL/zROR8KCZl3UtR5HGbAat6eYbkLYKPEJjytCK8+DdSSHd/nujMTGN2jbf4fji7YT24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+4Vj4ZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H8B5i8Tu4wenHAs3xeuPz8ujlaMv8MyeaBx+chrFIfeKN4yaJG/9cY0FpYTEciLPP2W6AxBsnrZeE1dNOFH+/E4nBD1cttBmEB2igzSURJwLhyTaBtQi1Z+1Svjy1DZYT7LuMD5iTDWlM76R655sBqDn7TTIsu1IyqMIkN1bUWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Js+vd2lR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+4Vj4ZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A31C4CEED;
-	Tue,  8 Jul 2025 16:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Js+vd2lR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294F2C4CEED;
+	Tue,  8 Jul 2025 16:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993640;
-	bh=0wZ2vreWAhGymFsym2k0cVHxMWvZV5s+9KUCd1O9SwY=;
+	s=korg; t=1751993644;
+	bh=FCcN88b4M/E+3p/N4nOfxXFpDOS13/zmEF+PbNDV1Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+4Vj4ZRETZSkEdHsdY8xMGikZSP2becN1Y4CaV8NGzkg5lfryRs3m/Kh643WbqLg
-	 CT9iy2neZ7UajnhaAYzCtcMmZD/MBNK48Zh+T7MXFUmTgJdC6T27hcJ9J5xtk+Ukxo
-	 8XT0CE4toIgopTyUru6jjAD3jl0MZQibsyB1hPJE=
+	b=Js+vd2lRtUmN6lq1ay1X1mk2DHVTCggGpuOAAOU/o7Urb18OujZL93fUYG2h6PX6P
+	 eGQ7d+zRPNBImBzEflN/0GW8WTs7IKSMamiTxYInzHpzneRJNP7a8cZ+xRj6pRlqQZ
+	 eHRO8SDKzSXTLvfkf28nEp4fES3eJTZHcdx6vL7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 136/178] wifi: mac80211: drop invalid source address OCB frames
-Date: Tue,  8 Jul 2025 18:22:53 +0200
-Message-ID: <20250708162240.106184157@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.15 145/178] xhci: dbc: Flush queued requests before stopping dbc
+Date: Tue,  8 Jul 2025 18:23:02 +0200
+Message-ID: <20250708162240.317284993@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,42 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit d1b1a5eb27c4948e8811cf4dbb05aaf3eb10700c ]
+commit efe3e3ae5a66cb38ef29c909e951b4039044bae9 upstream.
 
-In OCB, don't accept frames from invalid source addresses
-(and in particular don't try to create stations for them),
-drop the frames instead.
+Flush dbc requests when dbc is stopped and transfer rings are freed.
+Failure to flush them lead to leaking memory and dbc completing odd
+requests after resuming from suspend, leading to error messages such as:
 
-Reported-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6788d2d9.050a0220.20d369.0028.GAE@google.com/
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Tested-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20250616171838.7433379cab5d.I47444d63c72a0bd58d2e2b67bb99e1fea37eec6f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[   95.344392] xhci_hcd 0000:00:0d.0: no matched request
+
+Cc: stable <stable@kernel.org>
+Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250627144127.3889714-5-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rx.c | 4 ++++
+ drivers/usb/host/xhci-dbgcap.c |    4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 09beb65d6108b..e73431549ce77 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4432,6 +4432,10 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
- 		if (!multicast &&
- 		    !ether_addr_equal(sdata->dev->dev_addr, hdr->addr1))
- 			return false;
-+		/* reject invalid/our STA address */
-+		if (!is_valid_ether_addr(hdr->addr2) ||
-+		    ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
-+			return false;
- 		if (!rx->sta) {
- 			int rate_idx;
- 			if (status->encoding != RX_ENC_LEGACY)
--- 
-2.39.5
-
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -652,6 +652,10 @@ static void xhci_dbc_stop(struct xhci_db
+ 	case DS_DISABLED:
+ 		return;
+ 	case DS_CONFIGURED:
++		spin_lock(&dbc->lock);
++		xhci_dbc_flush_requests(dbc);
++		spin_unlock(&dbc->lock);
++
+ 		if (dbc->driver->disconnect)
+ 			dbc->driver->disconnect(dbc);
+ 		break;
 
 
