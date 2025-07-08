@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE54C289E2C;
-	Tue,  8 Jul 2025 16:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9520E2E041C;
+	Tue,  8 Jul 2025 16:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992767; cv=none; b=JIKrgOHDsEVVtlD/JP6dwVhXNBh192XvhrGuvJ9Y4bs5FzaNsSeUgziDAVT2IvaeymXYuqyALHIrNI0NPxtEwl/Gq5abbDjC+ocem8++uuUdz0y+Pf6eTUHa8vM0vptFPgme2iX+zwMfuYArN5siPMK7IeLORn7Pu22KDzgPQvA=
+	t=1751992770; cv=none; b=USnVWggS/TUhrROFz2J9o9aWcfVtLCzrwe7WQ9+b20N4kZABiJ2xYZRZdx5l2iOJ6LQ02S+f8R7E8N5X5uUN6KmCa8nQF+IkrQnNpwNhTvShMzQ0CPvLVWYXAILPwa6Oi7DqhhXRi2jOb1QcCk8lBZM+YeUh0ETj0V+Ti9qLApY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992767; c=relaxed/simple;
-	bh=LtgKvg67uNF79qLg+wFSsv3WcGBYCSxFp5Kv2kuGr24=;
+	s=arc-20240116; t=1751992770; c=relaxed/simple;
+	bh=b9ZZj2vX5j/28F5+RpK5aZB0UvAmO5LrRTQ82EJzfeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bq4NGu1uBlQJ9N4oQQOJBXOkigOoKc7GTCpdevsreoC+wpRSiyh/9RO810Q3J22Yt+9MGzUSAexn4nKnGXtIaw6YUZtjOJXBK0urmOmYuAX/Agg+M1zs0bnYnQZTHhgd7aU/onXO0UvAyePeDBH5ZsychpMMV1ryaayHfltojJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zg3XJbA6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mK2p5W8g08ghEl1UVKfHbcs9mME/PS7CSJU6Ur169ra+PlHNd2LIJSOfqjDzKRupBJw2keJ+s5UCkuhOiEyQtrhmbOlSOrLUA+ZgtD5YgtQOMpMsMt4hCB8xp80X+QiNvREEiS8/RHloVQfzb4Q8+lt5/GnX6EY7Q8SpaZLkk68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NK7fnDyO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zg3XJbA6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374E2C4CEED;
-	Tue,  8 Jul 2025 16:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NK7fnDyO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1B8C4CEF0;
+	Tue,  8 Jul 2025 16:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992767;
-	bh=LtgKvg67uNF79qLg+wFSsv3WcGBYCSxFp5Kv2kuGr24=;
+	s=korg; t=1751992770;
+	bh=b9ZZj2vX5j/28F5+RpK5aZB0UvAmO5LrRTQ82EJzfeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zg3XJbA6vXSkp3pANRhBf9qnAwEOp+9/dKKMEFGdoo7vcX5WIW7pSbL3vQHLEbXHf
-	 VbzFXT9Iomkc2yRLbM87bFUHbys3owVrEP7OwcUDd/yJ9MVQ/cQuzoMdRvlFVsxquI
-	 mk4qE8JWMc0oGYi56lWKbGrB61rtg/G84OyB9PxI=
+	b=NK7fnDyOVh/fFuVZCvN6crW5HD+6PGS2xnXU9e2W1fb5yNSzoCM4sCTLTPIA5Xt8Y
+	 meij+0P2BNSy+fvu1LHvWAcbWjux8BZczuFSMlNc3p7hUWydYXAcAHEf+ro2OP9TrI
+	 X/JH6oLTLdRqCtnNEMG594oMVTarECsQtjdL3HVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/232] smb: client: fix warning when reconnecting channel
-Date: Tue,  8 Jul 2025 18:21:10 +0200
-Message-ID: <20250708162243.386847613@linuxfoundation.org>
+Subject: [PATCH 6.12 075/232] net: usb: lan78xx: fix WARN in __netif_napi_del_locked on disconnect
+Date: Tue,  8 Jul 2025 18:21:11 +0200
+Message-ID: <20250708162243.415297081@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -54,127 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 3bbe46716092d8ef6b0df4b956f585c5cd0fc78e ]
+[ Upstream commit 6c7ffc9af7186ed79403a3ffee9a1e5199fc7450 ]
 
-When reconnecting a channel in smb2_reconnect_server(), a dummy tcon
-is passed down to smb2_reconnect() with ->query_interface
-uninitialized, so we can't call queue_delayed_work() on it.
+Remove redundant netif_napi_del() call from disconnect path.
 
-Fix the following warning by ensuring that we're queueing the delayed
-worker from correct tcon.
+A WARN may be triggered in __netif_napi_del_locked() during USB device
+disconnect:
 
-WARNING: CPU: 4 PID: 1126 at kernel/workqueue.c:2498 __queue_delayed_work+0x1d2/0x200
-Modules linked in: cifs cifs_arc4 nls_ucs2_utils cifs_md4 [last unloaded: cifs]
-CPU: 4 UID: 0 PID: 1126 Comm: kworker/4:0 Not tainted 6.16.0-rc3 #5 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-4.fc42 04/01/2014
-Workqueue: cifsiod smb2_reconnect_server [cifs]
-RIP: 0010:__queue_delayed_work+0x1d2/0x200
-Code: 41 5e 41 5f e9 7f ee ff ff 90 0f 0b 90 e9 5d ff ff ff bf 02 00
-00 00 e8 6c f3 07 00 89 c3 eb bd 90 0f 0b 90 e9 57 f> 0b 90 e9 65 fe
-ff ff 90 0f 0b 90 e9 72 fe ff ff 90 0f 0b 90 e9
-RSP: 0018:ffffc900014afad8 EFLAGS: 00010003
-RAX: 0000000000000000 RBX: ffff888124d99988 RCX: ffffffff81399cc1
-RDX: dffffc0000000000 RSI: ffff888114326e00 RDI: ffff888124d999f0
-RBP: 000000000000ea60 R08: 0000000000000001 R09: ffffed10249b3331
-R10: ffff888124d9998f R11: 0000000000000004 R12: 0000000000000040
-R13: ffff888114326e00 R14: ffff888124d999d8 R15: ffff888114939020
-FS:  0000000000000000(0000) GS:ffff88829f7fe000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffe7a2b4038 CR3: 0000000120a6f000 CR4: 0000000000750ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- queue_delayed_work_on+0xb4/0xc0
- smb2_reconnect+0xb22/0xf50 [cifs]
- smb2_reconnect_server+0x413/0xd40 [cifs]
- ? __pfx_smb2_reconnect_server+0x10/0x10 [cifs]
- ? local_clock_noinstr+0xd/0xd0
- ? local_clock+0x15/0x30
- ? lock_release+0x29b/0x390
- process_one_work+0x4c5/0xa10
- ? __pfx_process_one_work+0x10/0x10
- ? __list_add_valid_or_report+0x37/0x120
- worker_thread+0x2f1/0x5a0
- ? __kthread_parkme+0xde/0x100
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x1fe/0x380
- ? kthread+0x10f/0x380
- ? __pfx_kthread+0x10/0x10
- ? local_clock_noinstr+0xd/0xd0
- ? ret_from_fork+0x1b/0x1f0
- ? local_clock+0x15/0x30
- ? lock_release+0x29b/0x390
- ? rcu_is_watching+0x20/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x15b/0x1f0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-irq event stamp: 1116206
-hardirqs last  enabled at (1116205): [<ffffffff8143af42>] __up_console_sem+0x52/0x60
-hardirqs last disabled at (1116206): [<ffffffff81399f0e>] queue_delayed_work_on+0x6e/0xc0
-softirqs last  enabled at (1116138): [<ffffffffc04562fd>] __smb_send_rqst+0x42d/0x950 [cifs]
-softirqs last disabled at (1116136): [<ffffffff823d35e1>] release_sock+0x21/0xf0
+  WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
 
-Cc: linux-cifs@vger.kernel.org
-Reported-by: David Howells <dhowells@redhat.com>
-Fixes: 42ca547b13a2 ("cifs: do not disable interface polling on failure")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Shyam Prasad N <nspmangalore@gmail.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Tested-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This happens because netif_napi_del() is called in the disconnect path while
+NAPI is still enabled. However, it is not necessary to call netif_napi_del()
+explicitly, since unregister_netdev() will handle NAPI teardown automatically
+and safely. Removing the redundant call avoids triggering the warning.
+
+Full trace:
+ lan78xx 1-1:1.0 enu1: Failed to read register index 0x000000c4. ret = -ENODEV
+ lan78xx 1-1:1.0 enu1: Failed to set MAC down with error -ENODEV
+ lan78xx 1-1:1.0 enu1: Link is Down
+ lan78xx 1-1:1.0 enu1: Failed to read register index 0x00000120. ret = -ENODEV
+ ------------[ cut here ]------------
+ WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
+ Modules linked in: flexcan can_dev fuse
+ CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.0-rc2-00624-ge926949dab03 #9 PREEMPT
+ Hardware name: SKOV IMX8MP CPU revC - bd500 (DT)
+ Workqueue: usb_hub_wq hub_event
+ pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __netif_napi_del_locked+0x2b4/0x350
+ lr : __netif_napi_del_locked+0x7c/0x350
+ sp : ffffffc085b673c0
+ x29: ffffffc085b673c0 x28: ffffff800b7f2000 x27: ffffff800b7f20d8
+ x26: ffffff80110bcf58 x25: ffffff80110bd978 x24: 1ffffff0022179eb
+ x23: ffffff80110bc000 x22: ffffff800b7f5000 x21: ffffff80110bc000
+ x20: ffffff80110bcf38 x19: ffffff80110bcf28 x18: dfffffc000000000
+ x17: ffffffc081578940 x16: ffffffc08284cee0 x15: 0000000000000028
+ x14: 0000000000000006 x13: 0000000000040000 x12: ffffffb0022179e8
+ x11: 1ffffff0022179e7 x10: ffffffb0022179e7 x9 : dfffffc000000000
+ x8 : 0000004ffdde8619 x7 : ffffff80110bcf3f x6 : 0000000000000001
+ x5 : ffffff80110bcf38 x4 : ffffff80110bcf38 x3 : 0000000000000000
+ x2 : 0000000000000000 x1 : 1ffffff0022179e7 x0 : 0000000000000000
+ Call trace:
+  __netif_napi_del_locked+0x2b4/0x350 (P)
+  lan78xx_disconnect+0xf4/0x360
+  usb_unbind_interface+0x158/0x718
+  device_remove+0x100/0x150
+  device_release_driver_internal+0x308/0x478
+  device_release_driver+0x1c/0x30
+  bus_remove_device+0x1a8/0x368
+  device_del+0x2e0/0x7b0
+  usb_disable_device+0x244/0x540
+  usb_disconnect+0x220/0x758
+  hub_event+0x105c/0x35e0
+  process_one_work+0x760/0x17b0
+  worker_thread+0x768/0xce8
+  kthread+0x3bc/0x690
+  ret_from_fork+0x10/0x20
+ irq event stamp: 211604
+ hardirqs last  enabled at (211603): [<ffffffc0828cc9ec>] _raw_spin_unlock_irqrestore+0x84/0x98
+ hardirqs last disabled at (211604): [<ffffffc0828a9a84>] el1_dbg+0x24/0x80
+ softirqs last  enabled at (211296): [<ffffffc080095f10>] handle_softirqs+0x820/0xbc8
+ softirqs last disabled at (210993): [<ffffffc080010288>] __do_softirq+0x18/0x20
+ ---[ end trace 0000000000000000 ]---
+ lan78xx 1-1:1.0 enu1: failed to kill vid 0081/0
+
+Fixes: ec4c7e12396b ("lan78xx: Introduce NAPI polling support")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20250627051346.276029-1-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  1 +
- fs/smb/client/smb2pdu.c  | 10 ++++------
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/net/usb/lan78xx.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index c66655adecb2c..e77c0b3e49624 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1275,6 +1275,7 @@ struct cifs_tcon {
- 	bool use_persistent:1; /* use persistent instead of durable handles */
- 	bool no_lease:1;    /* Do not request leases on files or directories */
- 	bool use_witness:1; /* use witness protocol */
-+	bool dummy:1; /* dummy tcon used for reconnecting channels */
- 	__le32 capabilities;
- 	__u32 share_flags;
- 	__u32 maximal_access;
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index c6ae395a46925..3e501da62880c 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -440,9 +440,9 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
- 		free_xid(xid);
- 		ses->flags &= ~CIFS_SES_FLAGS_PENDING_QUERY_INTERFACES;
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 531b1b6a37d19..2f8637224b69e 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -4229,8 +4229,6 @@ static void lan78xx_disconnect(struct usb_interface *intf)
+ 	if (!dev)
+ 		return;
  
--		/* regardless of rc value, setup polling */
--		queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
--				   (SMB_INTERFACE_POLL_INTERVAL * HZ));
-+		if (!tcon->ipc && !tcon->dummy)
-+			queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
-+					   (SMB_INTERFACE_POLL_INTERVAL * HZ));
- 
- 		mutex_unlock(&ses->session_mutex);
- 
-@@ -4234,10 +4234,8 @@ void smb2_reconnect_server(struct work_struct *work)
- 		}
- 		goto done;
- 	}
+-	netif_napi_del(&dev->napi);
 -
- 	tcon->status = TID_GOOD;
--	tcon->retry = false;
--	tcon->need_reconnect = false;
-+	tcon->dummy = true;
+ 	udev = interface_to_usbdev(intf);
+ 	net = dev->net;
  
- 	/* now reconnect sessions for necessary channels */
- 	list_for_each_entry_safe(ses, ses2, &tmp_ses_list, rlist) {
 -- 
 2.39.5
 
