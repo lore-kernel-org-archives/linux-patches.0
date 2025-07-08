@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8329E14A60D;
-	Tue,  8 Jul 2025 16:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A742E5B08;
+	Tue,  8 Jul 2025 16:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992454; cv=none; b=kLvJqegE/iuyDhJna0RiZVFOqRUkQPkx4c1nTV5ODEdxWK9+VmZdKc44YSmoSpWaKzlq7TtIl0WavGWTHo1l35P0Jphu9b/6Vj+wQvL8+RzgZEeU4sJYdi/bMhs8b9pbYaumrKkcxTlSyjm4bcdq67tP9IWUH0KLE5Znq9mEnNs=
+	t=1751992457; cv=none; b=t9Oh085U8ZXScWlqZ+8VMDntgQlr73WyDDBOJHQp7QXCJj+vc3aMaOhpsrVZgQQoB+xcKjeE+qNK6mnNKbXBYG3K4C0XiCaDeh4EsVRPvoA4R2GQIwglqpytrTS6Nndmc2ZXYWgLUTvQwHqZVat2dZafRTcmWtVCEUxI7FocC6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992454; c=relaxed/simple;
-	bh=rlNQDgofp/mrdbe6ojFd/SP1k+jhINGh1AGFcjbVrIM=;
+	s=arc-20240116; t=1751992457; c=relaxed/simple;
+	bh=gVxOxUD2Fu0NBJrXzsRbCX/2GQR4HGQcqCxhyVA3bss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvkVte7Mv5p/9AMhk0MJjeGq5JsOhhg+9YLY0mYOFF0wniX2oref+ZIi8pBPy9wkXNhDQCmoY6uuem8Yq5hyaXnowz/K45UOXIuabYHO03g66M7ooThHlCqReLI++mVBQkB3qYGCEQh1vyNDXctKykltG+/uaxD4xpXcqJ2J8Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwLwLmEr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IRq1A+2eeid4q3EQAOMRzCFWuoTfFenNRFb+K05Hfyn/4PM5eaf1gXtwxNQXgt1TlHz/nKaxY0bxbDN8aSECW+06iqqMgOPTQVhlHQLj0nHrIAFly3EmaZqI00whZqDjpcivYmQQEXrTVjiUz9sQ3gBDim/LjN6sOv05PBa1AtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MaoE/EvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwLwLmEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30E1C4CEF5;
-	Tue,  8 Jul 2025 16:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MaoE/EvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10A3C4CEF5;
+	Tue,  8 Jul 2025 16:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992454;
-	bh=rlNQDgofp/mrdbe6ojFd/SP1k+jhINGh1AGFcjbVrIM=;
+	s=korg; t=1751992457;
+	bh=gVxOxUD2Fu0NBJrXzsRbCX/2GQR4HGQcqCxhyVA3bss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwLwLmEr5B0LvYUOAvlzJb188nLoKw+R+W9c7q2QPJfD3enUKvAbXbB3GpmIuD9kp
-	 s/tks52q5Xy78Prp0jROGvbNEF1Y37v4Ml3Unjn9DAt1DXd30wvc2K8yJoAi9NMhon
-	 u94QkIzp+2cCHgIIJXODNm/xgjvg6Cs+mlJaL3sU=
+	b=MaoE/EvEZCpsIhEQFgW9EbvdoGh8jK7zlfRnBC708xJU3koFlT2smo/ow3kVBJVYP
+	 8QQDjA5J9o/GKOzyUUFbCcIrnwEwfuLBe2bfiy6NdwPwBRsNXTR6yN8t6TFdlHKqa+
+	 MMVnMr1dmHHSlqc1vlcLMMgE7wT+zwja/Mycl8Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Peter Williams <peter@newton.cx>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans de Goede <hansg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/132] wifi: ath6kl: remove WARN on bad firmware input
-Date: Tue,  8 Jul 2025 18:23:27 +0200
-Message-ID: <20250708162233.421001022@linuxfoundation.org>
+Subject: [PATCH 6.6 097/132] ACPICA: Refuse to evaluate a method if arguments are missing
+Date: Tue,  8 Jul 2025 18:23:28 +0200
+Message-ID: <20250708162233.448755497@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -52,41 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e7417421d89358da071fd2930f91e67c7128fbff ]
+[ Upstream commit 6fcab2791543924d438e7fa49276d0998b0a069f ]
 
-If the firmware gives bad input, that's nothing to do with
-the driver's stack at this point etc., so the WARN_ON()
-doesn't add any value. Additionally, this is one of the
-top syzbot reports now. Just print a message, and as an
-added bonus, print the sizes too.
+As reported in [1], a platform firmware update that increased the number
+of method parameters and forgot to update a least one of its callers,
+caused ACPICA to crash due to use-after-free.
 
-Reported-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
-Tested-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
-Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250617114529.031a677a348e.I58bf1eb4ac16a82c546725ff010f3f0d2b0cca49@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Since this a result of a clear AML issue that arguably cannot be fixed
+up by the interpreter (it cannot produce missing data out of thin air),
+address it by making ACPICA refuse to evaluate a method if the caller
+attempts to pass fewer arguments than expected to it.
+
+Closes: https://github.com/acpica/acpica/issues/1027 [1]
+Reported-by: Peter Williams <peter@newton.cx>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Tested-by: Hans de Goede <hansg@kernel.org> # Dell XPS 9640 with BIOS 1.12.0
+Link: https://patch.msgid.link/5909446.DvuYhMxLoT@rjwysocki.net
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/bmi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/dsmethod.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
-index af98e871199d3..5a9e93fd1ef42 100644
---- a/drivers/net/wireless/ath/ath6kl/bmi.c
-+++ b/drivers/net/wireless/ath/ath6kl/bmi.c
-@@ -87,7 +87,9 @@ int ath6kl_bmi_get_target_info(struct ath6kl *ar,
- 		 * We need to do some backwards compatibility to make this work.
- 		 */
- 		if (le32_to_cpu(targ_info->byte_count) != sizeof(*targ_info)) {
--			WARN_ON(1);
-+			ath6kl_err("mismatched byte count %d vs. expected %zd\n",
-+				   le32_to_cpu(targ_info->byte_count),
-+				   sizeof(*targ_info));
- 			return -EINVAL;
- 		}
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index e809c2aed78ae..a232746d150a7 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -483,6 +483,13 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 		return_ACPI_STATUS(AE_NULL_OBJECT);
+ 	}
  
++	if (this_walk_state->num_operands < obj_desc->method.param_count) {
++		ACPI_ERROR((AE_INFO, "Missing argument for method [%4.4s]",
++			    acpi_ut_get_node_name(method_node)));
++
++		return_ACPI_STATUS(AE_AML_UNINITIALIZED_ARG);
++	}
++
+ 	/* Init for new method, possibly wait on method mutex */
+ 
+ 	status =
 -- 
 2.39.5
 
