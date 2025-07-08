@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B262045B5;
-	Tue,  8 Jul 2025 16:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E88DBE46;
+	Tue,  8 Jul 2025 16:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993604; cv=none; b=GqYRI2h0kftOlkb1Xn96lIEvBiZaCTRvmeV279q2tAm4F9b5fWzZitV1lBvZi7H+JkL3RiwaNExBtYnkW72XqbN5uzJGIbQd9NbxoVpdQBTl8HJxvJgs2CckdIMcQ6qyg4aLKSofKUMhyYZy/4oMZlQKtDyKoJ0T6U3QjSLNwlY=
+	t=1751993609; cv=none; b=AqXrefZ+1oynH2UtAmmlSCxGU3s+Bl2ddD8KJn+QeSTas4EFW5/zLJiu/ngTnTxMHpCqe3m8wxIFXXQ36x++6G0r/Hd5ykh/jPlFk3IpC+0CVhPUsUig9oHz/3ax1J6FWR94NoM0M4mqz1eAsvlngChabMydv2XLOBOIOU89uhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993604; c=relaxed/simple;
-	bh=rktD87SNJVsiVzyLWLDmwod8mxHZ6R8OnO9NHcS69C0=;
+	s=arc-20240116; t=1751993609; c=relaxed/simple;
+	bh=aorVeP5cBaSUjeZKjjQ8dfpepO9/zD9MhUcONYTEWL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azFjaSWmXK6RIpiiE46UudVtevQ1fyzp2IC9xTCUYvOIVXIrSHcejejWDmB1/8DyUaSrM6pLUK8Jt6xtNgQqXwKZDTw1YrsbF1wlhBU7d4OBB2bjrur24b1/robBkY06uiCVjOrD/Lu+k+wdQ93+QMWBTWOj2OFSHX32sw8h90A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwKD5Rcy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YtwPR3O1CUFBxw0R/CzCXiE75T26wfATJlrByKNcqnkL187WVZydB5YC0MVqjcdM+zp7KjSeyioFLZt8ESWIzC1Pl/upYKfuCW1XGk+hD+ITlk43WMFooVDSrQB9QrxsG9WeWo7h4elieeAXdsD1x+mfXe4TiglgqvevMESdrMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsPYnLn2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwKD5Rcy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF74C4CEF0;
-	Tue,  8 Jul 2025 16:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsPYnLn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9049C4CEED;
+	Tue,  8 Jul 2025 16:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993604;
-	bh=rktD87SNJVsiVzyLWLDmwod8mxHZ6R8OnO9NHcS69C0=;
+	s=korg; t=1751993608;
+	bh=aorVeP5cBaSUjeZKjjQ8dfpepO9/zD9MhUcONYTEWL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwKD5Rcy9+yMJ++l/OSDYi8ZPn2mC2XwYwiMwM+6gIfIX7uAgwrmGPwCNa4wo7TGP
-	 p6lhqyIWhRjCY3S2rsWrYsDj352PLs+FIbqAwx08WyVpfm9Vr3onVVV9qSU/++beqi
-	 z049M9ktXR6U9TqyybcI0D3+6W+biLQ0dIjCtEiE=
+	b=nsPYnLn2Cx32UnZJ+kyo5fy3K8dyU9QOUqt7VYsk24EhwYJbeLoeVpAOm7xJdtJzb
+	 aZWiXb57bViBEES5yDjrcm8Y8eY3enprjayeVt+Z8oGjpZ8K+iuarfCWZmIcCjEM8y
+	 y8+lK3aVSTMp4McBdJ9viLt8pDbiCgv2QE2dybgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tulio Magno <tuliom@ascii.art.br>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Justin M. Forbes" <jforbes@fedoraproject.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 131/178] powerpc: Fix struct termio related ioctl macros
-Date: Tue,  8 Jul 2025 18:22:48 +0200
-Message-ID: <20250708162239.989095952@linuxfoundation.org>
+Subject: [PATCH 6.15 105/178] drm/xe/guc_pc: Add _locked variant for min/max freq
+Date: Tue,  8 Jul 2025 18:22:22 +0200
+Message-ID: <20250708162239.381819377@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -54,56 +51,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
+[ Upstream commit d8390768dcf6f5a78af56aa03797a076871b01f3 ]
 
-Since termio interface is now obsolete, include/uapi/asm/ioctls.h
-has some constant macros referring to "struct termio", this caused
-build failure at userspace.
+There are places in which the getters/setters are called one after the
+other causing a multiple lock()/unlock(). These are not currently a
+problem since they are all happening from the same thread, but there's a
+race possibility as calls are added outside of the early init when the
+max/min and stashed values need to be correlated.
 
-In file included from /usr/include/asm/ioctl.h:12,
-                 from /usr/include/asm/ioctls.h:5,
-                 from tst-ioctls.c:3:
-tst-ioctls.c: In function 'get_TCGETA':
-tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
-   12 |   return TCGETA;
-      |          ^~~~~~
+Add the _locked() variants to prepare for that.
 
-Even though termios.h provides "struct termio", trying to juggle definitions around to
-make it compile could introduce regressions. So better to open code it.
-
-Reported-by: Tulio Magno <tuliom@ascii.art.br>
-Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
-Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://lore.kernel.org/r/20250618-wa-22019338487-v5-1-b888388477f2@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 1beae9aa2b88d3a02eb666e7b777eb2d7bc645f4)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: 84c0b4a00610 ("drm/xe/bmg: Update Wa_22019338487")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_pc.c | 123 ++++++++++++++++++---------------
+ 1 file changed, 69 insertions(+), 54 deletions(-)
 
-diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
-index 2c145da3b774a..b5211e413829a 100644
---- a/arch/powerpc/include/uapi/asm/ioctls.h
-+++ b/arch/powerpc/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
+diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
+index a7b8bacfe64ef..23a4c525c03bf 100644
+--- a/drivers/gpu/drm/xe/xe_guc_pc.c
++++ b/drivers/gpu/drm/xe/xe_guc_pc.c
+@@ -5,6 +5,7 @@
  
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
-+#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
-+#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
-+#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
+ #include "xe_guc_pc.h"
  
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
++#include <linux/cleanup.h>
+ #include <linux/delay.h>
+ #include <linux/ktime.h>
+ 
+@@ -538,6 +539,25 @@ u32 xe_guc_pc_get_rpn_freq(struct xe_guc_pc *pc)
+ 	return pc->rpn_freq;
+ }
+ 
++static int xe_guc_pc_get_min_freq_locked(struct xe_guc_pc *pc, u32 *freq)
++{
++	int ret;
++
++	lockdep_assert_held(&pc->freq_lock);
++
++	/* Might be in the middle of a gt reset */
++	if (!pc->freq_ready)
++		return -EAGAIN;
++
++	ret = pc_action_query_task_state(pc);
++	if (ret)
++		return ret;
++
++	*freq = pc_get_min_freq(pc);
++
++	return 0;
++}
++
+ /**
+  * xe_guc_pc_get_min_freq - Get the min operational frequency
+  * @pc: The GuC PC
+@@ -547,27 +567,29 @@ u32 xe_guc_pc_get_rpn_freq(struct xe_guc_pc *pc)
+  *         -EAGAIN if GuC PC not ready (likely in middle of a reset).
+  */
+ int xe_guc_pc_get_min_freq(struct xe_guc_pc *pc, u32 *freq)
++{
++	guard(mutex)(&pc->freq_lock);
++
++	return xe_guc_pc_get_min_freq_locked(pc, freq);
++}
++
++static int xe_guc_pc_set_min_freq_locked(struct xe_guc_pc *pc, u32 freq)
+ {
+ 	int ret;
+ 
+-	xe_device_assert_mem_access(pc_to_xe(pc));
++	lockdep_assert_held(&pc->freq_lock);
+ 
+-	mutex_lock(&pc->freq_lock);
+-	if (!pc->freq_ready) {
+-		/* Might be in the middle of a gt reset */
+-		ret = -EAGAIN;
+-		goto out;
+-	}
++	/* Might be in the middle of a gt reset */
++	if (!pc->freq_ready)
++		return -EAGAIN;
+ 
+-	ret = pc_action_query_task_state(pc);
++	ret = pc_set_min_freq(pc, freq);
+ 	if (ret)
+-		goto out;
++		return ret;
+ 
+-	*freq = pc_get_min_freq(pc);
++	pc->user_requested_min = freq;
+ 
+-out:
+-	mutex_unlock(&pc->freq_lock);
+-	return ret;
++	return 0;
+ }
+ 
+ /**
+@@ -580,25 +602,29 @@ int xe_guc_pc_get_min_freq(struct xe_guc_pc *pc, u32 *freq)
+  *         -EINVAL if value out of bounds.
+  */
+ int xe_guc_pc_set_min_freq(struct xe_guc_pc *pc, u32 freq)
++{
++	guard(mutex)(&pc->freq_lock);
++
++	return xe_guc_pc_set_min_freq_locked(pc, freq);
++}
++
++static int xe_guc_pc_get_max_freq_locked(struct xe_guc_pc *pc, u32 *freq)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&pc->freq_lock);
+-	if (!pc->freq_ready) {
+-		/* Might be in the middle of a gt reset */
+-		ret = -EAGAIN;
+-		goto out;
+-	}
++	lockdep_assert_held(&pc->freq_lock);
+ 
+-	ret = pc_set_min_freq(pc, freq);
++	/* Might be in the middle of a gt reset */
++	if (!pc->freq_ready)
++		return -EAGAIN;
++
++	ret = pc_action_query_task_state(pc);
+ 	if (ret)
+-		goto out;
++		return ret;
+ 
+-	pc->user_requested_min = freq;
++	*freq = pc_get_max_freq(pc);
+ 
+-out:
+-	mutex_unlock(&pc->freq_lock);
+-	return ret;
++	return 0;
+ }
+ 
+ /**
+@@ -610,25 +636,29 @@ int xe_guc_pc_set_min_freq(struct xe_guc_pc *pc, u32 freq)
+  *         -EAGAIN if GuC PC not ready (likely in middle of a reset).
+  */
+ int xe_guc_pc_get_max_freq(struct xe_guc_pc *pc, u32 *freq)
++{
++	guard(mutex)(&pc->freq_lock);
++
++	return xe_guc_pc_get_max_freq_locked(pc, freq);
++}
++
++static int xe_guc_pc_set_max_freq_locked(struct xe_guc_pc *pc, u32 freq)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&pc->freq_lock);
+-	if (!pc->freq_ready) {
+-		/* Might be in the middle of a gt reset */
+-		ret = -EAGAIN;
+-		goto out;
+-	}
++	lockdep_assert_held(&pc->freq_lock);
+ 
+-	ret = pc_action_query_task_state(pc);
++	/* Might be in the middle of a gt reset */
++	if (!pc->freq_ready)
++		return -EAGAIN;
++
++	ret = pc_set_max_freq(pc, freq);
+ 	if (ret)
+-		goto out;
++		return ret;
+ 
+-	*freq = pc_get_max_freq(pc);
++	pc->user_requested_max = freq;
+ 
+-out:
+-	mutex_unlock(&pc->freq_lock);
+-	return ret;
++	return 0;
+ }
+ 
+ /**
+@@ -642,24 +672,9 @@ int xe_guc_pc_get_max_freq(struct xe_guc_pc *pc, u32 *freq)
+  */
+ int xe_guc_pc_set_max_freq(struct xe_guc_pc *pc, u32 freq)
+ {
+-	int ret;
+-
+-	mutex_lock(&pc->freq_lock);
+-	if (!pc->freq_ready) {
+-		/* Might be in the middle of a gt reset */
+-		ret = -EAGAIN;
+-		goto out;
+-	}
+-
+-	ret = pc_set_max_freq(pc, freq);
+-	if (ret)
+-		goto out;
++	guard(mutex)(&pc->freq_lock);
+ 
+-	pc->user_requested_max = freq;
+-
+-out:
+-	mutex_unlock(&pc->freq_lock);
+-	return ret;
++	return xe_guc_pc_set_max_freq_locked(pc, freq);
+ }
+ 
+ /**
 -- 
 2.39.5
 
