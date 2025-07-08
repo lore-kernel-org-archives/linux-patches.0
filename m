@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDBF2DCC02;
-	Tue,  8 Jul 2025 16:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6DB21C190;
+	Tue,  8 Jul 2025 16:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992541; cv=none; b=PDEV1vUcA5K+CIV1cFucjnq3nAY/d9o3rgbZ+n/CuX0za81DlcSQfCTteaM/6zNtEajESVQ/zCes6OIBDCspczI7UP78S7+WjT0t7jXS9sFzWJPT0+temCF3iR3Xjem7jDabEfPAcBvolKil/Jwt5AZBmGVuxz9GMkRktxyjpUY=
+	t=1751992544; cv=none; b=XsNxU+XrMU1zt4Ipc4xYwUklY1nYUwnBRYUA544OVYVjSjKFhevv3Bgm8CqiP03ItZ+qdD0LyYf+9O496dUPQ+4pqRtQsmeAMR6ubaru/MMUUHrpmm6LqT4EGNPZp9+lPoa8x2RDjZYDys66XP+lskxyBv8S70QWv26pWGaA25c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992541; c=relaxed/simple;
-	bh=CRiNpyOBWvlfs9Zq7cF8ZpquTyHCfCxLhkC+I9XTQ2s=;
+	s=arc-20240116; t=1751992544; c=relaxed/simple;
+	bh=sBHoVtJgWpBKvC2JqIfwXXApX/IXYYtB5/xwGDEgzgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6SYInFGbIBhwJBlgCzFbY+rd/VjXzCUnsXOAFEE6b3tWlOXfy92eNDqeTgtM+3ixSu05c4A5co9iA/R+genWlEhtGH+9klkAvIwxMJYpv8cfpSYyk/EjiWDIcoUaQqxoJFPj+Gjg0tAcEPSNeYvieFIrThkaabGwoO88KCbV4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUYlGsV+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DxcN8IBsNNUW9CcS4UCu0T9wFjcsP5oB7pL/oLrOcb0DKK88LXgT6Ii21AEOWIe/OmrmScexnP3w+eWmpvr61nFgfO9AEXplKa4Hre7QOD1rDcNGt5YMNm3G7aY7zGhZ8GRPKY532wM/whKwWLKlfo4Qd7VDlW0eVBrbQQF9pzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvKWPp+G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUYlGsV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A5DC4CEF5;
-	Tue,  8 Jul 2025 16:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvKWPp+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D872C4CEED;
+	Tue,  8 Jul 2025 16:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992541;
-	bh=CRiNpyOBWvlfs9Zq7cF8ZpquTyHCfCxLhkC+I9XTQ2s=;
+	s=korg; t=1751992544;
+	bh=sBHoVtJgWpBKvC2JqIfwXXApX/IXYYtB5/xwGDEgzgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUYlGsV+tl9khGhlw/g9ae0ehKyB3OcUXfRaEBJcq0OH1Ag+uJsa7i0C1u2BQgLYP
-	 TDIa5Axu6ePFfA7NOlHfRT6oh4MkB3kAXRX0koxmkTg9K5ZluT8VkXr6XAPQ9YUN49
-	 gOnAR2ry4bqImwTC8s1nzOS0OS5yOQWz45YNAxQY=
+	b=FvKWPp+GoB/VnhQN5Q+z/+vN35aMygb3k+G51r62u0sofYA37nOqMspn+2+oufY8y
+	 ccRmDXvUJNIc2FmLDxh9D8CLIJKLGsUq1gscrBboUEPZJpWs/BOmxisZD3AUlYkpSR
+	 Nr0KJisV4+6Yqz4Ohkpsku2cPefQ9k0lIXYGIvqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 127/132] powerpc/kernel: Fix ppc_save_regs inclusion in build
-Date: Tue,  8 Jul 2025 18:23:58 +0200
-Message-ID: <20250708162234.241580121@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 6.6 128/132] x86/bugs: Rename MDS machinery to something more generic
+Date: Tue,  8 Jul 2025 18:23:59 +0200
+Message-ID: <20250708162234.266860739@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -50,48 +50,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit 93bd4a80efeb521314485a06d8c21157240497bb upstream.
+Commit f9af88a3d384c8b55beb5dc5483e5da0135fadbd upstream.
 
-Recent patch fixed an old commit
-'fc2a5a6161a2 ("powerpc/64s: ppc_save_regs is now needed for all 64s builds")'
-which is to include building of ppc_save_reg.c only when XMON
-and KEXEC_CORE and PPC_BOOK3S are enabled. This was valid, since
-ppc_save_regs was called only in replay_system_reset() of old
-irq.c which was under BOOK3S.
+It will be used by other x86 mitigations.
 
-But there has been multiple refactoring of irq.c and have
-added call to ppc_save_regs() from __replay_soft_interrupts
--> replay_soft_interrupts which is part of irq_64.c included
-under CONFIG_PPC64. And since ppc_save_regs is called in
-CRASH_DUMP path as part of crash_setup_regs in kexec.h,
-CONFIG_PPC32 also needs it.
+No functional changes.
 
-So with this recent patch which enabled the building of
-ppc_save_regs.c caused a build break when none of these
-(XMON, KEXEC_CORE, BOOK3S) where enabled as part of config.
-Patch to enable building of ppc_save_regs.c by defaults.
-
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250511041111.841158-1-maddy@linux.ibm.com
-Cc: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/Makefile |    2 --
- 1 file changed, 2 deletions(-)
+ Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst |    4 -
+ Documentation/arch/x86/mds.rst                                  |    8 +-
+ arch/x86/entry/entry.S                                          |    8 +-
+ arch/x86/include/asm/irqflags.h                                 |    4 -
+ arch/x86/include/asm/mwait.h                                    |    5 +
+ arch/x86/include/asm/nospec-branch.h                            |   29 +++++-----
+ arch/x86/kernel/cpu/bugs.c                                      |   12 ++--
+ arch/x86/kvm/vmx/vmx.c                                          |    2 
+ 8 files changed, 36 insertions(+), 36 deletions(-)
 
---- a/arch/powerpc/kernel/Makefile
-+++ b/arch/powerpc/kernel/Makefile
-@@ -165,9 +165,7 @@ endif
+--- a/Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst
++++ b/Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst
+@@ -157,9 +157,7 @@ This is achieved by using the otherwise
+ combination with a microcode update. The microcode clears the affected CPU
+ buffers when the VERW instruction is executed.
  
- obj64-$(CONFIG_PPC_TRANSACTIONAL_MEM)	+= tm.o
+-Kernel reuses the MDS function to invoke the buffer clearing:
+-
+-	mds_clear_cpu_buffers()
++Kernel does the buffer clearing with x86_clear_cpu_buffers().
  
--ifneq ($(CONFIG_XMON)$(CONFIG_KEXEC_CORE)$(CONFIG_PPC_BOOK3S),)
- obj-y				+= ppc_save_regs.o
--endif
+ On MDS affected CPUs, the kernel already invokes CPU buffer clear on
+ kernel/userspace, hypervisor/guest and C-state (idle) transitions. No
+--- a/Documentation/arch/x86/mds.rst
++++ b/Documentation/arch/x86/mds.rst
+@@ -93,7 +93,7 @@ enters a C-state.
  
- obj-$(CONFIG_EPAPR_PARAVIRT)	+= epapr_paravirt.o epapr_hcalls.o
- obj-$(CONFIG_KVM_GUEST)		+= kvm.o kvm_emul.o
+ The kernel provides a function to invoke the buffer clearing:
+ 
+-    mds_clear_cpu_buffers()
++    x86_clear_cpu_buffers()
+ 
+ Also macro CLEAR_CPU_BUFFERS can be used in ASM late in exit-to-user path.
+ Other than CFLAGS.ZF, this macro doesn't clobber any registers.
+@@ -185,9 +185,9 @@ Mitigation points
+    idle clearing would be a window dressing exercise and is therefore not
+    activated.
+ 
+-   The invocation is controlled by the static key mds_idle_clear which is
+-   switched depending on the chosen mitigation mode and the SMT state of
+-   the system.
++   The invocation is controlled by the static key cpu_buf_idle_clear which is
++   switched depending on the chosen mitigation mode and the SMT state of the
++   system.
+ 
+    The buffer clear is only invoked before entering the C-State to prevent
+    that stale data from the idling CPU from spilling to the Hyper-Thread
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -31,20 +31,20 @@ EXPORT_SYMBOL_GPL(entry_ibpb);
+ 
+ /*
+  * Define the VERW operand that is disguised as entry code so that
+- * it can be referenced with KPTI enabled. This ensure VERW can be
++ * it can be referenced with KPTI enabled. This ensures VERW can be
+  * used late in exit-to-user path after page tables are switched.
+  */
+ .pushsection .entry.text, "ax"
+ 
+ .align L1_CACHE_BYTES, 0xcc
+-SYM_CODE_START_NOALIGN(mds_verw_sel)
++SYM_CODE_START_NOALIGN(x86_verw_sel)
+ 	UNWIND_HINT_UNDEFINED
+ 	ANNOTATE_NOENDBR
+ 	.word __KERNEL_DS
+ .align L1_CACHE_BYTES, 0xcc
+-SYM_CODE_END(mds_verw_sel);
++SYM_CODE_END(x86_verw_sel);
+ /* For KVM */
+-EXPORT_SYMBOL_GPL(mds_verw_sel);
++EXPORT_SYMBOL_GPL(x86_verw_sel);
+ 
+ .popsection
+ 
+--- a/arch/x86/include/asm/irqflags.h
++++ b/arch/x86/include/asm/irqflags.h
+@@ -44,13 +44,13 @@ static __always_inline void native_irq_e
+ 
+ static __always_inline void native_safe_halt(void)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 	asm volatile("sti; hlt": : :"memory");
+ }
+ 
+ static __always_inline void native_halt(void)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 	asm volatile("hlt": : :"memory");
+ }
+ 
+--- a/arch/x86/include/asm/mwait.h
++++ b/arch/x86/include/asm/mwait.h
+@@ -44,7 +44,7 @@ static __always_inline void __monitorx(c
+ 
+ static __always_inline void __mwait(unsigned long eax, unsigned long ecx)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 
+ 	/* "mwait %eax, %ecx;" */
+ 	asm volatile(".byte 0x0f, 0x01, 0xc9;"
+@@ -89,7 +89,8 @@ static __always_inline void __mwaitx(uns
+ 
+ static __always_inline void __sti_mwait(unsigned long eax, unsigned long ecx)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
++
+ 	/* "mwait %eax, %ecx;" */
+ 	asm volatile("sti; .byte 0x0f, 0x01, 0xc9;"
+ 		     :: "a" (eax), "c" (ecx));
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -324,22 +324,22 @@
+ .endm
+ 
+ /*
+- * Macro to execute VERW instruction that mitigate transient data sampling
+- * attacks such as MDS. On affected systems a microcode update overloaded VERW
+- * instruction to also clear the CPU buffers. VERW clobbers CFLAGS.ZF.
+- *
++ * Macro to execute VERW insns that mitigate transient data sampling
++ * attacks such as MDS or TSA. On affected systems a microcode update
++ * overloaded VERW insns to also clear the CPU buffers. VERW clobbers
++ * CFLAGS.ZF.
+  * Note: Only the memory operand variant of VERW clears the CPU buffers.
+  */
+ .macro CLEAR_CPU_BUFFERS
+ #ifdef CONFIG_X86_64
+-	ALTERNATIVE "", "verw mds_verw_sel(%rip)", X86_FEATURE_CLEAR_CPU_BUF
++	ALTERNATIVE "", "verw x86_verw_sel(%rip)", X86_FEATURE_CLEAR_CPU_BUF
+ #else
+ 	/*
+ 	 * In 32bit mode, the memory operand must be a %cs reference. The data
+ 	 * segments may not be usable (vm86 mode), and the stack segment may not
+ 	 * be flat (ESPFIX32).
+ 	 */
+-	ALTERNATIVE "", "verw %cs:mds_verw_sel", X86_FEATURE_CLEAR_CPU_BUF
++	ALTERNATIVE "", "verw %cs:x86_verw_sel", X86_FEATURE_CLEAR_CPU_BUF
+ #endif
+ .endm
+ 
+@@ -592,24 +592,24 @@ DECLARE_STATIC_KEY_FALSE(switch_to_cond_
+ DECLARE_STATIC_KEY_FALSE(switch_mm_cond_ibpb);
+ DECLARE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
+ 
+-DECLARE_STATIC_KEY_FALSE(mds_idle_clear);
++DECLARE_STATIC_KEY_FALSE(cpu_buf_idle_clear);
+ 
+ DECLARE_STATIC_KEY_FALSE(switch_mm_cond_l1d_flush);
+ 
+ DECLARE_STATIC_KEY_FALSE(mmio_stale_data_clear);
+ 
+-extern u16 mds_verw_sel;
++extern u16 x86_verw_sel;
+ 
+ #include <asm/segment.h>
+ 
+ /**
+- * mds_clear_cpu_buffers - Mitigation for MDS and TAA vulnerability
++ * x86_clear_cpu_buffers - Buffer clearing support for different x86 CPU vulns
+  *
+  * This uses the otherwise unused and obsolete VERW instruction in
+  * combination with microcode which triggers a CPU buffer flush when the
+  * instruction is executed.
+  */
+-static __always_inline void mds_clear_cpu_buffers(void)
++static __always_inline void x86_clear_cpu_buffers(void)
+ {
+ 	static const u16 ds = __KERNEL_DS;
+ 
+@@ -626,14 +626,15 @@ static __always_inline void mds_clear_cp
+ }
+ 
+ /**
+- * mds_idle_clear_cpu_buffers - Mitigation for MDS vulnerability
++ * x86_idle_clear_cpu_buffers - Buffer clearing support in idle for the MDS
++ * vulnerability
+  *
+  * Clear CPU buffers if the corresponding static key is enabled
+  */
+-static __always_inline void mds_idle_clear_cpu_buffers(void)
++static __always_inline void x86_idle_clear_cpu_buffers(void)
+ {
+-	if (static_branch_likely(&mds_idle_clear))
+-		mds_clear_cpu_buffers();
++	if (static_branch_likely(&cpu_buf_idle_clear))
++		x86_clear_cpu_buffers();
+ }
+ 
+ #endif /* __ASSEMBLY__ */
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -122,9 +122,9 @@ DEFINE_STATIC_KEY_FALSE(switch_mm_cond_i
+ /* Control unconditional IBPB in switch_mm() */
+ DEFINE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
+ 
+-/* Control MDS CPU buffer clear before idling (halt, mwait) */
+-DEFINE_STATIC_KEY_FALSE(mds_idle_clear);
+-EXPORT_SYMBOL_GPL(mds_idle_clear);
++/* Control CPU buffer clear before idling (halt, mwait) */
++DEFINE_STATIC_KEY_FALSE(cpu_buf_idle_clear);
++EXPORT_SYMBOL_GPL(cpu_buf_idle_clear);
+ 
+ /*
+  * Controls whether l1d flush based mitigations are enabled,
+@@ -445,7 +445,7 @@ static void __init mmio_select_mitigatio
+ 	 * is required irrespective of SMT state.
+ 	 */
+ 	if (!(x86_arch_cap_msr & ARCH_CAP_FBSDP_NO))
+-		static_branch_enable(&mds_idle_clear);
++		static_branch_enable(&cpu_buf_idle_clear);
+ 
+ 	/*
+ 	 * Check if the system has the right microcode.
+@@ -2082,10 +2082,10 @@ static void update_mds_branch_idle(void)
+ 		return;
+ 
+ 	if (sched_smt_active()) {
+-		static_branch_enable(&mds_idle_clear);
++		static_branch_enable(&cpu_buf_idle_clear);
+ 	} else if (mmio_mitigation == MMIO_MITIGATION_OFF ||
+ 		   (x86_arch_cap_msr & ARCH_CAP_FBSDP_NO)) {
+-		static_branch_disable(&mds_idle_clear);
++		static_branch_disable(&cpu_buf_idle_clear);
+ 	}
+ }
+ 
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7263,7 +7263,7 @@ static noinstr void vmx_vcpu_enter_exit(
+ 		vmx_l1d_flush(vcpu);
+ 	else if (static_branch_unlikely(&mmio_stale_data_clear) &&
+ 		 kvm_arch_has_assigned_device(vcpu->kvm))
+-		mds_clear_cpu_buffers();
++		x86_clear_cpu_buffers();
+ 
+ 	vmx_disable_fb_clear(vmx);
+ 
 
 
