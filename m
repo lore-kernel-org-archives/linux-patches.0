@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AE32E266B;
-	Tue,  8 Jul 2025 16:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC73BE46;
+	Tue,  8 Jul 2025 16:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993710; cv=none; b=EDKbmJ3Btr/y1hmLgK1IXX0+4ArVH6p/8k95kh3Uvmc6qAPwmMbQUHo/ismFC5Tg5w6FG9lKCpNi1KgwcKC0XqI1ktALpnJP7aNfAf8KDoiIeMYkP3cnbQaTqla91hozsPq9+R+i1rwGabnHTWQ2RxRvImuOdw8AN0sGGNyBKJ0=
+	t=1751993713; cv=none; b=rXRRXQjP0fFiQ3c2DIaA4Ay/rNtUkLqULBTvwRNfma+iQSD8LKSiHNbMxrP3kn8jWjek5I/n7my+a2KGwgMlYJBZIgjA7XgGtsUw2tHEGFR4MewMN/FRiM0KHLX0SkrRQ5GUDM+fKjS5oRbkJAnpK8vS2+ZP5yNpTgtEQoLhxqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993710; c=relaxed/simple;
-	bh=7CG2DOnBnST9mIVrUT5mFEsNr4RpdWj3pzmpsG3wcOY=;
+	s=arc-20240116; t=1751993713; c=relaxed/simple;
+	bh=g4zCsdqtJniMj0GKmoDV9SxkFyInC6VwXrPqCTDuzK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HC+wtiazCqtldopaQi2s49AAXbOM8wWfqVHQQwv3969Z8r4ap1z4uxcoQbo8x+to/tAe0wRGtfL/l2iRBhJbrvN3v0R9qRI46j6ZlVguTL1P6hHLtHQn+Wp8UnVJmjyCI1QrRqSk/M7tPI/JudIfJKntGqoEmBHAxASNCTFeOa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nedKLoud; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgk9CVS9TDBeDQy/TMJhXl1TNZQe/V5AvWGcM0UHHCNGwZOnMNj09+xCp6pevWMwIEpEdD6AreDHAwsuOWesaD4JcOcak26G+OrgPa72+LhtaCL5+b2C2RgQyYDe96H1byvQbPhAY7ute8wQG1jUW2sSAXiUsK4B1qa0rOwWrzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHSO/eV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nedKLoud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC97C4CEED;
-	Tue,  8 Jul 2025 16:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHSO/eV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B6BC4CEED;
+	Tue,  8 Jul 2025 16:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993710;
-	bh=7CG2DOnBnST9mIVrUT5mFEsNr4RpdWj3pzmpsG3wcOY=;
+	s=korg; t=1751993713;
+	bh=g4zCsdqtJniMj0GKmoDV9SxkFyInC6VwXrPqCTDuzK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nedKLoudRNR/2UGUGDbxPV+BHlcMCgyE71nhaJzCmCwQAvCf7VEPkQSGwJrH/Vztc
-	 7CZNUzPKQ6/y80ekLgpxfRin3T+19xgwVT6rwjmP9lEqEU92YQxY50wlos5qlydyhE
-	 f59WFFmbq6wJpsJ09bim3tSKMPIikNZKeED+cPng=
+	b=uHSO/eV2eD2flFARhws7duuaoRacEyBftHsS665nMmN3Z51VkwjfkeiH/l5oq70G+
+	 RV3lrRR7eBw47RYAkkbL4eIKucyWuvvI5Zje6YFUkoGORIIiecJOzCPgo068IoZt+6
+	 Du1r2COIls057y4toRTeXj39L5It4FQNRuS954Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.15 166/178] powercap: intel_rapl: Do not change CLAMPING bit if ENABLE bit cannot be changed
-Date: Tue,  8 Jul 2025 18:23:23 +0200
-Message-ID: <20250708162240.808278005@linuxfoundation.org>
+	Han Gao <rabenda.cn@gmail.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>
+Subject: [PATCH 6.15 167/178] riscv: cpu_ops_sbi: Use static array for boot_data
+Date: Tue,  8 Jul 2025 18:23:24 +0200
+Message-ID: <20250708162240.831985452@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,68 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
 
-commit 964209202ebe1569c858337441e87ef0f9d71416 upstream.
+commit 2b29be967ae456fc09c320d91d52278cf721be1e upstream.
 
-PL1 cannot be disabled on some platforms. The ENABLE bit is still set
-after software clears it. This behavior leads to a scenario where, upon
-user request to disable the Power Limit through the powercap sysfs, the
-ENABLE bit remains set while the CLAMPING bit is inadvertently cleared.
+Since commit 6b9f29b81b15 ("riscv: Enable pcpu page first chunk
+allocator"), if NUMA is enabled, the page percpu allocator may be used
+on very sparse configurations, or when requested on boot with
+percpu_alloc=page.
 
-According to the Intel Software Developer's Manual, the CLAMPING bit,
-"When set, allows the processor to go below the OS requested P states in
-order to maintain the power below specified Platform Power Limit value."
+In that case, percpu data gets put in the vmalloc area. However,
+sbi_hsm_hart_start() needs the physical address of a sbi_hart_boot_data,
+and simply assumes that __pa() would work. This causes the just started
+hart to immediately access an invalid address and hang.
 
-Thus this means the system may operate at higher power levels than
-intended on such platforms.
+Fortunately, struct sbi_hart_boot_data is not too large, so we can
+simply allocate an array for boot_data statically, putting it in the
+kernel image.
 
-Enhance the code to check ENABLE bit after writing to it, and stop
-further processing if ENABLE bit cannot be changed.
+This fixes NUMA=y SMP boot on Sophgo SG2042.
 
-Reported-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Fixes: 2d281d8196e3 ("PowerCap: Introduce Intel RAPL power capping driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://patch.msgid.link/20250619071340.384782-1-rui.zhang@intel.com
-[ rjw: Use str_enabled_disabled() instead of open-coded equivalent ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+To reproduce on QEMU: Set CONFIG_NUMA=y and CONFIG_DEBUG_VIRTUAL=y, then
+run with:
+
+  qemu-system-riscv64 -M virt -smp 2 -nographic \
+    -kernel arch/riscv/boot/Image \
+    -append "percpu_alloc=page"
+
+Kernel output:
+
+[    0.000000] Booting Linux on hartid 0
+[    0.000000] Linux version 6.16.0-rc1 (dram@sakuya) (riscv64-unknown-linux-gnu-gcc (GCC) 14.2.1 20250322, GNU ld (GNU Binutils) 2.44) #11 SMP Tue Jun 24 14:56:22 CST 2025
+...
+[    0.000000] percpu: 28 4K pages/cpu s85784 r8192 d20712
+...
+[    0.083192] smp: Bringing up secondary CPUs ...
+[    0.086722] ------------[ cut here ]------------
+[    0.086849] virt_to_phys used for non-linear address: (____ptrval____) (0xff2000000001d080)
+[    0.088001] WARNING: CPU: 0 PID: 1 at arch/riscv/mm/physaddr.c:14 __virt_to_phys+0xae/0xe8
+[    0.088376] Modules linked in:
+[    0.088656] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.16.0-rc1 #11 NONE
+[    0.088833] Hardware name: riscv-virtio,qemu (DT)
+[    0.088948] epc : __virt_to_phys+0xae/0xe8
+[    0.089001]  ra : __virt_to_phys+0xae/0xe8
+[    0.089037] epc : ffffffff80021eaa ra : ffffffff80021eaa sp : ff2000000004bbc0
+[    0.089057]  gp : ffffffff817f49c0 tp : ff60000001d60000 t0 : 5f6f745f74726976
+[    0.089076]  t1 : 0000000000000076 t2 : 705f6f745f747269 s0 : ff2000000004bbe0
+[    0.089095]  s1 : ff2000000001d080 a0 : 0000000000000000 a1 : 0000000000000000
+[    0.089113]  a2 : 0000000000000000 a3 : 0000000000000000 a4 : 0000000000000000
+[    0.089131]  a5 : 0000000000000000 a6 : 0000000000000000 a7 : 0000000000000000
+[    0.089155]  s2 : ffffffff8130dc00 s3 : 0000000000000001 s4 : 0000000000000001
+[    0.089174]  s5 : ffffffff8185eff8 s6 : ff2000007f1eb000 s7 : ffffffff8002a2ec
+[    0.089193]  s8 : 0000000000000001 s9 : 0000000000000001 s10: 0000000000000000
+[    0.089211]  s11: 0000000000000000 t3 : ffffffff8180a9f7 t4 : ffffffff8180a9f7
+[    0.089960]  t5 : ffffffff8180a9f8 t6 : ff2000000004b9d8
+[    0.089984] status: 0000000200000120 badaddr: ffffffff80021eaa cause: 0000000000000003
+[    0.090101] [<ffffffff80021eaa>] __virt_to_phys+0xae/0xe8
+[    0.090228] [<ffffffff8001d796>] sbi_cpu_start+0x6e/0xe8
+[    0.090247] [<ffffffff8001a5da>] __cpu_up+0x1e/0x8c
+[    0.090260] [<ffffffff8002a32e>] bringup_cpu+0x42/0x258
+[    0.090277] [<ffffffff8002914c>] cpuhp_invoke_callback+0xe0/0x40c
+[    0.090292] [<ffffffff800294e0>] __cpuhp_invoke_callback_range+0x68/0xfc
+[    0.090320] [<ffffffff8002a96a>] _cpu_up+0x11a/0x244
+[    0.090334] [<ffffffff8002aae6>] cpu_up+0x52/0x90
+[    0.090384] [<ffffffff80c09350>] bringup_nonboot_cpus+0x78/0x118
+[    0.090411] [<ffffffff80c11060>] smp_init+0x34/0xb8
+[    0.090425] [<ffffffff80c01220>] kernel_init_freeable+0x148/0x2e4
+[    0.090442] [<ffffffff80b83802>] kernel_init+0x1e/0x14c
+[    0.090455] [<ffffffff800124ca>] ret_from_fork_kernel+0xe/0xf0
+[    0.090471] [<ffffffff80b8d9c2>] ret_from_fork_kernel_asm+0x16/0x18
+[    0.090560] ---[ end trace 0000000000000000 ]---
+[    1.179875] CPU1: failed to come online
+[    1.190324] smp: Brought up 1 node, 1 CPU
+
+Cc: stable@vger.kernel.org
+Reported-by: Han Gao <rabenda.cn@gmail.com>
+Fixes: 6b9f29b81b15 ("riscv: Enable pcpu page first chunk allocator")
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20250624-riscv-hsm-boot-data-array-v1-1-50b5eeafbe61@iscas.ac.cn
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/powercap/intel_rapl_common.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/cpu_ops_sbi.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -340,12 +340,28 @@ static int set_domain_enable(struct powe
- {
- 	struct rapl_domain *rd = power_zone_to_rapl_domain(power_zone);
- 	struct rapl_defaults *defaults = get_defaults(rd->rp);
-+	u64 val;
- 	int ret;
+--- a/arch/riscv/kernel/cpu_ops_sbi.c
++++ b/arch/riscv/kernel/cpu_ops_sbi.c
+@@ -18,10 +18,10 @@ const struct cpu_operations cpu_ops_sbi;
  
- 	cpus_read_lock();
- 	ret = rapl_write_pl_data(rd, POWER_LIMIT1, PL_ENABLE, mode);
--	if (!ret && defaults->set_floor_freq)
-+	if (ret)
-+		goto end;
-+
-+	ret = rapl_read_pl_data(rd, POWER_LIMIT1, PL_ENABLE, false, &val);
-+	if (ret)
-+		goto end;
-+
-+	if (mode != val) {
-+		pr_debug("%s cannot be %s\n", power_zone->name,
-+			 str_enabled_disabled(mode));
-+		goto end;
-+	}
-+
-+	if (defaults->set_floor_freq)
- 		defaults->set_floor_freq(rd, mode);
-+
-+end:
- 	cpus_read_unlock();
+ /*
+  * Ordered booting via HSM brings one cpu at a time. However, cpu hotplug can
+- * be invoked from multiple threads in parallel. Define a per cpu data
++ * be invoked from multiple threads in parallel. Define an array of boot data
+  * to handle that.
+  */
+-static DEFINE_PER_CPU(struct sbi_hart_boot_data, boot_data);
++static struct sbi_hart_boot_data boot_data[NR_CPUS];
  
- 	return ret;
+ static int sbi_hsm_hart_start(unsigned long hartid, unsigned long saddr,
+ 			      unsigned long priv)
+@@ -67,7 +67,7 @@ static int sbi_cpu_start(unsigned int cp
+ 	unsigned long boot_addr = __pa_symbol(secondary_start_sbi);
+ 	unsigned long hartid = cpuid_to_hartid_map(cpuid);
+ 	unsigned long hsm_data;
+-	struct sbi_hart_boot_data *bdata = &per_cpu(boot_data, cpuid);
++	struct sbi_hart_boot_data *bdata = &boot_data[cpuid];
+ 
+ 	/* Make sure tidle is updated */
+ 	smp_mb();
 
 
