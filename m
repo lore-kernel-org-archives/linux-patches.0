@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC852E659;
-	Tue,  8 Jul 2025 16:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2120D2A1BA;
+	Tue,  8 Jul 2025 16:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992085; cv=none; b=OFhGKmeJpNpPaKTqn8EBOXkx6DqDw1vM2/VBHDy+IaCxOICECxVVDiA0voQCCfwqNSSuHcckYqjN7TpBVt+zv2LBHyw0ktqdsK+fE0iIG4td2T5zsX/aOyhFRcshTLJkc6jjfV2tGTtfEF+pXyvCrAzuLNh4GnJXxFCJtnhrCi8=
+	t=1751992088; cv=none; b=l2UZhkgP9/F+LdiRfWnBxcWqwFpwlLcYGeBoHHbP1iTaI6Ol9ms9pynPtmioIhYSNaT3UUSUtbq6ZMoO4h72IFy/nqk/ss+PXmg5425S7L+YUulB+41ZZ2C22PPIpe383GKjyFLbd5IfkRsaSlImFgE9RyjP8YwneD0OxucQQ7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992085; c=relaxed/simple;
-	bh=WloMT+3vwc0QVvMuNk/PtuBOUjGSXGiAQVUt1CJ4DUM=;
+	s=arc-20240116; t=1751992088; c=relaxed/simple;
+	bh=/Dx5D6pyh0Zctr5FGBOkAsQapWew4cbbPQ2LhIoBjP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRX9KgoYuQk3CgRKPfZfyzbpnczfHFztHE+7tRnM7ZUFvjR0GfSNGfWkqN/vgzG9tCj7GX0QZAj+oH1tQJOYRRQMRyEzojT4EHAVSqPnCi0ARy9hzwYNZrTVRgfUi9kJLc43hlSx87E8TsTRPfXQagLuXGFuLM8czXjKsxradMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDwiVN8r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CKrCJjs5nMK1C3nnYN2PUZiTR7tOlPOauFgh+tUE/s2PExhnuOaTLkb1+NY12z0ldWGKlocVKdxHC3UClDgNhlKny11xztYlQi+V3J0Dr3qEzgK9BhQkWh0MHThvcQBedyfxilJSnVYnNdXHaH3z9KQHGq/redPTMBXuTKnNhRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvGHBX3A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDwiVN8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EFABC4CEED;
-	Tue,  8 Jul 2025 16:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvGHBX3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08B3C4CEED;
+	Tue,  8 Jul 2025 16:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992084;
-	bh=WloMT+3vwc0QVvMuNk/PtuBOUjGSXGiAQVUt1CJ4DUM=;
+	s=korg; t=1751992088;
+	bh=/Dx5D6pyh0Zctr5FGBOkAsQapWew4cbbPQ2LhIoBjP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDwiVN8rHxMU34v8PFyRkwKzxCpsS3sejrrJ3RPaii9LS3KnqpINwyc6w6nK+3O4q
-	 EKoBA+32xOFfSRn0Y1c2Jp3XkMubQ1mRYQT8PIPlv9iHoFfl1Bgiu0R/2c8C2Tj/Sn
-	 wf/gsPr3RHqaz5gPNgzKQ6yS109fgoiCLjcy3Res=
+	b=rvGHBX3AJZEEcAu22hVGbtQ5uZzjHY+SVLqn2zlXvzXxfkQU6ril8UpaD1Uddsm6l
+	 LG1x+zmhWG0DkTG1WoiirPrd5KXliaLO/f44wD5IvGqsVnF+pLfSmVJvmzuR3GoFlF
+	 khsGoKyv2G7ZNAUqR6qX8nJuXhtFrBFv3IoSIMC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 23/81] RDMA/mlx5: Fix CC counters query for MPV
-Date: Tue,  8 Jul 2025 18:23:15 +0200
-Message-ID: <20250708162225.667092900@linuxfoundation.org>
+Subject: [PATCH 6.1 24/81] platform/mellanox: nvsw-sn2201: Fix bus number in adapter error message
+Date: Tue,  8 Jul 2025 18:23:16 +0200
+Message-ID: <20250708162225.701284342@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -46,42 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit acd245b1e33fc4b9d0f2e3372021d632f7ee0652 ]
+[ Upstream commit d07143b507c51c04c091081627c5a130e9d3c517 ]
 
-In case, CC counters are querying for the second port use the correct
-core device for the query instead of always using the master core device.
+change error log to use correct bus number from main_mux_devs
+instead of cpld_devs.
 
-Fixes: aac4492ef23a ("IB/mlx5: Update counter implementation for dual port RoCE")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/9cace74dcf106116118bebfa9146d40d4166c6b0.1750064969.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 662f24826f95 ("platform/mellanox: Add support for new SN2201 system")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20250622072921.4111552-2-alok.a.tiwari@oracle.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/counters.c | 2 +-
+ drivers/platform/mellanox/nvsw-sn2201.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
-index 9915504ad1e18..39f71312e57a2 100644
---- a/drivers/infiniband/hw/mlx5/counters.c
-+++ b/drivers/infiniband/hw/mlx5/counters.c
-@@ -308,7 +308,7 @@ static int do_get_hw_stats(struct ib_device *ibdev,
- 			 */
- 			goto done;
- 		}
--		ret = mlx5_lag_query_cong_counters(dev->mdev,
-+		ret = mlx5_lag_query_cong_counters(mdev,
- 						   stats->value +
- 						   cnts->num_q_counters,
- 						   cnts->num_cong_counters,
+diff --git a/drivers/platform/mellanox/nvsw-sn2201.c b/drivers/platform/mellanox/nvsw-sn2201.c
+index f53baf7e78e74..03fbbbe1c8756 100644
+--- a/drivers/platform/mellanox/nvsw-sn2201.c
++++ b/drivers/platform/mellanox/nvsw-sn2201.c
+@@ -1084,7 +1084,7 @@ static int nvsw_sn2201_i2c_completion_notify(void *handle, int id)
+ 	if (!nvsw_sn2201->main_mux_devs->adapter) {
+ 		err = -ENODEV;
+ 		dev_err(nvsw_sn2201->dev, "Failed to get adapter for bus %d\n",
+-			nvsw_sn2201->cpld_devs->nr);
++			nvsw_sn2201->main_mux_devs->nr);
+ 		goto i2c_get_adapter_main_fail;
+ 	}
+ 
 -- 
 2.39.5
 
