@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F7A2A1BA;
-	Tue,  8 Jul 2025 16:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF912A1BA;
+	Tue,  8 Jul 2025 16:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992107; cv=none; b=A0npHwDATgH5WZxbST4STjsBTZDCDg9QF3Wfd29zAxC23/+6Mmwi/YQRjuH5uYR0d6Q9WzGMbXGJLzmYHZkg5ZsNPETJpgzcnkUVRy5nsLgPm9eehHTwijBhJJB0GCOFjlv1Sfteuoh64bKFwkrBfmsTjSqHf+8Nl87Z1nw1U60=
+	t=1751992110; cv=none; b=RI/VWdmWIHK1JD1HboBZ3lzvBgVH7IEGqem6GDOy2Lh0CvYXuhI3FxrgnXD6uEAVW/NUFS95Q7ecsb4uQgvkoX887ZVhwyXNt7im49IFdEKVSduh5Q3P7I/gCGoRolMRs+FOyeqpbpBOLEHOuovhlTmdDqXTf4RSMCavaRytbHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992107; c=relaxed/simple;
-	bh=y9oVzRvirBRTck3CadzeMxHHepCDwhRgB2xsZBtlqU0=;
+	s=arc-20240116; t=1751992110; c=relaxed/simple;
+	bh=nw3ox8vhRZuMrS8B0ogj3szZuZuxCtQBR2U7snSgAoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WSbnjdimXW0v3CNXUSxby0UGhfW73vgY87Iz86W4Y+2A5+gNHZII1mfdcl0UOQK/QarCGupdnlyz43u/5yqZhHzfjvgy4knrElA/FdsdM6oj0rnGbLQaZNfIAin9KGO7hpBZSkdoeKFx5C/Z3csvPf4dnih7OP2U4xBjaVst2G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXW8cAFW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oe2nenEWX9ajnzAAiC40KPJI1MO3577HHKh6U6Jt27S+T8Qed7hP9K739w68UQdVevGw7C4PPd+F8sPKBQ0ArpVu0bM145wav43B/Zg1W2bCRUUsgPl/90t+3MvYaWtnZOgPQrT/PQgumgj3fqBwWw/RtkD9Jrs3sjR2ujL29js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcaDd4mi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXW8cAFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3298AC4CEED;
-	Tue,  8 Jul 2025 16:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcaDd4mi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2920EC4CEED;
+	Tue,  8 Jul 2025 16:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992107;
-	bh=y9oVzRvirBRTck3CadzeMxHHepCDwhRgB2xsZBtlqU0=;
+	s=korg; t=1751992110;
+	bh=nw3ox8vhRZuMrS8B0ogj3szZuZuxCtQBR2U7snSgAoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXW8cAFW9ZCE8ymVAYB2HRwLmY9Ai9F9ZDgT1LqOKiUd1y1bd0BOUQo7wLULDbQyV
-	 bygfbfAx//VcMTXiKab/NsSPpWW4f8X6Atcx1TZQsUM0Fh2Qiw7CfXrXceIKXy+DKI
-	 d86OzqdoHQ9et7E9d0WxPpBLXALtdxocgnjvEB90=
+	b=OcaDd4mifsC8R3rcamsS3JaXjwm9xx6CZ+L//X5q0j7196R9gXz9JGvCqYUDlCZq7
+	 1iBMRlxcjz3+yY6WHHDgYkEIag8EH2ScpBN2dXE/yZkLtTzjzoOR2Tc7t67jZbAf4K
+	 3HFagF4BVGDef4QSC3SWk4HjeWGwkjy+joEnl0JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Juan A. Suarez" <jasuarez@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 61/81] drm/v3d: Disable interrupts before resetting the GPU
-Date: Tue,  8 Jul 2025 18:23:53 +0200
-Message-ID: <20250708162226.920050140@linuxfoundation.org>
+Subject: [PATCH 6.1 62/81] NFSv4/flexfiles: Fix handling of NFS level errors in I/O
+Date: Tue,  8 Jul 2025 18:23:54 +0200
+Message-ID: <20250708162226.947563541@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -46,211 +46,254 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 226862f50a7a88e4e4de9abbf36c64d19acd6fd0 ]
+[ Upstream commit 38074de35b015df5623f524d6f2b49a0cd395c40 ]
 
-Currently, an interrupt can be triggered during a GPU reset, which can
-lead to GPU hangs and NULL pointer dereference in an interrupt context
-as shown in the following trace:
+Allow the flexfiles error handling to recognise NFS level errors (as
+opposed to RPC level errors) and handle them separately. The main
+motivator is the NFSERR_PERM errors that get returned if the NFS client
+connects to the data server through a port number that is lower than
+1024. In that case, the client should disconnect and retry a READ on a
+different data server, or it should retry a WRITE after reconnecting.
 
- [  314.035040] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000c0
- [  314.043822] Mem abort info:
- [  314.046606]   ESR = 0x0000000096000005
- [  314.050347]   EC = 0x25: DABT (current EL), IL = 32 bits
- [  314.055651]   SET = 0, FnV = 0
- [  314.058695]   EA = 0, S1PTW = 0
- [  314.061826]   FSC = 0x05: level 1 translation fault
- [  314.066694] Data abort info:
- [  314.069564]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
- [  314.075039]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
- [  314.080080]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
- [  314.085382] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000102728000
- [  314.091814] [00000000000000c0] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
- [  314.100511] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
- [  314.106770] Modules linked in: v3d i2c_brcmstb vc4 snd_soc_hdmi_codec gpu_sched drm_shmem_helper drm_display_helper cec drm_dma_helper drm_kms_helper drm drm_panel_orientation_quirks snd_soc_core snd_compress snd_pcm_dmaengine snd_pcm snd_timer snd backlight
- [  314.129654] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.25+rpt-rpi-v8 #1  Debian 1:6.12.25-1+rpt1
- [  314.139388] Hardware name: Raspberry Pi 4 Model B Rev 1.4 (DT)
- [  314.145211] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- [  314.152165] pc : v3d_irq+0xec/0x2e0 [v3d]
- [  314.156187] lr : v3d_irq+0xe0/0x2e0 [v3d]
- [  314.160198] sp : ffffffc080003ea0
- [  314.163502] x29: ffffffc080003ea0 x28: ffffffec1f184980 x27: 021202b000000000
- [  314.170633] x26: ffffffec1f17f630 x25: ffffff8101372000 x24: ffffffec1f17d9f0
- [  314.177764] x23: 000000000000002a x22: 000000000000002a x21: ffffff8103252000
- [  314.184895] x20: 0000000000000001 x19: 00000000deadbeef x18: 0000000000000000
- [  314.192026] x17: ffffff94e51d2000 x16: ffffffec1dac3cb0 x15: c306000000000000
- [  314.199156] x14: 0000000000000000 x13: b2fc982e03cc5168 x12: 0000000000000001
- [  314.206286] x11: ffffff8103f8bcc0 x10: ffffffec1f196868 x9 : ffffffec1dac3874
- [  314.213416] x8 : 0000000000000000 x7 : 0000000000042a3a x6 : ffffff810017a180
- [  314.220547] x5 : ffffffec1ebad400 x4 : ffffffec1ebad320 x3 : 00000000000bebeb
- [  314.227677] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
- [  314.234807] Call trace:
- [  314.237243]  v3d_irq+0xec/0x2e0 [v3d]
- [  314.240906]  __handle_irq_event_percpu+0x58/0x218
- [  314.245609]  handle_irq_event+0x54/0xb8
- [  314.249439]  handle_fasteoi_irq+0xac/0x240
- [  314.253527]  handle_irq_desc+0x48/0x68
- [  314.257269]  generic_handle_domain_irq+0x24/0x38
- [  314.261879]  gic_handle_irq+0x48/0xd8
- [  314.265533]  call_on_irq_stack+0x24/0x58
- [  314.269448]  do_interrupt_handler+0x88/0x98
- [  314.273624]  el1_interrupt+0x34/0x68
- [  314.277193]  el1h_64_irq_handler+0x18/0x28
- [  314.281281]  el1h_64_irq+0x64/0x68
- [  314.284673]  default_idle_call+0x3c/0x168
- [  314.288675]  do_idle+0x1fc/0x230
- [  314.291895]  cpu_startup_entry+0x3c/0x50
- [  314.295810]  rest_init+0xe4/0xf0
- [  314.299030]  start_kernel+0x5e8/0x790
- [  314.302684]  __primary_switched+0x80/0x90
- [  314.306691] Code: 940029eb 360ffc13 f9442ea0 52800001 (f9406017)
- [  314.312775] ---[ end trace 0000000000000000 ]---
- [  314.317384] Kernel panic - not syncing: Oops: Fatal exception in interrupt
- [  314.324249] SMP: stopping secondary CPUs
- [  314.328167] Kernel Offset: 0x2b9da00000 from 0xffffffc080000000
- [  314.334076] PHYS_OFFSET: 0x0
- [  314.336946] CPU features: 0x08,00002013,c0200000,0200421b
- [  314.342337] Memory Limit: none
- [  314.345382] ---[ end Kernel panic - not syncing: Oops: Fatal exception in interrupt ]---
-
-Before resetting the GPU, it's necessary to disable all interrupts and
-deal with any interrupt handler still in-flight. Otherwise, the GPU might
-reset with jobs still running, or yet, an interrupt could be handled
-during the reset.
-
-Cc: stable@vger.kernel.org
-Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
-Reviewed-by: Juan A. Suarez <jasuarez@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://lore.kernel.org/r/20250628224243.47599-1-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_drv.h |  8 ++++++++
- drivers/gpu/drm/v3d/v3d_gem.c |  2 ++
- drivers/gpu/drm/v3d/v3d_irq.c | 37 +++++++++++++++++++++++++----------
- 3 files changed, 37 insertions(+), 10 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 121 ++++++++++++++++++-------
+ 1 file changed, 87 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_drv.h b/drivers/gpu/drm/v3d/v3d_drv.h
-index b74b1351bfc83..a366ea208787d 100644
---- a/drivers/gpu/drm/v3d/v3d_drv.h
-+++ b/drivers/gpu/drm/v3d/v3d_drv.h
-@@ -62,6 +62,12 @@ struct v3d_perfmon {
- 	u64 values[];
- };
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 07e5ea64dcd68..aa55b5df065bc 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1096,6 +1096,7 @@ static void ff_layout_reset_read(struct nfs_pgio_header *hdr)
+ }
  
-+enum v3d_irq {
-+	V3D_CORE_IRQ,
-+	V3D_HUB_IRQ,
-+	V3D_MAX_IRQS,
-+};
-+
- struct v3d_dev {
- 	struct drm_device drm;
+ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
++					   u32 op_status,
+ 					   struct nfs4_state *state,
+ 					   struct nfs_client *clp,
+ 					   struct pnfs_layout_segment *lseg,
+@@ -1106,32 +1107,42 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
+ 	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
  
-@@ -71,6 +77,8 @@ struct v3d_dev {
- 	int ver;
- 	bool single_irq_line;
- 
-+	int irq[V3D_MAX_IRQS];
-+
- 	void __iomem *hub_regs;
- 	void __iomem *core_regs[3];
- 	void __iomem *bridge_regs;
-diff --git a/drivers/gpu/drm/v3d/v3d_gem.c b/drivers/gpu/drm/v3d/v3d_gem.c
-index b8980440d137f..8b6450a96ebc3 100644
---- a/drivers/gpu/drm/v3d/v3d_gem.c
-+++ b/drivers/gpu/drm/v3d/v3d_gem.c
-@@ -119,6 +119,8 @@ v3d_reset(struct v3d_dev *v3d)
- 	if (false)
- 		v3d_idle_axi(v3d, 0);
- 
-+	v3d_irq_disable(v3d);
-+
- 	v3d_idle_gca(v3d);
- 	v3d_reset_v3d(v3d);
- 
-diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
-index b2d59a1686972..641315dbee8b2 100644
---- a/drivers/gpu/drm/v3d/v3d_irq.c
-+++ b/drivers/gpu/drm/v3d/v3d_irq.c
-@@ -215,7 +215,7 @@ v3d_hub_irq(int irq, void *arg)
- int
- v3d_irq_init(struct v3d_dev *v3d)
- {
--	int irq1, ret, core;
-+	int irq, ret, core;
- 
- 	INIT_WORK(&v3d->overflow_mem_work, v3d_overflow_mem_work);
- 
-@@ -226,17 +226,24 @@ v3d_irq_init(struct v3d_dev *v3d)
- 		V3D_CORE_WRITE(core, V3D_CTL_INT_CLR, V3D_CORE_IRQS);
- 	V3D_WRITE(V3D_HUB_INT_CLR, V3D_HUB_IRQS);
- 
--	irq1 = platform_get_irq_optional(v3d_to_pdev(v3d), 1);
--	if (irq1 == -EPROBE_DEFER)
--		return irq1;
--	if (irq1 > 0) {
--		ret = devm_request_irq(v3d->drm.dev, irq1,
-+	irq = platform_get_irq_optional(v3d_to_pdev(v3d), 1);
-+	if (irq == -EPROBE_DEFER)
-+		return irq;
-+	if (irq > 0) {
-+		v3d->irq[V3D_CORE_IRQ] = irq;
-+
-+		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_CORE_IRQ],
- 				       v3d_irq, IRQF_SHARED,
- 				       "v3d_core0", v3d);
- 		if (ret)
- 			goto fail;
--		ret = devm_request_irq(v3d->drm.dev,
--				       platform_get_irq(v3d_to_pdev(v3d), 0),
-+
-+		irq = platform_get_irq(v3d_to_pdev(v3d), 0);
-+		if (irq < 0)
-+			return irq;
-+		v3d->irq[V3D_HUB_IRQ] = irq;
-+
-+		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_HUB_IRQ],
- 				       v3d_hub_irq, IRQF_SHARED,
- 				       "v3d_hub", v3d);
- 		if (ret)
-@@ -244,8 +251,12 @@ v3d_irq_init(struct v3d_dev *v3d)
- 	} else {
- 		v3d->single_irq_line = true;
- 
--		ret = devm_request_irq(v3d->drm.dev,
--				       platform_get_irq(v3d_to_pdev(v3d), 0),
-+		irq = platform_get_irq(v3d_to_pdev(v3d), 0);
-+		if (irq < 0)
-+			return irq;
-+		v3d->irq[V3D_CORE_IRQ] = irq;
-+
-+		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_CORE_IRQ],
- 				       v3d_irq, IRQF_SHARED,
- 				       "v3d", v3d);
- 		if (ret)
-@@ -286,6 +297,12 @@ v3d_irq_disable(struct v3d_dev *v3d)
- 		V3D_CORE_WRITE(core, V3D_CTL_INT_MSK_SET, ~0);
- 	V3D_WRITE(V3D_HUB_INT_MSK_SET, ~0);
- 
-+	/* Finish any interrupt handler still in flight. */
-+	for (int i = 0; i < V3D_MAX_IRQS; i++) {
-+		if (v3d->irq[i])
-+			synchronize_irq(v3d->irq[i]);
+-	switch (task->tk_status) {
+-	case -NFS4ERR_BADSESSION:
+-	case -NFS4ERR_BADSLOT:
+-	case -NFS4ERR_BAD_HIGH_SLOT:
+-	case -NFS4ERR_DEADSESSION:
+-	case -NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
+-	case -NFS4ERR_SEQ_FALSE_RETRY:
+-	case -NFS4ERR_SEQ_MISORDERED:
++	switch (op_status) {
++	case NFS4_OK:
++	case NFS4ERR_NXIO:
++		break;
++	case NFSERR_PERM:
++		if (!task->tk_xprt)
++			break;
++		xprt_force_disconnect(task->tk_xprt);
++		goto out_retry;
++	case NFS4ERR_BADSESSION:
++	case NFS4ERR_BADSLOT:
++	case NFS4ERR_BAD_HIGH_SLOT:
++	case NFS4ERR_DEADSESSION:
++	case NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
++	case NFS4ERR_SEQ_FALSE_RETRY:
++	case NFS4ERR_SEQ_MISORDERED:
+ 		dprintk("%s ERROR %d, Reset session. Exchangeid "
+ 			"flags 0x%x\n", __func__, task->tk_status,
+ 			clp->cl_exchange_flags);
+ 		nfs4_schedule_session_recovery(clp->cl_session, task->tk_status);
+-		break;
+-	case -NFS4ERR_DELAY:
+-	case -NFS4ERR_GRACE:
++		goto out_retry;
++	case NFS4ERR_DELAY:
++		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
++		fallthrough;
++	case NFS4ERR_GRACE:
+ 		rpc_delay(task, FF_LAYOUT_POLL_RETRY_MAX);
+-		break;
+-	case -NFS4ERR_RETRY_UNCACHED_REP:
+-		break;
++		goto out_retry;
++	case NFS4ERR_RETRY_UNCACHED_REP:
++		goto out_retry;
+ 	/* Invalidate Layout errors */
+-	case -NFS4ERR_PNFS_NO_LAYOUT:
+-	case -ESTALE:           /* mapped NFS4ERR_STALE */
+-	case -EBADHANDLE:       /* mapped NFS4ERR_BADHANDLE */
+-	case -EISDIR:           /* mapped NFS4ERR_ISDIR */
+-	case -NFS4ERR_FHEXPIRED:
+-	case -NFS4ERR_WRONG_TYPE:
++	case NFS4ERR_PNFS_NO_LAYOUT:
++	case NFS4ERR_STALE:
++	case NFS4ERR_BADHANDLE:
++	case NFS4ERR_ISDIR:
++	case NFS4ERR_FHEXPIRED:
++	case NFS4ERR_WRONG_TYPE:
+ 		dprintk("%s Invalid layout error %d\n", __func__,
+ 			task->tk_status);
+ 		/*
+@@ -1144,6 +1155,11 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 		pnfs_destroy_layout(NFS_I(inode));
+ 		rpc_wake_up(&tbl->slot_tbl_waitq);
+ 		goto reset;
++	default:
++		break;
 +	}
 +
- 	/* Clear any pending interrupts we might have left. */
- 	for (core = 0; core < v3d->cores; core++)
- 		V3D_CORE_WRITE(core, V3D_CTL_INT_CLR, V3D_CORE_IRQS);
++	switch (task->tk_status) {
+ 	/* RPC connection errors */
+ 	case -ECONNREFUSED:
+ 	case -EHOSTDOWN:
+@@ -1159,26 +1175,56 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
+ 				&devid->deviceid);
+ 		rpc_wake_up(&tbl->slot_tbl_waitq);
+-		fallthrough;
++		break;
+ 	default:
+-		if (ff_layout_avoid_mds_available_ds(lseg))
+-			return -NFS4ERR_RESET_TO_PNFS;
+-reset:
+-		dprintk("%s Retry through MDS. Error %d\n", __func__,
+-			task->tk_status);
+-		return -NFS4ERR_RESET_TO_MDS;
++		break;
+ 	}
++
++	if (ff_layout_avoid_mds_available_ds(lseg))
++		return -NFS4ERR_RESET_TO_PNFS;
++reset:
++	dprintk("%s Retry through MDS. Error %d\n", __func__,
++		task->tk_status);
++	return -NFS4ERR_RESET_TO_MDS;
++
++out_retry:
+ 	task->tk_status = 0;
+ 	return -EAGAIN;
+ }
+ 
+ /* Retry all errors through either pNFS or MDS except for -EJUKEBOX */
+ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
++					   u32 op_status,
++					   struct nfs_client *clp,
+ 					   struct pnfs_layout_segment *lseg,
+ 					   u32 idx)
+ {
+ 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
+ 
++	switch (op_status) {
++	case NFS_OK:
++	case NFSERR_NXIO:
++		break;
++	case NFSERR_PERM:
++		if (!task->tk_xprt)
++			break;
++		xprt_force_disconnect(task->tk_xprt);
++		goto out_retry;
++	case NFSERR_ACCES:
++	case NFSERR_BADHANDLE:
++	case NFSERR_FBIG:
++	case NFSERR_IO:
++	case NFSERR_NOSPC:
++	case NFSERR_ROFS:
++	case NFSERR_STALE:
++		goto out_reset_to_pnfs;
++	case NFSERR_JUKEBOX:
++		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
++		goto out_retry;
++	default:
++		break;
++	}
++
+ 	switch (task->tk_status) {
+ 	/* File access problems. Don't mark the device as unavailable */
+ 	case -EACCES:
+@@ -1197,6 +1243,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
+ 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
+ 				&devid->deviceid);
+ 	}
++out_reset_to_pnfs:
+ 	/* FIXME: Need to prevent infinite looping here. */
+ 	return -NFS4ERR_RESET_TO_PNFS;
+ out_retry:
+@@ -1207,6 +1254,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
+ }
+ 
+ static int ff_layout_async_handle_error(struct rpc_task *task,
++					u32 op_status,
+ 					struct nfs4_state *state,
+ 					struct nfs_client *clp,
+ 					struct pnfs_layout_segment *lseg,
+@@ -1225,10 +1273,11 @@ static int ff_layout_async_handle_error(struct rpc_task *task,
+ 
+ 	switch (vers) {
+ 	case 3:
+-		return ff_layout_async_handle_error_v3(task, lseg, idx);
+-	case 4:
+-		return ff_layout_async_handle_error_v4(task, state, clp,
++		return ff_layout_async_handle_error_v3(task, op_status, clp,
+ 						       lseg, idx);
++	case 4:
++		return ff_layout_async_handle_error_v4(task, op_status, state,
++						       clp, lseg, idx);
+ 	default:
+ 		/* should never happen */
+ 		WARN_ON_ONCE(1);
+@@ -1281,6 +1330,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 	switch (status) {
+ 	case NFS4ERR_DELAY:
+ 	case NFS4ERR_GRACE:
++	case NFS4ERR_PERM:
+ 		break;
+ 	case NFS4ERR_NXIO:
+ 		ff_layout_mark_ds_unreachable(lseg, idx);
+@@ -1313,7 +1363,8 @@ static int ff_layout_read_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_read_error(hdr);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, hdr->args.context->state,
++	err = ff_layout_async_handle_error(task, hdr->res.op_status,
++					   hdr->args.context->state,
+ 					   hdr->ds_clp, hdr->lseg,
+ 					   hdr->pgio_mirror_idx);
+ 
+@@ -1483,7 +1534,8 @@ static int ff_layout_write_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_write_error(hdr);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, hdr->args.context->state,
++	err = ff_layout_async_handle_error(task, hdr->res.op_status,
++					   hdr->args.context->state,
+ 					   hdr->ds_clp, hdr->lseg,
+ 					   hdr->pgio_mirror_idx);
+ 
+@@ -1529,8 +1581,9 @@ static int ff_layout_commit_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_commit_error(data);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, NULL, data->ds_clp,
+-					   data->lseg, data->ds_commit_index);
++	err = ff_layout_async_handle_error(task, data->res.op_status,
++					   NULL, data->ds_clp, data->lseg,
++					   data->ds_commit_index);
+ 
+ 	trace_nfs4_pnfs_commit_ds(data, err);
+ 	switch (err) {
 -- 
 2.39.5
 
