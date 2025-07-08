@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7752E540C;
-	Tue,  8 Jul 2025 16:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22392E3385;
+	Tue,  8 Jul 2025 16:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993073; cv=none; b=KmyKL50W2lp55zyMAIqfPejP1hcQUnEBlTQ6uNuqJZrIqOy0jIXGE3N6wdgTfz2EcLC3dVe+8jjwdBlkVqAOhpL+veyjThDS7Yk0QsRnQoXtI0P/7qMlnRHUH//xZUdv/6J+qwrZyL/o+tVgXLlTFZfe2kYBwPAMZ5GWFzwvKGo=
+	t=1751993076; cv=none; b=g8h8RTu+UwQwYj8VDagpsNRZIPCqG+tJ/oEwL1CLgNtps4dGRYnsuKb+SN0kn3ZfRcTcu0FSCrbOWejXnPzHAEzlW0STcoP8EucjfVT/CUejAsBKnkyMrSjmvwGVsfhSm8Gz5Rd2Va+8zw8ES83NJd3nzlP/5fASV7F3Vl4Bqds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993073; c=relaxed/simple;
-	bh=fLcKDY/BEiwve4Tztw8Z/GOBz1x7O0KG1r8HNte80E8=;
+	s=arc-20240116; t=1751993076; c=relaxed/simple;
+	bh=lR36Ve0JjmqeX+/q8e7xwhMe5qTcl9iKIZaLzjON1Xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIsWm+2bfpn4ouo0Py0f8bJQh/lFHe+HM/qE4ZeNiVO1xNj6M5BHlTC7Ab/K7158vO/2MsTxsRBxUWvs+eIpxiXR/kENO6PX//yiY1sGWuB4YwVG5niYSwjroSMWCUTi1hFzwYmvPw2akxage0OtnyxycT9UUE5eZdXLmMTpJ9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6qyip4P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4KrCPWFl3uH6EJYpdqfW0/1ojVqVzDvM1jv6rmibY93FIq3ITdQhEUzRCaNKhMRZDO/4pOrqxC7bAmj/Qy4aUF3Ib1rSGYG6+R7NRgkoaYR5l1s0z5fxOru6sIkPFnvUDsvBZI2ktHDV2zwUiP9eUUpvnIwAAtajmqv7dWDZWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiiHvL14; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6qyip4P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43EA9C4CEED;
-	Tue,  8 Jul 2025 16:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiiHvL14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A83CC4CEED;
+	Tue,  8 Jul 2025 16:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993073;
-	bh=fLcKDY/BEiwve4Tztw8Z/GOBz1x7O0KG1r8HNte80E8=;
+	s=korg; t=1751993076;
+	bh=lR36Ve0JjmqeX+/q8e7xwhMe5qTcl9iKIZaLzjON1Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6qyip4P8Nxtnlfln3U0bDFrkgdCwkworMiuhRmpysCGgpSVnKZ07PtzlwXMeYiR0
-	 S9zfJchkJT6LBPvVKcQP7znDZGg8MVpP6JM/G403ZEx6W+U2XRva073lI3/K/nB86O
-	 oaUvpjlqVMm0JzY6fh9dOIW83NKZUYwXC5hA+fMQ=
+	b=hiiHvL146E+AjPCQyqDW+cIzl+wIuFo9oo/iVdcbOWHEXHuOstyBA8AeYuAuNwrWv
+	 GCj54nMEjLnaRRpEcie1oiW2ZutUtgAtExIq4jxSorVhUZujUCJipVGExvRkNpZNqq
+	 55k7rZHjYmiqkm6ZRDsYumb7Asl+WwNT8LElJh+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyeyoung Baek <gye976@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Tulio Magno <tuliom@ascii.art.br>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Justin M. Forbes" <jforbes@fedoraproject.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/232] genirq/irq_sim: Initialize work context pointers properly
-Date: Tue,  8 Jul 2025 18:22:55 +0200
-Message-ID: <20250708162246.123564254@linuxfoundation.org>
+Subject: [PATCH 6.12 180/232] powerpc: Fix struct termio related ioctl macros
+Date: Tue,  8 Jul 2025 18:22:56 +0200
+Message-ID: <20250708162246.148488299@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,35 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gyeyoung Baek <gye976@gmail.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit 8a2277a3c9e4cc5398f80821afe7ecbe9bdf2819 ]
+[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
 
-Initialize `ops` member's pointers properly by using kzalloc() instead of
-kmalloc() when allocating the simulation work context. Otherwise the
-pointers contain random content leading to invalid dereferencing.
+Since termio interface is now obsolete, include/uapi/asm/ioctls.h
+has some constant macros referring to "struct termio", this caused
+build failure at userspace.
 
-Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250612124827.63259-1-gye976@gmail.com
+In file included from /usr/include/asm/ioctl.h:12,
+                 from /usr/include/asm/ioctls.h:5,
+                 from tst-ioctls.c:3:
+tst-ioctls.c: In function 'get_TCGETA':
+tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+   12 |   return TCGETA;
+      |          ^~~~~~
+
+Even though termios.h provides "struct termio", trying to juggle definitions around to
+make it compile could introduce regressions. So better to open code it.
+
+Reported-by: Tulio Magno <tuliom@ascii.art.br>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
+Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irq_sim.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/irq/irq_sim.c b/kernel/irq/irq_sim.c
-index 1a3d483548e2f..ae4c9cbd1b4b9 100644
---- a/kernel/irq/irq_sim.c
-+++ b/kernel/irq/irq_sim.c
-@@ -202,7 +202,7 @@ struct irq_domain *irq_domain_create_sim_full(struct fwnode_handle *fwnode,
- 					      void *data)
- {
- 	struct irq_sim_work_ctx *work_ctx __free(kfree) =
--				kmalloc(sizeof(*work_ctx), GFP_KERNEL);
-+				kzalloc(sizeof(*work_ctx), GFP_KERNEL);
+diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
+index 2c145da3b774a..b5211e413829a 100644
+--- a/arch/powerpc/include/uapi/asm/ioctls.h
++++ b/arch/powerpc/include/uapi/asm/ioctls.h
+@@ -23,10 +23,10 @@
+ #define TCSETSW		_IOW('t', 21, struct termios)
+ #define TCSETSF		_IOW('t', 22, struct termios)
  
- 	if (!work_ctx)
- 		return ERR_PTR(-ENOMEM);
+-#define TCGETA		_IOR('t', 23, struct termio)
+-#define TCSETA		_IOW('t', 24, struct termio)
+-#define TCSETAW		_IOW('t', 25, struct termio)
+-#define TCSETAF		_IOW('t', 28, struct termio)
++#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
++#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
++#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
++#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
+ 
+ #define TCSBRK		_IO('t', 29)
+ #define TCXONC		_IO('t', 30)
 -- 
 2.39.5
 
