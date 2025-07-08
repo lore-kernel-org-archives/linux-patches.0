@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16B91CD1E4;
-	Tue,  8 Jul 2025 16:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECEA23A98D;
+	Tue,  8 Jul 2025 16:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992676; cv=none; b=e/r3v8pz/maFyn8ckD6nXBvGFlSLHQ2y8aQcrW/FUwpcxbwS9lh5FUWCo6R5vSzOsti7DMRmNdFpZcl5RGrXJgiAU9DlUtVNyGDHip6mUjBfElR2laZHPNh+iMenwLnUd72Bi5fNjmlCvCmgwQ6FPHf4+EvInKV/IexYDfPDbD4=
+	t=1751992680; cv=none; b=BnBbRg6rsGPl/4CSnw//1NeWdZ4mMpf7ECUc0eD6S2PwII/8IVL7wNx51X8AUL1fKTwEm9wkAnyG4xPT8LNZQGJ0ZRyQ0HZjKKbHyxLi8obd37vj2z3O6Q9vKGQB/Op3K1Z1FkdYUGGm5uvIrCzJ+YKyAshPZrAjFcsVVa39Cvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992676; c=relaxed/simple;
-	bh=+1BLoNLXUm1xJi6Ia5z4jgpdbzu3dow5mimGOqy2/aY=;
+	s=arc-20240116; t=1751992680; c=relaxed/simple;
+	bh=1gzgBq5UH7IZbIWr9wom04cDVwT2VEWa1KAnqIMwFPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+u8r7VsLs6TwefRB3ft/3QPQdstX+YtZn1Xhfmwg51ys/KHRjlxeaRAUZtBVi20w6pF/NaNUzwy8Ecfk6qOERYL2wS4w8P6mZVVCYzqGs267+9823kxAo7jpfij8ULRxPHyT3JIXbM6CHJVJqgsVFsbnUPLhXx7SEdG9+hJzEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLVdJuPb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dlFvFVySsBX0aC2VGz7HDyqmDMlkpVCY93XHbbdLSfoao7mZB264rgig+HvRHBpnzY4inE/zZ1ldenqMYHZEjts2t3d8pXn0h0uyOUUWOLhSxRr9/5UvP96KRipRMDcoaVGjseK461dRpdxmKDgAXO+PQZPjBDLP6uG20UXAijk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmWXu8y+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLVdJuPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599A0C4CEED;
-	Tue,  8 Jul 2025 16:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmWXu8y+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D36AC4CEED;
+	Tue,  8 Jul 2025 16:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992676;
-	bh=+1BLoNLXUm1xJi6Ia5z4jgpdbzu3dow5mimGOqy2/aY=;
+	s=korg; t=1751992679;
+	bh=1gzgBq5UH7IZbIWr9wom04cDVwT2VEWa1KAnqIMwFPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLVdJuPbN9DkNV9VnRUE3C/t562p7nzzhqOUQo1dgioivZU9XG88FZVuJzNCrPUXY
-	 cURy9qUOQNs1ikA56jYw6l0nWLf0g4yXuqZ7Ady2nsqqf9KINXdSC72QcVfKF0fWoS
-	 kNWOQfk5/QbPqR1x1Jv3uQbPDJgcbWn+vZ1F7xIM=
+	b=jmWXu8y+NZ1VZFtZFnizxcqczHfhlcuJ5NACKFVpJ6GF3G5qTQvyvu23Fjepa7xrn
+	 CP3KWjDfVF+TLEY0z9HRcxEwrjuHhjNK3Wms14CXkRdeI4dogeNKXH0gRw8g/RrvCV
+	 YznW7Kw81DDf5TgVWptri0NHql0cFSLoYDGF4v9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/232] RDMA/mlx5: Fix vport loopback for MPV device
-Date: Tue,  8 Jul 2025 18:20:39 +0200
-Message-ID: <20250708162242.588748138@linuxfoundation.org>
+Subject: [PATCH 6.12 044/232] platform/mellanox: mlxbf-pmc: Fix duplicate event ID for CACHE_DATA1
+Date: Tue,  8 Jul 2025 18:20:40 +0200
+Message-ID: <20250708162242.615823145@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -46,91 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit a9a9e68954f29b1e197663f76289db4879fd51bb ]
+[ Upstream commit 173bbec6693f3f3f00dac144f3aa0cd62fb60d33 ]
 
-Always enable vport loopback for both MPV devices on driver start.
+same ID (103) was assigned to both GDC_BANK0_G_RSE_PIPE_CACHE_DATA0
+and GDC_BANK0_G_RSE_PIPE_CACHE_DATA1. This could lead to incorrect
+event mapping.
+Updated the ID to 104 to ensure uniqueness.
 
-Previously in some cases related to MPV RoCE, packets weren't correctly
-executing loopback check at vport in FW, since it was disabled.
-Due to complexity of identifying such cases for MPV always enable vport
-loopback for both GVMIs when binding the slave to the master port.
-
-Fixes: 0042f9e458a5 ("RDMA/mlx5: Enable vport loopback when user context or QP mandate")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/d4298f5ebb2197459e9e7221c51ecd6a34699847.1750064969.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 423c3361855c ("platform/mellanox: mlxbf-pmc: Add support for BlueField-3")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/20250619060502.3594350-1-alok.a.tiwari@oracle.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 33 +++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/platform/mellanox/mlxbf-pmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 8c47cb4edd0a0..435c456a4fd5b 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1766,6 +1766,33 @@ static void deallocate_uars(struct mlx5_ib_dev *dev,
- 					     context->devx_uid);
- }
- 
-+static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
-+				struct mlx5_core_dev *slave)
-+{
-+	int err;
-+
-+	err = mlx5_nic_vport_update_local_lb(master, true);
-+	if (err)
-+		return err;
-+
-+	err = mlx5_nic_vport_update_local_lb(slave, true);
-+	if (err)
-+		goto out;
-+
-+	return 0;
-+
-+out:
-+	mlx5_nic_vport_update_local_lb(master, false);
-+	return err;
-+}
-+
-+static void mlx5_ib_disable_lb_mp(struct mlx5_core_dev *master,
-+				  struct mlx5_core_dev *slave)
-+{
-+	mlx5_nic_vport_update_local_lb(slave, false);
-+	mlx5_nic_vport_update_local_lb(master, false);
-+}
-+
- int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- {
- 	int err = 0;
-@@ -3448,6 +3475,8 @@ static void mlx5_ib_unbind_slave_port(struct mlx5_ib_dev *ibdev,
- 
- 	lockdep_assert_held(&mlx5_ib_multiport_mutex);
- 
-+	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev);
-+
- 	mlx5_core_mp_event_replay(ibdev->mdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_REMOVED,
- 				  NULL);
-@@ -3543,6 +3572,10 @@ static bool mlx5_ib_bind_slave_port(struct mlx5_ib_dev *ibdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_DONE,
- 				  &key);
- 
-+	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev);
-+	if (err)
-+		goto unbind;
-+
- 	return true;
- 
- unbind:
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 9ff7b487dc489..fbb8128d19de4 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -710,7 +710,7 @@ static const struct mlxbf_pmc_events mlxbf_pmc_llt_events[] = {
+ 	{101, "GDC_BANK0_HIT_DCL_PARTIAL"},
+ 	{102, "GDC_BANK0_EVICT_DCL"},
+ 	{103, "GDC_BANK0_G_RSE_PIPE_CACHE_DATA0"},
+-	{103, "GDC_BANK0_G_RSE_PIPE_CACHE_DATA1"},
++	{104, "GDC_BANK0_G_RSE_PIPE_CACHE_DATA1"},
+ 	{105, "GDC_BANK0_ARB_STRB"},
+ 	{106, "GDC_BANK0_ARB_WAIT"},
+ 	{107, "GDC_BANK0_GGA_STRB"},
 -- 
 2.39.5
 
