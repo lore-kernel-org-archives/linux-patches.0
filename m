@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EB621C190;
-	Tue,  8 Jul 2025 16:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7AB1DB127;
+	Tue,  8 Jul 2025 16:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993521; cv=none; b=NDTPux7AdDXQojQQZQBWCNQPDe/j9YsQH6nt9O3Qud7DRqcQCAjdhmYqt6wGFg62CvSb/fXc0Qm+/eTXcL+CZfmHvzdk3KD1Gmq+atfdFsP67/LuTc2Tw42hWrwbhWkATCIdF/JOpJm8QZlcFJ6TNap/QKKZtaC1P7eYtRs4oXI=
+	t=1751993524; cv=none; b=qtpH30PcAA2B5XLvIqpm/HGAak7SXpEXRuM2CvOzidijNLSASpDfjYAbubT/OW3fEfd4VuyI8RDqW7JJsu6K0qgC0oSiNLmh/bOW97jSD/bPpawC4FXJklAdYXFD/Fnk3atbktoXQ5S8Zc/6clXCWNsuF/9LNGBVBSr3r8+F3xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993521; c=relaxed/simple;
-	bh=FEgjMhaEwM3sWKyCXp63yzvZj7n5Z6otil2ujghYUAk=;
+	s=arc-20240116; t=1751993524; c=relaxed/simple;
+	bh=luYFYyIrWges2POr0lQK2E6k+9pEZR67vk2d+I+aJK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbDEPqrvygj9r/gb5gjGHrQ7l0959Pd7tYGBL7/fSYRC8Rv5ujyzwm9nokgHO64thIV/KPOiy6U9DaNXTlxQibnMDUaCTHyDv2l6ie+DFZrWuhlZ1eJq6mvXEq4N+bqgL31YTd9kOjuFSpziX0sFMCZ45AUOIEYk1NdTSdKqi9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ii/MD5CA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=reXdQ9nkrLO986gOCz92OkGfRShOiS5cA753SsNuo97IfvWHWjwGEBCLb64cUcJ/g9VMffqeOQ7VB1bjbyXFhKrq+rVDL5WrkUOK9bfgatdnnMTDPHh0+9dOmM70G5eBqsEOOplZOPAy+K/qXSNAxWFMWHcDE7CC/KOBPb9MW8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgUEG2NT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ii/MD5CA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0FFC4CEED;
-	Tue,  8 Jul 2025 16:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgUEG2NT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2373DC4CEF0;
+	Tue,  8 Jul 2025 16:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993521;
-	bh=FEgjMhaEwM3sWKyCXp63yzvZj7n5Z6otil2ujghYUAk=;
+	s=korg; t=1751993524;
+	bh=luYFYyIrWges2POr0lQK2E6k+9pEZR67vk2d+I+aJK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ii/MD5CAapWKd1cXHcJPVVm+UqnzxSodeVyxXeHazWV9YX8ncvAEG2WsOb0z9ZyHc
-	 WqjN/o9VvZoUnuWTO+mO1P7d19tm7B1AnU65F6KjDODTXaBHVbmZcryr+D+pPWvjyd
-	 2aAhwj4rUc6oPSqeNZeyqlrmNR2bhbGnmXD4YJsU=
+	b=fgUEG2NTZ0mHdTGIv9RWo+povElY3Qdtk+bwvnsOzqs/HOP4tkYDkysxq19ZSkK9v
+	 xT6engnAc3jzebcEZFTXuelW3/eSFMoRvKRNlo8EIH4/5Kh6Z+LFNYhTvEqsQkzm2y
+	 VXWr72Ov2HMhLTyo0nk1Ctriqvxp9/KhIltbGF5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Steve French <sfrench@samba.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 101/178] smb: client: set missing retry flag in cifs_readv_callback()
-Date: Tue,  8 Jul 2025 18:22:18 +0200
-Message-ID: <20250708162239.286276606@linuxfoundation.org>
+Subject: [PATCH 6.15 073/178] drm/exynos: fimd: Guard display clock control with runtime PM calls
+Date: Tue,  8 Jul 2025 18:21:50 +0200
+Message-ID: <20250708162238.582478896@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -55,38 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 0e60bae24ad28ab06a485698077d3c626f1e54ab ]
+[ Upstream commit 5d91394f236167ac624b823820faf4aa928b889e ]
 
-Set NETFS_SREQ_NEED_RETRY flag to tell netfslib that the subreq needs
-to be retried.
+Commit c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable
+and post-disable") changed the call sequence to the CRTC enable/disable
+and bridge pre_enable/post_disable methods, so those bridge methods are
+now called when CRTC is not yet enabled.
 
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/20250701163852.2171681-8-dhowells@redhat.com
-Tested-by: Steve French <sfrench@samba.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: netfs@lists.linux.dev
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This causes a lockup observed on Samsung Peach-Pit/Pi Chromebooks. The
+source of this lockup is a call to fimd_dp_clock_enable() function, when
+FIMD device is not yet runtime resumed. It worked before the mentioned
+commit only because the CRTC implemented by the FIMD driver was always
+enabled what guaranteed the FIMD device to be runtime resumed.
+
+This patch adds runtime PM guards to the fimd_dp_clock_enable() function
+to enable its proper operation also when the CRTC implemented by FIMD is
+not yet enabled.
+
+Fixes: 196e059a8a6a ("drm/exynos: convert clock_enable crtc callback to pipeline clock")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 7216fcec79e8b..f9ccae5de5b88 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1335,6 +1335,7 @@ cifs_readv_callback(struct mid_q_entry *mid)
- 		break;
- 	case MID_REQUEST_SUBMITTED:
- 	case MID_RETRY_NEEDED:
-+		__set_bit(NETFS_SREQ_NEED_RETRY, &rdata->subreq.flags);
- 		rdata->result = -EAGAIN;
- 		if (server->sign && rdata->got_bytes)
- 			/* reset bytes number since we can not check a sign */
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index c394cc702d7d4..205c238cc73a6 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -187,6 +187,7 @@ struct fimd_context {
+ 	u32				i80ifcon;
+ 	bool				i80_if;
+ 	bool				suspended;
++	bool				dp_clk_enabled;
+ 	wait_queue_head_t		wait_vsync_queue;
+ 	atomic_t			wait_vsync_event;
+ 	atomic_t			win_updated;
+@@ -1047,7 +1048,18 @@ static void fimd_dp_clock_enable(struct exynos_drm_clk *clk, bool enable)
+ 	struct fimd_context *ctx = container_of(clk, struct fimd_context,
+ 						dp_clk);
+ 	u32 val = enable ? DP_MIE_CLK_DP_ENABLE : DP_MIE_CLK_DISABLE;
++
++	if (enable == ctx->dp_clk_enabled)
++		return;
++
++	if (enable)
++		pm_runtime_resume_and_get(ctx->dev);
++
++	ctx->dp_clk_enabled = enable;
+ 	writel(val, ctx->regs + DP_MIE_CLKCON);
++
++	if (!enable)
++		pm_runtime_put(ctx->dev);
+ }
+ 
+ static const struct exynos_drm_crtc_ops fimd_crtc_ops = {
 -- 
 2.39.5
 
