@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C718EAB;
-	Tue,  8 Jul 2025 16:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EA21754B;
+	Tue,  8 Jul 2025 16:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993317; cv=none; b=iK5JBkc5C41PGWsaIh5QLdt2ii7oJawRSn5V7uBgxc/ingDNo43r3DqWEWjZGn5JPe8qK26WeRQ+/7pz0DcJV43hxGLBlJ7bfUmJRIna8dL1YVZsZm0Jhs0L+B4HU5a0HF99TcrDW67mmXmW/2l9VjsgcGzMKP1vs4laPr+Kejs=
+	t=1751993320; cv=none; b=Ka3kKjbnKleNRLCzVaA3AXtMg6zkH9r+B8FZ532cHnGdrszeBizZiyHi3HF0/yEYmoQM2X4ZOVXtvFPDY3g0nBg1nOdK8BRSfqKow6Er0Wp/tFySCypvZVRLAa0MovLARiyCK0NzpoGYfW/AVW76MmVUbkT/gBpLsEGOcPGnA4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993317; c=relaxed/simple;
-	bh=M9hJvcKD9HhCROtMjdil5QxQ4NKCEOSfEUk3GW/gWxw=;
+	s=arc-20240116; t=1751993320; c=relaxed/simple;
+	bh=vPgRs4T2lJlsCazMeiG0fvjfHKwIjp82GvFAMDSHLjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YW2oKaYVP6NTUmuE+oVFRl18RmAZpmJXKrPYfMZ4OSMMH0vIgVCRHVdsVpiCKRxfXq2JhLTDgWmZW9lkqLhJjy2wdZH+Q1iD4OqXrdH7vi7VlPdbEzC3bhwhKF0Lc9Cib/9abLffwk6Q+gLE2UOj7pCc5dfpmMfbaZMXZBy89aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXRnkN0E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1uPjS49Utlf+SPxS7nCbx5IrqHJ3a1Y1kn/eWPSdARANUhJAj/uHeg26i/qONxGk63ySEx0pNiU6wLsnC48yh0Pmn0+5IVixAA80GGtUXdk8VMX3jgqUypy2RUmBy8Yg5Up1Dm/yJjuk+2p6J1I0r5SoaWpXCCxiWkvxPvuXq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5/t+pxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXRnkN0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1F2C4CEED;
-	Tue,  8 Jul 2025 16:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5/t+pxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306F8C4CEED;
+	Tue,  8 Jul 2025 16:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993317;
-	bh=M9hJvcKD9HhCROtMjdil5QxQ4NKCEOSfEUk3GW/gWxw=;
+	s=korg; t=1751993320;
+	bh=vPgRs4T2lJlsCazMeiG0fvjfHKwIjp82GvFAMDSHLjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXRnkN0E0IC53SZrW2wEcgA8bWFcUxTBEjssoLLkwyFkq7icHWUeJOsieEzbDfgy1
-	 BgfGFcHjoTLvXYuPxqZHwzOhXEOh4XG0D2h6Hi0gQmWikbw7D6doaqvcC5msyxYTIQ
-	 k5oNJqrw/rFDQFnXpGTbcr3Lr7eYQ7EJ2Z7PhNWQ=
+	b=F5/t+pxc8vOaNga0DCjGdibMAsWuBqSsb7y3XK57MWZw90ut93Z/SPpYpZ0jIuDb+
+	 yWQzZG/Du3+uET5UT5fpXQqx3U2IJ5YebMw3o+bTWefkvVGIOhIZYbX5g3mcamlSxj
+	 WLD1oEKyjlvsnoaXMbQiWT7GZGRWG7Zv4SOQEKnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Juan A. Suarez" <jasuarez@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.15 032/178] drm/v3d: Disable interrupts before resetting the GPU
-Date: Tue,  8 Jul 2025 18:21:09 +0200
-Message-ID: <20250708162237.389140837@linuxfoundation.org>
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 033/178] firmware: arm_ffa: Fix memory leak by freeing notifier callback node
+Date: Tue,  8 Jul 2025 18:21:10 +0200
+Message-ID: <20250708162237.415950386@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -45,204 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-commit 226862f50a7a88e4e4de9abbf36c64d19acd6fd0 upstream.
+[ Upstream commit a833d31ad867103ba72a0b73f3606f4ab8601719 ]
 
-Currently, an interrupt can be triggered during a GPU reset, which can
-lead to GPU hangs and NULL pointer dereference in an interrupt context
-as shown in the following trace:
+Commit e0573444edbf ("firmware: arm_ffa: Add interfaces to request
+notification callbacks") adds support for notifier callbacks by allocating
+and inserting a callback node into a hashtable during registration of
+notifiers. However, during unregistration, the code only removes the
+node from the hashtable without freeing the associated memory, resulting
+in a memory leak.
 
- [  314.035040] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000c0
- [  314.043822] Mem abort info:
- [  314.046606]   ESR = 0x0000000096000005
- [  314.050347]   EC = 0x25: DABT (current EL), IL = 32 bits
- [  314.055651]   SET = 0, FnV = 0
- [  314.058695]   EA = 0, S1PTW = 0
- [  314.061826]   FSC = 0x05: level 1 translation fault
- [  314.066694] Data abort info:
- [  314.069564]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
- [  314.075039]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
- [  314.080080]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
- [  314.085382] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000102728000
- [  314.091814] [00000000000000c0] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
- [  314.100511] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
- [  314.106770] Modules linked in: v3d i2c_brcmstb vc4 snd_soc_hdmi_codec gpu_sched drm_shmem_helper drm_display_helper cec drm_dma_helper drm_kms_helper drm drm_panel_orientation_quirks snd_soc_core snd_compress snd_pcm_dmaengine snd_pcm snd_timer snd backlight
- [  314.129654] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.25+rpt-rpi-v8 #1  Debian 1:6.12.25-1+rpt1
- [  314.139388] Hardware name: Raspberry Pi 4 Model B Rev 1.4 (DT)
- [  314.145211] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- [  314.152165] pc : v3d_irq+0xec/0x2e0 [v3d]
- [  314.156187] lr : v3d_irq+0xe0/0x2e0 [v3d]
- [  314.160198] sp : ffffffc080003ea0
- [  314.163502] x29: ffffffc080003ea0 x28: ffffffec1f184980 x27: 021202b000000000
- [  314.170633] x26: ffffffec1f17f630 x25: ffffff8101372000 x24: ffffffec1f17d9f0
- [  314.177764] x23: 000000000000002a x22: 000000000000002a x21: ffffff8103252000
- [  314.184895] x20: 0000000000000001 x19: 00000000deadbeef x18: 0000000000000000
- [  314.192026] x17: ffffff94e51d2000 x16: ffffffec1dac3cb0 x15: c306000000000000
- [  314.199156] x14: 0000000000000000 x13: b2fc982e03cc5168 x12: 0000000000000001
- [  314.206286] x11: ffffff8103f8bcc0 x10: ffffffec1f196868 x9 : ffffffec1dac3874
- [  314.213416] x8 : 0000000000000000 x7 : 0000000000042a3a x6 : ffffff810017a180
- [  314.220547] x5 : ffffffec1ebad400 x4 : ffffffec1ebad320 x3 : 00000000000bebeb
- [  314.227677] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
- [  314.234807] Call trace:
- [  314.237243]  v3d_irq+0xec/0x2e0 [v3d]
- [  314.240906]  __handle_irq_event_percpu+0x58/0x218
- [  314.245609]  handle_irq_event+0x54/0xb8
- [  314.249439]  handle_fasteoi_irq+0xac/0x240
- [  314.253527]  handle_irq_desc+0x48/0x68
- [  314.257269]  generic_handle_domain_irq+0x24/0x38
- [  314.261879]  gic_handle_irq+0x48/0xd8
- [  314.265533]  call_on_irq_stack+0x24/0x58
- [  314.269448]  do_interrupt_handler+0x88/0x98
- [  314.273624]  el1_interrupt+0x34/0x68
- [  314.277193]  el1h_64_irq_handler+0x18/0x28
- [  314.281281]  el1h_64_irq+0x64/0x68
- [  314.284673]  default_idle_call+0x3c/0x168
- [  314.288675]  do_idle+0x1fc/0x230
- [  314.291895]  cpu_startup_entry+0x3c/0x50
- [  314.295810]  rest_init+0xe4/0xf0
- [  314.299030]  start_kernel+0x5e8/0x790
- [  314.302684]  __primary_switched+0x80/0x90
- [  314.306691] Code: 940029eb 360ffc13 f9442ea0 52800001 (f9406017)
- [  314.312775] ---[ end trace 0000000000000000 ]---
- [  314.317384] Kernel panic - not syncing: Oops: Fatal exception in interrupt
- [  314.324249] SMP: stopping secondary CPUs
- [  314.328167] Kernel Offset: 0x2b9da00000 from 0xffffffc080000000
- [  314.334076] PHYS_OFFSET: 0x0
- [  314.336946] CPU features: 0x08,00002013,c0200000,0200421b
- [  314.342337] Memory Limit: none
- [  314.345382] ---[ end Kernel panic - not syncing: Oops: Fatal exception in interrupt ]---
+Resolve the memory leak issue by ensuring the allocated notifier callback
+node is properly freed after it is removed from the hashtable entry.
 
-Before resetting the GPU, it's necessary to disable all interrupts and
-deal with any interrupt handler still in-flight. Otherwise, the GPU might
-reset with jobs still running, or yet, an interrupt could be handled
-during the reset.
-
-Cc: stable@vger.kernel.org
-Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
-Reviewed-by: Juan A. Suarez <jasuarez@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://lore.kernel.org/r/20250628224243.47599-1-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e0573444edbf ("firmware: arm_ffa: Add interfaces to request notification callbacks")
+Message-Id: <20250528-ffa_notif_fix-v1-1-5ed7bc7f8437@arm.com>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_drv.h |    8 ++++++++
- drivers/gpu/drm/v3d/v3d_gem.c |    2 ++
- drivers/gpu/drm/v3d/v3d_irq.c |   37 +++++++++++++++++++++++++++----------
- 3 files changed, 37 insertions(+), 10 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/v3d/v3d_drv.h
-+++ b/drivers/gpu/drm/v3d/v3d_drv.h
-@@ -101,6 +101,12 @@ enum v3d_gen {
- 	V3D_GEN_71 = 71,
- };
- 
-+enum v3d_irq {
-+	V3D_CORE_IRQ,
-+	V3D_HUB_IRQ,
-+	V3D_MAX_IRQS,
-+};
-+
- struct v3d_dev {
- 	struct drm_device drm;
- 
-@@ -112,6 +118,8 @@ struct v3d_dev {
- 
- 	bool single_irq_line;
- 
-+	int irq[V3D_MAX_IRQS];
-+
- 	struct v3d_perfmon_info perfmon_info;
- 
- 	void __iomem *hub_regs;
---- a/drivers/gpu/drm/v3d/v3d_gem.c
-+++ b/drivers/gpu/drm/v3d/v3d_gem.c
-@@ -118,6 +118,8 @@ v3d_reset(struct v3d_dev *v3d)
- 	if (false)
- 		v3d_idle_axi(v3d, 0);
- 
-+	v3d_irq_disable(v3d);
-+
- 	v3d_idle_gca(v3d);
- 	v3d_reset_v3d(v3d);
- 
---- a/drivers/gpu/drm/v3d/v3d_irq.c
-+++ b/drivers/gpu/drm/v3d/v3d_irq.c
-@@ -260,7 +260,7 @@ v3d_hub_irq(int irq, void *arg)
- int
- v3d_irq_init(struct v3d_dev *v3d)
- {
--	int irq1, ret, core;
-+	int irq, ret, core;
- 
- 	INIT_WORK(&v3d->overflow_mem_work, v3d_overflow_mem_work);
- 
-@@ -271,17 +271,24 @@ v3d_irq_init(struct v3d_dev *v3d)
- 		V3D_CORE_WRITE(core, V3D_CTL_INT_CLR, V3D_CORE_IRQS(v3d->ver));
- 	V3D_WRITE(V3D_HUB_INT_CLR, V3D_HUB_IRQS(v3d->ver));
- 
--	irq1 = platform_get_irq_optional(v3d_to_pdev(v3d), 1);
--	if (irq1 == -EPROBE_DEFER)
--		return irq1;
--	if (irq1 > 0) {
--		ret = devm_request_irq(v3d->drm.dev, irq1,
-+	irq = platform_get_irq_optional(v3d_to_pdev(v3d), 1);
-+	if (irq == -EPROBE_DEFER)
-+		return irq;
-+	if (irq > 0) {
-+		v3d->irq[V3D_CORE_IRQ] = irq;
-+
-+		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_CORE_IRQ],
- 				       v3d_irq, IRQF_SHARED,
- 				       "v3d_core0", v3d);
- 		if (ret)
- 			goto fail;
--		ret = devm_request_irq(v3d->drm.dev,
--				       platform_get_irq(v3d_to_pdev(v3d), 0),
-+
-+		irq = platform_get_irq(v3d_to_pdev(v3d), 0);
-+		if (irq < 0)
-+			return irq;
-+		v3d->irq[V3D_HUB_IRQ] = irq;
-+
-+		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_HUB_IRQ],
- 				       v3d_hub_irq, IRQF_SHARED,
- 				       "v3d_hub", v3d);
- 		if (ret)
-@@ -289,8 +296,12 @@ v3d_irq_init(struct v3d_dev *v3d)
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index fe55613a8ea99..6f75cdf297209 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -1284,6 +1284,7 @@ update_notifier_cb(struct ffa_device *dev, int notify_id, void *cb,
+ 		hash_add(drv_info->notifier_hash, &cb_info->hnode, notify_id);
  	} else {
- 		v3d->single_irq_line = true;
+ 		hash_del(&cb_info->hnode);
++		kfree(cb_info);
+ 	}
  
--		ret = devm_request_irq(v3d->drm.dev,
--				       platform_get_irq(v3d_to_pdev(v3d), 0),
-+		irq = platform_get_irq(v3d_to_pdev(v3d), 0);
-+		if (irq < 0)
-+			return irq;
-+		v3d->irq[V3D_CORE_IRQ] = irq;
-+
-+		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_CORE_IRQ],
- 				       v3d_irq, IRQF_SHARED,
- 				       "v3d", v3d);
- 		if (ret)
-@@ -331,6 +342,12 @@ v3d_irq_disable(struct v3d_dev *v3d)
- 		V3D_CORE_WRITE(core, V3D_CTL_INT_MSK_SET, ~0);
- 	V3D_WRITE(V3D_HUB_INT_MSK_SET, ~0);
- 
-+	/* Finish any interrupt handler still in flight. */
-+	for (int i = 0; i < V3D_MAX_IRQS; i++) {
-+		if (v3d->irq[i])
-+			synchronize_irq(v3d->irq[i]);
-+	}
-+
- 	/* Clear any pending interrupts we might have left. */
- 	for (core = 0; core < v3d->cores; core++)
- 		V3D_CORE_WRITE(core, V3D_CTL_INT_CLR, V3D_CORE_IRQS(v3d->ver));
+ 	return 0;
+-- 
+2.39.5
+
 
 
