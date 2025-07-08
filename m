@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E29E2E091E;
-	Tue,  8 Jul 2025 16:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0F82E091E;
+	Tue,  8 Jul 2025 16:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993858; cv=none; b=j1pb2mkzG3mjwMedzxQ1xjc8rDT5SP0JK8xBvZ+1qhj4RPNhN9iGd8AnSnWOOpnmL3zhPPL7JHuc+RaBRhaFhplUc4Opn/lCxaox5bp2bk6OIhlgBtqdkkUrshOTwIfHT976qAE9Jn0CEeV+dS7iHRMEXXPfouRsLtqIWLd1UaM=
+	t=1751993861; cv=none; b=DzjkYb8FVpYGQwam6MrLyU0oPYT1mWG3N8SIAx6HqLvdZvzjMUCbHa9hm3HNQgwi/k8kNXrdvp8utKGMcVdvo+MO5R7+n8pBMqnyvbA+iMkM2v2Jac6Lc0QpkVx3BXU8lIYUNW6OsenuQ+2ZiCNBicVLO0GUaON4m0eAjuYNZEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993858; c=relaxed/simple;
-	bh=8FspT2VIhYhdVf3jdvJNBhHmVoOCRo2+MEhucrpFD7o=;
+	s=arc-20240116; t=1751993861; c=relaxed/simple;
+	bh=KzEX0cI4uE0oll/Sks0GnQHdhyENMugYeeggK4SMiTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKSmTxmJJST5AblH6hdBx/vjTHBn0oufBxPLyGace+hYuoSI9qRA4ws3/qlfPNHqZSni/KWDno5Bw8dilXCb53KG79RERuV1wyA2S6D8/MHMp9+j9iHff9uKTKZW8Wq5HbE/v3Jm4JnfgeFNn0kVC9buU43UTisFtzToPi8EFVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlbTqBwj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I+lK2mDCyVtEcqCN8LBaAdS4/RIZuo98DtMUdkTpBPtb4hM2/uDg+PWIAiep1E472VluNWLos6ZP1PPhsC4gIlDDhn2WsFOM9G31GJoNGx+avcWlt79XYP5lzB7MVOOmCsXK+/0xe19U72KlPUhSx+orJ6wd/YfOjaTVnlFRS6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQOVLDnc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlbTqBwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67EFC4CEED;
-	Tue,  8 Jul 2025 16:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQOVLDnc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65B9C4CEF5;
+	Tue,  8 Jul 2025 16:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993858;
-	bh=8FspT2VIhYhdVf3jdvJNBhHmVoOCRo2+MEhucrpFD7o=;
+	s=korg; t=1751993861;
+	bh=KzEX0cI4uE0oll/Sks0GnQHdhyENMugYeeggK4SMiTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlbTqBwj1TfthiZcfsECx5BZTczaJdkseP/Xw9lQxfDkwTiyZnfqDgymGGgsqINW1
-	 zFvOQ1Gx0FkxiQxoLpYGfZTda8dG+yoIzzt3M1CAteRhgSDOe/am6r6suVllhdhZ3a
-	 OG7F4DmdX2/UAfFLhcBSMNAGTnX5+0Z+lSixncns=
+	b=TQOVLDnciIy4zTGqs4QQyM9RyW3gtcK5/U3hh4vkEP136MsYNrv1FnuaWvFgO07p8
+	 xCBMdBJoxbBcz9/i2cxaWCRhf7xP6/yPorOPkddqh1jHrNZ8Dsa3YnSnQYBITuy9BU
+	 +a7RbPz5afvHZQeYJ9wjbO1lknO2s7COxEUO4by0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 014/160] coresight: Only check bottom two claim bits
-Date: Tue,  8 Jul 2025 18:20:51 +0200
-Message-ID: <20250708162231.902877233@linuxfoundation.org>
+Subject: [PATCH 5.15 005/160] mfd: max14577: Fix wakeup source leaks on device unbind
+Date: Tue,  8 Jul 2025 18:20:42 +0200
+Message-ID: <20250708162231.658689466@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -53,53 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a4e65842e1142aa18ef36113fbd81d614eaefe5a ]
+[ Upstream commit d905d06e64b0eb3da43af6186c132f5282197998 ]
 
-The use of the whole register and == could break the claim mechanism if
-any of the other bits are used in the future. The referenced doc "PSCI -
-ARM DEN 0022D" also says to only read and clear the bottom two bits.
+Device can be unbound, so driver must also release memory for the wakeup
+source.
 
-Use FIELD_GET() to extract only the relevant part.
-
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20250325-james-coresight-claim-tags-v4-2-dfbd3822b2e5@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250406-mfd-device-wakekup-leak-v1-3-318e14bdba0a@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-core.c | 3 ++-
- drivers/hwtracing/coresight/coresight-priv.h | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/mfd/max14577.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index 3ea6900542223..f6989a74fec94 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -161,7 +161,8 @@ static int coresight_find_link_outport(struct coresight_device *csdev,
- 
- static inline u32 coresight_read_claim_tags(struct coresight_device *csdev)
+diff --git a/drivers/mfd/max14577.c b/drivers/mfd/max14577.c
+index be185e9d5f16b..c9e56145b08bd 100644
+--- a/drivers/mfd/max14577.c
++++ b/drivers/mfd/max14577.c
+@@ -467,6 +467,7 @@ static int max14577_i2c_remove(struct i2c_client *i2c)
  {
--	return csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR);
-+	return FIELD_GET(CORESIGHT_CLAIM_MASK,
-+			 csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR));
- }
+ 	struct max14577 *max14577 = i2c_get_clientdata(i2c);
  
- static inline bool coresight_is_claimed_self_hosted(struct coresight_device *csdev)
-diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
-index ff1dd2092ac5b..b416edcdf797d 100644
---- a/drivers/hwtracing/coresight/coresight-priv.h
-+++ b/drivers/hwtracing/coresight/coresight-priv.h
-@@ -32,6 +32,7 @@
-  * Coresight device CLAIM protocol.
-  * See PSCI - ARM DEN 0022D, Section: 6.8.1 Debug and Trace save and restore.
-  */
-+#define CORESIGHT_CLAIM_MASK		GENMASK(1, 0)
- #define CORESIGHT_CLAIM_SELF_HOSTED	BIT(1)
- 
- #define TIMEOUT_US		100
++	device_init_wakeup(max14577->dev, false);
+ 	mfd_remove_devices(max14577->dev);
+ 	regmap_del_irq_chip(max14577->irq, max14577->irq_data);
+ 	if (max14577->dev_type == MAXIM_DEVICE_TYPE_MAX77836)
 -- 
 2.39.5
 
