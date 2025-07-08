@@ -1,133 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3755225334B;
-	Tue,  8 Jul 2025 22:26:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D246201034
+	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 22:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752013573; cv=none; b=Btnim/asoaJuTUaUJHHIJFHTdR7JbGZjCS+lGsf2x+jmg1khTQHYlVucWBC4YchVn23EufVIZj/9ajWIkiPoGQ9HUk5KA6B9d11oXkUHTJRg1YZsTz7PiYoBlNS+bFV6ooXpN1UwBYKyFSVb/elVowcqqs9xyP/j1RHTM3tSZbw=
+	t=1752014607; cv=none; b=sL+5yOytcr1wGpwaaPeu3PNnrBGrdyrJ1ctqNzJnykAdch1HXcEiaINef3GZq8WMhQUR9iCeeoCx4XuQ9+2K6lAw0PnZczT1/fP8M1QDO+QLAyIiktbM/WSSmHyQN9ITluEHKk1QpZIWnzUeENOu6NRoMXKDJf/Sr+bxWMARE0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752013573; c=relaxed/simple;
-	bh=kYrg6N+iGJMB3IncQTR1f8OwIscAnjjBNP5f3b7e5/8=;
+	s=arc-20240116; t=1752014607; c=relaxed/simple;
+	bh=hew1ePhykAjsI9To26HnWi16u2zQDoYS797i5P3C8eM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mZVvVFDWxKuG+UbbKU10Jw28DkCAfxdHwWfqqKF1Dw9PCIcJCX1dYsNgzRoe8MeXYqLmgpm+X/LZe4pIPEuTweAJdKfBDQ23WYOMPPjYHhmV8XCx+gncTUfon3hOuhjJEfn71pkxRniRrqDc594uzfzf/puRHfz9HmiiSOH0JJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N62kqzG3; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ba6/T8e5ErfATuF+0Lk429OlBY4gP11GTckOLwuhZs5AO2gTuZuC1Sxz+FhKGxiDKns4SW7QyR16m7zERc3hmv5XiwTIzXYFtMko8ph4CKN+AmQkyEAYKkWG2XyRuN9ZiQh9rLaoKYwGz5vw/HETkSf3RE5uTZwngl5hzaTVUwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NxXW/FgY; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N62kqzG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86910C4CEED;
-	Tue,  8 Jul 2025 22:26:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752013572;
-	bh=kYrg6N+iGJMB3IncQTR1f8OwIscAnjjBNP5f3b7e5/8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N62kqzG3NbPhzfYpzEbe0IPQjFyIGvaSTDFEhbBD/JDkeVFMVEjoJFEp77oFrsjVE
-	 rCNBR1xWAVvYmjnunsZQ8nClEVBtz+wJ5kAT6OWlXddQMjTXXwTLw4KRI6y92gVUP7
-	 ZjFfmpU/0LFOlrGYlGtWWNxcluXoc1wwbUe0NTz//PhGhy/yaBo42EmmHT+pjs2gYa
-	 tuvp7weNCCOehJsFmKSzTTH+9vRbk7VshhBMmBLunmjvWt2FkPaDZWDcq0JBFHojeD
-	 FcJk1ixVy3/e4C/04RV4dGSJiO2W3K2wUacnkhKTgp+URmsU/twlmNDg+6Cqp2t6bk
-	 VrOGmiJSSzdPQ==
-Date: Tue, 8 Jul 2025 18:26:08 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Nat Wittstock <nat@fardog.io>, Lucian Langa <lucilanga@7pot.org>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	rafael@kernel.org, pavel@ucw.cz, len.brown@intel.com,
-	linux-pm@vger.kernel.org, kexec@lists.infradead.org
-Subject: Re: [PATCH AUTOSEL 6.15 6/8] PM: Restrict swap use to later in the
- suspend sequence
-Message-ID: <aG2bAMGrDDSvOhbl@lappy>
-References: <20250708000215.793090-1-sashal@kernel.org>
- <20250708000215.793090-6-sashal@kernel.org>
- <87ms9esclp.fsf@email.froward.int.ebiederm.org>
- <aG2AcbhWmFwaHT6C@lappy>
- <87tt3mqrtg.fsf@email.froward.int.ebiederm.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NxXW/FgY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752014605; x=1783550605;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=hew1ePhykAjsI9To26HnWi16u2zQDoYS797i5P3C8eM=;
+  b=NxXW/FgYtNlzeAZTGezPJR+Qhj21K+kMDh9K5xYj9eWEw+dNBIoyjQDm
+   UCRDF0lyGx7hDXJrvx2dhXua3Cgs2rYfxhJfkEjXjpfaqBZcMkNwyQpYb
+   pgbCOjiVJGExrVMJZRxJXANr+Sren1W3zw1Ev1Dn81K3p5qCpRUypKD7r
+   rYxpMkmDqtZmA6E/m7Ugn4BRsDEeIXsj9W/UHUh9QBWaGyBTuuqlvhI3c
+   B6mK5UdYG9n9hZzhyDADRPHUJoDOljrQ1BHUsM/IN3q4D5SbjoLRoAMxj
+   6ICJkjWw3Z+2bKTkWiG4yYCq5Q7XSu7amAU+hGUagVOy12Sn/H2iQs55Y
+   w==;
+X-CSE-ConnectionGUID: gbLP7yeKRAuKSDPSmDGZ9w==
+X-CSE-MsgGUID: xLhlrbIoTgOm1lk/Rt5ynQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="56875335"
+X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
+   d="scan'208";a="56875335"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2025 15:43:22 -0700
+X-CSE-ConnectionGUID: Cm6LicrfSzKZvcKCmdTGBg==
+X-CSE-MsgGUID: vdvIkTZ6RtmZfUDS1oOc3w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
+   d="scan'208";a="155731793"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.103.51])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2025 15:43:20 -0700
+Date: Tue, 8 Jul 2025 15:43:18 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v6 00/30] x86,fs/resctrl telemetry monitoring
+Message-ID: <aG2fBp5VojStKcCd@agluck-desk3>
+References: <20250626164941.106341-1-tony.luck@intel.com>
+ <b2de4c92-a883-40b0-92e0-16fac9e386b0@intel.com>
+ <aGa8Pg9pSCJ3XjtY@agluck-desk3>
+ <aG1sqKBJSfHydDsx@agluck-desk3>
+ <5b2d621f-459f-463e-abc6-9157513f1fee@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87tt3mqrtg.fsf@email.froward.int.ebiederm.org>
+In-Reply-To: <5b2d621f-459f-463e-abc6-9157513f1fee@intel.com>
 
-On Tue, Jul 08, 2025 at 04:46:19PM -0500, Eric W. Biederman wrote:
->Sasha Levin <sashal@kernel.org> writes:
->
->> On Tue, Jul 08, 2025 at 02:32:02PM -0500, Eric W. Biederman wrote:
->>>
->>>Wow!
->>>
->>>Sasha I think an impersonator has gotten into your account, and
->>>is just making nonsense up.
->>
->> https://lore.kernel.org/all/aDXQaq-bq5BMMlce@lappy/
->
->It is nice it is giving explanations for it's backporting decisions.
->
->It would be nicer if those explanations were clearly marked as
->coming from a non-human agent, and did not read like a human being
->impatient for a patch to be backported.
+On Tue, Jul 08, 2025 at 01:49:26PM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 7/8/25 12:08 PM, Luck, Tony wrote:
+> > On Thu, Jul 03, 2025 at 10:22:06AM -0700, Luck, Tony wrote:
+> >> On Thu, Jul 03, 2025 at 09:45:15AM -0700, Reinette Chatre wrote:
+> >>> Hi Tony and Dave,
+> >>>
+> >>> On 6/26/25 9:49 AM, Tony Luck wrote:
+> >>>>  --- 14 ---
+> >>>> Add mon_evt::is_floating_point set by resctrl file system code to limit
+> >>>> which events architecture code can request be displayed in floating point.
+> >>>>
+> >>>> Simplified the fixed-point to floating point algorithm. Reinette is
+> >>>> correct that the additional "lshift" and "rshift" operations are not
+> >>>> required. All that is needed is to multiply the fixed point fractional
+> >>>> part by 10**decimal_places, add a rounding amount equivalent to a "1"
+> >>>> in the binary place after those supplied. Finally divide by 2**binary_places
+> >>>> (with a right shift).
+> >>>>
+> >>>> Explained in commit comment how I chose the number of decimal places to
+> >>>> use for each binary places value.
+> >>>>
+> >>>> N.B. Dave Martin expressed an opinion that the kernel should not do
+> >>>> this conversion. Instead it should enumerate the scaling factor for
+> >>>> each event where hardware reported a fixed point value. This patch
+> >>>> could be dropped and replaced with one to enumerate scaling factors
+> >>>> per event if others agree with Dave.
+> >>>
+> >>> Could resctrl accommodate both usages? For example, it does not
+> >>> look too invasive to add a second file <mon_evt::name>.raw for the
+> >>> mon_evt::is_floating_point events that can output something like Dave
+> >>> suggested in [1]:
+> >>>
+> >>> .raw file format could be:
+> >>> 	#format:<output that depends on format>
+> >>> 	#fixed-point:<value>/<scaling factor>
+> >>>
+> >>> Example output:
+> >>> 	fixed-point:0x60000/0x40000
+> >>
+> >> Dave: Is that what you want in the ".raw" file? An alternative would be
+> >> to put the format information for non-integer events into an
+> >> "info" file ("info/{RESOURCE_NAME}_MON/monfeatures.raw.formats"?)
+> >> and just put the raw value into the ".raw" file under mon_data.
+> > 
+> > Note that I thought it easier for users to keep the raw file to just
+> > showing a value, rather than including the formatting details in
+> > Reinette's proposal.
+> 
+> Could you please elaborate what makes this easier? It is not obvious to me
+> how it is easier for user to open, parse, and close two files rather than one.
+> (more below)
 
-Thats a fair point. I'll add "LLM Analysis:" before the explanation to
-future patches.
+I had only considered the case where the format does not change while
+the resctrl file system is mounted. So users would read the "info" file
+to get the scaling factor once, and then read the event files with a
+parser that only has to convert a numerical string.
 
->Further the machine given explanations were clearly wrong.  Do you have
->plans to do anything about that?  Using very incorrect justifications
->for backporting patches is scary.
+> > Patch to implement my alternative suggestion below. To the user things
+> > look like this:
+> > 
+> > $ cd /sys/fs/resctrl/mon_data/mon_PERF_PKG_01
+> > $ cat core_energy
+> > 0.02203
+> > $ cat core_energy.raw
+> > 5775
+> > $ cat /sys/fs/resctrl/info/PERF_PKG_MON/mon_features_raw_scale
+> > core_energy 262144
+> > activity 262144
+> > $ bc -ql
+> > 5775 / 262144
+> > .02202987670898437500
+> > 
+> > If this seems useful I can write up a commit message and include
+> > as its own patch in v7. Suggestions for better names?
+> > 
+> 
+> I expect users to regularly interact with the monitoring files. For example,
+> "read the core_energy of group x every second". An API like above would require
+> a contract that the scale value will never change from resctrl mount to
+> resctrl unmount. I understand that this implementation supports exactly this by
+> allowing an architecture to only enable an event once, but do you think this is
+> something that will always be the case? If not then an interface like above will
+> require user space to open, parse, close two files instead of one on a frequent basis.
+> This is not ideal if user space wants to read monitoring data of multiple
+> groups frequently.
 
-Just like in the past 8 years where AUTOSEL ran without any explanation
-whatsoever, the patches are manually reviewed and tested prior to being
-included in the stable tree.
+While hardware designers do some outlandish things. Changing the format
+of an event counter on the fly seems beyond the range of possibility.
+How would that even work? A driver would have to rerun enumeration of
+the feature every time it read a counter. Or hardware would have to
+supply some interrupt to tell s/w that the format changed.
 
-I don't make a point to go back and correct the justification, it's
-there more to give some idea as to why this patch was marked for
-review and may be completely bogus (in which case I'll drop the patch).
+I think it reasonable that resctrl be able to guarantee that the format
+described in the info file is valid for the life of the mount.
 
-For that matter, I'd often look at the explanation only if I don't fully
-understand why a certain patch was selected. Most often I just use it as
-a "Yes/No" signal.
+> I would also like to keep extensibility in mind. We now know that
+> unsigned decimal and fixed-point binary needs to be supported. I think any
+> new interface used to communicate formatting information to user space should be done
+> in a way that can be extended for a new format. That is, for example, why
+> I used the actual term "fixed-point" in the example. Something like this avoids
+> needing assumptions that a raw value always implies fixed-point format.
 
-In this instance I honestly haven't read the LLM explanation. I agree
-with you that the explanation is flawed, but the patch clearly fixes a
-problem:
+This is fair. But could be covered in the "info" file with some more
+descriptive way to describe the format. Perhaps:
 
-	"On AMD dGPUs this can lead to failed suspends under memory
-	pressure situations as all VRAM must be evicted to system memory
-	or swap."
+$ cat /sys/fs/resctrl/info/PERF_PKG_MON/mon_features_raw_scale
+core_energy fixed-point scale=262144
+activity fixed-point scale=262144
 
-So it was included in the AUTOSEL patchset.
+To allow for other types in the future.
 
-Do you have an objection to this patch being included in -stable? So far
-your concerns were about the LLM explanation rather than actual patch.
+> 
+> Reinette
 
->I still highly recommend that you get your tool to not randomly
->cut out bits from links it references, making them unfollowable.
-
-Good point. I'm not really sure what messes up the line wraps. I'll take
-a look.
-
->>>At best all of this appears to be an effort to get someone else to
->>>do necessary thinking for you.  As my time for kernel work is very
->>>limited I expect I will auto-nack any such future attempts to outsource
->>>someone else's thinking on me.
->>
->> I've gone ahead and added you to the list of people who AUTOSEL will
->> skip, so no need to worry about wasting your time here.
->
->Thank you for that.
->
->I assume going forward that AUTOSEL will not consider any patches
->involving the core kernel and the user/kernel ABI going forward.  The
->areas I have been involved with over the years, and for which my review
->might be interesting.
-
-The filter is based on authorship and SoBs. Individual maintainers of a
-subsystem can elect to have their entire subsystem added to the ignore
-list.
-
--- 
-Thanks,
-Sasha
+-Tony
