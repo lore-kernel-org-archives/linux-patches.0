@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0913F21773D;
-	Tue,  8 Jul 2025 16:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD6921773D;
+	Tue,  8 Jul 2025 16:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992566; cv=none; b=WkAgskyja8piHqjhQowYFFE4cnRsBXjBPbSRVleq0JFvpWjd7tBE+xAqtC4odMmjqvVlxraUtuCw4r8d4TWhNmQeIfrCbMHt4cFpLJdw4aGZtrWVrHxJ/rwFU7GnDGSC636FuQnFi9APr+FSHexGV9c2nTvbdDTY4xunEWM4XOY=
+	t=1751992569; cv=none; b=jsxB3QWO62UCLlTdBY9A4T1bz2UOdZfQF6afhIazGseBZyKdBpbJVKW0Q2Qo+Xxthmd+OcFt3CNh9BncidbdtbvHKTvSAK+RSMrBM4oaoDMuBsXYx+4iFEZyWoCYsnfLVMGXJ6DYgbvvs25zDRdcym7p2NyE9g5aVJ2fV9HqBoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992566; c=relaxed/simple;
-	bh=qyOtmWy/4PrZyeu/BI9ysobgKkFPofmX8RjN+2m6kBE=;
+	s=arc-20240116; t=1751992569; c=relaxed/simple;
+	bh=vdbwql6KC6mLhrxIRECS27fOgwZOjz04i4/PAuOmvYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCFV+aKHroNn9XpLBLMT+mGYtOe1Oum5TZu2OaBquVgYUa497Hvh+j/HzClV1fZN22AeMlWtU+fRiRVL8KLNcxcyPx3JAO05rSKPSNNnQb1r5Ry0f6L2AZNuPAEtveHnzdBNq2WZZv24vPjV/JBlwR6/jWCtMkf91K1Jh1S2WbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7h6Pq+y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WnjO5I5bi3tqNJAJ32/ynbpvkPgK7v5xP0jLgZd3jnMBB5ciCdAvhWcWP6DqdIwhSuGkwqBn0Gkl/58ERIgmF1sT20yxn2FBPQWMUXUCxIdzF2zI+zuXb4YHnoGeljeXzLvOPy7bss4ytAOko2lKFd6atTtYIwWTDDJI+i0qEvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eT6FyBE4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7h6Pq+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8376DC4CEED;
-	Tue,  8 Jul 2025 16:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eT6FyBE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6585BC4CEED;
+	Tue,  8 Jul 2025 16:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992565;
-	bh=qyOtmWy/4PrZyeu/BI9ysobgKkFPofmX8RjN+2m6kBE=;
+	s=korg; t=1751992568;
+	bh=vdbwql6KC6mLhrxIRECS27fOgwZOjz04i4/PAuOmvYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7h6Pq+yUFSgvjgdOyQPPCCvtecWBKO9TQTy/LcLZtfXuFl4LdZw91cAhUZQvVOcU
-	 blOx0hQarF4m2XFfTkJvmUub20fcb/gKAUXiCaLCKeOwAO2eohaGk//OHe4MWhV4Wh
-	 g+DtjmZhOfVm59j+V5x8ToN0Bt0/uHJF8g9COSOE=
+	b=eT6FyBE4QYYZ/IqeK7SHL9FulN73c6Rg3gwehbPSe6rUGZ+l/qabOVZLndbAJZZ83
+	 h/CtOuIrA7hy6QlOj640IuHsYii5o8c/Q7x6xWfCeOYTM1X6LIyMO1Q1q8fUAumMn3
+	 /Abpl7T9wuiRmnanspo8Zzd/D22Hn+v1idQo0GeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilton Perim Neto <niltonperimneto@gmail.com>,
+	Jeff LaBundy <jeff@labundy.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 113/132] Input: xpad - support Acer NGR 200 Controller
-Date: Tue,  8 Jul 2025 18:23:44 +0200
-Message-ID: <20250708162233.877951609@linuxfoundation.org>
+Subject: [PATCH 6.6 114/132] Input: iqs7222 - explicitly define number of external channels
+Date: Tue,  8 Jul 2025 18:23:45 +0200
+Message-ID: <20250708162233.901296346@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -50,38 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilton Perim Neto <niltonperimneto@gmail.com>
+From: Jeff LaBundy <jeff@labundy.com>
 
-commit 22c69d786ef8fb789c61ca75492a272774221324 upstream.
+commit 63f4970a1219b5256e8ea952096c86dab666d312 upstream.
 
-Add the NGR 200 Xbox 360 to the list of recognized controllers.
+The number of external channels is assumed to be a multiple of 10,
+but this is not the case for IQS7222D. As a result, some CRx pins
+are wrongly prevented from being assigned to some channels.
 
-Signed-off-by: Nilton Perim Neto <niltonperimneto@gmail.com>
-Link: https://lore.kernel.org/r/20250608060517.14967-1-niltonperimneto@gmail.com
+Address this problem by explicitly defining the number of external
+channels for cases in which the number of external channels is not
+equal to the total number of available channels.
+
+Fixes: dd24e202ac72 ("Input: iqs7222 - add support for Azoteq IQS7222D")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Link: https://lore.kernel.org/r/aGHVf6HkyFZrzTPy@nixie71
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/misc/iqs7222.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -174,6 +174,7 @@ static const struct xpad_device {
- 	{ 0x05fd, 0x107a, "InterAct 'PowerPad Pro' X-Box pad (Germany)", 0, XTYPE_XBOX },
- 	{ 0x05fe, 0x3030, "Chic Controller", 0, XTYPE_XBOX },
- 	{ 0x05fe, 0x3031, "Chic Controller", 0, XTYPE_XBOX },
-+	{ 0x0502, 0x1305, "Acer NGR200", 0, XTYPE_XBOX },
- 	{ 0x062a, 0x0020, "Logic3 Xbox GamePad", 0, XTYPE_XBOX },
- 	{ 0x062a, 0x0033, "Competition Pro Steering Wheel", 0, XTYPE_XBOX },
- 	{ 0x06a3, 0x0200, "Saitek Racing Wheel", 0, XTYPE_XBOX },
-@@ -514,6 +515,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x045e),		/* Microsoft Xbox 360 controllers */
- 	XPAD_XBOXONE_VENDOR(0x045e),		/* Microsoft Xbox One controllers */
- 	XPAD_XBOX360_VENDOR(0x046d),		/* Logitech Xbox 360-style controllers */
-+	XPAD_XBOX360_VENDOR(0x0502),		/* Acer Inc. Xbox 360 style controllers */
- 	XPAD_XBOX360_VENDOR(0x056e),		/* Elecom JC-U3613M */
- 	XPAD_XBOX360_VENDOR(0x06a3),		/* Saitek P3600 */
- 	XPAD_XBOX360_VENDOR(0x0738),		/* Mad Catz Xbox 360 controllers */
+--- a/drivers/input/misc/iqs7222.c
++++ b/drivers/input/misc/iqs7222.c
+@@ -301,6 +301,7 @@ struct iqs7222_dev_desc {
+ 	int allow_offset;
+ 	int event_offset;
+ 	int comms_offset;
++	int ext_chan;
+ 	bool legacy_gesture;
+ 	struct iqs7222_reg_grp_desc reg_grps[IQS7222_NUM_REG_GRPS];
+ };
+@@ -315,6 +316,7 @@ static const struct iqs7222_dev_desc iqs
+ 		.allow_offset = 9,
+ 		.event_offset = 10,
+ 		.comms_offset = 12,
++		.ext_chan = 10,
+ 		.reg_grps = {
+ 			[IQS7222_REG_GRP_STAT] = {
+ 				.base = IQS7222_SYS_STATUS,
+@@ -373,6 +375,7 @@ static const struct iqs7222_dev_desc iqs
+ 		.allow_offset = 9,
+ 		.event_offset = 10,
+ 		.comms_offset = 12,
++		.ext_chan = 10,
+ 		.legacy_gesture = true,
+ 		.reg_grps = {
+ 			[IQS7222_REG_GRP_STAT] = {
+@@ -2244,7 +2247,7 @@ static int iqs7222_parse_chan(struct iqs
+ 	const struct iqs7222_dev_desc *dev_desc = iqs7222->dev_desc;
+ 	struct i2c_client *client = iqs7222->client;
+ 	int num_chan = dev_desc->reg_grps[IQS7222_REG_GRP_CHAN].num_row;
+-	int ext_chan = rounddown(num_chan, 10);
++	int ext_chan = dev_desc->ext_chan ? : num_chan;
+ 	int error, i;
+ 	u16 *chan_setup = iqs7222->chan_setup[chan_index];
+ 	u16 *sys_setup = iqs7222->sys_setup;
+@@ -2448,7 +2451,7 @@ static int iqs7222_parse_sldr(struct iqs
+ 	const struct iqs7222_dev_desc *dev_desc = iqs7222->dev_desc;
+ 	struct i2c_client *client = iqs7222->client;
+ 	int num_chan = dev_desc->reg_grps[IQS7222_REG_GRP_CHAN].num_row;
+-	int ext_chan = rounddown(num_chan, 10);
++	int ext_chan = dev_desc->ext_chan ? : num_chan;
+ 	int count, error, reg_offset, i;
+ 	u16 *event_mask = &iqs7222->sys_setup[dev_desc->event_offset];
+ 	u16 *sldr_setup = iqs7222->sldr_setup[sldr_index];
 
 
