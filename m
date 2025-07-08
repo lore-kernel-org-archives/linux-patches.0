@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624622DE1FA;
-	Tue,  8 Jul 2025 16:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413631DB127;
+	Tue,  8 Jul 2025 16:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993772; cv=none; b=FyOCZ4IjbayOdmU4E29rR3KGuutaJEhJOmn4W/uyx9aYaPIYdYFwRzZHUQSMqno9frEeEhO9+fmv218vqbuqYCLs+d7n9nLn0kR6nTwaaxaEjWeNyfzhZdMY8QqnGAK6jk80ivMVRkZiEZnjhpZvLhS0I+Y/u7KQzsWTwjgAgEg=
+	t=1751993775; cv=none; b=TYjj0/aCKsqfHCuXJFjTO3fdP6BIVSFJM9mck/uTjPz2ceUQMJ8W3pCPXEhUHU8t2mG9M+BV9tGkcBP5VXR7SHW4lkOEaAGZzA3uAQTWlJqbzN5BtIYQh9sb5UHH+XkRsr61Cv82TpeFksg5Xb5+/RcXrvCWR5NrsOX9NYnykjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993772; c=relaxed/simple;
-	bh=o78DTNbxZXtms7/mPPMmLDwK3EsbrUEgWbKVVQB7S1Y=;
+	s=arc-20240116; t=1751993775; c=relaxed/simple;
+	bh=j17j+zV80cw6Q4SQsP7Pq7ybwbQluq1nlR6h7YPtuXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DzePh5nm6Uf5YkSYoZ51AUUqH9eMHjwOb3UdJltWjiq3fnyMgnkw0h12jPxLYvTynRO4UiUd3Zwrbgkwu4CEdWBD5U7BWKDl9xphFr5bGTl42cNjGIdZ373k9BdbE6JMVEwPd3rT7GG2eY/gvtHxMomuhfXsdZF9+iAq/WZ363Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCxXH62F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IrTV/0NlwNQjGkKkj2L/koKc4IZdf9TqahNrg+Dj0W9hof6A1SmOWEx3NU3BcSvEo+VilmXf4lsxSKbjHP1cKgWbKpYlKq7OoeL5IlMgVJQHRPGbQup65WB5fcUT4YtRSKCo5Jiq5Kpr9VE4IGxDAJUA0r9o+Osci/AT4yZTHXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRKs0TH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCxXH62F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF39C4CEED;
-	Tue,  8 Jul 2025 16:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRKs0TH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC84BC4CEED;
+	Tue,  8 Jul 2025 16:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993772;
-	bh=o78DTNbxZXtms7/mPPMmLDwK3EsbrUEgWbKVVQB7S1Y=;
+	s=korg; t=1751993775;
+	bh=j17j+zV80cw6Q4SQsP7Pq7ybwbQluq1nlR6h7YPtuXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCxXH62FhZgpnOl+PIxjwGeTNrJfHY7qdyfzgzApCpMWsxmjbMxvivTqCVPFtif7g
-	 Mx7U0ob2y9AkT/9Vrnfx7/TfPST04hEmpUo3zLGoOeFK33YRWI7hCNRIFB6L1w+xms
-	 OrIFwmilrZh7x+d9fpf+L4Lfcold+/dD3xW/X8es=
+	b=rRKs0TH6Vw0XT4RI0HJirO5oNRmZviucncwIjhoIMMYFvaKJyW6hi4ccHW9WIcdm2
+	 xUUDGrwyqmGwft9SAcPq/Q/5ZrTO/IfUtInY1DmNM4iIFAMF+bkyjWox+Ha2TU6abN
+	 6n+I+yl8QLxDGQbwg19hBT2raQD1XCNKj/iLsnQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Sven Schuchmann <schuchmann@schleissheimer.de>,
+	Sven Schwermer <sven.schwermer@disruptive-technologies.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/160] mailbox: Not protect module_put with spin_lock_irqsave
-Date: Tue,  8 Jul 2025 18:20:41 +0200
-Message-ID: <20250708162231.628895447@linuxfoundation.org>
+Subject: [PATCH 5.15 006/160] leds: multicolor: Fix intensity setting while SW blinking
+Date: Tue,  8 Jul 2025 18:20:43 +0200
+Message-ID: <20250708162231.684669682@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,36 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
 
-[ Upstream commit dddbd233e67e792bb0a3f9694a4707e6be29b2c6 ]
+[ Upstream commit e35ca991a777ef513040cbb36bc8245a031a2633 ]
 
-&chan->lock is not supposed to protect 'chan->mbox'.
-And in __mbox_bind_client, try_module_get is also not protected
-by &chan->lock. So move module_put out of the lock protected
-region.
+When writing to the multi_intensity file, don't unconditionally call
+led_set_brightness. By only doing this if blinking is inactive we
+prevent blinking from stopping if the blinking is in its off phase while
+the file is written.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Instead, if blinking is active, the changed intensity values are applied
+upon the next blink. This is consistent with changing the brightness on
+monochrome LEDs with active blinking.
+
+Suggested-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Acked-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Acked-by: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
+Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+Signed-off-by: Sven Schwermer <sven.schwermer@disruptive-technologies.com>
+Link: https://lore.kernel.org/r/20250404184043.227116-1-sven@svenschwermer.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/leds/led-class-multicolor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index 6f54501dc7762..cb31ad917b352 100644
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -459,8 +459,8 @@ void mbox_free_channel(struct mbox_chan *chan)
- 	if (chan->txdone_method == TXDONE_BY_ACK)
- 		chan->txdone_method = TXDONE_BY_POLL;
+diff --git a/drivers/leds/led-class-multicolor.c b/drivers/leds/led-class-multicolor.c
+index ec62a48116135..e0785935f4ba6 100644
+--- a/drivers/leds/led-class-multicolor.c
++++ b/drivers/leds/led-class-multicolor.c
+@@ -61,7 +61,8 @@ static ssize_t multi_intensity_store(struct device *dev,
+ 	for (i = 0; i < mcled_cdev->num_colors; i++)
+ 		mcled_cdev->subled_info[i].intensity = intensity_value[i];
  
--	module_put(chan->mbox->dev->driver->owner);
- 	spin_unlock_irqrestore(&chan->lock, flags);
-+	module_put(chan->mbox->dev->driver->owner);
- }
- EXPORT_SYMBOL_GPL(mbox_free_channel);
- 
+-	led_set_brightness(led_cdev, led_cdev->brightness);
++	if (!test_bit(LED_BLINK_SW, &led_cdev->work_flags))
++		led_set_brightness(led_cdev, led_cdev->brightness);
+ 	ret = size;
+ err_out:
+ 	mutex_unlock(&led_cdev->led_access);
 -- 
 2.39.5
 
