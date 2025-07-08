@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0629A2DAFA3;
-	Tue,  8 Jul 2025 16:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F8C2E62B8;
+	Tue,  8 Jul 2025 16:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993161; cv=none; b=i+5Vl/W2DRW1+HNiX6Z6eQza4rLkYumi4kKJ8BUfG3w0H90GJi24MTZAkGWCq3O81Ewgl/BXPmEf9BPrKWuOwVDZQMKGmqw83myIvFX3XKccXCqu/UX3mE4W8n9grrtWC9w+KjY1JSu3kobngchG2SZ7CqsZspGC71oML3c4T/g=
+	t=1751993163; cv=none; b=eVr4t8rgOz4H/M1EmqQF798t36oP0S399sQ5tiuTAGv5fVPf274mvCMG0Wv8tzcPAwwe7RznWE7H9vOXuygUIUlOrmwA+pVd/wJQFn8O6JvwD94gk3AJZ7tETM/VRSiq68xMbol0XW11vRPd1/D8VU+XTYoAa7bhnIxnrLAZXdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993161; c=relaxed/simple;
-	bh=Sj2s6Ijfe27O/khGGm0bW5r0F5AXmZcpvZ/I2mLXIbQ=;
+	s=arc-20240116; t=1751993163; c=relaxed/simple;
+	bh=M0OBjhbiPgiCbA0K7yZq3XMB6tIbK2MUN2VcpaCqjYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=erMF8TAbvmj4j16FP95i+hIPJN/Dz2aEtmOrkmsoKwSg+X5MC582N/hZrJIL0GqijoQgwsct2+E5zHXigCntLg64C1SeGeeJ4CTrG9mw2wCBP5ynqJb1N82FmrnvWxf8vxPxwzMfqaeUiRxpg3ED6/cN110uxnkTLmKewUPTlhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSkr8NqW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6oQwQjxt1c0XOAABxWgkgoJUsLwkSz/rjpiX5IZFNwizROqQu1pDIIKoHZh39BSjKyMcRQyqoCYJuSw+VBYKtsY70gO1TnjdbGlkshaL+FHkVXcvBfqBAKDjU58xra0VHpbuHbQ3WmhC1EJI8pGge3U6/FZBF7CvAEGv16XFwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGEZ0YeD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSkr8NqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEB1C4CEF7;
-	Tue,  8 Jul 2025 16:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGEZ0YeD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63648C4CEED;
+	Tue,  8 Jul 2025 16:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993160;
-	bh=Sj2s6Ijfe27O/khGGm0bW5r0F5AXmZcpvZ/I2mLXIbQ=;
+	s=korg; t=1751993163;
+	bh=M0OBjhbiPgiCbA0K7yZq3XMB6tIbK2MUN2VcpaCqjYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSkr8NqWtBWibje0d0k9rMG+bMr1W19QNI79HuTaVmK3LxE722wx2tpK/aFZVjAvb
-	 GL+jNA7ki++/J99Imcr5PoSzcBmYhsFgJRujeZ7E58cLuJwcM8H9w1L5cOUzdbMxvA
-	 /43ixXPj4H1qwfjk9AXmiLGiqjgEsScqlVxg66/o=
+	b=nGEZ0YeDOnNiIUL0JPEWpOGIu2YEHWo59cExcguLe+tfXLtDTtibo/KmvAQ0qym/w
+	 UGd6WaRwN5ePLjdUX4Jt4oulODsP795eSvXC3Q6YqrQz9QDxzFAqoVyaiIEZoXmw1j
+	 gzcs+XfCJ6PAy8vmfozql1rd/yrgl9HwLnHS3SlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shawn Guo <shawnguo@kernel.org>,
+	John Ernberg <john.ernberg@actia.se>,
 	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.12 209/232] usb: dwc3: Abort suspend on soft disconnect failure
-Date: Tue,  8 Jul 2025 18:23:25 +0200
-Message-ID: <20250708162246.907835259@linuxfoundation.org>
+	Jun Li <jun.li@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.12 210/232] usb: chipidea: udc: disconnect/reconnect from host when do suspend/resume
+Date: Tue,  8 Jul 2025 18:23:26 +0200
+Message-ID: <20250708162246.937389345@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,100 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 630a1dec3b0eba2a695b9063f1c205d585cbfec9 upstream.
+commit 31a6afbe86e8e9deba9ab53876ec49eafc7fd901 upstream.
 
-When dwc3_gadget_soft_disconnect() fails, dwc3_suspend_common() keeps
-going with the suspend, resulting in a period where the power domain is
-off, but the gadget driver remains connected.  Within this time frame,
-invoking vbus_event_work() will cause an error as it attempts to access
-DWC3 registers for endpoint disabling after the power domain has been
-completely shut down.
+Shawn and John reported a hang issue during system suspend as below:
 
-Abort the suspend sequence when dwc3_gadget_suspend() cannot halt the
-controller and proceeds with a soft connect.
+ - USB gadget is enabled as Ethernet
+ - There is data transfer over USB Ethernet (scp a big file between host
+                                             and device)
+ - Device is going in/out suspend (echo mem > /sys/power/state)
 
-Fixes: 9f8a67b65a49 ("usb: dwc3: gadget: fix gadget suspend/resume")
+The root cause is the USB device controller is suspended but the USB bus
+is still active which caused the USB host continues to transfer data with
+device and the device continues to queue USB requests (in this case, a
+delayed TCP ACK packet trigger the issue) after controller is suspended,
+however the USB controller clock is already gated off. Then if udc driver
+access registers after that point, the system will hang.
+
+The correct way to avoid such issue is to disconnect device from host when
+the USB bus is not at suspend state. Then the host will receive disconnect
+event and stop data transfer in time. To continue make USB gadget device
+work after system resume, this will reconnect device automatically.
+
+To make usb wakeup work if USB bus is already at suspend state, this will
+keep connection for it only when USB device controller has enabled wakeup
+capability.
+
+Reported-by: Shawn Guo <shawnguo@kernel.org>
+Reported-by: John Ernberg <john.ernberg@actia.se>
+Closes: https://lore.kernel.org/linux-usb/aEZxmlHmjeWcXiF3@dragon/
+Tested-by: John Ernberg <john.ernberg@actia.se> # iMX8QXP
+Fixes: 235ffc17d014 ("usb: chipidea: udc: add suspend/resume support for device controller")
 Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://lore.kernel.org/r/20250528100315.2162699-1-khtsai@google.com
+Reviewed-by: Jun Li <jun.li@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20250614124914.207540-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c   |    9 +++++++--
- drivers/usb/dwc3/gadget.c |   22 +++++++++-------------
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ drivers/usb/chipidea/udc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -2364,6 +2364,7 @@ static int dwc3_suspend_common(struct dw
- {
- 	u32 reg;
- 	int i;
-+	int ret;
- 
- 	if (!pm_runtime_suspended(dwc->dev) && !PMSG_IS_AUTO(msg)) {
- 		dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
-@@ -2382,7 +2383,9 @@ static int dwc3_suspend_common(struct dw
- 	case DWC3_GCTL_PRTCAP_DEVICE:
- 		if (pm_runtime_suspended(dwc->dev))
- 			break;
--		dwc3_gadget_suspend(dwc);
-+		ret = dwc3_gadget_suspend(dwc);
-+		if (ret)
-+			return ret;
- 		synchronize_irq(dwc->irq_gadget);
- 		dwc3_core_exit(dwc);
- 		break;
-@@ -2417,7 +2420,9 @@ static int dwc3_suspend_common(struct dw
- 			break;
- 
- 		if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
--			dwc3_gadget_suspend(dwc);
-+			ret = dwc3_gadget_suspend(dwc);
-+			if (ret)
-+				return ret;
- 			synchronize_irq(dwc->irq_gadget);
- 		}
- 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4788,26 +4788,22 @@ int dwc3_gadget_suspend(struct dwc3 *dwc
- 	int ret;
- 
- 	ret = dwc3_gadget_soft_disconnect(dwc);
--	if (ret)
--		goto err;
--
--	spin_lock_irqsave(&dwc->lock, flags);
--	if (dwc->gadget_driver)
--		dwc3_disconnect_gadget(dwc);
--	spin_unlock_irqrestore(&dwc->lock, flags);
--
--	return 0;
--
--err:
- 	/*
- 	 * Attempt to reset the controller's state. Likely no
- 	 * communication can be established until the host
- 	 * performs a port reset.
+--- a/drivers/usb/chipidea/udc.c
++++ b/drivers/usb/chipidea/udc.c
+@@ -2362,6 +2362,10 @@ static void udc_suspend(struct ci_hdrc *
  	 */
--	if (dwc->softconnect)
-+	if (ret && dwc->softconnect) {
- 		dwc3_gadget_soft_connect(dwc);
-+		return -EAGAIN;
-+	}
- 
--	return ret;
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->gadget_driver)
-+		dwc3_disconnect_gadget(dwc);
-+	spin_unlock_irqrestore(&dwc->lock, flags);
+ 	if (hw_read(ci, OP_ENDPTLISTADDR, ~0) == 0)
+ 		hw_write(ci, OP_ENDPTLISTADDR, ~0, ~0);
 +
-+	return 0;
++	if (ci->gadget.connected &&
++	    (!ci->suspended || !device_may_wakeup(ci->dev)))
++		usb_gadget_disconnect(&ci->gadget);
  }
  
- int dwc3_gadget_resume(struct dwc3 *dwc)
+ static void udc_resume(struct ci_hdrc *ci, bool power_lost)
+@@ -2372,6 +2376,9 @@ static void udc_resume(struct ci_hdrc *c
+ 					OTGSC_BSVIS | OTGSC_BSVIE);
+ 		if (ci->vbus_active)
+ 			usb_gadget_vbus_disconnect(&ci->gadget);
++	} else if (ci->vbus_active && ci->driver &&
++		   !ci->gadget.connected) {
++		usb_gadget_connect(&ci->gadget);
+ 	}
+ 
+ 	/* Restore value 0 if it was set for power lost check */
 
 
