@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF092E0411;
-	Tue,  8 Jul 2025 16:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7CA289E2C;
+	Tue,  8 Jul 2025 16:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992710; cv=none; b=pG3Pwhgj9e4U8BJkEi2LTLse2Dz2XvU7PUzWdUFNRCtlfN/pMgXuyNqBYmdqptiu3H/XTmFBdD160Eg5zEYJ/ya8qoCP8J4IWGzOUuInGcgxThlwd5G6YGMoLsZ0NEbOFqXfEFveiwAr6d+pGsaeOZDMSmkQwlWDaLwtP07StwQ=
+	t=1751992712; cv=none; b=Sv8M+NczZE+TIbuOZHYX5jUxSusUVjVtheZ7a4CzLK4KVw+pcgNbMR6Z6V6GXblOaEL+OfogweTnHTqU9SL8Ago5Q2+Wgph5oRq2lHiazwCdDMFk+zPeMJlb8b0M1fsCLPR4pCgPeL67pEkluMQMKJDR4rCfeE04Yr5kc3+h8a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992710; c=relaxed/simple;
-	bh=dXTc3t/ujWx45+Y/IJd6IDkz7GLzG2TqDiyF3XxHbZg=;
+	s=arc-20240116; t=1751992712; c=relaxed/simple;
+	bh=+5dW3cJwGVonpxpyVyeB6aCjPRp8APp7DtZHYai+Fhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myXNBJjf34DhjoScY0nJFM2gGggMBEVOgGujdaXK43txnuFJbEG698kTQ128AzCVMWuOFleQNVUUUSE5drDnC0sHBeiuVMLUDVkOY+zB+mWl9LWNN/nr7k/DCYjttcY7d6kYwAH51Ml7wiWQpaM4siUjl6OQlW6qisGaI2ZlfOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hatGG3l0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bR684TeQJbtR9vPte3HLv9Cut4vu2ll9rQOEMu1h9XaW9f0OqO3Bh81gKqsDYQlbEfyIyKy8731SvznNFDn5zc9OiH+laveVo7IcMH6wVtYAxxrP3o+/k3R+DYgVjmQkTPA3vvXFKaoG/8cLDBUMWcnFDDmbkEDWmp36inwUyq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fP8Bx29U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hatGG3l0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D79C4CEED;
-	Tue,  8 Jul 2025 16:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fP8Bx29U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C69BC4CEED;
+	Tue,  8 Jul 2025 16:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992709;
-	bh=dXTc3t/ujWx45+Y/IJd6IDkz7GLzG2TqDiyF3XxHbZg=;
+	s=korg; t=1751992712;
+	bh=+5dW3cJwGVonpxpyVyeB6aCjPRp8APp7DtZHYai+Fhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hatGG3l0qeFQq4iTpcv+6nU9KZRTudCpTt14HEFF3wMIozn+VxqtbiW7+EEfZ8tR4
-	 eIF8jHtI+IOCEH1AaiRkfma0EXKa69xNx2UAUYvvdbVbGQJVrSQohZYHflgYVoX7mT
-	 Eyt9yTKGSy2GtiODl4vC+4AyPdMbEsYS0jkfZxHE=
+	b=fP8Bx29UpAuGZM7Lu+HDFAw4m4LNEkM4VKHClJgHfx3OTRNat9F0DpwuYv+f5qRxz
+	 HWbj1zV9SkqzFnDDvDIqv+yijMBl7Pp7EvUS94GNBqVSYzAL1ZufYi2ZS1AhNf0rk1
+	 o++oFJ9GkLToVpVnn4TV4TAjeHXMOs6i32AGte0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/232] btrfs: record new subvolume in parent dir earlier to avoid dir logging races
-Date: Tue,  8 Jul 2025 18:20:49 +0200
-Message-ID: <20250708162242.852288334@linuxfoundation.org>
+Subject: [PATCH 6.12 054/232] btrfs: propagate last_unlink_trans earlier when doing a rmdir
+Date: Tue,  8 Jul 2025 18:20:50 +0200
+Message-ID: <20250708162242.877790118@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -54,65 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit bf5bcf9a6fa070ec8a725b08db63fb1318f77366 ]
+[ Upstream commit c466e33e729a0ee017d10d919cba18f503853c60 ]
 
-Instead of recording that a new subvolume was created in a directory after
-we add the entry do the directory, record it before adding the entry. This
-is to avoid races where after creating the entry and before recording the
-new subvolume in the directory (the call to btrfs_record_new_subvolume()),
-another task logs the directory, so we end up with a log tree where we
-logged a directory that has an entry pointing to a root that was not yet
-committed, resulting in an invalid entry if the log is persisted and
-replayed later due to a power failure or crash.
+In case the removed directory had a snapshot that was deleted, we are
+propagating its inode's last_unlink_trans to the parent directory after
+we removed the entry from the parent directory. This leaves a small race
+window where someone can log the parent directory after we removed the
+entry and before we updated last_unlink_trans, and as a result if we ever
+try to replay such a log tree, we will fail since we will attempt to
+remove a snapshot during log replay, which is currently not possible and
+results in the log replay (and mount) to fail. This is the type of failure
+described in commit 1ec9a1ae1e30 ("Btrfs: fix unreplayable log after
+snapshot delete + parent dir fsync").
 
-Also state this requirement in the function comment for
-btrfs_record_new_subvolume(), similar to what we do for the
-btrfs_record_unlink_dir() and btrfs_record_snapshot_destroy().
+So fix this by propagating the last_unlink_trans to the parent directory
+before we remove the entry from it.
 
-Fixes: 45c4102f0d82 ("btrfs: avoid transaction commit on any fsync after subvolume creation")
+Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c    | 4 ++--
- fs/btrfs/tree-log.c | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/inode.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 3e3722a732393..1706f6d9b12e6 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -758,14 +758,14 @@ static noinline int create_subvol(struct mnt_idmap *idmap,
- 		goto out;
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 921ec3802648b..345e86fd844df 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4734,7 +4734,6 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	struct btrfs_fs_info *fs_info = BTRFS_I(inode)->root->fs_info;
+ 	int ret = 0;
+ 	struct btrfs_trans_handle *trans;
+-	u64 last_unlink_trans;
+ 	struct fscrypt_name fname;
+ 
+ 	if (inode->i_size > BTRFS_EMPTY_DIR_SIZE)
+@@ -4760,6 +4759,23 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 		goto out_notrans;
  	}
  
-+	btrfs_record_new_subvolume(trans, BTRFS_I(dir));
++	/*
++	 * Propagate the last_unlink_trans value of the deleted dir to its
++	 * parent directory. This is to prevent an unrecoverable log tree in the
++	 * case we do something like this:
++	 * 1) create dir foo
++	 * 2) create snapshot under dir foo
++	 * 3) delete the snapshot
++	 * 4) rmdir foo
++	 * 5) mkdir foo
++	 * 6) fsync foo or some file inside foo
++	 *
++	 * This is because we can't unlink other roots when replaying the dir
++	 * deletes for directory foo.
++	 */
++	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
++		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
 +
- 	ret = btrfs_create_new_inode(trans, &new_inode_args);
- 	if (ret) {
- 		btrfs_abort_transaction(trans, ret);
+ 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
+ 		ret = btrfs_unlink_subvol(trans, BTRFS_I(dir), dentry);
  		goto out;
- 	}
+@@ -4769,27 +4785,11 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	if (ret)
+ 		goto out;
  
--	btrfs_record_new_subvolume(trans, BTRFS_I(dir));
+-	last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
 -
- 	d_instantiate_new(dentry, new_inode_args.inode);
- 	new_inode_args.inode = NULL;
- 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 97c5dc0ebd9d6..16b4474ded4bc 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -7463,6 +7463,8 @@ void btrfs_record_snapshot_destroy(struct btrfs_trans_handle *trans,
-  * full log sync.
-  * Also we don't need to worry with renames, since btrfs_rename() marks the log
-  * for full commit when renaming a subvolume.
-+ *
-+ * Must be called before creating the subvolume entry in its parent directory.
-  */
- void btrfs_record_new_subvolume(const struct btrfs_trans_handle *trans,
- 				struct btrfs_inode *dir)
+ 	/* now the directory is empty */
+ 	ret = btrfs_unlink_inode(trans, BTRFS_I(dir), BTRFS_I(d_inode(dentry)),
+ 				 &fname.disk_name);
+-	if (!ret) {
++	if (!ret)
+ 		btrfs_i_size_write(BTRFS_I(inode), 0);
+-		/*
+-		 * Propagate the last_unlink_trans value of the deleted dir to
+-		 * its parent directory. This is to prevent an unrecoverable
+-		 * log tree in the case we do something like this:
+-		 * 1) create dir foo
+-		 * 2) create snapshot under dir foo
+-		 * 3) delete the snapshot
+-		 * 4) rmdir foo
+-		 * 5) mkdir foo
+-		 * 6) fsync foo or some file inside foo
+-		 */
+-		if (last_unlink_trans >= trans->transid)
+-			BTRFS_I(dir)->last_unlink_trans = last_unlink_trans;
+-	}
+ out:
+ 	btrfs_end_transaction(trans);
+ out_notrans:
 -- 
 2.39.5
 
