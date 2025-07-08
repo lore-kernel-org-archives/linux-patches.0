@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF1E231CB0;
-	Tue,  8 Jul 2025 16:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE73176ADB;
+	Tue,  8 Jul 2025 16:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992177; cv=none; b=BQVjsv5lZkvTLk03nHYwHPQVi6YCnDPUDRjWUGCxk1GfPxmb4K85Oi2VhMESuiVQoP6ZjF0FVeEkZGfTeEazVrZ1O/cgErlSjhhpNKnG+QAWtdcCnsBaVUlxKH+lALWyk1Ja8zmS73XiyXVWig92iutd3EUlSKskFK4N/WDZNSE=
+	t=1751992180; cv=none; b=JIrNP50cP+y59ltgb74b3b1yzPJ6FqsO6xsuG2tR2EYtDjuvC0Lgj9KmoddBQCNJJ6xyULfdjbLqr+fT3EwuCNUGSuV3vb2ycad7Eo1GpF8RJCSSSYRAzbrby5sIgslErJVNze6mq3uVZx2lkN+drkSAZUFPt62kAi+ap3ExXhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992177; c=relaxed/simple;
-	bh=7yAWZkOkxf7tL88Iq6qnNUU3qx6tAxk/UCgck/QG0N0=;
+	s=arc-20240116; t=1751992180; c=relaxed/simple;
+	bh=KPV6zNLNVaem2vy866CI1FDLJ0fKwHrv4cMTeDl0cJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSbDYo+2DLggIFmyVMXKi7iazZ//CkA2xXgtilaGHA/fytUWHra7feE2bunjVmTzZ2Doa78X9dn3eElO3XYeLJSPyGhXh0WrH/bZx7M9hZKL3q/4cEpQWKqtfTNpcjN7B4qrfodzXWL5d4nOsn6gDHaJgnqM8FB7HS7QU84faHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLi1/n2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Od6/GnxWJVgEGoGab6NEK9oeG/wa91CMMXcw0FEfnQB405cASKwK5LJeUF/KC6HRq90bRPX1B1uDp5YhWqy+zJq2cgF0IbEinLuo9iZkRznu3myrUUzGnHKGGYz5CGdpSamJo4WxsDNfHvWD3hAqWRV4Wr0KJWSDVMTFNAojKLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6WfdHqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLi1/n2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA223C4CEED;
-	Tue,  8 Jul 2025 16:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6WfdHqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B48C4CEED;
+	Tue,  8 Jul 2025 16:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992177;
-	bh=7yAWZkOkxf7tL88Iq6qnNUU3qx6tAxk/UCgck/QG0N0=;
+	s=korg; t=1751992180;
+	bh=KPV6zNLNVaem2vy866CI1FDLJ0fKwHrv4cMTeDl0cJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLi1/n2IjSs0/onVShOzF0QJLXrFB02uNh8dN17siiITLVis+wEGiTqnk81PFjH/J
-	 hNpanSQZ4AcwRPo0MxpHQk1sjwVZJC2jFmCxf5egM76GAwTG/wUUvRCE4wKzSevyHR
-	 D+KdL3bSJGQoq0lOuWXUK3klW1wBjqtQYAWWAfPk=
+	b=u6WfdHqu/Lam/fqSzro9zIyOfQrzbqwaSz89dslcMeE2wnZ+S3IIUZ3bKJarlCJhE
+	 6L9Z+gZfpM9x7oQ52CKwfahxljnCW5JCvXlMBRc8xASSsGyrVH9sFkMe72BK0WhiU5
+	 l7yJG6cazG8bqT01hQNhz8UQViVFkE8ZchfmX5iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Sanders <jsanders.devel@gmail.com>,
-	Valentin Kleibel <valentin@vrvis.at>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 53/81] aoe: defer rexmit timer downdev work to workqueue
-Date: Tue,  8 Jul 2025 18:23:45 +0200
-Message-ID: <20250708162226.693352464@linuxfoundation.org>
+Subject: [PATCH 6.1 54/81] wifi: mac80211: drop invalid source address OCB frames
+Date: Tue,  8 Jul 2025 18:23:46 +0200
+Message-ID: <20250708162226.720975029@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -52,92 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Sanders <jsanders.devel@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit cffc873d68ab09a0432b8212008c5613f8a70a2c ]
+[ Upstream commit d1b1a5eb27c4948e8811cf4dbb05aaf3eb10700c ]
 
-When aoe's rexmit_timer() notices that an aoe target fails to respond to
-commands for more than aoe_deadsecs, it calls aoedev_downdev() which
-cleans the outstanding aoe and block queues. This can involve sleeping,
-such as in blk_mq_freeze_queue(), which should not occur in irq context.
+In OCB, don't accept frames from invalid source addresses
+(and in particular don't try to create stations for them),
+drop the frames instead.
 
-This patch defers that aoedev_downdev() call to the aoe device's
-workqueue.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=212665
-Signed-off-by: Justin Sanders <jsanders.devel@gmail.com>
-Link: https://lore.kernel.org/r/20250610170600.869-2-jsanders.devel@gmail.com
-Tested-By: Valentin Kleibel <valentin@vrvis.at>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6788d2d9.050a0220.20d369.0028.GAE@google.com/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Tested-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20250616171838.7433379cab5d.I47444d63c72a0bd58d2e2b67bb99e1fea37eec6f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/aoe/aoe.h    | 1 +
- drivers/block/aoe/aoecmd.c | 8 ++++++--
- drivers/block/aoe/aoedev.c | 5 ++++-
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ net/mac80211/rx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/block/aoe/aoe.h b/drivers/block/aoe/aoe.h
-index 749ae1246f4cf..d35caa3c69e15 100644
---- a/drivers/block/aoe/aoe.h
-+++ b/drivers/block/aoe/aoe.h
-@@ -80,6 +80,7 @@ enum {
- 	DEVFL_NEWSIZE = (1<<6),	/* need to update dev size in block layer */
- 	DEVFL_FREEING = (1<<7),	/* set when device is being cleaned up */
- 	DEVFL_FREED = (1<<8),	/* device has been cleaned up */
-+	DEVFL_DEAD = (1<<9),	/* device has timed out of aoe_deadsecs */
- };
- 
- enum {
-diff --git a/drivers/block/aoe/aoecmd.c b/drivers/block/aoe/aoecmd.c
-index d1f4ddc576451..c4c5cf1ec71ba 100644
---- a/drivers/block/aoe/aoecmd.c
-+++ b/drivers/block/aoe/aoecmd.c
-@@ -754,7 +754,7 @@ rexmit_timer(struct timer_list *timer)
- 
- 	utgts = count_targets(d, NULL);
- 
--	if (d->flags & DEVFL_TKILL) {
-+	if (d->flags & (DEVFL_TKILL | DEVFL_DEAD)) {
- 		spin_unlock_irqrestore(&d->lock, flags);
- 		return;
- 	}
-@@ -786,7 +786,8 @@ rexmit_timer(struct timer_list *timer)
- 			 * to clean up.
- 			 */
- 			list_splice(&flist, &d->factive[0]);
--			aoedev_downdev(d);
-+			d->flags |= DEVFL_DEAD;
-+			queue_work(aoe_wq, &d->work);
- 			goto out;
- 		}
- 
-@@ -898,6 +899,9 @@ aoecmd_sleepwork(struct work_struct *work)
- {
- 	struct aoedev *d = container_of(work, struct aoedev, work);
- 
-+	if (d->flags & DEVFL_DEAD)
-+		aoedev_downdev(d);
-+
- 	if (d->flags & DEVFL_GDALLOC)
- 		aoeblk_gdalloc(d);
- 
-diff --git a/drivers/block/aoe/aoedev.c b/drivers/block/aoe/aoedev.c
-index 280679bde3a50..4240e11adfb76 100644
---- a/drivers/block/aoe/aoedev.c
-+++ b/drivers/block/aoe/aoedev.c
-@@ -200,8 +200,11 @@ aoedev_downdev(struct aoedev *d)
- 	struct list_head *head, *pos, *nx;
- 	struct request *rq, *rqnext;
- 	int i;
-+	unsigned long flags;
- 
--	d->flags &= ~DEVFL_UP;
-+	spin_lock_irqsave(&d->lock, flags);
-+	d->flags &= ~(DEVFL_UP | DEVFL_DEAD);
-+	spin_unlock_irqrestore(&d->lock, flags);
- 
- 	/* clean out active and to-be-retransmitted buffers */
- 	for (i = 0; i < NFACTIVE; i++) {
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index b6077a97af1dc..8c9267acb227b 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4336,6 +4336,10 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
+ 		if (!multicast &&
+ 		    !ether_addr_equal(sdata->dev->dev_addr, hdr->addr1))
+ 			return false;
++		/* reject invalid/our STA address */
++		if (!is_valid_ether_addr(hdr->addr2) ||
++		    ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
++			return false;
+ 		if (!rx->sta) {
+ 			int rate_idx;
+ 			if (status->encoding != RX_ENC_LEGACY)
 -- 
 2.39.5
 
