@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3418A2DEA94;
-	Tue,  8 Jul 2025 16:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7503B2DAFAE;
+	Tue,  8 Jul 2025 16:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993679; cv=none; b=rMPEuo3yfQR2ZtfUk0BrgEo8DfF1L4358pemOl+RDFeeX6nDxZXHgphESzmjnBfwT2cWqsxJXuj7cz/tSwB25Ms07UwoVDE5wTlzT3cvPJT3tR5J5S8Pn52gV+n+My+3Sc+0r+4N2wkvOdNQtSt2ooMSTjKhNSqJsyIDv3eGraw=
+	t=1751993682; cv=none; b=USpQOXFSklc+0gMQmIVxl2GCWluA8b4fSaHdvTTqE7RSKqWoNz1ZGUZPCMJQXMhtpSA6wDCRR/pGI83vEbptFcM0+2UJ7JBmTqMqEiMs+aHtk0B6Bmo9pXfwpWRlHf3SVi/biomp+yjzSEeprA+NWgrNBeuPI1I4sP8HB2p4qWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993679; c=relaxed/simple;
-	bh=zlyO+6t9l74q0Uu/n4XKKcbNqKDMmY0HE3OY3VTKVTQ=;
+	s=arc-20240116; t=1751993682; c=relaxed/simple;
+	bh=sSML05HhxSNeXBMZXe3AAuBoRzs2ynHx7gwOH1cqI+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrgosIORynX8zoFk+oXNtI64HDFZjJCG8ksPrw/aMRZYF68+Gt9+08tjrJ0QuHW0c296asik/nT8Xah2PeM6EYhWQ/DgOKC/nE69x5oOZ1ZSxEXXXwLxVYSQD6bV83RmdrfL77OhLnfRocN13kzSPqT/7D5Wu70y8+8ZBZLYbwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+cHcLJn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qa/HyCKATK9qERQYmj5cd4rrlbEVZhdZYT77AogKXMpUiyIeD3GLRZ1EqvB4boA3W5IbtMOXqAuXckm31dGiPORWwCnjljSYJKl7XSJ2D9XeLh2iRCy48gZlCHHChmaIH3M3FSTXzJTNUK3WS92XGPMTO9SCs8Ya/uY4DTbWX78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSFcr4Is; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+cHcLJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B069EC4CEED;
-	Tue,  8 Jul 2025 16:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSFcr4Is"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBC1C4CEED;
+	Tue,  8 Jul 2025 16:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993679;
-	bh=zlyO+6t9l74q0Uu/n4XKKcbNqKDMmY0HE3OY3VTKVTQ=;
+	s=korg; t=1751993682;
+	bh=sSML05HhxSNeXBMZXe3AAuBoRzs2ynHx7gwOH1cqI+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+cHcLJnzaqM27s/iBPicd6flqQgTs4FZBLY9rZqeUrLlMVY5EV4KKdYG/WqDmXwH
-	 YMb7lQGOuiuiXUMJ4J18tcHgb8xAQwUvksULFPwfCh7KOOYE30lRfvD+1+hSyHHtKS
-	 Zkw8EhVlex+DEXY7CNgOg9BOkdzTzYyHeGg+Y2CE=
+	b=qSFcr4IsTEaQBBn6oUrd8PM+oVO6hyCYfRDQ3AE/akX/JYkly5jq4X8U9b4QE7t9y
+	 7EkoPTdhY2qsTKxyg9JDylxQrHfcWaKyuddEPE3M51kpxZpsXqYXKyE7HKfTjJ2XUf
+	 KsrWEQjB3mtCOBjkAyn5vapwCQum1sSHTPIOeGXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Kerling <pkerling@casix.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 156/178] smb: client: fix readdir returning wrong type with POSIX extensions
-Date: Tue,  8 Jul 2025 18:23:13 +0200
-Message-ID: <20250708162240.571607489@linuxfoundation.org>
+Subject: [PATCH 6.15 157/178] cifs: all initializations for tcon should happen in tcon_info_alloc
+Date: Tue,  8 Jul 2025 18:23:14 +0200
+Message-ID: <20250708162240.594843845@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -50,43 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Kerling <pkerling@casix.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit b8f89cb723b9e66f5dbd7199e4036fee34fb0de0 upstream.
+commit 74ebd02163fde05baa23129e06dde4b8f0f2377a upstream.
 
-When SMB 3.1.1 POSIX Extensions are negotiated, userspace applications
-using readdir() or getdents() calls without stat() on each individual file
-(such as a simple "ls" or "find") would misidentify file types and exhibit
-strange behavior such as not descending into directories. The reason for
-this behavior is an oversight in the cifs_posix_to_fattr conversion
-function. Instead of extracting the entry type for cf_dtype from the
-properly converted cf_mode field, it tries to extract the type from the
-PDU. While the wire representation of the entry mode is similar in
-structure to POSIX stat(), the assignments of the entry types are
-different. Applying the S_DT macro to cf_mode instead yields the correct
-result. This is also what the equivalent function
-smb311_posix_info_to_fattr in inode.c already does for stat() etc.; which
-is why "ls -l" would give the correct file type but "ls" would not (as
-identified by the colors).
+Today, a few work structs inside tcon are initialized inside
+cifs_get_tcon and not in tcon_info_alloc. As a result, if a tcon
+is obtained from tcon_info_alloc, but not called as a part of
+cifs_get_tcon, we may trip over.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Philipp Kerling <pkerling@casix.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/readdir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsproto.h |    1 +
+ fs/smb/client/connect.c   |    8 +-------
+ fs/smb/client/misc.c      |    6 ++++++
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -263,7 +263,7 @@ cifs_posix_to_fattr(struct cifs_fattr *f
- 	/* The Mode field in the response can now include the file type as well */
- 	fattr->cf_mode = wire_mode_to_posix(le32_to_cpu(info->Mode),
- 					    fattr->cf_cifsattrs & ATTR_DIRECTORY);
--	fattr->cf_dtype = S_DT(le32_to_cpu(info->Mode));
-+	fattr->cf_dtype = S_DT(fattr->cf_mode);
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -136,6 +136,7 @@ extern int SendReceiveBlockingLock(const
+ 			struct smb_hdr *out_buf,
+ 			int *bytes_returned);
  
- 	switch (fattr->cf_mode & S_IFMT) {
- 	case S_IFLNK:
++void smb2_query_server_interfaces(struct work_struct *work);
+ void
+ cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
+ 				      bool all_channels);
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -97,7 +97,7 @@ static int reconn_set_ipaddr_from_hostna
+ 	return rc;
+ }
+ 
+-static void smb2_query_server_interfaces(struct work_struct *work)
++void smb2_query_server_interfaces(struct work_struct *work)
+ {
+ 	int rc;
+ 	int xid;
+@@ -2880,20 +2880,14 @@ cifs_get_tcon(struct cifs_ses *ses, stru
+ 	tcon->max_cached_dirs = ctx->max_cached_dirs;
+ 	tcon->nodelete = ctx->nodelete;
+ 	tcon->local_lease = ctx->local_lease;
+-	INIT_LIST_HEAD(&tcon->pending_opens);
+ 	tcon->status = TID_GOOD;
+ 
+-	INIT_DELAYED_WORK(&tcon->query_interfaces,
+-			  smb2_query_server_interfaces);
+ 	if (ses->server->dialect >= SMB30_PROT_ID &&
+ 	    (ses->server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
+ 		/* schedule query interfaces poll */
+ 		queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
+ 				   (SMB_INTERFACE_POLL_INTERVAL * HZ));
+ 	}
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-	INIT_DELAYED_WORK(&tcon->dfs_cache_work, dfs_cache_refresh);
+-#endif
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_add(&tcon->tcon_list, &ses->tcon_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -151,6 +151,12 @@ tcon_info_alloc(bool dir_leases_enabled,
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ 	INIT_LIST_HEAD(&ret_buf->dfs_ses_list);
+ #endif
++	INIT_LIST_HEAD(&ret_buf->pending_opens);
++	INIT_DELAYED_WORK(&ret_buf->query_interfaces,
++			  smb2_query_server_interfaces);
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	INIT_DELAYED_WORK(&ret_buf->dfs_cache_work, dfs_cache_refresh);
++#endif
+ 
+ 	return ret_buf;
+ }
 
 
