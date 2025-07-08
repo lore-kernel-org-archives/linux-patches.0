@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9F42E54DC;
-	Tue,  8 Jul 2025 17:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBEA1DC9B1;
+	Tue,  8 Jul 2025 17:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994080; cv=none; b=MTUfHRsk4ar3V9iwnRWQUatM1SwENZsFgtX1VH/uIHFk5AEwsFuiBaXZh90KrTZT+CRBrKx7GtCRB7Al/YJoEedAkp7XYraDErzjzeJhl7FcQFE0WM4CMCPUcfeWd2lyXtAOxN2ryRQK62y9UTT5MxpLka677XSe4AsM3RYLzAk=
+	t=1751994083; cv=none; b=nh0/2M/d3Eu1974Vz1ySnQXzBOHSU7TK2bckXrizd9vuNGBnQY0QsdypNrB/QhKhA7SRFpcXfmi1U+u51Bg5tB0Zgr6JR0ySj56MZjnnF2lKj+tbQ9n8lClMwf/n6DeFW3kpcSCpLHqoJCPgHj8mVBODtjYOzLgsBJ16fxAdF1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994080; c=relaxed/simple;
-	bh=zqq/RihB88gTsVCpMezRj6jCm9USPl/XHC73x1NEJUE=;
+	s=arc-20240116; t=1751994083; c=relaxed/simple;
+	bh=y72BJzZJSIqMF0Jiu47E52yfI+Z8g0ScTg7rK1PAeIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BoP8ChmEziMyFBDoxbOHj9kwCaXjeq9OQ4DShMHtSlvw3HEkhJtk8kn6HUQDZ+HOuju1O0gxmSXuOYShHGZBLI1SeQfK6COQqTOGynvtAUskSn27fFD9MSqMaCkbEzOxLcsAKTLP7PSnTxguj//Dx4Oyh+4mVAaEUdIim6Yj/lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yheovrxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m06TT5aqQxNGbdETKLl3Uid8GbcHQhKp8n3qeEDXPrgMf4zVdCCpDl67ffYcc8pgnH9mJoR5nKmJrL6ibV6CEKeiWWESYWpORYH5Pmc/NfkY4ZyGhrM6XMw7Y80UDNYl+mqHUY8jfAnE0IR7OVy0xkDKArtF+YzbXHj/Op5JCMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzyW+j5Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yheovrxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63EFC4CEED;
-	Tue,  8 Jul 2025 17:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzyW+j5Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A901BC4CEED;
+	Tue,  8 Jul 2025 17:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994080;
-	bh=zqq/RihB88gTsVCpMezRj6jCm9USPl/XHC73x1NEJUE=;
+	s=korg; t=1751994083;
+	bh=y72BJzZJSIqMF0Jiu47E52yfI+Z8g0ScTg7rK1PAeIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yheovrxBT6uTM2QEzKnCSVADc2DYN0DjZpD0Jab/Oo/hQ8DXzI38NaGMZg5GScJh7
-	 PjnSnSq3oKCoh5pZAn68GTlHNU1q1/aY31yU4o6d+mc7aLLEgQCrIN+ZCUi1CcHguY
-	 l0MF8pie85Dx2XW1whkora0LhIigy4Qc5hT5G8DA=
+	b=gzyW+j5YSoLb4rqp2KL4WLlJaUmgAaeowZYVHC+7BgrMCZ5NdoVlDZiajk7rCovBt
+	 INZli4lEHJzzJ7FzVvQSFKWHQ1+W9FL+84nUBzFaDwZET66voPyHWfATtjRsHfXVuL
+	 O+Q0QvKbTh3wdmpx8Ue5sUX2V8n7cMifCQvX4qHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/160] igc: disable L1.2 PCI-E link substate to avoid performance issue
-Date: Tue,  8 Jul 2025 18:22:36 +0200
-Message-ID: <20250708162234.746904089@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 102/160] mtk-sd: Fix a pagefault in dma_unmap_sg() for not prepared data
+Date: Tue,  8 Jul 2025 18:22:19 +0200
+Message-ID: <20250708162234.318509809@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -53,66 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 0325143b59c6c6d79987afc57d2456e7a20d13b7 ]
+commit 539d80575b810c7a5987c7ac8915e3bc99c03695 upstream.
 
-I226 devices advertise support for the PCI-E link L1.2 substate. However,
-due to a hardware limitation, the exit latency from this low-power state
-is longer than the packet buffer can tolerate under high traffic
-conditions. This can lead to packet loss and degraded performance.
+When swiotlb buffer is full, the dma_map_sg() returns 0 to
+msdc_prepare_data(), but it does not check it and sets the
+MSDC_PREPARE_FLAG.
 
-To mitigate this, disable the L1.2 substate. The increased power draw
-between L1.1 and L1.2 is insignificant.
+swiotlb_tbl_map_single() /* prints "swiotlb buffer is full" */
+  <-swiotlb_map()
+    <-dma_direct_map_page()
+      <-dma_direct_map_sg()
+        <-__dma_map_sg_attrs()
+          <-dma_map_sg_attrs()
+            <-dma_map_sg()  /* returns 0 (pages mapped) */
+              <-msdc_prepare_data()
 
-Fixes: 43546211738e ("igc: Add new device ID's")
-Link: https://lore.kernel.org/intel-wired-lan/15248b4f-3271-42dd-8e35-02bfc92b25e1@intel.com
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Then, the msdc_unprepare_data() checks MSDC_PREPARE_FLAG and calls
+dma_unmap_sg() with unmapped pages. It causes a page fault.
+
+To fix this problem, Do not set MSDC_PREPARE_FLAG if dma_map_sg()
+fails because this is not prepared.
+
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/174908565814.4056588.769599127120955383.stgit@mhiramat.tok.corp.google.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/host/mtk-sd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 4186e5732f972..f52c1674d19bd 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6549,6 +6549,10 @@ static int igc_probe(struct pci_dev *pdev,
- 	adapter->port_num = hw->bus.func;
- 	adapter->msg_enable = netif_msg_init(debug, DEFAULT_MSG_ENABLE);
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -727,9 +727,10 @@ static inline void msdc_dma_setup(struct
+ static void msdc_prepare_data(struct msdc_host *host, struct mmc_data *data)
+ {
+ 	if (!(data->host_cookie & MSDC_PREPARE_FLAG)) {
+-		data->host_cookie |= MSDC_PREPARE_FLAG;
+ 		data->sg_count = dma_map_sg(host->dev, data->sg, data->sg_len,
+ 					    mmc_get_dma_dir(data));
++		if (data->sg_count)
++			data->host_cookie |= MSDC_PREPARE_FLAG;
+ 	}
+ }
  
-+	/* Disable ASPM L1.2 on I226 devices to avoid packet loss */
-+	if (igc_is_device_id_i226(hw))
-+		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-+
- 	err = pci_save_state(pdev);
- 	if (err)
- 		goto err_ioremap;
-@@ -6914,6 +6918,9 @@ static int __maybe_unused igc_resume(struct device *dev)
- 	pci_enable_wake(pdev, PCI_D3hot, 0);
- 	pci_enable_wake(pdev, PCI_D3cold, 0);
- 
-+	if (igc_is_device_id_i226(hw))
-+		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-+
- 	if (igc_init_interrupt_scheme(adapter, true)) {
- 		netdev_err(netdev, "Unable to allocate memory for queues\n");
- 		return -ENOMEM;
-@@ -7029,6 +7036,9 @@ static pci_ers_result_t igc_io_slot_reset(struct pci_dev *pdev)
- 		pci_enable_wake(pdev, PCI_D3hot, 0);
- 		pci_enable_wake(pdev, PCI_D3cold, 0);
- 
-+		if (igc_is_device_id_i226(hw))
-+			pci_disable_link_state_locked(pdev, PCIE_LINK_STATE_L1_2);
-+
- 		/* In case of PCI error, adapter loses its HW address
- 		 * so we should re-assign it here.
- 		 */
--- 
-2.39.5
-
 
 
