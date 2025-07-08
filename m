@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5DA21B199;
-	Tue,  8 Jul 2025 16:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC242E0902;
+	Tue,  8 Jul 2025 16:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751991984; cv=none; b=PltbwlhW/wu5MPyXC4zDcqUUFZUAZkSvDiGDT/ecwEyPxGiZqCYcQxWWNTXf8quiKEx8WXgRZVdYHabiRdH34pKAxKswk+PHKzeKqjf3okhcP/4wf4xtrA9R3GVhCvo/OEgAwazKIzrvGLKe1O7Kv3RLCkkHHDpGJZWLj+3Qe7Q=
+	t=1751991987; cv=none; b=TJtmKZI9BlJhvj4FZzryPkNNHOiTDNsHiSni1U7sATjETiCyDa4tVv5eq3DZVRzkldOA8YRTsk21HUmvH9+N6PKWclFrIVqbuIBJwbp0jXcqGm3LpLBDVQKzySntrDOI46YDwtAwl0oHXSV2YWKoQ17EkLYm2YOdyCAXNDV0oD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751991984; c=relaxed/simple;
-	bh=OCl1l/fKqfy0BF0KbDdLme910Gs9XfOTdluedkEFmMc=;
+	s=arc-20240116; t=1751991987; c=relaxed/simple;
+	bh=nXJVGaISufp9UHV2lvra7XqGHLbAAmKB+qo1fuQfIDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0hgtL1n5woLsbtpuD9jbz4vBoWQY6IG2e1nPL3t88T9cnLPF2r4y755QBStprdEE7o5aId7M0vlFqieVt0aHvs0R0cfnBfCgGCNyMln3dLBclZCtpeIuvVQsX1za1kmmNe4dru914ajveTwH+vmwlrhxjHbKLqs2cVMEOOEtI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZuJgeFC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EVdefpn+HOfzhghuaS+0d2RsFgXZqJhRqkGILwglZd2W/9appYacr9ZU00h69VzQh+j+8nDo2QkHTiwmUt1DJjaru8x92k+wf4KUnpmYZlYXeFeBV2fTBYp1QnhwElw8ji/Jm+uyUr0DByhp013SAPmy2DNPOACEmGaJHspWauo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKmEA7Tl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZuJgeFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C67C4CEED;
-	Tue,  8 Jul 2025 16:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKmEA7Tl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98F2C4CEED;
+	Tue,  8 Jul 2025 16:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751991984;
-	bh=OCl1l/fKqfy0BF0KbDdLme910Gs9XfOTdluedkEFmMc=;
+	s=korg; t=1751991987;
+	bh=nXJVGaISufp9UHV2lvra7XqGHLbAAmKB+qo1fuQfIDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZuJgeFCeei7rG9/sihKFWv1Ol1HghvHttztekmSa0MJdl3LsyIugdSQ/gBvRWBvr
-	 ytacrdIQ9e26Hvc/XLg5Jc+jXb9g4nYeY3X28T9WJuojN1IShv0EccezvCl4bO3Uiy
-	 w/G2jR7dTskrSsDDgDPcoI6uZOd0xlXN4KpoDtT0=
+	b=BKmEA7TluLZAaEkJTIxt1ZsRtA2SYkVzg2lpRG1AhTzKMnp4h2jAtZcwIDZ7SlPYB
+	 AjYnr2Fcxw6yq9dr1WWnfX553AFVlAxErn+kn2BfWgmW8rokIXbvlTQQUeWpygiYgi
+	 S/YGnjp8JeEBD8UDJ8KBbc/8StQIJm5aHC4TILfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Shih <victor.shih@genesyslogic.com.tw>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 04/81] mmc: sdhci: Add a helper function for dump register in dynamic debug mode
-Date: Tue,  8 Jul 2025 18:22:56 +0200
-Message-ID: <20250708162224.973457784@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 16/81] platform/mellanox: mlxbf-tmfifo: fix vring_desc.len assignment
+Date: Tue,  8 Jul 2025 18:23:08 +0200
+Message-ID: <20250708162225.417974051@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -45,50 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Victor Shih <victor.shih@genesyslogic.com.tw>
+From: David Thompson <davthompson@nvidia.com>
 
-commit 2881ba9af073faa8ee7408a8d1e0575e50eb3f6c upstream.
+[ Upstream commit 109f4d29dade8ae5b4ac6325af9d1bc24b4230f8 ]
 
-Add a helper function for dump register in dynamic debug mode.
+Fix warnings reported by sparse, related to incorrect type:
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38: warning: incorrect type in assignment (different base types)
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    expected restricted __virtio32 [usertype] len
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    got unsigned long
 
-Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250606110121.96314-3-victorshihgli@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202404040339.S7CUIgf3-lkp@intel.com/
+Fixes: 78034cbece79 ("platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/20250613214608.2250130-1-davthompson@nvidia.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.h |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -820,4 +820,20 @@ void sdhci_switch_external_dma(struct sd
- void sdhci_set_data_timeout_irq(struct sdhci_host *host, bool enable);
- void __sdhci_set_timeout(struct sdhci_host *host, struct mmc_command *cmd);
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 9925a6d94affc..d8565490e4870 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -253,7 +253,8 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
+ 		vring->align = SMP_CACHE_BYTES;
+ 		vring->index = i;
+ 		vring->vdev_id = tm_vdev->vdev.id.device;
+-		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
++		vring->drop_desc.len = cpu_to_virtio32(&tm_vdev->vdev,
++						       VRING_DROP_DESC_MAX_LEN);
+ 		dev = &tm_vdev->vdev.dev;
  
-+#if defined(CONFIG_DYNAMIC_DEBUG) || \
-+	(defined(CONFIG_DYNAMIC_DEBUG_CORE) && defined(DYNAMIC_DEBUG_MODULE))
-+#define SDHCI_DBG_ANYWAY 0
-+#elif defined(DEBUG)
-+#define SDHCI_DBG_ANYWAY 1
-+#else
-+#define SDHCI_DBG_ANYWAY 0
-+#endif
-+
-+#define sdhci_dbg_dumpregs(host, fmt)					\
-+do {									\
-+	DEFINE_DYNAMIC_DEBUG_METADATA(descriptor, fmt);			\
-+	if (DYNAMIC_DEBUG_BRANCH(descriptor) ||	SDHCI_DBG_ANYWAY)	\
-+		sdhci_dumpregs(host);					\
-+} while (0)
-+
- #endif /* __SDHCI_HW_H */
+ 		size = vring_size(vring->num, vring->align);
+-- 
+2.39.5
+
 
 
