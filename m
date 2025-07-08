@@ -1,212 +1,104 @@
-Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A501DDA24;
-	Tue,  8 Jul 2025 19:52:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.70.13.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB6F23C507
+	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 19:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752004331; cv=none; b=RWTlYCDeLrfj0tK40kN/zuO/bB/lTdw52DtF2q/FwY+LFoyewjw+XKgXEz93a1gF45oSbGgM+i/bmPsz61F/yWj09Vylj5pUOR1QWixs8s40qWvQAJtlK7Ws3OWrcWtNkMlxoNhM+4RL7XmCWXUlMkn0sI84zxFYyVMpbgp+Ho8=
+	t=1752004793; cv=none; b=rgcsNycoSI1BbQwgelSKZudQl3KRBnVVRt0METIi55WGW+7VpLlgVbZccdu8OdGm5eoy4KLcXi05w3ebHyoLpNcNJ9nXR6WoYD11TSNpXKXbDqvRVxMStIdN9Ijw4QcWOwltolGh/gHQ6aSRAl73MIwowVjBwugPBq4e6QTypLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752004331; c=relaxed/simple;
-	bh=rIcG7QnMKABBJ4xbCaROXpMcNgkWqi9ulfpR9mmLQ3I=;
-	h=From:To:Cc:References:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type:Subject; b=JXfPl8jQrgQZdtOwNhqhKHFKbx1CmVyNXMlH7qi73jnyNVpD/YiM6d/ykbKqGcRsxvGot5wxeEwo0lLoCQD9cI6P7Cy9u7DvWM+e0PsTEPBOHdVrOYwPjjXH1kjmNOLk+WjCqS8y1PlRAnfi0T9nNZyIHbUnGBq4ItpLSCn9L+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com; spf=pass smtp.mailfrom=xmission.com; arc=none smtp.client-ip=166.70.13.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xmission.com
-Received: from in02.mta.xmission.com ([166.70.13.52]:47190)
-	by out02.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1uZDld-0087r7-EQ; Tue, 08 Jul 2025 13:14:13 -0600
-Received: from ip72-198-198-28.om.om.cox.net ([72.198.198.28]:57294 helo=email.froward.int.ebiederm.org.xmission.com)
-	by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1uZDlb-00EWoI-M0; Tue, 08 Jul 2025 13:14:13 -0600
-From: "Eric W. Biederman" <ebiederm@xmission.com>
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev,  stable@vger.kernel.org,  Mario Limonciello
- <mario.limonciello@amd.com>,  Nat Wittstock <nat@fardog.io>,  Lucian Langa
- <lucilanga@7pot.org>,  "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-  rafael@kernel.org,  pavel@ucw.cz,  len.brown@intel.com,
-  linux-pm@vger.kernel.org,  kexec@lists.infradead.org
-References: <20250708000215.793090-1-sashal@kernel.org>
-	<20250708000215.793090-6-sashal@kernel.org>
-Date: Tue, 08 Jul 2025 14:13:42 -0500
-In-Reply-To: <20250708000215.793090-6-sashal@kernel.org> (Sasha Levin's
-	message of "Mon, 7 Jul 2025 20:02:13 -0400")
-Message-ID: <87ikk2wl5l.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1752004793; c=relaxed/simple;
+	bh=sKuB8RQnIfm8FxftIf3X0GOfjjaSkos0VBJiEDTBxlI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WYl7tSXB16bUmhTC3ptv8gmDbAgGzezfbgAelE4M8aL2xcq6svpqmizPYVDBkkTuPpvEFV8t8aSStP8x9d/Mz7wfLisa35fi2kT3gtw0GWx6MlT6IFjCd0AkiNkjMXpKVOEJEeGUsNDoxTxFbcD5k5JFgVVKD8wbYdaG/kCvb/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=g/U2DZel; arc=none smtp.client-ip=209.85.161.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="g/U2DZel"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-611f48c6e30so2729400eaf.0
+        for <patches@lists.linux.dev>; Tue, 08 Jul 2025 12:59:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1752004789; x=1752609589; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SB9GNWWsPYQTrcDwgkvbanghflj6Omk2OsXB5XCpSp8=;
+        b=g/U2DZelgxYE/JbjymKPifDSP/QA1g9lCSANOFz3AZ+AqE6tn0IuTF7j5K7FrjBl8g
+         49RPhOjN86nov8EXHBCnUT2Wu4u11tOWTfIuXemQ7xFBmABsia0X8xX9o9sk0WwtdspL
+         W2t/OT3pN/c0n8pEET5lpPbYgty5hoJDcj4LE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752004789; x=1752609589;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SB9GNWWsPYQTrcDwgkvbanghflj6Omk2OsXB5XCpSp8=;
+        b=xTh94yYDIuPsKNq8hxIfpCfpD7zAzvgmmWbr+ySeHBoqGibsCo/vLRMc3jDXWoexLi
+         FIoWNUddfZ+Rw/pyPI7HzYv+0O2f3gLcdikUboWIvsGVysNWQWm4hWHMX1e45NimtrZJ
+         ddnaC0ucRFG93QP3/CVqUMBIb0UWYgNvRPWmFmt+lP3JJ66kKbulwVdmu2+OM+iwAduP
+         SWYlE/i8bCYrPbtPjmRsCrBXIvEZ8KiaUE7aptDXY0Q3B7/yMWvzwQo2Ql/jVl54CRFO
+         +wZVp23BWDQ2LkjeUV3S7JLIgBBTeeOT5yqJW03DJ+q9YwMSY7obpojWYtGF1IXY7syS
+         1eXA==
+X-Forwarded-Encrypted: i=1; AJvYcCWa7KFL5jfNkLiSwPmpz35/gtCYLADHYV8x8kk6wx0RFieHqvshIuVGS62FJSC2oq6KuEG+dI5H@lists.linux.dev
+X-Gm-Message-State: AOJu0YwHyN5Lr68jchQZypyf0OE6orJDCKeNmeGHmhfEjarDNV/9lMqo
+	ZcSVH4sjufFULSs/D23aZmIOExII8kjip8S1sYv2tmypTWGSbYYWGQlm4f6GfCNvQg==
+X-Gm-Gg: ASbGncvIqIjSjWrNp6TrFTImuRF9B3jmN54u5r0TQy8kgCdy087NQtVeQ8zzbYSQcLM
+	O4rjFWidIujYOZm+vsVsg1GP6nA4scTj7eUrxQnCyDDplpkMRYUGeTvIByOdDvQb+duomnojEfS
+	9AzvyxQS2mZAgiILwRhzae+Eovnjpvai/RR8sAS2sEoF6/fFYIFrwkSyynPcLltY70Qqz7qQUmj
+	QkUuQjwpCAqQwRigVipkMy9sAFe4fX4kyir2r8wnNRWY5iS/EWsG8FZ8STI8XI8hjRg9keOyBKY
+	5PFr+70XC4GyL81z07YUH6wOiBjpqAXrK7RLxMb70l6cTTX3lghax10FQEPsvj2+BqIXfqXi9gl
+	jn7eV6HNAK4qUKw==
+X-Google-Smtp-Source: AGHT+IEtr03NSkK6ECFSDZy0Tth+9Bq9hzDGfXM4PYpkiHw9hwDD0Kxv/StPhidCcUjve7ewHnoJDw==
+X-Received: by 2002:a05:6820:210e:b0:611:e30a:fa1c with SMTP id 006d021491bc7-613ca6b5916mr758011eaf.1.1752004789129;
+        Tue, 08 Jul 2025 12:59:49 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([72.42.103.70])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6138e590c86sm1790207eaf.20.2025.07.08.12.59.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jul 2025 12:59:48 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 8 Jul 2025 13:59:43 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.15 000/178] 6.15.6-rc1 review
+Message-ID: <aG14r1ZicqU4GNbI@fedora64.linuxtx.org>
+References: <20250708162236.549307806@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1uZDlb-00EWoI-M0;;;mid=<87ikk2wl5l.fsf@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=72.198.198.28;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX18eWuTXhpEEG+cAz+KqRLkQHqIlLXpyYLk=
-X-Spam-Level: 
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	*  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-	*      [score: 0.5000]
-	*  0.7 XMSubLong Long Subject
-	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
-	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa06 1397; Body=1 Fuz1=1 Fuz2=1]
-	*  0.0 T_TooManySym_01 4+ unique symbols in subject
-	*  0.2 XM_B_SpammyWords One or more commonly used spammy words
-X-Spam-DCC: XMission; sa06 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: ;Sasha Levin <sashal@kernel.org>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 882 ms - load_scoreonly_sql: 0.06 (0.0%),
-	signal_user_changed: 11 (1.3%), b_tie_ro: 10 (1.1%), parse: 1.76
-	(0.2%), extract_message_metadata: 24 (2.8%), get_uri_detail_list: 6
-	(0.6%), tests_pri_-2000: 8 (0.9%), tests_pri_-1000: 2.7 (0.3%),
-	tests_pri_-950: 1.56 (0.2%), tests_pri_-900: 1.20 (0.1%),
-	tests_pri_-90: 124 (14.0%), check_bayes: 112 (12.7%), b_tokenize: 20
-	(2.3%), b_tok_get_all: 14 (1.6%), b_comp_prob: 6 (0.7%),
-	b_tok_touch_all: 67 (7.6%), b_finish: 0.92 (0.1%), tests_pri_0: 691
-	(78.3%), check_dkim_signature: 0.99 (0.1%), check_dkim_adsp: 3.6
-	(0.4%), poll_dns_idle: 0.89 (0.1%), tests_pri_10: 2.2 (0.2%),
-	tests_pri_500: 10 (1.1%), rewrite_mail: 0.00 (0.0%)
-Subject: Re: [PATCH AUTOSEL 6.15 6/8] PM: Restrict swap use to later in the
- suspend sequence
-X-SA-Exim-Connect-IP: 166.70.13.52
-X-SA-Exim-Rcpt-To: kexec@lists.infradead.org, linux-pm@vger.kernel.org, len.brown@intel.com, pavel@ucw.cz, rafael@kernel.org, rafael.j.wysocki@intel.com, lucilanga@7pot.org, nat@fardog.io, mario.limonciello@amd.com, stable@vger.kernel.org, patches@lists.linux.dev, sashal@kernel.org
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-SA-Exim-Scanned: No (on out02.mta.xmission.com); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 
+On Tue, Jul 08, 2025 at 06:20:37PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.6 release.
+> There are 178 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 10 Jul 2025 16:22:09 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Wow!
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-Sasha I think an impersonator has gotten into your account, and is
-just making nonsense up.
-
-This reads like an impassioned plea to backport this change, from
-someone who has actually dealt with it.
-
-However reading the justification in detail is an exercise in reading
-falehoods.
-
-If this does not come from an impersonator then if this comes
-from a human being, I recommend you have a talk with them.
-
-If this comes from a machine I recommend take it out of commission
-and rework it.
-
-If I see this kind of baloney again I expect I will just auto-nack
-it instead of reading it, as reading it appears to be a waste of
-time.  It is a complete waste reading fiction in what little time I have
-for kernel development.
-
-Eric
-
-
-Sasha Levin <sashal@kernel.org> writes:
-
-> **YES**
->
-> This commit should be backported to stable kernel trees for the
-> following reasons:
->
-> ## Critical Bug Fix for Real User Issues
->
-> 1. **Fixes Actual Suspend Failures**: The commit addresses real-world
->    suspend failures under memory pressure on systems with AMD discrete
->    GPUs. The linked issues (ROCm/ROCK-Kernel-Driver#174 and
->    freedesktop.org/drm/amd#2362) indicate this affects actual users.
-
-The links in the first paragraph are very distorted.  The links
-from the actual change are:
-
- https://github.com/ROCm/ROCK-Kernel-Driver/issues/174
- https://gitlab.freedesktop.org/drm/amd/-/issues/2362
-
-Those completely distorted links make understanding this justification
-much harder then necessary.
-
-
-> 2. **Regression Fix**: This is effectively a regression fix. The PM
->    subsystem's early swap restriction prevents AMD GPU drivers from
->    properly evicting VRAM during their prepare() callbacks, which is a
->    requirement that has become more critical as GPU VRAM sizes have
->    increased.
-
-That is a justification.   There is no evidence that a kernel change
-made this worse.  Thus there is no evidence this is a regression fix.
-
-
-> ## Small, Contained Change
->
-> 3. **Minimal Code Changes**: The fix is remarkably simple - it just
->    moves the `pm_restrict_gfp_mask()` call from early in the suspend
->    sequence to after `dpm_prepare()` completes. The changes are:
->    - Move `pm_restrict_gfp_mask()` from multiple early locations to
->      inside `dpm_suspend_start()` after `dpm_prepare()` succeeds
->    - Add corresponding `pm_restore_gfp_mask()` calls in error paths and
->      resume paths
->    - Remove the now-redundant calls from hibernate.c and suspend.c
-
-Completely wrong.  
-
-> 4. **Low Risk of Regression**: The change maintains the original intent
->    of preventing I/O during the critical suspend phase while allowing it
->    during device preparation. The swap restriction still happens before
->    `dpm_suspend()`, just after `dpm_prepare()`.
-
-This is a fundamental change to a susbsystem that the subsystem
-maintainer does not say is low risk.
-
-> ## Follows Stable Rules
->
-> 5. **Meets Stable Criteria**:
->    - Fixes a real bug that bothers people (suspend failures)
-Addresses a real bug.
-
->    - Small change (moves function calls, doesn't introduce new logic)
-
-The change is a large change in the logic.
-
->    - Obviously correct (allows drivers to use swap during their
->      designated preparation phase)
-
-It obviously changes the behavior.  It is not at all obvious
-the change is behavior is desirable for all callbacks, and in all
-other scenarios.
-
-
->    - Already tested by users (Tested-by tags from affected users)
-Yes it has Tested-by tags.
-
-> ## Similar to Other Backported Commits
->
-> 6. **Pattern Matches**: Looking at the similar commits provided, this
->    follows the same pattern as the AMD GPU eviction commits that were
->    backported. Those commits also addressed the same fundamental issue -
->    ensuring GPU VRAM can be properly evicted during suspend/hibernation.
-
-Which commits that were backported?
-
-> ## Critical Timing
-
-Timing???  There is no race condition.
-
-> 7. **Error Path Handling**: The commit properly handles error paths by
->    adding `pm_restore_gfp_mask()` calls in:
->    - `dpm_resume_end()` for normal resume
->    - `platform_recover()` error path in suspend.c
->    - `pm_restore_gfp_mask()` in kexec_core.c for kexec flows
->
-> The commit is well-tested, addresses a real problem affecting users, and
-> makes a minimal, obviously correct change to fix suspend failures on
-> systems with discrete GPUs under memory pressure.
-
-What evidence is there that this commit has been tested let alone
-well-tested.
-
-The entire line of reasoning is completely suspect.
-
-Eric
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
