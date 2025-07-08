@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B402E6D1A;
-	Tue,  8 Jul 2025 16:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA592E62B8;
+	Tue,  8 Jul 2025 16:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993806; cv=none; b=sfpNbOuxqxBaiCNDM17MSMYUogoFqS+GgPhV2SjwKViouWaoUnWrpSdQf8znl0nd0oXMSNkINQX+IxrcdYMhIbfEpKudIGJP6zUVjeImJInENB1ZK2IBJH2yvHxMzcYnlW1TnxmDHSCo9eWt++UXHDN2Q5xGuZfXh8UUuXws2Ow=
+	t=1751993809; cv=none; b=scQAwMNQh8pi2ixCDhPKu/HQKX3lOq50MaPHhDolx379SYpvZjQFRE/8n9Z11rWI6hs+YQGlO3/BDGbiGv/4mPE+hxxbWnF7n3c5YDM85SLrdHTgXoVHbiEWRs/KtY37IUOwx3gLdBAUwqoVPwpAZGeMg7CeBcjhNSaYFApYt10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993806; c=relaxed/simple;
-	bh=vDyzTBvmq4jk1mx3o+qtM4JmPXvIaX+BKs65MHRMNWU=;
+	s=arc-20240116; t=1751993809; c=relaxed/simple;
+	bh=tfSvzQtpB+BIdVt0bLkDVrH6QbWnkdLrhyhJzoY6w5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhA9g+uc/K4uzfW4evfTofpbt6HgwExvnYwKQ1sEMj/N+29DlrVvPbKk6Q39bTSRSUBqnMceaYdMzAyuWtT5joQlM9Q8cIUYn10wl+WdZvT28FSoxCp0ByoeFB6W4+Iey1gZwhXmdEyGfZ9oqPYo1Vc9J4QiYUYHo/PBAx19TzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzpDjAzN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WtQ5LnNsrTeWc71Qe+aDq8TlxYO1c80h+A2EHQUnAMHuE7Sivk2sraMt0Cpk09Ma38IDaVgY5FvQJzQkeyEs++xOmyCPMELhQsrkEdGQOoA9Fy5jvJUaAyLZpVI72BNmy6x4208Guj6ASqyCeuT0w+KvWrKUjYsQjVkPMKFyDN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdTs0/g4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzpDjAzN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF65C4CEF5;
-	Tue,  8 Jul 2025 16:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdTs0/g4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435D9C4CEF6;
+	Tue,  8 Jul 2025 16:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993806;
-	bh=vDyzTBvmq4jk1mx3o+qtM4JmPXvIaX+BKs65MHRMNWU=;
+	s=korg; t=1751993809;
+	bh=tfSvzQtpB+BIdVt0bLkDVrH6QbWnkdLrhyhJzoY6w5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzpDjAzNLdaFu/kaXE4umJXn+fCaxz8MQaiYMSYsacktyNyauQMgacWCaQbtxE2k+
-	 Y2rvFD+11aFEN30dfBosgCEgIAyUnMCfGs6LGTV2I51F0UkcW68iy1GQFF2GCRHKWv
-	 qIDb+17nK5MbAHSTRQ4Nq6/H97zCAmgfQ5eUosPI=
+	b=CdTs0/g4s9YtdqltfqhoohFoaoO/8FTFnFmYD9tZRkEqKwUIXZd4c6BkLVVPEAxrX
+	 mfqdUOFCqaAEjM9Yj+D/62JRKovS8g25zKrfCqfqNTVpdmNb0p/il8OKVN2C8xEzW4
+	 e31vPtejh9N2vFWCC+HDmm3iR2FEdDs81BmBe20c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexis Czezar Torreno <alexisczezar.torreno@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Dmitry Kandybka <d.kandybka@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/160] hwmon: (pmbus/max34440) Fix support for max34451
-Date: Tue,  8 Jul 2025 18:20:44 +0200
-Message-ID: <20250708162231.713114056@linuxfoundation.org>
+Subject: [PATCH 5.15 025/160] ceph: fix possible integer overflow in ceph_zero_objects()
+Date: Tue,  8 Jul 2025 18:21:02 +0200
+Message-ID: <20250708162232.209623217@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,142 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-[ Upstream commit 19932f844f3f51646f762f3eac4744ec3a405064 ]
+[ Upstream commit 0abd87942e0c93964e93224836944712feba1d91 ]
 
-The max344** family has an issue with some PMBUS address being switched.
-This includes max34451 however version MAX34451-NA6 and later has this
-issue fixed and this commit supports that update.
+In 'ceph_zero_objects', promote 'object_size' to 'u64' to avoid possible
+integer overflow.
 
-Signed-off-by: Alexis Czezar Torreno <alexisczezar.torreno@analog.com>
-Link: https://lore.kernel.org/r/20250407-dev_adpm12160-v3-1-9cd3095445c8@analog.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Compile tested only.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/max34440.c | 48 +++++++++++++++++++++++++++++++---
- 1 file changed, 44 insertions(+), 4 deletions(-)
+ fs/ceph/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/max34440.c b/drivers/hwmon/pmbus/max34440.c
-index ea7609058a12f..91359647d1e78 100644
---- a/drivers/hwmon/pmbus/max34440.c
-+++ b/drivers/hwmon/pmbus/max34440.c
-@@ -34,16 +34,21 @@ enum chips { max34440, max34441, max34446, max34451, max34460, max34461 };
- /*
-  * The whole max344* family have IOUT_OC_WARN_LIMIT and IOUT_OC_FAULT_LIMIT
-  * swapped from the standard pmbus spec addresses.
-+ * For max34451, version MAX34451ETNA6+ and later has this issue fixed.
-  */
- #define MAX34440_IOUT_OC_WARN_LIMIT	0x46
- #define MAX34440_IOUT_OC_FAULT_LIMIT	0x4A
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index f3fba3d27efa6..e92a10ba58b3f 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2032,7 +2032,7 @@ static int ceph_zero_objects(struct inode *inode, loff_t offset, loff_t length)
+ 	s32 stripe_unit = ci->i_layout.stripe_unit;
+ 	s32 stripe_count = ci->i_layout.stripe_count;
+ 	s32 object_size = ci->i_layout.object_size;
+-	u64 object_set_size = object_size * stripe_count;
++	u64 object_set_size = (u64) object_size * stripe_count;
+ 	u64 nearly, t;
  
-+#define MAX34451ETNA6_MFR_REV		0x0012
-+
- #define MAX34451_MFR_CHANNEL_CONFIG	0xe4
- #define MAX34451_MFR_CHANNEL_CONFIG_SEL_MASK	0x3f
- 
- struct max34440_data {
- 	int id;
- 	struct pmbus_driver_info info;
-+	u8 iout_oc_warn_limit;
-+	u8 iout_oc_fault_limit;
- };
- 
- #define to_max34440_data(x)  container_of(x, struct max34440_data, info)
-@@ -60,11 +65,11 @@ static int max34440_read_word_data(struct i2c_client *client, int page,
- 	switch (reg) {
- 	case PMBUS_IOUT_OC_FAULT_LIMIT:
- 		ret = pmbus_read_word_data(client, page, phase,
--					   MAX34440_IOUT_OC_FAULT_LIMIT);
-+					   data->iout_oc_fault_limit);
- 		break;
- 	case PMBUS_IOUT_OC_WARN_LIMIT:
- 		ret = pmbus_read_word_data(client, page, phase,
--					   MAX34440_IOUT_OC_WARN_LIMIT);
-+					   data->iout_oc_warn_limit);
- 		break;
- 	case PMBUS_VIRT_READ_VOUT_MIN:
- 		ret = pmbus_read_word_data(client, page, phase,
-@@ -133,11 +138,11 @@ static int max34440_write_word_data(struct i2c_client *client, int page,
- 
- 	switch (reg) {
- 	case PMBUS_IOUT_OC_FAULT_LIMIT:
--		ret = pmbus_write_word_data(client, page, MAX34440_IOUT_OC_FAULT_LIMIT,
-+		ret = pmbus_write_word_data(client, page, data->iout_oc_fault_limit,
- 					    word);
- 		break;
- 	case PMBUS_IOUT_OC_WARN_LIMIT:
--		ret = pmbus_write_word_data(client, page, MAX34440_IOUT_OC_WARN_LIMIT,
-+		ret = pmbus_write_word_data(client, page, data->iout_oc_warn_limit,
- 					    word);
- 		break;
- 	case PMBUS_VIRT_RESET_POUT_HISTORY:
-@@ -235,6 +240,25 @@ static int max34451_set_supported_funcs(struct i2c_client *client,
- 	 */
- 
- 	int page, rv;
-+	bool max34451_na6 = false;
-+
-+	rv = i2c_smbus_read_word_data(client, PMBUS_MFR_REVISION);
-+	if (rv < 0)
-+		return rv;
-+
-+	if (rv >= MAX34451ETNA6_MFR_REV) {
-+		max34451_na6 = true;
-+		data->info.format[PSC_VOLTAGE_IN] = direct;
-+		data->info.format[PSC_CURRENT_IN] = direct;
-+		data->info.m[PSC_VOLTAGE_IN] = 1;
-+		data->info.b[PSC_VOLTAGE_IN] = 0;
-+		data->info.R[PSC_VOLTAGE_IN] = 3;
-+		data->info.m[PSC_CURRENT_IN] = 1;
-+		data->info.b[PSC_CURRENT_IN] = 0;
-+		data->info.R[PSC_CURRENT_IN] = 2;
-+		data->iout_oc_fault_limit = PMBUS_IOUT_OC_FAULT_LIMIT;
-+		data->iout_oc_warn_limit = PMBUS_IOUT_OC_WARN_LIMIT;
-+	}
- 
- 	for (page = 0; page < 16; page++) {
- 		rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-@@ -251,16 +275,30 @@ static int max34451_set_supported_funcs(struct i2c_client *client,
- 		case 0x20:
- 			data->info.func[page] = PMBUS_HAVE_VOUT |
- 				PMBUS_HAVE_STATUS_VOUT;
-+
-+			if (max34451_na6)
-+				data->info.func[page] |= PMBUS_HAVE_VIN |
-+					PMBUS_HAVE_STATUS_INPUT;
- 			break;
- 		case 0x21:
- 			data->info.func[page] = PMBUS_HAVE_VOUT;
-+
-+			if (max34451_na6)
-+				data->info.func[page] |= PMBUS_HAVE_VIN;
- 			break;
- 		case 0x22:
- 			data->info.func[page] = PMBUS_HAVE_IOUT |
- 				PMBUS_HAVE_STATUS_IOUT;
-+
-+			if (max34451_na6)
-+				data->info.func[page] |= PMBUS_HAVE_IIN |
-+					PMBUS_HAVE_STATUS_INPUT;
- 			break;
- 		case 0x23:
- 			data->info.func[page] = PMBUS_HAVE_IOUT;
-+
-+			if (max34451_na6)
-+				data->info.func[page] |= PMBUS_HAVE_IIN;
- 			break;
- 		default:
- 			break;
-@@ -494,6 +532,8 @@ static int max34440_probe(struct i2c_client *client)
- 		return -ENOMEM;
- 	data->id = i2c_match_id(max34440_id, client)->driver_data;
- 	data->info = max34440_info[data->id];
-+	data->iout_oc_fault_limit = MAX34440_IOUT_OC_FAULT_LIMIT;
-+	data->iout_oc_warn_limit = MAX34440_IOUT_OC_WARN_LIMIT;
- 
- 	if (data->id == max34451) {
- 		rv = max34451_set_supported_funcs(client, data);
+ 	/* round offset up to next period boundary */
 -- 
 2.39.5
 
