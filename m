@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3468F5B;
-	Tue,  8 Jul 2025 16:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9216C2E54B2;
+	Tue,  8 Jul 2025 16:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993050; cv=none; b=S2tOTCOC4Cl2B4Lz2BGfLDnYad+vAtSIEHsPoktu/fKpPdnTDI/sT7pGR8u4lKzYMmrZicYTbox9y9RwMGtAu7v6hY9x+/hT0r4rtMUI81KN6ALxabmHWdvwQDkKsBnn/VUBpIMxFGQu6X3b7rIyGh2IaP7IKvV8EKAHChkWfs4=
+	t=1751993053; cv=none; b=mSy7vlfCv3dSboYUZQXnmTvCX+PRRLDlJWY8MBrwR3vnYYQ/Y9945R/wKLHyyvxe7CR36ENSQQRn7cGZVhCzjUcDDWSQvOgQ2DW8NHmBYwA3CdjgxmGXM3oYoWG0qmNYS6n3EKhJFP2nlUjo1SpLsrNg1Ke2glseJAj9E9Z3jwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993050; c=relaxed/simple;
-	bh=PbcVN3zPbW0P/oKhOMPUR0lZQ5HeQqMvVk1wtvC9IyM=;
+	s=arc-20240116; t=1751993053; c=relaxed/simple;
+	bh=n0mrC8bhRvr5b0/VwbP+QDmZuRADcfdO2Cj8hFEufy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XiUotTn3pK/cvfFNTnHwTVc/kFjhwTMI2kVVabkBtDC4X+WUwetse7gHDHyMrW3vF8bxH2yNfV+6gy2e5QFHf6anZnO46JRC6Gw0CURh8qHQmT9FgQwMuVdrZeN4HlAK/Y2Bw0ZWhZj+Pcz8OWcZ4wKCmqlZ9uupVigMJmi5Qj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPdNoahz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEV341XVz0Lmip4muh7S+LeUw/V2vBrOfwf5XZFBu5uIjbAJ5Z6tCVspqW+rjNg4ZkoPwmZsUowg+JW4K13lU98gCHSnr2UwADJSzIbY1Zq/iqOniR+xOFWGQjjluF2spVOKfocYI902tP2Z1Xan+E0diiOEMk7QNEChSNN3qNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsJmp2Z3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPdNoahz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E9EC4CEED;
-	Tue,  8 Jul 2025 16:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsJmp2Z3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE96C4CEF9;
+	Tue,  8 Jul 2025 16:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993050;
-	bh=PbcVN3zPbW0P/oKhOMPUR0lZQ5HeQqMvVk1wtvC9IyM=;
+	s=korg; t=1751993053;
+	bh=n0mrC8bhRvr5b0/VwbP+QDmZuRADcfdO2Cj8hFEufy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPdNoahzPIb16+WO9O12D2K/zIN33G+wR1utjn5r2QYxlSq3w9mrZQ/129R96DjU3
-	 tzcc0ZKzdqijKdccVmtsWZIX+XKmhcoWpfQxgBmLUmhFPfga0Kpn3eCSaC0uYm47aT
-	 8/F7b1A8xU6KHvPvyfWni2FpGfXfmOtW5ErIF8EE=
+	b=rsJmp2Z3MH5+vDCfxfw/rJjV639IF38MMvuHZIfOQNkJxODFi3fM031qv7kwC0q9T
+	 6XKUKm1R+Jp3eY5XZfyDvz+T6f2qm/6MzFLjUSV+307IOvsHWK5XA/IALc/7qMNrBY
+	 Ah7KqIuO3XH5bat7+MlGD5S0HE1uk+Gez82FESZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/232] drm/msm: Fix a fence leak in submit error path
-Date: Tue,  8 Jul 2025 18:22:47 +0200
-Message-ID: <20250708162245.914020184@linuxfoundation.org>
+Subject: [PATCH 6.12 172/232] drm/msm: Fix another leak in the submit error path
+Date: Tue,  8 Jul 2025 18:22:48 +0200
+Message-ID: <20250708162245.940920044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -53,41 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 5d319f75ccf7f0927425a7545aa1a22b3eedc189 ]
+[ Upstream commit f681c2aa8676a890eacc84044717ab0fd26e058f ]
 
-In error paths, we could unref the submit without calling
-drm_sched_entity_push_job(), so msm_job_free() will never get
-called.  Since drm_sched_job_cleanup() will NULL out the
-s_fence, we can use that to detect this case.
+put_unused_fd() doesn't free the installed file, if we've already done
+fd_install().  So we need to also free the sync_file.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/653584/
+Patchwork: https://patchwork.freedesktop.org/patch/653583/
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index f775638d239a5..937c1f5d88cbb 100644
+index 937c1f5d88cbb..4b3a8ee8e278f 100644
 --- a/drivers/gpu/drm/msm/msm_gem_submit.c
 +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -85,6 +85,15 @@ void __msm_gem_submit_destroy(struct kref *kref)
- 			container_of(kref, struct msm_gem_submit, ref);
+@@ -667,6 +667,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	struct msm_ringbuffer *ring;
+ 	struct msm_submit_post_dep *post_deps = NULL;
+ 	struct drm_syncobj **syncobjs_to_reset = NULL;
++	struct sync_file *sync_file = NULL;
+ 	int out_fence_fd = -1;
  	unsigned i;
+ 	int ret;
+@@ -877,7 +878,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	}
  
-+	/*
-+	 * In error paths, we could unref the submit without calling
-+	 * drm_sched_entity_push_job(), so msm_job_free() will never
-+	 * get called.  Since drm_sched_job_cleanup() will NULL out
-+	 * s_fence, we can use that to detect this case.
-+	 */
-+	if (submit->base.s_fence)
-+		drm_sched_job_cleanup(&submit->base);
-+
- 	if (submit->fence_id) {
- 		spin_lock(&submit->queue->idr_lock);
- 		idr_remove(&submit->queue->fence_idr, submit->fence_id);
+ 	if (ret == 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
+-		struct sync_file *sync_file = sync_file_create(submit->user_fence);
++		sync_file = sync_file_create(submit->user_fence);
+ 		if (!sync_file) {
+ 			ret = -ENOMEM;
+ 		} else {
+@@ -911,8 +912,11 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ out_unlock:
+ 	mutex_unlock(&queue->lock);
+ out_post_unlock:
+-	if (ret && (out_fence_fd >= 0))
++	if (ret && (out_fence_fd >= 0)) {
+ 		put_unused_fd(out_fence_fd);
++		if (sync_file)
++			fput(sync_file->file);
++	}
+ 
+ 	if (!IS_ERR_OR_NULL(submit)) {
+ 		msm_gem_submit_put(submit);
 -- 
 2.39.5
 
