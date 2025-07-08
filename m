@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F151E492;
-	Tue,  8 Jul 2025 17:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B155202F70;
+	Tue,  8 Jul 2025 17:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994216; cv=none; b=I3LgKa0TD+Nt9GXgA3/O3bEk2HR7PHNUIOAOBEGRYaqEeNfZvEOd4ZHxc1KE1C3iEMQoVyBGP+sqovfEnZWbnQ+9klf8Yv2N77/pTFsKQ1bBrFkcNOh288SIQ95O813HOLY4UaURedbUIWJhv7xSwayKg9+4rqkDts1VPMluYKE=
+	t=1751994219; cv=none; b=SZHg5OX+T1d7PlTkSUEX4aOia6DUxzwqJ6/Asw48vUi6zgh6wSQFSAQ90+fWpOTX7IPuOtDMdvefFP4Rhrk34Fk3qxrav0G+m36xB5pxg9WM31/39NpDE03PwC9ZFwS0siNJ2cZGUPTHvAK+lHbDRRUGbyIbF3N/iolHClJBlzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994216; c=relaxed/simple;
-	bh=H0zmU7rQ9uw8AsfWWUN6DJfoczRG1eT9zqWrHU1UA/Y=;
+	s=arc-20240116; t=1751994219; c=relaxed/simple;
+	bh=E9GzmMZaV2KiBetE+HDvBf+VHHYZZIWrMS2PgS4TT3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omGaKa+Onn1g7VH+2+9yN3L0jcyB0cmRpZwceMe4XQjwCA2GbAOWJ/JnAgOPwrZ+eLThHH+SuZ21MXkerSDEHo9G5TMz4yU0+y2EB/7UlySMs6f1mU92/dQj62p6dHfO/8w51xK+zU1i+M0zDBt8VLqhcxfTYuEVeY1D7IBW29c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edALqzIm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sGE666GKi6/6Qsw8/hOQLwFe+5kuSuNqkeYBXXvRX+4NEmR1exSsz+AM27K8hswXMuAn8/1Ho4hWdhQRMrUxitnEbsCxcjHz2tdQv9YIFNYWxTeuRduZNFKSTj24i78QOXO8ztMtje9yxsA5YnqiyXuGK4tCqXixTZU9oZpkNF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVFiMfG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edALqzIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC15C4CEED;
-	Tue,  8 Jul 2025 17:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVFiMfG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC77C4CEED;
+	Tue,  8 Jul 2025 17:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994215;
-	bh=H0zmU7rQ9uw8AsfWWUN6DJfoczRG1eT9zqWrHU1UA/Y=;
+	s=korg; t=1751994219;
+	bh=E9GzmMZaV2KiBetE+HDvBf+VHHYZZIWrMS2PgS4TT3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=edALqzImUwyXEqsYexVbupKgCyWlXKs1uW4qiDZpLZA6b1pZJSQ1aBVHD7xFYi4qQ
-	 4UbNdQzSoBVVlX5CDSA50cYM20KBboN5edBfDibx5B/yfoR1rgc/3Ho1ASIgaOCdp7
-	 MlnXDYX4H9cP+N+i3zmA7YuAX5dHKFSoIAOUNk70=
+	b=wVFiMfG0FF6aHutpevU+cnE4+4IWzInxtgLTZQ3hlQ39CNXWCODPqVmcR2rellLSl
+	 P80CrWMaV1bASg5AVb6mw00+9P70qdzsgm6RNXYGePZRfzFrDNZkNwtj3zap9e/FWG
+	 A2tCYTssSFAi925YdYxtM2rHHIPjG/rZsbjeb50E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	"Juan A. Suarez" <jasuarez@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/160] regulator: gpio: Fix the out-of-bounds access to drvdata::gpiods
-Date: Tue,  8 Jul 2025 18:22:56 +0200
-Message-ID: <20250708162235.220634643@linuxfoundation.org>
+Subject: [PATCH 5.15 140/160] drm/v3d: Disable interrupts before resetting the GPU
+Date: Tue,  8 Jul 2025 18:22:57 +0200
+Message-ID: <20250708162235.244334714@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -45,61 +46,219 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <mani@kernel.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit c9764fd88bc744592b0604ccb6b6fc1a5f76b4e3 ]
+[ Upstream commit 226862f50a7a88e4e4de9abbf36c64d19acd6fd0 ]
 
-drvdata::gpiods is supposed to hold an array of 'gpio_desc' pointers. But
-the memory is allocated for only one pointer. This will lead to
-out-of-bounds access later in the code if 'config::ngpios' is > 1. So
-fix the code to allocate enough memory to hold 'config::ngpios' of GPIO
-descriptors.
+Currently, an interrupt can be triggered during a GPU reset, which can
+lead to GPU hangs and NULL pointer dereference in an interrupt context
+as shown in the following trace:
 
-While at it, also move the check for memory allocation failure to be below
-the allocation to make it more readable.
+ [  314.035040] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000c0
+ [  314.043822] Mem abort info:
+ [  314.046606]   ESR = 0x0000000096000005
+ [  314.050347]   EC = 0x25: DABT (current EL), IL = 32 bits
+ [  314.055651]   SET = 0, FnV = 0
+ [  314.058695]   EA = 0, S1PTW = 0
+ [  314.061826]   FSC = 0x05: level 1 translation fault
+ [  314.066694] Data abort info:
+ [  314.069564]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+ [  314.075039]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+ [  314.080080]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+ [  314.085382] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000102728000
+ [  314.091814] [00000000000000c0] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000
+ [  314.100511] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+ [  314.106770] Modules linked in: v3d i2c_brcmstb vc4 snd_soc_hdmi_codec gpu_sched drm_shmem_helper drm_display_helper cec drm_dma_helper drm_kms_helper drm drm_panel_orientation_quirks snd_soc_core snd_compress snd_pcm_dmaengine snd_pcm snd_timer snd backlight
+ [  314.129654] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.25+rpt-rpi-v8 #1  Debian 1:6.12.25-1+rpt1
+ [  314.139388] Hardware name: Raspberry Pi 4 Model B Rev 1.4 (DT)
+ [  314.145211] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ [  314.152165] pc : v3d_irq+0xec/0x2e0 [v3d]
+ [  314.156187] lr : v3d_irq+0xe0/0x2e0 [v3d]
+ [  314.160198] sp : ffffffc080003ea0
+ [  314.163502] x29: ffffffc080003ea0 x28: ffffffec1f184980 x27: 021202b000000000
+ [  314.170633] x26: ffffffec1f17f630 x25: ffffff8101372000 x24: ffffffec1f17d9f0
+ [  314.177764] x23: 000000000000002a x22: 000000000000002a x21: ffffff8103252000
+ [  314.184895] x20: 0000000000000001 x19: 00000000deadbeef x18: 0000000000000000
+ [  314.192026] x17: ffffff94e51d2000 x16: ffffffec1dac3cb0 x15: c306000000000000
+ [  314.199156] x14: 0000000000000000 x13: b2fc982e03cc5168 x12: 0000000000000001
+ [  314.206286] x11: ffffff8103f8bcc0 x10: ffffffec1f196868 x9 : ffffffec1dac3874
+ [  314.213416] x8 : 0000000000000000 x7 : 0000000000042a3a x6 : ffffff810017a180
+ [  314.220547] x5 : ffffffec1ebad400 x4 : ffffffec1ebad320 x3 : 00000000000bebeb
+ [  314.227677] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+ [  314.234807] Call trace:
+ [  314.237243]  v3d_irq+0xec/0x2e0 [v3d]
+ [  314.240906]  __handle_irq_event_percpu+0x58/0x218
+ [  314.245609]  handle_irq_event+0x54/0xb8
+ [  314.249439]  handle_fasteoi_irq+0xac/0x240
+ [  314.253527]  handle_irq_desc+0x48/0x68
+ [  314.257269]  generic_handle_domain_irq+0x24/0x38
+ [  314.261879]  gic_handle_irq+0x48/0xd8
+ [  314.265533]  call_on_irq_stack+0x24/0x58
+ [  314.269448]  do_interrupt_handler+0x88/0x98
+ [  314.273624]  el1_interrupt+0x34/0x68
+ [  314.277193]  el1h_64_irq_handler+0x18/0x28
+ [  314.281281]  el1h_64_irq+0x64/0x68
+ [  314.284673]  default_idle_call+0x3c/0x168
+ [  314.288675]  do_idle+0x1fc/0x230
+ [  314.291895]  cpu_startup_entry+0x3c/0x50
+ [  314.295810]  rest_init+0xe4/0xf0
+ [  314.299030]  start_kernel+0x5e8/0x790
+ [  314.302684]  __primary_switched+0x80/0x90
+ [  314.306691] Code: 940029eb 360ffc13 f9442ea0 52800001 (f9406017)
+ [  314.312775] ---[ end trace 0000000000000000 ]---
+ [  314.317384] Kernel panic - not syncing: Oops: Fatal exception in interrupt
+ [  314.324249] SMP: stopping secondary CPUs
+ [  314.328167] Kernel Offset: 0x2b9da00000 from 0xffffffc080000000
+ [  314.334076] PHYS_OFFSET: 0x0
+ [  314.336946] CPU features: 0x08,00002013,c0200000,0200421b
+ [  314.342337] Memory Limit: none
+ [  314.345382] ---[ end Kernel panic - not syncing: Oops: Fatal exception in interrupt ]---
 
-Cc: stable@vger.kernel.org # 5.0
-Fixes: d6cd33ad7102 ("regulator: gpio: Convert to use descriptors")
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20250703103549.16558-1-mani@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Before resetting the GPU, it's necessary to disable all interrupts and
+deal with any interrupt handler still in-flight. Otherwise, the GPU might
+reset with jobs still running, or yet, an interrupt could be handled
+during the reset.
+
+Cc: stable@vger.kernel.org
+Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
+Reviewed-by: Juan A. Suarez <jasuarez@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://lore.kernel.org/r/20250628224243.47599-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/gpio-regulator.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/v3d/v3d_drv.h |  8 +++++++
+ drivers/gpu/drm/v3d/v3d_gem.c |  2 ++
+ drivers/gpu/drm/v3d/v3d_irq.c | 39 +++++++++++++++++++++++++----------
+ 3 files changed, 38 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/regulator/gpio-regulator.c b/drivers/regulator/gpio-regulator.c
-index 95e61a2f43f5d..b34671eb49b52 100644
---- a/drivers/regulator/gpio-regulator.c
-+++ b/drivers/regulator/gpio-regulator.c
-@@ -260,8 +260,10 @@ static int gpio_regulator_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/gpu/drm/v3d/v3d_drv.h b/drivers/gpu/drm/v3d/v3d_drv.h
+index 2701347790730..0d551b1d9b05d 100644
+--- a/drivers/gpu/drm/v3d/v3d_drv.h
++++ b/drivers/gpu/drm/v3d/v3d_drv.h
+@@ -71,6 +71,12 @@ struct v3d_perfmon {
+ 	u64 values[];
+ };
  
--	drvdata->gpiods = devm_kzalloc(dev, sizeof(struct gpio_desc *),
--				       GFP_KERNEL);
-+	drvdata->gpiods = devm_kcalloc(dev, config->ngpios,
-+				       sizeof(struct gpio_desc *), GFP_KERNEL);
-+	if (!drvdata->gpiods)
-+		return -ENOMEM;
++enum v3d_irq {
++	V3D_CORE_IRQ,
++	V3D_HUB_IRQ,
++	V3D_MAX_IRQS,
++};
++
+ struct v3d_dev {
+ 	struct drm_device drm;
  
- 	if (config->input_supply) {
- 		drvdata->desc.supply_name = devm_kstrdup(&pdev->dev,
-@@ -274,8 +276,6 @@ static int gpio_regulator_probe(struct platform_device *pdev)
- 		}
- 	}
+@@ -80,6 +86,8 @@ struct v3d_dev {
+ 	int ver;
+ 	bool single_irq_line;
  
--	if (!drvdata->gpiods)
--		return -ENOMEM;
- 	for (i = 0; i < config->ngpios; i++) {
- 		drvdata->gpiods[i] = devm_gpiod_get_index(dev,
- 							  NULL,
++	int irq[V3D_MAX_IRQS];
++
+ 	void __iomem *hub_regs;
+ 	void __iomem *core_regs[3];
+ 	void __iomem *bridge_regs;
+diff --git a/drivers/gpu/drm/v3d/v3d_gem.c b/drivers/gpu/drm/v3d/v3d_gem.c
+index 805d6f6cba0e2..ecd03ad9699a0 100644
+--- a/drivers/gpu/drm/v3d/v3d_gem.c
++++ b/drivers/gpu/drm/v3d/v3d_gem.c
+@@ -120,6 +120,8 @@ v3d_reset(struct v3d_dev *v3d)
+ 	if (false)
+ 		v3d_idle_axi(v3d, 0);
+ 
++	v3d_irq_disable(v3d);
++
+ 	v3d_idle_gca(v3d);
+ 	v3d_reset_v3d(v3d);
+ 
+diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
+index b2d59a1686972..9aba78e6d7a5a 100644
+--- a/drivers/gpu/drm/v3d/v3d_irq.c
++++ b/drivers/gpu/drm/v3d/v3d_irq.c
+@@ -215,7 +215,7 @@ v3d_hub_irq(int irq, void *arg)
+ int
+ v3d_irq_init(struct v3d_dev *v3d)
+ {
+-	int irq1, ret, core;
++	int irq, ret, core;
+ 
+ 	INIT_WORK(&v3d->overflow_mem_work, v3d_overflow_mem_work);
+ 
+@@ -226,17 +226,24 @@ v3d_irq_init(struct v3d_dev *v3d)
+ 		V3D_CORE_WRITE(core, V3D_CTL_INT_CLR, V3D_CORE_IRQS);
+ 	V3D_WRITE(V3D_HUB_INT_CLR, V3D_HUB_IRQS);
+ 
+-	irq1 = platform_get_irq_optional(v3d_to_pdev(v3d), 1);
+-	if (irq1 == -EPROBE_DEFER)
+-		return irq1;
+-	if (irq1 > 0) {
+-		ret = devm_request_irq(v3d->drm.dev, irq1,
++	irq = platform_get_irq_optional(v3d_to_pdev(v3d), 1);
++	if (irq == -EPROBE_DEFER)
++		return irq;
++	if (irq > 0) {
++		v3d->irq[V3D_CORE_IRQ] = irq;
++
++		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_CORE_IRQ],
+ 				       v3d_irq, IRQF_SHARED,
+ 				       "v3d_core0", v3d);
+ 		if (ret)
+ 			goto fail;
+-		ret = devm_request_irq(v3d->drm.dev,
+-				       platform_get_irq(v3d_to_pdev(v3d), 0),
++
++		irq = platform_get_irq(v3d_to_pdev(v3d), 0);
++		if (irq < 0)
++			return irq;
++		v3d->irq[V3D_HUB_IRQ] = irq;
++
++		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_HUB_IRQ],
+ 				       v3d_hub_irq, IRQF_SHARED,
+ 				       "v3d_hub", v3d);
+ 		if (ret)
+@@ -244,8 +251,12 @@ v3d_irq_init(struct v3d_dev *v3d)
+ 	} else {
+ 		v3d->single_irq_line = true;
+ 
+-		ret = devm_request_irq(v3d->drm.dev,
+-				       platform_get_irq(v3d_to_pdev(v3d), 0),
++		irq = platform_get_irq(v3d_to_pdev(v3d), 0);
++		if (irq < 0)
++			return irq;
++		v3d->irq[V3D_CORE_IRQ] = irq;
++
++		ret = devm_request_irq(v3d->drm.dev, v3d->irq[V3D_CORE_IRQ],
+ 				       v3d_irq, IRQF_SHARED,
+ 				       "v3d", v3d);
+ 		if (ret)
+@@ -279,13 +290,19 @@ v3d_irq_enable(struct v3d_dev *v3d)
+ void
+ v3d_irq_disable(struct v3d_dev *v3d)
+ {
+-	int core;
++	int core, i;
+ 
+ 	/* Disable all interrupts. */
+ 	for (core = 0; core < v3d->cores; core++)
+ 		V3D_CORE_WRITE(core, V3D_CTL_INT_MSK_SET, ~0);
+ 	V3D_WRITE(V3D_HUB_INT_MSK_SET, ~0);
+ 
++	/* Finish any interrupt handler still in flight. */
++	for (i = 0; i < V3D_MAX_IRQS; i++) {
++		if (v3d->irq[i])
++			synchronize_irq(v3d->irq[i]);
++	}
++
+ 	/* Clear any pending interrupts we might have left. */
+ 	for (core = 0; core < v3d->cores; core++)
+ 		V3D_CORE_WRITE(core, V3D_CTL_INT_CLR, V3D_CORE_IRQS);
 -- 
 2.39.5
 
