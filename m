@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D078220766C;
-	Tue,  8 Jul 2025 16:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78272E266B;
+	Tue,  8 Jul 2025 16:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992581; cv=none; b=oVvj2wKw3zwzMl4DCceRpwuCUb+m/mWakPJagi0Eu7mgi+ud0nN4FO5zszA3PqMLo1OZl04RVwTi0hu0oLWGtprHJN+5Ni00z9vpW32aSwCwnO0PgZzJ4X2NDkMmfufGCGdJny/9yHR32jI0jZ7aZaN6E2Lc0DyvETdih2SJ7nE=
+	t=1751992584; cv=none; b=jdVw203WoeVLu3FcBjA9lnL+UF1J4Udu55YShyv6cItyp8KhXMhLsvRtcNZAjM/dXOYnee+o/SPXrLIVt2zQgmYduPg2we00kKJEyOFc1HHLSh1BVaI3DJwlV0gyhHmCh/cg8FcTHOjCrM9ixFge6OW6RDboShmhpoAdPj16MGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992581; c=relaxed/simple;
-	bh=H+DmmtjsS8cDfOyJ92D/HjJ7HA+Tk9gUwZj4jNtY+x0=;
+	s=arc-20240116; t=1751992584; c=relaxed/simple;
+	bh=JzScFDGIt8j4YU8VH8DM7g6hOpX3aLfl+isgZaSWvkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t/ZcZtnUwljItUlY2w0e+w4Q0+UCA0sjElqormRnIZeCUA7BKCJZ0FVL/ol8NLjaS2GgRi3MQpU1swmOyUS96iaWKnTI5olrmUxJrjLweP9m+v8QIqdCsgk++SudyKcpTqHEcWN/RXWygLFHFTEq474sEuyW4zFSO0rqQhWQbXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvSIsxPL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ctiZwo3efmL8jFaBUlaZS3jr6C0AOdgzzfXywBgLkPabSSq+vz7HMYsu7TNRKk3NYp7pgz4hdtO9JNSblQnCxdYEdulqeADe7hlSQvBUi7iZFJTB9XgNGfUh5tSxhTgSq7K04R3sluxE1tzgq2TCigbovAhWjxmUyIBZLGyjKIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IT1zalNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvSIsxPL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58410C4CEED;
-	Tue,  8 Jul 2025 16:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IT1zalNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414D3C4CEED;
+	Tue,  8 Jul 2025 16:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992581;
-	bh=H+DmmtjsS8cDfOyJ92D/HjJ7HA+Tk9gUwZj4jNtY+x0=;
+	s=korg; t=1751992584;
+	bh=JzScFDGIt8j4YU8VH8DM7g6hOpX3aLfl+isgZaSWvkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zvSIsxPLCam2DI8sI9RrYr85Oozn8q2T/MSjtoYXP4NsgMELERowVU2y5+ABQyB08
-	 lUyCxkEkAI307YSQPhobx1JRgPQUeVeBf3Tq2/8NJwcrj3k1eHTG5qH0je1dGeeShb
-	 vPMJIXdsZrF2zymvrUuhzFnsiHkyWQumgttRvd1s=
+	b=IT1zalNQ3EPDrf7AU57Wyz2ftAQiIax6SeeJ5a720+RtvtfWye+K9lWZ4xoyXSR+0
+	 5eisDfRaKao+YVJFgYSEsthqXZGnfvmnGAifIdErQJYAd0ccIfCE9qyjIrOMRkICvK
+	 KdvWayTwhf3bYj95pgyLUyWS4uYOzTpxQJ7GY2n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.6 118/132] dma-buf: fix timeout handling in dma_resv_wait_timeout v2
-Date: Tue,  8 Jul 2025 18:23:49 +0200
-Message-ID: <20250708162234.004682921@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 109/132] usb: xhci: quirk for data loss in ISOC transfers
+Date: Tue,  8 Jul 2025 18:23:40 +0200
+Message-ID: <20250708162233.778701101@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -45,60 +45,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-commit 2b95a7db6e0f75587bffddbb490399cbb87e4985 upstream.
+commit cbc889ab0122366f6cdbe3c28d477c683ebcebc2 upstream.
 
-Even the kerneldoc says that with a zero timeout the function should not
-wait for anything, but still return 1 to indicate that the fences are
-signaled now.
+During the High-Speed Isochronous Audio transfers, xHCI
+controller on certain AMD platforms experiences momentary data
+loss. This results in Missed Service Errors (MSE) being
+generated by the xHCI.
 
-Unfortunately that isn't what was implemented, instead of only returning
-1 we also waited for at least one jiffies.
+The root cause of the MSE is attributed to the ISOC OUT endpoint
+being omitted from scheduling. This can happen when an IN
+endpoint with a 64ms service interval either is pre-scheduled
+prior to the ISOC OUT endpoint or the interval of the ISOC OUT
+endpoint is shorter than that of the IN endpoint. Consequently,
+the OUT service is neglected when an IN endpoint with a service
+interval exceeding 32ms is scheduled concurrently (every 64ms in
+this scenario).
 
-Fix that by adjusting the handling to what the function is actually
-documented to do.
+This issue is particularly seen on certain older AMD platforms.
+To mitigate this problem, it is recommended to adjust the service
+interval of the IN endpoint to not exceed 32ms (interval 8). This
+adjustment ensures that the OUT endpoint will not be bypassed,
+even if a smaller interval value is utilized.
 
-v2: improve code readability
-
-Reported-by: Marek Olšák <marek.olsak@amd.com>
-Reported-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20250129105841.1806-1-christian.koenig@amd.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250627144127.3889714-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-resv.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/usb/host/xhci-mem.c |    4 ++++
+ drivers/usb/host/xhci-pci.c |   25 +++++++++++++++++++++++++
+ drivers/usb/host/xhci.h     |    1 +
+ 3 files changed, 30 insertions(+)
 
---- a/drivers/dma-buf/dma-resv.c
-+++ b/drivers/dma-buf/dma-resv.c
-@@ -678,11 +678,13 @@ long dma_resv_wait_timeout(struct dma_re
- 	dma_resv_iter_begin(&cursor, obj, usage);
- 	dma_resv_for_each_fence_unlocked(&cursor, fence) {
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -1436,6 +1436,10 @@ int xhci_endpoint_init(struct xhci_hcd *
+ 	/* Periodic endpoint bInterval limit quirk */
+ 	if (usb_endpoint_xfer_int(&ep->desc) ||
+ 	    usb_endpoint_xfer_isoc(&ep->desc)) {
++		if ((xhci->quirks & XHCI_LIMIT_ENDPOINT_INTERVAL_9) &&
++		    interval >= 9) {
++			interval = 8;
++		}
+ 		if ((xhci->quirks & XHCI_LIMIT_ENDPOINT_INTERVAL_7) &&
+ 		    udev->speed >= USB_SPEED_HIGH &&
+ 		    interval >= 7) {
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -65,12 +65,22 @@
+ #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI		0x51ed
+ #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI	0x54ed
  
--		ret = dma_fence_wait_timeout(fence, intr, ret);
--		if (ret <= 0) {
--			dma_resv_iter_end(&cursor);
--			return ret;
--		}
-+		ret = dma_fence_wait_timeout(fence, intr, timeout);
-+		if (ret <= 0)
-+			break;
++#define PCI_DEVICE_ID_AMD_ARIEL_TYPEC_XHCI		0x13ed
++#define PCI_DEVICE_ID_AMD_ARIEL_TYPEA_XHCI		0x13ee
++#define PCI_DEVICE_ID_AMD_STARSHIP_XHCI			0x148c
++#define PCI_DEVICE_ID_AMD_FIREFLIGHT_15D4_XHCI		0x15d4
++#define PCI_DEVICE_ID_AMD_FIREFLIGHT_15D5_XHCI		0x15d5
++#define PCI_DEVICE_ID_AMD_RAVEN_15E0_XHCI		0x15e0
++#define PCI_DEVICE_ID_AMD_RAVEN_15E1_XHCI		0x15e1
++#define PCI_DEVICE_ID_AMD_RAVEN2_XHCI			0x15e5
+ #define PCI_DEVICE_ID_AMD_RENOIR_XHCI			0x1639
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_4			0x43b9
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_3			0x43ba
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_2			0x43bb
+ #define PCI_DEVICE_ID_AMD_PROMONTORYA_1			0x43bc
+ 
++#define PCI_DEVICE_ID_ATI_NAVI10_7316_XHCI		0x7316
 +
-+		/* Even for zero timeout the return value is 1 */
-+		if (timeout)
-+			timeout = ret;
- 	}
- 	dma_resv_iter_end(&cursor);
+ #define PCI_DEVICE_ID_ASMEDIA_1042_XHCI			0x1042
+ #define PCI_DEVICE_ID_ASMEDIA_1042A_XHCI		0x1142
+ #define PCI_DEVICE_ID_ASMEDIA_1142_XHCI			0x1242
+@@ -348,6 +358,21 @@ static void xhci_pci_quirks(struct devic
+ 	if (pdev->vendor == PCI_VENDOR_ID_NEC)
+ 		xhci->quirks |= XHCI_NEC_HOST;
  
++	if (pdev->vendor == PCI_VENDOR_ID_AMD &&
++	    (pdev->device == PCI_DEVICE_ID_AMD_ARIEL_TYPEC_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_AMD_ARIEL_TYPEA_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_AMD_STARSHIP_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_AMD_FIREFLIGHT_15D4_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_AMD_FIREFLIGHT_15D5_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_AMD_RAVEN_15E0_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_AMD_RAVEN_15E1_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_AMD_RAVEN2_XHCI))
++		xhci->quirks |= XHCI_LIMIT_ENDPOINT_INTERVAL_9;
++
++	if (pdev->vendor == PCI_VENDOR_ID_ATI &&
++	    pdev->device == PCI_DEVICE_ID_ATI_NAVI10_7316_XHCI)
++		xhci->quirks |= XHCI_LIMIT_ENDPOINT_INTERVAL_9;
++
+ 	if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version == 0x96)
+ 		xhci->quirks |= XHCI_AMD_0x96_HOST;
+ 
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1659,6 +1659,7 @@ struct xhci_hcd {
+ #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
+ #define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
+ #define XHCI_ETRON_HOST	BIT_ULL(49)
++#define XHCI_LIMIT_ENDPOINT_INTERVAL_9 BIT_ULL(50)
+ 
+ 	unsigned int		num_active_eps;
+ 	unsigned int		limit_active_eps;
 
 
