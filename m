@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20072E0B45;
-	Tue,  8 Jul 2025 16:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EDE22259B;
+	Tue,  8 Jul 2025 16:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992392; cv=none; b=R48rCxthyfGgjzyQxWN0OqbQ/5XABwpHQGNfvxl907HeXFRS/cyxvPfBVKxZxNxs2gNUNwzenrwdH6pV6Wxj9AIbwTDR+gm7YGQ4uH9xA4pZ+oDCkcilm+Iy9suYq4fCEz7xXAho809x5JnjkxW/BJCI33Icw1Eef/BP+Eqv4sU=
+	t=1751992395; cv=none; b=jtRp20MfPEUb8GSmYnhB5HqJchXb+7wiYFV5vt/aKrN4XKg27/zld+x7sX2jgSYOVNR56VRGvc5ZMTRrsvtjJlCrx/uBzfEWimLsjp5qHqGKj72YxuuNCY3y1W6m0LGmVaY6CugTL3h8uCii8OkUkI1waQ6e6Y7rGMd3yZEBiZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992392; c=relaxed/simple;
-	bh=Xw3e3dmg0GHOgJdqzrj0az74XjMerZDBG+rK5Zs7fqo=;
+	s=arc-20240116; t=1751992395; c=relaxed/simple;
+	bh=LGMvfiR0nIAKXeA6NUlth+jJylH3eciaBzrqjyjrNSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qitzv/0FGEY/kG1q0Ga7Kfj/jdiyX3P1Mm6XhnYDTFhOMj2mi7cuX458k+fFJ8J1R0caGG67Pf+F3gjDc/QdqemBDRziOZ+fGo6EraVdibrAVjPeqKJMfYk3ymorghprpOxPcDCGBNd8pksuAW9jTAMxrrKTaIbf/9k+sfFD2S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmt8cKuQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ab2SnQybp/sMtjjI8L9LbyB/82119BZxcrB4grqsL4Yaa+wA9QAqEW4wX9BHqzpw4CDG2eOd3i9mS4HnPj41HTXGXMWVWYWKXsvu9sRNvH5XBAk+qP+EYAFd1yk/n/w42tjcvbyxKo8eLAQ88irfveFWTQ0fPzzv2F7xPBzD7p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcPeT3A0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmt8cKuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F17C4CEED;
-	Tue,  8 Jul 2025 16:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcPeT3A0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AC5C4CEED;
+	Tue,  8 Jul 2025 16:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992391;
-	bh=Xw3e3dmg0GHOgJdqzrj0az74XjMerZDBG+rK5Zs7fqo=;
+	s=korg; t=1751992394;
+	bh=LGMvfiR0nIAKXeA6NUlth+jJylH3eciaBzrqjyjrNSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmt8cKuQDwD5w3gkQEDP7ThScZE9M6hl7F+R0M0PYtdevQS4twlsZKT4zZar75W5M
-	 Myyiklp8oKpu4C0oBVRQ01iM5RzgsujdDqw2OE75G0uSZHPvAbOjmqMsXbJ3X4oFqV
-	 8cCLSmev7EZTN3cZnff7J9+ihM95FUV1zR3MrqOw=
+	b=gcPeT3A0VZGCKExqeG9eeZPpVOL/dbaJRlL8Vo8Mphc7NhIQ+ASoNW61BeU+EenPw
+	 fxdyq7FX1mAa43u9nBDibuEhf+UW2vYYS7cIBolmCwsmU06SxufQkxDd0PFrDk2A+F
+	 nNs9t8aUTou+gOp42w+6YgZeb+E7bPk/E+RLyE38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/132] f2fs: prevent writing without fallocate() for pinned files
-Date: Tue,  8 Jul 2025 18:23:05 +0200
-Message-ID: <20250708162232.805219002@linuxfoundation.org>
+Subject: [PATCH 6.6 075/132] f2fs: convert f2fs_vm_page_mkwrite() to use folio
+Date: Tue,  8 Jul 2025 18:23:06 +0200
+Message-ID: <20250708162232.832240977@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -52,93 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 3fdd89b452c2ea5e2195d6e315bef122769584c9 ]
+[ Upstream commit aec5755951b74e3bbb5ddee39ac142a788547854 ]
 
-In a case writing without fallocate(), we can't guarantee it's allocated
-in the conventional area for zoned stroage. To make it consistent across
-storage devices, we disallow it regardless of storage device types.
+Convert to use folio, so that we can get rid of 'page->index' to
+prepare for removal of 'index' field in structure page [1].
 
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+[1] https://lore.kernel.org/all/Zp8fgUSIBGQ1TN0D@casper.infradead.org/
+
+Cc: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: ba8dac350faf ("f2fs: fix to zero post-eof page")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ fs/f2fs/file.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 3e3822115d1e4..2eff37cc37601 100644
+index 2eff37cc37601..121849a4dcfda 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -57,7 +57,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+@@ -53,7 +53,7 @@ static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
+ 
+ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ {
+-	struct page *page = vmf->page;
++	struct folio *folio = page_folio(vmf->page);
  	struct inode *inode = file_inode(vmf->vma->vm_file);
  	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
  	struct dnode_of_data dn;
--	bool need_alloc = true;
-+	bool need_alloc = !f2fs_is_pinned_file(inode);
- 	int err = 0;
- 	vm_fault_t ret;
+@@ -85,7 +85,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
  
-@@ -114,19 +114,18 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ 	if (f2fs_compressed_file(inode)) {
+-		int ret = f2fs_is_compressed_cluster(inode, page->index);
++		int ret = f2fs_is_compressed_cluster(inode, folio->index);
+ 
+ 		if (ret < 0) {
+ 			err = ret;
+@@ -105,11 +105,11 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 
+ 	file_update_time(vmf->vma->vm_file);
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
+-	lock_page(page);
+-	if (unlikely(page->mapping != inode->i_mapping ||
+-			page_offset(page) > i_size_read(inode) ||
+-			!PageUptodate(page))) {
+-		unlock_page(page);
++	folio_lock(folio);
++	if (unlikely(folio->mapping != inode->i_mapping ||
++			folio_pos(folio) > i_size_read(inode) ||
++			!folio_test_uptodate(folio))) {
++		folio_unlock(folio);
+ 		err = -EFAULT;
  		goto out_sem;
  	}
- 
-+	set_new_dnode(&dn, inode, NULL, NULL, 0);
+@@ -117,9 +117,9 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	set_new_dnode(&dn, inode, NULL, NULL, 0);
  	if (need_alloc) {
  		/* block allocation */
--		set_new_dnode(&dn, inode, NULL, NULL, 0);
- 		err = f2fs_get_block_locked(&dn, page->index);
--	}
--
--#ifdef CONFIG_F2FS_FS_COMPRESSION
--	if (!need_alloc) {
--		set_new_dnode(&dn, inode, NULL, NULL, 0);
-+	} else {
- 		err = f2fs_get_dnode_of_data(&dn, page->index, LOOKUP_NODE);
+-		err = f2fs_get_block_locked(&dn, page->index);
++		err = f2fs_get_block_locked(&dn, folio->index);
+ 	} else {
+-		err = f2fs_get_dnode_of_data(&dn, page->index, LOOKUP_NODE);
++		err = f2fs_get_dnode_of_data(&dn, folio->index, LOOKUP_NODE);
  		f2fs_put_dnode(&dn);
-+		if (f2fs_is_pinned_file(inode) &&
-+		    !__is_valid_data_blkaddr(dn.data_blkaddr))
-+			err = -EIO;
+ 		if (f2fs_is_pinned_file(inode) &&
+ 		    !__is_valid_data_blkaddr(dn.data_blkaddr))
+@@ -127,11 +127,11 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
  	}
--#endif
-+
+ 
  	if (err) {
- 		unlock_page(page);
+-		unlock_page(page);
++		folio_unlock(folio);
  		goto out_sem;
-@@ -3332,7 +3331,7 @@ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
- 		goto done;
  	}
  
--	if (f2fs_sb_has_blkzoned(sbi) && F2FS_HAS_BLOCKS(inode)) {
-+	if (F2FS_HAS_BLOCKS(inode)) {
- 		ret = -EFBIG;
- 		goto out;
- 	}
-@@ -4919,6 +4918,8 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	bool dio;
- 	bool may_need_sync = true;
- 	int preallocated;
-+	const loff_t pos = iocb->ki_pos;
-+	const ssize_t count = iov_iter_count(from);
- 	ssize_t ret;
+-	f2fs_wait_on_page_writeback(page, DATA, false, true);
++	f2fs_wait_on_page_writeback(folio_page(folio, 0), DATA, false, true);
  
- 	if (unlikely(f2fs_cp_error(F2FS_I_SB(inode)))) {
-@@ -4940,6 +4941,12 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 		inode_lock(inode);
- 	}
+ 	/* wait for GCed page writeback via META_MAPPING */
+ 	f2fs_wait_on_block_writeback(inode, dn.data_blkaddr);
+@@ -139,18 +139,18 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	/*
+ 	 * check to see if the page is mapped already (no holes)
+ 	 */
+-	if (PageMappedToDisk(page))
++	if (folio_test_mappedtodisk(folio))
+ 		goto out_sem;
  
-+	if (f2fs_is_pinned_file(inode) &&
-+	    !f2fs_overwrite_io(inode, pos, count)) {
-+		ret = -EIO;
-+		goto out_unlock;
-+	}
-+
- 	ret = f2fs_write_checks(iocb, from);
- 	if (ret <= 0)
- 		goto out_unlock;
+ 	/* page is wholly or partially inside EOF */
+-	if (((loff_t)(page->index + 1) << PAGE_SHIFT) >
++	if (((loff_t)(folio->index + 1) << PAGE_SHIFT) >
+ 						i_size_read(inode)) {
+ 		loff_t offset;
+ 
+ 		offset = i_size_read(inode) & ~PAGE_MASK;
+-		zero_user_segment(page, offset, PAGE_SIZE);
++		folio_zero_segment(folio, offset, folio_size(folio));
+ 	}
+-	set_page_dirty(page);
++	folio_mark_dirty(folio);
+ 
+ 	f2fs_update_iostat(sbi, inode, APP_MAPPED_IO, F2FS_BLKSIZE);
+ 	f2fs_update_time(sbi, REQ_TIME);
+@@ -162,7 +162,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ out:
+ 	ret = vmf_fs_error(err);
+ 
+-	trace_f2fs_vm_page_mkwrite(inode, page->index, vmf->vma->vm_flags, ret);
++	trace_f2fs_vm_page_mkwrite(inode, folio->index, vmf->vma->vm_flags, ret);
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
