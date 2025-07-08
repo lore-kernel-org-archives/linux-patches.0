@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660BA1DB127;
-	Tue,  8 Jul 2025 16:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490091DB127;
+	Tue,  8 Jul 2025 16:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993902; cv=none; b=TzfUDTTPs7htLoE6ZXJHohWLT4J7/P5dwQHJpSrx9E+uhIB0bNWPFRQmMcMwul3hEBCLxJa7O2HzukbzhJx86SoS6A6Xn1uUI+6GE1ISHj3EEl5tvVVRZ51jQo+0gRsJw0wEJeHJnCWgkQv9H2uy4Oe1ryy3huAy2CZFjtf7UPg=
+	t=1751993905; cv=none; b=RpuBwL79pjxmZDl7UAW7hZwfCdyJQpQeOp0Tc9tHrHdNC+1KoEmeqEdAG0mpj8XRqSPQRHnTNEVZ3lIXESLSVaZAGFcHM++G5xhf7iaY8zzctxc/LgkPaySpRxFLhC3gusTv5cFF2dCJtuwBQLWr2zgif2exQ81BfQFuijUs+2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993902; c=relaxed/simple;
-	bh=7UEE66aZdaNERC7lzbAB9DF5iBt1Cx8hMFer5gDXtp8=;
+	s=arc-20240116; t=1751993905; c=relaxed/simple;
+	bh=v7XUCaex+V14iL5yTfbXSc3r5U6dbkfcGHDnGybxSGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D7bcdlaC7mPoAXL7XXjVSiQdmkYip6LAWbov4zF3oKKYjN+1ggNmAwX4JZidapl8Ji8dN443o3DXmdlJ0izYlYu9+wfmbRX1t/2Nu2cDwsJ+k4wPor1Dmg8ZXd8k6fZNQa42MEK0VR54k2qbIigqz/Jg7bEWg6kYTkJm0IEwWbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxYMXonB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMUYrTa4rzPuGJDnqVgvvz1oQnGs1w6Q/DMzn2cKEGqE2pGR2gpbnvY970EZBjr8sFzG7A+bBgPX/xn4sDT3BTSA6smz0qV5f1yPN1B0OwWhcZgTZfgGwC241kD2QOefe25owDrFIY6131Sk40OgtaqWh5gzoGpMcp/7QQwsNck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lt6jlSGT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxYMXonB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17FAC4CEED;
-	Tue,  8 Jul 2025 16:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lt6jlSGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41D3C4CEED;
+	Tue,  8 Jul 2025 16:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993902;
-	bh=7UEE66aZdaNERC7lzbAB9DF5iBt1Cx8hMFer5gDXtp8=;
+	s=korg; t=1751993905;
+	bh=v7XUCaex+V14iL5yTfbXSc3r5U6dbkfcGHDnGybxSGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxYMXonBXxzjTvHlNsdl9F95wUUP3OknHqpbZx0dzaJQJNU5nPz2Q3oHoaeaO3hPe
-	 3ZEzjSQFHwoGqmnwMrGB/obVPJnswjkLVm1ksUcUbu3/AngOa/F8OkXoIbg1y101IQ
-	 yrpbdyDak68N/LOh0zJmE7UCD1zhJhrBZ5wxs8lY=
+	b=Lt6jlSGTzbq8Dh4hpvf4FvOR52Y8WnisklJtSvAviE64wC1VGe/yA1m76zGav+r6D
+	 OsQ0qLw4my+cpkpN5cvLPd8RG7a2cGFrB+/nVneceIZN/SWxez63VztRVuBbaJ9Eyw
+	 J5PVONWG6K0E9SRI4kLu1FVzufbtfAlAun5wV3bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Yan <felixonmars@archlinux.org>,
-	Eric Long <i@hack3r.moe>,
-	Jianfei Zhang <zhangjianfei3@gmail.com>,
-	Mingcong Bai <jeffbai@aosc.io>,
-	Minh Le <minhld139@gmail.com>,
-	Sicheng Zhu <Emmet_Z@outlook.com>,
-	Rong Zhang <i@rong.moe>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/160] platform/x86: ideapad-laptop: use usleep_range() for EC polling
-Date: Tue,  8 Jul 2025 18:21:34 +0200
-Message-ID: <20250708162233.127128913@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.15 058/160] i2c: tiny-usb: disable zero-length read messages
+Date: Tue,  8 Jul 2025 18:21:35 +0200
+Message-ID: <20250708162233.158101317@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,131 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 5808c34216954cd832bd4b8bc52dfa287049122b ]
+commit cbdb25ccf7566eee0c2b945e35cb98baf9ed0aa6 upstream.
 
-It was reported that ideapad-laptop sometimes causes some recent (since
-2024) Lenovo ThinkBook models shut down when:
- - suspending/resuming
- - closing/opening the lid
- - (dis)connecting a charger
- - reading/writing some sysfs properties, e.g., fan_mode, touchpad
- - pressing down some Fn keys, e.g., Brightness Up/Down (Fn+F5/F6)
- - (seldom) loading the kmod
+This driver passes the length of an i2c_msg directly to
+usb_control_msg(). If the message is now a read and of length 0, it
+violates the USB protocol and a warning will be printed. Enable the
+I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
+read messages altogether.
 
-The issue has existed since the launch day of such models, and there
-have been some out-of-tree workarounds (see Link:) for the issue. One
-disables some functionalities, while another one simply shortens
-IDEAPAD_EC_TIMEOUT. The disabled functionalities have read_ec_data() in
-their call chains, which calls schedule() between each poll.
-
-It turns out that these models suffer from the indeterminacy of
-schedule() because of their low tolerance for being polled too
-frequently. Sometimes schedule() returns too soon due to the lack of
-ready tasks, causing the margin between two polls to be too short.
-In this case, the command is somehow aborted, and too many subsequent
-polls (they poll for "nothing!") may eventually break the state machine
-in the EC, resulting in a hard shutdown. This explains why shortening
-IDEAPAD_EC_TIMEOUT works around the issue - it reduces the total number
-of polls sent to the EC.
-
-Even when it doesn't lead to a shutdown, frequent polls may also disturb
-the ongoing operation and notably delay (+ 10-20ms) the availability of
-EC response. This phenomenon is unlikely to be exclusive to the models
-mentioned above, so dropping the schedule() manner should also slightly
-improve the responsiveness of various models.
-
-Fix these issues by migrating to usleep_range(150, 300). The interval is
-chosen to add some margin to the minimal 50us and considering EC
-responses are usually available after 150-2500us based on my test. It
-should be enough to fix these issues on all models subject to the EC bug
-without introducing latency on other models.
-
-Tested on ThinkBook 14 G7+ ASP and solved both issues. No regression was
-introduced in the test on a model without the EC bug (ThinkBook X IMH,
-thanks Eric).
-
-Link: https://github.com/ty2/ideapad-laptop-tb2024g6plus/commit/6c5db18c9e8109873c2c90a7d2d7f552148f7ad4
-Link: https://github.com/ferstar/ideapad-laptop-tb/commit/42d1e68e5009529d31bd23f978f636f79c023e80
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218771
-Fixes: 6a09f21dd1e2 ("ideapad: add ACPI helpers")
-Cc: stable@vger.kernel.org
-Tested-by: Felix Yan <felixonmars@archlinux.org>
-Tested-by: Eric Long <i@hack3r.moe>
-Tested-by: Jianfei Zhang <zhangjianfei3@gmail.com>
-Tested-by: Mingcong Bai <jeffbai@aosc.io>
-Tested-by: Minh Le <minhld139@gmail.com>
-Tested-by: Sicheng Zhu <Emmet_Z@outlook.com>
-Signed-off-by: Rong Zhang <i@rong.moe>
-Link: https://lore.kernel.org/r/20250525201833.37939-1-i@rong.moe
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e8c76eed2ecd ("i2c: New i2c-tiny-usb bus driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: <stable@vger.kernel.org> # v2.6.22+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250522064349.3823-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/ideapad-laptop.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-tiny-usb.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
-index e75b09a144a32..7c655ace4fdc2 100644
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -13,6 +13,7 @@
- #include <linux/bitops.h>
- #include <linux/bug.h>
- #include <linux/debugfs.h>
-+#include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/dmi.h>
- #include <linux/fb.h>
-@@ -158,6 +159,20 @@ MODULE_PARM_DESC(no_bt_rfkill, "No rfkill for bluetooth.");
-  */
- #define IDEAPAD_EC_TIMEOUT 200 /* in ms */
+--- a/drivers/i2c/busses/i2c-tiny-usb.c
++++ b/drivers/i2c/busses/i2c-tiny-usb.c
+@@ -140,6 +140,11 @@ out:
+ 	return ret;
+ }
  
-+/*
-+ * Some models (e.g., ThinkBook since 2024) have a low tolerance for being
-+ * polled too frequently. Doing so may break the state machine in the EC,
-+ * resulting in a hard shutdown.
-+ *
-+ * It is also observed that frequent polls may disturb the ongoing operation
-+ * and notably delay the availability of EC response.
-+ *
-+ * These values are used as the delay before the first poll and the interval
-+ * between subsequent polls to solve the above issues.
-+ */
-+#define IDEAPAD_EC_POLL_MIN_US 150
-+#define IDEAPAD_EC_POLL_MAX_US 300
++/* prevent invalid 0-length usb_control_msg */
++static const struct i2c_adapter_quirks usb_quirks = {
++	.flags = I2C_AQ_NO_ZERO_LEN_READ,
++};
 +
- static int eval_int(acpi_handle handle, const char *name, unsigned long *res)
- {
- 	unsigned long long result;
-@@ -263,7 +278,7 @@ static int read_ec_data(acpi_handle handle, unsigned long cmd, unsigned long *da
- 	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
- 
- 	while (time_before(jiffies, end_jiffies)) {
--		schedule();
-+		usleep_range(IDEAPAD_EC_POLL_MIN_US, IDEAPAD_EC_POLL_MAX_US);
- 
- 		err = eval_vpcr(handle, 1, &val);
- 		if (err)
-@@ -294,7 +309,7 @@ static int write_ec_cmd(acpi_handle handle, unsigned long cmd, unsigned long dat
- 	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
- 
- 	while (time_before(jiffies, end_jiffies)) {
--		schedule();
-+		usleep_range(IDEAPAD_EC_POLL_MIN_US, IDEAPAD_EC_POLL_MAX_US);
- 
- 		err = eval_vpcr(handle, 1, &val);
- 		if (err)
--- 
-2.39.5
-
+ /* This is the actual algorithm we define */
+ static const struct i2c_algorithm usb_algorithm = {
+ 	.master_xfer	= usb_xfer,
+@@ -244,6 +249,7 @@ static int i2c_tiny_usb_probe(struct usb
+ 	/* setup i2c adapter description */
+ 	dev->adapter.owner = THIS_MODULE;
+ 	dev->adapter.class = I2C_CLASS_HWMON;
++	dev->adapter.quirks = &usb_quirks;
+ 	dev->adapter.algo = &usb_algorithm;
+ 	dev->adapter.algo_data = dev;
+ 	snprintf(dev->adapter.name, sizeof(dev->adapter.name),
 
 
