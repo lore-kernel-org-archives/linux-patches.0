@@ -1,42 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1A779DA;
-	Tue,  8 Jul 2025 00:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D81179DA;
+	Tue,  8 Jul 2025 00:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932953; cv=none; b=rAr69KyFM97MpexnE9UqEi0ixzyJY/Td635ie8ch1Emj0M1//zu93h1981EvZJ2czYmHFbigLIzALXqYITAY4oMlZOwIboYzbDDxU2U0vkwonofDIQ0YQnB4FfTxYkVYNQrhU/mt1LdWXZhiyyDeEIGuOzyxTVqcnCTg8mT0Xv0=
+	t=1751932955; cv=none; b=mDcEV1N6Vm2OnxhJ3//5TTelpN89h+EOUlcBgjaDHb82ayb12hXzf/o8aou2uOTk67gTzTIIRvLuTOo5+xrW4MB3ftUV00A766e2K5l5DRlTwttO6qS048G2S62mL8PTRjGY3JrqCMNRGlgbKnnFWpuAdSAEudn142kqi+BFPgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932953; c=relaxed/simple;
-	bh=/d4iOmSnG/Vh1H/PnfEjcqJlL6LQPz7FpYjpbY1m02s=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UAVZuEqbJAP65YfIGBSRA3JPUcc7z2+f84tBKXBhr7aKAZ6HiIlQLRlcYp8rcZGJ7Vy9PaMm2y14yFQ6AKnBye4jy5/oNtjro/be2UPmKE5osg0JEw5GUBcazSFiw5KHRUgwauRqEN2ECi0tQW8E9werwWEzMuZv9OlUN1jzNuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WnTY/KRk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751932955; c=relaxed/simple;
+	bh=amaBfhxhq9g2AYE6DhKBw6AfiPJFDociuNjRttU9LVE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ETkIiMuBIPrHvSoCli/oFB1GhRxWNESredCRDDDYOpjR8AIYr0Xg1Dv59WqBTkmB3ivaNziw5Luio06p8/PkJQnjkidjPHkXS07s354QAnvl1QuBslj79yKu21Gmii+GqKmKhjKy6k0YZ8172L6mzBJOF3ZoE/Z60ipCsCJ6/R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwvTI3mR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WnTY/KRk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57223C4CEE3;
-	Tue,  8 Jul 2025 00:02:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwvTI3mR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD34C4CEF1;
+	Tue,  8 Jul 2025 00:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932953;
-	bh=/d4iOmSnG/Vh1H/PnfEjcqJlL6LQPz7FpYjpbY1m02s=;
-	h=From:To:Cc:Subject:Date:From;
-	b=WnTY/KRk1DYhAdAjFXTbcIfN0FFedyCmUyvoVdSeinBOvZHbRWr6iMIf6yjPwTqjm
-	 ZcS3SqOaTCS18qUolt87oG7cdbBxUiLBVMe1MO4XhfY9KP4yWtqH8trEIfC8oBGiCZ
-	 /wVBBMHtVHfwodTNaHgLa7iKB3rsGwQy+afIvZhsIaKU7gQDnfszLpLt15o/hyOgO8
-	 Vif2Kxe7f0/6jkEEi9o2K36TugWEpGMjupHicH4KylhUkqoho2pKP08+TiaZvPKJbs
-	 FEhlECETb7MA+IZS3HSCzQ2rNiEfW0E9cF1J+ouLbCFvZKq7R6jjT/7PwapxOoPjBQ
-	 zMclDFXVuLHhw==
+	s=k20201202; t=1751932955;
+	bh=amaBfhxhq9g2AYE6DhKBw6AfiPJFDociuNjRttU9LVE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=dwvTI3mRQXfRmkoz1Ucl4MjYV5KG8grL9ctyhYB1HCDtCdQVQ8Rd7JSyMN4gIrLLF
+	 WEf+mv4uolZYL3UquwgcBQVFHru3OSRmM3S62zjSR7E8IMXS3TB7jFUfyzsNwemY+X
+	 9WSs94P9BBxtOSSCUSqhv8vqPUqUbBISwPdBXIuiNJHcr5Y9p/lVIZd4dxJCq/gkFF
+	 Vboukv2g+FPpOukx6gQGo9ik4M1YdKuLpE/ajmpk6yzZoO+x8VBXQIAFi30nLSiHwt
+	 FYdLLMdiRV9ln5SKxpduL6Tb3f8e+CJMPwjoZ7PBQ6n4FafwJx6D587CapmJU4LBsd
+	 hqTxTuaMYfrCQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
+Cc: Laurent Vivier <lvivier@redhat.com>,
+	Lei Yang <leiyang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S . Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 1/6] Revert "ACPI: battery: negate current when discharging"
-Date: Mon,  7 Jul 2025 20:02:25 -0400
-Message-Id: <20250708000230.793347-1-sashal@kernel.org>
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	virtualization@lists.linux-foundation.org,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 2/6] virtio_net: Enforce minimum TX ring size for reliability
+Date: Mon,  7 Jul 2025 20:02:26 -0400
+Message-Id: <20250708000230.793347-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250708000230.793347-1-sashal@kernel.org>
+References: <20250708000230.793347-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,125 +58,135 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.36
 Content-Transfer-Encoding: 8bit
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-[ Upstream commit de1675de39aa945bad5937d1fde4df3682670639 ]
+[ Upstream commit 24b2f5df86aaebbe7bac40304eaf5a146c02367c ]
 
-Revert commit 234f71555019 ("ACPI: battery: negate current when
-discharging") breaks not one but several userspace implementations
-of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
-but those are the two that have been tested.
+The `tx_may_stop()` logic stops TX queues if free descriptors
+(`sq->vq->num_free`) fall below the threshold of (`MAX_SKB_FRAGS` + 2).
+If the total ring size (`ring_num`) is not strictly greater than this
+value, queues can become persistently stopped or stop after minimal
+use, severely degrading performance.
 
-Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+A single sk_buff transmission typically requires descriptors for:
+- The virtio_net_hdr (1 descriptor)
+- The sk_buff's linear data (head) (1 descriptor)
+- Paged fragments (up to MAX_SKB_FRAGS descriptors)
+
+This patch enforces that the TX ring size ('ring_num') must be strictly
+greater than (MAX_SKB_FRAGS + 2). This ensures that the ring is
+always large enough to hold at least one maximally-fragmented packet
+plus at least one additional slot.
+
+Reported-by: Lei Yang <leiyang@redhat.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20250521092236.661410-4-lvivier@redhat.com
+Tested-by: Lei Yang <leiyang@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES**, this commit should be backported to stable kernel trees.
+**YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-### 1. **Critical Userspace Regression Fix**
-This revert fixes a critical regression that breaks userspace
-applications. The commit message explicitly states that the original
-change "breaks not one but several userspace implementations of battery
-monitoring: Steam and MangoHud." This is a clear violation of the
-kernel's "no userspace regressions" rule, which is one of the most
-fundamental principles in kernel development.
+## 1. **Critical Bug Fix**
+The commit fixes a severe bug where TX queues can become permanently
+stopped, causing complete network transmission failure. Looking at the
+code change, it adds a crucial validation in `virtnet_tx_resize()`:
 
-### 2. **Code Analysis Shows ABI Change**
-Looking at the code changes:
 ```c
-// The problematic code that was added (and is now being removed):
-if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
-    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
-    acpi_battery_handle_discharging(battery)
-            == POWER_SUPPLY_STATUS_DISCHARGING)
-    val->intval = -val->intval;
+if (ring_num <= MAX_SKB_FRAGS + 2) {
+    netdev_err(vi->dev, "tx size (%d) cannot be smaller than %d\n",
+               ring_num, MAX_SKB_FRAGS + 2);
+    return -EINVAL;
+}
 ```
 
-This code was changing the sign of the current value when discharging,
-which altered the userspace-visible ABI. Even if the original behavior
-didn't match documentation, changing it broke existing applications that
-depended on the long-standing behavior.
+This prevents a configuration that would make the network interface
+essentially unusable.
 
-### 3. **Simple and Safe Revert**
-The commit is a clean revert that:
-- Removes the problematic sign negation logic
-- Restores the original behavior that userspace applications expect
-- Is self-contained to the `acpi_battery_get_property()` function
-- Has minimal risk of introducing new issues
+## 2. **Root Cause Analysis**
+The bug occurs because the `tx_may_stop()` logic (used throughout
+virtio_net for flow control) stops the TX queue when free descriptors
+fall below `MAX_SKB_FRAGS + 2`. If the total ring size is not strictly
+greater than this threshold, the queue can:
+- Stop after transmitting just one packet
+- Never have enough free slots to wake up again
+- Result in a permanently stalled TX queue
 
-### 4. **Meets Stable Kernel Criteria**
+## 3. **User Impact**
+This affects real users who:
+- Use virtio_net in virtualized environments (very common in cloud/VM
+  deployments)
+- Configure TX ring sizes via ethtool or other management tools
+- May unknowingly set ring sizes that trigger this bug
+
+The commit message explicitly mentions a report from Lei Yang at Red
+Hat, indicating this was discovered through real-world usage.
+
+## 4. **Minimal and Safe Fix**
+The fix is:
+- **Small**: Only 6 lines of code added
+- **Contained**: Only affects ring resize operations
+- **Safe**: Adds validation without changing existing behavior for valid
+  configurations
+- **Clear**: Returns -EINVAL with a descriptive error message
+
+## 5. **Meets Stable Criteria**
 According to stable kernel rules, this commit qualifies because it:
-- **Fixes a real bug** that users are hitting (broken battery monitoring
-  in Steam and MangoHud)
-- **Is obviously correct** (it's a revert of a change that broke
-  userspace)
-- **Is small and contained** (only affects the ACPI battery property
-  reporting)
-- **Has been tested** (the reporter confirmed the issue)
-- **Fixes a regression** (restores previous working behavior)
+- Fixes a bug that affects users (network stalls)
+- Is relatively small and contained
+- Has no major side effects
+- Doesn't introduce new features
+- Has been tested (by Lei Yang) and reviewed by maintainers (Jason Wang,
+  Michael S. Tsirkin)
 
-### 5. **Comparison to Similar Commits**
-Looking at the historical commits marked with "Backport Status: YES",
-they share similar characteristics:
-- Fix actual problems affecting users
-- Are relatively small and contained changes
-- Don't introduce new features or architectural changes
-- Focus on fixing specific issues
+## 6. **Comparison with Similar Commits**
+Looking at the historical commits:
+- Similar commit #3 (virtio_net: ensure netdev_tx_reset_queue) was
+  backported because it fixed TX queue handling issues
+- This commit is even more critical as it prevents complete TX failure
+- The fix is simpler than commit #3 (just validation vs. callback
+  handling)
 
-This revert fits perfectly into this pattern as it's fixing a specific
-userspace compatibility issue without introducing any new functionality.
+## 7. **No Architectural Changes**
+Unlike commits #1 and #2 which made architectural changes to ring
+sizing, this commit:
+- Only adds input validation
+- Doesn't change data structures
+- Doesn't modify existing workflows
+- Simply prevents an invalid configuration
 
-### 6. **Timing Considerations**
-The original problematic commit (234f71555019) was from May 8, 2025, and
-this revert is from July 3, 2025. If the original commit made it into
-any stable releases, those stable trees would need this revert to
-prevent userspace breakage.
+The fact that experienced maintainers like Jason Wang and Michael S.
+Tsirkin acked this change further supports its importance for stable
+backporting. This is a textbook example of a fix that should go to
+stable: it addresses a real bug with minimal risk.
 
-### Conclusion:
-This is a textbook example of a commit that should be backported to
-stable kernels. It fixes a userspace regression, is minimal in scope,
-carries very low risk, and restores previously working behavior that
-applications depend on. The fact that it's a revert of a problematic
-change makes it even more suitable for stable backporting.
+ drivers/net/virtio_net.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
- drivers/acpi/battery.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 6a7ac34d73bda..65fa3444367a1 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -243,23 +243,10 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
- 			ret = -ENODEV;
--			break;
--		}
--
--		val->intval = battery->rate_now * 1000;
--		/*
--		 * When discharging, the current should be reported as a
--		 * negative number as per the power supply class interface
--		 * definition.
--		 */
--		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
--		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
--		    acpi_battery_handle_discharging(battery)
--				== POWER_SUPPLY_STATUS_DISCHARGING)
--			val->intval = -val->intval;
--
-+		else
-+			val->intval = battery->rate_now * 1000;
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 6d36cb204f9bc..384aabca39964 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3231,6 +3231,12 @@ static int virtnet_tx_resize(struct virtnet_info *vi, struct send_queue *sq,
+ {
+ 	int qindex, err;
+ 
++	if (ring_num <= MAX_SKB_FRAGS + 2) {
++		netdev_err(vi->dev, "tx size (%d) cannot be smaller than %d\n",
++			   ring_num, MAX_SKB_FRAGS + 2);
++		return -EINVAL;
++	}
++
+ 	qindex = sq - vi->sq;
+ 
+ 	virtnet_tx_pause(vi, sq);
 -- 
 2.39.5
 
