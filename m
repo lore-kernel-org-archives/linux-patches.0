@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3272DC34C;
-	Tue,  8 Jul 2025 17:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565C22DC34C;
+	Tue,  8 Jul 2025 17:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994128; cv=none; b=e+8+TwMmz0Jv9G6vQ1Em+OwzuvmD37GBvIQtM0n5kiMAFFzLCgraBSXTyexDUZ4zwtK+y+O6QW7Bstdh/fDtpP2gt8sI5mkdSb7mhqBz405gYpuf1KMqbK2TtEWrcQ1zumfnJ36AOO3qA3nqN2FSWdmftbWTQZJj8OiCnocqiGo=
+	t=1751994131; cv=none; b=X90IRqFOq7IadE6o5DBWRsk+YVPt3vZISpTOlvmhKdsKn40GoRk2YFX3Xk85TS4vW1V8lrzrD2R05jgiWceNxjw2uA330ZD67Bv0CMAXvQteS723mxjErgP+d2GAvRkVZCp2eEbmWDfyc8SxQJ6Ws+/QBDkRNYSY6uIOJR8UOj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994128; c=relaxed/simple;
-	bh=dMPyQpBMiJcFI1ARTL+h+Ouxp7+1s9Ba8bV4qUfk3ag=;
+	s=arc-20240116; t=1751994131; c=relaxed/simple;
+	bh=uo7Irl3XFewIbfsTG2OM6V3Mr55rvJTPRpJmRJ+XHsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUxZHo5jU16QLj2Sf5IxFjVyeqwaMrNkwtLBTRvXhRNIOASTMZM15F/w0r6b2NdvbkFZUo1TnBnAgDpl089yi7/UFhxCC7alWtbb8NRWyvG6J0MuneEZllkcPTyuYsfyiP87PpgKkuuaPNpYwu8VXcbkGY3fPGC3sG01frCr3Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lS8IpZjE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ovaLpl28uoMSF5MFK0osKTuMrlFJ6JasUovUzGK63SQDZUwNJh47WayizbYwicvA2JvcMyMyBnXS1P6GhDVrtFCt72R/tdPPOIJpDAbcYZTDY41h5o9dmA3W2yxNzGzZYgsYxF54eVai6oRn+S/rV7r5B2S2qacP0S5TqXIJ4xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFAsEMQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lS8IpZjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F5DC4CEED;
-	Tue,  8 Jul 2025 17:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFAsEMQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2711C4CEED;
+	Tue,  8 Jul 2025 17:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994128;
-	bh=dMPyQpBMiJcFI1ARTL+h+Ouxp7+1s9Ba8bV4qUfk3ag=;
+	s=korg; t=1751994131;
+	bh=uo7Irl3XFewIbfsTG2OM6V3Mr55rvJTPRpJmRJ+XHsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lS8IpZjEfherdZdDRmmuA7I8QDfAJG4I7aeaaxrhpN7jLr5nCpO2VE4nHb4zMLRy8
-	 jNc6y7Md9ZQXTtk680/74yg3zk723iy0hQmqeIqnYmpP917Iey/HXM8sTJpyq4gJe4
-	 tRbSjv8TxjR3vN+CPRm4V2iykQoxlv+maRE1FMBM=
+	b=MFAsEMQJJ6d6g/mKzmNDA4zLxLRvTFF1Z/PWPoVS2Sv0/8NdbdU/VjIJlNpRim43f
+	 d8PORn0cEzt4r+tvxceZN9jqPWTH92m2rupYfKVG+yFkP5LCA8bpvaDmR/Si22ks2f
+	 fcpSSlmTOsyVnbbCC01W4jYFfZNdvfcvbHygOJkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 104/160] mtk-sd: reset host->mrq on prepare_data() error
-Date: Tue,  8 Jul 2025 18:22:21 +0200
-Message-ID: <20250708162234.366409216@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 105/160] platform/mellanox: mlxbf-tmfifo: fix vring_desc.len assignment
+Date: Tue,  8 Jul 2025 18:22:22 +0200
+Message-ID: <20250708162234.390160603@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -45,39 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: David Thompson <davthompson@nvidia.com>
 
-commit ec54c0a20709ed6e56f40a8d59eee725c31a916b upstream.
+[ Upstream commit 109f4d29dade8ae5b4ac6325af9d1bc24b4230f8 ]
 
-Do not leave host with dangling ->mrq pointer if we hit
-the msdc_prepare_data() error out path.
+Fix warnings reported by sparse, related to incorrect type:
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38: warning: incorrect type in assignment (different base types)
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    expected restricted __virtio32 [usertype] len
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    got unsigned long
 
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Fixes: f5de469990f1 ("mtk-sd: Prevent memory corruption from DMA map failure")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250625052106.584905-1-senozhatsky@chromium.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202404040339.S7CUIgf3-lkp@intel.com/
+Fixes: 78034cbece79 ("platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/20250613214608.2250130-1-davthompson@nvidia.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -1314,6 +1314,7 @@ static void msdc_ops_request(struct mmc_
- 	if (mrq->data) {
- 		msdc_prepare_data(host, mrq->data);
- 		if (!msdc_data_prepared(mrq->data)) {
-+			host->mrq = NULL;
- 			/*
- 			 * Failed to prepare DMA area, fail fast before
- 			 * starting any commands.
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 767f4406e55f1..1eb7f4eb1156c 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -253,7 +253,8 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
+ 		vring->align = SMP_CACHE_BYTES;
+ 		vring->index = i;
+ 		vring->vdev_id = tm_vdev->vdev.id.device;
+-		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
++		vring->drop_desc.len = cpu_to_virtio32(&tm_vdev->vdev,
++						       VRING_DROP_DESC_MAX_LEN);
+ 		dev = &tm_vdev->vdev.dev;
+ 
+ 		size = vring_size(vring->num, vring->align);
+-- 
+2.39.5
+
 
 
