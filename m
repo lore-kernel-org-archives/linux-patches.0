@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3292F85B;
-	Tue,  8 Jul 2025 00:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95F042AB0;
+	Tue,  8 Jul 2025 00:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932971; cv=none; b=pDUQZ7uo4bIYgZf1Y32nBpaQRj9LmUiZv84Y+ENz8Toc5ZD+aCV4IJvZbxKfc3nTcdYKjNU5QH56QCxGjwb6gUSGdBo1rpeZEh+qFsHyTC07x+PqgSyA7lqU8niCPITu6Ar/Rt4+zo6tAFM17Mvo3Bybrd8LeUfg3AUXZFpmvtY=
+	t=1751932972; cv=none; b=K2VRzKv8HZAu1VngoogAvH6Eq/JiT1iF60H6wiqtuOxb+9MlywuzJYA66Fv/DIGzcl6KZAu+HBl26V+RtqA0KcredsqAONCFS/XrLZj8IWDyjk9mvfhubyc/yFQQN2boS2nk1Wyqqa+q2iaUGgRZQVdMccoud1M2iFltz2UMiZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932971; c=relaxed/simple;
-	bh=Rsgl75XkJR7up1yFx6RN1skqoe1lmS7tOWLyRIE4pHc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Rjf6M45hkUnWA2LKop5/4oLrEbS+gmbtIgbnlR9adK42lmuLYwVFJTrlTsOcVH/FOidAxtbiaH12iSnn09GtGHXxHhk9YmBLFtyLH3hsVJ8i9YCBe5U55VIttm14N/F4nKOe3qCOo25P8Xd+a2RaBdCfSTbULsDWxPvCXqU4aks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W+CwYwUL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751932972; c=relaxed/simple;
+	bh=KK6c13TBpceypaX69s7DB/+irxQ5FP8rxLJEYiBq/Ec=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=d9H2Ai/tT+futEBS0RN5Zylhak0mY2foD8w/FGR+tYiJv3a5np4cxj+AlPq776AUl3s6oLPzEsr2EjkImfAGq7iZipaDXEflcjuEKfQ0YNkVdwNOyXrLOYjemFTp8ESMS1Ixpb8qUOLigDIpymdJlxX+aIUGJ9V0VS568mU6eNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPoYEJ/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W+CwYwUL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EEFC4CEE3;
-	Tue,  8 Jul 2025 00:02:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPoYEJ/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887DFC4CEF5;
+	Tue,  8 Jul 2025 00:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932971;
-	bh=Rsgl75XkJR7up1yFx6RN1skqoe1lmS7tOWLyRIE4pHc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=W+CwYwULDAYqFePARmuYZZVL1yAEGgdPeTvvqrrZSybhMs7XfO4wnBUe+GME7FGCS
-	 78/eWhwdraC8hFbif8qdppF3Xv/Kalipda596huQqEE1cAZtG64grF27bKPxL9et1j
-	 Ss0sBxA3KWxZiL0IEYKOlAaB+Ogvqq7mLHYkI7kZYYyhFuQ2P0Z6Qktg9vawbNS7JL
-	 uXGsv19I6294jCpeC4imyF9lNmaZ5XITaubZvsoYVj+ap0ZgGVsFZx82ZI7QyMp0id
-	 RVVDBdF5coOXTsqEBWR6gC5z8d38S51Cym84jUPEG7IUyAKQXiUsmVSInIOy39A1o+
-	 siRfedQ0/411Q==
+	s=k20201202; t=1751932972;
+	bh=KK6c13TBpceypaX69s7DB/+irxQ5FP8rxLJEYiBq/Ec=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=gPoYEJ/VXsEsMOXa7s29VJN3xu9lXiv6F0Pu2owuZSdj16jcfhJ5fQ5p7v1NFsRRo
+	 SZKCdLI4b9yPLenFSLoz7Is1mxUeYabUUtYzGYFzlYZw43WChjg6PJrtIIqSLIUwF1
+	 Gd5JLyxj+TrCmN795PK14UbmFyebBxEwkzsNc3e4MK//HitcbFF6j4sQLYhGZyhA9W
+	 1WUiWRLtxBT+a+SFKY8wQtaGUtayhNl/kocOBN6fXNRYZVvo2aEujQ0i2P4tGvgcP9
+	 7nDadi3vI0/YlwHxiGMVC15LOlVVQmZdRvwbVPu+VSIjeLlceiOm4JH6zk1AC2gXOT
+	 T8Pw3pPrz7/mg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
+Cc: Alessandro Carminati <acarmina@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 1/3] Revert "ACPI: battery: negate current when discharging"
-Date: Mon,  7 Jul 2025 20:02:46 -0400
-Message-Id: <20250708000248.793597-1-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 2/3] regulator: core: fix NULL dereference on unbind due to stale coupling data
+Date: Mon,  7 Jul 2025 20:02:47 -0400
+Message-Id: <20250708000248.793597-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250708000248.793597-1-sashal@kernel.org>
+References: <20250708000248.793597-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,125 +51,98 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.143
 Content-Transfer-Encoding: 8bit
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-[ Upstream commit de1675de39aa945bad5937d1fde4df3682670639 ]
+[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
 
-Revert commit 234f71555019 ("ACPI: battery: negate current when
-discharging") breaks not one but several userspace implementations
-of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
-but those are the two that have been tested.
+Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
+lead to NULL pointer dereference when regulators are accessed post-unbind.
 
-Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This can happen during runtime PM or other regulator operations that rely
+on coupling metadata.
+
+For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
+a panic in regulator_lock_recursive() due to stale coupling state.
+
+Ensure n_coupled is set to 0 to prevent access to invalid pointers.
+
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES**, this commit should be backported to stable kernel trees.
+Now I understand the bug. After unbind, the regulator_dev structure may
+still exist and be accessed (e.g., during runtime PM operations). If
+n_coupled is not reset to 0, code like regulator_lock_recursive() will
+try to iterate through n_coupled entries in the coupled_rdevs array, but
+that array has been freed and set to NULL, causing a NULL pointer
+dereference.
 
-## Extensive Explanation:
+**YES**
 
-### 1. **Critical Userspace Regression Fix**
-This revert fixes a critical regression that breaks userspace
-applications. The commit message explicitly states that the original
-change "breaks not one but several userspace implementations of battery
-monitoring: Steam and MangoHud." This is a clear violation of the
-kernel's "no userspace regressions" rule, which is one of the most
-fundamental principles in kernel development.
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-### 2. **Code Analysis Shows ABI Change**
-Looking at the code changes:
-```c
-// The problematic code that was added (and is now being removed):
-if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
-    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
-    acpi_battery_handle_discharging(battery)
-            == POWER_SUPPLY_STATUS_DISCHARGING)
-    val->intval = -val->intval;
-```
+1. **It fixes a real NULL pointer dereference bug**: The commit
+   addresses a crash that occurs when regulators are accessed after
+   unbind. The issue is in `regulator_lock_recursive()` at line 326-327
+   where it iterates through `n_coupled` entries in the `coupled_rdevs`
+   array:
+  ```c
+  for (i = 0; i < rdev->coupling_desc.n_coupled; i++) {
+  c_rdev = rdev->coupling_desc.coupled_rdevs[i];
+  ```
+  If `n_coupled > 0` but `coupled_rdevs` has been freed (set to NULL),
+  this causes a NULL pointer dereference.
 
-This code was changing the sign of the current value when discharging,
-which altered the userspace-visible ABI. Even if the original behavior
-didn't match documentation, changing it broke existing applications that
-depended on the long-standing behavior.
+2. **The fix is minimal and safe**: The patch adds just one line:
+  ```c
+  rdev->coupling_desc.n_coupled = 0;
+  ```
+  This ensures that after freeing the coupling data, the count is also
+  reset, preventing any code from trying to access the freed array.
 
-### 3. **Simple and Safe Revert**
-The commit is a clean revert that:
-- Removes the problematic sign negation logic
-- Restores the original behavior that userspace applications expect
-- Is self-contained to the `acpi_battery_get_property()` function
-- Has minimal risk of introducing new issues
+3. **It affects a critical subsystem**: The regulator framework is
+   essential for power management, and crashes in this subsystem can
+   cause system instability or complete failure.
 
-### 4. **Meets Stable Kernel Criteria**
-According to stable kernel rules, this commit qualifies because it:
-- **Fixes a real bug** that users are hitting (broken battery monitoring
-  in Steam and MangoHud)
-- **Is obviously correct** (it's a revert of a change that broke
-  userspace)
-- **Is small and contained** (only affects the ACPI battery property
-  reporting)
-- **Has been tested** (the reporter confirmed the issue)
-- **Fixes a regression** (restores previous working behavior)
+4. **The bug can be triggered during normal operations**: The commit
+   message mentions this happens during runtime PM or other regulator
+   operations, which are common scenarios, not edge cases.
 
-### 5. **Comparison to Similar Commits**
-Looking at the historical commits marked with "Backport Status: YES",
-they share similar characteristics:
-- Fix actual problems affecting users
-- Are relatively small and contained changes
-- Don't introduce new features or architectural changes
-- Focus on fixing specific issues
+5. **Similar to other backported fixes**: Looking at the historical
+   commits, we see that similar coupling-related fixes have been
+   backported:
+   - "regulator: core: Release coupled_rdevs on
+     regulator_init_coupling() error" (backported)
+   - "regulator: da9063: fix null pointer deref with partial DT config"
+     (backported)
+   These precedents show that NULL pointer fixes in the regulator
+subsystem are considered important for stable trees.
 
-This revert fits perfectly into this pattern as it's fixing a specific
-userspace compatibility issue without introducing any new functionality.
+6. **Clear reproducer**: The commit mentions a specific platform
+   (ridesx4) where unbinding the 'reg-dummy' platform device triggers
+   the panic, indicating this is a reproducible issue.
 
-### 6. **Timing Considerations**
-The original problematic commit (234f71555019) was from May 8, 2025, and
-this revert is from July 3, 2025. If the original commit made it into
-any stable releases, those stable trees would need this revert to
-prevent userspace breakage.
+The fix follows the stable kernel rules: it's a small, contained fix for
+an important bug with minimal risk of regression.
 
-### Conclusion:
-This is a textbook example of a commit that should be backported to
-stable kernels. It fixes a userspace regression, is minimal in scope,
-carries very low risk, and restores previously working behavior that
-applications depend on. The fact that it's a revert of a problematic
-change makes it even more suitable for stable backporting.
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
- drivers/acpi/battery.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 2f188a734a0c5..5a4e022662417 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -241,23 +241,10 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
- 			ret = -ENODEV;
--			break;
--		}
--
--		val->intval = battery->rate_now * 1000;
--		/*
--		 * When discharging, the current should be reported as a
--		 * negative number as per the power supply class interface
--		 * definition.
--		 */
--		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
--		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
--		    acpi_battery_handle_discharging(battery)
--				== POWER_SUPPLY_STATUS_DISCHARGING)
--			val->intval = -val->intval;
--
-+		else
-+			val->intval = battery->rate_now * 1000;
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 29c9171e923a2..7e6ff7e72784b 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5423,6 +5423,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+ 				 ERR_PTR(err));
+ 	}
+ 
++	rdev->coupling_desc.n_coupled = 0;
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	rdev->coupling_desc.coupled_rdevs = NULL;
+ }
 -- 
 2.39.5
 
