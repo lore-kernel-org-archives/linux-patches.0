@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E917881E;
-	Tue,  8 Jul 2025 16:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE108F5B;
+	Tue,  8 Jul 2025 16:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992247; cv=none; b=UoqIKD1yPPvMjM3az7/H//nnCzmL9vmefUq0lixTwGj/BcYcrRGzl+cGfa7p8OKOhcdClyxHPIOl6taaLcdlb4SiL4b+D6fA1pnfR5q5RgUircfGBVDD/3kIosxw219h3ig3qq/vIq9B3N7kzgT/eBR140VH5VydY56hysk0bjE=
+	t=1751992250; cv=none; b=athQ0CQT1SUBsphmQFbAGtibvKOukcoveTLDvbD63AdbZuP5Iy8UX4PX4gPnxhpZv7OHQbIOD7LNAQFTuFYnpRieZO6HC9CcPYz2ldiPtPYXuf1Hq08PlcndUCXoW6R1fA4EAiXJ5EvGF4EbbWNJDSzOp/mEqSHuKL/kuPb7yKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992247; c=relaxed/simple;
-	bh=qBxXnA3lLMjns3Lc90lpYjT7+hkNv95PXP4pzSUOd8E=;
+	s=arc-20240116; t=1751992250; c=relaxed/simple;
+	bh=kTpJvnAea+vJyt7h/Z0FX1xqE0hpC5i+AiIUd/HfCFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABgwFWeemcyn+aOSzAJhb+ozNiNhTbCcF2yukLvhQ63MWBNdCPkMTTXtRIJLVmVmfMTdzb3mZtjemz1ECfZpWTEcSuVDuqtiKgnTol1VUYMKjvB0jXJ3kZUh2wmH0WoP2WrECFzBn6jV6gFdMxw3la8TAVuKLlE6BUApJjBCdbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7b7GCNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=edWB7PM0hCHABdFmVqdC8E8CceWFEjQP5874q4wsrHKBv3nrBQbLg8Zzl3lsikQMxrUOd8CN6lSUqy9NGgsiPY9eaDlBx3KBD4Ujh8epKoYqgZ/t1gYhUZt7XdT7+I2Prg3u9XlXxl1GbQQxbA/KtUrKIKvfDrYfcrnInOHgkQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trMtvMTS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7b7GCNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8166CC4CEED;
-	Tue,  8 Jul 2025 16:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trMtvMTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9038FC4CEED;
+	Tue,  8 Jul 2025 16:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992246;
-	bh=qBxXnA3lLMjns3Lc90lpYjT7+hkNv95PXP4pzSUOd8E=;
+	s=korg; t=1751992249;
+	bh=kTpJvnAea+vJyt7h/Z0FX1xqE0hpC5i+AiIUd/HfCFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7b7GCNYxGojPpJzsDehJphRn6miu6dKjBAwQjNblnsW157wdvx8n7FJeY66buose
-	 O/Ot/+G3iF3m9+V1D9r+N/90l7Vy93cAP/MoYrJu6IGnLnu1uXHP0dpagQRwPVDtuM
-	 5TccZsTqGLCwqrvHfBsk98U43YcUkS8kcMNUOWNI=
+	b=trMtvMTSLJ/8c3OdLkEPDkEoED9P54kF8AoGNrqOzk3TBuGUaTHYXlczXwxSUUZ28
+	 +CNB0PYCndIhuC+YMIm9FTlReUPGtmjdRtL5wmNDfx2eQ0755inGLAzX2gaYDzexEO
+	 l9c8xPSZOk46tPeq6dmcmMLJEvNyLbotxVPj1XMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/132] RDMA/mlx5: Fix vport loopback for MPV device
-Date: Tue,  8 Jul 2025 18:22:19 +0200
-Message-ID: <20250708162231.534403803@linuxfoundation.org>
+Subject: [PATCH 6.6 029/132] platform/mellanox: nvsw-sn2201: Fix bus number in adapter error message
+Date: Tue,  8 Jul 2025 18:22:20 +0200
+Message-ID: <20250708162231.562648504@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -46,91 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit a9a9e68954f29b1e197663f76289db4879fd51bb ]
+[ Upstream commit d07143b507c51c04c091081627c5a130e9d3c517 ]
 
-Always enable vport loopback for both MPV devices on driver start.
+change error log to use correct bus number from main_mux_devs
+instead of cpld_devs.
 
-Previously in some cases related to MPV RoCE, packets weren't correctly
-executing loopback check at vport in FW, since it was disabled.
-Due to complexity of identifying such cases for MPV always enable vport
-loopback for both GVMIs when binding the slave to the master port.
-
-Fixes: 0042f9e458a5 ("RDMA/mlx5: Enable vport loopback when user context or QP mandate")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/d4298f5ebb2197459e9e7221c51ecd6a34699847.1750064969.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 662f24826f95 ("platform/mellanox: Add support for new SN2201 system")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20250622072921.4111552-2-alok.a.tiwari@oracle.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 33 +++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/platform/mellanox/nvsw-sn2201.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index ada7dbf8eb1cf..e922fb8728654 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1690,6 +1690,33 @@ static void deallocate_uars(struct mlx5_ib_dev *dev,
- 					     context->devx_uid);
- }
+diff --git a/drivers/platform/mellanox/nvsw-sn2201.c b/drivers/platform/mellanox/nvsw-sn2201.c
+index 1a7c45aa41bbf..6b4d3c44d7bd9 100644
+--- a/drivers/platform/mellanox/nvsw-sn2201.c
++++ b/drivers/platform/mellanox/nvsw-sn2201.c
+@@ -1088,7 +1088,7 @@ static int nvsw_sn2201_i2c_completion_notify(void *handle, int id)
+ 	if (!nvsw_sn2201->main_mux_devs->adapter) {
+ 		err = -ENODEV;
+ 		dev_err(nvsw_sn2201->dev, "Failed to get adapter for bus %d\n",
+-			nvsw_sn2201->cpld_devs->nr);
++			nvsw_sn2201->main_mux_devs->nr);
+ 		goto i2c_get_adapter_main_fail;
+ 	}
  
-+static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
-+				struct mlx5_core_dev *slave)
-+{
-+	int err;
-+
-+	err = mlx5_nic_vport_update_local_lb(master, true);
-+	if (err)
-+		return err;
-+
-+	err = mlx5_nic_vport_update_local_lb(slave, true);
-+	if (err)
-+		goto out;
-+
-+	return 0;
-+
-+out:
-+	mlx5_nic_vport_update_local_lb(master, false);
-+	return err;
-+}
-+
-+static void mlx5_ib_disable_lb_mp(struct mlx5_core_dev *master,
-+				  struct mlx5_core_dev *slave)
-+{
-+	mlx5_nic_vport_update_local_lb(slave, false);
-+	mlx5_nic_vport_update_local_lb(master, false);
-+}
-+
- int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- {
- 	int err = 0;
-@@ -3224,6 +3251,8 @@ static void mlx5_ib_unbind_slave_port(struct mlx5_ib_dev *ibdev,
- 
- 	lockdep_assert_held(&mlx5_ib_multiport_mutex);
- 
-+	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev);
-+
- 	mlx5_core_mp_event_replay(ibdev->mdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_REMOVED,
- 				  NULL);
-@@ -3319,6 +3348,10 @@ static bool mlx5_ib_bind_slave_port(struct mlx5_ib_dev *ibdev,
- 				  MLX5_DRIVER_EVENT_AFFILIATION_DONE,
- 				  &key);
- 
-+	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev);
-+	if (err)
-+		goto unbind;
-+
- 	return true;
- 
- unbind:
 -- 
 2.39.5
 
