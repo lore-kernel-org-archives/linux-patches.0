@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13511258CF7;
-	Tue,  8 Jul 2025 16:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2075258CF7;
+	Tue,  8 Jul 2025 16:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993838; cv=none; b=pTJCh4frPesEijJLYhiqrNAmivkCF9vlPqGcy3cYlnABnBajP84LdjZa5X9OkRuZr+rOipfleqNXwvo4VhRdqxvXyxvEHW7dunXXzZmxstj6EDVucePP/pTz45neEJVek1NWNpgv8yfTyVu5VG3RjBxuc8oJsbeDYACRRxLNeqE=
+	t=1751993841; cv=none; b=OCtWArV1ai9i3AsLY9h/EKm1LVCaU5YLtL7Yu/8zb8sec/FRSbcbEc3U1h4mGCPu7Buoaxn0zph5V/tnTCYTQlrbcWisgGsZkacaK07uFPlXRpdci7YalkAoA5aD/AaVpqFGHBgDPthtum4RhdImpewIIVW+C6PO9qtNbRTB89c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993838; c=relaxed/simple;
-	bh=dlcqTbcgYe03c3aayuNfoUqG01YZ61Ls2mmmu+UmIP4=;
+	s=arc-20240116; t=1751993841; c=relaxed/simple;
+	bh=rtQ1wFpOvGXGtmt5//L473Y877xaMgzS9RZHrUOY3jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9nUXQVdFT9a+JsD+VpXFimrBTfef0j4QubO2KlVGBnd4UrqVzL5p7xiyY78YcoBQ0gPoX2YYnbUTwrn5gl8/iDS4laj+QpTSeYT1hkbYxexgEJB+RxWWzBzkcw7GfFuTOmMWnnUONrmVicMu/jhxKbsBNwgRl2QD7G+7UE5vMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgTJ5Vi4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oIqcNKKY1EfndlL6Uj6gMKgdk1ZceSr67DDUxUtHFqi107jLn1vHo6tl0A9RKtC4o5jva3W0MuaIx1eF9P/QjDYOWaC/x8KSQViFa6+8oWK//ZPVcntZ3udaLRJSm/GhN5ynoB9M3AijYAtCHi2O9a5WwcHQrYnzEd2bQfemDVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jq0aeucC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgTJ5Vi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBCEC4CEED;
-	Tue,  8 Jul 2025 16:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jq0aeucC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B77DC4CEED;
+	Tue,  8 Jul 2025 16:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993837;
-	bh=dlcqTbcgYe03c3aayuNfoUqG01YZ61Ls2mmmu+UmIP4=;
+	s=korg; t=1751993840;
+	bh=rtQ1wFpOvGXGtmt5//L473Y877xaMgzS9RZHrUOY3jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgTJ5Vi4N9SaqLgsAwJvN6L5YRI8Wq5wc+BoNmuAdmSGg99RyfnD4Td3A72nLV0UB
-	 zC6ui7Vd/8cv0iJhlYu9UzwTwc1LiaAixAubAc5Aoxj8J8CnDVabKbrZdFmyxbXJI2
-	 2SE3CbEn6wv0u4E+zeW2/9OledcRzuzsWg+ciTMI=
+	b=Jq0aeucCF6kBbPMvLFhzJY/4H+nIv3S/Zgv6nT7t3YIU2F+Lcc2q2wwxwCZ2zIcjU
+	 PqMESDDbBnbQSuXzYr6LDyMgbqD0FknWf2kMxRYI2up/tReExCWRdc3NYZj3TnniXj
+	 WKHhAEv2pi9VrccAFyPPaLPddm4NaPFA+s8asgfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Kerling <pkerling@casix.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/160] ksmbd: allow a filename to contain special characters on SMB3.1.1 posix extension
-Date: Tue,  8 Jul 2025 18:20:45 +0200
-Message-ID: <20250708162231.740783832@linuxfoundation.org>
+Subject: [PATCH 5.15 035/160] ASoC: codecs: wcd9335: Handle nicer probe deferral and simplify with dev_err_probe()
+Date: Tue,  8 Jul 2025 18:21:12 +0200
+Message-ID: <20250708162232.500413467@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,106 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit dc3e0f17f74558e8a2fce00608855f050de10230 ]
+[ Upstream commit 4a03b5dbad466c902d522f3405daa4e5d80578c5 ]
 
-If client send SMB2_CREATE_POSIX_CONTEXT to ksmbd, Allow a filename
-to contain special characters.
+wcd9335_parse_dt() function is called only from probe(), so printing
+errors on resource acquisition is discouraged, because it can pollute
+dmesg.  Use dev_err_probe() to fix this and also make the code a bit
+simpler.
 
-Reported-by: Philipp Kerling <pkerling@casix.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://msgid.link/r/20240612-asoc-wcd9xxx-wide-cleanups-v1-4-0d15885b2a06@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 9079db287fc3 ("ASoC: codecs: wcd9335: Fix missing free of regulator supplies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 53 +++++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 26 deletions(-)
+ sound/soc/codecs/wcd9335.c | 28 +++++++++-------------------
+ 1 file changed, 9 insertions(+), 19 deletions(-)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index b21601c0a457c..76334a983cd25 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2679,7 +2679,7 @@ int smb2_open(struct ksmbd_work *work)
- 	int req_op_level = 0, open_flags = 0, may_flags = 0, file_info = 0;
- 	int rc = 0;
- 	int contxt_cnt = 0, query_disk_id = 0;
--	int maximal_access_ctxt = 0, posix_ctxt = 0;
-+	bool maximal_access_ctxt = false, posix_ctxt = false;
- 	int s_type = 0;
- 	int next_off = 0;
- 	char *name = NULL;
-@@ -2706,6 +2706,27 @@ int smb2_open(struct ksmbd_work *work)
- 		return create_smb2_pipe(work);
- 	}
+diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
+index 075ed20e9fad8..dc4ce2c3f2188 100644
+--- a/sound/soc/codecs/wcd9335.c
++++ b/sound/soc/codecs/wcd9335.c
+@@ -5028,22 +5028,16 @@ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
+ 	int ret;
  
-+	if (req->CreateContextsOffset && tcon->posix_extensions) {
-+		context = smb2_find_context_vals(req, SMB2_CREATE_TAG_POSIX, 16);
-+		if (IS_ERR(context)) {
-+			rc = PTR_ERR(context);
-+			goto err_out2;
-+		} else if (context) {
-+			struct create_posix *posix = (struct create_posix *)context;
-+
-+			if (le16_to_cpu(context->DataOffset) +
-+				le32_to_cpu(context->DataLength) <
-+			    sizeof(struct create_posix) - 4) {
-+				rc = -EINVAL;
-+				goto err_out2;
-+			}
-+			ksmbd_debug(SMB, "get posix context\n");
-+
-+			posix_mode = le32_to_cpu(posix->Mode);
-+			posix_ctxt = true;
-+		}
-+	}
-+
- 	if (req->NameLength) {
- 		if ((req->CreateOptions & FILE_DIRECTORY_FILE_LE) &&
- 		    *(char *)req->Buffer == '\\') {
-@@ -2737,9 +2758,11 @@ int smb2_open(struct ksmbd_work *work)
- 				goto err_out2;
- 		}
+ 	wcd->reset_gpio = of_get_named_gpio(np,	"reset-gpios", 0);
+-	if (wcd->reset_gpio < 0) {
+-		dev_err(dev, "Reset GPIO missing from DT\n");
+-		return wcd->reset_gpio;
+-	}
++	if (wcd->reset_gpio < 0)
++		return dev_err_probe(dev, wcd->reset_gpio, "Reset GPIO missing from DT\n");
  
--		rc = ksmbd_validate_filename(name);
--		if (rc < 0)
--			goto err_out2;
-+		if (posix_ctxt == false) {
-+			rc = ksmbd_validate_filename(name);
-+			if (rc < 0)
-+				goto err_out2;
-+		}
+ 	wcd->mclk = devm_clk_get(dev, "mclk");
+-	if (IS_ERR(wcd->mclk)) {
+-		dev_err(dev, "mclk not found\n");
+-		return PTR_ERR(wcd->mclk);
+-	}
++	if (IS_ERR(wcd->mclk))
++		return dev_err_probe(dev, PTR_ERR(wcd->mclk), "mclk not found\n");
  
- 		if (ksmbd_share_veto_filename(share, name)) {
- 			rc = -ENOENT;
-@@ -2854,28 +2877,6 @@ int smb2_open(struct ksmbd_work *work)
- 			rc = -EBADF;
- 			goto err_out2;
- 		}
--
--		if (tcon->posix_extensions) {
--			context = smb2_find_context_vals(req,
--							 SMB2_CREATE_TAG_POSIX, 16);
--			if (IS_ERR(context)) {
--				rc = PTR_ERR(context);
--				goto err_out2;
--			} else if (context) {
--				struct create_posix *posix =
--					(struct create_posix *)context;
--				if (le16_to_cpu(context->DataOffset) +
--				    le32_to_cpu(context->DataLength) <
--				    sizeof(struct create_posix) - 4) {
--					rc = -EINVAL;
--					goto err_out2;
--				}
--				ksmbd_debug(SMB, "get posix context\n");
--
--				posix_mode = le32_to_cpu(posix->Mode);
--				posix_ctxt = 1;
--			}
--		}
- 	}
+ 	wcd->native_clk = devm_clk_get(dev, "slimbus");
+-	if (IS_ERR(wcd->native_clk)) {
+-		dev_err(dev, "slimbus clock not found\n");
+-		return PTR_ERR(wcd->native_clk);
+-	}
++	if (IS_ERR(wcd->native_clk))
++		return dev_err_probe(dev, PTR_ERR(wcd->native_clk), "slimbus clock not found\n");
  
- 	if (ksmbd_override_fsids(work)) {
+ 	wcd->supplies[0].supply = "vdd-buck";
+ 	wcd->supplies[1].supply = "vdd-buck-sido";
+@@ -5052,10 +5046,8 @@ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
+ 	wcd->supplies[4].supply = "vdd-io";
+ 
+ 	ret = regulator_bulk_get(dev, WCD9335_MAX_SUPPLY, wcd->supplies);
+-	if (ret) {
+-		dev_err(dev, "Failed to get supplies: err = %d\n", ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to get supplies\n");
+ 
+ 	return 0;
+ }
+@@ -5158,10 +5150,8 @@ static int wcd9335_slim_probe(struct slim_device *slim)
+ 
+ 	wcd->dev = dev;
+ 	ret = wcd9335_parse_dt(wcd);
+-	if (ret) {
+-		dev_err(dev, "Error parsing DT: %d\n", ret);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	ret = wcd9335_power_on_reset(wcd);
+ 	if (ret)
 -- 
 2.39.5
 
