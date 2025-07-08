@@ -1,298 +1,313 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62B42472B7
-	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 21:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752009343; cv=fail; b=JeRz1tE+oZjHV1DECkdUBgHjcTpu4FW/21D9SaxDE+kjCu1epmrLWA6QCQDDci786o29uz6xya/vPsVZeMrf/CyEOFNG458n5m1mcPkHf8zmzbgVzwnhs77YVVJWIqS8qWTzdr1+LITRab8iJvtt6cqo94uXkEC9J6TD3AsfTko=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752009343; c=relaxed/simple;
-	bh=Uy4hlb1+ZPBPoF2SvfkZe4ygp/1kiSXduIvIemjMPMU=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=YWvyCAfFGDzUwwxnVOzRTGIKz2AviPnICLskf1ujr/Pv5qlLxAL6lW6elKFPPA4Z2gUm/8uGzOB8DgD3wlsbIvGxYNGAT4KS1fmdPEYYVjXoVSbfsgUeslasAqxySeS4zOqkMZ4oRtQDPOGnXjnH0BSw+y6qaTgkknk9Cn/Hc50=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ELWfxYtK; arc=fail smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E5224290E
+	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 21:24:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752009857; cv=none; b=PPoMAFp9fZd4BMSf/D2SNR/H1rKv32mnf53fsO97FdMmeqONsi0VlVbbMO7AFTe/Vxyq+2rOAdDQdK1u+yhhOmTDBwk8cNO2LYGvsSxZtu03ivhHiMqCANF9rnZpjXSkjhXVIqLJV5W/jCaNqYIN1MVA3TZbHXtToRe/NBK+pHg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752009857; c=relaxed/simple;
+	bh=1peS5qCn54AczeLVDKVCi9E3GKez0ewn76aZqjgKESQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=creXN/1LP4G806WPMx8/s32TCjxywChqBowH+gDXu+NFGfG3iJwmUNHHpR8VdPMgkkk+SIKvs83R4zC5pCGs/tm93o7Ca689YanmDO72cfwdJ3EFYg/4bQWePXJIpHem2pwC8GSBfcvwNaD33Kjq7z/Cv8/WSZNIBQ5TQtewa80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YMJ/5e/r; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ELWfxYtK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752009342; x=1783545342;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=Uy4hlb1+ZPBPoF2SvfkZe4ygp/1kiSXduIvIemjMPMU=;
-  b=ELWfxYtK4Cn+/ooaQXOI5wL1WwDaOp9rRPn6iYBjqpzeEg+ZmnQkQoki
-   iembhIdpn0Jq/dfLAsh/cEstx4qa9EF9baWgooKaWxF62g+6YWaodczHk
-   nj3gqWWd3qd36etIFfrGMYl6ZcjhgIZTTiNsUG+WQ1r2tTX5E1ECh8wz1
-   ghcu3T7dKEd/cgRu6yTzavekf30YPGu3IBji5dmiDP9BdkwDh2pAv5Pji
-   O2l5IAEp5w2xq7vnllkTH56SocOQUniyJqXfAFqQHV8r9g8jiIr2xisKZ
-   8aRV0+Lj7aJv2nOvghwq7VTaFV85YS0FCePcVPtdVZEuYRAv/umJJlJxx
-   g==;
-X-CSE-ConnectionGUID: b8Dy2+CsStSv9d5LbWJ0iw==
-X-CSE-MsgGUID: 1CvHKD/oTrubNLLCWspYMg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="54392006"
-X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
-   d="scan'208";a="54392006"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2025 14:15:42 -0700
-X-CSE-ConnectionGUID: dyhZvmY5R+qk4WRDLCRtgA==
-X-CSE-MsgGUID: yHnwb80FRt2QvWG0dgR76g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
-   d="scan'208";a="155924835"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2025 14:15:40 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 8 Jul 2025 14:15:40 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Tue, 8 Jul 2025 14:15:40 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.85) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 8 Jul 2025 14:15:39 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vC1PwX5nDr/7cIl8IXpSspa6r20DFYniKC4xYqnxRVmpps3AJlMrmqwusty8lY9y8bTqeEujRBCsqIGssd4d9Myz74XIzdaqhepc9L+lg/vURaUPK3HKk6GDUbyykLGFg+AXyI7XI+CNU0VtqWaSJ2WNRjdWrGGHw7wxygRIDdXbyKN+JWU+hWzh0sJMV1ieCFpEt73fQcfwZ00sO3Ae2kETRf35Pn7/B2r7iHLtC1vPpT9y0yjHLmfi8dTJIwMZKBuOuf3yxdG+el18Q/xfQqy0wCT45BWpSTkm4/Q0vaol19xsjUZmbHC0EPMGwNiwr+SP0boQu2CLPpsLpk43Bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qFnbpM8pNBj2zPHosSZWaIXyIrjW1SVf4Y0NB7XCeq8=;
- b=KzgyMzPlXZnbCENUtn91FRZcbqdG/F10UMHOy9++dQBO5WrA8/d5fPu01wAgfeAbpb3JgfM5feofsXmMN4ytsE9W1lX/nSA46UPY0VMXdfBHgkHY+WPBErQH6ZvRuDnLgsuPLiYVg/VtMiZ3jTIMR02H+vQiSQMoUaTe8XSVnmoo41lIfBqeP34XJL8sjIfKtgq8s6amInGrEEEVcJCePFJDLzotXDOQRWSr9nAh/Wr0DlINtIYauSvuhA4l9fV1LKHtRrtLqyOsoW7GNhaub4T7jbTAw2RrFzydxYKFFliGGdOljviVSlsBWnds6Ck9CLFY0Vg7xo/QByNIhmoUOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by PH7PR11MB7028.namprd11.prod.outlook.com (2603:10b6:510:20b::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.25; Tue, 8 Jul
- 2025 21:15:10 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%6]) with mapi id 15.20.8901.018; Tue, 8 Jul 2025
- 21:15:10 +0000
-Message-ID: <dd255670-72ef-4ce7-8713-b75975470482@intel.com>
-Date: Tue, 8 Jul 2025 14:15:08 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 13/30] x86,fs/resctrl: Handle events that can be read
- from any CPU
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
- Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
-	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
-	<babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, Dave Martin
-	<Dave.Martin@arm.com>, Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>
-CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20250626164941.106341-1-tony.luck@intel.com>
- <20250626164941.106341-14-tony.luck@intel.com>
-From: Reinette Chatre <reinette.chatre@intel.com>
-Content-Language: en-US
-In-Reply-To: <20250626164941.106341-14-tony.luck@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0193.namprd03.prod.outlook.com
- (2603:10b6:303:b8::18) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YMJ/5e/r"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b321bd36a41so4318558a12.2
+        for <patches@lists.linux.dev>; Tue, 08 Jul 2025 14:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1752009855; x=1752614655; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3TYk/LhDc5BmTUsXOQ3WfWFuFN2OL0SILOLf+2JGW+c=;
+        b=YMJ/5e/rYuXX2jLwNvH5aTMVxpMMZfLsNMFBFFIpuC2ut40wlKfUPSCzGq+tT/uysm
+         SQt7gjP3eEVh6MkRuCxjj2IJYJgecWmvUz5+QYcvNxDu0CTiB2yc+gwVxzobtiprwuSC
+         y2iEwXNa/NTuhRxxZ+KGO6gt88qZQybdUyhr1G0qtr6KG/MPgaH42pC1Oh7jySWawqDQ
+         lXIai3PLw9AUsKof0H7UU3wRcQ7n6vYrMhYQVYSEIgdSerMNPWP49esiacn4Cf//yOtz
+         f+NYcKJHibp6w0XjKcZmlZNjrd7dP9vKYmTi+7MLRqZNANOr88080FXstY/iuE4CeULh
+         K4Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752009855; x=1752614655;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3TYk/LhDc5BmTUsXOQ3WfWFuFN2OL0SILOLf+2JGW+c=;
+        b=wwf6zF14WeRreJjyQ/wUDoxhuueermEzOc0rwW3krJuBpq4WD733gke2dxUdX/lKjF
+         djVMxPZgZLs6IF0OmM/KsTWLbCjV6OwIAixBPgbTC76D1nG1dO1AK8vu4nMfaauw9QME
+         WePZBSnf23MNg57FeOieMUU0761oZXx833zw7d9joKmJaoP693buPX5y86tYV8IjfjiF
+         Fn6cBoLQ3XkeLwofbAGIZLeoOG145s/6v6xFd4EE5BJK+583wWhkomokGSyrrhctH5qQ
+         sF2W21HZ6E/QxpOsEo8D0wbm5tmbKB+tTz+QhVZx7b/lU/T+Qip5mqniZ74kcQwxoAu8
+         DANw==
+X-Forwarded-Encrypted: i=1; AJvYcCU6/O3wPIWPGKT/+YrNCJRmo33PQRt2HUcIqRqolvbiuiMfT4dVfTxEY9e9xY6k4/TeiqJ8uvNI@lists.linux.dev
+X-Gm-Message-State: AOJu0YxsC4fSvM5QeWqZHaL6LS3F11z+MCAfDSYpIPYBcngBDo/mfTtY
+	0jtJGzmwAl62O1SHwoa8412ychyPL9b+ndtb0C1zqF8XAWCEam6i5m5J2BhgWVCYAOfSuHKc6oe
+	XFridTokRi5tPdm+BxgOFc2Mtx1GisYvO8alOK4HBeA==
+X-Gm-Gg: ASbGnctzFeusRuLLfEpwDF3g23LeNpQ7lMOpLhexUWk4kxh5eMX0OaAKcGur+eAHfCr
+	8SXfFyYkTqytxCABJ19GCjHRxMJMdqWiyYErMenBpwqJHXfw+uW0Oq+b/EXLJpARWrWHVkjiRrV
+	G9aYMOycFSZEJ1gocCW6XzPUGAQA6jPXY0zzNMtl2wUrS8g+d+P7gofGVctjLGWAVq5oA3CIsnm
+	Fzs
+X-Google-Smtp-Source: AGHT+IGC1zl17iwbzwdo6GEQjumT6Zw2i385vWCVOsSuiOe0iINH0VdYvfBVzIFnWmRAAWRU0qYVeo2uenzgVCAlgZI=
+X-Received: by 2002:a17:90b:1c0f:b0:31c:23f2:d2ad with SMTP id
+ 98e67ed59e1d1-31c2fdad5efmr156423a91.16.1752009854650; Tue, 08 Jul 2025
+ 14:24:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH7PR11MB7028:EE_
-X-MS-Office365-Filtering-Correlation-Id: 26b05bcb-b71a-4cd1-4c9e-08ddbe648583
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|921020;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?U0JFZzFtanRQMDFpZlBpWTdMSUZpWFVVOVB0TVhNUUtxNGRRTnpjbEVmZFhv?=
- =?utf-8?B?MENZWG1PSkd6MFMveGpHc0hoZlc1TVo1M3RVNHl5YTRNV3p3OGpjNktTRG1i?=
- =?utf-8?B?ZE9SY1FzOFFlQjNseUhscXQwMnZHSDBSN0txREdET3JzeklWVEhTSUFnNE9U?=
- =?utf-8?B?VjRtZTlOWEpjMThiOFlhWUxKZHZpb1R4Uk1OOVZEd1pmTi9TcE5POE9DQmNO?=
- =?utf-8?B?RDF5Y1VPU1p1YWFzTjhZR2tTRC9mWGRsc0doQUh2UlVXcG1UUVVBNGpqTjU2?=
- =?utf-8?B?WmVrUGFWcEMvRVVtS083RnorVURkOTdsSWxUQlNER1J6UkJMdmsvRHpqMUNk?=
- =?utf-8?B?RWMwWTA1QzVGcWYzeGtSUGxiZ3FuMW1zSzJob0JPalZnZlpnaHhXM2RxbVR0?=
- =?utf-8?B?R290M0ErdG4ycGJzWlBibk5Cdkw0OUhYWlI3MTg4VDU0ckpoM0ViSTYwY3dJ?=
- =?utf-8?B?aWJIaGgrK0JXc3VhNmJWRit5bTA3SkVFQllpR2pCaVM5NkZnMzllN1NKbWRh?=
- =?utf-8?B?Ykw3TlQrNXBFZFI1YXA3SFNjckxwdjMzemRibTY0UmNuVXpLWEYwcEM3M0Rt?=
- =?utf-8?B?ajZrNDBmL2lLQmluSkJsSGRpNXV3ZStSSFM2RmVmTDMyUFZvcWZHWndyTVN2?=
- =?utf-8?B?TUZoN0ZOVTBNK0tPV3h5bFJTaDhocDFPOFpyQ1RCR2FGczNMS3JpWXp1VStO?=
- =?utf-8?B?Vk1qcmhCOWx1aFk2cXlQNy9IeENYSGwzS0g5N0ZwSzhpaVlQQnFvSmtLWkdY?=
- =?utf-8?B?VGFLMysxVUhVVThKMzl4aTBIUFhwWllwUnorb01FWm8rWS82d2NuVUdJUVBS?=
- =?utf-8?B?YkdVWTYyelZBZDFGdmdlbDUwRHo0VmYycFFBYUdFay9rOStNZE4wN1ZuZmpn?=
- =?utf-8?B?bEpOc0Z5dmdHUzR2eW4wWGJFNmd2cXZBSGdKbFBKTGU5TUZ0Zy8xRjhGY0tC?=
- =?utf-8?B?RXJUUDRWT3dUVVA2UjQwRENBUWExYllCZWo1YWlzLzJBSkpSUFhvakY5MndB?=
- =?utf-8?B?MDJBK0tqT0VxSjI3RGZZcFF3RmlQaldPVjZPL3YzOExJM2VUZTBuWGtqMzAw?=
- =?utf-8?B?SGxYcWVPS2Q3MUhlenhYTUQvaU5Cd0NWODRteU0rRGRmK2VwSEJFVm5LZGtF?=
- =?utf-8?B?WVFKdURzWjMvM0xVcThvemxET05la1V4QnVRdFFRRDhmQ1B4dGhnU21xcmR0?=
- =?utf-8?B?anVEWk1VOTY2disyY29Jc1dZUWR4aDU5cDZWTEE4L1J1eFV3QmhUbmlHNWR6?=
- =?utf-8?B?OURGK252Um1IQm54K0VtR1IwRHJPTjVtL29ITjBKS0RrVVFvdEk5WVBPZlZQ?=
- =?utf-8?B?MDA2YTd1c2xZVytlNkFrOEVzKzE5MlllN2dUUUZzYUVCZWhYem9zUG1QUDQv?=
- =?utf-8?B?a0dxcEFEdXNyM1I2N0xZVDZvZXpqVHFDamhlSWFRck8rVFVOcDNPY0xxbCtC?=
- =?utf-8?B?QldQTFRubXJ1TW1FVThLUG5uT2duRFgzNmY5cmJodW9IcXcwUC91VCszdis4?=
- =?utf-8?B?OWsydHI2QUg3VmFMZWx2UHRyeTJ0QmN3T1E0ZDJiejg5MjFrWVdCdm9nZGNT?=
- =?utf-8?B?M21IcjZyUEwycW9waEpObkpQeFAyM0FIVGNSOXUvZVliQ2ZlcCsxOHlvUFo0?=
- =?utf-8?B?N29zMXR0UnJVVjZaS1YwdXIxWkhoYmFYUFBZTG9WNXVWTEF2UkxRODNwcCta?=
- =?utf-8?B?SE5veEdOS3pWa1VWT296bzN6SWdQc0hVNEtuRmxKaWQxb2ZEOUN4MWcvTkQ4?=
- =?utf-8?B?U2IyY1NKT0pzcTc1N21PcnpnTFlybzN6TzNkdmcwaWl0YmpQNk9nNVFKY2pl?=
- =?utf-8?B?bXJoVDhiVVNJVTVFTEhyT3FtKy8xWlh1Q3BnOHJVZzZZNXV0UHJqdTBLUjRv?=
- =?utf-8?B?d0lCNlBMekFYWWI3YjE2M1VaQ0NQSTJROTBVMEpMU2JNNjFBNDhBRy9hdi9V?=
- =?utf-8?B?bmhNbkZ4R3FoQnRpRjNLRGVWTkZFY28xQy9JWkduU1lQNEJidmhsNW5KUUpv?=
- =?utf-8?B?cDlIaUtrN3B3PT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(921020);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N29ObXNvU044SUFLNW5ZTnlBYXN0UWd6Zm51a1hkNXFmMmQzRDhjdjBrc1U0?=
- =?utf-8?B?Ty8ycTlTb3Z4bDI0SXNzS29QcE1DdmJTbmRVZjRhNXNpNENlNXVNOHQrdDgv?=
- =?utf-8?B?ZnBZaExvR2hEUm5DOFpUOFdvVGl3M1lVL2tLMWo1R3V2QlJhSVdxU09UYmRQ?=
- =?utf-8?B?UXJrYitWVkVXcXBrcXJFdEZycVl4OXowK1RIYUpNam9SRXd4WTh0TDhXZWJB?=
- =?utf-8?B?REdUbThDa3RWOWhaRHM2MVZEQkpId3czQ1hobWFNZVBhZEFndlg1SEFjNHJ3?=
- =?utf-8?B?UExuVm9TNm5FK2RHNUY4K1Y5QWViODVKdzVmYndmMlQyWTZMMUhuRnFzV2NU?=
- =?utf-8?B?UTlaVERMT3hJSVhZcllodTlhTW5lZEFOTEk5QWxZdmpTMWdOVjZZTlZBQXli?=
- =?utf-8?B?SDhMZFJ4akhGU1RaRkMyMEtqbDBjU0NrK2xKeVppRUZMT05VL1BVSURXbHl5?=
- =?utf-8?B?QVEwL01jWjdOMzhWU3ZDUXE1U1Q2RFU1UWYvZUhHVmtyQWxsN0Z3Nzh5OFBZ?=
- =?utf-8?B?dUFoUFJGNTYrYVVPcHcwMlBjTjVrN0dOZkQ3T3pITEJsVEtaQ0V0Qk96b1BJ?=
- =?utf-8?B?Q21jbForSHRDeHNvclNqaFFZMW9mNStURlFsQWFEYzZ2MDE3aHQya0lQOWZP?=
- =?utf-8?B?ak5UTExhWk4wdGpRb3FsVG1qYUxhaFY5d2VyVnlFWDhac1UxZTNsekkwejhI?=
- =?utf-8?B?Q1VtVHUwS3hnVDJBNTYyVU1QOUx3aFdqdElDSGxyNkNnMUd6SDVrc3ZqV2ln?=
- =?utf-8?B?SG5YeDd3dGV4a0YwZjU5ZVpML0RKUHBucFg5TXRLa3lMWFhudTE4Z2haQ1lY?=
- =?utf-8?B?REdjdEY5YythTks5L1A2YmFpWVp5eVBqZ1hPYW5OT1k1N2dFejZPWEh0d0t4?=
- =?utf-8?B?bzgrdmRtczRBZGRFWHpUczFHWE9VdWNvL2NNbXM3QXgreUFZTU1zd3pxNG1o?=
- =?utf-8?B?Rmc0MXRRblhlS2ZKU3UrTWd2Ky9OaFczSUQvclRLQndzdWN2VVR5S0VLNmgy?=
- =?utf-8?B?MVZrdU1oc2NKdDZNUUxyNS9aNkJCVjcxSXRBV0w2UkJEYVgxdjNORU9tWVYy?=
- =?utf-8?B?TUlVQVlFNU90T25HeFRTUW1XOGo4Qy9vdjFDR3JKdnF5Z2VzTjducGNmRnFi?=
- =?utf-8?B?blBaUmlabzFIbE5PNWU4aTN1TlBOd0Z1a1p1bEFyOE1aM2ttRXc2R0ZSTmR3?=
- =?utf-8?B?VFVVcjlBVERqSFZpMGpYbUJ1a09RWmFtY1JTYVBXWm94UjNlUkRsVjE4dC92?=
- =?utf-8?B?UHprVFduUnoxWGw3UXJJejNpU1lrRER0MWxTN051dWpZZnpiZEpFRURodFh4?=
- =?utf-8?B?UFZseEJRVVZMSDRJQ3VKMlA4Uktqc3dQSllaSjY2dnI0SmVSaVZIRS9KaXhD?=
- =?utf-8?B?TU9abFRDZi9KVlFmMmVrTXhScDdLY2NheTRTajRoaW9vVU05MzBRYVR0YmVN?=
- =?utf-8?B?cmlkZVNCd2Z2MTNxYnV3bzgwSkt2VmxWT09oaWtQK2QrUXpLRVJWempBQXF2?=
- =?utf-8?B?T3k4cFlBTnJub3BSdmdnQmUrcEo0dFZGQm9pa2ZOK0ZYeU5GSGMrZHZHanJN?=
- =?utf-8?B?TGlQU1VEUUtCMDdNZUhXQjBSR1l0U09DUm5IRjk4YUszeTJaTkx3MmMrRnFk?=
- =?utf-8?B?d0dGa0ZyRUZnUDVTbytWVFcwb09jQUx5ZEx4aHNNT05WUmtmSkxQaTBJcHBh?=
- =?utf-8?B?bVArbHhjTFROeDRjSzE3RkgyOGtkd05sOHRzL29YSU51ODNVRVY0RTNpVXNn?=
- =?utf-8?B?SDJCdTMxMHU3VHhDWnY5TmFwMGJiYkxlRjZMOE11dEpKRTNLWFNWcDNBWmtL?=
- =?utf-8?B?Z0c3cnQ4Y2RvNEMyN0MvcEJnRTZkcUlSNkwzTytWZmxDQi80b3pnc2ljbkxF?=
- =?utf-8?B?Ym15ZHRmUDV5TXR6RW43OEhHQ1ZOVEFvMWJ6bFZDMDFOSEs1VGpoN2RhS2pL?=
- =?utf-8?B?Q2hVTkdQOUk3bjMwZmxFclJwQ1NlcFFNOU5KeTlVVk9XZlJ0SzM4eU5KNmIr?=
- =?utf-8?B?OFZNZUpBc3Z6Ym1CTWJvOTk2OGVSQWNYNlZ5WElCNVJwTVVtQXFFbWU5WUg0?=
- =?utf-8?B?eUtmVkdjMkNrYzVLT253UFlkS0xaK3JFSkkyM21PbXNXN0VqaVU5WVlmbm44?=
- =?utf-8?B?RHE5Y2Z2a0huSkdwTERDRGZqNkNmSkVMa2hZeG9sWGhxWHFyUG9aUUkrRkRq?=
- =?utf-8?B?VFE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 26b05bcb-b71a-4cd1-4c9e-08ddbe648583
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2025 21:15:10.4244
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Y6UVlORWrBu7+ga5DYyCnQg4pu8emnr4I5fzIgohdDD02sf9lhAsbbgPzjOUJmqxkw1Ingmi0ymwhR7OdxwZ5We0thZeo1t7lhw9ogj1aUc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB7028
-X-OriginatorOrg: intel.com
+References: <20250704125604.759558342@linuxfoundation.org> <CA+G9fYvidpyHTQ179dAJ4TSdhthC-Mtjuks5iQjMf+ovfPQbTg@mail.gmail.com>
+ <CA+G9fYub_Ln=EPp2mgL4-2ewvorZ6O7btM97Ka6RrWhO1o0Liw@mail.gmail.com>
+In-Reply-To: <CA+G9fYub_Ln=EPp2mgL4-2ewvorZ6O7btM97Ka6RrWhO1o0Liw@mail.gmail.com>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 9 Jul 2025 02:54:03 +0530
+X-Gm-Features: Ac12FXw8KmXSOFloz8JHG_WxTb9KW7umiayEZP4yCzmazJVNmpe-skD5MqB7ysY
+Message-ID: <CA+G9fYtb3OW5+0Y+qYC-hbg2AV-UUff3orui0VuckDrrMYjrcw@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/263] 6.15.5-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Anders Roxell <anders.roxell@linaro.org>, jakub.lewalski@nokia.com, 
+	Elodie Decerle <elodie.decerle@nokia.com>, Aidan Stewart <astewart@tektelic.com>, 
+	Fabio Estevam <festevam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Tony,
+On Tue, 8 Jul 2025 at 00:04, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>
+> On Sun, 6 Jul 2025 at 15:50, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> >
+> > On Fri, 4 Jul 2025 at 20:14, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 6.15.5 release.
+> > > There are 263 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Sun, 06 Jul 2025 12:55:09 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.5-rc2.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
+> >
+> > Approximately 20% of devices are experiencing intermittent boot failures
+> > with this kernel version. The issue appears to be related to auto login
+> > failures, where an incorrect password is being detected on the serial
+> > console during the login process.
+>
+> Reported issue is also noticed on Linux tree 6.16-rc5 build.
+>
+> > We are investigating this problem.
 
-On 6/26/25 9:49 AM, Tony Luck wrote:
+The following three patches were reverted and the system was re-tested.
+The previously reported issues are no longer observed after applying the
+reverts.
 
-> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-> index 6d4191eff391..aec26457d82c 100644
-> --- a/fs/resctrl/monitor.c
-> +++ b/fs/resctrl/monitor.c
-> @@ -356,11 +356,30 @@ static struct mbm_state *get_mbm_state(struct rdt_l3_mon_domain *d, u32 closid,
->  	return state ? &state[idx] : NULL;
->  }
->  
+serial: imx: Restore original RXTL for console to fix data loss
+    commit f23c52aafb1675ab1d1f46914556d8e29cbbf7b3 upstream.
+
+serial: core: restore of_node information in sysfs
+    commit d36f0e9a0002f04f4d6dd9be908d58fe5bd3a279 upstream.
+
+tty: serial: uartlite: register uart driver in init
+    [ Upstream commit 6bd697b5fc39fd24e2aa418c7b7d14469f550a93 ]
+
+Reference bug report lore link,
+ - https://lore.kernel.org/stable/CA+G9fYvidpyHTQ179dAJ4TSdhthC-Mtjuks5iQjMf+ovfPQbTg@mail.gmail.com/
 
 
-Could you please add a function comment for cpu_on_correct_domain(()
-to document the different contexts that this function needs to be able
-to handle? I think it is a bit subtle how the function is designed to be
-run in preemptible as well as non-preemptible context. This will be helpful
-when somebody aims to change/use this later.
-
-> +static bool cpu_on_correct_domain(struct rmid_read *rr)
-> +{
-> +	struct cacheinfo *ci;
-> +	int cpu;
-> +
-> +	/* Any CPU is OK for this event */
-> +	if (rr->evt->any_cpu)
-> +		return true;
-> +
-> +	cpu = smp_processor_id();
-> +
-> +	/* Single domain. Must be on a CPU in that domain. */
-> +	if (rr->hdr)
-> +		return cpumask_test_cpu(cpu, &rr->hdr->cpu_mask);
-> +
-> +	/* Summing domains that share a cache, must be on a CPU for that cache. */
-> +	ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
-> +
-> +	return ci && ci->id == rr->ci_id;
-> +}
-> +
->  static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
->  {
-> -	int cpu = smp_processor_id();
->  	struct rdt_l3_mon_domain *d;
-> -	struct cacheinfo *ci;
->  	struct mbm_state *m;
->  	int err, ret;
->  	u64 tval = 0;
-> @@ -378,9 +397,10 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
->  	}
->  
->  	if (rr->hdr) {
-> -		/* Reading a single domain, must be on a CPU in that domain. */
-> -		if (!cpumask_test_cpu(cpu, &rr->hdr->cpu_mask))
-> +		/* Single domain. */
-> +		if (!cpu_on_correct_domain(rr))
->  			return -EINVAL;
-
-cpu_on_correct_domain() duplicates the logic of __mon_event_count() so it
-seems redundant to call cpu_on_correct_domain() in these paths. Since
-cpu_on_correct_domain() contains complete logic it can be called just
-once at the beginning of __mon_event_count() and thus also cover the
-rr->first block?
-
-> +
->  		rr->err = resctrl_arch_rmid_read(rr->r, rr->hdr, closid, rmid,
->  						 rr->evt->evtid, &tval, rr->arch_mon_ctx);
->  		if (rr->err)
-> @@ -394,9 +414,8 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
->  	if (WARN_ON_ONCE(rr->r->rid != RDT_RESOURCE_L3))
->  		return -EINVAL;
->  
-> -	/* Summing domains that share a cache, must be on a CPU for that cache. */
-> -	ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
-> -	if (!ci || ci->id != rr->ci_id)
-> +	/* Sum across multiple domains. */
-> +	if (!cpu_on_correct_domain(rr))
->  		return -EINVAL;
->  
->  	/*
-> @@ -878,7 +897,7 @@ struct mon_evt mon_event_all[QOS_NUM_EVENTS] = {
->  	},
->  };
->  
-> -void resctrl_enable_mon_event(enum resctrl_event_id eventid)
-> +void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu)
->  {
->  	if (WARN_ON_ONCE(eventid < QOS_FIRST_EVENT || eventid >= QOS_NUM_EVENTS))
->  		return;
-> @@ -887,6 +906,7 @@ void resctrl_enable_mon_event(enum resctrl_event_id eventid)
->  		return;
->  	}
->  
-> +	mon_event_all[eventid].any_cpu = any_cpu;
->  	mon_event_all[eventid].enabled = true;
->  }
->  
-
-Reinette
+> >
+> > Test environments:
+> >  - dragonboard-410c
+> >  - dragonboard-845c
+> >  - e850-96
+> >  - juno-r2
+> >  - rk3399-rock-pi-4b
+> >  - x86
+> >
+> > Regression Analysis:
+> > - New regression? Yes
+> > - Reproducibility? 20% only
+> >
+> > Test regression: 6.15.5-rc2 auto login failed Login incorrect
+> >
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> >
+> > ## log in problem
+> >
+> > runner-ns46nmmj-project-40964107-concurrent-0 login: #
+> > Password:
+> > Login incorrect
+> > runner-ns46nmmj-project-40964107-concurrent-0 login:
+> >
+> > * log 1: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.15.y/build/v6.15.4-264-gf6977c36decb/testrun/29021685/suite/boot/test/clang-20-lkftconfig/log
+> > * log 2: https://qa-reports.linaro.org/api/testruns/29021720/log_file/
+> > * Boot test: https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.15.y/v6.15.4-264-gf6977c36decb/boot/clang-20-lkftconfig/
+> > * LAVA jobs 1: https://lkft.validation.linaro.org/scheduler/job/8344153#L1186
+> > * LAVA jobs 2: https://lkft.validation.linaro.org/scheduler/job/8343870#L1266
+> >
+> > ## Build
+> > * kernel: 6.15.5-rc2
+> > * git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+> > * git commit: f6977c36decb0875e78bdb8599749bce1e84c753
+> > * git describe: v6.15.4-264-gf6977c36decb
+> > * test details:
+> > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.15.y/build/v6.15.4-264-gf6977c36decb
+> >
+> > ## Test Regressions (compared to v6.15.3-590-gd93bc5feded1)
+> > * dragonboard-410c, boot
+> >   - clang-20-lkftconfig
+> >   - clang-nightly-lkftconfig-kselftest
+> >   - gcc-13-lkftconfig-debug
+> >
+> > * dragonboard-845c, boot
+> >   - clang-20-lkftconfig
+> >   - korg-clang-20-lkftconfig-lto-thing
+> >
+> > * dragonboard-845c-compat, boot
+> >   - gcc-13-lkftconfig-compat
+> >
+> > * e850-96, boot
+> >   - gcc-13-lkftconfig-no-kselftest-frag
+> >
+> > * juno-r2, boot
+> >   - clang-20-lkftconfig
+> >   - gcc-13-lkftconfig-debug
+> >   - gcc-13-lkftconfig-kselftest
+> >
+> > * rk3399-rock-pi-4b, boot
+> >   - clang-20-lkftconfig
+> >
+> > * x86, boot
+> >   - clang-20-lkftconfig
+> >   - clang-20-lkftconfig-no-kselftest-frag
+> >   - clang-nightly-lkftconfig-kselftest
+> >   - clang-nightly-lkftconfig-lto-thing
+> >   - gcc-13-defconfig-preempt_rt
+> >   - gcc-13-lkftconfig-no-kselftest-frag
+> >
+> > ## Metric Regressions (compared to v6.15.3-590-gd93bc5feded1)
+> >
+> > ## Test Fixes (compared to v6.15.3-590-gd93bc5feded1)
+> >
+> > ## Metric Fixes (compared to v6.15.3-590-gd93bc5feded1)
+> >
+> > ## Test result summary
+> > total: 259237, pass: 235906, fail: 6376, skip: 16955, xfail: 0
+> >
+> > ## Build Summary
+> > * arc: 5 total, 5 passed, 0 failed
+> > * arm: 139 total, 138 passed, 1 failed
+> > * arm64: 57 total, 57 passed, 0 failed
+> > * i386: 18 total, 18 passed, 0 failed
+> > * mips: 34 total, 27 passed, 7 failed
+> > * parisc: 4 total, 4 passed, 0 failed
+> > * powerpc: 40 total, 39 passed, 1 failed
+> > * riscv: 25 total, 25 passed, 0 failed
+> > * s390: 22 total, 22 passed, 0 failed
+> > * sh: 5 total, 5 passed, 0 failed
+> > * sparc: 4 total, 3 passed, 1 failed
+> > * x86_64: 49 total, 49 passed, 0 failed
+> >
+> > ## Test suites summary
+> > * boot
+> > * commands
+> > * kselftest-arm64
+> > * kselftest-breakpoints
+> > * kselftest-capabilities
+> > * kselftest-cgroup
+> > * kselftest-clone3
+> > * kselftest-core
+> > * kselftest-cpu-hotplug
+> > * kselftest-cpufreq
+> > * kselftest-efivarfs
+> > * kselftest-exec
+> > * kselftest-fpu
+> > * kselftest-ftrace
+> > * kselftest-futex
+> > * kselftest-gpio
+> > * kselftest-intel_pstate
+> > * kselftest-ipc
+> > * kselftest-kcmp
+> > * kselftest-kvm
+> > * kselftest-livepatch
+> > * kselftest-membarrier
+> > * kselftest-memfd
+> > * kselftest-mincore
+> > * kselftest-mm
+> > * kselftest-mqueue
+> > * kselftest-net
+> > * kselftest-net-mptcp
+> > * kselftest-openat2
+> > * kselftest-ptrace
+> > * kselftest-rseq
+> > * kselftest-rtc
+> > * kselftest-rust
+> > * kselftest-seccomp
+> > * kselftest-sigaltstack
+> > * kselftest-size
+> > * kselftest-tc-testing
+> > * kselftest-timers
+> > * kselftest-tmpfs
+> > * kselftest-tpm2
+> > * kselftest-user_events
+> > * kselftest-vDSO
+> > * kselftest-x86
+> > * kunit
+> > * kvm-unit-tests
+> > * lava
+> > * libgpiod
+> > * libhugetlbfs
+> > * log-parser-boot
+> > * log-parser-build-clang
+> > * log-parser-build-gcc
+> > * log-parser-test
+> > * ltp-capability
+> > * ltp-commands
+> > * ltp-containers
+> > * ltp-controllers
+> > * ltp-cpuhotplug
+> > * ltp-crypto
+> > * ltp-cve
+> > * ltp-dio
+> > * ltp-fcntl-locktests
+> > * ltp-fs
+> > * ltp-fs_bind
+> > * ltp-fs_perms_simple
+> > * ltp-hugetlb
+> > * ltp-math
+> > * ltp-mm
+> > * ltp-nptl
+> > * ltp-pty
+> > * ltp-sched
+> > * ltp-smoke
+> > * ltp-syscalls
+> > * ltp-tracing
+> > * modules
+> > * perf
+> > * rcutorture
+> > * rt-tests-cyclicdeadline
+> > * rt-tests-pi-stress
+> > * rt-tests-pmqtest
+> > * rt-tests-rt-migrate-test
+> > * rt-tests-signaltest
+> >
+> > --
+> > Linaro LKFT
+> > https://lkft.linaro.org
