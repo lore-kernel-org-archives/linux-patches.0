@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D32EEC3;
-	Tue,  8 Jul 2025 00:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEDC128819;
+	Tue,  8 Jul 2025 00:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932958; cv=none; b=EzzP36vc/zzYvCRm1+Wy/CzLwKi7K1zELZpVb9fKS0y34TPLYN5ZDpVrL5vS1R1DiMTdtsCR6P8kxB8quwgWwwn2FFhK2SDQ9FByar1zLFA84I/Cf4ubdDO/KddkEg+dA1lt/q84sunG4td1OhqPsTwjGYhFwrM+xXFE7/7Uqko=
+	t=1751932959; cv=none; b=dK0V3y4oHC5fPE1w+BIp/amz4ADRDur2QwkUDCulH3BicRYNUhCQ5K88u8POIj5XNKe4n80E0bW01siYsVoEtMZcbG4ipWBtw5rd5CYTXGNKUBmS6yCmEyHCIixRk8nnBIi4rQZNvd3E01GTqWUGDvblLBijnlmGtSpKmfiXfQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932958; c=relaxed/simple;
-	bh=wPVC3xPOe/NmVSmSah5sSlryp3XOKL8QVy+V9Gj+lfY=;
+	s=arc-20240116; t=1751932959; c=relaxed/simple;
+	bh=aMR2jpdIJSO4u4M6pTvRRlOr7CGzPhsxrkuJNcWvNCI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WrfxuPT32N07vc44SVda73I/LgZJ5e4Grr5U9z6VbxD2NUesVYS6geKPMTHMthfuLewqE3GTwijOQ2Hp9Cgk3MiT6nGAykVJHA4HuUGmxLfzz6vjMytLlussTGui9+wZjl2SbDMtQR7lMs+W1UE2dNG14oPVsDfGce2TlVcyld8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YYb6TDyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q57o5RIH5CZJ4hbq65exVcV1gFWxNauPgeiU+VzW0coA20M5fyOcE2OkbwePMPEy8f2ae5GCxxXZ/tDg0SL1JYQLoIBrDYlZJdPWJL9/DSkzwT/wSiVJp+EMfsesuo80WTeXgizPcpyZEV9GgPVmbfGJpDqvmgOFMoxoejUQVo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TuynXBSI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YYb6TDyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13865C4CEF1;
-	Tue,  8 Jul 2025 00:02:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TuynXBSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487E2C4CEE3;
+	Tue,  8 Jul 2025 00:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932957;
-	bh=wPVC3xPOe/NmVSmSah5sSlryp3XOKL8QVy+V9Gj+lfY=;
+	s=k20201202; t=1751932959;
+	bh=aMR2jpdIJSO4u4M6pTvRRlOr7CGzPhsxrkuJNcWvNCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYb6TDyNrjOOqkWII5zC87Qu6OEN6fRLQG1O1YHYes4IrympOOb72NM3T8Yr7vHsb
-	 8T0X5Zh2mJ2MbjY4r2Vtmj6fzk/XaanVc7qKWIy5yl9ub62dauDRa5EGqbeaFAwZ4L
-	 D5/VU+ld1RoCs8ifam+yAe/q92rlA3dr+NtfCsgmsdaYY3sljWszII3JbhGENDAXqA
-	 V39a11AhKuUQtBexPH+6dXc6HaU4yAUv6Poii8ESrLUaHlRKFL9sM5Tc14kmu/wmFD
-	 VxzIyb5YASL6DsUiAyNOR2yuPBXvcOj3e/IlSFiyVEbApo9hTPD/iM+ysR/EID07TO
-	 Atx+X+XWTbHhw==
+	b=TuynXBSI1dLyXu0S2aqWMiAsnu5NVJeQIoEa2NUKqpAm3box4Sqk7905v5hph0YBG
+	 zXv5iOGFpTN/LR7LSiJdNMu3B9A7DeL1zAjDGfCgjCgXKirORMS2zH1W8rgoATAOWa
+	 Sw423Of3nL520y81i/qjewUmEYPZZcXpQQHiT4LaCy0VvQ1EOJxprkUzuB/mtAJNB5
+	 /l6M9STyi3Wja8PGSEuYTBdjVV6pLaKljnWksCzvD8i6DURiuA52H1PdZY3LfK3GwN
+	 AlCJ/YzaAxpN7xSq4+t8TTiLpMgbsVlhZpYY7Pz8x1Gkg0PqF7Tn5YWW6bnzc3+6pV
+	 A0URxRGtspFmA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alessandro Carminati <acarmina@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Rahul Chandra <rahul@chandra.net>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 4/6] regulator: core: fix NULL dereference on unbind due to stale coupling data
-Date: Mon,  7 Jul 2025 20:02:28 -0400
-Message-Id: <20250708000230.793347-4-sashal@kernel.org>
+	corentin.chary@gmail.com,
+	hdegoede@redhat.com,
+	markgross@kernel.org,
+	acpi4asus-user@lists.sourceforge.net,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 5/6] platform/x86: asus-nb-wmi: add DMI quirk for ASUS Zenbook Duo UX8406CA
+Date: Mon,  7 Jul 2025 20:02:29 -0400
+Message-Id: <20250708000230.793347-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250708000230.793347-1-sashal@kernel.org>
 References: <20250708000230.793347-1-sashal@kernel.org>
@@ -46,103 +49,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.36
 Content-Transfer-Encoding: 8bit
 
-From: Alessandro Carminati <acarmina@redhat.com>
+From: Rahul Chandra <rahul@chandra.net>
 
-[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
+[ Upstream commit 7dc6b2d3b5503bcafebbeaf9818112bf367107b4 ]
 
-Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
-lead to NULL pointer dereference when regulators are accessed post-unbind.
+Add a DMI quirk entry for the ASUS Zenbook Duo UX8406CA 2025 model to use
+the existing zenbook duo keyboard quirk.
 
-This can happen during runtime PM or other regulator operations that rely
-on coupling metadata.
-
-For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
-a panic in regulator_lock_recursive() due to stale coupling state.
-
-Ensure n_coupled is set to 0 to prevent access to invalid pointers.
-
-Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
-Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Rahul Chandra <rahul@chandra.net>
+Link: https://lore.kernel.org/r/20250624073301.602070-1-rahul@chandra.net
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-Now I understand the bug. After unbind, the regulator_dev structure may
-still exist and be accessed (e.g., during runtime PM operations). If
-n_coupled is not reset to 0, code like regulator_lock_recursive() will
-try to iterate through n_coupled entries in the coupled_rdevs array, but
-that array has been freed and set to NULL, causing a NULL pointer
-dereference.
-
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's the
+extensive explanation:
 
-1. **It fixes a real NULL pointer dereference bug**: The commit
-   addresses a crash that occurs when regulators are accessed after
-   unbind. The issue is in `regulator_lock_recursive()` at line 326-327
-   where it iterates through `n_coupled` entries in the `coupled_rdevs`
-   array:
-  ```c
-  for (i = 0; i < rdev->coupling_desc.n_coupled; i++) {
-  c_rdev = rdev->coupling_desc.coupled_rdevs[i];
-  ```
-  If `n_coupled > 0` but `coupled_rdevs` has been freed (set to NULL),
-  this causes a NULL pointer dereference.
+## Analysis of the Code Changes
 
-2. **The fix is minimal and safe**: The patch adds just one line:
-  ```c
-  rdev->coupling_desc.n_coupled = 0;
-  ```
-  This ensures that after freeing the coupling data, the count is also
-  reset, preventing any code from trying to access the freed array.
+The commit adds a simple DMI quirk entry for the ASUS Zenbook Duo
+UX8406CA:
 
-3. **It affects a critical subsystem**: The regulator framework is
-   essential for power management, and crashes in this subsystem can
-   cause system instability or complete failure.
+```c
++       {
++               .callback = dmi_matched,
++               .ident = "ASUS Zenbook Duo UX8406CA",
++               .matches = {
++                       DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER
+INC."),
++                       DMI_MATCH(DMI_PRODUCT_NAME, "UX8406CA"),
++               },
++               .driver_data = &quirk_asus_zenbook_duo_kbd,
++       },
+```
 
-4. **The bug can be triggered during normal operations**: The commit
-   message mentions this happens during runtime PM or other regulator
-   operations, which are common scenarios, not edge cases.
+This applies the existing `quirk_asus_zenbook_duo_kbd` to the UX8406CA
+model.
 
-5. **Similar to other backported fixes**: Looking at the historical
-   commits, we see that similar coupling-related fixes have been
-   backported:
-   - "regulator: core: Release coupled_rdevs on
-     regulator_init_coupling() error" (backported)
-   - "regulator: da9063: fix null pointer deref with partial DT config"
-     (backported)
-   These precedents show that NULL pointer fixes in the regulator
-subsystem are considered important for stable trees.
+## Why This Is a Bug Fix, Not Just Hardware Enablement
 
-6. **Clear reproducer**: The commit mentions a specific platform
-   (ridesx4) where unbinding the 'reg-dummy' platform device triggers
-   the panic, indicating this is a reproducible issue.
+Based on my analysis of the kernel repository, the
+`quirk_asus_zenbook_duo_kbd` was introduced to fix a specific hardware
+issue where:
 
-The fix follows the stable kernel rules: it's a small, contained fix for
-an important bug with minimal risk of regression.
+1. **The keyboard emits spurious wireless disable keypresses** when
+   placed on the laptop's secondary display
+2. **This causes unexpected WiFi disconnections** via the rfkill system
+3. **The keyboard doesn't actually have wireless toggle functionality**,
+   so these events are always spurious
 
- drivers/regulator/core.c | 1 +
- 1 file changed, 1 insertion(+)
+## Evidence Supporting Backporting
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 1f4698d724bb7..e7f2a8b659477 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5536,6 +5536,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
- 				 ERR_PTR(err));
- 	}
+1. **Fixes User-Impacting Bug**: Without this quirk, users experience
+   unexpected WiFi disconnections when using their keyboard normally,
+   which significantly impacts usability.
+
+2. **Follows Established Pattern**: The commit follows the exact pattern
+   of the previous UX8406MA support (commit 9286dfd5735b), which
+   addressed the same issue for a similar model.
+
+3. **Minimal Risk**: The change is:
+   - Only 9 lines of code
+   - Isolated to specific hardware (only affects UX8406CA)
+   - Uses existing, tested infrastructure
+   - Cannot affect other systems due to DMI matching
+
+4. **Similar to Other Backported Commits**: Looking at the reference
+   commits:
+   - Commit 2b1cb70 (adding support for ALS on UX430UQ) was backported
+   - Commit ac16dfa (reverting GA401/GA502 quirks) was backported
+   - Commit 82a7228 (adding tablet mode quirk for ROG Flow X13) was
+     backported
+
+5. **Clear Bug Fix Nature**: Unlike commit 79493de (making use of
+   dmi->ident) which was NOT backported because it was just a code
+   improvement, this commit actually fixes broken functionality.
+
+## Comparison with Reference Commits
+
+This commit is most similar to:
+- **Commit 2b1cb70** (YES): Added device-specific quirk to fix
+  functionality
+- **Commit 82a7228** (YES): Added quirk to fix hardware-specific issue
+- **Commit 25390f8** (YES): Added device support to fix existing
+  hardware
+
+And dissimilar to:
+- **Commit 79493de** (NO): Code refactoring without functional impact
+
+## Conclusion
+
+This commit meets all criteria for stable backporting:
+- Fixes a real bug affecting users
+- Small, contained change
+- Low risk of regression
+- Follows established patterns
+- Only affects specific hardware
+
+The commit should be backported to stable kernels that contain the
+`quirk_asus_zenbook_duo_kbd` infrastructure (6.11+).
+
+ drivers/platform/x86/asus-nb-wmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index a5933980ade3d..90ad0045fec5f 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -529,6 +529,15 @@ static const struct dmi_system_id asus_quirks[] = {
+ 		},
+ 		.driver_data = &quirk_asus_zenbook_duo_kbd,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "ASUS Zenbook Duo UX8406CA",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "UX8406CA"),
++		},
++		.driver_data = &quirk_asus_zenbook_duo_kbd,
++	},
+ 	{},
+ };
  
-+	rdev->coupling_desc.n_coupled = 0;
- 	kfree(rdev->coupling_desc.coupled_rdevs);
- 	rdev->coupling_desc.coupled_rdevs = NULL;
- }
 -- 
 2.39.5
 
