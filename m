@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C941B1DB127;
-	Tue,  8 Jul 2025 16:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38AE202F70;
+	Tue,  8 Jul 2025 16:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993721; cv=none; b=YK9ZPLy3K48UTLyQ0eCQ2dA3GNA2JmiG02JkLpuPcOqKnBcKB8b/FM+kyG9HpCxMH4Dsy1rpP+uhmui4nu4/g9t+IweDV1ZvAfaO0zenwoRWdyuqAhcr6aRVlT8/WmgrZ6Z9+49Yv9+Eqat0hKkZyTfXQBJ8sIBPKytC3Tn58gA=
+	t=1751993724; cv=none; b=R8W3Bk6M0C+E44TGfXsUxkn3CfkgyBlLPrdCIulrY+VHx09zBDjL+o+qCUAg3yC7Gwm/cftrQlmm7kO9njRVrU/Y85d4017NTBeJiEGR3Zvv4k0PTcXvx+8mjjOe3MvntyCAG3k+s7aQqV58LF6dXTrFTiZkfz+8m3RKcrs4Dmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993721; c=relaxed/simple;
-	bh=vR/tOs+4iwYGMY0rnVGHF5AdcX+L3rfJ7aNtKE6fr4Q=;
+	s=arc-20240116; t=1751993724; c=relaxed/simple;
+	bh=wh71M4b7UsgmUqjavSd646IP2NLfQNJjfen1OKZ7/S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tRizwmqfK9xh5Onys/XSO1+PLLnO8ynxZp9ipCjpRdEkT5dg/YyPGhQaB+QvcEkJbzbjj1moUWbRdopE7S596pyxJpnrBS7k1Wz+cSAgKrbBvFWLh/0z0zmL1+nQqCbTetsZD4YidsIPfiAy4WMTjsJQgobTHcsbIQbO58y68y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFlbMm+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jv7TGUq7lhPsv/GWlR3EEYE3Mym/P+PE8++h2AWZgFcWFeZ9Uu/UBwV8Y80I+xw+Cww9A5luHka37UuuIx3A5USXrHUKzHZjOl9TPhYyBUKlYUl0V0rl80fbA6lER2V0Wvtw+us5CRXFt5eNcqZZ7KZBXDJGd2pgkOtGCGidPFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwZwYvaj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFlbMm+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552F0C4CEED;
-	Tue,  8 Jul 2025 16:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwZwYvaj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D314C4CEED;
+	Tue,  8 Jul 2025 16:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993721;
-	bh=vR/tOs+4iwYGMY0rnVGHF5AdcX+L3rfJ7aNtKE6fr4Q=;
+	s=korg; t=1751993724;
+	bh=wh71M4b7UsgmUqjavSd646IP2NLfQNJjfen1OKZ7/S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFlbMm+Wz/n+KWsyXdiMAiN4Bh29v9dv+7XE2HmNUENXX3976SlCYH1qoPwojxt4g
-	 erda3uUPm5bBgmQ0eTDwgxITkM6Vu5XAvWEUfbDq+BiS/S/R7sqMHU1EpIiCuljuiv
-	 NNT0RdDmaU+AuRHrE+9nLULrx4fRt6hL3krbzsak=
+	b=gwZwYvajkwplCpuUIV55zberN8xhJs2vrGeUW9PABBxQJ60uX0axI2YnbAJefnS1A
+	 llHyqVSZNIBljny5ip38/PsYSFGkaxTN8qaNYZRYRshAiO0QlMim8mzA5mU6zZrEQs
+	 mIkTTxbaP3c0UVu9M1H7AogPf/ibZul//LVh6fQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 140/178] rcu: Return early if callback is not specified
-Date: Tue,  8 Jul 2025 18:22:57 +0200
-Message-ID: <20250708162240.201669001@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mathias Nyman <mathias.nyman@intel.com>,
+	Roy Luo <royluo@google.com>
+Subject: [PATCH 6.15 141/178] usb: xhci: Skip xhci_reset in xhci_resume if xhci is being removed
+Date: Tue,  8 Jul 2025 18:22:58 +0200
+Message-ID: <20250708162240.223170682@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uladzislau Rezki (Sony) <urezki@gmail.com>
+From: Roy Luo <royluo@google.com>
 
-[ Upstream commit 33b6a1f155d627f5bd80c7485c598ce45428f74f ]
+commit 3eff494f6e17abf932699483f133a708ac0355dc upstream.
 
-Currently the call_rcu() API does not check whether a callback
-pointer is NULL. If NULL is passed, rcu_core() will try to invoke
-it, resulting in NULL pointer dereference and a kernel crash.
+xhci_reset() currently returns -ENODEV if XHCI_STATE_REMOVING is
+set, without completing the xhci handshake, unless the reset completes
+exceptionally quickly. This behavior causes a regression on Synopsys
+DWC3 USB controllers with dual-role capabilities.
 
-To prevent this and improve debuggability, this patch adds a check
-for NULL and emits a kernel stack trace to help identify a faulty
-caller.
+Specifically, when a DWC3 controller exits host mode and removes xhci
+while a reset is still in progress, and then attempts to configure its
+hardware for device mode, the ongoing, incomplete reset leads to
+critical register access issues. All register reads return zero, not
+just within the xHCI register space (which might be expected during a
+reset), but across the entire DWC3 IP block.
 
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch addresses the issue by preventing xhci_reset() from being
+called in xhci_resume() and bailing out early in the reinit flow when
+XHCI_STATE_REMOVING is set.
+
+Cc: stable <stable@kernel.org>
+Fixes: 6ccb83d6c497 ("usb: xhci: Implement xhci_handshake_check_state() helper")
+Suggested-by: Mathias Nyman <mathias.nyman@intel.com>
+Signed-off-by: Roy Luo <royluo@google.com>
+Link: https://lore.kernel.org/r/20250522190912.457583-2-royluo@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tree.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 80b10893b5038..37778d913f011 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -3068,6 +3068,10 @@ __call_rcu_common(struct rcu_head *head, rcu_callback_t func, bool lazy_in)
- 	/* Misaligned rcu_head! */
- 	WARN_ON_ONCE((unsigned long)head & (sizeof(void *) - 1));
- 
-+	/* Avoid NULL dereference if callback is NULL. */
-+	if (WARN_ON_ONCE(!func))
-+		return;
-+
- 	if (debug_rcu_head_queue(head)) {
- 		/*
- 		 * Probable double call_rcu(), so leak the callback.
--- 
-2.39.5
-
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -1084,7 +1084,10 @@ int xhci_resume(struct xhci_hcd *xhci, b
+ 		xhci_dbg(xhci, "Stop HCD\n");
+ 		xhci_halt(xhci);
+ 		xhci_zero_64b_regs(xhci);
+-		retval = xhci_reset(xhci, XHCI_RESET_LONG_USEC);
++		if (xhci->xhc_state & XHCI_STATE_REMOVING)
++			retval = -ENODEV;
++		else
++			retval = xhci_reset(xhci, XHCI_RESET_LONG_USEC);
+ 		spin_unlock_irq(&xhci->lock);
+ 		if (retval)
+ 			return retval;
 
 
