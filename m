@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D7F2DAFA3;
-	Tue,  8 Jul 2025 16:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF3F2E337A;
+	Tue,  8 Jul 2025 16:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993109; cv=none; b=UibGb6lY0IzlyvoYiMRy3EsqAn4voEENwF2T9xVqNjx23q1tQVFYNFVs1Ag83RXylMfyIKspAGnxWp9nLcUNPrBK5i/DWtkgGg2Q4xjnOYdp5e/KIaFfXfRXotRKJ9Je+OTBZY4j7SWerbIIrq6KX8ZFRxZ/cXhbl5u3VIJGpN0=
+	t=1751993111; cv=none; b=WONflk9lC1ryDQB4PsOVZPhk0NOer+HTLpdDmLIr8Jl3g7yqThsWdhBqrsyafz0sYL/SVa3IkhGquJybKI/b4l6jZt/wNZCYhFHB8JTRD5nykMIqi9eefuOTVKUbRuqwlT0WC1/u/wQR1l3Gf/eBJY2oT6u61wBcDIvgFeLiBG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993109; c=relaxed/simple;
-	bh=geqfrem5UMC6eiID6OxathzIWsmrqkHWXMx8U4f4WVc=;
+	s=arc-20240116; t=1751993111; c=relaxed/simple;
+	bh=lD70CuOubs17uYSKRXCkmGLMHlS/359o0AdpVY+scYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UWrBAFb00qLi+9l6xFkLzSZ9WXloWjlh7JIR/ohD2226ojmwszIBmXp3ofXwXh+wX0j+D7Y0NOYrjR7ZLEFKcr7drdPZ5e6FKmk6fMoPiUnLqe2J7lgPAX8N2RSDgzLZZYb6gVMdPYG/EMTNJ3i+cTbx3TPKUCgAruvJBUOztxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NietAweJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qYKL84ihHnK9PqIT/VylCVBSGJMcvqhPFI8xmmTxyFTo/W9L+ErHLG9yomBF++uXScrevz8iYlPq6kugRnYDEjXB1nK1C/xOdGWEOt7TFfKYoEUpQBRvDY3tgeldlTvi3egxP5stWC+KDTdT152g3JX6d25z2FC7U2ytJi5VfBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tidmuHIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NietAweJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B065C4CEF7;
-	Tue,  8 Jul 2025 16:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tidmuHIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E4FC4CEED;
+	Tue,  8 Jul 2025 16:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993108;
-	bh=geqfrem5UMC6eiID6OxathzIWsmrqkHWXMx8U4f4WVc=;
+	s=korg; t=1751993111;
+	bh=lD70CuOubs17uYSKRXCkmGLMHlS/359o0AdpVY+scYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NietAweJSIEHHd7GoONpsMONJlBiOeEJwQw2BRb5uvPrtBXE6zvkt44elELWR8Otg
-	 EylNoUKC4y4ouILEydmPK3eAW9yKX1xL7YTTYdRZCkcRn5QTcYI1/nN6zmAp9MZZeM
-	 mM3MLlEYr5Q2JaIpBwdX11l+TbNPoulcsESkB55w=
+	b=tidmuHIYWYJznPzlnF/DzY1XGzj3A3qjzfjmPYivhI5RTQ1Z0/niYZ/p468w+XUxC
+	 PpI8LrbcaqiTT04FvMUN4NqaCNDNJZKATgGG7bBuEmh2Rn6vcbE3HDOd5xSuVjt/x+
+	 9sla9rmNFwWIgZe4hA8KJGafKXV2U6bV8jpCXKq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Forissier?= <jerome.forissier@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 190/232] firmware: arm_ffa: Replace mutex with rwlock to avoid sleep in atomic context
-Date: Tue,  8 Jul 2025 18:23:06 +0200
-Message-ID: <20250708162246.407675887@linuxfoundation.org>
+Subject: [PATCH 6.12 164/232] drm/i915/dp_mst: Work around Thunderbolt sink disconnect after SINK_COUNT_ESI read
+Date: Tue,  8 Jul 2025 18:22:40 +0200
+Message-ID: <20250708162245.728587400@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -46,149 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit 9ca7a421229bbdfbe2e1e628cff5cfa782720a10 ]
+[ Upstream commit 9cb15478916e849d62a6ec44b10c593b9663328c ]
 
-The current use of a mutex to protect the notifier hashtable accesses
-can lead to issues in the atomic context. It results in the below
-kernel warnings:
+Due to a problem in the iTBT DP-in adapter's firmware the sink on a TBT
+link may get disconnected inadvertently if the SINK_COUNT_ESI and the
+DP_LINK_SERVICE_IRQ_VECTOR_ESI0 registers are read in a single AUX
+transaction. Work around the issue by reading these registers in
+separate transactions.
 
-  |  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:258
-  |  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 9, name: kworker/0:0
-  |  preempt_count: 1, expected: 0
-  |  RCU nest depth: 0, expected: 0
-  |  CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not tainted 6.14.0 #4
-  |  Workqueue: ffa_pcpu_irq_notification notif_pcpu_irq_work_fn
-  |  Call trace:
-  |   show_stack+0x18/0x24 (C)
-  |   dump_stack_lvl+0x78/0x90
-  |   dump_stack+0x18/0x24
-  |   __might_resched+0x114/0x170
-  |   __might_sleep+0x48/0x98
-  |   mutex_lock+0x24/0x80
-  |   handle_notif_callbacks+0x54/0xe0
-  |   notif_get_and_handle+0x40/0x88
-  |   generic_exec_single+0x80/0xc0
-  |   smp_call_function_single+0xfc/0x1a0
-  |   notif_pcpu_irq_work_fn+0x2c/0x38
-  |   process_one_work+0x14c/0x2b4
-  |   worker_thread+0x2e4/0x3e0
-  |   kthread+0x13c/0x210
-  |   ret_from_fork+0x10/0x20
+The issue affects MTL+ platforms and will be fixed in the DP-in adapter
+firmware, however releasing that firmware fix may take some time and is
+not guaranteed to be available for all systems. Based on this apply the
+workaround on affected platforms.
 
-To address this, replace the mutex with an rwlock to protect the notifier
-hashtable accesses. This ensures that read-side locking does not sleep and
-multiple readers can acquire the lock concurrently, avoiding unnecessary
-contention and potential deadlocks. Writer access remains exclusive,
-preserving correctness.
+See HSD #13013007775.
 
-This change resolves warnings from lockdep about potential sleep in
-atomic context.
+v2: Cc'ing Mika Westerberg.
 
-Cc: Jens Wiklander <jens.wiklander@linaro.org>
-Reported-by: Jérôme Forissier <jerome.forissier@linaro.org>
-Closes: https://github.com/OP-TEE/optee_os/issues/7394
-Fixes: e0573444edbf ("firmware: arm_ffa: Add interfaces to request notification callbacks")
-Message-Id: <20250528-ffa_notif_fix-v1-3-5ed7bc7f8437@arm.com>
-Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
-Tested-by: Jens Wiklander <jens.wiklander@linaro.org>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13760
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14147
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250519133417.1469181-1-imre.deak@intel.com
+(cherry picked from commit c3a48363cf1f76147088b1adb518136ac5df86a0)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 33f7bdb5c86dd..134e77a646cc1 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -110,7 +110,7 @@ struct ffa_drv_info {
- 	struct work_struct sched_recv_irq_work;
- 	struct xarray partition_info;
- 	DECLARE_HASHTABLE(notifier_hash, ilog2(FFA_MAX_NOTIFICATIONS));
--	struct mutex notify_lock; /* lock to protect notifier hashtable  */
-+	rwlock_t notify_lock; /* lock to protect notifier hashtable  */
- };
- 
- static struct ffa_drv_info *drv_info;
-@@ -1223,19 +1223,19 @@ static int __ffa_notify_relinquish(struct ffa_device *dev, int notify_id,
- 	if (notify_id >= FFA_MAX_NOTIFICATIONS)
- 		return -EINVAL;
- 
--	mutex_lock(&drv_info->notify_lock);
-+	write_lock(&drv_info->notify_lock);
- 
- 	rc = update_notifier_cb(dev, notify_id, NULL, is_framework);
- 	if (rc) {
- 		pr_err("Could not unregister notification callback\n");
--		mutex_unlock(&drv_info->notify_lock);
-+		write_unlock(&drv_info->notify_lock);
- 		return rc;
- 	}
- 
- 	if (!is_framework)
- 		rc = ffa_notification_unbind(dev->vm_id, BIT(notify_id));
- 
--	mutex_unlock(&drv_info->notify_lock);
-+	write_unlock(&drv_info->notify_lock);
- 
- 	return rc;
- }
-@@ -1275,7 +1275,7 @@ static int __ffa_notify_request(struct ffa_device *dev, bool is_per_vcpu,
- 	else
- 		cb_info->cb = cb;
- 
--	mutex_lock(&drv_info->notify_lock);
-+	write_lock(&drv_info->notify_lock);
- 
- 	if (!is_framework) {
- 		if (is_per_vcpu)
-@@ -1295,7 +1295,7 @@ static int __ffa_notify_request(struct ffa_device *dev, bool is_per_vcpu,
- 	}
- 
- out_unlock_free:
--	mutex_unlock(&drv_info->notify_lock);
-+	write_unlock(&drv_info->notify_lock);
- 	if (rc)
- 		kfree(cb_info);
- 
-@@ -1344,16 +1344,16 @@ static void handle_notif_callbacks(u64 bitmap, enum notify_type type)
- 		if (!(bitmap & 1))
- 			continue;
- 
--		mutex_lock(&drv_info->notify_lock);
-+		read_lock(&drv_info->notify_lock);
- 		cb_info = notifier_hnode_get_by_type(notify_id, type);
--		mutex_unlock(&drv_info->notify_lock);
-+		read_unlock(&drv_info->notify_lock);
- 
- 		if (cb_info && cb_info->cb)
- 			cb_info->cb(notify_id, cb_info->cb_data);
- 	}
- }
- 
--static void notif_get_and_handle(void *unused)
-+static void notif_get_and_handle(void *cb_data)
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 45cca965c11b4..ca9e0c730013d 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -4300,6 +4300,24 @@ intel_dp_mst_disconnect(struct intel_dp *intel_dp)
+ static bool
+ intel_dp_get_sink_irq_esi(struct intel_dp *intel_dp, u8 *esi)
  {
- 	int rc;
- 	struct ffa_notify_bitmaps bitmaps;
-@@ -1800,7 +1800,7 @@ static void ffa_notifications_setup(void)
- 		goto cleanup;
++	struct intel_display *display = to_intel_display(intel_dp);
++	struct drm_i915_private *i915 = dp_to_i915(intel_dp);
++
++	/*
++	 * Display WA for HSD #13013007775: mtl/arl/lnl
++	 * Read the sink count and link service IRQ registers in separate
++	 * transactions to prevent disconnecting the sink on a TBT link
++	 * inadvertently.
++	 */
++	if (IS_DISPLAY_VER(display, 14, 20) && !IS_BATTLEMAGE(i915)) {
++		if (drm_dp_dpcd_read(&intel_dp->aux, DP_SINK_COUNT_ESI, esi, 3) != 3)
++			return false;
++
++		/* DP_SINK_COUNT_ESI + 3 == DP_LINK_SERVICE_IRQ_VECTOR_ESI0 */
++		return drm_dp_dpcd_readb(&intel_dp->aux, DP_LINK_SERVICE_IRQ_VECTOR_ESI0,
++					 &esi[3]) == 1;
++	}
++
+ 	return drm_dp_dpcd_read(&intel_dp->aux, DP_SINK_COUNT_ESI, esi, 4) == 4;
+ }
  
- 	hash_init(drv_info->notifier_hash);
--	mutex_init(&drv_info->notify_lock);
-+	rwlock_init(&drv_info->notify_lock);
- 
- 	drv_info->notif_enabled = true;
- 	return;
 -- 
 2.39.5
 
