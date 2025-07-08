@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E201229B797;
-	Tue,  8 Jul 2025 16:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063592A1BA;
+	Tue,  8 Jul 2025 16:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992133; cv=none; b=JJiylo7Orqx7Ei9PoOMV5yIkdUYOZyDD+H7eklpTX5DnJidvOYbmQ651Y/bB1wlZv6cKvlY0ksnKM96/mudBvOz3NXjVra+Mu2Nhmmgo4sCTWup65TTPZVM2Fr+DruR1rSGYnYHLlr3X6w9jK/GnWpRLyK6r9POSGIuxCNeNJmo=
+	t=1751992136; cv=none; b=JQcgw8ESchtmdySxk5q+hwKSZLHay92ZWz+zh04Y+bPDp3KbPVTx1nabti2KDYxqaGrikorIvrKH47j8EHV07e6EnBwQGN8LG/XsnBjqiWVLSngp9XdLI7YyHOZBmHoPgHLjiTaFa3xp7CmClIAu8XIhQRer280TWK7h1167K5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992133; c=relaxed/simple;
-	bh=4BvJDLF1FSjonX2Uw3cJmJIZ3ZVA9zXJQM1GXkmXNb0=;
+	s=arc-20240116; t=1751992136; c=relaxed/simple;
+	bh=jfhMFws98up3FtXK7dC+H0PTlZkTRgX4opuzmnMFXRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MiRT7IK/oLMA2hS1aL+wMjmn3SEb242mHLN8YXsLoBScTKAwgF9LrEOUexSA+K8ILo5HvGkJHBWcqED2cI4Hy+w9Md4xd/7rwSrIkNSwTHOyatQsqq+1MeThXTzrKNtEgu/4r3rmUTjTJ/EFTHzyc1bhjg4SACaQa9KdcLzmYk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yziyTZCy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hc0Ii0sajpoYs010esO5hKyA4s/b8z5R0TfrnlHe9mkxye2nxwyK9ig/qQs9FqU1xN3owOqdqpnSfROROqYV6QfS4ulLclF2UFneuxl96X+NnPzDZzZnsWgg8ajqpmj/TzOrFGfNLs+Gu6M1d6pTHWzC6qmeWUVJBQpkQfSZp3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l65qmBZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yziyTZCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C189C4CEED;
-	Tue,  8 Jul 2025 16:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l65qmBZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81933C4CEED;
+	Tue,  8 Jul 2025 16:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992132;
-	bh=4BvJDLF1FSjonX2Uw3cJmJIZ3ZVA9zXJQM1GXkmXNb0=;
+	s=korg; t=1751992135;
+	bh=jfhMFws98up3FtXK7dC+H0PTlZkTRgX4opuzmnMFXRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yziyTZCygkLBeedB4XHC5jezVi4D1pAQwHJB4FMe1r1NwasTnTwmp0F2xKXVzD9yS
-	 Ch3ECeqagBDf1EO043qiIZUZrptHzGL/zo69Gj5nCyA7Pe9oPF0IQtRsOOrk07CYxs
-	 nZKQ7AItmHfVo9DoRwFoD6ahLKOcBsVIIrz7fmMA=
+	b=l65qmBZVVjoIYEcAUs2YS2nrk6X/a5eAQ9dO0zfS3pSUjJOs3DLAzUccEHaBQrVSD
+	 NybnS6eCynmZQNpmBSZwvdefvgp201TCBkuTrtASVdj3XA7mOtFHNmzAZqHK+2zHKO
+	 +NgssmYQ+7MFetp3MlmZYxvrbD31oHfUMzIRBG+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 68/81] xhci: dbctty: disable ECHO flag by default
-Date: Tue,  8 Jul 2025 18:24:00 +0200
-Message-ID: <20250708162227.122943785@linuxfoundation.org>
+Subject: [PATCH 6.1 69/81] xhci: dbc: Flush queued requests before stopping dbc
+Date: Tue,  8 Jul 2025 18:24:01 +0200
+Message-ID: <20250708162227.152204404@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -45,43 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Łukasz Bartosik <ukaszb@chromium.org>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 2b857d69a5e116150639a0c6c39c86cc329939ee upstream.
+commit efe3e3ae5a66cb38ef29c909e951b4039044bae9 upstream.
 
-When /dev/ttyDBC0 device is created then by default ECHO flag
-is set for the terminal device. However if data arrives from
-a peer before application using /dev/ttyDBC0 applies its set
-of terminal flags then the arriving data will be echoed which
-might not be desired behavior.
+Flush dbc requests when dbc is stopped and transfer rings are freed.
+Failure to flush them lead to leaking memory and dbc completing odd
+requests after resuming from suspend, leading to error messages such as:
 
-Fixes: 4521f1613940 ("xhci: dbctty: split dbc tty driver registration and unregistration functions.")
+[   95.344392] xhci_hcd 0000:00:0d.0: no matched request
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Łukasz Bartosik <ukaszb@chromium.org>
+Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/stable/20250610111802.18742-1-ukaszb%40chromium.org
-Link: https://lore.kernel.org/r/20250627144127.3889714-4-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20250627144127.3889714-5-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgtty.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci-dbgcap.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -586,6 +586,7 @@ int dbc_tty_init(void)
- 	dbc_tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
- 	dbc_tty_driver->subtype = SERIAL_TYPE_NORMAL;
- 	dbc_tty_driver->init_termios = tty_std_termios;
-+	dbc_tty_driver->init_termios.c_lflag &= ~ECHO;
- 	dbc_tty_driver->init_termios.c_cflag =
- 			B9600 | CS8 | CREAD | HUPCL | CLOCAL;
- 	dbc_tty_driver->init_termios.c_ispeed = 9600;
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -639,6 +639,10 @@ static void xhci_dbc_stop(struct xhci_db
+ 	case DS_DISABLED:
+ 		return;
+ 	case DS_CONFIGURED:
++		spin_lock(&dbc->lock);
++		xhci_dbc_flush_requests(dbc);
++		spin_unlock(&dbc->lock);
++
+ 		if (dbc->driver->disconnect)
+ 			dbc->driver->disconnect(dbc);
+ 		break;
 
 
