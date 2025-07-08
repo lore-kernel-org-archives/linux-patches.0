@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF911BC41;
-	Tue,  8 Jul 2025 00:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E897BA36;
+	Tue,  8 Jul 2025 00:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932944; cv=none; b=UHnJsarKEOaeUsv3uC521NzmHtG1rjNqYAtMRvZSsi/dz3kxtSdCIzP+OGzQiUk/9Y7YxmhLjDOZ4i6vlfYfyjNO/wfKpfdlhEUwf+X1q5839IEpbLhljdZ3Hy5zyzzR1yaL3RrcJUZ69GuA2CsiWaHQp4V7ZvwMU+qPFTfdZog=
+	t=1751932945; cv=none; b=Ct+cOx1HxCDRQs2F4Rdk74UZUj54APcngY1YvlIlEN7ex8w5aLiqMiVI4xAzVssbUm84ccBQREiY/9RgkLpD03xUjNgTHc7/yXKkSnIkxVylZDRZ062QtlNZJGWjIl7Jz+GmoSg3FIVd1BX4KYFj5LVzWL5fYIt0X5igZDAhhPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932944; c=relaxed/simple;
-	bh=S9ZIRQwMC2r+29JRA34OsR3pNa5ZIQDPOFqcxT7gEWo=;
+	s=arc-20240116; t=1751932945; c=relaxed/simple;
+	bh=Js+ZCJzqsyHE90UCFdNN6QrpRx8AHMNWNFbsdFdF3hM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XdKoRE7vK3O18sALzcRnYYCUieBDdhJbjEPk8kOHcP0qcV76Lpp0S4oaXJ8BSPvVrQMljY9+4S6IJK7A46SUeobpjkLGBzd2TLBhpIkyQWtPpCg8DHAp6QP+yWePPouLwYidnkwTkYlucLC++jDzyxFu4F9u3b+QQ+wIJWCEeE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DFrmmyq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YV/O8pum7YYrPy/21EmVnHdj8rOAFa/PA8fkgsyAoNgm83wzcAClWeeK59Fer5lNS+FyhLvpYm9X/Rp+rLHfnLNu3LPVf6nVdtEoq+Zv1eEc4K6Itvn95ZYAU7mzhN8Tf6lfuUJEikyz9k8KJci5puOC2IHV6oz8wcROtIajajI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mAiekFEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DFrmmyq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2412DC4CEF5;
-	Tue,  8 Jul 2025 00:02:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mAiekFEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A79C4CEF1;
+	Tue,  8 Jul 2025 00:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932943;
-	bh=S9ZIRQwMC2r+29JRA34OsR3pNa5ZIQDPOFqcxT7gEWo=;
+	s=k20201202; t=1751932944;
+	bh=Js+ZCJzqsyHE90UCFdNN6QrpRx8AHMNWNFbsdFdF3hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFrmmyq3z4vGQXueRk6vozyMp2AvnUf7mYkdZ2SWgW/WTniRYksyki7x8dVlA6nT/
-	 1Rrc57ssKbIDwgv4vGDaf0+uw2MICo3YhghEMAsMIBYywYLC9vrPOmZCx0irWxA3Oe
-	 ATAB19X0mxgANB46UCBOj1JswWqHg856zLfwAqmTaTc080hssZu6lJx7/WJBsmSYjz
-	 fp+1j7l+CyvEfvj2sjnB0J4hh5a5QqknmgSeOGe8vmaasBg42UoVr28ZB3BsvctdpI
-	 P11nH43QxkpAvAbCr/tO7oakT5YtjLHykFtMA7N9Uvu6gUGupRttYJzBBu740z4q95
-	 QfYyl9O2g7Fbw==
+	b=mAiekFEy5gCgSGyEV76ui9g8+oiaQ5k5UXzG1ZhvIRWb8f2KKWBoNowAgXyFmBY/m
+	 ndrIujMxt6YpxIdVXDfBXCbkBQWYg6yhpCqZUCcBAcXGBkupJ8HAtPidy9NLIuh7V9
+	 gafTmFLtWa2on4WZcYw57t83ejfBNNO9VrTpfn+fynZWD1hrre79GOrZeABhFGMZjO
+	 qEpFuGwjctYmLB+2IlWyLHisaM+MuhTLfFI4Wpl+qSL6fgUEK7CaFwUGGsTibp39DX
+	 bIdvV46YNeiBHqB15nLmYB/3ZP4U5Z39114TBEQ35ErU1Suj0vj9ZGa7Qta+DFbbbS
+	 MapaanXkFfhSQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Alessandro Carminati <acarmina@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	gregkh@linuxfoundation.org,
-	harry.wentland@amd.com,
-	Wayne.Lin@amd.com,
-	Roman.Li@amd.com,
-	hersenxs.wu@amd.com,
-	chiahsuan.chung@amd.com
-Subject: [PATCH AUTOSEL 6.15 4/8] drm/amd/display: Don't allow OLED to go down to fully off
-Date: Mon,  7 Jul 2025 20:02:11 -0400
-Message-Id: <20250708000215.793090-4-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 5/8] regulator: core: fix NULL dereference on unbind due to stale coupling data
+Date: Mon,  7 Jul 2025 20:02:12 -0400
+Message-Id: <20250708000215.793090-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250708000215.793090-1-sashal@kernel.org>
 References: <20250708000215.793090-1-sashal@kernel.org>
@@ -58,136 +51,98 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.5
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-[ Upstream commit 39d81457ad3417a98ac826161f9ca0e642677661 ]
+[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
 
-[Why]
-OLED panels can be fully off, but this behavior is unexpected.
+Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
+lead to NULL pointer dereference when regulators are accessed post-unbind.
 
-[How]
-Ensure that minimum luminance is at least 1.
+This can happen during runtime PM or other regulator operations that rely
+on coupling metadata.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4338
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 51496c7737d06a74b599d0aa7974c3d5a4b1162e)
+For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
+a panic in regulator_lock_recursive() due to stale coupling state.
+
+Ensure n_coupled is set to 0 to prevent access to invalid pointers.
+
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-## Analysis: **YES**
+Now I understand the bug. After unbind, the regulator_dev structure may
+still exist and be accessed (e.g., during runtime PM operations). If
+n_coupled is not reset to 0, code like regulator_lock_recursive() will
+try to iterate through n_coupled entries in the coupled_rdevs array, but
+that array has been freed and set to NULL, causing a NULL pointer
+dereference.
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+**YES**
 
-### 1. **Bug Fix Nature**
-This commit fixes an important user-visible bug where OLED panels could
-turn completely off (go to 0 luminance) when users adjust backlight to
-minimum. The code change shows:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-**Before the fix:**
-```c
-if (luminance_range->max_luminance) {
-    caps->aux_min_input_signal = luminance_range->min_luminance;
-    caps->aux_max_input_signal = luminance_range->max_luminance;
-} else {
-    caps->aux_min_input_signal = 0;  // <-- This allowed full off
-    caps->aux_max_input_signal = 512;
-}
-```
+1. **It fixes a real NULL pointer dereference bug**: The commit
+   addresses a crash that occurs when regulators are accessed after
+   unbind. The issue is in `regulator_lock_recursive()` at line 326-327
+   where it iterates through `n_coupled` entries in the `coupled_rdevs`
+   array:
+  ```c
+  for (i = 0; i < rdev->coupling_desc.n_coupled; i++) {
+  c_rdev = rdev->coupling_desc.coupled_rdevs[i];
+  ```
+  If `n_coupled > 0` but `coupled_rdevs` has been freed (set to NULL),
+  this causes a NULL pointer dereference.
 
-**After the fix:**
-```c
-if (luminance_range->max_luminance)
-    caps->aux_max_input_signal = luminance_range->max_luminance;
-else
-    caps->aux_max_input_signal = 512;
+2. **The fix is minimal and safe**: The patch adds just one line:
+  ```c
+  rdev->coupling_desc.n_coupled = 0;
+  ```
+  This ensures that after freeing the coupling data, the count is also
+  reset, preventing any code from trying to access the freed array.
 
-if (luminance_range->min_luminance)
-    caps->aux_min_input_signal = luminance_range->min_luminance;
-else
-    caps->aux_min_input_signal = 1;  // <-- Now minimum is 1, preventing
-full off
-```
+3. **It affects a critical subsystem**: The regulator framework is
+   essential for power management, and crashes in this subsystem can
+   cause system instability or complete failure.
 
-### 2. **User Impact**
-- The bug affects all users with OLED panels connected via eDP (laptops
-  with OLED displays)
-- When adjusting brightness to minimum, the screen would go completely
-  black, making the system appear unresponsive
-- This is a significant usability issue as users would need to blindly
-  increase brightness or reboot
+4. **The bug can be triggered during normal operations**: The commit
+   message mentions this happens during runtime PM or other regulator
+   operations, which are common scenarios, not edge cases.
 
-### 3. **Minimal and Contained Fix**
-The fix is extremely minimal:
-- Only 12 lines changed (7 insertions, 5 deletions)
-- Changes are confined to a single function
-  `update_connector_ext_caps()`
-- The logic change is straightforward: ensuring minimum luminance is at
-  least 1 instead of 0
-- No architectural changes or new features introduced
+5. **Similar to other backported fixes**: Looking at the historical
+   commits, we see that similar coupling-related fixes have been
+   backported:
+   - "regulator: core: Release coupled_rdevs on
+     regulator_init_coupling() error" (backported)
+   - "regulator: da9063: fix null pointer deref with partial DT config"
+     (backported)
+   These precedents show that NULL pointer fixes in the regulator
+subsystem are considered important for stable trees.
 
-### 4. **Low Risk of Regression**
-- The change only affects the minimum brightness value for OLED panels
-- Setting minimum to 1 instead of 0 is a safe change that maintains
-  display visibility
-- The code path is specific to eDP OLED panels with aux backlight
-  support
-- No changes to core display logic or other panel types
+6. **Clear reproducer**: The commit mentions a specific platform
+   (ridesx4) where unbinding the 'reg-dummy' platform device triggers
+   the panic, indicating this is a reproducible issue.
 
-### 5. **Similar to Previous Backported Commits**
-Looking at the similar commits provided:
-- "drm/amd/display: Don't register panel_power_savings on OLED panels"
-  (YES) - Also an OLED-specific bug fix
-- "drm/amd/display: Allow backlight to go below
-  `AMDGPU_DM_DEFAULT_MIN_BACKLIGHT`" (YES) - Similar backlight behavior
-  fix
+The fix follows the stable kernel rules: it's a small, contained fix for
+an important bug with minimal risk of regression.
 
-### 6. **Cherry-pick Indication**
-The commit message includes "(cherry picked from commit
-51496c7737d06a74b599d0aa7974c3d5a4b1162e)", indicating it's already been
-cherry-picked to at least one branch, suggesting its importance.
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-### 7. **Bug Report Reference**
-The commit closes a tracked issue
-(https://gitlab.freedesktop.org/drm/amd/-/issues/4338), indicating this
-was a user-reported problem affecting real users.
-
-This fix meets all the criteria for stable backporting: it's a minimal,
-contained bug fix that addresses a significant user-visible issue
-without introducing new features or architectural changes.
-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 87c2bc5f64a6c..f6d71bf7c89c2 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3548,13 +3548,15 @@ static void update_connector_ext_caps(struct amdgpu_dm_connector *aconnector)
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 90629a7566932..4ecad5c6c8390 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5639,6 +5639,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+ 				 ERR_PTR(err));
+ 	}
  
- 	luminance_range = &conn_base->display_info.luminance_range;
- 
--	if (luminance_range->max_luminance) {
--		caps->aux_min_input_signal = luminance_range->min_luminance;
-+	if (luminance_range->max_luminance)
- 		caps->aux_max_input_signal = luminance_range->max_luminance;
--	} else {
--		caps->aux_min_input_signal = 0;
-+	else
- 		caps->aux_max_input_signal = 512;
--	}
-+
-+	if (luminance_range->min_luminance)
-+		caps->aux_min_input_signal = luminance_range->min_luminance;
-+	else
-+		caps->aux_min_input_signal = 1;
- 
- 	min_input_signal_override = drm_get_panel_min_brightness_quirk(aconnector->drm_edid);
- 	if (min_input_signal_override >= 0)
++	rdev->coupling_desc.n_coupled = 0;
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	rdev->coupling_desc.coupled_rdevs = NULL;
+ }
 -- 
 2.39.5
 
