@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEA6225414;
-	Tue,  8 Jul 2025 16:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253F52DCF48;
+	Tue,  8 Jul 2025 16:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993561; cv=none; b=fkXnfjm+R/KTEHQryiOQEbIsKwtr9rB/RYBGSq/iL+/PoaHek/x+jn2/vTNbB5MRzU+QG7hklhzrXM6iDtcAwJbJGz368l5euHYUH1RGA5XP2Vl0HSkeHmkThggJyZmBWitwbeBNmnflhBMFyG4R2v+GSJ7Erj87OF22eLZG6mg=
+	t=1751993564; cv=none; b=cSr2dNJVb4HYIS+PWVh9NQBwdKxJSL3CZpL0icgyeKQSEDcF0pqiC9Z1X6F50kXV3iwrVpaV1VzEfQMyVKjOlUTKwqbN9FFcaCpfbFC7/tSEkra4VCWWDRGRRXfPBuaGFTcqJUIJvaDq9jixxbzQSEcNOAALE+gF/JRFaDye06Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993561; c=relaxed/simple;
-	bh=4zDJ56QBfvX8Hna1sSFPHrRL/oqc9LPrAGYcd8RzKAg=;
+	s=arc-20240116; t=1751993564; c=relaxed/simple;
+	bh=eHJGnG0/PaC9Hg9EfcapPEOHFouI/LNkX9rFpNUDsmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aKlGawPfVN9QFUB5J1j3aFozplWCfGOScfLr1adYKRPfmUvpwmb2Mgt2KB7G3oWRriOWGus8lg03pKaxPp2cST52Z893cJo0uMfl0tVKXA19gxhIWozDqiJGgXrSK2P1X4ft8nYxwqj+RKnqV2/xQCnYOMPS1f5QQIRsVuJNCKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOkKtyv8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O30MK535K0eML9DKW9PsstcOCjJ4hjNgE5X5cKFcdrjilRsL7np3ISntJZ+2289dM0zigQQ0yhXQrPCSb6OgQ7oXHRUCbazbL3d79CuAjTtGqQgWamm+aEI9it6UMD6mVAWoaFpXfBydk/NHf7jJmQagFmQ+8TGyT2f08bdOxZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ic5m8yJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOkKtyv8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C39C4CEED;
-	Tue,  8 Jul 2025 16:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ic5m8yJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A073EC4CEED;
+	Tue,  8 Jul 2025 16:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993561;
-	bh=4zDJ56QBfvX8Hna1sSFPHrRL/oqc9LPrAGYcd8RzKAg=;
+	s=korg; t=1751993564;
+	bh=eHJGnG0/PaC9Hg9EfcapPEOHFouI/LNkX9rFpNUDsmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOkKtyv8dofpx0ZAYm3yBBvbRH+D1r9yoK+gV/1w5zyR03rCFUPt79W1HapS1CGne
-	 2TV+WjaMXPwmJelXVGOECVT+jsihJlnGlanFiGKIKiZwrzL2ZWg4Wm2AIgweAPZylk
-	 NKFcFB660aIcU3qydSnchR1gW1U5MRmX7d4bhR+Q=
+	b=Ic5m8yJAOaJAXzi4aD9zu63JtuHyc5wCSU2rwv2Dv6/WnkCPG3CRfqskdin88+eHr
+	 cBnv7WJXJtwFulmtQlNz3su4ehRNVY54By1H0Co0Skq+UQlF5AS7L9vjNMmgV3+Est
+	 gj7xKwGK/QBDv/mACi97LZcEk34fdT1xuCIO8oxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
+	linux-cifs@vger.kernel.org,
+	Pierguido Lambri <plambri@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 117/178] smb: client: fix race condition in negotiate timeout by using more precise timing
-Date: Tue,  8 Jul 2025 18:22:34 +0200
-Message-ID: <20250708162239.668683271@linuxfoundation.org>
+Subject: [PATCH 6.15 118/178] smb: client: fix native SMB symlink traversal
+Date: Tue,  8 Jul 2025 18:22:35 +0200
+Message-ID: <20250708162239.691314084@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,125 +55,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 266b5d02e14f3a0e07414e11f239397de0577a1d ]
+[ Upstream commit 3363da82e02f1bddc54faa92ea430c6532e2cd2e ]
 
-When the SMB server reboots and the client immediately accesses the mount
-point, a race condition can occur that causes operations to fail with
-"Host is down" error.
+We've seen customers having shares mounted in paths like /??/C:/ or
+/??/UNC/foo.example.com/share in order to get their native SMB
+symlinks successfully followed from different mounts.
 
-Reproduction steps:
-  # Mount SMB share
-  mount -t cifs //192.168.245.109/TEST /mnt/ -o xxxx
-  ls /mnt
+After commit 12b466eb52d9 ("cifs: Fix creating and resolving absolute NT-style symlinks"),
+the client would then convert absolute paths from "/??/C:/" to "/mnt/c/"
+by default.  The absolute paths would vary depending on the value of
+symlinkroot= mount option.
 
-  # Reboot server
-  ssh root@192.168.245.109 reboot
-  ssh root@192.168.245.109 /path/to/cifs_server_setup.sh
-  ssh root@192.168.245.109 systemctl stop firewalld
+Fix this by restoring old behavior of not trying to convert absolute
+paths by default.  Only do this if symlinkroot= was _explicitly_ set.
 
-  # Immediate access fails
-  ls /mnt
-  ls: cannot access '/mnt': Host is down
+Before patch:
 
-  # But works if there is a delay
+  $ mount.cifs //w22-fs0/test2 /mnt/1 -o vers=3.1.1,username=xxx,password=yyy
+  $ ls -l /mnt/1/symlink2
+  lrwxr-xr-x 1 root root 15 Jun 20 14:22 /mnt/1/symlink2 -> /mnt/c/testfile
+  $ mkdir -p /??/C:; echo foo > //??/C:/testfile
+  $ cat /mnt/1/symlink2
+  cat: /mnt/1/symlink2: No such file or directory
 
-The issue is caused by a race condition between negotiate and reconnect.
-The 20-second negotiate timeout mechanism can interfere with the normal
-recovery process when both are triggered simultaneously.
+After patch:
 
-  ls                              cifsd
----------------------------------------------------
- cifs_getattr
- cifs_revalidate_dentry
- cifs_get_inode_info
- cifs_get_fattr
- smb2_query_path_info
- smb2_compound_op
- SMB2_open_init
- smb2_reconnect
- cifs_negotiate_protocol
-  smb2_negotiate
-   cifs_send_recv
-    smb_send_rqst
-    wait_for_response
-                            cifs_demultiplex_thread
-                              cifs_read_from_socket
-                              cifs_readv_from_socket
-                                server_unresponsive
-                                cifs_reconnect
-                                  __cifs_reconnect
-                                  cifs_abort_connection
-                                    mid->mid_state = MID_RETRY_NEEDED
-                                    cifs_wake_up_task
-    cifs_sync_mid_result
-     // case MID_RETRY_NEEDED
-     rc = -EAGAIN;
-   // In smb2_negotiate()
-   rc = -EHOSTDOWN;
+  $ mount.cifs //w22-fs0/test2 /mnt/1 -o vers=3.1.1,username=xxx,password=yyy
+  $ ls -l /mnt/1/symlink2
+  lrwxr-xr-x 1 root root 15 Jun 20 14:22 /mnt/1/symlink2 -> '/??/C:/testfile'
+  $ mkdir -p /??/C:; echo foo > //??/C:/testfile
+  $ cat /mnt/1/symlink2
+  foo
 
-The server_unresponsive() timeout triggers cifs_reconnect(), which aborts
-ongoing mid requests and causes the ls command to receive -EAGAIN, leading
-to -EHOSTDOWN.
-
-Fix this by introducing a dedicated `neg_start` field to
-precisely tracks when the negotiate process begins. The timeout check
-now uses this accurate timestamp instead of `lstrp`, ensuring that:
-
-1. Timeout is only triggered after negotiate has actually run for 20s
-2. The mechanism doesn't interfere with concurrent recovery processes
-3. Uninitialized timestamps (value 0) don't trigger false timeouts
-
-Fixes: 7ccc1465465d ("smb: client: fix hang in wait_for_response() for negproto")
-Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Cc: linux-cifs@vger.kernel.org
+Reported-by: Pierguido Lambri <plambri@redhat.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Stefan Metzmacher <metze@samba.org>
+Fixes: 12b466eb52d9 ("cifs: Fix creating and resolving absolute NT-style symlinks")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h | 1 +
- fs/smb/client/connect.c  | 7 ++++---
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ fs/smb/client/fs_context.c | 17 +++++++----------
+ fs/smb/client/reparse.c    | 22 +++++++++++++---------
+ 2 files changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index b89db44e0a8e3..eed29f043114a 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -777,6 +777,7 @@ struct TCP_Server_Info {
- 	__le32 session_key_id; /* retrieved from negotiate response and send in session setup request */
- 	struct session_key session_key;
- 	unsigned long lstrp; /* when we got last response from this server */
-+	unsigned long neg_start; /* when negotiate started (jiffies) */
- 	struct cifs_secmech secmech; /* crypto sec mech functs, descriptors */
- #define	CIFS_NEGFLAVOR_UNENCAP	1	/* wct == 17, but no ext_sec */
- #define	CIFS_NEGFLAVOR_EXTENDED	2	/* wct == 17, ext_sec bit set */
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index e92c7b71626fd..b4b162c93106b 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -679,12 +679,12 @@ server_unresponsive(struct TCP_Server_Info *server)
- 	/*
- 	 * If we're in the process of mounting a share or reconnecting a session
- 	 * and the server abruptly shut down (e.g. socket wasn't closed, packet
--	 * had been ACK'ed but no SMB response), don't wait longer than 20s to
--	 * negotiate protocol.
-+	 * had been ACK'ed but no SMB response), don't wait longer than 20s from
-+	 * when negotiate actually started.
- 	 */
- 	spin_lock(&server->srv_lock);
- 	if (server->tcpStatus == CifsInNegotiate &&
--	    time_after(jiffies, server->lstrp + 20 * HZ)) {
-+	    time_after(jiffies, server->neg_start + 20 * HZ)) {
- 		spin_unlock(&server->srv_lock);
- 		cifs_reconnect(server, false);
- 		return true;
-@@ -4209,6 +4209,7 @@ cifs_negotiate_protocol(const unsigned int xid, struct cifs_ses *ses,
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index a634a34d4086a..59ccc2229ab30 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1824,10 +1824,14 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 			cifs_errorf(fc, "symlinkroot mount options must be absolute path\n");
+ 			goto cifs_parse_mount_err;
+ 		}
+-		kfree(ctx->symlinkroot);
+-		ctx->symlinkroot = kstrdup(param->string, GFP_KERNEL);
+-		if (!ctx->symlinkroot)
++		if (strnlen(param->string, PATH_MAX) == PATH_MAX) {
++			cifs_errorf(fc, "symlinkroot path too long (max path length: %u)\n",
++				    PATH_MAX - 1);
+ 			goto cifs_parse_mount_err;
++		}
++		kfree(ctx->symlinkroot);
++		ctx->symlinkroot = param->string;
++		param->string = NULL;
+ 		break;
+ 	}
+ 	/* case Opt_ignore: - is ignored as expected ... */
+@@ -1837,13 +1841,6 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 		goto cifs_parse_mount_err;
+ 	}
  
- 	server->lstrp = jiffies;
- 	server->tcpStatus = CifsInNegotiate;
-+	server->neg_start = jiffies;
- 	spin_unlock(&server->srv_lock);
+-	/*
+-	 * By default resolve all native absolute symlinks relative to "/mnt/".
+-	 * Same default has drvfs driver running in WSL for resolving SMB shares.
+-	 */
+-	if (!ctx->symlinkroot)
+-		ctx->symlinkroot = kstrdup("/mnt/", GFP_KERNEL);
+-
+ 	return 0;
  
- 	rc = server->ops->negotiate(xid, ses, server);
+  cifs_parse_mount_err:
+diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
+index 1c40e42e4d897..5fa29a97ac154 100644
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -57,6 +57,7 @@ static int create_native_symlink(const unsigned int xid, struct inode *inode,
+ 	struct reparse_symlink_data_buffer *buf = NULL;
+ 	struct cifs_open_info_data data = {};
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
++	const char *symroot = cifs_sb->ctx->symlinkroot;
+ 	struct inode *new;
+ 	struct kvec iov;
+ 	__le16 *path = NULL;
+@@ -82,7 +83,8 @@ static int create_native_symlink(const unsigned int xid, struct inode *inode,
+ 		.symlink_target = symlink_target,
+ 	};
+ 
+-	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_POSIX_PATHS) && symname[0] == '/') {
++	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_POSIX_PATHS) &&
++	    symroot && symname[0] == '/') {
+ 		/*
+ 		 * This is a request to create an absolute symlink on the server
+ 		 * which does not support POSIX paths, and expects symlink in
+@@ -92,7 +94,7 @@ static int create_native_symlink(const unsigned int xid, struct inode *inode,
+ 		 * ensure compatibility of this symlink stored in absolute form
+ 		 * on the SMB server.
+ 		 */
+-		if (!strstarts(symname, cifs_sb->ctx->symlinkroot)) {
++		if (!strstarts(symname, symroot)) {
+ 			/*
+ 			 * If the absolute Linux symlink target path is not
+ 			 * inside "symlinkroot" location then there is no way
+@@ -101,12 +103,12 @@ static int create_native_symlink(const unsigned int xid, struct inode *inode,
+ 			cifs_dbg(VFS,
+ 				 "absolute symlink '%s' cannot be converted to NT format "
+ 				 "because it is outside of symlinkroot='%s'\n",
+-				 symname, cifs_sb->ctx->symlinkroot);
++				 symname, symroot);
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
+-		len = strlen(cifs_sb->ctx->symlinkroot);
+-		if (cifs_sb->ctx->symlinkroot[len-1] != '/')
++		len = strlen(symroot);
++		if (symroot[len - 1] != '/')
+ 			len++;
+ 		if (symname[len] >= 'a' && symname[len] <= 'z' &&
+ 		    (symname[len+1] == '/' || symname[len+1] == '\0')) {
+@@ -782,6 +784,7 @@ int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
+ 			      const char *full_path,
+ 			      struct cifs_sb_info *cifs_sb)
+ {
++	const char *symroot = cifs_sb->ctx->symlinkroot;
+ 	char sep = CIFS_DIR_SEP(cifs_sb);
+ 	char *linux_target = NULL;
+ 	char *smb_target = NULL;
+@@ -815,7 +818,8 @@ int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
+ 		goto out;
+ 	}
+ 
+-	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_POSIX_PATHS) && !relative) {
++	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_POSIX_PATHS) &&
++	    symroot && !relative) {
+ 		/*
+ 		 * This is an absolute symlink from the server which does not
+ 		 * support POSIX paths, so the symlink is in NT-style path.
+@@ -907,15 +911,15 @@ int smb2_parse_native_symlink(char **target, const char *buf, unsigned int len,
+ 		}
+ 
+ 		abs_path_len = strlen(abs_path)+1;
+-		symlinkroot_len = strlen(cifs_sb->ctx->symlinkroot);
+-		if (cifs_sb->ctx->symlinkroot[symlinkroot_len-1] == '/')
++		symlinkroot_len = strlen(symroot);
++		if (symroot[symlinkroot_len - 1] == '/')
+ 			symlinkroot_len--;
+ 		linux_target = kmalloc(symlinkroot_len + 1 + abs_path_len, GFP_KERNEL);
+ 		if (!linux_target) {
+ 			rc = -ENOMEM;
+ 			goto out;
+ 		}
+-		memcpy(linux_target, cifs_sb->ctx->symlinkroot, symlinkroot_len);
++		memcpy(linux_target, symroot, symlinkroot_len);
+ 		linux_target[symlinkroot_len] = '/';
+ 		memcpy(linux_target + symlinkroot_len + 1, abs_path, abs_path_len);
+ 	} else if (smb_target[0] == sep && relative) {
 -- 
 2.39.5
 
