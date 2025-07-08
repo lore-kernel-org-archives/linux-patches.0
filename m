@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DE02E49A8;
-	Tue,  8 Jul 2025 16:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406F52E3385;
+	Tue,  8 Jul 2025 16:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992886; cv=none; b=HLOqDmeZdHlK0Dyp9ZljaT18jDlK8NOXPXibcR8Asu4N5P5859uxr2W5vpSnURGeoUQ5ELGnHtNxFDejBwryoI1IZrL+M0sSo5R5eKQSTlcbfyhor6pJUTMg+TR3IP4OnBZsxo8jDiy8bqp4ypk9s+PHnhQoyvR5tfvQi2EASfM=
+	t=1751992889; cv=none; b=uChJjZL7imEwHm04/QJmjw+AMX4AYWDZe8+uAAYXIpRUKxmshZclsmyUZqrQT6GK1AZq7+1SEMP9GMZHUZ0epw9jr5Vn4zvtE9QShYqN6tokVpJmhUx3fdk29FW+h11URGpvbxAGCUoY+XIDyBGbY2WFbiGZ1GjbS4k0KpjDM0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992886; c=relaxed/simple;
-	bh=kwYCKBLwZ7leQSjcDzkNwfqxX6EZBm/smVJtjnZGQMk=;
+	s=arc-20240116; t=1751992889; c=relaxed/simple;
+	bh=xOqYTmTaUhDlre5EXPWV5eHqTTaye2DyA+5aaoJAE00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r95X/Ml1TVlxWgeHaRO3o+0sSgp06kdsNbgjJxn5tC1bu/o0ZlrxYA5wDdRfImUyLZXGzyjfVBpUYZkwJ6Sn7ESJOOBSfJSZjPva5/0rS69bQH8iCKd8Svon8WeRJxAUXb7pcvHKUhuAwij8nc2AQ3sBqQlpWP5pctcT8g6Skbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSMQC088; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hVVzNtdfR4f1I+oj28Hr5vkyw5QHmC2I+9WEhvPXYLw+HiNUPUFcxu0EcogKUOWAduTwQgqPOSUaDeyZbrMhLNZLgEuGOOu4UIyzpAocN0zQXCaFCsf/DUba4IlIQcvNEeN1OmlZvNEYbUw6Y+sFc7Y+9I3J8burN1rOo4fVgWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w52/l3X+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSMQC088"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B61C4CEED;
-	Tue,  8 Jul 2025 16:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w52/l3X+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777E4C4CEED;
+	Tue,  8 Jul 2025 16:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992886;
-	bh=kwYCKBLwZ7leQSjcDzkNwfqxX6EZBm/smVJtjnZGQMk=;
+	s=korg; t=1751992888;
+	bh=xOqYTmTaUhDlre5EXPWV5eHqTTaye2DyA+5aaoJAE00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSMQC088lVnT0VjgCfWupALCwOvjOSja6XNcP7zbizs+p0Gv6J5Bc0RPhga0t+jFI
-	 QA0Jcg66vGmj0/i6S15V3lbA/dt8GxOcDBiD/t9x9b1/E2HgUoau4py9+8211wjBm1
-	 Dls09K5+6y2XoDUFrpG1cE+iDW9HdWNmdPzHT3Lw=
+	b=w52/l3X+ftkRRZ0Xb4GSnAMT7UfwVDQJzetkKVSPuaFNGpU0bpfnLPUebdkurhTwj
+	 3VgRkBDFkzJElwTEb7EkcwxoR/quF63NCB00jevohXO5WjQxJpvhZxM1/++G/XTpnM
+	 2wol9M0ZgYeM3p21OyRULEU+cGObzs+bp0SGVBv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/232] crypto: zynqmp-sha - Add locking
-Date: Tue,  8 Jul 2025 18:21:33 +0200
-Message-ID: <20250708162243.986359807@linuxfoundation.org>
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>
+Subject: [PATCH 6.12 115/232] sched/fair: Fixup wake_up_sync() vs DELAYED_DEQUEUE
+Date: Tue,  8 Jul 2025 18:21:51 +0200
+Message-ID: <20250708162244.448795596@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -50,79 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-[ Upstream commit c7e68043620e0d5f89a37e573c667beab72d2937 ]
+[ Upstream commit aa3ee4f0b7541382c9f6f43f7408d73a5d4f4042 ]
 
-The hardwrae is only capable of one hash at a time, so add a lock
-to make sure that it isn't used concurrently.
+Delayed dequeued feature keeps a sleeping task enqueued until its
+lag has elapsed. As a result, it stays also visible in rq->nr_running.
+So when in wake_affine_idle(), we should use the real running-tasks
+in rq to check whether we should place the wake-up task to
+current cpu.
+On the other hand, add a helper function to return the nr-delayed.
 
-Fixes: 7ecc3e34474b ("crypto: xilinx - Add Xilinx SHA3 driver")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 152e11f6df29 ("sched/fair: Implement delayed dequeue")
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Reviewed-and-tested-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20250303105241.17251-2-xuewen.yan@unisoc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/xilinx/zynqmp-sha.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ kernel/sched/fair.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/xilinx/zynqmp-sha.c b/drivers/crypto/xilinx/zynqmp-sha.c
-index 1bcec6f46c9c7..9b5345068604f 100644
---- a/drivers/crypto/xilinx/zynqmp-sha.c
-+++ b/drivers/crypto/xilinx/zynqmp-sha.c
-@@ -3,18 +3,19 @@
-  * Xilinx ZynqMP SHA Driver.
-  * Copyright (c) 2022 Xilinx Inc.
-  */
--#include <linux/cacheflush.h>
- #include <crypto/hash.h>
- #include <crypto/internal/hash.h>
- #include <crypto/sha3.h>
--#include <linux/crypto.h>
-+#include <linux/cacheflush.h>
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/dma-mapping.h>
-+#include <linux/err.h>
- #include <linux/firmware/xlnx-zynqmp.h>
--#include <linux/init.h>
- #include <linux/io.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/spinlock.h>
- #include <linux/platform_device.h>
- 
- #define ZYNQMP_DMA_BIT_MASK		32U
-@@ -43,6 +44,8 @@ struct zynqmp_sha_desc_ctx {
- static dma_addr_t update_dma_addr, final_dma_addr;
- static char *ubuf, *fbuf;
- 
-+static DEFINE_SPINLOCK(zynqmp_sha_lock);
-+
- static int zynqmp_sha_init_tfm(struct crypto_shash *hash)
- {
- 	const char *fallback_driver_name = crypto_shash_alg_name(hash);
-@@ -124,7 +127,8 @@ static int zynqmp_sha_export(struct shash_desc *desc, void *out)
- 	return crypto_shash_export(&dctx->fbk_req, out);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 47ff4856561ea..7280ed04c96ce 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7313,6 +7313,11 @@ static bool dequeue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+ 	return true;
  }
  
--static int zynqmp_sha_digest(struct shash_desc *desc, const u8 *data, unsigned int len, u8 *out)
-+static int __zynqmp_sha_digest(struct shash_desc *desc, const u8 *data,
-+			       unsigned int len, u8 *out)
- {
- 	unsigned int remaining_len = len;
- 	int update_size;
-@@ -159,6 +163,12 @@ static int zynqmp_sha_digest(struct shash_desc *desc, const u8 *data, unsigned i
- 	return ret;
- }
- 
-+static int zynqmp_sha_digest(struct shash_desc *desc, const u8 *data, unsigned int len, u8 *out)
++static inline unsigned int cfs_h_nr_delayed(struct rq *rq)
 +{
-+	scoped_guard(spinlock_bh, &zynqmp_sha_lock)
-+		return __zynqmp_sha_digest(desc, data, len, out);
++	return (rq->cfs.h_nr_queued - rq->cfs.h_nr_runnable);
 +}
 +
- static struct zynqmp_sha_drv_ctx sha3_drv_ctx = {
- 	.sha3_384 = {
- 		.init = zynqmp_sha_init,
+ #ifdef CONFIG_SMP
+ 
+ /* Working cpumask for: sched_balance_rq(), sched_balance_newidle(). */
+@@ -7474,8 +7479,12 @@ wake_affine_idle(int this_cpu, int prev_cpu, int sync)
+ 	if (available_idle_cpu(this_cpu) && cpus_share_cache(this_cpu, prev_cpu))
+ 		return available_idle_cpu(prev_cpu) ? prev_cpu : this_cpu;
+ 
+-	if (sync && cpu_rq(this_cpu)->nr_running == 1)
+-		return this_cpu;
++	if (sync) {
++		struct rq *rq = cpu_rq(this_cpu);
++
++		if ((rq->nr_running - cfs_h_nr_delayed(rq)) == 1)
++			return this_cpu;
++	}
+ 
+ 	if (available_idle_cpu(prev_cpu))
+ 		return prev_cpu;
 -- 
 2.39.5
 
