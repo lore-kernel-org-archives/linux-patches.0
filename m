@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E2E2E427E;
-	Tue,  8 Jul 2025 16:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED04C1548C;
+	Tue,  8 Jul 2025 16:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992495; cv=none; b=Vu+zQYvgjPIs3G12U3KhualzG84RsFSNiKiTV2AGWuK/8i1uVGIkKqRO96ZXEdGCy/Di/JQYUAwugHbcdmGJH0x5p3DZvRS9vbExPC1hOxBX6WCSEnQqitl4TY/33ItgDU6TBerFC+5ZwyiYSexXksVQMiOWKJcsHWpjLe0OeQA=
+	t=1751992498; cv=none; b=SLEBf6qahuI0LpQ4WQy4wAB8w3yoUWBjgV3iNd/Q0VWP5wEJidetR/1pxhVMOBsHNN2sT2wDlQ9w2c8RPe45fygFlS4T5RmwFLCOO/VRPx8MhMuBEHYnLGyIHOJe3EPre9sEFgsdEkXFx9uWU4ddq4bUDAXfPws9oqtAEgq6XyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992495; c=relaxed/simple;
-	bh=sWEWJmuDss8a0DwqZFnqtEZ82cNZZCNVjM1NAzL3nTs=;
+	s=arc-20240116; t=1751992498; c=relaxed/simple;
+	bh=kcIFitZO8C81v/lWUGIldg1QGutfV185fnRvkBW2Arw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXRr+SIcI0Q/2HsY+4l9ZYfDvi+fjFJ0vCpUWdsC/SvIHQfzcipmh0NEJv5mW/orOGigt/2zYHpjW3z3y1JHv7tU7U6mu3gXGKybbtAxskrky0nAmiMFdMkMmy3dimG74wQw1U7ghEy4K68ckg5ZJw5Iv46GTzyNSlWgxZNabz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tY22MjqN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=if/VoUDQINEGnJ16qZHY6ktS3HHwqtzQQHk/i/PdRiuvu00QU9O53/m/IPi6NMgOcf/20qm2vSNkLYiYMfTZT3DW/fBritqcI04+cQ57i+RixRXDvtW+om9khxrx3l35GHDQAgKZun5Ub5q7LHMQGzotbx1P4JfGGTbBEokV9n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbJuUlDO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tY22MjqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDDFC4CEF0;
-	Tue,  8 Jul 2025 16:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbJuUlDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E8AC4CEED;
+	Tue,  8 Jul 2025 16:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992495;
-	bh=sWEWJmuDss8a0DwqZFnqtEZ82cNZZCNVjM1NAzL3nTs=;
+	s=korg; t=1751992497;
+	bh=kcIFitZO8C81v/lWUGIldg1QGutfV185fnRvkBW2Arw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tY22MjqNNgIO4LLwB/arEy8JDEfT4psF36zo/cWAl7q6kAlvlZIHu42zqnwlrAe8n
-	 mOvW3kjPIDIbZOVRpFWjZcVcllQ7q1HjLzvriyTln1rMw8Uv5DjYa9M0WMKUJO98EZ
-	 Kbx4kJ8AWGkNA/A3xzPl/wej/4qKAOvbuy5/WJXU=
+	b=gbJuUlDOEywEzuCDbiB8/gx6K3V0qAKVEz+DDVTw2rF0qBSkkNjrQE6N5G1XiSId8
+	 vZIOoBiON94ZybdFWv6PftP0GSg3/0DRtximxlh2fS6yoVgGeGXIlGtrijm00Cd/Tx
+	 od2SdCvHp8nAsLeP6BovkbZkWnIoGQNM1VlnGQmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/132] drm/simpledrm: Do not upcast in release helpers
-Date: Tue,  8 Jul 2025 18:23:11 +0200
-Message-ID: <20250708162232.975489001@linuxfoundation.org>
+Subject: [PATCH 6.6 081/132] drm/i915/dp_mst: Work around Thunderbolt sink disconnect after SINK_COUNT_ESI read
+Date: Tue,  8 Jul 2025 18:23:12 +0200
+Message-ID: <20250708162233.004888582@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -52,49 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Xin Li (Intel) <xin@zytor.com>
 
-[ Upstream commit d231cde7c84359fb18fb268cf6cff03b5bce48ff ]
+[ Upstream commit 9cb15478916e849d62a6ec44b10c593b9663328c ]
 
-The res pointer passed to simpledrm_device_release_clocks() and
-simpledrm_device_release_regulators() points to an instance of
-struct simpledrm_device. No need to upcast from struct drm_device.
-The upcast is harmless, as DRM device is the first field in struct
-simpledrm_device.
+Due to a problem in the iTBT DP-in adapter's firmware the sink on a TBT
+link may get disconnected inadvertently if the SINK_COUNT_ESI and the
+DP_LINK_SERVICE_IRQ_VECTOR_ESI0 registers are read in a single AUX
+transaction. Work around the issue by reading these registers in
+separate transactions.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 11e8f5fd223b ("drm: Add simpledrm driver")
-Cc: <stable@vger.kernel.org> # v5.14+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20250407134753.985925-2-tzimmermann@suse.de
+The issue affects MTL+ platforms and will be fixed in the DP-in adapter
+firmware, however releasing that firmware fix may take some time and is
+not guaranteed to be available for all systems. Based on this apply the
+workaround on affected platforms.
+
+See HSD #13013007775.
+
+v2: Cc'ing Mika Westerberg.
+
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13760
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14147
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250519133417.1469181-1-imre.deak@intel.com
+(cherry picked from commit c3a48363cf1f76147088b1adb518136ac5df86a0)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/simpledrm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/common.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/simpledrm.c b/drivers/gpu/drm/tiny/simpledrm.c
-index 8ea120eb8674b..30676b1073034 100644
---- a/drivers/gpu/drm/tiny/simpledrm.c
-+++ b/drivers/gpu/drm/tiny/simpledrm.c
-@@ -276,7 +276,7 @@ static struct simpledrm_device *simpledrm_device_of_dev(struct drm_device *dev)
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 3390814de0a54..cc1bbf70477b0 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2215,9 +2215,6 @@ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard);
  
- static void simpledrm_device_release_clocks(void *res)
+ #endif	/* CONFIG_X86_64 */
+ 
+-/*
+- * Clear all 6 debug registers:
+- */
+ static void initialize_debug_regs(void)
  {
--	struct simpledrm_device *sdev = simpledrm_device_of_dev(res);
-+	struct simpledrm_device *sdev = res;
- 	unsigned int i;
- 
- 	for (i = 0; i < sdev->clk_count; ++i) {
-@@ -374,7 +374,7 @@ static int simpledrm_device_init_clocks(struct simpledrm_device *sdev)
- 
- static void simpledrm_device_release_regulators(void *res)
- {
--	struct simpledrm_device *sdev = simpledrm_device_of_dev(res);
-+	struct simpledrm_device *sdev = res;
- 	unsigned int i;
- 
- 	for (i = 0; i < sdev->regulator_count; ++i) {
+ 	/* Control register first -- to make sure everything is disabled. */
 -- 
 2.39.5
 
