@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A692E2F0E;
-	Tue,  8 Jul 2025 16:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A08289E2C;
+	Tue,  8 Jul 2025 16:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992773; cv=none; b=K3XBbPX2j4zOssbB42ol+4pHpSsm6bJF/C7yo7wrjMtaKQwAtHeH6hbn3s6gvSvDU7y3AYHUkAr7p+qNOZfRB6D3zzRhn+zZuWUyfzUsWuNTeRu3ExMfN0Msh1QQ6UWcvY5Zitv703/NvADV+vSFxaWZGM9vOu2Ic/jps0j+ElM=
+	t=1751992776; cv=none; b=dm07ffTpJGG34u9DhjCjhYLVd9kyXYAKZvA3z7uPp16oCVQ2jJEJY/z83DQRIPNtXj8PncsCiP1R76hv7b7XqTPJlFtKAwl2q2sbikmbMro4mPjqA6LfRmNVxyIGPuH62W1+rFHa0MgJ/zc07aUKrnjLVZxgKJms32+Fdx6z7AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992773; c=relaxed/simple;
-	bh=cYIf3lpBWq8P3oFx+Dz7A5vi5IRQ5PLfyrtngyP6gfs=;
+	s=arc-20240116; t=1751992776; c=relaxed/simple;
+	bh=TEspSTppyO+fmvD3G6mEAfBFtYEeCi8Eoi66xMBfs80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=peaKvcu+NHrPzrI9r97ecZ8ldUxfYKcnttQ8RRw6xBbtcq2gglhWVJNtrcqX1rK9cfqJMI7TbiVni63tOHK8JYi15SROKwMYj+1yVfXarf+7Y853KFGOqXmrl7F86nzo2mCpvwQ5Ha4qPZEpc2ZqhjOYPWb2Zs8Vz2ROJTi8xOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct406OLI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aMj8PzjpK26oHTUWSEmMGpEkt4gTvRDiiPVOPf1/RxPob1ZevK17vvkK/d1NuUiVG8W1cFP0XS510U8QhtSIqMRAjkagXcOc53iij7XpTwwaBich08RqqHEQ//ZTXo66xELo2re3oMPcJIshITTOt9RoczCQIDqUGCGnWaBW7Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uN7QY+DT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct406OLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51FFC4CEF0;
-	Tue,  8 Jul 2025 16:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uN7QY+DT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C62C4CEED;
+	Tue,  8 Jul 2025 16:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992773;
-	bh=cYIf3lpBWq8P3oFx+Dz7A5vi5IRQ5PLfyrtngyP6gfs=;
+	s=korg; t=1751992776;
+	bh=TEspSTppyO+fmvD3G6mEAfBFtYEeCi8Eoi66xMBfs80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ct406OLIjDmNw97PgeBpf+76PH753lgeMU4M2gDxHyHOSE15Emi5TY33hAn9NhTrp
-	 faEnpJjx/BGe6rqdkc0ZO94FwFqRj+dGyzih/++08SccxanTSxltS9AAMy6DhutP6p
-	 ZZpTXOUjLbNIyZuUNUAqIDqELve8rJ0qxrRYEr4M=
+	b=uN7QY+DTlfqo72jPY6rnWViJoyB3vAmuXL4aukyXUUJc2Z9xZoyGJ7pnDoxzLqNjY
+	 GRfdtlTOmQR74E0Bw7LiSfGw5UJfd44eGeT4mP5FY/FbAE7X7UMSzatnSm9i1M7QSj
+	 Uj2gGpHmLDZJZ3Oi/Itpz8clqeXttqgap28SOJsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Krzysztof Niemiec <krzysztof.niemiec@intel.com>,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	Furong Zhou <furong.zhou@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/232] drm/i915/gt: Fix timeline left held on VMA alloc error
-Date: Tue,  8 Jul 2025 18:21:12 +0200
-Message-ID: <20250708162243.440251021@linuxfoundation.org>
+Subject: [PATCH 6.12 077/232] drm/i915/gsc: mei interrupt top half should be in irq disabled context
+Date: Tue,  8 Jul 2025 18:21:13 +0200
+Message-ID: <20250708162243.466655174@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -58,126 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+From: Junxiao Chang <junxiao.chang@intel.com>
 
-[ Upstream commit a5aa7bc1fca78c7fa127d9e33aa94a0c9066c1d6 ]
+[ Upstream commit 8cadce97bf264ed478669c6f32d5603b34608335 ]
 
-The following error has been reported sporadically by CI when a test
-unbinds the i915 driver on a ring submission platform:
+MEI GSC interrupt comes from i915. It has top half and bottom half.
+Top half is called from i915 interrupt handler. It should be in
+irq disabled context.
 
-<4> [239.330153] ------------[ cut here ]------------
-<4> [239.330166] i915 0000:00:02.0: [drm] drm_WARN_ON(dev_priv->mm.shrink_count)
-<4> [239.330196] WARNING: CPU: 1 PID: 18570 at drivers/gpu/drm/i915/i915_gem.c:1309 i915_gem_cleanup_early+0x13e/0x150 [i915]
-...
-<4> [239.330640] RIP: 0010:i915_gem_cleanup_early+0x13e/0x150 [i915]
-...
-<4> [239.330942] Call Trace:
-<4> [239.330944]  <TASK>
-<4> [239.330949]  i915_driver_late_release+0x2b/0xa0 [i915]
-<4> [239.331202]  i915_driver_release+0x86/0xa0 [i915]
-<4> [239.331482]  devm_drm_dev_init_release+0x61/0x90
-<4> [239.331494]  devm_action_release+0x15/0x30
-<4> [239.331504]  release_nodes+0x3d/0x120
-<4> [239.331517]  devres_release_all+0x96/0xd0
-<4> [239.331533]  device_unbind_cleanup+0x12/0x80
-<4> [239.331543]  device_release_driver_internal+0x23a/0x280
-<4> [239.331550]  ? bus_find_device+0xa5/0xe0
-<4> [239.331563]  device_driver_detach+0x14/0x20
-...
-<4> [357.719679] ---[ end trace 0000000000000000 ]---
+With RT kernel, by default i915 IRQ handler is in threaded IRQ. MEI GSC
+top half might be in threaded IRQ context. generic_handle_irq_safe API
+could be called from either IRQ or process context, it disables local
+IRQ then calls MEI GSC interrupt top half.
 
-If the test also unloads the i915 module then that's followed with:
+This change fixes A380/A770 GPU boot hang issue with RT kernel.
 
-<3> [357.787478] =============================================================================
-<3> [357.788006] BUG i915_vma (Tainted: G     U  W        N ): Objects remaining on __kmem_cache_shutdown()
-<3> [357.788031] -----------------------------------------------------------------------------
-<3> [357.788204] Object 0xffff888109e7f480 @offset=29824
-<3> [357.788670] Allocated in i915_vma_instance+0xee/0xc10 [i915] age=292729 cpu=4 pid=2244
-<4> [357.788994]  i915_vma_instance+0xee/0xc10 [i915]
-<4> [357.789290]  init_status_page+0x7b/0x420 [i915]
-<4> [357.789532]  intel_engines_init+0x1d8/0x980 [i915]
-<4> [357.789772]  intel_gt_init+0x175/0x450 [i915]
-<4> [357.790014]  i915_gem_init+0x113/0x340 [i915]
-<4> [357.790281]  i915_driver_probe+0x847/0xed0 [i915]
-<4> [357.790504]  i915_pci_probe+0xe6/0x220 [i915]
-...
-
-Closer analysis of CI results history has revealed a dependency of the
-error on a few IGT tests, namely:
-- igt@api_intel_allocator@fork-simple-stress-signal,
-- igt@api_intel_allocator@two-level-inception-interruptible,
-- igt@gem_linear_blits@interruptible,
-- igt@prime_mmap_coherency@ioctl-errors,
-which invisibly trigger the issue, then exhibited with first driver unbind
-attempt.
-
-All of the above tests perform actions which are actively interrupted with
-signals.  Further debugging has allowed to narrow that scope down to
-DRM_IOCTL_I915_GEM_EXECBUFFER2, and ring_context_alloc(), specific to ring
-submission, in particular.
-
-If successful then that function, or its execlists or GuC submission
-equivalent, is supposed to be called only once per GEM context engine,
-followed by raise of a flag that prevents the function from being called
-again.  The function is expected to unwind its internal errors itself, so
-it may be safely called once more after it returns an error.
-
-In case of ring submission, the function first gets a reference to the
-engine's legacy timeline and then allocates a VMA.  If the VMA allocation
-fails, e.g. when i915_vma_instance() called from inside is interrupted
-with a signal, then ring_context_alloc() fails, leaving the timeline held
-referenced.  On next I915_GEM_EXECBUFFER2 IOCTL, another reference to the
-timeline is got, and only that last one is put on successful completion.
-As a consequence, the legacy timeline, with its underlying engine status
-page's VMA object, is still held and not released on driver unbind.
-
-Get the legacy timeline only after successful allocation of the context
-engine's VMA.
-
-v2: Add a note on other submission methods (Krzysztof Karas):
-    Both execlists and GuC submission use lrc_alloc() which seems free
-    from a similar issue.
-
-Fixes: 75d0a7f31eec ("drm/i915: Lift timeline into intel_context")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12061
-Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Reviewed-by: Krzysztof Niemiec <krzysztof.niemiec@intel.com>
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/20250611104352.1014011-2-janusz.krzysztofik@linux.intel.com
-(cherry picked from commit cc43422b3cc79eacff4c5a8ba0d224688ca9dd4f)
+Fixes: 1e3dc1d8622b ("drm/i915/gsc: add gsc as a mei auxiliary device")
+Tested-by: Furong Zhou <furong.zhou@intel.com>
+Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
+Link: https://lore.kernel.org/r/20250425151108.643649-1-junxiao.chang@intel.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit dccf655f69002d496a527ba441b4f008aa5bebbf)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_ring_submission.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_gsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_ring_submission.c b/drivers/gpu/drm/i915/gt/intel_ring_submission.c
-index 72277bc8322e8..f84fa09cdb339 100644
---- a/drivers/gpu/drm/i915/gt/intel_ring_submission.c
-+++ b/drivers/gpu/drm/i915/gt/intel_ring_submission.c
-@@ -575,7 +575,6 @@ static int ring_context_alloc(struct intel_context *ce)
- 	/* One ringbuffer to rule them all */
- 	GEM_BUG_ON(!engine->legacy.ring);
- 	ce->ring = engine->legacy.ring;
--	ce->timeline = intel_timeline_get(engine->legacy.timeline);
+diff --git a/drivers/gpu/drm/i915/gt/intel_gsc.c b/drivers/gpu/drm/i915/gt/intel_gsc.c
+index 1e925c75fb080..c43febc862dc3 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gsc.c
++++ b/drivers/gpu/drm/i915/gt/intel_gsc.c
+@@ -284,7 +284,7 @@ static void gsc_irq_handler(struct intel_gt *gt, unsigned int intf_id)
+ 	if (gt->gsc.intf[intf_id].irq < 0)
+ 		return;
  
- 	GEM_BUG_ON(ce->state);
- 	if (engine->context_size) {
-@@ -588,6 +587,8 @@ static int ring_context_alloc(struct intel_context *ce)
- 		ce->state = vma;
- 	}
- 
-+	ce->timeline = intel_timeline_get(engine->legacy.timeline);
-+
- 	return 0;
+-	ret = generic_handle_irq(gt->gsc.intf[intf_id].irq);
++	ret = generic_handle_irq_safe(gt->gsc.intf[intf_id].irq);
+ 	if (ret)
+ 		gt_err_ratelimited(gt, "error handling GSC irq: %d\n", ret);
  }
- 
 -- 
 2.39.5
 
