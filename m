@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8AF2E0910;
-	Tue,  8 Jul 2025 16:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494DA8F5B;
+	Tue,  8 Jul 2025 16:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992944; cv=none; b=t4I7dyQQ3gaWlCRwLIFlN6bc8l3WBmrSfP0gIqDQTEHjlcGbF9SDrHDiJElgFK3TzVYNOCanbMlIt17n/COH8TqhSNATP5QB+vGoMn7fCnQ0Fug2kgp6s/kiRL2Gc7qgBXDXFiNd3VLAa1ymo7aaaBwJ+wONlRtS2Gu6+lwI4LA=
+	t=1751992947; cv=none; b=o4QrNppwx7T8MD4lgkAkpE0ZHMgDNBeWX2lG6GTFtGCDrI9vnD9xkOwCWHzxaWqThxllrcGZP4JFtQC38x1bLJbrwJ7E3xQNCj7hbJ7TxeX0RRAr2juVR6b7M01fAXd70EKhql2ZOLAKtwFcqe+CKoRetzlfKleRxuA21kQ1vVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992944; c=relaxed/simple;
-	bh=VRduV3qublJbrTbJdmdhfNS0Os5KKMPBOLQC+xu1rf8=;
+	s=arc-20240116; t=1751992947; c=relaxed/simple;
+	bh=SLxwoHI8APVvwUETMiSNlRP5LikjWsbOQpbltXgR/kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8VtrUTzr0BO5Nx6BryQDaN5sJRqMDMiOOUGi2mJOrc2be5Pr0vB2EXvA3pq1bh9Jg3Un0v3qBvnaA8pBDcGnu6cXlEzKDtPS5uAFNtY2Caus2VHfyxcfSgW2aBCvHxJzSdyCjuCapT87HfGuC/rJpjqIfK5KO51X5duV2tnLmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBUKUMSW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwkg/2HyglpcQuCtxLWD7xwfro7tqj/USvD4YRB/KFvgPSBrOMmN8srYkkavef8c8+I/X6GBmd8p/gY/xZETfAHzxluV23pg69qD+PuyQm83SYGB/v6DiGkDPNeAkmYrVGqMEoVj4TZOCbD/W0LnIFHxQ9CycyJDP1bxPMiz0oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s83MgYVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBUKUMSW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BC6C4CEED;
-	Tue,  8 Jul 2025 16:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s83MgYVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48EBC4CEED;
+	Tue,  8 Jul 2025 16:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992944;
-	bh=VRduV3qublJbrTbJdmdhfNS0Os5KKMPBOLQC+xu1rf8=;
+	s=korg; t=1751992947;
+	bh=SLxwoHI8APVvwUETMiSNlRP5LikjWsbOQpbltXgR/kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBUKUMSWhdXNUHv7WKedblzhLwdhVOjlQRQkyI4I1ru/wS6IUGsuu0xiZfHlM8RcG
-	 IO6jXRttSvSpFjbWW14VR7e/F2vVtTNksAF8ZIIVMj7kP1jm6BePRKvuILqOxE62kK
-	 IUsLMqsBDfyClHV+EcBwcXfQ0pqzGx/bkCGtgj5M=
+	b=s83MgYVXtG9TZn71mcpbi6rUctnF1NI4Gy4m5ePIl4UazbdCb2rSQvHTm3Hf2bjft
+	 FYwk7k8U3EHY4nQRW+4d+IXViG1dCy9I+Tg07v+yK/OyYUyr9wGAev5V3sQRtsaNMG
+	 Fk0Esf+KrWWnVp/km85SpsvWE/CwBBY0w7BVwoLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/232] gfs2: Prevent inode creation race
-Date: Tue,  8 Jul 2025 18:21:40 +0200
-Message-ID: <20250708162244.163784578@linuxfoundation.org>
+Subject: [PATCH 6.12 095/232] crypto: iaa - Do not clobber req->base.data
+Date: Tue,  8 Jul 2025 18:21:31 +0200
+Message-ID: <20250708162243.934641891@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -50,42 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit ffd1cf0443a208b80e40100ed02892d2ec74c7e9 ]
+[ Upstream commit cc98d8ce934b99789d30421957fd6a20fffb1c22 ]
 
-When a request to evict an inode comes in over the network, we are
-trying to grab an inode reference via the iopen glock's gl_object
-pointer.  There is a very small probability that by the time such a
-request comes in, inode creation hasn't completed and the I_NEW flag is
-still set.  To deal with that, wait for the inode and then check if
-inode creation was successful.
+The req->base.data field is for the user and must not be touched by
+the driver, unless you save it first.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: 2c63986dd35f ("gfs2: deallocate inodes in gfs2_create_inode")
+The iaa driver doesn't seem to be using the req->base.data value
+so just remove the assignment.
+
+Fixes: 09646c98d0bf ("crypto: iaa - Add irq support for the crypto async interface")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 9d72c5b8b7762..3c70c383b9bdd 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -984,6 +984,13 @@ static bool gfs2_try_evict(struct gfs2_glock *gl)
- 	if (ip && !igrab(&ip->i_inode))
- 		ip = NULL;
- 	spin_unlock(&gl->gl_lockref.lock);
-+	if (ip) {
-+		wait_on_inode(&ip->i_inode);
-+		if (is_bad_inode(&ip->i_inode)) {
-+			iput(&ip->i_inode);
-+			ip = NULL;
-+		}
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index 711c6e8914978..df2728cccf8b3 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -1182,8 +1182,7 @@ static int iaa_compress(struct crypto_tfm *tfm,	struct acomp_req *req,
+ 			" src_addr %llx, dst_addr %llx\n", __func__,
+ 			active_compression_mode->name,
+ 			src_addr, dst_addr);
+-	} else if (ctx->async_mode)
+-		req->base.data = idxd_desc;
 +	}
- 	if (ip) {
- 		set_bit(GIF_DEFER_DELETE, &ip->i_flags);
- 		d_prune_aliases(&ip->i_inode);
+ 
+ 	dev_dbg(dev, "%s: compression mode %s,"
+ 		" desc->src1_addr %llx, desc->src1_size %d,"
+@@ -1420,8 +1419,7 @@ static int iaa_decompress(struct crypto_tfm *tfm, struct acomp_req *req,
+ 			" src_addr %llx, dst_addr %llx\n", __func__,
+ 			active_compression_mode->name,
+ 			src_addr, dst_addr);
+-	} else if (ctx->async_mode && !disable_async)
+-		req->base.data = idxd_desc;
++	}
+ 
+ 	dev_dbg(dev, "%s: decompression mode %s,"
+ 		" desc->src1_addr %llx, desc->src1_size %d,"
 -- 
 2.39.5
 
