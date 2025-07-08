@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919122E540B;
-	Tue,  8 Jul 2025 16:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E835BE46;
+	Tue,  8 Jul 2025 16:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993575; cv=none; b=rNueC3kZ521LzJAtz00pfjuTB96we4eY0gBNBZLk4UYNypH7CeIyVx7n+NkURC5l2WIIWkawV6mlorhcgF8gAN+qGomtXgYpEPo4eNFE5LgSeYlvL5DkF3+C4jt3Qlji/M3JXLu7rd/Kwqji3C+6ONhEw90kWhGngf7p9QZfOAY=
+	t=1751993578; cv=none; b=sCk8eFMd5oMySroY53UdKNymSAHT36c1//cPmyeRdrxpflx3x9zMQHFyCrszpXGfMvSgdUp31IEIVnr86pW986TKlHQn/Z3V+wjbItWEjDmW5GkpcO4hchd7bOGoRLoWXuYI2vrjQbpsv+eRDogb35GL8mLfJu0Gd6iwil/OvSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993575; c=relaxed/simple;
-	bh=MnrCui42+pUpBcVYtM6xHKtwRgEqUVUno61jvfZsaFw=;
+	s=arc-20240116; t=1751993578; c=relaxed/simple;
+	bh=rJIwN/nKO4eZTnFCRR1MpbNMpyCvPsomTs2iURrdYy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANYkRA1xTkC8v2gODreprR95xmu1pqmgrHhdIlVMCXZV1GlbhIE9gtU3Lhl9BBWlgZI3n5e/oHEsm0BmKhUSAfge+/zUUWAXsduT/UqHgSuaA7vY/9OoExVQkqv0Vn+DGN4yuZc+/O4Ge84m3Sgr+8PNeltzT2PNK2+FPOBxDYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZFnNfeR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/tG7GPjDiwzCdzPiQtWW2cqA/BdPRSXx0wLDF0QkvRxNQMmdUrW+UMIHDFnQ4OzWi9aqLuxH4utZ4Rbf6O9Do3G2EjPRq+hDN9rizc3iDQa/eofDG/nGxx6OK2apruc7hFI1SsB+PrpZtqUF1l7Eoj2CzR2zuWQhSatdNpoc4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER3aQTHd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZFnNfeR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A0BC4CEED;
-	Tue,  8 Jul 2025 16:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER3aQTHd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F120CC4CEED;
+	Tue,  8 Jul 2025 16:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993575;
-	bh=MnrCui42+pUpBcVYtM6xHKtwRgEqUVUno61jvfZsaFw=;
+	s=korg; t=1751993578;
+	bh=rJIwN/nKO4eZTnFCRR1MpbNMpyCvPsomTs2iURrdYy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZFnNfeR2pk96BCEX26CXZ7sEWOgyYyX9rCFFicPOD30z6TmeVhUBcrgAS0hZWrUB
-	 c5mKudr7K2DwKCK++iDqsyyhAnHF1RqiKyG8AY7S/If1TicHU8kPndzTV/f/iqrMGT
-	 fXbUm702V4wT0deTqUQr/aOrnsWCudsGeY8IW/Kc=
+	b=ER3aQTHdtryWUrNp511lq++sjRBRRxvdo3Ng0p0ZpEIWt9E7eeQp4cf8zfRXK36rD
+	 oSkx5EUBtgyBGwPfoOHHnGTr8ZHzda4IYDDLs/bR9Bi4W7ZviPBGYbSxcMfLFdG3SV
+	 vJosE/pDLmqNPO2baN5WuWuJc1xLWxO6a28pxCeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 104/178] drm/xe/guc: Enable w/a 16026508708
-Date: Tue,  8 Jul 2025 18:22:21 +0200
-Message-ID: <20250708162239.360196339@linuxfoundation.org>
+Subject: [PATCH 6.15 122/178] drm/msm: Fix a fence leak in submit error path
+Date: Tue,  8 Jul 2025 18:22:39 +0200
+Message-ID: <20250708162239.782454270@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,62 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit d3e8349edf7ed9eaf076ab3d9973331ccc20e26c ]
+[ Upstream commit 5d319f75ccf7f0927425a7545aa1a22b3eedc189 ]
 
-The workaround is only relevant to SRIOV but does affect all platforms.
+In error paths, we could unref the submit without calling
+drm_sched_entity_push_job(), so msm_job_free() will never get
+called.  Since drm_sched_job_cleanup() will NULL out the
+s_fence, we can use that to detect this case.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://lore.kernel.org/r/20250403185619.1555853-2-John.C.Harrison@Intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Stable-dep-of: 84c0b4a00610 ("drm/xe/bmg: Update Wa_22019338487")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/653584/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/abi/guc_klvs_abi.h | 1 +
- drivers/gpu/drm/xe/xe_guc_ads.c       | 5 +++++
- drivers/gpu/drm/xe/xe_wa_oob.rules    | 2 ++
- 3 files changed, 8 insertions(+)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
-index d633f1c739e43..7de8f827281fc 100644
---- a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
-+++ b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
-@@ -367,6 +367,7 @@ enum xe_guc_klv_ids {
- 	GUC_WA_KLV_NP_RD_WRITE_TO_CLEAR_RCSM_AT_CGP_LATE_RESTORE			= 0x9008,
- 	GUC_WORKAROUND_KLV_ID_BACK_TO_BACK_RCS_ENGINE_RESET				= 0x9009,
- 	GUC_WA_KLV_WAKE_POWER_DOMAINS_FOR_OUTBOUND_MMIO					= 0x900a,
-+	GUC_WA_KLV_RESET_BB_STACK_PTR_ON_VF_SWITCH					= 0x900b,
- };
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 3e9aa2cc38ef9..b2aeaecaa39b3 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -85,6 +85,15 @@ void __msm_gem_submit_destroy(struct kref *kref)
+ 			container_of(kref, struct msm_gem_submit, ref);
+ 	unsigned i;
  
- #endif
-diff --git a/drivers/gpu/drm/xe/xe_guc_ads.c b/drivers/gpu/drm/xe/xe_guc_ads.c
-index 7031542a70ceb..1fccdef9e532e 100644
---- a/drivers/gpu/drm/xe/xe_guc_ads.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ads.c
-@@ -376,6 +376,11 @@ static void guc_waklv_init(struct xe_guc_ads *ads)
- 					GUC_WORKAROUND_KLV_ID_BACK_TO_BACK_RCS_ENGINE_RESET,
- 					&offset, &remain);
- 
-+	if (GUC_FIRMWARE_VER(&gt->uc.guc) >= MAKE_GUC_VER(70, 44, 0) && XE_WA(gt, 16026508708))
-+		guc_waklv_enable_simple(ads,
-+					GUC_WA_KLV_RESET_BB_STACK_PTR_ON_VF_SWITCH,
-+					&offset, &remain);
++	/*
++	 * In error paths, we could unref the submit without calling
++	 * drm_sched_entity_push_job(), so msm_job_free() will never
++	 * get called.  Since drm_sched_job_cleanup() will NULL out
++	 * s_fence, we can use that to detect this case.
++	 */
++	if (submit->base.s_fence)
++		drm_sched_job_cleanup(&submit->base);
 +
- 	size = guc_ads_waklv_size(ads) - remain;
- 	if (!size)
- 		return;
-diff --git a/drivers/gpu/drm/xe/xe_wa_oob.rules b/drivers/gpu/drm/xe/xe_wa_oob.rules
-index 9b9e176992a83..9efc5accd43d1 100644
---- a/drivers/gpu/drm/xe/xe_wa_oob.rules
-+++ b/drivers/gpu/drm/xe/xe_wa_oob.rules
-@@ -57,3 +57,5 @@ no_media_l3	MEDIA_VERSION(3000)
- 		GRAPHICS_VERSION(1260), GRAPHICS_STEP(A0, B0)
- 16023105232	GRAPHICS_VERSION_RANGE(2001, 3001)
- 		MEDIA_VERSION_RANGE(1301, 3000)
-+16026508708	GRAPHICS_VERSION_RANGE(1200, 3001)
-+		MEDIA_VERSION_RANGE(1300, 3000)
+ 	if (submit->fence_id) {
+ 		spin_lock(&submit->queue->idr_lock);
+ 		idr_remove(&submit->queue->fence_idr, submit->fence_id);
 -- 
 2.39.5
 
