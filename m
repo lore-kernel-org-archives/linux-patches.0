@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDB11E492;
-	Tue,  8 Jul 2025 17:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6132DC32D;
+	Tue,  8 Jul 2025 17:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994115; cv=none; b=nZj39P69SX1FDT5BOZucnENx6DtzgcliuVm5op/AypNwdq/FdnThC6sfqJ+ybuRWPRfgfUYbgqkJ1P2CQAwnFypgCpK6xzxULc5wrXj9AVtTPCaGHQ0PNdysI499Axv93Cp2ROf1JmFcUyu0FEio+bxALQ8PniB+mZWPXiOlN30=
+	t=1751994118; cv=none; b=rho0izJWqg451rOZtB7PjHS1ZeQd0GkrBWj6VW0vzylhGfE7NdjPtv5zP/Rm9tAhKrtCzwurwRKfO+/3Nk/RzMnqgwEhLQJtiq8GCbeJoZWf/et6ELmWlXIKsglKeItmNGAJ5cOi5z348HJtCNFieAUs8pee/KaH6dqNIEmpPnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994115; c=relaxed/simple;
-	bh=S28OdX/9KooApUJu/gqEACFGL8Hcmd0R6uKa42W2zyc=;
+	s=arc-20240116; t=1751994118; c=relaxed/simple;
+	bh=Geq76jeWQBrGrsrd27rwArilar8v5U4IR5c7pBpYO1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxJTPFuIOrOlZb/I2L6Qj9T3uxOK0Khf7ZjV/7V6B1y/qD3X0M7p2EzdhEtBKAqReDUsf10EKy1soH3Bwvrpl+4V4ONAPRamcduB0R0yXLAQylrNHsRrwo6jeOBk2mZNpae8ro1K1N+6EtaOUl8OF/kPuHDaz2+fmqNjMnpjxMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sgtbv0Ua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ewK1bvZ+KhWt2levUYiKtRIqZ7TcGbstWfICZcgEve09mRtWYUBitOEcPqgV0eP1uGrBBaMWNZXnKyIL64FkZrGBF7ELvy6B2wluqyj6C6cx4BR9sdwWPQ4cKeCAJneR0ObWXcq0xh1xWDVU3Tz/GqSLctfwaA55LwCo1d4Dq28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMqaP3vP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sgtbv0Ua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27822C4CEED;
-	Tue,  8 Jul 2025 17:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMqaP3vP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2C3C4CEED;
+	Tue,  8 Jul 2025 17:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994115;
-	bh=S28OdX/9KooApUJu/gqEACFGL8Hcmd0R6uKa42W2zyc=;
+	s=korg; t=1751994118;
+	bh=Geq76jeWQBrGrsrd27rwArilar8v5U4IR5c7pBpYO1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sgtbv0UaAe9P8a7ZzxpJnd7VEBNqlBKbuamrJAf86FldtrU+rJDSWrh2AxjXuJFqS
-	 4UUL/Dtgx3j7SvSoJVbFMBWlaFNR9Jh1C/I+CdrG0MIFOU3Vuz6qGY4WouL3T8Eg1G
-	 gttpunnZupkIqJSKJqHEiKgwhOiUxmCp3F3QIvsY=
+	b=CMqaP3vP3j4JrXIt+M9A1/lF/qGa8fuljERf+L4UPFobGiCmST9ZIeCtzWOVPLGsT
+	 KC00YzTX9z7WTRvdFPQXMx6EmWyDSGdrYoNB0G9roagnda0XBvLeFW9oWXg+09gJUM
+	 g6iYW5rCtM8siY+o8xSTbV8or0sh95jojat+W2D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 103/160] mtk-sd: Prevent memory corruption from DMA map failure
-Date: Tue,  8 Jul 2025 18:22:20 +0200
-Message-ID: <20250708162234.343494213@linuxfoundation.org>
+	Tulio Magno <tuliom@ascii.art.br>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Justin M. Forbes" <jforbes@fedoraproject.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 130/160] powerpc: Fix struct termio related ioctl macros
+Date: Tue,  8 Jul 2025 18:22:47 +0200
+Message-ID: <20250708162235.006734436@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -50,60 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-commit f5de469990f19569627ea0dd56536ff5a13beaa3 upstream.
+[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
 
-If msdc_prepare_data() fails to map the DMA region, the request is
-not prepared for data receiving, but msdc_start_data() proceeds
-the DMA with previous setting.
-Since this will lead a memory corruption, we have to stop the
-request operation soon after the msdc_prepare_data() fails to
-prepare it.
+Since termio interface is now obsolete, include/uapi/asm/ioctls.h
+has some constant macros referring to "struct termio", this caused
+build failure at userspace.
 
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/174972756982.3337526.6755001617701603082.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In file included from /usr/include/asm/ioctl.h:12,
+                 from /usr/include/asm/ioctls.h:5,
+                 from tst-ioctls.c:3:
+tst-ioctls.c: In function 'get_TCGETA':
+tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+   12 |   return TCGETA;
+      |          ^~~~~~
+
+Even though termios.h provides "struct termio", trying to juggle definitions around to
+make it compile could introduce regressions. So better to open code it.
+
+Reported-by: Tulio Magno <tuliom@ascii.art.br>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
+Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -734,6 +734,11 @@ static void msdc_prepare_data(struct msd
- 	}
- }
+diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
+index 2c145da3b774a..b5211e413829a 100644
+--- a/arch/powerpc/include/uapi/asm/ioctls.h
++++ b/arch/powerpc/include/uapi/asm/ioctls.h
+@@ -23,10 +23,10 @@
+ #define TCSETSW		_IOW('t', 21, struct termios)
+ #define TCSETSF		_IOW('t', 22, struct termios)
  
-+static bool msdc_data_prepared(struct mmc_data *data)
-+{
-+	return data->host_cookie & MSDC_PREPARE_FLAG;
-+}
-+
- static void msdc_unprepare_data(struct msdc_host *host, struct mmc_data *data)
- {
- 	if (data->host_cookie & MSDC_ASYNC_FLAG)
-@@ -1306,8 +1311,18 @@ static void msdc_ops_request(struct mmc_
- 	WARN_ON(host->mrq);
- 	host->mrq = mrq;
+-#define TCGETA		_IOR('t', 23, struct termio)
+-#define TCSETA		_IOW('t', 24, struct termio)
+-#define TCSETAW		_IOW('t', 25, struct termio)
+-#define TCSETAF		_IOW('t', 28, struct termio)
++#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
++#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
++#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
++#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
  
--	if (mrq->data)
-+	if (mrq->data) {
- 		msdc_prepare_data(host, mrq->data);
-+		if (!msdc_data_prepared(mrq->data)) {
-+			/*
-+			 * Failed to prepare DMA area, fail fast before
-+			 * starting any commands.
-+			 */
-+			mrq->cmd->error = -ENOSPC;
-+			mmc_request_done(mmc_from_priv(host), mrq);
-+			return;
-+		}
-+	}
- 
- 	/* if SBC is required, we have HW option and SW option.
- 	 * if HW option is enabled, and SBC does not have "special" flags,
+ #define TCSBRK		_IO('t', 29)
+ #define TCXONC		_IO('t', 30)
+-- 
+2.39.5
+
 
 
