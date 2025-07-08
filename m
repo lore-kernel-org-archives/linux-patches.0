@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC572045B5;
-	Tue,  8 Jul 2025 16:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DBE217722;
+	Tue,  8 Jul 2025 16:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993370; cv=none; b=YoI2vrkkCMsv2PLk6ZTCBvlXsnb+nX+6jGDo5Po19DcJdmUl5DIMRp067dH5081d3d3eNiVnPVpWPg0v70bEmG8f0p5dE8GbuSlCpQPQoBGvTrQwjbzJGd9nnm6RQ68Hf3Rsb08FIo/qLiT4ajjUEQfKpTHXiAcqQn8wRiOWNqY=
+	t=1751993373; cv=none; b=UMx1v4Cv9+8aU89Q+5a3gWqzIFi5ktjPKCuUehXycZkYGDyZuh0gqUW8NLwFmeW2Ax+ccDjue76YrXC9LqgJL3P/73tamlHp/HW+1QFLaMUF1qR1dTFj6lbhKCMtcUcq20yZiWLeT4Cn6X+rPL1DSsV/p5vMCmiyrzvLFMsdd/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993370; c=relaxed/simple;
-	bh=REN3WwYQh3BYhKrnkO+4BHCFd1aRrOI5SEGFh+T7mhs=;
+	s=arc-20240116; t=1751993373; c=relaxed/simple;
+	bh=CajFqJAjf2z8JKj87C1O7WVLes/hmWBSDb/jhspOMm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KeSvyon3ujrqMZ8+rxtN80WuoqA3ePgfwc4gvvm6/DPw4x4EC46I7RwfOcAswB5ZQk3xb8aYXIf+FMIj7h2nFjTPOE7DyaWX7HeixsSTVw8yaZDMOH2Y72gvjllbSPLllrmwedKS+0cB2sVcUv31OwMQr4yNHrfFwjPAM20ql8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iz9ALWsL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PKoYugptbpR+1EgaPXcac+90tEEdyacM+PxsdckCb0I6dqMwNqLhVyuE4d2giqPYyvfRqgyDqtVjp0kULOxGeIraAmq23vkaFUsnZU7wQeb7+N3X7OfkONwMxNkNQxt5fqXA3TkjhFOMb5oStyPtVv9zzXYLfzjmuSUL8tKFLXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKM2G4gs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iz9ALWsL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEC5C4CEED;
-	Tue,  8 Jul 2025 16:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKM2G4gs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BECC4CEED;
+	Tue,  8 Jul 2025 16:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993370;
-	bh=REN3WwYQh3BYhKrnkO+4BHCFd1aRrOI5SEGFh+T7mhs=;
+	s=korg; t=1751993372;
+	bh=CajFqJAjf2z8JKj87C1O7WVLes/hmWBSDb/jhspOMm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iz9ALWsLiCYugOiQM8+p9giDi9Gm8OrV0QsB0DXZ+ju/kfSCnWUf5yY9werqEG8Mo
-	 +ldbyjuH8KrI5xwX5N1imW02j6VPbI1erHwGOD9z7QIsjKFB7tjSL3grZZzxizQULp
-	 wPkNBQXjlXBB20QYURzeor5H+LyB9PuFKZBboP9o=
+	b=cKM2G4gsDm2SqwdRN+q4OGE14nMWAEYy7cNQbW1fzv0qEWSzZzLa1GkRnK3aJ0IYs
+	 vvuUZN2Xu9pHjQTvxUQj3BOem66vljzVmU1Ae1qwt2lcrnYUsRvj7GTmGbGlMhYYJf
+	 XsfDDK0QcM1Omqn/MJL3j5rAwOlNURkJDOXeDUoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jackysliu <1972843537@qq.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 051/178] scsi: sd: Fix VPD page 0xb7 length check
-Date: Tue,  8 Jul 2025 18:21:28 +0200
-Message-ID: <20250708162238.016304365@linuxfoundation.org>
+Subject: [PATCH 6.15 052/178] scsi: core: Enforce unlimited max_segment_size when virt_boundary_mask is set
+Date: Tue,  8 Jul 2025 18:21:29 +0200
+Message-ID: <20250708162238.041729935@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,45 +55,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: jackysliu <1972843537@qq.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 8889676cd62161896f1d861ce294adc29c4f2cb5 ]
+[ Upstream commit 4937e604ca24c41cae3296d069c871c2f3f519c8 ]
 
-sd_read_block_limits_ext() currently assumes that vpd->len excludes the
-size of the page header. However, vpd->len describes the size of the entire
-VPD page, therefore the sanity check is incorrect.
+The virt_boundary_mask limit requires an unlimited max_segment_size for
+bio splitting to not corrupt data.  Historically, the block layer tried
+to validate this, although the check was half-hearted until the addition
+of the atomic queue limits API.  The full blown check then triggered
+issues with stacked devices incorrectly inheriting limits such as the
+virt boundary and got disabled in commit b561ea56a264 ("block: allow
+device to have both virt_boundary_mask and max segment size") instead of
+fixing the issue properly.
 
-In practice this is not really a problem since we don't attach VPD
-pages unless they actually report data trailing the header. But fix
-the length check regardless.
+Ensure that the SCSI mid layer doesn't set the default low
+max_segment_size limit for this case, and check for invalid
+max_segment_size values in the host template, similar to the original
+block layer check given that SCSI devices can't be stacked.
 
-This issue was identified by Wukong-Agent (formerly Tencent Woodpecker), a
-code security AI agent, through static code analysis.
+This fixes reported data corruption on storvsc, although as far as I can
+tell storvsc always failed to properly set the max_segment_size limit as
+the SCSI APIs historically applied that when setting up the host, while
+storvsc only set the virt_boundary_mask when configuring the scsi_device.
 
-[mkp: rewrote patch description]
-
-Signed-off-by: jackysliu <1972843537@qq.com>
-Link: https://lore.kernel.org/r/tencent_ADA5210D1317EEB6CD7F3DE9FE9DA4591D05@qq.com
-Fixes: 96b171d6dba6 ("scsi: core: Query the Block Limits Extension VPD page")
+Fixes: 81988a0e6b03 ("storvsc: get rid of bounce buffer")
+Fixes: b561ea56a264 ("block: allow device to have both virt_boundary_mask and max segment size")
+Reported-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250624125233.219635-3-hch@lst.de
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hosts.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 950d8c9fb8843..89d5c4b17bc46 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3384,7 +3384,7 @@ static void sd_read_block_limits_ext(struct scsi_disk *sdkp)
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index e021f1106beab..cc5d05dc395c4 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -473,10 +473,17 @@ struct Scsi_Host *scsi_host_alloc(const struct scsi_host_template *sht, int priv
+ 	else
+ 		shost->max_sectors = SCSI_DEFAULT_MAX_SECTORS;
  
- 	rcu_read_lock();
- 	vpd = rcu_dereference(sdkp->device->vpd_pgb7);
--	if (vpd && vpd->len >= 2)
-+	if (vpd && vpd->len >= 6)
- 		sdkp->rscs = vpd->data[5] & 1;
- 	rcu_read_unlock();
- }
+-	if (sht->max_segment_size)
+-		shost->max_segment_size = sht->max_segment_size;
+-	else
+-		shost->max_segment_size = BLK_MAX_SEGMENT_SIZE;
++	shost->virt_boundary_mask = sht->virt_boundary_mask;
++	if (shost->virt_boundary_mask) {
++		WARN_ON_ONCE(sht->max_segment_size &&
++			     sht->max_segment_size != UINT_MAX);
++		shost->max_segment_size = UINT_MAX;
++	} else {
++		if (sht->max_segment_size)
++			shost->max_segment_size = sht->max_segment_size;
++		else
++			shost->max_segment_size = BLK_MAX_SEGMENT_SIZE;
++	}
+ 
+ 	/* 32-byte (dword) is a common minimum for HBAs. */
+ 	if (sht->dma_alignment)
+@@ -492,9 +499,6 @@ struct Scsi_Host *scsi_host_alloc(const struct scsi_host_template *sht, int priv
+ 	else
+ 		shost->dma_boundary = 0xffffffff;
+ 
+-	if (sht->virt_boundary_mask)
+-		shost->virt_boundary_mask = sht->virt_boundary_mask;
+-
+ 	device_initialize(&shost->shost_gendev);
+ 	dev_set_name(&shost->shost_gendev, "host%d", shost->host_no);
+ 	shost->shost_gendev.bus = &scsi_bus_type;
 -- 
 2.39.5
 
