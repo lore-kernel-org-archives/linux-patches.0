@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B72F2E1C74;
-	Tue,  8 Jul 2025 16:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13511258CF7;
+	Tue,  8 Jul 2025 16:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993835; cv=none; b=TpvZpt7EkNsOpQlQO6ilH9vv9GIwheS0Z8TOuLlexzOcjxcHGpO0KJLUuN0cKw4RKthNrMtk7OjVreN/ha/K+eFsKmQoOc16r4oDNlULLnQxBsK1roclX2XHcLTcJYwvc8FIDz867ktZYD6BTNVIORShvdzu2Axwx9FlYIPPwOY=
+	t=1751993838; cv=none; b=pTJCh4frPesEijJLYhiqrNAmivkCF9vlPqGcy3cYlnABnBajP84LdjZa5X9OkRuZr+rOipfleqNXwvo4VhRdqxvXyxvEHW7dunXXzZmxstj6EDVucePP/pTz45neEJVek1NWNpgv8yfTyVu5VG3RjBxuc8oJsbeDYACRRxLNeqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993835; c=relaxed/simple;
-	bh=sUfnF5uYJsssE5VLXVDpRslmZbRpiNcX7hNNTTt3DmA=;
+	s=arc-20240116; t=1751993838; c=relaxed/simple;
+	bh=dlcqTbcgYe03c3aayuNfoUqG01YZ61Ls2mmmu+UmIP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cw3b94Z6s4e4u3i5xriCKfrVdmhFBI7e0oM5g3ZfYkTu66MkS/lFbzz5xPoWVLnUaXAJzS8kLWEish1qNdmzGp+kThAUOFT8oNUCTnLRknds+V4vplzlllQL0OXKOHdD32BYlz47VRYcsIXYwa32VCT56iK/sThAevtrYyhAzsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kegdVkYV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M9nUXQVdFT9a+JsD+VpXFimrBTfef0j4QubO2KlVGBnd4UrqVzL5p7xiyY78YcoBQ0gPoX2YYnbUTwrn5gl8/iDS4laj+QpTSeYT1hkbYxexgEJB+RxWWzBzkcw7GfFuTOmMWnnUONrmVicMu/jhxKbsBNwgRl2QD7G+7UE5vMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgTJ5Vi4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kegdVkYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D485BC4CEED;
-	Tue,  8 Jul 2025 16:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgTJ5Vi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBCEC4CEED;
+	Tue,  8 Jul 2025 16:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993835;
-	bh=sUfnF5uYJsssE5VLXVDpRslmZbRpiNcX7hNNTTt3DmA=;
+	s=korg; t=1751993837;
+	bh=dlcqTbcgYe03c3aayuNfoUqG01YZ61Ls2mmmu+UmIP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kegdVkYVBtDPRLSl077B5V+ospUsqOQe9KO2ilhZD7pTz8YgORvRon4hHGySb4cKi
-	 r7Id29qSv3+cloUBjaB1E9W5VI7A/PhHinkFp3pIv2mNZn7FF5foptY89viHW3MieK
-	 Jr1D4j3DMHdOCXZ3hTWzlDUOBjYcIJWgUg1y2K9g=
+	b=GgTJ5Vi4N9SaqLgsAwJvN6L5YRI8Wq5wc+BoNmuAdmSGg99RyfnD4Td3A72nLV0UB
+	 zC6ui7Vd/8cv0iJhlYu9UzwTwc1LiaAixAubAc5Aoxj8J8CnDVabKbrZdFmyxbXJI2
+	 2SE3CbEn6wv0u4E+zeW2/9OledcRzuzsWg+ciTMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Philipp Kerling <pkerling@casix.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/160] regulator: Add devm helpers for get and enable
-Date: Tue,  8 Jul 2025 18:21:11 +0200
-Message-ID: <20250708162232.471647521@linuxfoundation.org>
+Subject: [PATCH 5.15 008/160] ksmbd: allow a filename to contain special characters on SMB3.1.1 posix extension
+Date: Tue,  8 Jul 2025 18:20:45 +0200
+Message-ID: <20250708162231.740783832@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,281 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit da279e6965b3838e99e5c0ab8f76b87bf86b31a5 ]
+[ Upstream commit dc3e0f17f74558e8a2fce00608855f050de10230 ]
 
-A few regulator consumer drivers seem to be just getting a regulator,
-enabling it and registering a devm-action to disable the regulator at
-the driver detach and then forget about it.
+If client send SMB2_CREATE_POSIX_CONTEXT to ksmbd, Allow a filename
+to contain special characters.
 
-We can simplify this a bit by adding a devm-helper for this pattern.
-Add devm_regulator_get_enable() and devm_regulator_get_enable_optional()
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/ed7b8841193bb9749d426f3cb3b199c9460794cd.1660292316.git.mazziesaccount@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 9079db287fc3 ("ASoC: codecs: wcd9335: Fix missing free of regulator supplies")
+Reported-by: Philipp Kerling <pkerling@casix.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/devres.c         | 164 +++++++++++++++++++++++++++++
- include/linux/regulator/consumer.h |  27 +++++
- 2 files changed, 191 insertions(+)
+ fs/ksmbd/smb2pdu.c | 53 +++++++++++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/regulator/devres.c b/drivers/regulator/devres.c
-index 32823a87fd409..3265e75e97ab4 100644
---- a/drivers/regulator/devres.c
-+++ b/drivers/regulator/devres.c
-@@ -70,6 +70,65 @@ struct regulator *devm_regulator_get_exclusive(struct device *dev,
- }
- EXPORT_SYMBOL_GPL(devm_regulator_get_exclusive);
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index b21601c0a457c..76334a983cd25 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -2679,7 +2679,7 @@ int smb2_open(struct ksmbd_work *work)
+ 	int req_op_level = 0, open_flags = 0, may_flags = 0, file_info = 0;
+ 	int rc = 0;
+ 	int contxt_cnt = 0, query_disk_id = 0;
+-	int maximal_access_ctxt = 0, posix_ctxt = 0;
++	bool maximal_access_ctxt = false, posix_ctxt = false;
+ 	int s_type = 0;
+ 	int next_off = 0;
+ 	char *name = NULL;
+@@ -2706,6 +2706,27 @@ int smb2_open(struct ksmbd_work *work)
+ 		return create_smb2_pipe(work);
+ 	}
  
-+static void regulator_action_disable(void *d)
-+{
-+	struct regulator *r = (struct regulator *)d;
++	if (req->CreateContextsOffset && tcon->posix_extensions) {
++		context = smb2_find_context_vals(req, SMB2_CREATE_TAG_POSIX, 16);
++		if (IS_ERR(context)) {
++			rc = PTR_ERR(context);
++			goto err_out2;
++		} else if (context) {
++			struct create_posix *posix = (struct create_posix *)context;
 +
-+	regulator_disable(r);
-+}
++			if (le16_to_cpu(context->DataOffset) +
++				le32_to_cpu(context->DataLength) <
++			    sizeof(struct create_posix) - 4) {
++				rc = -EINVAL;
++				goto err_out2;
++			}
++			ksmbd_debug(SMB, "get posix context\n");
 +
-+static int _devm_regulator_get_enable(struct device *dev, const char *id,
-+				      int get_type)
-+{
-+	struct regulator *r;
-+	int ret;
-+
-+	r = _devm_regulator_get(dev, id, get_type);
-+	if (IS_ERR(r))
-+		return PTR_ERR(r);
-+
-+	ret = regulator_enable(r);
-+	if (!ret)
-+		ret = devm_add_action_or_reset(dev, &regulator_action_disable, r);
-+
-+	if (ret)
-+		devm_regulator_put(r);
-+
-+	return ret;
-+}
-+
-+/**
-+ * devm_regulator_get_enable_optional - Resource managed regulator get and enable
-+ * @dev: device to supply
-+ * @id:  supply name or regulator ID.
-+ *
-+ * Get and enable regulator for duration of the device life-time.
-+ * regulator_disable() and regulator_put() are automatically called on driver
-+ * detach. See regulator_get_optional() and regulator_enable() for more
-+ * information.
-+ */
-+int devm_regulator_get_enable_optional(struct device *dev, const char *id)
-+{
-+	return _devm_regulator_get_enable(dev, id, OPTIONAL_GET);
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_get_enable_optional);
-+
-+/**
-+ * devm_regulator_get_enable - Resource managed regulator get and enable
-+ * @dev: device to supply
-+ * @id:  supply name or regulator ID.
-+ *
-+ * Get and enable regulator for duration of the device life-time.
-+ * regulator_disable() and regulator_put() are automatically called on driver
-+ * detach. See regulator_get() and regulator_enable() for more
-+ * information.
-+ */
-+int devm_regulator_get_enable(struct device *dev, const char *id)
-+{
-+	return _devm_regulator_get_enable(dev, id, NORMAL_GET);
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_get_enable);
-+
- /**
-  * devm_regulator_get_optional - Resource managed regulator_get_optional()
-  * @dev: device to supply
-@@ -194,6 +253,111 @@ int devm_regulator_bulk_get_const(struct device *dev, int num_consumers,
- }
- EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_const);
- 
-+static int devm_regulator_bulk_match(struct device *dev, void *res,
-+				     void *data)
-+{
-+	struct regulator_bulk_devres *match = res;
-+	struct regulator_bulk_data *target = data;
-+
-+	/*
-+	 * We check the put uses same consumer list as the get did.
-+	 * We _could_ scan all entries in consumer array and check the
-+	 * regulators match but ATM I don't see the need. We can change this
-+	 * later if needed.
-+	 */
-+	return match->consumers == target;
-+}
-+
-+/**
-+ * devm_regulator_bulk_put - Resource managed regulator_bulk_put()
-+ * @consumers: consumers to free
-+ *
-+ * Deallocate regulators allocated with devm_regulator_bulk_get(). Normally
-+ * this function will not need to be called and the resource management
-+ * code will ensure that the resource is freed.
-+ */
-+void devm_regulator_bulk_put(struct regulator_bulk_data *consumers)
-+{
-+	int rc;
-+	struct regulator *regulator = consumers[0].consumer;
-+
-+	rc = devres_release(regulator->dev, devm_regulator_bulk_release,
-+			    devm_regulator_bulk_match, consumers);
-+	if (rc != 0)
-+		WARN_ON(rc);
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_bulk_put);
-+
-+static void devm_regulator_bulk_disable(void *res)
-+{
-+	struct regulator_bulk_devres *devres = res;
-+	int i;
-+
-+	for (i = 0; i < devres->num_consumers; i++)
-+		regulator_disable(devres->consumers[i].consumer);
-+}
-+
-+/**
-+ * devm_regulator_bulk_get_enable - managed get'n enable multiple regulators
-+ *
-+ * @dev:           device to supply
-+ * @num_consumers: number of consumers to register
-+ * @id:            list of supply names or regulator IDs
-+ *
-+ * @return 0 on success, an errno on failure.
-+ *
-+ * This helper function allows drivers to get several regulator
-+ * consumers in one operation with management, the regulators will
-+ * automatically be freed when the device is unbound.  If any of the
-+ * regulators cannot be acquired then any regulators that were
-+ * allocated will be freed before returning to the caller.
-+ */
-+int devm_regulator_bulk_get_enable(struct device *dev, int num_consumers,
-+				   const char * const *id)
-+{
-+	struct regulator_bulk_devres *devres;
-+	struct regulator_bulk_data *consumers;
-+	int i, ret;
-+
-+	devres = devm_kmalloc(dev, sizeof(*devres), GFP_KERNEL);
-+	if (!devres)
-+		return -ENOMEM;
-+
-+	devres->consumers = devm_kcalloc(dev, num_consumers, sizeof(*consumers),
-+					 GFP_KERNEL);
-+	consumers = devres->consumers;
-+	if (!consumers)
-+		return -ENOMEM;
-+
-+	devres->num_consumers = num_consumers;
-+
-+	for (i = 0; i < num_consumers; i++)
-+		consumers[i].supply = id[i];
-+
-+	ret = devm_regulator_bulk_get(dev, num_consumers, consumers);
-+	if (ret)
-+		return ret;
-+
-+	for (i = 0; i < num_consumers; i++) {
-+		ret = regulator_enable(consumers[i].consumer);
-+		if (ret)
-+			goto unwind;
++			posix_mode = le32_to_cpu(posix->Mode);
++			posix_ctxt = true;
++		}
 +	}
 +
-+	ret = devm_add_action(dev, devm_regulator_bulk_disable, devres);
-+	if (!ret)
-+		return 0;
-+
-+unwind:
-+	while (--i >= 0)
-+		regulator_disable(consumers[i].consumer);
-+
-+	devm_regulator_bulk_put(consumers);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_enable);
-+
- static void devm_rdev_release(struct device *dev, void *res)
- {
- 	regulator_unregister(*(struct regulator_dev **)res);
-diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
-index 61f922e6fe353..a1fce0f27ce16 100644
---- a/include/linux/regulator/consumer.h
-+++ b/include/linux/regulator/consumer.h
-@@ -203,6 +203,8 @@ struct regulator *__must_check regulator_get_optional(struct device *dev,
- 						      const char *id);
- struct regulator *__must_check devm_regulator_get_optional(struct device *dev,
- 							   const char *id);
-+int devm_regulator_get_enable(struct device *dev, const char *id);
-+int devm_regulator_get_enable_optional(struct device *dev, const char *id);
- void regulator_put(struct regulator *regulator);
- void devm_regulator_put(struct regulator *regulator);
+ 	if (req->NameLength) {
+ 		if ((req->CreateOptions & FILE_DIRECTORY_FILE_LE) &&
+ 		    *(char *)req->Buffer == '\\') {
+@@ -2737,9 +2758,11 @@ int smb2_open(struct ksmbd_work *work)
+ 				goto err_out2;
+ 		}
  
-@@ -240,12 +242,15 @@ int __must_check regulator_bulk_get(struct device *dev, int num_consumers,
- 				    struct regulator_bulk_data *consumers);
- int __must_check devm_regulator_bulk_get(struct device *dev, int num_consumers,
- 					 struct regulator_bulk_data *consumers);
-+void devm_regulator_bulk_put(struct regulator_bulk_data *consumers);
- int __must_check devm_regulator_bulk_get_const(
- 	struct device *dev, int num_consumers,
- 	const struct regulator_bulk_data *in_consumers,
- 	struct regulator_bulk_data **out_consumers);
- int __must_check regulator_bulk_enable(int num_consumers,
- 				       struct regulator_bulk_data *consumers);
-+int devm_regulator_bulk_get_enable(struct device *dev, int num_consumers,
-+				   const char * const *id);
- int regulator_bulk_disable(int num_consumers,
- 			   struct regulator_bulk_data *consumers);
- int regulator_bulk_force_disable(int num_consumers,
-@@ -350,6 +355,17 @@ devm_regulator_get_exclusive(struct device *dev, const char *id)
- 	return ERR_PTR(-ENODEV);
- }
+-		rc = ksmbd_validate_filename(name);
+-		if (rc < 0)
+-			goto err_out2;
++		if (posix_ctxt == false) {
++			rc = ksmbd_validate_filename(name);
++			if (rc < 0)
++				goto err_out2;
++		}
  
-+static inline int devm_regulator_get_enable(struct device *dev, const char *id)
-+{
-+	return -ENODEV;
-+}
-+
-+static inline int devm_regulator_get_enable_optional(struct device *dev,
-+						     const char *id)
-+{
-+	return -ENODEV;
-+}
-+
- static inline struct regulator *__must_check
- regulator_get_optional(struct device *dev, const char *id)
- {
-@@ -371,6 +387,10 @@ static inline void devm_regulator_put(struct regulator *regulator)
- {
- }
+ 		if (ksmbd_share_veto_filename(share, name)) {
+ 			rc = -ENOENT;
+@@ -2854,28 +2877,6 @@ int smb2_open(struct ksmbd_work *work)
+ 			rc = -EBADF;
+ 			goto err_out2;
+ 		}
+-
+-		if (tcon->posix_extensions) {
+-			context = smb2_find_context_vals(req,
+-							 SMB2_CREATE_TAG_POSIX, 16);
+-			if (IS_ERR(context)) {
+-				rc = PTR_ERR(context);
+-				goto err_out2;
+-			} else if (context) {
+-				struct create_posix *posix =
+-					(struct create_posix *)context;
+-				if (le16_to_cpu(context->DataOffset) +
+-				    le32_to_cpu(context->DataLength) <
+-				    sizeof(struct create_posix) - 4) {
+-					rc = -EINVAL;
+-					goto err_out2;
+-				}
+-				ksmbd_debug(SMB, "get posix context\n");
+-
+-				posix_mode = le32_to_cpu(posix->Mode);
+-				posix_ctxt = 1;
+-			}
+-		}
+ 	}
  
-+static inline void devm_regulator_bulk_put(struct regulator_bulk_data *consumers)
-+{
-+}
-+
- static inline int regulator_register_supply_alias(struct device *dev,
- 						  const char *id,
- 						  struct device *alias_dev,
-@@ -461,6 +481,13 @@ static inline int regulator_bulk_enable(int num_consumers,
- 	return 0;
- }
- 
-+static inline int devm_regulator_bulk_get_enable(struct device *dev,
-+						 int num_consumers,
-+						 const char * const *id)
-+{
-+	return 0;
-+}
-+
- static inline int regulator_bulk_disable(int num_consumers,
- 					 struct regulator_bulk_data *consumers)
- {
+ 	if (ksmbd_override_fsids(work)) {
 -- 
 2.39.5
 
