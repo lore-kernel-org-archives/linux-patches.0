@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF43264F9C;
-	Tue,  8 Jul 2025 16:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B642E3385;
+	Tue,  8 Jul 2025 16:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993016; cv=none; b=DqvIBdvcl8u5HoT5Vawz/3o8utCFYpJopnXd6mP7SuhSdnn4laDOg2k3cMaOj3FW4Pp+PrdtSQhKXtMcv8iPqEY7n7fS/veziKrfyH6genAZS0pUH1IRh5usPyPPjXrcI9LOOpTMHydeedvIUh0Em8vV9USGoyg3t93YJiimtvc=
+	t=1751993019; cv=none; b=fkGgHkp9gMGRIhfgz3qTfqMG09MRasHeLPr/RERPWON4+x/XzEO8QaRdYOE1cJ/CT5WdOdyvX6EIUK/QgpQADi4aOdEgYkwn009Yr/SJshZHtVoyK193xswH4DcvO7PVQdJgp7Bx5r7baaMxSBw6UHnHxc1sBfXbTkE0LyA4A7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993016; c=relaxed/simple;
-	bh=HytYnIlkio5LmNBUyj7d1CYivxDP+7jqvukNs3CR3Ik=;
+	s=arc-20240116; t=1751993019; c=relaxed/simple;
+	bh=f5PoDmSIt5Uv4/Z1cegBDj0TWjvA/7tHfZOUhRYVleg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATcOtX0+885CDEpnD0FTJVuGZ0RHXgIIzLLQDiGOWB+inv3m14RICHXbbZZV5Z+jkf+uq7vZ89puRg2dQhhN99GipLVr6+M2fKssju4pBHhg1tyRD3pqMLI/8KeLnxyLJThl2mlQblT8WQ96G9P/IUnrSbyp3dJG5C0vebA4pvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pX/iyRDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PgxAK4ySB8KqTshFSCjvHEPgpbeAvgVcNMiYXOVIK5OraJrgRlzo88cfa/CiJTWgqtoxHlNyAggp+C4nEqpXlpQPEW+6cZxadVbbisvPRq8ZVgT+URXk/h7QBWLvRXVi3Uv+rsiW4udLREASqvGdgrcYkH1NmyQBuO3pRerdERg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCYC0rgd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pX/iyRDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98968C4CEF5;
-	Tue,  8 Jul 2025 16:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCYC0rgd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A0DC4CEED;
+	Tue,  8 Jul 2025 16:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993016;
-	bh=HytYnIlkio5LmNBUyj7d1CYivxDP+7jqvukNs3CR3Ik=;
+	s=korg; t=1751993018;
+	bh=f5PoDmSIt5Uv4/Z1cegBDj0TWjvA/7tHfZOUhRYVleg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pX/iyRDfTa5UCILJkA/cuZ14U4gh0TO+KrdsStGm3uafiJucSL5L/lz5aRkdV7o0g
-	 76vbRnDvE/vzh9ebGvvf4N33fsCq09+OfZ4nfAEJbbNTaCbMfQREIBrGePXwszSnIY
-	 9dg3u7iusCsR2wOdtUDoK7wNIPRzWlWm35cNMSwI=
+	b=vCYC0rgdj6WT4LZbKB4NRsRT+zHphx9na/13n0NafV1JAQRTxnPd82gj23musti/N
+	 bwwecJS8pKxA3Wo9hRSPRcb2ztq8bs9rbYzFMsV/nPOnHY/gzoDeOu3Qm0CtyIeUc4
+	 oObN/J9DwVtYrYQZg7e4CnyiYQT5bKSdPSzh2z7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 131/232] scsi: lpfc: Remove NLP_RELEASE_RPI flag from nodelist structure
-Date: Tue,  8 Jul 2025 18:22:07 +0200
-Message-ID: <20250708162244.869476947@linuxfoundation.org>
+Subject: [PATCH 6.12 158/232] drm/xe: Replace double space with single space after comma
+Date: Tue,  8 Jul 2025 18:22:34 +0200
+Message-ID: <20250708162245.571559021@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,418 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-[ Upstream commit 32566a6f1ae558d0e79fed6e17a75c253367a57f ]
+[ Upstream commit cd89de14bbacce1fc060fdfab75bacf95b1c5d40 ]
 
-An RPI is tightly bound to an NDLP structure and is freed only upon
-release of an NDLP object.  As such, there should be no logic that frees
-an RPI outside of the lpfc_nlp_release() routine.  In order to reinforce
-the original design usage of RPIs, remove the NLP_RELEASE_RPI flag and
-related logic.
+Avoid using double space, ",  " in function or macro parameters
+where it's not required by any alignment purpose. Replace it with
+a single space, ", ".
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20241031223219.152342-9-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: b5162bb6aa1e ("scsi: lpfc: Avoid potential ndlp use-after-free in dev_loss_tmo_callbk")
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240823080643.2461992-1-nitin.r.gote@intel.com
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Stable-dep-of: ad40098da5c3 ("drm/xe/guc: Explicitly exit CT safe mode on unwind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_crtn.h    |  2 +-
- drivers/scsi/lpfc/lpfc_disc.h    |  1 -
- drivers/scsi/lpfc/lpfc_els.c     | 32 +++-----------------
- drivers/scsi/lpfc/lpfc_hbadisc.c | 52 +++++++-------------------------
- drivers/scsi/lpfc/lpfc_init.c    | 36 +++++++---------------
- drivers/scsi/lpfc/lpfc_sli.c     | 48 +++++++++++------------------
- 6 files changed, 44 insertions(+), 127 deletions(-)
+ drivers/gpu/drm/xe/regs/xe_reg_defs.h | 2 +-
+ drivers/gpu/drm/xe/xe_guc.c           | 2 +-
+ drivers/gpu/drm/xe/xe_guc_ct.c        | 4 ++--
+ drivers/gpu/drm/xe/xe_irq.c           | 4 ++--
+ drivers/gpu/drm/xe/xe_trace_bo.h      | 2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_crtn.h b/drivers/scsi/lpfc/lpfc_crtn.h
-index d4e46a08f94da..36470bd716173 100644
---- a/drivers/scsi/lpfc/lpfc_crtn.h
-+++ b/drivers/scsi/lpfc/lpfc_crtn.h
-@@ -571,7 +571,7 @@ int lpfc_issue_reg_vfi(struct lpfc_vport *);
- int lpfc_issue_unreg_vfi(struct lpfc_vport *);
- int lpfc_selective_reset(struct lpfc_hba *);
- int lpfc_sli4_read_config(struct lpfc_hba *);
--void lpfc_sli4_node_prep(struct lpfc_hba *);
-+void lpfc_sli4_node_rpi_restore(struct lpfc_hba *phba);
- int lpfc_sli4_els_sgl_update(struct lpfc_hba *phba);
- int lpfc_sli4_nvmet_sgl_update(struct lpfc_hba *phba);
- int lpfc_io_buf_flush(struct lpfc_hba *phba, struct list_head *sglist);
-diff --git a/drivers/scsi/lpfc/lpfc_disc.h b/drivers/scsi/lpfc/lpfc_disc.h
-index f5ae8cc158205..5d6eabaeb094e 100644
---- a/drivers/scsi/lpfc/lpfc_disc.h
-+++ b/drivers/scsi/lpfc/lpfc_disc.h
-@@ -185,7 +185,6 @@ struct lpfc_node_rrq {
- /* Defines for nlp_flag (uint32) */
- #define NLP_IGNR_REG_CMPL  0x00000001 /* Rcvd rscn before we cmpl reg login */
- #define NLP_REG_LOGIN_SEND 0x00000002   /* sent reglogin to adapter */
--#define NLP_RELEASE_RPI    0x00000004   /* Release RPI to free pool */
- #define NLP_SUPPRESS_RSP   0x00000010	/* Remote NPort supports suppress rsp */
- #define NLP_PLOGI_SND      0x00000020	/* sent PLOGI request for this entry */
- #define NLP_PRLI_SND       0x00000040	/* sent PRLI request for this entry */
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index d737b897ddd82..4e049783fc94e 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -3063,8 +3063,6 @@ lpfc_cmpl_els_logo(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
- 	 */
- 	if (ndlp->nlp_flag & NLP_TARGET_REMOVE) {
- 		spin_lock_irq(&ndlp->lock);
--		if (phba->sli_rev == LPFC_SLI_REV4)
--			ndlp->nlp_flag |= NLP_RELEASE_RPI;
- 		ndlp->nlp_flag &= ~NLP_NPR_2B_DISC;
- 		spin_unlock_irq(&ndlp->lock);
- 		lpfc_disc_state_machine(vport, ndlp, cmdiocb,
-@@ -5456,24 +5454,14 @@ lpfc_cmpl_els_rsp(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
+diff --git a/drivers/gpu/drm/xe/regs/xe_reg_defs.h b/drivers/gpu/drm/xe/regs/xe_reg_defs.h
+index 23f7dc5bbe995..51fd40ffafcb9 100644
+--- a/drivers/gpu/drm/xe/regs/xe_reg_defs.h
++++ b/drivers/gpu/drm/xe/regs/xe_reg_defs.h
+@@ -128,7 +128,7 @@ struct xe_reg_mcr {
+  *       options.
+  */
+ #define XE_REG_MCR(r_, ...)	((const struct xe_reg_mcr){					\
+-				 .__reg = XE_REG_INITIALIZER(r_,  ##__VA_ARGS__, .mcr = 1)	\
++				 .__reg = XE_REG_INITIALIZER(r_, ##__VA_ARGS__, .mcr = 1)	\
+ 				 })
+ 
+ static inline bool xe_reg_is_valid(struct xe_reg r)
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index 52df28032a6ff..c67d4807f37df 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -985,7 +985,7 @@ int xe_guc_mmio_send_recv(struct xe_guc *guc, const u32 *request,
+ 		BUILD_BUG_ON(FIELD_MAX(GUC_HXG_MSG_0_TYPE) != GUC_HXG_TYPE_RESPONSE_SUCCESS);
+ 		BUILD_BUG_ON((GUC_HXG_TYPE_RESPONSE_SUCCESS ^ GUC_HXG_TYPE_RESPONSE_FAILURE) != 1);
+ 
+-		ret = xe_mmio_wait32(gt, reply_reg,  resp_mask, resp_mask,
++		ret = xe_mmio_wait32(gt, reply_reg, resp_mask, resp_mask,
+ 				     1000000, &header, false);
+ 
+ 		if (unlikely(FIELD_GET(GUC_HXG_MSG_0_ORIGIN, header) !=
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 1f74f6bd50f31..483c2b521a2d1 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -182,7 +182,7 @@ int xe_guc_ct_init(struct xe_guc_ct *ct)
+ 	spin_lock_init(&ct->fast_lock);
+ 	xa_init(&ct->fence_lookup);
+ 	INIT_WORK(&ct->g2h_worker, g2h_worker_func);
+-	INIT_DELAYED_WORK(&ct->safe_mode_worker,  safe_mode_worker_func);
++	INIT_DELAYED_WORK(&ct->safe_mode_worker, safe_mode_worker_func);
+ 	init_waitqueue_head(&ct->wq);
+ 	init_waitqueue_head(&ct->g2h_fence_wq);
+ 
+@@ -851,7 +851,7 @@ static bool retry_failure(struct xe_guc_ct *ct, int ret)
+ #define ct_alive(ct)	\
+ 	(xe_guc_ct_enabled(ct) && !ct->ctbs.h2g.info.broken && \
+ 	 !ct->ctbs.g2h.info.broken)
+-	if (!wait_event_interruptible_timeout(ct->wq, ct_alive(ct),  HZ * 5))
++	if (!wait_event_interruptible_timeout(ct->wq, ct_alive(ct), HZ * 5))
+ 		return false;
+ #undef ct_alive
+ 
+diff --git a/drivers/gpu/drm/xe/xe_irq.c b/drivers/gpu/drm/xe/xe_irq.c
+index 5f2c368c35adb..14c3a476597a7 100644
+--- a/drivers/gpu/drm/xe/xe_irq.c
++++ b/drivers/gpu/drm/xe/xe_irq.c
+@@ -173,7 +173,7 @@ void xe_irq_enable_hwe(struct xe_gt *gt)
+ 		if (ccs_mask & (BIT(0)|BIT(1)))
+ 			xe_mmio_write32(gt, CCS0_CCS1_INTR_MASK, ~dmask);
+ 		if (ccs_mask & (BIT(2)|BIT(3)))
+-			xe_mmio_write32(gt,  CCS2_CCS3_INTR_MASK, ~dmask);
++			xe_mmio_write32(gt, CCS2_CCS3_INTR_MASK, ~dmask);
  	}
  
- 	/* An SLI4 NPIV instance wants to drop the node at this point under
--	 * these conditions and release the RPI.
-+	 * these conditions because it doesn't need the login.
- 	 */
- 	if (phba->sli_rev == LPFC_SLI_REV4 &&
- 	    vport && vport->port_type == LPFC_NPIV_PORT &&
- 	    !(ndlp->fc4_xpt_flags & SCSI_XPT_REGD)) {
--		if (ndlp->nlp_flag & NLP_RELEASE_RPI) {
--			if (ndlp->nlp_state != NLP_STE_PLOGI_ISSUE &&
--			    ndlp->nlp_state != NLP_STE_REG_LOGIN_ISSUE) {
--				lpfc_sli4_free_rpi(phba, ndlp->nlp_rpi);
--				spin_lock_irq(&ndlp->lock);
--				ndlp->nlp_rpi = LPFC_RPI_ALLOC_ERROR;
--				ndlp->nlp_flag &= ~NLP_RELEASE_RPI;
--				spin_unlock_irq(&ndlp->lock);
--			}
--			lpfc_drop_node(vport, ndlp);
--		} else if (ndlp->nlp_state != NLP_STE_PLOGI_ISSUE &&
--			   ndlp->nlp_state != NLP_STE_REG_LOGIN_ISSUE &&
--			   ndlp->nlp_state != NLP_STE_PRLI_ISSUE) {
-+		if (ndlp->nlp_state != NLP_STE_PLOGI_ISSUE &&
-+		    ndlp->nlp_state != NLP_STE_REG_LOGIN_ISSUE &&
-+		    ndlp->nlp_state != NLP_STE_PRLI_ISSUE) {
- 			/* Drop ndlp if there is no planned or outstanding
- 			 * issued PRLI.
- 			 *
-@@ -5852,18 +5840,6 @@ lpfc_els_rsp_reject(struct lpfc_vport *vport, uint32_t rejectError,
- 		return 1;
- 	}
+ 	if (xe_gt_is_media_type(gt) || MEDIA_VER(xe) < 13) {
+@@ -504,7 +504,7 @@ static void gt_irq_reset(struct xe_tile *tile)
+ 	if (ccs_mask & (BIT(0)|BIT(1)))
+ 		xe_mmio_write32(mmio, CCS0_CCS1_INTR_MASK, ~0);
+ 	if (ccs_mask & (BIT(2)|BIT(3)))
+-		xe_mmio_write32(mmio,  CCS2_CCS3_INTR_MASK, ~0);
++		xe_mmio_write32(mmio, CCS2_CCS3_INTR_MASK, ~0);
  
--	/* The NPIV instance is rejecting this unsolicited ELS. Make sure the
--	 * node's assigned RPI gets released provided this node is not already
--	 * registered with the transport.
--	 */
--	if (phba->sli_rev == LPFC_SLI_REV4 &&
--	    vport->port_type == LPFC_NPIV_PORT &&
--	    !(ndlp->fc4_xpt_flags & SCSI_XPT_REGD)) {
--		spin_lock_irq(&ndlp->lock);
--		ndlp->nlp_flag |= NLP_RELEASE_RPI;
--		spin_unlock_irq(&ndlp->lock);
--	}
--
- 	rc = lpfc_sli_issue_iocb(phba, LPFC_ELS_RING, elsiocb, 0);
- 	if (rc == IOCB_ERROR) {
- 		lpfc_els_free_iocb(phba, elsiocb);
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 34f77b250387c..ff559b28738cf 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -5212,14 +5212,6 @@ lpfc_nlp_logo_unreg(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
- 		ndlp->nlp_defer_did = NLP_EVT_NOTHING_PENDING;
- 		lpfc_issue_els_plogi(vport, ndlp->nlp_DID, 0);
- 	} else {
--		/* NLP_RELEASE_RPI is only set for SLI4 ports. */
--		if (ndlp->nlp_flag & NLP_RELEASE_RPI) {
--			lpfc_sli4_free_rpi(vport->phba, ndlp->nlp_rpi);
--			spin_lock_irq(&ndlp->lock);
--			ndlp->nlp_flag &= ~NLP_RELEASE_RPI;
--			ndlp->nlp_rpi = LPFC_RPI_ALLOC_ERROR;
--			spin_unlock_irq(&ndlp->lock);
--		}
- 		spin_lock_irq(&ndlp->lock);
- 		ndlp->nlp_flag &= ~NLP_UNREG_INP;
- 		spin_unlock_irq(&ndlp->lock);
-@@ -5242,8 +5234,6 @@ static void
- lpfc_set_unreg_login_mbx_cmpl(struct lpfc_hba *phba, struct lpfc_vport *vport,
- 	struct lpfc_nodelist *ndlp, LPFC_MBOXQ_t *mbox)
- {
--	unsigned long iflags;
--
- 	/* Driver always gets a reference on the mailbox job
- 	 * in support of async jobs.
- 	 */
-@@ -5261,13 +5251,6 @@ lpfc_set_unreg_login_mbx_cmpl(struct lpfc_hba *phba, struct lpfc_vport *vport,
- 		    (kref_read(&ndlp->kref) > 0)) {
- 		mbox->mbox_cmpl = lpfc_sli4_unreg_rpi_cmpl_clr;
- 	} else {
--		if (test_bit(FC_UNLOADING, &vport->load_flag)) {
--			if (phba->sli_rev == LPFC_SLI_REV4) {
--				spin_lock_irqsave(&ndlp->lock, iflags);
--				ndlp->nlp_flag |= NLP_RELEASE_RPI;
--				spin_unlock_irqrestore(&ndlp->lock, iflags);
--			}
--		}
- 		mbox->mbox_cmpl = lpfc_sli_def_mbox_cmpl;
- 	}
- }
-@@ -5330,14 +5313,11 @@ lpfc_unreg_rpi(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
- 				return 1;
- 			}
+ 	if ((tile->media_gt &&
+ 	     xe_hw_engine_mask_per_class(tile->media_gt, XE_ENGINE_CLASS_OTHER)) ||
+diff --git a/drivers/gpu/drm/xe/xe_trace_bo.h b/drivers/gpu/drm/xe/xe_trace_bo.h
+index ba0f61e7d2d6b..4ff023b5d040d 100644
+--- a/drivers/gpu/drm/xe/xe_trace_bo.h
++++ b/drivers/gpu/drm/xe/xe_trace_bo.h
+@@ -189,7 +189,7 @@ DECLARE_EVENT_CLASS(xe_vm,
+ 			   ),
  
-+			/* Accept PLOGIs after unreg_rpi_cmpl. */
- 			if (mbox->mbox_cmpl == lpfc_sli4_unreg_rpi_cmpl_clr)
--				/*
--				 * accept PLOGIs after unreg_rpi_cmpl
--				 */
- 				acc_plogi = 0;
--			if (((ndlp->nlp_DID & Fabric_DID_MASK) !=
--			    Fabric_DID_MASK) &&
--			    (!test_bit(FC_OFFLINE_MODE, &vport->fc_flag)))
-+
-+			if (!test_bit(FC_OFFLINE_MODE, &vport->fc_flag))
- 				ndlp->nlp_flag |= NLP_UNREG_INP;
+ 		    TP_printk("dev=%s, vm=%p, asid=0x%05x", __get_str(dev),
+-			      __entry->vm,  __entry->asid)
++			      __entry->vm, __entry->asid)
+ );
  
- 			lpfc_printf_vlog(vport, KERN_INFO,
-@@ -5561,10 +5541,6 @@ lpfc_cleanup_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
- 	list_del_init(&ndlp->dev_loss_evt.evt_listp);
- 	list_del_init(&ndlp->recovery_evt.evt_listp);
- 	lpfc_cleanup_vports_rrqs(vport, ndlp);
--
--	if (phba->sli_rev == LPFC_SLI_REV4)
--		ndlp->nlp_flag |= NLP_RELEASE_RPI;
--
- 	return 0;
- }
- 
-@@ -6580,8 +6556,9 @@ lpfc_nlp_init(struct lpfc_vport *vport, uint32_t did)
- 	INIT_LIST_HEAD(&ndlp->nlp_listp);
- 	if (vport->phba->sli_rev == LPFC_SLI_REV4) {
- 		ndlp->nlp_rpi = rpi;
--		lpfc_printf_vlog(vport, KERN_INFO, LOG_NODE | LOG_DISCOVERY,
--				 "0007 Init New ndlp x%px, rpi:x%x DID:%x "
-+		lpfc_printf_vlog(vport, KERN_INFO,
-+				 LOG_ELS | LOG_NODE | LOG_DISCOVERY,
-+				 "0007 Init New ndlp x%px, rpi:x%x DID:x%x "
- 				 "flg:x%x refcnt:%d\n",
- 				 ndlp, ndlp->nlp_rpi, ndlp->nlp_DID,
- 				 ndlp->nlp_flag, kref_read(&ndlp->kref));
-@@ -6626,19 +6603,12 @@ lpfc_nlp_release(struct kref *kref)
- 	lpfc_cancel_retry_delay_tmo(vport, ndlp);
- 	lpfc_cleanup_node(vport, ndlp);
- 
--	/* Not all ELS transactions have registered the RPI with the port.
--	 * In these cases the rpi usage is temporary and the node is
--	 * released when the WQE is completed.  Catch this case to free the
--	 * RPI to the pool.  Because this node is in the release path, a lock
--	 * is unnecessary.  All references are gone and the node has been
--	 * dequeued.
-+	/* All nodes are initialized with an RPI that needs to be released
-+	 * now. All references are gone and the node has been dequeued.
- 	 */
--	if (ndlp->nlp_flag & NLP_RELEASE_RPI) {
--		if (ndlp->nlp_rpi != LPFC_RPI_ALLOC_ERROR &&
--		    !(ndlp->nlp_flag & (NLP_RPI_REGISTERED | NLP_UNREG_INP))) {
--			lpfc_sli4_free_rpi(vport->phba, ndlp->nlp_rpi);
--			ndlp->nlp_rpi = LPFC_RPI_ALLOC_ERROR;
--		}
-+	if (vport->phba->sli_rev == LPFC_SLI_REV4) {
-+		lpfc_sli4_free_rpi(vport->phba, ndlp->nlp_rpi);
-+		ndlp->nlp_rpi = LPFC_RPI_ALLOC_ERROR;
- 	}
- 
- 	/* The node is not freed back to memory, it is released to a pool so
-diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
-index 50c761991191f..986e2898b10b8 100644
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -3379,7 +3379,7 @@ lpfc_block_mgmt_io(struct lpfc_hba *phba, int mbx_action)
- }
- 
- /**
-- * lpfc_sli4_node_prep - Assign RPIs for active nodes.
-+ * lpfc_sli4_node_rpi_restore - Recover assigned RPIs for active nodes.
-  * @phba: pointer to lpfc hba data structure.
-  *
-  * Allocate RPIs for all active remote nodes. This is needed whenever
-@@ -3387,7 +3387,7 @@ lpfc_block_mgmt_io(struct lpfc_hba *phba, int mbx_action)
-  * is to fixup the temporary rpi assignments.
-  **/
- void
--lpfc_sli4_node_prep(struct lpfc_hba *phba)
-+lpfc_sli4_node_rpi_restore(struct lpfc_hba *phba)
- {
- 	struct lpfc_nodelist  *ndlp, *next_ndlp;
- 	struct lpfc_vport **vports;
-@@ -3397,10 +3397,10 @@ lpfc_sli4_node_prep(struct lpfc_hba *phba)
- 		return;
- 
- 	vports = lpfc_create_vport_work_array(phba);
--	if (vports == NULL)
-+	if (!vports)
- 		return;
- 
--	for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
-+	for (i = 0; i <= phba->max_vports && vports[i]; i++) {
- 		if (test_bit(FC_UNLOADING, &vports[i]->load_flag))
- 			continue;
- 
-@@ -3409,7 +3409,13 @@ lpfc_sli4_node_prep(struct lpfc_hba *phba)
- 					 nlp_listp) {
- 			rpi = lpfc_sli4_alloc_rpi(phba);
- 			if (rpi == LPFC_RPI_ALLOC_ERROR) {
--				/* TODO print log? */
-+				lpfc_printf_vlog(ndlp->vport, KERN_INFO,
-+						 LOG_NODE | LOG_DISCOVERY,
-+						 "0099 RPI alloc error for "
-+						 "ndlp x%px DID:x%06x "
-+						 "flg:x%x\n",
-+						 ndlp, ndlp->nlp_DID,
-+						 ndlp->nlp_flag);
- 				continue;
- 			}
- 			ndlp->nlp_rpi = rpi;
-@@ -3829,26 +3835,6 @@ lpfc_offline_prep(struct lpfc_hba *phba, int mbx_action)
- 					ndlp->nlp_flag &= ~(NLP_UNREG_INP |
- 							    NLP_RPI_REGISTERED);
- 					spin_unlock_irq(&ndlp->lock);
--					if (phba->sli_rev == LPFC_SLI_REV4)
--						lpfc_sli_rpi_release(vports[i],
--								     ndlp);
--				} else {
--					lpfc_unreg_rpi(vports[i], ndlp);
--				}
--				/*
--				 * Whenever an SLI4 port goes offline, free the
--				 * RPI. Get a new RPI when the adapter port
--				 * comes back online.
--				 */
--				if (phba->sli_rev == LPFC_SLI_REV4) {
--					lpfc_printf_vlog(vports[i], KERN_INFO,
--						 LOG_NODE | LOG_DISCOVERY,
--						 "0011 Free RPI x%x on "
--						 "ndlp: x%px did x%x\n",
--						 ndlp->nlp_rpi, ndlp,
--						 ndlp->nlp_DID);
--					lpfc_sli4_free_rpi(phba, ndlp->nlp_rpi);
--					ndlp->nlp_rpi = LPFC_RPI_ALLOC_ERROR;
- 				}
- 
- 				if (ndlp->nlp_type & NLP_FABRIC) {
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 4dccbaeb63283..17ecb2625eb84 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -2842,27 +2842,6 @@ lpfc_sli_wake_mbox_wait(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmboxq)
- 	return;
- }
- 
--static void
--__lpfc_sli_rpi_release(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
--{
--	unsigned long iflags;
--
--	if (ndlp->nlp_flag & NLP_RELEASE_RPI) {
--		lpfc_sli4_free_rpi(vport->phba, ndlp->nlp_rpi);
--		spin_lock_irqsave(&ndlp->lock, iflags);
--		ndlp->nlp_flag &= ~NLP_RELEASE_RPI;
--		ndlp->nlp_rpi = LPFC_RPI_ALLOC_ERROR;
--		spin_unlock_irqrestore(&ndlp->lock, iflags);
--	}
--	ndlp->nlp_flag &= ~NLP_UNREG_INP;
--}
--
--void
--lpfc_sli_rpi_release(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
--{
--	__lpfc_sli_rpi_release(vport, ndlp);
--}
--
- /**
-  * lpfc_sli_def_mbox_cmpl - Default mailbox completion handler
-  * @phba: Pointer to HBA context object.
-@@ -2942,8 +2921,6 @@ lpfc_sli_def_mbox_cmpl(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
- 				ndlp->nlp_flag &= ~NLP_UNREG_INP;
- 				ndlp->nlp_defer_did = NLP_EVT_NOTHING_PENDING;
- 				lpfc_issue_els_plogi(vport, ndlp->nlp_DID, 0);
--			} else {
--				__lpfc_sli_rpi_release(vport, ndlp);
- 			}
- 
- 			/* The unreg_login mailbox is complete and had a
-@@ -2991,6 +2968,7 @@ lpfc_sli4_unreg_rpi_cmpl_clr(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
- {
- 	struct lpfc_vport  *vport = pmb->vport;
- 	struct lpfc_nodelist *ndlp;
-+	u32 unreg_inp;
- 
- 	ndlp = pmb->ctx_ndlp;
- 	if (pmb->u.mb.mbxCommand == MBX_UNREG_LOGIN) {
-@@ -3009,14 +2987,22 @@ lpfc_sli4_unreg_rpi_cmpl_clr(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
- 					 ndlp->nlp_DID, ndlp->nlp_defer_did,
- 					 ndlp->nlp_flag,
- 					 ndlp);
--				ndlp->nlp_flag &= ~NLP_LOGO_ACC;
-+
-+				/* Cleanup the nlp_flag now that the UNREG RPI
-+				 * has completed.
-+				 */
-+				spin_lock_irq(&ndlp->lock);
-+				unreg_inp = ndlp->nlp_flag & NLP_UNREG_INP;
-+				ndlp->nlp_flag &=
-+					~(NLP_UNREG_INP | NLP_LOGO_ACC);
-+				spin_unlock_irq(&ndlp->lock);
- 
- 				/* Check to see if there are any deferred
- 				 * events to process
- 				 */
--				if ((ndlp->nlp_flag & NLP_UNREG_INP) &&
--				    (ndlp->nlp_defer_did !=
--				    NLP_EVT_NOTHING_PENDING)) {
-+				if (unreg_inp &&
-+				    ndlp->nlp_defer_did !=
-+				    NLP_EVT_NOTHING_PENDING) {
- 					lpfc_printf_vlog(
- 						vport, KERN_INFO,
- 						LOG_MBOX | LOG_SLI | LOG_NODE,
-@@ -3025,14 +3011,12 @@ lpfc_sli4_unreg_rpi_cmpl_clr(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
- 						"NPort x%x Data: x%x x%px\n",
- 						ndlp->nlp_rpi, ndlp->nlp_DID,
- 						ndlp->nlp_defer_did, ndlp);
--					ndlp->nlp_flag &= ~NLP_UNREG_INP;
- 					ndlp->nlp_defer_did =
- 						NLP_EVT_NOTHING_PENDING;
- 					lpfc_issue_els_plogi(
- 						vport, ndlp->nlp_DID, 0);
--				} else {
--					__lpfc_sli_rpi_release(vport, ndlp);
- 				}
-+
- 				lpfc_nlp_put(ndlp);
- 			}
- 		}
-@@ -8750,6 +8734,7 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
- 				lpfc_sli_config_mbox_opcode_get(
- 					phba, mboxq),
- 				rc, dd);
-+
- 	/*
- 	 * Allocate all resources (xri,rpi,vpi,vfi) now.  Subsequent
- 	 * calls depends on these resources to complete port setup.
-@@ -8762,6 +8747,8 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
- 		goto out_free_mbox;
- 	}
- 
-+	lpfc_sli4_node_rpi_restore(phba);
-+
- 	lpfc_set_host_data(phba, mboxq);
- 
- 	rc = lpfc_sli_issue_mbox(phba, mboxq, MBX_POLL);
-@@ -8949,7 +8936,6 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
- 		rc = -ENODEV;
- 		goto out_free_iocblist;
- 	}
--	lpfc_sli4_node_prep(phba);
- 
- 	if (!test_bit(HBA_FCOE_MODE, &phba->hba_flag)) {
- 		if ((phba->nvmet_support == 0) || (phba->cfg_nvmet_mrq == 1)) {
+ DEFINE_EVENT(xe_vm, xe_vm_kill,
 -- 
 2.39.5
 
