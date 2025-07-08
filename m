@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4240A202F70;
-	Tue,  8 Jul 2025 17:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343C42E62C0;
+	Tue,  8 Jul 2025 17:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994180; cv=none; b=Qan7EIPTqoNkDPkGIMT5r3IgdOEaEtpXeLMveSg2/pqqO2w9riuzBZfQkGmXOYITfNJN7y4iJObJsegSLluQov8UYcHbOQ7HBi/pmvemqa48M7D54yoTEcJd7HHyKD1JfAARx43sz3tOD4zHOwLD2ewP83tBQ5+X6HarVqDki5w=
+	t=1751994183; cv=none; b=P8FGXn+3Gs+2vonNEdqG5eQH9jR9cXFqPvx0gM9QBYAK7ff140PYziCG2Rc08lYRmWhsKYNVoB5ADYYyTGOPG0RGUpCKN56wQYC4q3Ex62jFyTwKKd2furlv7HVsnfP5rXg5w3BXaCxApq3PQFTJeOGKX8JxDE2waqojvETe46g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994180; c=relaxed/simple;
-	bh=Pq+qYefXhzsr99rEpEjyiMTVtiCabrFB0T3fqE/iX+I=;
+	s=arc-20240116; t=1751994183; c=relaxed/simple;
+	bh=03rpeH1r0pLnOxHFwuKS3Xwk5IhYX4NfHxriQacZsvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cv+eKqUEZ7BeTyGkdiJRFVB44sNrkRGH6hqZTTrr9gHRzp6phdSKpdHHl98u3dmdAIaWXDNMmry1wOlGFvBjbY04LflBSmjEQMFAGUfUvtkPRzCNGIwZBptBuHjbABWI/x81fYP4oimA4e0w1gP1ifZkNs7dXCWaTfk13eR1fEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dc/EtmxX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hrLdjA1HEhtJ6TMN7Po9CauJ4dxaemXzo50JjDUSPLo/jcqD3tYLpYqnk8h9X+spE02Ah5A1ZBnvsgfsppCeXqKysg1bqSe6wIddIue0cKLIe0AMjhF4x5/Q/aT89v+ADzORpRluD+vxKEsZr9gQsh2hsLNjdgWbFzKGxG+OhVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNPmrHM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dc/EtmxX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC91DC4CEED;
-	Tue,  8 Jul 2025 17:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNPmrHM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DE5C4CEF0;
+	Tue,  8 Jul 2025 17:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994180;
-	bh=Pq+qYefXhzsr99rEpEjyiMTVtiCabrFB0T3fqE/iX+I=;
+	s=korg; t=1751994183;
+	bh=03rpeH1r0pLnOxHFwuKS3Xwk5IhYX4NfHxriQacZsvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dc/EtmxX6t8xBUIDetGHo4oSH/+EmALQdT5EgPidq1rkXe4anv8rZq/Qr9oF4ZL1c
-	 ORYP1aUnrbLeWyAhLT/yTQ5SAHUMGjb3i/EFVbvCDAc94OgaUWhuYN22Sp6bHLWwMU
-	 4Ukq4ayW8ZomY812/spwriPxkMBJL0u6VF6HmQSU=
+	b=mNPmrHM5C6ul2BG5GpdrquDlHn6SczIv5uE/I4fapntsiWWiuzMLsUS9LbdlZ6R1Z
+	 H0ah6AXeLAVLckW5BRI8aZIXHsec5MqAKnCgD2qYxaNQtcQStiDRqkBXgYVAqDzQB5
+	 KoCFRWFbGmoZkGbY3UECSTuMyyrFFFqhMx50WmWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Martin-Gomez <pmartin-gomez@freebox.fr>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/160] mtd: spinand: fix memory leak of ECC engine conf
-Date: Tue,  8 Jul 2025 18:22:52 +0200
-Message-ID: <20250708162235.128230919@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 153/160] Logitech C-270 even more broken
+Date: Tue,  8 Jul 2025 18:23:10 +0200
+Message-ID: <20250708162235.549849610@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,59 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Martin-Gomez <pmartin-gomez@freebox.fr>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 6463cbe08b0cbf9bba8763306764f5fd643023e1 ]
+commit cee4392a57e14a799fbdee193bc4c0de65b29521 upstream.
 
-Memory allocated for the ECC engine conf is not released during spinand
-cleanup. Below kmemleak trace is seen for this memory leak:
+Some varieties of this device don't work with
+RESET_RESUME alone.
 
-unreferenced object 0xffffff80064f00e0 (size 8):
-  comm "swapper/0", pid 1, jiffies 4294937458
-  hex dump (first 8 bytes):
-    00 00 00 00 00 00 00 00                          ........
-  backtrace (crc 0):
-    kmemleak_alloc+0x30/0x40
-    __kmalloc_cache_noprof+0x208/0x3c0
-    spinand_ondie_ecc_init_ctx+0x114/0x200
-    nand_ecc_init_ctx+0x70/0xa8
-    nanddev_ecc_engine_init+0xec/0x27c
-    spinand_probe+0xa2c/0x1620
-    spi_mem_probe+0x130/0x21c
-    spi_probe+0xf0/0x170
-    really_probe+0x17c/0x6e8
-    __driver_probe_device+0x17c/0x21c
-    driver_probe_device+0x58/0x180
-    __device_attach_driver+0x15c/0x1f8
-    bus_for_each_drv+0xec/0x150
-    __device_attach+0x188/0x24c
-    device_initial_probe+0x10/0x20
-    bus_probe_device+0x11c/0x160
-
-Fix the leak by calling nanddev_ecc_engine_cleanup() inside
-spinand_cleanup().
-
-Signed-off-by: Pablo Martin-Gomez <pmartin-gomez@freebox.fr>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20250605122852.1440382-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/core/quirks.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
-index 2c8685f1f2fa7..80d0112d18fa6 100644
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1271,6 +1271,7 @@ static void spinand_cleanup(struct spinand_device *spinand)
- {
- 	struct nand_device *nand = spinand_to_nand(spinand);
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -224,7 +224,8 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x046a, 0x0023), .driver_info = USB_QUIRK_RESET_RESUME },
  
-+	nanddev_ecc_engine_cleanup(nand);
- 	nanddev_cleanup(nand);
- 	spinand_manufacturer_cleanup(spinand);
- 	kfree(spinand->databuf);
--- 
-2.39.5
-
+ 	/* Logitech HD Webcam C270 */
+-	{ USB_DEVICE(0x046d, 0x0825), .driver_info = USB_QUIRK_RESET_RESUME },
++	{ USB_DEVICE(0x046d, 0x0825), .driver_info = USB_QUIRK_RESET_RESUME |
++		USB_QUIRK_NO_LPM},
+ 
+ 	/* Logitech HD Pro Webcams C920, C920-C, C922, C925e and C930e */
+ 	{ USB_DEVICE(0x046d, 0x082d), .driver_info = USB_QUIRK_DELAY_INIT },
 
 
