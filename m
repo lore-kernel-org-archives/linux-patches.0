@@ -1,51 +1,51 @@
 Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84FA2E7640
-	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 17:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C92A1C5F13
+	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 18:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751997093; cv=none; b=JDQRE+gnxCIBoCjp9m/W/uKqp2Ih4nBHbP97XCKs2fWEPjaZjFvQxDiNPqAXPHPfRZSsvLBXaqrm20QEia8umrL5i4DNdrfvBucEagRHFxGb7LHgn66P8VojLuP2la6I8MvWhcBN/7Lp6238xZ59MEj6w/knY5ELRodfUTz5osM=
+	t=1751997877; cv=none; b=RnlTOIdTi+FTGPdXn1OnOtISH+wte6fccQMsr4514OIMZRhAAdAx3lOqGHxeEPUmg6isGeSWEh15nAOSItXKyC8zcj71AsEKx6PXkF+/u+Y1SrK2FZxDATfo9o3u52swOJKKFZiRHLyvXr7mbtBe5ylxiZNNHCCKv/Z6R1gB31Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751997093; c=relaxed/simple;
-	bh=9/WQeqINW53g+c4PLeyAEhnpr+KU876RE6FBaif84eU=;
+	s=arc-20240116; t=1751997877; c=relaxed/simple;
+	bh=+djsBe9sZyH57K2ZP7zpuovc0rp9b37H1S78krrCkuA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bbszfZbk685Tw0mKTe2g3xgMcBsxkiipC2ZF/33LG7vZNHvM1fA3fZRbczWF3dDEtX5TUAhSDBnVYOaKgaRaxeJay9+rKJIsMQ+KbVFvInVF7hEzq+ZqIXYkcAddG+meARNeJ1h/bYhxiw0TVy3ShCqP2ND/bXvNbMcuOqZKVxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=NOMVwclk; arc=none smtp.client-ip=65.109.113.108
+	 Content-Type:Content-Disposition:In-Reply-To; b=cBNithwb557aU+aXEHGgYeSwN3KPxUfztaDM/Ll0SuDUGbq/0KDbyrS7wItt5h5YK6Nuddu1Xuf8pRRy6Ixhk3J8Y+3hb1nWh5RE3A1juOlau2+U5TNYkfFR8FfliB/tWOyVFYYToUTweU6cbHD1EtxGdm7kgx2+CoFLSOaP67Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=LP4DlDPg; arc=none smtp.client-ip=65.109.113.108
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="NOMVwclk"
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="LP4DlDPg"
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 6D0DB40E0218;
-	Tue,  8 Jul 2025 17:51:28 +0000 (UTC)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id D9CC240E0208;
+	Tue,  8 Jul 2025 18:04:31 +0000 (UTC)
 X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
 Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
 	header.d=alien8.de
 Received: from mail.alien8.de ([127.0.0.1])
 	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id k3OUZ4T9jlTr; Tue,  8 Jul 2025 17:51:24 +0000 (UTC)
+	with ESMTP id jXbIYgmhZ6wC; Tue,  8 Jul 2025 18:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1751997083; bh=6QK9DFjQR6bUYo7xXpKRSgW7t2xcuRWNEv1cd/4cAZU=;
+	t=1751997867; bh=QRA8Ykwdl6P/4LLeLu87qkzsP7EmXrsEVU++kuDHtd0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NOMVwclkvL94rxvm0V/fXeyALVzEoL/D5dXtqrPrmicwlqt4kL9Pj2W9lGRznXt70
-	 OwO+4cpytWpKKXtIXbvbGbTpopFcUHSQlH6d6+7DyO0z1zd732mwKHxmFCNQZvpm+G
-	 mWn+O0BQh0BoKrE4ufh42ogHbFwXsvtf3+n+7m6JFhj2jNCGmNSZoPFlECNRZNQ+bQ
-	 JEEDthACvYAY/Hz9U0f5MoNyQoSX1L9hcW3DO/bYhJN9lUdkAYaYN9a0xXFu1kC/bc
-	 xZeA4bACS+oKMJeTtal5GD302tKiS01Ylvijy5xU36l1pmmIMtibxCwEiIVm700buw
-	 LmansSJGGGSAInhoOb5BIjLBmOVXtwq4lbzcI4Jn+f1ohDBas674soSa7L4fhL506g
-	 1Gq5aw0u+M/CtMkNQXno4lp55lyDMokGZ9LqR5MyZMwUsMAXhrqe/1E5Fn1JrDurWs
-	 rfMgHkg40O/j1zXadLMrK/23IAegBqvyh2+APsa9YXcyu6gs1p6eBslr855fW3AfJY
-	 2VthAyq8/VUIcnNuOonMyqXp3W8cz39vkuJCT6VaJWgNi4/YopYJX0WLBRlQtmPfnt
-	 RQoQY6HJ888qR38oj7AsKsEOuHBqKQde3Un1P/0lsYAJQewmRclxuZNgl9Y32ozCvF
-	 hJ5twRbhigsTOKfPTIO7+O6k=
+	b=LP4DlDPgGP1cFXN0xWEPZQLgOUutrXOY4LV5IyUbSWYM1vIMtqXQHIR6ci3635L2C
+	 wXkFmWAc5fLGoRNTqA61uZWFWG0cNZCtEG9frhgMNtBKZOwPyhE3eZb9wcx2u5k/DV
+	 iISGsYSSEO7QmMl5GLczkNmoCEGOAQ8BYBp7QE8RATRARWOTgcpB4OYhkl/VmPKMpt
+	 jcNief0V+AQLpRedgiUPnpNq4tIEp8Ekrf5M24kA2aLOpCDw3E8ZU9Nd11ugaqdoFR
+	 OrXpKGf8Gs/+c3HeMAgZ0ZxqebFMdc5/3972+DZhdZYnI9gbHjcYWtPTZxszs4sU5v
+	 lKATX0xDTUFQPsTn1y6Xd1qBN1oFg5Mtqpw20WmZncnGKKdrrn4nALClJnNIBfMuwM
+	 wLln+7Ouf+ekVThwOx2XUnLScKe5IkX/WlO3xYiikXDxTEXSjLzWl7cLIDz/HqCgo3
+	 1yRtwpi0hifoPyZ2gJBF/thhtlI05y3CIsBss8SjGfDxV0EXsjhZzBTboajmaB4Kcz
+	 gkk3ty8Ts17n7gj9D7eLNf8/rH/zBE1i230DtVANyNx8LZV9UdjbL4NlRQ+e/qfxMa
+	 29HAcZAGXKIjKKOgDQ4K7uhoYsEZuo8ENNLwqFPs5s5iU4mFXquCX+UKp5Qoj2Wknm
+	 3n+jbCoNuNrOPUmHV/bcPe3c=
 Received: from zn.tnic (p57969c58.dip0.t-ipconnect.de [87.150.156.88])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
 	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 17F9F40E021A;
-	Tue,  8 Jul 2025 17:51:02 +0000 (UTC)
-Date: Tue, 8 Jul 2025 19:51:01 +0200
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 0445C40E0213;
+	Tue,  8 Jul 2025 18:04:05 +0000 (UTC)
+Date: Tue, 8 Jul 2025 20:04:00 +0200
 From: Borislav Petkov <bp@alien8.de>
 To: Florian Fainelli <f.fainelli@gmail.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
@@ -58,7 +58,7 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
 Subject: Re: [PATCH 5.15 000/160] 5.15.187-rc1 review
-Message-ID: <20250708175101.GHaG1aha99JuQVYj73@fat_crate.local>
+Message-ID: <20250708180400.GIaG1dkGnKYAS1QOu0@fat_crate.local>
 References: <20250708162231.503362020@linuxfoundation.org>
  <2438aa80-091d-4668-90e0-fb75f3e0b699@gmail.com>
  <20250708172319.GEaG1UB5x3BffeL9VW@fat_crate.local>
@@ -78,8 +78,12 @@ On Tue, Jul 08, 2025 at 07:45:09PM +0200, Borislav Petkov wrote:
 > Right, it needs the __weak functions - this is solved differently on newer
 > kernels. Lemme send updated patches.
 
-Greg, here's an updated 5.15 patch:
+...and 6.1:
 
+Thanks Florian!
+
+---
+From 69fdd5ec45b0adfe91432c2288302b124ffc7d6a Mon Sep 17 00:00:00 2001
 From: "Borislav Petkov (AMD)" <bp@alien8.de>
 Date: Wed, 11 Sep 2024 10:53:08 +0200
 Subject: [PATCH] x86/bugs: Add a Transient Scheduler Attacks mitigation
@@ -98,7 +102,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  .../ABI/testing/sysfs-devices-system-cpu      |   1 +
  .../admin-guide/kernel-parameters.txt         |  13 ++
  arch/x86/Kconfig                              |   9 ++
- arch/x86/include/asm/cpu.h                    |  13 ++
+ arch/x86/include/asm/cpu.h                    |  12 ++
  arch/x86/include/asm/cpufeatures.h            |   6 +
  arch/x86/include/asm/mwait.h                  |   2 +-
  arch/x86/include/asm/nospec-branch.h          |  12 +-
@@ -109,13 +113,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  arch/x86/kvm/svm/vmenter.S                    |   6 +
  drivers/base/cpu.c                            |   7 +
  include/linux/cpu.h                           |   1 +
- 14 files changed, 260 insertions(+), 5 deletions(-)
+ 14 files changed, 259 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/ABI/testing/sysfs-devices-system-cpu b/Documentation/ABI/testing/sysfs-devices-system-cpu
-index 1d657a6b1b53..0301ac606cdd 100644
+index 1468609052c7..97e695efa959 100644
 --- a/Documentation/ABI/testing/sysfs-devices-system-cpu
 +++ b/Documentation/ABI/testing/sysfs-devices-system-cpu
-@@ -524,6 +524,7 @@ What:		/sys/devices/system/cpu/vulnerabilities
+@@ -526,6 +526,7 @@ What:		/sys/devices/system/cpu/vulnerabilities
  		/sys/devices/system/cpu/vulnerabilities/spectre_v1
  		/sys/devices/system/cpu/vulnerabilities/spectre_v2
  		/sys/devices/system/cpu/vulnerabilities/srbds
@@ -124,10 +128,10 @@ index 1d657a6b1b53..0301ac606cdd 100644
  Date:		January 2018
  Contact:	Linux kernel mailing list <linux-kernel@vger.kernel.org>
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index e5e7fddc962f..f12ba5c12b91 100644
+index 6938c8cd7a6f..eaeabff9beff 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5990,6 +5990,19 @@
+@@ -6400,6 +6400,19 @@
  			If not specified, "default" is used. In this case,
  			the RNG's choice is left to each individual trust source.
  
@@ -148,10 +152,10 @@ index e5e7fddc962f..f12ba5c12b91 100644
  			Format: <string>
  			[x86] reliable: mark tsc clocksource as reliable, this
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 026a5714f78f..4eca434fd80b 100644
+index 8e66bb443351..1da950b1d41a 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -2528,6 +2528,15 @@ config MITIGATION_ITS
+@@ -2586,6 +2586,15 @@ config MITIGATION_ITS
  	  disabled, mitigation cannot be enabled via cmdline.
  	  See <file:Documentation/admin-guide/hw-vuln/indirect-target-selection.rst>
  
@@ -168,14 +172,13 @@ index 026a5714f78f..4eca434fd80b 100644
  
  config ARCH_HAS_ADD_PAGES
 diff --git a/arch/x86/include/asm/cpu.h b/arch/x86/include/asm/cpu.h
-index 33d41e350c79..5a7491f968cd 100644
+index 37639a2d9c34..c976bbf909e0 100644
 --- a/arch/x86/include/asm/cpu.h
 +++ b/arch/x86/include/asm/cpu.h
-@@ -72,4 +72,17 @@ void init_ia32_feat_ctl(struct cpuinfo_x86 *c);
- #else
- static inline void init_ia32_feat_ctl(struct cpuinfo_x86 *c) {}
- #endif
-+
+@@ -98,4 +98,16 @@ extern u64 x86_read_arch_cap_msr(void);
+ 
+ extern struct cpumask cpus_stop_mask;
+ 
 +union zen_patch_rev {
 +	struct {
 +		__u32 rev	 : 8,
@@ -190,10 +193,10 @@ index 33d41e350c79..5a7491f968cd 100644
 +
  #endif /* _ASM_X86_CPU_H */
 diff --git a/arch/x86/include/asm/cpufeatures.h b/arch/x86/include/asm/cpufeatures.h
-index e2bf1cba02cd..63b84540cfb3 100644
+index 28edef597282..1c71f947b426 100644
 --- a/arch/x86/include/asm/cpufeatures.h
 +++ b/arch/x86/include/asm/cpufeatures.h
-@@ -419,6 +419,7 @@
+@@ -430,6 +430,7 @@
  #define X86_FEATURE_SME_COHERENT	(19*32+10) /* "" AMD hardware-enforced cache coherency */
  
  #define X86_FEATURE_AUTOIBRS		(20*32+ 8) /* "" Automatic IBRS */
@@ -201,7 +204,7 @@ index e2bf1cba02cd..63b84540cfb3 100644
  #define X86_FEATURE_SBPB		(20*32+27) /* "" Selective Branch Prediction Barrier */
  #define X86_FEATURE_IBPB_BRTYPE		(20*32+28) /* "" MSR_PRED_CMD[IBPB] flushes all branch type predictions */
  #define X86_FEATURE_SRSO_NO		(20*32+29) /* "" CPU is not affected by SRSO */
-@@ -435,6 +436,10 @@
+@@ -447,6 +448,10 @@
  #define X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT (21*32+ 4) /* "" Clear branch history at vmexit using SW loop */
  #define X86_FEATURE_INDIRECT_THUNK_ITS	(21*32 + 5) /* "" Use thunk for indirect branches in lower half of cacheline */
  
@@ -212,17 +215,17 @@ index e2bf1cba02cd..63b84540cfb3 100644
  /*
   * BUG word(s)
   */
-@@ -486,4 +491,5 @@
+@@ -498,4 +503,5 @@
  #define X86_BUG_IBPB_NO_RET		X86_BUG(1*32 + 4) /* "ibpb_no_ret" IBPB omits return target predictions */
  #define X86_BUG_ITS			X86_BUG(1*32 + 5) /* CPU is affected by Indirect Target Selection */
  #define X86_BUG_ITS_NATIVE_ONLY		X86_BUG(1*32 + 6) /* CPU is affected by ITS, VMX is not affected */
 +#define X86_BUG_TSA			X86_BUG(1*32+ 9) /* "tsa" CPU is affected by Transient Scheduler Attacks */
  #endif /* _ASM_X86_CPUFEATURES_H */
 diff --git a/arch/x86/include/asm/mwait.h b/arch/x86/include/asm/mwait.h
-index 35e20e8a7cc6..20b33e6370c3 100644
+index 209dce2c79b7..2c6020729dd1 100644
 --- a/arch/x86/include/asm/mwait.h
 +++ b/arch/x86/include/asm/mwait.h
-@@ -79,7 +79,7 @@ static inline void __mwait(unsigned long eax, unsigned long ecx)
+@@ -80,7 +80,7 @@ static inline void __mwait(unsigned long eax, unsigned long ecx)
  static inline void __mwaitx(unsigned long eax, unsigned long ebx,
  			    unsigned long ecx)
  {
@@ -232,7 +235,7 @@ index 35e20e8a7cc6..20b33e6370c3 100644
  	/* "mwaitx %eax, %ebx, %ecx;" */
  	asm volatile(".byte 0x0f, 0x01, 0xfb;"
 diff --git a/arch/x86/include/asm/nospec-branch.h b/arch/x86/include/asm/nospec-branch.h
-index f651b0a1f5e2..b62ce153a3c4 100644
+index 3713b6dab7f4..c77a65a3e5f1 100644
 --- a/arch/x86/include/asm/nospec-branch.h
 +++ b/arch/x86/include/asm/nospec-branch.h
 @@ -208,8 +208,8 @@
@@ -259,7 +262,7 @@ index f651b0a1f5e2..b62ce153a3c4 100644
  #ifdef CONFIG_X86_64
  .macro CLEAR_BRANCH_HISTORY
  	ALTERNATIVE "", "call clear_bhb_loop", X86_FEATURE_CLEAR_BHB_LOOP
-@@ -464,7 +470,7 @@ static __always_inline void x86_clear_cpu_buffers(void)
+@@ -462,7 +468,7 @@ static __always_inline void x86_clear_cpu_buffers(void)
  
  /**
   * x86_idle_clear_cpu_buffers - Buffer clearing support in idle for the MDS
@@ -269,10 +272,10 @@ index f651b0a1f5e2..b62ce153a3c4 100644
   * Clear CPU buffers if the corresponding static key is enabled
   */
 diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index a8dc7fe5f100..d409ba7fba85 100644
+index 9ac93b4ba67b..3e3679709e90 100644
 --- a/arch/x86/kernel/cpu/amd.c
 +++ b/arch/x86/kernel/cpu/amd.c
-@@ -582,6 +582,61 @@ static void early_init_amd_mc(struct cpuinfo_x86 *c)
+@@ -553,6 +553,61 @@ static void early_init_amd_mc(struct cpuinfo_x86 *c)
  #endif
  }
  
@@ -334,7 +337,7 @@ index a8dc7fe5f100..d409ba7fba85 100644
  static void bsp_init_amd(struct cpuinfo_x86 *c)
  {
  	if (cpu_has(c, X86_FEATURE_CONSTANT_TSC)) {
-@@ -687,6 +742,9 @@ static void early_detect_mem_encrypt(struct cpuinfo_x86 *c)
+@@ -663,6 +718,9 @@ static void early_detect_mem_encrypt(struct cpuinfo_x86 *c)
  		if (!(msr & MSR_K7_HWCR_SMMLOCK))
  			goto clear_sev;
  
@@ -345,7 +348,7 @@ index a8dc7fe5f100..d409ba7fba85 100644
  
  clear_all:
 diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 9d84a82dcdc9..261aa716971d 100644
+index d0a5df576e90..dba5262e1509 100644
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
 @@ -49,6 +49,7 @@ static void __init l1d_flush_select_mitigation(void);
@@ -517,10 +520,10 @@ index 9d84a82dcdc9..261aa716971d 100644
 +}
  #endif
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 8db11483e1e1..b16a77386236 100644
+index 722eac51beae..9c849a4160cd 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
-@@ -1146,6 +1146,8 @@ static const __initconst struct x86_cpu_id cpu_vuln_whitelist[] = {
+@@ -1256,6 +1256,8 @@ static const __initconst struct x86_cpu_id cpu_vuln_whitelist[] = {
  #define ITS		BIT(8)
  /* CPU is affected by Indirect Target Selection, but guest-host isolation is not affected */
  #define ITS_NATIVE_ONLY	BIT(9)
@@ -529,7 +532,7 @@ index 8db11483e1e1..b16a77386236 100644
  
  static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
  	VULNBL_INTEL_STEPPINGS(IVYBRIDGE,	X86_STEPPING_ANY,		SRBDS),
-@@ -1193,7 +1195,7 @@ static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
+@@ -1303,7 +1305,7 @@ static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
  	VULNBL_AMD(0x16, RETBLEED),
  	VULNBL_AMD(0x17, RETBLEED | SMT_RSB | SRSO),
  	VULNBL_HYGON(0x18, RETBLEED | SMT_RSB | SRSO),
@@ -538,7 +541,7 @@ index 8db11483e1e1..b16a77386236 100644
  	{}
  };
  
-@@ -1398,6 +1400,16 @@ static void __init cpu_set_bug_bits(struct cpuinfo_x86 *c)
+@@ -1508,6 +1510,16 @@ static void __init cpu_set_bug_bits(struct cpuinfo_x86 *c)
  			setup_force_cpu_bug(X86_BUG_ITS_NATIVE_ONLY);
  	}
  
@@ -556,25 +559,25 @@ index 8db11483e1e1..b16a77386236 100644
  		return;
  
 diff --git a/arch/x86/kernel/cpu/scattered.c b/arch/x86/kernel/cpu/scattered.c
-index 0f5211087810..dfcd3ed94c1c 100644
+index 28c357cf7c75..b9e39c9eb274 100644
 --- a/arch/x86/kernel/cpu/scattered.c
 +++ b/arch/x86/kernel/cpu/scattered.c
-@@ -44,6 +44,8 @@ static const struct cpuid_bit cpuid_bits[] = {
+@@ -45,6 +45,8 @@ static const struct cpuid_bit cpuid_bits[] = {
  	{ X86_FEATURE_CPB,		CPUID_EDX,  9, 0x80000007, 0 },
  	{ X86_FEATURE_PROC_FEEDBACK,    CPUID_EDX, 11, 0x80000007, 0 },
  	{ X86_FEATURE_MBA,		CPUID_EBX,  6, 0x80000008, 0 },
 +	{ X86_FEATURE_TSA_SQ_NO,	CPUID_ECX,  1, 0x80000021, 0 },
 +	{ X86_FEATURE_TSA_L1_NO,	CPUID_ECX,  2, 0x80000021, 0 },
- 	{ 0, 0, 0, 0, 0 }
- };
- 
+ 	{ X86_FEATURE_PERFMON_V2,	CPUID_EAX,  0, 0x80000022, 0 },
+ 	{ X86_FEATURE_AMD_LBR_V2,	CPUID_EAX,  1, 0x80000022, 0 },
+ 	{ X86_FEATURE_AMD_LBR_PMC_FREEZE,	CPUID_EAX,  2, 0x80000022, 0 },
 diff --git a/arch/x86/kvm/svm/vmenter.S b/arch/x86/kvm/svm/vmenter.S
-index f96060855522..eeab012e4ee0 100644
+index 5be9a63f09ff..42824f9b06a2 100644
 --- a/arch/x86/kvm/svm/vmenter.S
 +++ b/arch/x86/kvm/svm/vmenter.S
-@@ -77,6 +77,9 @@ SYM_FUNC_START(__svm_vcpu_run)
- 	/* "POP" @vmcb to RAX. */
- 	pop %_ASM_AX
+@@ -166,6 +166,9 @@ SYM_FUNC_START(__svm_vcpu_run)
+ #endif
+ 	mov VCPU_RDI(%_ASM_DI), %_ASM_DI
  
 +	/* Clobbers EFLAGS.ZF */
 +	VM_CLEAR_CPU_BUFFERS
@@ -582,9 +585,9 @@ index f96060855522..eeab012e4ee0 100644
  	/* Enter guest mode */
  	sti
  
-@@ -190,6 +193,9 @@ SYM_FUNC_START(__svm_sev_es_vcpu_run)
- 	/* Move @vmcb to RAX. */
- 	mov %_ASM_ARG1, %_ASM_AX
+@@ -336,6 +339,9 @@ SYM_FUNC_START(__svm_sev_es_vcpu_run)
+ 	mov SVM_current_vmcb(%_ASM_DI), %_ASM_AX
+ 	mov KVM_VMCB_pa(%_ASM_AX), %_ASM_AX
  
 +	/* Clobbers EFLAGS.ZF */
 +	VM_CLEAR_CPU_BUFFERS
@@ -593,7 +596,7 @@ index f96060855522..eeab012e4ee0 100644
  	sti
  
 diff --git a/drivers/base/cpu.c b/drivers/base/cpu.c
-index df196e073097..0e7f7f54665d 100644
+index 27aff2503765..d68c60f35764 100644
 --- a/drivers/base/cpu.c
 +++ b/drivers/base/cpu.c
 @@ -601,6 +601,11 @@ ssize_t __weak cpu_show_indirect_target_selection(struct device *dev,
@@ -625,7 +628,7 @@ index df196e073097..0e7f7f54665d 100644
  };
  
 diff --git a/include/linux/cpu.h b/include/linux/cpu.h
-index 87b5a176e848..ab1b88b16982 100644
+index 186e0e0f2e40..3d3ceccf8224 100644
 --- a/include/linux/cpu.h
 +++ b/include/linux/cpu.h
 @@ -78,6 +78,7 @@ extern ssize_t cpu_show_reg_file_data_sampling(struct device *dev,
