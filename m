@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEACA2DC34C;
-	Tue,  8 Jul 2025 16:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083CA2E3385;
+	Tue,  8 Jul 2025 16:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992898; cv=none; b=tDxP27SnquNPi4WB21n9uI2YQ6rHgCeb7EeFZ9d8DaPPHogJY/A5s2wbgNEZwvAXpl8ANAPxfSJNCp0O7pYZ/vBOza69BNEnmaRc6/CfNpG4nCX2iqxuIz9PqTRPmJvz2VY1W7Qzt/wopolspwVJKNDByXBn6CT46SoTdqafzeo=
+	t=1751992901; cv=none; b=Ke1mLehN8oUWqh+HDIHd2uNDvSptmAy+XwD5Ja/8+jz4TXSfzV71/QohaJyaPNsQmBN8FAA0wMEwqdsLXuPmqbDnw7uLda2IlI3pVJjRUEqr25Qq8jjcPKklAos++rVHRtKuibA2iqhzrg9OM7VI34G7WhQ7MpF36diuUiWq39U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992898; c=relaxed/simple;
-	bh=ctcuUiYQc5GDd4B+RvNZ8nCk7zIoH6bT02oiVDd8ApE=;
+	s=arc-20240116; t=1751992901; c=relaxed/simple;
+	bh=sJQ1OgICh6KxhoS1ei2PsckflVqkyRbBTEqFjTfBRxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JKvW+jf16be/H0bhlaB6+RrQfUB5exGDKgNmLVO1Y/fSzF+a4SBqhB+C4nib/EJA/OXpA5k+vbYonlMLhfohU4vGYKinUkuh8NgRTfGGCBMx4p21C5rqzYoTWgyVk8RAmR9o6WsyI1nUPhIoC4pNmRuRH83OkvAb9C+twmyP8Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtMPmA6N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AkAHBLSv1Y5fCz2L47Zw3ptE2OW59IvVSvx/VDjcBF83Z9AMA2ZUUPDKsLdPMXq1LpUMyEZWF/4fC8wrfI2PQNNV8mJu9RADcb2eVWNJyTHf/GdRonofT/Xy22NCcCfyUp6mD8xpcrFLhn8guJMEDDFWNOtgFzq8QUsxfFTYToY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qsj0byWE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtMPmA6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4550BC4CEED;
-	Tue,  8 Jul 2025 16:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qsj0byWE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CC0C4CEED;
+	Tue,  8 Jul 2025 16:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992897;
-	bh=ctcuUiYQc5GDd4B+RvNZ8nCk7zIoH6bT02oiVDd8ApE=;
+	s=korg; t=1751992900;
+	bh=sJQ1OgICh6KxhoS1ei2PsckflVqkyRbBTEqFjTfBRxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mtMPmA6N/197meso2FVdwjOxF5DUiZt+YbRvcf++mOLeftP259irUMBwXH9vAB6kk
-	 I4GXrvSUlo7+vJ1fVtiw+AacqKtGO78myquhBIDeqUUVlUS8Uvz1fzeLe/pyD1O1QL
-	 De2TZ0nzvK8VsAr5mu+0OMKvNL4X7C2njuT6S9e8=
+	b=Qsj0byWEDGAF2CwgaQ8cGdWIpYbhFpcM0MxTzRtLw02bYYDAu3XV+AlP29xXbkMw3
+	 liDBfYg+Yg50wXbJoLA/zKL10NYO05YMbLayLRnLxckz5O5X/gbw2wUKkDeeV/FN37
+	 ut8LKCaDYoCsruzSInEyeMeSlfBdE+2mfX/V50ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	James Calligeros <jcalligeros99@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/232] ASoC: tas2764: Extend driver to SN012776
-Date: Tue,  8 Jul 2025 18:21:54 +0200
-Message-ID: <20250708162244.528147466@linuxfoundation.org>
+Subject: [PATCH 6.12 119/232] ASoC: tas2764: Reinit cache on part reset
+Date: Tue,  8 Jul 2025 18:21:55 +0200
+Message-ID: <20250708162244.555277938@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -56,143 +56,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Martin Povišer <povik+lin@cutebit.org>
 
-[ Upstream commit ad18392962df46a858432839cc6bcaf2ede7cc86 ]
+[ Upstream commit 592ab3936b096da5deb64d4c906edbeb989174d6 ]
 
-SN012776 is a speaker amp chip found in Apple's 2021 laptops. It appears
-similar and more-or-less compatible to TAS2764. Extend the TAS2764
-driver with some SN012776 specifics and configure the chip assuming
-it's in one of the Apple machines.
+When the part is reset in component_probe, do not forget to reinit the
+regcache, otherwise the cache can get out of sync with the part's
+actual state. This fix is similar to commit 0a0342ede303
+("ASoC: tas2770: Reinit regcache on reset") which concerned the
+tas2770 driver.
 
+Fixes: 827ed8a0fa50 ("ASoC: tas2764: Add the driver for the TAS2764")
 Reviewed-by: Neal Gompa <neal@gompa.dev>
 Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
 Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20250227-apple-codec-changes-v3-3-cbb130030acf@gmail.com
+Link: https://patch.msgid.link/20250406-apple-codec-changes-v5-3-50a00ec850a3@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 592ab3936b09 ("ASoC: tas2764: Reinit cache on part reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2764.c | 43 +++++++++++++++++++++++++++++++++++---
- sound/soc/codecs/tas2764.h |  3 +++
- 2 files changed, 43 insertions(+), 3 deletions(-)
+ sound/soc/codecs/tas2764.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sound/soc/codecs/tas2764.c b/sound/soc/codecs/tas2764.c
-index 4326555aac032..fb34d029f7a6d 100644
+index fb34d029f7a6d..e8fbe8a399f6d 100644
 --- a/sound/soc/codecs/tas2764.c
 +++ b/sound/soc/codecs/tas2764.c
-@@ -14,6 +14,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/regmap.h>
- #include <linux/of.h>
-+#include <linux/of_device.h>
- #include <linux/slab.h>
- #include <sound/soc.h>
- #include <sound/pcm.h>
-@@ -23,6 +24,11 @@
- 
- #include "tas2764.h"
- 
-+enum tas2764_devid {
-+	DEVID_TAS2764  = 0,
-+	DEVID_SN012776 = 1
-+};
-+
- struct tas2764_priv {
- 	struct snd_soc_component *component;
- 	struct gpio_desc *reset_gpio;
-@@ -30,7 +36,8 @@ struct tas2764_priv {
- 	struct regmap *regmap;
- 	struct device *dev;
- 	int irq;
--	
-+	enum tas2764_devid devid;
-+
- 	int v_sense_slot;
- 	int i_sense_slot;
- 
-@@ -525,10 +532,16 @@ static struct snd_soc_dai_driver tas2764_dai_driver[] = {
- 	},
+@@ -538,6 +538,8 @@ static uint8_t sn012776_bop_presets[] = {
+ 	0x06, 0x3e, 0x37, 0x30, 0xff, 0xe6
  };
  
-+static uint8_t sn012776_bop_presets[] = {
-+	0x01, 0x32, 0x02, 0x22, 0x83, 0x2d, 0x80, 0x02, 0x06,
-+	0x32, 0x46, 0x30, 0x02, 0x06, 0x38, 0x40, 0x30, 0x02,
-+	0x06, 0x3e, 0x37, 0x30, 0xff, 0xe6
-+};
++static const struct regmap_config tas2764_i2c_regmap;
 +
  static int tas2764_codec_probe(struct snd_soc_component *component)
  {
  	struct tas2764_priv *tas2764 = snd_soc_component_get_drvdata(component);
--	int ret;
-+	int ret, i;
+@@ -551,6 +553,7 @@ static int tas2764_codec_probe(struct snd_soc_component *component)
+ 	}
  
- 	tas2764->component = component;
+ 	tas2764_reset(tas2764);
++	regmap_reinit_cache(tas2764->regmap, &tas2764_i2c_regmap);
  
-@@ -577,6 +590,27 @@ static int tas2764_codec_probe(struct snd_soc_component *component)
- 	if (ret < 0)
- 		return ret;
- 
-+	switch (tas2764->devid) {
-+	case DEVID_SN012776:
-+		ret = snd_soc_component_update_bits(component, TAS2764_PWR_CTRL,
-+					TAS2764_PWR_CTRL_BOP_SRC,
-+					TAS2764_PWR_CTRL_BOP_SRC);
-+		if (ret < 0)
-+			return ret;
-+
-+		for (i = 0; i < ARRAY_SIZE(sn012776_bop_presets); i++) {
-+			ret = snd_soc_component_write(component,
-+						TAS2764_BOP_CFG0 + i,
-+						sn012776_bop_presets[i]);
-+
-+			if (ret < 0)
-+				return ret;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+
- 	return 0;
- }
- 
-@@ -708,6 +742,8 @@ static int tas2764_i2c_probe(struct i2c_client *client)
- 	if (!tas2764)
- 		return -ENOMEM;
- 
-+	tas2764->devid = (enum tas2764_devid)of_device_get_match_data(&client->dev);
-+
- 	tas2764->dev = &client->dev;
- 	tas2764->irq = client->irq;
- 	i2c_set_clientdata(client, tas2764);
-@@ -744,7 +780,8 @@ MODULE_DEVICE_TABLE(i2c, tas2764_i2c_id);
- 
- #if defined(CONFIG_OF)
- static const struct of_device_id tas2764_of_match[] = {
--	{ .compatible = "ti,tas2764" },
-+	{ .compatible = "ti,tas2764",  .data = (void *)DEVID_TAS2764 },
-+	{ .compatible = "ti,sn012776", .data = (void *)DEVID_SN012776 },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, tas2764_of_match);
-diff --git a/sound/soc/codecs/tas2764.h b/sound/soc/codecs/tas2764.h
-index 9490f2686e389..69c0f91cb4239 100644
---- a/sound/soc/codecs/tas2764.h
-+++ b/sound/soc/codecs/tas2764.h
-@@ -29,6 +29,7 @@
- #define TAS2764_PWR_CTRL_ACTIVE		0x0
- #define TAS2764_PWR_CTRL_MUTE		BIT(0)
- #define TAS2764_PWR_CTRL_SHUTDOWN	BIT(1)
-+#define TAS2764_PWR_CTRL_BOP_SRC	BIT(7)
- 
- #define TAS2764_VSENSE_POWER_EN		3
- #define TAS2764_ISENSE_POWER_EN		4
-@@ -116,4 +117,6 @@
- #define TAS2764_INT_CLK_CFG             TAS2764_REG(0x0, 0x5c)
- #define TAS2764_INT_CLK_CFG_IRQZ_CLR    BIT(2)
- 
-+#define TAS2764_BOP_CFG0                TAS2764_REG(0X0, 0x1d)
-+
- #endif /* __TAS2764__ */
+ 	if (tas2764->irq) {
+ 		ret = snd_soc_component_write(tas2764->component, TAS2764_INT_MASK0, 0x00);
 -- 
 2.39.5
 
