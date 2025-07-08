@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86A2E5B04;
-	Tue,  8 Jul 2025 16:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9FA264F9C;
+	Tue,  8 Jul 2025 16:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993345; cv=none; b=djPyY9HPBNtfnKbVlqBeDFO7PFTszUAJKYJWzpqsJg1cCNnANyT7z32HG6b8bvM0aS2XnzIEvRU9xIBhRSJSLc/0PyvTuq0Zj2RPvOHiAQAJxXmxNcXQ1tzQ9OPYK7Sx7CRM26af4HbGYZSkl62ZvY3Ddk8+fLrGJKkGNLvSWdw=
+	t=1751993347; cv=none; b=jtj05HOqlEVgXVkXuqkdycU3dQSWEiTr/BmmLTvsvl3JkVRCHPcjyWVhbbMvVSKE259W5JzyFffqnF15dxkbz2FVbPE4lXGq8KaPkZqA8YT1DseV8VesN7S6uIZJyVrrsP94wguAnBVsCSn9A5loEC3iTtIDBvTb1Iku+bWBnd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993345; c=relaxed/simple;
-	bh=MiS07JNwzep9YymZsGSE0GyZMoYLr86kzhSFnfzonHw=;
+	s=arc-20240116; t=1751993347; c=relaxed/simple;
+	bh=TTrCvHW5pHh2Iuxj9jpffNu2w1D4BYuhM6ZyvkGzuvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7/nLhJuqpxwPWxyHDaZykRrSW86RXwIXFw4180TAzH7jwhf2iN/EJAxVLyVpRivLv28F+AvjeH/8HKWrmcUAMDJZ2o2b18adsGHpbh38ebJCtj7B2yKE26CvzaoLu/56bqnc24ocgEmTUd0tnhjxy+C8bSVW31p0wpvolBAYl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqcLVvQK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=foxdfDSXBdOCgm7KlOKeKCDDzM//suQrn+fM3LQIxnPeTu2XIjcdd7r5u1T567HMRUQ2u5aRRnroL9z722Phercys6rrZyumrOQ9Tp7LReMVeHLCJEza14Ta6sCGtVGNZtl8UVztpI3mtec4bOTndT4NyjkF9ThHkjvZJlcnkBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdS0FMUy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqcLVvQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682F2C4CEED;
-	Tue,  8 Jul 2025 16:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdS0FMUy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21145C4CEED;
+	Tue,  8 Jul 2025 16:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993344;
-	bh=MiS07JNwzep9YymZsGSE0GyZMoYLr86kzhSFnfzonHw=;
+	s=korg; t=1751993347;
+	bh=TTrCvHW5pHh2Iuxj9jpffNu2w1D4BYuhM6ZyvkGzuvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqcLVvQKAQhq2S8RLGy4NJXqIV3GZOOSODbOKcIN164991nTsjDjmwZfnc0V1xXnZ
-	 LnJKjRWC2LlQRoFUDu2p0xaSzaT/9C7By4sY5OSL/wXWAQmtUr3As3mpjk949AYsm/
-	 uLYRmqzE8y6VU3Y1DOXEqIpn98fU8StenxhAHZi8=
+	b=GdS0FMUy9V5AI1HHno0qvF3i4rVoLR7KqDKEbO658KSpA7Dlhyrdrv+lX2vjx4JWm
+	 ielo8kkmftbjpFFK4q1efck/uh0ScmdYo08IkqDWZcfm2iXg58XtXu/A7HhjU/n51f
+	 XUnD9ID4/69YJ74Ax8VGXXVrQpleVkkl/PxwbWBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Nicolin Chen <nicolinc@nvidia.com>
-Subject: [PATCH 6.15 011/178] iommufd/selftest: Add missing close(mfd) in memfd_mmap()
-Date: Tue,  8 Jul 2025 18:20:48 +0200
-Message-ID: <20250708162236.842605402@linuxfoundation.org>
+Subject: [PATCH 6.15 012/178] iommufd/selftest: Add asserts testing global mfd
+Date: Tue,  8 Jul 2025 18:20:49 +0200
+Message-ID: <20250708162236.866056338@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,44 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 4b75e3babb85238912f50bbe0647bae08242a9b6 upstream.
+commit a9bf67ee170514b17541038c60bb94cb2cf5732f upstream.
 
-Do not forget to close mfd in the error paths, since none of the callers
-would close it when ASSERT_NE(MAP_FAILED, buf) fails.
+The mfd and mfd_buffer will be used in the tests directly without an extra
+check. Test them in setup_sizes() to ensure they are safe to use.
 
 Fixes: 0bcceb1f51c7 ("iommufd: Selftest coverage for IOMMU_IOAS_MAP_FILE")
-Link: https://patch.msgid.link/r/a363a69dbf453d4bc1bde276f3b16778620488e1.1750787928.git.nicolinc@nvidia.com
+Link: https://patch.msgid.link/r/94bdc11d2b6d5db337b1361c5e5fce0ed494bb40.1750787928.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/iommu/iommufd_utils.h |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/testing/selftests/iommu/iommufd.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/iommu/iommufd_utils.h
-+++ b/tools/testing/selftests/iommu/iommufd_utils.h
-@@ -60,13 +60,18 @@ static inline void *memfd_mmap(size_t le
- {
- 	int mfd_flags = (flags & MAP_HUGETLB) ? MFD_HUGETLB : 0;
- 	int mfd = memfd_create("buffer", mfd_flags);
-+	void *buf = MAP_FAILED;
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -54,6 +54,8 @@ static __attribute__((constructor)) void
  
- 	if (mfd <= 0)
- 		return MAP_FAILED;
- 	if (ftruncate(mfd, length))
--		return MAP_FAILED;
-+		goto out;
- 	*mfd_p = mfd;
--	return mmap(0, length, prot, flags, mfd, 0);
-+	buf = mmap(0, length, prot, flags, mfd, 0);
-+out:
-+	if (buf == MAP_FAILED)
-+		close(mfd);
-+	return buf;
+ 	mfd_buffer = memfd_mmap(BUFFER_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED,
+ 				&mfd);
++	assert(mfd_buffer != MAP_FAILED);
++	assert(mfd > 0);
  }
  
- /*
+ FIXTURE(iommufd)
 
 
