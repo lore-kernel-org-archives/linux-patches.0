@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C9F2E041C;
-	Tue,  8 Jul 2025 16:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16B91CD1E4;
+	Tue,  8 Jul 2025 16:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992674; cv=none; b=RQq4Ujj5mAJAinDIY72lG3F/21Ua4yvL4kC5qgIUdWB0lzBKPy/E4/zLH3tqlceS1FCb9rEoEv/RC2m5JVT/QC1yRCBn5SkO1cjwlg+R7KhJ8XKgM8MTPT5pDnCse/I6K+Da22erDPKuHZDeuucPmFF0aujxsCNIsW/5Pi4FlvQ=
+	t=1751992676; cv=none; b=e/r3v8pz/maFyn8ckD6nXBvGFlSLHQ2y8aQcrW/FUwpcxbwS9lh5FUWCo6R5vSzOsti7DMRmNdFpZcl5RGrXJgiAU9DlUtVNyGDHip6mUjBfElR2laZHPNh+iMenwLnUd72Bi5fNjmlCvCmgwQ6FPHf4+EvInKV/IexYDfPDbD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992674; c=relaxed/simple;
-	bh=F6hGe9seLl6QziEXPQ+D4nEpWxY7ttxIK1JSfu9pTxc=;
+	s=arc-20240116; t=1751992676; c=relaxed/simple;
+	bh=+1BLoNLXUm1xJi6Ia5z4jgpdbzu3dow5mimGOqy2/aY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSXSdMmSQfyeTtegj6kC9GW579oH965vGNi+X3zxy3ZiYsZt/0JzDclRN0P/tSE4QdW3q1WpCprOHhkSr6W1kYX+LN2geMdJXxcKUcqgXhmLhnSi63QiW+ifERya9ZbF6uBZnBGNgpXJNPoN/5OJ1gExfHlnaRCnpurrVRNUeZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6emaWeO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+u8r7VsLs6TwefRB3ft/3QPQdstX+YtZn1Xhfmwg51ys/KHRjlxeaRAUZtBVi20w6pF/NaNUzwy8Ecfk6qOERYL2wS4w8P6mZVVCYzqGs267+9823kxAo7jpfij8ULRxPHyT3JIXbM6CHJVJqgsVFsbnUPLhXx7SEdG9+hJzEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLVdJuPb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6emaWeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6C1C4CEED;
-	Tue,  8 Jul 2025 16:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLVdJuPb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599A0C4CEED;
+	Tue,  8 Jul 2025 16:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992673;
-	bh=F6hGe9seLl6QziEXPQ+D4nEpWxY7ttxIK1JSfu9pTxc=;
+	s=korg; t=1751992676;
+	bh=+1BLoNLXUm1xJi6Ia5z4jgpdbzu3dow5mimGOqy2/aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L6emaWeOEqijvDHcQophkrHdRvOTwc05gO+UB9BIRZ0kbo8sttCHj2hrceHKYbbIw
-	 EKIRI6WmwDmuoPmOw2VJ8OXNlWPPZhCA7aUzyqt2FeRTPFqAOi+20K6A3Aqy/+MH1L
-	 3b4Ldl4oUDx6tlE7kLW+R7vpSs5xYqEOEZ3+GJ1Y=
+	b=SLVdJuPbN9DkNV9VnRUE3C/t562p7nzzhqOUQo1dgioivZU9XG88FZVuJzNCrPUXY
+	 cURy9qUOQNs1ikA56jYw6l0nWLf0g4yXuqZ7Ady2nsqqf9KINXdSC72QcVfKF0fWoS
+	 kNWOQfk5/QbPqR1x1Jv3uQbPDJgcbWn+vZ1F7xIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/232] RDMA/mlx5: Fix CC counters query for MPV
-Date: Tue,  8 Jul 2025 18:20:38 +0200
-Message-ID: <20250708162242.536327297@linuxfoundation.org>
+Subject: [PATCH 6.12 043/232] RDMA/mlx5: Fix vport loopback for MPV device
+Date: Tue,  8 Jul 2025 18:20:39 +0200
+Message-ID: <20250708162242.588748138@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -54,34 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit acd245b1e33fc4b9d0f2e3372021d632f7ee0652 ]
+[ Upstream commit a9a9e68954f29b1e197663f76289db4879fd51bb ]
 
-In case, CC counters are querying for the second port use the correct
-core device for the query instead of always using the master core device.
+Always enable vport loopback for both MPV devices on driver start.
 
-Fixes: aac4492ef23a ("IB/mlx5: Update counter implementation for dual port RoCE")
+Previously in some cases related to MPV RoCE, packets weren't correctly
+executing loopback check at vport in FW, since it was disabled.
+Due to complexity of identifying such cases for MPV always enable vport
+loopback for both GVMIs when binding the slave to the master port.
+
+Fixes: 0042f9e458a5 ("RDMA/mlx5: Enable vport loopback when user context or QP mandate")
 Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/9cace74dcf106116118bebfa9146d40d4166c6b0.1750064969.git.leon@kernel.org
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/d4298f5ebb2197459e9e7221c51ecd6a34699847.1750064969.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/counters.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/main.c | 33 +++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
-index fbabc5ac9ef27..ad6c195d077bb 100644
---- a/drivers/infiniband/hw/mlx5/counters.c
-+++ b/drivers/infiniband/hw/mlx5/counters.c
-@@ -411,7 +411,7 @@ static int do_get_hw_stats(struct ib_device *ibdev,
- 			 */
- 			goto done;
- 		}
--		ret = mlx5_lag_query_cong_counters(dev->mdev,
-+		ret = mlx5_lag_query_cong_counters(mdev,
- 						   stats->value +
- 						   cnts->num_q_counters,
- 						   cnts->num_cong_counters,
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 8c47cb4edd0a0..435c456a4fd5b 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -1766,6 +1766,33 @@ static void deallocate_uars(struct mlx5_ib_dev *dev,
+ 					     context->devx_uid);
+ }
+ 
++static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
++				struct mlx5_core_dev *slave)
++{
++	int err;
++
++	err = mlx5_nic_vport_update_local_lb(master, true);
++	if (err)
++		return err;
++
++	err = mlx5_nic_vport_update_local_lb(slave, true);
++	if (err)
++		goto out;
++
++	return 0;
++
++out:
++	mlx5_nic_vport_update_local_lb(master, false);
++	return err;
++}
++
++static void mlx5_ib_disable_lb_mp(struct mlx5_core_dev *master,
++				  struct mlx5_core_dev *slave)
++{
++	mlx5_nic_vport_update_local_lb(slave, false);
++	mlx5_nic_vport_update_local_lb(master, false);
++}
++
+ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
+ {
+ 	int err = 0;
+@@ -3448,6 +3475,8 @@ static void mlx5_ib_unbind_slave_port(struct mlx5_ib_dev *ibdev,
+ 
+ 	lockdep_assert_held(&mlx5_ib_multiport_mutex);
+ 
++	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev);
++
+ 	mlx5_core_mp_event_replay(ibdev->mdev,
+ 				  MLX5_DRIVER_EVENT_AFFILIATION_REMOVED,
+ 				  NULL);
+@@ -3543,6 +3572,10 @@ static bool mlx5_ib_bind_slave_port(struct mlx5_ib_dev *ibdev,
+ 				  MLX5_DRIVER_EVENT_AFFILIATION_DONE,
+ 				  &key);
+ 
++	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev);
++	if (err)
++		goto unbind;
++
+ 	return true;
+ 
+ unbind:
 -- 
 2.39.5
 
