@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B637E9;
-	Tue,  8 Jul 2025 16:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AC02E659;
+	Tue,  8 Jul 2025 16:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992002; cv=none; b=TNBzlU+H6t9kHQVfrc7M43/Pqz8flPL+v/5ZcPz/XWwv8oLlYIUrDIVI1sBJMjEYA57aDYGy0lDxIx8wrjpULbLkn+5JlXp9pmlMwQACb05FRv2dZeIE5ZliCa8vc0iAnV0lAmu9lPDAQJSBiM6Fxq48TATgCMVU6WpwJw6L+G8=
+	t=1751992004; cv=none; b=pdng17cY70EBuhYqKFAJwU2Yieoqo/bp/5KoSM7xPBt1r5v0pleIFWqLrMRW3dkLw9vK0tt/UM3DlPb9Ngd2b4SG/VvlNi0n4j8StsUu2AYIsqkrMzd+7KIiRdjzUlduPDW3PBmY4tq96BZ8Ss8mEyKsBw7J9PKG7iFa0Mzq7IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992002; c=relaxed/simple;
-	bh=4EIDxg7JG10yEsppMLtCfhNbukVWgsMPcxGsE42f5Ls=;
+	s=arc-20240116; t=1751992004; c=relaxed/simple;
+	bh=3FDB5FCdqpP4n/slqYxn4oZDOGdxQ+H6YyJWOgyJu6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nC1A2S7B0FLV7ZHCeu2eNO1ycKYjs4qrfkAqkXJFMtZIIIM1lKygVuxs6wS9i8Ed0IUQcytwsCMXiOHR2JNeCH1tke/l3qeGDiDCXkCxk4q2uv2ee+b8CavYNowAKiNEeWM3c7XRtyrbMjmHYdFomIAFwJejJNGF9f/F5246hDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XX+lCvXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDOZxDHjL1CggrI+EPQWsGgpwT1T1ADEZafrRL7RzZ8SjGrkhgaYj4OHmzVkjmUbDSKHZ6E0gczGpLyOwnlp414am5QC8j58gtHQU+FGkPHsKzUog15kc0RhRT496XLZp4uz/qa1sLdxLulF7+CmVXVGpIBl+yH8gD4qVrEzWsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSnRQ+bZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XX+lCvXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2AEC4CEED;
-	Tue,  8 Jul 2025 16:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSnRQ+bZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3941EC4CEED;
+	Tue,  8 Jul 2025 16:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992001;
-	bh=4EIDxg7JG10yEsppMLtCfhNbukVWgsMPcxGsE42f5Ls=;
+	s=korg; t=1751992004;
+	bh=3FDB5FCdqpP4n/slqYxn4oZDOGdxQ+H6YyJWOgyJu6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XX+lCvXRfzYySLDnVMRy80OE1aArUt34fAIaWrrV0UMWZLDZ+fRJxctKiquZ00YSX
-	 JHQCc4u+64+Wio824wajaj2YzjfU1CsuxN0Oomf+sNBv2c4+M7Foe8yyDdpUi3LvXA
-	 MgLnzR1ZNS2sIoypxVBVrot/6lmQvm1ev1zAa/uE=
+	b=iSnRQ+bZZXFNNS9DIaIqrYCc3vS9KoXgCDWdbLOEtHzmiLGnNNFbD2o3kelc/BcmT
+	 l5+or02zcyQmTdsioim3rpMBsndWC9xBMZSv+EWs/xfugdZsXFrGdCpz3hc9mvf7uJ
+	 EVIdOY11biB8Q8HVxyutnWwvGiUZIxkH02G15ibQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/81] ethernet: atl1: Add missing DMA mapping error checks and count errors
-Date: Tue,  8 Jul 2025 18:23:20 +0200
-Message-ID: <20250708162225.834302637@linuxfoundation.org>
+Subject: [PATCH 6.1 29/81] drm/exynos: fimd: Guard display clock control with runtime PM calls
+Date: Tue,  8 Jul 2025 18:23:21 +0200
+Message-ID: <20250708162225.866836027@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -51,211 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit d72411d20905180cdc452c553be17481b24463d2 ]
+[ Upstream commit 5d91394f236167ac624b823820faf4aa928b889e ]
 
-The `dma_map_XXX()` functions can fail and must be checked using
-`dma_mapping_error()`.  This patch adds proper error handling for all
-DMA mapping calls.
+Commit c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable
+and post-disable") changed the call sequence to the CRTC enable/disable
+and bridge pre_enable/post_disable methods, so those bridge methods are
+now called when CRTC is not yet enabled.
 
-In `atl1_alloc_rx_buffers()`, if DMA mapping fails, the buffer is
-deallocated and marked accordingly.
+This causes a lockup observed on Samsung Peach-Pit/Pi Chromebooks. The
+source of this lockup is a call to fimd_dp_clock_enable() function, when
+FIMD device is not yet runtime resumed. It worked before the mentioned
+commit only because the CRTC implemented by the FIMD driver was always
+enabled what guaranteed the FIMD device to be runtime resumed.
 
-In `atl1_tx_map()`, previously mapped buffers are unmapped and the
-packet is dropped on failure.
+This patch adds runtime PM guards to the fimd_dp_clock_enable() function
+to enable its proper operation also when the CRTC implemented by FIMD is
+not yet enabled.
 
-If `atl1_xmit_frame()` drops the packet, increment the tx_error counter.
-
-Fixes: f3cc28c79760 ("Add Attansic L1 ethernet driver.")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20250625141629.114984-2-fourier.thomas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 196e059a8a6a ("drm/exynos: convert clock_enable crtc callback to pipeline clock")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/atlx/atl1.c | 79 +++++++++++++++++-------
- 1 file changed, 57 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/atheros/atlx/atl1.c b/drivers/net/ethernet/atheros/atlx/atl1.c
-index 02aa6fd8ebc2d..4ed165702d58e 100644
---- a/drivers/net/ethernet/atheros/atlx/atl1.c
-+++ b/drivers/net/ethernet/atheros/atlx/atl1.c
-@@ -1861,14 +1861,21 @@ static u16 atl1_alloc_rx_buffers(struct atl1_adapter *adapter)
- 			break;
- 		}
- 
--		buffer_info->alloced = 1;
--		buffer_info->skb = skb;
--		buffer_info->length = (u16) adapter->rx_buffer_len;
- 		page = virt_to_page(skb->data);
- 		offset = offset_in_page(skb->data);
- 		buffer_info->dma = dma_map_page(&pdev->dev, page, offset,
- 						adapter->rx_buffer_len,
- 						DMA_FROM_DEVICE);
-+		if (dma_mapping_error(&pdev->dev, buffer_info->dma)) {
-+			kfree_skb(skb);
-+			adapter->soft_stats.rx_dropped++;
-+			break;
-+		}
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index 529033b980b20..0816714b1e581 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -188,6 +188,7 @@ struct fimd_context {
+ 	u32				i80ifcon;
+ 	bool				i80_if;
+ 	bool				suspended;
++	bool				dp_clk_enabled;
+ 	wait_queue_head_t		wait_vsync_queue;
+ 	atomic_t			wait_vsync_event;
+ 	atomic_t			win_updated;
+@@ -1048,7 +1049,18 @@ static void fimd_dp_clock_enable(struct exynos_drm_clk *clk, bool enable)
+ 	struct fimd_context *ctx = container_of(clk, struct fimd_context,
+ 						dp_clk);
+ 	u32 val = enable ? DP_MIE_CLK_DP_ENABLE : DP_MIE_CLK_DISABLE;
 +
-+		buffer_info->alloced = 1;
-+		buffer_info->skb = skb;
-+		buffer_info->length = (u16)adapter->rx_buffer_len;
++	if (enable == ctx->dp_clk_enabled)
++		return;
 +
- 		rfd_desc->buffer_addr = cpu_to_le64(buffer_info->dma);
- 		rfd_desc->buf_len = cpu_to_le16(adapter->rx_buffer_len);
- 		rfd_desc->coalese = 0;
-@@ -2183,8 +2190,8 @@ static int atl1_tx_csum(struct atl1_adapter *adapter, struct sk_buff *skb,
- 	return 0;
++	if (enable)
++		pm_runtime_resume_and_get(ctx->dev);
++
++	ctx->dp_clk_enabled = enable;
+ 	writel(val, ctx->regs + DP_MIE_CLKCON);
++
++	if (!enable)
++		pm_runtime_put(ctx->dev);
  }
  
--static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
--	struct tx_packet_desc *ptpd)
-+static bool atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
-+			struct tx_packet_desc *ptpd)
- {
- 	struct atl1_tpd_ring *tpd_ring = &adapter->tpd_ring;
- 	struct atl1_buffer *buffer_info;
-@@ -2194,6 +2201,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
- 	unsigned int nr_frags;
- 	unsigned int f;
- 	int retval;
-+	u16 first_mapped;
- 	u16 next_to_use;
- 	u16 data_len;
- 	u8 hdr_len;
-@@ -2201,6 +2209,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
- 	buf_len -= skb->data_len;
- 	nr_frags = skb_shinfo(skb)->nr_frags;
- 	next_to_use = atomic_read(&tpd_ring->next_to_use);
-+	first_mapped = next_to_use;
- 	buffer_info = &tpd_ring->buffer_info[next_to_use];
- 	BUG_ON(buffer_info->skb);
- 	/* put skb in last TPD */
-@@ -2216,6 +2225,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
- 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
- 						offset, hdr_len,
- 						DMA_TO_DEVICE);
-+		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
-+			goto dma_err;
- 
- 		if (++next_to_use == tpd_ring->count)
- 			next_to_use = 0;
-@@ -2242,6 +2253,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
- 								page, offset,
- 								buffer_info->length,
- 								DMA_TO_DEVICE);
-+				if (dma_mapping_error(&adapter->pdev->dev,
-+						      buffer_info->dma))
-+					goto dma_err;
- 				if (++next_to_use == tpd_ring->count)
- 					next_to_use = 0;
- 			}
-@@ -2254,6 +2268,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
- 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
- 						offset, buf_len,
- 						DMA_TO_DEVICE);
-+		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
-+			goto dma_err;
- 		if (++next_to_use == tpd_ring->count)
- 			next_to_use = 0;
- 	}
-@@ -2277,6 +2293,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
- 			buffer_info->dma = skb_frag_dma_map(&adapter->pdev->dev,
- 				frag, i * ATL1_MAX_TX_BUF_LEN,
- 				buffer_info->length, DMA_TO_DEVICE);
-+			if (dma_mapping_error(&adapter->pdev->dev,
-+					      buffer_info->dma))
-+				goto dma_err;
- 
- 			if (++next_to_use == tpd_ring->count)
- 				next_to_use = 0;
-@@ -2285,6 +2304,22 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
- 
- 	/* last tpd's buffer-info */
- 	buffer_info->skb = skb;
-+
-+	return true;
-+
-+ dma_err:
-+	while (first_mapped != next_to_use) {
-+		buffer_info = &tpd_ring->buffer_info[first_mapped];
-+		dma_unmap_page(&adapter->pdev->dev,
-+			       buffer_info->dma,
-+			       buffer_info->length,
-+			       DMA_TO_DEVICE);
-+		buffer_info->dma = 0;
-+
-+		if (++first_mapped == tpd_ring->count)
-+			first_mapped = 0;
-+	}
-+	return false;
- }
- 
- static void atl1_tx_queue(struct atl1_adapter *adapter, u16 count,
-@@ -2355,10 +2390,8 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
- 
- 	len = skb_headlen(skb);
- 
--	if (unlikely(skb->len <= 0)) {
--		dev_kfree_skb_any(skb);
--		return NETDEV_TX_OK;
--	}
-+	if (unlikely(skb->len <= 0))
-+		goto drop_packet;
- 
- 	nr_frags = skb_shinfo(skb)->nr_frags;
- 	for (f = 0; f < nr_frags; f++) {
-@@ -2371,10 +2404,9 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
- 	if (mss) {
- 		if (skb->protocol == htons(ETH_P_IP)) {
- 			proto_hdr_len = skb_tcp_all_headers(skb);
--			if (unlikely(proto_hdr_len > len)) {
--				dev_kfree_skb_any(skb);
--				return NETDEV_TX_OK;
--			}
-+			if (unlikely(proto_hdr_len > len))
-+				goto drop_packet;
-+
- 			/* need additional TPD ? */
- 			if (proto_hdr_len != len)
- 				count += (len - proto_hdr_len +
-@@ -2406,23 +2438,26 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
- 	}
- 
- 	tso = atl1_tso(adapter, skb, ptpd);
--	if (tso < 0) {
--		dev_kfree_skb_any(skb);
--		return NETDEV_TX_OK;
--	}
-+	if (tso < 0)
-+		goto drop_packet;
- 
- 	if (!tso) {
- 		ret_val = atl1_tx_csum(adapter, skb, ptpd);
--		if (ret_val < 0) {
--			dev_kfree_skb_any(skb);
--			return NETDEV_TX_OK;
--		}
-+		if (ret_val < 0)
-+			goto drop_packet;
- 	}
- 
--	atl1_tx_map(adapter, skb, ptpd);
-+	if (!atl1_tx_map(adapter, skb, ptpd))
-+		goto drop_packet;
-+
- 	atl1_tx_queue(adapter, count, ptpd);
- 	atl1_update_mailbox(adapter);
- 	return NETDEV_TX_OK;
-+
-+drop_packet:
-+	adapter->soft_stats.tx_errors++;
-+	dev_kfree_skb_any(skb);
-+	return NETDEV_TX_OK;
- }
- 
- static int atl1_rings_clean(struct napi_struct *napi, int budget)
+ static const struct exynos_drm_crtc_ops fimd_crtc_ops = {
 -- 
 2.39.5
 
