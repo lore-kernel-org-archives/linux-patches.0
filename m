@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A8B289E2C;
-	Tue,  8 Jul 2025 16:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4CF23A98D;
+	Tue,  8 Jul 2025 16:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992759; cv=none; b=NsnxWCco9Z+4oOtXWijNakWmAZA0Hj85VMXIgoaArou3sE+mpcY/95DNhBrrLBoEamCMaFPO9UP6cwwR7CYLU67NdUt4HhTp7nj80lr0qmn++n3derlCblMEAMDYwEgCTziqcD8ODxCUAGdl5EUTeYwWBtfDUgXEQuzj59iFyaU=
+	t=1751992762; cv=none; b=atXsNlH6sel85bhWRNtydVNUtqqf7GV1ve5sXrwyQmm81aAeH8WcLbbCeoi0jQxkqeEg9E10+yIp3udWwhSCfSOd77c0uXoaxGVd3WyUYtKVNiRXyo6vE9GHtI5yk2f1/TaJ4qeArzx6nMuYhHoU0IzOh1Erpm2hLmfvcn0Z/co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992759; c=relaxed/simple;
-	bh=ob+Sf0QB8E3Es39mNkgNbbcW0qsB2AkCXhtObDCSAnI=;
+	s=arc-20240116; t=1751992762; c=relaxed/simple;
+	bh=zIcqvy6k5ibG2MZvunhQWJW81rfCJbV6Z0+5ldsd19A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lj/pOU8OsV7vH3B/C+SSUtvWskxpsfC8V5XoOlyZAp6MmeGSpHCJuQ6vk+D7iPFFuinfvcdgoS6k0NTRXljxm5r15vxtJT8yBUWK2WBluC4XA4zv0jgQG0C2ERUr5pvFXJlHXufOC4z+04GrGuxh608SoMZ4FeJUE2+YSYtB8Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oh5Gh8EM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ftwyGafSkAhtxt/SHlGXB9KJdkl3aQDFyvQgjtvPSm+Nl61T2WnZDABBx8ZOYQV8s8b1iqYPM7fTmm4BvE4d5RGese+A28seiTOG9e/Aip3UOaF6Rcq9TZEcjNDofZczn9WvsJs8XOwmdKbwXRkGvx1nJh0CRe5tWeO2CVMCABI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aliF+D+F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oh5Gh8EM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B7EC4CEED;
-	Tue,  8 Jul 2025 16:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aliF+D+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74421C4CEED;
+	Tue,  8 Jul 2025 16:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992758;
-	bh=ob+Sf0QB8E3Es39mNkgNbbcW0qsB2AkCXhtObDCSAnI=;
+	s=korg; t=1751992761;
+	bh=zIcqvy6k5ibG2MZvunhQWJW81rfCJbV6Z0+5ldsd19A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oh5Gh8EMxu4e3pcjZlH00kFjwsxCz9WbToj3LoP/8Z15fWVyjU5qYOdWmRnwHUAJa
-	 jeoK+HRS8MLJpqTjLWXUSNcmLeKwRfCeSWs0p3uZTr14uhWburZjK+y0crzeEneJbr
-	 s4jDM3Z7ocPFqoAFTwjzCVHfyTTCIIU1IE1s9naw=
+	b=aliF+D+FbZHFf+dA5L/dZdG76FRHxRe5lVieYMN58SjQMeTf2G7e/9UbVQJJ8x5u1
+	 ej/veQHnh/EqgpIAyCiVgCpowPYnNb0EpjAOWiietLGZ19wWZKTEIn6dSCGOI4qjZO
+	 CoWJ5F6ejWb1K1xVIbDNg7QuAMkPmAcLdbDUiPAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/232] firmware: arm_ffa: Move memory allocation outside the mutex locking
-Date: Tue,  8 Jul 2025 18:20:26 +0200
-Message-ID: <20250708162242.223562540@linuxfoundation.org>
+Subject: [PATCH 6.12 064/232] platform/x86: hp-bioscfg: Directly use firmware_attributes_class
+Date: Tue,  8 Jul 2025 18:21:00 +0200
+Message-ID: <20250708162243.139017851@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -45,139 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 27e850c88df0e25474a8caeb2903e2e90b62c1dc ]
+[ Upstream commit 63f8c058036057644f095123a35895cd11639b88 ]
 
-The notifier callback node allocation is currently done while holding
-the notify_lock mutex. While this is safe even if memory allocation may
-sleep, we need to move the allocation outside the locked region in
-preparation to move from using muxtes to rwlocks.
+The usage of the lifecycle functions is not necessary anymore.
 
-Move the memory allocation to avoid potential sleeping in atomic context
-once the locks are moved from mutex to rwlocks.
-
-Fixes: e0573444edbf ("firmware: arm_ffa: Add interfaces to request notification callbacks")
-Message-Id: <20250528-ffa_notif_fix-v1-2-5ed7bc7f8437@arm.com>
-Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20250104-firmware-attributes-simplify-v1-4-949f9709e405@weissschuh.net
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 11cba4793b95 ("platform/x86: hp-bioscfg: Fix class device unregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 48 +++++++++++++++----------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index f19b142645cc5..33f7bdb5c86dd 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -1184,13 +1184,12 @@ notifier_hnode_get_by_type(u16 notify_id, enum notify_type type)
- 	return NULL;
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+index 2dc50152158a3..0b277b7e37dd6 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -24,8 +24,6 @@ struct bioscfg_priv bioscfg_drv = {
+ 	.mutex = __MUTEX_INITIALIZER(bioscfg_drv.mutex),
+ };
+ 
+-static const struct class *fw_attr_class;
+-
+ ssize_t display_name_language_code_show(struct kobject *kobj,
+ 					struct kobj_attribute *attr,
+ 					char *buf)
+@@ -972,11 +970,7 @@ static int __init hp_init(void)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = fw_attributes_class_get(&fw_attr_class);
+-	if (ret)
+-		goto err_unregister_class;
+-
+-	bioscfg_drv.class_dev = device_create(fw_attr_class, NULL, MKDEV(0, 0),
++	bioscfg_drv.class_dev = device_create(&firmware_attributes_class, NULL, MKDEV(0, 0),
+ 					      NULL, "%s", DRIVER_NAME);
+ 	if (IS_ERR(bioscfg_drv.class_dev)) {
+ 		ret = PTR_ERR(bioscfg_drv.class_dev);
+@@ -1043,10 +1037,9 @@ static int __init hp_init(void)
+ 	release_attributes_data();
+ 
+ err_destroy_classdev:
+-	device_destroy(fw_attr_class, MKDEV(0, 0));
++	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
+ 
+ err_unregister_class:
+-	fw_attributes_class_put();
+ 	hp_exit_attr_set_interface();
+ 
+ 	return ret;
+@@ -1055,9 +1048,8 @@ static int __init hp_init(void)
+ static void __exit hp_exit(void)
+ {
+ 	release_attributes_data();
+-	device_destroy(fw_attr_class, MKDEV(0, 0));
++	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
+ 
+-	fw_attributes_class_put();
+ 	hp_exit_attr_set_interface();
  }
  
--static int
--update_notifier_cb(struct ffa_device *dev, int notify_id, void *cb,
--		   void *cb_data, bool is_registration, bool is_framework)
-+static int update_notifier_cb(struct ffa_device *dev, int notify_id,
-+			      struct notifier_cb_info *cb, bool is_framework)
- {
- 	struct notifier_cb_info *cb_info = NULL;
- 	enum notify_type type = ffa_notify_type_get(dev->vm_id);
--	bool cb_found;
-+	bool cb_found, is_registration = !!cb;
- 
- 	if (is_framework)
- 		cb_info = notifier_hnode_get_by_vmid_uuid(notify_id, dev->vm_id,
-@@ -1204,18 +1203,7 @@ update_notifier_cb(struct ffa_device *dev, int notify_id, void *cb,
- 		return -EINVAL;
- 
- 	if (is_registration) {
--		cb_info = kzalloc(sizeof(*cb_info), GFP_KERNEL);
--		if (!cb_info)
--			return -ENOMEM;
--
--		cb_info->dev = dev;
--		cb_info->cb_data = cb_data;
--		if (is_framework)
--			cb_info->fwk_cb = cb;
--		else
--			cb_info->cb = cb;
--
--		hash_add(drv_info->notifier_hash, &cb_info->hnode, notify_id);
-+		hash_add(drv_info->notifier_hash, &cb->hnode, notify_id);
- 	} else {
- 		hash_del(&cb_info->hnode);
- 		kfree(cb_info);
-@@ -1237,8 +1225,7 @@ static int __ffa_notify_relinquish(struct ffa_device *dev, int notify_id,
- 
- 	mutex_lock(&drv_info->notify_lock);
- 
--	rc = update_notifier_cb(dev, notify_id, NULL, NULL, false,
--				is_framework);
-+	rc = update_notifier_cb(dev, notify_id, NULL, is_framework);
- 	if (rc) {
- 		pr_err("Could not unregister notification callback\n");
- 		mutex_unlock(&drv_info->notify_lock);
-@@ -1269,6 +1256,7 @@ static int __ffa_notify_request(struct ffa_device *dev, bool is_per_vcpu,
- {
- 	int rc;
- 	u32 flags = 0;
-+	struct notifier_cb_info *cb_info = NULL;
- 
- 	if (ffa_notifications_disabled())
- 		return -EOPNOTSUPP;
-@@ -1276,6 +1264,17 @@ static int __ffa_notify_request(struct ffa_device *dev, bool is_per_vcpu,
- 	if (notify_id >= FFA_MAX_NOTIFICATIONS)
- 		return -EINVAL;
- 
-+	cb_info = kzalloc(sizeof(*cb_info), GFP_KERNEL);
-+	if (!cb_info)
-+		return -ENOMEM;
-+
-+	cb_info->dev = dev;
-+	cb_info->cb_data = cb_data;
-+	if (is_framework)
-+		cb_info->fwk_cb = cb;
-+	else
-+		cb_info->cb = cb;
-+
- 	mutex_lock(&drv_info->notify_lock);
- 
- 	if (!is_framework) {
-@@ -1283,21 +1282,22 @@ static int __ffa_notify_request(struct ffa_device *dev, bool is_per_vcpu,
- 			flags = PER_VCPU_NOTIFICATION_FLAG;
- 
- 		rc = ffa_notification_bind(dev->vm_id, BIT(notify_id), flags);
--		if (rc) {
--			mutex_unlock(&drv_info->notify_lock);
--			return rc;
--		}
-+		if (rc)
-+			goto out_unlock_free;
- 	}
- 
--	rc = update_notifier_cb(dev, notify_id, cb, cb_data, true,
--				is_framework);
-+	rc = update_notifier_cb(dev, notify_id, cb_info, is_framework);
- 	if (rc) {
- 		pr_err("Failed to register callback for %d - %d\n",
- 		       notify_id, rc);
- 		if (!is_framework)
- 			ffa_notification_unbind(dev->vm_id, BIT(notify_id));
- 	}
-+
-+out_unlock_free:
- 	mutex_unlock(&drv_info->notify_lock);
-+	if (rc)
-+		kfree(cb_info);
- 
- 	return rc;
- }
 -- 
 2.39.5
 
