@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0092E5439;
-	Tue,  8 Jul 2025 16:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140482E5B26;
+	Tue,  8 Jul 2025 16:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993798; cv=none; b=rWF7wIYBwE5nYeCcEJJoz+kjZieFpAae2uXcM6G5hreezNxSA8RqfNaq7N2pI4whZOcGSo8Y3wctk9p3sBcHrkUXlYpBCPuYBtNGygB5m1wAEO9xkWAxTg9YYkq3g80W8JWZuo0Q5OtY5KblibCcOyIeGcw1Ny5fO2UFlWgsi+4=
+	t=1751993801; cv=none; b=S/xpyt4QU6VAjOGuZQcBldU7n/mqWlDNwSItmMN16eHHeMLX4oe2wqMWbcDikfiOU1Up6zdsmtWRIShdwgDwpiN0gtTYU78Kz9bTOHRV861zTgvvbI2c/nY8Z3tmi9dSRnnSnpqeiZaQ73rdDDX1Rle8v8/WCge6jYJYA98Qqxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993798; c=relaxed/simple;
-	bh=QjI4bGFaAaIBlS+wrkbJs3bWl5PMveKVVEguB8i1Jrw=;
+	s=arc-20240116; t=1751993801; c=relaxed/simple;
+	bh=O5TDb5HNP4ftS15x1BQqy0bxrNkVEa1jM2ejQBkdH8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J0QUstmpiPc6vsD3jpB+dh5HRzhDZxAkddQUOcIxdE/Nk/T7maGvfxAzx2EW2V8cGvevIUVJr4AgiOEVluh8wqOuvtNvonq/ov9ah90K/NyhCwWuKh89/xtHyp89SNDtlannLdUUeyBlJEGq4txRGKcYFK+O1Ga9aTSyGVGSr1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2CgIMinY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QRoqy5GvYXEyaG0RFt3vQsOrVD1Zonoa9T+Op3DN2QtioU8F83SgNVL3u/hP6NotEDo/wg6DduqcaRr8Oeuqw5e2pZAPN5jRPsdXF3yqFHhI7tmE7hdHzhN8r9R29XYEQOLZzdNEiK+pi5JpJMBdv1j/N7ovJZwiY+OoaM3XMpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mo6IPg51; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2CgIMinY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4410C4CEF0;
-	Tue,  8 Jul 2025 16:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mo6IPg51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C8FC4CEF5;
+	Tue,  8 Jul 2025 16:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993798;
-	bh=QjI4bGFaAaIBlS+wrkbJs3bWl5PMveKVVEguB8i1Jrw=;
+	s=korg; t=1751993801;
+	bh=O5TDb5HNP4ftS15x1BQqy0bxrNkVEa1jM2ejQBkdH8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2CgIMinY09H8hPfJZuJSD5Rr4/7nhOzaXMQLKnNiQXZdMX0WcAHQS+lEVgX3+p/tR
-	 aRMOLYoFKXOdrQZEQL1fdBfLZ5rZVr4tou7PANdzP81sE2AizYdCmxPe4TWO1qnYtc
-	 7gDJ51N9i0Zt3Wew9L//DFL7uoahRE+A6w3xGb2E=
+	b=Mo6IPg51StaqJqcndk5VtQmE02e8YmHAEM3j5BvcmDCbiUw0xh9bqdQm9RASLAdHl
+	 se9TPikM/gomhRNq3UXfbL5uKSEh9+4DOXR++w+Q8f4lhbr0j/697+wHYfPhzp9O9p
+	 +82XgCdCsp5W51gR1CALjewo5GpAy8sYyatW5ZNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/160] ALSA: hda: Ignore unsol events for cards being shut down
-Date: Tue,  8 Jul 2025 18:20:59 +0200
-Message-ID: <20250708162232.121835852@linuxfoundation.org>
+Subject: [PATCH 5.15 023/160] ALSA: hda: Add new pci id for AMD GPU display HD audio controller
+Date: Tue,  8 Jul 2025 18:21:00 +0200
+Message-ID: <20250708162232.151514696@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -46,50 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 3f100f524e75586537e337b34d18c8d604b398e7 ]
+[ Upstream commit ab72bfce7647522e01a181e3600c3d14ff5c143e ]
 
-For the classic snd_hda_intel driver, codec->card and bus->card point to
-the exact same thing. When snd_card_diconnect() fires, bus->shutdown is
-set thanks to azx_dev_disconnect(). card->shutdown is already set when
-that happens but both provide basically the same functionality.
+Add new pci id for AMD GPU display HD audio controller(device id- 0xab40).
 
-For the DSP snd_soc_avs driver where multiple codecs are located on
-multiple cards, bus->shutdown 'shortcut' is not sufficient. One codec
-card may be unregistered while other codecs are still operational.
-Proper check in form of card->shutdown must be used to verify whether
-the codec's card is being shut down.
-
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250530141309.2943404-1-cezary.rojewski@intel.com
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patch.msgid.link/20250529053838.2350071-1-Vijendar.Mukunda@amd.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_bind.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/hda_intel.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
-index 8e35009ec25cb..a22f723ab3ab6 100644
---- a/sound/pci/hda/hda_bind.c
-+++ b/sound/pci/hda/hda_bind.c
-@@ -45,7 +45,7 @@ static void hda_codec_unsol_event(struct hdac_device *dev, unsigned int ev)
- 	struct hda_codec *codec = container_of(dev, struct hda_codec, core);
- 
- 	/* ignore unsol events during shutdown */
--	if (codec->bus->shutdown)
-+	if (codec->card->shutdown || codec->bus->shutdown)
- 		return;
- 
- 	/* ignore unsol events during system suspend/resume */
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index cc8c066327b6c..c69f4e5989d4f 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2731,6 +2731,9 @@ static const struct pci_device_id azx_ids[] = {
+ 	{ PCI_DEVICE(0x1002, 0xab38),
+ 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
+ 	  AZX_DCAPS_PM_RUNTIME },
++	{ PCI_VDEVICE(ATI, 0xab40),
++	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
++	  AZX_DCAPS_PM_RUNTIME },
+ 	/* GLENFLY */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_GLENFLY, PCI_ANY_ID),
+ 	  .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
 -- 
 2.39.5
 
