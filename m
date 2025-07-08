@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C08BE46;
-	Tue,  8 Jul 2025 16:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DAA1F4190;
+	Tue,  8 Jul 2025 16:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993705; cv=none; b=DBnDv31Re1Z0EGSpvvFNz3nB2slC1n31gWfzWkziVYxz5U+QTvcE7rJnTscx2rtR0Czv2TavL6a8BU008H6QLOSJ+OZ31G36FK5HhzQUhIFdPuogINoAca6/gykys26joGZxSyBJ/MeBySpaM5BSXpb7OpnH9xbfxh2Lyz10sG0=
+	t=1751993707; cv=none; b=J4rLT9BhtKgdRC0IjsQ3Rn7H1CDK4ZJfw/fw7pPa8hiP/esNXXsDQ341D6X2AT+zTvyj3XsAWHFt0etfzWo7tBSgNQNyQnwKy7s7BYAFpvk3Ieh7MuCUkc+PbpqW2beurxdB3sd14UgHxsVu+hlTla2stsWwUc7Zp4DacNoypD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993705; c=relaxed/simple;
-	bh=vYKU5/F3QcilwL5E0uxwh9As+pWoCuML8CYM8jjC70k=;
+	s=arc-20240116; t=1751993707; c=relaxed/simple;
+	bh=w+rewtdTbaKTM2kYqtRGB5NMQ7fAMG6BNTvFu2/pqxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovD1r3LlB+zOdU5KCLsAEo0McB2q91xTpEqA6CQR9NAR8DHm14UHOLmoKvzJ4qG475Rt4CXFKIP7cN1157yRKgpDcjCvKL/x3hldqx5/2wsS6DPXyjKtdCZVIxH3V3/+Xx+H/Jc8RGKpc3pMNi/WloQc0xVHJjNLEU76TCMER5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKhg4ny/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRUfkkP0gL5Isk9O9l2W9U7Ve7yHbfChcRUNHYnCysibAOCDKb+nqQm1V2LB7MxP9mrlZ0N5lhZLvFpPaZDNuRUGyc/haWfbWnekpn22zLYnZT5qWv3SKk3MSBP3tAOzqE9zXB60KvgQ5IkFGTToH7KJVpAoKFPJGfTtpb0ajmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vG92nEuJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKhg4ny/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C304C4CEED;
-	Tue,  8 Jul 2025 16:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vG92nEuJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0D2C4CEED;
+	Tue,  8 Jul 2025 16:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993704;
-	bh=vYKU5/F3QcilwL5E0uxwh9As+pWoCuML8CYM8jjC70k=;
+	s=korg; t=1751993707;
+	bh=w+rewtdTbaKTM2kYqtRGB5NMQ7fAMG6BNTvFu2/pqxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKhg4ny/kbouroqCccV0Jn8GheP8+AVH3sURfd938Za5H+YMOSQhgpRXgYB3QbAiv
-	 rK1ARDd2EdlkngoV+cg1w9PLXNBI2huAkUSwWiqC7IfsTGdJJeg0EGcBv2Emlz55CK
-	 ttkmmE4hxV1MZZ8JWydmgL1GnfRCjwTiYRHGZDOU=
+	b=vG92nEuJ9pVY7Kwm4Cxr0MmeS48gXijZzEdH2R4oGUb/Ktg5UZmWgdo9OTYUAqz6M
+	 U/uvAR0viseXXEmGyV4F1YW0HMu5X92VwtnLy4x4gQOcb9lfxzW0CQKfvdOllj4SW2
+	 rnq7HSu5f0vVauK+ZQPlgqOc1X7RHo3uKyVXrgBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Williams <peter@newton.cx>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 138/178] ACPICA: Refuse to evaluate a method if arguments are missing
-Date: Tue,  8 Jul 2025 18:22:55 +0200
-Message-ID: <20250708162240.156255931@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.15 165/178] iommu/vt-d: Assign devtlb cache tag on ATS enablement
+Date: Tue,  8 Jul 2025 18:23:22 +0200
+Message-ID: <20250708162240.782926763@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,51 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit 6fcab2791543924d438e7fa49276d0998b0a069f ]
+commit 25b1b75bbaf96331750fb01302825069657b2ff8 upstream.
 
-As reported in [1], a platform firmware update that increased the number
-of method parameters and forgot to update a least one of its callers,
-caused ACPICA to crash due to use-after-free.
+Commit <4f1492efb495> ("iommu/vt-d: Revert ATS timing change to fix boot
+failure") placed the enabling of ATS in the probe_finalize callback. This
+occurs after the default domain attachment, which is when the ATS cache
+tag is assigned. Consequently, the device TLB cache tag is missed when the
+domain is attached, leading to the device TLB not being invalidated in the
+iommu_unmap paths.
 
-Since this a result of a clear AML issue that arguably cannot be fixed
-up by the interpreter (it cannot produce missing data out of thin air),
-address it by making ACPICA refuse to evaluate a method if the caller
-attempts to pass fewer arguments than expected to it.
+Fix this by assigning the CACHE_TAG_DEVTLB cache tag when ATS is enabled.
 
-Closes: https://github.com/acpica/acpica/issues/1027 [1]
-Reported-by: Peter Williams <peter@newton.cx>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Tested-by: Hans de Goede <hansg@kernel.org> # Dell XPS 9640 with BIOS 1.12.0
-Link: https://patch.msgid.link/5909446.DvuYhMxLoT@rjwysocki.net
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4f1492efb495 ("iommu/vt-d: Revert ATS timing change to fix boot failure")
+Cc: stable@vger.kernel.org
+Suggested-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Tested-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20250625050135.3129955-1-baolu.lu@linux.intel.com
+Link: https://lore.kernel.org/r/20250628100351.3198955-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/dsmethod.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/iommu/intel/cache.c |    5 ++---
+ drivers/iommu/intel/iommu.c |   11 ++++++++++-
+ drivers/iommu/intel/iommu.h |    2 ++
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index e809c2aed78ae..a232746d150a7 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -483,6 +483,13 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
- 		return_ACPI_STATUS(AE_NULL_OBJECT);
- 	}
+--- a/drivers/iommu/intel/cache.c
++++ b/drivers/iommu/intel/cache.c
+@@ -40,9 +40,8 @@ static bool cache_tage_match(struct cach
+ }
  
-+	if (this_walk_state->num_operands < obj_desc->method.param_count) {
-+		ACPI_ERROR((AE_INFO, "Missing argument for method [%4.4s]",
-+			    acpi_ut_get_node_name(method_node)));
+ /* Assign a cache tag with specified type to domain. */
+-static int cache_tag_assign(struct dmar_domain *domain, u16 did,
+-			    struct device *dev, ioasid_t pasid,
+-			    enum cache_tag_type type)
++int cache_tag_assign(struct dmar_domain *domain, u16 did, struct device *dev,
++		     ioasid_t pasid, enum cache_tag_type type)
+ {
+ 	struct device_domain_info *info = dev_iommu_priv_get(dev);
+ 	struct intel_iommu *iommu = info->iommu;
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -3819,8 +3819,17 @@ static void intel_iommu_probe_finalize(s
+ 	    !pci_enable_pasid(to_pci_dev(dev), info->pasid_supported & ~1))
+ 		info->pasid_enabled = 1;
+ 
+-	if (sm_supported(iommu) && !dev_is_real_dma_subdevice(dev))
++	if (sm_supported(iommu) && !dev_is_real_dma_subdevice(dev)) {
+ 		iommu_enable_pci_ats(info);
++		/* Assign a DEVTLB cache tag to the default domain. */
++		if (info->ats_enabled && info->domain) {
++			u16 did = domain_id_iommu(info->domain, iommu);
 +
-+		return_ACPI_STATUS(AE_AML_UNINITIALIZED_ARG);
++			if (cache_tag_assign(info->domain, did, dev,
++					     IOMMU_NO_PASID, CACHE_TAG_DEVTLB))
++				iommu_disable_pci_ats(info);
++		}
 +	}
-+
- 	/* Init for new method, possibly wait on method mutex */
+ 	iommu_enable_pci_pri(info);
+ }
  
- 	status =
--- 
-2.39.5
-
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -1277,6 +1277,8 @@ struct cache_tag {
+ 	unsigned int users;
+ };
+ 
++int cache_tag_assign(struct dmar_domain *domain, u16 did, struct device *dev,
++		     ioasid_t pasid, enum cache_tag_type type);
+ int cache_tag_assign_domain(struct dmar_domain *domain,
+ 			    struct device *dev, ioasid_t pasid);
+ void cache_tag_unassign_domain(struct dmar_domain *domain,
 
 
