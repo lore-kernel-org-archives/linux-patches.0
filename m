@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09E61DF74F;
-	Tue,  8 Jul 2025 16:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75D9289E2C;
+	Tue,  8 Jul 2025 16:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992793; cv=none; b=ibFBINkI/nfhbHcVfB4CiEwC8t+oIpS0REswPSJ+LCEFCLxjKD5etCG3JJKpXDZHWGWbwtW0hkwvpNkIKbNxi0uE9r7ZE/lW3Pg3M0xvlzUA7aSrlTahUaDc52bQBwb45sAEg8tfa9OxmDBfIZEDyOObKwIBAfLwwomPjFnC4K8=
+	t=1751992796; cv=none; b=m9CY3YKZ7JtGsLf43XxJ/A5HBS1DasH3Q6XTIwXfCCayJZCpf4niVQ+2ICNcpwnW50XAYRQJMokPbmJV6z45q86QY9+rEvGqmiUz1r9uaiADJgm0K2Za04q+qqwIpHfInQJehZpeThdNPNNlURFlBozt4ENY/a2kbTYnYyvKmuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992793; c=relaxed/simple;
-	bh=e0NBTJMQ0PnwVoAyefk6xHUEF/OSdHxD59faEit9gRs=;
+	s=arc-20240116; t=1751992796; c=relaxed/simple;
+	bh=fckYxr5NdA4yFewxeLJp9viFJKPNVeob8ZeTIXCZT5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MKx1xs9vnEvsqOHhRSqRd/TKxLZTq/R5lb2Py83lpI8beUXIt9uV3hBxHlm58McgYCXRlPThyqUZgOeynCzImF+UQJQWN93FP08KY3LIlnAM66ntVPQFxM2+IHy9TfpuJ6i5G90fYqCeDMLDIep0aAmJsFQI0z/j8A9E79Qt/v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1V4Z+z/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FfJOzCYFgEx2+XpdMuotcZua4O8RJDrJgDSrjZYAo9XGtjdoEKfOiImfakr0z2dzC939EaFrzk0lh1Rk8hSYcb9BO+6Jq4aC7LucZJS+mGy6gbDI5Z5+t0BwK/49SefO13APbMunWTIGtG8zdV6k4AYhCBYpADKJJPsoSAQeNj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWnyYmd9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1V4Z+z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276C9C4CEF7;
-	Tue,  8 Jul 2025 16:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWnyYmd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5A2C4CEED;
+	Tue,  8 Jul 2025 16:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992793;
-	bh=e0NBTJMQ0PnwVoAyefk6xHUEF/OSdHxD59faEit9gRs=;
+	s=korg; t=1751992796;
+	bh=fckYxr5NdA4yFewxeLJp9viFJKPNVeob8ZeTIXCZT5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1V4Z+z/KCXtx22uT/Gtq9BjWJ18Kvo4iOnHAdsguYDriW3tiaeLuPHfBC4DHBlM5
-	 7K1TktDnX4/g1NiBnOelIl2qRgiafYvf+/mRiXug4p77p5atEKMjwiU3DrT/+WykyM
-	 GgS8JwRt2i0BnFpPR8+gSQNgBblb6vWn3taMsp8Q=
+	b=yWnyYmd97IXiKta6hK494z6zdwDc91cIvF6FmyixVLKVXy+LpuUEW4jRf2iAoS06F
+	 V1FfwNhIeIDsOTfDRvOwCSQtio5IsvtPVMMHstTd32TUeb5i14gJaqJoF6pG6wPrR9
+	 KuryHZFZIfwNL2Ef2d0ZXahIbGcktS5CPDKAxtOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Borja <kuurtb@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <sfrench@samba.org>,
+	linux-cifs@vger.kernel.org,
+	netfs@lists.linux.dev,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/232] platform/x86: hp-bioscfg: Fix class device unregistration
-Date: Tue,  8 Jul 2025 18:21:01 +0200
-Message-ID: <20250708162243.164662954@linuxfoundation.org>
+Subject: [PATCH 6.12 083/232] smb: client: set missing retry flag in cifs_writev_callback()
+Date: Tue,  8 Jul 2025 18:21:19 +0200
+Message-ID: <20250708162243.621147875@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -45,54 +49,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 11cba4793b95df3bc192149a6eb044f69aa0b99e ]
+[ Upstream commit 74ee76bea4b445c023d04806e0bcd78a912fd30b ]
 
-Devices under the firmware_attributes_class do not have unique a dev_t.
-Therefore, device_unregister() should be used instead of
-device_destroy(), since the latter may match any device with a given
-dev_t.
+Set NETFS_SREQ_NEED_RETRY flag to tell netfslib that the subreq needs
+to be retried.
 
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250625-dest-fix-v1-1-3a0f342312bb@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/20250701163852.2171681-9-dhowells@redhat.com
+Tested-by: Steve French <sfrench@samba.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: netfs@lists.linux.dev
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/cifssmb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-index 0b277b7e37dd6..00b04adb4f191 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -1037,7 +1037,7 @@ static int __init hp_init(void)
- 	release_attributes_data();
- 
- err_destroy_classdev:
--	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
-+	device_unregister(bioscfg_drv.class_dev);
- 
- err_unregister_class:
- 	hp_exit_attr_set_interface();
-@@ -1048,7 +1048,7 @@ static int __init hp_init(void)
- static void __exit hp_exit(void)
- {
- 	release_attributes_data();
--	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
-+	device_unregister(bioscfg_drv.class_dev);
- 
- 	hp_exit_attr_set_interface();
- }
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 449ac718a8beb..e3d9367eaec37 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -1682,6 +1682,7 @@ cifs_writev_callback(struct mid_q_entry *mid)
+ 		break;
+ 	case MID_REQUEST_SUBMITTED:
+ 	case MID_RETRY_NEEDED:
++		__set_bit(NETFS_SREQ_NEED_RETRY, &wdata->subreq.flags);
+ 		result = -EAGAIN;
+ 		break;
+ 	default:
 -- 
 2.39.5
 
