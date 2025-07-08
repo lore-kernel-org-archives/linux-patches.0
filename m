@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AB72DC32D;
-	Tue,  8 Jul 2025 17:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670832E1C74;
+	Tue,  8 Jul 2025 17:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994074; cv=none; b=E0dtCSb+hpfRSkY5lNyd70vY9jMGpzaOovfW7bz+aFtbCHVTStc2qcrycTlBUj3XOy5OQpDaVsBqhxniaYKrrkdlPI6XODLWMdQ4HEPn71zSdcc0zsFTjJx6qXCbiZDC2qDvi2uYWXhmPAwvSLifnrxp2sfbWzX7yaaSNn+pZag=
+	t=1751994077; cv=none; b=KSv08LuD2/n+Kp2KxqL5djfEoBMXoKdiYT1DcsL21YxpTRKI3aHcCqreHTAxHDslrlUY//6Y8Rd/ghM1Gt374dYMSgXp4qtXJN95mp0oLb6uvqgPGCUqmoMVntE68Si7nNOFkE2nOps8bYUu5HxyAPtLIVDbb8hshDOJO95oRP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994074; c=relaxed/simple;
-	bh=olQaiNPAuZMRaHrWD3DJZgUGZa5zzhhRgtbkUClhoXo=;
+	s=arc-20240116; t=1751994077; c=relaxed/simple;
+	bh=8LqYMZjCEnDJ8xvao8ABW8S6c5uo7//+skO7jRR7s0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aoiXSz86zlCB7MYrSXl2PYZZ1VD2CXpenmRsXJptLUKo9PH5uNyXPdC7TuoaYvXiZOO2vwFoVRfbr6vYR4Xcmkt51rWK/hVV0snBZRPSaD5VQtaZSjVgvsGgCErCtXOpszqUriY3Ph33p432veiROS8nL8DlbSF0jJRnaZDqhjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJeOxhHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RrfKIAzQFFsNWaLalhVJ2/k6Os211Hx+J5sqQ8Rh/h/ktdiny841Waa2Hw9ZJeA2Jl5QlFzpT3aVwjCjPMgsw0w2RUexIbNze4W9R3ObAaMdbJ0ENdZ0Rj0p5CkZODrTv9ETFFxTzqy0+OFLXlDBEElaYMloV8+QJqFuAVqNPgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lb6eTdQZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJeOxhHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAA1C4CEED;
-	Tue,  8 Jul 2025 17:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lb6eTdQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41D5C4CEED;
+	Tue,  8 Jul 2025 17:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994074;
-	bh=olQaiNPAuZMRaHrWD3DJZgUGZa5zzhhRgtbkUClhoXo=;
+	s=korg; t=1751994077;
+	bh=8LqYMZjCEnDJ8xvao8ABW8S6c5uo7//+skO7jRR7s0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJeOxhHRDovUMjGDZqq6wpOVq5tniCZpTn8w/qqUfF7LJfufFijxfm+lA8QcBF0w1
-	 Gsw0zYCctrctIMm7acTCRz6CVwToh8tBV4Y+KGSCTl0evr83OUtcoRUw3iLiteQwRT
-	 jOFkE0J+AewizJVkMMGliFjRNRFroHgodhNJdehc=
+	b=Lb6eTdQZSRHY4IYiUHM5d7DPU9h6MmlH13gk6rAEvfYpoSJyeZi9ywr+eNYep47lE
+	 Bz2SAfBuHqpnvmpy3zaOGFw8c40jmYoeSZqiWliHBE4pVz6eQUCaDKyQ4LkRuOpRD+
+	 DT6W+max8t41kwvWCrpZfKMW8AqdWgcPmDytPyPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Graczyk <jangraczyk@yahoo.ca>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Kurt Borja <kuurtb@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
+	Krzysztof Niemiec <krzysztof.niemiec@intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/160] platform/x86: dell-wmi-sysman: Fix WMI data block retrieval in sysfs callbacks
-Date: Tue,  8 Jul 2025 18:22:34 +0200
-Message-ID: <20250708162234.696900245@linuxfoundation.org>
+Subject: [PATCH 5.15 118/160] drm/i915/gt: Fix timeline left held on VMA alloc error
+Date: Tue,  8 Jul 2025 18:22:35 +0200
+Message-ID: <20250708162234.721849213@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -48,142 +52,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-[ Upstream commit eb617dd25ca176f3fee24f873f0fd60010773d67 ]
+[ Upstream commit a5aa7bc1fca78c7fa127d9e33aa94a0c9066c1d6 ]
 
-After retrieving WMI data blocks in sysfs callbacks, check for the
-validity of them before dereferencing their content.
+The following error has been reported sporadically by CI when a test
+unbinds the i915 driver on a ring submission platform:
 
-Reported-by: Jan Graczyk <jangraczyk@yahoo.ca>
-Closes: https://lore.kernel.org/r/CAHk-=wgMiSKXf7SvQrfEnxVtmT=QVQPjJdNjfm3aXS7wc=rzTw@mail.gmail.com/
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250630-sysman-fix-v2-1-d185674d0a30@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+<4> [239.330153] ------------[ cut here ]------------
+<4> [239.330166] i915 0000:00:02.0: [drm] drm_WARN_ON(dev_priv->mm.shrink_count)
+<4> [239.330196] WARNING: CPU: 1 PID: 18570 at drivers/gpu/drm/i915/i915_gem.c:1309 i915_gem_cleanup_early+0x13e/0x150 [i915]
+...
+<4> [239.330640] RIP: 0010:i915_gem_cleanup_early+0x13e/0x150 [i915]
+...
+<4> [239.330942] Call Trace:
+<4> [239.330944]  <TASK>
+<4> [239.330949]  i915_driver_late_release+0x2b/0xa0 [i915]
+<4> [239.331202]  i915_driver_release+0x86/0xa0 [i915]
+<4> [239.331482]  devm_drm_dev_init_release+0x61/0x90
+<4> [239.331494]  devm_action_release+0x15/0x30
+<4> [239.331504]  release_nodes+0x3d/0x120
+<4> [239.331517]  devres_release_all+0x96/0xd0
+<4> [239.331533]  device_unbind_cleanup+0x12/0x80
+<4> [239.331543]  device_release_driver_internal+0x23a/0x280
+<4> [239.331550]  ? bus_find_device+0xa5/0xe0
+<4> [239.331563]  device_driver_detach+0x14/0x20
+...
+<4> [357.719679] ---[ end trace 0000000000000000 ]---
+
+If the test also unloads the i915 module then that's followed with:
+
+<3> [357.787478] =============================================================================
+<3> [357.788006] BUG i915_vma (Tainted: G     U  W        N ): Objects remaining on __kmem_cache_shutdown()
+<3> [357.788031] -----------------------------------------------------------------------------
+<3> [357.788204] Object 0xffff888109e7f480 @offset=29824
+<3> [357.788670] Allocated in i915_vma_instance+0xee/0xc10 [i915] age=292729 cpu=4 pid=2244
+<4> [357.788994]  i915_vma_instance+0xee/0xc10 [i915]
+<4> [357.789290]  init_status_page+0x7b/0x420 [i915]
+<4> [357.789532]  intel_engines_init+0x1d8/0x980 [i915]
+<4> [357.789772]  intel_gt_init+0x175/0x450 [i915]
+<4> [357.790014]  i915_gem_init+0x113/0x340 [i915]
+<4> [357.790281]  i915_driver_probe+0x847/0xed0 [i915]
+<4> [357.790504]  i915_pci_probe+0xe6/0x220 [i915]
+...
+
+Closer analysis of CI results history has revealed a dependency of the
+error on a few IGT tests, namely:
+- igt@api_intel_allocator@fork-simple-stress-signal,
+- igt@api_intel_allocator@two-level-inception-interruptible,
+- igt@gem_linear_blits@interruptible,
+- igt@prime_mmap_coherency@ioctl-errors,
+which invisibly trigger the issue, then exhibited with first driver unbind
+attempt.
+
+All of the above tests perform actions which are actively interrupted with
+signals.  Further debugging has allowed to narrow that scope down to
+DRM_IOCTL_I915_GEM_EXECBUFFER2, and ring_context_alloc(), specific to ring
+submission, in particular.
+
+If successful then that function, or its execlists or GuC submission
+equivalent, is supposed to be called only once per GEM context engine,
+followed by raise of a flag that prevents the function from being called
+again.  The function is expected to unwind its internal errors itself, so
+it may be safely called once more after it returns an error.
+
+In case of ring submission, the function first gets a reference to the
+engine's legacy timeline and then allocates a VMA.  If the VMA allocation
+fails, e.g. when i915_vma_instance() called from inside is interrupted
+with a signal, then ring_context_alloc() fails, leaving the timeline held
+referenced.  On next I915_GEM_EXECBUFFER2 IOCTL, another reference to the
+timeline is got, and only that last one is put on successful completion.
+As a consequence, the legacy timeline, with its underlying engine status
+page's VMA object, is still held and not released on driver unbind.
+
+Get the legacy timeline only after successful allocation of the context
+engine's VMA.
+
+v2: Add a note on other submission methods (Krzysztof Karas):
+    Both execlists and GuC submission use lrc_alloc() which seems free
+    from a similar issue.
+
+Fixes: 75d0a7f31eec ("drm/i915: Lift timeline into intel_context")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12061
+Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Reviewed-by: Krzysztof Niemiec <krzysztof.niemiec@intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/20250611104352.1014011-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit cc43422b3cc79eacff4c5a8ba0d224688ca9dd4f)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h   | 5 +++++
- .../platform/x86/dell/dell-wmi-sysman/enum-attributes.c   | 5 +++--
- .../platform/x86/dell/dell-wmi-sysman/int-attributes.c    | 5 +++--
- .../x86/dell/dell-wmi-sysman/passobj-attributes.c         | 5 +++--
- .../platform/x86/dell/dell-wmi-sysman/string-attributes.c | 5 +++--
- drivers/platform/x86/dell/dell-wmi-sysman/sysman.c        | 8 ++++----
- 6 files changed, 21 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_ring_submission.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-index 3ad33a094588c..817ee7ba07ca0 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-@@ -89,6 +89,11 @@ extern struct wmi_sysman_priv wmi_priv;
+diff --git a/drivers/gpu/drm/i915/gt/intel_ring_submission.c b/drivers/gpu/drm/i915/gt/intel_ring_submission.c
+index 02e18e70c78ea..d85b80156913f 100644
+--- a/drivers/gpu/drm/i915/gt/intel_ring_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_ring_submission.c
+@@ -563,7 +563,6 @@ static int ring_context_alloc(struct intel_context *ce)
+ 	/* One ringbuffer to rule them all */
+ 	GEM_BUG_ON(!engine->legacy.ring);
+ 	ce->ring = engine->legacy.ring;
+-	ce->timeline = intel_timeline_get(engine->legacy.timeline);
  
- enum { ENUM, INT, STR, PO };
+ 	GEM_BUG_ON(ce->state);
+ 	if (engine->context_size) {
+@@ -576,6 +575,8 @@ static int ring_context_alloc(struct intel_context *ce)
+ 		ce->state = vma;
+ 	}
  
-+#define ENUM_MIN_ELEMENTS		8
-+#define INT_MIN_ELEMENTS		9
-+#define STR_MIN_ELEMENTS		8
-+#define PO_MIN_ELEMENTS			4
++	ce->timeline = intel_timeline_get(engine->legacy.timeline);
 +
- enum {
- 	ATTR_NAME,
- 	DISPL_NAME_LANG_CODE,
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-index 8cc212c852668..fc2f58b4cbc6e 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-@@ -23,9 +23,10 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_ENUMERATION_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < ENUM_MIN_ELEMENTS ||
-+	    obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%s\n", obj->package.elements[CURRENT_VAL].string.pointer);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c
-index 951e75b538fad..7352480642391 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c
-@@ -25,9 +25,10 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_INTEGER_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_INTEGER) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < INT_MIN_ELEMENTS ||
-+	    obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_INTEGER) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%lld\n", obj->package.elements[CURRENT_VAL].integer.value);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-index d8f1bf5e58a0f..3167e06d416ed 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-@@ -26,9 +26,10 @@ static ssize_t is_enabled_show(struct kobject *kobj, struct kobj_attribute *attr
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_PASSOBJ_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[IS_PASS_SET].type != ACPI_TYPE_INTEGER) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < PO_MIN_ELEMENTS ||
-+	    obj->package.elements[IS_PASS_SET].type != ACPI_TYPE_INTEGER) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%lld\n", obj->package.elements[IS_PASS_SET].integer.value);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c
-index c392f0ecf8b55..0d2c74f8d1aad 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c
-@@ -25,9 +25,10 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_STRING_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < STR_MIN_ELEMENTS ||
-+	    obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%s\n", obj->package.elements[CURRENT_VAL].string.pointer);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-index 47f8c5a63343d..ab639dc8a8072 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-@@ -411,10 +411,10 @@ static int init_bios_attributes(int attr_type, const char *guid)
- 		return retval;
+ 	return 0;
+ }
  
- 	switch (attr_type) {
--	case ENUM:	min_elements = 8;	break;
--	case INT:	min_elements = 9;	break;
--	case STR:	min_elements = 8;	break;
--	case PO:	min_elements = 4;	break;
-+	case ENUM:	min_elements = ENUM_MIN_ELEMENTS;	break;
-+	case INT:	min_elements = INT_MIN_ELEMENTS;	break;
-+	case STR:	min_elements = STR_MIN_ELEMENTS;	break;
-+	case PO:	min_elements = PO_MIN_ELEMENTS;		break;
- 	default:
- 		pr_err("Error: Unknown attr_type: %d\n", attr_type);
- 		return -EINVAL;
 -- 
 2.39.5
 
