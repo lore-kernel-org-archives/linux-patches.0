@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA28A2DCC02;
-	Tue,  8 Jul 2025 16:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDBF2DCC02;
+	Tue,  8 Jul 2025 16:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992538; cv=none; b=qhCuj8Q20g4icjv0xuWVh191VLC2UyiIOQ03rvQAd/s/59wQRGjmImzPJO1Y3Wjk9iO+TPlYh+mH2hjo4w97NReX74y2EH0bPptEnT1u7xyiqPxMCR/qlyg5jiG6fYxy6IV0QlaUmRGsE+8NErjqqMLYhXS09jJZz/jCms8TlRI=
+	t=1751992541; cv=none; b=PDEV1vUcA5K+CIV1cFucjnq3nAY/d9o3rgbZ+n/CuX0za81DlcSQfCTteaM/6zNtEajESVQ/zCes6OIBDCspczI7UP78S7+WjT0t7jXS9sFzWJPT0+temCF3iR3Xjem7jDabEfPAcBvolKil/Jwt5AZBmGVuxz9GMkRktxyjpUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992538; c=relaxed/simple;
-	bh=+Ca/04lR2oONIl3+DHdFr1Y1ssfSIHT2hQ7AD/ExJEM=;
+	s=arc-20240116; t=1751992541; c=relaxed/simple;
+	bh=CRiNpyOBWvlfs9Zq7cF8ZpquTyHCfCxLhkC+I9XTQ2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCPjiEkyB0/H+BCe+Ip/wKrSlepTGW9+zwmby4P76UIL5bReK1ts4U7cnsUK61jlNCAPeJ4mixTDap8kYn4aTluEAgC6+AkTB2BF1qcZVkydnCi4wF/8KbCBWjosCmcBGbnCBCwTzoSt8fAcogC+g6O4jHgcYQYnqv0J1wApYF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEX+cFNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6SYInFGbIBhwJBlgCzFbY+rd/VjXzCUnsXOAFEE6b3tWlOXfy92eNDqeTgtM+3ixSu05c4A5co9iA/R+genWlEhtGH+9klkAvIwxMJYpv8cfpSYyk/EjiWDIcoUaQqxoJFPj+Gjg0tAcEPSNeYvieFIrThkaabGwoO88KCbV4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUYlGsV+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEX+cFNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72202C4CEED;
-	Tue,  8 Jul 2025 16:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUYlGsV+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A5DC4CEF5;
+	Tue,  8 Jul 2025 16:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992537;
-	bh=+Ca/04lR2oONIl3+DHdFr1Y1ssfSIHT2hQ7AD/ExJEM=;
+	s=korg; t=1751992541;
+	bh=CRiNpyOBWvlfs9Zq7cF8ZpquTyHCfCxLhkC+I9XTQ2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEX+cFNomi3aD20R/4AvIlKtH9qgw7YZIpH63y3MTeNhxYsYALQTND2FHMIMbTsHc
-	 Mu9PKJjUShvLDrYmKLNrthBe9H0XDArqd/KmgvB06kYj88kqMNH2NPnZblnWeiz2Dk
-	 koM6VNgpl5I2AFbMjCd1IWBhCpMPtsqOxBXZSQFA=
+	b=nUYlGsV+tl9khGhlw/g9ae0ehKyB3OcUXfRaEBJcq0OH1Ag+uJsa7i0C1u2BQgLYP
+	 TDIa5Axu6ePFfA7NOlHfRT6oh4MkB3kAXRX0koxmkTg9K5ZluT8VkXr6XAPQ9YUN49
+	 gOnAR2ry4bqImwTC8s1nzOS0OS5yOQWz45YNAxQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 126/132] usb: typec: displayport: Fix potential deadlock
-Date: Tue,  8 Jul 2025 18:23:57 +0200
-Message-ID: <20250708162234.216240363@linuxfoundation.org>
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 127/132] powerpc/kernel: Fix ppc_save_regs inclusion in build
+Date: Tue,  8 Jul 2025 18:23:58 +0200
+Message-ID: <20250708162234.241580121@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -51,43 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-commit 099cf1fbb8afc3771f408109f62bdec66f85160e upstream.
+commit 93bd4a80efeb521314485a06d8c21157240497bb upstream.
 
-The deadlock can occur due to a recursive lock acquisition of
-`cros_typec_altmode_data::mutex`.
-The call chain is as follows:
-1. cros_typec_altmode_work() acquires the mutex
-2. typec_altmode_vdm() -> dp_altmode_vdm() ->
-3. typec_altmode_exit() -> cros_typec_altmode_exit()
-4. cros_typec_altmode_exit() attempts to acquire the mutex again
+Recent patch fixed an old commit
+'fc2a5a6161a2 ("powerpc/64s: ppc_save_regs is now needed for all 64s builds")'
+which is to include building of ppc_save_reg.c only when XMON
+and KEXEC_CORE and PPC_BOOK3S are enabled. This was valid, since
+ppc_save_regs was called only in replay_system_reset() of old
+irq.c which was under BOOK3S.
 
-To prevent this, defer the `typec_altmode_exit()` call by scheduling
-it rather than calling it directly from within the mutex-protected
-context.
+But there has been multiple refactoring of irq.c and have
+added call to ppc_save_regs() from __replay_soft_interrupts
+-> replay_soft_interrupts which is part of irq_64.c included
+under CONFIG_PPC64. And since ppc_save_regs is called in
+CRASH_DUMP path as part of crash_setup_regs in kexec.h,
+CONFIG_PPC32 also needs it.
 
-Cc: stable <stable@kernel.org>
-Fixes: b4b38ffb38c9 ("usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode")
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250624133246.3936737-1-akuchynski@chromium.org
+So with this recent patch which enabled the building of
+ppc_save_regs.c caused a build break when none of these
+(XMON, KEXEC_CORE, BOOK3S) where enabled as part of config.
+Patch to enable building of ppc_save_regs.c by defaults.
+
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250511041111.841158-1-maddy@linux.ibm.com
+Cc: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/powerpc/kernel/Makefile |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -324,8 +324,7 @@ static int dp_altmode_vdm(struct typec_a
- 	case CMDT_RSP_NAK:
- 		switch (cmd) {
- 		case DP_CMD_STATUS_UPDATE:
--			if (typec_altmode_exit(alt))
--				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
-+			dp->state = DP_STATE_EXIT;
- 			break;
- 		case DP_CMD_CONFIGURE:
- 			dp->data.conf = 0;
+--- a/arch/powerpc/kernel/Makefile
++++ b/arch/powerpc/kernel/Makefile
+@@ -165,9 +165,7 @@ endif
+ 
+ obj64-$(CONFIG_PPC_TRANSACTIONAL_MEM)	+= tm.o
+ 
+-ifneq ($(CONFIG_XMON)$(CONFIG_KEXEC_CORE)$(CONFIG_PPC_BOOK3S),)
+ obj-y				+= ppc_save_regs.o
+-endif
+ 
+ obj-$(CONFIG_EPAPR_PARAVIRT)	+= epapr_paravirt.o epapr_hcalls.o
+ obj-$(CONFIG_KVM_GUEST)		+= kvm.o kvm_emul.o
 
 
