@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8075E2E5413;
-	Tue,  8 Jul 2025 16:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB8A2E540C;
+	Tue,  8 Jul 2025 16:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992828; cv=none; b=CSN74+gJd42AMjMXJnvcEMIsk4tBcNyPilPVkQQ9LrzCT//NouWHgutOn8FpZa/epsc/sENV2iGk46WC0lFyXn9D5VvQDXUj56v0rXqpqeBVZZ9bJYAFnH1aXzReggmA88CCUokg3hqct2Dw2VdG62XNpcN21CtUnhUVGwn1Xis=
+	t=1751992831; cv=none; b=fBiXGtJeUeAE5Urf3zsamhgmNynA/rxo1Pi6hkEiglLSMfqHgz4sjPD3cKo0afOevuN0NvgX0HFzk6I63ewtCTWOHcY1afVrVixUEwh4C15L1SB7CS2bHSJhAK5+dgrLmSA/mtGQaJri1YhMsxrqtNPP1DudULDWnXYHDu1uKvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992828; c=relaxed/simple;
-	bh=Htx8Vkz77rpsXmDyLME/v77Tb6X7Rn0D0lXxQS+jGIo=;
+	s=arc-20240116; t=1751992831; c=relaxed/simple;
+	bh=ZB6G23KGTDbiwlwDJTWlW08ZzYgg++FXHeJVXEeTw44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OgsE8keWPR8M2KFpGIAnA42lFHTkiROIrTqtmYm4ufnxRzJ6EKmum2zrBWoVyjtUnfVbHVxDZsoHGtB4UQZrhxd6JXk1A7yCvKDQtWcf9+eWORGNHc0W0hZuUWvpNKH3pQhOX8LQGMJZYB3HHID2xviLVIKr0lrAPOrR2NMnzwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rn7xoPqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sPFs22lVleitNPi+dePFfpH/LPnAtPldgm8mZz4V/SFZzTqRdLwkKBXoOpiFFw78RFAVMk5ZQTmKW31pCXC0ya+JxeZ284bNOvpJxsXK5AjdvPVlUllzvBk0OfYeanMx0/KDKKoAY8xpXi7r78q18fCNvLvMdYS/ISL1pAgaeMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImrHY9HE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rn7xoPqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C8FC4CEED;
-	Tue,  8 Jul 2025 16:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImrHY9HE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7EDC4CEED;
+	Tue,  8 Jul 2025 16:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992828;
-	bh=Htx8Vkz77rpsXmDyLME/v77Tb6X7Rn0D0lXxQS+jGIo=;
+	s=korg; t=1751992831;
+	bh=ZB6G23KGTDbiwlwDJTWlW08ZzYgg++FXHeJVXEeTw44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rn7xoPqH9WjFnQJ/hpT3QzgsaTD2Au6H0v98VSrfnpux2aCycHwG6UDl0L8Kwrupb
-	 JR8IuFnJK8GiK7WXoYaPXUcJ1brYnYNjJQliHdxIt94OOPPv1t0ranQanhtoXa6N6o
-	 U59sgKzFXGBre6e4heCFoPuooS/SCTZZwBBPBZ/w=
+	b=ImrHY9HEk/waMuEKaCWggMiyqgT08HUBKiZpClL7UyZhNd9nMsBkMeudj9jpFMIAl
+	 mTeL7SHUrAPWgEUDdGWpcd7s2Kt3t5xBZXZeYnITKmwq4WNgU9GdsMZXH/LJvF1fbu
+	 8Lo0h0s+osqNr+n46JYsSKOtbNs514zH+S1VUrZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/232] arm64: dts: rockchip: fix internal USB hub instability on RK3399 Puma
-Date: Tue,  8 Jul 2025 18:21:29 +0200
-Message-ID: <20250708162243.881609817@linuxfoundation.org>
+Subject: [PATCH 6.12 094/232] crypto: iaa - Remove dst_null support
+Date: Tue,  8 Jul 2025 18:21:30 +0200
+Message-ID: <20250708162243.908772419@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -45,135 +44,251 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit d7cc532df95f7f159e40595440e4e4b99481457b ]
+[ Upstream commit 02c974294c740bfb747ec64933e12148eb3d99e1 ]
 
-Currently, the onboard Cypress CYUSB3304 USB hub is not defined in
-the device tree, and hub reset pin is provided as vcc5v0_host
-regulator to usb phy. This causes instability issues, as a result
-of improper reset duration.
+Remove the unused dst_null support.
 
-The fixed regulator device requests the GPIO during probe in its
-inactive state (except if regulator-boot-on property is set, in
-which case it is requested in the active state). Considering gpio
-is GPIO_ACTIVE_LOW for Puma, it means it’s driving it high. Then
-the regulator gets enabled (because regulator-always-on property),
-which drives it to its active state, meaning driving it low.
-
-The Cypress CYUSB3304 USB hub actually requires the reset to be
-asserted for at least 5 ms, which we cannot guarantee right now
-since there's no delay in the current config, meaning the hub may
-sometimes work or not. We could add delay as offered by
-fixed-regulator but let's rather fix this by using the proper way
-to model onboard USB hubs.
-
-Define hub_2_0 and hub_3_0 nodes, as the onboard Cypress hub
-consist of two 'logical' hubs, for USB2.0 and USB3.0.
-Use the 'reset-gpios' property of hub to assign reset pin instead
-of using regulator. Rename the vcc5v0_host regulator to
-cy3304_reset to be more meaningful. Pin is configured to
-output-high by default, which sets the hub in reset state
-during pin controller initialization. This allows to avoid double
-enumeration of devices in case the bootloader has setup the USB
-hub before the kernel.
-The vdd-supply and vdd2-supply properties in hub nodes are
-added to provide correct dt-bindings, although power supplies are
-always enabled based on HW design.
-
-Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
-Cc: stable@vger.kernel.org # 6.6
-Cc: stable@vger.kernel.org # Backport of the patch in this series fixing product ID in onboard_dev_id_table in drivers/usb/misc/onboard_usb_dev.c driver
-Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
-Link: https://lore.kernel.org/r/20250425-onboard_usb_dev-v2-3-4a76a474a010@thaumatec.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: cc98d8ce934b ("crypto: iaa - Do not clobber req->base.data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi | 42 ++++++++++++-------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 136 +--------------------
+ 1 file changed, 6 insertions(+), 130 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-index 257636d0d2cbb..0a73218ea37b3 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
-@@ -59,17 +59,7 @@ vcc3v3_sys: vcc3v3-sys {
- 		vin-supply = <&vcc5v0_sys>;
- 	};
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index e1f60f0f507c9..711c6e8914978 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -1126,8 +1126,7 @@ static int iaa_compress(struct crypto_tfm *tfm,	struct acomp_req *req,
+ 			struct idxd_wq *wq,
+ 			dma_addr_t src_addr, unsigned int slen,
+ 			dma_addr_t dst_addr, unsigned int *dlen,
+-			u32 *compression_crc,
+-			bool disable_async)
++			u32 *compression_crc)
+ {
+ 	struct iaa_device_compression_mode *active_compression_mode;
+ 	struct iaa_compression_ctx *ctx = crypto_tfm_ctx(tfm);
+@@ -1170,7 +1169,7 @@ static int iaa_compress(struct crypto_tfm *tfm,	struct acomp_req *req,
+ 	desc->src2_size = sizeof(struct aecs_comp_table_record);
+ 	desc->completion_addr = idxd_desc->compl_dma;
  
--	vcc5v0_host: vcc5v0-host-regulator {
--		compatible = "regulator-fixed";
--		gpio = <&gpio4 RK_PA3 GPIO_ACTIVE_LOW>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&vcc5v0_host_en>;
--		regulator-name = "vcc5v0_host";
--		regulator-always-on;
--		vin-supply = <&vcc5v0_sys>;
--	};
+-	if (ctx->use_irq && !disable_async) {
++	if (ctx->use_irq) {
+ 		desc->flags |= IDXD_OP_FLAG_RCI;
+ 
+ 		idxd_desc->crypto.req = req;
+@@ -1183,7 +1182,7 @@ static int iaa_compress(struct crypto_tfm *tfm,	struct acomp_req *req,
+ 			" src_addr %llx, dst_addr %llx\n", __func__,
+ 			active_compression_mode->name,
+ 			src_addr, dst_addr);
+-	} else if (ctx->async_mode && !disable_async)
++	} else if (ctx->async_mode)
+ 		req->base.data = idxd_desc;
+ 
+ 	dev_dbg(dev, "%s: compression mode %s,"
+@@ -1204,7 +1203,7 @@ static int iaa_compress(struct crypto_tfm *tfm,	struct acomp_req *req,
+ 	update_total_comp_calls();
+ 	update_wq_comp_calls(wq);
+ 
+-	if (ctx->async_mode && !disable_async) {
++	if (ctx->async_mode) {
+ 		ret = -EINPROGRESS;
+ 		dev_dbg(dev, "%s: returning -EINPROGRESS\n", __func__);
+ 		goto out;
+@@ -1224,7 +1223,7 @@ static int iaa_compress(struct crypto_tfm *tfm,	struct acomp_req *req,
+ 
+ 	*compression_crc = idxd_desc->iax_completion->crc;
+ 
+-	if (!ctx->async_mode || disable_async)
++	if (!ctx->async_mode)
+ 		idxd_free_desc(wq, idxd_desc);
+ out:
+ 	return ret;
+@@ -1490,13 +1489,11 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 	struct iaa_compression_ctx *compression_ctx;
+ 	struct crypto_tfm *tfm = req->base.tfm;
+ 	dma_addr_t src_addr, dst_addr;
+-	bool disable_async = false;
+ 	int nr_sgs, cpu, ret = 0;
+ 	struct iaa_wq *iaa_wq;
+ 	u32 compression_crc;
+ 	struct idxd_wq *wq;
+ 	struct device *dev;
+-	int order = -1;
+ 
+ 	compression_ctx = crypto_tfm_ctx(tfm);
+ 
+@@ -1526,21 +1523,6 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 
+ 	iaa_wq = idxd_wq_get_private(wq);
+ 
+-	if (!req->dst) {
+-		gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
 -
--	vcc5v0_sys: vcc5v0-sys {
-+	vcc5v0_sys: regulator-vcc5v0-sys {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vcc5v0_sys";
- 		regulator-always-on;
-@@ -509,10 +499,10 @@ pmic_int_l: pmic-int-l {
- 		};
- 	};
+-		/* incompressible data will always be < 2 * slen */
+-		req->dlen = 2 * req->slen;
+-		order = order_base_2(round_up(req->dlen, PAGE_SIZE) / PAGE_SIZE);
+-		req->dst = sgl_alloc_order(req->dlen, order, false, flags, NULL);
+-		if (!req->dst) {
+-			ret = -ENOMEM;
+-			order = -1;
+-			goto out;
+-		}
+-		disable_async = true;
+-	}
+-
+ 	dev = &wq->idxd->pdev->dev;
  
--	usb2 {
--		vcc5v0_host_en: vcc5v0-host-en {
-+	usb {
-+		cy3304_reset: cy3304-reset {
- 			rockchip,pins =
--			  <4 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
-+			  <4 RK_PA3 RK_FUNC_GPIO &pcfg_output_high>;
- 		};
- 	};
+ 	nr_sgs = dma_map_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
+@@ -1570,7 +1552,7 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ 		req->dst, req->dlen, sg_dma_len(req->dst));
  
-@@ -579,7 +569,6 @@ u2phy1_otg: otg-port {
- 	};
+ 	ret = iaa_compress(tfm, req, wq, src_addr, req->slen, dst_addr,
+-			   &req->dlen, &compression_crc, disable_async);
++			   &req->dlen, &compression_crc);
+ 	if (ret == -EINPROGRESS)
+ 		return ret;
  
- 	u2phy1_host: host-port {
--		phy-supply = <&vcc5v0_host>;
- 		status = "okay";
- 	};
- };
-@@ -591,6 +580,29 @@ &usbdrd3_1 {
- &usbdrd_dwc3_1 {
- 	status = "okay";
- 	dr_mode = "host";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&cy3304_reset>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	hub_2_0: hub@1 {
-+		compatible = "usb4b4,6502", "usb4b4,6506";
-+		reg = <1>;
-+		peer-hub = <&hub_3_0>;
-+		reset-gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
-+		vdd-supply = <&vcc1v2_phy>;
-+		vdd2-supply = <&vcc3v3_sys>;
-+
-+	};
-+
-+	hub_3_0: hub@2 {
-+		compatible = "usb4b4,6500", "usb4b4,6504";
-+		reg = <2>;
-+		peer-hub = <&hub_2_0>;
-+		reset-gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
-+		vdd-supply = <&vcc1v2_phy>;
-+		vdd2-supply = <&vcc3v3_sys>;
-+	};
- };
+@@ -1601,100 +1583,6 @@ static int iaa_comp_acompress(struct acomp_req *req)
+ out:
+ 	iaa_wq_put(wq);
  
- &usb_host1_ehci {
+-	if (order >= 0)
+-		sgl_free_order(req->dst, order);
+-
+-	return ret;
+-}
+-
+-static int iaa_comp_adecompress_alloc_dest(struct acomp_req *req)
+-{
+-	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
+-		GFP_KERNEL : GFP_ATOMIC;
+-	struct crypto_tfm *tfm = req->base.tfm;
+-	dma_addr_t src_addr, dst_addr;
+-	int nr_sgs, cpu, ret = 0;
+-	struct iaa_wq *iaa_wq;
+-	struct device *dev;
+-	struct idxd_wq *wq;
+-	int order = -1;
+-
+-	cpu = get_cpu();
+-	wq = wq_table_next_wq(cpu);
+-	put_cpu();
+-	if (!wq) {
+-		pr_debug("no wq configured for cpu=%d\n", cpu);
+-		return -ENODEV;
+-	}
+-
+-	ret = iaa_wq_get(wq);
+-	if (ret) {
+-		pr_debug("no wq available for cpu=%d\n", cpu);
+-		return -ENODEV;
+-	}
+-
+-	iaa_wq = idxd_wq_get_private(wq);
+-
+-	dev = &wq->idxd->pdev->dev;
+-
+-	nr_sgs = dma_map_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
+-	if (nr_sgs <= 0 || nr_sgs > 1) {
+-		dev_dbg(dev, "couldn't map src sg for iaa device %d,"
+-			" wq %d: ret=%d\n", iaa_wq->iaa_device->idxd->id,
+-			iaa_wq->wq->id, ret);
+-		ret = -EIO;
+-		goto out;
+-	}
+-	src_addr = sg_dma_address(req->src);
+-	dev_dbg(dev, "dma_map_sg, src_addr %llx, nr_sgs %d, req->src %p,"
+-		" req->slen %d, sg_dma_len(sg) %d\n", src_addr, nr_sgs,
+-		req->src, req->slen, sg_dma_len(req->src));
+-
+-	req->dlen = 4 * req->slen; /* start with ~avg comp rato */
+-alloc_dest:
+-	order = order_base_2(round_up(req->dlen, PAGE_SIZE) / PAGE_SIZE);
+-	req->dst = sgl_alloc_order(req->dlen, order, false, flags, NULL);
+-	if (!req->dst) {
+-		ret = -ENOMEM;
+-		order = -1;
+-		goto out;
+-	}
+-
+-	nr_sgs = dma_map_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+-	if (nr_sgs <= 0 || nr_sgs > 1) {
+-		dev_dbg(dev, "couldn't map dst sg for iaa device %d,"
+-			" wq %d: ret=%d\n", iaa_wq->iaa_device->idxd->id,
+-			iaa_wq->wq->id, ret);
+-		ret = -EIO;
+-		goto err_map_dst;
+-	}
+-
+-	dst_addr = sg_dma_address(req->dst);
+-	dev_dbg(dev, "dma_map_sg, dst_addr %llx, nr_sgs %d, req->dst %p,"
+-		" req->dlen %d, sg_dma_len(sg) %d\n", dst_addr, nr_sgs,
+-		req->dst, req->dlen, sg_dma_len(req->dst));
+-	ret = iaa_decompress(tfm, req, wq, src_addr, req->slen,
+-			     dst_addr, &req->dlen, true);
+-	if (ret == -EOVERFLOW) {
+-		dma_unmap_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+-		req->dlen *= 2;
+-		if (req->dlen > CRYPTO_ACOMP_DST_MAX)
+-			goto err_map_dst;
+-		goto alloc_dest;
+-	}
+-
+-	if (ret != 0)
+-		dev_dbg(dev, "asynchronous decompress failed ret=%d\n", ret);
+-
+-	dma_unmap_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+-err_map_dst:
+-	dma_unmap_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
+-out:
+-	iaa_wq_put(wq);
+-
+-	if (order >= 0)
+-		sgl_free_order(req->dst, order);
+-
+ 	return ret;
+ }
+ 
+@@ -1717,9 +1605,6 @@ static int iaa_comp_adecompress(struct acomp_req *req)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (!req->dst)
+-		return iaa_comp_adecompress_alloc_dest(req);
+-
+ 	cpu = get_cpu();
+ 	wq = wq_table_next_wq(cpu);
+ 	put_cpu();
+@@ -1800,19 +1685,10 @@ static int iaa_comp_init_fixed(struct crypto_acomp *acomp_tfm)
+ 	return 0;
+ }
+ 
+-static void dst_free(struct scatterlist *sgl)
+-{
+-	/*
+-	 * Called for req->dst = NULL cases but we free elsewhere
+-	 * using sgl_free_order().
+-	 */
+-}
+-
+ static struct acomp_alg iaa_acomp_fixed_deflate = {
+ 	.init			= iaa_comp_init_fixed,
+ 	.compress		= iaa_comp_acompress,
+ 	.decompress		= iaa_comp_adecompress,
+-	.dst_free               = dst_free,
+ 	.base			= {
+ 		.cra_name		= "deflate",
+ 		.cra_driver_name	= "deflate-iaa",
 -- 
 2.39.5
 
