@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616AD215F5C;
-	Tue,  8 Jul 2025 16:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C38A7E9;
+	Tue,  8 Jul 2025 16:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993039; cv=none; b=DfxC7CVJKArF9em7AJa6WABFu/EqgnEzLEDjoiuVyQ6PYbL4jh/Uba0DJNSSYSMh74iLXHmdQJKwLbdPUdwmZX/AiEtD198dlmeowJXCQjbzdZ/WX3jvcJ2gWUwD7WTdZpsEA5Q/I0N58fFJwOB+3AyW2qT7sxOQ7uydj9VPry0=
+	t=1751993042; cv=none; b=trZHhI6c7/0Ef98g8lROGMRW9dcAsxB/lMUbJTN3TsxhTEJeQ3DI2Lsjn3PrY230HRudVkJqo3cEmzT4NPEaWo1/UuGlas0cp8jY0n0ptF3zsbIIdpszgsnSSI8Hhxjzy+TWAUNtnPU9RqQY3EMqeqIZk7P6V23+qHDLYhNAz6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993039; c=relaxed/simple;
-	bh=UF+kX+BCoEmkkerPMWZG/U5IKgMIsu3/7iGLMDkfAR8=;
+	s=arc-20240116; t=1751993042; c=relaxed/simple;
+	bh=e+WqUhSRkqd15S1Pur/MZJ5aIUOCMrkSgmIRRZriB9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OfYOl2AlT76CVypek7CmuYSTkR1JuKtMDqd8uoauXSGy8mwnCiwhchRzOsYibHyz7cKxjTSPEoAJs1m5iCVgg4U4vTXWuHba9IiL2Yu+UHi51Jn5cAVBqSKQVKDgvuPHBghmXHAfYtwVKgwPtDKgMwCa4YnBCoRLyUge5rR8kBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWD/xDu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6fm28Jps9rQb6HlSgI3yVQ7W596vAHqZVDzaRPP2mLtKHxm3QZHhdx/by0yUFf42XZks7NJge7xrQ95UyCwGqQvMnnyTWJD9nByu+0ZrdEKvM+zfgebgtc4jWMItS2AJ2/MfYNPx1PYEtpcJjuAOAUZeEt6Ch+PHaTdSgXNLqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mmp4Gc+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWD/xDu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E773CC4CEED;
-	Tue,  8 Jul 2025 16:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mmp4Gc+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BBAC4CEED;
+	Tue,  8 Jul 2025 16:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993039;
-	bh=UF+kX+BCoEmkkerPMWZG/U5IKgMIsu3/7iGLMDkfAR8=;
+	s=korg; t=1751993042;
+	bh=e+WqUhSRkqd15S1Pur/MZJ5aIUOCMrkSgmIRRZriB9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWD/xDu11y/QM/Hiij0JlgAUhZe6/wW5s7oHpJwOCUYEr7MIvDdaJZVMH5lm9e3no
-	 1unPFxnvLKjhbBbvkYr9H3Teo70JXTq4rTXbJKBkyZ0GDW/zl4MUKRanODv5yxTks2
-	 3ESgb4XmwHF6cT3dynWQIY55g1QseOzyB4FEk47M=
+	b=Mmp4Gc+JZTD+3Kek0or/4fKua9NuaqIzKKkYE49RBeAQm76aYV4GbCgW2Xmq3zTMj
+	 MHWzo+pQeQY76qMHmEYYN+xKy2uAnIbuH9yYaSVs3yUJAb9TvPL3pk6vk3K3bH0LuR
+	 5WdRd+LsjeMFP2Ou00oE1CoDXgsxkxoUQ5M9kWoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/232] bpf: use common instruction history across all states
-Date: Tue,  8 Jul 2025 18:22:12 +0200
-Message-ID: <20250708162244.999607366@linuxfoundation.org>
+Subject: [PATCH 6.12 137/232] bpf: Do not include stack ptr register in precision backtracking bookkeeping
+Date: Tue,  8 Jul 2025 18:22:13 +0200
+Message-ID: <20250708162245.026022942@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,419 +51,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 96a30e469ca1d2b8cc7811b40911f8614b558241 ]
+[ Upstream commit e2d2115e56c4a02377189bfc3a9a7933552a7b0f ]
 
-Instead of allocating and copying instruction history each time we
-enqueue child verifier state, switch to a model where we use one common
-dynamically sized array of instruction history entries across all states.
+Yi Lai reported an issue ([1]) where the following warning appears
+in kernel dmesg:
+  [   60.643604] verifier backtracking bug
+  [   60.643635] WARNING: CPU: 10 PID: 2315 at kernel/bpf/verifier.c:4302 __mark_chain_precision+0x3a6c/0x3e10
+  [   60.648428] Modules linked in: bpf_testmod(OE)
+  [   60.650471] CPU: 10 UID: 0 PID: 2315 Comm: test_progs Tainted: G           OE       6.15.0-rc4-gef11287f8289-dirty #327 PREEMPT(full)
+  [   60.654385] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+  [   60.656682] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+  [   60.660475] RIP: 0010:__mark_chain_precision+0x3a6c/0x3e10
+  [   60.662814] Code: 5a 30 84 89 ea e8 c4 d9 01 00 80 3d 3e 7d d8 04 00 0f 85 60 fa ff ff c6 05 31 7d d8 04
+                       01 48 c7 c7 00 58 30 84 e8 c4 06 a5 ff <0f> 0b e9 46 fa ff ff 48 ...
+  [   60.668720] RSP: 0018:ffff888116cc7298 EFLAGS: 00010246
+  [   60.671075] RAX: 54d70e82dfd31900 RBX: ffff888115b65e20 RCX: 0000000000000000
+  [   60.673659] RDX: 0000000000000001 RSI: 0000000000000004 RDI: 00000000ffffffff
+  [   60.676241] RBP: 0000000000000400 R08: ffff8881f6f23bd3 R09: 1ffff1103ede477a
+  [   60.678787] R10: dffffc0000000000 R11: ffffed103ede477b R12: ffff888115b60ae8
+  [   60.681420] R13: 1ffff11022b6cbc4 R14: 00000000fffffff2 R15: 0000000000000001
+  [   60.684030] FS:  00007fc2aedd80c0(0000) GS:ffff88826fa8a000(0000) knlGS:0000000000000000
+  [   60.686837] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [   60.689027] CR2: 000056325369e000 CR3: 000000011088b002 CR4: 0000000000370ef0
+  [   60.691623] Call Trace:
+  [   60.692821]  <TASK>
+  [   60.693960]  ? __pfx_verbose+0x10/0x10
+  [   60.695656]  ? __pfx_disasm_kfunc_name+0x10/0x10
+  [   60.697495]  check_cond_jmp_op+0x16f7/0x39b0
+  [   60.699237]  do_check+0x58fa/0xab10
+  ...
 
-The key observation for proving this is correct is that instruction
-history is only relevant while state is active, which means it either is
-a current state (and thus we are actively modifying instruction history
-and no other state can interfere with us) or we are checkpointed state
-with some children still active (either enqueued or being current).
+Further analysis shows the warning is at line 4302 as below:
 
-In the latter case our portion of instruction history is finalized and
-won't change or grow, so as long as we keep it immutable until the state
-is finalized, we are good.
+  4294                 /* static subprog call instruction, which
+  4295                  * means that we are exiting current subprog,
+  4296                  * so only r1-r5 could be still requested as
+  4297                  * precise, r0 and r6-r10 or any stack slot in
+  4298                  * the current frame should be zero by now
+  4299                  */
+  4300                 if (bt_reg_mask(bt) & ~BPF_REGMASK_ARGS) {
+  4301                         verbose(env, "BUG regs %x\n", bt_reg_mask(bt));
+  4302                         WARN_ONCE(1, "verifier backtracking bug");
+  4303                         return -EFAULT;
+  4304                 }
 
-Now, when state is finalized and is put into state hash for potentially
-future pruning lookups, instruction history is not used anymore. This is
-because instruction history is only used by precision marking logic, and
-we never modify precision markings for finalized states.
+With the below test (also in the next patch):
+  __used __naked static void __bpf_jmp_r10(void)
+  {
+	asm volatile (
+	"r2 = 2314885393468386424 ll;"
+	"goto +0;"
+	"if r2 <= r10 goto +3;"
+	"if r1 >= -1835016 goto +0;"
+	"if r2 <= 8 goto +0;"
+	"if r3 <= 0 goto +0;"
+	"exit;"
+	::: __clobber_all);
+  }
 
-So, instead of each state having its own small instruction history, we
-keep a global dynamically-sized instruction history, where each state in
-current DFS path from root to active state remembers its portion of
-instruction history. Current state can append to this history, but
-cannot modify any of its parent histories.
+  SEC("?raw_tp")
+  __naked void bpf_jmp_r10(void)
+  {
+	asm volatile (
+	"r3 = 0 ll;"
+	"call __bpf_jmp_r10;"
+	"r0 = 0;"
+	"exit;"
+	::: __clobber_all);
+  }
 
-Async callback state enqueueing, while logically detached from parent
-state, still is part of verification backtracking tree, so has to follow
-the same schema as normal state checkpoints.
+The following is the verifier failure log:
+  0: (18) r3 = 0x0                      ; R3_w=0
+  2: (85) call pc+2
+  caller:
+   R10=fp0
+  callee:
+   frame1: R1=ctx() R3_w=0 R10=fp0
+  5: frame1: R1=ctx() R3_w=0 R10=fp0
+  ; asm volatile ("                                 \ @ verifier_precision.c:184
+  5: (18) r2 = 0x20202000256c6c78       ; frame1: R2_w=0x20202000256c6c78
+  7: (05) goto pc+0
+  8: (bd) if r2 <= r10 goto pc+3        ; frame1: R2_w=0x20202000256c6c78 R10=fp0
+  9: (35) if r1 >= 0xffe3fff8 goto pc+0         ; frame1: R1=ctx()
+  10: (b5) if r2 <= 0x8 goto pc+0
+  mark_precise: frame1: last_idx 10 first_idx 0 subseq_idx -1
+  mark_precise: frame1: regs=r2 stack= before 9: (35) if r1 >= 0xffe3fff8 goto pc+0
+  mark_precise: frame1: regs=r2 stack= before 8: (bd) if r2 <= r10 goto pc+3
+  mark_precise: frame1: regs=r2,r10 stack= before 7: (05) goto pc+0
+  mark_precise: frame1: regs=r2,r10 stack= before 5: (18) r2 = 0x20202000256c6c78
+  mark_precise: frame1: regs=r10 stack= before 2: (85) call pc+2
+  BUG regs 400
 
-Because the insn_hist array can be grown through realloc, states don't
-keep pointers, they instead maintain two indices, [start, end), into
-global instruction history array. End is exclusive index, so
-`start == end` means there is no relevant instruction history.
+The main failure reason is due to r10 in precision backtracking bookkeeping.
+Actually r10 is always precise and there is no need to add it for the precision
+backtracking bookkeeping.
 
-This eliminates a lot of allocations and minimizes overall memory usage.
+One way to fix the issue is to prevent bt_set_reg() if any src/dst reg is
+r10. Andrii suggested to go with push_insn_history() approach to avoid
+explicitly checking r10 in backtrack_insn().
 
-For instance, running a worst-case test from [0] (but without the
-heuristics-based fix [1]), it took 12.5 minutes until we get -ENOMEM.
-With the changes in this patch the whole test succeeds in 10 minutes
-(very slow, so heuristics from [1] is important, of course).
+This patch added push_insn_history() support for cond_jmp like 'rX <op> rY'
+operations. In check_cond_jmp_op(), if any of rX or rY is a stack pointer,
+push_insn_history() will record such information, and later backtrack_insn()
+will do bt_set_reg() properly for those register(s).
 
-To further validate correctness, veristat-based comparison was performed for
-Meta production BPF objects and BPF selftests objects. In both cases there
-were no differences *at all* in terms of verdict or instruction and state
-counts, providing a good confidence in the change.
+  [1] https://lore.kernel.org/bpf/Z%2F8q3xzpU59CIYQE@ly-workstation/
 
-Having this low-memory-overhead solution of keeping dynamic
-per-instruction history cheaply opens up some new possibilities, like
-keeping extra information for literally every single validated
-instruction. This will be used for simplifying precision backpropagation
-logic in follow up patches.
+Reported by: Yi Lai <yi1.lai@linux.intel.com>
 
-  [0] https://lore.kernel.org/bpf/20241029172641.1042523-2-eddyz87@gmail.com/
-  [1] https://lore.kernel.org/bpf/20241029172641.1042523-1-eddyz87@gmail.com/
-
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: 407958a0e980 ("bpf: encapsulate precision backtracking bookkeeping")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20241115001303.277272-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: e2d2115e56c4 ("bpf: Do not include stack ptr register in precision backtracking bookkeeping")
+Link: https://lore.kernel.org/bpf/20250524041335.4046126-1-yonghong.song@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h |  19 ++++---
- kernel/bpf/verifier.c        | 107 +++++++++++++++++------------------
- 2 files changed, 63 insertions(+), 63 deletions(-)
+ include/linux/bpf_verifier.h | 12 ++++++++----
+ kernel/bpf/verifier.c        | 18 ++++++++++++++++--
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 50eeb5b86ed70..b82ff91916e42 100644
+index b82ff91916e42..fb33458f2fc77 100644
 --- a/include/linux/bpf_verifier.h
 +++ b/include/linux/bpf_verifier.h
-@@ -349,7 +349,7 @@ struct bpf_func_state {
+@@ -361,7 +361,11 @@ enum {
+ 	INSN_F_SPI_MASK = 0x3f, /* 6 bits */
+ 	INSN_F_SPI_SHIFT = 3, /* shifted 3 bits to the left */
  
- #define MAX_CALL_FRAMES 8
+-	INSN_F_STACK_ACCESS = BIT(9), /* we need 10 bits total */
++	INSN_F_STACK_ACCESS = BIT(9),
++
++	INSN_F_DST_REG_STACK = BIT(10), /* dst_reg is PTR_TO_STACK */
++	INSN_F_SRC_REG_STACK = BIT(11), /* src_reg is PTR_TO_STACK */
++	/* total 12 bits are used now. */
+ };
  
--/* instruction history flags, used in bpf_jmp_history_entry.flags field */
-+/* instruction history flags, used in bpf_insn_hist_entry.flags field */
- enum {
- 	/* instruction references stack slot through PTR_TO_STACK register;
- 	 * we also store stack's frame number in lower 3 bits (MAX_CALL_FRAMES is 8)
-@@ -367,7 +367,7 @@ enum {
  static_assert(INSN_F_FRAMENO_MASK + 1 >= MAX_CALL_FRAMES);
- static_assert(INSN_F_SPI_MASK + 1 >= MAX_BPF_STACK / 8);
- 
--struct bpf_jmp_history_entry {
-+struct bpf_insn_hist_entry {
+@@ -370,9 +374,9 @@ static_assert(INSN_F_SPI_MASK + 1 >= MAX_BPF_STACK / 8);
+ struct bpf_insn_hist_entry {
  	u32 idx;
  	/* insn idx can't be bigger than 1 million */
- 	u32 prev_idx : 22;
-@@ -458,13 +458,14 @@ struct bpf_verifier_state {
- 	 * See get_loop_entry() for more information.
+-	u32 prev_idx : 22;
+-	/* special flags, e.g., whether insn is doing register stack spill/load */
+-	u32 flags : 10;
++	u32 prev_idx : 20;
++	/* special INSN_F_xxx flags */
++	u32 flags : 12;
+ 	/* additional registers that need precision tracking when this
+ 	 * jump is backtracked, vector of six 10-bit records
  	 */
- 	struct bpf_verifier_state *loop_entry;
--	/* jmp history recorded from first to last.
--	 * backtracking is using it to go from last to first.
--	 * For most states jmp_history_cnt is [0-3].
-+	/* Sub-range of env->insn_hist[] corresponding to this state's
-+	 * instruction history.
-+	 * Backtracking is using it to go from last to first.
-+	 * For most states instruction history is short, 0-3 instructions.
- 	 * For loops can go up to ~40.
- 	 */
--	struct bpf_jmp_history_entry *jmp_history;
--	u32 jmp_history_cnt;
-+	u32 insn_hist_start;
-+	u32 insn_hist_end;
- 	u32 dfs_depth;
- 	u32 callback_unroll_depth;
- 	u32 may_goto_depth;
-@@ -748,7 +749,9 @@ struct bpf_verifier_env {
- 		int cur_stack;
- 	} cfg;
- 	struct backtrack_state bt;
--	struct bpf_jmp_history_entry *cur_hist_ent;
-+	struct bpf_insn_hist_entry *insn_hist;
-+	struct bpf_insn_hist_entry *cur_hist_ent;
-+	u32 insn_hist_cap;
- 	u32 pass_cnt; /* number of times do_check() was called */
- 	u32 subprog_cnt;
- 	/* number of instructions analyzed by the verifier */
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 39a3d750f2ff9..7f00dc993041b 100644
+index 7f00dc993041b..f01477cecf393 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -1376,13 +1376,6 @@ static void free_func_state(struct bpf_func_state *state)
- 	kfree(state);
- }
- 
--static void clear_jmp_history(struct bpf_verifier_state *state)
--{
--	kfree(state->jmp_history);
--	state->jmp_history = NULL;
--	state->jmp_history_cnt = 0;
--}
--
- static void free_verifier_state(struct bpf_verifier_state *state,
- 				bool free_self)
- {
-@@ -1392,7 +1385,6 @@ static void free_verifier_state(struct bpf_verifier_state *state,
- 		free_func_state(state->frame[i]);
- 		state->frame[i] = NULL;
- 	}
--	clear_jmp_history(state);
- 	if (free_self)
- 		kfree(state);
- }
-@@ -1418,13 +1410,6 @@ static int copy_verifier_state(struct bpf_verifier_state *dst_state,
- 	struct bpf_func_state *dst;
- 	int i, err;
- 
--	dst_state->jmp_history = copy_array(dst_state->jmp_history, src->jmp_history,
--					  src->jmp_history_cnt, sizeof(*dst_state->jmp_history),
--					  GFP_USER);
--	if (!dst_state->jmp_history)
--		return -ENOMEM;
--	dst_state->jmp_history_cnt = src->jmp_history_cnt;
--
- 	/* if dst has more stack frames then src frame, free them, this is also
- 	 * necessary in case of exceptional exits using bpf_throw.
- 	 */
-@@ -1443,6 +1428,8 @@ static int copy_verifier_state(struct bpf_verifier_state *dst_state,
- 	dst_state->parent = src->parent;
- 	dst_state->first_insn_idx = src->first_insn_idx;
- 	dst_state->last_insn_idx = src->last_insn_idx;
-+	dst_state->insn_hist_start = src->insn_hist_start;
-+	dst_state->insn_hist_end = src->insn_hist_end;
- 	dst_state->dfs_depth = src->dfs_depth;
- 	dst_state->callback_unroll_depth = src->callback_unroll_depth;
- 	dst_state->used_as_loop_entry = src->used_as_loop_entry;
-@@ -2496,9 +2483,14 @@ static struct bpf_verifier_state *push_async_cb(struct bpf_verifier_env *env,
- 	 * The caller state doesn't matter.
- 	 * This is async callback. It starts in a fresh stack.
- 	 * Initialize it similar to do_check_common().
-+	 * But we do need to make sure to not clobber insn_hist, so we keep
-+	 * chaining insn_hist_start/insn_hist_end indices as for a normal
-+	 * child state.
- 	 */
- 	elem->st.branches = 1;
- 	elem->st.in_sleepable = is_sleepable;
-+	elem->st.insn_hist_start = env->cur_state->insn_hist_end;
-+	elem->st.insn_hist_end = elem->st.insn_hist_start;
- 	frame = kzalloc(sizeof(*frame), GFP_KERNEL);
- 	if (!frame)
- 		goto err;
-@@ -3513,11 +3505,10 @@ static void linked_regs_unpack(u64 val, struct linked_regs *s)
- }
- 
- /* for any branch, call, exit record the history of jmps in the given state */
--static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_state *cur,
--			    int insn_flags, u64 linked_regs)
-+static int push_insn_history(struct bpf_verifier_env *env, struct bpf_verifier_state *cur,
-+			     int insn_flags, u64 linked_regs)
- {
--	u32 cnt = cur->jmp_history_cnt;
--	struct bpf_jmp_history_entry *p;
-+	struct bpf_insn_hist_entry *p;
- 	size_t alloc_size;
- 
- 	/* combine instruction flags if we already recorded this instruction */
-@@ -3537,29 +3528,32 @@ static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_st
- 		return 0;
- 	}
- 
--	cnt++;
--	alloc_size = kmalloc_size_roundup(size_mul(cnt, sizeof(*p)));
--	p = krealloc(cur->jmp_history, alloc_size, GFP_USER);
--	if (!p)
--		return -ENOMEM;
--	cur->jmp_history = p;
-+	if (cur->insn_hist_end + 1 > env->insn_hist_cap) {
-+		alloc_size = size_mul(cur->insn_hist_end + 1, sizeof(*p));
-+		p = kvrealloc(env->insn_hist, alloc_size, GFP_USER);
-+		if (!p)
-+			return -ENOMEM;
-+		env->insn_hist = p;
-+		env->insn_hist_cap = alloc_size / sizeof(*p);
-+	}
- 
--	p = &cur->jmp_history[cnt - 1];
-+	p = &env->insn_hist[cur->insn_hist_end];
- 	p->idx = env->insn_idx;
- 	p->prev_idx = env->prev_insn_idx;
- 	p->flags = insn_flags;
- 	p->linked_regs = linked_regs;
--	cur->jmp_history_cnt = cnt;
-+
-+	cur->insn_hist_end++;
- 	env->cur_hist_ent = p;
- 
- 	return 0;
- }
- 
--static struct bpf_jmp_history_entry *get_jmp_hist_entry(struct bpf_verifier_state *st,
--						        u32 hist_end, int insn_idx)
-+static struct bpf_insn_hist_entry *get_insn_hist_entry(struct bpf_verifier_env *env,
-+						       u32 hist_start, u32 hist_end, int insn_idx)
- {
--	if (hist_end > 0 && st->jmp_history[hist_end - 1].idx == insn_idx)
--		return &st->jmp_history[hist_end - 1];
-+	if (hist_end > hist_start && env->insn_hist[hist_end - 1].idx == insn_idx)
-+		return &env->insn_hist[hist_end - 1];
- 	return NULL;
- }
- 
-@@ -3576,25 +3570,26 @@ static struct bpf_jmp_history_entry *get_jmp_hist_entry(struct bpf_verifier_stat
-  * history entry recording a jump from last instruction of parent state and
-  * first instruction of given state.
-  */
--static int get_prev_insn_idx(struct bpf_verifier_state *st, int i,
--			     u32 *history)
-+static int get_prev_insn_idx(const struct bpf_verifier_env *env,
-+			     struct bpf_verifier_state *st,
-+			     int insn_idx, u32 hist_start, u32 *hist_endp)
- {
--	u32 cnt = *history;
-+	u32 hist_end = *hist_endp;
-+	u32 cnt = hist_end - hist_start;
- 
--	if (i == st->first_insn_idx) {
-+	if (insn_idx == st->first_insn_idx) {
- 		if (cnt == 0)
- 			return -ENOENT;
--		if (cnt == 1 && st->jmp_history[0].idx == i)
-+		if (cnt == 1 && env->insn_hist[hist_start].idx == insn_idx)
- 			return -ENOENT;
- 	}
- 
--	if (cnt && st->jmp_history[cnt - 1].idx == i) {
--		i = st->jmp_history[cnt - 1].prev_idx;
--		(*history)--;
-+	if (cnt && env->insn_hist[hist_end - 1].idx == insn_idx) {
-+		(*hist_endp)--;
-+		return env->insn_hist[hist_end - 1].prev_idx;
- 	} else {
--		i--;
-+		return insn_idx - 1;
- 	}
--	return i;
- }
- 
- static const char *disasm_kfunc_name(void *data, const struct bpf_insn *insn)
-@@ -3766,7 +3761,7 @@ static void fmt_stack_mask(char *buf, ssize_t buf_sz, u64 stack_mask)
- /* If any register R in hist->linked_regs is marked as precise in bt,
-  * do bt_set_frame_{reg,slot}(bt, R) for all registers in hist->linked_regs.
-  */
--static void bt_sync_linked_regs(struct backtrack_state *bt, struct bpf_jmp_history_entry *hist)
-+static void bt_sync_linked_regs(struct backtrack_state *bt, struct bpf_insn_hist_entry *hist)
- {
- 	struct linked_regs linked_regs;
- 	bool some_precise = false;
-@@ -3811,7 +3806,7 @@ static bool calls_callback(struct bpf_verifier_env *env, int insn_idx);
-  *   - *was* processed previously during backtracking.
-  */
- static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
--			  struct bpf_jmp_history_entry *hist, struct backtrack_state *bt)
-+			  struct bpf_insn_hist_entry *hist, struct backtrack_state *bt)
- {
- 	const struct bpf_insn_cbs cbs = {
- 		.cb_call	= disasm_kfunc_name,
-@@ -4230,7 +4225,7 @@ static void mark_all_scalars_imprecise(struct bpf_verifier_env *env, struct bpf_
-  * SCALARS, as well as any other registers and slots that contribute to
-  * a tracked state of given registers/stack slots, depending on specific BPF
-  * assembly instructions (see backtrack_insns() for exact instruction handling
-- * logic). This backtracking relies on recorded jmp_history and is able to
-+ * logic). This backtracking relies on recorded insn_hist and is able to
-  * traverse entire chain of parent states. This process ends only when all the
-  * necessary registers/slots and their transitive dependencies are marked as
-  * precise.
-@@ -4347,8 +4342,9 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
- 
- 	for (;;) {
- 		DECLARE_BITMAP(mask, 64);
--		u32 history = st->jmp_history_cnt;
--		struct bpf_jmp_history_entry *hist;
-+		u32 hist_start = st->insn_hist_start;
-+		u32 hist_end = st->insn_hist_end;
-+		struct bpf_insn_hist_entry *hist;
- 
- 		if (env->log.level & BPF_LOG_LEVEL2) {
- 			verbose(env, "mark_precise: frame%d: last_idx %d first_idx %d subseq_idx %d \n",
-@@ -4387,7 +4383,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
- 				err = 0;
- 				skip_first = false;
- 			} else {
--				hist = get_jmp_hist_entry(st, history, i);
-+				hist = get_insn_hist_entry(env, hist_start, hist_end, i);
- 				err = backtrack_insn(env, i, subseq_idx, hist, bt);
- 			}
- 			if (err == -ENOTSUPP) {
-@@ -4404,7 +4400,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
- 				 */
- 				return 0;
- 			subseq_idx = i;
--			i = get_prev_insn_idx(st, i, &history);
-+			i = get_prev_insn_idx(env, st, i, hist_start, &hist_end);
- 			if (i == -ENOENT)
- 				break;
- 			if (i >= env->prog->len) {
-@@ -4771,7 +4767,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 	}
- 
- 	if (insn_flags)
--		return push_jmp_history(env, env->cur_state, insn_flags, 0);
-+		return push_insn_history(env, env->cur_state, insn_flags, 0);
- 	return 0;
- }
- 
-@@ -5078,7 +5074,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 		insn_flags = 0; /* we are not restoring spilled register */
- 	}
- 	if (insn_flags)
--		return push_jmp_history(env, env->cur_state, insn_flags, 0);
-+		return push_insn_history(env, env->cur_state, insn_flags, 0);
- 	return 0;
- }
- 
-@@ -15542,7 +15538,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	if (dst_reg->type == SCALAR_VALUE && dst_reg->id)
- 		collect_linked_regs(this_branch, dst_reg->id, &linked_regs);
- 	if (linked_regs.cnt > 1) {
--		err = push_jmp_history(env, this_branch, 0, linked_regs_pack(&linked_regs));
-+		err = push_insn_history(env, this_branch, 0, linked_regs_pack(&linked_regs));
- 		if (err)
- 			return err;
- 	}
-@@ -17984,7 +17980,7 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
- 
- 	force_new_state = env->test_state_freq || is_force_checkpoint(env, insn_idx) ||
- 			  /* Avoid accumulating infinitely long jmp history */
--			  cur->jmp_history_cnt > 40;
-+			  cur->insn_hist_end - cur->insn_hist_start > 40;
- 
- 	/* bpf progs typically have pruning point every 4 instructions
- 	 * http://vger.kernel.org/bpfconf2019.html#session-1
-@@ -18182,7 +18178,7 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
- 			 * the current state.
+@@ -4066,8 +4066,10 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 			 * before it would be equally necessary to
+ 			 * propagate it to dreg.
  			 */
- 			if (is_jmp_point(env, env->insn_idx))
--				err = err ? : push_jmp_history(env, cur, 0, 0);
-+				err = err ? : push_insn_history(env, cur, 0, 0);
- 			err = err ? : propagate_precision(env, &sl->state);
- 			if (err)
- 				return err;
-@@ -18281,8 +18277,8 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
- 
- 	cur->parent = new;
- 	cur->first_insn_idx = insn_idx;
-+	cur->insn_hist_start = cur->insn_hist_end;
- 	cur->dfs_depth = new->dfs_depth + 1;
--	clear_jmp_history(cur);
- 	new_sl->next = *explored_state(env, insn_idx);
- 	*explored_state(env, insn_idx) = new_sl;
- 	/* connect new state to parentage chain. Current frame needs all
-@@ -18450,7 +18446,7 @@ static int do_check(struct bpf_verifier_env *env)
+-			bt_set_reg(bt, dreg);
+-			bt_set_reg(bt, sreg);
++			if (!hist || !(hist->flags & INSN_F_SRC_REG_STACK))
++				bt_set_reg(bt, sreg);
++			if (!hist || !(hist->flags & INSN_F_DST_REG_STACK))
++				bt_set_reg(bt, dreg);
+ 		} else if (BPF_SRC(insn->code) == BPF_K) {
+ 			 /* dreg <cond> K
+ 			  * Only dreg still needs precision before
+@@ -15415,6 +15417,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 	struct bpf_reg_state *eq_branch_regs;
+ 	struct linked_regs linked_regs = {};
+ 	u8 opcode = BPF_OP(insn->code);
++	int insn_flags = 0;
+ 	bool is_jmp32;
+ 	int pred = -1;
+ 	int err;
+@@ -15474,6 +15477,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 				insn->src_reg);
+ 			return -EACCES;
  		}
++
++		if (src_reg->type == PTR_TO_STACK)
++			insn_flags |= INSN_F_SRC_REG_STACK;
+ 	} else {
+ 		if (insn->src_reg != BPF_REG_0) {
+ 			verbose(env, "BPF_JMP/JMP32 uses reserved fields\n");
+@@ -15485,6 +15491,14 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 		__mark_reg_known(src_reg, insn->imm);
+ 	}
  
- 		if (is_jmp_point(env, env->insn_idx)) {
--			err = push_jmp_history(env, state, 0, 0);
-+			err = push_insn_history(env, state, 0, 0);
- 			if (err)
- 				return err;
- 		}
-@@ -22716,6 +22712,7 @@ int bpf_check(struct bpf_prog **prog, union bpf_attr *attr, bpfptr_t uattr, __u3
- 	if (!is_priv)
- 		mutex_unlock(&bpf_verifier_lock);
- 	vfree(env->insn_aux_data);
-+	kvfree(env->insn_hist);
- err_free_env:
- 	kvfree(env);
- 	return ret;
++	if (dst_reg->type == PTR_TO_STACK)
++		insn_flags |= INSN_F_DST_REG_STACK;
++	if (insn_flags) {
++		err = push_insn_history(env, this_branch, insn_flags, 0);
++		if (err)
++			return err;
++	}
++
+ 	is_jmp32 = BPF_CLASS(insn->code) == BPF_JMP32;
+ 	pred = is_branch_taken(dst_reg, src_reg, opcode, is_jmp32);
+ 	if (pred >= 0) {
 -- 
 2.39.5
 
