@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DAA1F4190;
-	Tue,  8 Jul 2025 16:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AE32E266B;
+	Tue,  8 Jul 2025 16:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993707; cv=none; b=J4rLT9BhtKgdRC0IjsQ3Rn7H1CDK4ZJfw/fw7pPa8hiP/esNXXsDQ341D6X2AT+zTvyj3XsAWHFt0etfzWo7tBSgNQNyQnwKy7s7BYAFpvk3Ieh7MuCUkc+PbpqW2beurxdB3sd14UgHxsVu+hlTla2stsWwUc7Zp4DacNoypD0=
+	t=1751993710; cv=none; b=EDKbmJ3Btr/y1hmLgK1IXX0+4ArVH6p/8k95kh3Uvmc6qAPwmMbQUHo/ismFC5Tg5w6FG9lKCpNi1KgwcKC0XqI1ktALpnJP7aNfAf8KDoiIeMYkP3cnbQaTqla91hozsPq9+R+i1rwGabnHTWQ2RxRvImuOdw8AN0sGGNyBKJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993707; c=relaxed/simple;
-	bh=w+rewtdTbaKTM2kYqtRGB5NMQ7fAMG6BNTvFu2/pqxQ=;
+	s=arc-20240116; t=1751993710; c=relaxed/simple;
+	bh=7CG2DOnBnST9mIVrUT5mFEsNr4RpdWj3pzmpsG3wcOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRUfkkP0gL5Isk9O9l2W9U7Ve7yHbfChcRUNHYnCysibAOCDKb+nqQm1V2LB7MxP9mrlZ0N5lhZLvFpPaZDNuRUGyc/haWfbWnekpn22zLYnZT5qWv3SKk3MSBP3tAOzqE9zXB60KvgQ5IkFGTToH7KJVpAoKFPJGfTtpb0ajmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vG92nEuJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HC+wtiazCqtldopaQi2s49AAXbOM8wWfqVHQQwv3969Z8r4ap1z4uxcoQbo8x+to/tAe0wRGtfL/l2iRBhJbrvN3v0R9qRI46j6ZlVguTL1P6hHLtHQn+Wp8UnVJmjyCI1QrRqSk/M7tPI/JudIfJKntGqoEmBHAxASNCTFeOa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nedKLoud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vG92nEuJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0D2C4CEED;
-	Tue,  8 Jul 2025 16:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nedKLoud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC97C4CEED;
+	Tue,  8 Jul 2025 16:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993707;
-	bh=w+rewtdTbaKTM2kYqtRGB5NMQ7fAMG6BNTvFu2/pqxQ=;
+	s=korg; t=1751993710;
+	bh=7CG2DOnBnST9mIVrUT5mFEsNr4RpdWj3pzmpsG3wcOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vG92nEuJ9pVY7Kwm4Cxr0MmeS48gXijZzEdH2R4oGUb/Ktg5UZmWgdo9OTYUAqz6M
-	 U/uvAR0viseXXEmGyV4F1YW0HMu5X92VwtnLy4x4gQOcb9lfxzW0CQKfvdOllj4SW2
-	 rnq7HSu5f0vVauK+ZQPlgqOc1X7RHo3uKyVXrgBQ=
+	b=nedKLoudRNR/2UGUGDbxPV+BHlcMCgyE71nhaJzCmCwQAvCf7VEPkQSGwJrH/Vztc
+	 7CZNUzPKQ6/y80ekLgpxfRin3T+19xgwVT6rwjmP9lEqEU92YQxY50wlos5qlydyhE
+	 f59WFFmbq6wJpsJ09bim3tSKMPIikNZKeED+cPng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.15 165/178] iommu/vt-d: Assign devtlb cache tag on ATS enablement
-Date: Tue,  8 Jul 2025 18:23:22 +0200
-Message-ID: <20250708162240.782926763@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.15 166/178] powercap: intel_rapl: Do not change CLAMPING bit if ENABLE bit cannot be changed
+Date: Tue,  8 Jul 2025 18:23:23 +0200
+Message-ID: <20250708162240.808278005@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,80 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-commit 25b1b75bbaf96331750fb01302825069657b2ff8 upstream.
+commit 964209202ebe1569c858337441e87ef0f9d71416 upstream.
 
-Commit <4f1492efb495> ("iommu/vt-d: Revert ATS timing change to fix boot
-failure") placed the enabling of ATS in the probe_finalize callback. This
-occurs after the default domain attachment, which is when the ATS cache
-tag is assigned. Consequently, the device TLB cache tag is missed when the
-domain is attached, leading to the device TLB not being invalidated in the
-iommu_unmap paths.
+PL1 cannot be disabled on some platforms. The ENABLE bit is still set
+after software clears it. This behavior leads to a scenario where, upon
+user request to disable the Power Limit through the powercap sysfs, the
+ENABLE bit remains set while the CLAMPING bit is inadvertently cleared.
 
-Fix this by assigning the CACHE_TAG_DEVTLB cache tag when ATS is enabled.
+According to the Intel Software Developer's Manual, the CLAMPING bit,
+"When set, allows the processor to go below the OS requested P states in
+order to maintain the power below specified Platform Power Limit value."
 
-Fixes: 4f1492efb495 ("iommu/vt-d: Revert ATS timing change to fix boot failure")
-Cc: stable@vger.kernel.org
-Suggested-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Tested-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20250625050135.3129955-1-baolu.lu@linux.intel.com
-Link: https://lore.kernel.org/r/20250628100351.3198955-2-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Thus this means the system may operate at higher power levels than
+intended on such platforms.
+
+Enhance the code to check ENABLE bit after writing to it, and stop
+further processing if ENABLE bit cannot be changed.
+
+Reported-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Fixes: 2d281d8196e3 ("PowerCap: Introduce Intel RAPL power capping driver")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Link: https://patch.msgid.link/20250619071340.384782-1-rui.zhang@intel.com
+[ rjw: Use str_enabled_disabled() instead of open-coded equivalent ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/cache.c |    5 ++---
- drivers/iommu/intel/iommu.c |   11 ++++++++++-
- drivers/iommu/intel/iommu.h |    2 ++
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/powercap/intel_rapl_common.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/intel/cache.c
-+++ b/drivers/iommu/intel/cache.c
-@@ -40,9 +40,8 @@ static bool cache_tage_match(struct cach
- }
- 
- /* Assign a cache tag with specified type to domain. */
--static int cache_tag_assign(struct dmar_domain *domain, u16 did,
--			    struct device *dev, ioasid_t pasid,
--			    enum cache_tag_type type)
-+int cache_tag_assign(struct dmar_domain *domain, u16 did, struct device *dev,
-+		     ioasid_t pasid, enum cache_tag_type type)
+--- a/drivers/powercap/intel_rapl_common.c
++++ b/drivers/powercap/intel_rapl_common.c
+@@ -340,12 +340,28 @@ static int set_domain_enable(struct powe
  {
- 	struct device_domain_info *info = dev_iommu_priv_get(dev);
- 	struct intel_iommu *iommu = info->iommu;
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3819,8 +3819,17 @@ static void intel_iommu_probe_finalize(s
- 	    !pci_enable_pasid(to_pci_dev(dev), info->pasid_supported & ~1))
- 		info->pasid_enabled = 1;
+ 	struct rapl_domain *rd = power_zone_to_rapl_domain(power_zone);
+ 	struct rapl_defaults *defaults = get_defaults(rd->rp);
++	u64 val;
+ 	int ret;
  
--	if (sm_supported(iommu) && !dev_is_real_dma_subdevice(dev))
-+	if (sm_supported(iommu) && !dev_is_real_dma_subdevice(dev)) {
- 		iommu_enable_pci_ats(info);
-+		/* Assign a DEVTLB cache tag to the default domain. */
-+		if (info->ats_enabled && info->domain) {
-+			u16 did = domain_id_iommu(info->domain, iommu);
+ 	cpus_read_lock();
+ 	ret = rapl_write_pl_data(rd, POWER_LIMIT1, PL_ENABLE, mode);
+-	if (!ret && defaults->set_floor_freq)
++	if (ret)
++		goto end;
 +
-+			if (cache_tag_assign(info->domain, did, dev,
-+					     IOMMU_NO_PASID, CACHE_TAG_DEVTLB))
-+				iommu_disable_pci_ats(info);
-+		}
++	ret = rapl_read_pl_data(rd, POWER_LIMIT1, PL_ENABLE, false, &val);
++	if (ret)
++		goto end;
++
++	if (mode != val) {
++		pr_debug("%s cannot be %s\n", power_zone->name,
++			 str_enabled_disabled(mode));
++		goto end;
 +	}
- 	iommu_enable_pci_pri(info);
- }
++
++	if (defaults->set_floor_freq)
+ 		defaults->set_floor_freq(rd, mode);
++
++end:
+ 	cpus_read_unlock();
  
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -1277,6 +1277,8 @@ struct cache_tag {
- 	unsigned int users;
- };
- 
-+int cache_tag_assign(struct dmar_domain *domain, u16 did, struct device *dev,
-+		     ioasid_t pasid, enum cache_tag_type type);
- int cache_tag_assign_domain(struct dmar_domain *domain,
- 			    struct device *dev, ioasid_t pasid);
- void cache_tag_unassign_domain(struct dmar_domain *domain,
+ 	return ret;
 
 
