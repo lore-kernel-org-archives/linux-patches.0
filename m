@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA952E5413;
-	Tue,  8 Jul 2025 16:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDB62E091E;
+	Tue,  8 Jul 2025 16:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993864; cv=none; b=N/gw7pMMrvR2cPpXz6pCM3hPhtiSCKHwH9LUMphxsaars88oZ1Cj1U6LaYRZE2vsVzg2jjWGeaTVWV4S6Y9vdIEWPTYrb4dWeMe4RfQ9WQK9atRoMHHds/9BzsIIMdiCYKKahrc6qvoJSFG5+anyEFxu5s3A7ZkoHdydWhgOgjA=
+	t=1751993866; cv=none; b=Sw/79GaZEno8jySGQC8oCCjqDhUPh2stXyG1Iq8x7vMmc/2ZqYSbjQnyLydGv/KvXBRUzHk/u2Y3iBNeWiXSe+cnqdmCEJY8kSRwMPCkGEvgjcyqn13Qn/Oull6nJKAH2h2R9upDJTOdc5jVJcac6rqeTjzHS2vdHallXnOu+fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993864; c=relaxed/simple;
-	bh=6T57YfHtuuQCuDBCwrD6NBS9ta+hHpLA5MqaLXr3fKc=;
+	s=arc-20240116; t=1751993866; c=relaxed/simple;
+	bh=JzGPqdVDv8czk7eBdcsHPaG+NuUfV3HOnQ426gkN2Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FePE9MbtMicWysASG3ZLsumEIGZl0aXkP/oEhRi4JCaa2VXUVSis9i8PlcUWC1GCdXa8fdWgximaaXs6lXZlS1GzoqaQGiCrG6CFfnIDubtmX+WhR3l1sn/tUyGF9l56osQm2YGfhlfpn1vysHghYJliaJbnME0Bu47gJrL1k+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SB+XdR1o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nz5WcImxLAl+dF5xRmHlsODeRoS4/jodt10ICQ9kfmMbiAUxhDjcWC8sjkK7ViQu3ptQWOLNxngPv33z5shTmQaKdLZHoa7xS3dIHR4Vop6yNY7aT6zcwLDJiQx1KBG9QNsZ/RqjOtE0S2Z7Sy+NSWCmVefchkQOpIUb//CSseo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpcTe6t5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB+XdR1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0EEC4CEF0;
-	Tue,  8 Jul 2025 16:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpcTe6t5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A816C4CEED;
+	Tue,  8 Jul 2025 16:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993864;
-	bh=6T57YfHtuuQCuDBCwrD6NBS9ta+hHpLA5MqaLXr3fKc=;
+	s=korg; t=1751993866;
+	bh=JzGPqdVDv8czk7eBdcsHPaG+NuUfV3HOnQ426gkN2Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SB+XdR1oRATf7QEI048wm4xs/oY8VZJF2sKdkmxN8WW80dslq4Hz39JZhi6uotDNB
-	 6xaUgCIILR2FVPOUF5fS3kO5ktwYgUvklQznPDcsp53wLn5aQh++nlsrhqVDrBhnna
-	 NQSFsYvOAtxLkw9p3w+Ojlss+wO1LkHBgf/1N0to=
+	b=SpcTe6t5UiF/JH84OgiTaOXpEFqMt4Ek60aLdZfxP36H2MYRp3d+pp2leDP+UMtU5
+	 9dX4i7cQG6SbpfqvvZJEOYN90/btM9e+X071mfX1men71s6Xl8CIEUi8rtar/pRetX
+	 Th0tn95LdW0HTwXLqs3txJyjsCK/E1YYEJlNw7Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Long Li <longli@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/160] ASoC: codecs: wcd9335: Fix missing free of regulator supplies
-Date: Tue,  8 Jul 2025 18:21:14 +0200
-Message-ID: <20250708162232.559430748@linuxfoundation.org>
+Subject: [PATCH 5.15 046/160] Drivers: hv: vmbus: Add utility function for querying ring size
+Date: Tue,  8 Jul 2025 18:21:23 +0200
+Message-ID: <20250708162232.815945346@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,86 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit 9079db287fc3e38e040b0edeb0a25770bb679c8e ]
+[ Upstream commit e8c4bd6c6e6b7e7b416c42806981c2a81370001e ]
 
-Driver gets and enables all regulator supplies in probe path
-(wcd9335_parse_dt() and wcd9335_power_on_reset()), but does not cleanup
-in final error paths and in unbind (missing remove() callback).  This
-leads to leaked memory and unbalanced regulator enable count during
-probe errors or unbind.
+Add a function to query for the preferred ring buffer size of VMBus
+device. This will allow the drivers (eg. UIO) to allocate the most
+optimized ring buffer size for devices.
 
-Fix this by converting entire code into devm_regulator_bulk_get_enable()
-which also greatly simplifies the code.
-
-Fixes: 20aedafdf492 ("ASoC: wcd9335: add support to wcd9335 codec")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250526-b4-b4-asoc-wcd9395-vdd-px-fixes-v1-1-0b8a2993b7d3@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Link: https://lore.kernel.org/r/1711788723-8593-2-git-send-email-ssengar@linux.microsoft.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd9335.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ drivers/hv/channel_mgmt.c | 15 ++++++++++++---
+ drivers/hv/hyperv_vmbus.h |  5 +++++
+ include/linux/hyperv.h    |  2 ++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index 08b7ca26c3c97..f20d0c9e91e49 100644
---- a/sound/soc/codecs/wcd9335.c
-+++ b/sound/soc/codecs/wcd9335.c
-@@ -339,7 +339,6 @@ struct wcd9335_codec {
+diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
+index 029f8269ad15d..cd9f01b7d37dd 100644
+--- a/drivers/hv/channel_mgmt.c
++++ b/drivers/hv/channel_mgmt.c
+@@ -119,7 +119,9 @@ const struct vmbus_device vmbus_devs[] = {
+ 	},
  
- 	int intr1;
- 	struct gpio_desc *reset_gpio;
--	struct regulator_bulk_data supplies[WCD9335_MAX_SUPPLY];
+ 	/* File copy */
+-	{ .dev_type = HV_FCOPY,
++	/* fcopy always uses 16KB ring buffer size and is working well for last many years */
++	{ .pref_ring_size = 0x4000,
++	  .dev_type = HV_FCOPY,
+ 	  HV_FCOPY_GUID,
+ 	  .perf_device = false,
+ 	  .allowed_in_isolated = false,
+@@ -139,12 +141,19 @@ const struct vmbus_device vmbus_devs[] = {
+ 	  .allowed_in_isolated = false,
+ 	},
  
- 	unsigned int rx_port_value;
- 	unsigned int tx_port_value;
-@@ -366,6 +365,10 @@ struct wcd9335_irq {
- 	char *name;
+-	/* Unknown GUID */
+-	{ .dev_type = HV_UNKNOWN,
++	/*
++	 * Unknown GUID
++	 * 64 KB ring buffer + 4 KB header should be sufficient size for any Hyper-V device apart
++	 * from HV_NIC and HV_SCSI. This case avoid the fallback for unknown devices to allocate
++	 * much bigger (2 MB) of ring size.
++	 */
++	{ .pref_ring_size = 0x11000,
++	  .dev_type = HV_UNKNOWN,
+ 	  .perf_device = false,
+ 	  .allowed_in_isolated = false,
+ 	},
  };
++EXPORT_SYMBOL_GPL(vmbus_devs);
  
-+static const char * const wcd9335_supplies[] = {
-+	"vdd-buck", "vdd-buck-sido", "vdd-tx", "vdd-rx", "vdd-io",
-+};
-+
- static const struct wcd9335_slim_ch wcd9335_tx_chs[WCD9335_TX_MAX] = {
- 	WCD9335_SLIM_TX_CH(0),
- 	WCD9335_SLIM_TX_CH(1),
-@@ -5038,30 +5041,16 @@ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
- 	if (IS_ERR(wcd->native_clk))
- 		return dev_err_probe(dev, PTR_ERR(wcd->native_clk), "slimbus clock not found\n");
- 
--	wcd->supplies[0].supply = "vdd-buck";
--	wcd->supplies[1].supply = "vdd-buck-sido";
--	wcd->supplies[2].supply = "vdd-tx";
--	wcd->supplies[3].supply = "vdd-rx";
--	wcd->supplies[4].supply = "vdd-io";
--
--	ret = regulator_bulk_get(dev, WCD9335_MAX_SUPPLY, wcd->supplies);
-+	ret = devm_regulator_bulk_get_enable(dev, ARRAY_SIZE(wcd9335_supplies),
-+					     wcd9335_supplies);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to get supplies\n");
-+		return dev_err_probe(dev, ret, "Failed to get and enable supplies\n");
- 
- 	return 0;
+ static const struct {
+ 	guid_t guid;
+diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
+index 6a0ae815a198e..b87adb3a98211 100644
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -405,6 +405,11 @@ static inline bool hv_is_perf_channel(struct vmbus_channel *channel)
+ 	return vmbus_devs[channel->device_id].perf_device;
  }
  
- static int wcd9335_power_on_reset(struct wcd9335_codec *wcd)
++static inline size_t hv_dev_ring_size(struct vmbus_channel *channel)
++{
++	return vmbus_devs[channel->device_id].pref_ring_size;
++}
++
+ static inline bool hv_is_allocated_cpu(unsigned int cpu)
  {
--	struct device *dev = wcd->dev;
--	int ret;
--
--	ret = regulator_bulk_enable(WCD9335_MAX_SUPPLY, wcd->supplies);
--	if (ret) {
--		dev_err(dev, "Failed to get supplies: err = %d\n", ret);
--		return ret;
--	}
--
- 	/*
- 	 * For WCD9335, it takes about 600us for the Vout_A and
- 	 * Vout_D to be ready after BUCK_SIDO is powered up.
+ 	struct vmbus_channel *channel, *sc;
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index aff435a42ead9..62d5bb1f726f6 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -815,6 +815,8 @@ struct vmbus_requestor {
+ #define VMBUS_RQST_RESET (U64_MAX - 3)
+ 
+ struct vmbus_device {
++	/* preferred ring buffer size in KB, 0 means no preferred size for this device */
++	size_t pref_ring_size;
+ 	u16  dev_type;
+ 	guid_t guid;
+ 	bool perf_device;
 -- 
 2.39.5
 
