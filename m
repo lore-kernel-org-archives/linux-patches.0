@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3613E2E3B03;
-	Tue,  8 Jul 2025 16:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D552E0B45;
+	Tue,  8 Jul 2025 16:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992597; cv=none; b=EpsHFnT/6W54jPs7LgMXFbC3NemlEVJ31fp+memkprDtoSxk53M08hWUWUuOnLrMZxKTC7sQQ5MuO4ed8ig55HdXpFc2zmdrB7iF0KgWieGVY9WcP2F4NhCWj9ORuVMk4F3w9viY4qyyVABzEOQffwklchCDLsNetAE02VQfewM=
+	t=1751992600; cv=none; b=nN/KFo6QRlLKr6tV12raqWQRIXlXhhLtfqJs7x+rYEkjvYp6/GO1JUp4Mq/BFuEwf57uEhnLmlKD5CKvBAuC3FVz44WnVy0EDxN10KvcwGI1yqk6eGXczsNiMFcVgzuDd0/L9jeALU7dWofQPAGqTJnaJDGyE3BWdyWN753fWZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992597; c=relaxed/simple;
-	bh=SPOO4P+RnftNm/YZ1uxehW8plom8WH3tZvmQ3XzDAkA=;
+	s=arc-20240116; t=1751992600; c=relaxed/simple;
+	bh=Z4DDZrow9eRUZb+6Wh3IOORYW3fhIuct2/QJ3PIJPL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+VGXw9Dsc9RRSGfBcs0GjwEaJZvFztNSgsqw71k4I7JrG1w9XHGPz8ZFy0KeBrJ/Gswh7LwWkqvM10fbkWYeHDNTC1csBlCXo4zVTFWBRaM9AjTqz6Is3M0prmZAL5kZHfE0LAePuPcha3JU+LBO4kgljWGoQ7tTPtEDkBZiGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyfbs52l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxOgx/QDPwgu8bjRswjr7G6uJzn1clZ5QRzijiHIhVUAIkdaXettN62ouuNmucYqzhZpdwmSjpGtuX61rAxR0OKhEHd3aqwIm5hBzbHpeCpVpt2iHj1TcYCXRMyfqQ9fICpbn7zoIp5aYxpxMnIMYNC55YnAI4VNnp0GPR5JEqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBbyE+WJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyfbs52l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB126C4CEED;
-	Tue,  8 Jul 2025 16:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBbyE+WJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C06C4CEED;
+	Tue,  8 Jul 2025 16:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992597;
-	bh=SPOO4P+RnftNm/YZ1uxehW8plom8WH3tZvmQ3XzDAkA=;
+	s=korg; t=1751992600;
+	bh=Z4DDZrow9eRUZb+6Wh3IOORYW3fhIuct2/QJ3PIJPL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yyfbs52lZWVPDF7QXCGKUKJ8buyzMLRiv6skOZd6IX9scca5HcgO4lKTA2CE4Pbmi
-	 hgC7wa2Xp4qZQv0PUKT6wChioSqQgFzolKOS03PO7gnL3JdbjxAX9dg46ywWqb/vIN
-	 P64mKDNKYNwhf1Mz99yYW+KauzPlNVGduQPnvguM=
+	b=mBbyE+WJwfhFRf8SyVH5TMJMlbEdErqBu+Mnh76PwZy3qSaBNrEWnWCnCKPIaF+AY
+	 zi1mzcogTOSfOJypJxuovXGMfrn7C2Ic0+kJEoHPA4IHw/ePC3ZNxuoB7VuPUC2BCu
+	 lk3/2a7q5rCWjBTOn9jqYVigUH9z4aXE8JwQw68Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christian Eggers <ceggers@arri.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 016/232] Bluetooth: MGMT: set_mesh: update LE scan interval and window
-Date: Tue,  8 Jul 2025 18:20:12 +0200
-Message-ID: <20250708162241.859321442@linuxfoundation.org>
+Subject: [PATCH 6.12 017/232] Bluetooth: MGMT: mesh_send: check instances prior disabling advertising
+Date: Tue,  8 Jul 2025 18:20:13 +0200
+Message-ID: <20250708162241.885123097@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,75 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Eggers <ceggers@arri.de>
 
-commit e5af67a870f738bb8a4594b6c60c2caf4c87a3c9 upstream.
+commit f3cb5676e5c11c896ba647ee309a993e73531588 upstream.
 
-According to the message of commit b338d91703fa ("Bluetooth: Implement
-support for Mesh"), MGMT_OP_SET_MESH_RECEIVER should set the passive scan
-parameters.  Currently the scan interval and window parameters are
-silently ignored, although user space (bluetooth-meshd) expects that
-they can be used [1]
+The unconditional call of hci_disable_advertising_sync() in
+mesh_send_done_sync() also disables other LE advertisings (non mesh
+related).
 
-[1] https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/mesh/mesh-io-mgmt.c#n344
+I am not sure whether this call is required at all, but checking the
+adv_instances list (like done at other places) seems to solve the
+problem.
+
 Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
 Cc: stable@vger.kernel.org
 Signed-off-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ net/bluetooth/mgmt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -2146,6 +2146,9 @@ static int set_mesh_sync(struct hci_dev
- 	else
- 		hci_dev_clear_flag(hdev, HCI_MESH);
+@@ -1073,7 +1073,8 @@ static int mesh_send_done_sync(struct hc
+ 	struct mgmt_mesh_tx *mesh_tx;
  
-+	hdev->le_scan_interval = __le16_to_cpu(cp->period);
-+	hdev->le_scan_window = __le16_to_cpu(cp->window);
-+
- 	len -= sizeof(*cp);
+ 	hci_dev_clear_flag(hdev, HCI_MESH_SENDING);
+-	hci_disable_advertising_sync(hdev);
++	if (list_empty(&hdev->adv_instances))
++		hci_disable_advertising_sync(hdev);
+ 	mesh_tx = mgmt_mesh_next(hdev, NULL);
  
- 	/* If filters don't fit, forward all adv pkts */
-@@ -2160,6 +2163,7 @@ static int set_mesh(struct sock *sk, str
- {
- 	struct mgmt_cp_set_mesh *cp = data;
- 	struct mgmt_pending_cmd *cmd;
-+	__u16 period, window;
- 	int err = 0;
- 
- 	bt_dev_dbg(hdev, "sock %p", sk);
-@@ -2173,6 +2177,23 @@ static int set_mesh(struct sock *sk, str
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
- 				       MGMT_STATUS_INVALID_PARAMS);
- 
-+	/* Keep allowed ranges in sync with set_scan_params() */
-+	period = __le16_to_cpu(cp->period);
-+
-+	if (period < 0x0004 || period > 0x4000)
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
-+				       MGMT_STATUS_INVALID_PARAMS);
-+
-+	window = __le16_to_cpu(cp->window);
-+
-+	if (window < 0x0004 || window > 0x4000)
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
-+				       MGMT_STATUS_INVALID_PARAMS);
-+
-+	if (window > period)
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
-+				       MGMT_STATUS_INVALID_PARAMS);
-+
- 	hci_dev_lock(hdev);
- 
- 	cmd = mgmt_pending_add(sk, MGMT_OP_SET_MESH_RECEIVER, hdev, data, len);
-@@ -6536,6 +6557,7 @@ static int set_scan_params(struct sock *
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_SCAN_PARAMS,
- 				       MGMT_STATUS_NOT_SUPPORTED);
- 
-+	/* Keep allowed ranges in sync with set_mesh() */
- 	interval = __le16_to_cpu(cp->interval);
- 
- 	if (interval < 0x0004 || interval > 0x4000)
+ 	if (mesh_tx)
 
 
