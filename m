@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EC918EAB;
-	Tue,  8 Jul 2025 16:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC86A2E5B04;
+	Tue,  8 Jul 2025 16:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993342; cv=none; b=EJf/qNi2DDdBjyhCAInsxkxN1s9Uecelq7RO+BAA9gtnpIvfDuDu/VDm1NgMO6xzbJhIksHjJ9+wCoKB94Hhefu5naFf5//F/ucVP391sh0gb7xQlRwDprzvnXkGKNtxLpAvOBKnwv+YaisXKFSN+TKL740gqv1WdxWIXOudkPY=
+	t=1751993345; cv=none; b=djPyY9HPBNtfnKbVlqBeDFO7PFTszUAJKYJWzpqsJg1cCNnANyT7z32HG6b8bvM0aS2XnzIEvRU9xIBhRSJSLc/0PyvTuq0Zj2RPvOHiAQAJxXmxNcXQ1tzQ9OPYK7Sx7CRM26af4HbGYZSkl62ZvY3Ddk8+fLrGJKkGNLvSWdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993342; c=relaxed/simple;
-	bh=CJuZZnS8E1IrIBoxNdGTRrydZnA/1nREEWJwecd/M1I=;
+	s=arc-20240116; t=1751993345; c=relaxed/simple;
+	bh=MiS07JNwzep9YymZsGSE0GyZMoYLr86kzhSFnfzonHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aoj4vcYUT1KL/2Fujsp3uCup07uA3s41ttPWi2L3YqVLsO+drOImLONLZKzckKK9ZNpb/36OTqf+hLUmYld4WfAp3RaoTce6/U7zJhFH7i5oIJBoYZbZEB1J02nVciLJ4vYwRUB3OzTAdBLdgVaYfmACqKzrFy7V/nYkJKGj5DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLztgBcx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7/nLhJuqpxwPWxyHDaZykRrSW86RXwIXFw4180TAzH7jwhf2iN/EJAxVLyVpRivLv28F+AvjeH/8HKWrmcUAMDJZ2o2b18adsGHpbh38ebJCtj7B2yKE26CvzaoLu/56bqnc24ocgEmTUd0tnhjxy+C8bSVW31p0wpvolBAYl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqcLVvQK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLztgBcx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759F4C4CEF0;
-	Tue,  8 Jul 2025 16:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqcLVvQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682F2C4CEED;
+	Tue,  8 Jul 2025 16:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993342;
-	bh=CJuZZnS8E1IrIBoxNdGTRrydZnA/1nREEWJwecd/M1I=;
+	s=korg; t=1751993344;
+	bh=MiS07JNwzep9YymZsGSE0GyZMoYLr86kzhSFnfzonHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLztgBcxNqjQ9J+3IVaEHdisVSB8JbwT7RXJRxnZFH+OR4sjSCTmZNq6UpL4ZezfA
-	 izmnP6vgLe2muWZhXib+cXhU2QYh2zUVocOVA0fr0aPWWISCZUheYOZGxmjoPtR3uy
-	 QBlQrKEluCerGfvjGndhExLOOc6A4hd8K7FNuWIM=
+	b=aqcLVvQKAQhq2S8RLGy4NJXqIV3GZOOSODbOKcIN164991nTsjDjmwZfnc0V1xXnZ
+	 LnJKjRWC2LlQRoFUDu2p0xaSzaT/9C7By4sY5OSL/wXWAQmtUr3As3mpjk949AYsm/
+	 uLYRmqzE8y6VU3Y1DOXEqIpn98fU8StenxhAHZi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	virtualization@lists.linux.dev,
-	netdev@vger.kernel.org,
-	stable <stable@kernel.org>,
-	HarshaVardhana S A <harshavardhana.sa@broadcom.com>
-Subject: [PATCH 6.15 010/178] vsock/vmci: Clear the vmci transport packet properly when initializing it
-Date: Tue,  8 Jul 2025 18:20:47 +0200
-Message-ID: <20250708162236.819209078@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>
+Subject: [PATCH 6.15 011/178] iommufd/selftest: Add missing close(mfd) in memfd_mmap()
+Date: Tue,  8 Jul 2025 18:20:48 +0200
+Message-ID: <20250708162236.842605402@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -60,56 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 223e2288f4b8c262a864e2c03964ffac91744cd5 upstream.
+commit 4b75e3babb85238912f50bbe0647bae08242a9b6 upstream.
 
-In vmci_transport_packet_init memset the vmci_transport_packet before
-populating the fields to avoid any uninitialised data being left in the
-structure.
+Do not forget to close mfd in the error paths, since none of the callers
+would close it when ASSERT_NE(MAP_FAILED, buf) fails.
 
-Cc: Bryan Tan <bryan-bt.tan@broadcom.com>
-Cc: Vishnu Dasa <vishnu.dasa@broadcom.com>
-Cc: Broadcom internal kernel review list
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: virtualization@lists.linux.dev
-Cc: netdev@vger.kernel.org
-Cc: stable <stable@kernel.org>
-Signed-off-by: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20250701122254.2397440-1-gregkh@linuxfoundation.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0bcceb1f51c7 ("iommufd: Selftest coverage for IOMMU_IOAS_MAP_FILE")
+Link: https://patch.msgid.link/r/a363a69dbf453d4bc1bde276f3b16778620488e1.1750787928.git.nicolinc@nvidia.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/vmci_transport.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/iommu/iommufd_utils.h |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -119,6 +119,8 @@ vmci_transport_packet_init(struct vmci_t
- 			   u16 proto,
- 			   struct vmci_handle handle)
+--- a/tools/testing/selftests/iommu/iommufd_utils.h
++++ b/tools/testing/selftests/iommu/iommufd_utils.h
+@@ -60,13 +60,18 @@ static inline void *memfd_mmap(size_t le
  {
-+	memset(pkt, 0, sizeof(*pkt));
-+
- 	/* We register the stream control handler as an any cid handle so we
- 	 * must always send from a source address of VMADDR_CID_ANY
- 	 */
-@@ -131,8 +133,6 @@ vmci_transport_packet_init(struct vmci_t
- 	pkt->type = type;
- 	pkt->src_port = src->svm_port;
- 	pkt->dst_port = dst->svm_port;
--	memset(&pkt->proto, 0, sizeof(pkt->proto));
--	memset(&pkt->_reserved2, 0, sizeof(pkt->_reserved2));
+ 	int mfd_flags = (flags & MAP_HUGETLB) ? MFD_HUGETLB : 0;
+ 	int mfd = memfd_create("buffer", mfd_flags);
++	void *buf = MAP_FAILED;
  
- 	switch (pkt->type) {
- 	case VMCI_TRANSPORT_PACKET_TYPE_INVALID:
+ 	if (mfd <= 0)
+ 		return MAP_FAILED;
+ 	if (ftruncate(mfd, length))
+-		return MAP_FAILED;
++		goto out;
+ 	*mfd_p = mfd;
+-	return mmap(0, length, prot, flags, mfd, 0);
++	buf = mmap(0, length, prot, flags, mfd, 0);
++out:
++	if (buf == MAP_FAILED)
++		close(mfd);
++	return buf;
+ }
+ 
+ /*
 
 
