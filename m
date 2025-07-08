@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDF21E492;
-	Tue,  8 Jul 2025 17:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BABE1DB127;
+	Tue,  8 Jul 2025 17:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994013; cv=none; b=IsuCda7+2+lnGDq+O/LVd6a5CU2AXH+ah99omOWCPHzKT+fHscRWaCYb8DPPLja+xtgOMWZ7GWrJkKPl9az/t2o595qo6hZF2v+S2GlprEEFD3gGSq9BvBcf4pqHp66B0GGB4N/8ebgTsyNEeEhsLSRJY2J5fp9gptBBO8rShf8=
+	t=1751994016; cv=none; b=jQRCnx2Wefuq/ZbLA+iNVZX1wqiFJ9RMPIc/pJGI+F0alx6HgcUB0rP7+XUVkC+Om3jhhwEkCDn72UOHsXutZ5ZTk6Zns8ScNKBShPlGTxARUhNsM429rGiSZfBnzd90OjKHmB35HIt4bjSypfegh5Bqx0ZV7sE80fx0E7OQlF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994013; c=relaxed/simple;
-	bh=G6yjQU0QRbqifDc4TYWur3blJ3lBmDezKUv1Ys0MYpo=;
+	s=arc-20240116; t=1751994016; c=relaxed/simple;
+	bh=Vln/AmmbcVF0Ucw7i3KlNauP6Z+Ti3LVmQD08X8cjQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KtrvRh6idqTq9RqtOocAT4O65ISsyNOUbYN5tpBShIw7K6IsSFVTVFO5z20tDZcP208YPLheJNbRsB3WqG+bOWf0WPKQ0jZoUeNSquqirhrE2Ab1SiczRLbD+s+xFMTzYoE5KOUs1IMxYqMMzrNKqZC/ahzzy8WRmZ+sqPjfezM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQ7sHYa1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DwlzidVBuLNJkEZlWAidDimiPOfYZYsMA7xvTvjZazS71qtZOglYfj9sOSg2UpEUoN7ITjNjnONUNuQLYxRrPKApvje09/KC2tfsH8CBnDrqbw0kB5rVSt3yGGK6ikJB8yVyIKg1xEsUEgIPkYms4Fx/fqYvuduW/0ln6lvtP10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7im4tHV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQ7sHYa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF8DC4CEF0;
-	Tue,  8 Jul 2025 17:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7im4tHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9ED1C4CEED;
+	Tue,  8 Jul 2025 17:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994013;
-	bh=G6yjQU0QRbqifDc4TYWur3blJ3lBmDezKUv1Ys0MYpo=;
+	s=korg; t=1751994016;
+	bh=Vln/AmmbcVF0Ucw7i3KlNauP6Z+Ti3LVmQD08X8cjQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQ7sHYa1hzFHJYMQ93CZWbJn4ssh/Vrwl6O8IDXyOPZU7+LbiXuWiV4hzpQb50RZd
-	 N7upRgwSGcaXEYHGI7k4waPfrViVnHRy6sP8Wv/2bzMFWt9f9VsIdQzVbpJfWalzvV
-	 AORcD7UeHIBVSOfvVsptnzkkCzanuPFWA6/RlRT4=
+	b=Q7im4tHVirDfDIz5rPUPhRG8bgzy6JJwo9IZOd0SwcL85oqCoqhYaB3uP+sprlvCo
+	 agSPzs1VxjeB7TRiyFC2qPujBLdHfIJLkcQ4QDRftjm1/LEkzeIJjcixr1qERI+MBT
+	 EKI/kxGPDN5+cHpuLFfbAACdcO+Ebf3EoEGZFC4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Larry Bassel <larry.bassel@oracle.com>
-Subject: [PATCH 5.15 095/160] btrfs: dont drop extent_map for free space inode on write error
-Date: Tue,  8 Jul 2025 18:22:12 +0200
-Message-ID: <20250708162234.133561100@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 5.15 096/160] ARM: 9354/1: ptrace: Use bitfield helpers
+Date: Tue,  8 Jul 2025 18:22:13 +0200
+Message-ID: <20250708162234.165776309@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,97 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 5571e41ec6e56e35f34ae9f5b3a335ef510e0ade upstream.
+commit b36e78b216e632d90138751e4ff80044de303656 upstream.
 
-While running the CI for an unrelated change I hit the following panic
-with generic/648 on btrfs_holes_spacecache.
+The isa_mode() macro extracts two fields, and recombines them into a
+single value.
 
-assertion failed: block_start != EXTENT_MAP_HOLE, in fs/btrfs/extent_io.c:1385
-------------[ cut here ]------------
-kernel BUG at fs/btrfs/extent_io.c:1385!
-invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 1 PID: 2695096 Comm: fsstress Kdump: loaded Tainted: G        W          6.8.0-rc2+ #1
-RIP: 0010:__extent_writepage_io.constprop.0+0x4c1/0x5c0
-Call Trace:
- <TASK>
- extent_write_cache_pages+0x2ac/0x8f0
- extent_writepages+0x87/0x110
- do_writepages+0xd5/0x1f0
- filemap_fdatawrite_wbc+0x63/0x90
- __filemap_fdatawrite_range+0x5c/0x80
- btrfs_fdatawrite_range+0x1f/0x50
- btrfs_write_out_cache+0x507/0x560
- btrfs_write_dirty_block_groups+0x32a/0x420
- commit_cowonly_roots+0x21b/0x290
- btrfs_commit_transaction+0x813/0x1360
- btrfs_sync_file+0x51a/0x640
- __x64_sys_fdatasync+0x52/0x90
- do_syscall_64+0x9c/0x190
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
+Make this more obvious by using the FIELD_GET() helper, and shifting the
+result into its final resting place.
 
-This happens because we fail to write out the free space cache in one
-instance, come back around and attempt to write it again.  However on
-the second pass through we go to call btrfs_get_extent() on the inode to
-get the extent mapping.  Because this is a new block group, and with the
-free space inode we always search the commit root to avoid deadlocking
-with the tree, we find nothing and return a EXTENT_MAP_HOLE for the
-requested range.
-
-This happens because the first time we try to write the space cache out
-we hit an error, and on an error we drop the extent mapping.  This is
-normal for normal files, but the free space cache inode is special.  We
-always expect the extent map to be correct.  Thus the second time
-through we end up with a bogus extent map.
-
-Since we're deprecating this feature, the most straightforward way to
-fix this is to simply skip dropping the extent map range for this failed
-range.
-
-I shortened the test by using error injection to stress the area to make
-it easier to reproduce.  With this patch in place we no longer panic
-with my error injection test.
-
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ Larry: backport to 5.15.y. Minor conflict resolved due to missing commit 4c0c8cfc8433
-  btrfs: move btrfs_drop_extent_cache() to extent_map.c ]
-Signed-off-by: Larry Bassel <larry.bassel@oracle.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ arch/arm/include/asm/ptrace.h |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3197,8 +3197,23 @@ out:
- 			unwritten_start += logical_len;
- 		clear_extent_uptodate(io_tree, unwritten_start, end, NULL);
+--- a/arch/arm/include/asm/ptrace.h
++++ b/arch/arm/include/asm/ptrace.h
+@@ -10,6 +10,7 @@
+ #include <uapi/asm/ptrace.h>
  
--		/* Drop the cache for the part of the extent we didn't write. */
--		btrfs_drop_extent_cache(inode, unwritten_start, end, 0);
-+		/*
-+		 * Drop extent maps for the part of the extent we didn't write.
-+		 *
-+		 * We have an exception here for the free_space_inode, this is
-+		 * because when we do btrfs_get_extent() on the free space inode
-+		 * we will search the commit root.  If this is a new block group
-+		 * we won't find anything, and we will trip over the assert in
-+		 * writepage where we do ASSERT(em->block_start !=
-+		 * EXTENT_MAP_HOLE).
-+		 *
-+		 * Theoretically we could also skip this for any NOCOW extent as
-+		 * we don't mess with the extent map tree in the NOCOW case, but
-+		 * for now simply skip this if we are the free space inode.
-+		 */
-+		if (!btrfs_is_free_space_inode(inode))
-+			btrfs_drop_extent_cache(inode, unwritten_start,
-+						    end, 0);
+ #ifndef __ASSEMBLY__
++#include <linux/bitfield.h>
+ #include <linux/types.h>
  
- 		/*
- 		 * If the ordered extent had an IOERR or something else went
+ struct pt_regs {
+@@ -35,8 +36,8 @@ struct svc_pt_regs {
+ 
+ #ifndef CONFIG_CPU_V7M
+ #define isa_mode(regs) \
+-	((((regs)->ARM_cpsr & PSR_J_BIT) >> (__ffs(PSR_J_BIT) - 1)) | \
+-	 (((regs)->ARM_cpsr & PSR_T_BIT) >> (__ffs(PSR_T_BIT))))
++	(FIELD_GET(PSR_J_BIT, (regs)->ARM_cpsr) << 1 | \
++	 FIELD_GET(PSR_T_BIT, (regs)->ARM_cpsr))
+ #else
+ #define isa_mode(regs) 1 /* Thumb */
+ #endif
 
 
