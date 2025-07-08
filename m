@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0351D1548C;
-	Tue,  8 Jul 2025 16:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9866C14A60D;
+	Tue,  8 Jul 2025 16:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992481; cv=none; b=oC362gNnxq6YWe4ttQlWSX4n0M8aZgV6ynjgu5IcpulhREwr0gHEduLcpg5pkt/Jj67wY/3DMNd9K/cz+GwubgygXlhgegM+bqK1FjHlHbemUqXSbJkcV0nR3T0QMxZYR3GNLkTvCqWewPjPGxwy0pu0FABBRlFh13MGaURzEpo=
+	t=1751992483; cv=none; b=TNi+njlQuGI8xM5L7uUshjzowyItPZX9dWVUmx86INgjXUgW63TPsv9ria2kIeipE4iCtisXcSnDGi4MXQinUGQbcRw1oHQzMeukO22+C07oAe/3r1pgyLNRb9NpcEm4Xt4f/nqVw2zOVvusXV/WCVlNPwkYrb/fpsQZSlmvkgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992481; c=relaxed/simple;
-	bh=wxlIqMcCSdiv9wsepa58iCX3RVydZkMT5FBxgjxpTn4=;
+	s=arc-20240116; t=1751992483; c=relaxed/simple;
+	bh=LHlvoroiG6GX8o5OjPzGR5DZ0RU/wtkqEIi7yU6MCgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4FZtfSRssCCy2sdRmzmVQP4RbKfQ1SLlRyPMCv9xd5SMML6S3PMi/L2natcKhdizKKnk+Ui37PWeMuvtSKF5fQvgj1j/pIZeGI/p904UFLbZ+XCbzAb+eppdrh+T1JWHHs2SIsWze+sX4qb/z+34a7S0iviAmvywxKZAfUmsew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4RASzx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jOd8tL9UbwVaKAm5Y9mGXOfyq369ZDbwhuUDEcm8TmYQD7cM9PDr5A44+9ug4EGtnbmiSdcmyT09W+2oA/f/Ma1GrD5ZDn8ObUR25eyRLiLcPkxaNv00LHbTsG4HcZLdIaxSmcgF2BqCK6OfMRUcLYfC49Z7UXgk1plTZNzfepc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXobbMMx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4RASzx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7D2C4CEED;
-	Tue,  8 Jul 2025 16:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXobbMMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B0DC4CEED;
+	Tue,  8 Jul 2025 16:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992480;
-	bh=wxlIqMcCSdiv9wsepa58iCX3RVydZkMT5FBxgjxpTn4=;
+	s=korg; t=1751992483;
+	bh=LHlvoroiG6GX8o5OjPzGR5DZ0RU/wtkqEIi7yU6MCgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w4RASzx0ziqBRZbhCL01qEpOCOpJHQEgm84kwYKxqvu+QygUUsp3SgZy9ZXwoQnIU
-	 M+WhgulzNYzGnBb8neViVI98HeUWp/FyE5NfHULGoP7xq9wTUDtzaWITcCm8UenJ4u
-	 rwUAbZtLK0NbCTf4sZZq50r+CYm8tv05XBmPW93I=
+	b=fXobbMMxxBvvfhuHxwkGSA7EdyWvvdTclX8D/PCFMzbaRzO0Go6/N2F2sGRtk1KVs
+	 fObgs0A2k8U3rE75pO20AnLyfebUZxLk0gfrsURioRY47qaIOGAVN8rxiMnB44Gj2h
+	 hznrxq9Agb7hwLWTKZWOnroxf0auyS8yVq4pNYKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	anvithdosapati <anvithdosapati@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/132] module: Provide EXPORT_SYMBOL_GPL_FOR_MODULES() helper
-Date: Tue,  8 Jul 2025 18:23:36 +0200
-Message-ID: <20250708162233.674213797@linuxfoundation.org>
+Subject: [PATCH 6.6 079/132] scsi: ufs: core: Fix clk scaling to be conditional in reset and restore
+Date: Tue,  8 Jul 2025 18:23:10 +0200
+Message-ID: <20250708162232.944781312@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -53,108 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: anvithdosapati <anvithdosapati@google.com>
 
-[ Upstream commit 707f853d7fa3ce323a6875487890c213e34d81a0 ]
+[ Upstream commit 2e083cd802294693a5414e4557a183dd7e442e71 ]
 
-Helper macro to more easily limit the export of a symbol to a given
-list of modules.
+In ufshcd_host_reset_and_restore(), scale up clocks only when clock
+scaling is supported. Without this change CPU latency is voted for 0
+(ufshcd_pm_qos_update) during resume unconditionally.
 
-Eg:
-
-  EXPORT_SYMBOL_GPL_FOR_MODULES(preempt_notifier_inc, "kvm");
-
-will limit the use of said function to kvm.ko, any other module trying
-to use this symbol will refure to load (and get modpost build
-failures).
-
-Requested-by: Masahiro Yamada <masahiroy@kernel.org>
-Requested-by: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Peter Zijlstra <peterz@infradead.org>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: cbe4134ea4bc ("fs: export anon_inode_make_secure_inode() and fix secretmem LSM bypass")
+Signed-off-by: anvithdosapati <anvithdosapati@google.com>
+Link: https://lore.kernel.org/r/20250616085734.2133581-1-anvithdosapati@google.com
+Fixes: a3cd5ec55f6c ("scsi: ufs: add load based scaling of UFS gear")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/core-api/symbol-namespaces.rst | 22 ++++++++++++++++++++
- include/linux/export.h                       | 12 +++++++++--
- 2 files changed, 32 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/core-api/symbol-namespaces.rst b/Documentation/core-api/symbol-namespaces.rst
-index 12e4aecdae945..29875e25e376f 100644
---- a/Documentation/core-api/symbol-namespaces.rst
-+++ b/Documentation/core-api/symbol-namespaces.rst
-@@ -28,6 +28,9 @@ kernel. As of today, modules that make use of symbols exported into namespaces,
- are required to import the namespace. Otherwise the kernel will, depending on
- its configuration, reject loading the module or warn about a missing import.
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index fa86942efd11f..da20bd3d46bc7 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -7780,7 +7780,8 @@ static int ufshcd_host_reset_and_restore(struct ufs_hba *hba)
+ 	hba->silence_err_logs = false;
  
-+Additionally, it is possible to put symbols into a module namespace, strictly
-+limiting which modules are allowed to use these symbols.
-+
- 2. How to define Symbol Namespaces
- ==================================
+ 	/* scale up clocks to max frequency before full reinitialization */
+-	ufshcd_scale_clks(hba, ULONG_MAX, true);
++	if (ufshcd_is_clkscaling_supported(hba))
++		ufshcd_scale_clks(hba, ULONG_MAX, true);
  
-@@ -84,6 +87,22 @@ unit as preprocessor statement. The above example would then read::
- within the corresponding compilation unit before any EXPORT_SYMBOL macro is
- used.
+ 	err = ufshcd_hba_enable(hba);
  
-+2.3 Using the EXPORT_SYMBOL_GPL_FOR_MODULES() macro
-+===================================================
-+
-+Symbols exported using this macro are put into a module namespace. This
-+namespace cannot be imported.
-+
-+The macro takes a comma separated list of module names, allowing only those
-+modules to access this symbol. Simple tail-globs are supported.
-+
-+For example:
-+
-+  EXPORT_SYMBOL_GPL_FOR_MODULES(preempt_notifier_inc, "kvm,kvm-*")
-+
-+will limit usage of this symbol to modules whoes name matches the given
-+patterns.
-+
- 3. How to use Symbols exported in Namespaces
- ============================================
- 
-@@ -155,3 +174,6 @@ in-tree modules::
- You can also run nsdeps for external module builds. A typical usage is::
- 
- 	$ make -C <path_to_kernel_src> M=$PWD nsdeps
-+
-+Note: it will happily generate an import statement for the module namespace;
-+which will not work and generates build and runtime failures.
-diff --git a/include/linux/export.h b/include/linux/export.h
-index 9911508a9604f..06f7a4eb64928 100644
---- a/include/linux/export.h
-+++ b/include/linux/export.h
-@@ -42,11 +42,17 @@ extern struct module __this_module;
- 	.long sym
- #endif
- 
--#define ___EXPORT_SYMBOL(sym, license, ns)		\
-+/*
-+ * LLVM integrated assembler cam merge adjacent string literals (like
-+ * C and GNU-as) passed to '.ascii', but not to '.asciz' and chokes on:
-+ *
-+ *   .asciz "MODULE_" "kvm" ;
-+ */
-+#define ___EXPORT_SYMBOL(sym, license, ns...)		\
- 	.section ".export_symbol","a"		ASM_NL	\
- 	__export_symbol_##sym:			ASM_NL	\
- 		.asciz license			ASM_NL	\
--		.asciz ns			ASM_NL	\
-+		.ascii ns "\0"			ASM_NL	\
- 		__EXPORT_SYMBOL_REF(sym)	ASM_NL	\
- 	.previous
- 
-@@ -88,4 +94,6 @@ extern struct module __this_module;
- #define EXPORT_SYMBOL_NS(sym, ns)	__EXPORT_SYMBOL(sym, "", __stringify(ns))
- #define EXPORT_SYMBOL_NS_GPL(sym, ns)	__EXPORT_SYMBOL(sym, "GPL", __stringify(ns))
- 
-+#define EXPORT_SYMBOL_GPL_FOR_MODULES(sym, mods) __EXPORT_SYMBOL(sym, "GPL", "module:" mods)
-+
- #endif /* _LINUX_EXPORT_H */
 -- 
 2.39.5
 
