@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7586C881E;
-	Tue,  8 Jul 2025 16:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C084881E;
+	Tue,  8 Jul 2025 16:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992271; cv=none; b=JZiucRKuzvsI1XOdz33PGLv+ihTuTCugMxPXvPH7ijyeSXbAzQPoxB50hw147FdY6JguOUz6V3p/kR6aG2CNSj1E+spmvcUt9jKH0giEIYomM/7WLf1sR8f7zzfsR1yj2gN/k1XRg+mChr7TjceFtJ0ZFUaALuOfKveab7QxmXM=
+	t=1751992274; cv=none; b=WW4K2iz8UMRLEE4Xy1UyQleOB9fIsCqfaZ0NikJNJSDlvsBts3pbhTD3pmJCd6h/Am5lP5X3trNcEyXsuYp2CEmd2Z3YzXx54OoBAJTk13ftaQvbmVcwneTcbw3DOOG5uNiFcMey6BO6k6QsrptiOKddlvvmmTmxlTThwdMbviY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992271; c=relaxed/simple;
-	bh=/pp1hQQnJLyqaEy7Qy52neRWtlVE7bB0YycvzMnpe9s=;
+	s=arc-20240116; t=1751992274; c=relaxed/simple;
+	bh=VeA+FiDi0cqRr9x/Iwa1W1J3rAKKEotWlNkI4GmFgxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVE7+fDkvgObfd1HitBm6PoqXhqHbMOZd/dSlHGAMhibC6c+/s7sNxGSd3mfk7EHDbvMnhF4vJ5U5pvNprc7PYOPT+VJGAJyj4yAseUxFeNOdxjZJfmaTHkJeUlV1sOkX3TlOQrpFH8M/Lc8dmj1Va126EMxM8YarOiY3Rmvhcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISEitlNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ea3bRVD/tQw6pW7N5dJrUggNpy0a4fthyqyHxh/yZ9ul5u8/uHdoSW87N4SlkmhcHe9vzx04DOnTEwGo/wKblqL2WCqEe8EvBpYU37rcsPloZFjbXno7+QIAUg8XpYdITNovmR+23j5TEW01n7VbLIdq82RC43kkUIvvc14kgNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+8DXLvT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISEitlNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C6FC4CEED;
-	Tue,  8 Jul 2025 16:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+8DXLvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C8AC4CEED;
+	Tue,  8 Jul 2025 16:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992271;
-	bh=/pp1hQQnJLyqaEy7Qy52neRWtlVE7bB0YycvzMnpe9s=;
+	s=korg; t=1751992274;
+	bh=VeA+FiDi0cqRr9x/Iwa1W1J3rAKKEotWlNkI4GmFgxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISEitlNJFTjJmD70HHj9FzpAb/SEKMeC8+Zqd/AVkcPOUs3CC8c3Qj6ZTnDQP5j0O
-	 MGX1QLg7oFHT9Mg96DSMONyPKshDT1DffR86wPMxGL98kjC3D0nCF+x7/AqG5HsFI+
-	 ChQaZmoFXP/bAim5O1OlCuusQvdDP5aMbYFzTGt4=
+	b=j+8DXLvT/dBdUFCSbqfhAUM9I4Z5ZLL8OdVWa8NNyyLF2en+Nx8HHBrHGT+wd2o33
+	 PscgQjRWf4nmlw0xpckXrCuN2WY6TeywBWJ/Mhh41YcrDam/4KGyECtHkxMtTHZeFG
+	 Z4L54y5Rtb4IrhezLVrZPfOHvJvPFFMGxELee6UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/132] btrfs: use btrfs_record_snapshot_destroy() during rmdir
-Date: Tue,  8 Jul 2025 18:22:26 +0200
-Message-ID: <20250708162231.726651878@linuxfoundation.org>
+Subject: [PATCH 6.6 036/132] ethernet: atl1: Add missing DMA mapping error checks and count errors
+Date: Tue,  8 Jul 2025 18:22:27 +0200
+Message-ID: <20250708162231.751902298@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -52,44 +51,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 157501b0469969fc1ba53add5049575aadd79d80 ]
+[ Upstream commit d72411d20905180cdc452c553be17481b24463d2 ]
 
-We are setting the parent directory's last_unlink_trans directly which
-may result in a concurrent task starting to log the directory not see the
-update and therefore can log the directory after we removed a child
-directory which had a snapshot within instead of falling back to a
-transaction commit. Replaying such a log tree would result in a mount
-failure since we can't currently delete snapshots (and subvolumes) during
-log replay. This is the type of failure described in commit 1ec9a1ae1e30
-("Btrfs: fix unreplayable log after snapshot delete + parent dir fsync").
+The `dma_map_XXX()` functions can fail and must be checked using
+`dma_mapping_error()`.  This patch adds proper error handling for all
+DMA mapping calls.
 
-Fix this by using btrfs_record_snapshot_destroy() which updates the
-last_unlink_trans field while holding the inode's log_mutex lock.
+In `atl1_alloc_rx_buffers()`, if DMA mapping fails, the buffer is
+deallocated and marked accordingly.
 
-Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+In `atl1_tx_map()`, previously mapped buffers are unmapped and the
+packet is dropped on failure.
+
+If `atl1_xmit_frame()` drops the packet, increment the tx_error counter.
+
+Fixes: f3cc28c79760 ("Add Attansic L1 ethernet driver.")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250625141629.114984-2-fourier.thomas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/atheros/atlx/atl1.c | 79 +++++++++++++++++-------
+ 1 file changed, 57 insertions(+), 22 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index cee1a11959c51..e8e57abb032d7 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4657,7 +4657,7 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
- 	 * deletes for directory foo.
- 	 */
- 	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
--		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
-+		btrfs_record_snapshot_destroy(trans, BTRFS_I(dir));
+diff --git a/drivers/net/ethernet/atheros/atlx/atl1.c b/drivers/net/ethernet/atheros/atlx/atl1.c
+index 02aa6fd8ebc2d..4ed165702d58e 100644
+--- a/drivers/net/ethernet/atheros/atlx/atl1.c
++++ b/drivers/net/ethernet/atheros/atlx/atl1.c
+@@ -1861,14 +1861,21 @@ static u16 atl1_alloc_rx_buffers(struct atl1_adapter *adapter)
+ 			break;
+ 		}
  
- 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
- 		ret = btrfs_unlink_subvol(trans, BTRFS_I(dir), dentry);
+-		buffer_info->alloced = 1;
+-		buffer_info->skb = skb;
+-		buffer_info->length = (u16) adapter->rx_buffer_len;
+ 		page = virt_to_page(skb->data);
+ 		offset = offset_in_page(skb->data);
+ 		buffer_info->dma = dma_map_page(&pdev->dev, page, offset,
+ 						adapter->rx_buffer_len,
+ 						DMA_FROM_DEVICE);
++		if (dma_mapping_error(&pdev->dev, buffer_info->dma)) {
++			kfree_skb(skb);
++			adapter->soft_stats.rx_dropped++;
++			break;
++		}
++
++		buffer_info->alloced = 1;
++		buffer_info->skb = skb;
++		buffer_info->length = (u16)adapter->rx_buffer_len;
++
+ 		rfd_desc->buffer_addr = cpu_to_le64(buffer_info->dma);
+ 		rfd_desc->buf_len = cpu_to_le16(adapter->rx_buffer_len);
+ 		rfd_desc->coalese = 0;
+@@ -2183,8 +2190,8 @@ static int atl1_tx_csum(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	return 0;
+ }
+ 
+-static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+-	struct tx_packet_desc *ptpd)
++static bool atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
++			struct tx_packet_desc *ptpd)
+ {
+ 	struct atl1_tpd_ring *tpd_ring = &adapter->tpd_ring;
+ 	struct atl1_buffer *buffer_info;
+@@ -2194,6 +2201,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	unsigned int nr_frags;
+ 	unsigned int f;
+ 	int retval;
++	u16 first_mapped;
+ 	u16 next_to_use;
+ 	u16 data_len;
+ 	u8 hdr_len;
+@@ -2201,6 +2209,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	buf_len -= skb->data_len;
+ 	nr_frags = skb_shinfo(skb)->nr_frags;
+ 	next_to_use = atomic_read(&tpd_ring->next_to_use);
++	first_mapped = next_to_use;
+ 	buffer_info = &tpd_ring->buffer_info[next_to_use];
+ 	BUG_ON(buffer_info->skb);
+ 	/* put skb in last TPD */
+@@ -2216,6 +2225,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
+ 						offset, hdr_len,
+ 						DMA_TO_DEVICE);
++		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
++			goto dma_err;
+ 
+ 		if (++next_to_use == tpd_ring->count)
+ 			next_to_use = 0;
+@@ -2242,6 +2253,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 								page, offset,
+ 								buffer_info->length,
+ 								DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      buffer_info->dma))
++					goto dma_err;
+ 				if (++next_to_use == tpd_ring->count)
+ 					next_to_use = 0;
+ 			}
+@@ -2254,6 +2268,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
+ 						offset, buf_len,
+ 						DMA_TO_DEVICE);
++		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
++			goto dma_err;
+ 		if (++next_to_use == tpd_ring->count)
+ 			next_to_use = 0;
+ 	}
+@@ -2277,6 +2293,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 			buffer_info->dma = skb_frag_dma_map(&adapter->pdev->dev,
+ 				frag, i * ATL1_MAX_TX_BUF_LEN,
+ 				buffer_info->length, DMA_TO_DEVICE);
++			if (dma_mapping_error(&adapter->pdev->dev,
++					      buffer_info->dma))
++				goto dma_err;
+ 
+ 			if (++next_to_use == tpd_ring->count)
+ 				next_to_use = 0;
+@@ -2285,6 +2304,22 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 
+ 	/* last tpd's buffer-info */
+ 	buffer_info->skb = skb;
++
++	return true;
++
++ dma_err:
++	while (first_mapped != next_to_use) {
++		buffer_info = &tpd_ring->buffer_info[first_mapped];
++		dma_unmap_page(&adapter->pdev->dev,
++			       buffer_info->dma,
++			       buffer_info->length,
++			       DMA_TO_DEVICE);
++		buffer_info->dma = 0;
++
++		if (++first_mapped == tpd_ring->count)
++			first_mapped = 0;
++	}
++	return false;
+ }
+ 
+ static void atl1_tx_queue(struct atl1_adapter *adapter, u16 count,
+@@ -2355,10 +2390,8 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
+ 
+ 	len = skb_headlen(skb);
+ 
+-	if (unlikely(skb->len <= 0)) {
+-		dev_kfree_skb_any(skb);
+-		return NETDEV_TX_OK;
+-	}
++	if (unlikely(skb->len <= 0))
++		goto drop_packet;
+ 
+ 	nr_frags = skb_shinfo(skb)->nr_frags;
+ 	for (f = 0; f < nr_frags; f++) {
+@@ -2371,10 +2404,9 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
+ 	if (mss) {
+ 		if (skb->protocol == htons(ETH_P_IP)) {
+ 			proto_hdr_len = skb_tcp_all_headers(skb);
+-			if (unlikely(proto_hdr_len > len)) {
+-				dev_kfree_skb_any(skb);
+-				return NETDEV_TX_OK;
+-			}
++			if (unlikely(proto_hdr_len > len))
++				goto drop_packet;
++
+ 			/* need additional TPD ? */
+ 			if (proto_hdr_len != len)
+ 				count += (len - proto_hdr_len +
+@@ -2406,23 +2438,26 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
+ 	}
+ 
+ 	tso = atl1_tso(adapter, skb, ptpd);
+-	if (tso < 0) {
+-		dev_kfree_skb_any(skb);
+-		return NETDEV_TX_OK;
+-	}
++	if (tso < 0)
++		goto drop_packet;
+ 
+ 	if (!tso) {
+ 		ret_val = atl1_tx_csum(adapter, skb, ptpd);
+-		if (ret_val < 0) {
+-			dev_kfree_skb_any(skb);
+-			return NETDEV_TX_OK;
+-		}
++		if (ret_val < 0)
++			goto drop_packet;
+ 	}
+ 
+-	atl1_tx_map(adapter, skb, ptpd);
++	if (!atl1_tx_map(adapter, skb, ptpd))
++		goto drop_packet;
++
+ 	atl1_tx_queue(adapter, count, ptpd);
+ 	atl1_update_mailbox(adapter);
+ 	return NETDEV_TX_OK;
++
++drop_packet:
++	adapter->soft_stats.tx_errors++;
++	dev_kfree_skb_any(skb);
++	return NETDEV_TX_OK;
+ }
+ 
+ static int atl1_rings_clean(struct napi_struct *napi, int budget)
 -- 
 2.39.5
 
