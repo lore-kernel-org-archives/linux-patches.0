@@ -1,160 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6002030A;
-	Tue,  8 Jul 2025 00:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBCBA94F
+	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 03:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932992; cv=none; b=RwbVnkHMWZ0qYmNEYeJiAFWgCt18iA9hASlGHEghpk776GogMvSTAJhhux8yN6TazgtyHkRJZul812jq1Xn/u5a1bidvOMhvYhXjlwu4Dq45bgS72Qp4YcZ47PtWre9v6R9VyHD2VK0qsZuXoUH3X2/Pd5YLWHvh8I07/0CAfPA=
+	t=1751946532; cv=none; b=skaSr2SSx6ZdgWbo0U0GP+orjTeJ9WEX4Ewj8lw0kTqugVnA3LpcLZp9dEVPZ3VJt36AWGdNpFGBEaMbB8JpY9OBOEuUd1OSn0tnenqXDv1qCmdAIBrL+z5LuNqPgicoREwWiIUwnvHIt9zKElQ4sFIQGUTb12A3xvXaldZnb9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932992; c=relaxed/simple;
-	bh=xq5sJP2IXD6XlYbJV37Zz2Oy/i0Bn1yBR02wa9zTCI8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XhPfSv5C2YRnGOs4AfWf/fGWWXFbVF4B9F29u/IeSdoJh85XK21C4rF5GAyHd4s8chN+ZE9AE5WA4lqhn1idx46syXabdyCMzCHJI+E7g8K6tXU5WfYPjd2M6nAGS3x4Wucp1MVm7jv0dvIGJrjIfq4cEnd2k2N34Etv3w5pDg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5p4Gorj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751946532; c=relaxed/simple;
+	bh=lGCclWXlatkY5vsKkO8/RoY2XuA+KbX7Iof9LK3V1vs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=WKUXUiCDRASrHuEDKW3FnzaBcOVo7qYSpvES1aMNfqSqIXN9jex1uZE58/4/zQP0IZJrpuPzyhVbm9P2NjS7teXdRJ8J7ACtz3mDEs4wLoD9xgpzbKb8Y5f4/Zs6SLPeJmEPTboJoZ3ou5D6BNxB9AAPBPkvsYvNMHjETdlal2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=Yugk+CyG; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5p4Gorj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429CFC4CEF5;
-	Tue,  8 Jul 2025 00:03:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932992;
-	bh=xq5sJP2IXD6XlYbJV37Zz2Oy/i0Bn1yBR02wa9zTCI8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5p4GorjD2Ag9Wy7+srD/NkE3WfwLTxxVOJJ9NNYTt6OVGRSRJbe2W5s7QshusIyp
-	 k0MKuVyZVFbG1DckD19EOIxBs1zx6vs5cK8hGL7SYug+2ilrT+AYla/nXpDtayeDwB
-	 PHEJ7bCTnomO6pyX8plE+/CThx3hNz1LkI00OKAAhU/U4NVmNBJy+JAA5aTsWmQZBq
-	 RtlCGIRNJUlPO+IbJfXA7T94MVCnLboK2LJd2JCbD9NTIz6Hj/RbN/yYHjaFgJ6hPs
-	 NPDRoVD2iqQ6dewXvedcbBKqkgUjyEpoDHR4XoXGLqNtgTvGiAhwJmkyX9/Iw77B2o
-	 rptJTxQjTLDBQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Maor Gottlieb <maorg@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	leon@kernel.org,
-	msanalla@nvidia.com,
-	phaddad@nvidia.com
-Subject: [PATCH AUTOSEL 5.4 3/3] RDMA/core: Rate limit GID cache warning messages
-Date: Mon,  7 Jul 2025 20:03:05 -0400
-Message-Id: <20250708000306.793995-3-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250708000306.793995-1-sashal@kernel.org>
-References: <20250708000306.793995-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="Yugk+CyG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1751945227;
+	bh=lGCclWXlatkY5vsKkO8/RoY2XuA+KbX7Iof9LK3V1vs=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=Yugk+CyGKMKw7OMCKJ1hzlKtTFr5RQ58KjEPPCnvIG9RJgucagRAFV0vwhx0T/9xS
+	 TpnUrFHZZLmsm7BFGBMzkXdvj5sETNqmdp0qYYvrr1syZQO3CR8GBXRIJ5nUerNHuI
+	 dJGteDPKyPFOf3XXjx8JKAdjKgAd7mhao4Nz1mmE=
+X-QQ-mid: zesmtpip2t1751945206t1c0f221f
+X-QQ-Originating-IP: rlSyvvFy1U9RsJt6yICitCUa28xBwuGjBpybJaCR1ik=
+Received: from avenger-e500 ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 08 Jul 2025 11:26:44 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 4491923407326219963
+EX-QQ-RecipientCnt: 9
+From: WangYuli <wangyuli@uniontech.com>
+To: gregkh@linuxfoundation.org
+Cc: chuck.lever@oracle.com,
+	masahiroy@kernel.org,
+	nicolas@fjasle.eu,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	dcavalca@meta.com,
+	jtornosm@redhat.com,
+	guanwentao@uniontech.com
+Subject: Re: [PATCH 6.6 129/139] scripts: clean up IA-64 code
+Date: Tue,  8 Jul 2025 11:26:44 +0800
+Message-ID: <E845ABA28076FEFB+20250708032644.1000734-1-wangyuli@uniontech.com>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250703143946.229154383@linuxfoundation.org>
+References: <20250703143946.229154383@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.4.295
 Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: N6+UlSQllctNp5jANuzqlaMAsNSNol9HG6zc76wQHn7n8X7hEm6WrdZx
+	knliQXtZ3IWIep8pEmqcVW8dQaYuWkZuQP4BWQzZvXV+x25idUry+2r3gyEOK2Ngl8zYOuh
+	z/KHcgnafNAIQogT+gfKLiHkpV0noay3yLxM5aVf/0MXmJLUdJ6FmQfuyg96WABRFFGSD+2
+	lx84RpKUs8YyWKieb8/vG6k3u4AjZN4e8tYwaHi+5AOIE7FYS0rR3DZyN2fKxHjoFwfb/2G
+	r5/pWjqsIG+KIJYNagcIVL60/5bWdKIniXltRr/ka8LFgTWF4VPcE1wWiVbmiJ9NutXCjKu
+	uHyhy+tHm7hnLzBff13biwuRNDrjXLxuNTul4kQZja7i+ycjBCIwK+6wUh+foyHa86O1v0+
+	6iMj/51Rau4fN1moKhzxxM/o/4VS/J4LvrrvEg2NkpxSdwG2MP+jRPxtyyw6rtzP1TOONWK
+	8/aOEdv74XaQ3rsmpRM5COAv3qr7cRNSvXnj/8/67LIVwI9B5rBRcuXeX1UIiY6CD6KFb3f
+	ut98pjzD3AT50mTX46suNus8uEsHZGqPdurC3eQP97UNmeUZc4RYpnd6fOxQ/+w9W1CKySH
+	RUKu2f0ZYa88Rff3AkahqLZ0CSH67n/gUWRVO3nCEbvmkC0Uik1tLrotgFb+cWn/8jreu13
+	ecLJ7vBw8x3+EFBV+3HPRpc6Zs/6meTEumLD7KuuKfVIk71HcAUVm2TZgfz4a37N5wfxT2L
+	HqKpWmeLWPW3ye9fGKlfTxUGF6iXxAAuR+GS958arW7uyUnWzJQBe/ZozK9vJLQ1ECi1+Cz
+	bxBtxXp/6MRmkM2r3kUhCMPx4FBypmG+jtUG+u4mE/KLGrdjhlyAbtNotSJs2gsRp9lk668
+	AuTdmAHEB+EaDpN1t6PtF36p6aZ5PbOWQOYh6m4TXFCK7hS3n1qxjBcsx3kg4oFl7q3Jjnb
+	bFJ7vyPw/NWKsI3EqrFRnHDmKMAlRyhwF+8V0crIODx0ykXkvzZ5v7WeIkTdKerD3pto=
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-RECHKSPAM: 0
 
-From: Maor Gottlieb <maorg@nvidia.com>
+Hi all,
 
-[ Upstream commit 333e4d79316c9ed5877d7aac8b8ed22efc74e96d ]
+This commit is a refinement and cleanup of commit cf8e865 ("arch:
+Remove Itanium (IA-64) architecture"). However, linux-6.6.y and earlier
+kernel versions have not actually merged commit cf8e865, meaning IA-64
+architecture has not been removed. Therefore, it seems commit 0df8e97
+("scripts: clean up IA-64 code") should not have been merged either.
 
-The GID cache warning messages can flood the kernel log when there are
-multiple failed attempts to add GIDs. This can happen when creating many
-virtual interfaces without having enough space for their GIDs in the GID
-table.
+I stumbled upon this while tracking the v6.6.69 update. It appears
+commit 358de8b ("kbuild: rpm-pkg: simplify installkernel %post")
+depends on commit cf8e865. We should perhaps consider reverting both
+of these commits and then refactoring commit 358de8b to prevent any
+issues with the IA-64 architecture in future linux-stable branches.
 
-Change pr_warn to pr_warn_ratelimited to prevent log flooding while still
-maintaining visibility of the issue.
-
-Link: https://patch.msgid.link/r/fd45ed4a1078e743f498b234c3ae816610ba1b18.1750062357.git.leon@kernel.org
-Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-**YES**
-
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
-
-## Key Reasons for Backporting:
-
-### 1. **Fixes a Real-World Bug**
-The commit addresses a concrete problem where warning messages can flood
-the kernel log. This is not a theoretical issue - it occurs when users
-create many virtual interfaces without sufficient GID table space. This
-is a common scenario in production environments with RDMA/InfiniBand
-deployments.
-
-### 2. **Small and Contained Change**
-The change is minimal - only replacing `pr_warn()` with
-`pr_warn_ratelimited()` on lines 585-586. This is exactly 2 lines of
-functional change with no architectural modifications or new features
-added.
-
-### 3. **Low Risk of Regression**
-- The change only affects logging behavior, not functional behavior
-- `pr_warn_ratelimited()` is a well-established kernel API that behaves
-  identically to `pr_warn()` except for rate limiting
-- No data structures are modified
-- No locking changes
-- No protocol or API changes
-
-### 4. **Follows Stable Kernel Rules**
-According to stable kernel rules, this fix qualifies because:
-- It fixes a bug that bothers people (kernel log flooding)
-- It's a trivial change (2 lines)
-- It has been tested in mainline
-- It doesn't add new features
-
-### 5. **Similar to Historical Backports**
-Looking at the similar commits provided:
-- Similar Commit #1 (backported): Fixed a hardware limitation issue with
-  clear bounds
-- Similar Commit #2 (NOT backported): Added rate limiting to ipoib_warn
-  but was more invasive with macro changes
-- This commit is more like #1 - a targeted fix for a specific issue
-
-### 6. **Production Impact**
-Log flooding can have serious production impacts:
-- Fills up `/var/log` partitions
-- Makes it difficult to find other important kernel messages
-- Can impact system performance due to excessive logging
-- Can trigger log rotation issues
-
-### 7. **Context-Specific Analysis**
-The error path where this warning occurs (line 571: `ret = -ENOSPC`)
-specifically handles the case when the GID table is full. In
-environments with many virtual interfaces, this condition can be hit
-repeatedly in quick succession, causing the flood described in the
-commit message.
-
-The commit message clearly states this is fixing an observed problem:
-"This can happen when creating many virtual interfaces without having
-enough space for their GIDs in the GID table."
-
-This is a perfect example of a stable-appropriate fix: minimal change,
-fixes a real bug, no risk of functional regression, and improves system
-stability in production environments.
-
- drivers/infiniband/core/cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index 7affe6b4ae210..641e537a0069a 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -578,8 +578,8 @@ static int __ib_cache_gid_add(struct ib_device *ib_dev, u8 port,
- out_unlock:
- 	mutex_unlock(&table->lock);
- 	if (ret)
--		pr_warn("%s: unable to add gid %pI6 error=%d\n",
--			__func__, gid->raw, ret);
-+		pr_warn_ratelimited("%s: unable to add gid %pI6 error=%d\n",
-+				    __func__, gid->raw, ret);
- 	return ret;
- }
- 
--- 
-2.39.5
-
+Thanks,
+--
+WangYuli
