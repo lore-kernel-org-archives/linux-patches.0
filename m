@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B5123DE;
-	Tue,  8 Jul 2025 16:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064102E266B;
+	Tue,  8 Jul 2025 16:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993216; cv=none; b=Y/cVZjvFgA0JTOeoMejEg9lFSMqRddKcmyPURvxrb/VaRdQbD772FEXVXiAZWlesdKNBpcF7Z2RHt1zRomqVm6Lxn/4uGh9nH2edHAU4pXoH3MDbQVyeLT6HZuo1qwrxMzZGvDCEkPU9nqG06wwQDid5QOm4/A1ZpcXYnVzj6O4=
+	t=1751993219; cv=none; b=RNhr7J2T4C8+UEO1xcj2Kc5x01gCbqOjBsxgWB7IbabKNY3hLj/pj5qDW1YKTLmVjUAsCIqeYF7s50kJod/XfYyJBK19xTJ4dEtIm4FfXF2jKagxYVshGPg6JPbtGVLLANhTLk+s00lBBrc03IfDkkxoRFFIc/uUXNgYBxbKMtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993216; c=relaxed/simple;
-	bh=A3tRwjt1DW9ehh9vjVleZSt4A9y0vk2o/jlXR6PYlms=;
+	s=arc-20240116; t=1751993219; c=relaxed/simple;
+	bh=0Ai4s/XnghSTYOv4KpMlnQSa5tSM9EUQdh3jnP3dq3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/19jaUeq5ffGlusHqCaGKSb9cWgGcinWBq1v9JvN4mAXwdskiwSr/mU5YK9L4eI1V7mze+CghWqxZ82YPxbMAXVWaNeQRYzvwVlzyc0vXJW6CwjiQOu5R6GL0sFJgNB7QP3sVPxXFktP4HCAbUVCScuTHMGMP5l5xTLZ6Xq+FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfrB6pPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tgH6juQ5aDbawZFA2M7Ky2TRckKUSE9hbN8nkGJqw/Gm1DKOsV2R3bKnzHt7rHhRjhoigFz+iPu7ui+CtZzxpHIwffO4eceMfP1o66hysBG0v/Udj5maz9BFQjcuTsVfS4kY/TCJyxp/SRTNMT7VyQPCZ2AD8Kt87oaN8H7Glqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AD98bnQa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfrB6pPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4575C4CEED;
-	Tue,  8 Jul 2025 16:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AD98bnQa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816BDC4CEED;
+	Tue,  8 Jul 2025 16:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993216;
-	bh=A3tRwjt1DW9ehh9vjVleZSt4A9y0vk2o/jlXR6PYlms=;
+	s=korg; t=1751993218;
+	bh=0Ai4s/XnghSTYOv4KpMlnQSa5tSM9EUQdh3jnP3dq3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfrB6pPpV3eYsEHruJ7VAudQvZ5UFFLMlDmoCINZ166m31u/cCkkWV6HMRNYjRAfx
-	 V3oOeG0lJxNiRKukkGQ8YTaV8GC/uI8SvCI/kH7ndmiXtEb2mkhU+vNg8+qhuQLgW2
-	 WOlmZwen9ZuKTcEixQYLQKC+QTO4vrBs1cjRQOn0=
+	b=AD98bnQaq+XCsguWNPVN1nu46fmEoLcDYH2x4YHeGdZMrUA6NqHqqdZ9JhKBO/j2M
+	 ueKYgXHjVbCUpRM/7jeA/F/k8Q2wdrTqtpp1sDwZNdGtTT9I34Ax3lYKmjj9fJEJG2
+	 28AvLocdfA6kPY9UQS/L7bgG2f8olz4AvdpJCgSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Subject: [PATCH 6.12 226/232] mm/vmalloc: fix data race in show_numa_info()
-Date: Tue,  8 Jul 2025 18:23:42 +0200
-Message-ID: <20250708162247.340959402@linuxfoundation.org>
+	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 198/232] NFSv4/flexfiles: Fix handling of NFS level errors in I/O
+Date: Tue,  8 Jul 2025 18:23:14 +0200
+Message-ID: <20250708162246.618230659@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,164 +52,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 5c5f0468d172ddec2e333d738d2a1f85402cf0bc upstream.
+[ Upstream commit 38074de35b015df5623f524d6f2b49a0cd395c40 ]
 
-The following data-race was found in show_numa_info():
+Allow the flexfiles error handling to recognise NFS level errors (as
+opposed to RPC level errors) and handle them separately. The main
+motivator is the NFSERR_PERM errors that get returned if the NFS client
+connects to the data server through a port number that is lower than
+1024. In that case, the client should disconnect and retry a READ on a
+different data server, or it should retry a WRITE after reconnecting.
 
-==================================================================
-BUG: KCSAN: data-race in vmalloc_info_show / vmalloc_info_show
-
-read to 0xffff88800971fe30 of 4 bytes by task 8289 on cpu 0:
- show_numa_info mm/vmalloc.c:4936 [inline]
- vmalloc_info_show+0x5a8/0x7e0 mm/vmalloc.c:5016
- seq_read_iter+0x373/0xb40 fs/seq_file.c:230
- proc_reg_read_iter+0x11e/0x170 fs/proc/inode.c:299
-....
-
-write to 0xffff88800971fe30 of 4 bytes by task 8287 on cpu 1:
- show_numa_info mm/vmalloc.c:4934 [inline]
- vmalloc_info_show+0x38f/0x7e0 mm/vmalloc.c:5016
- seq_read_iter+0x373/0xb40 fs/seq_file.c:230
- proc_reg_read_iter+0x11e/0x170 fs/proc/inode.c:299
-....
-
-value changed: 0x0000008f -> 0x00000000
-==================================================================
-
-According to this report,there is a read/write data-race because
-m->private is accessible to multiple CPUs.  To fix this, instead of
-allocating the heap in proc_vmalloc_init() and passing the heap address to
-m->private, vmalloc_info_show() should allocate the heap.
-
-Link: https://lkml.kernel.org/r/20250508165620.15321-1-aha310510@gmail.com
-Fixes: 8e1d743f2c26 ("mm: vmalloc: support multiple nodes in vmallocinfo")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmalloc.c |   63 ++++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 35 insertions(+), 28 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 121 ++++++++++++++++++-------
+ 1 file changed, 87 insertions(+), 34 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -3095,7 +3095,7 @@ static void clear_vm_uninitialized_flag(
- 	/*
- 	 * Before removing VM_UNINITIALIZED,
- 	 * we should make sure that vm has proper values.
--	 * Pair with smp_rmb() in show_numa_info().
-+	 * Pair with smp_rmb() in vread_iter() and vmalloc_info_show().
- 	 */
- 	smp_wmb();
- 	vm->flags &= ~VM_UNINITIALIZED;
-@@ -4938,28 +4938,29 @@ bool vmalloc_dump_obj(void *object)
- #endif
- 
- #ifdef CONFIG_PROC_FS
--static void show_numa_info(struct seq_file *m, struct vm_struct *v)
--{
--	if (IS_ENABLED(CONFIG_NUMA)) {
--		unsigned int nr, *counters = m->private;
--		unsigned int step = 1U << vm_area_page_order(v);
- 
--		if (!counters)
--			return;
-+/*
-+ * Print number of pages allocated on each memory node.
-+ *
-+ * This function can only be called if CONFIG_NUMA is enabled
-+ * and VM_UNINITIALIZED bit in v->flags is disabled.
-+ */
-+static void show_numa_info(struct seq_file *m, struct vm_struct *v,
-+				 unsigned int *counters)
-+{
-+	unsigned int nr;
-+	unsigned int step = 1U << vm_area_page_order(v);
- 
--		if (v->flags & VM_UNINITIALIZED)
--			return;
--		/* Pair with smp_wmb() in clear_vm_uninitialized_flag() */
--		smp_rmb();
-+	if (!counters)
-+		return;
- 
--		memset(counters, 0, nr_node_ids * sizeof(unsigned int));
-+	memset(counters, 0, nr_node_ids * sizeof(unsigned int));
- 
--		for (nr = 0; nr < v->nr_pages; nr += step)
--			counters[page_to_nid(v->pages[nr])] += step;
--		for_each_node_state(nr, N_HIGH_MEMORY)
--			if (counters[nr])
--				seq_printf(m, " N%u=%u", nr, counters[nr]);
--	}
-+	for (nr = 0; nr < v->nr_pages; nr += step)
-+		counters[page_to_nid(v->pages[nr])] += step;
-+	for_each_node_state(nr, N_HIGH_MEMORY)
-+		if (counters[nr])
-+			seq_printf(m, " N%u=%u", nr, counters[nr]);
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 8f7ea4076653d..bf96f7a8900c1 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1104,6 +1104,7 @@ static void ff_layout_reset_read(struct nfs_pgio_header *hdr)
  }
  
- static void show_purge_info(struct seq_file *m)
-@@ -4987,6 +4988,10 @@ static int vmalloc_info_show(struct seq_
- 	struct vmap_area *va;
- 	struct vm_struct *v;
- 	int i;
-+	unsigned int *counters;
+ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
++					   u32 op_status,
+ 					   struct nfs4_state *state,
+ 					   struct nfs_client *clp,
+ 					   struct pnfs_layout_segment *lseg,
+@@ -1114,32 +1115,42 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
+ 	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
+ 
+-	switch (task->tk_status) {
+-	case -NFS4ERR_BADSESSION:
+-	case -NFS4ERR_BADSLOT:
+-	case -NFS4ERR_BAD_HIGH_SLOT:
+-	case -NFS4ERR_DEADSESSION:
+-	case -NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
+-	case -NFS4ERR_SEQ_FALSE_RETRY:
+-	case -NFS4ERR_SEQ_MISORDERED:
++	switch (op_status) {
++	case NFS4_OK:
++	case NFS4ERR_NXIO:
++		break;
++	case NFSERR_PERM:
++		if (!task->tk_xprt)
++			break;
++		xprt_force_disconnect(task->tk_xprt);
++		goto out_retry;
++	case NFS4ERR_BADSESSION:
++	case NFS4ERR_BADSLOT:
++	case NFS4ERR_BAD_HIGH_SLOT:
++	case NFS4ERR_DEADSESSION:
++	case NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
++	case NFS4ERR_SEQ_FALSE_RETRY:
++	case NFS4ERR_SEQ_MISORDERED:
+ 		dprintk("%s ERROR %d, Reset session. Exchangeid "
+ 			"flags 0x%x\n", __func__, task->tk_status,
+ 			clp->cl_exchange_flags);
+ 		nfs4_schedule_session_recovery(clp->cl_session, task->tk_status);
+-		break;
+-	case -NFS4ERR_DELAY:
+-	case -NFS4ERR_GRACE:
++		goto out_retry;
++	case NFS4ERR_DELAY:
++		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
++		fallthrough;
++	case NFS4ERR_GRACE:
+ 		rpc_delay(task, FF_LAYOUT_POLL_RETRY_MAX);
+-		break;
+-	case -NFS4ERR_RETRY_UNCACHED_REP:
+-		break;
++		goto out_retry;
++	case NFS4ERR_RETRY_UNCACHED_REP:
++		goto out_retry;
+ 	/* Invalidate Layout errors */
+-	case -NFS4ERR_PNFS_NO_LAYOUT:
+-	case -ESTALE:           /* mapped NFS4ERR_STALE */
+-	case -EBADHANDLE:       /* mapped NFS4ERR_BADHANDLE */
+-	case -EISDIR:           /* mapped NFS4ERR_ISDIR */
+-	case -NFS4ERR_FHEXPIRED:
+-	case -NFS4ERR_WRONG_TYPE:
++	case NFS4ERR_PNFS_NO_LAYOUT:
++	case NFS4ERR_STALE:
++	case NFS4ERR_BADHANDLE:
++	case NFS4ERR_ISDIR:
++	case NFS4ERR_FHEXPIRED:
++	case NFS4ERR_WRONG_TYPE:
+ 		dprintk("%s Invalid layout error %d\n", __func__,
+ 			task->tk_status);
+ 		/*
+@@ -1152,6 +1163,11 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 		pnfs_destroy_layout(NFS_I(inode));
+ 		rpc_wake_up(&tbl->slot_tbl_waitq);
+ 		goto reset;
++	default:
++		break;
++	}
 +
-+	if (IS_ENABLED(CONFIG_NUMA))
-+		counters = kmalloc(nr_node_ids * sizeof(unsigned int), GFP_KERNEL);
- 
- 	for (i = 0; i < nr_vmap_nodes; i++) {
- 		vn = &vmap_nodes[i];
-@@ -5003,6 +5008,11 @@ static int vmalloc_info_show(struct seq_
- 			}
- 
- 			v = va->vm;
-+			if (v->flags & VM_UNINITIALIZED)
-+				continue;
++	switch (task->tk_status) {
+ 	/* RPC connection errors */
+ 	case -ECONNREFUSED:
+ 	case -EHOSTDOWN:
+@@ -1167,26 +1183,56 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
+ 				&devid->deviceid);
+ 		rpc_wake_up(&tbl->slot_tbl_waitq);
+-		fallthrough;
++		break;
+ 	default:
+-		if (ff_layout_avoid_mds_available_ds(lseg))
+-			return -NFS4ERR_RESET_TO_PNFS;
+-reset:
+-		dprintk("%s Retry through MDS. Error %d\n", __func__,
+-			task->tk_status);
+-		return -NFS4ERR_RESET_TO_MDS;
++		break;
+ 	}
 +
-+			/* Pair with smp_wmb() in clear_vm_uninitialized_flag() */
-+			smp_rmb();
- 
- 			seq_printf(m, "0x%pK-0x%pK %7ld",
- 				v->addr, v->addr + v->size, v->size);
-@@ -5037,7 +5047,9 @@ static int vmalloc_info_show(struct seq_
- 			if (is_vmalloc_addr(v->pages))
- 				seq_puts(m, " vpages");
- 
--			show_numa_info(m, v);
-+			if (IS_ENABLED(CONFIG_NUMA))
-+				show_numa_info(m, v, counters);
++	if (ff_layout_avoid_mds_available_ds(lseg))
++		return -NFS4ERR_RESET_TO_PNFS;
++reset:
++	dprintk("%s Retry through MDS. Error %d\n", __func__,
++		task->tk_status);
++	return -NFS4ERR_RESET_TO_MDS;
 +
- 			seq_putc(m, '\n');
- 		}
- 		spin_unlock(&vn->busy.lock);
-@@ -5047,19 +5059,14 @@ static int vmalloc_info_show(struct seq_
- 	 * As a final step, dump "unpurged" areas.
- 	 */
- 	show_purge_info(m);
-+	if (IS_ENABLED(CONFIG_NUMA))
-+		kfree(counters);
- 	return 0;
++out_retry:
+ 	task->tk_status = 0;
+ 	return -EAGAIN;
  }
  
- static int __init proc_vmalloc_init(void)
+ /* Retry all errors through either pNFS or MDS except for -EJUKEBOX */
+ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
++					   u32 op_status,
++					   struct nfs_client *clp,
+ 					   struct pnfs_layout_segment *lseg,
+ 					   u32 idx)
  {
--	void *priv_data = NULL;
--
--	if (IS_ENABLED(CONFIG_NUMA))
--		priv_data = kmalloc(nr_node_ids * sizeof(unsigned int), GFP_KERNEL);
--
--	proc_create_single_data("vmallocinfo",
--		0400, NULL, vmalloc_info_show, priv_data);
--
-+	proc_create_single("vmallocinfo", 0400, NULL, vmalloc_info_show);
- 	return 0;
+ 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
+ 
++	switch (op_status) {
++	case NFS_OK:
++	case NFSERR_NXIO:
++		break;
++	case NFSERR_PERM:
++		if (!task->tk_xprt)
++			break;
++		xprt_force_disconnect(task->tk_xprt);
++		goto out_retry;
++	case NFSERR_ACCES:
++	case NFSERR_BADHANDLE:
++	case NFSERR_FBIG:
++	case NFSERR_IO:
++	case NFSERR_NOSPC:
++	case NFSERR_ROFS:
++	case NFSERR_STALE:
++		goto out_reset_to_pnfs;
++	case NFSERR_JUKEBOX:
++		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
++		goto out_retry;
++	default:
++		break;
++	}
++
+ 	switch (task->tk_status) {
+ 	/* File access problems. Don't mark the device as unavailable */
+ 	case -EACCES:
+@@ -1205,6 +1251,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
+ 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
+ 				&devid->deviceid);
+ 	}
++out_reset_to_pnfs:
+ 	/* FIXME: Need to prevent infinite looping here. */
+ 	return -NFS4ERR_RESET_TO_PNFS;
+ out_retry:
+@@ -1215,6 +1262,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
  }
- module_init(proc_vmalloc_init);
+ 
+ static int ff_layout_async_handle_error(struct rpc_task *task,
++					u32 op_status,
+ 					struct nfs4_state *state,
+ 					struct nfs_client *clp,
+ 					struct pnfs_layout_segment *lseg,
+@@ -1233,10 +1281,11 @@ static int ff_layout_async_handle_error(struct rpc_task *task,
+ 
+ 	switch (vers) {
+ 	case 3:
+-		return ff_layout_async_handle_error_v3(task, lseg, idx);
+-	case 4:
+-		return ff_layout_async_handle_error_v4(task, state, clp,
++		return ff_layout_async_handle_error_v3(task, op_status, clp,
+ 						       lseg, idx);
++	case 4:
++		return ff_layout_async_handle_error_v4(task, op_status, state,
++						       clp, lseg, idx);
+ 	default:
+ 		/* should never happen */
+ 		WARN_ON_ONCE(1);
+@@ -1289,6 +1338,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 	switch (status) {
+ 	case NFS4ERR_DELAY:
+ 	case NFS4ERR_GRACE:
++	case NFS4ERR_PERM:
+ 		break;
+ 	case NFS4ERR_NXIO:
+ 		ff_layout_mark_ds_unreachable(lseg, idx);
+@@ -1321,7 +1371,8 @@ static int ff_layout_read_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_read_error(hdr);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, hdr->args.context->state,
++	err = ff_layout_async_handle_error(task, hdr->res.op_status,
++					   hdr->args.context->state,
+ 					   hdr->ds_clp, hdr->lseg,
+ 					   hdr->pgio_mirror_idx);
+ 
+@@ -1491,7 +1542,8 @@ static int ff_layout_write_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_write_error(hdr);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, hdr->args.context->state,
++	err = ff_layout_async_handle_error(task, hdr->res.op_status,
++					   hdr->args.context->state,
+ 					   hdr->ds_clp, hdr->lseg,
+ 					   hdr->pgio_mirror_idx);
+ 
+@@ -1537,8 +1589,9 @@ static int ff_layout_commit_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_commit_error(data);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, NULL, data->ds_clp,
+-					   data->lseg, data->ds_commit_index);
++	err = ff_layout_async_handle_error(task, data->res.op_status,
++					   NULL, data->ds_clp, data->lseg,
++					   data->ds_commit_index);
+ 
+ 	trace_nfs4_pnfs_commit_ds(data, err);
+ 	switch (err) {
+-- 
+2.39.5
+
 
 
