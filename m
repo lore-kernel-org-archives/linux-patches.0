@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3932E54D5;
-	Tue,  8 Jul 2025 16:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CC22E54DC;
+	Tue,  8 Jul 2025 16:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992359; cv=none; b=DCssz7UdmIYNxanuX83PXucJHFAlBjVjnP8dtM02WmxOVe4ezN9TYe9sTKKk0Aloj3ICrYWti0Q3J2fcYoKRZcsELWEWPxyFQgT0L6gIZEJMx5rTgY2gWotWBnFoc+wqplIyukhzoGNrpQAvmWIPWAy2+aI6IgKTf0Jhxlfva3A=
+	t=1751992361; cv=none; b=qwhJdoLx3WlL7f08IBYGYousVJls3bjq/i1hOmJurvSCv/agf+yvk2PcIt7vaPozGzdlggmfs1/2FkVsOfy+zUQxCMWf+ZGduzTTE7iIt8CyUYWBDeQyfsu5gQ2nI+mA3xJhF8vKRlq0M6prphcN3Kc6A3xnRnJcZ4muOotJxOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992359; c=relaxed/simple;
-	bh=SaTXyys1lK9i05WWMfi95JrbK/IlNAEcaEXMsJvxTv8=;
+	s=arc-20240116; t=1751992361; c=relaxed/simple;
+	bh=6+vMQJJveuXUCnWpxHrGq1dNDh6tdqWLbUmTXaj8kiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TgJMEOuv0sVJRYFIL/4BTYKk/SoDB9i6UakvC2gk5r+8od+awUsQUgwBEynL9dIjF+FCeKPaplzlqwRt9A3b9fQep9daKza5x40zHt5qX+HlPmXEvP8DUDbqyVLi4HMLnYthKKDhWIDbPJXTAjay6OqOWt2x4jtQLCWTaZIa7CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOTnmZt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=meF69J/kxxdJSex0NhStdzhZpNLO6FLSSk2VFEJSuVXceurSQScM1XJkt0anQPMIxNeqeughjplUy41sRvAD5D053OPZllMJ3hO8XA4t891JIT9qLKS6euU0JMurueEJPyKjsEVck1FQTmDOLcXmYLwS4OeiOrGRpLgGhN0Z3E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGXG30dm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOTnmZt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C67C4CEF0;
-	Tue,  8 Jul 2025 16:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGXG30dm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62720C4CEF5;
+	Tue,  8 Jul 2025 16:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992358;
-	bh=SaTXyys1lK9i05WWMfi95JrbK/IlNAEcaEXMsJvxTv8=;
+	s=korg; t=1751992361;
+	bh=6+vMQJJveuXUCnWpxHrGq1dNDh6tdqWLbUmTXaj8kiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gOTnmZt4Q25uhKYlVLYVUUDzZS/6eIANwi5S1BO54a1Bh9PhhTRnJeV+Lv4lEZ4fn
-	 r+5RK82DxVUf3D/RKQaLfI7S2pHovnM1K3NSRb3DZvf0KspTI5pMvooony+GdN51rb
-	 zt/RJhQ8HUuid/t41RnpKwazjRWsPDKfvgO+WlMk=
+	b=nGXG30dmPb6yEf5tnOTmH/mT/xTHGsXqhBB53qTPA6skzESiydz177sUrn/bVt4FL
+	 YM4whXtNpc60MYz4bS6VdlQiJ+S+vYdotljFDXSL9+3yOTYhQtcNYG6gC2LBGDoBr+
+	 Dh9QIrHdzSSphpCpTX4jhEa/cfu50r0YsGGBoaZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/132] Revert "drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1"
-Date: Tue,  8 Jul 2025 18:22:55 +0200
-Message-ID: <20250708162232.529894852@linuxfoundation.org>
+Subject: [PATCH 6.6 065/132] btrfs: fix qgroup reservation leak on failure to allocate ordered extent
+Date: Tue,  8 Jul 2025 18:22:56 +0200
+Message-ID: <20250708162232.556417191@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -50,59 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ed5915cfce2abb9a553c3737badebd4a11d6c9c7 ]
+[ Upstream commit 1f2889f5594a2bc4c6a52634c4a51b93e785def5 ]
 
-This reverts commit d6e020819612a4a06207af858e0978be4d3e3140.
+If we fail to allocate an ordered extent for a COW write we end up leaking
+a qgroup data reservation since we called btrfs_qgroup_release_data() but
+we didn't call btrfs_qgroup_free_refroot() (which would happen when
+running the respective data delayed ref created by ordered extent
+completion or when finishing the ordered extent in case an error happened).
 
-The IS_DGFX check was put in place because error capture of buffer
-objects is expected to be broken on devices with VRAM.
+So make sure we call btrfs_qgroup_free_refroot() if we fail to allocate an
+ordered extent for a COW write.
 
-Userspace fix[1] to the impacted media driver has been submitted, merged
-and a new driver release is out as 25.2.3 where the capture flag is
-dropped on DG1 thus unblocking the usage of media driver on DG1.
-
-[1] https://github.com/intel/media-driver/commit/93c07d9b4b96a78bab21f6acd4eb863f4313ea4a
-
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/20250522064127.24293-1-joonas.lahtinen@linux.intel.com
-[Joonas: Update message to point out the merged userspace fix]
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-(cherry picked from commit d2dc30e0aa252830f908c8e793d3139d51321370)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 7dbeaad0af7d ("btrfs: change timing for qgroup reserved space for ordered extents to fix reserved space leak")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ordered-data.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index 023b2ea74c360..5a687a3686bd5 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2013,7 +2013,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
- 			continue;
+diff --git a/fs/btrfs/ordered-data.c b/fs/btrfs/ordered-data.c
+index 86d846eb5ed49..c68e9ecbc438c 100644
+--- a/fs/btrfs/ordered-data.c
++++ b/fs/btrfs/ordered-data.c
+@@ -154,9 +154,10 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
+ 	struct btrfs_ordered_extent *entry;
+ 	int ret;
+ 	u64 qgroup_rsv = 0;
++	const bool is_nocow = (flags &
++	       ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC)));
  
- 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
--		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
-+		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
- 			return -EINVAL;
+-	if (flags &
+-	    ((1 << BTRFS_ORDERED_NOCOW) | (1 << BTRFS_ORDERED_PREALLOC))) {
++	if (is_nocow) {
+ 		/* For nocow write, we can release the qgroup rsv right now */
+ 		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
+ 		if (ret < 0)
+@@ -171,8 +172,13 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
+ 			return ERR_PTR(ret);
+ 	}
+ 	entry = kmem_cache_zalloc(btrfs_ordered_extent_cache, GFP_NOFS);
+-	if (!entry)
++	if (!entry) {
++		if (!is_nocow)
++			btrfs_qgroup_free_refroot(inode->root->fs_info,
++						  btrfs_root_id(inode->root),
++						  qgroup_rsv, BTRFS_QGROUP_RSV_DATA);
+ 		return ERR_PTR(-ENOMEM);
++	}
  
- 		for_each_batch_create_order(eb, j) {
+ 	entry->file_offset = file_offset;
+ 	entry->num_bytes = num_bytes;
 -- 
 2.39.5
 
