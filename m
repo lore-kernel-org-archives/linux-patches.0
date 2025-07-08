@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D22D18EAB;
-	Tue,  8 Jul 2025 16:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EFEBE46;
+	Tue,  8 Jul 2025 16:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993250; cv=none; b=rXwRNFXBRug9ro91DcKLFD22lg78lrjcach0/rpeeEnqRzMnC8F1R1phjYGSSEAMlVbbGywS9kIgw06eQJu6XGTyvM6Tgd4phe9QsjfI6TOoIYlIiGo+HKMSnGnHsOHLoVK/gzhNwYtXvJB5BAcrCCf9TGhQM+q9JGjkhFmRHJw=
+	t=1751993253; cv=none; b=TMIt7C17pMUQ5pHvNihkMwp+3SVCyMvS5YVOhKByl0SGXBK4cLKf1JeAQ42+VLrHzyGObgwezSQK3BCgd8bwDoxUvqZZFIBjTAw5NO9prn2yVL909ThLdpoOToxvYj354mE2bH/KvdsxtkkXw7PhL2IAEprHsK3MEesW02MCaLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993250; c=relaxed/simple;
-	bh=9Ls2KIdE7Lvz/0tYls1BfjJjWnQcFz013ISUjlNpzMc=;
+	s=arc-20240116; t=1751993253; c=relaxed/simple;
+	bh=7dcIg69mT+pimR9UP8IYm1M/kthISxlV668KpKGQ7gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/0fOam0JRt6p0PLfvXwuQaUL2DwalKVpCDvbKLqbtJfZTeFzCyMZGh9fVg+3HQLb7TV0q4h8nxWUoQCRkAA1f/9q9GnbHeMtmY1WI0gjf+vnopJnvR8y4f7+lsXFh87qkH5y6z9XjNs1kV0FfuVnih0A3gQDAQorjHfd9kI04Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkcbmeLa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C9Q82BK0ezF8ea+TyOUd5n+5DYPWqCMySK0ueNngvON8m1cJMatG5s8YygAePGx73VteTcvdT0sRXGUo8x8wcnIMwpXE2RTOH/w3KG1r/d+G3npvoBgvzEK3JhIhbGcpTKb+/s0J1oiNvFtUwMSVqpKKRnSOCOKBAIaauuTMPJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTIRh4z5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkcbmeLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9281C4CEED;
-	Tue,  8 Jul 2025 16:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTIRh4z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD970C4CEED;
+	Tue,  8 Jul 2025 16:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993250;
-	bh=9Ls2KIdE7Lvz/0tYls1BfjJjWnQcFz013ISUjlNpzMc=;
+	s=korg; t=1751993253;
+	bh=7dcIg69mT+pimR9UP8IYm1M/kthISxlV668KpKGQ7gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkcbmeLa24Z61sZrFe2lA7hKteM51nYi+0yLTLZftUm6mYyMHyxGKdM3bQBkpZxjC
-	 3kdZUfL4S7alAqgAe+fY4ln6l6//MnD/B64st+/Qi0NWBoc+hJEFAJFBP+cR9zjDrV
-	 +IzzH8c/pYfHSmOaWRw3NV+3nr982d+0M5BJF+68=
+	b=oTIRh4z53i5O6Nt+s8YSUgLm+VS9JSwsksFjcRA3T524Wb1iFzJTJJYQ2IL5gfsvL
+	 Gf1oBG4GExTWTDfIwJyAafSyHd4RL0/r6+AZHZXO8NhAI+TC6/J4oiTQhtCmUaRNRr
+	 2R9D0R0M32YBGqvEtFXtmkRz+Jjot4RqvCzRaGoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.12 232/232] x86/process: Move the buffer clearing before MONITOR
-Date: Tue,  8 Jul 2025 18:23:48 +0200
-Message-ID: <20250708162247.496360571@linuxfoundation.org>
+	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.15 003/178] rtc: cmos: use spin_lock_irqsave in cmos_interrupt
+Date: Tue,  8 Jul 2025 18:20:40 +0200
+Message-ID: <20250708162236.642714888@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
-References: <20250708162241.426806072@linuxfoundation.org>
+In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
+References: <20250708162236.549307806@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,115 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Borislav Petkov (AMD)" <bp@alien8.de>
+From: Mateusz Jończyk <mat.jonczyk@o2.pl>
 
-Commit 8e786a85c0a3c0fffae6244733fb576eeabd9dec upstream.
+commit 00a39d8652ff9088de07a6fe6e9e1893452fe0dd upstream.
 
-Move the VERW clearing before the MONITOR so that VERW doesn't disarm it
-and the machine never enters C1.
+cmos_interrupt() can be called in a non-interrupt context, such as in
+an ACPI event handler (which runs in an interrupt thread). Therefore,
+usage of spin_lock(&rtc_lock) is insecure. Use spin_lock_irqsave() /
+spin_unlock_irqrestore() instead.
 
-Original idea by Kim Phillips <kim.phillips@amd.com>.
+Before a misguided
+commit 6950d046eb6e ("rtc: cmos: Replace spin_lock_irqsave with spin_lock in hard IRQ")
+the cmos_interrupt() function used spin_lock_irqsave(). That commit
+changed it to spin_lock() and broke locking, which was partially fixed in
+commit 13be2efc390a ("rtc: cmos: Disable irq around direct invocation of cmos_interrupt()")
 
-Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+That second commit did not take account of the ACPI fixed event handler
+pathway, however. It introduced local_irq_disable() workarounds in
+cmos_check_wkalrm(), which can cause problems on PREEMPT_RT kernels
+and are now unnecessary.
+
+Add an explicit comment so that this change will not be reverted by
+mistake.
+
+Cc: stable@vger.kernel.org
+Fixes: 6950d046eb6e ("rtc: cmos: Replace spin_lock_irqsave with spin_lock in hard IRQ")
+Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Closes: https://lore.kernel.org/all/aDtJ92foPUYmGheF@debian.local/
+Link: https://lore.kernel.org/r/20250607210608.14835-1-mat.jonczyk@o2.pl
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/mwait.h |   25 +++++++++++++++----------
- arch/x86/kernel/process.c    |   16 ++++++++++++----
- 2 files changed, 27 insertions(+), 14 deletions(-)
+ drivers/rtc/rtc-cmos.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/x86/include/asm/mwait.h
-+++ b/arch/x86/include/asm/mwait.h
-@@ -44,8 +44,6 @@ static __always_inline void __monitorx(c
- 
- static __always_inline void __mwait(unsigned long eax, unsigned long ecx)
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -692,8 +692,12 @@ static irqreturn_t cmos_interrupt(int ir
  {
--	x86_idle_clear_cpu_buffers();
--
- 	/* "mwait %eax, %ecx;" */
- 	asm volatile(".byte 0x0f, 0x01, 0xc9;"
- 		     :: "a" (eax), "c" (ecx));
-@@ -98,7 +96,6 @@ static __always_inline void __mwaitx(uns
-  */
- static __always_inline void __sti_mwait(unsigned long eax, unsigned long ecx)
- {
--	x86_idle_clear_cpu_buffers();
+ 	u8		irqstat;
+ 	u8		rtc_control;
++	unsigned long	flags;
  
- 	/* "mwait %eax, %ecx;" */
- 	asm volatile("sti; .byte 0x0f, 0x01, 0xc9;"
-@@ -117,21 +114,29 @@ static __always_inline void __sti_mwait(
-  */
- static __always_inline void mwait_idle_with_hints(unsigned long eax, unsigned long ecx)
- {
-+	if (need_resched())
-+		return;
-+
-+	x86_idle_clear_cpu_buffers();
-+
- 	if (static_cpu_has_bug(X86_BUG_MONITOR) || !current_set_polling_and_test()) {
- 		const void *addr = &current_thread_info()->flags;
+-	spin_lock(&rtc_lock);
++	/* We cannot use spin_lock() here, as cmos_interrupt() is also called
++	 * in a non-irq context.
++	 */
++	spin_lock_irqsave(&rtc_lock, flags);
  
- 		alternative_input("", "clflush (%[addr])", X86_BUG_CLFLUSH_MONITOR, [addr] "a" (addr));
- 		__monitor(addr, 0, 0);
- 
--		if (!need_resched()) {
--			if (ecx & 1) {
--				__mwait(eax, ecx);
--			} else {
--				__sti_mwait(eax, ecx);
--				raw_local_irq_disable();
--			}
-+		if (need_resched())
-+			goto out;
-+
-+		if (ecx & 1) {
-+			__mwait(eax, ecx);
-+		} else {
-+			__sti_mwait(eax, ecx);
-+			raw_local_irq_disable();
- 		}
+ 	/* When the HPET interrupt handler calls us, the interrupt
+ 	 * status is passed as arg1 instead of the irq number.  But
+@@ -727,7 +731,7 @@ static irqreturn_t cmos_interrupt(int ir
+ 			hpet_mask_rtc_irq_bit(RTC_AIE);
+ 		CMOS_READ(RTC_INTR_FLAGS);
  	}
-+
-+out:
- 	current_clr_polling();
- }
+-	spin_unlock(&rtc_lock);
++	spin_unlock_irqrestore(&rtc_lock, flags);
  
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -911,16 +911,24 @@ static __init bool prefer_mwait_c1_over_
-  */
- static __cpuidle void mwait_idle(void)
- {
-+	if (need_resched())
-+		return;
-+
-+	x86_idle_clear_cpu_buffers();
-+
- 	if (!current_set_polling_and_test()) {
- 		const void *addr = &current_thread_info()->flags;
- 
- 		alternative_input("", "clflush (%[addr])", X86_BUG_CLFLUSH_MONITOR, [addr] "a" (addr));
- 		__monitor(addr, 0, 0);
--		if (!need_resched()) {
--			__sti_mwait(0, 0);
--			raw_local_irq_disable();
--		}
-+		if (need_resched())
-+			goto out;
-+
-+		__sti_mwait(0, 0);
-+		raw_local_irq_disable();
+ 	if (is_intr(irqstat)) {
+ 		rtc_update_irq(p, 1, irqstat);
+@@ -1295,9 +1299,7 @@ static void cmos_check_wkalrm(struct dev
+ 	 * ACK the rtc irq here
+ 	 */
+ 	if (t_now >= cmos->alarm_expires && cmos_use_acpi_alarm()) {
+-		local_irq_disable();
+ 		cmos_interrupt(0, (void *)cmos->rtc);
+-		local_irq_enable();
+ 		return;
  	}
-+
-+out:
- 	__current_clr_polling();
- }
  
 
 
