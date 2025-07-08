@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632EB2E3B03;
-	Tue,  8 Jul 2025 16:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4872E2F0D;
+	Tue,  8 Jul 2025 16:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992668; cv=none; b=bcvG0x90SoaS+8AurlfrpLj8qGFb2IVrg8E5C0J55U9McvRKwcZwiagtf/F2t3zWE0M4cv50wDIY5Lh62VehE++nuCgJVw3OQSZ1unQ0y5/QqEU/1lbeCQI0yH0V4o72xRTeDEh92jQLEICHo4YbWVbTeozKncJ9kNb0V7DxYnc=
+	t=1751992671; cv=none; b=h2ervmDI7T36OrAUUxC6OLRkfyhzzp+CYdtY5shgvuMpdERYRHAcvMVzSS+RXRz3sgVrxoC/qgPayJLTslRq6HjITRlQz5XxNUTFgSplymQ3dXh+P1FciZ13w3j0pTPUITP+jdIDiDhxFFwKU5EPpWQI0K9dqxe1pfX1Iyl7Dh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992668; c=relaxed/simple;
-	bh=a2G4sg0telHy33RhtzVtds4nKUtA14ZQ6LAwS4FdJes=;
+	s=arc-20240116; t=1751992671; c=relaxed/simple;
+	bh=Sr1/NNQD8LP+3RQomEyPMi8gNQmrA1b7HHxx6deuN98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVFeX6nO87ryCNKhukKIJFJDqYsp6124RUpwiIT7QXDzlGoBeBU8AGIoeDKfpfgahe9kY3gd7fWD0X6UVkZrTsPVls3FPxbTYXNeOavKB8QAEkdwP0zmEf2wKRevAnT4aK1zY2geaMfjbsmuRq0s5ta6aujl3XqpSOQww77gbiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnB8zYJ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s8/qMqZL3WA6JBywvGfOgrMjNxrUdCdw0kys34eXlrcrsc/p+F3dWJcpnsQyB55n+aTGdMj1CHjIvCxEqbUJqw6EyUz0jPwT/rYSEiaLDS3gdM+k4X/ONDW1Ly4SDLJpbeo5zEH/20kJ6lKhG5iu/FpKPAGk2GB+v3zW6nq1svk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcPne4LD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnB8zYJ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE89C4CEED;
-	Tue,  8 Jul 2025 16:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcPne4LD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA6EC4CEED;
+	Tue,  8 Jul 2025 16:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992668;
-	bh=a2G4sg0telHy33RhtzVtds4nKUtA14ZQ6LAwS4FdJes=;
+	s=korg; t=1751992670;
+	bh=Sr1/NNQD8LP+3RQomEyPMi8gNQmrA1b7HHxx6deuN98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnB8zYJ+weHfB63/CJ8Qw1Rq3vdAxN/yTIlJUWqZCTHqTtYJPDCiUNGRfR61GsE3l
-	 19ZTAv+rlkdJtYxwEDnX5Fgd5v89YEFI/dvYI7CxSebJ6MmKZ/qFZsXzgBq525I2u4
-	 c3qDPW8j4MzPb0qDNuUlUpwj4GTbTx2iBpPg0jdo=
+	b=tcPne4LDntCTSXVu+Ua5Q0WapPTO1j89ZyN2vCmKBvlrcqzF7AoAmBy3C+ilqeg8I
+	 F1JA4qPN2+bqnBJ4IEF9LnekDwC2PKaG4Vq16lWxMooYEM8qNKPAEJdlEBmMQfNmwJ
+	 zUIRJJKzLxqDWrzeol/thOJgM6KxCe7mFEhWNYJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Avri Altman <avri.altman@sandisk.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/232] scsi: ufs: core: Fix spelling of a sysfs attribute name
-Date: Tue,  8 Jul 2025 18:20:36 +0200
-Message-ID: <20250708162242.479520283@linuxfoundation.org>
+Subject: [PATCH 6.12 041/232] RDMA/mlx5: Fix HW counters query for non-representor devices
+Date: Tue,  8 Jul 2025 18:20:37 +0200
+Message-ID: <20250708162242.506200281@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,58 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 021f243627ead17eb6500170256d3d9be787dad8 ]
+[ Upstream commit 3cc1dbfddf88dc5ecce0a75185061403b1f7352d ]
 
-Change "resourse" into "resource" in the name of a sysfs attribute.
+To get the device HW counters, a non-representor switchdev device
+should use the mlx5_ib_query_q_counters() function and query all of
+the available counters. While a representor device in switchdev mode
+should use the mlx5_ib_query_q_counters_vport() function and query only
+the Q_Counters without the PPCNT counters and congestion control counters,
+since they aren't relevant for a representor device.
 
-Fixes: d829fc8a1058 ("scsi: ufs: sysfs: unit descriptor")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20250624181658.336035-1-bvanassche@acm.org
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Currently a non-representor switchdev device skips querying the PPCNT
+counters and congestion control counters, leaving them unupdated.
+Fix that by properly querying those counters for non-representor devices.
+
+Fixes: d22467a71ebe ("RDMA/mlx5: Expand switchdev Q-counters to expose representor statistics")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/56bf8af4ca8c58e3fb9f7e47b1dca2009eeeed81.1750064969.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-driver-ufs | 2 +-
- drivers/ufs/core/ufs-sysfs.c               | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/counters.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-driver-ufs b/Documentation/ABI/testing/sysfs-driver-ufs
-index 5fa6655aee840..16f17e91ee496 100644
---- a/Documentation/ABI/testing/sysfs-driver-ufs
-+++ b/Documentation/ABI/testing/sysfs-driver-ufs
-@@ -711,7 +711,7 @@ Description:	This file shows the thin provisioning type. This is one of
+diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
+index 81cfa74147a18..fbabc5ac9ef27 100644
+--- a/drivers/infiniband/hw/mlx5/counters.c
++++ b/drivers/infiniband/hw/mlx5/counters.c
+@@ -391,7 +391,7 @@ static int do_get_hw_stats(struct ib_device *ibdev,
+ 		return ret;
  
- 		The file is read only.
+ 	/* We don't expose device counters over Vports */
+-	if (is_mdev_switchdev_mode(dev->mdev) && port_num != 0)
++	if (is_mdev_switchdev_mode(dev->mdev) && dev->is_rep && port_num != 0)
+ 		goto done;
  
--What:		/sys/class/scsi_device/*/device/unit_descriptor/physical_memory_resourse_count
-+What:		/sys/class/scsi_device/*/device/unit_descriptor/physical_memory_resource_count
- Date:		February 2018
- Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
- Description:	This file shows the total physical memory resources. This is
-diff --git a/drivers/ufs/core/ufs-sysfs.c b/drivers/ufs/core/ufs-sysfs.c
-index 796e37a1d859f..f8397ef3cf8df 100644
---- a/drivers/ufs/core/ufs-sysfs.c
-+++ b/drivers/ufs/core/ufs-sysfs.c
-@@ -1608,7 +1608,7 @@ UFS_UNIT_DESC_PARAM(logical_block_size, _LOGICAL_BLK_SIZE, 1);
- UFS_UNIT_DESC_PARAM(logical_block_count, _LOGICAL_BLK_COUNT, 8);
- UFS_UNIT_DESC_PARAM(erase_block_size, _ERASE_BLK_SIZE, 4);
- UFS_UNIT_DESC_PARAM(provisioning_type, _PROVISIONING_TYPE, 1);
--UFS_UNIT_DESC_PARAM(physical_memory_resourse_count, _PHY_MEM_RSRC_CNT, 8);
-+UFS_UNIT_DESC_PARAM(physical_memory_resource_count, _PHY_MEM_RSRC_CNT, 8);
- UFS_UNIT_DESC_PARAM(context_capabilities, _CTX_CAPABILITIES, 2);
- UFS_UNIT_DESC_PARAM(large_unit_granularity, _LARGE_UNIT_SIZE_M1, 1);
- UFS_UNIT_DESC_PARAM(wb_buf_alloc_units, _WB_BUF_ALLOC_UNITS, 4);
-@@ -1625,7 +1625,7 @@ static struct attribute *ufs_sysfs_unit_descriptor[] = {
- 	&dev_attr_logical_block_count.attr,
- 	&dev_attr_erase_block_size.attr,
- 	&dev_attr_provisioning_type.attr,
--	&dev_attr_physical_memory_resourse_count.attr,
-+	&dev_attr_physical_memory_resource_count.attr,
- 	&dev_attr_context_capabilities.attr,
- 	&dev_attr_large_unit_granularity.attr,
- 	&dev_attr_wb_buf_alloc_units.attr,
+ 	if (MLX5_CAP_PCAM_FEATURE(dev->mdev, rx_icrc_encapsulated_counter)) {
 -- 
 2.39.5
 
