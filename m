@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B023E8F5B;
-	Tue,  8 Jul 2025 16:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058148F5B;
+	Tue,  8 Jul 2025 16:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992932; cv=none; b=mPnzEz730wrARW7iHQS0Felh07KsSKXoJbSQ3xpre6RGBBsmvu82VPSRR+WNo2TsVignKjjjIYPvAae/S8nU/RzRUDdavK1JASxO/R6SDtTu2DTKRm6sFdb2WGwOTF7qDEcQ8uUTiE8sO2aEOZqJv0DLNncJ+k+mzonPpS6eEjw=
+	t=1751992936; cv=none; b=GHflSAIfx84M2PYXqq68Vcqi96cVOOeibuflwExcrlI0bdpKOWEidHXnnavhf273BciSvsjJ1dtcSdy3g4vy0oHbQp9UPiPsSX0QnXL0GZhVxgn/DMQeCubaR+Eas9TJz9XOWmo6AlRENYDgQkYaQa9kxjfKYzAJB4vgW6Z9Ga0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992932; c=relaxed/simple;
-	bh=3RiUaKOdku12fg5cy8si584xlKI8WY0mUI5DXbqoVCg=;
+	s=arc-20240116; t=1751992936; c=relaxed/simple;
+	bh=SFpNC2r1nCfyhTnPYWxuysrLiufE8ravO9oz1Pmahiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ayej//CTecTFaIy0XDDp/CWboOHb647lTpkXrkLLeZ2vvR/SEBkFf8VafTucG9o9LUiV4hveu+26NKiQUKDp0J2w4RSXvvb+5uO134214ryA5CdAF0J9ljGTMH2QLWeRvjbSSEG73cfn+s4vQx7Qrma+2H34O0YU0doXlYpYa+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W10Eiilz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FkPPdGI9brjdMJbHtw2FdMqPWkJ4wdCiilWW6B7P+OPbkJFdqDr4fSoz+7R2iyqvPGDHgF12y+PiWxx9+OQ76smlvlB9rKCQYwWTEr51NWMnL+0IC2dtdd9YPwMi81WyjSIQiG/c3i9iB4oE6sqcd2mNoPdLfWQBqBylyk/uy5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdVFz7i5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W10Eiilz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362E1C4CEED;
-	Tue,  8 Jul 2025 16:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdVFz7i5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC58C4CEF0;
+	Tue,  8 Jul 2025 16:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992932;
-	bh=3RiUaKOdku12fg5cy8si584xlKI8WY0mUI5DXbqoVCg=;
+	s=korg; t=1751992935;
+	bh=SFpNC2r1nCfyhTnPYWxuysrLiufE8ravO9oz1Pmahiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W10Eiilzti4lMjMXRNaiEcZjm5PmdUuHB2hHmZJ8e4J8lhU5iRsa0dEr2p4UvamFf
-	 dXHFcMLjjHvUALY8xsqQz3bxu6pw3/Tl+KdP8UXVI/sJt7oVnda7IbjtIzlQxHajdN
-	 geyATdT/U5JQ/XQUQXyVCbsjxvuXIxjqN/EKyETU=
+	b=pdVFz7i57Z/2nzB1JKe7Xrxv5CB+yghJVCH2t/b5ILNR3d3Pt2rIDNKjhVBHp0Enq
+	 p2bDhVDW+QK04ZPpPbRu0IRuaKiqR42nylvNvBfpUxvAjRQLE4Zo4hsDgWGSYz9bmh
+	 uRiB8iknhmDtLwx42a9ilHZPeEzhudKSGVxn2mvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 100/232] kunit: qemu_configs: Disable faulting tests on 32-bit SPARC
-Date: Tue,  8 Jul 2025 18:21:36 +0200
-Message-ID: <20250708162244.061982050@linuxfoundation.org>
+Subject: [PATCH 6.12 101/232] gfs2: Initialize gl_no_formal_ino earlier
+Date: Tue,  8 Jul 2025 18:21:37 +0200
+Message-ID: <20250708162244.086882400@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -46,48 +44,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 1d31d536871fe8b16c8c0de58d201c78e21eb3a2 ]
+[ Upstream commit 1072b3aa6863bc4d91006038b032bfb4dcc98dec ]
 
-The 32-bit sparc configuration (--arch sparc) crashes on
-the kunit_fault_test. It's known that some architectures don't handle
-deliberate segfaults in kernel mode well, so there's a config switch to
-disable tests which rely upon it by default.
+Set gl_no_formal_ino of the iopen glock to the generation of the
+associated inode (ip->i_no_formal_ino) as soon as that value is known.
+This saves us from setting it later, possibly repeatedly, when queuing
+GLF_VERIFY_DELETE work.
 
-Use this for the sparc config, making sure the default config for it
-passes.
-
-Link: https://lore.kernel.org/r/20250416093826.1550040-1-davidgow@google.com
-Fixes: 87c9c1631788 ("kunit: tool: add support for QEMU")
-Signed-off-by: David Gow <davidgow@google.com>
-Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Tested-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: 2c63986dd35f ("gfs2: deallocate inodes in gfs2_create_inode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/qemu_configs/sparc.py | 1 +
- 1 file changed, 1 insertion(+)
+ fs/gfs2/glock.c | 1 -
+ fs/gfs2/glops.c | 9 ++++++++-
+ fs/gfs2/inode.c | 1 +
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/kunit/qemu_configs/sparc.py b/tools/testing/kunit/qemu_configs/sparc.py
-index 3131dd299a6e3..2019550a1b692 100644
---- a/tools/testing/kunit/qemu_configs/sparc.py
-+++ b/tools/testing/kunit/qemu_configs/sparc.py
-@@ -2,6 +2,7 @@ from ..qemu_config import QemuArchParams
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index aecce4bb5e1a9..ed699f2872f55 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -985,7 +985,6 @@ static bool gfs2_try_evict(struct gfs2_glock *gl)
+ 		ip = NULL;
+ 	spin_unlock(&gl->gl_lockref.lock);
+ 	if (ip) {
+-		gl->gl_no_formal_ino = ip->i_no_formal_ino;
+ 		set_bit(GIF_DEFERRED_DELETE, &ip->i_flags);
+ 		d_prune_aliases(&ip->i_inode);
+ 		iput(&ip->i_inode);
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index 72a0601ce65e2..4b6b23c638e29 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -494,11 +494,18 @@ int gfs2_inode_refresh(struct gfs2_inode *ip)
+ static int inode_go_instantiate(struct gfs2_glock *gl)
+ {
+ 	struct gfs2_inode *ip = gl->gl_object;
++	struct gfs2_glock *io_gl;
++	int error;
  
- QEMU_ARCH = QemuArchParams(linux_arch='sparc',
- 			   kconfig='''
-+CONFIG_KUNIT_FAULT_TEST=n
- CONFIG_SPARC32=y
- CONFIG_SERIAL_SUNZILOG=y
- CONFIG_SERIAL_SUNZILOG_CONSOLE=y
+ 	if (!ip) /* no inode to populate - read it in later */
+ 		return 0;
+ 
+-	return gfs2_inode_refresh(ip);
++	error = gfs2_inode_refresh(ip);
++	if (error)
++		return error;
++	io_gl = ip->i_iopen_gh.gh_gl;
++	io_gl->gl_no_formal_ino = ip->i_no_formal_ino;
++	return 0;
+ }
+ 
+ static int inode_go_held(struct gfs2_holder *gh)
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 3be24285ab01d..2d2f7646440f5 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -751,6 +751,7 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	if (error)
+ 		goto fail_free_inode;
+ 	gfs2_cancel_delete_work(io_gl);
++	io_gl->gl_no_formal_ino = ip->i_no_formal_ino;
+ 
+ retry:
+ 	error = insert_inode_locked4(inode, ip->i_no_addr, iget_test, &ip->i_no_addr);
 -- 
 2.39.5
 
