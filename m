@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CE3BE46;
-	Tue,  8 Jul 2025 16:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F11C2DFA22;
+	Tue,  8 Jul 2025 16:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993670; cv=none; b=awJvMFrv2BNMLgl2G8QK9sLoDvVAnjdaae/DmjLxbACDPapZtZJ5F6u0+wBz4W+avbL+gy+rTCDvQFkaisDv3n+3xMceX32YEuuoZxwskR85NvLmYtl/Wv8eaK0jOLEIFVAD5dZRXpkTu2a3Cl5j6sTNa6tUGucP25pI3FFrOb4=
+	t=1751993673; cv=none; b=IGTQj0C9C3yt/OO5sdg/s+SLBo64IjyJrArEpM9x2go7CDqTYlju60rYrLTAvlLNy68i5glKC5oLPYRoE04i6MFPU1xJXxKpUHA7ESNDO17QWy1ID4IW0J445y6AUbwO5JsJfSbu5VfyrDMfeYg5941DYmfhbqTzN0RJg16c/S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993670; c=relaxed/simple;
-	bh=P1rj8AWxyUYV3J9qkZ0wtQbgHxMWJRaQvYysrS3Wdow=;
+	s=arc-20240116; t=1751993673; c=relaxed/simple;
+	bh=7JtR2sFPKUfD3U33QC5rdw7jznAmYSkOaKBdZvldjw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWpDGzFRefcCkakgF2o5VZGQrbdcHJWRcfgq5nxD/C+Kh++Pg4PjktVadFCH6rMna9w+XjfEzm0vQjSGrUYo4r2PJ/vF+QQKD5eZVO4TNHgLz72Fz56PNzrTLk5egA+rht/LdDn/Xr3HTaPI/nWEWi+t8ZnCKjaZPBibgxwWVs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfeMtsqC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2TDZe9f7a77umy8MJg3OUzs78ek80abTPrlXYdTInAeA40lto3k4+NEz6m0Rly3Elshgk5I+pTm3GC/BIXV3IBO/bNXOJQ3YvEkk/2JLEb3QshGlTmG3wxSDRWAUMjnMk3FSI37Q0VSyLj++TcBXxO42pnx9vZhD00PsrGe8a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZeEH1oEX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfeMtsqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1511CC4CEED;
-	Tue,  8 Jul 2025 16:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZeEH1oEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED53FC4CEED;
+	Tue,  8 Jul 2025 16:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993670;
-	bh=P1rj8AWxyUYV3J9qkZ0wtQbgHxMWJRaQvYysrS3Wdow=;
+	s=korg; t=1751993673;
+	bh=7JtR2sFPKUfD3U33QC5rdw7jznAmYSkOaKBdZvldjw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xfeMtsqCQkCDbv+uce4K50xfOhxWsZhosFTwjSjDpKIU70NFVb/qWCPf1jKpfYE/1
-	 E33L439KMhVEORb5rAAYjxsj805k9uzTVjBDBx4CeMUw3rgKw3bRcvz7b1+zM/Zy0j
-	 vLeWBnMxoPqxnu3fiRxlpBiV+8hlVPzcIcBlrY7g=
+	b=ZeEH1oEXtZrOUqV47ygeyqlB9CHXDXFN8z+H/0IXwPvKZDBVu+dWhdUilhPUXfSuc
+	 bzLOMSL099h0cs/a8EZEG7a7/R6EmHmr6qtegK1eHzvbeGutMzFwH/vHSt9PkSN4hB
+	 oiYrQ3mUeXrvaDarPrazXkLAMXeuqb/D7BWEOcZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shawnguo@kernel.org>,
-	John Ernberg <john.ernberg@actia.se>,
-	stable <stable@kernel.org>,
-	Jun Li <jun.li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.15 154/178] usb: chipidea: udc: disconnect/reconnect from host when do suspend/resume
-Date: Tue,  8 Jul 2025 18:23:11 +0200
-Message-ID: <20250708162240.526176956@linuxfoundation.org>
+	syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 137/178] wifi: ath6kl: remove WARN on bad firmware input
+Date: Tue,  8 Jul 2025 18:22:54 +0200
+Message-ID: <20250708162240.131170456@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -54,70 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 31a6afbe86e8e9deba9ab53876ec49eafc7fd901 upstream.
+[ Upstream commit e7417421d89358da071fd2930f91e67c7128fbff ]
 
-Shawn and John reported a hang issue during system suspend as below:
+If the firmware gives bad input, that's nothing to do with
+the driver's stack at this point etc., so the WARN_ON()
+doesn't add any value. Additionally, this is one of the
+top syzbot reports now. Just print a message, and as an
+added bonus, print the sizes too.
 
- - USB gadget is enabled as Ethernet
- - There is data transfer over USB Ethernet (scp a big file between host
-                                             and device)
- - Device is going in/out suspend (echo mem > /sys/power/state)
-
-The root cause is the USB device controller is suspended but the USB bus
-is still active which caused the USB host continues to transfer data with
-device and the device continues to queue USB requests (in this case, a
-delayed TCP ACK packet trigger the issue) after controller is suspended,
-however the USB controller clock is already gated off. Then if udc driver
-access registers after that point, the system will hang.
-
-The correct way to avoid such issue is to disconnect device from host when
-the USB bus is not at suspend state. Then the host will receive disconnect
-event and stop data transfer in time. To continue make USB gadget device
-work after system resume, this will reconnect device automatically.
-
-To make usb wakeup work if USB bus is already at suspend state, this will
-keep connection for it only when USB device controller has enabled wakeup
-capability.
-
-Reported-by: Shawn Guo <shawnguo@kernel.org>
-Reported-by: John Ernberg <john.ernberg@actia.se>
-Closes: https://lore.kernel.org/linux-usb/aEZxmlHmjeWcXiF3@dragon/
-Tested-by: John Ernberg <john.ernberg@actia.se> # iMX8QXP
-Fixes: 235ffc17d014 ("usb: chipidea: udc: add suspend/resume support for device controller")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Jun Li <jun.li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20250614124914.207540-1-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
+Tested-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
+Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250617114529.031a677a348e.I58bf1eb4ac16a82c546725ff010f3f0d2b0cca49@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/udc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/ath/ath6kl/bmi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/udc.c
-+++ b/drivers/usb/chipidea/udc.c
-@@ -2374,6 +2374,10 @@ static void udc_suspend(struct ci_hdrc *
- 	 */
- 	if (hw_read(ci, OP_ENDPTLISTADDR, ~0) == 0)
- 		hw_write(ci, OP_ENDPTLISTADDR, ~0, ~0);
-+
-+	if (ci->gadget.connected &&
-+	    (!ci->suspended || !device_may_wakeup(ci->dev)))
-+		usb_gadget_disconnect(&ci->gadget);
- }
+diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
+index af98e871199d3..5a9e93fd1ef42 100644
+--- a/drivers/net/wireless/ath/ath6kl/bmi.c
++++ b/drivers/net/wireless/ath/ath6kl/bmi.c
+@@ -87,7 +87,9 @@ int ath6kl_bmi_get_target_info(struct ath6kl *ar,
+ 		 * We need to do some backwards compatibility to make this work.
+ 		 */
+ 		if (le32_to_cpu(targ_info->byte_count) != sizeof(*targ_info)) {
+-			WARN_ON(1);
++			ath6kl_err("mismatched byte count %d vs. expected %zd\n",
++				   le32_to_cpu(targ_info->byte_count),
++				   sizeof(*targ_info));
+ 			return -EINVAL;
+ 		}
  
- static void udc_resume(struct ci_hdrc *ci, bool power_lost)
-@@ -2384,6 +2388,9 @@ static void udc_resume(struct ci_hdrc *c
- 					OTGSC_BSVIS | OTGSC_BSVIE);
- 		if (ci->vbus_active)
- 			usb_gadget_vbus_disconnect(&ci->gadget);
-+	} else if (ci->vbus_active && ci->driver &&
-+		   !ci->gadget.connected) {
-+		usb_gadget_connect(&ci->gadget);
- 	}
- 
- 	/* Restore value 0 if it was set for power lost check */
+-- 
+2.39.5
+
 
 
