@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFA92E3701;
-	Tue,  8 Jul 2025 16:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC1A2E3701;
+	Tue,  8 Jul 2025 16:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992277; cv=none; b=uMvFmeb2f/LzC+AqPX19ArUG7F2CqI3LaSnvA2yNzaZv9+Z/uUTh+XP5erSRVrNCB+2sXqtvMzlp+YkddMY1KoOZ56CMzkRM31FBn1SuuplmXleFq5MkJdam10BQsI+OiAX7ZK44QmOWnsVfKWqu61UpPFPrxQ2zIiWLQrt1riY=
+	t=1751992280; cv=none; b=h2673a9Yy5CRS4z0l3PwR31em3CgHK5ivMxibJxQOWV1cqwRWjqFnizt7nBUm3gJAAbucUyLKXfGGUoudPmN1Ig4iR6/Cp8os+XFo0RmIo3h3dLkiaM5aC4Q6edUIk2R9f+9BMet9zqp2w7T+ZSCJenkUe24CWw72d6DtJvE6Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992277; c=relaxed/simple;
-	bh=quZn6u2DBOsaIYB+HTr3HjwzNLYa7zZqp1xrBEEmnTU=;
+	s=arc-20240116; t=1751992280; c=relaxed/simple;
+	bh=vseeM+pButf0L8KnGhixOXl4cH6qMdfkYywOkaZAVoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTInyNkbbelc9RPnrBYuXS++wzPCG0xCZTIFqd461uUTk/gSoyyYQdI57KDWA6mRN/3RbPPROdWyLM8UJmWnxbej2X2nFKYYNhRfIoWt+Gc4u+B27yCyz7IOGWIgnv7kOlBjEP87qQbeoZ+YvyqjsqpdIuX8ZgisdeG7eb1aoTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LR+eDeY9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdM6zkMYjfO1YYMNc4M/I8bSOsQGjixnapc78+TUPi+++2T/9s1Y9GciEogSFeDh3mEkda5aTZSX7Pca7lLnVFwOsz20uBx2We2C7elnxBMDHec5Pha1USLo7GZceohm4D318ibsfLrRitJb9vrXQ940i7TdhMHa0aSvIV5dMWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jR48LhfP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LR+eDeY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84FCC4CEED;
-	Tue,  8 Jul 2025 16:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jR48LhfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F61C4CEED;
+	Tue,  8 Jul 2025 16:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992277;
-	bh=quZn6u2DBOsaIYB+HTr3HjwzNLYa7zZqp1xrBEEmnTU=;
+	s=korg; t=1751992280;
+	bh=vseeM+pButf0L8KnGhixOXl4cH6qMdfkYywOkaZAVoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LR+eDeY9QjOyJpEWOrckpDGgxhYm02TMe3/xxuBCQAIXYmWQo/y2SN5GnZu1rB00h
-	 KAzViQG52ibqoDKNoG1suF+iHV4TvgpYeIovoQGod/zf108wqUQ3wkY8nOkdb0DVO8
-	 KhapRIoOhJDHN1RI6Zv1ORJh1EpKXMcpGWoAFGhI=
+	b=jR48LhfPxrxhdJsF85f1z4UHl3V/AmtPXwEyvSnE1KTOjL2uVnSa0Y+bNLFUx3mfk
+	 /rlxRLoUPXjo9z7fy2TbIVOyzQJuPLfBxshjXdbplluOrYtXukHGT8ml5PBpHCdL88
+	 mD8yJOGvfaWP9GeEXc8g3E2/CvlmbglvSeaApXBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fushuai Wang <wangfushuai@baidu.com>,
-	Simon Horman <horms@kernel.org>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/132] dpaa2-eth: fix xdp_rxq_info leak
-Date: Tue,  8 Jul 2025 18:22:28 +0200
-Message-ID: <20250708162231.778857187@linuxfoundation.org>
+Subject: [PATCH 6.6 038/132] drm/exynos: fimd: Guard display clock control with runtime PM calls
+Date: Tue,  8 Jul 2025 18:22:29 +0200
+Message-ID: <20250708162231.804899699@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -53,99 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fushuai Wang <wangfushuai@baidu.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 2def09ead4ad5907988b655d1e1454003aaf8297 ]
+[ Upstream commit 5d91394f236167ac624b823820faf4aa928b889e ]
 
-The driver registered xdp_rxq_info structures via xdp_rxq_info_reg()
-but failed to properly unregister them in error paths and during
-removal.
+Commit c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable
+and post-disable") changed the call sequence to the CRTC enable/disable
+and bridge pre_enable/post_disable methods, so those bridge methods are
+now called when CRTC is not yet enabled.
 
-Fixes: d678be1dc1ec ("dpaa2-eth: add XDP_REDIRECT support")
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20250626133003.80136-1-wangfushuai@baidu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This causes a lockup observed on Samsung Peach-Pit/Pi Chromebooks. The
+source of this lockup is a call to fimd_dp_clock_enable() function, when
+FIMD device is not yet runtime resumed. It worked before the mentioned
+commit only because the CRTC implemented by the FIMD driver was always
+enabled what guaranteed the FIMD device to be runtime resumed.
+
+This patch adds runtime PM guards to the fimd_dp_clock_enable() function
+to enable its proper operation also when the CRTC implemented by FIMD is
+not yet enabled.
+
+Fixes: 196e059a8a6a ("drm/exynos: convert clock_enable crtc callback to pipeline clock")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/dpaa2/dpaa2-eth.c  | 26 +++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index 40e8818295951..d3c36a6f84b01 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -3928,6 +3928,7 @@ static int dpaa2_eth_setup_rx_flow(struct dpaa2_eth_priv *priv,
- 					 MEM_TYPE_PAGE_ORDER0, NULL);
- 	if (err) {
- 		dev_err(dev, "xdp_rxq_info_reg_mem_model failed\n");
-+		xdp_rxq_info_unreg(&fq->channel->xdp_rxq);
- 		return err;
- 	}
- 
-@@ -4421,17 +4422,25 @@ static int dpaa2_eth_bind_dpni(struct dpaa2_eth_priv *priv)
- 			return -EINVAL;
- 		}
- 		if (err)
--			return err;
-+			goto out;
- 	}
- 
- 	err = dpni_get_qdid(priv->mc_io, 0, priv->mc_token,
- 			    DPNI_QUEUE_TX, &priv->tx_qdid);
- 	if (err) {
- 		dev_err(dev, "dpni_get_qdid() failed\n");
--		return err;
-+		goto out;
- 	}
- 
- 	return 0;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index 5bdc246f5fad0..341e95269836e 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -187,6 +187,7 @@ struct fimd_context {
+ 	u32				i80ifcon;
+ 	bool				i80_if;
+ 	bool				suspended;
++	bool				dp_clk_enabled;
+ 	wait_queue_head_t		wait_vsync_queue;
+ 	atomic_t			wait_vsync_event;
+ 	atomic_t			win_updated;
+@@ -1047,7 +1048,18 @@ static void fimd_dp_clock_enable(struct exynos_drm_clk *clk, bool enable)
+ 	struct fimd_context *ctx = container_of(clk, struct fimd_context,
+ 						dp_clk);
+ 	u32 val = enable ? DP_MIE_CLK_DP_ENABLE : DP_MIE_CLK_DISABLE;
 +
-+out:
-+	while (i--) {
-+		if (priv->fq[i].type == DPAA2_RX_FQ &&
-+		    xdp_rxq_info_is_reg(&priv->fq[i].channel->xdp_rxq))
-+			xdp_rxq_info_unreg(&priv->fq[i].channel->xdp_rxq);
-+	}
-+	return err;
++	if (enable == ctx->dp_clk_enabled)
++		return;
++
++	if (enable)
++		pm_runtime_resume_and_get(ctx->dev);
++
++	ctx->dp_clk_enabled = enable;
+ 	writel(val, ctx->regs + DP_MIE_CLKCON);
++
++	if (!enable)
++		pm_runtime_put(ctx->dev);
  }
  
- /* Allocate rings for storing incoming frame descriptors */
-@@ -4813,6 +4822,17 @@ static void dpaa2_eth_del_ch_napi(struct dpaa2_eth_priv *priv)
- 	}
- }
- 
-+static void dpaa2_eth_free_rx_xdp_rxq(struct dpaa2_eth_priv *priv)
-+{
-+	int i;
-+
-+	for (i = 0; i < priv->num_fqs; i++) {
-+		if (priv->fq[i].type == DPAA2_RX_FQ &&
-+		    xdp_rxq_info_is_reg(&priv->fq[i].channel->xdp_rxq))
-+			xdp_rxq_info_unreg(&priv->fq[i].channel->xdp_rxq);
-+	}
-+}
-+
- static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
- {
- 	struct device *dev;
-@@ -5016,6 +5036,7 @@ static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
- 	free_percpu(priv->percpu_stats);
- err_alloc_percpu_stats:
- 	dpaa2_eth_del_ch_napi(priv);
-+	dpaa2_eth_free_rx_xdp_rxq(priv);
- err_bind:
- 	dpaa2_eth_free_dpbps(priv);
- err_dpbp_setup:
-@@ -5068,6 +5089,7 @@ static void dpaa2_eth_remove(struct fsl_mc_device *ls_dev)
- 	free_percpu(priv->percpu_extras);
- 
- 	dpaa2_eth_del_ch_napi(priv);
-+	dpaa2_eth_free_rx_xdp_rxq(priv);
- 	dpaa2_eth_free_dpbps(priv);
- 	dpaa2_eth_free_dpio(priv);
- 	dpaa2_eth_free_dpni(priv);
+ static const struct exynos_drm_crtc_ops fimd_crtc_ops = {
 -- 
 2.39.5
 
