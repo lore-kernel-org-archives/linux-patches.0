@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308191DF74F;
-	Tue,  8 Jul 2025 16:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D4F9E8;
+	Tue,  8 Jul 2025 16:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992860; cv=none; b=uqck7hoZDjHavmSMFWFDbHCehW9tlmUN5/VlrkUTi47UquxiiRHsYvgx9UZ9nb+WXGutTXF7XoMi33h1peoBXQL7fu6sYIHQjdUa3QM+qkeixJaLCxxYvw8MljU0EFlCzPGf9V28OFeK06VqM+BYcOmDJS3F5AmHaxz6LJdY8fU=
+	t=1751992863; cv=none; b=Byvc+afMCGgaK7Y1Hhco9J/2+LeuytZP2pOPye+WynzJ47zWGjsAeO4GwkWu4ESY2/WoDMLlHXiRY8YHVwD1hLJ5ks3uaxFvEqqaI/uj6NoyzM79t2rEaTUqweEy1NrSgc6BduJFgbxRgs8qzfxVhon5VVxlMMJN1csVQbM7pMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992860; c=relaxed/simple;
-	bh=O2otyvuhvZ/oJ0VR7DftpWN+qXWESMKkNAAtvvDSLGM=;
+	s=arc-20240116; t=1751992863; c=relaxed/simple;
+	bh=WMIIGcE1tpQW8o5cSLFlT+4qCveyIkUnXEF5XlY9uwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i0/nTooo+eB15SLtk0uuvLQn+Bse1HBlFGCi5ChOV+qw70eRfIya/6OFFrrd6qgT3CQhfZhTS8t6FqRrFZRqaEnxvLDgSzwOy+F6VYh4pSzLy9Hml1fQwIK1iPalO+w1qT8wi/Vcmjd592Cl6YQLbjFQ7v5LPAEcVW539gQTtGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHR4orSU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fKGcmzvOV1qyPoA0BDZ25tdzkD6wv/vcqT3j2vamop1bAAGDY+mstKznkj/Y8rNliLhkI5FRiJlBTtOCZDuwwUg4XKnFCD0r4Jr28yUv33OBYmfRK6hCEf7dac8ivp65dimlUpChBMcAnKHdKvvQ1BX+bb/zg3iUST9vVmxLmY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kysFVVAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHR4orSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B496BC4CEED;
-	Tue,  8 Jul 2025 16:40:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kysFVVAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850FEC4CEED;
+	Tue,  8 Jul 2025 16:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992860;
-	bh=O2otyvuhvZ/oJ0VR7DftpWN+qXWESMKkNAAtvvDSLGM=;
+	s=korg; t=1751992862;
+	bh=WMIIGcE1tpQW8o5cSLFlT+4qCveyIkUnXEF5XlY9uwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHR4orSU0hoFt8UCiFXptyCDD9pUupEKYp1oPMM9QN2TaQgAlH46oCVCJKLuHSDGb
-	 0ZsXhbJrtX/lM88gf/hadISEPyXs/73I3sdl4lZrr1o0Z6l/OCqRSRARWlCTCEzd+F
-	 5iM5wt2aaKcKauHgmuLMYnldtrS6Y7osr6RcHa+E=
+	b=kysFVVAqQJov7GoeeI+afU1fgZmFtvGgucuQA02XmE/Y66GajQx+BGLw8NJDWtcPA
+	 xteJw7yvdwzQ64DI7Qa1XC6QzvU3x7zNrhQnsTwyOb4CSbG5k0ZzWYxlhqvVxK62tR
+	 oXsNvfnYAyhIoa2BSMIk6LDUeUC6Oqit6WSfVn9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/232] gfs2: Add GLF_PENDING_REPLY flag
-Date: Tue,  8 Jul 2025 18:21:42 +0200
-Message-ID: <20250708162244.214771958@linuxfoundation.org>
+Subject: [PATCH 6.12 107/232] gfs2: Replace GIF_DEFER_DELETE with GLF_DEFER_DELETE
+Date: Tue,  8 Jul 2025 18:21:43 +0200
+Message-ID: <20250708162244.239701983@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,84 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 8bbfde0875590b71f012bd8b0c9cb988c9a873b9 ]
+[ Upstream commit 3774f53d7f0b30a996eab4a1264611489b48f14c ]
 
-Introduce a new GLF_PENDING_REPLY flag to indicate that a reply from DLM
-is expected.  Include that flag in glock dumps to show more clearly
-what's going on.  (When the GLF_PENDING_REPLY flag is set, the GLF_LOCK
-flag will also be set but the GLF_LOCK flag alone isn't sufficient to
-tell that we are waiting for a DLM reply.)
+Having this flag attached to the iopen glock instead of the inode is
+much simpler; it eliminates a protential weird race in gfs2_try_evict().
 
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Stable-dep-of: 2c63986dd35f ("gfs2: deallocate inodes in gfs2_create_inode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c      | 5 +++++
- fs/gfs2/incore.h     | 1 +
- fs/gfs2/trace_gfs2.h | 1 +
- 3 files changed, 7 insertions(+)
+ fs/gfs2/glock.c      | 6 ++++--
+ fs/gfs2/incore.h     | 2 +-
+ fs/gfs2/super.c      | 3 ++-
+ fs/gfs2/trace_gfs2.h | 3 ++-
+ 4 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 3c70c383b9bdd..ec043aa71de8c 100644
+index ec043aa71de8c..161fc76ed5b0e 100644
 --- a/fs/gfs2/glock.c
 +++ b/fs/gfs2/glock.c
-@@ -807,6 +807,7 @@ __acquires(&gl->gl_lockref.lock)
- 	}
- 
- 	if (ls->ls_ops->lm_lock) {
-+		set_bit(GLF_PENDING_REPLY, &gl->gl_flags);
- 		spin_unlock(&gl->gl_lockref.lock);
- 		ret = ls->ls_ops->lm_lock(gl, target, lck_flags);
- 		spin_lock(&gl->gl_lockref.lock);
-@@ -825,6 +826,7 @@ __acquires(&gl->gl_lockref.lock)
- 			/* The operation will be completed asynchronously. */
- 			return;
+@@ -994,15 +994,15 @@ static bool gfs2_try_evict(struct gfs2_glock *gl)
  		}
-+		clear_bit(GLF_PENDING_REPLY, &gl->gl_flags);
  	}
+ 	if (ip) {
+-		set_bit(GIF_DEFER_DELETE, &ip->i_flags);
++		set_bit(GLF_DEFER_DELETE, &gl->gl_flags);
+ 		d_prune_aliases(&ip->i_inode);
+ 		iput(&ip->i_inode);
++		clear_bit(GLF_DEFER_DELETE, &gl->gl_flags);
  
- 	/* Complete the operation now. */
-@@ -1960,6 +1962,7 @@ void gfs2_glock_complete(struct gfs2_glock *gl, int ret)
- 	struct lm_lockstruct *ls = &gl->gl_name.ln_sbd->sd_lockstruct;
- 
- 	spin_lock(&gl->gl_lockref.lock);
-+	clear_bit(GLF_PENDING_REPLY, &gl->gl_flags);
- 	gl->gl_reply = ret;
- 
- 	if (unlikely(test_bit(DFL_BLOCK_LOCKS, &ls->ls_recover_flags))) {
-@@ -2360,6 +2363,8 @@ static const char *gflags2str(char *buf, const struct gfs2_glock *gl)
- 		*p++ = 'f';
- 	if (test_bit(GLF_INVALIDATE_IN_PROGRESS, gflags))
- 		*p++ = 'i';
-+	if (test_bit(GLF_PENDING_REPLY, gflags))
-+		*p++ = 'R';
- 	if (test_bit(GLF_HAVE_REPLY, gflags))
- 		*p++ = 'r';
- 	if (test_bit(GLF_INITIAL, gflags))
+ 		/* If the inode was evicted, gl->gl_object will now be NULL. */
+ 		spin_lock(&gl->gl_lockref.lock);
+ 		ip = gl->gl_object;
+ 		if (ip) {
+-			clear_bit(GIF_DEFER_DELETE, &ip->i_flags);
+ 			if (!igrab(&ip->i_inode))
+ 				ip = NULL;
+ 		}
+@@ -2389,6 +2389,8 @@ static const char *gflags2str(char *buf, const struct gfs2_glock *gl)
+ 		*p++ = 'e';
+ 	if (test_bit(GLF_VERIFY_DELETE, gflags))
+ 		*p++ = 'E';
++	if (test_bit(GLF_DEFER_DELETE, gflags))
++		*p++ = 's';
+ 	*p = 0;
+ 	return buf;
+ }
 diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
-index 98a41c631ce10..f6aee2c9b9118 100644
+index f6aee2c9b9118..142f61228d15e 100644
 --- a/fs/gfs2/incore.h
 +++ b/fs/gfs2/incore.h
-@@ -330,6 +330,7 @@ enum {
- 	GLF_UNLOCKED			= 16, /* Wait for glock to be unlocked */
+@@ -331,6 +331,7 @@ enum {
  	GLF_TRY_TO_EVICT		= 17, /* iopen glocks only */
  	GLF_VERIFY_DELETE		= 18, /* iopen glocks only */
-+	GLF_PENDING_REPLY		= 19,
+ 	GLF_PENDING_REPLY		= 19,
++	GLF_DEFER_DELETE		= 20, /* iopen glocks only */
  };
  
  struct gfs2_glock {
+@@ -377,7 +378,6 @@ enum {
+ 	GIF_SW_PAGED		= 3,
+ 	GIF_FREE_VFS_INODE      = 5,
+ 	GIF_GLOP_PENDING	= 6,
+-	GIF_DEFER_DELETE	= 7,
+ };
+ 
+ struct gfs2_inode {
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 6a0c0f3780b4c..d982db129b2b4 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1326,7 +1326,8 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
+ 	if (unlikely(test_bit(GIF_ALLOC_FAILED, &ip->i_flags)))
+ 		goto should_delete;
+ 
+-	if (test_bit(GIF_DEFER_DELETE, &ip->i_flags))
++	if (gfs2_holder_initialized(&ip->i_iopen_gh) &&
++	    test_bit(GLF_DEFER_DELETE, &ip->i_iopen_gh.gh_gl->gl_flags))
+ 		return EVICT_SHOULD_DEFER_DELETE;
+ 
+ 	/* Deletes should never happen under memory pressure anymore.  */
 diff --git a/fs/gfs2/trace_gfs2.h b/fs/gfs2/trace_gfs2.h
-index ac8ca485c46fe..09121c2c198ba 100644
+index 09121c2c198ba..43de603ab347e 100644
 --- a/fs/gfs2/trace_gfs2.h
 +++ b/fs/gfs2/trace_gfs2.h
-@@ -53,6 +53,7 @@
- 	{(1UL << GLF_DIRTY),			"y" },		\
- 	{(1UL << GLF_LFLUSH),			"f" },		\
- 	{(1UL << GLF_INVALIDATE_IN_PROGRESS),	"i" },		\
-+	{(1UL << GLF_PENDING_REPLY),		"R" },		\
- 	{(1UL << GLF_HAVE_REPLY),		"r" },		\
- 	{(1UL << GLF_INITIAL),			"a" },		\
- 	{(1UL << GLF_HAVE_FROZEN_REPLY),	"F" },		\
+@@ -64,7 +64,8 @@
+ 	{(1UL << GLF_INSTANTIATE_NEEDED),	"n" },		\
+ 	{(1UL << GLF_INSTANTIATE_IN_PROG),	"N" },		\
+ 	{(1UL << GLF_TRY_TO_EVICT),		"e" },		\
+-	{(1UL << GLF_VERIFY_DELETE),		"E" })
++	{(1UL << GLF_VERIFY_DELETE),		"E" },		\
++	{(1UL << GLF_DEFER_DELETE),		"s" })
+ 
+ #ifndef NUMPTY
+ #define NUMPTY
 -- 
 2.39.5
 
