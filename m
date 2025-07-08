@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3D32DECC4;
-	Tue,  8 Jul 2025 16:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4F22DECC4;
+	Tue,  8 Jul 2025 16:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992380; cv=none; b=QXRaV1huPIFbq+vj84Yn6Yy9l03AZmAkcBYXHX/4RsAHYIrKsnlEd/wUIV/+0Ljn1Rlkcz7WQPtVKAxkSRAozV63kDtifYnc2iwNpNM57xt1lbnDfXv8AygKwgOu8GgwAEQWBzfRnxHNRSG23boDkCm6HRNVtRA5Pe81Z43tJIY=
+	t=1751992383; cv=none; b=nF+CwlTdntcJo6oVtic3peZHXxXNE26R4+ctT6XuvN5Ecd5Q3RkadiXG0TjCnTciC0KvWQ53IX4ooX7X6zPj9QglhFuj6HW//poFPqV/9VpvAGXYP5bEbRnxkuRKZyPGPlfNzFzHtnMHOUV88T/DPuOEIYEDviwzD3ec/P5H864=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992380; c=relaxed/simple;
-	bh=ch19WUcZuo44fczuDgjJcHEF3eF3jE1zSZFUqX8j+T0=;
+	s=arc-20240116; t=1751992383; c=relaxed/simple;
+	bh=0ZKNzZIYyKGZePGBGQf0N87ndJFDhrdcV9PdnT6VD7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAbCvDlPx0WQz+WxXB7Sq1NlijNztTEkCmrt7gPQrBK0xpwCReyG0TV62odp614tl71K+fuq45KiVYMBFxLkECmQTp5kmHQKHdPM+QPM9ay6Erjfd5PSrXXj+SfdfEHhpKCITschSFw6lZFPR5uJ2KPhvzP6XgZ74g4aqWENoKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0LtzbIp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kRzYfEaUfU1F19YqJWE5LIZZimZwW5i6myVoJp9o4ZJx+WIcWkdVuCgS17RiS6/49x6ElV+/5VeDjZ9yu56oyp71cFnZhiawNl80nS83rOQU++r83USb/2Qnwb2WacxuswEJs5Gr03JkLCnuG1Ld9H5AYzyOHnFFOyKk3fYUq3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBAoSpig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0LtzbIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F35EC4CEED;
-	Tue,  8 Jul 2025 16:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBAoSpig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C009CC4CEED;
+	Tue,  8 Jul 2025 16:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992380;
-	bh=ch19WUcZuo44fczuDgjJcHEF3eF3jE1zSZFUqX8j+T0=;
+	s=korg; t=1751992383;
+	bh=0ZKNzZIYyKGZePGBGQf0N87ndJFDhrdcV9PdnT6VD7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0LtzbIpFsJF3Pa9op0dNlOHaQTNB8/fGF57yJed1ySzthrs2p0OwMbjW1jsMoSvb
-	 N2WdPjBiK5ueC0vPniJqqVI3mVNKWDlyJ2W8P99/fYjnqxE/rMlrOE1kyeR0UaQHAr
-	 Txpq75TAv+I51l/o8W13UwriWJedMpyWZGXBa9Eg=
+	b=dBAoSpigHjKU/FDoiD3rMqaKjH5Uzqc/sr59jkNw0QE8rP1z7fgY38kqcYAQGZrbk
+	 Rdn7QR+gdNXqNG1bDFDCkAgmtzSKfW51rQAtOteMLW9B66bExfemtdHBQMDnXsPdDA
+	 25mWembzotYbCfHPgS/Bry8vjBzbh6LJrBxcilzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Rzeznik <arzeznik@cloudflare.com>,
-	Yan Zhai <yan@cloudflare.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Andy Gospodarek <gospo@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/132] bnxt: properly flush XDP redirect lists
-Date: Tue,  8 Jul 2025 18:23:02 +0200
-Message-ID: <20250708162232.723927628@linuxfoundation.org>
+Subject: [PATCH 6.6 072/132] x86/traps: Initialize DR6 by writing its architectural reset value
+Date: Tue,  8 Jul 2025 18:23:03 +0200
+Message-ID: <20250708162232.751080617@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -55,140 +54,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-[ Upstream commit 9caca6ac0e26cd20efd490d8b3b2ffb1c7c00f6f ]
+[ Upstream commit 5f465c148c61e876b6d6eacd8e8e365f2d47758f ]
 
-We encountered following crash when testing a XDP_REDIRECT feature
-in production:
+Initialize DR6 by writing its architectural reset value to avoid
+incorrectly zeroing DR6 to clear DR6.BLD at boot time, which leads
+to a false bus lock detected warning.
 
-[56251.579676] list_add corruption. next->prev should be prev (ffff93120dd40f30), but was ffffb301ef3a6740. (next=ffff93120dd
-40f30).
-[56251.601413] ------------[ cut here ]------------
-[56251.611357] kernel BUG at lib/list_debug.c:29!
-[56251.621082] Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[56251.632073] CPU: 111 UID: 0 PID: 0 Comm: swapper/111 Kdump: loaded Tainted: P           O       6.12.33-cloudflare-2025.6.
-3 #1
-[56251.653155] Tainted: [P]=PROPRIETARY_MODULE, [O]=OOT_MODULE
-[56251.663877] Hardware name: MiTAC GC68B-B8032-G11P6-GPU/S8032GM-HE-CFR, BIOS V7.020.B10-sig 01/22/2025
-[56251.682626] RIP: 0010:__list_add_valid_or_report+0x4b/0xa0
-[56251.693203] Code: 0e 48 c7 c7 68 e7 d9 97 e8 42 16 fe ff 0f 0b 48 8b 52 08 48 39 c2 74 14 48 89 f1 48 c7 c7 90 e7 d9 97 48
- 89 c6 e8 25 16 fe ff <0f> 0b 4c 8b 02 49 39 f0 74 14 48 89 d1 48 c7 c7 e8 e7 d9 97 4c 89
-[56251.725811] RSP: 0018:ffff93120dd40b80 EFLAGS: 00010246
-[56251.736094] RAX: 0000000000000075 RBX: ffffb301e6bba9d8 RCX: 0000000000000000
-[56251.748260] RDX: 0000000000000000 RSI: ffff9149afda0b80 RDI: ffff9149afda0b80
-[56251.760349] RBP: ffff9131e49c8000 R08: 0000000000000000 R09: ffff93120dd40a18
-[56251.772382] R10: ffff9159cf2ce1a8 R11: 0000000000000003 R12: ffff911a80850000
-[56251.784364] R13: ffff93120fbc7000 R14: 0000000000000010 R15: ffff9139e7510e40
-[56251.796278] FS:  0000000000000000(0000) GS:ffff9149afd80000(0000) knlGS:0000000000000000
-[56251.809133] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[56251.819561] CR2: 00007f5e85e6f300 CR3: 00000038b85e2006 CR4: 0000000000770ef0
-[56251.831365] PKRU: 55555554
-[56251.838653] Call Trace:
-[56251.845560]  <IRQ>
-[56251.851943]  cpu_map_enqueue.cold+0x5/0xa
-[56251.860243]  xdp_do_redirect+0x2d9/0x480
-[56251.868388]  bnxt_rx_xdp+0x1d8/0x4c0 [bnxt_en]
-[56251.877028]  bnxt_rx_pkt+0x5f7/0x19b0 [bnxt_en]
-[56251.885665]  ? cpu_max_write+0x1e/0x100
-[56251.893510]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.902276]  __bnxt_poll_work+0x190/0x340 [bnxt_en]
-[56251.911058]  bnxt_poll+0xab/0x1b0 [bnxt_en]
-[56251.919041]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.927568]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.935958]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.944250]  __napi_poll+0x2b/0x160
-[56251.951155]  bpf_trampoline_6442548651+0x79/0x123
-[56251.959262]  __napi_poll+0x5/0x160
-[56251.966037]  net_rx_action+0x3d2/0x880
-[56251.973133]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.981265]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56251.989262]  ? __hrtimer_run_queues+0x162/0x2a0
-[56251.996967]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56252.004875]  ? srso_alias_return_thunk+0x5/0xfbef5
-[56252.012673]  ? bnxt_msix+0x62/0x70 [bnxt_en]
-[56252.019903]  handle_softirqs+0xcf/0x270
-[56252.026650]  irq_exit_rcu+0x67/0x90
-[56252.032933]  common_interrupt+0x85/0xa0
-[56252.039498]  </IRQ>
-[56252.044246]  <TASK>
-[56252.048935]  asm_common_interrupt+0x26/0x40
-[56252.055727] RIP: 0010:cpuidle_enter_state+0xb8/0x420
-[56252.063305] Code: dc 01 00 00 e8 f9 79 3b ff e8 64 f7 ff ff 49 89 c5 0f 1f 44 00 00 31 ff e8 a5 32 3a ff 45 84 ff 0f 85 ae
- 01 00 00 fb 45 85 f6 <0f> 88 88 01 00 00 48 8b 04 24 49 63 ce 4c 89 ea 48 6b f1 68 48 29
-[56252.088911] RSP: 0018:ffff93120c97fe98 EFLAGS: 00000202
-[56252.096912] RAX: ffff9149afd80000 RBX: ffff9141d3a72800 RCX: 0000000000000000
-[56252.106844] RDX: 00003329176c6b98 RSI: ffffffe36db3fdc7 RDI: 0000000000000000
-[56252.116733] RBP: 0000000000000002 R08: 0000000000000002 R09: 000000000000004e
-[56252.126652] R10: ffff9149afdb30c4 R11: 071c71c71c71c71c R12: ffffffff985ff860
-[56252.136637] R13: 00003329176c6b98 R14: 0000000000000002 R15: 0000000000000000
-[56252.146667]  ? cpuidle_enter_state+0xab/0x420
-[56252.153909]  cpuidle_enter+0x2d/0x40
-[56252.160360]  do_idle+0x176/0x1c0
-[56252.166456]  cpu_startup_entry+0x29/0x30
-[56252.173248]  start_secondary+0xf7/0x100
-[56252.179941]  common_startup_64+0x13e/0x141
-[56252.186886]  </TASK>
+The Intel SDM says:
 
->From the crash dump, we found that the cpu_map_flush_list inside
-redirect info is partially corrupted: its list_head->next points to
-itself, but list_head->prev points to a valid list of unflushed bq
-entries.
+  1) Certain debug exceptions may clear bits 0-3 of DR6.
 
-This turned out to be a result of missed XDP flush on redirect lists. By
-digging in the actual source code, we found that
-commit 7f0a168b0441 ("bnxt_en: Add completion ring pointer in TX and RX
-ring structures") incorrectly overwrites the event mask for XDP_REDIRECT
-in bnxt_rx_xdp. We can stably reproduce this crash by returning XDP_TX
-and XDP_REDIRECT randomly for incoming packets in a naive XDP program.
-Properly propagate the XDP_REDIRECT events back fixes the crash.
+  2) BLD induced #DB clears DR6.BLD and any other debug exception
+     doesn't modify DR6.BLD.
 
-Fixes: a7559bc8c17c ("bnxt: support transmit and free of aggregation buffers")
-Tested-by: Andrew Rzeznik <arzeznik@cloudflare.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
-Link: https://patch.msgid.link/aFl7jpCNzscumuN2@debian.debian
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  3) RTM induced #DB clears DR6.RTM and any other debug exception
+     sets DR6.RTM.
+
+  To avoid confusion in identifying debug exceptions, debug handlers
+  should set DR6.BLD and DR6.RTM, and clear other DR6 bits before
+  returning.
+
+The DR6 architectural reset value 0xFFFF0FF0, already defined as
+macro DR6_RESERVED, satisfies these requirements, so just use it to
+reinitialize DR6 whenever needed.
+
+Since clear_all_debug_regs() no longer zeros all debug registers,
+rename it to initialize_debug_regs() to better reflect its current
+behavior.
+
+Since debug_read_clear_dr6() no longer clears DR6, rename it to
+debug_read_reset_dr6() to better reflect its current behavior.
+
+Fixes: ebb1064e7c2e9 ("x86/traps: Handle #DB for bus lock")
+Reported-by: Sohil Mehta <sohil.mehta@intel.com>
+Suggested-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Link: https://lore.kernel.org/lkml/06e68373-a92b-472e-8fd9-ba548119770c@intel.com/
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250620231504.2676902-2-xin%40zytor.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/include/uapi/asm/debugreg.h | 21 +++++++++++++++++-
+ arch/x86/kernel/cpu/common.c         | 21 +++++++++---------
+ arch/x86/kernel/traps.c              | 32 +++++++++++++++++-----------
+ 3 files changed, 50 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 6bf4a21853858..8e4e8291d8c66 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -2491,6 +2491,7 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+diff --git a/arch/x86/include/uapi/asm/debugreg.h b/arch/x86/include/uapi/asm/debugreg.h
+index 0007ba077c0c2..41da492dfb01f 100644
+--- a/arch/x86/include/uapi/asm/debugreg.h
++++ b/arch/x86/include/uapi/asm/debugreg.h
+@@ -15,7 +15,26 @@
+    which debugging register was responsible for the trap.  The other bits
+    are either reserved or not of interest to us. */
+ 
+-/* Define reserved bits in DR6 which are always set to 1 */
++/*
++ * Define bits in DR6 which are set to 1 by default.
++ *
++ * This is also the DR6 architectural value following Power-up, Reset or INIT.
++ *
++ * Note, with the introduction of Bus Lock Detection (BLD) and Restricted
++ * Transactional Memory (RTM), the DR6 register has been modified:
++ *
++ * 1) BLD flag (bit 11) is no longer reserved to 1 if the CPU supports
++ *    Bus Lock Detection.  The assertion of a bus lock could clear it.
++ *
++ * 2) RTM flag (bit 16) is no longer reserved to 1 if the CPU supports
++ *    restricted transactional memory.  #DB occurred inside an RTM region
++ *    could clear it.
++ *
++ * Apparently, DR6.BLD and DR6.RTM are active low bits.
++ *
++ * As a result, DR6_RESERVED is an incorrect name now, but it is kept for
++ * compatibility.
++ */
+ #define DR6_RESERVED	(0xFFFF0FF0)
+ 
+ #define DR_TRAP0	(0x1)		/* db0 */
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index b6e43dad577a3..3390814de0a54 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2218,17 +2218,16 @@ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard);
+ /*
+  * Clear all 6 debug registers:
+  */
+-static void clear_all_debug_regs(void)
++static void initialize_debug_regs(void)
  {
- 	struct bnxt_napi *bnapi = cpr->bnapi;
- 	u32 raw_cons = cpr->cp_raw_cons;
-+	bool flush_xdp = false;
- 	u32 cons;
- 	int tx_pkts = 0;
- 	int rx_pkts = 0;
-@@ -2528,6 +2529,8 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			else
- 				rc = bnxt_force_rx_discard(bp, cpr, &raw_cons,
- 							   &event);
-+			if (event & BNXT_REDIRECT_EVENT)
-+				flush_xdp = true;
- 			if (likely(rc >= 0))
- 				rx_pkts += rc;
- 			/* Increment rx_pkts when rc is -ENOMEM to count towards
-@@ -2555,8 +2558,10 @@ static int __bnxt_poll_work(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 		}
- 	}
+-	int i;
+-
+-	for (i = 0; i < 8; i++) {
+-		/* Ignore db4, db5 */
+-		if ((i == 4) || (i == 5))
+-			continue;
+-
+-		set_debugreg(0, i);
+-	}
++	/* Control register first -- to make sure everything is disabled. */
++	set_debugreg(0, 7);
++	set_debugreg(DR6_RESERVED, 6);
++	/* dr5 and dr4 don't exist */
++	set_debugreg(0, 3);
++	set_debugreg(0, 2);
++	set_debugreg(0, 1);
++	set_debugreg(0, 0);
+ }
  
--	if (event & BNXT_REDIRECT_EVENT)
-+	if (flush_xdp) {
- 		xdp_do_flush();
-+		event &= ~BNXT_REDIRECT_EVENT;
-+	}
+ #ifdef CONFIG_KGDB
+@@ -2371,7 +2370,7 @@ void cpu_init(void)
  
- 	if (event & BNXT_TX_EVENT) {
- 		struct bnxt_tx_ring_info *txr = bnapi->tx_ring;
+ 	load_mm_ldt(&init_mm);
+ 
+-	clear_all_debug_regs();
++	initialize_debug_regs();
+ 	dbg_restore_debug_regs();
+ 
+ 	doublefault_init_cpu_tss();
+diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
+index 8718d58dd0fbe..a52db362a65d1 100644
+--- a/arch/x86/kernel/traps.c
++++ b/arch/x86/kernel/traps.c
+@@ -975,24 +975,32 @@ static bool is_sysenter_singlestep(struct pt_regs *regs)
+ #endif
+ }
+ 
+-static __always_inline unsigned long debug_read_clear_dr6(void)
++static __always_inline unsigned long debug_read_reset_dr6(void)
+ {
+ 	unsigned long dr6;
+ 
++	get_debugreg(dr6, 6);
++	dr6 ^= DR6_RESERVED; /* Flip to positive polarity */
++
+ 	/*
+ 	 * The Intel SDM says:
+ 	 *
+-	 *   Certain debug exceptions may clear bits 0-3. The remaining
+-	 *   contents of the DR6 register are never cleared by the
+-	 *   processor. To avoid confusion in identifying debug
+-	 *   exceptions, debug handlers should clear the register before
+-	 *   returning to the interrupted task.
++	 *   Certain debug exceptions may clear bits 0-3 of DR6.
++	 *
++	 *   BLD induced #DB clears DR6.BLD and any other debug
++	 *   exception doesn't modify DR6.BLD.
+ 	 *
+-	 * Keep it simple: clear DR6 immediately.
++	 *   RTM induced #DB clears DR6.RTM and any other debug
++	 *   exception sets DR6.RTM.
++	 *
++	 *   To avoid confusion in identifying debug exceptions,
++	 *   debug handlers should set DR6.BLD and DR6.RTM, and
++	 *   clear other DR6 bits before returning.
++	 *
++	 * Keep it simple: write DR6 with its architectural reset
++	 * value 0xFFFF0FF0, defined as DR6_RESERVED, immediately.
+ 	 */
+-	get_debugreg(dr6, 6);
+ 	set_debugreg(DR6_RESERVED, 6);
+-	dr6 ^= DR6_RESERVED; /* Flip to positive polarity */
+ 
+ 	return dr6;
+ }
+@@ -1188,19 +1196,19 @@ static __always_inline void exc_debug_user(struct pt_regs *regs,
+ /* IST stack entry */
+ DEFINE_IDTENTRY_DEBUG(exc_debug)
+ {
+-	exc_debug_kernel(regs, debug_read_clear_dr6());
++	exc_debug_kernel(regs, debug_read_reset_dr6());
+ }
+ 
+ /* User entry, runs on regular task stack */
+ DEFINE_IDTENTRY_DEBUG_USER(exc_debug)
+ {
+-	exc_debug_user(regs, debug_read_clear_dr6());
++	exc_debug_user(regs, debug_read_reset_dr6());
+ }
+ #else
+ /* 32 bit does not have separate entry points. */
+ DEFINE_IDTENTRY_RAW(exc_debug)
+ {
+-	unsigned long dr6 = debug_read_clear_dr6();
++	unsigned long dr6 = debug_read_reset_dr6();
+ 
+ 	if (user_mode(regs))
+ 		exc_debug_user(regs, dr6);
 -- 
 2.39.5
 
