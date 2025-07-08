@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735012DEA94;
-	Tue,  8 Jul 2025 16:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575E7225414;
+	Tue,  8 Jul 2025 16:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993478; cv=none; b=hMdYEQMx4F6D1GOuvftYyB+Nqo/k1cJiG6i59BWMDrUAeWExncL1VGHws5zAR+9ZDov9PasEYthRom56FDok/+M5FbjNM+EuoQ3BrtcAJPWausl24CG9g6BrlZ1GKxg6gXcEZE9FBIYZxhtZFVKwp5lof8yRVkj7G1vIQ/hl/fg=
+	t=1751993481; cv=none; b=ASHKjiQ0wHpHiWtRVcygPIHvt8Lw48FiTP6bZvhcPIBGAvw1oAPUSeXm/tirI9xSvqDvJU9bK+/RT1DoRGpYl0iuyN/4j/Rkcdygwism9ZWcWH17F99gT/xY9JzX7OhQFrl76W4GlsCbKfevpZ6+/E0G5WxBaReAVMMGXh5ZWdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993478; c=relaxed/simple;
-	bh=khkP0v3psbZuK9HilpyslOTlsLH+Cfk5xXplF8ewg9Y=;
+	s=arc-20240116; t=1751993481; c=relaxed/simple;
+	bh=oisnfmKZM5h6VopLWefA0kHWE3WEr390yVi2zB4sCek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJIpL3oUgBY217meDNmtUJSFZSJOgA60EjAf0k4glipQOovDU/rK8fJGqv7+u+kh9Wbnwl0hmbu1j9pnKTExB5WqA36eFNVR7ocWg1Hq1DSBhaHXWt56svtVQW4BYeVXJhs8ebcaPxHI+fF98B5PBr8f5GuLAJ5FgDTa7fVdBU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbwFobst; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EdLC7ucbBQhy1IW9F71tVHJTLSumJhQq84fC49S8zoqVnlAntLWDQ+mWFLeFMZdeE/XxZQ5FsMwzrvKHwSedL8XE3nsu0n5HrFHRCFykAi2Yl8HJzWtyk2Axmk7bEaBtM2qWbTYC9p3FVkDmQ4qQwVsoIPSLTJVwnhVwkhCJjH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1NG4kRK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbwFobst"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C33C4CEED;
-	Tue,  8 Jul 2025 16:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1NG4kRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3209C4CEED;
+	Tue,  8 Jul 2025 16:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993478;
-	bh=khkP0v3psbZuK9HilpyslOTlsLH+Cfk5xXplF8ewg9Y=;
+	s=korg; t=1751993481;
+	bh=oisnfmKZM5h6VopLWefA0kHWE3WEr390yVi2zB4sCek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbwFobstdPEnTghTdcKGotpNA3BPNjm8kNXhJSFhlRvyPU4BWabWSWCExSLM1BuOE
-	 h4TWSiI9RIeL4sTrAsDDNCGXGEB/F2a1IWl7pAL9SPsa7HB6jpQ2xOcVnYn1gGV7HK
-	 B3/phqTleGXR1IE7o+skY10PhjIm5sWoLHEDFwUY=
+	b=k1NG4kRK0xZWaYiLRNnzco4sDAjMGMhfkg9bWjSuNIoBfKoubPP7cGhEdiEyMYIEX
+	 GKWxcHfWQPtd33gupTZBeqDZeKNrxlddTf2JyVNAp42m7itBUgzvsAdEe7LUQ4oky2
+	 DzO1NbyxMEkPO0hpWN4jbEWWbLnck0e8z3cQ1SSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 088/178] net: usb: lan78xx: fix WARN in __netif_napi_del_locked on disconnect
-Date: Tue,  8 Jul 2025 18:22:05 +0200
-Message-ID: <20250708162238.972351382@linuxfoundation.org>
+Subject: [PATCH 6.15 071/178] ethernet: atl1: Add missing DMA mapping error checks and count errors
+Date: Tue,  8 Jul 2025 18:21:48 +0200
+Message-ID: <20250708162238.530680573@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -51,94 +51,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 6c7ffc9af7186ed79403a3ffee9a1e5199fc7450 ]
+[ Upstream commit d72411d20905180cdc452c553be17481b24463d2 ]
 
-Remove redundant netif_napi_del() call from disconnect path.
+The `dma_map_XXX()` functions can fail and must be checked using
+`dma_mapping_error()`.  This patch adds proper error handling for all
+DMA mapping calls.
 
-A WARN may be triggered in __netif_napi_del_locked() during USB device
-disconnect:
+In `atl1_alloc_rx_buffers()`, if DMA mapping fails, the buffer is
+deallocated and marked accordingly.
 
-  WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
+In `atl1_tx_map()`, previously mapped buffers are unmapped and the
+packet is dropped on failure.
 
-This happens because netif_napi_del() is called in the disconnect path while
-NAPI is still enabled. However, it is not necessary to call netif_napi_del()
-explicitly, since unregister_netdev() will handle NAPI teardown automatically
-and safely. Removing the redundant call avoids triggering the warning.
+If `atl1_xmit_frame()` drops the packet, increment the tx_error counter.
 
-Full trace:
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x000000c4. ret = -ENODEV
- lan78xx 1-1:1.0 enu1: Failed to set MAC down with error -ENODEV
- lan78xx 1-1:1.0 enu1: Link is Down
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x00000120. ret = -ENODEV
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
- Modules linked in: flexcan can_dev fuse
- CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.0-rc2-00624-ge926949dab03 #9 PREEMPT
- Hardware name: SKOV IMX8MP CPU revC - bd500 (DT)
- Workqueue: usb_hub_wq hub_event
- pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __netif_napi_del_locked+0x2b4/0x350
- lr : __netif_napi_del_locked+0x7c/0x350
- sp : ffffffc085b673c0
- x29: ffffffc085b673c0 x28: ffffff800b7f2000 x27: ffffff800b7f20d8
- x26: ffffff80110bcf58 x25: ffffff80110bd978 x24: 1ffffff0022179eb
- x23: ffffff80110bc000 x22: ffffff800b7f5000 x21: ffffff80110bc000
- x20: ffffff80110bcf38 x19: ffffff80110bcf28 x18: dfffffc000000000
- x17: ffffffc081578940 x16: ffffffc08284cee0 x15: 0000000000000028
- x14: 0000000000000006 x13: 0000000000040000 x12: ffffffb0022179e8
- x11: 1ffffff0022179e7 x10: ffffffb0022179e7 x9 : dfffffc000000000
- x8 : 0000004ffdde8619 x7 : ffffff80110bcf3f x6 : 0000000000000001
- x5 : ffffff80110bcf38 x4 : ffffff80110bcf38 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 1ffffff0022179e7 x0 : 0000000000000000
- Call trace:
-  __netif_napi_del_locked+0x2b4/0x350 (P)
-  lan78xx_disconnect+0xf4/0x360
-  usb_unbind_interface+0x158/0x718
-  device_remove+0x100/0x150
-  device_release_driver_internal+0x308/0x478
-  device_release_driver+0x1c/0x30
-  bus_remove_device+0x1a8/0x368
-  device_del+0x2e0/0x7b0
-  usb_disable_device+0x244/0x540
-  usb_disconnect+0x220/0x758
-  hub_event+0x105c/0x35e0
-  process_one_work+0x760/0x17b0
-  worker_thread+0x768/0xce8
-  kthread+0x3bc/0x690
-  ret_from_fork+0x10/0x20
- irq event stamp: 211604
- hardirqs last  enabled at (211603): [<ffffffc0828cc9ec>] _raw_spin_unlock_irqrestore+0x84/0x98
- hardirqs last disabled at (211604): [<ffffffc0828a9a84>] el1_dbg+0x24/0x80
- softirqs last  enabled at (211296): [<ffffffc080095f10>] handle_softirqs+0x820/0xbc8
- softirqs last disabled at (210993): [<ffffffc080010288>] __do_softirq+0x18/0x20
- ---[ end trace 0000000000000000 ]---
- lan78xx 1-1:1.0 enu1: failed to kill vid 0081/0
-
-Fixes: ec4c7e12396b ("lan78xx: Introduce NAPI polling support")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250627051346.276029-1-o.rempel@pengutronix.de
+Fixes: f3cc28c79760 ("Add Attansic L1 ethernet driver.")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250625141629.114984-2-fourier.thomas@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/atheros/atlx/atl1.c | 79 +++++++++++++++++-------
+ 1 file changed, 57 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index e4f1663b62047..5f014b8626853 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -4344,8 +4344,6 @@ static void lan78xx_disconnect(struct usb_interface *intf)
- 	if (!dev)
- 		return;
+diff --git a/drivers/net/ethernet/atheros/atlx/atl1.c b/drivers/net/ethernet/atheros/atlx/atl1.c
+index 38cd84b7677cf..86663aa0de17e 100644
+--- a/drivers/net/ethernet/atheros/atlx/atl1.c
++++ b/drivers/net/ethernet/atheros/atlx/atl1.c
+@@ -1861,14 +1861,21 @@ static u16 atl1_alloc_rx_buffers(struct atl1_adapter *adapter)
+ 			break;
+ 		}
  
--	netif_napi_del(&dev->napi);
--
- 	udev = interface_to_usbdev(intf);
- 	net = dev->net;
+-		buffer_info->alloced = 1;
+-		buffer_info->skb = skb;
+-		buffer_info->length = (u16) adapter->rx_buffer_len;
+ 		page = virt_to_page(skb->data);
+ 		offset = offset_in_page(skb->data);
+ 		buffer_info->dma = dma_map_page(&pdev->dev, page, offset,
+ 						adapter->rx_buffer_len,
+ 						DMA_FROM_DEVICE);
++		if (dma_mapping_error(&pdev->dev, buffer_info->dma)) {
++			kfree_skb(skb);
++			adapter->soft_stats.rx_dropped++;
++			break;
++		}
++
++		buffer_info->alloced = 1;
++		buffer_info->skb = skb;
++		buffer_info->length = (u16)adapter->rx_buffer_len;
++
+ 		rfd_desc->buffer_addr = cpu_to_le64(buffer_info->dma);
+ 		rfd_desc->buf_len = cpu_to_le16(adapter->rx_buffer_len);
+ 		rfd_desc->coalese = 0;
+@@ -2183,8 +2190,8 @@ static int atl1_tx_csum(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	return 0;
+ }
  
+-static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+-	struct tx_packet_desc *ptpd)
++static bool atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
++			struct tx_packet_desc *ptpd)
+ {
+ 	struct atl1_tpd_ring *tpd_ring = &adapter->tpd_ring;
+ 	struct atl1_buffer *buffer_info;
+@@ -2194,6 +2201,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	unsigned int nr_frags;
+ 	unsigned int f;
+ 	int retval;
++	u16 first_mapped;
+ 	u16 next_to_use;
+ 	u16 data_len;
+ 	u8 hdr_len;
+@@ -2201,6 +2209,7 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 	buf_len -= skb->data_len;
+ 	nr_frags = skb_shinfo(skb)->nr_frags;
+ 	next_to_use = atomic_read(&tpd_ring->next_to_use);
++	first_mapped = next_to_use;
+ 	buffer_info = &tpd_ring->buffer_info[next_to_use];
+ 	BUG_ON(buffer_info->skb);
+ 	/* put skb in last TPD */
+@@ -2216,6 +2225,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
+ 						offset, hdr_len,
+ 						DMA_TO_DEVICE);
++		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
++			goto dma_err;
+ 
+ 		if (++next_to_use == tpd_ring->count)
+ 			next_to_use = 0;
+@@ -2242,6 +2253,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 								page, offset,
+ 								buffer_info->length,
+ 								DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      buffer_info->dma))
++					goto dma_err;
+ 				if (++next_to_use == tpd_ring->count)
+ 					next_to_use = 0;
+ 			}
+@@ -2254,6 +2268,8 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 		buffer_info->dma = dma_map_page(&adapter->pdev->dev, page,
+ 						offset, buf_len,
+ 						DMA_TO_DEVICE);
++		if (dma_mapping_error(&adapter->pdev->dev, buffer_info->dma))
++			goto dma_err;
+ 		if (++next_to_use == tpd_ring->count)
+ 			next_to_use = 0;
+ 	}
+@@ -2277,6 +2293,9 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 			buffer_info->dma = skb_frag_dma_map(&adapter->pdev->dev,
+ 				frag, i * ATL1_MAX_TX_BUF_LEN,
+ 				buffer_info->length, DMA_TO_DEVICE);
++			if (dma_mapping_error(&adapter->pdev->dev,
++					      buffer_info->dma))
++				goto dma_err;
+ 
+ 			if (++next_to_use == tpd_ring->count)
+ 				next_to_use = 0;
+@@ -2285,6 +2304,22 @@ static void atl1_tx_map(struct atl1_adapter *adapter, struct sk_buff *skb,
+ 
+ 	/* last tpd's buffer-info */
+ 	buffer_info->skb = skb;
++
++	return true;
++
++ dma_err:
++	while (first_mapped != next_to_use) {
++		buffer_info = &tpd_ring->buffer_info[first_mapped];
++		dma_unmap_page(&adapter->pdev->dev,
++			       buffer_info->dma,
++			       buffer_info->length,
++			       DMA_TO_DEVICE);
++		buffer_info->dma = 0;
++
++		if (++first_mapped == tpd_ring->count)
++			first_mapped = 0;
++	}
++	return false;
+ }
+ 
+ static void atl1_tx_queue(struct atl1_adapter *adapter, u16 count,
+@@ -2355,10 +2390,8 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
+ 
+ 	len = skb_headlen(skb);
+ 
+-	if (unlikely(skb->len <= 0)) {
+-		dev_kfree_skb_any(skb);
+-		return NETDEV_TX_OK;
+-	}
++	if (unlikely(skb->len <= 0))
++		goto drop_packet;
+ 
+ 	nr_frags = skb_shinfo(skb)->nr_frags;
+ 	for (f = 0; f < nr_frags; f++) {
+@@ -2371,10 +2404,9 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
+ 	if (mss) {
+ 		if (skb->protocol == htons(ETH_P_IP)) {
+ 			proto_hdr_len = skb_tcp_all_headers(skb);
+-			if (unlikely(proto_hdr_len > len)) {
+-				dev_kfree_skb_any(skb);
+-				return NETDEV_TX_OK;
+-			}
++			if (unlikely(proto_hdr_len > len))
++				goto drop_packet;
++
+ 			/* need additional TPD ? */
+ 			if (proto_hdr_len != len)
+ 				count += (len - proto_hdr_len +
+@@ -2406,23 +2438,26 @@ static netdev_tx_t atl1_xmit_frame(struct sk_buff *skb,
+ 	}
+ 
+ 	tso = atl1_tso(adapter, skb, ptpd);
+-	if (tso < 0) {
+-		dev_kfree_skb_any(skb);
+-		return NETDEV_TX_OK;
+-	}
++	if (tso < 0)
++		goto drop_packet;
+ 
+ 	if (!tso) {
+ 		ret_val = atl1_tx_csum(adapter, skb, ptpd);
+-		if (ret_val < 0) {
+-			dev_kfree_skb_any(skb);
+-			return NETDEV_TX_OK;
+-		}
++		if (ret_val < 0)
++			goto drop_packet;
+ 	}
+ 
+-	atl1_tx_map(adapter, skb, ptpd);
++	if (!atl1_tx_map(adapter, skb, ptpd))
++		goto drop_packet;
++
+ 	atl1_tx_queue(adapter, count, ptpd);
+ 	atl1_update_mailbox(adapter);
+ 	return NETDEV_TX_OK;
++
++drop_packet:
++	adapter->soft_stats.tx_errors++;
++	dev_kfree_skb_any(skb);
++	return NETDEV_TX_OK;
+ }
+ 
+ static int atl1_rings_clean(struct napi_struct *napi, int budget)
 -- 
 2.39.5
 
