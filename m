@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE472D9790;
-	Tue,  8 Jul 2025 16:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296B62E542C;
+	Tue,  8 Jul 2025 16:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992117; cv=none; b=Sl+8H5T0LySgeKTyn7JVI2zOobN3czJogntWchnWVTJe9OKXJR7Zv6TWesBdVGyX6d+hlAul/+eg5IfxLuxzHVgpSLV+8ex5dGHE6WlbAAWg71ZYT6aMO/2CEd40hTNF8HOGMFISK4/HVEbWO5EERaAIGm+AFHBFNw6ZA65TQgc=
+	t=1751992120; cv=none; b=BX7gzJgp4CRV6M/w1cF0OKAV26/A3lODKEDhi8HnZ8ZUkXLz7n1Xv1E0Kqhu5GbFva4uvsEbsuB9M5AkshhCnfqSu4IBkinU93HaVL7BQwQf84IcMRc47wQR2axeKe0ovkieUkakWK59QjCadGdyjX1jzhhcLkGqiMfU9dkG+uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992117; c=relaxed/simple;
-	bh=XDG6N5TYx2B4X2QQFWD0jrgLUrRkE6HkQKqEnhvMe6U=;
+	s=arc-20240116; t=1751992120; c=relaxed/simple;
+	bh=vrD9e3+w6zpVAXEeZovkka1cIjd86FKnl68FhrwbT1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/R9rgABHY0Q1c/nxEUuf8ovQmZpX1lbHOcOdZEbEPuO9DyCL0qKRoHGqC6FkCS921jFoJDLLGzjupXBtfjKGdFayxHyQpqX5K9W6PGQ5yrj/CbWsPcJBc+oOQF+OV4Sjwoe769sLiGtMmOy1w5D+cEdDQSS3oTAp9lHOiPiS7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Viil+VrP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HsRKuo/DbdIp1DjkcmQWX1rR07QjN40IVDuqKVxfgZgeqJHy4IS9aEufOWg4lqw5R82NYjd2P1Q3LZdo2rn1kMDA+fQx2+SplEE+oNZB8wf0h0Dz6P/X0UwLa+b2DqW9fhSEQfsUYP+M83Jngpgm5LTaE6/oxbF2I1zM3h4ghCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAmBh4IN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Viil+VrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBB7C4CEF0;
-	Tue,  8 Jul 2025 16:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAmBh4IN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AF9C4CEED;
+	Tue,  8 Jul 2025 16:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992116;
-	bh=XDG6N5TYx2B4X2QQFWD0jrgLUrRkE6HkQKqEnhvMe6U=;
+	s=korg; t=1751992120;
+	bh=vrD9e3+w6zpVAXEeZovkka1cIjd86FKnl68FhrwbT1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Viil+VrP6/GFO5yBRbJeW3QX1heo4lhpf85P3zoav+xJ+0FVQzmJSJlIrU+jfmL4U
-	 W/D05XZsWasZAUavLK4A3Jp6LYP9RDFYnA+cS9lBcU5rcSFpqjo7ZpAz5D2j8hl7qg
-	 rdN/sUSqjhttxQmG/RTaNJ1BnSRMOV48LWwni7GE=
+	b=bAmBh4INPvtWhL2Ih0WH3LPsOMeTqOyyvVz+KXEuAdX5QohsCcLjojeo5+1s0OGOZ
+	 GUUBeutC1xcgvP2roCfo07oc6qSi2evGeJ67nDtkgPLzIWnuFY4XVaFouvOJ/htReg
+	 /4f2l9kmKVJV0k4acOYC8cq+em418RQfEnudpMM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fushuai Wang <wangfushuai@baidu.com>,
-	Simon Horman <horms@kernel.org>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kurt Borja <kuurtb@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 64/81] dpaa2-eth: fix xdp_rxq_info leak
-Date: Tue,  8 Jul 2025 18:23:56 +0200
-Message-ID: <20250708162227.006853217@linuxfoundation.org>
+Subject: [PATCH 6.1 65/81] platform/x86: think-lmi: Fix class device unregistration
+Date: Tue,  8 Jul 2025 18:23:57 +0200
+Message-ID: <20250708162227.037690385@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -47,105 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fushuai Wang <wangfushuai@baidu.com>
+From: Kurt Borja <kuurtb@gmail.com>
 
-[ Upstream commit 2def09ead4ad5907988b655d1e1454003aaf8297 ]
+[ Upstream commit 5ff1fbb3059730700b4823f43999fc1315984632 ]
 
-The driver registered xdp_rxq_info structures via xdp_rxq_info_reg()
-but failed to properly unregister them in error paths and during
-removal.
+Devices under the firmware_attributes_class do not have unique a dev_t.
+Therefore, device_unregister() should be used instead of
+device_destroy(), since the latter may match any device with a given
+dev_t.
 
-Fixes: d678be1dc1ec ("dpaa2-eth: add XDP_REDIRECT support")
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20250626133003.80136-1-wangfushuai@baidu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
+Signed-off-by: Kurt Borja <kuurtb@gmail.com>
+Link: https://lore.kernel.org/r/20250625-dest-fix-v1-2-3a0f342312bb@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/dpaa2/dpaa2-eth.c  | 26 +++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/platform/x86/think-lmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index bbbe7c5b5d35a..5ef117c9d0eca 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -3729,6 +3729,7 @@ static int dpaa2_eth_setup_rx_flow(struct dpaa2_eth_priv *priv,
- 					 MEM_TYPE_PAGE_ORDER0, NULL);
- 	if (err) {
- 		dev_err(dev, "xdp_rxq_info_reg_mem_model failed\n");
-+		xdp_rxq_info_unreg(&fq->channel->xdp_rxq);
- 		return err;
- 	}
- 
-@@ -4221,17 +4222,25 @@ static int dpaa2_eth_bind_dpni(struct dpaa2_eth_priv *priv)
- 			return -EINVAL;
- 		}
- 		if (err)
--			return err;
-+			goto out;
- 	}
- 
- 	err = dpni_get_qdid(priv->mc_io, 0, priv->mc_token,
- 			    DPNI_QUEUE_TX, &priv->tx_qdid);
- 	if (err) {
- 		dev_err(dev, "dpni_get_qdid() failed\n");
--		return err;
-+		goto out;
- 	}
- 
- 	return 0;
-+
-+out:
-+	while (i--) {
-+		if (priv->fq[i].type == DPAA2_RX_FQ &&
-+		    xdp_rxq_info_is_reg(&priv->fq[i].channel->xdp_rxq))
-+			xdp_rxq_info_unreg(&priv->fq[i].channel->xdp_rxq);
-+	}
-+	return err;
- }
- 
- /* Allocate rings for storing incoming frame descriptors */
-@@ -4588,6 +4597,17 @@ static void dpaa2_eth_del_ch_napi(struct dpaa2_eth_priv *priv)
- 	}
- }
- 
-+static void dpaa2_eth_free_rx_xdp_rxq(struct dpaa2_eth_priv *priv)
-+{
-+	int i;
-+
-+	for (i = 0; i < priv->num_fqs; i++) {
-+		if (priv->fq[i].type == DPAA2_RX_FQ &&
-+		    xdp_rxq_info_is_reg(&priv->fq[i].channel->xdp_rxq))
-+			xdp_rxq_info_unreg(&priv->fq[i].channel->xdp_rxq);
-+	}
-+}
-+
- static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index 6641f934f15bf..804e2493d7d21 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -1380,7 +1380,7 @@ static int tlmi_sysfs_init(void)
+ fail_create_attr:
+ 	tlmi_release_attr();
+ fail_device_created:
+-	device_destroy(fw_attr_class, MKDEV(0, 0));
++	device_unregister(tlmi_priv.class_dev);
+ fail_class_created:
+ 	fw_attributes_class_put();
+ 	return ret;
+@@ -1602,7 +1602,7 @@ static int tlmi_analyze(void)
+ static void tlmi_remove(struct wmi_device *wdev)
  {
- 	struct device *dev;
-@@ -4786,6 +4806,7 @@ static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
- 	free_percpu(priv->percpu_stats);
- err_alloc_percpu_stats:
- 	dpaa2_eth_del_ch_napi(priv);
-+	dpaa2_eth_free_rx_xdp_rxq(priv);
- err_bind:
- 	dpaa2_eth_free_dpbp(priv);
- err_dpbp_setup:
-@@ -4840,6 +4861,7 @@ static int dpaa2_eth_remove(struct fsl_mc_device *ls_dev)
- 	free_percpu(priv->percpu_extras);
+ 	tlmi_release_attr();
+-	device_destroy(fw_attr_class, MKDEV(0, 0));
++	device_unregister(tlmi_priv.class_dev);
+ 	fw_attributes_class_put();
+ }
  
- 	dpaa2_eth_del_ch_napi(priv);
-+	dpaa2_eth_free_rx_xdp_rxq(priv);
- 	dpaa2_eth_free_dpbp(priv);
- 	dpaa2_eth_free_dpio(priv);
- 	dpaa2_eth_free_dpni(priv);
 -- 
 2.39.5
 
