@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BD31548C;
-	Tue,  8 Jul 2025 16:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3613E2E3B03;
+	Tue,  8 Jul 2025 16:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992594; cv=none; b=F4FSCrB02hhU6GI+zNEdL9dj1F7Up1GYgBOPhQrhdeCgZ11Y8lpAIn45sGE95gyOTIWSlqTVzLVtbKAiWguIB+HMUKYA+0vYsvPnaXwAR9dE+5sewhSFA81UXFsmLLnw8qrRJwAmfpXY4rt+Uo2rfzNBV4FafNtkyaJVoq52rMI=
+	t=1751992597; cv=none; b=EpsHFnT/6W54jPs7LgMXFbC3NemlEVJ31fp+memkprDtoSxk53M08hWUWUuOnLrMZxKTC7sQQ5MuO4ed8ig55HdXpFc2zmdrB7iF0KgWieGVY9WcP2F4NhCWj9ORuVMk4F3w9viY4qyyVABzEOQffwklchCDLsNetAE02VQfewM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992594; c=relaxed/simple;
-	bh=q9UnSI4ow5Qzak1x5l+o2Ph6kGizFToVvS8B2RGV2ro=;
+	s=arc-20240116; t=1751992597; c=relaxed/simple;
+	bh=SPOO4P+RnftNm/YZ1uxehW8plom8WH3tZvmQ3XzDAkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gO2St3Qk9/HfK16C1N/SC20N1MbHH3OfcYXbH8s9On3YISyyv1dTICEXGyU8eiCTptsAgJhbCOv6F/uc9/DSMpj81/3LCI/gpFInwehvcRUo/w6vWCXVaY4+ZeaC16VUb95jlqNCwJsmzeSkLPFmKCDTFTgihgRg/xg5vyA9okg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2yADt+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e+VGXw9Dsc9RRSGfBcs0GjwEaJZvFztNSgsqw71k4I7JrG1w9XHGPz8ZFy0KeBrJ/Gswh7LwWkqvM10fbkWYeHDNTC1csBlCXo4zVTFWBRaM9AjTqz6Is3M0prmZAL5kZHfE0LAePuPcha3JU+LBO4kgljWGoQ7tTPtEDkBZiGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyfbs52l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2yADt+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC50EC4CEED;
-	Tue,  8 Jul 2025 16:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyfbs52l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB126C4CEED;
+	Tue,  8 Jul 2025 16:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992594;
-	bh=q9UnSI4ow5Qzak1x5l+o2Ph6kGizFToVvS8B2RGV2ro=;
+	s=korg; t=1751992597;
+	bh=SPOO4P+RnftNm/YZ1uxehW8plom8WH3tZvmQ3XzDAkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2yADt+CdPuIcFj/5lxePQRU2YuLruoInwn1R6asdMyZjebylx/NEkCCysl8gC11u
-	 1WrmlPnVYlxnqxEqCQT8pqZ+E8xH41bDpD00JIRCtJ9suEwcl7WkU/4YePSgcz/kBJ
-	 Ywoxsev0P9eUezu68Vys2WYeeqeaY1Gy1r0LYW8g=
+	b=yyfbs52lZWVPDF7QXCGKUKJ8buyzMLRiv6skOZd6IX9scca5HcgO4lKTA2CE4Pbmi
+	 hgC7wa2Xp4qZQv0PUKT6wChioSqQgFzolKOS03PO7gnL3JdbjxAX9dg46ywWqb/vIN
+	 P64mKDNKYNwhf1Mz99yYW+KauzPlNVGduQPnvguM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christian Eggers <ceggers@arri.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 015/232] Bluetooth: hci_sync: revert some mesh modifications
-Date: Tue,  8 Jul 2025 18:20:11 +0200
-Message-ID: <20250708162241.833418768@linuxfoundation.org>
+Subject: [PATCH 6.12 016/232] Bluetooth: MGMT: set_mesh: update LE scan interval and window
+Date: Tue,  8 Jul 2025 18:20:12 +0200
+Message-ID: <20250708162241.859321442@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,72 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Eggers <ceggers@arri.de>
 
-commit 46c0d947b64ac8efcf89dd754213dab5d1bd00aa upstream.
+commit e5af67a870f738bb8a4594b6c60c2caf4c87a3c9 upstream.
 
-This reverts minor parts of the changes made in commit b338d91703fa
-("Bluetooth: Implement support for Mesh"). It looks like these changes
-were only made for development purposes but shouldn't have been part of
-the commit.
+According to the message of commit b338d91703fa ("Bluetooth: Implement
+support for Mesh"), MGMT_OP_SET_MESH_RECEIVER should set the passive scan
+parameters.  Currently the scan interval and window parameters are
+silently ignored, although user space (bluetooth-meshd) expects that
+they can be used [1]
 
+[1] https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/mesh/mesh-io-mgmt.c#n344
 Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
 Cc: stable@vger.kernel.org
 Signed-off-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |   16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ net/bluetooth/mgmt.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2028,13 +2028,10 @@ static int hci_clear_adv_sets_sync(struc
- static int hci_clear_adv_sync(struct hci_dev *hdev, struct sock *sk, bool force)
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2146,6 +2146,9 @@ static int set_mesh_sync(struct hci_dev
+ 	else
+ 		hci_dev_clear_flag(hdev, HCI_MESH);
+ 
++	hdev->le_scan_interval = __le16_to_cpu(cp->period);
++	hdev->le_scan_window = __le16_to_cpu(cp->window);
++
+ 	len -= sizeof(*cp);
+ 
+ 	/* If filters don't fit, forward all adv pkts */
+@@ -2160,6 +2163,7 @@ static int set_mesh(struct sock *sk, str
  {
- 	struct adv_info *adv, *n;
--	int err = 0;
+ 	struct mgmt_cp_set_mesh *cp = data;
+ 	struct mgmt_pending_cmd *cmd;
++	__u16 period, window;
+ 	int err = 0;
  
- 	if (ext_adv_capable(hdev))
- 		/* Remove all existing sets */
--		err = hci_clear_adv_sets_sync(hdev, sk);
--	if (ext_adv_capable(hdev))
--		return err;
-+		return hci_clear_adv_sets_sync(hdev, sk);
+ 	bt_dev_dbg(hdev, "sock %p", sk);
+@@ -2173,6 +2177,23 @@ static int set_mesh(struct sock *sk, str
+ 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
+ 				       MGMT_STATUS_INVALID_PARAMS);
  
- 	/* This is safe as long as there is no command send while the lock is
- 	 * held.
-@@ -2062,13 +2059,11 @@ static int hci_clear_adv_sync(struct hci
- static int hci_remove_adv_sync(struct hci_dev *hdev, u8 instance,
- 			       struct sock *sk)
- {
--	int err = 0;
-+	int err;
++	/* Keep allowed ranges in sync with set_scan_params() */
++	period = __le16_to_cpu(cp->period);
++
++	if (period < 0x0004 || period > 0x4000)
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
++				       MGMT_STATUS_INVALID_PARAMS);
++
++	window = __le16_to_cpu(cp->window);
++
++	if (window < 0x0004 || window > 0x4000)
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
++				       MGMT_STATUS_INVALID_PARAMS);
++
++	if (window > period)
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
++				       MGMT_STATUS_INVALID_PARAMS);
++
+ 	hci_dev_lock(hdev);
  
- 	/* If we use extended advertising, instance has to be removed first. */
- 	if (ext_adv_capable(hdev))
--		err = hci_remove_ext_adv_instance_sync(hdev, instance, sk);
--	if (ext_adv_capable(hdev))
--		return err;
-+		return hci_remove_ext_adv_instance_sync(hdev, instance, sk);
+ 	cmd = mgmt_pending_add(sk, MGMT_OP_SET_MESH_RECEIVER, hdev, data, len);
+@@ -6536,6 +6557,7 @@ static int set_scan_params(struct sock *
+ 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_SCAN_PARAMS,
+ 				       MGMT_STATUS_NOT_SUPPORTED);
  
- 	/* This is safe as long as there is no command send while the lock is
- 	 * held.
-@@ -2167,16 +2162,13 @@ int hci_read_tx_power_sync(struct hci_de
- int hci_disable_advertising_sync(struct hci_dev *hdev)
- {
- 	u8 enable = 0x00;
--	int err = 0;
++	/* Keep allowed ranges in sync with set_mesh() */
+ 	interval = __le16_to_cpu(cp->interval);
  
- 	/* If controller is not advertising we are done. */
- 	if (!hci_dev_test_flag(hdev, HCI_LE_ADV))
- 		return 0;
- 
- 	if (ext_adv_capable(hdev))
--		err = hci_disable_ext_adv_instance_sync(hdev, 0x00);
--	if (ext_adv_capable(hdev))
--		return err;
-+		return hci_disable_ext_adv_instance_sync(hdev, 0x00);
- 
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_ADV_ENABLE,
- 				     sizeof(enable), &enable, HCI_CMD_TIMEOUT);
+ 	if (interval < 0x0004 || interval > 0x4000)
 
 
