@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12A71DD0EF;
-	Tue,  8 Jul 2025 16:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A7D1754B;
+	Tue,  8 Jul 2025 16:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993299; cv=none; b=j06TWPwwjaSjhVaWA7VuMWYaRZqHWe7/ZoHjRex9n4r1aqQKWCBfCA4Ig9g8gx21MniE737AurFUjKGFeaFgL18OVe0sfBlLeAZXtuOpjt3JsSe8VrAqV2qEwbTDY6VHsR7YfVKXGlxhhyIX0pBWV/qDG14tvQGhoH+pLAwEp/A=
+	t=1751993303; cv=none; b=OkwtR+5yp0a2W/ZR/XIr3pkjd5kKB7nWyJ/Bu2RdhfUGs6Y+9YsPgZq6TJiQ1I5BYSub3vThZ4UfMwHHsN0lHPVj/cGKQIN12HE2UJvVh1Iw/wqkuA6jSYppXX6zkUljubSepzHFFCc1m4c85SCMwJ+/nUXrF8nH+FIBGYVoPEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993299; c=relaxed/simple;
-	bh=0TYRbAN25owuAGaqg5SKW+m3fdWMh/BGXbY8cQdlihs=;
+	s=arc-20240116; t=1751993303; c=relaxed/simple;
+	bh=fFGzvZ8o8iHs6Ar3bzxukvHxVGgDoUKunaQz6dPSxY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkJz2xe9fxlYbdBCe7WrksJ/+6mLJ281r7FXmmpLXgF0sVxK+JErgaFe2/7G5VSUQMxn0rZU0CKx38H327RakLbuUtUw0Qq7S+HtDKSoRMl83qkRwKBB2YYXWY9gzGqCUMzI+Gk6olcw4mZC91ZHib7FS0sYWs1LYmHd0FauHGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/gCdbC+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TsJcSYPSUNmRmnLHDoejokG+GAFXTeDTrzNqNuuiNWZ2Ga9IGFJNz2rcZkp7q0pLVdt30aU899S8LsN5Zo4tXJC9AUW9n4DGEyMNwD4XIB2syK01JYo7WewskeaAKziiV0msygklpZxP4bo7kjrIbSpJG7+XrDNHXuzDS+5I23o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmdwAuEc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/gCdbC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A355C4CEED;
-	Tue,  8 Jul 2025 16:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmdwAuEc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC989C4CEED;
+	Tue,  8 Jul 2025 16:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993299;
-	bh=0TYRbAN25owuAGaqg5SKW+m3fdWMh/BGXbY8cQdlihs=;
+	s=korg; t=1751993303;
+	bh=fFGzvZ8o8iHs6Ar3bzxukvHxVGgDoUKunaQz6dPSxY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/gCdbC+4EFUM7Yip/lm5NcKhm+MkXty9k//pfs9GCsIRHpH16ILW7P6nAntFUs/d
-	 M3/ktQAvXrDrkaEVWakag0jvQGp3T2ntcytBO9SKIcjdSji/nd3TxgUjWug/Al80w1
-	 9mqRyqo7xBrLsSl6P1kvujGLBvA5ukLlSZVACKn0=
+	b=QmdwAuEcK90zfX/ANVUv5d5WCXJkIkN6Gw1CM8lwCa5cj/oZien3qC/ZhayVI+2hM
+	 YiUCeWwH90/b3Rq2L/0ZHNS3Oh3goGIKim4tgWqrp5ueYUunDnddVmVdBAh8ow4sB4
+	 V+hDp4tQqHWiHFSdWOTMjDVjHQpey5aYcO6SOJjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunshui Jiang <jiangyunshui@kylinos.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.15 026/178] Input: cs40l50-vibra - fix potential NULL dereference in cs40l50_upload_owt()
-Date: Tue,  8 Jul 2025 18:21:03 +0200
-Message-ID: <20250708162237.233235748@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	stable@kernel.org,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.15 027/178] anon_inode: rework assertions
+Date: Tue,  8 Jul 2025 18:21:04 +0200
+Message-ID: <20250708162237.258186480@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -50,36 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunshui Jiang <jiangyunshui@kylinos.cn>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 4cf65845fdd09d711fc7546d60c9abe010956922 upstream.
+commit 1e7ab6f67824343ee3e96f100f0937c393749a8a upstream.
 
-The cs40l50_upload_owt() function allocates memory via kmalloc()
-without checking for allocation failure, which could lead to a
-NULL pointer dereference.
+Making anonymous inodes regular files comes with a lot of risk and
+regression potential as evidenced by a recent hickup in io_uring. We're
+better of continuing to not have them be regular files. Since we have
+S_ANON_INODE we can port all of our assertions easily.
 
-Return -ENOMEM in case allocation fails.
-
-Signed-off-by: Yunshui Jiang <jiangyunshui@kylinos.cn>
-Fixes: c38fe1bb5d21 ("Input: cs40l50 - Add support for the CS40L50 haptic driver")
-Link: https://lore.kernel.org/r/20250704024010.2353841-1-jiangyunshui@kylinos.cn
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/20250702-work-fixes-v1-1-ff76ea589e33@kernel.org
+Fixes: cfd86ef7e8e7 ("anon_inode: use a proper mode internally")
+Acked-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@kernel.org
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/cs40l50-vibra.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/exec.c  |    9 +++++++--
+ fs/libfs.c |    8 +++-----
+ fs/namei.c |    2 +-
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
---- a/drivers/input/misc/cs40l50-vibra.c
-+++ b/drivers/input/misc/cs40l50-vibra.c
-@@ -238,6 +238,8 @@ static int cs40l50_upload_owt(struct cs4
- 	header.data_words = len / sizeof(u32);
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -111,6 +111,9 @@ static inline void put_binfmt(struct lin
  
- 	new_owt_effect_data = kmalloc(sizeof(header) + len, GFP_KERNEL);
-+	if (!new_owt_effect_data)
-+		return -ENOMEM;
+ bool path_noexec(const struct path *path)
+ {
++	/* If it's an anonymous inode make sure that we catch any shenanigans. */
++	VFS_WARN_ON_ONCE(IS_ANON_FILE(d_inode(path->dentry)) &&
++			 !(path->mnt->mnt_sb->s_iflags & SB_I_NOEXEC));
+ 	return (path->mnt->mnt_flags & MNT_NOEXEC) ||
+ 	       (path->mnt->mnt_sb->s_iflags & SB_I_NOEXEC);
+ }
+@@ -894,13 +897,15 @@ static struct file *do_open_execat(int f
+ 	if (IS_ERR(file))
+ 		return file;
  
- 	memcpy(new_owt_effect_data, &header, sizeof(header));
- 	memcpy(new_owt_effect_data + sizeof(header), work_data->custom_data, len);
++	if (path_noexec(&file->f_path))
++		return ERR_PTR(-EACCES);
++
+ 	/*
+ 	 * In the past the regular type check was here. It moved to may_open() in
+ 	 * 633fb6ac3980 ("exec: move S_ISREG() check earlier"). Since then it is
+ 	 * an invariant that all non-regular files error out before we get here.
+ 	 */
+-	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
+-	    path_noexec(&file->f_path))
++	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)))
+ 		return ERR_PTR(-EACCES);
+ 
+ 	err = exe_file_deny_write_access(file);
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -1648,12 +1648,10 @@ struct inode *alloc_anon_inode(struct su
+ 	 */
+ 	inode->i_state = I_DIRTY;
+ 	/*
+-	 * Historically anonymous inodes didn't have a type at all and
+-	 * userspace has come to rely on this. Internally they're just
+-	 * regular files but S_IFREG is masked off when reporting
+-	 * information to userspace.
++	 * Historically anonymous inodes don't have a type at all and
++	 * userspace has come to rely on this.
+ 	 */
+-	inode->i_mode = S_IFREG | S_IRUSR | S_IWUSR;
++	inode->i_mode = S_IRUSR | S_IWUSR;
+ 	inode->i_uid = current_fsuid();
+ 	inode->i_gid = current_fsgid();
+ 	inode->i_flags |= S_PRIVATE | S_ANON_INODE;
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -3464,7 +3464,7 @@ static int may_open(struct mnt_idmap *id
+ 			return -EACCES;
+ 		break;
+ 	default:
+-		VFS_BUG_ON_INODE(1, inode);
++		VFS_BUG_ON_INODE(!IS_ANON_FILE(inode), inode);
+ 	}
+ 
+ 	error = inode_permission(idmap, inode, MAY_OPEN | acc_mode);
 
 
