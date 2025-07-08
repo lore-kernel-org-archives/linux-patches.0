@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B12A1DC9B1;
-	Tue,  8 Jul 2025 17:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238B81548C;
+	Tue,  8 Jul 2025 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994019; cv=none; b=kKvnokO708Yhkk6FRoXfjGjRUBX4LMkKbSaGsSP2cYgcNpyt/xgm7nAO1IggCMhPaq3DgUPpXJCZy0RwqAOgyZt5gpytWgEcfPyF3fM0SC2x78BizGzJoQYhMbp6mqsLEhd2xsVxRK5k9qLs7JwxYL5cyfRl8PMk+JRDGWg3yKs=
+	t=1751994022; cv=none; b=M0jw8txV9aQbNjHJZvlYD0koSTdCpZ44Q86QyrpbNKlSRo3pn+wekYdaPjGM+SIp+GIlcc5uFZN4HDszvYtf0gt66UYFgaYeCB3RfsKI6P/GXQNXBG1toptHNwyfuvOqUSRH5jd+qi2eSsb+FvPbGmdzx5uQLDwT1mXkb8bjMCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994019; c=relaxed/simple;
-	bh=sItBZWYJmWv4cgoAGM+NKVFnXNlNh+QUAoYj0WK5Rxg=;
+	s=arc-20240116; t=1751994022; c=relaxed/simple;
+	bh=BIIFjrsnEQQlh8vQFw64KLpK0G11w+VQGhq7kZNUMvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dS+X1JksGBS0XIm3v/T/gWUUVFMA1u77gcY96F7ypfZ3MWjI5O4ovFB9ZRMLVJ0p8a6l1pmYCEr0R3w48fEg9woIDiZB7eo34GkQbPf9Vba9umNVxVduzX1ycHahWJRPbzFrfBxPkIcD0V+HiLq7uiiuwcI0ADA1nECrRPwahYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX/zqdBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L38SnjL4A2vcDZ0bjBZysi9irqql6kdy+NEJqk0K2iey6dDWvKEAhnQ+Kmdc8ol8UlRNpH7GX0XwS5mpj7ciFIS7a16C0CLeblReFf64iggoFx3MF4cruEPEb+qA8JRxjA3ETycLwGIArqjAEOTV19Qc2PO3QwdTnZ48Ckk+hM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYqlSu9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX/zqdBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6989C4CEED;
-	Tue,  8 Jul 2025 17:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYqlSu9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A241AC4CEED;
+	Tue,  8 Jul 2025 17:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994019;
-	bh=sItBZWYJmWv4cgoAGM+NKVFnXNlNh+QUAoYj0WK5Rxg=;
+	s=korg; t=1751994022;
+	bh=BIIFjrsnEQQlh8vQFw64KLpK0G11w+VQGhq7kZNUMvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qX/zqdBwiRCGYCYjjVq3pOnJyctw7R0yfiFD5feETG4J/x5+1K15Htiw7e1KvOb5r
-	 SMcG2FLSsvQILhpzdGbUdtkOsbtGoch5IkQ3DgpWaNQojFKobvTZPV6dp28V1dCgLu
-	 uPFqTK/euoiMWHfY+mwJu9bJn7lGAxKwJ+h3FvPM=
+	b=hYqlSu9bB2DcxPhKjygjVU3mo7uC8Ko7Ty+SE4hr//Q4CAQLWorJpQ4PyiutQpPxb
+	 62ZQn6gnFpLZvSCbYuBrzV1rOXM6IR6K8as8wi5SFFyF1GqLSTK4LjaET+LjkWWAwL
+	 n5bLjt2JgUyPR1wKoKGpbO9+/mTs9bCA6MgJariY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Chris Bainbridge <chris.bainbridge@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.15 097/160] rtc: cmos: use spin_lock_irqsave in cmos_interrupt
-Date: Tue,  8 Jul 2025 18:22:14 +0200
-Message-ID: <20250708162234.192390731@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 071/160] net: selftests: fix TCP packet checksum
+Date: Tue,  8 Jul 2025 18:21:48 +0200
+Message-ID: <20250708162233.521589082@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -46,84 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mateusz Jończyk <mat.jonczyk@o2.pl>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 00a39d8652ff9088de07a6fe6e9e1893452fe0dd upstream.
+[ Upstream commit 8d89661a36dd3bb8c9902cff36dc0c144dce3faf ]
 
-cmos_interrupt() can be called in a non-interrupt context, such as in
-an ACPI event handler (which runs in an interrupt thread). Therefore,
-usage of spin_lock(&rtc_lock) is insecure. Use spin_lock_irqsave() /
-spin_unlock_irqrestore() instead.
+The length in the pseudo header should be the length of the L3 payload
+AKA the L4 header+payload. The selftest code builds the packet from
+the lower layers up, so all the headers are pushed already when it
+constructs L4. We need to subtract the lower layer headers from skb->len.
 
-Before a misguided
-commit 6950d046eb6e ("rtc: cmos: Replace spin_lock_irqsave with spin_lock in hard IRQ")
-the cmos_interrupt() function used spin_lock_irqsave(). That commit
-changed it to spin_lock() and broke locking, which was partially fixed in
-commit 13be2efc390a ("rtc: cmos: Disable irq around direct invocation of cmos_interrupt()")
-
-That second commit did not take account of the ACPI fixed event handler
-pathway, however. It introduced local_irq_disable() workarounds in
-cmos_check_wkalrm(), which can cause problems on PREEMPT_RT kernels
-and are now unnecessary.
-
-Add an explicit comment so that this change will not be reverted by
-mistake.
-
-Cc: stable@vger.kernel.org
-Fixes: 6950d046eb6e ("rtc: cmos: Replace spin_lock_irqsave with spin_lock in hard IRQ")
-Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Reported-by: Chris Bainbridge <chris.bainbridge@gmail.com>
-Closes: https://lore.kernel.org/all/aDtJ92foPUYmGheF@debian.local/
-Link: https://lore.kernel.org/r/20250607210608.14835-1-mat.jonczyk@o2.pl
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3e1e58d64c3d ("net: add generic selftest support")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Reported-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20250624183258.3377740-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/core/selftests.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -698,8 +698,12 @@ static irqreturn_t cmos_interrupt(int ir
- {
- 	u8		irqstat;
- 	u8		rtc_control;
-+	unsigned long	flags;
- 
--	spin_lock(&rtc_lock);
-+	/* We cannot use spin_lock() here, as cmos_interrupt() is also called
-+	 * in a non-irq context.
-+	 */
-+	spin_lock_irqsave(&rtc_lock, flags);
- 
- 	/* When the HPET interrupt handler calls us, the interrupt
- 	 * status is passed as arg1 instead of the irq number.  But
-@@ -733,7 +737,7 @@ static irqreturn_t cmos_interrupt(int ir
- 			hpet_mask_rtc_irq_bit(RTC_AIE);
- 		CMOS_READ(RTC_INTR_FLAGS);
- 	}
--	spin_unlock(&rtc_lock);
-+	spin_unlock_irqrestore(&rtc_lock, flags);
- 
- 	if (is_intr(irqstat)) {
- 		rtc_update_irq(p, 1, irqstat);
-@@ -1284,9 +1288,7 @@ static void cmos_check_wkalrm(struct dev
- 	 * ACK the rtc irq here
- 	 */
- 	if (t_now >= cmos->alarm_expires && cmos_use_acpi_alarm()) {
--		local_irq_disable();
- 		cmos_interrupt(0, (void *)cmos->rtc);
--		local_irq_enable();
- 		return;
- 	}
- 
+diff --git a/net/core/selftests.c b/net/core/selftests.c
+index 29ca19ec82bb4..63938efd5b55f 100644
+--- a/net/core/selftests.c
++++ b/net/core/selftests.c
+@@ -160,8 +160,9 @@ static struct sk_buff *net_test_get_skb(struct net_device *ndev,
+ 	skb->csum = 0;
+ 	skb->ip_summed = CHECKSUM_PARTIAL;
+ 	if (attr->tcp) {
+-		thdr->check = ~tcp_v4_check(skb->len, ihdr->saddr,
+-					    ihdr->daddr, 0);
++		int l4len = skb->len - skb_transport_offset(skb);
++
++		thdr->check = ~tcp_v4_check(l4len, ihdr->saddr, ihdr->daddr, 0);
+ 		skb->csum_start = skb_transport_header(skb) - skb->head;
+ 		skb->csum_offset = offsetof(struct tcphdr, check);
+ 	} else {
+-- 
+2.39.5
+
 
 
