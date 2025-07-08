@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A442E5B2A;
-	Tue,  8 Jul 2025 17:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9222E6D18;
+	Tue,  8 Jul 2025 17:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994054; cv=none; b=GJD871nnmJpxEESDn8JiS7DBMG+viJakZICEJ03b4cJMRHg1mq8MIFXmMJGPKjA9v+xtFrztt3jSkDUv43Xnd4kjgR2kDuusrR0iWsFkri0XUtOSBQNlXtqX0o1Jkx4LO9ELmjkpJ3F4SC+WvcDRQpHCQyL/XXxN8vVgcPgo/Qo=
+	t=1751994056; cv=none; b=FFAPtiyMYIAcb4NcqY3PaXYV/mHwkPmJqPczBSusBXY6BxgGhmcpxh0wJqDqLUWwlZmHWLyLiUGYNLLYwIoJ+aMJpqOLH1oI4UZK5aYuK3gp1Kn0W2M4gwlgRp4Hk0Nf2nZbALU97DUTLv8PSOSvz41eQsp/+ive6QirG2dT078=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994054; c=relaxed/simple;
-	bh=DiAMrM8idigVU7HYG/yTQEpFz7yi9/sI/uiBgQaxdd8=;
+	s=arc-20240116; t=1751994056; c=relaxed/simple;
+	bh=17bK684FTnhfBlEpuZUf/9GNeyZSOXlNV1D9Co6s4mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=umBo6lWwtenzMJQHdT7Si/CXHA0+vdBIRoCIURoYGR6RM34zDNGUGWaHBqk+JGTN82QDDOqDw+stLSGxb5MxYW8g65LuTCQ7eApo4oM1WeEVSFjmkS5v2+Nxpfk+vlw++ldXkLufYQLpAvfrEdhOvcoldf1jJqVHrmnc2e2Ze6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jl3VLYkX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=No28v6MD6evkVThdP+9KD47UOaOoamPG3W0RnNSyoon/3kadA74lzA78LfvU0GFfRo3viyHKrSL0KAy51PJ8vRkvIqiWDnUPEtPlPs5aEwScIcjoVe3aLqTDRbCZV1IVzkELmSGrt0Qs99gndplToSC4txzxO2FFSam14NZCfV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMRPv510; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jl3VLYkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F461C4CEED;
-	Tue,  8 Jul 2025 17:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMRPv510"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F623C4CEED;
+	Tue,  8 Jul 2025 17:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994053;
-	bh=DiAMrM8idigVU7HYG/yTQEpFz7yi9/sI/uiBgQaxdd8=;
+	s=korg; t=1751994056;
+	bh=17bK684FTnhfBlEpuZUf/9GNeyZSOXlNV1D9Co6s4mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jl3VLYkXTQZ7dRRWyzP4aWWROJFpKT+/T1dQUkvfH0vwC0DX1QlcuQ5F9QwTN1myV
-	 2LfoL/nbgu9sjv0ucHtBkcRRzM14hOPba8Dwd0v18LDm2GIGtIGqOBa4CXGrPHhWw6
-	 QPSMBuO7kDXEiUwJ32MVW6yLBO89z5B3My8/i8m8=
+	b=WMRPv510b6vm3SsKPT46vmY86cdUct7GM74F0ZLcdZJ3wmfG0unSMzE+2y15n5Qxa
+	 zRHO4w/NvAYKMB8fnsoFVMVGE7dNllwKLElDSGIYgJSr3MB0Sw9Xlgv/C+CDNYwMVI
+	 6vykbmg5iCvjWKq0aaN6AzH9FRJedemGh8r4HpFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Avri Altman <avri.altman@sandisk.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/160] scsi: qla4xxx: Fix missing DMA mapping error in qla4xxx_alloc_pdu()
-Date: Tue,  8 Jul 2025 18:22:27 +0200
-Message-ID: <20250708162234.524083308@linuxfoundation.org>
+Subject: [PATCH 5.15 111/160] scsi: ufs: core: Fix spelling of a sysfs attribute name
+Date: Tue,  8 Jul 2025 18:22:28 +0200
+Message-ID: <20250708162234.548184620@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,35 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 00f452a1b084efbe8dcb60a29860527944a002a1 ]
+[ Upstream commit 021f243627ead17eb6500170256d3d9be787dad8 ]
 
-dma_map_XXX() can fail and should be tested for errors with
-dma_mapping_error().
+Change "resourse" into "resource" in the name of a sysfs attribute.
 
-Fixes: b3a271a94d00 ("[SCSI] qla4xxx: support iscsiadm session mgmt")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250618071742.21822-2-fourier.thomas@gmail.com
+Fixes: d829fc8a1058 ("scsi: ufs: sysfs: unit descriptor")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20250624181658.336035-1-bvanassche@acm.org
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/ABI/testing/sysfs-driver-ufs | 2 +-
+ drivers/scsi/ufs/ufs-sysfs.c               | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index dc466a364fb1f..ab89f3171a093 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -3420,6 +3420,8 @@ static int qla4xxx_alloc_pdu(struct iscsi_task *task, uint8_t opcode)
- 		task_data->data_dma = dma_map_single(&ha->pdev->dev, task->data,
- 						     task->data_count,
- 						     DMA_TO_DEVICE);
-+		if (dma_mapping_error(&ha->pdev->dev, task_data->data_dma))
-+			return -ENOMEM;
- 	}
+diff --git a/Documentation/ABI/testing/sysfs-driver-ufs b/Documentation/ABI/testing/sysfs-driver-ufs
+index ec3a7149ced59..2e2e0b992233d 100644
+--- a/Documentation/ABI/testing/sysfs-driver-ufs
++++ b/Documentation/ABI/testing/sysfs-driver-ufs
+@@ -655,7 +655,7 @@ Description:	This file shows the thin provisioning type. This is one of
  
- 	DEBUG2(ql4_printk(KERN_INFO, ha, "%s: MaxRecvLen %u, iscsi hrd %d\n",
+ 		The file is read only.
+ 
+-What:		/sys/class/scsi_device/*/device/unit_descriptor/physical_memory_resourse_count
++What:		/sys/class/scsi_device/*/device/unit_descriptor/physical_memory_resource_count
+ Date:		February 2018
+ Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+ Description:	This file shows the total physical memory resources. This is
+diff --git a/drivers/scsi/ufs/ufs-sysfs.c b/drivers/scsi/ufs/ufs-sysfs.c
+index 3bfdcc2f22dc0..369595dbb1fcd 100644
+--- a/drivers/scsi/ufs/ufs-sysfs.c
++++ b/drivers/scsi/ufs/ufs-sysfs.c
+@@ -1180,7 +1180,7 @@ UFS_UNIT_DESC_PARAM(logical_block_size, _LOGICAL_BLK_SIZE, 1);
+ UFS_UNIT_DESC_PARAM(logical_block_count, _LOGICAL_BLK_COUNT, 8);
+ UFS_UNIT_DESC_PARAM(erase_block_size, _ERASE_BLK_SIZE, 4);
+ UFS_UNIT_DESC_PARAM(provisioning_type, _PROVISIONING_TYPE, 1);
+-UFS_UNIT_DESC_PARAM(physical_memory_resourse_count, _PHY_MEM_RSRC_CNT, 8);
++UFS_UNIT_DESC_PARAM(physical_memory_resource_count, _PHY_MEM_RSRC_CNT, 8);
+ UFS_UNIT_DESC_PARAM(context_capabilities, _CTX_CAPABILITIES, 2);
+ UFS_UNIT_DESC_PARAM(large_unit_granularity, _LARGE_UNIT_SIZE_M1, 1);
+ UFS_UNIT_DESC_PARAM(hpb_lu_max_active_regions, _HPB_LU_MAX_ACTIVE_RGNS, 2);
+@@ -1200,7 +1200,7 @@ static struct attribute *ufs_sysfs_unit_descriptor[] = {
+ 	&dev_attr_logical_block_count.attr,
+ 	&dev_attr_erase_block_size.attr,
+ 	&dev_attr_provisioning_type.attr,
+-	&dev_attr_physical_memory_resourse_count.attr,
++	&dev_attr_physical_memory_resource_count.attr,
+ 	&dev_attr_context_capabilities.attr,
+ 	&dev_attr_large_unit_granularity.attr,
+ 	&dev_attr_hpb_lu_max_active_regions.attr,
 -- 
 2.39.5
 
