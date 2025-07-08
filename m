@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D9AF9E8;
-	Tue,  8 Jul 2025 16:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACCFF9E8;
+	Tue,  8 Jul 2025 16:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992785; cv=none; b=DdZpJpi1eP3/Bgtz31pGqtXV2NGKKkXKyP5omGtHI6aqNXKdeSK+pKh/KGE6NJ5GipETCPZLAZXC0ZnwIgzoAzNzC5bSyuTUNAVY3qWjPPdqmCcIUeJYYwk/4e1XrRu5LUGGdkKeLT2fxgvun0uBreBU09Psydpq2ZDhETw2lDg=
+	t=1751992788; cv=none; b=TA9Vs9lvKv37Q3Fr82iTUlgp8tmnGnrTlzWC/YIO1zvS78VcUEd40cdAJKLk7iVG+bv9NOtnUbLBtuT8u0uWdDIQxLHHuAi6/wYeRRGE9Lr+i3RAVNX8cy8/EVWE90/sGmbAS/hyij9xgiltwGbN9tfEarEGzBVfg+zRkqutKNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992785; c=relaxed/simple;
-	bh=uKF3ESQFwUY3wvYyowaTuEgDpsyh0l3RSYnQ3WfjQ0M=;
+	s=arc-20240116; t=1751992788; c=relaxed/simple;
+	bh=mc1527awR/yCeE2gxr/wRZEOb1D2fRNoLwSaQ35//y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYYUbkyb2UQhc5fuzj3vqa+IaWCuTJstJm0MA7iUnfFfjYjZCEwfbLbCCZO4ya5/8r2GR7wAnVVy0OoNxD2EhyW1VZwg6zaiuQlXBz5mngd6iE2BajxzD8gALArWqo97wtRcXNT+EAcJq+SzQqHMOZeQsOGaPNOlR1b7mdqC+h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOnwItbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aBqYkrbRfwm22SQ4/pLUvivimQwPpkFH6w6NC1t6dgec4xUbjsZ8EpGI3CmY3XGcoGlmdTVoPE4FO90IbEXSqzU40n3WlrfMGNTnmlNeGMQSMlUtcPkAciQd9IuZgLRl/IZPEHzFlhV4yt79lLSpVWUOxNGYOVwt5s0X/wLYyPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDTEsd6z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOnwItbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D127C4CEED;
-	Tue,  8 Jul 2025 16:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDTEsd6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6112FC4CEED;
+	Tue,  8 Jul 2025 16:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992784;
-	bh=uKF3ESQFwUY3wvYyowaTuEgDpsyh0l3RSYnQ3WfjQ0M=;
+	s=korg; t=1751992787;
+	bh=mc1527awR/yCeE2gxr/wRZEOb1D2fRNoLwSaQ35//y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOnwItbTZyWc6oZsADs9r6x+ZPxfjWvmu4WDGbgRQPZTQaLMe0b9JudHOW/zH2gti
-	 xdpBdoKKX/tMV2/eT3dbMLMlIERAsX7vgoszvd5j4PgxCY0UN6jPXUfflmmkomY6+1
-	 1g4xon5WUgCX6PG7ABRja65hX51/l5P25vZbID7Q=
+	b=RDTEsd6zQJQrxl3uwB2gOIU8m6wZXMqneIE7AVXVQPHbr0u7PAjiEfAvcreey4Ywp
+	 +J9UEUMKIU+EW+1Bfw4zMCN+LGjNqSqkRd6U7qqszmvAcqp0Ab9j4ZXxpI7xBP/7WJ
+	 SzwfIr4DGNzrtGjHU2hqUCeNyId7Ct3oGoF04eTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <sfrench@samba.org>,
+	linux-cifs@vger.kernel.org,
+	netfs@lists.linux.dev,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 080/232] igc: disable L1.2 PCI-E link substate to avoid performance issue
-Date: Tue,  8 Jul 2025 18:21:16 +0200
-Message-ID: <20250708162243.545859458@linuxfoundation.org>
+Subject: [PATCH 6.12 081/232] smb: client: set missing retry flag in smb2_writev_callback()
+Date: Tue,  8 Jul 2025 18:21:17 +0200
+Message-ID: <20250708162243.571907644@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -53,64 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 0325143b59c6c6d79987afc57d2456e7a20d13b7 ]
+[ Upstream commit e67e75edeb88022c04f8e0a173e1ff6dc688f155 ]
 
-I226 devices advertise support for the PCI-E link L1.2 substate. However,
-due to a hardware limitation, the exit latency from this low-power state
-is longer than the packet buffer can tolerate under high traffic
-conditions. This can lead to packet loss and degraded performance.
+Set NETFS_SREQ_NEED_RETRY flag to tell netfslib that the subreq needs
+to be retried.
 
-To mitigate this, disable the L1.2 substate. The increased power draw
-between L1.1 and L1.2 is insignificant.
-
-Fixes: 43546211738e ("igc: Add new device ID's")
-Link: https://lore.kernel.org/intel-wired-lan/15248b4f-3271-42dd-8e35-02bfc92b25e1@intel.com
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/20250701163852.2171681-7-dhowells@redhat.com
+Tested-by: Steve French <sfrench@samba.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: netfs@lists.linux.dev
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/smb/client/smb2pdu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 082b0baf5d37c..2a0c5a343e472 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6987,6 +6987,10 @@ static int igc_probe(struct pci_dev *pdev,
- 	adapter->port_num = hw->bus.func;
- 	adapter->msg_enable = netif_msg_init(debug, DEFAULT_MSG_ENABLE);
- 
-+	/* Disable ASPM L1.2 on I226 devices to avoid packet loss */
-+	if (igc_is_device_id_i226(hw))
-+		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-+
- 	err = pci_save_state(pdev);
- 	if (err)
- 		goto err_ioremap;
-@@ -7368,6 +7372,9 @@ static int igc_resume(struct device *dev)
- 	pci_enable_wake(pdev, PCI_D3hot, 0);
- 	pci_enable_wake(pdev, PCI_D3cold, 0);
- 
-+	if (igc_is_device_id_i226(hw))
-+		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-+
- 	if (igc_init_interrupt_scheme(adapter, true)) {
- 		netdev_err(netdev, "Unable to allocate memory for queues\n");
- 		return -ENOMEM;
-@@ -7480,6 +7487,9 @@ static pci_ers_result_t igc_io_slot_reset(struct pci_dev *pdev)
- 		pci_enable_wake(pdev, PCI_D3hot, 0);
- 		pci_enable_wake(pdev, PCI_D3cold, 0);
- 
-+		if (igc_is_device_id_i226(hw))
-+			pci_disable_link_state_locked(pdev, PCIE_LINK_STATE_L1_2);
-+
- 		/* In case of PCI error, adapter loses its HW address
- 		 * so we should re-assign it here.
- 		 */
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 3e501da62880c..d514f95deb7e7 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -4869,6 +4869,7 @@ smb2_writev_callback(struct mid_q_entry *mid)
+ 		break;
+ 	case MID_REQUEST_SUBMITTED:
+ 	case MID_RETRY_NEEDED:
++		__set_bit(NETFS_SREQ_NEED_RETRY, &wdata->subreq.flags);
+ 		result = -EAGAIN;
+ 		break;
+ 	case MID_RESPONSE_MALFORMED:
 -- 
 2.39.5
 
