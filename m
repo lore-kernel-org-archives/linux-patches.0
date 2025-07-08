@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5365479DA;
-	Tue,  8 Jul 2025 00:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1A779DA;
+	Tue,  8 Jul 2025 00:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932950; cv=none; b=PnDamaCDOubxvayinuozwdgLkbwkyOt+ld8EKjgZKtKDnSEDYvK/zWaavTlZaoivwlvC2+3Qod+i1lC7awfw8jMD2YsKPxac6mtuX0Guo3HwZdG39NsixVMZufw59PIW88/LFH90/qGj8vjMYuO/gUDmJzc/w4nkVwyJxfW9/Uw=
+	t=1751932953; cv=none; b=rAr69KyFM97MpexnE9UqEi0ixzyJY/Td635ie8ch1Emj0M1//zu93h1981EvZJ2czYmHFbigLIzALXqYITAY4oMlZOwIboYzbDDxU2U0vkwonofDIQ0YQnB4FfTxYkVYNQrhU/mt1LdWXZhiyyDeEIGuOzyxTVqcnCTg8mT0Xv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932950; c=relaxed/simple;
-	bh=TXuHPZB2fFk5Jsgnvk0Qx96H3byMaD1TeD02BEQbHNg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Opi7OG27GZHm2gekKWbBUz3sYQ3IaaKZAsVQytO9nq29ZX9LVlHSubWN/HmRyAVTl5Mnr0C6H/CTtxfPixgjCMjYXcCFg/ITA13O9iaJOpb7Cm+HRz7DT2RugCXuyt8S+KTem9rKZm02OUmzr8G79LpvXoEMABgjjJ4yE/ll7XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mv9AutDn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751932953; c=relaxed/simple;
+	bh=/d4iOmSnG/Vh1H/PnfEjcqJlL6LQPz7FpYjpbY1m02s=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UAVZuEqbJAP65YfIGBSRA3JPUcc7z2+f84tBKXBhr7aKAZ6HiIlQLRlcYp8rcZGJ7Vy9PaMm2y14yFQ6AKnBye4jy5/oNtjro/be2UPmKE5osg0JEw5GUBcazSFiw5KHRUgwauRqEN2ECi0tQW8E9werwWEzMuZv9OlUN1jzNuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WnTY/KRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mv9AutDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F08DC4CEE3;
-	Tue,  8 Jul 2025 00:02:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WnTY/KRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57223C4CEE3;
+	Tue,  8 Jul 2025 00:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932950;
-	bh=TXuHPZB2fFk5Jsgnvk0Qx96H3byMaD1TeD02BEQbHNg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mv9AutDn5CBDVEicpMq59ninbQvfZ5eVIrUKcfasAhsS4zU/oVav6UNNl283/C9Hq
-	 x44WmajCaNz4UcNiuY/SIFCCSNRcX5LRUGg+dUPVIBf27MsE4DTlmns5113pWRWAWn
-	 ToYdPXFfJQ1jFTS+pQJ04oLtEKX8i/v6JH8Tu/11xGpMB9dwrXq052j9St5aJIHgHb
-	 tFGKx//2oxhoA6MPaIgfDNVo20/yW4WF1wkhJ7vs2aR0Rmn9OBAkE0Z80EWDSWXEGe
-	 r/ve1BLCMiH769HRSowfFmzbAkU43CQ02lxgBOhvE+vRCJAYIFd8x/jvpRhZ08hTpI
-	 sUcxc9TVZc4vA==
+	s=k20201202; t=1751932953;
+	bh=/d4iOmSnG/Vh1H/PnfEjcqJlL6LQPz7FpYjpbY1m02s=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WnTY/KRk1DYhAdAjFXTbcIfN0FFedyCmUyvoVdSeinBOvZHbRWr6iMIf6yjPwTqjm
+	 ZcS3SqOaTCS18qUolt87oG7cdbBxUiLBVMe1MO4XhfY9KP4yWtqH8trEIfC8oBGiCZ
+	 /wVBBMHtVHfwodTNaHgLa7iKB3rsGwQy+afIvZhsIaKU7gQDnfszLpLt15o/hyOgO8
+	 Vif2Kxe7f0/6jkEEi9o2K36TugWEpGMjupHicH4KylhUkqoho2pKP08+TiaZvPKJbs
+	 FEhlECETb7MA+IZS3HSCzQ2rNiEfW0E9cF1J+ouLbCFvZKq7R6jjT/7PwapxOoPjBQ
+	 zMclDFXVuLHhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maor Gottlieb <maorg@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
 	Sasha Levin <sashal@kernel.org>,
-	leon@kernel.org,
-	phaddad@nvidia.com,
-	msanalla@nvidia.com
-Subject: [PATCH AUTOSEL 6.15 8/8] RDMA/core: Rate limit GID cache warning messages
-Date: Mon,  7 Jul 2025 20:02:15 -0400
-Message-Id: <20250708000215.793090-8-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 1/6] Revert "ACPI: battery: negate current when discharging"
+Date: Mon,  7 Jul 2025 20:02:25 -0400
+Message-Id: <20250708000230.793347-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250708000215.793090-1-sashal@kernel.org>
-References: <20250708000215.793090-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,111 +45,128 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.15.5
+X-stable-base: Linux 6.12.36
 Content-Transfer-Encoding: 8bit
 
-From: Maor Gottlieb <maorg@nvidia.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 333e4d79316c9ed5877d7aac8b8ed22efc74e96d ]
+[ Upstream commit de1675de39aa945bad5937d1fde4df3682670639 ]
 
-The GID cache warning messages can flood the kernel log when there are
-multiple failed attempts to add GIDs. This can happen when creating many
-virtual interfaces without having enough space for their GIDs in the GID
-table.
+Revert commit 234f71555019 ("ACPI: battery: negate current when
+discharging") breaks not one but several userspace implementations
+of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
+but those are the two that have been tested.
 
-Change pr_warn to pr_warn_ratelimited to prevent log flooding while still
-maintaining visibility of the issue.
-
-Link: https://patch.msgid.link/r/fd45ed4a1078e743f498b234c3ae816610ba1b18.1750062357.git.leon@kernel.org
-Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-**YES**
+**YES**, this commit should be backported to stable kernel trees.
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+## Extensive Explanation:
 
-## Key Reasons for Backporting:
+### 1. **Critical Userspace Regression Fix**
+This revert fixes a critical regression that breaks userspace
+applications. The commit message explicitly states that the original
+change "breaks not one but several userspace implementations of battery
+monitoring: Steam and MangoHud." This is a clear violation of the
+kernel's "no userspace regressions" rule, which is one of the most
+fundamental principles in kernel development.
 
-### 1. **Fixes a Real-World Bug**
-The commit addresses a concrete problem where warning messages can flood
-the kernel log. This is not a theoretical issue - it occurs when users
-create many virtual interfaces without sufficient GID table space. This
-is a common scenario in production environments with RDMA/InfiniBand
-deployments.
+### 2. **Code Analysis Shows ABI Change**
+Looking at the code changes:
+```c
+// The problematic code that was added (and is now being removed):
+if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
+    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
+    acpi_battery_handle_discharging(battery)
+            == POWER_SUPPLY_STATUS_DISCHARGING)
+    val->intval = -val->intval;
+```
 
-### 2. **Small and Contained Change**
-The change is minimal - only replacing `pr_warn()` with
-`pr_warn_ratelimited()` on lines 585-586. This is exactly 2 lines of
-functional change with no architectural modifications or new features
-added.
+This code was changing the sign of the current value when discharging,
+which altered the userspace-visible ABI. Even if the original behavior
+didn't match documentation, changing it broke existing applications that
+depended on the long-standing behavior.
 
-### 3. **Low Risk of Regression**
-- The change only affects logging behavior, not functional behavior
-- `pr_warn_ratelimited()` is a well-established kernel API that behaves
-  identically to `pr_warn()` except for rate limiting
-- No data structures are modified
-- No locking changes
-- No protocol or API changes
+### 3. **Simple and Safe Revert**
+The commit is a clean revert that:
+- Removes the problematic sign negation logic
+- Restores the original behavior that userspace applications expect
+- Is self-contained to the `acpi_battery_get_property()` function
+- Has minimal risk of introducing new issues
 
-### 4. **Follows Stable Kernel Rules**
-According to stable kernel rules, this fix qualifies because:
-- It fixes a bug that bothers people (kernel log flooding)
-- It's a trivial change (2 lines)
-- It has been tested in mainline
-- It doesn't add new features
+### 4. **Meets Stable Kernel Criteria**
+According to stable kernel rules, this commit qualifies because it:
+- **Fixes a real bug** that users are hitting (broken battery monitoring
+  in Steam and MangoHud)
+- **Is obviously correct** (it's a revert of a change that broke
+  userspace)
+- **Is small and contained** (only affects the ACPI battery property
+  reporting)
+- **Has been tested** (the reporter confirmed the issue)
+- **Fixes a regression** (restores previous working behavior)
 
-### 5. **Similar to Historical Backports**
-Looking at the similar commits provided:
-- Similar Commit #1 (backported): Fixed a hardware limitation issue with
-  clear bounds
-- Similar Commit #2 (NOT backported): Added rate limiting to ipoib_warn
-  but was more invasive with macro changes
-- This commit is more like #1 - a targeted fix for a specific issue
+### 5. **Comparison to Similar Commits**
+Looking at the historical commits marked with "Backport Status: YES",
+they share similar characteristics:
+- Fix actual problems affecting users
+- Are relatively small and contained changes
+- Don't introduce new features or architectural changes
+- Focus on fixing specific issues
 
-### 6. **Production Impact**
-Log flooding can have serious production impacts:
-- Fills up `/var/log` partitions
-- Makes it difficult to find other important kernel messages
-- Can impact system performance due to excessive logging
-- Can trigger log rotation issues
+This revert fits perfectly into this pattern as it's fixing a specific
+userspace compatibility issue without introducing any new functionality.
 
-### 7. **Context-Specific Analysis**
-The error path where this warning occurs (line 571: `ret = -ENOSPC`)
-specifically handles the case when the GID table is full. In
-environments with many virtual interfaces, this condition can be hit
-repeatedly in quick succession, causing the flood described in the
-commit message.
+### 6. **Timing Considerations**
+The original problematic commit (234f71555019) was from May 8, 2025, and
+this revert is from July 3, 2025. If the original commit made it into
+any stable releases, those stable trees would need this revert to
+prevent userspace breakage.
 
-The commit message clearly states this is fixing an observed problem:
-"This can happen when creating many virtual interfaces without having
-enough space for their GIDs in the GID table."
+### Conclusion:
+This is a textbook example of a commit that should be backported to
+stable kernels. It fixes a userspace regression, is minimal in scope,
+carries very low risk, and restores previously working behavior that
+applications depend on. The fact that it's a revert of a problematic
+change makes it even more suitable for stable backporting.
 
-This is a perfect example of a stable-appropriate fix: minimal change,
-fixes a real bug, no risk of functional regression, and improves system
-stability in production environments.
+ drivers/acpi/battery.c | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
- drivers/infiniband/core/cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index 9979a351577f1..81cf3c902e819 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -582,8 +582,8 @@ static int __ib_cache_gid_add(struct ib_device *ib_dev, u32 port,
- out_unlock:
- 	mutex_unlock(&table->lock);
- 	if (ret)
--		pr_warn("%s: unable to add gid %pI6 error=%d\n",
--			__func__, gid->raw, ret);
-+		pr_warn_ratelimited("%s: unable to add gid %pI6 error=%d\n",
-+				    __func__, gid->raw, ret);
- 	return ret;
- }
- 
+diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
+index 6a7ac34d73bda..65fa3444367a1 100644
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -243,23 +243,10 @@ static int acpi_battery_get_property(struct power_supply *psy,
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
+ 			ret = -ENODEV;
+-			break;
+-		}
+-
+-		val->intval = battery->rate_now * 1000;
+-		/*
+-		 * When discharging, the current should be reported as a
+-		 * negative number as per the power supply class interface
+-		 * definition.
+-		 */
+-		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
+-		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
+-		    acpi_battery_handle_discharging(battery)
+-				== POWER_SUPPLY_STATUS_DISCHARGING)
+-			val->intval = -val->intval;
+-
++		else
++			val->intval = battery->rate_now * 1000;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 -- 
 2.39.5
 
