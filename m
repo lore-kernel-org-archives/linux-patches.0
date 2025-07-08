@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E7E2E659;
-	Tue,  8 Jul 2025 16:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074052D9790;
+	Tue,  8 Jul 2025 16:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992007; cv=none; b=V2SBAh4bBMASkYYHfHnPii26nb8AB3jiF5J6QIEN3SfmVqnywwqe/i2+9uxJhaB8pfqcJLOVWFb56fSkPMvgCjBlfjwViMOqsUdMqizg/ucrNvhe7rj5dUNeF5jgAc4LWfWviK3BH9Hd2Y/dzCMmo710GYLw0kMrxzQxcI6FA5U=
+	t=1751992011; cv=none; b=WC3tux19O6YouQM/Qt7arUr2BZD5ccDSYD9BIt4HVNc8rQ4pG/vggpSVGL/40H/V1ulbY190gLgrhvaK1d40N9dmN9sWmqf5TufvPlMfhpjLgYUQngnigrIoKYr8t4wd2HPMzHHn0nUfgdBIu4kfBW1h9K0IqSIY4G2l5Pyahkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992007; c=relaxed/simple;
-	bh=e9WakCXu3XoH2pU5IP2hEsuiMbpJj0tMHPI58aeS1H4=;
+	s=arc-20240116; t=1751992011; c=relaxed/simple;
+	bh=LaS5g8lKlCUp2xLptAjK3A3rYyRcYy3iTcXypa5DWPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCcuSI5jBBAi6QQsvYs3Cxx3TpSaG/0kOnMGzKlj46ls8X/U4WGNGCifPCYyvGvHSglVDvF7WSL3NYI4zfZf2qZJ27sNTMUEjHJrqZS0XAbRRHTxYSyd+8VDq6Bq5RCFE9YD7hYHVsZZ+Yit7axsrtWvPvVb+zuTGb6xbHb7Yg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gl2U0Amc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggVlgFoqguA/YldwrXN4NdttMevBkiexoVLzqp/VwBMuu5RZdpTGdOg4hSZNDpbLtLsyIPkl1WZhWlmZ56cJTyFAz/hVVnA1cZXkBnBwechJFAyTahSAzSX5pS2NWTpmN6hQ6ZcEk1KXmfR5NAArtugRkiOnFhC0ZRC7/rivSW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k133Q6mc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gl2U0Amc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39208C4CEED;
-	Tue,  8 Jul 2025 16:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k133Q6mc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CFEC4CEED;
+	Tue,  8 Jul 2025 16:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992007;
-	bh=e9WakCXu3XoH2pU5IP2hEsuiMbpJj0tMHPI58aeS1H4=;
+	s=korg; t=1751992010;
+	bh=LaS5g8lKlCUp2xLptAjK3A3rYyRcYy3iTcXypa5DWPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl2U0AmcvPfDqB/U9J1IKee9oQ5orWbas2OtwQWPTD6o6sT0SAoDwiqCY1OEnkkxZ
-	 97krZjuDqOjU3Yoy+j1aZtvWQ40a+0PF3vqdKutLHJ4a6T6Fd4hVG18C7kloHjvKOW
-	 pqQD7zlicNvOZf3ByYV8VFLQj5P9sOqUNXE47T7g=
+	b=k133Q6mcvjo8fw1lRWRONXR3Dd/qsU55W8WXIYm08U3W9xHhRvVjB5ecfx8Hbku7n
+	 kzeBQkAT+jSJ2WAX9NF8J2SoyGivydPc8tvRc2HoNw4YRqIOddFsMguLhqG27KmRN9
+	 XBkHYhbKYaqP7mVRYI0vBweOjVAFlZIMacOT7/9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 30/81] spi: spi-fsl-dspi: Clear completion counter before initiating transfer
-Date: Tue,  8 Jul 2025 18:23:22 +0200
-Message-ID: <20250708162225.902400316@linuxfoundation.org>
+Subject: [PATCH 6.1 31/81] drm/i915/selftests: Change mock_request() to return error pointers
+Date: Tue,  8 Jul 2025 18:23:23 +0200
+Message-ID: <20250708162225.939607548@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -52,58 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit fa60c094c19b97e103d653f528f8d9c178b6a5f5 ]
+[ Upstream commit caa7c7a76b78ce41d347003f84975125383e6b59 ]
 
-In target mode, extra interrupts can be received between the end of a
-transfer and halting the module if the host continues sending more data.
-If the interrupt from this occurs after the reinit_completion() then the
-completion counter is left at a non-zero value. The next unrelated
-transfer initiated by userspace will then complete immediately without
-waiting for the interrupt or writing to the RX buffer.
+There was an error pointer vs NULL bug in __igt_breadcrumbs_smoketest().
+The __mock_request_alloc() function implements the
+smoketest->request_alloc() function pointer.  It was supposed to return
+error pointers, but it propogates the NULL return from mock_request()
+so in the event of a failure, it would lead to a NULL pointer
+dereference.
 
-Fix it by resetting the counter before the transfer so that lingering
-values are cleared. This is done after clearing the FIFOs and the
-status register but before the transfer is initiated, so no interrupts
-should be received at this point resulting in other race conditions.
+To fix this, change the mock_request() function to return error pointers
+and update all the callers to expect that.
 
-Fixes: 4f5ee75ea171 ("spi: spi-fsl-dspi: Replace interruptible wait queue with a simple completion")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250627-james-nxp-spi-dma-v4-1-178dba20c120@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 52c0fdb25c7c ("drm/i915: Replace global breadcrumbs with per-context interrupt tracking")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://lore.kernel.org/r/685c1417.050a0220.696f5.5c05@mx.google.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 778fa8ad5f0f23397d045c7ebca048ce8def1c43)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/selftests/i915_request.c | 20 +++++++++----------
+ drivers/gpu/drm/i915/selftests/mock_request.c |  2 +-
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 5374c6d44519a..3a33156f52740 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -964,11 +964,20 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- 		if (dspi->devtype_data->trans_mode == DSPI_DMA_MODE) {
- 			status = dspi_dma_xfer(dspi);
- 		} else {
-+			/*
-+			 * Reinitialize the completion before transferring data
-+			 * to avoid the case where it might remain in the done
-+			 * state due to a spurious interrupt from a previous
-+			 * transfer. This could falsely signal that the current
-+			 * transfer has completed.
-+			 */
-+			if (dspi->irq)
-+				reinit_completion(&dspi->xfer_done);
-+
- 			dspi_fifo_write(dspi);
+diff --git a/drivers/gpu/drm/i915/selftests/i915_request.c b/drivers/gpu/drm/i915/selftests/i915_request.c
+index a46350c37e9d4..a088fbca97e0c 100644
+--- a/drivers/gpu/drm/i915/selftests/i915_request.c
++++ b/drivers/gpu/drm/i915/selftests/i915_request.c
+@@ -73,8 +73,8 @@ static int igt_add_request(void *arg)
+ 	/* Basic preliminary test to create a request and let it loose! */
  
- 			if (dspi->irq) {
- 				wait_for_completion(&dspi->xfer_done);
--				reinit_completion(&dspi->xfer_done);
- 			} else {
- 				do {
- 					status = dspi_poll(dspi);
+ 	request = mock_request(rcs0(i915)->kernel_context, HZ / 10);
+-	if (!request)
+-		return -ENOMEM;
++	if (IS_ERR(request))
++		return PTR_ERR(request);
+ 
+ 	i915_request_add(request);
+ 
+@@ -91,8 +91,8 @@ static int igt_wait_request(void *arg)
+ 	/* Submit a request, then wait upon it */
+ 
+ 	request = mock_request(rcs0(i915)->kernel_context, T);
+-	if (!request)
+-		return -ENOMEM;
++	if (IS_ERR(request))
++		return PTR_ERR(request);
+ 
+ 	i915_request_get(request);
+ 
+@@ -160,8 +160,8 @@ static int igt_fence_wait(void *arg)
+ 	/* Submit a request, treat it as a fence and wait upon it */
+ 
+ 	request = mock_request(rcs0(i915)->kernel_context, T);
+-	if (!request)
+-		return -ENOMEM;
++	if (IS_ERR(request))
++		return PTR_ERR(request);
+ 
+ 	if (dma_fence_wait_timeout(&request->fence, false, T) != -ETIME) {
+ 		pr_err("fence wait success before submit (expected timeout)!\n");
+@@ -219,8 +219,8 @@ static int igt_request_rewind(void *arg)
+ 	GEM_BUG_ON(IS_ERR(ce));
+ 	request = mock_request(ce, 2 * HZ);
+ 	intel_context_put(ce);
+-	if (!request) {
+-		err = -ENOMEM;
++	if (IS_ERR(request)) {
++		err = PTR_ERR(request);
+ 		goto err_context_0;
+ 	}
+ 
+@@ -237,8 +237,8 @@ static int igt_request_rewind(void *arg)
+ 	GEM_BUG_ON(IS_ERR(ce));
+ 	vip = mock_request(ce, 0);
+ 	intel_context_put(ce);
+-	if (!vip) {
+-		err = -ENOMEM;
++	if (IS_ERR(vip)) {
++		err = PTR_ERR(vip);
+ 		goto err_context_1;
+ 	}
+ 
+diff --git a/drivers/gpu/drm/i915/selftests/mock_request.c b/drivers/gpu/drm/i915/selftests/mock_request.c
+index 09f747228dff5..1b0cf073e9643 100644
+--- a/drivers/gpu/drm/i915/selftests/mock_request.c
++++ b/drivers/gpu/drm/i915/selftests/mock_request.c
+@@ -35,7 +35,7 @@ mock_request(struct intel_context *ce, unsigned long delay)
+ 	/* NB the i915->requests slab cache is enlarged to fit mock_request */
+ 	request = intel_context_create_request(ce);
+ 	if (IS_ERR(request))
+-		return NULL;
++		return request;
+ 
+ 	request->mock.delay = delay;
+ 	return request;
 -- 
 2.39.5
 
