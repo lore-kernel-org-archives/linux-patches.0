@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9C22E5425;
-	Tue,  8 Jul 2025 16:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E0E2E5425;
+	Tue,  8 Jul 2025 16:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751991884; cv=none; b=LhZkQFJRQlV6jobX6yuUmzDMHIVZm0OJyt/EYwGn6WJ/pjpsrlETFJUIA79vGevNfPNGTkTY4aX7ugdq8t6Hn2bh7MLcvXT4/2pI4pvuAFPf8wf7Q7KW4SWp8+gUEAigHeMWItScjuOzbpvR4cF/iaZy+w2IHMyyaHIeV5omL3w=
+	t=1751991887; cv=none; b=Y9zX4vSeJLoMsXuyvi/FUe1z5VO5qK+ckDestbnfSBDj1maji3ly5GXL9fYT9URZzUpLne9v0F9+JXtYAvw+FhkiNClewpH5VizuHkIz+9Qt2dG9LGXC1KpPqsGYRctCb+/cAJAO79lbLalTsjRHP2Uc+aLg86gVNXmMHoHsluw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751991884; c=relaxed/simple;
-	bh=fKqoxrphlzUyiz5V58dozrtUH8dIvYJNTb3ofdENO2g=;
+	s=arc-20240116; t=1751991887; c=relaxed/simple;
+	bh=QkOhldzF7KG0re14tavBPXWg+Icm6RpFzTsMdso+D8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOJ1EW2W2fmHEI+JY7hWHhwX4WJr28unUughiSfnVswMYudOZrypqiX/DZgWQABLg73mB9MkqMBgOC2La8ktRlLpRPcQt9L+RSQFKYmZjLgd88nlnnbqliBY7fY2eiDWBebmIXIIhjRDrSthqiZuHX7m7ocTi2ydU03NER82l8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3800DVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1ldDBgIJiFuGpC5OIvKs9wzU7nPiOnrr7VqjS45g3FBgzbvkllHxGBgZzCJPYNl+1VNZEF+SnTlpFj9e5+bMhTJtR0Va0ucbjyA4l8pkSyTfK3sG1n3uJadE26hDwpes2yfabI9e6c2CTlrsVPdz4AOgi1jvat9z6vefw4uzAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUNpMLGR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3800DVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9935EC4CEED;
-	Tue,  8 Jul 2025 16:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUNpMLGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0DFC4CEF0;
+	Tue,  8 Jul 2025 16:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751991884;
-	bh=fKqoxrphlzUyiz5V58dozrtUH8dIvYJNTb3ofdENO2g=;
+	s=korg; t=1751991887;
+	bh=QkOhldzF7KG0re14tavBPXWg+Icm6RpFzTsMdso+D8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3800DVbN2fPIySEWn17qj+TZggvftF5JLBsO7xJ8SMU/MRTaOeGhXOSY+WMplQ2T
-	 qNFVIgI4pQQbQO9tWUVzwJlBPfsiMtqlIhSBgrqesoa7mzy5UicYUG7K4jjsZvLIpS
-	 cJCJek+K/pZmoox9to9R/+2aQiew0jJpuLEPVa1I=
+	b=pUNpMLGRVgpQGzkl5fVaIDUXRTTcG00aZTSSwoVkXfCftsvkM6OtSF3gDiZaFmLzp
+	 wMQjBRwaXz/HU7BxctLFuRBCP7TixalC74HwIeLWnewEMVZYujaIFszp5ZaA+v9Yc2
+	 G8xcP/c8Bl6K0kRvrS57+JL/Qzl/wAYpkPJ5Tqqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elena Popa <elena.popa@nxp.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.15 002/178] rtc: pcf2127: fix SPI command byte for PCF2131
+	Han Young <hanyang.tony@bytedance.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 002/160] NFSv4: Always set NLINK even if the server doesnt support it
 Date: Tue,  8 Jul 2025 18:20:39 +0200
-Message-ID: <20250708162236.617915940@linuxfoundation.org>
+Message-ID: <20250708162231.575337288@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
-References: <20250708162236.549307806@linuxfoundation.org>
+In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
+References: <20250708162231.503362020@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.15-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Elena Popa <elena.popa@nxp.com>
+From: Han Young <hanyang.tony@bytedance.com>
 
-commit fa78e9b606a472495ef5b6b3d8b45c37f7727f9d upstream.
+[ Upstream commit 3a3065352f73381d3a1aa0ccab44aec3a5a9b365 ]
 
-PCF2131 was not responding to read/write operations using SPI. PCF2131
-has a different command byte definition, compared to PCF2127/29. Added
-the new command byte definition when PCF2131 is detected.
+fattr4_numlinks is a recommended attribute, so the client should emulate
+it even if the server doesn't support it. In decode_attr_nlink function
+in nfs4xdr.c, nlink is initialized to 1. However, this default value
+isn't set to the inode due to the check in nfs_fhget.
 
-Fixes: afc505bf9039 ("rtc: pcf2127: add support for PCF2131 RTC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Elena Popa <elena.popa@nxp.com>
-Acked-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20250530104001.957977-1-elena.popa@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So if the server doesn't support numlinks, inode's nlink will be zero,
+the mount will fail with error "Stale file handle". Set the nlink to 1
+if the server doesn't support it.
+
+Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf2127.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfs/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/rtc/rtc-pcf2127.c
-+++ b/drivers/rtc/rtc-pcf2127.c
-@@ -1465,6 +1465,11 @@ static int pcf2127_i2c_probe(struct i2c_
- 		variant = &pcf21xx_cfg[type];
- 	}
- 
-+	if (variant->type == PCF2131) {
-+		config.read_flag_mask = 0x0;
-+		config.write_flag_mask = 0x0;
-+	}
-+
- 	config.max_register = variant->max_register,
- 
- 	regmap = devm_regmap_init(&client->dev, &pcf2127_i2c_regmap,
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index 09922258f5a11..28c24079c57a8 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -567,6 +567,8 @@ nfs_fhget(struct super_block *sb, struct nfs_fh *fh, struct nfs_fattr *fattr, st
+ 			set_nlink(inode, fattr->nlink);
+ 		else if (fattr_supported & NFS_ATTR_FATTR_NLINK)
+ 			nfs_set_cache_invalid(inode, NFS_INO_INVALID_NLINK);
++		else
++			set_nlink(inode, 1);
+ 		if (fattr->valid & NFS_ATTR_FATTR_OWNER)
+ 			inode->i_uid = fattr->uid;
+ 		else if (fattr_supported & NFS_ATTR_FATTR_OWNER)
+-- 
+2.39.5
+
 
 
