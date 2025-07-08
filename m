@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C248F5E;
-	Tue,  8 Jul 2025 16:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD67D1DB127;
+	Tue,  8 Jul 2025 16:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993784; cv=none; b=MAfSe4KeiMwmrNryZs3jE68ovuCjpDYzr639sVG7Ux0hwAQUPaB+UoY/IqkxGHgb2WIo+T/VJfUDsv6cjthZuV4YmdRDj475LfpnW1dubVGt5Sk/zJ1mHFAbG+YwZZHBB0jnsKMm6kpxW7W8Kp26lSq4YkR3xkfP3rWjUMVrRSI=
+	t=1751993786; cv=none; b=pAMQvNTcpzzgAvyTm6gfG2eRAPqAqDODI1E93o4L+zcyvwhca1u4gvCR0g+1in/IDW8xSv/H18xZI+xpntw5zwLxeIm80DXEsyRvGgDe/fO79nbpMaC6+6UipV8o8S1hHCBQ2nFW2BNj0VUeRrEEH6+k1tDko4atEjNxqUuNwXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993784; c=relaxed/simple;
-	bh=wpH3g0F6YVNXEImPUMwygfGv8A+7eaH0C5qf6SD3V1g=;
+	s=arc-20240116; t=1751993786; c=relaxed/simple;
+	bh=2NGlPPw4zjKdNWzjKuHE1KRyo+A8C+5HQw6qr+krJhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkRm2XfmBx8B7MUFVMEdjZ307wX7nXlF0NXMED90AqEDB5UsPi2n7Vl8SaMuYkY1tDOk95YdlFOY/TLpx8+7HoYvGMdoqkFpwJB8PGRsfYtcNjns3q0QeTQ8jAxgn4ga9JtWlN9Jap3ckFQX4/QDX7Fxn7W9au1kFaGG3nwpO0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lxh8NE8w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxEAdZfyItUSqvUxbW1BT1CuuAk069cNgnewIZawy5VHNi/dG4g6lcAyg+rjj3buLEGimMfOihIuonxuZ+ZTuhV2AocaGZD5PconFou+pA7DFDlRL/i/aMagLothU/hwAVEKEPclovKJvrYD4I5KORB/t0QOYKc1EM21j704vxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKHexyh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lxh8NE8w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62219C4CEF0;
-	Tue,  8 Jul 2025 16:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKHexyh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446ECC4CEF0;
+	Tue,  8 Jul 2025 16:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993783;
-	bh=wpH3g0F6YVNXEImPUMwygfGv8A+7eaH0C5qf6SD3V1g=;
+	s=korg; t=1751993786;
+	bh=2NGlPPw4zjKdNWzjKuHE1KRyo+A8C+5HQw6qr+krJhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lxh8NE8wrv59qqey8ogaTdEeKOPumNlpg2l+Q2tm4/NJY4Kt4Lyvkwh2FB5xFtcaX
-	 VTLNiOrOfb4ezM+oJztPHyCikGPTBA9zX78MsVuXzySRZA5a5LIX2qOf0D6Tp/lYRH
-	 2BXBPRQkXu4RU+tB9suQWZ1PWNWAAuwYkzu31pdc=
+	b=rKHexyh9JTBjMuw8TQ3dOi/PHLm+1iPbdwdiZqQqXJjZRK/EDGDrEc7Ks30O0bBrE
+	 wmWM5LNt2oHFPyR3Mo6xYbvZQK4lOo31q/s7g6d49vzGdFFLj361HZUfkMNA+40yD9
+	 1mWOWjQwQorVQSw8EwT2pHoq9sVv+j/C+CB7QE8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Lewalski <jakub.lewalski@nokia.com>,
-	Elodie Decerle <elodie.decerle@nokia.com>,
+	Chance Yang <chance.yang@kneron.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/160] tty: serial: uartlite: register uart driver in init
-Date: Tue,  8 Jul 2025 18:20:54 +0200
-Message-ID: <20250708162231.985264456@linuxfoundation.org>
+Subject: [PATCH 5.15 018/160] usb: common: usb-conn-gpio: use a unique name for usb connector device
+Date: Tue,  8 Jul 2025 18:20:55 +0200
+Message-ID: <20250708162232.012431452@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,99 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Lewalski <jakub.lewalski@nokia.com>
+From: Chance Yang <chance.yang@kneron.us>
 
-[ Upstream commit 6bd697b5fc39fd24e2aa418c7b7d14469f550a93 ]
+[ Upstream commit d4e5b10c55627e2f3fc9e5b337a28b4e2f02a55e ]
 
-When two instances of uart devices are probing, a concurrency race can
-occur. If one thread calls uart_register_driver function, which first
-allocates and assigns memory to 'uart_state' member of uart_driver
-structure, the other instance can bypass uart driver registration and
-call ulite_assign. This calls uart_add_one_port, which expects the uart
-driver to be fully initialized. This leads to a kernel panic due to a
-null pointer dereference:
+The current implementation of the usb-conn-gpio driver uses a fixed
+"usb-charger" name for all USB connector devices. This causes conflicts
+in the power supply subsystem when multiple USB connectors are present,
+as duplicate names are not allowed.
 
-[    8.143581] BUG: kernel NULL pointer dereference, address: 00000000000002b8
-[    8.156982] #PF: supervisor write access in kernel mode
-[    8.156984] #PF: error_code(0x0002) - not-present page
-[    8.156986] PGD 0 P4D 0
-...
-[    8.180668] RIP: 0010:mutex_lock+0x19/0x30
-[    8.188624] Call Trace:
-[    8.188629]  ? __die_body.cold+0x1a/0x1f
-[    8.195260]  ? page_fault_oops+0x15c/0x290
-[    8.209183]  ? __irq_resolve_mapping+0x47/0x80
-[    8.209187]  ? exc_page_fault+0x64/0x140
-[    8.209190]  ? asm_exc_page_fault+0x22/0x30
-[    8.209196]  ? mutex_lock+0x19/0x30
-[    8.223116]  uart_add_one_port+0x60/0x440
-[    8.223122]  ? proc_tty_register_driver+0x43/0x50
-[    8.223126]  ? tty_register_driver+0x1ca/0x1e0
-[    8.246250]  ulite_probe+0x357/0x4b0 [uartlite]
+Use IDA to manage unique IDs for naming usb connectors (e.g.,
+usb-charger-0, usb-charger-1).
 
-To prevent it, move uart driver registration in to init function. This
-will ensure that uart_driver is always registered when probe function
-is called.
-
-Signed-off-by: Jakub Lewalski <jakub.lewalski@nokia.com>
-Signed-off-by: Elodie Decerle <elodie.decerle@nokia.com>
-Link: https://lore.kernel.org/r/20250331160732.2042-1-elodie.decerle@nokia.com
+Signed-off-by: Chance Yang <chance.yang@kneron.us>
+Link: https://lore.kernel.org/r/20250411-work-next-v3-1-7cd9aa80190c@kneron.us
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/uartlite.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/usb/common/usb-conn-gpio.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/uartlite.c b/drivers/tty/serial/uartlite.c
-index 36871cebd6a0f..0345eaf969630 100644
---- a/drivers/tty/serial/uartlite.c
-+++ b/drivers/tty/serial/uartlite.c
-@@ -808,16 +808,6 @@ static int ulite_probe(struct platform_device *pdev)
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
- 
--	if (!ulite_uart_driver.state) {
--		dev_dbg(&pdev->dev, "uartlite: calling uart_register_driver()\n");
--		ret = uart_register_driver(&ulite_uart_driver);
--		if (ret < 0) {
--			dev_err(&pdev->dev, "Failed to register driver\n");
--			clk_disable_unprepare(pdata->clk);
--			return ret;
--		}
--	}
--
- 	ret = ulite_assign(&pdev->dev, id, res->start, irq, pdata);
- 
- 	pm_runtime_mark_last_busy(&pdev->dev);
-@@ -859,16 +849,25 @@ static struct platform_driver ulite_platform_driver = {
- 
- static int __init ulite_init(void)
- {
-+	int ret;
+diff --git a/drivers/usb/common/usb-conn-gpio.c b/drivers/usb/common/usb-conn-gpio.c
+index 521c95935d4c3..9691a1c8d8b0e 100644
+--- a/drivers/usb/common/usb-conn-gpio.c
++++ b/drivers/usb/common/usb-conn-gpio.c
+@@ -20,6 +20,9 @@
+ #include <linux/power_supply.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/usb/role.h>
++#include <linux/idr.h>
 +
-+	pr_debug("uartlite: calling uart_register_driver()\n");
-+	ret = uart_register_driver(&ulite_uart_driver);
-+	if (ret)
-+		return ret;
++static DEFINE_IDA(usb_conn_ida);
  
- 	pr_debug("uartlite: calling platform_driver_register()\n");
--	return platform_driver_register(&ulite_platform_driver);
-+	ret = platform_driver_register(&ulite_platform_driver);
-+	if (ret)
-+		uart_unregister_driver(&ulite_uart_driver);
+ #define USB_GPIO_DEB_MS		20	/* ms */
+ #define USB_GPIO_DEB_US		((USB_GPIO_DEB_MS) * 1000)	/* us */
+@@ -29,6 +32,7 @@
+ 
+ struct usb_conn_info {
+ 	struct device *dev;
++	int conn_id; /* store the IDA-allocated ID */
+ 	struct usb_role_switch *role_sw;
+ 	enum usb_role last_role;
+ 	struct regulator *vbus;
+@@ -160,7 +164,17 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
+ 		.of_node = dev->of_node,
+ 	};
+ 
+-	desc->name = "usb-charger";
++	info->conn_id = ida_alloc(&usb_conn_ida, GFP_KERNEL);
++	if (info->conn_id < 0)
++		return info->conn_id;
 +
-+	return ret;
- }
++	desc->name = devm_kasprintf(dev, GFP_KERNEL, "usb-charger-%d",
++				    info->conn_id);
++	if (!desc->name) {
++		ida_free(&usb_conn_ida, info->conn_id);
++		return -ENOMEM;
++	}
++
+ 	desc->properties = usb_charger_properties;
+ 	desc->num_properties = ARRAY_SIZE(usb_charger_properties);
+ 	desc->get_property = usb_charger_get_property;
+@@ -168,8 +182,10 @@ static int usb_conn_psy_register(struct usb_conn_info *info)
+ 	cfg.drv_data = info;
  
- static void __exit ulite_exit(void)
- {
- 	platform_driver_unregister(&ulite_platform_driver);
--	if (ulite_uart_driver.state)
--		uart_unregister_driver(&ulite_uart_driver);
-+	uart_unregister_driver(&ulite_uart_driver);
- }
+ 	info->charger = devm_power_supply_register(dev, desc, &cfg);
+-	if (IS_ERR(info->charger))
+-		dev_err(dev, "Unable to register charger\n");
++	if (IS_ERR(info->charger)) {
++		dev_err(dev, "Unable to register charger %d\n", info->conn_id);
++		ida_free(&usb_conn_ida, info->conn_id);
++	}
  
- module_init(ulite_init);
+ 	return PTR_ERR_OR_ZERO(info->charger);
+ }
+@@ -292,6 +308,9 @@ static int usb_conn_remove(struct platform_device *pdev)
+ 
+ 	cancel_delayed_work_sync(&info->dw_det);
+ 
++	if (info->charger)
++		ida_free(&usb_conn_ida, info->conn_id);
++
+ 	if (info->last_role == USB_ROLE_HOST && info->vbus)
+ 		regulator_disable(info->vbus);
+ 
 -- 
 2.39.5
 
