@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9FA264F9C;
-	Tue,  8 Jul 2025 16:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19A1214A9B;
+	Tue,  8 Jul 2025 16:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993347; cv=none; b=jtj05HOqlEVgXVkXuqkdycU3dQSWEiTr/BmmLTvsvl3JkVRCHPcjyWVhbbMvVSKE259W5JzyFffqnF15dxkbz2FVbPE4lXGq8KaPkZqA8YT1DseV8VesN7S6uIZJyVrrsP94wguAnBVsCSn9A5loEC3iTtIDBvTb1Iku+bWBnd0=
+	t=1751993350; cv=none; b=L5BdMc0F9v84/U2ajEyqj9ONnIHN+bsYMzgf5D2hqst5E44P87W+QsI3i++UmP0bz9zK2f+w+4bFJOJuINwhtO2YoKr+69K8RBTY9PCdVlvYGGdOoqNbYtIZCbi8woWLkrZl3vs9ksFZDWyn7klToBdBHOFTEVw1D0hP4hEOAe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993347; c=relaxed/simple;
-	bh=TTrCvHW5pHh2Iuxj9jpffNu2w1D4BYuhM6ZyvkGzuvQ=;
+	s=arc-20240116; t=1751993350; c=relaxed/simple;
+	bh=0PEapq4BZ+HnaqPbKqJQOJJ6RUnyWxSsCsOfTXgZYgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foxdfDSXBdOCgm7KlOKeKCDDzM//suQrn+fM3LQIxnPeTu2XIjcdd7r5u1T567HMRUQ2u5aRRnroL9z722Phercys6rrZyumrOQ9Tp7LReMVeHLCJEza14Ta6sCGtVGNZtl8UVztpI3mtec4bOTndT4NyjkF9ThHkjvZJlcnkBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdS0FMUy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aM8sPiRARJT3FNNx63fIvc/yV6MPCcGR3RwSey9ALYtILIfbek6x7ejuP3YlXQvlfYMZ6YeSocvYJRuoBqF+yavfGkRnoKCXrnBxzHq3a1CLsYpPszXprpClNZNY4EDCyUDfN8yShG8kktQ+kJAgZnuAWEzl1uSuoQQeSSkP27c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWyYsHVF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdS0FMUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21145C4CEED;
-	Tue,  8 Jul 2025 16:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWyYsHVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C1CC4CEED;
+	Tue,  8 Jul 2025 16:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993347;
-	bh=TTrCvHW5pHh2Iuxj9jpffNu2w1D4BYuhM6ZyvkGzuvQ=;
+	s=korg; t=1751993350;
+	bh=0PEapq4BZ+HnaqPbKqJQOJJ6RUnyWxSsCsOfTXgZYgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdS0FMUy9V5AI1HHno0qvF3i4rVoLR7KqDKEbO658KSpA7Dlhyrdrv+lX2vjx4JWm
-	 ielo8kkmftbjpFFK4q1efck/uh0ScmdYo08IkqDWZcfm2iXg58XtXu/A7HhjU/n51f
-	 XUnD9ID4/69YJ74Ax8VGXXVrQpleVkkl/PxwbWBw=
+	b=WWyYsHVFHL6rPJzMK6IkKvzRdVGCV0dYT5KnzQ3K1VQPyQfz5zwFsQZz1i8VfGFeW
+	 9J6rHfLGF25kM6AHoj1BO67y1HOwXVUROiX8qUJYQ8rZEdXekc7hSnfBWq6uaHeNh8
+	 xTLSqBw1/DhhtzAsgtCUCoJlMmUj4dCkHAEIF52Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>
-Subject: [PATCH 6.15 012/178] iommufd/selftest: Add asserts testing global mfd
-Date: Tue,  8 Jul 2025 18:20:49 +0200
-Message-ID: <20250708162236.866056338@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 013/178] net: libwx: fix the incorrect display of the queue number
+Date: Tue,  8 Jul 2025 18:20:50 +0200
+Message-ID: <20250708162236.891929255@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -50,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit a9bf67ee170514b17541038c60bb94cb2cf5732f upstream.
+commit 5186ff7e1d0e26aaef998ba18b31c79c28d1441f upstream.
 
-The mfd and mfd_buffer will be used in the tests directly without an extra
-check. Test them in setup_sizes() to ensure they are safe to use.
+When setting "ethtool -L eth0 combined 1", the number of RX/TX queue is
+changed to be 1. RSS is disabled at this moment, and the indices of FDIR
+have not be changed in wx_set_rss_queues(). So the combined count still
+shows the previous value. This issue was introduced when supporting
+FDIR. Fix it for those devices that support FDIR.
 
-Fixes: 0bcceb1f51c7 ("iommufd: Selftest coverage for IOMMU_IOAS_MAP_FILE")
-Link: https://patch.msgid.link/r/94bdc11d2b6d5db337b1361c5e5fce0ed494bb40.1750787928.git.nicolinc@nvidia.com
+Fixes: 34744a7749b3 ("net: txgbe: add FDIR info to ethtool ops")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/A5C8FE56D6C04608+20250701070625.73680-1-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/iommu/iommufd.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/iommu/iommufd.c
-+++ b/tools/testing/selftests/iommu/iommufd.c
-@@ -54,6 +54,8 @@ static __attribute__((constructor)) void
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -1641,6 +1641,7 @@ static void wx_set_rss_queues(struct wx
  
- 	mfd_buffer = memfd_mmap(BUFFER_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED,
- 				&mfd);
-+	assert(mfd_buffer != MAP_FAILED);
-+	assert(mfd > 0);
- }
+ 	clear_bit(WX_FLAG_FDIR_HASH, wx->flags);
  
- FIXTURE(iommufd)
++	wx->ring_feature[RING_F_FDIR].indices = 1;
+ 	/* Use Flow Director in addition to RSS to ensure the best
+ 	 * distribution of flows across cores, even when an FDIR flow
+ 	 * isn't matched.
 
 
