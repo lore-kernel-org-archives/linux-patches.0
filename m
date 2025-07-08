@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585E6944F;
-	Tue,  8 Jul 2025 00:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B931D18024;
+	Tue,  8 Jul 2025 00:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932940; cv=none; b=mcnpM98iQQbVg4aQsjFmJlwG1cK3Ac/9SXMtaToxxQhwZvSLUIjxrml1CbNqVqILUNo11VDi0OqCyrbf44/wh29gbTk906A4sJ7Ia51E8b7WBDmn1Z1iE5hWSY7yKgqdoD+l1rILcdZ58RziwmgMxMwW529JKwAmbxlePOmshDs=
+	t=1751932942; cv=none; b=pNAZkA+dO5TIlYjOA51Dw64CQG3glcJClEmyvlBQoyedMDlKiDHnQsR35ccsgE3ZAo4jvZGaZsGo2fhasnfGi/gsoFlHlnDCeX+CYjFTP8S4/5o49QcCi6NUiy+mO9i/Iw7qiPyDMncSp+nW1BHnJkpmxjHIEFSBJR4t9bsjQp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932940; c=relaxed/simple;
-	bh=GlFzYe43FUhyyIQgqvqd6gjeYhzmTUUOuoBAt919PFQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=GWoERPGsGj70jzNlcyoK5X8jKBIXmfmNIZUTAFGJOLOURi5pSbxgYqYSB40ELomHBitjIJ61W2krl6Vlt8AeJAYKivcOCdZp9qBI2NDbeFpJapM/zYy0ouRx2o8mX+ukVZaICHH2h6osbM1UOI5+HITBszwUoIH3MRdlQpjt5Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SmUdarfF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751932942; c=relaxed/simple;
+	bh=f03XlzpIQ4P4WnOH7ndWdwmE+3QLPfdnFkIBr1r+T/4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=GyVIbqROCJ7epyGivQuRb5OMkZM/kOJrbBlwjMA2UGCC4H1eT4zwkh2QervhiUXLmXdQOHLf3L9Tm65apMOPWRrc2fcM4TKzv9RZXWFHumw6D7iHeRIpXMbVpAw2m3L/3cMi5SfWxmszT08i4nY8ljAXcZbkrB3MJKcNOrpv47I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cl4TY8Vn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SmUdarfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF046C4CEE3;
-	Tue,  8 Jul 2025 00:02:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cl4TY8Vn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F80C4CEF1;
+	Tue,  8 Jul 2025 00:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932937;
-	bh=GlFzYe43FUhyyIQgqvqd6gjeYhzmTUUOuoBAt919PFQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=SmUdarfFQYxnfxrsWx4KIWHbXzHYvMIUaHc01hfE6jjxbogdSa1/lI9QWVBwxliv9
-	 3PHul0OX+Z6Q10u+GRD4oOvTTG2/Q73G89aWjR7XEhdcGy1ptwo+EM7GAPWWSZSylX
-	 j6ZYLyNZ8r/8iHHg079y2ujt1k0q46X88Vcqhc9vvrzy3UI/csPokWYAd+x5l7FuWT
-	 8Va+ElFMh+ufaKCJutC/15NwS4rfWT/iMMXUZq+jZ0eizVXAl09A2ZBXsvhnlWBRiY
-	 B/MnjX5eEHO4i14klFKiXAllVVtC/ZMxGfII9f/ffYjJreOlXuUqchAeIOCrZm0Q0h
-	 JvRa9Yzp3/3Zg==
+	s=k20201202; t=1751932941;
+	bh=f03XlzpIQ4P4WnOH7ndWdwmE+3QLPfdnFkIBr1r+T/4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Cl4TY8Vnpdjtn+I6gNdV3xrJQtse2TMlEHml/Y/C4GZrYoaraW9PFKS6bbrwJl5bJ
+	 700F+n/CBV04anTzBsZR1z+nPQ80sWRruLauuLC9dGdYX2zIX8+/d0FJeeHaGlFyzu
+	 RtiAs4YAHTYb3l3AYdsos9eK3VFCdahwXRqXP+PYrrNvLTm+w6AqkrGS5/l6QADghD
+	 FyyN4s2Oq+3M4K2LEeLM70UWTjpKuXpoMzaE0SOL01jX7CfhvUAGtuwKgVACqV/RO9
+	 joy4aN+FoaHDTNb1UMXREiCugY7EZx7NdHncEMvge6hRDav88pfqa1T0yaf4fE5fE1
+	 YSPzLjbLiWr7w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
+Cc: Laurent Vivier <lvivier@redhat.com>,
+	xuanzhuo@linux.alibaba.com,
+	Jason Wang <jasowang@redhat.com>,
+	Lei Yang <leiyang@redhat.com>,
+	"Michael S . Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 1/8] Revert "ACPI: battery: negate current when discharging"
-Date: Mon,  7 Jul 2025 20:02:08 -0400
-Message-Id: <20250708000215.793090-1-sashal@kernel.org>
+	virtualization@lists.linux-foundation.org
+Subject: [PATCH AUTOSEL 6.15 3/8] virtio_ring: Fix error reporting in virtqueue_resize
+Date: Mon,  7 Jul 2025 20:02:10 -0400
+Message-Id: <20250708000215.793090-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250708000215.793090-1-sashal@kernel.org>
+References: <20250708000215.793090-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,125 +54,149 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.5
 Content-Transfer-Encoding: 8bit
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-[ Upstream commit de1675de39aa945bad5937d1fde4df3682670639 ]
+[ Upstream commit 45ebc7e6c125ce93d2ddf82cd5bea20121bb0258 ]
 
-Revert commit 234f71555019 ("ACPI: battery: negate current when
-discharging") breaks not one but several userspace implementations
-of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
-but those are the two that have been tested.
+The virtqueue_resize() function was not correctly propagating error codes
+from its internal resize helper functions, specifically
+virtqueue_resize_packet() and virtqueue_resize_split(). If these helpers
+returned an error, but the subsequent call to virtqueue_enable_after_reset()
+succeeded, the original error from the resize operation would be masked.
+Consequently, virtqueue_resize() could incorrectly report success to its
+caller despite an underlying resize failure.
 
-Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This change restores the original code behavior:
+
+       if (vdev->config->enable_vq_after_reset(_vq))
+               return -EBUSY;
+
+       return err;
+
+Fix: commit ad48d53b5b3f ("virtio_ring: separate the logic of reset/enable from virtqueue_resize")
+Cc: xuanzhuo@linux.alibaba.com
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20250521092236.661410-2-lvivier@redhat.com
+Tested-by: Lei Yang <leiyang@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
+## Analysis Summary
+
 **YES**, this commit should be backported to stable kernel trees.
 
-## Extensive Explanation:
+Here's my extensive analysis:
 
-### 1. **Critical Userspace Regression Fix**
-This revert fixes a critical regression that breaks userspace
-applications. The commit message explicitly states that the original
-change "breaks not one but several userspace implementations of battery
-monitoring: Steam and MangoHud." This is a clear violation of the
-kernel's "no userspace regressions" rule, which is one of the most
-fundamental principles in kernel development.
+### 1. **This is a clear bug fix for incorrect error reporting**
 
-### 2. **Code Analysis Shows ABI Change**
-Looking at the code changes:
+The commit fixes a critical error handling bug in `virtqueue_resize()`
+where error codes from the resize operation (`virtqueue_resize_packed()`
+or `virtqueue_resize_split()`) were being masked if
+`virtqueue_enable_after_reset()` succeeded.
+
+The specific bug pattern:
 ```c
-// The problematic code that was added (and is now being removed):
-if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
-    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
-    acpi_battery_handle_discharging(battery)
-            == POWER_SUPPLY_STATUS_DISCHARGING)
-    val->intval = -val->intval;
+// Before fix (buggy code):
+err = virtqueue_resize_packed/_split(_vq, num);  // May return error
+return virtqueue_enable_after_reset(_vq);        // Returns 0 on
+success, masking 'err'
+
+// After fix (correct code):
+err = virtqueue_resize_packed/_split(_vq, num);
+err_reset = virtqueue_enable_after_reset(_vq);
+if (err_reset)
+    return err_reset;
+return err;  // Correctly returns the resize error
 ```
 
-This code was changing the sign of the current value when discharging,
-which altered the userspace-visible ABI. Even if the original behavior
-didn't match documentation, changing it broke existing applications that
-depended on the long-standing behavior.
+### 2. **The bug affects users and can cause silent failures**
 
-### 3. **Simple and Safe Revert**
-The commit is a clean revert that:
-- Removes the problematic sign negation logic
-- Restores the original behavior that userspace applications expect
-- Is self-contained to the `acpi_battery_get_property()` function
-- Has minimal risk of introducing new issues
+According to the function documentation at lines 2787-2788, when
+`-ENOMEM` is returned from resize, "vq can still work normally" with the
+original ring size. However, with the bug, the caller would receive
+success (0) instead of `-ENOMEM`, leading them to incorrectly believe
+the resize succeeded when it actually failed. This could cause:
+- Incorrect assumptions about queue capacity
+- Performance issues if the application expected a different queue size
+- Potential resource allocation mismatches
 
-### 4. **Meets Stable Kernel Criteria**
-According to stable kernel rules, this commit qualifies because it:
-- **Fixes a real bug** that users are hitting (broken battery monitoring
-  in Steam and MangoHud)
-- **Is obviously correct** (it's a revert of a change that broke
-  userspace)
-- **Is small and contained** (only affects the ACPI battery property
-  reporting)
-- **Has been tested** (the reporter confirmed the issue)
-- **Fixes a regression** (restores previous working behavior)
+### 3. **The fix is small, contained, and low-risk**
 
-### 5. **Comparison to Similar Commits**
-Looking at the historical commits marked with "Backport Status: YES",
-they share similar characteristics:
-- Fix actual problems affecting users
-- Are relatively small and contained changes
-- Don't introduce new features or architectural changes
-- Focus on fixing specific issues
+The change is minimal - only 6 lines of code:
+- Introduces a new local variable `err_reset`
+- Properly preserves and returns the original error code
+- No architectural changes or new features
+- Only affects error propagation logic
 
-This revert fits perfectly into this pattern as it's fixing a specific
-userspace compatibility issue without introducing any new functionality.
+### 4. **The bug exists in stable kernels**
 
-### 6. **Timing Considerations**
-The original problematic commit (234f71555019) was from May 8, 2025, and
-this revert is from July 3, 2025. If the original commit made it into
-any stable releases, those stable trees would need this revert to
-prevent userspace breakage.
+- Bug introduced in v6.6-rc1 (commit ad48d53b5b3f)
+- The feature (virtqueue_resize) exists since v6.0-rc1
+- Therefore, stable kernels 6.6.x and later contain this bug
 
-### Conclusion:
-This is a textbook example of a commit that should be backported to
-stable kernels. It fixes a userspace regression, is minimal in scope,
-carries very low risk, and restores previously working behavior that
-applications depend on. The fact that it's a revert of a problematic
-change makes it even more suitable for stable backporting.
+### 5. **Clear regression from refactoring**
 
- drivers/acpi/battery.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+The commit message explicitly states this "restores the original code
+behavior" and includes a "Fix:" tag pointing to the commit that
+introduced the regression. The original correct pattern was:
+```c
+if (vdev->config->enable_vq_after_reset(_vq))
+    return -EBUSY;
+return err;
+```
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 93bb1f7d90986..6760330a8af55 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -243,23 +243,10 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
- 			ret = -ENODEV;
--			break;
--		}
--
--		val->intval = battery->rate_now * 1000;
--		/*
--		 * When discharging, the current should be reported as a
--		 * negative number as per the power supply class interface
--		 * definition.
--		 */
--		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
--		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
--		    acpi_battery_handle_discharging(battery)
--				== POWER_SUPPLY_STATUS_DISCHARGING)
--			val->intval = -val->intval;
--
-+		else
-+			val->intval = battery->rate_now * 1000;
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+### 6. **Meets stable kernel criteria**
+
+Per stable kernel rules, this fix:
+- Fixes a real bug that affects users (incorrect error reporting)
+- Is already in Linus' tree (merged by Paolo Abeni)
+- Is small and easily reviewable
+- Has been tested (Tested-by: Lei Yang)
+- Has multiple maintainer acks (Jason Wang, Michael S. Tsirkin)
+- Does not add new features or make risky changes
+
+### 7. **Similar commits context**
+
+While the similar commits shown are feature additions (introducing
+virtqueue_resize functionality), this commit is fundamentally different
+- it's a bug fix for error handling, not a feature addition.
+
+The fix ensures that callers of `virtqueue_resize()` receive accurate
+error information, which is critical for proper error handling and
+recovery in virtio drivers that use queue resizing functionality.
+
+ drivers/virtio/virtio_ring.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
+index b784aab668670..4397392bfef00 100644
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -2797,7 +2797,7 @@ int virtqueue_resize(struct virtqueue *_vq, u32 num,
+ 		     void (*recycle_done)(struct virtqueue *vq))
+ {
+ 	struct vring_virtqueue *vq = to_vvq(_vq);
+-	int err;
++	int err, err_reset;
+ 
+ 	if (num > vq->vq.num_max)
+ 		return -E2BIG;
+@@ -2819,7 +2819,11 @@ int virtqueue_resize(struct virtqueue *_vq, u32 num,
+ 	else
+ 		err = virtqueue_resize_split(_vq, num);
+ 
+-	return virtqueue_enable_after_reset(_vq);
++	err_reset = virtqueue_enable_after_reset(_vq);
++	if (err_reset)
++		return err_reset;
++
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(virtqueue_resize);
+ 
 -- 
 2.39.5
 
