@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F319E23A98D;
-	Tue,  8 Jul 2025 16:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C9F2E041C;
+	Tue,  8 Jul 2025 16:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992799; cv=none; b=DeFLysoNBgDuQyeNBTl7GxUK3TIbL1pC5hux3HbXM57oZjvZgTzrtKE1KEim29pSozeX/Nmyhym/5ILu6zuybBiFyyA13Am16EoL7CwyOlYame6RMH2t2Ub+u9ngCnBqKWdRc4Da02NGZ/hCNpsv0hzOhRVFRnxT/YlTtpe7nqI=
+	t=1751992802; cv=none; b=KSuqHIws3Ojq0Er5Cya2azThNtODqvx6dM1izkW8CiYRxts2aBW9u9zeMTKzGW2bfWrhoWAgVUpfQ7E4p7MDXd13PmuMRThCcC3k+G2DPtBA4FQvwM/KjRQA1zCDLCiz63hoUmDPr1pdsHi5op55l5YlDusmRv/B28ZDl8sIS14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992799; c=relaxed/simple;
-	bh=f6K/Daqx6q/WwY4okpNJSRysLXFPQ7n+5l/14UgM1QI=;
+	s=arc-20240116; t=1751992802; c=relaxed/simple;
+	bh=7KRki01a4UABBUTRxv8mNCVL4JlwHR5boIS/sPfrCSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGnzMF0isfaXlt/aOmTChGoMZtxsaZEJW2gfAouEVv7gKvNcyRvUk9CHNYsym8WVD1Z1F0/7P+LNgF8/wATQ0vfZCxov2bd492uC8KEeMVaUqhlsk0QxVzBU0CVEO8RwE/ackyeMaNtc0jBFRJUYjqxUlMPFOq7nFJ/Y5FQcTxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=os05mZPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K2NTkbmikLq+huqEW6gSQZrZix22pDdaThEFcLptt2FLsVDc2JQzuil+8Utj+N8InoX6TvQJwc16siOzOW1VnuKpKNDXgQ94+ctrWUUL1pjtJXPj0eaBQq+mD23RwyO8B9KF6TMVlAg++yfsKZq67hQcfxSGgT1p1gNEDdnIjKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p02itcJy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="os05mZPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E3AC4CEF6;
-	Tue,  8 Jul 2025 16:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p02itcJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CF7C4CEF6;
+	Tue,  8 Jul 2025 16:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992798;
-	bh=f6K/Daqx6q/WwY4okpNJSRysLXFPQ7n+5l/14UgM1QI=;
+	s=korg; t=1751992801;
+	bh=7KRki01a4UABBUTRxv8mNCVL4JlwHR5boIS/sPfrCSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=os05mZPCG3V11eOQ0KuE48uyhBxDN80xcPDAb0/kWb7AiEcutT0R0U2n9o9pJuk/I
-	 vha+3Cs8SmbMvIAyDBRG16xbOHUOECZs6RTylHteZYmROLzp/QXz1JpDkzb5gUvGOI
-	 rP4kY/X0x8alP6hx4QPrSTU5+LI3nwUfke0+61XI=
+	b=p02itcJyMQGqJwKrvqA1t+IIeAF7hWO7Lj65mMCMRIC/Pfnq/QV12nDR+5G4y2PL3
+	 pQK1YsvLu6941WYJq3W4pcQbXS01ZeCRYLkgtNm7kQZIeTW71aV1l/kEXy0dCyRXde
+	 iZjBqKRBnkNFKgoDdEasjuBXqIbqj12PWv4yJwyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <sfrench@samba.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/232] netfs: Fix i_size updating
-Date: Tue,  8 Jul 2025 18:21:20 +0200
-Message-ID: <20250708162243.647578407@linuxfoundation.org>
+Subject: [PATCH 6.12 085/232] lib: test_objagg: Set error message in check_expect_hints_stats()
+Date: Tue,  8 Jul 2025 18:21:21 +0200
+Message-ID: <20250708162243.673640360@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -56,84 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 2e0658940d90a3dc130bb3b7f75bae9f4100e01f ]
+[ Upstream commit e6ed134a4ef592fe1fd0cafac9683813b3c8f3e8 ]
 
-Fix the updating of i_size, particularly in regard to the completion of DIO
-writes and especially async DIO writes by using a lock.
+Smatch complains that the error message isn't set in the caller:
 
-The bug is triggered occasionally by the generic/207 xfstest as it chucks a
-bunch of AIO DIO writes at the filesystem and then checks that fstat()
-returns a reasonable st_size as each completes.
+    lib/test_objagg.c:923 test_hints_case2()
+    error: uninitialized symbol 'errmsg'.
 
-The problem is that netfs is trying to do "if new_size > inode->i_size,
-update inode->i_size" sort of thing but without a lock around it.
+This static checker warning only showed up after a recent refactoring
+but the bug dates back to when the code was originally added.  This
+likely doesn't affect anything in real life.
 
-This can be seen with cifs, but shouldn't be seen with kafs because kafs
-serialises modification ops on the client whereas cifs sends the requests
-to the server as they're generated and lets the server order them.
-
-Fixes: 153a9961b551 ("netfs: Implement unbuffered/DIO write support")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/20250701163852.2171681-11-dhowells@redhat.com
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Steve French <sfrench@samba.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202506281403.DsuyHFTZ-lkp@intel.com/
+Fixes: 0a020d416d0a ("lib: introduce initial implementation of object aggregation manager")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/8548f423-2e3b-4bb7-b816-5041de2762aa@sabinyo.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_write.c | 2 ++
- fs/netfs/direct_write.c   | 8 ++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ lib/test_objagg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index b3910dfcb56d3..896d1d4219ed9 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -64,6 +64,7 @@ static void netfs_update_i_size(struct netfs_inode *ctx, struct inode *inode,
- 		return;
- 	}
+diff --git a/lib/test_objagg.c b/lib/test_objagg.c
+index d34df4306b874..222b39fc2629e 100644
+--- a/lib/test_objagg.c
++++ b/lib/test_objagg.c
+@@ -899,8 +899,10 @@ static int check_expect_hints_stats(struct objagg_hints *objagg_hints,
+ 	int err;
  
-+	spin_lock(&inode->i_lock);
- 	i_size_write(inode, pos);
- #if IS_ENABLED(CONFIG_FSCACHE)
- 	fscache_update_cookie(ctx->cache, NULL, &pos);
-@@ -77,6 +78,7 @@ static void netfs_update_i_size(struct netfs_inode *ctx, struct inode *inode,
- 					DIV_ROUND_UP(pos, SECTOR_SIZE),
- 					inode->i_blocks + add);
- 	}
-+	spin_unlock(&inode->i_lock);
- }
- 
- /**
-diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
-index 26cf9c94deebb..8fbfaf71c154c 100644
---- a/fs/netfs/direct_write.c
-+++ b/fs/netfs/direct_write.c
-@@ -14,13 +14,17 @@ static void netfs_cleanup_dio_write(struct netfs_io_request *wreq)
- 	struct inode *inode = wreq->inode;
- 	unsigned long long end = wreq->start + wreq->transferred;
- 
--	if (!wreq->error &&
--	    i_size_read(inode) < end) {
-+	if (wreq->error || end <= i_size_read(inode))
-+		return;
-+
-+	spin_lock(&inode->i_lock);
-+	if (end > i_size_read(inode)) {
- 		if (wreq->netfs_ops->update_i_size)
- 			wreq->netfs_ops->update_i_size(inode, end);
- 		else
- 			i_size_write(inode, end);
- 	}
-+	spin_unlock(&inode->i_lock);
- }
- 
- /*
+ 	stats = objagg_hints_stats_get(objagg_hints);
+-	if (IS_ERR(stats))
++	if (IS_ERR(stats)) {
++		*errmsg = "objagg_hints_stats_get() failed.";
+ 		return PTR_ERR(stats);
++	}
+ 	err = __check_expect_stats(stats, expect_stats, errmsg);
+ 	objagg_stats_put(stats);
+ 	return err;
 -- 
 2.39.5
 
