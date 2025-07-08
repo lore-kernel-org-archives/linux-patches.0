@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57822E2F0D;
-	Tue,  8 Jul 2025 16:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F14289E2C;
+	Tue,  8 Jul 2025 16:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992724; cv=none; b=DooGV/K5jY9tMem+LJimqrFf2y+Uh4/qs4eQMdslOLIxy/3tCOMrk1LQ28Vb6hCXyVw0p1n8vwB1AAz2bSFw0oCw2NP2UUcPAgDYVB3a/xilfa/+trGuNMuf0nJyaFup3YZlpdeQuWhD2pwkghsEVBGHxKz2ubDchndj7GBqwTc=
+	t=1751992727; cv=none; b=swhE+UEIfxG69BLlUibduvDK4Mwb5aT9e/xugMQJTSc7XhHbuauMLx/r9dHGYKq2dlH9XYw4UC8E5erWFFtFnYT9GQP/MF1XvJkLCpaeZb794LLtFreWbdMie0JSu30wH640kQKQgV39veUYMKHhBFDo48NXSlz0fJb19cHXxcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992724; c=relaxed/simple;
-	bh=Xe/Q9d3xqNJRibeHi0BmQnpBeM/OFQoPW64ugspSzXo=;
+	s=arc-20240116; t=1751992727; c=relaxed/simple;
+	bh=Fs+hqsUyCpD09mdMMGg6LT7sosSzu0ljF9fGXeZTQ2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZS2M6k5my+CsNBZ49YIY0Lr2uDo+Sqiei419DKRGrIYsdwAHWUTeOd0pKhvGg8Wp4mljkVKURcNOkxt5v+8EADhWBAVqeskg2Ic2FsZR2IItumCf9m5RALDNzw+7E1BE6c/+Gir47Pbvp0PhknYmD5Li7CBBxgNnryQuKTYtew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RM6AsNee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SY7sgAUlLXDTFpHImreOg23+u0fnEeYQP2RPppzpB6ODIaTOgVrVxrp2g7L9/0lOEEi/S4jKBBJdKGvw8llgzJgLCP9be/27sexjygQBnLD6/DTcVWZDC72V2+a9xqgqW8umPK69UnIx7vbIpzPH1b3vHXa3CFNsRdi274NCH7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQqDOGI7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RM6AsNee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96CFC4CEED;
-	Tue,  8 Jul 2025 16:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQqDOGI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C8CC4CEED;
+	Tue,  8 Jul 2025 16:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992724;
-	bh=Xe/Q9d3xqNJRibeHi0BmQnpBeM/OFQoPW64ugspSzXo=;
+	s=korg; t=1751992727;
+	bh=Fs+hqsUyCpD09mdMMGg6LT7sosSzu0ljF9fGXeZTQ2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RM6AsNee+yuMWuf01cDEevo2x/wrvTib418mgSm2Ly9Vc3hb4sGwBh84N26tgaIOA
-	 cJ5kfu/kzAX7xPM6hFvGld3klvJW3dKiXpEs69QxTHJGY94k43Un0L2Nf/y1R7/Jvv
-	 ReqvDtTtl0J37T0/C55EXXpLsVIMsXWLQS5S5LIw=
+	b=CQqDOGI7uk0aerCh0KRvzyQFzDrOs7a7ZSlIwxFhq7TCFmP35b9jxAB8tJ9pXucdD
+	 EFxQg4dGkMZenivaCjFDMZkj56dpG456N28uzfeuDwRqQoN5jlYb61UpTYZzmavUze
+	 cwFqgooXoXVjctYoTktv6aV1aUAbViEktNbIZLpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Inki Dae <inki.dae@samsung.com>,
+	James Clark <james.clark@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/232] drm/exynos: fimd: Guard display clock control with runtime PM calls
-Date: Tue,  8 Jul 2025 18:20:54 +0200
-Message-ID: <20250708162242.983925178@linuxfoundation.org>
+Subject: [PATCH 6.12 059/232] spi: spi-fsl-dspi: Clear completion counter before initiating transfer
+Date: Tue,  8 Jul 2025 18:20:55 +0200
+Message-ID: <20250708162243.009331655@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,65 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 5d91394f236167ac624b823820faf4aa928b889e ]
+[ Upstream commit fa60c094c19b97e103d653f528f8d9c178b6a5f5 ]
 
-Commit c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable
-and post-disable") changed the call sequence to the CRTC enable/disable
-and bridge pre_enable/post_disable methods, so those bridge methods are
-now called when CRTC is not yet enabled.
+In target mode, extra interrupts can be received between the end of a
+transfer and halting the module if the host continues sending more data.
+If the interrupt from this occurs after the reinit_completion() then the
+completion counter is left at a non-zero value. The next unrelated
+transfer initiated by userspace will then complete immediately without
+waiting for the interrupt or writing to the RX buffer.
 
-This causes a lockup observed on Samsung Peach-Pit/Pi Chromebooks. The
-source of this lockup is a call to fimd_dp_clock_enable() function, when
-FIMD device is not yet runtime resumed. It worked before the mentioned
-commit only because the CRTC implemented by the FIMD driver was always
-enabled what guaranteed the FIMD device to be runtime resumed.
+Fix it by resetting the counter before the transfer so that lingering
+values are cleared. This is done after clearing the FIFOs and the
+status register but before the transfer is initiated, so no interrupts
+should be received at this point resulting in other race conditions.
 
-This patch adds runtime PM guards to the fimd_dp_clock_enable() function
-to enable its proper operation also when the CRTC implemented by FIMD is
-not yet enabled.
-
-Fixes: 196e059a8a6a ("drm/exynos: convert clock_enable crtc callback to pipeline clock")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Fixes: 4f5ee75ea171 ("spi: spi-fsl-dspi: Replace interruptible wait queue with a simple completion")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250627-james-nxp-spi-dma-v4-1-178dba20c120@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_fimd.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/spi/spi-fsl-dspi.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-index f57df8c481391..05e4a5a63f5d8 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
-@@ -187,6 +187,7 @@ struct fimd_context {
- 	u32				i80ifcon;
- 	bool				i80_if;
- 	bool				suspended;
-+	bool				dp_clk_enabled;
- 	wait_queue_head_t		wait_vsync_queue;
- 	atomic_t			wait_vsync_event;
- 	atomic_t			win_updated;
-@@ -1047,7 +1048,18 @@ static void fimd_dp_clock_enable(struct exynos_drm_clk *clk, bool enable)
- 	struct fimd_context *ctx = container_of(clk, struct fimd_context,
- 						dp_clk);
- 	u32 val = enable ? DP_MIE_CLK_DP_ENABLE : DP_MIE_CLK_DISABLE;
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 7c43df252328d..e26363ae74890 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -983,11 +983,20 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ 		if (dspi->devtype_data->trans_mode == DSPI_DMA_MODE) {
+ 			status = dspi_dma_xfer(dspi);
+ 		} else {
++			/*
++			 * Reinitialize the completion before transferring data
++			 * to avoid the case where it might remain in the done
++			 * state due to a spurious interrupt from a previous
++			 * transfer. This could falsely signal that the current
++			 * transfer has completed.
++			 */
++			if (dspi->irq)
++				reinit_completion(&dspi->xfer_done);
 +
-+	if (enable == ctx->dp_clk_enabled)
-+		return;
-+
-+	if (enable)
-+		pm_runtime_resume_and_get(ctx->dev);
-+
-+	ctx->dp_clk_enabled = enable;
- 	writel(val, ctx->regs + DP_MIE_CLKCON);
-+
-+	if (!enable)
-+		pm_runtime_put(ctx->dev);
- }
+ 			dspi_fifo_write(dspi);
  
- static const struct exynos_drm_crtc_ops fimd_crtc_ops = {
+ 			if (dspi->irq) {
+ 				wait_for_completion(&dspi->xfer_done);
+-				reinit_completion(&dspi->xfer_done);
+ 			} else {
+ 				do {
+ 					status = dspi_poll(dspi);
 -- 
 2.39.5
 
