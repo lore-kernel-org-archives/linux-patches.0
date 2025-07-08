@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78272E266B;
-	Tue,  8 Jul 2025 16:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36A72E54C3;
+	Tue,  8 Jul 2025 16:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992584; cv=none; b=jdVw203WoeVLu3FcBjA9lnL+UF1J4Udu55YShyv6cItyp8KhXMhLsvRtcNZAjM/dXOYnee+o/SPXrLIVt2zQgmYduPg2we00kKJEyOFc1HHLSh1BVaI3DJwlV0gyhHmCh/cg8FcTHOjCrM9ixFge6OW6RDboShmhpoAdPj16MGQ=
+	t=1751992588; cv=none; b=MOph3iFY9IVFF+iJa/4WowL0TY8yHOkMvAqP3j87hoOTdTJYbhy4DKqhoYNn1VyPv2Jzr0ESL3Yw+FW4hEN8zr7lRG6bW+85qu+ZLIfxapUi4SZyyPGw/Bo6UNreqcE+eGv8SlYA7/FAxZbQySpEtW06zQCLBZ12q8Km9dO3K4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992584; c=relaxed/simple;
-	bh=JzScFDGIt8j4YU8VH8DM7g6hOpX3aLfl+isgZaSWvkI=;
+	s=arc-20240116; t=1751992588; c=relaxed/simple;
+	bh=n1tkC4GaGGVg9bLOg7LX5NlGjqS/XutsYkiXn5xLEh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctiZwo3efmL8jFaBUlaZS3jr6C0AOdgzzfXywBgLkPabSSq+vz7HMYsu7TNRKk3NYp7pgz4hdtO9JNSblQnCxdYEdulqeADe7hlSQvBUi7iZFJTB9XgNGfUh5tSxhTgSq7K04R3sluxE1tzgq2TCigbovAhWjxmUyIBZLGyjKIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IT1zalNQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bkUQ7iFMVo7f8RkNwe/jtmv9XqaW5rs50F25fEIk2SMAbtBwB0FJUDYfBq8G04hPZee57OH1COaMq2p/JTzShKBebe3TWjLh82CXDAcYwBuATkxE/IdzVkZldhSFLyn995W+21SaWfqSnnzyOngMOv+Nx+Zdq3Rx/ISdkv7cyb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmITmKVU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IT1zalNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414D3C4CEED;
-	Tue,  8 Jul 2025 16:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmITmKVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EFEC4CEED;
+	Tue,  8 Jul 2025 16:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992584;
-	bh=JzScFDGIt8j4YU8VH8DM7g6hOpX3aLfl+isgZaSWvkI=;
+	s=korg; t=1751992588;
+	bh=n1tkC4GaGGVg9bLOg7LX5NlGjqS/XutsYkiXn5xLEh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IT1zalNQ3EPDrf7AU57Wyz2ftAQiIax6SeeJ5a720+RtvtfWye+K9lWZ4xoyXSR+0
-	 5eisDfRaKao+YVJFgYSEsthqXZGnfvmnGAifIdErQJYAd0ccIfCE9qyjIrOMRkICvK
-	 KdvWayTwhf3bYj95pgyLUyWS4uYOzTpxQJ7GY2n0=
+	b=XmITmKVUxZT0dh57DfZs75iK3SCugqGcG5n+Ycy/aKOWFZr/UG2sjL9Q1fT+EhJV7
+	 CWbYNkIvlKhVDkIWBOB2SRxEkR9MqQDypV36/OLvcfIA902EaWZO3volGnTQ6DtU3I
+	 0dwEkncGrHSrZ0R5vz3kEufqzUmV6ELbMEI5ZCsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 109/132] usb: xhci: quirk for data loss in ISOC transfers
-Date: Tue,  8 Jul 2025 18:23:40 +0200
-Message-ID: <20250708162233.778701101@linuxfoundation.org>
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 005/232] virtio-net: ensure the received length does not exceed allocated size
+Date: Tue,  8 Jul 2025 18:20:01 +0200
+Message-ID: <20250708162241.572921978@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
-References: <20250708162230.765762963@linuxfoundation.org>
+In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
+References: <20250708162241.426806072@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,114 +47,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-commit cbc889ab0122366f6cdbe3c28d477c683ebcebc2 upstream.
+commit 315dbdd7cdf6aa533829774caaf4d25f1fd20e73 upstream.
 
-During the High-Speed Isochronous Audio transfers, xHCI
-controller on certain AMD platforms experiences momentary data
-loss. This results in Missed Service Errors (MSE) being
-generated by the xHCI.
+In xdp_linearize_page, when reading the following buffers from the ring,
+we forget to check the received length with the true allocate size. This
+can lead to an out-of-bound read. This commit adds that missing check.
 
-The root cause of the MSE is attributed to the ISOC OUT endpoint
-being omitted from scheduling. This can happen when an IN
-endpoint with a 64ms service interval either is pre-scheduled
-prior to the ISOC OUT endpoint or the interval of the ISOC OUT
-endpoint is shorter than that of the IN endpoint. Consequently,
-the OUT service is neglected when an IN endpoint with a service
-interval exceeding 32ms is scheduled concurrently (every 64ms in
-this scenario).
-
-This issue is particularly seen on certain older AMD platforms.
-To mitigate this problem, it is recommended to adjust the service
-interval of the IN endpoint to not exceed 32ms (interval 8). This
-adjustment ensures that the OUT endpoint will not be bypassed,
-even if a smaller interval value is utilized.
-
-Cc: stable <stable@kernel.org>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250627144127.3889714-2-mathias.nyman@linux.intel.com
+Cc: <stable@vger.kernel.org>
+Fixes: 4941d472bf95 ("virtio-net: do not reset during XDP set")
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20250630144212.48471-2-minhquangbui99@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-mem.c |    4 ++++
- drivers/usb/host/xhci-pci.c |   25 +++++++++++++++++++++++++
- drivers/usb/host/xhci.h     |    1 +
- 3 files changed, 30 insertions(+)
+ drivers/net/virtio_net.c |   38 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -1436,6 +1436,10 @@ int xhci_endpoint_init(struct xhci_hcd *
- 	/* Periodic endpoint bInterval limit quirk */
- 	if (usb_endpoint_xfer_int(&ep->desc) ||
- 	    usb_endpoint_xfer_isoc(&ep->desc)) {
-+		if ((xhci->quirks & XHCI_LIMIT_ENDPOINT_INTERVAL_9) &&
-+		    interval >= 9) {
-+			interval = 8;
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -765,6 +765,26 @@ static unsigned int mergeable_ctx_to_tru
+ 	return (unsigned long)mrg_ctx & ((1 << MRG_CTX_HEADER_SHIFT) - 1);
+ }
+ 
++static int check_mergeable_len(struct net_device *dev, void *mrg_ctx,
++			       unsigned int len)
++{
++	unsigned int headroom, tailroom, room, truesize;
++
++	truesize = mergeable_ctx_to_truesize(mrg_ctx);
++	headroom = mergeable_ctx_to_headroom(mrg_ctx);
++	tailroom = headroom ? sizeof(struct skb_shared_info) : 0;
++	room = SKB_DATA_ALIGN(headroom + tailroom);
++
++	if (len > truesize - room) {
++		pr_debug("%s: rx error: len %u exceeds truesize %lu\n",
++			 dev->name, len, (unsigned long)(truesize - room));
++		DEV_STATS_INC(dev, rx_length_errors);
++		return -1;
++	}
++
++	return 0;
++}
++
+ static struct sk_buff *virtnet_build_skb(void *buf, unsigned int buflen,
+ 					 unsigned int headroom,
+ 					 unsigned int len)
+@@ -1663,7 +1683,8 @@ static unsigned int virtnet_get_headroom
+  * across multiple buffers (num_buf > 1), and we make sure buffers
+  * have enough headroom.
+  */
+-static struct page *xdp_linearize_page(struct receive_queue *rq,
++static struct page *xdp_linearize_page(struct net_device *dev,
++				       struct receive_queue *rq,
+ 				       int *num_buf,
+ 				       struct page *p,
+ 				       int offset,
+@@ -1683,18 +1704,27 @@ static struct page *xdp_linearize_page(s
+ 	memcpy(page_address(page) + page_off, page_address(p) + offset, *len);
+ 	page_off += *len;
+ 
++	/* Only mergeable mode can go inside this while loop. In small mode,
++	 * *num_buf == 1, so it cannot go inside.
++	 */
+ 	while (--*num_buf) {
+ 		unsigned int buflen;
+ 		void *buf;
++		void *ctx;
+ 		int off;
+ 
+-		buf = virtnet_rq_get_buf(rq, &buflen, NULL);
++		buf = virtnet_rq_get_buf(rq, &buflen, &ctx);
+ 		if (unlikely(!buf))
+ 			goto err_buf;
+ 
+ 		p = virt_to_head_page(buf);
+ 		off = buf - page_address(p);
+ 
++		if (check_mergeable_len(dev, ctx, buflen)) {
++			put_page(p);
++			goto err_buf;
 +		}
- 		if ((xhci->quirks & XHCI_LIMIT_ENDPOINT_INTERVAL_7) &&
- 		    udev->speed >= USB_SPEED_HIGH &&
- 		    interval >= 7) {
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -65,12 +65,22 @@
- #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI		0x51ed
- #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI	0x54ed
- 
-+#define PCI_DEVICE_ID_AMD_ARIEL_TYPEC_XHCI		0x13ed
-+#define PCI_DEVICE_ID_AMD_ARIEL_TYPEA_XHCI		0x13ee
-+#define PCI_DEVICE_ID_AMD_STARSHIP_XHCI			0x148c
-+#define PCI_DEVICE_ID_AMD_FIREFLIGHT_15D4_XHCI		0x15d4
-+#define PCI_DEVICE_ID_AMD_FIREFLIGHT_15D5_XHCI		0x15d5
-+#define PCI_DEVICE_ID_AMD_RAVEN_15E0_XHCI		0x15e0
-+#define PCI_DEVICE_ID_AMD_RAVEN_15E1_XHCI		0x15e1
-+#define PCI_DEVICE_ID_AMD_RAVEN2_XHCI			0x15e5
- #define PCI_DEVICE_ID_AMD_RENOIR_XHCI			0x1639
- #define PCI_DEVICE_ID_AMD_PROMONTORYA_4			0x43b9
- #define PCI_DEVICE_ID_AMD_PROMONTORYA_3			0x43ba
- #define PCI_DEVICE_ID_AMD_PROMONTORYA_2			0x43bb
- #define PCI_DEVICE_ID_AMD_PROMONTORYA_1			0x43bc
- 
-+#define PCI_DEVICE_ID_ATI_NAVI10_7316_XHCI		0x7316
 +
- #define PCI_DEVICE_ID_ASMEDIA_1042_XHCI			0x1042
- #define PCI_DEVICE_ID_ASMEDIA_1042A_XHCI		0x1142
- #define PCI_DEVICE_ID_ASMEDIA_1142_XHCI			0x1242
-@@ -348,6 +358,21 @@ static void xhci_pci_quirks(struct devic
- 	if (pdev->vendor == PCI_VENDOR_ID_NEC)
- 		xhci->quirks |= XHCI_NEC_HOST;
- 
-+	if (pdev->vendor == PCI_VENDOR_ID_AMD &&
-+	    (pdev->device == PCI_DEVICE_ID_AMD_ARIEL_TYPEC_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_ARIEL_TYPEA_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_STARSHIP_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_FIREFLIGHT_15D4_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_FIREFLIGHT_15D5_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_RAVEN_15E0_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_RAVEN_15E1_XHCI ||
-+	     pdev->device == PCI_DEVICE_ID_AMD_RAVEN2_XHCI))
-+		xhci->quirks |= XHCI_LIMIT_ENDPOINT_INTERVAL_9;
-+
-+	if (pdev->vendor == PCI_VENDOR_ID_ATI &&
-+	    pdev->device == PCI_DEVICE_ID_ATI_NAVI10_7316_XHCI)
-+		xhci->quirks |= XHCI_LIMIT_ENDPOINT_INTERVAL_9;
-+
- 	if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version == 0x96)
- 		xhci->quirks |= XHCI_AMD_0x96_HOST;
- 
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1659,6 +1659,7 @@ struct xhci_hcd {
- #define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
- #define XHCI_CDNS_SCTX_QUIRK	BIT_ULL(48)
- #define XHCI_ETRON_HOST	BIT_ULL(49)
-+#define XHCI_LIMIT_ENDPOINT_INTERVAL_9 BIT_ULL(50)
- 
- 	unsigned int		num_active_eps;
- 	unsigned int		limit_active_eps;
+ 		/* guard against a misconfigured or uncooperative backend that
+ 		 * is sending packet larger than the MTU.
+ 		 */
+@@ -1783,7 +1813,7 @@ static struct sk_buff *receive_small_xdp
+ 		headroom = vi->hdr_len + header_offset;
+ 		buflen = SKB_DATA_ALIGN(GOOD_PACKET_LEN + headroom) +
+ 			SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+-		xdp_page = xdp_linearize_page(rq, &num_buf, page,
++		xdp_page = xdp_linearize_page(dev, rq, &num_buf, page,
+ 					      offset, header_offset,
+ 					      &tlen);
+ 		if (!xdp_page)
+@@ -2118,7 +2148,7 @@ static void *mergeable_xdp_get_buf(struc
+ 	 */
+ 	if (!xdp_prog->aux->xdp_has_frags) {
+ 		/* linearize data for XDP */
+-		xdp_page = xdp_linearize_page(rq, num_buf,
++		xdp_page = xdp_linearize_page(vi->dev, rq, num_buf,
+ 					      *page, offset,
+ 					      XDP_PACKET_HEADROOM,
+ 					      len);
 
 
