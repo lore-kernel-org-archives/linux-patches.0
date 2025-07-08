@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6E42E659;
-	Tue,  8 Jul 2025 16:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD142E659;
+	Tue,  8 Jul 2025 16:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992029; cv=none; b=C74KfaheF3TpPS9lhxvnVq8S7Ja8Vg4F0joFJZa2SvtzVqH3aTEDbfrfVpOIHpI31wHMmR+mOdqNlninDMhNyihsrT9panXHg51iuKNnSGBMHATA6iQE+1ZdclqyMMeOsTwF6zuQcRfHfJkGndcZvsXuwNoBqdP6ptAjwhWi1kM=
+	t=1751992033; cv=none; b=P6F3AWc/n6gsyzDbzh/W0QZs42dXOEO0Pt33j3EpR8GNULZxwcMN3ltbtIIT7+IL7iNUvfFQZJ7I97+HzgqOm9ZU7e/nJCZQoRtTTMX9Xg8ofWGdvpHPU7zGlcL7/B7ntQo2yV5H8ui5dFReZ0bj03+ryo1lhAzxC2MvgcTRF/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992029; c=relaxed/simple;
-	bh=WUK9dEYblYdiyNJGHbWgW/WC/xM28p7xK30M6HSQ/gc=;
+	s=arc-20240116; t=1751992033; c=relaxed/simple;
+	bh=LF0Awvfm+GPsf6flEAS8VGPcLOAhMLhisu5iOCd6itw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pi14BIDWT9LlDr9Xr39PAk83B7O5IraFSg4+hT5ZQ4imBxpgiW1wi7CPjdUxbtbzRBFRizy87KBkoLmMv1lnXf1/D/OimED88mATsm0joNcZ8EwFBibRekxajMTfnrdC4zutOQ1Yke03jx3K58dpl+9gOU30ENadQBli1MzI8QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qebVp2Wi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sop/bOkmBsUxdhWfLx4Ya3zRvszbbgH42+yZyGIT2mmGYBUSFp8dlbsYP3lotSclcT8MxPIJUWvoz8rhrz7mLgBX3K3sfWlLJC2I6CKMOnrrgGgbeJqQyouJmVcm+ybB8uGU1ixSPA6hV410eqSNZFwROEGgQakZyfvajvbNpWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVL1G80r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qebVp2Wi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B5EC4CEED;
-	Tue,  8 Jul 2025 16:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVL1G80r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FEEC4CEED;
+	Tue,  8 Jul 2025 16:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992029;
-	bh=WUK9dEYblYdiyNJGHbWgW/WC/xM28p7xK30M6HSQ/gc=;
+	s=korg; t=1751992032;
+	bh=LF0Awvfm+GPsf6flEAS8VGPcLOAhMLhisu5iOCd6itw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qebVp2Wiwy1NDHj46eC44ohatqcbE8E8d+SvoJDdxHOSb1QKpvrU+wSJXiGT367PF
-	 GiWjEb/VBOUHD91So73iZzn0PU4UA03pBNqsf+SHr6O1F+fC+gXXcZGQe3S/h544cL
-	 F2cVJmNh0jGT1IQxElED/hZLtf2nJwZ9WO1YS0x8=
+	b=kVL1G80rWpkXiVpTKn5ZozW+5iLl0l9xMpvENYwCzWEtipZykybmh2IN6X514tXRF
+	 Ck0eVntN54wvroCVZ8FZQ8TXAiXpzk3fJDruHBlTp+stG4xNHOl8JPkWPpSsfsrEXM
+	 J6C/FqZHUyOwJsL45tQicwx2G6d8lDGxyAMI5Oeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 36/81] igc: disable L1.2 PCI-E link substate to avoid performance issue
-Date: Tue,  8 Jul 2025 18:23:28 +0200
-Message-ID: <20250708162226.120991589@linuxfoundation.org>
+Subject: [PATCH 6.1 37/81] lib: test_objagg: Set error message in check_expect_hints_stats()
+Date: Tue,  8 Jul 2025 18:23:29 +0200
+Message-ID: <20250708162226.154288237@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -53,64 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0325143b59c6c6d79987afc57d2456e7a20d13b7 ]
+[ Upstream commit e6ed134a4ef592fe1fd0cafac9683813b3c8f3e8 ]
 
-I226 devices advertise support for the PCI-E link L1.2 substate. However,
-due to a hardware limitation, the exit latency from this low-power state
-is longer than the packet buffer can tolerate under high traffic
-conditions. This can lead to packet loss and degraded performance.
+Smatch complains that the error message isn't set in the caller:
 
-To mitigate this, disable the L1.2 substate. The increased power draw
-between L1.1 and L1.2 is insignificant.
+    lib/test_objagg.c:923 test_hints_case2()
+    error: uninitialized symbol 'errmsg'.
 
-Fixes: 43546211738e ("igc: Add new device ID's")
-Link: https://lore.kernel.org/intel-wired-lan/15248b4f-3271-42dd-8e35-02bfc92b25e1@intel.com
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+This static checker warning only showed up after a recent refactoring
+but the bug dates back to when the code was originally added.  This
+likely doesn't affect anything in real life.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202506281403.DsuyHFTZ-lkp@intel.com/
+Fixes: 0a020d416d0a ("lib: introduce initial implementation of object aggregation manager")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/8548f423-2e3b-4bb7-b816-5041de2762aa@sabinyo.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ lib/test_objagg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 082f78beeb4ed..ca3fd02708102 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6553,6 +6553,10 @@ static int igc_probe(struct pci_dev *pdev,
- 	adapter->port_num = hw->bus.func;
- 	adapter->msg_enable = netif_msg_init(debug, DEFAULT_MSG_ENABLE);
+diff --git a/lib/test_objagg.c b/lib/test_objagg.c
+index c0c957c506354..c0f7bb53db8d5 100644
+--- a/lib/test_objagg.c
++++ b/lib/test_objagg.c
+@@ -899,8 +899,10 @@ static int check_expect_hints_stats(struct objagg_hints *objagg_hints,
+ 	int err;
  
-+	/* Disable ASPM L1.2 on I226 devices to avoid packet loss */
-+	if (igc_is_device_id_i226(hw))
-+		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-+
- 	err = pci_save_state(pdev);
- 	if (err)
- 		goto err_ioremap;
-@@ -6920,6 +6924,9 @@ static int __maybe_unused igc_resume(struct device *dev)
- 	pci_enable_wake(pdev, PCI_D3hot, 0);
- 	pci_enable_wake(pdev, PCI_D3cold, 0);
- 
-+	if (igc_is_device_id_i226(hw))
-+		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-+
- 	if (igc_init_interrupt_scheme(adapter, true)) {
- 		netdev_err(netdev, "Unable to allocate memory for queues\n");
- 		return -ENOMEM;
-@@ -7035,6 +7042,9 @@ static pci_ers_result_t igc_io_slot_reset(struct pci_dev *pdev)
- 		pci_enable_wake(pdev, PCI_D3hot, 0);
- 		pci_enable_wake(pdev, PCI_D3cold, 0);
- 
-+		if (igc_is_device_id_i226(hw))
-+			pci_disable_link_state_locked(pdev, PCIE_LINK_STATE_L1_2);
-+
- 		/* In case of PCI error, adapter loses its HW address
- 		 * so we should re-assign it here.
- 		 */
+ 	stats = objagg_hints_stats_get(objagg_hints);
+-	if (IS_ERR(stats))
++	if (IS_ERR(stats)) {
++		*errmsg = "objagg_hints_stats_get() failed.";
+ 		return PTR_ERR(stats);
++	}
+ 	err = __check_expect_stats(stats, expect_stats, errmsg);
+ 	objagg_stats_put(stats);
+ 	return err;
 -- 
 2.39.5
 
