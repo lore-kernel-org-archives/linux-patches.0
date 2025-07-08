@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56352E0B4B;
-	Tue,  8 Jul 2025 16:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0701821C190;
+	Tue,  8 Jul 2025 16:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993989; cv=none; b=qsHQ4w8pFnJUW12bYytLd5MIZR9xcWONTrj7GKlH4xb8sURFc8+fhxYCOczS9am9ajD/BkRnFXdcJO8A2iWRSvfDoiPGWMdFoAnX6AwlMNEqDqEckDjPft/faqC3Jg/gz5mhBLHBQwkLWrMxodOL2EjfBrrOs7ez4tsswt8lyhw=
+	t=1751993993; cv=none; b=PiNYyk2mbgeftTjk1NzS9INCdUyMYU71arWpgU9ggwSBUoZfTrPI66DIy7pwG39bIdRf3YlSRATKYfmCTYv3S+13uvI33dDtzTHBFIri1o4A3sRF8MpH/9RVhP51YSwy109H1FCrna3Q5dytaCQUm7wPk34HfUWj7gkjSjDuyTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993989; c=relaxed/simple;
-	bh=kxQ4W3aX6SLqe46EoYnjOVu+PJQnP1402ESY6xmFzZQ=;
+	s=arc-20240116; t=1751993993; c=relaxed/simple;
+	bh=5DED0EOSC0IR4xEeS/ex8H+jBrBEt69QUKLEAigCwLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUsnOr2NI6lLPfOQPP6V84hCKUiBQ7+Bvja2X4H7RYRKgtrqQUvzWkDe2F0RRIgibnccTHGOcmbDQRkHcE09K+BIUuIUYhs6njdgZdPwWbej7TUmx7UE+bDP3/ckQjv78PAIiOgWOhXIG+YPq0OwvkvzgnHEKDLpXdadmcWoEpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdaBiYH7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E090MSkQ7e4oN6YS3s5Q22xkw+yFZtLJKEsx+rL9mwy6ySjhAgLtpYmjc/J3okQveFoRVEr49yvoQc3WZob+zDibcoO0EJiCs21+7tTRIK/m+Xxo0SWj6qrV9sLlbAI6QkoGNH8VYtSyr3D9is+z55eDIRIt2XS0envYch2Zw0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8taP9yE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdaBiYH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2BAC4CEED;
-	Tue,  8 Jul 2025 16:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8taP9yE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318B1C4CEED;
+	Tue,  8 Jul 2025 16:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993989;
-	bh=kxQ4W3aX6SLqe46EoYnjOVu+PJQnP1402ESY6xmFzZQ=;
+	s=korg; t=1751993992;
+	bh=5DED0EOSC0IR4xEeS/ex8H+jBrBEt69QUKLEAigCwLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdaBiYH76MckTYmDqk7V1zYHP8Uck04OEKIzZ/m/L1H29/+8prnj5dH1hkxtQoB6X
-	 ljkVH7ORsE4yHv0bv2+aQC5LCt+JQxmo9CZXeTNdZY+stBeGrppeT3ROcO8OjbwNxE
-	 ByUOnMDXAwInQaOl0OPbZZksEUNhup5t3x4DL5HE=
+	b=m8taP9yEL1GAFICyrlCczhimUVpbYAKz/j7itbx0PpIQkalfbcK/Kwzp3MICd0uxG
+	 tfwbQfUJsiVyQuWTcB0E2oNyQ9L9zHc1hcom9ICFO8hQyJDWv+lP2Dp7oe3lsG9KLo
+	 tuLAf/BCdOtnBFbz9pi5GOsmsea5xQX04plrE5Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8bd335d2ad3b93e80715@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/160] atm: Release atm_dev_mutex after removing procfs in atm_dev_deregister().
-Date: Tue,  8 Jul 2025 18:21:47 +0200
-Message-ID: <20250708162233.490770275@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 088/160] drm/amd/display: Add null pointer check for get_first_active_display()
+Date: Tue,  8 Jul 2025 18:22:05 +0200
+Message-ID: <20250708162233.954100797@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,105 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit a433791aeaea6e84df709e0b9584b9bbe040cd1c ]
+commit c3e9826a22027a21d998d3e64882fa377b613006 upstream.
 
-syzbot reported a warning below during atm_dev_register(). [0]
+The function mod_hdcp_hdcp1_enable_encryption() calls the function
+get_first_active_display(), but does not check its return value.
+The return value is a null pointer if the display list is empty.
+This will lead to a null pointer dereference in
+mod_hdcp_hdcp2_enable_encryption().
 
-Before creating a new device and procfs/sysfs for it, atm_dev_register()
-looks up a duplicated device by __atm_dev_lookup().  These operations are
-done under atm_dev_mutex.
+Add a null pointer check for get_first_active_display() and return
+MOD_HDCP_STATUS_DISPLAY_NOT_FOUND if the function return null.
 
-However, when removing a device in atm_dev_deregister(), it releases the
-mutex just after removing the device from the list that __atm_dev_lookup()
-iterates over.
-
-So, there will be a small race window where the device does not exist on
-the device list but procfs/sysfs are still not removed, triggering the
-splat.
-
-Let's hold the mutex until procfs/sysfs are removed in
-atm_dev_deregister().
-
-[0]:
-proc_dir_entry 'atm/atmtcp:0' already registered
-WARNING: CPU: 0 PID: 5919 at fs/proc/generic.c:377 proc_register+0x455/0x5f0 fs/proc/generic.c:377
-Modules linked in:
-CPU: 0 UID: 0 PID: 5919 Comm: syz-executor284 Not tainted 6.16.0-rc2-syzkaller-00047-g52da431bf03b #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-RIP: 0010:proc_register+0x455/0x5f0 fs/proc/generic.c:377
-Code: 48 89 f9 48 c1 e9 03 80 3c 01 00 0f 85 a2 01 00 00 48 8b 44 24 10 48 c7 c7 20 c0 c2 8b 48 8b b0 d8 00 00 00 e8 0c 02 1c ff 90 <0f> 0b 90 90 48 c7 c7 80 f2 82 8e e8 0b de 23 09 48 8b 4c 24 28 48
-RSP: 0018:ffffc9000466fa30 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff817ae248
-RDX: ffff888026280000 RSI: ffffffff817ae255 RDI: 0000000000000001
-RBP: ffff8880232bed48 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: ffff888076ed2140
-R13: dffffc0000000000 R14: ffff888078a61340 R15: ffffed100edda444
-FS:  00007f38b3b0c6c0(0000) GS:ffff888124753000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f38b3bdf953 CR3: 0000000076d58000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- proc_create_data+0xbe/0x110 fs/proc/generic.c:585
- atm_proc_dev_register+0x112/0x1e0 net/atm/proc.c:361
- atm_dev_register+0x46d/0x890 net/atm/resources.c:113
- atmtcp_create+0x77/0x210 drivers/atm/atmtcp.c:369
- atmtcp_attach drivers/atm/atmtcp.c:403 [inline]
- atmtcp_ioctl+0x2f9/0xd60 drivers/atm/atmtcp.c:464
- do_vcc_ioctl+0x12c/0x930 net/atm/ioctl.c:159
- sock_do_ioctl+0x115/0x280 net/socket.c:1190
- sock_ioctl+0x227/0x6b0 net/socket.c:1311
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl fs/ioctl.c:893 [inline]
- __x64_sys_ioctl+0x18b/0x210 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x4c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f38b3b74459
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f38b3b0c198 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007f38b3bfe318 RCX: 00007f38b3b74459
-RDX: 0000000000000000 RSI: 0000000000006180 RDI: 0000000000000005
-RBP: 00007f38b3bfe310 R08: 65732f636f72702f R09: 65732f636f72702f
-R10: 65732f636f72702f R11: 0000000000000246 R12: 00007f38b3bcb0ac
-R13: 00007f38b3b0c1a0 R14: 0000200000000200 R15: 00007f38b3bcb03b
- </TASK>
-
-Fixes: 64bf69ddff76 ("[ATM]: deregistration removes device from atm_devs list immediately")
-Reported-by: syzbot+8bd335d2ad3b93e80715@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/685316de.050a0220.216029.0087.GAE@google.com/
-Tested-by: syzbot+8bd335d2ad3b93e80715@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250624214505.570679-1-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2deade5ede56 ("drm/amd/display: Remove hdcp display state with mst fix")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # v5.8
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/resources.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/atm/resources.c b/net/atm/resources.c
-index 995d29e7fb138..b19d851e1f443 100644
---- a/net/atm/resources.c
-+++ b/net/atm/resources.c
-@@ -146,11 +146,10 @@ void atm_dev_deregister(struct atm_dev *dev)
- 	 */
- 	mutex_lock(&atm_dev_mutex);
- 	list_del(&dev->dev_list);
--	mutex_unlock(&atm_dev_mutex);
--
- 	atm_dev_release_vccs(dev);
- 	atm_unregister_sysfs(dev);
- 	atm_proc_dev_deregister(dev);
-+	mutex_unlock(&atm_dev_mutex);
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
+@@ -364,6 +364,9 @@ enum mod_hdcp_status mod_hdcp_hdcp1_enab
+ 	struct mod_hdcp_display *display = get_first_active_display(hdcp);
+ 	enum mod_hdcp_status status = MOD_HDCP_STATUS_SUCCESS;
  
- 	atm_dev_put(dev);
- }
--- 
-2.39.5
-
++	if (!display)
++		return MOD_HDCP_STATUS_DISPLAY_NOT_FOUND;
++
+ 	mutex_lock(&psp->hdcp_context.mutex);
+ 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
+ 	memset(hdcp_cmd, 0, sizeof(struct ta_hdcp_shared_memory));
 
 
