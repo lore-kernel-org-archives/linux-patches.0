@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01212E091E;
-	Tue,  8 Jul 2025 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E29E2E091E;
+	Tue,  8 Jul 2025 16:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993855; cv=none; b=BoBDW0P4dIuQUv78LuXoX7bIyYRa/OLZXVpsD2EpB48v6QYm2RNArfD9ZUN4nDCrBniUQI7fjXg3s2pl3A0Vbt0pTSTn172bzJCze1gc1ZYWnjrNYfsrOYyRS/MIh65UAilKTawicdUEZ9N5EPhma6oBsj4GarWdbfuMUPJzA3Q=
+	t=1751993858; cv=none; b=j1pb2mkzG3mjwMedzxQ1xjc8rDT5SP0JK8xBvZ+1qhj4RPNhN9iGd8AnSnWOOpnmL3zhPPL7JHuc+RaBRhaFhplUc4Opn/lCxaox5bp2bk6OIhlgBtqdkkUrshOTwIfHT976qAE9Jn0CEeV+dS7iHRMEXXPfouRsLtqIWLd1UaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993855; c=relaxed/simple;
-	bh=HsnKFW6q1v1hMPMw0hec1bXsIiUjh9nnsxmWxvF6Lzk=;
+	s=arc-20240116; t=1751993858; c=relaxed/simple;
+	bh=8FspT2VIhYhdVf3jdvJNBhHmVoOCRo2+MEhucrpFD7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpcL3BxBrVXha0Zu6tD3RDtuOHL2LatvAgGiU3szaVNSYyLOqubylWrNbzzuO0rB2ddSC+hayfejFFg0sJyY2tPvJXSrWdMv1IKLg/CUZv2UD3ZcmWP1KChrJ+/lohpI4o/HWEllNJVzHCBNC4vczLHCsDIS8Kqh6DuRdfk/IZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reVtx0Kq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKSmTxmJJST5AblH6hdBx/vjTHBn0oufBxPLyGace+hYuoSI9qRA4ws3/qlfPNHqZSni/KWDno5Bw8dilXCb53KG79RERuV1wyA2S6D8/MHMp9+j9iHff9uKTKZW8Wq5HbE/v3Jm4JnfgeFNn0kVC9buU43UTisFtzToPi8EFVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlbTqBwj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reVtx0Kq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E856FC4CEED;
-	Tue,  8 Jul 2025 16:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlbTqBwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67EFC4CEED;
+	Tue,  8 Jul 2025 16:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993855;
-	bh=HsnKFW6q1v1hMPMw0hec1bXsIiUjh9nnsxmWxvF6Lzk=;
+	s=korg; t=1751993858;
+	bh=8FspT2VIhYhdVf3jdvJNBhHmVoOCRo2+MEhucrpFD7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=reVtx0Kq24v8p8NMxv3iHurltW58ocANu8jKfXoVl5jP7uBO4vw9cQXb73AtczZKt
-	 qtmXnc7NRtwj5GGa9QGod3Bi0IrbnSO6/BEJp5ljUf7d28jsuMB5NyJcPnxhjQr/4x
-	 aAlSAxfSF940b8iCdLIpjZ41nMCLbaEK8EnU/4O4=
+	b=zlbTqBwj1TfthiZcfsECx5BZTczaJdkseP/Xw9lQxfDkwTiyZnfqDgymGGgsqINW1
+	 zFvOQ1Gx0FkxiQxoLpYGfZTda8dG+yoIzzt3M1CAteRhgSDOe/am6r6suVllhdhZ3a
+	 OG7F4DmdX2/UAfFLhcBSMNAGTnX5+0Z+lSixncns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	linux-kbuild@vger.kernel.org,
-	kernel test robot <lkp@intel.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/160] um: Add cmpxchg8b_emu and checksum functions to asm-prototypes.h
-Date: Tue,  8 Jul 2025 18:20:50 +0200
-Message-ID: <20250708162231.876855851@linuxfoundation.org>
+Subject: [PATCH 5.15 014/160] coresight: Only check bottom two claim bits
+Date: Tue,  8 Jul 2025 18:20:51 +0200
+Message-ID: <20250708162231.902877233@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -54,53 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 674d03f6bd6b0f8327f1a4920ff5893557facfbd ]
+[ Upstream commit a4e65842e1142aa18ef36113fbd81d614eaefe5a ]
 
-With CONFIG_GENDWARFKSYMS, um builds fail due to missing prototypes
-in asm/asm-prototypes.h. Add declarations for cmpxchg8b_emu and the
-exported checksum functions, including csum_partial_copy_generic as
-it's also exported.
+The use of the whole register and == could break the claim mechanism if
+any of the other bits are used in the future. The referenced doc "PSCI -
+ARM DEN 0022D" also says to only read and clear the bottom two bits.
 
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: linux-kbuild@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202503251216.lE4t9Ikj-lkp@intel.com/
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://patch.msgid.link/20250326190500.847236-2-samitolvanen@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Use FIELD_GET() to extract only the relevant part.
+
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20250325-james-coresight-claim-tags-v4-2-dfbd3822b2e5@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/asm/asm-prototypes.h | 5 +++++
- arch/x86/um/asm/checksum.h           | 3 +++
- 2 files changed, 8 insertions(+)
+ drivers/hwtracing/coresight/coresight-core.c | 3 ++-
+ drivers/hwtracing/coresight/coresight-priv.h | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/um/include/asm/asm-prototypes.h b/arch/um/include/asm/asm-prototypes.h
-index 5898a26daa0dd..408b31d591279 100644
---- a/arch/um/include/asm/asm-prototypes.h
-+++ b/arch/um/include/asm/asm-prototypes.h
-@@ -1 +1,6 @@
- #include <asm-generic/asm-prototypes.h>
-+#include <asm/checksum.h>
-+
-+#ifdef CONFIG_UML_X86
-+extern void cmpxchg8b_emu(void);
-+#endif
-diff --git a/arch/x86/um/asm/checksum.h b/arch/x86/um/asm/checksum.h
-index b07824500363f..ddc144657efad 100644
---- a/arch/x86/um/asm/checksum.h
-+++ b/arch/x86/um/asm/checksum.h
-@@ -20,6 +20,9 @@
-  */
- extern __wsum csum_partial(const void *buff, int len, __wsum sum);
+diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+index 3ea6900542223..f6989a74fec94 100644
+--- a/drivers/hwtracing/coresight/coresight-core.c
++++ b/drivers/hwtracing/coresight/coresight-core.c
+@@ -161,7 +161,8 @@ static int coresight_find_link_outport(struct coresight_device *csdev,
  
-+/* Do not call this directly. Declared for export type visibility. */
-+extern __visible __wsum csum_partial_copy_generic(const void *src, void *dst, int len);
-+
- /**
-  * csum_fold - Fold and invert a 32bit checksum.
-  * sum: 32bit unfolded sum
+ static inline u32 coresight_read_claim_tags(struct coresight_device *csdev)
+ {
+-	return csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR);
++	return FIELD_GET(CORESIGHT_CLAIM_MASK,
++			 csdev_access_relaxed_read32(&csdev->access, CORESIGHT_CLAIMCLR));
+ }
+ 
+ static inline bool coresight_is_claimed_self_hosted(struct coresight_device *csdev)
+diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
+index ff1dd2092ac5b..b416edcdf797d 100644
+--- a/drivers/hwtracing/coresight/coresight-priv.h
++++ b/drivers/hwtracing/coresight/coresight-priv.h
+@@ -32,6 +32,7 @@
+  * Coresight device CLAIM protocol.
+  * See PSCI - ARM DEN 0022D, Section: 6.8.1 Debug and Trace save and restore.
+  */
++#define CORESIGHT_CLAIM_MASK		GENMASK(1, 0)
+ #define CORESIGHT_CLAIM_SELF_HOSTED	BIT(1)
+ 
+ #define TIMEOUT_US		100
 -- 
 2.39.5
 
