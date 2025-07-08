@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2371FC0F3;
-	Tue,  8 Jul 2025 16:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7F71754B;
+	Tue,  8 Jul 2025 16:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993187; cv=none; b=Xa4SK+w9xAmkhtYLOluuiF9u1ipBNr9XkVtrh2/OgtrMF99TrFFkb5sazbNNG3VAdiyjb3PLBDzWOIFp/I6Kra6g8hjXP6/PRLsbNCOukPvBcxcuD1mMl2EnnOhL2UT+LQNi28/iHDhH7t8T9Xdbrrva5OapCnSsEwlVlPFQLl8=
+	t=1751993190; cv=none; b=QlIMgzY7j5zF+Q8dqNdIKNLCANUN8ffkIgQ4cB+jP6IvRr9TRyYPASpvWycbbwfNKuBSU0hRqlfQVIljywvhtHPcYyuFzDbRm2ykHBUAzJ4cQpNEX2bhjgEH0ybmWXRhFolB6cRG8UUeLuIHAhQTawFt9Y8iD52gTpAdsogbzcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993187; c=relaxed/simple;
-	bh=X2Gx1XFr3DmUxRJAWvzCn+/IcIru1Z92pU/sb00Z5mc=;
+	s=arc-20240116; t=1751993190; c=relaxed/simple;
+	bh=nSGNYPRAUgyB0xTr6og+lGkjC4XAJbUhSVkUDcZ4TZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CiEQNAY87T6uuH7/shVUtLOySLwmlVSFR/BNyGnxMxYOO0OhKa5ZDQbv4k4YFcGHPmT/K/azzzvZsbu8sAtSUVsc3JAiGKmOPMRzJPu8MzDKjkV7V7oEkTqw/c1ccQYoWqD2YmqBBCOUCA0MmqN6gcFm5Zi25hZhRsG0MRieRSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/o3oLBN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBr7/p8YWhhUlFZHh3fQyJIAUti+eHSGe8CYuVwMEcK2IgBlyMwPKXtVUUugErngkDpSIbOb49SkXJtaliYwFXGic6gXzXmILjPYfXzAkaJHPRJLmTnxDAQulPHhVJpI9m1NjW7dZDkLU2pzBkRE2pgaAiv696BRfdbpplXfu7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTaaDE5m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/o3oLBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA7FC4CEED;
-	Tue,  8 Jul 2025 16:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTaaDE5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE01C4CEED;
+	Tue,  8 Jul 2025 16:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993187;
-	bh=X2Gx1XFr3DmUxRJAWvzCn+/IcIru1Z92pU/sb00Z5mc=;
+	s=korg; t=1751993190;
+	bh=nSGNYPRAUgyB0xTr6og+lGkjC4XAJbUhSVkUDcZ4TZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/o3oLBNPuyTZzWOjurkGpUMAHiEAGFNvJEQ+07xaqyawXGXOdcGmnGKyNSVeSFAR
-	 be83iMGnYqN0dQt3b0/rwkUhgVqDXtE0x0k8rt3rfvdYcoeF5Lp/Ayg417VhNGoVu5
-	 +PuFWmCZ77+g4vMyDJ1JVkzzskInu/I2B+eo2bro=
+	b=DTaaDE5mAbPwrDA0KL3OHXaQa82bWM8uFOkZ01uCt7AOnyZrnB5zn8D3PSqT0bOnf
+	 OfOsunbRPgKoskQSAVvzVcNTUSMMEAvXTV+XTTeJYT2/bcgcxaaAz4xzm6ngepm5BZ
+	 81q3K6B50dW2PB7qXA6+IxqudyYOlRoYmagBtGJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 6.12 217/232] optee: ffa: fix sleep in atomic context
-Date: Tue,  8 Jul 2025 18:23:33 +0200
-Message-ID: <20250708162247.117095090@linuxfoundation.org>
+	Simon Xue <xxm@rock-chips.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.12 218/232] iommu/rockchip: prevent iommus dead loop when two masters share one IOMMU
+Date: Tue,  8 Jul 2025 18:23:34 +0200
+Message-ID: <20250708162247.139879382@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,151 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Wiklander <jens.wiklander@linaro.org>
+From: Simon Xue <xxm@rock-chips.com>
 
-commit 312d02adb959ea199372f375ada06e0186f651e4 upstream.
+commit 62e062a29ad5133f67c20b333ba0a952a99161ae upstream.
 
-The OP-TEE driver registers the function notif_callback() for FF-A
-notifications. However, this function is called in an atomic context
-leading to errors like this when processing asynchronous notifications:
+When two masters share an IOMMU, calling ops->of_xlate during
+the second master's driver init may overwrite iommu->domain set
+by the first. This causes the check if (iommu->domain == domain)
+in rk_iommu_attach_device() to fail, resulting in the same
+iommu->node being added twice to &rk_domain->iommus, which can
+lead to an infinite loop in subsequent &rk_domain->iommus operations.
 
- | BUG: sleeping function called from invalid context at kernel/locking/mutex.c:258
- | in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 9, name: kworker/0:0
- | preempt_count: 1, expected: 0
- | RCU nest depth: 0, expected: 0
- | CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not tainted 6.14.0-00019-g657536ebe0aa #13
- | Hardware name: linux,dummy-virt (DT)
- | Workqueue: ffa_pcpu_irq_notification notif_pcpu_irq_work_fn
- | Call trace:
- |  show_stack+0x18/0x24 (C)
- |  dump_stack_lvl+0x78/0x90
- |  dump_stack+0x18/0x24
- |  __might_resched+0x114/0x170
- |  __might_sleep+0x48/0x98
- |  mutex_lock+0x24/0x80
- |  optee_get_msg_arg+0x7c/0x21c
- |  simple_call_with_arg+0x50/0xc0
- |  optee_do_bottom_half+0x14/0x20
- |  notif_callback+0x3c/0x48
- |  handle_notif_callbacks+0x9c/0xe0
- |  notif_get_and_handle+0x40/0x88
- |  generic_exec_single+0x80/0xc0
- |  smp_call_function_single+0xfc/0x1a0
- |  notif_pcpu_irq_work_fn+0x2c/0x38
- |  process_one_work+0x14c/0x2b4
- |  worker_thread+0x2e4/0x3e0
- |  kthread+0x13c/0x210
- |  ret_from_fork+0x10/0x20
-
-Fix this by adding work queue to process the notification in a
-non-atomic context.
-
-Fixes: d0476a59de06 ("optee: ffa_abi: add asynchronous notifications")
-Cc: stable@vger.kernel.org
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Tested-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20250602120452.2507084-1-jens.wiklander@linaro.org
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 25c2325575cc ("iommu/rockchip: Add missing set_platform_dma_ops callback")
+Signed-off-by: Simon Xue <xxm@rock-chips.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20250623020018.584802-1-xxm@rock-chips.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/optee/ffa_abi.c       |   41 +++++++++++++++++++++++++++++---------
- drivers/tee/optee/optee_private.h |    2 +
- 2 files changed, 34 insertions(+), 9 deletions(-)
+ drivers/iommu/rockchip-iommu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/tee/optee/ffa_abi.c
-+++ b/drivers/tee/optee/ffa_abi.c
-@@ -728,12 +728,21 @@ static bool optee_ffa_exchange_caps(stru
- 	return true;
- }
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -1154,7 +1154,6 @@ static int rk_iommu_of_xlate(struct devi
+ 	iommu_dev = of_find_device_by_node(args->np);
  
-+static void notif_work_fn(struct work_struct *work)
-+{
-+	struct optee_ffa *optee_ffa = container_of(work, struct optee_ffa,
-+						   notif_work);
-+	struct optee *optee = container_of(optee_ffa, struct optee, ffa);
+ 	data->iommu = platform_get_drvdata(iommu_dev);
+-	data->iommu->domain = &rk_identity_domain;
+ 	dev_iommu_priv_set(dev, data);
+ 
+ 	platform_device_put(iommu_dev);
+@@ -1192,6 +1191,8 @@ static int rk_iommu_probe(struct platfor
+ 	if (!iommu)
+ 		return -ENOMEM;
+ 
++	iommu->domain = &rk_identity_domain;
 +
-+	optee_do_bottom_half(optee->ctx);
-+}
-+
- static void notif_callback(int notify_id, void *cb_data)
- {
- 	struct optee *optee = cb_data;
- 
- 	if (notify_id == optee->ffa.bottom_half_value)
--		optee_do_bottom_half(optee->ctx);
-+		queue_work(optee->ffa.notif_wq, &optee->ffa.notif_work);
- 	else
- 		optee_notif_send(optee, notify_id);
- }
-@@ -817,9 +826,11 @@ static void optee_ffa_remove(struct ffa_
- 	struct optee *optee = ffa_dev_get_drvdata(ffa_dev);
- 	u32 bottom_half_id = optee->ffa.bottom_half_value;
- 
--	if (bottom_half_id != U32_MAX)
-+	if (bottom_half_id != U32_MAX) {
- 		ffa_dev->ops->notifier_ops->notify_relinquish(ffa_dev,
- 							      bottom_half_id);
-+		destroy_workqueue(optee->ffa.notif_wq);
-+	}
- 	optee_remove_common(optee);
- 
- 	mutex_destroy(&optee->ffa.mutex);
-@@ -835,6 +846,13 @@ static int optee_ffa_async_notif_init(st
- 	u32 notif_id = 0;
- 	int rc;
- 
-+	INIT_WORK(&optee->ffa.notif_work, notif_work_fn);
-+	optee->ffa.notif_wq = create_workqueue("optee_notification");
-+	if (!optee->ffa.notif_wq) {
-+		rc = -EINVAL;
-+		goto err;
-+	}
-+
- 	while (true) {
- 		rc = ffa_dev->ops->notifier_ops->notify_request(ffa_dev,
- 								is_per_vcpu,
-@@ -851,19 +869,24 @@ static int optee_ffa_async_notif_init(st
- 		 * notifications in that case.
- 		 */
- 		if (rc != -EACCES)
--			return rc;
-+			goto err_wq;
- 		notif_id++;
- 		if (notif_id >= OPTEE_FFA_MAX_ASYNC_NOTIF_VALUE)
--			return rc;
-+			goto err_wq;
- 	}
- 	optee->ffa.bottom_half_value = notif_id;
- 
- 	rc = enable_async_notif(optee);
--	if (rc < 0) {
--		ffa_dev->ops->notifier_ops->notify_relinquish(ffa_dev,
--							      notif_id);
--		optee->ffa.bottom_half_value = U32_MAX;
--	}
-+	if (rc < 0)
-+		goto err_rel;
-+
-+	return 0;
-+err_rel:
-+	ffa_dev->ops->notifier_ops->notify_relinquish(ffa_dev, notif_id);
-+err_wq:
-+	destroy_workqueue(optee->ffa.notif_wq);
-+err:
-+	optee->ffa.bottom_half_value = U32_MAX;
- 
- 	return rc;
- }
---- a/drivers/tee/optee/optee_private.h
-+++ b/drivers/tee/optee/optee_private.h
-@@ -165,6 +165,8 @@ struct optee_ffa {
- 	/* Serializes access to @global_ids */
- 	struct mutex mutex;
- 	struct rhashtable global_ids;
-+	struct workqueue_struct *notif_wq;
-+	struct work_struct notif_work;
- };
- 
- struct optee;
+ 	platform_set_drvdata(pdev, iommu);
+ 	iommu->dev = dev;
+ 	iommu->num_mmu = 0;
 
 
