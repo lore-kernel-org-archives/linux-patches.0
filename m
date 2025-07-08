@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BE32E5B0E;
-	Tue,  8 Jul 2025 16:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76B021C190;
+	Tue,  8 Jul 2025 16:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992609; cv=none; b=lrSJgHSAt2I8/Vt69AtiHsvY8kazsWHslocWZW59kv0ogp7Hqe8mR3B41AdsfEbdMVVsm1GCCUEBKCkOp90iRrRTI/27R5KAmcaNxTA+Vs2ijXMGTGQra6hsBEHlS1lviaw28KIHIUxgqxOBls+gkS1Hq8dLbo1CcDvxo1WvYXg=
+	t=1751992612; cv=none; b=qo6cXsK6JmGaleaZRLvXFEUUeyu/dhgLXXi/tb/7nfAyHV12wyWUdSSMxw/0y4pysbHKuX7jyVOGmdyA96SB6sh3F+mad1nLDh+MABzVkdn3baBzoHk50tHw5R/vPPN1XonNBZRxDhsELJymUfvUuKuQaG1TBGNEVMeyVNfexEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992609; c=relaxed/simple;
-	bh=6DwpnSGG8ocpqm9zM/Rz3DA44n4TaRwY8GPttUHOkME=;
+	s=arc-20240116; t=1751992612; c=relaxed/simple;
+	bh=RVZtRjz/YJwkZ4EU/ShrJojqSyeMqqSlr1B+TEdkYz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XR6rtko4RzVUxoz/DXdyvmLyk7acPWWy3W6Mc6zQ9LeQdHSi4mkPjHOtvb124irh8bXeCstyeorsNlL9uAeaBdQkCRsAraM3h3S0baMqC1CnEwOqQC0y0PRSSswssK5CM2+DQ+uat2GksJAfKYnHYSClTbuZZXu8Cy12pw1y1EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9jX5ZKR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B9dAmLWzN1cJAMrPstSn7fLYDhnBTi79XmZ97LAJXwYU+4e6gZ7zpppLy2xWgTfhjkt1sa0995CEDyUIJBhLnjqp6PgdPNzzaiNL+w0PruNgq8GfuciTqY3xgWdxnlXLQBktB7kg15IZeGzoCl7bEYkm8FJvUKt/9KA/WH9VU0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+Kvr/Kj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9jX5ZKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D1DC4CEF6;
-	Tue,  8 Jul 2025 16:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+Kvr/Kj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A5FC4CEED;
+	Tue,  8 Jul 2025 16:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992609;
-	bh=6DwpnSGG8ocpqm9zM/Rz3DA44n4TaRwY8GPttUHOkME=;
+	s=korg; t=1751992612;
+	bh=RVZtRjz/YJwkZ4EU/ShrJojqSyeMqqSlr1B+TEdkYz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9jX5ZKRU2arLE/5HF6FsqF3anB330twoMyMX/gIATfK/EEkR7lg+Quot7VNzcNPZ
-	 MbjTXALqUvdFeNQ+JIkHYzq84xspZ8QYcgRCjvpDd2sKp+9UOz7yyFljssIzcC2FqF
-	 NeOVP3iMT8uwEbZxM7kXGFqRvN1XUhcdIJr0/lOk=
+	b=A+Kvr/Kj0yop3cP6LBHBkpn7SfEil71y4+N0Vvjb887zeTEXcDXouQIccAr6wSefa
+	 A0kewgK2wOW96AylUwwlY/eBQscjAK748LpSQXC3sSXDEejwor9UUyAH/+MM/67NK7
+	 W11t3xY/X5r8Yte47P27Iv246QmU6nsxitl8vFI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunshui Jiang <jiangyunshui@kylinos.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 020/232] Input: cs40l50-vibra - fix potential NULL dereference in cs40l50_upload_owt()
-Date: Tue,  8 Jul 2025 18:20:16 +0200
-Message-ID: <20250708162241.962898365@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	RD Babiera <rdbabiera@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 021/232] usb: typec: altmodes/displayport: do not index invalid pin_assignments
+Date: Tue,  8 Jul 2025 18:20:17 +0200
+Message-ID: <20250708162241.988420697@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -50,41 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunshui Jiang <jiangyunshui@kylinos.cn>
+From: RD Babiera <rdbabiera@google.com>
 
-commit 4cf65845fdd09d711fc7546d60c9abe010956922 upstream.
+commit af4db5a35a4ef7a68046883bfd12468007db38f1 upstream.
 
-The cs40l50_upload_owt() function allocates memory via kmalloc()
-without checking for allocation failure, which could lead to a
-NULL pointer dereference.
+A poorly implemented DisplayPort Alt Mode port partner can indicate
+that its pin assignment capabilities are greater than the maximum
+value, DP_PIN_ASSIGN_F. In this case, calls to pin_assignment_show
+will cause a BRK exception due to an out of bounds array access.
 
-Return -ENOMEM in case allocation fails.
+Prevent for loop in pin_assignment_show from accessing
+invalid values in pin_assignments by adding DP_PIN_ASSIGN_MAX
+value in typec_dp.h and using i < DP_PIN_ASSIGN_MAX as a loop
+condition.
 
-Signed-off-by: Yunshui Jiang <jiangyunshui@kylinos.cn>
-Fixes: c38fe1bb5d21 ("Input: cs40l50 - Add support for the CS40L50 haptic driver")
-Link: https://lore.kernel.org/r/20250704024010.2353841-1-jiangyunshui@kylinos.cn
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
+Cc: stable <stable@kernel.org>
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250618224943.3263103-2-rdbabiera@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/cs40l50-vibra.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/altmodes/displayport.c |    2 +-
+ include/linux/usb/typec_dp.h             |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/misc/cs40l50-vibra.c b/drivers/input/misc/cs40l50-vibra.c
-index dce3b0ec8cf3..330f09123631 100644
---- a/drivers/input/misc/cs40l50-vibra.c
-+++ b/drivers/input/misc/cs40l50-vibra.c
-@@ -238,6 +238,8 @@ static int cs40l50_upload_owt(struct cs40l50_work *work_data)
- 	header.data_words = len / sizeof(u32);
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -677,7 +677,7 @@ static ssize_t pin_assignment_show(struc
  
- 	new_owt_effect_data = kmalloc(sizeof(header) + len, GFP_KERNEL);
-+	if (!new_owt_effect_data)
-+		return -ENOMEM;
+ 	assignments = get_current_pin_assignments(dp);
  
- 	memcpy(new_owt_effect_data, &header, sizeof(header));
- 	memcpy(new_owt_effect_data + sizeof(header), work_data->custom_data, len);
--- 
-2.50.0
-
+-	for (i = 0; assignments; assignments >>= 1, i++) {
++	for (i = 0; assignments && i < DP_PIN_ASSIGN_MAX; assignments >>= 1, i++) {
+ 		if (assignments & 1) {
+ 			if (i == cur)
+ 				len += sprintf(buf + len, "[%s] ",
+--- a/include/linux/usb/typec_dp.h
++++ b/include/linux/usb/typec_dp.h
+@@ -57,6 +57,7 @@ enum {
+ 	DP_PIN_ASSIGN_D,
+ 	DP_PIN_ASSIGN_E,
+ 	DP_PIN_ASSIGN_F, /* Not supported after v1.0b */
++	DP_PIN_ASSIGN_MAX,
+ };
+ 
+ /* DisplayPort alt mode specific commands */
 
 
