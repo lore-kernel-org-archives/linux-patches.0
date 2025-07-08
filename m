@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAB08F5E;
-	Tue,  8 Jul 2025 16:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3358F5E;
+	Tue,  8 Jul 2025 16:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993428; cv=none; b=F5Qk1RV6vEAS/GtEZ1BThem/PxeBeAoTFOYw79cYOiAHbuzX2VndZi2UQwKFWJJezZYMcgA92gYt1J+DhC8lRB6QevrjRPgguMGjYO4ZyqPd5dWm9fMwHKtcmmk3vT+Hxr970xhdy/NB+tGnFwEr1y3GDHbuACoCQhKuzM/hwvc=
+	t=1751993431; cv=none; b=XmhQrMnfXuR+gtaWqnhSnhF4lRevepN8v58Pdu8jktw1TpZUbLJrRSmoc56aS9Gnf0DUQUBphhCbs0UVUPMpPPJv88mKJ6hDoNYVzARHBJktBEP0ohHPB4WvL3C8EZOT7wmQmC0Ib3EvfFjFGaDbvTLDUeUW4Ous3bpxwx/REps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993428; c=relaxed/simple;
-	bh=peQ/0zPOJXxLvNmH/Uc8HM6jfIkFpaMOXW3VQpy5v/4=;
+	s=arc-20240116; t=1751993431; c=relaxed/simple;
+	bh=WEImpKk4OYmn1fzs4v0e4QzyLM6EiKksi4CQsQw77SI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTKCyOPWdFs2KOo/3ZFVYiI8CqJgmnXvp3IOZpVo3GjrG9Xv3+vHXyxlAlnsXwen/ETd3HTmS/W5I1UgzMo4e3zrfWQM3c49BR32xlYHmRqDMPMk71JpIJnVqzrd3dZD8QBrParx4GhbUenptxdO3liEVruee5CumfCGWT8SUU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6DScqXl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SSCkFx09u1790NzAaCMpYY4GeXS8YmhZERbZXx7xumd/ye+3LeJ3TB1RjtjpOYWzm4xE3RrroIOZFd3xSGjRUWEMANG+f23zt1rYIyb4xhPIZkmm+Wr1f2QRj/jd5rHehNOxwWMn4N059LMlE3tO8PbDg+Y9v5COFx1VUUi7e9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iim6FTsY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6DScqXl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16553C4CEED;
-	Tue,  8 Jul 2025 16:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iim6FTsY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D15BC4CEED;
+	Tue,  8 Jul 2025 16:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993428;
-	bh=peQ/0zPOJXxLvNmH/Uc8HM6jfIkFpaMOXW3VQpy5v/4=;
+	s=korg; t=1751993431;
+	bh=WEImpKk4OYmn1fzs4v0e4QzyLM6EiKksi4CQsQw77SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6DScqXlz7qW0RSg6iyV1pxqOPi+Vzb5WIIurdbWFncCDXBCrhNneGYOuagSKPIlr
-	 IVlmrs5GtaypbB6vO8PzZXP7wZF5mvLRNjk4mSvEzMKaurW2RsXiKjeO1SBg6xueYc
-	 AFEVCMAoXdTNNjkeUFH2o2J80JSg3ZJBmmJXimt8=
+	b=Iim6FTsY1Go/YyUx9TnRi1LQydSAGBBGAy2YrUaYkOFUU1FIJzRNSnpAD0PdNRMHb
+	 cerEnlKQq7PKMjpmyl/Dsl76lBfcRMMrUGx++l1+0tSga9G4iqVx58/0r+NtpfpRE4
+	 dlinodU97Ye6NIaafy2gnNTU/DgPBDPkOiSR2Y8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Sven Peter <sven@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 041/178] arm64: dts: apple: Move touchbar mipi {address,size}-cells from dtsi to dts
-Date: Tue,  8 Jul 2025 18:21:18 +0200
-Message-ID: <20250708162237.752947861@linuxfoundation.org>
+Subject: [PATCH 6.15 042/178] platform/mellanox: mlxbf-tmfifo: fix vring_desc.len assignment
+Date: Tue,  8 Jul 2025 18:21:19 +0200
+Message-ID: <20250708162237.778931524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -45,87 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 08a0d93c353bd55de8b5fb77b464d89425be0215 ]
+[ Upstream commit 109f4d29dade8ae5b4ac6325af9d1bc24b4230f8 ]
 
-Move the {address,size}-cells property from the (disabled) touchbar screen
-mipi node inside the dtsi file to the model-specific dts file where it's
-enabled to fix the following W=1 warnings:
+Fix warnings reported by sparse, related to incorrect type:
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38: warning: incorrect type in assignment (different base types)
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    expected restricted __virtio32 [usertype] len
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    got unsigned long
 
-t8103.dtsi:404.34-433.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@228600000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" property
-t8112.dtsi:419.34-448.5: Warning (avoid_unnecessary_addr_size): /soc/dsi@228600000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" property
-
-Fixes: 7275e795e520 ("arm64: dts: apple: Add touchbar screen nodes")
-Reviewed-by: Janne Grunau <j@jannau.net>
-Link: https://lore.kernel.org/r/20250611-display-pipe-mipi-warning-v1-1-bd80ba2c0eea@kernel.org
-Signed-off-by: Sven Peter <sven@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202404040339.S7CUIgf3-lkp@intel.com/
+Fixes: 78034cbece79 ("platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/20250613214608.2250130-1-davthompson@nvidia.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/apple/t8103-j293.dts | 2 ++
- arch/arm64/boot/dts/apple/t8103.dtsi     | 2 --
- arch/arm64/boot/dts/apple/t8112-j493.dts | 2 ++
- arch/arm64/boot/dts/apple/t8112.dtsi     | 2 --
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/apple/t8103-j293.dts b/arch/arm64/boot/dts/apple/t8103-j293.dts
-index e2d9439397f71..5b3c42e9f0e67 100644
---- a/arch/arm64/boot/dts/apple/t8103-j293.dts
-+++ b/arch/arm64/boot/dts/apple/t8103-j293.dts
-@@ -100,6 +100,8 @@ dfr_mipi_out_panel: endpoint@0 {
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index aae99adb29eb0..70c58c4c6c842 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -281,7 +281,8 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
+ 		vring->align = SMP_CACHE_BYTES;
+ 		vring->index = i;
+ 		vring->vdev_id = tm_vdev->vdev.id.device;
+-		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
++		vring->drop_desc.len = cpu_to_virtio32(&tm_vdev->vdev,
++						       VRING_DROP_DESC_MAX_LEN);
+ 		dev = &tm_vdev->vdev.dev;
  
- &displaydfr_mipi {
- 	status = "okay";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
- 
- 	dfr_panel: panel@0 {
- 		compatible = "apple,j293-summit", "apple,summit";
-diff --git a/arch/arm64/boot/dts/apple/t8103.dtsi b/arch/arm64/boot/dts/apple/t8103.dtsi
-index 97b6a067394e3..229b10efaab9e 100644
---- a/arch/arm64/boot/dts/apple/t8103.dtsi
-+++ b/arch/arm64/boot/dts/apple/t8103.dtsi
-@@ -404,8 +404,6 @@ displaydfr_mipi: dsi@228600000 {
- 			compatible = "apple,t8103-display-pipe-mipi", "apple,h7-display-pipe-mipi";
- 			reg = <0x2 0x28600000 0x0 0x100000>;
- 			power-domains = <&ps_mipi_dsi>;
--			#address-cells = <1>;
--			#size-cells = <0>;
- 			status = "disabled";
- 
- 			ports {
-diff --git a/arch/arm64/boot/dts/apple/t8112-j493.dts b/arch/arm64/boot/dts/apple/t8112-j493.dts
-index be86d34c6696c..fb8ad7d4c65a8 100644
---- a/arch/arm64/boot/dts/apple/t8112-j493.dts
-+++ b/arch/arm64/boot/dts/apple/t8112-j493.dts
-@@ -63,6 +63,8 @@ dfr_mipi_out_panel: endpoint@0 {
- 
- &displaydfr_mipi {
- 	status = "okay";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
- 
- 	dfr_panel: panel@0 {
- 		compatible = "apple,j493-summit", "apple,summit";
-diff --git a/arch/arm64/boot/dts/apple/t8112.dtsi b/arch/arm64/boot/dts/apple/t8112.dtsi
-index d9b966d68e4fa..7488e3850493b 100644
---- a/arch/arm64/boot/dts/apple/t8112.dtsi
-+++ b/arch/arm64/boot/dts/apple/t8112.dtsi
-@@ -420,8 +420,6 @@ displaydfr_mipi: dsi@228600000 {
- 			compatible = "apple,t8112-display-pipe-mipi", "apple,h7-display-pipe-mipi";
- 			reg = <0x2 0x28600000 0x0 0x100000>;
- 			power-domains = <&ps_mipi_dsi>;
--			#address-cells = <1>;
--			#size-cells = <0>;
- 			status = "disabled";
- 
- 			ports {
+ 		size = vring_size(vring->num, vring->align);
 -- 
 2.39.5
 
