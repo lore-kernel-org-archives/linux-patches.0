@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CC22E54DC;
-	Tue,  8 Jul 2025 16:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C158B2E5B15;
+	Tue,  8 Jul 2025 16:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992361; cv=none; b=qwhJdoLx3WlL7f08IBYGYousVJls3bjq/i1hOmJurvSCv/agf+yvk2PcIt7vaPozGzdlggmfs1/2FkVsOfy+zUQxCMWf+ZGduzTTE7iIt8CyUYWBDeQyfsu5gQ2nI+mA3xJhF8vKRlq0M6prphcN3Kc6A3xnRnJcZ4muOotJxOQ=
+	t=1751992364; cv=none; b=PUfBjCK1nnCx5ihdx7XgwMBJZ5unwkOPAuz98lrYUZQ7L/K8cp8IQ1IF2FBVC696YxLBb4a/IrXmUcB/cJnc56S2AbT3rDudYA2HNkHizsygPkjUdCrPpmoKCWcrFAtjve7V+kpBMkDebtE3sIspft6oF7CBQTZaUQFhK7wXSzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992361; c=relaxed/simple;
-	bh=6+vMQJJveuXUCnWpxHrGq1dNDh6tdqWLbUmTXaj8kiw=;
+	s=arc-20240116; t=1751992364; c=relaxed/simple;
+	bh=kgNsivIV/KZ7UtjhpeYF0TO+ms2BIxW/erLpt+nfGMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=meF69J/kxxdJSex0NhStdzhZpNLO6FLSSk2VFEJSuVXceurSQScM1XJkt0anQPMIxNeqeughjplUy41sRvAD5D053OPZllMJ3hO8XA4t891JIT9qLKS6euU0JMurueEJPyKjsEVck1FQTmDOLcXmYLwS4OeiOrGRpLgGhN0Z3E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGXG30dm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hJVCWUhrLrBEXMrlKifxGvpb4W+IxV5fsB8cTSh4mOmt+q/0x+QHoty9T512QoJaR/9ysBG/bzHsVhd1OnzphgS/gwSp1AfqORBFjqzsPzrv75jmUf/tktlewrw5k56y0SSP62MDKbaFVBnV9NixXFzWqGcYy3G4ceMvLRJ94IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtDLcTpN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGXG30dm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62720C4CEF5;
-	Tue,  8 Jul 2025 16:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtDLcTpN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5FAC4CEED;
+	Tue,  8 Jul 2025 16:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992361;
-	bh=6+vMQJJveuXUCnWpxHrGq1dNDh6tdqWLbUmTXaj8kiw=;
+	s=korg; t=1751992364;
+	bh=kgNsivIV/KZ7UtjhpeYF0TO+ms2BIxW/erLpt+nfGMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGXG30dmPb6yEf5tnOTmH/mT/xTHGsXqhBB53qTPA6skzESiydz177sUrn/bVt4FL
-	 YM4whXtNpc60MYz4bS6VdlQiJ+S+vYdotljFDXSL9+3yOTYhQtcNYG6gC2LBGDoBr+
-	 Dh9QIrHdzSSphpCpTX4jhEa/cfu50r0YsGGBoaZ8=
+	b=qtDLcTpNbvX0T+wnUj/B+4HIAwdz2KiH2XlgZhrcNFNZ242I5k/a0hGAXSslIZ3gF
+	 evC0wAOgJOON+LSiD99RuHLIidnjN5KSBiks2JWr/TtzV3WzGA6/o9hCJBU8uZuOHs
+	 pjJ9IrLdJIgoKsr0MTWiQsoyU4zLJgMoC0K+9ENw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/132] btrfs: fix qgroup reservation leak on failure to allocate ordered extent
-Date: Tue,  8 Jul 2025 18:22:56 +0200
-Message-ID: <20250708162232.556417191@linuxfoundation.org>
+Subject: [PATCH 6.6 066/132] smb: client: remove \t from TP_printk statements
+Date: Tue,  8 Jul 2025 18:22:57 +0200
+Message-ID: <20250708162232.584511161@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -53,62 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 1f2889f5594a2bc4c6a52634c4a51b93e785def5 ]
+[ Upstream commit e97f9540ce001503a4539f337da742c1dfa7d86a ]
 
-If we fail to allocate an ordered extent for a COW write we end up leaking
-a qgroup data reservation since we called btrfs_qgroup_release_data() but
-we didn't call btrfs_qgroup_free_refroot() (which would happen when
-running the respective data delayed ref created by ordered extent
-completion or when finishing the ordered extent in case an error happened).
+The generate '[FAILED TO PARSE]' strings in trace-cmd report output like this:
 
-So make sure we call btrfs_qgroup_free_refroot() if we fail to allocate an
-ordered extent for a COW write.
+  rm-5298  [001]  6084.533748493: smb3_exit_err:        [FAILED TO PARSE] xid=972 func_name=cifs_rmdir rc=-39
+  rm-5298  [001]  6084.533959234: smb3_enter:           [FAILED TO PARSE] xid=973 func_name=cifs_closedir
+  rm-5298  [001]  6084.533967630: smb3_close_enter:     [FAILED TO PARSE] xid=973 fid=94489281833 tid=1 sesid=96758029877361
+  rm-5298  [001]  6084.534004008: smb3_cmd_enter:       [FAILED TO PARSE] tid=1 sesid=96758029877361 cmd=6 mid=566
+  rm-5298  [001]  6084.552248232: smb3_cmd_done:        [FAILED TO PARSE] tid=1 sesid=96758029877361 cmd=6 mid=566
+  rm-5298  [001]  6084.552280542: smb3_close_done:      [FAILED TO PARSE] xid=973 fid=94489281833 tid=1 sesid=96758029877361
+  rm-5298  [001]  6084.552316034: smb3_exit_done:       [FAILED TO PARSE] xid=973 func_name=cifs_closedir
 
-Fixes: 7dbeaad0af7d ("btrfs: change timing for qgroup reserved space for ordered extents to fix reserved space leak")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ordered-data.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/smb/client/trace.h | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/fs/btrfs/ordered-data.c b/fs/btrfs/ordered-data.c
-index 86d846eb5ed49..c68e9ecbc438c 100644
---- a/fs/btrfs/ordered-data.c
-+++ b/fs/btrfs/ordered-data.c
-@@ -154,9 +154,10 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
- 	struct btrfs_ordered_extent *entry;
- 	int ret;
- 	u64 qgroup_rsv = 0;
-+	const bool is_nocow = (flags &
-+	       ((1U << BTRFS_ORDERED_NOCOW) | (1U << BTRFS_ORDERED_PREALLOC)));
+diff --git a/fs/smb/client/trace.h b/fs/smb/client/trace.h
+index 563cb4d8edf0c..4dfdc521c5c98 100644
+--- a/fs/smb/client/trace.h
++++ b/fs/smb/client/trace.h
+@@ -114,7 +114,7 @@ DECLARE_EVENT_CLASS(smb3_rw_err_class,
+ 		__entry->len = len;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x fid=0x%llx offset=0x%llx len=0x%x rc=%d",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x fid=0x%llx offset=0x%llx len=0x%x rc=%d",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->fid,
+ 		__entry->offset, __entry->len, __entry->rc)
+ )
+@@ -247,7 +247,7 @@ DECLARE_EVENT_CLASS(smb3_fd_class,
+ 		__entry->tid = tid;
+ 		__entry->sesid = sesid;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x fid=0x%llx",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x fid=0x%llx",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->fid)
+ )
  
--	if (flags &
--	    ((1 << BTRFS_ORDERED_NOCOW) | (1 << BTRFS_ORDERED_PREALLOC))) {
-+	if (is_nocow) {
- 		/* For nocow write, we can release the qgroup rsv right now */
- 		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
- 		if (ret < 0)
-@@ -171,8 +172,13 @@ static struct btrfs_ordered_extent *alloc_ordered_extent(
- 			return ERR_PTR(ret);
- 	}
- 	entry = kmem_cache_zalloc(btrfs_ordered_extent_cache, GFP_NOFS);
--	if (!entry)
-+	if (!entry) {
-+		if (!is_nocow)
-+			btrfs_qgroup_free_refroot(inode->root->fs_info,
-+						  btrfs_root_id(inode->root),
-+						  qgroup_rsv, BTRFS_QGROUP_RSV_DATA);
- 		return ERR_PTR(-ENOMEM);
-+	}
+@@ -286,7 +286,7 @@ DECLARE_EVENT_CLASS(smb3_fd_err_class,
+ 		__entry->sesid = sesid;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\txid=%u sid=0x%llx tid=0x%x fid=0x%llx rc=%d",
++	TP_printk("xid=%u sid=0x%llx tid=0x%x fid=0x%llx rc=%d",
+ 		__entry->xid, __entry->sesid, __entry->tid, __entry->fid,
+ 		__entry->rc)
+ )
+@@ -558,7 +558,7 @@ DECLARE_EVENT_CLASS(smb3_cmd_err_class,
+ 		__entry->status = status;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\tsid=0x%llx tid=0x%x cmd=%u mid=%llu status=0x%x rc=%d",
++	TP_printk("sid=0x%llx tid=0x%x cmd=%u mid=%llu status=0x%x rc=%d",
+ 		__entry->sesid, __entry->tid, __entry->cmd, __entry->mid,
+ 		__entry->status, __entry->rc)
+ )
+@@ -593,7 +593,7 @@ DECLARE_EVENT_CLASS(smb3_cmd_done_class,
+ 		__entry->cmd = cmd;
+ 		__entry->mid = mid;
+ 	),
+-	TP_printk("\tsid=0x%llx tid=0x%x cmd=%u mid=%llu",
++	TP_printk("sid=0x%llx tid=0x%x cmd=%u mid=%llu",
+ 		__entry->sesid, __entry->tid,
+ 		__entry->cmd, __entry->mid)
+ )
+@@ -631,7 +631,7 @@ DECLARE_EVENT_CLASS(smb3_mid_class,
+ 		__entry->when_sent = when_sent;
+ 		__entry->when_received = when_received;
+ 	),
+-	TP_printk("\tcmd=%u mid=%llu pid=%u, when_sent=%lu when_rcv=%lu",
++	TP_printk("cmd=%u mid=%llu pid=%u, when_sent=%lu when_rcv=%lu",
+ 		__entry->cmd, __entry->mid, __entry->pid, __entry->when_sent,
+ 		__entry->when_received)
+ )
+@@ -662,7 +662,7 @@ DECLARE_EVENT_CLASS(smb3_exit_err_class,
+ 		__assign_str(func_name, func_name);
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\t%s: xid=%u rc=%d",
++	TP_printk("%s: xid=%u rc=%d",
+ 		__get_str(func_name), __entry->xid, __entry->rc)
+ )
  
- 	entry->file_offset = file_offset;
- 	entry->num_bytes = num_bytes;
+@@ -688,7 +688,7 @@ DECLARE_EVENT_CLASS(smb3_sync_err_class,
+ 		__entry->ino = ino;
+ 		__entry->rc = rc;
+ 	),
+-	TP_printk("\tino=%lu rc=%d",
++	TP_printk("ino=%lu rc=%d",
+ 		__entry->ino, __entry->rc)
+ )
+ 
+@@ -714,7 +714,7 @@ DECLARE_EVENT_CLASS(smb3_enter_exit_class,
+ 		__entry->xid = xid;
+ 		__assign_str(func_name, func_name);
+ 	),
+-	TP_printk("\t%s: xid=%u",
++	TP_printk("%s: xid=%u",
+ 		__get_str(func_name), __entry->xid)
+ )
+ 
 -- 
 2.39.5
 
