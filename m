@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9520E2E041C;
-	Tue,  8 Jul 2025 16:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A692E2F0E;
+	Tue,  8 Jul 2025 16:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992770; cv=none; b=USnVWggS/TUhrROFz2J9o9aWcfVtLCzrwe7WQ9+b20N4kZABiJ2xYZRZdx5l2iOJ6LQ02S+f8R7E8N5X5uUN6KmCa8nQF+IkrQnNpwNhTvShMzQ0CPvLVWYXAILPwa6Oi7DqhhXRi2jOb1QcCk8lBZM+YeUh0ETj0V+Ti9qLApY=
+	t=1751992773; cv=none; b=K3XBbPX2j4zOssbB42ol+4pHpSsm6bJF/C7yo7wrjMtaKQwAtHeH6hbn3s6gvSvDU7y3AYHUkAr7p+qNOZfRB6D3zzRhn+zZuWUyfzUsWuNTeRu3ExMfN0Msh1QQ6UWcvY5Zitv703/NvADV+vSFxaWZGM9vOu2Ic/jps0j+ElM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992770; c=relaxed/simple;
-	bh=b9ZZj2vX5j/28F5+RpK5aZB0UvAmO5LrRTQ82EJzfeI=;
+	s=arc-20240116; t=1751992773; c=relaxed/simple;
+	bh=cYIf3lpBWq8P3oFx+Dz7A5vi5IRQ5PLfyrtngyP6gfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mK2p5W8g08ghEl1UVKfHbcs9mME/PS7CSJU6Ur169ra+PlHNd2LIJSOfqjDzKRupBJw2keJ+s5UCkuhOiEyQtrhmbOlSOrLUA+ZgtD5YgtQOMpMsMt4hCB8xp80X+QiNvREEiS8/RHloVQfzb4Q8+lt5/GnX6EY7Q8SpaZLkk68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NK7fnDyO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=peaKvcu+NHrPzrI9r97ecZ8ldUxfYKcnttQ8RRw6xBbtcq2gglhWVJNtrcqX1rK9cfqJMI7TbiVni63tOHK8JYi15SROKwMYj+1yVfXarf+7Y853KFGOqXmrl7F86nzo2mCpvwQ5Ha4qPZEpc2ZqhjOYPWb2Zs8Vz2ROJTi8xOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct406OLI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NK7fnDyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1B8C4CEF0;
-	Tue,  8 Jul 2025 16:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct406OLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51FFC4CEF0;
+	Tue,  8 Jul 2025 16:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992770;
-	bh=b9ZZj2vX5j/28F5+RpK5aZB0UvAmO5LrRTQ82EJzfeI=;
+	s=korg; t=1751992773;
+	bh=cYIf3lpBWq8P3oFx+Dz7A5vi5IRQ5PLfyrtngyP6gfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NK7fnDyOVh/fFuVZCvN6crW5HD+6PGS2xnXU9e2W1fb5yNSzoCM4sCTLTPIA5Xt8Y
-	 meij+0P2BNSy+fvu1LHvWAcbWjux8BZczuFSMlNc3p7hUWydYXAcAHEf+ro2OP9TrI
-	 X/JH6oLTLdRqCtnNEMG594oMVTarECsQtjdL3HVo=
+	b=Ct406OLIjDmNw97PgeBpf+76PH753lgeMU4M2gDxHyHOSE15Emi5TY33hAn9NhTrp
+	 faEnpJjx/BGe6rqdkc0ZO94FwFqRj+dGyzih/++08SccxanTSxltS9AAMy6DhutP6p
+	 ZZpTXOUjLbNIyZuUNUAqIDqELve8rJ0qxrRYEr4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
+	Krzysztof Niemiec <krzysztof.niemiec@intel.com>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/232] net: usb: lan78xx: fix WARN in __netif_napi_del_locked on disconnect
-Date: Tue,  8 Jul 2025 18:21:11 +0200
-Message-ID: <20250708162243.415297081@linuxfoundation.org>
+Subject: [PATCH 6.12 076/232] drm/i915/gt: Fix timeline left held on VMA alloc error
+Date: Tue,  8 Jul 2025 18:21:12 +0200
+Message-ID: <20250708162243.440251021@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -51,93 +58,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-[ Upstream commit 6c7ffc9af7186ed79403a3ffee9a1e5199fc7450 ]
+[ Upstream commit a5aa7bc1fca78c7fa127d9e33aa94a0c9066c1d6 ]
 
-Remove redundant netif_napi_del() call from disconnect path.
+The following error has been reported sporadically by CI when a test
+unbinds the i915 driver on a ring submission platform:
 
-A WARN may be triggered in __netif_napi_del_locked() during USB device
-disconnect:
+<4> [239.330153] ------------[ cut here ]------------
+<4> [239.330166] i915 0000:00:02.0: [drm] drm_WARN_ON(dev_priv->mm.shrink_count)
+<4> [239.330196] WARNING: CPU: 1 PID: 18570 at drivers/gpu/drm/i915/i915_gem.c:1309 i915_gem_cleanup_early+0x13e/0x150 [i915]
+...
+<4> [239.330640] RIP: 0010:i915_gem_cleanup_early+0x13e/0x150 [i915]
+...
+<4> [239.330942] Call Trace:
+<4> [239.330944]  <TASK>
+<4> [239.330949]  i915_driver_late_release+0x2b/0xa0 [i915]
+<4> [239.331202]  i915_driver_release+0x86/0xa0 [i915]
+<4> [239.331482]  devm_drm_dev_init_release+0x61/0x90
+<4> [239.331494]  devm_action_release+0x15/0x30
+<4> [239.331504]  release_nodes+0x3d/0x120
+<4> [239.331517]  devres_release_all+0x96/0xd0
+<4> [239.331533]  device_unbind_cleanup+0x12/0x80
+<4> [239.331543]  device_release_driver_internal+0x23a/0x280
+<4> [239.331550]  ? bus_find_device+0xa5/0xe0
+<4> [239.331563]  device_driver_detach+0x14/0x20
+...
+<4> [357.719679] ---[ end trace 0000000000000000 ]---
 
-  WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
+If the test also unloads the i915 module then that's followed with:
 
-This happens because netif_napi_del() is called in the disconnect path while
-NAPI is still enabled. However, it is not necessary to call netif_napi_del()
-explicitly, since unregister_netdev() will handle NAPI teardown automatically
-and safely. Removing the redundant call avoids triggering the warning.
+<3> [357.787478] =============================================================================
+<3> [357.788006] BUG i915_vma (Tainted: G     U  W        N ): Objects remaining on __kmem_cache_shutdown()
+<3> [357.788031] -----------------------------------------------------------------------------
+<3> [357.788204] Object 0xffff888109e7f480 @offset=29824
+<3> [357.788670] Allocated in i915_vma_instance+0xee/0xc10 [i915] age=292729 cpu=4 pid=2244
+<4> [357.788994]  i915_vma_instance+0xee/0xc10 [i915]
+<4> [357.789290]  init_status_page+0x7b/0x420 [i915]
+<4> [357.789532]  intel_engines_init+0x1d8/0x980 [i915]
+<4> [357.789772]  intel_gt_init+0x175/0x450 [i915]
+<4> [357.790014]  i915_gem_init+0x113/0x340 [i915]
+<4> [357.790281]  i915_driver_probe+0x847/0xed0 [i915]
+<4> [357.790504]  i915_pci_probe+0xe6/0x220 [i915]
+...
 
-Full trace:
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x000000c4. ret = -ENODEV
- lan78xx 1-1:1.0 enu1: Failed to set MAC down with error -ENODEV
- lan78xx 1-1:1.0 enu1: Link is Down
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x00000120. ret = -ENODEV
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
- Modules linked in: flexcan can_dev fuse
- CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.0-rc2-00624-ge926949dab03 #9 PREEMPT
- Hardware name: SKOV IMX8MP CPU revC - bd500 (DT)
- Workqueue: usb_hub_wq hub_event
- pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __netif_napi_del_locked+0x2b4/0x350
- lr : __netif_napi_del_locked+0x7c/0x350
- sp : ffffffc085b673c0
- x29: ffffffc085b673c0 x28: ffffff800b7f2000 x27: ffffff800b7f20d8
- x26: ffffff80110bcf58 x25: ffffff80110bd978 x24: 1ffffff0022179eb
- x23: ffffff80110bc000 x22: ffffff800b7f5000 x21: ffffff80110bc000
- x20: ffffff80110bcf38 x19: ffffff80110bcf28 x18: dfffffc000000000
- x17: ffffffc081578940 x16: ffffffc08284cee0 x15: 0000000000000028
- x14: 0000000000000006 x13: 0000000000040000 x12: ffffffb0022179e8
- x11: 1ffffff0022179e7 x10: ffffffb0022179e7 x9 : dfffffc000000000
- x8 : 0000004ffdde8619 x7 : ffffff80110bcf3f x6 : 0000000000000001
- x5 : ffffff80110bcf38 x4 : ffffff80110bcf38 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 1ffffff0022179e7 x0 : 0000000000000000
- Call trace:
-  __netif_napi_del_locked+0x2b4/0x350 (P)
-  lan78xx_disconnect+0xf4/0x360
-  usb_unbind_interface+0x158/0x718
-  device_remove+0x100/0x150
-  device_release_driver_internal+0x308/0x478
-  device_release_driver+0x1c/0x30
-  bus_remove_device+0x1a8/0x368
-  device_del+0x2e0/0x7b0
-  usb_disable_device+0x244/0x540
-  usb_disconnect+0x220/0x758
-  hub_event+0x105c/0x35e0
-  process_one_work+0x760/0x17b0
-  worker_thread+0x768/0xce8
-  kthread+0x3bc/0x690
-  ret_from_fork+0x10/0x20
- irq event stamp: 211604
- hardirqs last  enabled at (211603): [<ffffffc0828cc9ec>] _raw_spin_unlock_irqrestore+0x84/0x98
- hardirqs last disabled at (211604): [<ffffffc0828a9a84>] el1_dbg+0x24/0x80
- softirqs last  enabled at (211296): [<ffffffc080095f10>] handle_softirqs+0x820/0xbc8
- softirqs last disabled at (210993): [<ffffffc080010288>] __do_softirq+0x18/0x20
- ---[ end trace 0000000000000000 ]---
- lan78xx 1-1:1.0 enu1: failed to kill vid 0081/0
+Closer analysis of CI results history has revealed a dependency of the
+error on a few IGT tests, namely:
+- igt@api_intel_allocator@fork-simple-stress-signal,
+- igt@api_intel_allocator@two-level-inception-interruptible,
+- igt@gem_linear_blits@interruptible,
+- igt@prime_mmap_coherency@ioctl-errors,
+which invisibly trigger the issue, then exhibited with first driver unbind
+attempt.
 
-Fixes: ec4c7e12396b ("lan78xx: Introduce NAPI polling support")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250627051346.276029-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+All of the above tests perform actions which are actively interrupted with
+signals.  Further debugging has allowed to narrow that scope down to
+DRM_IOCTL_I915_GEM_EXECBUFFER2, and ring_context_alloc(), specific to ring
+submission, in particular.
+
+If successful then that function, or its execlists or GuC submission
+equivalent, is supposed to be called only once per GEM context engine,
+followed by raise of a flag that prevents the function from being called
+again.  The function is expected to unwind its internal errors itself, so
+it may be safely called once more after it returns an error.
+
+In case of ring submission, the function first gets a reference to the
+engine's legacy timeline and then allocates a VMA.  If the VMA allocation
+fails, e.g. when i915_vma_instance() called from inside is interrupted
+with a signal, then ring_context_alloc() fails, leaving the timeline held
+referenced.  On next I915_GEM_EXECBUFFER2 IOCTL, another reference to the
+timeline is got, and only that last one is put on successful completion.
+As a consequence, the legacy timeline, with its underlying engine status
+page's VMA object, is still held and not released on driver unbind.
+
+Get the legacy timeline only after successful allocation of the context
+engine's VMA.
+
+v2: Add a note on other submission methods (Krzysztof Karas):
+    Both execlists and GuC submission use lrc_alloc() which seems free
+    from a similar issue.
+
+Fixes: 75d0a7f31eec ("drm/i915: Lift timeline into intel_context")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12061
+Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Reviewed-by: Krzysztof Niemiec <krzysztof.niemiec@intel.com>
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/20250611104352.1014011-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit cc43422b3cc79eacff4c5a8ba0d224688ca9dd4f)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_ring_submission.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 531b1b6a37d19..2f8637224b69e 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -4229,8 +4229,6 @@ static void lan78xx_disconnect(struct usb_interface *intf)
- 	if (!dev)
- 		return;
+diff --git a/drivers/gpu/drm/i915/gt/intel_ring_submission.c b/drivers/gpu/drm/i915/gt/intel_ring_submission.c
+index 72277bc8322e8..f84fa09cdb339 100644
+--- a/drivers/gpu/drm/i915/gt/intel_ring_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_ring_submission.c
+@@ -575,7 +575,6 @@ static int ring_context_alloc(struct intel_context *ce)
+ 	/* One ringbuffer to rule them all */
+ 	GEM_BUG_ON(!engine->legacy.ring);
+ 	ce->ring = engine->legacy.ring;
+-	ce->timeline = intel_timeline_get(engine->legacy.timeline);
  
--	netif_napi_del(&dev->napi);
--
- 	udev = interface_to_usbdev(intf);
- 	net = dev->net;
+ 	GEM_BUG_ON(ce->state);
+ 	if (engine->context_size) {
+@@ -588,6 +587,8 @@ static int ring_context_alloc(struct intel_context *ce)
+ 		ce->state = vma;
+ 	}
+ 
++	ce->timeline = intel_timeline_get(engine->legacy.timeline);
++
+ 	return 0;
+ }
  
 -- 
 2.39.5
