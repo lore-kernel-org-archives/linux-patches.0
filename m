@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803988F5E;
-	Tue,  8 Jul 2025 16:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615DA8F5E;
+	Tue,  8 Jul 2025 16:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993792; cv=none; b=GI1RkpNePyuf5iZ5JNm3FhbRmyAM/ZdnTOiSuulDZqSB/6yPu4xmR1+1GvlD1A/N/22gcFMsnULa3kZRZQT9g3zOIstmCpePZW9c9Wjs3s1ALBK5H+c18YJR6E3eNO7a5XP0LG6E5tPLBDNxVYM6UZJ5nBsmZZ7tZqu/kk9ojmk=
+	t=1751993795; cv=none; b=pVDiLvXykS3KKgJdbliyOYxbQRsVd7SqeZx6o/1NXZNyRtxTRPs8nAoN0U65sBmBDO91v9+k5jRV/9O7R2xBo5OqM9N0wzAU4JFBs8Bf6fdfpl/XRMG1jPL1IL/j/0SB2EACACiipSOX6hEs3yG3mU/I1aw5zD0+92D9VsmyMis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993792; c=relaxed/simple;
-	bh=KG345HwKongGRET+bwpHy1erZolIvwFC2kEVWeXwLY4=;
+	s=arc-20240116; t=1751993795; c=relaxed/simple;
+	bh=AeZcPSl1MiJECnTm8xM3YfPlb2ZOYmItNI9p1Esg4vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbCxRJdjzyefOIHdym8lIbX2r+GiMLWexyc1dMvKrp1WBiFSy32Jfg3BPlVOLtaRPc+Hdm3+JGs33QLf40nnTXbgIWLH3m/cMmrpD6eoah6h1Fue67p6PP8T1gVMBAYI/CQl3zjT4AC1dkRD3gLUmLmKPjfMmUwxqeUwUxndRTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6Uuujqv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d86ycEzgS+P0Qk16v7ZEyfF+ErX4C2UC3AqZufp6YE+wpVG8rgRzoHkmU2qKpSCJrskVQYGoXawnX+LqNCjj2KGV38D7oy32yZGITL+BWMhJKK9o5clj6/MJfntazz4RBxZu2B8fx8amUS3RNTGzxkgIzGamp/3xk2TmO8giydY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4j1vJds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6Uuujqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08154C4CEF0;
-	Tue,  8 Jul 2025 16:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4j1vJds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2A9C4CEED;
+	Tue,  8 Jul 2025 16:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993792;
-	bh=KG345HwKongGRET+bwpHy1erZolIvwFC2kEVWeXwLY4=;
+	s=korg; t=1751993795;
+	bh=AeZcPSl1MiJECnTm8xM3YfPlb2ZOYmItNI9p1Esg4vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6Uuujqvv9V83JhKShJEt9GGS61nvc1/ZpxbT2ix04ZabD6e0AU4DKYzsnp8wBwv8
-	 6HgMGrW1WL1cRnRHCC/fZG/pDYeuV6rAgaFOEoYWhzEy4wbypHk84qEV1PU380NwIE
-	 0QpL25eZeA+rB3JlXilvnK9U1phihdgmNdkFovv8=
+	b=p4j1vJdsQ8pzNDItAokrSamnFB+jodDbj/67p1WzrTeLN0sRltzqhp0N5r2K3Jc0l
+	 8NaoFnWkGbj7t+eAC63SY0pQCkRxS9izpmrB7V3xNL+VrtAW023Q6AvBgO5QrCdB7j
+	 RrQ0j3xZtyZKx+e+tppmza3t7qgDScoj2YFqN+ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hodaszi <robert.hodaszi@digi.com>,
-	Oliver Neukum <oneukum@suse.com>,
+	Jos Wang <joswang@lenovo.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/160] usb: cdc-wdm: avoid setting WDM_READ for ZLP-s
-Date: Tue,  8 Jul 2025 18:20:57 +0200
-Message-ID: <20250708162232.067054013@linuxfoundation.org>
+Subject: [PATCH 5.15 021/160] usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode
+Date: Tue,  8 Jul 2025 18:20:58 +0200
+Message-ID: <20250708162232.093731984@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -45,118 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Hodaszi <robert.hodaszi@digi.com>
+From: Jos Wang <joswang@lenovo.com>
 
-[ Upstream commit 387602d8a75574fafb451b7a8215e78dfd67ee63 ]
+[ Upstream commit b4b38ffb38c91afd4dc387608db26f6fc34ed40b ]
 
-Don't set WDM_READ flag in wdm_in_callback() for ZLP-s, otherwise when
-userspace tries to poll for available data, it might - incorrectly -
-believe there is something available, and when it tries to non-blocking
-read it, it might get stuck in the read loop.
+Although some Type-C DRD devices that do not support the DP Sink
+function (such as Huawei Mate 40Pro), the Source Port initiates
+Enter Mode CMD, but the device responds to Enter Mode ACK, the
+Source port then initiates DP Status Update CMD, and the device
+responds to DP Status Update NAK.
 
-For example this is what glib does for non-blocking read (briefly):
+As PD2.0 spec ("6.4.4.3.4 Enter Mode Command")，A DR_Swap Message
+Shall Not be sent during Modal Operation between the Port Partners.
+At this time, the source port initiates DR_Swap message through the
+"echo device > /sys/class/typec/port0/data_role" command to switch
+the data role from host to device. The device will initiate a Hard
+Reset for recovery, resulting in the failure of data role swap.
 
-  1. poll()
-  2. if poll returns with non-zero, starts a read data loop:
-    a. loop on poll() (EINTR disabled)
-    b. if revents was set, reads data
-      I. if read returns with EINTR or EAGAIN, goto 2.a.
-      II. otherwise return with data
+Therefore, when DP Status Update NAK is received, Exit Mode CMD is
+initiated to exit the currently entered DP altmode.
 
-So if ZLP sets WDM_READ (#1), we expect data, and try to read it (#2).
-But as that was a ZLP, and we are doing non-blocking read, wdm_read()
-returns with EAGAIN (#2.b.I), so loop again, and try to read again
-(#2.a.).
-
-With glib, we might stuck in this loop forever, as EINTR is disabled
-(#2.a).
-
-Signed-off-by: Robert Hodaszi <robert.hodaszi@digi.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250403144004.3889125-1-robert.hodaszi@digi.com
+Signed-off-by: Jos Wang <joswang@lenovo.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250209071926.69625-1-joswang1221@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-wdm.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/class/cdc-wdm.c b/drivers/usb/class/cdc-wdm.c
-index a4be6dba756b3..4b5cf1a5e30d8 100644
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -92,7 +92,6 @@ struct wdm_device {
- 	u16			wMaxCommand;
- 	u16			wMaxPacketSize;
- 	__le16			inum;
--	int			reslength;
- 	int			length;
- 	int			read;
- 	int			count;
-@@ -214,6 +213,11 @@ static void wdm_in_callback(struct urb *urb)
- 	if (desc->rerr == 0 && status != -EPIPE)
- 		desc->rerr = status;
- 
-+	if (length == 0) {
-+		dev_dbg(&desc->intf->dev, "received ZLP\n");
-+		goto skip_zlp;
-+	}
-+
- 	if (length + desc->length > desc->wMaxCommand) {
- 		/* The buffer would overflow */
- 		set_bit(WDM_OVERFLOW, &desc->flags);
-@@ -222,18 +226,18 @@ static void wdm_in_callback(struct urb *urb)
- 		if (!test_bit(WDM_OVERFLOW, &desc->flags)) {
- 			memmove(desc->ubuf + desc->length, desc->inbuf, length);
- 			desc->length += length;
--			desc->reslength = length;
- 		}
- 	}
- skip_error:
- 
- 	if (desc->rerr) {
- 		/*
--		 * Since there was an error, userspace may decide to not read
--		 * any data after poll'ing.
-+		 * If there was a ZLP or an error, userspace may decide to not
-+		 * read any data after poll'ing.
- 		 * We should respond to further attempts from the device to send
- 		 * data, so that we can get unstuck.
- 		 */
-+skip_zlp:
- 		schedule_work(&desc->service_outs_intr);
- 	} else {
- 		set_bit(WDM_READ, &desc->flags);
-@@ -585,15 +589,6 @@ static ssize_t wdm_read
- 			goto retry;
- 		}
- 
--		if (!desc->reslength) { /* zero length read */
--			dev_dbg(&desc->intf->dev, "zero length - clearing WDM_READ\n");
--			clear_bit(WDM_READ, &desc->flags);
--			rv = service_outstanding_interrupt(desc);
--			spin_unlock_irq(&desc->iuspin);
--			if (rv < 0)
--				goto err;
--			goto retry;
--		}
- 		cntr = desc->length;
- 		spin_unlock_irq(&desc->iuspin);
- 	}
-@@ -1015,7 +1010,7 @@ static void service_interrupt_work(struct work_struct *work)
- 
- 	spin_lock_irq(&desc->iuspin);
- 	service_outstanding_interrupt(desc);
--	if (!desc->resp_count) {
-+	if (!desc->resp_count && (desc->length || desc->rerr)) {
- 		set_bit(WDM_READ, &desc->flags);
- 		wake_up(&desc->wait);
- 	}
+diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+index 97a912f0c4eed..c76b872535d17 100644
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -298,6 +298,10 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
+ 		break;
+ 	case CMDT_RSP_NAK:
+ 		switch (cmd) {
++		case DP_CMD_STATUS_UPDATE:
++			if (typec_altmode_exit(alt))
++				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
++			break;
+ 		case DP_CMD_CONFIGURE:
+ 			dp->data.conf = 0;
+ 			ret = dp_altmode_configured(dp);
 -- 
 2.39.5
 
