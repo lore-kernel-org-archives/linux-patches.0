@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1BD1FC0F3;
-	Tue,  8 Jul 2025 16:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2371FC0F3;
+	Tue,  8 Jul 2025 16:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993184; cv=none; b=axa6F0kY6WyLHSwTO/vk36x1fEqhazjCi6B+zpIuAaBUmujUKkvSSCgmDbm2ftFUFGkEbrvm66BckaYSHZWoAOY/xxHMUbHF316Yhi4rx8zG7MHJGjBJAKWXfmAIri4r4N72jBGxdPKaZMqDaZFxHg6ygrJTnszy75EQL/9dfu8=
+	t=1751993187; cv=none; b=Xa4SK+w9xAmkhtYLOluuiF9u1ipBNr9XkVtrh2/OgtrMF99TrFFkb5sazbNNG3VAdiyjb3PLBDzWOIFp/I6Kra6g8hjXP6/PRLsbNCOukPvBcxcuD1mMl2EnnOhL2UT+LQNi28/iHDhH7t8T9Xdbrrva5OapCnSsEwlVlPFQLl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993184; c=relaxed/simple;
-	bh=miWteFMF38CQvnECIrTTEheltBoyF6a4M03/PD/++Pc=;
+	s=arc-20240116; t=1751993187; c=relaxed/simple;
+	bh=X2Gx1XFr3DmUxRJAWvzCn+/IcIru1Z92pU/sb00Z5mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVZn3oD5rK1tHVaTUo8X5TA4qJ65nlJG4+GXL9iMGMopHAA1ztwmiNtZ84bEJ5pxIUXtw9p3QjMrwylXflyZ6UlentzPgdrCT3a+jLUcVYihV9bCL/iMwfLKteS4c4hm1SLViQ66deTEfFM9ulL9Dg+GvfOBCaF0Y3bHipRRifA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kqzltk/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CiEQNAY87T6uuH7/shVUtLOySLwmlVSFR/BNyGnxMxYOO0OhKa5ZDQbv4k4YFcGHPmT/K/azzzvZsbu8sAtSUVsc3JAiGKmOPMRzJPu8MzDKjkV7V7oEkTqw/c1ccQYoWqD2YmqBBCOUCA0MmqN6gcFm5Zi25hZhRsG0MRieRSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/o3oLBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kqzltk/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3E2C4CEF5;
-	Tue,  8 Jul 2025 16:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/o3oLBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA7FC4CEED;
+	Tue,  8 Jul 2025 16:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993184;
-	bh=miWteFMF38CQvnECIrTTEheltBoyF6a4M03/PD/++Pc=;
+	s=korg; t=1751993187;
+	bh=X2Gx1XFr3DmUxRJAWvzCn+/IcIru1Z92pU/sb00Z5mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kqzltk/QdEWXDdKN8rzkdHxSUIkLkWYwja0iF0xgwSkQAv8DUEAYzVY3HB3QQHKxU
-	 Gd0MSlncNGN+DjlgG8BqEANnMf1vAbQ51GjR/35J7gEITsgnZa61w0rGgDxSjXikbD
-	 EpD/iqU1BJcRa4vyALZfve9SiRQnVT6UZ8CWDtps=
+	b=R/o3oLBNPuyTZzWOjurkGpUMAHiEAGFNvJEQ+07xaqyawXGXOdcGmnGKyNSVeSFAR
+	 be83iMGnYqN0dQt3b0/rwkUhgVqDXtE0x0k8rt3rfvdYcoeF5Lp/Ayg417VhNGoVu5
+	 +PuFWmCZ77+g4vMyDJ1JVkzzskInu/I2B+eo2bro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 216/232] Logitech C-270 even more broken
-Date: Tue,  8 Jul 2025 18:23:32 +0200
-Message-ID: <20250708162247.088676938@linuxfoundation.org>
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 6.12 217/232] optee: ffa: fix sleep in atomic context
+Date: Tue,  8 Jul 2025 18:23:33 +0200
+Message-ID: <20250708162247.117095090@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -50,32 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Jens Wiklander <jens.wiklander@linaro.org>
 
-commit cee4392a57e14a799fbdee193bc4c0de65b29521 upstream.
+commit 312d02adb959ea199372f375ada06e0186f651e4 upstream.
 
-Some varieties of this device don't work with
-RESET_RESUME alone.
+The OP-TEE driver registers the function notif_callback() for FF-A
+notifications. However, this function is called in an atomic context
+leading to errors like this when processing asynchronous notifications:
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250605122852.1440382-1-oneukum@suse.com
+ | BUG: sleeping function called from invalid context at kernel/locking/mutex.c:258
+ | in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 9, name: kworker/0:0
+ | preempt_count: 1, expected: 0
+ | RCU nest depth: 0, expected: 0
+ | CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not tainted 6.14.0-00019-g657536ebe0aa #13
+ | Hardware name: linux,dummy-virt (DT)
+ | Workqueue: ffa_pcpu_irq_notification notif_pcpu_irq_work_fn
+ | Call trace:
+ |  show_stack+0x18/0x24 (C)
+ |  dump_stack_lvl+0x78/0x90
+ |  dump_stack+0x18/0x24
+ |  __might_resched+0x114/0x170
+ |  __might_sleep+0x48/0x98
+ |  mutex_lock+0x24/0x80
+ |  optee_get_msg_arg+0x7c/0x21c
+ |  simple_call_with_arg+0x50/0xc0
+ |  optee_do_bottom_half+0x14/0x20
+ |  notif_callback+0x3c/0x48
+ |  handle_notif_callbacks+0x9c/0xe0
+ |  notif_get_and_handle+0x40/0x88
+ |  generic_exec_single+0x80/0xc0
+ |  smp_call_function_single+0xfc/0x1a0
+ |  notif_pcpu_irq_work_fn+0x2c/0x38
+ |  process_one_work+0x14c/0x2b4
+ |  worker_thread+0x2e4/0x3e0
+ |  kthread+0x13c/0x210
+ |  ret_from_fork+0x10/0x20
+
+Fix this by adding work queue to process the notification in a
+non-atomic context.
+
+Fixes: d0476a59de06 ("optee: ffa_abi: add asynchronous notifications")
+Cc: stable@vger.kernel.org
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Link: https://lore.kernel.org/r/20250602120452.2507084-1-jens.wiklander@linaro.org
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tee/optee/ffa_abi.c       |   41 +++++++++++++++++++++++++++++---------
+ drivers/tee/optee/optee_private.h |    2 +
+ 2 files changed, 34 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -227,7 +227,8 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x046a, 0x0023), .driver_info = USB_QUIRK_RESET_RESUME },
+--- a/drivers/tee/optee/ffa_abi.c
++++ b/drivers/tee/optee/ffa_abi.c
+@@ -728,12 +728,21 @@ static bool optee_ffa_exchange_caps(stru
+ 	return true;
+ }
  
- 	/* Logitech HD Webcam C270 */
--	{ USB_DEVICE(0x046d, 0x0825), .driver_info = USB_QUIRK_RESET_RESUME },
-+	{ USB_DEVICE(0x046d, 0x0825), .driver_info = USB_QUIRK_RESET_RESUME |
-+		USB_QUIRK_NO_LPM},
++static void notif_work_fn(struct work_struct *work)
++{
++	struct optee_ffa *optee_ffa = container_of(work, struct optee_ffa,
++						   notif_work);
++	struct optee *optee = container_of(optee_ffa, struct optee, ffa);
++
++	optee_do_bottom_half(optee->ctx);
++}
++
+ static void notif_callback(int notify_id, void *cb_data)
+ {
+ 	struct optee *optee = cb_data;
  
- 	/* Logitech HD Pro Webcams C920, C920-C, C922, C925e and C930e */
- 	{ USB_DEVICE(0x046d, 0x082d), .driver_info = USB_QUIRK_DELAY_INIT },
+ 	if (notify_id == optee->ffa.bottom_half_value)
+-		optee_do_bottom_half(optee->ctx);
++		queue_work(optee->ffa.notif_wq, &optee->ffa.notif_work);
+ 	else
+ 		optee_notif_send(optee, notify_id);
+ }
+@@ -817,9 +826,11 @@ static void optee_ffa_remove(struct ffa_
+ 	struct optee *optee = ffa_dev_get_drvdata(ffa_dev);
+ 	u32 bottom_half_id = optee->ffa.bottom_half_value;
+ 
+-	if (bottom_half_id != U32_MAX)
++	if (bottom_half_id != U32_MAX) {
+ 		ffa_dev->ops->notifier_ops->notify_relinquish(ffa_dev,
+ 							      bottom_half_id);
++		destroy_workqueue(optee->ffa.notif_wq);
++	}
+ 	optee_remove_common(optee);
+ 
+ 	mutex_destroy(&optee->ffa.mutex);
+@@ -835,6 +846,13 @@ static int optee_ffa_async_notif_init(st
+ 	u32 notif_id = 0;
+ 	int rc;
+ 
++	INIT_WORK(&optee->ffa.notif_work, notif_work_fn);
++	optee->ffa.notif_wq = create_workqueue("optee_notification");
++	if (!optee->ffa.notif_wq) {
++		rc = -EINVAL;
++		goto err;
++	}
++
+ 	while (true) {
+ 		rc = ffa_dev->ops->notifier_ops->notify_request(ffa_dev,
+ 								is_per_vcpu,
+@@ -851,19 +869,24 @@ static int optee_ffa_async_notif_init(st
+ 		 * notifications in that case.
+ 		 */
+ 		if (rc != -EACCES)
+-			return rc;
++			goto err_wq;
+ 		notif_id++;
+ 		if (notif_id >= OPTEE_FFA_MAX_ASYNC_NOTIF_VALUE)
+-			return rc;
++			goto err_wq;
+ 	}
+ 	optee->ffa.bottom_half_value = notif_id;
+ 
+ 	rc = enable_async_notif(optee);
+-	if (rc < 0) {
+-		ffa_dev->ops->notifier_ops->notify_relinquish(ffa_dev,
+-							      notif_id);
+-		optee->ffa.bottom_half_value = U32_MAX;
+-	}
++	if (rc < 0)
++		goto err_rel;
++
++	return 0;
++err_rel:
++	ffa_dev->ops->notifier_ops->notify_relinquish(ffa_dev, notif_id);
++err_wq:
++	destroy_workqueue(optee->ffa.notif_wq);
++err:
++	optee->ffa.bottom_half_value = U32_MAX;
+ 
+ 	return rc;
+ }
+--- a/drivers/tee/optee/optee_private.h
++++ b/drivers/tee/optee/optee_private.h
+@@ -165,6 +165,8 @@ struct optee_ffa {
+ 	/* Serializes access to @global_ids */
+ 	struct mutex mutex;
+ 	struct rhashtable global_ids;
++	struct workqueue_struct *notif_wq;
++	struct work_struct notif_work;
+ };
+ 
+ struct optee;
 
 
