@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FAB176ADB;
-	Tue,  8 Jul 2025 16:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8322E11B9;
+	Tue,  8 Jul 2025 16:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992196; cv=none; b=jEu9ZIVq41/rKlXDH1ZicTxgDk+VWkPr0k8g39tw5SusRoPBtWgJOSKMvwe1QiZS9ekG70NpZEXIJ+Sc/UFg8rq7kAp0/fpVzJHAn3nt4GRidu+SbeZdbN1ybGzgiH6Xp7QANTUX1G9C7e0KC1JUDfmOTf/Z7H/zE8e/AqlEwlc=
+	t=1751992199; cv=none; b=nIY1/r2qVT4HmVxGZyYDldrZy2tbvNjDXyW1ham/5n32gF66WxvnzBD77MLFLA3glqLyMAgxVV9BwtnBT451anb62FowM9vAZ0mByzzkXg1vKYUHt5oqdFO+GXVVKk2mRSsbn621mfSJx4wk1dLPGPD17HgM0W1gpxUF+phufB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992196; c=relaxed/simple;
-	bh=nY7GvBKAcf2dHHCfLWBfXS0EFOt7CA9zYkXsRqLeWyU=;
+	s=arc-20240116; t=1751992199; c=relaxed/simple;
+	bh=atGLmWN54pH6e2NvZY2zH55xCJ73bTuZkZzeX6Ngx+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d76Mm0kZV8Fho32zziSL3jXjRsbCGRX0cANcSoCNAj5G66T+MUT6rArjzXxlit+nwgpXky3cH9O8c8aVOsI00OM/mpKMBRlGgRiEXo7hn4z0lBqqtR76fwm0kp+OQKSukBHHTQM9xQAftXcA8rIuFTGSJPiJrbIYJifAdt3SUOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSKrxXxe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p3upwiEIcCL5SpTpkKW6nusabP+TXPErODn7lsMgf2M6eFeMpN79nwNS30BH/MCWLIRa8sx7KcXDZJ/VL/qLx43X4cC8E/aSjvwNi6tTN3iux/EfDcGg21ZlMN83g132hKna2dytgy6vpEhwCyQMUTPwu3W35DnwbFAa/iO1c9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHhSiMBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSKrxXxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F6FC4CEED;
-	Tue,  8 Jul 2025 16:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHhSiMBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F56C4CEED;
+	Tue,  8 Jul 2025 16:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992195;
-	bh=nY7GvBKAcf2dHHCfLWBfXS0EFOt7CA9zYkXsRqLeWyU=;
+	s=korg; t=1751992198;
+	bh=atGLmWN54pH6e2NvZY2zH55xCJ73bTuZkZzeX6Ngx+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZSKrxXxeOP2kxcCp8bpc5H/XiRC2smcsdrkgnoUQN72Lrnv5RB0tcFpjkCSjc5Lak
-	 xaLlb6c006nsKHM4mBwb1tLG8kQ2+JN6yE+E0l0zumjTJOduslHGpwVTv7IltmWSXA
-	 Mj0qRJJLWDysROQWdPAfp3ZiPguuj5H1I6zWxu4k=
+	b=PHhSiMBUQAcY1GnmTKqapLXs0QdBoJdSC9Ec/M7SBX3qbGWk8bpU5hHF7sFKNwuPh
+	 Qg8rHwYuKm8Frcmv32/aU2ZMKSxYy01wk6w9b3zf1pVGBhhzGrBany+OPbfDb6idJN
+	 OZU9ZoJruSqETtSFeFmSa1O3UjPqpAU2+XZtdgfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 81/81] x86/process: Move the buffer clearing before MONITOR
-Date: Tue,  8 Jul 2025 18:24:13 +0200
-Message-ID: <20250708162227.496631045@linuxfoundation.org>
+	Farhan Ali <alifm@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.6 005/132] s390/pci: Do not try re-enabling load/store if device is disabled
+Date: Tue,  8 Jul 2025 18:21:56 +0200
+Message-ID: <20250708162230.923655896@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
-References: <20250708162224.795155912@linuxfoundation.org>
+In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
+References: <20250708162230.765762963@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,108 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Borislav Petkov (AMD)" <bp@alien8.de>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-Commit 8e786a85c0a3c0fffae6244733fb576eeabd9dec upstream.
+commit b97a7972b1f4f81417840b9a2ab0c19722b577d5 upstream.
 
-Move the VERW clearing before the MONITOR so that VERW doesn't disarm it
-and the machine never enters C1.
+If a device is disabled unblocking load/store on its own is not useful
+as a full re-enable of the function is necessary anyway. Note that SCLP
+Write Event Data Action Qualifier 0 (Reset) leaves the device disabled
+and triggers this case unless the driver already requests a reset.
 
-Original idea by Kim Phillips <kim.phillips@amd.com>.
-
-Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Fixes: 4cdf2f4e24ff ("s390/pci: implement minimal PCI error recovery")
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/mwait.h |   16 +++++++++++-----
- arch/x86/kernel/process.c    |   15 ++++++++++++---
- 2 files changed, 23 insertions(+), 8 deletions(-)
+ arch/s390/pci/pci_event.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/include/asm/mwait.h
-+++ b/arch/x86/include/asm/mwait.h
-@@ -44,8 +44,6 @@ static inline void __monitorx(const void
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -98,6 +98,10 @@ static pci_ers_result_t zpci_event_do_er
+ 	struct zpci_dev *zdev = to_zpci(pdev);
+ 	int rc;
  
- static inline void __mwait(unsigned long eax, unsigned long ecx)
- {
--	x86_idle_clear_cpu_buffers();
--
- 	/* "mwait %eax, %ecx;" */
- 	asm volatile(".byte 0x0f, 0x01, 0xc9;"
- 		     :: "a" (eax), "c" (ecx));
-@@ -89,7 +87,6 @@ static inline void __mwaitx(unsigned lon
- 
- static inline void __sti_mwait(unsigned long eax, unsigned long ecx)
- {
--	x86_idle_clear_cpu_buffers();
- 
- 	/* "mwait %eax, %ecx;" */
- 	asm volatile("sti; .byte 0x0f, 0x01, 0xc9;"
-@@ -108,6 +105,11 @@ static inline void __sti_mwait(unsigned
-  */
- static inline void mwait_idle_with_hints(unsigned long eax, unsigned long ecx)
- {
-+	if (need_resched())
-+		return;
++	/* The underlying device may have been disabled by the event */
++	if (!zdev_enabled(zdev))
++		return PCI_ERS_RESULT_NEED_RESET;
 +
-+	x86_idle_clear_cpu_buffers();
-+
- 	if (static_cpu_has_bug(X86_BUG_MONITOR) || !current_set_polling_and_test()) {
- 		if (static_cpu_has_bug(X86_BUG_CLFLUSH_MONITOR)) {
- 			mb();
-@@ -116,9 +118,13 @@ static inline void mwait_idle_with_hints
- 		}
- 
- 		__monitor((void *)&current_thread_info()->flags, 0, 0);
--		if (!need_resched())
--			__mwait(eax, ecx);
-+		if (need_resched())
-+			goto out;
-+
-+		__mwait(eax, ecx);
- 	}
-+
-+out:
- 	current_clr_polling();
- }
- 
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -887,6 +887,11 @@ static int prefer_mwait_c1_over_halt(con
-  */
- static __cpuidle void mwait_idle(void)
- {
-+	if (need_resched())
-+		return;
-+
-+	x86_idle_clear_cpu_buffers();
-+
- 	if (!current_set_polling_and_test()) {
- 		if (this_cpu_has(X86_BUG_CLFLUSH_MONITOR)) {
- 			mb(); /* quirk */
-@@ -895,13 +900,17 @@ static __cpuidle void mwait_idle(void)
- 		}
- 
- 		__monitor((void *)&current_thread_info()->flags, 0, 0);
--		if (!need_resched())
--			__sti_mwait(0, 0);
--		else
-+		if (need_resched()) {
- 			raw_local_irq_enable();
-+			goto out;
-+		}
-+
-+		__sti_mwait(0, 0);
- 	} else {
- 		raw_local_irq_enable();
- 	}
-+
-+out:
- 	__current_clr_polling();
- }
- 
+ 	pr_info("%s: Unblocking device access for examination\n", pci_name(pdev));
+ 	rc = zpci_reset_load_store_blocked(zdev);
+ 	if (rc) {
 
 
