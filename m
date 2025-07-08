@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A53829B797;
-	Tue,  8 Jul 2025 16:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703B42367CE;
+	Tue,  8 Jul 2025 16:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992142; cv=none; b=MonQOlaPVcu1SbTZvKndmTPwpCZjGB8Bj9n2xau0pPrTGnIBaE9192LCubI29B5/OeDyVeUzF+kG7EDO1uw101WFVS2rfCCVuSGttbP+4nxvfecIC8p7aytGQMXwNuvFuODuoDbxkCsFvJkJH18Su6Kh6MO2qY1ZmnHK2vp3Pbg=
+	t=1751992145; cv=none; b=K/oFt215mIpN0hJjxvVATYolOlIboA9PJXwM3b64CNkZSUpVDlBA9OStHXu1e/elN/rOuSvaYLAhjPNMg/FLyvXJQKtgztoA0nKs5IX0C9i7xlrH09dypCTzc3pz3L/CVYVmHCykmUu5B/EE9xUXYpPlr1uESMqnQ7EC9kCaemk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992142; c=relaxed/simple;
-	bh=/DCPhZTb+uUE+CnmCS3jbm98MUaWyXJWUHlY9BknagU=;
+	s=arc-20240116; t=1751992145; c=relaxed/simple;
+	bh=GiJoZJQeyZcb8COJvylYABlSjqtX65B83yaXQ6kFPkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1fIAGXhgzVynCxCU+04921vXeoDRisTUDg+9edEES1EDsHOFiyr3WwM6A9hbtlLlZGJVOcDPaU9/eYzBbQVzaoIHYiHyJ7Au9dipdbCKP2BzBXjK9SiOZmbfHOcYSTaBtp1QC26OTTrY0xNC8zWovp5TdvvNvmudGSAol92TDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yW8nQ9nz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sXwsWBSJPNVbbO71h0OF1+/JQgUStJSopAUlCzPtv92y1Z0rQwV5cQlDHHVuO70DXUcWTaRpYLh96qLXOzW15D5GvheuwB0cwT3WZp4Tl0N84XZqWySpnxLpLUVc3X1Lh6xStkLNyr5OdBqOgK12KLq3l+wYbfY5izG2hlRdUks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCd1xtZu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yW8nQ9nz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A23C4CEED;
-	Tue,  8 Jul 2025 16:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCd1xtZu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA52CC4CEED;
+	Tue,  8 Jul 2025 16:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992142;
-	bh=/DCPhZTb+uUE+CnmCS3jbm98MUaWyXJWUHlY9BknagU=;
+	s=korg; t=1751992145;
+	bh=GiJoZJQeyZcb8COJvylYABlSjqtX65B83yaXQ6kFPkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yW8nQ9nznyQrpxn4NWn1AqROn0bLedONrCGazwmpNVxaKxa/ZEGIetXaaKJiar9/W
-	 hs1hPN1TxlbHviUFZdySPQ5AQUxooA2W4ldta9Y7ZPwV6e8qzgsSQnuqeocIuTXoM0
-	 BEYc6mf3hJ+/9m8YMZEmGFNG7dPVFVtCzAeW9mX0=
+	b=wCd1xtZuT4REzmRg6U0jelbVN3K4RQoTZfw6puQf6oFtm0/apZJhxjRTZ8E+ajx6H
+	 9HtEqtlolv0XoZLboFW+DdxE5ERoRVuuxCyraKCLDxZ80TSd2XOpeNmPT4u9d/F3B7
+	 1cWTeJ31XhBVZZPWk5oVVIY3dCPY3CdAuXIGteyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hongliang Yang <hongliang.yang@cixtech.com>,
-	Fugang Duan <fugang.duan@cixtech.com>,
-	Peter Chen <peter.chen@cixtech.com>
-Subject: [PATCH 6.1 71/81] usb: cdnsp: do not disable slot for disabled slot
-Date: Tue,  8 Jul 2025 18:24:03 +0200
-Message-ID: <20250708162227.208100433@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.1 72/81] dma-buf: fix timeout handling in dma_resv_wait_timeout v2
+Date: Tue,  8 Jul 2025 18:24:04 +0200
+Message-ID: <20250708162227.236971544@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -46,42 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chen <peter.chen@cixtech.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 7e2c421ef88e9da9c39e01496b7f5b0b354b42bc upstream.
+commit 2b95a7db6e0f75587bffddbb490399cbb87e4985 upstream.
 
-It doesn't need to do it, and the related command event returns
-'Slot Not Enabled Error' status.
+Even the kerneldoc says that with a zero timeout the function should not
+wait for anything, but still return 1 to indicate that the fences are
+signaled now.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Cc: stable <stable@kernel.org>
-Suggested-by: Hongliang Yang <hongliang.yang@cixtech.com>
-Reviewed-by: Fugang Duan <fugang.duan@cixtech.com>
-Signed-off-by: Peter Chen <peter.chen@cixtech.com>
-Link: https://lore.kernel.org/r/20250619013413.35817-1-peter.chen@cixtech.com
+Unfortunately that isn't what was implemented, instead of only returning
+1 we also waited for at least one jiffies.
+
+Fix that by adjusting the handling to what the function is actually
+documented to do.
+
+v2: improve code readability
+
+Reported-by: Marek Olšák <marek.olsak@amd.com>
+Reported-by: Lucas Stach <l.stach@pengutronix.de>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20250129105841.1806-1-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma-buf/dma-resv.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -772,7 +772,9 @@ static int cdnsp_update_port_id(struct c
- 	}
+--- a/drivers/dma-buf/dma-resv.c
++++ b/drivers/dma-buf/dma-resv.c
+@@ -673,11 +673,13 @@ long dma_resv_wait_timeout(struct dma_re
+ 	dma_resv_iter_begin(&cursor, obj, usage);
+ 	dma_resv_for_each_fence_unlocked(&cursor, fence) {
  
- 	if (port_id != old_port) {
--		cdnsp_disable_slot(pdev);
-+		if (pdev->slot_id)
-+			cdnsp_disable_slot(pdev);
+-		ret = dma_fence_wait_timeout(fence, intr, ret);
+-		if (ret <= 0) {
+-			dma_resv_iter_end(&cursor);
+-			return ret;
+-		}
++		ret = dma_fence_wait_timeout(fence, intr, timeout);
++		if (ret <= 0)
++			break;
 +
- 		pdev->active_port = port;
- 		cdnsp_enable_slot(pdev);
++		/* Even for zero timeout the return value is 1 */
++		if (timeout)
++			timeout = ret;
  	}
+ 	dma_resv_iter_end(&cursor);
+ 
 
 
