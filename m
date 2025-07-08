@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8C22E49AF;
-	Tue,  8 Jul 2025 16:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4FD8F5E;
+	Tue,  8 Jul 2025 16:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993952; cv=none; b=FOeHdmV02E3Vrgh4vtYqCtMTnWZ+2ojjhxhQKl68hxf794xjMXIUSqnNthEz9OTclS3CtNQSUamFqpnUvHXTohsLxYFLwyS4s8ry/80X/Ura9CPZ7VE+FeHNdPbB3e4bHg5mO4H33pFvxUlKPME3TTHx8k/v/ZsG+Qnw/7J9qlE=
+	t=1751993955; cv=none; b=DYEMQWxV13oD+cIm4mphjXHZUA373DvTSTy7b5EkplefhZ97WptxmdIGGATXRGIutaHLzjXOezV4FT3ejhKaDkqK2VsuWRfXzkU+6y7+XiVye+xTfdsjDV8w2k0aLpi/2fvRtqtP8MdGy+1ZLqMahCncjdymkiMOI3V1NhHbjDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993952; c=relaxed/simple;
-	bh=j9qk0kAN8cMApbJrN7Qt9c1WUgBrhgLbp7Ujz3U3JR4=;
+	s=arc-20240116; t=1751993955; c=relaxed/simple;
+	bh=puR7XoUc/yYK4qs0CXdcOmSb7iUgirwYtoMTlHCM8qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYeqabtldrFz2yOyPLlQsK1yfHyW8kFkUMEmdirO8cW9aJGsXOnicrPNsOgRQwEqry+uxO/3VyBdaLBLqNYk02q2bmaRgMDyykmpYZAlhY0Lsdnow5nhqZnFbFZwqJgOVK+gP+ZcC7zYCMP/+pNp2zf0/yrAuFRySf7eU0dDX54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umCP/InD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gb3vyqpGEXjtx2FEQvIjFVKusyHesqIA4l2l/lggZZoYyhU7pjYFUw/a0yg5t6J2IjBxTPRXfuMzyXYJaMEZ2MfQ7p60yb1zCyI+iS7BNT47PxdUHCCImYpEzolV83FkVntJVZuOxYhV0IlF+QTWtdvRpxlUg/u2KRG/hKRJAGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHKLmjAc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umCP/InD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D19C4CEED;
-	Tue,  8 Jul 2025 16:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHKLmjAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECE1C4CEED;
+	Tue,  8 Jul 2025 16:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993952;
-	bh=j9qk0kAN8cMApbJrN7Qt9c1WUgBrhgLbp7Ujz3U3JR4=;
+	s=korg; t=1751993955;
+	bh=puR7XoUc/yYK4qs0CXdcOmSb7iUgirwYtoMTlHCM8qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umCP/InDQIEH2p5A8tB4mLCkOgXkhNZ5B/OdcTEpHADmOGccNTpJzLCJ7Smuhn5L/
-	 JwHYPPoNzu5KIvd8200SwR5AS6cJSeMYEzm8Q6GdqcbZ6gNfSFZoirfVeFqEEvDc6g
-	 Foe80x66zMkav2ZTX6exVosehNPjo5tf4oxTFKlI=
+	b=fHKLmjAcD7DeunTwkDeEToUI8sO4cKQE+XJIarRCPOBpHAJCIzaxOPJcdPaWevKuo
+	 NqjJqUC6myKucQ9FzsB+QzdHJmZNCRmJp0ObLAtb8O6woD3BpoL5cW5azMcCF+GXKi
+	 4JYzApOAOLE7tMgxTlWerWigVU80/GODO1iyUTW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/160] Drivers: hv: Rename alloced to allocated
-Date: Tue,  8 Jul 2025 18:21:22 +0200
-Message-ID: <20250708162232.788600818@linuxfoundation.org>
+Subject: [PATCH 5.15 036/160] ASoC: codec: wcd9335: Convert to GPIO descriptors
+Date: Tue,  8 Jul 2025 18:21:13 +0200
+Message-ID: <20250708162232.531858054@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,143 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit de96e8a09889b35dd8d1cb6d19ef2bb123b05be1 ]
+[ Upstream commit d5099bc1b56417733f4cccf10c61ee74dadd5562 ]
 
-'Alloced' is not a real word and only saves us two letters, let's
-use 'allocated' instead.
+of_gpio.h is deprecated, update the driver to use GPIO descriptors.
+- Use dev_gpiod_get to get GPIO descriptor.
+- Use gpiod_set_value to configure output value.
 
-No functional change intended.
+With legacy of_gpio API, the driver set gpio value 0 to assert reset,
+and 1 to deassert reset. And the reset-gpios use GPIO_ACTIVE_LOW flag in
+DTS, so set GPIOD_OUT_LOW when get GPIO descriptors, and set value 1 means
+output low, set value 0 means output high with gpiod API.
 
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20220128103412.3033736-2-vkuznets@redhat.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Stable-dep-of: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
+The in-tree DTS files have the right polarity set up already so we can
+expect this to "just work"
+
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20250324-wcd-gpiod-v2-3-773f67ce3b56@nxp.com
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 9079db287fc3 ("ASoC: codecs: wcd9335: Fix missing free of regulator supplies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c | 18 +++++++++---------
- drivers/hv/hyperv_vmbus.h | 14 +++++++-------
- drivers/hv/vmbus_drv.c    |  2 +-
- 3 files changed, 17 insertions(+), 17 deletions(-)
+ sound/soc/codecs/wcd9335.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index 62c864f8d991b..029f8269ad15d 100644
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -459,7 +459,7 @@ void hv_process_channel_removal(struct vmbus_channel *channel)
- 	 * init_vp_index() can (re-)use the CPU.
+diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
+index dc4ce2c3f2188..08b7ca26c3c97 100644
+--- a/sound/soc/codecs/wcd9335.c
++++ b/sound/soc/codecs/wcd9335.c
+@@ -16,7 +16,7 @@
+ #include <sound/soc.h>
+ #include <sound/pcm_params.h>
+ #include <sound/soc-dapm.h>
+-#include <linux/of_gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/of.h>
+ #include <linux/of_irq.h>
+ #include <sound/tlv.h>
+@@ -338,7 +338,7 @@ struct wcd9335_codec {
+ 	int comp_enabled[COMPANDER_MAX];
+ 
+ 	int intr1;
+-	int reset_gpio;
++	struct gpio_desc *reset_gpio;
+ 	struct regulator_bulk_data supplies[WCD9335_MAX_SUPPLY];
+ 
+ 	unsigned int rx_port_value;
+@@ -5024,12 +5024,11 @@ static const struct regmap_irq_chip wcd9335_regmap_irq1_chip = {
+ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
+ {
+ 	struct device *dev = wcd->dev;
+-	struct device_node *np = dev->of_node;
+ 	int ret;
+ 
+-	wcd->reset_gpio = of_get_named_gpio(np,	"reset-gpios", 0);
+-	if (wcd->reset_gpio < 0)
+-		return dev_err_probe(dev, wcd->reset_gpio, "Reset GPIO missing from DT\n");
++	wcd->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	if (IS_ERR(wcd->reset_gpio))
++		return dev_err_probe(dev, PTR_ERR(wcd->reset_gpio), "Reset GPIO missing from DT\n");
+ 
+ 	wcd->mclk = devm_clk_get(dev, "mclk");
+ 	if (IS_ERR(wcd->mclk))
+@@ -5072,9 +5071,9 @@ static int wcd9335_power_on_reset(struct wcd9335_codec *wcd)
  	 */
- 	if (hv_is_perf_channel(channel))
--		hv_clear_alloced_cpu(channel->target_cpu);
-+		hv_clear_allocated_cpu(channel->target_cpu);
+ 	usleep_range(600, 650);
  
- 	/*
- 	 * Upon suspend, an in-use hv_sock channel is marked as "rescinded" and
-@@ -733,7 +733,7 @@ static void init_vp_index(struct vmbus_channel *channel)
- 	bool perf_chn = hv_is_perf_channel(channel);
- 	u32 i, ncpu = num_online_cpus();
- 	cpumask_var_t available_mask;
--	struct cpumask *alloced_mask;
-+	struct cpumask *allocated_mask;
- 	u32 target_cpu;
- 	int numa_node;
+-	gpio_direction_output(wcd->reset_gpio, 0);
++	gpiod_set_value(wcd->reset_gpio, 1);
+ 	msleep(20);
+-	gpio_set_value(wcd->reset_gpio, 1);
++	gpiod_set_value(wcd->reset_gpio, 0);
+ 	msleep(20);
  
-@@ -750,7 +750,7 @@ static void init_vp_index(struct vmbus_channel *channel)
- 		 */
- 		channel->target_cpu = VMBUS_CONNECT_CPU;
- 		if (perf_chn)
--			hv_set_alloced_cpu(VMBUS_CONNECT_CPU);
-+			hv_set_allocated_cpu(VMBUS_CONNECT_CPU);
- 		return;
- 	}
- 
-@@ -765,22 +765,22 @@ static void init_vp_index(struct vmbus_channel *channel)
- 				continue;
- 			break;
- 		}
--		alloced_mask = &hv_context.hv_numa_map[numa_node];
-+		allocated_mask = &hv_context.hv_numa_map[numa_node];
- 
--		if (cpumask_weight(alloced_mask) ==
-+		if (cpumask_weight(allocated_mask) ==
- 		    cpumask_weight(cpumask_of_node(numa_node))) {
- 			/*
- 			 * We have cycled through all the CPUs in the node;
--			 * reset the alloced map.
-+			 * reset the allocated map.
- 			 */
--			cpumask_clear(alloced_mask);
-+			cpumask_clear(allocated_mask);
- 		}
- 
--		cpumask_xor(available_mask, alloced_mask,
-+		cpumask_xor(available_mask, allocated_mask,
- 			    cpumask_of_node(numa_node));
- 
- 		target_cpu = cpumask_first(available_mask);
--		cpumask_set_cpu(target_cpu, alloced_mask);
-+		cpumask_set_cpu(target_cpu, allocated_mask);
- 
- 		if (channel->offermsg.offer.sub_channel_index >= ncpu ||
- 		    i > ncpu || !hv_cpuself_used(target_cpu, channel))
-diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index 631f0a138c2b9..6a0ae815a198e 100644
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -405,7 +405,7 @@ static inline bool hv_is_perf_channel(struct vmbus_channel *channel)
- 	return vmbus_devs[channel->device_id].perf_device;
- }
- 
--static inline bool hv_is_alloced_cpu(unsigned int cpu)
-+static inline bool hv_is_allocated_cpu(unsigned int cpu)
- {
- 	struct vmbus_channel *channel, *sc;
- 
-@@ -427,23 +427,23 @@ static inline bool hv_is_alloced_cpu(unsigned int cpu)
- 	return false;
- }
- 
--static inline void hv_set_alloced_cpu(unsigned int cpu)
-+static inline void hv_set_allocated_cpu(unsigned int cpu)
- {
- 	cpumask_set_cpu(cpu, &hv_context.hv_numa_map[cpu_to_node(cpu)]);
- }
- 
--static inline void hv_clear_alloced_cpu(unsigned int cpu)
-+static inline void hv_clear_allocated_cpu(unsigned int cpu)
- {
--	if (hv_is_alloced_cpu(cpu))
-+	if (hv_is_allocated_cpu(cpu))
- 		return;
- 	cpumask_clear_cpu(cpu, &hv_context.hv_numa_map[cpu_to_node(cpu)]);
- }
- 
--static inline void hv_update_alloced_cpus(unsigned int old_cpu,
-+static inline void hv_update_allocated_cpus(unsigned int old_cpu,
- 					  unsigned int new_cpu)
- {
--	hv_set_alloced_cpu(new_cpu);
--	hv_clear_alloced_cpu(old_cpu);
-+	hv_set_allocated_cpu(new_cpu);
-+	hv_clear_allocated_cpu(old_cpu);
- }
- 
- #ifdef CONFIG_HYPERV_TESTING
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index cb3a5b13c3ec2..f42c3cb3cc0aa 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -1878,7 +1878,7 @@ static ssize_t target_cpu_store(struct vmbus_channel *channel,
- 
- 	/* See init_vp_index(). */
- 	if (hv_is_perf_channel(channel))
--		hv_update_alloced_cpus(origin_cpu, target_cpu);
-+		hv_update_allocated_cpus(origin_cpu, target_cpu);
- 
- 	/* Currently set only for storvsc channels. */
- 	if (channel->change_target_cpu_callback) {
+ 	return 0;
 -- 
 2.39.5
 
