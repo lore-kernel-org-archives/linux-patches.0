@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6132DC32D;
-	Tue,  8 Jul 2025 17:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D572E717D;
+	Tue,  8 Jul 2025 17:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994118; cv=none; b=rho0izJWqg451rOZtB7PjHS1ZeQd0GkrBWj6VW0vzylhGfE7NdjPtv5zP/Rm9tAhKrtCzwurwRKfO+/3Nk/RzMnqgwEhLQJtiq8GCbeJoZWf/et6ELmWlXIKsglKeItmNGAJ5cOi5z348HJtCNFieAUs8pee/KaH6dqNIEmpPnU=
+	t=1751994123; cv=none; b=s3nL8EgeScY/34absV6s4yfpJlNrdubFklOGihxK0ZegYfQyDvzppypeOsz1Dn/QqRcXKg3v9+VFNbHKSYhAo7AuXRNZrHu+mjHBELjPZoSiaiyCKuOETQvfxmIgWDq32re6qwk6STxf4DKr2mjZRE9+lXHsHs5Pbo1RQmx6bnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994118; c=relaxed/simple;
-	bh=Geq76jeWQBrGrsrd27rwArilar8v5U4IR5c7pBpYO1A=;
+	s=arc-20240116; t=1751994123; c=relaxed/simple;
+	bh=tVHV1C5PejrPosj9dd3z/IlO5jkn5ZQoChvleIHFa4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ewK1bvZ+KhWt2levUYiKtRIqZ7TcGbstWfICZcgEve09mRtWYUBitOEcPqgV0eP1uGrBBaMWNZXnKyIL64FkZrGBF7ELvy6B2wluqyj6C6cx4BR9sdwWPQ4cKeCAJneR0ObWXcq0xh1xWDVU3Tz/GqSLctfwaA55LwCo1d4Dq28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMqaP3vP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NhxlkQeAjS7qAFv3zsL1aFLvuN6wJzXd16zK0YuB05dcaKwanjC7nmdCW77AkBd+opCt6Ip0jV4yp1hxHPg5cKbQ1uN0Lf2re6BLOD1JGE+DatxSNvpfIS0q1RyF9m1kMIJKBrIYwJAe2P5ze/0G66U0LGTLHxi27kG/1bZL4Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9OS4MC1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMqaP3vP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2C3C4CEED;
-	Tue,  8 Jul 2025 17:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9OS4MC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE18C4CEED;
+	Tue,  8 Jul 2025 17:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994118;
-	bh=Geq76jeWQBrGrsrd27rwArilar8v5U4IR5c7pBpYO1A=;
+	s=korg; t=1751994122;
+	bh=tVHV1C5PejrPosj9dd3z/IlO5jkn5ZQoChvleIHFa4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMqaP3vP3j4JrXIt+M9A1/lF/qGa8fuljERf+L4UPFobGiCmST9ZIeCtzWOVPLGsT
-	 KC00YzTX9z7WTRvdFPQXMx6EmWyDSGdrYoNB0G9roagnda0XBvLeFW9oWXg+09gJUM
-	 g6iYW5rCtM8siY+o8xSTbV8or0sh95jojat+W2D8=
+	b=t9OS4MC1vWfBuAgmgQnS/ogrufSmdx5bjmLA5j1uhaBHAQKOqcS60rhNpZMv9s6dc
+	 5TD1iT1dkwEFcX5Zl4ETe4+/kMUb2pXOsayzGCoTPYv2Gz3p5i0pCFPEyldtbABL7k
+	 dLelUmxt9NkGROrVAi3E4savv7DBiEx+90ttCgeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tulio Magno <tuliom@ascii.art.br>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Justin M. Forbes" <jforbes@fedoraproject.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	John Meneghini <jmeneghi@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/160] powerpc: Fix struct termio related ioctl macros
-Date: Tue,  8 Jul 2025 18:22:47 +0200
-Message-ID: <20250708162235.006734436@linuxfoundation.org>
+Subject: [PATCH 5.15 131/160] scsi: target: Fix NULL pointer dereference in core_scsi3_decode_spec_i_port()
+Date: Tue,  8 Jul 2025 18:22:48 +0200
+Message-ID: <20250708162235.031464935@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -54,56 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
+[ Upstream commit d8ab68bdb294b09a761e967dad374f2965e1913f ]
 
-Since termio interface is now obsolete, include/uapi/asm/ioctls.h
-has some constant macros referring to "struct termio", this caused
-build failure at userspace.
+The function core_scsi3_decode_spec_i_port(), in its error code path,
+unconditionally calls core_scsi3_lunacl_undepend_item() passing the
+dest_se_deve pointer, which may be NULL.
 
-In file included from /usr/include/asm/ioctl.h:12,
-                 from /usr/include/asm/ioctls.h:5,
-                 from tst-ioctls.c:3:
-tst-ioctls.c: In function 'get_TCGETA':
-tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
-   12 |   return TCGETA;
-      |          ^~~~~~
+This can lead to a NULL pointer dereference if dest_se_deve remains
+unset.
 
-Even though termios.h provides "struct termio", trying to juggle definitions around to
-make it compile could introduce regressions. So better to open code it.
+SPC-3 PR SPEC_I_PT: Unable to locate dest_tpg
+Unable to handle kernel paging request at virtual address dfff800000000012
+Call trace:
+  core_scsi3_lunacl_undepend_item+0x2c/0xf0 [target_core_mod] (P)
+  core_scsi3_decode_spec_i_port+0x120c/0x1c30 [target_core_mod]
+  core_scsi3_emulate_pro_register+0x6b8/0xcd8 [target_core_mod]
+  target_scsi3_emulate_pr_out+0x56c/0x840 [target_core_mod]
 
-Reported-by: Tulio Magno <tuliom@ascii.art.br>
-Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
-Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
+Fix this by adding a NULL check before calling
+core_scsi3_lunacl_undepend_item()
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20250612101556.24829-1-mlombard@redhat.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/target/target_core_pr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
-index 2c145da3b774a..b5211e413829a 100644
---- a/arch/powerpc/include/uapi/asm/ioctls.h
-+++ b/arch/powerpc/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
+diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
+index 3829b61b56c12..f4a797d3c5734 100644
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -1852,7 +1852,9 @@ core_scsi3_decode_spec_i_port(
+ 		}
  
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
-+#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
-+#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
-+#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
+ 		kmem_cache_free(t10_pr_reg_cache, dest_pr_reg);
+-		core_scsi3_lunacl_undepend_item(dest_se_deve);
++
++		if (dest_se_deve)
++			core_scsi3_lunacl_undepend_item(dest_se_deve);
  
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
+ 		if (is_local)
+ 			continue;
 -- 
 2.39.5
 
