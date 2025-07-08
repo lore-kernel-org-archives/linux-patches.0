@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2602DECBD;
-	Tue,  8 Jul 2025 16:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142D32E540B;
+	Tue,  8 Jul 2025 16:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993915; cv=none; b=MwaNyI6VRdUCX9i+Q30/Azm/fng0j5MP/NVhAdjUCqMh2wK1jJc/24dVB1wB6fdW+3CNzeykzILKlhxyoZT+p68XVvvNZEC16dgUSQWBQ5uixgUHT2zFaPohXOIS8p0vx7rN4Xtb3x2dKJGe60+WR0uhTK5jj9inXLuRRyn4my0=
+	t=1751993918; cv=none; b=eP9RJDYuIHtScu+t4EGjoH2OgdTdl4tMt/EkB4B20UaON9gnc7W0MR9uW2G7z0nKRc6bqBd8HrUozvyql8ytIiEjXd4chdT6hAtAH0+H7j6oJHXpihdgyfCjq6Ng+25HZm690Wxza/v+HLqZQh39UKVEvy+IJoL4O0zUN+5t/0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993915; c=relaxed/simple;
-	bh=KAeayTl4JJYaIQH8WfmZ7I3Q2C53hm4cbjsOpE78NDY=;
+	s=arc-20240116; t=1751993918; c=relaxed/simple;
+	bh=K8xO9plDs48ag0Qic5pOf/7BtwIwOBMVlnd0T2whu5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rc3uvmGOG+n8rG1cc7+D2YSr79kUo2JG870KH0KXj0X7Kiml8Z4YgWY8Rg8AbuQ32HKb01spqzjhr01Iwoq1G8SP1a4pHTTiQSlbscinBgRJ0PxAT/DbqHyUNTomX7EpdPasWHfwFy1ztatlNsZGB95mt4kirGCTZOUmEodb6p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akIMg+s2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z01PGqeGUYn9gyMb5U2pGWVpcmcggl+rVUnR+cTowSNrIhXeEWN9Dia8izbLmF6LrkBi6c7XyuRRxFr8tPff8G0UNInU+JSK/PEHgCm/ww6uo4jINfDG2hukvyC/DO4Nm3CtzmZWy4mHMIbPHw4Gzp07Me+t5aigjX1jTxDGBmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2jpXGvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akIMg+s2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699B6C4CEED;
-	Tue,  8 Jul 2025 16:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2jpXGvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DE3C4CEED;
+	Tue,  8 Jul 2025 16:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993914;
-	bh=KAeayTl4JJYaIQH8WfmZ7I3Q2C53hm4cbjsOpE78NDY=;
+	s=korg; t=1751993918;
+	bh=K8xO9plDs48ag0Qic5pOf/7BtwIwOBMVlnd0T2whu5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=akIMg+s2fC6RAFVcfX6goJsR5IOCvolyAmnYB6Oqctm6RMIn7eLYBxZvpsv48lenx
-	 2N0Ex+qiPQg06/WN6qmhQ1mjytlufJ5pjp0Mkh8nHA3s9Cejo+Y6k0yNkQtXGfJgkk
-	 5LlxcoZEvONNTckY1l0q8jcZd0IiHl4t6VR6di/w=
+	b=z2jpXGvOZyegadLHw2hQ8I+1/J+dhOq9pvMVFB2vSQzG6Ww+cnLO2jsEm69katRS5
+	 Q3hmisn1R3Ep585BA6qythWPRLkmEcnqldU+yoqsQ2hKR6yo9nKMSbYrFjhFY0Ku2c
+	 J9oD3VPmzbDNT/0HOL5TPZI8CHCNrcku0Kf9R5T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1316233c4c6803382a8b@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Gengming Liu <l.dmxcsnsbh@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Youngjun Lee <yjjuny.lee@samsung.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/160] atm: clip: prevent NULL deref in clip_push()
-Date: Tue,  8 Jul 2025 18:21:38 +0200
-Message-ID: <20250708162233.242323625@linuxfoundation.org>
+Subject: [PATCH 5.15 062/160] ALSA: usb-audio: Fix out-of-bounds read in snd_usb_get_audioformat_uac3()
+Date: Tue,  8 Jul 2025 18:21:39 +0200
+Message-ID: <20250708162233.271722957@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -55,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Youngjun Lee <yjjuny.lee@samsung.com>
 
-[ Upstream commit b993ea46b3b601915ceaaf3c802adf11e7d6bac6 ]
+[ Upstream commit fb4e2a6e8f28a3c0ad382e363aeb9cd822007b8a ]
 
-Blamed commit missed that vcc_destroy_socket() calls
-clip_push() with a NULL skb.
+In snd_usb_get_audioformat_uac3(), the length value returned from
+snd_usb_ctl_msg() is used directly for memory allocation without
+validation. This length is controlled by the USB device.
 
-If clip_devs is NULL, clip_push() then crashes when reading
-skb->truesize.
+The allocated buffer is cast to a uac3_cluster_header_descriptor
+and its fields are accessed without verifying that the buffer
+is large enough. If the device returns a smaller than expected
+length, this leads to an out-of-bounds read.
 
-Fixes: 93a2014afbac ("atm: fix a UAF in lec_arp_clear_vccs()")
-Reported-by: syzbot+1316233c4c6803382a8b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68556f59.a00a0220.137b3.004e.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Cc: Gengming Liu <l.dmxcsnsbh@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add a length check to ensure the buffer is large enough for
+uac3_cluster_header_descriptor.
+
+Signed-off-by: Youngjun Lee <yjjuny.lee@samsung.com>
+Fixes: 9a2fe9b801f5 ("ALSA: usb: initial USB Audio Device Class 3.0 support")
+Link: https://patch.msgid.link/20250623-uac3-oob-fix-v1-1-527303eaf40a@samsung.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/clip.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ sound/usb/stream.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/atm/clip.c b/net/atm/clip.c
-index 294cb9efe3d38..511467bb7fe40 100644
---- a/net/atm/clip.c
-+++ b/net/atm/clip.c
-@@ -193,12 +193,6 @@ static void clip_push(struct atm_vcc *vcc, struct sk_buff *skb)
- 
- 	pr_debug("\n");
- 
--	if (!clip_devs) {
--		atm_return(vcc, skb->truesize);
--		kfree_skb(skb);
--		return;
--	}
--
- 	if (!skb) {
- 		pr_debug("removing VCC %p\n", clip_vcc);
- 		if (clip_vcc->entry)
-@@ -208,6 +202,11 @@ static void clip_push(struct atm_vcc *vcc, struct sk_buff *skb)
- 		return;
- 	}
- 	atm_return(vcc, skb->truesize);
-+	if (!clip_devs) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
- 	skb->dev = clip_vcc->entry ? clip_vcc->entry->neigh->dev : clip_devs;
- 	/* clip_vcc->entry == NULL if we don't have an IP address yet */
- 	if (!skb->dev) {
+diff --git a/sound/usb/stream.c b/sound/usb/stream.c
+index e14c725acebf2..0f1558ef85553 100644
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -982,6 +982,8 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 	 * and request Cluster Descriptor
+ 	 */
+ 	wLength = le16_to_cpu(hc_header.wLength);
++	if (wLength < sizeof(cluster))
++		return NULL;
+ 	cluster = kzalloc(wLength, GFP_KERNEL);
+ 	if (!cluster)
+ 		return ERR_PTR(-ENOMEM);
 -- 
 2.39.5
 
