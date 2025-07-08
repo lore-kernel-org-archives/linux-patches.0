@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB972E2F0D;
-	Tue,  8 Jul 2025 16:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D342E2F0D;
+	Tue,  8 Jul 2025 16:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993746; cv=none; b=WQJ7rFYrjr43bmmP5LON6l8EO+BSqCnvBDiZiA1Ethx9IsSvSpCUuFPkvd+q90vEhm7uy+Q/edZQAVrIH0pzUd252MBttwZxQJD4CM7q69M6dVgkGW2cfFUNO3GhkieZuAxaLH/c/moY/5nnmrCDqBVsPBPA14Gz26SdrUAf/KM=
+	t=1751993748; cv=none; b=gmw4PRHHvTpJjhaHrEpuGZTKsMUU/9D5x6rTB0wWSKA4Eyrqs4t0NlDN0Ektt5/CwBvbaVbCwGrYVGub46aUE+QfeXC09jg0fMEyg51y/dRVv4LqfnmyOD+bWE1fcle8JU7+XtG0t1s+honwRj6N+b3kh1XFfdd6Zx0NajuNatc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993746; c=relaxed/simple;
-	bh=IlIohNjIY9eD8ep4Zh4wME0mh6oKJ24XSgC3N+uoTGU=;
+	s=arc-20240116; t=1751993748; c=relaxed/simple;
+	bh=MA7Pytkqh3ze8ZAU809MjX1kDWwXe5wwtIyu3JdAF7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fV9KgdjLaeXESBHTCTbZX7SAz9jVn97/xYAxoAnrFvV0slTkPkXvE4L6UgRRTbxZDxqeXRjxZULuO7j9mhI/5Yuj9caO81W1F3pMiL50T3hgdS6JkMpo2HhcUgGcrJYthH32H1FFE52gu4DGW8kdPaUhoYPzqhlUYT7zNapGzxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H413k3Cv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxytz1BkQkXTdX5izGYfW138PViGm4vzE/VkuGPSPRst52FzE4cfv28QO5jDi5UdEaEoqKoDDdZ4tjuT3bgmAGSr23pF6BDm1N9cMTsKZXoNqCgfIN/sSYbZf64vWuJjXLVcaLYRGNiMOd+khZej8E0qcD6C6fqikHGEpmD9Tyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aILY/GXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H413k3Cv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C0AC4CEED;
-	Tue,  8 Jul 2025 16:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aILY/GXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E472C4CEED;
+	Tue,  8 Jul 2025 16:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993745;
-	bh=IlIohNjIY9eD8ep4Zh4wME0mh6oKJ24XSgC3N+uoTGU=;
+	s=korg; t=1751993748;
+	bh=MA7Pytkqh3ze8ZAU809MjX1kDWwXe5wwtIyu3JdAF7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H413k3Cvl7eUPOgMmVYCJAl8OiEaaZiT6/a1whjXQ6u5Bw+KQHh76XcwbI3/MifaP
-	 97Jlg5ZgGSUf9mnGVGDlx72VL3zHCjtDGY/y+lUtM5VFQBZrUg5I8uRQhLLSGppiZz
-	 yXMT7UqnnvHD3sEIRUXnRVeJy10Ue8YAWcWNLhvY=
+	b=aILY/GXV2LO+nOscGbTM2RsPvcxA31jeOpEvOwvat09AgwfBwLvcEeEy3jWrV63fF
+	 AoYyjajuNZMX4L3UcAPc2M7IrBi5QG8hDr44QjPdxloIEMnLcvXpQ+R6twsXxLn+bj
+	 FZpf0ptDXNhUBVLQTTcuURaVoVSTMRn7LQRwZe0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Subject: [PATCH 6.15 172/178] mm/vmalloc: fix data race in show_numa_info()
-Date: Tue,  8 Jul 2025 18:23:29 +0200
-Message-ID: <20250708162240.946538446@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 6.15 173/178] x86/bugs: Rename MDS machinery to something more generic
+Date: Tue,  8 Jul 2025 18:23:30 +0200
+Message-ID: <20250708162240.969523682@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,164 +50,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit 5c5f0468d172ddec2e333d738d2a1f85402cf0bc upstream.
+Commit f9af88a3d384c8b55beb5dc5483e5da0135fadbd upstream.
 
-The following data-race was found in show_numa_info():
+It will be used by other x86 mitigations.
 
-==================================================================
-BUG: KCSAN: data-race in vmalloc_info_show / vmalloc_info_show
+No functional changes.
 
-read to 0xffff88800971fe30 of 4 bytes by task 8289 on cpu 0:
- show_numa_info mm/vmalloc.c:4936 [inline]
- vmalloc_info_show+0x5a8/0x7e0 mm/vmalloc.c:5016
- seq_read_iter+0x373/0xb40 fs/seq_file.c:230
- proc_reg_read_iter+0x11e/0x170 fs/proc/inode.c:299
-....
-
-write to 0xffff88800971fe30 of 4 bytes by task 8287 on cpu 1:
- show_numa_info mm/vmalloc.c:4934 [inline]
- vmalloc_info_show+0x38f/0x7e0 mm/vmalloc.c:5016
- seq_read_iter+0x373/0xb40 fs/seq_file.c:230
- proc_reg_read_iter+0x11e/0x170 fs/proc/inode.c:299
-....
-
-value changed: 0x0000008f -> 0x00000000
-==================================================================
-
-According to this report,there is a read/write data-race because
-m->private is accessible to multiple CPUs.  To fix this, instead of
-allocating the heap in proc_vmalloc_init() and passing the heap address to
-m->private, vmalloc_info_show() should allocate the heap.
-
-Link: https://lkml.kernel.org/r/20250508165620.15321-1-aha310510@gmail.com
-Fixes: 8e1d743f2c26 ("mm: vmalloc: support multiple nodes in vmallocinfo")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   63 ++++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 35 insertions(+), 28 deletions(-)
+ Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst |    4 -
+ Documentation/arch/x86/mds.rst                                  |    8 +-
+ arch/x86/entry/entry.S                                          |    8 +-
+ arch/x86/include/asm/irqflags.h                                 |    4 -
+ arch/x86/include/asm/mwait.h                                    |    5 +
+ arch/x86/include/asm/nospec-branch.h                            |   29 +++++-----
+ arch/x86/kernel/cpu/bugs.c                                      |   12 ++--
+ arch/x86/kvm/vmx/vmx.c                                          |    2 
+ 8 files changed, 36 insertions(+), 36 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -3100,7 +3100,7 @@ static void clear_vm_uninitialized_flag(
- 	/*
- 	 * Before removing VM_UNINITIALIZED,
- 	 * we should make sure that vm has proper values.
--	 * Pair with smp_rmb() in show_numa_info().
-+	 * Pair with smp_rmb() in vread_iter() and vmalloc_info_show().
- 	 */
- 	smp_wmb();
- 	vm->flags &= ~VM_UNINITIALIZED;
-@@ -4934,28 +4934,29 @@ bool vmalloc_dump_obj(void *object)
- #endif
+--- a/Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst
++++ b/Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst
+@@ -157,9 +157,7 @@ This is achieved by using the otherwise
+ combination with a microcode update. The microcode clears the affected CPU
+ buffers when the VERW instruction is executed.
  
- #ifdef CONFIG_PROC_FS
--static void show_numa_info(struct seq_file *m, struct vm_struct *v)
--{
--	if (IS_ENABLED(CONFIG_NUMA)) {
--		unsigned int nr, *counters = m->private;
--		unsigned int step = 1U << vm_area_page_order(v);
+-Kernel reuses the MDS function to invoke the buffer clearing:
+-
+-	mds_clear_cpu_buffers()
++Kernel does the buffer clearing with x86_clear_cpu_buffers().
  
--		if (!counters)
--			return;
-+/*
-+ * Print number of pages allocated on each memory node.
-+ *
-+ * This function can only be called if CONFIG_NUMA is enabled
-+ * and VM_UNINITIALIZED bit in v->flags is disabled.
-+ */
-+static void show_numa_info(struct seq_file *m, struct vm_struct *v,
-+				 unsigned int *counters)
-+{
-+	unsigned int nr;
-+	unsigned int step = 1U << vm_area_page_order(v);
+ On MDS affected CPUs, the kernel already invokes CPU buffer clear on
+ kernel/userspace, hypervisor/guest and C-state (idle) transitions. No
+--- a/Documentation/arch/x86/mds.rst
++++ b/Documentation/arch/x86/mds.rst
+@@ -93,7 +93,7 @@ enters a C-state.
  
--		if (v->flags & VM_UNINITIALIZED)
--			return;
--		/* Pair with smp_wmb() in clear_vm_uninitialized_flag() */
--		smp_rmb();
-+	if (!counters)
-+		return;
+ The kernel provides a function to invoke the buffer clearing:
  
--		memset(counters, 0, nr_node_ids * sizeof(unsigned int));
-+	memset(counters, 0, nr_node_ids * sizeof(unsigned int));
+-    mds_clear_cpu_buffers()
++    x86_clear_cpu_buffers()
  
--		for (nr = 0; nr < v->nr_pages; nr += step)
--			counters[page_to_nid(v->pages[nr])] += step;
--		for_each_node_state(nr, N_HIGH_MEMORY)
--			if (counters[nr])
--				seq_printf(m, " N%u=%u", nr, counters[nr]);
--	}
-+	for (nr = 0; nr < v->nr_pages; nr += step)
-+		counters[page_to_nid(v->pages[nr])] += step;
-+	for_each_node_state(nr, N_HIGH_MEMORY)
-+		if (counters[nr])
-+			seq_printf(m, " N%u=%u", nr, counters[nr]);
- }
+ Also macro CLEAR_CPU_BUFFERS can be used in ASM late in exit-to-user path.
+ Other than CFLAGS.ZF, this macro doesn't clobber any registers.
+@@ -185,9 +185,9 @@ Mitigation points
+    idle clearing would be a window dressing exercise and is therefore not
+    activated.
  
- static void show_purge_info(struct seq_file *m)
-@@ -4983,6 +4984,10 @@ static int vmalloc_info_show(struct seq_
- 	struct vmap_area *va;
- 	struct vm_struct *v;
- 	int i;
-+	unsigned int *counters;
-+
-+	if (IS_ENABLED(CONFIG_NUMA))
-+		counters = kmalloc(nr_node_ids * sizeof(unsigned int), GFP_KERNEL);
+-   The invocation is controlled by the static key mds_idle_clear which is
+-   switched depending on the chosen mitigation mode and the SMT state of
+-   the system.
++   The invocation is controlled by the static key cpu_buf_idle_clear which is
++   switched depending on the chosen mitigation mode and the SMT state of the
++   system.
  
- 	for (i = 0; i < nr_vmap_nodes; i++) {
- 		vn = &vmap_nodes[i];
-@@ -4999,6 +5004,11 @@ static int vmalloc_info_show(struct seq_
- 			}
+    The buffer clear is only invoked before entering the C-State to prevent
+    that stale data from the idling CPU from spilling to the Hyper-Thread
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -36,20 +36,20 @@ EXPORT_SYMBOL_GPL(write_ibpb);
  
- 			v = va->vm;
-+			if (v->flags & VM_UNINITIALIZED)
-+				continue;
-+
-+			/* Pair with smp_wmb() in clear_vm_uninitialized_flag() */
-+			smp_rmb();
+ /*
+  * Define the VERW operand that is disguised as entry code so that
+- * it can be referenced with KPTI enabled. This ensure VERW can be
++ * it can be referenced with KPTI enabled. This ensures VERW can be
+  * used late in exit-to-user path after page tables are switched.
+  */
+ .pushsection .entry.text, "ax"
  
- 			seq_printf(m, "0x%pK-0x%pK %7ld",
- 				v->addr, v->addr + v->size, v->size);
-@@ -5033,7 +5043,9 @@ static int vmalloc_info_show(struct seq_
- 			if (is_vmalloc_addr(v->pages))
- 				seq_puts(m, " vpages");
+ .align L1_CACHE_BYTES, 0xcc
+-SYM_CODE_START_NOALIGN(mds_verw_sel)
++SYM_CODE_START_NOALIGN(x86_verw_sel)
+ 	UNWIND_HINT_UNDEFINED
+ 	ANNOTATE_NOENDBR
+ 	.word __KERNEL_DS
+ .align L1_CACHE_BYTES, 0xcc
+-SYM_CODE_END(mds_verw_sel);
++SYM_CODE_END(x86_verw_sel);
+ /* For KVM */
+-EXPORT_SYMBOL_GPL(mds_verw_sel);
++EXPORT_SYMBOL_GPL(x86_verw_sel);
  
--			show_numa_info(m, v);
-+			if (IS_ENABLED(CONFIG_NUMA))
-+				show_numa_info(m, v, counters);
-+
- 			seq_putc(m, '\n');
- 		}
- 		spin_unlock(&vn->busy.lock);
-@@ -5043,19 +5055,14 @@ static int vmalloc_info_show(struct seq_
- 	 * As a final step, dump "unpurged" areas.
- 	 */
- 	show_purge_info(m);
-+	if (IS_ENABLED(CONFIG_NUMA))
-+		kfree(counters);
- 	return 0;
- }
+ .popsection
  
- static int __init proc_vmalloc_init(void)
+--- a/arch/x86/include/asm/irqflags.h
++++ b/arch/x86/include/asm/irqflags.h
+@@ -44,13 +44,13 @@ static __always_inline void native_irq_e
+ 
+ static __always_inline void native_safe_halt(void)
  {
--	void *priv_data = NULL;
--
--	if (IS_ENABLED(CONFIG_NUMA))
--		priv_data = kmalloc(nr_node_ids * sizeof(unsigned int), GFP_KERNEL);
--
--	proc_create_single_data("vmallocinfo",
--		0400, NULL, vmalloc_info_show, priv_data);
--
-+	proc_create_single("vmallocinfo", 0400, NULL, vmalloc_info_show);
- 	return 0;
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 	asm volatile("sti; hlt": : :"memory");
  }
- module_init(proc_vmalloc_init);
+ 
+ static __always_inline void native_halt(void)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 	asm volatile("hlt": : :"memory");
+ }
+ 
+--- a/arch/x86/include/asm/mwait.h
++++ b/arch/x86/include/asm/mwait.h
+@@ -43,7 +43,7 @@ static __always_inline void __monitorx(c
+ 
+ static __always_inline void __mwait(unsigned long eax, unsigned long ecx)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 
+ 	/* "mwait %eax, %ecx;" */
+ 	asm volatile(".byte 0x0f, 0x01, 0xc9;"
+@@ -97,7 +97,8 @@ static __always_inline void __mwaitx(uns
+  */
+ static __always_inline void __sti_mwait(unsigned long eax, unsigned long ecx)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
++
+ 	/* "mwait %eax, %ecx;" */
+ 	asm volatile("sti; .byte 0x0f, 0x01, 0xc9;"
+ 		     :: "a" (eax), "c" (ecx));
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -302,22 +302,22 @@
+ .endm
+ 
+ /*
+- * Macro to execute VERW instruction that mitigate transient data sampling
+- * attacks such as MDS. On affected systems a microcode update overloaded VERW
+- * instruction to also clear the CPU buffers. VERW clobbers CFLAGS.ZF.
+- *
++ * Macro to execute VERW insns that mitigate transient data sampling
++ * attacks such as MDS or TSA. On affected systems a microcode update
++ * overloaded VERW insns to also clear the CPU buffers. VERW clobbers
++ * CFLAGS.ZF.
+  * Note: Only the memory operand variant of VERW clears the CPU buffers.
+  */
+ .macro CLEAR_CPU_BUFFERS
+ #ifdef CONFIG_X86_64
+-	ALTERNATIVE "", "verw mds_verw_sel(%rip)", X86_FEATURE_CLEAR_CPU_BUF
++	ALTERNATIVE "", "verw x86_verw_sel(%rip)", X86_FEATURE_CLEAR_CPU_BUF
+ #else
+ 	/*
+ 	 * In 32bit mode, the memory operand must be a %cs reference. The data
+ 	 * segments may not be usable (vm86 mode), and the stack segment may not
+ 	 * be flat (ESPFIX32).
+ 	 */
+-	ALTERNATIVE "", "verw %cs:mds_verw_sel", X86_FEATURE_CLEAR_CPU_BUF
++	ALTERNATIVE "", "verw %cs:x86_verw_sel", X86_FEATURE_CLEAR_CPU_BUF
+ #endif
+ .endm
+ 
+@@ -567,24 +567,24 @@ DECLARE_STATIC_KEY_FALSE(switch_mm_alway
+ 
+ DECLARE_STATIC_KEY_FALSE(switch_vcpu_ibpb);
+ 
+-DECLARE_STATIC_KEY_FALSE(mds_idle_clear);
++DECLARE_STATIC_KEY_FALSE(cpu_buf_idle_clear);
+ 
+ DECLARE_STATIC_KEY_FALSE(switch_mm_cond_l1d_flush);
+ 
+ DECLARE_STATIC_KEY_FALSE(mmio_stale_data_clear);
+ 
+-extern u16 mds_verw_sel;
++extern u16 x86_verw_sel;
+ 
+ #include <asm/segment.h>
+ 
+ /**
+- * mds_clear_cpu_buffers - Mitigation for MDS and TAA vulnerability
++ * x86_clear_cpu_buffers - Buffer clearing support for different x86 CPU vulns
+  *
+  * This uses the otherwise unused and obsolete VERW instruction in
+  * combination with microcode which triggers a CPU buffer flush when the
+  * instruction is executed.
+  */
+-static __always_inline void mds_clear_cpu_buffers(void)
++static __always_inline void x86_clear_cpu_buffers(void)
+ {
+ 	static const u16 ds = __KERNEL_DS;
+ 
+@@ -601,14 +601,15 @@ static __always_inline void mds_clear_cp
+ }
+ 
+ /**
+- * mds_idle_clear_cpu_buffers - Mitigation for MDS vulnerability
++ * x86_idle_clear_cpu_buffers - Buffer clearing support in idle for the MDS
++ * vulnerability
+  *
+  * Clear CPU buffers if the corresponding static key is enabled
+  */
+-static __always_inline void mds_idle_clear_cpu_buffers(void)
++static __always_inline void x86_idle_clear_cpu_buffers(void)
+ {
+-	if (static_branch_likely(&mds_idle_clear))
+-		mds_clear_cpu_buffers();
++	if (static_branch_likely(&cpu_buf_idle_clear))
++		x86_clear_cpu_buffers();
+ }
+ 
+ #endif /* __ASSEMBLER__ */
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -125,9 +125,9 @@ DEFINE_STATIC_KEY_FALSE(switch_mm_always
+ DEFINE_STATIC_KEY_FALSE(switch_vcpu_ibpb);
+ EXPORT_SYMBOL_GPL(switch_vcpu_ibpb);
+ 
+-/* Control MDS CPU buffer clear before idling (halt, mwait) */
+-DEFINE_STATIC_KEY_FALSE(mds_idle_clear);
+-EXPORT_SYMBOL_GPL(mds_idle_clear);
++/* Control CPU buffer clear before idling (halt, mwait) */
++DEFINE_STATIC_KEY_FALSE(cpu_buf_idle_clear);
++EXPORT_SYMBOL_GPL(cpu_buf_idle_clear);
+ 
+ /*
+  * Controls whether l1d flush based mitigations are enabled,
+@@ -469,7 +469,7 @@ static void __init mmio_select_mitigatio
+ 	 * is required irrespective of SMT state.
+ 	 */
+ 	if (!(x86_arch_cap_msr & ARCH_CAP_FBSDP_NO))
+-		static_branch_enable(&mds_idle_clear);
++		static_branch_enable(&cpu_buf_idle_clear);
+ 
+ 	/*
+ 	 * Check if the system has the right microcode.
+@@ -2063,10 +2063,10 @@ static void update_mds_branch_idle(void)
+ 		return;
+ 
+ 	if (sched_smt_active()) {
+-		static_branch_enable(&mds_idle_clear);
++		static_branch_enable(&cpu_buf_idle_clear);
+ 	} else if (mmio_mitigation == MMIO_MITIGATION_OFF ||
+ 		   (x86_arch_cap_msr & ARCH_CAP_FBSDP_NO)) {
+-		static_branch_disable(&mds_idle_clear);
++		static_branch_disable(&cpu_buf_idle_clear);
+ 	}
+ }
+ 
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7366,7 +7366,7 @@ static noinstr void vmx_vcpu_enter_exit(
+ 		vmx_l1d_flush(vcpu);
+ 	else if (static_branch_unlikely(&mmio_stale_data_clear) &&
+ 		 kvm_arch_has_assigned_device(vcpu->kvm))
+-		mds_clear_cpu_buffers();
++		x86_clear_cpu_buffers();
+ 
+ 	vmx_disable_fb_clear(vmx);
+ 
 
 
