@@ -1,248 +1,145 @@
-Received: from out01.mta.xmission.com (out01.mta.xmission.com [166.70.13.231])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E0121ABDB;
-	Tue,  8 Jul 2025 20:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=166.70.13.231
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939BC23B602
+	for <patches@lists.linux.dev>; Tue,  8 Jul 2025 20:27:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752005280; cv=none; b=kkCvaWItWVFN9+QmFnPAsdwnfJNVeSnghwdkgOx3vEAaXl6RL0alM0M06lBvzX4KBenSgyBfxWdbDmqvL27l0fYB4klRXLWZWKjAdQPTCvQyZ4UgLfZK23MbXalbVyt8ps+D3rf8vqW9+RE38X++vwEKuoCqqDWHSzkAQFdzcMQ=
+	t=1752006446; cv=none; b=oUPUWfCLJs03cW9JvNWcHGaLPeKF91rD+yzR/QekGpzfoYZXmkx2gRKNfDcIWrrWCGCtSt1uchcfxkTjs9zzkZtOAazgukLjojSUvHe08Fm2VI23YRu5bMsA05lXLAAtBRupGhsR9yxwTLSU+N3UI7WoDtbSS7pXBsCb/DZbJAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752005280; c=relaxed/simple;
-	bh=4TApNHMh5bXuI1y5A4A8GkOhQSZM0IKOP7GX7SjIcW4=;
-	h=From:To:Cc:References:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type:Subject; b=hro7eKXw5lC2BycGM1vwZoUS9COBwPEO5gNvAGU9qFg+APTORWnbOCHrjR5Ezar0jqpoLxumqfdIXPWUUhhOSTa0kAHetE/14vQRbHm/7sy301II3WuUnmeEaYzavlU1R7P6rqFDzNc3ZBfNc6jSzeM/nFptqulO94mJlq/Us+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com; spf=pass smtp.mailfrom=xmission.com; arc=none smtp.client-ip=166.70.13.231
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=xmission.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=xmission.com
-Received: from in01.mta.xmission.com ([166.70.13.51]:54402)
-	by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1uZE4L-000RSs-N6; Tue, 08 Jul 2025 13:33:33 -0600
-Received: from ip72-198-198-28.om.om.cox.net ([72.198.198.28]:56478 helo=email.froward.int.ebiederm.org.xmission.com)
-	by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.93)
-	(envelope-from <ebiederm@xmission.com>)
-	id 1uZE4K-008C0F-0d; Tue, 08 Jul 2025 13:33:33 -0600
-From: "Eric W. Biederman" <ebiederm@xmission.com>
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev,  stable@vger.kernel.org,  Mario Limonciello
- <mario.limonciello@amd.com>,  Nat Wittstock <nat@fardog.io>,  Lucian Langa
- <lucilanga@7pot.org>,  "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-  rafael@kernel.org,  pavel@ucw.cz,  len.brown@intel.com,
-  linux-pm@vger.kernel.org,  kexec@lists.infradead.org
-References: <20250708000215.793090-1-sashal@kernel.org>
-	<20250708000215.793090-6-sashal@kernel.org>
-Date: Tue, 08 Jul 2025 14:32:02 -0500
-In-Reply-To: <20250708000215.793090-6-sashal@kernel.org> (Sasha Levin's
-	message of "Mon, 7 Jul 2025 20:02:13 -0400")
-Message-ID: <87ms9esclp.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1752006446; c=relaxed/simple;
+	bh=D4ZFY3zNZ2GF0aoUA8v03uP6Qb5ddMrAwH4USfqLWrg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PnNRTEbYyxAMMiCuV0IRbCS3qPzNi983APKVJTcxVs0KYqjqxzpEjnVGbCA2ZAI+hzcDMdZxdi97pcEucXYIw54SO/MWShUhDW47CRhkvT9BTP0ebf5ha511DX6/hQLJJgcCOooDVMJB01mbETBYco/+sVS/aJ0XXsBu31ZlfCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=boCb3wTY; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="boCb3wTY"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso4206938b3a.0
+        for <patches@lists.linux.dev>; Tue, 08 Jul 2025 13:27:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752006444; x=1752611244; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=6OA7chRA16WBdPr+40vvzWEefIHpoFhkr8uztjCaCvI=;
+        b=boCb3wTYZb5WBh4uYOPa8AtHJ2FkTZpmfiJiDdq2hd7F05VP4rq/HBXVC4hP4/dwPn
+         vC69anvfQFnHkKYMO5t8epmevw55inBtqqixR3vTsmZMT03Wjq65p+BGdos15L2a+nHE
+         wShp7KVrrc7H2WZyKI8Y08vN3WrXkU40akD0YMt0/9HEukVjjSDOywq6mQqnRiz3g7nI
+         CTcpm1teRwoZYFVTRSIN/vGHFsvi6Rqpn0Pzy+jzFHJ3I+iuyw+SvdECH613j0t8+Tut
+         KY/+1APGBVxWlYnU/wnYuvQ3mV3s2TH95zhA6jh8GnmIJfWAq/Zrv+TH3KGZYQ6lKFU3
+         38rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752006444; x=1752611244;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6OA7chRA16WBdPr+40vvzWEefIHpoFhkr8uztjCaCvI=;
+        b=WXbthBLwjnVg4db5wid6noA0nxo7WxCavxyEfvoSR5NijvSWaV8sEzYI943yuhdc7j
+         qVb+AS0IEH3thMGuD8ExQQivLbmSLpe2xfnBSbMw1bMQnHIXXZz/6T959eVJPpkGUv5R
+         dmbjSizk6DRvmiE252UbDFaw4NYv5gtqphSPWHL3xA9W5nJcB/e3HHSoZ53gc5Y4FMv6
+         waNH1MJpwlKNdaT3jfr7EcTd9m7taWMlknAJ7EhdxxrLNz1KZuW7CcEDRz1DVIwGVKRY
+         8uZMGkQWc124tB7rzH+SSoWlp2UHm/xAaluhGOz97rQyQ+PChH1Qv4qwX+4GDIXAVCGD
+         yCeg==
+X-Gm-Message-State: AOJu0YzRsqDtSmrt8rouR4FtAmdTQ/Hwgjy9/v5ftJSyjA3kBZGi9x1J
+	GltLsISLxVXkMTFih06LABdl6p1vZIecL9ENBuqNOESbOUkUb+ti6ceX
+X-Gm-Gg: ASbGncu9QFNHgdllHWTwFdhGWLkrvQ85JcT+7lGjPuAHU9+h+CbO4h2P3NuLHEifksD
+	KJAk01HRga9P0t/V+K2tJvw3EVtMO9HhKNAH4f7B04oRDIlb1z4m6/roLoIIjETA1X4zVIC5OWw
+	p6wAuLMpjPA9n6F76R17+4meoAHrE83+8pwHhoN1spUzTEg4atneoM67fLGLdd/90yprEC3kWaA
+	UcjonEghun/NumMTVSX/K5wpbEcAJFh6jiThw5aPKvLTadGs5QodB8rs0UI9ieZmyB91Z0awuep
+	O0dBHodZbXpYDt25WIydpa2S29BYp4pLhKDLklEIV8xFw8nAT7yhc03HJjvKLxmhK3qV1y8cXtt
+	IKi7aLyVm4qdA6r+/
+X-Google-Smtp-Source: AGHT+IGPcZ6ZQX5aQ05IyNUFOv25G7y4nEJ1Ysw3rs3xMJGKtJpoTGjGVfDRig/USeGjqzb+aah0cw==
+X-Received: by 2002:aa7:88c5:0:b0:740:a023:5d60 with SMTP id d2e1a72fcca58-74ce8ab1346mr23777663b3a.19.1752006443600;
+        Tue, 08 Jul 2025 13:27:23 -0700 (PDT)
+Received: from [10.230.3.249] ([192.19.161.250])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce417ddb3sm12865567b3a.87.2025.07.08.13.27.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Jul 2025 13:27:23 -0700 (PDT)
+Message-ID: <73bcad92-f211-4a29-8cdd-86026c54cdd2@gmail.com>
+Date: Tue, 8 Jul 2025 13:27:10 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1uZE4K-008C0F-0d;;;mid=<87ms9esclp.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=72.198.198.28;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX1+WnfoI1XgX4gSY7g//vFBSvkA5FSvHJZo=
-X-Spam-Level: **
-X-Spam-Virus: No
-X-Spam-Report: 
-	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
-	*  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-	*      [score: 0.5000]
-	*  0.7 XMSubLong Long Subject
-	*  0.0 T_TM2_M_HEADER_IN_MSG BODY: No description available.
-	* -0.0 DCC_CHECK_NEGATIVE Not listed in DCC
-	*      [sa03 1397; Body=1 Fuz1=1 Fuz2=1]
-	*  0.8 XM_B_SpammyWords2 Two or more commony used spammy words
-	*  1.0 XM_B_SpammyTLD Contains uncommon/spammy TLD
-	*  0.0 T_TooManySym_01 4+ unique symbols in subject
-	*  0.2 XM_B_SpammyWords One or more commonly used spammy words
-X-Spam-DCC: XMission; sa03 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: **;Sasha Levin <sashal@kernel.org>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 1180 ms - load_scoreonly_sql: 0.03 (0.0%),
-	signal_user_changed: 4.3 (0.4%), b_tie_ro: 3.0 (0.3%), parse: 1.37
-	(0.1%), extract_message_metadata: 28 (2.3%), get_uri_detail_list: 4.6
-	(0.4%), tests_pri_-2000: 28 (2.4%), tests_pri_-1000: 3.1 (0.3%),
-	tests_pri_-950: 1.48 (0.1%), tests_pri_-900: 1.23 (0.1%),
-	tests_pri_-90: 135 (11.4%), check_bayes: 117 (9.9%), b_tokenize: 16
-	(1.4%), b_tok_get_all: 14 (1.2%), b_comp_prob: 3.8 (0.3%),
-	b_tok_touch_all: 80 (6.8%), b_finish: 0.76 (0.1%), tests_pri_0: 615
-	(52.1%), check_dkim_signature: 0.45 (0.0%), check_dkim_adsp: 7 (0.6%),
-	poll_dns_idle: 334 (28.3%), tests_pri_10: 2.8 (0.2%), tests_pri_500:
-	357 (30.3%), rewrite_mail: 0.00 (0.0%)
-Subject: Re: [PATCH AUTOSEL 6.15 6/8] PM: Restrict swap use to later in the
- suspend sequence
-X-SA-Exim-Connect-IP: 166.70.13.51
-X-SA-Exim-Rcpt-To: kexec@lists.infradead.org, linux-pm@vger.kernel.org, len.brown@intel.com, pavel@ucw.cz, rafael@kernel.org, rafael.j.wysocki@intel.com, lucilanga@7pot.org, nat@fardog.io, mario.limonciello@amd.com, stable@vger.kernel.org, patches@lists.linux.dev, sashal@kernel.org
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-SA-Exim-Scanned: No (on out01.mta.xmission.com); SAEximRunCond expanded to false
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/130] 6.6.97-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250708183253.753837521@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ WlfRzlpjIPmdjgoicA==
+In-Reply-To: <20250708183253.753837521@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
-Wow!
 
-Sasha I think an impersonator has gotten into your account, and
-is just making nonsense up.
+On 7/8/2025 11:33 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.97 release.
+> There are 130 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 10 Jul 2025 18:32:37 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.97-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-At first glance this reads like an impassioned plea to backport this
-change, from someone who has actually dealt with it.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Unfortunately reading the justification in detail is an exercise
-in reading falsehoods.
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-If this does not come from an impersonator then:
-- If this comes from a human being, I recommend you have a talk with
-  them.
-- If this comes from a machine I recommend you take it out of commission
-  and rework it.
-
-At best all of this appears to be an effort to get someone else to
-do necessary thinking for you.  As my time for kernel work is very
-limited I expect I will auto-nack any such future attempts to outsource
-someone else's thinking on me.
-
-Eric
-
-Sasha Levin <sashal@kernel.org> writes:
-
-> From: Mario Limonciello <mario.limonciello@amd.com>
->
-> [ Upstream commit 12ffc3b1513ebc1f11ae77d053948504a94a68a6 ]
->
-> Currently swap is restricted before drivers have had a chance to do
-> their prepare() PM callbacks. Restricting swap this early means that if
-> a driver needs to evict some content from memory into sawp in it's
-> prepare callback, it won't be able to.
->
-> On AMD dGPUs this can lead to failed suspends under memory pressure
-> situations as all VRAM must be evicted to system memory or swap.
->
-> Move the swap restriction to right after all devices have had a chance
-> to do the prepare() callback.  If there is any problem with the sequence,
-> restore swap in the appropriate dpm resume callbacks or error handling
-> paths.
->
-> Closes: https://github.com/ROCm/ROCK-Kernel-Driver/issues/174
-> Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2362
-> Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-> Tested-by: Nat Wittstock <nat@fardog.io>
-> Tested-by: Lucian Langa <lucilanga@7pot.org>
-> Link: https://patch.msgid.link/20250613214413.4127087-1-superm1@kernel.org
-> Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->
-> **YES**
->
-> This commit should be backported to stable kernel trees for the
-> following reasons:
-
-Really?  And when those reasons turn out to be baloney?
-
-> ## Critical Bug Fix for Real User Issues
->
-> 1. **Fixes Actual Suspend Failures**: The commit addresses real-world
->    suspend failures under memory pressure on systems with AMD discrete
->    GPUs. The linked issues (ROCm/ROCK-Kernel-Driver#174 and
->    freedesktop.org/drm/amd#2362) indicate this affects actual users.
-
-Those linked issues are completely corrupted in the paragraph above.
-From the original commit the proper issues are:
-
-  https://github.com/ROCm/ROCK-Kernel-Driver/issues/174
-  https://gitlab.freedesktop.org/drm/amd/-/issues/2362
-
-Which indicate that something is going on, but are old enough and
-long enough coming to any kind of conclusion from them is not easy.
-
-> 2. **Regression Fix**: This is effectively a regression fix. The PM
->    subsystem's early swap restriction prevents AMD GPU drivers from
->    properly evicting VRAM during their prepare() callbacks, which is a
->    requirement that has become more critical as GPU VRAM sizes have
->    increased.
-
-There is no indication that this used to work, or that an earlier
-kernel change caused this to stop working.  This is not a regression.
-
-> ## Small, Contained Change
->
-> 3. **Minimal Code Changes**: The fix is remarkably simple - it just
->    moves the `pm_restrict_gfp_mask()` call from early in the suspend
->    sequence to after `dpm_prepare()` completes. The changes are:
->    - Move `pm_restrict_gfp_mask()` from multiple early locations to
->      inside `dpm_suspend_start()` after `dpm_prepare()` succeeds
->    - Add corresponding `pm_restore_gfp_mask()` calls in error paths and
->      resume paths
->    - Remove the now-redundant calls from hibernate.c and suspend.c
-
-Reworking how different layers of the kernel interact is not minimal,
-and it not self contained.
-
-> 4. **Low Risk of Regression**: The change maintains the original intent
->    of preventing I/O during the critical suspend phase while allowing it
->    during device preparation. The swap restriction still happens before
->    `dpm_suspend()`, just after `dpm_prepare()`.
-
-There is no analysis anywhere on what happens to the code with
-code that might expect the old behavior.
-
-So it is not possible to conclude a low risk of regression,
-in fact we can't conclude anything.
-
-> ## Follows Stable Rules
->
-> 5. **Meets Stable Criteria**:
->    - Fixes a real bug that bothers people (suspend failures)
-Addresses a real bug, yes.  Fixes?
->    - Small change (moves function calls, doesn't introduce new logic)
-No.
->    - Obviously correct (allows drivers to use swap during their
->      designated preparation phase)
-
-Not at all.  It certainly isn't obvious to me what is going on.
-
->    - Already tested by users (Tested-by tags from affected users)
-
-Yes there are Tested-by tags.
-
-> ## Similar to Other Backported Commits
->
-> 6. **Pattern Matches**: Looking at the similar commits provided, this
->    follows the same pattern as the AMD GPU eviction commits that were
->    backported. Those commits also addressed the same fundamental issue -
->    ensuring GPU VRAM can be properly evicted during suspend/hibernation.
-
-Which other commits are those?
-
-> ## Critical Timing
-
-Timing?
-
-> 7. **Error Path Handling**: The commit properly handles error paths by
->    adding `pm_restore_gfp_mask()` calls in:
->    - `dpm_resume_end()` for normal resume
->    - `platform_recover()` error path in suspend.c
->    - `pm_restore_gfp_mask()` in kexec_core.c for kexec flows
-
-I don't see anything in this change that has to do with error paths.
-
-
-> The commit is well-tested, addresses a real problem affecting users, and
-> makes a minimal, obviously correct change to fix suspend failures on
-> systems with discrete GPUs under memory pressure.
-
-The evidence that a 3 week old change is well tested, simply
-because it has been merged into Linus's change seems lacking.
-
-Tested yes, but is it well tested?  Are there any possible side
-effects?
-
-I certainly see no evidence of any testing or any exercise at
-all of the kexec path modified.  I wasn't even away of this
-change until this backport came in.
-
-Eric
