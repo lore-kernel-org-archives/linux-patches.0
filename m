@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0347263B;
-	Tue,  8 Jul 2025 17:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839ED2E6D0B;
+	Tue,  8 Jul 2025 17:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994039; cv=none; b=Ucw6gHoLUNifvNPa5/PAu0ldcJ1uG1VsyYmTrcDz01UwIBOAnjFkpLsYhvyzKd7mlFTe9hDZQqhyoX6jxPyWDvGdwZJ2A+12pqNXoQID0Bk7t+AXbwPUp0i/osUDw3jhaoj8pcQNN/yWITx9xYsRQbPo9HJtzYBu0Fea59D0Jms=
+	t=1751994042; cv=none; b=tjaC7Q1YnyPCsah+FUR2Yhnekj+CVJx0H/QoGv83JApMp3Q9RQjxFjfXBnY2Ju2Rn1VeX48xcm7VVYsATjy6lP1KLxEMMXkkWaFduQQCtUTauKjXdfiJ/nOiVko/ucVqSC5WZ/7c8/hGC1yAdS1ZBXlOxL4IbGOV6NR4ZOYN6eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994039; c=relaxed/simple;
-	bh=9OkjcX3Bhr2jMv9Tthe/zKX0EBDdPVuTad7fAm7wezw=;
+	s=arc-20240116; t=1751994042; c=relaxed/simple;
+	bh=6skdJ+K/YqLPqkF6/CU+LdDDu2W6S+tPo40cisEvOlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vb3KRzgW6DByUsljiYspxNwwxtv71V2yq0Cc0ZmEox2kkXmKYPJAouU30PIlfZDb2KHou+P6iSJLWEb09gO5FSkovQse4dfeKW5qbFC90XQ6sQPEn6TCT8+5RR2ew61BkfGKiQ6mkcZ1idDbkbAud56KkZNnPPqyG4X5YMXJlrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6N1iuHV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUlfzp/xVBGSKj7BsDx75io6iM3tvbArBKXoOJLvjA/3T0bVOM4AbXbGCrNtSLkEVNyndVsIwmd3CmVNPB6VaD9ERfILQiBg0utUhSb1LgeWeFVcxFT6NDoK9VGMh985TwRFtwcVqHgN+CxaJ91+jl4p97olJ2LcYI3IQPmEMOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYsx6V6P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6N1iuHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7CAC4CEED;
-	Tue,  8 Jul 2025 17:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYsx6V6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0643CC4CEED;
+	Tue,  8 Jul 2025 17:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994039;
-	bh=9OkjcX3Bhr2jMv9Tthe/zKX0EBDdPVuTad7fAm7wezw=;
+	s=korg; t=1751994042;
+	bh=6skdJ+K/YqLPqkF6/CU+LdDDu2W6S+tPo40cisEvOlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6N1iuHVVGWpMYUiizLraJATW0/3KbgtXIWHaPKGo7VRQAEZhbrafI4N5diKPo8LG
-	 a2DqIWCSxYObMYJQYzECfMRS6VLB4r+DcvpwqmNs/VbbWu5yaSMUJtXHKV5OuYG73C
-	 0SfdBL6glB7luwIuq/m17BJ3kmgnjM/Y9coddprQ=
+	b=xYsx6V6PEtSiHFrZDPWlaidB4Jn1n38QUJQUiRXfWJgX1H7+wEmcY3MwlUTXkAuJl
+	 cdDUMn8D9ZBK5ZUYIFbNZ6gmawRnNVQunuAhcaoOfW/0/F/1D+n4SC+EwDXypG0PMo
+	 MLCLTj2M5wgL7sJweNXoZGAMswKpYFU3cJcuHMmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heinz Mauelshagen <heinzm@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 075/160] dm-raid: fix variable in journal device check
-Date: Tue,  8 Jul 2025 18:21:52 +0200
-Message-ID: <20250708162233.625540764@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Mark Harmstone <maharmstone@fb.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 076/160] btrfs: update superblocks device bytes_used when dropping chunk
+Date: Tue,  8 Jul 2025 18:21:53 +0200
+Message-ID: <20250708162233.649903655@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -50,31 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heinz Mauelshagen <heinzm@redhat.com>
+From: Mark Harmstone <maharmstone@fb.com>
 
-commit db53805156f1e0aa6d059c0d3f9ac660d4ef3eb4 upstream.
+commit ae4477f937569d097ca5dbce92a89ba384b49bc6 upstream.
 
-Replace "rdev" with correct loop variable name "r".
+Each superblock contains a copy of the device item for that device. In a
+transaction which drops a chunk but doesn't create any new ones, we were
+correctly updating the device item in the chunk tree but not copying
+over the new bytes_used value to the superblock.
 
-Signed-off-by: Heinz Mauelshagen <heinzm@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: 63c32ed4afc2 ("dm raid: add raid4/5/6 journaling support")
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+This can be seen by doing the following:
+
+  # dd if=/dev/zero of=test bs=4096 count=2621440
+  # mkfs.btrfs test
+  # mount test /root/temp
+
+  # cd /root/temp
+  # for i in {00..10}; do dd if=/dev/zero of=$i bs=4096 count=32768; done
+  # sync
+  # rm *
+  # sync
+  # btrfs balance start -dusage=0 .
+  # sync
+
+  # cd
+  # umount /root/temp
+  # btrfs check test
+
+For btrfs-check to detect this, you will also need my patch at
+https://github.com/kdave/btrfs-progs/pull/991.
+
+Change btrfs_remove_dev_extents() so that it adds the devices to the
+fs_info->post_commit_list if they're not there already. This causes
+btrfs_commit_device_sizes() to be called, which updates the bytes_used
+value in the superblock.
+
+Fixes: bbbf7243d62d ("btrfs: combine device update operations during transaction commit")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Mark Harmstone <maharmstone@fb.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-raid.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/volumes.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -2381,7 +2381,7 @@ static int super_init_validation(struct
- 	 */
- 	sb_retrieve_failed_devices(sb, failed_devices);
- 	rdev_for_each(r, mddev) {
--		if (test_bit(Journal, &rdev->flags) ||
-+		if (test_bit(Journal, &r->flags) ||
- 		    !r->sb_page)
- 			continue;
- 		sb2 = page_address(r->sb_page);
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -3197,6 +3197,12 @@ int btrfs_remove_chunk(struct btrfs_tran
+ 					device->bytes_used - dev_extent_len);
+ 			atomic64_add(dev_extent_len, &fs_info->free_chunk_space);
+ 			btrfs_clear_space_info_full(fs_info);
++
++			if (list_empty(&device->post_commit_list)) {
++				list_add_tail(&device->post_commit_list,
++					      &trans->transaction->dev_update_list);
++			}
++
+ 			mutex_unlock(&fs_info->chunk_mutex);
+ 		}
+ 	}
 
 
