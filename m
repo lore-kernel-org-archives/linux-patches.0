@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87C614A60D;
-	Tue,  8 Jul 2025 16:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1622E2F0E;
+	Tue,  8 Jul 2025 16:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992487; cv=none; b=QbgVIcwJ3C35AvXOzTILukoMcnWYSs8ASq+Gz5K3pWy8RwBE3+c0i/xuAsIFJl4mwsNMJZfSOC5EmBIXuKDivMa83pkQENlgnxOePHg1UPa85qcvKmrhDCEUHz/JNpMVKBj3my8YwM8eMzxRq+axnSfl6bAVG/CEgAtnVvVW4dA=
+	t=1751992489; cv=none; b=Bz/EfkZHbfT1YobQe2qPnQw5J41HvA8wbo13TVF4hrYmvscsdVR/vBnNcrGOIdWKW2FM0AViirvbv6ID3x/NbuWoVaydq2tI0zBvGt0KafXYmZt/TzD6f25DSB7EPWAUyojy8SrJ1VEKnqOaVUmvhRQrJtnVMQHdy7OxvQ4piDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992487; c=relaxed/simple;
-	bh=hORdthgwvyYteA/llmv7n7tVD6X8TpE+Y28QJvrirEQ=;
+	s=arc-20240116; t=1751992489; c=relaxed/simple;
+	bh=0MjygabMb6zmfEHAOb5KHuXJlcckbDx9KmXCwwTko9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtipTXGLVLkTPxWAohyDe0aCEZ4sxNEQ5PEFAaauBpaZIo+Yqft85e3FQ6bm/3AhXhvJA+LdyFxoWCglU9cPant2fFVPqX9KhXoDE2V4UnqPa+MKqDXMii4JaSnQ6ASsPnkw5uPMYjEAZOJfViTAxjoIqkG9jS1Vw772wC6Fyho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbfkAe26; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZkZltBGJ12W+1AH4RykFyJjOINBcs4dZ2NnbNYciwvRcAnUGDleT4R9PzFFPDJ0obklmqNlvEiLw5qcmmJ2XrKkzby6L4o6fFLaRjWeaQCBVYeqJHE8zhZPSTQXBbQiwNi+t37XPVVApfG22H4NID3rA4zEG9O4P0XmjYZB4KzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbxz/nze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbfkAe26"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A21AC4CEED;
-	Tue,  8 Jul 2025 16:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbxz/nze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CE5C4CEED;
+	Tue,  8 Jul 2025 16:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992486;
-	bh=hORdthgwvyYteA/llmv7n7tVD6X8TpE+Y28QJvrirEQ=;
+	s=korg; t=1751992489;
+	bh=0MjygabMb6zmfEHAOb5KHuXJlcckbDx9KmXCwwTko9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbfkAe2637z2i7tGhgwMV6HQgnKUdrBvxlEQNckFs5ZV7usbf0QRM3rkt2H33fK0i
-	 I9E7IAbLPhPira/A62hdNdD5qtJj07vVEUiV+ehLK2M30Bswqqp0utaMWfpouvO8He
-	 zqRyek1lHQaGt3La7Wq5P21MxmHJAecCipE/RdiE=
+	b=jbxz/nze6pvQVeo0HFWzA04MHKHItE/ZHKpeWU+kDWmjFO8T1whHG2sryQedvc4r4
+	 6AvkEn1b2CYlBrZ8lxuajkJlE6oJqQgSpJP7fiqmQk4DPnhU9jKx/8URmmj8oAInN+
+	 o6gkEeCFH33d4P5XdN79DRTA2vav1c360TzA8hxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shivank Garg <shivankg@amd.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/132] fs: export anon_inode_make_secure_inode() and fix secretmem LSM bypass
-Date: Tue,  8 Jul 2025 18:23:37 +0200
-Message-ID: <20250708162233.699869797@linuxfoundation.org>
+Subject: [PATCH 6.6 107/132] NFSv4/flexfiles: Fix handling of NFS level errors in I/O
+Date: Tue,  8 Jul 2025 18:23:38 +0200
+Message-ID: <20250708162233.727097125@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -53,129 +52,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivank Garg <shivankg@amd.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit cbe4134ea4bc493239786220bd69cb8a13493190 ]
+[ Upstream commit 38074de35b015df5623f524d6f2b49a0cd395c40 ]
 
-Export anon_inode_make_secure_inode() to allow KVM guest_memfd to create
-anonymous inodes with proper security context. This replaces the current
-pattern of calling alloc_anon_inode() followed by
-inode_init_security_anon() for creating security context manually.
+Allow the flexfiles error handling to recognise NFS level errors (as
+opposed to RPC level errors) and handle them separately. The main
+motivator is the NFSERR_PERM errors that get returned if the NFS client
+connects to the data server through a port number that is lower than
+1024. In that case, the client should disconnect and retry a READ on a
+different data server, or it should retry a WRITE after reconnecting.
 
-This change also fixes a security regression in secretmem where the
-S_PRIVATE flag was not cleared after alloc_anon_inode(), causing
-LSM/SELinux checks to be bypassed for secretmem file descriptors.
-
-As guest_memfd currently resides in the KVM module, we need to export this
-symbol for use outside the core kernel. In the future, guest_memfd might be
-moved to core-mm, at which point the symbols no longer would have to be
-exported. When/if that happens is still unclear.
-
-Fixes: 2bfe15c52612 ("mm: create security context for memfd_secret inodes")
-Suggested-by: David Hildenbrand <david@redhat.com>
-Suggested-by: Mike Rapoport <rppt@kernel.org>
-Signed-off-by: Shivank Garg <shivankg@amd.com>
-Link: https://lore.kernel.org/20250620070328.803704-3-shivankg@amd.com
-Acked-by: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/anon_inodes.c   | 23 ++++++++++++++++++-----
- include/linux/fs.h |  2 ++
- mm/secretmem.c     | 11 +----------
- 3 files changed, 21 insertions(+), 15 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 121 ++++++++++++++++++-------
+ 1 file changed, 87 insertions(+), 34 deletions(-)
 
-diff --git a/fs/anon_inodes.c b/fs/anon_inodes.c
-index 24192a7667edf..a25766e90f0a6 100644
---- a/fs/anon_inodes.c
-+++ b/fs/anon_inodes.c
-@@ -55,15 +55,26 @@ static struct file_system_type anon_inode_fs_type = {
- 	.kill_sb	= kill_anon_super,
- };
- 
--static struct inode *anon_inode_make_secure_inode(
--	const char *name,
--	const struct inode *context_inode)
-+/**
-+ * anon_inode_make_secure_inode - allocate an anonymous inode with security context
-+ * @sb:		[in]	Superblock to allocate from
-+ * @name:	[in]	Name of the class of the newfile (e.g., "secretmem")
-+ * @context_inode:
-+ *		[in]	Optional parent inode for security inheritance
-+ *
-+ * The function ensures proper security initialization through the LSM hook
-+ * security_inode_init_security_anon().
-+ *
-+ * Return:	Pointer to new inode on success, ERR_PTR on failure.
-+ */
-+struct inode *anon_inode_make_secure_inode(struct super_block *sb, const char *name,
-+					   const struct inode *context_inode)
- {
- 	struct inode *inode;
- 	const struct qstr qname = QSTR_INIT(name, strlen(name));
- 	int error;
- 
--	inode = alloc_anon_inode(anon_inode_mnt->mnt_sb);
-+	inode = alloc_anon_inode(sb);
- 	if (IS_ERR(inode))
- 		return inode;
- 	inode->i_flags &= ~S_PRIVATE;
-@@ -74,6 +85,7 @@ static struct inode *anon_inode_make_secure_inode(
- 	}
- 	return inode;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 0bc537de1b295..0a26444fe2023 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1096,6 +1096,7 @@ static void ff_layout_reset_read(struct nfs_pgio_header *hdr)
  }
-+EXPORT_SYMBOL_GPL_FOR_MODULES(anon_inode_make_secure_inode, "kvm");
  
- static struct file *__anon_inode_getfile(const char *name,
- 					 const struct file_operations *fops,
-@@ -88,7 +100,8 @@ static struct file *__anon_inode_getfile(const char *name,
- 		return ERR_PTR(-ENOENT);
+ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
++					   u32 op_status,
+ 					   struct nfs4_state *state,
+ 					   struct nfs_client *clp,
+ 					   struct pnfs_layout_segment *lseg,
+@@ -1106,32 +1107,42 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
+ 	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
  
- 	if (secure) {
--		inode =	anon_inode_make_secure_inode(name, context_inode);
-+		inode =	anon_inode_make_secure_inode(anon_inode_mnt->mnt_sb,
-+						     name, context_inode);
- 		if (IS_ERR(inode)) {
- 			file = ERR_CAST(inode);
- 			goto err;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 81edfa1e66b60..b641a01512fb0 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3170,6 +3170,8 @@ extern int simple_write_begin(struct file *file, struct address_space *mapping,
- extern const struct address_space_operations ram_aops;
- extern int always_delete_dentry(const struct dentry *);
- extern struct inode *alloc_anon_inode(struct super_block *);
-+struct inode *anon_inode_make_secure_inode(struct super_block *sb, const char *name,
-+					   const struct inode *context_inode);
- extern int simple_nosetlease(struct file *, int, struct file_lock **, void **);
- extern const struct dentry_operations simple_dentry_operations;
+-	switch (task->tk_status) {
+-	case -NFS4ERR_BADSESSION:
+-	case -NFS4ERR_BADSLOT:
+-	case -NFS4ERR_BAD_HIGH_SLOT:
+-	case -NFS4ERR_DEADSESSION:
+-	case -NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
+-	case -NFS4ERR_SEQ_FALSE_RETRY:
+-	case -NFS4ERR_SEQ_MISORDERED:
++	switch (op_status) {
++	case NFS4_OK:
++	case NFS4ERR_NXIO:
++		break;
++	case NFSERR_PERM:
++		if (!task->tk_xprt)
++			break;
++		xprt_force_disconnect(task->tk_xprt);
++		goto out_retry;
++	case NFS4ERR_BADSESSION:
++	case NFS4ERR_BADSLOT:
++	case NFS4ERR_BAD_HIGH_SLOT:
++	case NFS4ERR_DEADSESSION:
++	case NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
++	case NFS4ERR_SEQ_FALSE_RETRY:
++	case NFS4ERR_SEQ_MISORDERED:
+ 		dprintk("%s ERROR %d, Reset session. Exchangeid "
+ 			"flags 0x%x\n", __func__, task->tk_status,
+ 			clp->cl_exchange_flags);
+ 		nfs4_schedule_session_recovery(clp->cl_session, task->tk_status);
+-		break;
+-	case -NFS4ERR_DELAY:
+-	case -NFS4ERR_GRACE:
++		goto out_retry;
++	case NFS4ERR_DELAY:
++		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
++		fallthrough;
++	case NFS4ERR_GRACE:
+ 		rpc_delay(task, FF_LAYOUT_POLL_RETRY_MAX);
+-		break;
+-	case -NFS4ERR_RETRY_UNCACHED_REP:
+-		break;
++		goto out_retry;
++	case NFS4ERR_RETRY_UNCACHED_REP:
++		goto out_retry;
+ 	/* Invalidate Layout errors */
+-	case -NFS4ERR_PNFS_NO_LAYOUT:
+-	case -ESTALE:           /* mapped NFS4ERR_STALE */
+-	case -EBADHANDLE:       /* mapped NFS4ERR_BADHANDLE */
+-	case -EISDIR:           /* mapped NFS4ERR_ISDIR */
+-	case -NFS4ERR_FHEXPIRED:
+-	case -NFS4ERR_WRONG_TYPE:
++	case NFS4ERR_PNFS_NO_LAYOUT:
++	case NFS4ERR_STALE:
++	case NFS4ERR_BADHANDLE:
++	case NFS4ERR_ISDIR:
++	case NFS4ERR_FHEXPIRED:
++	case NFS4ERR_WRONG_TYPE:
+ 		dprintk("%s Invalid layout error %d\n", __func__,
+ 			task->tk_status);
+ 		/*
+@@ -1144,6 +1155,11 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 		pnfs_destroy_layout(NFS_I(inode));
+ 		rpc_wake_up(&tbl->slot_tbl_waitq);
+ 		goto reset;
++	default:
++		break;
++	}
++
++	switch (task->tk_status) {
+ 	/* RPC connection errors */
+ 	case -ECONNREFUSED:
+ 	case -EHOSTDOWN:
+@@ -1159,26 +1175,56 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
+ 				&devid->deviceid);
+ 		rpc_wake_up(&tbl->slot_tbl_waitq);
+-		fallthrough;
++		break;
+ 	default:
+-		if (ff_layout_avoid_mds_available_ds(lseg))
+-			return -NFS4ERR_RESET_TO_PNFS;
+-reset:
+-		dprintk("%s Retry through MDS. Error %d\n", __func__,
+-			task->tk_status);
+-		return -NFS4ERR_RESET_TO_MDS;
++		break;
+ 	}
++
++	if (ff_layout_avoid_mds_available_ds(lseg))
++		return -NFS4ERR_RESET_TO_PNFS;
++reset:
++	dprintk("%s Retry through MDS. Error %d\n", __func__,
++		task->tk_status);
++	return -NFS4ERR_RESET_TO_MDS;
++
++out_retry:
+ 	task->tk_status = 0;
+ 	return -EAGAIN;
+ }
  
-diff --git a/mm/secretmem.c b/mm/secretmem.c
-index 399552814fd0f..4bedf491a8a74 100644
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -195,19 +195,10 @@ static struct file *secretmem_file_create(unsigned long flags)
- 	struct file *file;
- 	struct inode *inode;
- 	const char *anon_name = "[secretmem]";
--	const struct qstr qname = QSTR_INIT(anon_name, strlen(anon_name));
--	int err;
+ /* Retry all errors through either pNFS or MDS except for -EJUKEBOX */
+ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
++					   u32 op_status,
++					   struct nfs_client *clp,
+ 					   struct pnfs_layout_segment *lseg,
+ 					   u32 idx)
+ {
+ 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
  
--	inode = alloc_anon_inode(secretmem_mnt->mnt_sb);
-+	inode = anon_inode_make_secure_inode(secretmem_mnt->mnt_sb, anon_name, NULL);
- 	if (IS_ERR(inode))
- 		return ERR_CAST(inode);
--
--	err = security_inode_init_security_anon(inode, &qname, NULL);
--	if (err) {
--		file = ERR_PTR(err);
--		goto err_free_inode;
--	}
--
- 	file = alloc_file_pseudo(inode, secretmem_mnt, "secretmem",
- 				 O_RDWR, &secretmem_fops);
- 	if (IS_ERR(file))
++	switch (op_status) {
++	case NFS_OK:
++	case NFSERR_NXIO:
++		break;
++	case NFSERR_PERM:
++		if (!task->tk_xprt)
++			break;
++		xprt_force_disconnect(task->tk_xprt);
++		goto out_retry;
++	case NFSERR_ACCES:
++	case NFSERR_BADHANDLE:
++	case NFSERR_FBIG:
++	case NFSERR_IO:
++	case NFSERR_NOSPC:
++	case NFSERR_ROFS:
++	case NFSERR_STALE:
++		goto out_reset_to_pnfs;
++	case NFSERR_JUKEBOX:
++		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
++		goto out_retry;
++	default:
++		break;
++	}
++
+ 	switch (task->tk_status) {
+ 	/* File access problems. Don't mark the device as unavailable */
+ 	case -EACCES:
+@@ -1197,6 +1243,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
+ 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
+ 				&devid->deviceid);
+ 	}
++out_reset_to_pnfs:
+ 	/* FIXME: Need to prevent infinite looping here. */
+ 	return -NFS4ERR_RESET_TO_PNFS;
+ out_retry:
+@@ -1207,6 +1254,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
+ }
+ 
+ static int ff_layout_async_handle_error(struct rpc_task *task,
++					u32 op_status,
+ 					struct nfs4_state *state,
+ 					struct nfs_client *clp,
+ 					struct pnfs_layout_segment *lseg,
+@@ -1225,10 +1273,11 @@ static int ff_layout_async_handle_error(struct rpc_task *task,
+ 
+ 	switch (vers) {
+ 	case 3:
+-		return ff_layout_async_handle_error_v3(task, lseg, idx);
+-	case 4:
+-		return ff_layout_async_handle_error_v4(task, state, clp,
++		return ff_layout_async_handle_error_v3(task, op_status, clp,
+ 						       lseg, idx);
++	case 4:
++		return ff_layout_async_handle_error_v4(task, op_status, state,
++						       clp, lseg, idx);
+ 	default:
+ 		/* should never happen */
+ 		WARN_ON_ONCE(1);
+@@ -1281,6 +1330,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
+ 	switch (status) {
+ 	case NFS4ERR_DELAY:
+ 	case NFS4ERR_GRACE:
++	case NFS4ERR_PERM:
+ 		break;
+ 	case NFS4ERR_NXIO:
+ 		ff_layout_mark_ds_unreachable(lseg, idx);
+@@ -1313,7 +1363,8 @@ static int ff_layout_read_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_read_error(hdr);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, hdr->args.context->state,
++	err = ff_layout_async_handle_error(task, hdr->res.op_status,
++					   hdr->args.context->state,
+ 					   hdr->ds_clp, hdr->lseg,
+ 					   hdr->pgio_mirror_idx);
+ 
+@@ -1483,7 +1534,8 @@ static int ff_layout_write_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_write_error(hdr);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, hdr->args.context->state,
++	err = ff_layout_async_handle_error(task, hdr->res.op_status,
++					   hdr->args.context->state,
+ 					   hdr->ds_clp, hdr->lseg,
+ 					   hdr->pgio_mirror_idx);
+ 
+@@ -1529,8 +1581,9 @@ static int ff_layout_commit_done_cb(struct rpc_task *task,
+ 		trace_ff_layout_commit_error(data);
+ 	}
+ 
+-	err = ff_layout_async_handle_error(task, NULL, data->ds_clp,
+-					   data->lseg, data->ds_commit_index);
++	err = ff_layout_async_handle_error(task, data->res.op_status,
++					   NULL, data->ds_clp, data->lseg,
++					   data->ds_commit_index);
+ 
+ 	trace_nfs4_pnfs_commit_ds(data, err);
+ 	switch (err) {
 -- 
 2.39.5
 
