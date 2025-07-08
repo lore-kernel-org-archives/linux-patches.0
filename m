@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D736B672;
-	Tue,  8 Jul 2025 16:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C00BE46;
+	Tue,  8 Jul 2025 16:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993264; cv=none; b=gQwprxtpUG+hUBZBBLCPtPjg878Y4kNapNH/Oza9FrPuI0mgG6CWTcNE8m0A9QqBi/rHYHo6Tc4fP/PijujTN+MGWSP8xR9h5gqvUPuRjTOkqU/zntI6TiQdl7w4lJyxaQb4Eu/Jw1WIIqstYiQxDtQ75CI5h//tpWazvk5hLm8=
+	t=1751993267; cv=none; b=nBUnOvuXjJ4GYhIpml0K+n7mGGy+Si/ZZMy9SgtNfSXmapFoGVbz5AMuHHVHMNRwys7+/qZmetVEeO7w/49byNxjEWtFhV1NF62g/kO0ggaDjrVXZlZhudpzleIT/rgqPLDX5wBWeqho0cOjqaFV2/xhwueufZZDGK/04w60eZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993264; c=relaxed/simple;
-	bh=HMFoFSnRh4UKaZw8CuTzNzPuAfTn/lv7GD12DvqI8Xk=;
+	s=arc-20240116; t=1751993267; c=relaxed/simple;
+	bh=xddW8fvts2LWgi5SkMCQ48yWCN0JMKqWhDuEJ5PlwTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cv8o1cDo6khmZlU4b2v8mKSyBZbWnn4NuycrBz2/I0P0DK3sSTfPaluck2HPm5ZdtYSnP5DqhphdikEPMXALpD4jXrd77uUrdq5kd6mG0o8m5BXRNIwBJA44bzH1JlgVv5ZLTmVecLg+Ecvb1dqZ2XVdC/l6PP3DfcyIawSf2NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rB6q6kgb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4peZPvYCt1rORxiFKN8E7PjJh4IbwyQGSJyYU9fwyGRbw46cLK+vPsGgT/3W13H7dcAteXWxtCk8Jf6aLoVSBXXbHxRPMUwaVq020m71EpannSY9x+oFjOC8VH/BVVPzCjpIjvHeLKqNMM+0geKEQYWrSkT3hDB38lF5pm9E9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjlfWQR7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rB6q6kgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3A1C4CEED;
-	Tue,  8 Jul 2025 16:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjlfWQR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E631EC4CEED;
+	Tue,  8 Jul 2025 16:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993264;
-	bh=HMFoFSnRh4UKaZw8CuTzNzPuAfTn/lv7GD12DvqI8Xk=;
+	s=korg; t=1751993267;
+	bh=xddW8fvts2LWgi5SkMCQ48yWCN0JMKqWhDuEJ5PlwTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rB6q6kgbla/ziNuQxOA9f36/wjsTKNDYfAfwP3Et3t7Hq2MVZDdhl7UAa74fgcO9S
-	 mzMWWDwMzIuUdMGicI3tikhICR5WryEXVjAd3BJ89Cd3VaX2XAqLTeNR3dZ6uL9qfn
-	 RJDj6Rmh1KAFaqnyL4bFZUgxxoMaKMSdtrNiul3E=
+	b=TjlfWQR7QE1ju3hoRs8iyCD4ULHDcp2+kuDAgb0SN+U5faguR3YY63oqpRk/hLA2f
+	 lWnNXWJKTL5DDZjnZUWY0VcHLDTUm0DjlL9w+EtdS3QdafzowQevCZho2Kqzeg/e5k
+	 BumqMVS6J/ODnMRR8SLojPb9XQxeUd22uU3DofWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rostedt@goodmis.org,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.15 015/178] xfs: actually use the xfs_growfs_check_rtgeom tracepoint
-Date: Tue,  8 Jul 2025 18:20:52 +0200
-Message-ID: <20250708162236.945882988@linuxfoundation.org>
+	Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Jonathan Liu <net147@gmail.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.15 016/178] Revert "mmc: sdhci: Disable SD card clock before changing parameters"
+Date: Tue,  8 Jul 2025 18:20:53 +0200
+Message-ID: <20250708162236.970748390@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,40 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit db44d088a5ab030b741a3adf2e7b181a8a6dcfbe upstream.
+commit dcc3bcfc5b50c625b475dcc25d167b6b947a6637 upstream.
 
-We created a new tracepoint but forgot to put it in.  Fix that.
+It has turned out the trying to strictly conform to the SDHCI specification
+is causing problems. Let's revert and start over.
 
-Cc: rostedt@goodmis.org
-Cc: stable@vger.kernel.org # v6.14
-Fixes: 59a57acbce282d ("xfs: check that the rtrmapbt maxlevels doesn't increase when growing fs")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reported-by: Steven Rostedt <rostedt@goodmis.org>
-Closes: https://lore.kernel.org/all/20250612131021.114e6ec8@batman.local.home/
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+This reverts commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc.
+
+Cc: Erick Shepherd <erick.shepherd@ni.com>
+Cc: stable@vger.kernel.org
+Fixes: fb3bbc46c94f ("mmc: sdhci: Disable SD card clock before changing parameters")
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Reported-by: Jonathan Liu <net147@gmail.com>
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Closes: https://bugs.debian.org/1108065
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250624110932.176925-1-ulf.hansson@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_rtalloc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/sdhci.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/fs/xfs/xfs_rtalloc.c b/fs/xfs/xfs_rtalloc.c
-index 6484c596ecea..736eb0924573 100644
---- a/fs/xfs/xfs_rtalloc.c
-+++ b/fs/xfs/xfs_rtalloc.c
-@@ -1259,6 +1259,8 @@ xfs_growfs_check_rtgeom(
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -2065,15 +2065,10 @@ void sdhci_set_clock(struct sdhci_host *
  
- 	kfree(nmp);
+ 	host->mmc->actual_clock = 0;
  
-+	trace_xfs_growfs_check_rtgeom(mp, min_logfsbs);
-+
- 	if (min_logfsbs > mp->m_sb.sb_logblocks)
- 		return -EINVAL;
+-	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
+-	if (clk & SDHCI_CLOCK_CARD_EN)
+-		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
+-			SDHCI_CLOCK_CONTROL);
++	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
  
--- 
-2.50.0
-
+-	if (clock == 0) {
+-		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
++	if (clock == 0)
+ 		return;
+-	}
+ 
+ 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
+ 	sdhci_enable_clk(host, clk);
 
 
