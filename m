@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2340B2DAFA3;
-	Tue,  8 Jul 2025 16:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D6E2E54D6;
+	Tue,  8 Jul 2025 16:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993115; cv=none; b=ck3tEvjocrjjqzl0BBfnlKEurv5R6R5t/Wdo3zwTTZ+FITbp9gzLc9ymRl61P+wZeAp8XxDEFRoHCSNOcz4KvT/44s7LNJwMW5KwO5ncPlxmBxCAnLyXxrM32MktuOhvwDlWSDZN2z9wur+Txo+LFzS5dO1zHHEvgNlsMma/TKM=
+	t=1751993117; cv=none; b=MFWd+vN1kynbbffwzmmQFpEE4fki5Ls3G62PFwie6FPWpASvY2D7S9WHVeZhYAy3FWNVk8oQrRcDKQB9T1Vk2b9qi3Q45SqJwM2yHNAzUUkpdgvIOOgAEE7CPsKA+CGO4Bgi/syG3ey3vyzxAMHAYSERslX5qcYSZf7h3lZGXy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993115; c=relaxed/simple;
-	bh=XEj6ykCysKgMbKAOhtPSZtOze0xRplssXPl5s4iYw5k=;
+	s=arc-20240116; t=1751993117; c=relaxed/simple;
+	bh=DMuVjw41DmsEZi5sazZ/OfkkOfdPeDFjlDqslS/F0FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjFyWaB8C6NJXTec2Y70nEVD1RNakXE98Rmvfd8vsOvFACw3YYN5LvxWsaIFoYeSogSdcUfcxGcTlp5M5bmOBt85NZkDNWMoyoyGOH7DAHcgW3MObKiZrhide7ceCxH4BwaWgZONl+hZ3pjpnMkhJdtQuduDQR+i9IFmYQzSdUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOeGnGzK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U8JOovCU0t3zRkSshtmqKcEQyIAcr9uVIG5dTRMkj72i02edZZW7rO3uuDd7dA4tw/ejvSMYjrF2NIdPysh4IzIbNNsIlYjzYSdL6EnaN+yOWYJm6nS7bLcSfusVnkJz/Wv5dqZdJ8BuN2Ddv7JnfWUyjvqLdidUfmO0q3rDCEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igW6rXX9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOeGnGzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C476C4CEED;
-	Tue,  8 Jul 2025 16:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igW6rXX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C70DC4CEED;
+	Tue,  8 Jul 2025 16:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993114;
-	bh=XEj6ykCysKgMbKAOhtPSZtOze0xRplssXPl5s4iYw5k=;
+	s=korg; t=1751993117;
+	bh=DMuVjw41DmsEZi5sazZ/OfkkOfdPeDFjlDqslS/F0FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOeGnGzKlO2wg0tQ+J/1QgtK9To6roujtT0yYtewTTGrs4XjH4EhYTMTIZJd9iU6G
-	 69gI8H2Nf+HnP2DBTnQUyvu9vDzikEpp/ySEAzs69cQWYqr+YuxPzc7Zdm48gj66t3
-	 bd1LLTxBSNdK+iMM0PVONDAa5m4Z2GTQJ32mBnfY=
+	b=igW6rXX90Nqv1KM7ud6MYvpGrjGXImO1riy2EZWaIulqXHqaJmovOwYrAqZboYuwE
+	 v9GxnoV9ByhTBBCaaVReutS5uZa9u6V2g0+yrKf7kkddw3Ye0c+C3A09mzLYcsuF0+
+	 Jv4zcYdhfZyqJpUF9o5THEfoIMCzNfxD+RZtPWG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 191/232] add a string-to-qstr constructor
-Date: Tue,  8 Jul 2025 18:23:07 +0200
-Message-ID: <20250708162246.434272872@linuxfoundation.org>
+Subject: [PATCH 6.12 192/232] module: Provide EXPORT_SYMBOL_GPL_FOR_MODULES() helper
+Date: Tue,  8 Jul 2025 18:23:08 +0200
+Message-ID: <20250708162246.459462704@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -50,239 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit c1feab95e0b2e9fce7e4f4b2739baf40d84543af ]
+[ Upstream commit 707f853d7fa3ce323a6875487890c213e34d81a0 ]
 
-Quite a few places want to build a struct qstr by given string;
-it would be convenient to have a primitive doing that, rather
-than open-coding it via QSTR_INIT().
+Helper macro to more easily limit the export of a symbol to a given
+list of modules.
 
-The closest approximation was in bcachefs, but that expands to
-initializer list - {.len = strlen(string), .name = string}.
-It would be more useful to have it as compound literal -
-(struct qstr){.len = strlen(string), .name = string}.
+Eg:
 
-Unlike initializer list it's a valid expression.  What's more,
-it's a valid lvalue - it's an equivalent of anonymous local
-variable with such initializer, so the things like
-	path->dentry = d_alloc_pseudo(mnt->mnt_sb, &QSTR(name));
-are valid.  It can also be used as initializer, with identical
-effect -
-	struct qstr x = (struct qstr){.name = s, .len = strlen(s)};
-is equivalent to
-	struct qstr anon_variable = {.name = s, .len = strlen(s)};
-	struct qstr x = anon_variable;
-	// anon_variable is never used after that point
-and any even remotely sane compiler will manage to collapse that
-into
-	struct qstr x = {.name = s, .len = strlen(s)};
+  EXPORT_SYMBOL_GPL_FOR_MODULES(preempt_notifier_inc, "kvm");
 
-What compound literals can't be used for is initialization of
-global variables, but those are covered by QSTR_INIT().
+will limit the use of said function to kvm.ko, any other module trying
+to use this symbol will refure to load (and get modpost build
+failures).
 
-This commit lifts definition(s) of QSTR() into linux/dcache.h,
-converts it to compound literal (all bcachefs users are fine
-with that) and converts assorted open-coded instances to using
-that.
-
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Requested-by: Masahiro Yamada <masahiroy@kernel.org>
+Requested-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Peter Zijlstra <peterz@infradead.org>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Stable-dep-of: cbe4134ea4bc ("fs: export anon_inode_make_secure_inode() and fix secretmem LSM bypass")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/anon_inodes.c       |  4 ++--
- fs/bcachefs/fsck.c     |  2 +-
- fs/bcachefs/recovery.c |  2 --
- fs/bcachefs/util.h     |  2 --
- fs/erofs/xattr.c       |  2 +-
- fs/file_table.c        |  4 +---
- fs/kernfs/file.c       |  2 +-
- include/linux/dcache.h |  1 +
- mm/secretmem.c         |  3 +--
- net/sunrpc/rpc_pipe.c  | 14 +++++---------
- 10 files changed, 13 insertions(+), 23 deletions(-)
+ Documentation/core-api/symbol-namespaces.rst | 22 ++++++++++++++++++++
+ include/linux/export.h                       | 12 +++++++++--
+ 2 files changed, 32 insertions(+), 2 deletions(-)
 
-diff --git a/fs/anon_inodes.c b/fs/anon_inodes.c
-index 42bd1cb7c9cdd..583ac81669c24 100644
---- a/fs/anon_inodes.c
-+++ b/fs/anon_inodes.c
-@@ -60,14 +60,14 @@ static struct inode *anon_inode_make_secure_inode(
- 	const struct inode *context_inode)
- {
- 	struct inode *inode;
--	const struct qstr qname = QSTR_INIT(name, strlen(name));
- 	int error;
+diff --git a/Documentation/core-api/symbol-namespaces.rst b/Documentation/core-api/symbol-namespaces.rst
+index d1154eb438101..cca94469fa414 100644
+--- a/Documentation/core-api/symbol-namespaces.rst
++++ b/Documentation/core-api/symbol-namespaces.rst
+@@ -28,6 +28,9 @@ kernel. As of today, modules that make use of symbols exported into namespaces,
+ are required to import the namespace. Otherwise the kernel will, depending on
+ its configuration, reject loading the module or warn about a missing import.
  
- 	inode = alloc_anon_inode(anon_inode_mnt->mnt_sb);
- 	if (IS_ERR(inode))
- 		return inode;
- 	inode->i_flags &= ~S_PRIVATE;
--	error =	security_inode_init_security_anon(inode, &qname, context_inode);
-+	error =	security_inode_init_security_anon(inode, &QSTR(name),
-+						  context_inode);
- 	if (error) {
- 		iput(inode);
- 		return ERR_PTR(error);
-diff --git a/fs/bcachefs/fsck.c b/fs/bcachefs/fsck.c
-index 75c8a97a6954c..7b3b63ed747cf 100644
---- a/fs/bcachefs/fsck.c
-+++ b/fs/bcachefs/fsck.c
-@@ -405,7 +405,7 @@ static int reattach_inode(struct btree_trans *trans, struct bch_inode_unpacked *
- 		return ret;
++Additionally, it is possible to put symbols into a module namespace, strictly
++limiting which modules are allowed to use these symbols.
++
+ 2. How to define Symbol Namespaces
+ ==================================
  
- 	struct bch_hash_info dir_hash = bch2_hash_info_init(c, &lostfound);
--	struct qstr name = (struct qstr) QSTR(name_buf);
-+	struct qstr name = QSTR(name_buf);
+@@ -84,6 +87,22 @@ unit as preprocessor statement. The above example would then read::
+ within the corresponding compilation unit before any EXPORT_SYMBOL macro is
+ used.
  
- 	inode->bi_dir = lostfound.bi_inum;
++2.3 Using the EXPORT_SYMBOL_GPL_FOR_MODULES() macro
++===================================================
++
++Symbols exported using this macro are put into a module namespace. This
++namespace cannot be imported.
++
++The macro takes a comma separated list of module names, allowing only those
++modules to access this symbol. Simple tail-globs are supported.
++
++For example:
++
++  EXPORT_SYMBOL_GPL_FOR_MODULES(preempt_notifier_inc, "kvm,kvm-*")
++
++will limit usage of this symbol to modules whoes name matches the given
++patterns.
++
+ 3. How to use Symbols exported in Namespaces
+ ============================================
  
-diff --git a/fs/bcachefs/recovery.c b/fs/bcachefs/recovery.c
-index 3c7f941dde39a..ebabba2968821 100644
---- a/fs/bcachefs/recovery.c
-+++ b/fs/bcachefs/recovery.c
-@@ -32,8 +32,6 @@
- #include <linux/sort.h>
- #include <linux/stat.h>
+@@ -155,3 +174,6 @@ in-tree modules::
+ You can also run nsdeps for external module builds. A typical usage is::
  
--#define QSTR(n) { { { .len = strlen(n) } }, .name = n }
--
- void bch2_btree_lost_data(struct bch_fs *c, enum btree_id btree)
- {
- 	if (btree >= BTREE_ID_NR_MAX)
-diff --git a/fs/bcachefs/util.h b/fs/bcachefs/util.h
-index fb02c1c360044..a27f4b84fe775 100644
---- a/fs/bcachefs/util.h
-+++ b/fs/bcachefs/util.h
-@@ -647,8 +647,6 @@ static inline int cmp_le32(__le32 l, __le32 r)
+ 	$ make -C <path_to_kernel_src> M=$PWD nsdeps
++
++Note: it will happily generate an import statement for the module namespace;
++which will not work and generates build and runtime failures.
+diff --git a/include/linux/export.h b/include/linux/export.h
+index 1e04dbc675c2f..b40ae79b767da 100644
+--- a/include/linux/export.h
++++ b/include/linux/export.h
+@@ -24,11 +24,17 @@
+ 	.long sym
+ #endif
  
- #include <linux/uuid.h>
+-#define ___EXPORT_SYMBOL(sym, license, ns)		\
++/*
++ * LLVM integrated assembler cam merge adjacent string literals (like
++ * C and GNU-as) passed to '.ascii', but not to '.asciz' and chokes on:
++ *
++ *   .asciz "MODULE_" "kvm" ;
++ */
++#define ___EXPORT_SYMBOL(sym, license, ns...)		\
+ 	.section ".export_symbol","a"		ASM_NL	\
+ 	__export_symbol_##sym:			ASM_NL	\
+ 		.asciz license			ASM_NL	\
+-		.asciz ns			ASM_NL	\
++		.ascii ns "\0"			ASM_NL	\
+ 		__EXPORT_SYMBOL_REF(sym)	ASM_NL	\
+ 	.previous
  
--#define QSTR(n) { { { .len = strlen(n) } }, .name = n }
--
- static inline bool qstr_eq(const struct qstr l, const struct qstr r)
- {
- 	return l.len == r.len && !memcmp(l.name, r.name, l.len);
-diff --git a/fs/erofs/xattr.c b/fs/erofs/xattr.c
-index a90d7d6497390..60d2cf26e837e 100644
---- a/fs/erofs/xattr.c
-+++ b/fs/erofs/xattr.c
-@@ -407,7 +407,7 @@ int erofs_getxattr(struct inode *inode, int index, const char *name,
- 	}
+@@ -70,4 +76,6 @@
+ #define EXPORT_SYMBOL_NS(sym, ns)	__EXPORT_SYMBOL(sym, "", __stringify(ns))
+ #define EXPORT_SYMBOL_NS_GPL(sym, ns)	__EXPORT_SYMBOL(sym, "GPL", __stringify(ns))
  
- 	it.index = index;
--	it.name = (struct qstr)QSTR_INIT(name, strlen(name));
-+	it.name = QSTR(name);
- 	if (it.name.len > EROFS_NAME_LEN)
- 		return -ERANGE;
- 
-diff --git a/fs/file_table.c b/fs/file_table.c
-index 18735dc8269a1..cf3422edf737c 100644
---- a/fs/file_table.c
-+++ b/fs/file_table.c
-@@ -332,9 +332,7 @@ static struct file *alloc_file(const struct path *path, int flags,
- static inline int alloc_path_pseudo(const char *name, struct inode *inode,
- 				    struct vfsmount *mnt, struct path *path)
- {
--	struct qstr this = QSTR_INIT(name, strlen(name));
--
--	path->dentry = d_alloc_pseudo(mnt->mnt_sb, &this);
-+	path->dentry = d_alloc_pseudo(mnt->mnt_sb, &QSTR(name));
- 	if (!path->dentry)
- 		return -ENOMEM;
- 	path->mnt = mntget(mnt);
-diff --git a/fs/kernfs/file.c b/fs/kernfs/file.c
-index 1943c8bd479bf..2d9d5dfa19b87 100644
---- a/fs/kernfs/file.c
-+++ b/fs/kernfs/file.c
-@@ -928,7 +928,7 @@ static void kernfs_notify_workfn(struct work_struct *work)
- 		if (!inode)
- 			continue;
- 
--		name = (struct qstr)QSTR_INIT(kn->name, strlen(kn->name));
-+		name = QSTR(kn->name);
- 		parent = kernfs_get_parent(kn);
- 		if (parent) {
- 			p_inode = ilookup(info->sb, kernfs_ino(parent));
-diff --git a/include/linux/dcache.h b/include/linux/dcache.h
-index bff956f7b2b98..3d53a60145911 100644
---- a/include/linux/dcache.h
-+++ b/include/linux/dcache.h
-@@ -57,6 +57,7 @@ struct qstr {
- };
- 
- #define QSTR_INIT(n,l) { { { .len = l } }, .name = n }
-+#define QSTR(n) (struct qstr)QSTR_INIT(n, strlen(n))
- 
- extern const struct qstr empty_name;
- extern const struct qstr slash_name;
-diff --git a/mm/secretmem.c b/mm/secretmem.c
-index 399552814fd0f..1b0a214ee5580 100644
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -195,14 +195,13 @@ static struct file *secretmem_file_create(unsigned long flags)
- 	struct file *file;
- 	struct inode *inode;
- 	const char *anon_name = "[secretmem]";
--	const struct qstr qname = QSTR_INIT(anon_name, strlen(anon_name));
- 	int err;
- 
- 	inode = alloc_anon_inode(secretmem_mnt->mnt_sb);
- 	if (IS_ERR(inode))
- 		return ERR_CAST(inode);
- 
--	err = security_inode_init_security_anon(inode, &qname, NULL);
-+	err = security_inode_init_security_anon(inode, &QSTR(anon_name), NULL);
- 	if (err) {
- 		file = ERR_PTR(err);
- 		goto err_free_inode;
-diff --git a/net/sunrpc/rpc_pipe.c b/net/sunrpc/rpc_pipe.c
-index 7ce3721c06ca5..eadc00410ebc5 100644
---- a/net/sunrpc/rpc_pipe.c
-+++ b/net/sunrpc/rpc_pipe.c
-@@ -630,7 +630,7 @@ static int __rpc_rmpipe(struct inode *dir, struct dentry *dentry)
- static struct dentry *__rpc_lookup_create_exclusive(struct dentry *parent,
- 					  const char *name)
- {
--	struct qstr q = QSTR_INIT(name, strlen(name));
-+	struct qstr q = QSTR(name);
- 	struct dentry *dentry = d_hash_and_lookup(parent, &q);
- 	if (!dentry) {
- 		dentry = d_alloc(parent, &q);
-@@ -1190,8 +1190,7 @@ static const struct rpc_filelist files[] = {
- struct dentry *rpc_d_lookup_sb(const struct super_block *sb,
- 			       const unsigned char *dir_name)
- {
--	struct qstr dir = QSTR_INIT(dir_name, strlen(dir_name));
--	return d_hash_and_lookup(sb->s_root, &dir);
-+	return d_hash_and_lookup(sb->s_root, &QSTR(dir_name));
- }
- EXPORT_SYMBOL_GPL(rpc_d_lookup_sb);
- 
-@@ -1300,11 +1299,9 @@ rpc_gssd_dummy_populate(struct dentry *root, struct rpc_pipe *pipe_data)
- 	struct dentry *gssd_dentry;
- 	struct dentry *clnt_dentry = NULL;
- 	struct dentry *pipe_dentry = NULL;
--	struct qstr q = QSTR_INIT(files[RPCAUTH_gssd].name,
--				  strlen(files[RPCAUTH_gssd].name));
- 
- 	/* We should never get this far if "gssd" doesn't exist */
--	gssd_dentry = d_hash_and_lookup(root, &q);
-+	gssd_dentry = d_hash_and_lookup(root, &QSTR(files[RPCAUTH_gssd].name));
- 	if (!gssd_dentry)
- 		return ERR_PTR(-ENOENT);
- 
-@@ -1314,9 +1311,8 @@ rpc_gssd_dummy_populate(struct dentry *root, struct rpc_pipe *pipe_data)
- 		goto out;
- 	}
- 
--	q.name = gssd_dummy_clnt_dir[0].name;
--	q.len = strlen(gssd_dummy_clnt_dir[0].name);
--	clnt_dentry = d_hash_and_lookup(gssd_dentry, &q);
-+	clnt_dentry = d_hash_and_lookup(gssd_dentry,
-+					&QSTR(gssd_dummy_clnt_dir[0].name));
- 	if (!clnt_dentry) {
- 		__rpc_depopulate(gssd_dentry, gssd_dummy_clnt_dir, 0, 1);
- 		pipe_dentry = ERR_PTR(-ENOENT);
++#define EXPORT_SYMBOL_GPL_FOR_MODULES(sym, mods) __EXPORT_SYMBOL(sym, "GPL", "module:" mods)
++
+ #endif /* _LINUX_EXPORT_H */
 -- 
 2.39.5
 
