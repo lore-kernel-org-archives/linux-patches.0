@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BD42DA77B;
-	Tue,  8 Jul 2025 16:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F62BE46;
+	Tue,  8 Jul 2025 16:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993629; cv=none; b=AQnDk5hP9mRO9zTu7jEtSBANUJISrjqu3QefCV/hQV79yPNq26UT2yFPWBG3sz8HuOXPS99iz2a14J9n0dxOCWaZ+5zuBACmzLsH4vCuUZRVb6F1za7uu9xqSPKCv8T7qksuJXsTu5tchcUJdiFE/h53kJsV7GnX9uiKKNIp7+s=
+	t=1751993632; cv=none; b=hz3PWCPHlIjv4OAarfm6R4HfOcYmnfHTIvYW4Vigowc7QpLeGSht10KDcTAGq8Arfj/9hZ3BKCTek16JhUQKiq1kkFYUBJd0UgJJgrpvHzqAxsrI2mFaKoWtJsF33ZBruWFSw1ye4VfPpSfuUTzsnKT0p1Zk1W3JgdahPeJUvHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993629; c=relaxed/simple;
-	bh=9dBJ42AyEhaBfPFEJQTBb/y8P230tNANPNtEcbx44ck=;
+	s=arc-20240116; t=1751993632; c=relaxed/simple;
+	bh=h8Wgy/ncW2npjKttmGxXxqKMP3bIBHRpUwzKjHdpEls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R9BoInMo8iFZWy6w7p4E1OBppqPkMVafW3TdEA8xMSEdD7OypQR0egl+8BEGpr4TLGoJ5rOJM8wSmRzyhNgyXCxVbhm//bhHdRec7BS0BXdmjEOfBoi60i8gC8GqJzcUYRSPh1RFPfuC6GL2gAsXbbJYaYi6tsmjBoSgn8xEbn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAxcpOJV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0vilBCPc8AfvZ9KtlulrmT/OU2oTTzoYisnk29aYt1Rlk/qDqF83kaCFUqcZcCEqQrUyTmg5E1ztq65Z8SfsCllPzev5tUg/Lh3id8O/luJhV0umThUbz2I5OIKeEnAhFyRYogzMbUmOStRBgZtiPrYMb5cAQWd4nV10K67SHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NReE1mc1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAxcpOJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17ABC4CEED;
-	Tue,  8 Jul 2025 16:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NReE1mc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0AEC4CEED;
+	Tue,  8 Jul 2025 16:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993629;
-	bh=9dBJ42AyEhaBfPFEJQTBb/y8P230tNANPNtEcbx44ck=;
+	s=korg; t=1751993632;
+	bh=h8Wgy/ncW2npjKttmGxXxqKMP3bIBHRpUwzKjHdpEls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAxcpOJVDuuanKh244zb3I5rwfxrdg6qz/WjiZ8VSw/0/ltMoSJ7Qx0AaY9ZY/Ie7
-	 5ZTxgE+TqO3QUgDKdzY3auF/6qLurffdZ+qNBMAVGRwlDUHmE/0f+V+falAutVlS7U
-	 t80x8bn6H6hmuj/LraHpgFqV967TKp60ZXj+MOvY=
+	b=NReE1mc1uC9OC5232l2M+7943SzmGlE2OCKnZ/1Go4gxQt6WXTOE5FuTzdZepGyAc
+	 xDVAPJVbLAdfXUldDL/hMaNvOO9G+J7F5QunxpYEGXqgIk42la/TMb4BBA1EwFKYMe
+	 sBDTHORBUnbd9DzLLGOboL1tKEdcnbZOBsKoCnHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 109/178] lib: test_objagg: Set error message in check_expect_hints_stats()
-Date: Tue,  8 Jul 2025 18:22:26 +0200
-Message-ID: <20250708162239.475270396@linuxfoundation.org>
+Subject: [PATCH 6.15 110/178] amd-xgbe: align CL37 AN sequence as per databook
+Date: Tue,  8 Jul 2025 18:22:27 +0200
+Message-ID: <20250708162239.498928981@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -54,48 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit e6ed134a4ef592fe1fd0cafac9683813b3c8f3e8 ]
+[ Upstream commit 42fd432fe6d320323215ebdf4de4d0d7e56e6792 ]
 
-Smatch complains that the error message isn't set in the caller:
+Update the Clause 37 Auto-Negotiation implementation to properly align
+with the PCS hardware specifications:
+- Fix incorrect bit settings in Link Status and Link Duplex fields
+- Implement missing sequence steps 2 and 7
 
-    lib/test_objagg.c:923 test_hints_case2()
-    error: uninitialized symbol 'errmsg'.
+These changes ensure CL37 auto-negotiation protocol follows the exact
+sequence patterns as specified in the hardware databook.
 
-This static checker warning only showed up after a recent refactoring
-but the bug dates back to when the code was originally added.  This
-likely doesn't affect anything in real life.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202506281403.DsuyHFTZ-lkp@intel.com/
-Fixes: 0a020d416d0a ("lib: introduce initial implementation of object aggregation manager")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/8548f423-2e3b-4bb7-b816-5041de2762aa@sabinyo.mountain
+Fixes: 1bf40ada6290 ("amd-xgbe: Add support for clause 37 auto-negotiation")
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20250630192636.3838291-1-Raju.Rangoju@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_objagg.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-common.h | 2 ++
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c   | 9 +++++++++
+ drivers/net/ethernet/amd/xgbe/xgbe.h        | 4 ++--
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/lib/test_objagg.c b/lib/test_objagg.c
-index d34df4306b874..222b39fc2629e 100644
---- a/lib/test_objagg.c
-+++ b/lib/test_objagg.c
-@@ -899,8 +899,10 @@ static int check_expect_hints_stats(struct objagg_hints *objagg_hints,
- 	int err;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-common.h b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
+index 3b70f67376331..aa25a8a0a106f 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-common.h
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
+@@ -1373,6 +1373,8 @@
+ #define MDIO_VEND2_CTRL1_SS13		BIT(13)
+ #endif
  
- 	stats = objagg_hints_stats_get(objagg_hints);
--	if (IS_ERR(stats))
-+	if (IS_ERR(stats)) {
-+		*errmsg = "objagg_hints_stats_get() failed.";
- 		return PTR_ERR(stats);
-+	}
- 	err = __check_expect_stats(stats, expect_stats, errmsg);
- 	objagg_stats_put(stats);
- 	return err;
++#define XGBE_VEND2_MAC_AUTO_SW		BIT(9)
++
+ /* MDIO mask values */
+ #define XGBE_AN_CL73_INT_CMPLT		BIT(0)
+ #define XGBE_AN_CL73_INC_LINK		BIT(1)
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index 07f4f3418d018..3316c719f9f8c 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -375,6 +375,10 @@ static void xgbe_an37_set(struct xgbe_prv_data *pdata, bool enable,
+ 		reg |= MDIO_VEND2_CTRL1_AN_RESTART;
+ 
+ 	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_CTRL1, reg);
++
++	reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
++	reg |= XGBE_VEND2_MAC_AUTO_SW;
++	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
+ }
+ 
+ static void xgbe_an37_restart(struct xgbe_prv_data *pdata)
+@@ -1003,6 +1007,11 @@ static void xgbe_an37_init(struct xgbe_prv_data *pdata)
+ 
+ 	netif_dbg(pdata, link, pdata->netdev, "CL37 AN (%s) initialized\n",
+ 		  (pdata->an_mode == XGBE_AN_MODE_CL37) ? "BaseX" : "SGMII");
++
++	reg = XMDIO_READ(pdata, MDIO_MMD_AN, MDIO_CTRL1);
++	reg &= ~MDIO_AN_CTRL1_ENABLE;
++	XMDIO_WRITE(pdata, MDIO_MMD_AN, MDIO_CTRL1, reg);
++
+ }
+ 
+ static void xgbe_an73_init(struct xgbe_prv_data *pdata)
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe.h b/drivers/net/ethernet/amd/xgbe/xgbe.h
+index ed5d43c16d0e2..7526a0906b391 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe.h
++++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
+@@ -292,12 +292,12 @@
+ #define XGBE_LINK_TIMEOUT		5
+ #define XGBE_KR_TRAINING_WAIT_ITER	50
+ 
+-#define XGBE_SGMII_AN_LINK_STATUS	BIT(1)
++#define XGBE_SGMII_AN_LINK_DUPLEX	BIT(1)
+ #define XGBE_SGMII_AN_LINK_SPEED	(BIT(2) | BIT(3))
+ #define XGBE_SGMII_AN_LINK_SPEED_10	0x00
+ #define XGBE_SGMII_AN_LINK_SPEED_100	0x04
+ #define XGBE_SGMII_AN_LINK_SPEED_1000	0x08
+-#define XGBE_SGMII_AN_LINK_DUPLEX	BIT(4)
++#define XGBE_SGMII_AN_LINK_STATUS	BIT(4)
+ 
+ /* ECC correctable error notification window (seconds) */
+ #define XGBE_ECC_LIMIT			60
 -- 
 2.39.5
 
