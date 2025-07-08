@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AB220766C;
-	Tue,  8 Jul 2025 16:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73611548C;
+	Tue,  8 Jul 2025 16:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992472; cv=none; b=ePt8ft3fOAphx3INnfFvxIgxlqEcEV892x9XU5UWUWZnIs0Jo4BMWV/PSOlw/JoBjF/Z47L2ioLSH9ta0IAS4O7tKvo/7R6GFZ2qZkl8XH3KBcla0clAAAye1mhaFJfARAfBv4z/E81rkTvDMv7U6RSIkvbSDKmBKtbXcE06xIY=
+	t=1751992474; cv=none; b=MS4qChHjdCRas8LyqDF14/hTCzMDF0yoiobOKY7wMQCFqTzqYVZSSbV94E6QL7YBxzm6/h1KZv+hdZsfAE1t7Vjs0zQpMbjbSJCJKSsFYNQuxUAI+bXDknC45XZRKdow/0lCHPDGfJyyoChZaARfD3M/cORZpoWinLg0zP/ncTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992472; c=relaxed/simple;
-	bh=NE5XQyzBabE/KcL82HPVESIOrG/cFNdzfhgA0OchW+Y=;
+	s=arc-20240116; t=1751992474; c=relaxed/simple;
+	bh=m6s4y94JehGZULxNk8kCzqH6QkE5gk8ulfjJLVzkJfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=slSfQRznN3UVeCYBvhNfhVTvjnsrl50nxOE5Hdu9vfii6Nr1zwTGwqdmoqgpo9X7Jh3QLIYTuSKOpu6NEkv9C38toG0byh7cKNvEWHdr8yiW2rV6oIWziN9Je5jffPKW6OabcuaccAjh1qrGVY3m5XyU8kW5d1psbiw2BM06qCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdfcLVLU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBiJosB+kwwX3OfB+O0Y+ww+JHyFpR+/hAAXD+MZ9OgdE2Rmzwicc8+4JNYjmBrs49/IWyFfpw2TAxm+pqSS0PRLWxjmGf7EioqCe9qfJPZVRaaIsqkczCLh1ZPzc+V1fUqCPENWv6lhXbC1R13GZrlKAo36zUQkupL2hBlku0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1Rm9hgm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdfcLVLU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2F4C4CEED;
-	Tue,  8 Jul 2025 16:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1Rm9hgm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA7BC4CEF0;
+	Tue,  8 Jul 2025 16:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992471;
-	bh=NE5XQyzBabE/KcL82HPVESIOrG/cFNdzfhgA0OchW+Y=;
+	s=korg; t=1751992474;
+	bh=m6s4y94JehGZULxNk8kCzqH6QkE5gk8ulfjJLVzkJfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdfcLVLUhIyHWYnpj/6T4+gRjp4yj8MpBBiD4X2GFY+JrJOV30RJMuCLLmj/llOq5
-	 LnkNtieIe31u9bOT4IJ/1KUnPA181O0vDnpV6sgZIcu1ojJL3vpGhiViLR9TaHe5jr
-	 lwLXHCZdnnQG+P/kBEwpXVRcbtBsY6WasaibS/LQ=
+	b=Y1Rm9hgm53LtvG5vDtWW3iuyafCUABtWpH0mfIOfvEy1D/CxOup5BvPc0Nqs5j5Ed
+	 Vr+03HVBJF4iY3SLlFK6D16CkBiu9sVQWvYaOO5GvOtPzmEHy4H/sb0J2VOgUtltHR
+	 ve2yRqrmiaphPwRHmaOHFbi6gjL8v6DiIGAaICrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Borja <kuurtb@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/132] platform/x86: hp-bioscfg: Fix class device unregistration
-Date: Tue,  8 Jul 2025 18:23:33 +0200
-Message-ID: <20250708162233.590999685@linuxfoundation.org>
+Subject: [PATCH 6.6 103/132] iommu: Add IOMMU_DOMAIN_PLATFORM for S390
+Date: Tue,  8 Jul 2025 18:23:34 +0200
+Message-ID: <20250708162233.618770290@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -45,54 +49,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 11cba4793b95df3bc192149a6eb044f69aa0b99e ]
+[ Upstream commit e04c7487a6655722172e93e8f36e51d6ab279f86 ]
 
-Devices under the firmware_attributes_class do not have unique a dev_t.
-Therefore, device_unregister() should be used instead of
-device_destroy(), since the latter may match any device with a given
-dev_t.
+The PLATFORM domain will be set as the default domain and attached as
+normal during probe. The driver will ignore the initial attach from a NULL
+domain to the PLATFORM domain.
 
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250625-dest-fix-v1-1-3a0f342312bb@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+After this, the PLATFORM domain's attach_dev will be called whenever we
+detach from an UNMANAGED domain (eg for VFIO). This is the same time the
+original design would have called op->detach_dev().
+
+This is temporary until the S390 dma-iommu.c conversion is merged.
+
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/4-v8-81230027b2fa+9d-iommu_all_defdom_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 45537926dd2a ("s390/pci: Fix stale function handles in error handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/s390-iommu.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-index 049851e469f60..b62b158cffd85 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -1039,7 +1039,7 @@ static int __init hp_init(void)
- 	release_attributes_data();
- 
- err_destroy_classdev:
--	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
-+	device_unregister(bioscfg_drv.class_dev);
- 
- err_unregister_class:
- 	hp_exit_attr_set_interface();
-@@ -1050,7 +1050,7 @@ static int __init hp_init(void)
- static void __exit hp_exit(void)
- {
- 	release_attributes_data();
--	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
-+	device_unregister(bioscfg_drv.class_dev);
- 
- 	hp_exit_attr_set_interface();
+diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
+index fbf59a8db29b1..f0c867c57a5b9 100644
+--- a/drivers/iommu/s390-iommu.c
++++ b/drivers/iommu/s390-iommu.c
+@@ -142,14 +142,31 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
+ 	return 0;
  }
+ 
+-static void s390_iommu_set_platform_dma(struct device *dev)
++/*
++ * Switch control over the IOMMU to S390's internal dma_api ops
++ */
++static int s390_iommu_platform_attach(struct iommu_domain *platform_domain,
++				      struct device *dev)
+ {
+ 	struct zpci_dev *zdev = to_zpci_dev(dev);
+ 
++	if (!zdev->s390_domain)
++		return 0;
++
+ 	__s390_iommu_detach_device(zdev);
+ 	zpci_dma_init_device(zdev);
++	return 0;
+ }
+ 
++static struct iommu_domain_ops s390_iommu_platform_ops = {
++	.attach_dev = s390_iommu_platform_attach,
++};
++
++static struct iommu_domain s390_iommu_platform_domain = {
++	.type = IOMMU_DOMAIN_PLATFORM,
++	.ops = &s390_iommu_platform_ops,
++};
++
+ static void s390_iommu_get_resv_regions(struct device *dev,
+ 					struct list_head *list)
+ {
+@@ -428,12 +445,12 @@ void zpci_destroy_iommu(struct zpci_dev *zdev)
+ }
+ 
+ static const struct iommu_ops s390_iommu_ops = {
++	.default_domain = &s390_iommu_platform_domain,
+ 	.capable = s390_iommu_capable,
+ 	.domain_alloc = s390_domain_alloc,
+ 	.probe_device = s390_iommu_probe_device,
+ 	.release_device = s390_iommu_release_device,
+ 	.device_group = generic_device_group,
+-	.set_platform_dma_ops = s390_iommu_set_platform_dma,
+ 	.pgsize_bitmap = SZ_4K,
+ 	.get_resv_regions = s390_iommu_get_resv_regions,
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
 -- 
 2.39.5
 
