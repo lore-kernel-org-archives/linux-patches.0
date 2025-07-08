@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8322E11B9;
-	Tue,  8 Jul 2025 16:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FB21C6FEC;
+	Tue,  8 Jul 2025 16:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992199; cv=none; b=nIY1/r2qVT4HmVxGZyYDldrZy2tbvNjDXyW1ham/5n32gF66WxvnzBD77MLFLA3glqLyMAgxVV9BwtnBT451anb62FowM9vAZ0mByzzkXg1vKYUHt5oqdFO+GXVVKk2mRSsbn621mfSJx4wk1dLPGPD17HgM0W1gpxUF+phufB0=
+	t=1751992202; cv=none; b=Asn/5vzJ5QxhyUS2Cw02A70JSrV029INI/Zz4IO7qEzkeRcp6dUu9+EA019w3siGxmTC358qFhbNt7dTJur/Bwsjycd4IdPJTtw5n7huZViPA8mxFuV2UsNEwYXnuAKI3DvbmuDzmAUxQv+kDjVvT87NTIdRbIKA86qPFKPqN1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992199; c=relaxed/simple;
-	bh=atGLmWN54pH6e2NvZY2zH55xCJ73bTuZkZzeX6Ngx+I=;
+	s=arc-20240116; t=1751992202; c=relaxed/simple;
+	bh=un9sD9x7n5QQzIwLfSUYN/9O4+kXaOErfTahqv0rHAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3upwiEIcCL5SpTpkKW6nusabP+TXPErODn7lsMgf2M6eFeMpN79nwNS30BH/MCWLIRa8sx7KcXDZJ/VL/qLx43X4cC8E/aSjvwNi6tTN3iux/EfDcGg21ZlMN83g132hKna2dytgy6vpEhwCyQMUTPwu3W35DnwbFAa/iO1c9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHhSiMBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YAr8DgXfWb0j80eeMngMnzdn+rCC+ft5AukaDKmAzOd0rfWfoc0p9Jip1xtBxhkH8pUuOubSUpq6nKpmoa7MVP97xB3CBVtPJhGLjBsxnG4R3bBHKoVMXy1P9LT81fnGwRpb9DAwzecRdXKUeob1y9S5z72uTA9w25IYBXC2Wck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTmIym+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHhSiMBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F56C4CEED;
-	Tue,  8 Jul 2025 16:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTmIym+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF85C4CEED;
+	Tue,  8 Jul 2025 16:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992198;
-	bh=atGLmWN54pH6e2NvZY2zH55xCJ73bTuZkZzeX6Ngx+I=;
+	s=korg; t=1751992202;
+	bh=un9sD9x7n5QQzIwLfSUYN/9O4+kXaOErfTahqv0rHAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PHhSiMBUQAcY1GnmTKqapLXs0QdBoJdSC9Ec/M7SBX3qbGWk8bpU5hHF7sFKNwuPh
-	 Qg8rHwYuKm8Frcmv32/aU2ZMKSxYy01wk6w9b3zf1pVGBhhzGrBany+OPbfDb6idJN
-	 OZU9ZoJruSqETtSFeFmSa1O3UjPqpAU2+XZtdgfI=
+	b=xTmIym+BoZCzuQZZ1OlLMkBF/Qcvave7I8EhZkXVqas0Bl2YU57UfV0FhsUCu4srX
+	 01miA3+zeuMLuD5XQltrBAp9qQukXnF9EtZezHDEjaqnxb+jcQrPlYxMmze2nYNgG4
+	 EmTevgauSBr6d6LX/nm+LCFP9E2h6XlpNaLgoCAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.6 005/132] s390/pci: Do not try re-enabling load/store if device is disabled
-Date: Tue,  8 Jul 2025 18:21:56 +0200
-Message-ID: <20250708162230.923655896@linuxfoundation.org>
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	virtualization@lists.linux.dev,
+	netdev@vger.kernel.org,
+	stable <stable@kernel.org>,
+	HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+Subject: [PATCH 6.6 006/132] vsock/vmci: Clear the vmci transport packet properly when initializing it
+Date: Tue,  8 Jul 2025 18:21:57 +0200
+Message-ID: <20250708162230.951045547@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -51,37 +60,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
 
-commit b97a7972b1f4f81417840b9a2ab0c19722b577d5 upstream.
+commit 223e2288f4b8c262a864e2c03964ffac91744cd5 upstream.
 
-If a device is disabled unblocking load/store on its own is not useful
-as a full re-enable of the function is necessary anyway. Note that SCLP
-Write Event Data Action Qualifier 0 (Reset) leaves the device disabled
-and triggers this case unless the driver already requests a reset.
+In vmci_transport_packet_init memset the vmci_transport_packet before
+populating the fields to avoid any uninitialised data being left in the
+structure.
 
-Cc: stable@vger.kernel.org
-Fixes: 4cdf2f4e24ff ("s390/pci: implement minimal PCI error recovery")
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Bryan Tan <bryan-bt.tan@broadcom.com>
+Cc: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Cc: Broadcom internal kernel review list
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: virtualization@lists.linux.dev
+Cc: netdev@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Signed-off-by: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250701122254.2397440-1-gregkh@linuxfoundation.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_event.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/vmw_vsock/vmci_transport.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/s390/pci/pci_event.c
-+++ b/arch/s390/pci/pci_event.c
-@@ -98,6 +98,10 @@ static pci_ers_result_t zpci_event_do_er
- 	struct zpci_dev *zdev = to_zpci(pdev);
- 	int rc;
- 
-+	/* The underlying device may have been disabled by the event */
-+	if (!zdev_enabled(zdev))
-+		return PCI_ERS_RESULT_NEED_RESET;
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -119,6 +119,8 @@ vmci_transport_packet_init(struct vmci_t
+ 			   u16 proto,
+ 			   struct vmci_handle handle)
+ {
++	memset(pkt, 0, sizeof(*pkt));
 +
- 	pr_info("%s: Unblocking device access for examination\n", pci_name(pdev));
- 	rc = zpci_reset_load_store_blocked(zdev);
- 	if (rc) {
+ 	/* We register the stream control handler as an any cid handle so we
+ 	 * must always send from a source address of VMADDR_CID_ANY
+ 	 */
+@@ -131,8 +133,6 @@ vmci_transport_packet_init(struct vmci_t
+ 	pkt->type = type;
+ 	pkt->src_port = src->svm_port;
+ 	pkt->dst_port = dst->svm_port;
+-	memset(&pkt->proto, 0, sizeof(pkt->proto));
+-	memset(&pkt->_reserved2, 0, sizeof(pkt->_reserved2));
+ 
+ 	switch (pkt->type) {
+ 	case VMCI_TRANSPORT_PACKET_TYPE_INVALID:
 
 
