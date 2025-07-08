@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A0E2E659;
-	Tue,  8 Jul 2025 16:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B82E2E659;
+	Tue,  8 Jul 2025 16:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992014; cv=none; b=D4IHlT86zQ7HKNW2KGjWZS7j5av0i46PzJw19Q6nfAvvmJcrdjyJ/N+2+LRImG1c1mktvB5vUr07eVBtUAW5FfP8qoww/GTDosRh9eLOi4NvlkfOiNkyROdfg0lBgV+h45vpteKueTqUyU9LZdnh3fWDGx2P6zx7Es3CfESjYbs=
+	t=1751992017; cv=none; b=NqV39VVoBA4f0ftP8Uzk4UqpiBnHxC35ZfX+hNJiTcmuUgMA99vBq84rU+4TzLmi7Uyn4gEaMrAFolwxWLhlzPRGyj1x+w/24AUXsn6vml2ywGR+fLVtGC/VI6OD08GFEA0WCDJaNqj9sTdFzz4FmgTOp1Wa8v2D2Ak2PGXdpiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992014; c=relaxed/simple;
-	bh=sKV3tEF4LNh89YZxNRE5U8MjtN1/TxHZFJB2jJsMWO4=;
+	s=arc-20240116; t=1751992017; c=relaxed/simple;
+	bh=t8/pfNfEbbpoUywGdzzL3XqGhPzhgUjbcJqL7EMz+9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Df32/cYR8sj3xvvM4wKaQ81n9sBoNNN2fFjDwpTRppdCXkwZxrMlZZUMnYxiaA5FTLjiNq0yCuYPA/HxcUBf5fHifD+9tUZcEeoF7dlywTJMQ18XXXs/BQEy7ZRiui8sVh0f7DYDlJZMkJK+pNZG56b+01+Z04wtHvrWK+xWDtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4i51ouS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OF5ZrVKo2id4KpGRnQMMLGHxXRrK1Nu5jEq6mICF0e9kCfL/Ss3mZemLwfUMREAjEUVpmxYPmTw/bA/o7a1bhQgTzWRGBXY+mvnfVADxi0wx+YIO2A0H7WzlToWQRlt9kjdKvPSFLXnCeIsKnXR5XcoJQiGRee+tbVsC5m+d2XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVgT8CWZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4i51ouS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5091C4CEED;
-	Tue,  8 Jul 2025 16:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVgT8CWZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCF7C4CEED;
+	Tue,  8 Jul 2025 16:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992014;
-	bh=sKV3tEF4LNh89YZxNRE5U8MjtN1/TxHZFJB2jJsMWO4=;
+	s=korg; t=1751992017;
+	bh=t8/pfNfEbbpoUywGdzzL3XqGhPzhgUjbcJqL7EMz+9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4i51ouSND08NmtIMw3J+sokHFC1hWLmgHvhO0FdQqsQhzMamynLY2uBmCmjoMI21
-	 qffurqceI5y+hJr/n8nGjTp4SVrOp9FkHk0FX10WpHovrLgofJOH/x5fYWEGTci8sE
-	 LZDdItZ6n72TJdJpB19khvHrANv0zW51Mw2jHNFQ=
+	b=nVgT8CWZSUNm47QZUbfv33OO+83zTtZXWOHFXrMhgMKZrVRBXS6ZsFZ3fYG4IwTNO
+	 aE8DkqYUYFThOefp/7bhtLrAy7toE/nUfLmwkbkUchsO3HpM2OZvduAIRdh7Qv20ld
+	 8aLE/ENcR2h5iC7CiYc2cYvqUPpLJuzywF4N9DyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Graczyk <jangraczyk@yahoo.ca>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Kurt Borja <kuurtb@gmail.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 32/81] platform/x86: dell-wmi-sysman: Fix WMI data block retrieval in sysfs callbacks
-Date: Tue,  8 Jul 2025 18:23:24 +0200
-Message-ID: <20250708162225.976803659@linuxfoundation.org>
+Subject: [PATCH 6.1 33/81] platform/mellanox: mlxreg-lc: Fix logic error in power state check
+Date: Tue,  8 Jul 2025 18:23:25 +0200
+Message-ID: <20250708162226.010900193@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
 References: <20250708162224.795155912@linuxfoundation.org>
@@ -55,135 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit eb617dd25ca176f3fee24f873f0fd60010773d67 ]
+[ Upstream commit 644bec18e705ca41d444053407419a21832fcb2f ]
 
-After retrieving WMI data blocks in sysfs callbacks, check for the
-validity of them before dereferencing their content.
+Fixes a logic issue in mlxreg_lc_completion_notify() where the
+intention was to check if MLXREG_LC_POWERED flag is not set before
+powering on the device.
 
-Reported-by: Jan Graczyk <jangraczyk@yahoo.ca>
-Closes: https://lore.kernel.org/r/CAHk-=wgMiSKXf7SvQrfEnxVtmT=QVQPjJdNjfm3aXS7wc=rzTw@mail.gmail.com/
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250630-sysman-fix-v2-1-d185674d0a30@gmail.com
+The original code used "state & ~MLXREG_LC_POWERED" to check for the
+absence of the POWERED bit. However this condition evaluates to true
+even when other bits are set, leading to potentially incorrect
+behavior.
+
+Corrected the logic to explicitly check for the absence of
+MLXREG_LC_POWERED using !(state & MLXREG_LC_POWERED).
+
+Fixes: 62f9529b8d5c ("platform/mellanox: mlxreg-lc: Add initial support for Nvidia line card devices")
+Suggested-by: Vadim Pasternak <vadimp@nvidia.com>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://lore.kernel.org/r/20250630105812.601014-1-alok.a.tiwari@oracle.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h   | 5 +++++
- .../platform/x86/dell/dell-wmi-sysman/enum-attributes.c   | 5 +++--
- .../platform/x86/dell/dell-wmi-sysman/int-attributes.c    | 5 +++--
- .../x86/dell/dell-wmi-sysman/passobj-attributes.c         | 5 +++--
- .../platform/x86/dell/dell-wmi-sysman/string-attributes.c | 5 +++--
- drivers/platform/x86/dell/dell-wmi-sysman/sysman.c        | 8 ++++----
- 6 files changed, 21 insertions(+), 12 deletions(-)
+ drivers/platform/mellanox/mlxreg-lc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-index 3ad33a094588c..817ee7ba07ca0 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-@@ -89,6 +89,11 @@ extern struct wmi_sysman_priv wmi_priv;
- 
- enum { ENUM, INT, STR, PO };
- 
-+#define ENUM_MIN_ELEMENTS		8
-+#define INT_MIN_ELEMENTS		9
-+#define STR_MIN_ELEMENTS		8
-+#define PO_MIN_ELEMENTS			4
-+
- enum {
- 	ATTR_NAME,
- 	DISPL_NAME_LANG_CODE,
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-index 8cc212c852668..fc2f58b4cbc6e 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-@@ -23,9 +23,10 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_ENUMERATION_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < ENUM_MIN_ELEMENTS ||
-+	    obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%s\n", obj->package.elements[CURRENT_VAL].string.pointer);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c
-index 951e75b538fad..7352480642391 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/int-attributes.c
-@@ -25,9 +25,10 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_INTEGER_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_INTEGER) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < INT_MIN_ELEMENTS ||
-+	    obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_INTEGER) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%lld\n", obj->package.elements[CURRENT_VAL].integer.value);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-index d8f1bf5e58a0f..3167e06d416ed 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/passobj-attributes.c
-@@ -26,9 +26,10 @@ static ssize_t is_enabled_show(struct kobject *kobj, struct kobj_attribute *attr
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_PASSOBJ_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[IS_PASS_SET].type != ACPI_TYPE_INTEGER) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < PO_MIN_ELEMENTS ||
-+	    obj->package.elements[IS_PASS_SET].type != ACPI_TYPE_INTEGER) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%lld\n", obj->package.elements[IS_PASS_SET].integer.value);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c
-index c392f0ecf8b55..0d2c74f8d1aad 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/string-attributes.c
-@@ -25,9 +25,10 @@ static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *a
- 	obj = get_wmiobj_pointer(instance_id, DELL_WMI_BIOS_STRING_ATTRIBUTE_GUID);
- 	if (!obj)
- 		return -EIO;
--	if (obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count < STR_MIN_ELEMENTS ||
-+	    obj->package.elements[CURRENT_VAL].type != ACPI_TYPE_STRING) {
- 		kfree(obj);
--		return -EINVAL;
-+		return -EIO;
- 	}
- 	ret = snprintf(buf, PAGE_SIZE, "%s\n", obj->package.elements[CURRENT_VAL].string.pointer);
- 	kfree(obj);
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-index 3ef90211c51a6..660f00173f2ea 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-@@ -411,10 +411,10 @@ static int init_bios_attributes(int attr_type, const char *guid)
- 		return retval;
- 
- 	switch (attr_type) {
--	case ENUM:	min_elements = 8;	break;
--	case INT:	min_elements = 9;	break;
--	case STR:	min_elements = 8;	break;
--	case PO:	min_elements = 4;	break;
-+	case ENUM:	min_elements = ENUM_MIN_ELEMENTS;	break;
-+	case INT:	min_elements = INT_MIN_ELEMENTS;	break;
-+	case STR:	min_elements = STR_MIN_ELEMENTS;	break;
-+	case PO:	min_elements = PO_MIN_ELEMENTS;		break;
- 	default:
- 		pr_err("Error: Unknown attr_type: %d\n", attr_type);
- 		return -EINVAL;
+diff --git a/drivers/platform/mellanox/mlxreg-lc.c b/drivers/platform/mellanox/mlxreg-lc.c
+index 8d833836a6d32..74e9d78ff01ef 100644
+--- a/drivers/platform/mellanox/mlxreg-lc.c
++++ b/drivers/platform/mellanox/mlxreg-lc.c
+@@ -688,7 +688,7 @@ static int mlxreg_lc_completion_notify(void *handle, struct i2c_adapter *parent,
+ 	if (regval & mlxreg_lc->data->mask) {
+ 		mlxreg_lc->state |= MLXREG_LC_SYNCED;
+ 		mlxreg_lc_state_update_locked(mlxreg_lc, MLXREG_LC_SYNCED, 1);
+-		if (mlxreg_lc->state & ~MLXREG_LC_POWERED) {
++		if (!(mlxreg_lc->state & MLXREG_LC_POWERED)) {
+ 			err = mlxreg_lc_power_on_off(mlxreg_lc, 1);
+ 			if (err)
+ 				goto mlxreg_lc_regmap_power_on_off_fail;
 -- 
 2.39.5
 
