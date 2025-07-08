@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0B621C190;
-	Tue,  8 Jul 2025 16:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAB821C190;
+	Tue,  8 Jul 2025 16:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992618; cv=none; b=BHp61i3lP/ExcyV3oAVafdrsO+Yb+DPl0Y+Asr07LBcfbRY6CLvgm3rAsM6hV36aTdiaHt5cek5C/t+Cf2E+ih/67tpR2VGHwUARtjf5vPgILKm9hHDDNNa12xIVGpZhccNO9k+LjzzIeI8rxdYxOln1VhzpkI8U/xBKK1puZtc=
+	t=1751992621; cv=none; b=mnzu/ihIbnyagLVOOEP/jcXJIly9OGPLH+p1XIYCQMo0lMTHgNVMybiCFqrkD2s+/DAJ8fbNeUTgSriljbbTsl+cC9kwM+LprBXRN1ztJOh3hX16W/ngOQzNIoRr7QW69ujOFWhezuYvN9GVo26dVP0GKTt4Ddot6J5MH1VIvQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992618; c=relaxed/simple;
-	bh=5fZPMcKwqcfhbsadt6y4pPnGT1nW9S/NO07CnjV2xgE=;
+	s=arc-20240116; t=1751992621; c=relaxed/simple;
+	bh=Xef8uLP+wI8HtnmKFur1Wkb116b9fbWieGSHDDmYsEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=my15SCu63eoc0mYHwJZOZv7MnAo1HukcaTCt1ymypxVTLTJNtAADkXaQ251S2UEtTuRbahALlldjaO+B6FSAwBz3P6d64RsKp600kBLDPhF/fswrp4kIfNZ/Ymx+A8LVZLCDYqV275cVohJwLuypHv/FIaXGLNC4j37ZiJJH6l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRkofmJm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WJP0w2DwT1PrTB5aiuB+0F0mViG8O1fgZNdo9PT1EmwYgx91Q8euEOFzQWCJRcgg9zTJChwh5tbdnoFhmyYCbN6ZotJAwwVJpAlFnEHUJ80AeUuxYlONlMolO1kvRGBiOPNp8QJTrwSQqQBtAuBR4yZ6MpWYdmBZRVsSM/lczOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkpPMvFZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRkofmJm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA0DC4CEED;
-	Tue,  8 Jul 2025 16:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkpPMvFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1831C4CEED;
+	Tue,  8 Jul 2025 16:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992618;
-	bh=5fZPMcKwqcfhbsadt6y4pPnGT1nW9S/NO07CnjV2xgE=;
+	s=korg; t=1751992621;
+	bh=Xef8uLP+wI8HtnmKFur1Wkb116b9fbWieGSHDDmYsEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VRkofmJmvr7rmE8P4vfUegs2KwiwhHXazuuwuLr5/xAncrleFoqS/+wCP+WpVn/Qs
-	 UwiV7V/D/oi3v0sAW5HdIYbBI1r0CW/jLbyDojWosrCxoD/+2DjWBYQSnI9upUqbQ1
-	 ln0GvxV1p8a7a8JPg70YLumPs/JIbPDYVXve1P8s=
+	b=UkpPMvFZ5CfRgbl/QtaPMP5ACRPS9RPald3gWgJ/6qF/I+Mf7TvdRefOT4E4ykjK1
+	 gzdXQkgIPhbsQZ8neoFRBJ1Xv+NOWaufFuXJikewn5TEQvzcFGAFUMIAX/Jey1kIeT
+	 rk74UuS/W1Yw/yUtu0d82YBrFfmTfgUKS5xaLXns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 023/232] mtk-sd: Prevent memory corruption from DMA map failure
-Date: Tue,  8 Jul 2025 18:20:19 +0200
-Message-ID: <20250708162242.039234370@linuxfoundation.org>
+	Julian Ruess <julianr@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.12 006/232] s390/pci: Fix stale function handles in error handling
+Date: Tue,  8 Jul 2025 18:20:02 +0200
+Message-ID: <20250708162241.598367597@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -50,60 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit f5de469990f19569627ea0dd56536ff5a13beaa3 upstream.
+commit 45537926dd2aaa9190ac0fac5a0fbeefcadfea95 upstream.
 
-If msdc_prepare_data() fails to map the DMA region, the request is
-not prepared for data receiving, but msdc_start_data() proceeds
-the DMA with previous setting.
-Since this will lead a memory corruption, we have to stop the
-request operation soon after the msdc_prepare_data() fails to
-prepare it.
+The error event information for PCI error events contains a function
+handle for the respective function. This handle is generally captured at
+the time the error event was recorded. Due to delays in processing or
+cascading issues, it may happen that during firmware recovery multiple
+events are generated. When processing these events in order Linux may
+already have recovered an affected function making the event information
+stale. Fix this by doing an unconditional CLP List PCI function
+retrieving the current function handle with the zdev->state_lock held
+and ignoring the event if its function handle is stale.
 
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/174972756982.3337526.6755001617701603082.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 4cdf2f4e24ff ("s390/pci: implement minimal PCI error recovery")
+Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mtk-sd.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ arch/s390/pci/pci_event.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -783,6 +783,11 @@ static void msdc_prepare_data(struct msd
- 	}
- }
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -260,6 +260,8 @@ static void __zpci_event_error(struct zp
+ 	struct zpci_dev *zdev = get_zdev_by_fid(ccdf->fid);
+ 	struct pci_dev *pdev = NULL;
+ 	pci_ers_result_t ers_res;
++	u32 fh = 0;
++	int rc;
  
-+static bool msdc_data_prepared(struct mmc_data *data)
-+{
-+	return data->host_cookie & MSDC_PREPARE_FLAG;
-+}
-+
- static void msdc_unprepare_data(struct msdc_host *host, struct mmc_data *data)
- {
- 	if (data->host_cookie & MSDC_ASYNC_FLAG)
-@@ -1346,8 +1351,18 @@ static void msdc_ops_request(struct mmc_
- 	WARN_ON(host->mrq);
- 	host->mrq = mrq;
+ 	zpci_dbg(3, "err fid:%x, fh:%x, pec:%x\n",
+ 		 ccdf->fid, ccdf->fh, ccdf->pec);
+@@ -268,6 +270,15 @@ static void __zpci_event_error(struct zp
  
--	if (mrq->data)
-+	if (mrq->data) {
- 		msdc_prepare_data(host, mrq->data);
-+		if (!msdc_data_prepared(mrq->data)) {
-+			/*
-+			 * Failed to prepare DMA area, fail fast before
-+			 * starting any commands.
-+			 */
-+			mrq->cmd->error = -ENOSPC;
-+			mmc_request_done(mmc_from_priv(host), mrq);
-+			return;
+ 	if (zdev) {
+ 		mutex_lock(&zdev->state_lock);
++		rc = clp_refresh_fh(zdev->fid, &fh);
++		if (rc)
++			goto no_pdev;
++		if (!fh || ccdf->fh != fh) {
++			/* Ignore events with stale handles */
++			zpci_dbg(3, "err fid:%x, fh:%x (stale %x)\n",
++				 ccdf->fid, fh, ccdf->fh);
++			goto no_pdev;
 +		}
-+	}
- 
- 	/* if SBC is required, we have HW option and SW option.
- 	 * if HW option is enabled, and SBC does not have "special" flags,
+ 		zpci_update_fh(zdev, ccdf->fh);
+ 		if (zdev->zbus->bus)
+ 			pdev = pci_get_slot(zdev->zbus->bus, zdev->devfn);
 
 
