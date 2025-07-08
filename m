@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0721DF74F;
-	Tue,  8 Jul 2025 16:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5D51714B7;
+	Tue,  8 Jul 2025 16:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992341; cv=none; b=Bst7YagFWRD6vghTNm4FwmhRGDU21CFOABNJhDnLLthjr3DjbPO3pSOx2L2EBqdVXYck5oDkIn3TMB7kHaYlxV0whTTeOX86SYkYbclrYy9er5jPzHuPM39THdL/nvAEYSkPIdsHVGxbuLEaGcopY6K1huziaFw1W1SkZZQCevE=
+	t=1751992343; cv=none; b=gUt6UaAiZO7FMxGCcDoa7drIxqyw4/Uh8njolt6Ro4WGjWX53+9ndE1oDMuVwpdRSIYOlvGenm770JtDzBsVrr90S/aOSLYN0kU6RJzmgPzcUoLWLkv9WaSrbdQwdTQH77oMka/BBeNZBUrjYo71GPCaoazAw+yOekZK9mWiO/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992341; c=relaxed/simple;
-	bh=s9sn/Ag5Th6v5EPfDPZucpMTj0QVEOj2FwpOPFflQ+w=;
+	s=arc-20240116; t=1751992343; c=relaxed/simple;
+	bh=tvbzQ7SQmyWLmQRUmNpECv2PfZdD0S+0yhKt7qIJXiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdbfhV8Djfhs1ScA8dpKxJzAS8eQVVJkFbgmQIgHEJ8oy5Kki37s47ixjWd9Tf+S1sfSF6Ovq6SUmjFvxUsYBRff598BLaG1nnm5ie4xtdp6+Cn9kNxoQAhbFhlttfdPg6HXuHY2YG/3UsBbhyI2hw8yoh9o7hBagwY2OfEh+FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVxRx/I9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TfMB1B02reFc6k78iZqAYCdeJncZmrFvMEtl1cmsF15BJ5QxrULVO0NdIkhuD8aXXEHhZX6oPmSpMUI3Nx23g5gs8kM1ciwYwsjbPujt1O0Hl76yY7NuGF1Vaxy0beOjN9o6R+A0QB84UVb9WqhWqjV78UufkOXXc0noCQ55stQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sdgeMWB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVxRx/I9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADCFC4CEED;
-	Tue,  8 Jul 2025 16:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sdgeMWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AEFC4CEED;
+	Tue,  8 Jul 2025 16:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992340;
-	bh=s9sn/Ag5Th6v5EPfDPZucpMTj0QVEOj2FwpOPFflQ+w=;
+	s=korg; t=1751992343;
+	bh=tvbzQ7SQmyWLmQRUmNpECv2PfZdD0S+0yhKt7qIJXiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVxRx/I9QgDA5uki8C6ltRJyiFx1E9JJ1RCFsz2ylabZ8IrOVJLWuH0vkOLvaXqZX
-	 04OQrAq/6ooi7JD41pG8++/ii4xtRNfXhbRG+sOTwBAx+xjN7iIXMF26PG/Tr+LIzA
-	 4IGbhdys7sZyt3ibWBT4Ar0pFWlXp4zpTI7HL4Xo=
+	b=1sdgeMWBVc5xNMd5G7ksrFlP+7Zu1/FWp4OQEzbtrlIVVvVurB9cd3Piypo9WS5oD
+	 uq4Na9UlHD0m/qRiyEA5nBoqD3t4cLe/TxWY0CmIkqbrKY/ytHLbYy7Go/hN2InRt/
+	 MXR6iEik8JW+HQZKI/rUpdIA83Zqw2k6W6CUZhcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com,
-	Kohei Enju <enjuk@amazon.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/132] rose: fix dangling neighbour pointers in rose_rt_device_down()
-Date: Tue,  8 Jul 2025 18:22:50 +0200
-Message-ID: <20250708162232.384700156@linuxfoundation.org>
+Subject: [PATCH 6.6 060/132] nui: Fix dma_mapping_error() check
+Date: Tue,  8 Jul 2025 18:22:51 +0200
+Message-ID: <20250708162232.413406912@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -53,82 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enjuk@amazon.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 34a500caf48c47d5171f4aa1f237da39b07c6157 ]
+[ Upstream commit 561aa0e22b70a5e7246b73d62a824b3aef3fc375 ]
 
-There are two bugs in rose_rt_device_down() that can cause
-use-after-free:
+dma_map_XXX() functions return values DMA_MAPPING_ERROR as error values
+which is often ~0.  The error value should be tested with
+dma_mapping_error().
 
-1. The loop bound `t->count` is modified within the loop, which can
-   cause the loop to terminate early and miss some entries.
+This patch creates a new function in niu_ops to test if the mapping
+failed.  The test is fixed in niu_rbr_add_page(), added in
+niu_start_xmit() and the successfully mapped pages are unmaped upon error.
 
-2. When removing an entry from the neighbour array, the subsequent entries
-   are moved up to fill the gap, but the loop index `i` is still
-   incremented, causing the next entry to be skipped.
-
-For example, if a node has three neighbours (A, A, B) with count=3 and A
-is being removed, the second A is not checked.
-
-    i=0: (A, A, B) -> (A, B) with count=2
-          ^ checked
-    i=1: (A, B)    -> (A, B) with count=2
-             ^ checked (B, not A!)
-    i=2: (doesn't occur because i < count is false)
-
-This leaves the second A in the array with count=2, but the rose_neigh
-structure has been freed. Code that accesses these entries assumes that
-the first `count` entries are valid pointers, causing a use-after-free
-when it accesses the dangling pointer.
-
-Fix both issues by iterating over the array in reverse order with a fixed
-loop bound. This ensures that all entries are examined and that the removal
-of an entry doesn't affect subsequent iterations.
-
-Reported-by: syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e04e2c007ba2c80476cb
-Tested-by: syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Fixes: ec2deec1f352 ("niu: Fix to check for dma mapping errors.")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250629030833.6680-1-enjuk@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_route.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/sun/niu.c | 31 ++++++++++++++++++++++++++++++-
+ drivers/net/ethernet/sun/niu.h |  4 ++++
+ 2 files changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index fee772b4637c8..a7054546f52df 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -497,22 +497,15 @@ void rose_rt_device_down(struct net_device *dev)
- 			t         = rose_node;
- 			rose_node = rose_node->next;
+diff --git a/drivers/net/ethernet/sun/niu.c b/drivers/net/ethernet/sun/niu.c
+index 011d74087f860..fc6217917fc22 100644
+--- a/drivers/net/ethernet/sun/niu.c
++++ b/drivers/net/ethernet/sun/niu.c
+@@ -3336,7 +3336,7 @@ static int niu_rbr_add_page(struct niu *np, struct rx_ring_info *rp,
  
--			for (i = 0; i < t->count; i++) {
-+			for (i = t->count - 1; i >= 0; i--) {
- 				if (t->neighbour[i] != s)
- 					continue;
+ 	addr = np->ops->map_page(np->device, page, 0,
+ 				 PAGE_SIZE, DMA_FROM_DEVICE);
+-	if (!addr) {
++	if (np->ops->mapping_error(np->device, addr)) {
+ 		__free_page(page);
+ 		return -ENOMEM;
+ 	}
+@@ -6672,6 +6672,8 @@ static netdev_tx_t niu_start_xmit(struct sk_buff *skb,
+ 	len = skb_headlen(skb);
+ 	mapping = np->ops->map_single(np->device, skb->data,
+ 				      len, DMA_TO_DEVICE);
++	if (np->ops->mapping_error(np->device, mapping))
++		goto out_drop;
  
- 				t->count--;
+ 	prod = rp->prod;
  
--				switch (i) {
--				case 0:
--					t->neighbour[0] = t->neighbour[1];
--					fallthrough;
--				case 1:
--					t->neighbour[1] = t->neighbour[2];
--					break;
--				case 2:
--					break;
--				}
-+				memmove(&t->neighbour[i], &t->neighbour[i + 1],
-+					sizeof(t->neighbour[0]) *
-+						(t->count - i));
- 			}
+@@ -6713,6 +6715,8 @@ static netdev_tx_t niu_start_xmit(struct sk_buff *skb,
+ 		mapping = np->ops->map_page(np->device, skb_frag_page(frag),
+ 					    skb_frag_off(frag), len,
+ 					    DMA_TO_DEVICE);
++		if (np->ops->mapping_error(np->device, mapping))
++			goto out_unmap;
  
- 			if (t->count <= 0)
+ 		rp->tx_buffs[prod].skb = NULL;
+ 		rp->tx_buffs[prod].mapping = mapping;
+@@ -6737,6 +6741,19 @@ static netdev_tx_t niu_start_xmit(struct sk_buff *skb,
+ out:
+ 	return NETDEV_TX_OK;
+ 
++out_unmap:
++	while (i--) {
++		const skb_frag_t *frag;
++
++		prod = PREVIOUS_TX(rp, prod);
++		frag = &skb_shinfo(skb)->frags[i];
++		np->ops->unmap_page(np->device, rp->tx_buffs[prod].mapping,
++				    skb_frag_size(frag), DMA_TO_DEVICE);
++	}
++
++	np->ops->unmap_single(np->device, rp->tx_buffs[rp->prod].mapping,
++			      skb_headlen(skb), DMA_TO_DEVICE);
++
+ out_drop:
+ 	rp->tx_errors++;
+ 	kfree_skb(skb);
+@@ -9636,6 +9653,11 @@ static void niu_pci_unmap_single(struct device *dev, u64 dma_address,
+ 	dma_unmap_single(dev, dma_address, size, direction);
+ }
+ 
++static int niu_pci_mapping_error(struct device *dev, u64 addr)
++{
++	return dma_mapping_error(dev, addr);
++}
++
+ static const struct niu_ops niu_pci_ops = {
+ 	.alloc_coherent	= niu_pci_alloc_coherent,
+ 	.free_coherent	= niu_pci_free_coherent,
+@@ -9643,6 +9665,7 @@ static const struct niu_ops niu_pci_ops = {
+ 	.unmap_page	= niu_pci_unmap_page,
+ 	.map_single	= niu_pci_map_single,
+ 	.unmap_single	= niu_pci_unmap_single,
++	.mapping_error	= niu_pci_mapping_error,
+ };
+ 
+ static void niu_driver_version(void)
+@@ -10009,6 +10032,11 @@ static void niu_phys_unmap_single(struct device *dev, u64 dma_address,
+ 	/* Nothing to do.  */
+ }
+ 
++static int niu_phys_mapping_error(struct device *dev, u64 dma_address)
++{
++	return false;
++}
++
+ static const struct niu_ops niu_phys_ops = {
+ 	.alloc_coherent	= niu_phys_alloc_coherent,
+ 	.free_coherent	= niu_phys_free_coherent,
+@@ -10016,6 +10044,7 @@ static const struct niu_ops niu_phys_ops = {
+ 	.unmap_page	= niu_phys_unmap_page,
+ 	.map_single	= niu_phys_map_single,
+ 	.unmap_single	= niu_phys_unmap_single,
++	.mapping_error	= niu_phys_mapping_error,
+ };
+ 
+ static int niu_of_probe(struct platform_device *op)
+diff --git a/drivers/net/ethernet/sun/niu.h b/drivers/net/ethernet/sun/niu.h
+index 04c215f91fc08..0b169c08b0f2d 100644
+--- a/drivers/net/ethernet/sun/niu.h
++++ b/drivers/net/ethernet/sun/niu.h
+@@ -2879,6 +2879,9 @@ struct tx_ring_info {
+ #define NEXT_TX(tp, index) \
+ 	(((index) + 1) < (tp)->pending ? ((index) + 1) : 0)
+ 
++#define PREVIOUS_TX(tp, index) \
++	(((index) - 1) >= 0 ? ((index) - 1) : (((tp)->pending) - 1))
++
+ static inline u32 niu_tx_avail(struct tx_ring_info *tp)
+ {
+ 	return (tp->pending -
+@@ -3140,6 +3143,7 @@ struct niu_ops {
+ 			  enum dma_data_direction direction);
+ 	void (*unmap_single)(struct device *dev, u64 dma_address,
+ 			     size_t size, enum dma_data_direction direction);
++	int (*mapping_error)(struct device *dev, u64 dma_address);
+ };
+ 
+ struct niu_link_config {
 -- 
 2.39.5
 
