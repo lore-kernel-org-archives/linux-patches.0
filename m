@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3F42E49B0;
-	Tue,  8 Jul 2025 16:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AA02E49B0;
+	Tue,  8 Jul 2025 16:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992846; cv=none; b=AR9S+EJrsK5o2Y5LnXs4DMfe40pv20NzKk7izLkelnilkRfYj4kstFup7eoOvgaLQ4bnpbF66d2WZGOY4RZQW5br4d0qFmVvOfnGhbaeRnfLWU1RBsKof3o33q24TZ65aZjtNyPGpLxPUDYvLRizC8/ZH9G/1U6/fMZ6bZgNoeA=
+	t=1751992848; cv=none; b=JFLZ7bh4MuKNv8lKK3plAGlZ2aE0wjfmZKzWMbYvW88AdgSnQ7O/Y8J6PehZZBAVFc4hMw5+gd0gTAy+yjZLs1R0t4r4Z9cnGRvGnXpgpiUJ4dHLhu97L8dB8RojqBHqxX8o8zcJORuERZQ8o11MFiWx50I8WNC215XkpSeB1fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992846; c=relaxed/simple;
-	bh=aRtQAaZOnflMgnNnfb/sZN2pkWUNBNGW1itYjBQ/ofU=;
+	s=arc-20240116; t=1751992848; c=relaxed/simple;
+	bh=K7SfNmUMx6DBAeBIXYa7Gx5fbGV1JS4MB+uk1aSS6i8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tu3UbloJXczA0K28tKzaqTsdYCb2ZwK86piiPtaIOkezU0jEUnRlk4goVAVzJ8HN06+E4Oc3fJ8lOmqYrssz26b0B6mowfixzqkhbIB+DDDZQH1E9x9RpDMq77FV0PO6yxv6LY3BZk7gvQv8LeOB+Re60t9BEgGqOqMs1d6SGH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgI+KHqh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dBa/LvsWStKMpKOU9Y8/icY1kQefC5yqSnNw9hmgIprXa1MYEhxAaVO3EuiKMEI7ttFgx+jALAYf371C6MxHzTc8ikAmqfIk6n4zp2wbChYvq7r3w3/6rjQTO2Fa3dBI8LmRVqCIBgDmO4UguwvWl8vtb4GFCWrT+H3U/zf+m0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZaBXfDM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgI+KHqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67158C4CEED;
-	Tue,  8 Jul 2025 16:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZaBXfDM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522CFC4CEED;
+	Tue,  8 Jul 2025 16:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992845;
-	bh=aRtQAaZOnflMgnNnfb/sZN2pkWUNBNGW1itYjBQ/ofU=;
+	s=korg; t=1751992848;
+	bh=K7SfNmUMx6DBAeBIXYa7Gx5fbGV1JS4MB+uk1aSS6i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgI+KHqhdHSQOxyi8lwCqW0J1Z7oTg3GSKj6FnlBBLlRCSvf2eGvPJ2dGcjgqitOl
-	 94OwnwxOYwB1/5AAnq9m2RndeWgl1q/1Y+LTdC/0Cg9hP1/K4czWdNQvrxRLkuWtmC
-	 enWQtP2xb7D4IROvosYwGmo7GVeMzkaWI/7WI3jE=
+	b=QZaBXfDM1BOSjjyhS1NMIyXwLP3cN5zC0XEGqfC0Jwqr7FjB3BPz2KFVjBXK7h+b2
+	 5eTgu59/HqrgbRo0ZwC+J9LqA3vsrccIAjvPRQdpz3lLAxagtLnBuIRoVppLmyGglF
+	 R/kg8KBFNNpYV3qZE6oKZr513o7xpiNZEMseVmSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Borja <kuurtb@gmail.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/232] platform/x86: dell-wmi-sysman: Fix class device unregistration
-Date: Tue,  8 Jul 2025 18:21:07 +0200
-Message-ID: <20250708162243.319043495@linuxfoundation.org>
+Subject: [PATCH 6.12 072/232] platform/mellanox: mlxreg-lc: Fix logic error in power state check
+Date: Tue,  8 Jul 2025 18:21:08 +0200
+Message-ID: <20250708162243.340827445@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,47 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kurt Borja <kuurtb@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 314e5ad4782d08858b3abc325c0487bd2abc23a1 ]
+[ Upstream commit 644bec18e705ca41d444053407419a21832fcb2f ]
 
-Devices under the firmware_attributes_class do not have unique a dev_t.
-Therefore, device_unregister() should be used instead of
-device_destroy(), since the latter may match any device with a given
-dev_t.
+Fixes a logic issue in mlxreg_lc_completion_notify() where the
+intention was to check if MLXREG_LC_POWERED flag is not set before
+powering on the device.
 
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250625-dest-fix-v1-3-3a0f342312bb@gmail.com
+The original code used "state & ~MLXREG_LC_POWERED" to check for the
+absence of the POWERED bit. However this condition evaluates to true
+even when other bits are set, leading to potentially incorrect
+behavior.
+
+Corrected the logic to explicitly check for the absence of
+MLXREG_LC_POWERED using !(state & MLXREG_LC_POWERED).
+
+Fixes: 62f9529b8d5c ("platform/mellanox: mlxreg-lc: Add initial support for Nvidia line card devices")
+Suggested-by: Vadim Pasternak <vadimp@nvidia.com>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://lore.kernel.org/r/20250630105812.601014-1-alok.a.tiwari@oracle.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/sysman.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/mellanox/mlxreg-lc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-index 3c74d5e8350a4..f5402b7146572 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/sysman.c
-@@ -597,7 +597,7 @@ static int __init sysman_init(void)
- 	release_attributes_data();
- 
- err_destroy_classdev:
--	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
-+	device_unregister(wmi_priv.class_dev);
- 
- err_exit_bios_attr_pass_interface:
- 	exit_bios_attr_pass_interface();
-@@ -611,7 +611,7 @@ static int __init sysman_init(void)
- static void __exit sysman_exit(void)
- {
- 	release_attributes_data();
--	device_destroy(&firmware_attributes_class, MKDEV(0, 0));
-+	device_unregister(wmi_priv.class_dev);
- 	exit_bios_attr_set_interface();
- 	exit_bios_attr_pass_interface();
- }
+diff --git a/drivers/platform/mellanox/mlxreg-lc.c b/drivers/platform/mellanox/mlxreg-lc.c
+index 43d119e3a4734..99152676dbd28 100644
+--- a/drivers/platform/mellanox/mlxreg-lc.c
++++ b/drivers/platform/mellanox/mlxreg-lc.c
+@@ -688,7 +688,7 @@ static int mlxreg_lc_completion_notify(void *handle, struct i2c_adapter *parent,
+ 	if (regval & mlxreg_lc->data->mask) {
+ 		mlxreg_lc->state |= MLXREG_LC_SYNCED;
+ 		mlxreg_lc_state_update_locked(mlxreg_lc, MLXREG_LC_SYNCED, 1);
+-		if (mlxreg_lc->state & ~MLXREG_LC_POWERED) {
++		if (!(mlxreg_lc->state & MLXREG_LC_POWERED)) {
+ 			err = mlxreg_lc_power_on_off(mlxreg_lc, 1);
+ 			if (err)
+ 				goto mlxreg_lc_regmap_power_on_off_fail;
 -- 
 2.39.5
 
