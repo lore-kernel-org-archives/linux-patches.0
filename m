@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F8C2E62B8;
-	Tue,  8 Jul 2025 16:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D5F2045B5;
+	Tue,  8 Jul 2025 16:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993163; cv=none; b=eVr4t8rgOz4H/M1EmqQF798t36oP0S399sQ5tiuTAGv5fVPf274mvCMG0Wv8tzcPAwwe7RznWE7H9vOXuygUIUlOrmwA+pVd/wJQFn8O6JvwD94gk3AJZ7tETM/VRSiq68xMbol0XW11vRPd1/D8VU+XTYoAa7bhnIxnrLAZXdg=
+	t=1751993167; cv=none; b=LAePnmeqdedpaotQbVKuSQYoMeSofdV/KxBlmUJlD7ymsj0ZxMz9SirH44mO10itMLu+DB174riJZgIeC6XcIO4zRW5UBUL4MF7jtUPoTzDfbXltTUzrTkHHeoDvkOKo99xpWUzc1zqc3Bdtrq1/lAkzZFZK54nv1WMRRWjRjuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993163; c=relaxed/simple;
-	bh=M0OBjhbiPgiCbA0K7yZq3XMB6tIbK2MUN2VcpaCqjYg=;
+	s=arc-20240116; t=1751993167; c=relaxed/simple;
+	bh=h19ytu2aCJHZPHqjWvnaXrpn4zXLLm1GccvkP9j+mkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6oQwQjxt1c0XOAABxWgkgoJUsLwkSz/rjpiX5IZFNwizROqQu1pDIIKoHZh39BSjKyMcRQyqoCYJuSw+VBYKtsY70gO1TnjdbGlkshaL+FHkVXcvBfqBAKDjU58xra0VHpbuHbQ3WmhC1EJI8pGge3U6/FZBF7CvAEGv16XFwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGEZ0YeD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlmcagtH745QDWr52VXAjtskfisuxZkEFSxvu4Azybdpc6CRbL9XuOn3/+Tpwi+9S/ygod1r5bPFfl6ca7tobVhTbClNfImf5tNdY2S3n/w367KS/gnTeBfEwKLu/lKkEmkxBMaUUNsRzv3OW6I/vtl4wOzXdzXCDdfTB9PblHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+KzoLgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGEZ0YeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63648C4CEED;
-	Tue,  8 Jul 2025 16:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+KzoLgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C384C4CEED;
+	Tue,  8 Jul 2025 16:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993163;
-	bh=M0OBjhbiPgiCbA0K7yZq3XMB6tIbK2MUN2VcpaCqjYg=;
+	s=korg; t=1751993166;
+	bh=h19ytu2aCJHZPHqjWvnaXrpn4zXLLm1GccvkP9j+mkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGEZ0YeDOnNiIUL0JPEWpOGIu2YEHWo59cExcguLe+tfXLtDTtibo/KmvAQ0qym/w
-	 UGd6WaRwN5ePLjdUX4Jt4oulODsP795eSvXC3Q6YqrQz9QDxzFAqoVyaiIEZoXmw1j
-	 gzcs+XfCJ6PAy8vmfozql1rd/yrgl9HwLnHS3SlE=
+	b=m+KzoLgwgMOZjP6qzssK5dsWfN9l6yfDUOYpnw8v69x6OKcrXdOgxs667E7O1gehM
+	 dbr9I3mWwq7fmJVHBZWNHYjGoiJxH1HW4sxtoQq29t0kzHNFC4aM1230Mj2FQZzRTo
+	 KERDSf7XG8NTdw515rp/VBzI3cPQO20o+WgzzymU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shawnguo@kernel.org>,
-	John Ernberg <john.ernberg@actia.se>,
 	stable <stable@kernel.org>,
-	Jun Li <jun.li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.12 210/232] usb: chipidea: udc: disconnect/reconnect from host when do suspend/resume
-Date: Tue,  8 Jul 2025 18:23:26 +0200
-Message-ID: <20250708162246.937389345@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.12 211/232] usb: acpi: fix device link removal
+Date: Tue,  8 Jul 2025 18:23:27 +0200
+Message-ID: <20250708162246.962402747@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -54,70 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 31a6afbe86e8e9deba9ab53876ec49eafc7fd901 upstream.
+commit 3b18405763c1ebb1efc15feef5563c9cdb2cc3a7 upstream.
 
-Shawn and John reported a hang issue during system suspend as below:
+The device link to the USB4 host interface has to be removed
+manually since it's no longer auto removed.
 
- - USB gadget is enabled as Ethernet
- - There is data transfer over USB Ethernet (scp a big file between host
-                                             and device)
- - Device is going in/out suspend (echo mem > /sys/power/state)
-
-The root cause is the USB device controller is suspended but the USB bus
-is still active which caused the USB host continues to transfer data with
-device and the device continues to queue USB requests (in this case, a
-delayed TCP ACK packet trigger the issue) after controller is suspended,
-however the USB controller clock is already gated off. Then if udc driver
-access registers after that point, the system will hang.
-
-The correct way to avoid such issue is to disconnect device from host when
-the USB bus is not at suspend state. Then the host will receive disconnect
-event and stop data transfer in time. To continue make USB gadget device
-work after system resume, this will reconnect device automatically.
-
-To make usb wakeup work if USB bus is already at suspend state, this will
-keep connection for it only when USB device controller has enabled wakeup
-capability.
-
-Reported-by: Shawn Guo <shawnguo@kernel.org>
-Reported-by: John Ernberg <john.ernberg@actia.se>
-Closes: https://lore.kernel.org/linux-usb/aEZxmlHmjeWcXiF3@dragon/
-Tested-by: John Ernberg <john.ernberg@actia.se> # iMX8QXP
-Fixes: 235ffc17d014 ("usb: chipidea: udc: add suspend/resume support for device controller")
+Fixes: 623dae3e7084 ("usb: acpi: fix boot hang due to early incorrect 'tunneled' USB3 device links")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Jun Li <jun.li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20250614124914.207540-1-xu.yang_2@nxp.com
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/r/20250611111415.2707865-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/udc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/core/hub.c      |    3 +++
+ drivers/usb/core/usb-acpi.c |    4 +++-
+ include/linux/usb.h         |    2 ++
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/udc.c
-+++ b/drivers/usb/chipidea/udc.c
-@@ -2362,6 +2362,10 @@ static void udc_suspend(struct ci_hdrc *
- 	 */
- 	if (hw_read(ci, OP_ENDPTLISTADDR, ~0) == 0)
- 		hw_write(ci, OP_ENDPTLISTADDR, ~0, ~0);
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2336,6 +2336,9 @@ void usb_disconnect(struct usb_device **
+ 	usb_remove_ep_devs(&udev->ep0);
+ 	usb_unlock_device(udev);
+ 
++	if (udev->usb4_link)
++		device_link_del(udev->usb4_link);
 +
-+	if (ci->gadget.connected &&
-+	    (!ci->suspended || !device_may_wakeup(ci->dev)))
-+		usb_gadget_disconnect(&ci->gadget);
+ 	/* Unregister the device.  The device driver is responsible
+ 	 * for de-configuring the device and invoking the remove-device
+ 	 * notifier chain (used by usbfs and possibly others).
+--- a/drivers/usb/core/usb-acpi.c
++++ b/drivers/usb/core/usb-acpi.c
+@@ -157,7 +157,7 @@ EXPORT_SYMBOL_GPL(usb_acpi_set_power_sta
+  */
+ static int usb_acpi_add_usb4_devlink(struct usb_device *udev)
+ {
+-	const struct device_link *link;
++	struct device_link *link;
+ 	struct usb_port *port_dev;
+ 	struct usb_hub *hub;
+ 
+@@ -188,6 +188,8 @@ static int usb_acpi_add_usb4_devlink(str
+ 	dev_dbg(&port_dev->dev, "Created device link from %s to %s\n",
+ 		dev_name(&port_dev->child->dev), dev_name(nhi_fwnode->dev));
+ 
++	udev->usb4_link = link;
++
+ 	return 0;
  }
  
- static void udc_resume(struct ci_hdrc *ci, bool power_lost)
-@@ -2372,6 +2376,9 @@ static void udc_resume(struct ci_hdrc *c
- 					OTGSC_BSVIS | OTGSC_BSVIE);
- 		if (ci->vbus_active)
- 			usb_gadget_vbus_disconnect(&ci->gadget);
-+	} else if (ci->vbus_active && ci->driver &&
-+		   !ci->gadget.connected) {
-+		usb_gadget_connect(&ci->gadget);
- 	}
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -612,6 +612,7 @@ struct usb3_lpm_parameters {
+  *	FIXME -- complete doc
+  * @authenticated: Crypto authentication passed
+  * @tunnel_mode: Connection native or tunneled over USB4
++ * @usb4_link: device link to the USB4 host interface
+  * @lpm_capable: device supports LPM
+  * @lpm_devinit_allow: Allow USB3 device initiated LPM, exit latency is in range
+  * @usb2_hw_lpm_capable: device can perform USB2 hardware LPM
+@@ -722,6 +723,7 @@ struct usb_device {
+ 	unsigned reset_resume:1;
+ 	unsigned port_is_suspended:1;
+ 	enum usb_link_tunnel_mode tunnel_mode;
++	struct device_link *usb4_link;
  
- 	/* Restore value 0 if it was set for power lost check */
+ 	int slot_id;
+ 	struct usb2_lpm_parameters l1_params;
 
 
