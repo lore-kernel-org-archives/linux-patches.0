@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FB21C6FEC;
-	Tue,  8 Jul 2025 16:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916E62E49AF;
+	Tue,  8 Jul 2025 16:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992202; cv=none; b=Asn/5vzJ5QxhyUS2Cw02A70JSrV029INI/Zz4IO7qEzkeRcp6dUu9+EA019w3siGxmTC358qFhbNt7dTJur/Bwsjycd4IdPJTtw5n7huZViPA8mxFuV2UsNEwYXnuAKI3DvbmuDzmAUxQv+kDjVvT87NTIdRbIKA86qPFKPqN1I=
+	t=1751992205; cv=none; b=r6oLFr3Uhm1dN2X29UNZ2bJTjLHl8Zmfof1aEuBY48mpmKLR0fdsBHoByjEN3bQiZqFoatfmQmmoC00ohyl8Vi98sOQY5Etd311I6X893GBXmsmENcJ3ssdpBV5xqa8+VcUNK1LrcuZg31f0dx4wfBrW1HXtHfIaG39eYcH4OiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992202; c=relaxed/simple;
-	bh=un9sD9x7n5QQzIwLfSUYN/9O4+kXaOErfTahqv0rHAs=;
+	s=arc-20240116; t=1751992205; c=relaxed/simple;
+	bh=BqYf62IvgEYRILBmpf49iGf2AzTxXhfGx5cZ7R5/Cog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAr8DgXfWb0j80eeMngMnzdn+rCC+ft5AukaDKmAzOd0rfWfoc0p9Jip1xtBxhkH8pUuOubSUpq6nKpmoa7MVP97xB3CBVtPJhGLjBsxnG4R3bBHKoVMXy1P9LT81fnGwRpb9DAwzecRdXKUeob1y9S5z72uTA9w25IYBXC2Wck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTmIym+B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q7kOJfgPeSgiFVaOgbhqFG1SEGpxsfCgru3ptNckD+fltYA9+EjaEH1L15nvwLKSw4dJph1VerRME6t18T3sItPXlurpwP9QO8rGnaaMawhs0RisKJZTi8GlGl9/GVin4j1alxl0OR8vMdY4/+8VNUksxDekErNg9Jqq0Q1epNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPEpLbwR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTmIym+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF85C4CEED;
-	Tue,  8 Jul 2025 16:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPEpLbwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA109C4CEF5;
+	Tue,  8 Jul 2025 16:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992202;
-	bh=un9sD9x7n5QQzIwLfSUYN/9O4+kXaOErfTahqv0rHAs=;
+	s=korg; t=1751992205;
+	bh=BqYf62IvgEYRILBmpf49iGf2AzTxXhfGx5cZ7R5/Cog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTmIym+BoZCzuQZZ1OlLMkBF/Qcvave7I8EhZkXVqas0Bl2YU57UfV0FhsUCu4srX
-	 01miA3+zeuMLuD5XQltrBAp9qQukXnF9EtZezHDEjaqnxb+jcQrPlYxMmze2nYNgG4
-	 EmTevgauSBr6d6LX/nm+LCFP9E2h6XlpNaLgoCAQ=
+	b=iPEpLbwR5JiQXwA9kqLQPWhv8wqdZ/JIGTu6fxVc2YavB8dZrztDtTVD7KcOMeQB7
+	 hcvLzzxyKktnd9EfwB42JEn6GzdqBFvbodK4OIFXcqvDBVpoVTWCho2612QmyLCUCb
+	 utQr06pzlJzk42zXH4556WCQ0TZIzypcED3Rw2UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	virtualization@lists.linux.dev,
-	netdev@vger.kernel.org,
-	stable <stable@kernel.org>,
-	HarshaVardhana S A <harshavardhana.sa@broadcom.com>
-Subject: [PATCH 6.6 006/132] vsock/vmci: Clear the vmci transport packet properly when initializing it
-Date: Tue,  8 Jul 2025 18:21:57 +0200
-Message-ID: <20250708162230.951045547@linuxfoundation.org>
+	Victor Shih <victor.shih@genesyslogic.com.tw>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 007/132] mmc: sdhci: Add a helper function for dump register in dynamic debug mode
+Date: Tue,  8 Jul 2025 18:21:58 +0200
+Message-ID: <20250708162230.977212331@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -60,56 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+From: Victor Shih <victor.shih@genesyslogic.com.tw>
 
-commit 223e2288f4b8c262a864e2c03964ffac91744cd5 upstream.
+commit 2881ba9af073faa8ee7408a8d1e0575e50eb3f6c upstream.
 
-In vmci_transport_packet_init memset the vmci_transport_packet before
-populating the fields to avoid any uninitialised data being left in the
-structure.
+Add a helper function for dump register in dynamic debug mode.
 
-Cc: Bryan Tan <bryan-bt.tan@broadcom.com>
-Cc: Vishnu Dasa <vishnu.dasa@broadcom.com>
-Cc: Broadcom internal kernel review list
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: virtualization@lists.linux.dev
-Cc: netdev@vger.kernel.org
-Cc: stable <stable@kernel.org>
-Signed-off-by: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20250701122254.2397440-1-gregkh@linuxfoundation.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250606110121.96314-3-victorshihgli@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/vmci_transport.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci.h |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -119,6 +119,8 @@ vmci_transport_packet_init(struct vmci_t
- 			   u16 proto,
- 			   struct vmci_handle handle)
- {
-+	memset(pkt, 0, sizeof(*pkt));
-+
- 	/* We register the stream control handler as an any cid handle so we
- 	 * must always send from a source address of VMADDR_CID_ANY
- 	 */
-@@ -131,8 +133,6 @@ vmci_transport_packet_init(struct vmci_t
- 	pkt->type = type;
- 	pkt->src_port = src->svm_port;
- 	pkt->dst_port = dst->svm_port;
--	memset(&pkt->proto, 0, sizeof(pkt->proto));
--	memset(&pkt->_reserved2, 0, sizeof(pkt->_reserved2));
+--- a/drivers/mmc/host/sdhci.h
++++ b/drivers/mmc/host/sdhci.h
+@@ -825,4 +825,20 @@ void sdhci_switch_external_dma(struct sd
+ void sdhci_set_data_timeout_irq(struct sdhci_host *host, bool enable);
+ void __sdhci_set_timeout(struct sdhci_host *host, struct mmc_command *cmd);
  
- 	switch (pkt->type) {
- 	case VMCI_TRANSPORT_PACKET_TYPE_INVALID:
++#if defined(CONFIG_DYNAMIC_DEBUG) || \
++	(defined(CONFIG_DYNAMIC_DEBUG_CORE) && defined(DYNAMIC_DEBUG_MODULE))
++#define SDHCI_DBG_ANYWAY 0
++#elif defined(DEBUG)
++#define SDHCI_DBG_ANYWAY 1
++#else
++#define SDHCI_DBG_ANYWAY 0
++#endif
++
++#define sdhci_dbg_dumpregs(host, fmt)					\
++do {									\
++	DEFINE_DYNAMIC_DEBUG_METADATA(descriptor, fmt);			\
++	if (DYNAMIC_DEBUG_BRANCH(descriptor) ||	SDHCI_DBG_ANYWAY)	\
++		sdhci_dumpregs(host);					\
++} while (0)
++
+ #endif /* __SDHCI_HW_H */
 
 
