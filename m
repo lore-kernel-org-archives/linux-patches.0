@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971802E3AE8;
-	Tue,  8 Jul 2025 16:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D0A2E3B03;
+	Tue,  8 Jul 2025 16:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992526; cv=none; b=Tlj+HR26U7a9WltrLyDhPtsve/HtbpNJ23jBK3zxR4j3B6Z74w4TgEssk+EplvMpTnsGiiP5jPnXIgymsd7p1zpKUobaUV/JAgSMZPP0ozFwou2Jpp6GMUpTJ7zOA4RaffLw2F28mFTuBO5ZXq4xbrkpLxib70+61A/Cw4UrsUw=
+	t=1751992529; cv=none; b=K1vmQADT9x5mkjdA2ZEKeEqKAeFY/BUIbJJsD6lQfDxzA2VRMAzndhWlaIXNz03H/0+GJECA3v6aai5qnMlumdZG+lyS4F/WMP7slL4Lj3PApRPlEbnAupM7K/JXVEKuce0qqafmLvPFDPzr978qjISXrGpHwAEgMCjWCwJh2Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992526; c=relaxed/simple;
-	bh=qRMCEl63T3vEnrESKHSrZ3EAf3k7+rvClRC2TxobFxg=;
+	s=arc-20240116; t=1751992529; c=relaxed/simple;
+	bh=mf+SY3PkmjrZFYwgqs2XtcFdnyaLS/Naays9y1VYHJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5Mcd0CGJQ2BA1wnM0izkEXKYmNV1lg9x+zfc8hHbWdo3DNbp571A+hsnLZcgio3VgMIbG4YVWYqr3DLcAEdVgJBSibUmp3kW9D8cEqUmanhD+T3abPFJhc2zqC8At8QfZL3EoPiEgBUvXPwto1kfoVSeC6rha6N8s5INPQv+YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh6n2NCE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RIhomNioqi+MsjbTuGQ6xMS+E8rB6b2BfiGOlq1VqgzfxkuLcxwYLYx5Z014LzOoYcY6ltewnRD80rcwiXB7P89Qka3hqSJJw/uVW/nNxnlbHRxjii8SCcFt3sMUs3QKqrSLl0X8B8suYsqMZP13tA+Gpa6uVi/H0qUtB1S9LTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHFubuKi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh6n2NCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B4FC4CEF5;
-	Tue,  8 Jul 2025 16:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHFubuKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA38C4CEED;
+	Tue,  8 Jul 2025 16:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992526;
-	bh=qRMCEl63T3vEnrESKHSrZ3EAf3k7+rvClRC2TxobFxg=;
+	s=korg; t=1751992529;
+	bh=mf+SY3PkmjrZFYwgqs2XtcFdnyaLS/Naays9y1VYHJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eh6n2NCE4Sq4eHuSMPRbTjdyu0glrnKzMJnKO5rJW3xCsBMDX6kvO5z+Yo4BYS+Tk
-	 nikJtrGQ97s7uDyvjrTnz1N5JnjDi8qqgdSU3buLTaKoTuoVLqVwhYSODJNIc06kEr
-	 Yi85CJTcI2OvdSW+gR7P0hJ8Q5HwkE4O/yjDXs88=
+	b=PHFubuKiafyRnWEsEC0tjlO5D0FOFl+nLVj+8cewL4dbTipHmAFuGvRYUa4L2yNga
+	 IC9tNVv1wO+KQSwKmTvuZuKOnUCpLVnFqHob6fuKpGQ6lNIGsUUujqc3lKYcZeLHdK
+	 5XmBaqFJM0hwBTg55i1iYdyyScb4LtUyH7ca/5NE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 122/132] powercap: intel_rapl: Do not change CLAMPING bit if ENABLE bit cannot be changed
-Date: Tue,  8 Jul 2025 18:23:53 +0200
-Message-ID: <20250708162234.108446512@linuxfoundation.org>
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kurt Borja <kuurtb@gmail.com>
+Subject: [PATCH 6.6 123/132] platform/x86: think-lmi: Create ksets consecutively
+Date: Tue,  8 Jul 2025 18:23:54 +0200
+Message-ID: <20250708162234.133142697@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162230.765762963@linuxfoundation.org>
 References: <20250708162230.765762963@linuxfoundation.org>
@@ -45,74 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Kurt Borja <kuurtb@gmail.com>
 
-commit 964209202ebe1569c858337441e87ef0f9d71416 upstream.
+commit 8dab34ca77293b409c3223636dde915a22656748 upstream.
 
-PL1 cannot be disabled on some platforms. The ENABLE bit is still set
-after software clears it. This behavior leads to a scenario where, upon
-user request to disable the Power Limit through the powercap sysfs, the
-ENABLE bit remains set while the CLAMPING bit is inadvertently cleared.
+Avoid entering tlmi_release_attr() in error paths if both ksets are not
+yet created.
 
-According to the Intel Software Developer's Manual, the CLAMPING bit,
-"When set, allows the processor to go below the OS requested P states in
-order to maintain the power below specified Platform Power Limit value."
+This is accomplished by initializing them side by side.
 
-Thus this means the system may operate at higher power levels than
-intended on such platforms.
-
-Enhance the code to check ENABLE bit after writing to it, and stop
-further processing if ENABLE bit cannot be changed.
-
-Reported-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Fixes: 2d281d8196e3 ("PowerCap: Introduce Intel RAPL power capping driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://patch.msgid.link/20250619071340.384782-1-rui.zhang@intel.com
-[ rjw: Use str_enabled_disabled() instead of open-coded equivalent ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Kurt Borja <kuurtb@gmail.com>
+Link: https://lore.kernel.org/r/20250630-lmi-fix-v3-1-ce4f81c9c481@gmail.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/powercap/intel_rapl_common.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/platform/x86/think-lmi.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -338,12 +338,28 @@ static int set_domain_enable(struct powe
- {
- 	struct rapl_domain *rd = power_zone_to_rapl_domain(power_zone);
- 	struct rapl_defaults *defaults = get_defaults(rd->rp);
-+	u64 val;
- 	int ret;
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -1285,6 +1285,14 @@ static int tlmi_sysfs_init(void)
+ 		goto fail_device_created;
+ 	}
  
- 	cpus_read_lock();
- 	ret = rapl_write_pl_data(rd, POWER_LIMIT1, PL_ENABLE, mode);
--	if (!ret && defaults->set_floor_freq)
-+	if (ret)
-+		goto end;
-+
-+	ret = rapl_read_pl_data(rd, POWER_LIMIT1, PL_ENABLE, false, &val);
-+	if (ret)
-+		goto end;
-+
-+	if (mode != val) {
-+		pr_debug("%s cannot be %s\n", power_zone->name,
-+			 str_enabled_disabled(mode));
-+		goto end;
++	tlmi_priv.authentication_kset = kset_create_and_add("authentication", NULL,
++							    &tlmi_priv.class_dev->kobj);
++	if (!tlmi_priv.authentication_kset) {
++		kset_unregister(tlmi_priv.attribute_kset);
++		ret = -ENOMEM;
++		goto fail_device_created;
 +	}
 +
-+	if (defaults->set_floor_freq)
- 		defaults->set_floor_freq(rd, mode);
-+
-+end:
- 	cpus_read_unlock();
+ 	for (i = 0; i < TLMI_SETTINGS_COUNT; i++) {
+ 		/* Check if index is a valid setting - skip if it isn't */
+ 		if (!tlmi_priv.setting[i])
+@@ -1322,12 +1330,6 @@ static int tlmi_sysfs_init(void)
+ 	}
  
- 	return ret;
+ 	/* Create authentication entries */
+-	tlmi_priv.authentication_kset = kset_create_and_add("authentication", NULL,
+-								&tlmi_priv.class_dev->kobj);
+-	if (!tlmi_priv.authentication_kset) {
+-		ret = -ENOMEM;
+-		goto fail_create_attr;
+-	}
+ 	tlmi_priv.pwd_admin->kobj.kset = tlmi_priv.authentication_kset;
+ 	ret = kobject_add(&tlmi_priv.pwd_admin->kobj, NULL, "%s", "Admin");
+ 	if (ret)
 
 
