@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEDC128819;
-	Tue,  8 Jul 2025 00:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FF2155A59;
+	Tue,  8 Jul 2025 00:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932959; cv=none; b=dK0V3y4oHC5fPE1w+BIp/amz4ADRDur2QwkUDCulH3BicRYNUhCQ5K88u8POIj5XNKe4n80E0bW01siYsVoEtMZcbG4ipWBtw5rd5CYTXGNKUBmS6yCmEyHCIixRk8nnBIi4rQZNvd3E01GTqWUGDvblLBijnlmGtSpKmfiXfQs=
+	t=1751932961; cv=none; b=eKfZlExlShyRfcmA8hiQE2KfuytNq9oihWdmwjyeTsKu8VaYO50BQzyqsPr778rT2rAVT+w6p1oTdvBHCU6xaUyWAAmG0wCJHb8OEdhhvRsE5VNr3xrrB0JQJQWqgzbshDnDmIZxLRsZo9Kt+TgLbaSZyeMR3XsfBTovCRh7U0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932959; c=relaxed/simple;
-	bh=aMR2jpdIJSO4u4M6pTvRRlOr7CGzPhsxrkuJNcWvNCI=;
+	s=arc-20240116; t=1751932961; c=relaxed/simple;
+	bh=q5vJbPHhif8TjMH7ecJ38whhHyagF7VMFbvZWsTMp24=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q57o5RIH5CZJ4hbq65exVcV1gFWxNauPgeiU+VzW0coA20M5fyOcE2OkbwePMPEy8f2ae5GCxxXZ/tDg0SL1JYQLoIBrDYlZJdPWJL9/DSkzwT/wSiVJp+EMfsesuo80WTeXgizPcpyZEV9GgPVmbfGJpDqvmgOFMoxoejUQVo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TuynXBSI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jm/glhnsfSbK8eIPRwlfezZOgtnlBEX7iSMNn868smYj+maWfIfnvmWg4L3VBM6eW7R07Hq7OVx6SOoYN0a7IvK1xOfmRZxrHo32bWlN+DXr485r/vc8171b/if8b6rVyr+XVcwqwMTHCed3no/Ben7VGTjZxo/srLrgTWDtCxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sp44U7OF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TuynXBSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487E2C4CEE3;
-	Tue,  8 Jul 2025 00:02:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sp44U7OF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03125C4CEE3;
+	Tue,  8 Jul 2025 00:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932959;
-	bh=aMR2jpdIJSO4u4M6pTvRRlOr7CGzPhsxrkuJNcWvNCI=;
+	s=k20201202; t=1751932961;
+	bh=q5vJbPHhif8TjMH7ecJ38whhHyagF7VMFbvZWsTMp24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TuynXBSI1dLyXu0S2aqWMiAsnu5NVJeQIoEa2NUKqpAm3box4Sqk7905v5hph0YBG
-	 zXv5iOGFpTN/LR7LSiJdNMu3B9A7DeL1zAjDGfCgjCgXKirORMS2zH1W8rgoATAOWa
-	 Sw423Of3nL520y81i/qjewUmEYPZZcXpQQHiT4LaCy0VvQ1EOJxprkUzuB/mtAJNB5
-	 /l6M9STyi3Wja8PGSEuYTBdjVV6pLaKljnWksCzvD8i6DURiuA52H1PdZY3LfK3GwN
-	 AlCJ/YzaAxpN7xSq4+t8TTiLpMgbsVlhZpYY7Pz8x1Gkg0PqF7Tn5YWW6bnzc3+6pV
-	 A0URxRGtspFmA==
+	b=Sp44U7OFsLDUEOCl+F8Kul4ph1NzhTDTPVB5WmcTvkozr8uDIm6m8i8W3Eq3C2qUO
+	 g57eO9R5l8JPABxBKIKK56b4jknWN5QZ8eY3Ln9OhNZhRCFrNYO3YPtbp93A7LCjVX
+	 dWfbwNkT7ZT851k5z7vNE8l9lFlydHZnzYNbQyrZhUKB59rbvDkIwYRv2vd7eI0Be3
+	 Oo1XfPO9dDnZ6TefamspJAyJl3mLXPxquL5c/+EBvVCvpd0ckDg4oVRpsLe1C4fpZc
+	 ohaulPHPZzrqq3QHQtcMrmA9dNYcY3iWBLXLQAaJWCARVfBbrD9sjDfKC5/uNcfRR1
+	 i35lVL9QcHPkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rahul Chandra <rahul@chandra.net>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Maor Gottlieb <maorg@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	corentin.chary@gmail.com,
-	hdegoede@redhat.com,
-	markgross@kernel.org,
-	acpi4asus-user@lists.sourceforge.net,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 5/6] platform/x86: asus-nb-wmi: add DMI quirk for ASUS Zenbook Duo UX8406CA
-Date: Mon,  7 Jul 2025 20:02:29 -0400
-Message-Id: <20250708000230.793347-5-sashal@kernel.org>
+	leon@kernel.org,
+	msanalla@nvidia.com,
+	phaddad@nvidia.com
+Subject: [PATCH AUTOSEL 6.12 6/6] RDMA/core: Rate limit GID cache warning messages
+Date: Mon,  7 Jul 2025 20:02:30 -0400
+Message-Id: <20250708000230.793347-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250708000230.793347-1-sashal@kernel.org>
 References: <20250708000230.793347-1-sashal@kernel.org>
@@ -49,137 +48,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.36
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Chandra <rahul@chandra.net>
+From: Maor Gottlieb <maorg@nvidia.com>
 
-[ Upstream commit 7dc6b2d3b5503bcafebbeaf9818112bf367107b4 ]
+[ Upstream commit 333e4d79316c9ed5877d7aac8b8ed22efc74e96d ]
 
-Add a DMI quirk entry for the ASUS Zenbook Duo UX8406CA 2025 model to use
-the existing zenbook duo keyboard quirk.
+The GID cache warning messages can flood the kernel log when there are
+multiple failed attempts to add GIDs. This can happen when creating many
+virtual interfaces without having enough space for their GIDs in the GID
+table.
 
-Signed-off-by: Rahul Chandra <rahul@chandra.net>
-Link: https://lore.kernel.org/r/20250624073301.602070-1-rahul@chandra.net
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Change pr_warn to pr_warn_ratelimited to prevent log flooding while still
+maintaining visibility of the issue.
+
+Link: https://patch.msgid.link/r/fd45ed4a1078e743f498b234c3ae816610ba1b18.1750062357.git.leon@kernel.org
+Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's the
-extensive explanation:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Analysis of the Code Changes
+## Key Reasons for Backporting:
 
-The commit adds a simple DMI quirk entry for the ASUS Zenbook Duo
-UX8406CA:
+### 1. **Fixes a Real-World Bug**
+The commit addresses a concrete problem where warning messages can flood
+the kernel log. This is not a theoretical issue - it occurs when users
+create many virtual interfaces without sufficient GID table space. This
+is a common scenario in production environments with RDMA/InfiniBand
+deployments.
 
-```c
-+       {
-+               .callback = dmi_matched,
-+               .ident = "ASUS Zenbook Duo UX8406CA",
-+               .matches = {
-+                       DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER
-INC."),
-+                       DMI_MATCH(DMI_PRODUCT_NAME, "UX8406CA"),
-+               },
-+               .driver_data = &quirk_asus_zenbook_duo_kbd,
-+       },
-```
+### 2. **Small and Contained Change**
+The change is minimal - only replacing `pr_warn()` with
+`pr_warn_ratelimited()` on lines 585-586. This is exactly 2 lines of
+functional change with no architectural modifications or new features
+added.
 
-This applies the existing `quirk_asus_zenbook_duo_kbd` to the UX8406CA
-model.
+### 3. **Low Risk of Regression**
+- The change only affects logging behavior, not functional behavior
+- `pr_warn_ratelimited()` is a well-established kernel API that behaves
+  identically to `pr_warn()` except for rate limiting
+- No data structures are modified
+- No locking changes
+- No protocol or API changes
 
-## Why This Is a Bug Fix, Not Just Hardware Enablement
+### 4. **Follows Stable Kernel Rules**
+According to stable kernel rules, this fix qualifies because:
+- It fixes a bug that bothers people (kernel log flooding)
+- It's a trivial change (2 lines)
+- It has been tested in mainline
+- It doesn't add new features
 
-Based on my analysis of the kernel repository, the
-`quirk_asus_zenbook_duo_kbd` was introduced to fix a specific hardware
-issue where:
+### 5. **Similar to Historical Backports**
+Looking at the similar commits provided:
+- Similar Commit #1 (backported): Fixed a hardware limitation issue with
+  clear bounds
+- Similar Commit #2 (NOT backported): Added rate limiting to ipoib_warn
+  but was more invasive with macro changes
+- This commit is more like #1 - a targeted fix for a specific issue
 
-1. **The keyboard emits spurious wireless disable keypresses** when
-   placed on the laptop's secondary display
-2. **This causes unexpected WiFi disconnections** via the rfkill system
-3. **The keyboard doesn't actually have wireless toggle functionality**,
-   so these events are always spurious
+### 6. **Production Impact**
+Log flooding can have serious production impacts:
+- Fills up `/var/log` partitions
+- Makes it difficult to find other important kernel messages
+- Can impact system performance due to excessive logging
+- Can trigger log rotation issues
 
-## Evidence Supporting Backporting
+### 7. **Context-Specific Analysis**
+The error path where this warning occurs (line 571: `ret = -ENOSPC`)
+specifically handles the case when the GID table is full. In
+environments with many virtual interfaces, this condition can be hit
+repeatedly in quick succession, causing the flood described in the
+commit message.
 
-1. **Fixes User-Impacting Bug**: Without this quirk, users experience
-   unexpected WiFi disconnections when using their keyboard normally,
-   which significantly impacts usability.
+The commit message clearly states this is fixing an observed problem:
+"This can happen when creating many virtual interfaces without having
+enough space for their GIDs in the GID table."
 
-2. **Follows Established Pattern**: The commit follows the exact pattern
-   of the previous UX8406MA support (commit 9286dfd5735b), which
-   addressed the same issue for a similar model.
+This is a perfect example of a stable-appropriate fix: minimal change,
+fixes a real bug, no risk of functional regression, and improves system
+stability in production environments.
 
-3. **Minimal Risk**: The change is:
-   - Only 9 lines of code
-   - Isolated to specific hardware (only affects UX8406CA)
-   - Uses existing, tested infrastructure
-   - Cannot affect other systems due to DMI matching
+ drivers/infiniband/core/cache.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-4. **Similar to Other Backported Commits**: Looking at the reference
-   commits:
-   - Commit 2b1cb70 (adding support for ALS on UX430UQ) was backported
-   - Commit ac16dfa (reverting GA401/GA502 quirks) was backported
-   - Commit 82a7228 (adding tablet mode quirk for ROG Flow X13) was
-     backported
-
-5. **Clear Bug Fix Nature**: Unlike commit 79493de (making use of
-   dmi->ident) which was NOT backported because it was just a code
-   improvement, this commit actually fixes broken functionality.
-
-## Comparison with Reference Commits
-
-This commit is most similar to:
-- **Commit 2b1cb70** (YES): Added device-specific quirk to fix
-  functionality
-- **Commit 82a7228** (YES): Added quirk to fix hardware-specific issue
-- **Commit 25390f8** (YES): Added device support to fix existing
-  hardware
-
-And dissimilar to:
-- **Commit 79493de** (NO): Code refactoring without functional impact
-
-## Conclusion
-
-This commit meets all criteria for stable backporting:
-- Fixes a real bug affecting users
-- Small, contained change
-- Low risk of regression
-- Follows established patterns
-- Only affects specific hardware
-
-The commit should be backported to stable kernels that contain the
-`quirk_asus_zenbook_duo_kbd` infrastructure (6.11+).
-
- drivers/platform/x86/asus-nb-wmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index a5933980ade3d..90ad0045fec5f 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -529,6 +529,15 @@ static const struct dmi_system_id asus_quirks[] = {
- 		},
- 		.driver_data = &quirk_asus_zenbook_duo_kbd,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "ASUS Zenbook Duo UX8406CA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "UX8406CA"),
-+		},
-+		.driver_data = &quirk_asus_zenbook_duo_kbd,
-+	},
- 	{},
- };
+diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
+index b7c078b7f7cfd..a1291f475466d 100644
+--- a/drivers/infiniband/core/cache.c
++++ b/drivers/infiniband/core/cache.c
+@@ -582,8 +582,8 @@ static int __ib_cache_gid_add(struct ib_device *ib_dev, u32 port,
+ out_unlock:
+ 	mutex_unlock(&table->lock);
+ 	if (ret)
+-		pr_warn("%s: unable to add gid %pI6 error=%d\n",
+-			__func__, gid->raw, ret);
++		pr_warn_ratelimited("%s: unable to add gid %pI6 error=%d\n",
++				    __func__, gid->raw, ret);
+ 	return ret;
+ }
  
 -- 
 2.39.5
