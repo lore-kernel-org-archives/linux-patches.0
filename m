@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BF538FB9;
-	Tue,  8 Jul 2025 00:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E485079DA;
+	Tue,  8 Jul 2025 00:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932947; cv=none; b=MexGxnkjohg5yf2xKI4ZvdB/CRVd4VCZe+7DXPizh2ERzxnjUWVufxLJ06naRRTw4JP4cVt41p1KGhHj9NpgsNnJzZ0ZsyGWOxIcTXWtp7Q8cFeySqsTEv4V72HELcTsmBjtzuQDp2XgL0MBtrHse/vL01L3bYXH+B+n6b76tv0=
+	t=1751932949; cv=none; b=iFbi1pz1NnDzwQrJD1zE/4+uuCHeWTl9a9co/fCNunmaNr8ivmin0SDTaPCX8fuKE/CKe8P8HQUrh5wjHGJ+qrnWKV0kLPhJSRE3j/cqmDN4WMV1VPI2G1xb4eUgKPYS3lL76jmTUnzT22Fg5sChNs2XgGFbeRXCdEA7kzfILfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932947; c=relaxed/simple;
-	bh=oGRHJS2/KFYufyAFNRjiMUXXFkY1yNLM85w2UfIQEKU=;
+	s=arc-20240116; t=1751932949; c=relaxed/simple;
+	bh=vNaM/k+SL2ziJjMEPGwBUcTS6jl/bzY8vpECqk0Mtoo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Xo9u07hIw0wF1TlsNM9rnhbABw9nXYYDawBtLlkBTdrf/6Sqpj1GY79AWJclw+KnTyNyLGc3o36DBm/9/URXEXupx5sNYScCrYqRgLyJx3ZyJLIXlkrea2dWd1Zz+8NCb9d52g8P6a1IlRh0LhhcX/YWo+Kl9Rr2fD4MdtLK7y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AjG1QNfQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=M/aiaT9zkexEmZsrM8Qshgq15BKSjNx3PtsFyT4QsSNWVyVN4ozgdJbGQs2DuETJ6AVl9Ip+6i5SlsGxn6O0LhFSdW3Clq4dXGCn7imZ8STSq3GifxnXUzk0OPmqbuaQb/xqx6nvx+zQeR83gqvBo6ZJIRzDncY5QCcpHkCBvFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CTB7JcEg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AjG1QNfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA71C4CEF1;
-	Tue,  8 Jul 2025 00:02:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CTB7JcEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D891C4AF09;
+	Tue,  8 Jul 2025 00:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932946;
-	bh=oGRHJS2/KFYufyAFNRjiMUXXFkY1yNLM85w2UfIQEKU=;
+	s=k20201202; t=1751932948;
+	bh=vNaM/k+SL2ziJjMEPGwBUcTS6jl/bzY8vpECqk0Mtoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjG1QNfQf3FT/h0ejv99XMCmWXmVrd1ql24PFZDB7obobXuObqH2AOHpIIUlH3bEx
-	 rMNU8jlATYumj0aZKtmNbSpQNBjg1GwjYUBcEjA8LM9KgL24rgoOBv4HBwUakAY9ED
-	 YTgc0jMLucUZ/89FTyKE4Y8VhClZeDY+q73P2ZsixGXdVy6ad9v4yWBzPlNAOFfVIQ
-	 9bIZI+L2NJb/DjMm0rqJKO5OeXHq0xQXgdHcE8+YvDveGL1nOPJDfyr4R3FpZnwA4P
-	 Z9uMpOjDify00f4Fg+XVc8zX61Gcz8/8YXLBwbK7ElLy1jc46C/1gql8FRaJPTuAE1
-	 y7D8FCU+zfrzg==
+	b=CTB7JcEgHFe87RTWmqtQFcTEdUN3046YKbYmmPhdPeXbz/AMIvg/QDrpemnqXWTWI
+	 J9zYwxklnEz+ZRE9RZBH586X2dAC9DrXY1Yz8faIFfMwgCAx5qb8VDThiuS4GdtVFz
+	 J1H904miO+37HwWiO1gHw/HNos5e/ZHD1opt7PNWvSaPtVQ/wosXjW+2vazE7ktJCK
+	 SSaEk4i3k5GB4DtQ5KdWYpu+9qb90Dier7/sVOHDL+/LD+PysbQSPMOXU0lGMLmjlK
+	 dGxMSRbl+3WTvxMYf0v7bBUcYwqB7IwvFUmuY5nW/PnvRFOJyPZViNljC46n+Z2Hw/
+	 tPNICT0OP2JvQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Nat Wittstock <nat@fardog.io>,
-	Lucian Langa <lucilanga@7pot.org>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Rahul Chandra <rahul@chandra.net>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	pavel@ucw.cz,
-	len.brown@intel.com,
-	ebiederm@xmission.com,
-	linux-pm@vger.kernel.org,
-	kexec@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.15 6/8] PM: Restrict swap use to later in the suspend sequence
-Date: Mon,  7 Jul 2025 20:02:13 -0400
-Message-Id: <20250708000215.793090-6-sashal@kernel.org>
+	corentin.chary@gmail.com,
+	hdegoede@redhat.com,
+	markgross@kernel.org,
+	acpi4asus-user@lists.sourceforge.net,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 7/8] platform/x86: asus-nb-wmi: add DMI quirk for ASUS Zenbook Duo UX8406CA
+Date: Mon,  7 Jul 2025 20:02:14 -0400
+Message-Id: <20250708000215.793090-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250708000215.793090-1-sashal@kernel.org>
 References: <20250708000215.793090-1-sashal@kernel.org>
@@ -52,233 +49,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.5
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Rahul Chandra <rahul@chandra.net>
 
-[ Upstream commit 12ffc3b1513ebc1f11ae77d053948504a94a68a6 ]
+[ Upstream commit 7dc6b2d3b5503bcafebbeaf9818112bf367107b4 ]
 
-Currently swap is restricted before drivers have had a chance to do
-their prepare() PM callbacks. Restricting swap this early means that if
-a driver needs to evict some content from memory into sawp in it's
-prepare callback, it won't be able to.
+Add a DMI quirk entry for the ASUS Zenbook Duo UX8406CA 2025 model to use
+the existing zenbook duo keyboard quirk.
 
-On AMD dGPUs this can lead to failed suspends under memory pressure
-situations as all VRAM must be evicted to system memory or swap.
-
-Move the swap restriction to right after all devices have had a chance
-to do the prepare() callback.  If there is any problem with the sequence,
-restore swap in the appropriate dpm resume callbacks or error handling
-paths.
-
-Closes: https://github.com/ROCm/ROCK-Kernel-Driver/issues/174
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2362
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Nat Wittstock <nat@fardog.io>
-Tested-by: Lucian Langa <lucilanga@7pot.org>
-Link: https://patch.msgid.link/20250613214413.4127087-1-superm1@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Rahul Chandra <rahul@chandra.net>
+Link: https://lore.kernel.org/r/20250624073301.602070-1-rahul@chandra.net
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 **YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's the
+extensive explanation:
 
-## Critical Bug Fix for Real User Issues
+## Analysis of the Code Changes
 
-1. **Fixes Actual Suspend Failures**: The commit addresses real-world
-   suspend failures under memory pressure on systems with AMD discrete
-   GPUs. The linked issues (ROCm/ROCK-Kernel-Driver#174 and
-   freedesktop.org/drm/amd#2362) indicate this affects actual users.
+The commit adds a simple DMI quirk entry for the ASUS Zenbook Duo
+UX8406CA:
 
-2. **Regression Fix**: This is effectively a regression fix. The PM
-   subsystem's early swap restriction prevents AMD GPU drivers from
-   properly evicting VRAM during their prepare() callbacks, which is a
-   requirement that has become more critical as GPU VRAM sizes have
-   increased.
+```c
++       {
++               .callback = dmi_matched,
++               .ident = "ASUS Zenbook Duo UX8406CA",
++               .matches = {
++                       DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER
+INC."),
++                       DMI_MATCH(DMI_PRODUCT_NAME, "UX8406CA"),
++               },
++               .driver_data = &quirk_asus_zenbook_duo_kbd,
++       },
+```
 
-## Small, Contained Change
+This applies the existing `quirk_asus_zenbook_duo_kbd` to the UX8406CA
+model.
 
-3. **Minimal Code Changes**: The fix is remarkably simple - it just
-   moves the `pm_restrict_gfp_mask()` call from early in the suspend
-   sequence to after `dpm_prepare()` completes. The changes are:
-   - Move `pm_restrict_gfp_mask()` from multiple early locations to
-     inside `dpm_suspend_start()` after `dpm_prepare()` succeeds
-   - Add corresponding `pm_restore_gfp_mask()` calls in error paths and
-     resume paths
-   - Remove the now-redundant calls from hibernate.c and suspend.c
+## Why This Is a Bug Fix, Not Just Hardware Enablement
 
-4. **Low Risk of Regression**: The change maintains the original intent
-   of preventing I/O during the critical suspend phase while allowing it
-   during device preparation. The swap restriction still happens before
-   `dpm_suspend()`, just after `dpm_prepare()`.
+Based on my analysis of the kernel repository, the
+`quirk_asus_zenbook_duo_kbd` was introduced to fix a specific hardware
+issue where:
 
-## Follows Stable Rules
+1. **The keyboard emits spurious wireless disable keypresses** when
+   placed on the laptop's secondary display
+2. **This causes unexpected WiFi disconnections** via the rfkill system
+3. **The keyboard doesn't actually have wireless toggle functionality**,
+   so these events are always spurious
 
-5. **Meets Stable Criteria**:
-   - Fixes a real bug that bothers people (suspend failures)
-   - Small change (moves function calls, doesn't introduce new logic)
-   - Obviously correct (allows drivers to use swap during their
-     designated preparation phase)
-   - Already tested by users (Tested-by tags from affected users)
+## Evidence Supporting Backporting
 
-## Similar to Other Backported Commits
+1. **Fixes User-Impacting Bug**: Without this quirk, users experience
+   unexpected WiFi disconnections when using their keyboard normally,
+   which significantly impacts usability.
 
-6. **Pattern Matches**: Looking at the similar commits provided, this
-   follows the same pattern as the AMD GPU eviction commits that were
-   backported. Those commits also addressed the same fundamental issue -
-   ensuring GPU VRAM can be properly evicted during suspend/hibernation.
+2. **Follows Established Pattern**: The commit follows the exact pattern
+   of the previous UX8406MA support (commit 9286dfd5735b), which
+   addressed the same issue for a similar model.
 
-## Critical Timing
+3. **Minimal Risk**: The change is:
+   - Only 9 lines of code
+   - Isolated to specific hardware (only affects UX8406CA)
+   - Uses existing, tested infrastructure
+   - Cannot affect other systems due to DMI matching
 
-7. **Error Path Handling**: The commit properly handles error paths by
-   adding `pm_restore_gfp_mask()` calls in:
-   - `dpm_resume_end()` for normal resume
-   - `platform_recover()` error path in suspend.c
-   - `pm_restore_gfp_mask()` in kexec_core.c for kexec flows
+4. **Similar to Other Backported Commits**: Looking at the reference
+   commits:
+   - Commit 2b1cb70 (adding support for ALS on UX430UQ) was backported
+   - Commit ac16dfa (reverting GA401/GA502 quirks) was backported
+   - Commit 82a7228 (adding tablet mode quirk for ROG Flow X13) was
+     backported
 
-The commit is well-tested, addresses a real problem affecting users, and
-makes a minimal, obviously correct change to fix suspend failures on
-systems with discrete GPUs under memory pressure.
+5. **Clear Bug Fix Nature**: Unlike commit 79493de (making use of
+   dmi->ident) which was NOT backported because it was just a code
+   improvement, this commit actually fixes broken functionality.
 
- drivers/base/power/main.c | 5 ++++-
- include/linux/suspend.h   | 5 +++++
- kernel/kexec_core.c       | 1 +
- kernel/power/hibernate.c  | 3 ---
- kernel/power/power.h      | 5 -----
- kernel/power/suspend.c    | 3 +--
- 6 files changed, 11 insertions(+), 11 deletions(-)
+## Comparison with Reference Commits
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 1926454c7a7e8..dd1efa95bcf15 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -1182,6 +1182,7 @@ void dpm_complete(pm_message_t state)
-  */
- void dpm_resume_end(pm_message_t state)
- {
-+	pm_restore_gfp_mask();
- 	dpm_resume(state);
- 	dpm_complete(state);
- }
-@@ -2015,8 +2016,10 @@ int dpm_suspend_start(pm_message_t state)
- 	error = dpm_prepare(state);
- 	if (error)
- 		dpm_save_failed_step(SUSPEND_PREPARE);
--	else
-+	else {
-+		pm_restrict_gfp_mask();
- 		error = dpm_suspend(state);
-+	}
+This commit is most similar to:
+- **Commit 2b1cb70** (YES): Added device-specific quirk to fix
+  functionality
+- **Commit 82a7228** (YES): Added quirk to fix hardware-specific issue
+- **Commit 25390f8** (YES): Added device support to fix existing
+  hardware
+
+And dissimilar to:
+- **Commit 79493de** (NO): Code refactoring without functional impact
+
+## Conclusion
+
+This commit meets all criteria for stable backporting:
+- Fixes a real bug affecting users
+- Small, contained change
+- Low risk of regression
+- Follows established patterns
+- Only affects specific hardware
+
+The commit should be backported to stable kernels that contain the
+`quirk_asus_zenbook_duo_kbd` infrastructure (6.11+).
+
+ drivers/platform/x86/asus-nb-wmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index 3f8b2a324efdf..f84c3d03c1de7 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -530,6 +530,15 @@ static const struct dmi_system_id asus_quirks[] = {
+ 		},
+ 		.driver_data = &quirk_asus_zenbook_duo_kbd,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "ASUS Zenbook Duo UX8406CA",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "UX8406CA"),
++		},
++		.driver_data = &quirk_asus_zenbook_duo_kbd,
++	},
+ 	{},
+ };
  
- 	dpm_show_time(starttime, state, error, "start");
- 	return error;
-diff --git a/include/linux/suspend.h b/include/linux/suspend.h
-index da6ebca3ff774..d638f31dc32cd 100644
---- a/include/linux/suspend.h
-+++ b/include/linux/suspend.h
-@@ -441,6 +441,8 @@ extern int unregister_pm_notifier(struct notifier_block *nb);
- extern void ksys_sync_helper(void);
- extern void pm_report_hw_sleep_time(u64 t);
- extern void pm_report_max_hw_sleep(u64 t);
-+void pm_restrict_gfp_mask(void);
-+void pm_restore_gfp_mask(void);
- 
- #define pm_notifier(fn, pri) {				\
- 	static struct notifier_block fn##_nb =			\
-@@ -485,6 +487,9 @@ static inline int unregister_pm_notifier(struct notifier_block *nb)
- static inline void pm_report_hw_sleep_time(u64 t) {};
- static inline void pm_report_max_hw_sleep(u64 t) {};
- 
-+static inline void pm_restrict_gfp_mask(void) {}
-+static inline void pm_restore_gfp_mask(void) {}
-+
- static inline void ksys_sync_helper(void) {}
- 
- #define pm_notifier(fn, pri)	do { (void)(fn); } while (0)
-diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index 3e62b944c8833..2972278497b0b 100644
---- a/kernel/kexec_core.c
-+++ b/kernel/kexec_core.c
-@@ -1082,6 +1082,7 @@ int kernel_kexec(void)
-  Resume_devices:
- 		dpm_resume_end(PMSG_RESTORE);
-  Resume_console:
-+		pm_restore_gfp_mask();
- 		console_resume_all();
- 		thaw_processes();
-  Restore_console:
-diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
-index 5af9c7ee98cd4..0bb5a7befe944 100644
---- a/kernel/power/hibernate.c
-+++ b/kernel/power/hibernate.c
-@@ -418,7 +418,6 @@ int hibernation_snapshot(int platform_mode)
- 	}
- 
- 	console_suspend_all();
--	pm_restrict_gfp_mask();
- 
- 	error = dpm_suspend(PMSG_FREEZE);
- 
-@@ -554,7 +553,6 @@ int hibernation_restore(int platform_mode)
- 
- 	pm_prepare_console();
- 	console_suspend_all();
--	pm_restrict_gfp_mask();
- 	error = dpm_suspend_start(PMSG_QUIESCE);
- 	if (!error) {
- 		error = resume_target_kernel(platform_mode);
-@@ -566,7 +564,6 @@ int hibernation_restore(int platform_mode)
- 		BUG_ON(!error);
- 	}
- 	dpm_resume_end(PMSG_RECOVER);
--	pm_restore_gfp_mask();
- 	console_resume_all();
- 	pm_restore_console();
- 	return error;
-diff --git a/kernel/power/power.h b/kernel/power/power.h
-index f8496f40b54fa..6037090578b71 100644
---- a/kernel/power/power.h
-+++ b/kernel/power/power.h
-@@ -235,11 +235,6 @@ static inline void suspend_test_finish(const char *label) {}
- /* kernel/power/main.c */
- extern int pm_notifier_call_chain_robust(unsigned long val_up, unsigned long val_down);
- extern int pm_notifier_call_chain(unsigned long val);
--void pm_restrict_gfp_mask(void);
--void pm_restore_gfp_mask(void);
--#else
--static inline void pm_restrict_gfp_mask(void) {}
--static inline void pm_restore_gfp_mask(void) {}
- #endif
- 
- #ifdef CONFIG_HIGHMEM
-diff --git a/kernel/power/suspend.c b/kernel/power/suspend.c
-index 8eaec4ab121d4..d22edf9678872 100644
---- a/kernel/power/suspend.c
-+++ b/kernel/power/suspend.c
-@@ -537,6 +537,7 @@ int suspend_devices_and_enter(suspend_state_t state)
- 	return error;
- 
-  Recover_platform:
-+	pm_restore_gfp_mask();
- 	platform_recover(state);
- 	goto Resume_devices;
- }
-@@ -600,9 +601,7 @@ static int enter_state(suspend_state_t state)
- 
- 	trace_suspend_resume(TPS("suspend_enter"), state, false);
- 	pm_pr_dbg("Suspending system (%s)\n", mem_sleep_labels[state]);
--	pm_restrict_gfp_mask();
- 	error = suspend_devices_and_enter(state);
--	pm_restore_gfp_mask();
- 
-  Finish:
- 	events_check_enabled = false;
 -- 
 2.39.5
 
