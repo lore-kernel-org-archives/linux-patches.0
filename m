@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499D123DE;
-	Tue,  8 Jul 2025 16:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B5123DE;
+	Tue,  8 Jul 2025 16:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993213; cv=none; b=bwprBnkV4H4OAKtfR04UqCtaWhJnR/WPQ+5wrpr/+WOW/iH/fzgTHQUQEe0EPn69QK7OF5mm7y9EcV8MgIFARiIsYCekHQds+1xgld6pnwo0F4z/qa26GStQXi+u0NJVObkgAOV98yU2VRSvht3nAqfYGqkHMoJJYF03lWKX+lc=
+	t=1751993216; cv=none; b=Y/cVZjvFgA0JTOeoMejEg9lFSMqRddKcmyPURvxrb/VaRdQbD772FEXVXiAZWlesdKNBpcF7Z2RHt1zRomqVm6Lxn/4uGh9nH2edHAU4pXoH3MDbQVyeLT6HZuo1qwrxMzZGvDCEkPU9nqG06wwQDid5QOm4/A1ZpcXYnVzj6O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993213; c=relaxed/simple;
-	bh=yCAglCy19TPgV+IS/o/O7brQMut220LwdPre1C7ENOc=;
+	s=arc-20240116; t=1751993216; c=relaxed/simple;
+	bh=A3tRwjt1DW9ehh9vjVleZSt4A9y0vk2o/jlXR6PYlms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bje6SzysFVUkYT89T06c3ogks1PJQECGP9z0lHpOl45kJmr/rRMi72Trp0Su9CBM9IURHFBipCDU4XCQ+nOapNo9ZyatkIVuid17CHaegD+GdZXV329BaST+CrLwCwPHi5YYdgGCaKs1q4QdFipvMX4Xv1PD+lps3fdzA8DYUcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2dmNVnt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F/19jaUeq5ffGlusHqCaGKSb9cWgGcinWBq1v9JvN4mAXwdskiwSr/mU5YK9L4eI1V7mze+CghWqxZ82YPxbMAXVWaNeQRYzvwVlzyc0vXJW6CwjiQOu5R6GL0sFJgNB7QP3sVPxXFktP4HCAbUVCScuTHMGMP5l5xTLZ6Xq+FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfrB6pPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2dmNVnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64E0C4CEED;
-	Tue,  8 Jul 2025 16:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfrB6pPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4575C4CEED;
+	Tue,  8 Jul 2025 16:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993213;
-	bh=yCAglCy19TPgV+IS/o/O7brQMut220LwdPre1C7ENOc=;
+	s=korg; t=1751993216;
+	bh=A3tRwjt1DW9ehh9vjVleZSt4A9y0vk2o/jlXR6PYlms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2dmNVnt8mDMlPjRHPOLODnDgGcrMwQvZU/KHeeLgqZxq5GUC9dZcwbbWXqIVp2IH
-	 VhRdEkRsd70P8Kld1FMQ9oxUN+Zdxx12oZTsCtd0A4YsKhwBQKUHQHtyBSViz6Du+M
-	 vHGiA844wer5iTrS1nmP3vWTa9SF/tNDjvw1EVfw=
+	b=RfrB6pPpV3eYsEHruJ7VAudQvZ5UFFLMlDmoCINZ166m31u/cCkkWV6HMRNYjRAfx
+	 V3oOeG0lJxNiRKukkGQ8YTaV8GC/uI8SvCI/kH7ndmiXtEb2mkhU+vNg8+qhuQLgW2
+	 WOlmZwen9ZuKTcEixQYLQKC+QTO4vrBs1cjRQOn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 225/232] powerpc/kernel: Fix ppc_save_regs inclusion in build
-Date: Tue,  8 Jul 2025 18:23:41 +0200
-Message-ID: <20250708162247.315479908@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Subject: [PATCH 6.12 226/232] mm/vmalloc: fix data race in show_numa_info()
+Date: Tue,  8 Jul 2025 18:23:42 +0200
+Message-ID: <20250708162247.340959402@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -50,48 +52,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 93bd4a80efeb521314485a06d8c21157240497bb upstream.
+commit 5c5f0468d172ddec2e333d738d2a1f85402cf0bc upstream.
 
-Recent patch fixed an old commit
-'fc2a5a6161a2 ("powerpc/64s: ppc_save_regs is now needed for all 64s builds")'
-which is to include building of ppc_save_reg.c only when XMON
-and KEXEC_CORE and PPC_BOOK3S are enabled. This was valid, since
-ppc_save_regs was called only in replay_system_reset() of old
-irq.c which was under BOOK3S.
+The following data-race was found in show_numa_info():
 
-But there has been multiple refactoring of irq.c and have
-added call to ppc_save_regs() from __replay_soft_interrupts
--> replay_soft_interrupts which is part of irq_64.c included
-under CONFIG_PPC64. And since ppc_save_regs is called in
-CRASH_DUMP path as part of crash_setup_regs in kexec.h,
-CONFIG_PPC32 also needs it.
+==================================================================
+BUG: KCSAN: data-race in vmalloc_info_show / vmalloc_info_show
 
-So with this recent patch which enabled the building of
-ppc_save_regs.c caused a build break when none of these
-(XMON, KEXEC_CORE, BOOK3S) where enabled as part of config.
-Patch to enable building of ppc_save_regs.c by defaults.
+read to 0xffff88800971fe30 of 4 bytes by task 8289 on cpu 0:
+ show_numa_info mm/vmalloc.c:4936 [inline]
+ vmalloc_info_show+0x5a8/0x7e0 mm/vmalloc.c:5016
+ seq_read_iter+0x373/0xb40 fs/seq_file.c:230
+ proc_reg_read_iter+0x11e/0x170 fs/proc/inode.c:299
+....
 
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250511041111.841158-1-maddy@linux.ibm.com
-Cc: Guenter Roeck <linux@roeck-us.net>
+write to 0xffff88800971fe30 of 4 bytes by task 8287 on cpu 1:
+ show_numa_info mm/vmalloc.c:4934 [inline]
+ vmalloc_info_show+0x38f/0x7e0 mm/vmalloc.c:5016
+ seq_read_iter+0x373/0xb40 fs/seq_file.c:230
+ proc_reg_read_iter+0x11e/0x170 fs/proc/inode.c:299
+....
+
+value changed: 0x0000008f -> 0x00000000
+==================================================================
+
+According to this report,there is a read/write data-race because
+m->private is accessible to multiple CPUs.  To fix this, instead of
+allocating the heap in proc_vmalloc_init() and passing the heap address to
+m->private, vmalloc_info_show() should allocate the heap.
+
+Link: https://lkml.kernel.org/r/20250508165620.15321-1-aha310510@gmail.com
+Fixes: 8e1d743f2c26 ("mm: vmalloc: support multiple nodes in vmallocinfo")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/Makefile |    2 --
- 1 file changed, 2 deletions(-)
+ mm/vmalloc.c |   63 ++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 35 insertions(+), 28 deletions(-)
 
---- a/arch/powerpc/kernel/Makefile
-+++ b/arch/powerpc/kernel/Makefile
-@@ -162,9 +162,7 @@ endif
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -3095,7 +3095,7 @@ static void clear_vm_uninitialized_flag(
+ 	/*
+ 	 * Before removing VM_UNINITIALIZED,
+ 	 * we should make sure that vm has proper values.
+-	 * Pair with smp_rmb() in show_numa_info().
++	 * Pair with smp_rmb() in vread_iter() and vmalloc_info_show().
+ 	 */
+ 	smp_wmb();
+ 	vm->flags &= ~VM_UNINITIALIZED;
+@@ -4938,28 +4938,29 @@ bool vmalloc_dump_obj(void *object)
+ #endif
  
- obj64-$(CONFIG_PPC_TRANSACTIONAL_MEM)	+= tm.o
+ #ifdef CONFIG_PROC_FS
+-static void show_numa_info(struct seq_file *m, struct vm_struct *v)
+-{
+-	if (IS_ENABLED(CONFIG_NUMA)) {
+-		unsigned int nr, *counters = m->private;
+-		unsigned int step = 1U << vm_area_page_order(v);
  
--ifneq ($(CONFIG_XMON)$(CONFIG_KEXEC_CORE)$(CONFIG_PPC_BOOK3S),)
- obj-y				+= ppc_save_regs.o
--endif
+-		if (!counters)
+-			return;
++/*
++ * Print number of pages allocated on each memory node.
++ *
++ * This function can only be called if CONFIG_NUMA is enabled
++ * and VM_UNINITIALIZED bit in v->flags is disabled.
++ */
++static void show_numa_info(struct seq_file *m, struct vm_struct *v,
++				 unsigned int *counters)
++{
++	unsigned int nr;
++	unsigned int step = 1U << vm_area_page_order(v);
  
- obj-$(CONFIG_EPAPR_PARAVIRT)	+= epapr_paravirt.o epapr_hcalls.o
- obj-$(CONFIG_KVM_GUEST)		+= kvm.o kvm_emul.o
+-		if (v->flags & VM_UNINITIALIZED)
+-			return;
+-		/* Pair with smp_wmb() in clear_vm_uninitialized_flag() */
+-		smp_rmb();
++	if (!counters)
++		return;
+ 
+-		memset(counters, 0, nr_node_ids * sizeof(unsigned int));
++	memset(counters, 0, nr_node_ids * sizeof(unsigned int));
+ 
+-		for (nr = 0; nr < v->nr_pages; nr += step)
+-			counters[page_to_nid(v->pages[nr])] += step;
+-		for_each_node_state(nr, N_HIGH_MEMORY)
+-			if (counters[nr])
+-				seq_printf(m, " N%u=%u", nr, counters[nr]);
+-	}
++	for (nr = 0; nr < v->nr_pages; nr += step)
++		counters[page_to_nid(v->pages[nr])] += step;
++	for_each_node_state(nr, N_HIGH_MEMORY)
++		if (counters[nr])
++			seq_printf(m, " N%u=%u", nr, counters[nr]);
+ }
+ 
+ static void show_purge_info(struct seq_file *m)
+@@ -4987,6 +4988,10 @@ static int vmalloc_info_show(struct seq_
+ 	struct vmap_area *va;
+ 	struct vm_struct *v;
+ 	int i;
++	unsigned int *counters;
++
++	if (IS_ENABLED(CONFIG_NUMA))
++		counters = kmalloc(nr_node_ids * sizeof(unsigned int), GFP_KERNEL);
+ 
+ 	for (i = 0; i < nr_vmap_nodes; i++) {
+ 		vn = &vmap_nodes[i];
+@@ -5003,6 +5008,11 @@ static int vmalloc_info_show(struct seq_
+ 			}
+ 
+ 			v = va->vm;
++			if (v->flags & VM_UNINITIALIZED)
++				continue;
++
++			/* Pair with smp_wmb() in clear_vm_uninitialized_flag() */
++			smp_rmb();
+ 
+ 			seq_printf(m, "0x%pK-0x%pK %7ld",
+ 				v->addr, v->addr + v->size, v->size);
+@@ -5037,7 +5047,9 @@ static int vmalloc_info_show(struct seq_
+ 			if (is_vmalloc_addr(v->pages))
+ 				seq_puts(m, " vpages");
+ 
+-			show_numa_info(m, v);
++			if (IS_ENABLED(CONFIG_NUMA))
++				show_numa_info(m, v, counters);
++
+ 			seq_putc(m, '\n');
+ 		}
+ 		spin_unlock(&vn->busy.lock);
+@@ -5047,19 +5059,14 @@ static int vmalloc_info_show(struct seq_
+ 	 * As a final step, dump "unpurged" areas.
+ 	 */
+ 	show_purge_info(m);
++	if (IS_ENABLED(CONFIG_NUMA))
++		kfree(counters);
+ 	return 0;
+ }
+ 
+ static int __init proc_vmalloc_init(void)
+ {
+-	void *priv_data = NULL;
+-
+-	if (IS_ENABLED(CONFIG_NUMA))
+-		priv_data = kmalloc(nr_node_ids * sizeof(unsigned int), GFP_KERNEL);
+-
+-	proc_create_single_data("vmallocinfo",
+-		0400, NULL, vmalloc_info_show, priv_data);
+-
++	proc_create_single("vmallocinfo", 0400, NULL, vmalloc_info_show);
+ 	return 0;
+ }
+ module_init(proc_vmalloc_init);
 
 
