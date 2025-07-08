@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF514128819;
-	Tue,  8 Jul 2025 00:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D32EEC3;
+	Tue,  8 Jul 2025 00:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751932956; cv=none; b=Ls65O3RHXBVdXE92ZgJYaVnu/Gf2jYGd5Qm+KIlD3IKOV1R4f+zAmvFPynErUJj94uweczrHe3uFKQDzWq2WtaX/0DpDfHLBpJDP2yEjRsbop/IxZp8kBj9RO3PmlkwLvZIxspMT4PsaJEC9Wxt7Of8eNaUtUQAGLtbTvY4sLL4=
+	t=1751932958; cv=none; b=EzzP36vc/zzYvCRm1+Wy/CzLwKi7K1zELZpVb9fKS0y34TPLYN5ZDpVrL5vS1R1DiMTdtsCR6P8kxB8quwgWwwn2FFhK2SDQ9FByar1zLFA84I/Cf4ubdDO/KddkEg+dA1lt/q84sunG4td1OhqPsTwjGYhFwrM+xXFE7/7Uqko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751932956; c=relaxed/simple;
-	bh=2a9hDKsHy31E1vQnnQE8Z70lFs//x+5n4TmhNrq285s=;
+	s=arc-20240116; t=1751932958; c=relaxed/simple;
+	bh=wPVC3xPOe/NmVSmSah5sSlryp3XOKL8QVy+V9Gj+lfY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Nig6G71zv8FZABcJrF5bONM75jCJz61NduY6QMUnNNjkHSuZVOgIKHBx07cgvOSpDnscWxWTE8wy1EHW0vGOYPkVfplbOVZPflNFk9Rjgwxzl51fMc8JLWNI0ngPbzx8d2vLjMHlT/en/xd+VMhxkEFXGtcQBHbU1K5L7gYM+Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o/y6Px3W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WrfxuPT32N07vc44SVda73I/LgZJ5e4Grr5U9z6VbxD2NUesVYS6geKPMTHMthfuLewqE3GTwijOQ2Hp9Cgk3MiT6nGAykVJHA4HuUGmxLfzz6vjMytLlussTGui9+wZjl2SbDMtQR7lMs+W1UE2dNG14oPVsDfGce2TlVcyld8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YYb6TDyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o/y6Px3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0A5C4CEE3;
-	Tue,  8 Jul 2025 00:02:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YYb6TDyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13865C4CEF1;
+	Tue,  8 Jul 2025 00:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751932956;
-	bh=2a9hDKsHy31E1vQnnQE8Z70lFs//x+5n4TmhNrq285s=;
+	s=k20201202; t=1751932957;
+	bh=wPVC3xPOe/NmVSmSah5sSlryp3XOKL8QVy+V9Gj+lfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/y6Px3WBrqFXDL+p1vhihekV8Rk6dgf2ui/VZIOY6GblcJAfkBAshIG6zx8bEzgh
-	 vCzPd/oPAEIr8qg5kf5oseBSPxTAfeg2mLAMrhU9nRV9cJ0DPR9JLjYJBanmNMwdND
-	 jxUKacYk8DlGTKr5k1Ej8fW3boGkuC/GX16WDys63F6Q1srQADIpKUjMVQaoJkmGdn
-	 v6hidt7QNMSwiPn8CnhoXNhOVEv5+ZlMvHh4WzPkmCf/+si3Zo180EO2lAylZkPwRK
-	 ysfK6GrC3oj/q0+FhpF+mqYD3LIgsKT2IX/oWG1Ic7jCbhEqlfbELgzFuKtJUaOjJ2
-	 WJ9GApB4mJNCQ==
+	b=YYb6TDyNrjOOqkWII5zC87Qu6OEN6fRLQG1O1YHYes4IrympOOb72NM3T8Yr7vHsb
+	 8T0X5Zh2mJ2MbjY4r2Vtmj6fzk/XaanVc7qKWIy5yl9ub62dauDRa5EGqbeaFAwZ4L
+	 D5/VU+ld1RoCs8ifam+yAe/q92rlA3dr+NtfCsgmsdaYY3sljWszII3JbhGENDAXqA
+	 V39a11AhKuUQtBexPH+6dXc6HaU4yAUv6Poii8ESrLUaHlRKFL9sM5Tc14kmu/wmFD
+	 VxzIyb5YASL6DsUiAyNOR2yuPBXvcOj3e/IlSFiyVEbApo9hTPD/iM+ysR/EID07TO
+	 Atx+X+XWTbHhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Laurent Vivier <lvivier@redhat.com>,
-	xuanzhuo@linux.alibaba.com,
-	Jason Wang <jasowang@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
-	"Michael S . Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Alessandro Carminati <acarmina@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	virtualization@lists.linux-foundation.org
-Subject: [PATCH AUTOSEL 6.12 3/6] virtio_ring: Fix error reporting in virtqueue_resize
-Date: Mon,  7 Jul 2025 20:02:27 -0400
-Message-Id: <20250708000230.793347-3-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 4/6] regulator: core: fix NULL dereference on unbind due to stale coupling data
+Date: Mon,  7 Jul 2025 20:02:28 -0400
+Message-Id: <20250708000230.793347-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250708000230.793347-1-sashal@kernel.org>
 References: <20250708000230.793347-1-sashal@kernel.org>
@@ -54,149 +51,98 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.36
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-[ Upstream commit 45ebc7e6c125ce93d2ddf82cd5bea20121bb0258 ]
+[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
 
-The virtqueue_resize() function was not correctly propagating error codes
-from its internal resize helper functions, specifically
-virtqueue_resize_packet() and virtqueue_resize_split(). If these helpers
-returned an error, but the subsequent call to virtqueue_enable_after_reset()
-succeeded, the original error from the resize operation would be masked.
-Consequently, virtqueue_resize() could incorrectly report success to its
-caller despite an underlying resize failure.
+Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
+lead to NULL pointer dereference when regulators are accessed post-unbind.
 
-This change restores the original code behavior:
+This can happen during runtime PM or other regulator operations that rely
+on coupling metadata.
 
-       if (vdev->config->enable_vq_after_reset(_vq))
-               return -EBUSY;
+For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
+a panic in regulator_lock_recursive() due to stale coupling state.
 
-       return err;
+Ensure n_coupled is set to 0 to prevent access to invalid pointers.
 
-Fix: commit ad48d53b5b3f ("virtio_ring: separate the logic of reset/enable from virtqueue_resize")
-Cc: xuanzhuo@linux.alibaba.com
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://patch.msgid.link/20250521092236.661410-2-lvivier@redhat.com
-Tested-by: Lei Yang <leiyang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-## Analysis Summary
+Now I understand the bug. After unbind, the regulator_dev structure may
+still exist and be accessed (e.g., during runtime PM operations). If
+n_coupled is not reset to 0, code like regulator_lock_recursive() will
+try to iterate through n_coupled entries in the coupled_rdevs array, but
+that array has been freed and set to NULL, causing a NULL pointer
+dereference.
 
-**YES**, this commit should be backported to stable kernel trees.
+**YES**
 
-Here's my extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-### 1. **This is a clear bug fix for incorrect error reporting**
+1. **It fixes a real NULL pointer dereference bug**: The commit
+   addresses a crash that occurs when regulators are accessed after
+   unbind. The issue is in `regulator_lock_recursive()` at line 326-327
+   where it iterates through `n_coupled` entries in the `coupled_rdevs`
+   array:
+  ```c
+  for (i = 0; i < rdev->coupling_desc.n_coupled; i++) {
+  c_rdev = rdev->coupling_desc.coupled_rdevs[i];
+  ```
+  If `n_coupled > 0` but `coupled_rdevs` has been freed (set to NULL),
+  this causes a NULL pointer dereference.
 
-The commit fixes a critical error handling bug in `virtqueue_resize()`
-where error codes from the resize operation (`virtqueue_resize_packed()`
-or `virtqueue_resize_split()`) were being masked if
-`virtqueue_enable_after_reset()` succeeded.
+2. **The fix is minimal and safe**: The patch adds just one line:
+  ```c
+  rdev->coupling_desc.n_coupled = 0;
+  ```
+  This ensures that after freeing the coupling data, the count is also
+  reset, preventing any code from trying to access the freed array.
 
-The specific bug pattern:
-```c
-// Before fix (buggy code):
-err = virtqueue_resize_packed/_split(_vq, num);  // May return error
-return virtqueue_enable_after_reset(_vq);        // Returns 0 on
-success, masking 'err'
+3. **It affects a critical subsystem**: The regulator framework is
+   essential for power management, and crashes in this subsystem can
+   cause system instability or complete failure.
 
-// After fix (correct code):
-err = virtqueue_resize_packed/_split(_vq, num);
-err_reset = virtqueue_enable_after_reset(_vq);
-if (err_reset)
-    return err_reset;
-return err;  // Correctly returns the resize error
-```
+4. **The bug can be triggered during normal operations**: The commit
+   message mentions this happens during runtime PM or other regulator
+   operations, which are common scenarios, not edge cases.
 
-### 2. **The bug affects users and can cause silent failures**
+5. **Similar to other backported fixes**: Looking at the historical
+   commits, we see that similar coupling-related fixes have been
+   backported:
+   - "regulator: core: Release coupled_rdevs on
+     regulator_init_coupling() error" (backported)
+   - "regulator: da9063: fix null pointer deref with partial DT config"
+     (backported)
+   These precedents show that NULL pointer fixes in the regulator
+subsystem are considered important for stable trees.
 
-According to the function documentation at lines 2787-2788, when
-`-ENOMEM` is returned from resize, "vq can still work normally" with the
-original ring size. However, with the bug, the caller would receive
-success (0) instead of `-ENOMEM`, leading them to incorrectly believe
-the resize succeeded when it actually failed. This could cause:
-- Incorrect assumptions about queue capacity
-- Performance issues if the application expected a different queue size
-- Potential resource allocation mismatches
+6. **Clear reproducer**: The commit mentions a specific platform
+   (ridesx4) where unbinding the 'reg-dummy' platform device triggers
+   the panic, indicating this is a reproducible issue.
 
-### 3. **The fix is small, contained, and low-risk**
+The fix follows the stable kernel rules: it's a small, contained fix for
+an important bug with minimal risk of regression.
 
-The change is minimal - only 6 lines of code:
-- Introduces a new local variable `err_reset`
-- Properly preserves and returns the original error code
-- No architectural changes or new features
-- Only affects error propagation logic
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-### 4. **The bug exists in stable kernels**
-
-- Bug introduced in v6.6-rc1 (commit ad48d53b5b3f)
-- The feature (virtqueue_resize) exists since v6.0-rc1
-- Therefore, stable kernels 6.6.x and later contain this bug
-
-### 5. **Clear regression from refactoring**
-
-The commit message explicitly states this "restores the original code
-behavior" and includes a "Fix:" tag pointing to the commit that
-introduced the regression. The original correct pattern was:
-```c
-if (vdev->config->enable_vq_after_reset(_vq))
-    return -EBUSY;
-return err;
-```
-
-### 6. **Meets stable kernel criteria**
-
-Per stable kernel rules, this fix:
-- Fixes a real bug that affects users (incorrect error reporting)
-- Is already in Linus' tree (merged by Paolo Abeni)
-- Is small and easily reviewable
-- Has been tested (Tested-by: Lei Yang)
-- Has multiple maintainer acks (Jason Wang, Michael S. Tsirkin)
-- Does not add new features or make risky changes
-
-### 7. **Similar commits context**
-
-While the similar commits shown are feature additions (introducing
-virtqueue_resize functionality), this commit is fundamentally different
-- it's a bug fix for error handling, not a feature addition.
-
-The fix ensures that callers of `virtqueue_resize()` receive accurate
-error information, which is critical for proper error handling and
-recovery in virtio drivers that use queue resizing functionality.
-
- drivers/virtio/virtio_ring.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 147926c8bae09..c0276979675df 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -2741,7 +2741,7 @@ int virtqueue_resize(struct virtqueue *_vq, u32 num,
- 		     void (*recycle_done)(struct virtqueue *vq))
- {
- 	struct vring_virtqueue *vq = to_vvq(_vq);
--	int err;
-+	int err, err_reset;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 1f4698d724bb7..e7f2a8b659477 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5536,6 +5536,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+ 				 ERR_PTR(err));
+ 	}
  
- 	if (num > vq->vq.num_max)
- 		return -E2BIG;
-@@ -2763,7 +2763,11 @@ int virtqueue_resize(struct virtqueue *_vq, u32 num,
- 	else
- 		err = virtqueue_resize_split(_vq, num);
- 
--	return virtqueue_enable_after_reset(_vq);
-+	err_reset = virtqueue_enable_after_reset(_vq);
-+	if (err_reset)
-+		return err_reset;
-+
-+	return err;
++	rdev->coupling_desc.n_coupled = 0;
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	rdev->coupling_desc.coupled_rdevs = NULL;
  }
- EXPORT_SYMBOL_GPL(virtqueue_resize);
- 
 -- 
 2.39.5
 
