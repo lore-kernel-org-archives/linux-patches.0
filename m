@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D4F9E8;
-	Tue,  8 Jul 2025 16:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BB92E542C;
+	Tue,  8 Jul 2025 16:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992863; cv=none; b=Byvc+afMCGgaK7Y1Hhco9J/2+LeuytZP2pOPye+WynzJ47zWGjsAeO4GwkWu4ESY2/WoDMLlHXiRY8YHVwD1hLJ5ks3uaxFvEqqaI/uj6NoyzM79t2rEaTUqweEy1NrSgc6BduJFgbxRgs8qzfxVhon5VVxlMMJN1csVQbM7pMY=
+	t=1751992866; cv=none; b=M2mePswtO6+CsSFolRqu7A6oDlfP3HEqkjBU0Tlh5YLt6JwFivYyltGJN4PRxoEq7wY37myzcfvwrR7jZawZ3Nw/XLSPmfoJlvJ/Zlt7y5m+S8t40lbiRcVtCy6cPTAAwV8zIw3OImmEaDKml17KXz1S/R5LrG9XRjq+b+q4Tvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992863; c=relaxed/simple;
-	bh=WMIIGcE1tpQW8o5cSLFlT+4qCveyIkUnXEF5XlY9uwI=;
+	s=arc-20240116; t=1751992866; c=relaxed/simple;
+	bh=W4MXJ4H6qwkrDc04AaZrD5KYURjIqe1HlycvQvs/0Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKGcmzvOV1qyPoA0BDZ25tdzkD6wv/vcqT3j2vamop1bAAGDY+mstKznkj/Y8rNliLhkI5FRiJlBTtOCZDuwwUg4XKnFCD0r4Jr28yUv33OBYmfRK6hCEf7dac8ivp65dimlUpChBMcAnKHdKvvQ1BX+bb/zg3iUST9vVmxLmY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kysFVVAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pBQG652/3YVOsYlIO9TjWqXPXBPxinPd38uq7D7Yd5XJCUag2PCKJ2f+9vqXwsz9TDc4ViroRG9GBvbqY4spxhF1Ued96mzaK3Gvax0+lElVZCPVII//q6KOMIrHhDsLg7nHk4K3ylxy6LBMCXTf/CpRXUSW0g3Vucli5goF7VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSjNRd8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kysFVVAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850FEC4CEED;
-	Tue,  8 Jul 2025 16:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSjNRd8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736ACC4CEF5;
+	Tue,  8 Jul 2025 16:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992862;
-	bh=WMIIGcE1tpQW8o5cSLFlT+4qCveyIkUnXEF5XlY9uwI=;
+	s=korg; t=1751992865;
+	bh=W4MXJ4H6qwkrDc04AaZrD5KYURjIqe1HlycvQvs/0Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kysFVVAqQJov7GoeeI+afU1fgZmFtvGgucuQA02XmE/Y66GajQx+BGLw8NJDWtcPA
-	 xteJw7yvdwzQ64DI7Qa1XC6QzvU3x7zNrhQnsTwyOb4CSbG5k0ZzWYxlhqvVxK62tR
-	 oXsNvfnYAyhIoa2BSMIk6LDUeUC6Oqit6WSfVn9I=
+	b=LSjNRd8dYO2Pv68CFoya0cTo6Z+sGsoR0IL9wLfMfCIJ3Wtr0S2b7o/k9VamhRI4k
+	 GnfpTgy4h2utZkm4gLONTkMNhVyi4WCTnjbYMqGbEJ8XzJgbTBa+zUbFbYpajoqbP9
+	 +zRarIYBpN2+2/ivoOXTc2COgpK3MmujwKJwaJ3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/232] gfs2: Replace GIF_DEFER_DELETE with GLF_DEFER_DELETE
-Date: Tue,  8 Jul 2025 18:21:43 +0200
-Message-ID: <20250708162244.239701983@linuxfoundation.org>
+Subject: [PATCH 6.12 108/232] gfs2: Move gfs2_dinode_dealloc
+Date: Tue,  8 Jul 2025 18:21:44 +0200
+Message-ID: <20250708162244.266242050@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -52,100 +52,190 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 3774f53d7f0b30a996eab4a1264611489b48f14c ]
+[ Upstream commit bcd18105fb34e27c097f222733dba9a3e79f191c ]
 
-Having this flag attached to the iopen glock instead of the inode is
-much simpler; it eliminates a protential weird race in gfs2_try_evict().
+Move gfs2_dinode_dealloc() and its helper gfs2_final_release_pages()
+from super.c to inode.c.
 
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Stable-dep-of: 2c63986dd35f ("gfs2: deallocate inodes in gfs2_create_inode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c      | 6 ++++--
- fs/gfs2/incore.h     | 2 +-
- fs/gfs2/super.c      | 3 ++-
- fs/gfs2/trace_gfs2.h | 3 ++-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ fs/gfs2/inode.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++
+ fs/gfs2/inode.h |  1 +
+ fs/gfs2/super.c | 68 -------------------------------------------------
+ 3 files changed, 69 insertions(+), 68 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index ec043aa71de8c..161fc76ed5b0e 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -994,15 +994,15 @@ static bool gfs2_try_evict(struct gfs2_glock *gl)
- 		}
- 	}
- 	if (ip) {
--		set_bit(GIF_DEFER_DELETE, &ip->i_flags);
-+		set_bit(GLF_DEFER_DELETE, &gl->gl_flags);
- 		d_prune_aliases(&ip->i_inode);
- 		iput(&ip->i_inode);
-+		clear_bit(GLF_DEFER_DELETE, &gl->gl_flags);
- 
- 		/* If the inode was evicted, gl->gl_object will now be NULL. */
- 		spin_lock(&gl->gl_lockref.lock);
- 		ip = gl->gl_object;
- 		if (ip) {
--			clear_bit(GIF_DEFER_DELETE, &ip->i_flags);
- 			if (!igrab(&ip->i_inode))
- 				ip = NULL;
- 		}
-@@ -2389,6 +2389,8 @@ static const char *gflags2str(char *buf, const struct gfs2_glock *gl)
- 		*p++ = 'e';
- 	if (test_bit(GLF_VERIFY_DELETE, gflags))
- 		*p++ = 'E';
-+	if (test_bit(GLF_DEFER_DELETE, gflags))
-+		*p++ = 's';
- 	*p = 0;
- 	return buf;
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 2d2f7646440f5..e59fde1bae7b7 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -439,6 +439,74 @@ static int alloc_dinode(struct gfs2_inode *ip, u32 flags, unsigned *dblocks)
+ 	return error;
  }
-diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
-index f6aee2c9b9118..142f61228d15e 100644
---- a/fs/gfs2/incore.h
-+++ b/fs/gfs2/incore.h
-@@ -331,6 +331,7 @@ enum {
- 	GLF_TRY_TO_EVICT		= 17, /* iopen glocks only */
- 	GLF_VERIFY_DELETE		= 18, /* iopen glocks only */
- 	GLF_PENDING_REPLY		= 19,
-+	GLF_DEFER_DELETE		= 20, /* iopen glocks only */
- };
  
- struct gfs2_glock {
-@@ -377,7 +378,6 @@ enum {
- 	GIF_SW_PAGED		= 3,
- 	GIF_FREE_VFS_INODE      = 5,
- 	GIF_GLOP_PENDING	= 6,
--	GIF_DEFER_DELETE	= 7,
- };
++static void gfs2_final_release_pages(struct gfs2_inode *ip)
++{
++	struct inode *inode = &ip->i_inode;
++	struct gfs2_glock *gl = ip->i_gl;
++
++	if (unlikely(!gl)) {
++		/* This can only happen during incomplete inode creation. */
++		BUG_ON(!test_bit(GIF_ALLOC_FAILED, &ip->i_flags));
++		return;
++	}
++
++	truncate_inode_pages(gfs2_glock2aspace(gl), 0);
++	truncate_inode_pages(&inode->i_data, 0);
++
++	if (atomic_read(&gl->gl_revokes) == 0) {
++		clear_bit(GLF_LFLUSH, &gl->gl_flags);
++		clear_bit(GLF_DIRTY, &gl->gl_flags);
++	}
++}
++
++int gfs2_dinode_dealloc(struct gfs2_inode *ip)
++{
++	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
++	struct gfs2_rgrpd *rgd;
++	struct gfs2_holder gh;
++	int error;
++
++	if (gfs2_get_inode_blocks(&ip->i_inode) != 1) {
++		gfs2_consist_inode(ip);
++		return -EIO;
++	}
++
++	gfs2_rindex_update(sdp);
++
++	error = gfs2_quota_hold(ip, NO_UID_QUOTA_CHANGE, NO_GID_QUOTA_CHANGE);
++	if (error)
++		return error;
++
++	rgd = gfs2_blk2rgrpd(sdp, ip->i_no_addr, 1);
++	if (!rgd) {
++		gfs2_consist_inode(ip);
++		error = -EIO;
++		goto out_qs;
++	}
++
++	error = gfs2_glock_nq_init(rgd->rd_gl, LM_ST_EXCLUSIVE,
++				   LM_FLAG_NODE_SCOPE, &gh);
++	if (error)
++		goto out_qs;
++
++	error = gfs2_trans_begin(sdp, RES_RG_BIT + RES_STATFS + RES_QUOTA,
++				 sdp->sd_jdesc->jd_blocks);
++	if (error)
++		goto out_rg_gunlock;
++
++	gfs2_free_di(rgd, ip);
++
++	gfs2_final_release_pages(ip);
++
++	gfs2_trans_end(sdp);
++
++out_rg_gunlock:
++	gfs2_glock_dq_uninit(&gh);
++out_qs:
++	gfs2_quota_unhold(ip);
++	return error;
++}
++
+ static void gfs2_init_dir(struct buffer_head *dibh,
+ 			  const struct gfs2_inode *parent)
+ {
+diff --git a/fs/gfs2/inode.h b/fs/gfs2/inode.h
+index fd15d1c6b6fb1..225b9d0038cd0 100644
+--- a/fs/gfs2/inode.h
++++ b/fs/gfs2/inode.h
+@@ -92,6 +92,7 @@ struct inode *gfs2_inode_lookup(struct super_block *sb, unsigned type,
+ struct inode *gfs2_lookup_by_inum(struct gfs2_sbd *sdp, u64 no_addr,
+ 				  u64 no_formal_ino,
+ 				  unsigned int blktype);
++int gfs2_dinode_dealloc(struct gfs2_inode *ip);
  
- struct gfs2_inode {
+ int gfs2_inode_refresh(struct gfs2_inode *ip);
+ 
 diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 6a0c0f3780b4c..d982db129b2b4 100644
+index d982db129b2b4..aad6d5d2816e3 100644
 --- a/fs/gfs2/super.c
 +++ b/fs/gfs2/super.c
-@@ -1326,7 +1326,8 @@ static enum evict_behavior evict_should_delete(struct inode *inode,
- 	if (unlikely(test_bit(GIF_ALLOC_FAILED, &ip->i_flags)))
- 		goto should_delete;
+@@ -1175,74 +1175,6 @@ static int gfs2_show_options(struct seq_file *s, struct dentry *root)
+ 	return 0;
+ }
  
--	if (test_bit(GIF_DEFER_DELETE, &ip->i_flags))
-+	if (gfs2_holder_initialized(&ip->i_iopen_gh) &&
-+	    test_bit(GLF_DEFER_DELETE, &ip->i_iopen_gh.gh_gl->gl_flags))
- 		return EVICT_SHOULD_DEFER_DELETE;
- 
- 	/* Deletes should never happen under memory pressure anymore.  */
-diff --git a/fs/gfs2/trace_gfs2.h b/fs/gfs2/trace_gfs2.h
-index 09121c2c198ba..43de603ab347e 100644
---- a/fs/gfs2/trace_gfs2.h
-+++ b/fs/gfs2/trace_gfs2.h
-@@ -64,7 +64,8 @@
- 	{(1UL << GLF_INSTANTIATE_NEEDED),	"n" },		\
- 	{(1UL << GLF_INSTANTIATE_IN_PROG),	"N" },		\
- 	{(1UL << GLF_TRY_TO_EVICT),		"e" },		\
--	{(1UL << GLF_VERIFY_DELETE),		"E" })
-+	{(1UL << GLF_VERIFY_DELETE),		"E" },		\
-+	{(1UL << GLF_DEFER_DELETE),		"s" })
- 
- #ifndef NUMPTY
- #define NUMPTY
+-static void gfs2_final_release_pages(struct gfs2_inode *ip)
+-{
+-	struct inode *inode = &ip->i_inode;
+-	struct gfs2_glock *gl = ip->i_gl;
+-
+-	if (unlikely(!gl)) {
+-		/* This can only happen during incomplete inode creation. */
+-		BUG_ON(!test_bit(GIF_ALLOC_FAILED, &ip->i_flags));
+-		return;
+-	}
+-
+-	truncate_inode_pages(gfs2_glock2aspace(gl), 0);
+-	truncate_inode_pages(&inode->i_data, 0);
+-
+-	if (atomic_read(&gl->gl_revokes) == 0) {
+-		clear_bit(GLF_LFLUSH, &gl->gl_flags);
+-		clear_bit(GLF_DIRTY, &gl->gl_flags);
+-	}
+-}
+-
+-static int gfs2_dinode_dealloc(struct gfs2_inode *ip)
+-{
+-	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
+-	struct gfs2_rgrpd *rgd;
+-	struct gfs2_holder gh;
+-	int error;
+-
+-	if (gfs2_get_inode_blocks(&ip->i_inode) != 1) {
+-		gfs2_consist_inode(ip);
+-		return -EIO;
+-	}
+-
+-	gfs2_rindex_update(sdp);
+-
+-	error = gfs2_quota_hold(ip, NO_UID_QUOTA_CHANGE, NO_GID_QUOTA_CHANGE);
+-	if (error)
+-		return error;
+-
+-	rgd = gfs2_blk2rgrpd(sdp, ip->i_no_addr, 1);
+-	if (!rgd) {
+-		gfs2_consist_inode(ip);
+-		error = -EIO;
+-		goto out_qs;
+-	}
+-
+-	error = gfs2_glock_nq_init(rgd->rd_gl, LM_ST_EXCLUSIVE,
+-				   LM_FLAG_NODE_SCOPE, &gh);
+-	if (error)
+-		goto out_qs;
+-
+-	error = gfs2_trans_begin(sdp, RES_RG_BIT + RES_STATFS + RES_QUOTA,
+-				 sdp->sd_jdesc->jd_blocks);
+-	if (error)
+-		goto out_rg_gunlock;
+-
+-	gfs2_free_di(rgd, ip);
+-
+-	gfs2_final_release_pages(ip);
+-
+-	gfs2_trans_end(sdp);
+-
+-out_rg_gunlock:
+-	gfs2_glock_dq_uninit(&gh);
+-out_qs:
+-	gfs2_quota_unhold(ip);
+-	return error;
+-}
+-
+ /**
+  * gfs2_glock_put_eventually
+  * @gl:	The glock to put
 -- 
 2.39.5
 
