@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FADA2DC34C;
-	Tue,  8 Jul 2025 16:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DD92E542F;
+	Tue,  8 Jul 2025 16:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993446; cv=none; b=Z7R4lFGBwKBf04UkZ3zY8jiuUE3CTKVHkweQY60/ZcRXKFnUfNiZqMaOXNMtLKutjIxut1dhV+Hrx/97+64gOXqEF/qwBngqyEjbjvqeW2tc5nyK0WSrhmoF+qAM8iZJFbiLt9nbkg/y0idWeEYbsYO2aE6R+dJunFJIP9qjEhU=
+	t=1751993448; cv=none; b=l/xz/6wu3U2pBKtCEhWOY0c2Q2XO0I19YH2mGq9CBcN8nF0AMPhKwz3f77yqdgC+m96vrwcDPm5VUFp2bysSs2cK02conr+gXGSouNWueRaZLMkb4vTplFVtpMwAqs2EqNOBYkO6Ix5n0liAHXUnkHG0aYt7zTmnG6xQFsFWx5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993446; c=relaxed/simple;
-	bh=9PjNrjpE33n14o7fnd4XvUw9aTWIQtOS2p4Rz+s4MfE=;
+	s=arc-20240116; t=1751993448; c=relaxed/simple;
+	bh=gris6NlHGRG+jHwaKBibif4/G449+u2p+Put+QYXH9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OMoPVxY+Go+HI05j5oOGMfoQ71RWsIM+pJyeJzHV/T+CxwE5uJLSV63Tx+t1lXuBFc9rboGqMDaVwbzoIt3edYMjygKzqSPmJ0KohQ1h+XC+MQyXPAQqLLC2mJ0+wFVxZrQ1D27ulYmX6BiyvpSwjK4J1mqHxl6xlsyT2xIfEU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDC+hlmc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmcO2/rhgz0Efj5srwLLDAZSoHwxjLxMmCdb3+YwhZYvfJi8BazDXoshiS750Dc3JhkrvYKpwlzJY3Te+Anmyswfre9/8bnMJNW+3xwRRfre0iiosdcceBHmNz0bEaCfcUzURN7ZDUsfmoTJHmj2h47ZLEJZwaFtP2S5S7Z59P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQ6WvIvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDC+hlmc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897D2C4CEF6;
-	Tue,  8 Jul 2025 16:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQ6WvIvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636ACC4CEF0;
+	Tue,  8 Jul 2025 16:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993445;
-	bh=9PjNrjpE33n14o7fnd4XvUw9aTWIQtOS2p4Rz+s4MfE=;
+	s=korg; t=1751993448;
+	bh=gris6NlHGRG+jHwaKBibif4/G449+u2p+Put+QYXH9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDC+hlmc0OXCphiohw4BFipPZR/YkcK3ShRyU5asH/aXLJHOkcRzj8Y633YtXBXwd
-	 Lbjqz1cM3UIcj8b46RR/oU26fRxrQUWd9Dj6lFWgoTFvayF3wdZRAvGm2W5jeajAyn
-	 xZ94+cMkYxkjoTfVdQzfIw6/NTAbOjynpuzQo2qA=
+	b=RQ6WvIvEKGiaQU9HfIr0sBzlUBlOOC3eVEw70fAlyf8HK8cYlcD9f2yU4Dpo9o9we
+	 E+SFYmkPpggz+RrOxQfHImZIuGH35m2dPVTAIEHVINsZSV5e5wrjteXovQa8kzH5Z2
+	 WJpOp3SP0ZjU51NpYbtWP0dkfZqXwAbvb8qMvIVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 037/178] firmware: exynos-acpm: fix timeouts on xfers handling
-Date: Tue,  8 Jul 2025 18:21:14 +0200
-Message-ID: <20250708162237.651624669@linuxfoundation.org>
+Subject: [PATCH 6.15 070/178] btrfs: use btrfs_record_snapshot_destroy() during rmdir
+Date: Tue,  8 Jul 2025 18:21:47 +0200
+Message-ID: <20250708162238.505121884@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -46,112 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 8d2c2fa2209e83d0eb10f7330d8a0bbdc1df32ff ]
+[ Upstream commit 157501b0469969fc1ba53add5049575aadd79d80 ]
 
-The mailbox framework has a single inflight request at a time. If
-a request is sent while another is still active, it will be queued
-to the mailbox core ring buffer.
+We are setting the parent directory's last_unlink_trans directly which
+may result in a concurrent task starting to log the directory not see the
+update and therefore can log the directory after we removed a child
+directory which had a snapshot within instead of falling back to a
+transaction commit. Replaying such a log tree would result in a mount
+failure since we can't currently delete snapshots (and subvolumes) during
+log replay. This is the type of failure described in commit 1ec9a1ae1e30
+("Btrfs: fix unreplayable log after snapshot delete + parent dir fsync").
 
-ACPM protocol did not serialize the calls to the mailbox subsystem so we
-could start the timeout ticks in parallel for multiple requests, while
-just one was being inflight.
+Fix this by using btrfs_record_snapshot_destroy() which updates the
+last_unlink_trans field while holding the inode's log_mutex lock.
 
-Consider a hypothetical case where the xfer timeout is 100ms and an ACPM
-transaction takes 90ms:
-      | 0ms: Message #0 is queued in mailbox layer and sent out, then sits
-      |      at acpm_dequeue_by_polling() with a timeout of 100ms
-      | 1ms: Message #1 is queued in mailbox layer but not sent out yet.
-      |      Since send_message() doesn't block, it also sits at
-      |      acpm_dequeue_by_polling() with a timeout of 100ms
-      |  ...
-      | 90ms: Message #0 is completed, txdone is called and message #1 is sent
-      | 101ms: Message #1 times out since the count started at 1ms. Even though
-      |       it has only been inflight for 11ms.
-
-Fix the problem by moving mbox_send_message() and mbox_client_txdone()
-immediately after the message has been written to the TX queue and while
-still keeping the ACPM TX queue lock. We thus tie together the TX write
-with the doorbell ring and mark the TX as done after the doorbell has
-been rung. This guarantees that the doorbell has been rang before
-starting the timeout ticks. We should also see some performance
-improvement as we no longer wait to receive a response before ringing
-the doorbell for the next request, so the ACPM firmware shall be able to
-drain faster the TX queue. Another benefit is that requests are no
-longer able to ring the doorbell one for the other, so it eases
-debugging. Finally, the mailbox software queue will always contain a
-single doorbell request due to the serialization done at the ACPM TX
-queue level. Protocols like ACPM, that handle their own hardware queues
-need a passthrough mailbox API, where they are able to just ring the
-doorbell or flip a bit directly into the mailbox controller. The mailbox
-software queue mechanism, the locking done into the mailbox core is not
-really needed, so hopefully this lays the foundation for a passthrough
-mailbox API.
-
-Reported-by: André Draszik <andre.draszik@linaro.org>
-Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/20250606-acpm-timeout-v2-1-306b1aa07a6c@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/samsung/exynos-acpm.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/samsung/exynos-acpm.c b/drivers/firmware/samsung/exynos-acpm.c
-index e80cb7a8da8f2..520a9fd3b0fd3 100644
---- a/drivers/firmware/samsung/exynos-acpm.c
-+++ b/drivers/firmware/samsung/exynos-acpm.c
-@@ -430,6 +430,9 @@ int acpm_do_xfer(const struct acpm_handle *handle, const struct acpm_xfer *xfer)
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 24db00a9319b3..f18f4d59d389e 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4764,7 +4764,7 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	 * deletes for directory foo.
+ 	 */
+ 	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
+-		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
++		btrfs_record_snapshot_destroy(trans, BTRFS_I(dir));
  
-+	msg.chan_id = xfer->acpm_chan_id;
-+	msg.chan_type = EXYNOS_MBOX_CHAN_TYPE_DOORBELL;
-+
- 	scoped_guard(mutex, &achan->tx_lock) {
- 		tx_front = readl(achan->tx.front);
- 		idx = (tx_front + 1) % achan->qlen;
-@@ -446,25 +449,15 @@ int acpm_do_xfer(const struct acpm_handle *handle, const struct acpm_xfer *xfer)
- 
- 		/* Advance TX front. */
- 		writel(idx, achan->tx.front);
--	}
- 
--	msg.chan_id = xfer->acpm_chan_id;
--	msg.chan_type = EXYNOS_MBOX_CHAN_TYPE_DOORBELL;
--	ret = mbox_send_message(achan->chan, (void *)&msg);
--	if (ret < 0)
--		return ret;
--
--	ret = acpm_wait_for_message_response(achan, xfer);
-+		ret = mbox_send_message(achan->chan, (void *)&msg);
-+		if (ret < 0)
-+			return ret;
- 
--	/*
--	 * NOTE: we might prefer not to need the mailbox ticker to manage the
--	 * transfer queueing since the protocol layer queues things by itself.
--	 * Unfortunately, we have to kick the mailbox framework after we have
--	 * received our message.
--	 */
--	mbox_client_txdone(achan->chan, ret);
-+		mbox_client_txdone(achan->chan, 0);
-+	}
- 
--	return ret;
-+	return acpm_wait_for_message_response(achan, xfer);
- }
- 
- /**
+ 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
+ 		ret = btrfs_unlink_subvol(trans, BTRFS_I(dir), dentry);
 -- 
 2.39.5
 
