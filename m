@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C6F2E041C;
-	Tue,  8 Jul 2025 16:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE3814A60D;
+	Tue,  8 Jul 2025 16:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993493; cv=none; b=FJ2g7ZIsJxYuL6tScypb93hA8EHegDrFZVcSDz4uAdgnQi53QsQ2HfORkcDF+/T9WD7eGuvb4Gw5ZSrv65bocqL9Sx474aaw0WF3Rv0CtFsSslULW/4/i/iUEAuBmNlJdSCgOk2wfJihNeYWCi6g9hNOayNbpHX2l+PwDjL15aE=
+	t=1751993495; cv=none; b=mIdcsVkGVcP7GiliygxVSoLeki/8adpb3Bl4nb+wHTSFKnn1l6seKvorUsm8DkkGehTTkZQ5RpQdbGJ0niQ1/OvuzKKOFJD8JEeJMWZDFTG2E3P9XbSozJUz5/oBt/FygfCyVvCrBrDZkqu40WUnmwuXFtKbh3drKZZSbp6VA2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993493; c=relaxed/simple;
-	bh=D/QD7bWbhOo3Lo/OL3u+Nw2uOHch4PSivTTV2Q81ASo=;
+	s=arc-20240116; t=1751993495; c=relaxed/simple;
+	bh=4FR/gePfQWm8g0cWTmcPtXjRzRZ4xPjT8lxSWny80z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cXvK9oEfoYL5GpFYnsP6Q87/VcyVjuUg2pGQ7zxnSeIAuMxkwytfmUdScU7m2XBZmjgjLIJAk2hd/oesIP3+yd6eXFG12eqCsDCPgjPRvqzuojzFQwaueSJvJ6t5pbolPYajas0gc/KPdeyCtUmy06HIEytklSAvd3/0FThdMQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syUMAC+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+hkCrM2xhTqVewxM62s8MDDB1HGgRP5qXHIMwqaF6tZexL1WX2oBCWj/C0KYSVZn+NrkELNDbcfOaJsn7v6jRth4O3Wms8+C1DN/2dZ+oUdvFHbai8147921uZ4R+36awuFJTi5jEd2a7tZgavzUOvByuJwlTWZVrMgDfFu/f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ie7Jq4QF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syUMAC+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70172C4CEED;
-	Tue,  8 Jul 2025 16:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ie7Jq4QF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5377FC4CEED;
+	Tue,  8 Jul 2025 16:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993492;
-	bh=D/QD7bWbhOo3Lo/OL3u+Nw2uOHch4PSivTTV2Q81ASo=;
+	s=korg; t=1751993495;
+	bh=4FR/gePfQWm8g0cWTmcPtXjRzRZ4xPjT8lxSWny80z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=syUMAC+z/Hy55sx+X+MnPoAO/a0ZA5/g/CeR3vpGPIBC/wW2XsA3R8gJOZ3O6EzQc
-	 WkLfHs+JvzeWAKvzcAMxeIXB4Fl+tTR0tGIZOtnBhjCXy3DtBS8lGjdmWWyfJyxyIV
-	 YwCWjswqsVOwdlWXvFsqst99WpfSP72xZ7tbI3EE=
+	b=Ie7Jq4QFzHZFV2S/HrM/sxxJM0wAZVG6cfWO1tOusJ80l+rl5plt+hwj7E4iUTF8B
+	 UUQiA2QqAcu/1HzY9I5TBZ6osFHtybQK+syRbP6br8u0oID7FHc3OzS2DW63Xk56Sm
+	 en86BuJQSp92PdV1GtxJUvr5paUh9dw8CD/lPaNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 092/178] nvme-multipath: fix suspicious RCU usage warning
-Date: Tue,  8 Jul 2025 18:22:09 +0200
-Message-ID: <20250708162239.063337679@linuxfoundation.org>
+Subject: [PATCH 6.15 093/178] idpf: return 0 size for RSS key if not supported
+Date: Tue,  8 Jul 2025 18:22:10 +0200
+Message-ID: <20250708162239.086361477@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -54,109 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit d6811074203b13f715ce2480ac64c5b1c773f2a5 ]
+[ Upstream commit f77bf1ebf8ff6301ccdbc346f7b52db928f9cbf8 ]
 
-When I run the NVME over TCP test in virtme-ng, I get the following
-"suspicious RCU usage" warning in nvme_mpath_add_sysfs_link():
+Returning -EOPNOTSUPP from function returning u32 is leading to
+cast and invalid size value as a result.
 
-'''
-[    5.024557][   T44] nvmet: Created nvm controller 1 for subsystem nqn.2025-06.org.nvmexpress.mptcp for NQN nqn.2014-08.org.nvmexpress:uuid:f7f6b5e0-ff97-4894-98ac-c85309e0bc77.
-[    5.027401][  T183] nvme nvme0: creating 2 I/O queues.
-[    5.029017][  T183] nvme nvme0: mapped 2/0/0 default/read/poll queues.
-[    5.032587][  T183] nvme nvme0: new ctrl: NQN "nqn.2025-06.org.nvmexpress.mptcp", addr 127.0.0.1:4420, hostnqn: nqn.2014-08.org.nvmexpress:uuid:f7f6b5e0-ff97-4894-98ac-c85309e0bc77
-[    5.042214][   T25]
-[    5.042440][   T25] =============================
-[    5.042579][   T25] WARNING: suspicious RCU usage
-[    5.042705][   T25] 6.16.0-rc3+ #23 Not tainted
-[    5.042812][   T25] -----------------------------
-[    5.042934][   T25] drivers/nvme/host/multipath.c:1203 RCU-list traversed in non-reader section!!
-[    5.043111][   T25]
-[    5.043111][   T25] other info that might help us debug this:
-[    5.043111][   T25]
-[    5.043341][   T25]
-[    5.043341][   T25] rcu_scheduler_active = 2, debug_locks = 1
-[    5.043502][   T25] 3 locks held by kworker/u9:0/25:
-[    5.043615][   T25]  #0: ffff888008730948 ((wq_completion)async){+.+.}-{0:0}, at: process_one_work+0x7ed/0x1350
-[    5.043830][   T25]  #1: ffffc900001afd40 ((work_completion)(&entry->work)){+.+.}-{0:0}, at: process_one_work+0xcf3/0x1350
-[    5.044084][   T25]  #2: ffff888013ee0020 (&head->srcu){.+.+}-{0:0}, at: nvme_mpath_add_sysfs_link.part.0+0xb4/0x3a0
-[    5.044300][   T25]
-[    5.044300][   T25] stack backtrace:
-[    5.044439][   T25] CPU: 0 UID: 0 PID: 25 Comm: kworker/u9:0 Not tainted 6.16.0-rc3+ #23 PREEMPT(full)
-[    5.044441][   T25] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-[    5.044442][   T25] Workqueue: async async_run_entry_fn
-[    5.044445][   T25] Call Trace:
-[    5.044446][   T25]  <TASK>
-[    5.044449][   T25]  dump_stack_lvl+0x6f/0xb0
-[    5.044453][   T25]  lockdep_rcu_suspicious.cold+0x4f/0xb1
-[    5.044457][   T25]  nvme_mpath_add_sysfs_link.part.0+0x2fb/0x3a0
-[    5.044459][   T25]  ? queue_work_on+0x90/0xf0
-[    5.044461][   T25]  ? lockdep_hardirqs_on+0x78/0x110
-[    5.044466][   T25]  nvme_mpath_set_live+0x1e9/0x4f0
-[    5.044470][   T25]  nvme_mpath_add_disk+0x240/0x2f0
-[    5.044472][   T25]  ? __pfx_nvme_mpath_add_disk+0x10/0x10
-[    5.044475][   T25]  ? add_disk_fwnode+0x361/0x580
-[    5.044480][   T25]  nvme_alloc_ns+0x81c/0x17c0
-[    5.044483][   T25]  ? kasan_quarantine_put+0x104/0x240
-[    5.044487][   T25]  ? __pfx_nvme_alloc_ns+0x10/0x10
-[    5.044495][   T25]  ? __pfx_nvme_find_get_ns+0x10/0x10
-[    5.044496][   T25]  ? rcu_read_lock_any_held+0x45/0xa0
-[    5.044498][   T25]  ? validate_chain+0x232/0x4f0
-[    5.044503][   T25]  nvme_scan_ns+0x4c8/0x810
-[    5.044506][   T25]  ? __pfx_nvme_scan_ns+0x10/0x10
-[    5.044508][   T25]  ? find_held_lock+0x2b/0x80
-[    5.044512][   T25]  ? ktime_get+0x16d/0x220
-[    5.044517][   T25]  ? kvm_clock_get_cycles+0x18/0x30
-[    5.044520][   T25]  ? __pfx_nvme_scan_ns_async+0x10/0x10
-[    5.044522][   T25]  async_run_entry_fn+0x97/0x560
-[    5.044523][   T25]  ? rcu_is_watching+0x12/0xc0
-[    5.044526][   T25]  process_one_work+0xd3c/0x1350
-[    5.044532][   T25]  ? __pfx_process_one_work+0x10/0x10
-[    5.044536][   T25]  ? assign_work+0x16c/0x240
-[    5.044539][   T25]  worker_thread+0x4da/0xd50
-[    5.044545][   T25]  ? __pfx_worker_thread+0x10/0x10
-[    5.044546][   T25]  kthread+0x356/0x5c0
-[    5.044548][   T25]  ? __pfx_kthread+0x10/0x10
-[    5.044549][   T25]  ? ret_from_fork+0x1b/0x2e0
-[    5.044552][   T25]  ? __lock_release.isra.0+0x5d/0x180
-[    5.044553][   T25]  ? ret_from_fork+0x1b/0x2e0
-[    5.044555][   T25]  ? rcu_is_watching+0x12/0xc0
-[    5.044557][   T25]  ? __pfx_kthread+0x10/0x10
-[    5.044559][   T25]  ret_from_fork+0x218/0x2e0
-[    5.044561][   T25]  ? __pfx_kthread+0x10/0x10
-[    5.044562][   T25]  ret_from_fork_asm+0x1a/0x30
-[    5.044570][   T25]  </TASK>
-'''
+-EOPNOTSUPP as a size probably will lead to allocation fail.
 
-This patch uses sleepable RCU version of helper list_for_each_entry_srcu()
-instead of list_for_each_entry_rcu() to fix it.
+Command: ethtool -x eth0
+It is visible on all devices that don't have RSS caps set.
 
-Fixes: 4dbd2b2ebe4c ("nvme-multipath: Add visibility for round-robin io-policy")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+[  136.615917] Call Trace:
+[  136.615921]  <TASK>
+[  136.615927]  ? __warn+0x89/0x130
+[  136.615942]  ? __alloc_frozen_pages_noprof+0x322/0x330
+[  136.615953]  ? report_bug+0x164/0x190
+[  136.615968]  ? handle_bug+0x58/0x90
+[  136.615979]  ? exc_invalid_op+0x17/0x70
+[  136.615987]  ? asm_exc_invalid_op+0x1a/0x20
+[  136.616001]  ? rss_prepare_get.constprop.0+0xb9/0x170
+[  136.616016]  ? __alloc_frozen_pages_noprof+0x322/0x330
+[  136.616028]  __alloc_pages_noprof+0xe/0x20
+[  136.616038]  ___kmalloc_large_node+0x80/0x110
+[  136.616072]  __kmalloc_large_node_noprof+0x1d/0xa0
+[  136.616081]  __kmalloc_noprof+0x32c/0x4c0
+[  136.616098]  ? rss_prepare_get.constprop.0+0xb9/0x170
+[  136.616105]  rss_prepare_get.constprop.0+0xb9/0x170
+[  136.616114]  ethnl_default_doit+0x107/0x3d0
+[  136.616131]  genl_family_rcv_msg_doit+0x100/0x160
+[  136.616147]  genl_rcv_msg+0x1b8/0x2c0
+[  136.616156]  ? __pfx_ethnl_default_doit+0x10/0x10
+[  136.616168]  ? __pfx_genl_rcv_msg+0x10/0x10
+[  136.616176]  netlink_rcv_skb+0x58/0x110
+[  136.616186]  genl_rcv+0x28/0x40
+[  136.616195]  netlink_unicast+0x19b/0x290
+[  136.616206]  netlink_sendmsg+0x222/0x490
+[  136.616215]  __sys_sendto+0x1fd/0x210
+[  136.616233]  __x64_sys_sendto+0x24/0x30
+[  136.616242]  do_syscall_64+0x82/0x160
+[  136.616252]  ? __sys_recvmsg+0x83/0xe0
+[  136.616265]  ? syscall_exit_to_user_mode+0x10/0x210
+[  136.616275]  ? do_syscall_64+0x8e/0x160
+[  136.616282]  ? __count_memcg_events+0xa1/0x130
+[  136.616295]  ? count_memcg_events.constprop.0+0x1a/0x30
+[  136.616306]  ? handle_mm_fault+0xae/0x2d0
+[  136.616319]  ? do_user_addr_fault+0x379/0x670
+[  136.616328]  ? clear_bhb_loop+0x45/0xa0
+[  136.616340]  ? clear_bhb_loop+0x45/0xa0
+[  136.616349]  ? clear_bhb_loop+0x45/0xa0
+[  136.616359]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  136.616369] RIP: 0033:0x7fd30ba7b047
+[  136.616376] Code: 0c 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 80 3d bd d5 0c 00 00 41 89 ca 74 10 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 71 c3 55 48 83 ec 30 44 89 4c 24 2c 4c 89 44
+[  136.616381] RSP: 002b:00007ffde1796d68 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
+[  136.616388] RAX: ffffffffffffffda RBX: 000055d7bd89f2a0 RCX: 00007fd30ba7b047
+[  136.616392] RDX: 0000000000000028 RSI: 000055d7bd89f3b0 RDI: 0000000000000003
+[  136.616396] RBP: 00007ffde1796e10 R08: 00007fd30bb4e200 R09: 000000000000000c
+[  136.616399] R10: 0000000000000000 R11: 0000000000000202 R12: 000055d7bd89f340
+[  136.616403] R13: 000055d7bd89f3b0 R14: 000055d78943f200 R15: 0000000000000000
+
+Fixes: 02cbfba1add5 ("idpf: add ethtool callbacks")
+Reviewed-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/idpf/idpf_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index cf0ef4745564c..700dfbd5a4512 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -1050,7 +1050,8 @@ void nvme_mpath_add_sysfs_link(struct nvme_ns_head *head)
- 	 */
- 	srcu_idx = srcu_read_lock(&head->srcu);
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
+index 59b1a1a099967..f72420cf68216 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
+@@ -46,7 +46,7 @@ static u32 idpf_get_rxfh_key_size(struct net_device *netdev)
+ 	struct idpf_vport_user_config_data *user_config;
  
--	list_for_each_entry_rcu(ns, &head->list, siblings) {
-+	list_for_each_entry_srcu(ns, &head->list, siblings,
-+				 srcu_read_lock_held(&head->srcu)) {
- 		/*
- 		 * Ensure that ns path disk node is already added otherwise we
- 		 * may get invalid kobj name for target
+ 	if (!idpf_is_cap_ena_all(np->adapter, IDPF_RSS_CAPS, IDPF_CAP_RSS))
+-		return -EOPNOTSUPP;
++		return 0;
+ 
+ 	user_config = &np->adapter->vport_config[np->vport_idx]->user_config;
+ 
+@@ -65,7 +65,7 @@ static u32 idpf_get_rxfh_indir_size(struct net_device *netdev)
+ 	struct idpf_vport_user_config_data *user_config;
+ 
+ 	if (!idpf_is_cap_ena_all(np->adapter, IDPF_RSS_CAPS, IDPF_CAP_RSS))
+-		return -EOPNOTSUPP;
++		return 0;
+ 
+ 	user_config = &np->adapter->vport_config[np->vport_idx]->user_config;
+ 
 -- 
 2.39.5
 
