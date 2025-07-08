@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EF78F5B;
-	Tue,  8 Jul 2025 16:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AB25464F;
+	Tue,  8 Jul 2025 16:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751992926; cv=none; b=gvUzL7LQFvAbWPEZoCpboR6Rj9JeDZNWvBTvccBwibmFFCdhwkeQjUNNFShRzZBCC89pOngicNcrHHG/1U2c+HQU4Mk6ACw7flAT+Z3g1OKVJGqFIsYwE//XiMIkd3qYHNea7CXPGPAobGGh/6UxuU156ri2aupDglVq9U/iTd8=
+	t=1751992930; cv=none; b=sgJUcpr0twRIp1dHQDdzlCeKfppGZs1oCzqiUhvtx4Ftf42eKMKZ+rO3djVoxz2tNBYdbMIoAP2L134a+A0tht+1ZR2mrheHpgIqQFvN1SvnL+gkTsdH1g0Ed2vLwlLRACxvD4avPaTLyANKvEyhKLejVsZ1h5PmbFvo8sJq9E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751992926; c=relaxed/simple;
-	bh=509NGWDV0CNv0luMW+xJKzP5f1PN3ycPgoMSXVSLwoI=;
+	s=arc-20240116; t=1751992930; c=relaxed/simple;
+	bh=yh3Eqss4pl1JDtvPw/KL4FBhSEhjnA8rSaEOOPTlW4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OgSnKuKlBHfO4TSYU+/RtIMHwy7BH97hbYxHefixlRog1FsxLWZrH0Cc2eKmmXUZKp5bIeDGCnWFT11sPzzwMncym88FsDoOQg/lKdUNG9cTwHhpEks5I0VcN6e8Tx1oBruPwgWOE/OUsYdwi1zjc//4D5T5NSZYsy8aUx+GQf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6A0DtVm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LPNojslWWOZmR7+Mgj8m2/d8xQ8FQIUsNhwQkS4IOhAk0KBUsIGuCeYhezoHZoj8jtI+1aUh3Ebi5eZLKG28bPTGHJvv07QdN99lR2ALHDuzdUA7yNmyYhFjecqzO4eMuVuIULL8xBsKEP96KMfujhk9+47Mi1IMeYrjSYshxak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/+v5Vtk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6A0DtVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D00C4CEED;
-	Tue,  8 Jul 2025 16:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/+v5Vtk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47502C4CEED;
+	Tue,  8 Jul 2025 16:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751992926;
-	bh=509NGWDV0CNv0luMW+xJKzP5f1PN3ycPgoMSXVSLwoI=;
+	s=korg; t=1751992929;
+	bh=yh3Eqss4pl1JDtvPw/KL4FBhSEhjnA8rSaEOOPTlW4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6A0DtVmz4qzs1+QxEehFO84QG5k1ZuM28A7e8ZA0Wu9eOXUsFmpxoOfy+BT1QUnj
-	 7Wwy9kUWpJN9lOlpDcSUV9LSEyhMp9mEiLSNb+yoboSNIJaknWayPPp4taHRuUVZtZ
-	 smigZRFRGYfT8n71IjtYazJc33fH5wZCUTzMQohE=
+	b=l/+v5Vtkbg3e+Ievf+QeuyKASqeNm5F7UGSwaI4XmxcTIW5GYNF1C4jPiirJiZjq1
+	 QdmRJ53A65W1SMlj2mJxi5deQaZw8EnhVYBKGZjIzPiOAFpFC/9YgphZB2XZJrZc7+
+	 X2CsHukWIsfPmyE1aw6AsT9kBSaqXExL9DXqzZ0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 127/232] iommu: ipmmu-vmsa: avoid Wformat-security warning
-Date: Tue,  8 Jul 2025 18:22:03 +0200
-Message-ID: <20250708162244.766153955@linuxfoundation.org>
+Subject: [PATCH 6.12 099/232] kunit: qemu_configs: sparc: Explicitly enable CONFIG_SPARC32=y
+Date: Tue,  8 Jul 2025 18:21:35 +0200
+Message-ID: <20250708162244.036805363@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162241.426806072@linuxfoundation.org>
 References: <20250708162241.426806072@linuxfoundation.org>
@@ -47,54 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 33647d0be323f9e2f27cd1e86de5cfd965cec654 ]
+[ Upstream commit d16b3d0fb43cb0f9eb21b35c2d2c870b3f38ab1d ]
 
-iommu_device_sysfs_add() requires a constant format string, otherwise
-a W=1 build produces a warning:
+The configuration generated by kunit ends up with a 32bit configuration.
+A new kunit configuration for 64bit is to be added.
+To make the difference clearer spell out the variant in the kunit
+reference config.
 
-drivers/iommu/ipmmu-vmsa.c:1093:62: error: format string is not a string literal (potentially insecure) [-Werror,-Wformat-security]
- 1093 |         ret = iommu_device_sysfs_add(&mmu->iommu, &pdev->dev, NULL, dev_name(&pdev->dev));
-      |                                                                     ^~~~~~~~~~~~~~~~~~~~
-drivers/iommu/ipmmu-vmsa.c:1093:62: note: treat the string as an argument to avoid this
- 1093 |         ret = iommu_device_sysfs_add(&mmu->iommu, &pdev->dev, NULL, dev_name(&pdev->dev));
-      |                                                                     ^
-      |                                                                     "%s",
-
-This was an old bug but I saw it now because the code was changed as part
-of commit d9d3cede4167 ("iommu/ipmmu-vmsa: Register in a sensible order").
-
-Fixes: 7af9a5fdb9e0 ("iommu/ipmmu-vmsa: Use iommu_device_sysfs_add()/remove()")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20250423164006.2661372-1-arnd@kernel.org
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Link: https://lore.kernel.org/r/20250415-kunit-qemu-sparc64-v1-1-253906f61102@linutronix.de
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: 1d31d536871f ("kunit: qemu_configs: Disable faulting tests on 32-bit SPARC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/ipmmu-vmsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/kunit/qemu_configs/sparc.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/ipmmu-vmsa.c b/drivers/iommu/ipmmu-vmsa.c
-index ff55b8c307126..ae69691471e9f 100644
---- a/drivers/iommu/ipmmu-vmsa.c
-+++ b/drivers/iommu/ipmmu-vmsa.c
-@@ -1087,7 +1087,7 @@ static int ipmmu_probe(struct platform_device *pdev)
- 	 * - R-Car Gen3 IPMMU (leaf devices only - skip root IPMMU-MM device)
- 	 */
- 	if (!mmu->features->has_cache_leaf_nodes || !ipmmu_is_root(mmu)) {
--		ret = iommu_device_sysfs_add(&mmu->iommu, &pdev->dev, NULL,
-+		ret = iommu_device_sysfs_add(&mmu->iommu, &pdev->dev, NULL, "%s",
- 					     dev_name(&pdev->dev));
- 		if (ret)
- 			return ret;
+diff --git a/tools/testing/kunit/qemu_configs/sparc.py b/tools/testing/kunit/qemu_configs/sparc.py
+index 256d9573b4464..3131dd299a6e3 100644
+--- a/tools/testing/kunit/qemu_configs/sparc.py
++++ b/tools/testing/kunit/qemu_configs/sparc.py
+@@ -2,6 +2,7 @@ from ..qemu_config import QemuArchParams
+ 
+ QEMU_ARCH = QemuArchParams(linux_arch='sparc',
+ 			   kconfig='''
++CONFIG_SPARC32=y
+ CONFIG_SERIAL_SUNZILOG=y
+ CONFIG_SERIAL_SUNZILOG_CONSOLE=y
+ ''',
 -- 
 2.39.5
 
