@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86BC2E49BD;
-	Tue,  8 Jul 2025 17:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E402DCF48;
+	Tue,  8 Jul 2025 17:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994142; cv=none; b=Xu6CQfXEhPKiEfl+nkgNbmmFATOrJ7/PNiUK9j/2lYR/wThN9DC+QPBbvi9TvXNAlXTSg+m2AJChFBjQioVgYyxFA+X6Lfa4KUPXbr4Nch+sfO7o3MpRGCFolXY1FVBV9ydU5vOZaOw5sSAuGZNkGDfV7xwrwJOMsfhKoGgFsFk=
+	t=1751994145; cv=none; b=KBr65bbv+TuzW+voKHp/XrKsN1Cn6ViupGEWGfKYsEl1aFlYP0akDG6jpaRcH7FNKKUA40CQ/HeZFoIvPJDGTc+iHD2V0eqDFlhYNz2nHLvCkMn4pYIjsDDuboLY92k/2QIjiPWzdMo7wzXyHEEBRczXe9puB7z2gPxtO6IAXXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994142; c=relaxed/simple;
-	bh=MTb+yEDDtsiHnZ+3/1eue8UXyBNf8QMUVxxUP/qOz/M=;
+	s=arc-20240116; t=1751994145; c=relaxed/simple;
+	bh=3Etulblx/WvbCXQVQeAWmtNHCWzPibtbo6MQ4E+3VQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YmgmilHVNbPO6QROjHXRGnuHv52OdTljoo2I8zOzBU7a8N0fdeAY7cn0Sp2CH08M8IXAKgDM5NMbfHn6Q+X3blREsTRNi1BbHfnD8naAhsjwRsRcoH3pfWaSnkqp/h4V3uU6UqeuxX+Gpsy9QhFFKZOGbiOBE9qDaVeG20YrOxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wT9Y3lfJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgBShoxgEAFI3iS+oF4cuxxXIsegkJaEFpA0mIWPOJXnwMUlzoXNdmpaKi6knGSc+u7qRTCjrbqNPnowZXouEEUB+wRM+2t6/BubdP5D3wcgyHQ583mbQHN2cXqBoeBvYWH+DtM8zIRrFdDe7pEvQU+XCjXOVbtBW1zAxOOO6kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6owBOVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wT9Y3lfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F0DC4CEED;
-	Tue,  8 Jul 2025 17:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6owBOVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBA8C4CEED;
+	Tue,  8 Jul 2025 17:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994142;
-	bh=MTb+yEDDtsiHnZ+3/1eue8UXyBNf8QMUVxxUP/qOz/M=;
+	s=korg; t=1751994145;
+	bh=3Etulblx/WvbCXQVQeAWmtNHCWzPibtbo6MQ4E+3VQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wT9Y3lfJ+KBqx4f5zaQbvxBHYmPlFZRYqK3Pz8BRYYF5VV9S1zvt619thzUGAAIj3
-	 rIVTNhUJpeDonN7pYKQ3zMi7ZhKXImXoJUO/fG9uQdC37PlFOmP27svtYV+E5JBqNS
-	 IVdco7a7OIfczZn/IyMIoAPWc/Qfmjy3gT6kSmaI=
+	b=A6owBOVuNpQtrnNi4sPzkLqB56MNpiA/HKrK1Sb/OxaRwhKG7DO+mgLVn4PWcfhTg
+	 8eU5eyK5aGz+/8ZaZ27GzUJvFIvpAHeK+IS4ULztZaVMXX8MBSpOagS3z3pMqNRFnM
+	 bP8cslqWd2P4or7wOfBv8JL7caBoKnYvA0mnIuTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/160] scsi: qla2xxx: Fix DMA mapping test in qla24xx_get_port_database()
-Date: Tue,  8 Jul 2025 18:22:26 +0200
-Message-ID: <20250708162234.499284401@linuxfoundation.org>
+	Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Jonathan Liu <net147@gmail.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 100/160] Revert "mmc: sdhci: Disable SD card clock before changing parameters"
+Date: Tue,  8 Jul 2025 18:22:17 +0200
+Message-ID: <20250708162234.266847584@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -51,38 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit c3b214719a87735d4f67333a8ef3c0e31a34837c ]
+commit dcc3bcfc5b50c625b475dcc25d167b6b947a6637 upstream.
 
-dma_map_XXX() functions return as error values DMA_MAPPING_ERROR which is
-often ~0.  The error value should be tested with dma_mapping_error() like
-it was done in qla26xx_dport_diagnostics().
+It has turned out the trying to strictly conform to the SDHCI specification
+is causing problems. Let's revert and start over.
 
-Fixes: 818c7f87a177 ("scsi: qla2xxx: Add changes in preparation for vendor extended FDMI/RDP")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250617161115.39888-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This reverts commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc.
+
+Cc: Erick Shepherd <erick.shepherd@ni.com>
+Cc: stable@vger.kernel.org
+Fixes: fb3bbc46c94f ("mmc: sdhci: Disable SD card clock before changing parameters")
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Reported-by: Jonathan Liu <net147@gmail.com>
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Closes: https://bugs.debian.org/1108065
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250624110932.176925-1-ulf.hansson@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
-index d2ff54beb7cd7..7a28582b1f73a 100644
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -2141,7 +2141,7 @@ qla24xx_get_port_database(scsi_qla_host_t *vha, u16 nport_handle,
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -2009,15 +2009,10 @@ void sdhci_set_clock(struct sdhci_host *
  
- 	pdb_dma = dma_map_single(&vha->hw->pdev->dev, pdb,
- 	    sizeof(*pdb), DMA_FROM_DEVICE);
--	if (!pdb_dma) {
-+	if (dma_mapping_error(&vha->hw->pdev->dev, pdb_dma)) {
- 		ql_log(ql_log_warn, vha, 0x1116, "Failed to map dma buffer.\n");
- 		return QLA_MEMORY_ALLOC_FAILED;
- 	}
--- 
-2.39.5
-
+ 	host->mmc->actual_clock = 0;
+ 
+-	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
+-	if (clk & SDHCI_CLOCK_CARD_EN)
+-		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
+-			SDHCI_CLOCK_CONTROL);
++	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ 
+-	if (clock == 0) {
+-		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
++	if (clock == 0)
+ 		return;
+-	}
+ 
+ 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
+ 	sdhci_enable_clk(host, clk);
 
 
