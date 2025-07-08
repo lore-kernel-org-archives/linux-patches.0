@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E0E2E5425;
-	Tue,  8 Jul 2025 16:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D18217722;
+	Tue,  8 Jul 2025 16:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751991887; cv=none; b=Y9zX4vSeJLoMsXuyvi/FUe1z5VO5qK+ckDestbnfSBDj1maji3ly5GXL9fYT9URZzUpLne9v0F9+JXtYAvw+FhkiNClewpH5VizuHkIz+9Qt2dG9LGXC1KpPqsGYRctCb+/cAJAO79lbLalTsjRHP2Uc+aLg86gVNXmMHoHsluw=
+	t=1751991954; cv=none; b=pDqMi0fQic5q4/3334a3PFPjBUiFMcdBxVLyMnalAHI0CoJEDdsLnaMlukeMSOkG+n8HAzHaMJVjBRQaI4ZvJPnANYu5eKszpx3CreMOq2y/ORSTvXKkKK2ME+GiiZyNXQ+xrnSnUKgQA1HEQMoL/c7jV5w8LD/Ksb/8sAa5Ac8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751991887; c=relaxed/simple;
-	bh=QkOhldzF7KG0re14tavBPXWg+Icm6RpFzTsMdso+D8M=;
+	s=arc-20240116; t=1751991954; c=relaxed/simple;
+	bh=onaoRAtrRn8AgGPGJJ8r9ufl1cCJZS17T2iBkUx4A9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1ldDBgIJiFuGpC5OIvKs9wzU7nPiOnrr7VqjS45g3FBgzbvkllHxGBgZzCJPYNl+1VNZEF+SnTlpFj9e5+bMhTJtR0Va0ucbjyA4l8pkSyTfK3sG1n3uJadE26hDwpes2yfabI9e6c2CTlrsVPdz4AOgi1jvat9z6vefw4uzAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUNpMLGR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZL+Of1I+z/YKP6VZLebV1RyCnW0P3fjDaDdyQWTqFsCu+tY8EHYX0JEOX60hXXrKVJO8RDKxzvNApZUyNSpF/KIvPT7OnllRwtiG+/bteldiPTPvnndunf0Faas21u1JcN5b5xDkcXLH6GzfXoRXXbxKk8cflrg3c+VL5dXibwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAx1QFFL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUNpMLGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0DFC4CEF0;
-	Tue,  8 Jul 2025 16:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAx1QFFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A62AC4CEED;
+	Tue,  8 Jul 2025 16:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751991887;
-	bh=QkOhldzF7KG0re14tavBPXWg+Icm6RpFzTsMdso+D8M=;
+	s=korg; t=1751991953;
+	bh=onaoRAtrRn8AgGPGJJ8r9ufl1cCJZS17T2iBkUx4A9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUNpMLGRVgpQGzkl5fVaIDUXRTTcG00aZTSSwoVkXfCftsvkM6OtSF3gDiZaFmLzp
-	 wMQjBRwaXz/HU7BxctLFuRBCP7TixalC74HwIeLWnewEMVZYujaIFszp5ZaA+v9Yc2
-	 G8xcP/c8Bl6K0kRvrS57+JL/Qzl/wAYpkPJ5Tqqo=
+	b=qAx1QFFL0JYsEfGaaS1iXXZrDvbCMvPdL4ZI2UQ6Dfky5WoSBXcTZUJlkZj0S5WVx
+	 QoXvLrwEomHY2rae2B+uFLJflI3tbVjENxtqTxzpbiycyU6BZwUT+6ZEKATraA+aa9
+	 UavL8Cm2GpiCKvwgMZ+RFwQsKSOpkmccIM/Fm608=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Young <hanyang.tony@bytedance.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/160] NFSv4: Always set NLINK even if the server doesnt support it
-Date: Tue,  8 Jul 2025 18:20:39 +0200
-Message-ID: <20250708162231.575337288@linuxfoundation.org>
+	Erick Shepherd <erick.shepherd@ni.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Jonathan Liu <net147@gmail.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 05/81] Revert "mmc: sdhci: Disable SD card clock before changing parameters"
+Date: Tue,  8 Jul 2025 18:22:57 +0200
+Message-ID: <20250708162225.010420047@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
-References: <20250708162231.503362020@linuxfoundation.org>
+In-Reply-To: <20250708162224.795155912@linuxfoundation.org>
+References: <20250708162224.795155912@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Han Young <hanyang.tony@bytedance.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 3a3065352f73381d3a1aa0ccab44aec3a5a9b365 ]
+commit dcc3bcfc5b50c625b475dcc25d167b6b947a6637 upstream.
 
-fattr4_numlinks is a recommended attribute, so the client should emulate
-it even if the server doesn't support it. In decode_attr_nlink function
-in nfs4xdr.c, nlink is initialized to 1. However, this default value
-isn't set to the inode due to the check in nfs_fhget.
+It has turned out the trying to strictly conform to the SDHCI specification
+is causing problems. Let's revert and start over.
 
-So if the server doesn't support numlinks, inode's nlink will be zero,
-the mount will fail with error "Stale file handle". Set the nlink to 1
-if the server doesn't support it.
+This reverts commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc.
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Erick Shepherd <erick.shepherd@ni.com>
+Cc: stable@vger.kernel.org
+Fixes: fb3bbc46c94f ("mmc: sdhci: Disable SD card clock before changing parameters")
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Reported-by: Jonathan Liu <net147@gmail.com>
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Closes: https://bugs.debian.org/1108065
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250624110932.176925-1-ulf.hansson@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/sdhci.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 09922258f5a11..28c24079c57a8 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -567,6 +567,8 @@ nfs_fhget(struct super_block *sb, struct nfs_fh *fh, struct nfs_fattr *fattr, st
- 			set_nlink(inode, fattr->nlink);
- 		else if (fattr_supported & NFS_ATTR_FATTR_NLINK)
- 			nfs_set_cache_invalid(inode, NFS_INO_INVALID_NLINK);
-+		else
-+			set_nlink(inode, 1);
- 		if (fattr->valid & NFS_ATTR_FATTR_OWNER)
- 			inode->i_uid = fattr->uid;
- 		else if (fattr_supported & NFS_ATTR_FATTR_OWNER)
--- 
-2.39.5
-
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -2049,15 +2049,10 @@ void sdhci_set_clock(struct sdhci_host *
+ 
+ 	host->mmc->actual_clock = 0;
+ 
+-	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
+-	if (clk & SDHCI_CLOCK_CARD_EN)
+-		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
+-			SDHCI_CLOCK_CONTROL);
++	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ 
+-	if (clock == 0) {
+-		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
++	if (clock == 0)
+ 		return;
+-	}
+ 
+ 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
+ 	sdhci_enable_clk(host, clk);
 
 
