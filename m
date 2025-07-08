@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5F221D5BB;
-	Tue,  8 Jul 2025 16:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0182014A60D;
+	Tue,  8 Jul 2025 16:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993593; cv=none; b=bVPmMQx0Sk9FSX2BH0mfQlyjuXNphpopDiiznLWDCA+rUoBgbkagUqxXoFO6zFX/dXOpPHeufA7NJXdibHqJEWnrayU4rN0OJ7uaR1NM1IGa8MC2z+O89SE2L29nuWJ9qLBR1MfMlTrKZKqZCtgxzkLtIER5P0kVPGYrnTdIlcI=
+	t=1751993596; cv=none; b=lqzbPNfmvtBk1G806cB90T0MxvScOVLVOu59POWhr+cdB8nwfXEmvUQrWHWdRJmfnlVVCAf30dX4bTx0sIYMTYHbcqmxnS6nfgA96kIfRJk2/oSuri56BDLgrvS66fagiiHnOK+BapGi+xBAbtxJf9SuVZw8FI5Ah4ALf03s11E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993593; c=relaxed/simple;
-	bh=Qmk5TkGcJNQdmdFxnUzrEtgJuMlAGTT4kLyYsn2vu0k=;
+	s=arc-20240116; t=1751993596; c=relaxed/simple;
+	bh=eyCjJzxMJjDSidxbFtJiIYt3K5bnPo81/6rGrm4Jm1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rh9ObSyVxz8Y5vameBz6jQxDlc+uTL8AO+f1E7aw0K+Ev/iGLtl5NerUufCG6+BZADTsjYhwTnJKPo7oiWJ80nsHCRJcrWdR1jsCWvebcKsYkkLOYL+TOW96xHN8b65gq6hszXLvCgWhK3MqC8ICF/LWthdIYK/ED2/IHRB77rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTcTV324; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dTUe0nmlEDZY0VuGkvqI6mBPwIfA2T6qbsjIW4FenCUK8bLBMWsBbyewQb81LtOoqY3GEI5UMEnOINdx3ZnlzdePrkH21WcTdYSsUUqeLUlpbF6YMH9ItEymZZkR60nfwuMbhbbFYrQD7za4E4DTzdJjEiO9en/4uVNBJL3he+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlVA7UB3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTcTV324"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392BAC4CEED;
-	Tue,  8 Jul 2025 16:53:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlVA7UB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2374EC4CEED;
+	Tue,  8 Jul 2025 16:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993592;
-	bh=Qmk5TkGcJNQdmdFxnUzrEtgJuMlAGTT4kLyYsn2vu0k=;
+	s=korg; t=1751993595;
+	bh=eyCjJzxMJjDSidxbFtJiIYt3K5bnPo81/6rGrm4Jm1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fTcTV324j6FOlRiLYll2yIYZ1mo8iiJzgTyfxHZReSYoXIzKsnxpPIrp4v47/AoiU
-	 B7XWr8d3kIMqDIujXz6ISvckAwTAACE/XGW9aNk/T63/HYCiYb4BL9smwUYxIYuwca
-	 tYncsQDCSdJ56TwK7CZ6kYinfIHfutNXSgifHIiU=
+	b=GlVA7UB315iNjbf+hOW/Kb6F4rvwYc8i6E1/08By3mXjEJdJx+NrX75MmtpHMcECH
+	 7Dhu6Y/PpQVU/SCYmenK/J568JjvkxVsEEsobrGVWFV2H7imqzixklwq8eCUbl0xDl
+	 RRAAXAHA7Z5dwfjX5A7aMwLoikI641HwjF+oEZvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Gabriel Santese <santesegabriel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 127/178] ata: pata_cs5536: fix build on 32-bit UML
-Date: Tue,  8 Jul 2025 18:22:44 +0200
-Message-ID: <20250708162239.898316811@linuxfoundation.org>
+Subject: [PATCH 6.15 128/178] ASoC: amd: yc: Add quirk for MSI Bravo 17 D7VF internal mic
+Date: Tue,  8 Jul 2025 18:22:45 +0200
+Message-ID: <20250708162239.920606706@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,36 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Gabriel Santese <santesegabriel@gmail.com>
 
-[ Upstream commit fe5b391fc56f77cf3c22a9dd4f0ce20db0e3533f ]
+[ Upstream commit ba06528ad5a31923efc24324706116ccd17e12d8 ]
 
-On 32-bit ARCH=um, CONFIG_X86_32 is still defined, so it
-doesn't indicate building on real X86 machines. There's
-no MSR on UML though, so add a check for CONFIG_X86.
+MSI Bravo 17 (D7VF), like other laptops from the family,
+has broken ACPI tables and needs a quirk for internal mic
+to work properly.
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20250606090110.15784-2-johannes@sipsolutions.net
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Gabriel Santese <santesegabriel@gmail.com>
+Link: https://patch.msgid.link/20250530005444.23398-1-santesegabriel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_cs5536.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/ata/pata_cs5536.c b/drivers/ata/pata_cs5536.c
-index b811efd2cc346..73e81e160c91f 100644
---- a/drivers/ata/pata_cs5536.c
-+++ b/drivers/ata/pata_cs5536.c
-@@ -27,7 +27,7 @@
- #include <scsi/scsi_host.h>
- #include <linux/dmi.h>
- 
--#ifdef CONFIG_X86_32
-+#if defined(CONFIG_X86) && defined(CONFIG_X86_32)
- #include <asm/msr.h>
- static int use_msr;
- module_param_named(msr, use_msr, int, 0644);
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index b27966f82c8b6..4f8481c6802b1 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -451,6 +451,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VEK"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 17 D7VF"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
