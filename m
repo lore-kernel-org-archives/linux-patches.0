@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56838F5E;
-	Tue,  8 Jul 2025 16:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9757F20296E;
+	Tue,  8 Jul 2025 16:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993895; cv=none; b=PROEydPmaufBJtmwrALyMOq8SOIrp2X6QYZvrKNDOhGTTsajq2sZQj+N5o7d8gLZI6sEn33m9NJ35m5IwIrS3wbqdzFbWGSVp7bpA82EKA39VLihOMWn1dCiHcPisjWwAA9C4YrkCm/Gu35TZvAdYYeclRCFdBEi7R8IGom667A=
+	t=1751993899; cv=none; b=ZJv2A6vkHkZaLckcEvebbwaqc/wsDEhjQHkty6kZgFd8rmIwDysZX2yGZRA7En0wARLws6irklnGwlMeIwlnL5rVrqD7xHpbATxIwjG6qSPqPO/JQJEIqiZXUyI5J+x5f0WOooIks/G5WGIf+eWaFzstO4RTk3uxW8/6fGD3Qn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993895; c=relaxed/simple;
-	bh=vlyi0JtrDk+oJyuz1DxtvDhnzVU+jt8TCIM2MyrLNgM=;
+	s=arc-20240116; t=1751993899; c=relaxed/simple;
+	bh=EsGUECeuU262/9k6MF8D/Bzo9ox1cy3zkxiJjfjyNhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUNbxmK5MzAVbRMZOJ8qdfCDQn7dP5/3cS6/Bit3RynaAvnb48YcU5vO4gYObT3Hn7yNtmKIX2TpjUESpfYgBeSDW9tDWjiWlgOHL/3va4u/0ejvShR1mE8FZ4ivviwIScqdca9a21mYcad9U6JevPGi21jRlrF9uw8mrUIrIA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Je5DBRGI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMFpm1OuC2rFwkAYwjB63kFE1ZGZjfTXYpgB9tfwBShgylLgpvJX4lsLGHo9LSMtH9f2xLb1ybVztYmKgxE8kwC7VSrilpK7TB8mpTT/7kXgJeyxZnTYn//GijzCgg8gYqCpBmhtZhxxEf++XxpMPE0yVqlK3b/o4grykXnalSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkq32UR2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Je5DBRGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F439C4CEED;
-	Tue,  8 Jul 2025 16:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkq32UR2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A18C4CEED;
+	Tue,  8 Jul 2025 16:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993895;
-	bh=vlyi0JtrDk+oJyuz1DxtvDhnzVU+jt8TCIM2MyrLNgM=;
+	s=korg; t=1751993899;
+	bh=EsGUECeuU262/9k6MF8D/Bzo9ox1cy3zkxiJjfjyNhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Je5DBRGIxQgk24gdQ61zGMZa92LX+TFB84lopXFTLh3I8t2gRHoTjga0x+oEnh9d9
-	 Et3pN1Wif3QeGq8Vg8CTgfE6XwKh7GAUJLWH22B0nf1U+a3M6S7HoHjco9UW/Z8x6W
-	 J6GItjOEB9qz1NP6Dx/cvMt70ZGfhHfgaAEu+PPw=
+	b=hkq32UR253YQgjKzaMPRq7aAOauO65j+cocnXrhOfZvLVejXz1DFKxXcql+zhN3oq
+	 VwJDPLQoG+9K79ROsA95xFqzZp9UcYeJJTSXJWoVMGyjeVj59gh1l7CCv4P86+P0AH
+	 MFpwgmJ4/mRHTFwIGXzInz/ccMU5jiMTHW/SADxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Andrei Borzenkov <arvidjaar@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/160] f2fs: dont over-report free space or inodes in statvfs
-Date: Tue,  8 Jul 2025 18:21:15 +0200
-Message-ID: <20250708162232.588311860@linuxfoundation.org>
+Subject: [PATCH 5.15 056/160] dummycon: Trigger redraw when switching consoles with deferred takeover
+Date: Tue,  8 Jul 2025 18:21:33 +0200
+Message-ID: <20250708162233.099847543@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,97 +55,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
+[ Upstream commit 03bcbbb3995ba5df43af9aba45334e35f2dfe27b ]
 
-This fixes an analogus bug that was fixed in modern filesystems:
-a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
-inodes in statvfs")
-b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
-or inodes in statvfs")
-where statfs can report misleading / incorrect information where
-project quota is enabled, and the free space is less than the
-remaining quota.
+Signal vt subsystem to redraw console when switching to dummycon
+with deferred takeover enabled. Makes the console switch to fbcon
+and displays the available output.
 
-This commit will resolve a test failure in generic/762 which tests
-for this bug.
+With deferred takeover enabled, dummycon acts as the placeholder
+until the first output to the console happens. At that point, fbcon
+takes over. If the output happens while dummycon is not active, it
+cannot inform fbcon. This is the case if the vt subsystem runs in
+graphics mode.
 
-generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
-#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
-#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
-#    @@ -6,8 +6,10 @@
-#     root blocks2 is in range
-#     dir blocks2 is in range
-#     root bavail2 is in range
-#    -dir bavail2 is in range
-#    +dir bavail2 has value of 1539066
-#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
-#     root blocks3 is in range
-#    ...
-#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
+A typical graphical boot starts plymouth, a display manager and a
+compositor; all while leaving out dummycon. Switching to a text-mode
+console leaves the console with dummycon even if a getty terminal
+has been started.
 
-HINT: You _MAY_ be missing kernel fix:
-      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
+Returning true from dummycon's con_switch helper signals the vt
+subsystem to redraw the screen. If there's output available dummycon's
+con_putc{s} helpers trigger deferred takeover of fbcon, which sets a
+display mode and displays the output. If no output is available,
+dummycon remains active.
 
-Cc: stable@kernel.org
-Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+v2:
+- make the comment slightly more verbose (Javier)
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: Andrei Borzenkov <arvidjaar@gmail.com>
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1242191
+Tested-by: Andrei Borzenkov <arvidjaar@gmail.com>
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: 83d83bebf401 ("console/fbcon: Add support for deferred console takeover")
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: linux-fbdev@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v4.19+
+Link: https://lore.kernel.org/r/20250520071418.8462-1-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/video/console/dummycon.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 194d3f93ac5f2..b9da3074a1af8 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1737,26 +1737,32 @@ static int f2fs_statfs_project(struct super_block *sb,
- 
- 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
- 					dquot->dq_dqb.dqb_bhardlimit);
--	if (limit)
--		limit >>= sb->s_blocksize_bits;
-+	limit >>= sb->s_blocksize_bits;
+diff --git a/drivers/video/console/dummycon.c b/drivers/video/console/dummycon.c
+index d701f2b51f5b1..d99e1b3e4e5c1 100644
+--- a/drivers/video/console/dummycon.c
++++ b/drivers/video/console/dummycon.c
+@@ -82,6 +82,15 @@ static int dummycon_blank(struct vc_data *vc, int blank, int mode_switch)
+ 	/* Redraw, so that we get putc(s) for output done while blanked */
+ 	return 1;
+ }
 +
-+	if (limit) {
-+		uint64_t remaining = 0;
++static bool dummycon_switch(struct vc_data *vc)
++{
++	/*
++	 * Redraw, so that we get putc(s) for output done while switched
++	 * away. Informs deferred consoles to take over the display.
++	 */
++	return true;
++}
+ #else
+ static void dummycon_putc(struct vc_data *vc, int c, int ypos, int xpos) { }
+ static void dummycon_putcs(struct vc_data *vc, const unsigned short *s,
+@@ -90,6 +99,10 @@ static int dummycon_blank(struct vc_data *vc, int blank, int mode_switch)
+ {
+ 	return 0;
+ }
++static bool dummycon_switch(struct vc_data *vc)
++{
++	return false;
++}
+ #endif
  
--	if (limit && buf->f_blocks > limit) {
- 		curblock = (dquot->dq_dqb.dqb_curspace +
- 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
--		buf->f_blocks = limit;
--		buf->f_bfree = buf->f_bavail =
--			(buf->f_blocks > curblock) ?
--			 (buf->f_blocks - curblock) : 0;
-+		if (limit > curblock)
-+			remaining = limit - curblock;
-+
-+		buf->f_blocks = min(buf->f_blocks, limit);
-+		buf->f_bfree = min(buf->f_bfree, remaining);
-+		buf->f_bavail = min(buf->f_bavail, remaining);
- 	}
+ static const char *dummycon_startup(void)
+@@ -119,11 +132,6 @@ static bool dummycon_scroll(struct vc_data *vc, unsigned int top,
+ 	return false;
+ }
  
- 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
- 					dquot->dq_dqb.dqb_ihardlimit);
- 
--	if (limit && buf->f_files > limit) {
--		buf->f_files = limit;
--		buf->f_ffree =
--			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
--			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
-+	if (limit) {
-+		uint64_t remaining = 0;
-+
-+		if (limit > dquot->dq_dqb.dqb_curinodes)
-+			remaining = limit - dquot->dq_dqb.dqb_curinodes;
-+
-+		buf->f_files = min(buf->f_files, limit);
-+		buf->f_ffree = min(buf->f_ffree, remaining);
- 	}
- 
- 	spin_unlock(&dquot->dq_dqb_lock);
+-static bool dummycon_switch(struct vc_data *vc)
+-{
+-	return false;
+-}
+-
+ /*
+  *  The console `switch' structure for the dummy console
+  *
 -- 
 2.39.5
 
