@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238B81548C;
-	Tue,  8 Jul 2025 17:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082102DC34C;
+	Tue,  8 Jul 2025 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994022; cv=none; b=M0jw8txV9aQbNjHJZvlYD0koSTdCpZ44Q86QyrpbNKlSRo3pn+wekYdaPjGM+SIp+GIlcc5uFZN4HDszvYtf0gt66UYFgaYeCB3RfsKI6P/GXQNXBG1toptHNwyfuvOqUSRH5jd+qi2eSsb+FvPbGmdzx5uQLDwT1mXkb8bjMCc=
+	t=1751994025; cv=none; b=CfBzMlRvUgXHUTugTBXSszQB5HJAicftKktNNJrN9C4Yfgv+4P3zsnHkAl+1L2+tEG6R/zUJrnd3pBmeR7d+dRBliw0dzhXirO5rWIf6g1hXYQJTkWRK+SKvkCxqJm6k3QFZm0BruJMYeSs68EdrAvhy7aygShR2/qiPyherhoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994022; c=relaxed/simple;
-	bh=BIIFjrsnEQQlh8vQFw64KLpK0G11w+VQGhq7kZNUMvA=;
+	s=arc-20240116; t=1751994025; c=relaxed/simple;
+	bh=kyBGzQCcu1QGgb55QiBh3v3yUyjOk4xMqWCcW6viA0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L38SnjL4A2vcDZ0bjBZysi9irqql6kdy+NEJqk0K2iey6dDWvKEAhnQ+Kmdc8ol8UlRNpH7GX0XwS5mpj7ciFIS7a16C0CLeblReFf64iggoFx3MF4cruEPEb+qA8JRxjA3ETycLwGIArqjAEOTV19Qc2PO3QwdTnZ48Ckk+hM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYqlSu9b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKTMjf6KW3hgbwApdsWcI5dOz7EVUd9YxNTlFg1Bvl82RkyZ68c0sGGGH5jvstR1GLHbYQsk14Tw5qv6OdxnPm70ekTGW0/p+jf6Ah5JlChAMr3RSwVgpYIinMS7wx7CjpFnOECzV+noQF/65YH/pYAjx26zwuuOQa1F9eqZ35s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sm+6uEQZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYqlSu9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A241AC4CEED;
-	Tue,  8 Jul 2025 17:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sm+6uEQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573A8C4CEF0;
+	Tue,  8 Jul 2025 17:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994022;
-	bh=BIIFjrsnEQQlh8vQFw64KLpK0G11w+VQGhq7kZNUMvA=;
+	s=korg; t=1751994024;
+	bh=kyBGzQCcu1QGgb55QiBh3v3yUyjOk4xMqWCcW6viA0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYqlSu9bB2DcxPhKjygjVU3mo7uC8Ko7Ty+SE4hr//Q4CAQLWorJpQ4PyiutQpPxb
-	 62ZQn6gnFpLZvSCbYuBrzV1rOXM6IR6K8as8wi5SFFyF1GqLSTK4LjaET+LjkWWAwL
-	 n5bLjt2JgUyPR1wKoKGpbO9+/mTs9bCA6MgJariY=
+	b=Sm+6uEQZgjbUwG3F/SS2w1VoZqVGzSjF/QhaujlDVvzsEKFI4dtP3gntjGt3TJrgI
+	 LQon9Qp+0rWz/939J10G/xMUZkXMfbUCOXCmf5E3IQb4wdg6RZioydb0x3cXibkLVy
+	 KFbxXf15mG61BsAHpRfWJ6OvWb4JvWwP8kJbgi2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/160] net: selftests: fix TCP packet checksum
-Date: Tue,  8 Jul 2025 18:21:48 +0200
-Message-ID: <20250708162233.521589082@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	virtualization@lists.linux.dev,
+	netdev@vger.kernel.org,
+	stable <stable@kernel.org>,
+	HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+Subject: [PATCH 5.15 098/160] vsock/vmci: Clear the vmci transport packet properly when initializing it
+Date: Tue,  8 Jul 2025 18:22:15 +0200
+Message-ID: <20250708162234.216370055@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -53,46 +60,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
 
-[ Upstream commit 8d89661a36dd3bb8c9902cff36dc0c144dce3faf ]
+commit 223e2288f4b8c262a864e2c03964ffac91744cd5 upstream.
 
-The length in the pseudo header should be the length of the L3 payload
-AKA the L4 header+payload. The selftest code builds the packet from
-the lower layers up, so all the headers are pushed already when it
-constructs L4. We need to subtract the lower layer headers from skb->len.
+In vmci_transport_packet_init memset the vmci_transport_packet before
+populating the fields to avoid any uninitialised data being left in the
+structure.
 
-Fixes: 3e1e58d64c3d ("net: add generic selftest support")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Reported-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250624183258.3377740-1-kuba@kernel.org
+Cc: Bryan Tan <bryan-bt.tan@broadcom.com>
+Cc: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Cc: Broadcom internal kernel review list
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: virtualization@lists.linux.dev
+Cc: netdev@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Signed-off-by: HarshaVardhana S A <harshavardhana.sa@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250701122254.2397440-1-gregkh@linuxfoundation.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/selftests.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/vmw_vsock/vmci_transport.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/selftests.c b/net/core/selftests.c
-index 29ca19ec82bb4..63938efd5b55f 100644
---- a/net/core/selftests.c
-+++ b/net/core/selftests.c
-@@ -160,8 +160,9 @@ static struct sk_buff *net_test_get_skb(struct net_device *ndev,
- 	skb->csum = 0;
- 	skb->ip_summed = CHECKSUM_PARTIAL;
- 	if (attr->tcp) {
--		thdr->check = ~tcp_v4_check(skb->len, ihdr->saddr,
--					    ihdr->daddr, 0);
-+		int l4len = skb->len - skb_transport_offset(skb);
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -119,6 +119,8 @@ vmci_transport_packet_init(struct vmci_t
+ 			   u16 proto,
+ 			   struct vmci_handle handle)
+ {
++	memset(pkt, 0, sizeof(*pkt));
 +
-+		thdr->check = ~tcp_v4_check(l4len, ihdr->saddr, ihdr->daddr, 0);
- 		skb->csum_start = skb_transport_header(skb) - skb->head;
- 		skb->csum_offset = offsetof(struct tcphdr, check);
- 	} else {
--- 
-2.39.5
-
+ 	/* We register the stream control handler as an any cid handle so we
+ 	 * must always send from a source address of VMADDR_CID_ANY
+ 	 */
+@@ -131,8 +133,6 @@ vmci_transport_packet_init(struct vmci_t
+ 	pkt->type = type;
+ 	pkt->src_port = src->svm_port;
+ 	pkt->dst_port = dst->svm_port;
+-	memset(&pkt->proto, 0, sizeof(pkt->proto));
+-	memset(&pkt->_reserved2, 0, sizeof(pkt->_reserved2));
+ 
+ 	switch (pkt->type) {
+ 	case VMCI_TRANSPORT_PACKET_TYPE_INVALID:
 
 
