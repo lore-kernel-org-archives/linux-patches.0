@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D7D8F5E;
-	Tue,  8 Jul 2025 16:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0902BE46;
+	Tue,  8 Jul 2025 16:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993544; cv=none; b=p54pmB4IJQ34lLvmdF0hPejmx+dIwP04Lt0CSeBJ9jFaiWC2OeU+phVfERjJ6KoklL9q+M4YDFtXu9WvEpyy0RHnHoQ+4wDnBHc+Aw0eJNan2rq01NKrL9Jen7a2UtzQ3Rvz/4VnQGw8RjOuNnqwCFbbzA1Z6+BhiRWopnZuNIo=
+	t=1751993547; cv=none; b=gPFQa9wXr+eRMlLG2WX6vQx6MlYp8tbykVt1TWl4f4WjyFSuzQyi5aXcjO1R5hb9660bka93uUz3E+rHsRIy5fwuWpVGfJcPpNH5/aS30/dOCEIfdo75f5fe0j6yPvWvwEHaG4x0mgHw4DKgGdutXqPybYdGD2npP8WY4T2LUIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993544; c=relaxed/simple;
-	bh=CdQn3rLS/2BH1r264x+HlF7H+yzkqyetW7VG+0adQSc=;
+	s=arc-20240116; t=1751993547; c=relaxed/simple;
+	bh=hIkX9fP0YDhMQ3LrLoiKSMDnQ1rfVVZYnJpG71IkH7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Id7CRZ4wNqeIQh5xvP6YpcVLPLMIfGtgQYxX+/XyLWnGODRzZPVobNm7HKf9Pbv0vj8oEpPMtpG5dwrdVYJlcUj7QKaaDAQRSRCnbzUlCC2qC2UKbtXMJthki+3r4Rv+CFByHv5ZIXW1DH3xkDCzgG8s3dVxz2bkWQhrjaph4lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxbG2lOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzwfnX5f89VjQksQLFTyi+2A1pV0Tg3JhlDrP/KB2dZDkC8PtqpRe5juFUV8PTC/mvbcXzDP6/JQn6a6TMp3u0ESWpk8WiJ0IC06OdSo3NT3bxPYilDeDmE3e9x7nMJUNpyOTL9sUVZupE3XGlRq2WvMiqI5YST/Enlh5g6TyLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knGcKfBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxbG2lOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E0EC4CEED;
-	Tue,  8 Jul 2025 16:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knGcKfBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7396AC4CEF0;
+	Tue,  8 Jul 2025 16:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993544;
-	bh=CdQn3rLS/2BH1r264x+HlF7H+yzkqyetW7VG+0adQSc=;
+	s=korg; t=1751993546;
+	bh=hIkX9fP0YDhMQ3LrLoiKSMDnQ1rfVVZYnJpG71IkH7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxbG2lOb/31cMYv7vUfXiHR3pIVeT8+2uXA0D1avm8jYIF0tQPutHoWOITW7vZid4
-	 co+v/4ZZsqTOA/Zs57sVPPSGLyhgVQQ67K12NacUJDNMr4O9aTON8MawD3s3F8BTc2
-	 72TfLmlwvjEjbJwS+SxZL/oxbIPUKhrC+Qyp1qsU=
+	b=knGcKfBiR3MK0kIxQSjDf6vnBUzBaOALEiotfeeaACwwYgOmubwbG2YB/hQn8D8kw
+	 ZFYfH6JIRssVehWQmxAaZTJXh48ouKak+kAMUYWQ7vHzMI6y2mGl9EIhlWL1ehXnVK
+	 g9sCswjrkZoqf6Li/p2qRR3toaPpOHhyrh3iQyiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <sfrench@samba.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com,
+	Kohei Enju <enjuk@amazon.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 103/178] netfs: Fix i_size updating
-Date: Tue,  8 Jul 2025 18:22:20 +0200
-Message-ID: <20250708162239.336132436@linuxfoundation.org>
+Subject: [PATCH 6.15 112/178] rose: fix dangling neighbour pointers in rose_rt_device_down()
+Date: Tue,  8 Jul 2025 18:22:29 +0200
+Message-ID: <20250708162239.545530383@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -56,84 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit 2e0658940d90a3dc130bb3b7f75bae9f4100e01f ]
+[ Upstream commit 34a500caf48c47d5171f4aa1f237da39b07c6157 ]
 
-Fix the updating of i_size, particularly in regard to the completion of DIO
-writes and especially async DIO writes by using a lock.
+There are two bugs in rose_rt_device_down() that can cause
+use-after-free:
 
-The bug is triggered occasionally by the generic/207 xfstest as it chucks a
-bunch of AIO DIO writes at the filesystem and then checks that fstat()
-returns a reasonable st_size as each completes.
+1. The loop bound `t->count` is modified within the loop, which can
+   cause the loop to terminate early and miss some entries.
 
-The problem is that netfs is trying to do "if new_size > inode->i_size,
-update inode->i_size" sort of thing but without a lock around it.
+2. When removing an entry from the neighbour array, the subsequent entries
+   are moved up to fill the gap, but the loop index `i` is still
+   incremented, causing the next entry to be skipped.
 
-This can be seen with cifs, but shouldn't be seen with kafs because kafs
-serialises modification ops on the client whereas cifs sends the requests
-to the server as they're generated and lets the server order them.
+For example, if a node has three neighbours (A, A, B) with count=3 and A
+is being removed, the second A is not checked.
 
-Fixes: 153a9961b551 ("netfs: Implement unbuffered/DIO write support")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/20250701163852.2171681-11-dhowells@redhat.com
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Steve French <sfrench@samba.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+    i=0: (A, A, B) -> (A, B) with count=2
+          ^ checked
+    i=1: (A, B)    -> (A, B) with count=2
+             ^ checked (B, not A!)
+    i=2: (doesn't occur because i < count is false)
+
+This leaves the second A in the array with count=2, but the rose_neigh
+structure has been freed. Code that accesses these entries assumes that
+the first `count` entries are valid pointers, causing a use-after-free
+when it accesses the dangling pointer.
+
+Fix both issues by iterating over the array in reverse order with a fixed
+loop bound. This ensures that all entries are examined and that the removal
+of an entry doesn't affect subsequent iterations.
+
+Reported-by: syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e04e2c007ba2c80476cb
+Tested-by: syzbot+e04e2c007ba2c80476cb@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250629030833.6680-1-enjuk@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_write.c | 2 ++
- fs/netfs/direct_write.c   | 8 ++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ net/rose/rose_route.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index dbb544e183d13..9f22ff890a8cd 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -64,6 +64,7 @@ static void netfs_update_i_size(struct netfs_inode *ctx, struct inode *inode,
- 		return;
- 	}
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 2dd6bd3a3011f..b72bf8a08d489 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -497,22 +497,15 @@ void rose_rt_device_down(struct net_device *dev)
+ 			t         = rose_node;
+ 			rose_node = rose_node->next;
  
-+	spin_lock(&inode->i_lock);
- 	i_size_write(inode, pos);
- #if IS_ENABLED(CONFIG_FSCACHE)
- 	fscache_update_cookie(ctx->cache, NULL, &pos);
-@@ -77,6 +78,7 @@ static void netfs_update_i_size(struct netfs_inode *ctx, struct inode *inode,
- 					DIV_ROUND_UP(pos, SECTOR_SIZE),
- 					inode->i_blocks + add);
- 	}
-+	spin_unlock(&inode->i_lock);
- }
+-			for (i = 0; i < t->count; i++) {
++			for (i = t->count - 1; i >= 0; i--) {
+ 				if (t->neighbour[i] != s)
+ 					continue;
  
- /**
-diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
-index fa9a5bf3c6d51..3efa5894b2c07 100644
---- a/fs/netfs/direct_write.c
-+++ b/fs/netfs/direct_write.c
-@@ -14,13 +14,17 @@ static void netfs_cleanup_dio_write(struct netfs_io_request *wreq)
- 	struct inode *inode = wreq->inode;
- 	unsigned long long end = wreq->start + wreq->transferred;
+ 				t->count--;
  
--	if (!wreq->error &&
--	    i_size_read(inode) < end) {
-+	if (wreq->error || end <= i_size_read(inode))
-+		return;
-+
-+	spin_lock(&inode->i_lock);
-+	if (end > i_size_read(inode)) {
- 		if (wreq->netfs_ops->update_i_size)
- 			wreq->netfs_ops->update_i_size(inode, end);
- 		else
- 			i_size_write(inode, end);
- 	}
-+	spin_unlock(&inode->i_lock);
- }
+-				switch (i) {
+-				case 0:
+-					t->neighbour[0] = t->neighbour[1];
+-					fallthrough;
+-				case 1:
+-					t->neighbour[1] = t->neighbour[2];
+-					break;
+-				case 2:
+-					break;
+-				}
++				memmove(&t->neighbour[i], &t->neighbour[i + 1],
++					sizeof(t->neighbour[0]) *
++						(t->count - i));
+ 			}
  
- /*
+ 			if (t->count <= 0)
 -- 
 2.39.5
 
