@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBEA1DC9B1;
-	Tue,  8 Jul 2025 17:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7382DC34C;
+	Tue,  8 Jul 2025 17:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994083; cv=none; b=nh0/2M/d3Eu1974Vz1ySnQXzBOHSU7TK2bckXrizd9vuNGBnQY0QsdypNrB/QhKhA7SRFpcXfmi1U+u51Bg5tB0Zgr6JR0ySj56MZjnnF2lKj+tbQ9n8lClMwf/n6DeFW3kpcSCpLHqoJCPgHj8mVBODtjYOzLgsBJ16fxAdF1c=
+	t=1751994086; cv=none; b=KbyKBHHipw8xOXKwEuY0Zpk/XtVq/3I/Mo4aILYhUXZWFsBkf/jcuMyyInz/osqJeFWlZEvtvLHq1AHbofpPKYHScpWL42MOwvx1V0MCh2Ti9HG7ltJH48wKP9tv5FXlDeiqvDxRe4GF0Y4892FhfuNQx/r9P1dQimBWkUZUyJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994083; c=relaxed/simple;
-	bh=y72BJzZJSIqMF0Jiu47E52yfI+Z8g0ScTg7rK1PAeIk=;
+	s=arc-20240116; t=1751994086; c=relaxed/simple;
+	bh=Z5uiSz/ySAFudavRDsqYEW+F85f2z1hV8YKk+rAUnkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m06TT5aqQxNGbdETKLl3Uid8GbcHQhKp8n3qeEDXPrgMf4zVdCCpDl67ffYcc8pgnH9mJoR5nKmJrL6ibV6CEKeiWWESYWpORYH5Pmc/NfkY4ZyGhrM6XMw7Y80UDNYl+mqHUY8jfAnE0IR7OVy0xkDKArtF+YzbXHj/Op5JCMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzyW+j5Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QFAyKkJZaR1h52gJWx1+faPw40Q8DX1LTSpnASlgUeqv+r/46BBXHwYcohHEs0x2HuqDI7Ji9dZwGFiAJTit2NJhp32mCNvG0xa/aCSnlM56UbpWpka5AhJf5VMri5zr/QKzWbOI+LzwJB9kcMdof56cLlT8Me3uLaOFjRBfw0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X847xzWn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzyW+j5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A901BC4CEED;
-	Tue,  8 Jul 2025 17:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X847xzWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689B5C4CEED;
+	Tue,  8 Jul 2025 17:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994083;
-	bh=y72BJzZJSIqMF0Jiu47E52yfI+Z8g0ScTg7rK1PAeIk=;
+	s=korg; t=1751994085;
+	bh=Z5uiSz/ySAFudavRDsqYEW+F85f2z1hV8YKk+rAUnkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzyW+j5YSoLb4rqp2KL4WLlJaUmgAaeowZYVHC+7BgrMCZ5NdoVlDZiajk7rCovBt
-	 INZli4lEHJzzJ7FzVvQSFKWHQ1+W9FL+84nUBzFaDwZET66voPyHWfATtjRsHfXVuL
-	 O+Q0QvKbTh3wdmpx8Ue5sUX2V8n7cMifCQvX4qHo=
+	b=X847xzWnD0wlibwkRruHQ+h1gf7C5Frvh+sXr7wsGCYtV29FNbl4JQFmpFeultAq2
+	 qGiUyXykinQfDHrRvD2QvzWK8KV985ENM5wpOnG4E2z11FE4aApO8yGg6li7mxQ+X2
+	 a/SxqrivU3ocKb+WT1C7eQYrsR+sqoXKHMM9or2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 102/160] mtk-sd: Fix a pagefault in dma_unmap_sg() for not prepared data
-Date: Tue,  8 Jul 2025 18:22:19 +0200
-Message-ID: <20250708162234.318509809@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 120/160] lib: test_objagg: Set error message in check_expect_hints_stats()
+Date: Tue,  8 Jul 2025 18:22:37 +0200
+Message-ID: <20250708162234.771525984@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,54 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 539d80575b810c7a5987c7ac8915e3bc99c03695 upstream.
+[ Upstream commit e6ed134a4ef592fe1fd0cafac9683813b3c8f3e8 ]
 
-When swiotlb buffer is full, the dma_map_sg() returns 0 to
-msdc_prepare_data(), but it does not check it and sets the
-MSDC_PREPARE_FLAG.
+Smatch complains that the error message isn't set in the caller:
 
-swiotlb_tbl_map_single() /* prints "swiotlb buffer is full" */
-  <-swiotlb_map()
-    <-dma_direct_map_page()
-      <-dma_direct_map_sg()
-        <-__dma_map_sg_attrs()
-          <-dma_map_sg_attrs()
-            <-dma_map_sg()  /* returns 0 (pages mapped) */
-              <-msdc_prepare_data()
+    lib/test_objagg.c:923 test_hints_case2()
+    error: uninitialized symbol 'errmsg'.
 
-Then, the msdc_unprepare_data() checks MSDC_PREPARE_FLAG and calls
-dma_unmap_sg() with unmapped pages. It causes a page fault.
+This static checker warning only showed up after a recent refactoring
+but the bug dates back to when the code was originally added.  This
+likely doesn't affect anything in real life.
 
-To fix this problem, Do not set MSDC_PREPARE_FLAG if dma_map_sg()
-fails because this is not prepared.
-
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/174908565814.4056588.769599127120955383.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202506281403.DsuyHFTZ-lkp@intel.com/
+Fixes: 0a020d416d0a ("lib: introduce initial implementation of object aggregation manager")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/8548f423-2e3b-4bb7-b816-5041de2762aa@sabinyo.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/test_objagg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -727,9 +727,10 @@ static inline void msdc_dma_setup(struct
- static void msdc_prepare_data(struct msdc_host *host, struct mmc_data *data)
- {
- 	if (!(data->host_cookie & MSDC_PREPARE_FLAG)) {
--		data->host_cookie |= MSDC_PREPARE_FLAG;
- 		data->sg_count = dma_map_sg(host->dev, data->sg, data->sg_len,
- 					    mmc_get_dma_dir(data));
-+		if (data->sg_count)
-+			data->host_cookie |= MSDC_PREPARE_FLAG;
- 	}
- }
+diff --git a/lib/test_objagg.c b/lib/test_objagg.c
+index da137939a4100..78d25ab19a960 100644
+--- a/lib/test_objagg.c
++++ b/lib/test_objagg.c
+@@ -899,8 +899,10 @@ static int check_expect_hints_stats(struct objagg_hints *objagg_hints,
+ 	int err;
  
+ 	stats = objagg_hints_stats_get(objagg_hints);
+-	if (IS_ERR(stats))
++	if (IS_ERR(stats)) {
++		*errmsg = "objagg_hints_stats_get() failed.";
+ 		return PTR_ERR(stats);
++	}
+ 	err = __check_expect_stats(stats, expect_stats, errmsg);
+ 	objagg_stats_put(stats);
+ 	return err;
+-- 
+2.39.5
+
 
 
