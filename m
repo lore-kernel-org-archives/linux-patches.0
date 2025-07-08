@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AC32E5B1C;
-	Tue,  8 Jul 2025 16:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D7D8F5E;
+	Tue,  8 Jul 2025 16:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751993541; cv=none; b=jtd7U8kePIpZqd+UeB6jPLerQOcCztp6Bjol7yJuoYlejrcuNEAY4jEZUvDTPeo0KXILjLilraXNkpbxkdWLnAol9cG3jQFRFVCyBa8mcplqJtG43zUjcj5Q6Il6B5VhjQqK72spoW0hovykC6caan+fdHy9zEXo/+pHJU7tEuA=
+	t=1751993544; cv=none; b=p54pmB4IJQ34lLvmdF0hPejmx+dIwP04Lt0CSeBJ9jFaiWC2OeU+phVfERjJ6KoklL9q+M4YDFtXu9WvEpyy0RHnHoQ+4wDnBHc+Aw0eJNan2rq01NKrL9Jen7a2UtzQ3Rvz/4VnQGw8RjOuNnqwCFbbzA1Z6+BhiRWopnZuNIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751993541; c=relaxed/simple;
-	bh=o7jUMGC3uPhk7MgrPpNOA41/sorBiTsmhFggq8gqI+Y=;
+	s=arc-20240116; t=1751993544; c=relaxed/simple;
+	bh=CdQn3rLS/2BH1r264x+HlF7H+yzkqyetW7VG+0adQSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwDFZZ4aW/nnm42300fMJ1bD9FOxQ5kbU/zpV/R2JsvoqceKbZ0UpQ0VUyRhe2APvcUbF6IQl7QGKUA/nEN1dr8OVmTMar/jNosfpBQ/IMmCc2ZnglIlq/F9l+wxr/qeS5yBbyWddqvr/SYDwyLTk2iYDvP6yqkRW6yuVgVQACo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MaO1+ApV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Id7CRZ4wNqeIQh5xvP6YpcVLPLMIfGtgQYxX+/XyLWnGODRzZPVobNm7HKf9Pbv0vj8oEpPMtpG5dwrdVYJlcUj7QKaaDAQRSRCnbzUlCC2qC2UKbtXMJthki+3r4Rv+CFByHv5ZIXW1DH3xkDCzgG8s3dVxz2bkWQhrjaph4lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxbG2lOb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MaO1+ApV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB76C4CEED;
-	Tue,  8 Jul 2025 16:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxbG2lOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E0EC4CEED;
+	Tue,  8 Jul 2025 16:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751993541;
-	bh=o7jUMGC3uPhk7MgrPpNOA41/sorBiTsmhFggq8gqI+Y=;
+	s=korg; t=1751993544;
+	bh=CdQn3rLS/2BH1r264x+HlF7H+yzkqyetW7VG+0adQSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MaO1+ApVqgunvkd2iOV6pTBHpIYxFer2iy4kdripZW9sfyIaWJV0MVPeVoLWKgY0I
-	 EX9dlVoRj6cIXXfaY+RryLVpwwBtvNSw75a2GSr97DDM9Up+5pIs0/hcQFi4jjf+Fp
-	 epOmfNuHtjfQ9smilu+x+uv1DMoHc6nWTtAC8+IY=
+	b=OxbG2lOb/31cMYv7vUfXiHR3pIVeT8+2uXA0D1avm8jYIF0tQPutHoWOITW7vZid4
+	 co+v/4ZZsqTOA/Zs57sVPPSGLyhgVQQ67K12NacUJDNMr4O9aTON8MawD3s3F8BTc2
+	 72TfLmlwvjEjbJwS+SxZL/oxbIPUKhrC+Qyp1qsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <sfrench@samba.org>,
+	linux-cifs@vger.kernel.org,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 069/178] btrfs: propagate last_unlink_trans earlier when doing a rmdir
-Date: Tue,  8 Jul 2025 18:21:46 +0200
-Message-ID: <20250708162238.479801741@linuxfoundation.org>
+Subject: [PATCH 6.15 103/178] netfs: Fix i_size updating
+Date: Tue,  8 Jul 2025 18:22:20 +0200
+Message-ID: <20250708162239.336132436@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
 References: <20250708162236.549307806@linuxfoundation.org>
@@ -52,98 +56,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c466e33e729a0ee017d10d919cba18f503853c60 ]
+[ Upstream commit 2e0658940d90a3dc130bb3b7f75bae9f4100e01f ]
 
-In case the removed directory had a snapshot that was deleted, we are
-propagating its inode's last_unlink_trans to the parent directory after
-we removed the entry from the parent directory. This leaves a small race
-window where someone can log the parent directory after we removed the
-entry and before we updated last_unlink_trans, and as a result if we ever
-try to replay such a log tree, we will fail since we will attempt to
-remove a snapshot during log replay, which is currently not possible and
-results in the log replay (and mount) to fail. This is the type of failure
-described in commit 1ec9a1ae1e30 ("Btrfs: fix unreplayable log after
-snapshot delete + parent dir fsync").
+Fix the updating of i_size, particularly in regard to the completion of DIO
+writes and especially async DIO writes by using a lock.
 
-So fix this by propagating the last_unlink_trans to the parent directory
-before we remove the entry from it.
+The bug is triggered occasionally by the generic/207 xfstest as it chucks a
+bunch of AIO DIO writes at the filesystem and then checks that fstat()
+returns a reasonable st_size as each completes.
 
-Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The problem is that netfs is trying to do "if new_size > inode->i_size,
+update inode->i_size" sort of thing but without a lock around it.
+
+This can be seen with cifs, but shouldn't be seen with kafs because kafs
+serialises modification ops on the client whereas cifs sends the requests
+to the server as they're generated and lets the server order them.
+
+Fixes: 153a9961b551 ("netfs: Implement unbuffered/DIO write support")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/20250701163852.2171681-11-dhowells@redhat.com
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+cc: Steve French <sfrench@samba.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: linux-cifs@vger.kernel.org
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ fs/netfs/buffered_write.c | 2 ++
+ fs/netfs/direct_write.c   | 8 ++++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 391172b443e50..24db00a9319b3 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4724,7 +4724,6 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
- 	struct btrfs_fs_info *fs_info = BTRFS_I(inode)->root->fs_info;
- 	int ret = 0;
- 	struct btrfs_trans_handle *trans;
--	u64 last_unlink_trans;
- 	struct fscrypt_name fname;
- 
- 	if (inode->i_size > BTRFS_EMPTY_DIR_SIZE)
-@@ -4750,6 +4749,23 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
- 		goto out_notrans;
+diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
+index dbb544e183d13..9f22ff890a8cd 100644
+--- a/fs/netfs/buffered_write.c
++++ b/fs/netfs/buffered_write.c
+@@ -64,6 +64,7 @@ static void netfs_update_i_size(struct netfs_inode *ctx, struct inode *inode,
+ 		return;
  	}
  
-+	/*
-+	 * Propagate the last_unlink_trans value of the deleted dir to its
-+	 * parent directory. This is to prevent an unrecoverable log tree in the
-+	 * case we do something like this:
-+	 * 1) create dir foo
-+	 * 2) create snapshot under dir foo
-+	 * 3) delete the snapshot
-+	 * 4) rmdir foo
-+	 * 5) mkdir foo
-+	 * 6) fsync foo or some file inside foo
-+	 *
-+	 * This is because we can't unlink other roots when replaying the dir
-+	 * deletes for directory foo.
-+	 */
-+	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
-+		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
-+
- 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
- 		ret = btrfs_unlink_subvol(trans, BTRFS_I(dir), dentry);
- 		goto out;
-@@ -4759,27 +4775,11 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
- 	if (ret)
- 		goto out;
++	spin_lock(&inode->i_lock);
+ 	i_size_write(inode, pos);
+ #if IS_ENABLED(CONFIG_FSCACHE)
+ 	fscache_update_cookie(ctx->cache, NULL, &pos);
+@@ -77,6 +78,7 @@ static void netfs_update_i_size(struct netfs_inode *ctx, struct inode *inode,
+ 					DIV_ROUND_UP(pos, SECTOR_SIZE),
+ 					inode->i_blocks + add);
+ 	}
++	spin_unlock(&inode->i_lock);
+ }
  
--	last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
--
- 	/* now the directory is empty */
- 	ret = btrfs_unlink_inode(trans, BTRFS_I(dir), BTRFS_I(d_inode(dentry)),
- 				 &fname.disk_name);
--	if (!ret) {
-+	if (!ret)
- 		btrfs_i_size_write(BTRFS_I(inode), 0);
--		/*
--		 * Propagate the last_unlink_trans value of the deleted dir to
--		 * its parent directory. This is to prevent an unrecoverable
--		 * log tree in the case we do something like this:
--		 * 1) create dir foo
--		 * 2) create snapshot under dir foo
--		 * 3) delete the snapshot
--		 * 4) rmdir foo
--		 * 5) mkdir foo
--		 * 6) fsync foo or some file inside foo
--		 */
--		if (last_unlink_trans >= trans->transid)
--			BTRFS_I(dir)->last_unlink_trans = last_unlink_trans;
--	}
- out:
- 	btrfs_end_transaction(trans);
- out_notrans:
+ /**
+diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
+index fa9a5bf3c6d51..3efa5894b2c07 100644
+--- a/fs/netfs/direct_write.c
++++ b/fs/netfs/direct_write.c
+@@ -14,13 +14,17 @@ static void netfs_cleanup_dio_write(struct netfs_io_request *wreq)
+ 	struct inode *inode = wreq->inode;
+ 	unsigned long long end = wreq->start + wreq->transferred;
+ 
+-	if (!wreq->error &&
+-	    i_size_read(inode) < end) {
++	if (wreq->error || end <= i_size_read(inode))
++		return;
++
++	spin_lock(&inode->i_lock);
++	if (end > i_size_read(inode)) {
+ 		if (wreq->netfs_ops->update_i_size)
+ 			wreq->netfs_ops->update_i_size(inode, end);
+ 		else
+ 			i_size_write(inode, end);
+ 	}
++	spin_unlock(&inode->i_lock);
+ }
+ 
+ /*
 -- 
 2.39.5
 
