@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A3C2E6D26;
-	Tue,  8 Jul 2025 17:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDB11E492;
+	Tue,  8 Jul 2025 17:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751994112; cv=none; b=C6hCnsO062631ncMNPXIKkPgpktMZMCBErLRyolBNCbGBIYw/lm02FkrzQ6cwy9ylYqRbPSaXTBE1Gnvl4s9S9nQ5da5epEeMgWIwJbtlpuvkXwdcg9T7ygl/0O41ip0qjKftdts7QpoIoiYzrHmDrzqgeUHNWsYMyVKh+YqyrA=
+	t=1751994115; cv=none; b=nZj39P69SX1FDT5BOZucnENx6DtzgcliuVm5op/AypNwdq/FdnThC6sfqJ+ybuRWPRfgfUYbgqkJ1P2CQAwnFypgCpK6xzxULc5wrXj9AVtTPCaGHQ0PNdysI499Axv93Cp2ROf1JmFcUyu0FEio+bxALQ8PniB+mZWPXiOlN30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751994112; c=relaxed/simple;
-	bh=k24SWQRlYMxrIoK7TFkIg+CQ/MQheAszvPTB59hQxgw=;
+	s=arc-20240116; t=1751994115; c=relaxed/simple;
+	bh=S28OdX/9KooApUJu/gqEACFGL8Hcmd0R6uKa42W2zyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuB4MqYbrtMZz9Rh33uXXCfE+X8Nq7myisDcwCBqNVOrD9FDE6LExUcp99FPGK8YONSrOBkzlwgWnH2QmQPDj+Dbmu7vyJyd1A4CGCKdqBtpUpWGa6Z1c1w/EYw6aPNvws5CSw4+BxSFQXk+Pzn2BiBJRQt0FlgiGK9Ipdfd0ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E13wUXfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LxJTPFuIOrOlZb/I2L6Qj9T3uxOK0Khf7ZjV/7V6B1y/qD3X0M7p2EzdhEtBKAqReDUsf10EKy1soH3Bwvrpl+4V4ONAPRamcduB0R0yXLAQylrNHsRrwo6jeOBk2mZNpae8ro1K1N+6EtaOUl8OF/kPuHDaz2+fmqNjMnpjxMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sgtbv0Ua; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E13wUXfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEA5C4CEF5;
-	Tue,  8 Jul 2025 17:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sgtbv0Ua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27822C4CEED;
+	Tue,  8 Jul 2025 17:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1751994112;
-	bh=k24SWQRlYMxrIoK7TFkIg+CQ/MQheAszvPTB59hQxgw=;
+	s=korg; t=1751994115;
+	bh=S28OdX/9KooApUJu/gqEACFGL8Hcmd0R6uKa42W2zyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E13wUXfEENhGRJmR/WpzySOS9DdHFjybI/Hw6fRTbx3Ukxk6IeQ4zOeHXU5JW3vKo
-	 h8yU1gxjyuKhqpJ12hjMaZpP7Nd2dfZsViUD/effJiUU+zQ9IvLf8T1qBdt9mRUns7
-	 Puk2BNMweTIDSfjxeNw5Dooa4CC0omu+T/VEKKSY=
+	b=Sgtbv0UaAe9P8a7ZzxpJnd7VEBNqlBKbuamrJAf86FldtrU+rJDSWrh2AxjXuJFqS
+	 4UUL/Dtgx3j7SvSoJVbFMBWlaFNR9Jh1C/I+CdrG0MIFOU3Vuz6qGY4WouL3T8Eg1G
+	 gttpunnZupkIqJSKJqHEiKgwhOiUxmCp3F3QIvsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/160] ata: pata_cs5536: fix build on 32-bit UML
-Date: Tue,  8 Jul 2025 18:22:46 +0200
-Message-ID: <20250708162234.982717111@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 103/160] mtk-sd: Prevent memory corruption from DMA map failure
+Date: Tue,  8 Jul 2025 18:22:20 +0200
+Message-ID: <20250708162234.343494213@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250708162231.503362020@linuxfoundation.org>
 References: <20250708162231.503362020@linuxfoundation.org>
@@ -52,38 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit fe5b391fc56f77cf3c22a9dd4f0ce20db0e3533f ]
+commit f5de469990f19569627ea0dd56536ff5a13beaa3 upstream.
 
-On 32-bit ARCH=um, CONFIG_X86_32 is still defined, so it
-doesn't indicate building on real X86 machines. There's
-no MSR on UML though, so add a check for CONFIG_X86.
+If msdc_prepare_data() fails to map the DMA region, the request is
+not prepared for data receiving, but msdc_start_data() proceeds
+the DMA with previous setting.
+Since this will lead a memory corruption, we have to stop the
+request operation soon after the msdc_prepare_data() fails to
+prepare it.
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20250606090110.15784-2-johannes@sipsolutions.net
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/174972756982.3337526.6755001617701603082.stgit@mhiramat.tok.corp.google.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_cs5536.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/mtk-sd.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/pata_cs5536.c b/drivers/ata/pata_cs5536.c
-index 760ac6e65216f..3737d1bf1539d 100644
---- a/drivers/ata/pata_cs5536.c
-+++ b/drivers/ata/pata_cs5536.c
-@@ -27,7 +27,7 @@
- #include <scsi/scsi_host.h>
- #include <linux/dmi.h>
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -734,6 +734,11 @@ static void msdc_prepare_data(struct msd
+ 	}
+ }
  
--#ifdef CONFIG_X86_32
-+#if defined(CONFIG_X86) && defined(CONFIG_X86_32)
- #include <asm/msr.h>
- static int use_msr;
- module_param_named(msr, use_msr, int, 0644);
--- 
-2.39.5
-
++static bool msdc_data_prepared(struct mmc_data *data)
++{
++	return data->host_cookie & MSDC_PREPARE_FLAG;
++}
++
+ static void msdc_unprepare_data(struct msdc_host *host, struct mmc_data *data)
+ {
+ 	if (data->host_cookie & MSDC_ASYNC_FLAG)
+@@ -1306,8 +1311,18 @@ static void msdc_ops_request(struct mmc_
+ 	WARN_ON(host->mrq);
+ 	host->mrq = mrq;
+ 
+-	if (mrq->data)
++	if (mrq->data) {
+ 		msdc_prepare_data(host, mrq->data);
++		if (!msdc_data_prepared(mrq->data)) {
++			/*
++			 * Failed to prepare DMA area, fail fast before
++			 * starting any commands.
++			 */
++			mrq->cmd->error = -ENOSPC;
++			mmc_request_done(mmc_from_priv(host), mrq);
++			return;
++		}
++	}
+ 
+ 	/* if SBC is required, we have HW option and SW option.
+ 	 * if HW option is enabled, and SBC does not have "special" flags,
 
 
