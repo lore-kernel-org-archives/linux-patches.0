@@ -1,89 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4CD22DA0B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A75127FB12;
 	Wed,  9 Jul 2025 08:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752050827; cv=none; b=h6CdKg/6J0NAGGP77YJwv4yjQUDgs3xmZDEz6iYOP1oOdLDQOLEZVky+J94g1a1lALrxelI05gd0kBhauKmb23AWYb9vz1EdJV8LNiatt73tywOZaTCvwjl64H4T/qWsKxejLSlXVZqF3jIscXBkenObAKYff0cZN0ZMpkJTrEc=
+	t=1752050828; cv=none; b=PwU75FiSgphSmUDojt8UiHorvGXtnjpECjGLBCSuO5H7VCXUrrh5gM2FwKh3MjXe6B6i9Nn+YWrwF5a4Q3AIpaQciG0usAtKhO6QBRNMHuCV8bbEa9OGxIv7aaxh0Go0O+hTfnhsOfUpeUjhEBOlfuf0S8URmGCveLoyylEP5vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752050827; c=relaxed/simple;
-	bh=8eDfT1aIq5sj46Nlnip13kyLM/TlVQ5rzf4ZGoIRzAk=;
+	s=arc-20240116; t=1752050828; c=relaxed/simple;
+	bh=lFZ/3J/dfgojIoxW3tybEnI4LM5cOKI50TuFe38pSHI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AODJ6sl//dLadf6KbC1Q7Y8wp19fg1sUZFoXUyRt3fihD0afmo38QAwARwZyLSk5VCvDITMQla1cgU7U6eG8kfXgSRk9QefdyJ9nsBwcmA7eO1okwws2tDqQJmB5L7UJRRwrLEud2V15JXKExUDZAaTYmBE67yVkoBupIj84ECw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIfg4+ic; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ejVnWAJFRnswO8CYSEtsjXBSabUn7kpRnq+qM60+EhGoSsfF0pRnTb1iBToySukCDmE+O630TxXjDCmmXV6zeJS4QQZhybZGcd5rQ7TXptxsr939WmfvMnRUzLaVrq+aDmpD8dsB+DENzSqoe/pL82fUK9UYUsEB5Nwt1o3kU3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oi5pSZnP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIfg4+ic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE221C4CEEF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oi5pSZnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F89BC4CEF0;
 	Wed,  9 Jul 2025 08:47:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752050827;
-	bh=8eDfT1aIq5sj46Nlnip13kyLM/TlVQ5rzf4ZGoIRzAk=;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752050827;
+	bh=lFZ/3J/dfgojIoxW3tybEnI4LM5cOKI50TuFe38pSHI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lIfg4+icJ80KDbIzfntTJ2bx86u4pZ6Rs+dyTOaJCZWOAxxdNjZ8aQv9gwZiwPfg4
-	 9wviVUgiLKJ/PAamwx2N3V+AfYLcB/s2yhijtC7rdlTdL+v3CZpWlKZdWyNWmyFx6U
-	 eFdDZSZIKc31tvI1hGedu3/U/MCLBI145wD9oCrw=
-Date: Wed, 9 Jul 2025 10:47:04 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: WangYuli <wangyuli@uniontech.com>
-Cc: chuck.lever@oracle.com, masahiroy@kernel.org, nicolas@fjasle.eu,
-	patches@lists.linux.dev, stable@vger.kernel.org, dcavalca@meta.com,
-	jtornosm@redhat.com, guanwentao@uniontech.com
-Subject: Re: [PATCH 6.6 129/139] scripts: clean up IA-64 code
-Message-ID: <2025070914-hankering-saucy-ec33@gregkh>
-References: <20250703143946.229154383@linuxfoundation.org>
- <E845ABA28076FEFB+20250708032644.1000734-1-wangyuli@uniontech.com>
- <2025070857-junkman-tablet-6a45@gregkh>
- <572685AD12256749+e24050a6-dde6-4447-8b45-69578b352e5f@uniontech.com>
+	b=oi5pSZnPgKonq5oj4XxNNVl8vhvp0/A+VMaa8hzpXsCTEVYwDZKNWVlN7Y5r1XeFg
+	 SWfHGzdVOwhqeo+9UZdibzauHwVyxX+Rtg4PEM2KCYnTDcIpQdt3VOTUxjj0Y8+mZK
+	 hDCyH4qY1d7z7ZArIiykWxI76nGNlurJTLT23ZkPcFaKkquB2y+mwpcH5TVG39go/S
+	 KObwOmkJ9upnn9bOgDYc6HurDBskGzAsVKMhiTmedz3ne6FVvsadQTCbHBFk1rDQvs
+	 F74mcFbSEkl+3pXVZt58Tjp8/0p7KjYblGTtoPB72YOCwcDohdccd3g5ttrjqUo6XE
+	 SsSyd202j1TmA==
+Date: Wed, 9 Jul 2025 09:47:03 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com
+Subject: Re: [PATCH 6.15 000/178] 6.15.6-rc1 review
+Message-ID: <aG4sh87DTt6LY6TZ@finisterre.sirena.org.uk>
+References: <20250708162236.549307806@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5L2s3+A3smagnZMr"
+Content-Disposition: inline
+In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
+X-Cookie: Do not cut switchbacks.
+
+
+--5L2s3+A3smagnZMr
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <572685AD12256749+e24050a6-dde6-4447-8b45-69578b352e5f@uniontech.com>
 
-On Tue, Jul 08, 2025 at 03:45:16PM +0800, WangYuli wrote:
-> Hi greg k-h,
-> 
-> On 2025/7/8 15:20, Greg KH wrote:
-> > Is ia-64 actually being used in the 6.6.y tree by anyone?  Who still has
-> > that hardware that is keeping that arch alive for older kernels but not
-> > newer ones?
-> > 
-> I'm afraid I don't quite follow your point.
-> 
-> In v6.7-rc1, we introduced the commit to remove the IA-64 architecture code.
-> 
-> This means linux-6.6.y is the last kernel version that natively supports
-> IA-64, and it also happens to be the currently active LTS release.
+On Tue, Jul 08, 2025 at 06:20:37PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.6 release.
+> There are 178 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-6.12.y is the "currently active LTS release", along with 6.6.y and older
-ones.  So are all ia64 users sticking with 6.6.y only?
+Tested-by: Mark Brown <broonie@kernel.org>
 
-> In any case, I'm quite confused by the current situation because we've
-> essentially broken IA-64 build support in this kernel version.
+--5L2s3+A3smagnZMr
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Sorry, I didn't realize this, it came in for a different patch that
-fixed a different issue as the thread shows.
+-----BEGIN PGP SIGNATURE-----
 
-> If you genuinely believe that no one is using IA-64 devices with
-> linux-6.6.y, then it might be best to directly backport commit cf8e865
-> ("arch: Remove Itanium (IA-64) architecture") to completely remove IA-64.
-> 
-> This would avoid any misunderstanding.
-> 
-> Otherwise, someone in the future will inevitably assume linux-6.6.y still
-> supports IA-64, when in reality, it's no longer functional.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhuLIYACgkQJNaLcl1U
+h9A5ewf/XmKVeZCBXUxBXex6/F6Pb9upcVgaEQLAqPs/6/KS89iy9hMgx7nq4MWo
+b4jDaQK3QYCyANX//ah5SsyJZ3S5YRhlMnlCDldY2XEOcaTv9Ew3vext2r053TfW
+y96V8woK7StTZ9iJO4MvqqT+1bXUQPviVbFX3NZCOPhazpi48I5rXUPxDi7HE7GW
+B/++VyhRVBKhmiL7PUuqHNpoBUhFvsY2p0pk2AQs1Kfejy9miw9b/pNQmsZvw1ef
+r7eM2M1ltgCPdprQIuz+va3yreLJjE3dEpr1ZibexW1XaI1NEsEJPgmBTKsFLhQ0
+lsjWXVihgaTi2UMU26hb3wmY2yxHFw==
+=Ki7l
+-----END PGP SIGNATURE-----
 
-Who assumes this?  Again, who is still using/maintaining this arch for
-6.6.y anymore?
-
-I'm all for reverting this, but would like to see some reports of real
-users first :)
-
-thanks,
-
-greg k-h
+--5L2s3+A3smagnZMr--
