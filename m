@@ -1,95 +1,116 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557FF225397
-	for <patches@lists.linux.dev>; Wed,  9 Jul 2025 08:18:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FE723BCF3;
+	Wed,  9 Jul 2025 08:19:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752049094; cv=none; b=YyHVxbZaB943CsjgnsUzRmV9Hgy/7GRxf32/KpB8GxMI5rXYPfSyaknd/SRvosgN/9j3kxrQ4O4UNM4yjSFl1DIIjDFbFd7RckIjFP9aPh7xIkAdcHdPhBFMBGiAM/geDAeWta04epIE6zDedYC9i/w6Pdkw0zOS9CNruoKe5GU=
+	t=1752049183; cv=none; b=hi68No0RFueKuqaLyYA2god8/Isay7U0g0Z9LP97o/4GXthcCDCR7w+ZLRsWypFkZ4h4UDAcPZKg0lX2k8/BtKyS0PB6+fDHcz1gEOvVsj1Ea9Oei+JDbzMS7wj1+WBzHzymkAnJsNrZSEZulJpWefMOCGbeH1zdoDd9yKFYH9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752049094; c=relaxed/simple;
-	bh=9f/r6c0nBHbv8Dl8S+J8eeQaQPACDkzTRLiALBmX67g=;
+	s=arc-20240116; t=1752049183; c=relaxed/simple;
+	bh=a4DO43GgiFHJwdOTp+kKgsrgjSbcR3PTiF2Q8UxI5ck=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ii5SoPCo3c9vspucqPRDqxEhmaaclvJjaHgMY7HMMBRk1k7NuTTC7eQyRlMsuyC/BYHLEQEbboueS93W5FE527cmy9whwe8SirP8Gx3eV2K3wZZEPeh8WNxv4waLw4gUzgc0I2p3IZSnlV/Ho4Lec4GJRso12DjvDMx+gfMO5qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=TrccRNe4; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=gJ3qwMMg4V/Q8sbVCX54p4TlLdjzfbt6gqIaVD+QGTeKC+vk6EvFF5WtICg4dir9vtUd4j+osA7+w9dfbe87QN9w42hMXzgpAp7hB/GpDLUVbS65Nss2oDHnUx21KyiSRujrrbZK771OU6PR5d63MxhH8Ww98I9V9/6VitJLzZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZtD6fAY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="TrccRNe4"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E9B5A103972A7;
-	Wed,  9 Jul 2025 10:18:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1752049089; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=cedKP5FELDjAWzwANcQdCs0mQOvaolg+wrJ11dvqRbU=;
-	b=TrccRNe4QeZECDf4jTL5oJQpYyrnh3/iIC0a9/2dz0cjd6sBLed6rgcPj/T0BLWtlCINJ/
-	A+XnJLY0FHKzGTXzG73y0Uy9Vc1xRqFmkuOcMuLCpSV7CcaWVz7OWYpf3HETUkJcVLb0i+
-	gcUs//3GkqWxKGGrP4ysp+XSbZVkOBFVQ6/hmTPwJi2COY7bmIjHwh4LC4ACKsELIoaNbf
-	kRebEz8HQsvEdBYHSpIEiBcOnBURyZ3H3PCNfvA6FymIGn5Rl2OddWaqisRHaOvjSgsUSv
-	OLQKluWVUpbynoZRAT/uLEJ381sxbgXROhB1R33vOsbhO9TgWOmsUf7xvaYXmg==
-Date: Wed, 9 Jul 2025 10:18:02 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZtD6fAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267D4C4CEEF;
+	Wed,  9 Jul 2025 08:19:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1752049182;
+	bh=a4DO43GgiFHJwdOTp+kKgsrgjSbcR3PTiF2Q8UxI5ck=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EZtD6fAYcuBCx4QDbkWYeF18ikPAdwiPH0K2kdqkZmV4/IKlVvAmQb7RQMh6WEoUb
+	 NF0T0h+jNiUsiz6Sdp2Jid1wXw5J43uMfsYBe1aMW1THIxtAllHGWJkNqdV9jzk4pC
+	 Iy7THedHkVQ0ZePLfGC/R53GaSMNs46IEqShrlDQ=
+Date: Wed, 9 Jul 2025 10:19:37 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.15 000/178] 6.15.6-rc1 review
-Message-ID: <aG4lussFC45kuFAD@duo.ucw.cz>
-References: <20250708162236.549307806@linuxfoundation.org>
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Anders Roxell <anders.roxell@linaro.org>, jakub.lewalski@nokia.com,
+	Elodie Decerle <elodie.decerle@nokia.com>,
+	Aidan Stewart <astewart@tektelic.com>,
+	Fabio Estevam <festevam@gmail.com>
+Subject: Re: [PATCH 6.15 000/263] 6.15.5-rc2 review
+Message-ID: <2025070946-heroism-operation-5ea8@gregkh>
+References: <20250704125604.759558342@linuxfoundation.org>
+ <CA+G9fYvidpyHTQ179dAJ4TSdhthC-Mtjuks5iQjMf+ovfPQbTg@mail.gmail.com>
+ <CA+G9fYub_Ln=EPp2mgL4-2ewvorZ6O7btM97Ka6RrWhO1o0Liw@mail.gmail.com>
+ <CA+G9fYtb3OW5+0Y+qYC-hbg2AV-UUff3orui0VuckDrrMYjrcw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PU+46YvjpyCCLK9V"
-Content-Disposition: inline
-In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
-
-
---PU+46YvjpyCCLK9V
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CA+G9fYtb3OW5+0Y+qYC-hbg2AV-UUff3orui0VuckDrrMYjrcw@mail.gmail.com>
 
-Hi!
+On Wed, Jul 09, 2025 at 02:54:03AM +0530, Naresh Kamboju wrote:
+> On Tue, 8 Jul 2025 at 00:04, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> >
+> > On Sun, 6 Jul 2025 at 15:50, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > >
+> > > On Fri, 4 Jul 2025 at 20:14, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > This is the start of the stable review cycle for the 6.15.5 release.
+> > > > There are 263 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Sun, 06 Jul 2025 12:55:09 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.5-rc2.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > >
+> > > Approximately 20% of devices are experiencing intermittent boot failures
+> > > with this kernel version. The issue appears to be related to auto login
+> > > failures, where an incorrect password is being detected on the serial
+> > > console during the login process.
+> >
+> > Reported issue is also noticed on Linux tree 6.16-rc5 build.
+> >
+> > > We are investigating this problem.
+> 
+> The following three patches were reverted and the system was re-tested.
+> The previously reported issues are no longer observed after applying the
+> reverts.
+> 
+> serial: imx: Restore original RXTL for console to fix data loss
+>     commit f23c52aafb1675ab1d1f46914556d8e29cbbf7b3 upstream.
+> 
+> serial: core: restore of_node information in sysfs
+>     commit d36f0e9a0002f04f4d6dd9be908d58fe5bd3a279 upstream.
+> 
+> tty: serial: uartlite: register uart driver in init
+>     [ Upstream commit 6bd697b5fc39fd24e2aa418c7b7d14469f550a93 ]
+> 
+> Reference bug report lore link,
+>  - https://lore.kernel.org/stable/CA+G9fYvidpyHTQ179dAJ4TSdhthC-Mtjuks5iQjMf+ovfPQbTg@mail.gmail.com/
 
-> This is the start of the stable review cycle for the 6.15.6 release.
-> There are 178 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+As these are upstream, and causing the problem there too, can you email
+the tty list about them?  And those are 2 different serial drivers, and
+one serial core change, all independant, which feels odd that they all
+were needed to fix this issue.
 
-CIP testing did not find any problems here:
+thanks,
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.15.y
-
-6.6 passes our testing, too:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---PU+46YvjpyCCLK9V
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaG4lugAKCRAw5/Bqldv6
-8gKKAJ9sHeCAAZfqZwE6K5CerdwSK5UKrACgoLgVS19oYrMr5BDH2FbDJPAOwhs=
-=m83F
------END PGP SIGNATURE-----
-
---PU+46YvjpyCCLK9V--
+greg k-h
