@@ -1,184 +1,179 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2087.outbound.protection.outlook.com [40.107.244.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3075621FF26
-	for <patches@lists.linux.dev>; Wed,  9 Jul 2025 16:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752080160; cv=none; b=HoBmWiD2gSr5Nt9E7hCtvz34abOMCKPlUDPbjEukODDMqnXNjQf6dk9pYYSTPFE9U4Kmeo0gfDZgXmSliYdwuzXlGrCPDgnh36X9bnalNxUqPnCfmkELooCrOQcGZmPpQwFLJn/KmX2v/ZxSKps7KoZ1h092grvmzEW86exuNus=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752080160; c=relaxed/simple;
-	bh=s/nX8zIHBhz7UzymyaWsPZGQQ2RKaw+8h1/MMQwig60=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jXnsJ1qWQcbKJg+kTuCwgZlrs6xPF1dIPFypSZi0aPoFxkAuNGCsP16jEJUiEpAMCN6BuD1KJLt5EBOx82vWyR/1EHDBJrm94BJX0OwlzX7Lc2rfdb23KXCEgWf9j8AtJMh43TTLrOQRPRDJs3hkGgvQqqae0HLb22yIHIlLUus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U/UdVOQX; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E29221FDE;
+	Wed,  9 Jul 2025 17:09:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.87
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752080951; cv=fail; b=KWIdRR+QPRPq5Zdcu/sD1ePZd1hFKb/leCgx2TXHxUdjJy1Vgu/tzyYCwQIdEQ9cVSFAetD3w7nX52p73BpIMQao2KLyBJJu6AQJvXZiDPq4G/nXDStsoAAh3mMj1RLGKusBjIxJSwwpJfMOk8u6SL0Q0qFq3Z+R4kEV6v2dNk4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752080951; c=relaxed/simple;
+	bh=LiCgIm9JCLSPRAUhmIplZ65Lvfa/AJjtABDFik8ovpM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Fhz5E658txR2QyTCG71rfxkqNbhIJwpKUORxqeHEnrHnd39WKTNxpfqmC7VIySAqsgnot/rahxvNLyBkX4GsadXFWNliD5qLc9EmJ7VE3A/4XB2lYprGWBJ1mTd8dfJChnocT927oQTD77wAmXPiM6PoUAq8cBGcl1wxL+7DBfE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Wy4KoO/k; arc=fail smtp.client-ip=40.107.244.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U/UdVOQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7433C4CEF9
-	for <patches@lists.linux.dev>; Wed,  9 Jul 2025 16:55:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752080159;
-	bh=s/nX8zIHBhz7UzymyaWsPZGQQ2RKaw+8h1/MMQwig60=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=U/UdVOQXVmJEsmdVD1AsBg5HBpSzOUI1TZShH/yMS15dEBsXh5s+bL0yo+mHEuheF
-	 NOnoZrImJwF7we9U6+7ESNJhAyMuj6q0SVmPymnLHmAon+EebWOQuSyftxKIE3J3jg
-	 f3HkXB7x61Bq4BgvxWKe4Fdsqxat+YPN2qr6h07ErO9iOL0FEcoku1BCfSnl9l2tsh
-	 q4bxTS+v8pI68sL3lpCT/Bpwn7CobJpyV1PRSKrkVjMdMqVx7aYWqy4urXLnLVykaQ
-	 1y0REjV4M/7UDXzYfF9KnMiKyLtOpGrA0Qw9bHkwnaal2fpuqhtg1kvcZPEG/teStJ
-	 V4rRR2i9WyFPA==
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-613aaa2cf43so55216eaf.3
-        for <patches@lists.linux.dev>; Wed, 09 Jul 2025 09:55:59 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXMOr83FY6reX/VxfI1b8+y0QQEr+Uy+IGzzSNZQGwMpum5vPUF8jjoFliRDi1dVii1yGj0+z74@lists.linux.dev
-X-Gm-Message-State: AOJu0YxPTcDEfMvAwBaLGj+0rCJ+fx7IOR1Uh+cWWcK0wOROCyWDGs9j
-	htTCfO6aroFQVJysnvwoLwq9MclybnZ6+pMxwJKDSLHf+BAO2AfXC1aavOhAWX9Fp3t3tbEdCUD
-	tJWtWYln223xyhLXwuPxU167GeSPmOmE=
-X-Google-Smtp-Source: AGHT+IHxv3XyTmAE7BWnt5snY9w8QZkCASN2KwEpMUnGi9WrPdGJGGZnolR2Q0GJi5QXAyrvQ+bxSShfBvGLYf4yfn0=
-X-Received: by 2002:a05:6871:2b1c:b0:2b8:e4b9:47a3 with SMTP id
- 586e51a60fabf-2fef871c3e8mr2134957fac.22.1752080158987; Wed, 09 Jul 2025
- 09:55:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Wy4KoO/k"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yw7UHFkvQr626p0TBeFUHgazFNuyo1BKSVFSAKLiP5jaMF6AaENsSxCaQq1kQACSVCe/WXXnHr7XQWMyQE1bdzw6LWtIQQ+qqy86FEbnKJ3wNQYhRa0OTcs7wwBCkl809qRc8kSIdIgQnWsFa4G5GUz4QOKhBY7SWHBJEZRnSKiR88VVlJRGF+d4Rs1ilzNkjuj7OY64L3nxvrQVIie4D1Zfx+Wq2pERp7ivPDn/3hP8PIkG8F2Z02mVVRurhaC5mrDMIUFWMpi4h8Xc33ZKVJhryy5XKXu+d3kHipJaeozXag9HQgEyHzVqlZraVqdxdTSlkJ5NQzGfyAZ5ARt2Mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HPqy9z878GyC8K/bE9nTQTGvp0eJ6+uB1iGmNFsFHDk=;
+ b=aWsYaJJJruqqcp+vCuCfVoYfCnxbxn2mKrJR22gvs7Is8jWwD2mPm2mLiN66AvetUiiVlYailsxtDIvNBSIsIQZbdQZz2Wxh+FH3I5a4jAbJBeJx35kStX+HnuFBcUqF/OuQ72CubXzail0qFhKDqdwilQUzshHrxV1Xoso4WweNcUV4eMD9JvpWGso7Lr8p+2qaNCPYqQgnJzO588gYkFfgVEDWKFg3SEjkbzDe9oj6e4PE/mQOW87tC8u9xs0YtzgLbS9fbynhEI+vALiRNXfeg4+uSR2Ztv8LG2OutPowWRhZSjP0cQX1cDTDOlcs2Dlp/dV8kyhtZtXgBF75oA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HPqy9z878GyC8K/bE9nTQTGvp0eJ6+uB1iGmNFsFHDk=;
+ b=Wy4KoO/kehQGTXBpTHD/ohhClBCOS5X/LnFvXC1ZCw/QmjY0CA8rAisq1iVtBKf0VCwf06VRxjGTifSRpXW9gdpiwKa00vmUVWePqA38Igphu+qAmXrFzyy5R0h7EB1mQYDN2tSWNkRbSfzdpwbxe/e5le6uJdA83zUC2pWZ68UfXxnDCGiTqGCERxUiM77dP0UYS8HQ/yaNSIxCOCcg0ZyQCaYrsn3CmCU9rZcRG0UdjRU1fP73/2OLJmD69nGwiK0omszFHmPLHiUfAx0O9UVlXl3PrwPrv2/Mi9Eb3+Ti8e/trC3LlWUPa0FR4/pyeHPCLeStwVzgaS7smsKPLg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by CY3PR12MB9607.namprd12.prod.outlook.com (2603:10b6:930:103::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.28; Wed, 9 Jul
+ 2025 17:09:06 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8901.024; Wed, 9 Jul 2025
+ 17:09:05 +0000
+Date: Wed, 9 Jul 2025 14:09:04 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+	bagasdotme@gmail.com, robin.murphy@arm.com, joro@8bytes.org,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	shuah@kernel.org, jsnitsel@redhat.com, nathan@kernel.org,
+	peterz@infradead.org, yi.l.liu@intel.com, mshavit@google.com,
+	praan@google.com, zhangzekun11@huawei.com, iommu@lists.linux.dev,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	mochs@nvidia.com, alok.a.tiwari@oracle.com, vasant.hegde@amd.com,
+	dwmw2@infradead.org, baolu.lu@linux.intel.com
+Subject: Re: [PATCH v8 14/29] iommufd/viommu: Add IOMMUFD_CMD_HW_QUEUE_ALLOC
+ ioctl
+Message-ID: <20250709170904.GG1599700@nvidia.com>
+References: <cover.1751677708.git.nicolinc@nvidia.com>
+ <49a93d92ce657cf6a0d588d2b31ad3600ace21f7.1751677708.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <49a93d92ce657cf6a0d588d2b31ad3600ace21f7.1751677708.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: BL1P221CA0020.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c5::7) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250708000215.793090-1-sashal@kernel.org> <20250708000215.793090-6-sashal@kernel.org>
- <87ms9esclp.fsf@email.froward.int.ebiederm.org> <aG2AcbhWmFwaHT6C@lappy>
- <87tt3mqrtg.fsf@email.froward.int.ebiederm.org> <aG2bAMGrDDSvOhbl@lappy>
- <87ms9dpc3b.fsf@email.froward.int.ebiederm.org> <29441021-5758-4565-b120-e9713c58f6d8@amd.com>
-In-Reply-To: <29441021-5758-4565-b120-e9713c58f6d8@amd.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 9 Jul 2025 18:55:47 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0gWD+pnkhWbW0ZF8+5PYxX6qRbeNoRuVo=CpwmMMLFjDg@mail.gmail.com>
-X-Gm-Features: Ac12FXx_bufmZGZgpHOzEG3RZctbXShNv4NKhZDCMLVWf0RX27NUB7NRU_usyCE
-Message-ID: <CAJZ5v0gWD+pnkhWbW0ZF8+5PYxX6qRbeNoRuVo=CpwmMMLFjDg@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.15 6/8] PM: Restrict swap use to later in the
- suspend sequence
-To: Mario Limonciello <mario.limonciello@amd.com>, Sasha Levin <sashal@kernel.org>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Nat Wittstock <nat@fardog.io>, Lucian Langa <lucilanga@7pot.org>, 
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, rafael@kernel.org, pavel@ucw.cz, 
-	len.brown@intel.com, linux-pm@vger.kernel.org, kexec@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CY3PR12MB9607:EE_
+X-MS-Office365-Filtering-Correlation-Id: 32f13d8c-ab08-48c1-207f-08ddbf0b4f83
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?kVi3HRBhIjZxXsm/KMOnmOq+P1QJaM8JXekmQ/xl1C+pmFNjYhKKfYiqYKcW?=
+ =?us-ascii?Q?L/0p0ptrkKdueKBqJZPfkX4UJdsj+BEOThenUi5BCACCV1C2XtwBARoda8Mq?=
+ =?us-ascii?Q?sRB+Wzt+nvxTEYGDr2LdWxiI37w4Nd0q2tRHEdNTartIhg/sh384+sA757dN?=
+ =?us-ascii?Q?Frl9WLPGlYZzHLmV+h+P85LXGSr/jIhxrCVRMzmH53n2g83rD/EkwxhKkHcD?=
+ =?us-ascii?Q?Hc8Nv5mRGVZpK6pbtFmOm2WA9UtzuLEfDrk5CJIKoQAYxThELnake/fGvUHt?=
+ =?us-ascii?Q?LvXl+/p2endLrAfIkWCsEIw1nen6nLj2LMSm9k8w7jhSXC7OzkZ9XwLRQtpI?=
+ =?us-ascii?Q?TmYk+e62EiAzDRJ1oRFLasbdfcQBHBj6XVPSB0vk4HRaUVCEMLStcrkVzW1U?=
+ =?us-ascii?Q?yn3FJ9gyyWQxsxiZuP1CEJzTvTvjN41zA4LG658vzP2tOIddahzKcORirEHP?=
+ =?us-ascii?Q?E7aZrGceBZyzMLDU4fqJFS7rap1N2SFIQWok9wlXatvDlHc+DsnyOPi2DscU?=
+ =?us-ascii?Q?pgsEEneGd7762UyD5E6IVMpimeg6QFVznzS01qNB0Ta4fRb7J8Rvd4RxyyZI?=
+ =?us-ascii?Q?3oDkr/N7dZ6mcnV1sDhc1Hrj6vk60rjLtKHF6pA3cNmEQ4S4XbOM3NeYm/7+?=
+ =?us-ascii?Q?+IIgGdQ2zzBvuaihJlzrhl/BxT3Yamnu2x7Xoz1ftJLE2WZGLxAkkja0WoE+?=
+ =?us-ascii?Q?7ftliP9cIR2X86uMAkwRHX/90v54/WS2sZorkHtdfrirkwCSKicrfkQIERya?=
+ =?us-ascii?Q?OmPyr7FqakHosQajqVmg5WAafx+dhIa+Ee+728Ssmuwl9ucil59UwVyE+Pw3?=
+ =?us-ascii?Q?djwMjVH+U+SGrSOPdEHgKFPqdLcJSAZ3NHOJLsL3CWkYTRtq4BxjFWeCkzHC?=
+ =?us-ascii?Q?bu0jX4SMiI8oBTs0T1E1OX34MGck7WOjYQF1N13XkFESre9kpVxMhY0sRiq5?=
+ =?us-ascii?Q?la2oXCqA9VWFtFF5AOsTN5ni399jsozlR3d5TVu/rwl7rEBXZSf3lwUDW5UQ?=
+ =?us-ascii?Q?wrzskcRIiuZVbdNczFjMJrE+0MvPztUsRsLF6ZA8mIjODjrN8KjiJAezn6/B?=
+ =?us-ascii?Q?LnohlWxDa5pN4oFjI19RjSBOhCkEm6LSn7k4pzzwUbQYMgaK0JayYz1G7BXf?=
+ =?us-ascii?Q?f617DlneqdxBG2rfmftEb5YoS9zFZt5eA799MGf2IgBj33sqE75iJByYe7DR?=
+ =?us-ascii?Q?Xc4ZCmlTVWLROnwwtMqKi3vhy//fchhWerDOHpE+zHGrE5KinjgQgqw7YbGp?=
+ =?us-ascii?Q?nvLCcDOM19Rkzm9hbuCkNOV2h9uQO9Ux0tb9i/T73ZT5/ZzLItIgtUIiqPFN?=
+ =?us-ascii?Q?M2ZxAn02DFNZUvW80sPdBH3wDOoEVe1N9SH8o//HAFmsiBeefatVpzzzJ7SC?=
+ =?us-ascii?Q?BBPU5Zg0Bo1x8TISyj/SaLO34Mxog5mUxkQOUSkZG947I0srWSyJm1v6x8QQ?=
+ =?us-ascii?Q?qm6J20HXT9E=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?whGIr8PIpbXmSaJLpxXrr2B7QsvJUH/XfCyJZf2woTsKzYGx9XDbgNpOAp0R?=
+ =?us-ascii?Q?5vqtqSDkehvSUr2phHBz2v9A2gkEcjh+wRFxmwBmCRt1HaPrG9OY5b7tpHwh?=
+ =?us-ascii?Q?tp8F2GmUg6Jt46o7wYEUbXcwhGRZnx0C3rN26S4pw1Uz8SK8mgZNrTn5hAom?=
+ =?us-ascii?Q?fzANaIvTvS54dbckLI664HI5xYwPgU8/p+layCRbXEE09stZjI6A5WRxrdGp?=
+ =?us-ascii?Q?T8HIPEzRDhzwLQOAFhcLOGFsnREw/Ni67L9yGuuGV2o4p7qvAJ19iU1X0Grd?=
+ =?us-ascii?Q?ef8DSYN5JMq1qusdmIWGUxO5S7rQgLUhPP1DeIsxgbm7ZTLuOsdjWahzqTtD?=
+ =?us-ascii?Q?v6f/LP+qa20DqzcbsxK8ljrL+z41T3NCQHIAdowGHCMrdW0JSIwTF64L/yF+?=
+ =?us-ascii?Q?sJhUDOxPZLatHPILH3r1TDn7R1DKbNLxG3YciAJEMpmMoOaqHuFBpr3reW3o?=
+ =?us-ascii?Q?HRLYqWLNmda5MoRbZXJ2WuzwfYhXJk646QCJN3qtGb6QL9JUZsxkZVwB+l44?=
+ =?us-ascii?Q?67+bP1/3dp5p+mz1TS0KyaxVrO7s29N1C/KAJ4Uigb9sk1o/Y85hp1yKxd92?=
+ =?us-ascii?Q?+xQK10qOr6hT5TSpH7i3e+V57EWA3pgOYNoZyk0Ej5baNE3tJBuxaoLnZqXG?=
+ =?us-ascii?Q?Z7hPE5wiQmH2ViZIY+0G4WQ0dbefmGGpHBlN1NJhWSzNscu/xgYlZsMfx5dx?=
+ =?us-ascii?Q?doSRGyUkF7z++YCQpa891mpJmhoHPz60tGRIW2Ng88E3xq5nraCf2INHHggh?=
+ =?us-ascii?Q?FyiJxwCBQ7HhadyXJNpzpCqrxb4P+3ur+L8GFURxl8TkARqER+p+SAbCON00?=
+ =?us-ascii?Q?b5UTZbfB6OQZdiNv/cRD/whaqs00IWPuiJUNUodS5dLmBLg/Pp7ah1wKQh95?=
+ =?us-ascii?Q?YyD7QA5osv3V9OXrH2VQ0AMcKgOrgKwZ2LEYEPy2MLNz0QajsvzJfMJvxd7V?=
+ =?us-ascii?Q?CHX8aV8PXNpiWIrDWoWKsdTjx/mpGJgxlkO0fSGVxOI2Z1L2Qqa1ker7U1UP?=
+ =?us-ascii?Q?AMF9J+tz2R2ccPJAeCk2U6XjGkW7LrQXJ7w7HTSLLJA6/kHJEWxSnyqCcpaj?=
+ =?us-ascii?Q?FtVj1Ti7YBn6TkUhEvFC9aSBt1thatbmIeGzB4DTviZHZoTUdIXqpSW35PHm?=
+ =?us-ascii?Q?69DrVywGvyxs/VXPa7w9xmGdC2UUD4zO5an1G4ZkskT2S9hIW0XJo9NdYbnz?=
+ =?us-ascii?Q?JuG1t42u+oT/A8UgpjN/9PrpiV3C1h90e0ohv2sSdKkQs2X1tZFQh/Bo8Gqr?=
+ =?us-ascii?Q?Hgo8i64bcdTb4toTf0a2QjaEwPegEIhNNiTGa42t5ilcX4Ub95DOlkLvq26e?=
+ =?us-ascii?Q?nUQ1nwWGL4d43K2VfFjDkuIv3M+IBYjl/t5h1p1h4JYnnIi9CF20Tg+tS/VN?=
+ =?us-ascii?Q?zmueBCvdsssgegdBBUi4iVJ9FHtEG6/1nH0DcOYaIA6ab04CRNWYBsHYjoEs?=
+ =?us-ascii?Q?pdep+g/1Fx1QtjH1hlAbQpmwR+8qKzIZU2u9GVXjfduf+YUcqvf50i/SGQXS?=
+ =?us-ascii?Q?r5Zl7wfT8FyDOT3u32YaUhe2GHGjT9oXZxhb6I6LQ9AEn3J+9ir9+xOjOfk7?=
+ =?us-ascii?Q?waof5wB7OzB59KTZLzLDabZdYHHg4grAfmX+bHoN?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 32f13d8c-ab08-48c1-207f-08ddbf0b4f83
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2025 17:09:05.8678
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1TfWYl6KGebgpKx4VeLILaAeueUlGYjnri7XbAP/zP9Sei6y/ZK9+wT3GpkaAL+V
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9607
 
-On Wed, Jul 9, 2025 at 6:35=E2=80=AFPM Mario Limonciello
-<mario.limonciello@amd.com> wrote:
->
-> On 7/9/2025 12:23 PM, Eric W. Biederman wrote:
-> > Sasha Levin <sashal@kernel.org> writes:
-> >
-> >> On Tue, Jul 08, 2025 at 04:46:19PM -0500, Eric W. Biederman wrote:
-> >>> Sasha Levin <sashal@kernel.org> writes:
-> >>>
-> >>>> On Tue, Jul 08, 2025 at 02:32:02PM -0500, Eric W. Biederman wrote:
-> >>>>>
-> >>>>> Wow!
-> >>>>>
-> >>>>> Sasha I think an impersonator has gotten into your account, and
-> >>>>> is just making nonsense up.
-> >>>>
-> >>>> https://lore.kernel.org/all/aDXQaq-bq5BMMlce@lappy/
-> >>>
-> >>> It is nice it is giving explanations for it's backporting decisions.
-> >>>
-> >>> It would be nicer if those explanations were clearly marked as
-> >>> coming from a non-human agent, and did not read like a human being
-> >>> impatient for a patch to be backported.
-> >>
-> >> Thats a fair point. I'll add "LLM Analysis:" before the explanation to
-> >> future patches.
-> >>
-> >>> Further the machine given explanations were clearly wrong.  Do you ha=
-ve
-> >>> plans to do anything about that?  Using very incorrect justifications
-> >>> for backporting patches is scary.
-> >>
-> >> Just like in the past 8 years where AUTOSEL ran without any explanatio=
-n
-> >> whatsoever, the patches are manually reviewed and tested prior to bein=
-g
-> >> included in the stable tree.
-> >
-> > I believe there is some testing done.  However for a lot of what I see
-> > go by I would be strongly surprised if there is actually much manual
-> > review.
-> >
-> > I expect there is a lot of the changes are simply ignored after a quick
-> > glance because people don't know what is going on, or they are of too
-> > little consequence to spend time on.
-> >
-> >> I don't make a point to go back and correct the justification, it's
-> >> there more to give some idea as to why this patch was marked for
-> >> review and may be completely bogus (in which case I'll drop the patch)=
-.
-> >>
-> >> For that matter, I'd often look at the explanation only if I don't ful=
-ly
-> >> understand why a certain patch was selected. Most often I just use it =
-as
-> >> a "Yes/No" signal.
-> >>
-> >> In this instance I honestly haven't read the LLM explanation. I agree
-> >> with you that the explanation is flawed, but the patch clearly fixes a
-> >> problem:
-> >>
-> >>      "On AMD dGPUs this can lead to failed suspends under memory
-> >>      pressure situations as all VRAM must be evicted to system memory
-> >>      or swap."
-> >>
-> >> So it was included in the AUTOSEL patchset.
-> >
-> >
-> >> Do you have an objection to this patch being included in -stable? So f=
-ar
-> >> your concerns were about the LLM explanation rather than actual patch.
-> >
-> > Several objections.
-> > - The explanation was clearly bogus.
-> > - The maintainer takes alarm.
-> > - The patch while small, is not simple and not obviously correct.
-> > - The patch has not been thoroughly tested.
-> >
-> > I object because the code does not appear to have been well tested
-> > outside of the realm of fixing the issue.
-> >
-> > There is no indication that the kexec code path has ever been exercised=
-.
-> >
-> > So this appears to be one of those changes that was merged under
-> > the banner of "Let's see if this causes a regression".>
-> > To the original authors.  I would have appreciated it being a little
-> > more clearly called out in the change description that this came in
-> > under "Let's see if this causes a regression".
-> >
->
-> As the original author of this patch I don't feel this patch is any
-> different than any other patch in that regard.
-> I don't write in a commit message the expected risk of a patch.
->
-> There are always people that find interesting ways to exercise it and
-> they could find problems that I didn't envision.
->
-> > Such changes should not be backported automatically.  They should be
-> > backported with care after the have seen much more usage/testing of
-> > the kernel they were merged into.  Probably after a kernel release or
-> > so.  This is something that can take some actual judgment to decide,
-> > when a backport is reasonable.
->
-> TBH - I didn't include stable in the commit message with the intent that
-> after this baked a cycle or so that we could bring it back later if
-> AUTOSEL hadn't picked it up by then.
+On Fri, Jul 04, 2025 at 06:13:30PM -0700, Nicolin Chen wrote:
+> +static struct iommufd_access *
+> +iommufd_hw_queue_alloc_phys(struct iommu_hw_queue_alloc *cmd,
+> +			    struct iommufd_viommu *viommu, phys_addr_t *base_pa)
+> +{
+> +	struct iommufd_access *access;
+> +	struct page **pages;
+> +	size_t max_npages;
+> +	size_t length;
+> +	u64 offset;
+> +	size_t i;
+> +	int rc;
+> +
+> +	offset =
+> +		cmd->nesting_parent_iova - PAGE_ALIGN(cmd->nesting_parent_iova);
 
-I actually see an issue in this patch that I have overlooked
-previously, so Sasha and "stable" folks - please drop this one.
+PAGE_ALIGN is ALIGN UP, that is the wrong direction?
 
-Namely, the change in dpm_resume_end() is going too far.
+It is just:
 
-> It's a real issue people have complained about for years that is
-> non-obvious where the root cause is.
->
-> Once we're all confident on this I'd love to discuss bringing it back
-> even further to LTS kernels if it's viable.
+      offset = cmd->nesting_parent_iova % PAGE_SIZE;
 
-Sure.
+And this is missing:
+
+	*base_pa = (page_to_pfn(pages[0]) << PAGE_SHIFT) + offset;
+
+??
+
+Jason
