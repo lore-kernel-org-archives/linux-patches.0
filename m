@@ -1,47 +1,47 @@
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2066.outbound.protection.outlook.com [40.107.101.66])
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2086.outbound.protection.outlook.com [40.107.100.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2412E9EA0;
-	Wed,  9 Jul 2025 14:52:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.101.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0512E9ED6;
+	Wed,  9 Jul 2025 14:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.86
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752072760; cv=fail; b=j8mc5OzG2Pilfcrv2IgL0ojgXVDnJSqRxQkxwvMzRkhBDfCSYaWyw2jIR7G3sB13epC9GxTdM5rnA4NOoqHnAVqJxswmatIrs00mxhHlSLqeUUOVod53lRodwBhry1ap973LwFOCMdnYGqnhT9+foMwhHn6S8Wq5qZW2rLcI6cg=
+	t=1752072762; cv=fail; b=TwUVi/FgOFKtGlgdu+gzYKvRzjWtUz+0yn5+Fpk6bZwpFyviNNrw9uOZuYxuU32SCk7SURcd8GuhOtpz7TOIf7ub3Zm1zIwcPvkcGvixQyIBHUe+Fk7YZqQmYrG/+JiwBz1vsZgCj7cDDxAAp30il5RMK52loMF4YwTszrBaAFI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752072760; c=relaxed/simple;
-	bh=KN/G2lnyzTd6X2nVqUPqLlFa1igosgr49ZomjFTAEag=;
+	s=arc-20240116; t=1752072762; c=relaxed/simple;
+	bh=IUJwbSljjGPprPPrrxk07tF7P+cYDvOKWUv0tEf2Ktk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ggr6FJAsi8i0kDz16bI413xyPDbfl5N4gRKsy8kxpbfjB6WKZdshUYg4538MnxSAGJoTx1UDLPudD0XZ8K5T++S1P23USzP1rz6YWNyvmf66lBa0KEWmBjiuqKrKi294US4VLr65L0r8JlaPZDUM4hCZ0KfI0OY7Bf9rwH+k/j8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MiwSDWFd; arc=fail smtp.client-ip=40.107.101.66
+	 Content-Type:MIME-Version; b=ivenfKeOR0H7lGSLfcjfsfG9NHnHH9aazO7x/hVH2OX5fENQKkNTCvf+G66U+SJk+mi22ovEWnR2yzXRkpX6yETdNBrwcNT4GU324ROJWBsQqgOmER9ORvZUwtivUuf+goPNrsAhfHL8Cr8nOwR+Q779dr1d1ytlDC89k5xztVw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qu1N/xqV; arc=fail smtp.client-ip=40.107.100.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MiwSDWFd"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qu1N/xqV"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Abuaj01BRis2e7ssqMs9zegN/9doWy1EX2hrt+vYa81B6IkstNfa3RXEhteQKa5nBmSg3K7qkwiLRFjkFuzJwL8R85CrUPVGvYctydkgUacljoNHpfBLfv07TS+P9mQCsnScv3wcpjCdydTDWYxzNpBm8EHoyJ7nCg8Dm6H7VqjWB3PSAzIwcwTHiHybUv6UPPtTA67c93r4gVRH5Kj7catLs63MaVX79mUGC585b/BwzVC7MOi5oLWwlOJfO3GcIhclX/dEkqB8rNjENEjZe83MuToHv1uyDDPJj7hi28csyaOh8H3otz8NQzBz0lYT2xHouWcMfj2RyJe9AmAndA==
+ b=ezQPvGvRffhDF4XTVRUMiNHdNjscQlr+uvhS793Sqz8zCZbymmO+H2Psz7mds8tGQ8BkuR5cEn23dyiQr1xVpXb45ln84dKaWTTMxUwrF/uzFTtLZgZEMGRBovf0IldTyP3nd7LSCo8dPPwND7upI04IyfJ+dQ/AVnt+R2dVWIom+oJBy7jSVurKYDFp/+k7Y/VasklSd5hD/JumiTbepPiUTAq2mphg8v0RC/5pAaOlUECa4VtW7CbFURSCDH6Q5WTgqZWHZ+ITD9HsjC7LIO0J1gujgNzZX7rI16TOK05rKKv2q96LEMj9au0z4KQK9CPPER8upnVrZJ7GhVR05Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L+S9IMPr7E2SQHs5gt7QJSGVzE3HdbGB2/BM/vncrl8=;
- b=i72n+Z3FcAjBogGf2ELL588lNqAjbXKgOzIq3ZfNJXwlhtttGfR9jcCt7iRFoYsgAEZd6z1r1db8ZK9LxrowxcRAXfyj9ErdZe3WbNNyzL89f6qPNtRqVdfiM1pGO2U/5/UozQy05CZqK2BetnS2YRYiz2CLkmg4/w7+ArW4o7xNVkrOz4HReADBS/pT7Iw+qeGRuBZKsyZsAZP5cJPss0zzlmKvH/mkYbzvAlsp77QTp45IcGehOmPYNhucrMQyoRbUGRQ4g2+xz6UgYzEXk9kYP5OvMzLFV1D62GWdmNA7dAtwFWVb+ULO9MndCZ/EMqy3l24rem2Wmk4p+B4dJg==
+ bh=7Kg82F7YuBWWH5s2f182ITetGjYNikELvPCgChldAIE=;
+ b=lkKThrrLy5+IW+sxTX/+ctfsMUX/6sUTx7kb3DtJpHJ3uy/IpTgLo11lQPVckiQjd0MYT7/yD48ZOMcacHwMrnGwLUXtQCe9OUSQ04jixGprylSEVNkyIywWa90k2TlaCkk4Xo/bTX5/AMblLct6Ah2tG5L+E1oi6nCsSX6P+PfGIHsUmq+Pasl4WUkgAPF0y95IcqYUplUU2FPPNFilQ03Hz3qECxWtF+cI9L4DxW9iYCnZV7agl73RGLL/96IdlRsZL8yxtiOmTh7cr+ptXDMAtaIzAnXGew7iNPWYJl9QW2mGbhgnCDFUoUcSCAfedc/kFIBgHVpx2gDXaCpNRQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L+S9IMPr7E2SQHs5gt7QJSGVzE3HdbGB2/BM/vncrl8=;
- b=MiwSDWFdBTpf9T/W8PdBXZFIWqbGpa0OS8Xt6ed1zrTh4rxSZBYttZin+6GPJVxa4LqfHAmUxz5OJuzcWZPIKu5J7uZqNkHgqfwuFBO3Iz+KBfCeva5S7PCGPYKR38VxUNNMhxlyJs0zdBFlZWbSEjFb70tZOWwaHPb0eCMlxxMhZrzw4mGLAwNzDgXfqCrww9V4LhowwE78Y0ywFTZr5+RxXJ94eTR912B/12pH8yFLhiMAt+B4CtdopsGDi39HBXUCBhPGxDG3hiZQqsmxO3qSvw0EvRTxRjvooqIf2aXBKSeQENE8z2Mli0hWYlsWjcBumomrqAD18J/EFfN+xQ==
+ bh=7Kg82F7YuBWWH5s2f182ITetGjYNikELvPCgChldAIE=;
+ b=qu1N/xqVGbcjHyZc1gTGZyrJJOFMpYcXyYnk2kk/lt7gQQZOzAU11eUa5OoCNGoYmpVpjjgBJumUKz/skI/ABAhlyxcqTuuaxH+sMu4calPCFJWLqXAKReVjBAs16VghXGC689d2igunUOgYtywP561NmraJt+ieUtzLkAPGLA8kzWZaJxvpTSCw7gCz7qB3JeL3Ia25v0hHpTd7SyJkKQJ05GYNCsInMqh6T3FaTEmf+RTYQ1U4a13k9rhYs5PFIteowN2i01Ccpn8CZzhPJWTd3sy0W2/eFZuBRnl/mekQlethHbC1jspqmdWmbzb97spUpaEItY6iPTO9RxNeBA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
  by IA1PR12MB6356.namprd12.prod.outlook.com (2603:10b6:208:3e0::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.26; Wed, 9 Jul
- 2025 14:52:29 +0000
+ 2025 14:52:30 +0000
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8901.024; Wed, 9 Jul 2025
- 14:52:29 +0000
+ 14:52:30 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Bjorn Helgaas <bhelgaas@google.com>,
 	iommu@lists.linux.dev,
@@ -59,15 +59,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
 	patches@lists.linux.dev,
 	tdave@nvidia.com,
 	Tony Zhu <tony.zhu@intel.com>
-Subject: [PATCH v2 07/16] PCI: Use pci_quirk_mf_endpoint_acs() for pci_quirk_amd_sb_acs()
-Date: Wed,  9 Jul 2025 11:52:10 -0300
-Message-ID: <7-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+Subject: [PATCH v2 11/16] iommu: Compute iommu_groups properly for PCIe MFDs
+Date: Wed,  9 Jul 2025 11:52:14 -0300
+Message-ID: <11-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
 In-Reply-To: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SA9PR13CA0161.namprd13.prod.outlook.com
- (2603:10b6:806:28::16) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: SA9PR13CA0118.namprd13.prod.outlook.com
+ (2603:10b6:806:24::33) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -77,111 +77,339 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|IA1PR12MB6356:EE_
-X-MS-Office365-Filtering-Correlation-Id: 811ded62-7f45-4d09-2b3a-08ddbef83946
+X-MS-Office365-Filtering-Correlation-Id: e0fec9c7-35ab-4035-40a7-08ddbef83935
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?d0Qhev5u1QsZaihXEpdrZBWmZm+J2Rbd9a3YXG/FSRop+v82Gc5sUvJefSPx?=
- =?us-ascii?Q?qssxw195AvYzIyNNGlzORxCFM2oxqzSXXFFp+aYUxOGK7I6xZ862BBRGc5pq?=
- =?us-ascii?Q?Y4OhuwbYwzqPhsHZJUzewXiOMpb8C15n0RIPQOhf2Mrxe/d2LRDhnhv+ossB?=
- =?us-ascii?Q?BWx/7V850dTZvisHKjRWuzaiQVcbaZvjrJMoZTzqcQldZ4JFQHSCT6ClFl0e?=
- =?us-ascii?Q?bKH2aOM9Un5nJLsvs7wg8RihyOIGAlZIBmUKwGBOY3UfmMUCJr8hZhya2a5Z?=
- =?us-ascii?Q?vz/2WEE0yTmonzZXOyBnoVCqXLnYdCAfFlJg+iWbm4mJzvxJAyfeMfoeTbK4?=
- =?us-ascii?Q?6zqmp+QqsydlEKCG+3mHJ3JaJdqdFJ5CxxneeAK9w6W8nAjVzlLYk540NZp1?=
- =?us-ascii?Q?tXQplk1K7qwQhstKToL/3q7pfbEAuZ+LFfOG5f/Qn8HBtN9t143QIHk7xv4G?=
- =?us-ascii?Q?i/K7l821c4detjvXGQtN7d9i67UQawbvcdTGYhBvKONlwUmWC1pGdB1kBhgD?=
- =?us-ascii?Q?WdMEAvCIUmAikxhCmxSRdsD1/KCWZrN813q+BQsyr6IKKP4Z/UtXtsvjZHNz?=
- =?us-ascii?Q?jTwlGGdc4tSaHB1c6aAWP5Ak2SIl9Q2S4afMcis29Cww1TyLcXJnw733KM0N?=
- =?us-ascii?Q?aNgGsRjQ9IzZDd2svO+f9wbaALhFicmqhPzyx6xcjQTrG8Ab1QQv669IO+68?=
- =?us-ascii?Q?6Fc3scslh+N/Y86y23NhAdvO5yVTAIzmjMcPeWHkNXjUXXTKrtGoBeBnthu6?=
- =?us-ascii?Q?OAx09ZsPBvCVgaXhAv67Df+afRrwFvg2n5vgH53KxL39EXvrnukdhTtasrMc?=
- =?us-ascii?Q?7iADZa1m2TH4q+taPIOun+mtw1bzBRUKi2yNDOV/e8YhH1Yy9ligkXr3c2Ne?=
- =?us-ascii?Q?PgqNUHOb9OE0ZP2Qy0WpaZIBSNnX6Q4Hi63epLsFCJEFwHzPN1K1e8xGVukz?=
- =?us-ascii?Q?XNKtcUdYauYfO4Pl5dtMP8QfdcCzNEBZBDMA+xBuCaBznpc8iON1ZmtrJ5l+?=
- =?us-ascii?Q?HEOM/k55hErm434lS5DcxptNbGGGUxk+7lquUM/RvuEHOp49fGlrymptRx9j?=
- =?us-ascii?Q?3YmVkYxcpqR7hKJU08cmY1Wcg+3rw8+aUQKEL/xyR4DE6x/s+mnO3m2wq4tl?=
- =?us-ascii?Q?vRMIgQTb7Op4s5SLWYd/Agsyyj4YrFetM55yrDFNRLl7PooPmsWuMQPngFaO?=
- =?us-ascii?Q?CmcJYATEVXquJwFRSY9Ic8w8A/uLkxawEIHvIPw8yoWi43RwyJZ4vhN+O8qK?=
- =?us-ascii?Q?IZ3pfAS1dGebLr7ksiEd9FUKapkRhUZjIL6U0UF3awI9IhooY8uW4gAARrAI?=
- =?us-ascii?Q?6DehP7PEBteGwpx3Y34AyuvlUKfQ2FaqfN4SwrslajuDWtm/3sdveWvFbm1t?=
- =?us-ascii?Q?T7HgHZOtLFMaVPDGtYdDKgMQ7FK0t+Wqr2Rj/tbfO2RLMh7Rkw=3D=3D?=
+	=?us-ascii?Q?VFjNZsrVik4NAV+OT19euwjdw3vRh+uosDEimbCLQjwvkuTKZ19sMESEqo88?=
+ =?us-ascii?Q?tqE8uuFSlvGLJofBpBeXE8KPoe5i1Hof6132auKb4Y+U/6sTJQ5NX+jgyQ5y?=
+ =?us-ascii?Q?+8RZtFS+P6YxAe9kZfjg2H2JUoHeuGWGLQYhEgSMJV/X9sjbPSi6G0utTKtD?=
+ =?us-ascii?Q?os1uYYvk0L55zQUyan5GrNEqleeFNW3gskXa7wiUH9GJVUDVVnV41+7EC7RU?=
+ =?us-ascii?Q?XwF/HPKfNDepe4v3J4c8g9ti49UZbvkPzTV+dScmIN2C4i5+BWACPrOCxXtZ?=
+ =?us-ascii?Q?FrStQZUmDdsPqywODPqEbq7EWNWbGaxBqweg6Dqa9qVyZ8ZdulP8zxtSBU+b?=
+ =?us-ascii?Q?rn5nylt+L4JAjdh/s3oCyDiHUFtI4StPplYc38p3lXs67GEM39h/GAZ+RvuN?=
+ =?us-ascii?Q?oCahRILBi0sUrx8bjDzSiLhQscNeIFuBZSmmQQZn5cpBPBatS1y4PKpHUm38?=
+ =?us-ascii?Q?RYrDL464FmMBrLd0hZ6bGKIuLvDUgbffPcqpv/V/4eewIcUhuj8KTNWYuZug?=
+ =?us-ascii?Q?pDRFlDs/78JzSHDR/jCdcqkNCfJzLeXr5M/AcRd1XkqI8iHJrFlhlsGDME5M?=
+ =?us-ascii?Q?sPcjtxVSk8jLUnPqyePnLCjTdDg8bIX/Eoibcg9C/BpHdMpa6RbmBeHQdSOF?=
+ =?us-ascii?Q?FDR93/aJCIV5YaPGUnwqP8c5+Rsf7Kd7eY/aadg45SOMZiLGVyMSKpO8iClq?=
+ =?us-ascii?Q?pLO0A9fBTtdSJVcbbW0IQ/RHA0APE8pcel9dz1+6PG56DpGEXyP7LxfyvZcd?=
+ =?us-ascii?Q?0N/XiIm/+X/VOuRd9qaut0qWFjP1Z2DT4INPOp98DjE2ETMdjiU9VN2KCqSw?=
+ =?us-ascii?Q?swyBpbRENsGLeeZ1hHiu6PfEnUf4b4fzDHCrJnjbdESxOeAXGcTPLhx76fEj?=
+ =?us-ascii?Q?mJ3YDyCoyQrqbal5JOJoeZlPuZ9hsZy6+f3mz3HYtC0bK3F0e0jTGsudf07l?=
+ =?us-ascii?Q?tEmLbLpdMFyzLqqfw7NIfcDkvnatS7F74WDVpIabknkXhgodPr9J8CUlmVRQ?=
+ =?us-ascii?Q?wqM/Jq+7Klr4nu4cXO8IU3bxlioTVCKA0ZZ1tL8MQ9pGvOhM1dAXd7uJq4bV?=
+ =?us-ascii?Q?dC6qyTGEwYXANryP163noNyJkCFKuUFuVSOMe8mnSRPCWQeLJGoHyJ3TKAxM?=
+ =?us-ascii?Q?MpOYYjCdazmBenYmbwqR7OhfNP19RH/gyVmNtfXq6dlMdG9fZZuAPTDgTl7o?=
+ =?us-ascii?Q?HPi476irNHWawU4zlEvx1IYFWwQI7XAqYRvrbwiN8FrdGrT8KN/uKwVfx/el?=
+ =?us-ascii?Q?1QKfT4kqro2dOwFFRjNUJ5nIG9J/+v1M8poLQ3DNKM/spv2IXXTicoEblcQK?=
+ =?us-ascii?Q?/dz6pbcB1c8S8CT53OTO/vWS9Ga0ooVmBAz8NNz24jd7/cOOkBEJkDuqrIzp?=
+ =?us-ascii?Q?cCs1uf80aRXiGR1k34nSqqqnhHuh1UDFxCDxfhybdI3TeJ/u8gnEr7M3zBPF?=
+ =?us-ascii?Q?kjTh5uagf3M=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?CCrFSIfhgRuHa7HaKyJy2K7L/TZNInbDixMXDkqflrmWpT6c9RVVwCPmuZag?=
- =?us-ascii?Q?AJSsoKHuDrADxrYjYLmVWeuBy5qBBhYdqailE+cLBe2TQIM2w+0CwvrYjmoT?=
- =?us-ascii?Q?OfU+H4umMmjolUsVksE6FCsE5L17NhF0auytsNnTl9l71VPudgDfO6rFsLDR?=
- =?us-ascii?Q?TOfA0iQ7pHX4qQiCfTYszVE4xl7X+uzN2k8+JS7IWYsEmnI365jj/LXKvcrS?=
- =?us-ascii?Q?wuX/ZDx//LVv4MWDEL4XNpbuXJiCFJimmH9pCTb6NfuW9H08IKSGYQLDzpA3?=
- =?us-ascii?Q?HJJmTSFUFnZJDN5AOFFWZFqNahRHslIH/9CQxBNAfGEhoarn7dav1s5XrAVQ?=
- =?us-ascii?Q?UREH/RqX6aZyFH7h4Se4BLO1NxA2ayrt1IjRC1hUCzuYzdCkYONVEcvrcwbP?=
- =?us-ascii?Q?A6D0MJYcgtJUfQvwN7Wq8OBamgl8nkTzAu6HT8OP9rAQdxJhZIG/JTiv+9Yh?=
- =?us-ascii?Q?0u7D38jdj8YH2PNB5yyRjiPPpOfrdTb0l/P2yoCSqDZzzB1tYdPpWCaHt+A2?=
- =?us-ascii?Q?erFKF9SS5SXown1FJvPI0ZCsKm7cm7i3lFJCHsBTZbzFucinInL1jmP52qjm?=
- =?us-ascii?Q?8V2WRRwo/sDtsNMBSxnPqdfTeAQGc4J1z5DqeXVoADbbowXE+388cMqCSEld?=
- =?us-ascii?Q?kWlEBy4C9LmnykgJklm5G0ALgQuDm+H3a0IiyqWIZanPhw0bMzkUnwlpBacR?=
- =?us-ascii?Q?QkqGkNOH+8UJsIl3ma5XyfepJgzuaHGW7+uNR941PZuzpzuuuMJrmfw4Gpc/?=
- =?us-ascii?Q?t8wL/IOFZpAuTIQmg18YxF7w/H8LBMhdP4edpAuQ6eGA2oNOjrWnpZfIYtYx?=
- =?us-ascii?Q?6kDAzWUGwhsc8PZ+cMbSp4JnuOwCvoP3m0G+GwJy+XK5xTfSr/91to7Y4XGH?=
- =?us-ascii?Q?oWOs70ny0wiPA+Lv0ssuvf1vxKwmbVuujorqj+2nkeY00EzXSEjzWFiOWP03?=
- =?us-ascii?Q?UywkOITl2E5o+kRSar5Yq6UPdqAvRh7PnRScdAMpzX1p0z9L0vC+4HBGGHv6?=
- =?us-ascii?Q?uceNIsDIsqvFGl7dF/6bzbcWKtytzUw9BJmTP6Bwyl0A96JIizgSjtTc5Mao?=
- =?us-ascii?Q?GisXxqddKWtzcw4WQ2/dyDeYfOSOc0/DenCcz00OOBSG+SDsXJyJujhQ8KUw?=
- =?us-ascii?Q?wLXuP5Ye2tABwGbFR4MO2kuUNrfGOBbv0L0x4Byn7kjUiPAG0ITnEjB+p0KG?=
- =?us-ascii?Q?XK8KUASviCBXYOEWZDNI6j+XCt6nxOuaahwUzPhPha68crqwZO1nLuQmG8FD?=
- =?us-ascii?Q?ETFKwa2qoWtQExXtxbldlvOlmhi6pHmIto9AB1s/9j+qSCFlvRGhs9QwEPYj?=
- =?us-ascii?Q?EQKd0oe79CbayGeFcY0f/bG4xrIVZ3lY2q178xj9SKOJsOrIWo4T32GNbbcI?=
- =?us-ascii?Q?Ag65KocuTqDw9hSn7oKuGf/6jT2b9qcPOdci7DKhC82IeuYCtZqVoxM7H/q+?=
- =?us-ascii?Q?lbY1t7BhpVGD1M+1miDRTKKzrxTZn/I4nM/6C+LqS6C1BNtPr+fODxb2ZWKH?=
- =?us-ascii?Q?dPZw7RThrnMJOLsMnkCbV7YNxcOMxrVhCPOtbDVcM0JlA8BavEHpmUvH9SPO?=
- =?us-ascii?Q?dxQYh3U16yQD+FQwDarRGkcZuA72icqjbpDAD5r/?=
+	=?us-ascii?Q?ae5Lf1HEqz161OJ8vataamTl6DjmTcGwrTdR4i3xcow5gRCSAHHm3WYXKAXe?=
+ =?us-ascii?Q?Nilj41HRxiHv2/BwMnJo0yEHHZXwR8l+C1LweQoQaEVT+AotX5IJTOIDwUO0?=
+ =?us-ascii?Q?wngLe+/6N0haXfMuN2qe1eUi2mIRr3KFSMymR+4cx5eqbVWwfOvs/0O4grMw?=
+ =?us-ascii?Q?Mj0qIfZzwIQzhKVj8I/u/0IfKUKwPMPuBH/8DX4PMQSknAGJ5GRsSEv7Q2FO?=
+ =?us-ascii?Q?PGPf+gQsE2sVVyIsiNPtE+a5WWP849Ayw5Q2EknTiTLAMVj8TARFHNiCstig?=
+ =?us-ascii?Q?L8fEIUP1cAKVGwOQS+xm9HAJCywyTpJVNjV+QYXs2K+c6qpPTZ+piGnCUJ2k?=
+ =?us-ascii?Q?FNE1gtfr/3pVJuy9PfVWFW+f7fBTKN60FCXLpatLZ1loLRfZhn2q4dRWLqnw?=
+ =?us-ascii?Q?jf20OhvS+I1zgDGUCoP2A7lBvoob/zyY8oEyrlsml68s4cCjO2q3MdWSysa3?=
+ =?us-ascii?Q?+zf/Z4aV+O2bWWNuaxUKT59hD/Zz5SjTaEiTb12ST3r9JoK0tPxnUTAy1kQS?=
+ =?us-ascii?Q?RP52x4m4yCue4Mjxy37LOIpcYlZa7BYZRbhb37w0PHE4u7r8ZHs3LOqi3LCU?=
+ =?us-ascii?Q?cJLyIOXrKGMVamjsD70HD/WFo0n0LharhH4FRv02RRdvsPIsKqoHm8mIepW1?=
+ =?us-ascii?Q?VoXQFnEjIV+DS4oWoUOdxMjsKOGuTvILNtiinkVFAyx04sX0HEkf4AZAuXWz?=
+ =?us-ascii?Q?MXO3vrJaKrOGl6V95e/JpPzxlIczPbwn4PuJNYAKK+ar9jimvonHxDrxHget?=
+ =?us-ascii?Q?2FfdHsfRpS7dRtxPVyntHNLa7aXm6phbQOsE7LCsCOh85X3CBDvgnL/rYQHs?=
+ =?us-ascii?Q?OtO5F6r0d1SoW99y0laKpHf1B7gz2NQ4n3QL+Y0EPFvyWefI2rcFCkKiF+oo?=
+ =?us-ascii?Q?ZKBPO7FxMpSGaMDiI+wkCgtGx4MBnnnN83noHFJ4agRYwdUaamamclYjS7bY?=
+ =?us-ascii?Q?vihe6Mdzi1cASeqM6zSSc4awr9YtnPU1UNWY6s6iTb8bwUPBs+9Aw/GQkxyS?=
+ =?us-ascii?Q?Q5JII2C46tuegHZGjiVBplKO+9pGhdbZIbGM+e4jttjg5LqnvWjujEqias/f?=
+ =?us-ascii?Q?a1Ses+rtHsBh5S35r44kFPnHEW0tFwqUGkrNDYM9Pn72P6uSElZxGRQX+1vE?=
+ =?us-ascii?Q?a5lF7CO6XcbWVYMdnmC5AcfTdyM3EgSn+6kpBWCRza5kBXZnnUH7XT3SOdDG?=
+ =?us-ascii?Q?6m5SMkS3lxBqrtjjDpG1PYmyznvniJXUN8fDPohL9PDfFP8aFLtdInWQSPsZ?=
+ =?us-ascii?Q?8uF1q3mBqB22qzW8WyNljXXWZZGfAkcWlRicbp1vvvusGEXDwkr09pEHhnz3?=
+ =?us-ascii?Q?AcCFh1krqTxq9QEmBWdm3f7DiA40q7lRCl/pDJ5rm6dtEUdzQjcS8dRX2mTC?=
+ =?us-ascii?Q?s8fsG2d5rJXdZwCw9pyz/R3kBS2MrmEq0G7S/pCyAY8newZ0z5bXFI8mY02V?=
+ =?us-ascii?Q?RPAlivQoF8CgVlwu05BTC+pKQURsCmLpBKn8LG+HJAd646s+sUax4mqK0SSI?=
+ =?us-ascii?Q?X3Kuo8XW/sAZRTY/w3rODzGZ2Jfct73R3vYYh7SAHYJwvHbYK5ayTjpO1GMl?=
+ =?us-ascii?Q?eMUEDak4T/d7Ezj1AVGZNT3ZV3TP2Ls20txl0Ygd?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 811ded62-7f45-4d09-2b3a-08ddbef83946
+X-MS-Exchange-CrossTenant-Network-Message-Id: e0fec9c7-35ab-4035-40a7-08ddbef83935
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2025 14:52:28.0624
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2025 14:52:28.0997
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5rBScJ9vI3vsqDJCay59mC6sSYGAigDRshPeb66uBFiMJKeihRaDp4i4WEJ+AYPm
+X-MS-Exchange-CrossTenant-UserPrincipalName: bDowoTeMiPvm6pNm8TCiKuwMi+fyC6mlmRxJZSYReKNeLN55dAC3yuLCkvQH2yuF
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6356
 
-AMD is simply trying to say that it's MFD doesn't do P2P, use the
-existing common helper for this.
+The current algorithm does not work if the ACS is not uniform across the
+entire MFD. This seems to mostly happen in the real world because of
+Linux's quirk systems that sometimes quirks only one function in a MFD,
+creating an asymmetric situation.
 
+For discussion let's consider a simple MFD topology like the below:
+
+                      -- MFD 00:1f.0 ACS != REQ_ACS_FLAGS
+      Root 00:00.00 --|- MFD 00:1f.2 ACS != REQ_ACS_FLAGS
+                      |- MFD 00:1f.6 ACS = REQ_ACS_FLAGS
+
+This asymmetric ACS could be created using the config_acs kernel command
+line parameter, from quirks, or from a poorly thought out device that has
+ACS flags only on some functions.
+
+Since ACS is an egress property the asymmetric flags allow for 00:1f.0 to
+do memory acesses into 00:1f.6's BARs, but 00:1f.6 cannot reach any other
+function. Thus we expect an iommu_group to contain all three
+devices. Instead the current algorithm gives a group of [1f.0, 1f.2] and a
+single device group of 1f.6.
+
+The current algorithm sees the good ACS flags on 00:1f.6 and does not
+consider ACS on any other MFD functions.
+
+For path properties the ACS flags say that 00:1f.6 is safe to use with
+PASID and supports SVA as it will not have any portions of its address
+space routed away from the IOMMU, this part of the ACS system is working
+correctly.
+
+This is a problematic fix because this historical mistake has created an
+ecosystem around it. We now have quirks that assume single function is
+enough to quirk and it seems there are PCI root complexes that make the
+same non-compliant assumption.
+
+The new helper pci_mfd_isolation() retains the existing quirks and we
+will probably need to add additional HW quirks for PCI root complexes that
+have not followed the spec but have been silently working today.
+
+Use pci_reachable_set() in pci_device_group() to make the resulting
+algorithm faster and easier to understand.
+
+Add pci_mfds_are_same_group() which specifically looks pair-wise at all
+functions in the MFDs. Any function without ACS isolation will become
+reachable to all other functions.
+
+pci_reachable_set() does the calculations for figuring out the set of
+devices under the pci_bus_sem, which is better than repeatedly searching
+across all PCI devices.
+
+Once the set of devices is determined and the set has more than one device
+use pci_get_slot() to search for any existing groups in the reachable set.
+
+Fixes: 104a1c13ac66 ("iommu/core: Create central IOMMU group lookup/creation interface")
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/pci/quirks.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/iommu/iommu.c | 173 +++++++++++++++++-------------------------
+ 1 file changed, 71 insertions(+), 102 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 8a9ab76dd81494..963074286cc2a9 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -4640,6 +4640,8 @@ static int pci_acs_ctrl_isolated(u16 acs_flags)
- 		PCI_ACS_SV | PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_UF);
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 7b407065488296..cd26b43916e8be 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1413,85 +1413,6 @@ int iommu_group_id(struct iommu_group *group)
+ }
+ EXPORT_SYMBOL_GPL(iommu_group_id);
+ 
+-static struct iommu_group *get_pci_alias_group(struct pci_dev *pdev,
+-					       unsigned long *devfns);
+-
+-/*
+- * For multifunction devices which are not isolated from each other, find
+- * all the other non-isolated functions and look for existing groups.  For
+- * each function, we also need to look for aliases to or from other devices
+- * that may already have a group.
+- */
+-static struct iommu_group *get_pci_function_alias_group(struct pci_dev *pdev,
+-							unsigned long *devfns)
+-{
+-	struct pci_dev *tmp = NULL;
+-	struct iommu_group *group;
+-
+-	if (!pdev->multifunction || pci_acs_enabled(pdev, PCI_ACS_ISOLATED))
+-		return NULL;
+-
+-	for_each_pci_dev(tmp) {
+-		if (tmp == pdev || tmp->bus != pdev->bus ||
+-		    PCI_SLOT(tmp->devfn) != PCI_SLOT(pdev->devfn) ||
+-		    pci_acs_enabled(tmp, PCI_ACS_ISOLATED))
+-			continue;
+-
+-		group = get_pci_alias_group(tmp, devfns);
+-		if (group) {
+-			pci_dev_put(tmp);
+-			return group;
+-		}
+-	}
+-
+-	return NULL;
+-}
+-
+-/*
+- * Look for aliases to or from the given device for existing groups. DMA
+- * aliases are only supported on the same bus, therefore the search
+- * space is quite small (especially since we're really only looking at pcie
+- * device, and therefore only expect multiple slots on the root complex or
+- * downstream switch ports).  It's conceivable though that a pair of
+- * multifunction devices could have aliases between them that would cause a
+- * loop.  To prevent this, we use a bitmap to track where we've been.
+- */
+-static struct iommu_group *get_pci_alias_group(struct pci_dev *pdev,
+-					       unsigned long *devfns)
+-{
+-	struct pci_dev *tmp = NULL;
+-	struct iommu_group *group;
+-
+-	if (test_and_set_bit(pdev->devfn & 0xff, devfns))
+-		return NULL;
+-
+-	group = iommu_group_get(&pdev->dev);
+-	if (group)
+-		return group;
+-
+-	for_each_pci_dev(tmp) {
+-		if (tmp == pdev || tmp->bus != pdev->bus)
+-			continue;
+-
+-		/* We alias them or they alias us */
+-		if (pci_devs_are_dma_aliases(pdev, tmp)) {
+-			group = get_pci_alias_group(tmp, devfns);
+-			if (group) {
+-				pci_dev_put(tmp);
+-				return group;
+-			}
+-
+-			group = get_pci_function_alias_group(tmp, devfns);
+-			if (group) {
+-				pci_dev_put(tmp);
+-				return group;
+-			}
+-		}
+-	}
+-
+-	return NULL;
+-}
+-
+ /*
+  * Generic device_group call-back function. It just allocates one
+  * iommu-group per device.
+@@ -1534,40 +1455,88 @@ static struct iommu_group *pci_group_alloc_non_isolated(void)
+ 	return group;
  }
  
-+static int pci_quirk_mf_endpoint_acs(struct pci_dev *dev, u16 acs_flags);
++/*
++ * Ignoring quirks, all functions in the MFD need to be isolated from each other
++ * and get their own groups, otherwise the whole MFD will share a group. Any
++ * function that lacks explicit ACS isolation is assumed to be able to P2P
++ * access any other function in the MFD.
++ */
++static bool pci_mfds_are_same_group(struct pci_dev *deva, struct pci_dev *devb)
++{
++	/* Are deva/devb functions in the same MFD? */
++	if (PCI_SLOT(deva->devfn) != PCI_SLOT(devb->devfn))
++		return false;
++	/* Don't understand what is happening, be conservative */
++	if (deva->multifunction != devb->multifunction)
++		return true;
++	if (!deva->multifunction)
++		return false;
 +
- /*
-  * AMD has indicated that the devices below do not support peer-to-peer
-  * in any system where they are found in the southbridge with an AMD
-@@ -4682,10 +4684,7 @@ static int pci_quirk_amd_sb_acs(struct pci_dev *dev, u16 acs_flags)
++	/* Quirks can inhibit single MFD functions from combining into groups */
++	if (pci_mfd_isolated(deva) || pci_mfd_isolated(devb))
++		return false;
++
++	/* Can they reach each other's MMIO through P2P? */
++	return !pci_acs_enabled(deva, PCI_ACS_ISOLATED) ||
++	       !pci_acs_enabled(devb, PCI_ACS_ISOLATED);
++}
++
++static bool pci_devs_are_same_group(struct pci_dev *deva, struct pci_dev *devb)
++{
++	/*
++	 * This is allowed to return cycles: a,b -> b,c -> c,a can be aliases.
++	 */
++	if (pci_devs_are_dma_aliases(deva, devb))
++		return true;
++
++	return pci_mfds_are_same_group(deva, devb);
++}
++
+ static struct iommu_group *pci_get_alias_group(struct pci_dev *pdev)
+ {
+-	struct iommu_group *group;
+-	DECLARE_BITMAP(devfns, 256) = {};
++	struct pci_reachable_set devfns;
++	const unsigned int NR_DEVFNS = sizeof(devfns.devfns) * BITS_PER_BYTE;
++	unsigned int devfn;
  
- 	acpi_put_table(header);
+ 	/*
+-	 * Look for existing groups on device aliases.  If we alias another
+-	 * device or another device aliases us, use the same group.
++	 * Look for existing groups on device aliases and multi-function ACS. If
++	 * we alias another device or another device aliases us, use the same
++	 * group.
++	 *
++	 * pci_reachable_set() should return the same bitmap if called for any
++	 * device in the set and we want all devices in the set to have the same
++	 * group.
+ 	 */
+-	group = get_pci_alias_group(pdev, devfns);
+-	if (group)
+-		return group;
++	pci_reachable_set(pdev, &devfns, pci_devs_are_same_group);
++	/* start is known to have iommu_group_get() == NULL */
++	__clear_bit(pdev->devfn, devfns.devfns);
  
--	/* Filter out flags not applicable to multifunction */
--	acs_flags &= (PCI_ACS_RR | PCI_ACS_CR | PCI_ACS_EC | PCI_ACS_DT);
+ 	/*
+-	 * Look for existing groups on non-isolated functions on the same
+-	 * slot and aliases of those funcions, if any.  No need to clear
+-	 * the search bitmap, the tested devfns are still valid.
+-	 */
+-	group = get_pci_function_alias_group(pdev, devfns);
+-	if (group)
+-		return group;
 -
--	return pci_acs_ctrl_enabled(acs_flags, PCI_ACS_RR | PCI_ACS_CR);
-+	return pci_quirk_mf_endpoint_acs(dev, acs_flags);
- #else
- 	return -ENODEV;
- #endif
+-	/*
+-	 * When MFD's are included in the set due to ACS we assume that if ACS
+-	 * permits an internal loopback between functions it also permits the
+-	 * loopback to go downstream if a function is a bridge.
++	 * When MFD functions are included in the set due to ACS we assume that
++	 * if ACS permits an internal loopback between functions it also permits
++	 * the loopback to go downstream if any function is a bridge.
+ 	 *
+ 	 * It is less clear what aliases mean when applied to a bridge. For now
+ 	 * be conservative and also propagate the group downstream.
+ 	 */
+-	__clear_bit(pdev->devfn & 0xFF, devfns);
+-	if (!bitmap_empty(devfns, sizeof(devfns) * BITS_PER_BYTE))
+-		return pci_group_alloc_non_isolated();
+-	return NULL;
++	if (bitmap_empty(devfns.devfns, NR_DEVFNS))
++		return NULL;
++
++	for_each_set_bit(devfn, devfns.devfns, NR_DEVFNS) {
++		struct iommu_group *group;
++		struct pci_dev *pdev_slot;
++
++		pdev_slot = pci_get_slot(pdev->bus, devfn);
++		group = iommu_group_get(&pdev_slot->dev);
++		pci_dev_put(pdev_slot);
++		if (group) {
++			if (WARN_ON(!(group->bus_data &
++				      BUS_DATA_PCI_NON_ISOLATED)))
++				group->bus_data |= BUS_DATA_PCI_NON_ISOLATED;
++			return group;
++		}
++	}
++	return pci_group_alloc_non_isolated();
+ }
+ 
+ static struct iommu_group *pci_hierarchy_group(struct pci_dev *pdev)
 -- 
 2.43.0
 
