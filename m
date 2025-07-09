@@ -1,109 +1,137 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E381F584C
-	for <patches@lists.linux.dev>; Wed,  9 Jul 2025 05:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4EB1EEA40;
+	Wed,  9 Jul 2025 05:39:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752039566; cv=none; b=ATOoQ3tyCl5CLlgiH5/qYJc2Vam2Tu08NLwKE0e2QxZmF6ROyleQjNEFQvgXxmy26rlMfIZfph45xnxUh2djQilsdWPLzs6rs4TMpA2iwJ4PPuMVSgksJ3e8S1VYEmBPqgycgDMcmzFzt55lfxV7ybkAgeSF08VfqeQRbI8kMus=
+	t=1752039594; cv=none; b=E0AfiZ6Xpc96IjOKudztMcWrZ1TNH7KdgIU0+c0Bn42y/A6rar7mBPuo/NDWQ1sRaSRxkW/tQ4s9ES+C9PiL1+67etPkENX4Dz9s2M9gzjmdCIgcAfmkc9cNe5E8KJfEt4vRUEfFrrwPnTnS3xv3j7opaLfSc9XEjg+8KQHQP1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752039566; c=relaxed/simple;
-	bh=n0gmbWaoMc4QHu4q+1Uxx0ElnsLuexOtG+pOjym/Ehk=;
+	s=arc-20240116; t=1752039594; c=relaxed/simple;
+	bh=7zwyVyoHgAp6lLK9cesg4Iul0W95lo/nbGluCqo3G9s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gGElbjPzfhbphsfU3rt62WeLQY6lfc53rM36x50ytbI7o/VsZQzHu5GdeWt6DzYF2CwzNEHPjNFnSBTefD0Y/xSRDdIbxsPF1zT8GjnVEBMmsdSqvW4Eoh6PUBGOMbnY4X+V9hGDoJolrxIog5g+32ICByPkCHFDwtmGP03uYuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=Iod5xTBH; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
+	 Content-Type:Content-Disposition:In-Reply-To; b=g0oxxR7s0QIJA/1T73zxG6xf85hKa8PLJesG2scimdz2ehq8QeidqaK2F0NB01okOOHDJxmRiBNT0dsYEFPV8MOdwg1Rss6Pd0Men/4//sqwr/pVsTTwhrciarzN4gUXeCUfVelTHLGs75E1akViG25FOiQGHdTSyX4fHinSAo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JOoSWdp7; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="Iod5xTBH"
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id DE9F61C00B2; Wed,  9 Jul 2025 07:39:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-	t=1752039562;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=AgGo0D6w/UsINXs2Wle7uc8mU/aFWH/QOKQE3QW+Hgk=;
-	b=Iod5xTBHZgdsUmi51ar9v5dLDyhumMRHF8uBR4dIFbZ+ES0dYu7ki4ZhoaDGPmY90IP/DA
-	CkV1368WIXJKNOOIzFy0W16xRNktUAbJ2ZruolHwgA7Fy4N4W54g35tmUf3VIcYjnsrHVD
-	R5W7pldd1tuedKl6w6PruHRYq4chheE=
-Date: Wed, 9 Jul 2025 07:39:22 +0200
-From: Pavel Machek <pavel@ucw.cz>
-To: Sasha Levin <sashal@kernel.org>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>, patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Nat Wittstock <nat@fardog.io>, Lucian Langa <lucilanga@7pot.org>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	rafael@kernel.org, len.brown@intel.com, linux-pm@vger.kernel.org,
-	kexec@lists.infradead.org
-Subject: Re: [PATCH AUTOSEL 6.15 6/8] PM: Restrict swap use to later in the
- suspend sequence
-Message-ID: <aG4AilDpnqrqHXaS@duo.ucw.cz>
-References: <20250708000215.793090-1-sashal@kernel.org>
- <20250708000215.793090-6-sashal@kernel.org>
- <87ms9esclp.fsf@email.froward.int.ebiederm.org>
- <aG2AcbhWmFwaHT6C@lappy>
- <87tt3mqrtg.fsf@email.froward.int.ebiederm.org>
- <aG2bAMGrDDSvOhbl@lappy>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JOoSWdp7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752039594; x=1783575594;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7zwyVyoHgAp6lLK9cesg4Iul0W95lo/nbGluCqo3G9s=;
+  b=JOoSWdp7HVGji8y0HLuvzMhI+JMhf+Hop9tkt3KG3ueFktHYJzKqJg4B
+   PCKWf+aSDuWi0sT4F5CfKqcfeGyV76w4I0qrEVLJKsIXI3JbXfGy5A2I8
+   wHdoDCWuyQYDFSdX15YIRxBRFLbZ6lRkKkOGMFdNQ5L54iCVZPpNTr1Vh
+   wn/h58SnuXXmRn1KIvcyNzENqyn/pfFjJ7kbMuvd2apt7aJl5BFAsByfe
+   meHeGL+HOhyzaWuKd4StXQheJkkrJJ8En3wMy/3HnTOFzJQCxstngBevG
+   Hl3QiOEjaKQkViUrOJtq5rPT9lbTDH6P4Oa3uHq2pTNKQq4vAvmv/nK4i
+   A==;
+X-CSE-ConnectionGUID: 3yBS+toiSCGykQO9v5+t8Q==
+X-CSE-MsgGUID: wjoClcjvR3ibDhn2viUfGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11487"; a="54263531"
+X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
+   d="scan'208";a="54263531"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2025 22:39:53 -0700
+X-CSE-ConnectionGUID: 1z9kBPWUQaO4T6V0PNAAtA==
+X-CSE-MsgGUID: cEmge3AYT7uhOk7zwVLTTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,298,1744095600"; 
+   d="scan'208";a="155303315"
+Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost) ([10.239.159.165])
+  by fmviesa007.fm.intel.com with ESMTP; 08 Jul 2025 22:39:47 -0700
+Date: Wed, 9 Jul 2025 13:31:31 +0800
+From: Xu Yilun <yilun.xu@linux.intel.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, will@kernel.org,
+	robin.murphy@arm.com, joro@8bytes.org, praan@google.com,
+	yi.l.liu@intel.com, peterz@infradead.org, jsnitsel@redhat.com,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	baolu.lu@linux.intel.com
+Subject: Re: [PATCH v2 13/14] iommufd: Introduce iommufd_object_alloc_ucmd
+ helper
+Message-ID: <aG3+s8rzcjeKazG8@yilunxu-OptiPlex-7050>
+References: <cover.1749882255.git.nicolinc@nvidia.com>
+ <e7206d4227844887cc8dbf0cc7b0242580fafd9d.1749882255.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WlasF0qNpP9A3mRg"
-Content-Disposition: inline
-In-Reply-To: <aG2bAMGrDDSvOhbl@lappy>
-
-
---WlasF0qNpP9A3mRg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <e7206d4227844887cc8dbf0cc7b0242580fafd9d.1749882255.git.nicolinc@nvidia.com>
 
+> @@ -61,6 +61,24 @@ struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
+>  	return ERR_PTR(rc);
+>  }
+>  
+> +struct iommufd_object *_iommufd_object_alloc_ucmd(struct iommufd_ucmd *ucmd,
+> +						  size_t size,
+> +						  enum iommufd_object_type type)
+> +{
+> +	struct iommufd_object *new_obj;
+> +
+> +	/* Something is coded wrong if this is hit */
+> +	if (WARN_ON(ucmd->new_obj))
+> +		return ERR_PTR(-EBUSY);
+> +
+> +	new_obj = _iommufd_object_alloc(ucmd->ictx, size, type);
+> +	if (IS_ERR(new_obj))
+> +		return new_obj;
+> +
+> +	ucmd->new_obj = new_obj;
+> +	return new_obj;
+> +}
+> +
+>  /*
+>   * Allow concurrent access to the object.
+>   *
+> @@ -448,6 +466,13 @@ static long iommufd_fops_ioctl(struct file *filp, unsigned int cmd,
+>  	if (ret)
+>  		return ret;
+>  	ret = op->execute(&ucmd);
+> +
+> +	if (ucmd.new_obj) {
+> +		if (ret)
+> +			iommufd_object_abort_and_destroy(ictx, ucmd.new_obj);
 
-> In this instance I honestly haven't read the LLM explanation. I agree
-> with you that the explanation is flawed, but the patch clearly fixes a
-> problem:
->=20
-> 	"On AMD dGPUs this can lead to failed suspends under memory
-> 	pressure situations as all VRAM must be evicted to system memory
-> 	or swap."
->=20
-> So it was included in the AUTOSEL patchset.
+Sorry I didn't follow this thread before and maybe missed something.
 
-Is "may fix a problem" the only criteria for -stable inclusion? You
-have been acting as if so. Please update the rules, if so.
+According to 70eadc7fc7ef, abort op is for the object that can assume
+the caller is holding the lock. But here is for no locking, so calling
+iommufd_object_abort_and_destroy() is quite confusing.
 
-> > I assume going forward that AUTOSEL will not consider any patches
-> > involving the core kernel and the user/kernel ABI going forward.  The
-> > areas I have been involved with over the years, and for which my review
-> > might be interesting.
->=20
-> The filter is based on authorship and SoBs. Individual maintainers of a
-> subsystem can elect to have their entire subsystem added to the ignore
-> list.
+Is it better we change to:
 
-Then the filter is misdesigned.
+	if (ret) {
+		iommufd_object_ops[obj->type].destroy(obj);
+		iommufd_object_abort(ictx, obj);
+	}
 
-BR,
-								Pavel
+Also explicitely assert iommufd_object_alloc_ucmd() and abort can't be
+used at the same time.
 
+in _iommufd_object_alloc_ucmd():
 
---=20
-I don't work for Nazis and criminals, and neither should you.
-Boycott Putin, Trump, and Musk!
+	if (WARN_ON(iommufd_object_ops[type].abort))
+		return ERR_PTR(-EFAULT);
 
---WlasF0qNpP9A3mRg
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
+Yilun
 
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaG4AigAKCRAw5/Bqldv6
-8gTIAKC/zQyWgLHgvPMd65NHV3TkdPwjRgCeIAbYyb9XFecAJ4qXIm2LIa7gI/o=
-=taVt
------END PGP SIGNATURE-----
-
---WlasF0qNpP9A3mRg--
+> +		else
+> +			iommufd_object_finalize(ictx, ucmd.new_obj);
+> +	}
+>  	return ret;
+>  }
+>  
+> -- 
+> 2.43.0
+> 
+> 
