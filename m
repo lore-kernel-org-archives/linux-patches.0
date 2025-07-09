@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F290189905;
-	Wed,  9 Jul 2025 08:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4CD22DA0B;
+	Wed,  9 Jul 2025 08:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752050161; cv=none; b=D3Zx1BbDo8Bzyle+4o+RWzI9kFhtpnwR64XGeAbif9xnrywZo2vfSploKswlfByVUCJgQVpoIpw6OmLB3s/0SNWmiKeHBn12vk8AXolA6Zq+n58a2iT1Z4GvybWqJrJATutBTaCG3lRWYTIGJcRv9j3Vmm9EK1s63h0BuAByqXM=
+	t=1752050827; cv=none; b=h6CdKg/6J0NAGGP77YJwv4yjQUDgs3xmZDEz6iYOP1oOdLDQOLEZVky+J94g1a1lALrxelI05gd0kBhauKmb23AWYb9vz1EdJV8LNiatt73tywOZaTCvwjl64H4T/qWsKxejLSlXVZqF3jIscXBkenObAKYff0cZN0ZMpkJTrEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752050161; c=relaxed/simple;
-	bh=H/6KWOCh1Otuc6u/FpnmW+1tC+m+cq8bRv2psw4pl3Q=;
+	s=arc-20240116; t=1752050827; c=relaxed/simple;
+	bh=8eDfT1aIq5sj46Nlnip13kyLM/TlVQ5rzf4ZGoIRzAk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WB5tNnWBg6NzU6htIFSG09VM082FcKSaar/WDcIVkC2nDpL/FAwHUTbumztxqbL56Ox29aycWLleOZFYF9dfVSQIi6AVZk1QXC1PAdUwa9m+2oLQdJntw1Y4BT7bqO9htp5n0TaDDkkUkLQSQv1q3w8PxQWmNhfMAXIliVAOBsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYHcikUK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=AODJ6sl//dLadf6KbC1Q7Y8wp19fg1sUZFoXUyRt3fihD0afmo38QAwARwZyLSk5VCvDITMQla1cgU7U6eG8kfXgSRk9QefdyJ9nsBwcmA7eO1okwws2tDqQJmB5L7UJRRwrLEud2V15JXKExUDZAaTYmBE67yVkoBupIj84ECw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIfg4+ic; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYHcikUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3540C4CEEF;
-	Wed,  9 Jul 2025 08:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIfg4+ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE221C4CEEF;
+	Wed,  9 Jul 2025 08:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752050161;
-	bh=H/6KWOCh1Otuc6u/FpnmW+1tC+m+cq8bRv2psw4pl3Q=;
+	s=korg; t=1752050827;
+	bh=8eDfT1aIq5sj46Nlnip13kyLM/TlVQ5rzf4ZGoIRzAk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tYHcikUK9hlnoRMosGzRBlcSwIHywgG/zp6z1BJTwNX+wT/fOKWpH8o1AfZv9KMph
-	 /OAJpYt63NFMbt8B7OYyQEsP6MjWb6/rxp7eNpTmErz0NQ+Cgl+xX+WoL8SItWJxEv
-	 /4amOFG5L1E2uOEEApb33j4+uXnYBavz6vBCBNgI=
-Date: Wed, 9 Jul 2025 10:35:57 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sudeep Holla <sudeep.holla@arm.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 029/232] firmware: arm_ffa: Add support for
- {un,}registration of framework notifications
-Message-ID: <2025070906-marathon-uncorrupt-de38@gregkh>
-References: <20250708162241.426806072@linuxfoundation.org>
- <20250708162242.198209294@linuxfoundation.org>
- <20250708-jumping-strange-lemming-1bfc92@sudeepholla>
+	b=lIfg4+icJ80KDbIzfntTJ2bx86u4pZ6Rs+dyTOaJCZWOAxxdNjZ8aQv9gwZiwPfg4
+	 9wviVUgiLKJ/PAamwx2N3V+AfYLcB/s2yhijtC7rdlTdL+v3CZpWlKZdWyNWmyFx6U
+	 eFdDZSZIKc31tvI1hGedu3/U/MCLBI145wD9oCrw=
+Date: Wed, 9 Jul 2025 10:47:04 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: WangYuli <wangyuli@uniontech.com>
+Cc: chuck.lever@oracle.com, masahiroy@kernel.org, nicolas@fjasle.eu,
+	patches@lists.linux.dev, stable@vger.kernel.org, dcavalca@meta.com,
+	jtornosm@redhat.com, guanwentao@uniontech.com
+Subject: Re: [PATCH 6.6 129/139] scripts: clean up IA-64 code
+Message-ID: <2025070914-hankering-saucy-ec33@gregkh>
+References: <20250703143946.229154383@linuxfoundation.org>
+ <E845ABA28076FEFB+20250708032644.1000734-1-wangyuli@uniontech.com>
+ <2025070857-junkman-tablet-6a45@gregkh>
+ <572685AD12256749+e24050a6-dde6-4447-8b45-69578b352e5f@uniontech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,42 +43,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250708-jumping-strange-lemming-1bfc92@sudeepholla>
+In-Reply-To: <572685AD12256749+e24050a6-dde6-4447-8b45-69578b352e5f@uniontech.com>
 
-On Tue, Jul 08, 2025 at 08:34:00PM +0100, Sudeep Holla wrote:
-> On Tue, Jul 08, 2025 at 06:20:25PM +0200, Greg Kroah-Hartman wrote:
-> > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Sudeep Holla <sudeep.holla@arm.com>
-> > 
-> > [ Upstream commit c10debfe7f028c11f7a501a0f8e937c9be9e5327 ]
-> > 
-> > Framework notifications are doorbells that are rung by the partition
-> > managers to signal common events to an endpoint. These doorbells cannot
-> > be rung by an endpoint directly. A partition manager can signal a
-> > Framework notification in response to an FF-A ABI invocation by an
-> > endpoint.
-> > 
-> > Two additional notify_ops interface is being added for any FF-A device/
-> > driver to register and unregister for such a framework notifications.
-> > 
-> > Tested-by: Viresh Kumar <viresh.kumar@linaro.org>
-> > Message-Id: <20250217-ffa_updates-v3-16-bd1d9de615e7@arm.com>
-> > Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-> > Stable-dep-of: 27e850c88df0 ("firmware: arm_ffa: Move memory allocation outside the mutex locking")
+On Tue, Jul 08, 2025 at 03:45:16PM +0800, WangYuli wrote:
+> Hi greg k-h,
 > 
-> I understand these are being added in order to resolve the dependency
-> from 27e850c88df0, but this patch adds new feature. I would like to
-> drop 027/232, 028/232 and 029/232 from the queue. I already knew this and
-> had backports ready for
+> On 2025/7/8 15:20, Greg KH wrote:
+> > Is ia-64 actually being used in the 6.6.y tree by anyone?  Who still has
+> > that hardware that is keeping that arch alive for older kernels but not
+> > newer ones?
+> > 
+> I'm afraid I don't quite follow your point.
 > 
-> Upstream commit 27e850c88df0e25474a8caeb2903e2e90b62c1dc - 030/232 here
-> Upstream commit 9ca7a421229bbdfbe2e1e628cff5cfa782720a10 - 190/232 here
+> In v6.7-rc1, we introduced the commit to remove the IA-64 architecture code.
 > 
-> I will send then now.
+> This means linux-6.6.y is the last kernel version that natively supports
+> IA-64, and it also happens to be the currently active LTS release.
 
-Great, thanks, I'll drop these all and take your backports instead!
+6.12.y is the "currently active LTS release", along with 6.6.y and older
+ones.  So are all ia64 users sticking with 6.6.y only?
+
+> In any case, I'm quite confused by the current situation because we've
+> essentially broken IA-64 build support in this kernel version.
+
+Sorry, I didn't realize this, it came in for a different patch that
+fixed a different issue as the thread shows.
+
+> If you genuinely believe that no one is using IA-64 devices with
+> linux-6.6.y, then it might be best to directly backport commit cf8e865
+> ("arch: Remove Itanium (IA-64) architecture") to completely remove IA-64.
+> 
+> This would avoid any misunderstanding.
+> 
+> Otherwise, someone in the future will inevitably assume linux-6.6.y still
+> supports IA-64, when in reality, it's no longer functional.
+
+Who assumes this?  Again, who is still using/maintaining this arch for
+6.6.y anymore?
+
+I'm all for reverting this, but would like to see some reports of real
+users first :)
+
+thanks,
 
 greg k-h
