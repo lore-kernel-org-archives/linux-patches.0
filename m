@@ -1,140 +1,88 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3F31DFE1
-	for <patches@lists.linux.dev>; Wed,  9 Jul 2025 17:34:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A362A230264;
+	Wed,  9 Jul 2025 17:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752082490; cv=none; b=uJZCuojbIIy7TJV7RrS1iJj8ARdfKYhGJHstVfxzvjypQdQLnuB3gyozn7KoiMKoOdrRtTieZjR3HiqEXmZdOiPcrw2F2Js8s4RoxfWGydcpo3J5AjHMDrWHjvQdrd/NoV4k/K4+WdaTdbBWWvV28wXhWZ1cmCRNAuaZGE7r9jo=
+	t=1752082665; cv=none; b=KGyqcBiqnJdDHk+u389fib2yvYABjoF3FbW8rH2+WgeWSP+HkTRyxhQrd5b3Mg1limF0TO22XX/s9dCtLu0kFaR8oUTA0LUfvv/Ci7NHBbQdp2vGyG87l5eVMVD+RSSqMVLPhllciYMpdfupqB5K4h80MdCCyyOOGrnoIAtWWfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752082490; c=relaxed/simple;
-	bh=X5qPewITFNQEpAwzhGsLHekYx+r+paofysPe4hNI+10=;
+	s=arc-20240116; t=1752082665; c=relaxed/simple;
+	bh=UrMsQCIJDhTzvXs4RqAiNo8Cvl8Hxt1Ziw4xZzCivP8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RoyRMkBCXg9qvTY2wKQp+pxV5lLu3wVKoeyBciXaY18OFTchdIChlPWAiw8oK8KdFViTm1ZGd3PFJiKCWQY7PZ/SuUbnqisRYdRYMdvHoYXyzC1kodAel3J1vXqjH7TyqmSdpZjh4izB1XWkrcW1nbLtO/fEOzaiciPMhkupLQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=sRGvDhXd; arc=none smtp.client-ip=217.72.192.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+	 Content-Type:Content-Disposition:In-Reply-To; b=FDbryEw3HqZnd91v1WRaaVRt1fdz+u15QUwtnikHHSfH2XzsithFTxZxUHf68whWrCJ73CXpBG3HdAO96d+OJjtUC4yfJvz5QtP7gmBMJUmPpkvw8kxRHY2gLBx0a5+FJVAQHlUAJjZ/JsXMJe8c2yp/1VAHINupeLLUPR+s5Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QLHtwoBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="sRGvDhXd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1752082473; x=1752687273; i=christian@heusel.eu;
-	bh=c0IEYQyWxD4AtFpY+qQMDcLFAoe1atswqtNGUdt4E2o=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=sRGvDhXd7Mhu0Wq6LPC0RuOtLfbB3S3+tazdTVCO7zkR93DwAKnD7CnQ5AgD30G2
-	 AuXIs7ZyObYI230HGtpdhegmpP9jiLebI6Qh5x3/2oWRgovHp2+LTenIvNfLyyffG
-	 Jgz2ULSIU2Kv3A8awrtIZ9mdlaOdlHab0YijcjxWmAWaf0rSF949uyNi/bcsSjRlE
-	 +f+j7XIQshPfFxxab9oa0wa9NLHilP0BNTwHyk4ouF1uvpwSDMNub+7+hD7RrWZAt
-	 26ge+mRPq+KLmYfQdqv2WzSGcifHU1DZZpx9jLhcfD8TYo1/qKCDPJLm3qYNKSLV8
-	 SX6EvXYh/hPcmCEbDQ==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([80.187.65.231]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MwPjf-1uqFxZ1Rkz-015qvq; Wed, 09 Jul 2025 19:19:40 +0200
-Date: Wed, 9 Jul 2025 19:19:32 +0200
-From: Christian Heusel <christian@heusel.eu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org, linux@frame.work
-Subject: Re: [PATCH 6.15 000/178] 6.15.6-rc1 review
-Message-ID: <75a83214-9cc4-4420-9c0c-69d1e871ceff@heusel.eu>
-References: <20250708162236.549307806@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QLHtwoBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC82AC4CEF4;
+	Wed,  9 Jul 2025 17:37:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752082665;
+	bh=UrMsQCIJDhTzvXs4RqAiNo8Cvl8Hxt1Ziw4xZzCivP8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QLHtwoBRBDQXByIwztN3KSGJHjSq3oNBskn8+BqLMMhqdtnTR0UyUptamUZIYxGzS
+	 05rD14LKHLKqTeimzJ2y929jnGWklGIhtvQp6ocTIgZI3vagwr61joiQn1TPHnUZ89
+	 ycdYhIM+lzyzlbzjyDSkxSyKQ6uYEu5lkXBMrDbs3vtdGAMwESE30BKXvvCDPaVQUt
+	 W7dT2TuhGDf9YXB8WzyeFU2zclFXHgGlkoBe4ce2jqo0L70OLsP/cbUwRrE/xtKpDK
+	 byWECBlTs4hfYQ4Le26gLoYuh+ujVmaP2G9fkzWyxgJrH2kUpRW7Z/X8wfGAOFJC6w
+	 5tyz4QMbmlGCg==
+Date: Wed, 9 Jul 2025 13:37:40 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Nat Wittstock <nat@fardog.io>, Lucian Langa <lucilanga@7pot.org>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+	rafael@kernel.org, pavel@ucw.cz, len.brown@intel.com,
+	linux-pm@vger.kernel.org, kexec@lists.infradead.org
+Subject: Re: [PATCH AUTOSEL 6.15 6/8] PM: Restrict swap use to later in the
+ suspend sequence
+Message-ID: <aG6o5BYqwe1RmSqb@lappy>
+References: <20250708000215.793090-1-sashal@kernel.org>
+ <20250708000215.793090-6-sashal@kernel.org>
+ <87ms9esclp.fsf@email.froward.int.ebiederm.org>
+ <aG2AcbhWmFwaHT6C@lappy>
+ <87tt3mqrtg.fsf@email.froward.int.ebiederm.org>
+ <aG2bAMGrDDSvOhbl@lappy>
+ <87ms9dpc3b.fsf@email.froward.int.ebiederm.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tnngkyygq5ckjtkw"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20250708162236.549307806@linuxfoundation.org>
-X-Provags-ID: V03:K1:f9RkAiyKxt0ACuJu7rJckYHMUflUzZLGuynR6Y2E/rj+gO/WWFS
- SIvigM78jbMo2NNw84kIz64MHs/X32xwLUlSQm9wqZLJ7Qf85YJrcpbzcpDg7uKkOsvnpSA
- /1LyOQ747uoUyfW9qF7Z/xk6QxsB6Pg3quTmrb0WPD0kg6tyf74ILA2Pjmv7e9lOB8RdnMX
- 0hr85HNm+oGJ1LNdtrBnQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:DKa8gBObjdo=;lCWWOhIvNV51t/sEijCnpJbS4e7
- nTHxop0Fpwap4ApSpMIq9HL6fkIBFfCmb2duJsgwcSZeaaooXGVTzazX3QF6azrtOVNniaw8/
- ZJ15Q+zM1Jysr+hssToZZMK9JIzsQ6Cc5OgDmWps5HBve0iRoE1Dc/fcGEXmUdkSxfMiItrPX
- kIPdOeRwYIS7OAtiGRUGp04c3s2V17jMD1JY8GTXxFebXczhyMY8MTqgP1STiU6IuUjkYf6ny
- cwAQdHU8OCmPUqCnWxSU9tLJrG+nMpH23ttZgC7YBQHV0TRjU82EBxb+2PYcjmKJaC/492C9+
- MiVthyJQqUdan3sbYSgJAAjWxQePlZ2BILifUmFRc2qRFRBXF8nr2MoKuPmFXe/OXFMiCoWVz
- boEkWzSXQdTK9WVHtz3AYkG1JItKlvy+TRCxuDdMJz+NZhR4CtncPnz0wYx7zFzR/+49EQiL+
- FjI5RjnivhONdPyaTcV7N5OiwGkS47AiLf/MIp0sYSKyzzX5Xc5LE0483/X4wqpvcS6gxBb3W
- U/EpLdYZykDEtIWmFj5k+n5dlefS7ukCRG8SWqgYcuHZClga+jjX02FhddcowZGtNbVuSGoRC
- Tm431tDMjTpzmAUSnoyHB2H6NtyTxzFpTsISrsLOqESWO1j2wDvKGUrySw5pxq8yivZKbkBdu
- BSn48k+vcNsflO/pa5XDO794lWTdkgO8GbpC0fD7h1ojw4RJzCB1kg3CInOjhtlkPvodcf/Cd
- wnbIHjIPDlhXi9nbarlUmu4GbWl9ZjfEoY1i1IZoZYx4XA7U0fcwrmdV4FoXVl2e1H960Vg+s
- 14Eaxzhzp5vk1M+7JjqlZu0RUHdjAm/uz3USJ6pwpRi/7+S5vmLS3r9g3+SmnsBCyr2txCJyB
- KYG6oWRWgMi0pgnDN85Jixli+6lmf9y2EUiOdCYE6V+jSmMNg0OidBHcwfHMXcb5Mba4TNQsY
- WHxOPI2DC4Ml8jlspyF2dAPW9QG+dtdQNR2/F6labOV1vGXA9pxd7IO/JXgn/b49sXj23dV6s
- L+HUEi9sFdQmS2zM4C/KpcFpc8IBq9nCe8pVMMhccSfJaWrFAwh+645jRm4mxANFKcTWuYc3S
- Jjngh684mBJS+dhG0DYQbhrGOSXkRywS818YfvqF++kc5eCNb6Qi4kwauq+F5wqi5XWZGiID9
- Oeww0bH1UALeuvLbMYLu2e8kQ/l4bWVr97ZIe0ZZZUMtg+0xqAjhIZhXvh+rJtw2VqLHasc+4
- bTTYztOhs5sO2n/mTabgwqMe98g+ZHwzN1S/aEW2Da7nSE5+UUWgMlgwzAEHFLMFh46/v7WNt
- QtWNrGL70Jy7IMfY5r7+Fa2/YShXgKFkB3Y5admzLwwHGAb1HlGsiP2ia2mTNOIR1pIPWr1bX
- GLQ4/R+MKSiWTPhdyGeT4gD+GVoLGJoXcn9AE1MrRNCem26noL7WNI7gEDrJUUwGlWxwqq0kx
- mUejoxe1lfG5Lz5W1mAlHAESKLU+iVSFdRYALGnLUVB3zp564pVw7oYgr9ArttW9GFAyW9A0c
- dxp6eMWbO7HfV1jTXY31eak6kTqcwSfR+0hB+zQUcog+wq+D+W7jHj+8UQEtfQ==
+In-Reply-To: <87ms9dpc3b.fsf@email.froward.int.ebiederm.org>
 
+On Wed, Jul 09, 2025 at 11:23:36AM -0500, Eric W. Biederman wrote:
+>There is no indication that the kexec code path has ever been exercised.
+>
+>So this appears to be one of those changes that was merged under
+>the banner of "Let's see if this causes a regression".
+>
+>To the original authors.  I would have appreciated it being a little
+>more clearly called out in the change description that this came in
+>under "Let's see if this causes a regression".
+>
+>Such changes should not be backported automatically.  They should be
+>backported with care after the have seen much more usage/testing of
+>the kernel they were merged into.  Probably after a kernel release or
+>so.  This is something that can take some actual judgment to decide,
+>when a backport is reasonable.
 
---tnngkyygq5ckjtkw
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 6.15 000/178] 6.15.6-rc1 review
-MIME-Version: 1.0
+I'm assuming that you also refer to stable tagged patches that get
+"automatically" picked up, right?
 
-On 25/07/08 06:20PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.15.6 release.
-> There are 178 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Thu, 10 Jul 2025 16:22:09 +0000.
-> Anything received after that time might be too late.
+We already have a way to do what you suggest: maintainers can choose
+not to tag their patches for stable, and have both their subsystem
+and/or individual contributions ignored by AUTOSEL. This way they can
+send us commits at their convenience.
 
-Hey Greg,
+There is one subsystem that is mostly doing that (XFS).
 
-on the Framework Desktop I'm getting a new regression / error message
-within dmesg on 6.15.6-rc1 which was not present in previous versions of
-the stable kernel series:
+The other ones are *choosing* not to do that.
 
-    $ journalctl -b-1 --dmesg | grep "PPM init"
-    Jul 09 14:48:44 arch-external kernel: ucsi_acpi USBC000:00: error -ETIM=
-EDOUT: PPM init failed
-
-Maybe I can free some time to debug this tomorrow, otherwise the
-Framework folks are in CC of this mail.
-
-Cheers,
-Chris
-
---tnngkyygq5ckjtkw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmhupKQACgkQwEfU8yi1
-JYWKORAAg9XLN+v3Zg64qslKfwTNySut0W1FDVCZlTOn7jBlCqDgUWcbqffcyGkz
-W9y8tthHWtXDAQMVfs30+TWR9ONurrtjNLUxk7zbrEPx+S2p1QZXspRU/daXhLmx
-Yp4REnPlIRrdTubAdJH4jC52ra9YnFxLsAQ0Vx0BSB7ZqhztH7Hi1NgIq8Yd8qJV
-yp6R8a2bVRWxkAXoIScog2AcOuuJNyHmfCWOzZcdEWQG5LE691T1CKfHDsCgO2Rn
-3eG9dGH8I/zLgle8JGM3hZxn153CIBNRXPvilCl3PlwuW7ONKdWzM4YGG6wqxYE9
-PZWsAH7ERgHZqBFIOnBmiWEnTHfj6uNz77mGVsU6iXCHVKE7s3ewzTeFbMs9aRe9
-yo5X5zU2mEmQpbkzQSZvRYRFki1I0XAs3qzUTOb9WrIyAbhfYHPFi+mW1CSgvxss
-XxBfUbOt0OqJwoZWL0K5sBVbpFRAbN26mEu3ag/sV6BiIIvKYAMVLFB01le4y4xW
-IW9SRIg8cIdGcDD2btREVe0PJM9WpGoh7KtHX8/vgHtzi5ljtJGlhz8uPyendLY1
-CS+iVwt4Fu3rweXuugb07TVjePLpFE1sALsqA0W/ABYzvsf/FuvOoTcq3pFrH7a+
-EO1mdo2kjDG2+j5nDFoO3hDM7CONaBjwehHC4ObtCUNqWcA1WEg=
-=qFiL
------END PGP SIGNATURE-----
-
---tnngkyygq5ckjtkw--
+-- 
+Thanks,
+Sasha
