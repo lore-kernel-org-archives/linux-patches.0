@@ -1,85 +1,73 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B4D28B50A
-	for <patches@lists.linux.dev>; Thu, 10 Jul 2025 07:57:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7F33208;
+	Thu, 10 Jul 2025 08:14:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752134222; cv=none; b=fCol25DliYMpK09wnHeRnAS0/tcyJOLqm3TJNeNj4GTj7WzB5VNMP0WWa9cyh0oTAe9jDz30OfB39BHz5D9aND2hTbWWBsCmZ3qYESCbQYjUad1DjmzaBU66E7vrGvtPTE5DSC1L3vRmsd/tSYVt11zeH3mWPgZNTM4d1pznDh0=
+	t=1752135268; cv=none; b=RTthyYZL9NR3Ktvn5ljpp66luW4nDBhaNn3sVCY5pP9KUrHTNFjJK1Ibn0kivy/YNLw4mKScGTfwBu8+kj32ugssJ4w8/lT16an/IxBDEDIn/bedwJEV2S2Weujuf9MONsNgElKDDmDAbSBgLQHqjsKYbos2LC3NCConYY31psg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752134222; c=relaxed/simple;
-	bh=byBgfI/4HYqXz5MoL8PNW+q1b+cqGtjII06M8p4VvyE=;
+	s=arc-20240116; t=1752135268; c=relaxed/simple;
+	bh=WA3OFPfxvSq747KqaMSrkUwpYEKd0sSEJW17H/TST+E=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=IVmBBoDBtOpNUqqcg5ARbin8jqPbZnNsb3a1kDWXCpyzzOvCD+HsjfbG4oTX4No92P+tY0tgX3T5FG8XvbNK1blfqbVmfhAU+nCZl528I76AXEDTd9wgn9ZB1MpO+vDsqAsPSaKMG+gtrF0X6/0yn3LjiE044oJWFWes8ZYn3pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=YhYjD/jc; arc=none smtp.client-ip=148.163.156.1
+	 Content-Type:MIME-Version; b=IHDoAXjEk3hNob8qEVL+a6Vy5GmZ3WZRsrvfA3QbfxGLewhe7r8cROBE3z5AFYXg3Br2CXtEGo/GrVu98ORsHUFXaWyPp/wke7RNtGsqYHdl+THJxzFRdv4RvbVwXOU7q0TiMNNNnZSfkbp2FGrplUKwj2cKPbvZ0yTl/QmA1Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qpkSwdVe; arc=none smtp.client-ip=148.163.158.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="YhYjD/jc"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56A1W8fl013032;
-	Thu, 10 Jul 2025 07:56:41 GMT
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qpkSwdVe"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 569LwaWN004705;
+	Thu, 10 Jul 2025 08:14:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=H2vB/M
-	fhdWEVcAeZHEWQ1fGqSJ2Ptx36hUWmTdynI7U=; b=YhYjD/jcZD4SoEE6xZ1RRk
-	dByhEXMDzDXOrjMhwZ3lEZaB/5NuH6z7GjJPnu3tAItP/egZq3PL8PekC8Z/c6B7
-	9e2dOu8m+SMtbAAQQeQe2F2u7Zsruifmu9zz4dfrB4KPmaoVwjCyj7KPEXkc37eV
-	Oxt3LRQcdk0Ie7LMNf3zb/MxgxJVZ79oSHN2KKCiWap4IL7bSzHZdpPi3aJhsjoq
-	L9NwBxhzXscjKk0ZSSHpsqrwOp6CarxGdl8qLWq/U0cH4BRctW6Q5kg/kScWmFMf
-	Mm4sCRUJ9tHLgdLqM227P4nUsw9wxqpG4x2p3GvExIGX5YxmQhdjSLoE9r7QaEPA
+	:message-id:mime-version:references:subject:to; s=pp1; bh=AsG/sv
+	LIsZVI1j+a3Kfd1fICp/ISrPuoY1dGfKlmKFE=; b=qpkSwdVeMEBs+bMH0YtMH1
+	nAygWgyISXekRem3tcIMZ3yof31ETqsbaFuyn2/HcLxx0Le+JbB0Jf3MUO26u4m3
+	lDzDrKTx8tC02oiuJkaRPUyya0nnZDsyj2usk5PMgUMV+zZYUI7LY+JtX4Kw4MNB
+	9FGC3Ry0ID6k7IRDm3LB6FN6A/Dbw9dG3tRgLf8zwTooV5dygiie6kR9RBF8dqr4
+	uxfXWygdHtThvthAOM5s4fcjFE0ZiWUbqW3kRvtEnJh4WO0QiyKpOmIB9qM/AY3T
+	NUuPc5dAfIQNVGQ+hMMft2pWIkLuDxXZ6/kDOk5mhPfXGOw1ZgU5enruT8jUQ7uA
 	==
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47t3xd9gx0-1
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47puqnjhmp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 07:56:41 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
-	by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 56A7bdW0029440;
-	Thu, 10 Jul 2025 07:56:40 GMT
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47t3xd9gww-1
+	Thu, 10 Jul 2025 08:14:22 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56A5f42X021525;
+	Thu, 10 Jul 2025 08:14:21 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 47qectvvjp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 07:56:40 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 56A6afGq002847;
-	Thu, 10 Jul 2025 07:56:39 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47qfvmmg5k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Jul 2025 07:56:39 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 56A7ubuP32113296
+	Thu, 10 Jul 2025 08:14:21 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com [10.39.53.230])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 56A8EKci27066964
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 10 Jul 2025 07:56:37 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5CDD358054;
-	Thu, 10 Jul 2025 07:56:37 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 251EA5803F;
-	Thu, 10 Jul 2025 07:56:33 +0000 (GMT)
+	Thu, 10 Jul 2025 08:14:20 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4281A5805C;
+	Thu, 10 Jul 2025 08:14:20 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7D10558054;
+	Thu, 10 Jul 2025 08:14:18 +0000 (GMT)
 Received: from [9.111.81.29] (unknown [9.111.81.29])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 10 Jul 2025 07:56:32 +0000 (GMT)
-Message-ID: <54e22536eca7544fb5fab02d9b361eb1c31f44ee.camel@linux.ibm.com>
-Subject: Re: [PATCH 6.1 00/81] 6.1.144-rc2 review
+	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 10 Jul 2025 08:14:18 +0000 (GMT)
+Message-ID: <6bca64221f8954adcdcfe6b5639e29c7fee4b03a.camel@linux.ibm.com>
+Subject: Re: [PATCH 6.1 60/81] s390/pci: Fix stale function handles in error
+ handling
 From: Niklas Schnelle <schnelle@linux.ibm.com>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>,
-        Greg Kroah-Hartman
-	 <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-        linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-        akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-        patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-        jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-        srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-        hargar@microsoft.com, broonie@kernel.org,
-        Alexander Gordeev
- <agordeev@linux.ibm.com>,
-        Julian Ruess	 <julianr@linux.ibm.com>, alifm@linux.ibm.com
-Date: Thu, 10 Jul 2025 09:56:32 +0200
-In-Reply-To: <CA+G9fYtkGSe0MP7+vXEcLxg80VC4-yHtme_xjnK-Dg8LkN1VAQ@mail.gmail.com>
-References: <20250708180901.558453595@linuxfoundation.org>
-	 <CA+G9fYtkGSe0MP7+vXEcLxg80VC4-yHtme_xjnK-Dg8LkN1VAQ@mail.gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Julian Ruess <julianr@linux.ibm.com>,
+        Gerd
+ Bayer	 <gbayer@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
+        Alexander
+ Gordeev	 <agordeev@linux.ibm.com>,
+        Sasha Levin <sashal@kernel.org>
+Date: Thu, 10 Jul 2025 10:14:17 +0200
+In-Reply-To: <20250708162226.893789793@linuxfoundation.org>
+References: <20250708162224.795155912@linuxfoundation.org>
+	 <20250708162226.893789793@linuxfoundation.org>
 Autocrypt: addr=schnelle@linux.ibm.com; prefer-encrypt=mutual;
  keydata=mQINBGHm3M8BEAC+MIQkfoPIAKdjjk84OSQ8erd2OICj98+GdhMQpIjHXn/RJdCZLa58k
  /ay5x0xIHkWzx1JJOm4Lki7WEzRbYDexQEJP0xUia0U+4Yg7PJL4Dg/W4Ho28dRBROoJjgJSLSHwc
@@ -145,73 +133,109 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rk_20XK2bG6QkIGyhCyKtJHKEcHVL4n2
-X-Authority-Analysis: v=2.4 cv=MLRgmNZl c=1 sm=1 tr=0 ts=686f7239 cx=c_pps a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VwQbUJbxAAAA:8 a=ag1SF4gXAAAA:8 a=pXt5Tz5fr4PmGulvd3oA:9 a=QEXdDO2ut3YA:10
- a=Yupwre4RP9_Eg_Bd0iYG:22
-X-Proofpoint-GUID: Bx4NsGfdJMmseDl565dkBlsi28ajVf3H
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA2NiBTYWx0ZWRfX8DYFWrGxuKDk d4nSxfYh10ryGxXwJWiNMOwt0BSj7MnpYPv+exn3KqLWH/td2dLUfQHPZ34xl1XJYSedJJ4JcDM j2S0+6RKHo5NqL17ONN58fa/B1Pk0rQO4QtCLXbbmC1XX+R7p/cpbQSFxgLKM0WzBj0NVrhfg0I
- 4VIYFcZ3eKrKzOIjr44rkwBN571H/m0Ep2BReVavw4K4X7/RoNFWboupklGOTqg71NgcMhuCmAd kb2koVjdShXZyPNsg9eP7jK7lUUoYeTKM7rso43fLPjtTxMkzmpF91QXm8zkRXKcIuLkeHYD+JK /GWqKmLu2qTs/L7tqftajkoLiRacFb1Lp7+/M8YNy9ZvF9KPvPGvEcPSa4X+oTkjArCNVM0lgwD
- oAYScAMoDy5IdxT3qlYVYhXP67gMDuTwHxkk00TyE4tNNX0vliKtDGcVziGlPE5czNUqV9SN
+X-Authority-Analysis: v=2.4 cv=FZ43xI+6 c=1 sm=1 tr=0 ts=686f765e cx=c_pps a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=2IdWMj8hQMSgo3BdekcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: VtWGWgLaeUzhu8vni0A4MlFM-zDQRsKN
+X-Proofpoint-ORIG-GUID: VtWGWgLaeUzhu8vni0A4MlFM-zDQRsKN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzEwMDA2NiBTYWx0ZWRfXx+IywV3C1lyN qdE4uYSk8pUuKF07axkikB4mSQ1cOciQX2TVAVazH80c1P6pYsVpmDIlClZ7bvqOQHu69Dj3WME RnzRePvDI+rY6AOPRT+J6vGdGgg9mfB5JR2xX3JFYxVEk3G7azI6t6DVndNJp3neGbFT9/5bQ6O
+ n3aTKSHnG2dGddoe366Dm0jNmRCwt5GLmRiFsk030GBqOXqw//cT1vuXzAfi8blBqoocfXGsQFp 6vGn+VqXc+1NIgfQzXC9Ls15vhCWsjGZoMnFWvrbx5tphXi8Dfr65vfctYWY4NkKwLuiKxYSFNR M72ekVppJaEBxYJNrjBC2pVFlVGVkuSsEOLtdNmDgiUVNRwRE8pawnU4haMLXUQxffedW4M0cXj
+ 6ROM+DzheMZNZlbTF/RzKEaACaX4HoMJb99aes7hGBQnd9ErqwDEIpaTTgTpqnqPXaRrcZ3m
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
  definitions=2025-07-09_05,2025-07-09_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- adultscore=0 priorityscore=1501 mlxscore=0 clxscore=1011 impostorscore=0
- malwarescore=0 mlxlogscore=928 lowpriorityscore=0 phishscore=0 spamscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505280000
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=999 clxscore=1015
+ spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
  definitions=main-2507100066
 
-On Thu, 2025-07-10 at 01:34 +0530, Naresh Kamboju wrote:
-> On Tue, 8 Jul 2025 at 23:40, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >=20
-> > This is the start of the stable review cycle for the 6.1.144 release.
-> > There are 81 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >=20
-> > Responses should be made by Thu, 10 Jul 2025 18:08:50 +0000.
-> > Anything received after that time might be too late.
-> >=20
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patc=
-h-6.1.144-rc2.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stab=
-le-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> >=20
-> > thanks,
-> >=20
-> > greg k-h
+On Tue, 2025-07-08 at 18:23 +0200, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
 >=20
+> ------------------
 >=20
-> Regression on the stable-rc 6.1.144-rc2 s390 builds failed with clang-20
+> From: Niklas Schnelle <schnelle@linux.ibm.com>
 >=20
---- snip ---
+> [ Upstream commit 45537926dd2aaa9190ac0fac5a0fbeefcadfea95 ]
 >=20
-> in 'struct zpci_dev'
->   285 |                 mutex_unlock(&zdev->state_lock);
->       |                               ~~~~  ^
-> 4 errors generated.
+> The error event information for PCI error events contains a function
+> handle for the respective function. This handle is generally captured at
+> the time the error event was recorded. Due to delays in processing or
+> cascading issues, it may happen that during firmware recovery multiple
+> events are generated. When processing these events in order Linux may
+> already have recovered an affected function making the event information
+> stale. Fix this by doing an unconditional CLP List PCI function
+> retrieving the current function handle with the zdev->state_lock held
+> and ignoring the event if its function handle is stale.
 >=20
-> ## Source
-> * Kernel version: 6.1.144-rc2
+> Cc: stable@vger.kernel.org
+> Fixes: 4cdf2f4e24ff ("s390/pci: implement minimal PCI error recovery")
+> Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
+> Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  arch/s390/pci/pci_event.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 >=20
+> diff --git a/arch/s390/pci/pci_event.c b/arch/s390/pci/pci_event.c
+> index d969f36bf186f..dc512c8f82324 100644
+> --- a/arch/s390/pci/pci_event.c
+> +++ b/arch/s390/pci/pci_event.c
+> @@ -257,6 +257,8 @@ static void __zpci_event_error(struct zpci_ccdf_err *=
+ccdf)
+>  	struct zpci_dev *zdev =3D get_zdev_by_fid(ccdf->fid);
+>  	struct pci_dev *pdev =3D NULL;
+>  	pci_ers_result_t ers_res;
+> +	u32 fh =3D 0;
+> +	int rc;
+> =20
+>  	zpci_dbg(3, "err fid:%x, fh:%x, pec:%x\n",
+>  		 ccdf->fid, ccdf->fh, ccdf->pec);
+> @@ -264,9 +266,23 @@ static void __zpci_event_error(struct zpci_ccdf_err =
+*ccdf)
+>  	zpci_err_hex(ccdf, sizeof(*ccdf));
+> =20
+>  	if (zdev) {
+> +		mutex_lock(&zdev->state_lock);
+> +		rc =3D clp_refresh_fh(zdev->fid, &fh);
+> +		if (rc) {
+> +			mutex_unlock(&zdev->state_lock);
+> +			goto no_pdev;
+> +		}
+> +		if (!fh || ccdf->fh !=3D fh) {
+> +			/* Ignore events with stale handles */
+> +			zpci_dbg(3, "err fid:%x, fh:%x (stale %x)\n",
+> +				 ccdf->fid, fh, ccdf->fh);
+> +			mutex_unlock(&zdev->state_lock);
+> +			goto no_pdev;
+> +		}
+>  		zpci_update_fh(zdev, ccdf->fh);
+>  		if (zdev->zbus->bus)
+>  			pdev =3D pci_get_slot(zdev->zbus->bus, zdev->devfn);
+> +		mutex_unlock(&zdev->state_lock);
+>  	}
+> =20
+>  	pr_err("%s: Event 0x%x reports an error for PCI function 0x%x\n",
 
-Hi Naresh, Hi Greg,
+Sorry I only noticed this due to a build error report but this backport
+is NOT CORRECT. The mutex_lock(&zdev->state_lock) line that was context
+in the original commit was part of commit bcb5d6c76903 ("s390/pci:
+introduce lock to synchronize state of zpci_dev's") which also added
+the mutex and isn't in this tree. So without pulling that in as a
+prerequisite this won't compile.=C2=A0
 
-Thanks for the report!=C2=A0
+Also and kind of worse the above puts the mutex_unlock() in the wrong
+place! Please drop/revert this patch.=C2=A0
 
-Looks like the backport of 45537926dd2a ("s390/pci: Fix stale function
-handles in error handling") is broken. In the original commit there is
-a context line mutex_lock(&zdev->state_lock) from commit bcb5d6c76903
-("s390/pci: introduce lock to synchronize state of zpci_dev's") that
-ended up in the stable tree without also pulling in the rest of that
-commit. I found that backport in my mail and not only is the context
-turned into added lines but it also adds the matching unlock in the
-wrong place. Will comment on that mail too.
+The original commit here should work for its specific problem even
+without the backport of the mutex though I think it would be best to
+get that into stable as well. Sorry for not marking it as a dependency.
+That said, shouldn't there be a note that this backport deviates
+significantly from the upstream commit?
 
 Thanks,
 Niklas
