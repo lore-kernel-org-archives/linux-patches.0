@@ -1,28 +1,28 @@
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2074.outbound.protection.outlook.com [40.107.236.74])
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2069.outbound.protection.outlook.com [40.107.100.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A4F28C007;
-	Thu, 10 Jul 2025 06:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6575528751E;
+	Thu, 10 Jul 2025 06:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.69
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752127239; cv=fail; b=WiS8l0JVj0VfBNAV2trRaEjzz0zDJFaYc6TuPtmgU/q6MYc6RwuIU1HAb7Tt29oREzuL/joQWJGQNAsVRYA8l2K/87KkxSKthN7z4EH510O+RhinWWirSnoLL5vzxYaJxYkwy0dgxwsNe2vQAbdYTaRyDgwHvnPu9cqesdpH9Eo=
+	t=1752127240; cv=fail; b=s5vYZ4N3ZwlzXelFok3UW2hdQTuFNEp/fBEC679GVtUIewZWScG1BYlOPUwvyFEQCTBZxySTzuk2n8b1el7UwoXIzAVIL7nngURINLM0kCwyDrtKJovAqYaWSDc0MiC0dRkTYz/szoRj8tyXj7c5miej3Ir+TGnLG2rCeY89154=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752127239; c=relaxed/simple;
-	bh=sdRV38YfffU8VpeKJKLy8aD23uMiABTs9JAcT6qZvwQ=;
+	s=arc-20240116; t=1752127240; c=relaxed/simple;
+	bh=n+Frh3cP6rlPwORkIunHgJns2e2hgAbOo1klMDjv3Qk=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BEUaV4TgHSmSSFt1QwtzhX3ImfAiDm9nk/okXX8am+fZ76qzsveL+HVQ+iQOtuqwGqHlTUXhZ5OzWToYqc6gNE8z2B+qldY4F1146C8Ra3dc1x9fu1TPYMtIDE3xo5eU0HPHD22yMY3qQUC0e+05Va0qiz9sy4juOzdAT8RZ4cU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=UK7F43cI; arc=fail smtp.client-ip=40.107.236.74
+	 MIME-Version:Content-Type; b=qo2yjB+dxM18CgwfL6PjK9TvFTNl474pQ4vaz8g2Rn4BZgcCOdV/XuiYk/b2JPF6PsROZc2RVbsAkZmRpFritSmfVVK5vVSEAshRTleRfPtN7cEdB8H5AcJv0B2nHP0gCby3VNUZpLTnSS5AS5thSppw9jh++GDRCE9fJVSkTwc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nE5hg5Tq; arc=fail smtp.client-ip=40.107.100.69
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="UK7F43cI"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nE5hg5Tq"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ze29irV4E6rIhwzVcWIFfM90kKy0qo68X4ftyRZvr7uMlp5t1KedBVijZgrm1mfBceovQhHcQo944mpK7lnXMAMd0XbFscdEQamcWr1btAFsd/KeReQbL0meZ7eaH/qLJP3+W5IIBPWs1XcNn3qCutQzJnGHjk2CcQyEXJxF8/xUuzO77oFhzvy696Y0vJZCJu2SZ/cGsfkiJLsPI5P50Z62lm9AKj0PBwVhejPHNEn/JREKNd451HX/UUKpSk6yqm3554Q2gR3kOyc7IGS3TzIgVv6TK1A81EjxQKjL/RsqRBRsjF+DOQ/Ipj5/8CoN3AUhz7FdtK0eLGoT4Y/kXg==
+ b=w9LKa7EmpjE5Thd4cSvrT7j/6RhhllU0KjG5NtBf6tOBl4S0VM8KdloghZoN2mAvQeg2t/y4AQjGB8TFjKnaIIaTANrU1shz/ZGxs1Z7FgC3IffEdsL+z49AlCIxALMiDgphvzqOajBTx5CzKmdzPIROQjjJguAN72BIVHdZpAZJXpd3G75+3iVGl44Wd6YmD4DYayxT3HCMjKhSwLT+Y+HFkomueuS8ImuKOagZSGpXlhYcf2V8yR53NKhvMmpiP7TTBdXDOdS49xutxxK4pQqZlhNtoZHD9F0HCrycBM+hUDDTwUj1y9w9razXRCNaxGjLgF7mdV27oN1i/GUJ2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KJ+3QmhJEyvGvTTXuFFBDc1ZXP8tUN77scFN3bhW228=;
- b=uUwxLEamu2Rw4WrNc6Qc3rEKLXRV0hZ6jw2Z8yN4TZ8IMZM4k+mBKwcNwjMs2L9QbCwIf+hERb9/NYfvRvNaXN6THQgfnFp8mhHO/Vj6Mql5fx28+ghWAy4O39GuunABUtxzkniyfpNIiWRTG4wKIkZqYL1wLxdeE72aWNglWUtcFscIzp6/roSLcbKZtZKQk1Rfso/nEYK7nlH1J0aa6x+ig8qIyUNTc2NYDyzNqrLhL2yFy3MDuWy8q8UM3010n5ghB8KaXQLzBiUPcnQ1icwhZvO+tiUSIm3UxGsdaDoUQL5JwDQzdkkzVN0RfP5IUSmQAKODMU2AZeWMBqM2Jw==
+ bh=CrahDE26BiluYBTVRhYmNN2zMQDrtY2p9bqr+YJpsMI=;
+ b=mTmXCKG8uM7/fVeYb7GkMWGdz83cDlcMXXWG4BQdHNB9SWR06f9BXWHnrTG32QjHLaOHPRIt/cyMcg//qQDkEu7b/r8+4iPSbIZGhcn/xf8xufVfdMLzptlSkMHZX576BeY4GTLFCYzJoQwsuLOYQu9o9zIPQbrxIHXfzJum9kW62SXssA6rDUsTjGWtZY0F1YI3J6vhIpYUNZbTe+BBLu/zInSlUVxRv9lEqAuLe9Y+aR+3wEUDbg28X077unQ5BTkE9LUWPFjHxPBI0ee7A9qLoEiFjipDDi0lLog0AyNfgv+9L93kIcUsfoOeLBbpBim7CZkfhhVL/+UMN4cUhw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.160) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -30,18 +30,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KJ+3QmhJEyvGvTTXuFFBDc1ZXP8tUN77scFN3bhW228=;
- b=UK7F43cIrCMqUlkV4usIAgXaeEkWuoQG+86XGLwoW+Nxao+OufT78Z+nfzITEvK4vs++sWgFh1Jiqvhjl1X//QiJwHIMccSJgrP+qQA8zV8W/YB1RNMD3GloYfvD0zchFQlmJ70lA+ZNhfJ/SL2Wz0HJ4rlTR07SGnC0Bqjh0oqjKtsqU3TFrutIuBDqgdR6vCD/O84mhpzMlvHfkZfT7872f9peFXnFNTHR6xRwzhvjXe0n9/GBC7gXCJWTzpIcG9LG9/orxBP9MuOhUj1zOdUV0F8Bl0tCJnQXL72Qnf5v+B6+UiWEZr5jUdQVvgT+oQPXbysONNPJ4XOHzdrobA==
-Received: from CH0PR03CA0322.namprd03.prod.outlook.com (2603:10b6:610:118::27)
- by CH3PR12MB7522.namprd12.prod.outlook.com (2603:10b6:610:142::17) with
+ bh=CrahDE26BiluYBTVRhYmNN2zMQDrtY2p9bqr+YJpsMI=;
+ b=nE5hg5TqGlelDNkGry+Up84FV8b0x8GvymKhWFNLkUvhy2LkuytWijLX5m/jhOjUqUioH6ZV8f1vYU8bFKbyqyVWDmLvnDoH/a3tTH1ozSIS1Z+32PHTQ/z5ILYvdmHIRW8RdQhWeJnEvJEmSnt+qO006FJMNUpgYS7yyKxwqQ/NBk+/yzZPBIHKMKwGtVvysDqsHl/QTUU80zid/vj0vlVAT1StUpiaUxR7VEGevSMdhbqLfkQuSkcPVKeLObC+MKerVFpOMutTRDPBkHjpRh3c4o2A3C1JlXPVFs14NfXdsWnqRrZJUpl+3gASNKHkGKprYqkYnU3tKsRYrehKZQ==
+Received: from CH2PR16CA0005.namprd16.prod.outlook.com (2603:10b6:610:50::15)
+ by DS7PR12MB6072.namprd12.prod.outlook.com (2603:10b6:8:9c::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.26; Thu, 10 Jul
- 2025 06:00:30 +0000
-Received: from CH2PEPF00000147.namprd02.prod.outlook.com
- (2603:10b6:610:118:cafe::a6) by CH0PR03CA0322.outlook.office365.com
- (2603:10b6:610:118::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.25; Thu, 10 Jul
+ 2025 06:00:34 +0000
+Received: from CH2PEPF00000149.namprd02.prod.outlook.com
+ (2603:10b6:610:50:cafe::8) by CH2PR16CA0005.outlook.office365.com
+ (2603:10b6:610:50::15) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.8922.22 via Frontend Transport; Thu,
- 10 Jul 2025 06:00:30 +0000
+ 10 Jul 2025 06:00:34 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
@@ -49,20 +49,20 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.160 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.160) by
- CH2PEPF00000147.mail.protection.outlook.com (10.167.244.104) with Microsoft
+ CH2PEPF00000149.mail.protection.outlook.com (10.167.244.106) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8922.22 via Frontend Transport; Thu, 10 Jul 2025 06:00:30 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ 15.20.8922.22 via Frontend Transport; Thu, 10 Jul 2025 06:00:34 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
  (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 9 Jul 2025
- 23:00:11 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ 23:00:14 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 9 Jul
- 2025 23:00:10 -0700
+ 2025 23:00:13 -0700
 Received: from Asurada-Nvidia.nvidia.com (10.127.8.14) by mail.nvidia.com
  (10.129.68.6) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
- Transport; Wed, 9 Jul 2025 23:00:08 -0700
+ Transport; Wed, 9 Jul 2025 23:00:12 -0700
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: <jgg@nvidia.com>
 CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <bagasdotme@gmail.com>,
@@ -76,9 +76,9 @@ CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <bagasdotme@gmail.com>,
 	<linux-kselftest@vger.kernel.org>, <patches@lists.linux.dev>,
 	<mochs@nvidia.com>, <alok.a.tiwari@oracle.com>, <vasant.hegde@amd.com>,
 	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>
-Subject: [PATCH v9 13/29] iommufd/viommu: Introduce IOMMUFD_OBJ_HW_QUEUE and its related struct
-Date: Wed, 9 Jul 2025 22:59:05 -0700
-Message-ID: <6939b73699e278e60ce167e911b3d9be68882bad.1752126748.git.nicolinc@nvidia.com>
+Subject: [PATCH v9 15/29] iommufd/driver: Add iommufd_hw_queue_depend/undepend() helpers
+Date: Wed, 9 Jul 2025 22:59:07 -0700
+Message-ID: <2735c32e759c82f2e6c87cb32134eaf09b7589b5.1752126748.git.nicolinc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1752126748.git.nicolinc@nvidia.com>
 References: <cover.1752126748.git.nicolinc@nvidia.com>
@@ -93,192 +93,190 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: AnonymousSubmission
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF00000147:EE_|CH3PR12MB7522:EE_
-X-MS-Office365-Filtering-Correlation-Id: d8bdc798-be1a-4168-3323-08ddbf7713ad
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000149:EE_|DS7PR12MB6072:EE_
+X-MS-Office365-Filtering-Correlation-Id: df2ae70a-4343-4d6f-7de6-08ddbf7715d3
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|7416014|376014|36860700013|1800799024|7053199007;
+	BCL:0;ARA:13230040|82310400026|376014|36860700013|7416014|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?2kbXqclFYo73SP+EgoWQtyrSgZdJ9uZjfRutfGbTm5977lxTjwCYv2P9ZG+/?=
- =?us-ascii?Q?NmVxfZtdmthQ+7Favo/Ua5hSaGE0NtiWJ5yAUzqIlAmYwDdJcqkAWGJMtZZJ?=
- =?us-ascii?Q?luaYN/QsRXOum+P3TeLAk2hVhGU3k9wHl60tBeTfdXj2IGkfJiiddf9n7Lyz?=
- =?us-ascii?Q?RDLUzUucqluHSquE5Iv9HxwDRHkLzX1dvZ8wmH9moEAjtfioIr6ne7ZEJ8OV?=
- =?us-ascii?Q?+vHyURdoIq0lBr818fWO0SglKpAdVV6hk1ScPIdrEx5aCSBKXmbnuf9ukrOb?=
- =?us-ascii?Q?LPo8r89m68qiI2LmYKwDwO4JVjNbqRA6hVDC2qXXU+ieR3kG30ZebV6JGvpD?=
- =?us-ascii?Q?AkAKiC+i+xxsDighUIwrbmTdfWBcn9CiFiCTHQn/Sbwj6E8NiQhM0ZtW/wQd?=
- =?us-ascii?Q?+RnseHRaqFj6rvrkWF3t2teQc22dfcue8JstaB64mWp2+rISHa6OGCuywS+x?=
- =?us-ascii?Q?zDD8pUW6FC4+fkG7bstV2XiLuQdBem8EVvvlBrYwijbRLz2MnnU2AYn4T/Hp?=
- =?us-ascii?Q?zUcW6zUPFHdiZzJXyPJx5qfYFsB6G7FhnHU4bXyVutfMSDs3eBR4PgrO6/gP?=
- =?us-ascii?Q?ILT0DKIG2Oc/4qLJ2RBU9dbKN7B8BPUG6Idd0SCHhak3AbLy3Ju8yD9bc12l?=
- =?us-ascii?Q?4Ov4SHHkfn33tzfWO7TJA1M/8e2FsDF5CUp1keoEs7BykEDs7XJ+qhp4cDK2?=
- =?us-ascii?Q?HIKvkQ7fLXFnBcsE0VMfrlPgf+7ev/jpKJSQnSfV/HMKCe7lneXgHS+mgMr2?=
- =?us-ascii?Q?JyXeDJ2hjP0ouChf1e93bhetZpZkQRzlJaABQ6SgsPEd1oN1SQOVjoxby3+w?=
- =?us-ascii?Q?B9kyeKbpEUUPY++jgyAP6FTdvvsR5Uza57roFj8aBch8kPPnW9qzC6b6OsTa?=
- =?us-ascii?Q?jfbr6u0mPnoNgTb0/U4r4UHr8IAeKDZLIn/TdQ9NV+Hk9UrfIfTFCwMPKJv6?=
- =?us-ascii?Q?opOtP6BsF/ISxiIeBs3//QwdwowQ3uBka2vKXMtyMoDqNjZGxapo8VEsMHVG?=
- =?us-ascii?Q?ZPuMq1R3VJymDUBxQH0BhcmMZctPGDn5ZjSxFGCyqPAVXAieRfAx+aVCKZHx?=
- =?us-ascii?Q?X8mrD1AVX0AY0dPK+gHTtwiRUogCKaL99MvoUqiYOMnr5Z2vfO0EK9OVjGO+?=
- =?us-ascii?Q?2ztDeooiuRGEgvUBa97IO0trymK6+Eer2Eb0zxwo5WZcKb1Neey1mTgne9Z7?=
- =?us-ascii?Q?SR5DHgSyZMzYkxbNnCBpT11jMgrLVaTPjYhbie82EdnuKqGQDyY+FobxnjsD?=
- =?us-ascii?Q?zeou93bO+XIvN4q2HQbseXJq/DfqqsyV/PgBXO7JYX/2EFV8xortEl2GTSWB?=
- =?us-ascii?Q?8lecBsuuN4yumYZ2v8+gE2tTqh7ierua4IJTgvZll3rFGCBlX7U8F0WW3qqx?=
- =?us-ascii?Q?xFBuUhmpWV31iBGAK7IsAMzZHEZ+6CcxCEwSXBRsSKdM3siKi6YQkW79Utf+?=
- =?us-ascii?Q?Qh+9CCcPbEG0TN4i2Zzk9UMduQ0avxYzWoi8VPQ1oQNkMW4SAJQ/ycQQbhFR?=
- =?us-ascii?Q?tibexuEhzhXHdeVE6ZUjA36qIHkIGyHzsTpH?=
+	=?us-ascii?Q?p509RLhS9e/DIpNPnBefjzOo3tJei2nVcf8eAa+5i5CkusKltqqBKLnKfoFF?=
+ =?us-ascii?Q?6ZFF97+NDKddxkQD1Xx2EhnKGY56v50L0zImmIlVBgADukzynVZ7fWPCa/U+?=
+ =?us-ascii?Q?tCi+1nXH05jFv/ebdgc+UcdSbxPPTEW++u/JNcPOfg5mH1F3zRHXZck+tsUz?=
+ =?us-ascii?Q?rHfVT28bYp8jIFGMpoZ40o/oQyH7EwOztsMiJTvVbtd4iI14diA0/5c0OnbX?=
+ =?us-ascii?Q?djsDCk5cmOh1mIGaFlMN5vOniUJP9vBXZjxbcq52q9wsxaoKd/uWAwH4+uz5?=
+ =?us-ascii?Q?ar3FHGx7escfltc34Xdt9vdgcxAxuSr9rVaXtJ7c0DWYy143y6c9klOWvLfE?=
+ =?us-ascii?Q?pj8U6xzS6ZsOssfeJ9OQX1/xvS2XOpqQj0ffPLW9eiVFMkTWYgTv31w2wTOU?=
+ =?us-ascii?Q?tfmP+RA0MlYImDK6kROHy0UTfYa3AlpFPuxy/j2Xom0i8EJX6NFB19SnUfCq?=
+ =?us-ascii?Q?UjQJD8wbIzNxEh5leTuyrmMasq+9qj41MX+ltv5M7RD35+X6q1YpG7ih0x50?=
+ =?us-ascii?Q?2Y5TZNR7j2aCj9Ik3wMZUoHgbwc94315T58E6sx/eyBp5Ose1cStqYivtB21?=
+ =?us-ascii?Q?0UW80gqMb4hABmrowCt2kRFsk+eH9zvQfFfyr+leaMs2qgphCgNQOaW/rRRF?=
+ =?us-ascii?Q?pI5pdXqnZdNGkRI3j8L13+X38sBj2fXFc/++1qNlL9drz4VkPv5Un0QzIUmM?=
+ =?us-ascii?Q?XXsMVWUHx/O/Z3NB9882eNCUvmowaJsSe6NouQ6hl/A9pEM4I9O/MKHIyK+8?=
+ =?us-ascii?Q?UgWwCR0Ep8zMflobYyw4zFnjcVL/MlCSbyuGWq/xscymNmAHogiyeFkWFwOB?=
+ =?us-ascii?Q?YEAtMmkmk6E8hj4Xs6xDGQMA+qyCxzgxhVLstziUEsVoaeTP3bA297JtDPI1?=
+ =?us-ascii?Q?HtMkjZ07dcZZNp4Ik4pO1hQYImpCBGRnomHB5JvH3fp2LReTk/pEVUu6OQ07?=
+ =?us-ascii?Q?weRwY0lS0CmiqmtQGRrM9ZK5Wzv8MqV/SjvUvlR/vIf4l6ptEK+r9b8wTNJZ?=
+ =?us-ascii?Q?62TYc0UM8hyM74UR4SzVI45gJGGU1/wFdFHYI+47yY55Q8bl+GWfwZvldO1G?=
+ =?us-ascii?Q?V7pmwArs/bIXD+8lC21+mexsE5dtHVBZz9j8KNgLGLjRKyl/h1gJ3fV48w0j?=
+ =?us-ascii?Q?5oIX3vl0zcw65Q0HpjOqAeYCxyOx2JjPfZn3rw+UXT8ThKcb6FbxOGbXQfx/?=
+ =?us-ascii?Q?eHY6jXSQNZwKnbhGECl4m/xh51rJnPMHReFKF/i2OE9j4x3WjDKALGty17DX?=
+ =?us-ascii?Q?wrRjEHaTbj3VRboel4wwsQUtIuop39C2WZiOBZWZ/b79liwB+utOUDA3zV0t?=
+ =?us-ascii?Q?AlYilxBkBp+WkKiWZVE4MgzU0oNTMQVGH5k6Ov5KI9oIolsLp/VUtk4ZTtme?=
+ =?us-ascii?Q?FrGJ8f92nuwnY+Y6uaHk322MvXGQAaRl6xYgyvp+e/9jdfbg7o2XvfsMutxA?=
+ =?us-ascii?Q?pCxmmWDEzvxmwDeOCYeP15+bnqY++FKWS5QaDt/FPUBYVbT5erNy4j4lrNPK?=
+ =?us-ascii?Q?wL8uB76YgazbQNVkVAjETGsCKEgdBOB9W7tQ?=
 X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(7416014)(376014)(36860700013)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(376014)(36860700013)(7416014)(1800799024);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2025 06:00:30.6649
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2025 06:00:34.2926
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d8bdc798-be1a-4168-3323-08ddbf7713ad
+X-MS-Exchange-CrossTenant-Network-Message-Id: df2ae70a-4343-4d6f-7de6-08ddbf7715d3
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	CH2PEPF00000147.namprd02.prod.outlook.com
+	CH2PEPF00000149.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7522
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6072
 
-Add IOMMUFD_OBJ_HW_QUEUE with an iommufd_hw_queue structure, representing
-a HW-accelerated queue type of IOMMU's physical queue that can be passed
-through to a user space VM for direct hardware control, such as:
- - NVIDIA's Virtual Command Queue
- - AMD vIOMMU's Command Buffer, Event Log Buffers, and PPR Log Buffers
+NVIDIA Virtual Command Queue is one of the iommufd users exposing vIOMMU
+features to user space VMs. Its hardware has a strict rule when mapping
+and unmapping multiple global CMDQVs to/from a VM-owned VINTF, requiring
+mappings in ascending order and unmappings in descending order.
 
-Add new viommu ops for iommufd to communicate with IOMMU drivers to fetch
-supported HW queue structure size and to forward user space ioctls to the
-IOMMU drivers for initialization/destroy.
+The tegra241-cmdqv driver can apply the rule for a mapping in the LVCMDQ
+allocation handler. However, it can't do the same for an unmapping since
+user space could start random destroy calls breaking the rule, while the
+destroy op in the driver level can't reject a destroy call as it returns
+void.
 
-As the existing HWs, NVIDIA's VCMDQs access the guest memory via physical
-addresses, while AMD's Buffers access the guest memory via guest physical
-addresses (i.e. iova of the nesting parent HWPT). Separate two mutually
-exclusive hw_queue_init and hw_queue_init_phys ops to indicate whether a
-vIOMMU HW accesses the guest queue in the guest physical space (via iova)
-or the host physical space (via pa).
+Add iommufd_hw_queue_depend/undepend for-driver helpers, allowing LVCMDQ
+allocator to refcount_inc() a sibling LVCMDQ object and LVCMDQ destroyer
+to refcount_dec(), so that iommufd core will help block a random destroy
+call that breaks the rule.
 
-In a latter case, the iommufd core will validate the physical pages of a
-given guest queue, to ensure the underlying physical pages are contiguous
-and pinned.
-
-Since this is introduced with NVIDIA's VCMDQs, add hw_queue_init_phys for
-now, and leave some notes for hw_queue_init in the near future (for AMD).
-
-Either NVIDIA's or AMD's HW is a multi-queue model: NVIDIA's will be only
-one type in enum iommu_hw_queue_type, while AMD's will be three different
-types (two of which will have multi queues). Compared to letting the core
-manage multiple queues with three types per vIOMMU object, it'd be easier
-for the driver to manage that by having three different driver-structure
-arrays per vIOMMU object. Thus, pass in the index to the init op.
+This is a bit of compromise, because a driver might end up with abusing
+the API that deadlocks the objects. So restrict the API to a dependency
+between two driver-allocated objects of the same type, as iommufd would
+unlikely build any core-level dependency in this case. And encourage to
+use the macro version that currently supports the HW QUEUE objects only.
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- include/linux/iommufd.h      | 42 ++++++++++++++++++++++++++++++++++++
- include/uapi/linux/iommufd.h |  9 ++++++++
- 2 files changed, 51 insertions(+)
+ include/linux/iommufd.h        | 44 ++++++++++++++++++++++++++++++++++
+ drivers/iommu/iommufd/driver.c | 28 ++++++++++++++++++++++
+ 2 files changed, 72 insertions(+)
 
 diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
-index bdd10a85eeef..f13f3ca6adb5 100644
+index ce4011a2fc27..fa23439fa483 100644
 --- a/include/linux/iommufd.h
 +++ b/include/linux/iommufd.h
-@@ -37,6 +37,7 @@ enum iommufd_object_type {
- 	IOMMUFD_OBJ_VIOMMU,
- 	IOMMUFD_OBJ_VDEVICE,
- 	IOMMUFD_OBJ_VEVENTQ,
-+	IOMMUFD_OBJ_HW_QUEUE,
- #ifdef CONFIG_IOMMUFD_TEST
- 	IOMMUFD_OBJ_SELFTEST,
- #endif
-@@ -119,6 +120,19 @@ struct iommufd_vdevice {
- 	void (*destroy)(struct iommufd_vdevice *vdev);
- };
+@@ -251,6 +251,10 @@ static inline int iommufd_vfio_compat_set_no_iommu(struct iommufd_ctx *ictx)
+ #endif /* CONFIG_IOMMUFD */
  
-+struct iommufd_hw_queue {
-+	struct iommufd_object obj;
-+	struct iommufd_viommu *viommu;
+ #if IS_ENABLED(CONFIG_IOMMUFD_DRIVER_CORE)
++int _iommufd_object_depend(struct iommufd_object *obj_dependent,
++			   struct iommufd_object *obj_depended);
++void _iommufd_object_undepend(struct iommufd_object *obj_dependent,
++			      struct iommufd_object *obj_depended);
+ struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+ 				       unsigned long vdev_id);
+ int iommufd_viommu_get_vdev_id(struct iommufd_viommu *viommu,
+@@ -259,6 +263,18 @@ int iommufd_viommu_report_event(struct iommufd_viommu *viommu,
+ 				enum iommu_veventq_type type, void *event_data,
+ 				size_t data_len);
+ #else /* !CONFIG_IOMMUFD_DRIVER_CORE */
++static inline int _iommufd_object_depend(struct iommufd_object *obj_dependent,
++					 struct iommufd_object *obj_depended)
++{
++	return -EOPNOTSUPP;
++}
 +
-+	u64 base_addr; /* in guest physical address space */
-+	size_t length;
++static inline void
++_iommufd_object_undepend(struct iommufd_object *obj_dependent,
++			 struct iommufd_object *obj_depended)
++{
++}
 +
-+	enum iommu_hw_queue_type type;
-+
-+	/* Clean up all driver-specific parts of an iommufd_hw_queue */
-+	void (*destroy)(struct iommufd_hw_queue *hw_queue);
-+};
-+
- /**
-  * struct iommufd_viommu_ops - vIOMMU specific operations
-  * @destroy: Clean up all driver-specific parts of an iommufd_viommu. The memory
-@@ -143,6 +157,22 @@ struct iommufd_vdevice {
-  *                include/uapi/linux/iommufd.h)
-  *                If driver has a deinit function to revert what vdevice_init op
-  *                does, it should set it to the @vdev->destroy function pointer
-+ * @get_hw_queue_size: Get the size of a driver-defined HW queue structure for a
-+ *                     given @viommu corresponding to @queue_type. Driver should
-+ *                     return 0 if HW queue aren't supported accordingly. It is
-+ *                     required for driver to use the HW_QUEUE_STRUCT_SIZE macro
-+ *                     to sanitize the driver-level HW queue structure related
-+ *                     to the core one
-+ * @hw_queue_init_phys: Initialize the driver-level structure of a HW queue that
-+ *                      is initialized with its core-level structure that holds
-+ *                      all the info about a guest queue memory.
-+ *                      Driver providing this op indicates that HW accesses the
-+ *                      guest queue memory via physical addresses.
-+ *                      @index carries the logical HW QUEUE ID per vIOMMU in a
-+ *                      guest VM, for a multi-queue model. @base_addr_pa carries
-+ *                      the physical location of the guest queue
-+ *                      If driver has a deinit function to revert what this op
-+ *                      does, it should set it to the @hw_queue->destroy pointer
-  */
- struct iommufd_viommu_ops {
- 	void (*destroy)(struct iommufd_viommu *viommu);
-@@ -153,6 +183,11 @@ struct iommufd_viommu_ops {
- 				struct iommu_user_data_array *array);
- 	const size_t vdevice_size;
- 	int (*vdevice_init)(struct iommufd_vdevice *vdev);
-+	size_t (*get_hw_queue_size)(struct iommufd_viommu *viommu,
-+				    enum iommu_hw_queue_type queue_type);
-+	/* AMD's HW will add hw_queue_init simply using @hw_queue->base_addr */
-+	int (*hw_queue_init_phys)(struct iommufd_hw_queue *hw_queue, u32 index,
-+				  phys_addr_t base_addr_pa);
- };
- 
- #if IS_ENABLED(CONFIG_IOMMUFD)
-@@ -255,4 +290,11 @@ static inline int iommufd_viommu_report_event(struct iommufd_viommu *viommu,
- 	 BUILD_BUG_ON_ZERO(offsetof(drv_struct, member)) +                     \
- 	 BUILD_BUG_ON_ZERO(!__same_type(struct iommufd_vdevice,                \
+ static inline struct device *
+ iommufd_viommu_find_dev(struct iommufd_viommu *viommu, unsigned long vdev_id)
+ {
+@@ -298,4 +314,32 @@ static inline int iommufd_viommu_report_event(struct iommufd_viommu *viommu,
+ 	 BUILD_BUG_ON_ZERO(!__same_type(struct iommufd_hw_queue,               \
  					((drv_struct *)NULL)->member)))
-+
-+#define HW_QUEUE_STRUCT_SIZE(drv_struct, member)                               \
-+	(sizeof(drv_struct) +                                                  \
-+	 BUILD_BUG_ON_ZERO(offsetof(drv_struct, member)) +                     \
-+	 BUILD_BUG_ON_ZERO(!__same_type(struct iommufd_hw_queue,               \
-+					((drv_struct *)NULL)->member)))
-+
- #endif
-diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
-index 04eee77335cf..640a8b5147c2 100644
---- a/include/uapi/linux/iommufd.h
-+++ b/include/uapi/linux/iommufd.h
-@@ -1147,4 +1147,13 @@ struct iommu_veventq_alloc {
- 	__u32 __reserved;
- };
- #define IOMMU_VEVENTQ_ALLOC _IO(IOMMUFD_TYPE, IOMMUFD_CMD_VEVENTQ_ALLOC)
-+
-+/**
-+ * enum iommu_hw_queue_type - HW Queue Type
-+ * @IOMMU_HW_QUEUE_TYPE_DEFAULT: Reserved for future use
+ 
++/*
++ * Helpers for IOMMU driver to build/destroy a dependency between two sibling
++ * structures created by one of the allocators above
 + */
-+enum iommu_hw_queue_type {
-+	IOMMU_HW_QUEUE_TYPE_DEFAULT = 0,
-+};
++#define iommufd_hw_queue_depend(dependent, depended, member)                   \
++	({                                                                     \
++		int ret = -EINVAL;                                             \
++									       \
++		static_assert(__same_type(struct iommufd_hw_queue,             \
++					  dependent->member));                 \
++		static_assert(__same_type(typeof(*dependent), *depended));     \
++		if (!WARN_ON_ONCE(dependent->member.viommu !=                  \
++				  depended->member.viommu))                    \
++			ret = _iommufd_object_depend(&dependent->member.obj,   \
++						     &depended->member.obj);   \
++		ret;                                                           \
++	})
 +
++#define iommufd_hw_queue_undepend(dependent, depended, member)                 \
++	({                                                                     \
++		static_assert(__same_type(struct iommufd_hw_queue,             \
++					  dependent->member));                 \
++		static_assert(__same_type(typeof(*dependent), *depended));     \
++		WARN_ON_ONCE(dependent->member.viommu !=                       \
++			     depended->member.viommu);                         \
++		_iommufd_object_undepend(&dependent->member.obj,               \
++					 &depended->member.obj);               \
++	})
  #endif
+diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
+index 887719016804..e578ef32d30c 100644
+--- a/drivers/iommu/iommufd/driver.c
++++ b/drivers/iommu/iommufd/driver.c
+@@ -3,6 +3,34 @@
+  */
+ #include "iommufd_private.h"
+ 
++/* Driver should use a per-structure helper in include/linux/iommufd.h */
++int _iommufd_object_depend(struct iommufd_object *obj_dependent,
++			   struct iommufd_object *obj_depended)
++{
++	/* Reject self dependency that dead locks */
++	if (obj_dependent == obj_depended)
++		return -EINVAL;
++	/* Only support dependency between two objects of the same type */
++	if (obj_dependent->type != obj_depended->type)
++		return -EINVAL;
++
++	refcount_inc(&obj_depended->users);
++	return 0;
++}
++EXPORT_SYMBOL_NS_GPL(_iommufd_object_depend, "IOMMUFD");
++
++/* Driver should use a per-structure helper in include/linux/iommufd.h */
++void _iommufd_object_undepend(struct iommufd_object *obj_dependent,
++			      struct iommufd_object *obj_depended)
++{
++	if (WARN_ON_ONCE(obj_dependent == obj_depended ||
++			 obj_dependent->type != obj_depended->type))
++		return;
++
++	refcount_dec(&obj_depended->users);
++}
++EXPORT_SYMBOL_NS_GPL(_iommufd_object_undepend, "IOMMUFD");
++
+ /* Caller should xa_lock(&viommu->vdevs) to protect the return value */
+ struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+ 				       unsigned long vdev_id)
 -- 
 2.43.0
 
