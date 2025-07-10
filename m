@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90302221290;
-	Thu, 10 Jul 2025 13:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF917993;
+	Thu, 10 Jul 2025 13:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752153423; cv=none; b=rpMmG1LOsBAya+RD5nIJnosxJf5GlIhaZJIAJ2TGW5epkCyTn6bZXCfKf1u1KnpY4LgCJ4/ZTREUqyvL401PZmPHnHzCtPip1wq4FyqyVrr59qy742UMP9f1+cbG0iVFNqLFVq9m2qgx1wlxWh991k6zxo9FOhIWCFn8dln5ltE=
+	t=1752153483; cv=none; b=LVItZFItE9v3GnklY/7VFiMN2ae0ll0yzdsQwf5XWONQU6e4qbKYZ7dZPBUF/qjzdBkSbCSLV/N+yyaeZBx4Hp921/6zGyjRwd2wqM2oHLz2ozwZOTfezTZLtaRJOy3ffzpBerS/bGjhaiZy/AZlSm7r7EEZQMGRYk+/f+5Crjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752153423; c=relaxed/simple;
-	bh=90azQJZSwo2IVdYQNYBd2nthNRaHFxNtog/QVsJkiHQ=;
+	s=arc-20240116; t=1752153483; c=relaxed/simple;
+	bh=1rtiOKlL0gjZt0JsCJ4IP4OtVn/TjSI4IPpsxl+t7Qs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=knOyShGW1mE/sfaN/ufp4wCD5L3Cr4lHBMeOgUlz7q9ivjp7+w7t+ed6dfe5xzdYSdukhaTM8vDJ7I23DHrK4z9aKcjAbP77B5Cl4xwT3o0RAC8qB+fiMcev4QtMirf4eDKDoY4Xv3dsMJOIEzW2NXjpZyE/HPd3GyLn/BCopjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chC32Xdt; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=HKkP0GPgA/+CNTUXgNdvaX7H8j9n5EFNkQ7vVaj/8U5Wcqmtkn8S46vl8xEmdJ7wPlH7NX8kjcPNEKI7dIVyCJ4FFqqkQJGthbxZttnYfTW7bj/nKrHQO00NsKTXfNVeqLf4yaMyyjxhJM56SjptmvmQzNOBRbrm0jflqhATqfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFtdLgt4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chC32Xdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC58C4CEE3;
-	Thu, 10 Jul 2025 13:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFtdLgt4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD52CC4CEED;
+	Thu, 10 Jul 2025 13:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752153423;
-	bh=90azQJZSwo2IVdYQNYBd2nthNRaHFxNtog/QVsJkiHQ=;
+	s=korg; t=1752153483;
+	bh=1rtiOKlL0gjZt0JsCJ4IP4OtVn/TjSI4IPpsxl+t7Qs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=chC32Xdtoi+pWSToPQUF2SPLPOZJsa9M0Cijz1A4jTFbAs8EnhU9rnxND0DTAzMYF
-	 tjKZDUVlKsTu2h11LaQnFPgOrXQOo9vQStP6fH1fKmhPbcr60/GEW5XzqMdWdz2b+d
-	 LeXZgBpcv8ZfdrHDjp/RVW9YwAc8wktOXKaaBHqo=
-Date: Thu, 10 Jul 2025 15:16:59 +0200
+	b=GFtdLgt4W82WAVOdQTSekyXcJPYEsnenZxIzh2gNcwm8tfmYlugWKfoLT1HBMMkIL
+	 Ia6rHN3we7qcZsrKInElBLHSzpJMDNR96XKR5urwiFbk3pypsEJ8XYBaJgPjnEd78D
+	 LZtlKBSSXCaM/CZo8w4PHyzJsZIP2ke4QAxf/NTE=
+Date: Thu, 10 Jul 2025 15:18:00 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Niklas Schnelle <schnelle@linux.ibm.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -31,26 +31,25 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	Gerd Bayer <gbayer@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 60/81] s390/pci: Fix stale function handles in error
- handling
-Message-ID: <2025071041-liable-postal-77b7@gregkh>
-References: <20250708162224.795155912@linuxfoundation.org>
- <20250708162226.893789793@linuxfoundation.org>
- <6bca64221f8954adcdcfe6b5639e29c7fee4b03a.camel@linux.ibm.com>
+Subject: Re: [PATCH 6.6 108/132] s390/pci: Fix stale function handles in
+ error handling
+Message-ID: <2025071037-bulgur-frostily-3a6b@gregkh>
+References: <20250708162230.765762963@linuxfoundation.org>
+ <20250708162233.754242912@linuxfoundation.org>
+ <23b7e8e20d7f660513dce9c70958af81057f0f46.camel@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6bca64221f8954adcdcfe6b5639e29c7fee4b03a.camel@linux.ibm.com>
+In-Reply-To: <23b7e8e20d7f660513dce9c70958af81057f0f46.camel@linux.ibm.com>
 
-On Thu, Jul 10, 2025 at 10:14:17AM +0200, Niklas Schnelle wrote:
+On Thu, Jul 10, 2025 at 10:36:06AM +0200, Niklas Schnelle wrote:
 > On Tue, 2025-07-08 at 18:23 +0200, Greg Kroah-Hartman wrote:
-> > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > 6.6-stable review patch.  If anyone has any objections, please let me know.
 > > 
 > > ------------------
 > > 
@@ -77,11 +76,11 @@ On Thu, Jul 10, 2025 at 10:14:17AM +0200, Niklas Schnelle wrote:
 > > Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 > > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > > ---
-> >  arch/s390/pci/pci_event.c | 16 ++++++++++++++++
-> >  1 file changed, 16 insertions(+)
+> >  arch/s390/pci/pci_event.c | 14 ++++++++++++++
+> >  1 file changed, 14 insertions(+)
 > > 
 > > diff --git a/arch/s390/pci/pci_event.c b/arch/s390/pci/pci_event.c
-> > index d969f36bf186f..dc512c8f82324 100644
+> > index d969f36bf186f..fd83588f3c11d 100644
 > > --- a/arch/s390/pci/pci_event.c
 > > +++ b/arch/s390/pci/pci_event.c
 > > @@ -257,6 +257,8 @@ static void __zpci_event_error(struct zpci_ccdf_err *ccdf)
@@ -93,49 +92,56 @@ On Thu, Jul 10, 2025 at 10:14:17AM +0200, Niklas Schnelle wrote:
 > >  
 > >  	zpci_dbg(3, "err fid:%x, fh:%x, pec:%x\n",
 > >  		 ccdf->fid, ccdf->fh, ccdf->pec);
-> > @@ -264,9 +266,23 @@ static void __zpci_event_error(struct zpci_ccdf_err *ccdf)
+> > @@ -264,6 +266,16 @@ static void __zpci_event_error(struct zpci_ccdf_err *ccdf)
 > >  	zpci_err_hex(ccdf, sizeof(*ccdf));
 > >  
 > >  	if (zdev) {
 > > +		mutex_lock(&zdev->state_lock);
+> 
+> This won't compile this tree misses commit bcb5d6c76903 ("s390/pci:
+> introduce lock to synchronize state of zpci_dev's").
+> 
 > > +		rc = clp_refresh_fh(zdev->fid, &fh);
-> > +		if (rc) {
-> > +			mutex_unlock(&zdev->state_lock);
+> > +		if (rc)
 > > +			goto no_pdev;
-> > +		}
 > > +		if (!fh || ccdf->fh != fh) {
 > > +			/* Ignore events with stale handles */
 > > +			zpci_dbg(3, "err fid:%x, fh:%x (stale %x)\n",
 > > +				 ccdf->fid, fh, ccdf->fh);
-> > +			mutex_unlock(&zdev->state_lock);
 > > +			goto no_pdev;
 > > +		}
 > >  		zpci_update_fh(zdev, ccdf->fh);
 > >  		if (zdev->zbus->bus)
 > >  			pdev = pci_get_slot(zdev->zbus->bus, zdev->devfn);
-> > +		mutex_unlock(&zdev->state_lock);
+> > @@ -292,6 +304,8 @@ static void __zpci_event_error(struct zpci_ccdf_err *ccdf)
 > >  	}
+> >  	pci_dev_put(pdev);
+> >  no_pdev:
+> > +	if (zdev)
+> > +		mutex_unlock(&zdev->state_lock);
+> 
+> Curiously this patch was adjusted differently here vs for 6.1.y, this
+> one at least places the unlock in the same place as upstream.
+> 
+> >  	zpci_zdev_put(zdev);
+> >  }
 > >  
-> >  	pr_err("%s: Event 0x%x reports an error for PCI function 0x%x\n",
 > 
-> Sorry I only noticed this due to a build error report but this backport
-> is NOT CORRECT. The mutex_lock(&zdev->state_lock) line that was context
-> in the original commit was part of commit bcb5d6c76903 ("s390/pci:
-> introduce lock to synchronize state of zpci_dev's") which also added
-> the mutex and isn't in this tree. So without pulling that in as a
-> prerequisite this won't compile. 
+> Please drop this patch! Ten can we pull in commit bcb5d6c76903
+> ("s390/pci: introduce lock to synchronize state of zpci_dev's")
+> as a prerequiste? This fix would still work for its specific issue
+> without the mutex i.e. just adjusting context but I'd prefer to have
+> both in stable.
 > 
-> Also and kind of worse the above puts the mutex_unlock() in the wrong
-> place! Please drop/revert this patch. 
-> 
-> The original commit here should work for its specific problem even
-> without the backport of the mutex though I think it would be best to
-> get that into stable as well. Sorry for not marking it as a dependency.
-> That said, shouldn't there be a note that this backport deviates
-> significantly from the upstream commit?
+> Also, I wonder if it would be possible to have the subject of these
+> kind of mails indicate if the backport patch was adjusted more than
+> just line offsets or context? I think that would make it much easier to
+> spot where extra attention is required.
 
-Already dropped, as something went wrong here.
+Already dropped.  And yes, it should have contained some
+meta-information about this, normally that goes in the signed-off-by
+area.
 
-thanks for the review.
+thanks,
 
 greg k-h
