@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD4D2376F2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7315822F14D
 	for <patches@lists.linux.dev>; Fri, 11 Jul 2025 23:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752278045; cv=none; b=Hs/bSQzilhhzxARRU5o8PUE+bn93PFLi0LnUG4LO5ib8dJZ2LmaQ1FvlxYrRbFM++OUsRJuXHlmz27RRCT3Ox3Q96UAM6/yYpLpDI24XJcpfb3uIKlHrS0xappfqxyIr95QQ7s9YMpodFk8irbxx1Qa4uWw4yBpSbIZivfxV/EU=
+	t=1752278045; cv=none; b=Eloh+7YT5Xo/0025NMYshNjESgeWkDdODkZAMWtHVJ9CPaY4e175YCVDpvR2H/Miws7f3A9M1URiMOusZ9XxokyrFkkTL+VbbMr+VGXoE8fTbr4NrL2I6Aw02QYxQXBVfjrSRJNe5MzEGM1ZNc7yQtRVmmFOVcGU0toLPGCH8Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752278045; c=relaxed/simple;
-	bh=y2IWWBJDVHa721h8SD4SfjCT+yM4YgRx5AF9TwjxUFY=;
+	bh=H9pNqnslVKf0POo/3redOQn+y5DVSgdkaqPFIc2iWwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixh412/h0JUN5ppxZdn3+ZJRdYrIK3XxA8cIqE7ScO/cjm37Tpm7YXRMdvTH4xVrISEYokQv3qbyObUOyKw+OtvHZBDjmcgz782PdiSKU+5gjDmPp8E0WDCBEPUaC1IXTFrmiTRTHWfMkmk1Qb6TI5Ht5Hl+AYvJdi4hzbkYC58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=k53YPPdF; arc=none smtp.client-ip=198.175.65.20
+	 MIME-Version; b=kknW8CUN2HrtSJdTh9yHSJAXkPrT5sNurYwusGROw+KT5PNKOim2r+nw/5SJjmVdto5mrA4CL5uoLeEe4hjkUTkI08k7k/GB2GC0d59+WLf6mi//eGmePH4WFvdFoDt8oXyKa5YA+1X7U1PgQcNmy14rzqX6L+6UfDA75EZEi2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DikEoRRI; arc=none smtp.client-ip=198.175.65.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="k53YPPdF"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DikEoRRI"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1752278043; x=1783814043;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=y2IWWBJDVHa721h8SD4SfjCT+yM4YgRx5AF9TwjxUFY=;
-  b=k53YPPdFtGplE0BK1NsAYMR3lbLyKQPlLOJbaKADlPQFajthNYqJPFGD
-   gjM2jFBW7zsNzlHbxR3oreHdNT6FN3QFq9VC2ulnppGAsjskVcmN9sVcU
-   ttUmeSA1BKgvqdaND1EtHTMGmQ8Jl4HbOvlo3zZ2JmDUw0VCQaf20z/vB
-   MBeZGlJKagNyqt4zJVxrDFqcZoK/oxjdvvxrcCSvrIbiM/I/fkk8k0Xmm
-   pwsERup+Ru1E3jktlcxGQnTEcaXDrGgIJvBmaTtftbTghXHUN71E2RAvR
-   VAdAfm2lkR4UuuKOzjaMoh3lCF/JQ0WASQaJQ39nGfGt3htzvud1825nt
-   g==;
-X-CSE-ConnectionGUID: o0mBrg3XTR6AotIzYkG7NQ==
-X-CSE-MsgGUID: 8Wa9UoS8Sl+9SEHiksiyKA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54292709"
+  bh=H9pNqnslVKf0POo/3redOQn+y5DVSgdkaqPFIc2iWwA=;
+  b=DikEoRRIoy3uamoGggnssCGUpTOIXaKGWLRryRaNezNVlq/ClKCPQ+Gc
+   kYC75PLY6Dik9GIYvakgSdszNmbcCodiiYQxOm2ExTKf5HUpuNnNxRe8V
+   mEiRsSPkinZUWezR8k0oJy72AzgmchYL+jMzjF1uJP7ZrYJyD1VhlfGUu
+   2eqe1K0gyy7OSCitFXI8n+V5qhkuWZHQkErl/ZN87bosP6sMCB13hACP/
+   VAjciTj5/nkdFmfo16lj2I2oHbSRSJUgEBSE8306+6Q2oZe5+q0VjNKiG
+   C1pdC0LTZcv1jImeSC/M3JbusnloOZr3wRt9I81ge2zdINph554WZbCWI
+   Q==;
+X-CSE-ConnectionGUID: 2NmR3RPuRr2Iq8lZ4VzULw==
+X-CSE-MsgGUID: 6RKFDl2JSpqffHuGzyLnbA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54292717"
 X-IronPort-AV: E=Sophos;i="6.16,305,1744095600"; 
-   d="scan'208";a="54292709"
+   d="scan'208";a="54292717"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2025 16:54:00 -0700
-X-CSE-ConnectionGUID: sOGmGe1gTXiqU3K9iOWzaw==
-X-CSE-MsgGUID: tzhVrqbMRuGqv9tdnFDWNw==
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2025 16:54:01 -0700
+X-CSE-ConnectionGUID: ySJ5q6xxSW2858DrnSesAQ==
+X-CSE-MsgGUID: d3NTwtIsSIuPijuHTNuwvQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,305,1744095600"; 
-   d="scan'208";a="155902137"
+   d="scan'208";a="155902140"
 Received: from agluck-desk3.sc.intel.com ([172.25.103.51])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2025 16:54:00 -0700
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2025 16:54:01 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v7 17/31] x86/resctrl: Discover hardware telemetry events
-Date: Fri, 11 Jul 2025 16:53:24 -0700
-Message-ID: <20250711235341.113933-18-tony.luck@intel.com>
+Subject: [PATCH v7 18/31] x86/resctrl: Count valid telemetry aggregators per package
+Date: Fri, 11 Jul 2025 16:53:25 -0700
+Message-ID: <20250711235341.113933-19-tony.luck@intel.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250711235341.113933-1-tony.luck@intel.com>
 References: <20250711235341.113933-1-tony.luck@intel.com>
@@ -72,269 +72,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hardware has one or more telemetry event aggregators per package
-for each group of telemetry events. Each aggregator provides access
-to event counts in an array of 64-bit values in MMIO space. There
-is a "guid" (in this case a unique 32-bit integer) which refers to
-an XML file published in https://github.com/intel/Intel-PMT
-that provides all the details about each aggregator.
+There may be multiple telemetry aggregators per package, each enumerated
+by a telemetry region structure in the feature group.
 
-The XML file provides the following information:
-1) Which telemetry events are included in the group for this aggregator.
-2) The order in which the event counters appear for each RMID.
-3) The value type of each event counter (integer or fixed-point).
-4) The number of RMIDs supported.
-5) Which additional aggregator status registers are included.
-6) The total size of the MMIO region for this aggregator.
+Scan the array of telemetry region structures and count how many are
+in each package in preparation to allocate structures to save the MMIO
+addresses for each in a convenient format for use when reading event
+counters.
 
-Each aggregator makes event counters available to Linux in
-a region of MMIO memory. Enumeration of these regions is
-done by the INTEL_PMT_DISCOVERY discovery driver.
-
-Add a new Kconfig option CONFIG_X86_RESCTRL_CPU_INTEL_AET for the
-Intel specific parts of telemetry code. This depends on the
-INTEL_PMT_DISCOVERY driver being built-in to the kernel for
-enumeration of telemetry features.
-
-Call intel_pmt_get_regions_by_feature() for each pmt_feature_id
-that indicates per-RMID telemetry.
-
-Save the returned pmt_feature_group pointers with guids that are known
-to resctrl for use at run time.
-
-Those pointers are returned to the INTEL_PMT_DISCOVERY driver at
-resctrl_arch_exit() time.
-
-Note that checkpatch complains about the alignment of additional
-lines in the definition of the intel_pmt_put_feature_group
-cleanup helper. I didn't find a way to appease conflicting
-requirements from checkpatch.
+Sanity check that the telemetry region structures have a valid
+package_id and that the size they report for the MMIO space is as
+large as expected from the XML description of the registers in
+the region.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h  |   8 ++
- arch/x86/kernel/cpu/resctrl/core.c      |   5 +
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 133 ++++++++++++++++++++++++
- arch/x86/Kconfig                        |  13 +++
- arch/x86/kernel/cpu/resctrl/Makefile    |   1 +
- 5 files changed, 160 insertions(+)
- create mode 100644 arch/x86/kernel/cpu/resctrl/intel_aet.c
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 55 ++++++++++++++++++++++++-
+ 1 file changed, 53 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 684a1b830ced..36a2072c19c7 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -169,4 +169,12 @@ void __init intel_rdt_mbm_apply_quirk(void);
- 
- void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
- 
-+#ifdef CONFIG_X86_RESCTRL_CPU_INTEL_AET
-+bool intel_aet_get_events(void);
-+void __exit intel_aet_exit(void);
-+#else
-+static inline bool intel_aet_get_events(void) { return false; }
-+static inline void __exit intel_aet_exit(void) { }
-+#endif
-+
- #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 2b2f76c76d73..b8288f5d4aff 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -734,6 +734,9 @@ void resctrl_arch_pre_mount(void)
- 
- 	if (!atomic_try_cmpxchg(&only_once, &old, 1))
- 		return;
-+
-+	if (!intel_aet_get_events())
-+		return;
- }
- 
- enum {
-@@ -1086,6 +1089,8 @@ late_initcall(resctrl_arch_late_init);
- 
- static void __exit resctrl_arch_exit(void)
- {
-+	intel_aet_exit();
-+
- 	cpuhp_remove_state(rdt_online);
- 
- 	resctrl_exit();
 diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-new file mode 100644
-index 000000000000..d177e5aa1f6a
---- /dev/null
+index d177e5aa1f6a..7cd6c06f9205 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
 +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -0,0 +1,133 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Resource Director Technology(RDT)
-+ * - Intel Application Energy Telemetry
-+ *
-+ * Copyright (C) 2025 Intel Corporation
-+ *
-+ * Author:
-+ *    Tony Luck <tony.luck@intel.com>
-+ */
+@@ -15,6 +15,7 @@
+ #include <linux/cpu.h>
+ #include <linux/intel_vsec.h>
+ #include <linux/resctrl.h>
++#include <linux/slab.h>
+ 
+ #include "internal.h"
+ 
+@@ -25,6 +26,7 @@
+  *			telemetry regions.
+  * @list:		List of active event groups.
+  * @guid:		Unique number per XML description file.
++ * @mmio_size:		Number of bytes of MMIO registers for this group.
+  */
+ struct event_group {
+ 	/* Data fields for additional structures to manage this group. */
+@@ -33,16 +35,21 @@ struct event_group {
+ 
+ 	/* Remaining fields initialized from XML file. */
+ 	u32				guid;
++	size_t				mmio_size;
+ };
+ 
+ static LIST_HEAD(active_event_groups);
+ 
++#define XML_MMIO_SIZE(num_rmids, num_events, num_extra_status) \
++	(((num_rmids) * (num_events) + (num_extra_status)) * sizeof(u64))
 +
-+#define pr_fmt(fmt)   "resctrl: " fmt
-+
-+#include <linux/cleanup.h>
-+#include <linux/cpu.h>
-+#include <linux/intel_vsec.h>
-+#include <linux/resctrl.h>
-+
-+#include "internal.h"
-+
-+/**
-+ * struct event_group - All information about a group of telemetry events.
-+ * @pfg:		Points to the aggregated telemetry space information
-+ *			within the OOBMSM driver that contains data for all
-+ *			telemetry regions.
-+ * @list:		List of active event groups.
-+ * @guid:		Unique number per XML description file.
-+ */
-+struct event_group {
-+	/* Data fields for additional structures to manage this group. */
-+	struct pmt_feature_group	*pfg;
-+	struct list_head		list;
-+
-+	/* Remaining fields initialized from XML file. */
-+	u32				guid;
-+};
-+
-+static LIST_HEAD(active_event_groups);
-+
-+/*
-+ * Link: https://github.com/intel/Intel-PMT
-+ * File: xml/CWF/OOBMSM/RMID-ENERGY/cwf_aggregator.xml
-+ */
-+static struct event_group energy_0x26696143 = {
-+	.guid		= 0x26696143,
-+};
-+
-+/*
-+ * Link: https://github.com/intel/Intel-PMT
-+ * File: xml/CWF/OOBMSM/RMID-PERF/cwf_aggregator.xml
-+ */
-+static struct event_group perf_0x26557651 = {
-+	.guid		= 0x26557651,
-+};
-+
-+static struct event_group *known_energy_event_groups[] = {
-+	&energy_0x26696143,
-+};
-+
-+#define NUM_KNOWN_ENERGY_GROUPS ARRAY_SIZE(known_energy_event_groups)
-+
-+static struct event_group *known_perf_event_groups[] = {
-+	&perf_0x26557651,
-+};
-+
-+#define NUM_KNOWN_PERF_GROUPS ARRAY_SIZE(known_perf_event_groups)
-+
-+/* Stub for now */
-+static int discover_events(struct event_group *e, struct pmt_feature_group *p)
+ /*
+  * Link: https://github.com/intel/Intel-PMT
+  * File: xml/CWF/OOBMSM/RMID-ENERGY/cwf_aggregator.xml
+  */
+ static struct event_group energy_0x26696143 = {
+ 	.guid		= 0x26696143,
++	.mmio_size	= XML_MMIO_SIZE(576, 2, 3),
+ };
+ 
+ /*
+@@ -51,6 +58,7 @@ static struct event_group energy_0x26696143 = {
+  */
+ static struct event_group perf_0x26557651 = {
+ 	.guid		= 0x26557651,
++	.mmio_size	= XML_MMIO_SIZE(576, 7, 3),
+ };
+ 
+ static struct event_group *known_energy_event_groups[] = {
+@@ -65,10 +73,53 @@ static struct event_group *known_perf_event_groups[] = {
+ 
+ #define NUM_KNOWN_PERF_GROUPS ARRAY_SIZE(known_perf_event_groups)
+ 
+-/* Stub for now */
++static bool skip_this_region(struct telemetry_region *tr, struct event_group *e)
 +{
-+	return -EINVAL;
-+}
-+
-+DEFINE_FREE(intel_pmt_put_feature_group, struct pmt_feature_group *,
-+		if (!IS_ERR_OR_NULL(_T))
-+			intel_pmt_put_feature_group(_T))
-+
-+/*
-+ * Make a request to the INTEL_PMT_DISCOVERY driver for the
-+ * pmt_feature_group for a specific feature. If there is
-+ * one the returned structure has an array of telemetry_region
-+ * structures. Each describes one telemetry aggregator.
-+ * Try to use any with a known matching guid.
-+ */
-+static bool get_pmt_feature(enum pmt_feature_id feature, struct event_group **evgs,
-+			    unsigned int num_evg)
-+{
-+	struct pmt_feature_group *p __free(intel_pmt_put_feature_group) = NULL;
-+	struct event_group **peg;
-+	bool ret;
-+
-+	p = intel_pmt_get_regions_by_feature(feature);
-+
-+	if (IS_ERR_OR_NULL(p))
-+		return false;
-+
-+	for (peg = evgs; peg < &evgs[num_evg]; peg++) {
-+		ret = discover_events(*peg, p);
-+		if (!ret) {
-+			(*peg)->pfg = no_free_ptr(p);
-+			return true;
-+		}
++	if (tr->guid != e->guid)
++		return true;
++	if (tr->plat_info.package_id >= topology_max_packages()) {
++		pr_warn_once("Bad package %d in guid 0x%x\n", tr->plat_info.package_id,
++			     tr->guid);
++		return true;
++	}
++	if (tr->size != e->mmio_size) {
++		pr_warn_once("MMIO space %zu wrong size for guid 0x%x\n", tr->size, e->guid);
++		return true;
 +	}
 +
 +	return false;
 +}
 +
 +/*
-+ * Ask OOBMSM discovery driver for all the RMID based telemetry groups
-+ * that it supports.
++ * Discover events from one pmt_feature_group.
++ * 1) Count how many usable telemetry regions per package.
++ * 2...) To be continued.
 + */
-+bool intel_aet_get_events(void)
-+{
-+	bool ret1, ret2;
+ static int discover_events(struct event_group *e, struct pmt_feature_group *p)
+ {
+-	return -EINVAL;
++	int *pkgcounts __free(kfree) = NULL;
++	struct telemetry_region *tr;
++	int num_pkgs;
 +
-+	ret1 = get_pmt_feature(FEATURE_PER_RMID_ENERGY_TELEM,
-+			       known_energy_event_groups, NUM_KNOWN_ENERGY_GROUPS);
-+	ret2 = get_pmt_feature(FEATURE_PER_RMID_PERF_TELEM,
-+			       known_perf_event_groups, NUM_KNOWN_PERF_GROUPS);
++	num_pkgs = topology_max_packages();
 +
-+	return ret1 || ret2;
-+}
-+
-+void __exit intel_aet_exit(void)
-+{
-+	struct event_group *evg, *tmp;
-+
-+	list_for_each_entry_safe(evg, tmp, &active_event_groups, list) {
-+		intel_pmt_put_feature_group(evg->pfg);
-+		evg->pfg = NULL;
-+		list_del(&evg->list);
++	/* Get per-package counts of telemetry regions for this event group */
++	for (int i = 0; i < p->count; i++) {
++		tr = &p->regions[i];
++		if (skip_this_region(tr, e))
++			continue;
++		if (!pkgcounts) {
++			pkgcounts = kcalloc(num_pkgs, sizeof(*pkgcounts), GFP_KERNEL);
++			if (!pkgcounts)
++				return -ENOMEM;
++		}
++		pkgcounts[tr->plat_info.package_id]++;
 +	}
-+}
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 340e5468980e..21c2d1022b15 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -528,6 +528,19 @@ config X86_CPU_RESCTRL
- 
- 	  Say N if unsure.
- 
-+config X86_RESCTRL_CPU_INTEL_AET
-+	bool "Intel Application Energy Telemetry" if INTEL_PMT_DISCOVERY=y
-+	depends on X86_CPU_RESCTRL && CPU_SUP_INTEL
-+	help
-+	  Enable per-RMID telemetry events in resctrl
 +
-+	  Intel feature that collects per-RMID execution data
-+	  about energy consumption, measure of frequency independent
-+	  activity and other performance metrics. Data is aggregated
-+	  per package.
++	if (!pkgcounts)
++		return -ENODEV;
 +
-+	  Say N if unsure.
-+
- config X86_FRED
- 	bool "Flexible Return and Event Delivery"
- 	depends on X86_64
-diff --git a/arch/x86/kernel/cpu/resctrl/Makefile b/arch/x86/kernel/cpu/resctrl/Makefile
-index d8a04b195da2..c86df4b23993 100644
---- a/arch/x86/kernel/cpu/resctrl/Makefile
-+++ b/arch/x86/kernel/cpu/resctrl/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_X86_CPU_RESCTRL)		+= core.o rdtgroup.o monitor.o
- obj-$(CONFIG_X86_CPU_RESCTRL)		+= ctrlmondata.o
-+obj-$(CONFIG_X86_RESCTRL_CPU_INTEL_AET)	+= intel_aet.o
- obj-$(CONFIG_RESCTRL_FS_PSEUDO_LOCK)	+= pseudo_lock.o
++	return 0;
+ }
  
- # To allow define_trace.h's recursive include:
+ DEFINE_FREE(intel_pmt_put_feature_group, struct pmt_feature_group *,
 -- 
 2.50.0
 
