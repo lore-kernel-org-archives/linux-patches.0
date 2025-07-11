@@ -1,233 +1,207 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2049.outbound.protection.outlook.com [40.107.92.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE8F2ED149
-	for <patches@lists.linux.dev>; Fri, 11 Jul 2025 15:40:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752248429; cv=none; b=dh/ltJArQPPzuTyxBh5Dp5xSce/o92VnNSJP8ro6A9DZNljOOJhHeVFNjNCg3WUu/Q4pjp0yoyGSGut0lvYzFph8nBy5o2bxTe8BGh1etkHHrV8X167jas6F3T/C5CLNkqBea4A0OObgYQHT61ZtKLGBV4XrdYZALCNs52Vs+vw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752248429; c=relaxed/simple;
-	bh=cRSEYeAZQIo3llsEJyfAYMMwsDk6fdhA/0tgZ9rZxlg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aozcnnC0LjTugBWmuTXA74OkURnnpPKmnLG07BV7W7UWzN6FU34cX7USypCnZWhmEVOTBd+HK8eHc2ens926QNqw25ET5ws0zcw6tVBZFzfn1YoiqzObv2szC7WT29eYvosGk6lQ4dZU1/qOhxNYXl6o7bqVxZ5KJUL/YRsbUIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DOGDZsOv; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2FC2ED149;
+	Fri, 11 Jul 2025 16:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752250103; cv=fail; b=aLECAXO50s3Oumnd+26iyjq18DEJgJZZKwT2TmzC6aU02CUJ8PrCcclFxPwMzKf15A3SFcGQAE3KjOG5b2teSoT5L0PU1SaaN6dNFwtGKLCAdS1NME0SGl7oSX1NH7UewPTAJv1xApBnj5moC+1Orbz53Xv8PwjypPyvzpGDucA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752250103; c=relaxed/simple;
+	bh=e+xpQ8ZtIf6hjTVsYGKxuBOVx3GJE/LcBCU/NXseTuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=X1tEhH85yUZNnnlEHRVPtfRVV6J7KrtEcGA5IqYFdvwEseMWufeVDw2yEOkCWA5AAHwMlnlxoXEAbDSoQkGb/1oaOjvV2C2ueB4YCI58La3SmetPk9SqGJ2NHJEEXZPP0GXhPrXhq0xHszxwXI+oDoNfvpvgVnj7Tgns7zazyv4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=f8DkaZxk; arc=fail smtp.client-ip=40.107.92.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DOGDZsOv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752248426;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cYYFL7iSZ/ER1ZVOlySXlTIkEzpjXHGgym0ucB+NEiw=;
-	b=DOGDZsOvrw23uC5kD654YOz47133FAxmCvcRGYqvXxi7EOiI2r5zzuj/wquXd9BoTF8HA5
-	zb0msLR7UAdODApFkZlN42e9RcgyK9vU5I30ThE79HZoiTXanrFG9NtqVLeTrC6wYQWHOX
-	7kj52WJq/X/ke77+045enjVYPJkqb8E=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-7F9JUJw3PDyZP4jxnHhxPw-1; Fri, 11 Jul 2025 11:40:25 -0400
-X-MC-Unique: 7F9JUJw3PDyZP4jxnHhxPw-1
-X-Mimecast-MFC-AGG-ID: 7F9JUJw3PDyZP4jxnHhxPw_1752248424
-Received: by mail-io1-f70.google.com with SMTP id ca18e2360f4ac-876b6482d29so36842739f.3
-        for <patches@lists.linux.dev>; Fri, 11 Jul 2025 08:40:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752248424; x=1752853224;
-        h=content-transfer-encoding:mime-version:organization:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cYYFL7iSZ/ER1ZVOlySXlTIkEzpjXHGgym0ucB+NEiw=;
-        b=jnju5qYfFDfS3Sa5uYKc3H//pGinM6+95VACQqZz5YGBb1NKFDmiw7vIFsr9BfKVdr
-         iW7TvgICoiyNHuUIPx7WaXL3aiypE2DMDs6ePsWVvXyj0DDtOiVwDkXI6G6q820pX/qg
-         jq7ubyrNsibVtFK5uSJr+RfWF4Ya3+TZ6LVVPvO0zwpb3G5cW1nmXsF1pGhDxyPpMG69
-         v+WevPbIe2Q4aTnGVM3r70AdoeeBF7JSn3m41VqeFKq60HqjMH/yMv/UcQsJHZz3xfHD
-         T/OuVHkBL5Ry+T/EE5L8kTwGhf4oxDg4lMLooxBFt3BI1Cchngx15DfaxOV3h7T3r0B/
-         qxAA==
-X-Forwarded-Encrypted: i=1; AJvYcCVsgBcfdLBiIPL7d9CO8XZGotgPM5DvoOjKBHDmNQlp3qP/XHJAttyAn6m5xX/lzA1Gd2ESBC3D@lists.linux.dev
-X-Gm-Message-State: AOJu0YzsT5nUpgPZWVdm4e8bdlkE3P9zT07dJlJ1ukI5QjASWfBAsm4t
-	lNaMfXvveJ8+G+hbdY/pho4V/miT35VB+uKRQK7UfSBw08HT2HiaZb/wUL1765oNtLJ7VdiZIiI
-	n6bighbaB4n5MKihj4aCkzKc36OvuOSPgXBadYkiYjiBYod1Eph7sDudm7wk=
-X-Gm-Gg: ASbGncsW0lOvrxTZ2D37LIWSS6AP709h3IGShTqPkrWEjN4mdWaw3jzRHCwDyadKRo0
-	bo021xnweSSpSz3rPQXGVeewf6dBRG2gFkrRiVji8bxG99CP3GHS9hePdDza/Mw3FA3FzjZq0s/
-	Q08ueye9GZYSIyY9hxJ66FedfTPCQVVg19LNht8WGqBxJK8C/EBrYvH+R60wC32e99OJgsREPV2
-	Omzlpc9gVdDyDf2Ydag5VxKr9bSAVibkwNBjCOS7jsO3+wUYQSCAoh4o+sVTCbPmv2tOpSVvrmR
-	kx+KsNP14KSwNYER8c7vPmtO+hunThqQ4jEBBbeg5ow=
-X-Received: by 2002:a05:6602:2cc2:b0:876:97b0:937b with SMTP id ca18e2360f4ac-87979228fb2mr95699339f.3.1752248424012;
-        Fri, 11 Jul 2025 08:40:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHHVY5rBGhqRO5sp2SLT2myg1EFX29cpDhlYNuKxgTlHNrK/eYcqxX7DYKWsncg808ZpGBEWg==
-X-Received: by 2002:a05:6602:2cc2:b0:876:97b0:937b with SMTP id ca18e2360f4ac-87979228fb2mr95697739f.3.1752248423477;
-        Fri, 11 Jul 2025 08:40:23 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8796b8c46f9sm107447039f.8.2025.07.11.08.40.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 08:40:22 -0700 (PDT)
-Date: Fri, 11 Jul 2025 09:40:20 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev, Joerg Roedel
- <joro@8bytes.org>, linux-pci@vger.kernel.org, Robin Murphy
- <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, Lu Baolu
- <baolu.lu@linux.intel.com>, galshalom@nvidia.com, Joerg Roedel
- <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
- maorg@nvidia.com, patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu
- <tony.zhu@intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="f8DkaZxk"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CujuQefVXbwOwZy4mRjGx4aH67r70LljNpaLBgX+/TSNJxjC+ZchpuNkhPIYbduF7SKdutOeoLg+przm7aRda/Cy/ZZtSniDwo80fYaHA/w/jr3ZNRxEusubQd9HkW/A2hty4F7x4owIeAGDQwy9UEELdvhv8hZqUInTpCiBwpD102eVu70QLQwb/LTXhsm50DWK/77JQ8lAKIACjf2pr07aMUbVQVA0tOmMfmAo76YwlZ/jkWB9XzfX+lVmbg1OGiaskkGVRwW03CD5EMRUQdag6ceTiEcSOH4xlZaVZNobJ0AUPNYPT9q6tLXRIH/QhF8SYpJ+12MgbWkk6OAF0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tkb3Td3tyA6ST4F1YURkfxhxp9wv2JrVQfseOElTygg=;
+ b=t85NonlL7LhGViO2oVSCejnCM+DGgNQuG/UhUnz2a+iCy3wBmu9ELWJPIgj2oXPlCmDFV0RUlw+E1YGXZIOD8UNAEwQ4kSmj4PakedLIM1B4S570spJ9XkoHw2jutiShJzqmL9sxX/fZ8pPLyHIfXakHej8i/QlomTfc26eGrtvEYcVFk7hdGuhOJ1c++X+z84IPq2/NMOqEle9leOu6ffFwXaAKK/ZdsPY9WhwBj9hyhMmvE6fJRDFKD5Hfo4VWulZuiwK6ijmjXIngcbDn14HpLDzcW5C6S/5e3+nMF5w4E0XRSkl8CsR17Kguj6qbQzoE76745cG3vJXBXch5JA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tkb3Td3tyA6ST4F1YURkfxhxp9wv2JrVQfseOElTygg=;
+ b=f8DkaZxkPwJR7t4a89HcOzIpalJr5KjPpGPfRGhgEezuJD3ASv+LoC8JFvgzuQQAgy0+omTjTnYDLhy0Cv9FwU9P9hY16WnGSnm6bE8m2VZuX+sG9nNeO5z4RV+WAb0sR/MnDNzTYN/kk6n2+3plT+tOswFU8Q0K0UEVZUumucGnH2mMBUstxajvUy2rhz51RG+GoLfWJaHa9RL2GOmWIq8zLG9wIPl9bMmAZ5CVtThPVl8YDdmrKpGQ8hlIoN8drUmrOr/Mnn8/I9xw1BvE0XCaMB6DV96GlDC85YYhmjAjwcxe9dKPs4PUgOBlp8YBrn8IMzYVIbkbW7ccQfdv6Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by CH3PR12MB8658.namprd12.prod.outlook.com (2603:10b6:610:175::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.27; Fri, 11 Jul
+ 2025 16:08:19 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8901.024; Fri, 11 Jul 2025
+ 16:08:19 +0000
+Date: Fri, 11 Jul 2025 13:08:17 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
+	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
 Subject: Re: [PATCH 00/11] Fix incorrect iommu_groups with PCIe switches
-Message-ID: <20250711094020.697678fc.alex.williamson@redhat.com>
-In-Reply-To: <20250708204715.GA1599700@nvidia.com>
+Message-ID: <20250711160817.GC1951027@nvidia.com>
 References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
-	<20250701154826.75a7aba6.alex.williamson@redhat.com>
-	<20250708204715.GA1599700@nvidia.com>
-Organization: Red Hat
+ <20250701154826.75a7aba6.alex.williamson@redhat.com>
+ <20250704003709.GJ1209783@nvidia.com>
+ <20250711085504.71e82a16.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250711085504.71e82a16.alex.williamson@redhat.com>
+X-ClientProxiedBy: MN0PR02CA0019.namprd02.prod.outlook.com
+ (2603:10b6:208:530::34) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: tz7vj3GS2O3FDm48wFMRGg9W8E7zrPEggSIiJxRvTkA_1752248424
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CH3PR12MB8658:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7e351cc-25fb-4e78-a5da-08ddc09526cd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?arxSIYf55kElEV1r79oNXElpBqbyGiTJnKiWAJlQfeyasdaN7AuQm4i3hGrc?=
+ =?us-ascii?Q?89UOm3vXkDjjehH4ZLikMwcwZajjGQEff05USrIT/TCfdzE1zYMR0/fUnROx?=
+ =?us-ascii?Q?sc1k7W4h9w8wa9rg8/6u8hlnMmYwgdI/ABUhTJkc1MNCAX6LUXC1Si1KAOkz?=
+ =?us-ascii?Q?WfxtZPYXya5Sy3K2j+WbOlzKecuOpVxv/BkJSpQ0gZV6w1LKolt22s+4AXfC?=
+ =?us-ascii?Q?y++fWpjMYmqxThOwVJSfP+H561z5efigxD14oCj8MdN1SEZrVLkVfNkrg6rE?=
+ =?us-ascii?Q?+6ssGXxS2ktazJqXqC6svZcUWdbnEzPBiWo1QKu/W+nRje+769Om6zswXe1G?=
+ =?us-ascii?Q?ijNWnqKddMxi5qRu/fL2F4hwXwhH/oV2upAVL/Y5mkuNIPpTrZNlAJCVf1wj?=
+ =?us-ascii?Q?oc3CU3rV0YEFZzI0FNtW0S1x2qeFaQ+BHKt7caO/O7h366IatsjnijRqShSH?=
+ =?us-ascii?Q?aXs2gYNopsXnQFDX7Z3Sw9ZFw1owcILwf4j7dgTZYnJsf6ZNRLJ2E6nPiBcV?=
+ =?us-ascii?Q?NUoL2/LxUh9jRcnWVgPjPP8L1AaFu2u8fRGG3KFKnbduMDp7kZ7u9IjHd44O?=
+ =?us-ascii?Q?vzfDec7UYSdNfj9KVcPul6iCuqIOGZ77bcldj00SNkiYMS1NkQaafY0B6HPj?=
+ =?us-ascii?Q?iXlUznPhRw2v+MCvODZZjpfDFjrnITeCaiMXZVPCDeruIfacrwCoQuftNU5n?=
+ =?us-ascii?Q?PN/SKLcGpToM1OqStRONu7DELA0ycsAyXgW9ism/A/z7G+qfTWgR/XDQFpvn?=
+ =?us-ascii?Q?gtvCaIMS7ZhmghRZN3pNN4tusOZrKVmQ8bhsN/dJTk45Rhw2fAMsBzEg121U?=
+ =?us-ascii?Q?A4A+hu4PXqgXiKsXaK9tpCmd7zkHYeq1y0bt4En8J5CimE42xoIT4A3EG+d4?=
+ =?us-ascii?Q?bIdvHzw0TzT80+AyamJysPtjUE6Kp96R0afp3/fwtU/MEpdIrjHzb0mblTsf?=
+ =?us-ascii?Q?FE0Sa/+eBiMVExEQiyympmOpKbZf6D06bURZLfBHBSi1+ZWFH9MHmYCAxBza?=
+ =?us-ascii?Q?Opw4KoDwhv9s6lTbRrNGNr6PcocOnN402x17z8wWdTbNQ3tRD5SACo0tTQ4w?=
+ =?us-ascii?Q?yY8BoLJyIglId/JktCJTVQ16pibAqso/S1PgolavmW8NYk4tT4KU+tz4MSef?=
+ =?us-ascii?Q?xlBRMkVQvlGtb8fzkiYcwr6WoCTtRkLx3fi7mKHG2T40aDpMlVWq2yVArv8f?=
+ =?us-ascii?Q?u/VXGtlymmNqrlYDmLB6ZLgzP3eDWkoeB25Z4x433eaEu1iK4b2j6LzDuEgp?=
+ =?us-ascii?Q?zBaYG9/aJopa+PnakNad4jHE/ez8nxc6YUP9WgcVwGdO/MppdhaJAxrwNc+1?=
+ =?us-ascii?Q?XetWIeO097V41z7cdNlgtnVY/rOGa2TB5JMXHJgTlTyCzL066v4ERH5jib/d?=
+ =?us-ascii?Q?HwCpyb55mZvn7tVLPETUW8UfgHK+ODKcboqvHgl9YElyoxKdJLHuVx8/U7iY?=
+ =?us-ascii?Q?zpuQyX+mZLQ=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?yuKtc+KxVBVObbp59lL2cCJjRcep5NMiSExXAl2+6K3uKcXziwoyE+rfMi1V?=
+ =?us-ascii?Q?8Q0FE20jqHM6TJRvIKOY6H/ngmfKQU3v7QPprTI7sFPAdd5WVD6AYDjIQxZv?=
+ =?us-ascii?Q?yoQAsA263YK168KaVb7IsNmuZZSvIyMdVEkQ5hpvpVcFDzXnpPRFLE1vqDjQ?=
+ =?us-ascii?Q?bJakujnFYfjOhLxudPSP0jMRAsqTgp/sJWZVHJmUY05sAYMV42OTe136I4SG?=
+ =?us-ascii?Q?530GzFdiPALkK0UMgmDIFCxMmuwRmThlxXxZHcZW2w1p1WqjXTenoHlH6P1F?=
+ =?us-ascii?Q?LA52TYzdyaHzW9AyGQsnD1jg1O5SriCpTIp7dxFOyGTrwEDSNu2Qc6OFcQrU?=
+ =?us-ascii?Q?uKaFm+tKzWjarEEge8ZnZWR3d4J9oEWy1Ki4ygS0Pz/JQzrFoE3azx53FTfO?=
+ =?us-ascii?Q?w7DIfLUg648DuCo8XxULPS+b4qs8gcOS1jAfh3vzDDnj0wK25ZtHtjYEA4yV?=
+ =?us-ascii?Q?psq/ktqdXW+oQPp0iSea/CaTrg5W/CHyBUbBs5JyXh44lrXLpN5cNyUv2eOC?=
+ =?us-ascii?Q?vXGeW93wSzIvvlnB47YlNITFsAIwAal2sngAedQWjxSIzTnSJpV3R4WHB7xJ?=
+ =?us-ascii?Q?UrkMJC6XAAhQmA2j3dKvuO2AAYKIsnumm6iq6Kx/ojqUAAe/VIqO5aER5jp6?=
+ =?us-ascii?Q?vr1OL2dRVQzFfgq9hCO3n9e5Y9bvawRldgfILnmN3R5fU5Sld7S/emdX0r/4?=
+ =?us-ascii?Q?zvuXoJhR42tKeJFzG9hsqgSQ/lo5xaAFqzXKkSPIxhR70b4ZB7mbC3GRl5O3?=
+ =?us-ascii?Q?VeSGpQApoA8ShCA4YMJMBjzDZBZJRy/d2gHVbNOfpWqTERzvfSgKf4Zg2mKk?=
+ =?us-ascii?Q?Qya5b2Le7IkVKheMZK54p4aZdmzdvcEO7AUydZuT9BjOvcDByfAdWFz0Pf7K?=
+ =?us-ascii?Q?GK9wfN8n7dapA8cL+isda7iVTiOesTce+m6DkAQekGq3apHNFBEZlRbbQYK6?=
+ =?us-ascii?Q?+Hg72cHASxDjEqAr8HhJnKynCqyS07K765ctcNrHRMhEJoQ0m7i1nEsF3eQi?=
+ =?us-ascii?Q?KTgoPHtj/3UC8BS+XCmtT5WdBP7OIXoBtaTRJCfHwVGvta2MekuwY5pHLmhp?=
+ =?us-ascii?Q?TQ9SQ2UeJwopUGPtcZF9sdS7bvLIGk0N5o+H8+o7J0en4qqYG7ehfc2vmBng?=
+ =?us-ascii?Q?ReXlxORBRjy/O+XvBA0sVLT6/+xPazyLwV+sqglOsnoNMcx7fX5hrhqyl3Za?=
+ =?us-ascii?Q?GDHOBT4OoguY7N2kpaEofMEaANEeLVbngeyrFVf9+eqDh5haIqFwyjbCCi1X?=
+ =?us-ascii?Q?G83sM/iI/P2l+TsdxweSRh9u+0pVxre1GCQajghJZFtfzvNDKG0GOxNU+6vx?=
+ =?us-ascii?Q?/maG9DWIRK/+meBvfkyVq+vJv53r+MVejVYfSs+aw88aiuinl+8Gqpa6ikh/?=
+ =?us-ascii?Q?glErXaoPJPsOH+TjYjzFz84Stl1yB2gX/yPakRX93nGArQVIpM0I9VccpBdt?=
+ =?us-ascii?Q?wzNelVSd3qHMft0Ir74r2xpe7q5Y+LpcEPQ7Z5Lfv25mcDOS6UXv1xIyGcWi?=
+ =?us-ascii?Q?En5pLmkYSnKy8z3xmiF/v2+7OGAXRyL0R5e1YlVRwuM8akDDO6WXGZ+mBiKJ?=
+ =?us-ascii?Q?Z9sNMDrn5dcE8aRj459GHmNWF4SS/Y5kXrABk4cm?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7e351cc-25fb-4e78-a5da-08ddc09526cd
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jul 2025 16:08:19.2097
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: i2pgVCpiXUDtf6XTbg16mZb7Zu6uW7w6scqAerL+6JhgsbIym/tyHXqs+w9oGmBW
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8658
 
-On Tue, 8 Jul 2025 17:47:15 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+On Fri, Jul 11, 2025 at 08:55:04AM -0600, Alex Williamson wrote:
+> Sorry, you hit me right before holiday and PTO here.  I agree that
+> we're currently looking at isolation primarily from an egress
+> perspective.  Unfortunately it's not always symmetric.  In your case
+> above, I think we'd consider it safe to assign 1f.6 to a userspace
+> driver because 1f.6 cannot generate DMA out of its isolation domain.
+> On the other hand, 1f.4 can theoretically DMA into 1f.6, so it would be
+> unwise to attach 1f.4 to a userspace driver.  In practice there's not
+> much utility in assigning 1f.4 to a userspace driver, it's generally
+> bound to a "trusted" kernel driver, so all is well.
 
-> On Tue, Jul 01, 2025 at 03:48:26PM -0600, Alex Williamson wrote:
-> 
-> > Notably, each case where there's a dummy host bridge followed by some
-> > number of additional functions (ie. 01.0, 02.0, 03.0, 08.0), that dummy
-> > host bridge is tainting the function isolation and merging the group.
-> > For instance each of these were previously a separate group and are now
-> > combined into one group.  
-> 
-> I was able to run some testing on a Milan system that seems similar.
-> 
-> It has the weird "Dummy Host Bridge" MFD. I fixed it with this:
-> 
-> /*
->  * For some reason AMD likes to put "dummy functions" in their PCI hierarchy as
->  * part of a multi function device. These are notable because they can't do
->  * anything. No BARs and no downstream bus. Since they cannot accept P2P or
->  * initiate any MMIO we consider them to be isolated from the rest of MFD. Since
->  * they often accompany a real PCI bridge with downstream devices it is
->  * important that the MFD be isolated. Annoyingly there is no ACS capability
->  * reported we have to special case it.
->  */
-> static bool pci_dummy_function(struct pci_dev *pdev)
-> {
-> 	if (pdev->class >> 8 == PCI_CLASS_BRIDGE_HOST && !pci_has_mmio(pdev))
-> 		return true;
-> 	return false;
-> }
+That is not how we've defined groups as a security object though. If
+you flip the direction and say 1f.4 is used by VFIO and 1f.6 is in a
+kernel driver this would not be acceptable.
 
-Yeah, that might work since it does report itself as a host bridge.
-Probably noteworthy that you'd end up catching the Intel host bridge
-with this too.
- 
-> This AMD system has second weirdness:
-> 
-> 40:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge (prog-if 00 [Normal decode])
->         Capabilities: [2a0 v1] Access Control Services
->                 ACSCap: SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
->                 ACSCtl: SrcValid- TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
-> 40:01.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge (prog-if 00 [Normal decode])
->         Capabilities: [2a0 v1] Access Control Services
->                 ACSCap: SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
->                 ACSCtl: SrcValid- TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
-> 40:01.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Starship/Matisse GPP Bridge (prog-if 00 [Normal decode])
->         Capabilities: [2a0 v1] Access Control Services
->                 ACSCap: SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
->                 ACSCtl: SrcValid+ TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
-> 
-> Notice the SrcValid- 
-> 
-> The kernel definately set SrcValid+, the device stored it, and it
-> never set SrcValid-, yet somehow it got changed:
-> 
-> [    0.483828] pci 0000:40:01.1: pci_enable_acs:1089
-> [    0.483828] pci 0000:40:01.1: pci_write_config_word:604 9 678 = 1d
-> [    0.483831] pci 0000:40:01.1: ACS Set to 1d, readback=1d
-> [..]
-> [    0.826514] pci 0000:40:01.1: __pci_device_group:1635 Starting
-> [    0.826517] pci 0000:40:01.1: pci_acs_flags_enabled:3668   ctrl=1c acs_flags=1d cap=5f
-> 
-> I instrumented pci_write_config_word() and it isn't being called a
-> second time. I didn't try to narrow this down, too weird. Guessing
-> ACPI or FW?
-> 
-> So the new logic puts all the above and the downstream into group due
-> to insuffucient isolation which is the only degredation on this
-> system, the LOM ethernet gets grouped together with the above MFD.
-> 
-> Given in this case we explicitly have ACS flags we consider
-> non-isolated I'm not sure there is anything to be done about it.
-> 
-> Which raises a question if SrcValid should be part of grouping or not,
-> it is more of a security enhancement, it doesn't permit/deny P2P
-> between devices?
+While I like the idea, I think if we keep the current group system we
+can't really make arguments like this.
 
-Strange issue.  If a device can spoof a RID then it can theoretically
-inject a DMA payload as if it were another device.  That seems like
-basic security, not just an enhancement.
- 
-> > The endpoints result in equivalent grouping, but this is a case where I
-> > don't understand how we have non-isolated functions yet isolated
-> > subordinate buses.  
-> 
-> And I fixed this too, as above is showing, by marking the group of the
-> MFD as non-isolated, thus forcing it to propogate downstream.
-> 
-> > An Alder Lake system shows something similar:  
-> 
-> I also tested a bunch of Intel client systems. Some with an ACS quirk
-> and one with the VMD/non transparent bridge setup. Those had no
-> grouping changes, but no raptor lake in this group.
-> 
-> > # lspci -vvvs 1c. | grep -e ^0 -e "Access Control Services"
-> > 00:1c.0 PCI bridge: Intel Corporation Raptor Lake PCI Express Root Port #1 (rev 11) (prog-if 00 [Normal decode])
-> > 00:1c.1 PCI bridge: Intel Corporation Device 7a39 (rev 11) (prog-if 00 [Normal decode])
-> > 	Capabilities: [220 v1] Access Control Services
-> > 00:1c.2 PCI bridge: Intel Corporation Raptor Point-S PCH - PCI Express Root Port 3 (rev 11) (prog-if 00 [Normal decode])
-> > 	Capabilities: [220 v1] Access Control Services
-> > 00:1c.3 PCI bridge: Intel Corporation Raptor Lake PCI Express Root Port #4 (rev 11) (prog-if 00 [Normal decode])
-> > 	Capabilities: [220 v1] Access Control Services
-> > 
-> > So again the group is tainted by a device that cannot generate DMA,   
-> 
-> It looks like 00:1c.0 is advertised as a root port, so it can generate
-> DMA as part of its root port function bridging to something outside
-> the root complex.
-> 
-> This system doesn't seem to have anything downstream of that root port
-> (currently plugged in?), but IMHO that port should have ACS. By spec I
-> think it is correct to assume that without ACS traffic from downstream
-> of the root port would be able to follow the internal loopback of the
-> MFD.
-> 
-> This will probably need a quirk, and it is different from the AMD case
-> which used a host bridge..
-> 
-> Any other idea?
+FWIW, my v2 does seem to solve this problem class well enough.
 
-This root port at 1c.0 does look like it could have a subordinate
-device, but there is no unpopulated slot/socket on this motherboard.
-Possibly another motherboard SKU could use these links for a wifi card.
-Versus the other root ports, it lacks routing of its interrupt line, it
-does have a secondary bus and apertures assigned, it has a PCIe
-capability that claims it has a slot (LnkCap 8GT/s x1), it has an MSI
-capability and a NULL capability, no extended config space.  I'm not
-sure if this vendor (Gigabyte) is unique in incompletely stubbing out
-this link or if this is par for the course.
+> If we say that 1f.4 taints the group, including 1f.6, I think we're
+> going to see a bunch of functional regressions for not much actual gain
+> in security.
 
-Again, it should be perfectly safe to assign things downstream of the
-ACS isolated root ports in the MFD to userspace drivers, their egress
-DMA is isolated.  It would only be ingress from an endpoint that seems
-like it cannot exist that would be troublesome.  I don't have a good
-solution.  Thanks,
+I have been thinking if we should have an isolation=relaxed/strict
+boot option and relaxed has assumptions that are closer to what the
+current kernel does in practice while strict would basically require
+ACS everywhere to get smaller grouping.
 
-Alex
+For this problem relaxed could assume that a MFD function with no ACS
+also has no internal loopback at all. Realistically this is probably
+true in most cases.
 
+What concerns me is the enterprise market that does have a strong need
+for security here but does not have the resources of a CSP to properly
+self-audit their systems. I think if the enterprise world could be
+happy in a strict mode where quirks and ACS caps are mandatory which
+would force their vendors to audit.
+
+Consumer/etc doesn't really have the same security need and could be
+use with relaxed if they have any problems.
+
+> Maybe we need some extension to the concept of groups to
+> represent the asymmetry.  Thanks,
+
+Do you have any ideas? 
+
+Arguably the right answer is for groups to only be about DMA aliases
+and a separate 'P2P security graph' of what devices are allowed to P2P
+to other devices is used to enforce the VFIO opening rules. I can
+imagine how to make most of that work in iommufd, but not how to fully
+retain the VFIO group uAPI. It would be alot of work.
+
+But my main concern right now is the switch ACS which is the first
+three patches only. If we remove the MFD loopback downstream
+propagation from pci_get_alias_group() I think it will behave quite
+like today unless switches are present. Would you be comfortable going
+that far as a first step?
+
+Jason
