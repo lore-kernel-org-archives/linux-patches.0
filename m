@@ -1,524 +1,185 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2075.outbound.protection.outlook.com [40.107.94.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1012980CD;
-	Fri, 11 Jul 2025 12:01:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752235319; cv=none; b=WBKX1+W/3lSOtLeG74o9UYb7L48quhOMVUzTf8/B2Y8zx5arpZvwpOjgGqD8Abv8xxR1opRGK1rL2AJ/QarAlDSOwIRgQtOoE8zlc0mH2+C72BEpOCH1VFJiCqjGTu8k8uhO2d5bfWCCeT1LE9BxRFq/GNfOKUjW0hRLnNbqKv4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752235319; c=relaxed/simple;
-	bh=oecJucWId5/o+b5zJ8gUDvX8Qe4MVoaRwM3oIE0QEB0=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Mo0tpX5QKCV9jaFHJxfTQGJ274IOsbel13JEfJp9NIBDwkDALVsCOtpt8xENJr47zE7E23mQ15Wqjg7s5rN2m8ejuUjHyHR6xd7YfCXz7VvSb8syg9l3oAoGokqHB8d0VyL99vR/Wz4ZjPmW27T3RuVAMYNSIvQQoSY3o/FH2xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.162.254])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4bdqzf4Z5FztSZT;
-	Fri, 11 Jul 2025 20:00:46 +0800 (CST)
-Received: from dggpemf200014.china.huawei.com (unknown [7.185.36.229])
-	by mail.maildlp.com (Postfix) with ESMTPS id C6C57180489;
-	Fri, 11 Jul 2025 20:01:52 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- dggpemf200014.china.huawei.com (7.185.36.229) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 11 Jul 2025 20:01:51 +0800
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Fri, 11 Jul 2025 14:01:50 +0200
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>, Ankit Agrawal <ankita@nvidia.com>,
-	"Brett Creeley" <brett.creeley@amd.com>, Giovanni Cabiddu
-	<giovanni.cabiddu@intel.com>, Kevin Tian <kevin.tian@intel.com>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, liulongfang
-	<liulongfang@huawei.com>, "qat-linux@intel.com" <qat-linux@intel.com>,
-	"virtualization@lists.linux.dev" <virtualization@lists.linux.dev>, Xin Zeng
-	<xin.zeng@intel.com>, Yishai Hadas <yishaih@nvidia.com>
-CC: Alex Williamson <alex.williamson@redhat.com>, Matthew Rosato
-	<mjrosato@linux.ibm.com>, Nicolin Chen <nicolinc@nvidia.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Terrence Xu
-	<terrence.xu@intel.com>, Yanting Jiang <yanting.jiang@intel.com>, Yi Liu
-	<yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: RE: [PATCH v2] vfio/pci: Do vf_token checks for
- VFIO_DEVICE_BIND_IOMMUFD
-Thread-Topic: [PATCH v2] vfio/pci: Do vf_token checks for
- VFIO_DEVICE_BIND_IOMMUFD
-Thread-Index: AQHb8a+fxqosUj9FP0eBNap5oqWbxbQsz5tg
-Date: Fri, 11 Jul 2025 12:01:49 +0000
-Message-ID: <30449f7531ae42439136316321b3d60e@huawei.com>
-References: <0-v2-470f044801ef+a887e-vfio_token_jgg@nvidia.com>
-In-Reply-To: <0-v2-470f044801ef+a887e-vfio_token_jgg@nvidia.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0C7225409;
+	Fri, 11 Jul 2025 13:16:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.75
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752239805; cv=fail; b=TDF4ojYRmW1UfJWhQS4X2+H3dlCvxl4Dau2FYGRSoWtTRom1iv2faWMWhXk4zvh9feOjhpv7RV/nopcSyrLeiakdzF61KBcm3JMkdSg+NcrDK4gHp3O3B5ltdfdJTGV1NoYRRwgg534dFwNzmw5ltjpiYkAnQwn5HDvwdy1fbpk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752239805; c=relaxed/simple;
+	bh=tDEgbQF5DLCTn2G386CQXFGjgO80qU97a7brZiuOnpI=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=HzugO6LqHRCxMAUSIQjVmGro3Nmmmv55Zs3vbKBCe4MfHapc8nFKbpRn96YDZRUNVtbzmdI1+E5phd+L33ou2Eveg2mR77uqeb73hPR6MdYgKe2vCURJ4M+431s4mn7vD2qxSlXS3nRZ0k62qZVE8eqW24cbTxPeZQ1oiSY5fTU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=I2mbafsz; arc=fail smtp.client-ip=40.107.94.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="I2mbafsz"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OwRpynpmaiYhE3LEsbCxJuGOWeqPJ8seFMG0D0WA8vRktrBoJj/ohe4PmXCtkFFmE/e0NI8yOmI06YxD83gf0AfW/mMB7TxA8JzgQGGpaeXaAKsWjyOqglXNd9R3fSmo+4AwNe3DK6Ri68I+rvrQ9Hb4Lf0OUE01a3+MykJKHnYcKdiF7qO9DfVSbRFzQHo9qj3/hFFiWtNx45NG9RduXTw8ah1TdkN6uVmBGyWeLL3ysBk8WzS3a0eDb/OljvWKhAnOpHUQf++HHpdOxQW6rkm6U6b7n3a+FqwP2/o3Bt3aok+MC5GhV0Ia2vnCzSjo2k+SUeQanHxIB2lhmYQ9eA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fJVI6zpL/jc15fQAtLgnWutgbeyCm9qybL8xs1yOGKE=;
+ b=q/esasv0kEENVuz11JQSbFdWjzNG9U7zfLRD1ABYhJ/DjtxNyoOP8osG9KQIpY58BwuljCc5oySIzR7ZBnNmqK7pFnEyttUEGU4p6B4Gunx/7AotwdL57dNbdrsuJiavTBsknW7giQxp/Xxe6ZS15bHgbXRvjsN4YhfBV9kSmjJSVxJFgq15tb8shZKRpjhVm+cgTR7SPyIa5CcgJFB1r1mLRR8qPyUPiJinBG/eZtOQqMCzTpMCDfFB+dCCXyWy8olP933Rk0AyELwHFgDAzKMEadO9kBlh40xRYsnpHJnqWDg1G4E0KTE3SbK1JMk+wqaJgtrLYbQi7w7pTzlpRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fJVI6zpL/jc15fQAtLgnWutgbeyCm9qybL8xs1yOGKE=;
+ b=I2mbafsz9ceazBUY8ObbsLRp5JC6Jdsi3jrUMpaycmhRjnBaQq96hpi827DjB9edGuMiVcCbzENWOVY+9atZBzw0siTqLpy1dOz+gxAjuq4BzcI4a4Epjp2h76W+gv5wAnzzhb6yZy09yv4iFWcObPIGZOTYC76mdxVDpzniDoj/1+9YYAy0xC7IZaaOeYgcetQ/HwosFUSsbwezqaZzR+hrMh/N33hZZfKhMTuefBnSnSVgJEiEje46RDEvSs7EQwlsmZymp+dTTFwtRkXjK/weDn4TdE89O+WTvZdiFd7rTVmhJ28YU+d4VE0wWTOxb6tockqeGz595XFHh9i4yg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by SJ0PR12MB8116.namprd12.prod.outlook.com (2603:10b6:a03:4ec::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.25; Fri, 11 Jul
+ 2025 13:16:40 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8901.024; Fri, 11 Jul 2025
+ 13:16:40 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Cc: Joerg Roedel <joerg.roedel@amd.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	patches@lists.linux.dev
+Subject: [PATCH] iommu/qcom: Fix pgsize_bitmap
+Date: Fri, 11 Jul 2025 10:16:38 -0300
+Message-ID: <0-v1-65a7964d2545+195-qcom_pgsize_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BLAPR03CA0053.namprd03.prod.outlook.com
+ (2603:10b6:208:32d::28) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ0PR12MB8116:EE_
+X-MS-Office365-Filtering-Correlation-Id: 069c3299-c000-42f5-b93c-08ddc07d2c07
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?DocCqOhaZRrelUdTWsilS+t8Jt7JshxPIY4Xj2iGggIFu6pcEncojYMADlOC?=
+ =?us-ascii?Q?p/xVQyluV2jARAOtbwG6j6w7RBW8OJP3yo/4eDQaS1xtTNuIumXriVusi4fk?=
+ =?us-ascii?Q?EVtFwzl0JhFby4FyXngNNDU9Db2KHuVg87fU2ysyJRHd7Tzgkg1CCJSAtc3K?=
+ =?us-ascii?Q?31RRCx1ZrqeXWqQHCe9PuFWJFfbCBebxlRSAYjIcW4CV+A8mcjEexP8AiX9N?=
+ =?us-ascii?Q?p5cYe57c5hTGSPHOwENY/itVciKNs/G2UgQXZ5lBAx9YmetuFxV3EXfqHazO?=
+ =?us-ascii?Q?YDeWFT/4qD9y003urq0SGyhdICk2rvD0GflKQzMyxTpecTqRB3cqzM+enE0U?=
+ =?us-ascii?Q?OK7XVZYv8L0onuNKIyTYTRvL01IQ/vhIIMTgeLiMEfkJPe7nkF1tOnF6bK07?=
+ =?us-ascii?Q?A2wkDWFUaNmJuRUdNO0FezW/rO9yb8jsncrPvcTJ93elFFKeKto4LKbgq3Tl?=
+ =?us-ascii?Q?3WcbpgvGF8Z3CXFOT8KFGkmcqU4khcauRuaEHjBOa7d+QkyrAGms5nBnOlAs?=
+ =?us-ascii?Q?eXA4hVEozA5/uBm0cA1tjfg/RfhutWHWTNQXY1Fu8hRPkEPnZ2gjDW5FSNX3?=
+ =?us-ascii?Q?2/C/KKihOsnb/BgWFqIOdf0T1S1ZdOkG+zbfgsHL+Xum0l2Lukm43rf7BXOM?=
+ =?us-ascii?Q?uqOTUJXXYafg5oh4QorkFyHCZ3qeAgR/rfsjnDmpK9S3WtghyNoztQHHAqAO?=
+ =?us-ascii?Q?vuzgsxnIF8rT+IlWbqze62Bdruz5UAucZzOBqzwErQ0n4zhK0hsKh5EsAzWD?=
+ =?us-ascii?Q?ntrVAqk83S2i6N2pa8ebGrNc00PVYNi8x6P2ESqEr1jhrUTlBAykVZGIha5t?=
+ =?us-ascii?Q?bB28ns0+nOUiiRxAyN2kF6fhmLe+z7mKDKUUuzBonMldjBxnlNYobS8ryYi5?=
+ =?us-ascii?Q?+9nUmNwJvoZVYw1RxxP/lVJF15tW9LMY6bb3+TyBlCMFCFP5pSDsXRWEVvq0?=
+ =?us-ascii?Q?Vrtf3JgG5hbrDUephGlB1vhISnQpRTL0RfJIf140s2gFL8zlmJCC8eGSxK5v?=
+ =?us-ascii?Q?C6Chm3OGgYZsCvzrS7MK0gk2Ag43/fjQTDxfLs909n8nI7ouFRhn365oe0+W?=
+ =?us-ascii?Q?rzR2ROwo8uUTbZ7Fhkdtnv6KJHN1HY1QJbthc03RLtSP9XDU9KPAep4MkNHH?=
+ =?us-ascii?Q?dC2ycVRPSHGpOS89db5Py6oKrazmG8ROBD84SUm540awKughvRcrgmYXeJ/9?=
+ =?us-ascii?Q?reak2hsmgFt9wI+rdMBFTc9Yo6/mTqSC3nKCA9ESBhjwBHxmhqmujU0tat8s?=
+ =?us-ascii?Q?M0BdmsLXmTqb20kPsDNyvm4vZmoXdZsDl+OL8lJrq3FU4BWm2j6ul6/cC5mW?=
+ =?us-ascii?Q?ypkhi9imWMxisHJ2W1Ws8lXqjRDTX0dr/Y6zDcOWC/Z52SF8HS6WF9MUNRGz?=
+ =?us-ascii?Q?gMn1W0qhOpfsbuQTqYAEy/wtfcTwGuMVQlbkPPX+imk00MhJVQSTcxEst767?=
+ =?us-ascii?Q?FMdy5z5PUCI=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?zYVvbO5m4xe5C4ySH66pxqPX7NDLn32PS8XB4Q47659fEHRBCC4ytUSzX/WL?=
+ =?us-ascii?Q?rAxJAgxN+MJfJbv2pwAHFlnL8yHvWkkYyJBZ2flDm+FqL60CPvdXEzeFfkf9?=
+ =?us-ascii?Q?i+8/lYOjkde5deDjKv0nZ/ZJMoRzlD68unXQJu8No2ybPcD6pM7GYSC6mAG/?=
+ =?us-ascii?Q?yE7Oe+Nl5RO4vZxgAUHrgZ4r4njm80QNz4AiikgMvadh5t5Rqy6qoYbEz6Zp?=
+ =?us-ascii?Q?CKMFaYKwbZIdZuqJeNMcreBMz6py+FQJj2qrY+Ofte0cOxYOEfLxcDwv7y9p?=
+ =?us-ascii?Q?L4JXJ8UQGzbpIiNLN0d02lSXeG7FZvCXeYf0Gk2QdFtql1Lm+JQ3zI3FfR40?=
+ =?us-ascii?Q?ndNhOIKEnY+0PInGDD2OQeS0g4K87QRWztOBGbDijTlSRwCCaEC+floc2YId?=
+ =?us-ascii?Q?bc4jQefh3BBfedAy+HXYJR6Afz5OBnoEaMNDQ/r7VDa+0HLlSA6xbnZc+hzQ?=
+ =?us-ascii?Q?MMdWUCp2lZL8akSIEFjWSWsKFERZnBGaw9QiMIvIfyR9Xdu1tI7eFi13NxHh?=
+ =?us-ascii?Q?3AF0/gnsNKfO8x+dMX8mKbPbCCOhpr3Wwm/HhXbzlX01R+HttUGOCtXEEWhT?=
+ =?us-ascii?Q?1ZeeGtqWzFXN5g2ya/tEGv9+q3f+kDqiMHtHE3Cc29ITwRKXVUqyyMn3priN?=
+ =?us-ascii?Q?cl3oToPHY/85XN5bHl+BAgAsePnBYwcGRv8hQ9rCti1A4Uys3HUkMxFUAK8o?=
+ =?us-ascii?Q?YIEmp3ACMyYa46m0L1ZQOQXnmSBZGco0MoLwS4rpdy16mmbUjrPzRVA76T1D?=
+ =?us-ascii?Q?UXWZIdDvfvA1zW55jlHKR4pxRCzdM56+KQ3jr9XZkBJRGwbw9Bll5UGgU+N/?=
+ =?us-ascii?Q?mirEN7Y3iYj+bzET36wdaI2BGTffsNAO8XRIkNIqFOtv6pvoxcXlxz7Lm/KK?=
+ =?us-ascii?Q?EHdzGfxCUs41v+mkyB+NPHKKk2MHEqMfJgVkuyS4f2x6RpYyjb1+PJDUj0Pd?=
+ =?us-ascii?Q?Q6cfYNLtSLg10TH8iu80sDKuuzqZ345cVxST9JVEOad16qa6a6DcNN0Aavrg?=
+ =?us-ascii?Q?LnTvex7NGZ9yMlj8K/Lcy1ZpT2jmXW8TKJsq5VatUuQU20lHcgdgKTso1IoQ?=
+ =?us-ascii?Q?9/YWLsJm8mpTRvoML836iu6W1HnQQdwKNNKhyTXdHfVFyU9UkqsJ13RB4vJw?=
+ =?us-ascii?Q?1UjdMARUYUl4Ki1FDPxuQ92kggQoS8pkdtJTWTnNHWJmJg/dYN5Sw0lCMU6B?=
+ =?us-ascii?Q?JFhFqqbMPWnimP8jMJ73/hzYlA/vrVd0I212sQaVfv+lF9U8FG8EX+anAgu3?=
+ =?us-ascii?Q?cwrmz29NOIw5Sej07IPHSOwhRWE2orwbNibuckluUj+fdeot/ctnc1zqpQY0?=
+ =?us-ascii?Q?PuPmbbzWXkIrbLfdvx27tFF82GXrohYJ4fnyXnOLZlXTyhaEPXz0yr+tHJcg?=
+ =?us-ascii?Q?d5eIjtyl4k/PJukCYk/PXO/PFpK3cIA3molqDChc6ftwWeSdOwLpJdFaHm6z?=
+ =?us-ascii?Q?G32XNVtoYk7zc7jMDEbbtr73iGgPCQoEawNhGi3WIWMT3avSJf/XuRZY+g4G?=
+ =?us-ascii?Q?58GVQPFePo3KtJd9Dr0ptEIpIp6bpjNO8kjoL3bWcCIfMFBMN1l1NnEfXeTx?=
+ =?us-ascii?Q?kzk3AGf6AEiuveIEy0AMXNkDKI1DRYkpIJQdZjXa?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 069c3299-c000-42f5-b93c-08ddc07d2c07
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jul 2025 13:16:40.1363
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8FGoe9bbRag2Oyq3oQhbQ9Zpd9XoB6ibpScp/F2WDA2GwS86iXlvzxaM/oHtkmyz
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB8116
 
+qcom uses the ARM_32_LPAE_S1 format which uses the ARM long descriptor
+page table. Eventually arm_32_lpae_alloc_pgtable_s1() will adjust
+the pgsize_bitmap with:
 
+	cfg->pgsize_bitmap &= (SZ_4K | SZ_2M | SZ_1G);
 
-> -----Original Message-----
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Thursday, July 10, 2025 4:30 PM
-> To: Ankit Agrawal <ankita@nvidia.com>; Brett Creeley
-> <brett.creeley@amd.com>; Giovanni Cabiddu
-> <giovanni.cabiddu@intel.com>; Kevin Tian <kevin.tian@intel.com>;
-> kvm@vger.kernel.org; liulongfang <liulongfang@huawei.com>; qat-
-> linux@intel.com; virtualization@lists.linux.dev; Xin Zeng
-> <xin.zeng@intel.com>; Yishai Hadas <yishaih@nvidia.com>
-> Cc: Alex Williamson <alex.williamson@redhat.com>; Matthew Rosato
-> <mjrosato@linux.ibm.com>; Nicolin Chen <nicolinc@nvidia.com>;
-> patches@lists.linux.dev; Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; Terrence Xu
-> <terrence.xu@intel.com>; Yanting Jiang <yanting.jiang@intel.com>; Yi Liu
-> <yi.l.liu@intel.com>; Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Subject: [PATCH v2] vfio/pci: Do vf_token checks for
-> VFIO_DEVICE_BIND_IOMMUFD
->=20
-> This was missed during the initial implementation. The VFIO PCI encodes
-> the vf_token inside the device name when opening the device from the
-> group
-> FD, something like:
->=20
->   "0000:04:10.0 vf_token=3Dbd8d9d2b-5a5f-4f5a-a211-f591514ba1f3"
->=20
-> This is used to control access to a VF unless there is co-ordination with
-> the owner of the PF.
->=20
-> Since we no longer have a device name, pass the token directly through
-> VFIO_DEVICE_BIND_IOMMUFD using an optional field indicated by
-> VFIO_DEVICE_BIND_TOKEN.
->=20
-> Fixes: 5fcc26969a16 ("vfio: Add VFIO_DEVICE_BIND_IOMMUFD")
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/vfio/device_cdev.c                    | 38 +++++++++++++++++--
->  .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    |  1 +
->  drivers/vfio/pci/mlx5/main.c                  |  1 +
->  drivers/vfio/pci/nvgrace-gpu/main.c           |  2 +
->  drivers/vfio/pci/pds/vfio_dev.c               |  1 +
->  drivers/vfio/pci/qat/main.c                   |  1 +
->  drivers/vfio/pci/vfio_pci.c                   |  1 +
->  drivers/vfio/pci/vfio_pci_core.c              | 22 +++++++----
->  drivers/vfio/pci/virtio/main.c                |  3 ++
->  include/linux/vfio.h                          |  4 ++
->  include/linux/vfio_pci_core.h                 |  2 +
->  include/uapi/linux/vfio.h                     | 12 +++++-
->  12 files changed, 76 insertions(+), 12 deletions(-)
->=20
-> v2:
->  - Revise VFIO_DEVICE_BIND_TOKEN -> VFIO_DEVICE_BIND_FLAG_TOKEN
->  - Call the match_token_uuid through ops instead of directly
->  - update comments/style
-> v1: https://patch.msgid.link/r/0-v1-8639f9aed215+853-
-> vfio_token_jgg@nvidia.com
->=20
-> diff --git a/drivers/vfio/device_cdev.c b/drivers/vfio/device_cdev.c
-> index 281a8dc3ed4974..1c96d3627be24b 100644
-> --- a/drivers/vfio/device_cdev.c
-> +++ b/drivers/vfio/device_cdev.c
-> @@ -60,22 +60,50 @@ static void vfio_df_get_kvm_safe(struct
-> vfio_device_file *df)
->  	spin_unlock(&df->kvm_ref_lock);
->  }
->=20
-> +static int vfio_df_check_token(struct vfio_device *device,
-> +			       const struct vfio_device_bind_iommufd *bind)
-> +{
-> +	uuid_t uuid;
-> +
-> +	if (!device->ops->match_token_uuid) {
-> +		if (bind->flags & VFIO_DEVICE_BIND_FLAG_TOKEN)
-> +			return -EINVAL;
-> +		return 0;
-> +	}
-> +
-> +	if (!(bind->flags & VFIO_DEVICE_BIND_FLAG_TOKEN))
-> +		return device->ops->match_token_uuid(device, NULL);
-> +
-> +	if (copy_from_user(&uuid, u64_to_user_ptr(bind->token_uuid_ptr),
-> +			   sizeof(uuid)))
-> +		return -EFAULT;
-> +	return device->ops->match_token_uuid(device, &uuid);
-> +}
-> +
->  long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
->  				struct vfio_device_bind_iommufd __user
-> *arg)
->  {
-> +	const u32 VALID_FLAGS =3D VFIO_DEVICE_BIND_FLAG_TOKEN;
->  	struct vfio_device *device =3D df->device;
->  	struct vfio_device_bind_iommufd bind;
->  	unsigned long minsz;
-> +	u32 user_size;
->  	int ret;
->=20
->  	static_assert(__same_type(arg->out_devid, df->devid));
->=20
->  	minsz =3D offsetofend(struct vfio_device_bind_iommufd, out_devid);
->=20
-> -	if (copy_from_user(&bind, arg, minsz))
-> -		return -EFAULT;
-> +	ret =3D get_user(user_size, &arg->argsz);
-> +	if (ret)
-> +		return ret;
-> +	if (bind.argsz < minsz)
+So the current declaration is nonsensical. Fix it to be just SZ_4K which
+is what it has actually been using so far. Most likely the qcom driver
+copy and pasted the pgsize_bitmap from something using the ARM_V7S format.
 
-The above check should use user_size.
+Fixes: db64591de4b2 ("iommu/qcom: Remove iommu_ops pgsize_bitmap")
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Closes: https://lore.kernel.org/all/CA+G9fYvif6kDDFar5ZK4Dff3XThSrhaZaJundjQYujaJW978yg@mail.gmail.com/
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-With that fixed, I did a basic sanity testing with a latest Qemu(no BIND_FL=
-AG_TOKEN flag),
-assigning a vf to a Guest. Seems to be OK.  No regression observed.
+Joerg, can you pick this up for your core branch please
 
-FWIW:
-Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 5891ad5de0d5e2..3163a23fcbaa4f 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -335,7 +335,7 @@ static struct iommu_domain *qcom_iommu_domain_alloc_paging(struct device *dev)
+ 
+ 	mutex_init(&qcom_domain->init_mutex);
+ 	spin_lock_init(&qcom_domain->pgtbl_lock);
+-	qcom_domain->domain.pgsize_bitmap = SZ_4K | SZ_64K | SZ_1M | SZ_16M;
++	qcom_domain->domain.pgsize_bitmap = SZ_4K;
+ 
+ 	return &qcom_domain->domain;
+ }
 
-Thanks,
-Shameer
-
-> +		return -EINVAL;
-> +	ret =3D copy_struct_from_user(&bind, minsz, arg, user_size);
-> +	if (ret)
-> +		return ret;
->=20
-> -	if (bind.argsz < minsz || bind.flags || bind.iommufd < 0)
-> +	if (bind.iommufd < 0 || bind.flags & ~VALID_FLAGS)
->  		return -EINVAL;
->=20
->  	/* BIND_IOMMUFD only allowed for cdev fds */
-> @@ -93,6 +121,10 @@ long vfio_df_ioctl_bind_iommufd(struct
-> vfio_device_file *df,
->  		goto out_unlock;
->  	}
->=20
-> +	ret =3D vfio_df_check_token(device, &bind);
-> +	if (ret)
-> +		return ret;
-> +
->  	df->iommufd =3D iommufd_ctx_from_fd(bind.iommufd);
->  	if (IS_ERR(df->iommufd)) {
->  		ret =3D PTR_ERR(df->iommufd);
-> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> index 2149f49aeec7f8..397f5e44513639 100644
-> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> @@ -1583,6 +1583,7 @@ static const struct vfio_device_ops
-> hisi_acc_vfio_pci_ops =3D {
->  	.mmap =3D vfio_pci_core_mmap,
->  	.request =3D vfio_pci_core_request,
->  	.match =3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd =3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd =3D vfio_iommufd_physical_unbind,
->  	.attach_ioas =3D vfio_iommufd_physical_attach_ioas,
-> diff --git a/drivers/vfio/pci/mlx5/main.c b/drivers/vfio/pci/mlx5/main.c
-> index 93f894fe60d221..7ec47e736a8e5a 100644
-> --- a/drivers/vfio/pci/mlx5/main.c
-> +++ b/drivers/vfio/pci/mlx5/main.c
-> @@ -1372,6 +1372,7 @@ static const struct vfio_device_ops
-> mlx5vf_pci_ops =3D {
->  	.mmap =3D vfio_pci_core_mmap,
->  	.request =3D vfio_pci_core_request,
->  	.match =3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd =3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd =3D vfio_iommufd_physical_unbind,
->  	.attach_ioas =3D vfio_iommufd_physical_attach_ioas,
-> diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgra=
-ce-
-> gpu/main.c
-> index e5ac39c4cc6b6f..d95761dcdd58c4 100644
-> --- a/drivers/vfio/pci/nvgrace-gpu/main.c
-> +++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-> @@ -696,6 +696,7 @@ static const struct vfio_device_ops
-> nvgrace_gpu_pci_ops =3D {
->  	.mmap		=3D nvgrace_gpu_mmap,
->  	.request	=3D vfio_pci_core_request,
->  	.match		=3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd	=3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd	=3D vfio_iommufd_physical_unbind,
->  	.attach_ioas	=3D vfio_iommufd_physical_attach_ioas,
-> @@ -715,6 +716,7 @@ static const struct vfio_device_ops
-> nvgrace_gpu_pci_core_ops =3D {
->  	.mmap		=3D vfio_pci_core_mmap,
->  	.request	=3D vfio_pci_core_request,
->  	.match		=3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd	=3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd	=3D vfio_iommufd_physical_unbind,
->  	.attach_ioas	=3D vfio_iommufd_physical_attach_ioas,
-> diff --git a/drivers/vfio/pci/pds/vfio_dev.c b/drivers/vfio/pci/pds/vfio_=
-dev.c
-> index 76a80ae7087b51..5731e6856deaf1 100644
-> --- a/drivers/vfio/pci/pds/vfio_dev.c
-> +++ b/drivers/vfio/pci/pds/vfio_dev.c
-> @@ -201,6 +201,7 @@ static const struct vfio_device_ops pds_vfio_ops =3D =
-{
->  	.mmap =3D vfio_pci_core_mmap,
->  	.request =3D vfio_pci_core_request,
->  	.match =3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd =3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd =3D vfio_iommufd_physical_unbind,
->  	.attach_ioas =3D vfio_iommufd_physical_attach_ioas,
-> diff --git a/drivers/vfio/pci/qat/main.c b/drivers/vfio/pci/qat/main.c
-> index 845ed15b67718c..5cce6b0b8d2f3e 100644
-> --- a/drivers/vfio/pci/qat/main.c
-> +++ b/drivers/vfio/pci/qat/main.c
-> @@ -614,6 +614,7 @@ static const struct vfio_device_ops qat_vf_pci_ops =
-=3D
-> {
->  	.mmap =3D vfio_pci_core_mmap,
->  	.request =3D vfio_pci_core_request,
->  	.match =3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd =3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd =3D vfio_iommufd_physical_unbind,
->  	.attach_ioas =3D vfio_iommufd_physical_attach_ioas,
-> diff --git a/drivers/vfio/pci/vfio_pci.c b/drivers/vfio/pci/vfio_pci.c
-> index 5ba39f7623bb76..ac10f14417f2f3 100644
-> --- a/drivers/vfio/pci/vfio_pci.c
-> +++ b/drivers/vfio/pci/vfio_pci.c
-> @@ -138,6 +138,7 @@ static const struct vfio_device_ops vfio_pci_ops =3D =
-{
->  	.mmap		=3D vfio_pci_core_mmap,
->  	.request	=3D vfio_pci_core_request,
->  	.match		=3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd	=3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd	=3D vfio_iommufd_physical_unbind,
->  	.attach_ioas	=3D vfio_iommufd_physical_attach_ioas,
-> diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci=
-_core.c
-> index 6328c3a05bcdd4..d39b0201d910fd 100644
-> --- a/drivers/vfio/pci/vfio_pci_core.c
-> +++ b/drivers/vfio/pci/vfio_pci_core.c
-> @@ -1821,9 +1821,13 @@ void vfio_pci_core_request(struct vfio_device
-> *core_vdev, unsigned int count)
->  }
->  EXPORT_SYMBOL_GPL(vfio_pci_core_request);
->=20
-> -static int vfio_pci_validate_vf_token(struct vfio_pci_core_device *vdev,
-> -				      bool vf_token, uuid_t *uuid)
-> +int vfio_pci_core_match_token_uuid(struct vfio_device *core_vdev,
-> +				   const uuid_t *uuid)
-> +
->  {
-> +	struct vfio_pci_core_device *vdev =3D
-> +		container_of(core_vdev, struct vfio_pci_core_device, vdev);
-> +
->  	/*
->  	 * There's always some degree of trust or collaboration between SR-
-> IOV
->  	 * PF and VFs, even if just that the PF hosts the SR-IOV capability
-> and
-> @@ -1854,7 +1858,7 @@ static int vfio_pci_validate_vf_token(struct
-> vfio_pci_core_device *vdev,
->  		bool match;
->=20
->  		if (!pf_vdev) {
-> -			if (!vf_token)
-> +			if (!uuid)
->  				return 0; /* PF is not vfio-pci, no VF token */
->=20
->  			pci_info_ratelimited(vdev->pdev,
-> @@ -1862,7 +1866,7 @@ static int vfio_pci_validate_vf_token(struct
-> vfio_pci_core_device *vdev,
->  			return -EINVAL;
->  		}
->=20
-> -		if (!vf_token) {
-> +		if (!uuid) {
->  			pci_info_ratelimited(vdev->pdev,
->  				"VF token required to access device\n");
->  			return -EACCES;
-> @@ -1880,7 +1884,7 @@ static int vfio_pci_validate_vf_token(struct
-> vfio_pci_core_device *vdev,
->  	} else if (vdev->vf_token) {
->  		mutex_lock(&vdev->vf_token->lock);
->  		if (vdev->vf_token->users) {
-> -			if (!vf_token) {
-> +			if (!uuid) {
->  				mutex_unlock(&vdev->vf_token->lock);
->  				pci_info_ratelimited(vdev->pdev,
->  					"VF token required to access
-> device\n");
-> @@ -1893,12 +1897,12 @@ static int vfio_pci_validate_vf_token(struct
-> vfio_pci_core_device *vdev,
->  					"Incorrect VF token provided for
-> device\n");
->  				return -EACCES;
->  			}
-> -		} else if (vf_token) {
-> +		} else if (uuid) {
->  			uuid_copy(&vdev->vf_token->uuid, uuid);
->  		}
->=20
->  		mutex_unlock(&vdev->vf_token->lock);
-> -	} else if (vf_token) {
-> +	} else if (uuid) {
->  		pci_info_ratelimited(vdev->pdev,
->  			"VF token incorrectly provided, not a PF or VF\n");
->  		return -EINVAL;
-> @@ -1906,6 +1910,7 @@ static int vfio_pci_validate_vf_token(struct
-> vfio_pci_core_device *vdev,
->=20
->  	return 0;
->  }
-> +EXPORT_SYMBOL_GPL(vfio_pci_core_match_token_uuid);
->=20
->  #define VF_TOKEN_ARG "vf_token=3D"
->=20
-> @@ -1952,7 +1957,8 @@ int vfio_pci_core_match(struct vfio_device
-> *core_vdev, char *buf)
->  		}
->  	}
->=20
-> -	ret =3D vfio_pci_validate_vf_token(vdev, vf_token, &uuid);
-> +	ret =3D core_vdev->ops->match_token_uuid(core_vdev,
-> +					       vf_token ? &uuid : NULL);
->  	if (ret)
->  		return ret;
->=20
-> diff --git a/drivers/vfio/pci/virtio/main.c b/drivers/vfio/pci/virtio/mai=
-n.c
-> index 515fe1b9f94d80..8084f3e36a9f70 100644
-> --- a/drivers/vfio/pci/virtio/main.c
-> +++ b/drivers/vfio/pci/virtio/main.c
-> @@ -94,6 +94,7 @@ static const struct vfio_device_ops
-> virtiovf_vfio_pci_lm_ops =3D {
->  	.mmap =3D vfio_pci_core_mmap,
->  	.request =3D vfio_pci_core_request,
->  	.match =3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd =3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd =3D vfio_iommufd_physical_unbind,
->  	.attach_ioas =3D vfio_iommufd_physical_attach_ioas,
-> @@ -114,6 +115,7 @@ static const struct vfio_device_ops
-> virtiovf_vfio_pci_tran_lm_ops =3D {
->  	.mmap =3D vfio_pci_core_mmap,
->  	.request =3D vfio_pci_core_request,
->  	.match =3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd =3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd =3D vfio_iommufd_physical_unbind,
->  	.attach_ioas =3D vfio_iommufd_physical_attach_ioas,
-> @@ -134,6 +136,7 @@ static const struct vfio_device_ops
-> virtiovf_vfio_pci_ops =3D {
->  	.mmap =3D vfio_pci_core_mmap,
->  	.request =3D vfio_pci_core_request,
->  	.match =3D vfio_pci_core_match,
-> +	.match_token_uuid =3D vfio_pci_core_match_token_uuid,
->  	.bind_iommufd =3D vfio_iommufd_physical_bind,
->  	.unbind_iommufd =3D vfio_iommufd_physical_unbind,
->  	.attach_ioas =3D vfio_iommufd_physical_attach_ioas,
-> diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-> index 707b00772ce1ff..eb563f538dee51 100644
-> --- a/include/linux/vfio.h
-> +++ b/include/linux/vfio.h
-> @@ -105,6 +105,9 @@ struct vfio_device {
->   * @match: Optional device name match callback (return: 0 for no-match,
-> >0 for
->   *         match, -errno for abort (ex. match with insufficient or incor=
-rect
->   *         additional args)
-> + * @match_token_uuid: Optional device token match/validation. Return 0
-> + *         if the uuid is valid for the device, -errno otherwise. uuid i=
-s NULL
-> + *         if none was provided.
->   * @dma_unmap: Called when userspace unmaps IOVA from the container
->   *             this device is attached to.
->   * @device_feature: Optional, fill in the VFIO_DEVICE_FEATURE ioctl
-> @@ -132,6 +135,7 @@ struct vfio_device_ops {
->  	int	(*mmap)(struct vfio_device *vdev, struct vm_area_struct
-> *vma);
->  	void	(*request)(struct vfio_device *vdev, unsigned int count);
->  	int	(*match)(struct vfio_device *vdev, char *buf);
-> +	int	(*match_token_uuid)(struct vfio_device *vdev, const uuid_t
-> *uuid);
->  	void	(*dma_unmap)(struct vfio_device *vdev, u64 iova, u64
-> length);
->  	int	(*device_feature)(struct vfio_device *device, u32 flags,
->  				  void __user *arg, size_t argsz);
-> diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.=
-h
-> index fbb472dd99b361..f541044e42a2ad 100644
-> --- a/include/linux/vfio_pci_core.h
-> +++ b/include/linux/vfio_pci_core.h
-> @@ -122,6 +122,8 @@ ssize_t vfio_pci_core_write(struct vfio_device
-> *core_vdev, const char __user *bu
->  int vfio_pci_core_mmap(struct vfio_device *core_vdev, struct
-> vm_area_struct *vma);
->  void vfio_pci_core_request(struct vfio_device *core_vdev, unsigned int
-> count);
->  int vfio_pci_core_match(struct vfio_device *core_vdev, char *buf);
-> +int vfio_pci_core_match_token_uuid(struct vfio_device *core_vdev,
-> +				   const uuid_t *uuid);
->  int vfio_pci_core_enable(struct vfio_pci_core_device *vdev);
->  void vfio_pci_core_disable(struct vfio_pci_core_device *vdev);
->  void vfio_pci_core_finish_enable(struct vfio_pci_core_device *vdev);
-> diff --git a/include/uapi/linux/vfio.h b/include/uapi/linux/vfio.h
-> index 5764f315137f99..75100bf009baf5 100644
-> --- a/include/uapi/linux/vfio.h
-> +++ b/include/uapi/linux/vfio.h
-> @@ -905,10 +905,12 @@ struct vfio_device_feature {
->   * VFIO_DEVICE_BIND_IOMMUFD - _IOR(VFIO_TYPE, VFIO_BASE + 18,
->   *				   struct vfio_device_bind_iommufd)
->   * @argsz:	 User filled size of this data.
-> - * @flags:	 Must be 0.
-> + * @flags:	 Must be 0 or a bit flags of VFIO_DEVICE_BIND_*
->   * @iommufd:	 iommufd to bind.
->   * @out_devid:	 The device id generated by this bind. devid is a
-> handle for
->   *		 this device/iommufd bond and can be used in IOMMUFD
-> commands.
-> + * @token_uuid_ptr: Valid if VFIO_DEVICE_BIND_FLAG_TOKEN. Points to a
-> 16 byte
-> + *                  UUID in the same format as
-> VFIO_DEVICE_FEATURE_PCI_VF_TOKEN.
->   *
->   * Bind a vfio_device to the specified iommufd.
->   *
-> @@ -917,13 +919,21 @@ struct vfio_device_feature {
->   *
->   * Unbind is automatically conducted when device fd is closed.
->   *
-> + * A token is sometimes required to open the device, unless this is know=
-n
-> to be
-> + * needed VFIO_DEVICE_BIND_FLAG_TOKEN should not be set and
-> token_uuid_ptr is
-> + * ignored. The only case today is a PF/VF relationship where the VF bin=
-d
-> must
-> + * be provided the same token as VFIO_DEVICE_FEATURE_PCI_VF_TOKEN
-> provided to
-> + * the PF.
-> + *
->   * Return: 0 on success, -errno on failure.
->   */
->  struct vfio_device_bind_iommufd {
->  	__u32		argsz;
->  	__u32		flags;
-> +#define VFIO_DEVICE_BIND_FLAG_TOKEN (1 << 0)
->  	__s32		iommufd;
->  	__u32		out_devid;
-> +	__aligned_u64	token_uuid_ptr;
->  };
->=20
->  #define VFIO_DEVICE_BIND_IOMMUFD	_IO(VFIO_TYPE, VFIO_BASE +
-> 18)
->=20
-> base-commit: 3e2a9811f6a9cefd310cc33cab73d5435b4a4caa
-> --
-> 2.43.0
+base-commit: 600b96ab916c09a60106c64ba7fbf60c301b98b9
+-- 
+2.43.0
 
