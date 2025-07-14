@@ -1,51 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0503428F533;
-	Mon, 14 Jul 2025 23:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87F528F533;
+	Mon, 14 Jul 2025 23:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534435; cv=none; b=f+1Zi2bi5h0pLKYacx+f467dxnQ4Zm7QoIwwLw6k4B8nhR5the6XtW7pKfy618ooL/+1ECVj7seTIekvstL4wnJVVDWWaPGvjYyPmQphbntjnrijuA9U+aTanKNYT3BdcMzq6xX0+yzOaxa6WZvqxjokp6Opz9lhYJhsa/YUW5E=
+	t=1752534440; cv=none; b=ZTydGthdvpOVrOBHe9BbwRIfIPTpztVS4SKAhRV1cuqmAmX+4qdI2f4xS/kGcq9bCvmkkz8vwAYw0zPucDADAffYkBwx8lChWQl9Aa33rgqUcINr7P1mbu4VHHzp7rO1BImUyL5HeWGdBeGIOWurRkjdJfbRt2DVMl+yPxJK4+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534435; c=relaxed/simple;
-	bh=5hBgzpv9sRfc+XhHdqBVcvSjL1DILSinWJ/1flggI5A=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sJlgQLMURkka3+5feAU8skwFlo5Ow8H4Y1e5D0MhT5tnN7ikW/tOVa/f77fnq+6Nck+GjX7yLaabYjWF3etmgq76mZY4o9amNKGtxlJTaG5MGH7hQ8keQMoUu+EJGnCpBufMtJeCGEYDiCf7BpP5ZwAy60VZw0JbcsB3Y3A6Ryg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5O98vp/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752534440; c=relaxed/simple;
+	bh=BszdfQb86N5o8gOZU3QPEvtEPUnfJJPU+QZJXfnxgRU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=pexeh1Av80C0sQdJ0te3s/d/X2n9N7IuWBt18wQmM3jn3xjRduX6OQhl6+/r0G30h44QoT/AqV4qigHMgAc3uyPDP1LG7qtH1un2jzLcSmxjQsGvWyFSPkxwjo+5VZH7kZQgXiDyj7DQrtdoMk//h0y5YkAQvdrI80rPjwaAPf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b2UeT4Iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5O98vp/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BFEC4CEED;
-	Mon, 14 Jul 2025 23:07:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b2UeT4Iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B402C4CEED;
+	Mon, 14 Jul 2025 23:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534434;
-	bh=5hBgzpv9sRfc+XhHdqBVcvSjL1DILSinWJ/1flggI5A=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5O98vp/puS7tjKZLyrGJDqu8e+y/ZHTxz0gotS0ljyzh/bDga32iFOvjwTjyz/Ox
-	 xHR7BnW9BL9uTjPX2X3Z+FCMeaZutk5cmRR37PIZI5Q2PeApZoJg/S2XVfW89K5wNl
-	 CqCfKexMUfkH6ybqcL/K21JMGR4LQ6UIiYmRbcD/F8qswYL/BqsncsgM/UIPi0EqjA
-	 ysHqQBS5t5E9HmKnwhHnYv7HbuI3bQebTh7eynrAH+xvzpZGQpOK8lwMD8Pg73B3GQ
-	 i1PMntEmFKNjFI3MVs4/9IlfmRP6L38wQV0u0AT+QgkiG/unOzDPjMsaHU9+7xHTya
-	 8LX6LEbNJ+STA==
+	s=k20201202; t=1752534440;
+	bh=BszdfQb86N5o8gOZU3QPEvtEPUnfJJPU+QZJXfnxgRU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=b2UeT4IyziSmm2GlLv84zUsqQDLrRujMF6899LKoo2m6+ty+5sxTEra9tiCjFHTEU
+	 /QUhLm3wChXI0GolKoVcoh+24CyYggsrRDmp5PhtH3D6N0wJGHpCVIEPdHY0VaViqU
+	 PoXyHH6y5kty5wBc6RvIu/EP5YdBLF9gG6jT+6J/5xcxfwpL4pX2oxJQdKpzo/jQsz
+	 ndSjNcXoeQV75P7PW3jraK57jMDbxgLWHdJmE03cN16vIFq4hKx0BCiY0ZtjBrnnLe
+	 rTKySm6nfsH875lVtCL5Ifm424UioMq4utmxN1hZVZoek+xClDmAnQefwyuuL/MBis
+	 6qSP5wjkQ/rvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Simon Trimmer <simont@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	yung-chuan.liao@linux.intel.com,
-	pierre-louis.bossart@linux.dev,
-	Vijendar.Mukunda@amd.com,
-	liam.r.girdwood@intel.com,
-	ckeepax@opensource.cirrus.com,
-	rf@opensource.cirrus.com,
-	mstrozek@opensource.cirrus.com,
-	deep_harsora@dell.com
-Subject: [PATCH AUTOSEL 6.15 15/15] ASoC: Intel: sof_sdw: Add quirks for Lenovo P1 and P16
-Date: Mon, 14 Jul 2025 19:06:16 -0400
-Message-Id: <20250714230616.3709521-15-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 01/12] wifi: mac80211: always initialize sdata::key_list
+Date: Mon, 14 Jul 2025 19:07:04 -0400
+Message-Id: <20250714230715.3710039-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250714230616.3709521-1-sashal@kernel.org>
-References: <20250714230616.3709521-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,95 +45,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.15.6
+X-stable-base: Linux 6.12.38
 Content-Transfer-Encoding: 8bit
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit f7690d058170dbc1520b0bfbc3d9daf046b59326 ]
+[ Upstream commit d7a54d02db41f72f0581a3c77c75b0993ed3f6e2 ]
 
-These Lenovo Laptops have the DMICs connected to the host instead of the
-CS42L43 and so need the SOC_SDW_CODEC_MIC quirk.
+This is currently not initialized for a virtual monitor, leading to a
+NULL pointer dereference when - for example - iterating over all the
+keys of all the vifs.
 
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250702112235.377479-1-simont@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709233400.8dcefe578497.I4c90a00ae3256520e063199d7f6f2580d5451acf@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the surrounding code context, I
-can now provide my assessment:
+Based on my analysis of the commit and the code changes, here is my
+assessment:
 
 **YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Bug Fix for Hardware Functionality**: The commit fixes audio
-   functionality on specific Lenovo laptop models (P1 and P16) where the
-   DMICs (Digital Microphones) are incorrectly routed. Without this
-   quirk, the microphones on these laptops won't work properly because
-   the system would expect them to be connected to the CS42L43 codec
-   when they're actually connected to the host.
+1. **Critical NULL Pointer Dereference Fix**: The commit fixes a NULL
+   pointer dereference that occurs when iterating over the key_list of
+   virtual monitor interfaces. This is a crash-inducing bug that affects
+   system stability.
 
-2. **Small and Contained Change**: The patch only adds three lines to
-   the `sof_sdw_ssid_quirk_table[]` array:
+2. **Clear Bug with Simple Fix**: The issue is straightforward - the
+   `key_list` was not initialized for virtual monitor interfaces created
+   via `ieee80211_add_virtual_monitor()`. The fix is minimal and
+   contained - it simply moves the `INIT_LIST_HEAD(&sdata->key_list)`
+   initialization from `ieee80211_if_add()` into
+   `ieee80211_sdata_init()`, ensuring all sdata structures have their
+   key_list properly initialized.
+
+3. **Real-World Impact**: The bug can be triggered when any code
+   iterates over all interfaces and their keys. Looking at the code,
+   functions like `ieee80211_iter_keys()` and
+   `ieee80211_iter_keys_rcu()` iterate through all interfaces when
+   called without a specific vif parameter:
   ```c
-  SND_PCI_QUIRK(0x17aa, 0x2347, "Lenovo P16", SOC_SDW_CODEC_MIC),
-  SND_PCI_QUIRK(0x17aa, 0x2348, "Lenovo P16", SOC_SDW_CODEC_MIC),
-  SND_PCI_QUIRK(0x17aa, 0x2349, "Lenovo P1", SOC_SDW_CODEC_MIC),
+  list_for_each_entry(sdata, &local->interfaces, list)
+  list_for_each_entry_safe(key, tmp, &sdata->key_list, list)
   ```
-  This is a minimal, low-risk change that only affects the specific
-  hardware identified by the PCI subsystem IDs.
+  This would cause a NULL pointer dereference when it encounters a
+  virtual monitor interface.
 
-3. **Follows Established Pattern**: The commit follows the exact same
-   pattern as the previously backported commits shown in the similar
-   commits list:
-   - "ASoC: Intel: sof_sdw: Add quirk for Asus Zenbook S16" (marked as
-     YES for backporting)
-   - "ASoC: Intel: sof_sdw: Add quirk for Asus Zenbook S14" (marked as
-     YES for backporting)
-   - Multiple other Lenovo quirk fixes that were marked YES for
-     backporting
+4. **Minimal Risk**: The change is extremely low risk - it only adds
+   initialization of a list head that should have been initialized all
+   along. There are no architectural changes or feature additions.
 
-4. **No Architectural Changes**: The commit doesn't introduce any new
-   features or make architectural changes. It simply adds device IDs to
-   an existing quirk table that tells the driver to exclude the CS42L43
-   microphone DAI link for these specific models.
+5. **Follows Stable Rules**: This perfectly fits the stable kernel
+   criteria:
+   - Fixes a real bug (NULL pointer dereference/crash)
+   - Small and contained change (2 lines moved)
+   - Obviously correct fix
+   - No new features or behaviors introduced
 
-5. **Critical for Affected Users**: Without this fix, users of these
-   Lenovo laptop models would have non-functional microphones, which is
-   a significant usability issue that affects basic functionality.
+The commit is similar in nature to commit #5 in the reference list which
+was marked as suitable for backporting - both fix NULL pointer
+dereferences in the wifi/mac80211 subsystem with minimal, targeted
+changes.
 
-6. **Zero Risk to Other Systems**: The quirk only activates for systems
-   with the specific PCI subsystem vendor ID (0x17aa for Lenovo) and the
-   exact subsystem device IDs (0x2347, 0x2348, 0x2349). There's no risk
-   of regression on other hardware.
+ net/mac80211/iface.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-The commit is a straightforward hardware enablement fix that restores
-proper microphone functionality on specific Lenovo laptop models by
-correctly identifying their DMIC routing configuration. It follows
-stable tree rules by being a targeted bug fix with minimal changes and
-no risk to unaffected systems.
-
- sound/soc/intel/boards/sof_sdw.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 095d08b3fc824..380588fc2baf9 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -765,6 +765,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- static const struct snd_pci_quirk sof_sdw_ssid_quirk_table[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1e13, "ASUS Zenbook S14", SOC_SDW_CODEC_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1f43, "ASUS Zenbook S16", SOC_SDW_CODEC_MIC),
-+	SND_PCI_QUIRK(0x17aa, 0x2347, "Lenovo P16", SOC_SDW_CODEC_MIC),
-+	SND_PCI_QUIRK(0x17aa, 0x2348, "Lenovo P16", SOC_SDW_CODEC_MIC),
-+	SND_PCI_QUIRK(0x17aa, 0x2349, "Lenovo P1", SOC_SDW_CODEC_MIC),
- 	{}
- };
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 209d6ffa8e426..adfdc14bd91ac 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -1121,6 +1121,8 @@ static void ieee80211_sdata_init(struct ieee80211_local *local,
+ {
+ 	sdata->local = local;
+ 
++	INIT_LIST_HEAD(&sdata->key_list);
++
+ 	/*
+ 	 * Initialize the default link, so we can use link_id 0 for non-MLD,
+ 	 * and that continues to work for non-MLD-aware drivers that use just
+@@ -2162,8 +2164,6 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
+ 
+ 	ieee80211_init_frag_cache(&sdata->frags);
+ 
+-	INIT_LIST_HEAD(&sdata->key_list);
+-
+ 	wiphy_delayed_work_init(&sdata->dec_tailroom_needed_wk,
+ 				ieee80211_delayed_tailroom_dec);
  
 -- 
 2.39.5
