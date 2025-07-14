@@ -1,92 +1,85 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2752510A1E;
-	Mon, 14 Jul 2025 09:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE22248F7A;
+	Mon, 14 Jul 2025 11:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752483710; cv=none; b=iHUOiK4CazvtGEH/2g38oNxxwpKzWnjNPlicO03EaahcfwrtDXsgABUznhd6McqXIXbErPQIANk8ztqb7gSMYtGFlWYuZ6NpcoVIbKckz4on7Bp0tNmJmp08pjSqNPkGVvy33nLsrmp0LaBa6WWBVi6ye2X/yOFqntMBbjuXyZY=
+	t=1752494089; cv=none; b=KEYZigeVDOftTaeqe0QO2qvvAW4qqH33gG46f9xvO7oDD0P8LhCl63KoJH3jO85mrvM60h60POja/No1eC/T8T+slX0s10CTAZe+Drua2dfgnHXSozCuB9vN+rFXp117vobclx9leRGvJRs+GnyZuNCGNTPIIofGJbUEVZID540=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752483710; c=relaxed/simple;
-	bh=E1DjprMalu3MYxieIEg3iKgcKloRslOwdnRJZhDtCas=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mZK25LdHVC66ACN50uPddRQv7Rzo34T8AfeNipDoP3kYFK5Vl0YJVzgmHfzl/Aro1zoLY0/xS0TxwE8NOWZfgynrBM5SPR9v1/rnIjN6MiRClLm48T8CqHzDYUWSfDGRCyPWZR95sJm6RyLGSz+aLIAjxsAyQkz5MODJeFlQ+ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=n9GhlIE3; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1752494089; c=relaxed/simple;
+	bh=rziu0D+4kGuOhATIk+bxX7lWlGb57GTit+Rc33yBGEw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WyOmgaQRD3Zq1f+4aHieZISBIho8SV1f1LJLurWX6Ff6mBBgcOobaPHoyZ1ixuuqZA6oGAplZc64QyijR7mgJSOz44CXyoB6HpZGF67MUQs1/7iKLmHbsoYH2HWusa7dmUuYCbr6ATBYx3PeJQrXAHt7LqYuLv1er5l9+xkWsR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MMXYocwG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="n9GhlIE3"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=zdEc0Ly1I3A8OFmOCeYmPl/xXNhD1BIGPS9d7GroiT8=; b=n9GhlIE3PmAjZwDuZUzBIXKyQm
-	tYGpDoU8va1CCkF87FN2PH2+QohuFBnVXctMolBQG5flpUONFumbugXptqVxMVmcFyIA2WQLAhfMA
-	fQCSnqAM7Dn7NTgH+w+0YEu7B+dXICw556FjiLgZeN2bGTCiZyqyek34PyitOL5pa59HQmT3REbiQ
-	fh/sXtfEY6TwSrfU5D4tANvrVa0ZxCCvj+Lj4ZcOgJLlfcD40+JUe9kqoCKOpdpw6VDote2S5yOzQ
-	ZOoQq1ZkNsIS4UwKKOL7dTdUezwkVEDqr0U1E/ChYenzCB3jdY1Eb6zk5uie1thRYt2oKS7SilAvt
-	i/i7IpuA==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1ubF4D-00000006bGz-0Gna;
-	Mon, 14 Jul 2025 09:01:45 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 08480300186; Mon, 14 Jul 2025 11:01:44 +0200 (CEST)
-Date: Mon, 14 Jul 2025 11:01:43 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] objtool/rust: add one more `noreturn` Rust function
- for Rust 1.89.0
-Message-ID: <20250714090143.GM1613200@noisy.programming.kicks-ass.net>
-References: <20250712160103.1244945-1-ojeda@kernel.org>
- <20250712160103.1244945-2-ojeda@kernel.org>
- <20250714084638.GL905792@noisy.programming.kicks-ass.net>
- <CAH5fLgjtU1u=h8FY3im364AsC21GitnrjhBT=YJMmipH_ZWnQA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMXYocwG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE1EC4CEF7;
+	Mon, 14 Jul 2025 11:54:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752494088;
+	bh=rziu0D+4kGuOhATIk+bxX7lWlGb57GTit+Rc33yBGEw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=MMXYocwG9YB2Qbh87IeUgP6bdteXTdaMI0KAmYZ/rhULoDTzhozimbFrHmyq9Xt7O
+	 iXKDXnIT5hrIsavkrFJp8ghdJ0fnX0LlpTwP0QErFyRQKNg9meh859pIA9+POS9Giz
+	 0cknD/iCa3oJQd1RZZsVtMvaUg/ooE/0NGRdzeMEgzDgdJmre8TAbkfJoPo/w5nRdi
+	 JE9VEnBgh1Qf5JIzxjmsUkBrbCaifkF03h/HHQeC2HFjVD+GbU4JlupwYpLrKq5ceS
+	 eGOQRccSfr3sO9mZYN9PHZHAon8+zD5qkpLBwTBhQTegnemr+5Ku2EsrEMOP0/HZiJ
+	 TQpMejMjkHm4Q==
+From: Will Deacon <will@kernel.org>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] iommu/qcom: Fix pgsize_bitmap
+Date: Mon, 14 Jul 2025 12:54:30 +0100
+Message-Id: <175249096589.1450216.5497054354220056628.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <0-v1-65a7964d2545+195-qcom_pgsize_jgg@nvidia.com>
+References: <0-v1-65a7964d2545+195-qcom_pgsize_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH5fLgjtU1u=h8FY3im364AsC21GitnrjhBT=YJMmipH_ZWnQA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 14, 2025 at 10:48:33AM +0200, Alice Ryhl wrote:
-
-> > >  tools/objtool/check.c | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > >
-> > > diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-> > > index f23bdda737aa..3257eefc41ed 100644
-> > > --- a/tools/objtool/check.c
-> > > +++ b/tools/objtool/check.c
-> > > @@ -224,6 +224,7 @@ static bool is_rust_noreturn(const struct symbol *func)
-> > >              str_ends_with(func->name, "_4core9panicking14panic_explicit")                            ||
-> > >              str_ends_with(func->name, "_4core9panicking14panic_nounwind")                            ||
-> > >              str_ends_with(func->name, "_4core9panicking18panic_bounds_check")                        ||
-> > > +            str_ends_with(func->name, "_4core9panicking18panic_nounwind_fmt")                        ||
-> > >              str_ends_with(func->name, "_4core9panicking19assert_failed_inner")                       ||
-> > >              str_ends_with(func->name, "_4core9panicking30panic_null_pointer_dereference")            ||
-> > >              str_ends_with(func->name, "_4core9panicking36panic_misaligned_pointer_dereference")      ||
-> >
-> > Just having "_4core9panicking" substring is not sufficient?
+On Fri, 11 Jul 2025 10:16:38 -0300, Jason Gunthorpe wrote:
+> qcom uses the ARM_32_LPAE_S1 format which uses the ARM long descriptor
+> page table. Eventually arm_32_lpae_alloc_pgtable_s1() will adjust
+> the pgsize_bitmap with:
 > 
-> That prefix just means it is defined in the panicking.rs file, which
-> also has a few functions that are not noreturn.
+> 	cfg->pgsize_bitmap &= (SZ_4K | SZ_2M | SZ_1G);
+> 
+> So the current declaration is nonsensical. Fix it to be just SZ_4K which
+> is what it has actually been using so far. Most likely the qcom driver
+> copy and pasted the pgsize_bitmap from something using the ARM_V7S format.
+> 
+> [...]
 
-Oh well, I figured it was too good to be true anyway. Its just that
-there was a lot of that around and I had to ask :-)
+Applied to iommu (core), thanks!
+
+[1/1] iommu/qcom: Fix pgsize_bitmap
+      https://git.kernel.org/iommu/c/ced24bf4352c
+
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
