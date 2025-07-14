@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3790D290BA5;
-	Mon, 14 Jul 2025 23:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C2D298CA4;
+	Mon, 14 Jul 2025 23:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534473; cv=none; b=SumtpF9AJgKK72Obr/Kh8tL/7lYF6vd60gBNsXSl+hEoPvDZTYQl/8UvbNonhmE4jaaKCVajz3s7mNAWzKqz0L0kdR2Cc4EFcf5uGAy1TvNtzO7a3RyBBblEAGSiPyHMDFknWk6TcRRxrgosRqmjNLN+w8XIfF5arHBfrA/BdJQ=
+	t=1752534475; cv=none; b=TDA6b2PWe/yRPMgx6dxs8bSAR5WYItrRUtxVuizIlIQtMjYD/EXMRYsLLL1UHA7Lctg7Kvs5gKUyB6bWItZ23p3ZYuoZxwEcBjNQ2WiuL91gpZ0y59V0o2JDalrMZIhEQ1ZAe9oj/5WLq5ONUelNhfJz8h6qlAGAraRLjvF+tSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534473; c=relaxed/simple;
-	bh=i2SJgHx6hN7NkhX+pnv/6QdZnAJA9/GQd1NIdnGWizg=;
+	s=arc-20240116; t=1752534475; c=relaxed/simple;
+	bh=64AD+8Six6qCxgsMIz6zvbkOGb1ypExIrfiYZg4UJv4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QCRdxiT26QK6nDugfWjdpoBVGgBwJSNpAJYpOgsbvTl+o1BFInTWfVKGjDQE3fslDvL2wCINKDc8AiG7wAgAErtQAX1Tl96j+bhowBWaGZ9UzHXU/clLayFdk+mZlRMPQXp+zuYaHARkMQLvOQ9AvGv3KuzGFGSHYVri8uRB22M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ki4y+z9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Buw8TQRKHv2gwr+b/nEY4lPX8our03xdCDqyO9Zy+l9kzYE6qEhy6NKUSIfAe4JdrnBp/wSIsKqKYcxReRH4/A3Y/17sBOxyVZVwFdckTnlWxjbM/jznbnGQ7QNM+u05Naajf0kVb8y+59ZHgIcms0v9gGpuxFaFjKD124ShGdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hn6+kWY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ki4y+z9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0528C4CEED;
-	Mon, 14 Jul 2025 23:07:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hn6+kWY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C210C4CEED;
+	Mon, 14 Jul 2025 23:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534473;
-	bh=i2SJgHx6hN7NkhX+pnv/6QdZnAJA9/GQd1NIdnGWizg=;
+	s=k20201202; t=1752534474;
+	bh=64AD+8Six6qCxgsMIz6zvbkOGb1ypExIrfiYZg4UJv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ki4y+z9XFfEB97rHbUD9rMECVK9YjZ+VIX+9G0bLqFcg2vqK/v+oUp/2jlU+6wPrh
-	 TkeaXkDro5D1uD8iOlF3AXn+8hBY9OQQ8lHBLPd402slE792NAiDHOh6gBdAqU6+/C
-	 F292/F9H0mwGpK3jGHSAgxoOLSs3OQII8hvrhM389h89C0a6SbJOrcwOW7rsykX/fh
-	 9kmpIS+W+owsYLEC3aa4IbmtWnv/XpV3acJP4ITV4Bxp4Dw7iFqWruTpKLxBgXJhso
-	 L/9mYpw01FyM9MJvj+euzhSamhRyvvPdiHfiyw7fc1mLmWRWSorB9xpIJyxd2SQtZT
-	 4dm/4UOW9DglQ==
+	b=Hn6+kWY6l7AYydb30Kwmy+/4kgWsQkdaqh1YnA3nx21/l3yXKiJPBoy10oF4lCMcC
+	 8RqDn48Bsb2+YBaMPUi05RC83tLEcsRgTcUJo4Y2CdJ6VZhDnEm/z+Xhg+18qMJeqn
+	 e5PxDsrEYFa3MZ4mgmWDjZe7Dv4yDoqa1gsIkBrVGRRo3YP7BhxgygvVxZO8ota9M/
+	 9jrOQihMPBSNvtx/R8HC5PYCv3e9cNOYeB/unljbYv33Mwh6jkbuKtSSZ0flI++xrz
+	 RKg7+NeRdxcj2PgVvugw/gYOBAhoTIEfxU86UrOQJf/E47HCjgt040zYKv3N1bF/II
+	 kZQdKPRa8WArQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jann Horn <jannh@google.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+2fe61cb2a86066be6985@syzkaller.appspotmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 3/6] eventpoll: don't decrement ep refcount while still holding the ep mutex
-Date: Mon, 14 Jul 2025 19:07:40 -0400
-Message-Id: <20250714230744.3710270-3-sashal@kernel.org>
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 4/6] perf/core: Fix WARN in perf_sigtrap()
+Date: Mon, 14 Jul 2025 19:07:41 -0400
+Message-Id: <20250714230744.3710270-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250714230744.3710270-1-sashal@kernel.org>
 References: <20250714230744.3710270-1-sashal@kernel.org>
@@ -51,206 +53,107 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.98
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 ]
+[ Upstream commit 3da6bb419750f3ad834786d6ba7c9d5d062c770b ]
 
-Jann Horn points out that epoll is decrementing the ep refcount and then
-doing a
+Since exit_task_work() runs after perf_event_exit_task_context() updated
+ctx->task to TASK_TOMBSTONE, perf_sigtrap() from perf_pending_task() might
+observe event->ctx->task == TASK_TOMBSTONE.
 
-    mutex_unlock(&ep->mtx);
+Swap the early exit tests in order not to hit WARN_ON_ONCE().
 
-afterwards. That's very wrong, because it can lead to a use-after-free.
-
-That pattern is actually fine for the very last reference, because the
-code in question will delay the actual call to "ep_free(ep)" until after
-it has unlocked the mutex.
-
-But it's wrong for the much subtler "next to last" case when somebody
-*else* may also be dropping their reference and free the ep while we're
-still using the mutex.
-
-Note that this is true even if that other user is also using the same ep
-mutex: mutexes, unlike spinlocks, can not be used for object ownership,
-even if they guarantee mutual exclusion.
-
-A mutex "unlock" operation is not atomic, and as one user is still
-accessing the mutex as part of unlocking it, another user can come in
-and get the now released mutex and free the data structure while the
-first user is still cleaning up.
-
-See our mutex documentation in Documentation/locking/mutex-design.rst,
-in particular the section [1] about semantics:
-
-	"mutex_unlock() may access the mutex structure even after it has
-	 internally released the lock already - so it's not safe for
-	 another context to acquire the mutex and assume that the
-	 mutex_unlock() context is not using the structure anymore"
-
-So if we drop our ep ref before the mutex unlock, but we weren't the
-last one, we may then unlock the mutex, another user comes in, drops
-_their_ reference and releases the 'ep' as it now has no users - all
-while the mutex_unlock() is still accessing it.
-
-Fix this by simply moving the ep refcount dropping to outside the mutex:
-the refcount itself is atomic, and doesn't need mutex protection (that's
-the whole _point_ of refcounts: unlike mutexes, they are inherently
-about object lifetimes).
-
-Reported-by: Jann Horn <jannh@google.com>
-Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Closes: https://syzkaller.appspot.com/bug?extid=2fe61cb2a86066be6985
+Reported-by: syzbot <syzbot+2fe61cb2a86066be6985@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/b1c224bd-97f9-462c-a3e3-125d5e19c983@I-love.SAKURA.ne.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the code changes, here is my
-assessment:
+Based on my analysis of the commit, let me provide my assessment:
 
-**YES**, this commit should be backported to stable kernel trees.
+**YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-### 1. **Critical Use-After-Free Bug Fix**
+1. **It fixes a real bug with user-visible impact**: The commit fixes a
+   WARN_ON_ONCE() that fires in perf_sigtrap() when the system hits a
+   specific race condition. This WARN causes kernel log spam and
+   indicates an unexpected state that shouldn't occur.
 
-This commit fixes a serious use-after-free vulnerability in the epoll
-subsystem. The bug occurs because:
+2. **The fix is small and contained**: The change is minimal - it simply
+   reorders two early exit checks in perf_sigtrap():
+   - Before: Check `event->ctx->task != current` first, then check
+     `PF_EXITING`
+   - After: Check `PF_EXITING` first, then check `event->ctx->task !=
+     current`
 
-- The code was decrementing the refcount while still holding `ep->mtx`
-- `mutex_unlock()` is not atomic and can access the mutex structure
-  after internally releasing the lock
-- If another thread drops the last reference and frees the eventpoll
-  structure, the ongoing `mutex_unlock()` will access freed memory
+3. **Clear race condition**: The commit message explains the race:
+   exit_task_work() runs after perf_event_exit_task_context() has
+   updated ctx->task to TASK_TOMBSTONE. When perf_sigtrap() is called
+   from perf_pending_task() during this window, it observes
+   event->ctx->task == TASK_TOMBSTONE, which doesn't match current,
+   triggering the WARN.
 
-### 2. **Real Security Impact**
+4. **Low risk of regression**: The fix simply reorders existing checks
+   without changing functionality. If the task is exiting (PF_EXITING is
+   set), we return early regardless. The reordering just prevents the
+   WARN from firing in this legitimate exit scenario.
 
-From the code changes:
-```c
-// BEFORE (buggy):
-dispose = ep_refcount_dec_and_test(ep);
-mutex_unlock(&ep->mtx);  // UAF risk here!
-if (dispose)
-    ep_free(ep);
+5. **Fixes a reproducible issue**: The commit references a specific
+   syzbot report
+   (https://syzkaller.appspot.com/bug?extid=2fe61cb2a86066be6985),
+   indicating this is a real issue that can be triggered, not just
+   theoretical.
 
-// AFTER (fixed):
-mutex_unlock(&ep->mtx);
-if (ep_refcount_dec_and_test(ep))
-    ep_free(ep);
-```
+6. **Follows stable tree rules**: This is an important bugfix (prevents
+   kernel warnings), has minimal risk, and doesn't introduce new
+   features or make architectural changes.
 
-This is a classic use-after-free that could be exploited for:
-- Privilege escalation
-- System crashes/DoS
-- Potential arbitrary code execution
+The fix is appropriate because during task exit, it's expected that
+ctx->task might be TASK_TOMBSTONE while the task is still cleaning up
+its work items. By checking PF_EXITING first, we properly handle the
+legitimate exit case without triggering false warnings.
 
-### 3. **Race Condition in Common Code Path**
+ kernel/events/core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-The vulnerable code is in frequently used functions:
-- `__ep_remove()` - called when removing epoll items
-- `ep_remove_safe()` - wrapper for safe removal
-- `ep_clear_and_put()` - called during epoll cleanup
-- `eventpoll_release_file()` - called when files are closed
-
-These are not obscure edge cases but core epoll operations that happen
-during normal system operation.
-
-### 4. **Affects Systems Using Refcounted epoll**
-
-The refcounting mechanism was introduced in commit 4f04cbaf128 ("epoll:
-use refcount to reduce ep_mutex contention") to improve performance. Any
-kernel with this commit is vulnerable to the use-after-free bug.
-
-### 5. **Simple and Safe Fix**
-
-The fix is minimal and low-risk:
-- Simply reorders operations to move refcount decrement after mutex
-  unlock
-- No new features or architectural changes
-- The refcount is atomic and doesn't need mutex protection
-- Follows the documented mutex semantics
-
-### 6. **Matches Stable Criteria**
-
-Per stable kernel rules, this fix:
-- ✓ Fixes a real bug (use-after-free)
-- ✓ Small and contained change
-- ✓ No side effects beyond fixing the issue
-- ✓ Critical for system stability/security
-- ✓ Already tested (committed by Linus himself)
-
-### 7. **Documentation Reference**
-
-The commit explicitly references kernel documentation about mutex
-semantics that explains why this ordering is critical. This shows it's
-fixing a well-understood concurrency issue, not experimental behavior.
-
-The simplicity of the fix combined with the severity of the bug (use-
-after-free in core kernel code) makes this an ideal candidate for stable
-backporting. Systems running kernels with the epoll refcounting feature
-need this fix to prevent potential security vulnerabilities and system
-crashes.
-
- fs/eventpoll.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
-
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index cde5a15b129f6..31b32d9e7bbce 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -772,7 +772,7 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
- 	call_rcu(&epi->rcu, epi_rcu_free);
- 
- 	percpu_counter_dec(&ep->user->epoll_watches);
--	return ep_refcount_dec_and_test(ep);
-+	return true;
- }
- 
- /*
-@@ -780,14 +780,14 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
-  */
- static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 873b17545717c..7ceacbc24cfae 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6785,18 +6785,18 @@ void perf_event_wakeup(struct perf_event *event)
+ static void perf_sigtrap(struct perf_event *event)
  {
--	WARN_ON_ONCE(__ep_remove(ep, epi, false));
-+	if (__ep_remove(ep, epi, false))
-+		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
- }
+ 	/*
+-	 * We'd expect this to only occur if the irq_work is delayed and either
+-	 * ctx->task or current has changed in the meantime. This can be the
+-	 * case on architectures that do not implement arch_irq_work_raise().
++	 * Both perf_pending_task() and perf_pending_irq() can race with the
++	 * task exiting.
+ 	 */
+-	if (WARN_ON_ONCE(event->ctx->task != current))
++	if (current->flags & PF_EXITING)
+ 		return;
  
- static void ep_clear_and_put(struct eventpoll *ep)
- {
- 	struct rb_node *rbp, *next;
- 	struct epitem *epi;
--	bool dispose;
+ 	/*
+-	 * Both perf_pending_task() and perf_pending_irq() can race with the
+-	 * task exiting.
++	 * We'd expect this to only occur if the irq_work is delayed and either
++	 * ctx->task or current has changed in the meantime. This can be the
++	 * case on architectures that do not implement arch_irq_work_raise().
+ 	 */
+-	if (current->flags & PF_EXITING)
++	if (WARN_ON_ONCE(event->ctx->task != current))
+ 		return;
  
- 	/* We need to release all tasks waiting for these file */
- 	if (waitqueue_active(&ep->poll_wait))
-@@ -820,10 +820,8 @@ static void ep_clear_and_put(struct eventpoll *ep)
- 		cond_resched();
- 	}
- 
--	dispose = ep_refcount_dec_and_test(ep);
- 	mutex_unlock(&ep->mtx);
--
--	if (dispose)
-+	if (ep_refcount_dec_and_test(ep))
- 		ep_free(ep);
- }
- 
-@@ -1003,7 +1001,7 @@ void eventpoll_release_file(struct file *file)
- 		dispose = __ep_remove(ep, epi, true);
- 		mutex_unlock(&ep->mtx);
- 
--		if (dispose)
-+		if (dispose && ep_refcount_dec_and_test(ep))
- 			ep_free(ep);
- 		goto again;
- 	}
+ 	send_sig_perf((void __user *)event->pending_addr,
 -- 
 2.39.5
 
