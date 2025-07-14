@@ -1,94 +1,158 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DC914A8E;
-	Mon, 14 Jul 2025 05:05:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F01F1367;
+	Mon, 14 Jul 2025 06:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752469502; cv=none; b=ULLJSrSZIM20T6E0sjAHIVsFvP52VcmhyZg7ahtS6qxOX26/NlQqB/TAhWWTlajCiHbfLf5DAjK7w3GS2nbd9VKklSumrxHf007zTv3adwLVl4NA9cPi0jPI46U74PvYhm3BHsY5Mz6w9Z43QrMfeV3Vx8b/vKBudzKHLprHIjY=
+	t=1752473328; cv=none; b=KqN1gdTR6K3yTi8L5FqNRy786Esgr/kNBX6jpG+KMSWWCyxl2IsfqKi+uER3Jw91Icv2yHq9ynHRdpe3eNhLI8r5IxYwyepMZ7jhCckdzOO6fWD52WVIptHh8Q+yaISZRTSRhekK28gUEuQ866xOB+CXmjh9Cxaaizk3G5edVH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752469502; c=relaxed/simple;
-	bh=bBs0th1Lt9ao6wjmVxKc0IZG2cp7doHoM50mrOm2RyY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I/qM9PZWiL145UTFvk5I5OfdN6SxzxP6we3K7lJngq7xy6HGWvhbXMFnCOG49kQyQY36h+bb6sobBGT1KrLbmeKEPrrohBlmjGt+JmUapKkxEqxH40E8ZJazJq/jB/iHOzRSDPz/xeQFwTeXe3V1goVm2aTuzn5AehKx6qabbjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AGvbZ1ud; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1752473328; c=relaxed/simple;
+	bh=IT52CMMNQVZe/JpsyeRDyVjFNpZ1hXZyOCPsnriWGuY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=hQeTcZ/KiF3ujRi3wVOfAdtXCxUu78/FQqg112QL9Vngr6Fqsi4/Zyjeriw0uIRoO2wDhf0d9CAbeTKsnWvvm+1WeDaeHWRyqTJ/QztsTObAFC+d6K0a5QFHigy67n2DHx8ZuMlSTMjcVlJR5sAu6C+hLrRyzigWvbXe/fWRoI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=aDQRSUNA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NMOIB9oI; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AGvbZ1ud"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752469501; x=1784005501;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=bBs0th1Lt9ao6wjmVxKc0IZG2cp7doHoM50mrOm2RyY=;
-  b=AGvbZ1udbi/5b/cSCmoJcTfaSOEZk5rBhNCWMWHwOrrcgtw7mOV2+n8V
-   B+i85+1DN7yAylNA51UEVOm6EPrrKSqM6Y0aAeqOVs3O/gnq6jtifoVFi
-   qiQliMCWt2xGt/8XYPO8+5rxdIKRTxduPyEA9UgHe4VHmbqzPAbTAO7NS
-   TyFtGBqdmwQpnOJPWoM4/Snxhn/tk3BoPk7azzQuOsY4xgjZrbVf/LHPe
-   19uk5NBkEFxT4ukSOopc6jxR7lmk+B7nnwWLyHUBbYSUeeCiFH7cs0ZJI
-   56S5ND+o2z3etcgOojUmMtz3sjk/bCu3J23n8pZtlKs+rbH+muye/XUN7
-   A==;
-X-CSE-ConnectionGUID: nOdciKpNQyiRlJiRjTiYuQ==
-X-CSE-MsgGUID: yJ33UuXAQNu26eMqWyyhLw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54782225"
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; 
-   d="scan'208";a="54782225"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2025 22:05:00 -0700
-X-CSE-ConnectionGUID: ODEWPCAgRNSmYgjj1LKrbQ==
-X-CSE-MsgGUID: GwJR787cTWuZsYTZD2u3Ew==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; 
-   d="scan'208";a="187838527"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2025 22:04:57 -0700
-Message-ID: <6af5e16d-5cd7-4c18-9f8a-78740f24cc20@linux.intel.com>
-Date: Mon, 14 Jul 2025 13:03:10 +0800
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="aDQRSUNA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NMOIB9oI"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 75D78EC0453;
+	Mon, 14 Jul 2025 02:08:45 -0400 (EDT)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-05.internal (MEProxy); Mon, 14 Jul 2025 02:08:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1752473325;
+	 x=1752559725; bh=RC+CFVWd/VWYy7402scfBHaFNOZ1+z4P3lAFBCgGdWQ=; b=
+	aDQRSUNAXm+/DcRr8JHFpYax0uaM0MtbIvLQBkPE0LGP414DcT3gKnoamV8T8SEN
+	xYDBlC2feBCzsPE8RIOl9gJX/ikFb2POYxKMPEA05S+M8ypfatJ8ALGNrb5cALTL
+	KDCKokVRPEcA/wH7mmkvLR21BSJnfsWKsmCPIHbSqW3OM967bPW7ofJ0SSVIqSJx
+	3LMnM/KApSyk04F8E1kcEeNy8Yh8Bz3/lpnj04X5uLq2XaQLMgFVQdx3k352jNpu
+	6MHc13Lzk98yPzAMgNkUOlqeSsAqcThKlOyCRgE+3WdAUM9G2skt5RrdeoJrr4+v
+	WcchmnE45GeMCekZhRbOAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752473325; x=
+	1752559725; bh=RC+CFVWd/VWYy7402scfBHaFNOZ1+z4P3lAFBCgGdWQ=; b=N
+	MOIB9oIK4aFGz/MAFD2nsL3q6bVhYxOa+1rkg2f7yWSgVHnNep35yY+c0xwQzgsP
+	vMRwxeJnGvzwwxmEaQjimrah2ANgib3/waRIs7J0MBff5JWK2BuRG3V/gs48X2mH
+	vlSX0MrI8YV61X2YvowWrBpkGbPwwZgKMONU56Du0DBDjQ5pvBmdCMh/Ak6cISlM
+	7YxINbF6R4HK3hpbeP6adI/ZbzcjdrSk1IZzjIJr2ToCdWjW9MBjV3kknOLRcbC1
+	bAbloGmDZcko0XSzOVQtxTfXl9rd+Dx5DcSZgsIirq7CM+sIpLRzc9Enub5Y6Rzk
+	eo+eEwiVAq6EJ3fdKbTeg==
+X-ME-Sender: <xms:6550aNISqkL_c_gKSI1GS6zwoONBMO-j0aQrHirsA-Dx9-qhip8wJw>
+    <xme:6550aJLL4Ox0N4jUEaYXAg0enHEgZ0Hvj03HUlMKvtRESzvOZlCtNu5UrKmGPZXjZ
+    N-Z2U0G_l8VX-cujzE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehuddulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetrhhnugcu
+    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
+    hnpefhtdfhvddtfeehudekteeggffghfejgeegteefgffgvedugeduveelvdekhfdvieen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrhhnug
+    esrghrnhgusgdruggvpdhnsggprhgtphhtthhopeefuddpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepjhhorhhoseeksgihthgvshdrohhrghdprhgtphhtthhopehvrghsrg
+    hnthdrhhgvghguvgesrghmugdrtghomhdprhgtphhtthhopehrohgsihhnrdhmuhhrphhh
+    hiesrghrmhdrtghomhdprhgtphhtthhopegsrghgrghsughothhmvgesghhmrghilhdrtg
+    homhdprhgtphhtthhopehthhhivghrrhihrdhrvgguihhnghesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehmshhhrghvihhtsehgohhoghhlvgdrtghomhdprhgtphhtthhopehprh
+    grrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopeiihhgrnhhgiigvkhhunhduudes
+    hhhurgifvghirdgtohhmpdhrtghpthhtohepugifmhifvdesihhnfhhrrgguvggrugdroh
+    hrgh
+X-ME-Proxy: <xmx:6550aCsD6On8GiPFBuhmhjg2cQ8kX7cKAjv83xfvNnNf8nYQRggg1w>
+    <xmx:6550aKpYGV3_6_Cw9r9zZqL9Q_5umAHi98hyl4oNeTYJZsfFeuThwA>
+    <xmx:6550aEmSWAshMXkV1Pf880BQ9xBOxPKTnOyiXYTu6frVsoV0UZLpTA>
+    <xmx:6550aCT8AC-3Qk2ejJ1a-d5tfh-z3Z7Ik7HcexIq2X1piS7MnP9Efw>
+    <xmx:7Z50aC55r5eujMz0Dvb8Ej99ArwfSU_zftLIRLdUgHJFaXhmzaUc6tH4>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id AB571700068; Mon, 14 Jul 2025 02:08:43 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] Reorganize Intel VT-D to be ready for iommupt
-To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-Cc: Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev,
- Wei Wang <wei.w.wang@intel.com>
-References: <0-v3-dbbe6f7e7ae3+124ffe-vtd_prep_jgg@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <0-v3-dbbe6f7e7ae3+124ffe-vtd_prep_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-ThreadId: T0ce86a4a9bc2801a
+Date: Mon, 14 Jul 2025 08:08:21 +0200
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Nicolin Chen" <nicolinc@nvidia.com>, "Jason Gunthorpe" <jgg@nvidia.com>
+Cc: "Kevin Tian" <kevin.tian@intel.com>, "Jonathan Corbet" <corbet@lwn.net>,
+ "Bagas Sanjaya" <bagasdotme@gmail.com>, "Will Deacon" <will@kernel.org>,
+ "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel" <joro@8bytes.org>,
+ "Thierry Reding" <thierry.reding@gmail.com>, vdumpa@nvidia.com,
+ "Jon Hunter" <jonathanh@nvidia.com>, shuah <shuah@kernel.org>,
+ jsnitsel@redhat.com, "Nathan Chancellor" <nathan@kernel.org>,
+ "Peter Zijlstra" <peterz@infradead.org>, "Yi Liu" <yi.l.liu@intel.com>,
+ mshavit@google.com, praan@google.com, zhangzekun11@huawei.com,
+ iommu@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ patches@lists.linux.dev, mochs@nvidia.com,
+ "ALOK TIWARI" <alok.a.tiwari@oracle.com>, vasant.hegde@amd.com,
+ "David Woodhouse" <dwmw2@infradead.org>,
+ "Baolu Lu" <baolu.lu@linux.intel.com>
+Message-Id: <db221336-2694-4fcf-a2b2-8fcb46ba3c9e@app.fastmail.com>
+In-Reply-To: 
+ <9a888a326b12aa5fe940083eae1156304e210fe0.1752126748.git.nicolinc@nvidia.com>
+References: <cover.1752126748.git.nicolinc@nvidia.com>
+ <9a888a326b12aa5fe940083eae1156304e210fe0.1752126748.git.nicolinc@nvidia.com>
+Subject: Re: [PATCH v9 17/29] iommufd: Add mmap interface
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 6/30/25 23:03, Jason Gunthorpe wrote:
-> This is similar to a series I sent for AMD.
+On Thu, Jul 10, 2025, at 07:59, Nicolin Chen wrote:
+>  EXPORT_SYMBOL_NS_GPL(_iommufd_object_undepend, "IOMMUFD");
 > 
-> Lightly reorganize some of the page table related code so there is greater
-> isolation between the first and second stage logic. iommupt will introduce
-> distinct types and code flows for first and second stages, having them all
-> combined together is difficult.
-> 
-> Splitting actually makes things generally more understandable anyhow as
-> they do share only a little code. Most of the registers and logic are in
-> fact different. That was being obscured by small helper functions that
-> combine the first and second stage information.
-> 
-> This would replace some of the patches recently sent by Wei.
-> 
-> The full branch including the iommpt conversion is here:
-> 
->      https://github.com/jgunthorpe/linux/commits/iommu_pt_vtd
-> 
-> v3:
->   - Add intel_domain_is_fs/ss_paging() as wrappers around the ops check
->   - Set force_snooping for the ss as well
+> +/*
+> + * Allocate an @offset to return to user space to use for an mmap() 
+> syscall
+> + *
+> + * Driver should use a per-structure helper in include/linux/iommufd.h
+> + */
+> +int _iommufd_alloc_mmap(struct iommufd_ctx *ictx, struct 
+> iommufd_object *owner,
+> +			phys_addr_t mmio_addr, size_t length,
+> +			unsigned long *offset)
+> +{
+...
+> +
+> +	/* Skip the first page to ease caller identifying the returned offset 
+> */
+> +	rc = mtree_alloc_range(&ictx->mt_mmap, &startp, immap, immap->length,
+> +			       PAGE_SIZE, PHYS_ADDR_MAX, GFP_KERNEL);
 
-Queued for linux-next. Thank you, Jason.
 
---
-baolu
+This produces a warning on 32-bit targets with a 64-bit phys_addr_t,
+in practice this would be ARM Cortex-A15 or -A17 systems:
+
+In file included from include/linux/overflow.h:6,
+                 ...
+                 from drivers/iommu/iommufd/driver.c:4:
+drivers/iommu/iommufd/driver.c: In function '_iommufd_alloc_mmap':
+include/linux/limits.h:11:25: error: conversion from 'long long unsigned int' to 'long unsigned int' changes value from '18446744073709551615' to '4294967295' [-Werror=overflow]
+   11 | #define PHYS_ADDR_MAX   (~(phys_addr_t)0)
+      |                         ^~~~~~~~~~~~~~~~~
+drivers/iommu/iommufd/driver.c:61:43: note: in expansion of macro 'PHYS_ADDR_MAX'
+   61 |                                PAGE_SIZE, PHYS_ADDR_MAX, GFP_KERNEL);
+      |                                           ^~~~~~~~~~~~~
+
+
+The mtree_alloc_range() interface explicitly operates on 'unsigned long'
+address values, so I don't see an immediate workaround for this that would
+make it work on these machines. On the other hand, 
+
+At the moment, the only drivers that select CONFIG_IOMMUFD_DRIVER
+on 32-bit Arm systems are CONFIG_PDS_VFIO_PCI and CONFIG_MLX5_VFIO_PCI.
+It's probably fine to make all three symbols "depends on 64BIT" for
+now, but I don't know if there may be more drivers like this in the
+future that actually could make sense on embedded systems.
+
+     Arnd
