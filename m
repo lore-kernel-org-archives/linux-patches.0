@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4664128AAF6;
-	Mon, 14 Jul 2025 23:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C7128A1EE;
+	Mon, 14 Jul 2025 23:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534392; cv=none; b=Ki/RNZ1N47kkwMx5TeIoL625zR7E8zpUD+1HewrfH/h//tlZk3pMCZDpjgRuvQywGfWNJi/EHcGpRvItwCGeqhMm13lv3SCW6YT4rMpz8rpJBFDCZe727fs91DlTjkNwI1xUzlaV+OrRD5FMTJNtWm0u8IfQLycEn0Kh+MEr8B4=
+	t=1752534394; cv=none; b=KhaexbuvmNBoo+uc/iCmNgsf20cA95KNlrd+T9IRiA8V1ShHWeiB/ltPmDEZUcT+2iGEs4bkB34LxmiFRA2UfTjSfv6B6lsRC3VVb2QOc0u0nRPotVKkNfm2vqS8FfC4hk/lV3KuhAwD0bQ4zk7UhFsTMH1UB8VZ0WKvdMWQlpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534392; c=relaxed/simple;
-	bh=ChNnv9/qNNtWIT13JsmzOk+r6SJUetuZttTYrEmHzRY=;
+	s=arc-20240116; t=1752534394; c=relaxed/simple;
+	bh=YUruJ4S+nCxznnCUymHO9skBoajuaBdQ5QqlVSBgB9g=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=AFOW12/C+j/0ijkl0AC7eSWMo8qBiz+KUTQ8to9fJgW4mgjOgSBkq9tO2kl5heKTSDoc9XhvpOg9Gt/WjvZoajUyI/BcY3MIkyDGZLmiClZz9f2O4EFha9A/Qdj9/giQd4R4okKPIiMzri1pG3bI/wlrLsv21X6CuUDx/QDsqPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TecX8TEP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UlXEz1obTxsDrD3XzxiCfDGjqMl6aASUSZOTDkpJlcb7zZbs8bK3gQO/tJBz6ziX0BPTnNg1Eo2MGLqzVbC33OW+N2zb3xkKNTzkjsy1UwiJcS+j1piN+WBhxzGB6PA9ivR//vZXLKV3y7TlqqCBRYhCOPESO9s/iwnwpBPuC54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PrgT4jMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TecX8TEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA91EC4CEED;
-	Mon, 14 Jul 2025 23:06:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PrgT4jMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C57C4CEFA;
+	Mon, 14 Jul 2025 23:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534391;
-	bh=ChNnv9/qNNtWIT13JsmzOk+r6SJUetuZttTYrEmHzRY=;
+	s=k20201202; t=1752534393;
+	bh=YUruJ4S+nCxznnCUymHO9skBoajuaBdQ5QqlVSBgB9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TecX8TEPMsFjLP7FbupPn1S+bpEYY0Fhx6pndYZk8qLtHupUdLsJi58zwA9RHPku0
-	 V/11MDNn9yqlfeo7NcNCzFAAbP7oTQg4jdZEvOBdVKziNWurLFAcFA6+8qqtWnvbqe
-	 O7lcP8A8uJEDXROpGmzZdptxPot7Axhvwgw1Ln1/jBOE4PRfc84XP9ZukuyKA6z71s
-	 XpuQkCpcZa4aX4uF+cgaP86aWa6TUTW7Kqxt/p0ByVljAjemOzhF4NIurd6++exa60
-	 rSKk6J+M8khVbnHJ04an6S0e7lN+abFupfyYKEDwT3ISw2wYPVP1+O2kvMerNT6O5E
-	 TKsF+JSr3DjQA==
+	b=PrgT4jMPvSPFdG8LMZj5uO0pTibEm/9ItnXq6ythXw2pvFj7NnhAuFlXKWBSslWA1
+	 LDCPvegL6vjsZCvGKKrq7QJGgEUdGyRd//utT7RjTwT1FwupO+NpRkN9jJAOyOxpNU
+	 NFTlaY+e+UuCz0d2EjdKtm+7fOUjSDWkPccKQhrE+HpufumCDRrmI+0FV3/yAqTVAd
+	 g9Qeh0i2fSWH0xAemYlFnPngp8fYBGqiIXGuA2dusVZq9+NlWWfcvHm4yMGfLBlj72
+	 SdqehnASj/Q+CRrvlkbPcsfq5gRT5R9LwXwhJWz8dPLj300nV8chQixZz4RGZZ1qCD
+	 TBAGDQm/C44pg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+2fe61cb2a86066be6985@syzkaller.appspotmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linus.walleij@linaro.org,
-	brgl@bgdev.pl,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 07/15] gpio: of: initialize local variable passed to the .of_xlate() callback
-Date: Mon, 14 Jul 2025 19:06:08 -0400
-Message-Id: <20250714230616.3709521-7-sashal@kernel.org>
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 08/15] perf/core: Fix WARN in perf_sigtrap()
+Date: Mon, 14 Jul 2025 19:06:09 -0400
+Message-Id: <20250714230616.3709521-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250714230616.3709521-1-sashal@kernel.org>
 References: <20250714230616.3709521-1-sashal@kernel.org>
@@ -52,90 +55,105 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.6
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit d563e7f95c933816efe531c3a48e22bc099c0f55 ]
+[ Upstream commit 3da6bb419750f3ad834786d6ba7c9d5d062c770b ]
 
-of_flags is passed down to GPIO chip's xlate function, so ensure this one
-is properly initialized as - if the xlate callback does nothing with it
-- we may end up with various configuration errors like:
+Since exit_task_work() runs after perf_event_exit_task_context() updated
+ctx->task to TASK_TOMBSTONE, perf_sigtrap() from perf_pending_task() might
+observe event->ctx->task == TASK_TOMBSTONE.
 
-    gpio-720 (enable): multiple pull-up, pull-down or pull-disable enabled, invalid configuration
+Swap the early exit tests in order not to hit WARN_ON_ONCE().
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20250708083829.658051-1-alexander.stein@ew.tq-group.com
-[Bartosz: tweaked the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Closes: https://syzkaller.appspot.com/bug?extid=2fe61cb2a86066be6985
+Reported-by: syzbot <syzbot+2fe61cb2a86066be6985@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/b1c224bd-97f9-462c-a3e3-125d5e19c983@I-love.SAKURA.ne.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, here's my determination:
+Based on my analysis of the commit, let me provide my assessment:
 
 **YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **It fixes a real bug that affects users**: The uninitialized
-   `of_flags` variable can contain random stack data that gets passed to
-   GPIO chip's xlate callback and subsequently converted to GPIO lookup
-   flags. This can lead to spurious error messages like "multiple pull-
-   up, pull-down or pull-disable enabled, invalid configuration" when
-   random bits in the uninitialized variable match the OF_GPIO_PULL_UP
-   (0x10), OF_GPIO_PULL_DOWN (0x20), or OF_GPIO_PULL_DISABLE (0x40)
-   flags.
+1. **It fixes a real bug with user-visible impact**: The commit fixes a
+   WARN_ON_ONCE() that fires in perf_sigtrap() when the system hits a
+   specific race condition. This WARN causes kernel log spam and
+   indicates an unexpected state that shouldn't occur.
 
-2. **The fix is small and contained**: The change is minimal - just
-   initializing `enum of_gpio_flags of_flags = 0;` instead of leaving it
-   uninitialized. This is a single-line change that doesn't affect any
-   other functionality.
+2. **The fix is small and contained**: The change is minimal - it simply
+   reorders two early exit checks in perf_sigtrap():
+   - Before: Check `event->ctx->task != current` first, then check
+     `PF_EXITING`
+   - After: Check `PF_EXITING` first, then check `event->ctx->task !=
+     current`
 
-3. **Clear cause and effect**: The code path shows that:
-   - `of_flags` is declared uninitialized in `of_find_gpio()` (line 702)
-   - It's passed by reference to `of_get_named_gpiod_flags()` (line 708)
-   - Which passes it to `of_xlate_and_get_gpiod_flags()` (line 422-423)
-   - Which passes it to the chip's `of_xlate()` callback (line 146)
-   - If the xlate callback doesn't modify the flags (which is valid
-     behavior), the uninitialized value is preserved
-   - The uninitialized value is then converted by
-     `of_convert_gpio_flags()` (line 720)
-   - Random bits can trigger invalid configuration detection in the GPIO
-     subsystem
+3. **Clear race condition**: The commit message explains the race:
+   exit_task_work() runs after perf_event_exit_task_context() has
+   updated ctx->task to TASK_TOMBSTONE. When perf_sigtrap() is called
+   from perf_pending_task() during this window, it observes
+   event->ctx->task == TASK_TOMBSTONE, which doesn't match current,
+   triggering the WARN.
 
-4. **No architectural changes**: This is a straightforward bug fix that
-   doesn't introduce new features or change any APIs.
+4. **Low risk of regression**: The fix simply reorders existing checks
+   without changing functionality. If the task is exiting (PF_EXITING is
+   set), we return early regardless. The reordering just prevents the
+   WARN from firing in this legitimate exit scenario.
 
-5. **Minimal risk of regression**: Initializing a variable to zero is
-   extremely low risk. The worst case would be if some driver was
-   inadvertently relying on the undefined behavior, but that would be a
-   bug in that driver.
+5. **Fixes a reproducible issue**: The commit references a specific
+   syzbot report
+   (https://syzkaller.appspot.com/bug?extid=2fe61cb2a86066be6985),
+   indicating this is a real issue that can be triggered, not just
+   theoretical.
 
-6. **Affects core GPIO subsystem**: The bug is in the core GPIO OF code
-   path that's used by many GPIO controllers, making it important to fix
-   across all supported kernels.
+6. **Follows stable tree rules**: This is an important bugfix (prevents
+   kernel warnings), has minimal risk, and doesn't introduce new
+   features or make architectural changes.
 
-The commit clearly fixes a bug where uninitialized memory can cause
-false error conditions, making it an excellent candidate for stable
-backporting according to the stable tree rules.
+The fix is appropriate because during task exit, it's expected that
+ctx->task might be TASK_TOMBSTONE while the task is still cleaning up
+its work items. By checking PF_EXITING first, we properly handle the
+legitimate exit case without triggering false warnings.
 
- drivers/gpio/gpiolib-of.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index 17802d97492fa..c8a1f9d4a3edb 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -708,7 +708,7 @@ struct gpio_desc *of_find_gpio(struct device_node *np, const char *con_id,
- 			       unsigned int idx, unsigned long *flags)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 2d1131e2cfc02..c7df50825cfdb 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7137,18 +7137,18 @@ void perf_event_wakeup(struct perf_event *event)
+ static void perf_sigtrap(struct perf_event *event)
  {
- 	char propname[32]; /* 32 is max size of property name */
--	enum of_gpio_flags of_flags;
-+	enum of_gpio_flags of_flags = 0;
- 	const of_find_gpio_quirk *q;
- 	struct gpio_desc *desc;
+ 	/*
+-	 * We'd expect this to only occur if the irq_work is delayed and either
+-	 * ctx->task or current has changed in the meantime. This can be the
+-	 * case on architectures that do not implement arch_irq_work_raise().
++	 * Both perf_pending_task() and perf_pending_irq() can race with the
++	 * task exiting.
+ 	 */
+-	if (WARN_ON_ONCE(event->ctx->task != current))
++	if (current->flags & PF_EXITING)
+ 		return;
  
+ 	/*
+-	 * Both perf_pending_task() and perf_pending_irq() can race with the
+-	 * task exiting.
++	 * We'd expect this to only occur if the irq_work is delayed and either
++	 * ctx->task or current has changed in the meantime. This can be the
++	 * case on architectures that do not implement arch_irq_work_raise().
+ 	 */
+-	if (current->flags & PF_EXITING)
++	if (WARN_ON_ONCE(event->ctx->task != current))
+ 		return;
+ 
+ 	send_sig_perf((void __user *)event->pending_addr,
 -- 
 2.39.5
 
