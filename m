@@ -1,158 +1,108 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F01F1367;
-	Mon, 14 Jul 2025 06:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2238118D;
+	Mon, 14 Jul 2025 08:46:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752473328; cv=none; b=KqN1gdTR6K3yTi8L5FqNRy786Esgr/kNBX6jpG+KMSWWCyxl2IsfqKi+uER3Jw91Icv2yHq9ynHRdpe3eNhLI8r5IxYwyepMZ7jhCckdzOO6fWD52WVIptHh8Q+yaISZRTSRhekK28gUEuQ866xOB+CXmjh9Cxaaizk3G5edVH4=
+	t=1752482804; cv=none; b=bbvwZgHMoqxbdDfSeQnwlfg06U0wN07JZnT+zbcabGLFrf0HXVnqTHREtb2jjq01lEVXsJMjI33J2/rl5V9gHOij8NIb8zmgqegaF4PF+oWrYLWG7s3OWZ5OsDRiClO7wJhs2vILgYX6zgYf9s3C/jMotaQxkJNWnTHcH5H+usk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752473328; c=relaxed/simple;
-	bh=IT52CMMNQVZe/JpsyeRDyVjFNpZ1hXZyOCPsnriWGuY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=hQeTcZ/KiF3ujRi3wVOfAdtXCxUu78/FQqg112QL9Vngr6Fqsi4/Zyjeriw0uIRoO2wDhf0d9CAbeTKsnWvvm+1WeDaeHWRyqTJ/QztsTObAFC+d6K0a5QFHigy67n2DHx8ZuMlSTMjcVlJR5sAu6C+hLrRyzigWvbXe/fWRoI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=aDQRSUNA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NMOIB9oI; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1752482804; c=relaxed/simple;
+	bh=BFy8MleXcXtgklpMCeGYGOJYu9f9q7epntNXpb7QDto=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YesFEQbXKiqt65arDoBtiIWQ+gXtwvhQGfjWAnO+KpMA+VBNKEJF8omEgD3rix8l5ZGHwx1i7ukeTkCLsTIfFLxpA86zQjdFump6i60jyKE5Sa9T+6wkhGb/znQnTO2TXYRGUXio+Vh9RuzRXfHA96o64CyWlpuPpp/2A3dz7F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=K7jUc9ez; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="aDQRSUNA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NMOIB9oI"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 75D78EC0453;
-	Mon, 14 Jul 2025 02:08:45 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-05.internal (MEProxy); Mon, 14 Jul 2025 02:08:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1752473325;
-	 x=1752559725; bh=RC+CFVWd/VWYy7402scfBHaFNOZ1+z4P3lAFBCgGdWQ=; b=
-	aDQRSUNAXm+/DcRr8JHFpYax0uaM0MtbIvLQBkPE0LGP414DcT3gKnoamV8T8SEN
-	xYDBlC2feBCzsPE8RIOl9gJX/ikFb2POYxKMPEA05S+M8ypfatJ8ALGNrb5cALTL
-	KDCKokVRPEcA/wH7mmkvLR21BSJnfsWKsmCPIHbSqW3OM967bPW7ofJ0SSVIqSJx
-	3LMnM/KApSyk04F8E1kcEeNy8Yh8Bz3/lpnj04X5uLq2XaQLMgFVQdx3k352jNpu
-	6MHc13Lzk98yPzAMgNkUOlqeSsAqcThKlOyCRgE+3WdAUM9G2skt5RrdeoJrr4+v
-	WcchmnE45GeMCekZhRbOAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752473325; x=
-	1752559725; bh=RC+CFVWd/VWYy7402scfBHaFNOZ1+z4P3lAFBCgGdWQ=; b=N
-	MOIB9oIK4aFGz/MAFD2nsL3q6bVhYxOa+1rkg2f7yWSgVHnNep35yY+c0xwQzgsP
-	vMRwxeJnGvzwwxmEaQjimrah2ANgib3/waRIs7J0MBff5JWK2BuRG3V/gs48X2mH
-	vlSX0MrI8YV61X2YvowWrBpkGbPwwZgKMONU56Du0DBDjQ5pvBmdCMh/Ak6cISlM
-	7YxINbF6R4HK3hpbeP6adI/ZbzcjdrSk1IZzjIJr2ToCdWjW9MBjV3kknOLRcbC1
-	bAbloGmDZcko0XSzOVQtxTfXl9rd+Dx5DcSZgsIirq7CM+sIpLRzc9Enub5Y6Rzk
-	eo+eEwiVAq6EJ3fdKbTeg==
-X-ME-Sender: <xms:6550aNISqkL_c_gKSI1GS6zwoONBMO-j0aQrHirsA-Dx9-qhip8wJw>
-    <xme:6550aJLL4Ox0N4jUEaYXAg0enHEgZ0Hvj03HUlMKvtRESzvOZlCtNu5UrKmGPZXjZ
-    N-Z2U0G_l8VX-cujzE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehuddulecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetrhhnugcu
-    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
-    hnpefhtdfhvddtfeehudekteeggffghfejgeegteefgffgvedugeduveelvdekhfdvieen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrhhnug
-    esrghrnhgusgdruggvpdhnsggprhgtphhtthhopeefuddpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepjhhorhhoseeksgihthgvshdrohhrghdprhgtphhtthhopehvrghsrg
-    hnthdrhhgvghguvgesrghmugdrtghomhdprhgtphhtthhopehrohgsihhnrdhmuhhrphhh
-    hiesrghrmhdrtghomhdprhgtphhtthhopegsrghgrghsughothhmvgesghhmrghilhdrtg
-    homhdprhgtphhtthhopehthhhivghrrhihrdhrvgguihhnghesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehmshhhrghvihhtsehgohhoghhlvgdrtghomhdprhgtphhtthhopehprh
-    grrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopeiihhgrnhhgiigvkhhunhduudes
-    hhhurgifvghirdgtohhmpdhrtghpthhtohepugifmhifvdesihhnfhhrrgguvggrugdroh
-    hrgh
-X-ME-Proxy: <xmx:6550aCsD6On8GiPFBuhmhjg2cQ8kX7cKAjv83xfvNnNf8nYQRggg1w>
-    <xmx:6550aKpYGV3_6_Cw9r9zZqL9Q_5umAHi98hyl4oNeTYJZsfFeuThwA>
-    <xmx:6550aEmSWAshMXkV1Pf880BQ9xBOxPKTnOyiXYTu6frVsoV0UZLpTA>
-    <xmx:6550aCT8AC-3Qk2ejJ1a-d5tfh-z3Z7Ik7HcexIq2X1piS7MnP9Efw>
-    <xmx:7Z50aC55r5eujMz0Dvb8Ej99ArwfSU_zftLIRLdUgHJFaXhmzaUc6tH4>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id AB571700068; Mon, 14 Jul 2025 02:08:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="K7jUc9ez"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=RsVjotjGFwn4gIDgrJ+E8OefcgZwcT0N+CJTunCyL8Q=; b=K7jUc9ez58nrxekhKWTDy3aWp4
+	iDC4IIF/G05u3M7NlfaatOz9FE+wZRp8sonmYHGNl7oecBk8slqvLTCAEOnlffc4Uh7N+nAOpk4pz
+	SX0XsH0yFKPnTPeiLFNW0okicua/2mvtRMvm3PjjtFdapR6/IQOC/Ah1hBaw5KD1QnhkDxlfIPPB5
+	qkFyG2c8vwTbTDwymDVBXJvT9/RLlnQpC1VEtOf3OXeV1aH81Wr9Egk+jGOmjYlxotL3rEOH0uG+z
+	8Pu6KYcdwJV89B/vi7ipBBcmkKmY55gGvsMRV8CxQCc+g3zop2Vqr9kk0CwvGjGpoVNxyXULc6olE
+	XPAoy1Pg==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1ubEpa-00000009il9-39sR;
+	Mon, 14 Jul 2025 08:46:39 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 4DB90300186; Mon, 14 Jul 2025 10:46:38 +0200 (CEST)
+Date: Mon, 14 Jul 2025 10:46:38 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] objtool/rust: add one more `noreturn` Rust function
+ for Rust 1.89.0
+Message-ID: <20250714084638.GL905792@noisy.programming.kicks-ass.net>
+References: <20250712160103.1244945-1-ojeda@kernel.org>
+ <20250712160103.1244945-2-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: T0ce86a4a9bc2801a
-Date: Mon, 14 Jul 2025 08:08:21 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Nicolin Chen" <nicolinc@nvidia.com>, "Jason Gunthorpe" <jgg@nvidia.com>
-Cc: "Kevin Tian" <kevin.tian@intel.com>, "Jonathan Corbet" <corbet@lwn.net>,
- "Bagas Sanjaya" <bagasdotme@gmail.com>, "Will Deacon" <will@kernel.org>,
- "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel" <joro@8bytes.org>,
- "Thierry Reding" <thierry.reding@gmail.com>, vdumpa@nvidia.com,
- "Jon Hunter" <jonathanh@nvidia.com>, shuah <shuah@kernel.org>,
- jsnitsel@redhat.com, "Nathan Chancellor" <nathan@kernel.org>,
- "Peter Zijlstra" <peterz@infradead.org>, "Yi Liu" <yi.l.liu@intel.com>,
- mshavit@google.com, praan@google.com, zhangzekun11@huawei.com,
- iommu@lists.linux.dev, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org,
- patches@lists.linux.dev, mochs@nvidia.com,
- "ALOK TIWARI" <alok.a.tiwari@oracle.com>, vasant.hegde@amd.com,
- "David Woodhouse" <dwmw2@infradead.org>,
- "Baolu Lu" <baolu.lu@linux.intel.com>
-Message-Id: <db221336-2694-4fcf-a2b2-8fcb46ba3c9e@app.fastmail.com>
-In-Reply-To: 
- <9a888a326b12aa5fe940083eae1156304e210fe0.1752126748.git.nicolinc@nvidia.com>
-References: <cover.1752126748.git.nicolinc@nvidia.com>
- <9a888a326b12aa5fe940083eae1156304e210fe0.1752126748.git.nicolinc@nvidia.com>
-Subject: Re: [PATCH v9 17/29] iommufd: Add mmap interface
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250712160103.1244945-2-ojeda@kernel.org>
 
-On Thu, Jul 10, 2025, at 07:59, Nicolin Chen wrote:
->  EXPORT_SYMBOL_NS_GPL(_iommufd_object_undepend, "IOMMUFD");
+On Sat, Jul 12, 2025 at 06:01:02PM +0200, Miguel Ojeda wrote:
+> Starting with Rust 1.89.0 (expected 2025-08-07), under
+> `CONFIG_RUST_DEBUG_ASSERTIONS=y`, `objtool` may report:
 > 
-> +/*
-> + * Allocate an @offset to return to user space to use for an mmap() 
-> syscall
-> + *
-> + * Driver should use a per-structure helper in include/linux/iommufd.h
-> + */
-> +int _iommufd_alloc_mmap(struct iommufd_ctx *ictx, struct 
-> iommufd_object *owner,
-> +			phys_addr_t mmio_addr, size_t length,
-> +			unsigned long *offset)
-> +{
-...
-> +
-> +	/* Skip the first page to ease caller identifying the returned offset 
-> */
-> +	rc = mtree_alloc_range(&ictx->mt_mmap, &startp, immap, immap->length,
-> +			       PAGE_SIZE, PHYS_ADDR_MAX, GFP_KERNEL);
+>     rust/kernel.o: warning: objtool: _R..._6kernel4pageNtB5_4Page8read_raw()
+>     falls through to next function _R..._6kernel4pageNtB5_4Page9write_raw()
+> 
+> (and many others) due to calls to the `noreturn` symbol:
+> 
+>     core::panicking::panic_nounwind_fmt
+> 
+> Thus add the mangled one to the list so that `objtool` knows it is
+> actually `noreturn`.
+> 
+> See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+> for more details.
+> 
+> Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+> Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 
-This produces a warning on 32-bit targets with a 64-bit phys_addr_t,
-in practice this would be ARM Cortex-A15 or -A17 systems:
+> ---
+>  tools/objtool/check.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+> index f23bdda737aa..3257eefc41ed 100644
+> --- a/tools/objtool/check.c
+> +++ b/tools/objtool/check.c
+> @@ -224,6 +224,7 @@ static bool is_rust_noreturn(const struct symbol *func)
+>  	       str_ends_with(func->name, "_4core9panicking14panic_explicit")				||
+>  	       str_ends_with(func->name, "_4core9panicking14panic_nounwind")				||
+>  	       str_ends_with(func->name, "_4core9panicking18panic_bounds_check")			||
+> +	       str_ends_with(func->name, "_4core9panicking18panic_nounwind_fmt")			||
+>  	       str_ends_with(func->name, "_4core9panicking19assert_failed_inner")			||
+>  	       str_ends_with(func->name, "_4core9panicking30panic_null_pointer_dereference")		||
+>  	       str_ends_with(func->name, "_4core9panicking36panic_misaligned_pointer_dereference")	||
 
-In file included from include/linux/overflow.h:6,
-                 ...
-                 from drivers/iommu/iommufd/driver.c:4:
-drivers/iommu/iommufd/driver.c: In function '_iommufd_alloc_mmap':
-include/linux/limits.h:11:25: error: conversion from 'long long unsigned int' to 'long unsigned int' changes value from '18446744073709551615' to '4294967295' [-Werror=overflow]
-   11 | #define PHYS_ADDR_MAX   (~(phys_addr_t)0)
-      |                         ^~~~~~~~~~~~~~~~~
-drivers/iommu/iommufd/driver.c:61:43: note: in expansion of macro 'PHYS_ADDR_MAX'
-   61 |                                PAGE_SIZE, PHYS_ADDR_MAX, GFP_KERNEL);
-      |                                           ^~~~~~~~~~~~~
+Just having "_4core9panicking" substring is not sufficient?
 
-
-The mtree_alloc_range() interface explicitly operates on 'unsigned long'
-address values, so I don't see an immediate workaround for this that would
-make it work on these machines. On the other hand, 
-
-At the moment, the only drivers that select CONFIG_IOMMUFD_DRIVER
-on 32-bit Arm systems are CONFIG_PDS_VFIO_PCI and CONFIG_MLX5_VFIO_PCI.
-It's probably fine to make all three symbols "depends on 64BIT" for
-now, but I don't know if there may be more drivers like this in the
-future that actually could make sense on embedded systems.
-
-     Arnd
