@@ -1,165 +1,132 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9218E2580CA
-	for <patches@lists.linux.dev>; Mon, 14 Jul 2025 14:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEBE25A65A
+	for <patches@lists.linux.dev>; Mon, 14 Jul 2025 15:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752504063; cv=none; b=cUea0ONGxw5abwxkYOytRvdXGyg+LU3yomU9Gl/BczmkdaFOIeUB8AmX58DDXqA1xZmJfK/AhCtU21OBt2xfLgAiJ5HXEHZu5GmBZV4NaCRo7q6ZcDWElTJI7liuC/DKJcxwoXbtfc74Pc01LBo5pmnvEYVXiwjW9PTwkFc0d8Y=
+	t=1752505981; cv=none; b=t3aTqlVS0lPTX5YplQuGsgR5tSwMLlcMKjkxmZLWzIRACpz6C1vsElWUqFhKCuA1r0nwVbdbYNuMJbpp8ck3f3on+KD17n0lBMQ4iMSTyE7GH12yU9cm0yOo5VU1myZrX31fwpaD6brU00r92VF/gmXa2SxbfVXyWJ/HxN0dDHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752504063; c=relaxed/simple;
-	bh=WkbnkSN/9C9x5BAWT4GOvXy3evb45ZMcjMYvY/vr8qY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h9Z42KhP6lE/RaTT24vpTKI/TpYzye0zgcOqoVClwocci4U0NBjMKFXMKdomMQ0iXVEmni4Jg+lFqrEWdj2g4mQLWZ8LpQ3dGB0xqx7YnbMBTgsfnSvL0bSGah+r2303UCi+d8xuBtlEXb8oUEmJR8y1hRp+1WSXT8nPbOCiHCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=AsLKOMNc; arc=none smtp.client-ip=170.10.129.124
+	s=arc-20240116; t=1752505981; c=relaxed/simple;
+	bh=wq3jkDXmL2kbDR8yLPZKxT4RkHzlMSQh4F6k/stG0gE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DSJ5YNfjes6JXm9KOlahRINetloqcLoUhVM0PKxA8zafSh9tj8QOhKhk5yIgVwYM6Rt6vm3UhEqMlZgPZhZ1Qcxn0O6R5c5TS/+WrtUDwzJ6Tzqte2aZPcEI92lk4wWklt0Vf3IUH4UarcmgAipJtJ5ABfMbXMYp4lhuHx+sga4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=jKr0gCAc; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AsLKOMNc"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="jKr0gCAc"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752504060;
+	s=mimecast20190719; t=1752505978;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=aLXKhg1K3xQXwvyv6fgRzq/1onAkTRUAFhWSI1xTzJI=;
-	b=AsLKOMNc1nzTrnR6o36SQJEqEXeK/+GHNCA7HtEquTq3nyxBW3qMPpETpW+tISqOYBNV0z
-	Nn5O8Zy4HzRBGeGigrOEIBIIG61MX8EY+jbxjduCZyZGP+mVT1r0+/ZQ7Bwh4iVFtXml/t
-	DZAnGwtCYNJ2cvc4cmY+hXs+9nU52jQ=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=UAuWLDvGONYS4aGI3o9+xx7hOflsVGv3mSCNJ1rkux4=;
+	b=jKr0gCAchVHMtUoYhZ5rlFxSz+wGhZ/YKpbhjjGrH/98yLYF97HrVcbjV0gKbYfZut6SMm
+	BjKpGgldyERoLP7z2WPTxlC0XWxUfdaEFyXxYNLgNk1gqvY+RmWEalGflEb1Z0r9tTG5+A
+	U2Ugto7lvIMcMR07OwhAMfrlCCej0V8=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-FIB8YQboOA6GILc-q8LiRA-1; Mon, 14 Jul 2025 10:40:59 -0400
-X-MC-Unique: FIB8YQboOA6GILc-q8LiRA-1
-X-Mimecast-MFC-AGG-ID: FIB8YQboOA6GILc-q8LiRA_1752504058
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-ade5b98537dso499874966b.2
-        for <patches@lists.linux.dev>; Mon, 14 Jul 2025 07:40:58 -0700 (PDT)
+ us-mta-613-e8WKboIuOhWXT1F14MdOBA-1; Mon, 14 Jul 2025 11:12:57 -0400
+X-MC-Unique: e8WKboIuOhWXT1F14MdOBA-1
+X-Mimecast-MFC-AGG-ID: e8WKboIuOhWXT1F14MdOBA_1752505976
+Received: by mail-il1-f198.google.com with SMTP id e9e14a558f8ab-3ddd689c2b8so5104745ab.1
+        for <patches@lists.linux.dev>; Mon, 14 Jul 2025 08:12:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752504057; x=1753108857;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aLXKhg1K3xQXwvyv6fgRzq/1onAkTRUAFhWSI1xTzJI=;
-        b=XxcqHxnX+DRFmQUETEF14XRbE4mbdhZBk9hq+bXrVeKPR3MdZ7pg3o09ISvNzizTTQ
-         rFwoGnxuFkYANC2erAk+CPUN1IsZS0BUiVF0UrNNQBQuBMqy61kFOwm9at4BmC/2d+7y
-         UPXgLL1axBunLJFmMKvUNn7NSIm+JsAsSaHTJ9IPMo7RwlueNmzdeaUM6QrNQ8GdgaI6
-         MnA3MP8vVzMLdOra0mKVDyTWwm5PSJmtSaxfeF6Vk1w40vBF1Mee+9kvpC8HVCLbWDCV
-         Qs4MdnC+KYs7qadGWpStCXHdXrwrpxvvzabReh6JzqjlkbHXE9pgrAA2ge/47zvdcsCt
-         JX4g==
-X-Forwarded-Encrypted: i=1; AJvYcCWNIYWCpwoHA8rGhP2s4ew8UNbR4GvbvcO9ajl9H1dbXq0GsY+PZ8VV9WEJodOR89CC5yFh9QDI@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx8Le8OPfrtPF0AQzuHafDUFKxSnTF7szoRdAgUHe8TjgneWUbm
-	ss+P2ze5Q6xjz/TrHrwb4LRbPt8Hjnwhx8Hh9+IjNCAkpSychQCP/DtSUwO86Ftblo3UI1BrPM+
-	te8/VYAxYRFZo9V59IgFXfnqdL4WZLgZYLK0ZquhpFbbOCP54ciFv38tglxo=
-X-Gm-Gg: ASbGncsOWqT+XZWmcX7sbHl41f4LDzMSFgSQSX/cODP+MsM+pTV5yVBJufgFRcVc7Ez
-	hHo1Jw+8YgDlwEpXR2qYF6Z1FhZSIkBNRHv/fOFuTQlRaJ2h2B4ZXUpGHvIn2s9Es6F/1hsrvM8
-	6o1a+vOon4JHRtDNYuIcw+evXr79OIwnFUn1sVzR3KANbNQ6s26PA+SbxlVOWLS2L04gzZf2jpH
-	BM91DK7Z+2wSUk0Czmvj888t6S9Y+ftytXfGI+36UQfdKCKkaci+o18XQDcfsU850zyTUq/GreL
-	3n1B8W0QelYf1NzphepQk7yRjeqaqDT5zZF2a4ekBFyt
-X-Received: by 2002:a17:907:3d44:b0:ae3:ab68:4d7a with SMTP id a640c23a62f3a-ae6fbed8219mr1633105666b.25.1752504057154;
-        Mon, 14 Jul 2025 07:40:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHucm1YdLEC7W2MqVgXeYA2wsn4X0D/6ulvdMPDsK2hXL50tiQScU0+GEvdxz/6WUq3kW52KA==
-X-Received: by 2002:a17:907:3d44:b0:ae3:ab68:4d7a with SMTP id a640c23a62f3a-ae6fbed8219mr1633096866b.25.1752504055640;
-        Mon, 14 Jul 2025 07:40:55 -0700 (PDT)
-Received: from [10.40.98.122] ([78.108.130.194])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae6e7e91a0bsm827763966b.7.2025.07.14.07.40.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 07:40:55 -0700 (PDT)
-Message-ID: <afeadd0a-d341-46ee-9634-01c5122b416a@redhat.com>
-Date: Mon, 14 Jul 2025 16:40:54 +0200
+        d=1e100.net; s=20230601; t=1752505976; x=1753110776;
+        h=content-transfer-encoding:mime-version:organization:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UAuWLDvGONYS4aGI3o9+xx7hOflsVGv3mSCNJ1rkux4=;
+        b=dQVDdIDiyAkHeD7fjex7vYE5Bh5aHZaeJxI8H4huJNzmPzuu5/ERLPvhelBlTUgrnE
+         tYGnwZkpA66Ps8Zrwra02BjemybJDJHKoDOr6fl9Q8m8wCotcis4CA8fOoJ6tPDXS8pe
+         D0ERtCh+SyOryo4W8HnqcxGOnJ+vCX+vKa3FHc5RYqDREqqk15Keby+AvBIK/7uYl/Hv
+         8mYOV58LhAT4KC+RTPMk0KBBmGF+MH26abuckdXk4Lq3wiZdCFLitZhHAPzfTxcCIe5G
+         crKUmBarbqaE/Ty4Pmkg4MMBsi/CsfjfJszQI5eSYxrYstbFDrhPtiLbHYq8uxDcAyts
+         8iKg==
+X-Forwarded-Encrypted: i=1; AJvYcCXgmLXnfs7NsIPUHkBLEcqukkFVllvRqE1/v5gAnqYNLEGloeAn7oZEM5VApslhJZyhnFh887e6@lists.linux.dev
+X-Gm-Message-State: AOJu0YwuylC2EPKmKWq4ZOB1+hFIYhQkWlOeSEJe2zoIIwI8wfThnplF
+	ffPjmgVPZ4BRF1cuV4wJ0J52InUZ1iqQEXSoUVgCRZbR8DxvaQF/307VaJ67yYW+a9bCn94e+6y
+	Kk6qmhlvaMwbSaH8HWTOVd0G5BXXGzkQ1xGAlxXSSiTczDpcV8/NDp+dAthY=
+X-Gm-Gg: ASbGncvym2ZrMiSz22+PJhFMeuL/Tx9xBbn+XWF4h1DgJVKqZOfFj3woHF5jLbIf+jZ
+	kDNAvjKIN5m4X1Ry5UIYUnV379NmwMss9RKfOY9Sj9VW1UZAxkx1Q78ssiMksGODePFyAEYXflx
+	m/ArjCQ6l/R6QsYZcC5W3mFwxQYRmlVEnFPlPNE58MxKfVk796Loo49aRTKBEN5Yl97J2vsxdA2
+	4UXjJllLlhwh41BqTNmIxEvEWoHMihzza5lHC4dnfgtuqBvKcMPFlA5nF62xwcpQtq8ckXXX2TG
+	VKA/l7FhNQIsnT1kA21FGHlTRQHQZsIQ/pEASdIqcNE=
+X-Received: by 2002:a05:6e02:3083:b0:3d4:6d6f:6e1f with SMTP id e9e14a558f8ab-3e2543f45a2mr42634865ab.6.1752505976219;
+        Mon, 14 Jul 2025 08:12:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQWWnsQP46KCBBDLLmrvxRjBMZE+wrW8uiPq3ltdhzNoM6uXIgiwf7w6/nI+O/Wf1S85BaBQ==
+X-Received: by 2002:a05:6e02:3083:b0:3d4:6d6f:6e1f with SMTP id e9e14a558f8ab-3e2543f45a2mr42634705ab.6.1752505975706;
+        Mon, 14 Jul 2025 08:12:55 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-50556970df3sm2049358173.90.2025.07.14.08.12.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Jul 2025 08:12:54 -0700 (PDT)
+Date: Mon, 14 Jul 2025 09:12:52 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Yi Liu <yi.l.liu@intel.com>, Ankit Agrawal <ankita@nvidia.com>, Brett
+ Creeley <brett.creeley@amd.com>, Giovanni Cabiddu
+ <giovanni.cabiddu@intel.com>, Kevin Tian <kevin.tian@intel.com>,
+ kvm@vger.kernel.org, Longfang Liu <liulongfang@huawei.com>,
+ qat-linux@intel.com, virtualization@lists.linux.dev, Xin Zeng
+ <xin.zeng@intel.com>, Yishai Hadas <yishaih@nvidia.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ patches@lists.linux.dev, Shameer Kolothum
+ <shameerali.kolothum.thodi@huawei.com>, Terrence Xu
+ <terrence.xu@intel.com>, Yanting Jiang <yanting.jiang@intel.com>, Zhenzhong
+ Duan <zhenzhong.duan@intel.com>
+Subject: Re: [PATCH v2] vfio/pci: Do vf_token checks for
+ VFIO_DEVICE_BIND_IOMMUFD
+Message-ID: <20250714091252.118a4638.alex.williamson@redhat.com>
+In-Reply-To: <20250714142904.GA2059966@nvidia.com>
+References: <0-v2-470f044801ef+a887e-vfio_token_jgg@nvidia.com>
+	<a8484641-34d9-40bf-af8a-e472afdab0cc@intel.com>
+	<20250714142904.GA2059966@nvidia.com>
+Organization: Red Hat
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 087150] Input atkbd - skip ATKBD_CMD_GETID in
- translated mode
-To: Wang Hai <wanghai38@huawei.com>
-Cc: gregkh@linuxfoundation.org, stable@vger.kernel.org,
- patches@lists.linux.dev, yesh25@mail2.sysu.edu.cn, mail@gurevit.ch,
- egori@altlinux.org, anton@cpp.in, dmitry.torokhov@gmail.com,
- sashal@kernel.org
-References: <456b5d9c-f72a-4bfe-a72a-b5cc0f15eb70@huawei.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <456b5d9c-f72a-4bfe-a72a-b5cc0f15eb70@huawei.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: -6eISUOlUgh8w7E44HzcLqemgLKHxZTgxjEjHyRRZHY_1752504058
+X-Mimecast-MFC-PROC-ID: 3MQU-Ev8qiIsaQoY2gvJ_vomEFOErNQzcUjvzwOAiX8_1752505976
 X-Mimecast-Originator: redhat.com
-Content-Language: en-US, nl
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On Mon, 14 Jul 2025 11:29:04 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-On 14-Jul-25 15:49, Wang Hai wrote:
+> On Mon, Jul 14, 2025 at 09:12:30PM +0800, Yi Liu wrote:
+> > On 2025/7/10 23:30, Jason Gunthorpe wrote:  
+> > > This was missed during the initial implementation. The VFIO PCI encodes
+> > > the vf_token inside the device name when opening the device from the group
+> > > FD, something like:
+> > > 
+> > >    "0000:04:10.0 vf_token=bd8d9d2b-5a5f-4f5a-a211-f591514ba1f3"
+> > > 
+> > > This is used to control access to a VF unless there is co-ordination with
+> > > the owner of the PF.
+> > > 
+> > > Since we no longer have a device name, pass the token directly through
+> > > VFIO_DEVICE_BIND_IOMMUFD using an optional field indicated by
+> > > VFIO_DEVICE_BIND_TOKEN.  
+> > 
+> > two nits though I think the code is clear enough :)
+> > 
+> > s/Since we no longer have a device name/Since we no longer have a device
+> > name in the device cdev path/
+> > 
+> > s/VFIO_DEVICE_BIND_TOKEN/VFIO_DEVICE_BIND_FLAG_TOKEN/  
 > 
-> 
-> On 1970/1/1 8:00,  wrote:
->> 6.6-stable review patch.  If anyone has any objections, please let me know.
->>
->> ------------------
->>
->>  From Hans de Goede hdegoede@redhat.com
->>
->> [ Upstream commit 936e4d49ecbc8c404790504386e1422b599dec39 ]
->>
->> There have been multiple reports of keyboard issues on recent laptop models
->> which can be worked around by setting i8042.dumbkbd, with the downside
->> being this breaks the capslock LED.
->>
->> It seems that these issues are caused by recent laptops getting confused by
->> ATKBD_CMD_GETID. Rather then adding and endless growing list of quirks for
->> this, just skip ATKBD_CMD_GETID alltogether on laptops in translated mode.
->>
->> The main goal of sending ATKBD_CMD_GETID is to skip binding to ps2
->> micetouchpads and those are never used in translated mode.
->>
->> Examples of laptop models which benefit from skipping ATKBD_CMD_GETID
->>
->>   HP Laptop 15s-fq2xxx, HP laptop 15s-fq4xxx and HP Laptop 15-dy2xxx
->>    models the kbd stops working for the first 2 - 5 minutes after boot
->>    (waiting for EC watchdog reset)
->>
->>   On HP Spectre x360 13-aw2xxx atkbd fails to probe the keyboard
->>
->>   At least 9 different Lenovo models have issues with ATKBD_CMD_GETID, see
->>    httpsgithub.comyescallopatkbd-nogetid
->>
->> This has been tested on
->>
->> 1. A MSI B550M PRO-VDH WIFI desktop, where the i8042 controller is not
->>     in translated mode when no keyboard is plugged in and with a ps2 kbd
->>     a AT Translated Set 2 keyboard devinputevent# node shows up
->>
->> 2. A Lenovo ThinkPad X1 Yoga gen 8 (always has a translated set 2 keyboard)
->>
->> Reported-by Shang Ye yesh25@mail2.sysu.edu.cn
->> Closes httpslore.kernel.orglinux-input886D6167733841AE+20231017135318.11142-1-yesh25@mail2.sysu.edu.cn
->> Closes httpsgithub.comyescallopatkbd-nogetid
->> Reported-by gurevitch mail@gurevit.ch
->> Closes httpslore.kernel.orglinux-input2iAJTwqZV6lQs26cTb38RNYqxvsink6SRmrZ5h0cBUSuf9NT0tZTsf9fEAbbto2maavHJEOP8GA1evlKa6xjKOsaskDhtJWxjcnrgPigzVo=@gurevit.ch
->> Reported-by Egor Ignatov egori@altlinux.org
->> Closes httpslore.kernel.orgall20210609073333.8425-1-egori@altlinux.org
->> Reported-by Anton Zhilyaev anton@cpp.in
->> Closes httpslore.kernel.orglinux-input20210201160336.16008-1-anton@cpp.in
->> Closes httpsbugzilla.redhat.comshow_bug.cgiid=2086156
->> Signed-off-by Hans de Goede hdegoede@redhat.com
->> Link httpslore.kernel.orgr20231115174625.7462-1-hdegoede@redhat.com
->> Signed-off-by Dmitry Torokhov dmitry.torokhov@gmail.com
->> Signed-off-by Sasha Levin sashal@kernel.org
->> ---
-> 
-> Hi, Hans
-> 
-> I noticed there's a subsequent bugfix [1] for this patch, but it hasn't been merged into the stable-6.6 branch. Based on the bugfix description, the issue should exist there as well. Would you like this patch to be merged into the stable-6.6 branch?"
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9cf6e24c9fbf17e52de9fff07f12be7565ea6d61
+> Alex, can you fix this when applying the v3 version?
 
-Yes, if you can submit that patch for inclusion into the 6.6 stable branch
-that would be good.
+Hmm, where's this v3 version?  Did you already send a version with
+Shameer's fix (s/bind.argsz/user_size)?  Lore can't find it.  Thanks,
 
-Regards,
-
-Hans
+Alex
 
