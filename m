@@ -1,133 +1,92 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA84233134
-	for <patches@lists.linux.dev>; Mon, 14 Jul 2025 08:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2752510A1E;
+	Mon, 14 Jul 2025 09:01:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752483320; cv=none; b=hSyO80WwGXNkzSs0FATAKeZ+6GoSqocZsm+fwDNXz4DEj5uaUR1FYDGbxhpDNST+3wj5SmoO3Fxo8WxH5Gwy8KuF9ksvPtq0ZleiDrKZLzldPaS7unlOjt8ok7oaD7xM4kwj4iwZtB/xC9FyP6iR20mN6RvueueJeNSFivDb6Zg=
+	t=1752483710; cv=none; b=iHUOiK4CazvtGEH/2g38oNxxwpKzWnjNPlicO03EaahcfwrtDXsgABUznhd6McqXIXbErPQIANk8ztqb7gSMYtGFlWYuZ6NpcoVIbKckz4on7Bp0tNmJmp08pjSqNPkGVvy33nLsrmp0LaBa6WWBVi6ye2X/yOFqntMBbjuXyZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752483320; c=relaxed/simple;
-	bh=dZxAbZ8ulWv334/QiHn19XkVOBuijNqEiiRbXClfk4E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=buinQBLzGhL+6HalDE3ESPCCH9G/9G4F96cCTKpSP2qW5RVMtKdY7bSnYMOuF0F3wmEQVD7jZwuklrCfAWAuc7TchZEi0XenFmssVaO05SXug5Ft4N8v1Bd3Y7N8CVVAZt6x24dsANZanjmnLxLLHGQzwaAEGS1G5J8+G9QubXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VPztERsx; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1752483710; c=relaxed/simple;
+	bh=E1DjprMalu3MYxieIEg3iKgcKloRslOwdnRJZhDtCas=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mZK25LdHVC66ACN50uPddRQv7Rzo34T8AfeNipDoP3kYFK5Vl0YJVzgmHfzl/Aro1zoLY0/xS0TxwE8NOWZfgynrBM5SPR9v1/rnIjN6MiRClLm48T8CqHzDYUWSfDGRCyPWZR95sJm6RyLGSz+aLIAjxsAyQkz5MODJeFlQ+ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=n9GhlIE3; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VPztERsx"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-451d6ade159so29235955e9.1
-        for <patches@lists.linux.dev>; Mon, 14 Jul 2025 01:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1752483316; x=1753088116; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gj+niLV6OALorn2kYpyE8/uWxGl7XxWeivxdBGPq6ow=;
-        b=VPztERsxa/L9rWMKy4No9mkWo6g8mLQdIgg8TKZDpJz0CU28zixG+CVtLtP+iH+k7K
-         5o1uAUMuIC1JEIlZxmtvmRTsCtOxmCkws/3Lie1VstxlvOki1GlWNhxwSSfLbq1BGuhm
-         B3yeRsqtIb7+NF9WPbwcxRqOyDxCgtUWnFPVd/RRfX4Vh1lcl6tvGBIO/4AKv+YErre5
-         D2fh6OGIqmJ9hMwcYD79DO7vC4vpbUFSOtaBE5UNrtT8bjdjmodmq4cedFaTccy/t7uP
-         XS2WI9xShB89OylJrobLXZ6oMclf9BDkn4YZr/Q4YMcfssQxj7mEsJKBP1GgIU7/cVeE
-         zA8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752483316; x=1753088116;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gj+niLV6OALorn2kYpyE8/uWxGl7XxWeivxdBGPq6ow=;
-        b=mxBbhINLNIGgi+z4/yqeNe+RXuAhbPLujyPJV/0zMVEh2o/ovbR1zJFhBvRrEwFlD8
-         7mqtStdmUS3NaVya9r/J6WDCyt4MBKSbOFRdGeGQswMN2MwDp0ieQxy8BoQLNPdjvVJk
-         DSIbXDvUN34oL+R/Ak878wXCto7/rU668JK3wzPpcO91l9cd78H1r0Yyz16qCrU74+Yf
-         qKcoMyUJ7Z2dyVAwjs3xaWRt/Cs+rkehv7cKDsHzA8WUSdubS0KNdkzDibX+HAGiR9/R
-         GR727hI6izgyJ/5hmaLoGcB/SPgTbwsbTePPRP2Y9zyQb2pcFXQp6eN4c/l/4g6qDd+Y
-         X0EQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXvutIISLUsfo3aPSPTt6Qp8ejth2+qnbp7VD5LpyDVt3J8ZMmTcaP5i2o3TW9cueP2EDd7f6By@lists.linux.dev
-X-Gm-Message-State: AOJu0YxffKC0xlnWJMn32Br9AzmlgNc5MrcfQtLbXePG/vbIkQau56LC
-	ssBySLi8ey0hSz3pX9dCRrIh1jF+lhbpJ9PEd38jezL3oRjytqIYum8U2sh1fpSC5qhCEFwW1Cg
-	bhQ09IjFUc+RsnxRRH7fWURAXsA/unK64vomg1/8d
-X-Gm-Gg: ASbGnctTOYFUAvOINDxFMQIPliOBeMqAC7tUYeP3iuZX6Ziujy/wEhBhp4nB56mVSCf
-	AFHdsxgx5QkuUA4+K+/IAitasu1FZTzDDW7cORHi8DEMxFiBKHxDjAK1oqgxl+TD/a3FzA7PB7P
-	FQhMeF2I1gMn8FS79zjAzrwv13ajOzQyasWq9Ev+tMJ3I0NQRO6MrVcLZL/dV9uzKs0QtzHjQR5
-	8hMKwAnl5EVcXpd8YVnYM09cXze7khwtToK3w==
-X-Google-Smtp-Source: AGHT+IGsQeQEfcu02S30Jll96c0wDwxxBcoxIYEXCRnd0CfJMcytsTVZIf/b8uy6EvvrTgZ3nUg/bsWlB2lNPIlFVmI=
-X-Received: by 2002:a05:600c:46d1:b0:456:e98:9d17 with SMTP id
- 5b1f17b1804b1-4560e98a5ccmr52570005e9.5.1752483316042; Mon, 14 Jul 2025
- 01:55:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="n9GhlIE3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=zdEc0Ly1I3A8OFmOCeYmPl/xXNhD1BIGPS9d7GroiT8=; b=n9GhlIE3PmAjZwDuZUzBIXKyQm
+	tYGpDoU8va1CCkF87FN2PH2+QohuFBnVXctMolBQG5flpUONFumbugXptqVxMVmcFyIA2WQLAhfMA
+	fQCSnqAM7Dn7NTgH+w+0YEu7B+dXICw556FjiLgZeN2bGTCiZyqyek34PyitOL5pa59HQmT3REbiQ
+	fh/sXtfEY6TwSrfU5D4tANvrVa0ZxCCvj+Lj4ZcOgJLlfcD40+JUe9kqoCKOpdpw6VDote2S5yOzQ
+	ZOoQq1ZkNsIS4UwKKOL7dTdUezwkVEDqr0U1E/ChYenzCB3jdY1Eb6zk5uie1thRYt2oKS7SilAvt
+	i/i7IpuA==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1ubF4D-00000006bGz-0Gna;
+	Mon, 14 Jul 2025 09:01:45 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 08480300186; Mon, 14 Jul 2025 11:01:44 +0200 (CEST)
+Date: Mon, 14 Jul 2025 11:01:43 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] objtool/rust: add one more `noreturn` Rust function
+ for Rust 1.89.0
+Message-ID: <20250714090143.GM1613200@noisy.programming.kicks-ass.net>
+References: <20250712160103.1244945-1-ojeda@kernel.org>
+ <20250712160103.1244945-2-ojeda@kernel.org>
+ <20250714084638.GL905792@noisy.programming.kicks-ass.net>
+ <CAH5fLgjtU1u=h8FY3im364AsC21GitnrjhBT=YJMmipH_ZWnQA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250712160103.1244945-1-ojeda@kernel.org> <20250712160103.1244945-3-ojeda@kernel.org>
-In-Reply-To: <20250712160103.1244945-3-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 14 Jul 2025 10:55:03 +0200
-X-Gm-Features: Ac12FXymYzZFPEmEJ79-ojPY2RmA0JBZ1Q8D2S9b-wAnvsipbXwRr9MT_ii7c3E
-Message-ID: <CAH5fLgiZsdW+98-_kMmGcdujQzusDcLMdGJzPk-6VG7pkC2bcA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rust: use `#[used(compiler)]` to fix build and
- `modpost` with Rust >= 1.89.0
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	David Wood <david@davidtw.co>, Wesley Wiser <wwiser@gmail.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH5fLgjtU1u=h8FY3im364AsC21GitnrjhBT=YJMmipH_ZWnQA@mail.gmail.com>
 
-On Sat, Jul 12, 2025 at 6:02=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Starting with Rust 1.89.0 (expected 2025-08-07), the Rust compiler fails
-> to build the `rusttest` target due to undefined references such as:
->
->     kernel...-cgu.0:(.text....+0x116): undefined reference to
->     `rust_helper_kunit_get_current_test'
->
-> Moreover, tooling like `modpost` gets confused:
->
->     WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/nov=
-a/nova.o
->     ERROR: modpost: missing MODULE_LICENSE() in drivers/gpu/nova-core/nov=
-a_core.o
->
-> The reason behind both issues is that the Rust compiler will now [1]
-> treat `#[used]` as `#[used(linker)]` instead of `#[used(compiler)]`
-> for our targets. This means that the retain section flag (`R`,
-> `SHF_GNU_RETAIN`) will be used and that they will be marked as `unique`
-> too, with different IDs. In turn, that means we end up with undefined
-> references that did not get discarded in `rusttest` and that multiple
-> `.modinfo` sections are generated, which confuse tooling like `modpost`
-> because they only expect one.
->
-> Thus start using `#[used(compiler)]` to keep the previous behavior
-> and to be explicit about what we want. Sadly, it is an unstable feature
-> (`used_with_arg`) [2] -- we will talk to upstream Rust about it. The good
-> news is that it has been available for a long time (Rust >=3D 1.60) [3].
->
-> The changes should also be fine for previous Rust versions, since they
-> behave the same way as before [4].
->
-> Alternatively, we could use `#[no_mangle]` or `#[export_name =3D ...]`
-> since those still behave like `#[used(compiler)]`, but of course it is
-> not really what we want to express, and it requires other changes to
-> avoid symbol conflicts.
->
-> Cc: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
-> Cc: David Wood <david@davidtw.co>
-> Cc: Wesley Wiser <wwiser@gmail.com>
-> Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned i=
-n older LTSs).
-> Link: https://github.com/rust-lang/rust/pull/140872 [1]
-> Link: https://github.com/rust-lang/rust/issues/93798 [2]
-> Link: https://github.com/rust-lang/rust/pull/91504 [3]
-> Link: https://godbolt.org/z/sxzWTMfzW [4]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On Mon, Jul 14, 2025 at 10:48:33AM +0200, Alice Ryhl wrote:
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+> > >  tools/objtool/check.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+> > > index f23bdda737aa..3257eefc41ed 100644
+> > > --- a/tools/objtool/check.c
+> > > +++ b/tools/objtool/check.c
+> > > @@ -224,6 +224,7 @@ static bool is_rust_noreturn(const struct symbol *func)
+> > >              str_ends_with(func->name, "_4core9panicking14panic_explicit")                            ||
+> > >              str_ends_with(func->name, "_4core9panicking14panic_nounwind")                            ||
+> > >              str_ends_with(func->name, "_4core9panicking18panic_bounds_check")                        ||
+> > > +            str_ends_with(func->name, "_4core9panicking18panic_nounwind_fmt")                        ||
+> > >              str_ends_with(func->name, "_4core9panicking19assert_failed_inner")                       ||
+> > >              str_ends_with(func->name, "_4core9panicking30panic_null_pointer_dereference")            ||
+> > >              str_ends_with(func->name, "_4core9panicking36panic_misaligned_pointer_dereference")      ||
+> >
+> > Just having "_4core9panicking" substring is not sufficient?
+> 
+> That prefix just means it is defined in the panicking.rs file, which
+> also has a few functions that are not noreturn.
+
+Oh well, I figured it was too good to be true anyway. Its just that
+there was a lot of that around and I had to ask :-)
