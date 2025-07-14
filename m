@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E784A290BA5;
-	Mon, 14 Jul 2025 23:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3790D290BA5;
+	Mon, 14 Jul 2025 23:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534472; cv=none; b=KyxoC9di5kyyg1ECstQILR2ho/Q1ruC9SwieMtUuMUYoI9cPD9pedco+sNYc/Gq3UYn2AUNmA5A344FEQMG/OSmblaw/xhvhOyyO1rl9Vyk9OsIeEs6OEAwl2iVEs+EBHb1JRPggKrierKFeTPmaNaZ/K/q5/0EG8xfncbiYNRI=
+	t=1752534473; cv=none; b=SumtpF9AJgKK72Obr/Kh8tL/7lYF6vd60gBNsXSl+hEoPvDZTYQl/8UvbNonhmE4jaaKCVajz3s7mNAWzKqz0L0kdR2Cc4EFcf5uGAy1TvNtzO7a3RyBBblEAGSiPyHMDFknWk6TcRRxrgosRqmjNLN+w8XIfF5arHBfrA/BdJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534472; c=relaxed/simple;
-	bh=wfq1RWl7ZL5hKUpHgy/BNyO2fKMiYrDzD8Nnrpu3i7U=;
+	s=arc-20240116; t=1752534473; c=relaxed/simple;
+	bh=i2SJgHx6hN7NkhX+pnv/6QdZnAJA9/GQd1NIdnGWizg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Lh3WXRQQheCh6RqJbNxD+aqdRyG22u4jDvMxp7QpPCbga2odqvgamtCnzEFovW+YGl3bt7dN9VZGKB5J9F79mp0cMBNVadt4/m/iHejzi9P6Kdsi1LHNKNqH0ZCEqKagixC+dVySrDNhbhIjg0Dy28uPjZs52nsraYndJVOXg0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IjlcGwnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QCRdxiT26QK6nDugfWjdpoBVGgBwJSNpAJYpOgsbvTl+o1BFInTWfVKGjDQE3fslDvL2wCINKDc8AiG7wAgAErtQAX1Tl96j+bhowBWaGZ9UzHXU/clLayFdk+mZlRMPQXp+zuYaHARkMQLvOQ9AvGv3KuzGFGSHYVri8uRB22M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ki4y+z9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IjlcGwnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145EAC4CEF4;
-	Mon, 14 Jul 2025 23:07:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ki4y+z9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0528C4CEED;
+	Mon, 14 Jul 2025 23:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534471;
-	bh=wfq1RWl7ZL5hKUpHgy/BNyO2fKMiYrDzD8Nnrpu3i7U=;
+	s=k20201202; t=1752534473;
+	bh=i2SJgHx6hN7NkhX+pnv/6QdZnAJA9/GQd1NIdnGWizg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjlcGwnb0xMOUz5I5jXcZGMCar8cAlX9KwTzklXLg6Se1RD2V41q0ukGJpAZkogia
-	 5vRt35GwshZ704gfKQ1XGvXK02uBhEBMqUwJpyAV1nF0vXCbGcozmTeiDRmeUQRarv
-	 q1X0ciBrj+D8s5ejyT1Lak3PX7a64vMb8XyMI33MC/Q10P95LU4xNfRjEUZYPlqhD9
-	 7T2P2buRosfCa9YGP1VUNv4i2A2cTChdQYI/RonTqm3XK9U+qCzHdBQxzOEbF95PHo
-	 r1ccUBf+p3GfrHbMVeuExiTMBNV8b+QkGVevHpyT0Nr5JmGcX1BAkijFtwKcVhAuON
-	 Cy6LSyq/mYBIw==
+	b=Ki4y+z9XFfEB97rHbUD9rMECVK9YjZ+VIX+9G0bLqFcg2vqK/v+oUp/2jlU+6wPrh
+	 TkeaXkDro5D1uD8iOlF3AXn+8hBY9OQQ8lHBLPd402slE792NAiDHOh6gBdAqU6+/C
+	 F292/F9H0mwGpK3jGHSAgxoOLSs3OQII8hvrhM389h89C0a6SbJOrcwOW7rsykX/fh
+	 9kmpIS+W+owsYLEC3aa4IbmtWnv/XpV3acJP4ITV4Bxp4Dw7iFqWruTpKLxBgXJhso
+	 L/9mYpw01FyM9MJvj+euzhSamhRyvvPdiHfiyw7fc1mLmWRWSorB9xpIJyxd2SQtZT
+	 4dm/4UOW9DglQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>,
-	Junvyyang,
-	Tencent Zhuque Lab <zhuque@tencent.com>,
-	LePremierHomme <kwqcheii@proton.me>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Willy Tarreau <w@1wt.eu>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.6 2/6] rxrpc: Fix oops due to non-existence of prealloc backlog struct
-Date: Mon, 14 Jul 2025 19:07:39 -0400
-Message-Id: <20250714230744.3710270-2-sashal@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jann Horn <jannh@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 3/6] eventpoll: don't decrement ep refcount while still holding the ep mutex
+Date: Mon, 14 Jul 2025 19:07:40 -0400
+Message-Id: <20250714230744.3710270-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250714230744.3710270-1-sashal@kernel.org>
 References: <20250714230744.3710270-1-sashal@kernel.org>
@@ -54,92 +51,206 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.98
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 880a88f318cf1d2a0f4c0a7ff7b07e2062b434a4 ]
+[ Upstream commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 ]
 
-If an AF_RXRPC service socket is opened and bound, but calls are
-preallocated, then rxrpc_alloc_incoming_call() will oops because the
-rxrpc_backlog struct doesn't get allocated until the first preallocation is
-made.
+Jann Horn points out that epoll is decrementing the ep refcount and then
+doing a
 
-Fix this by returning NULL from rxrpc_alloc_incoming_call() if there is no
-backlog struct.  This will cause the incoming call to be aborted.
+    mutex_unlock(&ep->mtx);
 
-Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Suggested-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: LePremierHomme <kwqcheii@proton.me>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Willy Tarreau <w@1wt.eu>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250708211506.2699012-3-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+afterwards. That's very wrong, because it can lead to a use-after-free.
+
+That pattern is actually fine for the very last reference, because the
+code in question will delay the actual call to "ep_free(ep)" until after
+it has unlocked the mutex.
+
+But it's wrong for the much subtler "next to last" case when somebody
+*else* may also be dropping their reference and free the ep while we're
+still using the mutex.
+
+Note that this is true even if that other user is also using the same ep
+mutex: mutexes, unlike spinlocks, can not be used for object ownership,
+even if they guarantee mutual exclusion.
+
+A mutex "unlock" operation is not atomic, and as one user is still
+accessing the mutex as part of unlocking it, another user can come in
+and get the now released mutex and free the data structure while the
+first user is still cleaning up.
+
+See our mutex documentation in Documentation/locking/mutex-design.rst,
+in particular the section [1] about semantics:
+
+	"mutex_unlock() may access the mutex structure even after it has
+	 internally released the lock already - so it's not safe for
+	 another context to acquire the mutex and assume that the
+	 mutex_unlock() context is not using the structure anymore"
+
+So if we drop our ep ref before the mutex unlock, but we weren't the
+last one, we may then unlock the mutex, another user comes in, drops
+_their_ reference and releases the 'ep' as it now has no users - all
+while the mutex_unlock() is still accessing it.
+
+Fix this by simply moving the ep refcount dropping to outside the mutex:
+the refcount itself is atomic, and doesn't need mutex protection (that's
+the whole _point_ of refcounts: unlike mutexes, they are inherently
+about object lifetimes).
+
+Reported-by: Jann Horn <jannh@google.com>
+Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+Based on my analysis of the commit and the code changes, here is my
+assessment:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+**YES**, this commit should be backported to stable kernel trees.
 
-1. **Fixes a Critical Kernel Oops**: The commit addresses a NULL pointer
-   dereference that causes a kernel crash when `rx->backlog` is NULL. At
-   line 257 of the original code,
-   `smp_load_acquire(&b->call_backlog_head)` would dereference a NULL
-   pointer if no preallocation was done.
+## Extensive Explanation:
 
-2. **Minimal and Safe Fix**: The fix is a simple defensive check:
-  ```c
-  +       if (!b)
-  +               return NULL;
-  ```
-  This is placed immediately after obtaining the backlog pointer and
-  before any usage. The fix has zero risk of regression - if `b` is
-  NULL, the code would have crashed anyway.
+### 1. **Critical Use-After-Free Bug Fix**
 
-3. **Clear Reproducible Scenario**: The bug occurs in a specific but
-   realistic scenario - when an AF_RXRPC service socket is opened and
-   bound but no calls are preallocated (meaning
-   `rxrpc_service_prealloc()` was never called to allocate the backlog
-   structure).
+This commit fixes a serious use-after-free vulnerability in the epoll
+subsystem. The bug occurs because:
 
-4. **Follows Stable Kernel Rules**: This fix meets all criteria for
-   stable backporting:
-   - Fixes a real bug that users can hit
-   - Small and contained change (2 lines)
-   - Obviously correct with no side effects
-   - Already tested and merged upstream
+- The code was decrementing the refcount while still holding `ep->mtx`
+- `mutex_unlock()` is not atomic and can access the mutex structure
+  after internally releasing the lock
+- If another thread drops the last reference and frees the eventpoll
+  structure, the ongoing `mutex_unlock()` will access freed memory
 
-5. **Similar to Previously Backported Fixes**: Looking at Similar Commit
-   #2 which was marked YES, it also fixed an oops in the rxrpc
-   preallocation/backlog system with minimal changes.
+### 2. **Real Security Impact**
 
-The commit prevents a kernel crash with a trivial NULL check, making it
-an ideal candidate for stable backporting.
+From the code changes:
+```c
+// BEFORE (buggy):
+dispose = ep_refcount_dec_and_test(ep);
+mutex_unlock(&ep->mtx);  // UAF risk here!
+if (dispose)
+    ep_free(ep);
 
- net/rxrpc/call_accept.c | 3 +++
- 1 file changed, 3 insertions(+)
+// AFTER (fixed):
+mutex_unlock(&ep->mtx);
+if (ep_refcount_dec_and_test(ep))
+    ep_free(ep);
+```
 
-diff --git a/net/rxrpc/call_accept.c b/net/rxrpc/call_accept.c
-index 0f5a1d77b890f..94e663a8d323d 100644
---- a/net/rxrpc/call_accept.c
-+++ b/net/rxrpc/call_accept.c
-@@ -253,6 +253,9 @@ static struct rxrpc_call *rxrpc_alloc_incoming_call(struct rxrpc_sock *rx,
- 	unsigned short call_tail, conn_tail, peer_tail;
- 	unsigned short call_count, conn_count;
+This is a classic use-after-free that could be exploited for:
+- Privilege escalation
+- System crashes/DoS
+- Potential arbitrary code execution
+
+### 3. **Race Condition in Common Code Path**
+
+The vulnerable code is in frequently used functions:
+- `__ep_remove()` - called when removing epoll items
+- `ep_remove_safe()` - wrapper for safe removal
+- `ep_clear_and_put()` - called during epoll cleanup
+- `eventpoll_release_file()` - called when files are closed
+
+These are not obscure edge cases but core epoll operations that happen
+during normal system operation.
+
+### 4. **Affects Systems Using Refcounted epoll**
+
+The refcounting mechanism was introduced in commit 4f04cbaf128 ("epoll:
+use refcount to reduce ep_mutex contention") to improve performance. Any
+kernel with this commit is vulnerable to the use-after-free bug.
+
+### 5. **Simple and Safe Fix**
+
+The fix is minimal and low-risk:
+- Simply reorders operations to move refcount decrement after mutex
+  unlock
+- No new features or architectural changes
+- The refcount is atomic and doesn't need mutex protection
+- Follows the documented mutex semantics
+
+### 6. **Matches Stable Criteria**
+
+Per stable kernel rules, this fix:
+- ✓ Fixes a real bug (use-after-free)
+- ✓ Small and contained change
+- ✓ No side effects beyond fixing the issue
+- ✓ Critical for system stability/security
+- ✓ Already tested (committed by Linus himself)
+
+### 7. **Documentation Reference**
+
+The commit explicitly references kernel documentation about mutex
+semantics that explains why this ordering is critical. This shows it's
+fixing a well-understood concurrency issue, not experimental behavior.
+
+The simplicity of the fix combined with the severity of the bug (use-
+after-free in core kernel code) makes this an ideal candidate for stable
+backporting. Systems running kernels with the epoll refcounting feature
+need this fix to prevent potential security vulnerabilities and system
+crashes.
+
+ fs/eventpoll.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index cde5a15b129f6..31b32d9e7bbce 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -772,7 +772,7 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
+ 	call_rcu(&epi->rcu, epi_rcu_free);
  
-+	if (!b)
-+		return NULL;
-+
- 	/* #calls >= #conns >= #peers must hold true. */
- 	call_head = smp_load_acquire(&b->call_backlog_head);
- 	call_tail = b->call_backlog_tail;
+ 	percpu_counter_dec(&ep->user->epoll_watches);
+-	return ep_refcount_dec_and_test(ep);
++	return true;
+ }
+ 
+ /*
+@@ -780,14 +780,14 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
+  */
+ static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
+ {
+-	WARN_ON_ONCE(__ep_remove(ep, epi, false));
++	if (__ep_remove(ep, epi, false))
++		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
+ }
+ 
+ static void ep_clear_and_put(struct eventpoll *ep)
+ {
+ 	struct rb_node *rbp, *next;
+ 	struct epitem *epi;
+-	bool dispose;
+ 
+ 	/* We need to release all tasks waiting for these file */
+ 	if (waitqueue_active(&ep->poll_wait))
+@@ -820,10 +820,8 @@ static void ep_clear_and_put(struct eventpoll *ep)
+ 		cond_resched();
+ 	}
+ 
+-	dispose = ep_refcount_dec_and_test(ep);
+ 	mutex_unlock(&ep->mtx);
+-
+-	if (dispose)
++	if (ep_refcount_dec_and_test(ep))
+ 		ep_free(ep);
+ }
+ 
+@@ -1003,7 +1001,7 @@ void eventpoll_release_file(struct file *file)
+ 		dispose = __ep_remove(ep, epi, true);
+ 		mutex_unlock(&ep->mtx);
+ 
+-		if (dispose)
++		if (dispose && ep_refcount_dec_and_test(ep))
+ 			ep_free(ep);
+ 		goto again;
+ 	}
 -- 
 2.39.5
 
