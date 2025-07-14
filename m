@@ -1,130 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3E81804A;
-	Sun, 13 Jul 2025 14:49:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DC914A8E;
+	Mon, 14 Jul 2025 05:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752418140; cv=none; b=rja4HeJv1KSIwdGLhdv/iFvDcq5DMi8sXJOSnGK+5Bj1q21wqX1ZR/vQg3QUSAt20f4yco8o1GQRWujtjVVjsirHMk01A/3WE5aDEYVG2zd5j+I8hCMc1Uru5ZnsxfRd3jtPVRWyNshYLUMAq+jHXuBUMZZjir0xu70CuabPRsE=
+	t=1752469502; cv=none; b=ULLJSrSZIM20T6E0sjAHIVsFvP52VcmhyZg7ahtS6qxOX26/NlQqB/TAhWWTlajCiHbfLf5DAjK7w3GS2nbd9VKklSumrxHf007zTv3adwLVl4NA9cPi0jPI46U74PvYhm3BHsY5Mz6w9Z43QrMfeV3Vx8b/vKBudzKHLprHIjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752418140; c=relaxed/simple;
-	bh=oz6czx8HxgHo1482tpfP8IcaymOfGVB1uwRqP+6V3L4=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=AE6lDiKOSgNlgAjmKrxklITfb09e7aCVDRY+EXy1WqdV65F3jF/aUwht8ey6gX/Wf5PjAZR/hC1DW8DRISkizqb8KBd2Sv3JkMj/m+3sIR63awd1+7rgo6d8Yz26owZ4pm7rD6aTyN313AbKBz+wv/s+q0YF5Ysgxii6DxvDBfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBN1PQbn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752469502; c=relaxed/simple;
+	bh=bBs0th1Lt9ao6wjmVxKc0IZG2cp7doHoM50mrOm2RyY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I/qM9PZWiL145UTFvk5I5OfdN6SxzxP6we3K7lJngq7xy6HGWvhbXMFnCOG49kQyQY36h+bb6sobBGT1KrLbmeKEPrrohBlmjGt+JmUapKkxEqxH40E8ZJazJq/jB/iHOzRSDPz/xeQFwTeXe3V1goVm2aTuzn5AehKx6qabbjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AGvbZ1ud; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBN1PQbn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8CCC4CEE3;
-	Sun, 13 Jul 2025 14:48:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752418140;
-	bh=oz6czx8HxgHo1482tpfP8IcaymOfGVB1uwRqP+6V3L4=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=CBN1PQbn4fmEkNeeEA+tjdRn7x2DHxEThJgu6gqJQzunZy8eU9THQ9YUGA1L4oeXe
-	 d01VUjTtchpppTAeNaw/hzn5As6A27SBNDW6Frd2faojVbc+X2XqltAg8Aq/Id8n06
-	 fJuVL2cLhChIDXRO3IDbpblB0MtxTB5CZtj7z3SA=
-Subject: Patch "rust: init: allow `dead_code` warnings for Rust >= 1.89.0" has been added to the 6.12-stable tree
-To: a.hindborg@kernel.org,alex.gaynor@gmail.com,aliceryhl@google.com,benno.lossin@proton.me,bjorn3_gh@protonmail.com,boqun.feng@gmail.com,gary@garyguo.net,gregkh@linuxfoundation.org,lossin@kernel.org,ojeda@kernel.org,patches@lists.linux.dev,sashal@kernel.org,tmgross@umich.edu
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Sun, 13 Jul 2025 16:48:42 +0200
-In-Reply-To: <20250712171038.1287789-1-ojeda@kernel.org>
-Message-ID: <2025071342-untoasted-cupid-13af@gregkh>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AGvbZ1ud"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1752469501; x=1784005501;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bBs0th1Lt9ao6wjmVxKc0IZG2cp7doHoM50mrOm2RyY=;
+  b=AGvbZ1udbi/5b/cSCmoJcTfaSOEZk5rBhNCWMWHwOrrcgtw7mOV2+n8V
+   B+i85+1DN7yAylNA51UEVOm6EPrrKSqM6Y0aAeqOVs3O/gnq6jtifoVFi
+   qiQliMCWt2xGt/8XYPO8+5rxdIKRTxduPyEA9UgHe4VHmbqzPAbTAO7NS
+   TyFtGBqdmwQpnOJPWoM4/Snxhn/tk3BoPk7azzQuOsY4xgjZrbVf/LHPe
+   19uk5NBkEFxT4ukSOopc6jxR7lmk+B7nnwWLyHUBbYSUeeCiFH7cs0ZJI
+   56S5ND+o2z3etcgOojUmMtz3sjk/bCu3J23n8pZtlKs+rbH+muye/XUN7
+   A==;
+X-CSE-ConnectionGUID: nOdciKpNQyiRlJiRjTiYuQ==
+X-CSE-MsgGUID: yJ33UuXAQNu26eMqWyyhLw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54782225"
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; 
+   d="scan'208";a="54782225"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2025 22:05:00 -0700
+X-CSE-ConnectionGUID: ODEWPCAgRNSmYgjj1LKrbQ==
+X-CSE-MsgGUID: GwJR787cTWuZsYTZD2u3Ew==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,310,1744095600"; 
+   d="scan'208";a="187838527"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2025 22:04:57 -0700
+Message-ID: <6af5e16d-5cd7-4c18-9f8a-78740f24cc20@linux.intel.com>
+Date: Mon, 14 Jul 2025 13:03:10 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] Reorganize Intel VT-D to be ready for iommupt
+To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+Cc: Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev,
+ Wei Wang <wei.w.wang@intel.com>
+References: <0-v3-dbbe6f7e7ae3+124ffe-vtd_prep_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <0-v3-dbbe6f7e7ae3+124ffe-vtd_prep_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 6/30/25 23:03, Jason Gunthorpe wrote:
+> This is similar to a series I sent for AMD.
+> 
+> Lightly reorganize some of the page table related code so there is greater
+> isolation between the first and second stage logic. iommupt will introduce
+> distinct types and code flows for first and second stages, having them all
+> combined together is difficult.
+> 
+> Splitting actually makes things generally more understandable anyhow as
+> they do share only a little code. Most of the registers and logic are in
+> fact different. That was being obscured by small helper functions that
+> combine the first and second stage information.
+> 
+> This would replace some of the patches recently sent by Wei.
+> 
+> The full branch including the iommpt conversion is here:
+> 
+>      https://github.com/jgunthorpe/linux/commits/iommu_pt_vtd
+> 
+> v3:
+>   - Add intel_domain_is_fs/ss_paging() as wrappers around the ops check
+>   - Set force_snooping for the ss as well
 
-This is a note to let you know that I've just added the patch titled
+Queued for linux-next. Thank you, Jason.
 
-    rust: init: allow `dead_code` warnings for Rust >= 1.89.0
-
-to the 6.12-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
-
-The filename of the patch is:
-     rust-init-allow-dead_code-warnings-for-rust-1.89.0.patch
-and it can be found in the queue-6.12 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From ojeda@kernel.org  Sun Jul 13 16:40:56 2025
-From: Miguel Ojeda <ojeda@kernel.org>
-Date: Sat, 12 Jul 2025 19:10:38 +0200
-Subject: rust: init: allow `dead_code` warnings for Rust >= 1.89.0
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>
-Cc: stable@vger.kernel.org, "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>, "Björn Roy Baron" <bjorn3_gh@protonmail.com>, "Benno Lossin" <benno.lossin@proton.me>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, "Benno Lossin" <lossin@kernel.org>
-Message-ID: <20250712171038.1287789-1-ojeda@kernel.org>
-
-From: Miguel Ojeda <ojeda@kernel.org>
-
-Starting with Rust 1.89.0 (expected 2025-08-07), the Rust compiler
-may warn:
-
-    error: trait `MustNotImplDrop` is never used
-       --> rust/kernel/init/macros.rs:927:15
-        |
-    927 |         trait MustNotImplDrop {}
-        |               ^^^^^^^^^^^^^^^
-        |
-       ::: rust/kernel/sync/arc.rs:133:1
-        |
-    133 | #[pin_data]
-        | ----------- in this procedural macro expansion
-        |
-        = note: `-D dead-code` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(dead_code)]`
-        = note: this error originates in the macro `$crate::__pin_data`
-                which comes from the expansion of the attribute macro
-                `pin_data` (in Nightly builds, run with
-                -Z macro-backtrace for more info)
-
-Thus `allow` it to clean it up.
-
-This does not happen in mainline nor 6.15.y, because there the macro was
-moved out of the `kernel` crate, and `dead_code` warnings are not
-emitted if the macro is foreign to the crate. Thus this patch is
-directly sent to stable and intended for 6.12.y only.
-
-Similarly, it is not needed in previous LTSs, because there the Rust
-version is pinned.
-
-Acked-by: Benno Lossin <lossin@kernel.org>
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- rust/kernel/init/macros.rs |    2 ++
- 1 file changed, 2 insertions(+)
-
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -924,6 +924,7 @@ macro_rules! __pin_data {
-         // We prevent this by creating a trait that will be implemented for all types implementing
-         // `Drop`. Additionally we will implement this trait for the struct leading to a conflict,
-         // if it also implements `Drop`
-+        #[allow(dead_code)]
-         trait MustNotImplDrop {}
-         #[expect(drop_bounds)]
-         impl<T: ::core::ops::Drop> MustNotImplDrop for T {}
-@@ -932,6 +933,7 @@ macro_rules! __pin_data {
-         // We also take care to prevent users from writing a useless `PinnedDrop` implementation.
-         // They might implement `PinnedDrop` correctly for the struct, but forget to give
-         // `PinnedDrop` as the parameter to `#[pin_data]`.
-+        #[allow(dead_code)]
-         #[expect(non_camel_case_types)]
-         trait UselessPinnedDropImpl_you_need_to_specify_PinnedDrop {}
-         impl<T: $crate::init::PinnedDrop>
-
-
-Patches currently in stable-queue which might be from ojeda@kernel.org are
-
-queue-6.12/rust-init-allow-dead_code-warnings-for-rust-1.89.0.patch
+--
+baolu
