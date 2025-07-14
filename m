@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442CF28C01C;
-	Mon, 14 Jul 2025 23:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3767428C87D;
+	Mon, 14 Jul 2025 23:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534395; cv=none; b=D36g8wtzAnsayAbmgSNnUdnh3z/1L6RC1ZzocryPevOE3pASvazaj2kUkZBCAkdm4m1n95ywjTE4XCd6v6n1fh/jL41MFTkru2nU5pZFY6mhwV1xkxh2NtiwP5/ftQtjEcJA5DXl+rPlCvuzLzeitejJBe5x64UTkQkXmrQnz58=
+	t=1752534397; cv=none; b=Uyjx0RDwN5Tg1NDJj6Mww21MZHrsjkuLvzWesfsD5CFxoGq8OOMEGDo14w9J7IUD0C/9fvhtld39op3lW8fIsEbHmpvKDGTRGpcsKT7bL6hT6L43OcbmalIr3FB1KZBXX6GRzGQOfSW6ACjsjF7oXwUrpIE08jt9S7YoDo6cBG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534395; c=relaxed/simple;
-	bh=Q9laU8u8o/o/hYgzMcPM0W6xLkogyliHcux3hJjDXuM=;
+	s=arc-20240116; t=1752534397; c=relaxed/simple;
+	bh=QDYUHljB4vslgSRUKKsJCMfZnsTcRrcAgVAUWM9zEAk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rbxX1UyzkCJWJ9M7IlUut6dovOQlbPyi9ZJwJz7fDBLH9/NT1XjwYTudQOQ7AyOhW4ss3X+VXVkVX3PTXohHrJIRMPXDY4YAyJxUGU55IZ9iLW33oJ0iGuyDBxP4I+ACnXyLH/FpCxt3KZt0qijPZL/4cuPZks2TMp+yolyCWkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mF+saykt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OmJrVX6DE7GiQQxcc6kE97hI7ekxY1ZhgHtuIdtMFxUkI70leNKIBI64dhxtDJ+AY6+IOmUPF91l101CqqOAG/3g3Op1Guv54rbjeFbIMxxlOrVJwFo/NIFUp2xy6V2c/sxHfftuLmFJ7njYEiUXA2JTWcaZ5bVBz2uyvFnzGJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EggKEawD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mF+saykt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1B5C4CEF0;
-	Mon, 14 Jul 2025 23:06:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EggKEawD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A512C4CEED;
+	Mon, 14 Jul 2025 23:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534395;
-	bh=Q9laU8u8o/o/hYgzMcPM0W6xLkogyliHcux3hJjDXuM=;
+	s=k20201202; t=1752534397;
+	bh=QDYUHljB4vslgSRUKKsJCMfZnsTcRrcAgVAUWM9zEAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mF+sayktg8KgkwvxXJ8T9havypL8quBcsQ2Q4vrvl/4zd/UkA/TZjwQeignDFnKsq
-	 cv8Td89SEEmv4LMdfQH8XLe5t3jvn31fdGX/vGj+2MnFsuOVzLUHxXg6xrkOgzvdTX
-	 vqvnhyislB5jFoMTWPRPko14fXD7/FJNDtjOjS1Z/Go9f2qd8dfE0/VD8G/OMro8tq
-	 7zkhhCiLAepYq7J98r9PAzaI9GHePcPPm8hFV7ORZGmtRR6IWEXLs4/dAOJhsvAL90
-	 gGyNt7pyeGGXZp1a2Dt+YyDiApq9gSFsI+lTxjaxifEko7g+7Rg5M61bAKyK/IO4Kg
-	 VLGGH5LH+y8vQ==
+	b=EggKEawDQ+TtJcVDb10kwG2PUAui5BzvMOp7VHz/vmxncc1XxTnDp0shpkgvQKBw9
+	 ORejZFsp98ArsIed93i1On5GSON0D4ny446JbQmiyuGYyG5kPUWTFEDWw3uUHjhShb
+	 gwyWeZ7dcD9bMOMwlYwX94BaXNCnEONMEiu5iyCxhnubiTMk43MjN92K8Tox8D4yNn
+	 7a+MgPecPIiKQFP7J6KxDogDUydYzdc2owitVej0zSqJWinvCSI5+ww0zs1SaZLGdH
+	 X8Jb0eKYNkgDdJhY2NJNPlNjz/HUh4GL1SjiOlQJSF3hOOZx71wGVJibXYvhshra7I
+	 fre2aB9LYmGWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
-	Ziyan Xu <research@securitygossip.com>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Felix Fietkau <nbd@nbd.name>,
+	Chad Monroe <chad.monroe@adtran.com>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 09/15] ksmbd: fix potential use-after-free in oplock/lease break ack
-Date: Mon, 14 Jul 2025 19:06:10 -0400
-Message-Id: <20250714230616.3709521-9-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.15 10/15] wifi: mt76: fix queue assignment for deauth packets
+Date: Mon, 14 Jul 2025 19:06:11 -0400
+Message-Id: <20250714230616.3709521-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250714230616.3709521-1-sashal@kernel.org>
 References: <20250714230616.3709521-1-sashal@kernel.org>
@@ -52,197 +57,95 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.6
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 50f930db22365738d9387c974416f38a06e8057e ]
+[ Upstream commit dedf2ec30fe417d181490896adf89cd6b9885b23 ]
 
-If ksmbd_iov_pin_rsp return error, use-after-free can happen by
-accessing opinfo->state and opinfo_put and ksmbd_fd_put could
-called twice.
+When running in AP mode and deauthenticating a client that's in powersave
+mode, the disassoc/deauth packet can get stuck in a tx queue along with
+other buffered frames. This can fill up hardware queues with frames
+that are only released after the WTBL slot is reused for another client.
 
-Reported-by: Ziyan Xu <research@securitygossip.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this by moving deauth packets to the ALTX queue.
+
+Reported-by: Chad Monroe <chad.monroe@adtran.com>
+Link: https://patch.msgid.link/20250707154702.1726-2-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I understand the issue and the fix better. Let me analyze this
+commit:
+
 **YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Security Impact Analysis
+1. **It fixes a real bug affecting users**: The commit addresses a
+   specific issue where deauthentication packets sent to clients in
+   powersave mode can get stuck in hardware TX queues. This causes queue
+   exhaustion and prevents the WTBL (Wireless Table) slot from being
+   properly reused for new clients. This is a significant functional bug
+   that impacts AP mode operation.
 
-This commit fixes a critical **use-after-free vulnerability** in the
-oplock/lease break acknowledgment handling code paths in ksmbd (kernel
-SMB server). This is a serious security issue that can lead to:
+2. **The fix is small and contained**: The change is minimal - it only
+   adds a single condition (`||
+   ieee80211_is_deauth(hdr->frame_control)`) to the existing queue
+   assignment logic. This is a low-risk change that doesn't introduce
+   new functionality or architectural changes.
 
-1. **Memory corruption** - Accessing freed memory can corrupt kernel
-   memory
-2. **Kernel crashes** - Dereferencing freed pointers can cause kernel
-   panics
-3. **Potential privilege escalation** - UAF vulnerabilities can
-   potentially be exploited for privilege escalation
+3. **Clear problem and solution**: The commit message clearly describes
+   the issue (deauth packets getting stuck with other buffered frames)
+   and the solution (moving deauth packets to the ALTX/PSD queue). The
+   fix is logical because:
+   - According to `ieee80211_is_bufferable_mmpdu()` (line 4517), deauth
+     frames ARE considered bufferable MMPDUs
+   - However, when a client is being deauthenticated, we don't want
+     these frames to be buffered with regular data - they need immediate
+     transmission
+   - The PSD (Power Save Delivery) queue is more appropriate for
+     management frames that need immediate handling
 
-## Code Analysis
+4. **Similar to previous backported fixes**: Looking at the similar
+   commits, commit #1 (fca9615f1a43) which fixed queue handling for
+   loopback packets was backported. This current fix addresses a similar
+   class of queue assignment issues.
 
-The commit addresses a race condition where:
+5. **No architectural changes**: The fix uses existing infrastructure
+   (MT_TXQ_PSD queue) and existing helper functions
+   (ieee80211_is_deauth). It doesn't introduce new features or change
+   any APIs.
 
-1. **Double-free issue**: Both `opinfo_put()` and `ksmbd_fd_put()` could
-   be called twice on error paths
-2. **Use-after-free of opinfo->op_state**: The code was accessing
-   `opinfo->op_state` after potentially freeing the opinfo structure
+6. **Prevents resource exhaustion**: The bug can lead to hardware queue
+   exhaustion which is a serious issue in production AP deployments.
+   This makes it an important fix for stable kernels.
 
-### Specific Code Changes
+The code change shows that previously, only non-bufferable MMPDUs were
+assigned to the PSD queue, but deauth frames (which are technically
+bufferable) were getting stuck in regular data queues when sent to
+powersave clients. This fix ensures deauth frames bypass the normal
+buffering mechanism and get transmitted promptly via the PSD queue.
 
-In both `smb20_oplock_break_ack()` and `smb21_lease_break_ack()`, the
-fix reorganizes the cleanup logic:
+ drivers/net/wireless/mediatek/mt76/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-**Before (vulnerable pattern):**
-```c
-opinfo->op_state = OPLOCK_STATE_NONE;
-wake_up_interruptible_all(&opinfo->oplock_q);
-opinfo_put(opinfo);
-ksmbd_fd_put(work, fp);
-
-// ... response setup ...
-ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(...));
-if (!ret)
-    return;
-
-err_out:
-opinfo->op_state = OPLOCK_STATE_NONE;  // UAF: opinfo may be freed
-wake_up_interruptible_all(&opinfo->oplock_q);
-opinfo_put(opinfo);  // Double-free
-ksmbd_fd_put(work, fp);  // Double-free
-```
-
-**After (fixed pattern):**
-```c
-// ... response setup ...
-ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(...));
-if (ret) {
-err_out:
-    smb2_set_err_rsp(work);
-}
-
-// Single cleanup path
-opinfo->op_state = OPLOCK_STATE_NONE;
-wake_up_interruptible_all(&opinfo->oplock_q);
-opinfo_put(opinfo);
-ksmbd_fd_put(work, fp);
-```
-
-## Stable Kernel Criteria
-
-This commit meets all the stable kernel requirements:
-
-1. **Fixes a real bug**: UAF vulnerabilities are serious security bugs
-2. **Small and contained**: The fix is minimal, only reorganizing
-   cleanup logic
-3. **No new features**: Only fixes the bug, no functional changes
-4. **Low regression risk**: The change is straightforward and doesn't
-   modify core logic
-5. **Clear fix**: The commit clearly addresses the specific UAF issue
-
-## Historical Context
-
-Looking at similar commits in ksmbd:
-- Multiple UAF fixes have been backported (e.g., commits 18b4fac5ef17,
-  21a4e47578d4, a1f46c99d9ea)
-- All have "Cc: stable@vger.kernel.org" tags
-- This follows the same pattern of fixing race conditions and UAF issues
-  in SMB protocol handling
-
-## Conclusion
-
-This commit should be backported because:
-1. It fixes a critical security vulnerability (UAF)
-2. The fix is minimal and low-risk
-3. It follows the pattern of other ksmbd UAF fixes that were backported
-4. The vulnerability was reported by a security researcher (Ziyan Xu)
-5. It prevents potential kernel crashes and exploitation
-
-The commit follows stable tree rules perfectly - it's a targeted fix for
-an important bug with minimal changes and no architectural
-modifications.
-
- fs/smb/server/smb2pdu.c | 29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
-
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ad2b15ec3b561..f1c7ed1a6ca59 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8535,11 +8535,6 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 		goto err_out;
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 513916469ca2f..dc9bf2fff51bb 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -617,7 +617,8 @@ mt76_txq_schedule_pending_wcid(struct mt76_phy *phy, struct mt76_wcid *wcid,
+ 		if ((dev->drv->drv_flags & MT_DRV_HW_MGMT_TXQ) &&
+ 		    !(info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP) &&
+ 		    !ieee80211_is_data(hdr->frame_control) &&
+-		    !ieee80211_is_bufferable_mmpdu(skb))
++		    (!ieee80211_is_bufferable_mmpdu(skb) ||
++		     ieee80211_is_deauth(hdr->frame_control)))
+ 			qid = MT_TXQ_PSD;
  
--	opinfo->op_state = OPLOCK_STATE_NONE;
--	wake_up_interruptible_all(&opinfo->oplock_q);
--	opinfo_put(opinfo);
--	ksmbd_fd_put(work, fp);
--
- 	rsp->StructureSize = cpu_to_le16(24);
- 	rsp->OplockLevel = rsp_oplevel;
- 	rsp->Reserved = 0;
-@@ -8547,16 +8542,15 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 	rsp->VolatileFid = volatile_id;
- 	rsp->PersistentFid = persistent_id;
- 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_oplock_break));
--	if (!ret)
--		return;
--
-+	if (ret) {
- err_out:
-+		smb2_set_err_rsp(work);
-+	}
-+
- 	opinfo->op_state = OPLOCK_STATE_NONE;
- 	wake_up_interruptible_all(&opinfo->oplock_q);
--
- 	opinfo_put(opinfo);
- 	ksmbd_fd_put(work, fp);
--	smb2_set_err_rsp(work);
- }
- 
- static int check_lease_state(struct lease *lease, __le32 req_state)
-@@ -8686,11 +8680,6 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 	}
- 
- 	lease_state = lease->state;
--	opinfo->op_state = OPLOCK_STATE_NONE;
--	wake_up_interruptible_all(&opinfo->oplock_q);
--	atomic_dec(&opinfo->breaking_cnt);
--	wake_up_interruptible_all(&opinfo->oplock_brk);
--	opinfo_put(opinfo);
- 
- 	rsp->StructureSize = cpu_to_le16(36);
- 	rsp->Reserved = 0;
-@@ -8699,16 +8688,16 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 	rsp->LeaseState = lease_state;
- 	rsp->LeaseDuration = 0;
- 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_lease_ack));
--	if (!ret)
--		return;
--
-+	if (ret) {
- err_out:
-+		smb2_set_err_rsp(work);
-+	}
-+
-+	opinfo->op_state = OPLOCK_STATE_NONE;
- 	wake_up_interruptible_all(&opinfo->oplock_q);
- 	atomic_dec(&opinfo->breaking_cnt);
- 	wake_up_interruptible_all(&opinfo->oplock_brk);
--
- 	opinfo_put(opinfo);
--	smb2_set_err_rsp(work);
- }
- 
- /**
+ 		q = phy->q_tx[qid];
 -- 
 2.39.5
 
