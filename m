@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9826F2877C9;
-	Mon, 14 Jul 2025 23:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4664128AAF6;
+	Mon, 14 Jul 2025 23:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534390; cv=none; b=gGcvqNrvOMyBr4q8u/7469ho2I/O2PVGZ5QyI7WoZlwMrlMi8v3hxxa+Nf4V18ja2yanCGARpAT/bWkvo3DC2uQMi8W4ts114WcLWM3zf2jEjtagjhzMP0N/eRURYE0nifgSSNfd6lfr9udXWNi8h279XzTHGNcS7LkYeeCH1xY=
+	t=1752534392; cv=none; b=Ki/RNZ1N47kkwMx5TeIoL625zR7E8zpUD+1HewrfH/h//tlZk3pMCZDpjgRuvQywGfWNJi/EHcGpRvItwCGeqhMm13lv3SCW6YT4rMpz8rpJBFDCZe727fs91DlTjkNwI1xUzlaV+OrRD5FMTJNtWm0u8IfQLycEn0Kh+MEr8B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534390; c=relaxed/simple;
-	bh=BEjk0Qvi23pJ09wJJWW31oqfaoR9guSSS/s6cw6VDmI=;
+	s=arc-20240116; t=1752534392; c=relaxed/simple;
+	bh=ChNnv9/qNNtWIT13JsmzOk+r6SJUetuZttTYrEmHzRY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d0ZQZrd/zphm5UJulTfKdEhRVWHsJ8sjIPjQcaHrmKJ+PYYv7KrqaLz1pk+9OZ0ZrlUGP8mwzuzVcnUGhUBoSHvK0mpciLCsAk9fTAGck7yyJSjwylO5yh14MtHWPSZnlA1OoSqsoGlRyqcEstXUE9lhoLzTncGScECreLjPn2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F/oHoe9n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AFOW12/C+j/0ijkl0AC7eSWMo8qBiz+KUTQ8to9fJgW4mgjOgSBkq9tO2kl5heKTSDoc9XhvpOg9Gt/WjvZoajUyI/BcY3MIkyDGZLmiClZz9f2O4EFha9A/Qdj9/giQd4R4okKPIiMzri1pG3bI/wlrLsv21X6CuUDx/QDsqPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TecX8TEP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F/oHoe9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A16C4CEF0;
-	Mon, 14 Jul 2025 23:06:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TecX8TEP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA91EC4CEED;
+	Mon, 14 Jul 2025 23:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534390;
-	bh=BEjk0Qvi23pJ09wJJWW31oqfaoR9guSSS/s6cw6VDmI=;
+	s=k20201202; t=1752534391;
+	bh=ChNnv9/qNNtWIT13JsmzOk+r6SJUetuZttTYrEmHzRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/oHoe9n7S0RFb0OryswLF1JyIxh8ZryQwBqwyTlKc8X/nptQz1m9+G0wfj9QaELB
-	 yfBNc405ZeO9dLbt9HKJK4K5eCGW1yfV/27Ok76KVy+XHbIF8d9diXl2hHg13TuDkg
-	 rXikAXfcVv8Sv08UbwxwniioOgPu7OYuELe7KZ3Qme9uISJmVNY6OJAw0ANddAHFcI
-	 OuBzfJPMk2f32wj4Xfzi1A0/Dgq4Q3Cw3g5Wion79OZQW+ODXJjWP7S+5TBzyEAmuq
-	 8vkIcegvFKAYB0ZFLt9t+SZ7WlTBfmEQWo7bFTOjQElpphXj7RWovn9S3mSZySq6Wp
-	 1/ieiLdB7nwUQ==
+	b=TecX8TEPMsFjLP7FbupPn1S+bpEYY0Fhx6pndYZk8qLtHupUdLsJi58zwA9RHPku0
+	 V/11MDNn9yqlfeo7NcNCzFAAbP7oTQg4jdZEvOBdVKziNWurLFAcFA6+8qqtWnvbqe
+	 O7lcP8A8uJEDXROpGmzZdptxPot7Axhvwgw1Ln1/jBOE4PRfc84XP9ZukuyKA6z71s
+	 XpuQkCpcZa4aX4uF+cgaP86aWa6TUTW7Kqxt/p0ByVljAjemOzhF4NIurd6++exa60
+	 rSKk6J+M8khVbnHJ04an6S0e7lN+abFupfyYKEDwT3ISw2wYPVP1+O2kvMerNT6O5E
+	 TKsF+JSr3DjQA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jann Horn <jannh@google.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 06/15] eventpoll: don't decrement ep refcount while still holding the ep mutex
-Date: Mon, 14 Jul 2025 19:06:07 -0400
-Message-Id: <20250714230616.3709521-6-sashal@kernel.org>
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 07/15] gpio: of: initialize local variable passed to the .of_xlate() callback
+Date: Mon, 14 Jul 2025 19:06:08 -0400
+Message-Id: <20250714230616.3709521-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250714230616.3709521-1-sashal@kernel.org>
 References: <20250714230616.3709521-1-sashal@kernel.org>
@@ -51,206 +50,92 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 ]
+[ Upstream commit d563e7f95c933816efe531c3a48e22bc099c0f55 ]
 
-Jann Horn points out that epoll is decrementing the ep refcount and then
-doing a
+of_flags is passed down to GPIO chip's xlate function, so ensure this one
+is properly initialized as - if the xlate callback does nothing with it
+- we may end up with various configuration errors like:
 
-    mutex_unlock(&ep->mtx);
+    gpio-720 (enable): multiple pull-up, pull-down or pull-disable enabled, invalid configuration
 
-afterwards. That's very wrong, because it can lead to a use-after-free.
-
-That pattern is actually fine for the very last reference, because the
-code in question will delay the actual call to "ep_free(ep)" until after
-it has unlocked the mutex.
-
-But it's wrong for the much subtler "next to last" case when somebody
-*else* may also be dropping their reference and free the ep while we're
-still using the mutex.
-
-Note that this is true even if that other user is also using the same ep
-mutex: mutexes, unlike spinlocks, can not be used for object ownership,
-even if they guarantee mutual exclusion.
-
-A mutex "unlock" operation is not atomic, and as one user is still
-accessing the mutex as part of unlocking it, another user can come in
-and get the now released mutex and free the data structure while the
-first user is still cleaning up.
-
-See our mutex documentation in Documentation/locking/mutex-design.rst,
-in particular the section [1] about semantics:
-
-	"mutex_unlock() may access the mutex structure even after it has
-	 internally released the lock already - so it's not safe for
-	 another context to acquire the mutex and assume that the
-	 mutex_unlock() context is not using the structure anymore"
-
-So if we drop our ep ref before the mutex unlock, but we weren't the
-last one, we may then unlock the mutex, another user comes in, drops
-_their_ reference and releases the 'ep' as it now has no users - all
-while the mutex_unlock() is still accessing it.
-
-Fix this by simply moving the ep refcount dropping to outside the mutex:
-the refcount itself is atomic, and doesn't need mutex protection (that's
-the whole _point_ of refcounts: unlike mutexes, they are inherently
-about object lifetimes).
-
-Reported-by: Jann Horn <jannh@google.com>
-Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250708083829.658051-1-alexander.stein@ew.tq-group.com
+[Bartosz: tweaked the commit message]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the code changes, here is my
-assessment:
+Based on my analysis, here's my determination:
 
-**YES**, this commit should be backported to stable kernel trees.
+**YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-### 1. **Critical Use-After-Free Bug Fix**
+1. **It fixes a real bug that affects users**: The uninitialized
+   `of_flags` variable can contain random stack data that gets passed to
+   GPIO chip's xlate callback and subsequently converted to GPIO lookup
+   flags. This can lead to spurious error messages like "multiple pull-
+   up, pull-down or pull-disable enabled, invalid configuration" when
+   random bits in the uninitialized variable match the OF_GPIO_PULL_UP
+   (0x10), OF_GPIO_PULL_DOWN (0x20), or OF_GPIO_PULL_DISABLE (0x40)
+   flags.
 
-This commit fixes a serious use-after-free vulnerability in the epoll
-subsystem. The bug occurs because:
+2. **The fix is small and contained**: The change is minimal - just
+   initializing `enum of_gpio_flags of_flags = 0;` instead of leaving it
+   uninitialized. This is a single-line change that doesn't affect any
+   other functionality.
 
-- The code was decrementing the refcount while still holding `ep->mtx`
-- `mutex_unlock()` is not atomic and can access the mutex structure
-  after internally releasing the lock
-- If another thread drops the last reference and frees the eventpoll
-  structure, the ongoing `mutex_unlock()` will access freed memory
+3. **Clear cause and effect**: The code path shows that:
+   - `of_flags` is declared uninitialized in `of_find_gpio()` (line 702)
+   - It's passed by reference to `of_get_named_gpiod_flags()` (line 708)
+   - Which passes it to `of_xlate_and_get_gpiod_flags()` (line 422-423)
+   - Which passes it to the chip's `of_xlate()` callback (line 146)
+   - If the xlate callback doesn't modify the flags (which is valid
+     behavior), the uninitialized value is preserved
+   - The uninitialized value is then converted by
+     `of_convert_gpio_flags()` (line 720)
+   - Random bits can trigger invalid configuration detection in the GPIO
+     subsystem
 
-### 2. **Real Security Impact**
+4. **No architectural changes**: This is a straightforward bug fix that
+   doesn't introduce new features or change any APIs.
 
-From the code changes:
-```c
-// BEFORE (buggy):
-dispose = ep_refcount_dec_and_test(ep);
-mutex_unlock(&ep->mtx);  // UAF risk here!
-if (dispose)
-    ep_free(ep);
+5. **Minimal risk of regression**: Initializing a variable to zero is
+   extremely low risk. The worst case would be if some driver was
+   inadvertently relying on the undefined behavior, but that would be a
+   bug in that driver.
 
-// AFTER (fixed):
-mutex_unlock(&ep->mtx);
-if (ep_refcount_dec_and_test(ep))
-    ep_free(ep);
-```
+6. **Affects core GPIO subsystem**: The bug is in the core GPIO OF code
+   path that's used by many GPIO controllers, making it important to fix
+   across all supported kernels.
 
-This is a classic use-after-free that could be exploited for:
-- Privilege escalation
-- System crashes/DoS
-- Potential arbitrary code execution
+The commit clearly fixes a bug where uninitialized memory can cause
+false error conditions, making it an excellent candidate for stable
+backporting according to the stable tree rules.
 
-### 3. **Race Condition in Common Code Path**
+ drivers/gpio/gpiolib-of.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The vulnerable code is in frequently used functions:
-- `__ep_remove()` - called when removing epoll items
-- `ep_remove_safe()` - wrapper for safe removal
-- `ep_clear_and_put()` - called during epoll cleanup
-- `eventpoll_release_file()` - called when files are closed
-
-These are not obscure edge cases but core epoll operations that happen
-during normal system operation.
-
-### 4. **Affects Systems Using Refcounted epoll**
-
-The refcounting mechanism was introduced in commit 4f04cbaf128 ("epoll:
-use refcount to reduce ep_mutex contention") to improve performance. Any
-kernel with this commit is vulnerable to the use-after-free bug.
-
-### 5. **Simple and Safe Fix**
-
-The fix is minimal and low-risk:
-- Simply reorders operations to move refcount decrement after mutex
-  unlock
-- No new features or architectural changes
-- The refcount is atomic and doesn't need mutex protection
-- Follows the documented mutex semantics
-
-### 6. **Matches Stable Criteria**
-
-Per stable kernel rules, this fix:
-- ✓ Fixes a real bug (use-after-free)
-- ✓ Small and contained change
-- ✓ No side effects beyond fixing the issue
-- ✓ Critical for system stability/security
-- ✓ Already tested (committed by Linus himself)
-
-### 7. **Documentation Reference**
-
-The commit explicitly references kernel documentation about mutex
-semantics that explains why this ordering is critical. This shows it's
-fixing a well-understood concurrency issue, not experimental behavior.
-
-The simplicity of the fix combined with the severity of the bug (use-
-after-free in core kernel code) makes this an ideal candidate for stable
-backporting. Systems running kernels with the epoll refcounting feature
-need this fix to prevent potential security vulnerabilities and system
-crashes.
-
- fs/eventpoll.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
-
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index d4dbffdedd08e..0fbf5dfedb24e 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -883,7 +883,7 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
- 	kfree_rcu(epi, rcu);
- 
- 	percpu_counter_dec(&ep->user->epoll_watches);
--	return ep_refcount_dec_and_test(ep);
-+	return true;
- }
- 
- /*
-@@ -891,14 +891,14 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
-  */
- static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
+diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
+index 17802d97492fa..c8a1f9d4a3edb 100644
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -708,7 +708,7 @@ struct gpio_desc *of_find_gpio(struct device_node *np, const char *con_id,
+ 			       unsigned int idx, unsigned long *flags)
  {
--	WARN_ON_ONCE(__ep_remove(ep, epi, false));
-+	if (__ep_remove(ep, epi, false))
-+		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
- }
+ 	char propname[32]; /* 32 is max size of property name */
+-	enum of_gpio_flags of_flags;
++	enum of_gpio_flags of_flags = 0;
+ 	const of_find_gpio_quirk *q;
+ 	struct gpio_desc *desc;
  
- static void ep_clear_and_put(struct eventpoll *ep)
- {
- 	struct rb_node *rbp, *next;
- 	struct epitem *epi;
--	bool dispose;
- 
- 	/* We need to release all tasks waiting for these file */
- 	if (waitqueue_active(&ep->poll_wait))
-@@ -931,10 +931,8 @@ static void ep_clear_and_put(struct eventpoll *ep)
- 		cond_resched();
- 	}
- 
--	dispose = ep_refcount_dec_and_test(ep);
- 	mutex_unlock(&ep->mtx);
--
--	if (dispose)
-+	if (ep_refcount_dec_and_test(ep))
- 		ep_free(ep);
- }
- 
-@@ -1137,7 +1135,7 @@ void eventpoll_release_file(struct file *file)
- 		dispose = __ep_remove(ep, epi, true);
- 		mutex_unlock(&ep->mtx);
- 
--		if (dispose)
-+		if (dispose && ep_refcount_dec_and_test(ep))
- 			ep_free(ep);
- 		goto again;
- 	}
 -- 
 2.39.5
 
