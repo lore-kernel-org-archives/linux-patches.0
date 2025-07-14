@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C9E28F51A;
-	Mon, 14 Jul 2025 23:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2757F28F533;
+	Mon, 14 Jul 2025 23:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534427; cv=none; b=aOXZ4ZD/1/G2DCSVvQjpxwdbj/zJGGYgz4G+rP4JEz7efg1u7EbACgqu/YBrW2SZfrexZyFl3tmKunAFdqbd59/frRbXR9NtQH6L9vD7UQqZh6ZfrXFPLrzT1USsOuR8q9Hn4YuRgmxFUddaBLEtZBqiogpC7Oa0NUhk2PO3TvU=
+	t=1752534431; cv=none; b=tMFjK92TjZDEoU03RWULB8OJjYo0VuKLNUlXQ9YrCrzFUbJBfxYuvdkRq6h48FIGULHHInye6+JGxe/AjBmSv7YdMUZ06lw+xmkyQUjg7gmDZeHG7oqm6OBNgrJ+Z6giOyS479n6n7xK5IpCs5dwTauO9IPvo3+NtKoJx2B//As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534427; c=relaxed/simple;
-	bh=uRL3ttv24FxB9LrX86pQCOcTaY+XvWK+JYdoIk7yEu4=;
+	s=arc-20240116; t=1752534431; c=relaxed/simple;
+	bh=OcGdrjTB0NL/o8xmgbyH3QPGw05wg8q2srmJqyXWJnY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SkGp4GFqi90KgIgCMzHyoYOyx4zeiNfRA+Ef2Cmn+OvjaoM7ckPDwXwd/l/47Mhhtr5MrGnY7N7uPv3Y/E16pdMCSac4UZBaEEzLcXuSeUwCsT9Ulr6J1btUFLMpguQUp3Er2WG1knm3qUyHTBYV7/JTRw+neBxOymzDi7oSspE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=itztdLOL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UbvXxVam6r/9TttO153o9ndDyMTMHA1D3+61m6xa+sZfhwA3HrPsssDc+RoYYLVGnCdkCzMPiFAODm5Gno97m2+f6FKr0dW5rAIO/J5DstlJguImiZVmse5cZtC00jx5xn/vQabpG5yzzdukqILQ7BVSrZib2gJqjjMfiSTAXg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYapqocU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="itztdLOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E504C4CEED;
-	Mon, 14 Jul 2025 23:07:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYapqocU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF40EC4CEED;
+	Mon, 14 Jul 2025 23:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534426;
-	bh=uRL3ttv24FxB9LrX86pQCOcTaY+XvWK+JYdoIk7yEu4=;
+	s=k20201202; t=1752534431;
+	bh=OcGdrjTB0NL/o8xmgbyH3QPGw05wg8q2srmJqyXWJnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itztdLOL9qUkVPuv2TdMpcpaDQRoRffbHSyoqQx1O8bfBH2y3FW2J/mpmHEu2rJCH
-	 OK62c+kJPlSoqtytSmNUmkGRsMSKepWS5jUVna5ils9ldmvP0PONrIa3/wFk+1TPoO
-	 3owXzE2ClMIoFgJfh04HFWAZf0OIHP1uWr7DmOH9LORcfHVz61zXddLA+o96ttSGhV
-	 T+OtetOR2HEkG3yFGOXX9YESLuf3OZr5IaIubWELEMpWmPwX5fjevYMvkt0T3I7nHV
-	 MeOJ7pdos3t4vj4dSRY0zSZ61tYFWAIve4Lr51ra3No29Id+MxHJT6ZK/0sC2dVrcy
-	 smDjO4e2/q14w==
+	b=TYapqocUtjuatVliB2hHZ/MLIB9k3sGexQubb8qj2sbtsIn0dLT/hcbrTk0faI+Ut
+	 /7x9Yne+tTu0Lw/hoAJ9NcqBQzW7dHbBOFG4CbJhGoWIqnTVwmtrmnJNNjIxG1+HT8
+	 9Y/FTKDFKyhHiZ2+pmJcfuTQ3EG1KLs9h2Pa3b58mD9DwM9trd+5ghhqdpPRsLT+L3
+	 wGDEIu2Z7R9ZqRszOKFF/r2iBWLsvaOuP2Xk5Wp8whuF9PI1xaiZzI3BCn58yEY+kP
+	 jomSQjqw7E2YzvjkThyr0GjLIPpe/02OldsU+epxSnRP9OSxfciSVgSy4pYecSe42v
+	 Jl549tGVgxkzg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Milan Krstic <milan.krstic@gmail.com>,
-	David Bauer <mail@david-bauer.net>,
-	Linus Walleij <linus.walleij@linaro.org>,
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Anton Khirnov <anton@khirnov.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	brgl@bgdev.pl,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 13/15] pinctrl: aw9523: fix can_sleep flag for GPIO chip
-Date: Mon, 14 Jul 2025 19:06:14 -0400
-Message-Id: <20250714230616.3709521-13-sashal@kernel.org>
+	kailang@realtek.com,
+	sbinding@opensource.cirrus.com,
+	chris.chiu@canonical.com,
+	simont@opensource.cirrus.com,
+	josh@joshuagrisham.com
+Subject: [PATCH AUTOSEL 6.15 14/15] ALSA: hda/realtek: Add quirk for ASUS ExpertBook B9403CVAR
+Date: Mon, 14 Jul 2025 19:06:15 -0400
+Message-Id: <20250714230616.3709521-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250714230616.3709521-1-sashal@kernel.org>
 References: <20250714230616.3709521-1-sashal@kernel.org>
@@ -52,103 +55,109 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.6
 Content-Transfer-Encoding: 8bit
 
-From: Milan Krstic <milan.krstic@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 5285b5ed04ab6ad40f7b654eefbccd6ae8cbf415 ]
+[ Upstream commit db98ee56851061082fecd7e6b4b6a93600562ec2 ]
 
-The GPIO expander is connected via I2C, thus the can_sleep flag has to
-be set to true. This fixes spurious "scheduling while atomic" bugs
-in the kernel ringbuffer.
+ASUS ExpertBook B9403CVAR needs the ALC294_FIXUP_ASUS_HPE for the
+headphones to work.
 
-Signed-off-by: David Bauer <mail@david-bauer.net>
-Signed-off-by: Milan Krstic <milan.krstic@gmail.com>
-Link: https://lore.kernel.org/20250703143039.5809-1-milan.krstic@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Closes: https://github.com/thesofproject/linux/issues/5472
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Tested-by: Anton Khirnov <anton@khirnov.net>
+Link: https://patch.msgid.link/20250701133411.25275-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+Based on my analysis of the commit message and code changes:
 
-This commit should be backported to stable kernel trees.
+**YES** - This commit should be backported to stable kernel trees.
 
 ## Extensive Explanation:
 
-This is a critical bug fix that addresses a **sleep-in-atomic-context**
-issue in the aw9523 GPIO expander driver. Here's why this is an
-excellent candidate for stable backporting:
+### 1. **Nature of the Fix**
+This commit adds a hardware quirk for the ASUS ExpertBook B9403CVAR
+laptop to fix non-functional headphones. The change is:
+```c
++       SND_PCI_QUIRK(0x1043, 0x1e93, "ASUS ExpertBook B9403CVAR",
+ALC294_FIXUP_ASUS_HPE),
+```
 
-### 1. **Clear Bug Fix**
-The commit fixes a concrete bug where the driver incorrectly sets
-`can_sleep = false` for a GPIO chip that communicates over I2C. As
-evidenced in the code:
-- The GPIO operations (`aw9523_gpio_get`, `aw9523_gpio_set`, etc.) all
-  use `mutex_lock(&awi->i2c_lock)` and `regmap` operations
-- All GPIO operations involve I2C transactions through
-  `regmap_read/write`
-- I2C operations can sleep and cannot be called from atomic contexts
+This is a simple one-line addition to the quirk table that enables the
+`ALC294_FIXUP_ASUS_HPE` fixup for this specific laptop model (vendor ID
+0x1043, device ID 0x1e93).
 
-### 2. **Causes Real User-Visible Issues**
-The commit message explicitly states this causes "spurious 'scheduling
-while atomic' bugs in the kernel ringbuffer". These are serious kernel
-warnings that indicate the system is attempting to sleep in contexts
-where sleeping is not allowed, which can lead to:
-- System instability
-- Kernel warnings flooding the log
-- Potential deadlocks or system hangs
+### 2. **Matches Stable Tree Criteria**
+- **Fixes a real bug**: The commit explicitly states "for the headphones
+  to work", indicating that without this quirk, headphones don't
+  function on this laptop model
+- **Small and contained**: It's a single-line addition to a quirk table
+  with no architectural changes
+- **Hardware enablement**: This type of fix enables basic functionality
+  (audio output) on existing hardware
+- **No new features**: Simply applies an existing fixup to a new
+  hardware variant
+- **Minimal regression risk**: The change only affects systems with this
+  specific PCI ID combination
 
-### 3. **Simple, Low-Risk Fix**
-The fix is a one-line change from `gc->can_sleep = false;` to
-`gc->can_sleep = true;`. This is:
-- Minimal in scope
-- Only affects the metadata about the GPIO chip
-- Doesn't change any actual functionality
-- Just correctly declares the chip's sleeping requirements
+### 3. **Similar to Historical Backports**
+The commit follows the exact same pattern as the similar commits
+provided with "Backport Status: YES":
+- All are simple quirk additions for ASUS laptops
+- All use existing fixup methods (CS35L41, ALC294_FIXUP_ASUS_HPE, etc.)
+- All address audio functionality issues
+- All have explicit stable tags or were backported
 
-### 4. **Similar to Previously Backported Commits**
-Looking at the similar commits:
-- Commit #1 (gpio-adp5588): Fixed sleep-in-atomic bugs - **BACKPORTED**
-- Commit #3 (ltc2992): Fixed the same `can_sleep` flag issue for another
-  I2C GPIO chip - **BACKPORTED**
+### 4. **User Impact**
+- **Without the fix**: Users of ASUS ExpertBook B9403CVAR laptops cannot
+  use headphones
+- **With the fix**: Basic audio functionality is restored
+- The bug report reference
+  (https://github.com/thesofproject/linux/issues/5472) indicates this
+  was a user-reported issue affecting real systems
 
-Both of these commits addressed the exact same class of bug and were
-deemed suitable for stable backporting.
+### 5. **Code Safety**
+- Uses an existing, well-tested fixup (`ALC294_FIXUP_ASUS_HPE`)
+- Placed correctly in numerical order in the quirk table
+- No possibility of affecting other hardware models due to specific PCI
+  ID matching
+- The fixup itself only adjusts EAPD settings and chains to headset
+  microphone fixes
 
-### 5. **Long-standing Bug**
-The bug has existed since the driver was initially introduced (commit
-576623d70661), meaning all kernel versions with this driver are
-affected. The original implementation incorrectly set `gc->can_sleep =
-false`.
+### 6. **Comparison with Similar Commits**
+All the provided similar commits with "Backport Status: YES" share these
+characteristics:
+- Single or few line additions to quirk tables
+- Fix audio issues on specific ASUS laptop models
+- Use existing fixup infrastructure
+- Have clear user impact (non-functional audio components)
 
-### 6. **Meets Stable Kernel Criteria**
-According to stable kernel rules, this fix:
-- Fixes a real bug that users can hit
-- Is already in Linus's tree (merged)
-- Is small and self-contained
-- Doesn't add new features
-- Has minimal risk of regression
+This commit matches all these characteristics perfectly, making it an
+ideal candidate for stable backporting.
 
-The commit is essential for proper operation of systems using the AW9523
-GPIO expander, preventing kernel warnings and potential system
-instability when GPIOs are accessed from non-sleeping contexts.
+The commit represents exactly the type of hardware enablement fix that
+stable trees are meant to include - it restores basic functionality on
+existing hardware without introducing any new features or architectural
+changes.
 
- drivers/pinctrl/pinctrl-aw9523.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/pinctrl-aw9523.c b/drivers/pinctrl/pinctrl-aw9523.c
-index 9bf53de20be87..04afb344e9e58 100644
---- a/drivers/pinctrl/pinctrl-aw9523.c
-+++ b/drivers/pinctrl/pinctrl-aw9523.c
-@@ -784,7 +784,7 @@ static int aw9523_init_gpiochip(struct aw9523 *awi, unsigned int npins)
- 	gc->set_config = gpiochip_generic_config;
- 	gc->parent = dev;
- 	gc->owner = THIS_MODULE;
--	gc->can_sleep = false;
-+	gc->can_sleep = true;
- 
- 	return 0;
- }
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 03ffaec49998d..f21f820050e42 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11011,6 +11011,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1e63, "ASUS H7606W", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
+ 	SND_PCI_QUIRK(0x1043, 0x1e83, "ASUS GA605W", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
+ 	SND_PCI_QUIRK(0x1043, 0x1e8e, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA401),
++	SND_PCI_QUIRK(0x1043, 0x1e93, "ASUS ExpertBook B9403CVAR", ALC294_FIXUP_ASUS_HPE),
+ 	SND_PCI_QUIRK(0x1043, 0x1eb3, "ASUS Ally RCLA72", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x1ed3, "ASUS HN7306W", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1ee2, "ASUS UM6702RA/RC", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.39.5
 
