@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFA7281531;
-	Mon, 14 Jul 2025 23:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C306CB672;
+	Mon, 14 Jul 2025 23:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752534508; cv=none; b=DCHTSyHmmYWSrHmUHXkcce+H5KYpwE6rjaM7J1n+W+hJSiaoRjQmdFhrS1JiMoWpl7WiF9MGBR/YvYNRsi0AGmmbUWug/QZEXvzNm0KIF4+WWpv6YD+LSKd38CgKPODNxlPg/juF+5xeFOjlcEjzOMRQCL+P+5gZGS5uGZALhoE=
+	t=1752534513; cv=none; b=XjlRHSROdQeILHNxWUJF6cKFJlSe0vzeF8ncm5nATJKeCNvTNTYbWJmo1cxbxPUzDVFUhxAgVp0Y4ORuB+0Apu1hxyoXiLf9XnVftudZq7ciJBUjTbGQnFQrDY92GaXp4bvnjxKyME8jiBXBBoEQ5/ZxYh5nOxudXxsD5AV6mQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752534508; c=relaxed/simple;
-	bh=VQfPLVPgeuNAvHRM+gcPH7AZ48BrLgRPPNPEFIB4Lms=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KA9zFc0JqqHnFcUxluAjS7Yuw3DkoMdPe/Vo7ea42bNa0a49pIYVfTrncnG4XPr0xOEiEjyN+ku35fj1Q51SusmxhCW1ucuApSflPPJTO9ughOon+xlrs3kzNSpRciW8DGDJoyXWelGfFF52z1/kYT/Orglh/mmbrSH7fWT0Tg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OZ5eKgK6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752534513; c=relaxed/simple;
+	bh=+h2QHgTLUstsxYGjEKzMNIFUloDM9Kzzb90kEcntO94=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ce6Xl3WM+U9P6rs8nx4qwkFlQG/t/3lOMFnIOIiGCP1ghIjgjASbA94iRTmY3DnnH1AWWCv+2+YfriZwOaTIAcwFnc4VdsX9eDx+HrD4XeQNuARK1jX0I9iYd5gXZHB+UEtTBU/Ul6Dt6yVF/qW9+wHaWRTPAfVwDW/SKgJlcl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWWMMaDl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OZ5eKgK6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846AFC4CEF0;
-	Mon, 14 Jul 2025 23:08:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWWMMaDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52782C4CEED;
+	Mon, 14 Jul 2025 23:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752534507;
-	bh=VQfPLVPgeuNAvHRM+gcPH7AZ48BrLgRPPNPEFIB4Lms=;
+	s=k20201202; t=1752534513;
+	bh=+h2QHgTLUstsxYGjEKzMNIFUloDM9Kzzb90kEcntO94=;
 	h=From:To:Cc:Subject:Date:From;
-	b=OZ5eKgK6Ef6Z1mKvaalr4cAOOXnjwpjASm9SzYKeFiK/TI27AYH5A7Td9vK/Cwwlg
-	 3oV9yU0N6QT3oW4uRCSA2XbjymZCAPRMoWRCWtqbPGtLQEadHkKYxlwD3rpACUreMJ
-	 GdpLLdTEZOMX8sgmlDuMajIv/VyKhGEwzmfXvysfvnK+UwgDfcyLJTFZ5QGCB7BxOY
-	 r9n/+oDoK4OgNGz+0g45zEjvdPI6gbWdaLF+DUcW6DJiiHWBXhTOEnTX7wHWdo7QOO
-	 4SVRgWOqkApwiN3E/4QTeRzABd7OsSKJOOgqwMKPVTKvfnanhoboEWc+Y2E1Wy1zfg
-	 i694Z4+4hWX+Q==
+	b=MWWMMaDlcCD6cutb2SyLFsR0dbCwSYvMo2tsjo1AqTVu/6wEtZH4sn3930J7TYwZ0
+	 VqfiydvvlhUdTyPIfCUvsaI4ASGG+cqN3IPzlOIpcC6InGjS1zDGxSKNz+DnL50FP0
+	 zoOgtuJnLgg6Fe/cZ6ziZl593Qpa2SFY7YnAVanRs8eNKEzaCHd4Y97I3XVLiLWNJo
+	 HFksTkb1ADD8sAQMhkAToiMMBYj6tj0OHU+wv3WLzJDISaUITVq8mu/DoAo8btwwcJ
+	 0CaKZpu9G2hhhkCIjFw7vlzUaQuwaQgM1g+wBGWXl7cYVapKJcFHdzPligCf++myV9
+	 Xy0YI4aDYRrLQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -38,9 +38,9 @@ Cc: David Howells <dhowells@redhat.com>,
 	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.10] rxrpc: Fix oops due to non-existence of prealloc backlog struct
-Date: Mon, 14 Jul 2025 19:08:22 -0400
-Message-Id: <20250714230822.3710575-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4] rxrpc: Fix oops due to non-existence of prealloc backlog struct
+Date: Mon, 14 Jul 2025 19:08:28 -0400
+Message-Id: <20250714230828.3710613-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -50,7 +50,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.239
+X-stable-base: Linux 5.4.295
 Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
@@ -124,10 +124,10 @@ an ideal candidate for stable backporting.
  1 file changed, 3 insertions(+)
 
 diff --git a/net/rxrpc/call_accept.c b/net/rxrpc/call_accept.c
-index 2a14d69b171f3..b96af42a1b041 100644
+index 55fb3744552de..99f05057e4c90 100644
 --- a/net/rxrpc/call_accept.c
 +++ b/net/rxrpc/call_accept.c
-@@ -271,6 +271,9 @@ static struct rxrpc_call *rxrpc_alloc_incoming_call(struct rxrpc_sock *rx,
+@@ -281,6 +281,9 @@ static struct rxrpc_call *rxrpc_alloc_incoming_call(struct rxrpc_sock *rx,
  	unsigned short call_tail, conn_tail, peer_tail;
  	unsigned short call_count, conn_count;
  
