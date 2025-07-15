@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E452E7BB1;
-	Tue, 15 Jul 2025 13:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6DF2E92CF;
+	Tue, 15 Jul 2025 13:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586300; cv=none; b=DuHDfIf6HEkX0zbphSv62qj85KnZhxlLunaasFcuE8JR5fKh2orzlowTYrQGBf/tyUnL6iEftPZ31iFSiXrOxHMnZhKGetKVffM31Z9KoBURmzDEziNr9nyFFWGnJt2RIKbRs42hFd9VJFmnoNvfZzgT51Z4rQ3nrYZNoiC3Prs=
+	t=1752586304; cv=none; b=S/eh1Z5HD7RLxfPU5VzwFjzLwxxfLJ7dobv2uGMbxJb7m2NdQ9fo+xvjGD1aN9zochl2GZk1Ursm+gkL8ksGXUTwwrjb6s0oQHTIJSqCoCygoMoEXFNyagv3cMl4yuog2AFsrVNNiQccP4UYkiPzpgSRLDYOwilwRTo+KqZPYjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586300; c=relaxed/simple;
-	bh=xpgTpNwemqiAf6vu7BQ13hin96lVEyf/zpmXd/gFAVY=;
+	s=arc-20240116; t=1752586304; c=relaxed/simple;
+	bh=xP0MFUQpvty3LtoE+U16E7OgWC4xrqNg/fHuCRnF7WA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7wH16Fg9tA1kSKdTOItwBU9myIsFYRdpffPg3Z+nm9u60ehjZuJg5+VOlol9qvOvExeIgfEReDKtP8WrlsziZSu6j5Mb50BkqOSdxrGIurYOkAjRWJ9i2PlO9B+uO/4q22hD3TGrNdKC40TE8h24N3SXfPseKXarmoMzJpyOVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mxd4B2at; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7Df/DPagu+H4+NqkSxOw0/QvnUnwGZ/rutLN0JxttMhowK2Yw+rDWoYCor8PsZqzdTciq7a/nqG+VZfvHAqlEEN/H3fg0QQ6YyKi1wCJ+Ygn/Y1YlIS4XKxg6UTvF+4SP09Bu96VoTUB1XM6zyZfZrRnysaeLppmESSz7PBlps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkV4Afv8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mxd4B2at"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64253C4CEF1;
-	Tue, 15 Jul 2025 13:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkV4Afv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEB1C4CEE3;
+	Tue, 15 Jul 2025 13:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586300;
-	bh=xpgTpNwemqiAf6vu7BQ13hin96lVEyf/zpmXd/gFAVY=;
+	s=korg; t=1752586303;
+	bh=xP0MFUQpvty3LtoE+U16E7OgWC4xrqNg/fHuCRnF7WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mxd4B2atV5yZl0Qjr76MpHzKfi+n3BCPmMVMoipt/rE/VuDBIIrJH1/BanyueKUso
-	 wi5Mz/oxUobgGOFry4XmnGSL7I116adrVhKD460YU8Kg+KPrb2JzGwfTh2GqsXvFoW
-	 wjbqRbubpbxQhJsUbUvF36UWEZKXTzTdK0yg7Wms=
+	b=tkV4Afv8nrMmqS2DMsdjBo9EdVREikSFDCrck0uCUmzSLMj+p09bX7+b6bhcOA/hA
+	 bphyEoGlpp5Exv+ZtwUUUOuO9r6QfwxvB2WyqsJsCc4EOtNqz2docwlNNTg4Ftz/v4
+	 RERTrZS+QSjjQ3KhvVwCLz4UlvH7HImEpTdoX3ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Kees Cook <kees@kernel.org>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Jian-Wei Wu <jian-wei_wu@keysight.com>,
+	Guido Kiener <guido.kiener@rohde-schwarz.com>,
+	Dave Penkler <dpenkler@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 014/148] ovl: Check for NULL d_inode() in ovl_dentry_upper()
-Date: Tue, 15 Jul 2025 15:12:16 +0200
-Message-ID: <20250715130800.877210510@linuxfoundation.org>
+Subject: [PATCH 5.4 015/148] USB: usbtmc: Fix reading stale status byte
+Date: Tue, 15 Jul 2025 15:12:17 +0200
+Message-ID: <20250715130800.916851929@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,66 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Dave Penkler <dpenkler@gmail.com>
 
-[ Upstream commit 8a39f1c870e9d6fbac5638f3a42a6a6363829c49 ]
+[ Upstream commit 3c1037e2b6a94898f81ed1a68bea146a9db750a5 ]
 
-In ovl_path_type() and ovl_is_metacopy_dentry() GCC notices that it is
-possible for OVL_E() to return NULL (which implies that d_inode(dentry)
-may be NULL). This would result in out of bounds reads via container_of(),
-seen with GCC 15's -Warray-bounds -fdiagnostics-details. For example:
+The ioctl USBTMC488_IOCTL_READ_STB either returns a cached status byte
+(STB) sent by the device due to a service request (SRQ) condition or
+the STB obtained from a query to the device with a READ_STATUS_BYTE
+control message.
 
-In file included from arch/x86/include/generated/asm/rwonce.h:1,
-                 from include/linux/compiler.h:339,
-                 from include/linux/export.h:5,
-                 from include/linux/linkage.h:7,
-                 from include/linux/fs.h:5,
-                 from fs/overlayfs/util.c:7:
-In function 'ovl_upperdentry_dereference',
-    inlined from 'ovl_dentry_upper' at ../fs/overlayfs/util.c:305:9,
-    inlined from 'ovl_path_type' at ../fs/overlayfs/util.c:216:6:
-include/asm-generic/rwonce.h:44:26: error: array subscript 0 is outside array bounds of 'struct inode[7486503276667837]' [-Werror=array-bounds=]
-   44 | #define __READ_ONCE(x)  (*(const volatile __unqual_scalar_typeof(x) *)&(x))
-      |                         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-include/asm-generic/rwonce.h:50:9: note: in expansion of macro '__READ_ONCE'
-   50 |         __READ_ONCE(x);                                                 \
-      |         ^~~~~~~~~~~
-fs/overlayfs/ovl_entry.h:195:16: note: in expansion of macro 'READ_ONCE'
-  195 |         return READ_ONCE(oi->__upperdentry);
-      |                ^~~~~~~~~
-  'ovl_path_type': event 1
-  185 |         return inode ? OVL_I(inode)->oe : NULL;
-  'ovl_path_type': event 2
+When the query is interrupted by an SRQ message on the interrupt pipe,
+the ioctl still returns the requested STB while the STB of the
+out-of-band SRQ message is cached for the next call of this
+ioctl. However the cached SRQ STB represents a state that was previous
+to the last returned STB.  Furthermore the cached SRQ STB can be stale
+and not reflect the current state of the device.
 
-Avoid this by allowing ovl_dentry_upper() to return NULL if d_inode() is
-NULL, as that means the problematic dereferencing can never be reached.
-Note that this fixes the over-eager compiler warning in an effort to
-being able to enable -Warray-bounds globally. There is no known
-behavioral bug here.
+The fixed ioctl now always reads the STB from the device and if the
+associated file descriptor has the srq_asserted bit set it ors in the
+RQS bit to the returned STB and clears the srq_asserted bit conformant
+to subclass USB488 devices.
 
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Tested-by: Jian-Wei Wu <jian-wei_wu@keysight.com>
+Reviewed-by: Guido Kiener <guido.kiener@rohde-schwarz.com>
+Signed-off-by: Dave Penkler <dpenkler@gmail.com>
+Link: https://lore.kernel.org/r/20201215155621.9592-2-dpenkler@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: acb3dac2805d ("usb: usbtmc: Fix read_stb function and get_stb ioctl")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/util.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c | 46 +++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index 4d75e1cdf0b9c..af813e7773795 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -191,7 +191,9 @@ enum ovl_path_type ovl_path_real(struct dentry *dentry, struct path *path)
- 
- struct dentry *ovl_dentry_upper(struct dentry *dentry)
- {
--	return ovl_upperdentry_dereference(OVL_I(d_inode(dentry)));
-+	struct inode *inode = d_inode(dentry);
-+
-+	return inode ? ovl_upperdentry_dereference(OVL_I(inode)) : NULL;
+diff --git a/drivers/usb/class/usbtmc.c b/drivers/usb/class/usbtmc.c
+index d8ed205e6b439..d47ec01d29778 100644
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -475,15 +475,12 @@ static int usbtmc_ioctl_abort_bulk_out(struct usbtmc_device_data *data)
+ 	return usbtmc_ioctl_abort_bulk_out_tag(data, data->bTag_last_write);
  }
  
- struct dentry *ovl_dentry_lower(struct dentry *dentry)
+-static int usbtmc488_ioctl_read_stb(struct usbtmc_file_data *file_data,
+-				void __user *arg)
++static int usbtmc_get_stb(struct usbtmc_file_data *file_data, __u8 *stb)
+ {
+ 	struct usbtmc_device_data *data = file_data->data;
+ 	struct device *dev = &data->intf->dev;
+-	int srq_asserted = 0;
+ 	u8 *buffer;
+ 	u8 tag;
+-	__u8 stb;
+ 	int rv;
+ 	long wait_rv;
+ 	unsigned long expire;
+@@ -491,19 +488,6 @@ static int usbtmc488_ioctl_read_stb(struct usbtmc_file_data *file_data,
+ 	dev_dbg(dev, "Enter ioctl_read_stb iin_ep_present: %d\n",
+ 		data->iin_ep_present);
+ 
+-	spin_lock_irq(&data->dev_lock);
+-	srq_asserted = atomic_xchg(&file_data->srq_asserted, srq_asserted);
+-	if (srq_asserted) {
+-		/* a STB with SRQ is already received */
+-		stb = file_data->srq_byte;
+-		spin_unlock_irq(&data->dev_lock);
+-		rv = put_user(stb, (__u8 __user *)arg);
+-		dev_dbg(dev, "stb:0x%02x with srq received %d\n",
+-			(unsigned int)stb, rv);
+-		return rv;
+-	}
+-	spin_unlock_irq(&data->dev_lock);
+-
+ 	buffer = kmalloc(8, GFP_KERNEL);
+ 	if (!buffer)
+ 		return -ENOMEM;
+@@ -552,13 +536,12 @@ static int usbtmc488_ioctl_read_stb(struct usbtmc_file_data *file_data,
+ 				data->iin_bTag, tag);
+ 		}
+ 
+-		stb = data->bNotify2;
++		*stb = data->bNotify2;
+ 	} else {
+-		stb = buffer[2];
++		*stb = buffer[2];
+ 	}
+ 
+-	rv = put_user(stb, (__u8 __user *)arg);
+-	dev_dbg(dev, "stb:0x%02x received %d\n", (unsigned int)stb, rv);
++	dev_dbg(dev, "stb:0x%02x received %d\n", (unsigned int)*stb, rv);
+ 
+ 	rv = 0;
+ 
+@@ -573,6 +556,27 @@ static int usbtmc488_ioctl_read_stb(struct usbtmc_file_data *file_data,
+ 	return rv;
+ }
+ 
++static int usbtmc488_ioctl_read_stb(struct usbtmc_file_data *file_data,
++				void __user *arg)
++{
++	int srq_asserted = 0;
++	__u8 stb;
++	int rv;
++
++	rv = usbtmc_get_stb(file_data, &stb);
++
++	if (rv > 0) {
++		srq_asserted = atomic_xchg(&file_data->srq_asserted,
++					srq_asserted);
++		if (srq_asserted)
++			stb |= 0x40; /* Set RQS bit */
++
++		rv = put_user(stb, (__u8 __user *)arg);
++	}
++	return rv;
++
++}
++
+ static int usbtmc488_ioctl_wait_srq(struct usbtmc_file_data *file_data,
+ 				    __u32 __user *arg)
+ {
 -- 
 2.39.5
 
