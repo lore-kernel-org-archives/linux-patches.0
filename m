@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FE12E2657;
-	Tue, 15 Jul 2025 13:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB442EACF0;
+	Tue, 15 Jul 2025 13:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586497; cv=none; b=Om+UbU/VLEcZ3N+O4aNH7+4qG1xpKyetqn1UHj8Q+fpAXNXd/msI21Xa+RuM9v9CFGN0s922TWwEuu4RMq4ZycShpYvBiNok183WVsIrvfNH14SUhK05cwb/PwGm1qOSuTvXWiJAWYPtm/M0pqDys5qJqjI2zOLRUr0pl3vvp1I=
+	t=1752586499; cv=none; b=KYMwKYz3gLihp9IPN+HWbzPlkOeLUxyUvhaBaXFb/Ov6qF9yM4vvWwMqoyOVQDmRABCJ0QiTVk8tJhh6+7czuTwA6YAsQ2UyNxSWV/EkaYShD9n7E+EhvdoGg6uwceRnpxZEpnXrd1n8d8bdxWZHmnBtYKkjzFC7CPUOlrnElro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586497; c=relaxed/simple;
-	bh=ePAyti1bMynPuZxhvPhx/xEhEmLnx2KHJgXMdY4BHho=;
+	s=arc-20240116; t=1752586499; c=relaxed/simple;
+	bh=NEBpKIrwfgwCf7U8Z85JxsjHOWdKbK1GwntGNEH+v7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpC34zzqBsg2EruhFCnuVxeXB9buo7dInSnQsrPfC4Wal+n8pI+F0tEmBc/PxIGBJNLeXrguSBAkndzMsDSz0O+QozwiRl9Z68rIzz1vSJRX9xyBmwAngk9Nm+lEzdZRU+UMxI5CWNBJXAi4EJ12G7W1f9AvWPjmwapNPLScliw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMLQ0VGz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHyZ/WnxOyS7wwSqm3sCB3WLSX5oXwzrktPJldYvxLNvJYjUgZ6DL3yjwXmMssi/dLeRoohGU5yDQz1t00HxzwKDKEA8jQMVQlPnOK9pqOJZ4VQFJClIsEYVBVHiIWT0NKVj5Cb9wpyvmv2W5xtZBbpkd9oDMsOWW8IcTgRIUV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2niaYzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMLQ0VGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D34AC4CEE3;
-	Tue, 15 Jul 2025 13:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2niaYzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217D1C4CEF7;
+	Tue, 15 Jul 2025 13:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586496;
-	bh=ePAyti1bMynPuZxhvPhx/xEhEmLnx2KHJgXMdY4BHho=;
+	s=korg; t=1752586499;
+	bh=NEBpKIrwfgwCf7U8Z85JxsjHOWdKbK1GwntGNEH+v7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMLQ0VGzWDerdk/cAwHsxNm5srQ/dHE8joLxMEzuNHVR7lPaHh+hRHjWwvNbSdY+Y
-	 U5U3D/kxuQRAuVVG2I8Swj68CpW0seQ6yh1ridZJqSLkvw0LAgPY0mM2Ss/teuIZuM
-	 p2O3CCMVc3eQrSjUgVJkV/9AL11W5S1G6RgeFsGk=
+	b=N2niaYzoTZTvQjBo9qoPudPQQBCr1ts13xVh9t4Q166i2LREBGB/Qvkp/wtu36R7f
+	 2X1lgs07iKgSSM6akkKIDoHxFFQy87ngRinA4C2r8EiFwag7ce6DW5yxHbn6h49H8l
+	 M9efLYKijBpmKBD7VowBiDyRUAMzlvAPOwNE0bRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 087/148] RDMA/mlx5: Fix CC counters query for MPV
-Date: Tue, 15 Jul 2025 15:13:29 +0200
-Message-ID: <20250715130803.800482837@linuxfoundation.org>
+Subject: [PATCH 5.4 088/148] btrfs: propagate last_unlink_trans earlier when doing a rmdir
+Date: Tue, 15 Jul 2025 15:13:30 +0200
+Message-ID: <20250715130803.839714528@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,36 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit acd245b1e33fc4b9d0f2e3372021d632f7ee0652 ]
+[ Upstream commit c466e33e729a0ee017d10d919cba18f503853c60 ]
 
-In case, CC counters are querying for the second port use the correct
-core device for the query instead of always using the master core device.
+In case the removed directory had a snapshot that was deleted, we are
+propagating its inode's last_unlink_trans to the parent directory after
+we removed the entry from the parent directory. This leaves a small race
+window where someone can log the parent directory after we removed the
+entry and before we updated last_unlink_trans, and as a result if we ever
+try to replay such a log tree, we will fail since we will attempt to
+remove a snapshot during log replay, which is currently not possible and
+results in the log replay (and mount) to fail. This is the type of failure
+described in commit 1ec9a1ae1e30 ("Btrfs: fix unreplayable log after
+snapshot delete + parent dir fsync").
 
-Fixes: aac4492ef23a ("IB/mlx5: Update counter implementation for dual port RoCE")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/9cace74dcf106116118bebfa9146d40d4166c6b0.1750064969.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+So fix this by propagating the last_unlink_trans to the parent directory
+before we remove the entry from it.
+
+Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/inode.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index d30c37688bdac..1b880b555412f 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -5615,7 +5615,7 @@ static int mlx5_ib_get_hw_stats(struct ib_device *ibdev,
- 			 */
- 			goto done;
- 		}
--		ret = mlx5_lag_query_cong_counters(dev->mdev,
-+		ret = mlx5_lag_query_cong_counters(mdev,
- 						   stats->value +
- 						   cnts->num_q_counters,
- 						   cnts->num_cong_counters,
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 004894e6dd23b..8f92f998dc37b 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4747,7 +4747,6 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	int err = 0;
+ 	struct btrfs_root *root = BTRFS_I(dir)->root;
+ 	struct btrfs_trans_handle *trans;
+-	u64 last_unlink_trans;
+ 
+ 	if (inode->i_size > BTRFS_EMPTY_DIR_SIZE)
+ 		return -ENOTEMPTY;
+@@ -4758,6 +4757,23 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
+ 
++	/*
++	 * Propagate the last_unlink_trans value of the deleted dir to its
++	 * parent directory. This is to prevent an unrecoverable log tree in the
++	 * case we do something like this:
++	 * 1) create dir foo
++	 * 2) create snapshot under dir foo
++	 * 3) delete the snapshot
++	 * 4) rmdir foo
++	 * 5) mkdir foo
++	 * 6) fsync foo or some file inside foo
++	 *
++	 * This is because we can't unlink other roots when replaying the dir
++	 * deletes for directory foo.
++	 */
++	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
++		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
++
+ 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
+ 		err = btrfs_unlink_subvol(trans, dir, dentry);
+ 		goto out;
+@@ -4767,28 +4783,12 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	if (err)
+ 		goto out;
+ 
+-	last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
+-
+ 	/* now the directory is empty */
+ 	err = btrfs_unlink_inode(trans, root, BTRFS_I(dir),
+ 			BTRFS_I(d_inode(dentry)), dentry->d_name.name,
+ 			dentry->d_name.len);
+-	if (!err) {
++	if (!err)
+ 		btrfs_i_size_write(BTRFS_I(inode), 0);
+-		/*
+-		 * Propagate the last_unlink_trans value of the deleted dir to
+-		 * its parent directory. This is to prevent an unrecoverable
+-		 * log tree in the case we do something like this:
+-		 * 1) create dir foo
+-		 * 2) create snapshot under dir foo
+-		 * 3) delete the snapshot
+-		 * 4) rmdir foo
+-		 * 5) mkdir foo
+-		 * 6) fsync foo or some file inside foo
+-		 */
+-		if (last_unlink_trans >= trans->transid)
+-			BTRFS_I(dir)->last_unlink_trans = last_unlink_trans;
+-	}
+ out:
+ 	btrfs_end_transaction(trans);
+ 	btrfs_btree_balance_dirty(root->fs_info);
 -- 
 2.39.5
 
