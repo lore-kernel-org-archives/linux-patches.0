@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B232E62CF;
-	Tue, 15 Jul 2025 13:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657A72E62CF;
+	Tue, 15 Jul 2025 13:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586986; cv=none; b=ciqBJSthLVxX2I0zJ5PbiWDUsZwM8xDeP8tU/RAUdhE49nX8WETSEjssLFdlUPPiFggNsmHSqXURWzAI6yBWhLlBKXFdx/lJfcQk35ldr/39jzC8z/+xsqQnDmj1j2gYkA13adDRe0SMBl6BLIgbts6pAXy1TMewILxkEJWzZd4=
+	t=1752586989; cv=none; b=BbLazTawVEISug5RTBtneDUGGa2a3PZ3e++xafAWcREEaaE81FO1nFd3yd8HA50la/hAqfgFl7t1v7j/WzkZGVcwkv3ypF5x11P1pvdVOKHrCa2zdvTnSvEbiBMf7XDBxHAo86SmBQWL/hLSH8gsNK6KIxckf+CfLOOyfjnv72c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586986; c=relaxed/simple;
-	bh=LOT6fMaHD1m5HnJ3ecY6h1xzPWp2suB8OuShk7PtQ4o=;
+	s=arc-20240116; t=1752586989; c=relaxed/simple;
+	bh=JuFwPF0QMloIugKrWB5SDJBG7sFIIpd/RtFSQBrE0cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hvk0wmGY+1C9+MuNxc/I0HopIoHe+tletP4QsMgTmwPBpfQekNuHtv2W0fhKaRvvmCHzxSAAW5My2niuhl0w/3zCk3d/EejX2AADrod6VpONlK3WnivUQ/o4pooYhq7vmwwlcMNlGxh4Tq0xrQiR6FDT8fAfEQyFIAcnKKQYkHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBp95nIc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4Vf2J2NEKS7TRTWNhxOB4aaTo6eH7Z6OwudkXKd4EWs1LSLfnMQmlbriMJyxf9ZJelyVLXpI71+k3Pc31kRBbGo6mk857UAo1F8T1UlZrESrxm3GpTe1pjCj169NZTX0/NVi0SeuBHlqUGCCGldx5AZtc7lm0jrbMz+aYUT+as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFPyD11v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBp95nIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583A9C4CEE3;
-	Tue, 15 Jul 2025 13:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFPyD11v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF28CC4CEE3;
+	Tue, 15 Jul 2025 13:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586986;
-	bh=LOT6fMaHD1m5HnJ3ecY6h1xzPWp2suB8OuShk7PtQ4o=;
+	s=korg; t=1752586989;
+	bh=JuFwPF0QMloIugKrWB5SDJBG7sFIIpd/RtFSQBrE0cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBp95nIcjo/9hDQTJK0iEt+vFBD0fGnIx/FjtSQYrOQMR6GYkRr6r4nYYDJmMB5O7
-	 uZGRBBSy8R85foKwKv4eRmEVNWutp5Hmxvw0R2NiRGMryF85vEGP+kVWa1s/9W5GFS
-	 d8WBA3LgTz27vYIriqodYWizRcp2mOWMjwDm10ok=
+	b=wFPyD11vtaB8Zq4iP8rhZc4Kwg5sCZBBSw1/giihydek9jS6CC7OURzXUXjMI7ZdC
+	 Re2hu835jz6VwCw+yrDxVGgekRHhZ6H7/wWwPNkDozVus0O58dfiQnddhj/O7cH9n1
+	 xvwloY4VeQFNrlDCuYZUcNpyNxgpv4/geayvrsZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Kuen-Han Tsai <khtsai@google.com>,
 	Prashanth K <prashanth.k@oss.qualcomm.com>
-Subject: [PATCH 6.15 092/192] usb: gadget: u_serial: Fix race condition in TTY wakeup
-Date: Tue, 15 Jul 2025 15:13:07 +0200
-Message-ID: <20250715130818.598766572@linuxfoundation.org>
+Subject: [PATCH 6.15 093/192] Revert "usb: gadget: u_serial: Add null pointer check in gs_start_io"
+Date: Tue, 15 Jul 2025 15:13:08 +0200
+Message-ID: <20250715130818.636519643@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -53,57 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuen-Han Tsai <khtsai@google.com>
 
-commit c529c3730bd09115684644e26bf01ecbd7e2c2c9 upstream.
+commit f6c7bc4a6823a0a959f40866a1efe99bd03c2c5b upstream.
 
-A race condition occurs when gs_start_io() calls either gs_start_rx() or
-gs_start_tx(), as those functions briefly drop the port_lock for
-usb_ep_queue(). This allows gs_close() and gserial_disconnect() to clear
-port.tty and port_usb, respectively.
+This reverts commit ffd603f214237e250271162a5b325c6199a65382.
 
-Use the null-safe TTY Port helper function to wake up TTY.
+Commit ffd603f21423 ("usb: gadget: u_serial: Add null pointer check in
+gs_start_io") adds null pointer checks at the beginning of the
+gs_start_io() function to prevent a null pointer dereference. However,
+these checks are redundant because the function's comment already
+requires callers to hold the port_lock and ensure port.tty and port_usb
+are not null. All existing callers already follow these rules.
 
-Example
-  CPU1:			      CPU2:
-  gserial_connect() // lock
-  			      gs_close() // await lock
-  gs_start_rx()     // unlock
-  usb_ep_queue()
-  			      gs_close() // lock, reset port.tty and unlock
-  gs_start_rx()     // lock
-  tty_wakeup()      // NPE
+The true cause of the null pointer dereference is a race condition. When
+gs_start_io() calls either gs_start_rx() or gs_start_tx(), the port_lock
+is temporarily released for usb_ep_queue(). This allows port.tty and
+port_usb to be cleared.
 
-Fixes: 35f95fd7f234 ("TTY: usb/u_serial, use tty from tty_port")
+Fixes: ffd603f21423 ("usb: gadget: u_serial: Add null pointer check in gs_start_io")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
 Reviewed-by: Prashanth K <prashanth.k@oss.qualcomm.com>
-Link: https://lore.kernel.org/linux-usb/20240116141801.396398-1-khtsai@google.com/
-Link: https://lore.kernel.org/r/20250617050844.1848232-2-khtsai@google.com
+Link: https://lore.kernel.org/r/20250617050844.1848232-1-khtsai@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/u_serial.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
 --- a/drivers/usb/gadget/function/u_serial.c
 +++ b/drivers/usb/gadget/function/u_serial.c
-@@ -295,8 +295,8 @@ __acquires(&port->port_lock)
- 			break;
- 	}
+@@ -544,20 +544,16 @@ static int gs_alloc_requests(struct usb_
+ static int gs_start_io(struct gs_port *port)
+ {
+ 	struct list_head	*head = &port->read_pool;
+-	struct usb_ep		*ep;
++	struct usb_ep		*ep = port->port_usb->out;
+ 	int			status;
+ 	unsigned		started;
  
--	if (do_tty_wake && port->port.tty)
--		tty_wakeup(port->port.tty);
-+	if (do_tty_wake)
-+		tty_port_tty_wakeup(&port->port);
- 	return status;
- }
- 
-@@ -578,7 +578,7 @@ static int gs_start_io(struct gs_port *p
- 		gs_start_tx(port);
- 		/* Unblock any pending writes into our circular buffer, in case
- 		 * we didn't in gs_start_tx() */
--		tty_wakeup(port->port.tty);
-+		tty_port_tty_wakeup(&port->port);
- 	} else {
- 		/* Free reqs only if we are still connected */
- 		if (port->port_usb) {
+-	if (!port->port_usb || !port->port.tty)
+-		return -EIO;
+-
+ 	/* Allocate RX and TX I/O buffers.  We can't easily do this much
+ 	 * earlier (with GFP_KERNEL) because the requests are coupled to
+ 	 * endpoints, as are the packet sizes we'll be using.  Different
+ 	 * configurations may use different endpoints with a given port;
+ 	 * and high speed vs full speed changes packet sizes too.
+ 	 */
+-	ep = port->port_usb->out;
+ 	status = gs_alloc_requests(ep, head, gs_read_complete,
+ 		&port->read_allocated);
+ 	if (status)
 
 
