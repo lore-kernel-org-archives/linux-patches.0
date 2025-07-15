@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EB87464;
-	Tue, 15 Jul 2025 19:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B48529B20C;
+	Tue, 15 Jul 2025 19:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752606394; cv=none; b=cGBMiSKoqfzm3m/zkOuh3TmSX19G4vlaCWIPKOdc3KSehh+1CPzrnTv8ZmAZn22pcOIo4NxkqNRi3CskLRtXBgmk3GnLQSAz+YKj9uwiFLsnPXQT9nY63ls79CBOalFDKGKuRWpJNZlJ8kCxNtyPeem/sz1HHjCv+ODbmNaASoA=
+	t=1752606504; cv=none; b=mjUvhmGxIAF0S9f7fACaGx6XryC/Pcryx9AsbWZ5NLBRIBehjYf3gu/dbmR6YHb/PAHp+qQWxXxpy3g8BuXOnkVVAXhHH9tDmtXHHSjBkmNfBHgpl2GZepY0Lgt8bF5UAJ80JAYQRcH18aXwxHSviXpwwxTZXbTUddUxEYJQRAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752606394; c=relaxed/simple;
-	bh=L+UQBQ3ecguB16JTjOLfSGjZZddbOdM1WxYkXwjr/YI=;
+	s=arc-20240116; t=1752606504; c=relaxed/simple;
+	bh=C6NSJLdCxzeBZjFXiADceoqSo7HrYuwno6HE5J6teGU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cYPae2X6fVUjRgexHmtq6gQ/7DI6Wxswslwvb+PyUD2G13Uc1CXwE1aEqyzQ5xJYBv69eT1vBaRpb7oJRvYjhTmVSHdKjPuOxrzve9qllwPzraXixlzRZ4TA6U/jwMuWES6F8CtYGfYEiIQvT+NxDLz0oR01UUCHJffIMdTxf6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRfxLC0S; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=HPdh8fJb884xWWwS4+sCV9BJ9/SFMX4aTxR5LSM037Z9jTNSkyZeNQ2B9nojhgPPPcr6WkGrO3HnlDScFNA6rNppuU1Zf8g78UJPzKq/JHI/Q+XTc2rmnGNcHiCWqjUKdrYexfXk95Ebjh7OflE+qEmZeh84jCxEZkvATVP5tbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KSIMXftV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRfxLC0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99262C4CEE3;
-	Tue, 15 Jul 2025 19:06:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KSIMXftV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C68C4CEF5;
+	Tue, 15 Jul 2025 19:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752606393;
-	bh=L+UQBQ3ecguB16JTjOLfSGjZZddbOdM1WxYkXwjr/YI=;
+	s=k20201202; t=1752606503;
+	bh=C6NSJLdCxzeBZjFXiADceoqSo7HrYuwno6HE5J6teGU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DRfxLC0SWJJusMpZzlnz8OOsc6RIgOzny0xeuAyDOgRSIxKjXc3P+nGfrl+9XSYBy
-	 9goqUu42xNbnAoO01ATRrA7vmlJf47O5LUrfhcuHoFNWROMjVL1QdbQmbFdP2bBPkB
-	 Xf3RmNZRT34Fddz1p6KJYZarPh9m5/M9CMAfA/LlLxigK9DxmAH9Dd+3nTRa+JCApI
-	 1gpbOZkJapyRlMnHOAIdRjmwMsxQ3n7AHJ8kam5G1D0hLIlLmZxE8JnXyoFqG4Hu43
-	 BCrpX5s0Gb6ufyGUgCGH2EIn4SjzycI6H2OeffymU6K0vY497is7rGRlB4yOLXt31x
-	 yaF7wGKpAyueQ==
-Date: Tue, 15 Jul 2025 15:04:53 -0400
+	b=KSIMXftV6MD0i82lGLIpdJsXDyWXf/UfNEcd0Nqe3lSlgDY2q/RYm/f01yvpkfm8R
+	 CzxPyjdMrJu7BES1mJx4yFYcIQC0NtuLjzi/96zdUTXQY26tOxVlIezQzlxuQ0x9uW
+	 6Eky+nAVoZZSDzyb5B6CZhAZP3lXYDZvE96QElBPaNzG6fWc3wSVigMitUVokn4WJj
+	 ticixJU3fEmeVPNbEs2oX1QUV1qIF5itKSJLYmoBS6HxlzenLuu+GPs52EmXTX1lWJ
+	 vJ/Qe8SaUge1+LkwXZYkK+fK2pgvLNef9cjklwC/MWQMDBe5ByiC5pSNHJ35sI47v3
+	 /Ev1DC29cM2LQ==
+Date: Tue, 15 Jul 2025 15:06:43 -0400
 From: Sasha Levin <sashal@kernel.org>
 To: Kurt Borja <kuurtb@gmail.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
 	patches@lists.linux.dev, Mark Pearson <mpearson-lenovo@squebb.ca>,
 	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: Re: [PATCH 5.15 53/77] platform/x86: think-lmi: Fix sysfs group
+Subject: Re: [PATCH 6.1 53/88] platform/x86: think-lmi: Fix sysfs group
  cleanup
-Message-ID: <aHamVeuNznVqMb2x@lappy>
-References: <20250715130751.668489382@linuxfoundation.org>
- <20250715130753.855799519@linuxfoundation.org>
- <DBCUJ1QHGTKA.3H4TW1FB3FYJC@gmail.com>
+Message-ID: <aHamw2kyYlWv3Vnt@lappy>
+References: <20250715130754.497128560@linuxfoundation.org>
+ <20250715130756.686654974@linuxfoundation.org>
+ <DBCUFWL772Z5.2MUF08I4D6AH2@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,17 +47,17 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1; format=flowed
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <DBCUJ1QHGTKA.3H4TW1FB3FYJC@gmail.com>
+In-Reply-To: <DBCUFWL772Z5.2MUF08I4D6AH2@gmail.com>
 
-On Tue, Jul 15, 2025 at 03:38:58PM -0300, Kurt Borja wrote:
+On Tue, Jul 15, 2025 at 03:34:51PM -0300, Kurt Borja wrote:
 >Hi Greg,
 >
->On Tue Jul 15, 2025 at 10:13 AM -03, Greg Kroah-Hartman wrote:
->> 5.15-stable review patch.  If anyone has any objections, please let me know.
+>On Tue Jul 15, 2025 at 10:14 AM -03, Greg Kroah-Hartman wrote:
+>> 6.1-stable review patch.  If anyone has any objections, please let me know.
 >>
 >> ------------------
 >>
->> From: Kurt Borja <kuurtb@gmail.com>
+>> From: Zhang Rui <rui.zhang@intel.com>
 >>
 >> [ Upstream commit 4f30f946f27b7f044cf8f3f1f353dee1dcd3517a ]
 >>
@@ -76,44 +76,70 @@ On Tue, Jul 15, 2025 at 03:38:58PM -0300, Kurt Borja wrote:
 >> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 >> Signed-off-by: Sasha Levin <sashal@kernel.org>
 >> ---
->>  drivers/platform/x86/think-lmi.c | 35 +++++++++-----------------------
->>  1 file changed, 10 insertions(+), 25 deletions(-)
+>>  drivers/powercap/intel_rapl_common.c | 22 ++++++++++++++++++++--
+>>  1 file changed, 20 insertions(+), 2 deletions(-)
 >>
->> diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
->> index 36ff64a7b6847..cc46aa5f1da2c 100644
->> --- a/drivers/platform/x86/think-lmi.c
->> +++ b/drivers/platform/x86/think-lmi.c
->> @@ -491,6 +491,7 @@ static struct attribute *auth_attrs[] = {
->>  static const struct attribute_group auth_attr_group = {
->>  	.attrs = auth_attrs,
->>  };
->> +__ATTRIBUTE_GROUPS(auth_attr);
+>> diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
+>> index 26d00b1853b42..02787682b395e 100644
+>> --- a/drivers/powercap/intel_rapl_common.c
+>> +++ b/drivers/powercap/intel_rapl_common.c
+>> @@ -21,6 +21,7 @@
+>>  #include <linux/intel_rapl.h>
+>>  #include <linux/processor.h>
+>>  #include <linux/platform_device.h>
+>> +#include <linux/string_helpers.h>
 >>
->>  /* ---- Attributes sysfs --------------------------------------------------------- */
->>  static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *attr,
->> @@ -643,6 +644,7 @@ static const struct attribute_group tlmi_attr_group = {
->>  	.is_visible = attr_is_visible,
->>  	.attrs = tlmi_attrs,
->>  };
->> +__ATTRIBUTE_GROUPS(tlmi_attr);
+>>  #include <asm/iosf_mbi.h>
+>>  #include <asm/cpu_device_id.h>
+>> @@ -227,17 +228,34 @@ static int find_nr_power_limit(struct rapl_domain *rd)
+>>  static int set_domain_enable(struct powercap_zone *power_zone, bool mode)
+>>  {
+>>  	struct rapl_domain *rd = power_zone_to_rapl_domain(power_zone);
+>> +	u64 val;
+>> +	int ret;
 >>
->>  static ssize_t tlmi_attr_show(struct kobject *kobj, struct attribute *attr,
->>  				    char *buf)
->> @@ -688,12 +690,14 @@ static void tlmi_pwd_setting_release(struct kobject *kobj)
+>>  	if (rd->state & DOMAIN_STATE_BIOS_LOCKED)
+>>  		return -EACCES;
 >>
->>  static struct kobj_type tlmi_attr_setting_ktype = {
->>  	.release        = &tlmi_attr_setting_release,
->> -	.sysfs_ops	= &tlmi_kobj_sysfs_ops,
->> +	.sysfs_ops	= &kobj_sysfs_ops,
->> +	.default_groups = tlmi_attr_groups,
+>>  	cpus_read_lock();
+>> -	rapl_write_data_raw(rd, PL1_ENABLE, mode);
+>> +	ret = rapl_write_data_raw(rd, PL1_ENABLE, mode);
+>> +	if (ret)
+>> +		goto end;
+>> +
+>> +	ret = rapl_read_data_raw(rd, PL1_ENABLE, true, &val);
+>> +	if (ret)
+>> +		goto end;
+>> +
+>> +	if (mode != val) {
+>> +		pr_debug("%s cannot be %s\n", power_zone->name,
+>> +			 str_enabled_disabled(mode));
+>> +		goto end;
+>> +	}
+>> +
+>>  	if (rapl_defaults->set_floor_freq)
+>>  		rapl_defaults->set_floor_freq(rd, mode);
+>> +
+>> +end:
+>>  	cpus_read_unlock();
+>>
+>> -	return 0;
+>> +	return ret;
+>>  }
+>>
+>>  static int get_domain_enable(struct powercap_zone *power_zone, bool *mode)
 >
->I did *not* author this change and it utterly *breaks* the driver.
+>This diff has no relation to commit 4f30f946f27b ("platform/x86:
+>think-lmi: Fix sysfs group cleanup"), which the commit message claims.
 >
->This patch should be dropped ASAP.
+>It should be removed ASAP. Thanks!
 
-Right sorry about that - I accidently left that extra line of context
-you've pointed out. Dropped now along with the other patch you've
-pointed out.
+Dropped, thanks!
+
+This was supposed to be a backport of 964209202ebe ("powercap:
+intel_rapl: Do not change CLAMPING bit if ENABLE bit cannot be
+changed").
+
 
 -- 
 Thanks,
