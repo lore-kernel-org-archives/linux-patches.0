@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D542EA725;
-	Tue, 15 Jul 2025 13:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F5D2E49B4;
+	Tue, 15 Jul 2025 13:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586428; cv=none; b=SNMmceLhPMveyTpffaSJ51BJdHX/2DtnpjvOM2PEqVly3+TQnIXCVyxxc00okB4picuorP85Xmo6cO+XuJ2sr7wmb0Ya8MstHSgU7RHIavPACqiav5asRsyIxAnM3jXdyO64Y/ryyPHI+/Tb72sWHMSuiRPuJI8QoEwhu4Gwenk=
+	t=1752586430; cv=none; b=bnZZiRt330izDAtZgjTYjRUsrpe1Oqpsftif5ZyLnRVQrRxUSD9tT3EMlFF2NxrW6G5T94cM9ZNp1G7NyBtOAwlC3KXIXY4UCKsj1NKLIkKVHUH/lO5X7Owk7OEl/fXGqrVwH+/pcnBWOh9mGV8+BKb67jEvC1lKiTc5Du9NTLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586428; c=relaxed/simple;
-	bh=lU6q9H0Y4MbP65UaYM92aC1vTe/eLZV92fHWcVXzQkU=;
+	s=arc-20240116; t=1752586430; c=relaxed/simple;
+	bh=zKl22OltK0JT9SSHiC17w9Krc54dlmpkwCvLGkBRCiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XdC98UlBcE8x2Hw7rz7nVnmu0aHF362qdHWDzIfMRcJFudC/2OQpDQozqXPLGKc1NTLWVeWqHZnITAOP36Ntxe1ptorltohY7mKa1iFKIrT/8Ypk3BSvOF4vS6pX0By0P8IEDvxQEoJfZ89ODKGH9aS60X7nCTMjJDsAFANI1Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWcycriV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=joDnTkF54Y1u+/nQolw8B9vkSRF1QMLNdsaCE9zcb52MWdDn2xDB4xKhQcMvxTlxIo7pp9WMZggUJWSHTSsG1YF9SjQGLYQozcp90jcvupgIYLaEnK4i7Rdhv+BnKIrR6Rg64V160M9bWlUW1dL13G/fYEBb/9sLlcy7ZwAHcY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yiiwjWqP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWcycriV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F480C4CEE3;
-	Tue, 15 Jul 2025 13:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiiwjWqP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E77C4CEF7;
+	Tue, 15 Jul 2025 13:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586427;
-	bh=lU6q9H0Y4MbP65UaYM92aC1vTe/eLZV92fHWcVXzQkU=;
+	s=korg; t=1752586430;
+	bh=zKl22OltK0JT9SSHiC17w9Krc54dlmpkwCvLGkBRCiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZWcycriVH41wR/YyN5yIBdzoMCdoXzps74CicEy+SgHK4Q71jBn0kMk/aR9Bpxo3j
-	 SiasOn0qlY92hiXy+m6/u+ewsdzywVpz2O8uH+VYoINOHVQMc8rpjJ1sqpb/AhRluT
-	 gPQc6U3QP/x0KQIqpkKpo1fOUNcEtyRSghB1NQfc=
+	b=yiiwjWqPF6bHZp4b8/6rPM2d7BQSckCMcoBYXZYmSMijC4XGXNibcWrV2ek+l1mGW
+	 gT1xKgkLLwWf6PJTzJtV6jx9Ja4pX0MYH7lVvECy+mFHFIT530bgjASyoE/Up6nBiv
+	 b0rMkCT4sBHESAUuFkv3jRrsiPApdvL8wjsm1Fus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	David Thompson <davthompson@nvidia.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 061/148] platform/mellanox: mlxbf-tmfifo: fix vring_desc.len assignment
-Date: Tue, 15 Jul 2025 15:13:03 +0200
-Message-ID: <20250715130802.773986020@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.4 035/148] i2c: tiny-usb: disable zero-length read messages
+Date: Tue, 15 Jul 2025 15:12:37 +0200
+Message-ID: <20250715130801.719606928@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -46,50 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 109f4d29dade8ae5b4ac6325af9d1bc24b4230f8 ]
+commit cbdb25ccf7566eee0c2b945e35cb98baf9ed0aa6 upstream.
 
-Fix warnings reported by sparse, related to incorrect type:
-drivers/platform/mellanox/mlxbf-tmfifo.c:284:38: warning: incorrect type in assignment (different base types)
-drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    expected restricted __virtio32 [usertype] len
-drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    got unsigned long
+This driver passes the length of an i2c_msg directly to
+usb_control_msg(). If the message is now a read and of length 0, it
+violates the USB protocol and a warning will be printed. Enable the
+I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
+read messages altogether.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202404040339.S7CUIgf3-lkp@intel.com/
-Fixes: 78034cbece79 ("platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/20250613214608.2250130-1-davthompson@nvidia.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e8c76eed2ecd ("i2c: New i2c-tiny-usb bus driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: <stable@vger.kernel.org> # v2.6.22+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250522064349.3823-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-tiny-usb.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 767f4406e55f1..1eb7f4eb1156c 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -253,7 +253,8 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
- 		vring->align = SMP_CACHE_BYTES;
- 		vring->index = i;
- 		vring->vdev_id = tm_vdev->vdev.id.device;
--		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
-+		vring->drop_desc.len = cpu_to_virtio32(&tm_vdev->vdev,
-+						       VRING_DROP_DESC_MAX_LEN);
- 		dev = &tm_vdev->vdev.dev;
+--- a/drivers/i2c/busses/i2c-tiny-usb.c
++++ b/drivers/i2c/busses/i2c-tiny-usb.c
+@@ -140,6 +140,11 @@ out:
+ 	return ret;
+ }
  
- 		size = vring_size(vring->num, vring->align);
--- 
-2.39.5
-
++/* prevent invalid 0-length usb_control_msg */
++static const struct i2c_adapter_quirks usb_quirks = {
++	.flags = I2C_AQ_NO_ZERO_LEN_READ,
++};
++
+ /* This is the actual algorithm we define */
+ static const struct i2c_algorithm usb_algorithm = {
+ 	.master_xfer	= usb_xfer,
+@@ -246,6 +251,7 @@ static int i2c_tiny_usb_probe(struct usb
+ 	/* setup i2c adapter description */
+ 	dev->adapter.owner = THIS_MODULE;
+ 	dev->adapter.class = I2C_CLASS_HWMON;
++	dev->adapter.quirks = &usb_quirks;
+ 	dev->adapter.algo = &usb_algorithm;
+ 	dev->adapter.algo_data = dev;
+ 	snprintf(dev->adapter.name, sizeof(dev->adapter.name),
 
 
