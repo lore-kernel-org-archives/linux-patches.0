@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7EA2D8790;
-	Tue, 15 Jul 2025 13:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DE12E54C1;
+	Tue, 15 Jul 2025 13:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585957; cv=none; b=klGZWQFqhoR8yR7dUFcVi/AdNJ4tjBP9UY4zMlap/qEmLx2s1EOClZwFU93iQi7ST9A8iuTeqntEYBkDQ6QA3lj8xOxbzZJGziG4le11s1VY3TvJ6Mmt41WD4TlYJGCM+dtnjIEEcIGHK+BJ9WqEThrRm6EKgKDThWgRqSwXJaE=
+	t=1752585959; cv=none; b=Vfr7ShN+5rXx7h3Gj89E371hPI4UABlvxpjHFYxVgoYNoOrF8gUoKg6FvuCmEY+2/8Uruq5MX9mXbBhElLqWy0EtWzkWn9hxOqJPsaNK3ey10WFBW2QIHvRJXNkLskTVI5XQvOa+9NIoDFo5bMgK7TTOfAC/c+w7VDqsuV7mjuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585957; c=relaxed/simple;
-	bh=wrZ+9XoOuFnbAjkmlMhAhhxdP9//asTvMGcIurL+10E=;
+	s=arc-20240116; t=1752585959; c=relaxed/simple;
+	bh=jthzPBQwlVeviJ5+gHXiTbwNIkrTy4QQwRR99gxUQ08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMt2ni0f43Q9I35KbkQ+EX5Iqz81XrSiEHv2M2MMNPbF5LPv7o0K1ikmQZO57rjHKz1rnBHrKj177tfSF+/FheS3ovs+NP7mKakYHrTfeTAt02//ipjGL6X6GF4ui9gzWS/SYs+6bR5FNadcj8jns6IP3hF+kGyCjXmFGborQy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j270sDf5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MnwEf1hzWTmwPHAmXP788ouJLpXjuqJjazoyCCQI53ADnxJMpmhE13g0C0xs+c8R9N5x5/7ggEg3Dt8ATFU97iPTCDruWoMQLTw0S9ztwrDgQET0AT2DRkfaLUFSz1jYn5plb9KZiux0BKVixH5w5F/EMRpyBLtGCYx2S4WccfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+wN9Ezu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j270sDf5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A33C4CEF1;
-	Tue, 15 Jul 2025 13:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+wN9Ezu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD29C4CEE3;
+	Tue, 15 Jul 2025 13:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585956;
-	bh=wrZ+9XoOuFnbAjkmlMhAhhxdP9//asTvMGcIurL+10E=;
+	s=korg; t=1752585959;
+	bh=jthzPBQwlVeviJ5+gHXiTbwNIkrTy4QQwRR99gxUQ08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j270sDf57JZj8brvZfP3UkciCyycNLQF6Nxo4vK6Oygg1fd4YHGUysdw6ylOpdWCT
-	 b6fHbrPvIXWyyxKwckrRwNz4Or292KHoooAJ8jmjnYr/zabfneOeIfVlvnN2U0PMm+
-	 68pDVqEScymaRcSzsudnNEVbHyqOOdWZ6MZdcveQ=
+	b=0+wN9EzuuAGPj0jBNo/LBnVROwIn+bOXpoIgW06PvQ5fu5UapO6rHz6dhc2EokQgc
+	 byURFL2RijESlEEowu0UWJmgMh5nvoVA4XSUSr0IT76WJ/E4GcKnsQ1jbv84/Jxjhw
+	 BAt6QgSeV9Jhl3EMIHOdNE+46OSNyHJc+DXM2JpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/109] btrfs: fix inode lookup error handling during log replay
-Date: Tue, 15 Jul 2025 15:13:26 +0200
-Message-ID: <20250715130801.684986776@linuxfoundation.org>
+	Bjorn Andersson <andersson@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.6 041/109] pinctrl: qcom: msm: mark certain pins as invalid for interrupts
+Date: Tue, 15 Jul 2025 15:12:57 +0200
+Message-ID: <20250715130800.524420202@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -53,394 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 5f61b961599acbd2bed028d3089105a1f7d224b8 ]
+commit 93712205ce2f1fb047739494c0399a26ea4f0890 upstream.
 
-When replaying log trees we use read_one_inode() to get an inode, which is
-just a wrapper around btrfs_iget_logging(), which in turn is a wrapper for
-btrfs_iget(). But read_one_inode() always returns NULL for any error
-that btrfs_iget_logging() / btrfs_iget() may return and this is a problem
-because:
+On some platforms, the UFS-reset pin has no interrupt logic in TLMM but
+is nevertheless registered as a GPIO in the kernel. This enables the
+user-space to trigger a BUG() in the pinctrl-msm driver by running, for
+example: `gpiomon -c 0 113` on RB2.
 
-1) In many callers of read_one_inode() we convert the NULL into -EIO,
-   which is not accurate since btrfs_iget() may return -ENOMEM and -ENOENT
-   for example, besides -EIO and other errors. So during log replay we
-   may end up reporting a false -EIO, which is confusing since we may
-   not have had any IO error at all;
+The exact culprit is requesting pins whose intr_detection_width setting
+is not 1 or 2 for interrupts. This hits a BUG() in
+msm_gpio_irq_set_type(). Potentially crashing the kernel due to an
+invalid request from user-space is not optimal, so let's go through the
+pins and mark those that would fail the check as invalid for the irq chip
+as we should not even register them as available irqs.
 
-2) When replaying directory deletes, at replay_dir_deletes(), we assume
-   the NULL returned from read_one_inode() means that the inode doesn't
-   exist and then proceed as if no error had happened. This is wrong
-   because unless btrfs_iget() returned ERR_PTR(-ENOENT), we had an
-   actual error and the target inode may exist in the target subvolume
-   root - this may later result in the log replay code failing at a
-   later stage (if we are "lucky") or succeed but leaving some
-   inconsistency in the filesystem.
+This function can be extended if we determine that there are more
+corner-cases like this.
 
-So fix this by not ignoring errors from btrfs_iget_logging() and as
-a consequence remove the read_one_inode() wrapper and just use
-btrfs_iget_logging() directly. Also since btrfs_iget_logging() is
-supposed to be called only against subvolume roots, just like
-read_one_inode() which had a comment about it, add an assertion to
-btrfs_iget_logging() to check that the target root corresponds to a
-subvolume root.
-
-Fixes: 5d4f98a28c7d ("Btrfs: Mixed back reference  (FORWARD ROLLING FORMAT CHANGE)")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f365be092572 ("pinctrl: Add Qualcomm TLMM driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/20250612091448.41546-1-brgl@bgdev.pl
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c | 223 +++++++++++++++++++++++++++++---------------
- 1 file changed, 146 insertions(+), 77 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index f846dcbd70756..16434106c465d 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -145,6 +145,9 @@ static struct btrfs_inode *btrfs_iget_logging(u64 objectid, struct btrfs_root *r
- 	unsigned int nofs_flag;
- 	struct inode *inode;
- 
-+	/* Only meant to be called for subvolume roots and not for log roots. */
-+	ASSERT(is_fstree(btrfs_root_id(root)));
-+
- 	/*
- 	 * We're holding a transaction handle whether we are logging or
- 	 * replaying a log tree, so we must make sure NOFS semantics apply
-@@ -616,20 +619,6 @@ static int read_alloc_one_name(struct extent_buffer *eb, void *start, int len,
- 	return 0;
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1031,6 +1031,25 @@ static bool msm_gpio_needs_dual_edge_par
+ 	       test_bit(d->hwirq, pctrl->skip_wake_irqs);
  }
  
--/*
-- * simple helper to read an inode off the disk from a given root
-- * This can only be called for subvolume roots and not for the log
-- */
--static noinline struct inode *read_one_inode(struct btrfs_root *root,
--					     u64 objectid)
--{
--	struct btrfs_inode *inode;
--
--	inode = btrfs_iget_logging(objectid, root);
--	if (IS_ERR(inode))
--		return NULL;
--	return &inode->vfs_inode;
--}
- 
- /* replays a single extent in 'eb' at 'slot' with 'key' into the
-  * subvolume 'root'.  path is released on entry and should be released
-@@ -684,10 +673,15 @@ static noinline int replay_one_extent(struct btrfs_trans_handle *trans,
- 		goto out;
- 	}
- 
--	inode = read_one_inode(root, key->objectid);
--	if (!inode) {
--		ret = -EIO;
--		goto out;
-+	{
-+		struct btrfs_inode *btrfs_inode;
++static void msm_gpio_irq_init_valid_mask(struct gpio_chip *gc,
++					 unsigned long *valid_mask,
++					 unsigned int ngpios)
++{
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++	const struct msm_pingroup *g;
++	int i;
 +
-+		btrfs_inode = btrfs_iget_logging(key->objectid, root);
-+		if (IS_ERR(btrfs_inode)) {
-+			ret = PTR_ERR(btrfs_inode);
-+			goto out;
-+		}
-+		inode = &btrfs_inode->vfs_inode;
- 	}
- 
- 	/*
-@@ -966,10 +960,16 @@ static noinline int drop_one_dir_item(struct btrfs_trans_handle *trans,
- 
- 	btrfs_release_path(path);
- 
--	inode = read_one_inode(root, location.objectid);
--	if (!inode) {
--		ret = -EIO;
--		goto out;
-+	{
-+		struct btrfs_inode *btrfs_inode;
++	bitmap_fill(valid_mask, ngpios);
 +
-+		btrfs_inode = btrfs_iget_logging(location.objectid, root);
-+		if (IS_ERR(btrfs_inode)) {
-+			ret = PTR_ERR(btrfs_inode);
-+			inode = NULL;
-+			goto out;
-+		}
-+		inode = &btrfs_inode->vfs_inode;
- 	}
- 
- 	ret = link_to_fixup_dir(trans, root, path, location.objectid);
-@@ -1186,18 +1186,21 @@ static inline int __add_inode_ref(struct btrfs_trans_handle *trans,
- 				kfree(victim_name.name);
- 				return ret;
- 			} else if (!ret) {
--				ret = -ENOENT;
--				victim_parent = read_one_inode(root,
--						parent_objectid);
--				if (victim_parent) {
-+				struct btrfs_inode *btrfs_victim;
++	for (i = 0; i < ngpios; i++) {
++		g = &pctrl->soc->groups[i];
 +
-+				btrfs_victim = btrfs_iget_logging(parent_objectid, root);
-+				if (IS_ERR(btrfs_victim)) {
-+					ret = PTR_ERR(btrfs_victim);
-+				} else {
-+					victim_parent = &btrfs_victim->vfs_inode;
- 					inc_nlink(&inode->vfs_inode);
- 					btrfs_release_path(path);
- 
- 					ret = unlink_inode_for_log_replay(trans,
- 							BTRFS_I(victim_parent),
- 							inode, &victim_name);
-+					iput(victim_parent);
- 				}
--				iput(victim_parent);
- 				kfree(victim_name.name);
- 				if (ret)
- 					return ret;
-@@ -1334,11 +1337,16 @@ static int unlink_old_inode_refs(struct btrfs_trans_handle *trans,
- 			struct inode *dir;
- 
- 			btrfs_release_path(path);
--			dir = read_one_inode(root, parent_id);
--			if (!dir) {
--				ret = -ENOENT;
--				kfree(name.name);
--				goto out;
-+			{
-+				struct btrfs_inode *btrfs_dir;
-+
-+				btrfs_dir = btrfs_iget_logging(parent_id, root);
-+				if (IS_ERR(btrfs_dir)) {
-+					ret = PTR_ERR(btrfs_dir);
-+					kfree(name.name);
-+					goto out;
-+				}
-+				dir = &btrfs_dir->vfs_inode;
- 			}
- 			ret = unlink_inode_for_log_replay(trans, BTRFS_I(dir),
- 						 inode, &name);
-@@ -1409,16 +1417,28 @@ static noinline int add_inode_ref(struct btrfs_trans_handle *trans,
- 	 * copy the back ref in.  The link count fixup code will take
- 	 * care of the rest
- 	 */
--	dir = read_one_inode(root, parent_objectid);
--	if (!dir) {
--		ret = -ENOENT;
--		goto out;
-+	{
-+		struct btrfs_inode *btrfs_dir;
-+
-+		btrfs_dir = btrfs_iget_logging(parent_objectid, root);
-+		if (IS_ERR(btrfs_dir)) {
-+			ret = PTR_ERR(btrfs_dir);
-+			dir = NULL;
-+			goto out;
-+		}
-+		dir = &btrfs_dir->vfs_inode;
- 	}
- 
--	inode = read_one_inode(root, inode_objectid);
--	if (!inode) {
--		ret = -EIO;
--		goto out;
-+	{
-+		struct btrfs_inode *btrfs_inode;
-+
-+		btrfs_inode = btrfs_iget_logging(inode_objectid, root);
-+		if (IS_ERR(btrfs_inode)) {
-+			ret = PTR_ERR(btrfs_inode);
-+			inode = NULL;
-+			goto out;
-+		}
-+		inode = &btrfs_inode->vfs_inode;
- 	}
- 
- 	while (ref_ptr < ref_end) {
-@@ -1429,11 +1449,16 @@ static noinline int add_inode_ref(struct btrfs_trans_handle *trans,
- 			 * parent object can change from one array
- 			 * item to another.
- 			 */
--			if (!dir)
--				dir = read_one_inode(root, parent_objectid);
- 			if (!dir) {
--				ret = -ENOENT;
--				goto out;
-+				struct btrfs_inode *btrfs_dir;
-+
-+				btrfs_dir = btrfs_iget_logging(parent_objectid, root);
-+				if (IS_ERR(btrfs_dir)) {
-+					ret = PTR_ERR(btrfs_dir);
-+					dir = NULL;
-+					goto out;
-+				}
-+				dir = &btrfs_dir->vfs_inode;
- 			}
- 		} else {
- 			ret = ref_get_fields(eb, ref_ptr, &name, &ref_index);
-@@ -1701,10 +1726,15 @@ static noinline int fixup_inode_link_counts(struct btrfs_trans_handle *trans,
- 			break;
- 
- 		btrfs_release_path(path);
--		inode = read_one_inode(root, key.offset);
--		if (!inode) {
--			ret = -EIO;
--			break;
-+		{
-+			struct btrfs_inode *btrfs_inode;
-+
-+			btrfs_inode = btrfs_iget_logging(key.offset, root);
-+			if (IS_ERR(btrfs_inode)) {
-+				ret = PTR_ERR(btrfs_inode);
-+				break;
-+			}
-+			inode = &btrfs_inode->vfs_inode;
- 		}
- 
- 		ret = fixup_inode_link_count(trans, inode);
-@@ -1738,9 +1768,14 @@ static noinline int link_to_fixup_dir(struct btrfs_trans_handle *trans,
- 	int ret = 0;
- 	struct inode *inode;
- 
--	inode = read_one_inode(root, objectid);
--	if (!inode)
--		return -EIO;
-+	{
-+		struct btrfs_inode *btrfs_inode;
-+
-+		btrfs_inode = btrfs_iget_logging(objectid, root);
-+		if (IS_ERR(btrfs_inode))
-+			return PTR_ERR(btrfs_inode);
-+		inode = &btrfs_inode->vfs_inode;
++		if (g->intr_detection_width != 1 &&
++		    g->intr_detection_width != 2)
++			clear_bit(i, valid_mask);
 +	}
- 
- 	key.objectid = BTRFS_TREE_LOG_FIXUP_OBJECTID;
- 	key.type = BTRFS_ORPHAN_ITEM_KEY;
-@@ -1778,14 +1813,24 @@ static noinline int insert_one_name(struct btrfs_trans_handle *trans,
- 	struct inode *dir;
- 	int ret;
- 
--	inode = read_one_inode(root, location->objectid);
--	if (!inode)
--		return -ENOENT;
-+	{
-+		struct btrfs_inode *btrfs_inode;
- 
--	dir = read_one_inode(root, dirid);
--	if (!dir) {
--		iput(inode);
--		return -EIO;
-+		btrfs_inode = btrfs_iget_logging(location->objectid, root);
-+		if (IS_ERR(btrfs_inode))
-+			return PTR_ERR(btrfs_inode);
-+		inode = &btrfs_inode->vfs_inode;
-+	}
++}
 +
-+	{
-+		struct btrfs_inode *btrfs_dir;
-+
-+		btrfs_dir = btrfs_iget_logging(dirid, root);
-+		if (IS_ERR(btrfs_dir)) {
-+			iput(inode);
-+			return PTR_ERR(btrfs_dir);
-+		}
-+		dir = &btrfs_dir->vfs_inode;
- 	}
+ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -1392,6 +1411,7 @@ static int msm_gpio_init(struct msm_pinc
+ 	girq->default_type = IRQ_TYPE_NONE;
+ 	girq->handler = handle_bad_irq;
+ 	girq->parents[0] = pctrl->irq;
++	girq->init_valid_mask = msm_gpio_irq_init_valid_mask;
  
- 	ret = btrfs_add_link(trans, BTRFS_I(dir), BTRFS_I(inode), name,
-@@ -1863,9 +1908,14 @@ static noinline int replay_one_name(struct btrfs_trans_handle *trans,
- 	bool update_size = true;
- 	bool name_added = false;
- 
--	dir = read_one_inode(root, key->objectid);
--	if (!dir)
--		return -EIO;
-+	{
-+		struct btrfs_inode *btrfs_dir;
-+
-+		btrfs_dir = btrfs_iget_logging(key->objectid, root);
-+		if (IS_ERR(btrfs_dir))
-+			return PTR_ERR(btrfs_dir);
-+		dir = &btrfs_dir->vfs_inode;
-+	}
- 
- 	ret = read_alloc_one_name(eb, di + 1, btrfs_dir_name_len(eb, di), &name);
- 	if (ret)
-@@ -2167,10 +2217,16 @@ static noinline int check_item_in_log(struct btrfs_trans_handle *trans,
- 	btrfs_dir_item_key_to_cpu(eb, di, &location);
- 	btrfs_release_path(path);
- 	btrfs_release_path(log_path);
--	inode = read_one_inode(root, location.objectid);
--	if (!inode) {
--		ret = -EIO;
--		goto out;
-+	{
-+		struct btrfs_inode *btrfs_inode;
-+
-+		btrfs_inode = btrfs_iget_logging(location.objectid, root);
-+		if (IS_ERR(btrfs_inode)) {
-+			ret = PTR_ERR(btrfs_inode);
-+			inode = NULL;
-+			goto out;
-+		}
-+		inode = &btrfs_inode->vfs_inode;
- 	}
- 
- 	ret = link_to_fixup_dir(trans, root, path, location.objectid);
-@@ -2321,14 +2377,22 @@ static noinline int replay_dir_deletes(struct btrfs_trans_handle *trans,
- 	if (!log_path)
- 		return -ENOMEM;
- 
--	dir = read_one_inode(root, dirid);
--	/* it isn't an error if the inode isn't there, that can happen
--	 * because we replay the deletes before we copy in the inode item
--	 * from the log
--	 */
--	if (!dir) {
--		btrfs_free_path(log_path);
--		return 0;
-+	{
-+		struct btrfs_inode *btrfs_dir;
-+
-+		btrfs_dir = btrfs_iget_logging(dirid, root);
-+		/*
-+		 * It isn't an error if the inode isn't there, that can happen because
-+		 * we replay the deletes before we copy in the inode item from the log.
-+		 */
-+		if (IS_ERR(btrfs_dir)) {
-+			btrfs_free_path(log_path);
-+			ret = PTR_ERR(btrfs_dir);
-+			if (ret == -ENOENT)
-+				ret = 0;
-+			return ret;
-+		}
-+		dir = &btrfs_dir->vfs_inode;
- 	}
- 
- 	range_start = 0;
-@@ -2487,10 +2551,15 @@ static int replay_one_buffer(struct btrfs_root *log, struct extent_buffer *eb,
- 				struct inode *inode;
- 				u64 from;
- 
--				inode = read_one_inode(root, key.objectid);
--				if (!inode) {
--					ret = -EIO;
--					break;
-+				{
-+					struct btrfs_inode *btrfs_inode;
-+
-+					btrfs_inode = btrfs_iget_logging(key.objectid, root);
-+					if (IS_ERR(btrfs_inode)) {
-+						ret = PTR_ERR(btrfs_inode);
-+						break;
-+					}
-+					inode = &btrfs_inode->vfs_inode;
- 				}
- 				from = ALIGN(i_size_read(inode),
- 					     root->fs_info->sectorsize);
--- 
-2.39.5
-
+ 	ret = gpiochip_add_data(&pctrl->chip, pctrl);
+ 	if (ret) {
 
 
