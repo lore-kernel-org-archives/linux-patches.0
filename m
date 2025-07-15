@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FC3239E63;
-	Tue, 15 Jul 2025 13:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D932CA9;
+	Tue, 15 Jul 2025 13:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587269; cv=none; b=IYkqczycwnkW+7DdXb5aQf6O5YFMF9vTp9yQo36TFMORmmIdyY9A5LC+jjrbetcjMasXXyVz8UqIdq8t1Qmr8eqWTb8mU9wAYnN0wjk30QkY10Lw7i1wAKysBQq1Ttq5WRzySsXgIT49+/Vdow4ZHi7xFOCCLrvpWaZTnHftIj0=
+	t=1752587272; cv=none; b=oni0FSpj+I3VCv5j01yZLSnQcuMPYGSSzRadpzdBjRNiIFzYR4CA2/Qu22ALHOTqLRHDDaQvWMTj94HfCuTH5gVKjlS7wYYfgRHVyoai0a7EIhX/ztOvwE5ikVBoN8sTQM4GU0rg9HB9aBwqP2hC33MS5UkHtcUAzPSFXae8AY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587269; c=relaxed/simple;
-	bh=ct2iiPSuzLwNAZKBNJH/V2LeMvOQsd7K6K4Triybxk4=;
+	s=arc-20240116; t=1752587272; c=relaxed/simple;
+	bh=yefP47YhCOzioedxsSOdGO1HWKHdSUW71Rsqa/imJlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/c0PsoFBgccDLVhAgFJTCcsqJ3OILEfsnnwCIl5HgX0tF3c0LoZE376FlbBFWbFhB1ZwwNyCzr8+gjC8smepOniRUS7x3LNOuFMhHf3muIJYDuZhFwmzCLqqyFLZ6dgu07HKQthI2lvT0+VqBgfqKppFiu2mGK2AbdTZnu+75g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9lKXJ6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZttKPJ9vqBOisf8Vznekehd6LyxAJTAqvtVtLNjW6zfqfuqBT67MB/iF956ImTjC5cMrgKtzX1+VjyoCibWx4J0U6w2KqDGaEdln4vLoF5GbOwEBbja1Dfe44a2VL4S4SfWg+VnoDItLURyl6Jj7DbqjLieT4nbIATcHgdV3AlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPGKXygW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9lKXJ6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B4AC4CEE3;
-	Tue, 15 Jul 2025 13:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPGKXygW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD14CC4CEE3;
+	Tue, 15 Jul 2025 13:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587269;
-	bh=ct2iiPSuzLwNAZKBNJH/V2LeMvOQsd7K6K4Triybxk4=;
+	s=korg; t=1752587272;
+	bh=yefP47YhCOzioedxsSOdGO1HWKHdSUW71Rsqa/imJlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9lKXJ6Rgoo++haz2nV/mdNCJyUa+wvMeKFIXk1IS4BAyjbokfvEI7B5cYdMODDEz
-	 8YNQlfFirGL7qEN3DzcX7grXLKL3CT4wUSYrOjvtWsad+ac5T5rqZlaudvKRaCpQH7
-	 x9XXpXOkOZ0+mnbkNbP+S4bHotdCZdol724/G6L4=
+	b=UPGKXygWfXuCWDjiwimyDDbCRC45v3hgjAEnZOpYiLr6dTus7Nt565Y1YsgHSJtKl
+	 CJ/PK1w4sGlPFhoL059RvWfEZWlEm5mrmXP8sN6O+ZPw00KCMJGD3M1a4FCmLEgLr3
+	 FZ92XnJpqvUZaJzvKw47+M2Y7ANat4Neziua/SyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Baron <jbaron@akamai.com>,
+	syzbot+d333febcf8f4bc5f6110@syzkaller.appspotmail.com,
 	Kuniyuki Iwashima <kuniyu@google.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/88] netlink: Fix wraparounds of sk->sk_rmem_alloc.
-Date: Tue, 15 Jul 2025 15:13:43 +0200
-Message-ID: <20250715130754.803523174@linuxfoundation.org>
+Subject: [PATCH 6.1 08/88] tipc: Fix use-after-free in tipc_conn_close().
+Date: Tue, 15 Jul 2025 15:13:44 +0200
+Message-ID: <20250715130754.841691823@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -54,196 +55,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ae8f160e7eb24240a2a79fc4c815c6a0d4ee16cc ]
+[ Upstream commit 667eeab4999e981c96b447a4df5f20bdf5c26f13 ]
 
-Netlink has this pattern in some places
+syzbot reported a null-ptr-deref in tipc_conn_close() during netns
+dismantle. [0]
 
-  if (atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf)
-  	atomic_add(skb->truesize, &sk->sk_rmem_alloc);
+tipc_topsrv_stop() iterates tipc_net(net)->topsrv->conn_idr and calls
+tipc_conn_close() for each tipc_conn.
 
-, which has the same problem fixed by commit 5a465a0da13e ("udp:
-Fix multiple wraparounds of sk->sk_rmem_alloc.").
+The problem is that tipc_conn_close() is called after releasing the
+IDR lock.
 
-For example, if we set INT_MAX to SO_RCVBUFFORCE, the condition
-is always false as the two operands are of int.
+At the same time, there might be tipc_conn_recv_work() running and it
+could call tipc_conn_close() for the same tipc_conn and release its
+last ->kref.
 
-Then, a single socket can eat as many skb as possible until OOM
-happens, and we can see multiple wraparounds of sk->sk_rmem_alloc.
+Once we release the IDR lock in tipc_topsrv_stop(), there is no
+guarantee that the tipc_conn is alive.
 
-Let's fix it by using atomic_add_return() and comparing the two
-variables as unsigned int.
+Let's hold the ref before releasing the lock and put the ref after
+tipc_conn_close() in tipc_topsrv_stop().
 
-Before:
-  [root@fedora ~]# ss -f netlink
-  Recv-Q      Send-Q Local Address:Port                Peer Address:Port
-  -1668710080 0               rtnl:nl_wraparound/293               *
+[0]:
+BUG: KASAN: use-after-free in tipc_conn_close+0x122/0x140 net/tipc/topsrv.c:165
+Read of size 8 at addr ffff888099305a08 by task kworker/u4:3/435
 
-After:
-  [root@fedora ~]# ss -f netlink
-  Recv-Q     Send-Q Local Address:Port                Peer Address:Port
-  2147483072 0               rtnl:nl_wraparound/290               *
-  ^
-  `--- INT_MAX - 576
+CPU: 0 PID: 435 Comm: kworker/u4:3 Not tainted 4.19.204-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: netns cleanup_net
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x1fc/0x2ef lib/dump_stack.c:118
+ print_address_description.cold+0x54/0x219 mm/kasan/report.c:256
+ kasan_report_error.cold+0x8a/0x1b9 mm/kasan/report.c:354
+ kasan_report mm/kasan/report.c:412 [inline]
+ __asan_report_load8_noabort+0x88/0x90 mm/kasan/report.c:433
+ tipc_conn_close+0x122/0x140 net/tipc/topsrv.c:165
+ tipc_topsrv_stop net/tipc/topsrv.c:701 [inline]
+ tipc_topsrv_exit_net+0x27b/0x5c0 net/tipc/topsrv.c:722
+ ops_exit_list+0xa5/0x150 net/core/net_namespace.c:153
+ cleanup_net+0x3b4/0x8b0 net/core/net_namespace.c:553
+ process_one_work+0x864/0x1570 kernel/workqueue.c:2153
+ worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
+ kthread+0x33f/0x460 kernel/kthread.c:259
+ ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Jason Baron <jbaron@akamai.com>
-Closes: https://lore.kernel.org/netdev/cover.1750285100.git.jbaron@akamai.com/
+Allocated by task 23:
+ kmem_cache_alloc_trace+0x12f/0x380 mm/slab.c:3625
+ kmalloc include/linux/slab.h:515 [inline]
+ kzalloc include/linux/slab.h:709 [inline]
+ tipc_conn_alloc+0x43/0x4f0 net/tipc/topsrv.c:192
+ tipc_topsrv_accept+0x1b5/0x280 net/tipc/topsrv.c:470
+ process_one_work+0x864/0x1570 kernel/workqueue.c:2153
+ worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
+ kthread+0x33f/0x460 kernel/kthread.c:259
+ ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
+
+Freed by task 23:
+ __cache_free mm/slab.c:3503 [inline]
+ kfree+0xcc/0x210 mm/slab.c:3822
+ tipc_conn_kref_release net/tipc/topsrv.c:150 [inline]
+ kref_put include/linux/kref.h:70 [inline]
+ conn_put+0x2cd/0x3a0 net/tipc/topsrv.c:155
+ process_one_work+0x864/0x1570 kernel/workqueue.c:2153
+ worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
+ kthread+0x33f/0x460 kernel/kthread.c:259
+ ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
+
+The buggy address belongs to the object at ffff888099305a00
+ which belongs to the cache kmalloc-512 of size 512
+The buggy address is located 8 bytes inside of
+ 512-byte region [ffff888099305a00, ffff888099305c00)
+The buggy address belongs to the page:
+page:ffffea000264c140 count:1 mapcount:0 mapping:ffff88813bff0940 index:0x0
+flags: 0xfff00000000100(slab)
+raw: 00fff00000000100 ffffea00028b6b88 ffffea0002cd2b08 ffff88813bff0940
+raw: 0000000000000000 ffff888099305000 0000000100000006 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888099305900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888099305980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff888099305a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                      ^
+ ffff888099305a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888099305b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Fixes: c5fa7b3cf3cb ("tipc: introduce new TIPC server infrastructure")
+Reported-by: syzbot+d333febcf8f4bc5f6110@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=27169a847a70550d17be
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250704054824.1580222-1-kuniyu@google.com
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250702014350.692213-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 81 ++++++++++++++++++++++++----------------
- 1 file changed, 49 insertions(+), 32 deletions(-)
+ net/tipc/topsrv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 8a74847dacaf1..bf6df0b4b69c7 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -387,7 +387,6 @@ static void netlink_skb_set_owner_r(struct sk_buff *skb, struct sock *sk)
- 	WARN_ON(skb->sk != NULL);
- 	skb->sk = sk;
- 	skb->destructor = netlink_skb_destructor;
--	atomic_add(skb->truesize, &sk->sk_rmem_alloc);
- 	sk_mem_charge(sk, skb->truesize);
- }
- 
-@@ -1211,41 +1210,48 @@ static struct sk_buff *netlink_alloc_large_skb(unsigned int size,
- int netlink_attachskb(struct sock *sk, struct sk_buff *skb,
- 		      long *timeo, struct sock *ssk)
- {
-+	DECLARE_WAITQUEUE(wait, current);
- 	struct netlink_sock *nlk;
-+	unsigned int rmem;
- 
- 	nlk = nlk_sk(sk);
-+	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
- 
--	if ((atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf ||
--	     test_bit(NETLINK_S_CONGESTED, &nlk->state))) {
--		DECLARE_WAITQUEUE(wait, current);
--		if (!*timeo) {
--			if (!ssk || netlink_is_kernel(ssk))
--				netlink_overrun(sk);
--			sock_put(sk);
--			kfree_skb(skb);
--			return -EAGAIN;
--		}
--
--		__set_current_state(TASK_INTERRUPTIBLE);
--		add_wait_queue(&nlk->wait, &wait);
-+	if ((rmem == skb->truesize || rmem < READ_ONCE(sk->sk_rcvbuf)) &&
-+	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
-+		netlink_skb_set_owner_r(skb, sk);
-+		return 0;
-+	}
- 
--		if ((atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf ||
--		     test_bit(NETLINK_S_CONGESTED, &nlk->state)) &&
--		    !sock_flag(sk, SOCK_DEAD))
--			*timeo = schedule_timeout(*timeo);
-+	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
- 
--		__set_current_state(TASK_RUNNING);
--		remove_wait_queue(&nlk->wait, &wait);
-+	if (!*timeo) {
-+		if (!ssk || netlink_is_kernel(ssk))
-+			netlink_overrun(sk);
- 		sock_put(sk);
-+		kfree_skb(skb);
-+		return -EAGAIN;
-+	}
- 
--		if (signal_pending(current)) {
--			kfree_skb(skb);
--			return sock_intr_errno(*timeo);
--		}
--		return 1;
-+	__set_current_state(TASK_INTERRUPTIBLE);
-+	add_wait_queue(&nlk->wait, &wait);
-+	rmem = atomic_read(&sk->sk_rmem_alloc);
-+
-+	if (((rmem && rmem + skb->truesize > READ_ONCE(sk->sk_rcvbuf)) ||
-+	     test_bit(NETLINK_S_CONGESTED, &nlk->state)) &&
-+	    !sock_flag(sk, SOCK_DEAD))
-+		*timeo = schedule_timeout(*timeo);
-+
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&nlk->wait, &wait);
-+	sock_put(sk);
-+
-+	if (signal_pending(current)) {
-+		kfree_skb(skb);
-+		return sock_intr_errno(*timeo);
+diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
+index 69c88cc03887d..0445c91db009e 100644
+--- a/net/tipc/topsrv.c
++++ b/net/tipc/topsrv.c
+@@ -699,8 +699,10 @@ static void tipc_topsrv_stop(struct net *net)
+ 	for (id = 0; srv->idr_in_use; id++) {
+ 		con = idr_find(&srv->conn_idr, id);
+ 		if (con) {
++			conn_get(con);
+ 			spin_unlock_bh(&srv->idr_lock);
+ 			tipc_conn_close(con);
++			conn_put(con);
+ 			spin_lock_bh(&srv->idr_lock);
+ 		}
  	}
--	netlink_skb_set_owner_r(skb, sk);
--	return 0;
-+
-+	return 1;
- }
- 
- static int __netlink_sendskb(struct sock *sk, struct sk_buff *skb)
-@@ -1305,6 +1311,7 @@ static int netlink_unicast_kernel(struct sock *sk, struct sk_buff *skb,
- 	ret = -ECONNREFUSED;
- 	if (nlk->netlink_rcv != NULL) {
- 		ret = skb->len;
-+		atomic_add(skb->truesize, &sk->sk_rmem_alloc);
- 		netlink_skb_set_owner_r(skb, sk);
- 		NETLINK_CB(skb).sk = ssk;
- 		netlink_deliver_tap_kernel(sk, ssk, skb);
-@@ -1381,13 +1388,19 @@ EXPORT_SYMBOL_GPL(netlink_strict_get_check);
- static int netlink_broadcast_deliver(struct sock *sk, struct sk_buff *skb)
- {
- 	struct netlink_sock *nlk = nlk_sk(sk);
-+	unsigned int rmem, rcvbuf;
- 
--	if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf &&
-+	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
-+	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
-+
-+	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
- 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
- 		netlink_skb_set_owner_r(skb, sk);
- 		__netlink_sendskb(sk, skb);
--		return atomic_read(&sk->sk_rmem_alloc) > (sk->sk_rcvbuf >> 1);
-+		return rmem > (rcvbuf >> 1);
- 	}
-+
-+	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
- 	return -1;
- }
- 
-@@ -2159,6 +2172,7 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	struct module *module;
- 	int err = -ENOBUFS;
- 	int alloc_min_size;
-+	unsigned int rmem;
- 	int alloc_size;
- 
- 	if (!lock_taken)
-@@ -2168,9 +2182,6 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 		goto errout_skb;
- 	}
- 
--	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf)
--		goto errout_skb;
--
- 	/* NLMSG_GOODSIZE is small to avoid high order allocations being
- 	 * required, but it makes sense to _attempt_ a 16K bytes allocation
- 	 * to reduce number of system calls on dump operations, if user
-@@ -2193,6 +2204,12 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	if (!skb)
- 		goto errout_skb;
- 
-+	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
-+	if (rmem >= READ_ONCE(sk->sk_rcvbuf)) {
-+		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
-+		goto errout_skb;
-+	}
-+
- 	/* Trim skb to allocated size. User is expected to provide buffer as
- 	 * large as max(min_dump_alloc, 16KiB (mac_recvmsg_len capped at
- 	 * netlink_recvmsg())). dump will pack as many smaller messages as
 -- 
 2.39.5
 
