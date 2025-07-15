@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6042984A35;
-	Tue, 15 Jul 2025 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16FF2E6122;
+	Tue, 15 Jul 2025 13:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587392; cv=none; b=UpO0CVIVGaDkiugiBFflBxdbbB0bJoH3dJjbsXfcK9vsKezP1qqb4vaObmtF7a5X402um+YA2q/aEVCe1cJHVS5gx+t/1kbsAzeXx0EguhWXL9UqyKqJ/toXIQrK/DfTWAL+g0uqHJ5ujXn6IBwqOyIRd+ElYLNTdX7jtngexmc=
+	t=1752587395; cv=none; b=C1Irgy9nlU/Qeex65DwP/wDjUr6zKN0+eTjPcAsMg6gZNwNkCgCSxh2HK0g04EeUQgHQnfQZmyUK+AbJ0g6i3l8k2BUfc/cPsNcRZ5b50wM18JiRn4dR36be978FlXxUAuahVtL6qiLZrJT0voEAzy5T1yZJ+aEmdLxqSh8xjN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587392; c=relaxed/simple;
-	bh=qzx6s2UFaPGCYqI7L1Mi9EdpudBuAA0FnQNC7Ggq8tI=;
+	s=arc-20240116; t=1752587395; c=relaxed/simple;
+	bh=aoJVrWR+pUBDYPmK5JyW9EzXEJe+S1aBu3mKQaeX6fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6kdKeAxCqEJiX8bL57BS51WgLwFeK10yKDO9wtEU2+vHbsuOnoA3i2XzPxMka7VYQcyCEskWzQvrLULUlDaaeH1lJYHh3I2cBzdQXaey+AyreNAM6N+Qf6IAyHmB0y0lEL8d67gxXHsMBQVUCO69cggWWWYDxKSNqGXmFWR/ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSi4KRGO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCa2xVluy7Z/1tomWZD/fDdCxFBJr4QrpT+QFHl7r255w3tP20aaWnIaMchYNly+T9aziGm77yxNOrM1XhEZVdnaT4OESbMUjDlTbUi5eHTTnczcsdIX2SH1TZ2m1k6/aZ78NFz6zbgrbO/vZpRMm3waF/JF1l3qIOvHyHR86Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hi9fU3se; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSi4KRGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9BDC4CEF1;
-	Tue, 15 Jul 2025 13:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hi9fU3se"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85720C4CEE3;
+	Tue, 15 Jul 2025 13:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587392;
-	bh=qzx6s2UFaPGCYqI7L1Mi9EdpudBuAA0FnQNC7Ggq8tI=;
+	s=korg; t=1752587394;
+	bh=aoJVrWR+pUBDYPmK5JyW9EzXEJe+S1aBu3mKQaeX6fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSi4KRGOBfXsycVGNMloPysPAC400WdTFBiD5hLMPyOMzLrX2vmQwEoSuv3DJ51Cn
-	 lA9MpXszrUJESpC8ekNdLA43L4OjiVqOHAlAXVrq+B+2j/KnNHu3VHthq/950BvbYV
-	 09gly4QdS5kl8AFaN4ZwR7wNu7DJReFFfivNoXTY=
+	b=Hi9fU3seljfKRRzaCK5NRRy9Pe4tYQsPDghmOJI3Gi48jgPbC5wtEOjaFHKJiHNIg
+	 GWcP8JVXyYvTqjaLoUg3RLGe+V6zsukH3GMDhZKVRLLH8KscYlNu1BBX8Kn9qSLSVW
+	 0I4SVDF9f6r6L8pxO41oCdLyj5Q5S69I720d4JG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xinyu Zheng <zhengxinyu6@huawei.com>
-Subject: [PATCH 6.1 84/88] vhost-scsi: protect vq->log_used with vq->mutex
-Date: Tue, 15 Jul 2025 15:15:00 +0200
-Message-ID: <20250715130757.942070943@linuxfoundation.org>
+	Vitaly Chikunov <vt@altlinux.org>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Jann Horn <jannh@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>
+Subject: [PATCH 6.1 85/88] x86/mm: Disable hugetlb page table sharing on 32-bit
+Date: Tue, 15 Jul 2025 15:15:01 +0200
+Message-ID: <20250715130757.980989097@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -53,73 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Jann Horn <jannh@google.com>
 
-commit f591cf9fce724e5075cc67488c43c6e39e8cbe27 upstream.
+commit 76303ee8d54bff6d9a6d55997acd88a6c2ba63cf upstream.
 
-The vhost-scsi completion path may access vq->log_base when vq->log_used is
-already set to false.
+Only select ARCH_WANT_HUGE_PMD_SHARE on 64-bit x86.
+Page table sharing requires at least three levels because it involves
+shared references to PMD tables; 32-bit x86 has either two-level paging
+(without PAE) or three-level paging (with PAE), but even with
+three-level paging, having a dedicated PGD entry for hugetlb is only
+barely possible (because the PGD only has four entries), and it seems
+unlikely anyone's actually using PMD sharing on 32-bit.
 
-    vhost-thread                       QEMU-thread
+Having ARCH_WANT_HUGE_PMD_SHARE enabled on non-PAE 32-bit X86 (which
+has 2-level paging) became particularly problematic after commit
+59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count"),
+since that changes `struct ptdesc` such that the `pt_mm` (for PGDs) and
+the `pt_share_count` (for PMDs) share the same union storage - and with
+2-level paging, PMDs are PGDs.
 
-vhost_scsi_complete_cmd_work()
--> vhost_add_used()
-   -> vhost_add_used_n()
-      if (unlikely(vq->log_used))
-                                      QEMU disables vq->log_used
-                                      via VHOST_SET_VRING_ADDR.
-                                      mutex_lock(&vq->mutex);
-                                      vq->log_used = false now!
-                                      mutex_unlock(&vq->mutex);
+(For comparison, arm64 also gates ARCH_WANT_HUGE_PMD_SHARE on the
+configuration of page tables such that it is never enabled with 2-level
+paging.)
 
-				      QEMU gfree(vq->log_base)
-        log_used()
-        -> log_write(vq->log_base)
-
-Assuming the VMM is QEMU. The vq->log_base is from QEMU userpace and can be
-reclaimed via gfree(). As a result, this causes invalid memory writes to
-QEMU userspace.
-
-The control queue path has the same issue.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Message-Id: <20250403063028.16045-2-dongli.zhang@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-[ resoloved conflicts in drivers/vhost/scsi.c
-  bacause vhost_scsi_complete_cmd_work() has been refactored. ]
-Signed-off-by: Xinyu Zheng <zhengxinyu6@huawei.com>
+Closes: https://lore.kernel.org/r/srhpjxlqfna67blvma5frmy3aa@altlinux.org
+Fixes: cfe28c5d63d8 ("x86: mm: Remove x86 version of huge_pmd_share.")
+Reported-by: Vitaly Chikunov <vt@altlinux.org>
+Suggested-by: Dave Hansen <dave.hansen@intel.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand <david@redhat.com>
+Tested-by: Vitaly Chikunov <vt@altlinux.org>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250702-x86-2level-hugetlb-v2-1-1a98096edf92%40google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/scsi.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -568,8 +568,10 @@ static void vhost_scsi_complete_cmd_work
- 		ret = copy_to_iter(&v_rsp, sizeof(v_rsp), &iov_iter);
- 		if (likely(ret == sizeof(v_rsp))) {
- 			struct vhost_scsi_virtqueue *q;
--			vhost_add_used(cmd->tvc_vq, cmd->tvc_vq_desc, 0);
- 			q = container_of(cmd->tvc_vq, struct vhost_scsi_virtqueue, vq);
-+			mutex_lock(&q->vq.mutex);
-+			vhost_add_used(cmd->tvc_vq, cmd->tvc_vq_desc, 0);
-+			mutex_unlock(&q->vq.mutex);
- 			vq = q - vs->vqs;
- 			__set_bit(vq, vs->compl_bitmap);
- 		} else
-@@ -1173,8 +1175,11 @@ static void vhost_scsi_tmf_resp_work(str
- 	else
- 		resp_code = VIRTIO_SCSI_S_FUNCTION_REJECTED;
- 
-+	mutex_lock(&tmf->svq->vq.mutex);
- 	vhost_scsi_send_tmf_resp(tmf->vhost, &tmf->svq->vq, tmf->in_iovs,
- 				 tmf->vq_desc, &tmf->resp_iov, resp_code);
-+	mutex_unlock(&tmf->svq->vq.mutex);
-+
- 	vhost_scsi_release_tmf_res(tmf);
- }
- 
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -124,7 +124,7 @@ config X86
+ 	select ARCH_WANTS_DYNAMIC_TASK_STRUCT
+ 	select ARCH_WANTS_NO_INSTR
+ 	select ARCH_WANT_GENERAL_HUGETLB
+-	select ARCH_WANT_HUGE_PMD_SHARE
++	select ARCH_WANT_HUGE_PMD_SHARE		if X86_64
+ 	select ARCH_WANT_HUGETLB_PAGE_OPTIMIZE_VMEMMAP	if X86_64
+ 	select ARCH_WANT_LD_ORPHAN_WARN
+ 	select ARCH_WANTS_THP_SWAP		if X86_64
 
 
