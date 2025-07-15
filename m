@@ -1,144 +1,129 @@
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7EC6FBF
-	for <patches@lists.linux.dev>; Tue, 15 Jul 2025 03:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0135255F24;
+	Tue, 15 Jul 2025 05:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752550050; cv=none; b=HVr/8JfwvUq+5cmmewNbLRb/6u8eHA099Evt0wR6ePnV5zHNC40bbouVYfNO5v3rrMPzDa6vh89O0zGiZMpfNzkKPEUGN2djLUgoeJx3QlG2IRtlfsbs3dP2U7YUe1dQt7R5DU7Sanbg50kNBqLKUU4wzHhi8PH1la2tT0/jIeI=
+	t=1752559032; cv=none; b=H/oRjwtXmXAJvia2cdLs9Ogn9n7mnBOXx/hLTkV5e5KArztjHqE9nqBF40C1pfw9xS6tS7BalVsXh2uWoG9bJCul/VkPC3tWL/dAaExUMSZPe9EfBSAl/0A3JtakHhPndiB+PWiteG9TSGVIvLCKADOin+Gd8jj0ghB6fmRbm0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752550050; c=relaxed/simple;
-	bh=jOUqALX7QVyNYt5Xu05hH9z7mutVD909x5PM0TEzNss=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=sQViqwqP48wefethEYeNbhs+hbxsIk0WStETngZR6XSSBjeTkI5Y1RNWiTsFz8xNGsfxJbAG3ir7BdS0EpVfMcl6Pt28MlNeZePoV37McQ03jXpVCSY3tIpVNxbKpFsbg0ltBIFyVPbFMo2bstjxBapkwRB59w2Jd6fGn2hgDmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.17])
-	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4bh4LT6xjJz29drm;
-	Tue, 15 Jul 2025 11:24:49 +0800 (CST)
-Received: from dggemv705-chm.china.huawei.com (unknown [10.3.19.32])
-	by mail.maildlp.com (Postfix) with ESMTPS id BB54C1A0191;
-	Tue, 15 Jul 2025 11:27:26 +0800 (CST)
-Received: from kwepemn100006.china.huawei.com (7.202.194.109) by
- dggemv705-chm.china.huawei.com (10.3.19.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 15 Jul 2025 11:27:21 +0800
-Received: from [10.174.176.245] (10.174.176.245) by
- kwepemn100006.china.huawei.com (7.202.194.109) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 15 Jul 2025 11:27:19 +0800
-Message-ID: <b767d89b-ab77-4681-9eb3-a0590e7c97fe@huawei.com>
-Date: Tue, 15 Jul 2025 11:27:18 +0800
+	s=arc-20240116; t=1752559032; c=relaxed/simple;
+	bh=wmvN79kkI2uY89k/rrcdVS6059/8dQL8TezMZWnf+rM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UuwIH4MM45hCUNMHgWeG49I8VJJPNO+tDblhdMsyAS6SLXsvums274nez4bdkmBpRHmgcQVvy+dcvx/U8TpauUDIrGNZH5I666NUa6m4PMYmWs+EuE6gjCwhU9KOTjL1dqgjLfgt2v/lRyFze5eGQvRWAwEOexHm9oLHVTKbEs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJ0kddfR; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJ0kddfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8964C4CEE3;
+	Tue, 15 Jul 2025 05:57:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752559031;
+	bh=wmvN79kkI2uY89k/rrcdVS6059/8dQL8TezMZWnf+rM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jJ0kddfRq/wi2cczPvscCBtaQBOvPPubaZPv3FhypEw+5UKK0WhctGzJqakUE47mj
+	 0hgvMUtevpezIfVJrccsqdtSYPd2sjN0nRb9tN0vghFJ+c05Vt5+gWGqNDdNJk7p6H
+	 Sh8oWOAYHvlvgAcM5ZwOV2KbvC/4LCYKyIt/WgUJb5b0ER0EaKLDgyQwMcQxcdZpWG
+	 yRZoRdLWkXFBN0aAu91ZYkfbMxd4cRB9BrlHetz/bw9JgY4rGuKT9x+znMMEXCi7ry
+	 xSs/2RLQ/Ed9IUoMZM+nwW7VQ7Wh00EVvhINdsIUSq31XrazAB7+UGLadWmjzYO5wH
+	 BcbPsbS4HX8Vw==
+Date: Tue, 15 Jul 2025 08:57:07 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, linux-rdma@vger.kernel.org,
+	linux-s390@vger.kernel.org, llvm@lists.linux.dev,
+	Ingo Molnar <mingo@redhat.com>, Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jijie Shao <shaojijie@huawei.com>, Will Deacon <will@kernel.org>
+Subject: Re: [PATCH v3 6/6] IB/mlx5: Use __iowrite64_copy() for write
+ combining stores
+Message-ID: <20250715055707.GC5882@unreal>
+References: <0-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
+ <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
+ <20250714215504.GA2083014@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 087150] Input atkbd - skip ATKBD_CMD_GETID in
- translated mode
-To: Hans de Goede <hdegoede@redhat.com>
-CC: <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>,
-	<patches@lists.linux.dev>, <yesh25@mail2.sysu.edu.cn>, <mail@gurevit.ch>,
-	<egori@altlinux.org>, <anton@cpp.in>, <dmitry.torokhov@gmail.com>,
-	<sashal@kernel.org>
-References: <456b5d9c-f72a-4bfe-a72a-b5cc0f15eb70@huawei.com>
- <afeadd0a-d341-46ee-9634-01c5122b416a@redhat.com>
-Content-Language: en-US
-From: Wang Hai <wanghai38@huawei.com>
-In-Reply-To: <afeadd0a-d341-46ee-9634-01c5122b416a@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- kwepemn100006.china.huawei.com (7.202.194.109)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250714215504.GA2083014@nvidia.com>
 
-
-
-On 2025/7/14 22:40, Hans de Goede wrote:
-> Hi,
+On Mon, Jul 14, 2025 at 06:55:04PM -0300, Jason Gunthorpe wrote:
+> On Thu, Apr 11, 2024 at 01:46:19PM -0300, Jason Gunthorpe wrote:
+> > mlx5 has a built in self-test at driver startup to evaluate if the
+> > platform supports write combining to generate a 64 byte PCIe TLP or
+> > not. This has proven necessary because a lot of common scenarios end up
+> > with broken write combining (especially inside virtual machines) and there
+> > is other way to learn this information.
+> > 
+> > This self test has been consistently failing on new ARM64 CPU
+> > designs (specifically with NVIDIA Grace's implementation of Neoverse
+> > V2). The C loop around writeq() generates some pretty terrible ARM64
+> > assembly, but historically this has worked on a lot of existing ARM64 CPUs
+> > till now.
+> > 
+> > We see it succeed about 1 time in 10,000 on the worst effected
+> > systems. The CPU architects speculate that the load instructions
+> > interspersed with the stores makes the WC buffers statistically flush too
+> > often and thus the generation of large TLPs becomes infrequent. This makes
+> > the boot up test unreliable in that it indicates no write-combining,
+> > however userspace would be fine since it uses a ST4 instruction.
 > 
-> On 14-Jul-25 15:49, Wang Hai wrote:
->>
->>
->> On 1970/1/1 8:00,  wrote:
->>> 6.6-stable review patch.  If anyone has any objections, please let me know.
->>>
->>> ------------------
->>>
->>>   From Hans de Goede hdegoede@redhat.com
->>>
->>> [ Upstream commit 936e4d49ecbc8c404790504386e1422b599dec39 ]
->>>
->>> There have been multiple reports of keyboard issues on recent laptop models
->>> which can be worked around by setting i8042.dumbkbd, with the downside
->>> being this breaks the capslock LED.
->>>
->>> It seems that these issues are caused by recent laptops getting confused by
->>> ATKBD_CMD_GETID. Rather then adding and endless growing list of quirks for
->>> this, just skip ATKBD_CMD_GETID alltogether on laptops in translated mode.
->>>
->>> The main goal of sending ATKBD_CMD_GETID is to skip binding to ps2
->>> micetouchpads and those are never used in translated mode.
->>>
->>> Examples of laptop models which benefit from skipping ATKBD_CMD_GETID
->>>
->>>    HP Laptop 15s-fq2xxx, HP laptop 15s-fq4xxx and HP Laptop 15-dy2xxx
->>>     models the kbd stops working for the first 2 - 5 minutes after boot
->>>     (waiting for EC watchdog reset)
->>>
->>>    On HP Spectre x360 13-aw2xxx atkbd fails to probe the keyboard
->>>
->>>    At least 9 different Lenovo models have issues with ATKBD_CMD_GETID, see
->>>     httpsgithub.comyescallopatkbd-nogetid
->>>
->>> This has been tested on
->>>
->>> 1. A MSI B550M PRO-VDH WIFI desktop, where the i8042 controller is not
->>>      in translated mode when no keyboard is plugged in and with a ps2 kbd
->>>      a AT Translated Set 2 keyboard devinputevent# node shows up
->>>
->>> 2. A Lenovo ThinkPad X1 Yoga gen 8 (always has a translated set 2 keyboard)
->>>
->>> Reported-by Shang Ye yesh25@mail2.sysu.edu.cn
->>> Closes httpslore.kernel.orglinux-input886D6167733841AE+20231017135318.11142-1-yesh25@mail2.sysu.edu.cn
->>> Closes httpsgithub.comyescallopatkbd-nogetid
->>> Reported-by gurevitch mail@gurevit.ch
->>> Closes httpslore.kernel.orglinux-input2iAJTwqZV6lQs26cTb38RNYqxvsink6SRmrZ5h0cBUSuf9NT0tZTsf9fEAbbto2maavHJEOP8GA1evlKa6xjKOsaskDhtJWxjcnrgPigzVo=@gurevit.ch
->>> Reported-by Egor Ignatov egori@altlinux.org
->>> Closes httpslore.kernel.orgall20210609073333.8425-1-egori@altlinux.org
->>> Reported-by Anton Zhilyaev anton@cpp.in
->>> Closes httpslore.kernel.orglinux-input20210201160336.16008-1-anton@cpp.in
->>> Closes httpsbugzilla.redhat.comshow_bug.cgiid=2086156
->>> Signed-off-by Hans de Goede hdegoede@redhat.com
->>> Link httpslore.kernel.orgr20231115174625.7462-1-hdegoede@redhat.com
->>> Signed-off-by Dmitry Torokhov dmitry.torokhov@gmail.com
->>> Signed-off-by Sasha Levin sashal@kernel.org
->>> ---
->>
->> Hi, Hans
->>
->> I noticed there's a subsequent bugfix [1] for this patch, but it hasn't been merged into the stable-6.6 branch. Based on the bugfix description, the issue should exist there as well. Would you like this patch to be merged into the stable-6.6 branch?"
->>
->> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9cf6e24c9fbf17e52de9fff07f12be7565ea6d61
+> Hi Catalin,
 > 
-> Yes, if you can submit that patch for inclusion into the 6.6 stable branch
-> that would be good.
+> After a year of testing this in real systems it turns out that still
+> some systems are not good enough with the unrolled 8 byte store loop.
+> In my view the CPUs are quite bad here and this WC performance
+> optimization is not working very well.
 > 
-> Regards,
+> There are only two more options to work around this issue, use the
+> unrolled 16 byte STP or the single Neon instruction 64 byte store.
 > 
-> Hans
+> Since STP was rejected alread we've only tested the Neon version. It
+> does make a huge improvement, but it still somehow fails to combine
+> rarely sometimes. The CPU is really bad at this :(
 > 
+> So we want to make mlx5 use the single 64 byte neon store instruction
+> like userspace has been using for a long time for this testing
+> algorithm.
 > 
-Hi, Hans
+> It is simple enough, but the question has come up where to put the
+> code.  Do you want to somehow see the neon option to be in the
+> arch/arm64 code or should we stick it in the driver under a #ifdef?
+> 
+> The entry/exit from neon is slow enough I don't think any driver doing
+> performance work would want to use neon instead of __iowrite64_copy(),
+> so I do not think it should be hidden inside __iowrite64_copy(). Nor
+> have I thought of a name for an arch generic function..
 
-I noticed that the 5.4, 5.10, 5.15, 6.1, and 6.6 stable branches all
-require this. I’ve just submitted the fix patch—could you review it
-when you have time?
+__iowrite64_slow_copy() ????
 
-https://lore.kernel.org/stable/20250715031442.16528-1-wanghai38@huawei.com/T/#u
-
-Regards,
-
-Wang Hai
+> 
+> Thanks,
+> Jason
