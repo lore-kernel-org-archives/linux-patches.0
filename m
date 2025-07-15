@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F46263F52;
-	Tue, 15 Jul 2025 13:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F04F2E2EEF;
+	Tue, 15 Jul 2025 13:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586123; cv=none; b=TLQCJMy1InzuJt0HFuNjnlOFbq4C2ePJtpv7+guzJAVC4FS4zuUBeks9TwzYdhrA7fGsnPa/f6DFw9V+Jwii7OunvlbUr7rd6GUzUPclC8Gh13BOAn/UduRgzASFpvP10Jl9snY8C+i7yIOEueBlNKBbnr9rKgPRGviYjiOY1cE=
+	t=1752586126; cv=none; b=jpV1zOy8PdWQu0bb2z0jkF0AUoZEqf2wlyf4o9olTbVFYb0Xbl39ItFJ3rOZjagZM/Qx18yc9PUL506/+wdswVeNhQu0kaSqzkLhcyzCOrFDoeKZvNlw7v7zGhgE4Djue1S0DXqvmqJoZbIm42T24M4FLNuQLkm4s4WUDUUFz84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586123; c=relaxed/simple;
-	bh=Mzi1aspxwvSJXJ8Pt1E7wpxFmtCM4C9lofwZvvc5kFg=;
+	s=arc-20240116; t=1752586126; c=relaxed/simple;
+	bh=3kgYPQZwVbWbnHUhjpFfzBskQD5CRIE/AqMaZwzpdQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHjE4KhjfrxR9Drrbeapsp1gvna94ePGJVgyqILtUSY5uWfNOcrYRIUZLlwwZ7LFY9meEZH5J2PFPaDsXXexJUO9WprucGny+7uinUHNqd0177xcNpIbOACzV2dxdN/1UObbDxW5028amcqiPB+98ljWxObP1RwLgrW+4S2evnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ll0MWr4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tRs4cmqhanMo1Jlx3eVw0x43/BSeAHDIwFFCmTXXdGv8bmQ6blz3FLj1WjMRoODW7u+yzBFUgPWyLtCcOxhXq/mNgMQeIZ7da/1AKtXRdl1w9AaGGiaYYtAbYt6nj/uI+ik+gi57UcnZ7xyRWGKnRxN73OnnGQiViHsS7KD80sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPJoQydv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ll0MWr4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB21C4CEE3;
-	Tue, 15 Jul 2025 13:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPJoQydv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D6BC4CEE3;
+	Tue, 15 Jul 2025 13:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586123;
-	bh=Mzi1aspxwvSJXJ8Pt1E7wpxFmtCM4C9lofwZvvc5kFg=;
+	s=korg; t=1752586126;
+	bh=3kgYPQZwVbWbnHUhjpFfzBskQD5CRIE/AqMaZwzpdQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ll0MWr4IsrmHGuwWAJ+pgY6oopMh36JRr+89cC+e3DitNod9SknZ8RFdFa82cHvtW
-	 oq12TUYAl2aJR4sC3V5FaG6ADuWMC5X9Wi+oWq9ibnOGQWrSW4qBYgASfgBX4MFd+f
-	 RBGktqUnXjps/hDO5yamz/AO+f+H9td5NAFs12R8=
+	b=HPJoQydvaMhJ1C3MrAWC6LnhG+a0Gsei6twMtftE7rv19B3D2tjjsvD92R8UzQyEC
+	 lcQT9XRKOARQBpJa+RejO7IhzvXLrBxAKCPPLBs8BqNOOob/dDmSGHupGw+THYwaXB
+	 KgkzXzuleG1Sa+gibiW+43k3Te+HviUxhdKl22hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bba84aef3a26fb93deb9@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Aditya Dutt <duttaditya18@gmail.com>
-Subject: [PATCH 5.15 24/77] jfs: fix null ptr deref in dtInsertEntry
-Date: Tue, 15 Jul 2025 15:13:23 +0200
-Message-ID: <20250715130752.673321389@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Teddy Astie <teddy.astie@vates.tech>
+Subject: [PATCH 5.15 25/77] xen: replace xen_remap() with memremap()
+Date: Tue, 15 Jul 2025 15:13:24 +0200
+Message-ID: <20250715130752.716454036@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -52,47 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Juergen Gross <jgross@suse.com>
 
-commit ce6dede912f064a855acf6f04a04cbb2c25b8c8c upstream.
+commit 41925b105e345ebc84cedb64f59d20cb14a62613 upstream.
 
-[syzbot reported]
-general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-CPU: 0 PID: 5061 Comm: syz-executor404 Not tainted 6.8.0-syzkaller-08951-gfe46a7dd189e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-RIP: 0010:dtInsertEntry+0xd0c/0x1780 fs/jfs/jfs_dtree.c:3713
-...
-[Analyze]
-In dtInsertEntry(), when the pointer h has the same value as p, after writing
-name in UniStrncpy_to_le(), p->header.flag will be cleared. This will cause the
-previously true judgment "p->header.flag & BT-LEAF" to change to no after writing
-the name operation, this leads to entering an incorrect branch and accessing the
-uninitialized object ih when judging this condition for the second time.
+xen_remap() is used to establish mappings for frames not under direct
+control of the kernel: for Xenstore and console ring pages, and for
+grant pages of non-PV guests.
 
-[Fix]
-After got the page, check freelist first, if freelist == 0 then exit dtInsert()
-and return -EINVAL.
+Today xen_remap() is defined to use ioremap() on x86 (doing uncached
+mappings), and ioremap_cache() on Arm (doing cached mappings).
 
-Reported-by: syzbot+bba84aef3a26fb93deb9@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
+Uncached mappings for those use cases are bad for performance, so they
+should be avoided if possible. As all use cases of xen_remap() don't
+require uncached mappings (the mapped area is always physical RAM),
+a mapping using the standard WB cache mode is fine.
+
+As sparse is flagging some of the xen_remap() use cases to be not
+appropriate for iomem(), as the result is not annotated with the
+__iomem modifier, eliminate xen_remap() completely and replace all
+use cases with memremap() specifying the MEMREMAP_WB caching mode.
+
+xen_unmap() can be replaced with memunmap().
+
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Acked-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/r/20220530082634.6339-1-jgross@suse.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Teddy Astie <teddy.astie@vates.tech> [backport to 5.15.y]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dtree.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/include/asm/xen/page.h   |    3 ---
+ drivers/tty/hvc/hvc_xen.c         |    2 +-
+ drivers/xen/grant-table.c         |    6 +++---
+ drivers/xen/xenbus/xenbus_probe.c |    3 +--
+ include/xen/arm/page.h            |    3 ---
+ 5 files changed, 5 insertions(+), 12 deletions(-)
 
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -835,6 +835,8 @@ int dtInsert(tid_t tid, struct inode *ip
- 	 * the full page.
- 	 */
- 	DT_GETSEARCH(ip, btstack->top, bn, mp, p, index);
-+	if (p->header.freelist == 0)
-+		return -EINVAL;
+--- a/arch/x86/include/asm/xen/page.h
++++ b/arch/x86/include/asm/xen/page.h
+@@ -355,9 +355,6 @@ unsigned long arbitrary_virt_to_mfn(void
+ void make_lowmem_page_readonly(void *vaddr);
+ void make_lowmem_page_readwrite(void *vaddr);
  
- 	/*
- 	 *	insert entry for new key
+-#define xen_remap(cookie, size) ioremap((cookie), (size))
+-#define xen_unmap(cookie) iounmap((cookie))
+-
+ static inline bool xen_arch_need_swiotlb(struct device *dev,
+ 					 phys_addr_t phys,
+ 					 dma_addr_t dev_addr)
+--- a/drivers/tty/hvc/hvc_xen.c
++++ b/drivers/tty/hvc/hvc_xen.c
+@@ -270,7 +270,7 @@ static int xen_hvm_console_init(void)
+ 	if (r < 0 || v == 0)
+ 		goto err;
+ 	gfn = v;
+-	info->intf = xen_remap(gfn << XEN_PAGE_SHIFT, XEN_PAGE_SIZE);
++	info->intf = memremap(gfn << XEN_PAGE_SHIFT, XEN_PAGE_SIZE, MEMREMAP_WB);
+ 	if (info->intf == NULL)
+ 		goto err;
+ 	info->vtermno = HVC_COOKIE;
+--- a/drivers/xen/grant-table.c
++++ b/drivers/xen/grant-table.c
+@@ -743,7 +743,7 @@ int gnttab_setup_auto_xlat_frames(phys_a
+ 	if (xen_auto_xlat_grant_frames.count)
+ 		return -EINVAL;
+ 
+-	vaddr = xen_remap(addr, XEN_PAGE_SIZE * max_nr_gframes);
++	vaddr = memremap(addr, XEN_PAGE_SIZE * max_nr_gframes, MEMREMAP_WB);
+ 	if (vaddr == NULL) {
+ 		pr_warn("Failed to ioremap gnttab share frames (addr=%pa)!\n",
+ 			&addr);
+@@ -751,7 +751,7 @@ int gnttab_setup_auto_xlat_frames(phys_a
+ 	}
+ 	pfn = kcalloc(max_nr_gframes, sizeof(pfn[0]), GFP_KERNEL);
+ 	if (!pfn) {
+-		xen_unmap(vaddr);
++		memunmap(vaddr);
+ 		return -ENOMEM;
+ 	}
+ 	for (i = 0; i < max_nr_gframes; i++)
+@@ -770,7 +770,7 @@ void gnttab_free_auto_xlat_frames(void)
+ 	if (!xen_auto_xlat_grant_frames.count)
+ 		return;
+ 	kfree(xen_auto_xlat_grant_frames.pfn);
+-	xen_unmap(xen_auto_xlat_grant_frames.vaddr);
++	memunmap(xen_auto_xlat_grant_frames.vaddr);
+ 
+ 	xen_auto_xlat_grant_frames.pfn = NULL;
+ 	xen_auto_xlat_grant_frames.count = 0;
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -982,8 +982,7 @@ static int __init xenbus_init(void)
+ #endif
+ 		xen_store_gfn = (unsigned long)v;
+ 		xen_store_interface =
+-			xen_remap(xen_store_gfn << XEN_PAGE_SHIFT,
+-				  XEN_PAGE_SIZE);
++			memremap(xen_store_gfn << XEN_PAGE_SHIFT, XEN_PAGE_SIZE, MEMREMAP_WB);
+ 		break;
+ 	default:
+ 		pr_warn("Xenstore state unknown\n");
+--- a/include/xen/arm/page.h
++++ b/include/xen/arm/page.h
+@@ -109,9 +109,6 @@ static inline bool set_phys_to_machine(u
+ 	return __set_phys_to_machine(pfn, mfn);
+ }
+ 
+-#define xen_remap(cookie, size) ioremap_cache((cookie), (size))
+-#define xen_unmap(cookie) iounmap((cookie))
+-
+ bool xen_arch_need_swiotlb(struct device *dev,
+ 			   phys_addr_t phys,
+ 			   dma_addr_t dev_addr);
 
 
