@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7B227470;
-	Tue, 15 Jul 2025 13:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25483192D8A;
+	Tue, 15 Jul 2025 13:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585487; cv=none; b=tGbD8MWVQACcDxxI3iZsnjqRtJPKm420GeBpY4iFsY5w/yij5jVQFzt6mROsO0SKQ4xEyJxYBA/Vd6J1tVrnmhj5B/k9uuidR5SglsY3qfv+BzVaHqkwbsJLIvz/JYDSmwBH3z1xgf1PnCHSnresIwrZlImAbaLHTo8hs+ppHBA=
+	t=1752585490; cv=none; b=EFdH9PgF9nh/fjOsN9VbcaKQ7JV0AJoMsIZhQutz/fiII4x62iyydZ/ZidIN5vuf8CoesBQiHso6cf0P6SrPTisCHg84+4cuUCD1slSDWl0+8cGKtO/nrGG1AcKJoHuLsHkeORRI2nJvgFAly34+zqj6Y9QUtS7GB24ZUpcf+eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585487; c=relaxed/simple;
-	bh=Qokx3mFJI/i+LNjYEWR1PgyeKpGMwQiZvD9sK4iVjN8=;
+	s=arc-20240116; t=1752585490; c=relaxed/simple;
+	bh=8s4TGRXqJ9LKxsysdS18fjxidhX3Ds/sWkP3RLGZYSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JvSWF8QNiDx15apcZLpfNlnxRGAA/ZZF7xQi8yotJ2lNqVZhAKpHaOgtbfv8eLE18eaIFhEbDSvU3QP0V6YnmaFcXR/3IPXnHV4EJe0TxlGq8eBB6wBcJSArFqXxlFjyY+WR/3LB85X+PVQ4VhVcUYek8QB0xh64mw3weJLDw6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6DLx+DH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pmp8RCocciaKiUS+1iuU1FEqS/yLo4s5I7DFefBTIwONaRgiloHyXpAhudLxb3f80FKnuS/++JPrgvr5thbHMfP2CVbk8wuOgfsFfw7yPKgdwCGPp+ISET+EzW2+WSGCJJ2Z5kOYznpSzjzikLsscU0vfMq4VFwKo0MB/1YXl/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PvdMhni; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6DLx+DH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9F5C4CEE3;
-	Tue, 15 Jul 2025 13:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PvdMhni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33313C4CEE3;
+	Tue, 15 Jul 2025 13:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585486;
-	bh=Qokx3mFJI/i+LNjYEWR1PgyeKpGMwQiZvD9sK4iVjN8=;
+	s=korg; t=1752585489;
+	bh=8s4TGRXqJ9LKxsysdS18fjxidhX3Ds/sWkP3RLGZYSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n6DLx+DHo0AfgMqcamQpfgIztkPVhzNUymoO6XWmy/j2wmJWrfO6Y/4zAQoE6/R/z
-	 lM8kVKKCWGE2x5Wzk+pRsQ76kIHAdlbZQj2nmquBjQZjcmNUeQYe4TwRVMpb0TGf7+
-	 2Lw2RsKl9djepF7WYymxzMD3plx79geCXl0JPxTg=
+	b=2PvdMhniEzUJ5jY0q8j5pmLbVby/sUpCVfPMM305/8fppkIwDC/lYZTuXc9ktxUih
+	 J2jxRY2Qhy5RcXcJy8rdHc0UW6SfUfh1inWZbbKcLaxp4Zv8Uw1bN+yBHv91zRiwEK
+	 ebIyJEPbRL2zlG7y+nH84TFPj8IkjiwIEY3/IaFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Raghavan <arun@asymptotic.io>,
-	Pieterjan Camerlynck <p.camerlynck@televic.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 059/163] ASoC: fsl_sai: Force a software reset when starting in consumer mode
-Date: Tue, 15 Jul 2025 15:12:07 +0200
-Message-ID: <20250715130811.117285875@linuxfoundation.org>
+	Aiden Yang <ling@moedove.com>,
+	Gary Guo <gary@garyguo.net>,
+	Guillaume Nault <gnault@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 060/163] gre: Fix IPv6 multicast route creation.
+Date: Tue, 15 Jul 2025 15:12:08 +0200
+Message-ID: <20250715130811.157949907@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -52,59 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun Raghavan <arun@asymptotic.io>
+From: Guillaume Nault <gnault@redhat.com>
 
-commit dc78f7e59169d3f0e6c3c95d23dc8e55e95741e2 upstream.
+commit 4e914ef063de40397e25a025c70d9737a9e45a8c upstream.
 
-On an imx8mm platform with an external clock provider, when running the
-receiver (arecord) and triggering an xrun with xrun_injection, we see a
-channel swap/offset. This happens sometimes when running only the
-receiver, but occurs reliably if a transmitter (aplay) is also
-concurrently running.
+Use addrconf_add_dev() instead of ipv6_find_idev() in
+addrconf_gre_config() so that we don't just get the inet6_dev, but also
+install the default ff00::/8 multicast route.
 
-It seems that the SAI loses track of frame sync during the trigger stop
--> trigger start cycle that occurs during an xrun. Doing just a FIFO
-reset in this case does not suffice, and only a software reset seems to
-get it back on track.
+Before commit 3e6a0243ff00 ("gre: Fix again IPv6 link-local address
+generation."), the multicast route was created at the end of the
+function by addrconf_add_mroute(). But this code path is now only taken
+in one particular case (gre devices not bound to a local IP address and
+in EUI64 mode). For all other cases, the function exits early and
+addrconf_add_mroute() is not called anymore.
 
-This looks like the same h/w bug that is already handled for the
-producer case, so we now do the reset unconditionally on config disable.
+Using addrconf_add_dev() instead of ipv6_find_idev() in
+addrconf_gre_config(), fixes the problem as it will create the default
+multicast route for all gre devices. This also brings
+addrconf_gre_config() a bit closer to the normal netdevice IPv6
+configuration code (addrconf_dev_config()).
 
-Signed-off-by: Arun Raghavan <arun@asymptotic.io>
-Reported-by: Pieterjan Camerlynck <p.camerlynck@televic.com>
-Fixes: 3e3f8bd56955 ("ASoC: fsl_sai: fix no frame clk in master mode")
 Cc: stable@vger.kernel.org
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://patch.msgid.link/20250626130858.163825-1-arun@arunraghavan.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3e6a0243ff00 ("gre: Fix again IPv6 link-local address generation.")
+Reported-by: Aiden Yang <ling@moedove.com>
+Closes: https://lore.kernel.org/netdev/CANR=AhRM7YHHXVxJ4DmrTNMeuEOY87K2mLmo9KMed1JMr20p6g@mail.gmail.com/
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Tested-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/027a923dcb550ad115e6d93ee8bb7d310378bd01.1752070620.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_sai.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ net/ipv6/addrconf.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -771,13 +771,15 @@ static void fsl_sai_config_disable(struc
- 	 * anymore. Add software reset to fix this issue.
- 	 * This is a hardware bug, and will be fix in the
- 	 * next sai version.
-+	 *
-+	 * In consumer mode, this can happen even after a
-+	 * single open/close, especially if both tx and rx
-+	 * are running concurrently.
- 	 */
--	if (!sai->is_consumer_mode[tx]) {
--		/* Software Reset */
--		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
--		/* Clear SR bit to finish the reset */
--		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
--	}
-+	/* Software Reset */
-+	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
-+	/* Clear SR bit to finish the reset */
-+	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
- }
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3548,11 +3548,9 @@ static void addrconf_gre_config(struct n
  
- static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	ASSERT_RTNL();
+ 
+-	idev = ipv6_find_idev(dev);
+-	if (IS_ERR(idev)) {
+-		pr_debug("%s: add_dev failed\n", __func__);
++	idev = addrconf_add_dev(dev);
++	if (IS_ERR(idev))
+ 		return;
+-	}
+ 
+ 	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
+ 	 * unless we have an IPv4 GRE device not bound to an IP address and
+@@ -3566,9 +3564,6 @@ static void addrconf_gre_config(struct n
+ 	}
+ 
+ 	add_v4_addrs(idev);
+-
+-	if (dev->flags & IFF_POINTOPOINT)
+-		addrconf_add_mroute(dev);
+ }
+ #endif
+ 
 
 
