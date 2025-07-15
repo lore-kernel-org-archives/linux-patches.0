@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B738F70831;
-	Tue, 15 Jul 2025 13:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ABA2E3AE2;
+	Tue, 15 Jul 2025 13:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586247; cv=none; b=uZ7E+dSb2N70Ycq6sSgxk8lrCgIg2wshy24AVCJd7S7pjpYl/LdzeT4XU25yFZXuM+HGtZyOtGmpieeY77PCPmTQ4HiMoNWlxwU5SIwALdb4tB+ofX3AjGCuoNqKrHVDKUCYMztJ0PM1u4GfWrd9BiC6tAVIfOmYJvecXHs08vs=
+	t=1752586250; cv=none; b=i4AiyqLeq1d2XFswtgvx8YKzLcluArHm/zfFCw4vDj2ksdNaDsVlyHWZM5j7/Q2liwSnIq2nEGOzhlMnNuPYscPkSMBAIDMIvQ3W/N41sPmDWuPbanIbYqjVgHrEjKpf6WLVocYxMUYrUMkuvHHxavWyx/+d10nyyd8C53V5qHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586247; c=relaxed/simple;
-	bh=0QgCp1kb0GKCM7ptgm4dZIDPr0bwSsa3dLjE1DWrmkE=;
+	s=arc-20240116; t=1752586250; c=relaxed/simple;
+	bh=efBhIwKPPjOGmGL+kT1nntAUbHmbRusXO3um3qSNySk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJKI3SeorbGRFHpYQ6EGuLMBwBJ12sTC5X9qMQ/vmeF7eVM/x+qtSPRB1g3VJzJFjUHC4i8KMg7rGjuXAW3t6bVuebw2u+q8n6I2b6V0JieMxooTdImeX33vC8h/OSKGqCU2OtpwaEuFtcYiddADoCGC9DR9shwwaWZVZC3+RjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueQPCjP3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sn7pvw9Ckh60mhDZyxl24F739vdh+jgqDTtJZuvvVJamlgIznCiJE/q1km16rlpOImVbUdBZeJshB30/FQhEoFQ8bbHUDrymosUMPeukroiwoFRTsnPDhkNCb3o2t7uv4Ekl/FcvRwAM4xw0MPlxLtoVhdrsvhpBJtxdlyJnZX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzrCspcg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueQPCjP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6B2C4CEE3;
-	Tue, 15 Jul 2025 13:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzrCspcg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB943C4CEE3;
+	Tue, 15 Jul 2025 13:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586247;
-	bh=0QgCp1kb0GKCM7ptgm4dZIDPr0bwSsa3dLjE1DWrmkE=;
+	s=korg; t=1752586250;
+	bh=efBhIwKPPjOGmGL+kT1nntAUbHmbRusXO3um3qSNySk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ueQPCjP3DinFoXa60Zm63GRvj0We8EtnshhKta9yDFvhMAyfaleANIOvvlBapsGO/
-	 PretQgIK7yvzgpCH5XCU0tUcP8EUuw0q3ZFICLSdI2KS3Zj2icZesMW3Pm4kqk2BPy
-	 HjOg2fJV4I3yBiYEl6zeWLLFD8KXfFiQyir+oVwo=
+	b=QzrCspcgWzZmVErnoV20hU0wv5Otjijg2vsrfFnOufBsr29VdOFMRIFchRgk5rfm7
+	 hl2Ig4LEVT2oks8S3yQZu3hG7iHoot714117UggzkQT4C2wHd5X3gAUhNbByu/lnEk
+	 joJx8gyekFtOjEvz0mueBMWzUEpLY/oqXdN8pxTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 30/77] pinctrl: qcom: msm: mark certain pins as invalid for interrupts
-Date: Tue, 15 Jul 2025 15:13:29 +0200
-Message-ID: <20250715130752.918483767@linuxfoundation.org>
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Shravya KN <shravya.k-n@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 65/77] bnxt_en: Fix DCB ETS validation
+Date: Tue, 15 Jul 2025 15:14:04 +0200
+Message-ID: <20250715130754.336288188@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -51,71 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Shravya KN <shravya.k-n@broadcom.com>
 
-commit 93712205ce2f1fb047739494c0399a26ea4f0890 upstream.
+[ Upstream commit b74c2a2e9cc471e847abd87e50a2354c07e02040 ]
 
-On some platforms, the UFS-reset pin has no interrupt logic in TLMM but
-is nevertheless registered as a GPIO in the kernel. This enables the
-user-space to trigger a BUG() in the pinctrl-msm driver by running, for
-example: `gpiomon -c 0 113` on RB2.
+In bnxt_ets_validate(), the code incorrectly loops over all possible
+traffic classes to check and add the ETS settings.  Fix it to loop
+over the configured traffic classes only.
 
-The exact culprit is requesting pins whose intr_detection_width setting
-is not 1 or 2 for interrupts. This hits a BUG() in
-msm_gpio_irq_set_type(). Potentially crashing the kernel due to an
-invalid request from user-space is not optimal, so let's go through the
-pins and mark those that would fail the check as invalid for the irq chip
-as we should not even register them as available irqs.
+The unconfigured traffic classes will default to TSA_ETS with 0
+bandwidth.  Looping over these unconfigured traffic classes may
+cause the validation to fail and trigger this error message:
 
-This function can be extended if we determine that there are more
-corner-cases like this.
+"rejecting ETS config starving a TC\n"
 
-Fixes: f365be092572 ("pinctrl: Add Qualcomm TLMM driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/20250612091448.41546-1-brgl@bgdev.pl
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The .ieee_setets() will then fail.
+
+Fixes: 7df4ae9fe855 ("bnxt_en: Implement DCBNL to support host-based DCBX.")
+Reviewed-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250710213938.1959625-2-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -949,6 +949,25 @@ static bool msm_gpio_needs_dual_edge_par
- 	       test_bit(d->hwirq, pctrl->skip_wake_irqs);
- }
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
+index 228a5db7e1434..596513ffdfd9c 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
+@@ -479,7 +479,9 @@ static int bnxt_ets_validate(struct bnxt *bp, struct ieee_ets *ets, u8 *tc)
  
-+static void msm_gpio_irq_init_valid_mask(struct gpio_chip *gc,
-+					 unsigned long *valid_mask,
-+					 unsigned int ngpios)
-+{
-+	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-+	const struct msm_pingroup *g;
-+	int i;
-+
-+	bitmap_fill(valid_mask, ngpios);
-+
-+	for (i = 0; i < ngpios; i++) {
-+		g = &pctrl->soc->groups[i];
-+
-+		if (g->intr_detection_width != 1 &&
-+		    g->intr_detection_width != 2)
-+			clear_bit(i, valid_mask);
+ 		if ((ets->tc_tx_bw[i] || ets->tc_tsa[i]) && i > bp->max_tc)
+ 			return -EINVAL;
 +	}
-+}
-+
- static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-@@ -1305,6 +1324,7 @@ static int msm_gpio_init(struct msm_pinc
- 	girq->default_type = IRQ_TYPE_NONE;
- 	girq->handler = handle_bad_irq;
- 	girq->parents[0] = pctrl->irq;
-+	girq->init_valid_mask = msm_gpio_irq_init_valid_mask;
  
- 	ret = gpiochip_add_data(&pctrl->chip, pctrl);
- 	if (ret) {
++	for (i = 0; i < max_tc; i++) {
+ 		switch (ets->tc_tsa[i]) {
+ 		case IEEE_8021QAZ_TSA_STRICT:
+ 			break;
+-- 
+2.39.5
+
 
 
