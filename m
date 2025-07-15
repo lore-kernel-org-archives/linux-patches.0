@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C3E2D028A;
-	Tue, 15 Jul 2025 13:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69C61A3142;
+	Tue, 15 Jul 2025 13:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586354; cv=none; b=iFnHKpF3hZo2seJnJpTh2YrpxVuGKEoz0S6KanowuDxFG5h8TpB6E4yPRrKDRgwHLebKVtOKLK5R/MHFit0kqd981LS1MKYMO84KA8vfuFIMmvsIXEEmwR2czfFkgLqavKLoicm7zD03j/XRZgNas/qSNK2Nv8BN9lJbhkc/6C8=
+	t=1752586356; cv=none; b=X8DzlMEEbXGZqk1zTN9HrXHfMojU1m70+v9UOMTpGhglmSfBCnlnQ4l115W1rQXXh3YpZZ/IWQ8M1aOceHDie+pPvWOs588wg6RiNW9YH12N5ZVAkML1MY2+lDp64wWdH55sJm2G+xNvtYg9KrpQqCb0+FbhkbQwGRfQt0njEkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586354; c=relaxed/simple;
-	bh=/RIFg4gUoDaEt9629DFVdfG226PEfXT2SSwD7vivUeM=;
+	s=arc-20240116; t=1752586356; c=relaxed/simple;
+	bh=B8QJsYHFqByveVlI0nvk1FGESFnm+51uDe5y8LfG6rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAL8XxEDloLinaMwkjfaVQuEAfThYB8pjmEfXqdaQWcfoIfZ7bsvKCiQmhLlynF07F7LR3mSTYHn7iGCFOFwE626mzPLdOJnnmE46qYYiIZP2olMe4eAP3LZHNSAQXlkfSVpSvPDJHvUAvcjsRjgU+rrx4STbU3esL4cZ3RPHdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAZCFDOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bKBp8QWLtx8ZZH9wrJmHjUaaNvP1KeuubYLgouUo1BwhIMBEo0eASbBBJEdoBoRSqv8zojPY3BGFDRk+T/D4vKkeinZdC3beKxReMgNupk1Kjl6Y4aPt+I9c7wSJU1j4c7WYsZSlcnlplkgfFR1kTtzphOcjN0tnCnJhu1iflxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOymY30k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAZCFDOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90086C4CEE3;
-	Tue, 15 Jul 2025 13:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOymY30k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E1DC4CEE3;
+	Tue, 15 Jul 2025 13:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586353;
-	bh=/RIFg4gUoDaEt9629DFVdfG226PEfXT2SSwD7vivUeM=;
+	s=korg; t=1752586356;
+	bh=B8QJsYHFqByveVlI0nvk1FGESFnm+51uDe5y8LfG6rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAZCFDOD+nJdqyJYH8FJN7WDUEkFsY+nBzTNSsioSm6OCRbw9SfcnzMzSD128M+XN
-	 8wc0RgiWfy7ArGdJNBRnLqK/oi/UD1mHneekFTUU8j0dXas605cLtmxaVYdC4Ac1aE
-	 my+VtWuJ24f+B1Byh/TLp+ZwTeMLIz5zxJx7bL2o=
+	b=nOymY30kfv4cz8qqIZ9oOcAXs5++zpkfF7I7r0JGE6ImirtKSm3bj67M6x50o3hFl
+	 JCySOcFVL3MiOxOXjFWjreAhSI808xrqbRrja4xTF12x1swLmflpPaukzwDKVVvBKQ
+	 83IGn+xVMGsNAhSFlZNZIU4HJheTXIHGRD8cyVTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 004/148] dmaengine: xilinx_dma: Set dma_device directions
-Date: Tue, 15 Jul 2025 15:12:06 +0200
-Message-ID: <20250715130800.475332165@linuxfoundation.org>
+Subject: [PATCH 5.4 005/148] md/md-bitmap: fix dm-raid max_write_behind setting
+Date: Tue, 15 Jul 2025 15:12:07 +0200
+Message-ID: <20250715130800.514944934@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -53,38 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 7e01511443c30a55a5ae78d3debd46d4d872517e ]
+[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
 
-Coalesce the direction bits from the enabled TX and/or RX channels into
-the directions bit mask of dma_device. Without this mask set,
-dma_get_slave_caps() in the DMAEngine fails, which prevents the driver
-from being used with an IIO DMAEngine buffer.
+It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
 
-Signed-off-by: Thomas Gessler <thomas.gessler@brueckmann-gmbh.de>
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://lore.kernel.org/r/20250507182101.909010-1-thomas.gessler@brueckmann-gmbh.de
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/md-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index be44c86a1e037..5b5cbea997ff7 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2490,6 +2490,8 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
- 		return -EINVAL;
- 	}
- 
-+	xdev->common.directions |= chan->direction;
-+
- 	/* Request the interrupt */
- 	chan->irq = irq_of_parse_and_map(node, 0);
- 	err = request_irq(chan->irq, xilinx_dma_irq_handler, IRQF_SHARED,
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 8fc85b6251e48..feff5b29d0985 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -549,7 +549,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
+ 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
+ 	 */
+ 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
+-	if (write_behind > COUNTER_MAX)
++	if (write_behind > COUNTER_MAX / 2)
+ 		write_behind = COUNTER_MAX / 2;
+ 	sb->write_behind = cpu_to_le32(write_behind);
+ 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
 -- 
 2.39.5
 
