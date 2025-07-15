@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0EB2E6D28;
-	Tue, 15 Jul 2025 13:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8829D2E8DE0;
+	Tue, 15 Jul 2025 13:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586631; cv=none; b=ThOTam5rBSrwi/ltQbwPTimbV5YAKZFsaOGUAPrvRTOpDgNaHnNE3yPMNbMjJ0tVPPa2YVhYsJ/bDDR38aP9S3LznzVSxICVWlYfUpQNuuodL2KOP0ufvvJ+fXOdD7jcR7OsWJniNnFQuWVFyaV9H2BVp8t94QsuhJ827xjfRsA=
+	t=1752586634; cv=none; b=bNxDGgbwRTfmFEOefAiYyZgMoK0TiYXFyAlRyWx94UxjsSA6vMgMDfxkX9rtCV9Bv7+n5DNLqotA4CkIMg/IY3jG+vawX1+Gl5SzAHHCAuTTNaiwWoapk8Ak29nz7qesGnfxT0gd+wZed/XLMgowAus6KieNLvnemoYqOSOiO4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586631; c=relaxed/simple;
-	bh=AzznSN7rKrjYYSzdfM2IVAzFJuxt8x+LurWCZ/SaPRU=;
+	s=arc-20240116; t=1752586634; c=relaxed/simple;
+	bh=GriXLbIF0J9zUVt6JIMAfUIUaBNCvI4KR38xed0n/aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKJvNs2Wezm7rtnsEzhb1p3jPWIfzYpTnkaIO8lFkhnqp2qSjhKp63tLoOjy1hIMGUQ3Z20NhzXE5JXIVlcVTo6TbAnOAmRg78tEtcPaF9Dzv0ceEwlit+XHUKXcprbn6dEGtU7Bf8sXZbqDVckwiLg/9uERnDIPEYPHkC9L638=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+aw/ADw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rt7WyDO/ImpPq2pNh2cF/cKD2dE1D124ehQoNDxtGgwPR99tYDnDqZBys7SF+oO41KK7WMIV6qK/Nl8mwVbW3Q1WcjSBIIFgUes0EkM03BXdE7jU7ZUKPNhErbI14duwpRcSRl0DxGmoDDXIIihNngm0IqoL0l1zy4hfVUeS0Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRS0Dfr7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+aw/ADw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C860C4CEE3;
-	Tue, 15 Jul 2025 13:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRS0Dfr7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B79C4CEE3;
+	Tue, 15 Jul 2025 13:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586631;
-	bh=AzznSN7rKrjYYSzdfM2IVAzFJuxt8x+LurWCZ/SaPRU=;
+	s=korg; t=1752586634;
+	bh=GriXLbIF0J9zUVt6JIMAfUIUaBNCvI4KR38xed0n/aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+aw/ADwL+yvbVZjY9Xmy+ioKAVNQdG2RkaougWgoyRb/Tvjqsa+jkkiMRy+kDeWq
-	 rPl2KadOIlHBGOdRPhX/kppJMyfSXRLS8IUiRp5OJEoApivHliXoKkn6l/bCZNBEg1
-	 VrYTH7I3CaNt55QM8kz+EU2fRS7TpLBCQc298qAI=
+	b=pRS0Dfr7DS+A+EnVitI9z6QGhCRnfCN8Ge9W0T2eTJDa0knj2Kb7CpmasD0U0GxHi
+	 3VOy8wbqvMSCLTzzoPTMhDrpFrBZBu/ZniYj3IyFR1ivqmBGaHkZRiIE8DjV2Fzt0Z
+	 T9Z6fXyJfP58PX1+1Dv9nGbrp5j17cwYmNIKVb80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
+	NeilBrown <neilb@brown.name>,
+	Christian Brauner <brauner@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 107/148] proc: Clear the pieces of proc_inode that proc_evict_inode cares about
-Date: Tue, 15 Jul 2025 15:13:49 +0200
-Message-ID: <20250715130804.595887633@linuxfoundation.org>
+Subject: [PATCH 5.4 108/148] fix proc_sys_compare() handling of in-lookup dentries
+Date: Tue, 15 Jul 2025 15:13:50 +0200
+Message-ID: <20250715130804.635751101@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -50,63 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric W. Biederman <ebiederm@xmission.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 71448011ea2a1cd36d8f5cbdab0ed716c454d565 ]
+[ Upstream commit b969f9614885c20f903e1d1f9445611daf161d6d ]
 
-This just keeps everything tidier, and allows for using flags like
-SLAB_TYPESAFE_BY_RCU where slabs are not always cleared before reuse.
-I don't see reuse without reinitializing happening with the proc_inode
-but I had a false alarm while reworking flushing of proc dentries and
-indoes when a process dies that caused me to tidy this up.
+There's one case where ->d_compare() can be called for an in-lookup
+dentry; usually that's nothing special from ->d_compare() point of
+view, but... proc_sys_compare() is weird.
 
-The code is a little easier to follow and reason about this
-way so I figured the changes might as well be kept.
+The thing is, /proc/sys subdirectories can look differently for
+different processes.  Up to and including having the same name
+resolve to different dentries - all of them hashed.
 
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
-Stable-dep-of: b969f9614885 ("fix proc_sys_compare() handling of in-lookup dentries")
+The way it's done is ->d_compare() refusing to admit a match unless
+this dentry is supposed to be visible to this caller.  The information
+needed to discriminate between them is stored in inode; it is set
+during proc_sys_lookup() and until it's done d_splice_alias() we really
+can't tell who should that dentry be visible for.
+
+Normally there's no negative dentries in /proc/sys; we can run into
+a dying dentry in RCU dcache lookup, but those can be safely rejected.
+
+However, ->d_compare() is also called for in-lookup dentries, before
+they get positive - or hashed, for that matter.  In case of match
+we will wait until dentry leaves in-lookup state and repeat ->d_compare()
+afterwards.  In other words, the right behaviour is to treat the
+name match as sufficient for in-lookup dentries; if dentry is not
+for us, we'll see that when we recheck once proc_sys_lookup() is
+done with it.
+
+While we are at it, fix the misspelled READ_ONCE and WRITE_ONCE there.
+
+Fixes: d9171b934526 ("parallel lookups machinery, part 4 (and last)")
+Reported-by: NeilBrown <neilb@brown.name>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/inode.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/proc/inode.c       |  2 +-
+ fs/proc/proc_sysctl.c | 18 +++++++++++-------
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/fs/proc/inode.c b/fs/proc/inode.c
-index 3f0c89001fcff..a6bb1b5c903e6 100644
+index a6bb1b5c903e6..86175a8c04b3f 100644
 --- a/fs/proc/inode.c
 +++ b/fs/proc/inode.c
-@@ -33,21 +33,27 @@ static void proc_evict_inode(struct inode *inode)
- {
- 	struct proc_dir_entry *de;
- 	struct ctl_table_header *head;
-+	struct proc_inode *ei = PROC_I(inode);
+@@ -53,7 +53,7 @@ static void proc_evict_inode(struct inode *inode)
  
- 	truncate_inode_pages_final(&inode->i_data);
- 	clear_inode(inode);
- 
- 	/* Stop tracking associated processes */
--	put_pid(PROC_I(inode)->pid);
-+	if (ei->pid) {
-+		put_pid(ei->pid);
-+		ei->pid = NULL;
-+	}
- 
- 	/* Let go of any associated proc directory entry */
--	de = PDE(inode);
--	if (de)
-+	de = ei->pde;
-+	if (de) {
- 		pde_put(de);
-+		ei->pde = NULL;
-+	}
- 
--	head = PROC_I(inode)->sysctl;
-+	head = ei->sysctl;
+ 	head = ei->sysctl;
  	if (head) {
--		RCU_INIT_POINTER(PROC_I(inode)->sysctl, NULL);
-+		RCU_INIT_POINTER(ei->sysctl, NULL);
+-		RCU_INIT_POINTER(ei->sysctl, NULL);
++		WRITE_ONCE(ei->sysctl, NULL);
  		proc_sys_evict_inode(inode, head);
  	}
  }
+diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
+index f4264dd4ea31b..c8dad20069803 100644
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -928,17 +928,21 @@ static int proc_sys_compare(const struct dentry *dentry,
+ 	struct ctl_table_header *head;
+ 	struct inode *inode;
+ 
+-	/* Although proc doesn't have negative dentries, rcu-walk means
+-	 * that inode here can be NULL */
+-	/* AV: can it, indeed? */
+-	inode = d_inode_rcu(dentry);
+-	if (!inode)
+-		return 1;
+ 	if (name->len != len)
+ 		return 1;
+ 	if (memcmp(name->name, str, len))
+ 		return 1;
+-	head = rcu_dereference(PROC_I(inode)->sysctl);
++
++	// false positive is fine here - we'll recheck anyway
++	if (d_in_lookup(dentry))
++		return 0;
++
++	inode = d_inode_rcu(dentry);
++	// we just might have run into dentry in the middle of __dentry_kill()
++	if (!inode)
++		return 1;
++
++	head = READ_ONCE(PROC_I(inode)->sysctl);
+ 	return !head || !sysctl_is_seen(head);
+ }
+ 
 -- 
 2.39.5
 
