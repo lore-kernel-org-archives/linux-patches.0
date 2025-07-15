@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4D62E7646;
-	Tue, 15 Jul 2025 13:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F86BA42;
+	Tue, 15 Jul 2025 13:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586292; cv=none; b=U70LhIPvIAJycvYOr0CRrZ2fd1Eztd2aD/NxQajT+nLyj/QIlJZiO02QFCtotaU39k2jEDxXR3A6cDT9uj0khBgM2V7oWCcF9P/79/0tDWiMkaRLb0jnQ1qXocYHn59tRMZ9sB5MAoETMmEaF6annrsVLKW3SUEOU6fno941HiA=
+	t=1752586295; cv=none; b=ukCtBeHy/aT6VviThpXuG0LrP7ItD2h7bSsKgAv/0J/NRhv7+vx1JG6xDmMUh573vhsX/74HHk8t8oo+fzETZQGj7EEa1LHQx7dfBEjBPvm1ezbCZ+dSrlMe225OkXmyNPrU9vuKNPGv+u2FAcWgefgSSemvgZ4hllHlGyaebcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586292; c=relaxed/simple;
-	bh=ODVdmA2hY0ky5GROX++6qb0rYl2fE97Pu+dsJ04CMlY=;
+	s=arc-20240116; t=1752586295; c=relaxed/simple;
+	bh=sRz26X6n9vdSR7Oj2TrMs50xPchMyNDREwODfETaTGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dV6/jDLnDlh0KIVkXh953lBL9tilkZAFDioZ+f+/wM767qMOJPw6ZmwuEB4+6iTzmT+tUeRtfd4qzCHTmNTmyRcEvH2nnR/FiWWzDKHklyyJGsLcBdkTr5kzSH7+8tzvLokPAsYVXYh6C5EFQA7D9iOL0BG3fQMHTfHwk1TlSuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHori50y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Smjh/p5VIOEM0rZcTRVo39NZdDxs1IiP8sDfKBKBOeZ5FbRQBPqkDOxBCcf1dEj5ps0S5omeCiEiKWrP/VsA5lM/Wlp6+7MeZOITGQSszcpsjQ05VtL4Jxf/7VKW5XQzeKWkQbJkhMk3GHcmSbd8FS0P5/qHUk99HFYONe+V0pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz33NQZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHori50y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D34AC4CEE3;
-	Tue, 15 Jul 2025 13:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz33NQZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB695C4CEE3;
+	Tue, 15 Jul 2025 13:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586292;
-	bh=ODVdmA2hY0ky5GROX++6qb0rYl2fE97Pu+dsJ04CMlY=;
+	s=korg; t=1752586295;
+	bh=sRz26X6n9vdSR7Oj2TrMs50xPchMyNDREwODfETaTGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHori50yJhngtOwE/DOhEE+9jdn4sjMiUkDdP+PEq33ZK/9xSRdBB9EUvC99PGNHV
-	 iyKZ2CmMCvM2PZ2vnjzvEtaSNVsUYW06drUwjjCznQOmxk40HozpH9OfjVa42WJ8D1
-	 ko60xhQF4omEzuCuDnzJIDadqRkdfw8sG7Cer230=
+	b=Gz33NQZnRrrilhnVffiOLPiFewnsu86igzCg8fwZEUsbgGmNUy55BY3PxTjsopgKz
+	 FK3YBUezdfIpb2fAVKG893Q3149l8VDoLnmBNpjXb+o3gNjIkpXvhi+vc5C12uLnXv
+	 TDzsq+eHvqGFEZDbaVUnp1VbTDpl/d3AIQvcdZiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jos Wang <joswang@lenovo.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 011/148] usb: typec: displayport: Receive DP Status Update NAK request exit dp altmode
-Date: Tue, 15 Jul 2025 15:12:13 +0200
-Message-ID: <20250715130800.756259356@linuxfoundation.org>
+Subject: [PATCH 5.4 012/148] ALSA: hda: Ignore unsol events for cards being shut down
+Date: Tue, 15 Jul 2025 15:12:14 +0200
+Message-ID: <20250715130800.795516178@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,50 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jos Wang <joswang@lenovo.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit b4b38ffb38c91afd4dc387608db26f6fc34ed40b ]
+[ Upstream commit 3f100f524e75586537e337b34d18c8d604b398e7 ]
 
-Although some Type-C DRD devices that do not support the DP Sink
-function (such as Huawei Mate 40Pro), the Source Port initiates
-Enter Mode CMD, but the device responds to Enter Mode ACK, the
-Source port then initiates DP Status Update CMD, and the device
-responds to DP Status Update NAK.
+For the classic snd_hda_intel driver, codec->card and bus->card point to
+the exact same thing. When snd_card_diconnect() fires, bus->shutdown is
+set thanks to azx_dev_disconnect(). card->shutdown is already set when
+that happens but both provide basically the same functionality.
 
-As PD2.0 spec ("6.4.4.3.4 Enter Mode Command")，A DR_Swap Message
-Shall Not be sent during Modal Operation between the Port Partners.
-At this time, the source port initiates DR_Swap message through the
-"echo device > /sys/class/typec/port0/data_role" command to switch
-the data role from host to device. The device will initiate a Hard
-Reset for recovery, resulting in the failure of data role swap.
+For the DSP snd_soc_avs driver where multiple codecs are located on
+multiple cards, bus->shutdown 'shortcut' is not sufficient. One codec
+card may be unregistered while other codecs are still operational.
+Proper check in form of card->shutdown must be used to verify whether
+the codec's card is being shut down.
 
-Therefore, when DP Status Update NAK is received, Exit Mode CMD is
-initiated to exit the currently entered DP altmode.
-
-Signed-off-by: Jos Wang <joswang@lenovo.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250209071926.69625-1-joswang1221@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530141309.2943404-1-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/altmodes/displayport.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/hda/hda_bind.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index a2a1baabca933..35d7a4d40d9a4 100644
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -288,6 +288,10 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
- 		break;
- 	case CMDT_RSP_NAK:
- 		switch (cmd) {
-+		case DP_CMD_STATUS_UPDATE:
-+			if (typec_altmode_exit(alt))
-+				dev_err(&dp->alt->dev, "Exit Mode Failed!\n");
-+			break;
- 		case DP_CMD_CONFIGURE:
- 			dp->data.conf = 0;
- 			ret = dp_altmode_configured(dp);
+diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
+index 17a25e453f60c..047fe6cca7f1a 100644
+--- a/sound/pci/hda/hda_bind.c
++++ b/sound/pci/hda/hda_bind.c
+@@ -44,7 +44,7 @@ static void hda_codec_unsol_event(struct hdac_device *dev, unsigned int ev)
+ 	struct hda_codec *codec = container_of(dev, struct hda_codec, core);
+ 
+ 	/* ignore unsol events during shutdown */
+-	if (codec->bus->shutdown)
++	if (codec->card->shutdown || codec->bus->shutdown)
+ 		return;
+ 
+ 	/* ignore unsol events during system suspend/resume */
 -- 
 2.39.5
 
