@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCE32561AE;
-	Tue, 15 Jul 2025 13:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7B72E06E6;
+	Tue, 15 Jul 2025 13:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587275; cv=none; b=HdHX9fNHoHbq7v9NKdVLW1uIgNPMgdEZOgUQ1vPPKoHSd7d0G2kr+GB9xFvnjCaRGZiFsYMrZdk0MXDNa0IozQ1Ds+s09oPUy8XcJkeYUVq7bZ/F5uEaAhkqOeGbl93UcdLryHbFAR2tWkxql2nMnaQkrXRmPdHdrEXuRg7Yb9Q=
+	t=1752587277; cv=none; b=LqVnbAl/s4m/BXv3DFfQvlNqKm4R/pu4w+WEOa7Vt/Ss8iDKP1QPhVhAforsb3iKsf3crxbmQbkMi0+aTQSxpukvmsegBNFKVEMRALuak7WYiwJG1KyNnAw8jL8u4zTMWHESwBgz1kIB9ICzEzdd33EW9bR+ilw6yXeR0zqZINU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587275; c=relaxed/simple;
-	bh=ZfwB9NZgg5Jp+R0S5eJiJoKfpZShcmc9/0magCCfQ8o=;
+	s=arc-20240116; t=1752587277; c=relaxed/simple;
+	bh=I8/mrIaA5lGHdKU/LIMCZkUxPwjyZQ5zAznE2KbOAWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlT9QsQkqRv+H7VJa3I2fAiQ7TbN/9hsz0Pw9DpSkhHRsGfS1EOy3OwdkxVRNksaUShdlPUXV1aCCtGJX96MvDVH3gk0RzLIffeFLnLUD6Kxlf9UneH5mjAXAr6hbNrJ3Z5seKBUMguWRLn9gGqb4nc5vWvipfQoJzjafRLVdDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVhZx/I6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MF3+tbXFDgL8WvO/Abw1vq4kkrzRn6ojpLpvyY9cJC+lPoCjyCrlVnaH5phZ8QUpZEav8AkT8Ja2b10kzWfTT2qPlPi6XV4+iMWC73Cm2J0bbxl07y9na9fOauDpmMEHK+g5UvWHbQcnpWuYagrAgxKc+Axaoo8PHS+OwWPrBZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umVZLuE6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVhZx/I6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2513C4CEE3;
-	Tue, 15 Jul 2025 13:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umVZLuE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66823C4CEE3;
+	Tue, 15 Jul 2025 13:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587275;
-	bh=ZfwB9NZgg5Jp+R0S5eJiJoKfpZShcmc9/0magCCfQ8o=;
+	s=korg; t=1752587277;
+	bh=I8/mrIaA5lGHdKU/LIMCZkUxPwjyZQ5zAznE2KbOAWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVhZx/I6tNGSdPcvPvPvrM9SIWsk58hXksUFrqSIU7HCoGlwvqLOx9HTm/TAGdS/h
-	 eS2hSBDlT8VckhnO0zPs6a/H/EtfsIOzQYYhbhORUVM2lfPhroXCTWPw8XhYbmLt3y
-	 AjPJ4ZNwBsjRZI01ULFyiudOfSQDclep8rjHoh+w=
+	b=umVZLuE6s9wDPEfRo5d5hvgRkPY8NfZSJlXxBswMAZ6maQ/PDdDryCd7wJijTk9dr
+	 ErxF7z3mVnT2G8fV3UDCSE+J8B2UbbY+HmIPKn3SNhkjYuhOzYkqg9fiQuXiuHXhdv
+	 +jaIVldLA+FbqEDqhb17LW+EtFQfKQtGg9DA4c1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michal Luczaj <mhal@rbox.co>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/88] vsock: Fix transport_{g2h,h2g} TOCTOU
-Date: Tue, 15 Jul 2025 15:13:45 +0200
-Message-ID: <20250715130754.881089744@linuxfoundation.org>
+Subject: [PATCH 6.1 10/88] vsock: Fix transport_* TOCTOU
+Date: Tue, 15 Jul 2025 15:13:46 +0200
+Message-ID: <20250715130754.920824732@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -54,96 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 209fd720838aaf1420416494c5505096478156b4 ]
+[ Upstream commit 687aa0c5581b8d4aa87fd92973e4ee576b550cdf ]
 
-vsock_find_cid() and vsock_dev_do_ioctl() may race with module unload.
-transport_{g2h,h2g} may become NULL after the NULL check.
+Transport assignment may race with module unload. Protect new_transport
+from becoming a stale pointer.
 
-Introduce vsock_transport_local_cid() to protect from a potential
-null-ptr-deref.
+This also takes care of an insecure call in vsock_use_local_transport();
+add a lockdep assert.
 
-KASAN: null-ptr-deref in range [0x0000000000000118-0x000000000000011f]
-RIP: 0010:vsock_find_cid+0x47/0x90
+BUG: unable to handle page fault for address: fffffbfff8056000
+Oops: Oops: 0000 [#1] SMP KASAN
+RIP: 0010:vsock_assign_transport+0x366/0x600
 Call Trace:
- __vsock_bind+0x4b2/0x720
- vsock_bind+0x90/0xe0
- __sys_bind+0x14d/0x1e0
- __x64_sys_bind+0x6e/0xc0
- do_syscall_64+0x92/0x1c0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-KASAN: null-ptr-deref in range [0x0000000000000118-0x000000000000011f]
-RIP: 0010:vsock_dev_do_ioctl.isra.0+0x58/0xf0
-Call Trace:
- __x64_sys_ioctl+0x12d/0x190
+ vsock_connect+0x59c/0xc40
+ __sys_connect+0xe8/0x100
+ __x64_sys_connect+0x6e/0xc0
  do_syscall_64+0x92/0x1c0
  entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
 Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Link: https://patch.msgid.link/20250703-vsock-transports-toctou-v4-1-98f0eb530747@rbox.co
+Link: https://patch.msgid.link/20250703-vsock-transports-toctou-v4-2-98f0eb530747@rbox.co
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ net/vmw_vsock/af_vsock.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
 diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index a2271da346d34..42b5ff148d80b 100644
+index 42b5ff148d80b..060e971299873 100644
 --- a/net/vmw_vsock/af_vsock.c
 +++ b/net/vmw_vsock/af_vsock.c
-@@ -527,9 +527,25 @@ int vsock_assign_transport(struct vsock_sock *vsk, struct vsock_sock *psk)
+@@ -403,6 +403,8 @@ EXPORT_SYMBOL_GPL(vsock_enqueue_accept);
+ 
+ static bool vsock_use_local_transport(unsigned int remote_cid)
+ {
++	lockdep_assert_held(&vsock_register_mutex);
++
+ 	if (!transport_local)
+ 		return false;
+ 
+@@ -460,6 +462,8 @@ int vsock_assign_transport(struct vsock_sock *vsk, struct vsock_sock *psk)
+ 
+ 	remote_flags = vsk->remote_addr.svm_flags;
+ 
++	mutex_lock(&vsock_register_mutex);
++
+ 	switch (sk->sk_type) {
+ 	case SOCK_DGRAM:
+ 		new_transport = transport_dgram;
+@@ -475,12 +479,15 @@ int vsock_assign_transport(struct vsock_sock *vsk, struct vsock_sock *psk)
+ 			new_transport = transport_h2g;
+ 		break;
+ 	default:
+-		return -ESOCKTNOSUPPORT;
++		ret = -ESOCKTNOSUPPORT;
++		goto err;
+ 	}
+ 
+ 	if (vsk->transport) {
+-		if (vsk->transport == new_transport)
+-			return 0;
++		if (vsk->transport == new_transport) {
++			ret = 0;
++			goto err;
++		}
+ 
+ 		/* transport->release() must be called with sock lock acquired.
+ 		 * This path can only be taken during vsock_connect(), where we
+@@ -504,8 +511,16 @@ int vsock_assign_transport(struct vsock_sock *vsk, struct vsock_sock *psk)
+ 	/* We increase the module refcnt to prevent the transport unloading
+ 	 * while there are open sockets assigned to it.
+ 	 */
+-	if (!new_transport || !try_module_get(new_transport->module))
+-		return -ENODEV;
++	if (!new_transport || !try_module_get(new_transport->module)) {
++		ret = -ENODEV;
++		goto err;
++	}
++
++	/* It's safe to release the mutex after a successful try_module_get().
++	 * Whichever transport `new_transport` points at, it won't go away until
++	 * the last module_put() below or in vsock_deassign_transport().
++	 */
++	mutex_unlock(&vsock_register_mutex);
+ 
+ 	if (sk->sk_type == SOCK_SEQPACKET) {
+ 		if (!new_transport->seqpacket_allow ||
+@@ -524,6 +539,9 @@ int vsock_assign_transport(struct vsock_sock *vsk, struct vsock_sock *psk)
+ 	vsk->transport = new_transport;
+ 
+ 	return 0;
++err:
++	mutex_unlock(&vsock_register_mutex);
++	return ret;
  }
  EXPORT_SYMBOL_GPL(vsock_assign_transport);
  
-+/*
-+ * Provide safe access to static transport_{h2g,g2h,dgram,local} callbacks.
-+ * Otherwise we may race with module removal. Do not use on `vsk->transport`.
-+ */
-+static u32 vsock_registered_transport_cid(const struct vsock_transport **transport)
-+{
-+	u32 cid = VMADDR_CID_ANY;
-+
-+	mutex_lock(&vsock_register_mutex);
-+	if (*transport)
-+		cid = (*transport)->get_local_cid();
-+	mutex_unlock(&vsock_register_mutex);
-+
-+	return cid;
-+}
-+
- bool vsock_find_cid(unsigned int cid)
- {
--	if (transport_g2h && cid == transport_g2h->get_local_cid())
-+	if (cid == vsock_registered_transport_cid(&transport_g2h))
- 		return true;
- 
- 	if (transport_h2g && cid == VMADDR_CID_HOST)
-@@ -2320,18 +2336,17 @@ static long vsock_dev_do_ioctl(struct file *filp,
- 			       unsigned int cmd, void __user *ptr)
- {
- 	u32 __user *p = ptr;
--	u32 cid = VMADDR_CID_ANY;
- 	int retval = 0;
-+	u32 cid;
- 
- 	switch (cmd) {
- 	case IOCTL_VM_SOCKETS_GET_LOCAL_CID:
- 		/* To be compatible with the VMCI behavior, we prioritize the
- 		 * guest CID instead of well-know host CID (VMADDR_CID_HOST).
- 		 */
--		if (transport_g2h)
--			cid = transport_g2h->get_local_cid();
--		else if (transport_h2g)
--			cid = transport_h2g->get_local_cid();
-+		cid = vsock_registered_transport_cid(&transport_g2h);
-+		if (cid == VMADDR_CID_ANY)
-+			cid = vsock_registered_transport_cid(&transport_h2g);
- 
- 		if (put_user(cid, p) != 0)
- 			retval = -EFAULT;
 -- 
 2.39.5
 
