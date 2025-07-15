@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE9F2566;
-	Tue, 15 Jul 2025 13:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7A6137923;
+	Tue, 15 Jul 2025 13:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585814; cv=none; b=i0b0gak+aWZp/FM47odMUrNn02UjBK89eFl28UDacWIQlX0ON2pzjLr2rKZqdVzPWCP9DluNxvhKjoGEffquimgpL9CPTLASs5cCSnwcTybBZGwLVt9vqZZ7wQqX43q2jfUe1P2Or9p/fzCYnKlbRxB7A6itbnaIcbC7TN1RGJE=
+	t=1752585817; cv=none; b=Rqhg2TseHGngTtHoveGjl9jAXRqvYMaeW25mF3cO1H0G8T+5JZgjhmaNN2Cq0YeTT7u6fZmnK+B71zmS8dEBuwRnRhKPsBeXa2GgiaE+8G+hbKPpP3Gd3YJDQqPs17gAkI5KyT1usrMtceQLVHDbUsuKNtvhQr6TC7FPZZ5fhJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585814; c=relaxed/simple;
-	bh=oOelEYDp7bDQ46ajCOuDEWRp6/7mlFRxR5gPTe3ytIg=;
+	s=arc-20240116; t=1752585817; c=relaxed/simple;
+	bh=TRH+Kt9ld09981792TzKffyBwOPjWv2/K69A1xaKFh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnc/VjBfn9J7jRMzJHaG7GLc8GbnWECImRrY6adS75+Bc3yQhQPHIhZ6FXrFQVnAiU1wbKRog/RntdFOq4Cxh5eAMfjwZPWL20XLDqfpHcyPQK9QSdIFAPaprPRbCf9DE5Y6tuTzd9DC7FIovvIMTSmCfWfultLWijbFFThLquo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9HZ7BjF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7sfTxKjOwsp8NGUyyF3CC0vLEdSE4tu7FshRl7j+5FG8DwVTshgi0Igj4HziJqzXP+4n6yrVUgqjx68in8j22WSSAg2XoyFF/bC41CJ+DEy77rHG7lScMGWo8P7FIulEos5CbXHKAwaMdEaqA0Qcg0Yaw/QGbULXoLS9cwkp9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nlBOR0r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9HZ7BjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89B4C4CEE3;
-	Tue, 15 Jul 2025 13:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nlBOR0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC21C4CEE3;
+	Tue, 15 Jul 2025 13:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585814;
-	bh=oOelEYDp7bDQ46ajCOuDEWRp6/7mlFRxR5gPTe3ytIg=;
+	s=korg; t=1752585816;
+	bh=TRH+Kt9ld09981792TzKffyBwOPjWv2/K69A1xaKFh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9HZ7BjFfSv1PoGfbbGLkHTmE77i/QmSajrlJBU1SBXK8MmEmNYhNILUJk4AaovE+
-	 ijfecoTG/dUYZpbQhrvgKjXGQyLML4f0C80mkg5TvS1NBe1eTHtDV4GnwgpaCLbbbe
-	 w6iDSnE8N0LHhmcX+EK0Rfc2K2wo05J7NaI5WC04=
+	b=2nlBOR0rqx0wlPrqmbp1B2WJfbvhy8qzXMDT5gxQ6U2A33vuswSZRteTF17aVHjJJ
+	 0w1P/T9SXgzXH9buZaTUGZuhg+CxGesLL9jAAX3KibvEjAGpVzony/P2F59mPuGnHo
+	 7I0GLifVCqZHDbWdE7eFHfc4QjGqgrUhheY+/Gwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	EricChan <chenchuangyu@xiaomi.com>,
-	Simon Horman <horms@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andre Edich <andre.edich@microchip.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/109] net: stmmac: Fix interrupt handling for level-triggered mode in DWC_XGMAC2
-Date: Tue, 15 Jul 2025 15:12:34 +0200
-Message-ID: <20250715130759.610156847@linuxfoundation.org>
+Subject: [PATCH 6.6 019/109] net: phy: smsc: Fix Auto-MDIX configuration when disabled by strap
+Date: Tue, 15 Jul 2025 15:12:35 +0200
+Message-ID: <20250715130759.651714434@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -52,75 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: EricChan <chenchuangyu@xiaomi.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 78b7920a03351a8402de2f81914c1d2e2bdf24b7 ]
+[ Upstream commit a141af8eb2272ab0f677a7f2653874840bc9b214 ]
 
-According to the Synopsys Controller IP XGMAC-10G Ethernet MAC Databook
-v3.30a (section 2.7.2), when the INTM bit in the DMA_Mode register is set
-to 2, the sbd_perch_tx_intr_o[] and sbd_perch_rx_intr_o[] signals operate
-in level-triggered mode. However, in this configuration, the DMA does not
-assert the XGMAC_NIS status bit for Rx or Tx interrupt events.
+Correct the Auto-MDIX configuration to ensure userspace settings are
+respected when the feature is disabled by the AUTOMDIX_EN hardware strap.
 
-This creates a functional regression where the condition
-if (likely(intr_status & XGMAC_NIS)) in dwxgmac2_dma_interrupt() will
-never evaluate to true, preventing proper interrupt handling for
-level-triggered mode. The hardware specification explicitly states that
-"The DMA does not assert the NIS status bit for the Rx or Tx interrupt
-events" (Synopsys DWC_XGMAC2 Databook v3.30a, sec. 2.7.2).
+The LAN9500 PHY allows its default MDI-X mode to be configured via a
+hardware strap. If this strap sets the default to "MDI-X off", the
+driver was previously unable to enable Auto-MDIX from userspace.
 
-The fix ensures correct handling of both edge and level-triggered
-interrupts while maintaining backward compatibility with existing
-configurations. It has been tested on the hardware device (not publicly
-available), and it can properly trigger the RX and TX interrupt handling
-in both the INTM=0 and INTM=2 configurations.
+When handling the ETH_TP_MDI_AUTO case, the driver would set the
+SPECIAL_CTRL_STS_AMDIX_ENABLE_ bit but neglected to set the required
+SPECIAL_CTRL_STS_OVRRD_AMDIX_ bit. Without the override flag, the PHY
+falls back to its hardware strap default, ignoring the software request.
 
-Fixes: d6ddfacd95c7 ("net: stmmac: Add DMA related callbacks for XGMAC2")
-Tested-by: EricChan <chenchuangyu@xiaomi.com>
-Signed-off-by: EricChan <chenchuangyu@xiaomi.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250703020449.105730-1-chenchuangyu@xiaomi.com
+This patch corrects the behavior by also setting the override bit when
+enabling Auto-MDIX. This ensures that the userspace configuration takes
+precedence over the hardware strap, allowing Auto-MDIX to be enabled
+correctly in all scenarios.
+
+Fixes: 05b35e7eb9a1 ("smsc95xx: add phylib support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: Andre Edich <andre.edich@microchip.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250703114941.3243890-2-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/dwxgmac2_dma.c    | 24 +++++++++----------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ drivers/net/phy/smsc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-index dd2ab6185c40e..05ea74e937939 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-@@ -364,19 +364,17 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
- 	}
- 
- 	/* TX/RX NORMAL interrupts */
--	if (likely(intr_status & XGMAC_NIS)) {
--		if (likely(intr_status & XGMAC_RI)) {
--			u64_stats_update_begin(&stats->syncp);
--			u64_stats_inc(&stats->rx_normal_irq_n[chan]);
--			u64_stats_update_end(&stats->syncp);
--			ret |= handle_rx;
--		}
--		if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
--			u64_stats_update_begin(&stats->syncp);
--			u64_stats_inc(&stats->tx_normal_irq_n[chan]);
--			u64_stats_update_end(&stats->syncp);
--			ret |= handle_tx;
--		}
-+	if (likely(intr_status & XGMAC_RI)) {
-+		u64_stats_update_begin(&stats->syncp);
-+		u64_stats_inc(&stats->rx_normal_irq_n[chan]);
-+		u64_stats_update_end(&stats->syncp);
-+		ret |= handle_rx;
-+	}
-+	if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
-+		u64_stats_update_begin(&stats->syncp);
-+		u64_stats_inc(&stats->tx_normal_irq_n[chan]);
-+		u64_stats_update_end(&stats->syncp);
-+		ret |= handle_tx;
- 	}
- 
- 	/* Clear interrupts */
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index c88edb19d2e71..b7f9c4649652b 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -167,7 +167,8 @@ static int lan87xx_config_aneg(struct phy_device *phydev)
+ 			SPECIAL_CTRL_STS_AMDIX_STATE_;
+ 		break;
+ 	case ETH_TP_MDI_AUTO:
+-		val = SPECIAL_CTRL_STS_AMDIX_ENABLE_;
++		val = SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
++			SPECIAL_CTRL_STS_AMDIX_ENABLE_;
+ 		break;
+ 	default:
+ 		return genphy_config_aneg(phydev);
 -- 
 2.39.5
 
