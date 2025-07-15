@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3DD192D8A;
-	Tue, 15 Jul 2025 13:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B362E175C;
+	Tue, 15 Jul 2025 13:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585736; cv=none; b=DHFqQOr9dTtwO4BivBq3JEerE+1RFx8Vf4S9TEbT97SJsCTRVulpFkriBl5bnlI+klX0/Un+d6d5WWAj0PZbgY7uAW8mAke/PXi3OVw/HoZSS29BQnJJDamQ53cwZ+/G6n2z0QVMbgrOkJ5jMtyipsTU4+kv1A1ck/eMmXYUy+I=
+	t=1752585738; cv=none; b=a6tr0mM7aW0JRHmUxEUEX9y17Ggp5kASS+0/EkgC2zXHN7w87ddXTImitJ4oTRVe3Xs2u2K7u94nBaa1IZYzvUsyHoLzQ0vNly4FP/3rs9apIqTMnAP29PvFHVwELeg460dhkkQA6m/0jEBAyQBVsABlfmnmW30rU3tsmZYsJZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585736; c=relaxed/simple;
-	bh=b9IbN4tjVxp1KLWZKuJq5jzQDnXN4k0jdn0+MMjPjWQ=;
+	s=arc-20240116; t=1752585738; c=relaxed/simple;
+	bh=mTV7CdBa4w+ZhNCO386NAZ25W3KBxOLLKa0hPeWEYTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bs0MmE9Pb0dvKmlCLauW1qT0IH13o/DFes+ZEXOjIWH7ew1XgIbdkh0zYSucsayJChsTkjRFD7on1A7Lg9gsZta6m/u7cvbmru45HR3P0AzPwrI3rNYzVa1dyixPlSmacyAIpqKdwPgYZcZJD/Ho0e5u4x3ArbCDCmpf/UeBbJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzoEsCBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Smb20ooDAvzUHsQ+7OXNxbomi1bBbhGEjEf7Mgx7yA9buKn0RQzzYgWR2iPBrxipjtmMzd7OSIGWc6Eyq1hhaIyM3jt0z9Emr8TAF4EO9l1YBV+kjdRDlz5yrAavEvYTvnFb1EWz+REvGI21yLC7vAfLDEc3HSI+gNKCYkNVWME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBnDZDcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzoEsCBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D168C4CEF1;
-	Tue, 15 Jul 2025 13:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBnDZDcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2A8C4CEE3;
+	Tue, 15 Jul 2025 13:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585735;
-	bh=b9IbN4tjVxp1KLWZKuJq5jzQDnXN4k0jdn0+MMjPjWQ=;
+	s=korg; t=1752585738;
+	bh=mTV7CdBa4w+ZhNCO386NAZ25W3KBxOLLKa0hPeWEYTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NzoEsCBxaVUQTppjn1nQzSDk0yyKv8nlpiHIy234ysfdHn0mFNqEUXTi92yU27dAJ
-	 lfpe9dlFIlKaKPZpAvcAzQ1j4Mes9DHbJhejCcaN7wkY9nWONgq2ld6QEG+eiawqFg
-	 ee+qvvP6QYjbUMZxzM6OzQH+4rQhoTh8EPeK4GwY=
+	b=oBnDZDcdYQfw22wbsJW2kCs67Bj1g4Pba1lw2ROzzmKL+LqxhZbseoqrOeNYuaJDb
+	 8VjmVRtvGlu+HNLCrhCCLbeFh1kiyfTOo6xm4xuPQ0YFKsnDmwuQEpI9mG16Vj5L0G
+	 412d3pegmSxpLOphLJk+ff6/e86UyR8z6x7o8SyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Hongbo Li <lihongbo22@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/163] erofs: tidy up zdata.c
-Date: Tue, 15 Jul 2025 15:13:09 +0200
-Message-ID: <20250715130813.705754015@linuxfoundation.org>
+Subject: [PATCH 6.12 122/163] erofs: refine readahead tracepoint
+Date: Tue, 15 Jul 2025 15:13:10 +0200
+Message-ID: <20250715130813.745505183@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -53,350 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 6f435e94a19ad25b372bc61443afd0839b8a521c ]
+[ Upstream commit 4eb56b0761e75034dd35067a81da4c280c178262 ]
 
-All small code style adjustments, no logic changes:
+ - trace_erofs_readpages => trace_erofs_readahead;
 
- - z_erofs_decompress_frontend => z_erofs_frontend;
- - z_erofs_decompress_backend => z_erofs_backend;
- - Use Z_EROFS_DEFINE_FRONTEND() to replace DECOMPRESS_FRONTEND_INIT();
- - `nr_folios` should be `nrpages` in z_erofs_readahead();
- - Refine in-line comments.
+ - Rename a redundant statement `nrpages = readahead_count(rac);`;
 
-Reviewed-by: Chao Yu <chao@kernel.org>
+ - Move the tracepoint to the beginning of z_erofs_readahead().
+
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250114034429.431408-3-hsiangkao@linux.alibaba.com
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Link: https://lore.kernel.org/r/20250514120820.2739288-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Stable-dep-of: d53238b614e0 ("erofs: fix to add missing tracepoint in erofs_readahead()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 111 ++++++++++++++++++-----------------------------
- 1 file changed, 43 insertions(+), 68 deletions(-)
+ fs/erofs/fileio.c            | 2 +-
+ fs/erofs/zdata.c             | 5 ++---
+ include/trace/events/erofs.h | 2 +-
+ 3 files changed, 4 insertions(+), 5 deletions(-)
 
+diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
+index c8805bc732c6b..c865a7a610306 100644
+--- a/fs/erofs/fileio.c
++++ b/fs/erofs/fileio.c
+@@ -180,7 +180,7 @@ static void erofs_fileio_readahead(struct readahead_control *rac)
+ 	struct folio *folio;
+ 	int err;
+ 
+-	trace_erofs_readpages(inode, readahead_index(rac),
++	trace_erofs_readahead(inode, readahead_index(rac),
+ 			      readahead_count(rac), true);
+ 	while ((folio = readahead_folio(rac))) {
+ 		err = erofs_fileio_scan_folio(&io, folio);
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 9e01b52ecad47..f13052c3532ab 100644
+index f13052c3532ab..94c1e2d64df96 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -453,31 +453,25 @@ int __init z_erofs_init_subsystem(void)
- }
- 
- enum z_erofs_pclustermode {
-+	/* It has previously been linked into another processing chain */
- 	Z_EROFS_PCLUSTER_INFLIGHT,
- 	/*
--	 * a weak form of Z_EROFS_PCLUSTER_FOLLOWED, the difference is that it
--	 * could be dispatched into bypass queue later due to uptodated managed
--	 * pages. All related online pages cannot be reused for inplace I/O (or
--	 * bvpage) since it can be directly decoded without I/O submission.
-+	 * A weaker form of Z_EROFS_PCLUSTER_FOLLOWED; the difference is that it
-+	 * may be dispatched to the bypass queue later due to uptodated managed
-+	 * folios.  All file-backed folios related to this pcluster cannot be
-+	 * reused for in-place I/O (or bvpage) since the pcluster may be decoded
-+	 * in a separate queue (and thus out of order).
- 	 */
- 	Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE,
- 	/*
--	 * The pcluster was just linked to a decompression chain by us.  It can
--	 * also be linked with the remaining pclusters, which means if the
--	 * processing page is the tail page of a pcluster, this pcluster can
--	 * safely use the whole page (since the previous pcluster is within the
--	 * same chain) for in-place I/O, as illustrated below:
--	 *  ___________________________________________________
--	 * |  tail (partial) page  |    head (partial) page    |
--	 * |  (of the current pcl) |   (of the previous pcl)   |
--	 * |___PCLUSTER_FOLLOWED___|_____PCLUSTER_FOLLOWED_____|
--	 *
--	 * [  (*) the page above can be used as inplace I/O.   ]
-+	 * The pcluster has just been linked to our processing chain.
-+	 * File-backed folios (except for the head page) related to it can be
-+	 * used for in-place I/O (or bvpage).
- 	 */
- 	Z_EROFS_PCLUSTER_FOLLOWED,
- };
- 
--struct z_erofs_decompress_frontend {
-+struct z_erofs_frontend {
- 	struct inode *const inode;
- 	struct erofs_map_blocks map;
- 	struct z_erofs_bvec_iter biter;
-@@ -493,11 +487,11 @@ struct z_erofs_decompress_frontend {
- 	unsigned int icur;
- };
- 
--#define DECOMPRESS_FRONTEND_INIT(__i) { \
--	.inode = __i, .head = Z_EROFS_PCLUSTER_TAIL, \
--	.mode = Z_EROFS_PCLUSTER_FOLLOWED }
-+#define Z_EROFS_DEFINE_FRONTEND(fe, i, ho) struct z_erofs_frontend fe = { \
-+	.inode = i, .head = Z_EROFS_PCLUSTER_TAIL, \
-+	.mode = Z_EROFS_PCLUSTER_FOLLOWED, .headoffset = ho }
- 
--static bool z_erofs_should_alloc_cache(struct z_erofs_decompress_frontend *fe)
-+static bool z_erofs_should_alloc_cache(struct z_erofs_frontend *fe)
- {
- 	unsigned int cachestrategy = EROFS_I_SB(fe->inode)->opt.cache_strategy;
- 
-@@ -514,7 +508,7 @@ static bool z_erofs_should_alloc_cache(struct z_erofs_decompress_frontend *fe)
- 	return false;
- }
- 
--static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe)
-+static void z_erofs_bind_cache(struct z_erofs_frontend *fe)
- {
- 	struct address_space *mc = MNGD_MAPPING(EROFS_I_SB(fe->inode));
- 	struct z_erofs_pcluster *pcl = fe->pcl;
-@@ -671,7 +665,7 @@ int z_erofs_init_super(struct super_block *sb)
- }
- 
- /* callers must be with pcluster lock held */
--static int z_erofs_attach_page(struct z_erofs_decompress_frontend *fe,
-+static int z_erofs_attach_page(struct z_erofs_frontend *fe,
- 			       struct z_erofs_bvec *bvec, bool exclusive)
- {
- 	struct z_erofs_pcluster *pcl = fe->pcl;
-@@ -717,7 +711,7 @@ static bool z_erofs_get_pcluster(struct z_erofs_pcluster *pcl)
- 	return true;
- }
- 
--static int z_erofs_register_pcluster(struct z_erofs_decompress_frontend *fe)
-+static int z_erofs_register_pcluster(struct z_erofs_frontend *fe)
- {
- 	struct erofs_map_blocks *map = &fe->map;
- 	struct super_block *sb = fe->inode->i_sb;
-@@ -787,7 +781,7 @@ static int z_erofs_register_pcluster(struct z_erofs_decompress_frontend *fe)
- 	return err;
- }
- 
--static int z_erofs_pcluster_begin(struct z_erofs_decompress_frontend *fe)
-+static int z_erofs_pcluster_begin(struct z_erofs_frontend *fe)
- {
- 	struct erofs_map_blocks *map = &fe->map;
- 	struct super_block *sb = fe->inode->i_sb;
-@@ -860,14 +854,9 @@ static int z_erofs_pcluster_begin(struct z_erofs_decompress_frontend *fe)
- 	return 0;
- }
- 
--/*
-- * keep in mind that no referenced pclusters will be freed
-- * only after a RCU grace period.
-- */
- static void z_erofs_rcu_callback(struct rcu_head *head)
- {
--	z_erofs_free_pcluster(container_of(head,
--			struct z_erofs_pcluster, rcu));
-+	z_erofs_free_pcluster(container_of(head, struct z_erofs_pcluster, rcu));
- }
- 
- static bool __erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
-@@ -909,8 +898,7 @@ static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
- 	return free;
- }
- 
--unsigned long z_erofs_shrink_scan(struct erofs_sb_info *sbi,
--				  unsigned long nr_shrink)
-+unsigned long z_erofs_shrink_scan(struct erofs_sb_info *sbi, unsigned long nr)
- {
- 	struct z_erofs_pcluster *pcl;
- 	unsigned long index, freed = 0;
-@@ -923,7 +911,7 @@ unsigned long z_erofs_shrink_scan(struct erofs_sb_info *sbi,
- 		xa_unlock(&sbi->managed_pslots);
- 
- 		++freed;
--		if (!--nr_shrink)
-+		if (!--nr)
- 			return freed;
- 		xa_lock(&sbi->managed_pslots);
- 	}
-@@ -952,7 +940,7 @@ static void z_erofs_put_pcluster(struct erofs_sb_info *sbi,
- 		call_rcu(&pcl->rcu, z_erofs_rcu_callback);
- }
- 
--static void z_erofs_pcluster_end(struct z_erofs_decompress_frontend *fe)
-+static void z_erofs_pcluster_end(struct z_erofs_frontend *fe)
- {
- 	struct z_erofs_pcluster *pcl = fe->pcl;
- 
-@@ -965,13 +953,9 @@ static void z_erofs_pcluster_end(struct z_erofs_decompress_frontend *fe)
- 	if (fe->candidate_bvpage)
- 		fe->candidate_bvpage = NULL;
- 
--	/*
--	 * if all pending pages are added, don't hold its reference
--	 * any longer if the pcluster isn't hosted by ourselves.
--	 */
-+	/* Drop refcount if it doesn't belong to our processing chain */
- 	if (fe->mode < Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE)
- 		z_erofs_put_pcluster(EROFS_I_SB(fe->inode), pcl, false);
--
- 	fe->pcl = NULL;
- }
- 
-@@ -1000,7 +984,7 @@ static int z_erofs_read_fragment(struct super_block *sb, struct folio *folio,
- 	return 0;
- }
- 
--static int z_erofs_scan_folio(struct z_erofs_decompress_frontend *f,
-+static int z_erofs_scan_folio(struct z_erofs_frontend *f,
- 			      struct folio *folio, bool ra)
- {
- 	struct inode *const inode = f->inode;
-@@ -1113,7 +1097,7 @@ static bool z_erofs_page_is_invalidated(struct page *page)
- 	return !page_folio(page)->mapping && !z_erofs_is_shortlived_page(page);
- }
- 
--struct z_erofs_decompress_backend {
-+struct z_erofs_backend {
- 	struct page *onstack_pages[Z_EROFS_ONSTACK_PAGES];
- 	struct super_block *sb;
- 	struct z_erofs_pcluster *pcl;
-@@ -1134,7 +1118,7 @@ struct z_erofs_bvec_item {
- 	struct list_head list;
- };
- 
--static void z_erofs_do_decompressed_bvec(struct z_erofs_decompress_backend *be,
-+static void z_erofs_do_decompressed_bvec(struct z_erofs_backend *be,
- 					 struct z_erofs_bvec *bvec)
- {
- 	int poff = bvec->offset + be->pcl->pageofs_out;
-@@ -1159,8 +1143,7 @@ static void z_erofs_do_decompressed_bvec(struct z_erofs_decompress_backend *be,
- 	list_add(&item->list, &be->decompressed_secondary_bvecs);
- }
- 
--static void z_erofs_fill_other_copies(struct z_erofs_decompress_backend *be,
--				      int err)
-+static void z_erofs_fill_other_copies(struct z_erofs_backend *be, int err)
- {
- 	unsigned int off0 = be->pcl->pageofs_out;
- 	struct list_head *p, *n;
-@@ -1201,7 +1184,7 @@ static void z_erofs_fill_other_copies(struct z_erofs_decompress_backend *be,
- 	}
- }
- 
--static void z_erofs_parse_out_bvecs(struct z_erofs_decompress_backend *be)
-+static void z_erofs_parse_out_bvecs(struct z_erofs_backend *be)
- {
- 	struct z_erofs_pcluster *pcl = be->pcl;
- 	struct z_erofs_bvec_iter biter;
-@@ -1226,8 +1209,7 @@ static void z_erofs_parse_out_bvecs(struct z_erofs_decompress_backend *be)
- 		z_erofs_put_shortlivedpage(be->pagepool, old_bvpage);
- }
- 
--static int z_erofs_parse_in_bvecs(struct z_erofs_decompress_backend *be,
--				  bool *overlapped)
-+static int z_erofs_parse_in_bvecs(struct z_erofs_backend *be, bool *overlapped)
- {
- 	struct z_erofs_pcluster *pcl = be->pcl;
- 	unsigned int pclusterpages = z_erofs_pclusterpages(pcl);
-@@ -1262,8 +1244,7 @@ static int z_erofs_parse_in_bvecs(struct z_erofs_decompress_backend *be,
- 	return err;
- }
- 
--static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
--				       int err)
-+static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, int err)
- {
- 	struct erofs_sb_info *const sbi = EROFS_SB(be->sb);
- 	struct z_erofs_pcluster *pcl = be->pcl;
-@@ -1392,7 +1373,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- static int z_erofs_decompress_queue(const struct z_erofs_decompressqueue *io,
- 				    struct page **pagepool)
- {
--	struct z_erofs_decompress_backend be = {
-+	struct z_erofs_backend be = {
- 		.sb = io->sb,
- 		.pagepool = pagepool,
- 		.decompressed_secondary_bvecs =
-@@ -1470,7 +1451,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- }
- 
- static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
--				 struct z_erofs_decompress_frontend *f,
-+				 struct z_erofs_frontend *f,
- 				 struct z_erofs_pcluster *pcl,
- 				 unsigned int nr,
- 				 struct address_space *mc)
-@@ -1649,7 +1630,7 @@ static void z_erofs_endio(struct bio *bio)
- 		bio_put(bio);
- }
- 
--static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
-+static void z_erofs_submit_queue(struct z_erofs_frontend *f,
- 				 struct z_erofs_decompressqueue *fgq,
- 				 bool *force_fg, bool readahead)
- {
-@@ -1782,17 +1763,16 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 	z_erofs_decompress_kickoff(q[JQ_SUBMIT], nr_bios);
- }
- 
--static int z_erofs_runqueue(struct z_erofs_decompress_frontend *f,
--			    unsigned int ra_folios)
-+static int z_erofs_runqueue(struct z_erofs_frontend *f, unsigned int rapages)
- {
- 	struct z_erofs_decompressqueue io[NR_JOBQUEUES];
- 	struct erofs_sb_info *sbi = EROFS_I_SB(f->inode);
--	bool force_fg = z_erofs_is_sync_decompress(sbi, ra_folios);
-+	bool force_fg = z_erofs_is_sync_decompress(sbi, rapages);
- 	int err;
- 
- 	if (f->head == Z_EROFS_PCLUSTER_TAIL)
- 		return 0;
--	z_erofs_submit_queue(f, io, &force_fg, !!ra_folios);
-+	z_erofs_submit_queue(f, io, &force_fg, !!rapages);
- 
- 	/* handle bypass queue (no i/o pclusters) immediately */
- 	err = z_erofs_decompress_queue(&io[JQ_BYPASS], &f->pagepool);
-@@ -1810,7 +1790,7 @@ static int z_erofs_runqueue(struct z_erofs_decompress_frontend *f,
-  * Since partial uptodate is still unimplemented for now, we have to use
-  * approximate readmore strategies as a start.
-  */
--static void z_erofs_pcluster_readmore(struct z_erofs_decompress_frontend *f,
-+static void z_erofs_pcluster_readmore(struct z_erofs_frontend *f,
- 		struct readahead_control *rac, bool backmost)
- {
- 	struct inode *inode = f->inode;
-@@ -1865,12 +1845,10 @@ static void z_erofs_pcluster_readmore(struct z_erofs_decompress_frontend *f,
- static int z_erofs_read_folio(struct file *file, struct folio *folio)
- {
- 	struct inode *const inode = folio->mapping->host;
--	struct z_erofs_decompress_frontend f = DECOMPRESS_FRONTEND_INIT(inode);
-+	Z_EROFS_DEFINE_FRONTEND(f, inode, folio_pos(folio));
- 	int err;
- 
- 	trace_erofs_read_folio(folio, false);
--	f.headoffset = (erofs_off_t)folio->index << PAGE_SHIFT;
--
- 	z_erofs_pcluster_readmore(&f, NULL, true);
- 	err = z_erofs_scan_folio(&f, folio, false);
- 	z_erofs_pcluster_readmore(&f, NULL, false);
-@@ -1890,17 +1868,14 @@ static int z_erofs_read_folio(struct file *file, struct folio *folio)
- static void z_erofs_readahead(struct readahead_control *rac)
+@@ -1869,13 +1869,12 @@ static void z_erofs_readahead(struct readahead_control *rac)
  {
  	struct inode *const inode = rac->mapping->host;
--	struct z_erofs_decompress_frontend f = DECOMPRESS_FRONTEND_INIT(inode);
-+	Z_EROFS_DEFINE_FRONTEND(f, inode, readahead_pos(rac));
- 	struct folio *head = NULL, *folio;
--	unsigned int nr_folios;
-+	unsigned int nrpages = readahead_count(rac);
+ 	Z_EROFS_DEFINE_FRONTEND(f, inode, readahead_pos(rac));
+-	struct folio *head = NULL, *folio;
+ 	unsigned int nrpages = readahead_count(rac);
++	struct folio *head = NULL, *folio;
  	int err;
  
--	f.headoffset = readahead_pos(rac);
--
++	trace_erofs_readahead(inode, readahead_index(rac), nrpages, false);
  	z_erofs_pcluster_readmore(&f, rac, true);
--	nr_folios = readahead_count(rac);
--	trace_erofs_readpages(inode, readahead_index(rac), nr_folios, false);
--
-+	nrpages = readahead_count(rac);
-+	trace_erofs_readpages(inode, readahead_index(rac), nrpages, false);
+-	nrpages = readahead_count(rac);
+-	trace_erofs_readpages(inode, readahead_index(rac), nrpages, false);
  	while ((folio = readahead_folio(rac))) {
  		folio->private = head;
  		head = folio;
-@@ -1919,7 +1894,7 @@ static void z_erofs_readahead(struct readahead_control *rac)
- 	z_erofs_pcluster_readmore(&f, rac, false);
- 	z_erofs_pcluster_end(&f);
+diff --git a/include/trace/events/erofs.h b/include/trace/events/erofs.h
+index ad79f1ca4fb5a..198a0c644bea1 100644
+--- a/include/trace/events/erofs.h
++++ b/include/trace/events/erofs.h
+@@ -113,7 +113,7 @@ TRACE_EVENT(erofs_read_folio,
+ 		__entry->raw)
+ );
  
--	(void)z_erofs_runqueue(&f, nr_folios);
-+	(void)z_erofs_runqueue(&f, nrpages);
- 	erofs_put_metabuf(&f.map.buf);
- 	erofs_release_pages(&f.pagepool);
- }
+-TRACE_EVENT(erofs_readpages,
++TRACE_EVENT(erofs_readahead,
+ 
+ 	TP_PROTO(struct inode *inode, pgoff_t start, unsigned int nrpage,
+ 		bool raw),
 -- 
 2.39.5
 
