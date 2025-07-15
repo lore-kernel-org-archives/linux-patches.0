@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE6A2561AE;
-	Tue, 15 Jul 2025 13:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AD62561AE;
+	Tue, 15 Jul 2025 13:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587286; cv=none; b=hF9h0cGcq1xdak8u4PX+2Il4eomOXjq5WydUKjYIX2wu2ro2OXwpjMnuJbLYMQIdYOmueN+7JNoKgrAz/b3dUjKQ5gqKEkSymbJlIjEoUXwlysNmlN5g64gs1r+uFibg8lZgc/HokvQekP1hOIAulIivzPTHvARjg2ixWFeHKQI=
+	t=1752587289; cv=none; b=Xl3GLZVpmYLSwZiKV0CM70L2yOX1nMVKMu4Ug7HCW1LFEB2gjzIiZCRhLH13iQCqEW54qCxRftuD6SDYnLI/BpxKMZvdC0dKQOa9BaDzuuoudTpewXg3KO11sJ0nbrsyDNUqFDvAi8n1COw2a4XbtA4WyeDgtv3k35+LL01lTDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587286; c=relaxed/simple;
-	bh=nNp3/WzAuuQ37UbNOwoCD+7GxiEPZ/sll/Ew5RrRstA=;
+	s=arc-20240116; t=1752587289; c=relaxed/simple;
+	bh=gymZ/Fst5fKmTI6aG2s4e8MO13Cy9VwnbsW8ZMXgB7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FtyFtmovPg4a8L18GwwR3b+kQ6w+oq46OTVU1o6P7JaDvYxZ8CWqXqiSjXdD1px7LG/My+9Sa2aMIQDv5LFY5BFc7RyDXrequV6t47hnqnedj3ZYQHfhiNiXhhKYN+7zDCxvlsK4jIGnO2E1iLylrcJjYumClRLpoKSm+bXeMP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LElbjs2F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eLjWNMVY6xa8ljGQMz1JQgmUk1perWyJB9bw7rYBEdbpw03ClM6ghUz2m+eyL++ZJ/TqOMWUViHFIriiCm1fMJhSagWFyI8suWtdCH+Su0+/+3E9xxFOGedlfxSKj9onoKKRGXZe7sUG2+mB32bgYOhXkj/3G2oqaBkthnx87BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KT7/ITUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LElbjs2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EE7C4CEE3;
-	Tue, 15 Jul 2025 13:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KT7/ITUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAFBC4CEE3;
+	Tue, 15 Jul 2025 13:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587286;
-	bh=nNp3/WzAuuQ37UbNOwoCD+7GxiEPZ/sll/Ew5RrRstA=;
+	s=korg; t=1752587289;
+	bh=gymZ/Fst5fKmTI6aG2s4e8MO13Cy9VwnbsW8ZMXgB7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LElbjs2F/TBtcWxVKGp8h80qDY6knm761DBrvhRMVOVR29RancBf45A2vanyPDfL4
-	 tWq4Nx1/bJSy2kz4gwVQ8Mz7VXFdynvZEy+4eZqYF6hYIkNq/PTto6lCEjfdwkjvvL
-	 rHHn1plOJyYe3neP48Kp1+aRg5ywO8+t+9HyLoS4=
+	b=KT7/ITURx4GjcpPfUbVLmca8/3ZUGtX7stlpXa/eR/Y69ofIDautmNDo6Q2mksbV5
+	 gIJriiu5z7dX40+5hLcJ3qqYSqY4wrZUfTRkKtJIGhikjP1Vvvq8FvwlwiWGPT96G3
+	 44G+hR5gib3QVC8ECK8chxRfNAd4uhP390Rq/9TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/88] ASoC: fsl_asrc: use internal measured ratio for non-ideal ratio mode
-Date: Tue, 15 Jul 2025 15:13:39 +0200
-Message-ID: <20250715130754.637799734@linuxfoundation.org>
+	Achill Gilgenast <fossdd@pwned.life>,
+	Luis Henriques <luis@igalia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 37/88] kallsyms: fix build without execinfo
+Date: Tue, 15 Jul 2025 15:14:13 +0200
+Message-ID: <20250715130756.013086225@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -52,40 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Achill Gilgenast <fossdd@pwned.life>
 
-[ Upstream commit cbe876121633dadb2b0ce52711985328638e9aab ]
+commit a95743b53031b015e8949e845a9f6fdfb2656347 upstream.
 
-When USRC=0, there is underrun issue for the non-ideal ratio mode;
-according to the reference mannual, the internal measured ratio can be
-used with USRC=1 and IDRC=0.
+Some libc's like musl libc don't provide execinfo.h since it's not part of
+POSIX.  In order to fix compilation on musl, only include execinfo.h if
+available (HAVE_BACKTRACE_SUPPORT)
 
-Fixes: d0250cf4f2ab ("ASoC: fsl_asrc: Add an option to select internal ratio mode")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://patch.msgid.link/20250625020504.2728161-1-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This was discovered with c104c16073b7 ("Kunit to check the longest symbol
+length") which starts to include linux/kallsyms.h with Alpine Linux'
+configs.
+
+Link: https://lkml.kernel.org/r/20250622014608.448718-1-fossdd@pwned.life
+Fixes: c104c16073b7 ("Kunit to check the longest symbol length")
+Signed-off-by: Achill Gilgenast <fossdd@pwned.life>
+Cc: Luis Henriques <luis@igalia.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_asrc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/include/linux/kallsyms.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-index e16e7b3fa96cc..c541e2a0202a6 100644
---- a/sound/soc/fsl/fsl_asrc.c
-+++ b/sound/soc/fsl/fsl_asrc.c
-@@ -517,7 +517,8 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
- 	regmap_update_bits(asrc->regmap, REG_ASRCTR,
- 			   ASRCTR_ATSi_MASK(index), ASRCTR_ATS(index));
- 	regmap_update_bits(asrc->regmap, REG_ASRCTR,
--			   ASRCTR_USRi_MASK(index), 0);
-+			   ASRCTR_IDRi_MASK(index) | ASRCTR_USRi_MASK(index),
-+			   ASRCTR_USR(index));
+diff --git a/tools/include/linux/kallsyms.h b/tools/include/linux/kallsyms.h
+index 5a37ccbec54f..f61a01dd7eb7 100644
+--- a/tools/include/linux/kallsyms.h
++++ b/tools/include/linux/kallsyms.h
+@@ -18,6 +18,7 @@ static inline const char *kallsyms_lookup(unsigned long addr,
+ 	return NULL;
+ }
  
- 	/* Set the input and output clock sources */
- 	regmap_update_bits(asrc->regmap, REG_ASRCSR,
++#ifdef HAVE_BACKTRACE_SUPPORT
+ #include <execinfo.h>
+ #include <stdlib.h>
+ static inline void print_ip_sym(const char *loglvl, unsigned long ip)
+@@ -30,5 +31,8 @@ static inline void print_ip_sym(const char *loglvl, unsigned long ip)
+ 
+ 	free(name);
+ }
++#else
++static inline void print_ip_sym(const char *loglvl, unsigned long ip) {}
++#endif
+ 
+ #endif
 -- 
-2.39.5
+2.50.1
 
 
 
