@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82B52D8778;
-	Tue, 15 Jul 2025 13:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC332D8778;
+	Tue, 15 Jul 2025 13:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587331; cv=none; b=l65SPVhNbq/xMrm/Lvk9AY00TvM3NeVAe799pUwRNhrxGTEHWe6vCTq8NpAMgZSu5/Xj37xJqUHGotuW95q5yePqZQGtsX7axafuRunfjCN9IWXee+viUniZV4aQMemMZPEI1+4s75YF4AqPGrNJB1aGLtCs7HQEoPYK/5z3QGw=
+	t=1752587334; cv=none; b=GHcePk52lojxW8GSUdGq17FVNrpIt8qS3Li7ln+fxSuXZCvoQP/xFUZ0+Id3zDxe0MJwU5NG6e/oXnAvW5bqhAFtv8xI0RptsoR8Mg7tBa559quAjANFYszlv2tY7B190ptT6xnCv8Ch7Irlx3FtTfojdwXx+oVPeSuHU85AJGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587331; c=relaxed/simple;
-	bh=SGZD6oWQHjkkVGsnY4VEud5XPQNx+CuZUDlVlMOlMKA=;
+	s=arc-20240116; t=1752587334; c=relaxed/simple;
+	bh=q3+uLxMtplaBEroW9NHP2qjSkdu9H7HGBPcPW7kNVLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVXhSYvs4jABeYlcrwQ1xEAE5iB5HptFLcOWEZ5QllS/ah7461PSpsJplpxIzUt5MinmJO5bqcTJLW7xOyE2LOPsOFg5tONd5SuTjj3FSYxQHP2yvkmpqCCRetwdaB4Sm56tw4vgU3OGOsmxtRVphheDPhKNxrzXEEzdbYT5BgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9STAHJ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebxD64/gjEnr1n0NTude4pMFkjp/sa8u3AmDiY0TnmVdZt9U68DjKcc4MbCxbwOIQrgC3INgSOFu5MjA/rI+m0//13sxo1ZCOqIpnfH00NGjLKqltminCjgkDlrXQ06S5zcawa4GWYw5Cvnyeb7Ela1tJTHb5weSz2WHKw4kSIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgMKsgIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9STAHJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0B1C4CEE3;
-	Tue, 15 Jul 2025 13:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgMKsgIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FEEC4CEE3;
+	Tue, 15 Jul 2025 13:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587331;
-	bh=SGZD6oWQHjkkVGsnY4VEud5XPQNx+CuZUDlVlMOlMKA=;
+	s=korg; t=1752587334;
+	bh=q3+uLxMtplaBEroW9NHP2qjSkdu9H7HGBPcPW7kNVLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9STAHJ33RWy0JXKWRaoBbpGerzQV8XkgOURFlIFoP4WqP6vscpbs/7m74M4WJTbd
-	 J58TRlOdnQ38mpj26/AxnI5yJVhLyzkPVYngMKh11g2a5fOGO1huVNZg3cgnVgnn74
-	 wTOsasy9AZeHcR0KfWhEkm2Uc7aLCQnBXHqNEbyI=
+	b=XgMKsgIso5T64fFnuDih3gjCvomIs6SDWWcFZ3tmvkpbWYp83MoHLINjTCleA6ACq
+	 AatqLRnN8UVtPHeb+/2zCqQIAsJ80or+YOS2bWybXJuaUJ4/MSlQaOkbaU4R9QFC7K
+	 Ghj6BKP73Bs2K6+L3hdH3YH75zF9glJ9EVpJ708s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Yue Hu <huyue2@coolpad.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 60/88] erofs: clean up z_erofs_pcluster_readmore()
-Date: Tue, 15 Jul 2025 15:14:36 +0200
-Message-ID: <20250715130756.976195288@linuxfoundation.org>
+Subject: [PATCH 6.1 61/88] erofs: allocate extra bvec pages directly instead of retrying
+Date: Tue, 15 Jul 2025 15:14:37 +0200
+Message-ID: <20250715130757.016541663@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,110 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Hu <huyue2@coolpad.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 796e9149a2fcdba5543e247abd8d911a399bb9a6 ]
+[ Upstream commit 05b63d2beb8b0f752d1f5cdd051c8bdbf532cedd ]
 
-`end` parameter is no needed since it's pointless for !backmost, we can
-handle it with backmost internally.  And we only expand the trailing
-edge, so the newstart can be replaced with ->headoffset.
+If non-bootstrap bvecs cannot be kept in place (very rarely), an extra
+short-lived page is allocated.
 
-Also, remove linux/prefetch.h inclusion since that is not used anymore
-after commit 386292919c25 ("erofs: introduce readmore decompression
-strategy").
+Let's just allocate it immediately rather than do unnecessary -EAGAIN
+return first and retry as a cleanup.  Also it's unnecessary to use
+__GFP_NOFAIL here since we could gracefully fail out this case instead.
 
-Signed-off-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230525072605.17857-1-zbestahu@gmail.com
-[ Gao Xiang: update commit description. ]
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Link: https://lore.kernel.org/r/20230526201459.128169-2-hsiangkao@linux.alibaba.com
 Stable-dep-of: 99f7619a77a0 ("erofs: fix to add missing tracepoint in erofs_read_folio()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ fs/erofs/zdata.c | 32 ++++++++++++--------------------
+ 1 file changed, 12 insertions(+), 20 deletions(-)
 
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 8018f31d2dbca..50dd104dbaabf 100644
+index 50dd104dbaabf..ff82610eb14c9 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -5,7 +5,6 @@
-  * Copyright (C) 2022 Alibaba Cloud
-  */
- #include "compress.h"
--#include <linux/prefetch.h>
- #include <linux/psi.h>
- 
- #include <trace/events/erofs.h>
-@@ -1630,28 +1629,28 @@ static void z_erofs_runqueue(struct z_erofs_decompress_frontend *f,
-  */
- static void z_erofs_pcluster_readmore(struct z_erofs_decompress_frontend *f,
- 				      struct readahead_control *rac,
--				      erofs_off_t end,
--				      struct page **pagepool,
--				      bool backmost)
-+				      struct page **pagepool, bool backmost)
+@@ -238,12 +238,17 @@ static int z_erofs_bvec_enqueue(struct z_erofs_bvec_iter *iter,
+ 				struct z_erofs_bvec *bvec,
+ 				struct page **candidate_bvpage)
  {
- 	struct inode *inode = f->inode;
- 	struct erofs_map_blocks *map = &f->map;
--	erofs_off_t cur;
-+	erofs_off_t cur, end, headoffset = f->headoffset;
- 	int err;
- 
- 	if (backmost) {
-+		if (rac)
-+			end = headoffset + readahead_length(rac) - 1;
-+		else
-+			end = headoffset + PAGE_SIZE - 1;
- 		map->m_la = end;
- 		err = z_erofs_map_blocks_iter(inode, map,
- 					      EROFS_GET_BLOCKS_READMORE);
- 		if (err)
- 			return;
- 
--		/* expend ra for the trailing edge if readahead */
-+		/* expand ra for the trailing edge if readahead */
- 		if (rac) {
--			loff_t newstart = readahead_pos(rac);
+-	if (iter->cur == iter->nr) {
+-		if (!*candidate_bvpage)
+-			return -EAGAIN;
 -
- 			cur = round_up(map->m_la + map->m_llen, PAGE_SIZE);
--			readahead_expand(rac, newstart, cur - newstart);
-+			readahead_expand(rac, headoffset, cur - headoffset);
- 			return;
- 		}
- 		end = round_up(end, PAGE_SIZE);
-@@ -1699,10 +1698,9 @@ static int z_erofs_read_folio(struct file *file, struct folio *folio)
- 	trace_erofs_readpage(page, false);
- 	f.headoffset = (erofs_off_t)page->index << PAGE_SHIFT;
++	if (iter->cur >= iter->nr) {
++		struct page *nextpage = *candidate_bvpage;
++
++		if (!nextpage) {
++			nextpage = alloc_page(GFP_NOFS);
++			if (!nextpage)
++				return -ENOMEM;
++			set_page_private(nextpage, Z_EROFS_SHORTLIVED_PAGE);
++		}
+ 		DBG_BUGON(iter->bvset->nextpage);
+-		iter->bvset->nextpage = *candidate_bvpage;
++		iter->bvset->nextpage = nextpage;
+ 		z_erofs_bvset_flip(iter);
  
--	z_erofs_pcluster_readmore(&f, NULL, f.headoffset + PAGE_SIZE - 1,
--				  &pagepool, true);
-+	z_erofs_pcluster_readmore(&f, NULL, &pagepool, true);
- 	err = z_erofs_do_read_page(&f, page, &pagepool);
--	z_erofs_pcluster_readmore(&f, NULL, 0, &pagepool, false);
-+	z_erofs_pcluster_readmore(&f, NULL, &pagepool, false);
+ 		iter->bvset->nextpage = NULL;
+@@ -744,10 +749,8 @@ static bool z_erofs_collector_end(struct z_erofs_decompress_frontend *fe)
+ 	z_erofs_bvec_iter_end(&fe->biter);
+ 	mutex_unlock(&pcl->lock);
  
- 	(void)z_erofs_collector_end(&f);
+-	if (fe->candidate_bvpage) {
+-		DBG_BUGON(z_erofs_is_shortlived_page(fe->candidate_bvpage));
++	if (fe->candidate_bvpage)
+ 		fe->candidate_bvpage = NULL;
+-	}
  
-@@ -1728,8 +1726,7 @@ static void z_erofs_readahead(struct readahead_control *rac)
+ 	/*
+ 	 * if all pending pages are added, don't hold its reference
+@@ -896,24 +899,13 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
+ 	if (cur)
+ 		tight &= (fe->mode >= Z_EROFS_PCLUSTER_FOLLOWED);
  
- 	f.headoffset = readahead_pos(rac);
+-retry:
+ 	err = z_erofs_attach_page(fe, &((struct z_erofs_bvec) {
+ 					.page = page,
+ 					.offset = offset - map->m_la,
+ 					.end = end,
+ 				  }), exclusive);
+-	/* should allocate an additional short-lived page for bvset */
+-	if (err == -EAGAIN && !fe->candidate_bvpage) {
+-		fe->candidate_bvpage = alloc_page(GFP_NOFS | __GFP_NOFAIL);
+-		set_page_private(fe->candidate_bvpage,
+-				 Z_EROFS_SHORTLIVED_PAGE);
+-		goto retry;
+-	}
+-
+-	if (err) {
+-		DBG_BUGON(err == -EAGAIN && fe->candidate_bvpage);
++	if (err)
+ 		goto out;
+-	}
  
--	z_erofs_pcluster_readmore(&f, rac, f.headoffset +
--				  readahead_length(rac) - 1, &pagepool, true);
-+	z_erofs_pcluster_readmore(&f, rac, &pagepool, true);
- 	nr_pages = readahead_count(rac);
- 	trace_erofs_readpages(inode, readahead_index(rac), nr_pages, false);
- 
-@@ -1752,7 +1749,7 @@ static void z_erofs_readahead(struct readahead_control *rac)
- 				  page->index, EROFS_I(inode)->nid);
- 		put_page(page);
- 	}
--	z_erofs_pcluster_readmore(&f, rac, 0, &pagepool, false);
-+	z_erofs_pcluster_readmore(&f, rac, &pagepool, false);
- 	(void)z_erofs_collector_end(&f);
- 
- 	z_erofs_runqueue(&f, &pagepool,
+ 	z_erofs_onlinepage_split(page);
+ 	/* bump up the number of spiltted parts of a page */
 -- 
 2.39.5
 
