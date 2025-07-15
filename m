@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2B22E3AE5;
-	Tue, 15 Jul 2025 13:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FD42E337B;
+	Tue, 15 Jul 2025 13:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587222; cv=none; b=Jo257znDl6eebybckpgAVz6Gk9hmNz3BMYaLeO/+THjtAP9BxR4LRZMZvj/OMT0QEVIvAobsnsBFJUX0iyS/6BVTH+EZpHtvs0x/2fxp0DY0tFFCuUPm4isww9rii93Uma0Yt+pRDX8pooWBbbc8ECGLPjUKoZA2Z1EUv6inwL8=
+	t=1752587224; cv=none; b=ZkwJpCbQw5ItYdkZQmwRxufIEPu7jkjwtIHEqQ5UxGewUek1LPqE+tI65xMmWTAi2+rf90rk0I+T/qd36R3N5cdIGuQyY4RzgIemLKsrtTa4YmZoSNvkRZc5Yjw0V8GZZGfF4oTJUa2kJKnno9lCCv+X2VJ4Cvmpqqgab409V+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587222; c=relaxed/simple;
-	bh=FyqZqMqzrdIfMw5u2X/BdcCcA3GICGHy3JHLNNLsmYI=;
+	s=arc-20240116; t=1752587224; c=relaxed/simple;
+	bh=mmkLNBEUpTRHg3fp3rn6vTTt8CPTx7YnN0rW7+Qhu7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhgC9mUBh1PuXFFGRgjSrco82w6/NqQoopCEiFB1DlbpSU5p/fQLENsQPAWYfoX3kndJLSBUIMTc06oyxnNca1ChKaqezr5O8tM0YiT63Ry5Tuc8Tz/DWce6MnPL0jzRn7sY/QP8Dtfzl6rpXgsr9TF7yeTpSsJNRfKdtBwgUHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5MdYrDR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S6hIquOT5e4ZFRSl/PBLhI2NzuZBufrCr4hn26IAEKV9F7YxU16XlSGf1SpK2hbupXskfRWf6CgUGLEOBpcspxbh6p0IoXYDrouKa9aznC7ZH99a5deGIM6LSAuNwpfJ/l8azXHglMav1L8Ndgz3QBIQjwf2jHGmOCssMXZ7l/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpT/6154; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5MdYrDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AC0C4CEE3;
-	Tue, 15 Jul 2025 13:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpT/6154"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2E2C4CEE3;
+	Tue, 15 Jul 2025 13:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587221;
-	bh=FyqZqMqzrdIfMw5u2X/BdcCcA3GICGHy3JHLNNLsmYI=;
+	s=korg; t=1752587224;
+	bh=mmkLNBEUpTRHg3fp3rn6vTTt8CPTx7YnN0rW7+Qhu7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5MdYrDRlvz4l6FEllu/OPxIRGWVp8WESXZNf5zpKuclC8dhF3zsbqDSzvOfRhIlM
-	 LbheZuSxhjOeyNTv5mYVmLZf+vWLUBpzSkASR9Yzzpxweks/2IVCfWaFNY1KxjFYng
-	 5IjKG6Mpm7y9RRP9OGI/swTJGYbSHlYl4kZvJQRs=
+	b=OpT/61547hQ2/CHcHzTmjexBjMex6YRAVukRtIsFf3xc8/RCrT+hX+suUB2uoQgrT
+	 JQES2tuZ5H3V7CN/0KhueDtuL94367nw9pMayYtJxtuBvC554nciPEmXwLk2/j95qq
+	 lfUDu74XAwbGROiq9n3ZzJYPKi6y0sHiqiSx+XsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
-	David Howells <dhowells@redhat.com>,
-	LePremierHomme <kwqcheii@proton.me>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Willy Tarreau <w@1wt.eu>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 20/88] rxrpc: Fix oops due to non-existence of prealloc backlog struct
-Date: Tue, 15 Jul 2025 15:13:56 +0200
-Message-ID: <20250715130755.324477686@linuxfoundation.org>
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	Borislav Petkov <bp@alien8.de>
+Subject: [PATCH 6.1 21/88] x86/boot: Compile boot code with -std=gnu11 too
+Date: Tue, 15 Jul 2025 15:13:57 +0200
+Message-ID: <20250715130755.366749918@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -56,44 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-commit 880a88f318cf1d2a0f4c0a7ff7b07e2062b434a4 upstream.
+commit b3bee1e7c3f2b1b77182302c7b2131c804175870 upstream.
 
-If an AF_RXRPC service socket is opened and bound, but calls are
-preallocated, then rxrpc_alloc_incoming_call() will oops because the
-rxrpc_backlog struct doesn't get allocated until the first preallocation is
-made.
+Use -std=gnu11 for consistency with main kernel code.
 
-Fix this by returning NULL from rxrpc_alloc_incoming_call() if there is no
-backlog struct.  This will cause the incoming call to be aborted.
+It doesn't seem to change anything in vmlinux.
 
-Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Suggested-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: LePremierHomme <kwqcheii@proton.me>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Willy Tarreau <w@1wt.eu>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250708211506.2699012-3-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Link: https://lore.kernel.org/r/2058761e-12a4-4b2f-9690-3c3c1c9902a5@p183
+Cc: Borislav Petkov <bp@alien8.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/call_accept.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/rxrpc/call_accept.c
-+++ b/net/rxrpc/call_accept.c
-@@ -270,6 +270,9 @@ static struct rxrpc_call *rxrpc_alloc_in
- 	unsigned short call_tail, conn_tail, peer_tail;
- 	unsigned short call_count, conn_count;
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -43,7 +43,7 @@ endif
  
-+	if (!b)
-+		return NULL;
-+
- 	/* #calls >= #conns >= #peers must hold true. */
- 	call_head = smp_load_acquire(&b->call_backlog_head);
- 	call_tail = b->call_backlog_tail;
+ # How to compile the 16-bit code.  Note we always compile for -march=i386;
+ # that way we can complain to the user if the CPU is insufficient.
+-REALMODE_CFLAGS	:= -m16 -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
++REALMODE_CFLAGS	:= -std=gnu11 -m16 -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
+ 		   -Wall -Wstrict-prototypes -march=i386 -mregparm=3 \
+ 		   -fno-strict-aliasing -fomit-frame-pointer -fno-pic \
+ 		   -mno-mmx -mno-sse $(call cc-option,-fcf-protection=none)
 
 
