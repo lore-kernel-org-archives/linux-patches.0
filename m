@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB991F0E26;
-	Tue, 15 Jul 2025 13:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7927419F420;
+	Tue, 15 Jul 2025 13:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585527; cv=none; b=d+1DZBsbkYc5DXq7OQVB9RMUZeyMeIq8A1+NgkJYKxcCQtYgNeeCFRbjCeS46Bhzy7pWddHessJqMGw6Usekc+Q2h3uQHHCchrPVVBgBEcx73fn4k2f+5IiY119zOiJxb/G7zIltCFxNKyzMdK9A8JEZHSQXz0HgmcCv2m2JUhQ=
+	t=1752585529; cv=none; b=GQj75agZcA3tRufKPuKlbpT8uIR8BkzEzj7bmFazLoFvA1ikPySSF3ZjKq5/4lKlUCM2IjqLun2x2uAsjfSHeATWRiQb0BsdgspbKehoGnRVGGpz94B3lOwccHnXnfdvDRuL7mVncPyQ4WIQdAtFenwGCbOGnfxibLEl4/ro/5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585527; c=relaxed/simple;
-	bh=KMXYQfXMcG1RRFsvtYmy7Q1IoCEg6+ZBKoZQVYgJdGY=;
+	s=arc-20240116; t=1752585529; c=relaxed/simple;
+	bh=sdgPHpmQIxPooMihWiGcUt/qCPORZsgGCxwb7Xrx4B0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/2Fad/entyE5bGqi40unwEvwRnich6aVpaVbP7tlyjR3HLu1Chb2n9zEEJtjnNoGl7+lm0MXokONCRoWTcefhQq+CzXSa2Lv3rMBudN+ugxQWSR58ykGxcykXAf8oBcTlwmA28ywSREa+IIVH7bR14zEkV9oxs1H6VIsxJeDzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQVDrV6y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RwXhGf+sVbq5lYeovD7YR5RYFD+3yLyfaplHxR2uSbD8XJvuIr1KkdzcUqoidwz2MbqOSohNDvWyDobtWDVXjTUXISXn5/CSkoE7JVWf4B/ipTQLd3UkjcddAQRCU5u51IYJiYaMKOTD4791XzHHfbexVA6NCA7F/IU3mDz4cbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qaHJvotO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQVDrV6y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72836C4CEE3;
-	Tue, 15 Jul 2025 13:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qaHJvotO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D5CC4CEE3;
+	Tue, 15 Jul 2025 13:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585526;
-	bh=KMXYQfXMcG1RRFsvtYmy7Q1IoCEg6+ZBKoZQVYgJdGY=;
+	s=korg; t=1752585529;
+	bh=sdgPHpmQIxPooMihWiGcUt/qCPORZsgGCxwb7Xrx4B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQVDrV6yga2M6y/QveddnvI+9rjJwDZVs+5sslJX7Y1oFmvUrtU6s2MRy2k6697z2
-	 q40lyzYDKxbmQ790SBKdU0Yclct+H3fKFVkn5ONB+YZrRkB6eUiciDJVyO3aN2HsVi
-	 HyMxXB3a2A+l1XAg+2NqEfJgEsoeUe0I7faiYQ28=
+	b=qaHJvotOaJT/XhVegkEjB1hMxCTP/JY6CruWhNtdi/mPefThrdWpL0k8hfuqPGovI
+	 hKytDMp/n3xZDZrrj4Jlzkt5plxjlXOXDPgsSMoEIR3LEIDD66QCzXDuVdC1nbOqWX
+	 qUDUZCGb5esgoCRv7Fqy6gE2rHFup3/GasaEBEuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 073/163] drm/amdkfd: Dont call mmput from MMU notifier callback
-Date: Tue, 15 Jul 2025 15:12:21 +0200
-Message-ID: <20250715130811.667068938@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Anusha Srivatsa <asrivats@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org
+Subject: [PATCH 6.12 074/163] drm/gem: Acquire references on GEM handles for framebuffers
+Date: Tue, 15 Jul 2025 15:12:22 +0200
+Message-ID: <20250715130811.705959272@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -45,191 +51,231 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit cf234231fcbc7d391e2135b9518613218cc5347f upstream.
+commit 5307dce878d4126e1b375587318955bd019c3741 upstream.
 
-If the process is exiting, the mmput inside mmu notifier callback from
-compactd or fork or numa balancing could release the last reference
-of mm struct to call exit_mmap and free_pgtable, this triggers deadlock
-with below backtrace.
+A GEM handle can be released while the GEM buffer object is attached
+to a DRM framebuffer. This leads to the release of the dma-buf backing
+the buffer object, if any. [1] Trying to use the framebuffer in further
+mode-setting operations leads to a segmentation fault. Most easily
+happens with driver that use shadow planes for vmap-ing the dma-buf
+during a page flip. An example is shown below.
 
-The deadlock will leak kfd process as mmu notifier release is not called
-and cause VRAM leaking.
+[  156.791968] ------------[ cut here ]------------
+[  156.796830] WARNING: CPU: 2 PID: 2255 at drivers/dma-buf/dma-buf.c:1527 dma_buf_vmap+0x224/0x430
+[...]
+[  156.942028] RIP: 0010:dma_buf_vmap+0x224/0x430
+[  157.043420] Call Trace:
+[  157.045898]  <TASK>
+[  157.048030]  ? show_trace_log_lvl+0x1af/0x2c0
+[  157.052436]  ? show_trace_log_lvl+0x1af/0x2c0
+[  157.056836]  ? show_trace_log_lvl+0x1af/0x2c0
+[  157.061253]  ? drm_gem_shmem_vmap+0x74/0x710
+[  157.065567]  ? dma_buf_vmap+0x224/0x430
+[  157.069446]  ? __warn.cold+0x58/0xe4
+[  157.073061]  ? dma_buf_vmap+0x224/0x430
+[  157.077111]  ? report_bug+0x1dd/0x390
+[  157.080842]  ? handle_bug+0x5e/0xa0
+[  157.084389]  ? exc_invalid_op+0x14/0x50
+[  157.088291]  ? asm_exc_invalid_op+0x16/0x20
+[  157.092548]  ? dma_buf_vmap+0x224/0x430
+[  157.096663]  ? dma_resv_get_singleton+0x6d/0x230
+[  157.101341]  ? __pfx_dma_buf_vmap+0x10/0x10
+[  157.105588]  ? __pfx_dma_resv_get_singleton+0x10/0x10
+[  157.110697]  drm_gem_shmem_vmap+0x74/0x710
+[  157.114866]  drm_gem_vmap+0xa9/0x1b0
+[  157.118763]  drm_gem_vmap_unlocked+0x46/0xa0
+[  157.123086]  drm_gem_fb_vmap+0xab/0x300
+[  157.126979]  drm_atomic_helper_prepare_planes.part.0+0x487/0xb10
+[  157.133032]  ? lockdep_init_map_type+0x19d/0x880
+[  157.137701]  drm_atomic_helper_commit+0x13d/0x2e0
+[  157.142671]  ? drm_atomic_nonblocking_commit+0xa0/0x180
+[  157.147988]  drm_mode_atomic_ioctl+0x766/0xe40
+[...]
+[  157.346424] ---[ end trace 0000000000000000 ]---
 
-The fix is to take mm reference mmget_non_zero when adding prange to the
-deferred list to pair with mmput in deferred list work.
+Acquiring GEM handles for the framebuffer's GEM buffer objects prevents
+this from happening. The framebuffer's cleanup later puts the handle
+references.
 
-If prange split and add into pchild list, the pchild work_item.mm is not
-used, so remove the mm parameter from svm_range_unmap_split and
-svm_range_add_child.
+Commit 1a148af06000 ("drm/gem-shmem: Use dma_buf from GEM object
+instance") triggers the segmentation fault easily by using the dma-buf
+field more widely. The underlying issue with reference counting has
+been present before.
 
-The backtrace of hung task:
+v2:
+- acquire the handle instead of the BO (Christian)
+- fix comment style (Christian)
+- drop the Fixes tag (Christian)
+- rename err_ gotos
+- add missing Link tag
 
- INFO: task python:348105 blocked for more than 64512 seconds.
- Call Trace:
-  __schedule+0x1c3/0x550
-  schedule+0x46/0xb0
-  rwsem_down_write_slowpath+0x24b/0x4c0
-  unlink_anon_vmas+0xb1/0x1c0
-  free_pgtables+0xa9/0x130
-  exit_mmap+0xbc/0x1a0
-  mmput+0x5a/0x140
-  svm_range_cpu_invalidate_pagetables+0x2b/0x40 [amdgpu]
-  mn_itree_invalidate+0x72/0xc0
-  __mmu_notifier_invalidate_range_start+0x48/0x60
-  try_to_unmap_one+0x10fa/0x1400
-  rmap_walk_anon+0x196/0x460
-  try_to_unmap+0xbb/0x210
-  migrate_page_unmap+0x54d/0x7e0
-  migrate_pages_batch+0x1c3/0xae0
-  migrate_pages_sync+0x98/0x240
-  migrate_pages+0x25c/0x520
-  compact_zone+0x29d/0x590
-  compact_zone_order+0xb6/0xf0
-  try_to_compact_pages+0xbe/0x220
-  __alloc_pages_direct_compact+0x96/0x1a0
-  __alloc_pages_slowpath+0x410/0x930
-  __alloc_pages_nodemask+0x3a9/0x3e0
-  do_huge_pmd_anonymous_page+0xd7/0x3e0
-  __handle_mm_fault+0x5e3/0x5f0
-  handle_mm_fault+0xf7/0x2e0
-  hmm_vma_fault.isra.0+0x4d/0xa0
-  walk_pmd_range.isra.0+0xa8/0x310
-  walk_pud_range+0x167/0x240
-  walk_pgd_range+0x55/0x100
-  __walk_page_range+0x87/0x90
-  walk_page_range+0xf6/0x160
-  hmm_range_fault+0x4f/0x90
-  amdgpu_hmm_range_get_pages+0x123/0x230 [amdgpu]
-  amdgpu_ttm_tt_get_user_pages+0xb1/0x150 [amdgpu]
-  init_user_pages+0xb1/0x2a0 [amdgpu]
-  amdgpu_amdkfd_gpuvm_alloc_memory_of_gpu+0x543/0x7d0 [amdgpu]
-  kfd_ioctl_alloc_memory_of_gpu+0x24c/0x4e0 [amdgpu]
-  kfd_ioctl+0x29d/0x500 [amdgpu]
-
-Fixes: fa582c6f3684 ("drm/amdkfd: Use mmget_not_zero in MMU notifier")
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a29e067bd38946f752b0ef855f3dfff87e77bec7)
-Cc: stable@vger.kernel.org
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://elixir.bootlin.com/linux/v6.15/source/drivers/gpu/drm/drm_gem.c#L241 # [1]
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Anusha Srivatsa <asrivats@redhat.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: linux-media@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250630084001.293053-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c |   43 ++++++++++++++++-------------------
- 1 file changed, 20 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/drm_gem.c                    |   44 ++++++++++++++++++++++++---
+ drivers/gpu/drm/drm_gem_framebuffer_helper.c |   16 +++++----
+ drivers/gpu/drm/drm_internal.h               |    2 +
+ 3 files changed, 51 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -1170,13 +1170,12 @@ svm_range_split_head(struct svm_range *p
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -186,6 +186,35 @@ void drm_gem_private_object_fini(struct
+ }
+ EXPORT_SYMBOL(drm_gem_private_object_fini);
+ 
++static void drm_gem_object_handle_get(struct drm_gem_object *obj)
++{
++	struct drm_device *dev = obj->dev;
++
++	drm_WARN_ON(dev, !mutex_is_locked(&dev->object_name_lock));
++
++	if (obj->handle_count++ == 0)
++		drm_gem_object_get(obj);
++}
++
++/**
++ * drm_gem_object_handle_get_unlocked - acquire reference on user-space handles
++ * @obj: GEM object
++ *
++ * Acquires a reference on the GEM buffer object's handle. Required
++ * to keep the GEM object alive. Call drm_gem_object_handle_put_unlocked()
++ * to release the reference.
++ */
++void drm_gem_object_handle_get_unlocked(struct drm_gem_object *obj)
++{
++	struct drm_device *dev = obj->dev;
++
++	guard(mutex)(&dev->object_name_lock);
++
++	drm_WARN_ON(dev, !obj->handle_count); /* first ref taken in create-tail helper */
++	drm_gem_object_handle_get(obj);
++}
++EXPORT_SYMBOL(drm_gem_object_handle_get_unlocked);
++
+ /**
+  * drm_gem_object_handle_free - release resources bound to userspace handles
+  * @obj: GEM object to clean up.
+@@ -216,8 +245,14 @@ static void drm_gem_object_exported_dma_
+ 	}
  }
  
- static void
--svm_range_add_child(struct svm_range *prange, struct mm_struct *mm,
--		    struct svm_range *pchild, enum svm_work_list_ops op)
-+svm_range_add_child(struct svm_range *prange, struct svm_range *pchild, enum svm_work_list_ops op)
+-static void
+-drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj)
++/**
++ * drm_gem_object_handle_put_unlocked - releases reference on user-space handles
++ * @obj: GEM object
++ *
++ * Releases a reference on the GEM buffer object's handle. Possibly releases
++ * the GEM buffer object and associated dma-buf objects.
++ */
++void drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj)
  {
- 	pr_debug("add child 0x%p [0x%lx 0x%lx] to prange 0x%p child list %d\n",
- 		 pchild, pchild->start, pchild->last, prange, op);
- 
--	pchild->work_item.mm = mm;
-+	pchild->work_item.mm = NULL;
- 	pchild->work_item.op = op;
- 	list_add_tail(&pchild->child_list, &prange->child_list);
+ 	struct drm_device *dev = obj->dev;
+ 	bool final = false;
+@@ -242,6 +277,7 @@ drm_gem_object_handle_put_unlocked(struc
+ 	if (final)
+ 		drm_gem_object_put(obj);
  }
-@@ -2384,15 +2383,17 @@ svm_range_add_list_work(struct svm_range
- 		    prange->work_item.op != SVM_OP_UNMAP_RANGE)
- 			prange->work_item.op = op;
- 	} else {
--		prange->work_item.op = op;
--
--		/* Pairs with mmput in deferred_list_work */
--		mmget(mm);
--		prange->work_item.mm = mm;
--		list_add_tail(&prange->deferred_list,
--			      &prange->svms->deferred_range_list);
--		pr_debug("add prange 0x%p [0x%lx 0x%lx] to work list op %d\n",
--			 prange, prange->start, prange->last, op);
-+		/* Pairs with mmput in deferred_list_work.
-+		 * If process is exiting and mm is gone, don't update mmu notifier.
-+		 */
-+		if (mmget_not_zero(mm)) {
-+			prange->work_item.mm = mm;
-+			prange->work_item.op = op;
-+			list_add_tail(&prange->deferred_list,
-+				      &prange->svms->deferred_range_list);
-+			pr_debug("add prange 0x%p [0x%lx 0x%lx] to work list op %d\n",
-+				 prange, prange->start, prange->last, op);
-+		}
- 	}
- 	spin_unlock(&svms->deferred_list_lock);
- }
-@@ -2406,8 +2407,7 @@ void schedule_deferred_list_work(struct
- }
++EXPORT_SYMBOL(drm_gem_object_handle_put_unlocked);
  
- static void
--svm_range_unmap_split(struct mm_struct *mm, struct svm_range *parent,
--		      struct svm_range *prange, unsigned long start,
-+svm_range_unmap_split(struct svm_range *parent, struct svm_range *prange, unsigned long start,
- 		      unsigned long last)
- {
- 	struct svm_range *head;
-@@ -2428,12 +2428,12 @@ svm_range_unmap_split(struct mm_struct *
- 		svm_range_split(tail, last + 1, tail->last, &head);
+ /*
+  * Called at device or object close to release the file's
+@@ -363,8 +399,8 @@ drm_gem_handle_create_tail(struct drm_fi
+ 	int ret;
  
- 	if (head != prange && tail != prange) {
--		svm_range_add_child(parent, mm, head, SVM_OP_UNMAP_RANGE);
--		svm_range_add_child(parent, mm, tail, SVM_OP_ADD_RANGE);
-+		svm_range_add_child(parent, head, SVM_OP_UNMAP_RANGE);
-+		svm_range_add_child(parent, tail, SVM_OP_ADD_RANGE);
- 	} else if (tail != prange) {
--		svm_range_add_child(parent, mm, tail, SVM_OP_UNMAP_RANGE);
-+		svm_range_add_child(parent, tail, SVM_OP_UNMAP_RANGE);
- 	} else if (head != prange) {
--		svm_range_add_child(parent, mm, head, SVM_OP_UNMAP_RANGE);
-+		svm_range_add_child(parent, head, SVM_OP_UNMAP_RANGE);
- 	} else if (parent != prange) {
- 		prange->work_item.op = SVM_OP_UNMAP_RANGE;
- 	}
-@@ -2510,14 +2510,14 @@ svm_range_unmap_from_cpu(struct mm_struc
- 		l = min(last, pchild->last);
- 		if (l >= s)
- 			svm_range_unmap_from_gpus(pchild, s, l, trigger);
--		svm_range_unmap_split(mm, prange, pchild, start, last);
-+		svm_range_unmap_split(prange, pchild, start, last);
- 		mutex_unlock(&pchild->lock);
- 	}
- 	s = max(start, prange->start);
- 	l = min(last, prange->last);
- 	if (l >= s)
- 		svm_range_unmap_from_gpus(prange, s, l, trigger);
--	svm_range_unmap_split(mm, prange, prange, start, last);
-+	svm_range_unmap_split(prange, prange, start, last);
+ 	WARN_ON(!mutex_is_locked(&dev->object_name_lock));
+-	if (obj->handle_count++ == 0)
+-		drm_gem_object_get(obj);
++
++	drm_gem_object_handle_get(obj);
  
- 	if (unmap_parent)
- 		svm_range_add_list_work(svms, prange, mm, SVM_OP_UNMAP_RANGE);
-@@ -2560,8 +2560,6 @@ svm_range_cpu_invalidate_pagetables(stru
+ 	/*
+ 	 * Get the user-visible handle using idr.  Preload and perform
+--- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
++++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+@@ -99,7 +99,7 @@ void drm_gem_fb_destroy(struct drm_frame
+ 	unsigned int i;
  
- 	if (range->event == MMU_NOTIFY_RELEASE)
- 		return true;
--	if (!mmget_not_zero(mni->mm))
--		return true;
+ 	for (i = 0; i < fb->format->num_planes; i++)
+-		drm_gem_object_put(fb->obj[i]);
++		drm_gem_object_handle_put_unlocked(fb->obj[i]);
  
- 	start = mni->interval_tree.start;
- 	last = mni->interval_tree.last;
-@@ -2588,7 +2586,6 @@ svm_range_cpu_invalidate_pagetables(stru
+ 	drm_framebuffer_cleanup(fb);
+ 	kfree(fb);
+@@ -182,8 +182,10 @@ int drm_gem_fb_init_with_funcs(struct dr
+ 		if (!objs[i]) {
+ 			drm_dbg_kms(dev, "Failed to lookup GEM object\n");
+ 			ret = -ENOENT;
+-			goto err_gem_object_put;
++			goto err_gem_object_handle_put_unlocked;
+ 		}
++		drm_gem_object_handle_get_unlocked(objs[i]);
++		drm_gem_object_put(objs[i]);
+ 
+ 		min_size = (height - 1) * mode_cmd->pitches[i]
+ 			 + drm_format_info_min_pitch(info, i, width)
+@@ -193,22 +195,22 @@ int drm_gem_fb_init_with_funcs(struct dr
+ 			drm_dbg_kms(dev,
+ 				    "GEM object size (%zu) smaller than minimum size (%u) for plane %d\n",
+ 				    objs[i]->size, min_size, i);
+-			drm_gem_object_put(objs[i]);
++			drm_gem_object_handle_put_unlocked(objs[i]);
+ 			ret = -EINVAL;
+-			goto err_gem_object_put;
++			goto err_gem_object_handle_put_unlocked;
+ 		}
  	}
  
- 	svm_range_unlock(prange);
--	mmput(mni->mm);
+ 	ret = drm_gem_fb_init(dev, fb, mode_cmd, objs, i, funcs);
+ 	if (ret)
+-		goto err_gem_object_put;
++		goto err_gem_object_handle_put_unlocked;
  
- 	return true;
+ 	return 0;
+ 
+-err_gem_object_put:
++err_gem_object_handle_put_unlocked:
+ 	while (i > 0) {
+ 		--i;
+-		drm_gem_object_put(objs[i]);
++		drm_gem_object_handle_put_unlocked(objs[i]);
+ 	}
+ 	return ret;
  }
+--- a/drivers/gpu/drm/drm_internal.h
++++ b/drivers/gpu/drm/drm_internal.h
+@@ -153,6 +153,8 @@ void drm_sysfs_lease_event(struct drm_de
+ 
+ /* drm_gem.c */
+ int drm_gem_init(struct drm_device *dev);
++void drm_gem_object_handle_get_unlocked(struct drm_gem_object *obj);
++void drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj);
+ int drm_gem_handle_create_tail(struct drm_file *file_priv,
+ 			       struct drm_gem_object *obj,
+ 			       u32 *handlep);
 
 
