@@ -1,205 +1,105 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C100F17BA1
-	for <patches@lists.linux.dev>; Tue, 15 Jul 2025 22:55:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD3B2C08A2;
+	Tue, 15 Jul 2025 22:56:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752620154; cv=none; b=AYTlt37v39l5alAbshMqVatdiSX8/fRnADG7nkdT+4sbiwwWHWniQhCcidKEgGly0rXLkv2uqF4UC0OQYJ6ELzijX34sTC5+H4358UMBmU5gumhvz7bpxgeEpxdhuTfEWKozuuhfe5zxFWFIiTSXoD8N6jBI+gDnDtulBLEy0/Y=
+	t=1752620173; cv=none; b=bvFu9YRLIx0IAy/nvPnosavZcR+BrZKYpjC4SQtMaO89ym9UDdCU48bvv7nR+hrjhhRpsNWdultZu9/ZbVXn9RIgsx1VVunAmvgUs1ocE5lrFR9jaO3yrEe0kGjSi5A2W1L5ARZbkUFBJzTsBfo+4PDlQzT5/iUZeZbrTRK/4Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752620154; c=relaxed/simple;
-	bh=vEmMpBK5/tPkb9KHvQ0SdOc52MTBa8ee6/BHSUyXBLo=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=JZw6H+rksuNLj2kZqXTtinF8Nv8fUno1LOaOzsA3nug9WViMvu8WvHDewnqdnKl2huqpXGH0USNsf+AvDTE32LMlEwCFA/NnBgeVgQboQldHsF2BI10hAOognLVXSZ57bkL8ORyhimuSi+mtvdodQpNN68m+tWOWOurpVALG1eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SyaLvmRa; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1752620173; c=relaxed/simple;
+	bh=5RyARkgf5SswMnaypfJWEGPx2OdRLTjBe9Y66ciJDKM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YyVHco+aBG7d5hBZz/qComyUjNNIdCPQRPUsFKCWMi+Zhvg+HRx9cVRrRxeW8imFjfi4quMheDbW/AHsKgvEE5wJZQyfDggFt41PANPo88QqzmlAIHUNGoMDHsjQ7VUa67iYOo+zAqydwZjhjfv6xAShc8Wy61ZwIDblWmUWh5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HvL3ooAh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SyaLvmRa"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2cc89c59cc0so234751fac.0
-        for <patches@lists.linux.dev>; Tue, 15 Jul 2025 15:55:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1752620151; x=1753224951; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oi4TdNlobhflphwjzdK68I/IBj5StICPNqn66i2gNn4=;
-        b=SyaLvmRaZU7zwsmTJJfvKAvcBZ8WDVximDZo/3v4u7bovE8+1WS6N8+YNhhurm1HGB
-         787CYA/qI60GnEtRFFHY8Lmg7x9N02M4lfYLXemFyi4rKbemr+5sIQvFbbG2DmArOZNI
-         LQwNIbZUwiNvgekWPFAISNZwMqJi8VrqntM8YtEMz1kroYa5oMAWsgFrB0ewTbNkdsDH
-         /1f9SCL0Hc/kloWhuc8NlolxbhOZEwDSEmgxoZoZeBpke2GqvcDLxoCYAm7xDlA5pGW4
-         ywYuc34bmaWDKmBVhaCYLMRiv2g3+sLosZUELTame5ef7qLAVzmrPII8zYQz+JMcWXLZ
-         736w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752620151; x=1753224951;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oi4TdNlobhflphwjzdK68I/IBj5StICPNqn66i2gNn4=;
-        b=DXPJYuWAo7QAM53aFkLLTHEL6KvjeIQWW0brRc2f0ho3UOnosZ34pN3lNzlcyxlb0O
-         XWAnaCb+VTtFVRHAsdPA6ZHZo9Zko00dsYgim+HwDmUK0SyV5gpRsI6CFSZghwyYSzOd
-         MYhr9YVVE9+lVI/OFBXRoyOiyZCwEZw8PmgURyL/MhLGb+gEUWd91jQH26M7NXQNZzK7
-         okQXOgUgAhf0nZhQite6jqdZIrNU2SF0bRBaOnEwlnoM1RRSFqs/qf0kN9X9fCT2+InO
-         WD7lTlDdjqmCO2AVAP496r0Ql3HfriEuYyImiSfNe2i3+nzjE2O3YAeN7ClSODkxxVqe
-         IRyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVrtLHTd436sujq9aEfj1gHT0LVBvHzOv/mzBUIiRZH0OMPDVlB66E5/UlETpT+cK++MkzMVCO6@lists.linux.dev
-X-Gm-Message-State: AOJu0YzXGjsIVNkGVhB+ZOz28tzM8yl9x9wAz0mFTZT6lX+Z+mDvx02H
-	VFxdSbLQoLmygokFBPju9/ZBocsc+banHkZyH5pRT1Gx2L3jCBUn/G11RLcepsKyMEY=
-X-Gm-Gg: ASbGnctcn6y+r+Yp6H68qlAlYpzDw9NH9v9uwE6a9jWLYdv/cxavUZlYflFj9vzpLGm
-	lFUlZNvmiSHDvcfy8msWDHcjIR5o+9DELgF0oDfYb5ynK32VU6ndplusNY8ADTAwN1xAHN/lCf9
-	jwCgvfbGuh65398+GYImsM1YEs3fmf+olzPf51kWgn4kcm56M4mHrHio+J6bitJyco96KP3+d1W
-	X6/ykZo14TjBCux0awOhMvdLIjgmK5EOAQ88XbTbd6liud/tRi+kdJDFGcbZhd/yi1h+OXryZta
-	nfXVxSSd9mdy57XOXbt1Qq0bIJuK5cSVW5jtqgMYRu4Tl7PHEReobEerCYXUJ+kqkbTUrUraIUL
-	xXohEkC6qZZaED2ZloRjWPPRdmgdIQKf+C3FxU9A=
-X-Google-Smtp-Source: AGHT+IF5HaHuyKCM6E4t2p7V295FGoLcL158yabHcCEf0sSmb2eM1U+wbvg4ZE1zb1cHzfegWFEB5Q==
-X-Received: by 2002:a05:6870:3288:b0:2f7:64f7:8d40 with SMTP id 586e51a60fabf-2ffb0bed7efmr740669fac.9.1752620150775;
-        Tue, 15 Jul 2025 15:55:50 -0700 (PDT)
-Received: from localhost ([2603:8080:b800:f700:a172:6205:b5e:43cb])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2ff116d22easm2976522fac.33.2025.07.15.15.55.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 15:55:49 -0700 (PDT)
-Date: Wed, 16 Jul 2025 01:55:45 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: oe-kbuild@lists.linux.dev, Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Ankit Agrawal <ankita@nvidia.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	Longfang Liu <liulongfang@huawei.com>, qat-linux@intel.com,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	virtualization@lists.linux.dev, Xin Zeng <xin.zeng@intel.com>,
-	Yishai Hadas <yishaih@nvidia.com>
-Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH v3] vfio/pci: Do vf_token checks for
- VFIO_DEVICE_BIND_IOMMUFD
-Message-ID: <76f27eb9-7f56-45e7-813e-e3f595f3b6e9@suswa.mountain>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HvL3ooAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924C7C4CEE3;
+	Tue, 15 Jul 2025 22:56:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752620173;
+	bh=5RyARkgf5SswMnaypfJWEGPx2OdRLTjBe9Y66ciJDKM=;
+	h=From:Date:Subject:To:Cc:From;
+	b=HvL3ooAhAI7Ck8IC1tnJuXl9/v9R0vEEWBBKlTjw7Dmdurri+UdTRJ8M2LJCN/oGR
+	 q8YIgqLhrT6taIHfMYy5H+aB7lOgP8Pk8k3eSrBi47jCc109LhxXUOlZRnMg29/JrD
+	 Qb7ggiKK+vBDT7QDiGPwV686myWRhiLJGWnDLpuLQMdgVOfZnFom2iPkFOlJHpu1ZL
+	 5JPEeDc+gU7kUoEloi6T/WmXwmYyeHETOluykIfeE65eCGC2yeJEZgnf1VaP/0j6lP
+	 q/u176TotsAO+yx/LQw1d6Z5oCAbkL3JxPa8h7fpdrOnKpFF1azCk3RIXK121R3f9D
+	 0IwTvis+cuJOA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 15 Jul 2025 15:56:05 -0700
+Subject: [PATCH] memstick: core: Zero initialize id_reg in
+ h_memstick_read_dev_id()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v3-bdd8716e85fe+3978a-vfio_token_jgg@nvidia.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250715-memstick-fix-uninit-const-pointer-v1-1-f6753829c27a@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAITcdmgC/x2NwQrCMBAFf6Xs2YWktir+ivSgyUYf0k3JRhFK/
+ 73B48Aws5JJgRhdu5WKfGHI2sAfOgqvuz6FERtT7/rRnf3Is8xWEd6c8OOPQlE5ZLXKS4ZWKSz
+ xlPzx8kiDi9Q6S5Hm/h+3adt2u2wy/nMAAAA=
+X-Change-ID: 20250715-memstick-fix-uninit-const-pointer-ed6f138bf40d
+To: Maxim Levitsky <maximlevitsky@gmail.com>, Alex Dubov <oakad@yahoo.com>, 
+ Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Arnd Bergmann <arnd@arndb.de>, linux-mmc@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2095; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=5RyARkgf5SswMnaypfJWEGPx2OdRLTjBe9Y66ciJDKM=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBlld7pfcXVfsUp2Kji0pLdpkkfnX7bDTSl1J5pidsas/
+ 8k0n+1iRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjIyY2MDB9PyH4L55/ie+Ph
+ WYlFnDu3XvSXMeuM9U2/l7HMbPnyLZqMDD1cp1qqGzQ/Pf40feoOwbcm0l0Pjcp4Hr8waeA8VZ0
+ fwQUA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi Jason,
+A new warning in clang [1] points out that id_reg is uninitialized then
+passed to memstick_init_req() as a const pointer:
 
-kernel test robot noticed the following build warnings:
+  drivers/memstick/core/memstick.c:330:59: error: variable 'id_reg' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+    330 |                 memstick_init_req(&card->current_mrq, MS_TPC_READ_REG, &id_reg,
+        |                                                                         ^~~~~~
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jason-Gunthorpe/vfio-pci-Do-vf_token-checks-for-VFIO_DEVICE_BIND_IOMMUFD/20250715-001209
-base:   32b2d3a57e26804ca96d82a222667ac0fa226cb7
-patch link:    https://lore.kernel.org/r/0-v3-bdd8716e85fe%2B3978a-vfio_token_jgg%40nvidia.com
-patch subject: [PATCH v3] vfio/pci: Do vf_token checks for VFIO_DEVICE_BIND_IOMMUFD
-config: openrisc-randconfig-r071-20250715 (https://download.01.org/0day-ci/archive/20250716/202507160254.dAjYAz9h-lkp@intel.com/config)
-compiler: or1k-linux-gcc (GCC) 15.1.0
+Commit de182cc8e882 ("drivers/memstick/core/memstick.c: avoid -Wnonnull
+warning") intentionally passed this variable uninitialized to avoid an
+-Wnonnull warning from a NULL value that was previously there because
+id_reg is never read from the call to memstick_init_req() in
+h_memstick_read_dev_id(). Just zero initialize id_reg to avoid the
+warning, which is likely happening in the majority of builds using
+modern compilers that support '-ftrivial-auto-var-init=zero'.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202507160254.dAjYAz9h-lkp@intel.com/
+Cc: stable@vger.kernel.org
+Fixes: de182cc8e882 ("drivers/memstick/core/memstick.c: avoid -Wnonnull warning")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2105
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/memstick/core/memstick.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-smatch warnings:
-drivers/vfio/device_cdev.c:126 vfio_df_ioctl_bind_iommufd() warn: missing unwind goto?
-drivers/vfio/device_cdev.c:170 vfio_df_ioctl_bind_iommufd() warn: inconsistent returns '&device->dev_set->lock'.
+diff --git a/drivers/memstick/core/memstick.c b/drivers/memstick/core/memstick.c
+index 043b9ec756ff..7f3f47db4c98 100644
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -324,7 +324,7 @@ EXPORT_SYMBOL(memstick_init_req);
+ static int h_memstick_read_dev_id(struct memstick_dev *card,
+ 				  struct memstick_request **mrq)
+ {
+-	struct ms_id_register id_reg;
++	struct ms_id_register id_reg = {};
+ 
+ 	if (!(*mrq)) {
+ 		memstick_init_req(&card->current_mrq, MS_TPC_READ_REG, &id_reg,
 
-vim +126 drivers/vfio/device_cdev.c
+---
+base-commit: ff09b71bf9daeca4f21d6e5e449641c9fad75b53
+change-id: 20250715-memstick-fix-uninit-const-pointer-ed6f138bf40d
 
-5fcc26969a164e Yi Liu          2023-07-18   83  long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
-5fcc26969a164e Yi Liu          2023-07-18   84  				struct vfio_device_bind_iommufd __user *arg)
-5fcc26969a164e Yi Liu          2023-07-18   85  {
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14   86  	const u32 VALID_FLAGS = VFIO_DEVICE_BIND_FLAG_TOKEN;
-5fcc26969a164e Yi Liu          2023-07-18   87  	struct vfio_device *device = df->device;
-5fcc26969a164e Yi Liu          2023-07-18   88  	struct vfio_device_bind_iommufd bind;
-5fcc26969a164e Yi Liu          2023-07-18   89  	unsigned long minsz;
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14   90  	u32 user_size;
-5fcc26969a164e Yi Liu          2023-07-18   91  	int ret;
-5fcc26969a164e Yi Liu          2023-07-18   92  
-5fcc26969a164e Yi Liu          2023-07-18   93  	static_assert(__same_type(arg->out_devid, df->devid));
-5fcc26969a164e Yi Liu          2023-07-18   94  
-5fcc26969a164e Yi Liu          2023-07-18   95  	minsz = offsetofend(struct vfio_device_bind_iommufd, out_devid);
-5fcc26969a164e Yi Liu          2023-07-18   96  
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14   97  	ret = get_user(user_size, &arg->argsz);
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14   98  	if (ret)
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14   99  		return ret;
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  100  	if (user_size < minsz)
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  101  		return -EINVAL;
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  102  	ret = copy_struct_from_user(&bind, minsz, arg, user_size);
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  103  	if (ret)
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  104  		return ret;
-5fcc26969a164e Yi Liu          2023-07-18  105  
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  106  	if (bind.iommufd < 0 || bind.flags & ~VALID_FLAGS)
-5fcc26969a164e Yi Liu          2023-07-18  107  		return -EINVAL;
-5fcc26969a164e Yi Liu          2023-07-18  108  
-5fcc26969a164e Yi Liu          2023-07-18  109  	/* BIND_IOMMUFD only allowed for cdev fds */
-5fcc26969a164e Yi Liu          2023-07-18  110  	if (df->group)
-5fcc26969a164e Yi Liu          2023-07-18  111  		return -EINVAL;
-5fcc26969a164e Yi Liu          2023-07-18  112  
-5fcc26969a164e Yi Liu          2023-07-18  113  	ret = vfio_device_block_group(device);
-5fcc26969a164e Yi Liu          2023-07-18  114  	if (ret)
-5fcc26969a164e Yi Liu          2023-07-18  115  		return ret;
-5fcc26969a164e Yi Liu          2023-07-18  116  
-5fcc26969a164e Yi Liu          2023-07-18  117  	mutex_lock(&device->dev_set->lock);
-5fcc26969a164e Yi Liu          2023-07-18  118  	/* one device cannot be bound twice */
-5fcc26969a164e Yi Liu          2023-07-18  119  	if (df->access_granted) {
-5fcc26969a164e Yi Liu          2023-07-18  120  		ret = -EINVAL;
-5fcc26969a164e Yi Liu          2023-07-18  121  		goto out_unlock;
-5fcc26969a164e Yi Liu          2023-07-18  122  	}
-5fcc26969a164e Yi Liu          2023-07-18  123  
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  124  	ret = vfio_df_check_token(device, &bind);
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  125  	if (ret)
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14 @126  		return ret;
-
-This needs to be a goto unlock.
-
-be2e70b96c3e54 Jason Gunthorpe 2025-07-14  127  
-5fcc26969a164e Yi Liu          2023-07-18  128  	df->iommufd = iommufd_ctx_from_fd(bind.iommufd);
-5fcc26969a164e Yi Liu          2023-07-18  129  	if (IS_ERR(df->iommufd)) {
-5fcc26969a164e Yi Liu          2023-07-18  130  		ret = PTR_ERR(df->iommufd);
-5fcc26969a164e Yi Liu          2023-07-18  131  		df->iommufd = NULL;
-5fcc26969a164e Yi Liu          2023-07-18  132  		goto out_unlock;
-5fcc26969a164e Yi Liu          2023-07-18  133  	}
-5fcc26969a164e Yi Liu          2023-07-18  134  
-5fcc26969a164e Yi Liu          2023-07-18  135  	/*
-5fcc26969a164e Yi Liu          2023-07-18  136  	 * Before the device open, get the KVM pointer currently
-5fcc26969a164e Yi Liu          2023-07-18  137  	 * associated with the device file (if there is) and obtain
-5fcc26969a164e Yi Liu          2023-07-18  138  	 * a reference.  This reference is held until device closed.
-5fcc26969a164e Yi Liu          2023-07-18  139  	 * Save the pointer in the device for use by drivers.
-5fcc26969a164e Yi Liu          2023-07-18  140  	 */
-5fcc26969a164e Yi Liu          2023-07-18  141  	vfio_df_get_kvm_safe(df);
-5fcc26969a164e Yi Liu          2023-07-18  142  
-5fcc26969a164e Yi Liu          2023-07-18  143  	ret = vfio_df_open(df);
-5fcc26969a164e Yi Liu          2023-07-18  144  	if (ret)
-5fcc26969a164e Yi Liu          2023-07-18  145  		goto out_put_kvm;
-5fcc26969a164e Yi Liu          2023-07-18  146  
-5fcc26969a164e Yi Liu          2023-07-18  147  	ret = copy_to_user(&arg->out_devid, &df->devid,
-5fcc26969a164e Yi Liu          2023-07-18  148  			   sizeof(df->devid)) ? -EFAULT : 0;
-5fcc26969a164e Yi Liu          2023-07-18  149  	if (ret)
-5fcc26969a164e Yi Liu          2023-07-18  150  		goto out_close_device;
-5fcc26969a164e Yi Liu          2023-07-18  151  
-5fcc26969a164e Yi Liu          2023-07-18  152  	device->cdev_opened = true;
-5fcc26969a164e Yi Liu          2023-07-18  153  	/*
-5fcc26969a164e Yi Liu          2023-07-18  154  	 * Paired with smp_load_acquire() in vfio_device_fops::ioctl/
-5fcc26969a164e Yi Liu          2023-07-18  155  	 * read/write/mmap
-5fcc26969a164e Yi Liu          2023-07-18  156  	 */
-5fcc26969a164e Yi Liu          2023-07-18  157  	smp_store_release(&df->access_granted, true);
-5fcc26969a164e Yi Liu          2023-07-18  158  	mutex_unlock(&device->dev_set->lock);
-5fcc26969a164e Yi Liu          2023-07-18  159  	return 0;
-5fcc26969a164e Yi Liu          2023-07-18  160  
-5fcc26969a164e Yi Liu          2023-07-18  161  out_close_device:
-5fcc26969a164e Yi Liu          2023-07-18  162  	vfio_df_close(df);
-5fcc26969a164e Yi Liu          2023-07-18  163  out_put_kvm:
-5fcc26969a164e Yi Liu          2023-07-18  164  	vfio_device_put_kvm(device);
-5fcc26969a164e Yi Liu          2023-07-18  165  	iommufd_ctx_put(df->iommufd);
-5fcc26969a164e Yi Liu          2023-07-18  166  	df->iommufd = NULL;
-5fcc26969a164e Yi Liu          2023-07-18  167  out_unlock:
-5fcc26969a164e Yi Liu          2023-07-18  168  	mutex_unlock(&device->dev_set->lock);
-5fcc26969a164e Yi Liu          2023-07-18  169  	vfio_device_unblock_group(device);
-5fcc26969a164e Yi Liu          2023-07-18 @170  	return ret;
-5fcc26969a164e Yi Liu          2023-07-18  171  }
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
 
