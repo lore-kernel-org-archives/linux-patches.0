@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AD62561AE;
-	Tue, 15 Jul 2025 13:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD7A2566;
+	Tue, 15 Jul 2025 13:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587289; cv=none; b=Xl3GLZVpmYLSwZiKV0CM70L2yOX1nMVKMu4Ug7HCW1LFEB2gjzIiZCRhLH13iQCqEW54qCxRftuD6SDYnLI/BpxKMZvdC0dKQOa9BaDzuuoudTpewXg3KO11sJ0nbrsyDNUqFDvAi8n1COw2a4XbtA4WyeDgtv3k35+LL01lTDU=
+	t=1752587291; cv=none; b=BTxl8EMEJgRIELPEt9ye28whVvSWGhfAJQue+6xerhPYBRe3h9pvOXyEDcqEOp5THG8biBxmJnkbjSjd8UMUGb8Nq1Hmvc+3WXPZYquF6PqwFblN6L7V2q8cZv5CkKsoA9vPHP8LErA9uMjgB2K5gMRkRNdfu1HTnzdBNGzWDzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587289; c=relaxed/simple;
-	bh=gymZ/Fst5fKmTI6aG2s4e8MO13Cy9VwnbsW8ZMXgB7w=;
+	s=arc-20240116; t=1752587291; c=relaxed/simple;
+	bh=csiWDixZoE3ByqRob/Ij0E+X485xagYKbBG3VGUCOmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLjWNMVY6xa8ljGQMz1JQgmUk1perWyJB9bw7rYBEdbpw03ClM6ghUz2m+eyL++ZJ/TqOMWUViHFIriiCm1fMJhSagWFyI8suWtdCH+Su0+/+3E9xxFOGedlfxSKj9onoKKRGXZe7sUG2+mB32bgYOhXkj/3G2oqaBkthnx87BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KT7/ITUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JEmBEyd5OZzmy78x64ovTq28nZHGCelxX6Nu/XypEdtKg0kfhh9Mdh+UhfR4BAToYuW949NfLGsbuDo3xarJGvwfwMiijGOGJU1AdNTDY169u+chjTM1UKPdXPauAiFZ6Ojkq212ch36ILylsolbgSAVQ9+Pb44zOX+R+GS1CxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6ueR+xP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KT7/ITUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAFBC4CEE3;
-	Tue, 15 Jul 2025 13:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6ueR+xP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F44CC4CEE3;
+	Tue, 15 Jul 2025 13:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587289;
-	bh=gymZ/Fst5fKmTI6aG2s4e8MO13Cy9VwnbsW8ZMXgB7w=;
+	s=korg; t=1752587291;
+	bh=csiWDixZoE3ByqRob/Ij0E+X485xagYKbBG3VGUCOmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KT7/ITURx4GjcpPfUbVLmca8/3ZUGtX7stlpXa/eR/Y69ofIDautmNDo6Q2mksbV5
-	 gIJriiu5z7dX40+5hLcJ3qqYSqY4wrZUfTRkKtJIGhikjP1Vvvq8FvwlwiWGPT96G3
-	 44G+hR5gib3QVC8ECK8chxRfNAd4uhP390Rq/9TU=
+	b=A6ueR+xPZrZVoYsfQAT4ENbSXP40nSI5SC+i8ccjC/5uBDOP9D6D3M3LAL8GL8e+S
+	 MuKH9urAPSYbgkFPrfaYatmT/WXqULfu5ylIl8PgU5DfVnLYlLF7EyBRW4mgGOoNk6
+	 zHDsAzJl2QeNTzJwtXXIp1DdinH64I5rQ8g4tExQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Achill Gilgenast <fossdd@pwned.life>,
-	Luis Henriques <luis@igalia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 37/88] kallsyms: fix build without execinfo
-Date: Tue, 15 Jul 2025 15:14:13 +0200
-Message-ID: <20250715130756.013086225@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 46/88] xhci: Allow RPM on the USB controller (1022:43f7) by default
+Date: Tue, 15 Jul 2025 15:14:22 +0200
+Message-ID: <20250715130756.390364563@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,53 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Achill Gilgenast <fossdd@pwned.life>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit a95743b53031b015e8949e845a9f6fdfb2656347 upstream.
+[ Upstream commit 28cbed496059fe1868203b76e9e0ef285733524d ]
 
-Some libc's like musl libc don't provide execinfo.h since it's not part of
-POSIX.  In order to fix compilation on musl, only include execinfo.h if
-available (HAVE_BACKTRACE_SUPPORT)
+Enable runtime PM by default for older AMD 1022:43f7 xHCI 1.1 host as it
+is proven to work.
+Driver enables runtime PM by default for newer xHCI 1.2 host.
 
-This was discovered with c104c16073b7 ("Kunit to check the longest symbol
-length") which starts to include linux/kallsyms.h with Alpine Linux'
-configs.
-
-Link: https://lkml.kernel.org/r/20250622014608.448718-1-fossdd@pwned.life
-Fixes: c104c16073b7 ("Kunit to check the longest symbol length")
-Signed-off-by: Achill Gilgenast <fossdd@pwned.life>
-Cc: Luis Henriques <luis@igalia.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/all/12335218.O9o76ZdvQC@natalenko.name/
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240304054327.2564500-1-Basavaraj.Natikar@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: cbc889ab0122 ("usb: xhci: quirk for data loss in ISOC transfers")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/linux/kallsyms.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci-pci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/include/linux/kallsyms.h b/tools/include/linux/kallsyms.h
-index 5a37ccbec54f..f61a01dd7eb7 100644
---- a/tools/include/linux/kallsyms.h
-+++ b/tools/include/linux/kallsyms.h
-@@ -18,6 +18,7 @@ static inline const char *kallsyms_lookup(unsigned long addr,
- 	return NULL;
- }
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index ca27bc15209c2..30b2188a3cf8a 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -190,8 +190,11 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 		xhci->quirks |= XHCI_RESET_ON_RESUME;
+ 	}
  
-+#ifdef HAVE_BACKTRACE_SUPPORT
- #include <execinfo.h>
- #include <stdlib.h>
- static inline void print_ip_sym(const char *loglvl, unsigned long ip)
-@@ -30,5 +31,8 @@ static inline void print_ip_sym(const char *loglvl, unsigned long ip)
+-	if (pdev->vendor == PCI_VENDOR_ID_AMD)
++	if (pdev->vendor == PCI_VENDOR_ID_AMD) {
+ 		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
++		if (pdev->device == 0x43f7)
++			xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
++	}
  
- 	free(name);
- }
-+#else
-+static inline void print_ip_sym(const char *loglvl, unsigned long ip) {}
-+#endif
- 
- #endif
+ 	if ((pdev->vendor == PCI_VENDOR_ID_AMD) &&
+ 		((pdev->device == PCI_DEVICE_ID_AMD_PROMONTORYA_4) ||
 -- 
-2.50.1
+2.39.5
 
 
 
