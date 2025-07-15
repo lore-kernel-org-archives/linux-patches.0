@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC832EBB99;
-	Tue, 15 Jul 2025 13:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB39C2E7F3C;
+	Tue, 15 Jul 2025 13:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586187; cv=none; b=SPg6N+rvCJ65j+rvuaubNvguvuXHP1GrtfCJyL06AQnXs89RIr1mL5v04OyV10u+ZvWAw6fVFMuvw2z0PaD5/IkKi0vQpDuFYNXRTtFsKYrCgIlcR7zQo8SgVpcB535fneM7eAugy5C7dgicmP35DKBG4iN6E3CCCMSCiHosIKU=
+	t=1752586189; cv=none; b=cIZcJIjRy1LLk6+B+vXJGi89JgLZrZiA2IXJGgXBomkezbbThJOmfFN8NZh5Fh3B41HdPZO7YoZJ2lAA5cSWnAlnAAsK2hVuN5TyIO2EHvslagGRGJcGQhalsO168QyyVsUh/M+uptYPZZrXjS2vi4m+JVbOMnhlLAlMFfrUxoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586187; c=relaxed/simple;
-	bh=snVdj9DVNecFYw8VDmXdNl5kBQReI8Tyk3cp2nK3W5c=;
+	s=arc-20240116; t=1752586189; c=relaxed/simple;
+	bh=abnAHv8wb3biEtYvtiBoD9IxxMijfuV2HVNV11ENL20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qp5SQg1ufzxLqcsSollyz8ibvdUiMIetdu6LOoGwXAMoqHTng/YrlwF3LC4KnVBiJmTopzcQtRUG+RUMjmjnOPvuq2qJHYQgYOvKpeLksr1e5HL2voEvIabOp20F8/dTaC3ncjprvx7MzlIb4WZ0w85I6dRO91EdqgYF92/Z/Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=em+aJzAu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HbOBdLIb8F71zT2yJwHyrvb7nsDDMxpLnza6bpAGx49sCoMgKJr8hQMiIBxeUh0lZqmw/tvA1ltJCPUalswGU5sS4KH8SF2e80/GsnNG10j1eBpawQhOjQXVI+bu3FOqT73q03vYesOdsgz7wAj2U10JN688bjmxa3HZxgrvKdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiPskh9g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="em+aJzAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DE9C4CEE3;
-	Tue, 15 Jul 2025 13:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiPskh9g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DDFC4CEE3;
+	Tue, 15 Jul 2025 13:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586186;
-	bh=snVdj9DVNecFYw8VDmXdNl5kBQReI8Tyk3cp2nK3W5c=;
+	s=korg; t=1752586189;
+	bh=abnAHv8wb3biEtYvtiBoD9IxxMijfuV2HVNV11ENL20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=em+aJzAuxf/jPQF9tg9O0f02/LW5DGvCerZq92hxwoD+NLxspawRxAMUg5+7qs2Mw
-	 ALcXY48UqfGLb4mGi5F1Sv5WuDS++WsAYKSvDoxDFl9V0o90MMHJjnbOMdFGYK//go
-	 KOyLIaiDPE769R3/dwRB4I0fhFaBfJzb5YagXQ/s=
+	b=IiPskh9goZyWzbZvkAqIvE7alAMidvTuNVr987fSoS4hL3R0VHdMhMt9XZwgXyqbt
+	 ea4soW8DSLl5zcAlkD6Kpfxi5NVh7ps8SAHp1ZZpiT3g1XpQsWFYXjiZftGM3j2bxc
+	 PgAkf2PnBddfRAjAcqZmwpsHXqDUB+RI9L/aJ/Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Kuen-Han Tsai <khtsai@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/77] usb: dwc3: Abort suspend on soft disconnect failure
-Date: Tue, 15 Jul 2025 15:13:48 +0200
-Message-ID: <20250715130753.690789316@linuxfoundation.org>
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Simona Vetter <simona.vetter@intel.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>
+Subject: [PATCH 5.15 32/77] drm/gem: Fix race in drm_gem_handle_create_tail()
+Date: Tue, 15 Jul 2025 15:13:31 +0200
+Message-ID: <20250715130752.997780056@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -52,108 +56,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Simona Vetter <simona.vetter@ffwll.ch>
 
-[ Upstream commit 630a1dec3b0eba2a695b9063f1c205d585cbfec9 ]
+commit bd46cece51a36ef088f22ef0416ac13b0a46d5b0 upstream.
 
-When dwc3_gadget_soft_disconnect() fails, dwc3_suspend_common() keeps
-going with the suspend, resulting in a period where the power domain is
-off, but the gadget driver remains connected.  Within this time frame,
-invoking vbus_event_work() will cause an error as it attempts to access
-DWC3 registers for endpoint disabling after the power domain has been
-completely shut down.
+Object creation is a careful dance where we must guarantee that the
+object is fully constructed before it is visible to other threads, and
+GEM buffer objects are no difference.
 
-Abort the suspend sequence when dwc3_gadget_suspend() cannot halt the
-controller and proceeds with a soft connect.
+Final publishing happens by calling drm_gem_handle_create(). After
+that the only allowed thing to do is call drm_gem_object_put() because
+a concurrent call to the GEM_CLOSE ioctl with a correctly guessed id
+(which is trivial since we have a linear allocator) can already tear
+down the object again.
 
-Fixes: 9f8a67b65a49 ("usb: dwc3: gadget: fix gadget suspend/resume")
-Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://lore.kernel.org/r/20250528100315.2162699-1-khtsai@google.com
+Luckily most drivers get this right, the very few exceptions I've
+pinged the relevant maintainers for. Unfortunately we also need
+drm_gem_handle_create() when creating additional handles for an
+already existing object (e.g. GETFB ioctl or the various bo import
+ioctl), and hence we cannot have a drm_gem_handle_create_and_put() as
+the only exported function to stop these issues from happening.
+
+Now unfortunately the implementation of drm_gem_handle_create() isn't
+living up to standards: It does correctly finishe object
+initialization at the global level, and hence is safe against a
+concurrent tear down. But it also sets up the file-private aspects of
+the handle, and that part goes wrong: We fully register the object in
+the drm_file.object_idr before calling drm_vma_node_allow() or
+obj->funcs->open, which opens up races against concurrent removal of
+that handle in drm_gem_handle_delete().
+
+Fix this with the usual two-stage approach of first reserving the
+handle id, and then only registering the object after we've completed
+the file-private setup.
+
+Jacek reported this with a testcase of concurrently calling GEM_CLOSE
+on a freshly-created object (which also destroys the object), but it
+should be possible to hit this with just additional handles created
+through import or GETFB without completed destroying the underlying
+object with the concurrent GEM_CLOSE ioctl calls.
+
+Note that the close-side of this race was fixed in f6cd7daecff5 ("drm:
+Release driver references to handle before making it available
+again"), which means a cool 9 years have passed until someone noticed
+that we need to make this symmetry or there's still gaps left :-/
+Without the 2-stage close approach we'd still have a race, therefore
+that's an integral part of this bugfix.
+
+More importantly, this means we can have NULL pointers behind
+allocated id in our drm_file.object_idr. We need to check for that
+now:
+
+- drm_gem_handle_delete() checks for ERR_OR_NULL already
+
+- drm_gem.c:object_lookup() also chekcs for NULL
+
+- drm_gem_release() should never be called if there's another thread
+  still existing that could call into an IOCTL that creates a new
+  handle, so cannot race. For paranoia I added a NULL check to
+  drm_gem_object_release_handle() though.
+
+- most drivers (etnaviv, i915, msm) are find because they use
+  idr_find(), which maps both ENOENT and NULL to NULL.
+
+- drivers using idr_for_each_entry() should also be fine, because
+  idr_get_next does filter out NULL entries and continues the
+  iteration.
+
+- The same holds for drm_show_memory_stats().
+
+v2: Use drm_WARN_ON (Thomas)
+
+Reported-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Tested-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: stable@vger.kernel.org
+Cc: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Signed-off-by: Simona Vetter <simona.vetter@intel.com>
+Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250707151814.603897-1-simona.vetter@ffwll.ch
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c   |  9 +++++++--
- drivers/usb/dwc3/gadget.c | 22 +++++++++-------------
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/drm_gem.c |   10 +++++++++-
+ include/drm/drm_file.h    |    3 +++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index bb20d8dd18791..488cb16acd67e 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1818,6 +1818,7 @@ static int dwc3_core_init_for_resume(struct dwc3 *dwc)
- static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- {
- 	u32 reg;
-+	int ret;
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -234,6 +234,9 @@ drm_gem_object_release_handle(int id, vo
+ 	struct drm_file *file_priv = data;
+ 	struct drm_gem_object *obj = ptr;
  
- 	if (!pm_runtime_suspended(dwc->dev) && !PMSG_IS_AUTO(msg)) {
- 		dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
-@@ -1836,7 +1837,9 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- 	case DWC3_GCTL_PRTCAP_DEVICE:
- 		if (pm_runtime_suspended(dwc->dev))
- 			break;
--		dwc3_gadget_suspend(dwc);
-+		ret = dwc3_gadget_suspend(dwc);
-+		if (ret)
-+			return ret;
- 		synchronize_irq(dwc->irq_gadget);
- 		dwc3_core_exit(dwc);
- 		break;
-@@ -1867,7 +1870,9 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- 			break;
- 
- 		if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
--			dwc3_gadget_suspend(dwc);
-+			ret = dwc3_gadget_suspend(dwc);
-+			if (ret)
-+				return ret;
- 			synchronize_irq(dwc->irq_gadget);
- 		}
- 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index a99e669468ee3..44bb3770f8bb2 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4580,26 +4580,22 @@ int dwc3_gadget_suspend(struct dwc3 *dwc)
- 	int ret;
- 
- 	ret = dwc3_gadget_soft_disconnect(dwc);
--	if (ret)
--		goto err;
--
--	spin_lock_irqsave(&dwc->lock, flags);
--	if (dwc->gadget_driver)
--		dwc3_disconnect_gadget(dwc);
--	spin_unlock_irqrestore(&dwc->lock, flags);
--
--	return 0;
--
--err:
- 	/*
- 	 * Attempt to reset the controller's state. Likely no
- 	 * communication can be established until the host
- 	 * performs a port reset.
- 	 */
--	if (dwc->softconnect)
-+	if (ret && dwc->softconnect) {
- 		dwc3_gadget_soft_connect(dwc);
-+		return -EAGAIN;
-+	}
- 
--	return ret;
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	if (dwc->gadget_driver)
-+		dwc3_disconnect_gadget(dwc);
-+	spin_unlock_irqrestore(&dwc->lock, flags);
++	if (drm_WARN_ON(obj->dev, !data))
++		return 0;
 +
-+	return 0;
- }
+ 	if (obj->funcs->close)
+ 		obj->funcs->close(obj, file_priv);
  
- int dwc3_gadget_resume(struct dwc3 *dwc)
--- 
-2.39.5
-
+@@ -361,7 +364,7 @@ drm_gem_handle_create_tail(struct drm_fi
+ 	idr_preload(GFP_KERNEL);
+ 	spin_lock(&file_priv->table_lock);
+ 
+-	ret = idr_alloc(&file_priv->object_idr, obj, 1, 0, GFP_NOWAIT);
++	ret = idr_alloc(&file_priv->object_idr, NULL, 1, 0, GFP_NOWAIT);
+ 
+ 	spin_unlock(&file_priv->table_lock);
+ 	idr_preload_end();
+@@ -382,6 +385,11 @@ drm_gem_handle_create_tail(struct drm_fi
+ 			goto err_revoke;
+ 	}
+ 
++	/* mirrors drm_gem_handle_delete to avoid races */
++	spin_lock(&file_priv->table_lock);
++	obj = idr_replace(&file_priv->object_idr, obj, handle);
++	WARN_ON(obj != NULL);
++	spin_unlock(&file_priv->table_lock);
+ 	*handlep = handle;
+ 	return 0;
+ 
+--- a/include/drm/drm_file.h
++++ b/include/drm/drm_file.h
+@@ -273,6 +273,9 @@ struct drm_file {
+ 	 *
+ 	 * Mapping of mm object handles to object pointers. Used by the GEM
+ 	 * subsystem. Protected by @table_lock.
++	 *
++	 * Note that allocated entries might be NULL as a transient state when
++	 * creating or deleting a handle.
+ 	 */
+ 	struct idr object_idr;
+ 
 
 
