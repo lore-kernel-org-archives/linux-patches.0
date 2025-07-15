@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFB826D4F2;
-	Tue, 15 Jul 2025 13:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FE12E424C;
+	Tue, 15 Jul 2025 13:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587777; cv=none; b=hIh595WLqR1BEyGj70knVMFhsr52yNvhJMsPIqWB8AubQtSJssKAYwePaqYR90XJUd8UaXmS5yiWd5tS8py4pMrH+qgSNZIYV7poiuLs0c6YnG0ygIQyxzaCHhaaDnejMZCxCN15TeITu1o1Bi45i0ndi4QoHOjU1j6fo8H0uf8=
+	t=1752587780; cv=none; b=rbdltxMaZDP5fiQa+d6RjIfttRlqOl9XJEDuOICjeeAp+MoF+gY54ubz7DeHa4PN1jAYZwRzVaUuPA2Uu5fhUotvd7W1yBV9gXBuaPV6ehwwisSX27ndLXoLcNWd/ikAoBr0JPMs4eocPx6Ug9Z5nmALPIGWFsZ+lKEX36lMe00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587777; c=relaxed/simple;
-	bh=hpzorVeN8rqteMINtD0rbZ8yxDeIqju3zjwTMvA8//k=;
+	s=arc-20240116; t=1752587780; c=relaxed/simple;
+	bh=3oVxXjVuo4ePQQwnXoCX3UnERIGESwtGV4bO0BTBSLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYq6CxzyefokipaiFso0GEkbcl46XdYHExSLhXHIlQ+HZAtVYh3hXMBBD/PIc0HR7FmqIabGQJTi01kyU+L1/buueySllUhrHxsFrr5QhvzHnDxC5elSTOsK/WIz/oQLLexiWsN0q+mCO+cnw31zchd0y+Bco8wJWCnWz6dLQC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMsRb0lT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HnlPBWlzYBmNo5TKpl/hqf9phVr5WzF4CUrM3Dd8+sKZMzIt4KT5giaUhby3Yr9GtveKGhID1RSDMxLvi0PaOCG/TraAdo9syaWyv0G0OhpLR+ZV3/2qMTbeS4DyORLAUEHhHciLyefQKlrtzxr0yWO3vGCJsQechXHb2tUBf+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQP3UN7E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMsRb0lT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388B2C4CEE3;
-	Tue, 15 Jul 2025 13:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQP3UN7E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A68C4CEE3;
+	Tue, 15 Jul 2025 13:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587777;
-	bh=hpzorVeN8rqteMINtD0rbZ8yxDeIqju3zjwTMvA8//k=;
+	s=korg; t=1752587780;
+	bh=3oVxXjVuo4ePQQwnXoCX3UnERIGESwtGV4bO0BTBSLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMsRb0lTkMoVVI0zQb5Ykg4HKEwBMuGgFgtiEj15J4FVjQUBimTdBQjlUA7hAO+b1
-	 4Fo2ECZUY2AV7uT7GbrGr5P+3dEp5nB81Ob/gAs8jsl1FaepzR0zh4KeaSNX2mSF2O
-	 XZ2PEMS0ZWh+3GL/C/BuM34NiP+PoGUAEpH8PnBg=
+	b=LQP3UN7EgU7tIzTKXLBlKzQZR3SUda0QfUvQahGhvoCerrrSGec+6juhqylum34l3
+	 mRz80Scaq2N0fL5HVOob9vCq1MW/G7ahUCIEXK9gMeWz6gfmbIAg8ckMj/ICtxWZHB
+	 lVAikmoyIypkVAR35hhNRNmu90P/1qAN2NaQ5gM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefano Garzarella <sgarzare@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 140/208] vm_sockets: Add flags field in the vsock address data structure
-Date: Tue, 15 Jul 2025 15:14:09 +0200
-Message-ID: <20250715130816.535062280@linuxfoundation.org>
+Subject: [PATCH 5.10 141/208] vm_sockets: Add VMADDR_FLAG_TO_HOST vsock flag
+Date: Tue, 15 Jul 2025 15:14:10 +0200
+Message-ID: <20250715130816.574701069@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -54,38 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Andra Paraschiv <andraprs@amazon.com>
 
-[ Upstream commit dc8eeef73b63ed8988224ba6b5ed19a615163a7f ]
+[ Upstream commit caaf95e0f23f9ed240b02251aab0f6fdb652b33d ]
 
-vsock enables communication between virtual machines and the host they
-are running on. With the multi transport support (guest->host and
-host->guest), nested VMs can also use vsock channels for communication.
+Add VMADDR_FLAG_TO_HOST vsock flag that is used to setup a vsock
+connection where all the packets are forwarded to the host.
 
-In addition to this, by default, all the vsock packets are forwarded to
-the host, if no host->guest transport is loaded. This behavior can be
-implicitly used for enabling vsock communication between sibling VMs.
-
-Add a flags field in the vsock address data structure that can be used
-to explicitly mark the vsock connection as being targeted for a certain
-type of communication. This way, can distinguish between different use
-cases such as nested VMs and sibling VMs.
-
-This field can be set when initializing the vsock address variable used
-for the connect() call.
+Then, using this type of vsock channel, vsock communication between
+sibling VMs can be built on top of it.
 
 Changelog
 
 v3 -> v4
 
-* Update the size of "svm_flags" field to be 1 byte instead of 2 bytes.
+* Update the "VMADDR_FLAG_TO_HOST" value, as the size of the field has
+  been updated to 1 byte.
 
 v2 -> v3
 
-* Add "svm_flags" as a new field, not reusing "svm_reserved1".
+* Update comments to mention when the flag is set in the connect and
+  listen paths.
 
 v1 -> v2
 
-* Update the field name to "svm_flags".
-* Split the current patch in 2 patches.
+* New patch in v2, it was split from the first patch in the series.
+* Remove the default value for the vsock flags field.
+* Update the naming for the vsock flag to "VMADDR_FLAG_TO_HOST".
 
 Signed-off-by: Andra Paraschiv <andraprs@amazon.com>
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
@@ -93,36 +86,40 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 687aa0c5581b ("vsock: Fix transport_* TOCTOU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/vm_sockets.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/uapi/linux/vm_sockets.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/include/uapi/linux/vm_sockets.h b/include/uapi/linux/vm_sockets.h
-index 67e3938e86bd0..490ca99dcada1 100644
+index 490ca99dcada1..4263c85593fa0 100644
 --- a/include/uapi/linux/vm_sockets.h
 +++ b/include/uapi/linux/vm_sockets.h
-@@ -22,6 +22,7 @@
- #endif
+@@ -119,6 +119,26 @@
  
- #include <linux/socket.h>
-+#include <linux/types.h>
+ #define VMADDR_CID_HOST 2
  
- /* Option name for STREAM socket buffer size.  Use as the option name in
-  * setsockopt(3) or getsockopt(3) to set or get an unsigned long long that
-@@ -152,10 +153,13 @@ struct sockaddr_vm {
- 	unsigned short svm_reserved1;
- 	unsigned int svm_port;
- 	unsigned int svm_cid;
-+	__u8 svm_flags;
- 	unsigned char svm_zero[sizeof(struct sockaddr) -
- 			       sizeof(sa_family_t) -
- 			       sizeof(unsigned short) -
--			       sizeof(unsigned int) - sizeof(unsigned int)];
-+			       sizeof(unsigned int) -
-+			       sizeof(unsigned int) -
-+			       sizeof(__u8)];
- };
++/* The current default use case for the vsock channel is the following:
++ * local vsock communication between guest and host and nested VMs setup.
++ * In addition to this, implicitly, the vsock packets are forwarded to the host
++ * if no host->guest vsock transport is set.
++ *
++ * Set this flag value in the sockaddr_vm corresponding field if the vsock
++ * packets need to be always forwarded to the host. Using this behavior,
++ * vsock communication between sibling VMs can be setup.
++ *
++ * This way can explicitly distinguish between vsock channels created for
++ * different use cases, such as nested VMs (or local communication between
++ * guest and host) and sibling VMs.
++ *
++ * The flag can be set in the connect logic in the user space application flow.
++ * In the listen logic (from kernel space) the flag is set on the remote peer
++ * address. This happens for an incoming connection when it is routed from the
++ * host and comes from the guest (local CID and remote CID > VMADDR_CID_HOST).
++ */
++#define VMADDR_FLAG_TO_HOST 0x01
++
+ /* Invalid vSockets version. */
  
- #define IOCTL_VM_SOCKETS_GET_LOCAL_CID		_IO(7, 0xb9)
+ #define VM_SOCKETS_INVALID_VERSION -1U
 -- 
 2.39.5
 
