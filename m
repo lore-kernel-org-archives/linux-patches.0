@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9426F2E11D3;
-	Tue, 15 Jul 2025 13:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADC92E1C69;
+	Tue, 15 Jul 2025 13:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585758; cv=none; b=V67LFocCKTygwyL420xSr7IW5Tw9Wl1o2btzhN0U9UkQPHdvWqZz0+Ffu6eKvu+tNZF/t8K0g+/LKiB2RRJPHAgwB874zPbZR75ZZscioAlp2UuWZNu/as/CimHT1ddgv+JmoKElj+Hqysdh/xFJZQLZ05AosMslTGf2ixPkmI4=
+	t=1752585761; cv=none; b=RwoLy5ArtLWrSDPpcqzexL7Bk9ikyQfHlm8Va9RuJanOPYgOy5yT8Ukg2309RCbEMw3uhn9HZqsc77ljYiSflB9i7C5GwRXCpzDWSAvELaQy62yiNXtlQluAcJ6iVV5I5bdTxxoJ2rhirOjx5Urw17GiOWPotetBGIdHIeQU6yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585758; c=relaxed/simple;
-	bh=3o6zsYO8YwOkO86mzylxKNa2LumRF1DprVaCjIWpH7E=;
+	s=arc-20240116; t=1752585761; c=relaxed/simple;
+	bh=hI70LW6VPGMVv2cD2AtJ1OKEGHeQEeveeyb8HGHoAzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ag/NVcZc0c2gtQ1YMA010O4GsEfWrLWExrQtcoHyFyhgXUPcWwMZcpAWhmDoX2hju+LJC9kbYVvTWsjh2GUOo1e4JEkqmaqDsfaIRqIJsMGhgp4GtpLxZNtWG6vsnqUFCda7gCE0t2N8o91A9N/YVTOkbj3ZTlV3KBqPoV+SISg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCyR9l9o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJaHtkxbi5dUQCXPa3+dDXy4S2Vj2PKk6dXyHgPS+w9gCqHJwNx5IQrVfyl9evDfcKp9fH4zJdbRfPvg9PrJUe0lX8akUP9rs71wOQOjcM1iJHJ+BwlVLbZ6OJBA9dOXM/34gGtqZ2hQp+1Ri0I5XBJo1Ru7/e8BHeS1D5cDBhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mn7Fm5N1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCyR9l9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E330DC4CEE3;
-	Tue, 15 Jul 2025 13:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mn7Fm5N1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5E9C4CEFE;
+	Tue, 15 Jul 2025 13:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585758;
-	bh=3o6zsYO8YwOkO86mzylxKNa2LumRF1DprVaCjIWpH7E=;
+	s=korg; t=1752585761;
+	bh=hI70LW6VPGMVv2cD2AtJ1OKEGHeQEeveeyb8HGHoAzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCyR9l9oD5GXMl7s+wsq35cGyJ7ZP2XBmcmAI0e5537JrQHtWF1JKmpEm2Me3j3kP
-	 A6fccVaMjIolyCKbaxKb8BCnuWZ8a8Nja/eShx02uYYDN4WapXPELZz+YBwZMSAJf7
-	 Qlls3/LDVzEQgu0VgFZLlgwYXPaz/gbjT6kDnBFI=
+	b=mn7Fm5N1TnAUxU9OAeRIf/Tq5gAkc21qI0utqjLWhn5N5OsDfjp8E8wOWaDrdYZ4h
+	 qXC9YOZ3V9zNe22GBVZ13e4ycYupY/L4mS6dLnlniSIxizAfvK61j6lywAoq8fsVAp
+	 Jnrp0uH8r4mpFSwyYqgKyZzFXkcWW1heaKBw3dA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Yunseong Kim <ysk@kzalloc.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 161/163] kasan: remove kasan_find_vm_area() to prevent possible deadlock
-Date: Tue, 15 Jul 2025 15:13:49 +0200
-Message-ID: <20250715130815.292422276@linuxfoundation.org>
+	Ziyan Xu <research@securitygossip.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 162/163] ksmbd: fix potential use-after-free in oplock/lease break ack
+Date: Tue, 15 Jul 2025 15:13:50 +0200
+Message-ID: <20250715130815.331268960@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -59,71 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 6ee9b3d84775944fb8c8a447961cd01274ac671c upstream.
+commit 50f930db22365738d9387c974416f38a06e8057e upstream.
 
-find_vm_area() couldn't be called in atomic_context.  If find_vm_area() is
-called to reports vm area information, kasan can trigger deadlock like:
+If ksmbd_iov_pin_rsp return error, use-after-free can happen by
+accessing opinfo->state and opinfo_put and ksmbd_fd_put could
+called twice.
 
-CPU0                                CPU1
-vmalloc();
- alloc_vmap_area();
-  spin_lock(&vn->busy.lock)
-                                    spin_lock_bh(&some_lock);
-   <interrupt occurs>
-   <in softirq>
-   spin_lock(&some_lock);
-                                    <access invalid address>
-                                    kasan_report();
-                                     print_report();
-                                      print_address_description();
-                                       kasan_find_vm_area();
-                                        find_vm_area();
-                                         spin_lock(&vn->busy.lock) // deadlock!
-
-To prevent possible deadlock while kasan reports, remove kasan_find_vm_area().
-
-Link: https://lkml.kernel.org/r/20250703181018.580833-1-yeoreum.yun@arm.com
-Fixes: c056a364e954 ("kasan: print virtual mapping info in reports")
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Reported-by: Yunseong Kim <ysk@kzalloc.com>
-Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Ziyan Xu <research@securitygossip.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/report.c |   13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ fs/smb/server/smb2pdu.c |   29 +++++++++--------------------
+ 1 file changed, 9 insertions(+), 20 deletions(-)
 
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -398,17 +398,8 @@ static void print_address_description(vo
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8517,11 +8517,6 @@ static void smb20_oplock_break_ack(struc
+ 		goto err_out;
  	}
  
- 	if (is_vmalloc_addr(addr)) {
--		struct vm_struct *va = find_vm_area(addr);
+-	opinfo->op_state = OPLOCK_STATE_NONE;
+-	wake_up_interruptible_all(&opinfo->oplock_q);
+-	opinfo_put(opinfo);
+-	ksmbd_fd_put(work, fp);
 -
--		if (va) {
--			pr_err("The buggy address belongs to the virtual mapping at\n"
--			       " [%px, %px) created by:\n"
--			       " %pS\n",
--			       va->addr, va->addr + va->size, va->caller);
--			pr_err("\n");
+ 	rsp->StructureSize = cpu_to_le16(24);
+ 	rsp->OplockLevel = rsp_oplevel;
+ 	rsp->Reserved = 0;
+@@ -8529,16 +8524,15 @@ static void smb20_oplock_break_ack(struc
+ 	rsp->VolatileFid = volatile_id;
+ 	rsp->PersistentFid = persistent_id;
+ 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_oplock_break));
+-	if (!ret)
+-		return;
 -
--			page = vmalloc_to_page(addr);
--		}
-+		pr_err("The buggy address %px belongs to a vmalloc virtual mapping\n", addr);
-+		page = vmalloc_to_page(addr);
++	if (ret) {
+ err_out:
++		smb2_set_err_rsp(work);
++	}
++
+ 	opinfo->op_state = OPLOCK_STATE_NONE;
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+-
+ 	opinfo_put(opinfo);
+ 	ksmbd_fd_put(work, fp);
+-	smb2_set_err_rsp(work);
+ }
+ 
+ static int check_lease_state(struct lease *lease, __le32 req_state)
+@@ -8668,11 +8662,6 @@ static void smb21_lease_break_ack(struct
  	}
  
- 	if (page) {
+ 	lease_state = lease->state;
+-	opinfo->op_state = OPLOCK_STATE_NONE;
+-	wake_up_interruptible_all(&opinfo->oplock_q);
+-	atomic_dec(&opinfo->breaking_cnt);
+-	wake_up_interruptible_all(&opinfo->oplock_brk);
+-	opinfo_put(opinfo);
+ 
+ 	rsp->StructureSize = cpu_to_le16(36);
+ 	rsp->Reserved = 0;
+@@ -8681,16 +8670,16 @@ static void smb21_lease_break_ack(struct
+ 	rsp->LeaseState = lease_state;
+ 	rsp->LeaseDuration = 0;
+ 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_lease_ack));
+-	if (!ret)
+-		return;
+-
++	if (ret) {
+ err_out:
++		smb2_set_err_rsp(work);
++	}
++
++	opinfo->op_state = OPLOCK_STATE_NONE;
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+ 	atomic_dec(&opinfo->breaking_cnt);
+ 	wake_up_interruptible_all(&opinfo->oplock_brk);
+-
+ 	opinfo_put(opinfo);
+-	smb2_set_err_rsp(work);
+ }
+ 
+ /**
 
 
