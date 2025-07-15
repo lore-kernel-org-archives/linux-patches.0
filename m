@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5D52E6D00;
-	Tue, 15 Jul 2025 13:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43BF2E62DD;
+	Tue, 15 Jul 2025 13:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586571; cv=none; b=WV9cO3Df3Mjc7Ts0lzSv2/K7Aj3yIkKiMi/NApHJkAREIYWZzv/YQC6xwAb3lolrewepshOEcyyzVwjMrqAEeDStH17zSLvox/rZPMYTx0YJAQRRf7KVlKvnqIkqGvWL1664lcE6bsPBzrfp+uSCv9AHiHLncw7cvfFo1ztcGZc=
+	t=1752586573; cv=none; b=hRjah2Z7759+bta0NqKzSHFhcw3Hv5srV+88SVhfq9fXOCMjRBisnjBW9Nq8CwPzXxZtHAQyCYkdlxPl2sLc8yF3zU7IvL8aZs0FaVe4JYIJr6ahXCSSooK30F5JQ4HuDwadUvDrTJzhTH8C5Mk6aNtLd2IUUaA28b+K4o7szlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586571; c=relaxed/simple;
-	bh=3vxas5e5u8UrAkm/YflkWF9+Q+DxO9y6mBW3EgDLgNg=;
+	s=arc-20240116; t=1752586573; c=relaxed/simple;
+	bh=zgMI8cndVLJFH5LzUjw6Qi+1gRs7AdN2rRWqX98gdUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LIzscHB5VoO7/nRwSVAHN2PEQodGrRchW3Gsy+SqSgwUa3PV0KhdMx9/AqXgVrWZrG37q9Wm0T9hXAeBQLPhnIvxpMq6/MJIiuNaUwM9KxBP2kbdE5nXKTNbmf9bH8uKFxNnlCHncQmVx8SeGbIdqMBMsXNAVB/bYYeyLKbwjGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abljTGdF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XGd7ua7Xm2CdDqfBe1BCkhdj8YF4Z2X314rElXBKnO5ZwCkZMMQ465cfxKli7DEcroim+kWJyPnXs2pKA/GgjweDs3wBopHNYWFEWEn2iPp8isM34ZoInJjUYpmylz88as03x9pfi1UY4nL/XtyjRQ63F727RnnP6pk8KF/l+vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVBlyctO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abljTGdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84536C4CEE3;
-	Tue, 15 Jul 2025 13:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVBlyctO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C9BC4CEE3;
+	Tue, 15 Jul 2025 13:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586570;
-	bh=3vxas5e5u8UrAkm/YflkWF9+Q+DxO9y6mBW3EgDLgNg=;
+	s=korg; t=1752586573;
+	bh=zgMI8cndVLJFH5LzUjw6Qi+1gRs7AdN2rRWqX98gdUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=abljTGdFBV3HmTQ+wKS1nsqlR48KdrOq73Q/utSQ8vr2jZ09zrtHApKYquWVqrXDx
-	 L6LCtHHb4kK59qwr/iaIGwuktYPpwopCAPb/r65S347M5sehVHE7l0HCzf2g2NLxHo
-	 4kecJft+BT//APPXcl3AMtmR251r5K3ZqS7eUGQM=
+	b=rVBlyctOwf+7aLK4JCEjfgXV4uR1zA3P79HC1eqeQuGUcZgCWxrAAmkC8xrhgIlP3
+	 VjmvqCEZ6QLXiETztyxtpHvj/s3fI/0F0QB0bjLbw+3lGrjlxxlDlysYrzrlLGPpeX
+	 ToMCuxnjUHd41nT/g8v7DxLOnBCV2zqfHLwlRaFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
-	David Howells <dhowells@redhat.com>,
-	LePremierHomme <kwqcheii@proton.me>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Willy Tarreau <w@1wt.eu>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 116/148] rxrpc: Fix oops due to non-existence of prealloc backlog struct
-Date: Tue, 15 Jul 2025 15:13:58 +0200
-Message-ID: <20250715130804.950057173@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.4 117/148] x86/mce/amd: Fix threshold limit reset
+Date: Tue, 15 Jul 2025 15:13:59 +0200
+Message-ID: <20250715130804.988444230@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -56,44 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 880a88f318cf1d2a0f4c0a7ff7b07e2062b434a4 upstream.
+commit 5f6e3b720694ad771911f637a51930f511427ce1 upstream.
 
-If an AF_RXRPC service socket is opened and bound, but calls are
-preallocated, then rxrpc_alloc_incoming_call() will oops because the
-rxrpc_backlog struct doesn't get allocated until the first preallocation is
-made.
+The MCA threshold limit must be reset after servicing the interrupt.
 
-Fix this by returning NULL from rxrpc_alloc_incoming_call() if there is no
-backlog struct.  This will cause the incoming call to be aborted.
+Currently, the restart function doesn't have an explicit check for this.  It
+makes some assumptions based on the current limit and what's in the registers.
+These assumptions don't always hold, so the limit won't be reset in some
+cases.
 
-Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Suggested-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: LePremierHomme <kwqcheii@proton.me>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Willy Tarreau <w@1wt.eu>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250708211506.2699012-3-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Make the reset condition explicit. Either an interrupt/overflow has occurred
+or the bank is being initialized.
+
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-4-236dd74f645f@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/call_accept.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/cpu/mce/amd.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/net/rxrpc/call_accept.c
-+++ b/net/rxrpc/call_accept.c
-@@ -281,6 +281,9 @@ static struct rxrpc_call *rxrpc_alloc_in
- 	unsigned short call_tail, conn_tail, peer_tail;
- 	unsigned short call_count, conn_count;
+--- a/arch/x86/kernel/cpu/mce/amd.c
++++ b/arch/x86/kernel/cpu/mce/amd.c
+@@ -290,7 +290,6 @@ static void smca_configure(unsigned int
  
-+	if (!b)
-+		return NULL;
-+
- 	/* #calls >= #conns >= #peers must hold true. */
- 	call_head = smp_load_acquire(&b->call_backlog_head);
- 	call_tail = b->call_backlog_tail;
+ struct thresh_restart {
+ 	struct threshold_block	*b;
+-	int			reset;
+ 	int			set_lvt_off;
+ 	int			lvt_off;
+ 	u16			old_limit;
+@@ -381,13 +380,13 @@ static void threshold_restart_bank(void
+ 
+ 	rdmsr(tr->b->address, lo, hi);
+ 
+-	if (tr->b->threshold_limit < (hi & THRESHOLD_MAX))
+-		tr->reset = 1;	/* limit cannot be lower than err count */
+-
+-	if (tr->reset) {		/* reset err count and overflow bit */
+-		hi =
+-		    (hi & ~(MASK_ERR_COUNT_HI | MASK_OVERFLOW_HI)) |
+-		    (THRESHOLD_MAX - tr->b->threshold_limit);
++	/*
++	 * Reset error count and overflow bit.
++	 * This is done during init or after handling an interrupt.
++	 */
++	if (hi & MASK_OVERFLOW_HI || tr->set_lvt_off) {
++		hi &= ~(MASK_ERR_COUNT_HI | MASK_OVERFLOW_HI);
++		hi |= THRESHOLD_MAX - tr->b->threshold_limit;
+ 	} else if (tr->old_limit) {	/* change limit w/o reset */
+ 		int new_count = (hi & THRESHOLD_MAX) +
+ 		    (tr->old_limit - tr->b->threshold_limit);
 
 
