@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B892C15A3;
-	Tue, 15 Jul 2025 13:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AED02E2EFF;
+	Tue, 15 Jul 2025 13:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586518; cv=none; b=gJdrygcwI2U0xOIYDc3/fwqGFAaYdS2xfORNIsg9wZTvp6uBtvCV/IXRsbFQjjAjGaPakUm6YdyyF4uA7ACARNUQvpvejc1ia4lpS9Gk2wTIR7C9jKVG6Y4p66lmByBorkDSKBJm26yqKwHkR6O2kljNP7A3ls6ErYAnVh6TBqA=
+	t=1752586521; cv=none; b=Io5XcyqA+fYvtnKGiFEDpDNbiKTOF0xzehyosKELjGLlD3EoRO3nmqNA+pwvnfIEFM7kLd94ty42cCNuAyq9nl90SW6FWLrQ+8GJkrViJ+5Se+/trDaZK7ORXUUMU23J6XKZD6CffUDrIp6Obz6i6+Uy3H5iq5IUOcHIh4ir96M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586518; c=relaxed/simple;
-	bh=IvekdONGq4K4/Lbw8AhnmeMbk0b4vj8QbBM4dZDodzY=;
+	s=arc-20240116; t=1752586521; c=relaxed/simple;
+	bh=Gz4Sh3pl2uEfgWc94iDxgcpHLIyiChKdOODFQTpJg8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNnnwnUaUElafd1VOFaRiis/ha1G+V1Jh89OFiZy+i4NE/1QjYBqjODnA7iI1VnY7MFVuj3DSpoGBaZyS1KUjesJjGFF3xaDrrwBH5MeSPMLip+U7Fpj+PMaJsYiDWeDgxzAGeBvdfaMi5mj/hCd1wM/S52QPG2k91A6uzF9sjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9HwxuEJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TCDEfX+36U8ZubgDFbcW+yPQuUVN38dQVzX7W8v8P6ogEVZCbbnDpEH9aSpX0qg5a6EIljsHPgb/tbRzVYv7x6oCJVJU99S5o7exbSrZ3rIE6Zb7B6fH7/G0kuD/nZ4RlU21OF2CQB4ySuPnNHslfkTKGq/Tt6KUcNuUZrothf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0B8f4e9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9HwxuEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54D4C4CEE3;
-	Tue, 15 Jul 2025 13:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0B8f4e9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADA0C4CEE3;
+	Tue, 15 Jul 2025 13:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586518;
-	bh=IvekdONGq4K4/Lbw8AhnmeMbk0b4vj8QbBM4dZDodzY=;
+	s=korg; t=1752586520;
+	bh=Gz4Sh3pl2uEfgWc94iDxgcpHLIyiChKdOODFQTpJg8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9HwxuEJl4ALTVLpTgHI8HzqU2r607kabaAQM0KSSqyDa47bPAfNYkLEdd80c1UEO
-	 jEtev2a92MLiytNCbzjkJt6vnYgK11j4TtX7sqf9rFu1LKv7rGZZpw420xV0OZVDZG
-	 KMlUhGu/pm9UF3mIvgKUG5QLzrGUDKF/gveLrc4Q=
+	b=0B8f4e9OPO6cToNH6mvV09LTfHk4s1Y462YrLKf4M9Ouc0vmhdBSEfqZzQ7C3v+9d
+	 3uqCggxi65JjU5+tr7fptt9hs30dY87NaYQwrES5/xscZ5GyH/gkbU93R0EpEeQEVk
+	 +L/zMyizQnGleuN/gTreUtpZ5ZImICzpcnw717FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	John Daley <johndale@cisco.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 095/148] drm/i915/selftests: Change mock_request() to return error pointers
-Date: Tue, 15 Jul 2025 15:13:37 +0200
-Message-ID: <20250715130804.119121149@linuxfoundation.org>
+Subject: [PATCH 5.4 069/148] enic: fix incorrect MTU comparison in enic_change_mtu()
+Date: Tue, 15 Jul 2025 15:13:11 +0200
+Message-ID: <20250715130803.087935435@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,106 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit caa7c7a76b78ce41d347003f84975125383e6b59 ]
+[ Upstream commit aaf2b2480375099c022a82023e1cd772bf1c6a5d ]
 
-There was an error pointer vs NULL bug in __igt_breadcrumbs_smoketest().
-The __mock_request_alloc() function implements the
-smoketest->request_alloc() function pointer.  It was supposed to return
-error pointers, but it propogates the NULL return from mock_request()
-so in the event of a failure, it would lead to a NULL pointer
-dereference.
+The comparison in enic_change_mtu() incorrectly used the current
+netdev->mtu instead of the new new_mtu value when warning about
+an MTU exceeding the port MTU. This could suppress valid warnings
+or issue incorrect ones.
 
-To fix this, change the mock_request() function to return error pointers
-and update all the callers to expect that.
+Fix the condition and log to properly reflect the new_mtu.
 
-Fixes: 52c0fdb25c7c ("drm/i915: Replace global breadcrumbs with per-context interrupt tracking")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://lore.kernel.org/r/685c1417.050a0220.696f5.5c05@mx.google.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 778fa8ad5f0f23397d045c7ebca048ce8def1c43)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: ab123fe071c9 ("enic: handle mtu change for vf properly")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Acked-by: John Daley <johndale@cisco.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250628145612.476096-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/selftests/i915_request.c | 20 ++++++++++---------
- drivers/gpu/drm/i915/selftests/mock_request.c |  2 +-
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/cisco/enic/enic_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/selftests/i915_request.c b/drivers/gpu/drm/i915/selftests/i915_request.c
-index b3688543ed7d0..6ee24f2061616 100644
---- a/drivers/gpu/drm/i915/selftests/i915_request.c
-+++ b/drivers/gpu/drm/i915/selftests/i915_request.c
-@@ -47,8 +47,10 @@ static int igt_add_request(void *arg)
+diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
+index 892c4b5ff3036..1101f1416d076 100644
+--- a/drivers/net/ethernet/cisco/enic/enic_main.c
++++ b/drivers/net/ethernet/cisco/enic/enic_main.c
+@@ -2093,10 +2093,10 @@ static int enic_change_mtu(struct net_device *netdev, int new_mtu)
+ 	if (enic_is_dynamic(enic) || enic_is_sriov_vf(enic))
+ 		return -EOPNOTSUPP;
  
- 	mutex_lock(&i915->drm.struct_mutex);
- 	request = mock_request(i915->engine[RCS0]->kernel_context, HZ / 10);
--	if (!request)
-+	if (IS_ERR(request)) {
-+		err = PTR_ERR(request);
- 		goto out_unlock;
-+	}
+-	if (netdev->mtu > enic->port_mtu)
++	if (new_mtu > enic->port_mtu)
+ 		netdev_warn(netdev,
+ 			    "interface MTU (%d) set higher than port MTU (%d)\n",
+-			    netdev->mtu, enic->port_mtu);
++			    new_mtu, enic->port_mtu);
  
- 	i915_request_add(request);
- 
-@@ -69,8 +71,8 @@ static int igt_wait_request(void *arg)
- 
- 	mutex_lock(&i915->drm.struct_mutex);
- 	request = mock_request(i915->engine[RCS0]->kernel_context, T);
--	if (!request) {
--		err = -ENOMEM;
-+	if (IS_ERR(request)) {
-+		err = PTR_ERR(request);
- 		goto out_unlock;
- 	}
- 	i915_request_get(request);
-@@ -142,8 +144,8 @@ static int igt_fence_wait(void *arg)
- 
- 	mutex_lock(&i915->drm.struct_mutex);
- 	request = mock_request(i915->engine[RCS0]->kernel_context, T);
--	if (!request) {
--		err = -ENOMEM;
-+	if (IS_ERR(request)) {
-+		err = PTR_ERR(request);
- 		goto out_locked;
- 	}
- 
-@@ -203,8 +205,8 @@ static int igt_request_rewind(void *arg)
- 	GEM_BUG_ON(IS_ERR(ce));
- 	request = mock_request(ce, 2 * HZ);
- 	intel_context_put(ce);
--	if (!request) {
--		err = -ENOMEM;
-+	if (IS_ERR(request)) {
-+		err = PTR_ERR(request);
- 		goto err_context_0;
- 	}
- 
-@@ -216,8 +218,8 @@ static int igt_request_rewind(void *arg)
- 	GEM_BUG_ON(IS_ERR(ce));
- 	vip = mock_request(ce, 0);
- 	intel_context_put(ce);
--	if (!vip) {
--		err = -ENOMEM;
-+	if (IS_ERR(vip)) {
-+		err = PTR_ERR(vip);
- 		goto err_context_1;
- 	}
- 
-diff --git a/drivers/gpu/drm/i915/selftests/mock_request.c b/drivers/gpu/drm/i915/selftests/mock_request.c
-index 09f747228dff5..1b0cf073e9643 100644
---- a/drivers/gpu/drm/i915/selftests/mock_request.c
-+++ b/drivers/gpu/drm/i915/selftests/mock_request.c
-@@ -35,7 +35,7 @@ mock_request(struct intel_context *ce, unsigned long delay)
- 	/* NB the i915->requests slab cache is enlarged to fit mock_request */
- 	request = intel_context_create_request(ce);
- 	if (IS_ERR(request))
--		return NULL;
-+		return request;
- 
- 	request->mock.delay = delay;
- 	return request;
+ 	return _enic_change_mtu(netdev, new_mtu);
+ }
 -- 
 2.39.5
 
