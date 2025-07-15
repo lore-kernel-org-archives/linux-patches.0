@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D05C2E1747;
-	Tue, 15 Jul 2025 13:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7752E764E;
+	Tue, 15 Jul 2025 13:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586028; cv=none; b=BOPo3368pANpddtTW507eWxUHgkDegspT9JKCFVaFnGnncC6lwZaaHXTMUcYaVGfZIdAn83YEO5bkKKeNt0PdZPEGff9vF3eUO8YSLUh/Yhcx2HrsyvB66agW/BZ/mOWct3FtLGqHLDL+8OihQ/juI8GZwR1kBHrr/dIHpV9uEE=
+	t=1752586030; cv=none; b=Zp70+T5PqFduWRXIdUh+RPuaJTYC6NaWsateQuHTn3RUwLW68QMgOkHuLW99e0IaOryLuBJ9wvPa1YWY3yz2nmE4YRyYDLmXHkXdOjaHObgcJlCWlZn3gJvDg7isoc4pxfaHNt5TcMKD3GsuJ5wOOmfsBAIpVZGEDNcidnxbJYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586028; c=relaxed/simple;
-	bh=4CVH6uh8H1ZvmvEjpfj6Fqiz9zECbn8RV6tfQ34bMOw=;
+	s=arc-20240116; t=1752586030; c=relaxed/simple;
+	bh=WNt4QEGVOENKcdFM2p3W9zSvD+TRmnEzf79/iaqVxCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIJHWMmMP5QDaBaHnIxOzgCzlPssGpo7XZJyOf/8ySzvevo8+NTYYPPLjWhgRVCOKkuoLLNwiHr29PGJp/x24Dr2Zsw5T7vGJszrA7c1jcAiusN6fJmF+CS5URpwsc/+L/Gd4gE+u+5zWHZbP5CoCcYg8El5pfh1MSZgCOOaFpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUtJpeGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UIZ80nr9OoXpBl/frksAhx91B+mV/nb7W17kwT6MaA/J+eADVyH7jfOmm0mew1ZnpmJ73aDGf1LaD6imd/K7sUt4Sczf1l5M13Ltj5FzAATYpwz/MDeXsSPeDSWtmCMzONPpxfzJx+Sy0qi2k86UiMg/IX0VKWPTic2R68h8YBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgmUZWH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUtJpeGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6989C4CEE3;
-	Tue, 15 Jul 2025 13:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgmUZWH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60447C4CEE3;
+	Tue, 15 Jul 2025 13:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586028;
-	bh=4CVH6uh8H1ZvmvEjpfj6Fqiz9zECbn8RV6tfQ34bMOw=;
+	s=korg; t=1752586030;
+	bh=WNt4QEGVOENKcdFM2p3W9zSvD+TRmnEzf79/iaqVxCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUtJpeGxbs20ZU+wdr6hNMGVZAAx/dg9GeOLLZTSLFPonDK4NKDOkCuMxOnuXd1jD
-	 onhRwFv/ne1pgmmiVGGXaSBcQdWkUESAodHOrtOlMycc95/Znn1O4wDRl011/K1HVR
-	 FyvEVeEaH3bvQ7HIZ+oxsHQavpgsDSZL7nMLvIa8=
+	b=CgmUZWH62q/NFhNORqy9RHRfmJ78S4Z2efxGnAFioIelI0np6as1UP1hraX+BkCDP
+	 8o2kYwNXjmE4HbQ1kCH4xFYb5V8sBLcY3ROBjZenJh/Cjy+SqEEJPZWhR0MSKYNWfS
+	 2jPJt7BZY3Bn/DWePs2//Z71clPtFjhB4UjOuLZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Inoue <niyarium@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Long Li <longli@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/109] HID: lenovo: Add support for ThinkPad X1 Tablet Thin Keyboard Gen2
-Date: Tue, 15 Jul 2025 15:13:54 +0200
-Message-ID: <20250715130802.807579959@linuxfoundation.org>
+Subject: [PATCH 6.6 099/109] net: mana: Record doorbell physical address in PF mode
+Date: Tue, 15 Jul 2025 15:13:55 +0200
+Message-ID: <20250715130802.845767438@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -51,118 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akira Inoue <niyarium@gmail.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit a8905238c3bbe13db90065ed74682418f23830c3 ]
+[ Upstream commit e0fca6f2cebff539e9317a15a37dcf432e3b851a ]
 
-Add "Thinkpad X1 Tablet Gen 2 Keyboard" PID to hid-lenovo driver to fix trackpoint not working issue.
+MANA supports RDMA in PF mode. The driver should record the doorbell
+physical address when in PF mode.
 
-Signed-off-by: Akira Inoue <niyarium@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+The doorbell physical address is used by the RDMA driver to map
+doorbell pages of the device to user-mode applications through RDMA
+verbs interface. In the past, they have been mapped to user-mode while
+the device is in VF mode. With the support for PF mode implemented,
+also expose those pages in PF mode.
+
+Support for PF mode is implemented in
+290e5d3c49f6 ("net: mana: Add support for Multi Vports on Bare metal")
+
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1750210606-12167-1-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h        | 1 +
- drivers/hid/hid-lenovo.c     | 8 ++++++++
- drivers/hid/hid-multitouch.c | 8 +++++++-
- 3 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/gdma_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index a8665d57094b2..c0ce11393f0fb 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -807,6 +807,7 @@
- #define USB_DEVICE_ID_LENOVO_TPPRODOCK	0x6067
- #define USB_DEVICE_ID_LENOVO_X1_COVER	0x6085
- #define USB_DEVICE_ID_LENOVO_X1_TAB	0x60a3
-+#define USB_DEVICE_ID_LENOVO_X1_TAB2	0x60a4
- #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
- #define USB_DEVICE_ID_LENOVO_X12_TAB	0x60fe
- #define USB_DEVICE_ID_LENOVO_X12_TAB2	0x61ae
-diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
-index ee65da98c7d5b..32cb2e75228c4 100644
---- a/drivers/hid/hid-lenovo.c
-+++ b/drivers/hid/hid-lenovo.c
-@@ -473,6 +473,7 @@ static int lenovo_input_mapping(struct hid_device *hdev,
- 		return lenovo_input_mapping_tp10_ultrabook_kbd(hdev, hi, field,
- 							       usage, bit, max);
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		return lenovo_input_mapping_x1_tab_kbd(hdev, hi, field, usage, bit, max);
- 	default:
-@@ -587,6 +588,7 @@ static ssize_t attr_fn_lock_store(struct device *dev,
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		ret = lenovo_led_set_tp10ubkbd(hdev, TP10UBKBD_FN_LOCK_LED, value);
- 		if (ret)
-@@ -782,6 +784,7 @@ static int lenovo_event(struct hid_device *hdev, struct hid_field *field,
- 		return lenovo_event_cptkbd(hdev, field, usage, value);
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		return lenovo_event_tp10ubkbd(hdev, field, usage, value);
- 	default:
-@@ -1065,6 +1068,7 @@ static int lenovo_led_brightness_set(struct led_classdev *led_cdev,
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		ret = lenovo_led_set_tp10ubkbd(hdev, tp10ubkbd_led[led_nr], value);
- 		break;
-@@ -1296,6 +1300,7 @@ static int lenovo_probe(struct hid_device *hdev,
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		ret = lenovo_probe_tp10ubkbd(hdev);
- 		break;
-@@ -1383,6 +1388,7 @@ static void lenovo_remove(struct hid_device *hdev)
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		lenovo_remove_tp10ubkbd(hdev);
- 		break;
-@@ -1433,6 +1439,8 @@ static const struct hid_device_id lenovo_devices[] = {
- 	 */
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB) },
-+	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
-+		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB2) },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB3) },
- 	{ }
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 6386043aab0bb..becd4c1ccf93c 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2110,12 +2110,18 @@ static const struct hid_device_id mt_devices[] = {
- 		HID_DEVICE(BUS_I2C, HID_GROUP_GENERIC,
- 			USB_VENDOR_ID_LG, I2C_DEVICE_ID_LG_7010) },
+diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+index 9ed965d61e355..d3c9a3020fbf6 100644
+--- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
++++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+@@ -28,6 +28,9 @@ static void mana_gd_init_pf_regs(struct pci_dev *pdev)
+ 	gc->db_page_base = gc->bar0_va +
+ 				mana_gd_r64(gc, GDMA_PF_REG_DB_PAGE_OFF);
  
--	/* Lenovo X1 TAB Gen 2 */
-+	/* Lenovo X1 TAB Gen 1 */
- 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
- 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
- 			   USB_VENDOR_ID_LENOVO,
- 			   USB_DEVICE_ID_LENOVO_X1_TAB) },
- 
-+	/* Lenovo X1 TAB Gen 2 */
-+	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
-+		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
-+			   USB_VENDOR_ID_LENOVO,
-+			   USB_DEVICE_ID_LENOVO_X1_TAB2) },
++	gc->phys_db_page_base = gc->bar0_pa +
++				mana_gd_r64(gc, GDMA_PF_REG_DB_PAGE_OFF);
 +
- 	/* Lenovo X1 TAB Gen 3 */
- 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
- 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
+ 	sriov_base_off = mana_gd_r64(gc, GDMA_SRIOV_REG_CFG_BASE_OFF);
+ 
+ 	sriov_base_va = gc->bar0_va + sriov_base_off;
 -- 
 2.39.5
 
