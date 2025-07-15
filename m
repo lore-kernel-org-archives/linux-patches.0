@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF09A2E2F0C;
-	Tue, 15 Jul 2025 13:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3227D2E175C;
+	Tue, 15 Jul 2025 13:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585589; cv=none; b=QWRN7ygHuwbsTGXM5NZDp+M3dncbVPZth8e9Xz8CbLTX/M7GrPcEaw3lsscayJd23jmoailsOTYMmYShn5iUkRwxnxthziRsrKleRwsgVgtmQGIc9H+joTdcVHBZw9WCTb6+DgG3mhzy8v+HEabHY707i9fjFyITCdy+i7smQgY=
+	t=1752585591; cv=none; b=reHqB1A+jbg65y4SNoQDDa06MZKoSVsmY4DjrkYpkAX7OXpajciGBD40GS49EHPoAwAtkg9wyL9VQvoudSEhnLj+SKA5zuQ2sDJLKVVW7+0INhxO1SitOAet7PV7U4WJDvC9OP2eEpD1vm8Zki+TwRjlEwHl89a5geRhbSMVmoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585589; c=relaxed/simple;
-	bh=5dWFUewCwh4cQ2rxDt8SC+2Idluw1wcXJQMvxUmUJyY=;
+	s=arc-20240116; t=1752585591; c=relaxed/simple;
+	bh=IAzaJ7V7ycv7lJhB0SZ5pno9uZPtfsmXDcl67LTu7qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CMRG9+AxWPZQBSFd4TiAIOHmP8h/oUQNjBqz9xbL69woh9TrKghpUNX1fdL13KaxOzQsBZIJtpB7x0DQR/7o8ZRl85K4NOvrgX/hxT6YNHfpNX8/N3AOoSa3YyzljyNOw+4frGCQL/jVpI+goVauhWtRmre9Sbwg7dAzngd7E6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAaUJ4TK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMsJ2X2CIjS0Dw0GIQZ3Jy6ppjf+DJUl4nL6cG8f7wHg/Jn27/nZ+Z8Raa0oi+GbjKvDlu84fktmaQ+kH0tX9VOz1jJ06L7CnJgFKRiAln0EIv3aXmA61gX+6mQBNQY1mP5fC3aIyc7Yc64zsJaHPniom21+oJwxhzrB1Ix60BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olySxMd/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAaUJ4TK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21297C4CEE3;
-	Tue, 15 Jul 2025 13:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olySxMd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F7FC4CEE3;
+	Tue, 15 Jul 2025 13:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585588;
-	bh=5dWFUewCwh4cQ2rxDt8SC+2Idluw1wcXJQMvxUmUJyY=;
+	s=korg; t=1752585591;
+	bh=IAzaJ7V7ycv7lJhB0SZ5pno9uZPtfsmXDcl67LTu7qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAaUJ4TK7WcHEeFwUauzLyjisvDWMI1V96t7R6gp5/fED4a2BzP16WdZse/jgBTcb
-	 OrAC/hSDXyarGLBzrLAjYzxoXg1Q52C9DGswy1TAktp74upj0byhry1jQFVJH9660A
-	 3dczEdRCE6jyyofKyRtsjo1nN8VjC7h4v6r0XUQ8=
+	b=olySxMd/mUOmDwpb3GobVuTLQQjvPMozlz99pyOTz8J5jUWpkRmDkn0yobkrsetG0
+	 UoYL9QLRrFa+NzHRMJI95lzHzqcVYA0lH1XUkPvLxAON8RezbNxRmMIjgvGa8bHidJ
+	 qJB9LaBn6LayOUntQQORF/WWvZJ3RAJV2qef/kBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Chikunov <vt@altlinux.org>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Jann Horn <jannh@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@redhat.com>
-Subject: [PATCH 6.12 097/163] x86/mm: Disable hugetlb page table sharing on 32-bit
-Date: Tue, 15 Jul 2025 15:12:45 +0200
-Message-ID: <20250715130812.758066100@linuxfoundation.org>
+	peng.fan@nxp.com,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.12 098/163] clk: scmi: Handle case where child clocks are initialized before their parents
+Date: Tue, 15 Jul 2025 15:12:46 +0200
+Message-ID: <20250715130812.796455257@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -54,55 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 76303ee8d54bff6d9a6d55997acd88a6c2ba63cf upstream.
+commit 6306e0c5a0d28e9df2b5902f4a021204bee75173 upstream.
 
-Only select ARCH_WANT_HUGE_PMD_SHARE on 64-bit x86.
-Page table sharing requires at least three levels because it involves
-shared references to PMD tables; 32-bit x86 has either two-level paging
-(without PAE) or three-level paging (with PAE), but even with
-three-level paging, having a dedicated PGD entry for hugetlb is only
-barely possible (because the PGD only has four entries), and it seems
-unlikely anyone's actually using PMD sharing on 32-bit.
+The SCMI clock driver currently assumes that parent clocks are always
+initialized before their children. However, this assumption can fail if
+a child clock is encountered before its parent during probe.
 
-Having ARCH_WANT_HUGE_PMD_SHARE enabled on non-PAE 32-bit X86 (which
-has 2-level paging) became particularly problematic after commit
-59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count"),
-since that changes `struct ptdesc` such that the `pt_mm` (for PGDs) and
-the `pt_share_count` (for PMDs) share the same union storage - and with
-2-level paging, PMDs are PGDs.
+This leads to an issue during initialization of the parent_data array:
 
-(For comparison, arm64 also gates ARCH_WANT_HUGE_PMD_SHARE on the
-configuration of page tables such that it is never enabled with 2-level
-paging.)
+    sclk->parent_data[i].hw = hws[sclk->info->parents[i]];
 
-Closes: https://lore.kernel.org/r/srhpjxlqfna67blvma5frmy3aa@altlinux.org
-Fixes: cfe28c5d63d8 ("x86: mm: Remove x86 version of huge_pmd_share.")
-Reported-by: Vitaly Chikunov <vt@altlinux.org>
-Suggested-by: Dave Hansen <dave.hansen@intel.com>
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand <david@redhat.com>
-Tested-by: Vitaly Chikunov <vt@altlinux.org>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250702-x86-2level-hugetlb-v2-1-1a98096edf92%40google.com
+If the parent clock's hardware structure has not been initialized yet,
+this assignment results in invalid data.
+
+To resolve this, allocate all struct scmi_clk instances as a contiguous
+array at the beginning of the probe and populate the hws[] array
+upfront. This ensures that any parent referenced later is already
+initialized, regardless of the order in which clocks are processed.
+
+Note that we can no longer free individual scmi_clk instances if
+scmi_clk_ops_init() fails which shouldn't be a problem if the SCMI
+platform has proper per-agent clock discovery.
+
+Fixes: 65a8a3dd3b95f ("clk: scmi: Add support for clock {set,get}_parent")
+Reviewed-by: peng.fan@nxp.com
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://lore.kernel.org/r/20250612-clk-scmi-children-parent-fix-v3-1-7de52a27593d@pengutronix.de
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-scmi.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -137,7 +137,7 @@ config X86
- 	select ARCH_WANTS_DYNAMIC_TASK_STRUCT
- 	select ARCH_WANTS_NO_INSTR
- 	select ARCH_WANT_GENERAL_HUGETLB
--	select ARCH_WANT_HUGE_PMD_SHARE
-+	select ARCH_WANT_HUGE_PMD_SHARE		if X86_64
- 	select ARCH_WANT_LD_ORPHAN_WARN
- 	select ARCH_WANT_OPTIMIZE_DAX_VMEMMAP	if X86_64
- 	select ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP	if X86_64
+--- a/drivers/clk/clk-scmi.c
++++ b/drivers/clk/clk-scmi.c
+@@ -404,6 +404,7 @@ static int scmi_clocks_probe(struct scmi
+ 	const struct scmi_handle *handle = sdev->handle;
+ 	struct scmi_protocol_handle *ph;
+ 	const struct clk_ops *scmi_clk_ops_db[SCMI_MAX_CLK_OPS] = {};
++	struct scmi_clk *sclks;
+ 
+ 	if (!handle)
+ 		return -ENODEV;
+@@ -430,18 +431,21 @@ static int scmi_clocks_probe(struct scmi
+ 	transport_is_atomic = handle->is_transport_atomic(handle,
+ 							  &atomic_threshold_us);
+ 
++	sclks = devm_kcalloc(dev, count, sizeof(*sclks), GFP_KERNEL);
++	if (!sclks)
++		return -ENOMEM;
++
++	for (idx = 0; idx < count; idx++)
++		hws[idx] = &sclks[idx].hw;
++
+ 	for (idx = 0; idx < count; idx++) {
+-		struct scmi_clk *sclk;
++		struct scmi_clk *sclk = &sclks[idx];
+ 		const struct clk_ops *scmi_ops;
+ 
+-		sclk = devm_kzalloc(dev, sizeof(*sclk), GFP_KERNEL);
+-		if (!sclk)
+-			return -ENOMEM;
+-
+ 		sclk->info = scmi_proto_clk_ops->info_get(ph, idx);
+ 		if (!sclk->info) {
+ 			dev_dbg(dev, "invalid clock info for idx %d\n", idx);
+-			devm_kfree(dev, sclk);
++			hws[idx] = NULL;
+ 			continue;
+ 		}
+ 
+@@ -479,13 +483,11 @@ static int scmi_clocks_probe(struct scmi
+ 		if (err) {
+ 			dev_err(dev, "failed to register clock %d\n", idx);
+ 			devm_kfree(dev, sclk->parent_data);
+-			devm_kfree(dev, sclk);
+ 			hws[idx] = NULL;
+ 		} else {
+ 			dev_dbg(dev, "Registered clock:%s%s\n",
+ 				sclk->info->name,
+ 				scmi_ops->enable ? " (atomic ops)" : "");
+-			hws[idx] = &sclk->hw;
+ 		}
+ 	}
+ 
 
 
