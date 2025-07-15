@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B6B2E62DF;
-	Tue, 15 Jul 2025 13:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889082E6D0E;
+	Tue, 15 Jul 2025 13:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587424; cv=none; b=sHDvcdBJlELa1j7mqVPqBMwb9ZYbUzzlUFlYqdbvxXRqhpigi6xeEKT3HRDt5BuBDUeZasrJPQOxRCWBBXJ8Js7SgHNR9c0WyhVo8iMxvczzvq/RxsYNvGV6XfrDe3Z1uqDyazhMq0i7Y507q5KsSFPsd2Ap/gvhOCDgX2SLQY8=
+	t=1752587426; cv=none; b=P7dJjGGcjglBY/fG3bXOBAWC+qRY/ioIUoxn/oMamS3HSsSzAvw5IO2qVfPUidFBlEQsImPErAUyl38TbJAxePbLn7+Klc2kp3JS9VruAb+UBNicetRMIsovsql1+gPd9xLbWY79gPdk75IKIxNuGS+AiR2LfHJAPom6LDoQA5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587424; c=relaxed/simple;
-	bh=2DZwETiYajWXLaMo6AQd5mZNmcoJceQKJyurWAFENgA=;
+	s=arc-20240116; t=1752587426; c=relaxed/simple;
+	bh=5GFec4ugs8+uvSCnN+kfSuxzjdH0yWITrWK4GlZp2QI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvLIxLqftSDdvi0RTqn88psFH/j9DAA0lveHOEanPXsOiC5wAA5SYc54+R7M9P376u4QQlNferJKlYflM3T7tYNxwMH+rZCYG/QhwW9EtQwOgO8zPCklCYso10jOTZbw4i5wQ7dbTTfoA/HfMopa7FqLh2y32tGSksKKYOqNYHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XuORSONk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J3vRIimPIkuztjHUlx4dmXTvfjvAFO0eocVDbQiiQBy9iVxsWduBxlSfBRnhNY2u8RS5mfe3ptIereqnp/URZhw8q08qwAcUc8sgDnze4jQCUfCvRfrWiybAIPGMVO8u9uiKg6p00Kv0HOjHexqxGoEWVRC/dSVTt7qX3Xz+l1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMaKTY9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuORSONk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F67CC4CEF1;
-	Tue, 15 Jul 2025 13:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMaKTY9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAB4C4CEE3;
+	Tue, 15 Jul 2025 13:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587423;
-	bh=2DZwETiYajWXLaMo6AQd5mZNmcoJceQKJyurWAFENgA=;
+	s=korg; t=1752587426;
+	bh=5GFec4ugs8+uvSCnN+kfSuxzjdH0yWITrWK4GlZp2QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XuORSONkW3pODIgWjbQfFtO4nlShjY9NJIEqfnvu81IKzxmFzpWJhQZHazb3G4e8V
-	 9Y9kcSIPSfqWeirOD5KNtlV3o9GgGHP/06IavxrJpvKmhst8/QOgouJ8FtvwBew87O
-	 KF/DObYP5pCzED1rcQ94x7l/j+dMV3v7/wjtS9W8=
+	b=QMaKTY9XP/dm+97LmuqsTjf1GkHGbovDY/gY3Y/3/Ivbd/DrnroLvGiavZqjroxho
+	 L2GFwiiDUIDdvzGn64O6SpRkV21S96lONiDD4dDMZT8sAoPHi45Hc25KjMrqAo8IKj
+	 27w+5npYo9G19AQiaagkD+GuBDnVzvGi6pmGH8/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+36fae25c35159a763a2a@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 79/88] btrfs: fix assertion when building free space tree
-Date: Tue, 15 Jul 2025 15:14:55 +0200
-Message-ID: <20250715130757.744429933@linuxfoundation.org>
+Subject: [PATCH 6.1 70/88] net: ll_temac: Fix missing tx_pending check in ethtools_set_ringparam()
+Date: Tue, 15 Jul 2025 15:14:46 +0200
+Message-ID: <20250715130757.380327109@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -53,124 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 1961d20f6fa8903266ed9bd77c691924c22c8f02 ]
+[ Upstream commit e81750b4e3826fedce7362dad839cb40384d60ae ]
 
-When building the free space tree with the block group tree feature
-enabled, we can hit an assertion failure like this:
+The function ll_temac_ethtools_set_ringparam() incorrectly checked
+rx_pending twice, once correctly for RX and once mistakenly in place
+of tx_pending. This caused tx_pending to be left unchecked against
+TX_BD_NUM_MAX.
+As a result, invalid TX ring sizes may have been accepted or valid
+ones wrongly rejected based on the RX limit, leading to potential
+misconfiguration or unexpected results.
 
-  BTRFS info (device loop0 state M): rebuilding free space tree
-  assertion failed: ret == 0, in fs/btrfs/free-space-tree.c:1102
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/free-space-tree.c:1102!
-  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-  Modules linked in:
-  CPU: 1 UID: 0 PID: 6592 Comm: syz-executor322 Not tainted 6.15.0-rc7-syzkaller-gd7fa1af5b33e #0 PREEMPT
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102
-  lr : populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102
-  sp : ffff8000a4ce7600
-  x29: ffff8000a4ce76e0 x28: ffff0000c9bc6000 x27: ffff0000ddfff3d8
-  x26: ffff0000ddfff378 x25: dfff800000000000 x24: 0000000000000001
-  x23: ffff8000a4ce7660 x22: ffff70001499cecc x21: ffff0000e1d8c160
-  x20: ffff0000e1cb7800 x19: ffff0000e1d8c0b0 x18: 00000000ffffffff
-  x17: ffff800092f39000 x16: ffff80008ad27e48 x15: ffff700011e740c0
-  x14: 1ffff00011e740c0 x13: 0000000000000004 x12: ffffffffffffffff
-  x11: ffff700011e740c0 x10: 0000000000ff0100 x9 : 94ef24f55d2dbc00
-  x8 : 94ef24f55d2dbc00 x7 : 0000000000000001 x6 : 0000000000000001
-  x5 : ffff8000a4ce6f98 x4 : ffff80008f415ba0 x3 : ffff800080548ef0
-  x2 : 0000000000000000 x1 : 0000000100000000 x0 : 000000000000003e
-  Call trace:
-   populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102 (P)
-   btrfs_rebuild_free_space_tree+0x14c/0x54c fs/btrfs/free-space-tree.c:1337
-   btrfs_start_pre_rw_mount+0xa78/0xe10 fs/btrfs/disk-io.c:3074
-   btrfs_remount_rw fs/btrfs/super.c:1319 [inline]
-   btrfs_reconfigure+0x828/0x2418 fs/btrfs/super.c:1543
-   reconfigure_super+0x1d4/0x6f0 fs/super.c:1083
-   do_remount fs/namespace.c:3365 [inline]
-   path_mount+0xb34/0xde0 fs/namespace.c:4200
-   do_mount fs/namespace.c:4221 [inline]
-   __do_sys_mount fs/namespace.c:4432 [inline]
-   __se_sys_mount fs/namespace.c:4409 [inline]
-   __arm64_sys_mount+0x3e8/0x468 fs/namespace.c:4409
-   __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
-   invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
-   el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
-   do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
-   el0_svc+0x58/0x17c arch/arm64/kernel/entry-common.c:767
-   el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:786
-   el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
-  Code: f0047182 91178042 528089c3 9771d47b (d4210000)
-  ---[ end trace 0000000000000000 ]---
+This patch corrects the condition to properly validate tx_pending.
 
-This happens because we are processing an empty block group, which has
-no extents allocated from it, there are no items for this block group,
-including the block group item since block group items are stored in a
-dedicated tree when using the block group tree feature. It also means
-this is the block group with the highest start offset, so there are no
-higher keys in the extent root, hence btrfs_search_slot_for_read()
-returns 1 (no higher key found).
-
-Fix this by asserting 'ret' is 0 only if the block group tree feature
-is not enabled, in which case we should find a block group item for
-the block group since it's stored in the extent root and block group
-item keys are greater than extent item keys (the value for
-BTRFS_BLOCK_GROUP_ITEM_KEY is 192 and for BTRFS_EXTENT_ITEM_KEY and
-BTRFS_METADATA_ITEM_KEY the values are 168 and 169 respectively).
-In case 'ret' is 1, we just need to add a record to the free space
-tree which spans the whole block group, and we can achieve this by
-making 'ret == 0' as the while loop's condition.
-
-Reported-by: syzbot+36fae25c35159a763a2a@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/6841dca8.a00a0220.d4325.0020.GAE@google.com/
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f7b261bfc35e ("net: ll_temac: Make RX/TX ring sizes configurable")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250710180621.2383000-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/free-space-tree.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/xilinx/ll_temac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
-index 6a44733a95e1c..14bdb241ff6bb 100644
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -1098,11 +1098,21 @@ static int populate_free_space_tree(struct btrfs_trans_handle *trans,
- 	ret = btrfs_search_slot_for_read(extent_root, &key, path, 1, 0);
- 	if (ret < 0)
- 		goto out_locked;
--	ASSERT(ret == 0);
-+	/*
-+	 * If ret is 1 (no key found), it means this is an empty block group,
-+	 * without any extents allocated from it and there's no block group
-+	 * item (key BTRFS_BLOCK_GROUP_ITEM_KEY) located in the extent tree
-+	 * because we are using the block group tree feature, so block group
-+	 * items are stored in the block group tree. It also means there are no
-+	 * extents allocated for block groups with a start offset beyond this
-+	 * block group's end offset (this is the last, highest, block group).
-+	 */
-+	if (!btrfs_fs_compat_ro(trans->fs_info, BLOCK_GROUP_TREE))
-+		ASSERT(ret == 0);
+diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
+index 08c45756b2181..d9b5c1c6ceaa2 100644
+--- a/drivers/net/ethernet/xilinx/ll_temac_main.c
++++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
+@@ -1311,7 +1311,7 @@ ll_temac_ethtools_set_ringparam(struct net_device *ndev,
+ 	if (ering->rx_pending > RX_BD_NUM_MAX ||
+ 	    ering->rx_mini_pending ||
+ 	    ering->rx_jumbo_pending ||
+-	    ering->rx_pending > TX_BD_NUM_MAX)
++	    ering->tx_pending > TX_BD_NUM_MAX)
+ 		return -EINVAL;
  
- 	start = block_group->start;
- 	end = block_group->start + block_group->length;
--	while (1) {
-+	while (ret == 0) {
- 		btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
- 
- 		if (key.type == BTRFS_EXTENT_ITEM_KEY ||
-@@ -1132,8 +1142,6 @@ static int populate_free_space_tree(struct btrfs_trans_handle *trans,
- 		ret = btrfs_next_item(extent_root, path);
- 		if (ret < 0)
- 			goto out_locked;
--		if (ret)
--			break;
- 	}
- 	if (start < end) {
- 		ret = __add_to_free_space_tree(trans, block_group, path2,
+ 	if (netif_running(ndev))
 -- 
 2.39.5
 
