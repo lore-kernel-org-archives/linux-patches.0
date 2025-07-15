@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239572DEA72;
-	Tue, 15 Jul 2025 13:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70F828937D;
+	Tue, 15 Jul 2025 13:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587005; cv=none; b=Ti8POJ9UOZ4o+9csD4ByFi7sL0LP9ACpYBKTii3d05SJwd+1fU5KaEUWiXOVjIs5g8rNtlKMFEV/TodXWQyTOZ2pUR47oLYCFY9FpxehiTf1Qly7GbgYvGaYof3At7HBQxNqawwbsBUFHpyCoFEfLlKPMu/ctY44LAahy+bwhZI=
+	t=1752587007; cv=none; b=ppdUlYT1BJHgvYTWXxVguu22LtQU4fNhIyp7dv4ByicwP+69TQTQ32fPUpFl+VQRvKRJt3XKWJiCt1jxq7oKPzqzBOjYyTqkgPhNIHt4KAgZBKKaKm53pg0EZBLfUxtocFtUy6nR7FYUcU/nV1Ef0VgEv2uvleFjqHamIG1XijU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587005; c=relaxed/simple;
-	bh=OHpGAv27Zp0dKGLXoDC6/+epby1B/MMYt6II+wZWbZE=;
+	s=arc-20240116; t=1752587007; c=relaxed/simple;
+	bh=L0M4afixRbLolkrnyafjDwaYUm8jd8cdtSQy/y619FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dFgK18isp6NB9yw9c4axmoAdzl+TYKp7mxGhX3nSt1v1OX1J3WQPBavhUZoZvUpJm4wwE+DVbDKowymKBxBElFTyVFKs7KzB/VjrRkjyxfrcaa0pTkM/3Z40B2ZXa9heP6no5diy0p1nVR/tyqxZJ9o2Uu+IJrasVU1p6EmAKGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0CHgzkH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4GguFZk3AT9PDyd3egkZxJBb7ft/u4XTnhzxuHkqocnEVKziEKhrcIkkjkOrH+Eg75xsYP/GlGdp1aF0cVW4jx7/XpmQnLehBl2k/gaaoMnQx8Jaf0jFOLB+06ilFgmfm2yjznJSGyQVatHUDj6VM2WfbqtQF9fk/N0U8KeaFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+y/pITx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0CHgzkH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A955FC4CEE3;
-	Tue, 15 Jul 2025 13:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+y/pITx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AFFC4CEE3;
+	Tue, 15 Jul 2025 13:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587005;
-	bh=OHpGAv27Zp0dKGLXoDC6/+epby1B/MMYt6II+wZWbZE=;
+	s=korg; t=1752587007;
+	bh=L0M4afixRbLolkrnyafjDwaYUm8jd8cdtSQy/y619FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0CHgzkH3AeXthN53Y07uSzR0PGm52txle286XGtXd5VJC5D61xNyENCIaUJDQbkn
-	 RwyEvX7hwDtNl0Abbaa/Kbu+itFOqvlhq5qCzxNzL7jCPq3jsoQohtMqFFSmFGbuUl
-	 TtQkyjnoCV9DsLQNNEpCiKWsqAjPbpe62ncdGMOM=
+	b=m+y/pITxE8wQ+zqVZfo/ZAKjRCjAIqewj9gTrhUN5np9dXyQesrsHHC5i2TM7+0fM
+	 Alqp/FabfK+udnQNT9RKs18mfc4EftDB/7nsw4KjvDVjqvPg8CngPmQ7afbE5zP2Uk
+	 p2AJmtZA8MLFOTZ5rLuH57/t18CquJA2Na2V2AUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nigel Croxon <ncroxon@redhat.com>,
+	Zheng Qixing <zhengqixing@huawei.com>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 131/192] raid10: cleanup memleak at raid10_make_request
-Date: Tue, 15 Jul 2025 15:13:46 +0200
-Message-ID: <20250715130820.153655262@linuxfoundation.org>
+Subject: [PATCH 6.15 132/192] md/raid1,raid10: strip REQ_NOWAIT from member bios
+Date: Tue, 15 Jul 2025 15:13:47 +0200
+Message-ID: <20250715130820.196871588@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,79 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nigel Croxon <ncroxon@redhat.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 43806c3d5b9bb7d74ba4e33a6a8a41ac988bde24 ]
+[ Upstream commit 5fa31c49928139fa948f078b094d80f12ed83f5f ]
 
-If raid10_read_request or raid10_write_request registers a new
-request and the REQ_NOWAIT flag is set, the code does not
-free the malloc from the mempool.
+RAID layers don't implement proper non-blocking semantics for
+REQ_NOWAIT, making the flag potentially misleading when propagated
+to member disks.
 
-unreferenced object 0xffff8884802c3200 (size 192):
-   comm "fio", pid 9197, jiffies 4298078271
-   hex dump (first 32 bytes):
-     00 00 00 00 00 00 00 00 88 41 02 00 00 00 00 00  .........A......
-     08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-   backtrace (crc c1a049a2):
-     __kmalloc+0x2bb/0x450
-     mempool_alloc+0x11b/0x320
-     raid10_make_request+0x19e/0x650 [raid10]
-     md_handle_request+0x3b3/0x9e0
-     __submit_bio+0x394/0x560
-     __submit_bio_noacct+0x145/0x530
-     submit_bio_noacct_nocheck+0x682/0x830
-     __blkdev_direct_IO_async+0x4dc/0x6b0
-     blkdev_read_iter+0x1e5/0x3b0
-     __io_read+0x230/0x1110
-     io_read+0x13/0x30
-     io_issue_sqe+0x134/0x1180
-     io_submit_sqes+0x48c/0xe90
-     __do_sys_io_uring_enter+0x574/0x8b0
-     do_syscall_64+0x5c/0xe0
-     entry_SYSCALL_64_after_hwframe+0x76/0x7e
+This patch clear REQ_NOWAIT from cloned bios in raid1/raid10. Retain
+original bio's REQ_NOWAIT flag for upper layer error handling.
 
-V4: changing backing tree to see if CKI tests will pass.
-The patch code has not changed between any versions.
+Maybe we can implement non-blocking I/O handling mechanisms within
+RAID in future work.
 
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
-Signed-off-by: Nigel Croxon <ncroxon@redhat.com>
-Link: https://lore.kernel.org/linux-raid/c0787379-9caa-42f3-b5fc-369aed784400@redhat.com
+Fixes: 9f346f7d4ea7 ("md/raid1,raid10: don't handle IO error for
+REQ_RAHEAD and REQ_NOWAIT")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Link: https://lore.kernel.org/linux-raid/20250702102341.1969154-1-zhengqixing@huaweicloud.com
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/md/raid1.c  | 3 ++-
+ drivers/md/raid10.c | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 80efe737010b5..3d99a4e38e1c6 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1399,7 +1399,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
+ 	}
+ 	read_bio = bio_alloc_clone(mirror->rdev->bdev, bio, gfp,
+ 				   &mddev->bio_set);
+-
++	read_bio->bi_opf &= ~REQ_NOWAIT;
+ 	r1_bio->bios[rdisk] = read_bio;
+ 
+ 	read_bio->bi_iter.bi_sector = r1_bio->sector +
+@@ -1649,6 +1649,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 				wait_for_serialization(rdev, r1_bio);
+ 		}
+ 
++		mbio->bi_opf &= ~REQ_NOWAIT;
+ 		r1_bio->bios[i] = mbio;
+ 
+ 		mbio->bi_iter.bi_sector	= (r1_bio->sector + rdev->data_offset);
 diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 54320a887ecc5..0443a479809f9 100644
+index 0443a479809f9..6a55374a6ba37 100644
 --- a/drivers/md/raid10.c
 +++ b/drivers/md/raid10.c
-@@ -1182,8 +1182,11 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 		}
+@@ -1224,6 +1224,7 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 		r10_bio->master_bio = bio;
  	}
+ 	read_bio = bio_alloc_clone(rdev->bdev, bio, gfp, &mddev->bio_set);
++	read_bio->bi_opf &= ~REQ_NOWAIT;
  
--	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors))
-+	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
-+		raid_end_bio_io(r10_bio);
- 		return;
-+	}
-+
- 	rdev = read_balance(conf, r10_bio, &max_sectors);
- 	if (!rdev) {
- 		if (err_rdev) {
-@@ -1370,8 +1373,11 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 	}
+ 	r10_bio->devs[slot].bio = read_bio;
+ 	r10_bio->devs[slot].rdev = rdev;
+@@ -1259,6 +1260,7 @@ static void raid10_write_one_disk(struct mddev *mddev, struct r10bio *r10_bio,
+ 			     conf->mirrors[devnum].rdev;
  
- 	sectors = r10_bio->sectors;
--	if (!regular_request_wait(mddev, conf, bio, sectors))
-+	if (!regular_request_wait(mddev, conf, bio, sectors)) {
-+		raid_end_bio_io(r10_bio);
- 		return;
-+	}
-+
- 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery) &&
- 	    (mddev->reshape_backwards
- 	     ? (bio->bi_iter.bi_sector < conf->reshape_safe &&
+ 	mbio = bio_alloc_clone(rdev->bdev, bio, GFP_NOIO, &mddev->bio_set);
++	mbio->bi_opf &= ~REQ_NOWAIT;
+ 	if (replacement)
+ 		r10_bio->devs[n_copy].repl_bio = mbio;
+ 	else
 -- 
 2.39.5
 
