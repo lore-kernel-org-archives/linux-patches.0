@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A362E339B;
-	Tue, 15 Jul 2025 13:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11382E8893;
+	Tue, 15 Jul 2025 13:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586997; cv=none; b=naqN+kqw5rSH8gljpYPgEbtWDVHBtHPPfmGf+WAMZSUKkObSgeAbW8exm8kNZt8O2R0DQrNXSxwmCHQo8EF/inWrRjHSOPu5lNoEnNr6h8QXnJ68mTzMpjuMw1QRSM9gBIqRFagCkGm9Zsnr/tBKU2DFV4wDgSKQ3m/OERAlWqw=
+	t=1752586999; cv=none; b=Shl8JVOGNyrpIP1x48gbqDRD6flY1xtdLEUwIQdzRgYo+PalUp1bdi9qKvvC44MFhzn9gfiplLusbZJak6Rb+VeicsLeb03WtHaLNy1FZPNMw+l9RebjPt697ZNWF+BJxXxlefscaFlORC5CGlb/mvL/O4DABPGAottaKRFJwOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586997; c=relaxed/simple;
-	bh=uJVz7yT+DeTkVo9qCp2Wm0/Y/eq8XJzxaXu3IWRr5yI=;
+	s=arc-20240116; t=1752586999; c=relaxed/simple;
+	bh=60OKKbAlFVcInfm/FYRPWSsZiv5r7WaFRrNXgTTrVy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDTKlifYttXU3juo01gJ+81e3UwVB4qFD+RDHRa/EEz+C8xNB9uMhUmsBXHSYtaEIFEsijsPFHrgxGUgRROgXhBDBAgy+7bn9ZwZy3j/HuUO4PKcbnEtpJoBt/KgLfyROMWiWOA7vNf5/yVO7/J+GWTSOt0BItTRkwXpgQwXknw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgPrmSZ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h+ax6JQjSl4xlGoRAVRxz4UqRcDpvDSaO+cMVPcKUYGfsybsw9UXrGb6/zZT25MCtRhDWcFsgJ6MbBHKaTQc/8M7yLx+Z+XKhEalpKT74JDRr69HDRiZK8rD1l8u4NIdZ2zQNYjcI/Od4nC2KQ27i+TbvAXxjRV9YsQMeIQoPRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0gu0K2+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgPrmSZ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF093C4CEE3;
-	Tue, 15 Jul 2025 13:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0gu0K2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654CFC4CEE3;
+	Tue, 15 Jul 2025 13:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586997;
-	bh=uJVz7yT+DeTkVo9qCp2Wm0/Y/eq8XJzxaXu3IWRr5yI=;
+	s=korg; t=1752586999;
+	bh=60OKKbAlFVcInfm/FYRPWSsZiv5r7WaFRrNXgTTrVy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgPrmSZ5V3zJTQkLgX0wsoKMrwaNLiTsr+E10gQ4W2Vf1R15oG4D70xMV7CKxjpKp
-	 t+3vGlXIxdFTcnzvEdWsdbRKNNCcL+/fFPRkZ1V7kdNRfzwIzro+CmhPMiXS8IRtXi
-	 bK9g7HCwCto9JNXJWZz632AKnNgRZNQotMOmL0Vk=
+	b=N0gu0K2+PsVWp93UZ5dvFoqjilt19EkW5ZuFEEddjKoZcmTn8OaVnglLVfaKMezee
+	 7EbjUShD0Bdx0ddgfCwoYmg0BVi4uSNvaJ1VrejWNIzEZuBspEIACcqtORAxNnMR1r
+	 yhuTPPM4KpCa+VAH7xkqmr6OX//W2+YUrP4Zks0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.15 096/192] Revert "ACPI: battery: negate current when discharging"
-Date: Tue, 15 Jul 2025 15:13:11 +0200
-Message-ID: <20250715130818.751992284@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 6.15 087/192] drm/ttm: fix error handling in ttm_buffer_object_transfer
+Date: Tue, 15 Jul 2025 15:13:02 +0200
+Message-ID: <20250715130818.404167893@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -44,57 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit de1675de39aa945bad5937d1fde4df3682670639 upstream.
+commit 97e000acf2e20a86a50a0ec8c2739f0846f37509 upstream.
 
-Revert commit 234f71555019 ("ACPI: battery: negate current when
-discharging") breaks not one but several userspace implementations
-of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
-but those are the two that have been tested.
+Unlocking the resv object was missing in the error path, additionally to
+that we should move over the resource only after the fence slot was
+reserved.
 
-Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Fixes: c8d4c18bfbc4a ("dma-buf/drivers: make reserving a shared slot mandatory v4")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20250616130726.22863-3-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/battery.c |   19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/ttm/ttm_bo_util.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -243,23 +243,10 @@ static int acpi_battery_get_property(str
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
- 			ret = -ENODEV;
--			break;
--		}
+--- a/drivers/gpu/drm/ttm/ttm_bo_util.c
++++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
+@@ -254,6 +254,13 @@ static int ttm_buffer_object_transfer(st
+ 	ret = dma_resv_trylock(&fbo->base.base._resv);
+ 	WARN_ON(!ret);
+ 
++	ret = dma_resv_reserve_fences(&fbo->base.base._resv, 1);
++	if (ret) {
++		dma_resv_unlock(&fbo->base.base._resv);
++		kfree(fbo);
++		return ret;
++	}
++
+ 	if (fbo->base.resource) {
+ 		ttm_resource_set_bo(fbo->base.resource, &fbo->base);
+ 		bo->resource = NULL;
+@@ -262,12 +269,6 @@ static int ttm_buffer_object_transfer(st
+ 		fbo->base.bulk_move = NULL;
+ 	}
+ 
+-	ret = dma_resv_reserve_fences(&fbo->base.base._resv, 1);
+-	if (ret) {
+-		kfree(fbo);
+-		return ret;
+-	}
 -
--		val->intval = battery->rate_now * 1000;
--		/*
--		 * When discharging, the current should be reported as a
--		 * negative number as per the power supply class interface
--		 * definition.
--		 */
--		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
--		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
--		    acpi_battery_handle_discharging(battery)
--				== POWER_SUPPLY_STATUS_DISCHARGING)
--			val->intval = -val->intval;
--
-+		else
-+			val->intval = battery->rate_now * 1000;
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+ 	ttm_bo_get(bo);
+ 	fbo->bo = bo;
+ 
 
 
