@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512D2DCF40;
-	Tue, 15 Jul 2025 13:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E695A2E6D0E;
+	Tue, 15 Jul 2025 13:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587434; cv=none; b=dVWbcFt0kDcoIRz2JYUH81H4Cjet07qqDIMi+P2yMF3ZaBrrVNQdJNZNMimXe51N4efmoMnE8alZ4J5At2kZsJM92U3XBIxJU1h1ND9vyu1+KJBnPB6XzHWPK1PenqY0a3nfZCR06S/J+uckpJ42kii7I1MB2ZjxjkE8TY82yRw=
+	t=1752587437; cv=none; b=te/wTEwmioGZqf/a55Ze6q3Hi5+sgj9aQnYJuQ+8xUCEZSfKmL/TOGwEEHXy2PoOmcJhk66Ij9ogsPqJWwOCi1KuoUKqa+3aYdGfsp8yGE5lxSKAxepMY8UoOB4GtA1w8YNQ1jRbgRArYinMY/S/6GExCLj6BSmb3y2rnjq5zbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587434; c=relaxed/simple;
-	bh=OTwpqorPusUQuzYAAuYZwlFut1sfUTA2cR+pG7lLj9E=;
+	s=arc-20240116; t=1752587437; c=relaxed/simple;
+	bh=/3xYRYxUsWSuOB2mExp4+9adu48Pe1P/pPkcUy6ZKP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pp3xeeXXgxIpvnMiZAvUy+QNonbkWQHWmIy4F2qcsmWjZD7XL/h1ZXb0pNUGHVcPeezsf7Z+BWOBjNq3X9Cj+uK3Di9X6oR4JKouH39PqbC57TGmtr4lZZLtlyTkFN7CYPVYJz/9gtJDFu70O/5bT/urAu2Cx4dEV8hwpaetqac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+bPLlqA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/EC+3GT/sppQTavctzuFpbbqXkpRJ5yuwmWfjobPBDBz3Kmb6EOWaCfKwxy/L5wnH3ceuo9lG4H968uxph8PUYO5hgr9lsWiVkarzudJio5S5HWBW1Y+lo7ViTxqDteyQrURh242/W1UT9IvIDLfntQJ2ma8HRhmetizEL1iFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xwsek+6m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+bPLlqA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3E2C4CEE3;
-	Tue, 15 Jul 2025 13:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xwsek+6m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8B8C4CEE3;
+	Tue, 15 Jul 2025 13:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587434;
-	bh=OTwpqorPusUQuzYAAuYZwlFut1sfUTA2cR+pG7lLj9E=;
+	s=korg; t=1752587436;
+	bh=/3xYRYxUsWSuOB2mExp4+9adu48Pe1P/pPkcUy6ZKP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+bPLlqAGVm8OhpO9/cYVkF/rBdTeKN0CZevNswIfVIsDQjr4Y/fVY9xjyhDJM+rK
-	 w1snvWtZn1iHEBOMS66WWeVujxjRZ5Z97npZ0IoSaLR5Oj0bjegQayaSBQeE3GQi/T
-	 kq0KrtUjpMjJlgR8Q8m61StteRVG5J9Dmn5bITUU=
+	b=Xwsek+6mipOcuq94mWmlD463rsJCTwaN+U6J1t7xUPUTz4iMh8RRoU3hGCgS2YJpv
+	 f4h9vH82fKQv0ov3uZP7k3Rbq7qLvNFwEr6viqUkF0SLGm9doODswO81DL4r9ZVPEV
+	 pMfYN9ss/1YovAfA9u1FttecHJNCedKLdsgFC3GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	linux-kbuild@vger.kernel.org,
-	kernel test robot <lkp@intel.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chen Yufeng <chenyufeng@iie.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/208] um: Add cmpxchg8b_emu and checksum functions to asm-prototypes.h
-Date: Tue, 15 Jul 2025 15:12:00 +0200
-Message-ID: <20250715130811.289757421@linuxfoundation.org>
+Subject: [PATCH 5.10 012/208] usb: potential integer overflow in usbg_make_tpg()
+Date: Tue, 15 Jul 2025 15:12:01 +0200
+Message-ID: <20250715130811.328882493@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -54,53 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Chen Yufeng <chenyufeng@iie.ac.cn>
 
-[ Upstream commit 674d03f6bd6b0f8327f1a4920ff5893557facfbd ]
+[ Upstream commit 153874010354d050f62f8ae25cbb960c17633dc5 ]
 
-With CONFIG_GENDWARFKSYMS, um builds fail due to missing prototypes
-in asm/asm-prototypes.h. Add declarations for cmpxchg8b_emu and the
-exported checksum functions, including csum_partial_copy_generic as
-it's also exported.
+The variable tpgt in usbg_make_tpg() is defined as unsigned long and is
+assigned to tpgt->tport_tpgt, which is defined as u16. This may cause an
+integer overflow when tpgt is greater than USHRT_MAX (65535). I
+haven't tried to trigger it myself, but it is possible to trigger it
+by calling usbg_make_tpg() with a large value for tpgt.
 
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: linux-kbuild@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202503251216.lE4t9Ikj-lkp@intel.com/
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://patch.msgid.link/20250326190500.847236-2-samitolvanen@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+I modified the type of tpgt to match tpgt->tport_tpgt and adjusted the
+relevant code accordingly.
+
+This patch is similar to commit 59c816c1f24d ("vhost/scsi: potential
+memory corruption").
+
+Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
+Link: https://lore.kernel.org/r/20250415065857.1619-1-chenyufeng@iie.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/asm/asm-prototypes.h | 5 +++++
- arch/x86/um/asm/checksum.h           | 3 +++
- 2 files changed, 8 insertions(+)
+ drivers/usb/gadget/function/f_tcm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/um/include/asm/asm-prototypes.h b/arch/um/include/asm/asm-prototypes.h
-index 5898a26daa0dd..408b31d591279 100644
---- a/arch/um/include/asm/asm-prototypes.h
-+++ b/arch/um/include/asm/asm-prototypes.h
-@@ -1 +1,6 @@
- #include <asm-generic/asm-prototypes.h>
-+#include <asm/checksum.h>
-+
-+#ifdef CONFIG_UML_X86
-+extern void cmpxchg8b_emu(void);
-+#endif
-diff --git a/arch/x86/um/asm/checksum.h b/arch/x86/um/asm/checksum.h
-index b07824500363f..ddc144657efad 100644
---- a/arch/x86/um/asm/checksum.h
-+++ b/arch/x86/um/asm/checksum.h
-@@ -20,6 +20,9 @@
-  */
- extern __wsum csum_partial(const void *buff, int len, __wsum sum);
+diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
+index 7f825c961fb88..30c3a44abb183 100644
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1325,14 +1325,14 @@ static struct se_portal_group *usbg_make_tpg(struct se_wwn *wwn,
+ 	struct usbg_tport *tport = container_of(wwn, struct usbg_tport,
+ 			tport_wwn);
+ 	struct usbg_tpg *tpg;
+-	unsigned long tpgt;
++	u16 tpgt;
+ 	int ret;
+ 	struct f_tcm_opts *opts;
+ 	unsigned i;
  
-+/* Do not call this directly. Declared for export type visibility. */
-+extern __visible __wsum csum_partial_copy_generic(const void *src, void *dst, int len);
-+
- /**
-  * csum_fold - Fold and invert a 32bit checksum.
-  * sum: 32bit unfolded sum
+ 	if (strstr(name, "tpgt_") != name)
+ 		return ERR_PTR(-EINVAL);
+-	if (kstrtoul(name + 5, 0, &tpgt) || tpgt > UINT_MAX)
++	if (kstrtou16(name + 5, 0, &tpgt))
+ 		return ERR_PTR(-EINVAL);
+ 	ret = -ENODEV;
+ 	mutex_lock(&tpg_instances_lock);
 -- 
 2.39.5
 
