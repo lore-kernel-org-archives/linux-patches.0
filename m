@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDAD2701B8;
-	Tue, 15 Jul 2025 13:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE37C2566;
+	Tue, 15 Jul 2025 13:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585503; cv=none; b=is0gKp1BupJYm5+n+6spcfJjrrnN2E/k3FcBHlgBA7pOel8EXAZdReT0aRjlZ6XAyIcXAilz4pXMZZP7XUwPEvznJTvcqqNhJ3CwiU/TIa2bmF7Y+AtpC2S+NoziHKWfB3zMvAJ5D4UtycqityWbl/M+R1OEmuMJyYSafskdGHk=
+	t=1752585505; cv=none; b=TZMVtVe8ODS2oypbYKWCCyaEJCnZZeCms/Sx/Ucw4nZSG99i27glFqkiIvhZR9TbN9WmfwTw2TuAYGB1S3dSrDiW5Za+JcndDZW6p4s/7mrsLblJz+6DVJ3qUpnn304LLv6v1GmYtCvEO0Z31mTYvk5PBGFL4R2NQ+quNZ+kKp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585503; c=relaxed/simple;
-	bh=ePFS/8QiOfZ/OXeZ50ngNHXm5ubIOS/GpyDcBUie4Ks=;
+	s=arc-20240116; t=1752585505; c=relaxed/simple;
+	bh=jW+te8g1HjgHzf4e/42domepQL30WtvZZstokC8nPmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RZLITrePYh1zhcsS5y//P+/YadZ92Tiv7xpH7HjlGrcLYBb1gB2WRVw6BDfbvicWsgsCNfp37nJ5ztyHJJBCDPqVdqSZtRVWPvG62StxwWe+24lr41SsZk2Fr9W5XR1Ivc6zvh8smq8FnDaMFvpi0Ez8cmBp3+H2a45Emx+kewQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDzPMwsE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKotv6UULM5MvCdIgm0sewo9WtaeqLgpBPBr/M3bTqsW3WEbRifXq8LWVZtV7mMlv7P9u8lT0keUgSOfra7lORTkM63srK3wlbd6OiCJgxhhIMUA01YdW/fZNsSwbtkerqWONCQYVApb7t6RtHbzHlNZrxEkGCaLUjYOQYWMi9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02GYYL+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDzPMwsE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CABC4CEE3;
-	Tue, 15 Jul 2025 13:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02GYYL+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60986C4CEE3;
+	Tue, 15 Jul 2025 13:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585503;
-	bh=ePFS/8QiOfZ/OXeZ50ngNHXm5ubIOS/GpyDcBUie4Ks=;
+	s=korg; t=1752585505;
+	bh=jW+te8g1HjgHzf4e/42domepQL30WtvZZstokC8nPmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDzPMwsEOdkVXPqrYks0jOZFjvy/RaZm0cABnnc9bYxrT/D+PkIAXumd/FqNsmKyy
-	 8Fu7n24lnEqzHmw1WjfFl7HHOaocAOZuQYgRKsH0nghoX6gnUQbdBfvupmDvnVsgpn
-	 wA4wwWCqXz72vKhRjmWreBMCy6XMXKCFcePbdqOM=
+	b=02GYYL+UxIHsz4vyU6+zJ66+0tkJDpOIIKt2Aa/3i4xPW8zJ7lHn45a2lGM/XRmH7
+	 2gDSc1SDJpPbuWZOfMWMyHbVspo6mpAih77OjJqgmDnwzRE3YoGEhks636UppgX4Sl
+	 1BWlUB7yaK+W3/mkM9LnjSTmyxrw0jAnG9qHtP2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.12 065/163] pwm: mediatek: Ensure to disable clocks in error path
-Date: Tue, 15 Jul 2025 15:12:13 +0200
-Message-ID: <20250715130811.356495162@linuxfoundation.org>
+	Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 066/163] wifi: prevent A-MSDU attacks in mesh networks
+Date: Tue, 15 Jul 2025 15:12:14 +0200
+Message-ID: <20250715130811.394485551@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -44,69 +44,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>
 
-commit 505b730ede7f5c4083ff212aa955155b5b92e574 upstream.
+commit 737bb912ebbe4571195c56eba557c4d7315b26fb upstream.
 
-After enabling the clocks each error path must disable the clocks again.
-One of them failed to do so. Unify the error paths to use goto to make it
-harder for future changes to add a similar bug.
+This patch is a mitigation to prevent the A-MSDU spoofing vulnerability
+for mesh networks. The initial update to the IEEE 802.11 standard, in
+response to the FragAttacks, missed this case (CVE-2025-27558). It can
+be considered a variant of CVE-2020-24588 but for mesh networks.
 
-Fixes: 7ca59947b5fc ("pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250704172728.626815-2-u.kleine-koenig@baylibre.com
+This patch tries to detect if a standard MSDU was turned into an A-MSDU
+by an adversary. This is done by parsing a received A-MSDU as a standard
+MSDU, calculating the length of the Mesh Control header, and seeing if
+the 6 bytes after this header equal the start of an rfc1042 header. If
+equal, this is a strong indication of an ongoing attack attempt.
+
+This defense was tested with mac80211_hwsim against a mesh network that
+uses an empty Mesh Address Extension field, i.e., when four addresses
+are used, and when using a 12-byte Mesh Address Extension field, i.e.,
+when six addresses are used. Functionality of normal MSDUs and A-MSDUs
+was also tested, and confirmed working, when using both an empty and
+12-byte Mesh Address Extension field.
+
+It was also tested with mac80211_hwsim that A-MSDU attacks in non-mesh
+networks keep being detected and prevented.
+
+Note that the vulnerability being patched, and the defense being
+implemented, was also discussed in the following paper and in the
+following IEEE 802.11 presentation:
+
+https://papers.mathyvanhoef.com/wisec2025.pdf
+https://mentor.ieee.org/802.11/dcn/25/11-25-0949-00-000m-a-msdu-mesh-spoof-protection.docx
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>
+Link: https://patch.msgid.link/20250616004635.224344-1-Mathy.Vanhoef@kuleuven.be
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-mediatek.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/wireless/util.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -130,8 +130,10 @@ static int pwm_mediatek_config(struct pw
- 		return ret;
- 
- 	clk_rate = clk_get_rate(pc->clk_pwms[pwm->hwpwm]);
--	if (!clk_rate)
--		return -EINVAL;
-+	if (!clk_rate) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 
- 	/* Make sure we use the bus clock and not the 26MHz clock */
- 	if (pc->soc->has_ck_26m_sel)
-@@ -150,9 +152,9 @@ static int pwm_mediatek_config(struct pw
- 	}
- 
- 	if (clkdiv > PWM_CLK_DIV_MAX) {
--		pwm_mediatek_clk_disable(chip, pwm);
- 		dev_err(pwmchip_parent(chip), "period of %d ns not supported\n", period_ns);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 
- 	if (pc->soc->pwm45_fixup && pwm->hwpwm > 2) {
-@@ -169,9 +171,10 @@ static int pwm_mediatek_config(struct pw
- 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period);
- 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty);
- 
-+out:
- 	pwm_mediatek_clk_disable(chip, pwm);
- 
--	return 0;
-+	return ret;
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -820,6 +820,52 @@ bool ieee80211_is_valid_amsdu(struct sk_
  }
+ EXPORT_SYMBOL(ieee80211_is_valid_amsdu);
  
- static int pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
++
++/*
++ * Detects if an MSDU frame was maliciously converted into an A-MSDU
++ * frame by an adversary. This is done by parsing the received frame
++ * as if it were a regular MSDU, even though the A-MSDU flag is set.
++ *
++ * For non-mesh interfaces, detection involves checking whether the
++ * payload, when interpreted as an MSDU, begins with a valid RFC1042
++ * header. This is done by comparing the A-MSDU subheader's destination
++ * address to the start of the RFC1042 header.
++ *
++ * For mesh interfaces, the MSDU includes a 6-byte Mesh Control field
++ * and an optional variable-length Mesh Address Extension field before
++ * the RFC1042 header. The position of the RFC1042 header must therefore
++ * be calculated based on the mesh header length.
++ *
++ * Since this function intentionally parses an A-MSDU frame as an MSDU,
++ * it only assumes that the A-MSDU subframe header is present, and
++ * beyond this it performs its own bounds checks under the assumption
++ * that the frame is instead parsed as a non-aggregated MSDU.
++ */
++static bool
++is_amsdu_aggregation_attack(struct ethhdr *eth, struct sk_buff *skb,
++			    enum nl80211_iftype iftype)
++{
++	int offset;
++
++	/* Non-mesh case can be directly compared */
++	if (iftype != NL80211_IFTYPE_MESH_POINT)
++		return ether_addr_equal(eth->h_dest, rfc1042_header);
++
++	offset = __ieee80211_get_mesh_hdrlen(eth->h_dest[0]);
++	if (offset == 6) {
++		/* Mesh case with empty address extension field */
++		return ether_addr_equal(eth->h_source, rfc1042_header);
++	} else if (offset + ETH_ALEN <= skb->len) {
++		/* Mesh case with non-empty address extension field */
++		u8 temp[ETH_ALEN];
++
++		skb_copy_bits(skb, offset, temp, ETH_ALEN);
++		return ether_addr_equal(temp, rfc1042_header);
++	}
++
++	return false;
++}
++
+ void ieee80211_amsdu_to_8023s(struct sk_buff *skb, struct sk_buff_head *list,
+ 			      const u8 *addr, enum nl80211_iftype iftype,
+ 			      const unsigned int extra_headroom,
+@@ -861,8 +907,10 @@ void ieee80211_amsdu_to_8023s(struct sk_
+ 		/* the last MSDU has no padding */
+ 		if (subframe_len > remaining)
+ 			goto purge;
+-		/* mitigate A-MSDU aggregation injection attacks */
+-		if (ether_addr_equal(hdr.eth.h_dest, rfc1042_header))
++		/* mitigate A-MSDU aggregation injection attacks, to be
++		 * checked when processing first subframe (offset == 0).
++		 */
++		if (offset == 0 && is_amsdu_aggregation_attack(&hdr.eth, skb, iftype))
+ 			goto purge;
+ 
+ 		offset += sizeof(struct ethhdr);
 
 
