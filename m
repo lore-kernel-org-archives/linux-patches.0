@@ -1,90 +1,113 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC22617BA1
-	for <patches@lists.linux.dev>; Tue, 15 Jul 2025 20:20:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5523114C5B0;
+	Tue, 15 Jul 2025 20:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752610819; cv=none; b=DUOaVyZ6qEM60nVcsnqmIcpWB4pNF0cizqaTmoJEliePpyMZ7fY8Zgw+Z0cZ/jnpG/ppFSz+tPkaUGqjkHk5PwOY9vFJ3xlCkjwCX1TAKhDR9z+bl/xCPpH6oVEdEUjV+I+ocJmatYVxtOaQvXftlbycUO/03aJSh/6rptQgSkE=
+	t=1752611624; cv=none; b=hPWN2AyK7SHVYpmsT/2m5oVtvywP/aKlO9oUV37liw8kzkRUgYhmdp6bMGiOxYLs0juGmi5bnrgaSmy7hyY40AZxfscRrHISy+AkmtSjCtZ2Abc45mzasvBgnaIvtXQMyb1t47jlVwZwjOR5yQ+2mASRGIv2M+dj8Ju0FmRx8Eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752610819; c=relaxed/simple;
-	bh=82dh6mXxzgool741Tp2b9ID7hUl6Ys+rldzp0+2gDog=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l97EOYlJdT0E+8a5B6INz7SGDBj01ZLDTfEtWl1O8cHEukIXIA4xOX8s6Dzm0H4RwjRzxdyfrsmW+CZ2SVyv+hn/EetRIrDwNwsJH3Pdh/RpAOGC4RB5ET3D62wQQjw2timnq8mTwh9271KeTEBUmPJUEjVUNsqKvk6IOH+uJfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=XdNnf+kk; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1752611624; c=relaxed/simple;
+	bh=8tpCzL5oiRbCf6TONC2mLp87lm68V7p5K+gVlHvUvkM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TGLH9Zb/GKDLh+QHf6gFIQ+ZehOW4Dwf1ym1wWk0RfCTO6uVZHhop62ifBtZWeVENDa22sQAUsL/+O0/9M0eKYm8TdvGREW1C0HVXQayTymfsYzqXbC5aFErciV0Jr2mIw5EqyM+/FlSbjFAY0hVPfgoTrT/cbznw9JUJCDEI+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ehR5ztTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="XdNnf+kk"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C02F71027235A;
-	Tue, 15 Jul 2025 22:20:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1752610815; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=hLScYj7rME9Eh39h5hkrPBR1W+hf/KGmj340jGhaQSU=;
-	b=XdNnf+kkAdLHA3kZo13rvzYOgARJuwMBNcMvIVLg99N7pj0KOZpzqKkcYcV2xhrdGCsZqc
-	wjbZrnZWl/JHqjrzzRMxW4C4WAjl9OJiKs7MKr+2nu1iAvu1jQ2jAUmhWtE0Sw1GAeJEVg
-	sC0ypP8M0j8vsKceVfUU6kUEKWTtlcateZ+PGqhM6UIzVgzbsyDc1mhicdgeGNTg9aOWOV
-	whjifib1lC8g4ydo6FH3MwPRYPIqLMb+v5XO2jd0djBP7ZdUWsnW/D/IIVnSctTdAdRKGI
-	JiQS4dpEzLyHdxWuD+REjAewirwoPhf4UaXe37F6XwjQ4VRcKcT3M7scQuhAWw==
-Date: Tue, 15 Jul 2025 22:20:09 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/163] 6.12.39-rc1 review
-Message-ID: <aHa3+VT3RkEmuTc+@duo.ucw.cz>
-References: <20250715130808.777350091@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ehR5ztTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DC3C4CEE3;
+	Tue, 15 Jul 2025 20:33:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752611624;
+	bh=8tpCzL5oiRbCf6TONC2mLp87lm68V7p5K+gVlHvUvkM=;
+	h=From:Date:Subject:To:Cc:From;
+	b=ehR5ztTixlsFC5diEwVDfGinQWEE3lyc6dIcxqojIv7lIw040XUbp9JAyJra+tvvH
+	 uU4/0/QtEOVIWuJY9xXmCkwVBd5i6PA+F60ukfhRlxdwJSnjigGtLJrZZbyjKC8L3S
+	 jk1sYu45Cis2RIu2DfXEq1o/p3ucCnz3CJApRkwL649DUyuAmeI3NU1jyIO41nEXQb
+	 f+XaSur0i9RazSTw0MSlTMzxM378xnUaFqCYTXn4QrMudphMYVgEetJa+OZ58kpqwK
+	 t+B+BpyQYwGNcHEY/WO34pg2vn0N0hXL37ILyK7Ddf5+6DyhTwYZu2+TkjWxWoPZ7i
+	 AGcZLcwdQIMng==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 15 Jul 2025 13:33:32 -0700
+Subject: [PATCH] usb: atm: cxacru: Zero initialize bp in
+ cxacru_heavy_init()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Xhbr9jlV77XkysF3"
-Content-Disposition: inline
-In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250715-usb-cxacru-fix-clang-21-uninit-warning-v1-1-de6c652c3079@kernel.org>
+X-B4-Tracking: v=1; b=H4sIABu7dmgC/x2N3QqDMAxGX0VyvUDb+YN7leFFjZkGRjdS6wTx3
+ Q27+w4czndAZhXO8KgOUN4kyycZ+FsFtMQ0M8pkDMGFxnW+wZJHpD2SFnzJjvQ2CYPHkiTJir+
+ oNmbs67ub+pbakTxY7Kts+v/oOZznBd+Fk8h4AAAA
+X-Change-ID: 20250715-usb-cxacru-fix-clang-21-uninit-warning-9430d96c6bc1
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: accessrunner-general@lists.sourceforge.net, linux-usb@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2691; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=8tpCzL5oiRbCf6TONC2mLp87lm68V7p5K+gVlHvUvkM=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBllu9WkmsoXez8L+tZhH3J/bc001YSsOxuM9Hd3yBuX5
+ qd9vTm/o5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEzk/hmGP1yrVimelbSXt0r7
+ L1w7O9w+WuTd89C4dWt9jrMzTpBe3sbI8KDImfsbZ8T9EFdvu8zU+Oi1Ox9J9S1dJxqcn/jfzvA
+ YDwA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+After a recent change in clang to expose uninitialized warnings from
+const variables [1], there is a warning in cxacru_heavy_init():
 
---Xhbr9jlV77XkysF3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  drivers/usb/atm/cxacru.c:1104:6: error: variable 'bp' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1113:39: note: uninitialized use occurs here
+   1113 |         cxacru_upload_firmware(instance, fw, bp);
+        |                                              ^~
+  drivers/usb/atm/cxacru.c:1104:2: note: remove the 'if' if its condition is always true
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1095:32: note: initialize the variable 'bp' to silence this warning
+   1095 |         const struct firmware *fw, *bp;
+        |                                       ^
+        |                                        = NULL
 
-Hi!
+This warning occurs in clang's frontend before inlining occurs, so it
+cannot notice that bp is only used within cxacru_upload_firmware() under
+the same condition that initializes it in cxacru_heavy_init(). Just
+initialize bp to NULL to silence the warning without functionally
+changing the code, which is what happens with modern compilers when they
+support '-ftrivial-auto-var-init=zero' (CONFIG_INIT_STACK_ALL_ZERO=y).
 
-> This is the start of the stable review cycle for the 6.12.39 release.
-> There are 163 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Cc: stable@vger.kernel.org
+Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2102
+Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/usb/atm/cxacru.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-CIP testing did not find any problems here:
+diff --git a/drivers/usb/atm/cxacru.c b/drivers/usb/atm/cxacru.c
+index a12ab90b3db7..b7c3b224a759 100644
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -1092,7 +1092,7 @@ static int cxacru_find_firmware(struct cxacru_data *instance,
+ static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
+ 			     struct usb_interface *usb_intf)
+ {
+-	const struct firmware *fw, *bp;
++	const struct firmware *fw, *bp = NULL;
+ 	struct cxacru_data *instance = usbatm_instance->driver_data;
+ 	int ret = cxacru_find_firmware(instance, "fw", &fw);
+ 
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.12.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+---
+base-commit: fdfa018c6962c86d2faa183187669569be4d513f
+change-id: 20250715-usb-cxacru-fix-clang-21-uninit-warning-9430d96c6bc1
 
 Best regards,
-                                                                Pavel
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+--  
+Nathan Chancellor <nathan@kernel.org>
 
---Xhbr9jlV77XkysF3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaHa3+QAKCRAw5/Bqldv6
-8sV8AJ9tplw+7ZqQfENBgdsrqFBSJ2heEACaA+vLTgTQGIeh3F4+Nho2QuTBa1M=
-=muUO
------END PGP SIGNATURE-----
-
---Xhbr9jlV77XkysF3--
