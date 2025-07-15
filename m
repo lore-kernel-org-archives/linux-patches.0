@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFEF2E3382;
-	Tue, 15 Jul 2025 13:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32782E7F1A;
+	Tue, 15 Jul 2025 13:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587886; cv=none; b=Wx9G7OqTaSUaEKEDfEFvj14K7wxZvCaiEIQy3jRHimDNeZoScSpcL5GDYVsHXa0MjjVkGnjVsaD2wNbIIKyE2XStEFTKbt6f/PKFbEiiN6p7UaanGwxH6YYFRP8WqpMqxZE7yWoxKhTYIt0PrqOvLSbnW/wJt+OYUlExKw666tE=
+	t=1752587889; cv=none; b=VbQ6v7yq5FxaPSs0ZhUcoJByYBcKRzKm9UE8qKX61Csp0wJhKOLyPiYxbhmZydjCeyPJVm4g3EAns2JuhUUJruJOu8bGN89pnNKqrMvQReL0mIw9D4Y+dIwhpUCfI6VVdUnU8Bvh771S53JXCmsNTn4rkThnfjGWU+tcNxXw4Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587886; c=relaxed/simple;
-	bh=Vfp7Mf0ede5rPm34SGRd5nc0EGTUoCOumcJHsdBdTEY=;
+	s=arc-20240116; t=1752587889; c=relaxed/simple;
+	bh=+SWmiBJ+pv+YhcVJh4wQtucQwdMnhmH34bDWd2EaT2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N40+B1fgETAounzB8BrBWN4m7LW3jRKS+YE8b1mp1xjqo0ducLYB+sKmlhuPn0yqJEJ/bInkDw9jR330c4SOXutck/+G1ThdH2JpNriZFZXCkc+XsWHBu00tO0f5xHH7dpVM6q9pjdPMW2rkoFiS+nhkyk0U2uLW8H4X+3UlZ08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KGY9NBP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uE7BE2cNQ5fpWX9znKmPwkBclMmaJmtOf7prAnlBEOLHdpvRe1q6dvzKFgrtLrFNhZxlmeOIYmkwl2fLMoioCYdLA1e8JtTAGUpJF4P0VGbe1W3bTQiyVB5kN85GJdo0Z8hgCbyPn2KpQtTKIE+lmVImfULVA/CS3GDSGaaDn7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5aGpa9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KGY9NBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3F7C4CEE3;
-	Tue, 15 Jul 2025 13:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5aGpa9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B84C4CEF7;
+	Tue, 15 Jul 2025 13:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587886;
-	bh=Vfp7Mf0ede5rPm34SGRd5nc0EGTUoCOumcJHsdBdTEY=;
+	s=korg; t=1752587889;
+	bh=+SWmiBJ+pv+YhcVJh4wQtucQwdMnhmH34bDWd2EaT2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1KGY9NBPs4t02s6cpDP5rtaNnlhZKKA5c84dw7KBp47bHT6mHvkGWUWYLuQjAYNUx
-	 EwH2Gk5cavmQeunRrbv08Tj5OxmQFIXR0I2d8jpVrVeZL5mEDYiTTSRz5ZEBNRng5d
-	 +r5MlBVkC3Ju0rwRQRAXiCDdXQ5ZbU134EQb53Mg=
+	b=j5aGpa9YelHvS5JFHUR6K5RPeuhqtY/1zV24I/13/NKO5q7kfcNjUuaYNEcbypNHl
+	 gNIM/SZyJZ44kvDSD/5LS30ZnbDAXiILSh/1flVvCJiHujDaviiNcIZAzHrrNFIob3
+	 deo2YWya+z2fFZfz0OroROkSnU27TiLgAS4svGt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 181/208] netlink: Fix rmem check in netlink_broadcast_deliver().
-Date: Tue, 15 Jul 2025 15:14:50 +0200
-Message-ID: <20250715130818.211785698@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 5.10 164/208] x86/its: Fix undefined reference to cpu_wants_rethunk_at()
+Date: Tue, 15 Jul 2025 15:14:33 +0200
+Message-ID: <20250715130817.547752927@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -50,37 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit a3c4a125ec725cefb40047eb05ff9eafd57830b4 upstream.
+Below error was reported in a 32-bit kernel build:
 
-We need to allow queuing at least one skb even when skb is
-larger than sk->sk_rcvbuf.
+  static_call.c:(.ref.text+0x46): undefined reference to `cpu_wants_rethunk_at'
+  make[1]: [Makefile:1234: vmlinux] Error
 
-The cited commit made a mistake while converting a condition
-in netlink_broadcast_deliver().
+This is because the definition of cpu_wants_rethunk_at() depends on
+CONFIG_STACK_VALIDATION which is only enabled in 64-bit mode.
 
-Let's correct the rmem check for the allow-one-skb rule.
+Define the empty function for CONFIG_STACK_VALIDATION=n, rethunk mitigation
+is anyways not supported without it.
 
-Fixes: ae8f160e7eb24 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250711053208.2965945-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5d19a0574b75 ("x86/its: Add support for ITS-safe return thunk")
+Link: https://lore.kernel.org/stable/0f597436-5da6-4319-b918-9f57bde5634a@roeck-us.net/
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlink/af_netlink.c |    2 +-
+ arch/x86/include/asm/alternative.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1391,7 +1391,7 @@ static int netlink_broadcast_deliver(str
- 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
- 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -80,7 +80,7 @@ extern void apply_returns(s32 *start, s3
  
--	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
-+	if ((rmem == skb->truesize || rmem <= rcvbuf) &&
- 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
- 		netlink_skb_set_owner_r(skb, sk);
- 		__netlink_sendskb(sk, skb);
+ struct module;
+ 
+-#ifdef CONFIG_RETHUNK
++#if defined(CONFIG_RETHUNK) && defined(CONFIG_STACK_VALIDATION)
+ extern bool cpu_wants_rethunk(void);
+ extern bool cpu_wants_rethunk_at(void *addr);
+ #else
 
 
