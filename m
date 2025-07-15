@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16542E3AFB;
-	Tue, 15 Jul 2025 13:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B0F2E424C;
+	Tue, 15 Jul 2025 13:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587193; cv=none; b=TDiDq53es1eZ/EEOGNEYdtph9MbPjleEHdLl+f1AzTZM0rIpwbldgYSzJcWajwEQjR26tFWvqDHFsodl5jmdECD8b4WDY8TDsaEvdllVMFq6tUWqIg0W7vswhs7UvipvjliIj9wo7rYTe0+N1SLoWmB3nXAW9r0QIyXvsocxJek=
+	t=1752587195; cv=none; b=NWqwNXPOLdKF4R1yICGC/2FOdOHVsRc9tpytaXJCkzOA7RGDhGbC726aMigETfB/2EMbnKaO/i4AfkFN6FlzlIivZOWuVVFRMzmRre54kV7Lgh/AdyTPjcqSqD88RD6P5+q/iVM10cusAGcoDyrcRC3hSSon+TRaNn4sp2iwT34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587193; c=relaxed/simple;
-	bh=mJcSiD9cVE7fXrXapqq7T9f7PibXw8zKEmtLRkQSO6Y=;
+	s=arc-20240116; t=1752587195; c=relaxed/simple;
+	bh=qL2Z5kN587egPQhIR6jMz1vl+75fhGG5V+M+LZ5L5h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5pntvr58Zx9cvoWJySyZt6lwImYj+JAazeWBwSthHeMFLUlfnXgeYJf/1jytYWFFrA+5+EonPVP+bXvJ4mlhhUnWuYvBm8nutKcEtj72ucVE9NYQJkLlQXTmOkyD92D7Y0SYOwu4gneZ8DTe6S2d58AFz9a8U6nIUGQQEoGKwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUOzalCd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MEfjemjviMt32/DibzximBSoXqxLGRSq+rHhZVBNFtzr9yZEdQNJ79e5dr91RojJ9YI+miXlbaMiPXo/76xrBUljfGXFK5IasPP/0u5r6xURux0z5HqwAA2SGP2XEpuWx/D67mx+o/vXvFWN/lAaXRkVaEyVfSshWE9RpA9wvQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VWT6zjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUOzalCd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAE4C4CEE3;
-	Tue, 15 Jul 2025 13:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VWT6zjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5354C4CEE3;
+	Tue, 15 Jul 2025 13:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587192;
-	bh=mJcSiD9cVE7fXrXapqq7T9f7PibXw8zKEmtLRkQSO6Y=;
+	s=korg; t=1752587195;
+	bh=qL2Z5kN587egPQhIR6jMz1vl+75fhGG5V+M+LZ5L5h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUOzalCdkuU8bZJ7FqHWnlzdbu1B5oY4xLbxf5lX/yBithYHhXAoOLOSMRrCtwggb
-	 34AKzKW5jBgSJgUFsw+czZ2n0xPmiV4HbHpH8NzO8INXPjJMj5Ar3AwIbB+9M36sGa
-	 RseyTWoGNpz1FA9C3bAiYdJYibC2vJhM7D+TeHlg=
+	b=1VWT6zjP+e3V5DVxPOqlgRv+fWpBS5qrlmzN8Y71sxHoUrZNiSVRx8ooPjf0cu07i
+	 viRw1iv8gmuFYoqk8y+U1fMT5zBMhGhtWwn1EE3F/27Q741oUQ54qvpx7+DKdjfyhz
+	 I2wKrmXpTJ95RiNVrji+SiPQbYAHu7Q/xButwPzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 6.1 01/88] drm/exynos: exynos7_drm_decon: add vblank check in IRQ handling
-Date: Tue, 15 Jul 2025 15:13:37 +0200
-Message-ID: <20250715130754.558826544@linuxfoundation.org>
+	Felix Yan <felixonmars@archlinux.org>,
+	Eric Long <i@hack3r.moe>,
+	Jianfei Zhang <zhangjianfei3@gmail.com>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Minh Le <minhld139@gmail.com>,
+	Sicheng Zhu <Emmet_Z@outlook.com>,
+	Rong Zhang <i@rong.moe>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 02/88] platform/x86: ideapad-laptop: use usleep_range() for EC polling
+Date: Tue, 15 Jul 2025 15:13:38 +0200
+Message-ID: <20250715130754.597208962@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -44,53 +51,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Rong Zhang <i@rong.moe>
 
-commit b846350aa272de99bf6fecfa6b08e64ebfb13173 upstream.
+[ Upstream commit 5808c34216954cd832bd4b8bc52dfa287049122b ]
 
-If there's support for another console device (such as a TTY serial),
-the kernel occasionally panics during boot. The panic message and a
-relevant snippet of the call stack is as follows:
+It was reported that ideapad-laptop sometimes causes some recent (since
+2024) Lenovo ThinkBook models shut down when:
+ - suspending/resuming
+ - closing/opening the lid
+ - (dis)connecting a charger
+ - reading/writing some sysfs properties, e.g., fan_mode, touchpad
+ - pressing down some Fn keys, e.g., Brightness Up/Down (Fn+F5/F6)
+ - (seldom) loading the kmod
 
-  Unable to handle kernel NULL pointer dereference at virtual address 000000000000000
-  Call trace:
-    drm_crtc_handle_vblank+0x10/0x30 (P)
-    decon_irq_handler+0x88/0xb4
-    [...]
+The issue has existed since the launch day of such models, and there
+have been some out-of-tree workarounds (see Link:) for the issue. One
+disables some functionalities, while another one simply shortens
+IDEAPAD_EC_TIMEOUT. The disabled functionalities have read_ec_data() in
+their call chains, which calls schedule() between each poll.
 
-Otherwise, the panics don't happen. This indicates that it's some sort
-of race condition.
+It turns out that these models suffer from the indeterminacy of
+schedule() because of their low tolerance for being polled too
+frequently. Sometimes schedule() returns too soon due to the lack of
+ready tasks, causing the margin between two polls to be too short.
+In this case, the command is somehow aborted, and too many subsequent
+polls (they poll for "nothing!") may eventually break the state machine
+in the EC, resulting in a hard shutdown. This explains why shortening
+IDEAPAD_EC_TIMEOUT works around the issue - it reduces the total number
+of polls sent to the EC.
 
-Add a check to validate if the drm device can handle vblanks before
-calling drm_crtc_handle_vblank() to avoid this.
+Even when it doesn't lead to a shutdown, frequent polls may also disturb
+the ongoing operation and notably delay (+ 10-20ms) the availability of
+EC response. This phenomenon is unlikely to be exclusive to the models
+mentioned above, so dropping the schedule() manner should also slightly
+improve the responsiveness of various models.
 
+Fix these issues by migrating to usleep_range(150, 300). The interval is
+chosen to add some margin to the minimal 50us and considering EC
+responses are usually available after 150-2500us based on my test. It
+should be enough to fix these issues on all models subject to the EC bug
+without introducing latency on other models.
+
+Tested on ThinkBook 14 G7+ ASP and solved both issues. No regression was
+introduced in the test on a model without the EC bug (ThinkBook X IMH,
+thanks Eric).
+
+Link: https://github.com/ty2/ideapad-laptop-tb2024g6plus/commit/6c5db18c9e8109873c2c90a7d2d7f552148f7ad4
+Link: https://github.com/ferstar/ideapad-laptop-tb/commit/42d1e68e5009529d31bd23f978f636f79c023e80
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218771
+Fixes: 6a09f21dd1e2 ("ideapad: add ACPI helpers")
 Cc: stable@vger.kernel.org
-Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Felix Yan <felixonmars@archlinux.org>
+Tested-by: Eric Long <i@hack3r.moe>
+Tested-by: Jianfei Zhang <zhangjianfei3@gmail.com>
+Tested-by: Mingcong Bai <jeffbai@aosc.io>
+Tested-by: Minh Le <minhld139@gmail.com>
+Tested-by: Sicheng Zhu <Emmet_Z@outlook.com>
+Signed-off-by: Rong Zhang <i@rong.moe>
+Link: https://lore.kernel.org/r/20250525201833.37939-1-i@rong.moe
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos7_drm_decon.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/x86/ideapad-laptop.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-@@ -602,6 +602,10 @@ static irqreturn_t decon_irq_handler(int
- 	if (!ctx->drm_dev)
- 		goto out;
+diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
+index 6674ad529ae93..bddd240d68abc 100644
+--- a/drivers/platform/x86/ideapad-laptop.c
++++ b/drivers/platform/x86/ideapad-laptop.c
+@@ -13,6 +13,7 @@
+ #include <linux/bitops.h>
+ #include <linux/bug.h>
+ #include <linux/debugfs.h>
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/dmi.h>
+ #include <linux/fb.h>
+@@ -223,6 +224,20 @@ static void ideapad_shared_exit(struct ideapad_private *priv)
+  */
+ #define IDEAPAD_EC_TIMEOUT 200 /* in ms */
  
-+	/* check if crtc and vblank have been initialized properly */
-+	if (!drm_dev_has_vblank(ctx->drm_dev))
-+		goto out;
++/*
++ * Some models (e.g., ThinkBook since 2024) have a low tolerance for being
++ * polled too frequently. Doing so may break the state machine in the EC,
++ * resulting in a hard shutdown.
++ *
++ * It is also observed that frequent polls may disturb the ongoing operation
++ * and notably delay the availability of EC response.
++ *
++ * These values are used as the delay before the first poll and the interval
++ * between subsequent polls to solve the above issues.
++ */
++#define IDEAPAD_EC_POLL_MIN_US 150
++#define IDEAPAD_EC_POLL_MAX_US 300
 +
- 	if (!ctx->i80_if) {
- 		drm_crtc_handle_vblank(&ctx->crtc->base);
+ static int eval_int(acpi_handle handle, const char *name, unsigned long *res)
+ {
+ 	unsigned long long result;
+@@ -328,7 +343,7 @@ static int read_ec_data(acpi_handle handle, unsigned long cmd, unsigned long *da
+ 	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
  
+ 	while (time_before(jiffies, end_jiffies)) {
+-		schedule();
++		usleep_range(IDEAPAD_EC_POLL_MIN_US, IDEAPAD_EC_POLL_MAX_US);
+ 
+ 		err = eval_vpcr(handle, 1, &val);
+ 		if (err)
+@@ -359,7 +374,7 @@ static int write_ec_cmd(acpi_handle handle, unsigned long cmd, unsigned long dat
+ 	end_jiffies = jiffies + msecs_to_jiffies(IDEAPAD_EC_TIMEOUT) + 1;
+ 
+ 	while (time_before(jiffies, end_jiffies)) {
+-		schedule();
++		usleep_range(IDEAPAD_EC_POLL_MIN_US, IDEAPAD_EC_POLL_MAX_US);
+ 
+ 		err = eval_vpcr(handle, 1, &val);
+ 		if (err)
+-- 
+2.39.5
+
 
 
