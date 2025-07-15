@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E342E3380;
-	Tue, 15 Jul 2025 13:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B0D2561AE;
+	Tue, 15 Jul 2025 13:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586762; cv=none; b=kHT/rfKO8PgxTnC4mhH9kFe3SgwWz6p/Pib5nSN5yXjMLHw2UG/f6C9PbAy77puOpeJVjeNEmCnR6uk3L3C3BDFWgSB540x9Uhu2TwuXO2Vyl5vfxdz6qnJQXWpNlpgPQgsv9gJ711iAIV/7FUR8/iFhaw6sSdm1CAZn5PzWQUA=
+	t=1752586764; cv=none; b=SRNqPQT3mymhEp4qFzujbxGbT7dLCb3reNbYRhAAx8aXRVh0a2I+F9L+nhY9ZXFQebRhfGPc19Wv04taKGgVEJ4dxAb3wrQ0oyJ9LhfZ/W+AMP/+oXqB4ThE+l0wBdS034n6RpwCE6oaocUN7WSmp++u3nbukYMyrIS72JyAQc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586762; c=relaxed/simple;
-	bh=bx0lx9CS1oHeoARKQoQy9YnY0nHbUNj4jAil8eT+hKM=;
+	s=arc-20240116; t=1752586764; c=relaxed/simple;
+	bh=YvT008b7+l0GifvLYBPe1WUO6NKLt3k4f4XQ7lpDDNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XMDVQ6hJUlO04/wQib61CLYA6AAyV8yqAYwhdBJOQkL4oTsvLbYFYgYwKn/3MrU1Ixfc0jO8iC0/53A4/sExKg68hxulrI1GiJUKI0r0rVjSJy+HLfcoK+nW549NR0i5ooF2i+gOwzOav/ij22sud83gvIswpvfL93368bDjm6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CD819+4q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mOtQYuaXQX9Csh+xxOggTC4G0idnd9QJkUtXau/tMajiVr6TJOC4BGRBJLHPs090HS5Ia7JRIX9CCzsoaUakkop9aNFBxU2f30JtVN0YnWHUD7/pJYXBGVLetpV8T6CnCHz0Lc6YhgcGApTkGxOVdV2ypR8CMop8cnG1QqpQ6cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpcGCPZh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CD819+4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C648C4CEE3;
-	Tue, 15 Jul 2025 13:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpcGCPZh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD51C4CEE3;
+	Tue, 15 Jul 2025 13:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586761;
-	bh=bx0lx9CS1oHeoARKQoQy9YnY0nHbUNj4jAil8eT+hKM=;
+	s=korg; t=1752586764;
+	bh=YvT008b7+l0GifvLYBPe1WUO6NKLt3k4f4XQ7lpDDNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CD819+4qr/pGRPy/cWR85/JLgbJ6usRNmvyjOlJ3vALZzdzvXLefmTX7Pp3lDiyFi
-	 17bc1Qj2i8tkTqxDrReZmPuk8H+SKnwDOltsD2I2xokl04OmJDqCxbsvC0fiW15ZUa
-	 TeK9E+8b33lNQXFZ9URsLih5MOsnCKba5ctLaEa8=
+	b=RpcGCPZhnfvRr+47brkaDxlRCgqKlYmmgvNaAckUy2IyFfav2rY205nmzK998I8IF
+	 qvp2d3nVxfaVMQ3qY2OCRYVgMDpMSX5/bjG0JnXh9EV78o/Qp7sRTaVQHxqliugKrF
+	 g+TfwRpQ54erX4C9mRzxMkuds9ikV2yA1b3juFMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andre Edich <andre.edich@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	John Stultz <jstultz@google.com>,
+	kuyo chang <kuyo.chang@mediatek.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 039/192] net: phy: smsc: Force predictable MDI-X state on LAN87xx
-Date: Tue, 15 Jul 2025 15:12:14 +0200
-Message-ID: <20250715130816.423410374@linuxfoundation.org>
+Subject: [PATCH 6.15 022/192] sched/deadline: Fix dl_server runtime calculation formula
+Date: Tue, 15 Jul 2025 15:11:57 +0200
+Message-ID: <20250715130815.755238240@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -53,80 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: kuyo chang <kuyo.chang@mediatek.com>
 
-[ Upstream commit 0713e55533c88a20edb53eea6517dc56786a0078 ]
+[ Upstream commit fc975cfb36393db1db517fbbe366e550bcdcff14 ]
 
-Override the hardware strap configuration for MDI-X mode to ensure a
-predictable initial state for the driver. The initial mode of the LAN87xx
-PHY is determined by the AUTOMDIX_EN strap pin, but the driver has no
-documented way to read its latched status.
+In our testing with 6.12 based kernel on a big.LITTLE system, we were
+seeing instances of RT tasks being blocked from running on the LITTLE
+cpus for multiple seconds of time, apparently by the dl_server. This
+far exceeds the default configured 50ms per second runtime.
 
-This unpredictability means the driver cannot know if the PHY has
-initialized with Auto-MDIX enabled or disabled, preventing it from
-providing a reliable interface to the user.
+This is due to the fair dl_server runtime calculation being scaled
+for frequency & capacity of the cpu.
 
-This patch introduces a `config_init` hook that forces the PHY into a
-known state by explicitly enabling Auto-MDIX.
+Consider the following case under a Big.LITTLE architecture:
+Assume the runtime is: 50,000,000 ns, and Frequency/capacity
+scale-invariance defined as below:
+Frequency scale-invariance: 100
+Capacity scale-invariance: 50
+First by Frequency scale-invariance,
+the runtime is scaled to 50,000,000 * 100 >> 10 = 4,882,812
+Then by capacity scale-invariance,
+it is further scaled to 4,882,812 * 50 >> 10 = 238,418.
+So it will scaled to 238,418 ns.
 
-Fixes: 05b35e7eb9a1 ("smsc95xx: add phylib support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: Andre Edich <andre.edich@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250703114941.3243890-3-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This smaller "accounted runtime" value is what ends up being
+subtracted against the fair-server's runtime for the current period.
+Thus after 50ms of real time, we've only accounted ~238us against the
+fair servers runtime. This 209:1 ratio in this example means that on
+the smaller cpu the fair server is allowed to continue running,
+blocking RT tasks, for over 10 seconds before it exhausts its supposed
+50ms of runtime.  And on other hardware configurations it can be even
+worse.
+
+For the fair deadline_server, to prevent realtime tasks from being
+unexpectedly delayed, we really do want to use fixed time, and not
+scaled time for smaller capacity/frequency cpus. So remove the scaling
+from the fair server's accounting to fix this.
+
+Fixes: a110a81c52a9 ("sched/deadline: Deferrable dl server")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Suggested-by: John Stultz <jstultz@google.com>
+Signed-off-by: kuyo chang <kuyo.chang@mediatek.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Acked-by: John Stultz <jstultz@google.com>
+Tested-by: John Stultz <jstultz@google.com>
+Link: https://lore.kernel.org/r/20250702021440.2594736-1-kuyo.chang@mediatek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ kernel/sched/deadline.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index adf12d7108b5c..ad9a3d91bb8ae 100644
---- a/drivers/net/phy/smsc.c
-+++ b/drivers/net/phy/smsc.c
-@@ -262,6 +262,33 @@ int lan87xx_read_status(struct phy_device *phydev)
- }
- EXPORT_SYMBOL_GPL(lan87xx_read_status);
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index ad45a8fea245e..89019a1408264 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1504,7 +1504,9 @@ static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64
+ 	if (dl_entity_is_special(dl_se))
+ 		return;
  
-+static int lan87xx_phy_config_init(struct phy_device *phydev)
-+{
-+	int rc;
-+
-+	/* The LAN87xx PHY's initial MDI-X mode is determined by the AUTOMDIX_EN
-+	 * hardware strap, but the driver cannot read the strap's status. This
-+	 * creates an unpredictable initial state.
-+	 *
-+	 * To ensure consistent and reliable behavior across all boards,
-+	 * override the strap configuration on initialization and force the PHY
-+	 * into a known state with Auto-MDIX enabled, which is the expected
-+	 * default for modern hardware.
-+	 */
-+	rc = phy_modify(phydev, SPECIAL_CTRL_STS,
-+			SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
-+			SPECIAL_CTRL_STS_AMDIX_ENABLE_ |
-+			SPECIAL_CTRL_STS_AMDIX_STATE_,
-+			SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
-+			SPECIAL_CTRL_STS_AMDIX_ENABLE_);
-+	if (rc < 0)
-+		return rc;
-+
-+	phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
-+
-+	return smsc_phy_config_init(phydev);
-+}
-+
- static int lan874x_phy_config_init(struct phy_device *phydev)
+-	scaled_delta_exec = dl_scaled_delta_exec(rq, dl_se, delta_exec);
++	scaled_delta_exec = delta_exec;
++	if (!dl_server(dl_se))
++		scaled_delta_exec = dl_scaled_delta_exec(rq, dl_se, delta_exec);
+ 
+ 	dl_se->runtime -= scaled_delta_exec;
+ 
+@@ -1611,7 +1613,7 @@ static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64
+  */
+ void dl_server_update_idle_time(struct rq *rq, struct task_struct *p)
  {
- 	u16 val;
-@@ -696,7 +723,7 @@ static struct phy_driver smsc_phy_driver[] = {
+-	s64 delta_exec, scaled_delta_exec;
++	s64 delta_exec;
  
- 	/* basic functions */
- 	.read_status	= lan87xx_read_status,
--	.config_init	= smsc_phy_config_init,
-+	.config_init	= lan87xx_phy_config_init,
- 	.soft_reset	= smsc_phy_reset,
- 	.config_aneg	= lan87xx_config_aneg,
+ 	if (!rq->fair_server.dl_defer)
+ 		return;
+@@ -1624,9 +1626,7 @@ void dl_server_update_idle_time(struct rq *rq, struct task_struct *p)
+ 	if (delta_exec < 0)
+ 		return;
  
+-	scaled_delta_exec = dl_scaled_delta_exec(rq, &rq->fair_server, delta_exec);
+-
+-	rq->fair_server.runtime -= scaled_delta_exec;
++	rq->fair_server.runtime -= delta_exec;
+ 
+ 	if (rq->fair_server.runtime < 0) {
+ 		rq->fair_server.dl_defer_running = 0;
 -- 
 2.39.5
 
