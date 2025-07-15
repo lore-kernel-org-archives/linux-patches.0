@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37532EBBA7;
-	Tue, 15 Jul 2025 13:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA062EBB8D;
+	Tue, 15 Jul 2025 13:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587124; cv=none; b=f8Y339+T2WRlHpTezr/pCTW6/I8nblYT3gSyioyJ/DvCW80drqTQ5X2w6/0fPCVgmnYaDf09If6Bzx/4fVWHvy4l2CGS8vMFyyi5UU/nfNikMsNWOXgVR4TNnUVbYwJzI0F3nCvNah/oodY3j6QXGMXHSHQfYDoGYE6jLXcRakw=
+	t=1752587126; cv=none; b=rOCF9NdSBrmjdYty9ocfxD9JEq//6psBDVpJbcmZSi3vuEEhmGQhdSYDfxqU+OQ9+W/qsDvA59Sr/DEW6zi73fC6TB7+F2b15LrQ9FeHvTM6RjtaPnFIGoKaBgJwPXdDHiP8erXL6e0BBnTIUSXMe0wpwwu5PQ0f4XIKW47VBJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587124; c=relaxed/simple;
-	bh=alBjTIaspklzKaHDtIlFvZN/51S1g8Phb+Gcgz8roSI=;
+	s=arc-20240116; t=1752587126; c=relaxed/simple;
+	bh=f9mptjfJa/gzgM9HKD2NfDAKoJd3i8ccqHV5RuMmyYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZDl2B6UtOxBflR4yhyq6ku4B20InqYqXu9F+wnL8OKkOuYm08Qgp5/uW6duX3vtbvtl//U/oTCq3YKJ4YtcqTEVun+G5u1RIvi/TKVUjCcLHdu3j7H2myrJukc4Am/Hz1Lily7YUTP3w21M0dNOIQ7nPZgAhlbb0tY+egPRz54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBKSkBMf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i7lrpekYrqZq/jFqDgQJariZbRax4xPPMd7AUAWF7dfcaszzCulmmN/Pgzg+bePdjh7NqP1XyjARNvpVHeM/CHKiz2q2+I4XJ3W6wmP/0wDw6Kq6lpBDD46oBjW7rDHS1vqtccnIeXYuD8tjBZWdiHi6BxhVouKkBXRTpFKmL3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvEl0Pro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBKSkBMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F78C4CEF1;
-	Tue, 15 Jul 2025 13:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvEl0Pro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 160A2C4CEE3;
+	Tue, 15 Jul 2025 13:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587123;
-	bh=alBjTIaspklzKaHDtIlFvZN/51S1g8Phb+Gcgz8roSI=;
+	s=korg; t=1752587126;
+	bh=f9mptjfJa/gzgM9HKD2NfDAKoJd3i8ccqHV5RuMmyYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBKSkBMfKF8/1NdW7NQMpx2FmFCUQB9nub7+ha6utUeE3LGV4p/KOwRwnPYUSkspX
-	 1XJRTTzOVVU5mWZLCM13tMj8pzozXNWxKAzDfruny+k0e6c9TjjxskaR87sun+bDO8
-	 t2mCFqr4aXivtPmdVmr7HmwqZ4j4xeNKRf9Hr8ss=
+	b=qvEl0Pro7zjGNaBwc1LNlV8+T+K/5e3Mrt0xMyyghxoHKAzzB2jGvOYLjDIt7Xl9T
+	 vjwxwhozRtGGt/sZEhvTk/DDmGIXaVvfwYUf9mIozTMnY0sQSpaJNLl37wXk9IXD9u
+	 REHCDRaTOx90dWpkiooe40nHKJE++WLgV8r0mIOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuzuru <yuzuru_10@proton.me>,
-	Mark Brown <broonie@kernel.org>,
+	Yasmin Fitzgerald <sunoflife1.git@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 175/192] ASoC: amd: yc: add quirk for Acer Nitro ANV15-41 internal mic
-Date: Tue, 15 Jul 2025 15:14:30 +0200
-Message-ID: <20250715130821.935003373@linuxfoundation.org>
+Subject: [PATCH 6.15 176/192] ALSA: hda/realtek - Enable mute LED on HP Pavilion Laptop 15-eg100
+Date: Tue, 15 Jul 2025 15:14:31 +0200
+Message-ID: <20250715130821.975227898@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,40 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuzuru10 <yuzuru_10@proton.me>
+From: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
 
-[ Upstream commit 7186b81807b4a08f8bf834b6bdc72d6ed8ba1587 ]
+[ Upstream commit 68cc9d3c8e44afe90e43cbbd2960da15c2f31e23 ]
 
-This patch adds DMI-based quirk for the Acer Nitro ANV15-41,
-allowing the internal microphone to be detected correctly on
-machines with "RB" as board vendor.
+The HP Pavilion Laptop 15-eg100 has Realtek HDA codec ALC287.
+It needs the ALC287_FIXUP_HP_GPIO_LED quirk to enable the mute LED.
 
-Signed-off-by: Yuzuru <yuzuru_10@proton.me>
-Link: https://patch.msgid.link/20250622225754.20856-1-yuzuru_10@proton.me
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
+Link: https://patch.msgid.link/20250621053832.52950-1-sunoflife1.git@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 723cb7bc12851..1689b6b22598e 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -346,6 +346,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "RB"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Nitro ANV15-41"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index b3cd0ab29bb6a..5cf5350439029 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10715,6 +10715,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8975, "HP EliteBook x360 840 Aero G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x897d, "HP mt440 Mobile Thin Client U74", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8981, "HP Elite Dragonfly G3", ALC245_FIXUP_CS35L41_SPI_4),
++	SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x898e, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x898f, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8991, "HP EliteBook 845 G9", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
 -- 
 2.39.5
 
