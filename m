@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C76A2397BF;
-	Tue, 15 Jul 2025 13:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90582E3B19;
+	Tue, 15 Jul 2025 13:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586068; cv=none; b=SnxYTtAw3ctzjsWpSPSwCxSUzasoFH6YHfMirfKpScaH9SKt4fdFgMAy3DdJQaDevPELkSpPaABEHG+ivIZiHgV9yk3UONjw97M9oNUJQyxDtdUdgKiTLjbKe6uIPApREiCKEeDXvlqutKrgd1g9FvO3FACzKHvsPs3HMwI3B2M=
+	t=1752586071; cv=none; b=Yzt7YoEvD7BHzo+X7YyXSvMrI8MSFnz0T0SLTIbtmULS4R/UyrEi3fNsdYnahNsBRhkTt/38/4j1JlkglLLlZtbnw+29FLrzYzi9tDWIHDY48iCtBYcuR7jZ9PticWkCilxGb+neFW5LqKiDGm5PGV7fkWaNzrrsXdQhXXZNNY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586068; c=relaxed/simple;
-	bh=XCwL5oyPD5FwSjoUH+SW0P+BDDlY3n/mWPhTd4xNPco=;
+	s=arc-20240116; t=1752586071; c=relaxed/simple;
+	bh=fJuZyCnHaBB5Qa9sP+27PPNuil/JeBR/KnCzI5vJ6GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2hALBpqFKHkUj2B5La071Z9DC6CV+84TeBJcA9a2yecCaNM6KYFZ3NG1Twfw/71RMgGf3RxUXAfApEFhRNuPLCO5isdngXZ2LA9VMiim4G2cSKwn5PGTpuYeaRWoS5onvT7sdSPV7WigwZfxoGGzVulUIlP3jPlYQFG9/rSxdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvHsAOxa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dsx0MXv22H+jrcYiOaTBb8Yuz/Z2p6lj8e0PNQxq+xdSu1OK8g5E1AJaEyZNmilw6LdoOb8BJ7mIJdiWt5xKi9MGT4w4+zXZryfa2RQPi+6Wz8PgjUv0jQWhXdszFbXpR6wHHzxQ6w8b3p749xxhPkyzNe4xY7WOOPzsCspc3bA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoFX4Mss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvHsAOxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3E9C4CEE3;
-	Tue, 15 Jul 2025 13:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoFX4Mss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE63C4CEF1;
+	Tue, 15 Jul 2025 13:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586068;
-	bh=XCwL5oyPD5FwSjoUH+SW0P+BDDlY3n/mWPhTd4xNPco=;
+	s=korg; t=1752586070;
+	bh=fJuZyCnHaBB5Qa9sP+27PPNuil/JeBR/KnCzI5vJ6GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvHsAOxaVbopvGev58ldEsPOgazeT0TSWbdWswTXTCG49vwIUCVTG911ZweIZgQne
-	 r7m8mYm2YPp1PpcptWkt37d2IK1HD+QJlTBMbHrfcr0aWA6xGblLpbKcGPDzDhThWz
-	 bC8ovzWHFwXUv5ZyXR/nSJk/rBzMqvAcRraMGsxk=
+	b=UoFX4Mss8Pcy/9c9bxnzjjadYN17f2QSoZbctNdDLdx1WVJtO563IHfOiVHJ483uB
+	 u9FzIPzId05rMx6adunlG8SbtfdnMpve5Gg6sFa20Kqd6M1m0rwUN1lWjHUEXOTQxd
+	 IKxOzQSrdtVxwI1zYtfeXzEF8wiLHseuY5UwaEfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 106/109] selftests/bpf: adapt one more case in test_lru_map to the new target_free
-Date: Tue, 15 Jul 2025 15:14:02 +0200
-Message-ID: <20250715130803.122515818@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 107/109] smb: client: fix potential race in cifs_put_tcon()
+Date: Tue, 15 Jul 2025 15:14:03 +0200
+Message-ID: <20250715130803.161180233@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -50,101 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 5e9388f7984a9cc7e659a105113f6ccf0aebedd0 upstream.
+commit c32b624fa4f7ca5a2ff217a0b1b2f1352bb4ec11 upstream.
 
-The below commit that updated BPF_MAP_TYPE_LRU_HASH free target,
-also updated tools/testing/selftests/bpf/test_lru_map to match.
+dfs_cache_refresh() delayed worker could race with cifs_put_tcon(), so
+make sure to call list_replace_init() on @tcon->dfs_ses_list after
+kworker is cancelled or finished.
 
-But that missed one case that passes with 4 cores, but fails at
-higher cpu counts.
-
-Update test_lru_sanity3 to also adjust its expectation of target_free.
-
-This time tested with 1, 4, 16, 64 and 384 cpu count.
-
-Fixes: d4adf1c9ee77 ("bpf: Adjust free target to avoid global starvation of LRU map")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20250625210412.2732970-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4f42a8b54b5c ("smb: client: fix DFS interlink failover")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/test_lru_map.c |   33 +++++++++++++++--------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ fs/smb/client/connect.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/tools/testing/selftests/bpf/test_lru_map.c
-+++ b/tools/testing/selftests/bpf/test_lru_map.c
-@@ -138,6 +138,12 @@ static int sched_next_online(int pid, in
- 	return ret;
- }
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -2557,9 +2557,6 @@ cifs_put_tcon(struct cifs_tcon *tcon, en
  
-+/* Derive target_free from map_size, same as bpf_common_lru_populate */
-+static unsigned int __tgt_size(unsigned int map_size)
-+{
-+	return (map_size / nr_cpus) / 2;
-+}
-+
- /* Inverse of how bpf_common_lru_populate derives target_free from map_size. */
- static unsigned int __map_size(unsigned int tgt_free)
- {
-@@ -410,12 +416,12 @@ static void test_lru_sanity2(int map_typ
- 	printf("Pass\n");
- }
+ 	list_del_init(&tcon->tcon_list);
+ 	tcon->status = TID_EXITING;
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-	list_replace_init(&tcon->dfs_ses_list, &ses_list);
+-#endif
+ 	spin_unlock(&tcon->tc_lock);
+ 	spin_unlock(&cifs_tcp_ses_lock);
  
--/* Size of the LRU map is 2*tgt_free
-- * It is to test the active/inactive list rotation
-- * Insert 1 to 2*tgt_free (+2*tgt_free keys)
-- * Lookup key 1 to tgt_free*3/2
-- * Add 1+2*tgt_free to tgt_free*5/2 (+tgt_free/2 keys)
-- *  => key 1+tgt_free*3/2 to 2*tgt_free are removed from LRU
-+/* Test the active/inactive list rotation
-+ *
-+ * Fill the whole map, deplete the free list.
-+ * Reference all except the last lru->target_free elements.
-+ * Insert lru->target_free new elements. This triggers one shrink.
-+ * Verify that the non-referenced elements are replaced.
-  */
- static void test_lru_sanity3(int map_type, int map_flags, unsigned int tgt_free)
- {
-@@ -434,8 +440,7 @@ static void test_lru_sanity3(int map_typ
+@@ -2567,6 +2564,7 @@ cifs_put_tcon(struct cifs_tcon *tcon, en
+ 	cancel_delayed_work_sync(&tcon->query_interfaces);
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ 	cancel_delayed_work_sync(&tcon->dfs_cache_work);
++	list_replace_init(&tcon->dfs_ses_list, &ses_list);
+ #endif
  
- 	assert(sched_next_online(0, &next_cpu) != -1);
- 
--	batch_size = tgt_free / 2;
--	assert(batch_size * 2 == tgt_free);
-+	batch_size = __tgt_size(tgt_free);
- 
- 	map_size = tgt_free * 2;
- 	lru_map_fd = create_map(map_type, map_flags, map_size);
-@@ -446,23 +451,21 @@ static void test_lru_sanity3(int map_typ
- 
- 	value[0] = 1234;
- 
--	/* Insert 1 to 2*tgt_free (+2*tgt_free keys) */
--	end_key = 1 + (2 * tgt_free);
-+	/* Fill the map */
-+	end_key = 1 + map_size;
- 	for (key = 1; key < end_key; key++)
- 		assert(!bpf_map_update_elem(lru_map_fd, &key, value,
- 					    BPF_NOEXIST));
- 
--	/* Lookup key 1 to tgt_free*3/2 */
--	end_key = tgt_free + batch_size;
-+	/* Reference all but the last batch_size */
-+	end_key = 1 + map_size - batch_size;
- 	for (key = 1; key < end_key; key++) {
- 		assert(!bpf_map_lookup_elem_with_ref_bit(lru_map_fd, key, value));
- 		assert(!bpf_map_update_elem(expected_map_fd, &key, value,
- 					    BPF_NOEXIST));
- 	}
- 
--	/* Add 1+2*tgt_free to tgt_free*5/2
--	 * (+tgt_free/2 keys)
--	 */
-+	/* Insert new batch_size: replaces the non-referenced elements */
- 	key = 2 * tgt_free + 1;
- 	end_key = key + batch_size;
- 	for (; key < end_key; key++) {
+ 	if (tcon->use_witness) {
 
 
