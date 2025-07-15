@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C8F2E3AFB;
-	Tue, 15 Jul 2025 13:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB849274FDB;
+	Tue, 15 Jul 2025 13:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585627; cv=none; b=WYYkE8hJWREdb0X7iiipkCi6uYIr8oW0obBvYXo7kv7ysvZOYrFokqypvJLJ8A8kuhHfqwjqqUdKw+H9Z8DV82hghQS8HTmaK8+gyF3eFfg6/x33tLDaYwau2Xibq95CFzNoOUsuDMUUzC+Cr6Cz9ErgsPFbw1R/iL5Gi9yulwk=
+	t=1752585630; cv=none; b=KB82kBGPicWC7qdnai1Xmrchd1ESnlZQFMla+wQJ65ldRvgUTDLdtrsKEkYbGxrYJoF0jb1GGVmzeBi5+LQdqEnXh49yJqPRKsTRDz2qRz6btNnx8SXEzm0b+kiSyy+SzsT4YSYDpuV8AnNVjDPDvk4BiKjxiAe1OQQZ56zif4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585627; c=relaxed/simple;
-	bh=SeVpBYho0YkZhbG/IcW7AHKsPxURe5Asgm24oH0qRF8=;
+	s=arc-20240116; t=1752585630; c=relaxed/simple;
+	bh=JESs8SJrl5C/C+npcowAvF2x8hJrSnz18ltfADMp5CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TSvZTLlHmWntwEm978W9f74kBIxsjjr/fp4ShTRWKxLCxFzp0QTE5Ci6snh+GZ+Q9iLNR0fGxShG57IiTSKZfZ50AnO3941pRSKAvqobAGha7c+KB+YxzFajJ+VvrD7am6AmsMo5Byj35mzvnjL8N2O8vSZX1L3h0gQVVNfLFS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNYqyS9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T/QaUJJbgrFBBRX9OWnvSRW2Nfi8qTyquvY7zjnTBEfaoyKPVTnN64EVBjoMhW3hITPYnxLOc+U8CridKmDV/b38LoZOJ1wuVhPgINSQU9LEzpS1hl7tuIHecfJpAYm4aXrheZOZzWq97+OeykhqSiqNMrHkqGWngNG/pHlQkh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9sRDKTB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNYqyS9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA1CC4CEF7;
-	Tue, 15 Jul 2025 13:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9sRDKTB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1602C4CEF6;
+	Tue, 15 Jul 2025 13:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585627;
-	bh=SeVpBYho0YkZhbG/IcW7AHKsPxURe5Asgm24oH0qRF8=;
+	s=korg; t=1752585630;
+	bh=JESs8SJrl5C/C+npcowAvF2x8hJrSnz18ltfADMp5CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNYqyS9VQV1MeKH+EIT9buqXviEZ9mWeKBCCovQAcemTWSZLoIKVXGlcaGYPe4UCv
-	 fTM2pAsLYwHJVJq/f9nsa1vLmI/qAFbyltMq9pty64Nex2QuCibqs6q7Mkpf4e2rLk
-	 m7BLJ4tb6PKuD91KbDCO74E+TeXeoopKvKX99NNs=
+	b=h9sRDKTBVQf/8jLkT/q+DUfup9fM7U/JhkzN49Gv5RwNzB3JQKLNq7/frehJlZBIn
+	 oDgr9xbNECQObMX9gXJ7fqxLyE3PF4oRMqPaTT2gKTMUM+umb5f/I+B7D0v1ixk6MR
+	 9aYfEPW5hlITolbkBYKM6crIjBB4y1rNo3DrVufg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nigel Croxon <ncroxon@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Simon Wadsworth <simon@morsemicro.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/163] raid10: cleanup memleak at raid10_make_request
-Date: Tue, 15 Jul 2025 15:12:59 +0200
-Message-ID: <20250715130813.308939945@linuxfoundation.org>
+Subject: [PATCH 6.12 112/163] wifi: mac80211: correctly identify S1G short beacon
+Date: Tue, 15 Jul 2025 15:13:00 +0200
+Message-ID: <20250715130813.346845006@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,79 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nigel Croxon <ncroxon@redhat.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit 43806c3d5b9bb7d74ba4e33a6a8a41ac988bde24 ]
+[ Upstream commit c5fd399a24c8e2865524361f7dc4d4a6899be4f4 ]
 
-If raid10_read_request or raid10_write_request registers a new
-request and the REQ_NOWAIT flag is set, the code does not
-free the malloc from the mempool.
+mac80211 identifies a short beacon by the presence of the next
+TBTT field, however the standard actually doesn't explicitly state that
+the next TBTT can't be in a long beacon or even that it is required in
+a short beacon - and as a result this validation does not work for all
+vendor implementations.
 
-unreferenced object 0xffff8884802c3200 (size 192):
-   comm "fio", pid 9197, jiffies 4298078271
-   hex dump (first 32 bytes):
-     00 00 00 00 00 00 00 00 88 41 02 00 00 00 00 00  .........A......
-     08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-   backtrace (crc c1a049a2):
-     __kmalloc+0x2bb/0x450
-     mempool_alloc+0x11b/0x320
-     raid10_make_request+0x19e/0x650 [raid10]
-     md_handle_request+0x3b3/0x9e0
-     __submit_bio+0x394/0x560
-     __submit_bio_noacct+0x145/0x530
-     submit_bio_noacct_nocheck+0x682/0x830
-     __blkdev_direct_IO_async+0x4dc/0x6b0
-     blkdev_read_iter+0x1e5/0x3b0
-     __io_read+0x230/0x1110
-     io_read+0x13/0x30
-     io_issue_sqe+0x134/0x1180
-     io_submit_sqes+0x48c/0xe90
-     __do_sys_io_uring_enter+0x574/0x8b0
-     do_syscall_64+0x5c/0xe0
-     entry_SYSCALL_64_after_hwframe+0x76/0x7e
+The standard explicitly states that an S1G long beacon shall contain
+the S1G beacon compatibility element as the first element in a beacon
+transmitted at a TBTT that is not a TSBTT (Target Short Beacon
+Transmission Time) as per IEEE80211-2024 11.1.3.10.1. This is validated
+by 9.3.4.3 Table 9-76 which states that the S1G beacon compatibility
+element is only allowed in the full set and is not allowed in the
+minimum set of elements permitted for use within short beacons.
 
-V4: changing backing tree to see if CKI tests will pass.
-The patch code has not changed between any versions.
+Correctly identify short beacons by the lack of an S1G beacon
+compatibility element as the first element in an S1G beacon frame.
 
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
-Signed-off-by: Nigel Croxon <ncroxon@redhat.com>
-Link: https://lore.kernel.org/linux-raid/c0787379-9caa-42f3-b5fc-369aed784400@redhat.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Fixes: 9eaffe5078ca ("cfg80211: convert S1G beacon to scan results")
+Signed-off-by: Simon Wadsworth <simon@morsemicro.com>
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20250701075541.162619-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/linux/ieee80211.h | 45 ++++++++++++++++++++++++++++-----------
+ net/mac80211/mlme.c       |  7 ++++--
+ 2 files changed, 38 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index cc194f6ec18da..5cdc599fcad3c 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1181,8 +1181,11 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 		}
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index d07c1f0ad3de3..7ecdde54e1edd 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -662,18 +662,6 @@ static inline bool ieee80211_s1g_has_cssid(__le16 fc)
+ 		(fc & cpu_to_le16(IEEE80211_S1G_BCN_CSSID));
+ }
+ 
+-/**
+- * ieee80211_is_s1g_short_beacon - check if frame is an S1G short beacon
+- * @fc: frame control bytes in little-endian byteorder
+- * Return: whether or not the frame is an S1G short beacon,
+- *	i.e. it is an S1G beacon with 'next TBTT' flag set
+- */
+-static inline bool ieee80211_is_s1g_short_beacon(__le16 fc)
+-{
+-	return ieee80211_is_s1g_beacon(fc) &&
+-		(fc & cpu_to_le16(IEEE80211_S1G_BCN_NEXT_TBTT));
+-}
+-
+ /**
+  * ieee80211_is_atim - check if IEEE80211_FTYPE_MGMT && IEEE80211_STYPE_ATIM
+  * @fc: frame control bytes in little-endian byteorder
+@@ -4863,6 +4851,39 @@ static inline bool ieee80211_is_ftm(struct sk_buff *skb)
+ 	return false;
+ }
+ 
++/**
++ * ieee80211_is_s1g_short_beacon - check if frame is an S1G short beacon
++ * @fc: frame control bytes in little-endian byteorder
++ * @variable: pointer to the beacon frame elements
++ * @variable_len: length of the frame elements
++ * Return: whether or not the frame is an S1G short beacon. As per
++ *	IEEE80211-2024 11.1.3.10.1, The S1G beacon compatibility element shall
++ *	always be present as the first element in beacon frames generated at a
++ *	TBTT (Target Beacon Transmission Time), so any frame not containing
++ *	this element must have been generated at a TSBTT (Target Short Beacon
++ *	Transmission Time) that is not a TBTT. Additionally, short beacons are
++ *	prohibited from containing the S1G beacon compatibility element as per
++ *	IEEE80211-2024 9.3.4.3 Table 9-76, so if we have an S1G beacon with
++ *	either no elements or the first element is not the beacon compatibility
++ *	element, we have a short beacon.
++ */
++static inline bool ieee80211_is_s1g_short_beacon(__le16 fc, const u8 *variable,
++						 size_t variable_len)
++{
++	if (!ieee80211_is_s1g_beacon(fc))
++		return false;
++
++	/*
++	 * If the frame does not contain at least 1 element (this is perfectly
++	 * valid in a short beacon) and is an S1G beacon, we have a short
++	 * beacon.
++	 */
++	if (variable_len < 2)
++		return true;
++
++	return variable[0] != WLAN_EID_S1G_BCN_COMPAT;
++}
++
+ struct element {
+ 	u8 id;
+ 	u8 datalen;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 16bb3db67eaac..fd7434995a475 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6702,6 +6702,7 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
+ 	struct ieee80211_bss_conf *bss_conf = link->conf;
+ 	struct ieee80211_vif_cfg *vif_cfg = &sdata->vif.cfg;
+ 	struct ieee80211_mgmt *mgmt = (void *) hdr;
++	struct ieee80211_ext *ext = NULL;
+ 	size_t baselen;
+ 	struct ieee802_11_elems *elems;
+ 	struct ieee80211_local *local = sdata->local;
+@@ -6727,7 +6728,7 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
+ 	/* Process beacon from the current BSS */
+ 	bssid = ieee80211_get_bssid(hdr, len, sdata->vif.type);
+ 	if (ieee80211_is_s1g_beacon(mgmt->frame_control)) {
+-		struct ieee80211_ext *ext = (void *) mgmt;
++		ext = (void *)mgmt;
+ 		variable = ext->u.s1g_beacon.variable +
+ 			   ieee80211_s1g_optional_len(ext->frame_control);
+ 	}
+@@ -6914,7 +6915,9 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
  	}
  
--	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors))
-+	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
-+		raid_end_bio_io(r10_bio);
- 		return;
-+	}
-+
- 	rdev = read_balance(conf, r10_bio, &max_sectors);
- 	if (!rdev) {
- 		if (err_rdev) {
-@@ -1368,8 +1371,11 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
- 	}
- 
- 	sectors = r10_bio->sectors;
--	if (!regular_request_wait(mddev, conf, bio, sectors))
-+	if (!regular_request_wait(mddev, conf, bio, sectors)) {
-+		raid_end_bio_io(r10_bio);
- 		return;
-+	}
-+
- 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery) &&
- 	    (mddev->reshape_backwards
- 	     ? (bio->bi_iter.bi_sector < conf->reshape_safe &&
+ 	if ((ncrc == link->u.mgd.beacon_crc && link->u.mgd.beacon_crc_valid) ||
+-	    ieee80211_is_s1g_short_beacon(mgmt->frame_control))
++	    (ext && ieee80211_is_s1g_short_beacon(ext->frame_control,
++						  parse_params.start,
++						  parse_params.len)))
+ 		goto free;
+ 	link->u.mgd.beacon_crc = ncrc;
+ 	link->u.mgd.beacon_crc_valid = true;
 -- 
 2.39.5
 
