@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B287C2E3AFB;
-	Tue, 15 Jul 2025 13:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3D72E3395;
+	Tue, 15 Jul 2025 13:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586703; cv=none; b=Nup7i7QVBJ4GNrxjv4f4AeenKMgZ1vOjtOPm1nW0aSZUZuBeLrFCLPbvsZcxmS/dzgyZtBU2EPRxDwDlVUUB4MnQxL8LN9BugY2nfqT15mr4AQHkye+z8e8haXHErT5plbgIHsF4T8fyleCcNC3AuTyv05EADxOeP7Odb6KgGCo=
+	t=1752586706; cv=none; b=I/dgZVmxROkal1ATlboedvjH5OtV3iThRFrLdewDsLazZfXmzbim7crWHf/nD9YdEyo1y07uGQazERG7e15i1kS14eo9S5XPvaksr+hklBKyH5XiIqEzLQBSe0B9vNk//myOnpH7j3FZFR81SjgIs+oPRi/j46+JD7xuV9ZQI8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586703; c=relaxed/simple;
-	bh=Bc3+ApIlseck3qkWSyJsO9ZxEHCcnOyqbaTnlGjoqG0=;
+	s=arc-20240116; t=1752586706; c=relaxed/simple;
+	bh=lCYQLhpJZiPJDH/P80hxNIRP2UsWMHauldsSHnP1a0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGy9SFWBYp8sAXE2J7gjVO8qRmy8ZO1iPBcExRygS7yRIKWhrwhDEFIQgwHX1FlMqy9jQrPLtV8bVuNweRywhFcOv24HP/6KcTNAnhHBYMTu3WMdP2EZ+8VsA8aiNl5noEAQ1xQBerwLlVewVYmEAKSWl7PPRoQ4hPWV0/aLa5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3ZTlWxK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oAgiusIQhcGWs7dTbeG4rcHFKJ7jTpFYuNWhzc/XuY6FrvZqhf1uSnVOO8pNViJtlQOKoC5MdadOH9Dg8wmysp3zw+98tHqYoWmlb9q2R3Smz4r3GHsn8+BpyY/Gi1Un64ONQPvvL+BHoejb11zD4Hzy7f+j24hfw7B9u2sIA3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkYrX4Lu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3ZTlWxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339BFC4CEE3;
-	Tue, 15 Jul 2025 13:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkYrX4Lu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78A7C4CEE3;
+	Tue, 15 Jul 2025 13:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586703;
-	bh=Bc3+ApIlseck3qkWSyJsO9ZxEHCcnOyqbaTnlGjoqG0=;
+	s=korg; t=1752586706;
+	bh=lCYQLhpJZiPJDH/P80hxNIRP2UsWMHauldsSHnP1a0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3ZTlWxK0S+eQkTpYrigKK0Jm9pSnPiGBgMqmc6EKfFz6PQH3TX5Ga/wAri8ZjZ2c
-	 A4EmKsvaCuVEn0XcbvZN4aeBtpl0QkaUfjlQKRgMVBxjRb4Mynl2oJJZunVhLD05mV
-	 BaDed8ZMdl7vakTTSJZMREHsZhnB1Ifxx9JAQ0kw=
+	b=tkYrX4Luh3oI4hueUIppxi0Yb6MBhIQ4C2M9Y8BwyBOeN+Z20nJmVXb6jSzWX/mWQ
+	 V1klER/DwRuj/tiRnuCmU4acRoSKJPxS9PIkyGLhpjk3roi/ZOjFRb6UcdkIqYsDKT
+	 SRV/2SAxVu4GGCjzPXSPKWOFmHisGjtdFnIM3IYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 017/192] Bluetooth: hci_core: Remove check of BDADDR_ANY in hci_conn_hash_lookup_big_state
-Date: Tue, 15 Jul 2025 15:11:52 +0200
-Message-ID: <20250715130815.555589074@linuxfoundation.org>
+Subject: [PATCH 6.15 018/192] Bluetooth: hci_sync: Fix attempting to send HCI_Disconnect to BIS handle
+Date: Tue, 15 Jul 2025 15:11:53 +0200
+Message-ID: <20250715130815.594137940@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,32 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 59710a26a289ad4e7ef227d22063e964930928b0 ]
+[ Upstream commit 314d30b1508682e27c8a324096262c66f23455d9 ]
 
-The check for destination to be BDADDR_ANY is no longer necessary with
-the introduction of BIS_LINK.
+BIS/PA connections do have their own cleanup proceedure which are
+performed by hci_conn_cleanup/bis_cleanup.
 
 Fixes: 23205562ffc8 ("Bluetooth: separate CIS_LINK and BIS_LINK link types")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 6e9d2a856a6b0..1cf60ed7ac89b 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1346,8 +1346,7 @@ hci_conn_hash_lookup_big_state(struct hci_dev *hdev, __u8 handle,  __u16 state)
- 	rcu_read_lock();
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index f3897395ac129..3ac8d436e3e3a 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5479,7 +5479,7 @@ static int hci_disconnect_sync(struct hci_dev *hdev, struct hci_conn *conn,
+ {
+ 	struct hci_cp_disconnect cp;
  
- 	list_for_each_entry_rcu(c, &h->list, list) {
--		if (c->type != BIS_LINK || bacmp(&c->dst, BDADDR_ANY) ||
--		    c->state != state)
-+		if (c->type != BIS_LINK || c->state != state)
- 			continue;
- 
- 		if (handle == c->iso_qos.bcast.big) {
+-	if (test_bit(HCI_CONN_BIG_CREATED, &conn->flags)) {
++	if (conn->type == BIS_LINK) {
+ 		/* This is a BIS connection, hci_conn_del will
+ 		 * do the necessary cleanup.
+ 		 */
 -- 
 2.39.5
 
