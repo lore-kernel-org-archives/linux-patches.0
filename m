@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DAB2E339B;
-	Tue, 15 Jul 2025 13:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A362E339B;
+	Tue, 15 Jul 2025 13:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586994; cv=none; b=h3pHPOsUs9zADV5MPKXuUceXNCry4YaOuh1OXvo2OGwrtK8TzibAsKzkTXrPvLUuhTHI/b/vz9hbzqIKaX0CKlhj7z5Tz+LX1R2WhTESgWQ+zPTxbocPxel3+LWvJeI21iA1K2Z4/QxdxHIqjL076adJ125dAdhRawvnJMomeYE=
+	t=1752586997; cv=none; b=naqN+kqw5rSH8gljpYPgEbtWDVHBtHPPfmGf+WAMZSUKkObSgeAbW8exm8kNZt8O2R0DQrNXSxwmCHQo8EF/inWrRjHSOPu5lNoEnNr6h8QXnJ68mTzMpjuMw1QRSM9gBIqRFagCkGm9Zsnr/tBKU2DFV4wDgSKQ3m/OERAlWqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586994; c=relaxed/simple;
-	bh=x17jeFV2wN16FpE2rOKGe9zLL6Uwr3oxHnFJ4AzytpA=;
+	s=arc-20240116; t=1752586997; c=relaxed/simple;
+	bh=uJVz7yT+DeTkVo9qCp2Wm0/Y/eq8XJzxaXu3IWRr5yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9jDS2/TsLEyOc7Oo947vu3sNT6h1X5AxBu9H0j6XpUG2wz8CD3tqCI+6+oRuUJvK2/Ya+e9aLEGbEM1NT95WceDzmWNwSZDSxYtPTj7Kawy4Qmey2gBRKBpUYxJZQFTU18sYnv0ssfqgj4rtAPFHyjap+CDJU+ZgSGIblfYDBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uT7mKhAm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rDTKlifYttXU3juo01gJ+81e3UwVB4qFD+RDHRa/EEz+C8xNB9uMhUmsBXHSYtaEIFEsijsPFHrgxGUgRROgXhBDBAgy+7bn9ZwZy3j/HuUO4PKcbnEtpJoBt/KgLfyROMWiWOA7vNf5/yVO7/J+GWTSOt0BItTRkwXpgQwXknw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgPrmSZ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uT7mKhAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3520CC4CEE3;
-	Tue, 15 Jul 2025 13:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgPrmSZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF093C4CEE3;
+	Tue, 15 Jul 2025 13:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586994;
-	bh=x17jeFV2wN16FpE2rOKGe9zLL6Uwr3oxHnFJ4AzytpA=;
+	s=korg; t=1752586997;
+	bh=uJVz7yT+DeTkVo9qCp2Wm0/Y/eq8XJzxaXu3IWRr5yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uT7mKhAmlwDMmgIO00T7j3Ur17hiPk1VoMTy+h4j0fWYt5dHPrdzuCCiuWtggrkb1
-	 3kBlXcRwUMGv6h400GSb2u4rJAoJ/0qImvx2vaNzMqg3VBbHYjFX6ET5z4/bJDNfUZ
-	 Q0mamb0MXJADUDFmrMk6TpAoo1Bs4uup5rfMm1To=
+	b=wgPrmSZ5V3zJTQkLgX0wsoKMrwaNLiTsr+E10gQ4W2Vf1R15oG4D70xMV7CKxjpKp
+	 t+3vGlXIxdFTcnzvEdWsdbRKNNCcL+/fFPRkZ1V7kdNRfzwIzro+CmhPMiXS8IRtXi
+	 bK9g7HCwCto9JNXJWZz632AKnNgRZNQotMOmL0Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Francois Dugast <francois.dugast@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.15 095/192] drm/xe: Allocate PF queue size on pow2 boundary
-Date: Tue, 15 Jul 2025 15:13:10 +0200
-Message-ID: <20250715130818.714574050@linuxfoundation.org>
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.15 096/192] Revert "ACPI: battery: negate current when discharging"
+Date: Tue, 15 Jul 2025 15:13:11 +0200
+Message-ID: <20250715130818.751992284@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,35 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit c9a95dbe06102cf01afee4cd83ecb29f8d587a72 upstream.
+commit de1675de39aa945bad5937d1fde4df3682670639 upstream.
 
-CIRC_SPACE does not work unless the size argument is a power of 2,
-allocate PF queue size on power of 2 boundary.
+Revert commit 234f71555019 ("ACPI: battery: negate current when
+discharging") breaks not one but several userspace implementations
+of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
+but those are the two that have been tested.
 
-Cc: stable@vger.kernel.org
-Fixes: 3338e4f90c14 ("drm/xe: Use topology to determine page fault queue size")
-Fixes: 29582e0ea75c ("drm/xe: Add page queue multiplier")
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Francois Dugast <francois.dugast@intel.com>
-Link: https://lore.kernel.org/r/20250702213511.3226167-1-matthew.brost@intel.com
-(cherry picked from commit 491b9783126303755717c0cbde0b08ee59b6abab)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_gt_pagefault.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/battery.c |   19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_gt_pagefault.c
-+++ b/drivers/gpu/drm/xe/xe_gt_pagefault.c
-@@ -444,6 +444,7 @@ static int xe_alloc_pf_queue(struct xe_g
- #define PF_MULTIPLIER	8
- 	pf_queue->num_dw =
- 		(num_eus + XE_NUM_HW_ENGINES) * PF_MSG_LEN_DW * PF_MULTIPLIER;
-+	pf_queue->num_dw = roundup_pow_of_two(pf_queue->num_dw);
- #undef PF_MULTIPLIER
- 
- 	pf_queue->gt = gt;
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -243,23 +243,10 @@ static int acpi_battery_get_property(str
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
+ 			ret = -ENODEV;
+-			break;
+-		}
+-
+-		val->intval = battery->rate_now * 1000;
+-		/*
+-		 * When discharging, the current should be reported as a
+-		 * negative number as per the power supply class interface
+-		 * definition.
+-		 */
+-		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
+-		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
+-		    acpi_battery_handle_discharging(battery)
+-				== POWER_SUPPLY_STATUS_DISCHARGING)
+-			val->intval = -val->intval;
+-
++		else
++			val->intval = battery->rate_now * 1000;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 
 
