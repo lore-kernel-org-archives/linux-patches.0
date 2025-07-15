@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE40C2E3AED;
-	Tue, 15 Jul 2025 13:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E8E2E7BAF;
+	Tue, 15 Jul 2025 13:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586050; cv=none; b=aWTAY/kgLXLMs0HFZGo2k5KDrRMlwiwziPy3CX3UxQBWFz3zbhjiVT5i1BEAfZOOUbuJ6A9CH3vjmj2B/OOkM93jqK2qHsR6mUZW2soO2tws1H7eUb4y+UjlNxgHRVtXDmTra4btLFGvFQrIHH2UMS4hY8keUYb/OZg33mf0nCI=
+	t=1752586052; cv=none; b=R2EkvKU8Mxh/jCLbKmthz61RBIHByAF2SN5C2IxceNNFzNiqnbikUjfVUi1rt8oJ2/RZtCFrolGLKVf8HtT+4ANtJj8CZc8QkWYrZ4Rn0X5PRMndRDQEh7wRjnwsG11rdKqs8xWTImTclhF+vUFPR4K7gdraj7rZ8akqzgKAaPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586050; c=relaxed/simple;
-	bh=Urhc0WLito1KGueqNqdBS4Odv4ildhAqkrljrcoyk8Q=;
+	s=arc-20240116; t=1752586052; c=relaxed/simple;
+	bh=JfLckwTwu3U6rcnfhvqRsC2nqiPZ0Q1F2QpK4uOvFls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JyfEBWP/fOpMhhvhZ7tgv+bnf2Yv2KPv/iHNqMfin91ut0UIixfxn+PkJ6SNkoPHLRLYOaGt5AOYqaFAMmzxKE6MOGiJpYMXlKcMHiYrYFmo/OL+LGQ4w9yHSlOo9XkSQvklWEsPgQyZ1+/1NZIvKJdiKtcVN+IFxv5rZkg66aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVdQf9uq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMgDVtSsqZBKMxC04KzCGODKn7L8LrYrx0rePAW1aDPLD3d9aHdYPeiDOuyCPUVPidQt1SlwfrJ8vaiuM7LlD8vkjWpJML0kspq8OH1XFRFhw12eY8IXOOc9D+DywV4He0jJkXbc33mqFS/g5ZdTM/KLW5X8Adc7c5REXXu49oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3YL2WZS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVdQf9uq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDC7C4CEE3;
-	Tue, 15 Jul 2025 13:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3YL2WZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9520C4CEE3;
+	Tue, 15 Jul 2025 13:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586049;
-	bh=Urhc0WLito1KGueqNqdBS4Odv4ildhAqkrljrcoyk8Q=;
+	s=korg; t=1752586052;
+	bh=JfLckwTwu3U6rcnfhvqRsC2nqiPZ0Q1F2QpK4uOvFls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVdQf9uqHEs4Bd2n8/FGJcxbdxtWLqKBbegzyvwq36k8L7mXO3ocw2zw6ah/bmxgm
-	 0EhqHRVgioCtMKOUUYiINuaKjDwLtAR3jE+LRifYiRkQ7OUbvgqiXfjZpYiuaiZiux
-	 Fr7xU/ijtzVyOPlkpfIyGfombuzBSd98z3LhFCaw=
+	b=y3YL2WZSEmsQY3ex+9l0QWt1FDm+j4JUNV/z1NW1yFbwagLBoUK4lRh+oViPzKBBd
+	 P51aPmLTAlNfAHJ+YwhRqstGBW8vSbTjL8u+2lxyk3sIR6tWHbODfsBEFPMFEZefIe
+	 zc8Q36fmVgXb/6WkjkqFq55X2VwrJVkT/9f82dcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/109] smb: client: avoid unnecessary reconnects when refreshing referrals
-Date: Tue, 15 Jul 2025 15:13:31 +0200
-Message-ID: <20250715130801.886545460@linuxfoundation.org>
+Subject: [PATCH 6.6 076/109] smb: client: fix DFS interlink failover
+Date: Tue, 15 Jul 2025 15:13:32 +0200
+Message-ID: <20250715130801.927312731@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -53,283 +53,557 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 242d23efc987151ecd34bc0cae4c0b737494fc40 ]
+[ Upstream commit 4f42a8b54b5c6e36519aef3cb1f6210e54abd451 ]
 
-Do not mark tcons for reconnect when current connection matches any of
-the targets returned by new referral even when there is no cached
-entry.
+The DFS interlinks point to different DFS namespaces so make sure to
+use the correct DFS root server to chase any DFS links under it by
+storing the SMB session in dfs_ref_walk structure and then using it on
+every referral walk.
 
 Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: 74ebd02163fd ("cifs: all initializations for tcon should happen in tcon_info_alloc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/dfs_cache.c | 187 ++++++++++++++++++++++++--------------
- 1 file changed, 117 insertions(+), 70 deletions(-)
+ fs/smb/client/cifsglob.h   |  3 ++
+ fs/smb/client/cifsproto.h  | 12 ++-----
+ fs/smb/client/connect.c    | 41 +++++++++++----------
+ fs/smb/client/dfs.c        | 73 ++++++++++++++++++--------------------
+ fs/smb/client/dfs.h        | 42 ++++++++++++++--------
+ fs/smb/client/dfs_cache.c  |  3 +-
+ fs/smb/client/fs_context.h |  1 +
+ fs/smb/client/misc.c       |  3 ++
+ fs/smb/client/namespace.c  |  2 +-
+ 9 files changed, 94 insertions(+), 86 deletions(-)
 
-diff --git a/fs/smb/client/dfs_cache.c b/fs/smb/client/dfs_cache.c
-index 11c8efecf7aa1..3cf7c88489be4 100644
---- a/fs/smb/client/dfs_cache.c
-+++ b/fs/smb/client/dfs_cache.c
-@@ -1095,16 +1095,18 @@ int dfs_cache_get_tgt_share(char *path, const struct dfs_cache_tgt_iterator *it,
- 	return 0;
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 5c856adf7be9e..c9b37f2ebde85 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -830,6 +830,7 @@ struct TCP_Server_Info {
+ 	 * format: \\HOST\SHARE[\OPTIONAL PATH]
+ 	 */
+ 	char *leaf_fullpath;
++	bool dfs_conn:1;
+ };
+ 
+ static inline bool is_smb1(struct TCP_Server_Info *server)
+@@ -1065,6 +1066,7 @@ struct cifs_ses {
+ 	struct list_head smb_ses_list;
+ 	struct list_head rlist; /* reconnect list */
+ 	struct list_head tcon_list;
++	struct list_head dlist; /* dfs list */
+ 	struct cifs_tcon *tcon_ipc;
+ 	spinlock_t ses_lock;  /* protect anything here that is not protected */
+ 	struct mutex session_mutex;
+@@ -1294,6 +1296,7 @@ struct cifs_tcon {
+ 	/* BB add field for back pointer to sb struct(s)? */
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+ 	struct delayed_work dfs_cache_work;
++	struct list_head dfs_ses_list;
+ #endif
+ 	struct delayed_work	query_interfaces; /* query interfaces workqueue job */
+ 	char *origin_fullpath; /* canonical copy of smb3_fs_context::source */
+diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
+index c6d325666b5cd..8edb6fe89a97c 100644
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -737,15 +737,9 @@ static inline int cifs_create_options(struct cifs_sb_info *cifs_sb, int options)
+ 
+ int cifs_wait_for_server_reconnect(struct TCP_Server_Info *server, bool retry);
+ 
+-/* Put references of @ses and its children */
+ static inline void cifs_put_smb_ses(struct cifs_ses *ses)
+ {
+-	struct cifs_ses *next;
+-
+-	do {
+-		next = ses->dfs_root_ses;
+-		__cifs_put_smb_ses(ses);
+-	} while ((ses = next));
++	__cifs_put_smb_ses(ses);
  }
  
--static bool target_share_equal(struct TCP_Server_Info *server, const char *s1, const char *s2)
-+static bool target_share_equal(struct cifs_tcon *tcon, const char *s1)
+ /* Get an active reference of @ses and its children.
+@@ -759,9 +753,7 @@ static inline void cifs_put_smb_ses(struct cifs_ses *ses)
+ static inline void cifs_smb_ses_inc_refcount(struct cifs_ses *ses)
  {
--	char unc[sizeof("\\\\") + SERVER_NAME_LENGTH] = {0};
-+	struct TCP_Server_Info *server = tcon->ses->server;
-+	struct sockaddr_storage ss;
- 	const char *host;
-+	const char *s2 = &tcon->tree_name[1];
- 	size_t hostlen;
--	struct sockaddr_storage ss;
-+	char unc[sizeof("\\\\") + SERVER_NAME_LENGTH] = {0};
- 	bool match;
- 	int rc;
- 
--	if (strcasecmp(s1, s2))
-+	if (strcasecmp(s2, s1))
- 		return false;
- 
- 	/*
-@@ -1128,34 +1130,6 @@ static bool target_share_equal(struct TCP_Server_Info *server, const char *s1, c
- 	return match;
+ 	lockdep_assert_held(&cifs_tcp_ses_lock);
+-
+-	for (; ses; ses = ses->dfs_root_ses)
+-		ses->ses_count++;
++	ses->ses_count++;
  }
  
--/*
-- * Mark dfs tcon for reconnecting when the currently connected tcon does not match any of the new
-- * target shares in @refs.
-- */
--static void mark_for_reconnect_if_needed(struct TCP_Server_Info *server,
--					 const char *path,
--					 struct dfs_cache_tgt_list *old_tl,
--					 struct dfs_cache_tgt_list *new_tl)
--{
--	struct dfs_cache_tgt_iterator *oit, *nit;
--
--	for (oit = dfs_cache_get_tgt_iterator(old_tl); oit;
--	     oit = dfs_cache_get_next_tgt(old_tl, oit)) {
--		for (nit = dfs_cache_get_tgt_iterator(new_tl); nit;
--		     nit = dfs_cache_get_next_tgt(new_tl, nit)) {
--			if (target_share_equal(server,
--					       dfs_cache_get_tgt_name(oit),
--					       dfs_cache_get_tgt_name(nit))) {
--				dfs_cache_noreq_update_tgthint(path, nit);
--				return;
--			}
--		}
--	}
--
--	cifs_dbg(FYI, "%s: no cached or matched targets. mark dfs share for reconnect.\n", __func__);
--	cifs_signal_cifsd_for_reconnect(server, true);
--}
--
- static bool is_ses_good(struct cifs_ses *ses)
- {
- 	struct TCP_Server_Info *server = ses->server;
-@@ -1172,41 +1146,35 @@ static bool is_ses_good(struct cifs_ses *ses)
- 	return ret;
- }
+ static inline bool dfs_src_pathname_equal(const char *s1, const char *s2)
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 8298d1745f9b9..14be8822d23a2 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1551,6 +1551,9 @@ static int match_server(struct TCP_Server_Info *server,
+ 	if (server->nosharesock)
+ 		return 0;
  
--/* Refresh dfs referral of @ses and mark it for reconnect if needed */
--static void __refresh_ses_referral(struct cifs_ses *ses, bool force_refresh)
-+static char *get_ses_refpath(struct cifs_ses *ses)
- {
- 	struct TCP_Server_Info *server = ses->server;
--	DFS_CACHE_TGT_LIST(old_tl);
--	DFS_CACHE_TGT_LIST(new_tl);
--	bool needs_refresh = false;
--	struct cache_entry *ce;
--	unsigned int xid;
--	char *path = NULL;
--	int rc = 0;
--
--	xid = get_xid();
-+	char *path = ERR_PTR(-ENOENT);
- 
- 	mutex_lock(&server->refpath_lock);
- 	if (server->leaf_fullpath) {
- 		path = kstrdup(server->leaf_fullpath + 1, GFP_ATOMIC);
- 		if (!path)
--			rc = -ENOMEM;
-+			path = ERR_PTR(-ENOMEM);
- 	}
- 	mutex_unlock(&server->refpath_lock);
--	if (!path)
--		goto out;
-+	return path;
-+}
- 
--	down_read(&htable_rw_lock);
--	ce = lookup_cache_entry(path);
--	needs_refresh = force_refresh || IS_ERR(ce) || cache_entry_expired(ce);
--	if (!IS_ERR(ce)) {
--		rc = get_targets(ce, &old_tl);
--		cifs_dbg(FYI, "%s: get_targets: %d\n", __func__, rc);
--	}
--	up_read(&htable_rw_lock);
-+/* Refresh dfs referral of @ses */
-+static void refresh_ses_referral(struct cifs_ses *ses)
-+{
-+	struct cache_entry *ce;
-+	unsigned int xid;
-+	char *path;
-+	int rc = 0;
- 
--	if (!needs_refresh) {
--		rc = 0;
-+	xid = get_xid();
-+
-+	path = get_ses_refpath(ses);
-+	if (IS_ERR(path)) {
-+		rc = PTR_ERR(path);
-+		path = NULL;
- 		goto out;
- 	}
- 
-@@ -1217,29 +1185,106 @@ static void __refresh_ses_referral(struct cifs_ses *ses, bool force_refresh)
- 		goto out;
- 	}
- 
--	ce = cache_refresh_path(xid, ses, path, true);
--	if (!IS_ERR(ce)) {
--		rc = get_targets(ce, &new_tl);
-+	ce = cache_refresh_path(xid, ses, path, false);
-+	if (!IS_ERR(ce))
- 		up_read(&htable_rw_lock);
--		cifs_dbg(FYI, "%s: get_targets: %d\n", __func__, rc);
--		mark_for_reconnect_if_needed(server, path, &old_tl, &new_tl);
--	}
-+	else
-+		rc = PTR_ERR(ce);
- 
- out:
- 	free_xid(xid);
--	dfs_cache_free_tgts(&old_tl);
--	dfs_cache_free_tgts(&new_tl);
- 	kfree(path);
- }
- 
--static inline void refresh_ses_referral(struct cifs_ses *ses)
-+static int __refresh_tcon_referral(struct cifs_tcon *tcon,
-+				   const char *path,
-+				   struct dfs_info3_param *refs,
-+				   int numrefs, bool force_refresh)
- {
--	__refresh_ses_referral(ses, false);
-+	struct cache_entry *ce;
-+	bool reconnect = force_refresh;
-+	int rc = 0;
-+	int i;
-+
-+	if (unlikely(!numrefs))
++	if (!match_super && (ctx->dfs_conn || server->dfs_conn))
 +		return 0;
 +
-+	if (force_refresh) {
-+		for (i = 0; i < numrefs; i++) {
-+			/* TODO: include prefix paths in the matching */
-+			if (target_share_equal(tcon, refs[i].node_name)) {
-+				reconnect = false;
-+				break;
-+			}
-+		}
-+	}
-+
-+	down_write(&htable_rw_lock);
-+	ce = lookup_cache_entry(path);
-+	if (!IS_ERR(ce)) {
-+		if (force_refresh || cache_entry_expired(ce))
-+			rc = update_cache_entry_locked(ce, refs, numrefs);
-+	} else if (PTR_ERR(ce) == -ENOENT) {
-+		ce = add_cache_entry_locked(refs, numrefs);
-+	}
-+	up_write(&htable_rw_lock);
-+
-+	if (IS_ERR(ce))
-+		rc = PTR_ERR(ce);
-+	if (reconnect) {
-+		cifs_tcon_dbg(FYI, "%s: mark for reconnect\n", __func__);
-+		cifs_signal_cifsd_for_reconnect(tcon->ses->server, true);
-+	}
-+	return rc;
+ 	/* If multidialect negotiation see if existing sessions match one */
+ 	if (strcmp(ctx->vals->version_string, SMB3ANY_VERSION_STRING) == 0) {
+ 		if (server->vals->protocol_id < SMB30_PROT_ID)
+@@ -1740,6 +1743,7 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 
+ 	if (ctx->nosharesock)
+ 		tcp_ses->nosharesock = true;
++	tcp_ses->dfs_conn = ctx->dfs_conn;
+ 
+ 	tcp_ses->ops = ctx->ops;
+ 	tcp_ses->vals = ctx->vals;
+@@ -1890,12 +1894,14 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
  }
  
--static inline void force_refresh_ses_referral(struct cifs_ses *ses)
-+static void refresh_tcon_referral(struct cifs_tcon *tcon, bool force_refresh)
+ /* this function must be called with ses_lock and chan_lock held */
+-static int match_session(struct cifs_ses *ses, struct smb3_fs_context *ctx)
++static int match_session(struct cifs_ses *ses,
++			 struct smb3_fs_context *ctx,
++			 bool match_super)
  {
--	__refresh_ses_referral(ses, true);
-+	struct dfs_info3_param *refs = NULL;
-+	struct cache_entry *ce;
-+	struct cifs_ses *ses;
-+	unsigned int xid;
-+	bool needs_refresh;
-+	char *path;
-+	int numrefs = 0;
-+	int rc = 0;
-+
-+	xid = get_xid();
-+	ses = tcon->ses;
-+
-+	path = get_ses_refpath(ses);
-+	if (IS_ERR(path)) {
-+		rc = PTR_ERR(path);
-+		path = NULL;
-+		goto out;
-+	}
-+
-+	down_read(&htable_rw_lock);
-+	ce = lookup_cache_entry(path);
-+	needs_refresh = force_refresh || IS_ERR(ce) || cache_entry_expired(ce);
-+	if (!needs_refresh) {
-+		up_read(&htable_rw_lock);
-+		goto out;
-+	}
-+	up_read(&htable_rw_lock);
-+
-+	ses = CIFS_DFS_ROOT_SES(ses);
-+	if (!is_ses_good(ses)) {
-+		cifs_dbg(FYI, "%s: skip cache refresh due to disconnected ipc\n",
-+			 __func__);
-+		goto out;
-+	}
-+
-+	rc = get_dfs_referral(xid, ses, path, &refs, &numrefs);
-+	if (!rc) {
-+		rc = __refresh_tcon_referral(tcon, path, refs,
-+					     numrefs, force_refresh);
-+	}
-+
-+out:
-+	free_xid(xid);
-+	kfree(path);
-+	free_dfs_info_array(refs, numrefs);
+ 	struct TCP_Server_Info *server = ses->server;
+ 	enum securityEnum ctx_sec, ses_sec;
+ 
+-	if (ctx->dfs_root_ses != ses->dfs_root_ses)
++	if (!match_super && ctx->dfs_root_ses != ses->dfs_root_ses)
+ 		return 0;
+ 
+ 	/*
+@@ -2047,7 +2053,7 @@ cifs_find_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+ 			continue;
+ 		}
+ 		spin_lock(&ses->chan_lock);
+-		if (match_session(ses, ctx)) {
++		if (match_session(ses, ctx, false)) {
+ 			spin_unlock(&ses->chan_lock);
+ 			spin_unlock(&ses->ses_lock);
+ 			ret = ses;
+@@ -2450,8 +2456,6 @@ cifs_get_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+ 	 * need to lock before changing something in the session.
+ 	 */
+ 	spin_lock(&cifs_tcp_ses_lock);
+-	if (ctx->dfs_root_ses)
+-		cifs_smb_ses_inc_refcount(ctx->dfs_root_ses);
+ 	ses->dfs_root_ses = ctx->dfs_root_ses;
+ 	list_add(&ses->smb_ses_list, &server->smb_ses_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+@@ -2528,6 +2532,7 @@ cifs_put_tcon(struct cifs_tcon *tcon, enum smb3_tcon_ref_trace trace)
+ {
+ 	unsigned int xid;
+ 	struct cifs_ses *ses;
++	LIST_HEAD(ses_list);
+ 
+ 	/*
+ 	 * IPC tcon share the lifetime of their session and are
+@@ -2552,6 +2557,9 @@ cifs_put_tcon(struct cifs_tcon *tcon, enum smb3_tcon_ref_trace trace)
+ 
+ 	list_del_init(&tcon->tcon_list);
+ 	tcon->status = TID_EXITING;
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	list_replace_init(&tcon->dfs_ses_list, &ses_list);
++#endif
+ 	spin_unlock(&tcon->tc_lock);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+ 
+@@ -2579,6 +2587,9 @@ cifs_put_tcon(struct cifs_tcon *tcon, enum smb3_tcon_ref_trace trace)
+ 	cifs_fscache_release_super_cookie(tcon);
+ 	tconInfoFree(tcon, netfs_trace_tcon_ref_free);
+ 	cifs_put_smb_ses(ses);
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	dfs_put_root_smb_sessions(&ses_list);
++#endif
  }
  
  /**
-@@ -1280,7 +1325,7 @@ int dfs_cache_remount_fs(struct cifs_sb_info *cifs_sb)
- 	 */
- 	cifs_sb->mnt_cifs_flags |= CIFS_MOUNT_USE_PREFIX_PATH;
+@@ -2962,7 +2973,7 @@ cifs_match_super(struct super_block *sb, void *data)
+ 	spin_lock(&ses->chan_lock);
+ 	spin_lock(&tcon->tc_lock);
+ 	if (!match_server(tcp_srv, ctx, true) ||
+-	    !match_session(ses, ctx) ||
++	    !match_session(ses, ctx, true) ||
+ 	    !match_tcon(tcon, ctx) ||
+ 	    !match_prepath(sb, tcon, mnt_data)) {
+ 		rc = 0;
+@@ -3712,13 +3723,12 @@ int cifs_is_path_remote(struct cifs_mount_ctx *mnt_ctx)
+ int cifs_mount(struct cifs_sb_info *cifs_sb, struct smb3_fs_context *ctx)
+ {
+ 	struct cifs_mount_ctx mnt_ctx = { .cifs_sb = cifs_sb, .fs_ctx = ctx, };
+-	bool isdfs;
+ 	int rc;
  
--	force_refresh_ses_referral(tcon->ses);
-+	refresh_tcon_referral(tcon, true);
+-	rc = dfs_mount_share(&mnt_ctx, &isdfs);
++	rc = dfs_mount_share(&mnt_ctx);
+ 	if (rc)
+ 		goto error;
+-	if (!isdfs)
++	if (!ctx->dfs_conn)
+ 		goto out;
+ 
+ 	/*
+@@ -4135,7 +4145,7 @@ cifs_set_vol_auth(struct smb3_fs_context *ctx, struct cifs_ses *ses)
+ }
+ 
+ static struct cifs_tcon *
+-__cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
++cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
+ {
+ 	int rc;
+ 	struct cifs_tcon *master_tcon = cifs_sb_master_tcon(cifs_sb);
+@@ -4233,17 +4243,6 @@ __cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
+ 	return tcon;
+ }
+ 
+-static struct cifs_tcon *
+-cifs_construct_tcon(struct cifs_sb_info *cifs_sb, kuid_t fsuid)
+-{
+-	struct cifs_tcon *ret;
+-
+-	cifs_mount_lock();
+-	ret = __cifs_construct_tcon(cifs_sb, fsuid);
+-	cifs_mount_unlock();
+-	return ret;
+-}
+-
+ struct cifs_tcon *
+ cifs_sb_master_tcon(struct cifs_sb_info *cifs_sb)
+ {
+diff --git a/fs/smb/client/dfs.c b/fs/smb/client/dfs.c
+index bd259b04cdede..c35953843373e 100644
+--- a/fs/smb/client/dfs.c
++++ b/fs/smb/client/dfs.c
+@@ -69,7 +69,7 @@ static int get_session(struct cifs_mount_ctx *mnt_ctx, const char *full_path)
+  * Get an active reference of @ses so that next call to cifs_put_tcon() won't
+  * release it as any new DFS referrals must go through its IPC tcon.
+  */
+-static void add_root_smb_session(struct cifs_mount_ctx *mnt_ctx)
++static void set_root_smb_session(struct cifs_mount_ctx *mnt_ctx)
+ {
+ 	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
+ 	struct cifs_ses *ses = mnt_ctx->ses;
+@@ -95,7 +95,7 @@ static inline int parse_dfs_target(struct smb3_fs_context *ctx,
+ 	return rc;
+ }
+ 
+-static int set_ref_paths(struct cifs_mount_ctx *mnt_ctx,
++static int setup_dfs_ref(struct cifs_mount_ctx *mnt_ctx,
+ 			 struct dfs_info3_param *tgt,
+ 			 struct dfs_ref_walk *rw)
+ {
+@@ -120,6 +120,7 @@ static int set_ref_paths(struct cifs_mount_ctx *mnt_ctx,
+ 	}
+ 	ref_walk_path(rw) = ref_path;
+ 	ref_walk_fpath(rw) = full_path;
++	ref_walk_ses(rw) = ctx->dfs_root_ses;
  	return 0;
  }
  
-@@ -1291,9 +1336,11 @@ void dfs_cache_refresh(struct work_struct *work)
+@@ -128,11 +129,11 @@ static int __dfs_referral_walk(struct cifs_mount_ctx *mnt_ctx,
+ {
+ 	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
+ 	struct dfs_info3_param tgt = {};
+-	bool is_refsrv;
+ 	int rc = -ENOENT;
+ 
+ again:
+ 	do {
++		ctx->dfs_root_ses = ref_walk_ses(rw);
+ 		if (ref_walk_empty(rw)) {
+ 			rc = dfs_get_referral(mnt_ctx, ref_walk_path(rw) + 1,
+ 					      NULL, ref_walk_tl(rw));
+@@ -158,10 +159,7 @@ static int __dfs_referral_walk(struct cifs_mount_ctx *mnt_ctx,
+ 			if (rc)
+ 				continue;
+ 
+-			is_refsrv = tgt.server_type == DFS_TYPE_ROOT ||
+-				DFS_INTERLINK(tgt.flags);
+ 			ref_walk_set_tgt_hint(rw);
+-
+ 			if (tgt.flags & DFSREF_STORAGE_SERVER) {
+ 				rc = cifs_mount_get_tcon(mnt_ctx);
+ 				if (!rc)
+@@ -172,12 +170,10 @@ static int __dfs_referral_walk(struct cifs_mount_ctx *mnt_ctx,
+ 					continue;
+ 			}
+ 
+-			if (is_refsrv)
+-				add_root_smb_session(mnt_ctx);
+-
++			set_root_smb_session(mnt_ctx);
+ 			rc = ref_walk_advance(rw);
+ 			if (!rc) {
+-				rc = set_ref_paths(mnt_ctx, &tgt, rw);
++				rc = setup_dfs_ref(mnt_ctx, &tgt, rw);
+ 				if (!rc) {
+ 					rc = -EREMOTE;
+ 					goto again;
+@@ -193,20 +189,22 @@ static int __dfs_referral_walk(struct cifs_mount_ctx *mnt_ctx,
+ 	return rc;
+ }
+ 
+-static int dfs_referral_walk(struct cifs_mount_ctx *mnt_ctx)
++static int dfs_referral_walk(struct cifs_mount_ctx *mnt_ctx,
++			     struct dfs_ref_walk **rw)
+ {
+-	struct dfs_ref_walk *rw;
+ 	int rc;
+ 
+-	rw = ref_walk_alloc();
+-	if (IS_ERR(rw))
+-		return PTR_ERR(rw);
++	*rw = ref_walk_alloc();
++	if (IS_ERR(*rw)) {
++		rc = PTR_ERR(*rw);
++		*rw = NULL;
++		return rc;
++	}
+ 
+-	ref_walk_init(rw);
+-	rc = set_ref_paths(mnt_ctx, NULL, rw);
++	ref_walk_init(*rw);
++	rc = setup_dfs_ref(mnt_ctx, NULL, *rw);
+ 	if (!rc)
+-		rc = __dfs_referral_walk(mnt_ctx, rw);
+-	ref_walk_free(rw);
++		rc = __dfs_referral_walk(mnt_ctx, *rw);
+ 	return rc;
+ }
+ 
+@@ -214,16 +212,16 @@ static int __dfs_mount_share(struct cifs_mount_ctx *mnt_ctx)
+ {
+ 	struct cifs_sb_info *cifs_sb = mnt_ctx->cifs_sb;
+ 	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
++	struct dfs_ref_walk *rw = NULL;
+ 	struct cifs_tcon *tcon;
+ 	char *origin_fullpath;
+-	bool new_tcon = true;
+ 	int rc;
+ 
+ 	origin_fullpath = dfs_get_path(cifs_sb, ctx->source);
+ 	if (IS_ERR(origin_fullpath))
+ 		return PTR_ERR(origin_fullpath);
+ 
+-	rc = dfs_referral_walk(mnt_ctx);
++	rc = dfs_referral_walk(mnt_ctx, &rw);
+ 	if (!rc) {
+ 		/*
+ 		 * Prevent superblock from being created with any missing
+@@ -241,21 +239,16 @@ static int __dfs_mount_share(struct cifs_mount_ctx *mnt_ctx)
+ 
+ 	tcon = mnt_ctx->tcon;
+ 	spin_lock(&tcon->tc_lock);
+-	if (!tcon->origin_fullpath) {
+-		tcon->origin_fullpath = origin_fullpath;
+-		origin_fullpath = NULL;
+-	} else {
+-		new_tcon = false;
+-	}
++	tcon->origin_fullpath = origin_fullpath;
++	origin_fullpath = NULL;
++	ref_walk_set_tcon(rw, tcon);
+ 	spin_unlock(&tcon->tc_lock);
+-
+-	if (new_tcon) {
+-		queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
+-				   dfs_cache_get_ttl() * HZ);
+-	}
++	queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
++			   dfs_cache_get_ttl() * HZ);
+ 
+ out:
+ 	kfree(origin_fullpath);
++	ref_walk_free(rw);
+ 	return rc;
+ }
+ 
+@@ -279,7 +272,7 @@ static int update_fs_context_dstaddr(struct smb3_fs_context *ctx)
+ 	return rc;
+ }
+ 
+-int dfs_mount_share(struct cifs_mount_ctx *mnt_ctx, bool *isdfs)
++int dfs_mount_share(struct cifs_mount_ctx *mnt_ctx)
+ {
+ 	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
+ 	bool nodfs = ctx->nodfs;
+@@ -289,7 +282,6 @@ int dfs_mount_share(struct cifs_mount_ctx *mnt_ctx, bool *isdfs)
+ 	if (rc)
+ 		return rc;
+ 
+-	*isdfs = false;
+ 	rc = get_session(mnt_ctx, NULL);
+ 	if (rc)
+ 		return rc;
+@@ -317,10 +309,15 @@ int dfs_mount_share(struct cifs_mount_ctx *mnt_ctx, bool *isdfs)
+ 		return rc;
+ 	}
+ 
+-	*isdfs = true;
+-	add_root_smb_session(mnt_ctx);
+-	rc = __dfs_mount_share(mnt_ctx);
+-	dfs_put_root_smb_sessions(mnt_ctx);
++	if (!ctx->dfs_conn) {
++		ctx->dfs_conn = true;
++		cifs_mount_put_conns(mnt_ctx);
++		rc = get_session(mnt_ctx, NULL);
++	}
++	if (!rc) {
++		set_root_smb_session(mnt_ctx);
++		rc = __dfs_mount_share(mnt_ctx);
++	}
+ 	return rc;
+ }
+ 
+diff --git a/fs/smb/client/dfs.h b/fs/smb/client/dfs.h
+index e5c4dcf837503..1aa2bc65b3bc2 100644
+--- a/fs/smb/client/dfs.h
++++ b/fs/smb/client/dfs.h
+@@ -19,6 +19,7 @@
+ struct dfs_ref {
+ 	char *path;
+ 	char *full_path;
++	struct cifs_ses *ses;
+ 	struct dfs_cache_tgt_list tl;
+ 	struct dfs_cache_tgt_iterator *tit;
+ };
+@@ -38,6 +39,7 @@ struct dfs_ref_walk {
+ #define ref_walk_path(w)	(ref_walk_cur(w)->path)
+ #define ref_walk_fpath(w)	(ref_walk_cur(w)->full_path)
+ #define ref_walk_tl(w)		(&ref_walk_cur(w)->tl)
++#define ref_walk_ses(w)	(ref_walk_cur(w)->ses)
+ 
+ static inline struct dfs_ref_walk *ref_walk_alloc(void)
+ {
+@@ -60,14 +62,19 @@ static inline void __ref_walk_free(struct dfs_ref *ref)
+ 	kfree(ref->path);
+ 	kfree(ref->full_path);
+ 	dfs_cache_free_tgts(&ref->tl);
++	if (ref->ses)
++		cifs_put_smb_ses(ref->ses);
+ 	memset(ref, 0, sizeof(*ref));
+ }
+ 
+ static inline void ref_walk_free(struct dfs_ref_walk *rw)
+ {
+-	struct dfs_ref *ref = ref_walk_start(rw);
++	struct dfs_ref *ref;
+ 
+-	for (; ref <= ref_walk_end(rw); ref++)
++	if (!rw)
++		return;
++
++	for (ref = ref_walk_start(rw); ref <= ref_walk_end(rw); ref++)
+ 		__ref_walk_free(ref);
+ 	kfree(rw);
+ }
+@@ -116,9 +123,22 @@ static inline void ref_walk_set_tgt_hint(struct dfs_ref_walk *rw)
+ 				       ref_walk_tit(rw));
+ }
+ 
++static inline void ref_walk_set_tcon(struct dfs_ref_walk *rw,
++				     struct cifs_tcon *tcon)
++{
++	struct dfs_ref *ref = ref_walk_start(rw);
++
++	for (; ref <= ref_walk_cur(rw); ref++) {
++		if (WARN_ON_ONCE(!ref->ses))
++			continue;
++		list_add(&ref->ses->dlist, &tcon->dfs_ses_list);
++		ref->ses = NULL;
++	}
++}
++
+ int dfs_parse_target_referral(const char *full_path, const struct dfs_info3_param *ref,
+ 			      struct smb3_fs_context *ctx);
+-int dfs_mount_share(struct cifs_mount_ctx *mnt_ctx, bool *isdfs);
++int dfs_mount_share(struct cifs_mount_ctx *mnt_ctx);
+ 
+ static inline char *dfs_get_path(struct cifs_sb_info *cifs_sb, const char *path)
+ {
+@@ -142,20 +162,14 @@ static inline int dfs_get_referral(struct cifs_mount_ctx *mnt_ctx, const char *p
+  * references of all DFS root sessions that were used across the mount process
+  * in dfs_mount_share().
+  */
+-static inline void dfs_put_root_smb_sessions(struct cifs_mount_ctx *mnt_ctx)
++static inline void dfs_put_root_smb_sessions(struct list_head *head)
+ {
+-	const struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
+-	struct cifs_ses *ses = ctx->dfs_root_ses;
+-	struct cifs_ses *cur;
+-
+-	if (!ses)
+-		return;
++	struct cifs_ses *ses, *n;
+ 
+-	for (cur = ses; cur; cur = cur->dfs_root_ses) {
+-		if (cur->dfs_root_ses)
+-			cifs_put_smb_ses(cur->dfs_root_ses);
++	list_for_each_entry_safe(ses, n, head, dlist) {
++		list_del_init(&ses->dlist);
++		cifs_put_smb_ses(ses);
+ 	}
+-	cifs_put_smb_ses(ses);
+ }
+ 
+ #endif /* _CIFS_DFS_H */
+diff --git a/fs/smb/client/dfs_cache.c b/fs/smb/client/dfs_cache.c
+index 3cf7c88489be4..433f546055b97 100644
+--- a/fs/smb/client/dfs_cache.c
++++ b/fs/smb/client/dfs_cache.c
+@@ -1336,9 +1336,8 @@ void dfs_cache_refresh(struct work_struct *work)
  	struct cifs_ses *ses;
  
  	tcon = container_of(work, struct cifs_tcon, dfs_cache_work.work);
-+	ses = tcon->ses->dfs_root_ses;
+-	ses = tcon->ses->dfs_root_ses;
  
--	for (ses = tcon->ses; ses; ses = ses->dfs_root_ses)
-+	for (; ses; ses = ses->dfs_root_ses)
+-	for (; ses; ses = ses->dfs_root_ses)
++	list_for_each_entry(ses, &tcon->dfs_ses_list, dlist)
  		refresh_ses_referral(ses);
-+	refresh_tcon_referral(tcon, false);
+ 	refresh_tcon_referral(tcon, false);
  
- 	queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
- 			   atomic_read(&dfs_cache_ttl) * HZ);
+diff --git a/fs/smb/client/fs_context.h b/fs/smb/client/fs_context.h
+index d0a2043ea4468..52ee72e562f5f 100644
+--- a/fs/smb/client/fs_context.h
++++ b/fs/smb/client/fs_context.h
+@@ -287,6 +287,7 @@ struct smb3_fs_context {
+ 	struct cifs_ses *dfs_root_ses;
+ 	bool dfs_automount:1; /* set for dfs automount only */
+ 	enum cifs_reparse_type reparse_type;
++	bool dfs_conn:1; /* set for dfs mounts */
+ };
+ 
+ extern const struct fs_parameter_spec smb3_fs_parameters[];
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 9e8e0a01ae8eb..2e9a14e28e466 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -145,6 +145,9 @@ tcon_info_alloc(bool dir_leases_enabled, enum smb3_tcon_ref_trace trace)
+ 	mutex_init(&ret_buf->fscache_lock);
+ #endif
+ 	trace_smb3_tcon_ref(ret_buf->debug_id, ret_buf->tc_count, trace);
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	INIT_LIST_HEAD(&ret_buf->dfs_ses_list);
++#endif
+ 
+ 	return ret_buf;
+ }
+diff --git a/fs/smb/client/namespace.c b/fs/smb/client/namespace.c
+index ec58c0e507244..a6655807c0865 100644
+--- a/fs/smb/client/namespace.c
++++ b/fs/smb/client/namespace.c
+@@ -260,7 +260,7 @@ static struct vfsmount *cifs_do_automount(struct path *path)
+ 		ctx->source = NULL;
+ 		goto out;
+ 	}
+-	ctx->dfs_automount = is_dfs_mount(mntpt);
++	ctx->dfs_automount = ctx->dfs_conn = is_dfs_mount(mntpt);
+ 	cifs_dbg(FYI, "%s: ctx: source=%s UNC=%s prepath=%s dfs_automount=%d\n",
+ 		 __func__, ctx->source, ctx->UNC, ctx->prepath, ctx->dfs_automount);
+ 
 -- 
 2.39.5
 
