@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1FB2E6D28;
-	Tue, 15 Jul 2025 13:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0EB2E6D28;
+	Tue, 15 Jul 2025 13:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586629; cv=none; b=ufKgYMb97r126Ud3pQuCYHdMrimiZ64DyK4qDsWUm+k7muNI7aKLGN1DMUv0mBPuZDPvOGeMQ0pRb7U4kdlHJofXlKgPIT+F5i8ZYEH/51Gr689VzIUkFEZZM0qAD45DPTc1NcdQszNZqN2MinW+jIR3k5TRHmkM0H4uzmpbfIc=
+	t=1752586631; cv=none; b=ThOTam5rBSrwi/ltQbwPTimbV5YAKZFsaOGUAPrvRTOpDgNaHnNE3yPMNbMjJ0tVPPa2YVhYsJ/bDDR38aP9S3LznzVSxICVWlYfUpQNuuodL2KOP0ufvvJ+fXOdD7jcR7OsWJniNnFQuWVFyaV9H2BVp8t94QsuhJ827xjfRsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586629; c=relaxed/simple;
-	bh=HiF2ghztmojzTuebhJhHKvzDLIBMaY+9sA1dO5zuQsg=;
+	s=arc-20240116; t=1752586631; c=relaxed/simple;
+	bh=AzznSN7rKrjYYSzdfM2IVAzFJuxt8x+LurWCZ/SaPRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrJIB7vyz5UKhEfw7W0d9fBlEURfnREAMGdpFfGlGA1dL1LMvMxEcZB+knkXoKGeoYf0u2zVAHUfm+yuNYTXOL4UirdxFZMlpiw3LDtMZaLZB08OAAgZCljeOhOGT3ITLgeY7QKHODVAnWJ/MswZ9AJiq+3QksXRqb42V1QL7Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0KKTNoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dKJvNs2Wezm7rtnsEzhb1p3jPWIfzYpTnkaIO8lFkhnqp2qSjhKp63tLoOjy1hIMGUQ3Z20NhzXE5JXIVlcVTo6TbAnOAmRg78tEtcPaF9Dzv0ceEwlit+XHUKXcprbn6dEGtU7Bf8sXZbqDVckwiLg/9uERnDIPEYPHkC9L638=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+aw/ADw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0KKTNoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D356DC4CEE3;
-	Tue, 15 Jul 2025 13:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+aw/ADw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C860C4CEE3;
+	Tue, 15 Jul 2025 13:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586629;
-	bh=HiF2ghztmojzTuebhJhHKvzDLIBMaY+9sA1dO5zuQsg=;
+	s=korg; t=1752586631;
+	bh=AzznSN7rKrjYYSzdfM2IVAzFJuxt8x+LurWCZ/SaPRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0KKTNoMngFeSm/AxowSMF0u289PMdQNtCWVD3TEnaJ4tvjGib/hkLSV2KFHk4AWy
-	 mQH+5w3EI6WzSFU5O2eTvrEF63YNCJMjCqy1wTgc6+89E9ph73Q4I6NMF1oSaWLnTo
-	 mEkZnF4mY8nd3YkzYfzpm4JGsbdD6/7HmgieBKYM=
+	b=m+aw/ADwL+yvbVZjY9Xmy+ioKAVNQdG2RkaougWgoyRb/Tvjqsa+jkkiMRy+kDeWq
+	 rPl2KadOIlHBGOdRPhX/kppJMyfSXRLS8IUiRp5OJEoApivHliXoKkn6l/bCZNBEg1
+	 VrYTH7I3CaNt55QM8kz+EU2fRS7TpLBCQc298qAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 5.4 106/148] drm/exynos: exynos7_drm_decon: add vblank check in IRQ handling
-Date: Tue, 15 Jul 2025 15:13:48 +0200
-Message-ID: <20250715130804.555803356@linuxfoundation.org>
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 107/148] proc: Clear the pieces of proc_inode that proc_evict_inode cares about
+Date: Tue, 15 Jul 2025 15:13:49 +0200
+Message-ID: <20250715130804.595887633@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -50,47 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Eric W. Biederman <ebiederm@xmission.com>
 
-commit b846350aa272de99bf6fecfa6b08e64ebfb13173 upstream.
+[ Upstream commit 71448011ea2a1cd36d8f5cbdab0ed716c454d565 ]
 
-If there's support for another console device (such as a TTY serial),
-the kernel occasionally panics during boot. The panic message and a
-relevant snippet of the call stack is as follows:
+This just keeps everything tidier, and allows for using flags like
+SLAB_TYPESAFE_BY_RCU where slabs are not always cleared before reuse.
+I don't see reuse without reinitializing happening with the proc_inode
+but I had a false alarm while reworking flushing of proc dentries and
+indoes when a process dies that caused me to tidy this up.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 000000000000000
-  Call trace:
-    drm_crtc_handle_vblank+0x10/0x30 (P)
-    decon_irq_handler+0x88/0xb4
-    [...]
+The code is a little easier to follow and reason about this
+way so I figured the changes might as well be kept.
 
-Otherwise, the panics don't happen. This indicates that it's some sort
-of race condition.
-
-Add a check to validate if the drm device can handle vblanks before
-calling drm_crtc_handle_vblank() to avoid this.
-
-Cc: stable@vger.kernel.org
-Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Stable-dep-of: b969f9614885 ("fix proc_sys_compare() handling of in-lookup dentries")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos7_drm_decon.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/proc/inode.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-@@ -595,6 +595,10 @@ static irqreturn_t decon_irq_handler(int
- 	if (!ctx->drm_dev)
- 		goto out;
+diff --git a/fs/proc/inode.c b/fs/proc/inode.c
+index 3f0c89001fcff..a6bb1b5c903e6 100644
+--- a/fs/proc/inode.c
++++ b/fs/proc/inode.c
+@@ -33,21 +33,27 @@ static void proc_evict_inode(struct inode *inode)
+ {
+ 	struct proc_dir_entry *de;
+ 	struct ctl_table_header *head;
++	struct proc_inode *ei = PROC_I(inode);
  
-+	/* check if crtc and vblank have been initialized properly */
-+	if (!drm_dev_has_vblank(ctx->drm_dev))
-+		goto out;
-+
- 	if (!ctx->i80_if) {
- 		drm_crtc_handle_vblank(&ctx->crtc->base);
+ 	truncate_inode_pages_final(&inode->i_data);
+ 	clear_inode(inode);
  
+ 	/* Stop tracking associated processes */
+-	put_pid(PROC_I(inode)->pid);
++	if (ei->pid) {
++		put_pid(ei->pid);
++		ei->pid = NULL;
++	}
+ 
+ 	/* Let go of any associated proc directory entry */
+-	de = PDE(inode);
+-	if (de)
++	de = ei->pde;
++	if (de) {
+ 		pde_put(de);
++		ei->pde = NULL;
++	}
+ 
+-	head = PROC_I(inode)->sysctl;
++	head = ei->sysctl;
+ 	if (head) {
+-		RCU_INIT_POINTER(PROC_I(inode)->sysctl, NULL);
++		RCU_INIT_POINTER(ei->sysctl, NULL);
+ 		proc_sys_evict_inode(inode, head);
+ 	}
+ }
+-- 
+2.39.5
+
 
 
