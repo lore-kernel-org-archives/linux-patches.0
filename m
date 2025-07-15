@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9392EB5BB;
-	Tue, 15 Jul 2025 13:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3672EB5CA;
+	Tue, 15 Jul 2025 13:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587592; cv=none; b=AdrGSCzZZHOGX0XogKcD4Zo8a9U8MdF5an7FJ8lcWtkkXHVP7aaX/6peZdgh8M4IScXiJ2lLnfL4Ss1ImprzlxZ/psROvmc8m+JlBwckF1HdkCLFi50O+Q4MVuj/9UCNPdVC1p6i1Ou4MgdT64Pf4qomqELjoY9vOjYCq/h3HGw=
+	t=1752587594; cv=none; b=KCUNpy9kFQkm4fze9VAe/lVlkYMhkPsSOx6Mf5+lyAD/6Eflpli2J+jSQjla+NhBxHYI3jHSxR/K6HCu/7n0meYYcKFQJ/N8HoI5MRH23HYaEAQeg91tD3mRJcE5PQdUll5HC7yy9GydmFdwxBLDUCi98wP7OQE0rBZipETC1eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587592; c=relaxed/simple;
-	bh=fjH4yyKp0QdvNe95iT4SW2VFUkaa7bZh9ovTYi1qpoo=;
+	s=arc-20240116; t=1752587594; c=relaxed/simple;
+	bh=9/aMNvUK0TLd2l17Vw0Cs3x+E3CXag/atrcOwlU+arE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBdnHAKSYNzJc6im3dlVGxND18xu+Znq3x0F+Ymbqx0594XKMhF8iiEVAFbS4XkiO21/GLCyR+iF8KlTKrkKiYnGSBDfGJevJHORwZS6EINk8lYg3M8WiHCkxvCw7awBdxGvPq9ujJIYxsKc7c3nEaml+ANGd2LzSGDf4u48670=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mv7gCRBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QflWBDgrz2AZG6oLfSUn+iYRi+Fz3AkEdOURVnZvCTU32ltGlPaFu+8J8s0rGvwUPtzaAMfuCfbcJ7UpY9doklFvcCECytqAww2CxcNlx7QWKIBDcBl/kICMkzc8MfA957XPgp+za4bt2xIQgp5MNpD+BVUqi304ZEwdj49DNWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwvx7on7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mv7gCRBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE10C4CEE3;
-	Tue, 15 Jul 2025 13:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwvx7on7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD19C4CEE3;
+	Tue, 15 Jul 2025 13:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587591;
-	bh=fjH4yyKp0QdvNe95iT4SW2VFUkaa7bZh9ovTYi1qpoo=;
+	s=korg; t=1752587594;
+	bh=9/aMNvUK0TLd2l17Vw0Cs3x+E3CXag/atrcOwlU+arE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mv7gCRBb0tE5dMxSCpqiXHhAJ/T5rpkikPnAYcz3IF4g8WG9PpGoXa4UT1cO9q0cW
-	 RZpR12o/kMG0CIT0QnxgJgW0ayanFJ2O1ocYVKucm28i256Z+KRW6I1ixUN1lIEi9z
-	 VClY+BvNAYjYFD4N+Jf8znBQ8B+XXDKjwPW9TC24=
+	b=wwvx7on7OqdiJiDG/lr4sf2832+FW2Dt3IxI17fqXvk2DySw6es1022CWWO6QC29S
+	 5OEnylh/jDie8CboC6C2feXT8+mUNa/Wh0RYDOh2K+4eA8CjLzj2xnsOhvtXIMaoxw
+	 Xw6NtEDK4W4W/ZjQm5UiCBTN0/KieUhIJUpWuhdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Haller <d.haller@phytec.de>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 5.10 070/208] drm/bridge: cdns-dsi: Wait for Clk and Data Lanes to be ready
-Date: Tue, 15 Jul 2025 15:12:59 +0200
-Message-ID: <20250715130813.755900065@linuxfoundation.org>
+	"Boqun Feng (Microsoft)" <boqun.feng@gmail.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+	Jake Oshins <jakeo@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 5.10 071/208] PCI: hv: Do not set PCI_COMMAND_MEMORY to reduce VM boot time
+Date: Tue, 15 Jul 2025 15:13:00 +0200
+Message-ID: <20250715130813.795077157@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -53,72 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aradhya Bhatia <a-bhatia1@ti.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-commit 47c03e6660e96cbba0239125b1d4a9db3c724b1d upstream.
+commit 23e118a48acf7be223e57d98e98da8ac5a4071ac upstream.
 
-Once the DSI Link and DSI Phy are initialized, the code needs to wait
-for Clk and Data Lanes to be ready, before continuing configuration.
-This is in accordance with the DSI Start-up procedure, found in the
-Technical Reference Manual of Texas Instrument's J721E SoC[0] which
-houses this DSI TX controller.
+Currently when the pci-hyperv driver finishes probing and initializing the
+PCI device, it sets the PCI_COMMAND_MEMORY bit; later when the PCI device
+is registered to the core PCI subsystem, the core PCI driver's BAR detection
+and initialization code toggles the bit multiple times, and each toggling of
+the bit causes the hypervisor to unmap/map the virtual BARs from/to the
+physical BARs, which can be slow if the BAR sizes are huge, e.g., a Linux VM
+with 14 GPU devices has to spend more than 3 minutes on BAR detection and
+initialization, causing a long boot time.
 
-If the previous bridge (or crtc/encoder) are configured pre-maturely,
-the input signal FIFO gets corrupt. This introduces a color-shift on the
-display.
+Reduce the boot time by not setting the PCI_COMMAND_MEMORY bit when we
+register the PCI device (there is no need to have it set in the first place).
+The bit stays off till the PCI device driver calls pci_enable_device().
+With this change, the boot time of such a 14-GPU VM is reduced by almost
+3 minutes.
 
-Allow the driver to wait for the clk and data lanes to get ready during
-DSI enable.
-
-[0]: See section 12.6.5.7.3 "Start-up Procedure" in J721E SoC TRM
-     TRM Link: http://www.ti.com/lit/pdf/spruil1
-
-Fixes: e19233955d9e ("drm/bridge: Add Cadence DSI driver")
-Cc: stable@vger.kernel.org
-Tested-by: Dominik Haller <d.haller@phytec.de>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Tested-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Signed-off-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Link: https://lore.kernel.org/r/20250329113925.68204-6-aradhya.bhatia@linux.dev
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/lkml/20220419220007.26550-1-decui@microsoft.com/
+Tested-by: Boqun Feng (Microsoft) <boqun.feng@gmail.com>
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Acked-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc: Jake Oshins <jakeo@microsoft.com>
+Link: https://lore.kernel.org/r/20220502074255.16901-1-decui@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/cdns-dsi.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pci-hyperv.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/bridge/cdns-dsi.c
-+++ b/drivers/gpu/drm/bridge/cdns-dsi.c
-@@ -789,8 +789,9 @@ static void cdns_dsi_bridge_enable(struc
- 	struct phy_configure_opts_mipi_dphy *phy_cfg = &output->phy_opts.mipi_dphy;
- 	unsigned long tx_byte_period;
- 	struct cdns_dsi_cfg dsi_cfg;
--	u32 tmp, reg_wakeup, div;
-+	u32 tmp, reg_wakeup, div, status;
- 	int nlanes;
-+	int i;
- 
- 	if (WARN_ON(pm_runtime_get_sync(dsi->base.dev) < 0))
- 		return;
-@@ -803,6 +804,19 @@ static void cdns_dsi_bridge_enable(struc
- 	cdns_dsi_hs_init(dsi);
- 	cdns_dsi_init_link(dsi);
- 
-+	/*
-+	 * Now that the DSI Link and DSI Phy are initialized,
-+	 * wait for the CLK and Data Lanes to be ready.
-+	 */
-+	tmp = CLK_LANE_RDY;
-+	for (i = 0; i < nlanes; i++)
-+		tmp |= DATA_LANE_RDY(i);
-+
-+	if (readl_poll_timeout(dsi->regs + MCTL_MAIN_STS, status,
-+			       (tmp == (status & tmp)), 100, 500000))
-+		dev_err(dsi->base.dev,
-+			"Timed Out: DSI-DPhy Clock and Data Lanes not ready.\n");
-+
- 	writel(HBP_LEN(dsi_cfg.hbp) | HSA_LEN(dsi_cfg.hsa),
- 	       dsi->regs + VID_HSIZE1);
- 	writel(HFP_LEN(dsi_cfg.hfp) | HACT_LEN(dsi_cfg.hact),
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -1820,12 +1820,17 @@ static void prepopulate_bars(struct hv_p
+ 				}
+ 			}
+ 			if (high_size <= 1 && low_size <= 1) {
+-				/* Set the memory enable bit. */
+-				_hv_pcifront_read_config(hpdev, PCI_COMMAND, 2,
+-							 &command);
+-				command |= PCI_COMMAND_MEMORY;
+-				_hv_pcifront_write_config(hpdev, PCI_COMMAND, 2,
+-							  command);
++				/*
++				 * No need to set the PCI_COMMAND_MEMORY bit as
++				 * the core PCI driver doesn't require the bit
++				 * to be pre-set. Actually here we intentionally
++				 * keep the bit off so that the PCI BAR probing
++				 * in the core PCI driver doesn't cause Hyper-V
++				 * to unnecessarily unmap/map the virtual BARs
++				 * from/to the physical BARs multiple times.
++				 * This reduces the VM boot time significantly
++				 * if the BAR sizes are huge.
++				 */
+ 				break;
+ 			}
+ 		}
 
 
