@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B85D2DEA72;
-	Tue, 15 Jul 2025 13:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D7E2E6D32;
+	Tue, 15 Jul 2025 13:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587018; cv=none; b=rVnjxAWx+Udj8O/E1I7DzzQhtr7h8GL7TBNJ8Q+sHUz2pW/Jasg+9mVpnJ4YSKfq/kfcHYhACGpRZuILXgmxl0hVBsdI/Wqgk8QIZzJz+CW2H37UpD+Cn36IEkxpOZfDKddL1sDzU9LCgtHlu5liMgWXfnzvqveMKviX6k4FkLA=
+	t=1752587021; cv=none; b=RN+7g/EQfh7AJBh3svLp/iKjTtBcAC6hHOqcV2/U49yl/qzs1Vq4BU/bQ7XLMGL2OsR3n2SpTRURHgn2VxHJsQmIUBgc+nOTXl0HK8LrN7N/nyahYytfE3YWsbOevg8NljgZ2UqkPx4+72QEJbXFFQccdnsCaUZrNNB1o9qSfVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587018; c=relaxed/simple;
-	bh=0jV9dox07iPXWBoTqzMm1jExZ9RGQR3kfDL8XfIkzeA=;
+	s=arc-20240116; t=1752587021; c=relaxed/simple;
+	bh=97qbLqzqhjhyYTk+wf89Or/ngAj9w7sD5K3rNBQj6Uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAf7yj2VRxugHML0gi1ciNF3TdjNbexQKCpgWCqsyMWHxgaqPr37cDPQQKjLqY6RMWqieWdsdsxOBNS1BwIap1apPHh8UfptxbFey6t0pFIQ4cPeaSEkvOQMNA+UkUXeUAJDZH9AhrmGSy/0mTgQO1SezNQyLUIpzKBD5Z4Q3l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXVXnuFW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbAozhFzrkLq5Ruv8h6dYYfLINVEnShi/PhYXp3M85HViMECUvV714fqcAQWWfmIP4bC+Cjkhhv20EM7GGupKcBimH4nbIhF8raBq+FA5GDHqNV3a7Cd64PsPQl1Pt+uFA12c5qZQ+UTTlbM6vv0ngVj2+NKkn2szTG8QridXc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvS7byVM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXVXnuFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3676C4CEE3;
-	Tue, 15 Jul 2025 13:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvS7byVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CB9C4CEE3;
+	Tue, 15 Jul 2025 13:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587018;
-	bh=0jV9dox07iPXWBoTqzMm1jExZ9RGQR3kfDL8XfIkzeA=;
+	s=korg; t=1752587021;
+	bh=97qbLqzqhjhyYTk+wf89Or/ngAj9w7sD5K3rNBQj6Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXVXnuFWEwXvzcC/8Ee4S2H76hT5H5geSqvDjKbG9DZvHL6DhpnU16wfvKcZKTYJ0
-	 GGX4uQ9g+PtHNoRVQfA7wBLIapeYIMjwIcadVyqkvOpVwXr1e7eW5cTkGuVVF6t84+
-	 iIwflzAGHQWYKjVUrequP/O/K7CUHCj7PsLNFLtc=
+	b=ZvS7byVMggC1aOnRbW5lD/ELjU/iGlBIhi2F/CzglGakVvoM4kGO6NSXxMQ4I8UkU
+	 0+N3fcEOxn7H2yn78vOmy9/G1sWy6Wkcsw+Kc69DCiH2G+NFrT/bvxItEg1IOg4/Ml
+	 tayXFLWwVUFiL9sPNG4Rg4Abe1jWmHol5P2yViZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 136/192] wifi: rt2x00: fix remove callback type mismatch
-Date: Tue, 15 Jul 2025 15:13:51 +0200
-Message-ID: <20250715130820.361014028@linuxfoundation.org>
+Subject: [PATCH 6.15 137/192] io_uring/zcrx: fix pp destruction warnings
+Date: Tue, 15 Jul 2025 15:13:52 +0200
+Message-ID: <20250715130820.401373572@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,58 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 2ce6ad9262256dd345cb104ba0ac6cf4aeed25a3 ]
+[ Upstream commit 203817de269539c062724d97dfa5af3cdf77a3ec ]
 
-The function is used as remove callback for a platform driver.
-It was missed during the conversion from int to void
+With multiple page pools and in some other cases we can have allocated
+niovs on page pool destruction. Remove a misplaced warning checking that
+all niovs are returned to zcrx on io_pp_zc_destroy(). It was reported
+before but apparently got lost.
 
-Fixes: 0edb555a65d1 ("platform: Make platform_driver::remove() return void")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20250706092053.97724-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Pedro Tammela <pctammela@mojatatu.com>
+Fixes: 34a3e60821ab9 ("io_uring/zcrx: implement zerocopy receive pp memory provider")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/b9e6d919d2964bc48ddbf8eb52fc9f5d118e9bc1.1751878185.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2x00soc.c | 4 +---
- drivers/net/wireless/ralink/rt2x00/rt2x00soc.h | 2 +-
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ io_uring/zcrx.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
-index eface610178d2..f7f3a2340c392 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
-@@ -108,7 +108,7 @@ int rt2x00soc_probe(struct platform_device *pdev, const struct rt2x00_ops *ops)
- }
- EXPORT_SYMBOL_GPL(rt2x00soc_probe);
- 
--int rt2x00soc_remove(struct platform_device *pdev)
-+void rt2x00soc_remove(struct platform_device *pdev)
+diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
+index a53058dd6b7a1..adb1e426987ed 100644
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -676,10 +676,7 @@ static int io_pp_zc_init(struct page_pool *pp)
+ static void io_pp_zc_destroy(struct page_pool *pp)
  {
- 	struct ieee80211_hw *hw = platform_get_drvdata(pdev);
- 	struct rt2x00_dev *rt2x00dev = hw->priv;
-@@ -119,8 +119,6 @@ int rt2x00soc_remove(struct platform_device *pdev)
- 	rt2x00lib_remove_dev(rt2x00dev);
- 	rt2x00soc_free_reg(rt2x00dev);
- 	ieee80211_free_hw(hw);
--
--	return 0;
- }
- EXPORT_SYMBOL_GPL(rt2x00soc_remove);
+ 	struct io_zcrx_ifq *ifq = io_pp_to_ifq(pp);
+-	struct io_zcrx_area *area = ifq->area;
  
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
-index 021fd06b36272..d6226b8a10e00 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
-@@ -17,7 +17,7 @@
-  * SoC driver handlers.
-  */
- int rt2x00soc_probe(struct platform_device *pdev, const struct rt2x00_ops *ops);
--int rt2x00soc_remove(struct platform_device *pdev);
-+void rt2x00soc_remove(struct platform_device *pdev);
- #ifdef CONFIG_PM
- int rt2x00soc_suspend(struct platform_device *pdev, pm_message_t state);
- int rt2x00soc_resume(struct platform_device *pdev);
+-	if (WARN_ON_ONCE(area->free_count != area->nia.num_niovs))
+-		return;
+ 	percpu_ref_put(&ifq->ctx->refs);
+ }
+ 
 -- 
 2.39.5
 
