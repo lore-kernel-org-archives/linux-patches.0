@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC2A2E1757;
-	Tue, 15 Jul 2025 13:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36382D028A;
+	Tue, 15 Jul 2025 13:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586322; cv=none; b=PYO7gTqvAo+gPxFYCbaVLRwPim17lrq+wJgGNQLOk24gaouhR8F6yhyq5uYV6i2X9rbVi8j4NsMkoTtOTjhQ4zW8uwfYjR66QYX5A0rSBak/jhCORi0A+yxtUKL1ULA3kLtHi3PKx0pUFQYcnAZuRl6jL3fGmJvzfFt+XU3jJIQ=
+	t=1752586324; cv=none; b=tZgtHji+V7/LgCH5vjHpqddSSmiPFT2u99LFJ8OrNm9VGlYvTKQciAy5jerl4gpjYseQjkDQXn5v21NGcRQQl0hkUM4nKypgYJG9aLEPSSuXR/rcXCRBSzXvt/C/orK2mdLHqaEc9arQ2c6tsRZcd53yAVyuEoHOMWx/oPwpoPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586322; c=relaxed/simple;
-	bh=WgMuium4ihTBdz2HmPFECSHZlXIEVoWCm7FSyE/Id6M=;
+	s=arc-20240116; t=1752586324; c=relaxed/simple;
+	bh=w1SNLCDWFkU/Qf9N9IjjTPsWFIcKINHD35q3dYnwCeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KbwdyV6MXQfFmLwylDNLrD36/2eMFSbbWuSFriTnW0NCKeO0QHDrL21xv4pI4itj5EeeMzzsbpI4F4o5Pazwnn+3reyWTeVm8mLyLJyGOCdzlEpggynoG06xhaZTejDuWxbxUW7UF0IsZWBeGnrSragd82srSESZoGZlQe9Mnuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3z8EkRw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VT3p539hSpvAhPk7var7W7v9G3wUZRr4O4tdPr3WKamlz3F0SEnGD1XI07KpqahyBTSh8+aEBN6EFvhb4ENSMm3Fz3hBPKhmb8fSDwPE+OYratD71Bb6W9vbBH2ANLC8nOnbss0YAwQ9d3dny5b8FsPDDq0VOO1JSBS8RL7Lf68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/ZynmJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3z8EkRw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939D8C4CEE3;
-	Tue, 15 Jul 2025 13:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/ZynmJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5550EC4CEE3;
+	Tue, 15 Jul 2025 13:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586322;
-	bh=WgMuium4ihTBdz2HmPFECSHZlXIEVoWCm7FSyE/Id6M=;
+	s=korg; t=1752586324;
+	bh=w1SNLCDWFkU/Qf9N9IjjTPsWFIcKINHD35q3dYnwCeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O3z8EkRwLxwhCO42VBVLIWZbMX+C5J+HMlD21TsldQ0isgA3VdcsMMTg7FyykjPsx
-	 Hiu1eLv3/SYhVqDzkxgMMjqWIuqNnuROOcbM8GY80eDvKpsl3NyExx7CyH0ospan3n
-	 EU07pT4zi4ROFJw/Whp+ol2rw8EyJbsxedD+yb2E=
+	b=A/ZynmJkXVTEStc1LeL7NdlLrlSlv+6d+1AX6BQ9+7sN754/gFN8M4RODmAuHsm4t
+	 8jZJhSWBFbVXTUBBhs7NDHeVNHN2Y18vBk9q2vgf5uw10vEa+2vZ4RwdSNOAaFbSYM
+	 tUc5k/tl1puPuMNBu4j6nAf5DEkNLoWY4hVkbs6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 021/148] bpfilter: match bit size of bpfilter_umh to that of the kernel
-Date: Tue, 15 Jul 2025 15:12:23 +0200
-Message-ID: <20250715130801.164566860@linuxfoundation.org>
+Subject: [PATCH 5.4 022/148] kbuild: add --target to correctly cross-compile UAPI headers with Clang
+Date: Tue, 15 Jul 2025 15:12:24 +0200
+Message-ID: <20250715130801.204557777@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,90 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 9371f86ecb60f6f1f120e3d93fe892bbb70d04c0 ]
+[ Upstream commit 9fbed27a7a1101c926718dfa9b49aff1d04477b5 ]
 
-bpfilter_umh is built for the default machine bit of the compiler,
-which may not match to the bit size of the kernel.
+When you compile-test UAPI headers (CONFIG_UAPI_HEADER_TEST=y) with
+Clang, they are currently compiled for the host target (likely x86_64)
+regardless of the given ARCH=.
 
-This happens in the scenario below:
+In fact, some exported headers include libc headers. For example,
+include/uapi/linux/agpgart.h includes <stdlib.h> after being exported.
+The header search paths should match to the target we are compiling
+them for.
 
-You can use biarch GCC that defaults to 64-bit for building the 32-bit
-kernel. In this case, Kbuild passes -m32 to teach the compiler to
-produce 32-bit kernel space objects. However, it is missing when
-building bpfilter_umh. It is built as a 64-bit ELF, and then embedded
-into the 32-bit kernel.
-
-The 32-bit kernel and 64-bit umh is a bad combination.
-
-In theory, we can have 32-bit umh running on 64-bit kernel, but we do
-not have a good reason to support such a usecase.
-
-The best is to match the bit size between them.
-
-Pass -m32 or -m64 to the umh build command if it is found in
-$(KBUILD_CFLAGS). Evaluate CC_CAN_LINK against the kernel bit-size.
+Pick up the --target triple from KBUILD_CFLAGS in the same ways as
+commit 7f58b487e9ff ("kbuild: make Clang build userprogs for target
+architecture").
 
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Stable-dep-of: 02e9a22ceef0 ("kbuild: hdrcheck: fix cross build with clang")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/Kconfig          | 4 +++-
- net/bpfilter/Makefile | 5 +++--
- usr/include/Makefile  | 4 ++++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ usr/include/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/init/Kconfig b/init/Kconfig
-index 41e87e8a5c6c1..50adf085d08b7 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -28,7 +28,9 @@ config CLANG_VERSION
- 	default $(shell,$(srctree)/scripts/clang-version.sh $(CC))
- 
- config CC_CAN_LINK
--	def_bool $(success,$(srctree)/scripts/cc-can-link.sh $(CC))
-+	bool
-+	default $(success,$(srctree)/scripts/cc-can-link.sh $(CC) $(m64-flag)) if 64BIT
-+	default $(success,$(srctree)/scripts/cc-can-link.sh $(CC) $(m32-flag))
- 
- config CC_HAS_ASM_GOTO
- 	def_bool $(success,$(srctree)/scripts/gcc-goto.sh $(CC))
-diff --git a/net/bpfilter/Makefile b/net/bpfilter/Makefile
-index aa945ab5b6558..05930c2fafd52 100644
---- a/net/bpfilter/Makefile
-+++ b/net/bpfilter/Makefile
-@@ -5,14 +5,15 @@
- 
- hostprogs-y := bpfilter_umh
- bpfilter_umh-objs := main.o
--KBUILD_HOSTCFLAGS += -I $(srctree)/tools/include/ -I $(srctree)/tools/include/uapi
-+KBUILD_HOSTCFLAGS += -I $(srctree)/tools/include/ -I $(srctree)/tools/include/uapi \
-+			$(filter -m32 -m64, $(KBUILD_CFLAGS))
- HOSTCC := $(CC)
- 
- ifeq ($(CONFIG_BPFILTER_UMH), y)
- # builtin bpfilter_umh should be compiled with -static
- # since rootfs isn't mounted at the time of __init
- # function is called and do_execv won't find elf interpreter
--KBUILD_HOSTLDFLAGS += -static
-+KBUILD_HOSTLDFLAGS += -static $(filter -m32 -m64, $(KBUILD_CFLAGS))
- endif
- 
- $(obj)/bpfilter_umh_blob.o: $(obj)/bpfilter_umh
 diff --git a/usr/include/Makefile b/usr/include/Makefile
-index 6c4b79d4558d6..3d9dc4a5c6fca 100644
+index 3d9dc4a5c6fca..de6f9bffb01ed 100644
 --- a/usr/include/Makefile
 +++ b/usr/include/Makefile
-@@ -8,6 +8,10 @@
- # We cannot go as far as adding -Wpedantic since it emits too many warnings.
- UAPI_CFLAGS := -std=c90 -Wall -Werror=implicit-function-declaration
+@@ -10,7 +10,7 @@ UAPI_CFLAGS := -std=c90 -Wall -Werror=implicit-function-declaration
  
-+# In theory, we do not care -m32 or -m64 for header compile tests.
-+# It is here just because CONFIG_CC_CAN_LINK is tested with -m32 or -m64.
-+UAPI_CFLAGS += $(filter -m32 -m64, $(KBUILD_CFLAGS))
-+
+ # In theory, we do not care -m32 or -m64 for header compile tests.
+ # It is here just because CONFIG_CC_CAN_LINK is tested with -m32 or -m64.
+-UAPI_CFLAGS += $(filter -m32 -m64, $(KBUILD_CFLAGS))
++UAPI_CFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CFLAGS))
+ 
  override c_flags = $(UAPI_CFLAGS) -Wp,-MMD,$(depfile) -I$(objtree)/usr/include
  
- # The following are excluded for now because they fail to build.
 -- 
 2.39.5
 
