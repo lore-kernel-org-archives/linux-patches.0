@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154CA8462;
-	Tue, 15 Jul 2025 13:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CEA2EA736;
+	Tue, 15 Jul 2025 13:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587366; cv=none; b=b1JMSp34ZJEqB2r74j19PdNTUD2vzrZxSut08HiuhfI0+M5Ohho1VrlvWIEVw5vwCdBhbie7FZQH0yw4m2ceqJ8OM5Vib48mJ4fvQNOr1v++SOB2hIXxTfRJpJmyKnVXVzW+ttpc1lwJcjg/A/QQdW79aehMwmP043baFgUMp7s=
+	t=1752587368; cv=none; b=rcze8BGuwn3mOqNEG3B3Eb64kgygsOPfVJjbb01Y63mnVNq2MfUKnmNBpwZFwFlnDwfR8EyV7h2EBUmGVxQQW3dTNvJepnNF/Qw/v0JCCWBSmcXwZpS4qSbBub7mhL5ToKugWjXjmAXbNZW1PprS3AIdS2ETCwKYBO3yFIPKgNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587366; c=relaxed/simple;
-	bh=MV8Ka6TOa/xGpEKuuldkyI2cPbjqrs/mHQw29cbgpg4=;
+	s=arc-20240116; t=1752587368; c=relaxed/simple;
+	bh=lqUhWOleLH25Q8mFNSX1oCCQgdKnjA2pSnmyM8veLzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTwwFpc9Rd8r1kA0qSuzIyszpRwSgZxEZvlopOs9JtGybMA1BXk7a5s36eTNpSd7M6cigMPkAIJhwKEhoZ/O2i2drNNLqj+hMdB2OzJdZZdwtfjHNOtXo0tey+8JFenijUJ4lHVPMr1+qudBijcAxcX66qVfc1BPjcJ+zeLUNwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUWFSVDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKvxn9B+zVuqv452xNz3o/iNerP65FniEbaMt0/ClphzoXybpgBGuse7PbHtimc5RNfecHYKn9XwuHvOxejBhyptDLduHXFQ4Vnwtk3fIc3obMQXSYAvPEqFK01VpbKpNvfq8vbVfhj99bxRWQiBf/UpPKznNFTro/iF8RRsEMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ce+rokiW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUWFSVDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA5DC4CEE3;
-	Tue, 15 Jul 2025 13:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ce+rokiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DC5C4CEE3;
+	Tue, 15 Jul 2025 13:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587366;
-	bh=MV8Ka6TOa/xGpEKuuldkyI2cPbjqrs/mHQw29cbgpg4=;
+	s=korg; t=1752587368;
+	bh=lqUhWOleLH25Q8mFNSX1oCCQgdKnjA2pSnmyM8veLzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUWFSVDfF4bTgoIoDcgoLt/hzorzeGA/iKyl5tY0/LgCy16oEVLktk+i9DZGffdad
-	 zXN//nauQ19Rx/5ldCgN1T/SKiR3ogZfBvnAS6706AJeCLW3bjd9NwJGNKigZenlRg
-	 KO3HCRKkBLQIKnTSRD6vYK6nvViO5SYFKH5f7ugY=
+	b=Ce+rokiWW8Ft/WsRKlswPj4JejVv9t/n6LFBANxv+QJmwX6RTzyLorm95hXnsDmlO
+	 CfJf1OtoSM1htVEKDwKNSJK6n47J2vCSHXQ/QH5F9CeJRkUIvZiAMSZ5hGEjlkw5Tf
+	 /Ml1nGAhUTAb7oCe607x0hzlNCkVNGLVvJUoqEgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 42/88] netlink: Fix rmem check in netlink_broadcast_deliver().
-Date: Tue, 15 Jul 2025 15:14:18 +0200
-Message-ID: <20250715130756.216506136@linuxfoundation.org>
+Subject: [PATCH 6.1 43/88] netlink: make sure we allow at least one dump skb
+Date: Tue, 15 Jul 2025 15:14:19 +0200
+Message-ID: <20250715130756.258644230@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -50,37 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit a3c4a125ec725cefb40047eb05ff9eafd57830b4 upstream.
+commit a215b5723922f8099078478122f02100e489cb80 upstream.
 
-We need to allow queuing at least one skb even when skb is
-larger than sk->sk_rcvbuf.
+Commit under Fixes tightened up the memory accounting for Netlink
+sockets. Looks like the accounting is too strict for some existing
+use cases, Marek reported issues with nl80211 / WiFi iw CLI.
 
-The cited commit made a mistake while converting a condition
-in netlink_broadcast_deliver().
+To reduce number of iterations Netlink dumps try to allocate
+messages based on the size of the buffer passed to previous
+recvmsg() calls. If user space uses a larger buffer in recvmsg()
+than sk_rcvbuf we will allocate an skb we won't be able to queue.
 
-Let's correct the rmem check for the allow-one-skb rule.
+Make sure we always allow at least one skb to be queued.
+Same workaround is already present in netlink_attachskb().
+Alternative would be to cap the allocation size to
+  rcvbuf - rmem_alloc
+but as I said, the workaround is already present in other places.
 
-Fixes: ae8f160e7eb24 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250711053208.2965945-1-kuniyu@google.com
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/9794af18-4905-46c6-b12c-365ea2f05858@samsung.com
+Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711001121.3649033-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlink/af_netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netlink/af_netlink.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/net/netlink/af_netlink.c
 +++ b/net/netlink/af_netlink.c
-@@ -1393,7 +1393,7 @@ static int netlink_broadcast_deliver(str
- 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
- 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+@@ -2168,11 +2168,11 @@ static int netlink_dump(struct sock *sk,
+ 	struct netlink_ext_ack extack = {};
+ 	struct netlink_callback *cb;
+ 	struct sk_buff *skb = NULL;
++	unsigned int rmem, rcvbuf;
+ 	size_t max_recvmsg_len;
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
+-	unsigned int rmem;
+ 	int alloc_size;
  
--	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
-+	if ((rmem == skb->truesize || rmem <= rcvbuf) &&
- 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
- 		netlink_skb_set_owner_r(skb, sk);
- 		__netlink_sendskb(sk, skb);
+ 	if (!lock_taken)
+@@ -2204,8 +2204,9 @@ static int netlink_dump(struct sock *sk,
+ 	if (!skb)
+ 		goto errout_skb;
+ 
++	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+-	if (rmem >= READ_ONCE(sk->sk_rcvbuf)) {
++	if (rmem != skb->truesize && rmem >= rcvbuf) {
+ 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+ 		goto errout_skb;
+ 	}
 
 
