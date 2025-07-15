@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A45B2E3AEA;
-	Tue, 15 Jul 2025 13:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34642E266C;
+	Tue, 15 Jul 2025 13:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587321; cv=none; b=TaNdG4Wn5hwHkRhniTR2TOsZrgfl0TK+QVY/xPxxa1rSBKurVBMBTcTm4NuGWowUhQskRUHX/4T9Int+OuwOR7jpbZm9QUPm0z1BhQ13XRuQDkjHnTS1OIYcdsSlhySGpwI2nDVvvMLPwhr3I9kJGdJPjhrpIGX976olkx/E6lc=
+	t=1752587323; cv=none; b=mtJZ4NbS7gnefIifly6gzdDwz5ql09BCPvc/ceUQyoZmYr8/W7GDolnMB0QNcHUagq7vkOIre1sC2nn4VRUlv0MbwoACPhy3pXJ5QMigQMxrKAkiT20ph5fmVgVhpzGx3X/+XOzGsKYfwLRb83Sh1PzJ+wzHkdGvQKiiz84SIY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587321; c=relaxed/simple;
-	bh=nVxaRsAd9M51rQ0u3jHAq0nmxILF3lr7AUuxkmrgcJE=;
+	s=arc-20240116; t=1752587323; c=relaxed/simple;
+	bh=4hp19hlSRpfEXiPysapcxBEziC+y6fCf0HjP4SB6+eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbIIcQAqqGu+AnhOgpbdPm/ko4YtIxg1L2qV79ps4FuhQbtQLZoU2hsAQQv+9GiWzO/zCoPzXkEfDWcee53nBB/5T8wyh6cSHEAc1JEYjoi6IYapaWBvGBic1TnqFv8vzWx57Za6zea+5eETE+bF1k/QMKhoQzIWwVjMhf+Y+aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5uxJHoQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hl2EX4uk9J8Gl7/LySvaOVBkpcgKFw9/H9mNysXoSam0N26QXmaA3/RfYPC01vz/OnEdmEyg/AYB5RwBVnWzEGNiQMYw6deTsGj6gsGf8A59MqRbPFTblFl6537IgwVNYSaLkSLKg1WhQLK6b7BhW8y/8vpQHdNSUq4QuwOWPDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTNte0ps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5uxJHoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A141AC4CEE3;
-	Tue, 15 Jul 2025 13:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTNte0ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606B6C4CEE3;
+	Tue, 15 Jul 2025 13:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587321;
-	bh=nVxaRsAd9M51rQ0u3jHAq0nmxILF3lr7AUuxkmrgcJE=;
+	s=korg; t=1752587323;
+	bh=4hp19hlSRpfEXiPysapcxBEziC+y6fCf0HjP4SB6+eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5uxJHoQ0QoZcevZ1AewxrjctsFgzDZ8L70mnUjgJ1/OZb9XZWVLSxauSpzj3S10I
-	 GQNHKba15XviqaexhBbAkGca4uUnbJR7d6yVtp8CwntoYi9/g1n5pjlHJzcuFgjTSU
-	 2eeDiozOF1DVlkuTJwK1MkC9h5t11Fk+KUQKpssE=
+	b=pTNte0pstJI6m5zerr085iN58velGnR2IkjKCca2RvS16mmreeDHsQYWpiTLs5z+f
+	 tYOtMDDadwCXQruXsbkPK/cKoh3hznOVUSeyC2GSQEaNmNS2T33Xul+95yPkTsBpMt
+	 xi9XlkHhdGDoZTiNjR7ZQ32/35/VgsvakOWkOBE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jinchao <wangjinchao600@gmail.com>,
+	Nigel Croxon <ncroxon@redhat.com>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 56/88] md/raid1: Fix stack memory use after return in raid1_reshape
-Date: Tue, 15 Jul 2025 15:14:32 +0200
-Message-ID: <20250715130756.811453362@linuxfoundation.org>
+Subject: [PATCH 6.1 57/88] raid10: cleanup memleak at raid10_make_request
+Date: Tue, 15 Jul 2025 15:14:33 +0200
+Message-ID: <20250715130756.852071505@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,78 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jinchao <wangjinchao600@gmail.com>
+From: Nigel Croxon <ncroxon@redhat.com>
 
-[ Upstream commit d67ed2ccd2d1dcfda9292c0ea8697a9d0f2f0d98 ]
+[ Upstream commit 43806c3d5b9bb7d74ba4e33a6a8a41ac988bde24 ]
 
-In the raid1_reshape function, newpool is
-allocated on the stack and assigned to conf->r1bio_pool.
-This results in conf->r1bio_pool.wait.head pointing
-to a stack address.
-Accessing this address later can lead to a kernel panic.
+If raid10_read_request or raid10_write_request registers a new
+request and the REQ_NOWAIT flag is set, the code does not
+free the malloc from the mempool.
 
-Example access path:
+unreferenced object 0xffff8884802c3200 (size 192):
+   comm "fio", pid 9197, jiffies 4298078271
+   hex dump (first 32 bytes):
+     00 00 00 00 00 00 00 00 88 41 02 00 00 00 00 00  .........A......
+     08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+   backtrace (crc c1a049a2):
+     __kmalloc+0x2bb/0x450
+     mempool_alloc+0x11b/0x320
+     raid10_make_request+0x19e/0x650 [raid10]
+     md_handle_request+0x3b3/0x9e0
+     __submit_bio+0x394/0x560
+     __submit_bio_noacct+0x145/0x530
+     submit_bio_noacct_nocheck+0x682/0x830
+     __blkdev_direct_IO_async+0x4dc/0x6b0
+     blkdev_read_iter+0x1e5/0x3b0
+     __io_read+0x230/0x1110
+     io_read+0x13/0x30
+     io_issue_sqe+0x134/0x1180
+     io_submit_sqes+0x48c/0xe90
+     __do_sys_io_uring_enter+0x574/0x8b0
+     do_syscall_64+0x5c/0xe0
+     entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-raid1_reshape()
-{
-	// newpool is on the stack
-	mempool_t newpool, oldpool;
-	// initialize newpool.wait.head to stack address
-	mempool_init(&newpool, ...);
-	conf->r1bio_pool = newpool;
-}
+V4: changing backing tree to see if CKI tests will pass.
+The patch code has not changed between any versions.
 
-raid1_read_request() or raid1_write_request()
-{
-	alloc_r1bio()
-	{
-		mempool_alloc()
-		{
-			// if pool->alloc fails
-			remove_element()
-			{
-				--pool->curr_nr;
-			}
-		}
-	}
-}
-
-mempool_free()
-{
-	if (pool->curr_nr < pool->min_nr) {
-		// pool->wait.head is a stack address
-		// wake_up() will try to access this invalid address
-		// which leads to a kernel panic
-		return;
-		wake_up(&pool->wait);
-	}
-}
-
-Fix:
-reinit conf->r1bio_pool.wait after assigning newpool.
-
-Fixes: afeee514ce7f ("md: convert to bioset_init()/mempool_init()")
-Signed-off-by: Wang Jinchao <wangjinchao600@gmail.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/linux-raid/20250612112901.3023950-1-wangjinchao600@gmail.com
+Fixes: c9aa889b035f ("md: raid10 add nowait support")
+Signed-off-by: Nigel Croxon <ncroxon@redhat.com>
+Link: https://lore.kernel.org/linux-raid/c0787379-9caa-42f3-b5fc-369aed784400@redhat.com
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid10.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 38e77a4b6b338..ebff40a3423ae 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -3306,6 +3306,7 @@ static int raid1_reshape(struct mddev *mddev)
- 	/* ok, everything is stopped */
- 	oldpool = conf->r1bio_pool;
- 	conf->r1bio_pool = newpool;
-+	init_waitqueue_head(&conf->r1bio_pool.wait);
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 24427eddf61bc..2ae68b7b79598 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1210,8 +1210,11 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 		rcu_read_unlock();
+ 	}
  
- 	for (d = d2 = 0; d < conf->raid_disks; d++) {
- 		struct md_rdev *rdev = conf->mirrors[d].rdev;
+-	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors))
++	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
++		raid_end_bio_io(r10_bio);
+ 		return;
++	}
++
+ 	rdev = read_balance(conf, r10_bio, &max_sectors);
+ 	if (!rdev) {
+ 		if (err_rdev) {
+@@ -1432,8 +1435,11 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 	}
+ 
+ 	sectors = r10_bio->sectors;
+-	if (!regular_request_wait(mddev, conf, bio, sectors))
++	if (!regular_request_wait(mddev, conf, bio, sectors)) {
++		raid_end_bio_io(r10_bio);
+ 		return;
++	}
++
+ 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery) &&
+ 	    (mddev->reshape_backwards
+ 	     ? (bio->bi_iter.bi_sector < conf->reshape_safe &&
 -- 
 2.39.5
 
