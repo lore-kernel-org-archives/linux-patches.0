@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A352E2E6D12;
-	Tue, 15 Jul 2025 13:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC832EBB99;
+	Tue, 15 Jul 2025 13:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586184; cv=none; b=aG3FtaPCy8Yfkrs3+BRWeKF/yIV6kBJZeWACSBb3mTKop37j/Wzmjs3C/TtlXGr6uOTz4I2oJwVtb5U6bbAlDFYxUld1V0aZ99YfyZOmOl818UFmG3ffdNJuHfp5s4Wu7332ApzdX98ReCCFiVtxEffY43EQnYit+c51IWazenI=
+	t=1752586187; cv=none; b=SPg6N+rvCJ65j+rvuaubNvguvuXHP1GrtfCJyL06AQnXs89RIr1mL5v04OyV10u+ZvWAw6fVFMuvw2z0PaD5/IkKi0vQpDuFYNXRTtFsKYrCgIlcR7zQo8SgVpcB535fneM7eAugy5C7dgicmP35DKBG4iN6E3CCCMSCiHosIKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586184; c=relaxed/simple;
-	bh=3/5oIqVuBILgjbqkNUTgyjh3b1csEjNlXeD6OHDRCTc=;
+	s=arc-20240116; t=1752586187; c=relaxed/simple;
+	bh=snVdj9DVNecFYw8VDmXdNl5kBQReI8Tyk3cp2nK3W5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qgm+Gcnz5IyK44Y543uqjUVtWbsJz1a4SHfLiVctxku/wFgkJhOXzNd623M9bVyMT/o6dadQh/oNBmxEg5ZPbGPp/EHI7SrFn666xr3yeGPo/2ULC/MmL/5hb1ADB3WllrgVHzJ5Q1BKey5PPSr0J08WOdr6E/V3E+1p3+ipZms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxW25vE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qp5SQg1ufzxLqcsSollyz8ibvdUiMIetdu6LOoGwXAMoqHTng/YrlwF3LC4KnVBiJmTopzcQtRUG+RUMjmjnOPvuq2qJHYQgYOvKpeLksr1e5HL2voEvIabOp20F8/dTaC3ncjprvx7MzlIb4WZ0w85I6dRO91EdqgYF92/Z/Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=em+aJzAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxW25vE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A1CC4CEF1;
-	Tue, 15 Jul 2025 13:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="em+aJzAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DE9C4CEE3;
+	Tue, 15 Jul 2025 13:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586184;
-	bh=3/5oIqVuBILgjbqkNUTgyjh3b1csEjNlXeD6OHDRCTc=;
+	s=korg; t=1752586186;
+	bh=snVdj9DVNecFYw8VDmXdNl5kBQReI8Tyk3cp2nK3W5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxW25vE7K2dqwFUjh9xrxoVpBhwczfs55CunfX6NEo98LiYeCiRvNCCOI8vpqZlFm
-	 bsz1T8RWZitE6gcNnXJuW026KmU55A3AdfZMg7zaPOfSfx4xq4AI8qFtdOgfO1b0oD
-	 gYlV+MRdjAr81enNqXdcKvdjfh6qO+jdLctHMHRw=
+	b=em+aJzAuxf/jPQF9tg9O0f02/LW5DGvCerZq92hxwoD+NLxspawRxAMUg5+7qs2Mw
+	 ALcXY48UqfGLb4mGi5F1Sv5WuDS++WsAYKSvDoxDFl9V0o90MMHJjnbOMdFGYK//go
+	 KOyLIaiDPE769R3/dwRB4I0fhFaBfJzb5YagXQ/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Kuen-Han Tsai <khtsai@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 48/77] usb: cdnsp: Fix issue with CV Bad Descriptor test
-Date: Tue, 15 Jul 2025 15:13:47 +0200
-Message-ID: <20250715130753.647727109@linuxfoundation.org>
+Subject: [PATCH 5.15 49/77] usb: dwc3: Abort suspend on soft disconnect failure
+Date: Tue, 15 Jul 2025 15:13:48 +0200
+Message-ID: <20250715130753.690789316@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -52,119 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 2831a81077f5162f104ba5a97a7d886eb371c21c ]
+[ Upstream commit 630a1dec3b0eba2a695b9063f1c205d585cbfec9 ]
 
-The SSP2 controller has extra endpoint state preserve bit (ESP) which
-setting causes that endpoint state will be preserved during
-Halt Endpoint command. It is used only for EP0.
-Without this bit the Command Verifier "TD 9.10 Bad Descriptor Test"
-failed.
-Setting this bit doesn't have any impact for SSP controller.
+When dwc3_gadget_soft_disconnect() fails, dwc3_suspend_common() keeps
+going with the suspend, resulting in a period where the power domain is
+off, but the gadget driver remains connected.  Within this time frame,
+invoking vbus_event_work() will cause an error as it attempts to access
+DWC3 registers for endpoint disabling after the power domain has been
+completely shut down.
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Abort the suspend sequence when dwc3_gadget_suspend() cannot halt the
+controller and proceeds with a soft connect.
+
+Fixes: 9f8a67b65a49 ("usb: dwc3: gadget: fix gadget suspend/resume")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/PH7PR07MB95382CCD50549DABAEFD6156DD7CA@PH7PR07MB9538.namprd07.prod.outlook.com
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://lore.kernel.org/r/20250528100315.2162699-1-khtsai@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdnsp-debug.h  |  5 +++--
- drivers/usb/cdns3/cdnsp-ep0.c    | 18 +++++++++++++++---
- drivers/usb/cdns3/cdnsp-gadget.h |  6 ++++++
- drivers/usb/cdns3/cdnsp-ring.c   |  3 ++-
- 4 files changed, 26 insertions(+), 6 deletions(-)
+ drivers/usb/dwc3/core.c   |  9 +++++++--
+ drivers/usb/dwc3/gadget.c | 22 +++++++++-------------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/usb/cdns3/cdnsp-debug.h b/drivers/usb/cdns3/cdnsp-debug.h
-index cd138acdcce16..86860686d8363 100644
---- a/drivers/usb/cdns3/cdnsp-debug.h
-+++ b/drivers/usb/cdns3/cdnsp-debug.h
-@@ -327,12 +327,13 @@ static inline const char *cdnsp_decode_trb(char *str, size_t size, u32 field0,
- 	case TRB_RESET_EP:
- 	case TRB_HALT_ENDPOINT:
- 		ret = scnprintf(str, size,
--				"%s: ep%d%s(%d) ctx %08x%08x slot %ld flags %c",
-+				"%s: ep%d%s(%d) ctx %08x%08x slot %ld flags %c %c",
- 				cdnsp_trb_type_string(type),
- 				ep_num, ep_id % 2 ? "out" : "in",
- 				TRB_TO_EP_INDEX(field3), field1, field0,
- 				TRB_TO_SLOT_ID(field3),
--				field3 & TRB_CYCLE ? 'C' : 'c');
-+				field3 & TRB_CYCLE ? 'C' : 'c',
-+				field3 & TRB_ESP ? 'P' : 'p');
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index bb20d8dd18791..488cb16acd67e 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1818,6 +1818,7 @@ static int dwc3_core_init_for_resume(struct dwc3 *dwc)
+ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+ {
+ 	u32 reg;
++	int ret;
+ 
+ 	if (!pm_runtime_suspended(dwc->dev) && !PMSG_IS_AUTO(msg)) {
+ 		dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
+@@ -1836,7 +1837,9 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+ 	case DWC3_GCTL_PRTCAP_DEVICE:
+ 		if (pm_runtime_suspended(dwc->dev))
+ 			break;
+-		dwc3_gadget_suspend(dwc);
++		ret = dwc3_gadget_suspend(dwc);
++		if (ret)
++			return ret;
+ 		synchronize_irq(dwc->irq_gadget);
+ 		dwc3_core_exit(dwc);
  		break;
- 	case TRB_STOP_RING:
- 		ret = scnprintf(str, size,
-diff --git a/drivers/usb/cdns3/cdnsp-ep0.c b/drivers/usb/cdns3/cdnsp-ep0.c
-index f317d3c847810..5cd9b898ce971 100644
---- a/drivers/usb/cdns3/cdnsp-ep0.c
-+++ b/drivers/usb/cdns3/cdnsp-ep0.c
-@@ -414,6 +414,7 @@ static int cdnsp_ep0_std_request(struct cdnsp_device *pdev,
- void cdnsp_setup_analyze(struct cdnsp_device *pdev)
- {
- 	struct usb_ctrlrequest *ctrl = &pdev->setup;
-+	struct cdnsp_ep *pep;
- 	int ret = -EINVAL;
- 	u16 len;
+@@ -1867,7 +1870,9 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+ 			break;
  
-@@ -427,10 +428,21 @@ void cdnsp_setup_analyze(struct cdnsp_device *pdev)
- 		goto out;
- 	}
+ 		if (dwc->current_otg_role == DWC3_OTG_ROLE_DEVICE) {
+-			dwc3_gadget_suspend(dwc);
++			ret = dwc3_gadget_suspend(dwc);
++			if (ret)
++				return ret;
+ 			synchronize_irq(dwc->irq_gadget);
+ 		}
  
-+	pep = &pdev->eps[0];
-+
- 	/* Restore the ep0 to Stopped/Running state. */
--	if (pdev->eps[0].ep_state & EP_HALTED) {
--		trace_cdnsp_ep0_halted("Restore to normal state");
--		cdnsp_halt_endpoint(pdev, &pdev->eps[0], 0);
-+	if (pep->ep_state & EP_HALTED) {
-+		if (GET_EP_CTX_STATE(pep->out_ctx) == EP_STATE_HALTED)
-+			cdnsp_halt_endpoint(pdev, pep, 0);
-+
-+		/*
-+		 * Halt Endpoint Command for SSP2 for ep0 preserve current
-+		 * endpoint state and driver has to synchronize the
-+		 * software endpoint state with endpoint output context
-+		 * state.
-+		 */
-+		pep->ep_state &= ~EP_HALTED;
-+		pep->ep_state |= EP_STOPPED;
- 	}
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index a99e669468ee3..44bb3770f8bb2 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4580,26 +4580,22 @@ int dwc3_gadget_suspend(struct dwc3 *dwc)
+ 	int ret;
  
+ 	ret = dwc3_gadget_soft_disconnect(dwc);
+-	if (ret)
+-		goto err;
+-
+-	spin_lock_irqsave(&dwc->lock, flags);
+-	if (dwc->gadget_driver)
+-		dwc3_disconnect_gadget(dwc);
+-	spin_unlock_irqrestore(&dwc->lock, flags);
+-
+-	return 0;
+-
+-err:
  	/*
-diff --git a/drivers/usb/cdns3/cdnsp-gadget.h b/drivers/usb/cdns3/cdnsp-gadget.h
-index 48336e121ed6f..155fd770a8cd9 100644
---- a/drivers/usb/cdns3/cdnsp-gadget.h
-+++ b/drivers/usb/cdns3/cdnsp-gadget.h
-@@ -987,6 +987,12 @@ enum cdnsp_setup_dev {
- #define STREAM_ID_FOR_TRB(p)		((((p)) << 16) & GENMASK(31, 16))
- #define SCT_FOR_TRB(p)			(((p) << 1) & 0x7)
+ 	 * Attempt to reset the controller's state. Likely no
+ 	 * communication can be established until the host
+ 	 * performs a port reset.
+ 	 */
+-	if (dwc->softconnect)
++	if (ret && dwc->softconnect) {
+ 		dwc3_gadget_soft_connect(dwc);
++		return -EAGAIN;
++	}
  
-+/*
-+ * Halt Endpoint Command TRB field.
-+ * The ESP bit only exists in the SSP2 controller.
-+ */
-+#define TRB_ESP				BIT(9)
+-	return ret;
++	spin_lock_irqsave(&dwc->lock, flags);
++	if (dwc->gadget_driver)
++		dwc3_disconnect_gadget(dwc);
++	spin_unlock_irqrestore(&dwc->lock, flags);
 +
- /* Link TRB specific fields. */
- #define TRB_TC				BIT(1)
- 
-diff --git a/drivers/usb/cdns3/cdnsp-ring.c b/drivers/usb/cdns3/cdnsp-ring.c
-index 795668435c77e..42db256978bcc 100644
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -2475,7 +2475,8 @@ void cdnsp_queue_halt_endpoint(struct cdnsp_device *pdev, unsigned int ep_index)
- {
- 	cdnsp_queue_command(pdev, 0, 0, 0, TRB_TYPE(TRB_HALT_ENDPOINT) |
- 			    SLOT_ID_FOR_TRB(pdev->slot_id) |
--			    EP_ID_FOR_TRB(ep_index));
-+			    EP_ID_FOR_TRB(ep_index) |
-+			    (!ep_index ? TRB_ESP : 0));
++	return 0;
  }
  
- void cdnsp_force_header_wakeup(struct cdnsp_device *pdev, int intf_num)
+ int dwc3_gadget_resume(struct dwc3 *dwc)
 -- 
 2.39.5
 
