@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C152EF65C;
-	Tue, 15 Jul 2025 13:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F9A2E3AE2;
+	Tue, 15 Jul 2025 13:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587187; cv=none; b=H2np/8Qu3P/7mhH1dVynW/xBPhiSvajwv+FaDZbxBQaSGbW0sRYYzSjhKNb++mQCmL9TnOsXyQ7Lgd3l1rrupXgzc008Tee4p4A9nfsAxotFj7zwcph9/MylxYP1g7RqiWlfIt/++f9c26rx5/BwpXauOL7T6mZcZepV5f6tFj4=
+	t=1752587190; cv=none; b=KXZvsGZOqy+/xga9Q3u2GFIaelYzJ7hfaWLzU6AF+RHM00FKfHIL+hc6Jn3URB2bRHJej6xS5yNBAo8NGHSUEJn2+1yH/6Jmb3K/tWwUTu67tcgAVbJooLaqzhXIf/ZobJ8rPsOw7k66709w+ooHvjgOkFDECNiLG/US4ryBMOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587187; c=relaxed/simple;
-	bh=rjQpVgcrU0aOojY2DtM5IBPQZPdMUtqCYSlZepI9XQc=;
+	s=arc-20240116; t=1752587190; c=relaxed/simple;
+	bh=MJ8Gcj9K7Ihcdktdk19IUN9uaLsT7mhxK+OnlQN0Qh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHLljJsCR1UDY0Vd0XijwrVLRpxDFOuAjrdoswyXJ8L5mjcgacL9/AorhOMy7wbQ7heiIA75HzbvRTWLIufbLvZWo1DwYLXZsvuAjdsYff9U1QAcbaEsQbIn6hkFi8Em8rhJirKkKtB7vxytU0YLHBOrbccWxP7BkJCgjHlQtP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj/tRcQ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=az6y8fxPYwdoC244cCrWUNCw56N7HKzGCxy5qAtLsGQaEMtNgBvd56DCOWqy77yFc3sJ6Wo1759SThJsWAKMruObkjdxwG4zEDA7d8iiJw+hHmYBbidWDElp+LX2nl7N/BWvzBuzVuoI1nqBKLJY+gJLQ+hL+AHAq0V+YL3BvuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKnE9Va5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj/tRcQ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF292C4CEE3;
-	Tue, 15 Jul 2025 13:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKnE9Va5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8538BC4CEE3;
+	Tue, 15 Jul 2025 13:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587187;
-	bh=rjQpVgcrU0aOojY2DtM5IBPQZPdMUtqCYSlZepI9XQc=;
+	s=korg; t=1752587189;
+	bh=MJ8Gcj9K7Ihcdktdk19IUN9uaLsT7mhxK+OnlQN0Qh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mj/tRcQ/zdudN05p/TlS/Xp/R00phNaihDwdjBlyQIZ6zkGhjMsupZ7WymcDmLQg2
-	 KUS+RuguhuCsTrtetioNce5JiHDHWZT3mixeYxWQj7CAGKkeI+1VXcpY/4yJ/c/Er/
-	 AmQpaCJbuXP9mq0XeYrSfOSwu76PqJ2uW1Jds7g4=
+	b=DKnE9Va5HjnAh/OojKLtLCjGdZmNzLCbZdhfneJ4Ofv5aNu+ooAp5wlzM6MtH2ZnK
+	 9tBoY1B+Adc5LcPFCL9MAc5bFUpsmk1zxo6a9/8z+FIiJkoQjQd+J2KGYOVXRMPqXD
+	 9Wih+Ltdlo3dxkHGJkzQ1JJMjpmNaOG9OMQ1b05c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyan Xu <research@securitygossip.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 192/192] ksmbd: fix potential use-after-free in oplock/lease break ack
-Date: Tue, 15 Jul 2025 15:14:47 +0200
-Message-ID: <20250715130822.629147906@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.15 189/192] selftests/bpf: adapt one more case in test_lru_map to the new target_free
+Date: Tue, 15 Jul 2025 15:14:44 +0200
+Message-ID: <20250715130822.508776317@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,90 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 50f930db22365738d9387c974416f38a06e8057e upstream.
+commit 5e9388f7984a9cc7e659a105113f6ccf0aebedd0 upstream.
 
-If ksmbd_iov_pin_rsp return error, use-after-free can happen by
-accessing opinfo->state and opinfo_put and ksmbd_fd_put could
-called twice.
+The below commit that updated BPF_MAP_TYPE_LRU_HASH free target,
+also updated tools/testing/selftests/bpf/test_lru_map to match.
 
-Reported-by: Ziyan Xu <research@securitygossip.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+But that missed one case that passes with 4 cores, but fails at
+higher cpu counts.
+
+Update test_lru_sanity3 to also adjust its expectation of target_free.
+
+This time tested with 1, 4, 16, 64 and 384 cpu count.
+
+Fixes: d4adf1c9ee77 ("bpf: Adjust free target to avoid global starvation of LRU map")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20250625210412.2732970-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+ tools/testing/selftests/bpf/test_lru_map.c |   33 +++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8535,11 +8535,6 @@ static void smb20_oplock_break_ack(struc
- 		goto err_out;
- 	}
- 
--	opinfo->op_state = OPLOCK_STATE_NONE;
--	wake_up_interruptible_all(&opinfo->oplock_q);
--	opinfo_put(opinfo);
--	ksmbd_fd_put(work, fp);
--
- 	rsp->StructureSize = cpu_to_le16(24);
- 	rsp->OplockLevel = rsp_oplevel;
- 	rsp->Reserved = 0;
-@@ -8547,16 +8542,15 @@ static void smb20_oplock_break_ack(struc
- 	rsp->VolatileFid = volatile_id;
- 	rsp->PersistentFid = persistent_id;
- 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_oplock_break));
--	if (!ret)
--		return;
--
-+	if (ret) {
- err_out:
-+		smb2_set_err_rsp(work);
-+	}
-+
- 	opinfo->op_state = OPLOCK_STATE_NONE;
- 	wake_up_interruptible_all(&opinfo->oplock_q);
--
- 	opinfo_put(opinfo);
- 	ksmbd_fd_put(work, fp);
--	smb2_set_err_rsp(work);
+--- a/tools/testing/selftests/bpf/test_lru_map.c
++++ b/tools/testing/selftests/bpf/test_lru_map.c
+@@ -138,6 +138,12 @@ static int sched_next_online(int pid, in
+ 	return ret;
  }
  
- static int check_lease_state(struct lease *lease, __le32 req_state)
-@@ -8686,11 +8680,6 @@ static void smb21_lease_break_ack(struct
- 	}
- 
- 	lease_state = lease->state;
--	opinfo->op_state = OPLOCK_STATE_NONE;
--	wake_up_interruptible_all(&opinfo->oplock_q);
--	atomic_dec(&opinfo->breaking_cnt);
--	wake_up_interruptible_all(&opinfo->oplock_brk);
--	opinfo_put(opinfo);
- 
- 	rsp->StructureSize = cpu_to_le16(36);
- 	rsp->Reserved = 0;
-@@ -8699,16 +8688,16 @@ static void smb21_lease_break_ack(struct
- 	rsp->LeaseState = lease_state;
- 	rsp->LeaseDuration = 0;
- 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_lease_ack));
--	if (!ret)
--		return;
--
-+	if (ret) {
- err_out:
-+		smb2_set_err_rsp(work);
-+	}
++/* Derive target_free from map_size, same as bpf_common_lru_populate */
++static unsigned int __tgt_size(unsigned int map_size)
++{
++	return (map_size / nr_cpus) / 2;
++}
 +
-+	opinfo->op_state = OPLOCK_STATE_NONE;
- 	wake_up_interruptible_all(&opinfo->oplock_q);
- 	atomic_dec(&opinfo->breaking_cnt);
- 	wake_up_interruptible_all(&opinfo->oplock_brk);
--
- 	opinfo_put(opinfo);
--	smb2_set_err_rsp(work);
+ /* Inverse of how bpf_common_lru_populate derives target_free from map_size. */
+ static unsigned int __map_size(unsigned int tgt_free)
+ {
+@@ -410,12 +416,12 @@ static void test_lru_sanity2(int map_typ
+ 	printf("Pass\n");
  }
  
- /**
+-/* Size of the LRU map is 2*tgt_free
+- * It is to test the active/inactive list rotation
+- * Insert 1 to 2*tgt_free (+2*tgt_free keys)
+- * Lookup key 1 to tgt_free*3/2
+- * Add 1+2*tgt_free to tgt_free*5/2 (+tgt_free/2 keys)
+- *  => key 1+tgt_free*3/2 to 2*tgt_free are removed from LRU
++/* Test the active/inactive list rotation
++ *
++ * Fill the whole map, deplete the free list.
++ * Reference all except the last lru->target_free elements.
++ * Insert lru->target_free new elements. This triggers one shrink.
++ * Verify that the non-referenced elements are replaced.
+  */
+ static void test_lru_sanity3(int map_type, int map_flags, unsigned int tgt_free)
+ {
+@@ -434,8 +440,7 @@ static void test_lru_sanity3(int map_typ
+ 
+ 	assert(sched_next_online(0, &next_cpu) != -1);
+ 
+-	batch_size = tgt_free / 2;
+-	assert(batch_size * 2 == tgt_free);
++	batch_size = __tgt_size(tgt_free);
+ 
+ 	map_size = tgt_free * 2;
+ 	lru_map_fd = create_map(map_type, map_flags, map_size);
+@@ -446,23 +451,21 @@ static void test_lru_sanity3(int map_typ
+ 
+ 	value[0] = 1234;
+ 
+-	/* Insert 1 to 2*tgt_free (+2*tgt_free keys) */
+-	end_key = 1 + (2 * tgt_free);
++	/* Fill the map */
++	end_key = 1 + map_size;
+ 	for (key = 1; key < end_key; key++)
+ 		assert(!bpf_map_update_elem(lru_map_fd, &key, value,
+ 					    BPF_NOEXIST));
+ 
+-	/* Lookup key 1 to tgt_free*3/2 */
+-	end_key = tgt_free + batch_size;
++	/* Reference all but the last batch_size */
++	end_key = 1 + map_size - batch_size;
+ 	for (key = 1; key < end_key; key++) {
+ 		assert(!bpf_map_lookup_elem_with_ref_bit(lru_map_fd, key, value));
+ 		assert(!bpf_map_update_elem(expected_map_fd, &key, value,
+ 					    BPF_NOEXIST));
+ 	}
+ 
+-	/* Add 1+2*tgt_free to tgt_free*5/2
+-	 * (+tgt_free/2 keys)
+-	 */
++	/* Insert new batch_size: replaces the non-referenced elements */
+ 	key = 2 * tgt_free + 1;
+ 	end_key = key + batch_size;
+ 	for (; key < end_key; key++) {
 
 
