@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBE419D09C;
-	Tue, 15 Jul 2025 13:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DF02E2EEE;
+	Tue, 15 Jul 2025 13:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585612; cv=none; b=sBPmuvbvofLbmHrGk6Y/UcqYJrG8AXZEgNSKHtp7oXgLIN3Stzc6HlotjrVko9VSF3+m3yL5kpsm567VSZ0ByqfjxKUV6QVhRS1f4U8sqx/UuHMnq4hLa9TguHwoA1ror5NOJsFWk37R2hfB1mEoCCyc6RyxrFkGKxTw7MtYxKA=
+	t=1752585614; cv=none; b=NRolAejtI9k/5aMLxhvr7fXmH9WKidIZ32ljRamRE18tQvAsc5bfntCQlIiq0vJqVoKPsjQANCz6Hj9zAjTyUZgUaMPdWGacNzNQxCPfodwg0oqdwBswpclt2yoE7ZkxFFMq4W/YlxRsllv7KRFBVst5WX9ZI8Bc8pq0imYqhKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585612; c=relaxed/simple;
-	bh=FmprCZkWmru+slBW9qTebjqT7SrE4DQGU9epZ+Md5qk=;
+	s=arc-20240116; t=1752585614; c=relaxed/simple;
+	bh=GttpmwWLPpfA92yt7p/T9TwPaMcvB84SRYcfzZnep+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfAkTCJev9MiQyf833iRiqh2XXICBs873oSyssuV3t/soIp6GLGRubVmj8SUlV+7PEq4R4eYqkgPP6t3jOt32uj5aO5EmiNrn/ptpnx/N5ORvnGpFocGgEm1KNls3ixOBddq/6SAmEKBDAMpLtFZjubnjfpbsmcOiO+oAVA0p3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hj1YvU2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEp/kmY4rBrWb503iD8XBGRrIgeL0n7e0MH5tCiSJz4f6gfEyFfwfI/mZbGZgP/XJ418rSfXxNn2SKVOhbwHIh2yAUuIMoFR4IoToRHAqzDvQ4KhDgZR4RxMBBpRKVf4VGULzdRmJQfVy/EBOT35wTwlA+tTta8UKySzgD4+rv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtufEJ6N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hj1YvU2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2F8C4CEF8;
-	Tue, 15 Jul 2025 13:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtufEJ6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C872C4CEE3;
+	Tue, 15 Jul 2025 13:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585611;
-	bh=FmprCZkWmru+slBW9qTebjqT7SrE4DQGU9epZ+Md5qk=;
+	s=korg; t=1752585614;
+	bh=GttpmwWLPpfA92yt7p/T9TwPaMcvB84SRYcfzZnep+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hj1YvU2NfQyxxjVohbHOaHoRWJVIDcHQlB4yo1XRsrkHIrhuq/H1zcvkRjEofQ9UY
-	 TyuRlcceMjoaJ/1GEO7l0iw5HYvsmCLsG/XeI/KDLe7W7Ce2Uk7oRfdvHOh0vvJ2pc
-	 saRo4VjjxNOsfJoc+g0i84dYhElJT4wZgp7ZYP1E=
+	b=KtufEJ6N/vpWkBvRT3ANTGQmUudH6HV1Orx+34Ose86XPyavHoR520C+qhFxRrhXo
+	 T70CQL/R9aJXqMblfI7LmmLiJN0LoQJBm6gu15vEqPtY5l6Qlvl2E5nrUHNdT1s4UR
+	 V4+4i2ir1xBB4FsDHjyIdjaXIGCcdlKlVuZWR79E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 105/163] netlink: make sure we allow at least one dump skb
-Date: Tue, 15 Jul 2025 15:12:53 +0200
-Message-ID: <20250715130813.073970731@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Steve French <sfrench@samba.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 106/163] netfs: Fix ref leak on inserted extra subreq in write retry
+Date: Tue, 15 Jul 2025 15:12:54 +0200
+Message-ID: <20250715130813.111931582@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,62 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-commit a215b5723922f8099078478122f02100e489cb80 upstream.
+[ Upstream commit 97d8e8e52cb8ab3d7675880a92626d9a4332f7a6 ]
 
-Commit under Fixes tightened up the memory accounting for Netlink
-sockets. Looks like the accounting is too strict for some existing
-use cases, Marek reported issues with nl80211 / WiFi iw CLI.
+The write-retry algorithm will insert extra subrequests into the list if it
+can't get sufficient capacity to split the range that needs to be retried
+into the sequence of subrequests it currently has (for instance, if the
+cifs credit pool has fewer credits available than it did when the range was
+originally divided).
 
-To reduce number of iterations Netlink dumps try to allocate
-messages based on the size of the buffer passed to previous
-recvmsg() calls. If user space uses a larger buffer in recvmsg()
-than sk_rcvbuf we will allocate an skb we won't be able to queue.
+However, the allocator furnishes each new subreq with 2 refs and then
+another is added for resubmission, causing one to be leaked.
 
-Make sure we always allow at least one skb to be queued.
-Same workaround is already present in netlink_attachskb().
-Alternative would be to cap the allocation size to
-  rcvbuf - rmem_alloc
-but as I said, the workaround is already present in other places.
+Fix this by replacing the ref-getting line with a neutral trace line.
 
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/9794af18-4905-46c6-b12c-365ea2f05858@samsung.com
-Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250711001121.3649033-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/20250701163852.2171681-6-dhowells@redhat.com
+Tested-by: Steve French <sfrench@samba.org>
+Reviewed-by: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/netfs/write_collect.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -2261,11 +2261,11 @@ static int netlink_dump(struct sock *sk,
- 	struct netlink_ext_ack extack = {};
- 	struct netlink_callback *cb;
- 	struct sk_buff *skb = NULL;
-+	unsigned int rmem, rcvbuf;
- 	size_t max_recvmsg_len;
- 	struct module *module;
- 	int err = -ENOBUFS;
- 	int alloc_min_size;
--	unsigned int rmem;
- 	int alloc_size;
+diff --git a/fs/netfs/write_collect.c b/fs/netfs/write_collect.c
+index 7cb21da40a0a4..a968688a73234 100644
+--- a/fs/netfs/write_collect.c
++++ b/fs/netfs/write_collect.c
+@@ -285,7 +285,7 @@ static void netfs_retry_write_stream(struct netfs_io_request *wreq,
+ 			trace_netfs_sreq_ref(wreq->debug_id, subreq->debug_index,
+ 					     refcount_read(&subreq->ref),
+ 					     netfs_sreq_trace_new);
+-			netfs_get_subrequest(subreq, netfs_sreq_trace_get_resubmit);
++			trace_netfs_sreq(subreq, netfs_sreq_trace_split);
  
- 	if (!lock_taken)
-@@ -2297,8 +2297,9 @@ static int netlink_dump(struct sock *sk,
- 	if (!skb)
- 		goto errout_skb;
- 
-+	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
- 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
--	if (rmem >= READ_ONCE(sk->sk_rcvbuf)) {
-+	if (rmem != skb->truesize && rmem >= rcvbuf) {
- 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
- 		goto errout_skb;
- 	}
+ 			list_add(&subreq->rreq_link, &to->rreq_link);
+ 			to = list_next_entry(to, rreq_link);
+-- 
+2.39.5
+
 
 
