@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0822DAFB9;
-	Tue, 15 Jul 2025 13:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB62F2E7651;
+	Tue, 15 Jul 2025 13:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587578; cv=none; b=Hi+1bGsQBCmgx+V6++HBxwjd8Te4EAKjKlIeX6b0PSFk9LSk1LmlNxvR3YoYrL7rX9gY/56Sxpb8kCLhwpKNVAMd2tFQWRmJuBMfdCdvOByoSU7Zqn/j4hM5lwGssuVmVUXRTyQnfaBOjFcTE1T8Bw2epJF0eSOdbf9HpbvRZ2g=
+	t=1752587580; cv=none; b=SE5GCUfUt/PbPHo9UikvfQv81CDiy0yTZoWhFMtSw3elWqgx/r7PSJ/6JTHu0IIRe5J7mCW0PaX1YHP7EO/e3GHYIc0YhknJRpYeysaZki4ZB1TaotoOJe+Su54XkNvDU545W82uXPZ3psMHRScIMlIf6Aev8fsDoQWPqpUsQcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587578; c=relaxed/simple;
-	bh=mijITuDA+rsojxYR0jBPPARFoaJxjI667aYWYcXIJlw=;
+	s=arc-20240116; t=1752587580; c=relaxed/simple;
+	bh=5rDCkSfDcloC+B0wPF6CABW4kOaTDSLDeWG2V31JdXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1eJ8bIPicKKNpHJNmH0PnqfHWK55S1guaJ2dfef8vX/c4OhFnxTKhIzMtvsvt6ZlIQ/JxvJQjMfGeHZzvy/K2GvsO2G9H296+u1Bv7temoGW6GcNEh3M9k8DxlpaXKEJZuw8sEzBjBsWSvxB5xOQ4D0+/wu6uaEUSS+QWOF2PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOfZbE6o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IVui5Jx2lzu/vdIQu83yAJ40c94KDNPJIakCn7kHzZNaSr1V3WZwxlZgX/s10Ug5pPLtUmfFkCUQR6359wLLuITSNZ2kBSNwzmZNDiBpjukjLslWqVfRG3NHmdPwg96GkPD0cjM1X81x4nyqq8UN0X+Ws4SOP94n6ezUxAIwEUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbdkoX6q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOfZbE6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F13C4CEE3;
-	Tue, 15 Jul 2025 13:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbdkoX6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2686BC4CEE3;
+	Tue, 15 Jul 2025 13:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587577;
-	bh=mijITuDA+rsojxYR0jBPPARFoaJxjI667aYWYcXIJlw=;
+	s=korg; t=1752587580;
+	bh=5rDCkSfDcloC+B0wPF6CABW4kOaTDSLDeWG2V31JdXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOfZbE6ogYTaVw5D6M4IYxfQ3qJAUAW/14npgyMekVu2pkB324YxqxuQqQXyR8xuX
-	 aclK9yDCdKFIznzbklVoTRvZRMU9IDjZmJwcO1/L/1DqtBOqjAOI0PFllmiZb1U0gr
-	 4ifQGvM8IBVVLhaDrskT/5NRILkMbrJk5qhni8uY=
+	b=cbdkoX6q+AhCd7CfNCtBvCs7GE4Y6Ck/9HKIyOEULTrdk4Y4w0X+MJCYi591briUd
+	 xjyv1Wf4ndoiLVayukk3QHBMblIU5d2bYFM/6TIezZ1yTccBTFVH2ppX0mYNRMaEe+
+	 XcrFlWzAKjm4YMOyuj+C86nIhukZlS+qdOyzciiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Werling <brett.werling@garmin.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/208] can: tcan4x5x: fix power regulator retrieval during probe
-Date: Tue, 15 Jul 2025 15:12:22 +0200
-Message-ID: <20250715130812.157482121@linuxfoundation.org>
+Subject: [PATCH 5.10 034/208] f2fs: dont over-report free space or inodes in statvfs
+Date: Tue, 15 Jul 2025 15:12:23 +0200
+Message-ID: <20250715130812.195906649@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -51,44 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Werling <brett.werling@garmin.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit db22720545207f734aaa9d9f71637bfc8b0155e0 ]
+[ Upstream commit a9201960623287927bf5776de3f70fb2fbde7e02 ]
 
-Fixes the power regulator retrieval in tcan4x5x_can_probe() by ensuring
-the regulator pointer is not set to NULL in the successful return from
-devm_regulator_get_optional().
+This fixes an analogus bug that was fixed in modern filesystems:
+a) xfs in commit 4b8d867ca6e2 ("xfs: don't over-report free space or
+inodes in statvfs")
+b) ext4 in commit f87d3af74193 ("ext4: don't over-report free space
+or inodes in statvfs")
+where statfs can report misleading / incorrect information where
+project quota is enabled, and the free space is less than the
+remaining quota.
 
-Fixes: 3814ca3a10be ("can: tcan4x5x: tcan4x5x_can_probe(): turn on the power before parsing the config")
-Signed-off-by: Brett Werling <brett.werling@garmin.com>
-Link: https://patch.msgid.link/20250612191825.3646364-1-brett.werling@garmin.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+This commit will resolve a test failure in generic/762 which tests
+for this bug.
+
+generic/762       - output mismatch (see /share/git/fstests/results//generic/762.out.bad)
+#    --- tests/generic/762.out   2025-04-15 10:21:53.371067071 +0800
+#    +++ /share/git/fstests/results//generic/762.out.bad 2025-05-13 16:13:37.000000000 +0800
+#    @@ -6,8 +6,10 @@
+#     root blocks2 is in range
+#     dir blocks2 is in range
+#     root bavail2 is in range
+#    -dir bavail2 is in range
+#    +dir bavail2 has value of 1539066
+#    +dir bavail2 is NOT in range 304734.87 .. 310891.13
+#     root blocks3 is in range
+#    ...
+#    (Run 'diff -u /share/git/fstests/tests/generic/762.out /share/git/fstests/results//generic/762.out.bad'  to see the entire diff)
+
+HINT: You _MAY_ be missing kernel fix:
+      XXXXXXXXXXXXXX xfs: don't over-report free space or inodes in statvfs
+
+Cc: stable@kernel.org
+Fixes: ddc34e328d06 ("f2fs: introduce f2fs_statfs_project")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/tcan4x5x.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/f2fs/super.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/can/m_can/tcan4x5x.c b/drivers/net/can/m_can/tcan4x5x.c
-index f903f78af087a..4bdea945c4862 100644
---- a/drivers/net/can/m_can/tcan4x5x.c
-+++ b/drivers/net/can/m_can/tcan4x5x.c
-@@ -417,10 +417,11 @@ static int tcan4x5x_can_probe(struct spi_device *spi)
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index b7997df291a66..d7fd28a477011 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1433,26 +1433,32 @@ static int f2fs_statfs_project(struct super_block *sb,
+ 
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_bsoftlimit,
+ 					dquot->dq_dqb.dqb_bhardlimit);
+-	if (limit)
+-		limit >>= sb->s_blocksize_bits;
++	limit >>= sb->s_blocksize_bits;
++
++	if (limit) {
++		uint64_t remaining = 0;
+ 
+-	if (limit && buf->f_blocks > limit) {
+ 		curblock = (dquot->dq_dqb.dqb_curspace +
+ 			    dquot->dq_dqb.dqb_rsvspace) >> sb->s_blocksize_bits;
+-		buf->f_blocks = limit;
+-		buf->f_bfree = buf->f_bavail =
+-			(buf->f_blocks > curblock) ?
+-			 (buf->f_blocks - curblock) : 0;
++		if (limit > curblock)
++			remaining = limit - curblock;
++
++		buf->f_blocks = min(buf->f_blocks, limit);
++		buf->f_bfree = min(buf->f_bfree, remaining);
++		buf->f_bavail = min(buf->f_bavail, remaining);
  	}
  
- 	priv->power = devm_regulator_get_optional(&spi->dev, "vsup");
--	if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
--		ret = -EPROBE_DEFER;
--		goto out_m_can_class_free_dev;
--	} else {
-+	if (IS_ERR(priv->power)) {
-+		if (PTR_ERR(priv->power) == -EPROBE_DEFER) {
-+			ret = -EPROBE_DEFER;
-+			goto out_m_can_class_free_dev;
-+		}
- 		priv->power = NULL;
+ 	limit = min_not_zero(dquot->dq_dqb.dqb_isoftlimit,
+ 					dquot->dq_dqb.dqb_ihardlimit);
+ 
+-	if (limit && buf->f_files > limit) {
+-		buf->f_files = limit;
+-		buf->f_ffree =
+-			(buf->f_files > dquot->dq_dqb.dqb_curinodes) ?
+-			 (buf->f_files - dquot->dq_dqb.dqb_curinodes) : 0;
++	if (limit) {
++		uint64_t remaining = 0;
++
++		if (limit > dquot->dq_dqb.dqb_curinodes)
++			remaining = limit - dquot->dq_dqb.dqb_curinodes;
++
++		buf->f_files = min(buf->f_files, limit);
++		buf->f_ffree = min(buf->f_ffree, remaining);
  	}
  
+ 	spin_unlock(&dquot->dq_dqb_lock);
 -- 
 2.39.5
 
