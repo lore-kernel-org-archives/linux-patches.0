@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3CE2E88BB;
-	Tue, 15 Jul 2025 13:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1563C2E88AC;
+	Tue, 15 Jul 2025 13:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587506; cv=none; b=JHSl+gfHAKzshWGUOIC//kQAb4j/dJwqdrqDPLr45KpKXQ3vcKMAsyzaQCanDR/eSc1MwYfMNyOZSpeP13u09vqpUE9kJ/9oN62tYsVl2Y/lB4sN/tb0XUOT4lO91z5MCbdc7Bd2YM6/E2GT5OY83jOM97Q8TdSI2tSqU20Ik8c=
+	t=1752587509; cv=none; b=OT2yTi85wvlSPb1jBy63Vncyyftrk+yUI2Wsoj9dJ0jylsDy3aliXmn2bq76BbEbXPhhyFa/9kymCpGUSWESbcdptRExlKjEm2CuK2P38KhBg2n69IEvkA/6PUEumOHd038vf5xVbCW4CjE+vFN6GZONiXc2bSxr1oRi9m/DXWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587506; c=relaxed/simple;
-	bh=3OqYNCT1/f9Oj5IWfCXn2yQlv+jF20n4z6PlubnkjDY=;
+	s=arc-20240116; t=1752587509; c=relaxed/simple;
+	bh=hxA3H3ilztMtA7CwsnjZ7Xu+PIbkG4rmOpzGCNwn+Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAFqXhkp4pNCLLcOns2k7c2b66LzniEEng6HHprGl9HgarJBrkIFnjPRI1ymL1v2hP3QAxKxGdoW4M5YFY+3Nw/Fryqn8NNpJi/ao6vhDvMC3N5mlLY9W5UfwaLeGG8+gEyZVcUj3SMSkNmwJwNF8t2UiNOVg8/jQA4vlf+0CH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeyuV92u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d30v0YuCAV4PEr4+2Br/45BDSEV7YiABaf+NWxuqt7WSECA8VsNjTNAnrA6Ikrm2NPCA6dvlugqHCQ5TCye8omUftVX6QOQlB10UA9gXgvaqbCvogUmKabYBdHAzi/kgWU89w/uwcrRwMd+5KQV7UOCAclzvYwMzy/bgvcqGkAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEbBmQ4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeyuV92u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A15C4CEE3;
-	Tue, 15 Jul 2025 13:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEbBmQ4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A91C4CEE3;
+	Tue, 15 Jul 2025 13:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587506;
-	bh=3OqYNCT1/f9Oj5IWfCXn2yQlv+jF20n4z6PlubnkjDY=;
+	s=korg; t=1752587508;
+	bh=hxA3H3ilztMtA7CwsnjZ7Xu+PIbkG4rmOpzGCNwn+Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CeyuV92u+3HNVwmA7Ht4ZV133NOCwG2HfNtt2Ta6EF3N8j5Wn0zJmVisLJrm+brK7
-	 PJuDrdTxe+wrhuT+QD0Hjo+PamPhWP86PzXBAR3UUdKWQ8ftqBWrueWhDLsG/diZoD
-	 hAxzgn7yhT3c/B4B0R438umwnmn90Sx+98MTLNvk=
+	b=yEbBmQ4kBXqzA0LEAqvYxncuPPNQauGGMhGJQ1svmcS6+83G90YmKWXp+Jp5E6+nw
+	 XlN7LTYtHTnYz6ukDpKdRZOHeFNTTKZ4rV2sR+cPrj1qF1RMA6szg7VFyZkXn1VhNN
+	 YRokf+VS/uuLRUC7qI8520lMig8+4cVuvpKE1lIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
 	Michael Kelley <mikelley@microsoft.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/208] Drivers: hv: vmbus: Fix duplicate CPU assignments within a device
-Date: Tue, 15 Jul 2025 15:12:27 +0200
-Message-ID: <20250715130812.486705615@linuxfoundation.org>
+Subject: [PATCH 5.10 039/208] Drivers: hv: Rename alloced to allocated
+Date: Tue, 15 Jul 2025 15:12:28 +0200
+Message-ID: <20250715130812.525837718@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,207 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-[ Upstream commit 7c9ff3deeee61b253715dcf968a6307af148c9b2 ]
+[ Upstream commit de96e8a09889b35dd8d1cb6d19ef2bb123b05be1 ]
 
-The vmbus module uses a rotational algorithm to assign target CPUs to
-a device's channels. Depending on the timing of different device's channel
-offers, different channels of a device may be assigned to the same CPU.
+'Alloced' is not a real word and only saves us two letters, let's
+use 'allocated' instead.
 
-For example on a VM with 2 CPUs, if NIC A and B's channels are offered
-in the following order, NIC A will have both channels on CPU0, and
-NIC B will have both channels on CPU1 -- see below. This kind of
-assignment causes RSS load that is spreading across different channels
-to end up on the same CPU.
+No functional change intended.
 
-Timing of channel offers:
-NIC A channel 0
-NIC B channel 0
-NIC A channel 1
-NIC B channel 1
-
-VMBUS ID 14: Class_ID = {f8615163-df3e-46c5-913f-f2d2f965ed0e} - Synthetic network adapter
-        Device_ID = {cab064cd-1f31-47d5-a8b4-9d57e320cccd}
-        Sysfs path: /sys/bus/vmbus/devices/cab064cd-1f31-47d5-a8b4-9d57e320cccd
-        Rel_ID=14, target_cpu=0
-        Rel_ID=17, target_cpu=0
-
-VMBUS ID 16: Class_ID = {f8615163-df3e-46c5-913f-f2d2f965ed0e} - Synthetic network adapter
-        Device_ID = {244225ca-743e-4020-a17d-d7baa13d6cea}
-        Sysfs path: /sys/bus/vmbus/devices/244225ca-743e-4020-a17d-d7baa13d6cea
-        Rel_ID=16, target_cpu=1
-        Rel_ID=18, target_cpu=1
-
-Update the vmbus CPU assignment algorithm to avoid duplicate CPU
-assignments within a device.
-
-The new algorithm iterates num_online_cpus + 1 times.
-The existing rotational algorithm to find "next NUMA & CPU" is still here.
-But if the resulting CPU is already used by the same device, it will try
-the next CPU.
-In the last iteration, it assigns the channel to the next available CPU
-like the existing algorithm. This is not normally expected, because
-during device probe, we limit the number of channels of a device to
-be <= number of online CPUs.
-
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
 Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Tested-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1626459673-17420-1-git-send-email-haiyangz@microsoft.com
+Link: https://lore.kernel.org/r/20220128103412.3033736-2-vkuznets@redhat.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Stable-dep-of: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c | 96 ++++++++++++++++++++++++++-------------
- 1 file changed, 64 insertions(+), 32 deletions(-)
+ drivers/hv/channel_mgmt.c | 18 +++++++++---------
+ drivers/hv/hyperv_vmbus.h | 14 +++++++-------
+ drivers/hv/vmbus_drv.c    |  2 +-
+ 3 files changed, 17 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index 0c6c54061088e..9da36d87ee2c7 100644
+index 9da36d87ee2c7..4ee8b9b22bb9d 100644
 --- a/drivers/hv/channel_mgmt.c
 +++ b/drivers/hv/channel_mgmt.c
-@@ -579,6 +579,17 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
+@@ -429,7 +429,7 @@ void hv_process_channel_removal(struct vmbus_channel *channel)
+ 	 * init_vp_index() can (re-)use the CPU.
  	 */
- 	mutex_lock(&vmbus_connection.channel_mutex);
+ 	if (hv_is_perf_channel(channel))
+-		hv_clear_alloced_cpu(channel->target_cpu);
++		hv_clear_allocated_cpu(channel->target_cpu);
  
-+	list_for_each_entry(channel, &vmbus_connection.chn_list, listentry) {
-+		if (guid_equal(&channel->offermsg.offer.if_type,
-+			       &newchannel->offermsg.offer.if_type) &&
-+		    guid_equal(&channel->offermsg.offer.if_instance,
-+			       &newchannel->offermsg.offer.if_instance)) {
-+			fnew = false;
-+			newchannel->primary_channel = channel;
-+			break;
-+		}
-+	}
-+
- 	init_vp_index(newchannel);
- 
- 	/* Remember the channels that should be cleaned up upon suspend. */
-@@ -591,16 +602,6 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
- 	 */
- 	atomic_dec(&vmbus_connection.offer_in_progress);
- 
--	list_for_each_entry(channel, &vmbus_connection.chn_list, listentry) {
--		if (guid_equal(&channel->offermsg.offer.if_type,
--			       &newchannel->offermsg.offer.if_type) &&
--		    guid_equal(&channel->offermsg.offer.if_instance,
--			       &newchannel->offermsg.offer.if_instance)) {
--			fnew = false;
--			break;
--		}
--	}
--
- 	if (fnew) {
- 		list_add_tail(&newchannel->listentry,
- 			      &vmbus_connection.chn_list);
-@@ -622,7 +623,6 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
- 		/*
- 		 * Process the sub-channel.
- 		 */
--		newchannel->primary_channel = channel;
- 		list_add_tail(&newchannel->sc_list, &channel->sc_list);
- 	}
- 
-@@ -658,6 +658,30 @@ static void vmbus_process_offer(struct vmbus_channel *newchannel)
- 	queue_work(wq, &newchannel->add_channel_work);
- }
- 
-+/*
-+ * Check if CPUs used by other channels of the same device.
-+ * It should only be called by init_vp_index().
-+ */
-+static bool hv_cpuself_used(u32 cpu, struct vmbus_channel *chn)
-+{
-+	struct vmbus_channel *primary = chn->primary_channel;
-+	struct vmbus_channel *sc;
-+
-+	lockdep_assert_held(&vmbus_connection.channel_mutex);
-+
-+	if (!primary)
-+		return false;
-+
-+	if (primary->target_cpu == cpu)
-+		return true;
-+
-+	list_for_each_entry(sc, &primary->sc_list, sc_list)
-+		if (sc != chn && sc->target_cpu == cpu)
-+			return true;
-+
-+	return false;
-+}
-+
- /*
-  * We use this state to statically distribute the channel interrupt load.
-  */
-@@ -677,6 +701,7 @@ static int next_numa_node_id;
- static void init_vp_index(struct vmbus_channel *channel)
- {
+ 	/*
+ 	 * Upon suspend, an in-use hv_sock channel is marked as "rescinded" and
+@@ -703,7 +703,7 @@ static void init_vp_index(struct vmbus_channel *channel)
  	bool perf_chn = hv_is_perf_channel(channel);
-+	u32 i, ncpu = num_online_cpus();
+ 	u32 i, ncpu = num_online_cpus();
  	cpumask_var_t available_mask;
- 	struct cpumask *alloced_mask;
+-	struct cpumask *alloced_mask;
++	struct cpumask *allocated_mask;
  	u32 target_cpu;
-@@ -699,31 +724,38 @@ static void init_vp_index(struct vmbus_channel *channel)
+ 	int numa_node;
+ 
+@@ -720,7 +720,7 @@ static void init_vp_index(struct vmbus_channel *channel)
+ 		 */
+ 		channel->target_cpu = VMBUS_CONNECT_CPU;
+ 		if (perf_chn)
+-			hv_set_alloced_cpu(VMBUS_CONNECT_CPU);
++			hv_set_allocated_cpu(VMBUS_CONNECT_CPU);
  		return;
  	}
  
--	while (true) {
--		numa_node = next_numa_node_id++;
--		if (numa_node == nr_node_ids) {
--			next_numa_node_id = 0;
--			continue;
-+	for (i = 1; i <= ncpu + 1; i++) {
-+		while (true) {
-+			numa_node = next_numa_node_id++;
-+			if (numa_node == nr_node_ids) {
-+				next_numa_node_id = 0;
-+				continue;
-+			}
-+			if (cpumask_empty(cpumask_of_node(numa_node)))
-+				continue;
-+			break;
+@@ -735,22 +735,22 @@ static void init_vp_index(struct vmbus_channel *channel)
+ 				continue;
+ 			break;
  		}
--		if (cpumask_empty(cpumask_of_node(numa_node)))
--			continue;
--		break;
--	}
--	alloced_mask = &hv_context.hv_numa_map[numa_node];
-+		alloced_mask = &hv_context.hv_numa_map[numa_node];
+-		alloced_mask = &hv_context.hv_numa_map[numa_node];
++		allocated_mask = &hv_context.hv_numa_map[numa_node];
  
--	if (cpumask_weight(alloced_mask) ==
--	    cpumask_weight(cpumask_of_node(numa_node))) {
--		/*
--		 * We have cycled through all the CPUs in the node;
--		 * reset the alloced map.
--		 */
--		cpumask_clear(alloced_mask);
--	}
-+		if (cpumask_weight(alloced_mask) ==
-+		    cpumask_weight(cpumask_of_node(numa_node))) {
-+			/*
-+			 * We have cycled through all the CPUs in the node;
-+			 * reset the alloced map.
-+			 */
-+			cpumask_clear(alloced_mask);
-+		}
+-		if (cpumask_weight(alloced_mask) ==
++		if (cpumask_weight(allocated_mask) ==
+ 		    cpumask_weight(cpumask_of_node(numa_node))) {
+ 			/*
+ 			 * We have cycled through all the CPUs in the node;
+-			 * reset the alloced map.
++			 * reset the allocated map.
+ 			 */
+-			cpumask_clear(alloced_mask);
++			cpumask_clear(allocated_mask);
+ 		}
  
--	cpumask_xor(available_mask, alloced_mask, cpumask_of_node(numa_node));
-+		cpumask_xor(available_mask, alloced_mask,
-+			    cpumask_of_node(numa_node));
+-		cpumask_xor(available_mask, alloced_mask,
++		cpumask_xor(available_mask, allocated_mask,
+ 			    cpumask_of_node(numa_node));
  
--	target_cpu = cpumask_first(available_mask);
--	cpumask_set_cpu(target_cpu, alloced_mask);
-+		target_cpu = cpumask_first(available_mask);
-+		cpumask_set_cpu(target_cpu, alloced_mask);
-+
-+		if (channel->offermsg.offer.sub_channel_index >= ncpu ||
-+		    i > ncpu || !hv_cpuself_used(target_cpu, channel))
-+			break;
-+	}
+ 		target_cpu = cpumask_first(available_mask);
+-		cpumask_set_cpu(target_cpu, alloced_mask);
++		cpumask_set_cpu(target_cpu, allocated_mask);
  
- 	channel->target_cpu = target_cpu;
+ 		if (channel->offermsg.offer.sub_channel_index >= ncpu ||
+ 		    i > ncpu || !hv_cpuself_used(target_cpu, channel))
+diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
+index a785d790e0aae..323c56152fa1b 100644
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -406,7 +406,7 @@ static inline bool hv_is_perf_channel(struct vmbus_channel *channel)
+ 	return vmbus_devs[channel->device_id].perf_device;
+ }
  
+-static inline bool hv_is_alloced_cpu(unsigned int cpu)
++static inline bool hv_is_allocated_cpu(unsigned int cpu)
+ {
+ 	struct vmbus_channel *channel, *sc;
+ 
+@@ -428,23 +428,23 @@ static inline bool hv_is_alloced_cpu(unsigned int cpu)
+ 	return false;
+ }
+ 
+-static inline void hv_set_alloced_cpu(unsigned int cpu)
++static inline void hv_set_allocated_cpu(unsigned int cpu)
+ {
+ 	cpumask_set_cpu(cpu, &hv_context.hv_numa_map[cpu_to_node(cpu)]);
+ }
+ 
+-static inline void hv_clear_alloced_cpu(unsigned int cpu)
++static inline void hv_clear_allocated_cpu(unsigned int cpu)
+ {
+-	if (hv_is_alloced_cpu(cpu))
++	if (hv_is_allocated_cpu(cpu))
+ 		return;
+ 	cpumask_clear_cpu(cpu, &hv_context.hv_numa_map[cpu_to_node(cpu)]);
+ }
+ 
+-static inline void hv_update_alloced_cpus(unsigned int old_cpu,
++static inline void hv_update_allocated_cpus(unsigned int old_cpu,
+ 					  unsigned int new_cpu)
+ {
+-	hv_set_alloced_cpu(new_cpu);
+-	hv_clear_alloced_cpu(old_cpu);
++	hv_set_allocated_cpu(new_cpu);
++	hv_clear_allocated_cpu(old_cpu);
+ }
+ 
+ #ifdef CONFIG_HYPERV_TESTING
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index e8bea7c791691..2fed2b169a910 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -1790,7 +1790,7 @@ static ssize_t target_cpu_store(struct vmbus_channel *channel,
+ 
+ 	/* See init_vp_index(). */
+ 	if (hv_is_perf_channel(channel))
+-		hv_update_alloced_cpus(origin_cpu, target_cpu);
++		hv_update_allocated_cpus(origin_cpu, target_cpu);
+ 
+ 	/* Currently set only for storvsc channels. */
+ 	if (channel->change_target_cpu_callback) {
 -- 
 2.39.5
 
