@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EE72E8E04;
-	Tue, 15 Jul 2025 13:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893052EB5A0;
+	Tue, 15 Jul 2025 13:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587079; cv=none; b=slaMnKyyXYW5R9ThbZhcoyijFnUK/ZfxduWMINZYN9tsSgAmMjhCn79R6YCgFeGi2EpBYlEvWhxsAajRyXnIg4WzqJbFlW17CFwgzplcDJ3tonuaagHx1AEhIEXDOrC56G+kdRST2MG9han+PU0HwiBk4Dexmyqy87vMusLgV+A=
+	t=1752587081; cv=none; b=Xtv5gmll35D9qkX44693joka3pkSVbUgc/OfNTLlvxgYWWSy2W7MbPT0+iQcrWWRChkmXmcCzFI9qiQ7gsV4uLx3ATYRkifZnltPIn27d9jBPCZCRyjnD5BTNcxCx2DP0ttJnAZxobZf6Yus+XKi7p0dD0COVEbqZl3f33K03KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587079; c=relaxed/simple;
-	bh=QWQT3QKdNeSBTE88Q3r5OCucxCl0MbeayFQEBOJOyBs=;
+	s=arc-20240116; t=1752587081; c=relaxed/simple;
+	bh=GNQODW5LSyHMt3Rwg04jUXGI7/UdFvJMkim+H3dMUU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltvQU2KHJYstore2tEdJnwbYNGeNgP/tq8ZF7EkrHDIPyuDAzIGlhaqt7zscJrDNR5/qB/W8vXS4AYFR5UdYZ7u7m1qW6mhlEVWY6EuwoOnX9nBk+kG+/d0znfJe99RBDSsA4LtZVMnOBCtmnxYmlXshK0mbPwUnPOZC60yN0/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xS5uLP7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHpCTMpwAQ4BkTUu/4tckBUzwqqMR6WLDdDLK/yWC2QIMKPmaVY19iPttKCsuDuS8AtLFtWvboW7VvVoYvBURW/VK1O8C4BCcBP2GkUOcg9ptUwjy4HeJlMFEwPspc2sTrOxB824vpV+Jk2koWbYq83JiPMdKXchO/mebo0tabs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdR1qssV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xS5uLP7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BA4C4CEE3;
-	Tue, 15 Jul 2025 13:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdR1qssV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFC5C4CEE3;
+	Tue, 15 Jul 2025 13:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587078;
-	bh=QWQT3QKdNeSBTE88Q3r5OCucxCl0MbeayFQEBOJOyBs=;
+	s=korg; t=1752587081;
+	bh=GNQODW5LSyHMt3Rwg04jUXGI7/UdFvJMkim+H3dMUU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1xS5uLP7SoNEcipiMenqkuMRabD6FOwMUj7bAZez3bVJFmoqkDyNmNu1yvsr6fiGb
-	 TPSY0Uc7SEWu5iHhmy24MXj49m6anRk3c4qi/mX9ctOIqikC11bRAtoo7sUsRwF+pw
-	 3A9+5/hsH1ZgrGlJl2uyxuD//caE0rvVUffHYnFw=
+	b=NdR1qssVkKDr6L4T3PIcbTCb3d3VL5s0PfnvyRH/lvvfXicDWBPa31qa8RZ6TxWuZ
+	 NNk0oSPE9Bgq8SN6IsuB6tXKbmRzE5oaXVHIipi08oK/wolXUKeiCcv2Ckz21MzDTv
+	 Y43CRW+NciGpT8Yj0h8lfqkeuklAtgVt30BlcJVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 127/192] wifi: cfg80211: fix S1G beacon head validation in nl80211
-Date: Tue, 15 Jul 2025 15:13:42 +0200
-Message-ID: <20250715130819.993024429@linuxfoundation.org>
+Subject: [PATCH 6.15 128/192] wifi: zd1211rw: Fix potential NULL pointer dereference in zd_mac_tx_to_dev()
+Date: Tue, 15 Jul 2025 15:13:43 +0200
+Message-ID: <20250715130820.035500340@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,51 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 1fe44a86ff0ff483aa1f1332f2b08f431fa51ce8 ]
+[ Upstream commit 74b1ec9f5d627d2bdd5e5b6f3f81c23317657023 ]
 
-S1G beacons contain fixed length optional fields that precede the
-variable length elements, ensure we take this into account when
-validating the beacon. This particular case was missed in
-1e1f706fc2ce ("wifi: cfg80211/mac80211: correctly parse S1G
-beacon optional elements").
+There is a potential NULL pointer dereference in zd_mac_tx_to_dev(). For
+example, the following is possible:
 
-Fixes: 1d47f1198d58 ("nl80211: correctly validate S1G beacon head")
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Link: https://patch.msgid.link/20250626115118.68660-1-lachlan.hodges@morsemicro.com
-[shorten/reword subject]
+    	T0			    		T1
+zd_mac_tx_to_dev()
+  /* len == skb_queue_len(q) */
+  while (len > ZD_MAC_MAX_ACK_WAITERS) {
+
+					  filter_ack()
+					    spin_lock_irqsave(&q->lock, flags);
+					    /* position == skb_queue_len(q) */
+					    for (i=1; i<position; i++)
+				    	      skb = __skb_dequeue(q)
+
+					    if (mac->type == NL80211_IFTYPE_AP)
+					      skb = __skb_dequeue(q);
+					    spin_unlock_irqrestore(&q->lock, flags);
+
+    skb_dequeue() -> NULL
+
+Since there is a small gap between checking skb queue length and skb being
+unconditionally dequeued in zd_mac_tx_to_dev(), skb_dequeue() can return NULL.
+Then the pointer is passed to zd_mac_tx_status() where it is dereferenced.
+
+In order to avoid potential NULL pointer dereference due to situations like
+above, check if skb is not NULL before passing it to zd_mac_tx_status().
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 459c51ad6e1f ("zd1211rw: port to mac80211")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://patch.msgid.link/20250626114619.172631-1-d.dulov@aladdin.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/zydas/zd1211rw/zd_mac.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index f039a7d0d6f73..0c7e8389bc49e 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -229,6 +229,7 @@ static int validate_beacon_head(const struct nlattr *attr,
- 	unsigned int len = nla_len(attr);
- 	const struct element *elem;
- 	const struct ieee80211_mgmt *mgmt = (void *)data;
-+	const struct ieee80211_ext *ext;
- 	unsigned int fixedlen, hdrlen;
- 	bool s1g_bcn;
+diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
+index 9653dbaac3c05..781510a3ec6d5 100644
+--- a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
++++ b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
+@@ -583,7 +583,11 @@ void zd_mac_tx_to_dev(struct sk_buff *skb, int error)
  
-@@ -237,8 +238,10 @@ static int validate_beacon_head(const struct nlattr *attr,
- 
- 	s1g_bcn = ieee80211_is_s1g_beacon(mgmt->frame_control);
- 	if (s1g_bcn) {
--		fixedlen = offsetof(struct ieee80211_ext,
--				    u.s1g_beacon.variable);
-+		ext = (struct ieee80211_ext *)mgmt;
-+		fixedlen =
-+			offsetof(struct ieee80211_ext, u.s1g_beacon.variable) +
-+			ieee80211_s1g_optional_len(ext->frame_control);
- 		hdrlen = offsetof(struct ieee80211_ext, u.s1g_beacon);
- 	} else {
- 		fixedlen = offsetof(struct ieee80211_mgmt,
+ 		skb_queue_tail(q, skb);
+ 		while (skb_queue_len(q) > ZD_MAC_MAX_ACK_WAITERS) {
+-			zd_mac_tx_status(hw, skb_dequeue(q),
++			skb = skb_dequeue(q);
++			if (!skb)
++				break;
++
++			zd_mac_tx_status(hw, skb,
+ 					 mac->ack_pending ? mac->ack_signal : 0,
+ 					 NULL);
+ 			mac->ack_pending = 0;
 -- 
 2.39.5
 
