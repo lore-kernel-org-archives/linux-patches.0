@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F982472AE;
-	Tue, 15 Jul 2025 13:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5873319F420;
+	Tue, 15 Jul 2025 13:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585513; cv=none; b=SkH+2YTB/gG+WI5SjfkapIfCoFHn9ognE+L7jyb8TByNU/WpsJ8uS9ztD9y0QjPTeNFZzX3V3pT+JmoJabOcmzHZhtb+xeV1v8+w9cCXHZRRR86mAg7qNP+J+XUqxfjLjsv6BsKVUzrb4IY9nAmW2qDmnmXAMgtLPUK535U44SM=
+	t=1752585516; cv=none; b=m5BpYHApukxpXEzwLYp9IF/sZMdh3jeaq4rr/6TbPemblF/I/zrdW3/ubt3LqlzFxWR8qcJD4q7uZs5GQLtELbumE+aUVWZRF1n0RsjjJCH28E18+2PDenVAFr7jsqyXfmNbsBbEhRQ1Q5AkmOgFnCKetVFLXndwmh/A01Q0zfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585513; c=relaxed/simple;
-	bh=lrjwa8sbEm6F+AJJWwM2/4B+muj4eKa6HFttNLsjQqI=;
+	s=arc-20240116; t=1752585516; c=relaxed/simple;
+	bh=0w96zMfHMpa3APYAAqxMsEcdaLUnjtqnR5BxZikAPKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nduf/7jWey6QeQ/ep2rwyKnYS6NsNMMYvAUOsNP6kpxt9QyGtrOb9uXumdf9pNbTUxT4mP+eN9jCxWV4cyHkCh17QLAGG530HHIQDV4O7aqcTEa0G5geYc9xMDeudYVkYX0gf3rR65ug+Lh0J57yLMoBtnfy2duaNd6Td1Bz9AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZvVzTTG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GcnrHk4Z5HVgNWpf3W5auK/6o3gxCwuYRG14DH11AF/ds5J6vuOytgls5F5PQR4K+sI+5LA4MSOXBXUPe5UYbBth9MKwK09bR01Vm/YawHYT+2bszzcY5fKFDtCR6SRB+kzOH9vq+mdUNrfaHZVrIECVRpTWqdfm/T55q4UCm8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kh4dXUvG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZvVzTTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABBDC4CEE3;
-	Tue, 15 Jul 2025 13:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kh4dXUvG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3019C4CEE3;
+	Tue, 15 Jul 2025 13:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585513;
-	bh=lrjwa8sbEm6F+AJJWwM2/4B+muj4eKa6HFttNLsjQqI=;
+	s=korg; t=1752585516;
+	bh=0w96zMfHMpa3APYAAqxMsEcdaLUnjtqnR5BxZikAPKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZvVzTTG667E0lbp4Wp9rvyl+HHlCFsK2TBXt9aj271MfmjVK7MK2j7bq+4WiV1V2
-	 R89nGUfXPdB1ITghRCniZqIa5Mv3GZYg8jD9WGpDA96J3jPF9OPvh6btstitjZj8hz
-	 SwImlnPJQqgDKfZZESpGRq8VHh/hXuMok/zDdC8M=
+	b=Kh4dXUvGWLNs4Uzv3HldM+GqCLdaZfRDNxTrCK8XzOiDvKs03GacBTsMg1sAdj0+v
+	 MUT/Tk0gT+gF9pFG/4KGGZSw19tBydRAC7TTq2UNlN9rGoOXIZzjtaVoUjrdwWHbF+
+	 KeT+kIEkTotihNbNC9Kl42WOo+F/F4v1lCjOAHt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 6.12 051/163] x86/mce: Dont remove sysfs if thresholding sysfs init fails
-Date: Tue, 15 Jul 2025 15:11:59 +0200
-Message-ID: <20250715130810.805566106@linuxfoundation.org>
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.12 069/163] wifi: mt76: mt7925: prevent NULL pointer dereference in mt7925_sta_set_decap_offload()
+Date: Tue, 15 Jul 2025 15:12:17 +0200
+Message-ID: <20250715130811.509904813@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -52,52 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-commit 4c113a5b28bfd589e2010b5fc8867578b0135ed7 upstream.
+commit 35ad47c0b3da04b00b19a8b9ed5632e2f2520472 upstream.
 
-Currently, the MCE subsystem sysfs interface will be removed if the
-thresholding sysfs interface fails to be created. A common failure is due to
-new MCA bank types that are not recognized and don't have a short name set.
+Add a NULL check for msta->vif before accessing its members to prevent
+a kernel panic in AP mode deployment. This also fix the issue reported
+in [1].
 
-The MCA thresholding feature is optional and should not break the common MCE
-sysfs interface. Also, new MCA bank types are occasionally introduced, and
-updates will be needed to recognize them. But likewise, this should not break
-the common sysfs interface.
+The crash occurs when this function is triggered before the station is
+fully initialized. The call trace shows a page fault at
+mt7925_sta_set_decap_offload() due to accessing resources when msta->vif
+is NULL.
 
-Keep the MCE sysfs interface regardless of the status of the thresholding
-sysfs interface.
+Fix this by adding an early return if msta->vif is NULL and also check
+wcid.sta is ready. This ensures we only proceed with decap offload
+configuration when the station's state is properly initialized.
 
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Tony Luck <tony.luck@intel.com>
+[14739.655703] Unable to handle kernel paging request at virtual address ffffffffffffffa0
+[14739.811820] CPU: 0 UID: 0 PID: 895854 Comm: hostapd Tainted: G
+[14739.821394] Tainted: [C]=CRAP, [O]=OOT_MODULE
+[14739.825746] Hardware name: Raspberry Pi 4 Model B Rev 1.1 (DT)
+[14739.831577] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[14739.838538] pc : mt7925_sta_set_decap_offload+0xc0/0x1b8 [mt7925_common]
+[14739.845271] lr : mt7925_sta_set_decap_offload+0x58/0x1b8 [mt7925_common]
+[14739.851985] sp : ffffffc085efb500
+[14739.855295] x29: ffffffc085efb500 x28: 0000000000000000 x27: ffffff807803a158
+[14739.862436] x26: ffffff8041ececb8 x25: 0000000000000001 x24: 0000000000000001
+[14739.869577] x23: 0000000000000001 x22: 0000000000000008 x21: ffffff8041ecea88
+[14739.876715] x20: ffffff8041c19ca0 x19: ffffff8078031fe0 x18: 0000000000000000
+[14739.883853] x17: 0000000000000000 x16: ffffffe2aeac1110 x15: 000000559da48080
+[14739.890991] x14: 0000000000000001 x13: 0000000000000000 x12: 0000000000000000
+[14739.898130] x11: 0a10020001008e88 x10: 0000000000001a50 x9 : ffffffe26457bfa0
+[14739.905269] x8 : ffffff8042013bb0 x7 : ffffff807fb6cbf8 x6 : dead000000000100
+[14739.912407] x5 : dead000000000122 x4 : ffffff80780326c8 x3 : 0000000000000000
+[14739.919546] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffff8041ececb8
+[14739.926686] Call trace:
+[14739.929130]  mt7925_sta_set_decap_offload+0xc0/0x1b8 [mt7925_common]
+[14739.935505]  ieee80211_check_fast_rx+0x19c/0x510 [mac80211]
+[14739.941344]  _sta_info_move_state+0xe4/0x510 [mac80211]
+[14739.946860]  sta_info_move_state+0x1c/0x30 [mac80211]
+[14739.952116]  sta_apply_auth_flags.constprop.0+0x90/0x1b0 [mac80211]
+[14739.958708]  sta_apply_parameters+0x234/0x5e0 [mac80211]
+[14739.964332]  ieee80211_add_station+0xdc/0x190 [mac80211]
+[14739.969950]  nl80211_new_station+0x46c/0x670 [cfg80211]
+[14739.975516]  genl_family_rcv_msg_doit+0xdc/0x150
+[14739.980158]  genl_rcv_msg+0x218/0x298
+[14739.983830]  netlink_rcv_skb+0x64/0x138
+[14739.987670]  genl_rcv+0x40/0x60
+[14739.990816]  netlink_unicast+0x314/0x380
+[14739.994742]  netlink_sendmsg+0x198/0x3f0
+[14739.998664]  __sock_sendmsg+0x64/0xc0
+[14740.002324]  ____sys_sendmsg+0x260/0x298
+[14740.006242]  ___sys_sendmsg+0xb4/0x110
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-1-236dd74f645f@amd.com
+Link: https://github.com/morrownr/USB-WiFi/issues/603 [1]
+Fixes: b859ad65309a ("wifi: mt76: mt7925: add link handling in mt7925_sta_set_decap_offload")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Link: https://patch.msgid.link/35aedbffa050e98939264300407a52ba4e236d52.1748149855.git.deren.wu@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/core.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2756,15 +2756,9 @@ static int mce_cpu_dead(unsigned int cpu
- static int mce_cpu_online(unsigned int cpu)
- {
- 	struct timer_list *t = this_cpu_ptr(&mce_timer);
--	int ret;
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1565,6 +1565,9 @@ static void mt7925_sta_set_decap_offload
+ 	unsigned long valid = mvif->valid_links;
+ 	u8 i;
  
- 	mce_device_create(cpu);
--
--	ret = mce_threshold_create_device(cpu);
--	if (ret) {
--		mce_device_remove(cpu);
--		return ret;
--	}
-+	mce_threshold_create_device(cpu);
- 	mce_reenable_cpu();
- 	mce_start_timer(t);
- 	return 0;
++	if (!msta->vif)
++		return;
++
+ 	mt792x_mutex_acquire(dev);
+ 
+ 	valid = ieee80211_vif_is_mld(vif) ? mvif->valid_links : BIT(0);
+@@ -1579,6 +1582,9 @@ static void mt7925_sta_set_decap_offload
+ 		else
+ 			clear_bit(MT_WCID_FLAG_HDR_TRANS, &mlink->wcid.flags);
+ 
++		if (!mlink->wcid.sta)
++			continue;
++
+ 		mt7925_mcu_wtbl_update_hdr_trans(dev, vif, sta, i);
+ 	}
+ 
 
 
