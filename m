@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A0A1B4231;
-	Tue, 15 Jul 2025 13:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AFF2E2EEA;
+	Tue, 15 Jul 2025 13:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586219; cv=none; b=kWQzPxSObT+wFPa4JLyNNunP1l3Ch2ea1j1QbJn3ZSl9DPK/3iMS8i60FHsif0xL/77dr2kW8zAUNqwJg8v1v8TovHpBAnfQdojx32f/kmwtLqedt2SSy43IUBSE3mXa7q0YeNWz764uXNXa8OixjyDNX3lYSFtCWPO6DrMOotE=
+	t=1752586221; cv=none; b=NXe5iltMNlc2/7W6L0V13KUW7W0Hof9RUjaZ29q5t/KVvH99MAJO4tzqPPEc2ahj8iZ6Ic3yM+MsjWUxC8RAV6sVzqc5jNfOd8bsC69RUvKGLk7naMOCS1ACtdHe223ypCYGbOtPUQDxgAKv3DAQsaD1xQjt6MYLlDxfZ7abLfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586219; c=relaxed/simple;
-	bh=g27ymKmGVlGV4h9k28ih/pK8lqhJ3IHutalOMG/e4KI=;
+	s=arc-20240116; t=1752586221; c=relaxed/simple;
+	bh=Dzbsx5CV+I+X1CuFGVhC8uAQ5kQ3iBmDlolgOlevlkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLme59/yObejG4XOeTLXLAcfWj9Cp1pV3NVCbsz/Shf935vS9GsgpFdf5VeTpQU2jvN7lxDwkIXwabHbJ5v7q+FOrqzmoXwo7+wPyZOLLbMkMvqb9WiQTD7SpcrnI2oQ9u5X0dEG6cx9gyg0jsZokUiFwT87ZoSIBb/DamtabAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkvdoFQ2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCE5DIgw891ays5ygokNI9KUW5ewSCa5E5uyECLHkwoA+qH3hYdivr2M+tDelax9QaSV13uqpe8fO4SjnguvvinDh9ctjl2WplUCgOER+3OwEjg8j7lc7ywoVoputRZOcBXmJvE55KiyBn0oK1YL53R93ZBLFxDQBFVOUfVslMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hni6CicD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkvdoFQ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785C5C4CEE3;
-	Tue, 15 Jul 2025 13:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hni6CicD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6A8C4CEF1;
+	Tue, 15 Jul 2025 13:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586218;
-	bh=g27ymKmGVlGV4h9k28ih/pK8lqhJ3IHutalOMG/e4KI=;
+	s=korg; t=1752586221;
+	bh=Dzbsx5CV+I+X1CuFGVhC8uAQ5kQ3iBmDlolgOlevlkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JkvdoFQ2Y5GxqTog92eyYej2SBqojwY928oHj4IzOJggGXl/flDRn+dR5sz6mKJz/
-	 EanDVC9oRHzl7X1K+72guH3KLdxb05E8FDz6dUPJ/bee5WnBRNaHE8IkskUE/9dXNE
-	 Ew/YL22BoQwD0PqqMeVSacDn9yPcbTQhFUH/73DU=
+	b=Hni6CicDA00w+SIKE+NWxNreyI7Bq4LKrR5ExHs2UjIpjQzwMfgac0o34MR6muHhs
+	 piT4i/FWzdrjxU4XloZoTJ0v499U4W3yxeiwyufF3CoHk8O877V5addlr3k1I77O6G
+	 Fz7y4aEX3N5pNgd8bUccLJMAnbCudfrU/5b4kkgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kuen-Han Tsai <khtsai@google.com>,
-	Prashanth K <prashanth.k@oss.qualcomm.com>
-Subject: [PATCH 5.15 33/77] usb: gadget: u_serial: Fix race condition in TTY wakeup
-Date: Tue, 15 Jul 2025 15:13:32 +0200
-Message-ID: <20250715130753.035907965@linuxfoundation.org>
+	syzbot+bf6ed459397e307c3ad2@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 60/77] netfilter: flowtable: account for Ethernet header in nf_flow_pppoe_proto()
+Date: Tue, 15 Jul 2025 15:13:59 +0200
+Message-ID: <20250715130754.136612222@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -51,59 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit c529c3730bd09115684644e26bf01ecbd7e2c2c9 upstream.
+[ Upstream commit 18cdb3d982da8976b28d57691eb256ec5688fad2 ]
 
-A race condition occurs when gs_start_io() calls either gs_start_rx() or
-gs_start_tx(), as those functions briefly drop the port_lock for
-usb_ep_queue(). This allows gs_close() and gserial_disconnect() to clear
-port.tty and port_usb, respectively.
+syzbot found a potential access to uninit-value in nf_flow_pppoe_proto()
 
-Use the null-safe TTY Port helper function to wake up TTY.
+Blamed commit forgot the Ethernet header.
 
-Example
-  CPU1:			      CPU2:
-  gserial_connect() // lock
-  			      gs_close() // await lock
-  gs_start_rx()     // unlock
-  usb_ep_queue()
-  			      gs_close() // lock, reset port.tty and unlock
-  gs_start_rx()     // lock
-  tty_wakeup()      // NPE
+BUG: KMSAN: uninit-value in nf_flow_offload_inet_hook+0x7e4/0x940 net/netfilter/nf_flow_table_inet.c:27
+  nf_flow_offload_inet_hook+0x7e4/0x940 net/netfilter/nf_flow_table_inet.c:27
+  nf_hook_entry_hookfn include/linux/netfilter.h:157 [inline]
+  nf_hook_slow+0xe1/0x3d0 net/netfilter/core.c:623
+  nf_hook_ingress include/linux/netfilter_netdev.h:34 [inline]
+  nf_ingress net/core/dev.c:5742 [inline]
+  __netif_receive_skb_core+0x4aff/0x70c0 net/core/dev.c:5837
+  __netif_receive_skb_one_core net/core/dev.c:5975 [inline]
+  __netif_receive_skb+0xcc/0xac0 net/core/dev.c:6090
+  netif_receive_skb_internal net/core/dev.c:6176 [inline]
+  netif_receive_skb+0x57/0x630 net/core/dev.c:6235
+  tun_rx_batched+0x1df/0x980 drivers/net/tun.c:1485
+  tun_get_user+0x4ee0/0x6b40 drivers/net/tun.c:1938
+  tun_chr_write_iter+0x3e9/0x5c0 drivers/net/tun.c:1984
+  new_sync_write fs/read_write.c:593 [inline]
+  vfs_write+0xb4b/0x1580 fs/read_write.c:686
+  ksys_write fs/read_write.c:738 [inline]
+  __do_sys_write fs/read_write.c:749 [inline]
 
-Fixes: 35f95fd7f234 ("TTY: usb/u_serial, use tty from tty_port")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Reviewed-by: Prashanth K <prashanth.k@oss.qualcomm.com>
-Link: https://lore.kernel.org/linux-usb/20240116141801.396398-1-khtsai@google.com/
-Link: https://lore.kernel.org/r/20250617050844.1848232-2-khtsai@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+bf6ed459397e307c3ad2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/686bc073.a00a0220.c7b3.0086.GAE@google.com/T/#u
+Fixes: 87b3593bed18 ("netfilter: flowtable: validate pppoe header")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://patch.msgid.link/20250707124517.614489-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/netfilter/nf_flow_table.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -290,8 +290,8 @@ __acquires(&port->port_lock)
- 			break;
- 	}
+diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
+index 8e98fb8edff8d..664c3637e283c 100644
+--- a/include/net/netfilter/nf_flow_table.h
++++ b/include/net/netfilter/nf_flow_table.h
+@@ -336,7 +336,7 @@ static inline __be16 __nf_flow_pppoe_proto(const struct sk_buff *skb)
  
--	if (do_tty_wake && port->port.tty)
--		tty_wakeup(port->port.tty);
-+	if (do_tty_wake)
-+		tty_port_tty_wakeup(&port->port);
- 	return status;
- }
+ static inline bool nf_flow_pppoe_proto(struct sk_buff *skb, __be16 *inner_proto)
+ {
+-	if (!pskb_may_pull(skb, PPPOE_SES_HLEN))
++	if (!pskb_may_pull(skb, ETH_HLEN + PPPOE_SES_HLEN))
+ 		return false;
  
-@@ -568,7 +568,7 @@ static int gs_start_io(struct gs_port *p
- 		gs_start_tx(port);
- 		/* Unblock any pending writes into our circular buffer, in case
- 		 * we didn't in gs_start_tx() */
--		tty_wakeup(port->port.tty);
-+		tty_port_tty_wakeup(&port->port);
- 	} else {
- 		/* Free reqs only if we are still connected */
- 		if (port->port_usb) {
+ 	*inner_proto = __nf_flow_pppoe_proto(skb);
+-- 
+2.39.5
+
 
 
