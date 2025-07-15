@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4217819066B;
-	Tue, 15 Jul 2025 13:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D063BBF2;
+	Tue, 15 Jul 2025 13:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585367; cv=none; b=SQzLyb+qnnroqdGN3AYDhpFplfIfbmpGv/M8rFGuweKi1nAM110MSYrozOz1GuIAuJjWBtgDFgBKK2n8+ZLtt2ExbStxSjy0I67rfd4TsSXBNdu9R56BSYmW5uYHCvDxrtujNd09bk5KoBRFYb0G+C0nAu0oP8xZYVW5C6mcf60=
+	t=1752585370; cv=none; b=e9PjWa0jAhxh3Has7zh+0TjAWWpJSaXeSsHlKsUERP+1m2ZcfHzPwMildC1aqZXmDScNWZGcl3XUK/odG1B8SRHfkd+Ukmq1yC1lhPxpa6sJUi29/Wbejf3hBhzs9HzrFxEIKW+ZFZoI4s/tGzZEaHDWwp2tNV/0GQfqQHKvnsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585367; c=relaxed/simple;
-	bh=0aRSjdDffhwHIBHUm2MNvC0Rt21qopTmCLnmH7CzQWw=;
+	s=arc-20240116; t=1752585370; c=relaxed/simple;
+	bh=lGwf51EaPc3Q/c+CePCOn1pjxXtrehejRHw+JFMRgH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZbt57QaWPZ+zPSqK3NgqxU/+8/GQxzsUeToX2YSEgyeCGZAEX9dRo6Sn++jFc9E0rmtkzRxei/1ciuPc8+4zspmsOjkK2O1uwgmaKaejQpEPE+6bYaxOBjX5YcAAWMvLXflvgt8VxQ/NQ5HP16uVzfscqxEJVnooDyzFvTf3AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGMvthgd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjbcrGjFIw0bF7h9rGfYDvDzWUWpFKmHhFEK7BzlGNCjJmxMWNVLeiPEnkOpCpeW3r6DPAjVLBRteQLheGqcK+DQpKvpWvTQMLT1HvKfg2GrpP4fRfweiI0wHgcaT/KINNwSLTb6TgPVg3welPA1oEl4Wz9aplmWD19wif+p2C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpL8fksV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGMvthgd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85DCC4CEE3;
-	Tue, 15 Jul 2025 13:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpL8fksV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549E6C4CEE3;
+	Tue, 15 Jul 2025 13:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585367;
-	bh=0aRSjdDffhwHIBHUm2MNvC0Rt21qopTmCLnmH7CzQWw=;
+	s=korg; t=1752585369;
+	bh=lGwf51EaPc3Q/c+CePCOn1pjxXtrehejRHw+JFMRgH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGMvthgdn1vUYZKIMimC1NACp/0msYjgP04cCRhzWKyPP3eDkTbkRqLAvbc/zyPj+
-	 UcetuVJfMLqmO0f1/wbeDujEEXhov9KTawN03IewIOZFRHGFt0ZbHObmx9BwoXS6F6
-	 +BEy7yjNOJhkE4Y1LqJf1KRQoNq44QcgOx738YsY=
+	b=TpL8fksVlAXlgK1+u3/Bo0FHFjgWPuJ4wgLUIv3jopqKsnpdyYGyk5pSgubcVHwRL
+	 LLLZNL01saRbTadVAXdA2BvUqQnNpRghcCMiaFRS+H81eAHT1uln9l/1f7kuVKlIHz
+	 ne8LxdtEyFwFWaqTFrmsLndQIlUx6ozdm6coxNq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/163] ASoC: Intel: soc-acpi: arl: Correct order of cs42l43 matches
-Date: Tue, 15 Jul 2025 15:11:22 +0200
-Message-ID: <20250715130809.346910664@linuxfoundation.org>
+	Kaustabh Chakraborty <kauschluss@disroot.org>,
+	Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH 6.12 002/163] drm/exynos: exynos7_drm_decon: add vblank check in IRQ handling
+Date: Tue, 15 Jul 2025 15:11:10 +0200
+Message-ID: <20250715130808.879336420@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,52 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Kaustabh Chakraborty <kauschluss@disroot.org>
 
-[ Upstream commit a7528e9beadbddcec21b394ce5fa8dc4e5cdaa24 ]
+commit b846350aa272de99bf6fecfa6b08e64ebfb13173 upstream.
 
-Matches should go from more specific to less specific, correct the
-ordering of two cs42l43 entries.
+If there's support for another console device (such as a TTY serial),
+the kernel occasionally panics during boot. The panic message and a
+relevant snippet of the call stack is as follows:
 
-Fixes: c0524067653d ("ASoC: Intel: soc-acpi: arl: Add match entries for new cs42l43 laptops")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250626141841.77780-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  Unable to handle kernel NULL pointer dereference at virtual address 000000000000000
+  Call trace:
+    drm_crtc_handle_vblank+0x10/0x30 (P)
+    decon_irq_handler+0x88/0xb4
+    [...]
+
+Otherwise, the panics don't happen. This indicates that it's some sort
+of race condition.
+
+Add a check to validate if the drm device can handle vblanks before
+calling drm_crtc_handle_vblank() to avoid this.
+
+Cc: stable@vger.kernel.org
+Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
+Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/common/soc-acpi-intel-arl-match.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-arl-match.c b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
-index 73e581e937554..1ad704ca2c5f2 100644
---- a/sound/soc/intel/common/soc-acpi-intel-arl-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
-@@ -468,17 +468,17 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_sdw_machines[] = {
- 		.get_function_tplg_files = sof_sdw_get_tplg_files,
- 	},
- 	{
--		.link_mask = BIT(2),
--		.links = arl_cs42l43_l2,
-+		.link_mask = BIT(2) | BIT(3),
-+		.links = arl_cs42l43_l2_cs35l56_l3,
- 		.drv_name = "sof_sdw",
--		.sof_tplg_filename = "sof-arl-cs42l43-l2.tplg",
-+		.sof_tplg_filename = "sof-arl-cs42l43-l2-cs35l56-l3.tplg",
- 		.get_function_tplg_files = sof_sdw_get_tplg_files,
- 	},
- 	{
--		.link_mask = BIT(2) | BIT(3),
--		.links = arl_cs42l43_l2_cs35l56_l3,
-+		.link_mask = BIT(2),
-+		.links = arl_cs42l43_l2,
- 		.drv_name = "sof_sdw",
--		.sof_tplg_filename = "sof-arl-cs42l43-l2-cs35l56-l3.tplg",
-+		.sof_tplg_filename = "sof-arl-cs42l43-l2.tplg",
- 		.get_function_tplg_files = sof_sdw_get_tplg_files,
- 	},
- 	{
--- 
-2.39.5
-
+--- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+@@ -601,6 +601,10 @@ static irqreturn_t decon_irq_handler(int
+ 	if (!ctx->drm_dev)
+ 		goto out;
+ 
++	/* check if crtc and vblank have been initialized properly */
++	if (!drm_dev_has_vblank(ctx->drm_dev))
++		goto out;
++
+ 	if (!ctx->i80_if) {
+ 		drm_crtc_handle_vblank(&ctx->crtc->base);
+ 
 
 
