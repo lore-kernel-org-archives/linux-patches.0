@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3227D2E175C;
-	Tue, 15 Jul 2025 13:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B645919D09C;
+	Tue, 15 Jul 2025 13:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585591; cv=none; b=reHqB1A+jbg65y4SNoQDDa06MZKoSVsmY4DjrkYpkAX7OXpajciGBD40GS49EHPoAwAtkg9wyL9VQvoudSEhnLj+SKA5zuQ2sDJLKVVW7+0INhxO1SitOAet7PV7U4WJDvC9OP2eEpD1vm8Zki+TwRjlEwHl89a5geRhbSMVmoE=
+	t=1752585593; cv=none; b=eFzF4o8xLCkmaM7r7kg3v752cbHXSwQShHn7vG+AB/OhLUNaL0QcEsB+iKZaAbJC4ORlCedYxWwjhDrZn7umBII0ISdI8Kz+EnADf/lTYrFcHA4Xghlp/NbMrI6w+i2jf6whaaeVdxZrwUXtuLP3NToLWZXGiPowmjO9bLwmIXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585591; c=relaxed/simple;
-	bh=IAzaJ7V7ycv7lJhB0SZ5pno9uZPtfsmXDcl67LTu7qU=;
+	s=arc-20240116; t=1752585593; c=relaxed/simple;
+	bh=glIwbtmsq1m1rRqbYxUUdwi7StLm6ZJLOyibE+B3RR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMsJ2X2CIjS0Dw0GIQZ3Jy6ppjf+DJUl4nL6cG8f7wHg/Jn27/nZ+Z8Raa0oi+GbjKvDlu84fktmaQ+kH0tX9VOz1jJ06L7CnJgFKRiAln0EIv3aXmA61gX+6mQBNQY1mP5fC3aIyc7Yc64zsJaHPniom21+oJwxhzrB1Ix60BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olySxMd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMtAdplWXKgJLlCBr5Aen3DMdFePU6gNKLviLAeIaJcI9ro+G/7NGSHcO7xft9b/w71BxxXGyBn4cFrqI2bmcrZ0xyHLbgP1vmZMpRZGHetTKM+vwGolP63SG4pZpz1ggtyAs7+JU5ao80kSXeOo7dxsXhz08gI/rXIf7hndrIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icRCwRlm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olySxMd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F7FC4CEE3;
-	Tue, 15 Jul 2025 13:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icRCwRlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2CFC4CEE3;
+	Tue, 15 Jul 2025 13:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585591;
-	bh=IAzaJ7V7ycv7lJhB0SZ5pno9uZPtfsmXDcl67LTu7qU=;
+	s=korg; t=1752585593;
+	bh=glIwbtmsq1m1rRqbYxUUdwi7StLm6ZJLOyibE+B3RR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olySxMd/mUOmDwpb3GobVuTLQQjvPMozlz99pyOTz8J5jUWpkRmDkn0yobkrsetG0
-	 UoYL9QLRrFa+NzHRMJI95lzHzqcVYA0lH1XUkPvLxAON8RezbNxRmMIjgvGa8bHidJ
-	 qJB9LaBn6LayOUntQQORF/WWvZJ3RAJV2qef/kBA=
+	b=icRCwRlmZSi92wqnW1HMVeFg0BBOlg4Mon+20AsTgzCKfurw5iRQ0oUMPIYcYkSDe
+	 oZdpIHk3/xr2p5sozbs9A8Ynvb/M1JaqR6sz1/vdP96R6+PWnyURDS0CcW8Zqn93Ed
+	 pwIHTL4M/96aIuPaoOdaWK6ZBI11jF3Mld0gbEqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	peng.fan@nxp.com,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.12 098/163] clk: scmi: Handle case where child clocks are initialized before their parents
-Date: Tue, 15 Jul 2025 15:12:46 +0200
-Message-ID: <20250715130812.796455257@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sergey Senozhatsky <sergey.senozhatsky@gmail.com>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	Stefan Metzmacher <metze@samba.org>
+Subject: [PATCH 6.12 099/163] smb: server: make use of rdma_destroy_qp()
+Date: Tue, 15 Jul 2025 15:12:47 +0200
+Message-ID: <20250715130812.834997324@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -53,93 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit 6306e0c5a0d28e9df2b5902f4a021204bee75173 upstream.
+commit 0c2b53997e8f5e2ec9e0fbd17ac0436466b65488 upstream.
 
-The SCMI clock driver currently assumes that parent clocks are always
-initialized before their children. However, this assumption can fail if
-a child clock is encountered before its parent during probe.
+The qp is created by rdma_create_qp() as t->cm_id->qp
+and t->qp is just a shortcut.
 
-This leads to an issue during initialization of the parent_data array:
+rdma_destroy_qp() also calls ib_destroy_qp(cm_id->qp) internally,
+but it is protected by a mutex, clears the cm_id and also calls
+trace_cm_qp_destroy().
 
-    sclk->parent_data[i].hw = hws[sclk->info->parents[i]];
+This should make the tracing more useful as both
+rdma_create_qp() and rdma_destroy_qp() are traces and it makes
+the code look more sane as functions from the same layer are used
+for the specific qp object.
 
-If the parent clock's hardware structure has not been initialized yet,
-this assignment results in invalid data.
+trace-cmd stream -e rdma_cma:cm_qp_create -e rdma_cma:cm_qp_destroy
+shows this now while doing a mount and unmount from a client:
 
-To resolve this, allocate all struct scmi_clk instances as a contiguous
-array at the beginning of the probe and populate the hws[] array
-upfront. This ensures that any parent referenced later is already
-initialized, regardless of the order in which clocks are processed.
+  <...>-80   [002] 378.514182: cm_qp_create:  cm.id=1 src=172.31.9.167:5445 dst=172.31.9.166:37113 tos=0 pd.id=0 qp_type=RC send_wr=867 recv_wr=255 qp_num=1 rc=0
+  <...>-6283 [001] 381.686172: cm_qp_destroy: cm.id=1 src=172.31.9.167:5445 dst=172.31.9.166:37113 tos=0 qp_num=1
 
-Note that we can no longer free individual scmi_clk instances if
-scmi_clk_ops_init() fails which shouldn't be a problem if the SCMI
-platform has proper per-agent clock discovery.
+Before we only saw the first line.
 
-Fixes: 65a8a3dd3b95f ("clk: scmi: Add support for clock {set,get}_parent")
-Reviewed-by: peng.fan@nxp.com
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://lore.kernel.org/r/20250612-clk-scmi-children-parent-fix-v3-1-7de52a27593d@pengutronix.de
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <stfrench@microsoft.com>
+Cc: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+Cc: Hyunchul Lee <hyc.lee@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/clk-scmi.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ fs/smb/server/transport_rdma.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/clk-scmi.c
-+++ b/drivers/clk/clk-scmi.c
-@@ -404,6 +404,7 @@ static int scmi_clocks_probe(struct scmi
- 	const struct scmi_handle *handle = sdev->handle;
- 	struct scmi_protocol_handle *ph;
- 	const struct clk_ops *scmi_clk_ops_db[SCMI_MAX_CLK_OPS] = {};
-+	struct scmi_clk *sclks;
- 
- 	if (!handle)
- 		return -ENODEV;
-@@ -430,18 +431,21 @@ static int scmi_clocks_probe(struct scmi
- 	transport_is_atomic = handle->is_transport_atomic(handle,
- 							  &atomic_threshold_us);
- 
-+	sclks = devm_kcalloc(dev, count, sizeof(*sclks), GFP_KERNEL);
-+	if (!sclks)
-+		return -ENOMEM;
-+
-+	for (idx = 0; idx < count; idx++)
-+		hws[idx] = &sclks[idx].hw;
-+
- 	for (idx = 0; idx < count; idx++) {
--		struct scmi_clk *sclk;
-+		struct scmi_clk *sclk = &sclks[idx];
- 		const struct clk_ops *scmi_ops;
- 
--		sclk = devm_kzalloc(dev, sizeof(*sclk), GFP_KERNEL);
--		if (!sclk)
--			return -ENOMEM;
--
- 		sclk->info = scmi_proto_clk_ops->info_get(ph, idx);
- 		if (!sclk->info) {
- 			dev_dbg(dev, "invalid clock info for idx %d\n", idx);
--			devm_kfree(dev, sclk);
-+			hws[idx] = NULL;
- 			continue;
- 		}
- 
-@@ -479,13 +483,11 @@ static int scmi_clocks_probe(struct scmi
- 		if (err) {
- 			dev_err(dev, "failed to register clock %d\n", idx);
- 			devm_kfree(dev, sclk->parent_data);
--			devm_kfree(dev, sclk);
- 			hws[idx] = NULL;
- 		} else {
- 			dev_dbg(dev, "Registered clock:%s%s\n",
- 				sclk->info->name,
- 				scmi_ops->enable ? " (atomic ops)" : "");
--			hws[idx] = &sclk->hw;
- 		}
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -432,7 +432,8 @@ static void free_transport(struct smb_di
+ 	if (t->qp) {
+ 		ib_drain_qp(t->qp);
+ 		ib_mr_pool_destroy(t->qp, &t->qp->rdma_mrs);
+-		ib_destroy_qp(t->qp);
++		t->qp = NULL;
++		rdma_destroy_qp(t->cm_id);
  	}
  
+ 	ksmbd_debug(RDMA, "drain the reassembly queue\n");
+@@ -1939,8 +1940,8 @@ static int smb_direct_create_qpair(struc
+ 	return 0;
+ err:
+ 	if (t->qp) {
+-		ib_destroy_qp(t->qp);
+ 		t->qp = NULL;
++		rdma_destroy_qp(t->cm_id);
+ 	}
+ 	if (t->recv_cq) {
+ 		ib_destroy_cq(t->recv_cq);
 
 
