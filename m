@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBB12E1734;
-	Tue, 15 Jul 2025 13:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4AA2E3372;
+	Tue, 15 Jul 2025 13:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585670; cv=none; b=HhCcZ/4Dit8HTqOrA/ZGKpYXpVNbTPs3g6O+SU2mW7yuZAHt/qrKefUunF/cyT0iXLEmGQ6cpHoIGasIPYpTsfM/k7+TK99Sd11I9aHfswDmy93jCaSXwTn/xIAJrwJyeHNT6t8+IfI6MlsqBUuJ1YmYLETGgCkRFZrU3LH/2SY=
+	t=1752585672; cv=none; b=BlWlZr3kizElafr4Z28FT/TWPMEXh/rIQSptYfQcxi+VImQCQOYVIMPCA7f+tzevZfcA5ToXaXRErZS6/4uYQOQPFNvd9KnFofMSVyBxqhaNZubyZAuwVIAHJTuau2Hmgg7nPfc82s2vaOoW3vkYMoIuh2dJd/VVCzo6C7UmWzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585670; c=relaxed/simple;
-	bh=HXgEyhAIhgPsEP2QcrA4sZwOAS+xVIUJiVrD9Yp1nGQ=;
+	s=arc-20240116; t=1752585672; c=relaxed/simple;
+	bh=0kivPY3C4D+DBmOuF/5MUds8s7Vky50fX01EWfU+k5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S90THC1LqF6KAylAqZQwM5yYLSAMbKLNgA2nmeDFQ34Hx6hOqWRQ/GkvZHMjdX/FtsskxHfReIBjZc+zCaawsaVeW1ogmTwYSVyW7LmUoZi/KBW+SKveNbKaJWCaQ2NWFQ13ldVcr352HG6xUOBBh0280ztuaYiLDBS6J/n6N1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEOycXdT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t/Mz4WCdSwwbNzekwSAOXY1g7DBGCsApdvMNdgs5e0YVWYDYwBni2FbeVYS+Gg02torCCjL3XhQtagrvirlGhL1jKtXlnAq303zHlOOMrGY8Si3oPXE+Goc9tV6oqAZW8t5P8DJT+H3/N/dL2QY2u1CK47PZPD70UpMkleIdPjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZc1eaHo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEOycXdT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C12C4CEE3;
-	Tue, 15 Jul 2025 13:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZc1eaHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42292C4CEF6;
+	Tue, 15 Jul 2025 13:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585670;
-	bh=HXgEyhAIhgPsEP2QcrA4sZwOAS+xVIUJiVrD9Yp1nGQ=;
+	s=korg; t=1752585672;
+	bh=0kivPY3C4D+DBmOuF/5MUds8s7Vky50fX01EWfU+k5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEOycXdTGIwiu1/OxyDjby+ZcNEnbGxW2WP0NMU9imtubJ2a4LQqrlv7XXOmtf4iX
-	 zjBVo+ACqpfTAu4i577xysbnFP01kA+i+ImQfQPlm5bFLVxDLClOZ73HH/VOCbP6tH
-	 5PNoqLQDEghlMm7cDYqNt4S/2u/vGFb1NxrORS3s=
+	b=KZc1eaHoQMmUSCEoZZ12UmNTPtPE0AqIu3/qfraybAyqcb6OXEx1lmZfI9Scjb2ie
+	 COJmmD71K2mI1MbI2L9mt9qJub5VXS+Qi3SBTWDeO/3cv24LBP0DUa3M+mkKyxwgHw
+	 UJTQeSMrb1tzn2vgDLbMk/XbprDWzNRW5LtqnYbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Petr Machata <petrm@nvidia.com>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/163] net: phy: microchip: limit 100M workaround to link-down events on LAN88xx
-Date: Tue, 15 Jul 2025 15:13:16 +0200
-Message-ID: <20250715130813.978554260@linuxfoundation.org>
+Subject: [PATCH 6.12 129/163] selftests: net: lib: Move logging from forwarding/lib.sh here
+Date: Tue, 15 Jul 2025 15:13:17 +0200
+Message-ID: <20250715130814.017568803@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -52,57 +53,311 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit dd4360c0e8504f2f7639c7f5d07c93cfd6a98333 ]
+[ Upstream commit b219bcfcc92e9bd50c6277ac68cb75f64b403e5e ]
 
-Restrict the 100Mbit forced-mode workaround to link-down transitions
-only, to prevent repeated link reset cycles in certain configurations.
+Many net selftests invent their own logging helpers. These really should be
+in a library sourced by these tests. Currently forwarding/lib.sh has a
+suite of perfectly fine logging helpers, but sourcing a forwarding/ library
+from a higher-level directory smells of layering violation. In this patch,
+move the logging helpers to net/lib.sh so that every net test can use them.
 
-The workaround was originally introduced to improve signal reliability
-when switching cables between long and short distances. It temporarily
-forces the PHY into 10 Mbps before returning to 100 Mbps.
+Together with the logging helpers, it's also necessary to move
+pause_on_fail(), and EXIT_STATUS and RET.
 
-However, when used with autonegotiating link partners (e.g., Intel i350),
-executing this workaround on every link change can confuse the partner
-and cause constant renegotiation loops. This results in repeated link
-down/up transitions and the PHY never reaching a stable state.
+Existing lib.sh users might be using these same names for their functions
+or variables. However lib.sh is always sourced near the top of the
+file (checked), and whatever new definitions will simply override the ones
+provided by lib.sh.
 
-Limit the workaround to only run during the PHY_NOLINK state. This ensures
-it is triggered only once per link drop, avoiding disruptive toggling
-while still preserving its intended effect.
-
-Note: I am not able to reproduce the original issue that this workaround
-addresses. I can only confirm that 100 Mbit mode works correctly in my
-test setup. Based on code inspection, I assume the workaround aims to
-reset some internal state machine or signal block by toggling speeds.
-However, a PHY reset is already performed earlier in the function via
-phy_init_hw(), which may achieve a similar effect. Without a reproducer,
-I conservatively keep the workaround but restrict its conditions.
-
-Fixes: e57cf3639c32 ("net: lan78xx: fix accessing the LAN7800's internal phy specific registers from the MAC driver")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250709130753.3994461-3-o.rempel@pengutronix.de
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Amit Cohen <amcohen@nvidia.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/edd3785a3bd72ffbe1409300989e993ee50ae98b.1731589511.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 47c84997c686 ("selftests: net: lib: fix shift count out of range")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/microchip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/lib.sh | 113 -----------------
+ tools/testing/selftests/net/lib.sh            | 115 ++++++++++++++++++
+ 2 files changed, 115 insertions(+), 113 deletions(-)
 
-diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
-index c9b6ede7ac6ac..ffca1cec4ec99 100644
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -332,7 +332,7 @@ static void lan88xx_link_change_notify(struct phy_device *phydev)
- 	 * As workaround, set to 10 before setting to 100
- 	 * at forced 100 F/H mode.
- 	 */
--	if (!phydev->autoneg && phydev->speed == 100) {
-+	if (phydev->state == PHY_NOLINK && !phydev->autoneg && phydev->speed == 100) {
- 		/* disable phy interrupt */
- 		temp = phy_read(phydev, LAN88XX_INT_MASK);
- 		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
+diff --git a/tools/testing/selftests/net/forwarding/lib.sh b/tools/testing/selftests/net/forwarding/lib.sh
+index c992e385159c0..195360082d949 100644
+--- a/tools/testing/selftests/net/forwarding/lib.sh
++++ b/tools/testing/selftests/net/forwarding/lib.sh
+@@ -48,7 +48,6 @@ declare -A NETIFS=(
+ : "${WAIT_TIME:=5}"
+ 
+ # Whether to pause on, respectively, after a failure and before cleanup.
+-: "${PAUSE_ON_FAIL:=no}"
+ : "${PAUSE_ON_CLEANUP:=no}"
+ 
+ # Whether to create virtual interfaces, and what netdevice type they should be.
+@@ -446,22 +445,6 @@ done
+ ##############################################################################
+ # Helpers
+ 
+-# Exit status to return at the end. Set in case one of the tests fails.
+-EXIT_STATUS=0
+-# Per-test return value. Clear at the beginning of each test.
+-RET=0
+-
+-ret_set_ksft_status()
+-{
+-	local ksft_status=$1; shift
+-	local msg=$1; shift
+-
+-	RET=$(ksft_status_merge $RET $ksft_status)
+-	if (( $? )); then
+-		retmsg=$msg
+-	fi
+-}
+-
+ # Whether FAILs should be interpreted as XFAILs. Internal.
+ FAIL_TO_XFAIL=
+ 
+@@ -535,102 +518,6 @@ xfail_on_veth()
+ 	fi
+ }
+ 
+-log_test_result()
+-{
+-	local test_name=$1; shift
+-	local opt_str=$1; shift
+-	local result=$1; shift
+-	local retmsg=$1; shift
+-
+-	printf "TEST: %-60s  [%s]\n" "$test_name $opt_str" "$result"
+-	if [[ $retmsg ]]; then
+-		printf "\t%s\n" "$retmsg"
+-	fi
+-}
+-
+-pause_on_fail()
+-{
+-	if [[ $PAUSE_ON_FAIL == yes ]]; then
+-		echo "Hit enter to continue, 'q' to quit"
+-		read a
+-		[[ $a == q ]] && exit 1
+-	fi
+-}
+-
+-handle_test_result_pass()
+-{
+-	local test_name=$1; shift
+-	local opt_str=$1; shift
+-
+-	log_test_result "$test_name" "$opt_str" " OK "
+-}
+-
+-handle_test_result_fail()
+-{
+-	local test_name=$1; shift
+-	local opt_str=$1; shift
+-
+-	log_test_result "$test_name" "$opt_str" FAIL "$retmsg"
+-	pause_on_fail
+-}
+-
+-handle_test_result_xfail()
+-{
+-	local test_name=$1; shift
+-	local opt_str=$1; shift
+-
+-	log_test_result "$test_name" "$opt_str" XFAIL "$retmsg"
+-	pause_on_fail
+-}
+-
+-handle_test_result_skip()
+-{
+-	local test_name=$1; shift
+-	local opt_str=$1; shift
+-
+-	log_test_result "$test_name" "$opt_str" SKIP "$retmsg"
+-}
+-
+-log_test()
+-{
+-	local test_name=$1
+-	local opt_str=$2
+-
+-	if [[ $# -eq 2 ]]; then
+-		opt_str="($opt_str)"
+-	fi
+-
+-	if ((RET == ksft_pass)); then
+-		handle_test_result_pass "$test_name" "$opt_str"
+-	elif ((RET == ksft_xfail)); then
+-		handle_test_result_xfail "$test_name" "$opt_str"
+-	elif ((RET == ksft_skip)); then
+-		handle_test_result_skip "$test_name" "$opt_str"
+-	else
+-		handle_test_result_fail "$test_name" "$opt_str"
+-	fi
+-
+-	EXIT_STATUS=$(ksft_exit_status_merge $EXIT_STATUS $RET)
+-	return $RET
+-}
+-
+-log_test_skip()
+-{
+-	RET=$ksft_skip retmsg= log_test "$@"
+-}
+-
+-log_test_xfail()
+-{
+-	RET=$ksft_xfail retmsg= log_test "$@"
+-}
+-
+-log_info()
+-{
+-	local msg=$1
+-
+-	echo "INFO: $msg"
+-}
+-
+ not()
+ {
+ 	"$@"
+diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
+index be8707bfb46e5..6839514a176d3 100644
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -6,6 +6,9 @@
+ 
+ : "${WAIT_TIMEOUT:=20}"
+ 
++# Whether to pause on after a failure.
++: "${PAUSE_ON_FAIL:=no}"
++
+ BUSYWAIT_TIMEOUT=$((WAIT_TIMEOUT * 1000)) # ms
+ 
+ # Kselftest framework constants.
+@@ -17,6 +20,11 @@ ksft_skip=4
+ # namespace list created by setup_ns
+ NS_LIST=()
+ 
++# Exit status to return at the end. Set in case one of the tests fails.
++EXIT_STATUS=0
++# Per-test return value. Clear at the beginning of each test.
++RET=0
++
+ ##############################################################################
+ # Helpers
+ 
+@@ -233,3 +241,110 @@ tc_rule_handle_stats_get()
+ 	    | jq ".[] | select(.options.handle == $handle) | \
+ 		  .options.actions[0].stats$selector"
+ }
++
++ret_set_ksft_status()
++{
++	local ksft_status=$1; shift
++	local msg=$1; shift
++
++	RET=$(ksft_status_merge $RET $ksft_status)
++	if (( $? )); then
++		retmsg=$msg
++	fi
++}
++
++log_test_result()
++{
++	local test_name=$1; shift
++	local opt_str=$1; shift
++	local result=$1; shift
++	local retmsg=$1; shift
++
++	printf "TEST: %-60s  [%s]\n" "$test_name $opt_str" "$result"
++	if [[ $retmsg ]]; then
++		printf "\t%s\n" "$retmsg"
++	fi
++}
++
++pause_on_fail()
++{
++	if [[ $PAUSE_ON_FAIL == yes ]]; then
++		echo "Hit enter to continue, 'q' to quit"
++		read a
++		[[ $a == q ]] && exit 1
++	fi
++}
++
++handle_test_result_pass()
++{
++	local test_name=$1; shift
++	local opt_str=$1; shift
++
++	log_test_result "$test_name" "$opt_str" " OK "
++}
++
++handle_test_result_fail()
++{
++	local test_name=$1; shift
++	local opt_str=$1; shift
++
++	log_test_result "$test_name" "$opt_str" FAIL "$retmsg"
++	pause_on_fail
++}
++
++handle_test_result_xfail()
++{
++	local test_name=$1; shift
++	local opt_str=$1; shift
++
++	log_test_result "$test_name" "$opt_str" XFAIL "$retmsg"
++	pause_on_fail
++}
++
++handle_test_result_skip()
++{
++	local test_name=$1; shift
++	local opt_str=$1; shift
++
++	log_test_result "$test_name" "$opt_str" SKIP "$retmsg"
++}
++
++log_test()
++{
++	local test_name=$1
++	local opt_str=$2
++
++	if [[ $# -eq 2 ]]; then
++		opt_str="($opt_str)"
++	fi
++
++	if ((RET == ksft_pass)); then
++		handle_test_result_pass "$test_name" "$opt_str"
++	elif ((RET == ksft_xfail)); then
++		handle_test_result_xfail "$test_name" "$opt_str"
++	elif ((RET == ksft_skip)); then
++		handle_test_result_skip "$test_name" "$opt_str"
++	else
++		handle_test_result_fail "$test_name" "$opt_str"
++	fi
++
++	EXIT_STATUS=$(ksft_exit_status_merge $EXIT_STATUS $RET)
++	return $RET
++}
++
++log_test_skip()
++{
++	RET=$ksft_skip retmsg= log_test "$@"
++}
++
++log_test_xfail()
++{
++	RET=$ksft_xfail retmsg= log_test "$@"
++}
++
++log_info()
++{
++	local msg=$1
++
++	echo "INFO: $msg"
++}
 -- 
 2.39.5
 
