@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0135255F24;
-	Tue, 15 Jul 2025 05:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864CF19DF6A;
+	Tue, 15 Jul 2025 10:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752559032; cv=none; b=H/oRjwtXmXAJvia2cdLs9Ogn9n7mnBOXx/hLTkV5e5KArztjHqE9nqBF40C1pfw9xS6tS7BalVsXh2uWoG9bJCul/VkPC3tWL/dAaExUMSZPe9EfBSAl/0A3JtakHhPndiB+PWiteG9TSGVIvLCKADOin+Gd8jj0ghB6fmRbm0Q=
+	t=1752574535; cv=none; b=kiAYg2MpLvE7LBUaY04B8p+rYWTMjfBuAmwgqpvRQTm9pE2nSsJEu9rXEChHz1Dq39QDdX1knnLokWcdD9qBFBID5fQDVaLl3nDmxI/DLssa8rQaLUUb1Hq5Pq6h0oJikGbmYLNVAim/VyWLVzpKO6HPKyGFH5qSGGKiYgQTmxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752559032; c=relaxed/simple;
-	bh=wmvN79kkI2uY89k/rrcdVS6059/8dQL8TezMZWnf+rM=;
+	s=arc-20240116; t=1752574535; c=relaxed/simple;
+	bh=IBYVlI+orIMPRgYFaIqphL4RshTJzkbjmDni9IWE3vI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UuwIH4MM45hCUNMHgWeG49I8VJJPNO+tDblhdMsyAS6SLXsvums274nez4bdkmBpRHmgcQVvy+dcvx/U8TpauUDIrGNZH5I666NUa6m4PMYmWs+EuE6gjCwhU9KOTjL1dqgjLfgt2v/lRyFze5eGQvRWAwEOexHm9oLHVTKbEs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJ0kddfR; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=i9wBC96AnWHFHeISRa0spUnaZedyx4fzGTPcG8R9koKsnPWxcs4jmOoXIDp+8uqEez8kHJdlBA7J3aYLwx+xZUMd6+qMUMobOfkj1uro9Kpmh4KpExEtQywP7lzxKFOUqUskx7eOfvUKOsYFl/YGzMvbkxsbmWnJhVhJ4HA/dkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FztlJ1OF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJ0kddfR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8964C4CEE3;
-	Tue, 15 Jul 2025 05:57:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FztlJ1OF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BDCC4CEE3;
+	Tue, 15 Jul 2025 10:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752559031;
-	bh=wmvN79kkI2uY89k/rrcdVS6059/8dQL8TezMZWnf+rM=;
+	s=k20201202; t=1752574535;
+	bh=IBYVlI+orIMPRgYFaIqphL4RshTJzkbjmDni9IWE3vI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jJ0kddfRq/wi2cczPvscCBtaQBOvPPubaZPv3FhypEw+5UKK0WhctGzJqakUE47mj
-	 0hgvMUtevpezIfVJrccsqdtSYPd2sjN0nRb9tN0vghFJ+c05Vt5+gWGqNDdNJk7p6H
-	 Sh8oWOAYHvlvgAcM5ZwOV2KbvC/4LCYKyIt/WgUJb5b0ER0EaKLDgyQwMcQxcdZpWG
-	 yRZoRdLWkXFBN0aAu91ZYkfbMxd4cRB9BrlHetz/bw9JgY4rGuKT9x+znMMEXCi7ry
-	 xSs/2RLQ/Ed9IUoMZM+nwW7VQ7Wh00EVvhINdsIUSq31XrazAB7+UGLadWmjzYO5wH
-	 BcbPsbS4HX8Vw==
-Date: Tue, 15 Jul 2025 08:57:07 +0300
-From: Leon Romanovsky <leon@kernel.org>
+	b=FztlJ1OFq4eDjn612gnPl+YVBf7o63I7kavAKkN6NFFz2JarOIQLE/JFJXeCg6HIL
+	 z4ZOGtGZqr2hPQKCDh6IFKndGWXk3RHqqyPPB3czhiyvHdDfjkLQATIl9Lfl8M5gID
+	 0HJtGGxF+rGCtt710YXgmyHq4m4s6ORR7QRXexgQRC8ZUNIjSNQXBlfwaF88VnHy5Q
+	 DAeqFE4EsBQdtOCEvZ/PIaHSEYH78SR85B5+0dobS6Zx5s4O7OpqEuvklCOv/kkzQZ
+	 i3ZfJH1M7EPMLX9i6abuLL0sl0GpzfeP8svATD4gLx1MMmUlMd7S/CH7JSvW9yWmk3
+	 gd5aHtoOobY1A==
+Date: Tue, 15 Jul 2025 11:15:25 +0100
+From: Will Deacon <will@kernel.org>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Catalin Marinas <catalin.marinas@arm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
@@ -42,9 +42,10 @@ Cc: Catalin Marinas <catalin.marinas@arm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Justin Stitt <justinstitt@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, linux-rdma@vger.kernel.org,
-	linux-s390@vger.kernel.org, llvm@lists.linux.dev,
-	Ingo Molnar <mingo@redhat.com>, Bill Wendling <morbo@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
+	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
+	Bill Wendling <morbo@google.com>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>,
@@ -52,15 +53,16 @@ Cc: Catalin Marinas <catalin.marinas@arm.com>,
 	Sven Schnelle <svens@linux.ibm.com>,
 	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
 	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Arnd Bergmann <arnd@arndb.de>, linux-arch@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	Mark Rutland <mark.rutland@arm.com>,
 	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
 	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Jijie Shao <shaojijie@huawei.com>, Will Deacon <will@kernel.org>
+	Jijie Shao <shaojijie@huawei.com>
 Subject: Re: [PATCH v3 6/6] IB/mlx5: Use __iowrite64_copy() for write
  combining stores
-Message-ID: <20250715055707.GC5882@unreal>
+Message-ID: <aHYqPRqgcl5DQOpq@willie-the-truck>
 References: <0-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
  <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
  <20250714215504.GA2083014@nvidia.com>
@@ -95,8 +97,6 @@ On Mon, Jul 14, 2025 at 06:55:04PM -0300, Jason Gunthorpe wrote:
 > > the boot up test unreliable in that it indicates no write-combining,
 > > however userspace would be fine since it uses a ST4 instruction.
 > 
-> Hi Catalin,
-> 
 > After a year of testing this in real systems it turns out that still
 > some systems are not good enough with the unrolled 8 byte store loop.
 > In my view the CPUs are quite bad here and this WC performance
@@ -108,22 +108,16 @@ On Mon, Jul 14, 2025 at 06:55:04PM -0300, Jason Gunthorpe wrote:
 > Since STP was rejected alread we've only tested the Neon version. It
 > does make a huge improvement, but it still somehow fails to combine
 > rarely sometimes. The CPU is really bad at this :(
-> 
-> So we want to make mlx5 use the single 64 byte neon store instruction
-> like userspace has been using for a long time for this testing
-> algorithm.
-> 
-> It is simple enough, but the question has come up where to put the
-> code.  Do you want to somehow see the neon option to be in the
-> arch/arm64 code or should we stick it in the driver under a #ifdef?
-> 
-> The entry/exit from neon is slow enough I don't think any driver doing
-> performance work would want to use neon instead of __iowrite64_copy(),
-> so I do not think it should be hidden inside __iowrite64_copy(). Nor
-> have I thought of a name for an arch generic function..
 
-__iowrite64_slow_copy() ????
+I think the thread was from last year so I've forgotten most of the
+details, but wasn't STP rejected because it wasn't virtualisable? In
+which case, doesn't NEON suffer from exactly the same (or possibly
+worse) problem?
 
-> 
-> Thanks,
-> Jason
+Also, have you managed to investigate why the CPU tends not to get this
+right? Do we e.g. end up taking interrupts/exceptions while the self
+test is running or something like that?
+
+Sorry for the wall of questions!
+
+Will
