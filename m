@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641302E54BF;
-	Tue, 15 Jul 2025 13:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD8B2D8363;
+	Tue, 15 Jul 2025 13:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587387; cv=none; b=Ms54EpEgoIhGAUqtGg5TTqUO/QfVYT8zDV9S1gsYo7SPQ8HwDUhNeWqc13x4KAwzomNVdqF3HXf2N3gM+MwYZSpuYoOF1AoN/ghnzB65+VUU42vG9R7kntVYH49KJgH6JHbl/1eoXj1mel7oC9YyVf8zgppzv/8H9rwvtd9bLJE=
+	t=1752587390; cv=none; b=euG458cLG4quZWhmxFclAKi8RtNzDGIpmMNJi3AI7HwTFJDt2fqH1RZUHt7zp92PqIWxRW0MQkLzrJoLUyIBeXOmkhM6gzdtWhK6WvswYdmJLIUpYImi9fmU23B+tO3sKbpycs1JNBpIqjIyjXHHUgkd6ozJfKRut13BXJxziWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587387; c=relaxed/simple;
-	bh=WnBjYR7NO/E9jJgzbGi1N76BJpF1tljTjhAZC8IWGJ0=;
+	s=arc-20240116; t=1752587390; c=relaxed/simple;
+	bh=DqYeUxWmp3A4/Kno/s/aZe/gZf1nlOV9ZWDDvt0/iPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBLO+FIBtg4PHSYQX0/kOZ8kHdI2LHZJCymMkZW1siwhMxq4D8FV7fAxkbvCaiDEgJSXxYlizE9bDGgXzD4PPtYQ8vJk9FUkUz0xzdSqVjs894zjmTXfDPYJAgb6j2Dm7756lnG98QEB03B0kKjf5EhNqOfC4czXSe42zwTyZRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdz2uWrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tE86S75C6UJRXYK5LDVfO9+5npncUowNoH3ZV0ZldDH7ko9dhGIej0eZdXtfBGKRJuRNIn3/8EjI1bf3ei8HklaC1LT6XOXzhtFuuSrIMUXcn0dTMTXZFnYBOVYQ+8oA2QOFrEbA3r6cR3Somgd5VJeZJ0NErqjP3pnJED4949c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUWgg7bo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdz2uWrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7F3C4CEE3;
-	Tue, 15 Jul 2025 13:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUWgg7bo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A49C4CEE3;
+	Tue, 15 Jul 2025 13:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587387;
-	bh=WnBjYR7NO/E9jJgzbGi1N76BJpF1tljTjhAZC8IWGJ0=;
+	s=korg; t=1752587389;
+	bh=DqYeUxWmp3A4/Kno/s/aZe/gZf1nlOV9ZWDDvt0/iPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdz2uWrd/SQqfHm3YIUO1AAxOxYz957s9ToQO7Xr0WGQYL6u/AbqFWxdKimyF3jSr
-	 tZJijhZ/LoLNhKVME92hD50ZbtpPwGEtdv4REfO+LCSzUnfoduNHpZdFcMACnK8jDg
-	 oySMRKedshho7Dxaxd/g5v9acidAV72hqmDaTSCc=
+	b=mUWgg7boq1/FH1KbV4p/XXQGx/E966uRw1fiRBdMxN5n8/TLRtsv92MYGuX6XKOXK
+	 STTVwzAKzJ1pJMm6Pt4BV4Kstq4QlG26WCQroygTtk2ob8yASjb+U662NxX4lU0AwX
+	 PDku0HyzfQkPT7lL5cz5g+v+LhZtcEpyY1RlfJSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 82/88] HID: quirks: Add quirk for 2 Chicony Electronics HP 5MP Cameras
-Date: Tue, 15 Jul 2025 15:14:58 +0200
-Message-ID: <20250715130757.863501480@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Wang Hai <wanghai38@huawei.com>
+Subject: [PATCH 6.1 83/88] Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID
+Date: Tue, 15 Jul 2025 15:14:59 +0200
+Message-ID: <20250715130757.903144709@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,54 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 54bae4c17c11688339eb73a04fd24203bb6e7494 ]
+commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 upstream.
 
-The Chicony Electronics HP 5MP Cameras (USB ID 04F2:B824 & 04F2:B82C)
-report a HID sensor interface that is not actually implemented.
-Attempting to access this non-functional sensor via iio_info causes
-system hangs as runtime PM tries to wake up an unresponsive sensor.
+After commit 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in
+translated mode") not only the getid command is skipped, but also
+the de-activating of the keyboard at the end of atkbd_probe(), potentially
+re-introducing the problem fixed by commit be2d7e4233a4 ("Input: atkbd -
+fix multi-byte scancode handling on reconnect").
 
-Add these 2 devices to the HID ignore list since the sensor interface is
-non-functional by design and should not be exposed to userspace.
+Make sure multi-byte scancode handling on reconnect is still handled
+correctly by not skipping the atkbd_deactivate() call.
 
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240126160724.13278-3-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    | 2 ++
- drivers/hid/hid-quirks.c | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/input/keyboard/atkbd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 21e0660179ee9..0bbba80d6c51c 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -297,6 +297,8 @@
- #define USB_DEVICE_ID_ASUS_AK1D		0x1125
- #define USB_DEVICE_ID_CHICONY_TOSHIBA_WT10A	0x1408
- #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -807,7 +807,7 @@ static int atkbd_probe(struct atkbd *atk
  
- #define USB_VENDOR_ID_CHUNGHWAT		0x2247
- #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 7fca632ceea79..b37927f909412 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -738,6 +738,8 @@ static const struct hid_device_id hid_ignore_list[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AVERMEDIA, USB_DEVICE_ID_AVER_FM_MR800) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AXENTIA, USB_DEVICE_ID_AXENTIA_FM_RADIO) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
--- 
-2.39.5
-
+ 	if (atkbd_skip_getid(atkbd)) {
+ 		atkbd->id = 0xab83;
+-		return 0;
++		goto deactivate_kbd;
+ 	}
+ 
+ /*
+@@ -844,6 +844,7 @@ static int atkbd_probe(struct atkbd *atk
+ 		return -1;
+ 	}
+ 
++deactivate_kbd:
+ /*
+  * Make sure nothing is coming from the keyboard and disturbs our
+  * internal state.
 
 
