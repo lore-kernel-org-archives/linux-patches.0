@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EBF2E92C4;
-	Tue, 15 Jul 2025 13:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2142ECD02;
+	Tue, 15 Jul 2025 13:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587105; cv=none; b=ZQv9TMXU8Du8XyPB2lWClQXc8I9dsFIE6YPjatyvr2g6w/M1r74W7Ueolr9fLJ6MloCe2HhqBmNmGLatUzyfoPPG4fNiIARQYpzi3RS3Z57RuvN9jJrruwYJttcXHf6H6gd9ExQxfe1Ff7siHfjNJY9zr+kqcZYsvtDo1shI/9w=
+	t=1752587108; cv=none; b=ccOe6bhidW14mYLwOvHRQPva0yzOxN+oLDBHiFwGU7ULGjrtNhsDwaK8Ben7/LaFBSWTxjeROW854aoEoKc1iuavD/PqUrFq/ZZaCM4HncjtKNeduqCip1wpWwdudVSxSXIMA3dBHDzWffEvlU6aHYN/Hpue96MUAEFPaLV5GUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587105; c=relaxed/simple;
-	bh=mWLPfEheqPr66I1D8p3FbBPT2OTHB8SlqcyNQwd8lSI=;
+	s=arc-20240116; t=1752587108; c=relaxed/simple;
+	bh=/LEnGDZVeiqWAcsRgzl7jVcwwyR8Ge2zcMdaGIy6wPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiGGSFPugO6filbRerhOoWAuhE3ANLZ1xxP77OJ4AYSKKCEnwH1LVEKU2H3vVzWHwlNZB47OclXgXhCD+Se5qsWyqKDaKwJGEopwwhHrUcThBuwnAvD4nJhVRwPixvCFtEyRExNjvNLZAoquQEeJ66OgoOqdUmpJrwVpbpfOs7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cu/1trDB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OH5lTrF1THNMTEIO/CpNNzc8jdKzWwWUjKjdl5tb5wXNE0yrd/FduCJl3S1aj8VWpktRHsb0+0h9D4WFtTvO6Ock77eIYrYK5+FEDfzAbrgSpXMQ1J1rjiCGIDzAJoyQpQZVwk4RhnNZ9W3QlUkl6Q34BSNmmasPxcPhAcBVKvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4b6Np7M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cu/1trDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F13C4CEE3;
-	Tue, 15 Jul 2025 13:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4b6Np7M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34B4C4CEE3;
+	Tue, 15 Jul 2025 13:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587105;
-	bh=mWLPfEheqPr66I1D8p3FbBPT2OTHB8SlqcyNQwd8lSI=;
+	s=korg; t=1752587108;
+	bh=/LEnGDZVeiqWAcsRgzl7jVcwwyR8Ge2zcMdaGIy6wPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cu/1trDBCVLElZKVWzPbEWSUWxOBwcrTm0IpaLDh07eI6HIgA7rrZxZsiymnXuHcZ
-	 icVXORGuKWnS8moYvxTEYf1Seo+/NaJqnKgnrOBWFh9r7buPKVr2pKsmYdN9xf3f5+
-	 ZIY7woqH6Wdm12wNXg7Y29sWxQ7sCLuBIfO828eY=
+	b=X4b6Np7MutiJgHIMLuQliWTEN27/hVw30VIsCA6mrdfAmbymsFRL8hVqkVLlYnCwU
+	 zEy7OSH9WaDK5qlbzeDq1O6wwdw9NA+PAkD37klOpZKKJIVDr7yvBORNbJ64UL4pb/
+	 NJguxVOMsE9/OpSQWAgG0KOZZ7d6sGQsby8rMMjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Tamura Dai <kirinode0@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 169/192] um: vector: Reduce stack usage in vector_eth_configure()
-Date: Tue, 15 Jul 2025 15:14:24 +0200
-Message-ID: <20250715130821.695423189@linuxfoundation.org>
+Subject: [PATCH 6.15 170/192] ASoC: SOF: Intel: hda: Use devm_kstrdup() to avoid memleak.
+Date: Tue, 15 Jul 2025 15:14:25 +0200
+Message-ID: <20250715130821.734444921@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,91 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Tamura Dai <kirinode0@gmail.com>
 
-[ Upstream commit 2d65fc13be85c336c56af7077f08ccd3a3a15a4a ]
+[ Upstream commit 6c038b58a2dc5a008c7e7a1297f5aaa4deaaaa7e ]
 
-When compiling with clang (19.1.7), initializing *vp using a compound
-literal may result in excessive stack usage. Fix it by initializing the
-required fields of *vp individually.
+sof_pdata->tplg_filename can have address allocated by kstrdup()
+and can be overwritten. Memory leak was detected with kmemleak:
 
-Without this patch:
+unreferenced object 0xffff88812391ff60 (size 16):
+  comm "kworker/4:1", pid 161, jiffies 4294802931
+  hex dump (first 16 bytes):
+    73 6f 66 2d 68 64 61 2d 67 65 6e 65 72 69 63 00  sof-hda-generic.
+  backtrace (crc 4bf1675c):
+    __kmalloc_node_track_caller_noprof+0x49c/0x6b0
+    kstrdup+0x46/0xc0
+    hda_machine_select.cold+0x1de/0x12cf [snd_sof_intel_hda_generic]
+    sof_init_environment+0x16f/0xb50 [snd_sof]
+    sof_probe_continue+0x45/0x7c0 [snd_sof]
+    sof_probe_work+0x1e/0x40 [snd_sof]
+    process_one_work+0x894/0x14b0
+    worker_thread+0x5e5/0xfb0
+    kthread+0x39d/0x760
+    ret_from_fork+0x31/0x70
+    ret_from_fork_asm+0x1a/0x30
 
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:1472
-...
-
-With this patch:
-
-$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
-...
-0x0000000000000540 vector_eth_configure [vector_kern.o]:208
-...
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506221017.WtB7Usua-lkp@intel.com/
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20250623110829.314864-1-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Tamura Dai <kirinode0@gmail.com>
+Link: https://patch.msgid.link/20250615235548.8591-1-kirinode0@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/vector_kern.c | 42 +++++++++++------------------------
- 1 file changed, 13 insertions(+), 29 deletions(-)
+ sound/soc/sof/intel/hda.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
-index b97bb52dd5626..70f8d7e87fb81 100644
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -1592,35 +1592,19 @@ static void vector_eth_configure(
+diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
+index 6a3932d90b43a..27b077f5c8f58 100644
+--- a/sound/soc/sof/intel/hda.c
++++ b/sound/soc/sof/intel/hda.c
+@@ -1254,11 +1254,11 @@ static int check_tplg_quirk_mask(struct snd_soc_acpi_mach *mach)
+ 	return 0;
+ }
  
- 	device->dev = dev;
+-static char *remove_file_ext(const char *tplg_filename)
++static char *remove_file_ext(struct device *dev, const char *tplg_filename)
+ {
+ 	char *filename, *tmp;
  
--	*vp = ((struct vector_private)
--		{
--		.list			= LIST_HEAD_INIT(vp->list),
--		.dev			= dev,
--		.unit			= n,
--		.options		= get_transport_options(def),
--		.rx_irq			= 0,
--		.tx_irq			= 0,
--		.parsed			= def,
--		.max_packet		= get_mtu(def) + ETH_HEADER_OTHER,
--		/* TODO - we need to calculate headroom so that ip header
--		 * is 16 byte aligned all the time
--		 */
--		.headroom		= get_headroom(def),
--		.form_header		= NULL,
--		.verify_header		= NULL,
--		.header_rxbuffer	= NULL,
--		.header_txbuffer	= NULL,
--		.header_size		= 0,
--		.rx_header_size		= 0,
--		.rexmit_scheduled	= false,
--		.opened			= false,
--		.transport_data		= NULL,
--		.in_write_poll		= false,
--		.coalesce		= 2,
--		.req_size		= get_req_size(def),
--		.in_error		= false,
--		.bpf			= NULL
--	});
-+	INIT_LIST_HEAD(&vp->list);
-+	vp->dev		= dev;
-+	vp->unit	= n;
-+	vp->options	= get_transport_options(def);
-+	vp->parsed	= def;
-+	vp->max_packet	= get_mtu(def) + ETH_HEADER_OTHER;
-+	/*
-+	 * TODO - we need to calculate headroom so that ip header
-+	 * is 16 byte aligned all the time
-+	 */
-+	vp->headroom	= get_headroom(def);
-+	vp->coalesce	= 2;
-+	vp->req_size	= get_req_size(def);
+-	filename = kstrdup(tplg_filename, GFP_KERNEL);
++	filename = devm_kstrdup(dev, tplg_filename, GFP_KERNEL);
+ 	if (!filename)
+ 		return NULL;
  
- 	dev->features = dev->hw_features = (NETIF_F_SG | NETIF_F_FRAGLIST);
- 	INIT_WORK(&vp->reset_tx, vector_reset_tx);
+@@ -1342,7 +1342,7 @@ struct snd_soc_acpi_mach *hda_machine_select(struct snd_sof_dev *sdev)
+ 		 */
+ 		if (!sof_pdata->tplg_filename) {
+ 			/* remove file extension if it exists */
+-			tplg_filename = remove_file_ext(mach->sof_tplg_filename);
++			tplg_filename = remove_file_ext(sdev->dev, mach->sof_tplg_filename);
+ 			if (!tplg_filename)
+ 				return NULL;
+ 
 -- 
 2.39.5
 
