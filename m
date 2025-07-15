@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59D8192D8A;
-	Tue, 15 Jul 2025 13:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0AF2E175C;
+	Tue, 15 Jul 2025 13:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585720; cv=none; b=hVB83VRXoxoFlw5xBxO3KgSYxAYJzvNoZo40ZsYsIr4Naev6GU1OJIMX7ITsDZdj8B54tluo38o9ix4LmkI+oI/svWhC3FzuCaqaJztKtdNeeSR9ziA2p6plNM3jcnl35xXRtm7jZ87OGeOjAEsZWA2FcG8iTJqvSQn+e4Ao6WI=
+	t=1752585722; cv=none; b=fkGEOD+Whl+yZ/9qQ9ggELO7cOAya2CHD+EIxu21+x4jYvGoIkGfBgRA+M7yl9eBDHhctn+j1+bWZb8LoVOVxVBrGwKpfRDB63bwjZM0gUHtLXAgGUJWM3GXGpv1aAVTPKFN48LeDwa4dYMULWJ+tCDFt4kksqstNODUty384hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585720; c=relaxed/simple;
-	bh=CkiSwoVE4wJ9RULl6yiRDPwH1fA7v9yLMLPF/+p/QlE=;
+	s=arc-20240116; t=1752585722; c=relaxed/simple;
+	bh=0hDyPhJNJJyH5je0dtfGfq1CRFvB9FERxtVsd66Rr0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BL7JJT+eCkFFvdtkFJheKFtcUljmfxNf2zyimMMFkfMnZtnjqh2xcGTOo4MjHrStS8n4n9RvlJLOQL+kZFYXsg/t0BJoNcFdD2B//nQnkg99h870a6npNGN4qXvnQTnFgYa9RfPzZLls3ynRE8Q+v8JEDBYAEQb4s4M8v+70ONc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BonH4qLd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEQWnTcV4X9A9dr89FB0v3lm54YRHdE7V4vqiutuZFRUpWJPH0Tu+waBywvaiNMqfjgrFqrhkJtmYWKICXHrYNPD3LF9aYpePB9ss2nIUXR/IyYf4XM0KeBrtKkjoReg4EpjnfbBNqgBZ6ep3yuP8e5Y6ZzfyUDibYhQGc/Tlc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2JI3MpY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BonH4qLd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A405C4CEE3;
-	Tue, 15 Jul 2025 13:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2JI3MpY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7B5C4CEE3;
+	Tue, 15 Jul 2025 13:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585719;
-	bh=CkiSwoVE4wJ9RULl6yiRDPwH1fA7v9yLMLPF/+p/QlE=;
+	s=korg; t=1752585722;
+	bh=0hDyPhJNJJyH5je0dtfGfq1CRFvB9FERxtVsd66Rr0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BonH4qLdZfs96sJ/mrusnk05L7eVuesc34/FCX7Bk1FrlrTdk+ZT9YRLCiylJuMbS
-	 YUFCD/5kDwFaJcesVqtTkqknfiHdPn0iHj6Q3AsROuGY61NlJbdGJP3T0rPJTWopg5
-	 sDHcsPK19JjtOJZcz1SEd9YDDIZ+uR8ptgNm2tCI=
+	b=X2JI3MpYqzeMEFZPDgZ/pMC+yIf0iJ34NAvkHyNECCj+v3ZeByFMIlF6XiFCX8A+z
+	 isfwMgr/eGmMSkaiH6S7rGwQMnEjWg3U0RCYGW17OgtkISUSswupCmuPRFYe5jEFlf
+	 PZnZVmyNF62pUh29l0cF4/bLYFh6E4a/nz52tobk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunhai Guo <guochunhai@vivo.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Tim Crawford <tcrawford@system76.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/163] erofs: free pclusters if no cached folio is attached
-Date: Tue, 15 Jul 2025 15:13:07 +0200
-Message-ID: <20250715130813.625545173@linuxfoundation.org>
+Subject: [PATCH 6.12 146/163] ALSA: hda/realtek: Add quirks for some Clevo laptops
+Date: Tue, 15 Jul 2025 15:13:34 +0200
+Message-ID: <20250715130814.690106928@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,179 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunhai Guo <guochunhai@vivo.com>
+From: Tim Crawford <tcrawford@system76.com>
 
-[ Upstream commit f5ad9f9a603f829d11ca31a0a4049e16091e8c13 ]
+[ Upstream commit e41687b511d5e5437db5d2151e23c115dba30411 ]
 
-Once a pcluster is fully decompressed and there are no attached cached
-folios, its corresponding `struct z_erofs_pcluster` will be freed. This
-will significantly reduce the frequency of calls to erofs_shrink_scan()
-and the memory allocated for `struct z_erofs_pcluster`.
+Add audio quirks to fix speaker output and headset detection on the
+following Clevo models:
 
-The tables below show approximately a 96% reduction in the calls to
-erofs_shrink_scan() and in the memory allocated for `struct
-z_erofs_pcluster` after applying this patch. The results were obtained
-by performing a test to copy a 4.1GB partition on ARM64 Android devices
-running the 6.6 kernel with an 8-core CPU and 12GB of memory.
+- V350ENC
+- V350WNPQ
+- V540TU
+- X560WNR
+- X580WNS
 
-1. The reduction in calls to erofs_shrink_scan():
-+-----------------+-----------+----------+---------+
-|                 | w/o patch | w/ patch |  diff   |
-+-----------------+-----------+----------+---------+
-| Average (times) |   11390   |   390    | -96.57% |
-+-----------------+-----------+----------+---------+
-
-2. The reduction in memory released by erofs_shrink_scan():
-+-----------------+-----------+----------+---------+
-|                 | w/o patch | w/ patch |  diff   |
-+-----------------+-----------+----------+---------+
-| Average (Byte)  | 133612656 | 4434552  | -96.68% |
-+-----------------+-----------+----------+---------+
-
-Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20241112043235.546164-1-guochunhai@vivo.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Stable-dep-of: d53238b614e0 ("erofs: fix to add missing tracepoint in erofs_readahead()")
+Signed-off-by: Tim Crawford <tcrawford@system76.com>
+Link: https://patch.msgid.link/20250620204329.35878-1-tcrawford@system76.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 57 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 38 insertions(+), 19 deletions(-)
+ sound/pci/hda/patch_realtek.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 6b1d19d1d2f0c..4d5a1fbd7e0ad 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -882,14 +882,11 @@ static void z_erofs_rcu_callback(struct rcu_head *head)
- 			struct z_erofs_pcluster, rcu));
- }
- 
--static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
-+static bool __erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
- 					  struct z_erofs_pcluster *pcl)
- {
--	int free = false;
--
--	spin_lock(&pcl->lockref.lock);
- 	if (pcl->lockref.count)
--		goto out;
-+		return false;
- 
- 	/*
- 	 * Note that all cached folios should be detached before deleted from
-@@ -897,7 +894,7 @@ static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
- 	 * orphan old pcluster when the new one is available in the tree.
- 	 */
- 	if (erofs_try_to_free_all_cached_folios(sbi, pcl))
--		goto out;
-+		return false;
- 
- 	/*
- 	 * It's impossible to fail after the pcluster is freezed, but in order
-@@ -906,8 +903,16 @@ static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
- 	DBG_BUGON(__xa_erase(&sbi->managed_pslots, pcl->index) != pcl);
- 
- 	lockref_mark_dead(&pcl->lockref);
--	free = true;
--out:
-+	return true;
-+}
-+
-+static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
-+					  struct z_erofs_pcluster *pcl)
-+{
-+	bool free;
-+
-+	spin_lock(&pcl->lockref.lock);
-+	free = __erofs_try_to_release_pcluster(sbi, pcl);
- 	spin_unlock(&pcl->lockref.lock);
- 	if (free) {
- 		atomic_long_dec(&erofs_global_shrink_cnt);
-@@ -938,16 +943,25 @@ unsigned long z_erofs_shrink_scan(struct erofs_sb_info *sbi,
- 	return freed;
- }
- 
--static void z_erofs_put_pcluster(struct z_erofs_pcluster *pcl)
-+static void z_erofs_put_pcluster(struct erofs_sb_info *sbi,
-+		struct z_erofs_pcluster *pcl, bool try_free)
- {
-+	bool free = false;
-+
- 	if (lockref_put_or_lock(&pcl->lockref))
- 		return;
- 
- 	DBG_BUGON(__lockref_is_dead(&pcl->lockref));
--	if (pcl->lockref.count == 1)
--		atomic_long_inc(&erofs_global_shrink_cnt);
--	--pcl->lockref.count;
-+	if (!--pcl->lockref.count) {
-+		if (try_free && xa_trylock(&sbi->managed_pslots)) {
-+			free = __erofs_try_to_release_pcluster(sbi, pcl);
-+			xa_unlock(&sbi->managed_pslots);
-+		}
-+		atomic_long_add(!free, &erofs_global_shrink_cnt);
-+	}
- 	spin_unlock(&pcl->lockref.lock);
-+	if (free)
-+		call_rcu(&pcl->rcu, z_erofs_rcu_callback);
- }
- 
- static void z_erofs_pcluster_end(struct z_erofs_decompress_frontend *fe)
-@@ -968,7 +982,7 @@ static void z_erofs_pcluster_end(struct z_erofs_decompress_frontend *fe)
- 	 * any longer if the pcluster isn't hosted by ourselves.
- 	 */
- 	if (fe->mode < Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE)
--		z_erofs_put_pcluster(pcl);
-+		z_erofs_put_pcluster(EROFS_I_SB(fe->inode), pcl, false);
- 
- 	fe->pcl = NULL;
- }
-@@ -1271,6 +1285,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- 	int i, j, jtop, err2;
- 	struct page *page;
- 	bool overlapped;
-+	bool try_free = true;
- 
- 	mutex_lock(&pcl->lock);
- 	be->nr_pages = PAGE_ALIGN(pcl->length + pcl->pageofs_out) >> PAGE_SHIFT;
-@@ -1328,9 +1343,12 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- 		/* managed folios are still left in compressed_bvecs[] */
- 		for (i = 0; i < pclusterpages; ++i) {
- 			page = be->compressed_pages[i];
--			if (!page ||
--			    erofs_folio_is_managed(sbi, page_folio(page)))
-+			if (!page)
- 				continue;
-+			if (erofs_folio_is_managed(sbi, page_folio(page))) {
-+				try_free = false;
-+				continue;
-+			}
- 			(void)z_erofs_put_shortlivedpage(be->pagepool, page);
- 			WRITE_ONCE(pcl->compressed_bvecs[i].page, NULL);
- 		}
-@@ -1375,6 +1393,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
- 	/* pcluster lock MUST be taken before the following line */
- 	WRITE_ONCE(pcl->next, Z_EROFS_PCLUSTER_NIL);
- 	mutex_unlock(&pcl->lock);
-+
-+	if (z_erofs_is_inline_pcluster(pcl))
-+		z_erofs_free_pcluster(pcl);
-+	else
-+		z_erofs_put_pcluster(sbi, pcl, try_free);
- 	return err;
- }
- 
-@@ -1397,10 +1420,6 @@ static int z_erofs_decompress_queue(const struct z_erofs_decompressqueue *io,
- 		owned = READ_ONCE(be.pcl->next);
- 
- 		err = z_erofs_decompress_pcluster(&be, err) ?: err;
--		if (z_erofs_is_inline_pcluster(be.pcl))
--			z_erofs_free_pcluster(be.pcl);
--		else
--			z_erofs_put_pcluster(be.pcl);
- 	}
- 	return err;
- }
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 0bc59b6f1b9a6..e98823bd3634f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -2658,6 +2658,7 @@ static const struct hda_quirk alc882_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x147b, 0x107a, "Abit AW9D-MAX", ALC882_FIXUP_ABIT_AW9D_MAX),
+ 	SND_PCI_QUIRK(0x1558, 0x3702, "Clevo X370SN[VW]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x50d3, "Clevo PC50[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
++	SND_PCI_QUIRK(0x1558, 0x5802, "Clevo X58[05]WN[RST]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65d1, "Clevo PB51[ER][CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65d2, "Clevo PB51R[CDF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+ 	SND_PCI_QUIRK(0x1558, 0x65e1, "Clevo PB51[ED][DF]", ALC1220_FIXUP_CLEVO_PB51ED_PINS),
+@@ -11046,6 +11047,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1558, 0x14a1, "Clevo L141MU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x2624, "Clevo L240TU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x28c1, "Clevo V370VND", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1558, 0x35a1, "Clevo V3[56]0EN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0x35b1, "Clevo V3[57]0WN[MNP]Q", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x4018, "Clevo NV40M[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x4019, "Clevo NV40MZ", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x4020, "Clevo NV40MB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+@@ -11073,6 +11076,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1558, 0x51b1, "Clevo NS50AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x51b3, "Clevo NS70AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x5630, "Clevo NP50RNJS", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1558, 0x5700, "Clevo X560WN[RST]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70a1, "Clevo NB70T[HJK]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70b3, "Clevo NK70SB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0x70f2, "Clevo NH79EPY", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+@@ -11112,6 +11116,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1558, 0xa650, "Clevo NP[567]0SN[CD]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa671, "Clevo NP70SN[CDE]", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xa741, "Clevo V54x_6x_TNE", ALC245_FIXUP_CLEVO_NOISY_MIC),
++	SND_PCI_QUIRK(0x1558, 0xa743, "Clevo V54x_6x_TU", ALC245_FIXUP_CLEVO_NOISY_MIC),
+ 	SND_PCI_QUIRK(0x1558, 0xa763, "Clevo V54x_6x_TU", ALC245_FIXUP_CLEVO_NOISY_MIC),
+ 	SND_PCI_QUIRK(0x1558, 0xb018, "Clevo NP50D[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1558, 0xb019, "Clevo NH77D[BE]Q", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
 -- 
 2.39.5
 
