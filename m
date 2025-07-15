@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4632EA49D;
-	Tue, 15 Jul 2025 13:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D542EA725;
+	Tue, 15 Jul 2025 13:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586425; cv=none; b=W+tBAbBkPjhZ+YFUCkS5Mi4Cd01b4PmGWXUjG89J6XGv/gr0dD2sxajHsSH9/n0L9yjYlqK80XnnXtqa00rD3MBFHs/aNKOKJtK1He9fRq8nQxzKxQaIWL3q+z7/dBlb+weRLH+1PI7XNGY/pbReSsIGH1Y614Ozv70szrYYSEA=
+	t=1752586428; cv=none; b=SNMmceLhPMveyTpffaSJ51BJdHX/2DtnpjvOM2PEqVly3+TQnIXCVyxxc00okB4picuorP85Xmo6cO+XuJ2sr7wmb0Ya8MstHSgU7RHIavPACqiav5asRsyIxAnM3jXdyO64Y/ryyPHI+/Tb72sWHMSuiRPuJI8QoEwhu4Gwenk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586425; c=relaxed/simple;
-	bh=0780TFSUF+yoOwjcu0DyRH4POa02ut96nIXvuNEFTas=;
+	s=arc-20240116; t=1752586428; c=relaxed/simple;
+	bh=lU6q9H0Y4MbP65UaYM92aC1vTe/eLZV92fHWcVXzQkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8Z2EIqYSHu4QWkjlE8i7Mi9SFZyxxxRSLedk29yLRahZDWXgrf3P87AJYnWTmj+EPVoRIqaa2YpgaAvZT7hVJvE3SC4KkcVa56Yxc22bwDxXeAxjc/NfJAkt0zdjNyznxfdW3KkoYFku+fcCnemBhiJkFP0n69BTf0TYq9tyE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bza/aYKk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XdC98UlBcE8x2Hw7rz7nVnmu0aHF362qdHWDzIfMRcJFudC/2OQpDQozqXPLGKc1NTLWVeWqHZnITAOP36Ntxe1ptorltohY7mKa1iFKIrT/8Ypk3BSvOF4vS6pX0By0P8IEDvxQEoJfZ89ODKGH9aS60X7nCTMjJDsAFANI1Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWcycriV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bza/aYKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6735C4CEE3;
-	Tue, 15 Jul 2025 13:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWcycriV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F480C4CEE3;
+	Tue, 15 Jul 2025 13:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586425;
-	bh=0780TFSUF+yoOwjcu0DyRH4POa02ut96nIXvuNEFTas=;
+	s=korg; t=1752586427;
+	bh=lU6q9H0Y4MbP65UaYM92aC1vTe/eLZV92fHWcVXzQkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bza/aYKke5XYTr4eYiSL+3kdd5ASQxSZsCmXvU2uz1kEiKDoh2BUxcFb984EpqiPU
-	 oxaM1UDsIz56/nt0DRD7Ll4r5jhYharm0zlWfSTVAb7cpSl8n5Ta0l9t/RxQIBvw+x
-	 KbobFPlAFbVU48IWYsl0sxrDBr7/ky6sfA3uT3qQ=
+	b=ZWcycriVH41wR/YyN5yIBdzoMCdoXzps74CicEy+SgHK4Q71jBn0kMk/aR9Bpxo3j
+	 SiasOn0qlY92hiXy+m6/u+ewsdzywVpz2O8uH+VYoINOHVQMc8rpjJ1sqpb/AhRluT
+	 gPQc6U3QP/x0KQIqpkKpo1fOUNcEtyRSghB1NQfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 060/148] mtk-sd: Fix a pagefault in dma_unmap_sg() for not prepared data
-Date: Tue, 15 Jul 2025 15:13:02 +0200
-Message-ID: <20250715130802.731268651@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 061/148] platform/mellanox: mlxbf-tmfifo: fix vring_desc.len assignment
+Date: Tue, 15 Jul 2025 15:13:03 +0200
+Message-ID: <20250715130802.773986020@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -46,60 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: David Thompson <davthompson@nvidia.com>
 
-commit 539d80575b810c7a5987c7ac8915e3bc99c03695 upstream.
+[ Upstream commit 109f4d29dade8ae5b4ac6325af9d1bc24b4230f8 ]
 
-When swiotlb buffer is full, the dma_map_sg() returns 0 to
-msdc_prepare_data(), but it does not check it and sets the
-MSDC_PREPARE_FLAG.
+Fix warnings reported by sparse, related to incorrect type:
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38: warning: incorrect type in assignment (different base types)
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    expected restricted __virtio32 [usertype] len
+drivers/platform/mellanox/mlxbf-tmfifo.c:284:38:    got unsigned long
 
-swiotlb_tbl_map_single() /* prints "swiotlb buffer is full" */
-  <-swiotlb_map()
-    <-dma_direct_map_page()
-      <-dma_direct_map_sg()
-        <-__dma_map_sg_attrs()
-          <-dma_map_sg_attrs()
-            <-dma_map_sg()  /* returns 0 (pages mapped) */
-              <-msdc_prepare_data()
-
-Then, the msdc_unprepare_data() checks MSDC_PREPARE_FLAG and calls
-dma_unmap_sg() with unmapped pages. It causes a page fault.
-
-To fix this problem, Do not set MSDC_PREPARE_FLAG if dma_map_sg()
-fails because this is not prepared.
-
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/174908565814.4056588.769599127120955383.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202404040339.S7CUIgf3-lkp@intel.com/
+Fixes: 78034cbece79 ("platform/mellanox: mlxbf-tmfifo: Drop the Rx packet if no more descriptors")
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/20250613214608.2250130-1-davthompson@nvidia.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c |    3 ++-
+ drivers/platform/mellanox/mlxbf-tmfifo.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -681,9 +681,10 @@ static void msdc_prepare_data(struct msd
- 	struct mmc_data *data = mrq->data;
+diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
+index 767f4406e55f1..1eb7f4eb1156c 100644
+--- a/drivers/platform/mellanox/mlxbf-tmfifo.c
++++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
+@@ -253,7 +253,8 @@ static int mlxbf_tmfifo_alloc_vrings(struct mlxbf_tmfifo *fifo,
+ 		vring->align = SMP_CACHE_BYTES;
+ 		vring->index = i;
+ 		vring->vdev_id = tm_vdev->vdev.id.device;
+-		vring->drop_desc.len = VRING_DROP_DESC_MAX_LEN;
++		vring->drop_desc.len = cpu_to_virtio32(&tm_vdev->vdev,
++						       VRING_DROP_DESC_MAX_LEN);
+ 		dev = &tm_vdev->vdev.dev;
  
- 	if (!(data->host_cookie & MSDC_PREPARE_FLAG)) {
--		data->host_cookie |= MSDC_PREPARE_FLAG;
- 		data->sg_count = dma_map_sg(host->dev, data->sg, data->sg_len,
- 					    mmc_get_dma_dir(data));
-+		if (data->sg_count)
-+			data->host_cookie |= MSDC_PREPARE_FLAG;
- 	}
- }
- 
+ 		size = vring_size(vring->num, vring->align);
+-- 
+2.39.5
+
 
 
