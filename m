@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE492D8790;
-	Tue, 15 Jul 2025 13:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7EA2D8790;
+	Tue, 15 Jul 2025 13:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585954; cv=none; b=FFJ5A4inOayozl1U+r7XDnd2mosmihKLkGZ9yr5dB83DHWL3V7U55zHdAeKaxSPy2wTjetNO3PRYP6EqRTTXADykwsl0NGxGVNEj4oL3JEcAJwUHM74TIwBLzg5fiDIbLFBYHqaodSC+yLB2ptbS/zRhb5lwQLQT8PREzoPFJS0=
+	t=1752585957; cv=none; b=klGZWQFqhoR8yR7dUFcVi/AdNJ4tjBP9UY4zMlap/qEmLx2s1EOClZwFU93iQi7ST9A8iuTeqntEYBkDQ6QA3lj8xOxbzZJGziG4le11s1VY3TvJ6Mmt41WD4TlYJGCM+dtnjIEEcIGHK+BJ9WqEThrRm6EKgKDThWgRqSwXJaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585954; c=relaxed/simple;
-	bh=3Aob5wlgTUh/BEpo7+aQyMVu/A+XU1XU9ruUACADKPY=;
+	s=arc-20240116; t=1752585957; c=relaxed/simple;
+	bh=wrZ+9XoOuFnbAjkmlMhAhhxdP9//asTvMGcIurL+10E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+kucZtNy7FSC6Fkfq+cbJi/DbIg3qbRSJf8a7Uw4WPmtqSp9Hrd1wU8M4PQW1gz8haCJ/r2xSr9G8stcQCCB1SIlSwqMJacK8ZQWDottNFHhbzk5LRk+BXuyMFWREICyolNGXHRGxN7sHhSh5hB8kGIyb0IKnast18I5gwvuT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Si6+UrCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMt2ni0f43Q9I35KbkQ+EX5Iqz81XrSiEHv2M2MMNPbF5LPv7o0K1ikmQZO57rjHKz1rnBHrKj177tfSF+/FheS3ovs+NP7mKakYHrTfeTAt02//ipjGL6X6GF4ui9gzWS/SYs+6bR5FNadcj8jns6IP3hF+kGyCjXmFGborQy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j270sDf5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Si6+UrCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D38C4CEE3;
-	Tue, 15 Jul 2025 13:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j270sDf5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A33C4CEF1;
+	Tue, 15 Jul 2025 13:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585954;
-	bh=3Aob5wlgTUh/BEpo7+aQyMVu/A+XU1XU9ruUACADKPY=;
+	s=korg; t=1752585956;
+	bh=wrZ+9XoOuFnbAjkmlMhAhhxdP9//asTvMGcIurL+10E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Si6+UrCC7p2lw3dyidQQrA/ermXU5i3u2M2eVm7LjpOo1acLH2XfpfxftOa7IJiKl
-	 69I/qt2/RU2wcA2KEQF0E1KU4jUhn+YNCwsYldVfX8paDl29F1zcTKPr/5X4SbiBoe
-	 ja7BIYni25FxHXjIa0Y+UYvefCBDvCClIP9lqEiU=
+	b=j270sDf57JZj8brvZfP3UkciCyycNLQF6Nxo4vK6Oygg1fd4YHGUysdw6ylOpdWCT
+	 b6fHbrPvIXWyyxKwckrRwNz4Or292KHoooAJ8jmjnYr/zabfneOeIfVlvnN2U0PMm+
+	 68pDVqEScymaRcSzsudnNEVbHyqOOdWZ6MZdcveQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/109] btrfs: return a btrfs_inode from btrfs_iget_logging()
-Date: Tue, 15 Jul 2025 15:13:25 +0200
-Message-ID: <20250715130801.644739580@linuxfoundation.org>
+Subject: [PATCH 6.6 070/109] btrfs: fix inode lookup error handling during log replay
+Date: Tue, 15 Jul 2025 15:13:26 +0200
+Message-ID: <20250715130801.684986776@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -53,282 +55,390 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit a488d8ac2c4d96ecc7da59bb35a573277204ac6b ]
+[ Upstream commit 5f61b961599acbd2bed028d3089105a1f7d224b8 ]
 
-All callers of btrfs_iget_logging() are interested in the btrfs_inode
-structure rather than the VFS inode, so make btrfs_iget_logging() return
-the btrfs_inode instead, avoiding lots of BTRFS_I() calls.
+When replaying log trees we use read_one_inode() to get an inode, which is
+just a wrapper around btrfs_iget_logging(), which in turn is a wrapper for
+btrfs_iget(). But read_one_inode() always returns NULL for any error
+that btrfs_iget_logging() / btrfs_iget() may return and this is a problem
+because:
 
+1) In many callers of read_one_inode() we convert the NULL into -EIO,
+   which is not accurate since btrfs_iget() may return -ENOMEM and -ENOENT
+   for example, besides -EIO and other errors. So during log replay we
+   may end up reporting a false -EIO, which is confusing since we may
+   not have had any IO error at all;
+
+2) When replaying directory deletes, at replay_dir_deletes(), we assume
+   the NULL returned from read_one_inode() means that the inode doesn't
+   exist and then proceed as if no error had happened. This is wrong
+   because unless btrfs_iget() returned ERR_PTR(-ENOENT), we had an
+   actual error and the target inode may exist in the target subvolume
+   root - this may later result in the log replay code failing at a
+   later stage (if we are "lucky") or succeed but leaving some
+   inconsistency in the filesystem.
+
+So fix this by not ignoring errors from btrfs_iget_logging() and as
+a consequence remove the read_one_inode() wrapper and just use
+btrfs_iget_logging() directly. Also since btrfs_iget_logging() is
+supposed to be called only against subvolume roots, just like
+read_one_inode() which had a comment about it, add an assertion to
+btrfs_iget_logging() to check that the target root corresponds to a
+subvolume root.
+
+Fixes: 5d4f98a28c7d ("Btrfs: Mixed back reference  (FORWARD ROLLING FORMAT CHANGE)")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 5f61b961599a ("btrfs: fix inode lookup error handling during log replay")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 94 ++++++++++++++++++++++-----------------------
- 1 file changed, 45 insertions(+), 49 deletions(-)
+ fs/btrfs/tree-log.c | 223 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 146 insertions(+), 77 deletions(-)
 
 diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index a17942f4c155b..f846dcbd70756 100644
+index f846dcbd70756..16434106c465d 100644
 --- a/fs/btrfs/tree-log.c
 +++ b/fs/btrfs/tree-log.c
-@@ -140,7 +140,7 @@ static void wait_log_commit(struct btrfs_root *root, int transid);
-  * and once to do all the other items.
-  */
- 
--static struct inode *btrfs_iget_logging(u64 objectid, struct btrfs_root *root)
-+static struct btrfs_inode *btrfs_iget_logging(u64 objectid, struct btrfs_root *root)
- {
+@@ -145,6 +145,9 @@ static struct btrfs_inode *btrfs_iget_logging(u64 objectid, struct btrfs_root *r
  	unsigned int nofs_flag;
  	struct inode *inode;
-@@ -156,7 +156,10 @@ static struct inode *btrfs_iget_logging(u64 objectid, struct btrfs_root *root)
- 	inode = btrfs_iget(root->fs_info->sb, objectid, root);
- 	memalloc_nofs_restore(nofs_flag);
  
--	return inode;
-+	if (IS_ERR(inode))
-+		return ERR_CAST(inode);
++	/* Only meant to be called for subvolume roots and not for log roots. */
++	ASSERT(is_fstree(btrfs_root_id(root)));
 +
-+	return BTRFS_I(inode);
+ 	/*
+ 	 * We're holding a transaction handle whether we are logging or
+ 	 * replaying a log tree, so we must make sure NOFS semantics apply
+@@ -616,20 +619,6 @@ static int read_alloc_one_name(struct extent_buffer *eb, void *start, int len,
+ 	return 0;
  }
  
- /*
-@@ -620,12 +623,12 @@ static int read_alloc_one_name(struct extent_buffer *eb, void *start, int len,
- static noinline struct inode *read_one_inode(struct btrfs_root *root,
- 					     u64 objectid)
- {
--	struct inode *inode;
-+	struct btrfs_inode *inode;
- 
- 	inode = btrfs_iget_logging(objectid, root);
- 	if (IS_ERR(inode))
--		inode = NULL;
--	return inode;
-+		return NULL;
-+	return &inode->vfs_inode;
- }
+-/*
+- * simple helper to read an inode off the disk from a given root
+- * This can only be called for subvolume roots and not for the log
+- */
+-static noinline struct inode *read_one_inode(struct btrfs_root *root,
+-					     u64 objectid)
+-{
+-	struct btrfs_inode *inode;
+-
+-	inode = btrfs_iget_logging(objectid, root);
+-	if (IS_ERR(inode))
+-		return NULL;
+-	return &inode->vfs_inode;
+-}
  
  /* replays a single extent in 'eb' at 'slot' with 'key' into the
-@@ -5419,7 +5422,6 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
- 	ihold(&curr_inode->vfs_inode);
- 
- 	while (true) {
--		struct inode *vfs_inode;
- 		struct btrfs_key key;
- 		struct btrfs_key found_key;
- 		u64 next_index;
-@@ -5435,7 +5437,7 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
- 			struct extent_buffer *leaf = path->nodes[0];
- 			struct btrfs_dir_item *di;
- 			struct btrfs_key di_key;
--			struct inode *di_inode;
-+			struct btrfs_inode *di_inode;
- 			int log_mode = LOG_INODE_EXISTS;
- 			int type;
- 
-@@ -5462,17 +5464,16 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
- 				goto out;
- 			}
- 
--			if (!need_log_inode(trans, BTRFS_I(di_inode))) {
--				btrfs_add_delayed_iput(BTRFS_I(di_inode));
-+			if (!need_log_inode(trans, di_inode)) {
-+				btrfs_add_delayed_iput(di_inode);
- 				break;
- 			}
- 
- 			ctx->log_new_dentries = false;
- 			if (type == BTRFS_FT_DIR)
- 				log_mode = LOG_INODE_ALL;
--			ret = btrfs_log_inode(trans, BTRFS_I(di_inode),
--					      log_mode, ctx);
--			btrfs_add_delayed_iput(BTRFS_I(di_inode));
-+			ret = btrfs_log_inode(trans, di_inode, log_mode, ctx);
-+			btrfs_add_delayed_iput(di_inode);
- 			if (ret)
- 				goto out;
- 			if (ctx->log_new_dentries) {
-@@ -5514,14 +5515,13 @@ static int log_new_dir_dentries(struct btrfs_trans_handle *trans,
- 		kfree(dir_elem);
- 
- 		btrfs_add_delayed_iput(curr_inode);
--		curr_inode = NULL;
- 
--		vfs_inode = btrfs_iget_logging(ino, root);
--		if (IS_ERR(vfs_inode)) {
--			ret = PTR_ERR(vfs_inode);
-+		curr_inode = btrfs_iget_logging(ino, root);
-+		if (IS_ERR(curr_inode)) {
-+			ret = PTR_ERR(curr_inode);
-+			curr_inode = NULL;
- 			break;
- 		}
--		curr_inode = BTRFS_I(vfs_inode);
+  * subvolume 'root'.  path is released on entry and should be released
+@@ -684,10 +673,15 @@ static noinline int replay_one_extent(struct btrfs_trans_handle *trans,
+ 		goto out;
  	}
- out:
- 	btrfs_free_path(path);
-@@ -5599,7 +5599,7 @@ static int add_conflicting_inode(struct btrfs_trans_handle *trans,
- 				 struct btrfs_log_ctx *ctx)
- {
- 	struct btrfs_ino_list *ino_elem;
--	struct inode *inode;
-+	struct btrfs_inode *inode;
+ 
+-	inode = read_one_inode(root, key->objectid);
+-	if (!inode) {
+-		ret = -EIO;
+-		goto out;
++	{
++		struct btrfs_inode *btrfs_inode;
++
++		btrfs_inode = btrfs_iget_logging(key->objectid, root);
++		if (IS_ERR(btrfs_inode)) {
++			ret = PTR_ERR(btrfs_inode);
++			goto out;
++		}
++		inode = &btrfs_inode->vfs_inode;
+ 	}
  
  	/*
- 	 * It's rare to have a lot of conflicting inodes, in practice it is not
-@@ -5690,12 +5690,12 @@ static int add_conflicting_inode(struct btrfs_trans_handle *trans,
- 	 * inode in LOG_INODE_EXISTS mode and rename operations update the log,
- 	 * so that the log ends up with the new name and without the old name.
- 	 */
--	if (!need_log_inode(trans, BTRFS_I(inode))) {
--		btrfs_add_delayed_iput(BTRFS_I(inode));
-+	if (!need_log_inode(trans, inode)) {
-+		btrfs_add_delayed_iput(inode);
- 		return 0;
+@@ -966,10 +960,16 @@ static noinline int drop_one_dir_item(struct btrfs_trans_handle *trans,
+ 
+ 	btrfs_release_path(path);
+ 
+-	inode = read_one_inode(root, location.objectid);
+-	if (!inode) {
+-		ret = -EIO;
+-		goto out;
++	{
++		struct btrfs_inode *btrfs_inode;
++
++		btrfs_inode = btrfs_iget_logging(location.objectid, root);
++		if (IS_ERR(btrfs_inode)) {
++			ret = PTR_ERR(btrfs_inode);
++			inode = NULL;
++			goto out;
++		}
++		inode = &btrfs_inode->vfs_inode;
  	}
  
--	btrfs_add_delayed_iput(BTRFS_I(inode));
-+	btrfs_add_delayed_iput(inode);
+ 	ret = link_to_fixup_dir(trans, root, path, location.objectid);
+@@ -1186,18 +1186,21 @@ static inline int __add_inode_ref(struct btrfs_trans_handle *trans,
+ 				kfree(victim_name.name);
+ 				return ret;
+ 			} else if (!ret) {
+-				ret = -ENOENT;
+-				victim_parent = read_one_inode(root,
+-						parent_objectid);
+-				if (victim_parent) {
++				struct btrfs_inode *btrfs_victim;
++
++				btrfs_victim = btrfs_iget_logging(parent_objectid, root);
++				if (IS_ERR(btrfs_victim)) {
++					ret = PTR_ERR(btrfs_victim);
++				} else {
++					victim_parent = &btrfs_victim->vfs_inode;
+ 					inc_nlink(&inode->vfs_inode);
+ 					btrfs_release_path(path);
  
- 	ino_elem = kmalloc(sizeof(*ino_elem), GFP_NOFS);
- 	if (!ino_elem)
-@@ -5731,7 +5731,7 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
+ 					ret = unlink_inode_for_log_replay(trans,
+ 							BTRFS_I(victim_parent),
+ 							inode, &victim_name);
++					iput(victim_parent);
+ 				}
+-				iput(victim_parent);
+ 				kfree(victim_name.name);
+ 				if (ret)
+ 					return ret;
+@@ -1334,11 +1337,16 @@ static int unlink_old_inode_refs(struct btrfs_trans_handle *trans,
+ 			struct inode *dir;
+ 
+ 			btrfs_release_path(path);
+-			dir = read_one_inode(root, parent_id);
+-			if (!dir) {
+-				ret = -ENOENT;
+-				kfree(name.name);
+-				goto out;
++			{
++				struct btrfs_inode *btrfs_dir;
++
++				btrfs_dir = btrfs_iget_logging(parent_id, root);
++				if (IS_ERR(btrfs_dir)) {
++					ret = PTR_ERR(btrfs_dir);
++					kfree(name.name);
++					goto out;
++				}
++				dir = &btrfs_dir->vfs_inode;
+ 			}
+ 			ret = unlink_inode_for_log_replay(trans, BTRFS_I(dir),
+ 						 inode, &name);
+@@ -1409,16 +1417,28 @@ static noinline int add_inode_ref(struct btrfs_trans_handle *trans,
+ 	 * copy the back ref in.  The link count fixup code will take
+ 	 * care of the rest
  	 */
- 	while (!list_empty(&ctx->conflict_inodes)) {
- 		struct btrfs_ino_list *curr;
--		struct inode *inode;
-+		struct btrfs_inode *inode;
- 		u64 ino;
- 		u64 parent;
+-	dir = read_one_inode(root, parent_objectid);
+-	if (!dir) {
+-		ret = -ENOENT;
+-		goto out;
++	{
++		struct btrfs_inode *btrfs_dir;
++
++		btrfs_dir = btrfs_iget_logging(parent_objectid, root);
++		if (IS_ERR(btrfs_dir)) {
++			ret = PTR_ERR(btrfs_dir);
++			dir = NULL;
++			goto out;
++		}
++		dir = &btrfs_dir->vfs_inode;
+ 	}
  
-@@ -5767,9 +5767,8 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
- 			 * dir index key range logged for the directory. So we
- 			 * must make sure the deletion is recorded.
+-	inode = read_one_inode(root, inode_objectid);
+-	if (!inode) {
+-		ret = -EIO;
+-		goto out;
++	{
++		struct btrfs_inode *btrfs_inode;
++
++		btrfs_inode = btrfs_iget_logging(inode_objectid, root);
++		if (IS_ERR(btrfs_inode)) {
++			ret = PTR_ERR(btrfs_inode);
++			inode = NULL;
++			goto out;
++		}
++		inode = &btrfs_inode->vfs_inode;
+ 	}
+ 
+ 	while (ref_ptr < ref_end) {
+@@ -1429,11 +1449,16 @@ static noinline int add_inode_ref(struct btrfs_trans_handle *trans,
+ 			 * parent object can change from one array
+ 			 * item to another.
  			 */
--			ret = btrfs_log_inode(trans, BTRFS_I(inode),
--					      LOG_INODE_ALL, ctx);
--			btrfs_add_delayed_iput(BTRFS_I(inode));
-+			ret = btrfs_log_inode(trans, inode, LOG_INODE_ALL, ctx);
-+			btrfs_add_delayed_iput(inode);
- 			if (ret)
- 				break;
- 			continue;
-@@ -5785,8 +5784,8 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
- 		 * it again because if some other task logged the inode after
- 		 * that, we can avoid doing it again.
- 		 */
--		if (!need_log_inode(trans, BTRFS_I(inode))) {
--			btrfs_add_delayed_iput(BTRFS_I(inode));
-+		if (!need_log_inode(trans, inode)) {
-+			btrfs_add_delayed_iput(inode);
- 			continue;
+-			if (!dir)
+-				dir = read_one_inode(root, parent_objectid);
+ 			if (!dir) {
+-				ret = -ENOENT;
+-				goto out;
++				struct btrfs_inode *btrfs_dir;
++
++				btrfs_dir = btrfs_iget_logging(parent_objectid, root);
++				if (IS_ERR(btrfs_dir)) {
++					ret = PTR_ERR(btrfs_dir);
++					dir = NULL;
++					goto out;
++				}
++				dir = &btrfs_dir->vfs_inode;
+ 			}
+ 		} else {
+ 			ret = ref_get_fields(eb, ref_ptr, &name, &ref_index);
+@@ -1701,10 +1726,15 @@ static noinline int fixup_inode_link_counts(struct btrfs_trans_handle *trans,
+ 			break;
+ 
+ 		btrfs_release_path(path);
+-		inode = read_one_inode(root, key.offset);
+-		if (!inode) {
+-			ret = -EIO;
+-			break;
++		{
++			struct btrfs_inode *btrfs_inode;
++
++			btrfs_inode = btrfs_iget_logging(key.offset, root);
++			if (IS_ERR(btrfs_inode)) {
++				ret = PTR_ERR(btrfs_inode);
++				break;
++			}
++			inode = &btrfs_inode->vfs_inode;
  		}
  
-@@ -5797,8 +5796,8 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
- 		 * well because during a rename we pin the log and update the
- 		 * log with the new name before we unpin it.
- 		 */
--		ret = btrfs_log_inode(trans, BTRFS_I(inode), LOG_INODE_EXISTS, ctx);
--		btrfs_add_delayed_iput(BTRFS_I(inode));
-+		ret = btrfs_log_inode(trans, inode, LOG_INODE_EXISTS, ctx);
-+		btrfs_add_delayed_iput(inode);
- 		if (ret)
- 			break;
+ 		ret = fixup_inode_link_count(trans, inode);
+@@ -1738,9 +1768,14 @@ static noinline int link_to_fixup_dir(struct btrfs_trans_handle *trans,
+ 	int ret = 0;
+ 	struct inode *inode;
+ 
+-	inode = read_one_inode(root, objectid);
+-	if (!inode)
+-		return -EIO;
++	{
++		struct btrfs_inode *btrfs_inode;
++
++		btrfs_inode = btrfs_iget_logging(objectid, root);
++		if (IS_ERR(btrfs_inode))
++			return PTR_ERR(btrfs_inode);
++		inode = &btrfs_inode->vfs_inode;
++	}
+ 
+ 	key.objectid = BTRFS_TREE_LOG_FIXUP_OBJECTID;
+ 	key.type = BTRFS_ORPHAN_ITEM_KEY;
+@@ -1778,14 +1813,24 @@ static noinline int insert_one_name(struct btrfs_trans_handle *trans,
+ 	struct inode *dir;
+ 	int ret;
+ 
+-	inode = read_one_inode(root, location->objectid);
+-	if (!inode)
+-		return -ENOENT;
++	{
++		struct btrfs_inode *btrfs_inode;
+ 
+-	dir = read_one_inode(root, dirid);
+-	if (!dir) {
+-		iput(inode);
+-		return -EIO;
++		btrfs_inode = btrfs_iget_logging(location->objectid, root);
++		if (IS_ERR(btrfs_inode))
++			return PTR_ERR(btrfs_inode);
++		inode = &btrfs_inode->vfs_inode;
++	}
++
++	{
++		struct btrfs_inode *btrfs_dir;
++
++		btrfs_dir = btrfs_iget_logging(dirid, root);
++		if (IS_ERR(btrfs_dir)) {
++			iput(inode);
++			return PTR_ERR(btrfs_dir);
++		}
++		dir = &btrfs_dir->vfs_inode;
  	}
-@@ -6290,7 +6289,7 @@ static int log_new_delayed_dentries(struct btrfs_trans_handle *trans,
  
- 	list_for_each_entry(item, delayed_ins_list, log_list) {
- 		struct btrfs_dir_item *dir_item;
--		struct inode *di_inode;
-+		struct btrfs_inode *di_inode;
- 		struct btrfs_key key;
- 		int log_mode = LOG_INODE_EXISTS;
+ 	ret = btrfs_add_link(trans, BTRFS_I(dir), BTRFS_I(inode), name,
+@@ -1863,9 +1908,14 @@ static noinline int replay_one_name(struct btrfs_trans_handle *trans,
+ 	bool update_size = true;
+ 	bool name_added = false;
  
-@@ -6306,8 +6305,8 @@ static int log_new_delayed_dentries(struct btrfs_trans_handle *trans,
- 			break;
- 		}
+-	dir = read_one_inode(root, key->objectid);
+-	if (!dir)
+-		return -EIO;
++	{
++		struct btrfs_inode *btrfs_dir;
++
++		btrfs_dir = btrfs_iget_logging(key->objectid, root);
++		if (IS_ERR(btrfs_dir))
++			return PTR_ERR(btrfs_dir);
++		dir = &btrfs_dir->vfs_inode;
++	}
  
--		if (!need_log_inode(trans, BTRFS_I(di_inode))) {
--			btrfs_add_delayed_iput(BTRFS_I(di_inode));
-+		if (!need_log_inode(trans, di_inode)) {
-+			btrfs_add_delayed_iput(di_inode);
- 			continue;
- 		}
+ 	ret = read_alloc_one_name(eb, di + 1, btrfs_dir_name_len(eb, di), &name);
+ 	if (ret)
+@@ -2167,10 +2217,16 @@ static noinline int check_item_in_log(struct btrfs_trans_handle *trans,
+ 	btrfs_dir_item_key_to_cpu(eb, di, &location);
+ 	btrfs_release_path(path);
+ 	btrfs_release_path(log_path);
+-	inode = read_one_inode(root, location.objectid);
+-	if (!inode) {
+-		ret = -EIO;
+-		goto out;
++	{
++		struct btrfs_inode *btrfs_inode;
++
++		btrfs_inode = btrfs_iget_logging(location.objectid, root);
++		if (IS_ERR(btrfs_inode)) {
++			ret = PTR_ERR(btrfs_inode);
++			inode = NULL;
++			goto out;
++		}
++		inode = &btrfs_inode->vfs_inode;
+ 	}
  
-@@ -6315,12 +6314,12 @@ static int log_new_delayed_dentries(struct btrfs_trans_handle *trans,
- 			log_mode = LOG_INODE_ALL;
+ 	ret = link_to_fixup_dir(trans, root, path, location.objectid);
+@@ -2321,14 +2377,22 @@ static noinline int replay_dir_deletes(struct btrfs_trans_handle *trans,
+ 	if (!log_path)
+ 		return -ENOMEM;
  
- 		ctx->log_new_dentries = false;
--		ret = btrfs_log_inode(trans, BTRFS_I(di_inode), log_mode, ctx);
-+		ret = btrfs_log_inode(trans, di_inode, log_mode, ctx);
+-	dir = read_one_inode(root, dirid);
+-	/* it isn't an error if the inode isn't there, that can happen
+-	 * because we replay the deletes before we copy in the inode item
+-	 * from the log
+-	 */
+-	if (!dir) {
+-		btrfs_free_path(log_path);
+-		return 0;
++	{
++		struct btrfs_inode *btrfs_dir;
++
++		btrfs_dir = btrfs_iget_logging(dirid, root);
++		/*
++		 * It isn't an error if the inode isn't there, that can happen because
++		 * we replay the deletes before we copy in the inode item from the log.
++		 */
++		if (IS_ERR(btrfs_dir)) {
++			btrfs_free_path(log_path);
++			ret = PTR_ERR(btrfs_dir);
++			if (ret == -ENOENT)
++				ret = 0;
++			return ret;
++		}
++		dir = &btrfs_dir->vfs_inode;
+ 	}
  
- 		if (!ret && ctx->log_new_dentries)
--			ret = log_new_dir_dentries(trans, BTRFS_I(di_inode), ctx);
-+			ret = log_new_dir_dentries(trans, di_inode, ctx);
+ 	range_start = 0;
+@@ -2487,10 +2551,15 @@ static int replay_one_buffer(struct btrfs_root *log, struct extent_buffer *eb,
+ 				struct inode *inode;
+ 				u64 from;
  
--		btrfs_add_delayed_iput(BTRFS_I(di_inode));
-+		btrfs_add_delayed_iput(di_inode);
- 
- 		if (ret)
- 			break;
-@@ -6728,7 +6727,7 @@ static int btrfs_log_all_parents(struct btrfs_trans_handle *trans,
- 		ptr = btrfs_item_ptr_offset(leaf, slot);
- 		while (cur_offset < item_size) {
- 			struct btrfs_key inode_key;
--			struct inode *dir_inode;
-+			struct btrfs_inode *dir_inode;
- 
- 			inode_key.type = BTRFS_INODE_ITEM_KEY;
- 			inode_key.offset = 0;
-@@ -6777,18 +6776,16 @@ static int btrfs_log_all_parents(struct btrfs_trans_handle *trans,
- 				goto out;
- 			}
- 
--			if (!need_log_inode(trans, BTRFS_I(dir_inode))) {
--				btrfs_add_delayed_iput(BTRFS_I(dir_inode));
-+			if (!need_log_inode(trans, dir_inode)) {
-+				btrfs_add_delayed_iput(dir_inode);
- 				continue;
- 			}
- 
- 			ctx->log_new_dentries = false;
--			ret = btrfs_log_inode(trans, BTRFS_I(dir_inode),
--					      LOG_INODE_ALL, ctx);
-+			ret = btrfs_log_inode(trans, dir_inode, LOG_INODE_ALL, ctx);
- 			if (!ret && ctx->log_new_dentries)
--				ret = log_new_dir_dentries(trans,
--						   BTRFS_I(dir_inode), ctx);
--			btrfs_add_delayed_iput(BTRFS_I(dir_inode));
-+				ret = log_new_dir_dentries(trans, dir_inode, ctx);
-+			btrfs_add_delayed_iput(dir_inode);
- 			if (ret)
- 				goto out;
- 		}
-@@ -6813,7 +6810,7 @@ static int log_new_ancestors(struct btrfs_trans_handle *trans,
- 		struct extent_buffer *leaf;
- 		int slot;
- 		struct btrfs_key search_key;
--		struct inode *inode;
-+		struct btrfs_inode *inode;
- 		u64 ino;
- 		int ret = 0;
- 
-@@ -6828,11 +6825,10 @@ static int log_new_ancestors(struct btrfs_trans_handle *trans,
- 		if (IS_ERR(inode))
- 			return PTR_ERR(inode);
- 
--		if (BTRFS_I(inode)->generation >= trans->transid &&
--		    need_log_inode(trans, BTRFS_I(inode)))
--			ret = btrfs_log_inode(trans, BTRFS_I(inode),
--					      LOG_INODE_EXISTS, ctx);
--		btrfs_add_delayed_iput(BTRFS_I(inode));
-+		if (inode->generation >= trans->transid &&
-+		    need_log_inode(trans, inode))
-+			ret = btrfs_log_inode(trans, inode, LOG_INODE_EXISTS, ctx);
-+		btrfs_add_delayed_iput(inode);
- 		if (ret)
- 			return ret;
- 
+-				inode = read_one_inode(root, key.objectid);
+-				if (!inode) {
+-					ret = -EIO;
+-					break;
++				{
++					struct btrfs_inode *btrfs_inode;
++
++					btrfs_inode = btrfs_iget_logging(key.objectid, root);
++					if (IS_ERR(btrfs_inode)) {
++						ret = PTR_ERR(btrfs_inode);
++						break;
++					}
++					inode = &btrfs_inode->vfs_inode;
+ 				}
+ 				from = ALIGN(i_size_read(inode),
+ 					     root->fs_info->sectorsize);
 -- 
 2.39.5
 
