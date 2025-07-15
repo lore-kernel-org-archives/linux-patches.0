@@ -1,51 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FDB2E2657;
-	Tue, 15 Jul 2025 13:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015472E49B3;
+	Tue, 15 Jul 2025 13:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586944; cv=none; b=eGiZhe4/1d63WeQ9tiDx6HCP9LDjO1PFcSriIkAF0u9lev0lIqqbHpm1Dz7/3bgMiCE7qRaAANCLzsQDgkcnHX1ceslJuoilx8AZoNcyO116R4xdymeYsd/uBIucU5fhBnrGlBlHTSHzzH3SW6WHqQnhul9vAfk39R5F7B5Pdwc=
+	t=1752586947; cv=none; b=kkI2HC0zwlPQJmDqG9mOtDiDETZyD3c0PuJkTJDv/h10Ur/2H9nXSkNTfsYwIRaj1sG6PtJT/KxYXv6R4YipwjK3UMpPW3nraH/ETJx7B0TNlfHrKTL764nFn+HAyYSKOPKcoDOFqAl+RvSdDRLDhsInqgEAXyR4hqoB18cXB78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586944; c=relaxed/simple;
-	bh=BxmuLHxn/WE1J/xuOnhEa+utZlCF0gcYdFaTPF6loik=;
+	s=arc-20240116; t=1752586947; c=relaxed/simple;
+	bh=bQ5FNtSqEMmG1pUzMjhGg2NDhSHq/KBHaoNTjAeY428=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGeCEPPmTdzxVGjNluM66AT8kr0oyo8LgWi5gFlwzzEtLYdOExZiyoBaXwbZeLFxDHWORCevcbrPv92Toy0E5pXflAxRoNYg0lNtoHZ61gVo4NJ7q7GDNSmwpnFr6NOs8z6A9voJchFUcATmddlweunIs1KRpuW4RedKV+odWUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vltIEt0/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNBQZViJsP9G9f63aKSU+L5OSckWW0Yd1aCKE2UtQmLWSQQdNcszFCX5WWmrs4P0GefGpPo7YaxEplEk5tdbnhr5m3WYLkm90hOrY8SEzoDKXsXJxiaxHwfyChPJPNv44imFSmJ4A4dPZakOJvVZUDcYy7qgxFh1jbtydjq38Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ws/oo1bq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vltIEt0/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F34C4CEE3;
-	Tue, 15 Jul 2025 13:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ws/oo1bq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC76C4CEE3;
+	Tue, 15 Jul 2025 13:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586943;
-	bh=BxmuLHxn/WE1J/xuOnhEa+utZlCF0gcYdFaTPF6loik=;
+	s=korg; t=1752586946;
+	bh=bQ5FNtSqEMmG1pUzMjhGg2NDhSHq/KBHaoNTjAeY428=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vltIEt0/Yo8s0ZrDiRN5SI0jhNwKRqi8WIz+XgtDIcWAyETJuUBiKOIlJafICU7gx
-	 b8b0kwMQGqfNVcrOMQJi4nLo0GD+UUZxy+eBV9xcmXQLWXXZDon/SJqlpRzUJE1zx2
-	 7t2kXlg7NgTx87Zu0dNF1+COyhjTXIpalZ1CYq9g=
+	b=Ws/oo1bqm8XbKXjPDumN1iPz4r98hBvgo1h6qKKrohKq2cmTe1TQc6D82WBQq9tKy
+	 WA83F1HvqAAfwF32BubXksfXG53yf1EkwFyGb/hNmyDEjR7v6AffdIOSppxpSyOcGF
+	 /+ojt10Nw0ZdbIApxRm2Yj0iKLYG+QUXujXDi/8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	David Hildenbrand <david@redhat.com>,
-	Barry Song <baohua@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chris Li <chrisl@kernel.org>,
-	"Huang, Ying" <huang.ying.caritas@gmail.com>,
-	Kairui Song <kasong@tencent.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Mingzhe Yang <mingzhe.yang@ly.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Tangquan Zheng <zhengtangquan@oppo.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 107/192] mm/rmap: fix potential out-of-bounds page table access during batched unmap
-Date: Tue, 15 Jul 2025 15:13:22 +0200
-Message-ID: <20250715130819.182840070@linuxfoundation.org>
+Subject: [PATCH 6.15 108/192] mm/damon/core: handle damon_call_control as normal under kdmond deactivation
+Date: Tue, 15 Jul 2025 15:13:23 +0200
+Message-ID: <20250715130819.224610705@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -64,140 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: SeongJae Park <sj@kernel.org>
 
-commit ddd05742b45b083975a0855ef6ebbf88cf1f532a upstream.
+commit bb1b5929b4279b136816f95ce1e8f1fa689bf4a1 upstream.
 
-As pointed out by David[1], the batched unmap logic in
-try_to_unmap_one() may read past the end of a PTE table when a large
-folio's PTE mappings are not fully contained within a single page
-table.
+DAMON sysfs interface internally uses damon_call() to update DAMON
+parameters as users requested, online.  However, DAMON core cancels any
+damon_call() requests when it is deactivated by DAMOS watermarks.
 
-While this scenario might be rare, an issue triggerable from userspace
-must be fixed regardless of its likelihood.  This patch fixes the
-out-of-bounds access by refactoring the logic into a new helper,
-folio_unmap_pte_batch().
+As a result, users cannot change DAMON parameters online while DAMON is
+deactivated.  Note that users can turn DAMON off and on with different
+watermarks to work around.  Since deactivated DAMON is nearly same to
+stopped DAMON, the work around should have no big problem.  Anyway, a bug
+is a bug.
 
-The new helper correctly calculates the safe batch size by capping the
-scan at both the VMA and PMD boundaries.  To simplify the code, it also
-supports partial batching (i.e., any number of pages from 1 up to the
-calculated safe maximum), as there is no strong reason to special-case
-for fully mapped folios.
+There is no real good reason to cancel the damon_call() request under
+DAMOS deactivation.  Fix it by simply handling the request as normal,
+rather than cancelling under the situation.
 
-Link: https://lkml.kernel.org/r/20250701143100.6970-1-lance.yang@linux.dev
-Link: https://lkml.kernel.org/r/20250630011305.23754-1-lance.yang@linux.dev
-Link: https://lkml.kernel.org/r/20250627062319.84936-1-lance.yang@linux.dev
-Link: https://lore.kernel.org/linux-mm/a694398c-9f03-4737-81b9-7e49c857fcbe@redhat.com [1]
-Fixes: 354dffd29575 ("mm: support batched unmap for lazyfree large folios during reclamation")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Reported-by: David Hildenbrand <david@redhat.com>
-Closes: https://lore.kernel.org/linux-mm/a694398c-9f03-4737-81b9-7e49c857fcbe@redhat.com
-Suggested-by: Barry Song <baohua@kernel.org>
-Acked-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Mingzhe Yang <mingzhe.yang@ly.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Tangquan Zheng <zhengtangquan@oppo.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20250629204914.54114-1-sj@kernel.org
+Fixes: 42b7491af14c ("mm/damon/core: introduce damon_call()")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.14+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/rmap.c | 46 ++++++++++++++++++++++++++++------------------
- 1 file changed, 28 insertions(+), 18 deletions(-)
+ mm/damon/core.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/mm/rmap.c b/mm/rmap.c
-index fb63d9256f09..1320b88fab74 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -1845,23 +1845,32 @@ void folio_remove_rmap_pud(struct folio *folio, struct page *page,
- #endif
- }
- 
--/* We support batch unmapping of PTEs for lazyfree large folios */
--static inline bool can_batch_unmap_folio_ptes(unsigned long addr,
--			struct folio *folio, pte_t *ptep)
-+static inline unsigned int folio_unmap_pte_batch(struct folio *folio,
-+			struct page_vma_mapped_walk *pvmw,
-+			enum ttu_flags flags, pte_t pte)
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2306,9 +2306,8 @@ static void kdamond_usleep(unsigned long
+  *
+  * If there is a &struct damon_call_control request that registered via
+  * &damon_call() on @ctx, do or cancel the invocation of the function depending
+- * on @cancel.  @cancel is set when the kdamond is deactivated by DAMOS
+- * watermarks, or the kdamond is already out of the main loop and therefore
+- * will be terminated.
++ * on @cancel.  @cancel is set when the kdamond is already out of the main loop
++ * and therefore will be terminated.
+  */
+ static void kdamond_call(struct damon_ctx *ctx, bool cancel)
  {
- 	const fpb_t fpb_flags = FPB_IGNORE_DIRTY | FPB_IGNORE_SOFT_DIRTY;
--	int max_nr = folio_nr_pages(folio);
--	pte_t pte = ptep_get(ptep);
-+	unsigned long end_addr, addr = pvmw->address;
-+	struct vm_area_struct *vma = pvmw->vma;
-+	unsigned int max_nr;
- 
-+	if (flags & TTU_HWPOISON)
-+		return 1;
-+	if (!folio_test_large(folio))
-+		return 1;
-+
-+	/* We may only batch within a single VMA and a single page table. */
-+	end_addr = pmd_addr_end(addr, vma->vm_end);
-+	max_nr = (end_addr - addr) >> PAGE_SHIFT;
-+
-+	/* We only support lazyfree batching for now ... */
- 	if (!folio_test_anon(folio) || folio_test_swapbacked(folio))
--		return false;
-+		return 1;
- 	if (pte_unused(pte))
--		return false;
--	if (pte_pfn(pte) != folio_pfn(folio))
--		return false;
-+		return 1;
- 
--	return folio_pte_batch(folio, addr, ptep, pte, max_nr, fpb_flags, NULL,
--			       NULL, NULL) == max_nr;
-+	return folio_pte_batch(folio, addr, pvmw->pte, pte, max_nr, fpb_flags,
-+			       NULL, NULL, NULL);
- }
- 
- /*
-@@ -2024,9 +2033,7 @@ static bool try_to_unmap_one(struct folio *folio, struct vm_area_struct *vma,
- 			if (pte_dirty(pteval))
- 				folio_mark_dirty(folio);
- 		} else if (likely(pte_present(pteval))) {
--			if (folio_test_large(folio) && !(flags & TTU_HWPOISON) &&
--			    can_batch_unmap_folio_ptes(address, folio, pvmw.pte))
--				nr_pages = folio_nr_pages(folio);
-+			nr_pages = folio_unmap_pte_batch(folio, &pvmw, flags, pteval);
- 			end_addr = address + nr_pages * PAGE_SIZE;
- 			flush_cache_range(vma, address, end_addr);
- 
-@@ -2206,13 +2213,16 @@ static bool try_to_unmap_one(struct folio *folio, struct vm_area_struct *vma,
- 			hugetlb_remove_rmap(folio);
- 		} else {
- 			folio_remove_rmap_ptes(folio, subpage, nr_pages, vma);
--			folio_ref_sub(folio, nr_pages - 1);
- 		}
- 		if (vma->vm_flags & VM_LOCKED)
- 			mlock_drain_local();
--		folio_put(folio);
--		/* We have already batched the entire folio */
--		if (nr_pages > 1)
-+		folio_put_refs(folio, nr_pages);
-+
-+		/*
-+		 * If we are sure that we batched the entire folio and cleared
-+		 * all PTEs, we can just optimize and stop right here.
-+		 */
-+		if (nr_pages == folio_nr_pages(folio))
- 			goto walk_done;
- 		continue;
- walk_abort:
--- 
-2.50.1
-
+@@ -2356,7 +2355,7 @@ static int kdamond_wait_activation(struc
+ 		if (ctx->callback.after_wmarks_check &&
+ 				ctx->callback.after_wmarks_check(ctx))
+ 			break;
+-		kdamond_call(ctx, true);
++		kdamond_call(ctx, false);
+ 		damos_walk_cancel(ctx);
+ 	}
+ 	return -EBUSY;
 
 
