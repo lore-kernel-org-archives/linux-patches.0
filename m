@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C045E2EA48E;
-	Tue, 15 Jul 2025 13:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B812E498B;
+	Tue, 15 Jul 2025 13:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586830; cv=none; b=Jnh0RGV8G40dl7QtTFPstwfm/feG5vei+iVWzqHxaARDo3IRuIU08ZnH/0dE3kqdYdB/hw9x4p6N03+HEs3/7bKgmMkQm8e6tN3TEI+KH1AtVCKCinGF1yX5er3fNWsxS6ylzxWLd/Er4Jkbb0eY+tE4czQyWSJq7/G5/BVmNC4=
+	t=1752586833; cv=none; b=DVPIKXXHXlyCz9al+xlys7HeldINPZbSXW9fW/So7I8cRWbHLCY2WNvKTrfq/Kqar6rssTvIfL8pSCfRc4KANJRG6ECC8detU1uxBTT6juEN5fIv0vXvzqLwz+WuviOsvU/B3W6zo3w6NeUBgvmQJ66kBSaokhOAgfFSjc2TcXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586830; c=relaxed/simple;
-	bh=T8AH2qnV5PM9rffsvOLBj9EoboTDQ9kNo4NpS35HKec=;
+	s=arc-20240116; t=1752586833; c=relaxed/simple;
+	bh=eL0CY1csAHfwSap++gtrqAZqmuopaLLy2I/OBAk4XTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CluYwLEsSPNfPKzRXqGxk9AQdihgXzUL1+MCo9choLJ9fQyGoUHmSTqi8qHy4Xp4nmIe71Y8a6A2MRsiex0q4DHCd9T25fXpWKZrUXJAlM/3MPF+HkdzSzNRVvg3r98ONcjr43tQuxvUsMQiKOSDaaSo2ECHNGwdKf7lvL91YqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKp09/PQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IQv3m+tzWlE63rXG3ZIv/FBl2xQkgMw8HsvUj6GoZ55rx4YTsoCkpV7jX9/QnVk5rTuNvjeDTP59qGU39oGxKUNKwxYgKK2vi8mruasNiE6iV47jOzrQbPghLYDAUzEm5sHwWnAPrBbwZEoT6V8lZnETePqeQ8/uYUoXtvyvgjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIps1ktP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKp09/PQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376EBC4CEF1;
-	Tue, 15 Jul 2025 13:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIps1ktP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B7DC4CEF1;
+	Tue, 15 Jul 2025 13:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586830;
-	bh=T8AH2qnV5PM9rffsvOLBj9EoboTDQ9kNo4NpS35HKec=;
+	s=korg; t=1752586833;
+	bh=eL0CY1csAHfwSap++gtrqAZqmuopaLLy2I/OBAk4XTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKp09/PQXV1WmbBcEo82z+Yq4vNE3OV4DvtTJUXLpTP53A/XW5YjddhW2CWBMqEsu
-	 dcnfiLXZsqysVKDzwk8+HB+XXmt/zEyuQbGE5WNcNrSCQOqzRYpgVEW4gX99E9W13T
-	 wrM4xtdsdmZ3OvQ0tVAfJxWSem/hM5ZjhzyuxDMA=
+	b=FIps1ktPRrxFCkkZ4U1hBAboKa/nx4KyWh83TZzdbX7lHzQqzFCpIJkpVVS0vwMyf
+	 LYHX1I534pMzt51TzYiTNhgEa6i+mbp0AuStcOsgfMtPuPT7UZQvkdhDiKq+2705rv
+	 XVFjy8gU1WMocoMkcuYr4I+0EYtLwk/Eebu7qLRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Raghavan <arun@asymptotic.io>,
-	Pieterjan Camerlynck <p.camerlynck@televic.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.15 065/192] ASoC: fsl_sai: Force a software reset when starting in consumer mode
-Date: Tue, 15 Jul 2025 15:12:40 +0200
-Message-ID: <20250715130817.547565418@linuxfoundation.org>
+	syzbot+54cbbfb4db9145d26fc2@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.15 066/192] io_uring/msg_ring: ensure io_kiocb freeing is deferred for RCU
+Date: Tue, 15 Jul 2025 15:12:41 +0200
+Message-ID: <20250715130817.586486772@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,59 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun Raghavan <arun@asymptotic.io>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit dc78f7e59169d3f0e6c3c95d23dc8e55e95741e2 upstream.
+commit fc582cd26e888b0652bc1494f252329453fd3b23 upstream.
 
-On an imx8mm platform with an external clock provider, when running the
-receiver (arecord) and triggering an xrun with xrun_injection, we see a
-channel swap/offset. This happens sometimes when running only the
-receiver, but occurs reliably if a transmitter (aplay) is also
-concurrently running.
+syzbot reports that defer/local task_work adding via msg_ring can hit
+a request that has been freed:
 
-It seems that the SAI loses track of frame sync during the trigger stop
--> trigger start cycle that occurs during an xrun. Doing just a FIFO
-reset in this case does not suffice, and only a software reset seems to
-get it back on track.
+CPU: 1 UID: 0 PID: 19356 Comm: iou-wrk-19354 Not tainted 6.16.0-rc4-syzkaller-00108-g17bbde2e1716 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xd2/0x2b0 mm/kasan/report.c:521
+ kasan_report+0x118/0x150 mm/kasan/report.c:634
+ io_req_local_work_add io_uring/io_uring.c:1184 [inline]
+ __io_req_task_work_add+0x589/0x950 io_uring/io_uring.c:1252
+ io_msg_remote_post io_uring/msg_ring.c:103 [inline]
+ io_msg_data_remote io_uring/msg_ring.c:133 [inline]
+ __io_msg_ring_data+0x820/0xaa0 io_uring/msg_ring.c:151
+ io_msg_ring_data io_uring/msg_ring.c:173 [inline]
+ io_msg_ring+0x134/0xa00 io_uring/msg_ring.c:314
+ __io_issue_sqe+0x17e/0x4b0 io_uring/io_uring.c:1739
+ io_issue_sqe+0x165/0xfd0 io_uring/io_uring.c:1762
+ io_wq_submit_work+0x6e9/0xb90 io_uring/io_uring.c:1874
+ io_worker_handle_work+0x7cd/0x1180 io_uring/io-wq.c:642
+ io_wq_worker+0x42f/0xeb0 io_uring/io-wq.c:696
+ ret_from_fork+0x3fc/0x770 arch/x86/kernel/process.c:148
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
 
-This looks like the same h/w bug that is already handled for the
-producer case, so we now do the reset unconditionally on config disable.
+which is supposed to be safe with how requests are allocated. But msg
+ring requests alloc and free on their own, and hence must defer freeing
+to a sane time.
 
-Signed-off-by: Arun Raghavan <arun@asymptotic.io>
-Reported-by: Pieterjan Camerlynck <p.camerlynck@televic.com>
-Fixes: 3e3f8bd56955 ("ASoC: fsl_sai: fix no frame clk in master mode")
+Add an rcu_head and use kfree_rcu() in both spots where requests are
+freed. Only the one in io_msg_tw_complete() is strictly required as it
+has been visible on the other ring, but use it consistently in the other
+spot as well.
+
+This should not cause any other issues outside of KASAN rightfully
+complaining about it.
+
+Link: https://lore.kernel.org/io-uring/686cd2ea.a00a0220.338033.0007.GAE@google.com/
+Reported-by: syzbot+54cbbfb4db9145d26fc2@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Link: https://patch.msgid.link/20250626130858.163825-1-arun@arunraghavan.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0617bb500bfa ("io_uring/msg_ring: improve handling of target CQE posting")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_sai.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ include/linux/io_uring_types.h |    2 ++
+ io_uring/msg_ring.c            |    4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -771,13 +771,15 @@ static void fsl_sai_config_disable(struc
- 	 * anymore. Add software reset to fix this issue.
- 	 * This is a hardware bug, and will be fix in the
- 	 * next sai version.
-+	 *
-+	 * In consumer mode, this can happen even after a
-+	 * single open/close, especially if both tx and rx
-+	 * are running concurrently.
- 	 */
--	if (!sai->is_consumer_mode[tx]) {
--		/* Software Reset */
--		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
--		/* Clear SR bit to finish the reset */
--		regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
--	}
-+	/* Software Reset */
-+	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
-+	/* Clear SR bit to finish the reset */
-+	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -701,6 +701,8 @@ struct io_kiocb {
+ 		struct hlist_node	hash_node;
+ 		/* For IOPOLL setup queues, with hybrid polling */
+ 		u64                     iopoll_start;
++		/* for private io_kiocb freeing */
++		struct rcu_head		rcu_head;
+ 	};
+ 	/* internal polling, see IORING_FEAT_FAST_POLL */
+ 	struct async_poll		*apoll;
+--- a/io_uring/msg_ring.c
++++ b/io_uring/msg_ring.c
+@@ -82,7 +82,7 @@ static void io_msg_tw_complete(struct io
+ 		spin_unlock(&ctx->msg_lock);
+ 	}
+ 	if (req)
+-		kmem_cache_free(req_cachep, req);
++		kfree_rcu(req, rcu_head);
+ 	percpu_ref_put(&ctx->refs);
  }
  
- static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
+@@ -90,7 +90,7 @@ static int io_msg_remote_post(struct io_
+ 			      int res, u32 cflags, u64 user_data)
+ {
+ 	if (!READ_ONCE(ctx->submitter_task)) {
+-		kmem_cache_free(req_cachep, req);
++		kfree_rcu(req, rcu_head);
+ 		return -EOWNERDEAD;
+ 	}
+ 	req->opcode = IORING_OP_NOP;
 
 
