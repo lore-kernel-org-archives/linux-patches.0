@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03C62E339B;
-	Tue, 15 Jul 2025 13:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B902E339B;
+	Tue, 15 Jul 2025 13:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586594; cv=none; b=r51NdbOsFKb1LT3O+wMms1c34JquF8GK3mYOsEIfIc2P2E/Vs9KSPconr3IFdw1xwFjeB831qtj+dCYB9POZnBPntq1kAJllqbgZdJGxPaeQtzf27kiPcJehKpeIHImFzcwvXNGvLvdtwfsJPn7y7m1uxijPWaHkz3BcqkhsQ1k=
+	t=1752586597; cv=none; b=BvDaZTny8ig4Frkj4fSyF2v19OWZW0paTqjOBgD6yPAYn7Tmo/1dPj+toq0m6cSpuQUg0jUewBCYWuOW5v+Kj5IJN8j6IKaHrN8JlwKnRzGKBkKHGf7KsaLkcDejYCG7DnPdS4BjZgh9EgB1T2rndtkZGx5CKelVVG8czNC7T5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586594; c=relaxed/simple;
-	bh=XhuFar+czKwtrq5n5FX4r44OQk0bq1tC6Im/TeeKOWs=;
+	s=arc-20240116; t=1752586597; c=relaxed/simple;
+	bh=AL3Hd6xQiiPVmXPowzOlVLyIs1wpjv7PFBDLJFXPD2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iCRU8qTKF8Z3aBx9n1tcYxwb1HU+WiQEf8AVOgXu+NqGBzRduoE1o3ofbuAdcggP34SdHbL26M8yoAQo/tGt1/htFSPvJROdjY8BgBUdM0oPvqxYsfwbGs+x28YRpaStBZ612rncSX4/Fwwfy0Az6geQgeKbq5UMs4Bb2vl2Nk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDsE6jrT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AkmVJ3HJotRO/KkEUOzcjAjl8ok2QZQf+z+ZKq5h7E/lUPDqUq85GtYnGaqP6B+HLJAQbHeBdAS44Wspnj2ovIFtpFA820fWnC9Q+tEGDezkVd6FGGLcUo89TBtHfY0lIRqSy6qzaCKAL9WZ9vsoIPRnQlrLfSuxXa3rfPDxHPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smLeglw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDsE6jrT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396DDC4CEE3;
-	Tue, 15 Jul 2025 13:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smLeglw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEC2C4CEE3;
+	Tue, 15 Jul 2025 13:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586594;
-	bh=XhuFar+czKwtrq5n5FX4r44OQk0bq1tC6Im/TeeKOWs=;
+	s=korg; t=1752586597;
+	bh=AL3Hd6xQiiPVmXPowzOlVLyIs1wpjv7PFBDLJFXPD2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDsE6jrTnsKDw+Azac5TVgOSjNOE96Q0mX3cyC89wL/0j5mBD1DlgzYtrAfnh8s18
-	 961JFDqCQoBD2raGGz2hm7rtJOey0MbJAIVAuWp9TWwZ72+tXf72krqN9Cklv+d8Fx
-	 Y8TpWA67EvVGX9g89jqDGkK1XFwQoQxX0dWylZG8=
+	b=smLeglw2cOCnluaPlAxwoNeNsFqoEUy3DZWxjyTB2EUNeUGRnA5DdufyQyV2u0LFV
+	 FyUQsnbiGmEcEOxkooVDGVrh9tbvQq8LIV4J2x3HhzdVBoiUsYTURKHSz4hcmYENgF
+	 9kxE/uWMgSjO1soIv3sMrU75U/coZK7OobDqpEH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 5.4 124/148] pwm: mediatek: Ensure to disable clocks in error path
-Date: Tue, 15 Jul 2025 15:14:06 +0200
-Message-ID: <20250715130805.262630586@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 125/148] netlink: make sure we allow at least one dump skb
+Date: Tue, 15 Jul 2025 15:14:07 +0200
+Message-ID: <20250715130805.300163679@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -44,71 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 505b730ede7f5c4083ff212aa955155b5b92e574 upstream.
+commit a215b5723922f8099078478122f02100e489cb80 upstream.
 
-After enabling the clocks each error path must disable the clocks again.
-One of them failed to do so. Unify the error paths to use goto to make it
-harder for future changes to add a similar bug.
+Commit under Fixes tightened up the memory accounting for Netlink
+sockets. Looks like the accounting is too strict for some existing
+use cases, Marek reported issues with nl80211 / WiFi iw CLI.
 
-Fixes: 7ca59947b5fc ("pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250704172728.626815-2-u.kleine-koenig@baylibre.com
-Cc: stable@vger.kernel.org
-[ukleinek: backported to 5.15.y]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+To reduce number of iterations Netlink dumps try to allocate
+messages based on the size of the buffer passed to previous
+recvmsg() calls. If user space uses a larger buffer in recvmsg()
+than sk_rcvbuf we will allocate an skb we won't be able to queue.
+
+Make sure we always allow at least one skb to be queued.
+Same workaround is already present in netlink_attachskb().
+Alternative would be to cap the allocation size to
+  rcvbuf - rmem_alloc
+but as I said, the workaround is already present in other places.
+
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/9794af18-4905-46c6-b12c-365ea2f05858@samsung.com
+Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711001121.3649033-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-mediatek.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/netlink/af_netlink.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -134,8 +134,10 @@ static int pwm_mediatek_config(struct pw
- 		return ret;
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2186,11 +2186,11 @@ static int netlink_dump(struct sock *sk)
+ 	struct netlink_ext_ack extack = {};
+ 	struct netlink_callback *cb;
+ 	struct sk_buff *skb = NULL;
++	unsigned int rmem, rcvbuf;
+ 	struct nlmsghdr *nlh;
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
+-	unsigned int rmem;
+ 	int alloc_size;
  
- 	clk_rate = clk_get_rate(pc->clk_pwms[pwm->hwpwm]);
--	if (!clk_rate)
--		return -EINVAL;
-+	if (!clk_rate) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
+ 	mutex_lock(nlk->cb_mutex);
+@@ -2220,8 +2220,9 @@ static int netlink_dump(struct sock *sk)
+ 	if (!skb)
+ 		goto errout_skb;
  
- 	/* Make sure we use the bus clock and not the 26MHz clock */
- 	if (pc->soc->has_ck_26m_sel)
-@@ -154,9 +156,9 @@ static int pwm_mediatek_config(struct pw
++	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+-	if (rmem >= READ_ONCE(sk->sk_rcvbuf)) {
++	if (rmem != skb->truesize && rmem >= rcvbuf) {
+ 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+ 		goto errout_skb;
  	}
- 
- 	if (clkdiv > PWM_CLK_DIV_MAX) {
--		pwm_mediatek_clk_disable(chip, pwm);
--		dev_err(chip->dev, "period %d not supported\n", period_ns);
--		return -EINVAL;
-+		dev_err(chip->dev, "period of %d ns not supported\n", period_ns);
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 
- 	if (pc->soc->pwm45_fixup && pwm->hwpwm > 2) {
-@@ -173,9 +175,10 @@ static int pwm_mediatek_config(struct pw
- 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period);
- 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty);
- 
-+out:
- 	pwm_mediatek_clk_disable(chip, pwm);
- 
--	return 0;
-+	return ret;
- }
- 
- static int pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
 
 
