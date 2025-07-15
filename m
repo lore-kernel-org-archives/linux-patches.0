@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FF02E49BB;
-	Tue, 15 Jul 2025 13:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82412E49B2;
+	Tue, 15 Jul 2025 13:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586796; cv=none; b=TxnNUrZbsGUDOOin2b+dsFyrtEM3fnIhO/24g6KLbRlXvn35UOWNJXnta/FCDVlDQECeg+RLjDyGufOioK8O8CzNBSvW0Xfjstx0+lqSMviRM9KExlRHl1yfmkUy/fHAlNJyB/yzFofSQTL+CeJ3nQZeO7HEGU7OBob/a8Yl6yc=
+	t=1752586798; cv=none; b=lihahJL5oH2znxtYa8XrakQWHPfUpVClc4tjfM8ex0TtcFUcVWrqocoLS4EoGKUylDZBHKWKFWEV2AqtxFXjS7S8K+jTMD/hGShbveU1jWaxouGXRKyKSUUUbHMrf7s0PxdhvFcmgg60D2l+mFydzPmh58OY7nv1wR3NfKXiINA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586796; c=relaxed/simple;
-	bh=DQc1DcnWLySaXegNbBtcy+E/fjVU1k0z4VYVanKP1sw=;
+	s=arc-20240116; t=1752586798; c=relaxed/simple;
+	bh=od6FwcrzyMcCoTOsuPSulkXBpeiRLfmXdEgtFup/GpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAI9FqklPC2ZpIqjj/cOm09NJ5g8SjyXcmI2noDbZNY+8okomamLeE1b3+Vglnw3R2gTAfBAGoMazNnxVyw9VZpZzLJ7hzkJvBcD6kKsRAfxOg0MnuFXvhht/KQ/oL5zjbsQ6IrVShTgrkbAfNJsdWnPQm+LEKM1K/OCCaqEY7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s25TCSoA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vATBK/HEVsKwDTfx2kZpGxPMeXM679ecb19116dIAEZP4ChOmozeQFMxppcdFi/YSUD/cMKbeF7PidFZT90Tkyt8jdr9DX72uAFwBLILXydk1W3u/L4tYEHxJa8DNQf6JG9Xm5YvzDA/7v1lWAoTPsDmZh9ApH9IKrwFmK2JCcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyIrADmx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s25TCSoA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3584C4CEF1;
-	Tue, 15 Jul 2025 13:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyIrADmx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484F1C4CEE3;
+	Tue, 15 Jul 2025 13:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586796;
-	bh=DQc1DcnWLySaXegNbBtcy+E/fjVU1k0z4VYVanKP1sw=;
+	s=korg; t=1752586798;
+	bh=od6FwcrzyMcCoTOsuPSulkXBpeiRLfmXdEgtFup/GpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s25TCSoAkQ/osJxUHSkW+d57lsToctoMFzudWM9e/Uo/94lNwvzAym1+BAwyCA4Dq
-	 +Wp6Cjh+uAV0CwddqkcbKDFKn3AbWMIUsULIYBruD7pUPJJsF6mo2/08b/PXXHxiGC
-	 PUrfOoiiamzIip6PqOWFz7rY57Ot3ffiNFzy6mHc=
+	b=HyIrADmxysfwIvuwsqikL7eMfS+ZgZagT2qDlo1gRGSFHy+0dwNDhwlvUFLRf9rxB
+	 6E02p75HNMAPjUaNhdMqPLLMgW+bpPtyJuA/uf8Sr0yJHYw946j7CK32eYiZlMklCq
+	 UUT72Vk2+kk7yVQvJduOoDETAlSUYLYaceySon4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Corey Minyard <corey@minyard.net>,
-	Brendan Jackman <jackmanb@google.com>
-Subject: [PATCH 6.15 050/192] ipmi:msghandler: Fix potential memory corruption in ipmi_create_user()
-Date: Tue, 15 Jul 2025 15:12:25 +0200
-Message-ID: <20250715130816.854706537@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.15 051/192] x86/mce/amd: Add default names for MCA banks and blocks
+Date: Tue, 15 Jul 2025 15:12:26 +0200
+Message-ID: <20250715130816.894201157@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,49 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit fa332f5dc6fc662ad7d3200048772c96b861cf6b upstream.
+commit d66e1e90b16055d2f0ee76e5384e3f119c3c2773 upstream.
 
-The "intf" list iterator is an invalid pointer if the correct
-"intf->intf_num" is not found.  Calling atomic_dec(&intf->nr_users) on
-and invalid pointer will lead to memory corruption.
+Ensure that sysfs init doesn't fail for new/unrecognized bank types or if
+a bank has additional blocks available.
 
-We don't really need to call atomic_dec() if we haven't called
-atomic_add_return() so update the if (intf->in_shutdown) path as well.
+Most MCA banks have a single thresholding block, so the block takes the same
+name as the bank.
 
-Fixes: 8e76741c3d8b ("ipmi: Add a limit on the number of users that may use IPMI")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <aBjMZ8RYrOt6NOgi@stanley.mountain>
-Signed-off-by: Corey Minyard <corey@minyard.net>
-[ - Dropped change to the `if (intf->in_shutdown)` block since that logic
-    doesn't exist yet.
-  - Modified out_unlock to release the srcu lock instead of the mutex
-    since we don't have the mutex here yet. ]
-Signed-off-by: Brendan Jackman <jackmanb@google.com>
+Unified Memory Controllers (UMCs) are a special case where there are two
+blocks and each has a unique name.
+
+However, the microarchitecture allows for five blocks. Any new MCA bank types
+with more than one block will be missing names for the extra blocks. The MCE
+sysfs will fail to initialize in this case.
+
+Fixes: 87a6d4091bd7 ("x86/mce/AMD: Update sysfs bank names for SMCA systems")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-3-236dd74f645f@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/mce/amd.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -1241,7 +1241,7 @@ int ipmi_create_user(unsigned int
+--- a/arch/x86/kernel/cpu/mce/amd.c
++++ b/arch/x86/kernel/cpu/mce/amd.c
+@@ -1113,13 +1113,20 @@ static const char *get_name(unsigned int
  	}
- 	/* Not found, return an error */
- 	rv = -EINVAL;
--	goto out_kfree;
-+	goto out_unlock;
  
-  found:
- 	if (atomic_add_return(1, &intf->nr_users) > max_users) {
-@@ -1283,6 +1283,7 @@ int ipmi_create_user(unsigned int
+ 	bank_type = smca_get_bank_type(cpu, bank);
+-	if (bank_type >= N_SMCA_BANK_TYPES)
+-		return NULL;
  
- out_kfree:
- 	atomic_dec(&intf->nr_users);
-+out_unlock:
- 	srcu_read_unlock(&ipmi_interfaces_srcu, index);
- 	vfree(new_user);
- 	return rv;
+ 	if (b && (bank_type == SMCA_UMC || bank_type == SMCA_UMC_V2)) {
+ 		if (b->block < ARRAY_SIZE(smca_umc_block_names))
+ 			return smca_umc_block_names[b->block];
+-		return NULL;
++	}
++
++	if (b && b->block) {
++		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_block_%u", b->block);
++		return buf_mcatype;
++	}
++
++	if (bank_type >= N_SMCA_BANK_TYPES) {
++		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_bank_%u", bank);
++		return buf_mcatype;
+ 	}
+ 
+ 	if (per_cpu(smca_bank_counts, cpu)[bank_type] == 1)
 
 
