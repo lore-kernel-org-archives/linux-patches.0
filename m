@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17B92E339B;
-	Tue, 15 Jul 2025 13:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F67F2E6D00;
+	Tue, 15 Jul 2025 13:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586578; cv=none; b=O9fdj+BqEetnYFYK0zF9R7yET+4IOSauBbBA4T2WynadHeEYWrk5uAWG22fMNle74Pzrh4RSuIPzs+/TsJfDt1/QWcsyyvl/fGC1RvSbqy8aXcvHgwfxKOWHQlIDKC9EUwJSA2LkHuhNbK3h86RQ8/mGq36I7Ou9Rr8W7wM4EPk=
+	t=1752586581; cv=none; b=JsQ8PMgkj+xz+oUfNibFWqJOepxKFc41B9T/SJpyT3Bcx51OTYmtE8mtnBwxFTBDTdia9TNhVFo/Alx3yjLhwMdlM8qxvwZX4QNgxJi/ojJ3sZW5WtvXb4LUCBQVYZhKl3UWnwpg0Y1hry0ccXr3D1fuR8hvcR/7UnF6Nfug3+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586578; c=relaxed/simple;
-	bh=hIAcD5wfmAGWRMfkeEHurxwhk/KrLmzRSqYP7v7FL+c=;
+	s=arc-20240116; t=1752586581; c=relaxed/simple;
+	bh=hTv0fmezGX/yC51bRjlZc5fINWT7TlR1Q41AW19DTnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMc7pnZFvFb+yJoWTc/6oAPq3gQ2mpW0DAzMlTHbdVN8WmbdRC8bdaf3+FddSrIbtPkDzJenMj1wDTRFJYxKsBeGuFvhcgh2g524TBnYrYVWV8Ddyc+Ssd54h2qvR401rxVmx169Z53NVtqDC+1cHwkfO2UPFY5L4G9qpWgGYAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ucMoniK3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g90N5TpjTD+3rrZllpxLFiy3cZNxdj7MbRXL+1GFgS0MGF54dwnZHD6pu417f00f9+MBVUhkOB+Rk4TLRJB9sqRobPxCVOgnVua3SEK7K2ZtYIbNNj/ShndamODmKFio0PkdgJ7XzUPudU7beUGJh2GGtAuE+Lu0yiFus57Rijs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WD80Ka+G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucMoniK3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AE4C4CEE3;
-	Tue, 15 Jul 2025 13:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WD80Ka+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63BBC4CEE3;
+	Tue, 15 Jul 2025 13:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586578;
-	bh=hIAcD5wfmAGWRMfkeEHurxwhk/KrLmzRSqYP7v7FL+c=;
+	s=korg; t=1752586581;
+	bh=hTv0fmezGX/yC51bRjlZc5fINWT7TlR1Q41AW19DTnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ucMoniK3YX++owF/LAkBs65gmh7Obqg+BKpra/sKM2ZEzU7+J7rsD6BGNAIwqkSAD
-	 e93pVOc0dlw16cEjcG+BtxrnhVOQikIQl0KKZSsoX95jFZ8DnBjcDVBYPSK6No+XCV
-	 ScABvbigRgOr7mQLO6KKwkfE4Sc8TI6OYjE++l/0=
+	b=WD80Ka+GVvYMQA7UJ+FacTAroxjefpaqZlTfq+YHnLtPO+N+1vY7kgtnaJNvrd0Ci
+	 ZnA9x1Wd9B6Ko/EaiVmAXRXEYQfSkzovXPR/e8XSIDPWKXmhbns3NhHGOX3XbhMCtM
+	 m9hnOzzH7Gt7Jq6gKAg5mmRPhCguElS2gEbm15BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aijay Adams <aijay@meta.com>,
-	JP Kobryn <inwardvessel@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.4 119/148] x86/mce: Make sure CMCI banks are cleared during shutdown on Intel
-Date: Tue, 15 Jul 2025 15:14:01 +0200
-Message-ID: <20250715130805.066673256@linuxfoundation.org>
+	stable@kernel.org,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.4 102/148] media: uvcvideo: Return the number of processed controls
+Date: Tue, 15 Jul 2025 15:13:44 +0200
+Message-ID: <20250715130804.398905879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -54,38 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: JP Kobryn <inwardvessel@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 30ad231a5029bfa16e46ce868497b1a5cdd3c24d upstream.
+commit ba4fafb02ad6a4eb2e00f861893b5db42ba54369 upstream.
 
-CMCI banks are not cleared during shutdown on Intel CPUs. As a side effect,
-when a kexec is performed, CPUs coming back online are unable to
-rediscover/claim these occupied banks which breaks MCE reporting.
+If we let know our callers that we have not done anything, they will be
+able to optimize their decisions.
 
-Clear the CPU ownership during shutdown via cmci_clear() so the banks can
-be reclaimed and MCE reporting will become functional once more.
-
-  [ bp: Massage commit message. ]
-
-Reported-by: Aijay Adams <aijay@meta.com>
-Signed-off-by: JP Kobryn <inwardvessel@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/20250627174935.95194-1-inwardvessel@gmail.com
+Cc: stable@kernel.org
+Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Message-ID: <20250224-uvc-data-backup-v2-1-de993ed9823b@chromium.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/intel.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/uvc/uvc_ctrl.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/mce/intel.c
-+++ b/arch/x86/kernel/cpu/mce/intel.c
-@@ -516,4 +516,5 @@ void mce_intel_feature_init(struct cpuin
- void mce_intel_feature_clear(struct cpuinfo_x86 *c)
- {
- 	intel_clear_lmce();
-+	cmci_clear();
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1560,11 +1560,16 @@ int uvc_ctrl_begin(struct uvc_video_chai
+ 	return mutex_lock_interruptible(&chain->ctrl_mutex) ? -ERESTARTSYS : 0;
  }
+ 
++/*
++ * Returns the number of uvc controls that have been correctly set, or a
++ * negative number if there has been an error.
++ */
+ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+ 				  struct uvc_fh *handle,
+ 				  struct uvc_entity *entity,
+ 				  int rollback)
+ {
++	unsigned int processed_ctrls = 0;
+ 	struct uvc_control *ctrl;
+ 	unsigned int i;
+ 	int ret;
+@@ -1598,6 +1603,9 @@ static int uvc_ctrl_commit_entity(struct
+ 		else
+ 			ret = 0;
+ 
++		if (!ret)
++			processed_ctrls++;
++
+ 		if (rollback || ret < 0)
+ 			memcpy(uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+ 			       uvc_ctrl_data(ctrl, UVC_CTRL_DATA_BACKUP),
+@@ -1613,7 +1621,7 @@ static int uvc_ctrl_commit_entity(struct
+ 			uvc_ctrl_set_handle(handle, ctrl, handle);
+ 	}
+ 
+-	return 0;
++	return processed_ctrls;
+ }
+ 
+ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
+@@ -1634,6 +1642,7 @@ int __uvc_ctrl_commit(struct uvc_fh *han
+ 
+ 	if (!rollback)
+ 		uvc_ctrl_send_events(handle, xctrls, xctrls_count);
++	ret = 0;
+ done:
+ 	mutex_unlock(&chain->ctrl_mutex);
+ 	return ret;
 
 
