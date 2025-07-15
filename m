@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389A42EAB8E;
-	Tue, 15 Jul 2025 13:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9BA2EAB80;
+	Tue, 15 Jul 2025 13:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586142; cv=none; b=r2FESR0oflhMvk3GZ6EnfCjVieqZ1EXxhA9jBJULNns0a7LeAOLy49dgwBIX+AUfBVIPeib7ej/UylCcwwVfrUePlCkHmrIcAiTG/e468uXIZdgE152t/7nZ2u8q/knH14lJPZ+473RB+/CpuNRUsTpQflXqNE7bkYoDCtXynYk=
+	t=1752586144; cv=none; b=EB22Q5lv/2WxOwc5cDqWblXrrA1Z2D1A+0UdNue+iABuIPJf8MBfmXpEzHfu2ERKebdhwb0FpwV9Z+Y7sKX7qDwRIjF6FNbpSvY9WOXKJfu8YKTRzPYUCDBuWD97iaZpzg86wP91BLiY5XosH457ZDk9DhUxDgOMjlnHAB7BY1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586142; c=relaxed/simple;
-	bh=AotPO7yYcUlRa1Cg70OYHCglqQELskYLDUUMkfx4w9Y=;
+	s=arc-20240116; t=1752586144; c=relaxed/simple;
+	bh=L3pp5tCQEC6amA0FRUMKdj9IUZrJDaM1VKED/v5+k1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NcPcNhzD6awq5Jmb01rysU9n/61U0v2R1U/+61kun9bUtqFj3BS+PGakRPQ19uZN5+8LutPyTctW5Y8THz2B5H5CI9Mv1LVItKIoxQDhBE3psGQa12/uVrIPwZ8TJgjczg6a0FTHpgSZkjJu4bWPYU1oL9GEV12NYtH9DcOmYtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqzAk05f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dBnX2rUvMox9IImVTNhy2J7tDck2wc0wsA8vbX6+nXgnryjUClkhL7Uo5xzhBwatwHD4zu3YVa/XiIcnYHtPTC1CMGR+OhFFwgnaaGUc2P02lqriN5GdNow8BRojZcu2cSHD+6JjDsiQWQ36V4eW6OGTj8xHkZFnBGhn5bLIo48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3ta5A1N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqzAk05f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0824C4CEF1;
-	Tue, 15 Jul 2025 13:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3ta5A1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E478C4CEE3;
+	Tue, 15 Jul 2025 13:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586142;
-	bh=AotPO7yYcUlRa1Cg70OYHCglqQELskYLDUUMkfx4w9Y=;
+	s=korg; t=1752586144;
+	bh=L3pp5tCQEC6amA0FRUMKdj9IUZrJDaM1VKED/v5+k1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jqzAk05flPvgGMWTw5hDVdu6J5OCK3JiynG5uBqlgAeu2mGF/5AkrQnsStnn7iRBw
-	 S9CPs/hNQrLVfD6bdm3GBRKpiArlzUtqJ5gSSQnISMsPqqtQNX1xC3rLxDw0310zzT
-	 hBIM+1IjBllup1KkkjgFkQxgerSDapITKBpQUqW8=
+	b=U3ta5A1NS7ac5j2/UXLkaHPU/Q8K9Gr355mY1+9ufeOusBf6HudpNRS2hsoGg/b3h
+	 eECmjkiDcHYpvqYpB4FPXbucgdajwaH9VfGnl2j9jHfiRYUbfQIhjDmy9m9EaTZcSM
+	 9oIy9/BrbGdi9dqtImJO/lOWpgG8+nHyEj2s3q5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@brown.name>,
-	Christian Brauner <brauner@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Jason Baron <jbaron@akamai.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 04/77] fix proc_sys_compare() handling of in-lookup dentries
-Date: Tue, 15 Jul 2025 15:13:03 +0200
-Message-ID: <20250715130751.859031138@linuxfoundation.org>
+Subject: [PATCH 5.15 05/77] netlink: Fix wraparounds of sk->sk_rmem_alloc.
+Date: Tue, 15 Jul 2025 15:13:04 +0200
+Message-ID: <20250715130751.898988255@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -53,94 +52,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit b969f9614885c20f903e1d1f9445611daf161d6d ]
+[ Upstream commit ae8f160e7eb24240a2a79fc4c815c6a0d4ee16cc ]
 
-There's one case where ->d_compare() can be called for an in-lookup
-dentry; usually that's nothing special from ->d_compare() point of
-view, but... proc_sys_compare() is weird.
+Netlink has this pattern in some places
 
-The thing is, /proc/sys subdirectories can look differently for
-different processes.  Up to and including having the same name
-resolve to different dentries - all of them hashed.
+  if (atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf)
+  	atomic_add(skb->truesize, &sk->sk_rmem_alloc);
 
-The way it's done is ->d_compare() refusing to admit a match unless
-this dentry is supposed to be visible to this caller.  The information
-needed to discriminate between them is stored in inode; it is set
-during proc_sys_lookup() and until it's done d_splice_alias() we really
-can't tell who should that dentry be visible for.
+, which has the same problem fixed by commit 5a465a0da13e ("udp:
+Fix multiple wraparounds of sk->sk_rmem_alloc.").
 
-Normally there's no negative dentries in /proc/sys; we can run into
-a dying dentry in RCU dcache lookup, but those can be safely rejected.
+For example, if we set INT_MAX to SO_RCVBUFFORCE, the condition
+is always false as the two operands are of int.
 
-However, ->d_compare() is also called for in-lookup dentries, before
-they get positive - or hashed, for that matter.  In case of match
-we will wait until dentry leaves in-lookup state and repeat ->d_compare()
-afterwards.  In other words, the right behaviour is to treat the
-name match as sufficient for in-lookup dentries; if dentry is not
-for us, we'll see that when we recheck once proc_sys_lookup() is
-done with it.
+Then, a single socket can eat as many skb as possible until OOM
+happens, and we can see multiple wraparounds of sk->sk_rmem_alloc.
 
-While we are at it, fix the misspelled READ_ONCE and WRITE_ONCE there.
+Let's fix it by using atomic_add_return() and comparing the two
+variables as unsigned int.
 
-Fixes: d9171b934526 ("parallel lookups machinery, part 4 (and last)")
-Reported-by: NeilBrown <neilb@brown.name>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Before:
+  [root@fedora ~]# ss -f netlink
+  Recv-Q      Send-Q Local Address:Port                Peer Address:Port
+  -1668710080 0               rtnl:nl_wraparound/293               *
+
+After:
+  [root@fedora ~]# ss -f netlink
+  Recv-Q     Send-Q Local Address:Port                Peer Address:Port
+  2147483072 0               rtnl:nl_wraparound/290               *
+  ^
+  `--- INT_MAX - 576
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Jason Baron <jbaron@akamai.com>
+Closes: https://lore.kernel.org/netdev/cover.1750285100.git.jbaron@akamai.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250704054824.1580222-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/inode.c       |  2 +-
- fs/proc/proc_sysctl.c | 18 +++++++++++-------
- 2 files changed, 12 insertions(+), 8 deletions(-)
+ net/netlink/af_netlink.c | 81 ++++++++++++++++++++++++----------------
+ 1 file changed, 49 insertions(+), 32 deletions(-)
 
-diff --git a/fs/proc/inode.c b/fs/proc/inode.c
-index 695471fa24fe5..de5ae2e5a97df 100644
---- a/fs/proc/inode.c
-+++ b/fs/proc/inode.c
-@@ -54,7 +54,7 @@ static void proc_evict_inode(struct inode *inode)
- 
- 	head = ei->sysctl;
- 	if (head) {
--		RCU_INIT_POINTER(ei->sysctl, NULL);
-+		WRITE_ONCE(ei->sysctl, NULL);
- 		proc_sys_evict_inode(inode, head);
- 	}
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index d3852526ef52e..ae83e56478998 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -387,7 +387,6 @@ static void netlink_skb_set_owner_r(struct sk_buff *skb, struct sock *sk)
+ 	WARN_ON(skb->sk != NULL);
+ 	skb->sk = sk;
+ 	skb->destructor = netlink_skb_destructor;
+-	atomic_add(skb->truesize, &sk->sk_rmem_alloc);
+ 	sk_mem_charge(sk, skb->truesize);
  }
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 7c5d472b193f8..1a22aa43e740d 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -910,17 +910,21 @@ static int proc_sys_compare(const struct dentry *dentry,
- 	struct ctl_table_header *head;
- 	struct inode *inode;
  
--	/* Although proc doesn't have negative dentries, rcu-walk means
--	 * that inode here can be NULL */
--	/* AV: can it, indeed? */
--	inode = d_inode_rcu(dentry);
--	if (!inode)
--		return 1;
- 	if (name->len != len)
- 		return 1;
- 	if (memcmp(name->name, str, len))
- 		return 1;
--	head = rcu_dereference(PROC_I(inode)->sysctl);
-+
-+	// false positive is fine here - we'll recheck anyway
-+	if (d_in_lookup(dentry))
+@@ -1211,41 +1210,48 @@ static struct sk_buff *netlink_alloc_large_skb(unsigned int size,
+ int netlink_attachskb(struct sock *sk, struct sk_buff *skb,
+ 		      long *timeo, struct sock *ssk)
+ {
++	DECLARE_WAITQUEUE(wait, current);
+ 	struct netlink_sock *nlk;
++	unsigned int rmem;
+ 
+ 	nlk = nlk_sk(sk);
++	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+ 
+-	if ((atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf ||
+-	     test_bit(NETLINK_S_CONGESTED, &nlk->state))) {
+-		DECLARE_WAITQUEUE(wait, current);
+-		if (!*timeo) {
+-			if (!ssk || netlink_is_kernel(ssk))
+-				netlink_overrun(sk);
+-			sock_put(sk);
+-			kfree_skb(skb);
+-			return -EAGAIN;
+-		}
+-
+-		__set_current_state(TASK_INTERRUPTIBLE);
+-		add_wait_queue(&nlk->wait, &wait);
++	if ((rmem == skb->truesize || rmem < READ_ONCE(sk->sk_rcvbuf)) &&
++	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
++		netlink_skb_set_owner_r(skb, sk);
 +		return 0;
++	}
+ 
+-		if ((atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf ||
+-		     test_bit(NETLINK_S_CONGESTED, &nlk->state)) &&
+-		    !sock_flag(sk, SOCK_DEAD))
+-			*timeo = schedule_timeout(*timeo);
++	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+ 
+-		__set_current_state(TASK_RUNNING);
+-		remove_wait_queue(&nlk->wait, &wait);
++	if (!*timeo) {
++		if (!ssk || netlink_is_kernel(ssk))
++			netlink_overrun(sk);
+ 		sock_put(sk);
++		kfree_skb(skb);
++		return -EAGAIN;
++	}
+ 
+-		if (signal_pending(current)) {
+-			kfree_skb(skb);
+-			return sock_intr_errno(*timeo);
+-		}
+-		return 1;
++	__set_current_state(TASK_INTERRUPTIBLE);
++	add_wait_queue(&nlk->wait, &wait);
++	rmem = atomic_read(&sk->sk_rmem_alloc);
 +
-+	inode = d_inode_rcu(dentry);
-+	// we just might have run into dentry in the middle of __dentry_kill()
-+	if (!inode)
-+		return 1;
++	if (((rmem && rmem + skb->truesize > READ_ONCE(sk->sk_rcvbuf)) ||
++	     test_bit(NETLINK_S_CONGESTED, &nlk->state)) &&
++	    !sock_flag(sk, SOCK_DEAD))
++		*timeo = schedule_timeout(*timeo);
 +
-+	head = READ_ONCE(PROC_I(inode)->sysctl);
- 	return !head || !sysctl_is_seen(head);
++	__set_current_state(TASK_RUNNING);
++	remove_wait_queue(&nlk->wait, &wait);
++	sock_put(sk);
++
++	if (signal_pending(current)) {
++		kfree_skb(skb);
++		return sock_intr_errno(*timeo);
+ 	}
+-	netlink_skb_set_owner_r(skb, sk);
+-	return 0;
++
++	return 1;
  }
  
+ static int __netlink_sendskb(struct sock *sk, struct sk_buff *skb)
+@@ -1305,6 +1311,7 @@ static int netlink_unicast_kernel(struct sock *sk, struct sk_buff *skb,
+ 	ret = -ECONNREFUSED;
+ 	if (nlk->netlink_rcv != NULL) {
+ 		ret = skb->len;
++		atomic_add(skb->truesize, &sk->sk_rmem_alloc);
+ 		netlink_skb_set_owner_r(skb, sk);
+ 		NETLINK_CB(skb).sk = ssk;
+ 		netlink_deliver_tap_kernel(sk, ssk, skb);
+@@ -1383,13 +1390,19 @@ EXPORT_SYMBOL_GPL(netlink_strict_get_check);
+ static int netlink_broadcast_deliver(struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct netlink_sock *nlk = nlk_sk(sk);
++	unsigned int rmem, rcvbuf;
+ 
+-	if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf &&
++	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
++	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
++
++	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
+ 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
+ 		netlink_skb_set_owner_r(skb, sk);
+ 		__netlink_sendskb(sk, skb);
+-		return atomic_read(&sk->sk_rmem_alloc) > (sk->sk_rcvbuf >> 1);
++		return rmem > (rcvbuf >> 1);
+ 	}
++
++	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+ 	return -1;
+ }
+ 
+@@ -2206,6 +2219,7 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
++	unsigned int rmem;
+ 	int alloc_size;
+ 
+ 	if (!lock_taken)
+@@ -2215,9 +2229,6 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
+ 		goto errout_skb;
+ 	}
+ 
+-	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf)
+-		goto errout_skb;
+-
+ 	/* NLMSG_GOODSIZE is small to avoid high order allocations being
+ 	 * required, but it makes sense to _attempt_ a 16K bytes allocation
+ 	 * to reduce number of system calls on dump operations, if user
+@@ -2240,6 +2251,12 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
+ 	if (!skb)
+ 		goto errout_skb;
+ 
++	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
++	if (rmem >= READ_ONCE(sk->sk_rcvbuf)) {
++		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
++		goto errout_skb;
++	}
++
+ 	/* Trim skb to allocated size. User is expected to provide buffer as
+ 	 * large as max(min_dump_alloc, 16KiB (mac_recvmsg_len capped at
+ 	 * netlink_recvmsg())). dump will pack as many smaller messages as
 -- 
 2.39.5
 
