@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568AA2EBDCA;
-	Tue, 15 Jul 2025 13:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FDB2E2657;
+	Tue, 15 Jul 2025 13:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586941; cv=none; b=I+3iTwJPu83K515WY3vvhh48+SyTVYXX8vgfRM3fGattKLExC1dN3MMyP3VDsHToyaAson3sdrdw3Fe5wh41/DkIDSnifALuwja+b4cPsurloeHlfpsh/cWkLTTLin9cYcx8/y7fjIyK4Bji96rQ4thQ7omgOvqTIzY9cMg6d9E=
+	t=1752586944; cv=none; b=eGiZhe4/1d63WeQ9tiDx6HCP9LDjO1PFcSriIkAF0u9lev0lIqqbHpm1Dz7/3bgMiCE7qRaAANCLzsQDgkcnHX1ceslJuoilx8AZoNcyO116R4xdymeYsd/uBIucU5fhBnrGlBlHTSHzzH3SW6WHqQnhul9vAfk39R5F7B5Pdwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586941; c=relaxed/simple;
-	bh=Fz68Na8SOYc4FtOAPkOox6yqsbiXrLJez2DqChRPGbk=;
+	s=arc-20240116; t=1752586944; c=relaxed/simple;
+	bh=BxmuLHxn/WE1J/xuOnhEa+utZlCF0gcYdFaTPF6loik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tnj7wz/X6A6J8K/QsTRviQAA7meACvEzTxeYt3MGEVzANYoxpCFH5YI0f30OW1EPe+ULCWUoQq0h5qBd8dBlhulZmtxgTLtTv/UmErpr2ROM81CyjvumlNPkUwaKv2COma6BqCochCYMDdg9fX8Kmc/DSML7dP0E2lo6uOMV4Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DspTENol; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cGeCEPPmTdzxVGjNluM66AT8kr0oyo8LgWi5gFlwzzEtLYdOExZiyoBaXwbZeLFxDHWORCevcbrPv92Toy0E5pXflAxRoNYg0lNtoHZ61gVo4NJ7q7GDNSmwpnFr6NOs8z6A9voJchFUcATmddlweunIs1KRpuW4RedKV+odWUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vltIEt0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DspTENol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF94C4CEE3;
-	Tue, 15 Jul 2025 13:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vltIEt0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F34C4CEE3;
+	Tue, 15 Jul 2025 13:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586941;
-	bh=Fz68Na8SOYc4FtOAPkOox6yqsbiXrLJez2DqChRPGbk=;
+	s=korg; t=1752586943;
+	bh=BxmuLHxn/WE1J/xuOnhEa+utZlCF0gcYdFaTPF6loik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DspTENollMyph+9E2JQDhvBjFbybhl6gl5P4mdANs81UsFWore/caf1BpAAFpZMve
-	 VGsYb7DnQkBWCO58/n8AU9cGuFGykRv4eXdQObg43SLvWmLMDGY9dJSz+Sp1aw6rdZ
-	 8E+STQ6/YzMKG/m/aJVC6ZVRsoXm7Q2MgX+SHNH8=
+	b=vltIEt0/Yo8s0ZrDiRN5SI0jhNwKRqi8WIz+XgtDIcWAyETJuUBiKOIlJafICU7gx
+	 b8b0kwMQGqfNVcrOMQJi4nLo0GD+UUZxy+eBV9xcmXQLWXXZDon/SJqlpRzUJE1zx2
+	 7t2kXlg7NgTx87Zu0dNF1+COyhjTXIpalZ1CYq9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Akshata Jahagirdar <akshata.jahagirdar@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.15 089/192] drm/xe/bmg: fix compressed VRAM handling
-Date: Tue, 15 Jul 2025 15:13:04 +0200
-Message-ID: <20250715130818.480576520@linuxfoundation.org>
+	Lance Yang <lance.yang@linux.dev>,
+	David Hildenbrand <david@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chris Li <chrisl@kernel.org>,
+	"Huang, Ying" <huang.ying.caritas@gmail.com>,
+	Kairui Song <kasong@tencent.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Mingzhe Yang <mingzhe.yang@ly.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Tangquan Zheng <zhengtangquan@oppo.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 107/192] mm/rmap: fix potential out-of-bounds page table access during batched unmap
+Date: Tue, 15 Jul 2025 15:13:22 +0200
+Message-ID: <20250715130819.182840070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -48,56 +58,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Lance Yang <lance.yang@linux.dev>
 
-commit fee58ca135a7b979c8b75e6d2eac60d695f9209b upstream.
+commit ddd05742b45b083975a0855ef6ebbf88cf1f532a upstream.
 
-There looks to be an issue in our compression handling when the BO pages
-are very fragmented, where we choose to skip the identity map and
-instead fall back to emitting the PTEs by hand when migrating memory,
-such that we can hopefully do more work per blit operation. However in
-such a case we need to ensure the src PTEs are correctly tagged with a
-compression enabled PAT index on dgpu xe2+, otherwise the copy will
-simply treat the src memory as uncompressed, leading to corruption if
-the memory was compressed by the user.
+As pointed out by David[1], the batched unmap logic in
+try_to_unmap_one() may read past the end of a PTE table when a large
+folio's PTE mappings are not fully contained within a single page
+table.
 
-To fix this pass along use_comp_pat into emit_pte() on the src side, to
-indicate that compression should be considered.
+While this scenario might be rare, an issue triggerable from userspace
+must be fixed regardless of its likelihood.  This patch fixes the
+out-of-bounds access by refactoring the logic into a new helper,
+folio_unmap_pte_batch().
 
-v2 (Jonathan): tweak the commit message
+The new helper correctly calculates the safe batch size by capping the
+scan at both the VMA and PMD boundaries.  To simplify the code, it also
+supports partial batching (i.e., any number of pages from 1 up to the
+calculated safe maximum), as there is no strong reason to special-case
+for fully mapped folios.
 
-Fixes: 523f191cc0c7 ("drm/xe/xe_migrate: Handle migration logic for xe2+ dgfx")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Akshata Jahagirdar <akshata.jahagirdar@intel.com>
-Cc: <stable@vger.kernel.org> # v6.12+
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://lore.kernel.org/r/20250701103949.83116-2-matthew.auld@intel.com
-(cherry picked from commit f7a2fd776e57bd6468644bdecd91ab3aba57ba58)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://lkml.kernel.org/r/20250701143100.6970-1-lance.yang@linux.dev
+Link: https://lkml.kernel.org/r/20250630011305.23754-1-lance.yang@linux.dev
+Link: https://lkml.kernel.org/r/20250627062319.84936-1-lance.yang@linux.dev
+Link: https://lore.kernel.org/linux-mm/a694398c-9f03-4737-81b9-7e49c857fcbe@redhat.com [1]
+Fixes: 354dffd29575 ("mm: support batched unmap for lazyfree large folios during reclamation")
+Signed-off-by: Lance Yang <lance.yang@linux.dev>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Reported-by: David Hildenbrand <david@redhat.com>
+Closes: https://lore.kernel.org/linux-mm/a694398c-9f03-4737-81b9-7e49c857fcbe@redhat.com
+Suggested-by: Barry Song <baohua@kernel.org>
+Acked-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Mingzhe Yang <mingzhe.yang@ly.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Tangquan Zheng <zhengtangquan@oppo.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_migrate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/rmap.c | 46 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_migrate.c
-+++ b/drivers/gpu/drm/xe/xe_migrate.c
-@@ -860,7 +860,7 @@ struct dma_fence *xe_migrate_copy(struct
- 		if (src_is_vram && xe_migrate_allow_identity(src_L0, &src_it))
- 			xe_res_next(&src_it, src_L0);
- 		else
--			emit_pte(m, bb, src_L0_pt, src_is_vram, copy_system_ccs,
-+			emit_pte(m, bb, src_L0_pt, src_is_vram, copy_system_ccs || use_comp_pat,
- 				 &src_it, src_L0, src);
+diff --git a/mm/rmap.c b/mm/rmap.c
+index fb63d9256f09..1320b88fab74 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -1845,23 +1845,32 @@ void folio_remove_rmap_pud(struct folio *folio, struct page *page,
+ #endif
+ }
  
- 		if (dst_is_vram && xe_migrate_allow_identity(src_L0, &dst_it))
+-/* We support batch unmapping of PTEs for lazyfree large folios */
+-static inline bool can_batch_unmap_folio_ptes(unsigned long addr,
+-			struct folio *folio, pte_t *ptep)
++static inline unsigned int folio_unmap_pte_batch(struct folio *folio,
++			struct page_vma_mapped_walk *pvmw,
++			enum ttu_flags flags, pte_t pte)
+ {
+ 	const fpb_t fpb_flags = FPB_IGNORE_DIRTY | FPB_IGNORE_SOFT_DIRTY;
+-	int max_nr = folio_nr_pages(folio);
+-	pte_t pte = ptep_get(ptep);
++	unsigned long end_addr, addr = pvmw->address;
++	struct vm_area_struct *vma = pvmw->vma;
++	unsigned int max_nr;
+ 
++	if (flags & TTU_HWPOISON)
++		return 1;
++	if (!folio_test_large(folio))
++		return 1;
++
++	/* We may only batch within a single VMA and a single page table. */
++	end_addr = pmd_addr_end(addr, vma->vm_end);
++	max_nr = (end_addr - addr) >> PAGE_SHIFT;
++
++	/* We only support lazyfree batching for now ... */
+ 	if (!folio_test_anon(folio) || folio_test_swapbacked(folio))
+-		return false;
++		return 1;
+ 	if (pte_unused(pte))
+-		return false;
+-	if (pte_pfn(pte) != folio_pfn(folio))
+-		return false;
++		return 1;
+ 
+-	return folio_pte_batch(folio, addr, ptep, pte, max_nr, fpb_flags, NULL,
+-			       NULL, NULL) == max_nr;
++	return folio_pte_batch(folio, addr, pvmw->pte, pte, max_nr, fpb_flags,
++			       NULL, NULL, NULL);
+ }
+ 
+ /*
+@@ -2024,9 +2033,7 @@ static bool try_to_unmap_one(struct folio *folio, struct vm_area_struct *vma,
+ 			if (pte_dirty(pteval))
+ 				folio_mark_dirty(folio);
+ 		} else if (likely(pte_present(pteval))) {
+-			if (folio_test_large(folio) && !(flags & TTU_HWPOISON) &&
+-			    can_batch_unmap_folio_ptes(address, folio, pvmw.pte))
+-				nr_pages = folio_nr_pages(folio);
++			nr_pages = folio_unmap_pte_batch(folio, &pvmw, flags, pteval);
+ 			end_addr = address + nr_pages * PAGE_SIZE;
+ 			flush_cache_range(vma, address, end_addr);
+ 
+@@ -2206,13 +2213,16 @@ static bool try_to_unmap_one(struct folio *folio, struct vm_area_struct *vma,
+ 			hugetlb_remove_rmap(folio);
+ 		} else {
+ 			folio_remove_rmap_ptes(folio, subpage, nr_pages, vma);
+-			folio_ref_sub(folio, nr_pages - 1);
+ 		}
+ 		if (vma->vm_flags & VM_LOCKED)
+ 			mlock_drain_local();
+-		folio_put(folio);
+-		/* We have already batched the entire folio */
+-		if (nr_pages > 1)
++		folio_put_refs(folio, nr_pages);
++
++		/*
++		 * If we are sure that we batched the entire folio and cleared
++		 * all PTEs, we can just optimize and stop right here.
++		 */
++		if (nr_pages == folio_nr_pages(folio))
+ 			goto walk_done;
+ 		continue;
+ walk_abort:
+-- 
+2.50.1
+
 
 
