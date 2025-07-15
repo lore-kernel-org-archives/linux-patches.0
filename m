@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629252E54DD;
-	Tue, 15 Jul 2025 13:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6522E54DD;
+	Tue, 15 Jul 2025 13:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587095; cv=none; b=DtB3zrPtqmIHFP5Ao4OEOfR2H1xZIxFDvysXFkuaYqEuCq1QTSwZIw/RckXMY8dzx3FcNuzs49lxb5UXvr4MnrG9Go9NH30/cwVUouDEG/G7C3ZYZse5qW6ncetqUnOyuLcDXGes9N7uYDKMjHe4ewMtOPCiBENU45ea7o/p06c=
+	t=1752587097; cv=none; b=vBDw3WPCZM9RA5ZECvEFlPBSDGdF7CXbx+thD5bp/5GYsbM6IBPVSxz7sUqjoEy+QAAOAObIcxyZOehy7aHq4hHg/h0OWSq4tm/cvOZv4cbRWvIqP0a4GyPG5+ToZHnwLL0eD5xDfa0IG3VVMzNQtbgSkOkk7eNDWZBYnt9dWM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587095; c=relaxed/simple;
-	bh=V2djcu/xVcbASucHEpItgQy2DZnHKdbJUuuC0fnpClw=;
+	s=arc-20240116; t=1752587097; c=relaxed/simple;
+	bh=Ah0CeMfM8mT9PsKqgUk2L7yOZdlTmp6oHNJNsYhpe0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBD72hmrKUvPSkeMGPPkaNX5rLHGiSJgWFJH6cz4JQboL6KcJ0Y3fpSVtPeyizpC/Wh9AKwPhlGMBgcB9i4RvQcKTl68mxTyGKstUbU0nKipFoyipR0q0lTrcxLmTVRDiX4YeLPJ9LyfFh8UPxi3Sqq9VAgZAZzcEpPZCz4LJ9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuLoTIku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g++9qBLmRSZhI0OpJLe/5C4QUS07wnQu4T1QK5/409PSGNee7te29mieNQtTjLlqFg7YOnRs379q86+aMbDJNIkltLOCh2MilzlsPgtLiM9ZxsMOI+FpxIQaavSGsZ1dF9BJLrBIwMPhPmlpgyAc0YpIEKCWajRnaniH784o1C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0aigrNS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuLoTIku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C238C4CEF1;
-	Tue, 15 Jul 2025 13:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0aigrNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328D0C4CEF1;
+	Tue, 15 Jul 2025 13:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587094;
-	bh=V2djcu/xVcbASucHEpItgQy2DZnHKdbJUuuC0fnpClw=;
+	s=korg; t=1752587097;
+	bh=Ah0CeMfM8mT9PsKqgUk2L7yOZdlTmp6oHNJNsYhpe0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cuLoTIkuVHzuzED1UvoBxn/cPGT8IlM4LFdjlHCklmDFKi1id+JK8wInc40ycTsvT
-	 snLdX3t0iPF6uUxUHTFS6/iZxcDyZsOjYOnnkfzCYztcz0ZlaBjxh/3RH79VLDQNHZ
-	 xmKwcXB4YA7p1+A1cQgfxeVUI0JzcvVwZK/uDy40=
+	b=v0aigrNSQA51w+Nn0Uq4ZAnUFoHqxiRmbECe4S4PAG+WW5mn83yvfaf0r5AWt8Yz1
+	 Snb5fVrVWqYDcXifRTu4qnIGqzxT1kYbRB1uPplVM4DENZDGyqVaunlq0f5ixt9LTj
+	 KXw2Em3NB96vCth7nnkGz9KtiLqzPsPOF3XG8WmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Shruti Parab <shruti.parab@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 165/192] bnxt_en: Flush FW trace before copying to the coredump
-Date: Tue, 15 Jul 2025 15:14:20 +0200
-Message-ID: <20250715130821.536974441@linuxfoundation.org>
+Subject: [PATCH 6.15 166/192] bnxt_en: Set DMA unmap len correctly for XDP_REDIRECT
+Date: Tue, 15 Jul 2025 15:14:21 +0200
+Message-ID: <20250715130821.575777666@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -53,67 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shruti Parab <shruti.parab@broadcom.com>
+From: Somnath Kotur <somnath.kotur@broadcom.com>
 
-[ Upstream commit 100c08c89d173b7fdf953e7d9f9ca8f69f80d1c5 ]
+[ Upstream commit 3cdf199d4755d477972ee87110b2aebc88b3cfad ]
 
-bnxt_fill_drv_seg_record() calls bnxt_dbg_hwrm_log_buffer_flush()
-to flush the FW trace buffer.  This needs to be done before we
-call bnxt_copy_ctx_mem() to copy the trace data.
+When transmitting an XDP_REDIRECT packet, call dma_unmap_len_set()
+with the proper length instead of 0.  This bug triggers this warning
+on a system with IOMMU enabled:
 
-Without this fix, the coredump may not contain all the FW
-traces.
+WARNING: CPU: 36 PID: 0 at drivers/iommu/dma-iommu.c:842 __iommu_dma_unmap+0x159/0x170
+RIP: 0010:__iommu_dma_unmap+0x159/0x170
+Code: a8 00 00 00 00 48 c7 45 b0 00 00 00 00 48 c7 45 c8 00 00 00 00 48 c7 45 a0 ff ff ff ff 4c 89 45
+b8 4c 89 45 c0 e9 77 ff ff ff <0f> 0b e9 60 ff ff ff e8 8b bf 6a 00 66 66 2e 0f 1f 84 00 00 00 00
+RSP: 0018:ff22d31181150c88 EFLAGS: 00010206
+RAX: 0000000000002000 RBX: 00000000e13a0000 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: ff22d31181150cf0 R08: ff22d31181150ca8 R09: 0000000000000000
+R10: 0000000000000000 R11: ff22d311d36c9d80 R12: 0000000000001000
+R13: ff13544d10645010 R14: ff22d31181150c90 R15: ff13544d0b2bac00
+FS: 0000000000000000(0000) GS:ff13550908a00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005be909dacff8 CR3: 0008000173408003 CR4: 0000000000f71ef0
+PKRU: 55555554
+Call Trace:
+<IRQ>
+? show_regs+0x6d/0x80
+? __warn+0x89/0x160
+? __iommu_dma_unmap+0x159/0x170
+? report_bug+0x17e/0x1b0
+? handle_bug+0x46/0x90
+? exc_invalid_op+0x18/0x80
+? asm_exc_invalid_op+0x1b/0x20
+? __iommu_dma_unmap+0x159/0x170
+? __iommu_dma_unmap+0xb3/0x170
+iommu_dma_unmap_page+0x4f/0x100
+dma_unmap_page_attrs+0x52/0x220
+? srso_alias_return_thunk+0x5/0xfbef5
+? xdp_return_frame+0x2e/0xd0
+bnxt_tx_int_xdp+0xdf/0x440 [bnxt_en]
+__bnxt_poll_work_done+0x81/0x1e0 [bnxt_en]
+bnxt_poll+0xd3/0x1e0 [bnxt_en]
 
-Fixes: 3c2179e66355 ("bnxt_en: Add FW trace coredump segments to the coredump")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Shruti Parab <shruti.parab@broadcom.com>
+Fixes: f18c2b77b2e4 ("bnxt_en: optimized XDP_REDIRECT support")
+Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250710213938.1959625-3-michael.chan@broadcom.com
+Link: https://patch.msgid.link/20250710213938.1959625-4-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/bnxt/bnxt_coredump.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-index a000d3f630bd3..187695af6611f 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_coredump.c
-@@ -368,23 +368,27 @@ static u32 bnxt_get_ctx_coredump(struct bnxt *bp, void *buf, u32 offset,
- 		if (!ctxm->mem_valid || !seg_id)
- 			continue;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index e675611777b52..aedd9e145ff9c 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -115,7 +115,7 @@ static void __bnxt_xmit_xdp_redirect(struct bnxt *bp,
+ 	tx_buf->action = XDP_REDIRECT;
+ 	tx_buf->xdpf = xdpf;
+ 	dma_unmap_addr_set(tx_buf, mapping, mapping);
+-	dma_unmap_len_set(tx_buf, len, 0);
++	dma_unmap_len_set(tx_buf, len, len);
+ }
  
--		if (trace)
-+		if (trace) {
- 			extra_hlen = BNXT_SEG_RCD_LEN;
-+			if (buf) {
-+				u16 trace_type = bnxt_bstore_to_trace[type];
-+
-+				bnxt_fill_drv_seg_record(bp, &record, ctxm,
-+							 trace_type);
-+			}
-+		}
-+
- 		if (buf)
- 			data = buf + BNXT_SEG_HDR_LEN + extra_hlen;
-+
- 		seg_len = bnxt_copy_ctx_mem(bp, ctxm, data, 0) + extra_hlen;
- 		if (buf) {
- 			bnxt_fill_coredump_seg_hdr(bp, &seg_hdr, NULL, seg_len,
- 						   0, 0, 0, comp_id, seg_id);
- 			memcpy(buf, &seg_hdr, BNXT_SEG_HDR_LEN);
- 			buf += BNXT_SEG_HDR_LEN;
--			if (trace) {
--				u16 trace_type = bnxt_bstore_to_trace[type];
--
--				bnxt_fill_drv_seg_record(bp, &record, ctxm,
--							 trace_type);
-+			if (trace)
- 				memcpy(buf, &record, BNXT_SEG_RCD_LEN);
--			}
- 			buf += seg_len;
- 		}
- 		len += BNXT_SEG_HDR_LEN + seg_len;
+ void bnxt_tx_int_xdp(struct bnxt *bp, struct bnxt_napi *bnapi, int budget)
 -- 
 2.39.5
 
