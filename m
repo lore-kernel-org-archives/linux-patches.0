@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DF62E7F1A;
-	Tue, 15 Jul 2025 13:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621F82E7F08;
+	Tue, 15 Jul 2025 13:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586372; cv=none; b=lrSqAQOc/RxTVZAk9vIGMJAnlu16FV5ZzOprrKmYPRcLBMF8fQkRtCAGGgD/ejJ+oXZMEV39nA1zdcTzufSISNUyiucbH5RjiU2sVvof8io/ZC3cqXDKsA8Vls7ZcwiJYDoimxXpTyzj5sxegeNfnu+rKHP5JSpycOpJhvoSHNQ=
+	t=1752586375; cv=none; b=PCaEtzkpQzsawaztTr+anHIaBrDa9566humWovQlAfAcJasZq4P1xXi4cYaPkCOuRFfg/PKGMRsadTpRoVFXNwUn8e6c/Dthkz0kYtcmxXQaeCi7lUpuO7qMDtzNQiHVQ9/lSbAzCzdF7SaNoLaiwjFKiHimy4WjJ2E1MRGMZJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586372; c=relaxed/simple;
-	bh=sWc47UaPs3Nczs5K+EgKXbOnmSqaIZLb3NoZUa4ROG8=;
+	s=arc-20240116; t=1752586375; c=relaxed/simple;
+	bh=E3G4eWJ8K+mtq6fjo5knmWRO1YYEvzwJVyURro6J1cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eF/3hfelIUxLaTUxYj8jzYR6AODKqzWocdfJuW4YNpr5THqFQKROXIOIBKEKjcN8VN1XqTPV3p2Jxz5bPf/gUTxjL04gsMYbWebY1c9zRzziCCkIw+/j5qp8/tKnEJbWhkFm9CwgvopkUn61IR2M0WamjGeQfEx5Ia5QgDAKqBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvdlxcKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WNKpyaopx0vlr5Q4ha5W9UoFzT/wAitUWQEP9NVzrxOHrkBDeKkS2GgfwZFta0UL+sGbkIKpMabuJ6AajkJD7bslsFt930HvTPQMFyIteOr79RYpYSOmeHnR7Ac9nnaFcMZjNhThB8KEraA1kvYWNz6Fy6JtzMKODdIzUdtvPvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKkrcKZy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvdlxcKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48292C4CEE3;
-	Tue, 15 Jul 2025 13:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKkrcKZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E3AC4CEE3;
+	Tue, 15 Jul 2025 13:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586372;
-	bh=sWc47UaPs3Nczs5K+EgKXbOnmSqaIZLb3NoZUa4ROG8=;
+	s=korg; t=1752586375;
+	bh=E3G4eWJ8K+mtq6fjo5knmWRO1YYEvzwJVyURro6J1cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvdlxcKBkBNcg6tGoEeHG2rE7vshOmHgoTFoBiVZJpmK+M4lW2eHacQrMiYBJmE/O
-	 Wu4DjRqRjTagRGaA1/exLmHXxGKHPT+TpcOl2hGKL+NTfbFTrxDzHl14ipQmmGcHgJ
-	 EOCFQ+KbnCjNQ+O2L4D9+HsUeUwCsTauC4ywQxfQ=
+	b=ZKkrcKZyHvCBV5lAmCWMYEpeY86tYi4I5d5YpkjF8pw49G8WkzmieIK9fId+7X735
+	 rKvuw/hA3xpKwdLDHgRneB+gthazOiFHOc6JOCPl7eLjd6Hor1xvb/u33s2jRFscpP
+	 Z2dUujSTv9mSIL7xsBVXC64eEMPuw4o2Ozkz/99U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weihang Li <liweihang@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 033/148] RDMA/core: Use refcount_t instead of atomic_t on refcount of iwcm_id_private
-Date: Tue, 15 Jul 2025 15:12:35 +0200
-Message-ID: <20250715130801.639073227@linuxfoundation.org>
+Subject: [PATCH 5.4 042/148] net: enetc: Correct endianness handling in _enetc_rd_reg64
+Date: Tue, 15 Jul 2025 15:12:44 +0200
+Message-ID: <20250715130802.000390010@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -51,76 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weihang Li <liweihang@huawei.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 60dff56d77292062789232f68354f567e1ccf1d2 ]
+[ Upstream commit 7b515f35a911fdc31fbde6531828dcd6ae9803d3 ]
 
-The refcount_t API will WARN on underflow and overflow of a reference
-counter, and avoid use-after-free risks.
+enetc_hw.h provides two versions of _enetc_rd_reg64.
+One which simply calls ioread64() when available.
+And another that composes the 64-bit result from ioread32() calls.
 
-Link: https://lore.kernel.org/r/1622194663-2383-2-git-send-email-liweihang@huawei.com
-Signed-off-by: Weihang Li <liweihang@huawei.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: 6883b680e703 ("RDMA/iwcm: Fix use-after-free of work objects after cm_id destruction")
+In the second case the code appears to assume that each ioread32() call
+returns a little-endian value. However both the shift and logical or
+used to compose the return value would not work correctly on big endian
+systems if this were the case. Moreover, this is inconsistent with the
+first case where the return value of ioread64() is assumed to be in host
+byte order.
+
+It appears that the correct approach is for both versions to treat the
+return value of ioread*() functions as being in host byte order. And
+this patch corrects the ioread32()-based version to do so.
+
+This is a bug but would only manifest on big endian systems
+that make use of the ioread32-based implementation of _enetc_rd_reg64.
+While all in-tree users of this driver are little endian and
+make use of the ioread64-based implementation of _enetc_rd_reg64.
+Thus, no in-tree user of this driver is affected by this bug.
+
+Flagged by Sparse.
+Compile tested only.
+
+Fixes: 16eb4c85c964 ("enetc: Add ethtool statistics")
+Closes: https://lore.kernel.org/all/AM9PR04MB850500D3FC24FE23DEFCEA158879A@AM9PR04MB8505.eurprd04.prod.outlook.com/
+Signed-off-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250624-etnetc-le-v1-1-a73a95d96e4e@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwcm.c | 9 ++++-----
- drivers/infiniband/core/iwcm.h | 2 +-
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc_hw.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/iwcm.c b/drivers/infiniband/core/iwcm.c
-index 44362f693df9f..3e4941754b48d 100644
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -211,8 +211,7 @@ static void free_cm_id(struct iwcm_id_private *cm_id_priv)
-  */
- static int iwcm_deref_id(struct iwcm_id_private *cm_id_priv)
- {
--	BUG_ON(atomic_read(&cm_id_priv->refcount)==0);
--	if (atomic_dec_and_test(&cm_id_priv->refcount)) {
-+	if (refcount_dec_and_test(&cm_id_priv->refcount)) {
- 		BUG_ON(!list_empty(&cm_id_priv->work_list));
- 		free_cm_id(cm_id_priv);
- 		return 1;
-@@ -225,7 +224,7 @@ static void add_ref(struct iw_cm_id *cm_id)
- {
- 	struct iwcm_id_private *cm_id_priv;
- 	cm_id_priv = container_of(cm_id, struct iwcm_id_private, id);
--	atomic_inc(&cm_id_priv->refcount);
-+	refcount_inc(&cm_id_priv->refcount);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_hw.h b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
+index fac80831d5327..e99546b6a356c 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_hw.h
++++ b/drivers/net/ethernet/freescale/enetc/enetc_hw.h
+@@ -319,7 +319,7 @@ static inline u64 enetc_rd_reg64(void __iomem *reg)
+ 		tmp = ioread32(reg + 4);
+ 	} while (high != tmp);
+ 
+-	return le64_to_cpu((__le64)high << 32 | low);
++	return (u64)high << 32 | low;
  }
- 
- static void rem_ref(struct iw_cm_id *cm_id)
-@@ -257,7 +256,7 @@ struct iw_cm_id *iw_create_cm_id(struct ib_device *device,
- 	cm_id_priv->id.add_ref = add_ref;
- 	cm_id_priv->id.rem_ref = rem_ref;
- 	spin_lock_init(&cm_id_priv->lock);
--	atomic_set(&cm_id_priv->refcount, 1);
-+	refcount_set(&cm_id_priv->refcount, 1);
- 	init_waitqueue_head(&cm_id_priv->connect_wait);
- 	init_completion(&cm_id_priv->destroy_comp);
- 	INIT_LIST_HEAD(&cm_id_priv->work_list);
-@@ -1097,7 +1096,7 @@ static int cm_event_handler(struct iw_cm_id *cm_id,
- 		}
- 	}
- 
--	atomic_inc(&cm_id_priv->refcount);
-+	refcount_inc(&cm_id_priv->refcount);
- 	if (list_empty(&cm_id_priv->work_list)) {
- 		list_add_tail(&work->list, &cm_id_priv->work_list);
- 		queue_work(iwcm_wq, &work->work);
-diff --git a/drivers/infiniband/core/iwcm.h b/drivers/infiniband/core/iwcm.h
-index 82c2cd1b0a804..bf74639be1287 100644
---- a/drivers/infiniband/core/iwcm.h
-+++ b/drivers/infiniband/core/iwcm.h
-@@ -52,7 +52,7 @@ struct iwcm_id_private {
- 	wait_queue_head_t connect_wait;
- 	struct list_head work_list;
- 	spinlock_t lock;
--	atomic_t refcount;
-+	refcount_t refcount;
- 	struct list_head work_free_list;
- };
+ #endif
  
 -- 
 2.39.5
