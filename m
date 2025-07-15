@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF922E718E;
-	Tue, 15 Jul 2025 13:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5E72E718E;
+	Tue, 15 Jul 2025 13:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587722; cv=none; b=X+q102Q0GfIKSZFlQElI0saWLRTQKMe1A7cTiJ0S1gDESeAhn2oW9qP/Aimg0oq5BcZQBq70LLJcOuiQ+Ifh6BMGvaxNRYq4YWaj0hHqINoCrZZjBWrtEVo0i5X3haOSvWgHrpNuYDic+soMN992vVGCAMtpkmvs1pA42JGmpa4=
+	t=1752587724; cv=none; b=q8XgUfCpo/I3B3sXb/avxDG++++Xe67vroYFEgGUr6S4+fhBWglx8fMT0IJhe7yniZBSLkK7/W64tu9YEJI5Gju1m02EFFp7WNb8J2QN+Qiy1txdqXqB9yeaiXrZ1h0GKVadh8cU4ce4dwKuh3L/u9cOGlIY5pE4CjLvfDFM55E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587722; c=relaxed/simple;
-	bh=liwxJkOh5A16o+zHmEmGsjD50RbUryASEfCQnfxboNw=;
+	s=arc-20240116; t=1752587724; c=relaxed/simple;
+	bh=u23/mNFEJgK8viNDxgIFrVcOcDQs0jOQxHNN5T01/9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfCP7KDQJ/G9NBTHKjrko3Y1CDRf3Fa4oBlgLovWD2OdHrNjBQtLy0QJBvWSxUI3iQCAFC6QtfMar8ild3giC3QQ54hFiCup43fn+MAXVmNF2oeVtAP95F3mc6hKuBB223RyQqQaIOG8/QZreGCfOfY0KGKKKAw9SaJIVBtpK8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhSKkTph; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bOxJ5hlaZpGJhyTdbfyJcL0N16EmyTgRXNYNchkNNdl2vFZrJr2w3UP0jEGmKo995H39aD5uiCMkyBR4E2VVFUmOzErTQqpMlbQULiHFjUVKEtPiphRueuieUUyOE9Okq3tU5BEb4aXR+zGodqtoSU2N/0IMPsRgRq0pbMqTH1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuA//h8M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhSKkTph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961CDC4CEE3;
-	Tue, 15 Jul 2025 13:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuA//h8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33805C4CEE3;
+	Tue, 15 Jul 2025 13:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587721;
-	bh=liwxJkOh5A16o+zHmEmGsjD50RbUryASEfCQnfxboNw=;
+	s=korg; t=1752587724;
+	bh=u23/mNFEJgK8viNDxgIFrVcOcDQs0jOQxHNN5T01/9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhSKkTphXQiGHFz8mmPXO2u7Fy0wSndLYtHrYWw9RcglNNfMaDciXKrhxmXWQHkrb
-	 Z+UdkK4rBxvpo5q71lWDl/eVz7TZFjFbxWASbpgCnUtQ4c3AIJBGrDMugxYrlO9Dw0
-	 5DYXvIQbCQFVyV0iAvvFxkMawiUdBjZo4ggZXC+E=
+	b=xuA//h8Mh4jOTAdO02dNs+lFdQZ9zAp+vv2ueIWBOfFINs5L3rRe0dKseZDgjWAK7
+	 DcZMab9mJ3XX3mfZznI0/k4Dya8uIoxh1Mj3OyBmz5/+j8cl6yMSh3poy31LyaQsvU
+	 tyGC+IpWKvJWeKLEbtoEOfM6vPP0CDIukD3dM8zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/208] btrfs: use btrfs_record_snapshot_destroy() during rmdir
-Date: Tue, 15 Jul 2025 15:13:47 +0200
-Message-ID: <20250715130815.672734364@linuxfoundation.org>
+Subject: [PATCH 5.10 119/208] dpaa2-eth: rename dpaa2_eth_xdp_release_buf into dpaa2_eth_recycle_buf
+Date: Tue, 15 Jul 2025 15:13:48 +0200
+Message-ID: <20250715130815.711951665@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,44 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 157501b0469969fc1ba53add5049575aadd79d80 ]
+[ Upstream commit 28d137cc8c0bd2c9501b8eb0855b631289c7b4a3 ]
 
-We are setting the parent directory's last_unlink_trans directly which
-may result in a concurrent task starting to log the directory not see the
-update and therefore can log the directory after we removed a child
-directory which had a snapshot within instead of falling back to a
-transaction commit. Replaying such a log tree would result in a mount
-failure since we can't currently delete snapshots (and subvolumes) during
-log replay. This is the type of failure described in commit 1ec9a1ae1e30
-("Btrfs: fix unreplayable log after snapshot delete + parent dir fsync").
+Rename the dpaa2_eth_xdp_release_buf function into dpaa2_eth_recycle_buf
+since in the next patches we'll be using the same recycle mechanism for
+the normal stack path beside for XDP_DROP.
 
-Fix this by using btrfs_record_snapshot_destroy() which updates the
-last_unlink_trans field while holding the inode's log_mutex lock.
+Also, rename the array which holds the buffers to be recycled so that it
+does not have any reference to XDP.
 
-Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 2def09ead4ad ("dpaa2-eth: fix xdp_rxq_info leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/freescale/dpaa2/dpaa2-eth.c  | 26 +++++++++----------
+ .../net/ethernet/freescale/dpaa2/dpaa2-eth.h  |  6 +++--
+ 2 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 94a338de3a8e9..82805ac91b06c 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4175,7 +4175,7 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
- 	 * deletes for directory foo.
- 	 */
- 	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
--		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
-+		btrfs_record_snapshot_destroy(trans, BTRFS_I(dir));
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index fa202fea537f8..fa799cc044426 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -223,31 +223,31 @@ static void dpaa2_eth_free_bufs(struct dpaa2_eth_priv *priv, u64 *buf_array,
+ 	}
+ }
  
- 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
- 		err = btrfs_unlink_subvol(trans, dir, dentry);
+-static void dpaa2_eth_xdp_release_buf(struct dpaa2_eth_priv *priv,
+-				      struct dpaa2_eth_channel *ch,
+-				      dma_addr_t addr)
++static void dpaa2_eth_recycle_buf(struct dpaa2_eth_priv *priv,
++				  struct dpaa2_eth_channel *ch,
++				  dma_addr_t addr)
+ {
+ 	int retries = 0;
+ 	int err;
+ 
+-	ch->xdp.drop_bufs[ch->xdp.drop_cnt++] = addr;
+-	if (ch->xdp.drop_cnt < DPAA2_ETH_BUFS_PER_CMD)
++	ch->recycled_bufs[ch->recycled_bufs_cnt++] = addr;
++	if (ch->recycled_bufs_cnt < DPAA2_ETH_BUFS_PER_CMD)
+ 		return;
+ 
+ 	while ((err = dpaa2_io_service_release(ch->dpio, priv->bpid,
+-					       ch->xdp.drop_bufs,
+-					       ch->xdp.drop_cnt)) == -EBUSY) {
++					       ch->recycled_bufs,
++					       ch->recycled_bufs_cnt)) == -EBUSY) {
+ 		if (retries++ >= DPAA2_ETH_SWP_BUSY_RETRIES)
+ 			break;
+ 		cpu_relax();
+ 	}
+ 
+ 	if (err) {
+-		dpaa2_eth_free_bufs(priv, ch->xdp.drop_bufs, ch->xdp.drop_cnt);
+-		ch->buf_count -= ch->xdp.drop_cnt;
++		dpaa2_eth_free_bufs(priv, ch->recycled_bufs, ch->recycled_bufs_cnt);
++		ch->buf_count -= ch->recycled_bufs_cnt;
+ 	}
+ 
+-	ch->xdp.drop_cnt = 0;
++	ch->recycled_bufs_cnt = 0;
+ }
+ 
+ static int dpaa2_eth_xdp_flush(struct dpaa2_eth_priv *priv,
+@@ -300,7 +300,7 @@ static void dpaa2_eth_xdp_tx_flush(struct dpaa2_eth_priv *priv,
+ 		ch->stats.xdp_tx++;
+ 	}
+ 	for (i = enqueued; i < fq->xdp_tx_fds.num; i++) {
+-		dpaa2_eth_xdp_release_buf(priv, ch, dpaa2_fd_get_addr(&fds[i]));
++		dpaa2_eth_recycle_buf(priv, ch, dpaa2_fd_get_addr(&fds[i]));
+ 		percpu_stats->tx_errors++;
+ 		ch->stats.xdp_tx_err++;
+ 	}
+@@ -386,7 +386,7 @@ static u32 dpaa2_eth_run_xdp(struct dpaa2_eth_priv *priv,
+ 		trace_xdp_exception(priv->net_dev, xdp_prog, xdp_act);
+ 		fallthrough;
+ 	case XDP_DROP:
+-		dpaa2_eth_xdp_release_buf(priv, ch, addr);
++		dpaa2_eth_recycle_buf(priv, ch, addr);
+ 		ch->stats.xdp_drop++;
+ 		break;
+ 	case XDP_REDIRECT:
+@@ -407,7 +407,7 @@ static u32 dpaa2_eth_run_xdp(struct dpaa2_eth_priv *priv,
+ 				free_pages((unsigned long)vaddr, 0);
+ 			} else {
+ 				ch->buf_count++;
+-				dpaa2_eth_xdp_release_buf(priv, ch, addr);
++				dpaa2_eth_recycle_buf(priv, ch, addr);
+ 			}
+ 			ch->stats.xdp_drop++;
+ 		} else {
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
+index 2825f53e7e9b1..e143d66ca2474 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
+@@ -438,8 +438,6 @@ struct dpaa2_eth_fq {
+ 
+ struct dpaa2_eth_ch_xdp {
+ 	struct bpf_prog *prog;
+-	u64 drop_bufs[DPAA2_ETH_BUFS_PER_CMD];
+-	int drop_cnt;
+ 	unsigned int res;
+ };
+ 
+@@ -457,6 +455,10 @@ struct dpaa2_eth_channel {
+ 	struct dpaa2_eth_ch_xdp xdp;
+ 	struct xdp_rxq_info xdp_rxq;
+ 	struct list_head *rx_list;
++
++	/* Buffers to be recycled back in the buffer pool */
++	u64 recycled_bufs[DPAA2_ETH_BUFS_PER_CMD];
++	int recycled_bufs_cnt;
+ };
+ 
+ struct dpaa2_eth_dist_fields {
 -- 
 2.39.5
 
