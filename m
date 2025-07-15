@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1B82EBDFC;
-	Tue, 15 Jul 2025 13:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652482EBDFC;
+	Tue, 15 Jul 2025 13:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587612; cv=none; b=UqrgsDQ7FVHNxCZE+spO6UixVDiyWvqIgGnpWPYUZGTHACGFX+Y/J30scCfDwau705aR+exI5pZBqrrjet40wA84mzdscCSX5RDZk9aSGHldgL4MsJFiMdRld6APwAtjnKwcxIYmjvqrpe74k1lh/8OvnujBwnf2poLZxlTeba8=
+	t=1752587615; cv=none; b=SBev+V9mDq2Zc2Ydu+QlXWG5SwvNgnl9KjK5DUN/Qedi4qjKBDVvP0kc2GgNisfiWisuaQO0bwptC+NvKaXcFu9b8VltcdM90Lvn/YrAmuo28OrRTIZm9cIYrVA2x2QIhxK8aJWki5XKyXYLyfQMK5d2uTPmOTpzkVoSEkavLFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587612; c=relaxed/simple;
-	bh=d3xBQO/F/FSk7mjMalBREW5hAaz/7cVWyBkezjgjbIQ=;
+	s=arc-20240116; t=1752587615; c=relaxed/simple;
+	bh=3H0uedK8OL+2/4K/1gj6gRmAEhr838pFPJyX2MOJDIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8VJ0A4tPno6jCTafyJ4yDCnRlFdhqyYOvatru6GP5Ii5YWLjHNL3rBxsDMS4D2Wtp/J00qcXUPNG7knkFqY9/vwpMUE+UB9GoFOhWVMcuI7AiLe48eFLStY3BTChBssAkDwH4QR0n+B+fE5O5mlq576yWh8ftkiaO4EfdMA8fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7TnQwR8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eeSCbiVWnyxHGZJ8QvU1rKl7uMU+jgsScaAF60yTFzf+5OsVqdLC0ooOUZCYUXnVh9sELYmNFV+dUqm+dfzgKdxXPruFe1o07DuFAaKi9S55Z/+M3X1rV7yWU3nwnp/Bad7hwutV+oWKpAVBSMvsHqpRjQ3L8zv8luU08mQPLWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmH910Zd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7TnQwR8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541C5C4CEE3;
-	Tue, 15 Jul 2025 13:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmH910Zd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB68AC4CEE3;
+	Tue, 15 Jul 2025 13:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587612;
-	bh=d3xBQO/F/FSk7mjMalBREW5hAaz/7cVWyBkezjgjbIQ=;
+	s=korg; t=1752587615;
+	bh=3H0uedK8OL+2/4K/1gj6gRmAEhr838pFPJyX2MOJDIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q7TnQwR85QkVjVhGfEteIaZpWvncH6N/y+PvtAlyn8aPgazg2erhbe6SsZ2XjwDF6
-	 hBb29sthriujmqYEq2BToB1I+akmpsWxx/tYoq6mE//aXbf/mPRu6oxZHVyp4Z3g11
-	 /YL3nGhPfIs+ZtknOCBxEBy9ZzmrDK0YfwRLQK/s=
+	b=FmH910ZdlThyCbOOqA2fAxktQKq9I1gjh801SCL5kEzNwbrZJlDjwwRyBFMfmUIDt
+	 9wuS8y5rAMKbjo5vE0PYQfcKfNOT1wxNAvtz5IfGI0rwj3z/ODkFVe1Vv3atYkZap0
+	 qvYWLdf1E2qFalP3K73YIqLVzO2Ec/uF7at2DOAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erick Shepherd <erick.shepherd@ni.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jonathan Liu <net147@gmail.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 078/208] Revert "mmc: sdhci: Disable SD card clock before changing parameters"
-Date: Tue, 15 Jul 2025 15:13:07 +0200
-Message-ID: <20250715130814.069128104@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	RD Babiera <rdbabiera@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 079/208] usb: typec: altmodes/displayport: do not index invalid pin_assignments
+Date: Tue, 15 Jul 2025 15:13:08 +0200
+Message-ID: <20250715130814.107365082@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -53,49 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: RD Babiera <rdbabiera@google.com>
 
-commit dcc3bcfc5b50c625b475dcc25d167b6b947a6637 upstream.
+commit af4db5a35a4ef7a68046883bfd12468007db38f1 upstream.
 
-It has turned out the trying to strictly conform to the SDHCI specification
-is causing problems. Let's revert and start over.
+A poorly implemented DisplayPort Alt Mode port partner can indicate
+that its pin assignment capabilities are greater than the maximum
+value, DP_PIN_ASSIGN_F. In this case, calls to pin_assignment_show
+will cause a BRK exception due to an out of bounds array access.
 
-This reverts commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc.
+Prevent for loop in pin_assignment_show from accessing
+invalid values in pin_assignments by adding DP_PIN_ASSIGN_MAX
+value in typec_dp.h and using i < DP_PIN_ASSIGN_MAX as a loop
+condition.
 
-Cc: Erick Shepherd <erick.shepherd@ni.com>
-Cc: stable@vger.kernel.org
-Fixes: fb3bbc46c94f ("mmc: sdhci: Disable SD card clock before changing parameters")
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Reported-by: Jonathan Liu <net147@gmail.com>
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Closes: https://bugs.debian.org/1108065
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://lore.kernel.org/r/20250624110932.176925-1-ulf.hansson@linaro.org
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
+Cc: stable <stable@kernel.org>
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250618224943.3263103-2-rdbabiera@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c |    2 +-
+ include/linux/usb/typec_dp.h             |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2010,15 +2010,10 @@ void sdhci_set_clock(struct sdhci_host *
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -509,7 +509,7 @@ static ssize_t pin_assignment_show(struc
  
- 	host->mmc->actual_clock = 0;
+ 	assignments = get_current_pin_assignments(dp);
  
--	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
--	if (clk & SDHCI_CLOCK_CARD_EN)
--		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
--			SDHCI_CLOCK_CONTROL);
-+	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+-	for (i = 0; assignments; assignments >>= 1, i++) {
++	for (i = 0; assignments && i < DP_PIN_ASSIGN_MAX; assignments >>= 1, i++) {
+ 		if (assignments & 1) {
+ 			if (i == cur)
+ 				len += sprintf(buf + len, "[%s] ",
+--- a/include/linux/usb/typec_dp.h
++++ b/include/linux/usb/typec_dp.h
+@@ -56,6 +56,7 @@ enum {
+ 	DP_PIN_ASSIGN_D,
+ 	DP_PIN_ASSIGN_E,
+ 	DP_PIN_ASSIGN_F, /* Not supported after v1.0b */
++	DP_PIN_ASSIGN_MAX,
+ };
  
--	if (clock == 0) {
--		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
-+	if (clock == 0)
- 		return;
--	}
- 
- 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
- 	sdhci_enable_clk(host, clk);
+ /* DisplayPort alt mode specific commands */
 
 
