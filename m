@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1720C2E3AE5;
-	Tue, 15 Jul 2025 13:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80F82E4272;
+	Tue, 15 Jul 2025 13:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587214; cv=none; b=UCcYDNGQ8slbnSKQYtpm/HX9fXy1m4kBnGJSy1KmdMxG9NS7YzTRpwbboEUcXwjru36UDMWg2uKXBv6TfoXB2yJxUxPqKMMBnqL6LcY6snhUxFcLZQF31cdLdXE7rvtXlJFpcqs2FB8DjKtplAf6Q4/2oNkOxGemDOgtvQbDadA=
+	t=1752587216; cv=none; b=Ru3PaiakYYpDX7//QTnVAQmR4/eDzEKzBKSb+0l4ivE2OSyUEUkTG3jARbY6nSqU4I5xPAQhaIz0ECR19k5NQ7ak4n36K4LOsnO8DFznXBzPEaHdTXtGkHQM4jjG1SDBLGEv/03YF7/ZLayHkVrH73W6kBQcZgUZPxp3o/7h8i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587214; c=relaxed/simple;
-	bh=ZcDa9bhuQUKz/lrGhPdD+u7wy1uEI8w53qqkzcDq+i8=;
+	s=arc-20240116; t=1752587216; c=relaxed/simple;
+	bh=bS1xeBG4Se0pku8yYPqDnB/ixwlNIy7LnLLZLtQphT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZSQXC5FMb/H/24vh7NPaEe/Ns8qX+I3x5O3xsCxGibySDpQ8DGHEzfI9PbqcpTqZraYn5CLoC9vbZ3NdWGn7lj2DfGAVF+TFubNhFsbjRfMiGVD1ubfKiSkVxHOvYcTCSJQUU8VZ4jueqRIVTnhIQjDGHhI9beusbX/EPg5QBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HhxicEh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C78vRIaVU3sFhBfQYXC1L2nWXxKW+PBXPZxRfI4wnhZqkNXjNwjoeTzLdsspyUU6q6EGsPpHm5qpH3ZYi8DfWO/SK1iKDXv8upqMHFmXrzX3iFqlnQ62NrLgU8SOZB3cyu2Pmzooiy3MCGgq5KX+Ad7i03yit4SjKww1Kw3Pi+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIjA1J0W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HhxicEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B44CC4CEE3;
-	Tue, 15 Jul 2025 13:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIjA1J0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE130C4CEE3;
+	Tue, 15 Jul 2025 13:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587213;
-	bh=ZcDa9bhuQUKz/lrGhPdD+u7wy1uEI8w53qqkzcDq+i8=;
+	s=korg; t=1752587216;
+	bh=bS1xeBG4Se0pku8yYPqDnB/ixwlNIy7LnLLZLtQphT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0HhxicEhSItw1HK+7+TLe03LvKhxljy/p4fVhjCc6aTXi8T04fwE3OV8+Co5fe1nm
-	 iX0C6uF5cn3Xa+ZKsFYyJqsrxxaDNU9eg7oLDQ7oNwuLB+5zjQCru47VKPh4tde7Fm
-	 qroHANIpxJKFvn5Ym37twmjpGmepVXVW2+VEIpdI=
+	b=vIjA1J0W/0KSj0nfCK89PHz67I9Z3sC9AFQfovW35JUSWn+9+sIbN8Mabip8PZmY+
+	 W7PnzbNaxmarEHFni7aE3Pt55e+wLvKOlLKVLvEoRI/xgb516aNdxASXZC/hze3iHL
+	 /xNij7ANxTGsrI6cLd1kmnL1ZoyQgPmoucBfS5CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e34e5e6b5eddb0014def@syzkaller.appspotmail.com,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	syzbot+d8b58d7b0ad89a678a16@syzkaller.appspotmail.com,
+	syzbot+5eccb463fa89309d8bdc@syzkaller.appspotmail.com,
+	syzbot+1261670bbdefc5485a06@syzkaller.appspotmail.com,
+	syzbot+15b96fc3aac35468fe77@syzkaller.appspotmail.com,
+	syzbot+4dadc5aecf80324d5a51@syzkaller.appspotmail.com,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/88] atm: clip: Fix NULL pointer dereference in vcc_sendmsg()
-Date: Tue, 15 Jul 2025 15:13:53 +0200
-Message-ID: <20250715130755.203377703@linuxfoundation.org>
+Subject: [PATCH 6.1 18/88] net/sched: Abort __tc_modify_qdisc if parent class does not exist
+Date: Tue, 15 Jul 2025 15:13:54 +0200
+Message-ID: <20250715130755.243638288@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -53,80 +58,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 22fc46cea91df3dce140a7dc6847c6fcf0354505 ]
+[ Upstream commit ffdde7bf5a439aaa1955ebd581f5c64ab1533963 ]
 
-atmarpd_dev_ops does not implement the send method, which may cause crash
-as bellow.
+Lion's patch [1] revealed an ancient bug in the qdisc API.
+Whenever a user creates/modifies a qdisc specifying as a parent another
+qdisc, the qdisc API will, during grafting, detect that the user is
+not trying to attach to a class and reject. However grafting is
+performed after qdisc_create (and thus the qdiscs' init callback) is
+executed. In qdiscs that eventually call qdisc_tree_reduce_backlog
+during init or change (such as fq, hhf, choke, etc), an issue
+arises. For example, executing the following commands:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 0 P4D 0
-Oops: Oops: 0010 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 5324 Comm: syz.0.0 Not tainted 6.15.0-rc6-syzkaller-00346-g5723cc3450bc #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:0x0
-Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-RSP: 0018:ffffc9000d3cf778 EFLAGS: 00010246
-RAX: 1ffffffff1910dd1 RBX: 00000000000000c0 RCX: dffffc0000000000
-RDX: ffffc9000dc82000 RSI: ffff88803e4c4640 RDI: ffff888052cd0000
-RBP: ffffc9000d3cf8d0 R08: ffff888052c9143f R09: 1ffff1100a592287
-R10: dffffc0000000000 R11: 0000000000000000 R12: 1ffff92001a79f00
-R13: ffff888052cd0000 R14: ffff88803e4c4640 R15: ffffffff8c886e88
-FS:  00007fbc762566c0(0000) GS:ffff88808d6c2000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffffffffd6 CR3: 0000000041f1b000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- vcc_sendmsg+0xa10/0xc50 net/atm/common.c:644
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:727
- ____sys_sendmsg+0x52d/0x830 net/socket.c:2566
- ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2620
- __sys_sendmmsg+0x227/0x430 net/socket.c:2709
- __do_sys_sendmmsg net/socket.c:2736 [inline]
- __se_sys_sendmmsg net/socket.c:2733 [inline]
- __x64_sys_sendmmsg+0xa0/0xc0 net/socket.c:2733
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xf6/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+sudo tc qdisc add dev lo root handle a: htb default 2
+sudo tc qdisc add dev lo parent a: handle beef fq
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+e34e5e6b5eddb0014def@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/682f82d5.a70a0220.1765ec.0143.GAE@google.com/T
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250705085228.329202-1-yuehaibing@huawei.com
+Qdiscs such as fq, hhf, choke, etc unconditionally invoke
+qdisc_tree_reduce_backlog() in their control path init() or change() which
+then causes a failure to find the child class; however, that does not stop
+the unconditional invocation of the assumed child qdisc's qlen_notify with
+a null class. All these qdiscs make the assumption that class is non-null.
+
+The solution is ensure that qdisc_leaf() which looks up the parent
+class, and is invoked prior to qdisc_create(), should return failure on
+not finding the class.
+In this patch, we leverage qdisc_leaf to return ERR_PTRs whenever the
+parentid doesn't correspond to a class, so that we can detect it
+earlier on and abort before qdisc_create is called.
+
+[1] https://lore.kernel.org/netdev/d912cbd7-193b-4269-9857-525bee8bbb6a@gmail.com/
+
+Fixes: 5e50da01d0ce ("[NET_SCHED]: Fix endless loops (part 2): "simple" qdiscs")
+Reported-by: syzbot+d8b58d7b0ad89a678a16@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68663c93.a70a0220.5d25f.0857.GAE@google.com/
+Reported-by: syzbot+5eccb463fa89309d8bdc@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68663c94.a70a0220.5d25f.0858.GAE@google.com/
+Reported-by: syzbot+1261670bbdefc5485a06@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/686764a5.a00a0220.c7b3.0013.GAE@google.com/
+Reported-by: syzbot+15b96fc3aac35468fe77@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/686764a5.a00a0220.c7b3.0014.GAE@google.com/
+Reported-by: syzbot+4dadc5aecf80324d5a51@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68679e81.a70a0220.29cf51.0016.GAE@google.com/
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20250707210801.372995-1-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/clip.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/sched/sch_api.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/net/atm/clip.c b/net/atm/clip.c
-index 936b9558be4b9..53d62361ae460 100644
---- a/net/atm/clip.c
-+++ b/net/atm/clip.c
-@@ -632,8 +632,16 @@ static void atmarpd_close(struct atm_vcc *vcc)
- 	module_put(THIS_MODULE);
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 7c5df62421bbd..e53149a973a63 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -333,17 +333,22 @@ struct Qdisc *qdisc_lookup_rcu(struct net_device *dev, u32 handle)
+ 	return q;
  }
  
-+static int atmarpd_send(struct atm_vcc *vcc, struct sk_buff *skb)
-+{
-+	atm_return_tx(vcc, skb);
-+	dev_kfree_skb_any(skb);
-+	return 0;
-+}
-+
- static const struct atmdev_ops atmarpd_dev_ops = {
--	.close = atmarpd_close
-+	.close = atmarpd_close,
-+	.send = atmarpd_send
- };
+-static struct Qdisc *qdisc_leaf(struct Qdisc *p, u32 classid)
++static struct Qdisc *qdisc_leaf(struct Qdisc *p, u32 classid,
++				struct netlink_ext_ack *extack)
+ {
+ 	unsigned long cl;
+ 	const struct Qdisc_class_ops *cops = p->ops->cl_ops;
  
+-	if (cops == NULL)
+-		return NULL;
++	if (cops == NULL) {
++		NL_SET_ERR_MSG(extack, "Parent qdisc is not classful");
++		return ERR_PTR(-EOPNOTSUPP);
++	}
+ 	cl = cops->find(p, classid);
  
+-	if (cl == 0)
+-		return NULL;
++	if (cl == 0) {
++		NL_SET_ERR_MSG(extack, "Specified class not found");
++		return ERR_PTR(-ENOENT);
++	}
+ 	return cops->leaf(p, cl);
+ }
+ 
+@@ -1500,7 +1505,7 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 					NL_SET_ERR_MSG(extack, "Failed to find qdisc with specified classid");
+ 					return -ENOENT;
+ 				}
+-				q = qdisc_leaf(p, clid);
++				q = qdisc_leaf(p, clid, extack);
+ 			} else if (dev_ingress_queue(dev)) {
+ 				q = rtnl_dereference(dev_ingress_queue(dev)->qdisc_sleeping);
+ 			}
+@@ -1511,6 +1516,8 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 			NL_SET_ERR_MSG(extack, "Cannot find specified qdisc on specified device");
+ 			return -ENOENT;
+ 		}
++		if (IS_ERR(q))
++			return PTR_ERR(q);
+ 
+ 		if (tcm->tcm_handle && q->handle != tcm->tcm_handle) {
+ 			NL_SET_ERR_MSG(extack, "Invalid handle");
+@@ -1604,7 +1611,9 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 					NL_SET_ERR_MSG(extack, "Failed to find specified qdisc");
+ 					return -ENOENT;
+ 				}
+-				q = qdisc_leaf(p, clid);
++				q = qdisc_leaf(p, clid, extack);
++				if (IS_ERR(q))
++					return PTR_ERR(q);
+ 			} else if (dev_ingress_queue_create(dev)) {
+ 				q = rtnl_dereference(dev_ingress_queue(dev)->qdisc_sleeping);
+ 			}
 -- 
 2.39.5
 
