@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0101E3BBF2;
-	Tue, 15 Jul 2025 13:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5313C193077;
+	Tue, 15 Jul 2025 13:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585380; cv=none; b=inPPAcwSIx2M2brUH3LkJ3M2noEvJA/IqI1ol46PaxFi70/eLnfLMqhpsVVdi7CuZ+wZhpt+C6hOCZkU39+SS4PyX3vP0TyEsypt/9fsLnwH2/gOuAOzsp2d1UyErFkAFEo+Za2DRzEmsYfRWYERqefCrpfKrH/pfNEA/224YmY=
+	t=1752585380; cv=none; b=RKIIg1ZPnvsGaG36Hiir/LVzgBGIkkVnxBVA3BTxS41atJDibgxelsp1PeHJCN7np/zFALM18nWtmikL6i6Pvlwqfwir8C0esSC7UmujQwmtnqKHlNH2KnAZxfeBfXrQBZKl5AjUxK0WZ5fPL7qhphcmqemmaUEGDc8GUdMkq0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752585380; c=relaxed/simple;
-	bh=0B9x1IhngiS8jJGQij/Ahj6he0o/5LqSzoO1HcvdsAY=;
+	bh=8xx3D6IuOBTU87WqT+DrFV2baVi3oHQN0+y5qejrEo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rS7sANxXVys0SkyX1NqP931uZhuuk6M2laZXwN6PQaSQcv6F6CbHr5k8Mdbv9TUvk17AOidLps6YyvDtxCWko4vX3abLpCes9Jrhi1WXZrugVBnBqNEO6Dcu7RFkt7TQ1NzT0IOTGuNIZ8smQtkDqqqMn1BImx/8S3mrRsZCGVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3JywZhw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hsj2BXjKpynI9Mag23jBnmbWlNxu628uwKh1HWZhvs1PugpQ659cOoUzyN5mMaR5XtbDt7QzheEsiNdHbsJYh9Vn/HJEq0fBnpc/NOLA3VerTrrsAyCLrG5BIz4xd28aa4Pgll8uFFawQRoaAdqXPmk/WIDieCO7D9QYMYKrsdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/zrDviw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3JywZhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DA5C4CEE3;
-	Tue, 15 Jul 2025 13:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/zrDviw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7F9C4CEF1;
+	Tue, 15 Jul 2025 13:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585377;
-	bh=0B9x1IhngiS8jJGQij/Ahj6he0o/5LqSzoO1HcvdsAY=;
+	s=korg; t=1752585380;
+	bh=8xx3D6IuOBTU87WqT+DrFV2baVi3oHQN0+y5qejrEo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3JywZhwbMA3o+W4PNPirqxRPChhETE3tL2rMu5Mwnmgt8nHCId0Npk9L+rR/HmPc
-	 K79q9c2MYLM+fGAzveY9MzPi9bpWtPf3HHM0uDtnccIptcF2A/vhbdYsve8uBi7WJ8
-	 IRkCR/3fxXYF51lKXOCdJa/HjV0paHFURfotvA8I=
+	b=Z/zrDviw4GUDKFeb8V2+RqSwZQGCuSiiCBbBR0n/QgM69JTJvgY4EH67iu1NlExwM
+	 6RrjGM8V95HTIk6DMby7IrXbEsW7NMn7DArB/Ckv5JKjsUO5tV6n7e0n0HpWSTQoYl
+	 UUvFgHcL1AnbRbnJIdYWHuCa3rf1p2zabixB0s7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 005/163] crypto: s390/sha - Fix uninitialized variable in SHA-1 and SHA-2
-Date: Tue, 15 Jul 2025 15:11:13 +0200
-Message-ID: <20250715130808.996179241@linuxfoundation.org>
+	lin cao <lin.cao@amd.com>,
+	Jingwen Chen <Jingwen.Chen2@amd.com>,
+	Victor Skvortsov <victor.skvortsov@amd.com>,
+	Zhigang Luo <zhigang.luo@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Wenshan Lan <jetlan9@163.com>
+Subject: [PATCH 6.12 006/163] drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
+Date: Tue, 15 Jul 2025 15:11:14 +0200
+Message-ID: <20250715130809.034395150@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -45,120 +50,176 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 68279380266a5fa70e664de754503338e2ec3f43 upstream.
+commit dc0297f3198bd60108ccbd167ee5d9fa4af31ed0 upstream.
 
-Commit 88c02b3f79a6 ("s390/sha3: Support sha3 performance enhancements")
-added the field s390_sha_ctx::first_message_part and made it be used by
-s390_sha_update() (now s390_sha_update_blocks()).  At the time,
-s390_sha_update() was used by all the s390 SHA-1, SHA-2, and SHA-3
-algorithms.  However, only the initialization functions for SHA-3 were
-updated, leaving SHA-1 and SHA-2 using first_message_part uninitialized.
+RLCG Register Access is a way for virtual functions to safely access GPU
+registers in a virtualized environment., including TLB flushes and
+register reads. When multiple threads or VFs try to access the same
+registers simultaneously, it can lead to race conditions. By using the
+RLCG interface, the driver can serialize access to the registers. This
+means that only one thread can access the registers at a time,
+preventing conflicts and ensuring that operations are performed
+correctly. Additionally, when a low-priority task holds a mutex that a
+high-priority task needs, ie., If a thread holding a spinlock tries to
+acquire a mutex, it can lead to priority inversion. register access in
+amdgpu_virt_rlcg_reg_rw especially in a fast code path is critical.
 
-This could cause e.g. the function code CPACF_KIMD_SHA_512 |
-CPACF_KIMD_NIP to be used instead of just CPACF_KIMD_SHA_512.  This
-apparently was harmless, as the SHA-1 and SHA-2 function codes ignore
-CPACF_KIMD_NIP; it is recognized only by the SHA-3 function codes
-(https://lore.kernel.org/r/73477fe9-a1dc-4e38-98a6-eba9921e8afa@linux.ibm.com/).
-Therefore, this bug was found only when first_message_part was later
-converted to a boolean and UBSAN detected its uninitialized use.
-Regardless, let's fix this by just initializing to zero.
+The call stack shows that the function amdgpu_virt_rlcg_reg_rw is being
+called, which attempts to acquire the mutex. This function is invoked
+from amdgpu_sriov_wreg, which in turn is called from
+gmc_v11_0_flush_gpu_tlb.
 
-Note: in 6.16, we need to patch SHA-1, SHA-384, and SHA-512.  In 6.15
-and earlier, we'll also need to patch SHA-224 and SHA-256, as they
-hadn't yet been librarified (which incidentally fixed this bug).
+The [ BUG: Invalid wait context ] indicates that a thread is trying to
+acquire a mutex while it is in a context that does not allow it to sleep
+(like holding a spinlock).
 
-Fixes: 88c02b3f79a6 ("s390/sha3: Support sha3 performance enhancements")
-Cc: stable@vger.kernel.org
-Reported-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Closes: https://lore.kernel.org/r/12740696-595c-4604-873e-aefe8b405fbf@linux.ibm.com
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250703172316.7914-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes the below:
+
+[  253.013423] =============================
+[  253.013434] [ BUG: Invalid wait context ]
+[  253.013446] 6.12.0-amdstaging-drm-next-lol-050225 #14 Tainted: G     U     OE
+[  253.013464] -----------------------------
+[  253.013475] kworker/0:1/10 is trying to lock:
+[  253.013487] ffff9f30542e3cf8 (&adev->virt.rlcg_reg_lock){+.+.}-{3:3}, at: amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.013815] other info that might help us debug this:
+[  253.013827] context-{4:4}
+[  253.013835] 3 locks held by kworker/0:1/10:
+[  253.013847]  #0: ffff9f3040050f58 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x3f5/0x680
+[  253.013877]  #1: ffffb789c008be40 ((work_completion)(&wfc.work)){+.+.}-{0:0}, at: process_one_work+0x1d6/0x680
+[  253.013905]  #2: ffff9f3054281838 (&adev->gmc.invalidate_lock){+.+.}-{2:2}, at: gmc_v11_0_flush_gpu_tlb+0x198/0x4f0 [amdgpu]
+[  253.014154] stack backtrace:
+[  253.014164] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Tainted: G     U     OE      6.12.0-amdstaging-drm-next-lol-050225 #14
+[  253.014189] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[  253.014203] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/18/2024
+[  253.014224] Workqueue: events work_for_cpu_fn
+[  253.014241] Call Trace:
+[  253.014250]  <TASK>
+[  253.014260]  dump_stack_lvl+0x9b/0xf0
+[  253.014275]  dump_stack+0x10/0x20
+[  253.014287]  __lock_acquire+0xa47/0x2810
+[  253.014303]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.014321]  lock_acquire+0xd1/0x300
+[  253.014333]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.014562]  ? __lock_acquire+0xa6b/0x2810
+[  253.014578]  __mutex_lock+0x85/0xe20
+[  253.014591]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.014782]  ? sched_clock_noinstr+0x9/0x10
+[  253.014795]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.014808]  ? local_clock_noinstr+0xe/0xc0
+[  253.014822]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.015012]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.015029]  mutex_lock_nested+0x1b/0x30
+[  253.015044]  ? mutex_lock_nested+0x1b/0x30
+[  253.015057]  amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.015249]  amdgpu_sriov_wreg+0xc5/0xd0 [amdgpu]
+[  253.015435]  gmc_v11_0_flush_gpu_tlb+0x44b/0x4f0 [amdgpu]
+[  253.015667]  gfx_v11_0_hw_init+0x499/0x29c0 [amdgpu]
+[  253.015901]  ? __pfx_smu_v13_0_update_pcie_parameters+0x10/0x10 [amdgpu]
+[  253.016159]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.016173]  ? smu_hw_init+0x18d/0x300 [amdgpu]
+[  253.016403]  amdgpu_device_init+0x29ad/0x36a0 [amdgpu]
+[  253.016614]  amdgpu_driver_load_kms+0x1a/0xc0 [amdgpu]
+[  253.017057]  amdgpu_pci_probe+0x1c2/0x660 [amdgpu]
+[  253.017493]  local_pci_probe+0x4b/0xb0
+[  253.017746]  work_for_cpu_fn+0x1a/0x30
+[  253.017995]  process_one_work+0x21e/0x680
+[  253.018248]  worker_thread+0x190/0x330
+[  253.018500]  ? __pfx_worker_thread+0x10/0x10
+[  253.018746]  kthread+0xe7/0x120
+[  253.018988]  ? __pfx_kthread+0x10/0x10
+[  253.019231]  ret_from_fork+0x3c/0x60
+[  253.019468]  ? __pfx_kthread+0x10/0x10
+[  253.019701]  ret_from_fork_asm+0x1a/0x30
+[  253.019939]  </TASK>
+
+v2: s/spin_trylock/spin_lock_irqsave to be safe (Christian).
+
+Fixes: e864180ee49b ("drm/amdgpu: Add lock around VF RLCG interface")
+Cc: lin cao <lin.cao@amd.com>
+Cc: Jingwen Chen <Jingwen.Chen2@amd.com>
+Cc: Victor Skvortsov <victor.skvortsov@amd.com>
+Cc: Zhigang Luo <zhigang.luo@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ Minor context change fixed. ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/sha1_s390.c   |    2 ++
- arch/s390/crypto/sha256_s390.c |    3 +++
- arch/s390/crypto/sha512_s390.c |    3 +++
- 3 files changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   |    5 +++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   |    3 ++-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/s390/crypto/sha1_s390.c
-+++ b/arch/s390/crypto/sha1_s390.c
-@@ -38,6 +38,7 @@ static int s390_sha1_init(struct shash_d
- 	sctx->state[4] = SHA1_H4;
- 	sctx->count = 0;
- 	sctx->func = CPACF_KIMD_SHA_1;
-+	sctx->first_message_part = 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4144,7 +4144,6 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	mutex_init(&adev->grbm_idx_mutex);
+ 	mutex_init(&adev->mn_lock);
+ 	mutex_init(&adev->virt.vf_errors.lock);
+-	mutex_init(&adev->virt.rlcg_reg_lock);
+ 	hash_init(adev->mn_hash);
+ 	mutex_init(&adev->psp.mutex);
+ 	mutex_init(&adev->notifier_lock);
+@@ -4170,6 +4169,7 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	spin_lock_init(&adev->se_cac_idx_lock);
+ 	spin_lock_init(&adev->audio_endpt_idx_lock);
+ 	spin_lock_init(&adev->mm_stats.lock);
++	spin_lock_init(&adev->virt.rlcg_reg_lock);
+ 	spin_lock_init(&adev->wb.lock);
  
- 	return 0;
- }
-@@ -62,6 +63,7 @@ static int s390_sha1_import(struct shash
- 	memcpy(sctx->state, ictx->state, sizeof(ictx->state));
- 	memcpy(sctx->buf, ictx->buffer, sizeof(ictx->buffer));
- 	sctx->func = CPACF_KIMD_SHA_1;
-+	sctx->first_message_part = 0;
- 	return 0;
- }
+ 	INIT_LIST_HEAD(&adev->reset_list);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -1010,6 +1010,7 @@ u32 amdgpu_virt_rlcg_reg_rw(struct amdgp
+ 	void *scratch_reg2;
+ 	void *scratch_reg3;
+ 	void *spare_int;
++	unsigned long flags;
  
---- a/arch/s390/crypto/sha256_s390.c
-+++ b/arch/s390/crypto/sha256_s390.c
-@@ -31,6 +31,7 @@ static int s390_sha256_init(struct shash
- 	sctx->state[7] = SHA256_H7;
- 	sctx->count = 0;
- 	sctx->func = CPACF_KIMD_SHA_256;
-+	sctx->first_message_part = 0;
+ 	if (!adev->gfx.rlc.rlcg_reg_access_supported) {
+ 		dev_err(adev->dev,
+@@ -1031,7 +1032,7 @@ u32 amdgpu_virt_rlcg_reg_rw(struct amdgp
+ 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
+ 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
  
- 	return 0;
- }
-@@ -55,6 +56,7 @@ static int sha256_import(struct shash_de
- 	memcpy(sctx->state, ictx->state, sizeof(ictx->state));
- 	memcpy(sctx->buf, ictx->buf, sizeof(ictx->buf));
- 	sctx->func = CPACF_KIMD_SHA_256;
-+	sctx->first_message_part = 0;
- 	return 0;
- }
+-	mutex_lock(&adev->virt.rlcg_reg_lock);
++	spin_lock_irqsave(&adev->virt.rlcg_reg_lock, flags);
  
-@@ -90,6 +92,7 @@ static int s390_sha224_init(struct shash
- 	sctx->state[7] = SHA224_H7;
- 	sctx->count = 0;
- 	sctx->func = CPACF_KIMD_SHA_256;
-+	sctx->first_message_part = 0;
+ 	if (reg_access_ctrl->spare_int)
+ 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
+@@ -1090,7 +1091,7 @@ u32 amdgpu_virt_rlcg_reg_rw(struct amdgp
  
- 	return 0;
- }
---- a/arch/s390/crypto/sha512_s390.c
-+++ b/arch/s390/crypto/sha512_s390.c
-@@ -32,6 +32,7 @@ static int sha512_init(struct shash_desc
- 	*(__u64 *)&ctx->state[14] = SHA512_H7;
- 	ctx->count = 0;
- 	ctx->func = CPACF_KIMD_SHA_512;
-+	ctx->first_message_part = 0;
+ 	ret = readl(scratch_reg0);
  
- 	return 0;
- }
-@@ -60,6 +61,7 @@ static int sha512_import(struct shash_de
- 	memcpy(sctx->state, ictx->state, sizeof(ictx->state));
- 	memcpy(sctx->buf, ictx->buf, sizeof(ictx->buf));
- 	sctx->func = CPACF_KIMD_SHA_512;
-+	sctx->first_message_part = 0;
- 	return 0;
- }
+-	mutex_unlock(&adev->virt.rlcg_reg_lock);
++	spin_unlock_irqrestore(&adev->virt.rlcg_reg_lock, flags);
  
-@@ -97,6 +99,7 @@ static int sha384_init(struct shash_desc
- 	*(__u64 *)&ctx->state[14] = SHA384_H7;
- 	ctx->count = 0;
- 	ctx->func = CPACF_KIMD_SHA_512;
-+	ctx->first_message_part = 0;
- 
- 	return 0;
+ 	return ret;
  }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+@@ -275,7 +275,8 @@ struct amdgpu_virt {
+ 	/* the ucode id to signal the autoload */
+ 	uint32_t autoload_ucode_id;
+ 
+-	struct mutex rlcg_reg_lock;
++	/* Spinlock to protect access to the RLCG register interface */
++	spinlock_t rlcg_reg_lock;
+ };
+ 
+ struct amdgpu_video_codec_info;
 
 
