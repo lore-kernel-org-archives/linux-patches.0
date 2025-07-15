@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521A327584E;
-	Tue, 15 Jul 2025 13:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59D8192D8A;
+	Tue, 15 Jul 2025 13:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585717; cv=none; b=buvEAo+ZLaI3fYbgW/83snKE4fIDq3vy9ajUcVtxs774vp/xlNvaXHgnBbbGLvr+xaSZvkD+AwGIajJdyzU2RuP09r7q9AGkV2i2DLZhMPDlLSDEEvffyhNgknjdtFNLJUt8KUn+0vpw2H+Oi1IuZsPwQb3PfTmxVUYTkdwMbQE=
+	t=1752585720; cv=none; b=hVB83VRXoxoFlw5xBxO3KgSYxAYJzvNoZo40ZsYsIr4Naev6GU1OJIMX7ITsDZdj8B54tluo38o9ix4LmkI+oI/svWhC3FzuCaqaJztKtdNeeSR9ziA2p6plNM3jcnl35xXRtm7jZ87OGeOjAEsZWA2FcG8iTJqvSQn+e4Ao6WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585717; c=relaxed/simple;
-	bh=UijHOgt2lpTZU252Smt/Gu9JX2oRv8X+rVDVHJpJejA=;
+	s=arc-20240116; t=1752585720; c=relaxed/simple;
+	bh=CkiSwoVE4wJ9RULl6yiRDPwH1fA7v9yLMLPF/+p/QlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVcXjPHEN6YVV3Py4k0Mfuj3YV1gAvB73yBQfDJT5R4FFRV2JhBuUryGhnHNXD+zsnnpgSxodeGHp4Rc/8ibbUecyDg2DRdLnNltrp1TyFE6a0kjQaCe+HmNjMyA9ZGVVJ8tmsXbRMzHAmlSNS+wKSr1w0x9daD305wACwc0QHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/EyBvk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BL7JJT+eCkFFvdtkFJheKFtcUljmfxNf2zyimMMFkfMnZtnjqh2xcGTOo4MjHrStS8n4n9RvlJLOQL+kZFYXsg/t0BJoNcFdD2B//nQnkg99h870a6npNGN4qXvnQTnFgYa9RfPzZLls3ynRE8Q+v8JEDBYAEQb4s4M8v+70ONc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BonH4qLd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/EyBvk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA85EC4CEE3;
-	Tue, 15 Jul 2025 13:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BonH4qLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A405C4CEE3;
+	Tue, 15 Jul 2025 13:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585717;
-	bh=UijHOgt2lpTZU252Smt/Gu9JX2oRv8X+rVDVHJpJejA=;
+	s=korg; t=1752585719;
+	bh=CkiSwoVE4wJ9RULl6yiRDPwH1fA7v9yLMLPF/+p/QlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/EyBvk2zMAg+4zg2sUWK/Hmo0nZFh9+MVrf7LXsedqL2xZlf90rtJioyeXQCTri2
-	 qj0zFmQoduu8iOkxzR4HyuHSlcsM9zML6vKJSSYmSLgLZasYkOGRsb+yCl3zytMHbk
-	 GwGrPdsl8PhQnOwhZMXszBiNuD2vc2x68MwvxkUg=
+	b=BonH4qLdZfs96sJ/mrusnk05L7eVuesc34/FCX7Bk1FrlrTdk+ZT9YRLCiylJuMbS
+	 YUFCD/5kDwFaJcesVqtTkqknfiHdPn0iHj6Q3AsROuGY61NlJbdGJP3T0rPJTWopg5
+	 sDHcsPK19JjtOJZcz1SEd9YDDIZ+uR8ptgNm2tCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasmin Fitzgerald <sunoflife1.git@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/163] ALSA: hda/realtek - Enable mute LED on HP Pavilion Laptop 15-eg100
-Date: Tue, 15 Jul 2025 15:13:33 +0200
-Message-ID: <20250715130814.650767417@linuxfoundation.org>
+Subject: [PATCH 6.12 119/163] erofs: free pclusters if no cached folio is attached
+Date: Tue, 15 Jul 2025 15:13:07 +0200
+Message-ID: <20250715130813.625545173@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,33 +51,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
+From: Chunhai Guo <guochunhai@vivo.com>
 
-[ Upstream commit 68cc9d3c8e44afe90e43cbbd2960da15c2f31e23 ]
+[ Upstream commit f5ad9f9a603f829d11ca31a0a4049e16091e8c13 ]
 
-The HP Pavilion Laptop 15-eg100 has Realtek HDA codec ALC287.
-It needs the ALC287_FIXUP_HP_GPIO_LED quirk to enable the mute LED.
+Once a pcluster is fully decompressed and there are no attached cached
+folios, its corresponding `struct z_erofs_pcluster` will be freed. This
+will significantly reduce the frequency of calls to erofs_shrink_scan()
+and the memory allocated for `struct z_erofs_pcluster`.
 
-Signed-off-by: Yasmin Fitzgerald <sunoflife1.git@gmail.com>
-Link: https://patch.msgid.link/20250621053832.52950-1-sunoflife1.git@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The tables below show approximately a 96% reduction in the calls to
+erofs_shrink_scan() and in the memory allocated for `struct
+z_erofs_pcluster` after applying this patch. The results were obtained
+by performing a test to copy a 4.1GB partition on ARM64 Android devices
+running the 6.6 kernel with an 8-core CPU and 12GB of memory.
+
+1. The reduction in calls to erofs_shrink_scan():
++-----------------+-----------+----------+---------+
+|                 | w/o patch | w/ patch |  diff   |
++-----------------+-----------+----------+---------+
+| Average (times) |   11390   |   390    | -96.57% |
++-----------------+-----------+----------+---------+
+
+2. The reduction in memory released by erofs_shrink_scan():
++-----------------+-----------+----------+---------+
+|                 | w/o patch | w/ patch |  diff   |
++-----------------+-----------+----------+---------+
+| Average (Byte)  | 133612656 | 4434552  | -96.68% |
++-----------------+-----------+----------+---------+
+
+Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20241112043235.546164-1-guochunhai@vivo.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Stable-dep-of: d53238b614e0 ("erofs: fix to add missing tracepoint in erofs_readahead()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/erofs/zdata.c | 57 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 38 insertions(+), 19 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 57f17ddaf7860..0bc59b6f1b9a6 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10655,6 +10655,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8975, "HP EliteBook x360 840 Aero G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x897d, "HP mt440 Mobile Thin Client U74", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8981, "HP Elite Dragonfly G3", ALC245_FIXUP_CS35L41_SPI_4),
-+	SND_PCI_QUIRK(0x103c, 0x898a, "HP Pavilion 15-eg100", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x898e, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x898f, "HP EliteBook 835 G9", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8991, "HP EliteBook 845 G9", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 6b1d19d1d2f0c..4d5a1fbd7e0ad 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -882,14 +882,11 @@ static void z_erofs_rcu_callback(struct rcu_head *head)
+ 			struct z_erofs_pcluster, rcu));
+ }
+ 
+-static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
++static bool __erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
+ 					  struct z_erofs_pcluster *pcl)
+ {
+-	int free = false;
+-
+-	spin_lock(&pcl->lockref.lock);
+ 	if (pcl->lockref.count)
+-		goto out;
++		return false;
+ 
+ 	/*
+ 	 * Note that all cached folios should be detached before deleted from
+@@ -897,7 +894,7 @@ static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
+ 	 * orphan old pcluster when the new one is available in the tree.
+ 	 */
+ 	if (erofs_try_to_free_all_cached_folios(sbi, pcl))
+-		goto out;
++		return false;
+ 
+ 	/*
+ 	 * It's impossible to fail after the pcluster is freezed, but in order
+@@ -906,8 +903,16 @@ static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
+ 	DBG_BUGON(__xa_erase(&sbi->managed_pslots, pcl->index) != pcl);
+ 
+ 	lockref_mark_dead(&pcl->lockref);
+-	free = true;
+-out:
++	return true;
++}
++
++static bool erofs_try_to_release_pcluster(struct erofs_sb_info *sbi,
++					  struct z_erofs_pcluster *pcl)
++{
++	bool free;
++
++	spin_lock(&pcl->lockref.lock);
++	free = __erofs_try_to_release_pcluster(sbi, pcl);
+ 	spin_unlock(&pcl->lockref.lock);
+ 	if (free) {
+ 		atomic_long_dec(&erofs_global_shrink_cnt);
+@@ -938,16 +943,25 @@ unsigned long z_erofs_shrink_scan(struct erofs_sb_info *sbi,
+ 	return freed;
+ }
+ 
+-static void z_erofs_put_pcluster(struct z_erofs_pcluster *pcl)
++static void z_erofs_put_pcluster(struct erofs_sb_info *sbi,
++		struct z_erofs_pcluster *pcl, bool try_free)
+ {
++	bool free = false;
++
+ 	if (lockref_put_or_lock(&pcl->lockref))
+ 		return;
+ 
+ 	DBG_BUGON(__lockref_is_dead(&pcl->lockref));
+-	if (pcl->lockref.count == 1)
+-		atomic_long_inc(&erofs_global_shrink_cnt);
+-	--pcl->lockref.count;
++	if (!--pcl->lockref.count) {
++		if (try_free && xa_trylock(&sbi->managed_pslots)) {
++			free = __erofs_try_to_release_pcluster(sbi, pcl);
++			xa_unlock(&sbi->managed_pslots);
++		}
++		atomic_long_add(!free, &erofs_global_shrink_cnt);
++	}
+ 	spin_unlock(&pcl->lockref.lock);
++	if (free)
++		call_rcu(&pcl->rcu, z_erofs_rcu_callback);
+ }
+ 
+ static void z_erofs_pcluster_end(struct z_erofs_decompress_frontend *fe)
+@@ -968,7 +982,7 @@ static void z_erofs_pcluster_end(struct z_erofs_decompress_frontend *fe)
+ 	 * any longer if the pcluster isn't hosted by ourselves.
+ 	 */
+ 	if (fe->mode < Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE)
+-		z_erofs_put_pcluster(pcl);
++		z_erofs_put_pcluster(EROFS_I_SB(fe->inode), pcl, false);
+ 
+ 	fe->pcl = NULL;
+ }
+@@ -1271,6 +1285,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 	int i, j, jtop, err2;
+ 	struct page *page;
+ 	bool overlapped;
++	bool try_free = true;
+ 
+ 	mutex_lock(&pcl->lock);
+ 	be->nr_pages = PAGE_ALIGN(pcl->length + pcl->pageofs_out) >> PAGE_SHIFT;
+@@ -1328,9 +1343,12 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 		/* managed folios are still left in compressed_bvecs[] */
+ 		for (i = 0; i < pclusterpages; ++i) {
+ 			page = be->compressed_pages[i];
+-			if (!page ||
+-			    erofs_folio_is_managed(sbi, page_folio(page)))
++			if (!page)
+ 				continue;
++			if (erofs_folio_is_managed(sbi, page_folio(page))) {
++				try_free = false;
++				continue;
++			}
+ 			(void)z_erofs_put_shortlivedpage(be->pagepool, page);
+ 			WRITE_ONCE(pcl->compressed_bvecs[i].page, NULL);
+ 		}
+@@ -1375,6 +1393,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_decompress_backend *be,
+ 	/* pcluster lock MUST be taken before the following line */
+ 	WRITE_ONCE(pcl->next, Z_EROFS_PCLUSTER_NIL);
+ 	mutex_unlock(&pcl->lock);
++
++	if (z_erofs_is_inline_pcluster(pcl))
++		z_erofs_free_pcluster(pcl);
++	else
++		z_erofs_put_pcluster(sbi, pcl, try_free);
+ 	return err;
+ }
+ 
+@@ -1397,10 +1420,6 @@ static int z_erofs_decompress_queue(const struct z_erofs_decompressqueue *io,
+ 		owned = READ_ONCE(be.pcl->next);
+ 
+ 		err = z_erofs_decompress_pcluster(&be, err) ?: err;
+-		if (z_erofs_is_inline_pcluster(be.pcl))
+-			z_erofs_free_pcluster(be.pcl);
+-		else
+-			z_erofs_put_pcluster(be.pcl);
+ 	}
+ 	return err;
+ }
 -- 
 2.39.5
 
