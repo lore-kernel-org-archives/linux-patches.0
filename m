@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CC92EB5A6;
-	Tue, 15 Jul 2025 13:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF462E339B;
+	Tue, 15 Jul 2025 13:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586589; cv=none; b=SnXp66M4LavG9nL+6POM3ETorEjturBangeV9OsI7X2TiOAyN9GZRHhQtgfrl/YvXzV1zzfsiRvnk/zopQ9nr3f11fctcpZGq6tD0KRymX/yWZ7bCwr3wDZ3xvMjygN2+T6KBsGPLO6ticazrGiFNAeLIe9eZAk0+CH11fsm7nE=
+	t=1752586592; cv=none; b=uDrU5WPUFDugmRQs1Gok/vBjpfPXHBY02nQR3an8Qq8k6o6LblnQ3cHHvMyd6IBcAU/whl3cDVEe+rnBhxkiDTtbzCicnaKwoAOxZnqN3mYafaipvu5OvhEs2a88Zh/2U7FqPusQXG+euOrMyd7Z53j2kwCn2jTGYsIufYdTbTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586589; c=relaxed/simple;
-	bh=1XLaTBSZZgHPe2uhaoBGsweHHQMr9asMCTADyBeGoAM=;
+	s=arc-20240116; t=1752586592; c=relaxed/simple;
+	bh=V0oE5t0O/P5yvLIwTKJPfrYDJisbQ4JVEpQOcoP3dyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5Jaxuqifi2cXUU/Crs+WKFvsQUPqWJP+zxVPHnnU9HY7BfSGLl7UQGfSJrqnvtlblpSN/UeHXwHxjPwXnwg4koTcVikYPmJ3S0ewsLXSccoy5C/8EdpXyByC9ecK7/8g0dwuzng9V66d4s74heE9xN9MlDj2tzBM6dGHtaGiDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aZOpKlX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZOHIdx4QIbKHd7DICzA70VHnYCaUcz4KUeiYOGjhlhFFVT4NwQh69xSNL9lb4bw/lE4rYkgjOd6npaAIGEiiCg67FZf7G3bvWp4gXShB65ZwkAVF22JEI/iEH3lm1jQ9/1ogf1wM7SJgg70nnQ4MxowsCoWjIbPwN3wXuFWOwkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwoG0VC/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aZOpKlX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0A7C4CEE3;
-	Tue, 15 Jul 2025 13:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwoG0VC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F75C4CEE3;
+	Tue, 15 Jul 2025 13:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586589;
-	bh=1XLaTBSZZgHPe2uhaoBGsweHHQMr9asMCTADyBeGoAM=;
+	s=korg; t=1752586591;
+	bh=V0oE5t0O/P5yvLIwTKJPfrYDJisbQ4JVEpQOcoP3dyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2aZOpKlXAZpYlMgJ++w2Byd75ZdWsp2IoRblAG0BOz+JVGuJzFuGquYQ/Z43/HHTz
-	 C2LyJQrK284cCIu68590BVMidAGanFRYdxxb35Fjcri+yhBp3ytvc6ZkIa4faesdll
-	 IW2EinVrbqpbgWzMxF3aPY2mVgvxsTynrwJ8RJso=
+	b=kwoG0VC/SV1yKWml+23tgiQ94gCYWRMMdxFVaClkqLYgBm9jNRAS/VvixlL6xja37
+	 /EEmu9kdd5PicfZtmE+PR1zYYUl29Y2PRq3bapsjuytHMfndtRDTuixzWm1y6xXfUZ
+	 nF6HIVfnKB7A5sP9+MU7UQSf9Orum4dZgnL4Krks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kuen-Han Tsai <khtsai@google.com>,
-	Prashanth K <prashanth.k@oss.qualcomm.com>
-Subject: [PATCH 5.4 122/148] usb: gadget: u_serial: Fix race condition in TTY wakeup
-Date: Tue, 15 Jul 2025 15:14:04 +0200
-Message-ID: <20250715130805.184504920@linuxfoundation.org>
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.4 123/148] Revert "ACPI: battery: negate current when discharging"
+Date: Tue, 15 Jul 2025 15:14:05 +0200
+Message-ID: <20250715130805.224395958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -51,59 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit c529c3730bd09115684644e26bf01ecbd7e2c2c9 upstream.
+commit de1675de39aa945bad5937d1fde4df3682670639 upstream.
 
-A race condition occurs when gs_start_io() calls either gs_start_rx() or
-gs_start_tx(), as those functions briefly drop the port_lock for
-usb_ep_queue(). This allows gs_close() and gserial_disconnect() to clear
-port.tty and port_usb, respectively.
+Revert commit 234f71555019 ("ACPI: battery: negate current when
+discharging") breaks not one but several userspace implementations
+of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
+but those are the two that have been tested.
 
-Use the null-safe TTY Port helper function to wake up TTY.
-
-Example
-  CPU1:			      CPU2:
-  gserial_connect() // lock
-  			      gs_close() // await lock
-  gs_start_rx()     // unlock
-  usb_ep_queue()
-  			      gs_close() // lock, reset port.tty and unlock
-  gs_start_rx()     // lock
-  tty_wakeup()      // NPE
-
-Fixes: 35f95fd7f234 ("TTY: usb/u_serial, use tty from tty_port")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Reviewed-by: Prashanth K <prashanth.k@oss.qualcomm.com>
-Link: https://lore.kernel.org/linux-usb/20240116141801.396398-1-khtsai@google.com/
-Link: https://lore.kernel.org/r/20250617050844.1848232-2-khtsai@google.com
+Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/battery.c |   19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -286,8 +286,8 @@ __acquires(&port->port_lock)
- 			break;
- 	}
- 
--	if (do_tty_wake && port->port.tty)
--		tty_wakeup(port->port.tty);
-+	if (do_tty_wake)
-+		tty_port_tty_wakeup(&port->port);
- 	return status;
- }
- 
-@@ -564,7 +564,7 @@ static int gs_start_io(struct gs_port *p
- 		gs_start_tx(port);
- 		/* Unblock any pending writes into our circular buffer, in case
- 		 * we didn't in gs_start_tx() */
--		tty_wakeup(port->port.tty);
-+		tty_port_tty_wakeup(&port->port);
- 	} else {
- 		/* Free reqs only if we are still connected */
- 		if (port->port_usb) {
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -266,23 +266,10 @@ static int acpi_battery_get_property(str
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
+ 			ret = -ENODEV;
+-			break;
+-		}
+-
+-		val->intval = battery->rate_now * 1000;
+-		/*
+-		 * When discharging, the current should be reported as a
+-		 * negative number as per the power supply class interface
+-		 * definition.
+-		 */
+-		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
+-		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
+-		    acpi_battery_handle_discharging(battery)
+-				== POWER_SUPPLY_STATUS_DISCHARGING)
+-			val->intval = -val->intval;
+-
++		else
++			val->intval = battery->rate_now * 1000;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 
 
