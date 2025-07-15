@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ABA2E3AE2;
-	Tue, 15 Jul 2025 13:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E172E5B06;
+	Tue, 15 Jul 2025 13:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586250; cv=none; b=i4AiyqLeq1d2XFswtgvx8YKzLcluArHm/zfFCw4vDj2ksdNaDsVlyHWZM5j7/Q2liwSnIq2nEGOzhlMnNuPYscPkSMBAIDMIvQ3W/N41sPmDWuPbanIbYqjVgHrEjKpf6WLVocYxMUYrUMkuvHHxavWyx/+d10nyyd8C53V5qHo=
+	t=1752586253; cv=none; b=gDQ52OTQESpHGHII053mpSkmbQgq4p9JNS++vv0UnpPs5rvgBe8kaRt9Bu0KdypPqcIFjJRMaEB39J+LW3DY8DTVyMCaulhWYzKjr8pF0k/O34P4ZwQzRlOPKdL/WUrRxSlzDCht66p3qxi+UMa0RTfpM72aEfwQYExcet4U72E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586250; c=relaxed/simple;
-	bh=efBhIwKPPjOGmGL+kT1nntAUbHmbRusXO3um3qSNySk=;
+	s=arc-20240116; t=1752586253; c=relaxed/simple;
+	bh=sSTDWX/gzuo9ErBsCsXnbRgDCXUQjzjjS5MOXmLAJQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sn7pvw9Ckh60mhDZyxl24F739vdh+jgqDTtJZuvvVJamlgIznCiJE/q1km16rlpOImVbUdBZeJshB30/FQhEoFQ8bbHUDrymosUMPeukroiwoFRTsnPDhkNCb3o2t7uv4Ekl/FcvRwAM4xw0MPlxLtoVhdrsvhpBJtxdlyJnZX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzrCspcg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKFsRzBXQn7eCsiLL2f8siRz9yg0PD9FvG4j8vI0dlzEgJPqLv1y539Keiu105/UfOhbo6sLPgDK03pZTc7mjK3nGJmHKWVKmk2ueG/iEyD8FpNZlx4O5q+8aUBGhQrPQI+oje/BmPXnZ6V5BGjXR8qhHK2NcmeOr9QPVA8/dXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzTSBqTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzrCspcg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB943C4CEE3;
-	Tue, 15 Jul 2025 13:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzTSBqTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764CAC4CEE3;
+	Tue, 15 Jul 2025 13:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586250;
-	bh=efBhIwKPPjOGmGL+kT1nntAUbHmbRusXO3um3qSNySk=;
+	s=korg; t=1752586252;
+	bh=sSTDWX/gzuo9ErBsCsXnbRgDCXUQjzjjS5MOXmLAJQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzrCspcgWzZmVErnoV20hU0wv5Otjijg2vsrfFnOufBsr29VdOFMRIFchRgk5rfm7
-	 hl2Ig4LEVT2oks8S3yQZu3hG7iHoot714117UggzkQT4C2wHd5X3gAUhNbByu/lnEk
-	 joJx8gyekFtOjEvz0mueBMWzUEpLY/oqXdN8pxTI=
+	b=ZzTSBqTpXnK61ZIw1clVAmoBVwYv8PAe7dV8fOTdq16IdDO8W6jUFDt1jWNQxnCd2
+	 OeJoN0jZdUzA6tQ1agZcmtNBjpLaW09lg7MGxPkoPRenTdCbqkj+Hp8NYp/ICx61uj
+	 2tP7kY5UYy1RGU0FCQAC+gqT0aa8L3lAp8Im1hBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
-	Shravya KN <shravya.k-n@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 65/77] bnxt_en: Fix DCB ETS validation
-Date: Tue, 15 Jul 2025 15:14:04 +0200
-Message-ID: <20250715130754.336288188@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Wang Hai <wanghai38@huawei.com>
+Subject: [PATCH 5.15 74/77] Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID
+Date: Tue, 15 Jul 2025 15:14:13 +0200
+Message-ID: <20250715130754.695992312@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -53,49 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shravya KN <shravya.k-n@broadcom.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit b74c2a2e9cc471e847abd87e50a2354c07e02040 ]
+commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 upstream.
 
-In bnxt_ets_validate(), the code incorrectly loops over all possible
-traffic classes to check and add the ETS settings.  Fix it to loop
-over the configured traffic classes only.
+After commit 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in
+translated mode") not only the getid command is skipped, but also
+the de-activating of the keyboard at the end of atkbd_probe(), potentially
+re-introducing the problem fixed by commit be2d7e4233a4 ("Input: atkbd -
+fix multi-byte scancode handling on reconnect").
 
-The unconfigured traffic classes will default to TSA_ETS with 0
-bandwidth.  Looping over these unconfigured traffic classes may
-cause the validation to fail and trigger this error message:
+Make sure multi-byte scancode handling on reconnect is still handled
+correctly by not skipping the atkbd_deactivate() call.
 
-"rejecting ETS config starving a TC\n"
-
-The .ieee_setets() will then fail.
-
-Fixes: 7df4ae9fe855 ("bnxt_en: Implement DCBNL to support host-based DCBX.")
-Reviewed-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250710213938.1959625-2-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240126160724.13278-3-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/keyboard/atkbd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
-index 228a5db7e1434..596513ffdfd9c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
-@@ -479,7 +479,9 @@ static int bnxt_ets_validate(struct bnxt *bp, struct ieee_ets *ets, u8 *tc)
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -817,7 +817,7 @@ static int atkbd_probe(struct atkbd *atk
  
- 		if ((ets->tc_tx_bw[i] || ets->tc_tsa[i]) && i > bp->max_tc)
- 			return -EINVAL;
-+	}
+ 	if (atkbd_skip_getid(atkbd)) {
+ 		atkbd->id = 0xab83;
+-		return 0;
++		goto deactivate_kbd;
+ 	}
  
-+	for (i = 0; i < max_tc; i++) {
- 		switch (ets->tc_tsa[i]) {
- 		case IEEE_8021QAZ_TSA_STRICT:
- 			break;
--- 
-2.39.5
-
+ /*
+@@ -854,6 +854,7 @@ static int atkbd_probe(struct atkbd *atk
+ 		return -1;
+ 	}
+ 
++deactivate_kbd:
+ /*
+  * Make sure nothing is coming from the keyboard and disturbs our
+  * internal state.
 
 
