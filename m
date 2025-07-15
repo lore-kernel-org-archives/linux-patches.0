@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421C02EA726;
-	Tue, 15 Jul 2025 13:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3B82EA726;
+	Tue, 15 Jul 2025 13:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587371; cv=none; b=GsL/kfip71327vLy1BWlLorSMHNu9x8qkFSyPc9ls2jDC+YxTV1h9x6V2Hvb4WLShh+QsqWs+BMs785eLsIkat76/5MU+RVfo84H/I+fj4HLUJdzHuNeRGvwaAyo0eA7SXuABXqn85/tcjKwE5Bk9QrUP1MfO33U5M1EUF9AZm8=
+	t=1752587374; cv=none; b=clUvxJKceygQ3V+OsnfK++1r7e9h0tAM8rkGodzfOifxLqhmhKYGMLAX7YcdbDsXiqqF4WfQgHGV85CkULkZOxOf6qnyas8Nf2HrAkZob6ph59+neDgeZS24Ww4/G/0BS1aaZT44Ub0uH4cy6g/qsMeVjhYmI/kkXlHF4bodSWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587371; c=relaxed/simple;
-	bh=mratpHpOT+qmnEBUC7VAhyZSZ5dR0e3fPWnTWBcamcI=;
+	s=arc-20240116; t=1752587374; c=relaxed/simple;
+	bh=95c7cSpsjnXN2POgL9tV4RpmkHta3PFi9J0CUG76W9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNulMCroxVoL81e4Ungoghn5NasiHUBUshB0iA1y/Asw7VtAhumImVrpZ/oLjsUQ9O8LaO9CepnQkZhTPvbpPWJx5FanNTkXojVNd7sR1cFSPVAUAKmpzs9WlXJMHAy7FLEP89ENAIWLMICS7S5u1G+yIYRveEpfNXwhdQyXwWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuqN9lNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UP5MnEz4kVEe+9cwmrIZUeifA0yTQRc2MNp/vzbDU+Ylg4GtrPIoI5HZiQyh/9Z6Fo/cH8ClRfBIXq1TI6S4vx5cHC/Ljxm2TFenXG9Oe/9G+pbb+3oLUXnvIsca2mCLbokbm0MBtoAzsd/UpSFJC9u16et4bT0CjdlmPykIh7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltTAGaKm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuqN9lNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CA6C4CEE3;
-	Tue, 15 Jul 2025 13:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltTAGaKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E94CC4CEE3;
+	Tue, 15 Jul 2025 13:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587371;
-	bh=mratpHpOT+qmnEBUC7VAhyZSZ5dR0e3fPWnTWBcamcI=;
+	s=korg; t=1752587373;
+	bh=95c7cSpsjnXN2POgL9tV4RpmkHta3PFi9J0CUG76W9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuqN9lNuA8mtYANqfufTFPU+CWywrkg7c8s0q05sQ8ekaNa286ZP1MhnpggJkCTvj
-	 Sr74F0s99bC2CGFLbjqtDjgpMd99KiNtNpJ6qmIr7mno+AVdj6u/jmRcxmwBN8UXq9
-	 +UPZ7JNE2VWmOhfcvnhGcC/3AcvgDrcXd6dNujMk=
+	b=ltTAGaKmKDQTAs0wWwNjFKKj4nqp4XHEhUNJViesGnV2dWJ2eJe0akVuOfOE3mqhX
+	 rOBZlTr+q3kiCW8JUBk9OInZ0l9d8Bx2Zqu/yCtsHY86c+uXYCHAkoIeT2LGoW3hqe
+	 tCmgU/xe5PgEkkBs4BBktfBUXurowNabTcRhatYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shivank Garg <shivankg@amd.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 44/88] fs: export anon_inode_make_secure_inode() and fix secretmem LSM bypass
-Date: Tue, 15 Jul 2025 15:14:20 +0200
-Message-ID: <20250715130756.300047477@linuxfoundation.org>
+Subject: [PATCH 6.1 45/88] btrfs: propagate last_unlink_trans earlier when doing a rmdir
+Date: Tue, 15 Jul 2025 15:14:21 +0200
+Message-ID: <20250715130756.343011415@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -53,129 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivank Garg <shivankg@amd.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit cbe4134ea4bc493239786220bd69cb8a13493190 ]
+[ Upstream commit c466e33e729a0ee017d10d919cba18f503853c60 ]
 
-Export anon_inode_make_secure_inode() to allow KVM guest_memfd to create
-anonymous inodes with proper security context. This replaces the current
-pattern of calling alloc_anon_inode() followed by
-inode_init_security_anon() for creating security context manually.
+In case the removed directory had a snapshot that was deleted, we are
+propagating its inode's last_unlink_trans to the parent directory after
+we removed the entry from the parent directory. This leaves a small race
+window where someone can log the parent directory after we removed the
+entry and before we updated last_unlink_trans, and as a result if we ever
+try to replay such a log tree, we will fail since we will attempt to
+remove a snapshot during log replay, which is currently not possible and
+results in the log replay (and mount) to fail. This is the type of failure
+described in commit 1ec9a1ae1e30 ("Btrfs: fix unreplayable log after
+snapshot delete + parent dir fsync").
 
-This change also fixes a security regression in secretmem where the
-S_PRIVATE flag was not cleared after alloc_anon_inode(), causing
-LSM/SELinux checks to be bypassed for secretmem file descriptors.
+So fix this by propagating the last_unlink_trans to the parent directory
+before we remove the entry from it.
 
-As guest_memfd currently resides in the KVM module, we need to export this
-symbol for use outside the core kernel. In the future, guest_memfd might be
-moved to core-mm, at which point the symbols no longer would have to be
-exported. When/if that happens is still unclear.
-
-Fixes: 2bfe15c52612 ("mm: create security context for memfd_secret inodes")
-Suggested-by: David Hildenbrand <david@redhat.com>
-Suggested-by: Mike Rapoport <rppt@kernel.org>
-Signed-off-by: Shivank Garg <shivankg@amd.com>
-Link: https://lore.kernel.org/20250620070328.803704-3-shivankg@amd.com
-Acked-by: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/anon_inodes.c   | 23 ++++++++++++++++++-----
- include/linux/fs.h |  2 ++
- mm/secretmem.c     | 11 +----------
- 3 files changed, 21 insertions(+), 15 deletions(-)
+ fs/btrfs/inode.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/fs/anon_inodes.c b/fs/anon_inodes.c
-index 24192a7667edf..7a9b1ce9c98a1 100644
---- a/fs/anon_inodes.c
-+++ b/fs/anon_inodes.c
-@@ -55,15 +55,26 @@ static struct file_system_type anon_inode_fs_type = {
- 	.kill_sb	= kill_anon_super,
- };
- 
--static struct inode *anon_inode_make_secure_inode(
--	const char *name,
--	const struct inode *context_inode)
-+/**
-+ * anon_inode_make_secure_inode - allocate an anonymous inode with security context
-+ * @sb:		[in]	Superblock to allocate from
-+ * @name:	[in]	Name of the class of the newfile (e.g., "secretmem")
-+ * @context_inode:
-+ *		[in]	Optional parent inode for security inheritance
-+ *
-+ * The function ensures proper security initialization through the LSM hook
-+ * security_inode_init_security_anon().
-+ *
-+ * Return:	Pointer to new inode on success, ERR_PTR on failure.
-+ */
-+struct inode *anon_inode_make_secure_inode(struct super_block *sb, const char *name,
-+					   const struct inode *context_inode)
- {
- 	struct inode *inode;
- 	const struct qstr qname = QSTR_INIT(name, strlen(name));
- 	int error;
- 
--	inode = alloc_anon_inode(anon_inode_mnt->mnt_sb);
-+	inode = alloc_anon_inode(sb);
- 	if (IS_ERR(inode))
- 		return inode;
- 	inode->i_flags &= ~S_PRIVATE;
-@@ -74,6 +85,7 @@ static struct inode *anon_inode_make_secure_inode(
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 5ecc2f3dc3a99..469a622b440b6 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4881,6 +4881,23 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 		goto out_notrans;
  	}
- 	return inode;
- }
-+EXPORT_SYMBOL_GPL(anon_inode_make_secure_inode);
  
- static struct file *__anon_inode_getfile(const char *name,
- 					 const struct file_operations *fops,
-@@ -88,7 +100,8 @@ static struct file *__anon_inode_getfile(const char *name,
- 		return ERR_PTR(-ENOENT);
- 
- 	if (secure) {
--		inode =	anon_inode_make_secure_inode(name, context_inode);
-+		inode =	anon_inode_make_secure_inode(anon_inode_mnt->mnt_sb,
-+						     name, context_inode);
- 		if (IS_ERR(inode)) {
- 			file = ERR_CAST(inode);
- 			goto err;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 08fba309ddc78..1a619b681bccb 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3469,6 +3469,8 @@ extern int simple_write_begin(struct file *file, struct address_space *mapping,
- extern const struct address_space_operations ram_aops;
- extern int always_delete_dentry(const struct dentry *);
- extern struct inode *alloc_anon_inode(struct super_block *);
-+struct inode *anon_inode_make_secure_inode(struct super_block *sb, const char *name,
-+					   const struct inode *context_inode);
- extern int simple_nosetlease(struct file *, long, struct file_lock **, void **);
- extern const struct dentry_operations simple_dentry_operations;
- 
-diff --git a/mm/secretmem.c b/mm/secretmem.c
-index c6006d765bbd2..18954eae995fc 100644
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -193,19 +193,10 @@ static struct file *secretmem_file_create(unsigned long flags)
- 	struct file *file = ERR_PTR(-ENOMEM);
- 	struct inode *inode;
- 	const char *anon_name = "[secretmem]";
--	const struct qstr qname = QSTR_INIT(anon_name, strlen(anon_name));
--	int err;
- 
--	inode = alloc_anon_inode(secretmem_mnt->mnt_sb);
-+	inode = anon_inode_make_secure_inode(secretmem_mnt->mnt_sb, anon_name, NULL);
- 	if (IS_ERR(inode))
- 		return ERR_CAST(inode);
--
--	err = security_inode_init_security_anon(inode, &qname, NULL);
--	if (err) {
--		file = ERR_PTR(err);
--		goto err_free_inode;
--	}
--
- 	file = alloc_file_pseudo(inode, secretmem_mnt, "secretmem",
- 				 O_RDWR, &secretmem_fops);
- 	if (IS_ERR(file))
++	/*
++	 * Propagate the last_unlink_trans value of the deleted dir to its
++	 * parent directory. This is to prevent an unrecoverable log tree in the
++	 * case we do something like this:
++	 * 1) create dir foo
++	 * 2) create snapshot under dir foo
++	 * 3) delete the snapshot
++	 * 4) rmdir foo
++	 * 5) mkdir foo
++	 * 6) fsync foo or some file inside foo
++	 *
++	 * This is because we can't unlink other roots when replaying the dir
++	 * deletes for directory foo.
++	 */
++	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
++		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
++
+ 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
+ 		err = btrfs_unlink_subvol(trans, dir, dentry);
+ 		goto out;
+@@ -4895,17 +4912,6 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 				 &fname.disk_name);
+ 	if (!err) {
+ 		btrfs_i_size_write(BTRFS_I(inode), 0);
+-		/*
+-		 * Propagate the last_unlink_trans value of the deleted dir to
+-		 * its parent directory. This is to prevent an unrecoverable
+-		 * log tree in the case we do something like this:
+-		 * 1) create dir foo
+-		 * 2) create snapshot under dir foo
+-		 * 3) delete the snapshot
+-		 * 4) rmdir foo
+-		 * 5) mkdir foo
+-		 * 6) fsync foo or some file inside foo
+-		 */
+ 		if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
+ 			btrfs_record_snapshot_destroy(trans, BTRFS_I(dir));
+ 	}
 -- 
 2.39.5
 
