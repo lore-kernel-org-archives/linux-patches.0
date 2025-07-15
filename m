@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7752EA728;
-	Tue, 15 Jul 2025 13:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154CA8462;
+	Tue, 15 Jul 2025 13:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587363; cv=none; b=Xj8s9PfRVos9I0uYvOuO78JZzHNu843/TRLbMMpv6sRvtXGMTX3BxXXHPqyzQOvZzCwv7mqpIExTU+S9yZSGERZd5S2fnE0387QFBh1Ae3tY1f8Z9FzcIzuAPc8BIQPo0o53u6Ra3IO9dSI/3OGV1jB+IhCVxWgt6n1iWlMEs/E=
+	t=1752587366; cv=none; b=b1JMSp34ZJEqB2r74j19PdNTUD2vzrZxSut08HiuhfI0+M5Ohho1VrlvWIEVw5vwCdBhbie7FZQH0yw4m2ceqJ8OM5Vib48mJ4fvQNOr1v++SOB2hIXxTfRJpJmyKnVXVzW+ttpc1lwJcjg/A/QQdW79aehMwmP043baFgUMp7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587363; c=relaxed/simple;
-	bh=m/ZPPuDq7BrhmqGrqmcjy+cZyx0ZBXF/SuIIdQjVcyE=;
+	s=arc-20240116; t=1752587366; c=relaxed/simple;
+	bh=MV8Ka6TOa/xGpEKuuldkyI2cPbjqrs/mHQw29cbgpg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cciHWMC8yzU4cHRbj42n9IieXe/5gCdVEBNMnGQbMwhu1GBGYigQVygQTIqc8qwr75j/xRaWMRLB3ddP0sVs+zO81siplkb5zN1fnHwMAv1kgjbgUGcFY6OdR8UdNx9uNNdUZ94Cxbm2sEqKI0N25um6dFdSgNepcLZ5qRnB9ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHOqTdxj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iTwwFpc9Rd8r1kA0qSuzIyszpRwSgZxEZvlopOs9JtGybMA1BXk7a5s36eTNpSd7M6cigMPkAIJhwKEhoZ/O2i2drNNLqj+hMdB2OzJdZZdwtfjHNOtXo0tey+8JFenijUJ4lHVPMr1+qudBijcAxcX66qVfc1BPjcJ+zeLUNwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUWFSVDf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHOqTdxj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12956C4CEE3;
-	Tue, 15 Jul 2025 13:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUWFSVDf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA5DC4CEE3;
+	Tue, 15 Jul 2025 13:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587363;
-	bh=m/ZPPuDq7BrhmqGrqmcjy+cZyx0ZBXF/SuIIdQjVcyE=;
+	s=korg; t=1752587366;
+	bh=MV8Ka6TOa/xGpEKuuldkyI2cPbjqrs/mHQw29cbgpg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yHOqTdxjCvOS513g9QO6/zGbBs3PsM1OVtrjvWUOG/RnQlGNGEHl3QZswip1+y5Kh
-	 CC4DU7IlB3lCrQoJQEHiuKwCFRMfmLnRgb3afw78CRJefp5WnKCTuKaqMObCnK9t/j
-	 6Q/odS4J6E7frTBRCIBTE9UEynSHBi2TZodpbKH8=
+	b=mUWFSVDfF4bTgoIoDcgoLt/hzorzeGA/iKyl5tY0/LgCy16oEVLktk+i9DZGffdad
+	 zXN//nauQ19Rx/5ldCgN1T/SKiR3ogZfBvnAS6706AJeCLW3bjd9NwJGNKigZenlRg
+	 KO3HCRKkBLQIKnTSRD6vYK6nvViO5SYFKH5f7ugY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 41/88] ksmbd: fix a mount write count leak in ksmbd_vfs_kern_path_locked()
-Date: Tue, 15 Jul 2025 15:14:17 +0200
-Message-ID: <20250715130756.174593383@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 42/88] netlink: Fix rmem check in netlink_broadcast_deliver().
+Date: Tue, 15 Jul 2025 15:14:18 +0200
+Message-ID: <20250715130756.216506136@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,34 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 277627b431a0a6401635c416a21b2a0f77a77347 upstream.
+commit a3c4a125ec725cefb40047eb05ff9eafd57830b4 upstream.
 
-If the call of ksmbd_vfs_lock_parent() fails, we drop the parent_path
-references and return an error.  We need to drop the write access we
-just got on parent_path->mnt before we drop the mount reference - callers
-assume that ksmbd_vfs_kern_path_locked() returns with mount write
-access grabbed if and only if it has returned 0.
+We need to allow queuing at least one skb even when skb is
+larger than sk->sk_rcvbuf.
 
-Fixes: 864fb5d37163 ("ksmbd: fix possible deadlock in smb2_open")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+The cited commit made a mistake while converting a condition
+in netlink_broadcast_deliver().
+
+Let's correct the rmem check for the allow-one-skb rule.
+
+Fixes: ae8f160e7eb24 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711053208.2965945-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netlink/af_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1283,6 +1283,7 @@ out1:
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1393,7 +1393,7 @@ static int netlink_broadcast_deliver(str
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+ 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
  
- 		err = ksmbd_vfs_lock_parent(parent_path->dentry, path->dentry);
- 		if (err) {
-+			mnt_drop_write(parent_path->mnt);
- 			path_put(path);
- 			path_put(parent_path);
- 		}
+-	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
++	if ((rmem == skb->truesize || rmem <= rcvbuf) &&
+ 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
+ 		netlink_skb_set_owner_r(skb, sk);
+ 		__netlink_sendskb(sk, skb);
 
 
