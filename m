@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E262E1734;
-	Tue, 15 Jul 2025 13:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBB12E1734;
+	Tue, 15 Jul 2025 13:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585667; cv=none; b=OR3dE0DKkB6oHrsMPGHhbrKppgnLk4CKETjBE9yET4iCBEz6S6hYLxiyx6RSKTiThrV19Uej/LlOlXucHmyZfgX0rgkC7ERZ6TNnF8+HyzV8jLrR0UKphkdqdN9VBpWsA+fGBAxBk/tFvQwQncTp1GJreTqgwXzwJ4lBldsAuaE=
+	t=1752585670; cv=none; b=HhCcZ/4Dit8HTqOrA/ZGKpYXpVNbTPs3g6O+SU2mW7yuZAHt/qrKefUunF/cyT0iXLEmGQ6cpHoIGasIPYpTsfM/k7+TK99Sd11I9aHfswDmy93jCaSXwTn/xIAJrwJyeHNT6t8+IfI6MlsqBUuJ1YmYLETGgCkRFZrU3LH/2SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585667; c=relaxed/simple;
-	bh=/J20ZSQZpsQySrOeeiZM4FT2/yytU/IiMq1dR7odv/4=;
+	s=arc-20240116; t=1752585670; c=relaxed/simple;
+	bh=HXgEyhAIhgPsEP2QcrA4sZwOAS+xVIUJiVrD9Yp1nGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pw+t9mdG5C9Mdc5CLJVqVKTWi7Qynp29z3Ifm/fzg9HPz9a1H0h0lvt2jpr89C0oaUDAiZz4DLprUodrwkj9+KWumeiP1N8FyE2EOOdBaCy6vmrfnvCBuA8kbBzJdNsAMJ83N8hDpd4jtim+lEcPM+7/xCpLFkrW+Vo8huMTfUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+7N0LAP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S90THC1LqF6KAylAqZQwM5yYLSAMbKLNgA2nmeDFQ34Hx6hOqWRQ/GkvZHMjdX/FtsskxHfReIBjZc+zCaawsaVeW1ogmTwYSVyW7LmUoZi/KBW+SKveNbKaJWCaQ2NWFQ13ldVcr352HG6xUOBBh0280ztuaYiLDBS6J/n6N1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEOycXdT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+7N0LAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13826C4CEF1;
-	Tue, 15 Jul 2025 13:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEOycXdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C12C4CEE3;
+	Tue, 15 Jul 2025 13:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585667;
-	bh=/J20ZSQZpsQySrOeeiZM4FT2/yytU/IiMq1dR7odv/4=;
+	s=korg; t=1752585670;
+	bh=HXgEyhAIhgPsEP2QcrA4sZwOAS+xVIUJiVrD9Yp1nGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+7N0LAPlTj6BUX2mrVYVHYSmPCEhxIwD5sGnS1mUvF48OA6mf3QO+Vm8LQ83TCQK
-	 MpHBQNgq8ufrLvf0NGlQrjp5s5Rb2kEJb8UZX4MQAhWCdI9pEr+78hoR4tu8OC8ww1
-	 /Y5uu6ZUGJrMtLycKNfHqT46kF2RYAUuFtbptqfQ=
+	b=NEOycXdTGIwiu1/OxyDjby+ZcNEnbGxW2WP0NMU9imtubJ2a4LQqrlv7XXOmtf4iX
+	 zjBVo+ACqpfTAu4i577xysbnFP01kA+i+ImQfQPlm5bFLVxDLClOZ73HH/VOCbP6tH
+	 5PNoqLQDEghlMm7cDYqNt4S/2u/vGFb1NxrORS3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 127/163] net: phy: microchip: Use genphy_soft_reset() to purge stale LPA bits
-Date: Tue, 15 Jul 2025 15:13:15 +0200
-Message-ID: <20250715130813.939372537@linuxfoundation.org>
+Subject: [PATCH 6.12 128/163] net: phy: microchip: limit 100M workaround to link-down events on LAN88xx
+Date: Tue, 15 Jul 2025 15:13:16 +0200
+Message-ID: <20250715130813.978554260@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -54,43 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit b4517c363e0e005c7f81ae3be199eec68e87f122 ]
+[ Upstream commit dd4360c0e8504f2f7639c7f5d07c93cfd6a98333 ]
 
-Enable .soft_reset for the LAN88xx PHY driver by assigning
-genphy_soft_reset() to ensure that the phylib core performs a proper
-soft reset during reconfiguration.
+Restrict the 100Mbit forced-mode workaround to link-down transitions
+only, to prevent repeated link reset cycles in certain configurations.
 
-Previously, the driver left .soft_reset unimplemented, so calls to
-phy_init_hw() (e.g., from lan88xx_link_change_notify()) did not fully
-reset the PHY. As a result, stale contents in the Link Partner Ability
-(LPA) register could persist, causing the PHY to incorrectly report
-that the link partner advertised autonegotiation even when it did not.
+The workaround was originally introduced to improve signal reliability
+when switching cables between long and short distances. It temporarily
+forces the PHY into 10 Mbps before returning to 100 Mbps.
 
-Using genphy_soft_reset() guarantees a clean reset of the PHY and
-corrects the false autoneg reporting in these scenarios.
+However, when used with autonegotiating link partners (e.g., Intel i350),
+executing this workaround on every link change can confuse the partner
+and cause constant renegotiation loops. This results in repeated link
+down/up transitions and the PHY never reaching a stable state.
 
-Fixes: ccb989e4d1ef ("net: phy: microchip: Reset LAN88xx PHY to ensure clean link state on LAN7800/7850")
+Limit the workaround to only run during the PHY_NOLINK state. This ensures
+it is triggered only once per link drop, avoiding disruptive toggling
+while still preserving its intended effect.
+
+Note: I am not able to reproduce the original issue that this workaround
+addresses. I can only confirm that 100 Mbit mode works correctly in my
+test setup. Based on code inspection, I assume the workaround aims to
+reset some internal state machine or signal block by toggling speeds.
+However, a PHY reset is already performed earlier in the function via
+phy_init_hw(), which may achieve a similar effect. Without a reproducer,
+I conservatively keep the workaround but restrict its conditions.
+
+Fixes: e57cf3639c32 ("net: lan78xx: fix accessing the LAN7800's internal phy specific registers from the MAC driver")
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250709130753.3994461-2-o.rempel@pengutronix.de
+Link: https://patch.msgid.link/20250709130753.3994461-3-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/microchip.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/phy/microchip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
-index e3a5961dced9b..c9b6ede7ac6ac 100644
+index c9b6ede7ac6ac..ffca1cec4ec99 100644
 --- a/drivers/net/phy/microchip.c
 +++ b/drivers/net/phy/microchip.c
-@@ -486,6 +486,7 @@ static struct phy_driver microchip_phy_driver[] = {
- 	.config_init	= lan88xx_config_init,
- 	.config_aneg	= lan88xx_config_aneg,
- 	.link_change_notify = lan88xx_link_change_notify,
-+	.soft_reset	= genphy_soft_reset,
- 
- 	/* Interrupt handling is broken, do not define related
- 	 * functions to force polling.
+@@ -332,7 +332,7 @@ static void lan88xx_link_change_notify(struct phy_device *phydev)
+ 	 * As workaround, set to 10 before setting to 100
+ 	 * at forced 100 F/H mode.
+ 	 */
+-	if (!phydev->autoneg && phydev->speed == 100) {
++	if (phydev->state == PHY_NOLINK && !phydev->autoneg && phydev->speed == 100) {
+ 		/* disable phy interrupt */
+ 		temp = phy_read(phydev, LAN88XX_INT_MASK);
+ 		temp &= ~LAN88XX_INT_MASK_MDINTPIN_EN_;
 -- 
 2.39.5
 
