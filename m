@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C292E62D8;
-	Tue, 15 Jul 2025 13:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81612DEA72;
+	Tue, 15 Jul 2025 13:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587013; cv=none; b=L/uRtbo8hWy1syaeFil4QA7qSXJJml0CS26g6QGOIxRRu5FE0uD54ZAp1Uz6hna32j4J/A0owtLhaF7seKzy+WJ7TmX6M2R4KEyulN+M6dPwaBgr7Ha/CpqdGJxNf43GVhEIA2WcK6heBrmwnH3sw5PkQQlaAgSGJtnosgLNooo=
+	t=1752587015; cv=none; b=hAir7rZA5Wa/C3cwyykxaN0U82zuvLLu6ad98xzO0J8slBMBR2V1dW42dQX9jQfByBXg7zPAnNcHoiwl7mC9pl95CzActJkG8JpAs2T06IKqM+AiGi+0gRAVKpEs/nQ2uWy0ZN72NcPD6iGZF9rb1eOEEW6ZxnMFkx1PTOr/5cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587013; c=relaxed/simple;
-	bh=2gXvh7B3Eire2lSTEmL3iRyvSpxZsGN8fTuDCPav+1k=;
+	s=arc-20240116; t=1752587015; c=relaxed/simple;
+	bh=j/r4JdAr0wOqxqZWrBIA2yN/iGXFKL1YQr35TxPNbDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShBm2MB+hSQO7eAj8Tt4AVOmME8h4WEJqP3cryXIXz/pcVx0utwtPOn4mT8NfjubH+eenKlDXIMRRVApt4l/8k2t9yKiRt42uJHOu/EkTazxwpo25PnJh6Hpiz971cTmqMay61zzabJqaQfOYUQWNbyAK3++uheH2eTrgWwvMgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFbPrTv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrmYVYGSuti9ZXWTgeeH2opBjSmu+LSL1Fc9Sd2sanPVa5VZW67UU3/NsFclvxNpw7P1mk2zxSE68hPjrrPLdIdPZQu9dLM1Q33om3NVaUlvkU8vl3PMLgNcsSzvONEmtWOuK/9a6eadJCYEhV7iK/wEoFW2hPUiiI2pUHn3cPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PsQRBUl4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFbPrTv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA92C4CEE3;
-	Tue, 15 Jul 2025 13:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsQRBUl4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5E5C4CEE3;
+	Tue, 15 Jul 2025 13:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587013;
-	bh=2gXvh7B3Eire2lSTEmL3iRyvSpxZsGN8fTuDCPav+1k=;
+	s=korg; t=1752587015;
+	bh=j/r4JdAr0wOqxqZWrBIA2yN/iGXFKL1YQr35TxPNbDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cFbPrTv2lULGosZx75N3zIcyrhlCjE1Luq3t1iUGmxsRCUGDB1wqsuWyJ2Sk7G7e8
-	 bdxvCUL+hakzSXQiUPgZS7y/zePa5RIstX22Pf9MtHg448HWASZ54uDwW0FSAfxLwf
-	 6TQEwajxqxH1Q3/hK9OrKYHYTCdjeDzauSOoayPo=
+	b=PsQRBUl4ZsFLtVCKCpq2ZRRseG7Du2VfkHVGVoVE6z0NLQREozLI5a3Gqdedf3EEZ
+	 /8Dm5fsSK8dnSanIqIKT4TiSe/q+o5c91GTi3vok0E6ALzP7SDPRqsZXuhgjM0mjTh
+	 +LRDD2GpOTHtYc3EK352Sr/VAjz0xqNKth8m/eaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael-CY Lee <michael-cy.lee@mediatek.com>,
+	syzbot+ededba317ddeca8b3f08@syzkaller.appspotmail.com,
+	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 134/192] wifi: mac80211: fix non-transmitted BSSID profile search
-Date: Tue, 15 Jul 2025 15:13:49 +0200
-Message-ID: <20250715130820.277444787@linuxfoundation.org>
+Subject: [PATCH 6.15 135/192] wifi: mac80211: reject VHT opmode for unsupported channel widths
+Date: Tue, 15 Jul 2025 15:13:50 +0200
+Message-ID: <20250715130820.321473588@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,54 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
 
-[ Upstream commit e1e6ebf490e55fee1ae573aa443c1d4aea5e4a40 ]
+[ Upstream commit 58fcb1b4287ce38850402bb2bb16d09bf77b91d9 ]
 
-When the non-transmitted BSSID profile is found, immediately return
-from the search to not return the wrong profile_len when the profile
-is found in a multiple BSSID element that isn't the last one in the
-frame.
+VHT operating mode notifications are not defined for channel widths
+below 20 MHz. In particular, 5 MHz and 10 MHz are not valid under the
+VHT specification and must be rejected.
 
-Fixes: 5023b14cf4df ("mac80211: support profile split between elements")
-Reported-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
-Link: https://patch.msgid.link/20250630154501.f26cd45a0ecd.I28e0525d06e8a99e555707301bca29265cf20dc8@changeid
+Without this check, malformed notifications using these widths may
+reach ieee80211_chan_width_to_rx_bw(), leading to a WARN_ON due to
+invalid input. This issue was reported by syzbot.
+
+Reject these unsupported widths early in sta_link_apply_parameters()
+when opmode_notif is used. The accepted set includes 20, 40, 80, 160,
+and 80+80 MHz, which are valid for VHT. While 320 MHz is not defined
+for VHT, it is allowed to avoid rejecting HE or EHT clients that may
+still send a VHT opmode notification.
+
+Reported-by: syzbot+ededba317ddeca8b3f08@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ededba317ddeca8b3f08
+Fixes: 751e7489c1d7 ("wifi: mac80211: expose ieee80211_chan_width_to_rx_bw() to drivers")
+Tested-by: syzbot+ededba317ddeca8b3f08@syzkaller.appspotmail.com
+Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+Link: https://patch.msgid.link/20250703193756.46622-2-moonhee.lee.ca@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/parse.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/mac80211/cfg.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/mac80211/parse.c b/net/mac80211/parse.c
-index 6da39c864f45b..922ea9a6e2412 100644
---- a/net/mac80211/parse.c
-+++ b/net/mac80211/parse.c
-@@ -758,7 +758,6 @@ static size_t ieee802_11_find_bssid_profile(const u8 *start, size_t len,
- {
- 	const struct element *elem, *sub;
- 	size_t profile_len = 0;
--	bool found = false;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index acfde525fad2f..4a8d9c3ea480f 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1942,6 +1942,20 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 	ieee80211_sta_init_nss(link_sta);
  
- 	if (!bss || !bss->transmitted_bss)
- 		return profile_len;
-@@ -809,15 +808,14 @@ static size_t ieee802_11_find_bssid_profile(const u8 *start, size_t len,
- 					       index[2],
- 					       new_bssid);
- 			if (ether_addr_equal(new_bssid, bss->bssid)) {
--				found = true;
- 				elems->bssid_index_len = index[1];
- 				elems->bssid_index = (void *)&index[2];
--				break;
-+				return profile_len;
- 			}
- 		}
- 	}
- 
--	return found ? profile_len : 0;
-+	return 0;
- }
- 
- static void
+ 	if (params->opmode_notif_used) {
++		enum nl80211_chan_width width = link->conf->chanreq.oper.width;
++
++		switch (width) {
++		case NL80211_CHAN_WIDTH_20:
++		case NL80211_CHAN_WIDTH_40:
++		case NL80211_CHAN_WIDTH_80:
++		case NL80211_CHAN_WIDTH_160:
++		case NL80211_CHAN_WIDTH_80P80:
++		case NL80211_CHAN_WIDTH_320: /* not VHT, allowed for HE/EHT */
++			break;
++		default:
++			return -EINVAL;
++		}
++
+ 		/* returned value is only needed for rc update, but the
+ 		 * rc isn't initialized here yet, so ignore it
+ 		 */
 -- 
 2.39.5
 
