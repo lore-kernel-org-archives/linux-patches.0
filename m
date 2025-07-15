@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC9D2701B8;
-	Tue, 15 Jul 2025 13:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B6B2E62DF;
+	Tue, 15 Jul 2025 13:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587421; cv=none; b=EA5lqplOEE7Wuvjl7Zzecl0yeyzP8XxySA/vvsKyLd/ZgiA7kZK/6KqVl3/NJgPeUtX229hhFlJjv9ebn/QcwX5FZb2+bPgmyYHTIQHsnWKhPA9FuJZQL9hOfKvKEk7JDJpW1cZ3SS2OWzQ6uezGGtHyvorC20CtnwSp44mFjlE=
+	t=1752587424; cv=none; b=sHDvcdBJlELa1j7mqVPqBMwb9ZYbUzzlUFlYqdbvxXRqhpigi6xeEKT3HRDt5BuBDUeZasrJPQOxRCWBBXJ8Js7SgHNR9c0WyhVo8iMxvczzvq/RxsYNvGV6XfrDe3Z1uqDyazhMq0i7Y507q5KsSFPsd2Ap/gvhOCDgX2SLQY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587421; c=relaxed/simple;
-	bh=Y8yzXLJvgf0e0NYtIBx7VaTFuHakJq4Pdu2NXgIfCTo=;
+	s=arc-20240116; t=1752587424; c=relaxed/simple;
+	bh=2DZwETiYajWXLaMo6AQd5mZNmcoJceQKJyurWAFENgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WS8Rwn0YkLG6AQwxDl34bBC+tpjEUh0weeGhJpauaVOQ3oXApyn2vRDuuj7utt7esZFhEZ9bFOHUzXJ3epea36KwxY3iBKGbUi73y9HYXnuHAmnlwnwBkpyq75SNXywsqHOYnK0iAS2/fAkRB31vt/xlEDe3wD+4PgwBX3Q5aYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eX6caqKu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvLIxLqftSDdvi0RTqn88psFH/j9DAA0lveHOEanPXsOiC5wAA5SYc54+R7M9P376u4QQlNferJKlYflM3T7tYNxwMH+rZCYG/QhwW9EtQwOgO8zPCklCYso10jOTZbw4i5wQ7dbTTfoA/HfMopa7FqLh2y32tGSksKKYOqNYHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XuORSONk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eX6caqKu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5ECCC4CEF8;
-	Tue, 15 Jul 2025 13:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuORSONk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F67CC4CEF1;
+	Tue, 15 Jul 2025 13:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587421;
-	bh=Y8yzXLJvgf0e0NYtIBx7VaTFuHakJq4Pdu2NXgIfCTo=;
+	s=korg; t=1752587423;
+	bh=2DZwETiYajWXLaMo6AQd5mZNmcoJceQKJyurWAFENgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eX6caqKulMoJIv67gHaiwV+Vkwe4FTKqWTwihYvDCi2en0bV3mAY5NRv5atazeugm
-	 w+tXp6r6OmdwmXACP5pg2nFM6cdyErK0BlLFZ1JOdSBdTZV13t2o5QwdMwiiV2CR5H
-	 /JzQUmQwhPx3PlqJ5m+GGnEUm9ovoCLfQzJDlSwo=
+	b=XuORSONkW3pODIgWjbQfFtO4nlShjY9NJIEqfnvu81IKzxmFzpWJhQZHazb3G4e8V
+	 9Y9kcSIPSfqWeirOD5KNtlV3o9GgGHP/06IavxrJpvKmhst8/QOgouJ8FtvwBew87O
+	 KF/DObYP5pCzED1rcQ94x7l/j+dMV3v7/wjtS9W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Inoue <niyarium@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+36fae25c35159a763a2a@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 78/88] HID: lenovo: Add support for ThinkPad X1 Tablet Thin Keyboard Gen2
-Date: Tue, 15 Jul 2025 15:14:54 +0200
-Message-ID: <20250715130757.704858144@linuxfoundation.org>
+Subject: [PATCH 6.1 79/88] btrfs: fix assertion when building free space tree
+Date: Tue, 15 Jul 2025 15:14:55 +0200
+Message-ID: <20250715130757.744429933@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,118 +53,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akira Inoue <niyarium@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit a8905238c3bbe13db90065ed74682418f23830c3 ]
+[ Upstream commit 1961d20f6fa8903266ed9bd77c691924c22c8f02 ]
 
-Add "Thinkpad X1 Tablet Gen 2 Keyboard" PID to hid-lenovo driver to fix trackpoint not working issue.
+When building the free space tree with the block group tree feature
+enabled, we can hit an assertion failure like this:
 
-Signed-off-by: Akira Inoue <niyarium@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+  BTRFS info (device loop0 state M): rebuilding free space tree
+  assertion failed: ret == 0, in fs/btrfs/free-space-tree.c:1102
+  ------------[ cut here ]------------
+  kernel BUG at fs/btrfs/free-space-tree.c:1102!
+  Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 6592 Comm: syz-executor322 Not tainted 6.15.0-rc7-syzkaller-gd7fa1af5b33e #0 PREEMPT
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102
+  lr : populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102
+  sp : ffff8000a4ce7600
+  x29: ffff8000a4ce76e0 x28: ffff0000c9bc6000 x27: ffff0000ddfff3d8
+  x26: ffff0000ddfff378 x25: dfff800000000000 x24: 0000000000000001
+  x23: ffff8000a4ce7660 x22: ffff70001499cecc x21: ffff0000e1d8c160
+  x20: ffff0000e1cb7800 x19: ffff0000e1d8c0b0 x18: 00000000ffffffff
+  x17: ffff800092f39000 x16: ffff80008ad27e48 x15: ffff700011e740c0
+  x14: 1ffff00011e740c0 x13: 0000000000000004 x12: ffffffffffffffff
+  x11: ffff700011e740c0 x10: 0000000000ff0100 x9 : 94ef24f55d2dbc00
+  x8 : 94ef24f55d2dbc00 x7 : 0000000000000001 x6 : 0000000000000001
+  x5 : ffff8000a4ce6f98 x4 : ffff80008f415ba0 x3 : ffff800080548ef0
+  x2 : 0000000000000000 x1 : 0000000100000000 x0 : 000000000000003e
+  Call trace:
+   populate_free_space_tree+0x514/0x518 fs/btrfs/free-space-tree.c:1102 (P)
+   btrfs_rebuild_free_space_tree+0x14c/0x54c fs/btrfs/free-space-tree.c:1337
+   btrfs_start_pre_rw_mount+0xa78/0xe10 fs/btrfs/disk-io.c:3074
+   btrfs_remount_rw fs/btrfs/super.c:1319 [inline]
+   btrfs_reconfigure+0x828/0x2418 fs/btrfs/super.c:1543
+   reconfigure_super+0x1d4/0x6f0 fs/super.c:1083
+   do_remount fs/namespace.c:3365 [inline]
+   path_mount+0xb34/0xde0 fs/namespace.c:4200
+   do_mount fs/namespace.c:4221 [inline]
+   __do_sys_mount fs/namespace.c:4432 [inline]
+   __se_sys_mount fs/namespace.c:4409 [inline]
+   __arm64_sys_mount+0x3e8/0x468 fs/namespace.c:4409
+   __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
+   invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
+   el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
+   do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
+   el0_svc+0x58/0x17c arch/arm64/kernel/entry-common.c:767
+   el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:786
+   el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
+  Code: f0047182 91178042 528089c3 9771d47b (d4210000)
+  ---[ end trace 0000000000000000 ]---
+
+This happens because we are processing an empty block group, which has
+no extents allocated from it, there are no items for this block group,
+including the block group item since block group items are stored in a
+dedicated tree when using the block group tree feature. It also means
+this is the block group with the highest start offset, so there are no
+higher keys in the extent root, hence btrfs_search_slot_for_read()
+returns 1 (no higher key found).
+
+Fix this by asserting 'ret' is 0 only if the block group tree feature
+is not enabled, in which case we should find a block group item for
+the block group since it's stored in the extent root and block group
+item keys are greater than extent item keys (the value for
+BTRFS_BLOCK_GROUP_ITEM_KEY is 192 and for BTRFS_EXTENT_ITEM_KEY and
+BTRFS_METADATA_ITEM_KEY the values are 168 and 169 respectively).
+In case 'ret' is 1, we just need to add a record to the free space
+tree which spans the whole block group, and we can achieve this by
+making 'ret == 0' as the while loop's condition.
+
+Reported-by: syzbot+36fae25c35159a763a2a@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/6841dca8.a00a0220.d4325.0020.GAE@google.com/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h        | 1 +
- drivers/hid/hid-lenovo.c     | 8 ++++++++
- drivers/hid/hid-multitouch.c | 8 +++++++-
- 3 files changed, 16 insertions(+), 1 deletion(-)
+ fs/btrfs/free-space-tree.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index e078d2ac92c87..60e30cc9d6ff7 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -790,6 +790,7 @@
- #define USB_DEVICE_ID_LENOVO_TPPRODOCK	0x6067
- #define USB_DEVICE_ID_LENOVO_X1_COVER	0x6085
- #define USB_DEVICE_ID_LENOVO_X1_TAB	0x60a3
-+#define USB_DEVICE_ID_LENOVO_X1_TAB2	0x60a4
- #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
- #define USB_DEVICE_ID_LENOVO_X12_TAB	0x60fe
- #define USB_DEVICE_ID_LENOVO_X12_TAB2	0x61ae
-diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
-index ee65da98c7d5b..32cb2e75228c4 100644
---- a/drivers/hid/hid-lenovo.c
-+++ b/drivers/hid/hid-lenovo.c
-@@ -473,6 +473,7 @@ static int lenovo_input_mapping(struct hid_device *hdev,
- 		return lenovo_input_mapping_tp10_ultrabook_kbd(hdev, hi, field,
- 							       usage, bit, max);
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		return lenovo_input_mapping_x1_tab_kbd(hdev, hi, field, usage, bit, max);
- 	default:
-@@ -587,6 +588,7 @@ static ssize_t attr_fn_lock_store(struct device *dev,
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		ret = lenovo_led_set_tp10ubkbd(hdev, TP10UBKBD_FN_LOCK_LED, value);
- 		if (ret)
-@@ -782,6 +784,7 @@ static int lenovo_event(struct hid_device *hdev, struct hid_field *field,
- 		return lenovo_event_cptkbd(hdev, field, usage, value);
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		return lenovo_event_tp10ubkbd(hdev, field, usage, value);
- 	default:
-@@ -1065,6 +1068,7 @@ static int lenovo_led_brightness_set(struct led_classdev *led_cdev,
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		ret = lenovo_led_set_tp10ubkbd(hdev, tp10ubkbd_led[led_nr], value);
- 		break;
-@@ -1296,6 +1300,7 @@ static int lenovo_probe(struct hid_device *hdev,
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		ret = lenovo_probe_tp10ubkbd(hdev);
- 		break;
-@@ -1383,6 +1388,7 @@ static void lenovo_remove(struct hid_device *hdev)
- 		break;
- 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB:
-+	case USB_DEVICE_ID_LENOVO_X1_TAB2:
- 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
- 		lenovo_remove_tp10ubkbd(hdev);
- 		break;
-@@ -1433,6 +1439,8 @@ static const struct hid_device_id lenovo_devices[] = {
- 	 */
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB) },
-+	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
-+		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB2) },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB3) },
- 	{ }
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 6386043aab0bb..becd4c1ccf93c 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2110,12 +2110,18 @@ static const struct hid_device_id mt_devices[] = {
- 		HID_DEVICE(BUS_I2C, HID_GROUP_GENERIC,
- 			USB_VENDOR_ID_LG, I2C_DEVICE_ID_LG_7010) },
+diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
+index 6a44733a95e1c..14bdb241ff6bb 100644
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1098,11 +1098,21 @@ static int populate_free_space_tree(struct btrfs_trans_handle *trans,
+ 	ret = btrfs_search_slot_for_read(extent_root, &key, path, 1, 0);
+ 	if (ret < 0)
+ 		goto out_locked;
+-	ASSERT(ret == 0);
++	/*
++	 * If ret is 1 (no key found), it means this is an empty block group,
++	 * without any extents allocated from it and there's no block group
++	 * item (key BTRFS_BLOCK_GROUP_ITEM_KEY) located in the extent tree
++	 * because we are using the block group tree feature, so block group
++	 * items are stored in the block group tree. It also means there are no
++	 * extents allocated for block groups with a start offset beyond this
++	 * block group's end offset (this is the last, highest, block group).
++	 */
++	if (!btrfs_fs_compat_ro(trans->fs_info, BLOCK_GROUP_TREE))
++		ASSERT(ret == 0);
  
--	/* Lenovo X1 TAB Gen 2 */
-+	/* Lenovo X1 TAB Gen 1 */
- 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
- 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
- 			   USB_VENDOR_ID_LENOVO,
- 			   USB_DEVICE_ID_LENOVO_X1_TAB) },
+ 	start = block_group->start;
+ 	end = block_group->start + block_group->length;
+-	while (1) {
++	while (ret == 0) {
+ 		btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
  
-+	/* Lenovo X1 TAB Gen 2 */
-+	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
-+		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
-+			   USB_VENDOR_ID_LENOVO,
-+			   USB_DEVICE_ID_LENOVO_X1_TAB2) },
-+
- 	/* Lenovo X1 TAB Gen 3 */
- 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
- 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
+ 		if (key.type == BTRFS_EXTENT_ITEM_KEY ||
+@@ -1132,8 +1142,6 @@ static int populate_free_space_tree(struct btrfs_trans_handle *trans,
+ 		ret = btrfs_next_item(extent_root, path);
+ 		if (ret < 0)
+ 			goto out_locked;
+-		if (ret)
+-			break;
+ 	}
+ 	if (start < end) {
+ 		ret = __add_to_free_space_tree(trans, block_group, path2,
 -- 
 2.39.5
 
