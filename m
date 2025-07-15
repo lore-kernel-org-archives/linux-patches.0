@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3282DEA96;
-	Tue, 15 Jul 2025 13:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B822DEA96;
+	Tue, 15 Jul 2025 13:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587556; cv=none; b=KSHYgUXBJAzg0uLODuxPbe4Hge3UqvqWAhAcPU2J+Os54ddTmyBUHauDw3gy+5kD0O4I1PiuNFAMxsLY5aEkEjzeX7YQQSTU+IRrxKciHM6dm3td+ttIimeOsFhbFEeFSzLMpGFPfnYpT6mHxwPKofupi3ZklNDDvZMzQ+lEYmI=
+	t=1752587558; cv=none; b=itBEI0JNXudhGbUmHqEmhu3XiCTOOy8CFcwyAhSTLqPrO69rNB4bE8rE08UDXb7oqSop1DYDrezvabskx+7B/IP5DxjNRrIH5b3v33KAeG2ibI913ZnGk1grbjCWr0zYCeTJ36ujWWMYqCwzc9dTETtqYl83jepJ6l7UeComHgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587556; c=relaxed/simple;
-	bh=yT4oCVJHMGQfC6D1/ObxZeEdnNaUDqSHXC/Dknz6NvQ=;
+	s=arc-20240116; t=1752587558; c=relaxed/simple;
+	bh=GiZR5QEtZVNKpg+DIST9duUhCk9n83b5NqCnHna6JhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8Tap30io6lFvCugK7Seh8XIIyxRj+WC0Bxo7+87hJj1n9pG5+j/EdYgqSg9mZ2xOCcKMZjeV4b2Kmhir8aJZsXI6yz8taHg0wQYdolXuxxbqoO1ATL7Q7IWBNuGrp6sllQNq6DLtPz6zURBR4HUAKQDEhrSIZqvY+lxiZ6Lljk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCfG6oyL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxXULSHudLDKddtHhHWvH7OF3SEe3zDZZ2RFRmkx447vfFcHOUBOVm4S8Gn0HxVWTFUCzAEAiMgM27ggtChCJiH3lPWpMRP5gvzPZraWIaz/QssVEYCcb21961xVBeB3zb2DXFadi8YdmwWOD8NCfcyFK85sS+7gT17jWGjS1iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9phNROP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCfG6oyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7F1C4CEE3;
-	Tue, 15 Jul 2025 13:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9phNROP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69789C4CEE3;
+	Tue, 15 Jul 2025 13:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587556;
-	bh=yT4oCVJHMGQfC6D1/ObxZeEdnNaUDqSHXC/Dknz6NvQ=;
+	s=korg; t=1752587558;
+	bh=GiZR5QEtZVNKpg+DIST9duUhCk9n83b5NqCnHna6JhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCfG6oyL44cQ2vrVGA20SbBfkccm/xsp57cg7ofIEv8LP4vd4QvWhWKkXw7NmDqVD
-	 fhXzaO2Yx/hY2+8tH51UCW97khvOHpWx1oqwnTYDARsplVJ8Bf4uAzM4Ibad3hMIEr
-	 uc7CA5mno60eIC4xp5oKVJhspOQDT8bGJlwB4etA=
+	b=z9phNROPqbxaNRzQshObBPnnTUT6whQezYbFP0d2JK57t1hYwQ4cKEfR30krf7nfJ
+	 x9ItYEqO/GvFft0pTKTSfYOGgatIPr5F8DtPuRwV5AJ1vPbuhxQR42NmBSddmQP5sq
+	 +sC3LHeNrc4tYVC8B88Fi2ZpUhbGK8pkHQPaAZL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Kyle Tso <kyletso@google.com>,
 	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/208] usb: typec: tcpm/tcpci_maxim: Fix bounds check in process_rx()
-Date: Tue, 15 Jul 2025 15:12:18 +0200
-Message-ID: <20250715130812.000666093@linuxfoundation.org>
+	Yao Zi <ziyao@disroot.org>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 5.10 056/208] dt-bindings: serial: 8250: Make clocks and clock-frequency exclusive
+Date: Tue, 15 Jul 2025 15:12:45 +0200
+Message-ID: <20250715130813.195522472@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -54,50 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit 0736299d090f5c6a1032678705c4bc0a9511a3db ]
+commit 09812134071b3941fb81def30b61ed36d3a5dfb5 upstream.
 
-Register read of TCPC_RX_BYTE_CNT returns the total size consisting of:
+The 8250 binding before converting to json-schema states,
 
-  PD message (pending read) size + 1 Byte for Frame Type (SOP*)
+  - clock-frequency : the input clock frequency for the UART
+  	or
+  - clocks phandle to refer to the clk used as per Documentation/devicetree
 
-This is validated against the max PD message (`struct pd_message`) size
-without accounting for the extra byte for the frame type. Note that the
-struct pd_message does not contain a field for the frame_type. This
-results in false negatives when the "PD message (pending read)" is equal
-to the max PD message size.
+for clock-related properties, where "or" indicates these properties
+shouldn't exist at the same time.
 
-Fixes: 6f413b559f86 ("usb: typec: tcpci_maxim: Chip level TCPC driver")
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Kyle Tso <kyletso@google.com>
+Additionally, the behavior of Linux's driver is strange when both clocks
+and clock-frequency are specified: it ignores clocks and obtains the
+frequency from clock-frequency, left the specified clocks unclaimed. It
+may even be disabled, which is undesired most of the time.
+
+But "anyOf" doesn't prevent these two properties from coexisting, as it
+considers the object valid as long as there's at LEAST one match.
+
+Let's switch to "oneOf" and disallows the other property if one exists,
+precisely matching the original binding and avoiding future confusion on
+the driver's behavior.
+
+Fixes: e69f5dc623f9 ("dt-bindings: serial: Convert 8250 to json-schema")
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/stable/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d%40google.com
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250502-b4-new-fix-pd-rx-count-v1-1-e5711ed09b3d@google.com
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20250623093445.62327-1-ziyao@disroot.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpci_maxim.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/serial/8250.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/tcpm/tcpci_maxim.c b/drivers/usb/typec/tcpm/tcpci_maxim.c
-index df5887db46946..d694094084f85 100644
---- a/drivers/usb/typec/tcpm/tcpci_maxim.c
-+++ b/drivers/usb/typec/tcpm/tcpci_maxim.c
-@@ -165,7 +165,8 @@ static void process_rx(struct max_tcpci_chip *chip, u16 status)
- 		return;
- 	}
+--- a/Documentation/devicetree/bindings/serial/8250.yaml
++++ b/Documentation/devicetree/bindings/serial/8250.yaml
+@@ -39,7 +39,7 @@ allOf:
+                   - ns16550
+                   - ns16550a
+     then:
+-      anyOf:
++      oneOf:
+         - required: [ clock-frequency ]
+         - required: [ clocks ]
  
--	if (count > sizeof(struct pd_message) || count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
-+	if (count > sizeof(struct pd_message) + 1 ||
-+	    count + 1 > TCPC_RECEIVE_BUFFER_LEN) {
- 		dev_err(chip->dev, "Invalid TCPC_RX_BYTE_CNT %d\n", count);
- 		return;
- 	}
--- 
-2.39.5
-
 
 
