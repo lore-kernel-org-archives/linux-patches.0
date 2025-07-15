@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69C61A3142;
-	Tue, 15 Jul 2025 13:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7991E2D028A;
+	Tue, 15 Jul 2025 13:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586356; cv=none; b=X8DzlMEEbXGZqk1zTN9HrXHfMojU1m70+v9UOMTpGhglmSfBCnlnQ4l115W1rQXXh3YpZZ/IWQ8M1aOceHDie+pPvWOs588wg6RiNW9YH12N5ZVAkML1MY2+lDp64wWdH55sJm2G+xNvtYg9KrpQqCb0+FbhkbQwGRfQt0njEkk=
+	t=1752586359; cv=none; b=epbEIs9HowgCOjEYjmJYHvK6RDgdKPcE0FjWuNu18aMuoHfnU9LD+GmEVgFfzESjCwkngo8tmENAJUv6odG3w0JyUAd4V7V1+EPXcz8B4E0lpi3fJlpT7H1IFnovTQC0ifsyrN7X4jCbOhuseWZr2ALpT7R2nk/5AJgBa1aBwrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586356; c=relaxed/simple;
-	bh=B8QJsYHFqByveVlI0nvk1FGESFnm+51uDe5y8LfG6rw=;
+	s=arc-20240116; t=1752586359; c=relaxed/simple;
+	bh=kKG2DY2H8TgvkgiSKX6AVFz6B61s/Myccwb/woumm64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKBp8QWLtx8ZZH9wrJmHjUaaNvP1KeuubYLgouUo1BwhIMBEo0eASbBBJEdoBoRSqv8zojPY3BGFDRk+T/D4vKkeinZdC3beKxReMgNupk1Kjl6Y4aPt+I9c7wSJU1j4c7WYsZSlcnlplkgfFR1kTtzphOcjN0tnCnJhu1iflxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOymY30k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCFkXSIpGGO0lqc02reqveP3U0282WV/uKopzHjMaxBQFoRl5Evbrp/WMnOwDM3n5tKVNRkYzCe0zIZnF43R+z/lJM9LfeDp/hfqQBWTSi6t17JSyTYFhNdOlBADe23ZcNzQW2CVZCkj1XK89oLyVPKtFZ6ibCfQgGO1Ahgg7wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpkpLpks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOymY30k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E1DC4CEE3;
-	Tue, 15 Jul 2025 13:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpkpLpks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAD1C4CEE3;
+	Tue, 15 Jul 2025 13:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586356;
-	bh=B8QJsYHFqByveVlI0nvk1FGESFnm+51uDe5y8LfG6rw=;
+	s=korg; t=1752586359;
+	bh=kKG2DY2H8TgvkgiSKX6AVFz6B61s/Myccwb/woumm64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOymY30kfv4cz8qqIZ9oOcAXs5++zpkfF7I7r0JGE6ImirtKSm3bj67M6x50o3hFl
-	 JCySOcFVL3MiOxOXjFWjreAhSI808xrqbRrja4xTF12x1swLmflpPaukzwDKVVvBKQ
-	 83IGn+xVMGsNAhSFlZNZIU4HJheTXIHGRD8cyVTU=
+	b=mpkpLpksGTrZ9sx1sIPCCWWOD7vf4gLs0SxX0G/f4TT3QIMhWFdVIMJoXVeoZxdxS
+	 QW5qFWmwFfuKKdtNGzWXH/G9uSGN5CDwcCkBEdO566bpoc1onC/rB4xfLBtzdqAC52
+	 CywJlxqS67+A8OsXjwNNXxK5kr3o8Phr+jdb0Pj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 005/148] md/md-bitmap: fix dm-raid max_write_behind setting
-Date: Tue, 15 Jul 2025 15:12:07 +0200
-Message-ID: <20250715130800.514944934@linuxfoundation.org>
+Subject: [PATCH 5.4 006/148] iio: pressure: zpa2326: Use aligned_s64 for the timestamp
+Date: Tue, 15 Jul 2025 15:12:08 +0200
+Message-ID: <20250715130800.554250505@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,34 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
+[ Upstream commit 886a446b76afddfad307488e95e87f23a08ffd51 ]
 
-It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
+On x86_32 s64 fields are only 32-bit aligned.  Hence force the alignment of
+the field and padding in the structure by using aligned_s64 instead.
 
-Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250413103443.2420727-19-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 2 +-
+ drivers/iio/pressure/zpa2326.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 8fc85b6251e48..feff5b29d0985 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -549,7 +549,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
- 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
- 	 */
- 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
--	if (write_behind > COUNTER_MAX)
-+	if (write_behind > COUNTER_MAX / 2)
- 		write_behind = COUNTER_MAX / 2;
- 	sb->write_behind = cpu_to_le32(write_behind);
- 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
+diff --git a/drivers/iio/pressure/zpa2326.c b/drivers/iio/pressure/zpa2326.c
+index df60b3d91dad4..85ca48f2fe665 100644
+--- a/drivers/iio/pressure/zpa2326.c
++++ b/drivers/iio/pressure/zpa2326.c
+@@ -581,7 +581,7 @@ static int zpa2326_fill_sample_buffer(struct iio_dev               *indio_dev,
+ 	struct {
+ 		u32 pressure;
+ 		u16 temperature;
+-		u64 timestamp;
++		aligned_s64 timestamp;
+ 	}   sample;
+ 	int err;
+ 
 -- 
 2.39.5
 
