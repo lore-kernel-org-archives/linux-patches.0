@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5D026D4F2;
-	Tue, 15 Jul 2025 13:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E282D8790;
+	Tue, 15 Jul 2025 13:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586981; cv=none; b=o4N3P/77bvUPAedZ7ORkKSZURv9WPMN1pSYIg6ImLo9h/bymh11NTLyirLIwZ61fd9irm3Q+lZWbUogPOXyVr0Tv/iA1ZqSpE1c8p3h+qjDBnHx8pl/gieDQu1o/cOA3KR7p1kRgaq3dMi/LtEjkaDCmhNeNwmTb/3Hwinq7Ge8=
+	t=1752586984; cv=none; b=iZFWun5TGqiuPEloTDMSqBh+WBIpPEVhZdBcETxHiG2sSfMkxfOqrMiUzlSQ06cRZAdAv40W2h3nx1LPOtKxy63B10bLwGh0RnhuiHtyfgdMnwE8IwyB+nXQiYxrBAclRJzidUUCYZWxZYYlsDMWjrYfaRaJwkGGgB5zPMqHIQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586981; c=relaxed/simple;
-	bh=ciZ5tTOE/RRCVcTmEvg/0sIty5SGjH1x82wtQ7aU0kU=;
+	s=arc-20240116; t=1752586984; c=relaxed/simple;
+	bh=wNuOyJgAwOWCfGgZrlEbj3Mh0MwC8GLsXK6i0GVYsSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2MOJg1KQtiZZ8LBt+6A/Vu8TWPShkUXmqouz7FUcJ1J0wX2jNIT4mZTd2Yr+WbrGAj3HlMpeZP80yNEWqhjjPXSdVMrKILrj9uit3m/rb8rnOo+MxFbb7DkQ2GFJmjMymB5V88cpayCWMUnJMgzARKEkWDVWQlndccepJGY/dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCbEK86B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xq9txjhIGyN52qX/k1TZFD/ysr99Ahm9QjydZ9Kap6sB47ulVEIaYkeyamaA6o/5fG7UegbHwCBng9xfksEvW7LaDHgcOVmk4cLidkwsaSN617uM94rcAYALGT1UXgCmWuzbSD/KA4gtvAVMarhLfXajIavIhFPYOijCiz+6Fjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FumPQ8sB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCbEK86B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B88C4CEE3;
-	Tue, 15 Jul 2025 13:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FumPQ8sB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFE4C4CEF6;
+	Tue, 15 Jul 2025 13:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586981;
-	bh=ciZ5tTOE/RRCVcTmEvg/0sIty5SGjH1x82wtQ7aU0kU=;
+	s=korg; t=1752586984;
+	bh=wNuOyJgAwOWCfGgZrlEbj3Mh0MwC8GLsXK6i0GVYsSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aCbEK86BvlUjPQjru2/19W7eqay1ggy9kSy93yJNJDMJBOJP8qa3oEYyFheeA2sff
-	 SpBCl3hBlHbItaylg+/825+dYTPIsJ8ZO6X3ySFDxgCXpWHGe0OVKWl/Rds563wfe3
-	 9hfiPGemusg/zavcNrfSUqykW5F0d92QOGFU0TOw=
+	b=FumPQ8sBB+0eak14Dy+4ZtWJQD+18jO4Awf01Kjiopz1EeaIlTRY6Rn6+0jxOlHRs
+	 X3Ur85vi/wSOma9f38yHgnl4SAl41rRIo2kz2zzGDm+U86dOyoe4ESMA26brk/2i01
+	 a/4T0vPZJGoNdgsQ5wTasK/xMXtV4vk6XJCFxdyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 120/192] ksmbd: fix a mount write count leak in ksmbd_vfs_kern_path_locked()
-Date: Tue, 15 Jul 2025 15:13:35 +0200
-Message-ID: <20250715130819.703460783@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.15 091/192] drm/nouveau: Do not fail module init on debugfs errors
+Date: Tue, 15 Jul 2025 15:13:06 +0200
+Message-ID: <20250715130818.559574810@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,34 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Aaron Thompson <dev@aaront.org>
 
-commit 277627b431a0a6401635c416a21b2a0f77a77347 upstream.
+commit 78f88067d5c56d9aed69f27e238742841461cf67 upstream.
 
-If the call of ksmbd_vfs_lock_parent() fails, we drop the parent_path
-references and return an error.  We need to drop the write access we
-just got on parent_path->mnt before we drop the mount reference - callers
-assume that ksmbd_vfs_kern_path_locked() returns with mount write
-access grabbed if and only if it has returned 0.
+If CONFIG_DEBUG_FS is enabled, nouveau_drm_init() returns an error if it
+fails to create the "nouveau" directory in debugfs. One case where that
+will happen is when debugfs access is restricted by
+CONFIG_DEBUG_FS_ALLOW_NONE or by the boot parameter debugfs=off, which
+cause the debugfs APIs to return -EPERM.
 
-Fixes: 864fb5d37163 ("ksmbd: fix possible deadlock in smb2_open")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+So just ignore errors from debugfs. Note that nouveau_debugfs_root may
+be an error now, but that is a standard pattern for debugfs. From
+include/linux/debugfs.h:
+
+"NOTE: it's expected that most callers should _ignore_ the errors
+returned by this function. Other debugfs functions handle the fact that
+the "dentry" passed to them could be an error and they don't crash in
+that case. Drivers should generally work fine even if debugfs fails to
+init anyway."
+
+Fixes: 97118a1816d2 ("drm/nouveau: create module debugfs root")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Acked-by: Timur Tabi <ttabi@nvidia.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20250703211949.9916-1-dev@aaront.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nouveau_debugfs.c |    6 +-----
+ drivers/gpu/drm/nouveau/nouveau_debugfs.h |    5 ++---
+ drivers/gpu/drm/nouveau/nouveau_drm.c     |    4 +---
+ 3 files changed, 4 insertions(+), 11 deletions(-)
 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1280,6 +1280,7 @@ out1:
+--- a/drivers/gpu/drm/nouveau/nouveau_debugfs.c
++++ b/drivers/gpu/drm/nouveau/nouveau_debugfs.c
+@@ -314,14 +314,10 @@ nouveau_debugfs_fini(struct nouveau_drm
+ 	drm->debugfs = NULL;
+ }
  
- 		err = ksmbd_vfs_lock_parent(parent_path->dentry, path->dentry);
- 		if (err) {
-+			mnt_drop_write(parent_path->mnt);
- 			path_put(path);
- 			path_put(parent_path);
- 		}
+-int
++void
+ nouveau_module_debugfs_init(void)
+ {
+ 	nouveau_debugfs_root = debugfs_create_dir("nouveau", NULL);
+-	if (IS_ERR(nouveau_debugfs_root))
+-		return PTR_ERR(nouveau_debugfs_root);
+-
+-	return 0;
+ }
+ 
+ void
+--- a/drivers/gpu/drm/nouveau/nouveau_debugfs.h
++++ b/drivers/gpu/drm/nouveau/nouveau_debugfs.h
+@@ -24,7 +24,7 @@ extern void nouveau_debugfs_fini(struct
+ 
+ extern struct dentry *nouveau_debugfs_root;
+ 
+-int  nouveau_module_debugfs_init(void);
++void nouveau_module_debugfs_init(void);
+ void nouveau_module_debugfs_fini(void);
+ #else
+ static inline void
+@@ -42,10 +42,9 @@ nouveau_debugfs_fini(struct nouveau_drm
+ {
+ }
+ 
+-static inline int
++static inline void
+ nouveau_module_debugfs_init(void)
+ {
+-	return 0;
+ }
+ 
+ static inline void
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -1456,9 +1456,7 @@ nouveau_drm_init(void)
+ 	if (!nouveau_modeset)
+ 		return 0;
+ 
+-	ret = nouveau_module_debugfs_init();
+-	if (ret)
+-		return ret;
++	nouveau_module_debugfs_init();
+ 
+ #ifdef CONFIG_NOUVEAU_PLATFORM_DRIVER
+ 	platform_driver_register(&nouveau_platform_driver);
 
 
