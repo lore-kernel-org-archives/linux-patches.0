@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5E72E718E;
-	Tue, 15 Jul 2025 13:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410C12ECE87;
+	Tue, 15 Jul 2025 13:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587724; cv=none; b=q8XgUfCpo/I3B3sXb/avxDG++++Xe67vroYFEgGUr6S4+fhBWglx8fMT0IJhe7yniZBSLkK7/W64tu9YEJI5Gju1m02EFFp7WNb8J2QN+Qiy1txdqXqB9yeaiXrZ1h0GKVadh8cU4ce4dwKuh3L/u9cOGlIY5pE4CjLvfDFM55E=
+	t=1752587727; cv=none; b=ipSH0br1kVJULnUInEqL4Q16wIw7GBjLCnGVGCNyXrvswnd2p4DODWSieRBAaiY6JB+gRR4ny8Cq3XYA3NmzDyINBt3yM25SAvAHockrONPXTJ203T7W3lOeAvMkg6CiA4sy/TeqbSrpS1e09CZp4LEFZc6nXVNPtzHVEndcSt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587724; c=relaxed/simple;
-	bh=u23/mNFEJgK8viNDxgIFrVcOcDQs0jOQxHNN5T01/9g=;
+	s=arc-20240116; t=1752587727; c=relaxed/simple;
+	bh=e/UqlI1oWbYHDiHS7FKOBPh8C+iFNmjTBpTwiPDsGG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOxJ5hlaZpGJhyTdbfyJcL0N16EmyTgRXNYNchkNNdl2vFZrJr2w3UP0jEGmKo995H39aD5uiCMkyBR4E2VVFUmOzErTQqpMlbQULiHFjUVKEtPiphRueuieUUyOE9Okq3tU5BEb4aXR+zGodqtoSU2N/0IMPsRgRq0pbMqTH1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuA//h8M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c/5PWh4kQ1COtOVmxToR8Uwg2F4F2oKbyaXogs5M5qhe5y+SNnnpeaOniZUob+X7Rd0syTC9mvvjFUIXWh7nNXBALybODHC8wgDjeCepU1La8QSDm+RXocvrFiqVoxH8Y3g8yFD9g+ZytDKlDg9axoZfsHuOfEsqq6Ke+8LP45s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZ8NdyGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuA//h8M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33805C4CEE3;
-	Tue, 15 Jul 2025 13:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZ8NdyGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0E9C4CEE3;
+	Tue, 15 Jul 2025 13:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587724;
-	bh=u23/mNFEJgK8viNDxgIFrVcOcDQs0jOQxHNN5T01/9g=;
+	s=korg; t=1752587727;
+	bh=e/UqlI1oWbYHDiHS7FKOBPh8C+iFNmjTBpTwiPDsGG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuA//h8Mh4jOTAdO02dNs+lFdQZ9zAp+vv2ueIWBOfFINs5L3rRe0dKseZDgjWAK7
-	 DcZMab9mJ3XX3mfZznI0/k4Dya8uIoxh1Mj3OyBmz5/+j8cl6yMSh3poy31LyaQsvU
-	 tyGC+IpWKvJWeKLEbtoEOfM6vPP0CDIukD3dM8zo=
+	b=CZ8NdyGHQBUoexX17o1rMBfWxnu5gG1VcjDYvQeIG1fPXkuVO1Q3ooM6Vu95A14Eu
+	 EhEnOjwxWy4HKMqfSKTL0qC0jP1beaAvLqILdnkByaoZOxptQcfN9wvYp4qzXeOiw2
+	 b4Nz3j7IqT78mLrO0L5FQJTQ3xF4CJNYdkNvcJp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Radu Bulie <radu-andrei.bulie@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/208] dpaa2-eth: rename dpaa2_eth_xdp_release_buf into dpaa2_eth_recycle_buf
-Date: Tue, 15 Jul 2025 15:13:48 +0200
-Message-ID: <20250715130815.711951665@linuxfoundation.org>
+Subject: [PATCH 5.10 120/208] dpaa2-eth: Update dpni_get_single_step_cfg command
+Date: Tue, 15 Jul 2025 15:13:49 +0200
+Message-ID: <20250715130815.751585825@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,124 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Radu Bulie <radu-andrei.bulie@nxp.com>
 
-[ Upstream commit 28d137cc8c0bd2c9501b8eb0855b631289c7b4a3 ]
+[ Upstream commit 9572594ecf027a2b1828e42c26fb55cbd3219708 ]
 
-Rename the dpaa2_eth_xdp_release_buf function into dpaa2_eth_recycle_buf
-since in the next patches we'll be using the same recycle mechanism for
-the normal stack path beside for XDP_DROP.
+dpni_get_single_step_cfg is an MC firmware command used for
+retrieving the contents of SINGLE_STEP 1588 register available
+in a DPMAC.
 
-Also, rename the array which holds the buffers to be recycled so that it
-does not have any reference to XDP.
+This patch adds a new version of this command that returns as an extra
+argument the physical base address of the aforementioned register.
+The address will be used to directly modify the contents of the
+SINGLE_STEP register instead of invoking the MC command
+dpni_set_single_step_cgf. The former approach introduced huge delays on
+the TX datapath when one step PTP events were transmitted. This led to low
+throughput and high latencies observed in the PTP correction field.
 
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Radu Bulie <radu-andrei.bulie@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 2def09ead4ad ("dpaa2-eth: fix xdp_rxq_info leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/dpaa2/dpaa2-eth.c  | 26 +++++++++----------
- .../net/ethernet/freescale/dpaa2/dpaa2-eth.h  |  6 +++--
- 2 files changed, 17 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpni-cmd.h | 6 +++++-
+ drivers/net/ethernet/freescale/dpaa2/dpni.c     | 2 ++
+ drivers/net/ethernet/freescale/dpaa2/dpni.h     | 6 ++++++
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index fa202fea537f8..fa799cc044426 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -223,31 +223,31 @@ static void dpaa2_eth_free_bufs(struct dpaa2_eth_priv *priv, u64 *buf_array,
- 	}
- }
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpni-cmd.h b/drivers/net/ethernet/freescale/dpaa2/dpni-cmd.h
+index 90453dc7baefe..a0dfd25c6bd4a 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpni-cmd.h
++++ b/drivers/net/ethernet/freescale/dpaa2/dpni-cmd.h
+@@ -94,7 +94,7 @@
+ #define DPNI_CMDID_GET_LINK_CFG				DPNI_CMD(0x278)
  
--static void dpaa2_eth_xdp_release_buf(struct dpaa2_eth_priv *priv,
--				      struct dpaa2_eth_channel *ch,
--				      dma_addr_t addr)
-+static void dpaa2_eth_recycle_buf(struct dpaa2_eth_priv *priv,
-+				  struct dpaa2_eth_channel *ch,
-+				  dma_addr_t addr)
- {
- 	int retries = 0;
- 	int err;
+ #define DPNI_CMDID_SET_SINGLE_STEP_CFG			DPNI_CMD(0x279)
+-#define DPNI_CMDID_GET_SINGLE_STEP_CFG			DPNI_CMD(0x27a)
++#define DPNI_CMDID_GET_SINGLE_STEP_CFG			DPNI_CMD_V2(0x27a)
  
--	ch->xdp.drop_bufs[ch->xdp.drop_cnt++] = addr;
--	if (ch->xdp.drop_cnt < DPAA2_ETH_BUFS_PER_CMD)
-+	ch->recycled_bufs[ch->recycled_bufs_cnt++] = addr;
-+	if (ch->recycled_bufs_cnt < DPAA2_ETH_BUFS_PER_CMD)
- 		return;
- 
- 	while ((err = dpaa2_io_service_release(ch->dpio, priv->bpid,
--					       ch->xdp.drop_bufs,
--					       ch->xdp.drop_cnt)) == -EBUSY) {
-+					       ch->recycled_bufs,
-+					       ch->recycled_bufs_cnt)) == -EBUSY) {
- 		if (retries++ >= DPAA2_ETH_SWP_BUSY_RETRIES)
- 			break;
- 		cpu_relax();
- 	}
- 
- 	if (err) {
--		dpaa2_eth_free_bufs(priv, ch->xdp.drop_bufs, ch->xdp.drop_cnt);
--		ch->buf_count -= ch->xdp.drop_cnt;
-+		dpaa2_eth_free_bufs(priv, ch->recycled_bufs, ch->recycled_bufs_cnt);
-+		ch->buf_count -= ch->recycled_bufs_cnt;
- 	}
- 
--	ch->xdp.drop_cnt = 0;
-+	ch->recycled_bufs_cnt = 0;
- }
- 
- static int dpaa2_eth_xdp_flush(struct dpaa2_eth_priv *priv,
-@@ -300,7 +300,7 @@ static void dpaa2_eth_xdp_tx_flush(struct dpaa2_eth_priv *priv,
- 		ch->stats.xdp_tx++;
- 	}
- 	for (i = enqueued; i < fq->xdp_tx_fds.num; i++) {
--		dpaa2_eth_xdp_release_buf(priv, ch, dpaa2_fd_get_addr(&fds[i]));
-+		dpaa2_eth_recycle_buf(priv, ch, dpaa2_fd_get_addr(&fds[i]));
- 		percpu_stats->tx_errors++;
- 		ch->stats.xdp_tx_err++;
- 	}
-@@ -386,7 +386,7 @@ static u32 dpaa2_eth_run_xdp(struct dpaa2_eth_priv *priv,
- 		trace_xdp_exception(priv->net_dev, xdp_prog, xdp_act);
- 		fallthrough;
- 	case XDP_DROP:
--		dpaa2_eth_xdp_release_buf(priv, ch, addr);
-+		dpaa2_eth_recycle_buf(priv, ch, addr);
- 		ch->stats.xdp_drop++;
- 		break;
- 	case XDP_REDIRECT:
-@@ -407,7 +407,7 @@ static u32 dpaa2_eth_run_xdp(struct dpaa2_eth_priv *priv,
- 				free_pages((unsigned long)vaddr, 0);
- 			} else {
- 				ch->buf_count++;
--				dpaa2_eth_xdp_release_buf(priv, ch, addr);
-+				dpaa2_eth_recycle_buf(priv, ch, addr);
- 			}
- 			ch->stats.xdp_drop++;
- 		} else {
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
-index 2825f53e7e9b1..e143d66ca2474 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
-@@ -438,8 +438,6 @@ struct dpaa2_eth_fq {
- 
- struct dpaa2_eth_ch_xdp {
- 	struct bpf_prog *prog;
--	u64 drop_bufs[DPAA2_ETH_BUFS_PER_CMD];
--	int drop_cnt;
- 	unsigned int res;
+ /* Macros for accessing command fields smaller than 1byte */
+ #define DPNI_MASK(field)	\
+@@ -654,12 +654,16 @@ struct dpni_cmd_single_step_cfg {
+ 	__le16 flags;
+ 	__le16 offset;
+ 	__le32 peer_delay;
++	__le32 ptp_onestep_reg_base;
++	__le32 pad0;
  };
  
-@@ -457,6 +455,10 @@ struct dpaa2_eth_channel {
- 	struct dpaa2_eth_ch_xdp xdp;
- 	struct xdp_rxq_info xdp_rxq;
- 	struct list_head *rx_list;
-+
-+	/* Buffers to be recycled back in the buffer pool */
-+	u64 recycled_bufs[DPAA2_ETH_BUFS_PER_CMD];
-+	int recycled_bufs_cnt;
+ struct dpni_rsp_single_step_cfg {
+ 	__le16 flags;
+ 	__le16 offset;
+ 	__le32 peer_delay;
++	__le32 ptp_onestep_reg_base;
++	__le32 pad0;
  };
  
- struct dpaa2_eth_dist_fields {
+ #endif /* _FSL_DPNI_CMD_H */
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpni.c b/drivers/net/ethernet/freescale/dpaa2/dpni.c
+index 6ea7db66a6322..d248a40fbc3f8 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpni.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpni.c
+@@ -2037,6 +2037,8 @@ int dpni_get_single_step_cfg(struct fsl_mc_io *mc_io,
+ 	ptp_cfg->ch_update = dpni_get_field(le16_to_cpu(rsp_params->flags),
+ 					    PTP_CH_UPDATE) ? 1 : 0;
+ 	ptp_cfg->peer_delay = le32_to_cpu(rsp_params->peer_delay);
++	ptp_cfg->ptp_onestep_reg_base =
++				  le32_to_cpu(rsp_params->ptp_onestep_reg_base);
+ 
+ 	return err;
+ }
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpni.h b/drivers/net/ethernet/freescale/dpaa2/dpni.h
+index e7b9e195b534b..f854450983983 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpni.h
++++ b/drivers/net/ethernet/freescale/dpaa2/dpni.h
+@@ -1096,12 +1096,18 @@ int dpni_set_tx_shaping(struct fsl_mc_io *mc_io,
+  * @peer_delay:	For peer-to-peer transparent clocks add this value to the
+  *		correction field in addition to the transient time update.
+  *		The value expresses nanoseconds.
++ * @ptp_onestep_reg_base: 1588 SINGLE_STEP register base address. This address
++ *			  is used to update directly the register contents.
++ *			  User has to create an address mapping for it.
++ *
++ *
+  */
+ struct dpni_single_step_cfg {
+ 	u8	en;
+ 	u8	ch_update;
+ 	u16	offset;
+ 	u32	peer_delay;
++	u32	ptp_onestep_reg_base;
+ };
+ 
+ int dpni_set_single_step_cfg(struct fsl_mc_io *mc_io,
 -- 
 2.39.5
 
