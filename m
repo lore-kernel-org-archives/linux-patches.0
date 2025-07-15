@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCC92E2EEF;
-	Tue, 15 Jul 2025 13:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21592E3391;
+	Tue, 15 Jul 2025 13:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586852; cv=none; b=bpe8ufzAzr0NXWajrEil9oTbNwoFD4YW1e8pSuMjGHYEMEWy4oD8FreMIx7RutIiE0As0Fl7FDO9aoPCaBGy4i+5VI5YQI1tr7W2VDqiI5J7ndFy/pin5QVufb5cxtCpPNG/zUHHH1hKxwIhw/I3+oIP9yaQFH7AqKxXojkza1k=
+	t=1752586854; cv=none; b=dKytztHUix1JxqAmWEIWO4iSVWMjPTScYEq829tnYwgcK8lP7DGUALtUaW94fan6aAUdKyb6hK8kngV2fxyyrT33r/FOEYzB6TGW7Ri5IXuL+4VIL5MYgZ0gkgGjXDdIySIMpXeHhAkAmUo9MeRJQm89A0GMfJNWNYEI2LAGUBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586852; c=relaxed/simple;
-	bh=W27qVyyEBtHONF/cg5+PxUMtPXe0KZnKu3nhinSAeiI=;
+	s=arc-20240116; t=1752586854; c=relaxed/simple;
+	bh=rVUvktp3l/txSVD5oy5vh0Qa1znWvKZXYWLD6zcr9ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qsjur0IdYgppPq1YzCzgOCZhInlo3vH+OVs1R5gYORtLGcrUSwh86Jg1jhM3eMgFbZ9AU+Tsxlvt5lLvz071xZ/AmCec6FTB8GPWAXkn3jamBp2G7fgu0AD6CIAg7LU5pqUdnoFigLGSLfzqI4uIZrpPVwWfu6ZfTSUU4ucf1m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0me23V74; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvO+FJ6LRkggZ8VZwfM8C/dhHDm3Yv63hizUkyCrUdFM/TR+0v6oyMwvNew84uP8MV0vxFQs08BvXP9iAarnCmCfmgEYRYf8qYlw9/Qd5k1lUwN6hNPJQpZWnJrKpt5RXpKGg0AzjENH3oPcr6QNu+Mxgn7bD97G/kWie+fW5fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1x52fa2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0me23V74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410E6C4CEE3;
-	Tue, 15 Jul 2025 13:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1x52fa2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2FEC4CEF1;
+	Tue, 15 Jul 2025 13:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586851;
-	bh=W27qVyyEBtHONF/cg5+PxUMtPXe0KZnKu3nhinSAeiI=;
+	s=korg; t=1752586854;
+	bh=rVUvktp3l/txSVD5oy5vh0Qa1znWvKZXYWLD6zcr9ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0me23V74CpdzSH7ClzzMsGPYtKvHbnovcksrsglx9FoY8pHLHk+Xw89NUI1DgIRs4
-	 Cm4VBhbbqfAW+D/K475xNJZ7BmFtOX5x2bIctouegbP1qMeE2D1HYUhYD4EHSd/rja
-	 hphNrwCLhndqiNimrDx/KL19EeHnCstj60/yDCG4=
+	b=1x52fa2k8DuUsARY9T9Q3ur9Tp6HGkCydSS9HtdDuHGSNdnvWAqEmuiwxBIH2ekNt
+	 qZ7V4wEBhDfMM0FB8oe/0Y+DmCR6aYkcAZ5PgGpeq6fSBchPqMHSKMUmaleVwU5S3+
+	 fm/x2YxaeBP5hLYrUGo+Wvd0TGINvTnxNR5uB+6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.15 073/192] pwm: Fix invalid state detection
-Date: Tue, 15 Jul 2025 15:12:48 +0200
-Message-ID: <20250715130817.863024242@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Paul Durrant <paul@xen.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.15 056/192] KVM: x86/xen: Allow out of range event channel ports in IRQ routing table.
+Date: Tue, 15 Jul 2025 15:12:31 +0200
+Message-ID: <20250715130817.088416139@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -44,47 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 9ee124caae1b0defd0e02c65686f539845a3ac9b upstream.
+commit a7f4dff21fd744d08fa956c243d2b1795f23cbf7 upstream.
 
-Commit 9dd42d019e63 ("pwm: Allow pwm state transitions from an invalid
-state") intended to allow some state transitions that were not allowed
-before. The idea is sane and back then I also got the code comment
-right, but the check for enabled is bogus. This resulted in state
-transitions for enabled states to be allowed to have invalid duty/period
-settings and thus it can happen that low-level drivers get requests for
-invalid states🙄.
+To avoid imposing an ordering constraint on userspace, allow 'invalid'
+event channel targets to be configured in the IRQ routing table.
 
-Invert the check to allow state transitions for disabled states only.
+This is the same as accepting interrupts targeted at vCPUs which don't
+exist yet, which is already the case for both Xen event channels *and*
+for MSIs (which don't do any filtering of permitted APIC ID targets at
+all).
 
-Fixes: 9dd42d019e63 ("pwm: Allow pwm state transitions from an invalid state")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250704172416.626433-2-u.kleine-koenig@baylibre.com
+If userspace actually *triggers* an IRQ with an invalid target, that
+will fail cleanly, as kvm_xen_set_evtchn_fast() also does the same range
+check.
+
+If KVM enforced that the IRQ target must be valid at the time it is
+*configured*, that would force userspace to create all vCPUs and do
+various other parts of setup (in this case, setting the Xen long_mode)
+before restoring the IRQ table.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Link: https://lore.kernel.org/r/e489252745ac4b53f1f7f50570b03fb416aa2065.camel@infradead.org
+[sean: massage comment]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/xen.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/pwm/core.c
-+++ b/drivers/pwm/core.c
-@@ -549,7 +549,7 @@ static bool pwm_state_valid(const struct
- 	 * and supposed to be ignored. So also ignore any strange values and
- 	 * consider the state ok.
- 	 */
--	if (state->enabled)
-+	if (!state->enabled)
- 		return true;
+--- a/arch/x86/kvm/xen.c
++++ b/arch/x86/kvm/xen.c
+@@ -1970,8 +1970,19 @@ int kvm_xen_setup_evtchn(struct kvm *kvm
+ {
+ 	struct kvm_vcpu *vcpu;
  
- 	if (!state->period)
+-	if (ue->u.xen_evtchn.port >= max_evtchn_port(kvm))
+-		return -EINVAL;
++	/*
++	 * Don't check for the port being within range of max_evtchn_port().
++	 * Userspace can configure what ever targets it likes; events just won't
++	 * be delivered if/while the target is invalid, just like userspace can
++	 * configure MSIs which target non-existent APICs.
++	 *
++	 * This allow on Live Migration and Live Update, the IRQ routing table
++	 * can be restored *independently* of other things like creating vCPUs,
++	 * without imposing an ordering dependency on userspace.  In this
++	 * particular case, the problematic ordering would be with setting the
++	 * Xen 'long mode' flag, which changes max_evtchn_port() to allow 4096
++	 * instead of 1024 event channels.
++	 */
+ 
+ 	/* We only support 2 level event channels for now */
+ 	if (ue->u.xen_evtchn.priority != KVM_IRQ_ROUTING_XEN_EVTCHN_PRIO_2LEVEL)
 
 
