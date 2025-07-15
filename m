@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D382561AE;
-	Tue, 15 Jul 2025 13:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE6A2561AE;
+	Tue, 15 Jul 2025 13:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587283; cv=none; b=mlLq4holxkrifWBNr/PEb0AVF53SWtV3mBonTCEwWC5xac6IdqkFtuEiy/s+SKC+i8ZOvzzcMUk9JHkaxwWAWvJZwgcPo52EX2Rc28+++InNOdbhgx2OZKniJhyYq5C2Baxgg5Qggm0xiNNUxPU8nighlebEIrqeovAPo05HMUM=
+	t=1752587286; cv=none; b=hF9h0cGcq1xdak8u4PX+2Il4eomOXjq5WydUKjYIX2wu2ro2OXwpjMnuJbLYMQIdYOmueN+7JNoKgrAz/b3dUjKQ5gqKEkSymbJlIjEoUXwlysNmlN5g64gs1r+uFibg8lZgc/HokvQekP1hOIAulIivzPTHvARjg2ixWFeHKQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587283; c=relaxed/simple;
-	bh=A/rxr6PrC72lSGxn5hPRHdKrAqAJH7YJPtYKMlw+XuI=;
+	s=arc-20240116; t=1752587286; c=relaxed/simple;
+	bh=nNp3/WzAuuQ37UbNOwoCD+7GxiEPZ/sll/Ew5RrRstA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCu4CswPwSBKnVARAhM4yb6q7oZNZdo1Oq2QyhkL9B0vWU7xoRmpVnJPYzOTU37IsBu0Ti6PBrBwfvyW0EMixRsBtXuuAiHwSwBENHcapFSUgezh/dt3xLmh8/9uD2fehKXkN/22aEdOddEogG7OdeyjlKJvir89BuMM+giEnYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9nrrhOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FtyFtmovPg4a8L18GwwR3b+kQ6w+oq46OTVU1o6P7JaDvYxZ8CWqXqiSjXdD1px7LG/My+9Sa2aMIQDv5LFY5BFc7RyDXrequV6t47hnqnedj3ZYQHfhiNiXhhKYN+7zDCxvlsK4jIGnO2E1iLylrcJjYumClRLpoKSm+bXeMP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LElbjs2F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9nrrhOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B01C4CEE3;
-	Tue, 15 Jul 2025 13:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LElbjs2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EE7C4CEE3;
+	Tue, 15 Jul 2025 13:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587283;
-	bh=A/rxr6PrC72lSGxn5hPRHdKrAqAJH7YJPtYKMlw+XuI=;
+	s=korg; t=1752587286;
+	bh=nNp3/WzAuuQ37UbNOwoCD+7GxiEPZ/sll/Ew5RrRstA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9nrrhOwdhA+9HYjeR2JgXZ60CkUcAwgt7EcuWky7OPmYjhiaUabL9vQSRrJzTEGG
-	 D+6kbktARc0KbMBW/voluukATbiyFe/nIn7GstBFeU2jWe4sLDUiDmsVRnzd0k0qAJ
-	 ApewYkDzrg2uGCQJQTrtbDSS4k9qPnuyUkNsJYKU=
+	b=LElbjs2F/TBtcWxVKGp8h80qDY6knm761DBrvhRMVOVR29RancBf45A2vanyPDfL4
+	 tWq4Nx1/bJSy2kz4gwVQ8Mz7VXFdynvZEy+4eZqYF6hYIkNq/PTto6lCEjfdwkjvvL
+	 rHHn1plOJyYe3neP48Kp1+aRg5ywO8+t+9HyLoS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andre Edich <andre.edich@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 12/88] net: phy: smsc: Fix Auto-MDIX configuration when disabled by strap
-Date: Tue, 15 Jul 2025 15:13:48 +0200
-Message-ID: <20250715130754.999650393@linuxfoundation.org>
+Subject: [PATCH 6.1 03/88] ASoC: fsl_asrc: use internal measured ratio for non-ideal ratio mode
+Date: Tue, 15 Jul 2025 15:13:39 +0200
+Message-ID: <20250715130754.637799734@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -53,52 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit a141af8eb2272ab0f677a7f2653874840bc9b214 ]
+[ Upstream commit cbe876121633dadb2b0ce52711985328638e9aab ]
 
-Correct the Auto-MDIX configuration to ensure userspace settings are
-respected when the feature is disabled by the AUTOMDIX_EN hardware strap.
+When USRC=0, there is underrun issue for the non-ideal ratio mode;
+according to the reference mannual, the internal measured ratio can be
+used with USRC=1 and IDRC=0.
 
-The LAN9500 PHY allows its default MDI-X mode to be configured via a
-hardware strap. If this strap sets the default to "MDI-X off", the
-driver was previously unable to enable Auto-MDIX from userspace.
-
-When handling the ETH_TP_MDI_AUTO case, the driver would set the
-SPECIAL_CTRL_STS_AMDIX_ENABLE_ bit but neglected to set the required
-SPECIAL_CTRL_STS_OVRRD_AMDIX_ bit. Without the override flag, the PHY
-falls back to its hardware strap default, ignoring the software request.
-
-This patch corrects the behavior by also setting the override bit when
-enabling Auto-MDIX. This ensures that the userspace configuration takes
-precedence over the hardware strap, allowing Auto-MDIX to be enabled
-correctly in all scenarios.
-
-Fixes: 05b35e7eb9a1 ("smsc95xx: add phylib support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: Andre Edich <andre.edich@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250703114941.3243890-2-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d0250cf4f2ab ("ASoC: fsl_asrc: Add an option to select internal ratio mode")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://patch.msgid.link/20250625020504.2728161-1-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 3 ++-
+ sound/soc/fsl/fsl_asrc.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index df2c5435c5c49..8726619466858 100644
---- a/drivers/net/phy/smsc.c
-+++ b/drivers/net/phy/smsc.c
-@@ -148,7 +148,8 @@ static int lan87xx_config_aneg(struct phy_device *phydev)
- 			SPECIAL_CTRL_STS_AMDIX_STATE_;
- 		break;
- 	case ETH_TP_MDI_AUTO:
--		val = SPECIAL_CTRL_STS_AMDIX_ENABLE_;
-+		val = SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
-+			SPECIAL_CTRL_STS_AMDIX_ENABLE_;
- 		break;
- 	default:
- 		return genphy_config_aneg(phydev);
+diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
+index e16e7b3fa96cc..c541e2a0202a6 100644
+--- a/sound/soc/fsl/fsl_asrc.c
++++ b/sound/soc/fsl/fsl_asrc.c
+@@ -517,7 +517,8 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
+ 	regmap_update_bits(asrc->regmap, REG_ASRCTR,
+ 			   ASRCTR_ATSi_MASK(index), ASRCTR_ATS(index));
+ 	regmap_update_bits(asrc->regmap, REG_ASRCTR,
+-			   ASRCTR_USRi_MASK(index), 0);
++			   ASRCTR_IDRi_MASK(index) | ASRCTR_USRi_MASK(index),
++			   ASRCTR_USR(index));
+ 
+ 	/* Set the input and output clock sources */
+ 	regmap_update_bits(asrc->regmap, REG_ASRCSR,
 -- 
 2.39.5
 
