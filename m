@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252172E338F;
-	Tue, 15 Jul 2025 13:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFA01A3142;
+	Tue, 15 Jul 2025 13:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586084; cv=none; b=i1V14lPbrKeZpj4k6CS7sEKKaTKVdt6u/YA9JKudZuduUb52ROJxNM+HNCsWCCgWrA7L+v6h+s9fbZpsZH9wCPDjAlMdMhJIZXqHUucfR+RmSR1m2SK4OEcZp4nzdq5kwHFGY6z1uH2OweyIKDGxyRhLYClCmGtB+RHgM/G68hI=
+	t=1752586087; cv=none; b=Ticbi9eBCbFOr2lmLuVAOU5J8DrmBjP4fteaSWPZGEXVWTfWH4JaDh7J0WYlrZnQNXnDEn4W0e2uIGhRRIne/YO2QMEfFH+CSNnVQPpL48eM4Y8+GIYkXfW0pJ0Vk4DoKMk8EdnkYpquJaKtMnuvHGjpVOvZe1NjRdBI1UIGkpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586084; c=relaxed/simple;
-	bh=zOnBbp5rsUDLICaB81lPfGmFX+CramSE4HzI6WTiPa4=;
+	s=arc-20240116; t=1752586087; c=relaxed/simple;
+	bh=ZtQODZ5H+6aQ/JnaFUMcPbGRpPAlOtB0C5FfU/XDjv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MDsYrOPig20BtPzI5D+TCR7enf/DTIiEl83yrIKVIqpNOjhQ5XuTngMcKs34ZHNHbmeC9Y8bVbvJf0Fy7Vl7vOGuRomJp8WoNy5yGTOziYsgq8FSqKQLtZ4B0MU8EcbzMnQ81NiF25UEVKRT4WNWniPddcsks2/lpRgsuFORrFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOI4NjeX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AcZTW37puPW746Ff9O3uTAnM5czO7y/0c8uGIFnnEJefdsWmBuM8QBw62wx2vMEN7KKiDcnvXEw/tBHAJM9Ate1PXJWSXGI1b7GJoHjFH8REuNyObYTPu8dEtQgL23QAxn513yrEVzbO+DHhlu9PdIkdMhigDkQlX76+KKMDwvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSrzZ6Ti; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOI4NjeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EA3C4CEE3;
-	Tue, 15 Jul 2025 13:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSrzZ6Ti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3E5C4CEE3;
+	Tue, 15 Jul 2025 13:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586084;
-	bh=zOnBbp5rsUDLICaB81lPfGmFX+CramSE4HzI6WTiPa4=;
+	s=korg; t=1752586086;
+	bh=ZtQODZ5H+6aQ/JnaFUMcPbGRpPAlOtB0C5FfU/XDjv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOI4NjeXKZotlCZYRzF3QAVqJekDMYqP43gxyW3Ana3l+PhXHRdf1ouYBywo0eUS3
-	 O4ZBQGNCsd4ZWPkWbd1D7zNyyTg2rlx4CNqip4IxoIh2XuN+IyPxL4DdGCe3PLFntH
-	 ymlIFO8za1MWOLLSdnkbgbl35r5SZnX3jMtXjsVk=
+	b=gSrzZ6TiKpaD/zEJ6n/NhpZ1waAMzHvaJiS8vKIxcqtzgLzBaiAdrXPbwyHR4V8gu
+	 D9Z8R2DE7G0wMSVrb1rsDrc1y+taa9Z2EQ6p8r/vONoMAjmNdx8UjQvne9u5qL8xiC
+	 AYugQ/sU2QuG0dDmKJajj7Xhuk0KQXHI6naGZTZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Andre Edich <andre.edich@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/77] net: phy: smsc: Fix Auto-MDIX configuration when disabled by strap
-Date: Tue, 15 Jul 2025 15:13:09 +0200
-Message-ID: <20250715130752.105599366@linuxfoundation.org>
+Subject: [PATCH 5.15 11/77] net: phy: smsc: Fix link failure in forced mode with Auto-MDIX
+Date: Tue, 15 Jul 2025 15:13:10 +0200
+Message-ID: <20250715130752.147241292@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -55,50 +55,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit a141af8eb2272ab0f677a7f2653874840bc9b214 ]
+[ Upstream commit 9dfe110cc0f6ef42af8e81ce52aef34a647d0b8a ]
 
-Correct the Auto-MDIX configuration to ensure userspace settings are
-respected when the feature is disabled by the AUTOMDIX_EN hardware strap.
+Force a fixed MDI-X mode when auto-negotiation is disabled to prevent
+link instability.
 
-The LAN9500 PHY allows its default MDI-X mode to be configured via a
-hardware strap. If this strap sets the default to "MDI-X off", the
-driver was previously unable to enable Auto-MDIX from userspace.
+When forcing the link speed and duplex on a LAN9500 PHY (e.g., with
+`ethtool -s eth0 autoneg off ...`) while leaving MDI-X control in auto
+mode, the PHY fails to establish a stable link. This occurs because the
+PHY's Auto-MDIX algorithm is not designed to operate when
+auto-negotiation is disabled. In this state, the PHY continuously
+toggles the TX/RX signal pairs, which prevents the link partner from
+synchronizing.
 
-When handling the ETH_TP_MDI_AUTO case, the driver would set the
-SPECIAL_CTRL_STS_AMDIX_ENABLE_ bit but neglected to set the required
-SPECIAL_CTRL_STS_OVRRD_AMDIX_ bit. Without the override flag, the PHY
-falls back to its hardware strap default, ignoring the software request.
-
-This patch corrects the behavior by also setting the override bit when
-enabling Auto-MDIX. This ensures that the userspace configuration takes
-precedence over the hardware strap, allowing Auto-MDIX to be enabled
-correctly in all scenarios.
+This patch resolves the issue by detecting when auto-negotiation is
+disabled. If the MDI-X control mode is set to 'auto', the driver now
+forces a specific, stable mode (ETH_TP_MDI) to prevent the pair
+toggling. This choice of a fixed MDI mode mirrors the behavior the
+hardware would exhibit if the AUTOMDIX_EN strap were configured for a
+fixed MDI connection.
 
 Fixes: 05b35e7eb9a1 ("smsc95xx: add phylib support")
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Cc: Andre Edich <andre.edich@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250703114941.3243890-2-o.rempel@pengutronix.de
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250703114941.3243890-4-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/smsc.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index 36dcf6c7f445d..6d9069a53db1d 100644
+index 6d9069a53db1d..5c3ebb66fceb5 100644
 --- a/drivers/net/phy/smsc.c
 +++ b/drivers/net/phy/smsc.c
-@@ -155,7 +155,8 @@ static int lan87xx_config_aneg(struct phy_device *phydev)
- 			SPECIAL_CTRL_STS_AMDIX_STATE_;
+@@ -143,10 +143,29 @@ static int lan911x_config_init(struct phy_device *phydev)
+ 
+ static int lan87xx_config_aneg(struct phy_device *phydev)
+ {
+-	int rc;
++	u8 mdix_ctrl;
+ 	int val;
++	int rc;
++
++	/* When auto-negotiation is disabled (forced mode), the PHY's
++	 * Auto-MDIX will continue toggling the TX/RX pairs.
++	 *
++	 * To establish a stable link, we must select a fixed MDI mode.
++	 * If the user has not specified a fixed MDI mode (i.e., mdix_ctrl is
++	 * 'auto'), we default to ETH_TP_MDI. This choice of a ETH_TP_MDI mode
++	 * mirrors the behavior the hardware would exhibit if the AUTOMDIX_EN
++	 * strap were configured for a fixed MDI connection.
++	 */
++	if (phydev->autoneg == AUTONEG_DISABLE) {
++		if (phydev->mdix_ctrl == ETH_TP_MDI_AUTO)
++			mdix_ctrl = ETH_TP_MDI;
++		else
++			mdix_ctrl = phydev->mdix_ctrl;
++	} else {
++		mdix_ctrl = phydev->mdix_ctrl;
++	}
+ 
+-	switch (phydev->mdix_ctrl) {
++	switch (mdix_ctrl) {
+ 	case ETH_TP_MDI:
+ 		val = SPECIAL_CTRL_STS_OVRRD_AMDIX_;
  		break;
- 	case ETH_TP_MDI_AUTO:
--		val = SPECIAL_CTRL_STS_AMDIX_ENABLE_;
-+		val = SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
-+			SPECIAL_CTRL_STS_AMDIX_ENABLE_;
- 		break;
- 	default:
- 		return genphy_config_aneg(phydev);
+@@ -172,7 +191,7 @@ static int lan87xx_config_aneg(struct phy_device *phydev)
+ 	rc |= val;
+ 	phy_write(phydev, SPECIAL_CTRL_STS, rc);
+ 
+-	phydev->mdix = phydev->mdix_ctrl;
++	phydev->mdix = mdix_ctrl;
+ 	return genphy_config_aneg(phydev);
+ }
+ 
 -- 
 2.39.5
 
