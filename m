@@ -1,448 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02902E3B14;
-	Tue, 15 Jul 2025 13:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04662EF9C2;
+	Tue, 15 Jul 2025 13:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587198; cv=none; b=d2ZDdVfLuPhJG0xnR7c3RqUvQ83YN2GpOTmtTdoYH58bIz7vPapnf2j68yvcd+3NJVw6YR2pyrSA9cp54e7H25fcpG+yDJZCXga3lesiFti29+vEhAVDPTw4nBbUKlSUZto1S2zUFqfnJ/MJDFhF65qGkKnhIsWk7GBWb3SenoY=
+	t=1752587201; cv=none; b=mEtM1ISyWmjv+wbVWJWmzWfhpUZJijLmPjd6gcwkWdCDrHpKiU3OPqSoO1zUl+3GgkuLaRB5dHeFbeduF4jhfUjqexu4HLuw26jirDX4B/Dzvsnau05Nicjq7jHeP9JyT5aNw5fWLhC23FY2ozl/C2sbEwAgbVEsWCkz+zgjO+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587198; c=relaxed/simple;
-	bh=MdDguX/NgBq/rPaLtbd5h2Gbs69MUp+P9H6GoQ1yNvQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Msm1aP5U6fsRLgZjf8VawKCnza+04a6Eb1pvRmlIgWnsjbMBYKZmKbOGwXvT8pt5P/LTxka0Rn8Zn3mYp3xUT/8xl026H0yJj1h8PPSQRZT8VCDHfJJsZu/Bl6mDt1vK/taRAKCrLCEyV/drN0TGeAvXo0Hod+cW2Io+QdkbSWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqoVaFcy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752587201; c=relaxed/simple;
+	bh=qW0HV8ed9cvAGGxZLCVVizX3CYKsdVvhxEsU3cm2CUk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kWOVZGxYreVeVQGnIvinCi+97H0+NQZCiom1rut2oSqVgK6yCV7uXUGqYEpzx3ZE2zUQLB+IJUt/JpgsDo0I0wNGpT8taATnLgubnN7+nVTYQE/bUSKiOi//uSWRJSM4GE5NDfKmNMX6Adi6dzfXH2nAgCVsYrnBdkwUHjVc8qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LujQUDAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqoVaFcy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45263C4CEE3;
-	Tue, 15 Jul 2025 13:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LujQUDAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AB3C4CEE3;
+	Tue, 15 Jul 2025 13:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587197;
-	bh=MdDguX/NgBq/rPaLtbd5h2Gbs69MUp+P9H6GoQ1yNvQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=lqoVaFcypTyGVSbogYvR2VJ2+D+OlIyRz5uwi7jpAWJXPNWrfwK0jTY3OiWhjxm9A
-	 oHjnhK6ceig3oLM4AzmldudSB+2gDZ0i9NhfmjlljnSyeGCJoP1ytwquyuJjf5++BH
-	 nRroe6oe47cXxhff8roX+UsOu2DIEheZrSzQm2cw=
+	s=korg; t=1752587200;
+	bh=qW0HV8ed9cvAGGxZLCVVizX3CYKsdVvhxEsU3cm2CUk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LujQUDAdmdMBRIXNWJZ/2mUA/eADhQrSy40U1AlxUZcpm8mbiL0tNoNGXpI+wQRqu
+	 VrsppTVkwc1HF+ZMud4WsArnRQOtq3LImrlJ1PoSKijl6/s9m+7/a/zZeNMgiaQA8Z
+	 zEqzkCE8THLz971jOeH82RUrkmD5YqoLdWrhNYvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org
-Subject: [PATCH 6.1 00/88] 6.1.146-rc1 review
-Date: Tue, 15 Jul 2025 15:13:36 +0200
-Message-ID: <20250715130754.497128560@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 04/88] perf: Revert to requiring CAP_SYS_ADMIN for uprobes
+Date: Tue, 15 Jul 2025 15:13:40 +0200
+Message-ID: <20250715130754.677996750@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
+References: <20250715130754.497128560@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.146-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.146-rc1
-X-KernelTest-Deadline: 2025-07-17T13:07+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.146 release.
-There are 88 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Peter Zijlstra <peterz@infradead.org>
+
+[ Upstream commit ba677dbe77af5ffe6204e0f3f547f3ba059c6302 ]
+
+Jann reports that uprobes can be used destructively when used in the
+middle of an instruction. The kernel only verifies there is a valid
+instruction at the requested offset, but due to variable instruction
+length cannot determine if this is an instruction as seen by the
+intended execution stream.
+
+Additionally, Mark Rutland notes that on architectures that mix data
+in the text segment (like arm64), a similar things can be done if the
+data word is 'mistaken' for an instruction.
+
+As such, require CAP_SYS_ADMIN for uprobes.
+
+Fixes: c9e0924e5c2b ("perf/core: open access to probes for CAP_PERFMON privileged process")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/CAG48ez1n4520sq0XrWYDHKiKxE_+WCfAK+qt9qkY4ZiBGmL-5g@mail.gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ kernel/events/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 2761db0365ddc..f815b808db20a 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -10207,7 +10207,7 @@ static int perf_uprobe_event_init(struct perf_event *event)
+ 	if (event->attr.type != perf_uprobe.type)
+ 		return -ENOENT;
+ 
+-	if (!perfmon_capable())
++	if (!capable(CAP_SYS_ADMIN))
+ 		return -EACCES;
+ 
+ 	/*
+-- 
+2.39.5
 
-Responses should be made by Thu, 17 Jul 2025 13:07:32 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.146-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.146-rc1
-
-Namjae Jeon <linkinjeon@kernel.org>
-    ksmbd: fix potential use-after-free in oplock/lease break ack
-
-Yeoreum Yun <yeoreum.yun@arm.com>
-    kasan: remove kasan_find_vm_area() to prevent possible deadlock
-
-Jack Wang <jinpu.wang@ionos.com>
-    x86: Fix X86_FEATURE_VERW_CLEAR definition
-
-Jann Horn <jannh@google.com>
-    x86/mm: Disable hugetlb page table sharing on 32-bit
-
-Dongli Zhang <dongli.zhang@oracle.com>
-    vhost-scsi: protect vq->log_used with vq->mutex
-
-Hans de Goede <hdegoede@redhat.com>
-    Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID
-
-Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-    HID: quirks: Add quirk for 2 Chicony Electronics HP 5MP Cameras
-
-Zhang Heng <zhangheng@kylinos.cn>
-    HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY
-
-Nicolas Pitre <npitre@baylibre.com>
-    vt: add missing notification when switching back to text mode
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix assertion when building free space tree
-
-Akira Inoue <niyarium@gmail.com>
-    HID: lenovo: Add support for ThinkPad X1 Tablet Thin Keyboard Gen2
-
-Xiaowei Li <xiaowei.li@simcom.com>
-    net: usb: qmi_wwan: add SIMCom 8230C composition
-
-Yasmin Fitzgerald <sunoflife1.git@gmail.com>
-    ALSA: hda/realtek - Enable mute LED on HP Pavilion Laptop 15-eg100
-
-Yuzuru10 <yuzuru_10@proton.me>
-    ASoC: amd: yc: add quirk for Acer Nitro ANV15-41 internal mic
-
-Tiwei Bie <tiwei.btw@antgroup.com>
-    um: vector: Reduce stack usage in vector_eth_configure()
-
-Thomas Fourier <fourier.thomas@gmail.com>
-    atm: idt77252: Add missing `dma_map_error()`
-
-Somnath Kotur <somnath.kotur@broadcom.com>
-    bnxt_en: Set DMA unmap len correctly for XDP_REDIRECT
-
-Shravya KN <shravya.k-n@broadcom.com>
-    bnxt_en: Fix DCB ETS validation
-
-Alok Tiwari <alok.a.tiwari@oracle.com>
-    net: ll_temac: Fix missing tx_pending check in ethtools_set_ringparam()
-
-Sean Nyekjaer <sean@geanix.com>
-    can: m_can: m_can_handle_lost_msg(): downgrade msg lost in rx message to debug level
-
-Oleksij Rempel <linux@rempel-privat.de>
-    net: phy: microchip: limit 100M workaround to link-down events on LAN88xx
-
-Mingming Cao <mmc@linux.ibm.com>
-    ibmvnic: Fix hardcoded NUM_RX_STATS/NUM_TX_STATS with dynamic sizeof
-
-Kito Xu <veritas501@foxmail.com>
-    net: appletalk: Fix device refcount leak in atrtr_create()
-
-Eric Dumazet <edumazet@google.com>
-    netfilter: flowtable: account for Ethernet header in nf_flow_pppoe_proto()
-
-Chao Yu <chao@kernel.org>
-    erofs: fix to add missing tracepoint in erofs_read_folio()
-
-Gao Xiang <xiang@kernel.org>
-    erofs: adapt folios for z_erofs_read_folio()
-
-Gao Xiang <xiang@kernel.org>
-    erofs: avoid on-stack pagepool directly passed by arguments
-
-Gao Xiang <xiang@kernel.org>
-    erofs: allocate extra bvec pages directly instead of retrying
-
-Yue Hu <huyue2@coolpad.com>
-    erofs: clean up z_erofs_pcluster_readmore()
-
-Yue Hu <huyue2@coolpad.com>
-    erofs: remove the member readahead from struct z_erofs_decompress_frontend
-
-Zheng Qixing <zhengqixing@huawei.com>
-    nbd: fix uaf in nbd_genl_connect() error path
-
-Nigel Croxon <ncroxon@redhat.com>
-    raid10: cleanup memleak at raid10_make_request
-
-Wang Jinchao <wangjinchao600@gmail.com>
-    md/raid1: Fix stack memory use after return in raid1_reshape
-
-Mikko Perttunen <mperttunen@nvidia.com>
-    drm/tegra: nvdec: Fix dma_alloc_coherent error check
-
-Daniil Dulov <d.dulov@aladdin.ru>
-    wifi: zd1211rw: Fix potential NULL pointer dereference in zd_mac_tx_to_dev()
-
-Zhang Rui <rui.zhang@intel.com>
-    platform/x86: think-lmi: Fix sysfs group cleanup
-
-Kuen-Han Tsai <khtsai@google.com>
-    usb: dwc3: Abort suspend on soft disconnect failure
-
-Pawel Laszczak <pawell@cadence.com>
-    usb: cdnsp: Fix issue with CV Bad Descriptor test
-
-Lee Jones <lee@kernel.org>
-    usb: cdnsp: Replace snprintf() with the safer scnprintf() variant
-
-Pawel Laszczak <pawell@cadence.com>
-    usb:cdnsp: remove TRB_FLUSH_ENDPOINT command
-
-Nilton Perim Neto <niltonperimneto@gmail.com>
-    Input: xpad - support Acer NGR 200 Controller
-
-Raju Rangoju <Raju.Rangoju@amd.com>
-    usb: xhci: quirk for data loss in ISOC transfers
-
-Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-    xhci: Allow RPM on the USB controller (1022:43f7) by default
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: propagate last_unlink_trans earlier when doing a rmdir
-
-Shivank Garg <shivankg@amd.com>
-    fs: export anon_inode_make_secure_inode() and fix secretmem LSM bypass
-
-Jakub Kicinski <kuba@kernel.org>
-    netlink: make sure we allow at least one dump skb
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    netlink: Fix rmem check in netlink_broadcast_deliver().
-
-Al Viro <viro@zeniv.linux.org.uk>
-    ksmbd: fix a mount write count leak in ksmbd_vfs_kern_path_locked()
-
-Stefan Metzmacher <metze@samba.org>
-    smb: server: make use of rdma_destroy_qp()
-
-Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-    pwm: mediatek: Ensure to disable clocks in error path
-
-Wei Yang <richard.weiyang@gmail.com>
-    maple_tree: fix mt_destroy_walk() on root leaf node
-
-Achill Gilgenast <fossdd@pwned.life>
-    kallsyms: fix build without execinfo
-
-Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-    Revert "ACPI: battery: negate current when discharging"
-
-Kuen-Han Tsai <khtsai@google.com>
-    usb: gadget: u_serial: Fix race condition in TTY wakeup
-
-Simona Vetter <simona.vetter@ffwll.ch>
-    drm/gem: Fix race in drm_gem_handle_create_tail()
-
-Christian König <christian.koenig@amd.com>
-    drm/ttm: fix error handling in ttm_buffer_object_transfer
-
-Matthew Brost <matthew.brost@intel.com>
-    drm/sched: Increment job count before swapping tail spsc queue
-
-Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>
-    wifi: prevent A-MSDU attacks in mesh networks
-
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-    pinctrl: qcom: msm: mark certain pins as invalid for interrupts
-
-Håkon Bugge <haakon.bugge@oracle.com>
-    md/md-bitmap: fix GPF in bitmap_get_stats()
-
-Guillaume Nault <gnault@redhat.com>
-    gre: Fix IPv6 multicast route creation.
-
-Sean Christopherson <seanjc@google.com>
-    KVM: SVM: Reject SEV{-ES} intra host migration if vCPU creation is in-flight
-
-David Woodhouse <dwmw@amazon.co.uk>
-    KVM: x86/xen: Allow 'out of range' event channel ports in IRQ routing table.
-
-JP Kobryn <inwardvessel@gmail.com>
-    x86/mce: Make sure CMCI banks are cleared during shutdown on Intel
-
-Yazen Ghannam <yazen.ghannam@amd.com>
-    x86/mce: Don't remove sysfs if thresholding sysfs init fails
-
-Yazen Ghannam <yazen.ghannam@amd.com>
-    x86/mce/amd: Fix threshold limit reset
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    ipmi:msghandler: Fix potential memory corruption in ipmi_create_user()
-
-Alexey Dobriyan <adobriyan@gmail.com>
-    x86/boot: Compile boot code with -std=gnu11 too
-
-David Howells <dhowells@redhat.com>
-    rxrpc: Fix oops due to non-existence of prealloc backlog struct
-
-Liam R. Howlett <Liam.Howlett@oracle.com>
-    maple_tree: fix MA_STATE_PREALLOC flag in mas_preallocate()
-
-Victor Nogueira <victor@mojatatu.com>
-    net/sched: Abort __tc_modify_qdisc if parent class does not exist
-
-Yue Haibing <yuehaibing@huawei.com>
-    atm: clip: Fix NULL pointer dereference in vcc_sendmsg()
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    atm: clip: Fix infinite recursive call of clip_push().
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    atm: clip: Fix memory leak of struct clip_vcc.
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    atm: clip: Fix potential null-ptr-deref in to_atmarpd().
-
-Oleksij Rempel <linux@rempel-privat.de>
-    net: phy: smsc: Fix link failure in forced mode with Auto-MDIX
-
-Oleksij Rempel <linux@rempel-privat.de>
-    net: phy: smsc: Fix Auto-MDIX configuration when disabled by strap
-
-Michal Luczaj <mhal@rbox.co>
-    vsock: Fix IOCTL_VM_SOCKETS_GET_LOCAL_CID to check also `transport_local`
-
-Michal Luczaj <mhal@rbox.co>
-    vsock: Fix transport_* TOCTOU
-
-Michal Luczaj <mhal@rbox.co>
-    vsock: Fix transport_{g2h,h2g} TOCTOU
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    tipc: Fix use-after-free in tipc_conn_close().
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    netlink: Fix wraparounds of sk->sk_rmem_alloc.
-
-Al Viro <viro@zeniv.linux.org.uk>
-    fix proc_sys_compare() handling of in-lookup dentries
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: hci_sync: Fix not disabling advertising instance
-
-Peter Zijlstra <peterz@infradead.org>
-    perf: Revert to requiring CAP_SYS_ADMIN for uprobes
-
-Shengjiu Wang <shengjiu.wang@nxp.com>
-    ASoC: fsl_asrc: use internal measured ratio for non-ideal ratio mode
-
-Rong Zhang <i@rong.moe>
-    platform/x86: ideapad-laptop: use usleep_range() for EC polling
-
-Kaustabh Chakraborty <kauschluss@disroot.org>
-    drm/exynos: exynos7_drm_decon: add vblank check in IRQ handling
-
-
--------------
-
-Diffstat:
-
- Makefile                                      |   4 +-
- arch/um/drivers/vector_kern.c                 |  42 +--
- arch/x86/Kconfig                              |   2 +-
- arch/x86/Makefile                             |   2 +-
- arch/x86/include/asm/cpufeatures.h            |   2 +-
- arch/x86/kernel/cpu/mce/amd.c                 |  15 +-
- arch/x86/kernel/cpu/mce/core.c                |   8 +-
- arch/x86/kernel/cpu/mce/intel.c               |   1 +
- arch/x86/kvm/svm/sev.c                        |   4 +
- arch/x86/kvm/xen.c                            |  15 +-
- drivers/acpi/battery.c                        |  19 +-
- drivers/atm/idt77252.c                        |   5 +
- drivers/block/nbd.c                           |   6 +-
- drivers/char/ipmi/ipmi_msghandler.c           |   3 +-
- drivers/gpu/drm/drm_gem.c                     |  10 +-
- drivers/gpu/drm/exynos/exynos7_drm_decon.c    |   4 +
- drivers/gpu/drm/tegra/nvdec.c                 |   6 +-
- drivers/gpu/drm/ttm/ttm_bo_util.c             |  13 +-
- drivers/hid/hid-ids.h                         |   6 +
- drivers/hid/hid-lenovo.c                      |   8 +
- drivers/hid/hid-multitouch.c                  |   8 +-
- drivers/hid/hid-quirks.c                      |   3 +
- drivers/input/joystick/xpad.c                 |   2 +
- drivers/input/keyboard/atkbd.c                |   3 +-
- drivers/md/md-bitmap.c                        |   3 +-
- drivers/md/raid1.c                            |   1 +
- drivers/md/raid10.c                           |  10 +-
- drivers/net/can/m_can/m_can.c                 |   2 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c |   2 +
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |   2 +-
- drivers/net/ethernet/ibm/ibmvnic.h            |   8 +-
- drivers/net/ethernet/xilinx/ll_temac_main.c   |   2 +-
- drivers/net/phy/microchip.c                   |   2 +-
- drivers/net/phy/smsc.c                        |  28 +-
- drivers/net/usb/qmi_wwan.c                    |   1 +
- drivers/net/wireless/zydas/zd1211rw/zd_mac.c  |   6 +-
- drivers/pinctrl/qcom/pinctrl-msm.c            |  20 ++
- drivers/platform/x86/ideapad-laptop.c         |  19 +-
- drivers/powercap/intel_rapl_common.c          |  22 +-
- drivers/pwm/pwm-mediatek.c                    |  13 +-
- drivers/tty/vt/vt.c                           |   1 +
- drivers/usb/cdns3/cdnsp-debug.h               | 358 +++++++++++++-------------
- drivers/usb/cdns3/cdnsp-ep0.c                 |  18 +-
- drivers/usb/cdns3/cdnsp-gadget.c              |   6 +-
- drivers/usb/cdns3/cdnsp-gadget.h              |  11 +-
- drivers/usb/cdns3/cdnsp-ring.c                |  27 +-
- drivers/usb/dwc3/core.c                       |   9 +-
- drivers/usb/dwc3/gadget.c                     |  22 +-
- drivers/usb/gadget/function/u_serial.c        |   6 +-
- drivers/usb/host/xhci-mem.c                   |   4 +
- drivers/usb/host/xhci-pci.c                   |  30 ++-
- drivers/usb/host/xhci.h                       |   1 +
- drivers/vhost/scsi.c                          |   7 +-
- fs/anon_inodes.c                              |  23 +-
- fs/btrfs/free-space-tree.c                    |  16 +-
- fs/btrfs/inode.c                              |  28 +-
- fs/erofs/data.c                               |   2 +
- fs/erofs/zdata.c                              | 124 ++++-----
- fs/proc/inode.c                               |   2 +-
- fs/proc/proc_sysctl.c                         |  18 +-
- fs/smb/server/smb2pdu.c                       |  29 +--
- fs/smb/server/transport_rdma.c                |   5 +-
- fs/smb/server/vfs.c                           |   1 +
- include/drm/drm_file.h                        |   3 +
- include/drm/spsc_queue.h                      |   4 +-
- include/linux/fs.h                            |   2 +
- include/net/netfilter/nf_flow_table.h         |   2 +-
- include/trace/events/erofs.h                  |  16 +-
- kernel/events/core.c                          |   2 +-
- lib/maple_tree.c                              |   7 +-
- mm/kasan/report.c                             |  13 +-
- mm/secretmem.c                                |  11 +-
- net/appletalk/ddp.c                           |   1 +
- net/atm/clip.c                                |  64 +++--
- net/bluetooth/hci_sync.c                      |   2 +-
- net/ipv6/addrconf.c                           |   9 +-
- net/netlink/af_netlink.c                      |  90 ++++---
- net/rxrpc/call_accept.c                       |   3 +
- net/sched/sch_api.c                           |  23 +-
- net/tipc/topsrv.c                             |   2 +
- net/vmw_vsock/af_vsock.c                      |  57 +++-
- net/wireless/util.c                           |  52 +++-
- sound/pci/hda/patch_realtek.c                 |   1 +
- sound/soc/amd/yc/acp6x-mach.c                 |   7 +
- sound/soc/fsl/fsl_asrc.c                      |   3 +-
- tools/include/linux/kallsyms.h                |   4 +
- 86 files changed, 876 insertions(+), 582 deletions(-)
 
 
