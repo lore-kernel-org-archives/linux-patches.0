@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4E72E2657;
-	Tue, 15 Jul 2025 13:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B892472AE;
+	Tue, 15 Jul 2025 13:20:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585641; cv=none; b=Ms05ZdRb4fuZyMM3Atlc2CVkhY2B+yiZHEKY+AWQPP+8B6Zxe2Gc1iCJ4joxcVOaN/3E31S1Q2GsmELESjCaDrr+c4nFCtsM3Qz4rWPLlUQG6LxbpuClxhtSM6d4v9Vwxx6F6lOdtlMYytokpBBrjzwiyQq7wj75+fGGqA1BqL0=
+	t=1752585643; cv=none; b=dMyacPTrDC7nEQN3M4f9fH/bubfQMNOvA4ZSywOY1oFRRpUQ0HYO8xmKDt/hv257/C48hLO3rvUN6iOfAY7/bobplazhx1lk22Rvhyv3CCabd0w7/Bq7pmiAjq2K9WO/T5hHXKSmzjZ8EM7EeCFSazmknvW+9H/5mjIzbMIWdXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585641; c=relaxed/simple;
-	bh=m2v2wEfusWAqA5yW+rhm4PBoCdTPP5wIVeu3fezLreE=;
+	s=arc-20240116; t=1752585643; c=relaxed/simple;
+	bh=5nbe3jQ/JAfpCwothgCGTCSEMVCwq34PoJt5XtjGXCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OU5CNlhFWCtAXagBW9falveFunkCiusI46AwA6qVCuW77Ms7Jgo5hm/BrcHpudoANBq21l/vyblZxHNLCIOc+JykzDQ+adFDxOhaBdnmdOneu+8HPYyImJP4rZA8OKu8SbxDPDf4N/SKvyZOM28Uz7AMUq4y4Ulgvt/hpPU4wxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNxWx28g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ti0z3FCu+4oJU30WE/lrAzqkaBN3LyaLK3KNZfLmlGn6QIC7NY7PUBZT7ARFkpWBJVx7cFXavfikRnUyLwaR5bURwxTdiDV8tsCjGV4Wnn/C7WNRrYEwBIejPvn4NuJlaL1KOeEOmfN8sTzbHw7lPZvcbEB8d4pyhrMKdLM0pCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEkLZ2jR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNxWx28g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877A7C4CEE3;
-	Tue, 15 Jul 2025 13:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEkLZ2jR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA4CC4CEE3;
+	Tue, 15 Jul 2025 13:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585641;
-	bh=m2v2wEfusWAqA5yW+rhm4PBoCdTPP5wIVeu3fezLreE=;
+	s=korg; t=1752585643;
+	bh=5nbe3jQ/JAfpCwothgCGTCSEMVCwq34PoJt5XtjGXCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNxWx28gskxPVXAkUXLBbuPLIz9ttg17wZbJ7RA6oK13IR7TSAf7M5qlOS8zfjIf1
-	 Pls8JREf97o2UAIc7teuVA1rhLHJ6n8gG5CrxTQSACAkXjJW3+NRhGlvvi8+7VYpMU
-	 bem7H7QnpyyQgXjm4F+5Fj6G2LogsG8uBEnAknV0=
+	b=mEkLZ2jRXzl9PPerhap1bI7eJzBczKCWwhHzyj7hirUi3TAboMkQz+WOovp2ZH7HV
+	 PDidXzIvmjlRsYodg4YIhJCwjn00V8tYoNbidbjLzN6fm3G1nx8ulsvO/0mXcIZ11N
+	 XARJpDknbeZKD9OFKEIp4J2HKQlEtUPz/q6QabR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/163] drm/nouveau/gsp: fix potential leak of memory used during acpi init
-Date: Tue, 15 Jul 2025 15:13:03 +0200
-Message-ID: <20250715130813.467720941@linuxfoundation.org>
+	Wei Yang <richard.weiyang@gmail.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 087/163] maple_tree: fix mt_destroy_walk() on root leaf node
+Date: Tue, 15 Jul 2025 15:12:35 +0200
+Message-ID: <20250715130812.216350824@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,96 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Skeggs <bskeggs@nvidia.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit d133036a0b23d3ef781d067ccdea6bbfb381e0cf ]
+commit ea9b77f98d94c4d5c1bd1ac1db078f78b40e8bf5 upstream.
 
-If any of the ACPI calls fail, memory allocated for the input buffer
-would be leaked.  Fix failure paths to free allocated memory.
+On destroy, we should set each node dead.  But current code miss this when
+the maple tree has only the root node.
 
-Also add checks to ensure the allocations succeeded in the first place.
+The reason is mt_destroy_walk() leverage mte_destroy_descend() to set node
+dead, but this is skipped since the only root node is a leaf.
 
-Reported-by: Danilo Krummrich <dakr@kernel.org>
-Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
-Signed-off-by: Ben Skeggs <bskeggs@nvidia.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20250617040036.2932-1-bskeggs@nvidia.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes this by setting the node dead if it is a leaf.
+
+Link: https://lore.kernel.org/all/20250407231354.11771-1-richard.weiyang@gmail.com/
+Link: https://lkml.kernel.org/r/20250624191841.64682-1-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/nouveau/nvkm/subdev/gsp/r535.c    | 20 +++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ lib/maple_tree.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-index fc84ca214f247..3ad4f6e9a8ac2 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-@@ -1454,7 +1454,6 @@ r535_gsp_acpi_caps(acpi_handle handle, CAPS_METHOD_DATA *caps)
- 	union acpi_object argv4 = {
- 		.buffer.type    = ACPI_TYPE_BUFFER,
- 		.buffer.length  = 4,
--		.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL),
- 	}, *obj;
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -5335,6 +5335,7 @@ static void mt_destroy_walk(struct maple
+ 	struct maple_enode *start;
  
- 	caps->status = 0xffff;
-@@ -1462,17 +1461,22 @@ r535_gsp_acpi_caps(acpi_handle handle, CAPS_METHOD_DATA *caps)
- 	if (!acpi_check_dsm(handle, &NVOP_DSM_GUID, NVOP_DSM_REV, BIT_ULL(0x1a)))
- 		return;
- 
-+	argv4.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL);
-+	if (!argv4.buffer.pointer)
-+		return;
-+
- 	obj = acpi_evaluate_dsm(handle, &NVOP_DSM_GUID, NVOP_DSM_REV, 0x1a, &argv4);
- 	if (!obj)
--		return;
-+		goto done;
- 
- 	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
- 	    WARN_ON(obj->buffer.length != 4))
--		return;
-+		goto done;
- 
- 	caps->status = 0;
- 	caps->optimusCaps = *(u32 *)obj->buffer.pointer;
- 
-+done:
- 	ACPI_FREE(obj);
- 
- 	kfree(argv4.buffer.pointer);
-@@ -1489,24 +1493,28 @@ r535_gsp_acpi_jt(acpi_handle handle, JT_METHOD_DATA *jt)
- 	union acpi_object argv4 = {
- 		.buffer.type    = ACPI_TYPE_BUFFER,
- 		.buffer.length  = sizeof(caps),
--		.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL),
- 	}, *obj;
- 
- 	jt->status = 0xffff;
- 
-+	argv4.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL);
-+	if (!argv4.buffer.pointer)
-+		return;
-+
- 	obj = acpi_evaluate_dsm(handle, &JT_DSM_GUID, JT_DSM_REV, 0x1, &argv4);
- 	if (!obj)
--		return;
-+		goto done;
- 
- 	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
- 	    WARN_ON(obj->buffer.length != 4))
--		return;
-+		goto done;
- 
- 	jt->status = 0;
- 	jt->jtCaps = *(u32 *)obj->buffer.pointer;
- 	jt->jtRevId = (jt->jtCaps & 0xfff00000) >> 20;
- 	jt->bSBIOSCaps = 0;
- 
-+done:
- 	ACPI_FREE(obj);
- 
- 	kfree(argv4.buffer.pointer);
--- 
-2.39.5
-
+ 	if (mte_is_leaf(enode)) {
++		mte_set_node_dead(enode);
+ 		node->type = mte_node_type(enode);
+ 		goto free_leaf;
+ 	}
 
 
