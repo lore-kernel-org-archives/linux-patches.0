@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481102E2F0C;
-	Tue, 15 Jul 2025 13:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100B62EA17D;
+	Tue, 15 Jul 2025 13:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586809; cv=none; b=qyQ7lA0l58vZtuw5/ntujZBTHudYqJwDqGBmSZEx6Dt1JWoNONSsyD2ERhhWf71SMHAQZ0poqhFLohTpMXdOO5fLM2F/xW+UCoF43DttLa2FOAX9/LoWeEHMJj02bolXOS5wcTnkpGPbX3zHvZ1X4sYpDLjp02oCPiP7JwUrldU=
+	t=1752586812; cv=none; b=tVpIIU5iV2GZOUSaVy3oyoo17qmeufPCSv4id0eRSRoxwfigS0bXgRa5C5LVY2H7qPoJmD5hsrmpicR2S2wfaWgp/9CY8LYf/HT1muhjmP8Dy1TcOgD0BeBtrA+blQsMfqRCxVcDJW3KyRHBYJgLQiMnDwEyxvAVw2fViWXYakw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586809; c=relaxed/simple;
-	bh=aplGWxuyWnpriI8/kKa7PVnD8iQ34TgUjxhgXLJ3L0s=;
+	s=arc-20240116; t=1752586812; c=relaxed/simple;
+	bh=OE4yhTJDPHMPVO0zHqgAzSCoebDT8gcPiyJdsM3fMxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7FK/QOCxwwOFctEJZws4d3VRm5qUCwTSXSnp0zG7hc5vJUzCO3TbUFWFnxHVHck6MfjXR/jGK2na20sZy6K3SIGshHl+Gkoe5/ZONZCfLWClZxFUaI6bxo6MZWiaX8hM7O1jpiUIuREZOD1s7gPsFepLysblHUMiekNeNhSOrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxLnXjex; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5aOJc7zGDDz3/x2uKJQKJnBf2NQf6HCKCBq3wrMqFigkoCvx/1ElId4vDphpVgEk7wu7CpunyMGIlUqzG/K+oQtuy9FLsuzWrUtqiESZqVz4quhA8RvOOqyKTfBRo2pvYCF2HJxe2l/mLdbcRn+UFXg4pOZvWEi135AxXDMKLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPb4ppGa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxLnXjex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D007EC4CEE3;
-	Tue, 15 Jul 2025 13:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPb4ppGa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FBFC4CEF1;
+	Tue, 15 Jul 2025 13:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586809;
-	bh=aplGWxuyWnpriI8/kKa7PVnD8iQ34TgUjxhgXLJ3L0s=;
+	s=korg; t=1752586811;
+	bh=OE4yhTJDPHMPVO0zHqgAzSCoebDT8gcPiyJdsM3fMxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxLnXjexsxSApLAZy4Zyb+60/q8Ml3bUzyCVlASpY4I8pvgxgkE3yWCRCW0G0CdXT
-	 FFjOeYeYbgVuDIwj4fErrdAKGHKEo1q0jQLafqE5DJ6/hUQ1YfVldx1Nj/jWqYVjBY
-	 VFLePFkLHCYdxkSQsnsKtXWWcF9Gl6nDymSZu6Gc=
+	b=EPb4ppGafnfx5/TaSUtwCBfpkJ/J/6ASxPHM6pjEIS1G8778grq0j66gqGu0TZAu9
+	 LXV7M0oZiLsSmP/TqNIHtCPN2imr92c2YpvQAHBsufxWV/4zdeWhbxhdQ2rzPBv36p
+	 LDtRKbDlK/g7lnWlAUxsxk3qVJQTiua/bn3Xkl5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Luo Jie <quic_luoj@quicinc.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 025/192] arm64/mm: Drop wrong writes into TCR2_EL1
-Date: Tue, 15 Jul 2025 15:12:00 +0200
-Message-ID: <20250715130815.874397237@linuxfoundation.org>
+Subject: [PATCH 6.15 026/192] net: phy: qcom: move the WoL function to shared library
+Date: Tue, 15 Jul 2025 15:12:01 +0200
+Message-ID: <20250715130815.914234904@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -57,49 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Luo Jie <quic_luoj@quicinc.com>
 
-[ Upstream commit 9dd1757493416310a5e71146a08bc228869f8dae ]
+[ Upstream commit e31cf3cce2102af984656fed6e2254cbdd46da02 ]
 
-Register X0 contains PIE_E1_ASM and should not be written into REG_TCR2_EL1
-which could have an adverse impact otherwise. This has remained undetected
-till now probably because current value for PIE_E1_ASM (0xcc880e0ac0800000)
-clears TCR2_EL1 which again gets set subsequently with 'tcr2' after testing
-for FEAT_TCR2.
+Move the WoL (Wake-on-LAN) functionality to a shared library to enable
+its reuse by the QCA808X PHY driver, incorporating support for WoL
+functionality similar to the implementation in at8031_set_wol().
 
-Drop this unwarranted 'msr' which is a stray change from an earlier commit.
-This line got re-introduced when rebasing on top of the commit 926b66e2ebc8
-("arm64: setup: name 'tcr2' register").
-
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Fixes: 7052e808c446 ("arm64/sysreg: Get rid of the TCR2_EL1x SysregFields")
-Acked-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20250704063812.298914-1-anshuman.khandual@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+Link: https://patch.msgid.link/20250704-qcom_phy_wol_support-v1-1-053342b1538d@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4ab9ada765b7 ("net: phy: qcom: qca808x: Fix WoL issue by utilizing at8031_set_wol()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/proc.S | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/phy/qcom/at803x.c       | 27 ---------------------------
+ drivers/net/phy/qcom/qcom-phy-lib.c | 25 +++++++++++++++++++++++++
+ drivers/net/phy/qcom/qcom.h         |  5 +++++
+ 3 files changed, 30 insertions(+), 27 deletions(-)
 
-diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
-index fb30c8804f87b..46a18af52980d 100644
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -533,7 +533,6 @@ alternative_else_nop_endif
- #undef PTE_MAYBE_SHARED
+diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
+index 26350b962890b..8f26e395e39f9 100644
+--- a/drivers/net/phy/qcom/at803x.c
++++ b/drivers/net/phy/qcom/at803x.c
+@@ -26,9 +26,6 @@
  
- 	orr	tcr2, tcr2, TCR2_EL1_PIE
--	msr	REG_TCR2_EL1, x0
+ #define AT803X_LED_CONTROL			0x18
  
- .Lskip_indirection:
+-#define AT803X_PHY_MMD3_WOL_CTRL		0x8012
+-#define AT803X_WOL_EN				BIT(5)
+-
+ #define AT803X_REG_CHIP_CONFIG			0x1f
+ #define AT803X_BT_BX_REG_SEL			0x8000
  
+@@ -866,30 +863,6 @@ static int at8031_config_init(struct phy_device *phydev)
+ 	return at803x_config_init(phydev);
+ }
+ 
+-static int at8031_set_wol(struct phy_device *phydev,
+-			  struct ethtool_wolinfo *wol)
+-{
+-	int ret;
+-
+-	/* First setup MAC address and enable WOL interrupt */
+-	ret = at803x_set_wol(phydev, wol);
+-	if (ret)
+-		return ret;
+-
+-	if (wol->wolopts & WAKE_MAGIC)
+-		/* Enable WOL function for 1588 */
+-		ret = phy_modify_mmd(phydev, MDIO_MMD_PCS,
+-				     AT803X_PHY_MMD3_WOL_CTRL,
+-				     0, AT803X_WOL_EN);
+-	else
+-		/* Disable WoL function for 1588 */
+-		ret = phy_modify_mmd(phydev, MDIO_MMD_PCS,
+-				     AT803X_PHY_MMD3_WOL_CTRL,
+-				     AT803X_WOL_EN, 0);
+-
+-	return ret;
+-}
+-
+ static int at8031_config_intr(struct phy_device *phydev)
+ {
+ 	struct at803x_priv *priv = phydev->priv;
+diff --git a/drivers/net/phy/qcom/qcom-phy-lib.c b/drivers/net/phy/qcom/qcom-phy-lib.c
+index d28815ef56bbf..af7d0d8e81be5 100644
+--- a/drivers/net/phy/qcom/qcom-phy-lib.c
++++ b/drivers/net/phy/qcom/qcom-phy-lib.c
+@@ -115,6 +115,31 @@ int at803x_set_wol(struct phy_device *phydev,
+ }
+ EXPORT_SYMBOL_GPL(at803x_set_wol);
+ 
++int at8031_set_wol(struct phy_device *phydev,
++		   struct ethtool_wolinfo *wol)
++{
++	int ret;
++
++	/* First setup MAC address and enable WOL interrupt */
++	ret = at803x_set_wol(phydev, wol);
++	if (ret)
++		return ret;
++
++	if (wol->wolopts & WAKE_MAGIC)
++		/* Enable WOL function for 1588 */
++		ret = phy_modify_mmd(phydev, MDIO_MMD_PCS,
++				     AT803X_PHY_MMD3_WOL_CTRL,
++				     0, AT803X_WOL_EN);
++	else
++		/* Disable WoL function for 1588 */
++		ret = phy_modify_mmd(phydev, MDIO_MMD_PCS,
++				     AT803X_PHY_MMD3_WOL_CTRL,
++				     AT803X_WOL_EN, 0);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(at8031_set_wol);
++
+ void at803x_get_wol(struct phy_device *phydev,
+ 		    struct ethtool_wolinfo *wol)
+ {
+diff --git a/drivers/net/phy/qcom/qcom.h b/drivers/net/phy/qcom/qcom.h
+index 4bb541728846d..7f7151c8bacaa 100644
+--- a/drivers/net/phy/qcom/qcom.h
++++ b/drivers/net/phy/qcom/qcom.h
+@@ -172,6 +172,9 @@
+ #define AT803X_LOC_MAC_ADDR_16_31_OFFSET	0x804B
+ #define AT803X_LOC_MAC_ADDR_32_47_OFFSET	0x804A
+ 
++#define AT803X_PHY_MMD3_WOL_CTRL		0x8012
++#define AT803X_WOL_EN				BIT(5)
++
+ #define AT803X_DEBUG_ADDR			0x1D
+ #define AT803X_DEBUG_DATA			0x1E
+ 
+@@ -215,6 +218,8 @@ int at803x_debug_reg_mask(struct phy_device *phydev, u16 reg,
+ int at803x_debug_reg_write(struct phy_device *phydev, u16 reg, u16 data);
+ int at803x_set_wol(struct phy_device *phydev,
+ 		   struct ethtool_wolinfo *wol);
++int at8031_set_wol(struct phy_device *phydev,
++		   struct ethtool_wolinfo *wol);
+ void at803x_get_wol(struct phy_device *phydev,
+ 		    struct ethtool_wolinfo *wol);
+ int at803x_ack_interrupt(struct phy_device *phydev);
 -- 
 2.39.5
 
