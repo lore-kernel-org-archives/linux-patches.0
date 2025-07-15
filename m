@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3402E3AF9;
-	Tue, 15 Jul 2025 13:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2893FBE4A;
+	Tue, 15 Jul 2025 13:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586683; cv=none; b=qzaCjA7mjjszZYf+l1TfDDA/oNzEpJMdKVRdE2ErToLaSeW/3yzt5vj5ilP+/VhMVxTDhuL++7cA0LGqtijZtnK1rSr/UqAAWTiBNqeyDfktNV/kLGkZYLGU0qCFdpEUgamAz50NEDgsYKBaUkGHdKme7mGxt+daYCDqK2wjlZ4=
+	t=1752586685; cv=none; b=kVpCQIcz1RlvICW5zkG0TgHNGLeYE8uUNri05kzFI4l9zzZBiUfG7FqiW/ufkw7Jn/WqWmSHbGwIBDU7o3VHFKfiWYo9pET0fWR1KOhB0n8eME0Pbavz6EhDlNuTJXRiiLDjbLiX7yYckHvzfxClDtrsissj+4E0wlXQZQNxpeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586683; c=relaxed/simple;
-	bh=IffMIAgBKPGn7hqzCQBOKgaQEFtZUHklxpU00w6B9DM=;
+	s=arc-20240116; t=1752586685; c=relaxed/simple;
+	bh=+LVFQh0Ztl2eEZrpu2z0qAj2USBvqOx0nxZVxvIuIrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5xaWbsQm93CIAaKXLXbrWUZMEZPWd9ZaTK1F+RjXt/NgZxVXRqWUeNFBlpBpjZZ6zfmM5Osda0bTUlUbxYhX1Y2k/Lr0v2kg/8Ry3ibGttzzXJLy0F92Xc5Xz5pRI2nuWYIHKZtSNwh5N3zZHD133ew+pV9q2ZookNIiBWKWIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiNGkPVm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kd+9X5xoiUWjU6ciJMdq3eF/L+6M3rHoCMvbqarPYCkcJiaGX+eF79qrQdcPKnkKEuPPkUdZOJILTBpkmPmEz18wojrw0h492lEpi0MOHfOP01M8egBqtWOm+HxuB/qpQ0uzzQnClSrrchxFFjcVXhCyth5exwn/hLthWnmqon8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2+9IHmU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiNGkPVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19496C4CEE3;
-	Tue, 15 Jul 2025 13:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2+9IHmU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB4DC4CEF1;
+	Tue, 15 Jul 2025 13:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586682;
-	bh=IffMIAgBKPGn7hqzCQBOKgaQEFtZUHklxpU00w6B9DM=;
+	s=korg; t=1752586685;
+	bh=+LVFQh0Ztl2eEZrpu2z0qAj2USBvqOx0nxZVxvIuIrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HiNGkPVmCYbXwn/SDv61HwmVhHdyvtTh4nj68ppom25AprFk4uUJpBFZMEY4IuFay
-	 htGQY1JPjXRCCi1a7GfUpiN8vODLbb5p9jpEIkwBORHw5omHE6CQwnzMj5zYfQZ/K3
-	 TlndCWXQiuf53C2ScupcvARRCgsPF567xDgcYLcU=
+	b=q2+9IHmUCL1t2TxjuOF7FaJJXNyb/NJgJW0viA1NmVjaawS3bmp3W/Bs2uFYHgRQG
+	 ZgdpUpqrn+mEi6Jaca5cDM+wimA3EzKmB5vdTy+C9ojTQDO0XMjZTtlXGVJLK9Fdn2
+	 x0Nn9mk4B90CWgLKB5pwAPaltYZJg8zkuNGZ+rOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.15 001/192] eventpoll: dont decrement ep refcount while still holding the ep mutex
-Date: Tue, 15 Jul 2025 15:11:36 +0200
-Message-ID: <20250715130814.919965446@linuxfoundation.org>
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Shiju Jose <shiju.jose@huawei.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 010/192] EDAC: Initialize EDAC features sysfs attributes
+Date: Tue, 15 Jul 2025 15:11:45 +0200
+Message-ID: <20250715130815.273423010@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -53,111 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 upstream.
+[ Upstream commit 1e14ea901dc8d976d355ddc3e0de84ee86ef0596 ]
 
-Jann Horn points out that epoll is decrementing the ep refcount and then
-doing a
+Fix the lockdep splat caused by missing sysfs_attr_init() calls for the
+recently added EDAC feature's sysfs attributes.
 
-    mutex_unlock(&ep->mtx);
+In lockdep_init_map_type(), the check for the lock-class key if
+(!static_obj(key) && !is_dynamic_key(key)) causes the splat.
 
-afterwards. That's very wrong, because it can lead to a use-after-free.
+  Backtrace:
+  RIP: 0010:lockdep_init_map_type
+  Call Trace:
+   __kernfs_create_file
+  sysfs_add_file_mode_ns
+  internal_create_group
+  internal_create_groups
+  device_add
+  ? __init_waitqueue_head
+  edac_dev_register
+  devm_cxl_memdev_edac_register
+  ? lock_acquire
+  ? find_held_lock
+  ? cxl_mem_probe
+  ? cxl_mem_probe
+  ? lockdep_hardirqs_on
+  ? cxl_mem_probe
+  cxl_mem_probe
 
-That pattern is actually fine for the very last reference, because the
-code in question will delay the actual call to "ep_free(ep)" until after
-it has unlocked the mutex.
+  [ bp: Massage. ]
 
-But it's wrong for the much subtler "next to last" case when somebody
-*else* may also be dropping their reference and free the ep while we're
-still using the mutex.
-
-Note that this is true even if that other user is also using the same ep
-mutex: mutexes, unlike spinlocks, can not be used for object ownership,
-even if they guarantee mutual exclusion.
-
-A mutex "unlock" operation is not atomic, and as one user is still
-accessing the mutex as part of unlocking it, another user can come in
-and get the now released mutex and free the data structure while the
-first user is still cleaning up.
-
-See our mutex documentation in Documentation/locking/mutex-design.rst,
-in particular the section [1] about semantics:
-
-	"mutex_unlock() may access the mutex structure even after it has
-	 internally released the lock already - so it's not safe for
-	 another context to acquire the mutex and assume that the
-	 mutex_unlock() context is not using the structure anymore"
-
-So if we drop our ep ref before the mutex unlock, but we weren't the
-last one, we may then unlock the mutex, another user comes in, drops
-_their_ reference and releases the 'ep' as it now has no users - all
-while the mutex_unlock() is still accessing it.
-
-Fix this by simply moving the ep refcount dropping to outside the mutex:
-the refcount itself is atomic, and doesn't need mutex protection (that's
-the whole _point_ of refcounts: unlike mutexes, they are inherently
-about object lifetimes).
-
-Reported-by: Jann Horn <jannh@google.com>
-Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f90b738166fe ("EDAC: Add scrub control feature")
+Fixes: bcbd069b11b0 ("EDAC: Add a Error Check Scrub control feature")
+Fixes: 699ea5219c4b ("EDAC: Add a memory repair control feature")
+Reported-by: Dave Jiang <dave.jiang@intel.com>
+Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://lore.kernel.org/20250626101344.1726-1-shiju.jose@huawei.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/edac/ecs.c        | 4 +++-
+ drivers/edac/mem_repair.c | 1 +
+ drivers/edac/scrub.c      | 1 +
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -883,7 +883,7 @@ static bool __ep_remove(struct eventpoll
- 	kfree_rcu(epi, rcu);
+diff --git a/drivers/edac/ecs.c b/drivers/edac/ecs.c
+index 1d51838a60c11..51c451c7f0f0b 100755
+--- a/drivers/edac/ecs.c
++++ b/drivers/edac/ecs.c
+@@ -170,8 +170,10 @@ static int ecs_create_desc(struct device *ecs_dev, const struct attribute_group
+ 		fru_ctx->dev_attr[ECS_RESET]		= EDAC_ECS_ATTR_WO(reset, fru);
+ 		fru_ctx->dev_attr[ECS_THRESHOLD]	= EDAC_ECS_ATTR_RW(threshold, fru);
  
- 	percpu_counter_dec(&ep->user->epoll_watches);
--	return ep_refcount_dec_and_test(ep);
-+	return true;
- }
+-		for (i = 0; i < ECS_MAX_ATTRS; i++)
++		for (i = 0; i < ECS_MAX_ATTRS; i++) {
++			sysfs_attr_init(&fru_ctx->dev_attr[i].dev_attr.attr);
+ 			fru_ctx->ecs_attrs[i] = &fru_ctx->dev_attr[i].dev_attr.attr;
++		}
  
- /*
-@@ -891,14 +891,14 @@ static bool __ep_remove(struct eventpoll
-  */
- static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
- {
--	WARN_ON_ONCE(__ep_remove(ep, epi, false));
-+	if (__ep_remove(ep, epi, false))
-+		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
- }
- 
- static void ep_clear_and_put(struct eventpoll *ep)
- {
- 	struct rb_node *rbp, *next;
- 	struct epitem *epi;
--	bool dispose;
- 
- 	/* We need to release all tasks waiting for these file */
- 	if (waitqueue_active(&ep->poll_wait))
-@@ -931,10 +931,8 @@ static void ep_clear_and_put(struct even
- 		cond_resched();
+ 		sprintf(fru_ctx->name, "%s%d", EDAC_ECS_FRU_NAME, fru);
+ 		group->name = fru_ctx->name;
+diff --git a/drivers/edac/mem_repair.c b/drivers/edac/mem_repair.c
+index 3b1a845457b08..1df8957a8459a 100755
+--- a/drivers/edac/mem_repair.c
++++ b/drivers/edac/mem_repair.c
+@@ -324,6 +324,7 @@ static int mem_repair_create_desc(struct device *dev,
+ 	for (i = 0; i < MR_MAX_ATTRS; i++) {
+ 		memcpy(&ctx->mem_repair_dev_attr[i],
+ 		       &dev_attr[i], sizeof(dev_attr[i]));
++		sysfs_attr_init(&ctx->mem_repair_dev_attr[i].dev_attr.attr);
+ 		ctx->mem_repair_attrs[i] =
+ 			&ctx->mem_repair_dev_attr[i].dev_attr.attr;
  	}
- 
--	dispose = ep_refcount_dec_and_test(ep);
- 	mutex_unlock(&ep->mtx);
--
--	if (dispose)
-+	if (ep_refcount_dec_and_test(ep))
- 		ep_free(ep);
- }
- 
-@@ -1137,7 +1135,7 @@ again:
- 		dispose = __ep_remove(ep, epi, true);
- 		mutex_unlock(&ep->mtx);
- 
--		if (dispose)
-+		if (dispose && ep_refcount_dec_and_test(ep))
- 			ep_free(ep);
- 		goto again;
+diff --git a/drivers/edac/scrub.c b/drivers/edac/scrub.c
+index e421d3ebd959f..f9d02af2fc3a2 100755
+--- a/drivers/edac/scrub.c
++++ b/drivers/edac/scrub.c
+@@ -176,6 +176,7 @@ static int scrub_create_desc(struct device *scrub_dev,
+ 	group = &scrub_ctx->group;
+ 	for (i = 0; i < SCRUB_MAX_ATTRS; i++) {
+ 		memcpy(&scrub_ctx->scrub_dev_attr[i], &dev_attr[i], sizeof(dev_attr[i]));
++		sysfs_attr_init(&scrub_ctx->scrub_dev_attr[i].dev_attr.attr);
+ 		scrub_ctx->scrub_attrs[i] = &scrub_ctx->scrub_dev_attr[i].dev_attr.attr;
  	}
+ 	sprintf(scrub_ctx->name, "%s%d", "scrub", instance);
+-- 
+2.39.5
+
 
 
