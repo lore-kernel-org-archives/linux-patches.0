@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA065246BD7;
-	Tue, 15 Jul 2025 13:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968482E54BB;
+	Tue, 15 Jul 2025 13:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587377; cv=none; b=V1qX3R2Xo05sK27IlGYoJj29XWubRsxiyCn/V9/YQxbWoe5Nh85Ej3ZERuJ1Zv2DO1oDZZnGSm6RjwA/45H2GKLw3ElXyhT62WLgm1MXGoTbXwqkSrHhqtr+kq8X+8XO+eMPDR2muiWGYF0s+Xe5QqmxEBknDb90ZyhcOB7HPt4=
+	t=1752587379; cv=none; b=C2m6ZL0Qf9TFj1iVPXRUsv/cFxsDTO82wJ5jY64cry79crA228Sie159BayPneMGWzvvp5b96nk3R3cgcOj1DUGDsvyWftwHZZXVHGqs5iDgkg3b6RHPpBHn5NXqrxc61wq1KkD16i41lEoT6rftLLzvfbD7x4AznEBtBZjzC7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587377; c=relaxed/simple;
-	bh=VlDEua+0El+jkrsYAa+1RzZSy1IJQrlXdC4WSs/Nygs=;
+	s=arc-20240116; t=1752587379; c=relaxed/simple;
+	bh=2tEsJFgojdPM9h8cW+B9fVWaRklhJjuKrQ4AxG8dhas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RlQimbyKLL/q65tFyIxH3TFN4IA/pbd77swlHqp/3vsRLOG+2PKhZcaDJxuYuG2Zyd4AW6EO5/R5OmLnswRRVlNwvVaUmoyoZHRjEqq9wblgAr4/szytiuwq+BOcosQOWFUtYGNTdEDPoQY0iYVtaTHjE05zxRNwI239ZsWXX8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxAtKY/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BLNLvQVrNKi/ZtC8ZvfrjWEtAUibRJMsceaJTMWUScN0CP58R1A46T0il8pRS/cDR1k2uS2TVtwutGJ3q7N9aG6mJ15E5AL9KmnxWkL/clkscxeYwrafk4f8QxvgdezkB4KEpDyxH3horflAuWHMmf9s4rpWx1qyCiS+Buu9iSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBQmFm2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxAtKY/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32692C4CEE3;
-	Tue, 15 Jul 2025 13:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBQmFm2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FF4C4CEE3;
+	Tue, 15 Jul 2025 13:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587376;
-	bh=VlDEua+0El+jkrsYAa+1RzZSy1IJQrlXdC4WSs/Nygs=;
+	s=korg; t=1752587379;
+	bh=2tEsJFgojdPM9h8cW+B9fVWaRklhJjuKrQ4AxG8dhas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxAtKY/mW2feJfgVvfjDUHH3LMWBoSjGLxZJi1V7opeq2SyOy3gsMi/oTNd24jXq5
-	 c+ccC0eB9OpFdc3Sb4Cj2T581Sho7SdyO/mJ3ydyAhX1Tnc7LFyp7shXo/a6xCXzOL
-	 XegnouXwQP2KFr0i7TK3qvxSXvM88yMbxBOa1m24=
+	b=oBQmFm2vmsZkINVtY0w5uuLjt3a7PDiF98Bwpyu7px43mEB0IVQWg2j1vFkvPyvcU
+	 58tukzW0KF8zD/GgzP9+TJ/UQQ1QPU7gtIP5CUKIY4P6Ok523D4ikGh2JaXoZ+2dNK
+	 LZddqSkm7RRvB0MUfwV8NBohfVSrlPOJRy3Mk4ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 36/88] Revert "ACPI: battery: negate current when discharging"
-Date: Tue, 15 Jul 2025 15:14:12 +0200
-Message-ID: <20250715130755.972000236@linuxfoundation.org>
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Shravya KN <shravya.k-n@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 71/88] bnxt_en: Fix DCB ETS validation
+Date: Tue, 15 Jul 2025 15:14:47 +0200
+Message-ID: <20250715130757.421546568@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -50,51 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Shravya KN <shravya.k-n@broadcom.com>
 
-commit de1675de39aa945bad5937d1fde4df3682670639 upstream.
+[ Upstream commit b74c2a2e9cc471e847abd87e50a2354c07e02040 ]
 
-Revert commit 234f71555019 ("ACPI: battery: negate current when
-discharging") breaks not one but several userspace implementations
-of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
-but those are the two that have been tested.
+In bnxt_ets_validate(), the code incorrectly loops over all possible
+traffic classes to check and add the ETS settings.  Fix it to loop
+over the configured traffic classes only.
 
-Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The unconfigured traffic classes will default to TSA_ETS with 0
+bandwidth.  Looping over these unconfigured traffic classes may
+cause the validation to fail and trigger this error message:
+
+"rejecting ETS config starving a TC\n"
+
+The .ieee_setets() will then fail.
+
+Fixes: 7df4ae9fe855 ("bnxt_en: Implement DCBNL to support host-based DCBX.")
+Reviewed-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250710213938.1959625-2-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c |   19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -241,23 +241,10 @@ static int acpi_battery_get_property(str
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
- 	case POWER_SUPPLY_PROP_POWER_NOW:
--		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
-+		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
- 			ret = -ENODEV;
--			break;
--		}
--
--		val->intval = battery->rate_now * 1000;
--		/*
--		 * When discharging, the current should be reported as a
--		 * negative number as per the power supply class interface
--		 * definition.
--		 */
--		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
--		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
--		    acpi_battery_handle_discharging(battery)
--				== POWER_SUPPLY_STATUS_DISCHARGING)
--			val->intval = -val->intval;
--
-+		else
-+			val->intval = battery->rate_now * 1000;
- 		break;
- 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
- 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
+index 63e0670383852..1727e9bb1479d 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
+@@ -487,7 +487,9 @@ static int bnxt_ets_validate(struct bnxt *bp, struct ieee_ets *ets, u8 *tc)
+ 
+ 		if ((ets->tc_tx_bw[i] || ets->tc_tsa[i]) && i > bp->max_tc)
+ 			return -EINVAL;
++	}
+ 
++	for (i = 0; i < max_tc; i++) {
+ 		switch (ets->tc_tsa[i]) {
+ 		case IEEE_8021QAZ_TSA_STRICT:
+ 			break;
+-- 
+2.39.5
+
 
 
