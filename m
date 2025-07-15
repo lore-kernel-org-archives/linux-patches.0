@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6029E2E4256;
-	Tue, 15 Jul 2025 13:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC5D2ECE90;
+	Tue, 15 Jul 2025 13:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587854; cv=none; b=m4z7EPIPZTeVc3PHHXy9X/AF9vh0x6zKNH2TJQrOcC8vmp1ZSkrFqr51AFuaUapNxsvW/gY3hA6IXyC4TX8I9RLSEHZwtkWdF8UAEMS+YvFuskuOdFMS0iZqCXvfo4jan0HBXXtqzl/dBX9nCBTSGt5uGt0fGgLZyN2rAkdu73o=
+	t=1752587857; cv=none; b=Q1Oh+0IU8RoHsVS0QJnXauF6p0nK3Hfr4CVYUjIUUArq4KcCs7YNZWgJ3g0sZ3cH7DpSiH7emvQrLcc74uWhqjq+4aPrrwNQAnu/JehWPCNUa1YO0tLsw/qwhnwe7B28Zz9m//GOd6lbtNyX62JJ8/4Il/awSHrFHZ7OR8DqG4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587854; c=relaxed/simple;
-	bh=NGQzhA5Ch0tehUonSjTbPbSkkk7tG1hQjx6InVlT/Ww=;
+	s=arc-20240116; t=1752587857; c=relaxed/simple;
+	bh=CvKuNePCOiSkDGvQNbMmqTSZrwlDXtZwOFsTR3h+xY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDp5ceJ2hKZ21BjPgxfgVwTpmzrXXK8JCIi5/+6oxEby6G9CkrSgRWwXAKnG+MeSk//1Qsxx0yfKxn1nin6BazPbbJpQroxahnZwIqdKMJJlQW/WQabwNPEw+YO4bPDsGLMtFCyfbJvsPilPr4ip4c9rz+abb7q7vrv4EPruXPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDkSnJ0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Megi+wZ4yDyEb3mP2lYYktKefoalrF9aj/Ehtxu1OFKFQQYHa5Up7jC6hCwbVAXQrYlnE5euT75V+afa4TTKeV0HkxSFBubz7IOVpD22NVUecF+tMb7fgJT9zRT2xb//4tGMeqGciuJYtvSV+5IcBWWMeeQ6rKlsc3v9La6TQGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XthqX88d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDkSnJ0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA19AC4CEE3;
-	Tue, 15 Jul 2025 13:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XthqX88d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC91C4CEE3;
+	Tue, 15 Jul 2025 13:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587854;
-	bh=NGQzhA5Ch0tehUonSjTbPbSkkk7tG1hQjx6InVlT/Ww=;
+	s=korg; t=1752587857;
+	bh=CvKuNePCOiSkDGvQNbMmqTSZrwlDXtZwOFsTR3h+xY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qDkSnJ0ItV5o/LCABa/ygakwS/yBr6la0YlqJxhgP4UDkOCJDM2qsa+oXeRf34lCf
-	 qtzJoZTAtxDd/90g748uN8ohksxt1dL38f+tQQZ16eQ9KpLQjTf5T2VNi7xcAO+606
-	 mRJ/g7PSoK2nTXzlAtfZJVScz+o0m9WqvoxKdiqI=
+	b=XthqX88db0b3pGkFhsTD/nlksSjKDxs6z1ySvqdttoNrMTGcNXhVeFAJ4OFPUu1TZ
+	 /KXZiKzj0oPtNcRN8wTidf2AtdLgmj5/UB1BMV9Fd0LoeNE4kAzUVUnxgBEj9kyo4L
+	 8YrcOHGAGLSTr9FUOWmD82QgrvppB5SUvJesvm+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Baron <jbaron@akamai.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 137/208] netlink: Fix wraparounds of sk->sk_rmem_alloc.
-Date: Tue, 15 Jul 2025 15:14:06 +0200
-Message-ID: <20250715130816.419964237@linuxfoundation.org>
+	Seiji Nishikawa <snishika@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
+Subject: [PATCH 5.10 128/208] ACPI: PAD: fix crash in exit_round_robin()
+Date: Tue, 15 Jul 2025 15:13:57 +0200
+Message-ID: <20250715130816.069220324@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,200 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-[ Upstream commit ae8f160e7eb24240a2a79fc4c815c6a0d4ee16cc ]
+commit 0a2ed70a549e61c5181bad5db418d223b68ae932 upstream.
 
-Netlink has this pattern in some places
+The kernel occasionally crashes in cpumask_clear_cpu(), which is called
+within exit_round_robin(), because when executing clear_bit(nr, addr) with
+nr set to 0xffffffff, the address calculation may cause misalignment within
+the memory, leading to access to an invalid memory address.
 
-  if (atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf)
-  	atomic_add(skb->truesize, &sk->sk_rmem_alloc);
+----------
+BUG: unable to handle kernel paging request at ffffffffe0740618
+        ...
+CPU: 3 PID: 2919323 Comm: acpi_pad/14 Kdump: loaded Tainted: G           OE  X --------- -  - 4.18.0-425.19.2.el8_7.x86_64 #1
+        ...
+RIP: 0010:power_saving_thread+0x313/0x411 [acpi_pad]
+Code: 89 cd 48 89 d3 eb d1 48 c7 c7 55 70 72 c0 e8 64 86 b0 e4 c6 05 0d a1 02 00 01 e9 bc fd ff ff 45 89 e4 42 8b 04 a5 20 82 72 c0 <f0> 48 0f b3 05 f4 9c 01 00 42 c7 04 a5 20 82 72 c0 ff ff ff ff 31
+RSP: 0018:ff72a5d51fa77ec8 EFLAGS: 00010202
+RAX: 00000000ffffffff RBX: ff462981e5d8cb80 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000246 RDI: 0000000000000246
+RBP: ff46297556959d80 R08: 0000000000000382 R09: ff46297c8d0f38d8
+R10: 0000000000000000 R11: 0000000000000001 R12: 000000000000000e
+R13: 0000000000000000 R14: ffffffffffffffff R15: 000000000000000e
+FS:  0000000000000000(0000) GS:ff46297a800c0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffe0740618 CR3: 0000007e20410004 CR4: 0000000000771ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ ? acpi_pad_add+0x120/0x120 [acpi_pad]
+ kthread+0x10b/0x130
+ ? set_kthread_struct+0x50/0x50
+ ret_from_fork+0x1f/0x40
+        ...
+CR2: ffffffffe0740618
 
-, which has the same problem fixed by commit 5a465a0da13e ("udp:
-Fix multiple wraparounds of sk->sk_rmem_alloc.").
+crash> dis -lr ffffffffc0726923
+        ...
+/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./include/linux/cpumask.h: 114
+0xffffffffc0726918 <power_saving_thread+776>:	mov    %r12d,%r12d
+/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./include/linux/cpumask.h: 325
+0xffffffffc072691b <power_saving_thread+779>:	mov    -0x3f8d7de0(,%r12,4),%eax
+/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./arch/x86/include/asm/bitops.h: 80
+0xffffffffc0726923 <power_saving_thread+787>:	lock btr %rax,0x19cf4(%rip)        # 0xffffffffc0740620 <pad_busy_cpus_bits>
 
-For example, if we set INT_MAX to SO_RCVBUFFORCE, the condition
-is always false as the two operands are of int.
+crash> px tsk_in_cpu[14]
+$66 = 0xffffffff
 
-Then, a single socket can eat as many skb as possible until OOM
-happens, and we can see multiple wraparounds of sk->sk_rmem_alloc.
+crash> px 0xffffffffc072692c+0x19cf4
+$99 = 0xffffffffc0740620
 
-Let's fix it by using atomic_add_return() and comparing the two
-variables as unsigned int.
+crash> sym 0xffffffffc0740620
+ffffffffc0740620 (b) pad_busy_cpus_bits [acpi_pad]
 
-Before:
-  [root@fedora ~]# ss -f netlink
-  Recv-Q      Send-Q Local Address:Port                Peer Address:Port
-  -1668710080 0               rtnl:nl_wraparound/293               *
+crash> px pad_busy_cpus_bits[0]
+$42 = 0xfffc0
+----------
 
-After:
-  [root@fedora ~]# ss -f netlink
-  Recv-Q     Send-Q Local Address:Port                Peer Address:Port
-  2147483072 0               rtnl:nl_wraparound/290               *
-  ^
-  `--- INT_MAX - 576
+To fix this, ensure that tsk_in_cpu[tsk_index] != -1 before calling
+cpumask_clear_cpu() in exit_round_robin(), just as it is done in
+round_robin_cpu().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Jason Baron <jbaron@akamai.com>
-Closes: https://lore.kernel.org/netdev/cover.1750285100.git.jbaron@akamai.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250704054824.1580222-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Link: https://patch.msgid.link/20240825141352.25280-1-snishika@redhat.com
+[ rjw: Subject edit, avoid updates to the same value ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlink/af_netlink.c | 81 ++++++++++++++++++++++++----------------
- 1 file changed, 49 insertions(+), 32 deletions(-)
+ drivers/acpi/acpi_pad.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 4da043d9f2c7a..6f71b4c84d1d2 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -379,7 +379,6 @@ static void netlink_skb_set_owner_r(struct sk_buff *skb, struct sock *sk)
- 	WARN_ON(skb->sk != NULL);
- 	skb->sk = sk;
- 	skb->destructor = netlink_skb_destructor;
--	atomic_add(skb->truesize, &sk->sk_rmem_alloc);
- 	sk_mem_charge(sk, skb->truesize);
- }
- 
-@@ -1207,41 +1206,48 @@ static struct sk_buff *netlink_alloc_large_skb(unsigned int size,
- int netlink_attachskb(struct sock *sk, struct sk_buff *skb,
- 		      long *timeo, struct sock *ssk)
+--- a/drivers/acpi/acpi_pad.c
++++ b/drivers/acpi/acpi_pad.c
+@@ -128,8 +128,11 @@ static void round_robin_cpu(unsigned int
+ static void exit_round_robin(unsigned int tsk_index)
  {
-+	DECLARE_WAITQUEUE(wait, current);
- 	struct netlink_sock *nlk;
-+	unsigned int rmem;
- 
- 	nlk = nlk_sk(sk);
-+	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
- 
--	if ((atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf ||
--	     test_bit(NETLINK_S_CONGESTED, &nlk->state))) {
--		DECLARE_WAITQUEUE(wait, current);
--		if (!*timeo) {
--			if (!ssk || netlink_is_kernel(ssk))
--				netlink_overrun(sk);
--			sock_put(sk);
--			kfree_skb(skb);
--			return -EAGAIN;
--		}
--
--		__set_current_state(TASK_INTERRUPTIBLE);
--		add_wait_queue(&nlk->wait, &wait);
-+	if ((rmem == skb->truesize || rmem < READ_ONCE(sk->sk_rcvbuf)) &&
-+	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
-+		netlink_skb_set_owner_r(skb, sk);
-+		return 0;
+ 	struct cpumask *pad_busy_cpus = to_cpumask(pad_busy_cpus_bits);
+-	cpumask_clear_cpu(tsk_in_cpu[tsk_index], pad_busy_cpus);
+-	tsk_in_cpu[tsk_index] = -1;
++
++	if (tsk_in_cpu[tsk_index] != -1) {
++		cpumask_clear_cpu(tsk_in_cpu[tsk_index], pad_busy_cpus);
++		tsk_in_cpu[tsk_index] = -1;
 +	}
- 
--		if ((atomic_read(&sk->sk_rmem_alloc) > sk->sk_rcvbuf ||
--		     test_bit(NETLINK_S_CONGESTED, &nlk->state)) &&
--		    !sock_flag(sk, SOCK_DEAD))
--			*timeo = schedule_timeout(*timeo);
-+	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
- 
--		__set_current_state(TASK_RUNNING);
--		remove_wait_queue(&nlk->wait, &wait);
-+	if (!*timeo) {
-+		if (!ssk || netlink_is_kernel(ssk))
-+			netlink_overrun(sk);
- 		sock_put(sk);
-+		kfree_skb(skb);
-+		return -EAGAIN;
-+	}
- 
--		if (signal_pending(current)) {
--			kfree_skb(skb);
--			return sock_intr_errno(*timeo);
--		}
--		return 1;
-+	__set_current_state(TASK_INTERRUPTIBLE);
-+	add_wait_queue(&nlk->wait, &wait);
-+	rmem = atomic_read(&sk->sk_rmem_alloc);
-+
-+	if (((rmem && rmem + skb->truesize > READ_ONCE(sk->sk_rcvbuf)) ||
-+	     test_bit(NETLINK_S_CONGESTED, &nlk->state)) &&
-+	    !sock_flag(sk, SOCK_DEAD))
-+		*timeo = schedule_timeout(*timeo);
-+
-+	__set_current_state(TASK_RUNNING);
-+	remove_wait_queue(&nlk->wait, &wait);
-+	sock_put(sk);
-+
-+	if (signal_pending(current)) {
-+		kfree_skb(skb);
-+		return sock_intr_errno(*timeo);
- 	}
--	netlink_skb_set_owner_r(skb, sk);
--	return 0;
-+
-+	return 1;
  }
  
- static int __netlink_sendskb(struct sock *sk, struct sk_buff *skb)
-@@ -1301,6 +1307,7 @@ static int netlink_unicast_kernel(struct sock *sk, struct sk_buff *skb,
- 	ret = -ECONNREFUSED;
- 	if (nlk->netlink_rcv != NULL) {
- 		ret = skb->len;
-+		atomic_add(skb->truesize, &sk->sk_rmem_alloc);
- 		netlink_skb_set_owner_r(skb, sk);
- 		NETLINK_CB(skb).sk = ssk;
- 		netlink_deliver_tap_kernel(sk, ssk, skb);
-@@ -1379,13 +1386,19 @@ EXPORT_SYMBOL_GPL(netlink_strict_get_check);
- static int netlink_broadcast_deliver(struct sock *sk, struct sk_buff *skb)
- {
- 	struct netlink_sock *nlk = nlk_sk(sk);
-+	unsigned int rmem, rcvbuf;
- 
--	if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf &&
-+	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
-+	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
-+
-+	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
- 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
- 		netlink_skb_set_owner_r(skb, sk);
- 		__netlink_sendskb(sk, skb);
--		return atomic_read(&sk->sk_rmem_alloc) > (sk->sk_rcvbuf >> 1);
-+		return rmem > (rcvbuf >> 1);
- 	}
-+
-+	atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
- 	return -1;
- }
- 
-@@ -2202,6 +2215,7 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	struct module *module;
- 	int err = -ENOBUFS;
- 	int alloc_min_size;
-+	unsigned int rmem;
- 	int alloc_size;
- 
- 	if (!lock_taken)
-@@ -2211,9 +2225,6 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 		goto errout_skb;
- 	}
- 
--	if (atomic_read(&sk->sk_rmem_alloc) >= sk->sk_rcvbuf)
--		goto errout_skb;
--
- 	/* NLMSG_GOODSIZE is small to avoid high order allocations being
- 	 * required, but it makes sense to _attempt_ a 16K bytes allocation
- 	 * to reduce number of system calls on dump operations, if user
-@@ -2236,6 +2247,12 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 	if (!skb)
- 		goto errout_skb;
- 
-+	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
-+	if (rmem >= READ_ONCE(sk->sk_rcvbuf)) {
-+		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
-+		goto errout_skb;
-+	}
-+
- 	/* Trim skb to allocated size. User is expected to provide buffer as
- 	 * large as max(min_dump_alloc, 16KiB (mac_recvmsg_len capped at
- 	 * netlink_recvmsg())). dump will pack as many smaller messages as
--- 
-2.39.5
-
+ static unsigned int idle_pct = 5; /* percentage */
 
 
