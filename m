@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E59B26CE27;
-	Tue, 15 Jul 2025 13:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9762E3AFF;
+	Tue, 15 Jul 2025 13:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586055; cv=none; b=YT3FeBIbSAel/pU3kX8U86tabpoXc73zzp3X5kAGGgnP1YSTqVCghq5b8LBGVQjZ8zVE0FrGBaVCqCRd4GUnPjWHQAIEo49XiuMkOyB/csdvJtyyUZhFue5DlTNmwNcrUBbToYUJcPaUX7/Uqn/O2Y3+oFQRZuffec/pjSyXRKY=
+	t=1752586057; cv=none; b=PLjqf8cQqSXF1BdmHgdII4bTV/bYixY8xmDZkp7X8LFXqZU8ZQQ2i2Xn0dLIfy1iYU2TScPeSghSae0Sjm3WWRV2AvvCkcJ1oF365crpmBAbo8Z8aipg103HomMg9vFVCRSxNZNcc7WxUdXlhZDVFAbn7g8T9sKSOnItF5EP6i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586055; c=relaxed/simple;
-	bh=6129G5mgFGCVq9DINgmpiOQ0zllzGZpk9wTRNTHiRr4=;
+	s=arc-20240116; t=1752586057; c=relaxed/simple;
+	bh=3WchZIK0yDR6Li5PBrbQuvKq1FogV0ZdyUOIULy8pEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQ1CXgjqzLjJ1u+5FLYGR7N18gEHR3m61hWscHLa6kD5yZETt4jbZTOHB8r1TLnO8lbHZTVXYanunVLgVcle5CqWmER+U8Vnqqm32aNDIBnXnP7ye75WFdrmmOgibBrYc7Pd4n1W8kZGJujS1rCmqnIYpkmEgqIZrREWOCng3kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMbFhSu6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgXV/RZ/ueetmAmEIwBT+UWrCAHiV9Epd2nfpc9FTqwVx1zIkuqF87GYr3jqN/5aUq4Y/tyLFwP63ARWfy6daQdJqg70Cfj1UQ6TsPhNkO5+deLvAxEs1/4B5M86kat2NYn4EeFbJEYN7aNRnHu0QlrR7NZ6xGbxfAxnaoBQ6wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcitySYq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMbFhSu6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A3CC4CEF7;
-	Tue, 15 Jul 2025 13:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcitySYq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4FAC4CEE3;
+	Tue, 15 Jul 2025 13:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586055;
-	bh=6129G5mgFGCVq9DINgmpiOQ0zllzGZpk9wTRNTHiRr4=;
+	s=korg; t=1752586057;
+	bh=3WchZIK0yDR6Li5PBrbQuvKq1FogV0ZdyUOIULy8pEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMbFhSu6As6K1ompjaJpfYTz+s5at/U0YG3FkMJ7+dHz5RifMCeqBbUcfAOciXoir
-	 Ws1cj14AX9fOS4TCsYO2JKEB6RwgmYjOT7HitBQgLvEiNOYko5munCpbzOXgUwDA2A
-	 LLJbsXtmJ43ZErVIXqyHglmcLCKozSu2Uvgd/Exs=
+	b=LcitySYq6W8kpwU1N7Az7/kBXIJ7PNbeXNbLb1ii3I4sdHBnG3EZKDRlK2J2+DdGn
+	 WEJhbf9e/HIy+ge0wpOEO6lrceXM9GzPib+MH15acrxEkvf7Ez9BJpQTurILF4Bcaa
+	 d3qP4uSJMy0zFTam9KSBkAjOq4rfWz4IZK7Zecxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/109] cifs: all initializations for tcon should happen in tcon_info_alloc
-Date: Tue, 15 Jul 2025 15:13:33 +0200
-Message-ID: <20250715130801.966652822@linuxfoundation.org>
+Subject: [PATCH 6.6 078/109] wifi: zd1211rw: Fix potential NULL pointer dereference in zd_mac_tx_to_dev()
+Date: Tue, 15 Jul 2025 15:13:34 +0200
+Message-ID: <20250715130802.005419827@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -52,89 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 74ebd02163fde05baa23129e06dde4b8f0f2377a ]
+[ Upstream commit 74b1ec9f5d627d2bdd5e5b6f3f81c23317657023 ]
 
-Today, a few work structs inside tcon are initialized inside
-cifs_get_tcon and not in tcon_info_alloc. As a result, if a tcon
-is obtained from tcon_info_alloc, but not called as a part of
-cifs_get_tcon, we may trip over.
+There is a potential NULL pointer dereference in zd_mac_tx_to_dev(). For
+example, the following is possible:
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+    	T0			    		T1
+zd_mac_tx_to_dev()
+  /* len == skb_queue_len(q) */
+  while (len > ZD_MAC_MAX_ACK_WAITERS) {
+
+					  filter_ack()
+					    spin_lock_irqsave(&q->lock, flags);
+					    /* position == skb_queue_len(q) */
+					    for (i=1; i<position; i++)
+				    	      skb = __skb_dequeue(q)
+
+					    if (mac->type == NL80211_IFTYPE_AP)
+					      skb = __skb_dequeue(q);
+					    spin_unlock_irqrestore(&q->lock, flags);
+
+    skb_dequeue() -> NULL
+
+Since there is a small gap between checking skb queue length and skb being
+unconditionally dequeued in zd_mac_tx_to_dev(), skb_dequeue() can return NULL.
+Then the pointer is passed to zd_mac_tx_status() where it is dereferenced.
+
+In order to avoid potential NULL pointer dereference due to situations like
+above, check if skb is not NULL before passing it to zd_mac_tx_status().
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 459c51ad6e1f ("zd1211rw: port to mac80211")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://patch.msgid.link/20250626114619.172631-1-d.dulov@aladdin.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsproto.h | 1 +
- fs/smb/client/connect.c   | 8 +-------
- fs/smb/client/misc.c      | 6 ++++++
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/zydas/zd1211rw/zd_mac.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index 8edb6fe89a97c..5ab877e480abc 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -136,6 +136,7 @@ extern int SendReceiveBlockingLock(const unsigned int xid,
- 			struct smb_hdr *out_buf,
- 			int *bytes_returned);
+diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
+index 5d534e15a844f..278875c02f41f 100644
+--- a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
++++ b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
+@@ -583,7 +583,11 @@ void zd_mac_tx_to_dev(struct sk_buff *skb, int error)
  
-+void smb2_query_server_interfaces(struct work_struct *work);
- void
- cifs_signal_cifsd_for_reconnect(struct TCP_Server_Info *server,
- 				      bool all_channels);
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 14be8822d23a2..33a292dabdb87 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -113,7 +113,7 @@ static int reconn_set_ipaddr_from_hostname(struct TCP_Server_Info *server)
- 	return rc;
- }
- 
--static void smb2_query_server_interfaces(struct work_struct *work)
-+void smb2_query_server_interfaces(struct work_struct *work)
- {
- 	int rc;
- 	int xid;
-@@ -2818,20 +2818,14 @@ cifs_get_tcon(struct cifs_ses *ses, struct smb3_fs_context *ctx)
- 	tcon->max_cached_dirs = ctx->max_cached_dirs;
- 	tcon->nodelete = ctx->nodelete;
- 	tcon->local_lease = ctx->local_lease;
--	INIT_LIST_HEAD(&tcon->pending_opens);
- 	tcon->status = TID_GOOD;
- 
--	INIT_DELAYED_WORK(&tcon->query_interfaces,
--			  smb2_query_server_interfaces);
- 	if (ses->server->dialect >= SMB30_PROT_ID &&
- 	    (ses->server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
- 		/* schedule query interfaces poll */
- 		queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
- 				   (SMB_INTERFACE_POLL_INTERVAL * HZ));
- 	}
--#ifdef CONFIG_CIFS_DFS_UPCALL
--	INIT_DELAYED_WORK(&tcon->dfs_cache_work, dfs_cache_refresh);
--#endif
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_add(&tcon->tcon_list, &ses->tcon_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 2e9a14e28e466..bbbe48447765d 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -148,6 +148,12 @@ tcon_info_alloc(bool dir_leases_enabled, enum smb3_tcon_ref_trace trace)
- #ifdef CONFIG_CIFS_DFS_UPCALL
- 	INIT_LIST_HEAD(&ret_buf->dfs_ses_list);
- #endif
-+	INIT_LIST_HEAD(&ret_buf->pending_opens);
-+	INIT_DELAYED_WORK(&ret_buf->query_interfaces,
-+			  smb2_query_server_interfaces);
-+#ifdef CONFIG_CIFS_DFS_UPCALL
-+	INIT_DELAYED_WORK(&ret_buf->dfs_cache_work, dfs_cache_refresh);
-+#endif
- 
- 	return ret_buf;
- }
+ 		skb_queue_tail(q, skb);
+ 		while (skb_queue_len(q) > ZD_MAC_MAX_ACK_WAITERS) {
+-			zd_mac_tx_status(hw, skb_dequeue(q),
++			skb = skb_dequeue(q);
++			if (!skb)
++				break;
++
++			zd_mac_tx_status(hw, skb,
+ 					 mac->ack_pending ? mac->ack_signal : 0,
+ 					 NULL);
+ 			mac->ack_pending = 0;
 -- 
 2.39.5
 
