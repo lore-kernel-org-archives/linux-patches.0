@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469DC2E2F04;
-	Tue, 15 Jul 2025 13:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FA22E7185;
+	Tue, 15 Jul 2025 13:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587047; cv=none; b=GGjgoLJBX5hwHlI7TPOROttgC43vob+S94oTVJiAQ9hIWi4yg+p5pDLUnRGDCE/rjw1aYDqYuptHlmk6bBz76PKqeCeJrPdwF/xb0lMlEjJnjcgo3ysCj8v3Q90V2OqAKv3me4nnznUwMDA203kNmJR5S8n8yobaZXSwms71pMw=
+	t=1752587050; cv=none; b=jRoEVV7yVtAK+oAVTBKjh5F2GNDomMc3zE8AjKqBlbfmFIoySI3Rjf6jB3MURQnRTtKNQrhOm6KgS7ZfFPgU13P4wxQr5wEA+et1lAQoPJK/oBndH36LI+i5dMm4TLkvgDeU1QZ1e1kGK4fLAlgx3AkwamlYQM1an9926UfRRTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587047; c=relaxed/simple;
-	bh=Zw3KWAJQesZ2/C1EJGrdmMVtKkRmyvhVEjXLs7sauH0=;
+	s=arc-20240116; t=1752587050; c=relaxed/simple;
+	bh=ZvdUt4DS6lh6YkjSYHg0EA1ImKOpSPIQAJGnfpwM/00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eystuq6x8/56mRfv3wdf5kbkjEhhkV4BICtZlRKrsWybXYUgGoxav9ru/eSrcLsEEB8xg3c2XGsT62brxNIGklLHP2dtV1O4b/4+YFtL2f+WpWVCU0lElTaVXRft5s7Egc/WEToo/+aiWv8X94ku2TiVtVLLYbrpIDtiytizxTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3nVNH+k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b2onBV05VCRMS+7TZ0EEEq6mivhIKILo4OPX1G6ddkgc6Vz0Uv57c8eD8agRt3Gsr33bGuE+s0MNBzhfxKOgzNNsgNldGb9X32HVEwKjETYwD5hRRUjUtq0lWjZm835bo8gMHaEIlwA0mJljPoRyWHVPshSHyApWJEVQBvitrw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nz73L3Pk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3nVNH+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01A9C4CEE3;
-	Tue, 15 Jul 2025 13:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nz73L3Pk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719D2C4CEE3;
+	Tue, 15 Jul 2025 13:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587047;
-	bh=Zw3KWAJQesZ2/C1EJGrdmMVtKkRmyvhVEjXLs7sauH0=;
+	s=korg; t=1752587049;
+	bh=ZvdUt4DS6lh6YkjSYHg0EA1ImKOpSPIQAJGnfpwM/00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3nVNH+kEGJXkvmEzt8frl4ZubS4rNxP6A27ZiAzWmGX1mN+36P1lJI+YyTS3Umyn
-	 9/gjbBvidj/wQcTPeV+UhZ7GxNrlky7eWxg3gzFLnuSP5s5E+vukPKQKgu6ZVshCUF
-	 z2qt7OjQAhUm56hxvTZQwfIJl4mcyKrxa35TUXQ8=
+	b=Nz73L3PkrYX3SDq+1KBJC4+BApkZGC9tmIOSMRiFVdZ+hcH61tYaFX6HdUr0XnE8D
+	 HEPTFcCE23tAXCu88DnsP2lC6uf6pD2FA08JtcuyWMj4F9E6c+DZiLER6sZQVbEC8C
+	 41L/vU9zEMTR/szy+5x4jTm1mJDKT9fKniJAj/kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Lukasz Laguna <lukasz.laguna@intel.com>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 146/192] block: reject bs > ps block devices when THP is disabled
-Date: Tue, 15 Jul 2025 15:14:01 +0200
-Message-ID: <20250715130820.770290496@linuxfoundation.org>
+Subject: [PATCH 6.15 147/192] drm/xe/pf: Clear all LMTT pages on alloc
+Date: Tue, 15 Jul 2025 15:14:02 +0200
+Message-ID: <20250715130820.809996564@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -46,81 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pankaj Raghav <p.raghav@samsung.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 4cdf1bdd45ac78a088773722f009883af30ad318 ]
+[ Upstream commit 705a412a367f383430fa34bada387af2e52eb043 ]
 
-If THP is disabled and when a block device with logical block size >
-page size is present, the following null ptr deref panic happens during
-boot:
+Our LMEM buffer objects are not cleared by default on alloc
+and during VF provisioning we only setup LMTT PTEs for the
+actually provisioned LMEM range. But beyond that valid range
+we might leave some stale data that could either point to some
+other VFs allocations or even to the PF pages.
 
-[   [13.2 mK  AOSAN: null-ptr-deref in range [0x0000000000000000-0x0000000000K0 0 0[07]
-[   13.017749] RIP: 0010:create_empty_buffers+0x3b/0x380
-<snip>
-[   13.025448] Call Trace:
-[   13.025692]  <TASK>
-[   13.025895]  block_read_full_folio+0x610/0x780
-[   13.026379]  ? __pfx_blkdev_get_block+0x10/0x10
-[   13.027008]  ? __folio_batch_add_and_move+0x1fa/0x2b0
-[   13.027548]  ? __pfx_blkdev_read_folio+0x10/0x10
-[   13.028080]  filemap_read_folio+0x9b/0x200
-[   13.028526]  ? __pfx_filemap_read_folio+0x10/0x10
-[   13.029030]  ? __filemap_get_folio+0x43/0x620
-[   13.029497]  do_read_cache_folio+0x155/0x3b0
-[   13.029962]  ? __pfx_blkdev_read_folio+0x10/0x10
-[   13.030381]  read_part_sector+0xb7/0x2a0
-[   13.030805]  read_lba+0x174/0x2c0
-<snip>
-[   13.045348]  nvme_scan_ns+0x684/0x850 [nvme_core]
-[   13.045858]  ? __pfx_nvme_scan_ns+0x10/0x10 [nvme_core]
-[   13.046414]  ? _raw_spin_unlock+0x15/0x40
-[   13.046843]  ? __switch_to+0x523/0x10a0
-[   13.047253]  ? kvm_clock_get_cycles+0x14/0x30
-[   13.047742]  ? __pfx_nvme_scan_ns_async+0x10/0x10 [nvme_core]
-[   13.048353]  async_run_entry_fn+0x96/0x4f0
-[   13.048787]  process_one_work+0x667/0x10a0
-[   13.049219]  worker_thread+0x63c/0xf60
+Explicitly clear all new LMTT page to avoid the risk that a
+malicious VF would try to exploit that gap.
 
-As large folio support depends on THP, only allow bs > ps block devices
-if THP is enabled.
+While around add asserts to catch any undesired PTE overwrites
+and low-level debug traces to track LMTT PT life-cycle.
 
-Fixes: 47dd67532303 ("block/bdev: lift block size restrictions to 64k")
-Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20250704092134.289491-1-p.raghav@samsung.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: b1d204058218 ("drm/xe/pf: Introduce Local Memory Translation Table")
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Michał Winiarski <michal.winiarski@intel.com>
+Cc: Lukasz Laguna <lukasz.laguna@intel.com>
+Reviewed-by: Michał Winiarski <michal.winiarski@intel.com>
+Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Link: https://lore.kernel.org/r/20250701220052.1612-1-michal.wajdeczko@intel.com
+(cherry picked from commit 3fae6918a3e27cce20ded2551f863fb05d4bef8d)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blkdev.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/xe/xe_lmtt.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 9a1f0ee40b566..7c2a66995518a 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -268,11 +268,16 @@ static inline dev_t disk_devt(struct gendisk *disk)
- 	return MKDEV(disk->major, disk->first_minor);
- }
+diff --git a/drivers/gpu/drm/xe/xe_lmtt.c b/drivers/gpu/drm/xe/xe_lmtt.c
+index 89393dcb53d9d..1337cf49f1c20 100644
+--- a/drivers/gpu/drm/xe/xe_lmtt.c
++++ b/drivers/gpu/drm/xe/xe_lmtt.c
+@@ -78,6 +78,9 @@ static struct xe_lmtt_pt *lmtt_pt_alloc(struct xe_lmtt *lmtt, unsigned int level
+ 	}
  
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- /*
-  * We should strive for 1 << (PAGE_SHIFT + MAX_PAGECACHE_ORDER)
-  * however we constrain this to what we can validate and test.
-  */
- #define BLK_MAX_BLOCK_SIZE      SZ_64K
-+#else
-+#define BLK_MAX_BLOCK_SIZE      PAGE_SIZE
-+#endif
+ 	lmtt_assert(lmtt, xe_bo_is_vram(bo));
++	lmtt_debug(lmtt, "level=%u addr=%#llx\n", level, (u64)xe_bo_main_addr(bo, XE_PAGE_SIZE));
 +
++	xe_map_memset(lmtt_to_xe(lmtt), &bo->vmap, 0, 0, bo->size);
  
- /* blk_validate_limits() validates bsize, so drivers don't usually need to */
- static inline int blk_validate_block_size(unsigned long bsize)
+ 	pt->level = level;
+ 	pt->bo = bo;
+@@ -91,6 +94,9 @@ static struct xe_lmtt_pt *lmtt_pt_alloc(struct xe_lmtt *lmtt, unsigned int level
+ 
+ static void lmtt_pt_free(struct xe_lmtt_pt *pt)
+ {
++	lmtt_debug(&pt->bo->tile->sriov.pf.lmtt, "level=%u addr=%llx\n",
++		   pt->level, (u64)xe_bo_main_addr(pt->bo, XE_PAGE_SIZE));
++
+ 	xe_bo_unpin_map_no_vm(pt->bo);
+ 	kfree(pt);
+ }
+@@ -226,9 +232,14 @@ static void lmtt_write_pte(struct xe_lmtt *lmtt, struct xe_lmtt_pt *pt,
+ 
+ 	switch (lmtt->ops->lmtt_pte_size(level)) {
+ 	case sizeof(u32):
++		lmtt_assert(lmtt, !overflows_type(pte, u32));
++		lmtt_assert(lmtt, !pte || !iosys_map_rd(&pt->bo->vmap, idx * sizeof(u32), u32));
++
+ 		xe_map_wr(lmtt_to_xe(lmtt), &pt->bo->vmap, idx * sizeof(u32), u32, pte);
+ 		break;
+ 	case sizeof(u64):
++		lmtt_assert(lmtt, !pte || !iosys_map_rd(&pt->bo->vmap, idx * sizeof(u64), u64));
++
+ 		xe_map_wr(lmtt_to_xe(lmtt), &pt->bo->vmap, idx * sizeof(u64), u64, pte);
+ 		break;
+ 	default:
 -- 
 2.39.5
 
