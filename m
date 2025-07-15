@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1814A2EBB88;
-	Tue, 15 Jul 2025 13:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66B72EBB84;
+	Tue, 15 Jul 2025 13:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587116; cv=none; b=bat6yopbSwMdpzNAGKOCUNvqdZE3Lm7V7qWiNAUyfftuoZAxsjiadaRSITBiJVdrjJc0pr5HpbrPfjxo1l5VGUeVWf2Ph+MPd9uvk9VvK4aL3gqazuJM7rQe+DmGAAPyfbu5lS815KrtKa2KVWqCQrhHLd0e+iiQyrGH4MmBg4s=
+	t=1752587118; cv=none; b=tI/IG7s1K5kY/RvDU+z09SUKVNbtMce5Q5ACrtO4X6Gzhvc2WOcgWNyR8wNxHLdFevDvgZ+jIjNNX0wPLhS4mY75TsWiPZJiKMgDUfJe3LIopKv1DLxdia6sp4FuhjiwstpHT1toAmWevvtr3/2ILPgpDIk/4zisMVZBNS6TyX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587116; c=relaxed/simple;
-	bh=VgSGkXmxCN8QyKU5K/MHmAbh3YySgWm1CKx3J2exdc4=;
+	s=arc-20240116; t=1752587118; c=relaxed/simple;
+	bh=E1tV42f+spZ+8sN8JgA4oZbCX0Ka5SD1kWNoPtFrYsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBDPUBAbKn/cU+oDn64PK7a/3GaoXjxqeQH/sBAJ/zmpMLT/FpjFR0kKsdjlA9JxLwQ163w2eEZHXAJyImm53no8ppqTjkW1qXIiAl8ocq1kLXJ5/KbJx9FivaC3vgQGQICmsgrqZcSQOTwBZQ2Y9/aXNOGVNmnjV7sE5UwbzAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKGLC7+e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ceHhh64wmVrGrTab1PHe20UvFlFqwKHYhFArCy5bLGJjgc4x4gmAcQnlJF+Pff4iy0DahUBoQ9Imx4zMaF31MaI5SwAFBTEtulm/KLFbZM4iR8tXtN07kgGmpasBzPJdSjS7UZX7WvpKJ0VsTLIElhYUYvtROwzlo9lhqF5NkEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KP6K1zFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKGLC7+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962FDC4CEE3;
-	Tue, 15 Jul 2025 13:45:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KP6K1zFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3969FC4CEE3;
+	Tue, 15 Jul 2025 13:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587115;
-	bh=VgSGkXmxCN8QyKU5K/MHmAbh3YySgWm1CKx3J2exdc4=;
+	s=korg; t=1752587118;
+	bh=E1tV42f+spZ+8sN8JgA4oZbCX0Ka5SD1kWNoPtFrYsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKGLC7+eCsNdV/5B+xnG3rulgVAzff22gFaR+XdMUP8WoYw82Say0gVWLhY5r3SRo
-	 cmFvYj/ZgR7Y336/yudKVumoe8vb1PrIW+pDSw1uAu5fHlHINeQCqoVJtL35kCiCqH
-	 QK6lHEcTiIpOPJaJ+FJqV651jDrD29CPCHeG7gqY=
+	b=KP6K1zFV2iurrjjGEm15bZCPRKxZgSsBqd+MiH1Dc5vMS2eF4g9UwSHjbYzsgZuY9
+	 o0c7Cp53heNKL54HwaatHCw6mTK1n+jqD1LF4MmyyepFELBa8Dfo96z/RAKJ8mjomd
+	 eyTuR/x60eWxC1qfUPiD5xGzlPEppG/L/nNHUmxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chris.chiu@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Fengnan Chang <changfengnan@bytedance.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 173/192] ALSA: hda/realtek: fix mute/micmute LEDs for HP EliteBook 6 G1a
-Date: Tue, 15 Jul 2025 15:14:28 +0200
-Message-ID: <20250715130821.856012233@linuxfoundation.org>
+Subject: [PATCH 6.15 174/192] io_uring: make fallocate be hashed work
+Date: Tue, 15 Jul 2025 15:14:29 +0200
+Message-ID: <20250715130821.896150648@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,36 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Chiu <chris.chiu@canonical.com>
+From: Fengnan Chang <changfengnan@bytedance.com>
 
-[ Upstream commit 9a07ca9a4015f8f71e2b594ee76ac55483babd89 ]
+[ Upstream commit 88a80066af1617fab444776135d840467414beb6 ]
 
-HP EliteBook 6 G1a laptops use ALC236 codec and need the fixup
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF to make the mic/micmute LEDs
+Like ftruncate and write, fallocate operations on the same file cannot
+be executed in parallel, so it is better to make fallocate be hashed
 work.
 
-Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
-Link: https://patch.msgid.link/20250623063023.374920-1-chris.chiu@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Fengnan Chang <changfengnan@bytedance.com>
+Link: https://lore.kernel.org/r/20250623110218.61490-1-changfengnan@bytedance.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/opdef.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index beb9423658d72..b3cd0ab29bb6a 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10886,7 +10886,9 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8def, "HP EliteBook 660 G12", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8df0, "HP EliteBook 630 G12", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8df1, "HP EliteBook 630 G12", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8dfb, "HP EliteBook 6 G1a 14", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8dfc, "HP EliteBook 645 G12", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8dfd, "HP EliteBook 6 G1a 16", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8dfe, "HP EliteBook 665 G12", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e11, "HP Trekker", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e12, "HP Trekker", ALC287_FIXUP_CS35L41_I2C_2),
+diff --git a/io_uring/opdef.c b/io_uring/opdef.c
+index 489384c0438bd..78ef5976bf003 100644
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -216,6 +216,7 @@ const struct io_issue_def io_issue_defs[] = {
+ 	},
+ 	[IORING_OP_FALLOCATE] = {
+ 		.needs_file		= 1,
++		.hash_reg_file          = 1,
+ 		.prep			= io_fallocate_prep,
+ 		.issue			= io_fallocate,
+ 	},
 -- 
 2.39.5
 
