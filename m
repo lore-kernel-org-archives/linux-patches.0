@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65FF2E54B7;
-	Tue, 15 Jul 2025 13:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5A71A5B9D;
+	Tue, 15 Jul 2025 13:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586462; cv=none; b=anjG2QhzMLXxTsxEvJIdVIzFJZheA6oRofK5+uQsbn8NxN8KY2DmpadnXSEJdoRxoCbhFuKXl2df+pnISNb2G0l3P0Pb/jsUbBff2F6zv1dV8J9FYDISJZa9lCf/5Dvkn76CA1c0UG1So4qZiP0s1AkjsN7qiDrO+GJmOWmzGqs=
+	t=1752586465; cv=none; b=Jhy/b+6RPk0rw9RRP3bGEpguIaUHJIgYHlWJseSu18M3emQ+fxzhT260gh0Ku0Vj62inTuYQeTrTp/+3gldGduIu2UaCsnP6OJc5NTmkcyVWbSx1XF9BrUVoEVrULLCRP+ZHu3ZefVYZjzDLiPCdEJZcwuAHuWHbO0ycFo4GVfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586462; c=relaxed/simple;
-	bh=VYa9cuxf8SK4g+LyRyvgJQyq6nKd6bd6KM24orC7YH4=;
+	s=arc-20240116; t=1752586465; c=relaxed/simple;
+	bh=YB5kjyKU8lgmbrwkYaiO8MSWNbrbcpZaL7PIQ/36abk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HibuFBlV3bqy5UKVfUgNoPHySAJpGsVtIDeUFR8t3R1CUgBEl14VtWHqc323UWzMdxk6MGuXdRqMV9hRkWObJUKRacEcNDrOoZEzOH60dYspjbWg/+F2NRvNhrH1QqYA8LqzfiIlv7uaulBKLvUJUI4n0kKUAAJE9WlhCTnCThs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f36/urlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5TiP13JnjLyTUGPpWR+dLAT3h/AlYQlAZSzkL+7XrjKCVGCIjBiIVotrd7K1gNfByDO/zcGGFKtgU6RlwgE2ef+8vQDuqcYf5ARAGTRSTWhv6Avs6vZkgEKzXUZU95v60sMDCfsTNv1z0wkCOs5OM5qYcsG4dbKfcuUa7IKieM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjbRzfCw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f36/urlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B70AC4CEE3;
-	Tue, 15 Jul 2025 13:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjbRzfCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AD4C4CEE3;
+	Tue, 15 Jul 2025 13:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586462;
-	bh=VYa9cuxf8SK4g+LyRyvgJQyq6nKd6bd6KM24orC7YH4=;
+	s=korg; t=1752586465;
+	bh=YB5kjyKU8lgmbrwkYaiO8MSWNbrbcpZaL7PIQ/36abk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f36/urljMgNVUAMqHuAWWoiGZ6LegRj2w255wNA26Kos0KpSeac6PIowk2T8XPNAr
-	 3+kvMwXqij81Hey0GhnHxPKBIAStBAUY4t5KsvjPViIhsSoh5Id2+0p3LjxCOtZnKB
-	 oeRATxNjZHxMH+IcZW82OXMWn9KUlLH79/G/On0A=
+	b=XjbRzfCwP67GLp2UDv+c+2dT6zTbblfn1+slMqNGiuCSYBElDACRM61pLrrI7/U5/
+	 EUKheCUl1CMdthYHL/jDNdjxIfvZQSV4Q+fUlHVVBEW6UCgSXOOKi0sfYSzjU86FHG
+	 gxBG46PaE0c2wHrWJKicGwSjFq14dAMqNXW00u+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/148] lib: test_objagg: Set error message in check_expect_hints_stats()
-Date: Tue, 15 Jul 2025 15:13:09 +0200
-Message-ID: <20250715130803.010502404@linuxfoundation.org>
+Subject: [PATCH 5.4 076/148] wifi: ath6kl: remove WARN on bad firmware input
+Date: Tue, 15 Jul 2025 15:13:18 +0200
+Message-ID: <20250715130803.364392736@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -54,48 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit e6ed134a4ef592fe1fd0cafac9683813b3c8f3e8 ]
+[ Upstream commit e7417421d89358da071fd2930f91e67c7128fbff ]
 
-Smatch complains that the error message isn't set in the caller:
+If the firmware gives bad input, that's nothing to do with
+the driver's stack at this point etc., so the WARN_ON()
+doesn't add any value. Additionally, this is one of the
+top syzbot reports now. Just print a message, and as an
+added bonus, print the sizes too.
 
-    lib/test_objagg.c:923 test_hints_case2()
-    error: uninitialized symbol 'errmsg'.
-
-This static checker warning only showed up after a recent refactoring
-but the bug dates back to when the code was originally added.  This
-likely doesn't affect anything in real life.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202506281403.DsuyHFTZ-lkp@intel.com/
-Fixes: 0a020d416d0a ("lib: introduce initial implementation of object aggregation manager")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/8548f423-2e3b-4bb7-b816-5041de2762aa@sabinyo.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
+Tested-by: syzbot+92c6dd14aaa230be6855@syzkaller.appspotmail.com
+Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250617114529.031a677a348e.I58bf1eb4ac16a82c546725ff010f3f0d2b0cca49@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_objagg.c | 4 +++-
+ drivers/net/wireless/ath/ath6kl/bmi.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/lib/test_objagg.c b/lib/test_objagg.c
-index da137939a4100..78d25ab19a960 100644
---- a/lib/test_objagg.c
-+++ b/lib/test_objagg.c
-@@ -899,8 +899,10 @@ static int check_expect_hints_stats(struct objagg_hints *objagg_hints,
- 	int err;
+diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
+index af98e871199d3..5a9e93fd1ef42 100644
+--- a/drivers/net/wireless/ath/ath6kl/bmi.c
++++ b/drivers/net/wireless/ath/ath6kl/bmi.c
+@@ -87,7 +87,9 @@ int ath6kl_bmi_get_target_info(struct ath6kl *ar,
+ 		 * We need to do some backwards compatibility to make this work.
+ 		 */
+ 		if (le32_to_cpu(targ_info->byte_count) != sizeof(*targ_info)) {
+-			WARN_ON(1);
++			ath6kl_err("mismatched byte count %d vs. expected %zd\n",
++				   le32_to_cpu(targ_info->byte_count),
++				   sizeof(*targ_info));
+ 			return -EINVAL;
+ 		}
  
- 	stats = objagg_hints_stats_get(objagg_hints);
--	if (IS_ERR(stats))
-+	if (IS_ERR(stats)) {
-+		*errmsg = "objagg_hints_stats_get() failed.";
- 		return PTR_ERR(stats);
-+	}
- 	err = __check_expect_stats(stats, expect_stats, errmsg);
- 	objagg_stats_put(stats);
- 	return err;
 -- 
 2.39.5
 
