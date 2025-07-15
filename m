@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889082E6D0E;
-	Tue, 15 Jul 2025 13:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200FC2E6D0E;
+	Tue, 15 Jul 2025 13:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587426; cv=none; b=P7dJjGGcjglBY/fG3bXOBAWC+qRY/ioIUoxn/oMamS3HSsSzAvw5IO2qVfPUidFBlEQsImPErAUyl38TbJAxePbLn7+Klc2kp3JS9VruAb+UBNicetRMIsovsql1+gPd9xLbWY79gPdk75IKIxNuGS+AiR2LfHJAPom6LDoQA5w=
+	t=1752587429; cv=none; b=WxjME6ceUvV0PMliq1VTGob53LqhBjj4t+HV78sBKCaBkog9fIqTweOOtvrhJdU8WvarKVjXKyyCjOdVx/VBdrLNS+3Ssi8uCPOutTFwl57TWoXRLl7BB5eLefFW06/Wlo8cKYR9ZVv1LKkMGlBoRZxYMgI24hjvu3gt39wwezg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587426; c=relaxed/simple;
-	bh=5GFec4ugs8+uvSCnN+kfSuxzjdH0yWITrWK4GlZp2QI=;
+	s=arc-20240116; t=1752587429; c=relaxed/simple;
+	bh=/acimN+XRsKyvXcu0M04DznstB79oBxSe8t5b30COPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3vRIimPIkuztjHUlx4dmXTvfjvAFO0eocVDbQiiQBy9iVxsWduBxlSfBRnhNY2u8RS5mfe3ptIereqnp/URZhw8q08qwAcUc8sgDnze4jQCUfCvRfrWiybAIPGMVO8u9uiKg6p00Kv0HOjHexqxGoEWVRC/dSVTt7qX3Xz+l1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMaKTY9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Vrp6P4HEclSwmGteIfE1W9o68geyj0OtoBh8+ew6Lvg0dFbOjmBG0KUg87UztJ6/nshHAysxa9HC0nxAqe8BU9hbd7dDjgr5/nq2ED030S4kksnqHL3oFdtUNT68SQuA5wR8+0kam1+UJqzv1kpuH6yfnfJk0zxL2H+28aZVQuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ns2/IYa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMaKTY9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAB4C4CEE3;
-	Tue, 15 Jul 2025 13:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ns2/IYa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1F5C4CEE3;
+	Tue, 15 Jul 2025 13:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587426;
-	bh=5GFec4ugs8+uvSCnN+kfSuxzjdH0yWITrWK4GlZp2QI=;
+	s=korg; t=1752587429;
+	bh=/acimN+XRsKyvXcu0M04DznstB79oBxSe8t5b30COPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMaKTY9XP/dm+97LmuqsTjf1GkHGbovDY/gY3Y/3/Ivbd/DrnroLvGiavZqjroxho
-	 L2GFwiiDUIDdvzGn64O6SpRkV21S96lONiDD4dDMZT8sAoPHi45Hc25KjMrqAo8IKj
-	 27w+5npYo9G19AQiaagkD+GuBDnVzvGi6pmGH8/o=
+	b=0Ns2/IYacCDjmL1fCu2lWVksejRcstBfw7xgJ6cKxHRqsJh7D9rRa/tu7N52mcIIh
+	 qC6UxnzubJOHsXMCIJ7asYuUgzKy6C9Mo0ln5/owGSoXtJ63gC5aezmXIAcJMUidLK
+	 p90g03RcA/hBDnDzvuDs6Hf7o/AgfVNqLdR8zJBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 70/88] net: ll_temac: Fix missing tx_pending check in ethtools_set_ringparam()
-Date: Tue, 15 Jul 2025 15:14:46 +0200
-Message-ID: <20250715130757.380327109@linuxfoundation.org>
+Subject: [PATCH 5.10 001/208] cifs: Fix cifs_query_path_info() for Windows NT servers
+Date: Tue, 15 Jul 2025 15:11:50 +0200
+Message-ID: <20250715130810.893945345@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
-References: <20250715130754.497128560@linuxfoundation.org>
+In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
+References: <20250715130810.830580412@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,48 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit e81750b4e3826fedce7362dad839cb40384d60ae ]
+[ Upstream commit a3e771afbb3bce91c8296828304903e7348003fe ]
 
-The function ll_temac_ethtools_set_ringparam() incorrectly checked
-rx_pending twice, once correctly for RX and once mistakenly in place
-of tx_pending. This caused tx_pending to be left unchecked against
-TX_BD_NUM_MAX.
-As a result, invalid TX ring sizes may have been accepted or valid
-ones wrongly rejected based on the RX limit, leading to potential
-misconfiguration or unexpected results.
+For TRANS2 QUERY_PATH_INFO request when the path does not exist, the
+Windows NT SMB server returns error response STATUS_OBJECT_NAME_NOT_FOUND
+or ERRDOS/ERRbadfile without the SMBFLG_RESPONSE flag set. Similarly it
+returns STATUS_DELETE_PENDING when the file is being deleted. And looks
+like that any error response from TRANS2 QUERY_PATH_INFO does not have
+SMBFLG_RESPONSE flag set.
 
-This patch corrects the condition to properly validate tx_pending.
+So relax check in check_smb_hdr() for detecting if the packet is response
+for this special case.
 
-Fixes: f7b261bfc35e ("net: ll_temac: Make RX/TX ring sizes configurable")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250710180621.2383000-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This change fixes stat() operation against Windows NT SMB servers and also
+all operations which depends on -ENOENT result from stat like creat() or
+mkdir().
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/ll_temac_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/misc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
-index 08c45756b2181..d9b5c1c6ceaa2 100644
---- a/drivers/net/ethernet/xilinx/ll_temac_main.c
-+++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
-@@ -1311,7 +1311,7 @@ ll_temac_ethtools_set_ringparam(struct net_device *ndev,
- 	if (ering->rx_pending > RX_BD_NUM_MAX ||
- 	    ering->rx_mini_pending ||
- 	    ering->rx_jumbo_pending ||
--	    ering->rx_pending > TX_BD_NUM_MAX)
-+	    ering->tx_pending > TX_BD_NUM_MAX)
- 		return -EINVAL;
+diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
+index 2d46018b02839..54c443686daba 100644
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -310,6 +310,14 @@ check_smb_hdr(struct smb_hdr *smb)
+ 	if (smb->Command == SMB_COM_LOCKING_ANDX)
+ 		return 0;
  
- 	if (netif_running(ndev))
++	/*
++	 * Windows NT server returns error resposne (e.g. STATUS_DELETE_PENDING
++	 * or STATUS_OBJECT_NAME_NOT_FOUND or ERRDOS/ERRbadfile or any other)
++	 * for some TRANS2 requests without the RESPONSE flag set in header.
++	 */
++	if (smb->Command == SMB_COM_TRANSACTION2 && smb->Status.CifsError != 0)
++		return 0;
++
+ 	cifs_dbg(VFS, "Server sent request, not response. mid=%u\n",
+ 		 get_mid(smb));
+ 	return 1;
 -- 
 2.39.5
 
