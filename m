@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE3F2ED877;
-	Tue, 15 Jul 2025 13:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC4D2EE27E;
+	Tue, 15 Jul 2025 13:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587647; cv=none; b=mhXFHn5G4ttqK9KS9pg1RIwNYZgJD8/BUzjJbwxoLHaab3K087p8f5uPt+tlOFATcVxq/QegNXWZmmufPo06rJvGGZshVGHpRKBCqY0XAFGaRczXngdw7p97bKMhvVybXCwkc6T1FN9La6Pz9XxFe+P2wb4BZ9DZO9i4vclFAt4=
+	t=1752587650; cv=none; b=Fx7K2BpASoZTW2bow9IGsYVbF171wdr5IwHRkTZOHPTzhoZbJ5lx371IDApYSzXhpw9IIng7brX4z1t8MSHke3K7VbC1px4w4gkPMK89NHS+rpNRqp2nELwZfgC+QMjmIq53/Qj10lAUVr7G0FVhSGSIjGzE788ievzQ6aLr71w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587647; c=relaxed/simple;
-	bh=DCQZ7OeEK9b3EXRa0Z9WJ/nHMazp22ru5E51ZGyILWk=;
+	s=arc-20240116; t=1752587650; c=relaxed/simple;
+	bh=QEMZHb1njrO6icsQy+/2ATwe8/lE2lB3uk/Xp3TIlM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWhYTRfjjTcNDnGK2/BAVWQLWP0tw3iSlW2Uiq6bCtw0xk4tSeZy/k0j2McVT3M0om6qhMNCNU2hMWdYflqi4uE9WM0ZGQLGMRCqIOu6ErtLCdiuJSHxf3xGwD/r3Uf8JHL864uUOzbTWD5eQnWXD/Y3MnKLPvg0IJ+cyzOcIAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3yG+4CY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YRy1GvTK4ZKTmTEp8nXmus4bsCMaxvXmgWx7lRHPcern0y6I8dwy+sVitJnTVIGXH6oACRO6/A1kd7c9vJc95CWelEBS7Si6TgDtulKYNmhvmxlDwEd+pZVQY7c3/NcOm9WqOKb1McDlPdHLQihV/2ZLR3BWY+nOjWkTXuV+Z1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZE+Uiujs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3yG+4CY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0438DC4CEF7;
-	Tue, 15 Jul 2025 13:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZE+Uiujs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC7EC4CEE3;
+	Tue, 15 Jul 2025 13:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587647;
-	bh=DCQZ7OeEK9b3EXRa0Z9WJ/nHMazp22ru5E51ZGyILWk=;
+	s=korg; t=1752587650;
+	bh=QEMZHb1njrO6icsQy+/2ATwe8/lE2lB3uk/Xp3TIlM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3yG+4CYLo9tZviv8cedil/aD8VKyEzLyqPHoXa0Zvj7vLP8WZG2gPaRTCR47dhYf
-	 XyOtKjTxn8ZNNDjD7ZqyQGp5VkSzdDoovlKnZ5ZAOD1KWOnHOTuMRtTn5qzXGPyzNW
-	 SZImZdW1J1b0socbHdRXOW2ooSxKnHnnLopHb3WI=
+	b=ZE+Uiujsj/WUoqP0HHOzh43vNF8HmRUy16OdXC10KIrAtWmClIn0/GKdAFd1LPEAf
+	 eTKBDnVH2R5tWy085A5zLTLyUaFtad3jgGo7xLFO19ujReH4x+0iDT+db9z3hdhcuo
+	 2DsYgIrReUvi6ThjnIl1LlCdJW9VOU2Mabs94jbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 5.10 063/208] drm/tegra: Assign plane type before registration
-Date: Tue, 15 Jul 2025 15:12:52 +0200
-Message-ID: <20250715130813.475312721@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Inki Dae <inki.dae@samsung.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 090/208] drm/exynos: fimd: Guard display clock control with runtime PM calls
+Date: Tue, 15 Jul 2025 15:13:19 +0200
+Message-ID: <20250715130814.546063016@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -50,87 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thierry Reding <treding@nvidia.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 9ff4fdf4f44b69237c0afc1d3a8dac916ce66f3e upstream.
+[ Upstream commit 5d91394f236167ac624b823820faf4aa928b889e ]
 
-Changes to a plane's type after it has been registered aren't propagated
-to userspace automatically. This could possibly be achieved by updating
-the property, but since we can already determine which type this should
-be before the registration, passing in the right type from the start is
-a much better solution.
+Commit c9b1150a68d9 ("drm/atomic-helper: Re-order bridge chain pre-enable
+and post-disable") changed the call sequence to the CRTC enable/disable
+and bridge pre_enable/post_disable methods, so those bridge methods are
+now called when CRTC is not yet enabled.
 
-Suggested-by: Aaron Kling <webgeek1234@gmail.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Cc: stable@vger.kernel.org
-Fixes: 473079549f27 ("drm/tegra: dc: Add Tegra186 support")
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250421-tegra-drm-primary-v2-1-7f740c4c2121@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This causes a lockup observed on Samsung Peach-Pit/Pi Chromebooks. The
+source of this lockup is a call to fimd_dp_clock_enable() function, when
+FIMD device is not yet runtime resumed. It worked before the mentioned
+commit only because the CRTC implemented by the FIMD driver was always
+enabled what guaranteed the FIMD device to be runtime resumed.
+
+This patch adds runtime PM guards to the fimd_dp_clock_enable() function
+to enable its proper operation also when the CRTC implemented by FIMD is
+not yet enabled.
+
+Fixes: 196e059a8a6a ("drm/exynos: convert clock_enable crtc callback to pipeline clock")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/dc.c  |   12 ++++++++----
- drivers/gpu/drm/tegra/hub.c |    4 ++--
- drivers/gpu/drm/tegra/hub.h |    3 ++-
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/tegra/dc.c
-+++ b/drivers/gpu/drm/tegra/dc.c
-@@ -1134,10 +1134,16 @@ static struct drm_plane *tegra_dc_add_sh
- 		if (wgrp->dc == dc->pipe) {
- 			for (j = 0; j < wgrp->num_windows; j++) {
- 				unsigned int index = wgrp->windows[j];
-+				enum drm_plane_type type;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index c045330f9c48f..3b89a8774db5a 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -182,6 +182,7 @@ struct fimd_context {
+ 	u32				i80ifcon;
+ 	bool				i80_if;
+ 	bool				suspended;
++	bool				dp_clk_enabled;
+ 	wait_queue_head_t		wait_vsync_queue;
+ 	atomic_t			wait_vsync_event;
+ 	atomic_t			win_updated;
+@@ -1003,7 +1004,18 @@ static void fimd_dp_clock_enable(struct exynos_drm_clk *clk, bool enable)
+ 	struct fimd_context *ctx = container_of(clk, struct fimd_context,
+ 						dp_clk);
+ 	u32 val = enable ? DP_MIE_CLK_DP_ENABLE : DP_MIE_CLK_DISABLE;
 +
-+				if (primary)
-+					type = DRM_PLANE_TYPE_OVERLAY;
-+				else
-+					type = DRM_PLANE_TYPE_PRIMARY;
++	if (enable == ctx->dp_clk_enabled)
++		return;
++
++	if (enable)
++		pm_runtime_resume_and_get(ctx->dev);
++
++	ctx->dp_clk_enabled = enable;
+ 	writel(val, ctx->regs + DP_MIE_CLKCON);
++
++	if (!enable)
++		pm_runtime_put(ctx->dev);
+ }
  
- 				plane = tegra_shared_plane_create(drm, dc,
- 								  wgrp->index,
--								  index);
-+								  index, type);
- 				if (IS_ERR(plane))
- 					return plane;
- 
-@@ -1145,10 +1151,8 @@ static struct drm_plane *tegra_dc_add_sh
- 				 * Choose the first shared plane owned by this
- 				 * head as the primary plane.
- 				 */
--				if (!primary) {
--					plane->type = DRM_PLANE_TYPE_PRIMARY;
-+				if (!primary)
- 					primary = plane;
--				}
- 			}
- 		}
- 	}
---- a/drivers/gpu/drm/tegra/hub.c
-+++ b/drivers/gpu/drm/tegra/hub.c
-@@ -551,9 +551,9 @@ static const struct drm_plane_helper_fun
- struct drm_plane *tegra_shared_plane_create(struct drm_device *drm,
- 					    struct tegra_dc *dc,
- 					    unsigned int wgrp,
--					    unsigned int index)
-+					    unsigned int index,
-+					    enum drm_plane_type type)
- {
--	enum drm_plane_type type = DRM_PLANE_TYPE_OVERLAY;
- 	struct tegra_drm *tegra = drm->dev_private;
- 	struct tegra_display_hub *hub = tegra->hub;
- 	/* planes can be assigned to arbitrary CRTCs */
---- a/drivers/gpu/drm/tegra/hub.h
-+++ b/drivers/gpu/drm/tegra/hub.h
-@@ -81,7 +81,8 @@ void tegra_display_hub_cleanup(struct te
- struct drm_plane *tegra_shared_plane_create(struct drm_device *drm,
- 					    struct tegra_dc *dc,
- 					    unsigned int wgrp,
--					    unsigned int index);
-+					    unsigned int index,
-+					    enum drm_plane_type type);
- 
- int tegra_display_hub_atomic_check(struct drm_device *drm,
- 				   struct drm_atomic_state *state);
+ static const struct exynos_drm_crtc_ops fimd_crtc_ops = {
+-- 
+2.39.5
+
 
 
