@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7202E3AF9;
-	Tue, 15 Jul 2025 13:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB24192D8A;
+	Tue, 15 Jul 2025 13:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586555; cv=none; b=g9C9YO/PTIDowboKH2537jeJZFMQlYyb0QnhoVNiR9X3J3C1ui5kfzDBMexFT3+r/JIIHXTN4525ml93IsQwiuMCXaT43XNoAVXretDOyEcpIa/Z/Kxy9V7uA974L6HY/Abl1ZWXsKENehoB95LfusTEdTQRRuENYz5VvX10+4k=
+	t=1752586557; cv=none; b=Im7R/KAQtEuGg4ItyZbMWx4yMCldE7fzj7Jn6uYUNrOwJsgouohjmmempdYAU2R5WkPQ6qPgEEetyWIerfcgoubrXgk2B6zKG/GuCePd4fIkwZ0G3VslAnM1hOsFN5EbbwS8S4OXTt0JRNwVD/wQa+A1hP4rbV8GqGb1EVY7+dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586555; c=relaxed/simple;
-	bh=KmIQEyE8KPF79P8HvqUBlw5pgm4Tbsq+mDesEe5y93M=;
+	s=arc-20240116; t=1752586557; c=relaxed/simple;
+	bh=fDHcaNgX1d0t1dEbJU6XhP3XZWT14GfGQAgTQrPgvDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpQUAbwtv1/g25jpBlPW1aLM0byCddto+9WulzXwEIGh/Lj7U3ebaBZ0ppBiBhZ80oQ842eSTQxXbzW2UJcF9iZZtBCBEwooSuDXg6eNe9qEDRc173AdaDm9A1obduiwbCLNiZD4zZeoT+JmSAldaBLt7bhkceYESXGePBemit8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3/LlVG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUdTmBrCOcwJIt+eZ7pHNiIuHihhrZ3QKUohKqFFZn0J0ykE4NKgkMFRubJ5DierZ0n497pg/8JifO7q+p9jq2BFkYRhHDhm+ibMgxw4zd4INyvI+hEyrJnlvdfyBrQGGvncPhTAZZvTRfzpkTC5P9Xuh2Y/sSkiAYrKOgDTEk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/P2gC9F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3/LlVG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3668C4CEE3;
-	Tue, 15 Jul 2025 13:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/P2gC9F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC71C4CEE3;
+	Tue, 15 Jul 2025 13:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586555;
-	bh=KmIQEyE8KPF79P8HvqUBlw5pgm4Tbsq+mDesEe5y93M=;
+	s=korg; t=1752586557;
+	bh=fDHcaNgX1d0t1dEbJU6XhP3XZWT14GfGQAgTQrPgvDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3/LlVG00DIqMZgCpefvBaufFhzSwqgYoj9E//1ap2EPW5cOzFT6Mt8E50eB0cOFg
-	 LMDf2pmziFn8F3ZBtr3O73Y7VVUXqDpIEhr0QAtbWXHCSZHz2yq6yRvu7b3rw9jIUl
-	 PGNvuwmeEj8jS8bGqJWrBMgq9Extjjo1Rm8XxsCI=
+	b=D/P2gC9Fsn3nI5cTnfpUc4+7vGt22qxs02MJnXRxP/i116s1CNXud1XCfJDZZhPfI
+	 1sB0bqtW8L5keBG9AtT5WfUaTyO3cM5bRvjIIExYRVn4CHowB3MCvB0ktRIvsUdT/f
+	 zZj6A6iJQ3Q/S7wAIqxJgA/1z5hz2YdQE8j4t4gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d333febcf8f4bc5f6110@syzkaller.appspotmail.com,
 	Kuniyuki Iwashima <kuniyu@google.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/148] tipc: Fix use-after-free in tipc_conn_close().
-Date: Tue, 15 Jul 2025 15:13:52 +0200
-Message-ID: <20250715130804.715755774@linuxfoundation.org>
+Subject: [PATCH 5.4 111/148] atm: clip: Fix potential null-ptr-deref in to_atmarpd().
+Date: Tue, 15 Jul 2025 15:13:53 +0200
+Message-ID: <20250715130804.755214284@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -55,119 +54,130 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 667eeab4999e981c96b447a4df5f20bdf5c26f13 ]
+[ Upstream commit 706cc36477139c1616a9b2b96610a8bb520b7119 ]
 
-syzbot reported a null-ptr-deref in tipc_conn_close() during netns
-dismantle. [0]
+atmarpd is protected by RTNL since commit f3a0592b37b8 ("[ATM]: clip
+causes unregister hang").
 
-tipc_topsrv_stop() iterates tipc_net(net)->topsrv->conn_idr and calls
-tipc_conn_close() for each tipc_conn.
+However, it is not enough because to_atmarpd() is called without RTNL,
+especially clip_neigh_solicit() / neigh_ops->solicit() is unsleepable.
 
-The problem is that tipc_conn_close() is called after releasing the
-IDR lock.
+Also, there is no RTNL dependency around atmarpd.
 
-At the same time, there might be tipc_conn_recv_work() running and it
-could call tipc_conn_close() for the same tipc_conn and release its
-last ->kref.
+Let's use a private mutex and RCU to protect access to atmarpd in
+to_atmarpd().
 
-Once we release the IDR lock in tipc_topsrv_stop(), there is no
-guarantee that the tipc_conn is alive.
-
-Let's hold the ref before releasing the lock and put the ref after
-tipc_conn_close() in tipc_topsrv_stop().
-
-[0]:
-BUG: KASAN: use-after-free in tipc_conn_close+0x122/0x140 net/tipc/topsrv.c:165
-Read of size 8 at addr ffff888099305a08 by task kworker/u4:3/435
-
-CPU: 0 PID: 435 Comm: kworker/u4:3 Not tainted 4.19.204-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: netns cleanup_net
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x1fc/0x2ef lib/dump_stack.c:118
- print_address_description.cold+0x54/0x219 mm/kasan/report.c:256
- kasan_report_error.cold+0x8a/0x1b9 mm/kasan/report.c:354
- kasan_report mm/kasan/report.c:412 [inline]
- __asan_report_load8_noabort+0x88/0x90 mm/kasan/report.c:433
- tipc_conn_close+0x122/0x140 net/tipc/topsrv.c:165
- tipc_topsrv_stop net/tipc/topsrv.c:701 [inline]
- tipc_topsrv_exit_net+0x27b/0x5c0 net/tipc/topsrv.c:722
- ops_exit_list+0xa5/0x150 net/core/net_namespace.c:153
- cleanup_net+0x3b4/0x8b0 net/core/net_namespace.c:553
- process_one_work+0x864/0x1570 kernel/workqueue.c:2153
- worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
- kthread+0x33f/0x460 kernel/kthread.c:259
- ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
-
-Allocated by task 23:
- kmem_cache_alloc_trace+0x12f/0x380 mm/slab.c:3625
- kmalloc include/linux/slab.h:515 [inline]
- kzalloc include/linux/slab.h:709 [inline]
- tipc_conn_alloc+0x43/0x4f0 net/tipc/topsrv.c:192
- tipc_topsrv_accept+0x1b5/0x280 net/tipc/topsrv.c:470
- process_one_work+0x864/0x1570 kernel/workqueue.c:2153
- worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
- kthread+0x33f/0x460 kernel/kthread.c:259
- ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
-
-Freed by task 23:
- __cache_free mm/slab.c:3503 [inline]
- kfree+0xcc/0x210 mm/slab.c:3822
- tipc_conn_kref_release net/tipc/topsrv.c:150 [inline]
- kref_put include/linux/kref.h:70 [inline]
- conn_put+0x2cd/0x3a0 net/tipc/topsrv.c:155
- process_one_work+0x864/0x1570 kernel/workqueue.c:2153
- worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
- kthread+0x33f/0x460 kernel/kthread.c:259
- ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
-
-The buggy address belongs to the object at ffff888099305a00
- which belongs to the cache kmalloc-512 of size 512
-The buggy address is located 8 bytes inside of
- 512-byte region [ffff888099305a00, ffff888099305c00)
-The buggy address belongs to the page:
-page:ffffea000264c140 count:1 mapcount:0 mapping:ffff88813bff0940 index:0x0
-flags: 0xfff00000000100(slab)
-raw: 00fff00000000100 ffffea00028b6b88 ffffea0002cd2b08 ffff88813bff0940
-raw: 0000000000000000 ffff888099305000 0000000100000006 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff888099305900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff888099305980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff888099305a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                      ^
- ffff888099305a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff888099305b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: c5fa7b3cf3cb ("tipc: introduce new TIPC server infrastructure")
-Reported-by: syzbot+d333febcf8f4bc5f6110@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=27169a847a70550d17be
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20250702014350.692213-1-kuniyu@google.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250704062416.1613927-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/topsrv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/atm/clip.c | 44 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 15 deletions(-)
 
-diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
-index 88e8e8d69b60e..820bed3b9cc51 100644
---- a/net/tipc/topsrv.c
-+++ b/net/tipc/topsrv.c
-@@ -699,8 +699,10 @@ static void tipc_topsrv_stop(struct net *net)
- 	for (id = 0; srv->idr_in_use; id++) {
- 		con = idr_find(&srv->conn_idr, id);
- 		if (con) {
-+			conn_get(con);
- 			spin_unlock_bh(&srv->idr_lock);
- 			tipc_conn_close(con);
-+			conn_put(con);
- 			spin_lock_bh(&srv->idr_lock);
- 		}
+diff --git a/net/atm/clip.c b/net/atm/clip.c
+index 294cb9efe3d38..d5363ae5296ad 100644
+--- a/net/atm/clip.c
++++ b/net/atm/clip.c
+@@ -45,7 +45,8 @@
+ #include <net/atmclip.h>
+ 
+ static struct net_device *clip_devs;
+-static struct atm_vcc *atmarpd;
++static struct atm_vcc __rcu *atmarpd;
++static DEFINE_MUTEX(atmarpd_lock);
+ static struct timer_list idle_timer;
+ static const struct neigh_ops clip_neigh_ops;
+ 
+@@ -53,24 +54,35 @@ static int to_atmarpd(enum atmarp_ctrl_type type, int itf, __be32 ip)
+ {
+ 	struct sock *sk;
+ 	struct atmarp_ctrl *ctrl;
++	struct atm_vcc *vcc;
+ 	struct sk_buff *skb;
++	int err = 0;
+ 
+ 	pr_debug("(%d)\n", type);
+-	if (!atmarpd)
+-		return -EUNATCH;
++
++	rcu_read_lock();
++	vcc = rcu_dereference(atmarpd);
++	if (!vcc) {
++		err = -EUNATCH;
++		goto unlock;
++	}
+ 	skb = alloc_skb(sizeof(struct atmarp_ctrl), GFP_ATOMIC);
+-	if (!skb)
+-		return -ENOMEM;
++	if (!skb) {
++		err = -ENOMEM;
++		goto unlock;
++	}
+ 	ctrl = skb_put(skb, sizeof(struct atmarp_ctrl));
+ 	ctrl->type = type;
+ 	ctrl->itf_num = itf;
+ 	ctrl->ip = ip;
+-	atm_force_charge(atmarpd, skb->truesize);
++	atm_force_charge(vcc, skb->truesize);
+ 
+-	sk = sk_atm(atmarpd);
++	sk = sk_atm(vcc);
+ 	skb_queue_tail(&sk->sk_receive_queue, skb);
+ 	sk->sk_data_ready(sk);
+-	return 0;
++unlock:
++	rcu_read_unlock();
++	return err;
+ }
+ 
+ static void link_vcc(struct clip_vcc *clip_vcc, struct atmarp_entry *entry)
+@@ -608,10 +620,12 @@ static void atmarpd_close(struct atm_vcc *vcc)
+ {
+ 	pr_debug("\n");
+ 
+-	rtnl_lock();
+-	atmarpd = NULL;
++	mutex_lock(&atmarpd_lock);
++	RCU_INIT_POINTER(atmarpd, NULL);
++	mutex_unlock(&atmarpd_lock);
++
++	synchronize_rcu();
+ 	skb_queue_purge(&sk_atm(vcc)->sk_receive_queue);
+-	rtnl_unlock();
+ 
+ 	pr_debug("(done)\n");
+ 	module_put(THIS_MODULE);
+@@ -632,15 +646,15 @@ static struct atm_dev atmarpd_dev = {
+ 
+ static int atm_init_atmarp(struct atm_vcc *vcc)
+ {
+-	rtnl_lock();
++	mutex_lock(&atmarpd_lock);
+ 	if (atmarpd) {
+-		rtnl_unlock();
++		mutex_unlock(&atmarpd_lock);
+ 		return -EADDRINUSE;
  	}
+ 
+ 	mod_timer(&idle_timer, jiffies + CLIP_CHECK_INTERVAL * HZ);
+ 
+-	atmarpd = vcc;
++	rcu_assign_pointer(atmarpd, vcc);
+ 	set_bit(ATM_VF_META, &vcc->flags);
+ 	set_bit(ATM_VF_READY, &vcc->flags);
+ 	    /* allow replies and avoid getting closed if signaling dies */
+@@ -649,7 +663,7 @@ static int atm_init_atmarp(struct atm_vcc *vcc)
+ 	vcc->push = NULL;
+ 	vcc->pop = NULL; /* crash */
+ 	vcc->push_oam = NULL; /* crash */
+-	rtnl_unlock();
++	mutex_unlock(&atmarpd_lock);
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
