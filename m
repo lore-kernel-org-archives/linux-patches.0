@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D12C2E339A;
-	Tue, 15 Jul 2025 13:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA42E62A4;
+	Tue, 15 Jul 2025 13:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586957; cv=none; b=m425M162XETruRQuMw1Wb4D4/EdzwzBj7I7M3EOQ6dmaqka6cxZpj9TUJOHZVuULt+TujD0t/J+rVnb8FGoJeTaetsF1v1FAWiBRDW1bEmz3GoEobTTCD+OOjPgLKlASjU/clDkaOhzF2Yms4HwNhXBrjo1JDOpuXSaNuuux3yk=
+	t=1752586960; cv=none; b=WvoqBhHbq56bVy1xLzLqKLBwHROJcHW+OeY+tieWKoEuliDV+CkuIkKzaP62Ses1CE770xENP0NStjhHJ5avKGAlur5MbDH1FKiJU3hIeAhkq6Og6PcH/NeF9r91UphWb01JvTBqLfq1NLk+sfXvF5dKXMtd6KfhxCXUkNSJ9ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586957; c=relaxed/simple;
-	bh=gcnrZw7F0Enpr/gFJSVTYAKUhDGtHcoasBBaKqsulmk=;
+	s=arc-20240116; t=1752586960; c=relaxed/simple;
+	bh=gDSpDJlSyB1HDaFhWfFjifMoXcwTpz1IUHda0H9z4H8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DO22L6r4axZs5Te03Vo0jlI0JNPfMcs57wshmPfCFYI1tzkbiO2BdKwJzhGzW/L1UFEtlSRfYBO8T9F5hznSMNZBCUokaAWLElotWR74+OWEIcVXyMZzK0rJp3kNDCb20auWNV7biUsCXjz5XtahLW2vkW3WJooU0wUAJwK3P7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jITSNOO8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HmRUyZF8sWX+0+ZdD2TC7D6S7LuppCyg/DL+KK0YWbhfbCni1y+k3tewPEtzp5L4J039OiarXdmU2Uzz60PBXkDrJlsVjCRgZxCgce+LIiaJYxk32z9NSumcz4uogFs5irNwl3jAd9t81IqPItMmZnaB5+iLGrW4sfZl/MrAo4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQ7Zro7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jITSNOO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5697C4CEE3;
-	Tue, 15 Jul 2025 13:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQ7Zro7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2ABC4CEE3;
+	Tue, 15 Jul 2025 13:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586957;
-	bh=gcnrZw7F0Enpr/gFJSVTYAKUhDGtHcoasBBaKqsulmk=;
+	s=korg; t=1752586960;
+	bh=gDSpDJlSyB1HDaFhWfFjifMoXcwTpz1IUHda0H9z4H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jITSNOO8ogc9+OQSP19/TcgXSHoCtog7zX3P/zHDRy3VblUcaz/sg2nVK9mz8+oKo
-	 0RaQkfm80Ip4e0EeaOztwhvd9fBaVnOkdhiFO3DuM3LbAj+Mi40pASnTyEntNEZogR
-	 tKSHezn06RsFNZAZaOukqQx09rfxzA7PECT88X/c=
+	b=RQ7Zro7gxzE8ftrcfqHhaLdZifnlJjcNgeS8cz+DIFy3b61El736AZMYluTRm5OIe
+	 de319JvofYdeV+bsGc06edfN/cbPphoWsKGVHfYQi37uiy0qIM9p1cvq9yx4Y3hSDu
+	 O+CYwKRLn1JUruy8AGOlveRdmBybwy77zyd/Fjwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Yoo <harry.yoo@oracle.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Raghavendra K T <raghavendra.kt@amd.com>,
-	Casey Chen <cachen@purestorage.com>,
-	David Wang <00107082@163.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Yuanyuan Zhong <yzhong@purestorage.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 112/192] lib/alloc_tag: do not acquire non-existent lock in alloc_tag_top_users()
-Date: Tue, 15 Jul 2025 15:13:27 +0200
-Message-ID: <20250715130819.383929497@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.15 113/192] clk: imx: Fix an out-of-bounds access in dispmix_csr_clk_dev_data
+Date: Tue, 15 Jul 2025 15:13:28 +0200
+Message-ID: <20250715130819.423085359@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -57,100 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Yoo <harry.yoo@oracle.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 99af22cd34688cc0d535a1919e0bea4cbc6c1ea1 upstream.
+commit aacc875a448d363332b9df0621dde6d3a225ea9f upstream.
 
-alloc_tag_top_users() attempts to lock alloc_tag_cttype->mod_lock even
-when the alloc_tag_cttype is not allocated because:
+When num_parents is 4, __clk_register() occurs an out-of-bounds
+when accessing parent_names member. Use ARRAY_SIZE() instead of
+hardcode number here.
 
-  1) alloc tagging is disabled because mem profiling is disabled
-     (!alloc_tag_cttype)
-  2) alloc tagging is enabled, but not yet initialized (!alloc_tag_cttype)
-  3) alloc tagging is enabled, but failed initialization
-     (!alloc_tag_cttype or IS_ERR(alloc_tag_cttype))
+ BUG: KASAN: global-out-of-bounds in __clk_register+0x1844/0x20d8
+ Read of size 8 at addr ffff800086988e78 by task kworker/u24:3/59
+  Hardware name: NXP i.MX95 19X19 board (DT)
+  Workqueue: events_unbound deferred_probe_work_func
+  Call trace:
+    dump_backtrace+0x94/0xec
+    show_stack+0x18/0x24
+    dump_stack_lvl+0x8c/0xcc
+    print_report+0x398/0x5fc
+    kasan_report+0xd4/0x114
+    __asan_report_load8_noabort+0x20/0x2c
+    __clk_register+0x1844/0x20d8
+    clk_hw_register+0x44/0x110
+    __clk_hw_register_mux+0x284/0x3a8
+    imx95_bc_probe+0x4f4/0xa70
 
-In all cases, alloc_tag_cttype is not allocated, and therefore
-alloc_tag_top_users() should not attempt to acquire the semaphore.
-
-This leads to a crash on memory allocation failure by attempting to
-acquire a non-existent semaphore:
-
-  Oops: general protection fault, probably for non-canonical address 0xdffffc000000001b: 0000 [#3] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x00000000000000d8-0x00000000000000df]
-  CPU: 2 UID: 0 PID: 1 Comm: systemd Tainted: G      D             6.16.0-rc2 #1 VOLUNTARY
-  Tainted: [D]=DIE
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-  RIP: 0010:down_read_trylock+0xaa/0x3b0
-  Code: d0 7c 08 84 d2 0f 85 a0 02 00 00 8b 0d df 31 dd 04 85 c9 75 29 48 b8 00 00 00 00 00 fc ff df 48 8d 6b 68 48 89 ea 48 c1 ea 03 <80> 3c 02 00 0f 85 88 02 00 00 48 3b 5b 68 0f 85 53 01 00 00 65 ff
-  RSP: 0000:ffff8881002ce9b8 EFLAGS: 00010016
-  RAX: dffffc0000000000 RBX: 0000000000000070 RCX: 0000000000000000
-  RDX: 000000000000001b RSI: 000000000000000a RDI: 0000000000000070
-  RBP: 00000000000000d8 R08: 0000000000000001 R09: ffffed107dde49d1
-  R10: ffff8883eef24e8b R11: ffff8881002cec20 R12: 1ffff11020059d37
-  R13: 00000000003fff7b R14: ffff8881002cec20 R15: dffffc0000000000
-  FS:  00007f963f21d940(0000) GS:ffff888458ca6000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f963f5edf71 CR3: 000000010672c000 CR4: 0000000000350ef0
-  Call Trace:
-   <TASK>
-   codetag_trylock_module_list+0xd/0x20
-   alloc_tag_top_users+0x369/0x4b0
-   __show_mem+0x1cd/0x6e0
-   warn_alloc+0x2b1/0x390
-   __alloc_frozen_pages_noprof+0x12b9/0x21a0
-   alloc_pages_mpol+0x135/0x3e0
-   alloc_slab_page+0x82/0xe0
-   new_slab+0x212/0x240
-   ___slab_alloc+0x82a/0xe00
-   </TASK>
-
-As David Wang points out, this issue became easier to trigger after commit
-780138b12381 ("alloc_tag: check mem_profiling_support in alloc_tag_init").
-
-Before the commit, the issue occurred only when it failed to allocate and
-initialize alloc_tag_cttype or if a memory allocation fails before
-alloc_tag_init() is called.  After the commit, it can be easily triggered
-when memory profiling is compiled but disabled at boot.
-
-To properly determine whether alloc_tag_init() has been called and its
-data structures initialized, verify that alloc_tag_cttype is a valid
-pointer before acquiring the semaphore.  If the variable is NULL or an
-error value, it has not been properly initialized.  In such a case, just
-skip and do not attempt to acquire the semaphore.
-
-[harry.yoo@oracle.com: v3]
-  Link: https://lkml.kernel.org/r/20250624072513.84219-1-harry.yoo@oracle.com
-Link: https://lkml.kernel.org/r/20250620195305.1115151-1-harry.yoo@oracle.com
-Fixes: 780138b12381 ("alloc_tag: check mem_profiling_support in alloc_tag_init")
-Fixes: 1438d349d16b ("lib: add memory allocations report in show_mem()")
-Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202506181351.bba867dd-lkp@intel.com
-Acked-by: Suren Baghdasaryan <surenb@google.com>
-Tested-by: Raghavendra K T <raghavendra.kt@amd.com>
-Cc: Casey Chen <cachen@purestorage.com>
-Cc: David Wang <00107082@163.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Yuanyuan Zhong <yzhong@purestorage.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5224b189462f ("clk: imx: add i.MX95 BLK CTL clk driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Link: https://lore.kernel.org/r/20250619062108.2016511-1-xiaolei.wang@windriver.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/alloc_tag.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/imx/clk-imx95-blk-ctl.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/lib/alloc_tag.c
-+++ b/lib/alloc_tag.c
-@@ -134,6 +134,9 @@ size_t alloc_tag_top_users(struct codeta
- 	struct codetag_bytes n;
- 	unsigned int i, nr = 0;
+--- a/drivers/clk/imx/clk-imx95-blk-ctl.c
++++ b/drivers/clk/imx/clk-imx95-blk-ctl.c
+@@ -219,11 +219,15 @@ static const struct imx95_blk_ctl_dev_da
+ 	.clk_reg_offset = 0,
+ };
  
-+	if (IS_ERR_OR_NULL(alloc_tag_cttype))
-+		return 0;
++static const char * const disp_engine_parents[] = {
++	"videopll1", "dsi_pll", "ldb_pll_div7"
++};
 +
- 	if (can_sleep)
- 		codetag_lock_module_list(alloc_tag_cttype, true);
- 	else if (!codetag_trylock_module_list(alloc_tag_cttype))
+ static const struct imx95_blk_ctl_clk_dev_data dispmix_csr_clk_dev_data[] = {
+ 	[IMX95_CLK_DISPMIX_ENG0_SEL] = {
+ 		.name = "disp_engine0_sel",
+-		.parent_names = (const char *[]){"videopll1", "dsi_pll", "ldb_pll_div7", },
+-		.num_parents = 4,
++		.parent_names = disp_engine_parents,
++		.num_parents = ARRAY_SIZE(disp_engine_parents),
+ 		.reg = 0,
+ 		.bit_idx = 0,
+ 		.bit_width = 2,
+@@ -232,8 +236,8 @@ static const struct imx95_blk_ctl_clk_de
+ 	},
+ 	[IMX95_CLK_DISPMIX_ENG1_SEL] = {
+ 		.name = "disp_engine1_sel",
+-		.parent_names = (const char *[]){"videopll1", "dsi_pll", "ldb_pll_div7", },
+-		.num_parents = 4,
++		.parent_names = disp_engine_parents,
++		.num_parents = ARRAY_SIZE(disp_engine_parents),
+ 		.reg = 0,
+ 		.bit_idx = 2,
+ 		.bit_width = 2,
 
 
