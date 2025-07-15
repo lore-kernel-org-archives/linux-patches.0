@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBE32E6105;
-	Tue, 15 Jul 2025 13:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB1C2E610D;
+	Tue, 15 Jul 2025 13:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586491; cv=none; b=jszIOdNrtw1SP8FM0Oe0Sodq8T6Bm5/AM3uhNmUpe128SWDwGbLafE0yidQJyGsiNmJvxMShCYjH/jrrEYH1arOXVjauzVC9Z5l8RoCWVzNElgFmpWIhmELrGZUHaXIO1zcXeQwFXG8fKd2D7ha6xpB3Z/q/G8Tkd+eLjO7tmYQ=
+	t=1752586494; cv=none; b=OAL1vtDMg/Ke28MoVJXKNxNhMf2CYtDPOtR69w7dYg74djoGmbe9Cr45VTcR4d64F0+zvJzScVT5vrtbqOiZ8KB8dz/sMXdpO9bTTLMODsPU4egmqXYvQCBjAmtmIPPgfX3dQXXRHUwYVnwQYP2jnDGxi1yNHovxYoypv40c4Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586491; c=relaxed/simple;
-	bh=hBxkCd4THdEidijs+YdWJZQCNaBlGhqARtSQ8ZbUMiw=;
+	s=arc-20240116; t=1752586494; c=relaxed/simple;
+	bh=z9WuE6ZHF/PgEdkovItnMP21Vg96aAFJWFJ/8pCUo5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vr7UqPjV6y8yUAiOMS1Ehc/n0ID1nbEEnZLywN2gzM49fQLB6CoB+p0GTHmCoOaQON2RsF+ikRZdZZUSfnd1Cziinhc+NeUurE0xNBrvJbTS37fEUfSZx99uticVTzd6b0852abNdAqMCcOnkVTE6c97lVk+sqXsMrKM5qKXZ50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auI9nSC7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dm+Hrviz8Ov/s6pMBaeJKO1SQXFc+TTuxPXYSeAAd3mjzCjkdXJTgL7Y6IhcXisPWaHl+iBY/mZxMEI0G1b8goS7eQWiBjgUB2HUfZDo/q4K0BfUs1GsJ+UbyGWl+EKc7waUnx1YReVio0sa2rGBMXdW1LzopymcuHpNirK9QfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrfnEc1T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auI9nSC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51110C4CEF1;
-	Tue, 15 Jul 2025 13:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrfnEc1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FA8C4CEE3;
+	Tue, 15 Jul 2025 13:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586491;
-	bh=hBxkCd4THdEidijs+YdWJZQCNaBlGhqARtSQ8ZbUMiw=;
+	s=korg; t=1752586494;
+	bh=z9WuE6ZHF/PgEdkovItnMP21Vg96aAFJWFJ/8pCUo5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auI9nSC7tCp0LZW83kLwNP8yLL5Y6jxDmna+5Mo3ZDTZUEVP5JeKkmim9J9Oaaugo
-	 1xolI/aTM0ILjPV//zpYlhXn/0FM8Di01t0hLss24wRWk1XtGubWiIVI6VhdAIErhE
-	 4XftcSLmNECgIo11lRKwUkLRECOiqKOz+xRcQoD4=
+	b=UrfnEc1TNCsS1D1bdZbSEYytvfLWlZ6KmA5aBqxLHHlerseunEhfE+ovY845sNrVP
+	 0IQ414X6z4xIVn1d+NJ6NL4WfG26bes2Lo3uCF2kV7l1P60SgHpfoOH7AF7HDSlA26
+	 06J8BhIxBQGvpmXz4oL4wNltIR15sCJUk16Y6YCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Leon Romanovsky <leonro@mellanox.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 068/148] amd-xgbe: align CL37 AN sequence as per databook
-Date: Tue, 15 Jul 2025 15:13:10 +0200
-Message-ID: <20250715130803.048601934@linuxfoundation.org>
+Subject: [PATCH 5.4 086/148] RDMA/core: Create and destroy counters in the ib_core
+Date: Tue, 15 Jul 2025 15:13:28 +0200
+Message-ID: <20250715130803.761648552@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -51,87 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Leon Romanovsky <leonro@mellanox.com>
 
-[ Upstream commit 42fd432fe6d320323215ebdf4de4d0d7e56e6792 ]
+[ Upstream commit 3b023e1b680a56e84c22d43486875a5aa4c78afe ]
 
-Update the Clause 37 Auto-Negotiation implementation to properly align
-with the PCS hardware specifications:
-- Fix incorrect bit settings in Link Status and Link Duplex fields
-- Implement missing sequence steps 2 and 7
+Move allocation and destruction of counters under ib_core responsibility
 
-These changes ensure CL37 auto-negotiation protocol follows the exact
-sequence patterns as specified in the hardware databook.
-
-Fixes: 1bf40ada6290 ("amd-xgbe: Add support for clause 37 auto-negotiation")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Link: https://patch.msgid.link/20250630192636.3838291-1-Raju.Rangoju@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20200630101855.368895-2-leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@mellanox.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: acd245b1e33f ("RDMA/mlx5: Fix CC counters query for MPV")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-common.h | 2 ++
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c   | 9 +++++++++
- drivers/net/ethernet/amd/xgbe/xgbe.h        | 4 ++--
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/device.c              |  1 +
+ .../core/uverbs_std_types_counters.c          | 17 ++++++++--------
+ drivers/infiniband/hw/mlx5/main.c             | 20 ++++++-------------
+ include/rdma/ib_verbs.h                       |  7 ++++---
+ 4 files changed, 20 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-common.h b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
-index 533b8519ec352..c5dc23906a78d 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-common.h
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
-@@ -1355,6 +1355,8 @@
- #define MDIO_VEND2_CTRL1_SS13		BIT(13)
- #endif
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index c46d68e6ccd0e..cf3c0d6928ac2 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2683,6 +2683,7 @@ void ib_set_device_ops(struct ib_device *dev, const struct ib_device_ops *ops)
+ 	SET_DEVICE_OP(dev_ops, unmap_fmr);
  
-+#define XGBE_VEND2_MAC_AUTO_SW		BIT(9)
-+
- /* MDIO mask values */
- #define XGBE_AN_CL73_INT_CMPLT		BIT(0)
- #define XGBE_AN_CL73_INC_LINK		BIT(1)
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 0e552022e659a..3819b23c927d5 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -363,6 +363,10 @@ static void xgbe_an37_set(struct xgbe_prv_data *pdata, bool enable,
- 		reg |= MDIO_VEND2_CTRL1_AN_RESTART;
+ 	SET_OBJ_SIZE(dev_ops, ib_ah);
++	SET_OBJ_SIZE(dev_ops, ib_counters);
+ 	SET_OBJ_SIZE(dev_ops, ib_cq);
+ 	SET_OBJ_SIZE(dev_ops, ib_pd);
+ 	SET_OBJ_SIZE(dev_ops, ib_srq);
+diff --git a/drivers/infiniband/core/uverbs_std_types_counters.c b/drivers/infiniband/core/uverbs_std_types_counters.c
+index 35e41c5ca1bb1..95b66ce4943b4 100644
+--- a/drivers/infiniband/core/uverbs_std_types_counters.c
++++ b/drivers/infiniband/core/uverbs_std_types_counters.c
+@@ -46,7 +46,9 @@ static int uverbs_free_counters(struct ib_uobject *uobject,
+ 	if (ret)
+ 		return ret;
  
- 	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_CTRL1, reg);
-+
-+	reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
-+	reg |= XGBE_VEND2_MAC_AUTO_SW;
-+	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
+-	return counters->device->ops.destroy_counters(counters);
++	counters->device->ops.destroy_counters(counters);
++	kfree(counters);
++	return 0;
  }
  
- static void xgbe_an37_restart(struct xgbe_prv_data *pdata)
-@@ -991,6 +995,11 @@ static void xgbe_an37_init(struct xgbe_prv_data *pdata)
+ static int UVERBS_HANDLER(UVERBS_METHOD_COUNTERS_CREATE)(
+@@ -66,20 +68,19 @@ static int UVERBS_HANDLER(UVERBS_METHOD_COUNTERS_CREATE)(
+ 	if (!ib_dev->ops.create_counters)
+ 		return -EOPNOTSUPP;
  
- 	netif_dbg(pdata, link, pdata->netdev, "CL37 AN (%s) initialized\n",
- 		  (pdata->an_mode == XGBE_AN_MODE_CL37) ? "BaseX" : "SGMII");
-+
-+	reg = XMDIO_READ(pdata, MDIO_MMD_AN, MDIO_CTRL1);
-+	reg &= ~MDIO_AN_CTRL1_ENABLE;
-+	XMDIO_WRITE(pdata, MDIO_MMD_AN, MDIO_CTRL1, reg);
-+
+-	counters = ib_dev->ops.create_counters(ib_dev, attrs);
+-	if (IS_ERR(counters)) {
+-		ret = PTR_ERR(counters);
+-		goto err_create_counters;
+-	}
++	counters = rdma_zalloc_drv_obj(ib_dev, ib_counters);
++	if (!counters)
++		return -ENOMEM;
+ 
+ 	counters->device = ib_dev;
+ 	counters->uobject = uobj;
+ 	uobj->object = counters;
+ 	atomic_set(&counters->usecnt, 0);
+ 
+-	return 0;
++	ret = ib_dev->ops.create_counters(counters, attrs);
++	if (ret)
++		kfree(counters);
+ 
+-err_create_counters:
+ 	return ret;
  }
  
- static void xgbe_an73_init(struct xgbe_prv_data *pdata)
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe.h b/drivers/net/ethernet/amd/xgbe/xgbe.h
-index a27979ef7b1cc..536c8495d6afc 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe.h
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
-@@ -292,11 +292,11 @@
- #define XGBE_LINK_TIMEOUT		5
- #define XGBE_KR_TRAINING_WAIT_ITER	50
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index fb5a1b4abcbce..d30c37688bdac 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -6113,7 +6113,7 @@ static int mlx5_ib_read_counters(struct ib_counters *counters,
+ 	return ret;
+ }
  
--#define XGBE_SGMII_AN_LINK_STATUS	BIT(1)
-+#define XGBE_SGMII_AN_LINK_DUPLEX	BIT(1)
- #define XGBE_SGMII_AN_LINK_SPEED	(BIT(2) | BIT(3))
- #define XGBE_SGMII_AN_LINK_SPEED_100	0x04
- #define XGBE_SGMII_AN_LINK_SPEED_1000	0x08
--#define XGBE_SGMII_AN_LINK_DUPLEX	BIT(4)
-+#define XGBE_SGMII_AN_LINK_STATUS	BIT(4)
+-static int mlx5_ib_destroy_counters(struct ib_counters *counters)
++static void mlx5_ib_destroy_counters(struct ib_counters *counters)
+ {
+ 	struct mlx5_ib_mcounters *mcounters = to_mcounters(counters);
  
- /* ECC correctable error notification window (seconds) */
- #define XGBE_ECC_LIMIT			60
+@@ -6121,24 +6121,15 @@ static int mlx5_ib_destroy_counters(struct ib_counters *counters)
+ 	if (mcounters->hw_cntrs_hndl)
+ 		mlx5_fc_destroy(to_mdev(counters->device)->mdev,
+ 				mcounters->hw_cntrs_hndl);
+-
+-	kfree(mcounters);
+-
+-	return 0;
+ }
+ 
+-static struct ib_counters *mlx5_ib_create_counters(struct ib_device *device,
+-						   struct uverbs_attr_bundle *attrs)
++static int mlx5_ib_create_counters(struct ib_counters *counters,
++				   struct uverbs_attr_bundle *attrs)
+ {
+-	struct mlx5_ib_mcounters *mcounters;
+-
+-	mcounters = kzalloc(sizeof(*mcounters), GFP_KERNEL);
+-	if (!mcounters)
+-		return ERR_PTR(-ENOMEM);
++	struct mlx5_ib_mcounters *mcounters = to_mcounters(counters);
+ 
+ 	mutex_init(&mcounters->mcntrs_mutex);
+-
+-	return &mcounters->ibcntrs;
++	return 0;
+ }
+ 
+ static void mlx5_ib_stage_init_cleanup(struct mlx5_ib_dev *dev)
+@@ -6296,6 +6287,7 @@ static const struct ib_device_ops mlx5_ib_dev_ops = {
+ 	.resize_cq = mlx5_ib_resize_cq,
+ 
+ 	INIT_RDMA_OBJ_SIZE(ib_ah, mlx5_ib_ah, ibah),
++	INIT_RDMA_OBJ_SIZE(ib_counters, mlx5_ib_mcounters, ibcntrs),
+ 	INIT_RDMA_OBJ_SIZE(ib_cq, mlx5_ib_cq, ibcq),
+ 	INIT_RDMA_OBJ_SIZE(ib_pd, mlx5_ib_pd, ibpd),
+ 	INIT_RDMA_OBJ_SIZE(ib_srq, mlx5_ib_srq, ibsrq),
+diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
+index 30d50528d710e..7e5df8218689e 100644
+--- a/include/rdma/ib_verbs.h
++++ b/include/rdma/ib_verbs.h
+@@ -2468,9 +2468,9 @@ struct ib_device_ops {
+ 	struct ib_mr *(*reg_dm_mr)(struct ib_pd *pd, struct ib_dm *dm,
+ 				   struct ib_dm_mr_attr *attr,
+ 				   struct uverbs_attr_bundle *attrs);
+-	struct ib_counters *(*create_counters)(
+-		struct ib_device *device, struct uverbs_attr_bundle *attrs);
+-	int (*destroy_counters)(struct ib_counters *counters);
++	int (*create_counters)(struct ib_counters *counters,
++			       struct uverbs_attr_bundle *attrs);
++	void (*destroy_counters)(struct ib_counters *counters);
+ 	int (*read_counters)(struct ib_counters *counters,
+ 			     struct ib_counters_read_attr *counters_read_attr,
+ 			     struct uverbs_attr_bundle *attrs);
+@@ -2563,6 +2563,7 @@ struct ib_device_ops {
+ 	int (*counter_update_stats)(struct rdma_counter *counter);
+ 
+ 	DECLARE_RDMA_OBJ_SIZE(ib_ah);
++	DECLARE_RDMA_OBJ_SIZE(ib_counters);
+ 	DECLARE_RDMA_OBJ_SIZE(ib_cq);
+ 	DECLARE_RDMA_OBJ_SIZE(ib_pd);
+ 	DECLARE_RDMA_OBJ_SIZE(ib_srq);
 -- 
 2.39.5
 
