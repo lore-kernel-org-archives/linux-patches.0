@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32502E7BC5;
-	Tue, 15 Jul 2025 13:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2982561AE;
+	Tue, 15 Jul 2025 13:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586748; cv=none; b=YIS7vWM8nFycLoEjbhT/uz+bG4vU/uSrXsSvZAek8FtkpjUjbEKB7nw4tSWTWpD2Cm3NFVTOJCYEy/4W18Kw3+Fyh5Y6r8ZyrqdI80ROGlrJCf2ErL2Y6kIsDh/mBbTXYDeXwzdFHkJFYSAVKlSk+YYEYa1Kr/kc5J62NkG7Kyg=
+	t=1752586751; cv=none; b=mDCLo62YVOByCLrmEHUxHbvk11LfcOw0biDgbDsI4WkqjYXE7XDQHJ4bnQA7rapwA53XcYaeqS8YiGf4u4WldljSWPHfjznIv2mnn5VgPw2hCQdQfPouwNNjN8k7eJBf+nGa+O0xhCIgpkSDNHZ4NlqbkK9tXVqGGI40lDl6Lws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586748; c=relaxed/simple;
-	bh=rGjN3xjl7fQxb+RmjQ+9s0Kuu70WovsDuQj5yg9wgns=;
+	s=arc-20240116; t=1752586751; c=relaxed/simple;
+	bh=96Q1mbem1I6fFpMOedE3Cq9Fq6o2BrgkCzaLgxs8nxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUgM6rhgNURyQH5hmoW1e2UPpAiNSwZJkkwCkDKijq9Hnjf2NxNhNaXwNs9fY+DzmJqqXbbvIiVeeg5LJGMLSKd6Qjh9YyXjnUapi3pMQoxlzlSOz85YCV7F65bdVQqH4K8vIUVpouWioH9NHVGFjaxTRsd0hhRizdV6AXQySPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrISRTdI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lJs6IxiTAq5tSfmxoCZYbTjKGaE2nkV8+XgH6C5ge0GJY2RcMwsKa4WNcDSWezdWvyakANKDTkyP4AGCy4EGiby4TlKNfOmccgrDeeeWrh4jvb6xXmzvNH8P9DUiKSMsi4LhJwVVayfFQh1cdiodeX9yntg/Zsa3+ewKFNSoTiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTtQnF4f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrISRTdI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605A2C4CEE3;
-	Tue, 15 Jul 2025 13:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTtQnF4f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B563C4CEE3;
+	Tue, 15 Jul 2025 13:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586748;
-	bh=rGjN3xjl7fQxb+RmjQ+9s0Kuu70WovsDuQj5yg9wgns=;
+	s=korg; t=1752586751;
+	bh=96Q1mbem1I6fFpMOedE3Cq9Fq6o2BrgkCzaLgxs8nxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrISRTdIjFXA/1ubGGqdjZ3XXCeVDWGlgiB4snOH0wBYUCvmpZFJwB7YyjvAfmY09
-	 rnefRdwMOqx9LMOxixTzRADiUqHGxs4tKbgwhcUwanQDLweKgnJ0V/8hBhf1Y3f16F
-	 QHPCpepKv6d1f2fYuAhBfxbWy9bTTapWUJp6ioXs=
+	b=mTtQnF4fA2Pm4AMdew/Laxr3lu1WTlhPBc11+sXXr77dY/8GDKqUajnVVBDjcyDcp
+	 hT9Ug2N4oBk3w9CkC6zTTsDnPvAeEt5e8JdW2RXaneov7Yqp9UDMjXptBHJxWO713r
+	 VvJCfBGAAHEuwzcnLl5CNbJrZxDLCTQmKVx3gHJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Michal Luczaj <mhal@rbox.co>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 034/192] vsock: Fix IOCTL_VM_SOCKETS_GET_LOCAL_CID to check also `transport_local`
-Date: Tue, 15 Jul 2025 15:12:09 +0200
-Message-ID: <20250715130816.226954517@linuxfoundation.org>
+Subject: [PATCH 6.15 035/192] net: airoha: Fix an error handling path in airoha_probe()
+Date: Tue, 15 Jul 2025 15:12:10 +0200
+Message-ID: <20250715130816.268104176@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,37 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 1e7d9df379a04ccd0c2f82f39fbb69d482e864cc ]
+[ Upstream commit 3ef07434c7dbfba302df477bb6c70e082965f232 ]
 
-Support returning VMADDR_CID_LOCAL in case no other vsock transport is
-available.
+If an error occurs after a successful airoha_hw_init() call,
+airoha_ppe_deinit() needs to be called as already done in the remove
+function.
 
-Fixes: 0e12190578d0 ("vsock: add local transport support in the vsock core")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Link: https://patch.msgid.link/20250703-vsock-transports-toctou-v4-3-98f0eb530747@rbox.co
+Fixes: 00a7678310fe ("net: airoha: Introduce flowtable offload support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/1c940851b4fa3c3ed2a142910c821493a136f121.1746715755.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/airoha/airoha_eth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index f947ab8787899..c50184eddb445 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -2548,6 +2548,8 @@ static long vsock_dev_do_ioctl(struct file *filp,
- 		cid = vsock_registered_transport_cid(&transport_g2h);
- 		if (cid == VMADDR_CID_ANY)
- 			cid = vsock_registered_transport_cid(&transport_h2g);
-+		if (cid == VMADDR_CID_ANY)
-+			cid = vsock_registered_transport_cid(&transport_local);
- 
- 		if (put_user(cid, p) != 0)
- 			retval = -EFAULT;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index af28a9300a15c..9e70cf14c8c70 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -2628,6 +2628,7 @@ static int airoha_probe(struct platform_device *pdev)
+ error_napi_stop:
+ 	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
+ 		airoha_qdma_stop_napi(&eth->qdma[i]);
++	airoha_ppe_deinit(eth);
+ error_hw_cleanup:
+ 	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
+ 		airoha_hw_cleanup(&eth->qdma[i]);
 -- 
 2.39.5
 
