@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA8A2E11D3;
-	Tue, 15 Jul 2025 13:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364CD2E11D3;
+	Tue, 15 Jul 2025 13:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585701; cv=none; b=a4g4OiKI20XC1u6XPmg4Z3ZQkjI/oRzpimdxYtOYerNekNNXyMw2k08yn9sIt6NkWd+gr13nPHF6J2dYh+1tfykjK1nkpOAk2G4btiyjXYb/ttgpkKSE5MvLUSdGG3VTZjwUdrT4YAPfoH1Thtz+4R1iKnR9dylDR+jonp+n2lk=
+	t=1752585704; cv=none; b=P8V9JjcupSl+Gn0m4Fejb5uqg7aLQ1OKSBP02f+SjHdRbkvIE3klQEQzqnym4pEM/1BKppTngZ5eogpLCwbzE8/ScXorGsxh68VdsOnVGYk/N7tAE982Xra1S1Ey1JZdBP/0VMBy4aiFhN222FOsm1iUiVu0T7+lypyi6KA3Pvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585701; c=relaxed/simple;
-	bh=aCHgjo4Ex6jVBSVaD+oONOOgqG0i9Yl8skkyEJlqCJs=;
+	s=arc-20240116; t=1752585704; c=relaxed/simple;
+	bh=FcUVviDNxnpMyUt7SC19GnQoZDeUb5gCTRGJ9KI6ouY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYpnLap0o4ryiUaZ+KKIbD7ylNoUmehkEOKanESkTQKYq/fghLr+rKyy4xWKd2j0tO3OR8Temc3ONqF89b9x21pXAB9wlOaQHKK6c9LWfINxXKs3inMpUE5OOpnxcUQ++Ddv4KjXKwoJfjrJmeLxwPBB3OENnfYZLns/7GhTGsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmJ9KFWZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IoD3V0k6zsmmsYiRuJyrehsOR40KVEcAjOkvLeotC561fTpglYvv0CBBP5XegCXgxDiwOj3vq9dQSTYrVfBfZrG49l8gu2jh+HHSaT9XkaROYitRlCgiDjsWRCu4u5VwBWv+tMHZuDmUUmvwlRfdTnQhzW0Pq4NN2e8PSgwjZN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Is7e7kLB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmJ9KFWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEA1C4CEE3;
-	Tue, 15 Jul 2025 13:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Is7e7kLB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B284AC4CEE3;
+	Tue, 15 Jul 2025 13:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585701;
-	bh=aCHgjo4Ex6jVBSVaD+oONOOgqG0i9Yl8skkyEJlqCJs=;
+	s=korg; t=1752585704;
+	bh=FcUVviDNxnpMyUt7SC19GnQoZDeUb5gCTRGJ9KI6ouY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmJ9KFWZ3NEXg63u3AGN4nSTAk+ya1H1eJ28jpLgtcP45Id/0hF8yPxBTJpdliWA6
-	 y8oUR2p1dLLq+kOXR2ya4KAtIH8npfZWLR4RtvKP355UyfO8c/gQGm450Q8Y+LCRTQ
-	 AIz/nVWQgWSBnqNx0/InqpuyaAoGo+5wfA0f+fXQ=
+	b=Is7e7kLBpUyqbG9mf9yLLyDysU6ETxWiaOgoI7JB1MDiJIBxX9WceEhAhOOEdvyps
+	 /dgXOE7sof2+ztsIVwV1gYFNfPC3Z0hDeRE6n5JZmItgK4bPk7u4bLd0pjCyMFHuy+
+	 U7kHjO5LvDWX55sisFHdxH+fVY3ipu2UG1v8lib8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/163] atm: idt77252: Add missing `dma_map_error()`
-Date: Tue, 15 Jul 2025 15:13:27 +0200
-Message-ID: <20250715130814.413051821@linuxfoundation.org>
+Subject: [PATCH 6.12 140/163] um: vector: Reduce stack usage in vector_eth_configure()
+Date: Tue, 15 Jul 2025 15:13:28 +0200
+Message-ID: <20250715130814.451639667@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -52,51 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit c4890963350dcf4e9a909bae23665921fba4ad27 ]
+[ Upstream commit 2d65fc13be85c336c56af7077f08ccd3a3a15a4a ]
 
-The DMA map functions can fail and should be tested for errors.
+When compiling with clang (19.1.7), initializing *vp using a compound
+literal may result in excessive stack usage. Fix it by initializing the
+required fields of *vp individually.
 
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250624064148.12815-3-fourier.thomas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Without this patch:
+
+$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
+...
+0x0000000000000540 vector_eth_configure [vector_kern.o]:1472
+...
+
+With this patch:
+
+$ objdump -d arch/um/drivers/vector_kern.o | ./scripts/checkstack.pl x86_64 0
+...
+0x0000000000000540 vector_eth_configure [vector_kern.o]:208
+...
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506221017.WtB7Usua-lkp@intel.com/
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20250623110829.314864-1-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/atm/idt77252.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/um/drivers/vector_kern.c | 42 +++++++++++------------------------
+ 1 file changed, 13 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
-index a876024d8a05f..63d41320cd5cf 100644
---- a/drivers/atm/idt77252.c
-+++ b/drivers/atm/idt77252.c
-@@ -852,6 +852,8 @@ queue_skb(struct idt77252_dev *card, struct vc_map *vc,
+diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
+index 64c09db392c16..7a88b13d289f1 100644
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -1592,35 +1592,19 @@ static void vector_eth_configure(
  
- 	IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev, skb->data,
- 						 skb->len, DMA_TO_DEVICE);
-+	if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
-+		return -ENOMEM;
+ 	device->dev = dev;
  
- 	error = -EINVAL;
+-	*vp = ((struct vector_private)
+-		{
+-		.list			= LIST_HEAD_INIT(vp->list),
+-		.dev			= dev,
+-		.unit			= n,
+-		.options		= get_transport_options(def),
+-		.rx_irq			= 0,
+-		.tx_irq			= 0,
+-		.parsed			= def,
+-		.max_packet		= get_mtu(def) + ETH_HEADER_OTHER,
+-		/* TODO - we need to calculate headroom so that ip header
+-		 * is 16 byte aligned all the time
+-		 */
+-		.headroom		= get_headroom(def),
+-		.form_header		= NULL,
+-		.verify_header		= NULL,
+-		.header_rxbuffer	= NULL,
+-		.header_txbuffer	= NULL,
+-		.header_size		= 0,
+-		.rx_header_size		= 0,
+-		.rexmit_scheduled	= false,
+-		.opened			= false,
+-		.transport_data		= NULL,
+-		.in_write_poll		= false,
+-		.coalesce		= 2,
+-		.req_size		= get_req_size(def),
+-		.in_error		= false,
+-		.bpf			= NULL
+-	});
++	INIT_LIST_HEAD(&vp->list);
++	vp->dev		= dev;
++	vp->unit	= n;
++	vp->options	= get_transport_options(def);
++	vp->parsed	= def;
++	vp->max_packet	= get_mtu(def) + ETH_HEADER_OTHER;
++	/*
++	 * TODO - we need to calculate headroom so that ip header
++	 * is 16 byte aligned all the time
++	 */
++	vp->headroom	= get_headroom(def);
++	vp->coalesce	= 2;
++	vp->req_size	= get_req_size(def);
  
-@@ -1857,6 +1859,8 @@ add_rx_skb(struct idt77252_dev *card, int queue,
- 		paddr = dma_map_single(&card->pcidev->dev, skb->data,
- 				       skb_end_pointer(skb) - skb->data,
- 				       DMA_FROM_DEVICE);
-+		if (dma_mapping_error(&card->pcidev->dev, paddr))
-+			goto outpoolrm;
- 		IDT77252_PRV_PADDR(skb) = paddr;
- 
- 		if (push_rx_skb(card, skb, queue)) {
-@@ -1871,6 +1875,7 @@ add_rx_skb(struct idt77252_dev *card, int queue,
- 	dma_unmap_single(&card->pcidev->dev, IDT77252_PRV_PADDR(skb),
- 			 skb_end_pointer(skb) - skb->data, DMA_FROM_DEVICE);
- 
-+outpoolrm:
- 	handle = IDT77252_PRV_POOL(skb);
- 	card->sbpool[POOL_QUEUE(handle)].skb[POOL_INDEX(handle)] = NULL;
- 
+ 	dev->features = dev->hw_features = (NETIF_F_SG | NETIF_F_FRAGLIST);
+ 	INIT_WORK(&vp->reset_tx, vector_reset_tx);
 -- 
 2.39.5
 
