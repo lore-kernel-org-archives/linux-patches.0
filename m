@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A9E2DECC2;
-	Tue, 15 Jul 2025 13:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DFE274FDB;
+	Tue, 15 Jul 2025 13:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585559; cv=none; b=r7LqZSF9Dm7zYEQ5RukcFxV9AdUsu5LtQezEVtkV2y4I6jv5BkT1CZC+Rj1OnXyg4eFvVVYV5WALzAX121ciDh81cce/S16NQHwKmaj8y8uyJH0GLASBQyeaFzvUqCCewGHr2W2PWSOMaDqo8+iMuRlMgxhs5+RgnMwWZkwxe5Q=
+	t=1752585562; cv=none; b=g0l0vCOjCLKhYCRG4hki2vandHYMTVdiotv/Swx1eGTbw8GdechWS2lXusV9ehWnXPlz2jPXb7lDcRvjf3ANFEGf46ZU1eZnkmDcNwwK9CRbKaxSepgP3XFvcvoda2WiCcRvwqPFH3PR7hjwfrteKvootR6XH/qnpCEr05ZXauo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585559; c=relaxed/simple;
-	bh=wn/wvk7Hg8pCqxh2CwoNqUMLZKLnoI0/hWsRDMqQS14=;
+	s=arc-20240116; t=1752585562; c=relaxed/simple;
+	bh=99tNd6ylRt+RELaxf+vIW4jC9kPcdZ3q0i/Q/f8EjTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbmazgGilq/+SKe7i5BaI7i5/4zMh9sNyg15oxm8z9Q/sy6a28xVZ4bvEf9DuNER9vmbfuQlEgLB2aGEd/K0lRY0vFho66bkOk7JqxcHvgV9MzIMHcrEIFWquXvy6eVfXn0fyKkkcfUKdbjzJdS/Gn3BEiQpeP6JDBlxxTIgd2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+drfZQC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DtdOsmM2Xw39YrPpbVox1AARSiVmb9clMNYfoK00ZNcwa2M8l7RbtEh7vWoe2pPoaquVuTHIyuRkQTwpMDc6IVLV2wWcW/ub3vSKxqznx7D400BKBsr6VIxtTaMA5DynMVWHBqtjOSyQSgxY/dKf6KB3stuBNNPT1mnupXHJG78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u1x+WXZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+drfZQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B8BC4CEE3;
-	Tue, 15 Jul 2025 13:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u1x+WXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8FAC4CEE3;
+	Tue, 15 Jul 2025 13:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585558;
-	bh=wn/wvk7Hg8pCqxh2CwoNqUMLZKLnoI0/hWsRDMqQS14=;
+	s=korg; t=1752585561;
+	bh=99tNd6ylRt+RELaxf+vIW4jC9kPcdZ3q0i/Q/f8EjTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+drfZQCuMeWcWn7VRckFnZuzRyUZM3wyagIJLmOs0CFOGA0ZTVrfRFQWaWhWw7/s
-	 4NcWFUZLtTmgJ1JtjnvLbBTTxImfOlCgfNqzba+A3BqCQbq3PVC+pXRs0SSnIJfs5j
-	 ljIeor1bNMEeK2HiJJuCRixXX6hAVNzoz6pfANwM=
+	b=0u1x+WXZNEngYi3qMZzx0LDNpicJRtT9HurCBVeVixW8yWtH3Umy0iGuM8L7H9kxs
+	 lovL9pxL52p3YphKC3+JxmiwjEcnyr7cwGmznCGk6fOP9W81WGdLx0RpPF0FRNRApS
+	 0Y1Bq2oheaVUGz3vgxYKMMZJQ8BI0fMjYPnIqVpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Paul Durrant <paul@xen.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Vaishali Thakkar <vaishali.thakkar@suse.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 054/163] KVM: x86/xen: Allow out of range event channel ports in IRQ routing table.
-Date: Tue, 15 Jul 2025 15:12:02 +0200
-Message-ID: <20250715130810.920939878@linuxfoundation.org>
+Subject: [PATCH 6.12 055/163] KVM: SVM: Add missing member in SNP_LAUNCH_START command structure
+Date: Tue, 15 Jul 2025 15:12:03 +0200
+Message-ID: <20250715130810.959622993@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,61 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Nikunj A Dadhania <nikunj@amd.com>
 
-commit a7f4dff21fd744d08fa956c243d2b1795f23cbf7 upstream.
+commit 51a4273dcab39dd1e850870945ccec664352d383 upstream.
 
-To avoid imposing an ordering constraint on userspace, allow 'invalid'
-event channel targets to be configured in the IRQ routing table.
+The sev_data_snp_launch_start structure should include a 4-byte
+desired_tsc_khz field before the gosvw field, which was missed in the
+initial implementation. As a result, the structure is 4 bytes shorter than
+expected by the firmware, causing the gosvw field to start 4 bytes early.
+Fix this by adding the missing 4-byte member for the desired TSC frequency.
 
-This is the same as accepting interrupts targeted at vCPUs which don't
-exist yet, which is already the case for both Xen event channels *and*
-for MSIs (which don't do any filtering of permitted APIC ID targets at
-all).
-
-If userspace actually *triggers* an IRQ with an invalid target, that
-will fail cleanly, as kvm_xen_set_evtchn_fast() also does the same range
-check.
-
-If KVM enforced that the IRQ target must be valid at the time it is
-*configured*, that would force userspace to create all vCPUs and do
-various other parts of setup (in this case, setting the Xen long_mode)
-before restoring the IRQ table.
-
+Fixes: 3a45dc2b419e ("crypto: ccp: Define the SEV-SNP commands")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Link: https://lore.kernel.org/r/e489252745ac4b53f1f7f50570b03fb416aa2065.camel@infradead.org
-[sean: massage comment]
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Tested-by: Vaishali Thakkar <vaishali.thakkar@suse.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Link: https://lore.kernel.org/r/20250408093213.57962-3-nikunj@amd.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/xen.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ include/linux/psp-sev.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/xen.c
-+++ b/arch/x86/kvm/xen.c
-@@ -1916,8 +1916,19 @@ int kvm_xen_setup_evtchn(struct kvm *kvm
- {
- 	struct kvm_vcpu *vcpu;
+--- a/include/linux/psp-sev.h
++++ b/include/linux/psp-sev.h
+@@ -594,6 +594,7 @@ struct sev_data_snp_addr {
+  * @imi_en: launch flow is launching an IMI (Incoming Migration Image) for the
+  *          purpose of guest-assisted migration.
+  * @rsvd: reserved
++ * @desired_tsc_khz: hypervisor desired mean TSC freq in kHz of the guest
+  * @gosvw: guest OS-visible workarounds, as defined by hypervisor
+  */
+ struct sev_data_snp_launch_start {
+@@ -603,6 +604,7 @@ struct sev_data_snp_launch_start {
+ 	u32 ma_en:1;				/* In */
+ 	u32 imi_en:1;				/* In */
+ 	u32 rsvd:30;
++	u32 desired_tsc_khz;			/* In */
+ 	u8 gosvw[16];				/* In */
+ } __packed;
  
--	if (ue->u.xen_evtchn.port >= max_evtchn_port(kvm))
--		return -EINVAL;
-+	/*
-+	 * Don't check for the port being within range of max_evtchn_port().
-+	 * Userspace can configure what ever targets it likes; events just won't
-+	 * be delivered if/while the target is invalid, just like userspace can
-+	 * configure MSIs which target non-existent APICs.
-+	 *
-+	 * This allow on Live Migration and Live Update, the IRQ routing table
-+	 * can be restored *independently* of other things like creating vCPUs,
-+	 * without imposing an ordering dependency on userspace.  In this
-+	 * particular case, the problematic ordering would be with setting the
-+	 * Xen 'long mode' flag, which changes max_evtchn_port() to allow 4096
-+	 * instead of 1024 event channels.
-+	 */
- 
- 	/* We only support 2 level event channels for now */
- 	if (ue->u.xen_evtchn.priority != KVM_IRQ_ROUTING_XEN_EVTCHN_PRIO_2LEVEL)
 
 
