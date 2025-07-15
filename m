@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D952E3B13;
-	Tue, 15 Jul 2025 13:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B52D2E2EE9;
+	Tue, 15 Jul 2025 13:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585917; cv=none; b=mCqdif4A/rOFZzXGh4UlEIrMdVz1Px5bQYty8U9OT43+RigEIEV1//loGYULq1eahVAyCZsB68zZxPcdgYhOSMMpUX19ne35hA1H7O1N5tr++eppcJKeEkuEDWis7S1CZbz9uOnAol3IZr0oyM2U3xJbu95p/Q4i6zuUEAnJz1k=
+	t=1752585920; cv=none; b=Eu3JhIVFIvckguqBAZDSPjQrexEM76cibirtNIFbStk6FKHs6ySG17ZSij23mX5XF4Z/qpcTK1P3JRi+Wp0H8dU7+yUxK+eo2k85h05GP5skH0qF/QMZbzF1NN/y4kzKmhpCDwz8gNOWaehwCio3TD9MFsJKB3lhokiVp0c/QLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585917; c=relaxed/simple;
-	bh=xXztFy2HL5t+zg8g64xsDF6oBMbkRf85xfr6Cav2kWM=;
+	s=arc-20240116; t=1752585920; c=relaxed/simple;
+	bh=Y4aBjFDAYQvN0CrpwaZ6cjZP0N0jBsXqtAxlvO7DD2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pkMrYOroHuHIBibx2xrELPqkezu8d6fsJDrtm7H9gEED0XVPmnByLPKvE/z2KVOqCh5S7S0InHLyTGduKyga8eSRgk0hu5uu5qFAye7K++KeBGNkf07LeNX1IQNXbkv3fxQgCEaFqScfJjZU0D4uI9IY1WQWkWteQxuUNXon7Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3rRUsCa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VD+/p4HYtThFp2XTkQ969ekPoREPWqVgx5cUIJGQIm+esWuQD31WpGIZg22R/MVGsMu20hVlO8orTcy3/HLjtlLQMd/GyNrThsBctSyAVPT4KjuxKkTyXj8Jo/WCaIzxcjrNJgwTNzSzOI8IkMhsR891fJ1m3WAmsFIJjHFb4dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnprbSfV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3rRUsCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329B7C4CEE3;
-	Tue, 15 Jul 2025 13:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnprbSfV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5051C4CEE3;
+	Tue, 15 Jul 2025 13:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585917;
-	bh=xXztFy2HL5t+zg8g64xsDF6oBMbkRf85xfr6Cav2kWM=;
+	s=korg; t=1752585920;
+	bh=Y4aBjFDAYQvN0CrpwaZ6cjZP0N0jBsXqtAxlvO7DD2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3rRUsCaJnGYdrworzJ+HuXxj4JDe9y7WxCpW57PSdIXZ1gZKfBs/G+VhnRmKeAas
-	 kFUZ+6MDsv9feq8Z1JdD597PHf4wWJ+DBxwAohtqIrpSub8p/xyikZXwNiCW0u5Gfd
-	 hcvD5NElSA5A85y6GAw8xLzbKrnSwRHEO2UWFS40=
+	b=nnprbSfV6tdwLqUXC44l0xXlF/9kJ33pmWATEDlS/btYMK/ntblMrIhv4h3YZwcUd
+	 PTHNf9Ilau25KMg4HBprJoBw/ChhB6Saj5CRgOi+RuCJ63Nn++2sq8EQuE3nWO0UPx
+	 B12tKH++iFXSleKFmtWSc4na+KqcNWqgNcuMZbDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aiden Yang <ling@moedove.com>,
-	Gary Guo <gary@garyguo.net>,
-	Guillaume Nault <gnault@redhat.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 039/109] gre: Fix IPv6 multicast route creation.
-Date: Tue, 15 Jul 2025 15:12:55 +0200
-Message-ID: <20250715130800.445562551@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 057/109] mm/vmalloc: leave lazy MMU mode on PTE mapping error
+Date: Tue, 15 Jul 2025 15:13:13 +0200
+Message-ID: <20250715130801.164500230@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -53,67 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-commit 4e914ef063de40397e25a025c70d9737a9e45a8c upstream.
+commit fea18c686320a53fce7ad62a87a3e1d10ad02f31 upstream.
 
-Use addrconf_add_dev() instead of ipv6_find_idev() in
-addrconf_gre_config() so that we don't just get the inet6_dev, but also
-install the default ff00::/8 multicast route.
+vmap_pages_pte_range() enters the lazy MMU mode, but fails to leave it in
+case an error is encountered.
 
-Before commit 3e6a0243ff00 ("gre: Fix again IPv6 link-local address
-generation."), the multicast route was created at the end of the
-function by addrconf_add_mroute(). But this code path is now only taken
-in one particular case (gre devices not bound to a local IP address and
-in EUI64 mode). For all other cases, the function exits early and
-addrconf_add_mroute() is not called anymore.
-
-Using addrconf_add_dev() instead of ipv6_find_idev() in
-addrconf_gre_config(), fixes the problem as it will create the default
-multicast route for all gre devices. This also brings
-addrconf_gre_config() a bit closer to the normal netdevice IPv6
-configuration code (addrconf_dev_config()).
-
-Cc: stable@vger.kernel.org
-Fixes: 3e6a0243ff00 ("gre: Fix again IPv6 link-local address generation.")
-Reported-by: Aiden Yang <ling@moedove.com>
-Closes: https://lore.kernel.org/netdev/CANR=AhRM7YHHXVxJ4DmrTNMeuEOY87K2mLmo9KMed1JMr20p6g@mail.gmail.com/
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Tested-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/027a923dcb550ad115e6d93ee8bb7d310378bd01.1752070620.git.gnault@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20250623075721.2817094-1-agordeev@linux.ibm.com
+Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202506132017.T1l1l6ME-lkp@intel.com/
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/addrconf.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ mm/vmalloc.c |   22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -3499,11 +3499,9 @@ static void addrconf_gre_config(struct n
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -459,6 +459,7 @@ static int vmap_pages_pte_range(pmd_t *p
+ 		unsigned long end, pgprot_t prot, struct page **pages, int *nr,
+ 		pgtbl_mod_mask *mask)
+ {
++	int err = 0;
+ 	pte_t *pte;
  
- 	ASSERT_RTNL();
+ 	/*
+@@ -472,18 +473,25 @@ static int vmap_pages_pte_range(pmd_t *p
+ 	do {
+ 		struct page *page = pages[*nr];
  
--	idev = ipv6_find_idev(dev);
--	if (IS_ERR(idev)) {
--		pr_debug("%s: add_dev failed\n", __func__);
-+	idev = addrconf_add_dev(dev);
-+	if (IS_ERR(idev))
- 		return;
--	}
+-		if (WARN_ON(!pte_none(ptep_get(pte))))
+-			return -EBUSY;
+-		if (WARN_ON(!page))
+-			return -ENOMEM;
+-		if (WARN_ON(!pfn_valid(page_to_pfn(page))))
+-			return -EINVAL;
++		if (WARN_ON(!pte_none(ptep_get(pte)))) {
++			err = -EBUSY;
++			break;
++		}
++		if (WARN_ON(!page)) {
++			err = -ENOMEM;
++			break;
++		}
++		if (WARN_ON(!pfn_valid(page_to_pfn(page)))) {
++			err = -EINVAL;
++			break;
++		}
  
- 	/* Generate the IPv6 link-local address using addrconf_addr_gen(),
- 	 * unless we have an IPv4 GRE device not bound to an IP address and
-@@ -3517,9 +3515,6 @@ static void addrconf_gre_config(struct n
- 	}
- 
- 	add_v4_addrs(idev);
--
--	if (dev->flags & IFF_POINTOPOINT)
--		addrconf_add_mroute(dev);
+ 		set_pte_at(&init_mm, addr, pte, mk_pte(page, prot));
+ 		(*nr)++;
+ 	} while (pte++, addr += PAGE_SIZE, addr != end);
+ 	*mask |= PGTBL_PTE_MODIFIED;
+-	return 0;
++
++	return err;
  }
- #endif
  
+ static int vmap_pages_pmd_range(pud_t *pud, unsigned long addr,
 
 
