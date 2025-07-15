@@ -1,147 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F357B672;
-	Tue, 15 Jul 2025 19:54:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7CF20485B
+	for <patches@lists.linux.dev>; Tue, 15 Jul 2025 20:19:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752609298; cv=none; b=dcG12RVFzVArB/FnK/Bl8SUfY23tbO3p2nsevu0JKx5cOBdUiRjwT7J7kMVGUC9RB0MEMG/HZA6RR4G6FX03HM+Q6INL+XNBN/l+BLyOpKo77iD35Dm2fDY4NZgF0l9vXnM60IM7v2BoF9sUinvww2/Png97YWt2x+CbLUTL+W4=
+	t=1752610754; cv=none; b=AxGVK4pu0JIP0aTapRFBtmtrJoXmOKQIkpAMFUEHh8roFsM8ZHRd2EGq01Ezp+L6q/MMxC+xCeYl2AEk47mxoGI6msT3FxibnD0l3QJ6bom+NN4xkwCxdJZUk8ytFY6RP2615/Aq2gSNKi4GqJZ5SLjT52Os4E3McR7qTdzd6E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752609298; c=relaxed/simple;
-	bh=QRZp+4I8maMQPrmjNoRyUwwSYnT+bKiX3aX0Y433DVg=;
+	s=arc-20240116; t=1752610754; c=relaxed/simple;
+	bh=M21qr5y7Z0Wl+XEBa90r3aQQQKQmisfjLJQLPvhdlaQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ACroH+nZYqURNkESZV6wntvwqc77nrehRJl7DYH9i9TQhzYDK/YN7TZvexWDYfry3VD1tS+cmAm4Cei2ErfLDU9Oayqgd0SNaMmp+y00QXiZot+nSQ/Ezq7zaeikTQVZzhaEliE8X1W3B/9BlcScSN5jU0BuvHjWP5d9exqtZ0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rdodJGVK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=UFfdUtQ1P73CRAa9gKUs660nmK8lRNA6H/F5EwvGLVwq1tnf9oEX8cxSZkJfrJ46pLpD2JYEN2L+qZWr4kZP43O+pkZrJJVlKWPd9IMrSL49fQw1PlogocCZ+btIGKrXwPLCK0iJw4d0asIEEtqsqihLGaWXWV8axxdW4FfJMNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=Vq4TlHUz; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rdodJGVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8BCC4CEE3;
-	Tue, 15 Jul 2025 19:54:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752609298;
-	bh=QRZp+4I8maMQPrmjNoRyUwwSYnT+bKiX3aX0Y433DVg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rdodJGVK4uo4adZp/P3a8MMJi67HL9sr270p92nS9sHZLLEaH2+WesXl7ZBUTGsXo
-	 zB3IFq62diBa7eefr9dVtCybrbSq2VCRA0O6EuJILOPWtQiokuPGRhH0ZngMQXM17Z
-	 23LQ05CvXYGkdBWuxHV4kVZdrTFiKfDPbiOGpu7Dzf4xdt7dNyRxaUmFbYUJag7htQ
-	 1nfuFFSmUaglJsi7So1gUYSiGsSnzL4nHNjx6LJcNwDY9GA316H9rmhxTND1HQgGgX
-	 1SixH2X7GlVGAW0J4meIznLjmjEKUi6WSZrTkRp6eaMKmZXZCs9C2SqRXGQcZk8GgG
-	 L5c0MhCdR4m3g==
-Date: Tue, 15 Jul 2025 15:12:52 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Kurt Borja <kuurtb@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: Re: [PATCH 5.15 53/77] platform/x86: think-lmi: Fix sysfs group
- cleanup
-Message-ID: <aHaoNDFKsoogzNge@lappy>
-References: <20250715130751.668489382@linuxfoundation.org>
- <20250715130753.855799519@linuxfoundation.org>
- <DBCUJ1QHGTKA.3H4TW1FB3FYJC@gmail.com>
- <aHamVeuNznVqMb2x@lappy>
- <DBCVGAAFB8Q3.21ZP9FUITWDI9@gmail.com>
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="Vq4TlHUz"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 66EF210397286;
+	Tue, 15 Jul 2025 22:18:58 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1752610744; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=VJAfMqyjyX37znxXL4xbV0iHrWclS8WxWXqLLY0rogU=;
+	b=Vq4TlHUz6f83RIH3m8HunDZ28nACuUQ7nKqUOPGohRnlADznGxgY8rgTLL1FCOv+dkwKAE
+	DdId97hPzk7lg1bbP+ke3dOj5MSGzoaD5FjAuzaHFhgqVZwR0GNzZ4ls3ROiX8zXpcDYCs
+	RW3lRQjYE9qIpaKcwEEzNWkrJ01Bm05M5mt+RO1cIyeNvZwozAWtPxaDeuiS2e7VtZb2V+
+	FVw/p7Q2ExUxpb5e0ZrjuSGajSlQRUdRb1Pg1ZUQ/vdvEFUndNhsBEcpJ3TV2MqegTDYzd
+	3fLqyB3GhZqISnpsj3FhSXuGmElllkh+vmxOcuczxtYN/mP/8Z2TV0t6eI7hWQ==
+Date: Tue, 15 Jul 2025 22:18:55 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 5.10 000/209] 5.10.240-rc3 review
+Message-ID: <aHa3r7rPD+Yllze4@duo.ucw.cz>
+References: <20250715163613.640534312@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Ge5yhp2dN5KI9qRk"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <DBCVGAAFB8Q3.21ZP9FUITWDI9@gmail.com>
+In-Reply-To: <20250715163613.640534312@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Tue, Jul 15, 2025 at 04:22:22PM -0300, Kurt Borja wrote:
->Hi Sasha,
->
->On Tue Jul 15, 2025 at 4:04 PM -03, Sasha Levin wrote:
->> On Tue, Jul 15, 2025 at 03:38:58PM -0300, Kurt Borja wrote:
->>>Hi Greg,
->>>
->>>On Tue Jul 15, 2025 at 10:13 AM -03, Greg Kroah-Hartman wrote:
->>>> 5.15-stable review patch.  If anyone has any objections, please let me know.
->>>>
->>>> ------------------
->>>>
->>>> From: Kurt Borja <kuurtb@gmail.com>
->>>>
->>>> [ Upstream commit 4f30f946f27b7f044cf8f3f1f353dee1dcd3517a ]
->>>>
->>>> Many error paths in tlmi_sysfs_init() lead to sysfs groups being removed
->>>> when they were not even created.
->>>>
->>>> Fix this by letting the kobject core manage these groups through their
->>>> kobj_type's defult_groups.
->>>>
->>>> Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
->>>> Cc: stable@vger.kernel.org
->>>> Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
->>>> Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
->>>> Signed-off-by: Kurt Borja <kuurtb@gmail.com>
->>>> Link: https://lore.kernel.org/r/20250630-lmi-fix-v3-3-ce4f81c9c481@gmail.com
->>>> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
->>>> Signed-off-by: Sasha Levin <sashal@kernel.org>
->>>> ---
->>>>  drivers/platform/x86/think-lmi.c | 35 +++++++++-----------------------
->>>>  1 file changed, 10 insertions(+), 25 deletions(-)
->>>>
->>>> diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
->>>> index 36ff64a7b6847..cc46aa5f1da2c 100644
->>>> --- a/drivers/platform/x86/think-lmi.c
->>>> +++ b/drivers/platform/x86/think-lmi.c
->>>> @@ -491,6 +491,7 @@ static struct attribute *auth_attrs[] = {
->>>>  static const struct attribute_group auth_attr_group = {
->>>>  	.attrs = auth_attrs,
->>>>  };
->>>> +__ATTRIBUTE_GROUPS(auth_attr);
->>>>
->>>>  /* ---- Attributes sysfs --------------------------------------------------------- */
->>>>  static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *attr,
->>>> @@ -643,6 +644,7 @@ static const struct attribute_group tlmi_attr_group = {
->>>>  	.is_visible = attr_is_visible,
->>>>  	.attrs = tlmi_attrs,
->>>>  };
->>>> +__ATTRIBUTE_GROUPS(tlmi_attr);
->>>>
->>>>  static ssize_t tlmi_attr_show(struct kobject *kobj, struct attribute *attr,
->>>>  				    char *buf)
->>>> @@ -688,12 +690,14 @@ static void tlmi_pwd_setting_release(struct kobject *kobj)
->>>>
->>>>  static struct kobj_type tlmi_attr_setting_ktype = {
->>>>  	.release        = &tlmi_attr_setting_release,
->>>> -	.sysfs_ops	= &tlmi_kobj_sysfs_ops,
->>>> +	.sysfs_ops	= &kobj_sysfs_ops,
->>>> +	.default_groups = tlmi_attr_groups,
->>>
->>>I did *not* author this change and it utterly *breaks* the driver.
->>>
->>>This patch should be dropped ASAP.
->>
->> Right sorry about that - I accidently left that extra line of context
->> you've pointed out. Dropped now along with the other patch you've
->> pointed out.
->
->Thank you for the quick response!
->
->May I suggest informing authors and maintainers about manual conflict
->resolution in the email's subject?
->
->This resolution was not acked by anyone and I don't appreciate that.
 
-In general we'd note a manual resolution and wait for an ack if any
-significant changes were made to a commit.
+--Ge5yhp2dN5KI9qRk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In this case I messed up the context when resolving the conflict, and
-didn't consider it meaningful.
+Hi!
 
-However, yes, just noting that along with my signoff wouldn't have hurt.
-I'll start doing that more often.
+> This is the start of the stable review cycle for the 5.10.240 release.
+> There are 209 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
->In the past couple of weeks and I got like 50 stable related emails. I
->simply cannot check each and every one for things like this.
+CIP testing did not find any problems here:
 
-Is there something we can do on our end to make it more managable?
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
 
--- 
-Thanks,
-Sasha
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
+Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--Ge5yhp2dN5KI9qRk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaHa3rwAKCRAw5/Bqldv6
+8sDrAJ9FZUwMs5GHEIkZWPg8AgBNI/dm1QCgi9N1KUrswml1w/1yQjQlvlkN6X0=
+=aj6C
+-----END PGP SIGNATURE-----
+
+--Ge5yhp2dN5KI9qRk--
