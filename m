@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF6219D09C;
-	Tue, 15 Jul 2025 13:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE671A23AF;
+	Tue, 15 Jul 2025 13:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585572; cv=none; b=IxN8/oa2cHTCfFs4GVkV3caQi9A1gjnA/kkxD4lb/L+5AUY8WWMF910BD2tZfAYtG8Ie3D0sWStk2/xYkjlgaf1IfJSJ9ZmEu1xO1UAhfmv196GlJOLMRG4lgjoUXy8yod2AjctDdO0AwjqqZU1ejdoSR9Y9UVlvYATFh9nCBqw=
+	t=1752585575; cv=none; b=DF9e8OGh71vtas/5T6e76yOk/VFxrHxTRl6QR324VJyivD4G4az26+yBU3V+E93tLztpy/RoJlyNUKKoqMqSN1kvUI2r0f9Y0QRcLdIwmP8mqVlei6Ub7ZOWa2r3DLPmvsi2vlpRb+r2wZAZHHElI8Nxv6NBAZb/p7AprJC3T00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585572; c=relaxed/simple;
-	bh=CrFLHJoNKZlKVrR6llBHG2dQSw+Wuk9nKBWkDwsc+K8=;
+	s=arc-20240116; t=1752585575; c=relaxed/simple;
+	bh=A4X9PBZM2V+5W1N/Js8uXsGgt8xYdWd5K084bOM64Kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9ffVYmw8Btx+MRxb8Sfa7xetuL+gh0+9w65zPj6nzetSt0Ch1V03bBqD3u0DItPzK6cA1BXZzGWe8fZbZLPto269wVJ3DkCp7Dt7BiWj97NsqbNzy9WgwZP563puwWkicaYZ/xTSj4pVg9moNtA/OhTYQaDNPP0VwQowZ4VORE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6CUbcUT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HrS+wHY8z3g+oSTzC0SMYk7KkDu8N8nFKnxRkOQyiKY8ORpX0VK8tmZAUdj7tZRjPEp4ktRLsPK6xU8G2GJ0rEAisjUotT4cKxmit62u9qTIlAw+yytAPZkCnfgZQAY5a8M2EN9TzA0ib/moJbFYz1ZNV+tM2Bm5nk/4zXFc07c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQRZHLxh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6CUbcUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB6EC4CEE3;
-	Tue, 15 Jul 2025 13:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQRZHLxh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6331C4CEE3;
+	Tue, 15 Jul 2025 13:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585572;
-	bh=CrFLHJoNKZlKVrR6llBHG2dQSw+Wuk9nKBWkDwsc+K8=;
+	s=korg; t=1752585575;
+	bh=A4X9PBZM2V+5W1N/Js8uXsGgt8xYdWd5K084bOM64Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6CUbcUT3KlDqfGX3vWq37BP+xjrX27jVyvsz/06phizVsDaL/5HpY6zx9qc8O7Oi
-	 Hypn7SOn+FouaSrlhqY+rDQjB9hwNDuYN3KGW13vLoPwwy01YLKw/YGCuSJuar0IYk
-	 0Ajh2HHJM57Q7kUKoRzF3g+SSyl8ACpY7/FbXzIg=
+	b=MQRZHLxhXzwWIq9sfqZd1hbFxfBrCVHzomjjij5ByfNCygEiEPIHtXRPr0rgBMynU
+	 P5aQupGH9DTf7aDzRKSvfSZOnOFpMYTZYOo3rfmWGK5VdeblJyV851WOYIli4H3NKG
+	 wg6bEgnWnweGxkbIOWcbA5bqPUy0E0N0ior9rCSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.12 049/163] x86/mce/amd: Add default names for MCA banks and blocks
-Date: Tue, 15 Jul 2025 15:11:57 +0200
-Message-ID: <20250715130810.726808084@linuxfoundation.org>
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 084/163] Revert "ACPI: battery: negate current when discharging"
+Date: Tue, 15 Jul 2025 15:12:32 +0200
+Message-ID: <20250715130812.097920304@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -50,58 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit d66e1e90b16055d2f0ee76e5384e3f119c3c2773 upstream.
+commit de1675de39aa945bad5937d1fde4df3682670639 upstream.
 
-Ensure that sysfs init doesn't fail for new/unrecognized bank types or if
-a bank has additional blocks available.
+Revert commit 234f71555019 ("ACPI: battery: negate current when
+discharging") breaks not one but several userspace implementations
+of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
+but those are the two that have been tested.
 
-Most MCA banks have a single thresholding block, so the block takes the same
-name as the bank.
-
-Unified Memory Controllers (UMCs) are a special case where there are two
-blocks and each has a unique name.
-
-However, the microarchitecture allows for five blocks. Any new MCA bank types
-with more than one block will be missing names for the extra blocks. The MCE
-sysfs will fail to initialize in this case.
-
-Fixes: 87a6d4091bd7 ("x86/mce/AMD: Update sysfs bank names for SMCA systems")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-3-236dd74f645f@amd.com
+Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/amd.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/acpi/battery.c |   19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -1099,13 +1099,20 @@ static const char *get_name(unsigned int
- 	}
- 
- 	bank_type = smca_get_bank_type(cpu, bank);
--	if (bank_type >= N_SMCA_BANK_TYPES)
--		return NULL;
- 
- 	if (b && (bank_type == SMCA_UMC || bank_type == SMCA_UMC_V2)) {
- 		if (b->block < ARRAY_SIZE(smca_umc_block_names))
- 			return smca_umc_block_names[b->block];
--		return NULL;
-+	}
-+
-+	if (b && b->block) {
-+		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_block_%u", b->block);
-+		return buf_mcatype;
-+	}
-+
-+	if (bank_type >= N_SMCA_BANK_TYPES) {
-+		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_bank_%u", bank);
-+		return buf_mcatype;
- 	}
- 
- 	if (per_cpu(smca_bank_counts, cpu)[bank_type] == 1)
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -243,23 +243,10 @@ static int acpi_battery_get_property(str
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
+ 			ret = -ENODEV;
+-			break;
+-		}
+-
+-		val->intval = battery->rate_now * 1000;
+-		/*
+-		 * When discharging, the current should be reported as a
+-		 * negative number as per the power supply class interface
+-		 * definition.
+-		 */
+-		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
+-		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
+-		    acpi_battery_handle_discharging(battery)
+-				== POWER_SUPPLY_STATUS_DISCHARGING)
+-			val->intval = -val->intval;
+-
++		else
++			val->intval = battery->rate_now * 1000;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 
 
