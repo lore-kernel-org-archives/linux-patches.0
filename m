@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3672EB5CA;
-	Tue, 15 Jul 2025 13:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36B42EB5D7;
+	Tue, 15 Jul 2025 13:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587594; cv=none; b=KCUNpy9kFQkm4fze9VAe/lVlkYMhkPsSOx6Mf5+lyAD/6Eflpli2J+jSQjla+NhBxHYI3jHSxR/K6HCu/7n0meYYcKFQJ/N8HoI5MRH23HYaEAQeg91tD3mRJcE5PQdUll5HC7yy9GydmFdwxBLDUCi98wP7OQE0rBZipETC1eU=
+	t=1752587596; cv=none; b=I/ZDBWVIC8CXxZLcnh5jMyII5kL1TFbnOnE6mDbmzm/iZm+y1EEWIRgdvLg3Mcf90/HIOubgfSApun7pG4ER/XowJJqj8V8Jgse5N5RJh1JEPkGI2ANXzMijzbxB5wYejJ1L9ci0Ly1jTEpoqSDmrt8kvqjSFhTm+XONh+M2ClA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587594; c=relaxed/simple;
-	bh=9/aMNvUK0TLd2l17Vw0Cs3x+E3CXag/atrcOwlU+arE=;
+	s=arc-20240116; t=1752587596; c=relaxed/simple;
+	bh=Fper4bd/vzpZaT1N7zNuPW1fYlrxmxpB78e2um1ZERU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QflWBDgrz2AZG6oLfSUn+iYRi+Fz3AkEdOURVnZvCTU32ltGlPaFu+8J8s0rGvwUPtzaAMfuCfbcJ7UpY9doklFvcCECytqAww2CxcNlx7QWKIBDcBl/kICMkzc8MfA957XPgp+za4bt2xIQgp5MNpD+BVUqi304ZEwdj49DNWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwvx7on7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FCvFvn4yJck2taASgULkSnDYYbGjWdSSxI+DKArO+e2he5pHRrr5wnTwKh1gQWvN8qGwRPelk2YnXGdGs0sm0V80vMvOY13yIqEPOojAn13vglGRoNgH/K43OXIxtD1mfZLu+CBnmBQYWToIK9VURQo2bctk2dGRqFORrCMQEwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ru9nqh8x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwvx7on7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD19C4CEE3;
-	Tue, 15 Jul 2025 13:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ru9nqh8x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E2AC4CEE3;
+	Tue, 15 Jul 2025 13:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587594;
-	bh=9/aMNvUK0TLd2l17Vw0Cs3x+E3CXag/atrcOwlU+arE=;
+	s=korg; t=1752587596;
+	bh=Fper4bd/vzpZaT1N7zNuPW1fYlrxmxpB78e2um1ZERU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwvx7on7OqdiJiDG/lr4sf2832+FW2Dt3IxI17fqXvk2DySw6es1022CWWO6QC29S
-	 5OEnylh/jDie8CboC6C2feXT8+mUNa/Wh0RYDOh2K+4eA8CjLzj2xnsOhvtXIMaoxw
-	 Xw6NtEDK4W4W/ZjQm5UiCBTN0/KieUhIJUpWuhdg=
+	b=Ru9nqh8xNlzIC2kkdaUbiYJIj9eBlZEiIzBGlUrWVk7dQVP6lpAxZhJSoI1dFbDFC
+	 rppE0PCyHL0q9Tjgc2707blpTgHOQVN0SHAg5hMsDjjjipMMV61DP9Q0Xy4KZEZgC0
+	 jHKC88gaeD+Wqeexw6bNvZnrl9u70GEMBBCHIRRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Boqun Feng (Microsoft)" <boqun.feng@gmail.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-	Jake Oshins <jakeo@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 5.10 071/208] PCI: hv: Do not set PCI_COMMAND_MEMORY to reduce VM boot time
-Date: Tue, 15 Jul 2025 15:13:00 +0200
-Message-ID: <20250715130813.795077157@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.10 072/208] s390: Add -std=gnu11 to decompressor and purgatory CFLAGS
+Date: Tue, 15 Jul 2025 15:13:01 +0200
+Message-ID: <20250715130813.835307963@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -54,63 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 23e118a48acf7be223e57d98e98da8ac5a4071ac upstream.
+commit 3b8b80e993766dc96d1a1c01c62f5d15fafc79b9 upstream.
 
-Currently when the pci-hyperv driver finishes probing and initializing the
-PCI device, it sets the PCI_COMMAND_MEMORY bit; later when the PCI device
-is registered to the core PCI subsystem, the core PCI driver's BAR detection
-and initialization code toggles the bit multiple times, and each toggling of
-the bit causes the hypervisor to unmap/map the virtual BARs from/to the
-physical BARs, which can be slow if the BAR sizes are huge, e.g., a Linux VM
-with 14 GPU devices has to spend more than 3 minutes on BAR detection and
-initialization, causing a long boot time.
+GCC changed the default C standard dialect from gnu17 to gnu23,
+which should not have impacted the kernel because it explicitly requests
+the gnu11 standard in the main Makefile. However, there are certain
+places in the s390 code that use their own CFLAGS without a '-std='
+value, which break with this dialect change because of the kernel's own
+definitions of bool, false, and true conflicting with the C23 reserved
+keywords.
 
-Reduce the boot time by not setting the PCI_COMMAND_MEMORY bit when we
-register the PCI device (there is no need to have it set in the first place).
-The bit stays off till the PCI device driver calls pci_enable_device().
-With this change, the boot time of such a 14-GPU VM is reduced by almost
-3 minutes.
+  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+     11 |         false   = 0,
+        |         ^~~~~
+  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
+     35 | typedef _Bool                   bool;
+        |                                 ^~~~
+  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
 
-Link: https://lore.kernel.org/lkml/20220419220007.26550-1-decui@microsoft.com/
-Tested-by: Boqun Feng (Microsoft) <boqun.feng@gmail.com>
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Acked-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc: Jake Oshins <jakeo@microsoft.com>
-Link: https://lore.kernel.org/r/20220502074255.16901-1-decui@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Add '-std=gnu11' to the decompressor and purgatory CFLAGS to eliminate
+these errors and make the C standard version of these areas match the
+rest of the kernel.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250122-s390-fix-std-for-gcc-15-v1-1-8b00cadee083@kernel.org
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ arch/s390/Makefile           |    2 +-
+ arch/s390/purgatory/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -1820,12 +1820,17 @@ static void prepopulate_bars(struct hv_p
- 				}
- 			}
- 			if (high_size <= 1 && low_size <= 1) {
--				/* Set the memory enable bit. */
--				_hv_pcifront_read_config(hpdev, PCI_COMMAND, 2,
--							 &command);
--				command |= PCI_COMMAND_MEMORY;
--				_hv_pcifront_write_config(hpdev, PCI_COMMAND, 2,
--							  command);
-+				/*
-+				 * No need to set the PCI_COMMAND_MEMORY bit as
-+				 * the core PCI driver doesn't require the bit
-+				 * to be pre-set. Actually here we intentionally
-+				 * keep the bit off so that the PCI BAR probing
-+				 * in the core PCI driver doesn't cause Hyper-V
-+				 * to unnecessarily unmap/map the virtual BARs
-+				 * from/to the physical BARs multiple times.
-+				 * This reduces the VM boot time significantly
-+				 * if the BAR sizes are huge.
-+				 */
- 				break;
- 			}
- 		}
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -23,7 +23,7 @@ endif
+ aflags_dwarf	:= -Wa,-gdwarf-2
+ KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -D__ASSEMBLY__
+ KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
+-KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2
++KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -std=gnu11
+ KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -20,7 +20,7 @@ GCOV_PROFILE := n
+ UBSAN_SANITIZE := n
+ KASAN_SANITIZE := n
+ 
+-KBUILD_CFLAGS := -fno-strict-aliasing -Wall -Wstrict-prototypes
++KBUILD_CFLAGS := -std=gnu11 -fno-strict-aliasing -Wall -Wstrict-prototypes
+ KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
+ KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
+ KBUILD_CFLAGS += -c -MD -Os -m64 -msoft-float -fno-common
 
 
