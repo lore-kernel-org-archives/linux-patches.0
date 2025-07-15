@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450B52E7BB7;
-	Tue, 15 Jul 2025 13:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EE62ECD02;
+	Tue, 15 Jul 2025 13:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587100; cv=none; b=YdMg4kAY9yOO5bYUeflpHYeLc1zIy33GemXNt6JK5/3/9hdVtoB+BM8/seP4xqJfbkQFvOmZyiLVZxV6rfURiEqmCv9BCUQk5WjaddNd2bmZ+1bSv+wNrf1mK6A/dLK9VNqHd4phxLp3eoapQbWFclSiBaJRz+JrcCbmIFNFLNQ=
+	t=1752587103; cv=none; b=pbeAqhB+uMemgeKx5hm8dB2/+JY/k35vNufWJy1H62EV8YeLyN2WyCu2usumuqk1G2qF+1uL7uGQ31vIVy+dOyRv/tCsJlERU6m/tVe+DbRaLN1KFZiqG/HLCbSQKbBF3paF63fRJ1Z8aZQkg6pSL4ZLA/gj+ibiyapwIf37OCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587100; c=relaxed/simple;
-	bh=v+7uxXbHL+xp7cIlpBk8RKoGYgKWnenJCwCFgEXPau8=;
+	s=arc-20240116; t=1752587103; c=relaxed/simple;
+	bh=e3Aze4DE8I788ghCLanMeZJh+n9xnc+E6Ms2ZrM8N4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLHisZQXjZItY8RKVJfse8tRKvH2oe+JHyzEzf8trFIVkiYzIzx5iX76VyMfZYuTGta2fsiooguaKV3+TME7/4T14hf3+p+rhdFTE4BwFH5csj2pSnew3Gyya05SpLvfXd5QbKiYU4fOe7Mz84rJNiZYVsRcLkGFfLsxNY5Ki48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhedln2d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GcJ3IPCPQvHvVo1t+toWSKsgiYXFqC7Ab11JqQPBbCxBW/bz6fU/wjrJTyWSQdMbptsvUO+NtLC0oYJyG8MQ/epNa+brJ/9tdywvD3pxDleJ+dCFTVKPqDWZPsGx6OuVtbqPiRd8Vrgsr3tXfS8iS4SKdZMczpQ8mTGX41DhHKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck5e0wO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhedln2d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4E4C4CEF1;
-	Tue, 15 Jul 2025 13:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck5e0wO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B93C4CEE3;
+	Tue, 15 Jul 2025 13:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587100;
-	bh=v+7uxXbHL+xp7cIlpBk8RKoGYgKWnenJCwCFgEXPau8=;
+	s=korg; t=1752587102;
+	bh=e3Aze4DE8I788ghCLanMeZJh+n9xnc+E6Ms2ZrM8N4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhedln2dYO7ChyA2QG9PMpahSNERwLrUlP6493a2r7w3UffyX4q1dZ63NLOjfphqD
-	 uGcVt9S1i0iKE+o5I5En6YUMWYUIi8Vyoxzoh97mlrfrzeja9N+mya8ce09N1bDJP8
-	 6RoJUZvI0M1MHTIRpTvKRopfI33YV7ojOO+AqLCw=
+	b=ck5e0wO75FgFZSvGuClBM5Bb8egphUzMSGO4kICQtEDZS025XshTd4gz9PQezE/ZJ
+	 ZL1zPLDd2mB0MLnQ/zKZZvui5LRH/x1GCb3oOZxk4lsuJKsrepHLyq7YzI1PehWS2V
+	 I7JM+s4+wdf8U34yWJcppl3YmalBunyg58ijlT3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronnie Sahlberg <rsahlberg@whamcloud.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 167/192] ublk: sanity check add_dev input for underflow
-Date: Tue, 15 Jul 2025 15:14:22 +0200
-Message-ID: <20250715130821.614249613@linuxfoundation.org>
+Subject: [PATCH 6.15 168/192] atm: idt77252: Add missing `dma_map_error()`
+Date: Tue, 15 Jul 2025 15:14:23 +0200
+Message-ID: <20250715130821.656256246@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,36 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronnie Sahlberg <rsahlberg@whamcloud.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 969127bf0783a4ac0c8a27e633a9e8ea1738583f ]
+[ Upstream commit c4890963350dcf4e9a909bae23665921fba4ad27 ]
 
-Add additional checks that queue depth and number of queues are
-non-zero.
+The DMA map functions can fail and should be tested for errors.
 
-Signed-off-by: Ronnie Sahlberg <rsahlberg@whamcloud.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250626022046.235018-1-ronniesahlberg@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250624064148.12815-3-fourier.thomas@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/atm/idt77252.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 8a482853a75ed..0e017eae97fb1 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2710,7 +2710,8 @@ static int ublk_ctrl_add_dev(const struct ublksrv_ctrl_cmd *header)
- 	if (copy_from_user(&info, argp, sizeof(info)))
- 		return -EFAULT;
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index a876024d8a05f..63d41320cd5cf 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -852,6 +852,8 @@ queue_skb(struct idt77252_dev *card, struct vc_map *vc,
  
--	if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || info.nr_hw_queues > UBLK_MAX_NR_QUEUES)
-+	if (info.queue_depth > UBLK_MAX_QUEUE_DEPTH || !info.queue_depth ||
-+	    info.nr_hw_queues > UBLK_MAX_NR_QUEUES || !info.nr_hw_queues)
- 		return -EINVAL;
+ 	IDT77252_PRV_PADDR(skb) = dma_map_single(&card->pcidev->dev, skb->data,
+ 						 skb->len, DMA_TO_DEVICE);
++	if (dma_mapping_error(&card->pcidev->dev, IDT77252_PRV_PADDR(skb)))
++		return -ENOMEM;
  
- 	if (capable(CAP_SYS_ADMIN))
+ 	error = -EINVAL;
+ 
+@@ -1857,6 +1859,8 @@ add_rx_skb(struct idt77252_dev *card, int queue,
+ 		paddr = dma_map_single(&card->pcidev->dev, skb->data,
+ 				       skb_end_pointer(skb) - skb->data,
+ 				       DMA_FROM_DEVICE);
++		if (dma_mapping_error(&card->pcidev->dev, paddr))
++			goto outpoolrm;
+ 		IDT77252_PRV_PADDR(skb) = paddr;
+ 
+ 		if (push_rx_skb(card, skb, queue)) {
+@@ -1871,6 +1875,7 @@ add_rx_skb(struct idt77252_dev *card, int queue,
+ 	dma_unmap_single(&card->pcidev->dev, IDT77252_PRV_PADDR(skb),
+ 			 skb_end_pointer(skb) - skb->data, DMA_FROM_DEVICE);
+ 
++outpoolrm:
+ 	handle = IDT77252_PRV_POOL(skb);
+ 	card->sbpool[POOL_QUEUE(handle)].skb[POOL_INDEX(handle)] = NULL;
+ 
 -- 
 2.39.5
 
