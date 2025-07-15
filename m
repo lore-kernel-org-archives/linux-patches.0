@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96012E2F0B;
-	Tue, 15 Jul 2025 13:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6020A2ECD3C;
+	Tue, 15 Jul 2025 13:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587163; cv=none; b=ZnwTY8m/9HseCYVe/SG03UXFRGE2eUitfDsD5BAObUG91mlc6giFoQ3rG9oYs+TocXvytym2wmiHUsPUzoNJ69E8wiyF7Q9boRPEq8cBZ7UMFn/4pzl0eQGJPwm4pMeTtRaAJ2tnvlP/mfifrgra0KOrgekFZKtDn4DdgzrMroI=
+	t=1752587166; cv=none; b=G390b5HBsg0YnKQtgl3BAhO8Ch+xxRuaEVGN4o17S87IzMxKA6dCJ4BrADz/m9tyA4FqQf3JdOWCJtOpR38vu9pqMQquR3kLObqkI+MXN9oc/WtWgp6X+Xo16LORA8O3KsoNYZEBF0AMuUJCWJ4aDYK/FJRa2iuOCpnG16T+qIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587163; c=relaxed/simple;
-	bh=IL2WQMmsJIAYa+nlKjgrberE12KX6S9TR7wySrk03v8=;
+	s=arc-20240116; t=1752587166; c=relaxed/simple;
+	bh=0SEdfAs6ifof6HjzPvS2lH58rtdH6uTpCGFD88HWzcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rmHv/pjyBm4dVcyQ+p6KnlsL2UVv499KSOQoAAv+snLaVMub/SdXzeWHr0rO/sDt2ISdCMnJcvoPN6Gfvo1RSOghpnxzrZt72x5Qei2fW4OOEn+WRyWrleJRtbEMihFksis4lAmbekMGjF4GBYiHGS9FjeUe5Wh6SuIv9uR8/R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuF0rymO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CafoLFqnvb6XVW4lMJFhrQ+sMiSpm0/T80wY4xJ8ZDN2xFmD8n6alL2x3fORUzYrUYjN6+v8dKXEjkCwICIqive2WugeRiez3JeDXVZnYCxLG174Zb1td/wgVzuXPIuGv/LvctqGgISOQdVmoxxJdewaX8tGpZ+tqEaqyAWL0BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mvh/r8c/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuF0rymO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE5EC4CEF6;
-	Tue, 15 Jul 2025 13:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mvh/r8c/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7698C4CEF1;
+	Tue, 15 Jul 2025 13:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587163;
-	bh=IL2WQMmsJIAYa+nlKjgrberE12KX6S9TR7wySrk03v8=;
+	s=korg; t=1752587166;
+	bh=0SEdfAs6ifof6HjzPvS2lH58rtdH6uTpCGFD88HWzcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuF0rymOxzvsfZEjlzwOFPWQi8G7sYPEiDibELzDQCXsSaZlt3nSwXh9+o5aFqsbf
-	 2d5Hh9g4ZZU6GbWlK7OzFE+yBrSnEmCrFX4/aiRqVpkoabh6Xd3Sc1bNIZctoS8zqg
-	 fXR4CIuGxR7QXOs+fGNMvyPlWscMHG6VZX6JV5NA=
+	b=Mvh/r8c/2QCCBkwGfRi4mXbxM6V+CTWQkl/W2NO6URIXmqTCERDSYkXzpM64PS05u
+	 B4i62As9zIbY670qtPrHluQGehsbMNdgAA5JxTPXoT6HpOj/UvCY8zW4YSgZBV0X1w
+	 d8MdDuzj3xKBBrogBAwzLMgnuG1ctDK9zQ7LquIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Sean Nyekjaer <sean@geanix.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 159/192] can: m_can: m_can_handle_lost_msg(): downgrade msg lost in rx message to debug level
-Date: Tue, 15 Jul 2025 15:14:14 +0200
-Message-ID: <20250715130821.297733595@linuxfoundation.org>
+Subject: [PATCH 6.15 160/192] net/mlx5: Reset bw_share field when changing a nodes parent
+Date: Tue, 15 Jul 2025 15:14:15 +0200
+Message-ID: <20250715130821.336228882@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,37 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 58805e9cbc6f6a28f35d90e740956e983a0e036e ]
+[ Upstream commit f7b76466894083c8f518cf29fef75fcd3ec670e5 ]
 
-Downgrade the "msg lost in rx" message to debug level, to prevent
-flooding the kernel log with error messages.
+When changing a node's parent, its scheduling element is destroyed and
+re-created with bw_share 0. However, the node's bw_share field was not
+updated accordingly.
 
-Fixes: e0d1f4816f2a ("can: m_can: add Bosch M_CAN controller support")
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250711-mcan_ratelimit-v3-1-7413e8e21b84@geanix.com
-[mkl: enhance commit message]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Set the node's bw_share to 0 after re-creation to keep the software
+state in sync with the firmware configuration.
+
+Fixes: 9c7bbf4c3304 ("net/mlx5: Add support for setting parent of nodes")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/1752155624-24095-2-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/m_can.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index c2c116ce1087c..782131de5ef76 100644
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -665,7 +665,7 @@ static int m_can_handle_lost_msg(struct net_device *dev)
- 	struct can_frame *frame;
- 	u32 timestamp = 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+index b6ae384396b33..ad9f6fca9b6a2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+@@ -1076,6 +1076,7 @@ static int esw_qos_vports_node_update_parent(struct mlx5_esw_sched_node *node,
+ 		return err;
+ 	}
+ 	esw_qos_node_set_parent(node, parent);
++	node->bw_share = 0;
  
--	netdev_err(dev, "msg lost in rxf0\n");
-+	netdev_dbg(dev, "msg lost in rxf0\n");
- 
- 	stats->rx_errors++;
- 	stats->rx_over_errors++;
+ 	return 0;
+ }
 -- 
 2.39.5
 
