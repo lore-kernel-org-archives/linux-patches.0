@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80F82E4272;
-	Tue, 15 Jul 2025 13:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23852E424E;
+	Tue, 15 Jul 2025 13:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587216; cv=none; b=Ru3PaiakYYpDX7//QTnVAQmR4/eDzEKzBKSb+0l4ivE2OSyUEUkTG3jARbY6nSqU4I5xPAQhaIz0ECR19k5NQ7ak4n36K4LOsnO8DFznXBzPEaHdTXtGkHQM4jjG1SDBLGEv/03YF7/ZLayHkVrH73W6kBQcZgUZPxp3o/7h8i0=
+	t=1752587219; cv=none; b=OJvs4laL4SHoKJF7NJOrTvNdG6F1gUSznLPtLyLCFjGcDvwCTVjQZMDyGR0HmErKrJFheoruxqXC+Kp6nAyP2J33yA9waOaixk68ESZsQVcyBtCOUtdUinm+8F05MI1/FjnXkueCol1l+i8FqTlrSmrXITNUxtWRXglUTOvVpak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587216; c=relaxed/simple;
-	bh=bS1xeBG4Se0pku8yYPqDnB/ixwlNIy7LnLLZLtQphT4=;
+	s=arc-20240116; t=1752587219; c=relaxed/simple;
+	bh=BJc2oKrBiFyExis0PhbWzGfELvL9FaE4Dwc+SbOUSVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C78vRIaVU3sFhBfQYXC1L2nWXxKW+PBXPZxRfI4wnhZqkNXjNwjoeTzLdsspyUU6q6EGsPpHm5qpH3ZYi8DfWO/SK1iKDXv8upqMHFmXrzX3iFqlnQ62NrLgU8SOZB3cyu2Pmzooiy3MCGgq5KX+Ad7i03yit4SjKww1Kw3Pi+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIjA1J0W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p9TOsF8AJh3FEGRCZP/Ecp3mLL67QvVZQUFMj5xiXateWSIzTO0WgYg8hXS0P6c0uDGWhEGbjTNd7zgVE5joSxfAulF/MXV6QqKw1JRh9FugcyVeCBHhFnVGx5jCPwy225nNjNiNNxLssy6puonOn2NtuwE9WER0UlvTBNNLDWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLl6aM+N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIjA1J0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE130C4CEE3;
-	Tue, 15 Jul 2025 13:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLl6aM+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA06C4CEE3;
+	Tue, 15 Jul 2025 13:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587216;
-	bh=bS1xeBG4Se0pku8yYPqDnB/ixwlNIy7LnLLZLtQphT4=;
+	s=korg; t=1752587218;
+	bh=BJc2oKrBiFyExis0PhbWzGfELvL9FaE4Dwc+SbOUSVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vIjA1J0W/0KSj0nfCK89PHz67I9Z3sC9AFQfovW35JUSWn+9+sIbN8Mabip8PZmY+
-	 W7PnzbNaxmarEHFni7aE3Pt55e+wLvKOlLKVLvEoRI/xgb516aNdxASXZC/hze3iHL
-	 /xNij7ANxTGsrI6cLd1kmnL1ZoyQgPmoucBfS5CE=
+	b=CLl6aM+NStAhRmZMCMSdbvHSDk/wCMhmsvv8LjLshQSmQo7F1z8Irc80M6jSXsy3/
+	 9K/GYKnAVeFlc73zfs38RGpkmI2ugjohjYzs9R7q2HmhBokVmcAiMiWPHwsTd/46mj
+	 J0EGJaqPhnCmiYZjAWhk09Qv5xDIoqkwdCFcet+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d8b58d7b0ad89a678a16@syzkaller.appspotmail.com,
-	syzbot+5eccb463fa89309d8bdc@syzkaller.appspotmail.com,
-	syzbot+1261670bbdefc5485a06@syzkaller.appspotmail.com,
-	syzbot+15b96fc3aac35468fe77@syzkaller.appspotmail.com,
-	syzbot+4dadc5aecf80324d5a51@syzkaller.appspotmail.com,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 18/88] net/sched: Abort __tc_modify_qdisc if parent class does not exist
-Date: Tue, 15 Jul 2025 15:13:54 +0200
-Message-ID: <20250715130755.243638288@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
+	Hailong Liu <hailong.liu@oppo.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"zhangpeng.00@bytedance.com" <zhangpeng.00@bytedance.com>,
+	Steve Kang <Steve.Kang@unisoc.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 19/88] maple_tree: fix MA_STATE_PREALLOC flag in mas_preallocate()
+Date: Tue, 15 Jul 2025 15:13:55 +0200
+Message-ID: <20250715130755.283873893@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -58,121 +58,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-[ Upstream commit ffdde7bf5a439aaa1955ebd581f5c64ab1533963 ]
+commit fba46a5d83ca8decb338722fb4899026d8d9ead2 upstream.
 
-Lion's patch [1] revealed an ancient bug in the qdisc API.
-Whenever a user creates/modifies a qdisc specifying as a parent another
-qdisc, the qdisc API will, during grafting, detect that the user is
-not trying to attach to a class and reject. However grafting is
-performed after qdisc_create (and thus the qdiscs' init callback) is
-executed. In qdiscs that eventually call qdisc_tree_reduce_backlog
-during init or change (such as fq, hhf, choke, etc), an issue
-arises. For example, executing the following commands:
+Temporarily clear the preallocation flag when explicitly requesting
+allocations.  Pre-existing allocations are already counted against the
+request through mas_node_count_gfp(), but the allocations will not happen
+if the MA_STATE_PREALLOC flag is set.  This flag is meant to avoid
+re-allocating in bulk allocation mode, and to detect issues with
+preallocation calculations.
 
-sudo tc qdisc add dev lo root handle a: htb default 2
-sudo tc qdisc add dev lo parent a: handle beef fq
+The MA_STATE_PREALLOC flag should also always be set on zero allocations
+so that detection of underflow allocations will print a WARN_ON() during
+consumption.
 
-Qdiscs such as fq, hhf, choke, etc unconditionally invoke
-qdisc_tree_reduce_backlog() in their control path init() or change() which
-then causes a failure to find the child class; however, that does not stop
-the unconditional invocation of the assumed child qdisc's qlen_notify with
-a null class. All these qdiscs make the assumption that class is non-null.
+User visible effect of this flaw is a WARN_ON() followed by a null pointer
+dereference when subsequent requests for larger number of nodes is
+ignored, such as the vma merge retry in mmap_region() caused by drivers
+altering the vma flags (which happens in v6.6, at least)
 
-The solution is ensure that qdisc_leaf() which looks up the parent
-class, and is invoked prior to qdisc_create(), should return failure on
-not finding the class.
-In this patch, we leverage qdisc_leaf to return ERR_PTRs whenever the
-parentid doesn't correspond to a class, so that we can detect it
-earlier on and abort before qdisc_create is called.
-
-[1] https://lore.kernel.org/netdev/d912cbd7-193b-4269-9857-525bee8bbb6a@gmail.com/
-
-Fixes: 5e50da01d0ce ("[NET_SCHED]: Fix endless loops (part 2): "simple" qdiscs")
-Reported-by: syzbot+d8b58d7b0ad89a678a16@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68663c93.a70a0220.5d25f.0857.GAE@google.com/
-Reported-by: syzbot+5eccb463fa89309d8bdc@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68663c94.a70a0220.5d25f.0858.GAE@google.com/
-Reported-by: syzbot+1261670bbdefc5485a06@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/686764a5.a00a0220.c7b3.0013.GAE@google.com/
-Reported-by: syzbot+15b96fc3aac35468fe77@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/686764a5.a00a0220.c7b3.0014.GAE@google.com/
-Reported-by: syzbot+4dadc5aecf80324d5a51@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68679e81.a70a0220.29cf51.0016.GAE@google.com/
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20250707210801.372995-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250616184521.3382795-3-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Reported-by: Hailong Liu <hailong.liu@oppo.com>
+Link: https://lore.kernel.org/all/1652f7eb-a51b-4fee-8058-c73af63bacd1@oppo.com/
+Link: https://lore.kernel.org/all/20250428184058.1416274-1-Liam.Howlett@oracle.com/
+Link: https://lore.kernel.org/all/20250429014754.1479118-1-Liam.Howlett@oracle.com/
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Hailong Liu <hailong.liu@oppo.com>
+Cc: zhangpeng.00@bytedance.com <zhangpeng.00@bytedance.com>
+Cc: Steve Kang <Steve.Kang@unisoc.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ lib/maple_tree.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 7c5df62421bbd..e53149a973a63 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -333,17 +333,22 @@ struct Qdisc *qdisc_lookup_rcu(struct net_device *dev, u32 handle)
- 	return q;
- }
- 
--static struct Qdisc *qdisc_leaf(struct Qdisc *p, u32 classid)
-+static struct Qdisc *qdisc_leaf(struct Qdisc *p, u32 classid,
-+				struct netlink_ext_ack *extack)
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -5802,10 +5802,12 @@ int mas_preallocate(struct ma_state *mas
  {
- 	unsigned long cl;
- 	const struct Qdisc_class_ops *cops = p->ops->cl_ops;
+ 	int ret;
  
--	if (cops == NULL)
--		return NULL;
-+	if (cops == NULL) {
-+		NL_SET_ERR_MSG(extack, "Parent qdisc is not classful");
-+		return ERR_PTR(-EOPNOTSUPP);
++	mas->mas_flags &= ~MA_STATE_PREALLOC;
+ 	mas_node_count_gfp(mas, 1 + mas_mt_height(mas) * 3, gfp);
+-	mas->mas_flags |= MA_STATE_PREALLOC;
+-	if (likely(!mas_is_err(mas)))
++	if (likely(!mas_is_err(mas))) {
++		mas->mas_flags |= MA_STATE_PREALLOC;
+ 		return 0;
 +	}
- 	cl = cops->find(p, classid);
  
--	if (cl == 0)
--		return NULL;
-+	if (cl == 0) {
-+		NL_SET_ERR_MSG(extack, "Specified class not found");
-+		return ERR_PTR(-ENOENT);
-+	}
- 	return cops->leaf(p, cl);
- }
- 
-@@ -1500,7 +1505,7 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 					NL_SET_ERR_MSG(extack, "Failed to find qdisc with specified classid");
- 					return -ENOENT;
- 				}
--				q = qdisc_leaf(p, clid);
-+				q = qdisc_leaf(p, clid, extack);
- 			} else if (dev_ingress_queue(dev)) {
- 				q = rtnl_dereference(dev_ingress_queue(dev)->qdisc_sleeping);
- 			}
-@@ -1511,6 +1516,8 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 			NL_SET_ERR_MSG(extack, "Cannot find specified qdisc on specified device");
- 			return -ENOENT;
- 		}
-+		if (IS_ERR(q))
-+			return PTR_ERR(q);
- 
- 		if (tcm->tcm_handle && q->handle != tcm->tcm_handle) {
- 			NL_SET_ERR_MSG(extack, "Invalid handle");
-@@ -1604,7 +1611,9 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 					NL_SET_ERR_MSG(extack, "Failed to find specified qdisc");
- 					return -ENOENT;
- 				}
--				q = qdisc_leaf(p, clid);
-+				q = qdisc_leaf(p, clid, extack);
-+				if (IS_ERR(q))
-+					return PTR_ERR(q);
- 			} else if (dev_ingress_queue_create(dev)) {
- 				q = rtnl_dereference(dev_ingress_queue(dev)->qdisc_sleeping);
- 			}
--- 
-2.39.5
-
+ 	mas_set_alloc_req(mas, 0);
+ 	ret = xa_err(mas->node);
 
 
