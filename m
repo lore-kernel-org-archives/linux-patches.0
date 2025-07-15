@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F1C1A23AF;
-	Tue, 15 Jul 2025 13:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F842D9EFF;
+	Tue, 15 Jul 2025 13:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585521; cv=none; b=A++q7hUGWAOQRly0dn90CTGbxWD3uX2VB7C5Tx+ByUbB4jaCjSlriWZZM5AZH90yiV2Wauwo+pbKooR/+ZUHypS8CTgAN4yHVWcCJaoZl5v2ux4wJktPWOhj2zGkLXStRK9wQntNW41RfHg4c7OgG+gwcSVfa9XZ28U0QdwEnbw=
+	t=1752585524; cv=none; b=Cctl2PutzhC0fNQho1Oxh0lGgyU2rqsIN4J6cxa386QZJVPW6ExLsPsBna74o61rDWlTl4ZE0Tt4Lz/DJzlI1Ha1SVeIJmYCX2udmLU5/Pkg51hQlRq003qnPnUzMgCZax26K351BJh4IKaFcOHhQcLPQEyTloY95D6Lxuw8U3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585521; c=relaxed/simple;
-	bh=w9EHeDbFB/tBbgQBkwGZ2AmS+aZ9/XolJkrM1oJcus8=;
+	s=arc-20240116; t=1752585524; c=relaxed/simple;
+	bh=8MnSN0BKKEw/sutcZZGIsP1HwVeno5Bv3fy8qeZq6FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fryvLKufBQ2PLYi7Bbft5mYYpbSGcYWeEHpOT80DOj0lEd0eyLk5GVMRGdGF4PpSjfvKQUetYniJdu1q0UzOk1vFP2Vgx3SzCHOLdafVLOWacQeYDYQcZporFaN6fR7g/v0mDe6j6107fmjUsyKdDOljVK4P2mlNDopUOiCBgMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ka4iXUwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kKH450bTUk/6T4wcaGpx6RN6/0CWoPFE0DbDqPg1hmOYZxSOZ/en+5RUuvMXejyMI3TRGiKlUiViTyWmvFckEQZFDLGctdO4GLv0FF9NEJTDAOP6HbJCfZlmBiEB516kMTd7ra4Boc7Qzlhgh2wpLuCgVo2/BVTiSaEGAsIgopg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YudKiSdn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ka4iXUwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4F8C4CEE3;
-	Tue, 15 Jul 2025 13:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YudKiSdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC156C4CEE3;
+	Tue, 15 Jul 2025 13:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585521;
-	bh=w9EHeDbFB/tBbgQBkwGZ2AmS+aZ9/XolJkrM1oJcus8=;
+	s=korg; t=1752585524;
+	bh=8MnSN0BKKEw/sutcZZGIsP1HwVeno5Bv3fy8qeZq6FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ka4iXUwghEiYo3VvNNwiOes3douyypxAdHC/BgcGTMUFX/rj/GUO34oz9LcpEF84N
-	 jvsAK0uxFhMNt0kg0PZc3aTZtQ3ofda/6kXOpGI13hE4eaeseT6edVHkRLRyfZ0T6U
-	 goN8V0/Z5zmexsseULO2zJdUAfV+jmSlQ8mITTsk=
+	b=YudKiSdnDQAJ3umh4iIVPEgXl7PY2UlN1mtMhltLKLcsZNnEvcUMh3jkweCXfou5x
+	 /gRdtuHpVV4VLqVXO5yWZnRQhqwgXMPOI+XWhcpRLgxFyLfLIVvRSL9upY/cw9s2df
+	 PlHO6P8B/pebIcb5UlByIUGk9JoLR3Bk9na6zAqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Lo <michael.lo@mediatek.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 071/163] wifi: mt76: mt7925: fix invalid array index in ssid assignment during hw scan
-Date: Tue, 15 Jul 2025 15:12:19 +0200
-Message-ID: <20250715130811.587128055@linuxfoundation.org>
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>
+Subject: [PATCH 6.12 072/163] drm/imagination: Fix kernel crash when hard resetting the GPU
+Date: Tue, 15 Jul 2025 15:12:20 +0200
+Message-ID: <20250715130811.628113044@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,52 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Lo <michael.lo@mediatek.com>
+From: Alessio Belle <alessio.belle@imgtec.com>
 
-commit c701574c54121af2720648572efbfe77564652d1 upstream.
+commit d38376b3ee48d073c64e75e150510d7e6b4b04f7 upstream.
 
-Update the destination index to use 'n_ssids', which is incremented only
-when a valid SSID is present. Previously, both mt76_connac_mcu_hw_scan()
-and mt7925_mcu_hw_scan() used the loop index 'i' for the destination
-array, potentially leaving gaps if any source SSIDs had zero length.
+The GPU hard reset sequence calls pm_runtime_force_suspend() and
+pm_runtime_force_resume(), which according to their documentation should
+only be used during system-wide PM transitions to sleep states.
 
+The main issue though is that depending on some internal runtime PM
+state as seen by pm_runtime_force_suspend() (whether the usage count is
+<= 1), pm_runtime_force_resume() might not resume the device unless
+needed. If that happens, the runtime PM resume callback
+pvr_power_device_resume() is not called, the GPU clocks are not
+re-enabled, and the kernel crashes on the next attempt to access GPU
+registers as part of the power-on sequence.
+
+Replace calls to pm_runtime_force_suspend() and
+pm_runtime_force_resume() with direct calls to the driver's runtime PM
+callbacks, pvr_power_device_suspend() and pvr_power_device_resume(),
+to ensure clocks are re-enabled and avoid the kernel crash.
+
+Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://lore.kernel.org/r/20250624-fix-kernel-crash-gpu-hard-reset-v1-1-6d24810d72a6@imgtec.com
 Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Michael Lo <michael.lo@mediatek.com>
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250612062046.160598-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c |    4 ++--
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c      |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/imagination/pvr_power.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -1696,8 +1696,8 @@ int mt76_connac_mcu_hw_scan(struct mt76_
- 		if (!sreq->ssids[i].ssid_len)
- 			continue;
+--- a/drivers/gpu/drm/imagination/pvr_power.c
++++ b/drivers/gpu/drm/imagination/pvr_power.c
+@@ -363,13 +363,13 @@ pvr_power_reset(struct pvr_device *pvr_d
+ 		if (!err) {
+ 			if (hard_reset) {
+ 				pvr_dev->fw_dev.booted = false;
+-				WARN_ON(pm_runtime_force_suspend(from_pvr_device(pvr_dev)->dev));
++				WARN_ON(pvr_power_device_suspend(from_pvr_device(pvr_dev)->dev));
  
--		req->ssids[i].ssid_len = cpu_to_le32(sreq->ssids[i].ssid_len);
--		memcpy(req->ssids[i].ssid, sreq->ssids[i].ssid,
-+		req->ssids[n_ssids].ssid_len = cpu_to_le32(sreq->ssids[i].ssid_len);
-+		memcpy(req->ssids[n_ssids].ssid, sreq->ssids[i].ssid,
- 		       sreq->ssids[i].ssid_len);
- 		n_ssids++;
- 	}
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -2823,8 +2823,8 @@ int mt7925_mcu_hw_scan(struct mt76_phy *
- 		if (!sreq->ssids[i].ssid_len)
- 			continue;
+ 				err = pvr_fw_hard_reset(pvr_dev);
+ 				if (err)
+ 					goto err_device_lost;
  
--		ssid->ssids[i].ssid_len = cpu_to_le32(sreq->ssids[i].ssid_len);
--		memcpy(ssid->ssids[i].ssid, sreq->ssids[i].ssid,
-+		ssid->ssids[n_ssids].ssid_len = cpu_to_le32(sreq->ssids[i].ssid_len);
-+		memcpy(ssid->ssids[n_ssids].ssid, sreq->ssids[i].ssid,
- 		       sreq->ssids[i].ssid_len);
- 		n_ssids++;
- 	}
+-				err = pm_runtime_force_resume(from_pvr_device(pvr_dev)->dev);
++				err = pvr_power_device_resume(from_pvr_device(pvr_dev)->dev);
+ 				pvr_dev->fw_dev.booted = true;
+ 				if (err)
+ 					goto err_device_lost;
 
 
