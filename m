@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713772E3AE7;
-	Tue, 15 Jul 2025 13:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100BC2E3AE7;
+	Tue, 15 Jul 2025 13:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587519; cv=none; b=WHXeD2xfXk/Vhk+6tLlsl90wAftsNe8bPhlCFqpgwSo8gKw5zseMiorfbvzeUTt90+8epV+q+rzVqXBgoJGy1xC2/KgowmH89qY9KTNgzkN5znlEUgLouKtG0zlKnHKX1Dw3TJCQgsqWjU/vsPim4/yYEahfZ1xcdMGwg3FXXZg=
+	t=1752587522; cv=none; b=akd8p5MYtIdSaqm6gjniXITBgPu/5zo4tli/jfwZugZg+vVgD69TwNrmZVChYDC3Dc5KacKN0eFSmN8DDl25ElT42dS1rLMjCPxASX3a9MOzEi2Oj8yuiCdsRWXxiI+HytEKus/xk8wJmjGZWpriEA24MkjMAdaX2IAt0LY42RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587519; c=relaxed/simple;
-	bh=ccB/k1+wr1pyuTdFqM70SUYWDA2nJFzg8ZQqMpBlh6Q=;
+	s=arc-20240116; t=1752587522; c=relaxed/simple;
+	bh=AFVQeH7mEGB1S5gYceKzR8K7j7xLfCcmDS80DOaz4WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mR1eQNOSkbiPfpyj+voObxmHYJoQXZsdqxkC9FRsDn0TesM97SxS+RPVBYXkJPTNYI4SBVBUO83Jyu7JnEf5zw5LEuMHmhEvV99T5glHz5mNaclM2uYJ5rCvuuVFIdt9P4A+XZHgzTsTWT6t1i+fenQWT4QhlnBPWGQZpw5CDBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPs6IJHN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PWYCjMMvhoNhN5mOf8R4RHQgyjSvwT/yA5PluhCNK+ME/gZ2V4iTxeFdSdt3NYNL14dNHxFZ5bxRcn0KiHFjCT8HJbNGBAEvHMbVsDRRzwpctrkz9VUgU7GySmDFO8ifnItwCD+cRzgCqET9EZjnxIvn8aB+p4z9hhy+maiDYwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3//oBQz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPs6IJHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030F4C4CEE3;
-	Tue, 15 Jul 2025 13:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3//oBQz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CF7C4CEF4;
+	Tue, 15 Jul 2025 13:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587519;
-	bh=ccB/k1+wr1pyuTdFqM70SUYWDA2nJFzg8ZQqMpBlh6Q=;
+	s=korg; t=1752587521;
+	bh=AFVQeH7mEGB1S5gYceKzR8K7j7xLfCcmDS80DOaz4WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPs6IJHNV7XgApkJpZJM/WqNWntpLpnRlkNzL++pjMMM76aJLA+tjTemn+Vt+ZTJC
-	 CLcsD//cNDXTI4FjgkYl4QBGq/F1K5pn2Kts4nBskt/f/zaWdCgCV0XUSPe0fLzJKN
-	 mT2dD6ttkNqbDoAys5iVSLUpF/s/QHHU891WEaSs=
+	b=K3//oBQzfmWUNLeR854UPzAvQLWSFeL+x9Q1+oE0Qi8GUpJK7VBfoolyqyYKYO9C3
+	 TEy8OulfZGdcVMVuibp/Cg7Wp4FYDh6sqOP9Xx4QDPmI17TwJkJZvIJCw7sJQFPQEq
+	 akD/JDaPJEcJYaZ7mg+9I7yPog9Sh6fdhoQpLbFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Gerrard Tai <gerrard.tai@starlabs.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/208] PCI: cadence-ep: Correct PBA offset in .set_msix() callback
-Date: Tue, 15 Jul 2025 15:12:32 +0200
-Message-ID: <20250715130812.681722972@linuxfoundation.org>
+Subject: [PATCH 5.10 044/208] net_sched: sch_sfq: reject invalid perturb period
+Date: Tue, 15 Jul 2025 15:12:33 +0200
+Message-ID: <20250715130812.720449607@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -54,63 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c8bcb01352a86bc5592403904109c22b66bd916e ]
+[ Upstream commit 7ca52541c05c832d32b112274f81a985101f9ba8 ]
 
-While cdns_pcie_ep_set_msix() writes the Table Size field correctly (N-1),
-the calculation of the PBA offset is wrong because it calculates space for
-(N-1) entries instead of N.
+Gerrard Tai reported that SFQ perturb_period has no range check yet,
+and this can be used to trigger a race condition fixed in a separate patch.
 
-This results in the following QEMU error when using PCI passthrough on a
-device which relies on the PCI endpoint subsystem:
+We want to make sure ctl->perturb_period * HZ will not overflow
+and is positive.
 
-  failed to add PCI capability 0x11[0x50]@0xb0: table & pba overlap, or they don't fit in BARs, or don't align
+Tested:
 
-Fix the calculation of PBA offset in the MSI-X capability.
+tc qd add dev lo root sfq perturb -10   # negative value : error
+Error: sch_sfq: invalid perturb period.
 
-[bhelgaas: more specific subject and commit log]
+tc qd add dev lo root sfq perturb 1000000000 # too big : error
+Error: sch_sfq: invalid perturb period.
 
-Fixes: 3ef5d16f50f8 ("PCI: cadence: Add MSI-X support to Endpoint driver")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+tc qd add dev lo root sfq perturb 2000000 # acceptable value
+tc -s -d qd sh dev lo
+qdisc sfq 8005: root refcnt 2 limit 127p quantum 64Kb depth 127 flows 128 divisor 1024 perturb 2000000sec
+ Sent 0 bytes 0 pkt (dropped 0, overlimits 0 requeues 0)
+ backlog 0b 0p requeues 0
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250514074313.283156-10-cassel@kernel.org
+Link: https://patch.msgid.link/20250611083501.1810459-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-ep.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sched/sch_sfq.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
-index 403ff93bc8509..f6edbe77e640a 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
-@@ -253,11 +253,12 @@ static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u16 interrupts,
- 	struct cdns_pcie *pcie = &ep->pcie;
- 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
- 	u32 val, reg;
-+	u16 actual_interrupts = interrupts + 1;
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index e87560e244861..4a10f794be588 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -653,6 +653,14 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
+ 		return -EINVAL;
+ 	}
++
++	if (ctl->perturb_period < 0 ||
++	    ctl->perturb_period > INT_MAX / HZ) {
++		NL_SET_ERR_MSG_MOD(extack, "invalid perturb period");
++		return -EINVAL;
++	}
++	perturb_period = ctl->perturb_period * HZ;
++
+ 	if (ctl_v1 && !red_check_params(ctl_v1->qth_min, ctl_v1->qth_max,
+ 					ctl_v1->Wlog, ctl_v1->Scell_log, NULL))
+ 		return -EINVAL;
+@@ -669,14 +677,12 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 	headdrop = q->headdrop;
+ 	maxdepth = q->maxdepth;
+ 	maxflows = q->maxflows;
+-	perturb_period = q->perturb_period;
+ 	quantum = q->quantum;
+ 	flags = q->flags;
  
- 	reg = cap + PCI_MSIX_FLAGS;
- 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
- 	val &= ~PCI_MSIX_FLAGS_QSIZE;
--	val |= interrupts;
-+	val |= interrupts; /* 0's based value */
- 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
- 
- 	/* Set MSIX BAR and offset */
-@@ -267,7 +268,7 @@ static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u16 interrupts,
- 
- 	/* Set PBA BAR and offset.  BAR must match MSIX BAR */
- 	reg = cap + PCI_MSIX_PBA;
--	val = (offset + (interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
-+	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
- 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
- 
- 	return 0;
+ 	/* update and validate configuration */
+ 	if (ctl->quantum)
+ 		quantum = ctl->quantum;
+-	perturb_period = ctl->perturb_period * HZ;
+ 	if (ctl->flows)
+ 		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
 -- 
 2.39.5
 
