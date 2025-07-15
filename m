@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D332719F420;
-	Tue, 15 Jul 2025 13:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74C9192D8A;
+	Tue, 15 Jul 2025 13:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585430; cv=none; b=cq6nq5IltDH/dgZYch1h9vPYx0FcRvdY06xkjrpdxSQXgNb+6X972lrnfBtUm9JDwQNVZKxQ9rIeUnQ7cPNPwqJMen4cONqMh5NEv/TyLY/DutKfYlbhIFgH5KOuLSu+cP/T9ABxFo17WOrndP+kljS3NsZUbzIsnIJwXg3Xarg=
+	t=1752585433; cv=none; b=IT1yxYhlwnVgzzthbVAscgYSCEJm95NtPGmOCACGzpbHnGhR9ZmIRlGj6+gz6RJkxt+fuzeNGvDJR1UgJFFD5TudLuaFOT9dg19LSPlQH8ks1Qhm/2ew3aFaqhHqfCVHhfKA1ODyXwTOqka8XOFvE8kFyZZZQ1+EzPWhedmoKKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585430; c=relaxed/simple;
-	bh=YxtUF5IhwwxS8pvs2Y3upleyRoPK9fXRTWnhcY+/P7g=;
+	s=arc-20240116; t=1752585433; c=relaxed/simple;
+	bh=txkpk2TW3WHivQqggla7KJwHT/otlG31AvYkPJXG8nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEhYtBRHUOjosTqmagst5W9gPYDxuLTDuTA6dyWUuiYu1gEAcrygsIv+8Wsxu53FpfSoCe7hQ+y4x/1mose2lLfbdbKHXtIKbYvNMtB/aHTojKv6WXf0VkeVQ7tDTXZ/B7MBScnQh1V/4ufelP2QxRLwcNeudpe4i2CNqlKYaTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHrJs56U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXZ6PcuO1wc0FqJdExY1LVvgSyaPL+Ily4mHlKctk5+z19/LxphIpto5oRl7PNi8KU4kP9LO1CyFPkRI3u1n5XO1Qx2EgtomwFI977uUw7IJlYV5QUS4TmAaYFmB4Xw3XwbDw/25qKSNMCK9czr+HJIBfI7BOLX/b4niL6LRalE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQKUbHgN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHrJs56U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E13C4CEE3;
-	Tue, 15 Jul 2025 13:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQKUbHgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C99DC4CEE3;
+	Tue, 15 Jul 2025 13:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585430;
-	bh=YxtUF5IhwwxS8pvs2Y3upleyRoPK9fXRTWnhcY+/P7g=;
+	s=korg; t=1752585433;
+	bh=txkpk2TW3WHivQqggla7KJwHT/otlG31AvYkPJXG8nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHrJs56U0QWi73Y67OiHaTKyeUf4XnSthlWTN8F6/kJfg0pgD21Qrfjc51JnWO3UX
-	 iELPuceSYfSXkRV1gmil7GzJvo9DRsN63dB+85DpacNbSRcFbxHn62SkCUNkmTtd6O
-	 l9l96FIcyp7SkVZxepNfExxg2Ew9vGehqeQMK5rw=
+	b=mQKUbHgNCAoc7p5K9GQp8TY3Rp0lERs6FIvAtGLgKmPygPmW6zqNjUIVCRfHMmeWP
+	 DqWjtQwm/G/PMEBaJh7CxwNuTm58HuI6Ftil3T8WHwnu0nd6ZWnSyMtfSBYa6cOiml
+	 1j/hZpXCFR4KWBAWQ2eqqGfpJo/oNeVhyy8sQijw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Andre Edich <andre.edich@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/163] net: phy: smsc: Fix Auto-MDIX configuration when disabled by strap
-Date: Tue, 15 Jul 2025 15:11:45 +0200
-Message-ID: <20250715130810.246139327@linuxfoundation.org>
+Subject: [PATCH 6.12 038/163] net: phy: smsc: Force predictable MDI-X state on LAN87xx
+Date: Tue, 15 Jul 2025 15:11:46 +0200
+Message-ID: <20250715130810.285327109@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -55,50 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit a141af8eb2272ab0f677a7f2653874840bc9b214 ]
+[ Upstream commit 0713e55533c88a20edb53eea6517dc56786a0078 ]
 
-Correct the Auto-MDIX configuration to ensure userspace settings are
-respected when the feature is disabled by the AUTOMDIX_EN hardware strap.
+Override the hardware strap configuration for MDI-X mode to ensure a
+predictable initial state for the driver. The initial mode of the LAN87xx
+PHY is determined by the AUTOMDIX_EN strap pin, but the driver has no
+documented way to read its latched status.
 
-The LAN9500 PHY allows its default MDI-X mode to be configured via a
-hardware strap. If this strap sets the default to "MDI-X off", the
-driver was previously unable to enable Auto-MDIX from userspace.
+This unpredictability means the driver cannot know if the PHY has
+initialized with Auto-MDIX enabled or disabled, preventing it from
+providing a reliable interface to the user.
 
-When handling the ETH_TP_MDI_AUTO case, the driver would set the
-SPECIAL_CTRL_STS_AMDIX_ENABLE_ bit but neglected to set the required
-SPECIAL_CTRL_STS_OVRRD_AMDIX_ bit. Without the override flag, the PHY
-falls back to its hardware strap default, ignoring the software request.
-
-This patch corrects the behavior by also setting the override bit when
-enabling Auto-MDIX. This ensures that the userspace configuration takes
-precedence over the hardware strap, allowing Auto-MDIX to be enabled
-correctly in all scenarios.
+This patch introduces a `config_init` hook that forces the PHY into a
+known state by explicitly enabling Auto-MDIX.
 
 Fixes: 05b35e7eb9a1 ("smsc95xx: add phylib support")
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Cc: Andre Edich <andre.edich@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250703114941.3243890-2-o.rempel@pengutronix.de
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250703114941.3243890-3-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/smsc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/phy/smsc.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index 150aea7c9c367..871b7d42cdae7 100644
+index 871b7d42cdae7..09fbc30bfd3d0 100644
 --- a/drivers/net/phy/smsc.c
 +++ b/drivers/net/phy/smsc.c
-@@ -167,7 +167,8 @@ static int lan87xx_config_aneg(struct phy_device *phydev)
- 			SPECIAL_CTRL_STS_AMDIX_STATE_;
- 		break;
- 	case ETH_TP_MDI_AUTO:
--		val = SPECIAL_CTRL_STS_AMDIX_ENABLE_;
-+		val = SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
-+			SPECIAL_CTRL_STS_AMDIX_ENABLE_;
- 		break;
- 	default:
- 		return genphy_config_aneg(phydev);
+@@ -262,6 +262,33 @@ int lan87xx_read_status(struct phy_device *phydev)
+ }
+ EXPORT_SYMBOL_GPL(lan87xx_read_status);
+ 
++static int lan87xx_phy_config_init(struct phy_device *phydev)
++{
++	int rc;
++
++	/* The LAN87xx PHY's initial MDI-X mode is determined by the AUTOMDIX_EN
++	 * hardware strap, but the driver cannot read the strap's status. This
++	 * creates an unpredictable initial state.
++	 *
++	 * To ensure consistent and reliable behavior across all boards,
++	 * override the strap configuration on initialization and force the PHY
++	 * into a known state with Auto-MDIX enabled, which is the expected
++	 * default for modern hardware.
++	 */
++	rc = phy_modify(phydev, SPECIAL_CTRL_STS,
++			SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
++			SPECIAL_CTRL_STS_AMDIX_ENABLE_ |
++			SPECIAL_CTRL_STS_AMDIX_STATE_,
++			SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
++			SPECIAL_CTRL_STS_AMDIX_ENABLE_);
++	if (rc < 0)
++		return rc;
++
++	phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
++
++	return smsc_phy_config_init(phydev);
++}
++
+ static int lan874x_phy_config_init(struct phy_device *phydev)
+ {
+ 	u16 val;
+@@ -695,7 +722,7 @@ static struct phy_driver smsc_phy_driver[] = {
+ 
+ 	/* basic functions */
+ 	.read_status	= lan87xx_read_status,
+-	.config_init	= smsc_phy_config_init,
++	.config_init	= lan87xx_phy_config_init,
+ 	.soft_reset	= smsc_phy_reset,
+ 	.config_aneg	= lan87xx_config_aneg,
+ 
 -- 
 2.39.5
 
