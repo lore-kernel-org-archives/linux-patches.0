@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2708462;
-	Tue, 15 Jul 2025 13:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969A72EA73B;
+	Tue, 15 Jul 2025 13:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586883; cv=none; b=dJEAAWBjIk3NA19zkM+WDTMlXl9tIiAFAelYxLfQXHNq0ZFbUtXttYtEBf1wCc4+h5i18q3PVrdJhya8UcQwZox6rbb0UgItOtIO3/9c5c6bcjDkRnmJ39HguUxz4pG+VQsQbUmb9/x3c/RYYn3y3YjGRe3qyhoH/oPit9DfxO8=
+	t=1752586886; cv=none; b=TKnXXlIlVmBnQxrj2dagrXSR3GU3jF+JSXXElqf/goDPW5RwUdPid9bn18FSaKiDM2HHjb9GGpnyp6xeqsORXeU6pVvhoRw6KvAQV2fYyGVStQP2eC9DN14IIHv9k06cadM0wsj0GMzN2lvgx19xGa0QINInSoBvtfyJvL7UFVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586883; c=relaxed/simple;
-	bh=9s3m8t/Wayix23M8FY05Zj6J8H6EQ9z9e/d20AoI4OE=;
+	s=arc-20240116; t=1752586886; c=relaxed/simple;
+	bh=HtMwZfVwUk4pN47tEyf6a43vJ1ICAkEJBBm82jH8daU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IfJTGeG27Vp20GgpyWw/syciDkOw437AEyllPdvK3gB//yKw0JWAbKd3A+V9m96a8RRI4KZXyR8kFkOyDQLTqjXkICIS5cmVLVXJ8dyzloD2nHY3teFykutRzjLrPUvSdXBMYIv3BT1lAaYzIMnjadz3tjZhglPSueSBRKbBPbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtMmQzZy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hh8ScEMBYMKZ/t+OqoyAJoFrGtd24wbS6jlEHtIQqq5KKW6eI22EEBqxAUYEFN9bzKUrfezShhN+lzeW2TVfnDc8+o7fhkWXUXa8UCoryZ6so5ki2Y9TDdJrWWbhc9of32lXY4qjU8sb276AHf1RsMJNktqm8yBt4DpIniDOQbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1xnvtuf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtMmQzZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B11FC4CEE3;
-	Tue, 15 Jul 2025 13:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1xnvtuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD5DC4CEF8;
+	Tue, 15 Jul 2025 13:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586883;
-	bh=9s3m8t/Wayix23M8FY05Zj6J8H6EQ9z9e/d20AoI4OE=;
+	s=korg; t=1752586886;
+	bh=HtMwZfVwUk4pN47tEyf6a43vJ1ICAkEJBBm82jH8daU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtMmQzZydFo+aUVJv2znlCvRX2bAFvhQpAzAaoQRQUdrz3mT45yD0ZXVF+hFkU7/6
-	 lbm5omtsGLt+Ja7bParZeIlB3gIi1KF+Kl3tHsz0D6P6W4YIpNPcuvZugVaJpFb1rQ
-	 NUmdkEku3KkV1bv2IL12pIJ5EfleV/WFocyjFhI4=
+	b=q1xnvtuf0eaTDdi+3Mt/9B8JAxs0BW4Jy5c9nXIN9h8qXxldwQ6QUeyjWCgfW/CWN
+	 hGZjT5cX/Oqp7MIr/u1MhMdEhAjDFvvIgWBuHdeILNEq5KKZkCZqQs6jOi5jcKd1y9
+	 18wAdGws3a4G8mMlYoH/mX7nebzASJNI4yLW0Ex8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Andreas <manuel.andreas@tum.de>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.15 057/192] KVM: x86/hyper-v: Skip non-canonical addresses during PV TLB flush
-Date: Tue, 15 Jul 2025 15:12:32 +0200
-Message-ID: <20250715130817.126618818@linuxfoundation.org>
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Johl Brown <johlbrown@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.15 084/192] drm/amdkfd: add hqd_sdma_get_doorbell callbacks for gfx7/8
+Date: Tue, 15 Jul 2025 15:12:59 +0200
+Message-ID: <20250715130818.289491027@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,68 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manuel Andreas <manuel.andreas@tum.de>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit fa787ac07b3ceb56dd88a62d1866038498e96230 upstream.
+commit 34659c1a1f4fd4c148ab13e13b11fd64df01ffcd upstream.
 
-In KVM guests with Hyper-V hypercalls enabled, the hypercalls
-HVCALL_FLUSH_VIRTUAL_ADDRESS_LIST and HVCALL_FLUSH_VIRTUAL_ADDRESS_LIST_EX
-allow a guest to request invalidation of portions of a virtual TLB.
-For this, the hypercall parameter includes a list of GVAs that are supposed
-to be invalidated.
+These were missed when support was added for other generations.
+The callbacks are called unconditionally so we need to make
+sure all generations have them.
 
-However, when non-canonical GVAs are passed, there is currently no
-filtering in place and they are eventually passed to checked invocations of
-INVVPID on Intel / INVLPGA on AMD.  While AMD's INVLPGA silently ignores
-non-canonical addresses (effectively a no-op), Intel's INVVPID explicitly
-signals VM-Fail and ultimately triggers the WARN_ONCE in invvpid_error():
-
-  invvpid failed: ext=0x0 vpid=1 gva=0xaaaaaaaaaaaaa000
-  WARNING: CPU: 6 PID: 326 at arch/x86/kvm/vmx/vmx.c:482
-  invvpid_error+0x91/0xa0 [kvm_intel]
-  Modules linked in: kvm_intel kvm 9pnet_virtio irqbypass fuse
-  CPU: 6 UID: 0 PID: 326 Comm: kvm-vm Not tainted 6.15.0 #14 PREEMPT(voluntary)
-  RIP: 0010:invvpid_error+0x91/0xa0 [kvm_intel]
-  Call Trace:
-    vmx_flush_tlb_gva+0x320/0x490 [kvm_intel]
-    kvm_hv_vcpu_flush_tlb+0x24f/0x4f0 [kvm]
-    kvm_arch_vcpu_ioctl_run+0x3013/0x5810 [kvm]
-
-Hyper-V documents that invalid GVAs (those that are beyond a partition's
-GVA space) are to be ignored.  While not completely clear whether this
-ruling also applies to non-canonical GVAs, it is likely fine to make that
-assumption, and manual testing on Azure confirms "real" Hyper-V interprets
-the specification in the same way.
-
-Skip non-canonical GVAs when processing the list of address to avoid
-tripping the INVVPID failure.  Alternatively, KVM could filter out "bad"
-GVAs before inserting into the FIFO, but practically speaking the only
-downside of pushing validation to the final processing is that doing so
-is suboptimal for the guest, and no well-behaved guest will request TLB
-flushes for non-canonical addresses.
-
-Fixes: 260970862c88 ("KVM: x86: hyper-v: Handle HVCALL_FLUSH_VIRTUAL_ADDRESS_LIST{,EX} calls gently")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4304
+Link: https://github.com/ROCm/ROCm/issues/4965
+Fixes: bac38ca8c475 ("drm/amdkfd: implement per queue sdma reset for gfx 9.4+")
+Cc: Jonathan Kim <jonathan.kim@amd.com>
+Reported-by: Johl Brown <johlbrown@gmail.com>
+Reviewed-by: Jonathan Kim <jonathan.kim@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1e9d17a5dcf1242e9518e461d8e63ad35240e49e)
 Cc: stable@vger.kernel.org
-Signed-off-by: Manuel Andreas <manuel.andreas@tum.de>
-Suggested-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://lore.kernel.org/r/c090efb3-ef82-499f-a5e0-360fc8420fb7@tum.de
-Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/hyperv.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v7.c |    8 ++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v8.c |    8 ++++++++
+ 2 files changed, 16 insertions(+)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -1979,6 +1979,9 @@ int kvm_hv_vcpu_flush_tlb(struct kvm_vcp
- 		if (entries[i] == KVM_HV_TLB_FLUSHALL_ENTRY)
- 			goto out_flush_all;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v7.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v7.c
+@@ -561,6 +561,13 @@ static uint32_t read_vmid_from_vmfault_r
+ 	return REG_GET_FIELD(status, VM_CONTEXT1_PROTECTION_FAULT_STATUS, VMID);
+ }
  
-+		if (is_noncanonical_invlpg_address(entries[i], vcpu))
-+			continue;
++static uint32_t kgd_hqd_sdma_get_doorbell(struct amdgpu_device *adev,
++					  int engine, int queue)
 +
- 		/*
- 		 * Lower 12 bits of 'address' encode the number of additional
- 		 * pages to flush.
++{
++	return 0;
++}
++
+ const struct kfd2kgd_calls gfx_v7_kfd2kgd = {
+ 	.program_sh_mem_settings = kgd_program_sh_mem_settings,
+ 	.set_pasid_vmid_mapping = kgd_set_pasid_vmid_mapping,
+@@ -578,4 +585,5 @@ const struct kfd2kgd_calls gfx_v7_kfd2kg
+ 	.set_scratch_backing_va = set_scratch_backing_va,
+ 	.set_vm_context_page_table_base = set_vm_context_page_table_base,
+ 	.read_vmid_from_vmfault_reg = read_vmid_from_vmfault_reg,
++	.hqd_sdma_get_doorbell = kgd_hqd_sdma_get_doorbell,
+ };
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v8.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v8.c
+@@ -582,6 +582,13 @@ static void set_vm_context_page_table_ba
+ 			lower_32_bits(page_table_base));
+ }
+ 
++static uint32_t kgd_hqd_sdma_get_doorbell(struct amdgpu_device *adev,
++					  int engine, int queue)
++
++{
++	return 0;
++}
++
+ const struct kfd2kgd_calls gfx_v8_kfd2kgd = {
+ 	.program_sh_mem_settings = kgd_program_sh_mem_settings,
+ 	.set_pasid_vmid_mapping = kgd_set_pasid_vmid_mapping,
+@@ -599,4 +606,5 @@ const struct kfd2kgd_calls gfx_v8_kfd2kg
+ 			get_atc_vmid_pasid_mapping_info,
+ 	.set_scratch_backing_va = set_scratch_backing_va,
+ 	.set_vm_context_page_table_base = set_vm_context_page_table_base,
++	.hqd_sdma_get_doorbell = kgd_hqd_sdma_get_doorbell,
+ };
 
 
