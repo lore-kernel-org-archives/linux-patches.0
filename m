@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B702EB5A2;
-	Tue, 15 Jul 2025 13:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5F52E7651;
+	Tue, 15 Jul 2025 13:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587567; cv=none; b=Fky2vxYnPy9Vwyvnt54v1P9an1r3jW80PLpUwtYZq6rV92dQ5NfkSeeEDC9iQyJ50+m3f8n0SO8gLVlpmPnR+xPwzHYJj+vw/mzSEOr9QPIOOSfuzRwSsJlTJrdy7duJJmG3Co4i5457YQIAfGbdCYva1h0qpBJ1HRhPS74/1Ak=
+	t=1752587570; cv=none; b=RNcgThtOMLxqutN9OzuOBAQNx7WQT+hFTwkLo/QCopVIs38R0rYPvW7ETa9hZVbQH9DrkE2GSA6fcTV431gxsPLmR1HCVEVlh5RB36Jkz9rQNWr7hs+Tj+a8hH9q0H0eNHdr3EQklJ1JWdwZ7mWQJk2YOp+rgIUa9b8zBAmyLBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587567; c=relaxed/simple;
-	bh=Wycrv70JUobkUpHmn8Fv0xuD8hmqmUfppIBuDjCGoBw=;
+	s=arc-20240116; t=1752587570; c=relaxed/simple;
+	bh=eTD3ISTDCWmM5N2ffSFkPwUMIhgHksAhjBexzjl8Wy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJ2zTiLUvjgYdYcULLyeiCMFTIeI7Cu0h2n5cjcUVCRrcpA3Nur86R97lxL/9kk/dWM5idCC3PArd2MHDwKhuPAt/5vwrri19V6oVRuFfKlWvcoLHzd8DludgUcaU2sftOUA9YX3ksPv8aGtPJy+2aULAXci8NhoZyFme4VRWRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Nj/bjNz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NyCI8l558bOi6mdTWp0vtwLMKJs/5dJFZ/royFDgJ6UF3D18sOwcKUEAApc/si/HBLqDb+M1GK+38o6wJpvB9PcwNbVb1pIYcLsPzflZF5ryfYtQ5LHqs/DRIM/FuKK6AIbiYBGD7WboORsvAJqPyofcnHrR2PmiTno040c3/64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZV0W1aOZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Nj/bjNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D597C4CEE3;
-	Tue, 15 Jul 2025 13:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZV0W1aOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B668C4CEE3;
+	Tue, 15 Jul 2025 13:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587567;
-	bh=Wycrv70JUobkUpHmn8Fv0xuD8hmqmUfppIBuDjCGoBw=;
+	s=korg; t=1752587569;
+	bh=eTD3ISTDCWmM5N2ffSFkPwUMIhgHksAhjBexzjl8Wy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Nj/bjNzxg2JyX/5P74GAqMe3kFpxGZQJeXhM6E5w6nJPN013DPBD2aHdeBxxLALG
-	 De7yvj5OCT9wYaUPfcSLJvHJmMo/RXXzO1ubsYL3n01a5siQPBNel4+NOmYi5MNBPB
-	 mumyZQi2ciYgMee+zrs46aS1Oqbfp4lj3sqDirx0=
+	b=ZV0W1aOZSNiUH3SPtUw4JSFJEAqmn40jCOIL/opGzjbTeSt11zaiCGE6rdCi1L6KP
+	 TkmxNwJH6pAKMFIvGyQWiSbOPQ/X84Fae0FGJEmwtSb5QUBkM948YZ6OQyja1BWQLG
+	 /F8PhT4j1qW6IIAlwtAcpNMefETWB6uJeENEfQxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <maharmstone@fb.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 059/208] btrfs: update superblocks device bytes_used when dropping chunk
-Date: Tue, 15 Jul 2025 15:12:48 +0200
-Message-ID: <20250715130813.313373977@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 030/208] fs/jfs: consolidate sanity checking in dbMount
+Date: Tue, 15 Jul 2025 15:12:19 +0200
+Message-ID: <20250715130812.039695847@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -51,66 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <maharmstone@fb.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-commit ae4477f937569d097ca5dbce92a89ba384b49bc6 upstream.
+[ Upstream commit 0d250b1c52484d489e31df2cf9118b7c4bd49d31 ]
 
-Each superblock contains a copy of the device item for that device. In a
-transaction which drops a chunk but doesn't create any new ones, we were
-correctly updating the device item in the chunk tree but not copying
-over the new bytes_used value to the superblock.
+Sanity checks have been added to dbMount as individual if clauses with
+identical error handling. Move these all into one clause.
 
-This can be seen by doing the following:
-
-  # dd if=/dev/zero of=test bs=4096 count=2621440
-  # mkfs.btrfs test
-  # mount test /root/temp
-
-  # cd /root/temp
-  # for i in {00..10}; do dd if=/dev/zero of=$i bs=4096 count=32768; done
-  # sync
-  # rm *
-  # sync
-  # btrfs balance start -dusage=0 .
-  # sync
-
-  # cd
-  # umount /root/temp
-  # btrfs check test
-
-For btrfs-check to detect this, you will also need my patch at
-https://github.com/kdave/btrfs-progs/pull/991.
-
-Change btrfs_remove_dev_extents() so that it adds the devices to the
-fs_info->post_commit_list if they're not there already. This causes
-btrfs_commit_device_sizes() to be called, which updates the bytes_used
-value in the superblock.
-
-Fixes: bbbf7243d62d ("btrfs: combine device update operations during transaction commit")
-CC: stable@vger.kernel.org # 5.10+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <maharmstone@fb.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Stable-dep-of: 37bfb464ddca ("jfs: validate AG parameters in dbMount() to prevent crashes")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/jfs/jfs_dmap.c | 37 +++++++++----------------------------
+ 1 file changed, 9 insertions(+), 28 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3101,6 +3101,12 @@ int btrfs_remove_chunk(struct btrfs_tran
- 					device->bytes_used - dev_extent_len);
- 			atomic64_add(dev_extent_len, &fs_info->free_chunk_space);
- 			btrfs_clear_space_info_full(fs_info);
-+
-+			if (list_empty(&device->post_commit_list)) {
-+				list_add_tail(&device->post_commit_list,
-+					      &trans->transaction->dev_update_list);
-+			}
-+
- 			mutex_unlock(&fs_info->chunk_mutex);
- 		}
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 9dccebbee55ad..ba60e24b30a45 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -178,45 +178,26 @@ int dbMount(struct inode *ipbmap)
+ 	dbmp_le = (struct dbmap_disk *) mp->data;
+ 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
+-
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+-	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE ||
+-		bmp->db_l2nbperpage < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+-	if (!bmp->db_numag || bmp->db_numag > MAXAG) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+ 	bmp->db_maxag = le32_to_cpu(dbmp_le->dn_maxag);
+ 	bmp->db_agpref = le32_to_cpu(dbmp_le->dn_agpref);
+-	if (bmp->db_maxag >= MAXAG || bmp->db_maxag < 0 ||
+-		bmp->db_agpref >= MAXAG || bmp->db_agpref < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_aglevel = le32_to_cpu(dbmp_le->dn_aglevel);
+ 	bmp->db_agheight = le32_to_cpu(dbmp_le->dn_agheight);
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+-	if (!bmp->db_agwidth) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
+-	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
+-	    bmp->db_agl2size < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
  
+-	if (((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
++	if ((bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) ||
++	    (bmp->db_l2nbperpage < 0) ||
++	    !bmp->db_numag || (bmp->db_numag > MAXAG) ||
++	    (bmp->db_maxag >= MAXAG) || (bmp->db_maxag < 0) ||
++	    (bmp->db_agpref >= MAXAG) || (bmp->db_agpref < 0) ||
++	    !bmp->db_agwidth ||
++	    (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) ||
++	    (bmp->db_agl2size < 0) ||
++	    ((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
+ 	}
+-- 
+2.39.5
+
 
 
