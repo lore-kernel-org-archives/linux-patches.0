@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D182E2EFF;
-	Tue, 15 Jul 2025 13:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294912E2EFF;
+	Tue, 15 Jul 2025 13:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586510; cv=none; b=FKEKu3BHk49mY30yIqQzssZsJH0WXThioUu7JJFBob0cSxmszvHSgrtm7MMiIya/rOzfNDZv8rbxVSO4rJsWsxqAd98en+HKbVh0y5xMfd+UDlAX62/nt+uuSL8gIlf/8y96YegB9EyOAwp4wFGOPUhR+ehUh6GY/E7B0dS2MJY=
+	t=1752586513; cv=none; b=ZeHV2i35UuoBz4amGZU1gNdKbeIrRscpTcmsj4Tw35TPvjGL0kzSbuvxNFrs3WqBR1HKD2bLykGXIsufquv0bP7pqr2XrZWamMSL0YaaYD5+oYTRgO3iwvB7BcyzwI/l++AkkaZfqJbAoAq/qB83YMC0GhT5nSYOVxVX40fIIj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586510; c=relaxed/simple;
-	bh=b9KepwfolTcVZNsk9HbUbi84mDb/1ZQSyYtE0Qu2wGs=;
+	s=arc-20240116; t=1752586513; c=relaxed/simple;
+	bh=PeJo7r8J+DZ/TqByugAPEdeQWRZ9K9G1I645Hhesns8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCCA9qU4tlIS6ef2fXc565ml7q69jfSJp/4g6lyouaehxDIagLY/BYcMSKkI04Uay2knngLObrcQ80EG9iO68hsdBehRim3q9RYzzcpzhqJlfXH9ctD7cprzfR6yE9p5y1kH/+Gpu18wRiE0icCLvBz88jec5pn5OJ/UiXy+ITs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kR9Y6fqC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SOXdgfRgVjZF1Hl+okKzrLXl1P6RASiTcYnYA+/eW8L0FGBTaApMdnX7O1bOLL+sArua3BE+q8SPovhcJdt03+p5sJ4P4hxb6rwp2uAqEW7WmSeXaL6lEGG2SwldohBWa6Y+In3XnttqxotgMmhPBu6zS7C4yiNpDmsBBYDdHJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2K4+3RAL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kR9Y6fqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CB9C4CEE3;
-	Tue, 15 Jul 2025 13:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K4+3RAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B48C4CEE3;
+	Tue, 15 Jul 2025 13:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586510;
-	bh=b9KepwfolTcVZNsk9HbUbi84mDb/1ZQSyYtE0Qu2wGs=;
+	s=korg; t=1752586512;
+	bh=PeJo7r8J+DZ/TqByugAPEdeQWRZ9K9G1I645Hhesns8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kR9Y6fqCWGPkEDEcKrp3PwnbIqZZErvOgTOVIwRfGGyJvB5lP9V9BiU5go+66Snuv
-	 CWAi0q7sL68FOPR+c8zMHj8Efvz2CVE9VkyHXxiWXzXPl5ER3HkHZLtWFbEKAWFjn/
-	 pr+mvq4dFrSdZ2oJv3wDR/WTCwqct4S6Wvr9CgC0=
+	b=2K4+3RALYT0zCyEgAsfwA+6EIOqcQnwAcnsVjDUlZ7KcJ8RyfnlEIACq/W9I4uX3p
+	 V8QF7p8+efniCvFCNcbdEfytTWjnPSfl5cIMcnj+nBmRMo/Ju7H5jn91FZalcr9OL3
+	 Dox6tLFgjTxGjEGKVciFiWm4wr6djPi2ACx7Ost4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Michael Walle <michael@walle.cc>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/148] spi: spi-fsl-dspi: Rename fifo_{read,write} and {tx,cmd}_fifo_write
-Date: Tue, 15 Jul 2025 15:13:34 +0200
-Message-ID: <20250715130803.997444990@linuxfoundation.org>
+Subject: [PATCH 5.4 093/148] spi: spi-fsl-dspi: Fix interrupt-less DMA mode taking an XSPI code path
+Date: Tue, 15 Jul 2025 15:13:35 +0200
+Message-ID: <20250715130804.037918285@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -53,99 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 547248fbed23f3cd2f6a5937b44fad60993640c4 ]
+[ Upstream commit 826b3a6a34619b934cdc33eeb961fcb99ce92c09 ]
 
-These function names are very generic and it is easy to get confused.
-Rename them after the hardware register that they are accessing.
+Interrupts are not necessary for DMA functionality, since the completion
+event is provided by the DMA driver.
 
+But if the driver fails to request the IRQ defined in the device tree,
+it will call dspi_poll which would make the driver hang waiting for data
+to become available in the RX FIFO.
+
+Fixes: c55be3059159 ("spi: spi-fsl-dspi: Use poll mode in case the platform IRQ is missing")
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20200304220044.11193-6-olteanv@gmail.com
+Tested-by: Michael Walle <michael@walle.cc>
+Link: https://lore.kernel.org/r/20200318001603.9650-9-olteanv@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: fa60c094c19b ("spi: spi-fsl-dspi: Clear completion counter before initiating transfer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 1d94fc89602f2..99d048acca29e 100644
+index 99d048acca29e..7b62ecbe36321 100644
 --- a/drivers/spi/spi-fsl-dspi.c
 +++ b/drivers/spi/spi-fsl-dspi.c
-@@ -560,12 +560,12 @@ static void ns_delay_scale(char *psc, char *sc, int delay_ns,
- 	}
- }
+@@ -793,13 +793,15 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ 			goto out;
+ 		}
  
--static void fifo_write(struct fsl_dspi *dspi)
-+static void dspi_pushr_write(struct fsl_dspi *dspi)
- {
- 	regmap_write(dspi->regmap, SPI_PUSHR, dspi_pop_tx_pushr(dspi));
- }
+-		if (!dspi->irq) {
+-			do {
+-				status = dspi_poll(dspi);
+-			} while (status == -EINPROGRESS);
+-		} else if (trans_mode != DSPI_DMA_MODE) {
+-			wait_for_completion(&dspi->xfer_done);
+-			reinit_completion(&dspi->xfer_done);
++		if (trans_mode != DSPI_DMA_MODE) {
++			if (dspi->irq) {
++				wait_for_completion(&dspi->xfer_done);
++				reinit_completion(&dspi->xfer_done);
++			} else {
++				do {
++					status = dspi_poll(dspi);
++				} while (status == -EINPROGRESS);
++			}
+ 		}
  
--static void cmd_fifo_write(struct fsl_dspi *dspi)
-+static void dspi_pushr_cmd_write(struct fsl_dspi *dspi)
- {
- 	u16 cmd = dspi->tx_cmd;
- 
-@@ -574,7 +574,7 @@ static void cmd_fifo_write(struct fsl_dspi *dspi)
- 	regmap_write(dspi->regmap_pushr, PUSHR_CMD, cmd);
- }
- 
--static void tx_fifo_write(struct fsl_dspi *dspi, u16 txdata)
-+static void dspi_pushr_txdata_write(struct fsl_dspi *dspi, u16 txdata)
- {
- 	regmap_write(dspi->regmap_pushr, PUSHR_TX, txdata);
- }
-@@ -590,18 +590,18 @@ static void dspi_tcfq_write(struct fsl_dspi *dspi)
- 		 */
- 		u32 data = dspi_pop_tx(dspi);
- 
--		cmd_fifo_write(dspi);
--		tx_fifo_write(dspi, data & 0xFFFF);
--		tx_fifo_write(dspi, data >> 16);
-+		dspi_pushr_cmd_write(dspi);
-+		dspi_pushr_txdata_write(dspi, data & 0xFFFF);
-+		dspi_pushr_txdata_write(dspi, data >> 16);
- 	} else {
- 		/* Write one entry to both TX FIFO and CMD FIFO
- 		 * simultaneously.
- 		 */
--		fifo_write(dspi);
-+		dspi_pushr_write(dspi);
- 	}
- }
- 
--static u32 fifo_read(struct fsl_dspi *dspi)
-+static u32 dspi_popr_read(struct fsl_dspi *dspi)
- {
- 	u32 rxdata = 0;
- 
-@@ -611,7 +611,7 @@ static u32 fifo_read(struct fsl_dspi *dspi)
- 
- static void dspi_tcfq_read(struct fsl_dspi *dspi)
- {
--	dspi_push_rx(dspi, fifo_read(dspi));
-+	dspi_push_rx(dspi, dspi_popr_read(dspi));
- }
- 
- static void dspi_eoq_write(struct fsl_dspi *dspi)
-@@ -629,7 +629,7 @@ static void dspi_eoq_write(struct fsl_dspi *dspi)
- 		if (fifo_size == (DSPI_FIFO_SIZE - 1))
- 			dspi->tx_cmd |= SPI_PUSHR_CMD_CTCNT;
- 		/* Write combined TX FIFO and CMD FIFO entry */
--		fifo_write(dspi);
-+		dspi_pushr_write(dspi);
- 	}
- }
- 
-@@ -639,7 +639,7 @@ static void dspi_eoq_read(struct fsl_dspi *dspi)
- 
- 	/* Read one FIFO entry and push to rx buffer */
- 	while ((dspi->rx < dspi->rx_end) && fifo_size--)
--		dspi_push_rx(dspi, fifo_read(dspi));
-+		dspi_push_rx(dspi, dspi_popr_read(dspi));
- }
- 
- static int dspi_rxtx(struct fsl_dspi *dspi)
+ 		if (transfer->delay_usecs)
 -- 
 2.39.5
 
