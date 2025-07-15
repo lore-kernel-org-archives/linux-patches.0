@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E6E2E1757;
-	Tue, 15 Jul 2025 13:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F682E1757;
+	Tue, 15 Jul 2025 13:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587711; cv=none; b=moSrhPHSVy5UOGpxOacXeXyKnJco37yPiHhJnChVIJJX+KFDAegoHcwYpZF2K8KgCbgDCoZwwn25WUgwTwFAsN2q77/C8m2UL8nxw7hnewtLMYzA/8NR7DBpmFzrEz1gmuVKiHwGuXRFRnjuu4JTYraOXrywCbUN5SawrKXw5VI=
+	t=1752587714; cv=none; b=tYz2XawFB0WYhRFk37VFcsYVqI/Nvc21v7ASh0GMCIEpArU88WKL1Fu9lH9RaA5VXLs3p3ZIYm28tc+HprfJidpHdev79kK39iSTc4/niKt/DNGG7mY641pOL7FasOsmpVWUWwkwrEqItlILr4Y5no+uT5NNhOqw1US96TKuphQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587711; c=relaxed/simple;
-	bh=4Oifk2DbG+/gXf3ebjf5hfPdCCM1O7Yu0eoa0lyBbG4=;
+	s=arc-20240116; t=1752587714; c=relaxed/simple;
+	bh=hjd/OR+KvhA7NBmBF56ERX4GZjbC6Tk6DTU5y3u1rDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQHy8FD/ChaAh1kql/EU7W+vRJLFLQFIgbvXpu3Y6jmpEoXQrgMw80g2Mnt4AFoUa5rFWzl8jsNeSQIQXsW637/SBLkEbEGKC2luUsDMbWu/efO0OoVa4rIpjm3nQKovjweCSSE2q4bKbbXHFanoeomkeWl3pATeVZKx3bL35HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hbPLGYz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MUKDJCo9dauiISsTeoi/D0dMyOTXrD6+ds4ubC3lqpayt2rEs5qDJSO9lcXdaci/HXZVFx4Fi/CwonRQP6yRDgl0fOXZ5mTIYJXhv4mP6bjHxyzjMEuSTwKm4bMr/BekItPKngm2neadD9wyISHSX3Pn1jLA9bHs5c+LoWy4FBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq4z3jCg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hbPLGYz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B10C4CEE3;
-	Tue, 15 Jul 2025 13:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq4z3jCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A970BC4CEE3;
+	Tue, 15 Jul 2025 13:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587711;
-	bh=4Oifk2DbG+/gXf3ebjf5hfPdCCM1O7Yu0eoa0lyBbG4=;
+	s=korg; t=1752587714;
+	bh=hjd/OR+KvhA7NBmBF56ERX4GZjbC6Tk6DTU5y3u1rDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hbPLGYzVrjRljMonKuFPl6JU6TE6tTvaPg/MlNd2WT4qRc62UMZNigLWHvLED+YV
-	 u/bAfTVIcJnv05rrQE3EHa/hOQ4RMVr93zZEbiMK1+mmGNJ0nSKIkZ4FTm/7NywNdq
-	 QZWxLbVNMOFCKeaRsm4QOHBoLByLELHgbSVWoABg=
+	b=cq4z3jCgtB8g/dMnY8704fBhEDbB2yO/e4o2XGJ2XjyXKoPSUfMnT49HV4dtyd92g
+	 bIeiw+oB8AIRVq3xfTnjWFgHv7pLMsy+fZ275NdIrwvUs4D8pWaoSqM20l1w4O+Jss
+	 9MFwyBTboG81J7n+O+WOD0cbdbKMtzYZAxbUZUmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/208] RDMA/mlx5: Fix vport loopback for MPV device
-Date: Tue, 15 Jul 2025 15:13:43 +0200
-Message-ID: <20250715130815.515131340@linuxfoundation.org>
+Subject: [PATCH 5.10 115/208] flexfiles/pNFS: update stats on NFS4ERR_DELAY for v4.1 DSes
+Date: Tue, 15 Jul 2025 15:13:44 +0200
+Message-ID: <20250715130815.555271026@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,85 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
 
-[ Upstream commit a9a9e68954f29b1e197663f76289db4879fd51bb ]
+[ Upstream commit e3e3775392f3f0f3e3044f8c162bf47858e01759 ]
 
-Always enable vport loopback for both MPV devices on driver start.
+On NFS4ERR_DELAY nfs slient updates its stats, but misses for
+flexfiles v4.1 DSes.
 
-Previously in some cases related to MPV RoCE, packets weren't correctly
-executing loopback check at vport in FW, since it was disabled.
-Due to complexity of identifying such cases for MPV always enable vport
-loopback for both GVMIs when binding the slave to the master port.
-
-Fixes: 0042f9e458a5 ("RDMA/mlx5: Enable vport loopback when user context or QP mandate")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/d4298f5ebb2197459e9e7221c51ecd6a34699847.1750064969.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Stable-dep-of: 38074de35b01 ("NFSv4/flexfiles: Fix handling of NFS level errors in I/O")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 33 +++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 1800cea46b2d3..0e20b99cae8b6 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1667,6 +1667,33 @@ static void deallocate_uars(struct mlx5_ib_dev *dev,
- 			mlx5_cmd_free_uar(dev->mdev, bfregi->sys_pages[i]);
- }
- 
-+static int mlx5_ib_enable_lb_mp(struct mlx5_core_dev *master,
-+				struct mlx5_core_dev *slave)
-+{
-+	int err;
-+
-+	err = mlx5_nic_vport_update_local_lb(master, true);
-+	if (err)
-+		return err;
-+
-+	err = mlx5_nic_vport_update_local_lb(slave, true);
-+	if (err)
-+		goto out;
-+
-+	return 0;
-+
-+out:
-+	mlx5_nic_vport_update_local_lb(master, false);
-+	return err;
-+}
-+
-+static void mlx5_ib_disable_lb_mp(struct mlx5_core_dev *master,
-+				  struct mlx5_core_dev *slave)
-+{
-+	mlx5_nic_vport_update_local_lb(slave, false);
-+	mlx5_nic_vport_update_local_lb(master, false);
-+}
-+
- int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- {
- 	int err = 0;
-@@ -3424,6 +3451,8 @@ static void mlx5_ib_unbind_slave_port(struct mlx5_ib_dev *ibdev,
- 
- 	lockdep_assert_held(&mlx5_ib_multiport_mutex);
- 
-+	mlx5_ib_disable_lb_mp(ibdev->mdev, mpi->mdev);
-+
- 	mlx5_ib_cleanup_cong_debugfs(ibdev, port_num);
- 
- 	spin_lock(&port->mp.mpi_lock);
-@@ -3512,6 +3541,10 @@ static bool mlx5_ib_bind_slave_port(struct mlx5_ib_dev *ibdev,
- 
- 	mlx5_ib_init_cong_debugfs(ibdev, port_num);
- 
-+	err = mlx5_ib_enable_lb_mp(ibdev->mdev, mpi->mdev);
-+	if (err)
-+		goto unbind;
-+
- 	return true;
- 
- unbind:
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index ce9c2d1f54ae0..46b106785eb82 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1127,6 +1127,8 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
+ 		nfs4_schedule_session_recovery(clp->cl_session, task->tk_status);
+ 		break;
+ 	case -NFS4ERR_DELAY:
++		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
++		fallthrough;
+ 	case -NFS4ERR_GRACE:
+ 		rpc_delay(task, FF_LAYOUT_POLL_RETRY_MAX);
+ 		break;
 -- 
 2.39.5
 
