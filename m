@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58C11DFCE;
-	Tue, 15 Jul 2025 13:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70BD2ED166;
+	Tue, 15 Jul 2025 13:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587110; cv=none; b=GDV0CUg+1GT/kEH8NvWElmOFIX2V0JeV4L5n6ikc5rd6Ztl6JbQqAgPRBlhBwCi8ZSX/8muMvt7pcCzMo4okyqckoCVqj6GbnBGPYG9v8mhg5xxXywT+ygmJN8orsRYamC1t2xlpG/vJwZoFhnvS2+N670P9CttOIVlXKkD/mEc=
+	t=1752587113; cv=none; b=cmUJWBfmDCJ8SAP3RQwhIQEb87GklXQTJsI6s53Q0rhvaQPTgij9R0pwdsSwJEUpVb7kQ9/+6bwUdP67mmAQ9nmTku9wG3oOW2FONbXfwDC0W9WFnaP4xi9Lsi5HXY2Cy/7X+7gOYDM+Ul+oBCVNvYDuPTGY7iTDljorWWv0jRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587110; c=relaxed/simple;
-	bh=eQwEez+aI3/Z44ZGqsIf6/zQweaJFvJG6YxL5dl5d/4=;
+	s=arc-20240116; t=1752587113; c=relaxed/simple;
+	bh=fcH/ZrKosThD4vbjkLJ11GF/1BpWsX3xvqINPMM/N4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCE8qBEXIea++aSn2oFGl4YkKViH+Stks2Ymo1aWZbUSpTGHypZ952ETsy25DX+1xZLWaPBT8PdII8WIoaS6+8mqM3mkoLBkzvMjzecCzNPeE8ihyClfgpO9U04cKuGXAj9VHgPGH+UV3vgySoLXcCe/SDjFJoSCdosswEQ/tA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZD85rgr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A69naQbelCJk8X66tx4UbqXWAMkvbOQNnRR8iRnEbim707f1ysJb2OKqXzZ9kPKSHDue3q6XyI2DcQMuLCHo/8C3uHo02xuFksWuDsu1EhL5RTCJtQzbZ6qr+p7ymjCU0frWoqjXDkzLhF4jTSCb2GZBmOp85XrInGneGXgaPl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0QqlYIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZD85rgr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D87C4CEE3;
-	Tue, 15 Jul 2025 13:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0QqlYIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BFAC4CEE3;
+	Tue, 15 Jul 2025 13:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587110;
-	bh=eQwEez+aI3/Z44ZGqsIf6/zQweaJFvJG6YxL5dl5d/4=;
+	s=korg; t=1752587113;
+	bh=fcH/ZrKosThD4vbjkLJ11GF/1BpWsX3xvqINPMM/N4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZD85rgr25LUiqRVINbusZkzj1+YCpQ+95JJLfo8J9H+WCf3wv38OeQQmjADejWyX
-	 wRBnkTNOqqTHY1X0CGC7uJsHyWdEsasO+B7u9KGjqg0BImeGRWl7WYVhnVY/r3+x2g
-	 ew7f2ZgSn0tDdhut1iy1BU3Ztpc1hqws55T6yVDQ=
+	b=M0QqlYIkyUYoXozIIbCgBiy0bMdsUIlQ7wBL1YVZOufyhOwnUWbbPYd97YfTYA4mG
+	 FE10cjgCszMK9PZHfm+fOTDKz4fauH9wb4WQd+ToxHVCa8Kgg02kXmyls3wOb64tLe
+	 XKhASguGQBnh7v7ImT+9gl2ov8jBQzUSmWg13By4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Yu <jack.yu@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 171/192] ASoC: rt721-sdca: fix boost gain calculation error
-Date: Tue, 15 Jul 2025 15:14:26 +0200
-Message-ID: <20250715130821.775109574@linuxfoundation.org>
+Subject: [PATCH 6.15 172/192] ALSA: hda/realtek: Add mic-mute LED setup for ASUS UM5606
+Date: Tue, 15 Jul 2025 15:14:27 +0200
+Message-ID: <20250715130821.815651867@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,71 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Yu <jack.yu@realtek.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ff21a6ec0f27c126db0a86d96751bd6e5d1d9874 ]
+[ Upstream commit 41c66461cb2e8d3934a5395f27e572ebe63696b4 ]
 
-Fix the boost gain calculation error in rt721_sdca_set_gain_get.
-This patch is specific for "FU33 Boost Volume".
+ASUS UM5606* models use the quirk to set up the bass speakers, but it
+missed the mic-mute LED configuration.  Other similar models have the
+AMD ACP dmic, and the mic-mute is set up for that, but those models
+don't have AMD ACP but rather built-in mics of Realtek codec, hence
+the Realtek driver should set it up, instead.
 
-Signed-off-by: Jack Yu <jack.yu@realtek.com>
-Link: https://patch.msgid.link/1b18fcde41c64d6fa85451d523c0434a@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220125
+Link: https://patch.msgid.link/20250623151841.28810-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt721-sdca.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/rt721-sdca.c b/sound/soc/codecs/rt721-sdca.c
-index 1c9f32e405cf9..ba080957e9336 100644
---- a/sound/soc/codecs/rt721-sdca.c
-+++ b/sound/soc/codecs/rt721-sdca.c
-@@ -430,6 +430,7 @@ static int rt721_sdca_set_gain_get(struct snd_kcontrol *kcontrol,
- 	unsigned int read_l, read_r, ctl_l = 0, ctl_r = 0;
- 	unsigned int adc_vol_flag = 0;
- 	const unsigned int interval_offset = 0xc0;
-+	const unsigned int tendA = 0x200;
- 	const unsigned int tendB = 0xa00;
- 
- 	if (strstr(ucontrol->id.name, "FU1E Capture Volume") ||
-@@ -439,9 +440,16 @@ static int rt721_sdca_set_gain_get(struct snd_kcontrol *kcontrol,
- 	regmap_read(rt721->mbq_regmap, mc->reg, &read_l);
- 	regmap_read(rt721->mbq_regmap, mc->rreg, &read_r);
- 
--	if (mc->shift == 8) /* boost gain */
-+	if (mc->shift == 8) {
-+		/* boost gain */
- 		ctl_l = read_l / tendB;
--	else {
-+	} else if (mc->shift == 1) {
-+		/* FU33 boost gain */
-+		if (read_l == 0x8000 || read_l == 0xfe00)
-+			ctl_l = 0;
-+		else
-+			ctl_l = read_l / tendA + 1;
-+	} else {
- 		if (adc_vol_flag)
- 			ctl_l = mc->max - (((0x1e00 - read_l) & 0xffff) / interval_offset);
- 		else
-@@ -449,9 +457,16 @@ static int rt721_sdca_set_gain_get(struct snd_kcontrol *kcontrol,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index e33cbc6a385ea..beb9423658d72 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6609,6 +6609,7 @@ static void alc294_fixup_bass_speaker_15(struct hda_codec *codec,
+ 	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
+ 		static const hda_nid_t conn[] = { 0x02, 0x03 };
+ 		snd_hda_override_conn_list(codec, 0x15, ARRAY_SIZE(conn), conn);
++		snd_hda_gen_add_micmute_led_cdev(codec, NULL);
  	}
+ }
  
- 	if (read_l != read_r) {
--		if (mc->shift == 8) /* boost gain */
-+		if (mc->shift == 8) {
-+			/* boost gain */
- 			ctl_r = read_r / tendB;
--		else { /* ADC/DAC gain */
-+		} else if (mc->shift == 1) {
-+			/* FU33 boost gain */
-+			if (read_r == 0x8000 || read_r == 0xfe00)
-+				ctl_r = 0;
-+			else
-+				ctl_r = read_r / tendA + 1;
-+		} else { /* ADC/DAC gain */
- 			if (adc_vol_flag)
- 				ctl_r = mc->max - (((0x1e00 - read_r) & 0xffff) / interval_offset);
- 			else
 -- 
 2.39.5
 
