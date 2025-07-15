@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D7E2E6D32;
-	Tue, 15 Jul 2025 13:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB28F2E6D2B;
+	Tue, 15 Jul 2025 13:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587021; cv=none; b=RN+7g/EQfh7AJBh3svLp/iKjTtBcAC6hHOqcV2/U49yl/qzs1Vq4BU/bQ7XLMGL2OsR3n2SpTRURHgn2VxHJsQmIUBgc+nOTXl0HK8LrN7N/nyahYytfE3YWsbOevg8NljgZ2UqkPx4+72QEJbXFFQccdnsCaUZrNNB1o9qSfVY=
+	t=1752587023; cv=none; b=QRiW7mtH/hiLbddL2LROflhRnboFRHT3QBI7piEFNy+hp2va+k7IJIzXU+XVOQPoCr1t+vFgtKuxnHJy1LRtKhMcVa+1jQtkxxDHT/ff7HbKmjfmuHlguR90BtTwWptBF5vvQXzIukjYtg7HA5STiGtu5q4koLiLpRUr64DpqnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587021; c=relaxed/simple;
-	bh=97qbLqzqhjhyYTk+wf89Or/ngAj9w7sD5K3rNBQj6Uc=;
+	s=arc-20240116; t=1752587023; c=relaxed/simple;
+	bh=v+ly67Eq2NDrKwgpcwKUMnwt2hq2EjjUgnrBVsTxdss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbAozhFzrkLq5Ruv8h6dYYfLINVEnShi/PhYXp3M85HViMECUvV714fqcAQWWfmIP4bC+Cjkhhv20EM7GGupKcBimH4nbIhF8raBq+FA5GDHqNV3a7Cd64PsPQl1Pt+uFA12c5qZQ+UTTlbM6vv0ngVj2+NKkn2szTG8QridXc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvS7byVM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHv6KvD2vr6PZXROVnC94067oN+PF3DItHMbFzKwJK+2ONz6K85aLFUXqXcnMjwTxwvDm37NRpNmPU653ywotH241QxDEPEJQKpqR05oQmyT3JZRB446x8PnKf7S1DRb4o9k6sLqQ+IjPaly/fgwGrBVq66zguQNnp8WdBWRZpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXgrE94q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvS7byVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CB9C4CEE3;
-	Tue, 15 Jul 2025 13:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXgrE94q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5A9C4CEE3;
+	Tue, 15 Jul 2025 13:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587021;
-	bh=97qbLqzqhjhyYTk+wf89Or/ngAj9w7sD5K3rNBQj6Uc=;
+	s=korg; t=1752587023;
+	bh=v+ly67Eq2NDrKwgpcwKUMnwt2hq2EjjUgnrBVsTxdss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvS7byVMggC1aOnRbW5lD/ELjU/iGlBIhi2F/CzglGakVvoM4kGO6NSXxMQ4I8UkU
-	 0+N3fcEOxn7H2yn78vOmy9/G1sWy6Wkcsw+Kc69DCiH2G+NFrT/bvxItEg1IOg4/Ml
-	 tayXFLWwVUFiL9sPNG4Rg4Abe1jWmHol5P2yViZE=
+	b=TXgrE94qnDU7DVvZWkL52MfpxJG2utTPyKWWOc4VimP3N1z5P4YbVGYWpUSi3kiDt
+	 GY073Gc/EtQrIS7yQI+2uC7b9eUSoTJHm58NMoARQlhIU0H3SCVGpuo5WZcDVI8QFn
+	 Ridw/Vjj5yYbidbLG3Wmj+VFpA9hDEY8tClmR7as=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Ben Skeggs <bskeggs@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 137/192] io_uring/zcrx: fix pp destruction warnings
-Date: Tue, 15 Jul 2025 15:13:52 +0200
-Message-ID: <20250715130820.401373572@linuxfoundation.org>
+Subject: [PATCH 6.15 138/192] drm/nouveau/gsp: fix potential leak of memory used during acpi init
+Date: Tue, 15 Jul 2025 15:13:53 +0200
+Message-ID: <20250715130820.441589958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,40 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Ben Skeggs <bskeggs@nvidia.com>
 
-[ Upstream commit 203817de269539c062724d97dfa5af3cdf77a3ec ]
+[ Upstream commit d133036a0b23d3ef781d067ccdea6bbfb381e0cf ]
 
-With multiple page pools and in some other cases we can have allocated
-niovs on page pool destruction. Remove a misplaced warning checking that
-all niovs are returned to zcrx on io_pp_zc_destroy(). It was reported
-before but apparently got lost.
+If any of the ACPI calls fail, memory allocated for the input buffer
+would be leaked.  Fix failure paths to free allocated memory.
 
-Reported-by: Pedro Tammela <pctammela@mojatatu.com>
-Fixes: 34a3e60821ab9 ("io_uring/zcrx: implement zerocopy receive pp memory provider")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/b9e6d919d2964bc48ddbf8eb52fc9f5d118e9bc1.1751878185.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Also add checks to ensure the allocations succeeded in the first place.
+
+Reported-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
+Signed-off-by: Ben Skeggs <bskeggs@nvidia.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20250617040036.2932-1-bskeggs@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/zcrx.c | 3 ---
- 1 file changed, 3 deletions(-)
+ .../gpu/drm/nouveau/nvkm/subdev/gsp/r535.c    | 20 +++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/io_uring/zcrx.c b/io_uring/zcrx.c
-index a53058dd6b7a1..adb1e426987ed 100644
---- a/io_uring/zcrx.c
-+++ b/io_uring/zcrx.c
-@@ -676,10 +676,7 @@ static int io_pp_zc_init(struct page_pool *pp)
- static void io_pp_zc_destroy(struct page_pool *pp)
- {
- 	struct io_zcrx_ifq *ifq = io_pp_to_ifq(pp);
--	struct io_zcrx_area *area = ifq->area;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+index 53a4af0010392..d220c68bfe914 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+@@ -1047,7 +1047,6 @@ r535_gsp_acpi_caps(acpi_handle handle, CAPS_METHOD_DATA *caps)
+ 	union acpi_object argv4 = {
+ 		.buffer.type    = ACPI_TYPE_BUFFER,
+ 		.buffer.length  = 4,
+-		.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL),
+ 	}, *obj;
  
--	if (WARN_ON_ONCE(area->free_count != area->nia.num_niovs))
+ 	caps->status = 0xffff;
+@@ -1055,17 +1054,22 @@ r535_gsp_acpi_caps(acpi_handle handle, CAPS_METHOD_DATA *caps)
+ 	if (!acpi_check_dsm(handle, &NVOP_DSM_GUID, NVOP_DSM_REV, BIT_ULL(0x1a)))
+ 		return;
+ 
++	argv4.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL);
++	if (!argv4.buffer.pointer)
++		return;
++
+ 	obj = acpi_evaluate_dsm(handle, &NVOP_DSM_GUID, NVOP_DSM_REV, 0x1a, &argv4);
+ 	if (!obj)
 -		return;
- 	percpu_ref_put(&ifq->ctx->refs);
- }
++		goto done;
  
+ 	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
+ 	    WARN_ON(obj->buffer.length != 4))
+-		return;
++		goto done;
+ 
+ 	caps->status = 0;
+ 	caps->optimusCaps = *(u32 *)obj->buffer.pointer;
+ 
++done:
+ 	ACPI_FREE(obj);
+ 
+ 	kfree(argv4.buffer.pointer);
+@@ -1082,24 +1086,28 @@ r535_gsp_acpi_jt(acpi_handle handle, JT_METHOD_DATA *jt)
+ 	union acpi_object argv4 = {
+ 		.buffer.type    = ACPI_TYPE_BUFFER,
+ 		.buffer.length  = sizeof(caps),
+-		.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL),
+ 	}, *obj;
+ 
+ 	jt->status = 0xffff;
+ 
++	argv4.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL);
++	if (!argv4.buffer.pointer)
++		return;
++
+ 	obj = acpi_evaluate_dsm(handle, &JT_DSM_GUID, JT_DSM_REV, 0x1, &argv4);
+ 	if (!obj)
+-		return;
++		goto done;
+ 
+ 	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
+ 	    WARN_ON(obj->buffer.length != 4))
+-		return;
++		goto done;
+ 
+ 	jt->status = 0;
+ 	jt->jtCaps = *(u32 *)obj->buffer.pointer;
+ 	jt->jtRevId = (jt->jtCaps & 0xfff00000) >> 20;
+ 	jt->bSBIOSCaps = 0;
+ 
++done:
+ 	ACPI_FREE(obj);
+ 
+ 	kfree(argv4.buffer.pointer);
 -- 
 2.39.5
 
