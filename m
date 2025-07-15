@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AEA2EF9B1;
-	Tue, 15 Jul 2025 13:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96B827470;
+	Tue, 15 Jul 2025 13:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587849; cv=none; b=V8fN2lpq7CzWPb1TVQ+E3XK/lR/PFnd+oHE3/8z+qTCnu4FGfmQ/HNhljnBHtUDWu0WZbvGzarDMcC+ZQ6oHo9svgFPmyqpbkPmUevmg8hmwIelDm6BsdJzVZ6e/SEZAw/f66LPTssy4hZH3la5ykGVua+GxgaBDLGlJrtZVU5Q=
+	t=1752587851; cv=none; b=H29dIFPBIixJ0ssEuSuh9OFj1XF4oc8h5jLEloaJEUWU+gASzbRUaSmmwPsba71ylS59DjozGp3Ww8DHDAhvm5qcf9dYD3u2R3AWCTyRJLcvvXazJoGJeFqoW9a7xYNUvmCOV2AKx2nxTbWpFYjg8b/rLtFwpL7CkMoKP8EyoB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587849; c=relaxed/simple;
-	bh=1OWtpkLJMr6ckjGdYz9aiIfn5antmJ+kQCpX3LEg6kg=;
+	s=arc-20240116; t=1752587851; c=relaxed/simple;
+	bh=Aov9zJ7acWMx7zoK3s8v37x0ypdEHPNvBu4RCADqodI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjEVBPJXfy8aX9NK07cZk7x1B8aDEa7JHLLeCLHRlbto3luIlhLbo8RipsQXwP0ROFpEjslgmbvfwyvQPe4LyvlgRNQs9ZVlXrAvyIlS0mqlmqX0CHJweSjnJ1kciK1gYxwSyH8kF9i+6Wg+xOrAVi0e3JkmBGaaqgCstBQCk1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icF4d1E2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FaaTC1DcHerZL5RLKm3goeAM2noKGUo88HqEWmbkku+b0jYoAPRoMDOpTWnhCCDwRk4AarRfsiCbzLDtGwq3NdDfKPM5ikWLPWvSIU6MQsYG88VjRItzPBuXBgybcmuvHD00B8r2FSOycswjfXRlzQ2AtmbL4LNVg+8FOuNnct4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgVsvoNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icF4d1E2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D57C4CEE3;
-	Tue, 15 Jul 2025 13:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgVsvoNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB95C4CEF1;
+	Tue, 15 Jul 2025 13:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587849;
-	bh=1OWtpkLJMr6ckjGdYz9aiIfn5antmJ+kQCpX3LEg6kg=;
+	s=korg; t=1752587851;
+	bh=Aov9zJ7acWMx7zoK3s8v37x0ypdEHPNvBu4RCADqodI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icF4d1E2mexzd69aix2gNnOAxr7d8f6rKYzRZjq56zrAJZ88p1BW8KdvKYjzvXWj5
-	 vNS+onvVR3E4KikWnmG5IG/k7VSa9/Vq8dwfvsqhNsGvJpQKIjp1iAD78iKXD1rJje
-	 oxajdsd988Z93/ehU13LGex6ldBM+3HGBTgQvjRQ=
+	b=IgVsvoNTPEIpzQ5WnWcGT7n9v/rKN7dN1UqLRqGDG76256dHQ8N1RdjTQDnnF036Q
+	 mhamtZN9UMcOgsYSqDp9wvJ2jKpTLmtGiVhRcmuthn2KkWS1L58tO3VT6UqCTvkw3A
+	 RpSOmyfCHTI5mxTz5Csk6eEWsgKhj8VjgbynCZZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	NeilBrown <neilb@brown.name>,
+	Christian Brauner <brauner@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 135/208] perf: Revert to requiring CAP_SYS_ADMIN for uprobes
-Date: Tue, 15 Jul 2025 15:14:04 +0200
-Message-ID: <20250715130816.342188609@linuxfoundation.org>
+Subject: [PATCH 5.10 136/208] fix proc_sys_compare() handling of in-lookup dentries
+Date: Tue, 15 Jul 2025 15:14:05 +0200
+Message-ID: <20250715130816.380856795@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -51,44 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit ba677dbe77af5ffe6204e0f3f547f3ba059c6302 ]
+[ Upstream commit b969f9614885c20f903e1d1f9445611daf161d6d ]
 
-Jann reports that uprobes can be used destructively when used in the
-middle of an instruction. The kernel only verifies there is a valid
-instruction at the requested offset, but due to variable instruction
-length cannot determine if this is an instruction as seen by the
-intended execution stream.
+There's one case where ->d_compare() can be called for an in-lookup
+dentry; usually that's nothing special from ->d_compare() point of
+view, but... proc_sys_compare() is weird.
 
-Additionally, Mark Rutland notes that on architectures that mix data
-in the text segment (like arm64), a similar things can be done if the
-data word is 'mistaken' for an instruction.
+The thing is, /proc/sys subdirectories can look differently for
+different processes.  Up to and including having the same name
+resolve to different dentries - all of them hashed.
 
-As such, require CAP_SYS_ADMIN for uprobes.
+The way it's done is ->d_compare() refusing to admit a match unless
+this dentry is supposed to be visible to this caller.  The information
+needed to discriminate between them is stored in inode; it is set
+during proc_sys_lookup() and until it's done d_splice_alias() we really
+can't tell who should that dentry be visible for.
 
-Fixes: c9e0924e5c2b ("perf/core: open access to probes for CAP_PERFMON privileged process")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/CAG48ez1n4520sq0XrWYDHKiKxE_+WCfAK+qt9qkY4ZiBGmL-5g@mail.gmail.com
+Normally there's no negative dentries in /proc/sys; we can run into
+a dying dentry in RCU dcache lookup, but those can be safely rejected.
+
+However, ->d_compare() is also called for in-lookup dentries, before
+they get positive - or hashed, for that matter.  In case of match
+we will wait until dentry leaves in-lookup state and repeat ->d_compare()
+afterwards.  In other words, the right behaviour is to treat the
+name match as sufficient for in-lookup dentries; if dentry is not
+for us, we'll see that when we recheck once proc_sys_lookup() is
+done with it.
+
+While we are at it, fix the misspelled READ_ONCE and WRITE_ONCE there.
+
+Fixes: d9171b934526 ("parallel lookups machinery, part 4 (and last)")
+Reported-by: NeilBrown <neilb@brown.name>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/inode.c       |  2 +-
+ fs/proc/proc_sysctl.c | 18 +++++++++++-------
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index b133abe23a4b1..bf9f9eab6f67f 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9823,7 +9823,7 @@ static int perf_uprobe_event_init(struct perf_event *event)
- 	if (event->attr.type != perf_uprobe.type)
- 		return -ENOENT;
+diff --git a/fs/proc/inode.c b/fs/proc/inode.c
+index ba35ffc426eac..269a14a50d8b0 100644
+--- a/fs/proc/inode.c
++++ b/fs/proc/inode.c
+@@ -54,7 +54,7 @@ static void proc_evict_inode(struct inode *inode)
  
--	if (!perfmon_capable())
-+	if (!capable(CAP_SYS_ADMIN))
- 		return -EACCES;
+ 	head = ei->sysctl;
+ 	if (head) {
+-		RCU_INIT_POINTER(ei->sysctl, NULL);
++		WRITE_ONCE(ei->sysctl, NULL);
+ 		proc_sys_evict_inode(inode, head);
+ 	}
+ }
+diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
+index f5c9677353354..78bd606314281 100644
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -909,17 +909,21 @@ static int proc_sys_compare(const struct dentry *dentry,
+ 	struct ctl_table_header *head;
+ 	struct inode *inode;
  
- 	/*
+-	/* Although proc doesn't have negative dentries, rcu-walk means
+-	 * that inode here can be NULL */
+-	/* AV: can it, indeed? */
+-	inode = d_inode_rcu(dentry);
+-	if (!inode)
+-		return 1;
+ 	if (name->len != len)
+ 		return 1;
+ 	if (memcmp(name->name, str, len))
+ 		return 1;
+-	head = rcu_dereference(PROC_I(inode)->sysctl);
++
++	// false positive is fine here - we'll recheck anyway
++	if (d_in_lookup(dentry))
++		return 0;
++
++	inode = d_inode_rcu(dentry);
++	// we just might have run into dentry in the middle of __dentry_kill()
++	if (!inode)
++		return 1;
++
++	head = READ_ONCE(PROC_I(inode)->sysctl);
+ 	return !head || !sysctl_is_seen(head);
+ }
+ 
 -- 
 2.39.5
 
