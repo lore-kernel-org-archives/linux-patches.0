@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C4B2E7F08;
-	Tue, 15 Jul 2025 13:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBE12E7F03;
+	Tue, 15 Jul 2025 13:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587264; cv=none; b=HcFly3Zm+esb2uoxQkQQFh7cgw96ETH75Gri1/OA2jhv7dFkRhF/xvK0tC/J+Uswu8IAYXalX/K5nfvusJf2C1zC1+/2Wo6ayqiFW9BPQNlcIYGuKQsUU0UfZeEjRTTlXWLtRRO5AhQzaU5qxTACFrA1PlmNXXcbFbGTgNpUkFM=
+	t=1752587267; cv=none; b=jkyl08G4NYHJxfEUP2GzUPVVzZ2kpCI8CXhw5DYh3KzORHbxJYDC2KoU6EwRcBIk49Xt6gS5cjnL6+N97YpfrNAeX8fjqA/7ffAgxP24TBFFxdu91ISbkrzU7QOhQR8V2Zm/w6oLvPBaFK+jkGM3sgZQCrnXPuxfUpPWb+1RPtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587264; c=relaxed/simple;
-	bh=e/5kO3eX5SRwG7YWbCi4QXE0+PSEK5UxUmhtKyMIV9U=;
+	s=arc-20240116; t=1752587267; c=relaxed/simple;
+	bh=6Z7rp4/zoQaICpC/rxnHfgIkvtSxYbVRz92FbZilUkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elsnfXAyCRPCddFSmbS5K4DUEVQCpB1ndVOto5EJKg3Ttb3bDH/fuitUeL3Xj/F3T/HVwIFUQdwduocWQpekETQhim2i+Io0ncv3z0ZPvolT4QHDGrAT0yX09Kn+pSy4++XLE+fwGZHew4zP9qUnyYL0G/9+oJBanAoBZ2OJXgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZm88HwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7LGAB6ot5Ri2GNmHKkfuwJEPRSe0TjMi4YR4iidbfVIpP6BzLqlWbVfihU4PlPx5cJVPin+lAXumVaVzfcQTwhCuQvuHeGRElA7c9b3eYepLHzP50fgT74xuiNTR1BmzPL0xTonByS5UcLJ9x1IOcvYRq6YnA7ieWzKG/yY/I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzR7aHe9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZm88HwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B02C4CEF1;
-	Tue, 15 Jul 2025 13:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzR7aHe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AD7C4CEF1;
+	Tue, 15 Jul 2025 13:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587264;
-	bh=e/5kO3eX5SRwG7YWbCi4QXE0+PSEK5UxUmhtKyMIV9U=;
+	s=korg; t=1752587266;
+	bh=6Z7rp4/zoQaICpC/rxnHfgIkvtSxYbVRz92FbZilUkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZm88HwHOJlAWrjtV5hDXbHtFM7lHdFdK84H7SSNa8T344EpjGamGoLtRrRcodlJF
-	 S1uZu712nWKksycE00kg/eIBVsoLjK3jbaQfkCzCLIe+mh1kImZxbjLMpYBLq88WOf
-	 UjJf224XyYmkVCDDxo8bYnToiFWYc4HeDH2AF25E=
+	b=mzR7aHe9pOMkZ/mlUypMnQVlQHHIYviK19c/u8voqvv6ch3rpy7V3IOxx4ksPwD9j
+	 KYun9wmxnyUFU6BBKKd1Xy4ndpgqgRc2bPIKYrAVpkQEqC/8mMTb6QGjcY5qk3w0U8
+	 PTZd9C3v8hNVMkY4birXZ0D22UMmjVneITLHguoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Simona Vetter <simona.vetter@intel.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>
-Subject: [PATCH 6.1 34/88] drm/gem: Fix race in drm_gem_handle_create_tail()
-Date: Tue, 15 Jul 2025 15:14:10 +0200
-Message-ID: <20250715130755.890068305@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>,
+	Prashanth K <prashanth.k@oss.qualcomm.com>
+Subject: [PATCH 6.1 35/88] usb: gadget: u_serial: Fix race condition in TTY wakeup
+Date: Tue, 15 Jul 2025 15:14:11 +0200
+Message-ID: <20250715130755.929787003@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -56,140 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simona Vetter <simona.vetter@ffwll.ch>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-commit bd46cece51a36ef088f22ef0416ac13b0a46d5b0 upstream.
+commit c529c3730bd09115684644e26bf01ecbd7e2c2c9 upstream.
 
-Object creation is a careful dance where we must guarantee that the
-object is fully constructed before it is visible to other threads, and
-GEM buffer objects are no difference.
+A race condition occurs when gs_start_io() calls either gs_start_rx() or
+gs_start_tx(), as those functions briefly drop the port_lock for
+usb_ep_queue(). This allows gs_close() and gserial_disconnect() to clear
+port.tty and port_usb, respectively.
 
-Final publishing happens by calling drm_gem_handle_create(). After
-that the only allowed thing to do is call drm_gem_object_put() because
-a concurrent call to the GEM_CLOSE ioctl with a correctly guessed id
-(which is trivial since we have a linear allocator) can already tear
-down the object again.
+Use the null-safe TTY Port helper function to wake up TTY.
 
-Luckily most drivers get this right, the very few exceptions I've
-pinged the relevant maintainers for. Unfortunately we also need
-drm_gem_handle_create() when creating additional handles for an
-already existing object (e.g. GETFB ioctl or the various bo import
-ioctl), and hence we cannot have a drm_gem_handle_create_and_put() as
-the only exported function to stop these issues from happening.
+Example
+  CPU1:			      CPU2:
+  gserial_connect() // lock
+  			      gs_close() // await lock
+  gs_start_rx()     // unlock
+  usb_ep_queue()
+  			      gs_close() // lock, reset port.tty and unlock
+  gs_start_rx()     // lock
+  tty_wakeup()      // NPE
 
-Now unfortunately the implementation of drm_gem_handle_create() isn't
-living up to standards: It does correctly finishe object
-initialization at the global level, and hence is safe against a
-concurrent tear down. But it also sets up the file-private aspects of
-the handle, and that part goes wrong: We fully register the object in
-the drm_file.object_idr before calling drm_vma_node_allow() or
-obj->funcs->open, which opens up races against concurrent removal of
-that handle in drm_gem_handle_delete().
-
-Fix this with the usual two-stage approach of first reserving the
-handle id, and then only registering the object after we've completed
-the file-private setup.
-
-Jacek reported this with a testcase of concurrently calling GEM_CLOSE
-on a freshly-created object (which also destroys the object), but it
-should be possible to hit this with just additional handles created
-through import or GETFB without completed destroying the underlying
-object with the concurrent GEM_CLOSE ioctl calls.
-
-Note that the close-side of this race was fixed in f6cd7daecff5 ("drm:
-Release driver references to handle before making it available
-again"), which means a cool 9 years have passed until someone noticed
-that we need to make this symmetry or there's still gaps left :-/
-Without the 2-stage close approach we'd still have a race, therefore
-that's an integral part of this bugfix.
-
-More importantly, this means we can have NULL pointers behind
-allocated id in our drm_file.object_idr. We need to check for that
-now:
-
-- drm_gem_handle_delete() checks for ERR_OR_NULL already
-
-- drm_gem.c:object_lookup() also chekcs for NULL
-
-- drm_gem_release() should never be called if there's another thread
-  still existing that could call into an IOCTL that creates a new
-  handle, so cannot race. For paranoia I added a NULL check to
-  drm_gem_object_release_handle() though.
-
-- most drivers (etnaviv, i915, msm) are find because they use
-  idr_find(), which maps both ENOENT and NULL to NULL.
-
-- drivers using idr_for_each_entry() should also be fine, because
-  idr_get_next does filter out NULL entries and continues the
-  iteration.
-
-- The same holds for drm_show_memory_stats().
-
-v2: Use drm_WARN_ON (Thomas)
-
-Reported-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Tested-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: stable@vger.kernel.org
-Cc: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Signed-off-by: Simona Vetter <simona.vetter@intel.com>
-Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250707151814.603897-1-simona.vetter@ffwll.ch
+Fixes: 35f95fd7f234 ("TTY: usb/u_serial, use tty from tty_port")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Reviewed-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-usb/20240116141801.396398-1-khtsai@google.com/
+Link: https://lore.kernel.org/r/20250617050844.1848232-2-khtsai@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem.c |   10 +++++++++-
- include/drm/drm_file.h    |    3 +++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_serial.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -236,6 +236,9 @@ drm_gem_object_release_handle(int id, vo
- 	struct drm_file *file_priv = data;
- 	struct drm_gem_object *obj = ptr;
- 
-+	if (drm_WARN_ON(obj->dev, !data))
-+		return 0;
-+
- 	if (obj->funcs->close)
- 		obj->funcs->close(obj, file_priv);
- 
-@@ -363,7 +366,7 @@ drm_gem_handle_create_tail(struct drm_fi
- 	idr_preload(GFP_KERNEL);
- 	spin_lock(&file_priv->table_lock);
- 
--	ret = idr_alloc(&file_priv->object_idr, obj, 1, 0, GFP_NOWAIT);
-+	ret = idr_alloc(&file_priv->object_idr, NULL, 1, 0, GFP_NOWAIT);
- 
- 	spin_unlock(&file_priv->table_lock);
- 	idr_preload_end();
-@@ -384,6 +387,11 @@ drm_gem_handle_create_tail(struct drm_fi
- 			goto err_revoke;
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -290,8 +290,8 @@ __acquires(&port->port_lock)
+ 			break;
  	}
  
-+	/* mirrors drm_gem_handle_delete to avoid races */
-+	spin_lock(&file_priv->table_lock);
-+	obj = idr_replace(&file_priv->object_idr, obj, handle);
-+	WARN_ON(obj != NULL);
-+	spin_unlock(&file_priv->table_lock);
- 	*handlep = handle;
- 	return 0;
+-	if (do_tty_wake && port->port.tty)
+-		tty_wakeup(port->port.tty);
++	if (do_tty_wake)
++		tty_port_tty_wakeup(&port->port);
+ 	return status;
+ }
  
---- a/include/drm/drm_file.h
-+++ b/include/drm/drm_file.h
-@@ -273,6 +273,9 @@ struct drm_file {
- 	 *
- 	 * Mapping of mm object handles to object pointers. Used by the GEM
- 	 * subsystem. Protected by @table_lock.
-+	 *
-+	 * Note that allocated entries might be NULL as a transient state when
-+	 * creating or deleting a handle.
- 	 */
- 	struct idr object_idr;
- 
+@@ -568,7 +568,7 @@ static int gs_start_io(struct gs_port *p
+ 		gs_start_tx(port);
+ 		/* Unblock any pending writes into our circular buffer, in case
+ 		 * we didn't in gs_start_tx() */
+-		tty_wakeup(port->port.tty);
++		tty_port_tty_wakeup(&port->port);
+ 	} else {
+ 		/* Free reqs only if we are still connected */
+ 		if (port->port_usb) {
 
 
