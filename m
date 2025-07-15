@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220D32EA746;
-	Tue, 15 Jul 2025 13:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CCF2E54B7;
+	Tue, 15 Jul 2025 13:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586455; cv=none; b=SO9MOtNGKH23EdFW1VgXoJSmD3BpdNtnGhHAllQwl5EOrcT54MZHyQPZurLXtuxr0DpD25Rb+898fc3mDAmN8XyF3GOB7cSR9Dvz/e8JgeFu8T2hwcDNvgw8JpbGGX7YYseAFlZ88/vBXUPLaSIbiwlRfwtcF4TaSHwi3CmX5pU=
+	t=1752586458; cv=none; b=P2SPZbNMB4V+BE5znMynQgIGeKn7HFabxkhbjZIE4KSxep5v004bWSHYxFESs/8lU5Jcbq/CetmtuYx5O0eBmCHlP6arEVC156lXV3h9/BeqGVSrnm7cU6wyEaAgWAKkPG46TIcMFOA6Iioo5J/WTHeDV+w5FvvUd9r44tBNVrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586455; c=relaxed/simple;
-	bh=ksmy/UNubdp7Tzc89nQDLEPRuhuDajkx3danH2SVBik=;
+	s=arc-20240116; t=1752586458; c=relaxed/simple;
+	bh=sOssEsSYaPaABb9n8QBz93FMBhp9epvJjntfhRBPb58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CX/FdJmT1gWpGANryraz8vpJyrn9/XiX7QRzRZpDFw8KvBnb5b1O0FnZuq7jAX9LrEdOVDK+auIs4P3IbAYNajMEPol3tONstOLdvToPIUYNbNwtrLmieebc5LE07WAUJP0etdUuxfZV3UoJP8VX4xwobVui2GOWsFZWFoNdXho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJk1rBcj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxdnlcN8rNOxK4zYS5V/yFDsl7KV3P7z/bY2swPStFDjq4A/r2T8yh+Y1dH5W3QElHB5QRHCyjqIJA2JvKmr7mbWEKLlRfnQ/ptYoXnH1v1hXgPzQLbga+Ibe2X+x6BgjhK79wY3ksi66yrZc/DqySw6fKv9xoP2vsqEn8o1f+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T724QmIZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJk1rBcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D4FC4CEF1;
-	Tue, 15 Jul 2025 13:34:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T724QmIZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B0AC4CEE3;
+	Tue, 15 Jul 2025 13:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586454;
-	bh=ksmy/UNubdp7Tzc89nQDLEPRuhuDajkx3danH2SVBik=;
+	s=korg; t=1752586457;
+	bh=sOssEsSYaPaABb9n8QBz93FMBhp9epvJjntfhRBPb58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJk1rBcjJlVMlkQck4uZlw0yTYEG/FwRGY5Peuvp1vRElSpGn07DPKbHb9pETtCz3
-	 RpfpLfi2dLWW0EVluuNmtUGwEDND91XtgDeaoEQwTNSoktgjIkwqUfIwG5Un44+u69
-	 AiXQEzA+nnjCkuv37a7eryJOOPZ5EXoCrCUAbxPk=
+	b=T724QmIZgF16phLwVOB6sLY8UY/a6/ztJmz/rnGzFniFxJvsN7o8jTqJyt//Uce19
+	 2o3XpSHdOu7fbN17Y7HN1Kq2m8c3fJSsN5gfp7gabyatEg3VFumv3V1U3Az0/mH88M
+	 mWIbOyUG2GQ5vyzfKMSv0QtWUWYBjp/Sil2Zs9+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daan De Meyer <daan.j.demeyer@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 040/148] vsock/uapi: fix linux/vm_sockets.h userspace compilation errors
-Date: Tue, 15 Jul 2025 15:12:42 +0200
-Message-ID: <20250715130801.921091802@linuxfoundation.org>
+Subject: [PATCH 5.4 041/148] um: ubd: Add missing error check in start_io_thread()
+Date: Tue, 15 Jul 2025 15:12:43 +0200
+Message-ID: <20250715130801.961162399@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -46,56 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit 22bbc1dcd0d6785fb390c41f0dd5b5e218d23bdd ]
+[ Upstream commit c55c7a85e02a7bfee20a3ffebdff7cbeb41613ef ]
 
-If a userspace application just include <linux/vm_sockets.h> will fail
-to build with the following errors:
+The subsequent call to os_set_fd_block() overwrites the previous
+return value. OR the two return values together to fix it.
 
-    /usr/include/linux/vm_sockets.h:182:39: error: invalid application of ‘sizeof’ to incomplete type ‘struct sockaddr’
-      182 |         unsigned char svm_zero[sizeof(struct sockaddr) -
-          |                                       ^~~~~~
-    /usr/include/linux/vm_sockets.h:183:39: error: ‘sa_family_t’ undeclared here (not in a function)
-      183 |                                sizeof(sa_family_t) -
-          |
-
-Include <sys/socket.h> for userspace (guarded by ifndef __KERNEL__)
-where `struct sockaddr` and `sa_family_t` are defined.
-We already do something similar in <linux/mptcp.h> and <linux/if.h>.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: Daan De Meyer <daan.j.demeyer@gmail.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20250623100053.40979-1-sgarzare@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f88f0bdfc32f ("um: UBD Improvements")
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20250606124428.148164-2-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/vm_sockets.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/um/drivers/ubd_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/vm_sockets.h b/include/uapi/linux/vm_sockets.h
-index 68d57c5e99bc0..f763d1caf27df 100644
---- a/include/uapi/linux/vm_sockets.h
-+++ b/include/uapi/linux/vm_sockets.h
-@@ -17,6 +17,10 @@
- #ifndef _UAPI_VM_SOCKETS_H
- #define _UAPI_VM_SOCKETS_H
+diff --git a/arch/um/drivers/ubd_user.c b/arch/um/drivers/ubd_user.c
+index a1afe414ce481..fb5b1e7c133d8 100644
+--- a/arch/um/drivers/ubd_user.c
++++ b/arch/um/drivers/ubd_user.c
+@@ -41,7 +41,7 @@ int start_io_thread(unsigned long sp, int *fd_out)
+ 	*fd_out = fds[1];
  
-+#ifndef __KERNEL__
-+#include <sys/socket.h>        /* for struct sockaddr and sa_family_t */
-+#endif
-+
- #include <linux/socket.h>
- 
- /* Option name for STREAM socket buffer size.  Use as the option name in
+ 	err = os_set_fd_block(*fd_out, 0);
+-	err = os_set_fd_block(kernel_fd, 0);
++	err |= os_set_fd_block(kernel_fd, 0);
+ 	if (err) {
+ 		printk("start_io_thread - failed to set nonblocking I/O.\n");
+ 		goto out_close;
 -- 
 2.39.5
 
