@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EDD2E7F1D;
-	Tue, 15 Jul 2025 13:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C149F2E2F0C;
+	Tue, 15 Jul 2025 13:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587942; cv=none; b=ciC3N1jY/n31ETh4+e8jRZPYJL8v8xidkQx9ZRLBgZwawgdBvzSDY8VtL9a7zOieLZ4R/sYlSTBWH+ILiWPVfdLnQ/lImKaZlEdyqodAERfsMcfc3FZe3G87fV8qDUNtoenaHpyFF/RuNoo5rQiCNEBgJEXFnv/ASdGcU0RDjsY=
+	t=1752587944; cv=none; b=Y0FEUM2Lk641GJi+JDwKhUIypodgtcyO/kryMIcwQ9Bs+GXDZDJZ3qJs17PzEsyk9oENxg3zF5NRelKWDRG6IaNYP+DeUffgaUlqyl2Oto1ob0jMUwphpsofD7ZUhKLccGdCo1Z7TvQpOv8Alo/Qb9qPMxMUJDfyZzugUEfFYIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587942; c=relaxed/simple;
-	bh=ugv4f2NURxPHzeTylyGyC1xqGMnZseQbg5wNLib4tgM=;
+	s=arc-20240116; t=1752587944; c=relaxed/simple;
+	bh=OupeyO+rbGW+0f9uvmt0Rj2sMEVlBzKbcAP/81OLpkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ksTJEFpt8eXxw/Kx1dwyZrgB6UKWMYcyMryotgXn9kMQUWtN1nm/NSgO3xXgIgPSwIWigm43NT5R/Y1xtHxNN4AEFiPSp17LaKG5y8387umAy5r9+kJJsykIBgtOhA9kTrsMHBdOX21/Qimux0yvAEDV0BayjHfo6NqAcK7+Hq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuzT33RA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LiqA65xRFH/C62RZLnyLNSA1Ecb7oUJqDS0gYvn/va7/Wbqf0YvuggyDDK3DtD0Swvi1o58C0fM6K6NjXygcwX5NTh6+62RPB9IXvhbKFMmi2PHzo/oaxHEWRdxv1HPFE1DvoatRWfG2eoAgRjSzxuQ0ezy6tjNxNuLcBbvwgbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrPJx5Jk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuzT33RA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDD6C4CEE3;
-	Tue, 15 Jul 2025 13:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrPJx5Jk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533E4C4CEE3;
+	Tue, 15 Jul 2025 13:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587942;
-	bh=ugv4f2NURxPHzeTylyGyC1xqGMnZseQbg5wNLib4tgM=;
+	s=korg; t=1752587944;
+	bh=OupeyO+rbGW+0f9uvmt0Rj2sMEVlBzKbcAP/81OLpkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuzT33RAzufjGXTaOj7w9WZ1EdybbOdg7IFKUDb7PAEggd+5RuoAz+VhP+bsGk0Sz
-	 BPZoNuYBciRTStQ4IgcEqSKjTPRfz8uES246Z7GTTlJtGKLLLHywJ4E6oZQmQxaCWM
-	 De+EdM55tkqsZjoQOn0IevlKHixQSJRlzP22nOpo=
+	b=DrPJx5JkgG2F0RQZQp0e7XXDaZpxKfzArf8SOorRgJEhyNY9c95Pa0Il72EshN1DB
+	 t8+u0UMauue8IcOG2xaWscssQF004r6QDLDxXANblFI2U77XINpUMSivhjO7JJmvqL
+	 XK9PLeLvjyVW9dHFvg10dS7kZ34nrINTsZ/Rk1k4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Alexandre Chartre <alexandre.chartre@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?UTF-8?q?Holger=20Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 5.10 169/208] x86/its: Fix build errors when CONFIG_MODULES=n
-Date: Tue, 15 Jul 2025 15:14:38 +0200
-Message-ID: <20250715130817.751028440@linuxfoundation.org>
+Subject: [PATCH 5.10 170/208] x86/its: FineIBT-paranoid vs ITS
+Date: Tue, 15 Jul 2025 15:14:39 +0200
+Message-ID: <20250715130817.789480077@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -48,60 +47,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 9f35e33144ae5377d6a8de86dd3bd4d995c6ac65 upstream.
+commit e52c1dc7455d32c8a55f9949d300e5e87d011fa6 upstream.
 
-Fix several build errors when CONFIG_MODULES=n, including the following:
+FineIBT-paranoid was using the retpoline bytes for the paranoid check,
+disabling retpolines, because all parts that have IBT also have eIBRS
+and thus don't need no stinking retpolines.
 
-../arch/x86/kernel/alternative.c:195:25: error: incomplete definition of type 'struct module'
-  195 |         for (int i = 0; i < mod->its_num_pages; i++) {
+Except... ITS needs the retpolines for indirect calls must not be in
+the first half of a cacheline :-/
 
-  [ pawan: backport: Bring ITS dynamic thunk code under CONFIG_MODULES ]
+So what was the paranoid call sequence:
 
-Fixes: 872df34d7c51 ("x86/its: Use dynamic thunks for indirect branches")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Acked-by: Dave Hansen <dave.hansen@intel.com>
-Tested-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+  <fineibt_paranoid_start>:
+   0:   41 ba 78 56 34 12       mov    $0x12345678, %r10d
+   6:   45 3b 53 f7             cmp    -0x9(%r11), %r10d
+   a:   4d 8d 5b <f0>           lea    -0x10(%r11), %r11
+   e:   75 fd                   jne    d <fineibt_paranoid_start+0xd>
+  10:   41 ff d3                call   *%r11
+  13:   90                      nop
+
+Now becomes:
+
+  <fineibt_paranoid_start>:
+   0:   41 ba 78 56 34 12       mov    $0x12345678, %r10d
+   6:   45 3b 53 f7             cmp    -0x9(%r11), %r10d
+   a:   4d 8d 5b f0             lea    -0x10(%r11), %r11
+   e:   2e e8 XX XX XX XX	cs call __x86_indirect_paranoid_thunk_r11
+
+  Where the paranoid_thunk looks like:
+
+   1d:  <ea>                    (bad)
+   __x86_indirect_paranoid_thunk_r11:
+   1e:  75 fd                   jne 1d
+   __x86_indirect_its_thunk_r11:
+   20:  41 ff eb                jmp *%r11
+   23:  cc                      int3
+
+[ dhansen: remove initialization to false ]
+
+[ pawan: move the its_static_thunk() definition to alternative.c. This is
+	 done to avoid a build failure due to circular dependency between
+	 kernel.h(asm-generic/bug.h) and asm/alternative.h which is
+	 needed for WARN_ONCE(). ]
+
+[ Just a portion of the original commit, in order to fix a build issue
+  in stable kernels due to backports ]
+
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Reviewed-by: Alexandre Chartre <alexandre.chartre@oracle.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
+Link: https://lore.kernel.org/r/20250514113952.GB16434@noisy.programming.kicks-ass.net
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/include/asm/alternative.h |    2 ++
+ arch/x86/kernel/alternative.c      |   19 ++++++++++++++++++-
+ arch/x86/net/bpf_jit_comp.c        |    2 +-
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -80,6 +80,8 @@ extern void apply_returns(s32 *start, s3
+ 
+ struct module;
+ 
++extern u8 *its_static_thunk(int reg);
++
+ #ifdef CONFIG_MITIGATION_ITS
+ extern void its_init_mod(struct module *mod);
+ extern void its_fini_mod(struct module *mod);
 --- a/arch/x86/kernel/alternative.c
 +++ b/arch/x86/kernel/alternative.c
-@@ -554,6 +554,7 @@ static int emit_indirect(int op, int reg
- 
- #ifdef CONFIG_MITIGATION_ITS
- 
-+#ifdef CONFIG_MODULES
- static struct module *its_mod;
- static void *its_page;
- static unsigned int its_offset;
-@@ -674,6 +675,14 @@ static void *its_allocate_thunk(int reg)
- 
- 	return thunk;
+@@ -752,7 +752,24 @@ static bool cpu_wants_indirect_its_thunk
+ 	/* Lower-half of the cacheline? */
+ 	return !(addr & 0x20);
  }
-+#else /* CONFIG_MODULES */
+-#endif
 +
-+static void *its_allocate_thunk(int reg)
++u8 *its_static_thunk(int reg)
 +{
++	u8 *thunk = __x86_indirect_its_thunk_array[reg];
++
++	return thunk;
++}
++
++#else /* CONFIG_MITIGATION_ITS */
++
++u8 *its_static_thunk(int reg)
++{
++	WARN_ONCE(1, "ITS not compiled in");
++
 +	return NULL;
 +}
 +
-+#endif /* CONFIG_MODULES */
++#endif /* CONFIG_MITIGATION_ITS */
  
- static int __emit_trampoline(void *addr, struct insn *insn, u8 *bytes,
- 			     void *call_dest, void *jmp_dest)
+ /*
+  * Rewrite the compiler generated retpoline thunk calls.
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -390,7 +390,7 @@ static void emit_indirect_jump(u8 **ppro
+ 	if (IS_ENABLED(CONFIG_MITIGATION_ITS) &&
+ 	    cpu_feature_enabled(X86_FEATURE_INDIRECT_THUNK_ITS)) {
+ 		OPTIMIZER_HIDE_VAR(reg);
+-		emit_jump(&prog, &__x86_indirect_its_thunk_array[reg], ip);
++		emit_jump(&prog, its_static_thunk(reg), ip);
+ 	} else if (cpu_feature_enabled(X86_FEATURE_RETPOLINE_LFENCE)) {
+ 		EMIT_LFENCE();
+ 		EMIT2(0xFF, 0xE0 + reg);
 
 
