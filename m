@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652482EBDFC;
-	Tue, 15 Jul 2025 13:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6093F2EBDF6;
+	Tue, 15 Jul 2025 13:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587615; cv=none; b=SBev+V9mDq2Zc2Ydu+QlXWG5SwvNgnl9KjK5DUN/Qedi4qjKBDVvP0kc2GgNisfiWisuaQO0bwptC+NvKaXcFu9b8VltcdM90Lvn/YrAmuo28OrRTIZm9cIYrVA2x2QIhxK8aJWki5XKyXYLyfQMK5d2uTPmOTpzkVoSEkavLFY=
+	t=1752587618; cv=none; b=RYgGfe5Qds2H1nDLTpcmJ3EOHsXhpxFYUfXrBxym+Ei3YKa6Km9QDLuMHUe+E/DiG3v8xBmTaMeUITQEi7WQTBn4HsNPmL3Wdr4/R+MWlXm6jvpMFTh+c/vJ9yf4SCwT7sqPLbUfffk3d5huQ/Oj7VcI+A7QRYj9CiGs3liGsng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587615; c=relaxed/simple;
-	bh=3H0uedK8OL+2/4K/1gj6gRmAEhr838pFPJyX2MOJDIc=;
+	s=arc-20240116; t=1752587618; c=relaxed/simple;
+	bh=44k/kjn6Mxx4tUv60zTn0+X4YcgTmqZe7VAAf+VFZr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeSCbiVWnyxHGZJ8QvU1rKl7uMU+jgsScaAF60yTFzf+5OsVqdLC0ooOUZCYUXnVh9sELYmNFV+dUqm+dfzgKdxXPruFe1o07DuFAaKi9S55Z/+M3X1rV7yWU3nwnp/Bad7hwutV+oWKpAVBSMvsHqpRjQ3L8zv8luU08mQPLWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmH910Zd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o2rMUR4v/RgQ1YndUx0BJmmQ7AVEqoAwKsjeVbiA880HX/wDFASxIanT0COZIvosyEbIrRNzeskg6st7nyM4LLwkOFvLkDK6oEElGWztWy6P6eFkRmr8Oz139eJxXKWI7gGz5hZTADa62U4Yn6WUL9j9mIc4Wt3RPxqZGJVaUDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5Z3tOXi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmH910Zd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB68AC4CEE3;
-	Tue, 15 Jul 2025 13:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5Z3tOXi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93805C4CEE3;
+	Tue, 15 Jul 2025 13:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587615;
-	bh=3H0uedK8OL+2/4K/1gj6gRmAEhr838pFPJyX2MOJDIc=;
+	s=korg; t=1752587617;
+	bh=44k/kjn6Mxx4tUv60zTn0+X4YcgTmqZe7VAAf+VFZr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmH910ZdlThyCbOOqA2fAxktQKq9I1gjh801SCL5kEzNwbrZJlDjwwRyBFMfmUIDt
-	 9wuS8y5rAMKbjo5vE0PYQfcKfNOT1wxNAvtz5IfGI0rwj3z/ODkFVe1Vv3atYkZap0
-	 qvYWLdf1E2qFalP3K73YIqLVzO2Ec/uF7at2DOAQ=
+	b=F5Z3tOXiGkXlOH/YBCUd3ofMkWTFOQnlHS8ZrzJtnQ0xKyIuZEMq52UwDfWM3liUH
+	 UGlag+KNZnW97sdmTcyBawFwVsp3wVXHwefAKJvZbmM9t9X66ljVeVubwwEXgaIoEV
+	 aSpsNhcRUxvP00CBm8yyjbv272Y4ND2/sJhTp/5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	RD Babiera <rdbabiera@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 079/208] usb: typec: altmodes/displayport: do not index invalid pin_assignments
-Date: Tue, 15 Jul 2025 15:13:08 +0200
-Message-ID: <20250715130814.107365082@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.10 062/208] HID: wacom: fix kobject reference count leak
+Date: Tue, 15 Jul 2025 15:12:51 +0200
+Message-ID: <20250715130813.436080149@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,53 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit af4db5a35a4ef7a68046883bfd12468007db38f1 upstream.
+commit 85a720f4337f0ddf1603c8b75a8f1ffbbe022ef9 upstream.
 
-A poorly implemented DisplayPort Alt Mode port partner can indicate
-that its pin assignment capabilities are greater than the maximum
-value, DP_PIN_ASSIGN_F. In this case, calls to pin_assignment_show
-will cause a BRK exception due to an out of bounds array access.
+When sysfs_create_files() fails in wacom_initialize_remotes() the error
+is returned and the cleanup action will not have been registered yet.
 
-Prevent for loop in pin_assignment_show from accessing
-invalid values in pin_assignments by adding DP_PIN_ASSIGN_MAX
-value in typec_dp.h and using i < DP_PIN_ASSIGN_MAX as a loop
-condition.
+As a result the kobject???s refcount is never dropped, so the
+kobject can never be freed leading to a reference leak.
 
-Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
-Cc: stable <stable@kernel.org>
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250618224943.3263103-2-rdbabiera@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by calling kobject_put() before returning.
+
+Fixes: 83e6b40e2de6 ("HID: wacom: EKR: have the wacom resources dynamically allocated")
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    2 +-
- include/linux/usb/typec_dp.h             |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/wacom_sys.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -509,7 +509,7 @@ static ssize_t pin_assignment_show(struc
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2031,6 +2031,7 @@ static int wacom_initialize_remotes(stru
+ 		hid_err(wacom->hdev,
+ 			"cannot create sysfs group err: %d\n", error);
+ 		kfifo_free(&remote->remote_fifo);
++		kobject_put(remote->remote_dir);
+ 		return error;
+ 	}
  
- 	assignments = get_current_pin_assignments(dp);
- 
--	for (i = 0; assignments; assignments >>= 1, i++) {
-+	for (i = 0; assignments && i < DP_PIN_ASSIGN_MAX; assignments >>= 1, i++) {
- 		if (assignments & 1) {
- 			if (i == cur)
- 				len += sprintf(buf + len, "[%s] ",
---- a/include/linux/usb/typec_dp.h
-+++ b/include/linux/usb/typec_dp.h
-@@ -56,6 +56,7 @@ enum {
- 	DP_PIN_ASSIGN_D,
- 	DP_PIN_ASSIGN_E,
- 	DP_PIN_ASSIGN_F, /* Not supported after v1.0b */
-+	DP_PIN_ASSIGN_MAX,
- };
- 
- /* DisplayPort alt mode specific commands */
 
 
