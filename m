@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A176193077;
-	Tue, 15 Jul 2025 13:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0567319066B;
+	Tue, 15 Jul 2025 13:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585415; cv=none; b=CdjIkqED1EsCC544xhbnc2b4+bdyFOAGBLEualg00t2w7sNWNag5iNowV4m1my5hnyjvBpyO0hv9opLmcbQ2RgpmR+9vlhYhqF9Up4lC0QAH+o1H0VNHz565hgPt57sZOxJE8cPLpz422T2sD+lfntyAvDQ2KVTcNAWjMU1j9Dk=
+	t=1752585418; cv=none; b=c/ynQ4etjurFWNw789jxpYhRSK02CDkSkjUIC7Pkx14LQk5OGj37vLJedxeq4nYLYldrsUi4sAdpu0BBLKBTAgidUnjrFTj2jHtaGXsP1kzhCFusa/0cbSiysw6uC5CgXalfqD6Nv/I0bi9VcoQsoT+gMwMZ2He5PZgp9sBjXm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585415; c=relaxed/simple;
-	bh=qFiy0VxXJTaNE0zswaaVLt2WliJhECdxGPgl9ktVQIE=;
+	s=arc-20240116; t=1752585418; c=relaxed/simple;
+	bh=Y1bN/WZRnA+UgTiC17av605dfD4OmgV2HbjgEOrk/1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utkZ3qWSrNq1oxEDuRJj934Uq8q0zParQhfa43/enlfvOOprQntt9896DESIBFHNzuhR6p2R78cOlJiMs+KTvTcTO6bCoSWwCBdgAPQMSGTshkS2BdjvrTw9mJQGsolhJ2cfDi41y+r/1esUbhhqX6/tO5p4myFH/42opGqNiNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UB6G4mnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g0ErpcIW3O1ekwV7vPIVjc8Wf1Ibt8HPmW/nO347Sm0PLxgswlMfGQERtb24IHg0Ep+168Cj7PeF8uO81d46SHBtSzFGM2QTqG7tmMZaMjG1+rCmyeROPRSSSzd3sppo4K181R37PjMs2DHomLyozJLhoyHIkAw9QiNUE6VMMK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEfPDIsa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UB6G4mnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0C1C4CEE3;
-	Tue, 15 Jul 2025 13:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEfPDIsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C7BC4CEE3;
+	Tue, 15 Jul 2025 13:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585414;
-	bh=qFiy0VxXJTaNE0zswaaVLt2WliJhECdxGPgl9ktVQIE=;
+	s=korg; t=1752585417;
+	bh=Y1bN/WZRnA+UgTiC17av605dfD4OmgV2HbjgEOrk/1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UB6G4mnlF5+7VPUn97nrP5Pzsaq+C70BSTxHWjXzUtKPRtLWUZ5IFgCdh/BgU5/NN
-	 Pw5ZABeGLcGP+Ehb7SYT+yIQTykNpBnZKonC2Z6UrQJQMEtuexHJFUdWp6jNG6v4d+
-	 Xcd6S0lkIRux6uWNsjXX2JJ+AFddTxnU5NEVUDK4=
+	b=VEfPDIsasZmgKlMtH4gUsLWy9HrYb7sDfG64qSonUHRMHRYWcpgrCvKNEOEzz8WoC
+	 /U7vKpheVx4gfSQVg6wz4ZS0gTDeEirsIgDEDG9E9DdcfiEtVi31KvOCKfE4T7+NFY
+	 okwbcknPOiPbV7wTbqDa4f8c9hZ62EyC3KpoFO24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de6565462ab540f50e47@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	David Howells <dhowells@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Michal Luczaj <mhal@rbox.co>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/163] tcp: Correct signedness in skb remaining space calculation
-Date: Tue, 15 Jul 2025 15:11:40 +0200
-Message-ID: <20250715130810.044028736@linuxfoundation.org>
+Subject: [PATCH 6.12 033/163] vsock: Fix transport_{g2h,h2g} TOCTOU
+Date: Tue, 15 Jul 2025 15:11:41 +0200
+Message-ID: <20250715130810.086528697@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -54,74 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit d3a5f2871adc0c61c61869f37f3e697d97f03d8c ]
+[ Upstream commit 209fd720838aaf1420416494c5505096478156b4 ]
 
-Syzkaller reported a bug [1] where sk->sk_forward_alloc can overflow.
+vsock_find_cid() and vsock_dev_do_ioctl() may race with module unload.
+transport_{g2h,h2g} may become NULL after the NULL check.
 
-When we send data, if an skb exists at the tail of the write queue, the
-kernel will attempt to append the new data to that skb. However, the code
-that checks for available space in the skb is flawed:
-'''
-copy = size_goal - skb->len
-'''
+Introduce vsock_transport_local_cid() to protect from a potential
+null-ptr-deref.
 
-The types of the variables involved are:
-'''
-copy: ssize_t (s64 on 64-bit systems)
-size_goal: int
-skb->len: unsigned int
-'''
+KASAN: null-ptr-deref in range [0x0000000000000118-0x000000000000011f]
+RIP: 0010:vsock_find_cid+0x47/0x90
+Call Trace:
+ __vsock_bind+0x4b2/0x720
+ vsock_bind+0x90/0xe0
+ __sys_bind+0x14d/0x1e0
+ __x64_sys_bind+0x6e/0xc0
+ do_syscall_64+0x92/0x1c0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Due to C's type promotion rules, the signed size_goal is converted to an
-unsigned int to match skb->len before the subtraction. The result is an
-unsigned int.
+KASAN: null-ptr-deref in range [0x0000000000000118-0x000000000000011f]
+RIP: 0010:vsock_dev_do_ioctl.isra.0+0x58/0xf0
+Call Trace:
+ __x64_sys_ioctl+0x12d/0x190
+ do_syscall_64+0x92/0x1c0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-When this unsigned int result is then assigned to the s64 copy variable,
-it is zero-extended, preserving its non-negative value. Consequently, copy
-is always >= 0.
-
-Assume we are sending 2GB of data and size_goal has been adjusted to a
-value smaller than skb->len. The subtraction will result in copy holding a
-very large positive integer. In the subsequent logic, this large value is
-used to update sk->sk_forward_alloc, which can easily cause it to overflow.
-
-The syzkaller reproducer uses TCP_REPAIR to reliably create this
-condition. However, this can also occur in real-world scenarios. The
-tcp_bound_to_half_wnd() function can also reduce size_goal to a small
-value. This would cause the subsequent tcp_wmem_schedule() to set
-sk->sk_forward_alloc to a value close to INT_MAX. Further memory
-allocation requests would then cause sk_forward_alloc to wrap around and
-become negative.
-
-[1]: https://syzkaller.appspot.com/bug?extid=de6565462ab540f50e47
-
-Reported-by: syzbot+de6565462ab540f50e47@syzkaller.appspotmail.com
-Fixes: 270a1c3de47e ("tcp: Support MSG_SPLICE_PAGES")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20250707054112.101081-1-jiayuan.chen@linux.dev
+Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Link: https://patch.msgid.link/20250703-vsock-transports-toctou-v4-1-98f0eb530747@rbox.co
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index b731a4a8f2b0d..156da81bce068 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1145,7 +1145,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
- 		goto do_error;
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index d08f205b33dcc..f671f2375f04b 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -531,9 +531,25 @@ int vsock_assign_transport(struct vsock_sock *vsk, struct vsock_sock *psk)
+ }
+ EXPORT_SYMBOL_GPL(vsock_assign_transport);
  
- 	while (msg_data_left(msg)) {
--		ssize_t copy = 0;
-+		int copy = 0;
++/*
++ * Provide safe access to static transport_{h2g,g2h,dgram,local} callbacks.
++ * Otherwise we may race with module removal. Do not use on `vsk->transport`.
++ */
++static u32 vsock_registered_transport_cid(const struct vsock_transport **transport)
++{
++	u32 cid = VMADDR_CID_ANY;
++
++	mutex_lock(&vsock_register_mutex);
++	if (*transport)
++		cid = (*transport)->get_local_cid();
++	mutex_unlock(&vsock_register_mutex);
++
++	return cid;
++}
++
+ bool vsock_find_cid(unsigned int cid)
+ {
+-	if (transport_g2h && cid == transport_g2h->get_local_cid())
++	if (cid == vsock_registered_transport_cid(&transport_g2h))
+ 		return true;
  
- 		skb = tcp_write_queue_tail(sk);
- 		if (skb)
+ 	if (transport_h2g && cid == VMADDR_CID_HOST)
+@@ -2502,18 +2518,17 @@ static long vsock_dev_do_ioctl(struct file *filp,
+ 			       unsigned int cmd, void __user *ptr)
+ {
+ 	u32 __user *p = ptr;
+-	u32 cid = VMADDR_CID_ANY;
+ 	int retval = 0;
++	u32 cid;
+ 
+ 	switch (cmd) {
+ 	case IOCTL_VM_SOCKETS_GET_LOCAL_CID:
+ 		/* To be compatible with the VMCI behavior, we prioritize the
+ 		 * guest CID instead of well-know host CID (VMADDR_CID_HOST).
+ 		 */
+-		if (transport_g2h)
+-			cid = transport_g2h->get_local_cid();
+-		else if (transport_h2g)
+-			cid = transport_h2g->get_local_cid();
++		cid = vsock_registered_transport_cid(&transport_g2h);
++		if (cid == VMADDR_CID_ANY)
++			cid = vsock_registered_transport_cid(&transport_h2g);
+ 
+ 		if (put_user(cid, p) != 0)
+ 			retval = -EFAULT;
 -- 
 2.39.5
 
