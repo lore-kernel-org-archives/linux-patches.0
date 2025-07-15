@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DFD2E041E;
-	Tue, 15 Jul 2025 13:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9BC2C327B;
+	Tue, 15 Jul 2025 13:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585782; cv=none; b=KPnBwadcWoy4290EeMljwuVzAYQSouOf92p1QD7lNjEcZaEVBpH2FzIcixq1c3htGo8GRcBw4DfZbPl6zO+VGy4Y9zg8SoPysXOiGwboOjbt+I3MfdEYS000rnKx+EfdZMWn9fpAVTqGJsQZCHcLu8oMh/nkSPWcLHTXTWzGFk4=
+	t=1752585785; cv=none; b=mbWg7iikwqe+xSzbFT6jiqjyGTvJoD00PN0lIgKXXUpD0vQxMjM4M7LE8ZUv8BimkMLjtZkglUaJQvmAK8jveUF7aYuLlxZL55r7G322wUmlMYezm5lW6SOyEBmA0xnPj0vIVDEzAl2+ga560V4YqHa+s37+aD8hP4SDNN7o6lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585782; c=relaxed/simple;
-	bh=tfQyQ2TgKosci/UIfNV8tCmTBnJ4SQ8LpATOTYWze8Q=;
+	s=arc-20240116; t=1752585785; c=relaxed/simple;
+	bh=6UbF2ZpCBuekvfc3HYEJfMXU3RRQUtwLgADNkWMauUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTlWOvZ3cE3lwtCeEjJmW/UmS/BXS7VN3JK4ZHfkauFkwwDk53hmOSmuY/uNSW3LbJ25ekox2/1tauNpsB9qn2Lm/Yz3f50vUtNCKty5fiNpY0X+ZPU20/9wksO07G+B/gZMQ5nhjuTU9+Er6aLJZePJ53122sfO3B0ROYsvasI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F881U6Dv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSnD576+kIcPX019Hkm/0fjtuLAZbE4PCiB/7Q4E+XP4aw6teM86PDEpU6zE0PfuAvo8ux4Fl3gDfvfViONRFa4QICVL5tabojyJv7kuhU4vUUSNbC2V2iyFGulId0MFhVBAfBu7cJTrjLNjrOv7XkdQkoLdmzBBdDuCEtvRksA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBzpS0rk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F881U6Dv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF111C4CEF1;
-	Tue, 15 Jul 2025 13:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBzpS0rk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F292C4CEE3;
+	Tue, 15 Jul 2025 13:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585782;
-	bh=tfQyQ2TgKosci/UIfNV8tCmTBnJ4SQ8LpATOTYWze8Q=;
+	s=korg; t=1752585784;
+	bh=6UbF2ZpCBuekvfc3HYEJfMXU3RRQUtwLgADNkWMauUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F881U6DvOQ2VHXjq3gVe+jUdq2hr1RxUEVOBU3kqcuIqoQHgR9npYIUSvJiYkUO7R
-	 /Dr/vl2t+TYPI74lQQU8rzpzw2a29P/GmAZrMq9U0kOyQ6PP+FstxRSo4tsG8Am/+B
-	 cF4w14eC5lUD6Z1ydPmb/UW8TKO8TF+I9zFUvXPU=
+	b=TBzpS0rkbeRcwgZurZeDDl8SD4Qa1yLqR6sBnWyGmPM8jQOcmxyGw2LAPM2AeMxA4
+	 1H4smOt7qIWifXpvrRVJg6tf4D7GDiNvdG526CBoHoRAwmqDKm3Lt3CvqZ9q+1LrSW
+	 vBdP6wYS9olpTHeUhXH+P+LIeSdG2KLtLR+vqztk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 158/163] selftests/bpf: adapt one more case in test_lru_map to the new target_free
-Date: Tue, 15 Jul 2025 15:13:46 +0200
-Message-ID: <20250715130815.172872572@linuxfoundation.org>
+	syzbot+7ff87b095e7ca0c5ac39@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.12 159/163] erofs: fix rare pcluster memory leak after unmounting
+Date: Tue, 15 Jul 2025 15:13:47 +0200
+Message-ID: <20250715130815.212731690@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -50,101 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 5e9388f7984a9cc7e659a105113f6ccf0aebedd0 upstream.
+commit b10a1e5643e505c367c7e16aa6d8a9a0dc07354b upstream.
 
-The below commit that updated BPF_MAP_TYPE_LRU_HASH free target,
-also updated tools/testing/selftests/bpf/test_lru_map to match.
+There may still exist some pcluster with valid reference counts
+during unmounting.  Instead of introducing another synchronization
+primitive, just try again as unmounting is relatively rare.  This
+approach is similar to z_erofs_cache_invalidate_folio().
 
-But that missed one case that passes with 4 cores, but fails at
-higher cpu counts.
+It was also reported by syzbot as a UAF due to commit f5ad9f9a603f
+("erofs: free pclusters if no cached folio is attached"):
 
-Update test_lru_sanity3 to also adjust its expectation of target_free.
+BUG: KASAN: slab-use-after-free in do_raw_spin_trylock+0x72/0x1f0 kernel/locking/spinlock_debug.c:123
+..
+ queued_spin_trylock include/asm-generic/qspinlock.h:92 [inline]
+ do_raw_spin_trylock+0x72/0x1f0 kernel/locking/spinlock_debug.c:123
+ __raw_spin_trylock include/linux/spinlock_api_smp.h:89 [inline]
+ _raw_spin_trylock+0x20/0x80 kernel/locking/spinlock.c:138
+ spin_trylock include/linux/spinlock.h:361 [inline]
+ z_erofs_put_pcluster fs/erofs/zdata.c:959 [inline]
+ z_erofs_decompress_pcluster fs/erofs/zdata.c:1403 [inline]
+ z_erofs_decompress_queue+0x3798/0x3ef0 fs/erofs/zdata.c:1425
+ z_erofs_decompressqueue_work+0x99/0xe0 fs/erofs/zdata.c:1437
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xa68/0x1840 kernel/workqueue.c:3310
+ worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+ kthread+0x2f2/0x390 kernel/kthread.c:389
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
 
-This time tested with 1, 4, 16, 64 and 384 cpu count.
+However, it seems a long outstanding memory leak.  Fix it now.
 
-Fixes: d4adf1c9ee77 ("bpf: Adjust free target to avoid global starvation of LRU map")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20250625210412.2732970-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: f5ad9f9a603f ("erofs: free pclusters if no cached folio is attached")
+Reported-by: syzbot+7ff87b095e7ca0c5ac39@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/674c1235.050a0220.ad585.0032.GAE@google.com
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20241203072821.1885740-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/test_lru_map.c |   33 +++++++++++++++--------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ fs/erofs/zutil.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/bpf/test_lru_map.c
-+++ b/tools/testing/selftests/bpf/test_lru_map.c
-@@ -138,6 +138,12 @@ static int sched_next_online(int pid, in
- 	return ret;
- }
+--- a/fs/erofs/zutil.c
++++ b/fs/erofs/zutil.c
+@@ -230,9 +230,10 @@ void erofs_shrinker_unregister(struct su
+ 	struct erofs_sb_info *const sbi = EROFS_SB(sb);
  
-+/* Derive target_free from map_size, same as bpf_common_lru_populate */
-+static unsigned int __tgt_size(unsigned int map_size)
-+{
-+	return (map_size / nr_cpus) / 2;
-+}
-+
- /* Inverse of how bpf_common_lru_populate derives target_free from map_size. */
- static unsigned int __map_size(unsigned int tgt_free)
- {
-@@ -410,12 +416,12 @@ static void test_lru_sanity2(int map_typ
- 	printf("Pass\n");
- }
- 
--/* Size of the LRU map is 2*tgt_free
-- * It is to test the active/inactive list rotation
-- * Insert 1 to 2*tgt_free (+2*tgt_free keys)
-- * Lookup key 1 to tgt_free*3/2
-- * Add 1+2*tgt_free to tgt_free*5/2 (+tgt_free/2 keys)
-- *  => key 1+tgt_free*3/2 to 2*tgt_free are removed from LRU
-+/* Test the active/inactive list rotation
-+ *
-+ * Fill the whole map, deplete the free list.
-+ * Reference all except the last lru->target_free elements.
-+ * Insert lru->target_free new elements. This triggers one shrink.
-+ * Verify that the non-referenced elements are replaced.
-  */
- static void test_lru_sanity3(int map_type, int map_flags, unsigned int tgt_free)
- {
-@@ -434,8 +440,7 @@ static void test_lru_sanity3(int map_typ
- 
- 	assert(sched_next_online(0, &next_cpu) != -1);
- 
--	batch_size = tgt_free / 2;
--	assert(batch_size * 2 == tgt_free);
-+	batch_size = __tgt_size(tgt_free);
- 
- 	map_size = tgt_free * 2;
- 	lru_map_fd = create_map(map_type, map_flags, map_size);
-@@ -446,23 +451,21 @@ static void test_lru_sanity3(int map_typ
- 
- 	value[0] = 1234;
- 
--	/* Insert 1 to 2*tgt_free (+2*tgt_free keys) */
--	end_key = 1 + (2 * tgt_free);
-+	/* Fill the map */
-+	end_key = 1 + map_size;
- 	for (key = 1; key < end_key; key++)
- 		assert(!bpf_map_update_elem(lru_map_fd, &key, value,
- 					    BPF_NOEXIST));
- 
--	/* Lookup key 1 to tgt_free*3/2 */
--	end_key = tgt_free + batch_size;
-+	/* Reference all but the last batch_size */
-+	end_key = 1 + map_size - batch_size;
- 	for (key = 1; key < end_key; key++) {
- 		assert(!bpf_map_lookup_elem_with_ref_bit(lru_map_fd, key, value));
- 		assert(!bpf_map_update_elem(expected_map_fd, &key, value,
- 					    BPF_NOEXIST));
- 	}
- 
--	/* Add 1+2*tgt_free to tgt_free*5/2
--	 * (+tgt_free/2 keys)
--	 */
-+	/* Insert new batch_size: replaces the non-referenced elements */
- 	key = 2 * tgt_free + 1;
- 	end_key = key + batch_size;
- 	for (; key < end_key; key++) {
+ 	mutex_lock(&sbi->umount_mutex);
+-	/* clean up all remaining pclusters in memory */
+-	z_erofs_shrink_scan(sbi, ~0UL);
+-
++	while (!xa_empty(&sbi->managed_pslots)) {
++		z_erofs_shrink_scan(sbi, ~0UL);
++		cond_resched();
++	}
+ 	spin_lock(&erofs_sb_list_lock);
+ 	list_del(&sbi->list);
+ 	spin_unlock(&erofs_sb_list_lock);
 
 
