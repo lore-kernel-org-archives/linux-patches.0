@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53282E9EB2;
-	Tue, 15 Jul 2025 13:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835FE2EBBB8;
+	Tue, 15 Jul 2025 13:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587626; cv=none; b=GyacpGMEPZ4bJci7Q9XSjd2qq41EjuqaypzJwksluc6WMDGx29WKfgppoHqrr9nMB9MDMVqp1t8WWAEGQtKlKXNf+Jv/ErRylpHdI6eFLfewWHXyOInqe49dX9IybTpCweRVehH6Gml9ev8Ua3QfKcNaXW0rAhd1M/ZTTyk8eO0=
+	t=1752587628; cv=none; b=lidvWjH7+LAuvqWNF5zIVBJHl+fqIDRmBKzsjdmehhux6grLhnZZMaUjg9nCFn3X95ApqoT5mXWCt1D6JXYoFDmd2JhAiS6OrJwIpIfckjaTWZUx36ZwCGjmCvEnN0lUxWfM9xxIVNqN4dAp6Pt6fEv8kdc/c9bc8ylqMmjlTGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587626; c=relaxed/simple;
-	bh=b+v4FO3a1avVicrV9DT5RseVC/r0SGDU/Xh1KKCmaoE=;
+	s=arc-20240116; t=1752587628; c=relaxed/simple;
+	bh=dyVWcQ6K0/nxg2dt6JzEh1T/1W7bAJ1LTK8SAkkzjq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUrPHo1QzgQl78NPl8nqIYNwc1qy4FT/zGBdxeh0dkvya6KVChrKTIRpUvkSL/NDb5SVXdjS4Mxa0/reoHOc66SpzVjqljaGysASSsTk2UFsC53y91u+N5sO3vdHGOq4IRyrYY+9jsU0XlvELUQ2tF+oxTY+UyKUHI1rZ7YUJNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgIBtqNB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s90y5q9MaScwBNyMxEdmEQ2sx8H5M9/tNbwR4/9jIa538XciOtqq3PSlj3ouODO3/GEAXQyRiDMYleNBUFQXBjOGxtX7jxb8XQiaCRlxM7nZGcHMMCtk3/57is/2OxfRTa8eo4t3yD9oHNpzetkwNcWdY9eErrb9mY1Sea1pCag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYbHNkrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgIBtqNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766FCC4CEE3;
-	Tue, 15 Jul 2025 13:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYbHNkrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1973EC4CEE3;
+	Tue, 15 Jul 2025 13:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587625;
-	bh=b+v4FO3a1avVicrV9DT5RseVC/r0SGDU/Xh1KKCmaoE=;
+	s=korg; t=1752587628;
+	bh=dyVWcQ6K0/nxg2dt6JzEh1T/1W7bAJ1LTK8SAkkzjq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WgIBtqNBPSmHVFV0tzEzklqBOEJ9g9TL1Rfx84n6s58QmY+a2gTzsxAuEw9lYy4Qm
-	 OFGzXDF5jnl9DjQ/qhMEyydip/KrYv3uMRriS+gJ4nlAoWFsP0rMBPPRZlkamCHHEc
-	 ZijBsJ00l40fYKJEwm5ko9YniBjY9L7FMjfR+nbk=
+	b=dYbHNkrzGeJ2Sv8baCd3LqtqoS3vvhKkOdrJF37UgyjAjSt5KhCJhiZmaW+IZUJy1
+	 dad2iuEcI4ks80tAVFPhqyXhnmWky9oRBgMByCxb9epJvNLy9PWB0ECB3jJbyRpEp7
+	 qUjz/Grs5zxqI/ipI2n9nAgfjVYouVxX6Dj9vDaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	syzbot+a4cc4ac22daa4a71b87c@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 082/208] RDMA/mlx5: Initialize obj_event->obj_sub_list before xa_insert
-Date: Tue, 15 Jul 2025 15:13:11 +0200
-Message-ID: <20250715130814.227351723@linuxfoundation.org>
+Subject: [PATCH 5.10 083/208] nfs: Clean up /proc/net/rpc/nfs when nfs_fs_proc_net_init() fails.
+Date: Tue, 15 Jul 2025 15:13:12 +0200
+Message-ID: <20250715130814.267899126@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,98 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 8edab8a72d67742f87e9dc2e2b0cdfddda5dc29a ]
+[ Upstream commit e8d6f3ab59468e230f3253efe5cb63efa35289f7 ]
 
-The obj_event may be loaded immediately after inserted, then if the
-list_head is not initialized then we may get a poisonous pointer.  This
-fixes the crash below:
+syzbot reported a warning below [1] following a fault injection in
+nfs_fs_proc_net_init(). [0]
 
- mlx5_core 0000:03:00.0: MLX5E: StrdRq(1) RqSz(8) StrdSz(2048) RxCqeCmprss(0 enhanced)
- mlx5_core.sf mlx5_core.sf.4: firmware version: 32.38.3056
- mlx5_core 0000:03:00.0 en3f0pf0sf2002: renamed from eth0
- mlx5_core.sf mlx5_core.sf.4: Rate limit: 127 rates are supported, range: 0Mbps to 195312Mbps
- IPv6: ADDRCONF(NETDEV_CHANGE): en3f0pf0sf2002: link becomes ready
- Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
- Mem abort info:
-   ESR = 0x96000006
-   EC = 0x25: DABT (current EL), IL = 32 bits
-   SET = 0, FnV = 0
-   EA = 0, S1PTW = 0
- Data abort info:
-   ISV = 0, ISS = 0x00000006
-   CM = 0, WnR = 0
- user pgtable: 4k pages, 48-bit VAs, pgdp=00000007760fb000
- [0000000000000060] pgd=000000076f6d7003, p4d=000000076f6d7003, pud=0000000777841003, pmd=0000000000000000
- Internal error: Oops: 96000006 [#1] SMP
- Modules linked in: ipmb_host(OE) act_mirred(E) cls_flower(E) sch_ingress(E) mptcp_diag(E) udp_diag(E) raw_diag(E) unix_diag(E) tcp_diag(E) inet_diag(E) binfmt_misc(E) bonding(OE) rdma_ucm(OE) rdma_cm(OE) iw_cm(OE) ib_ipoib(OE) ib_cm(OE) isofs(E) cdrom(E) mst_pciconf(OE) ib_umad(OE) mlx5_ib(OE) ipmb_dev_int(OE) mlx5_core(OE) kpatch_15237886(OEK) mlxdevm(OE) auxiliary(OE) ib_uverbs(OE) ib_core(OE) psample(E) mlxfw(OE) tls(E) sunrpc(E) vfat(E) fat(E) crct10dif_ce(E) ghash_ce(E) sha1_ce(E) sbsa_gwdt(E) virtio_console(E) ext4(E) mbcache(E) jbd2(E) xfs(E) libcrc32c(E) mmc_block(E) virtio_net(E) net_failover(E) failover(E) sha2_ce(E) sha256_arm64(E) nvme(OE) nvme_core(OE) gpio_mlxbf3(OE) mlx_compat(OE) mlxbf_pmc(OE) i2c_mlxbf(OE) sdhci_of_dwcmshc(OE) pinctrl_mlxbf3(OE) mlxbf_pka(OE) gpio_generic(E) i2c_core(E) mmc_core(E) mlxbf_gige(OE) vitesse(E) pwr_mlxbf(OE) mlxbf_tmfifo(OE) micrel(E) mlxbf_bootctl(OE) virtio_ring(E) virtio(E) ipmi_devintf(E) ipmi_msghandler(E)
-  [last unloaded: mst_pci]
- CPU: 11 PID: 20913 Comm: rte-worker-11 Kdump: loaded Tainted: G           OE K   5.10.134-13.1.an8.aarch64 #1
- Hardware name: https://www.mellanox.com BlueField-3 SmartNIC Main Card/BlueField-3 SmartNIC Main Card, BIOS 4.2.2.12968 Oct 26 2023
- pstate: a0400089 (NzCv daIf +PAN -UAO -TCO BTYPE=--)
- pc : dispatch_event_fd+0x68/0x300 [mlx5_ib]
- lr : devx_event_notifier+0xcc/0x228 [mlx5_ib]
- sp : ffff80001005bcf0
- x29: ffff80001005bcf0 x28: 0000000000000001
- x27: ffff244e0740a1d8 x26: ffff244e0740a1d0
- x25: ffffda56beff5ae0 x24: ffffda56bf911618
- x23: ffff244e0596a480 x22: ffff244e0596a480
- x21: ffff244d8312ad90 x20: ffff244e0596a480
- x19: fffffffffffffff0 x18: 0000000000000000
- x17: 0000000000000000 x16: ffffda56be66d620
- x15: 0000000000000000 x14: 0000000000000000
- x13: 0000000000000000 x12: 0000000000000000
- x11: 0000000000000040 x10: ffffda56bfcafb50
- x9 : ffffda5655c25f2c x8 : 0000000000000010
- x7 : 0000000000000000 x6 : ffff24545a2e24b8
- x5 : 0000000000000003 x4 : ffff80001005bd28
- x3 : 0000000000000000 x2 : 0000000000000000
- x1 : ffff244e0596a480 x0 : ffff244d8312ad90
- Call trace:
-  dispatch_event_fd+0x68/0x300 [mlx5_ib]
-  devx_event_notifier+0xcc/0x228 [mlx5_ib]
-  atomic_notifier_call_chain+0x58/0x80
-  mlx5_eq_async_int+0x148/0x2b0 [mlx5_core]
-  atomic_notifier_call_chain+0x58/0x80
-  irq_int_handler+0x20/0x30 [mlx5_core]
-  __handle_irq_event_percpu+0x60/0x220
-  handle_irq_event_percpu+0x3c/0x90
-  handle_irq_event+0x58/0x158
-  handle_fasteoi_irq+0xfc/0x188
-  generic_handle_irq+0x34/0x48
-  ...
+When nfs_fs_proc_net_init() fails, /proc/net/rpc/nfs is not removed.
 
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Link: https://patch.msgid.link/r/3ce7f20e0d1a03dc7de6e57494ec4b8eaf1f05c2.1750147949.git.leon@kernel.org
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Later, rpc_proc_exit() tries to remove /proc/net/rpc, and the warning
+is logged as the directory is not empty.
+
+Let's handle the error of nfs_fs_proc_net_init() properly.
+
+[0]:
+FAULT_INJECTION: forcing a failure.
+name failslab, interval 1, probability 0, space 0, times 0
+CPU: 1 UID: 0 PID: 6120 Comm: syz.2.27 Not tainted 6.16.0-rc1-syzkaller-00010-g2c4a1f3fe03e #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Call Trace:
+ <TASK>
+  dump_stack_lvl (lib/dump_stack.c:123)
+ should_fail_ex (lib/fault-inject.c:73 lib/fault-inject.c:174)
+ should_failslab (mm/failslab.c:46)
+ kmem_cache_alloc_noprof (mm/slub.c:4178 mm/slub.c:4204)
+ __proc_create (fs/proc/generic.c:427)
+ proc_create_reg (fs/proc/generic.c:554)
+ proc_create_net_data (fs/proc/proc_net.c:120)
+ nfs_fs_proc_net_init (fs/nfs/client.c:1409)
+ nfs_net_init (fs/nfs/inode.c:2600)
+ ops_init (net/core/net_namespace.c:138)
+ setup_net (net/core/net_namespace.c:443)
+ copy_net_ns (net/core/net_namespace.c:576)
+ create_new_namespaces (kernel/nsproxy.c:110)
+ unshare_nsproxy_namespaces (kernel/nsproxy.c:218 (discriminator 4))
+ ksys_unshare (kernel/fork.c:3123)
+ __x64_sys_unshare (kernel/fork.c:3190)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+ </TASK>
+
+[1]:
+remove_proc_entry: removing non-empty directory 'net/rpc', leaking at least 'nfs'
+ WARNING: CPU: 1 PID: 6120 at fs/proc/generic.c:727 remove_proc_entry+0x45e/0x530 fs/proc/generic.c:727
+Modules linked in:
+CPU: 1 UID: 0 PID: 6120 Comm: syz.2.27 Not tainted 6.16.0-rc1-syzkaller-00010-g2c4a1f3fe03e #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+ RIP: 0010:remove_proc_entry+0x45e/0x530 fs/proc/generic.c:727
+Code: 3c 02 00 0f 85 85 00 00 00 48 8b 93 d8 00 00 00 4d 89 f0 4c 89 e9 48 c7 c6 40 ba a2 8b 48 c7 c7 60 b9 a2 8b e8 33 81 1d ff 90 <0f> 0b 90 90 e9 5f fe ff ff e8 04 69 5e ff 90 48 b8 00 00 00 00 00
+RSP: 0018:ffffc90003637b08 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff88805f534140 RCX: ffffffff817a92c8
+RDX: ffff88807da99e00 RSI: ffffffff817a92d5 RDI: 0000000000000001
+RBP: ffff888033431ac0 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000001 R12: ffff888033431a00
+R13: ffff888033431ae4 R14: ffff888033184724 R15: dffffc0000000000
+FS:  0000555580328500(0000) GS:ffff888124a62000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f71733743e0 CR3: 000000007f618000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  sunrpc_exit_net+0x46/0x90 net/sunrpc/sunrpc_syms.c:76
+  ops_exit_list net/core/net_namespace.c:200 [inline]
+  ops_undo_list+0x2eb/0xab0 net/core/net_namespace.c:253
+  setup_net+0x2e1/0x510 net/core/net_namespace.c:457
+  copy_net_ns+0x2a6/0x5f0 net/core/net_namespace.c:574
+  create_new_namespaces+0x3ea/0xa90 kernel/nsproxy.c:110
+  unshare_nsproxy_namespaces+0xc0/0x1f0 kernel/nsproxy.c:218
+  ksys_unshare+0x45b/0xa40 kernel/fork.c:3121
+  __do_sys_unshare kernel/fork.c:3192 [inline]
+  __se_sys_unshare kernel/fork.c:3190 [inline]
+  __x64_sys_unshare+0x31/0x40 kernel/fork.c:3190
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xcd/0x490 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fa1a6b8e929
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fff3a090368 EFLAGS: 00000246 ORIG_RAX: 0000000000000110
+RAX: ffffffffffffffda RBX: 00007fa1a6db5fa0 RCX: 00007fa1a6b8e929
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000040000080
+RBP: 00007fa1a6c10b39 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fa1a6db5fa0 R14: 00007fa1a6db5fa0 R15: 0000000000000001
+ </TASK>
+
+Fixes: d47151b79e32 ("nfs: expose /proc/net/sunrpc/nfs in net namespaces")
+Reported-by: syzbot+a4cc4ac22daa4a71b87c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a4cc4ac22daa4a71b87c
+Tested-by: syzbot+a4cc4ac22daa4a71b87c@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/inode.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index f67ebd9f3cdd1..301c061bb3190 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -1809,6 +1809,7 @@ subscribe_event_xa_alloc(struct mlx5_devx_event_table *devx_event_table,
- 			/* Level1 is valid for future use, no need to free */
- 			return -ENOMEM;
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index d82eb1b2164f3..3e3114a9d1937 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -2227,15 +2227,26 @@ EXPORT_SYMBOL_GPL(nfs_net_id);
+ static int nfs_net_init(struct net *net)
+ {
+ 	struct nfs_net *nn = net_generic(net, nfs_net_id);
++	int err;
  
-+		INIT_LIST_HEAD(&obj_event->obj_sub_list);
- 		err = xa_insert(&event->object_ids,
- 				key_level2,
- 				obj_event,
-@@ -1817,7 +1818,6 @@ subscribe_event_xa_alloc(struct mlx5_devx_event_table *devx_event_table,
- 			kfree(obj_event);
- 			return err;
- 		}
--		INIT_LIST_HEAD(&obj_event->obj_sub_list);
+ 	nfs_clients_init(net);
+ 
+ 	if (!rpc_proc_register(net, &nn->rpcstats)) {
+-		nfs_clients_exit(net);
+-		return -ENOMEM;
++		err = -ENOMEM;
++		goto err_proc_rpc;
  	}
  
- 	return 0;
+-	return nfs_fs_proc_net_init(net);
++	err = nfs_fs_proc_net_init(net);
++	if (err)
++		goto err_proc_nfs;
++
++	return 0;
++
++err_proc_nfs:
++	rpc_proc_unregister(net, "nfs");
++err_proc_rpc:
++	nfs_clients_exit(net);
++	return err;
+ }
+ 
+ static void nfs_net_exit(struct net *net)
 -- 
 2.39.5
 
