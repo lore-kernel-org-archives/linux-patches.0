@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3692E7186;
-	Tue, 15 Jul 2025 13:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1162E717F;
+	Tue, 15 Jul 2025 13:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587055; cv=none; b=ZeU3tsni8LTtDK/YYr0gQAD6FCLjpr/of74BVYFrqzIwD9F4EJk8QXgRdfPHlh39ZpsraplMFk3NBGGTUUQ7eEwHfv6HS99Vf40rWqU9vfVp7S/8q7SBarIVGNlCQ1M9wkjAP23KJdkw/djL5iE19Hi/HR2F+ZxcZmci1yu26ns=
+	t=1752587058; cv=none; b=AMP+/fk3/JZJpj9lkY8rKMabj956YLbxM9Amgk2tflgmAVNy6Q37MQx3grOk5fF6eb76kVPlsDvEYYfnQ3tUhkeLo9MrWKtFyVZccsNMRWtmNXV8OYNz7ZdEYjgZfP6HZMqqxO3Inn5gFK3EkfiCf2pcBYutSFtFnMEtm38D4jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587055; c=relaxed/simple;
-	bh=jI1bcSY3Tob9dwHMXCeAjepimVlcV5L3z2R0pH+Hf6E=;
+	s=arc-20240116; t=1752587058; c=relaxed/simple;
+	bh=brcNjlkOm2Owa0K2eziuACVeD9crF1RZbfztNdty6eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZAkjBW2rrE+Ie2kKuULxfsvA9wXNFqek60EARzburCHWgFeBHs/MpIzEdzl2y+6QWSJI9b1PA33ztKMD8aRxEHFJIkif5mcsJsy7RHwv75X+ukiOpK6qp/M1WURg/VUkL5I6845p4Pz8OkptS0GppMJR+w3HY81SL3pY+8kCF1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8kro404; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUN311rhG6O6U8DEJRH8Pk+c2Ha6YHdazlXFskYV3ZvMEgT9H8onUaF488H1Ti5H4v+QAef/q1g+++VjnhsNPURMGlqluCZvC8tjo1bfJzphxIEB7ROdo5NfH2kkWO8Y+gbdLP/djchYRgLh0zd/rloInctINz0Xf4SraojmMN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4EEp5Go; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8kro404"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83A5C4CEE3;
-	Tue, 15 Jul 2025 13:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4EEp5Go"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FF3C4CEE3;
+	Tue, 15 Jul 2025 13:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587055;
-	bh=jI1bcSY3Tob9dwHMXCeAjepimVlcV5L3z2R0pH+Hf6E=;
+	s=korg; t=1752587057;
+	bh=brcNjlkOm2Owa0K2eziuACVeD9crF1RZbfztNdty6eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8kro404rqDOnFRd9ElYEc7+H3inGahGYJdq0qeIALtLTyQpBeC2glN6/FDH0DR5l
-	 OPrlinOdavQq3U1BId8xTDAOGkF2m2DDIv/i/nZCOSa7togS6s48vedA0RjFUrOGsu
-	 +Bfh3DQYNQifXuJD9Afq6ecvFvFOwjN18vDnvzaA=
+	b=J4EEp5GoWccPFI7NK5M9pmaGg61/SPq7RQHwPQEALh8jZOrxYjFuFx/buO1OEPtXY
+	 Cv3+ovbvEhKTNdmo3dz6N1ZYG31qfAKI8gPKmbx7ObyQ0QUIQCf2+MgEAItWtrShnP
+	 aMcmAFaR5++iSXZ8bMKsxNcfe2rhHCA3a1FWQsEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 149/192] erofs: fix to add missing tracepoint in erofs_readahead()
-Date: Tue, 15 Jul 2025 15:14:04 +0200
-Message-ID: <20250715130820.890777412@linuxfoundation.org>
+Subject: [PATCH 6.15 150/192] wifi: mac80211: add the virtual monitor after reconfig complete
+Date: Tue, 15 Jul 2025 15:14:05 +0200
+Message-ID: <20250715130820.931243847@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,37 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit d53238b614e01266a3d36b417b60a502e0698504 ]
+[ Upstream commit c07981af55d3ba3ec3be880cfe4a0cc10f1f7138 ]
 
-Commit 771c994ea51f ("erofs: convert all uncompressed cases to iomap")
-converts to use iomap interface, it removed trace_erofs_readahead()
-tracepoint in the meantime, let's add it back.
+In reconfig we add the virtual monitor in 2 cases:
+1. If we are resuming (it was deleted on suspend)
+2. If it was added after an error but before the reconfig
+   (due to the last non-monitor interface removal).
 
-Fixes: 771c994ea51f ("erofs: convert all uncompressed cases to iomap")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250707084832.2725677-1-chao@kernel.org
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+In the second case, the removal of the non-monitor interface will succeed
+but the addition of the virtual monitor will fail, so we add it in the
+reconfig.
+
+The problem is that we mislead the driver to think that this is an existing
+interface that is getting re-added - while it is actually a completely new
+interface from the drivers' point of view.
+
+Some drivers act differently when a interface is re-added. For example, it
+might not initialize things because they were already initialized.
+Such drivers will - in this case - be left with a partialy initialized vif.
+
+To fix it, add the virtual monitor after reconfig_complete, so the
+driver will know that this is a completely new interface.
+
+Fixes: 3c3e21e7443b ("mac80211: destroy virtual monitor interface across suspend")
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709233451.648d39b041e8.I2e37b68375278987e303d6c00cc5f3d8334d2f96@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/data.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/util.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/fs/erofs/data.c b/fs/erofs/data.c
-index 0ab0e8ec70d03..33cb0a7330d23 100644
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -363,6 +363,9 @@ static int erofs_read_folio(struct file *file, struct folio *folio)
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 82256eddd16bd..0fc3527e6fdd1 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2155,11 +2155,6 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 		cfg80211_sched_scan_stopped_locked(local->hw.wiphy, 0);
  
- static void erofs_readahead(struct readahead_control *rac)
- {
-+	trace_erofs_readahead(rac->mapping->host, readahead_index(rac),
-+					readahead_count(rac), true);
+  wake_up:
+-
+-	if (local->virt_monitors > 0 &&
+-	    local->virt_monitors == local->open_count)
+-		ieee80211_add_virtual_monitor(local);
+-
+ 	/*
+ 	 * Clear the WLAN_STA_BLOCK_BA flag so new aggregation
+ 	 * sessions can be established after a resume.
+@@ -2213,6 +2208,10 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 		}
+ 	}
+ 
++	if (local->virt_monitors > 0 &&
++	    local->virt_monitors == local->open_count)
++		ieee80211_add_virtual_monitor(local);
 +
- 	return iomap_readahead(rac, &erofs_iomap_ops);
- }
+ 	if (!suspended)
+ 		return 0;
  
 -- 
 2.39.5
