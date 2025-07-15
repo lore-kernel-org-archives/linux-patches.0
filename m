@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CED22397BF;
-	Tue, 15 Jul 2025 13:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3DC2EF291;
+	Tue, 15 Jul 2025 13:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587815; cv=none; b=X3bOVucqY6JE9eRCJAkDzPYq+2VXpyJsP9KFTv5e/ff6iSL+C6Qx2TTTFIaQw5+GXFTt53tpAPWkJR+KN9iczQ1PIYzZvUdjcohPnCyoTXyHPLmDShvTeXHBeYPELK3TAfJ5e5XQDVLF00x5PMGJDA9D41nbJbpcMiLrpDX758c=
+	t=1752587817; cv=none; b=tPiLrvdPndXa7TNYVusYkGX/+yfpCoreyOg5GkVWDEfJ4dQ5w1uYp5+7XPY6fX05eqgwWdk8/67flLLy44mKb4Qgz34uWwgzwwZ4mlu7FOWkTSHBPH7WMaZB5wm8OULQlKF8/KsOi3NVpakhjk8GLUeehuklCP7AiPt7l6tP5aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587815; c=relaxed/simple;
-	bh=jf/utHT9qhOjqJitvg1ws9asGMTmINU2Jt6d08bT/bQ=;
+	s=arc-20240116; t=1752587817; c=relaxed/simple;
+	bh=eRxrCnbpodGym7ngIe7hF/KJWUIDVAJzbuFAwbHWzRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YiuOhqbI559bCcTxFKKmXksbSVciaZ1zDEj2fa/GqKECTSBWDJUzpaNrHNh16zaaplCm8cFhLtfqc4vmcXCzyQkojnEyY9MBooCS0AK0QZGB94a/8KudwUwmWIjXmLgG3EU7Apad9D4GkMyVufjytyufu+oTuMbK1znBmfO3ezg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAfRy5NX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KnCh3kWcHECvN3JT65cBJmievzNpTEs7VeaIzWw+2194K74wvAQQFYUtmuH1BDgX21i05oIXrfhCoB7D/04JNKliNkRNvNAm5B4ZV/UxysAlpX62i7WNo/iOKUWw8XxOdP7GFU0DaKzQEevZeZfkHbmGcDV6ip5ZnHkWNmG5ZPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cwV+ZvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAfRy5NX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9CCC4CEE3;
-	Tue, 15 Jul 2025 13:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cwV+ZvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0696EC4CEE3;
+	Tue, 15 Jul 2025 13:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587814;
-	bh=jf/utHT9qhOjqJitvg1ws9asGMTmINU2Jt6d08bT/bQ=;
+	s=korg; t=1752587817;
+	bh=eRxrCnbpodGym7ngIe7hF/KJWUIDVAJzbuFAwbHWzRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kAfRy5NX0W6ziqrjBky+ie8cOojHMt/qbcbFGpRsOg3uVrDD6IEY0Ddimxk2yKmWF
-	 gqDCyXKNGAKW3FYut33TJ8383A2dOpZMt6WY0oGqrQpiFO8j26AgQSYXdmOg6H8aC8
-	 DoEN5xq1OSWeggHf3khOw9BWOLDPdhjH2WO6YO4g=
+	b=2cwV+ZvR4FemAkYP3FhevYM8ZA4Tc4dPcWDOj6qBKYlKSsO2gbhocG9FXx3xxiUxX
+	 0PEbMpnuMKOXlqID5MjudT/Fa0hTzXmeXBVMNzE/MGZtSG2ctTrhoJ5WkpUOwLE5AS
+	 kANS5shK4xBoYTIeK3EjqJI/S/y/4Qc/QtTD+gFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Maximilian Heyne <mheyne@amazon.de>
-Subject: [PATCH 5.10 153/208] fs/proc: do_task_stat: use __for_each_thread()
-Date: Tue, 15 Jul 2025 15:14:22 +0200
-Message-ID: <20250715130817.039390912@linuxfoundation.org>
+	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
+	David Howells <dhowells@redhat.com>,
+	LePremierHomme <kwqcheii@proton.me>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Willy Tarreau <w@1wt.eu>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 154/208] rxrpc: Fix oops due to non-existence of prealloc backlog struct
+Date: Tue, 15 Jul 2025 15:14:23 +0200
+Message-ID: <20250715130817.078825642@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,48 +56,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 7904e53ed5a20fc678c01d5d1b07ec486425bb6a upstream.
+commit 880a88f318cf1d2a0f4c0a7ff7b07e2062b434a4 upstream.
 
-do/while_each_thread should be avoided when possible.
+If an AF_RXRPC service socket is opened and bound, but calls are
+preallocated, then rxrpc_alloc_incoming_call() will oops because the
+rxrpc_backlog struct doesn't get allocated until the first preallocation is
+made.
 
-Link: https://lkml.kernel.org/r/20230909164501.GA11581@redhat.com
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 7601df8031fd ("fs/proc: do_task_stat: use sig->stats_lock to gather the threads/children stats")
-Cc: stable@vger.kernel.org
-[ mheyne: adjusted context ]
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
+Fix this by returning NULL from rxrpc_alloc_incoming_call() if there is no
+backlog struct.  This will cause the incoming call to be aborted.
+
+Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+Suggested-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: LePremierHomme <kwqcheii@proton.me>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Willy Tarreau <w@1wt.eu>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20250708211506.2699012-3-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/array.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/rxrpc/call_accept.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/proc/array.c
-+++ b/fs/proc/array.c
-@@ -512,18 +512,18 @@ static int do_task_stat(struct seq_file
- 		cgtime = sig->cgtime;
+--- a/net/rxrpc/call_accept.c
++++ b/net/rxrpc/call_accept.c
+@@ -271,6 +271,9 @@ static struct rxrpc_call *rxrpc_alloc_in
+ 	unsigned short call_tail, conn_tail, peer_tail;
+ 	unsigned short call_count, conn_count;
  
- 		if (whole) {
--			struct task_struct *t = task;
-+			struct task_struct *t;
- 
- 			min_flt = sig->min_flt;
- 			maj_flt = sig->maj_flt;
- 			gtime = sig->gtime;
- 
- 			rcu_read_lock();
--			do {
-+			__for_each_thread(sig, t) {
- 				min_flt += t->min_flt;
- 				maj_flt += t->maj_flt;
- 				gtime += task_gtime(t);
--			} while_each_thread(task, t);
-+			}
- 			rcu_read_unlock();
- 
- 			thread_group_cputime_adjusted(task, &utime, &stime);
++	if (!b)
++		return NULL;
++
+ 	/* #calls >= #conns >= #peers must hold true. */
+ 	call_head = smp_load_acquire(&b->call_backlog_head);
+ 	call_tail = b->call_backlog_tail;
 
 
