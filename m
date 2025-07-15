@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148C72D5426;
-	Tue, 15 Jul 2025 13:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A77192D8A;
+	Tue, 15 Jul 2025 13:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585728; cv=none; b=nRCW4hOMP/45OFMsOgPPe5ro9l88/10y0FdnyqgfFkJgTQ8lX3Szjxacr4tnFxWXyRO8N3hqSn8eCy54u7e7ovxg0RBbySiJsP0vx5R3pzXw4QLQrHbLGToVazg/9epkqtvuCuexbYL+XAVu/pPTvs2vTHfvpHyc0kgMQoJyrzI=
+	t=1752585730; cv=none; b=PoS6yDxqm4omqjspzb3xqOVbr/bF1SCXQ+8qh1IcyxnYysWwLqrtYpRxeJY1qQ55FmHl74AONEBJQPtlBg4vGv0AweEnuGX2jc8YLNFKqzERBvzX7pBt58kK4L1jv0yQmMDYWuMkIXI4PUio1RHKRWc0emtyIpz5cCLHVPoAzpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585728; c=relaxed/simple;
-	bh=gRj2AecfhSPzYrYRfsfyGQ5o8ltOw83OBRmU+1Vpdyc=;
+	s=arc-20240116; t=1752585730; c=relaxed/simple;
+	bh=l10+plt18Mm/A/Vfnczk/HVYtUCZgb2qf+xrIuuRngA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXM/6X5eyyvZxKaitiqWUJ+L9/FxsD3XQ5U6R9dpNpDjtS2FiB280iTs0xorjGe4xlkOe8o0LAFEqpUvV3p2qu/y0VwXVv25WiBoavIAGF7X5Fk5KHKfxYdaTv12Z7PhfH9i1MdTzTVtGZKKRs/AnqmlQgc0r2r7PRCo+1G362o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqjW5xb6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djAr/73s6XTMTx4paAh1xM+GRf16Blf/YzICUgJaeao3ezEPXOWiyy8ywbjLvRxLmrgdmEsOiXI+gkzXL0oluiK1qpBO9yoDRrVjXwkWbyQbfcpSV/S+BQqnlTT8qIXcpkJ/gMN+EC8AiuPRAzA9MnrWKimkH0KzKk8zJnWg3e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tk7P/0Nc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqjW5xb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFABC4CEE3;
-	Tue, 15 Jul 2025 13:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tk7P/0Nc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40546C4CEE3;
+	Tue, 15 Jul 2025 13:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585728;
-	bh=gRj2AecfhSPzYrYRfsfyGQ5o8ltOw83OBRmU+1Vpdyc=;
+	s=korg; t=1752585730;
+	bh=l10+plt18Mm/A/Vfnczk/HVYtUCZgb2qf+xrIuuRngA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqjW5xb6uGrPPOUKj7wsj+p6AV4UCDEShERjvBTDVL7UZ6eEpqC2jHh3Jgy3qkKVL
-	 4RQqcQGBCxVncGDyrTRv0W9CD+FaPEJvl6QNSVC+Ke3wKAdRliyHqjayRglAYwxHJy
-	 BOoJQ8xmTy3S0pyJ3LqmcLH6IqgWeyYEr5D9EyiE=
+	b=Tk7P/0NcHIyU4+iSQdzfejwxokQmcz3wLaMSZr1oDHMVOIGTNM6SP5R9PwH0T0XZZ
+	 L+rAyccbyMKWglZCxkgGmc2v6DmPFCq80TtM5wVa9PH0KokzIzeEFeLEt3Ux6IehaX
+	 KiIpHwrpkEomd4PnNfTeXm6JiOGqzYXfteGybL5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Zhang <quic_shuaz@quicinc.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Akira Inoue <niyarium@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 148/163] driver: bluetooth: hci_qca:fix unable to load the BT driver
-Date: Tue, 15 Jul 2025 15:13:36 +0200
-Message-ID: <20250715130814.769798434@linuxfoundation.org>
+Subject: [PATCH 6.12 149/163] HID: lenovo: Add support for ThinkPad X1 Tablet Thin Keyboard Gen2
+Date: Tue, 15 Jul 2025 15:13:37 +0200
+Message-ID: <20250715130814.812043266@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,47 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Zhang <quic_shuaz@quicinc.com>
+From: Akira Inoue <niyarium@gmail.com>
 
-[ Upstream commit db0ff7e15923ffa7067874604ca275e92343f1b1 ]
+[ Upstream commit a8905238c3bbe13db90065ed74682418f23830c3 ]
 
-Some modules have BT_EN enabled via a hardware pull-up,
-meaning it is not defined in the DTS and is not controlled
-through the power sequence. In such cases, fall through
-to follow the legacy flow.
+Add "Thinkpad X1 Tablet Gen 2 Keyboard" PID to hid-lenovo driver to fix trackpoint not working issue.
 
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Akira Inoue <niyarium@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/hid/hid-ids.h        | 1 +
+ drivers/hid/hid-lenovo.c     | 8 ++++++++
+ drivers/hid/hid-multitouch.c | 8 +++++++-
+ 3 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 025b9a07c0875..e6ad01d5e1d5d 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2363,10 +2363,17 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 			 */
- 			qcadev->bt_power->pwrseq = devm_pwrseq_get(&serdev->dev,
- 								   "bluetooth");
--			if (IS_ERR(qcadev->bt_power->pwrseq))
--				return PTR_ERR(qcadev->bt_power->pwrseq);
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index c6424f6259487..49dc86981287a 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -814,6 +814,7 @@
+ #define USB_DEVICE_ID_LENOVO_TPPRODOCK	0x6067
+ #define USB_DEVICE_ID_LENOVO_X1_COVER	0x6085
+ #define USB_DEVICE_ID_LENOVO_X1_TAB	0x60a3
++#define USB_DEVICE_ID_LENOVO_X1_TAB2	0x60a4
+ #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
+ #define USB_DEVICE_ID_LENOVO_X12_TAB	0x60fe
+ #define USB_DEVICE_ID_LENOVO_X12_TAB2	0x61ae
+diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
+index 56e530860caef..8482852c662dd 100644
+--- a/drivers/hid/hid-lenovo.c
++++ b/drivers/hid/hid-lenovo.c
+@@ -473,6 +473,7 @@ static int lenovo_input_mapping(struct hid_device *hdev,
+ 		return lenovo_input_mapping_tp10_ultrabook_kbd(hdev, hi, field,
+ 							       usage, bit, max);
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		return lenovo_input_mapping_x1_tab_kbd(hdev, hi, field, usage, bit, max);
+ 	default:
+@@ -587,6 +588,7 @@ static ssize_t attr_fn_lock_store(struct device *dev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_led_set_tp10ubkbd(hdev, TP10UBKBD_FN_LOCK_LED, value);
+ 		if (ret)
+@@ -781,6 +783,7 @@ static int lenovo_event(struct hid_device *hdev, struct hid_field *field,
+ 		return lenovo_event_cptkbd(hdev, field, usage, value);
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		return lenovo_event_tp10ubkbd(hdev, field, usage, value);
+ 	default:
+@@ -1062,6 +1065,7 @@ static int lenovo_led_brightness_set(struct led_classdev *led_cdev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_led_set_tp10ubkbd(hdev, tp10ubkbd_led[led_nr], value);
+ 		break;
+@@ -1293,6 +1297,7 @@ static int lenovo_probe(struct hid_device *hdev,
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		ret = lenovo_probe_tp10ubkbd(hdev);
+ 		break;
+@@ -1380,6 +1385,7 @@ static void lenovo_remove(struct hid_device *hdev)
+ 		break;
+ 	case USB_DEVICE_ID_LENOVO_TP10UBKBD:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB:
++	case USB_DEVICE_ID_LENOVO_X1_TAB2:
+ 	case USB_DEVICE_ID_LENOVO_X1_TAB3:
+ 		lenovo_remove_tp10ubkbd(hdev);
+ 		break;
+@@ -1430,6 +1436,8 @@ static const struct hid_device_id lenovo_devices[] = {
+ 	 */
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB) },
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB2) },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X1_TAB3) },
+ 	{ }
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 93b5c648ef82c..641292cfdaa6f 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -2116,12 +2116,18 @@ static const struct hid_device_id mt_devices[] = {
+ 		HID_DEVICE(BUS_I2C, HID_GROUP_GENERIC,
+ 			USB_VENDOR_ID_LG, I2C_DEVICE_ID_LG_7010) },
  
--			break;
-+			/*
-+			 * Some modules have BT_EN enabled via a hardware pull-up,
-+			 * meaning it is not defined in the DTS and is not controlled
-+			 * through the power sequence. In such cases, fall through
-+			 * to follow the legacy flow.
-+			 */
-+			if (IS_ERR(qcadev->bt_power->pwrseq))
-+				qcadev->bt_power->pwrseq = NULL;
-+			else
-+				break;
- 		}
- 		fallthrough;
- 	case QCA_WCN3988:
+-	/* Lenovo X1 TAB Gen 2 */
++	/* Lenovo X1 TAB Gen 1 */
+ 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
+ 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
+ 			   USB_VENDOR_ID_LENOVO,
+ 			   USB_DEVICE_ID_LENOVO_X1_TAB) },
+ 
++	/* Lenovo X1 TAB Gen 2 */
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
++		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
++			   USB_VENDOR_ID_LENOVO,
++			   USB_DEVICE_ID_LENOVO_X1_TAB2) },
++
+ 	/* Lenovo X1 TAB Gen 3 */
+ 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
+ 		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
 -- 
 2.39.5
 
