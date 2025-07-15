@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21B02E1758;
-	Tue, 15 Jul 2025 13:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A942E2EE7;
+	Tue, 15 Jul 2025 13:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585790; cv=none; b=YIyFhlCwFan7wVcYbYVYvbFXY7XAtIm1oTOcKv+9ZTgHiN+1ezU1AVVtLYDIjoO2tM+7/dGtt9DX5W+aEPBSrQ3h8PQaPRmaHCam+qT/jwLR0zebynWWyWQuqVELWg4/XKuVbjAVXQ+wXvO3unjiCYRrBOOd11Za76ARtA5znME=
+	t=1752585793; cv=none; b=SPhIy+SJnG+2DhKkTzIcEln/5RYoSeMOxb/w9ophCa0+1zTUwaWPZaeF0+gjpzP0aO2ooQSq+iQR8UVLa75UuNNManSPnYvZ+LeJG4CMH1+m8dA3gY8VpKUYxuSY9v51oeu55Ajnrgn4UEtjyj3c0m3kjnGvE/T6fdJjkHeGdaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585790; c=relaxed/simple;
-	bh=GG2zvebY860dx7jt/hDDbm5vTUYR2aJxTq4azKupfqU=;
+	s=arc-20240116; t=1752585793; c=relaxed/simple;
+	bh=It4EmhxqDAfwYjN/XDHDgihJmkOAf9retNXb9ILuR7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtqjlutX0Hj+IN+Ip1zqPQoPvH8TUnNbnUBAgYLBeNcNERGHFk+gqSy1FDj2rY+aPLMiczCAvUDEC0WaIfSyTOTqFmKYyftnzzlea8n9AGbNtylVPl3h90PmlpOtlOsvDIpO3mwuw6az9hRa1G1Q/XxN+c27n+u7KeZbw10VJIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsJrYrCw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aDBppsUFI6AFPtn08msFxk9p2XIW//tbaGIfDMvrHa7ITQR3TEQDIElvx5ke46nnkJ+8XMaelpUhxvWLOnO5wIaV5jQs5BEfmdQJreqSBQTpxRFrq74MUQXuFx4WdthN5yiSelawnGj/6jgNUDoeqIuTjK+rp+nOtDIhhmP7TC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iQkL0I1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsJrYrCw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8623C4CEE3;
-	Tue, 15 Jul 2025 13:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iQkL0I1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995A5C4CEE3;
+	Tue, 15 Jul 2025 13:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585790;
-	bh=GG2zvebY860dx7jt/hDDbm5vTUYR2aJxTq4azKupfqU=;
+	s=korg; t=1752585792;
+	bh=It4EmhxqDAfwYjN/XDHDgihJmkOAf9retNXb9ILuR7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XsJrYrCwNzsFMZnQi6ljxUujjdg+wTWjKa6x0Czp/vpG1fSC414J8sO5KFVDJEDP6
-	 Az1VEu0Yaw4+tufNIArkRkazDSRRlWjMPIZOcWwgGl4wYckfjAHj5/i0wasljrGk3p
-	 E0A9MamUY0aEIcRr/moRwIxgxzdtcMdwSetUTPSk=
+	b=2iQkL0I1rQKQGoDyJSbxFH3aPaZT9d0rQoXL+maiZ8RLk9lTqOors9eRqvcaakFyD
+	 hZI1a+Xz/oNf3q1mZ/+H1UHCW3dvbwPXKJMIvj3QBpafFb/LxAhWTevzPJ8hPYdV9X
+	 ChdRykuEt0tNs9xUR1eEMO1SXMUWNqKw2QtRwgPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 001/109] eventpoll: dont decrement ep refcount while still holding the ep mutex
-Date: Tue, 15 Jul 2025 15:12:17 +0200
-Message-ID: <20250715130758.928745481@linuxfoundation.org>
+	Kaustabh Chakraborty <kauschluss@disroot.org>,
+	Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH 6.6 002/109] drm/exynos: exynos7_drm_decon: add vblank check in IRQ handling
+Date: Tue, 15 Jul 2025 15:12:18 +0200
+Message-ID: <20250715130758.969636112@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -53,111 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Kaustabh Chakraborty <kauschluss@disroot.org>
 
-commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 upstream.
+commit b846350aa272de99bf6fecfa6b08e64ebfb13173 upstream.
 
-Jann Horn points out that epoll is decrementing the ep refcount and then
-doing a
+If there's support for another console device (such as a TTY serial),
+the kernel occasionally panics during boot. The panic message and a
+relevant snippet of the call stack is as follows:
 
-    mutex_unlock(&ep->mtx);
+  Unable to handle kernel NULL pointer dereference at virtual address 000000000000000
+  Call trace:
+    drm_crtc_handle_vblank+0x10/0x30 (P)
+    decon_irq_handler+0x88/0xb4
+    [...]
 
-afterwards. That's very wrong, because it can lead to a use-after-free.
+Otherwise, the panics don't happen. This indicates that it's some sort
+of race condition.
 
-That pattern is actually fine for the very last reference, because the
-code in question will delay the actual call to "ep_free(ep)" until after
-it has unlocked the mutex.
+Add a check to validate if the drm device can handle vblanks before
+calling drm_crtc_handle_vblank() to avoid this.
 
-But it's wrong for the much subtler "next to last" case when somebody
-*else* may also be dropping their reference and free the ep while we're
-still using the mutex.
-
-Note that this is true even if that other user is also using the same ep
-mutex: mutexes, unlike spinlocks, can not be used for object ownership,
-even if they guarantee mutual exclusion.
-
-A mutex "unlock" operation is not atomic, and as one user is still
-accessing the mutex as part of unlocking it, another user can come in
-and get the now released mutex and free the data structure while the
-first user is still cleaning up.
-
-See our mutex documentation in Documentation/locking/mutex-design.rst,
-in particular the section [1] about semantics:
-
-	"mutex_unlock() may access the mutex structure even after it has
-	 internally released the lock already - so it's not safe for
-	 another context to acquire the mutex and assume that the
-	 mutex_unlock() context is not using the structure anymore"
-
-So if we drop our ep ref before the mutex unlock, but we weren't the
-last one, we may then unlock the mutex, another user comes in, drops
-_their_ reference and releases the 'ep' as it now has no users - all
-while the mutex_unlock() is still accessing it.
-
-Fix this by simply moving the ep refcount dropping to outside the mutex:
-the refcount itself is atomic, and doesn't need mutex protection (that's
-the whole _point_ of refcounts: unlike mutexes, they are inherently
-about object lifetimes).
-
-Reported-by: Jann Horn <jannh@google.com>
-Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
+Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/exynos/exynos7_drm_decon.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -772,7 +772,7 @@ static bool __ep_remove(struct eventpoll
- 	call_rcu(&epi->rcu, epi_rcu_free);
+--- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
+@@ -601,6 +601,10 @@ static irqreturn_t decon_irq_handler(int
+ 	if (!ctx->drm_dev)
+ 		goto out;
  
- 	percpu_counter_dec(&ep->user->epoll_watches);
--	return ep_refcount_dec_and_test(ep);
-+	return true;
- }
++	/* check if crtc and vblank have been initialized properly */
++	if (!drm_dev_has_vblank(ctx->drm_dev))
++		goto out;
++
+ 	if (!ctx->i80_if) {
+ 		drm_crtc_handle_vblank(&ctx->crtc->base);
  
- /*
-@@ -780,14 +780,14 @@ static bool __ep_remove(struct eventpoll
-  */
- static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
- {
--	WARN_ON_ONCE(__ep_remove(ep, epi, false));
-+	if (__ep_remove(ep, epi, false))
-+		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
- }
- 
- static void ep_clear_and_put(struct eventpoll *ep)
- {
- 	struct rb_node *rbp, *next;
- 	struct epitem *epi;
--	bool dispose;
- 
- 	/* We need to release all tasks waiting for these file */
- 	if (waitqueue_active(&ep->poll_wait))
-@@ -820,10 +820,8 @@ static void ep_clear_and_put(struct even
- 		cond_resched();
- 	}
- 
--	dispose = ep_refcount_dec_and_test(ep);
- 	mutex_unlock(&ep->mtx);
--
--	if (dispose)
-+	if (ep_refcount_dec_and_test(ep))
- 		ep_free(ep);
- }
- 
-@@ -1003,7 +1001,7 @@ again:
- 		dispose = __ep_remove(ep, epi, true);
- 		mutex_unlock(&ep->mtx);
- 
--		if (dispose)
-+		if (dispose && ep_refcount_dec_and_test(ep))
- 			ep_free(ep);
- 		goto again;
- 	}
 
 
