@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49A02C327B;
-	Tue, 15 Jul 2025 13:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21B02E1758;
+	Tue, 15 Jul 2025 13:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585787; cv=none; b=eLSh7SwFoaUVHR815PzxnoV0oiVxIHQ08DSSq5FmhYDq4zjTbfShURbFhghjxkrw1G71ZIPdUSgjeriNxdOw4rhphwM/t8WEf6qtxikdxBjumaHCt+n6k03GpYuYtYcwMKFRREXFgsR7odloRuso5EziDB1Hqi0yab6t6C8d5l4=
+	t=1752585790; cv=none; b=YIyFhlCwFan7wVcYbYVYvbFXY7XAtIm1oTOcKv+9ZTgHiN+1ezU1AVVtLYDIjoO2tM+7/dGtt9DX5W+aEPBSrQ3h8PQaPRmaHCam+qT/jwLR0zebynWWyWQuqVELWg4/XKuVbjAVXQ+wXvO3unjiCYRrBOOd11Za76ARtA5znME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585787; c=relaxed/simple;
-	bh=fN9WP7ena3U2SIVe0d4dqdL2K2Cg5cpi4d8PDorwtuY=;
+	s=arc-20240116; t=1752585790; c=relaxed/simple;
+	bh=GG2zvebY860dx7jt/hDDbm5vTUYR2aJxTq4azKupfqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTdbP0MWAqXkjrzEgEw8z49ShjD4k4sKHLB0Brq/4c3RIxmTchaBVgEi0CY+yy9NBk9Th02nLcBdDuZpEE18pdo5q2B2C0zWN4U1E/Q2pFFAKTmRw9lHDMTkpXlXrJ6jZm/EjLx0MzI0ENbFWZOLppyNwVdg8gS3FfDnqr8daWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSIm7gCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtqjlutX0Hj+IN+Ip1zqPQoPvH8TUnNbnUBAgYLBeNcNERGHFk+gqSy1FDj2rY+aPLMiczCAvUDEC0WaIfSyTOTqFmKYyftnzzlea8n9AGbNtylVPl3h90PmlpOtlOsvDIpO3mwuw6az9hRa1G1Q/XxN+c27n+u7KeZbw10VJIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsJrYrCw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSIm7gCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B8FC4CEF7;
-	Tue, 15 Jul 2025 13:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsJrYrCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8623C4CEE3;
+	Tue, 15 Jul 2025 13:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585787;
-	bh=fN9WP7ena3U2SIVe0d4dqdL2K2Cg5cpi4d8PDorwtuY=;
+	s=korg; t=1752585790;
+	bh=GG2zvebY860dx7jt/hDDbm5vTUYR2aJxTq4azKupfqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSIm7gCkTDEUSdIdmyReyVytwbY6xy9NICgy20PfCLmVwlSrE7KtbrzVhgotA8d6c
-	 MXpLe6Txt7ln5ltHd16FjMo6/QVfpCq6X5Xk3CfIYDL0RrC5FxJ1oFb8ni5oEQ+WkI
-	 Vw8AZUXDkrqavbHop9hTt9g0f0R4Cl3hXAopd1aI=
+	b=XsJrYrCwNzsFMZnQi6ljxUujjdg+wTWjKa6x0Czp/vpG1fSC414J8sO5KFVDJEDP6
+	 Az1VEu0Yaw4+tufNIArkRkazDSRRlWjMPIZOcWwgGl4wYckfjAHj5/i0wasljrGk3p
+	 E0A9MamUY0aEIcRr/moRwIxgxzdtcMdwSetUTPSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/163] net: mana: Record doorbell physical address in PF mode
-Date: Tue, 15 Jul 2025 15:13:38 +0200
-Message-ID: <20250715130814.855295132@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.6 001/109] eventpoll: dont decrement ep refcount while still holding the ep mutex
+Date: Tue, 15 Jul 2025 15:12:17 +0200
+Message-ID: <20250715130758.928745481@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
-References: <20250715130808.777350091@linuxfoundation.org>
+In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
+References: <20250715130758.864940641@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +49,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit e0fca6f2cebff539e9317a15a37dcf432e3b851a ]
+commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 upstream.
 
-MANA supports RDMA in PF mode. The driver should record the doorbell
-physical address when in PF mode.
+Jann Horn points out that epoll is decrementing the ep refcount and then
+doing a
 
-The doorbell physical address is used by the RDMA driver to map
-doorbell pages of the device to user-mode applications through RDMA
-verbs interface. In the past, they have been mapped to user-mode while
-the device is in VF mode. With the support for PF mode implemented,
-also expose those pages in PF mode.
+    mutex_unlock(&ep->mtx);
 
-Support for PF mode is implemented in
-290e5d3c49f6 ("net: mana: Add support for Multi Vports on Bare metal")
+afterwards. That's very wrong, because it can lead to a use-after-free.
 
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1750210606-12167-1-git-send-email-longli@linuxonhyperv.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That pattern is actually fine for the very last reference, because the
+code in question will delay the actual call to "ep_free(ep)" until after
+it has unlocked the mutex.
+
+But it's wrong for the much subtler "next to last" case when somebody
+*else* may also be dropping their reference and free the ep while we're
+still using the mutex.
+
+Note that this is true even if that other user is also using the same ep
+mutex: mutexes, unlike spinlocks, can not be used for object ownership,
+even if they guarantee mutual exclusion.
+
+A mutex "unlock" operation is not atomic, and as one user is still
+accessing the mutex as part of unlocking it, another user can come in
+and get the now released mutex and free the data structure while the
+first user is still cleaning up.
+
+See our mutex documentation in Documentation/locking/mutex-design.rst,
+in particular the section [1] about semantics:
+
+	"mutex_unlock() may access the mutex structure even after it has
+	 internally released the lock already - so it's not safe for
+	 another context to acquire the mutex and assume that the
+	 mutex_unlock() context is not using the structure anymore"
+
+So if we drop our ep ref before the mutex unlock, but we weren't the
+last one, we may then unlock the mutex, another user comes in, drops
+_their_ reference and releases the 'ep' as it now has no users - all
+while the mutex_unlock() is still accessing it.
+
+Fix this by simply moving the ep refcount dropping to outside the mutex:
+the refcount itself is atomic, and doesn't need mutex protection (that's
+the whole _point_ of refcounts: unlike mutexes, they are inherently
+about object lifetimes).
+
+Reported-by: Jann Horn <jannh@google.com>
+Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/gdma_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/eventpoll.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-index 9bac4083d8a09..876de6db63c4f 100644
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -28,6 +28,9 @@ static void mana_gd_init_pf_regs(struct pci_dev *pdev)
- 	gc->db_page_base = gc->bar0_va +
- 				mana_gd_r64(gc, GDMA_PF_REG_DB_PAGE_OFF);
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -772,7 +772,7 @@ static bool __ep_remove(struct eventpoll
+ 	call_rcu(&epi->rcu, epi_rcu_free);
  
-+	gc->phys_db_page_base = gc->bar0_pa +
-+				mana_gd_r64(gc, GDMA_PF_REG_DB_PAGE_OFF);
-+
- 	sriov_base_off = mana_gd_r64(gc, GDMA_SRIOV_REG_CFG_BASE_OFF);
+ 	percpu_counter_dec(&ep->user->epoll_watches);
+-	return ep_refcount_dec_and_test(ep);
++	return true;
+ }
  
- 	sriov_base_va = gc->bar0_va + sriov_base_off;
--- 
-2.39.5
-
+ /*
+@@ -780,14 +780,14 @@ static bool __ep_remove(struct eventpoll
+  */
+ static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
+ {
+-	WARN_ON_ONCE(__ep_remove(ep, epi, false));
++	if (__ep_remove(ep, epi, false))
++		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
+ }
+ 
+ static void ep_clear_and_put(struct eventpoll *ep)
+ {
+ 	struct rb_node *rbp, *next;
+ 	struct epitem *epi;
+-	bool dispose;
+ 
+ 	/* We need to release all tasks waiting for these file */
+ 	if (waitqueue_active(&ep->poll_wait))
+@@ -820,10 +820,8 @@ static void ep_clear_and_put(struct even
+ 		cond_resched();
+ 	}
+ 
+-	dispose = ep_refcount_dec_and_test(ep);
+ 	mutex_unlock(&ep->mtx);
+-
+-	if (dispose)
++	if (ep_refcount_dec_and_test(ep))
+ 		ep_free(ep);
+ }
+ 
+@@ -1003,7 +1001,7 @@ again:
+ 		dispose = __ep_remove(ep, epi, true);
+ 		mutex_unlock(&ep->mtx);
+ 
+-		if (dispose)
++		if (dispose && ep_refcount_dec_and_test(ep))
+ 			ep_free(ep);
+ 		goto again;
+ 	}
 
 
