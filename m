@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448EB2E2F06;
-	Tue, 15 Jul 2025 13:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64122E3AE5;
+	Tue, 15 Jul 2025 13:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586335; cv=none; b=uxC/4MSqjpIwoM6sPeYfPLjUiRoRyaB0oVsFxwcfp5lhVptpi2R5nJXiEKmaez0z80Uv9xAgVBzIQ4N6tl9xqJ0DKZ9No96HUb85PThj2kAWpexZ8AudN5XHatz/f1tIfwUeskLbsk63MmjlbBdG/4JOVuIJ1EabxP1We3lNMs8=
+	t=1752586337; cv=none; b=jtvJPNAtCTuwYbEWJAosUTw9YlTaI8Kwu2+Duxr4hhxs8eILrqllRM/F3w4azkfxszLTNoICy/zpOHZZCZrYpuWMvE38fNG+LoG7tBABMIqt1VYpLFGJJAot16x/hGFNmlZ/fMYN+hZ8WaK0GmDq0IxwM53CkLNSbAsv1n8j4vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586335; c=relaxed/simple;
-	bh=gpKa8v//eCon/zzSPxrWywknJuMnslOpw8D2phbfGPk=;
+	s=arc-20240116; t=1752586337; c=relaxed/simple;
+	bh=dhZ5rd18J+2oQZRwuPZbj8JWlzu9dJJ0MSVFF1XzzOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dq1IsxLVMMVaIu2HZ0a/oLOkLtbpFllfLxIZxr6d6jUPREvxLTKvILpIuQeMYtckw5YJ4DLRX6FSFqQm9N8cy5pvJi1inkfLg6KVdn0ZeldCQgZ1AXBTiFELak8OMuGlRIsq9dN51MI4Fd+aOdtWA2+ztxPue/QtNZxIvULiSn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuDjj4zj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DQFD7CfbvfSFZBMAU/xT/qnWri/tahBUvAzZxXrFCUl0QAJT/HgT/GxBpP3aN4saVWiSnqaA++xiRaMq7e/Trxd6GQdAzXVT6Wi799TvaWcysmP3O3CMw14aKgJDpE1rMfstMD0SnVCLfgdcGQkEKLWnBzypv33MQLdyAeGCu8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b75i9RWe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuDjj4zj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1C9C4CEE3;
-	Tue, 15 Jul 2025 13:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b75i9RWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D30C4CEE3;
+	Tue, 15 Jul 2025 13:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586335;
-	bh=gpKa8v//eCon/zzSPxrWywknJuMnslOpw8D2phbfGPk=;
+	s=korg; t=1752586337;
+	bh=dhZ5rd18J+2oQZRwuPZbj8JWlzu9dJJ0MSVFF1XzzOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuDjj4zjZ6smDSL0pHAaq93UNOYvKZ+AoIUsiRh4zSRwYVpLMYPeaU77HpEEbnV3b
-	 5gkjnnKnlf0TOA53DshlAuL9ZMJsUR+ObnaMQVyfzpmXOF0RMqNniU+f6QnKKcetDT
-	 zape1s44S40rEi8UUkj40eq084J+/NYcr8mDxBNs=
+	b=b75i9RWeLZuGQn4vgiHR3drOi6dnoSxehDB0JrCcZ9cedxiTY9FaaDz+9KqyhhyKk
+	 QW9IgTX6PsYUy2HbXsc5zrNEpNKqHmcP3euHVycam3+ENCcfIiabbR2k5SmUGcgWwM
+	 L5BcPvACutlzTybd7ZuRFx35huVbBSq3kot97JMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/148] ASoC: meson: meson-card-utils: use of_property_present() for DT parsing
-Date: Tue, 15 Jul 2025 15:12:28 +0200
-Message-ID: <20250715130801.365178230@linuxfoundation.org>
+Subject: [PATCH 5.4 027/148] fs/jfs: consolidate sanity checking in dbMount
+Date: Tue, 15 Jul 2025 15:12:29 +0200
+Message-ID: <20250715130801.404777910@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,46 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-[ Upstream commit 171eb6f71e9e3ba6a7410a1d93f3ac213f39dae2 ]
+[ Upstream commit 0d250b1c52484d489e31df2cf9118b7c4bd49d31 ]
 
-Commit c141ecc3cecd ("of: Warn when of_property_read_bool() is used on
-non-boolean properties") added a warning when trying to parse a property
-with a value (boolean properties are defined as: absent = false, present
-without any value = true). This causes a warning from meson-card-utils.
+Sanity checks have been added to dbMount as individual if clauses with
+identical error handling. Move these all into one clause.
 
-meson-card-utils needs to know about the existence of the
-"audio-routing" and/or "audio-widgets" properties in order to properly
-parse them. Switch to of_property_present() in order to silence the
-following warning messages during boot:
-  OF: /sound: Read of boolean property 'audio-routing' with a value.
-  OF: /sound: Read of boolean property 'audio-widgets' with a value.
-
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Tested-by: Christian Hewitt <christianshewitt@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20250419213448.59647-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Stable-dep-of: 37bfb464ddca ("jfs: validate AG parameters in dbMount() to prevent crashes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/meson-card-utils.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 37 +++++++++----------------------------
+ 1 file changed, 9 insertions(+), 28 deletions(-)
 
-diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
-index a70d244ef88b6..f66a0c38c3037 100644
---- a/sound/soc/meson/meson-card-utils.c
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -244,7 +244,7 @@ static int meson_card_parse_of_optional(struct snd_soc_card *card,
- 						    const char *p))
- {
- 	/* If property is not provided, don't fail ... */
--	if (!of_property_read_bool(card->dev->of_node, propname))
-+	if (!of_property_present(card->dev->of_node, propname))
- 		return 0;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index d161bbafe77f6..6bd9ab705cc66 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -178,45 +178,26 @@ int dbMount(struct inode *ipbmap)
+ 	dbmp_le = (struct dbmap_disk *) mp->data;
+ 	bmp->db_mapsize = le64_to_cpu(dbmp_le->dn_mapsize);
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
+-
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+-	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE ||
+-		bmp->db_l2nbperpage < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+-	if (!bmp->db_numag || bmp->db_numag > MAXAG) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+ 	bmp->db_maxag = le32_to_cpu(dbmp_le->dn_maxag);
+ 	bmp->db_agpref = le32_to_cpu(dbmp_le->dn_agpref);
+-	if (bmp->db_maxag >= MAXAG || bmp->db_maxag < 0 ||
+-		bmp->db_agpref >= MAXAG || bmp->db_agpref < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+-
+ 	bmp->db_aglevel = le32_to_cpu(dbmp_le->dn_aglevel);
+ 	bmp->db_agheight = le32_to_cpu(dbmp_le->dn_agheight);
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+-	if (!bmp->db_agwidth) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
+-	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG ||
+-	    bmp->db_agl2size < 0) {
+-		err = -EINVAL;
+-		goto err_release_metapage;
+-	}
  
- 	/* ... but do fail if it is provided and the parsing fails */
+-	if (((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
++	if ((bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) ||
++	    (bmp->db_l2nbperpage < 0) ||
++	    !bmp->db_numag || (bmp->db_numag > MAXAG) ||
++	    (bmp->db_maxag >= MAXAG) || (bmp->db_maxag < 0) ||
++	    (bmp->db_agpref >= MAXAG) || (bmp->db_agpref < 0) ||
++	    !bmp->db_agwidth ||
++	    (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) ||
++	    (bmp->db_agl2size < 0) ||
++	    ((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
+ 	}
 -- 
 2.39.5
 
