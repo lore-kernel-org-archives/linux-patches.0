@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D04192D8A;
-	Tue, 15 Jul 2025 13:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F222E2EFF;
+	Tue, 15 Jul 2025 13:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585468; cv=none; b=M0fSZv3MX8HBiW3r8lgVziQaUS2Syoig62eLpWAHj2ibg0wUERkFKd4ZZv6RXad1ix3IE4i0qEVDNxLDibnx0l/n7Y8gewAydJoH0FI8TW+u9RD13MtI3oShGtnFQMUxlCMGlxmvcrNmCdxCeBVFrSbWFf1gvQ+aH9LF//a2rW8=
+	t=1752585471; cv=none; b=qNpf90n8On+Gfckp/Tnd2/d+nQbRZFBvG7ACvqb3XuSpR5JUGPVpNJDW4KQCU0pIGx6OppLdj3UXJOCptd+xe2OSAfe+UVQHeigZGUMN/uA2VmBaG1zy3ngEkDbWdlNn2nSQItnn75hIIFiClMtBJMlSHrVK9wqVxo5In8cZUEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585468; c=relaxed/simple;
-	bh=pjvzWtg0jTZXL/bix1slAobAM3wezzNSDNub6Frxpks=;
+	s=arc-20240116; t=1752585471; c=relaxed/simple;
+	bh=VZtPdH+OZcCio11O1i1+iVOgcP2R/vE83u72mbpyifc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C48gRBZQ9oqUV+ZF2xtOBTI5Z/E4dHVRHCC+ydkbqZhVBa25fnlan9Qi1W89DixRmjtdsd9R5cAXevcJers2NGoJxAaUtpQXIAWBG3FqpAlMX1M+NwUbCmU9Gvc1k6tZO+WW48y14xHjqsUhpxfpadJiPoDLiu+qOa9qg8Ku0mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJCQONlw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XIZHh14Bz5QCzHxf6Ff263nwcoN+iNeJtf/trMBitVq4pF0NxJxgKiihl1AstFTM8HqO+z2NwHGTiplk9vhl10o40dqlrEo0Rz6D7tZ6pAMEER7ZGdCYjemdeg8HCmNyBrrjsoYTjNO7mMGT44tD4xsq4b3KId59Vb7dtjaSDtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBfuGBzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJCQONlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2313C4CEE3;
-	Tue, 15 Jul 2025 13:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBfuGBzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89991C4CEE3;
+	Tue, 15 Jul 2025 13:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585468;
-	bh=pjvzWtg0jTZXL/bix1slAobAM3wezzNSDNub6Frxpks=;
+	s=korg; t=1752585470;
+	bh=VZtPdH+OZcCio11O1i1+iVOgcP2R/vE83u72mbpyifc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJCQONlwhgUumUyy0yknQ5dSCxrSjxBzhMgkoK7VczuPPJTasiNZRowS/A2lVSTnu
-	 FbP8LdZcscd+xpW0ViQWnlHT2EnRPrlfaQMIjnfetSQAzTEzUqoYTTsrRePzXuLUJu
-	 6acMthC7+T59lzV1uAN83NF6pl8iYDqDabt/1mQk=
+	b=tBfuGBzzEB/aZ4YI/AlXpghsKrmMyTTYwnVskdIFMYu9Ac4M1wVSAi12lx+J80KB7
+	 gUBdr7a7DTNK3D7h2Htx9yg6OVa6lvK+I2vJTVxKP1CgYWVTUV9oQOxl6J9InfwjSX
+	 fsYBqStwm1RjnGf0IWA8xb+SbHbx+KiExxuYVwSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/163] Bluetooth: hci_sync: Fix not disabling advertising instance
-Date: Tue, 15 Jul 2025 15:11:28 +0200
-Message-ID: <20250715130809.577602736@linuxfoundation.org>
+Subject: [PATCH 6.12 021/163] Bluetooth: hci_event: Fix not marking Broadcast Sink BIS as connected
+Date: Tue, 15 Jul 2025 15:11:29 +0200
+Message-ID: <20250715130809.616578700@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -52,32 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit ef9675b0ef030d135413e8638989f3a7d1f3217a ]
+[ Upstream commit c7349772c268ec3c91d83cbfbbcf63f1bd7c256c ]
 
-As the code comments on hci_setup_ext_adv_instance_sync suggests the
-advertising instance needs to be disabled in order to update its
-parameters, but it was wrongly checking that !adv->pending.
+Upon receiving HCI_EVT_LE_BIG_SYNC_ESTABLISHED with status 0x00
+(success) the corresponding BIS hci_conn state shall be set to
+BT_CONNECTED otherwise they will be left with BT_OPEN which is invalid
+at that point, also create the debugfs and sysfs entries following the
+same logic as the likes of Broadcast Source BIS and CIS connections.
 
-Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
+Fixes: f777d8827817 ("Bluetooth: ISO: Notify user space about failed bis connections")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_event.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 79d1a6ed08b29..bc01135e43f3e 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1345,7 +1345,7 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 	 * Command Disallowed error, so we must first disable the
- 	 * instance if it is active.
- 	 */
--	if (adv && !adv->pending) {
-+	if (adv) {
- 		err = hci_disable_ext_adv_instance_sync(hdev, instance);
- 		if (err)
- 			return err;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 7fdf17351e4a2..b7dcebc701898 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6945,7 +6945,10 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 		bis->iso_qos.bcast.in.sdu = le16_to_cpu(ev->max_pdu);
+ 
+ 		if (!ev->status) {
++			bis->state = BT_CONNECTED;
+ 			set_bit(HCI_CONN_BIG_SYNC, &bis->flags);
++			hci_debugfs_create_conn(bis);
++			hci_conn_add_sysfs(bis);
+ 			hci_iso_setup_path(bis);
+ 		}
+ 	}
 -- 
 2.39.5
 
