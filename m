@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4482E3B15;
-	Tue, 15 Jul 2025 13:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3362D29C2;
+	Tue, 15 Jul 2025 13:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586971; cv=none; b=rmlrGNNJ04WxnaiLO5gKHPfgwrQFNcbuVicaYQDlBv6lmd2lwRiYREL0q3g2MTIi4FlzA8+4OBiZeP/nmlTXw4ldyTQUzVqDYL+5O7L/W7AFUttITaR1c/lW8zT9TU4X1lwxBEHFQ0QF24Qo0o8WcCaSWkStvyRZvBbnMzybYhA=
+	t=1752586973; cv=none; b=Vw768/mRT1W0oCVqXXLBydGo+dtDx2jeFmCzaRL36/hMxGonvCKaEsZjEfJnK4LikaBCWwQoDzj/bsLHfvpUmC/WdtQgok71RztUny38dEJIBEu1I1+oDaXwV4MB0gtrOIX97YkxoW+ApL5EHe8Eh1QG8W+dIq513cm2QIk7nkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586971; c=relaxed/simple;
-	bh=a2Xty2b/4V1PyQijERpuK9J90ZEn/o+rN4WlXWPn/oQ=;
+	s=arc-20240116; t=1752586973; c=relaxed/simple;
+	bh=hKg/aZabzfj8RR9wrRNhBokydPYxIUNTkmNEXvbS9sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYTeq/+OkOsl9UMRPxG4M7hSpjcBfU0+xisrYx/PwGWwB8tc3oENvyTqw7bG94JJH1WxZqN7REOvh1a/AicXTI32CO5yhMbDyQ4kdQDKkfmA0oi+hFsfjhoBoXwxB2HMIO5k5m4dg994kYssutuBDiL+uV6h/MdG4o1qn6ztPEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saKHlHC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YsK1dcc5mhEqR/N61kNjSuWBl4/cCOkIRLrK1JMKXSBKvooooErlEGTElFf+5LkCzSn71zVpKnruA94NKiRodgmmOEinNh1gMYzpK8ekSoQbUThSoBwJbaZGS2TD7Ny3k8xVB7FYneXxm7KPIjdjJw+sa4YZmYAMbIKqNAYBH5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6ShzhA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saKHlHC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927B5C4CEE3;
-	Tue, 15 Jul 2025 13:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6ShzhA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FACFC4CEE3;
+	Tue, 15 Jul 2025 13:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586970;
-	bh=a2Xty2b/4V1PyQijERpuK9J90ZEn/o+rN4WlXWPn/oQ=;
+	s=korg; t=1752586973;
+	bh=hKg/aZabzfj8RR9wrRNhBokydPYxIUNTkmNEXvbS9sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=saKHlHC8tgHmMXCLucB1vgg6ijQRDNslCqr2bRlW09PISzDJs13peWE6i3iZT59nD
-	 iZisMZ1LC2mrGOu83T12FA4nMczBpY+voXfxINGjYppE9DCqfdlYQdgyZlLvwWUIAl
-	 OuQ8m0Z5ZxbB/lXUjmWf7Ao8YqCISRitza5CtOFM=
+	b=v6ShzhA+bO0FsxlqlyKsbzaywrqxOUuXpORyvnjwF62CLT6QyZXqid72XuwTVaetj
+	 UbpmGRJpS3DPSK31sORm9dvPccs6pZHG8eyFz3Lw3ZO2b4zkubgfk4HkHzMbBg9TTa
+	 wD6RBgprHAxE9F2nmd+CwQPX6pPV55AlcKwQ9n68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.15 090/192] Revert "drm/xe/xe2: Enable Indirect Ring State support for Xe2"
-Date: Tue, 15 Jul 2025 15:13:05 +0200
-Message-ID: <20250715130818.520611756@linuxfoundation.org>
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Julien Massot <julien.massot@collabora.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.15 117/192] dt-bindings: clock: mediatek: Add #reset-cells property for MT8188
+Date: Tue, 15 Jul 2025 15:13:32 +0200
+Message-ID: <20250715130819.583914581@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -50,44 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Julien Massot <julien.massot@collabora.com>
 
-commit daa099fed50a39256feb37d3fac146bf0d74152f upstream.
+commit a42b4dcc4f9f309a23e6de5ae57a680b9fd2ea10 upstream.
 
-This reverts commit fe0154cf8222d9e38c60ccc124adb2f9b5272371.
+The '#reset-cells' property is permitted for some of the MT8188
+clock controllers, but not listed as a valid property.
 
-Seeing some unexplained random failures during LRC context switches with
-indirect ring state enabled. The failures were always there, but the
-repro rate increased with the addition of WA BB as a separate BO.
-Commit 3a1edef8f4b5 ("drm/xe: Make WA BB part of LRC BO") helped to
-reduce the issues in the context switches, but didn't eliminate them
-completely.
-
-Indirect ring state is not required for any current features, so disable
-for now until failures can be root caused.
-
-Cc: stable@vger.kernel.org
-Fixes: fe0154cf8222 ("drm/xe/xe2: Enable Indirect Ring State support for Xe2")
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://lore.kernel.org/r/20250702035846.3178344-1-matthew.brost@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 03d85ab36bcbcbe9dc962fccd3f8e54d7bb93b35)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Fixes: 9a5cd59640ac ("dt-bindings: clock: mediatek: Add SMI LARBs reset for MT8188")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Julien Massot <julien.massot@collabora.com>
+Link: https://lore.kernel.org/r/20250516-dtb-check-mt8188-v2-1-fb60bef1b8e1@collabora.com
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pci.c |    1 -
- 1 file changed, 1 deletion(-)
+ .../devicetree/bindings/clock/mediatek,mt8188-clock.yaml       | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -137,7 +137,6 @@ static const struct xe_graphics_desc gra
- 	.has_asid = 1, \
- 	.has_atomic_enable_pte_bit = 1, \
- 	.has_flat_ccs = 1, \
--	.has_indirect_ring_state = 1, \
- 	.has_range_tlb_invalidation = 1, \
- 	.has_usm = 1, \
- 	.has_64bit_timestamp = 1, \
+diff --git a/Documentation/devicetree/bindings/clock/mediatek,mt8188-clock.yaml b/Documentation/devicetree/bindings/clock/mediatek,mt8188-clock.yaml
+index 2985c8c717d7..5403242545ab 100644
+--- a/Documentation/devicetree/bindings/clock/mediatek,mt8188-clock.yaml
++++ b/Documentation/devicetree/bindings/clock/mediatek,mt8188-clock.yaml
+@@ -52,6 +52,9 @@ properties:
+   '#clock-cells':
+     const: 1
+ 
++  '#reset-cells':
++    const: 1
++
+ required:
+   - compatible
+   - reg
+-- 
+2.50.1
+
 
 
