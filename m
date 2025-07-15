@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7843E2E7654;
-	Tue, 15 Jul 2025 13:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAE92E7654;
+	Tue, 15 Jul 2025 13:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587583; cv=none; b=pBP3SE8JOZVI4aUC8nf2cUzqFv0yRy/yV/OwFA1LFtLYnJ7TfKwwxwMsf7piAGvFL7qEgRTLG1hoQ1vhDCRiMjMiAf3S8ZNtHvoVSr2cd/xVBaI5znHbcvuu4waIoYqHW2hxYTZRSFI8NRZGlpROucH+gUoPZmPcNkfiw9deQvU=
+	t=1752587586; cv=none; b=bsICV6EzFnvm3nM3sP33XKrsKGPCXTu+IqnFNTogdkhHNJsMvLWiOJlYVq3sPdP+8zqiOVvO0EhBTz8ZjdBhSi89HO5Y2H9FYpOzdzdwpTZr/MaMcXkgf8TJ+WzBCTWl9EkO0f6qPA+aU/cB6XHrWiJ/1DBGBNyBW1sUX2rmP1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587583; c=relaxed/simple;
-	bh=gpbU8NT66oLmbzW7LmSrCR7oZQVRqWErQQIAHT9sCWg=;
+	s=arc-20240116; t=1752587586; c=relaxed/simple;
+	bh=Z5pivog5AZqZZChm3Hdeioid7BBKSvQfufK6ucpzyQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlGS85QSTw/4t0k/lnsHoDz1ZR3mtI27tgvQ+Fxx4mqn9lOC/d2igIiMlQrnijpGl2rJcq63VbPcWrmP+QJ6LBAYy4p39ri35LNA+ekaYlifeIfRSgcGQnGV+fE2N4qAl8QohkWpvNq/g9VjRrRkGIw6d7OUJ5ybsIVCo14VDJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNsOyeGZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oU+bx7EHf5E0aNuEpWCJ9bV8QKEWTzgXtbdfi0c9QRZsHsFvL4W5QQeV5F2QUnDSfBRb0UmzMzakgRGGpRN6EyAzV/IY2Lbw4g6i6Gonhh4Ohhs2A9/RT5XyJM/bBuFqYiu8cKKIwQye6QlQ0dG2ys5iFVGOdv+iP8sQIYryxAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ia0WjK7v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNsOyeGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BE9C4CEE3;
-	Tue, 15 Jul 2025 13:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ia0WjK7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB387C4CEE3;
+	Tue, 15 Jul 2025 13:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587583;
-	bh=gpbU8NT66oLmbzW7LmSrCR7oZQVRqWErQQIAHT9sCWg=;
+	s=korg; t=1752587586;
+	bh=Z5pivog5AZqZZChm3Hdeioid7BBKSvQfufK6ucpzyQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNsOyeGZRCD4INN8pfC1ZOv6Ez8s2qF6QTiAXyB29VQODNT1DngTL5wxzq40wzK6C
-	 8YefmtYWpwJz9L8NIil9XnWLJb6neXCX3uZKdyt0qdjfq6AQdFNj7R53fdzEKDubc4
-	 nAuVbif+ktf9Aa4e2iB+wpnhheJH4xMkwvx22A14=
+	b=Ia0WjK7vZbNTc6z17vFVD8mu3BnMJmNiKWO4yLim94sFJiyBTTg+QHSRA+Fw7y4Y/
+	 r5gs06DL4H2chZfdwy0D0WROKXIzxwdrfXm8iY7/FSjM1B3NRzhJX9RHjRAp5hjXVq
+	 gQyH7SmWQn3claariTICoJV7C6uWIP1y8+hjaoqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weihang Li <liweihang@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 035/208] RDMA/core: Use refcount_t instead of atomic_t on refcount of iwcm_id_private
-Date: Tue, 15 Jul 2025 15:12:24 +0200
-Message-ID: <20250715130812.234766163@linuxfoundation.org>
+Subject: [PATCH 5.10 026/208] usb: typec: tcpci_maxim: Fix uninitialized return variable
+Date: Tue, 15 Jul 2025 15:12:15 +0200
+Message-ID: <20250715130811.882294532@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -51,77 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weihang Li <liweihang@huawei.com>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-[ Upstream commit 60dff56d77292062789232f68354f567e1ccf1d2 ]
+[ Upstream commit 7695cae24b29edd2dbd3b3a77a7264cd6d9ca67a ]
 
-The refcount_t API will WARN on underflow and overflow of a reference
-counter, and avoid use-after-free risks.
+New smatch warnings:
+drivers/usb/typec/tcpm/tcpci_maxim.c:324 max_tcpci_irq() error: uninitialized symbol 'irq_return'.
+drivers/usb/typec/tcpm/tcpci_maxim.c:407 max_tcpci_probe() warn: passing zero to 'PTR_ERR'
 
-Link: https://lore.kernel.org/r/1622194663-2383-2-git-send-email-liweihang@huawei.com
-Signed-off-by: Weihang Li <liweihang@huawei.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: 6883b680e703 ("RDMA/iwcm: Fix use-after-free of work objects after cm_id destruction")
+The change fixes the above warnings by initializing irq_return
+and replacing IS_ERR_OR_NULL with IS_ERR.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20201029063138.1429760-11-badhri@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 0736299d090f ("usb: typec: tcpm/tcpci_maxim: Fix bounds check in process_rx()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwcm.c | 9 ++++-----
- drivers/infiniband/core/iwcm.h | 2 +-
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/usb/typec/tcpm/tcpci_maxim.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/iwcm.c b/drivers/infiniband/core/iwcm.c
-index 44362f693df9f..3e4941754b48d 100644
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -211,8 +211,7 @@ static void free_cm_id(struct iwcm_id_private *cm_id_priv)
-  */
- static int iwcm_deref_id(struct iwcm_id_private *cm_id_priv)
+diff --git a/drivers/usb/typec/tcpm/tcpci_maxim.c b/drivers/usb/typec/tcpm/tcpci_maxim.c
+index 723d7dd38f75b..6bf0d1ebc1fae 100644
+--- a/drivers/usb/typec/tcpm/tcpci_maxim.c
++++ b/drivers/usb/typec/tcpm/tcpci_maxim.c
+@@ -344,7 +344,7 @@ static irqreturn_t max_tcpci_irq(int irq, void *dev_id)
  {
--	BUG_ON(atomic_read(&cm_id_priv->refcount)==0);
--	if (atomic_dec_and_test(&cm_id_priv->refcount)) {
-+	if (refcount_dec_and_test(&cm_id_priv->refcount)) {
- 		BUG_ON(!list_empty(&cm_id_priv->work_list));
- 		free_cm_id(cm_id_priv);
- 		return 1;
-@@ -225,7 +224,7 @@ static void add_ref(struct iw_cm_id *cm_id)
- {
- 	struct iwcm_id_private *cm_id_priv;
- 	cm_id_priv = container_of(cm_id, struct iwcm_id_private, id);
--	atomic_inc(&cm_id_priv->refcount);
-+	refcount_inc(&cm_id_priv->refcount);
- }
+ 	struct max_tcpci_chip *chip = dev_id;
+ 	u16 status;
+-	irqreturn_t irq_return;
++	irqreturn_t irq_return = IRQ_HANDLED;
+ 	int ret;
  
- static void rem_ref(struct iw_cm_id *cm_id)
-@@ -257,7 +256,7 @@ struct iw_cm_id *iw_create_cm_id(struct ib_device *device,
- 	cm_id_priv->id.add_ref = add_ref;
- 	cm_id_priv->id.rem_ref = rem_ref;
- 	spin_lock_init(&cm_id_priv->lock);
--	atomic_set(&cm_id_priv->refcount, 1);
-+	refcount_set(&cm_id_priv->refcount, 1);
- 	init_waitqueue_head(&cm_id_priv->connect_wait);
- 	init_completion(&cm_id_priv->destroy_comp);
- 	INIT_LIST_HEAD(&cm_id_priv->work_list);
-@@ -1097,7 +1096,7 @@ static int cm_event_handler(struct iw_cm_id *cm_id,
- 		}
- 	}
+ 	if (!chip->port)
+@@ -444,7 +444,7 @@ static int max_tcpci_probe(struct i2c_client *client, const struct i2c_device_id
  
--	atomic_inc(&cm_id_priv->refcount);
-+	refcount_inc(&cm_id_priv->refcount);
- 	if (list_empty(&cm_id_priv->work_list)) {
- 		list_add_tail(&work->list, &cm_id_priv->work_list);
- 		queue_work(iwcm_wq, &work->work);
-diff --git a/drivers/infiniband/core/iwcm.h b/drivers/infiniband/core/iwcm.h
-index 82c2cd1b0a804..bf74639be1287 100644
---- a/drivers/infiniband/core/iwcm.h
-+++ b/drivers/infiniband/core/iwcm.h
-@@ -52,7 +52,7 @@ struct iwcm_id_private {
- 	wait_queue_head_t connect_wait;
- 	struct list_head work_list;
- 	spinlock_t lock;
--	atomic_t refcount;
-+	refcount_t refcount;
- 	struct list_head work_free_list;
- };
- 
+ 	max_tcpci_init_regs(chip);
+ 	chip->tcpci = tcpci_register_port(chip->dev, &chip->data);
+-	if (IS_ERR_OR_NULL(chip->tcpci)) {
++	if (IS_ERR(chip->tcpci)) {
+ 		dev_err(&client->dev, "TCPCI port registration failed");
+ 		ret = PTR_ERR(chip->tcpci);
+ 		return PTR_ERR(chip->tcpci);
 -- 
 2.39.5
 
