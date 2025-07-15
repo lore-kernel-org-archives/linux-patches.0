@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2A82E1757;
-	Tue, 15 Jul 2025 13:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8842E1757;
+	Tue, 15 Jul 2025 13:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587717; cv=none; b=ONqRVlWfsNnSfreESNxXoQd17rMMTUbJUOt0jW7KtjvYJf3853wmytLjhGk6eJEma+Hcsa2NylfW5VidCLm5vJoYOUgJzlHxhx3yyJm7zPBlkOO062ZAT1Ixu9j2T8uneldPxwW8nlMsDPPwjPA8szEsB/HY2AT0CvZWGg0NXbA=
+	t=1752587719; cv=none; b=AUafsgow4Ld45fmcLqFpbW/RZY3poDPT6lrt93gadUbcdgD8coKPHjqgYvFz2v6KzcG4iNOcrvd7E+DSofwXLDamqa14ms5HG9Rzeaw8Q3VENWR1F8yGS3UD61+x4pMUH5iC/XFpY5vo8XAT3WDoy/JRUX6xmEzz2D5EOrOz5fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587717; c=relaxed/simple;
-	bh=nGEJaNNZ4tP/c2AZNLXjI1a8ovpLriGZH+KZzeUpMwE=;
+	s=arc-20240116; t=1752587719; c=relaxed/simple;
+	bh=hteh+4LL9Zo4NDh7aId+yVo0hXxxszvDiOCxobURe58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGNoB8ofkvD3gY6uQVAv+4ypTtjoQDYw73bH6Qm3YJTepyWb4e7I+wcgJ+6ELKI0DNGI6Ob+u8P3RgGhNotTIgx7kBPgeCGnxgyIj5B2VqKaa1zT0yc6s220eYkc7W6Fv1Intoxbv724hbOiEVEMK/r+iyaTAlbx5mTQXcXXjLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cS+qpyM1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nhvhcK85KpWAtQsGu8o6oZ52sjgN2Osq8Nsr1MS+P70Oi78OIahgaAdWziNQy6GsECKEAvloGUVHwp6glzJvrkjQyE62vSNH4kGe0RbDIUCapz/JwcTHVLyhAX1DXApPQ0HR7fNBQSfhfMEu0K303s7rdzd+2wZ8FIQ26QC4r6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jm5W24ad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cS+qpyM1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D6AC4CEE3;
-	Tue, 15 Jul 2025 13:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jm5W24ad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B2DC4CEE3;
+	Tue, 15 Jul 2025 13:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587716;
-	bh=nGEJaNNZ4tP/c2AZNLXjI1a8ovpLriGZH+KZzeUpMwE=;
+	s=korg; t=1752587719;
+	bh=hteh+4LL9Zo4NDh7aId+yVo0hXxxszvDiOCxobURe58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cS+qpyM12x4AGAF9vnRmhYfHiZfL9XPuzXpt7m2seX+8JeKnWXbsETBy1hdE+Isg9
-	 +JENUljTl28y/qKSKb7EPLrhNKmxgOb93WM9QSkm6ckjTalwUR/aJvEjD9ck17vp9e
-	 TeMMlBIkxJu1GTvMIRrA9BfdSk9ze8nuobWrBrC8=
+	b=Jm5W24adYplSoMxe5fgduXIzf9in1GSpuvx3sKc6zQ34dp6HeP5qj5QBvOHeBWewB
+	 Nn5bmF74tfcdWDdG08QuJZ3Cwc7Z/8Qcx1cTlKMZnaKO701sATh3Nm19zHsDHDZYd7
+	 pfE6PLX2TD+ndGRpJwEsQGCMwu6y5vftf1alE36I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 116/208] NFSv4/flexfiles: Fix handling of NFS level errors in I/O
-Date: Tue, 15 Jul 2025 15:13:45 +0200
-Message-ID: <20250715130815.594396669@linuxfoundation.org>
+Subject: [PATCH 5.10 117/208] btrfs: propagate last_unlink_trans earlier when doing a rmdir
+Date: Tue, 15 Jul 2025 15:13:46 +0200
+Message-ID: <20250715130815.634095227@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,248 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 38074de35b015df5623f524d6f2b49a0cd395c40 ]
+[ Upstream commit c466e33e729a0ee017d10d919cba18f503853c60 ]
 
-Allow the flexfiles error handling to recognise NFS level errors (as
-opposed to RPC level errors) and handle them separately. The main
-motivator is the NFSERR_PERM errors that get returned if the NFS client
-connects to the data server through a port number that is lower than
-1024. In that case, the client should disconnect and retry a READ on a
-different data server, or it should retry a WRITE after reconnecting.
+In case the removed directory had a snapshot that was deleted, we are
+propagating its inode's last_unlink_trans to the parent directory after
+we removed the entry from the parent directory. This leaves a small race
+window where someone can log the parent directory after we removed the
+entry and before we updated last_unlink_trans, and as a result if we ever
+try to replay such a log tree, we will fail since we will attempt to
+remove a snapshot during log replay, which is currently not possible and
+results in the log replay (and mount) to fail. This is the type of failure
+described in commit 1ec9a1ae1e30 ("Btrfs: fix unreplayable log after
+snapshot delete + parent dir fsync").
 
-Reviewed-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+So fix this by propagating the last_unlink_trans to the parent directory
+before we remove the entry from it.
+
+Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 119 ++++++++++++++++++-------
- 1 file changed, 85 insertions(+), 34 deletions(-)
+ fs/btrfs/inode.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 46b106785eb82..f8962eaec87bc 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1103,6 +1103,7 @@ static void ff_layout_reset_read(struct nfs_pgio_header *hdr)
- }
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 8d7ca8a21525a..94a338de3a8e9 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4150,7 +4150,6 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	int err = 0;
+ 	struct btrfs_root *root = BTRFS_I(dir)->root;
+ 	struct btrfs_trans_handle *trans;
+-	u64 last_unlink_trans;
  
- static int ff_layout_async_handle_error_v4(struct rpc_task *task,
-+					   u32 op_status,
- 					   struct nfs4_state *state,
- 					   struct nfs_client *clp,
- 					   struct pnfs_layout_segment *lseg,
-@@ -1113,34 +1114,42 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
- 	struct nfs4_slot_table *tbl = &clp->cl_session->fc_slot_table;
+ 	if (inode->i_size > BTRFS_EMPTY_DIR_SIZE)
+ 		return -ENOTEMPTY;
+@@ -4161,6 +4160,23 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
  
--	switch (task->tk_status) {
--	case -NFS4ERR_BADSESSION:
--	case -NFS4ERR_BADSLOT:
--	case -NFS4ERR_BAD_HIGH_SLOT:
--	case -NFS4ERR_DEADSESSION:
--	case -NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
--	case -NFS4ERR_SEQ_FALSE_RETRY:
--	case -NFS4ERR_SEQ_MISORDERED:
-+	switch (op_status) {
-+	case NFS4_OK:
-+	case NFS4ERR_NXIO:
-+		break;
-+	case NFSERR_PERM:
-+		if (!task->tk_xprt)
-+			break;
-+		xprt_force_disconnect(task->tk_xprt);
-+		goto out_retry;
-+	case NFS4ERR_BADSESSION:
-+	case NFS4ERR_BADSLOT:
-+	case NFS4ERR_BAD_HIGH_SLOT:
-+	case NFS4ERR_DEADSESSION:
-+	case NFS4ERR_CONN_NOT_BOUND_TO_SESSION:
-+	case NFS4ERR_SEQ_FALSE_RETRY:
-+	case NFS4ERR_SEQ_MISORDERED:
- 		dprintk("%s ERROR %d, Reset session. Exchangeid "
- 			"flags 0x%x\n", __func__, task->tk_status,
- 			clp->cl_exchange_flags);
- 		nfs4_schedule_session_recovery(clp->cl_session, task->tk_status);
--		break;
--	case -NFS4ERR_DELAY:
-+		goto out_retry;
-+	case NFS4ERR_DELAY:
- 		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
- 		fallthrough;
--	case -NFS4ERR_GRACE:
-+	case NFS4ERR_GRACE:
- 		rpc_delay(task, FF_LAYOUT_POLL_RETRY_MAX);
--		break;
--	case -NFS4ERR_RETRY_UNCACHED_REP:
--		break;
-+		goto out_retry;
-+	case NFS4ERR_RETRY_UNCACHED_REP:
-+		goto out_retry;
- 	/* Invalidate Layout errors */
--	case -NFS4ERR_PNFS_NO_LAYOUT:
--	case -ESTALE:           /* mapped NFS4ERR_STALE */
--	case -EBADHANDLE:       /* mapped NFS4ERR_BADHANDLE */
--	case -EISDIR:           /* mapped NFS4ERR_ISDIR */
--	case -NFS4ERR_FHEXPIRED:
--	case -NFS4ERR_WRONG_TYPE:
-+	case NFS4ERR_PNFS_NO_LAYOUT:
-+	case NFS4ERR_STALE:
-+	case NFS4ERR_BADHANDLE:
-+	case NFS4ERR_ISDIR:
-+	case NFS4ERR_FHEXPIRED:
-+	case NFS4ERR_WRONG_TYPE:
- 		dprintk("%s Invalid layout error %d\n", __func__,
- 			task->tk_status);
- 		/*
-@@ -1153,6 +1162,11 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 		pnfs_destroy_layout(NFS_I(inode));
- 		rpc_wake_up(&tbl->slot_tbl_waitq);
- 		goto reset;
-+	default:
-+		break;
-+	}
++	/*
++	 * Propagate the last_unlink_trans value of the deleted dir to its
++	 * parent directory. This is to prevent an unrecoverable log tree in the
++	 * case we do something like this:
++	 * 1) create dir foo
++	 * 2) create snapshot under dir foo
++	 * 3) delete the snapshot
++	 * 4) rmdir foo
++	 * 5) mkdir foo
++	 * 6) fsync foo or some file inside foo
++	 *
++	 * This is because we can't unlink other roots when replaying the dir
++	 * deletes for directory foo.
++	 */
++	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
++		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
 +
-+	switch (task->tk_status) {
- 	/* RPC connection errors */
- 	case -ECONNREFUSED:
- 	case -EHOSTDOWN:
-@@ -1166,26 +1180,56 @@ static int ff_layout_async_handle_error_v4(struct rpc_task *task,
- 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
- 				&devid->deviceid);
- 		rpc_wake_up(&tbl->slot_tbl_waitq);
--		fallthrough;
-+		break;
- 	default:
--		if (ff_layout_avoid_mds_available_ds(lseg))
--			return -NFS4ERR_RESET_TO_PNFS;
--reset:
--		dprintk("%s Retry through MDS. Error %d\n", __func__,
--			task->tk_status);
--		return -NFS4ERR_RESET_TO_MDS;
-+		break;
- 	}
-+
-+	if (ff_layout_avoid_mds_available_ds(lseg))
-+		return -NFS4ERR_RESET_TO_PNFS;
-+reset:
-+	dprintk("%s Retry through MDS. Error %d\n", __func__,
-+		task->tk_status);
-+	return -NFS4ERR_RESET_TO_MDS;
-+
-+out_retry:
- 	task->tk_status = 0;
- 	return -EAGAIN;
- }
+ 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
+ 		err = btrfs_unlink_subvol(trans, dir, dentry);
+ 		goto out;
+@@ -4170,28 +4186,12 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 	if (err)
+ 		goto out;
  
- /* Retry all errors through either pNFS or MDS except for -EJUKEBOX */
- static int ff_layout_async_handle_error_v3(struct rpc_task *task,
-+					   u32 op_status,
-+					   struct nfs_client *clp,
- 					   struct pnfs_layout_segment *lseg,
- 					   u32 idx)
- {
- 	struct nfs4_deviceid_node *devid = FF_LAYOUT_DEVID_NODE(lseg, idx);
- 
-+	switch (op_status) {
-+	case NFS_OK:
-+	case NFSERR_NXIO:
-+		break;
-+	case NFSERR_PERM:
-+		if (!task->tk_xprt)
-+			break;
-+		xprt_force_disconnect(task->tk_xprt);
-+		goto out_retry;
-+	case NFSERR_ACCES:
-+	case NFSERR_BADHANDLE:
-+	case NFSERR_FBIG:
-+	case NFSERR_IO:
-+	case NFSERR_NOSPC:
-+	case NFSERR_ROFS:
-+	case NFSERR_STALE:
-+		goto out_reset_to_pnfs;
-+	case NFSERR_JUKEBOX:
-+		nfs_inc_stats(lseg->pls_layout->plh_inode, NFSIOS_DELAY);
-+		goto out_retry;
-+	default:
-+		break;
-+	}
-+
- 	switch (task->tk_status) {
- 	/* File access problems. Don't mark the device as unavailable */
- 	case -EACCES:
-@@ -1204,6 +1248,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
- 		nfs4_delete_deviceid(devid->ld, devid->nfs_client,
- 				&devid->deviceid);
- 	}
-+out_reset_to_pnfs:
- 	/* FIXME: Need to prevent infinite looping here. */
- 	return -NFS4ERR_RESET_TO_PNFS;
- out_retry:
-@@ -1214,6 +1259,7 @@ static int ff_layout_async_handle_error_v3(struct rpc_task *task,
- }
- 
- static int ff_layout_async_handle_error(struct rpc_task *task,
-+					u32 op_status,
- 					struct nfs4_state *state,
- 					struct nfs_client *clp,
- 					struct pnfs_layout_segment *lseg,
-@@ -1232,10 +1278,11 @@ static int ff_layout_async_handle_error(struct rpc_task *task,
- 
- 	switch (vers) {
- 	case 3:
--		return ff_layout_async_handle_error_v3(task, lseg, idx);
--	case 4:
--		return ff_layout_async_handle_error_v4(task, state, clp,
-+		return ff_layout_async_handle_error_v3(task, op_status, clp,
- 						       lseg, idx);
-+	case 4:
-+		return ff_layout_async_handle_error_v4(task, op_status, state,
-+						       clp, lseg, idx);
- 	default:
- 		/* should never happen */
- 		WARN_ON_ONCE(1);
-@@ -1286,6 +1333,7 @@ static void ff_layout_io_track_ds_error(struct pnfs_layout_segment *lseg,
- 	switch (status) {
- 	case NFS4ERR_DELAY:
- 	case NFS4ERR_GRACE:
-+	case NFS4ERR_PERM:
- 		break;
- 	case NFS4ERR_NXIO:
- 		ff_layout_mark_ds_unreachable(lseg, idx);
-@@ -1318,7 +1366,8 @@ static int ff_layout_read_done_cb(struct rpc_task *task,
- 		trace_ff_layout_read_error(hdr);
- 	}
- 
--	err = ff_layout_async_handle_error(task, hdr->args.context->state,
-+	err = ff_layout_async_handle_error(task, hdr->res.op_status,
-+					   hdr->args.context->state,
- 					   hdr->ds_clp, hdr->lseg,
- 					   hdr->pgio_mirror_idx);
- 
-@@ -1483,7 +1532,8 @@ static int ff_layout_write_done_cb(struct rpc_task *task,
- 		trace_ff_layout_write_error(hdr);
- 	}
- 
--	err = ff_layout_async_handle_error(task, hdr->args.context->state,
-+	err = ff_layout_async_handle_error(task, hdr->res.op_status,
-+					   hdr->args.context->state,
- 					   hdr->ds_clp, hdr->lseg,
- 					   hdr->pgio_mirror_idx);
- 
-@@ -1529,8 +1579,9 @@ static int ff_layout_commit_done_cb(struct rpc_task *task,
- 		trace_ff_layout_commit_error(data);
- 	}
- 
--	err = ff_layout_async_handle_error(task, NULL, data->ds_clp,
--					   data->lseg, data->ds_commit_index);
-+	err = ff_layout_async_handle_error(task, data->res.op_status,
-+					   NULL, data->ds_clp, data->lseg,
-+					   data->ds_commit_index);
- 
- 	trace_nfs4_pnfs_commit_ds(data, err);
- 	switch (err) {
+-	last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
+-
+ 	/* now the directory is empty */
+ 	err = btrfs_unlink_inode(trans, root, BTRFS_I(dir),
+ 			BTRFS_I(d_inode(dentry)), dentry->d_name.name,
+ 			dentry->d_name.len);
+-	if (!err) {
++	if (!err)
+ 		btrfs_i_size_write(BTRFS_I(inode), 0);
+-		/*
+-		 * Propagate the last_unlink_trans value of the deleted dir to
+-		 * its parent directory. This is to prevent an unrecoverable
+-		 * log tree in the case we do something like this:
+-		 * 1) create dir foo
+-		 * 2) create snapshot under dir foo
+-		 * 3) delete the snapshot
+-		 * 4) rmdir foo
+-		 * 5) mkdir foo
+-		 * 6) fsync foo or some file inside foo
+-		 */
+-		if (last_unlink_trans >= trans->transid)
+-			BTRFS_I(dir)->last_unlink_trans = last_unlink_trans;
+-	}
+ out:
+ 	btrfs_end_transaction(trans);
+ 	btrfs_btree_balance_dirty(root->fs_info);
 -- 
 2.39.5
 
