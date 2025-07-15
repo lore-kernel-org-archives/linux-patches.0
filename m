@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB252D8790;
-	Tue, 15 Jul 2025 13:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4513137923;
+	Tue, 15 Jul 2025 13:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587490; cv=none; b=mtfK1tskKik3Th4iBoY1EO/6oolxd7YDL8vk5B0fJvkI9dedG8U43TXTfGGJQHrjiI1bTx3xnVv92VAQ2Fc1pcKW5skyIhLCm5B9HsH+NNnkHhkD3h+Qn4kzOZDKmB6C/ztQzBc+f46EYWPiUb9eUwneac26zIOppTD1RS/HYy4=
+	t=1752587492; cv=none; b=VvJQPC7lj2kdo0O7bme2qQLpE2+K8B5nvImhDeZP17sJuc8BAGqC5T5mPxtH14p/OHHaj2Decvsw5Yg3b5IofqzsGoOOa7FPdguAGDk8f8ch96IcqvwBDvnFjDz106wZSxDd1TCsfBBKHBq9acunMAsw97gba6zhOVWiNflE2mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587490; c=relaxed/simple;
-	bh=iLeiJxZ1q1pvZypch2W2JzeQLzC/2scRPGTsbKpMugw=;
+	s=arc-20240116; t=1752587492; c=relaxed/simple;
+	bh=mptxxeKxr7caYqfTk/NFqBIBBLdaPQ+7ypsoLilLtUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uv5/bAqS7ZpW6h83lnbIPqkc4uaUvR2OvefD0fNP8g8ruKsxfqi0Ewa+Y/cECJTZt8l0K/KzFPmZBaPJja+pmrkMGlLkR0CAHoxgqwRmmawnGfqmYObAIRS26SaDhmSyCID7kuAVPzzGQB6X9HUeYUG5w1nw29hxaJc3XwCbTX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OD0zofyW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RCfJcDzBVAaYXna9wlAjlX6UpAsPUOMrk66LO0OJGX4x8EHrPKn5WXgYH059TDseHrvnJIiZsY60E728ghxGqokt0RG6AuTn7lCHCmOHNSs5D5eTMXr/hrCVkPfgRyQPqdpXZoxw3rWYlE8rSbmkNlofoRNTKHjcYxGCZ0xI7GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCIGnrUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OD0zofyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3994C4CEE3;
-	Tue, 15 Jul 2025 13:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCIGnrUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF45C4CEE3;
+	Tue, 15 Jul 2025 13:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587490;
-	bh=iLeiJxZ1q1pvZypch2W2JzeQLzC/2scRPGTsbKpMugw=;
+	s=korg; t=1752587492;
+	bh=mptxxeKxr7caYqfTk/NFqBIBBLdaPQ+7ypsoLilLtUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OD0zofyWLdkWjSyloWQtW3eK/3a2Z7156VIMYPjcvW3MtX9X8m2jY00MNhe7g5J5v
-	 bO2tNPPbA6qbca2UFvpoxhMX4FeUpwOynFdeU2RMLvk9p93CTiy7N+d1UIAsTFu2H9
-	 2jjf1jrgWAl5EqMl1v5opIKarenro3XSLByJ4+/c=
+	b=cCIGnrUdu+7O3g4OKW0/xINPF4ct/ZfMhq5FEDb+uhTihb7ioZqUDI3T6qaYCpX3p
+	 E5yI9iSFe+Gf0nI+IflZEUOGfcTY9Oxo/cFm18nHIo7vsSwoX8SNMZbX+CPLxTgeOD
+	 vbjC2ldsEvaosydcABP0ovp8IGxv0taec0ip9Cv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
+	Linggang Zeng <linggang.zeng@easystack.cn>,
+	Mingzhe Zou <mingzhe.zou@easystack.cn>,
+	Coly Li <colyli@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/208] md/md-bitmap: fix dm-raid max_write_behind setting
-Date: Tue, 15 Jul 2025 15:11:57 +0200
-Message-ID: <20250715130811.170706504@linuxfoundation.org>
+Subject: [PATCH 5.10 009/208] bcache: fix NULL pointer in cache_set_flush()
+Date: Tue, 15 Jul 2025 15:11:58 +0200
+Message-ID: <20250715130811.209998985@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,34 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Linggang Zeng <linggang.zeng@easystack.cn>
 
-[ Upstream commit 2afe17794cfed5f80295b1b9facd66e6f65e5002 ]
+[ Upstream commit 1e46ed947ec658f89f1a910d880cd05e42d3763e ]
 
-It's supposed to be COUNTER_MAX / 2, not COUNTER_MAX.
+1. LINE#1794 - LINE#1887 is some codes about function of
+   bch_cache_set_alloc().
+2. LINE#2078 - LINE#2142 is some codes about function of
+   register_cache_set().
+3. register_cache_set() will call bch_cache_set_alloc() in LINE#2098.
 
-Link: https://lore.kernel.org/linux-raid/20250524061320.370630-14-yukuai1@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+ 1794 struct cache_set *bch_cache_set_alloc(struct cache_sb *sb)
+ 1795 {
+ ...
+ 1860         if (!(c->devices = kcalloc(c->nr_uuids, sizeof(void *), GFP_KERNEL)) ||
+ 1861             mempool_init_slab_pool(&c->search, 32, bch_search_cache) ||
+ 1862             mempool_init_kmalloc_pool(&c->bio_meta, 2,
+ 1863                                 sizeof(struct bbio) + sizeof(struct bio_vec) *
+ 1864                                 bucket_pages(c)) ||
+ 1865             mempool_init_kmalloc_pool(&c->fill_iter, 1, iter_size) ||
+ 1866             bioset_init(&c->bio_split, 4, offsetof(struct bbio, bio),
+ 1867                         BIOSET_NEED_BVECS|BIOSET_NEED_RESCUER) ||
+ 1868             !(c->uuids = alloc_bucket_pages(GFP_KERNEL, c)) ||
+ 1869             !(c->moving_gc_wq = alloc_workqueue("bcache_gc",
+ 1870                                                 WQ_MEM_RECLAIM, 0)) ||
+ 1871             bch_journal_alloc(c) ||
+ 1872             bch_btree_cache_alloc(c) ||
+ 1873             bch_open_buckets_alloc(c) ||
+ 1874             bch_bset_sort_state_init(&c->sort, ilog2(c->btree_pages)))
+ 1875                 goto err;
+                      ^^^^^^^^
+ 1876
+ ...
+ 1883         return c;
+ 1884 err:
+ 1885         bch_cache_set_unregister(c);
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 1886         return NULL;
+ 1887 }
+ ...
+ 2078 static const char *register_cache_set(struct cache *ca)
+ 2079 {
+ ...
+ 2098         c = bch_cache_set_alloc(&ca->sb);
+ 2099         if (!c)
+ 2100                 return err;
+                      ^^^^^^^^^^
+ ...
+ 2128         ca->set = c;
+ 2129         ca->set->cache[ca->sb.nr_this_dev] = ca;
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ ...
+ 2138         return NULL;
+ 2139 err:
+ 2140         bch_cache_set_unregister(c);
+ 2141         return err;
+ 2142 }
+
+(1) If LINE#1860 - LINE#1874 is true, then do 'goto err'(LINE#1875) and
+    call bch_cache_set_unregister()(LINE#1885).
+(2) As (1) return NULL(LINE#1886), LINE#2098 - LINE#2100 would return.
+(3) As (2) has returned, LINE#2128 - LINE#2129 would do *not* give the
+    value to c->cache[], it means that c->cache[] is NULL.
+
+LINE#1624 - LINE#1665 is some codes about function of cache_set_flush().
+As (1), in LINE#1885 call
+bch_cache_set_unregister()
+---> bch_cache_set_stop()
+     ---> closure_queue()
+          -.-> cache_set_flush() (as below LINE#1624)
+
+ 1624 static void cache_set_flush(struct closure *cl)
+ 1625 {
+ ...
+ 1654         for_each_cache(ca, c, i)
+ 1655                 if (ca->alloc_thread)
+                          ^^
+ 1656                         kthread_stop(ca->alloc_thread);
+ ...
+ 1665 }
+
+(4) In LINE#1655 ca is NULL(see (3)) in cache_set_flush() then the
+    kernel crash occurred as below:
+[  846.712887] bcache: register_cache() error drbd6: cannot allocate memory
+[  846.713242] bcache: register_bcache() error : failed to register device
+[  846.713336] bcache: cache_set_free() Cache set 2f84bdc1-498a-4f2f-98a7-01946bf54287 unregistered
+[  846.713768] BUG: unable to handle kernel NULL pointer dereference at 00000000000009f8
+[  846.714790] PGD 0 P4D 0
+[  846.715129] Oops: 0000 [#1] SMP PTI
+[  846.715472] CPU: 19 PID: 5057 Comm: kworker/19:16 Kdump: loaded Tainted: G           OE    --------- -  - 4.18.0-147.5.1.el8_1.5es.3.x86_64 #1
+[  846.716082] Hardware name: ESPAN GI-25212/X11DPL-i, BIOS 2.1 06/15/2018
+[  846.716451] Workqueue: events cache_set_flush [bcache]
+[  846.716808] RIP: 0010:cache_set_flush+0xc9/0x1b0 [bcache]
+[  846.717155] Code: 00 4c 89 a5 b0 03 00 00 48 8b 85 68 f6 ff ff a8 08 0f 84 88 00 00 00 31 db 66 83 bd 3c f7 ff ff 00 48 8b 85 48 ff ff ff 74 28 <48> 8b b8 f8 09 00 00 48 85 ff 74 05 e8 b6 58 a2 e1 0f b7 95 3c f7
+[  846.718026] RSP: 0018:ffffb56dcf85fe70 EFLAGS: 00010202
+[  846.718372] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+[  846.718725] RDX: 0000000000000001 RSI: 0000000040000001 RDI: 0000000000000000
+[  846.719076] RBP: ffffa0ccc0f20df8 R08: ffffa0ce1fedb118 R09: 000073746e657665
+[  846.719428] R10: 8080808080808080 R11: 0000000000000000 R12: ffffa0ce1fee8700
+[  846.719779] R13: ffffa0ccc0f211a8 R14: ffffa0cd1b902840 R15: ffffa0ccc0f20e00
+[  846.720132] FS:  0000000000000000(0000) GS:ffffa0ce1fec0000(0000) knlGS:0000000000000000
+[  846.720726] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  846.721073] CR2: 00000000000009f8 CR3: 00000008ba00a005 CR4: 00000000007606e0
+[  846.721426] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  846.721778] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  846.722131] PKRU: 55555554
+[  846.722467] Call Trace:
+[  846.722814]  process_one_work+0x1a7/0x3b0
+[  846.723157]  worker_thread+0x30/0x390
+[  846.723501]  ? create_worker+0x1a0/0x1a0
+[  846.723844]  kthread+0x112/0x130
+[  846.724184]  ? kthread_flush_work_fn+0x10/0x10
+[  846.724535]  ret_from_fork+0x35/0x40
+
+Now, check whether that ca is NULL in LINE#1655 to fix the issue.
+
+Signed-off-by: Linggang Zeng <linggang.zeng@easystack.cn>
+Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
+Signed-off-by: Coly Li <colyli@kernel.org>
+Link: https://lore.kernel.org/r/20250527051601.74407-2-colyli@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/bcache/super.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 91bc764a854c6..f2ba541ed89d4 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -546,7 +546,7 @@ static int md_bitmap_new_disk_sb(struct bitmap *bitmap)
- 	 * is a good choice?  We choose COUNTER_MAX / 2 arbitrarily.
- 	 */
- 	write_behind = bitmap->mddev->bitmap_info.max_write_behind;
--	if (write_behind > COUNTER_MAX)
-+	if (write_behind > COUNTER_MAX / 2)
- 		write_behind = COUNTER_MAX / 2;
- 	sb->write_behind = cpu_to_le32(write_behind);
- 	bitmap->mddev->bitmap_info.max_write_behind = write_behind;
+diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
+index 85569bd253b2c..a80de1cfbbd07 100644
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -1765,7 +1765,12 @@ static void cache_set_flush(struct closure *cl)
+ 			mutex_unlock(&b->write_lock);
+ 		}
+ 
+-	if (ca->alloc_thread)
++	/*
++	 * If the register_cache_set() call to bch_cache_set_alloc() failed,
++	 * ca has not been assigned a value and return error.
++	 * So we need check ca is not NULL during bch_cache_set_unregister().
++	 */
++	if (ca && ca->alloc_thread)
+ 		kthread_stop(ca->alloc_thread);
+ 
+ 	if (c->journal.cur) {
 -- 
 2.39.5
 
