@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033DA2E2F0F;
-	Tue, 15 Jul 2025 13:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B412E2F0F;
+	Tue, 15 Jul 2025 13:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585936; cv=none; b=Hj+6p2HfkAgYyRHBq3ox+8QmbLivjlvZaEgWHDPjh6VczdIJV4m7+yAeRrTf9H1WQNET8eBeg6DrtUxzQRpabTfFVl8vAqB8letooF4cS+ZhZ9GSkLucv1cInTcP2YpPSJJp1byHEZZoIVqkVgXIvPlyspUXP+7enNL17XWywE8=
+	t=1752585938; cv=none; b=RxhDcAlfaxLxHtP6dlOtaKZ5vMY1nFN7Cmq14hYD0aRLLnTnxvk72IlV396erJ8xAfTZS5SIAqiDHGoAjw01K9wB+TGj8MXJvLCi9MECSnb1xq63uglmDT4k5qT3Gh7qznmCTVc9YInOQr5PwjXiW9SWwe6sQXDQ3qFZxurC9GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585936; c=relaxed/simple;
-	bh=B/3PSWz/S5N5/ipt9cOtCJctXYHjBBTHt9vHzPWguY4=;
+	s=arc-20240116; t=1752585938; c=relaxed/simple;
+	bh=JSeZyytk3e0QH5tGfAHG8Dq3cHErNtIEErCPFdI63IQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPzVtJyKwT7/g5asON9lrCF27LW5VOk7zsrIR5bQPZVC2CdQ/4RUmsTL5d6dMj1OdQ1FpFH1RXEuJAjRPmcLxWRtDbJLg99c3VlloJSTxBhHGGDiaPiHjj3TVgkUqG901n/iXg8eDOltVL/3i9gFFgtYBwZ7tifunGfEQOkkilg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqxztoQv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NR1//Ju6si7GfcluQ08cp4n3s/mvAKoAe0MaYh9VfuERqXkoCqqOyFPJEdDtCz69+F/y0Yaeb7u2FClTW0YpMJ4vY24WdFF4GTzWhKvnenTwf0oJci2Fh916Vfbu/N5QtIuN/4Vyt/CeGiEChASTBqughvbuLUcHvnkzSeduVNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBQHIYup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqxztoQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BED1C4CEE3;
-	Tue, 15 Jul 2025 13:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBQHIYup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33798C4CEE3;
+	Tue, 15 Jul 2025 13:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585935;
-	bh=B/3PSWz/S5N5/ipt9cOtCJctXYHjBBTHt9vHzPWguY4=;
+	s=korg; t=1752585938;
+	bh=JSeZyytk3e0QH5tGfAHG8Dq3cHErNtIEErCPFdI63IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqxztoQvnY0e6NhzufidR7jYLKvYZNFYYBSbRmhwJPVeZm9DWzti87iib4s0pvMF1
-	 l34Ho7kfDiHs+MsnYhz1n5P+tklx6IZ6hv4o3O74WOuzDSgvPS4fbk/y3WIkAIIVgC
-	 Xflzo61QQLlTPqmdwnFTY9gLaiSq05EBMAK9lGBI=
+	b=mBQHIYupCpj1qvKQ1YgiAhkbwW26P6v+QRjfX+slAxerwxTXLm+1tWDdlhw/oHCLz
+	 i6N5cfSyNwxnyvI3opqCWpZrfIIe7hMcVIhx4KHsofr03oqh3vOO9CzhOIEyFd650K
+	 JLDrWUQlQYTya75CZkeGl1OO/g/zWOGmvm7RA/ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.6 063/109] erofs: fix to add missing tracepoint in erofs_read_folio()
-Date: Tue, 15 Jul 2025 15:13:19 +0200
-Message-ID: <20250715130801.406011581@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 064/109] netlink: Fix rmem check in netlink_broadcast_deliver().
+Date: Tue, 15 Jul 2025 15:13:20 +0200
+Message-ID: <20250715130801.446189457@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -50,34 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 99f7619a77a0a2e3e2bcae676d0f301769167754 upstream.
+commit a3c4a125ec725cefb40047eb05ff9eafd57830b4 upstream.
 
-Commit 771c994ea51f ("erofs: convert all uncompressed cases to iomap")
-converts to use iomap interface, it removed trace_erofs_readpage()
-tracepoint in the meantime, let's add it back.
+We need to allow queuing at least one skb even when skb is
+larger than sk->sk_rcvbuf.
 
-Fixes: 771c994ea51f ("erofs: convert all uncompressed cases to iomap")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250708111942.3120926-1-chao@kernel.org
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+The cited commit made a mistake while converting a condition
+in netlink_broadcast_deliver().
+
+Let's correct the rmem check for the allow-one-skb rule.
+
+Fixes: ae8f160e7eb24 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711053208.2965945-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/data.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/netlink/af_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -358,6 +358,8 @@ int erofs_fiemap(struct inode *inode, st
-  */
- static int erofs_read_folio(struct file *file, struct folio *folio)
- {
-+	trace_erofs_read_folio(folio, true);
-+
- 	return iomap_read_folio(folio, &erofs_iomap_ops);
- }
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1405,7 +1405,7 @@ static int netlink_broadcast_deliver(str
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+ 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
  
+-	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
++	if ((rmem == skb->truesize || rmem <= rcvbuf) &&
+ 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
+ 		netlink_skb_set_owner_r(skb, sk);
+ 		__netlink_sendskb(sk, skb);
 
 
