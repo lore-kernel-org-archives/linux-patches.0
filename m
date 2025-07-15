@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA422E267F;
-	Tue, 15 Jul 2025 13:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A0A1B4231;
+	Tue, 15 Jul 2025 13:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586216; cv=none; b=FNTFuPV9y3QisqlDuBuTozj5XrpLmj/IX7Fh6PHtVSxVs1BuhsWRYUPDw6uo7sXjVs/1ptIQWliJHnbNhQqnS555K3mzOtREgIrnqBfc6D7HkAqTxDF2J0TWJuHV8ORgvPUop+6M97Ujz9AoFwD7LlDuVlS9sYKfTO1PRoRbTPE=
+	t=1752586219; cv=none; b=kWQzPxSObT+wFPa4JLyNNunP1l3Ch2ea1j1QbJn3ZSl9DPK/3iMS8i60FHsif0xL/77dr2kW8zAUNqwJg8v1v8TovHpBAnfQdojx32f/kmwtLqedt2SSy43IUBSE3mXa7q0YeNWz764uXNXa8OixjyDNX3lYSFtCWPO6DrMOotE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586216; c=relaxed/simple;
-	bh=ofkntiCQivDgf8MoXVnTcearlwWwg6C9Y+ivGCOmRJs=;
+	s=arc-20240116; t=1752586219; c=relaxed/simple;
+	bh=g27ymKmGVlGV4h9k28ih/pK8lqhJ3IHutalOMG/e4KI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sytPEfHyd0jexSbOFEGqumpy5RNLBoObx2FbskAXlxFPkg/w/xiXP3ufrXkY07oImDn3QUiWd3eCVFTPdDgPf8monc2MLZzvQWkCjYYc4vpboAH8iTVi8/HKoNG6BN+oDD3nr5BFJeUzOJPenlN9PN9pq3s6lil4Ud/t3QjNkv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11BXq4b9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DLme59/yObejG4XOeTLXLAcfWj9Cp1pV3NVCbsz/Shf935vS9GsgpFdf5VeTpQU2jvN7lxDwkIXwabHbJ5v7q+FOrqzmoXwo7+wPyZOLLbMkMvqb9WiQTD7SpcrnI2oQ9u5X0dEG6cx9gyg0jsZokUiFwT87ZoSIBb/DamtabAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkvdoFQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11BXq4b9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD548C4CEE3;
-	Tue, 15 Jul 2025 13:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkvdoFQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785C5C4CEE3;
+	Tue, 15 Jul 2025 13:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586216;
-	bh=ofkntiCQivDgf8MoXVnTcearlwWwg6C9Y+ivGCOmRJs=;
+	s=korg; t=1752586218;
+	bh=g27ymKmGVlGV4h9k28ih/pK8lqhJ3IHutalOMG/e4KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11BXq4b9Y5Y3IBGxoJZ8dwfwzdln2jaam5/Jigkr+aX/otHCTNHV0LRrbuT/mevp9
-	 SGTUld8VjQMKNoH2EmAyPygY2vgE/4nrG0GiRx3imcCsI59EtK2+AXFd+rYpG79qPF
-	 MAp9sBDvtDsOfr7C066ehv97q5g9pOC1FnPt+K9k=
+	b=JkvdoFQ2Y5GxqTog92eyYej2SBqojwY928oHj4IzOJggGXl/flDRn+dR5sz6mKJz/
+	 EanDVC9oRHzl7X1K+72guH3KLdxb05E8FDz6dUPJ/bee5WnBRNaHE8IkskUE/9dXNE
+	 Ew/YL22BoQwD0PqqMeVSacDn9yPcbTQhFUH/73DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 59/77] ksmbd: fix a mount write count leak in ksmbd_vfs_kern_path_locked()
-Date: Tue, 15 Jul 2025 15:13:58 +0200
-Message-ID: <20250715130754.095185055@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>,
+	Prashanth K <prashanth.k@oss.qualcomm.com>
+Subject: [PATCH 5.15 33/77] usb: gadget: u_serial: Fix race condition in TTY wakeup
+Date: Tue, 15 Jul 2025 15:13:32 +0200
+Message-ID: <20250715130753.035907965@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -52,39 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 277627b431a0a6401635c416a21b2a0f77a77347 ]
+commit c529c3730bd09115684644e26bf01ecbd7e2c2c9 upstream.
 
-If the call of ksmbd_vfs_lock_parent() fails, we drop the parent_path
-references and return an error.  We need to drop the write access we
-just got on parent_path->mnt before we drop the mount reference - callers
-assume that ksmbd_vfs_kern_path_locked() returns with mount write
-access grabbed if and only if it has returned 0.
+A race condition occurs when gs_start_io() calls either gs_start_rx() or
+gs_start_tx(), as those functions briefly drop the port_lock for
+usb_ep_queue(). This allows gs_close() and gserial_disconnect() to clear
+port.tty and port_usb, respectively.
 
-Fixes: 864fb5d37163 ("ksmbd: fix possible deadlock in smb2_open")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use the null-safe TTY Port helper function to wake up TTY.
+
+Example
+  CPU1:			      CPU2:
+  gserial_connect() // lock
+  			      gs_close() // await lock
+  gs_start_rx()     // unlock
+  usb_ep_queue()
+  			      gs_close() // lock, reset port.tty and unlock
+  gs_start_rx()     // lock
+  tty_wakeup()      // NPE
+
+Fixes: 35f95fd7f234 ("TTY: usb/u_serial, use tty from tty_port")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Reviewed-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-usb/20240116141801.396398-1-khtsai@google.com/
+Link: https://lore.kernel.org/r/20250617050844.1848232-2-khtsai@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/vfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/u_serial.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ksmbd/vfs.c b/fs/ksmbd/vfs.c
-index 7afb2412c4d43..4804976c0c13f 100644
---- a/fs/ksmbd/vfs.c
-+++ b/fs/ksmbd/vfs.c
-@@ -1280,6 +1280,7 @@ int ksmbd_vfs_kern_path_locked(struct ksmbd_work *work, char *name,
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -290,8 +290,8 @@ __acquires(&port->port_lock)
+ 			break;
+ 	}
  
- 		err = ksmbd_vfs_lock_parent(parent_path->dentry, path->dentry);
- 		if (err) {
-+			mnt_drop_write(parent_path->mnt);
- 			path_put(path);
- 			path_put(parent_path);
- 		}
--- 
-2.39.5
-
+-	if (do_tty_wake && port->port.tty)
+-		tty_wakeup(port->port.tty);
++	if (do_tty_wake)
++		tty_port_tty_wakeup(&port->port);
+ 	return status;
+ }
+ 
+@@ -568,7 +568,7 @@ static int gs_start_io(struct gs_port *p
+ 		gs_start_tx(port);
+ 		/* Unblock any pending writes into our circular buffer, in case
+ 		 * we didn't in gs_start_tx() */
+-		tty_wakeup(port->port.tty);
++		tty_port_tty_wakeup(&port->port);
+ 	} else {
+ 		/* Free reqs only if we are still connected */
+ 		if (port->port_usb) {
 
 
