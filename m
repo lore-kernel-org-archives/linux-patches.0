@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9258F2E889C;
-	Tue, 15 Jul 2025 13:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2213E2E889C;
+	Tue, 15 Jul 2025 13:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586197; cv=none; b=j0tqOABthAX3gx/QnZm2Gp7Z67hnQ6PGFlhPhmQquwUF24aJulU4KdyeI7bEhmbYK98c+VauUJQTW/1xRNbJO4oS1lfFKZfthDqjdI5O/wrUoEpGsNXr8Zdcyetj2Ms2sp0VIJkUwnBNhrQg4D1TbPUTayMbEWryD8wnjoEk1ss=
+	t=1752586200; cv=none; b=MBqIVpJ+QGXD7UUl5ffVPXvbwQDbgaFTTHnsQEJLEwST3IdTJgUE71+KCQO3Olv7BuqY1Wd55Dr+1yrCAP9JnJz84Jft3A5/iqKXNMuCWJXZzgPfI++RovvUQGXubpcvqWBc4PC0qNsTUTmYw4GkomrXmzRSfMVpIcvDPRwzKfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586197; c=relaxed/simple;
-	bh=5MmRCZAMrJhYZBfXEVoa9YvLJWIWH6YJCFXQ33PDgfE=;
+	s=arc-20240116; t=1752586200; c=relaxed/simple;
+	bh=z6ngKh2GItpMosxdnUfC7m3GnQrHmIKChS/BafY8Qtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jsGA2UFEL8GwjaKy/FGl8bfLzXxeoPunAZQ0trvVsfnjngyJVl+BhB5zzmTM3Rn1qO7Pw0JW9oa6v0k0id+AxDCBcQs2bh07Fe79gxR9VSlueN+3Gn49JS3tQh526HZq5ZnMDE4JmKE+bz5M0v54gPDQ4S6b9EATwM+vE6Db1YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmA8DJPf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=efHbRp7EVh1pDOlSPwzzscNentmUGGCRNaH+ePuiN1u6AyZyjFezLm/Gtp5n5smg3yiJpWqTCEgakvJps30QOCTGUK5F3f8B+lIM6mJkCipPS+nKbvJrdUCzWRwROTH/A1FfDDaGr4JZHTFXh5YdMSpF5v0+mCUanoKnPLqRcHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhtshD+I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmA8DJPf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203A6C4CEE3;
-	Tue, 15 Jul 2025 13:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhtshD+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA64AC4CEF1;
+	Tue, 15 Jul 2025 13:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586197;
-	bh=5MmRCZAMrJhYZBfXEVoa9YvLJWIWH6YJCFXQ33PDgfE=;
+	s=korg; t=1752586200;
+	bh=z6ngKh2GItpMosxdnUfC7m3GnQrHmIKChS/BafY8Qtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmA8DJPfuNEh/2REsGSmmMXNXRBh2+C1Dmjlhs4UD8STRvA2Bk3huYCEEJKkC450g
-	 GenW31flsf2IjQVWWbeF8xDSK1O5ep+ytb3ZGkPTf96XSNdHOx35gFawtShDTXjClI
-	 sAEePVV/BrJVoLtyszk9weXohP6dhZ9CkXjoNOAE=
+	b=bhtshD+IQNbXnC1aKd+7udIfhpsimtDovhBWlgJLbzoCob8Vzh0LLaI7uXqgbqWdR
+	 QYTqK0VPtqi+v12hZh5uQ/9Bqs6YMl/Q8usXHZDa4+kIGsfc2e0Vid0QsiV1jnmfWV
+	 Sb5+7/f7vgUjr0dt3ljxv8RkU15Hhv51ZzmLJbqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kurt Borja <kuurtb@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 52/77] dma-buf: fix timeout handling in dma_resv_wait_timeout v2
-Date: Tue, 15 Jul 2025 15:13:51 +0200
-Message-ID: <20250715130753.816338149@linuxfoundation.org>
+Subject: [PATCH 5.15 53/77] platform/x86: think-lmi: Fix sysfs group cleanup
+Date: Tue, 15 Jul 2025 15:13:52 +0200
+Message-ID: <20250715130753.855799519@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -53,56 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Kurt Borja <kuurtb@gmail.com>
 
-[ Upstream commit 2b95a7db6e0f75587bffddbb490399cbb87e4985 ]
+[ Upstream commit 4f30f946f27b7f044cf8f3f1f353dee1dcd3517a ]
 
-Even the kerneldoc says that with a zero timeout the function should not
-wait for anything, but still return 1 to indicate that the fences are
-signaled now.
+Many error paths in tlmi_sysfs_init() lead to sysfs groups being removed
+when they were not even created.
 
-Unfortunately that isn't what was implemented, instead of only returning
-1 we also waited for at least one jiffies.
+Fix this by letting the kobject core manage these groups through their
+kobj_type's defult_groups.
 
-Fix that by adjusting the handling to what the function is actually
-documented to do.
-
-v2: improve code readability
-
-Reported-by: Marek Olšák <marek.olsak@amd.com>
-Reported-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20250129105841.1806-1-christian.koenig@amd.com
+Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Kurt Borja <kuurtb@gmail.com>
+Link: https://lore.kernel.org/r/20250630-lmi-fix-v3-3-ce4f81c9c481@gmail.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-resv.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/platform/x86/think-lmi.c | 35 +++++++++-----------------------
+ 1 file changed, 10 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/dma-buf/dma-resv.c b/drivers/dma-buf/dma-resv.c
-index 8db368c7d35c3..cafaa54c3d9f1 100644
---- a/drivers/dma-buf/dma-resv.c
-+++ b/drivers/dma-buf/dma-resv.c
-@@ -619,11 +619,13 @@ long dma_resv_wait_timeout(struct dma_resv *obj, bool wait_all, bool intr,
- 	dma_resv_iter_begin(&cursor, obj, wait_all);
- 	dma_resv_for_each_fence_unlocked(&cursor, fence) {
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index 36ff64a7b6847..cc46aa5f1da2c 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -491,6 +491,7 @@ static struct attribute *auth_attrs[] = {
+ static const struct attribute_group auth_attr_group = {
+ 	.attrs = auth_attrs,
+ };
++__ATTRIBUTE_GROUPS(auth_attr);
  
--		ret = dma_fence_wait_timeout(fence, intr, ret);
--		if (ret <= 0) {
--			dma_resv_iter_end(&cursor);
--			return ret;
+ /* ---- Attributes sysfs --------------------------------------------------------- */
+ static ssize_t display_name_show(struct kobject *kobj, struct kobj_attribute *attr,
+@@ -643,6 +644,7 @@ static const struct attribute_group tlmi_attr_group = {
+ 	.is_visible = attr_is_visible,
+ 	.attrs = tlmi_attrs,
+ };
++__ATTRIBUTE_GROUPS(tlmi_attr);
+ 
+ static ssize_t tlmi_attr_show(struct kobject *kobj, struct attribute *attr,
+ 				    char *buf)
+@@ -688,12 +690,14 @@ static void tlmi_pwd_setting_release(struct kobject *kobj)
+ 
+ static struct kobj_type tlmi_attr_setting_ktype = {
+ 	.release        = &tlmi_attr_setting_release,
+-	.sysfs_ops	= &tlmi_kobj_sysfs_ops,
++	.sysfs_ops	= &kobj_sysfs_ops,
++	.default_groups = tlmi_attr_groups,
+ };
+ 
+ static struct kobj_type tlmi_pwd_setting_ktype = {
+ 	.release        = &tlmi_pwd_setting_release,
+-	.sysfs_ops	= &tlmi_kobj_sysfs_ops,
++	.sysfs_ops	= &kobj_sysfs_ops,
++	.default_groups = auth_attr_groups,
+ };
+ 
+ static ssize_t pending_reboot_show(struct kobject *kobj, struct kobj_attribute *attr,
+@@ -765,25 +769,18 @@ static struct kobj_attribute debug_cmd = __ATTR_WO(debug_cmd);
+ /* ---- Initialisation --------------------------------------------------------- */
+ static void tlmi_release_attr(void)
+ {
+-	int i;
++	struct kobject *pos, *n;
+ 
+ 	/* Attribute structures */
+-	for (i = 0; i < TLMI_SETTINGS_COUNT; i++) {
+-		if (tlmi_priv.setting[i]) {
+-			sysfs_remove_group(&tlmi_priv.setting[i]->kobj, &tlmi_attr_group);
+-			kobject_put(&tlmi_priv.setting[i]->kobj);
 -		}
-+		ret = dma_fence_wait_timeout(fence, intr, timeout);
-+		if (ret <= 0)
-+			break;
-+
-+		/* Even for zero timeout the return value is 1 */
-+		if (timeout)
-+			timeout = ret;
- 	}
- 	dma_resv_iter_end(&cursor);
+-	}
+ 	sysfs_remove_file(&tlmi_priv.attribute_kset->kobj, &pending_reboot.attr);
+ 	if (tlmi_priv.can_debug_cmd && debug_support)
+ 		sysfs_remove_file(&tlmi_priv.attribute_kset->kobj, &debug_cmd.attr);
+ 	kset_unregister(tlmi_priv.attribute_kset);
  
+ 	/* Authentication structures */
+-	sysfs_remove_group(&tlmi_priv.pwd_admin->kobj, &auth_attr_group);
+-	kobject_put(&tlmi_priv.pwd_admin->kobj);
+-	sysfs_remove_group(&tlmi_priv.pwd_power->kobj, &auth_attr_group);
+-	kobject_put(&tlmi_priv.pwd_power->kobj);
++	list_for_each_entry_safe(pos, n, &tlmi_priv.authentication_kset->list, entry)
++		kobject_put(pos);
++
+ 	kset_unregister(tlmi_priv.authentication_kset);
+ }
+ 
+@@ -855,10 +852,6 @@ static int tlmi_sysfs_init(void)
+ 				  "%s", tlmi_priv.setting[i]->display_name);
+ 		if (ret)
+ 			goto fail_create_attr;
+-
+-		ret = sysfs_create_group(&tlmi_priv.setting[i]->kobj, &tlmi_attr_group);
+-		if (ret)
+-			goto fail_create_attr;
+ 	}
+ 
+ 	ret = sysfs_create_file(&tlmi_priv.attribute_kset->kobj, &pending_reboot.attr);
+@@ -876,19 +869,11 @@ static int tlmi_sysfs_init(void)
+ 	if (ret)
+ 		goto fail_create_attr;
+ 
+-	ret = sysfs_create_group(&tlmi_priv.pwd_admin->kobj, &auth_attr_group);
+-	if (ret)
+-		goto fail_create_attr;
+-
+ 	tlmi_priv.pwd_power->kobj.kset = tlmi_priv.authentication_kset;
+ 	ret = kobject_add(&tlmi_priv.pwd_power->kobj, NULL, "%s", "System");
+ 	if (ret)
+ 		goto fail_create_attr;
+ 
+-	ret = sysfs_create_group(&tlmi_priv.pwd_power->kobj, &auth_attr_group);
+-	if (ret)
+-		goto fail_create_attr;
+-
+ 	return ret;
+ 
+ fail_create_attr:
 -- 
 2.39.5
 
