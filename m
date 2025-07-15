@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13A927584E;
-	Tue, 15 Jul 2025 13:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E3027584E;
+	Tue, 15 Jul 2025 13:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585685; cv=none; b=gocTDuBioogHEszWsazseyY0OQtzwilb7bGeitNYUk+lhPb57Xm1YcsGG/ErvW/+lOW+hOgXXJVf/4MCKFDDBH8t1s1Jll5xg+xHWGx6cYRf/+8+6GSO67U+DGUqEGpd1Xz5F134cOYKv64C0qtzUU/lMqwiRPg782SgJ49jMwg=
+	t=1752585688; cv=none; b=JoMEtu+/qiMxg4iiui/FimSOr4RE5MXf28+jriekAC2nWKq5ugPH8ZZaILyPy4V5+9afnwoHJV95X3Y5+juT/pHekorotC3xB8n/11Uok2L5lQNyk+zc5o9juT2wRaelBkBHkj+KtNKd6q5ko3Pv5RhL3JnHei//edYbVnW3dPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585685; c=relaxed/simple;
-	bh=RUX0gb3/8DJjwtNJr+31GBrpJsIX7ePRjLFZ66HaPRY=;
+	s=arc-20240116; t=1752585688; c=relaxed/simple;
+	bh=Mp3Fld91axa9a8CJwVTgA6j4S9PQwPwZ4oPYR45d/rE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xll+4NObvTAnAO1r8f44BsVAe+Nr15+//owfPjYt3SrvggtbUXXl8+0X0DOiFtK6jZVFvcnn5alndOrGxWSOHKm4qV52qD1d0qcb+rs2ugGqWeyVzZppIlBAzyjvMmHATE+Z/wRKA/2FYBhu+q537JyHYYHJyAIuCcrraQ7b4dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU3FbBAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=inQMja0kJ7d7gUhNb4mqBOCvHGT526ntgDsREOOuHR/VJoUADNYzMDlDiP3UB1QN0NWLxcr+yFFo8tTXaAFgvi8CgxDsl26BxB0rMAVONrpk7/VcFU7SkaqV6cUgO4dyaHdzcyWO351GLTaV5/r66y7YQQUxpliMGxXpVE7LiMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aiWKXq/O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU3FbBAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45197C4CEE3;
-	Tue, 15 Jul 2025 13:21:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aiWKXq/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCA6C4CEE3;
+	Tue, 15 Jul 2025 13:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585685;
-	bh=RUX0gb3/8DJjwtNJr+31GBrpJsIX7ePRjLFZ66HaPRY=;
+	s=korg; t=1752585688;
+	bh=Mp3Fld91axa9a8CJwVTgA6j4S9PQwPwZ4oPYR45d/rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uU3FbBAqToQ+pPd1sQGHDoBMnphoSuhNc9axZ5obyJFwHxMA4Jqz8aaOsu9GMCqsC
-	 lQWno/OVNRHiBOZxNBDKBVpz2stCzA4HE57tH+KvlqycEvCujlQeHSZ88B/3t0RMwN
-	 ih5yFZYhOFa7UXKVw/2ep9sYdyLjMPq2jfwH8ePc=
+	b=aiWKXq/O9UqdJ8/M22gV61WbnNcWMnSksEbtXZTPgpkA0EE1zFqQkHjYoJKlk078J
+	 b5dMaW/jRfOcwxq6wdGQmOyfdoqvxOxS/TpaXRIeD9tPdUgOqo+Z1T92wAuCbBReGP
+	 3ZGeN1QDACy7Z9JAxR/wPsF7aOUym0jxl0IrTNtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 134/163] net/mlx5e: Add new prio for promiscuous mode
-Date: Tue, 15 Jul 2025 15:13:22 +0200
-Message-ID: <20250715130814.215272933@linuxfoundation.org>
+Subject: [PATCH 6.12 135/163] net: ll_temac: Fix missing tx_pending check in ethtools_set_ringparam()
+Date: Tue, 15 Jul 2025 15:13:23 +0200
+Message-ID: <20250715130814.255195040@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -54,114 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 4c9fce56fa702059bbc5ab737265b68f79cbaac4 ]
+[ Upstream commit e81750b4e3826fedce7362dad839cb40384d60ae ]
 
-An optimization for promiscuous mode adds a high-priority steering
-table with a single catch-all rule to steer all traffic directly to
-the TTC table.
+The function ll_temac_ethtools_set_ringparam() incorrectly checked
+rx_pending twice, once correctly for RX and once mistakenly in place
+of tx_pending. This caused tx_pending to be left unchecked against
+TX_BD_NUM_MAX.
+As a result, invalid TX ring sizes may have been accepted or valid
+ones wrongly rejected based on the RX limit, leading to potential
+misconfiguration or unexpected results.
 
-However, a gap exists between the creation of this table and the
-insertion of the catch-all rule. Packets arriving in this brief window
-would miss as no rule was inserted yet, unnecessarily incrementing the
-'rx_steer_missed_packets' counter and dropped.
+This patch corrects the condition to properly validate tx_pending.
 
-This patch resolves the issue by introducing a new prio for this
-table, placing it between MLX5E_TC_PRIO and MLX5E_NIC_PRIO. By doing
-so, packets arriving during the window now fall through to the next
-prio (at MLX5E_NIC_PRIO) instead of being dropped.
-
-Fixes: 1c46d7409f30 ("net/mlx5e: Optimize promiscuous mode")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/1752155624-24095-4-git-send-email-tariqt@nvidia.com
+Fixes: f7b261bfc35e ("net: ll_temac: Make RX/TX ring sizes configurable")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250710180621.2383000-1-alok.a.tiwari@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/fs.h   |  9 +++++++--
- drivers/net/ethernet/mellanox/mlx5/core/en_fs.c   |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 13 +++++++++----
- 3 files changed, 17 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/xilinx/ll_temac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/fs.h b/drivers/net/ethernet/mellanox/mlx5/core/en/fs.h
-index 1e8b7d3307014..b5aac0e1a68ec 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/fs.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/fs.h
-@@ -18,7 +18,8 @@ enum {
+diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
+index 1072e2210aed3..6b93418224e7e 100644
+--- a/drivers/net/ethernet/xilinx/ll_temac_main.c
++++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
+@@ -1309,7 +1309,7 @@ ll_temac_ethtools_set_ringparam(struct net_device *ndev,
+ 	if (ering->rx_pending > RX_BD_NUM_MAX ||
+ 	    ering->rx_mini_pending ||
+ 	    ering->rx_jumbo_pending ||
+-	    ering->rx_pending > TX_BD_NUM_MAX)
++	    ering->tx_pending > TX_BD_NUM_MAX)
+ 		return -EINVAL;
  
- enum {
- 	MLX5E_TC_PRIO = 0,
--	MLX5E_NIC_PRIO
-+	MLX5E_PROMISC_PRIO,
-+	MLX5E_NIC_PRIO,
- };
- 
- struct mlx5e_flow_table {
-@@ -68,9 +69,13 @@ struct mlx5e_l2_table {
- 				 MLX5_HASH_FIELD_SEL_DST_IP   |\
- 				 MLX5_HASH_FIELD_SEL_IPSEC_SPI)
- 
--/* NIC prio FTS */
-+/* NIC promisc FT level */
- enum {
- 	MLX5E_PROMISC_FT_LEVEL,
-+};
-+
-+/* NIC prio FTS */
-+enum {
- 	MLX5E_VLAN_FT_LEVEL,
- 	MLX5E_L2_FT_LEVEL,
- 	MLX5E_TTC_FT_LEVEL,
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
-index 05058710d2c79..537e732085b22 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
-@@ -776,7 +776,7 @@ static int mlx5e_create_promisc_table(struct mlx5e_flow_steering *fs)
- 	ft_attr.max_fte = MLX5E_PROMISC_TABLE_SIZE;
- 	ft_attr.autogroup.max_num_groups = 1;
- 	ft_attr.level = MLX5E_PROMISC_FT_LEVEL;
--	ft_attr.prio = MLX5E_NIC_PRIO;
-+	ft_attr.prio = MLX5E_PROMISC_PRIO;
- 
- 	ft->t = mlx5_create_auto_grouped_flow_table(fs->ns, &ft_attr);
- 	if (IS_ERR(ft->t)) {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-index 1bc88743d2dfa..7ef0a4af89e48 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
-@@ -113,13 +113,16 @@
- #define ETHTOOL_PRIO_NUM_LEVELS 1
- #define ETHTOOL_NUM_PRIOS 11
- #define ETHTOOL_MIN_LEVEL (KERNEL_MIN_LEVEL + ETHTOOL_NUM_PRIOS)
--/* Promiscuous, Vlan, mac, ttc, inner ttc, {UDP/ANY/aRFS/accel/{esp, esp_err}}, IPsec policy,
-+/* Vlan, mac, ttc, inner ttc, {UDP/ANY/aRFS/accel/{esp, esp_err}}, IPsec policy,
-  * {IPsec RoCE MPV,Alias table},IPsec RoCE policy
-  */
--#define KERNEL_NIC_PRIO_NUM_LEVELS 11
-+#define KERNEL_NIC_PRIO_NUM_LEVELS 10
- #define KERNEL_NIC_NUM_PRIOS 1
--/* One more level for tc */
--#define KERNEL_MIN_LEVEL (KERNEL_NIC_PRIO_NUM_LEVELS + 1)
-+/* One more level for tc, and one more for promisc */
-+#define KERNEL_MIN_LEVEL (KERNEL_NIC_PRIO_NUM_LEVELS + 2)
-+
-+#define KERNEL_NIC_PROMISC_NUM_PRIOS 1
-+#define KERNEL_NIC_PROMISC_NUM_LEVELS 1
- 
- #define KERNEL_NIC_TC_NUM_PRIOS  1
- #define KERNEL_NIC_TC_NUM_LEVELS 3
-@@ -187,6 +190,8 @@ static struct init_tree_node {
- 			   ADD_NS(MLX5_FLOW_TABLE_MISS_ACTION_DEF,
- 				  ADD_MULTIPLE_PRIO(KERNEL_NIC_TC_NUM_PRIOS,
- 						    KERNEL_NIC_TC_NUM_LEVELS),
-+				  ADD_MULTIPLE_PRIO(KERNEL_NIC_PROMISC_NUM_PRIOS,
-+						    KERNEL_NIC_PROMISC_NUM_LEVELS),
- 				  ADD_MULTIPLE_PRIO(KERNEL_NIC_NUM_PRIOS,
- 						    KERNEL_NIC_PRIO_NUM_LEVELS))),
- 		  ADD_PRIO(0, BY_PASS_MIN_LEVEL, 0, FS_CHAINING_CAPS,
+ 	if (netif_running(ndev))
 -- 
 2.39.5
 
