@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED042EA482;
-	Tue, 15 Jul 2025 13:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4632EA49D;
+	Tue, 15 Jul 2025 13:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586422; cv=none; b=e8YgkqiPfFlHKC7we0dY2QE42prm4a+ASipCzEHXL+jpbqiZEHAWuJcPIWXTpojdVXc1kclKeNmBUavbUQ/jILRZU5o6AOa/fWIriokK2e+BRwJkpWH6yThISji1YzW7sgdEilhmE7kMqoxZYNmhbyix7e9s4QiokLHYxKza5Eg=
+	t=1752586425; cv=none; b=W+tBAbBkPjhZ+YFUCkS5Mi4Cd01b4PmGWXUjG89J6XGv/gr0dD2sxajHsSH9/n0L9yjYlqK80XnnXtqa00rD3MBFHs/aNKOKJtK1He9fRq8nQxzKxQaIWL3q+z7/dBlb+weRLH+1PI7XNGY/pbReSsIGH1Y614Ozv70szrYYSEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586422; c=relaxed/simple;
-	bh=YMBu3uPeEGxWDW4sdVt94CB5QMDmIWbi+y7aiy6wWHk=;
+	s=arc-20240116; t=1752586425; c=relaxed/simple;
+	bh=0780TFSUF+yoOwjcu0DyRH4POa02ut96nIXvuNEFTas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7j2pynzzRSZ8CMgxJ7gY379cDGX95KWkdMFUerA3Os+ZVZCPF5G78WzARR0H0oY36Ncd3F8HbjwqmgJg23IDZdg0Uo2q+LLfDdC2thu7bQWlsEP3aJ84C88hVGEckPGPIFS/NIFu38ye6KMA+w9R9NUpCO0kmwIkRG9Hw3UJDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGa2nlXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b8Z2EIqYSHu4QWkjlE8i7Mi9SFZyxxxRSLedk29yLRahZDWXgrf3P87AJYnWTmj+EPVoRIqaa2YpgaAvZT7hVJvE3SC4KkcVa56Yxc22bwDxXeAxjc/NfJAkt0zdjNyznxfdW3KkoYFku+fcCnemBhiJkFP0n69BTf0TYq9tyE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bza/aYKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGa2nlXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493B4C4CEE3;
-	Tue, 15 Jul 2025 13:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bza/aYKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6735C4CEE3;
+	Tue, 15 Jul 2025 13:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586422;
-	bh=YMBu3uPeEGxWDW4sdVt94CB5QMDmIWbi+y7aiy6wWHk=;
+	s=korg; t=1752586425;
+	bh=0780TFSUF+yoOwjcu0DyRH4POa02ut96nIXvuNEFTas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGa2nlXRfH2acENHQjHaVLnLGF7ZtMlkecxwDFr6RxtObLaXQV/fhnMJsY9p1sYEb
-	 UBn8y4v3wRLIgMW4wKoEx6oG+eczXuWKeKhtQn935F5ilb8Q/b+co4rQLf/XuP5Lt4
-	 P46Yax5yZSsijxWzAniq1oik5Nd8JbTRo6OC+N9E=
+	b=bza/aYKke5XYTr4eYiSL+3kdd5ASQxSZsCmXvU2uz1kEiKDoh2BUxcFb984EpqiPU
+	 oxaM1UDsIz56/nt0DRD7Ll4r5jhYharm0zlWfSTVAb7cpSl8n5Ta0l9t/RxQIBvw+x
+	 KbobFPlAFbVU48IWYsl0sxrDBr7/ky6sfA3uT3qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	RD Babiera <rdbabiera@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.4 059/148] usb: typec: altmodes/displayport: do not index invalid pin_assignments
-Date: Tue, 15 Jul 2025 15:13:01 +0200
-Message-ID: <20250715130802.692567856@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 060/148] mtk-sd: Fix a pagefault in dma_unmap_sg() for not prepared data
+Date: Tue, 15 Jul 2025 15:13:02 +0200
+Message-ID: <20250715130802.731268651@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,53 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit af4db5a35a4ef7a68046883bfd12468007db38f1 upstream.
+commit 539d80575b810c7a5987c7ac8915e3bc99c03695 upstream.
 
-A poorly implemented DisplayPort Alt Mode port partner can indicate
-that its pin assignment capabilities are greater than the maximum
-value, DP_PIN_ASSIGN_F. In this case, calls to pin_assignment_show
-will cause a BRK exception due to an out of bounds array access.
+When swiotlb buffer is full, the dma_map_sg() returns 0 to
+msdc_prepare_data(), but it does not check it and sets the
+MSDC_PREPARE_FLAG.
 
-Prevent for loop in pin_assignment_show from accessing
-invalid values in pin_assignments by adding DP_PIN_ASSIGN_MAX
-value in typec_dp.h and using i < DP_PIN_ASSIGN_MAX as a loop
-condition.
+swiotlb_tbl_map_single() /* prints "swiotlb buffer is full" */
+  <-swiotlb_map()
+    <-dma_direct_map_page()
+      <-dma_direct_map_sg()
+        <-__dma_map_sg_attrs()
+          <-dma_map_sg_attrs()
+            <-dma_map_sg()  /* returns 0 (pages mapped) */
+              <-msdc_prepare_data()
 
-Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
-Cc: stable <stable@kernel.org>
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250618224943.3263103-2-rdbabiera@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Then, the msdc_unprepare_data() checks MSDC_PREPARE_FLAG and calls
+dma_unmap_sg() with unmapped pages. It causes a page fault.
+
+To fix this problem, Do not set MSDC_PREPARE_FLAG if dma_map_sg()
+fails because this is not prepared.
+
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/174908565814.4056588.769599127120955383.stgit@mhiramat.tok.corp.google.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    2 +-
- include/linux/usb/typec_dp.h             |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mtk-sd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -492,7 +492,7 @@ static ssize_t pin_assignment_show(struc
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -681,9 +681,10 @@ static void msdc_prepare_data(struct msd
+ 	struct mmc_data *data = mrq->data;
  
- 	assignments = get_current_pin_assignments(dp);
+ 	if (!(data->host_cookie & MSDC_PREPARE_FLAG)) {
+-		data->host_cookie |= MSDC_PREPARE_FLAG;
+ 		data->sg_count = dma_map_sg(host->dev, data->sg, data->sg_len,
+ 					    mmc_get_dma_dir(data));
++		if (data->sg_count)
++			data->host_cookie |= MSDC_PREPARE_FLAG;
+ 	}
+ }
  
--	for (i = 0; assignments; assignments >>= 1, i++) {
-+	for (i = 0; assignments && i < DP_PIN_ASSIGN_MAX; assignments >>= 1, i++) {
- 		if (assignments & 1) {
- 			if (i == cur)
- 				len += sprintf(buf + len, "[%s] ",
---- a/include/linux/usb/typec_dp.h
-+++ b/include/linux/usb/typec_dp.h
-@@ -56,6 +56,7 @@ enum {
- 	DP_PIN_ASSIGN_D,
- 	DP_PIN_ASSIGN_E,
- 	DP_PIN_ASSIGN_F, /* Not supported after v1.0b */
-+	DP_PIN_ASSIGN_MAX,
- };
- 
- /* DisplayPort alt mode specific commands */
 
 
