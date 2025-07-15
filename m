@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520712E62B4;
-	Tue, 15 Jul 2025 13:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE042E6D2B;
+	Tue, 15 Jul 2025 13:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587063; cv=none; b=JID7q5oaFxX5CxCzhIvOuKl57JTBcSirXCHI5eDkAzJs3rrLDjrCZTqnru6hAEKRWRr8m3soGEW5CvbX6LzkqSvP5t0XFHA2OnBFKQ5GF+YI+90goaKaMyV5YuoyIld4ebMAjm4UOYxbzbbCuq72nOOBtMfD1i1xKFlPbf/JDUY=
+	t=1752587066; cv=none; b=UMhn7W1BJSLU3uKVWjbfwIN4Y30qRydn7ZKZIx+hcrAER8GVLdZZT3x0im1kvrVE8gqqShllqOiXd8ri5eNevR6Q/f02yBcgEbiAao9Kfh3rKey0NRqbX4C5aGpykCFIH+omes3DxQOhmg4u6W5Pn2tGALi91VqqNYizcx0/efM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587063; c=relaxed/simple;
-	bh=akD/2XaOd43ymWU7XLHzC7xilnKb64i13YCXe9YVr5w=;
+	s=arc-20240116; t=1752587066; c=relaxed/simple;
+	bh=r5Sp3KX0QqbpWlTkdM6QFp/dwTkcsMvejn1T+MFBcSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OidWQqlIcihjfMcA8XrcmXZpzGys4wn4kpLH2rMB12oBj9p8x5BnBu+z84KYzN1sWEiLEwH4iv9CmNuBdNswI8vjM5UuMyWerxkzd+9VlyXSeDAW+0hBuBqbQYcvv3am/591Xq26Xw7RjS9aST3fwO+LiIrY6YrYmhAkNquqIV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cX7i9uhQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rfX/FEj7Inge1ot6Df6ocYtKSywUPFcdGM5j0ZqBfNTumDQH1eIsuF+U7I52eNNthPAU4771NiFoQXZwHRmaTZdHs4wSQkwuC7PFqsomEwGHW0qjlPHxh/0DDIIPtKNi4WRwNle7zY9AEM3w4UXgErKidjjPxIPqHQ43mBw2hNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoLKs4+X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cX7i9uhQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF7AC4CEE3;
-	Tue, 15 Jul 2025 13:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoLKs4+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71908C4CEE3;
+	Tue, 15 Jul 2025 13:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587063;
-	bh=akD/2XaOd43ymWU7XLHzC7xilnKb64i13YCXe9YVr5w=;
+	s=korg; t=1752587065;
+	bh=r5Sp3KX0QqbpWlTkdM6QFp/dwTkcsMvejn1T+MFBcSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cX7i9uhQAIAQ+o4AL3e+20B3SSaF0rb9ljnsVb6L+kDtFTyAVvlKAx+0vEg/qljFw
-	 AD0tMQdXUwOAk+H3XczD5wi5BZ68e6ZA5yRcWzbyw03MCDcjfwq1rVjZIiYBFxeUMS
-	 LQmiX1siEwFyuTJr0apwA57+CZjMFySEn6wly1/g=
+	b=EoLKs4+XKTaTLgXEsAJC9YSpWcHWnmztyeUb/5ueCTdIh5d0Nn5YJu7PySu/kyo1G
+	 TMHkJkpNfdaa7niTmomTicjf3UmssM8/IuYeqQ89rPTaMjmksDqwouC5TwAtFbeFIi
+	 4+hcN20QHEvjHxjwrOwwTp0QZqetucZtT3qjKxEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bf6ed459397e307c3ad2@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kito Xu <veritas501@foxmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 151/192] netfilter: flowtable: account for Ethernet header in nf_flow_pppoe_proto()
-Date: Tue, 15 Jul 2025 15:14:06 +0200
-Message-ID: <20250715130820.970870126@linuxfoundation.org>
+Subject: [PATCH 6.15 152/192] net: appletalk: Fix device refcount leak in atrtr_create()
+Date: Tue, 15 Jul 2025 15:14:07 +0200
+Message-ID: <20250715130821.011750066@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -53,58 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kito Xu <veritas501@foxmail.com>
 
-[ Upstream commit 18cdb3d982da8976b28d57691eb256ec5688fad2 ]
+[ Upstream commit 711c80f7d8b163d3ecd463cd96f07230f488e750 ]
 
-syzbot found a potential access to uninit-value in nf_flow_pppoe_proto()
+When updating an existing route entry in atrtr_create(), the old device
+reference was not being released before assigning the new device,
+leading to a device refcount leak. Fix this by calling dev_put() to
+release the old device reference before holding the new one.
 
-Blamed commit forgot the Ethernet header.
-
-BUG: KMSAN: uninit-value in nf_flow_offload_inet_hook+0x7e4/0x940 net/netfilter/nf_flow_table_inet.c:27
-  nf_flow_offload_inet_hook+0x7e4/0x940 net/netfilter/nf_flow_table_inet.c:27
-  nf_hook_entry_hookfn include/linux/netfilter.h:157 [inline]
-  nf_hook_slow+0xe1/0x3d0 net/netfilter/core.c:623
-  nf_hook_ingress include/linux/netfilter_netdev.h:34 [inline]
-  nf_ingress net/core/dev.c:5742 [inline]
-  __netif_receive_skb_core+0x4aff/0x70c0 net/core/dev.c:5837
-  __netif_receive_skb_one_core net/core/dev.c:5975 [inline]
-  __netif_receive_skb+0xcc/0xac0 net/core/dev.c:6090
-  netif_receive_skb_internal net/core/dev.c:6176 [inline]
-  netif_receive_skb+0x57/0x630 net/core/dev.c:6235
-  tun_rx_batched+0x1df/0x980 drivers/net/tun.c:1485
-  tun_get_user+0x4ee0/0x6b40 drivers/net/tun.c:1938
-  tun_chr_write_iter+0x3e9/0x5c0 drivers/net/tun.c:1984
-  new_sync_write fs/read_write.c:593 [inline]
-  vfs_write+0xb4b/0x1580 fs/read_write.c:686
-  ksys_write fs/read_write.c:738 [inline]
-  __do_sys_write fs/read_write.c:749 [inline]
-
-Reported-by: syzbot+bf6ed459397e307c3ad2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/686bc073.a00a0220.c7b3.0086.GAE@google.com/T/#u
-Fixes: 87b3593bed18 ("netfilter: flowtable: validate pppoe header")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Link: https://patch.msgid.link/20250707124517.614489-1-edumazet@google.com
+Fixes: c7f905f0f6d4 ("[ATALK]: Add missing dev_hold() to atrtr_create().")
+Signed-off-by: Kito Xu <veritas501@foxmail.com>
+Link: https://patch.msgid.link/tencent_E1A26771CDAB389A0396D1681A90A49E5D09@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_flow_table.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/appletalk/ddp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
-index d711642e78b57..c003cd194fa2a 100644
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -370,7 +370,7 @@ static inline __be16 __nf_flow_pppoe_proto(const struct sk_buff *skb)
+diff --git a/net/appletalk/ddp.c b/net/appletalk/ddp.c
+index b068651984fe3..fa7f002b14fa3 100644
+--- a/net/appletalk/ddp.c
++++ b/net/appletalk/ddp.c
+@@ -576,6 +576,7 @@ static int atrtr_create(struct rtentry *r, struct net_device *devhint)
  
- static inline bool nf_flow_pppoe_proto(struct sk_buff *skb, __be16 *inner_proto)
- {
--	if (!pskb_may_pull(skb, PPPOE_SES_HLEN))
-+	if (!pskb_may_pull(skb, ETH_HLEN + PPPOE_SES_HLEN))
- 		return false;
- 
- 	*inner_proto = __nf_flow_pppoe_proto(skb);
+ 	/* Fill in the routing entry */
+ 	rt->target  = ta->sat_addr;
++	dev_put(rt->dev); /* Release old device */
+ 	dev_hold(devhint);
+ 	rt->dev     = devhint;
+ 	rt->flags   = r->rt_flags;
 -- 
 2.39.5
 
