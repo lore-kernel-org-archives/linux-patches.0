@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709C327584E;
-	Tue, 15 Jul 2025 13:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295732C327B;
+	Tue, 15 Jul 2025 13:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585709; cv=none; b=nZuWb7eZwfjdf6XHQ2K6hqCKud7Y3ZOOOLjt8J+IdP8/if43zmRyB7aI4bfECpAorqIzUtAv2/6sG/SmpxYXf83Ga9rH9EKoac7Y3s+kX5CNa9VoV/6AiNEPeWI2IbJafdgzKYar9r2hOvm3DRnAoRgiKFzjK1R4gZeu4FSmNjY=
+	t=1752585712; cv=none; b=XYUKYu7GzRYYk3FpdSKbzkVz97GTUsJuKbep774AhkLiEZihA0ybQaF3w579X2xo+QApOI+Hjw3F/DDHCJEThfic3akCcxJmGaGufswvxS6S9cBv2/10DLcypTwiR5+5t202+lxre/0EGIToC6dCJ9h8W2ApZMf+G+poZwAzgQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585709; c=relaxed/simple;
-	bh=0C5d9i0U79G+W3nh0vbwg04ayUXIMIx1c6vIpVXeUJY=;
+	s=arc-20240116; t=1752585712; c=relaxed/simple;
+	bh=8SpRUlA+hdA3E5loFbvWNO7M2zSBEYpB3Lnf2N7eOuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHSKs+MKV+7vq6GuJkO3VHpHAKU/e+mPsys23E/u/UBEtmyLPF0tN6HOrlagDBwuSRhJMz373ikUJakxfxob0If0ZnDPrNeg61WDAevpWgjFl+q+krE2Ou3e1HQI5UTruUf98HrJGvAk0JNkgQjBNhV9wQyAVGTDoLioEsOcTV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8IVakdd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s/zNgR/P1dVWurjNzxBQ26C8oziuUYZxcUPHuOp3x06WomfCfeJvGVaZBX+WqeuhyZ3Ypw6gZrpisuOLWHqMibWaSprHiUDS2rYMCTQwHMk6yVfMO/ek5aCY1+7uQM+ddJuRAU238Rq0tVL50cT8mWQ/Cqptx+56wSZcTyR13sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oawSUNkO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8IVakdd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00036C4CEE3;
-	Tue, 15 Jul 2025 13:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oawSUNkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F2EC4CEE3;
+	Tue, 15 Jul 2025 13:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585709;
-	bh=0C5d9i0U79G+W3nh0vbwg04ayUXIMIx1c6vIpVXeUJY=;
+	s=korg; t=1752585712;
+	bh=8SpRUlA+hdA3E5loFbvWNO7M2zSBEYpB3Lnf2N7eOuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8IVakddjajISTnTksb/oNf+7VrxMB6xEiLjpB0ooVIs/sQdWpx0A08ZEugfwvGec
-	 qYOEdrbilTGnwXfxoSJzRx6WKkuGGTGxAslkyOU/wiGk8TfVLHpEZf7fhc8wM2y7Jh
-	 Ykw1cSGyxqMO85fp98/30BLc/x4K0uKn07BMk3yo=
+	b=oawSUNkOCjM9ROGmR08izKrl+vxvdEeyBkTEvZpL3oMSRDPLD1V+aEdsJgJfhnUzh
+	 1FpgADPN7DRTS+cw5wjLjbhmrwPwti07PdZrm5ARTm9Gjy2ZWZZqY9u8rSSb/vYfV/
+	 He188bemqRUPK61UGeViRPimYd2zfd5rpZerXRR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Fengnan Chang <changfengnan@bytedance.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/163] ALSA: hda/realtek: Add mic-mute LED setup for ASUS UM5606
-Date: Tue, 15 Jul 2025 15:13:30 +0200
-Message-ID: <20250715130814.531167164@linuxfoundation.org>
+Subject: [PATCH 6.12 143/163] io_uring: make fallocate be hashed work
+Date: Tue, 15 Jul 2025 15:13:31 +0200
+Message-ID: <20250715130814.570633215@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -50,36 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Fengnan Chang <changfengnan@bytedance.com>
 
-[ Upstream commit 41c66461cb2e8d3934a5395f27e572ebe63696b4 ]
+[ Upstream commit 88a80066af1617fab444776135d840467414beb6 ]
 
-ASUS UM5606* models use the quirk to set up the bass speakers, but it
-missed the mic-mute LED configuration.  Other similar models have the
-AMD ACP dmic, and the mic-mute is set up for that, but those models
-don't have AMD ACP but rather built-in mics of Realtek codec, hence
-the Realtek driver should set it up, instead.
+Like ftruncate and write, fallocate operations on the same file cannot
+be executed in parallel, so it is better to make fallocate be hashed
+work.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220125
-Link: https://patch.msgid.link/20250623151841.28810-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Fengnan Chang <changfengnan@bytedance.com>
+Link: https://lore.kernel.org/r/20250623110218.61490-1-changfengnan@bytedance.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
+ io_uring/opdef.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 30e9e26c5b2a7..57f17ddaf7860 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -6611,6 +6611,7 @@ static void alc294_fixup_bass_speaker_15(struct hda_codec *codec,
- 	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
- 		static const hda_nid_t conn[] = { 0x02, 0x03 };
- 		snd_hda_override_conn_list(codec, 0x15, ARRAY_SIZE(conn), conn);
-+		snd_hda_gen_add_micmute_led_cdev(codec, NULL);
- 	}
- }
- 
+diff --git a/io_uring/opdef.c b/io_uring/opdef.c
+index a2be3bbca5ffa..5dc1cba158a06 100644
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -214,6 +214,7 @@ const struct io_issue_def io_issue_defs[] = {
+ 	},
+ 	[IORING_OP_FALLOCATE] = {
+ 		.needs_file		= 1,
++		.hash_reg_file          = 1,
+ 		.prep			= io_fallocate_prep,
+ 		.issue			= io_fallocate,
+ 	},
 -- 
 2.39.5
 
