@@ -1,106 +1,338 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BD82EE966;
-	Tue, 15 Jul 2025 13:56:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A042EE961
+	for <patches@lists.linux.dev>; Tue, 15 Jul 2025 13:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587793; cv=none; b=KO4Wz2lwIQGoeSevcd0LLJiZTcDdQ//V2g3UPiYdJKNNQ6nFgiDmBQUKv7Ho6qFo/cOVWYKLzjkKZdueb3oW/XrJ0rXNnOl/8GfZSwe6AUxwPpty9wxB9JvQye7/xiXWRECJjvAaCqZqAaHXnL5vtmNLayfJMgiDU2CovD0K5Uo=
+	t=1752587794; cv=none; b=dhrd7T07lhFxONB4yoh6bmVeLEGLicNkaIBgKYnDCm7HKNTxlRtRKWIMFP0NGyQVxs73EYobp4WVGbQe9renXx9nTiqgcLiiqRW5gUYh4HSsx6A6hDmVKHHiy4BIU7/Sv5dF0L4M0V7DXzRbFe/nr1dd5ZcxXcOPCGCXkzQhee8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587793; c=relaxed/simple;
-	bh=5A6gsO95BpzLu/9tZt73GkXtmlor0NgIZr4jpv7DOIA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPyJAcViXYwcYixqbAu24Wqj0+Shh3APChfMrdidWxpsfJkLWONEFChWDSbxtGh/hDi/EOpRuU2/2Mi9ReSDURmCKyI2VKvOq1FGMmPbXyakkLs8qNCOIVAI7fgO8fd2Zgl+MBbhrY9ooyREOM2QGiK0WTSZOf8/0hqEFKPll7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q804T2NY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752587794; c=relaxed/simple;
+	bh=YESQyAIGOya5AfOhg62W8gn7QNGPOV3WPqR34Fme3RE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bl4ZIDijHops7AMy+0PhTG+Na3gWB8ZRtoM0GVw0t34tHG5oyNjRepfw6g2yK/zMInVxlWLjvLL5eieubdOndVmB26QHWxAJV4CC8Vc6BHrt/FUFjX1CwM8yMW0bX+92HP3yO/XU1xsgTgLx/UbaZF0+V5XfdZ2COpgiMb4QP9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=h+oiF3IF; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q804T2NY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31261C4CEF1;
-	Tue, 15 Jul 2025 13:56:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587793;
-	bh=5A6gsO95BpzLu/9tZt73GkXtmlor0NgIZr4jpv7DOIA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q804T2NYP0K1vXBvmuYLIo/yyLQQmRTLbbqeuwqGt9hq1Pp57utjJsr/83SX3kUFl
-	 7iuOTe363ItA0TgO73OQ05k9XAZR1U2wjazMG3nusxyXsFWtnr7C+BEmoxBwVO7zXs
-	 RT4grSHHPMwxdWMBw5H315+W1tjXGYirBiAW0qv0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andre Edich <andre.edich@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/208] net: phy: smsc: Fix Auto-MDIX configuration when disabled by strap
-Date: Tue, 15 Jul 2025 15:14:15 +0200
-Message-ID: <20250715130816.768386585@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
-References: <20250715130810.830580412@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="h+oiF3IF"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4560add6cd2so22557035e9.0
+        for <patches@lists.linux.dev>; Tue, 15 Jul 2025 06:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1752587791; x=1753192591; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Hn+WuqRR1t5R9mQwZhl3jtziWMIfUg5J12SJufxMgDI=;
+        b=h+oiF3IFBJEMmr9PXCaVp5wCr1gm3gQTGxE8coAWdLCG6dDriL3uzlWQ2eusxTilFm
+         g1FN+3WxXRIbwV8gUExBTnSeLOuciEN2QBV5kiPnqNLH0RSs7HBlBsZHHrpeTqRvzEgq
+         84YwjSiNAnDVGD/FqOnNqsSQzyhivsRI+srM0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752587791; x=1753192591;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hn+WuqRR1t5R9mQwZhl3jtziWMIfUg5J12SJufxMgDI=;
+        b=MrthKert8+ONZQhYHQrPw6qc0mdyz17ZbvVWJyKvXZ6pQ/SYOmERC7Lexv0K10pbBp
+         7SBsKxwVD72x1flwsCRdrkR4wjx5cXOmvRKdIkYrA8MkyBqJQXOh+49bl7mD/CoLiUVL
+         MmaKyTKYYxTB0jtdoCzn/gUge3HvAh0J5SqeeBD0n80jGDy9C3d8klhI88VRIr/cIXdv
+         ssCcTW6fUYf515lokL3Li71Uk1cj6E+B0wJ3z/q2wKglTYOa8wd9BJcp1TyLyre+mYx1
+         cMm94QjZiHuiV9+MEHxr/cDvucmYXy5xw4/CzOj+Zzb5eiASZM6C5yzB277DQTlu9F8g
+         J4mw==
+X-Forwarded-Encrypted: i=1; AJvYcCVI7vJ7w04EGSJKkmd+kmjMmUf2Rj8h1gySRUPVodSgcBQJHetKtddO2V/EP6uHt6CxhmQhx1vS@lists.linux.dev
+X-Gm-Message-State: AOJu0YxXpKO89/RdTrpsBkFkS0OKiFZnIfl4OnL497n6lHdexsgLOp8H
+	O9YSDGMeThzPAUc00OBDha/wxoDRiF83Ezah/Rg0sVlrXzc/5DnNLsXk60em9xZLT0c=
+X-Gm-Gg: ASbGnctExSYs5pzkfG5YcTdqYCCgjk/oOuliWV6i7MI/aecLNgDUmCeGYFyzSPKR6Y1
+	ZbFXmHVrjRfrFPWkBEOiE38/GOuKQOO9nzb/GV6ssDCGzqIHFdtKwoAM4jnrqEGnRegKZLq9MAl
+	yWn1GPCPbZmSMkz+4avED8/RFVyNtt6lDlhUCHY3VL0wKvXKFgbaOEbA26HSTuf4CPxxKwDgcyP
+	VVuuzwqToDt9BlKtXUc7KhIKYnkWTrs4rYuUFbbJQ1FaEhAdmkwA/eHcm/7VcCiZ6RUcPPinHDC
+	eD1fwGZAFHWSRDD9Gcaxv4SUyRg+Ezd+YklndhAvJUVuIcRqeMYHEbWZPQJAjtVdWfvdWGKijS5
+	MKR9dLKp528vcPzsXV7FVnIf4sZy23umurg==
+X-Google-Smtp-Source: AGHT+IFTv64UdrkysCJ2yuTEiKwcSb+1/4iYjcQ5l+Q8OyQYeLKhaF8jbrFd+PIwKagB43BFmrw6cA==
+X-Received: by 2002:a05:600c:4e14:b0:439:4b23:9e8e with SMTP id 5b1f17b1804b1-45625e1cc84mr37560615e9.3.1752587790620;
+        Tue, 15 Jul 2025 06:56:30 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:5485:d4b2:c087:b497])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4561b25a948sm60727255e9.35.2025.07.15.06.56.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jul 2025 06:56:28 -0700 (PDT)
+Date: Tue, 15 Jul 2025 15:56:24 +0200
+From: Simona Vetter <simona.vetter@ffwll.ch>
+To: Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>,
+	Anusha Srivatsa <asrivats@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>, linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH 6.15 085/192] drm/gem: Acquire references on GEM handles
+ for framebuffers
+Message-ID: <aHZeCE249cYEGCc2@phenom.ffwll.local>
+References: <20250715130814.854109770@linuxfoundation.org>
+ <20250715130818.327986464@linuxfoundation.org>
+ <d52b4d04-cb02-48d2-9042-b135a30f8a8e@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <d52b4d04-cb02-48d2-9042-b135a30f8a8e@amd.com>
+X-Operating-System: Linux phenom 6.12.30-amd64 
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Jul 15, 2025 at 03:43:08PM +0200, Christian König wrote:
+> We are about to revert this patch. Not sure if backporting it makes sense at the moment.
 
-------------------
+I think it still makes sense, at least as an interim fix.
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+What I discussed with Thomas is that first we want to revert back from
+gem_bo->dma_buf to gem_bo->import_attach.dmabuf everywhere. And those
+patches are sprinkled over various branches/trees/releases. So it'll take
+a while to catch them all. Meanwhile these two patches at least take care
+of the worst fallout, they're already tested and in the pipeline - I don't
+think it makes sense to hold them up and wait.
 
-[ Upstream commit a141af8eb2272ab0f677a7f2653874840bc9b214 ]
+It might take us until 6.17-rc1 until we've caught all the trees and made
+sure the backports of those reverts have happened, and I don't think we
+should wait that long.
 
-Correct the Auto-MDIX configuration to ensure userspace settings are
-respected when the feature is disabled by the AUTOMDIX_EN hardware strap.
+Cheers, Sima
 
-The LAN9500 PHY allows its default MDI-X mode to be configured via a
-hardware strap. If this strap sets the default to "MDI-X off", the
-driver was previously unable to enable Auto-MDIX from userspace.
+> Regards,
+> Christian.
+> 
+> On 15.07.25 15:13, Greg Kroah-Hartman wrote:
+> > 6.15-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Thomas Zimmermann <tzimmermann@suse.de>
+> > 
+> > commit 5307dce878d4126e1b375587318955bd019c3741 upstream.
+> > 
+> > A GEM handle can be released while the GEM buffer object is attached
+> > to a DRM framebuffer. This leads to the release of the dma-buf backing
+> > the buffer object, if any. [1] Trying to use the framebuffer in further
+> > mode-setting operations leads to a segmentation fault. Most easily
+> > happens with driver that use shadow planes for vmap-ing the dma-buf
+> > during a page flip. An example is shown below.
+> > 
+> > [  156.791968] ------------[ cut here ]------------
+> > [  156.796830] WARNING: CPU: 2 PID: 2255 at drivers/dma-buf/dma-buf.c:1527 dma_buf_vmap+0x224/0x430
+> > [...]
+> > [  156.942028] RIP: 0010:dma_buf_vmap+0x224/0x430
+> > [  157.043420] Call Trace:
+> > [  157.045898]  <TASK>
+> > [  157.048030]  ? show_trace_log_lvl+0x1af/0x2c0
+> > [  157.052436]  ? show_trace_log_lvl+0x1af/0x2c0
+> > [  157.056836]  ? show_trace_log_lvl+0x1af/0x2c0
+> > [  157.061253]  ? drm_gem_shmem_vmap+0x74/0x710
+> > [  157.065567]  ? dma_buf_vmap+0x224/0x430
+> > [  157.069446]  ? __warn.cold+0x58/0xe4
+> > [  157.073061]  ? dma_buf_vmap+0x224/0x430
+> > [  157.077111]  ? report_bug+0x1dd/0x390
+> > [  157.080842]  ? handle_bug+0x5e/0xa0
+> > [  157.084389]  ? exc_invalid_op+0x14/0x50
+> > [  157.088291]  ? asm_exc_invalid_op+0x16/0x20
+> > [  157.092548]  ? dma_buf_vmap+0x224/0x430
+> > [  157.096663]  ? dma_resv_get_singleton+0x6d/0x230
+> > [  157.101341]  ? __pfx_dma_buf_vmap+0x10/0x10
+> > [  157.105588]  ? __pfx_dma_resv_get_singleton+0x10/0x10
+> > [  157.110697]  drm_gem_shmem_vmap+0x74/0x710
+> > [  157.114866]  drm_gem_vmap+0xa9/0x1b0
+> > [  157.118763]  drm_gem_vmap_unlocked+0x46/0xa0
+> > [  157.123086]  drm_gem_fb_vmap+0xab/0x300
+> > [  157.126979]  drm_atomic_helper_prepare_planes.part.0+0x487/0xb10
+> > [  157.133032]  ? lockdep_init_map_type+0x19d/0x880
+> > [  157.137701]  drm_atomic_helper_commit+0x13d/0x2e0
+> > [  157.142671]  ? drm_atomic_nonblocking_commit+0xa0/0x180
+> > [  157.147988]  drm_mode_atomic_ioctl+0x766/0xe40
+> > [...]
+> > [  157.346424] ---[ end trace 0000000000000000 ]---
+> > 
+> > Acquiring GEM handles for the framebuffer's GEM buffer objects prevents
+> > this from happening. The framebuffer's cleanup later puts the handle
+> > references.
+> > 
+> > Commit 1a148af06000 ("drm/gem-shmem: Use dma_buf from GEM object
+> > instance") triggers the segmentation fault easily by using the dma-buf
+> > field more widely. The underlying issue with reference counting has
+> > been present before.
+> > 
+> > v2:
+> > - acquire the handle instead of the BO (Christian)
+> > - fix comment style (Christian)
+> > - drop the Fixes tag (Christian)
+> > - rename err_ gotos
+> > - add missing Link tag
+> > 
+> > Suggested-by: Christian König <christian.koenig@amd.com>
+> > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> > Link: https://elixir.bootlin.com/linux/v6.15/source/drivers/gpu/drm/drm_gem.c#L241 # [1]
+> > Cc: Thomas Zimmermann <tzimmermann@suse.de>
+> > Cc: Anusha Srivatsa <asrivats@redhat.com>
+> > Cc: Christian König <christian.koenig@amd.com>
+> > Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> > Cc: Maxime Ripard <mripard@kernel.org>
+> > Cc: Sumit Semwal <sumit.semwal@linaro.org>
+> > Cc: "Christian König" <christian.koenig@amd.com>
+> > Cc: linux-media@vger.kernel.org
+> > Cc: dri-devel@lists.freedesktop.org
+> > Cc: linaro-mm-sig@lists.linaro.org
+> > Cc: <stable@vger.kernel.org>
+> > Reviewed-by: Christian König <christian.koenig@amd.com>
+> > Link: https://lore.kernel.org/r/20250630084001.293053-1-tzimmermann@suse.de
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> >  drivers/gpu/drm/drm_gem.c                    |   44 ++++++++++++++++++++++++---
+> >  drivers/gpu/drm/drm_gem_framebuffer_helper.c |   16 +++++----
+> >  drivers/gpu/drm/drm_internal.h               |    2 +
+> >  3 files changed, 51 insertions(+), 11 deletions(-)
+> > 
+> > --- a/drivers/gpu/drm/drm_gem.c
+> > +++ b/drivers/gpu/drm/drm_gem.c
+> > @@ -212,6 +212,35 @@ void drm_gem_private_object_fini(struct
+> >  }
+> >  EXPORT_SYMBOL(drm_gem_private_object_fini);
+> >  
+> > +static void drm_gem_object_handle_get(struct drm_gem_object *obj)
+> > +{
+> > +	struct drm_device *dev = obj->dev;
+> > +
+> > +	drm_WARN_ON(dev, !mutex_is_locked(&dev->object_name_lock));
+> > +
+> > +	if (obj->handle_count++ == 0)
+> > +		drm_gem_object_get(obj);
+> > +}
+> > +
+> > +/**
+> > + * drm_gem_object_handle_get_unlocked - acquire reference on user-space handles
+> > + * @obj: GEM object
+> > + *
+> > + * Acquires a reference on the GEM buffer object's handle. Required
+> > + * to keep the GEM object alive. Call drm_gem_object_handle_put_unlocked()
+> > + * to release the reference.
+> > + */
+> > +void drm_gem_object_handle_get_unlocked(struct drm_gem_object *obj)
+> > +{
+> > +	struct drm_device *dev = obj->dev;
+> > +
+> > +	guard(mutex)(&dev->object_name_lock);
+> > +
+> > +	drm_WARN_ON(dev, !obj->handle_count); /* first ref taken in create-tail helper */
+> > +	drm_gem_object_handle_get(obj);
+> > +}
+> > +EXPORT_SYMBOL(drm_gem_object_handle_get_unlocked);
+> > +
+> >  /**
+> >   * drm_gem_object_handle_free - release resources bound to userspace handles
+> >   * @obj: GEM object to clean up.
+> > @@ -242,8 +271,14 @@ static void drm_gem_object_exported_dma_
+> >  	}
+> >  }
+> >  
+> > -static void
+> > -drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj)
+> > +/**
+> > + * drm_gem_object_handle_put_unlocked - releases reference on user-space handles
+> > + * @obj: GEM object
+> > + *
+> > + * Releases a reference on the GEM buffer object's handle. Possibly releases
+> > + * the GEM buffer object and associated dma-buf objects.
+> > + */
+> > +void drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj)
+> >  {
+> >  	struct drm_device *dev = obj->dev;
+> >  	bool final = false;
+> > @@ -268,6 +303,7 @@ drm_gem_object_handle_put_unlocked(struc
+> >  	if (final)
+> >  		drm_gem_object_put(obj);
+> >  }
+> > +EXPORT_SYMBOL(drm_gem_object_handle_put_unlocked);
+> >  
+> >  /*
+> >   * Called at device or object close to release the file's
+> > @@ -389,8 +425,8 @@ drm_gem_handle_create_tail(struct drm_fi
+> >  	int ret;
+> >  
+> >  	WARN_ON(!mutex_is_locked(&dev->object_name_lock));
+> > -	if (obj->handle_count++ == 0)
+> > -		drm_gem_object_get(obj);
+> > +
+> > +	drm_gem_object_handle_get(obj);
+> >  
+> >  	/*
+> >  	 * Get the user-visible handle using idr.  Preload and perform
+> > --- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+> > +++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+> > @@ -99,7 +99,7 @@ void drm_gem_fb_destroy(struct drm_frame
+> >  	unsigned int i;
+> >  
+> >  	for (i = 0; i < fb->format->num_planes; i++)
+> > -		drm_gem_object_put(fb->obj[i]);
+> > +		drm_gem_object_handle_put_unlocked(fb->obj[i]);
+> >  
+> >  	drm_framebuffer_cleanup(fb);
+> >  	kfree(fb);
+> > @@ -182,8 +182,10 @@ int drm_gem_fb_init_with_funcs(struct dr
+> >  		if (!objs[i]) {
+> >  			drm_dbg_kms(dev, "Failed to lookup GEM object\n");
+> >  			ret = -ENOENT;
+> > -			goto err_gem_object_put;
+> > +			goto err_gem_object_handle_put_unlocked;
+> >  		}
+> > +		drm_gem_object_handle_get_unlocked(objs[i]);
+> > +		drm_gem_object_put(objs[i]);
+> >  
+> >  		min_size = (height - 1) * mode_cmd->pitches[i]
+> >  			 + drm_format_info_min_pitch(info, i, width)
+> > @@ -193,22 +195,22 @@ int drm_gem_fb_init_with_funcs(struct dr
+> >  			drm_dbg_kms(dev,
+> >  				    "GEM object size (%zu) smaller than minimum size (%u) for plane %d\n",
+> >  				    objs[i]->size, min_size, i);
+> > -			drm_gem_object_put(objs[i]);
+> > +			drm_gem_object_handle_put_unlocked(objs[i]);
+> >  			ret = -EINVAL;
+> > -			goto err_gem_object_put;
+> > +			goto err_gem_object_handle_put_unlocked;
+> >  		}
+> >  	}
+> >  
+> >  	ret = drm_gem_fb_init(dev, fb, mode_cmd, objs, i, funcs);
+> >  	if (ret)
+> > -		goto err_gem_object_put;
+> > +		goto err_gem_object_handle_put_unlocked;
+> >  
+> >  	return 0;
+> >  
+> > -err_gem_object_put:
+> > +err_gem_object_handle_put_unlocked:
+> >  	while (i > 0) {
+> >  		--i;
+> > -		drm_gem_object_put(objs[i]);
+> > +		drm_gem_object_handle_put_unlocked(objs[i]);
+> >  	}
+> >  	return ret;
+> >  }
+> > --- a/drivers/gpu/drm/drm_internal.h
+> > +++ b/drivers/gpu/drm/drm_internal.h
+> > @@ -161,6 +161,8 @@ void drm_sysfs_lease_event(struct drm_de
+> >  
+> >  /* drm_gem.c */
+> >  int drm_gem_init(struct drm_device *dev);
+> > +void drm_gem_object_handle_get_unlocked(struct drm_gem_object *obj);
+> > +void drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj);
+> >  int drm_gem_handle_create_tail(struct drm_file *file_priv,
+> >  			       struct drm_gem_object *obj,
+> >  			       u32 *handlep);
+> > 
+> > 
+> 
 
-When handling the ETH_TP_MDI_AUTO case, the driver would set the
-SPECIAL_CTRL_STS_AMDIX_ENABLE_ bit but neglected to set the required
-SPECIAL_CTRL_STS_OVRRD_AMDIX_ bit. Without the override flag, the PHY
-falls back to its hardware strap default, ignoring the software request.
-
-This patch corrects the behavior by also setting the override bit when
-enabling Auto-MDIX. This ensures that the userspace configuration takes
-precedence over the hardware strap, allowing Auto-MDIX to be enabled
-correctly in all scenarios.
-
-Fixes: 05b35e7eb9a1 ("smsc95xx: add phylib support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: Andre Edich <andre.edich@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250703114941.3243890-2-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/phy/smsc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
-index b67de3f9ef186..9ec2485df645e 100644
---- a/drivers/net/phy/smsc.c
-+++ b/drivers/net/phy/smsc.c
-@@ -132,7 +132,8 @@ static int lan87xx_config_aneg(struct phy_device *phydev)
- 			SPECIAL_CTRL_STS_AMDIX_STATE_;
- 		break;
- 	case ETH_TP_MDI_AUTO:
--		val = SPECIAL_CTRL_STS_AMDIX_ENABLE_;
-+		val = SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
-+			SPECIAL_CTRL_STS_AMDIX_ENABLE_;
- 		break;
- 	default:
- 		return genphy_config_aneg(phydev);
 -- 
-2.39.5
-
-
-
+Simona Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
