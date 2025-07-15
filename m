@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF18A2E2657;
-	Tue, 15 Jul 2025 13:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7532E2F18;
+	Tue, 15 Jul 2025 13:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586439; cv=none; b=Ul7EG2bFOVjm9Z2hxGxLA11CwNAAmeW3D1jLbRlWoN7K67Pw3Q7oM6WAQz6jGBjkRuKfzRlnYLtPafDeLPDIKbzAPGzMr+dlTLyV2M/xOtheFY7OZ5LF4Ip351XOVuMTfmjVD7VnqUzphwqSxTIDyDsLnmcClXRjk0wDSfo8pZs=
+	t=1752586441; cv=none; b=bnn4KY3Qxo58nrK7mHb/L0/7YDSAyelesohcD4ZdoZeQLJZIyos7kYBmfiQL4qiIG8GuRgNmxZW16YZ2lZYIxIsk6ws9V2fRxcgd8Cmwf6l9WMdvjzXKIfBTmCeXyomm+s0tN+iwLdvWWPUlic6Wzow4qBK5IvmdQjU3myO21ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586439; c=relaxed/simple;
-	bh=+XdO7MJOpkAY8mf2c88I/xyDfdZB0huNCR76UMOYj9w=;
+	s=arc-20240116; t=1752586441; c=relaxed/simple;
+	bh=vO0ybVFdYtiRpS509Ter6qoZp4wfsevSQpzRgd6eoUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVlp4AokM64piQKkKlLSmaDxKrQI3oFqOUtlNKU+8IfAmFeMXx8LHtQjZWPJUd9Bz34CC1HMmTj/qXPKbUYecyHbWCtwmmDpogmKQ8XWHA0dILoReA9kK0pawW212BqTmVhUdCaA5C+eJuCVjVJwT1XPkYMLrvxM6cD2y6EX7SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3AfNmsG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjpeJS/WxcY14cKXEK5/ULMQv1plTJV1WaCEONUbp4/cE4PDdytrmEpc6StXIZpwyXGKDX+rL/TdYqnH58N80t3JQdc5HEFbOd4o5RRGRucCFyrdmsSWtGxGFQVkwSvocOhc+/5MnJVSX8u3e+Nb0+NcuRxBCFmoQQ2N0VG6maU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACrw9BIq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3AfNmsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83325C4CEE3;
-	Tue, 15 Jul 2025 13:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACrw9BIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D6AC4CEE3;
+	Tue, 15 Jul 2025 13:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586438;
-	bh=+XdO7MJOpkAY8mf2c88I/xyDfdZB0huNCR76UMOYj9w=;
+	s=korg; t=1752586441;
+	bh=vO0ybVFdYtiRpS509Ter6qoZp4wfsevSQpzRgd6eoUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3AfNmsGEWb3gprmwGYnMfD7CY7TmgPKTUfCeK/sJAGOR6UgUPwrM3c8e+nY4SVeB
-	 KngwiW01IRkxZ9vQhROkA8N98MCSM+WjqmzKbsum16luviwV95sG1R8YO3BWDhkA78
-	 D5aTJMXXfTGb6sdXf7n3qcnfQsIBV1xVn18+6c8o=
+	b=ACrw9BIqTAoOUP7spVD49MSuufqjeVnsmxtdlTKBUzQaMRn20IvbTFgow6XnkNPNg
+	 efP7ZB6Be8m3W73jXllT3XWCsiH5yTCJ2Y4pcfQysYh9WOMi9IhMPWfDGobws8a4VQ
+	 yn6yborN5wZVRGcK2PnCUTJ2QEqigkIXk9BdSuKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/148] scsi: qla4xxx: Fix missing DMA mapping error in qla4xxx_alloc_pdu()
-Date: Tue, 15 Jul 2025 15:13:06 +0200
-Message-ID: <20250715130802.891900825@linuxfoundation.org>
+Subject: [PATCH 5.4 065/148] btrfs: fix missing error handling when searching for inode refs during log replay
+Date: Tue, 15 Jul 2025 15:13:07 +0200
+Message-ID: <20250715130802.931013347@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -51,35 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 00f452a1b084efbe8dcb60a29860527944a002a1 ]
+[ Upstream commit 6561a40ceced9082f50c374a22d5966cf9fc5f5c ]
 
-dma_map_XXX() can fail and should be tested for errors with
-dma_mapping_error().
+During log replay, at __add_inode_ref(), when we are searching for inode
+ref keys we totally ignore if btrfs_search_slot() returns an error. This
+may make a log replay succeed when there was an actual error and leave
+some metadata inconsistency in a subvolume tree. Fix this by checking if
+an error was returned from btrfs_search_slot() and if so, return it to
+the caller.
 
-Fixes: b3a271a94d00 ("[SCSI] qla4xxx: support iscsiadm session mgmt")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250618071742.21822-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: e02119d5a7b4 ("Btrfs: Add a write ahead tree log to optimize synchronous operations")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/tree-log.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index ea15bbe0397fc..af1c45dd2f38a 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -3394,6 +3394,8 @@ static int qla4xxx_alloc_pdu(struct iscsi_task *task, uint8_t opcode)
- 		task_data->data_dma = dma_map_single(&ha->pdev->dev, task->data,
- 						     task->data_count,
- 						     DMA_TO_DEVICE);
-+		if (dma_mapping_error(&ha->pdev->dev, task_data->data_dma))
-+			return -ENOMEM;
- 	}
- 
- 	DEBUG2(ql4_printk(KERN_INFO, ha, "%s: MaxRecvLen %u, iscsi hrd %d\n",
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index f75333d7b78a5..75bf490cd7320 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1033,7 +1033,9 @@ static inline int __add_inode_ref(struct btrfs_trans_handle *trans,
+ 	search_key.type = BTRFS_INODE_REF_KEY;
+ 	search_key.offset = parent_objectid;
+ 	ret = btrfs_search_slot(NULL, root, &search_key, path, 0, 0);
+-	if (ret == 0) {
++	if (ret < 0) {
++		return ret;
++	} else if (ret == 0) {
+ 		struct btrfs_inode_ref *victim_ref;
+ 		unsigned long ptr;
+ 		unsigned long ptr_end;
 -- 
 2.39.5
 
