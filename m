@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1B723ABAF;
-	Tue, 15 Jul 2025 13:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C0E2E5404;
+	Tue, 15 Jul 2025 13:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586417; cv=none; b=fGAbb2v27drOYTA/XM0kWwQ+1IcPn+qPKS7ldIXcGbOVrC5nzOMvf+Zxus54iOVk3cptB5CHmY9eW6AQMCoi7eAvOVnBjVa8p4HgHpjLKP6HwSocl0ODOlaAvNzJ31iy1tboSigsSR2pGskCJD7q8UnMku2FFBYSGUlBJd7xvVM=
+	t=1752586420; cv=none; b=PpICZ/IuwKKukCirULLr2oUQbwQN7xjXfw2ZUVDd/5iDWPl7l24kDPrn0+VtTRkH7YBxgmleOUS9V+KtE9ouOGMZsjUWu6WORmjCGo9cJWJHpkpyUAhTm16nynFJ8pxQNZxwxDJghmcglJHWlLK1nYzRj7TSC0YVdS29JZKPHpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586417; c=relaxed/simple;
-	bh=vQMxG+dtStwQWd3JoOoTDMvuu+YEWnj8bAEsu3NaAyQ=;
+	s=arc-20240116; t=1752586420; c=relaxed/simple;
+	bh=BinJLm6sui0+elbqJDvHDrD6aMzjQ6/9lttHE2NwMmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WY0RbgakdrwyztF1IWgMVDPi2AGeFF3GaZXlNSbiLhQQd08ROqENi0SMlvQx5KDp4zCL/J18r2fIwM1gPhJEK0aWLeMZjch9+vvhAP8N6VlZXuHXOJYfzrVgX7cdAQoMYFit9cLl4+z+br+/QAz6stUULuW6Iu+8wddag8t66DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shvuVlLW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WpWM1wtC9OAePZneF5vJI9piVsKowiJg5BTTsbZH/qVBfSedDSdbu7DZmnQ61pKyNcV/KtUaK/6+gOpfZKdqU8C1QgFVCxxpikJ9P1BmX4vzK684lYQWJ/fUknAy344C8s86bEovzwQYhnoToTshYJoGOae1bLyYam9VT4PDYZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWBOBSXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shvuVlLW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78EDC4CEE3;
-	Tue, 15 Jul 2025 13:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWBOBSXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99400C4CEE3;
+	Tue, 15 Jul 2025 13:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586417;
-	bh=vQMxG+dtStwQWd3JoOoTDMvuu+YEWnj8bAEsu3NaAyQ=;
+	s=korg; t=1752586420;
+	bh=BinJLm6sui0+elbqJDvHDrD6aMzjQ6/9lttHE2NwMmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shvuVlLWGMJzvHd05JX0KbPXJ/4HUC62Verl/qAjOwlJ+qGPpC9+EPmPj7FmPE7J2
-	 WZwMPq0IlLqX2cHyI0e7Yk2c2P4p5OHHaPa4zSZwMUJ4VpuRESsgs3/ODOGuQB5gfQ
-	 xbRn6p6Yw9SBLObqH8pjkCBKICSWc/36yOuRA5bM=
+	b=cWBOBSXhJiaetY4mDLiivx+94uHi4kxuNqf6mP6FOqFGi8geS9e7FNyDG2n0rrfEd
+	 L0+UCBr47RkexlZKb0HYmlw+KMcEty8FrPhGnEAnubh4SYWHogqQBRgTnef9Fd3Voa
+	 gbNGB82009ZOT80FpwB2FgjyRS9+IF37m8z9mWHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Shih <victor.shih@genesyslogic.com.tw>,
+	Erick Shepherd <erick.shepherd@ni.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
+	Jonathan Liu <net147@gmail.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 057/148] mmc: sdhci: Add a helper function for dump register in dynamic debug mode
-Date: Tue, 15 Jul 2025 15:12:59 +0200
-Message-ID: <20250715130802.610804014@linuxfoundation.org>
+Subject: [PATCH 5.4 058/148] Revert "mmc: sdhci: Disable SD card clock before changing parameters"
+Date: Tue, 15 Jul 2025 15:13:00 +0200
+Message-ID: <20250715130802.649684628@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -51,44 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Shih <victor.shih@genesyslogic.com.tw>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit 2881ba9af073faa8ee7408a8d1e0575e50eb3f6c upstream.
+commit dcc3bcfc5b50c625b475dcc25d167b6b947a6637 upstream.
 
-Add a helper function for dump register in dynamic debug mode.
+It has turned out the trying to strictly conform to the SDHCI specification
+is causing problems. Let's revert and start over.
 
-Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+This reverts commit fb3bbc46c94f261b6156ee863c1b06c84cf157dc.
+
+Cc: Erick Shepherd <erick.shepherd@ni.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250606110121.96314-3-victorshihgli@gmail.com
+Fixes: fb3bbc46c94f ("mmc: sdhci: Disable SD card clock before changing parameters")
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Reported-by: Jonathan Liu <net147@gmail.com>
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Closes: https://bugs.debian.org/1108065
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250624110932.176925-1-ulf.hansson@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.h |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/mmc/host/sdhci.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -801,4 +801,20 @@ void sdhci_abort_tuning(struct sdhci_hos
- void sdhci_set_data_timeout_irq(struct sdhci_host *host, bool enable);
- void __sdhci_set_timeout(struct sdhci_host *host, struct mmc_command *cmd);
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -1708,15 +1708,10 @@ void sdhci_set_clock(struct sdhci_host *
  
-+#if defined(CONFIG_DYNAMIC_DEBUG) || \
-+	(defined(CONFIG_DYNAMIC_DEBUG_CORE) && defined(DYNAMIC_DEBUG_MODULE))
-+#define SDHCI_DBG_ANYWAY 0
-+#elif defined(DEBUG)
-+#define SDHCI_DBG_ANYWAY 1
-+#else
-+#define SDHCI_DBG_ANYWAY 0
-+#endif
-+
-+#define sdhci_dbg_dumpregs(host, fmt)					\
-+do {									\
-+	DEFINE_DYNAMIC_DEBUG_METADATA(descriptor, fmt);			\
-+	if (DYNAMIC_DEBUG_BRANCH(descriptor) ||	SDHCI_DBG_ANYWAY)	\
-+		sdhci_dumpregs(host);					\
-+} while (0)
-+
- #endif /* __SDHCI_HW_H */
+ 	host->mmc->actual_clock = 0;
+ 
+-	clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL);
+-	if (clk & SDHCI_CLOCK_CARD_EN)
+-		sdhci_writew(host, clk & ~SDHCI_CLOCK_CARD_EN,
+-			SDHCI_CLOCK_CONTROL);
++	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ 
+-	if (clock == 0) {
+-		sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
++	if (clock == 0)
+ 		return;
+-	}
+ 
+ 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
+ 	sdhci_enable_clk(host, clk);
 
 
