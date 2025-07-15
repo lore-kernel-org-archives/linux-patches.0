@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B52D2E2EE9;
-	Tue, 15 Jul 2025 13:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31E62D8790;
+	Tue, 15 Jul 2025 13:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585920; cv=none; b=Eu3JhIVFIvckguqBAZDSPjQrexEM76cibirtNIFbStk6FKHs6ySG17ZSij23mX5XF4Z/qpcTK1P3JRi+Wp0H8dU7+yUxK+eo2k85h05GP5skH0qF/QMZbzF1NN/y4kzKmhpCDwz8gNOWaehwCio3TD9MFsJKB3lhokiVp0c/QLk=
+	t=1752585923; cv=none; b=X0NJ1dKzT3RvalJP8RYluinb9iw1f9X4VcUTl+IgIcIvQhTA5nOI37THksl62u9vzSUzy5+jG2X1CJjmDkx23zeTtxKJoM2i4qTKfhNM37twu4bMpvoK2YQATIyaeMU2r3Ru5hj61bLhwUnyHh8sCykXB/axmLpZ57uyD3XiVIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585920; c=relaxed/simple;
-	bh=Y4aBjFDAYQvN0CrpwaZ6cjZP0N0jBsXqtAxlvO7DD2s=;
+	s=arc-20240116; t=1752585923; c=relaxed/simple;
+	bh=gBdUQb8x91ihvOIDuB4ae83toHUUpvIH4eFB0znGxpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VD+/p4HYtThFp2XTkQ969ekPoREPWqVgx5cUIJGQIm+esWuQD31WpGIZg22R/MVGsMu20hVlO8orTcy3/HLjtlLQMd/GyNrThsBctSyAVPT4KjuxKkTyXj8Jo/WCaIzxcjrNJgwTNzSzOI8IkMhsR891fJ1m3WAmsFIJjHFb4dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnprbSfV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gkGrF3ch8MwxhXjghe6xk5UJyQj+bkyaE5EmdWUNkeVNicGoMNSOEAb/ybrC5NHWIN22OMxRhj20Pt8nJ8Xq/b11KJxTZRjh2coASfcZZ/b+JHCFxCYGjqgYkcSEiAizfAZ+UWmk7iPzr9XX6GAFgrlBaHs4h9Ol/AG2zJJI7ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xbnk3Gbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnprbSfV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5051C4CEE3;
-	Tue, 15 Jul 2025 13:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xbnk3Gbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E22C4CEE3;
+	Tue, 15 Jul 2025 13:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585920;
-	bh=Y4aBjFDAYQvN0CrpwaZ6cjZP0N0jBsXqtAxlvO7DD2s=;
+	s=korg; t=1752585922;
+	bh=gBdUQb8x91ihvOIDuB4ae83toHUUpvIH4eFB0znGxpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnprbSfV6tdwLqUXC44l0xXlF/9kJ33pmWATEDlS/btYMK/ntblMrIhv4h3YZwcUd
-	 PTHNf9Ilau25KMg4HBprJoBw/ChhB6Saj5CRgOi+RuCJ63Nn++2sq8EQuE3nWO0UPx
-	 B12tKH++iFXSleKFmtWSc4na+KqcNWqgNcuMZbDI=
+	b=Xbnk3GbczRct87oQ29fQ4ATrFjgiWcdNxk6larpt83j45OPQFFlNzXShrjRj0a/Cz
+	 6DzHPby6N2S09ojzNRuCeFuFlFM7btwOXyPUeKh12qEqKFAHphc/f6+U36WGw/jeL+
+	 q8zIe3g7dhk30THmS/DYyP/VO7LexDuw1LZzD2Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 057/109] mm/vmalloc: leave lazy MMU mode on PTE mapping error
-Date: Tue, 15 Jul 2025 15:13:13 +0200
-Message-ID: <20250715130801.164500230@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.6 058/109] pwm: mediatek: Ensure to disable clocks in error path
+Date: Tue, 15 Jul 2025 15:13:14 +0200
+Message-ID: <20250715130801.204544547@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -47,75 +44,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit fea18c686320a53fce7ad62a87a3e1d10ad02f31 upstream.
+commit 505b730ede7f5c4083ff212aa955155b5b92e574 upstream.
 
-vmap_pages_pte_range() enters the lazy MMU mode, but fails to leave it in
-case an error is encountered.
+After enabling the clocks each error path must disable the clocks again.
+One of them failed to do so. Unify the error paths to use goto to make it
+harder for future changes to add a similar bug.
 
-Link: https://lkml.kernel.org/r/20250623075721.2817094-1-agordeev@linux.ibm.com
-Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202506132017.T1l1l6ME-lkp@intel.com/
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 7ca59947b5fc ("pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20250704172728.626815-2-u.kleine-koenig@baylibre.com
+Cc: stable@vger.kernel.org
+[ukleinek: backported to 6.6.y]
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/pwm/pwm-mediatek.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -459,6 +459,7 @@ static int vmap_pages_pte_range(pmd_t *p
- 		unsigned long end, pgprot_t prot, struct page **pages, int *nr,
- 		pgtbl_mod_mask *mask)
- {
-+	int err = 0;
- 	pte_t *pte;
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -133,8 +133,10 @@ static int pwm_mediatek_config(struct pw
+ 		return ret;
  
- 	/*
-@@ -472,18 +473,25 @@ static int vmap_pages_pte_range(pmd_t *p
- 	do {
- 		struct page *page = pages[*nr];
+ 	clk_rate = clk_get_rate(pc->clk_pwms[pwm->hwpwm]);
+-	if (!clk_rate)
+-		return -EINVAL;
++	if (!clk_rate) {
++		ret = -EINVAL;
++		goto out;
++	}
  
--		if (WARN_ON(!pte_none(ptep_get(pte))))
--			return -EBUSY;
--		if (WARN_ON(!page))
--			return -ENOMEM;
--		if (WARN_ON(!pfn_valid(page_to_pfn(page))))
--			return -EINVAL;
-+		if (WARN_ON(!pte_none(ptep_get(pte)))) {
-+			err = -EBUSY;
-+			break;
-+		}
-+		if (WARN_ON(!page)) {
-+			err = -ENOMEM;
-+			break;
-+		}
-+		if (WARN_ON(!pfn_valid(page_to_pfn(page)))) {
-+			err = -EINVAL;
-+			break;
-+		}
+ 	/* Make sure we use the bus clock and not the 26MHz clock */
+ 	if (pc->soc->has_ck_26m_sel)
+@@ -153,9 +155,9 @@ static int pwm_mediatek_config(struct pw
+ 	}
  
- 		set_pte_at(&init_mm, addr, pte, mk_pte(page, prot));
- 		(*nr)++;
- 	} while (pte++, addr += PAGE_SIZE, addr != end);
- 	*mask |= PGTBL_PTE_MODIFIED;
+ 	if (clkdiv > PWM_CLK_DIV_MAX) {
+-		pwm_mediatek_clk_disable(chip, pwm);
+ 		dev_err(chip->dev, "period of %d ns not supported\n", period_ns);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 
+ 	if (pc->soc->pwm45_fixup && pwm->hwpwm > 2) {
+@@ -172,9 +174,10 @@ static int pwm_mediatek_config(struct pw
+ 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period);
+ 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty);
+ 
++out:
+ 	pwm_mediatek_clk_disable(chip, pwm);
+ 
 -	return 0;
-+
-+	return err;
++	return ret;
  }
  
- static int vmap_pages_pmd_range(pud_t *pud, unsigned long addr,
+ static int pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
 
 
