@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38902ECE80;
-	Tue, 15 Jul 2025 13:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4F52ECE80;
+	Tue, 15 Jul 2025 13:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587738; cv=none; b=oVdZx14uiWJBtuTzmB1hyV/hYHydtxGMF/z25KH9SUjNwTp/dX1BBp2JUitqGMLno2IU1S5vaurY1d+Mff1ftrl5AY82kkfXHVhd+IZvhW1RErk6Opybql8eLpzy1DWdZUmeKah5pMbI1ufiVAOCSwvvi6n+gb88gf1KOzqcFDc=
+	t=1752587740; cv=none; b=rdLZI2pYBxiH1DKWoTaEjVMhcsMrtK4IYxfz46RepkcknDgQ1KstZMFRWYNudYANAkIay0UxU670E26nRQGQ/e8HgYSpbyVIbWoKJ+sYHce9fRuLbbpaw+xXDKvUzklhf527Po+CaUeZStUKFZ6TYjTVs/L5zmyZz1G+pS3p0B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587738; c=relaxed/simple;
-	bh=3MRK57SFk7MCYWxY7TLCdZjxjCKc6ScW6xsHbvytGVI=;
+	s=arc-20240116; t=1752587740; c=relaxed/simple;
+	bh=DRURMqcAgCnvU1ndtH/WZaMU8Uxbz+abn6fb9jiT0vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aODwtaCoVZn59Q29KydU3vPA4DldVAJCA196vTCoMxEjGME+ZUVD7OgxJ+eZrg3nt1N0oIPEbDT6a4DQsZvYUhgOJLWgXhK6s4cJ5oOxf9+pnWT2IQ7K+ER39ervXofs7f3x06V6xJ6UaG4W5EdMNIa/Ig7ho1H0v5jE28kbOQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2o5/9rQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qP9wKoTaC5tbN9Dalyw2EoMBKSV7bLNa3PhA9l+UOEOO+C06tfg2T80q85+1IEsb7xBRAnvrSjotHaTm6CxqzWeUufCp+lAJeJQECWL4l8rabAaTGApTlLkPrQBT3c683DJx+cG58gUFh1XzUxuxogZTK4h/SfaSUrPkU3Z54Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFY3nIrr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2o5/9rQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E8BC4CEE3;
-	Tue, 15 Jul 2025 13:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFY3nIrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD34C4CEE3;
+	Tue, 15 Jul 2025 13:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587737;
-	bh=3MRK57SFk7MCYWxY7TLCdZjxjCKc6ScW6xsHbvytGVI=;
+	s=korg; t=1752587740;
+	bh=DRURMqcAgCnvU1ndtH/WZaMU8Uxbz+abn6fb9jiT0vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2o5/9rQK/wdzNAvZaBbOkWv7UMY9EJ0KT4YUp3Ykl7hjHhBEriIhaATe4GTPFYPd
-	 vgAkvVY1LbEluk2qqDPdh0hYFADOCDZtYjRcVrGhADNfK2jznIHQDeTbgGSv/xMkHt
-	 BQ4cit/nX87UlRWziTPvYNeWgTamCKI6cs25pawk=
+	b=TFY3nIrrCixIBkXXPn2xoGKEIjWqGm3oegL0tIf5adEM2F7j7Iwo5wLrigO5dA3qy
+	 Q9RvirhJUfdvdkOHnAButHe+3jr+Dary948BKfxvWbV4SMUD239l9dDiO5JyCUtZf0
+	 PthNvAhZZimstOg+y8XXOEFw+FbAZ2ipNCOo1A1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/208] net: rose: Fix fall-through warnings for Clang
-Date: Tue, 15 Jul 2025 15:13:26 +0200
-Message-ID: <20250715130814.829683441@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 124/208] xhci: dbctty: disable ECHO flag by default
+Date: Tue, 15 Jul 2025 15:13:53 +0200
+Message-ID: <20250715130815.910825306@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -45,51 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Łukasz Bartosik <ukaszb@chromium.org>
 
-[ Upstream commit 90d181ca488f466904ea59dd5c836f766b69c71b ]
+commit 2b857d69a5e116150639a0c6c39c86cc329939ee upstream.
 
-In preparation to enable -Wimplicit-fallthrough for Clang, fix multiple
-warnings by explicitly adding multiple break statements instead of
-letting the code fall through to the next case.
+When /dev/ttyDBC0 device is created then by default ECHO flag
+is set for the terminal device. However if data arrives from
+a peer before application using /dev/ttyDBC0 applies its set
+of terminal flags then the arriving data will be echoed which
+might not be desired behavior.
 
-Link: https://github.com/KSPP/linux/issues/115
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 34a500caf48c ("rose: fix dangling neighbour pointers in rose_rt_device_down()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4521f1613940 ("xhci: dbctty: split dbc tty driver registration and unregistration functions.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Łukasz Bartosik <ukaszb@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/stable/20250610111802.18742-1-ukaszb%40chromium.org
+Link: https://lore.kernel.org/r/20250627144127.3889714-4-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_route.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/xhci-dbgtty.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 981bdefd478b0..66aa05db5390f 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -347,6 +347,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 				case 1:
- 					rose_node->neighbour[1] =
- 						rose_node->neighbour[2];
-+					break;
- 				case 2:
- 					break;
- 				}
-@@ -508,6 +509,7 @@ void rose_rt_device_down(struct net_device *dev)
- 					fallthrough;
- 				case 1:
- 					t->neighbour[1] = t->neighbour[2];
-+					break;
- 				case 2:
- 					break;
- 				}
--- 
-2.39.5
-
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -529,6 +529,7 @@ static int dbc_tty_init(void)
+ 	dbc_tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
+ 	dbc_tty_driver->subtype = SERIAL_TYPE_NORMAL;
+ 	dbc_tty_driver->init_termios = tty_std_termios;
++	dbc_tty_driver->init_termios.c_lflag &= ~ECHO;
+ 	dbc_tty_driver->init_termios.c_cflag =
+ 			B9600 | CS8 | CREAD | HUPCL | CLOCAL;
+ 	dbc_tty_driver->init_termios.c_ispeed = 9600;
 
 
