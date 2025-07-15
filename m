@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015472E49B3;
-	Tue, 15 Jul 2025 13:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768962E610D;
+	Tue, 15 Jul 2025 13:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586947; cv=none; b=kkI2HC0zwlPQJmDqG9mOtDiDETZyD3c0PuJkTJDv/h10Ur/2H9nXSkNTfsYwIRaj1sG6PtJT/KxYXv6R4YipwjK3UMpPW3nraH/ETJx7B0TNlfHrKTL764nFn+HAyYSKOPKcoDOFqAl+RvSdDRLDhsInqgEAXyR4hqoB18cXB78=
+	t=1752586949; cv=none; b=JXWyXdjWCIcuXfp+ksoE10kcA7gBesa8nr5//LuqilAdVq8Ep+E5rLYwFzI4uGK14M9JVxkdNkWo9V7NVpL9o7dDBzJVxa5B3oSE641SxFmdTfQARUb1OEO9/OK1/9jOOmp6n3T49Z2VGlykd7D6Swiqpm9NAG/4J8pToGjClO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586947; c=relaxed/simple;
-	bh=bQ5FNtSqEMmG1pUzMjhGg2NDhSHq/KBHaoNTjAeY428=;
+	s=arc-20240116; t=1752586949; c=relaxed/simple;
+	bh=AeaYmvRAb/EWQAJ3MS4zGZuwFH+kqG8mPdfKWpc0+hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNBQZViJsP9G9f63aKSU+L5OSckWW0Yd1aCKE2UtQmLWSQQdNcszFCX5WWmrs4P0GefGpPo7YaxEplEk5tdbnhr5m3WYLkm90hOrY8SEzoDKXsXJxiaxHwfyChPJPNv44imFSmJ4A4dPZakOJvVZUDcYy7qgxFh1jbtydjq38Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ws/oo1bq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f8eyQS1dH+QNU0dxMONoYHnyL2cVVbDLcN7YCCeOt26ypX9mGVycRLEK5qL6xkZybAol5d2xTgfr1QGCsj3g3IeNeL7PJz1cQM3n32LV7xRYtxMT5AGUXX/+nb8vKEFug1CxAeMvngSFSWXyTsMF0ivv9FvpbRcwUuDTBjF4MjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXoJWACB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ws/oo1bq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC76C4CEE3;
-	Tue, 15 Jul 2025 13:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXoJWACB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04121C4CEE3;
+	Tue, 15 Jul 2025 13:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586946;
-	bh=bQ5FNtSqEMmG1pUzMjhGg2NDhSHq/KBHaoNTjAeY428=;
+	s=korg; t=1752586949;
+	bh=AeaYmvRAb/EWQAJ3MS4zGZuwFH+kqG8mPdfKWpc0+hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ws/oo1bqm8XbKXjPDumN1iPz4r98hBvgo1h6qKKrohKq2cmTe1TQc6D82WBQq9tKy
-	 WA83F1HvqAAfwF32BubXksfXG53yf1EkwFyGb/hNmyDEjR7v6AffdIOSppxpSyOcGF
-	 /+ojt10Nw0ZdbIApxRm2Yj0iKLYG+QUXujXDi/8w=
+	b=fXoJWACBvImb7kRRYAvNF0BFX9YHFiKsrk2OAhBuzNv8qDP6cwZKX2pbc3DXXq4DN
+	 fNLgj5iEKq+gTjqtrrJwmvynWPyLON0oXJ5bek310NsjvruQ2scK74wmJ6gWGW1V37
+	 uuOqZ97pICALjjzkthDRCfVSm2koyXjtmhW/CgKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Honggyu Kim <honggyu.kim@sk.com>,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 108/192] mm/damon/core: handle damon_call_control as normal under kdmond deactivation
-Date: Tue, 15 Jul 2025 15:13:23 +0200
-Message-ID: <20250715130819.224610705@linuxfoundation.org>
+Subject: [PATCH 6.15 109/192] mm/damon: fix divide by zero in damon_get_intervals_score()
+Date: Tue, 15 Jul 2025 15:13:24 +0200
+Message-ID: <20250715130819.264497662@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -50,56 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Honggyu Kim <honggyu.kim@sk.com>
 
-commit bb1b5929b4279b136816f95ce1e8f1fa689bf4a1 upstream.
+commit bd225b9591442065beb876da72656f4a2d627d03 upstream.
 
-DAMON sysfs interface internally uses damon_call() to update DAMON
-parameters as users requested, online.  However, DAMON core cancels any
-damon_call() requests when it is deactivated by DAMOS watermarks.
+The current implementation allows having zero size regions with no special
+reasons, but damon_get_intervals_score() gets crashed by divide by zero
+when the region size is zero.
 
-As a result, users cannot change DAMON parameters online while DAMON is
-deactivated.  Note that users can turn DAMON off and on with different
-watermarks to work around.  Since deactivated DAMON is nearly same to
-stopped DAMON, the work around should have no big problem.  Anyway, a bug
-is a bug.
+  [   29.403950] Oops: divide error: 0000 [#1] SMP NOPTI
 
-There is no real good reason to cancel the damon_call() request under
-DAMOS deactivation.  Fix it by simply handling the request as normal,
-rather than cancelling under the situation.
+This patch fixes the bug, but does not disallow zero size regions to keep
+the backward compatibility since disallowing zero size regions might be a
+breaking change for some users.
 
-Link: https://lkml.kernel.org/r/20250629204914.54114-1-sj@kernel.org
-Fixes: 42b7491af14c ("mm/damon/core: introduce damon_call()")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.14+]
+In addition, the same crash can happen when intervals_goal.access_bp is
+zero so this should be fixed in stable trees as well.
+
+Link: https://lkml.kernel.org/r/20250702000205.1921-5-honggyu.kim@sk.com
+Fixes: f04b0fedbe71 ("mm/damon/core: implement intervals auto-tuning")
+Signed-off-by: Honggyu Kim <honggyu.kim@sk.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ mm/damon/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -2306,9 +2306,8 @@ static void kdamond_usleep(unsigned long
-  *
-  * If there is a &struct damon_call_control request that registered via
-  * &damon_call() on @ctx, do or cancel the invocation of the function depending
-- * on @cancel.  @cancel is set when the kdamond is deactivated by DAMOS
-- * watermarks, or the kdamond is already out of the main loop and therefore
-- * will be terminated.
-+ * on @cancel.  @cancel is set when the kdamond is already out of the main loop
-+ * and therefore will be terminated.
-  */
- static void kdamond_call(struct damon_ctx *ctx, bool cancel)
- {
-@@ -2356,7 +2355,7 @@ static int kdamond_wait_activation(struc
- 		if (ctx->callback.after_wmarks_check &&
- 				ctx->callback.after_wmarks_check(ctx))
- 			break;
--		kdamond_call(ctx, true);
-+		kdamond_call(ctx, false);
- 		damos_walk_cancel(ctx);
+@@ -1427,6 +1427,7 @@ static unsigned long damon_get_intervals
+ 		}
  	}
- 	return -EBUSY;
+ 	target_access_events = max_access_events * goal_bp / 10000;
++	target_access_events = target_access_events ? : 1;
+ 	return access_events * 10000 / target_access_events;
+ }
+ 
 
 
