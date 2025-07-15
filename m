@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B942E62C3;
-	Tue, 15 Jul 2025 13:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3402E3AF9;
+	Tue, 15 Jul 2025 13:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586680; cv=none; b=I3gsijLqragGoeCQhvK8OHGSEJCePei0zddm/jUP0zCjXP7dhHSZeofZ6v/MlXR9adkNT9Xz0wKVuX480jeOD8iXSVPnU2xERp63nV1pL/Jw/AbKIDpWXw3hbbyJuRnvHyJ7VhHztAZ20cHv6B8JwHy55yPq4OsI7j5zv8FpwhM=
+	t=1752586683; cv=none; b=qzaCjA7mjjszZYf+l1TfDDA/oNzEpJMdKVRdE2ErToLaSeW/3yzt5vj5ilP+/VhMVxTDhuL++7cA0LGqtijZtnK1rSr/UqAAWTiBNqeyDfktNV/kLGkZYLGU0qCFdpEUgamAz50NEDgsYKBaUkGHdKme7mGxt+daYCDqK2wjlZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586680; c=relaxed/simple;
-	bh=3T0ghl6RRiT1/pHxjEwtnTHHZqfcc/sg5O7o4pwvKDg=;
+	s=arc-20240116; t=1752586683; c=relaxed/simple;
+	bh=IffMIAgBKPGn7hqzCQBOKgaQEFtZUHklxpU00w6B9DM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdLYKfOonLs/NBE0w5S3QWc1Bmu2oA8RID71ykniCU4MLWm8S4NgQwXWcYcHR6KWJ462ZgvZHSdU6ce09bZYkowPQc4e0i5qALJejwIjjxkDlYXse3UNyi9CdoRhZXeQBpEe1mU2bWMpYBgrdL/veNTg2D9cBA7t7CC3DrL2WHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk0qtef7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5xaWbsQm93CIAaKXLXbrWUZMEZPWd9ZaTK1F+RjXt/NgZxVXRqWUeNFBlpBpjZZ6zfmM5Osda0bTUlUbxYhX1Y2k/Lr0v2kg/8Ry3ibGttzzXJLy0F92Xc5Xz5pRI2nuWYIHKZtSNwh5N3zZHD133ew+pV9q2ZookNIiBWKWIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiNGkPVm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk0qtef7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A76C4CEE3;
-	Tue, 15 Jul 2025 13:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiNGkPVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19496C4CEE3;
+	Tue, 15 Jul 2025 13:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586679;
-	bh=3T0ghl6RRiT1/pHxjEwtnTHHZqfcc/sg5O7o4pwvKDg=;
+	s=korg; t=1752586682;
+	bh=IffMIAgBKPGn7hqzCQBOKgaQEFtZUHklxpU00w6B9DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wk0qtef7G38Kpn1mt1fzproljb3/lzieX7IvFiQ7uzgZNsbDqp2ZaUYtH18IInAwS
-	 xFvl1CD3YuS7nJtLcc8L2SuGTbeKlCK+emtmMDJHOsjw0z2kgS+/1v0hWPC3hNfsyb
-	 neOJ3Gd8u9Jn+N0cQZfaQ4PZ6O9FJfDT+P92tpMk=
+	b=HiNGkPVmCYbXwn/SDv61HwmVhHdyvtTh4nj68ppom25AprFk4uUJpBFZMEY4IuFay
+	 htGQY1JPjXRCCi1a7GfUpiN8vODLbb5p9jpEIkwBORHw5omHE6CQwnzMj5zYfQZ/K3
+	 TlndCWXQiuf53C2ScupcvARRCgsPF567xDgcYLcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 134/148] wifi: zd1211rw: Fix potential NULL pointer dereference in zd_mac_tx_to_dev()
-Date: Tue, 15 Jul 2025 15:14:16 +0200
-Message-ID: <20250715130805.653694443@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.15 001/192] eventpoll: dont decrement ep refcount while still holding the ep mutex
+Date: Tue, 15 Jul 2025 15:11:36 +0200
+Message-ID: <20250715130814.919965446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
-References: <20250715130800.293690950@linuxfoundation.org>
+In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
+References: <20250715130814.854109770@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +49,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 74b1ec9f5d627d2bdd5e5b6f3f81c23317657023 ]
+commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 upstream.
 
-There is a potential NULL pointer dereference in zd_mac_tx_to_dev(). For
-example, the following is possible:
+Jann Horn points out that epoll is decrementing the ep refcount and then
+doing a
 
-    	T0			    		T1
-zd_mac_tx_to_dev()
-  /* len == skb_queue_len(q) */
-  while (len > ZD_MAC_MAX_ACK_WAITERS) {
+    mutex_unlock(&ep->mtx);
 
-					  filter_ack()
-					    spin_lock_irqsave(&q->lock, flags);
-					    /* position == skb_queue_len(q) */
-					    for (i=1; i<position; i++)
-				    	      skb = __skb_dequeue(q)
+afterwards. That's very wrong, because it can lead to a use-after-free.
 
-					    if (mac->type == NL80211_IFTYPE_AP)
-					      skb = __skb_dequeue(q);
-					    spin_unlock_irqrestore(&q->lock, flags);
+That pattern is actually fine for the very last reference, because the
+code in question will delay the actual call to "ep_free(ep)" until after
+it has unlocked the mutex.
 
-    skb_dequeue() -> NULL
+But it's wrong for the much subtler "next to last" case when somebody
+*else* may also be dropping their reference and free the ep while we're
+still using the mutex.
 
-Since there is a small gap between checking skb queue length and skb being
-unconditionally dequeued in zd_mac_tx_to_dev(), skb_dequeue() can return NULL.
-Then the pointer is passed to zd_mac_tx_status() where it is dereferenced.
+Note that this is true even if that other user is also using the same ep
+mutex: mutexes, unlike spinlocks, can not be used for object ownership,
+even if they guarantee mutual exclusion.
 
-In order to avoid potential NULL pointer dereference due to situations like
-above, check if skb is not NULL before passing it to zd_mac_tx_status().
+A mutex "unlock" operation is not atomic, and as one user is still
+accessing the mutex as part of unlocking it, another user can come in
+and get the now released mutex and free the data structure while the
+first user is still cleaning up.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+See our mutex documentation in Documentation/locking/mutex-design.rst,
+in particular the section [1] about semantics:
 
-Fixes: 459c51ad6e1f ("zd1211rw: port to mac80211")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Link: https://patch.msgid.link/20250626114619.172631-1-d.dulov@aladdin.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	"mutex_unlock() may access the mutex structure even after it has
+	 internally released the lock already - so it's not safe for
+	 another context to acquire the mutex and assume that the
+	 mutex_unlock() context is not using the structure anymore"
+
+So if we drop our ep ref before the mutex unlock, but we weren't the
+last one, we may then unlock the mutex, another user comes in, drops
+_their_ reference and releases the 'ep' as it now has no users - all
+while the mutex_unlock() is still accessing it.
+
+Fix this by simply moving the ep refcount dropping to outside the mutex:
+the refcount itself is atomic, and doesn't need mutex protection (that's
+the whole _point_ of refcounts: unlike mutexes, they are inherently
+about object lifetimes).
+
+Reported-by: Jann Horn <jannh@google.com>
+Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/zydas/zd1211rw/zd_mac.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/eventpoll.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
-index a9999d10ae81f..bff6e796fde0d 100644
---- a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
-+++ b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
-@@ -584,7 +584,11 @@ void zd_mac_tx_to_dev(struct sk_buff *skb, int error)
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -883,7 +883,7 @@ static bool __ep_remove(struct eventpoll
+ 	kfree_rcu(epi, rcu);
  
- 		skb_queue_tail(q, skb);
- 		while (skb_queue_len(q) > ZD_MAC_MAX_ACK_WAITERS) {
--			zd_mac_tx_status(hw, skb_dequeue(q),
-+			skb = skb_dequeue(q);
-+			if (!skb)
-+				break;
-+
-+			zd_mac_tx_status(hw, skb,
- 					 mac->ack_pending ? mac->ack_signal : 0,
- 					 NULL);
- 			mac->ack_pending = 0;
--- 
-2.39.5
-
+ 	percpu_counter_dec(&ep->user->epoll_watches);
+-	return ep_refcount_dec_and_test(ep);
++	return true;
+ }
+ 
+ /*
+@@ -891,14 +891,14 @@ static bool __ep_remove(struct eventpoll
+  */
+ static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
+ {
+-	WARN_ON_ONCE(__ep_remove(ep, epi, false));
++	if (__ep_remove(ep, epi, false))
++		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
+ }
+ 
+ static void ep_clear_and_put(struct eventpoll *ep)
+ {
+ 	struct rb_node *rbp, *next;
+ 	struct epitem *epi;
+-	bool dispose;
+ 
+ 	/* We need to release all tasks waiting for these file */
+ 	if (waitqueue_active(&ep->poll_wait))
+@@ -931,10 +931,8 @@ static void ep_clear_and_put(struct even
+ 		cond_resched();
+ 	}
+ 
+-	dispose = ep_refcount_dec_and_test(ep);
+ 	mutex_unlock(&ep->mtx);
+-
+-	if (dispose)
++	if (ep_refcount_dec_and_test(ep))
+ 		ep_free(ep);
+ }
+ 
+@@ -1137,7 +1135,7 @@ again:
+ 		dispose = __ep_remove(ep, epi, true);
+ 		mutex_unlock(&ep->mtx);
+ 
+-		if (dispose)
++		if (dispose && ep_refcount_dec_and_test(ep))
+ 			ep_free(ep);
+ 		goto again;
+ 	}
 
 
