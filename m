@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2652620F08C;
-	Tue, 15 Jul 2025 13:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A6E2E6100;
+	Tue, 15 Jul 2025 13:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586915; cv=none; b=pFTm21jY3O/zTKetLSMlz29nzFDYWaeraj1ojbrXajD0EXP822WmZgdFS8aS7vPSjZ5KGCnVP+T1NNrQobWx8N9xHhfbPiEMVE9Pc/H+rlaPamQa9vT//IPyR6B8Q7sl05mAT24fnCYHAQ7HeT/2MmwIiW0CfbAD2EnRq8Ip8G0=
+	t=1752586917; cv=none; b=EUWWEFFG45xVa8bxuhlfBHRwnoH2bM9l7v8+0CWcPLwDves1OWxJD1ZF076TzcOxQSiWj9EKS1n/YY4hBAN2y3/od8XiS6PDUM5AnhZ4L1bRawPNoxK14o6X1F6AqXzbT5gpAypR6XXGrgPnB29aXQ7Slf31aco419/LSppW2Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586915; c=relaxed/simple;
-	bh=JiF4eNf0bHUvHJuO6IleC6Zy/IiOftiwMJJN66J5ga4=;
+	s=arc-20240116; t=1752586917; c=relaxed/simple;
+	bh=AobKhIJOOcobIKHaHVfGPaLQlP7XDeSkY+oN1ygrZpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PucQmMtKZwCDePS80KlFJ2KulQKMy38d9HyzER+7dCMlazCxs1TPXxdlKXKQzg9Xl4KtUaNAITHFza7BjTYWbZn5RaQZ0Pu3NvD1Yr0x9ZZJasDp1l+aKEgJ347cttWlVZqmYaNRGafT+rUd1oPUB90DVvhSSmH7Mqx0KgyXLWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGTfbsrh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0OM9aWWYv49Q7llliemP3DUnv/qMs7coP0GlGi1aFlnyO9oQ+IzTwxVJIQbenezM/fz66u2msdwSGmVZ37iLizZn6CCjdCTEIgUjE4mOv/g9LU3tpalmamShozajrjSIB5uPsD08W4BiSo52U/q5ClwPa/13tEcWCUyvztIEGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeI/zfla; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGTfbsrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9CDC4CEE3;
-	Tue, 15 Jul 2025 13:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeI/zfla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB8CC4CEE3;
+	Tue, 15 Jul 2025 13:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586915;
-	bh=JiF4eNf0bHUvHJuO6IleC6Zy/IiOftiwMJJN66J5ga4=;
+	s=korg; t=1752586917;
+	bh=AobKhIJOOcobIKHaHVfGPaLQlP7XDeSkY+oN1ygrZpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGTfbsrhh5UwbaC66a7uhIcO/cld05cp2tDaxgs4cRchDmQP8xL7YOKegT+gBfr/I
-	 edU3csiKG0GY2bqm5eKF6Lt56tOBFQ4DTgQcU1YiKKYiiutNuMSRkSxLaM9Y9xTYtH
-	 2I2YEi3piSTyaNdMWQPC2pckowFZHXPMwgGxIZMk=
+	b=IeI/zfla+P1nEbNkqcbyfm6pWhGN762zB6VSC2e/6E0w9VmG97hybrnHLo2oqLNLo
+	 CefrtpyeAhs75T1do/yb9AY50p71xgLPVG/ULKZ28bSdAut4q02bgRl+rC9DKod7k3
+	 JVlNp6L+tTOgWyJUplqOPVKTqsYnfd+TpKI8lvbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Zhe Qiao <qiaozhe@iscas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.15 097/192] Revert "PCI/ACPI: Fix allocated memory release on error in pci_acpi_scan_root()"
-Date: Tue, 15 Jul 2025 15:13:12 +0200
-Message-ID: <20250715130818.790304622@linuxfoundation.org>
+	Achill Gilgenast <fossdd@pwned.life>,
+	Luis Henriques <luis@igalia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 098/192] kallsyms: fix build without execinfo
+Date: Tue, 15 Jul 2025 15:13:13 +0200
+Message-ID: <20250715130818.828653969@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,81 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhe Qiao <qiaozhe@iscas.ac.cn>
+From: Achill Gilgenast <fossdd@pwned.life>
 
-commit 2b8be57fa0c88ac824a906f29c04d728f9f6047a upstream.
+commit a95743b53031b015e8949e845a9f6fdfb2656347 upstream.
 
-This reverts commit 631b2af2f357 ("PCI/ACPI: Fix allocated memory release
-on error in pci_acpi_scan_root()").
+Some libc's like musl libc don't provide execinfo.h since it's not part of
+POSIX.  In order to fix compilation on musl, only include execinfo.h if
+available (HAVE_BACKTRACE_SUPPORT)
 
-The reverted patch causes the 'ri->cfg' and 'root_ops' resources to be
-released multiple times.
+This was discovered with c104c16073b7 ("Kunit to check the longest symbol
+length") which starts to include linux/kallsyms.h with Alpine Linux'
+configs.
 
-When acpi_pci_root_create() fails, these resources have already been
-released internally by the __acpi_pci_root_release_info() function.
-
-Releasing them again in pci_acpi_scan_root() leads to incorrect behavior
-and potential memory issues.
-
-We plan to resolve the issue using a more appropriate fix.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/aEmdnuw715btq7Q5@stanley.mountain/
-Signed-off-by: Zhe Qiao <qiaozhe@iscas.ac.cn>
-Acked-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250619072608.2075475-1-qiaozhe@iscas.ac.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lkml.kernel.org/r/20250622014608.448718-1-fossdd@pwned.life
+Fixes: c104c16073b7 ("Kunit to check the longest symbol length")
+Signed-off-by: Achill Gilgenast <fossdd@pwned.life>
+Cc: Luis Henriques <luis@igalia.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-acpi.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ tools/include/linux/kallsyms.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -1676,19 +1676,24 @@ struct pci_bus *pci_acpi_scan_root(struc
- 		return NULL;
- 
- 	root_ops = kzalloc(sizeof(*root_ops), GFP_KERNEL);
--	if (!root_ops)
--		goto free_ri;
-+	if (!root_ops) {
-+		kfree(ri);
-+		return NULL;
-+	}
- 
- 	ri->cfg = pci_acpi_setup_ecam_mapping(root);
--	if (!ri->cfg)
--		goto free_root_ops;
-+	if (!ri->cfg) {
-+		kfree(ri);
-+		kfree(root_ops);
-+		return NULL;
-+	}
- 
- 	root_ops->release_info = pci_acpi_generic_release_info;
- 	root_ops->prepare_resources = pci_acpi_root_prepare_resources;
- 	root_ops->pci_ops = (struct pci_ops *)&ri->cfg->ops->pci_ops;
- 	bus = acpi_pci_root_create(root, root_ops, &ri->common, ri->cfg);
- 	if (!bus)
--		goto free_cfg;
-+		return NULL;
- 
- 	/* If we must preserve the resource configuration, claim now */
- 	host = pci_find_host_bridge(bus);
-@@ -1705,14 +1710,6 @@ struct pci_bus *pci_acpi_scan_root(struc
- 		pcie_bus_configure_settings(child);
- 
- 	return bus;
--
--free_cfg:
--	pci_ecam_free(ri->cfg);
--free_root_ops:
--	kfree(root_ops);
--free_ri:
--	kfree(ri);
--	return NULL;
+--- a/tools/include/linux/kallsyms.h
++++ b/tools/include/linux/kallsyms.h
+@@ -18,6 +18,7 @@ static inline const char *kallsyms_looku
+ 	return NULL;
  }
  
- void pcibios_add_bus(struct pci_bus *bus)
++#ifdef HAVE_BACKTRACE_SUPPORT
+ #include <execinfo.h>
+ #include <stdlib.h>
+ static inline void print_ip_sym(const char *loglvl, unsigned long ip)
+@@ -30,5 +31,8 @@ static inline void print_ip_sym(const ch
+ 
+ 	free(name);
+ }
++#else
++static inline void print_ip_sym(const char *loglvl, unsigned long ip) {}
++#endif
+ 
+ #endif
 
 
