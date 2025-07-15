@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F462E49AC;
-	Tue, 15 Jul 2025 13:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750E12E49AC;
+	Tue, 15 Jul 2025 13:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586544; cv=none; b=EsbVEL6gEeRYhl+84uNPjRKPNg3eXA3UsLbBM/e+7EB1EHH4kfjEE3m79CdHfwt2UZHRnTxpiRKtikrnDH0ZWlphC6MaXYCqUXBN1LeJBWC0QrglmKmOY1t51WFsIzLg8tR6kUVbkJ6aWtHS/ztQmgmGJGAIwDP+a67I84GzPQs=
+	t=1752586547; cv=none; b=pfEFkZiUcfhaGrLTSLagRcYXXNphdgW9Oq+bq7WwpLHLHqyf+7cQOuBSvwvuHoq0Fd7mvoQs6RR9ZnANKA8XMZjpCu3W0k5LOhq9Riw48Fp4AeNd5TIcJSv2T1PHYN5hM1s1lxS7OMMlttRTPKAtQFr2rcf2HJ9vPLNb9fPXcTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586544; c=relaxed/simple;
-	bh=6Rf5HIlf1aV6RPo06XMjP0m55sLeEzViXxPbzDhPjwc=;
+	s=arc-20240116; t=1752586547; c=relaxed/simple;
+	bh=h4icVeQJYDJn/pAkQ8l4s78yomGMq784o1j/tIwGDKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLqFtMrm0KAbl92sOYzg4jZQ8jvoN2ONfcxuKLLuG1BZ8q1D5Nfou6adTJ0Wy8q5et7O0UQQOu5z/ZqS8UYI7dOODomqN+FOPI17pyXiax4yxNUxWsPcvru2r8NPFoQlBNrcW1CJxX/sduw8+C9Y9D+yZYMZmW/qNN7oICtFxeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mte+yEv3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nk6upWqqD/ExhuOhOCaljYG0/8kBZtU6hXXtiTTKhj/R07KdeIBE2TExEpPsqfkQn/kwlcjYlZRk0yFDh042BjlRQp6SApDIAmKDNzSzEoj3lsegWxhWqhP8qTjiZfwbtXJCNnvHbGmgPRfS7+Mdd8pQ+SpYGy3NP+ZV68b9AC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gq9JiCwQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mte+yEv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D64AC4CEE3;
-	Tue, 15 Jul 2025 13:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gq9JiCwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB880C4CEE3;
+	Tue, 15 Jul 2025 13:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586544;
-	bh=6Rf5HIlf1aV6RPo06XMjP0m55sLeEzViXxPbzDhPjwc=;
+	s=korg; t=1752586547;
+	bh=h4icVeQJYDJn/pAkQ8l4s78yomGMq784o1j/tIwGDKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mte+yEv3lZ5dEMAew7JDjVRplwts9ir+2YrUGC6MkoKAVSFRkL4i2ZZCTSVMstb8o
-	 aVp3VX+STTwXqA8AL+iRtzXysRKjskK4WKXKRmrSFQ+TgP1chEudEbLc53eJkuq+Ds
-	 Mh/3HsoklbRZTKDqBE5eLcVKx8MGjcc2SQEFBayQ=
+	b=gq9JiCwQ6En9fKjt1WnhIBfez3aXDXyzkfSZobYVta83c1ajPN75VUZJN9k/C3iIa
+	 CHns3acTYSAX8rFipC/rOcCY2xYHqcNhOXLJzSDcTTyJuePITmfsq9M7jUjbsm7OMr
+	 yKp3fhYtVmJ8PfZJQi3p4iZtBLy+gu87zkjal0mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tulio Magno <tuliom@ascii.art.br>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Justin M. Forbes" <jforbes@fedoraproject.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 074/148] powerpc: Fix struct termio related ioctl macros
-Date: Tue, 15 Jul 2025 15:13:16 +0200
-Message-ID: <20250715130803.285571964@linuxfoundation.org>
+Subject: [PATCH 5.4 075/148] wifi: mac80211: drop invalid source address OCB frames
+Date: Tue, 15 Jul 2025 15:13:17 +0200
+Message-ID: <20250715130803.324868176@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -54,56 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
+[ Upstream commit d1b1a5eb27c4948e8811cf4dbb05aaf3eb10700c ]
 
-Since termio interface is now obsolete, include/uapi/asm/ioctls.h
-has some constant macros referring to "struct termio", this caused
-build failure at userspace.
+In OCB, don't accept frames from invalid source addresses
+(and in particular don't try to create stations for them),
+drop the frames instead.
 
-In file included from /usr/include/asm/ioctl.h:12,
-                 from /usr/include/asm/ioctls.h:5,
-                 from tst-ioctls.c:3:
-tst-ioctls.c: In function 'get_TCGETA':
-tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
-   12 |   return TCGETA;
-      |          ^~~~~~
-
-Even though termios.h provides "struct termio", trying to juggle definitions around to
-make it compile could introduce regressions. So better to open code it.
-
-Reported-by: Tulio Magno <tuliom@ascii.art.br>
-Suggested-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
-Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
-Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
+Reported-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6788d2d9.050a0220.20d369.0028.GAE@google.com/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Tested-by: syzbot+8b512026a7ec10dcbdd9@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20250616171838.7433379cab5d.I47444d63c72a0bd58d2e2b67bb99e1fea37eec6f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mac80211/rx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
-index 2c145da3b774a..b5211e413829a 100644
---- a/arch/powerpc/include/uapi/asm/ioctls.h
-+++ b/arch/powerpc/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
- 
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
-+#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
-+#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
-+#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
- 
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 99d5f8b58e92e..4c805530edfb6 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -3982,6 +3982,10 @@ static bool ieee80211_accept_frame(struct ieee80211_rx_data *rx)
+ 		if (!multicast &&
+ 		    !ether_addr_equal(sdata->dev->dev_addr, hdr->addr1))
+ 			return false;
++		/* reject invalid/our STA address */
++		if (!is_valid_ether_addr(hdr->addr2) ||
++		    ether_addr_equal(sdata->dev->dev_addr, hdr->addr2))
++			return false;
+ 		if (!rx->sta) {
+ 			int rate_idx;
+ 			if (status->encoding != RX_ENC_LEGACY)
 -- 
 2.39.5
 
