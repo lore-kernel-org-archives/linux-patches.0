@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD532EBDD6;
-	Tue, 15 Jul 2025 13:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B2D2ECD30;
+	Tue, 15 Jul 2025 13:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587692; cv=none; b=WzOxg3kLPI2axdycauK21zlejjqcsMaHNdip4rb021R4KbJD76jE5yEJif0uNr1GAs6viXk8Wpj7mvE62nZmYfBIsYOK39p5zCSF3u8DaIl0yFZn9k8P2FiggRHdwPJnsdSfTw57vTR8VBDfiDLauGuHBUpXYKa/uj6HqkdNYt8=
+	t=1752587695; cv=none; b=RRQtVRfW9nvQaksb6sJsA1bxuRpRpxKyctcGuybyPhCZQyDE5ZUHK6ggyP5HRKxRVVoZlLzy5CIJ9RE8LqAYWxOSbIA3OihuE3H1q9wEY1C4ruC04RQnfAl44HnKqCADiSGh2DLOpgmOVy49klk4hTNKHbQ0P14BFGmF/6bVOjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587692; c=relaxed/simple;
-	bh=IpecSAZlYwn47hUZG3zd++jyX0UUp0nYr8ojEINqHUY=;
+	s=arc-20240116; t=1752587695; c=relaxed/simple;
+	bh=5vC8KAJ6Es23ZyrtqjXf95ZdPdrWVopYs/xEArOrUMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kF/oP/hAUbD8nrg7Ts4cDCYXtEm53dqjYSsuJdHl1UJ+9xSC3loGKJHmAawYkX8NWBfU+tEXrlx3eOe+TzDk1yYwK9/cijNiyMUGvgOBqKdQgvmkLEQMjfr0x2KEAm8fp/6AVRFoKcsOjicophLOuleRzw7mooJ4CFYHbfyayVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9RKjwtn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9VuhUmJpwZZgdUYiQEN/8LSLp8zk96K3+akr4U5u2tZus5HtIR/+p7kHQQENhRJh4j6/Ke1hVDhoH+1OM4HPRbwDnhIqgWqiewrnKUZNHWST5wCC4lCxuhpb1j+7FMLTsZxfJMyoCaZ4dfmHmqwE/P7/FlyEQDyE7S5vXXvimI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRFbYFWE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9RKjwtn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116B1C4CEE3;
-	Tue, 15 Jul 2025 13:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRFbYFWE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B146AC4CEE3;
+	Tue, 15 Jul 2025 13:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587692;
-	bh=IpecSAZlYwn47hUZG3zd++jyX0UUp0nYr8ojEINqHUY=;
+	s=korg; t=1752587695;
+	bh=5vC8KAJ6Es23ZyrtqjXf95ZdPdrWVopYs/xEArOrUMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9RKjwtnEW/NVzY+zrnCuxGkd4STFcY7RLyK+l6fTo+UHas+roX7EjFBFHV7u/EA3
-	 F7fP3kr47ZaFHeUCEvHyqHLQlSU4izvBHcuXG9KOfn5aWjUr1Dds9px5T0aokVI5ny
-	 axEVg4abw8RQv5Dx0bdvMtDS3zJQVKrUN0AkYY/8=
+	b=bRFbYFWEXlLD8A+LkwdLHGyjLoRuztLw70fRwg8Q7np6+pxy5gVM7lXF3SRs88wgQ
+	 LqAz8oYKsSDakXTkjZkEPfJYXWQBwXXH7rKOEcr4o3AISiGe5sqUVk6TyOazUaSCpU
+	 3j6IHvHG8D/RUKkxZtlMTV9MtOjYx0CH6AMj414s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/208] rcu: Return early if callback is not specified
-Date: Tue, 15 Jul 2025 15:13:37 +0200
-Message-ID: <20250715130815.275336178@linuxfoundation.org>
+Subject: [PATCH 5.10 109/208] regulator: gpio: Fix the out-of-bounds access to drvdata::gpiods
+Date: Tue, 15 Jul 2025 15:13:38 +0200
+Message-ID: <20250715130815.315568603@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -51,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uladzislau Rezki (Sony) <urezki@gmail.com>
+From: Manivannan Sadhasivam <mani@kernel.org>
 
-[ Upstream commit 33b6a1f155d627f5bd80c7485c598ce45428f74f ]
+[ Upstream commit c9764fd88bc744592b0604ccb6b6fc1a5f76b4e3 ]
 
-Currently the call_rcu() API does not check whether a callback
-pointer is NULL. If NULL is passed, rcu_core() will try to invoke
-it, resulting in NULL pointer dereference and a kernel crash.
+drvdata::gpiods is supposed to hold an array of 'gpio_desc' pointers. But
+the memory is allocated for only one pointer. This will lead to
+out-of-bounds access later in the code if 'config::ngpios' is > 1. So
+fix the code to allocate enough memory to hold 'config::ngpios' of GPIO
+descriptors.
 
-To prevent this and improve debuggability, this patch adds a check
-for NULL and emits a kernel stack trace to help identify a faulty
-caller.
+While at it, also move the check for memory allocation failure to be below
+the allocation to make it more readable.
 
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Cc: stable@vger.kernel.org # 5.0
+Fixes: d6cd33ad7102 ("regulator: gpio: Convert to use descriptors")
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20250703103549.16558-1-mani@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/regulator/gpio-regulator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 06bfe61d3cd38..c4eb06d37ae91 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -2959,6 +2959,10 @@ __call_rcu(struct rcu_head *head, rcu_callback_t func)
- 	/* Misaligned rcu_head! */
- 	WARN_ON_ONCE((unsigned long)head & (sizeof(void *) - 1));
+diff --git a/drivers/regulator/gpio-regulator.c b/drivers/regulator/gpio-regulator.c
+index 5927d4f3eabd7..de07b16b34f8e 100644
+--- a/drivers/regulator/gpio-regulator.c
++++ b/drivers/regulator/gpio-regulator.c
+@@ -257,8 +257,8 @@ static int gpio_regulator_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 	}
  
-+	/* Avoid NULL dereference if callback is NULL. */
-+	if (WARN_ON_ONCE(!func))
-+		return;
-+
- 	if (debug_rcu_head_queue(head)) {
- 		/*
- 		 * Probable double call_rcu(), so leak the callback.
+-	drvdata->gpiods = devm_kzalloc(dev, sizeof(struct gpio_desc *),
+-				       GFP_KERNEL);
++	drvdata->gpiods = devm_kcalloc(dev, config->ngpios,
++				       sizeof(struct gpio_desc *), GFP_KERNEL);
+ 	if (!drvdata->gpiods)
+ 		return -ENOMEM;
+ 	for (i = 0; i < config->ngpios; i++) {
 -- 
 2.39.5
 
