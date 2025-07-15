@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B532D3732;
-	Tue, 15 Jul 2025 13:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C752D3732;
+	Tue, 15 Jul 2025 13:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586623; cv=none; b=TCncrbDzT3eYVnBpfrjqr9FMWPFB3Q2p5DxCUDJW+WxuKl+O5aQTRaPppZDHROogKA0sTgoZZzycI2LgIZTFi9tsMdyBAEYh3gZlK4hE5UskO1OBFNYH0fGYfM5yWEh0NO1iUVZSLlN7Nn7a3TAd7uuc1tD9LHP6lN75eXbAyPI=
+	t=1752586626; cv=none; b=XH5b5UaCCfOa5W6esbzcQMuGn4l63bNmLOkemlGU0bc0iCwlPoLy4iwl8ietTVL92jfl56wtentidivg4EbSlBQepIcY9geXwhQQ/8XlX03ONl4KydOVxoY8u0YHC1OxSBNAMRRLQIJS9PUlgn4IF+LRg1Pt6xK+yuMWVr1025s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586623; c=relaxed/simple;
-	bh=oyABSZCfX16jrXEfHeDx//T+sV1n1Ps4NgVOBeUDYfI=;
+	s=arc-20240116; t=1752586626; c=relaxed/simple;
+	bh=mX/8AxrU5l/0XlM0Zn/9jdcwshefwIweQOu9tb752wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/PjvrJVXkaLLiRWd0zfblm49/f4b6QFEOHJF9Q4Cgj6+OlInmrQxZpRTHcwmYSWXIn2+WqojmE6YS4p4Z9iRpcqt3Z8jZwLzhfyQXQXN8VCGTxxHtlM/CPrb7CZeNz29qPjk7vft3ELPNSjapnuniZqopUdhO61sAZ0Gb1GM+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vA/cGV7/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BR3cGDlMG5rGI5q3JXmZlj9RY82+NEpM2YNtcoljxq1thp5IeKK8ViFpzBSAY+7t7tI2zLm/fesjAvOUSQeiQnNEg+Eb4gDgsBD1oDYQrZTYRn+ktVNl7mkzIYPYSpAr8scKHHUFHw3rA4MuMA8x9veDpa1m0NIZ9qwmBCvbeB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCZnXKma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vA/cGV7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353EDC4CEE3;
-	Tue, 15 Jul 2025 13:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCZnXKma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3D0C4CEF6;
+	Tue, 15 Jul 2025 13:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586623;
-	bh=oyABSZCfX16jrXEfHeDx//T+sV1n1Ps4NgVOBeUDYfI=;
+	s=korg; t=1752586626;
+	bh=mX/8AxrU5l/0XlM0Zn/9jdcwshefwIweQOu9tb752wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vA/cGV7/tilC0nNHBt4CrnCodd4HMyDpk2P08BV6XiK22uGL3IkFdLZtBI5Oth7Qc
-	 iNv+nPjVVujaeW2z18DbSRe2ZHZt7C3bpVRi4E2HvJzXeS/4vrnEeqxwMRQKFGR4gV
-	 LkJakpCKOF/HCZ3HVLZZdCFH8r4Nr2Auq3lhDxaI=
+	b=oCZnXKma2WuO2kY7TliaeKiimiVfOETGepK7XzuQlEUbIpSFAyxd4EjgpM2+F1fpQ
+	 Kkruob2fZpuXiUGV1EGUDvoRN6eW8/6EkS2wxBwQ9MF/a8YrI0k9FsKPW65BTubuxJ
+	 KKivDrZFR/YFu1n4snepIjp9BMs02jfA5RnoxniU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.4 104/148] media: uvcvideo: Rollback non processed entities on error
-Date: Tue, 15 Jul 2025 15:13:46 +0200
-Message-ID: <20250715130804.477540852@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 5.4 105/148] staging: rtl8723bs: Avoid memset() in aes_cipher() and aes_decipher()
+Date: Tue, 15 Jul 2025 15:13:47 +0200
+Message-ID: <20250715130804.515824480@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -52,113 +50,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit a70705d3c020d0d5c3ab6a5cc93e011ac35e7d48 upstream.
+commit a55bc4ffc06d8c965a7d6f0a01ed0ed41380df28 upstream.
 
-If we fail to commit an entity, we need to restore the
-UVC_CTRL_DATA_BACKUP for the other uncommitted entities. Otherwise the
-control cache and the device would be out of sync.
+After commit 6f110a5e4f99 ("Disable SLUB_TINY for build testing"), which
+causes CONFIG_KASAN to be enabled in allmodconfig again, arm64
+allmodconfig builds with older versions of clang (15 through 17) show an
+instance of -Wframe-larger-than (which breaks the build with
+CONFIG_WERROR=y):
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Closes: https://lore.kernel.org/linux-media/fe845e04-9fde-46ee-9763-a6f00867929a@redhat.com/
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-3-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+  drivers/staging/rtl8723bs/core/rtw_security.c:1287:5: error: stack frame size (2208) exceeds limit (2048) in 'rtw_aes_decrypt' [-Werror,-Wframe-larger-than]
+   1287 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
+        |     ^
+
+This comes from aes_decipher() being inlined in rtw_aes_decrypt().
+Running the same build with CONFIG_FRAME_WARN=128 shows aes_cipher()
+also uses a decent amount of stack, just under the limit of 2048:
+
+  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1952) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
+    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
+        |                   ^
+
+-Rpass-analysis=stack-frame-layout only shows one large structure on the
+stack, which is the ctx variable inlined from aes128k128d(). A good
+number of the other variables come from the additional checks of
+fortified string routines, which are present in memset(), which both
+aes_cipher() and aes_decipher() use to initialize some temporary
+buffers. In this case, since the size is known at compile time, these
+additional checks should not result in any code generation changes but
+allmodconfig has several sanitizers enabled, which may make it harder
+for the compiler to eliminate the compile time checks and the variables
+that come about from them.
+
+The memset() calls are just initializing these buffers to zero, so use
+'= {}' instead, which is used all over the kernel and does the exact
+same thing as memset() without the fortify checks, which drops the stack
+usage of these functions by a few hundred kilobytes.
+
+  drivers/staging/rtl8723bs/core/rtw_security.c:864:19: warning: stack frame size (1584) exceeds limit (128) in 'aes_cipher' [-Wframe-larger-than]
+    864 | static signed int aes_cipher(u8 *key, uint      hdrlen,
+        |                   ^
+  drivers/staging/rtl8723bs/core/rtw_security.c:1271:5: warning: stack frame size (1456) exceeds limit (128) in 'rtw_aes_decrypt' [-Wframe-larger-than]
+   1271 | u32 rtw_aes_decrypt(struct adapter *padapter, u8 *precvframe)
+        |     ^
+
+Cc: stable@vger.kernel.org
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250609-rtl8723bs-fix-clang-arm64-wflt-v1-1-e2accba43def@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   42 ++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 14 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_security.c |   46 +++++++-------------------
+ 1 file changed, 14 insertions(+), 32 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1577,7 +1577,7 @@ static int uvc_ctrl_commit_entity(struct
- 	unsigned int processed_ctrls = 0;
- 	struct uvc_control *ctrl;
- 	unsigned int i;
--	int ret;
-+	int ret = 0;
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -1333,30 +1333,21 @@ static sint aes_cipher(u8 *key, uint	hdr
+ 		num_blocks, payload_index;
  
- 	if (entity == NULL)
- 		return 0;
-@@ -1605,8 +1605,6 @@ static int uvc_ctrl_commit_entity(struct
- 				dev->intfnum, ctrl->info.selector,
- 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 				ctrl->info.size);
--		else
--			ret = 0;
+ 	u8 pn_vector[6];
+-	u8 mic_iv[16];
+-	u8 mic_header1[16];
+-	u8 mic_header2[16];
+-	u8 ctr_preload[16];
++	u8 mic_iv[16] = {};
++	u8 mic_header1[16] = {};
++	u8 mic_header2[16] = {};
++	u8 ctr_preload[16] = {};
  
- 		if (!ret)
- 			processed_ctrls++;
-@@ -1618,14 +1616,22 @@ static int uvc_ctrl_commit_entity(struct
+ 	/* Intermediate Buffers */
+-	u8 chain_buffer[16];
+-	u8 aes_out[16];
+-	u8 padded_buffer[16];
++	u8 chain_buffer[16] = {};
++	u8 aes_out[16] = {};
++	u8 padded_buffer[16] = {};
+ 	u8 mic[8];
+ 	uint	frtype  = GetFrameType(pframe);
+ 	uint	frsubtype  = GetFrameSubType(pframe);
  
- 		ctrl->dirty = 0;
+ 	frsubtype = frsubtype>>4;
  
--		if (ret < 0)
--			return ret;
 -
--		if (!rollback && handle &&
-+		if (!rollback && handle && !ret &&
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			uvc_ctrl_set_handle(handle, ctrl, handle);
-+
-+		if (ret < 0 && !rollback) {
-+			/*
-+			 * If we fail to set a control, we need to rollback
-+			 * the next ones.
-+			 */
-+			rollback = 1;
-+		}
- 	}
+-	memset((void *)mic_iv, 0, 16);
+-	memset((void *)mic_header1, 0, 16);
+-	memset((void *)mic_header2, 0, 16);
+-	memset((void *)ctr_preload, 0, 16);
+-	memset((void *)chain_buffer, 0, 16);
+-	memset((void *)aes_out, 0, 16);
+-	memset((void *)padded_buffer, 0, 16);
+-
+ 	if ((hdrlen == WLAN_HDR_A3_LEN) || (hdrlen ==  WLAN_HDR_A3_QOS_LEN))
+ 		a4_exists = 0;
+ 	else
+@@ -1581,15 +1572,15 @@ static sint aes_decipher(u8 *key, uint	h
+ 			num_blocks, payload_index;
+ 	sint res = _SUCCESS;
+ 	u8 pn_vector[6];
+-	u8 mic_iv[16];
+-	u8 mic_header1[16];
+-	u8 mic_header2[16];
+-	u8 ctr_preload[16];
++	u8 mic_iv[16] = {};
++	u8 mic_header1[16] = {};
++	u8 mic_header2[16] = {};
++	u8 ctr_preload[16] = {};
  
-+	if (ret)
-+		return ret;
-+
- 	return processed_ctrls;
- }
+ 		/* Intermediate Buffers */
+-	u8 chain_buffer[16];
+-	u8 aes_out[16];
+-	u8 padded_buffer[16];
++	u8 chain_buffer[16] = {};
++	u8 aes_out[16] = {};
++	u8 padded_buffer[16] = {};
+ 	u8 mic[8];
  
-@@ -1635,23 +1641,31 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- {
- 	struct uvc_video_chain *chain = handle->chain;
- 	struct uvc_entity *entity;
--	int ret = 0;
-+	int ret_out = 0;
-+	int ret;
  
- 	/* Find the control. */
- 	list_for_each_entry(entity, &chain->entities, chain) {
- 		ret = uvc_ctrl_commit_entity(chain->dev, handle, entity,
- 					     rollback);
--		if (ret < 0)
--			goto done;
--		else if (ret > 0 && !rollback)
-+		if (ret < 0) {
-+			/*
-+			 * When we fail to commit an entity, we need to
-+			 * restore the UVC_CTRL_DATA_BACKUP for all the
-+			 * controls in the other entities, otherwise our cache
-+			 * and the hardware will be out of sync.
-+			 */
-+			rollback = 1;
-+
-+			ret_out = ret;
-+		} else if (ret > 0 && !rollback) {
- 			uvc_ctrl_send_events(handle, entity, xctrls,
- 					     xctrls_count);
-+		}
- 	}
+@@ -1599,15 +1590,6 @@ static sint aes_decipher(u8 *key, uint	h
  
--	ret = 0;
--done:
- 	mutex_unlock(&chain->ctrl_mutex);
--	return ret;
-+	return ret_out;
- }
+ 	frsubtype = frsubtype>>4;
  
- int uvc_ctrl_get(struct uvc_video_chain *chain,
+-
+-	memset((void *)mic_iv, 0, 16);
+-	memset((void *)mic_header1, 0, 16);
+-	memset((void *)mic_header2, 0, 16);
+-	memset((void *)ctr_preload, 0, 16);
+-	memset((void *)chain_buffer, 0, 16);
+-	memset((void *)aes_out, 0, 16);
+-	memset((void *)padded_buffer, 0, 16);
+-
+ 	/* start to decrypt the payload */
+ 
+ 	num_blocks = (plen-8) / 16; /* plen including LLC, payload_length and mic) */
 
 
