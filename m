@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C1027470;
-	Tue, 15 Jul 2025 13:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FFD27470;
+	Tue, 15 Jul 2025 13:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585492; cv=none; b=edACGjLnkmA6dB1ZUFEgsoCJA4uNyfLgLgAZEuQ4fadeeTv3gxFHhuqWQ+nG3GjMyuyf+9py6g158gu4EXMRozb+O+zuN7mvU/lyjs8MQetBZjsk3h/2opfdTsgEF1y1heawhqCB84baxNP7ySQpIPVTqUPmrqYDEgGWXKMLfUo=
+	t=1752585495; cv=none; b=e+6HqOv4+0qMvD05EkLD6AkAiibmYh0OG4+YP7bc4Mygztd4T1QW4UtmxtUuzUwdd7Jr5CqqwaJ5emGVeovyNYcmPfFZwn9iy2x0U3ii8pZrurwv7Rt+/nit4ZrPui+9S5YyrqcOEEZqKB2aeLDfVOxsdOz5yXbAapGY7OaaU+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585492; c=relaxed/simple;
-	bh=l8KUcjpLMaQZmsi/wbRAraGQYh7eu8t+ab3CRQGy6uo=;
+	s=arc-20240116; t=1752585495; c=relaxed/simple;
+	bh=mGJxCtH2catRql4J5d+bWG/hfC3dB3hPV23wiYJWLUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Rxib7e8kExDlKT+uhT51gZ5WXs13AWLxf5fxwl1+S0WmzIhHXD03YnP8YlAWzI7+sT5wJnOiNdZY5V2mT+w0gTcnxdADTPnzRCwOJSTrLiyuNsRpJMjyThzY5pBm/+DHBnyRMI+XB23Y73Ky0f5ISljQOL07O7HMkFd7MlzbkY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjsKwVI/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e3bIeDgBOpUkhdTds5iB3E7eW/7XwqT2loqQKWmiE6bhxBBakCAbLJJM5WTmMkF7YkiZt8Z7edpvVpV1GBZ3YCnw15vdSoU1Ht66M/jQEWSpg+bZv06VobdFYl+PVu3YCnhpJf3gsmJKXkK4hpah7G3Afxj33rMeRORh8yWPW+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3xgQvh7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjsKwVI/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F95C4CEE3;
-	Tue, 15 Jul 2025 13:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3xgQvh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D126C4CEE3;
+	Tue, 15 Jul 2025 13:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585492;
-	bh=l8KUcjpLMaQZmsi/wbRAraGQYh7eu8t+ab3CRQGy6uo=;
+	s=korg; t=1752585495;
+	bh=mGJxCtH2catRql4J5d+bWG/hfC3dB3hPV23wiYJWLUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjsKwVI/S0khIzKYUCgpvu4hoVtPaVU0E/DgLH053xfKw+qqYkXIXwEqc18Y7H1pH
-	 SEB6j/cG6upvIKBsqYesEaBvzbZgWYDmb7l5HXE4Admfts2wFcwRjcql+Nupi6zJAh
-	 0chhBrYZ9FHnuvkXFgONZZAi55aqyCj6Zp7pnaw8=
+	b=M3xgQvh77D5+lmbVzmZThmqJokdEakCGT0SepVMUjTATOIylcdL7j5NiQa2BodC4e
+	 jvE1dPpBDx7uk3d/UpAVjEXeN8k7/b9lN0NVRrwM7VzYuoN13mFYK2XqDhWRoKo8UO
+	 zj1nsq73HDNye7FZvGYTfHvnyXLnx5eIf3O/+aqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 061/163] net: ethernet: rtsn: Fix a null pointer dereference in rtsn_probe()
-Date: Tue, 15 Jul 2025 15:12:09 +0200
-Message-ID: <20250715130811.200747946@linuxfoundation.org>
+	Gerald Gibson <gerald.gibson@oracle.com>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Yu Kuai <yukuai3@huawei.com>
+Subject: [PATCH 6.12 062/163] md/md-bitmap: fix GPF in bitmap_get_stats()
+Date: Tue, 15 Jul 2025 15:12:10 +0200
+Message-ID: <20250715130811.241568057@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -52,43 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-commit 95a234f6affbf51f06338383537ab80d637bb785 upstream.
+commit c17fb542dbd1db745c9feac15617056506dd7195 upstream.
 
-Add check for the return value of rcar_gen4_ptp_alloc()
-to prevent potential null pointer dereference.
+The commit message of commit 6ec1f0239485 ("md/md-bitmap: fix stats
+collection for external bitmaps") states:
 
-Fixes: b0d3969d2b4d ("net: ethernet: rtsn: Add support for Renesas Ethernet-TSN")
+    Remove the external bitmap check as the statistics should be
+    available regardless of bitmap storage location.
+
+    Return -EINVAL only for invalid bitmap with no storage (neither in
+    superblock nor in external file).
+
+But, the code does not adhere to the above, as it does only check for
+a valid super-block for "internal" bitmaps. Hence, we observe:
+
+Oops: GPF, probably for non-canonical address 0x1cd66f1f40000028
+RIP: 0010:bitmap_get_stats+0x45/0xd0
+Call Trace:
+
+ seq_read_iter+0x2b9/0x46a
+ seq_read+0x12f/0x180
+ proc_reg_read+0x57/0xb0
+ vfs_read+0xf6/0x380
+ ksys_read+0x6d/0xf0
+ do_syscall_64+0x8c/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+We fix this by checking the existence of a super-block for both the
+internal and external case.
+
+Fixes: 6ec1f0239485 ("md/md-bitmap: fix stats collection for external bitmaps")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://patch.msgid.link/20250703100109.2541018-1-haoxiang_li2024@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Gerald Gibson <gerald.gibson@oracle.com>
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Link: https://lore.kernel.org/linux-raid/20250702091035.2061312-1-haakon.bugge@oracle.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/rtsn.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/md/md-bitmap.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/rtsn.c b/drivers/net/ethernet/renesas/rtsn.c
-index 6b3f7fca8d15..05c4b6c8c9c3 100644
---- a/drivers/net/ethernet/renesas/rtsn.c
-+++ b/drivers/net/ethernet/renesas/rtsn.c
-@@ -1259,7 +1259,12 @@ static int rtsn_probe(struct platform_device *pdev)
- 	priv = netdev_priv(ndev);
- 	priv->pdev = pdev;
- 	priv->ndev = ndev;
-+
- 	priv->ptp_priv = rcar_gen4_ptp_alloc(pdev);
-+	if (!priv->ptp_priv) {
-+		ret = -ENOMEM;
-+		goto error_free;
-+	}
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2355,8 +2355,7 @@ static int bitmap_get_stats(void *data,
  
- 	spin_lock_init(&priv->lock);
- 	platform_set_drvdata(pdev, priv);
--- 
-2.50.1
-
+ 	if (!bitmap)
+ 		return -ENOENT;
+-	if (!bitmap->mddev->bitmap_info.external &&
+-	    !bitmap->storage.sb_page)
++	if (!bitmap->storage.sb_page)
+ 		return -EINVAL;
+ 	sb = kmap_local_page(bitmap->storage.sb_page);
+ 	stats->sync_size = le64_to_cpu(sb->sync_size);
 
 
