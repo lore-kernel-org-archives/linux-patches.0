@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3242D6419;
-	Tue, 15 Jul 2025 13:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C229E2E7F1F;
+	Tue, 15 Jul 2025 13:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585901; cv=none; b=THKA6JqkxHuBJLjTVo6uCTvXgAmtWbnjzXUyPnVzEpY2T77yRLVC5aukA7uM7v4ih8lX9JB0Pg0kUQDLqvT0pny/RHdCQjhmkeSGMO1q/eUm0eeHz+IbTb9zT3SZMpWA3pvK0YYxaZYEBsDi8UMlJQIyhV8hMCEAEhTLBND8RWI=
+	t=1752585904; cv=none; b=gnuNdKqQVFDFF/O2kvQHf6Opcg8NJ+4g5/SlMeqZQBRYbVUwbSZHN5AgEEP68BKDOo8MEKzRm7ex8j4LRGmD4pWSKL5anGA6bzsCem3RYOWxkC0bio5MV1GBnmuVySEqMjlsfSK/uUSho9kFbI9VyZabAz7psp13MAh5l6llwNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585901; c=relaxed/simple;
-	bh=cxSKuYPxuZqSnOpkuY8Hc9MmKfBqo6v0aGcQY/WB9T0=;
+	s=arc-20240116; t=1752585904; c=relaxed/simple;
+	bh=lIFd+rYjQM2FJiqLmMoqOtCWQ157qs/ijgE0P2Q7o+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qG/GzP8NOSyERMd4IbB0OGPLxLFneHEBMu5MqrLxTbQ6xH/2qRrVd4FJqDnHcuEl99PmhsVuvHN2j7bhhY79G4cIuPMjJWM/ZfUSoSwzsdH0IhHlHULqRnGlVxtIKR8nybNKWbEwyBHXUeHDzsoulYaJkRYcAE5Qbg2wywa0KbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2+0Z/kV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=afpHA5k3A/hJ47f5qSsY+A3mMjeBTFufCFUu/ChZm6NAC6Ll5ds8yc9zq/AdQEnnNVEtUx9SOcGZK+7PugQhR3EktZAwZSZxUCx7Rw9Q4ZFVI6FaoeKLvtyKeuicCm1QH8b2LTlRCOIPscufAPsn5YnlJaQ+4EgyeTH/orMNCLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nCxBe8n2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2+0Z/kV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610F1C4CEF1;
-	Tue, 15 Jul 2025 13:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCxBe8n2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F27C4CEFD;
+	Tue, 15 Jul 2025 13:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585901;
-	bh=cxSKuYPxuZqSnOpkuY8Hc9MmKfBqo6v0aGcQY/WB9T0=;
+	s=korg; t=1752585904;
+	bh=lIFd+rYjQM2FJiqLmMoqOtCWQ157qs/ijgE0P2Q7o+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2+0Z/kVyHs69vdDRH/M7vKsMXUYf5JG7NjkQ9VfEyL3Fbfr1PEWPMT4Qe70WqJoU
-	 ao39sOrUL6PMIOTp9yGlcvFtPtsblml7ONvkNAtbOXoC6BoGvxVE1FyuMAZd81OhBb
-	 J5KwZ2njw6q8i4K67QX258NEur6MGe163AfVtdqE=
+	b=nCxBe8n27mUeQ6xrYp597MvzOU+2cYmB1rOWbZMXXIINy33ICYuZ95XgNa7mOYT6a
+	 hpUpGoPPO96I4fKHZtZR80d9osBsCFXVOnhFcq7jlLBvaoC5xkBoeClw8HUseTB5ut
+	 yi0phRqXLFkBA/8Nh41x/sXygZA47CWFZ4FQsuIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Achill Gilgenast <fossdd@pwned.life>,
-	Luis Henriques <luis@igalia.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Dev Jain <dev.jain@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 051/109] kallsyms: fix build without execinfo
-Date: Tue, 15 Jul 2025 15:13:07 +0200
-Message-ID: <20250715130800.918603388@linuxfoundation.org>
+Subject: [PATCH 6.6 052/109] maple_tree: fix mt_destroy_walk() on root leaf node
+Date: Tue, 15 Jul 2025 15:13:08 +0200
+Message-ID: <20250715130800.957748570@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -51,48 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Achill Gilgenast <fossdd@pwned.life>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-commit a95743b53031b015e8949e845a9f6fdfb2656347 upstream.
+commit ea9b77f98d94c4d5c1bd1ac1db078f78b40e8bf5 upstream.
 
-Some libc's like musl libc don't provide execinfo.h since it's not part of
-POSIX.  In order to fix compilation on musl, only include execinfo.h if
-available (HAVE_BACKTRACE_SUPPORT)
+On destroy, we should set each node dead.  But current code miss this when
+the maple tree has only the root node.
 
-This was discovered with c104c16073b7 ("Kunit to check the longest symbol
-length") which starts to include linux/kallsyms.h with Alpine Linux'
-configs.
+The reason is mt_destroy_walk() leverage mte_destroy_descend() to set node
+dead, but this is skipped since the only root node is a leaf.
 
-Link: https://lkml.kernel.org/r/20250622014608.448718-1-fossdd@pwned.life
-Fixes: c104c16073b7 ("Kunit to check the longest symbol length")
-Signed-off-by: Achill Gilgenast <fossdd@pwned.life>
-Cc: Luis Henriques <luis@igalia.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes this by setting the node dead if it is a leaf.
+
+Link: https://lore.kernel.org/all/20250407231354.11771-1-richard.weiyang@gmail.com/
+Link: https://lkml.kernel.org/r/20250624191841.64682-1-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/kallsyms.h |    4 ++++
- 1 file changed, 4 insertions(+)
+ lib/maple_tree.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/include/linux/kallsyms.h
-+++ b/tools/include/linux/kallsyms.h
-@@ -18,6 +18,7 @@ static inline const char *kallsyms_looku
- 	return NULL;
- }
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -5270,6 +5270,7 @@ static void mt_destroy_walk(struct maple
+ 	struct maple_enode *start;
  
-+#ifdef HAVE_BACKTRACE_SUPPORT
- #include <execinfo.h>
- #include <stdlib.h>
- static inline void print_ip_sym(const char *loglvl, unsigned long ip)
-@@ -30,5 +31,8 @@ static inline void print_ip_sym(const ch
- 
- 	free(name);
- }
-+#else
-+static inline void print_ip_sym(const char *loglvl, unsigned long ip) {}
-+#endif
- 
- #endif
+ 	if (mte_is_leaf(enode)) {
++		mte_set_node_dead(enode);
+ 		node->type = mte_node_type(enode);
+ 		goto free_leaf;
+ 	}
 
 
