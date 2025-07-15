@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC1F2C327B;
-	Tue, 15 Jul 2025 13:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4E72E2657;
+	Tue, 15 Jul 2025 13:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585638; cv=none; b=gPbPOQuxeVKdbwZId9M4xUqsvBCM6QeoRKRDuyQGeSgXqbi6O2uv/FslqBFJz3dD3wje1NsiFjDrlYEOtaQ46dhAH3UBQoM9d3W65dYRs67tsf96XJqnMYx8YpKALUPD2wd4M5xzD+1G4F3BiIW4odbjui9Y5dTd/XgN2OQBzd8=
+	t=1752585641; cv=none; b=Ms05ZdRb4fuZyMM3Atlc2CVkhY2B+yiZHEKY+AWQPP+8B6Zxe2Gc1iCJ4joxcVOaN/3E31S1Q2GsmELESjCaDrr+c4nFCtsM3Qz4rWPLlUQG6LxbpuClxhtSM6d4v9Vwxx6F6lOdtlMYytokpBBrjzwiyQq7wj75+fGGqA1BqL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585638; c=relaxed/simple;
-	bh=p1z5p33115nH6GUDefYCyHMxgSW8Zdo+Jx6+b3W7Zss=;
+	s=arc-20240116; t=1752585641; c=relaxed/simple;
+	bh=m2v2wEfusWAqA5yW+rhm4PBoCdTPP5wIVeu3fezLreE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAYQq3jIQk3fK8FtVrz9vAy+nwm/jgPdQ2BdmKpDPhkxWAM6X+mvd7Y1NITfF7dtDsKgzKQOf3kNaWcy074eCmI+HUTnaPd6wwz6mcDoqeTOHOQay8+sZk8Umqljgps+rkcbi+vR77TJ7dFT7LLBOfuDAzHRfs9YRgBUhpa0/vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FX9tD/p/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OU5CNlhFWCtAXagBW9falveFunkCiusI46AwA6qVCuW77Ms7Jgo5hm/BrcHpudoANBq21l/vyblZxHNLCIOc+JykzDQ+adFDxOhaBdnmdOneu+8HPYyImJP4rZA8OKu8SbxDPDf4N/SKvyZOM28Uz7AMUq4y4Ulgvt/hpPU4wxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNxWx28g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FX9tD/p/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA95C4CEE3;
-	Tue, 15 Jul 2025 13:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNxWx28g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877A7C4CEE3;
+	Tue, 15 Jul 2025 13:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585638;
-	bh=p1z5p33115nH6GUDefYCyHMxgSW8Zdo+Jx6+b3W7Zss=;
+	s=korg; t=1752585641;
+	bh=m2v2wEfusWAqA5yW+rhm4PBoCdTPP5wIVeu3fezLreE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FX9tD/p/EEDK54J+OxD5piv9ie9iE/WAw3NwHCg3cVRQocerMF1uOfMECmAxKEpF5
-	 KHAJ3ow+2iCliJmpEBQk9ElgcM7f4FCmwkKElqJ4mxTQT7e4RC13uUdzwZHYNZyfYI
-	 AuxW80tYIPBjRaC6H8T/C+ZnYbaQBj8DgMWWudms=
+	b=rNxWx28gskxPVXAkUXLBbuPLIz9ttg17wZbJ7RA6oK13IR7TSAf7M5qlOS8zfjIf1
+	 Pls8JREf97o2UAIc7teuVA1rhLHJ6n8gG5CrxTQSACAkXjJW3+NRhGlvvi8+7VYpMU
+	 bem7H7QnpyyQgXjm4F+5Fj6G2LogsG8uBEnAknV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Ben Skeggs <bskeggs@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 114/163] wifi: rt2x00: fix remove callback type mismatch
-Date: Tue, 15 Jul 2025 15:13:02 +0200
-Message-ID: <20250715130813.428084892@linuxfoundation.org>
+Subject: [PATCH 6.12 115/163] drm/nouveau/gsp: fix potential leak of memory used during acpi init
+Date: Tue, 15 Jul 2025 15:13:03 +0200
+Message-ID: <20250715130813.467720941@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,58 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Ben Skeggs <bskeggs@nvidia.com>
 
-[ Upstream commit 2ce6ad9262256dd345cb104ba0ac6cf4aeed25a3 ]
+[ Upstream commit d133036a0b23d3ef781d067ccdea6bbfb381e0cf ]
 
-The function is used as remove callback for a platform driver.
-It was missed during the conversion from int to void
+If any of the ACPI calls fail, memory allocated for the input buffer
+would be leaked.  Fix failure paths to free allocated memory.
 
-Fixes: 0edb555a65d1 ("platform: Make platform_driver::remove() return void")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20250706092053.97724-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Also add checks to ensure the allocations succeeded in the first place.
+
+Reported-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
+Signed-off-by: Ben Skeggs <bskeggs@nvidia.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://lore.kernel.org/r/20250617040036.2932-1-bskeggs@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2x00soc.c | 4 +---
- drivers/net/wireless/ralink/rt2x00/rt2x00soc.h | 2 +-
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ .../gpu/drm/nouveau/nvkm/subdev/gsp/r535.c    | 20 +++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
-index eface610178d2..f7f3a2340c392 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
-@@ -108,7 +108,7 @@ int rt2x00soc_probe(struct platform_device *pdev, const struct rt2x00_ops *ops)
- }
- EXPORT_SYMBOL_GPL(rt2x00soc_probe);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+index fc84ca214f247..3ad4f6e9a8ac2 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+@@ -1454,7 +1454,6 @@ r535_gsp_acpi_caps(acpi_handle handle, CAPS_METHOD_DATA *caps)
+ 	union acpi_object argv4 = {
+ 		.buffer.type    = ACPI_TYPE_BUFFER,
+ 		.buffer.length  = 4,
+-		.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL),
+ 	}, *obj;
  
--int rt2x00soc_remove(struct platform_device *pdev)
-+void rt2x00soc_remove(struct platform_device *pdev)
- {
- 	struct ieee80211_hw *hw = platform_get_drvdata(pdev);
- 	struct rt2x00_dev *rt2x00dev = hw->priv;
-@@ -119,8 +119,6 @@ int rt2x00soc_remove(struct platform_device *pdev)
- 	rt2x00lib_remove_dev(rt2x00dev);
- 	rt2x00soc_free_reg(rt2x00dev);
- 	ieee80211_free_hw(hw);
--
--	return 0;
- }
- EXPORT_SYMBOL_GPL(rt2x00soc_remove);
+ 	caps->status = 0xffff;
+@@ -1462,17 +1461,22 @@ r535_gsp_acpi_caps(acpi_handle handle, CAPS_METHOD_DATA *caps)
+ 	if (!acpi_check_dsm(handle, &NVOP_DSM_GUID, NVOP_DSM_REV, BIT_ULL(0x1a)))
+ 		return;
  
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
-index 021fd06b36272..d6226b8a10e00 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
-@@ -17,7 +17,7 @@
-  * SoC driver handlers.
-  */
- int rt2x00soc_probe(struct platform_device *pdev, const struct rt2x00_ops *ops);
--int rt2x00soc_remove(struct platform_device *pdev);
-+void rt2x00soc_remove(struct platform_device *pdev);
- #ifdef CONFIG_PM
- int rt2x00soc_suspend(struct platform_device *pdev, pm_message_t state);
- int rt2x00soc_resume(struct platform_device *pdev);
++	argv4.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL);
++	if (!argv4.buffer.pointer)
++		return;
++
+ 	obj = acpi_evaluate_dsm(handle, &NVOP_DSM_GUID, NVOP_DSM_REV, 0x1a, &argv4);
+ 	if (!obj)
+-		return;
++		goto done;
+ 
+ 	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
+ 	    WARN_ON(obj->buffer.length != 4))
+-		return;
++		goto done;
+ 
+ 	caps->status = 0;
+ 	caps->optimusCaps = *(u32 *)obj->buffer.pointer;
+ 
++done:
+ 	ACPI_FREE(obj);
+ 
+ 	kfree(argv4.buffer.pointer);
+@@ -1489,24 +1493,28 @@ r535_gsp_acpi_jt(acpi_handle handle, JT_METHOD_DATA *jt)
+ 	union acpi_object argv4 = {
+ 		.buffer.type    = ACPI_TYPE_BUFFER,
+ 		.buffer.length  = sizeof(caps),
+-		.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL),
+ 	}, *obj;
+ 
+ 	jt->status = 0xffff;
+ 
++	argv4.buffer.pointer = kmalloc(argv4.buffer.length, GFP_KERNEL);
++	if (!argv4.buffer.pointer)
++		return;
++
+ 	obj = acpi_evaluate_dsm(handle, &JT_DSM_GUID, JT_DSM_REV, 0x1, &argv4);
+ 	if (!obj)
+-		return;
++		goto done;
+ 
+ 	if (WARN_ON(obj->type != ACPI_TYPE_BUFFER) ||
+ 	    WARN_ON(obj->buffer.length != 4))
+-		return;
++		goto done;
+ 
+ 	jt->status = 0;
+ 	jt->jtCaps = *(u32 *)obj->buffer.pointer;
+ 	jt->jtRevId = (jt->jtCaps & 0xfff00000) >> 20;
+ 	jt->bSBIOSCaps = 0;
+ 
++done:
+ 	ACPI_FREE(obj);
+ 
+ 	kfree(argv4.buffer.pointer);
 -- 
 2.39.5
 
