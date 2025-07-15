@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365A72ECE9F;
-	Tue, 15 Jul 2025 13:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0672EF295;
+	Tue, 15 Jul 2025 13:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587174; cv=none; b=p4qmBayvlkheBOXhOwOYqAzdH8olND4jY/2pcA4LK37nkqYO/95IHBdRBhXka7lVecq90eb0lkXuABI69RIBREUOEaOCa8UMAEfpJbQ0cH6dsbcjTQ0qvs0qCwAqHAvyg3qByLVUsHR1oE79xx6//jvys6M1ZRZNLbR6h06AeLU=
+	t=1752587176; cv=none; b=hrzyWKnNtoyIjn9jt5SXVICDqI567g6bRo9I7AJuYDbkkHiIyHora6GhbjUL7WJPHhVSktnuMqP89q9GkxDqwqJ0vzsOAuZPNNyUHTJBf81xdr6y3s85mFvBsqfj26OSVmSCqUF/ZHigqulhg1TAaujhFRwUFSTxMinJkdhB2ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587174; c=relaxed/simple;
-	bh=HjmddSVkdxvF0yQjFRCPA7xuPDMNFpyw8xJ7Kyoc+hk=;
+	s=arc-20240116; t=1752587176; c=relaxed/simple;
+	bh=3rG4DRMaPb/jVboiNdDJchYe8E23EG26Vps0QWIrOiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pca2FJRAH/FBT3W5jsFJgDWERlNNLK0aYFvQ+Lj6E7hViaL6FLwOjCbyIw5RU7nzDqPFMuZNb7gWv9/VBjCwIlDfExZLwydzTAfE58Efox+3YyFMTNmHCEGHD+3ylQ4Iobx0mvU3ohd0QNe46lCTTUCWCRwt5YY8bDgv9Q48k8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13PhUPZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MfGsQrZleTes0if0Y5+2w5hkq8CPseVQKXVx6JBxyF9riS1XzDG5smKA2lg2LSRN60SHIENF4fpBw+XDUfpNjVmvnLe3eWvsZuxHVGmPnTVdCAxLYw+cpCiNvUctQ+vheUxLWZN8yleTQa2jEFKEvVu880dDfSC7LEZgKthfZBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKEEH4us; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13PhUPZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAC9C4CEF7;
-	Tue, 15 Jul 2025 13:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKEEH4us"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602F0C4CEE3;
+	Tue, 15 Jul 2025 13:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587174;
-	bh=HjmddSVkdxvF0yQjFRCPA7xuPDMNFpyw8xJ7Kyoc+hk=;
+	s=korg; t=1752587176;
+	bh=3rG4DRMaPb/jVboiNdDJchYe8E23EG26Vps0QWIrOiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13PhUPZRCtsp3G8ONkEBmRPZZskIZifVJSvKvF8mnkqHFzLMoi6Q6gHvmGS0cRoM3
-	 4I1jmGcWAdE130TfKsPoA06hSIVm2kVEw18z6CEqc2eTnDqf6ETEQL0n9MDoOUMkQA
-	 3uKLesysnTfOMktNSJM1/ZhQP8cBiMQvzLJQYZeI=
+	b=bKEEH4ussBn5eQWZrx8gsjXm//5cLWE+ynGG9kqkDGyAHySK284YylI/gCpmQOnB+
+	 9ArPkud8PHKadyAD9sR0/uo8HXchezHk+yFo0EhkzJ9VMohxFaDgtGTKKWF0V96Nca
+	 I2TDUGNLNdMevYEYNlDko0TYum82fLi+M9H/b9T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Shravya KN <shravya.k-n@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 163/192] net: ll_temac: Fix missing tx_pending check in ethtools_set_ringparam()
-Date: Tue, 15 Jul 2025 15:14:18 +0200
-Message-ID: <20250715130821.457664873@linuxfoundation.org>
+Subject: [PATCH 6.15 164/192] bnxt_en: Fix DCB ETS validation
+Date: Tue, 15 Jul 2025 15:14:19 +0200
+Message-ID: <20250715130821.497017924@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,42 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Shravya KN <shravya.k-n@broadcom.com>
 
-[ Upstream commit e81750b4e3826fedce7362dad839cb40384d60ae ]
+[ Upstream commit b74c2a2e9cc471e847abd87e50a2354c07e02040 ]
 
-The function ll_temac_ethtools_set_ringparam() incorrectly checked
-rx_pending twice, once correctly for RX and once mistakenly in place
-of tx_pending. This caused tx_pending to be left unchecked against
-TX_BD_NUM_MAX.
-As a result, invalid TX ring sizes may have been accepted or valid
-ones wrongly rejected based on the RX limit, leading to potential
-misconfiguration or unexpected results.
+In bnxt_ets_validate(), the code incorrectly loops over all possible
+traffic classes to check and add the ETS settings.  Fix it to loop
+over the configured traffic classes only.
 
-This patch corrects the condition to properly validate tx_pending.
+The unconfigured traffic classes will default to TSA_ETS with 0
+bandwidth.  Looping over these unconfigured traffic classes may
+cause the validation to fail and trigger this error message:
 
-Fixes: f7b261bfc35e ("net: ll_temac: Make RX/TX ring sizes configurable")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250710180621.2383000-1-alok.a.tiwari@oracle.com
+"rejecting ETS config starving a TC\n"
+
+The .ieee_setets() will then fail.
+
+Fixes: 7df4ae9fe855 ("bnxt_en: Implement DCBNL to support host-based DCBX.")
+Reviewed-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250710213938.1959625-2-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/ll_temac_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/xilinx/ll_temac_main.c b/drivers/net/ethernet/xilinx/ll_temac_main.c
-index edb36ff07a0c6..6f82203a414cd 100644
---- a/drivers/net/ethernet/xilinx/ll_temac_main.c
-+++ b/drivers/net/ethernet/xilinx/ll_temac_main.c
-@@ -1309,7 +1309,7 @@ ll_temac_ethtools_set_ringparam(struct net_device *ndev,
- 	if (ering->rx_pending > RX_BD_NUM_MAX ||
- 	    ering->rx_mini_pending ||
- 	    ering->rx_jumbo_pending ||
--	    ering->rx_pending > TX_BD_NUM_MAX)
-+	    ering->tx_pending > TX_BD_NUM_MAX)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
+index 0dbb880a7aa0e..71e14be2507e1 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_dcb.c
+@@ -487,7 +487,9 @@ static int bnxt_ets_validate(struct bnxt *bp, struct ieee_ets *ets, u8 *tc)
  
- 	if (netif_running(ndev))
+ 		if ((ets->tc_tx_bw[i] || ets->tc_tsa[i]) && i > bp->max_tc)
+ 			return -EINVAL;
++	}
+ 
++	for (i = 0; i < max_tc; i++) {
+ 		switch (ets->tc_tsa[i]) {
+ 		case IEEE_8021QAZ_TSA_STRICT:
+ 			break;
 -- 
 2.39.5
 
