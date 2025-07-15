@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD522D6402;
-	Tue, 15 Jul 2025 13:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C152EF65C;
+	Tue, 15 Jul 2025 13:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587184; cv=none; b=hZ82psb/RWDG2f2xJNlFnO80kFs39GuFQnSaKOxACo4iHjmkA+LLlmKqTBO28eOBwqCV+2TCS+BhwZ3PJ0XjyMihdzO/TVXx7APzWetlJV/TW+6KdUi7x7lWr14XOT1lh/mptGOsNKTTWJhG+d4+qOHuW8wvYw/HAQhMxb2oQWA=
+	t=1752587187; cv=none; b=H2np/8Qu3P/7mhH1dVynW/xBPhiSvajwv+FaDZbxBQaSGbW0sRYYzSjhKNb++mQCmL9TnOsXyQ7Lgd3l1rrupXgzc008Tee4p4A9nfsAxotFj7zwcph9/MylxYP1g7RqiWlfIt/++f9c26rx5/BwpXauOL7T6mZcZepV5f6tFj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587184; c=relaxed/simple;
-	bh=GwA6r6h7IleKfqpErlRrSBQC+LRBqHt6kOIvAEz5DQI=;
+	s=arc-20240116; t=1752587187; c=relaxed/simple;
+	bh=rjQpVgcrU0aOojY2DtM5IBPQZPdMUtqCYSlZepI9XQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jeU2WYgB5a7hlkKixVRSn/0y4twOOWp56HBxrnylJBu3jk5ypgFH9agclrkUy3x1snRWpZi2bzTpaOkqiVyM5q5NEAhvflAFYqAs9xGzYCuZf5U3AKJZJsT0LqkEifF4WTEDRzcanm5K04jZyuZM+cqaOAFHibyDf4lAOp8eO6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8aVkj/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sHLljJsCR1UDY0Vd0XijwrVLRpxDFOuAjrdoswyXJ8L5mjcgacL9/AorhOMy7wbQ7heiIA75HzbvRTWLIufbLvZWo1DwYLXZsvuAjdsYff9U1QAcbaEsQbIn6hkFi8Em8rhJirKkKtB7vxytU0YLHBOrbccWxP7BkJCgjHlQtP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj/tRcQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8aVkj/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5D8C4CEE3;
-	Tue, 15 Jul 2025 13:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj/tRcQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF292C4CEE3;
+	Tue, 15 Jul 2025 13:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587184;
-	bh=GwA6r6h7IleKfqpErlRrSBQC+LRBqHt6kOIvAEz5DQI=;
+	s=korg; t=1752587187;
+	bh=rjQpVgcrU0aOojY2DtM5IBPQZPdMUtqCYSlZepI9XQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8aVkj/Dod0OeZw0tbj8GzaMLYo3DoOl/cWfXEXREJWfWH8dOsr2rHbEm3vbi2QU8
-	 kt3TLFqQvOREPc1EIR+CuU6Nxcf7l/sltgkk5iK+YWeIeIYznCKS2uMQjHPk/Bh50H
-	 FQF8mytxgZBh1rs1GYN7wm0THXqve2T+BIaKLxgc=
+	b=mj/tRcQ/zdudN05p/TlS/Xp/R00phNaihDwdjBlyQIZ6zkGhjMsupZ7WymcDmLQg2
+	 KUS+RuguhuCsTrtetioNce5JiHDHWZT3mixeYxWQj7CAGKkeI+1VXcpY/4yJ/c/Er/
+	 AmQpaCJbuXP9mq0XeYrSfOSwu76PqJ2uW1Jds7g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.15 191/192] x86/sev: Use TSC_FACTOR for Secure TSC frequency calculation
-Date: Tue, 15 Jul 2025 15:14:46 +0200
-Message-ID: <20250715130822.590138652@linuxfoundation.org>
+	Ziyan Xu <research@securitygossip.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 192/192] ksmbd: fix potential use-after-free in oplock/lease break ack
+Date: Tue, 15 Jul 2025 15:14:47 +0200
+Message-ID: <20250715130822.629147906@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -50,124 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 52e1a03e6cf61ae165f59f41c44394a653a0a788 upstream.
+commit 50f930db22365738d9387c974416f38a06e8057e upstream.
 
-When using Secure TSC, the GUEST_TSC_FREQ MSR reports a frequency based on
-the nominal P0 frequency, which deviates slightly (typically ~0.2%) from
-the actual mean TSC frequency due to clocking parameters.
+If ksmbd_iov_pin_rsp return error, use-after-free can happen by
+accessing opinfo->state and opinfo_put and ksmbd_fd_put could
+called twice.
 
-Over extended VM uptime, this discrepancy accumulates, causing clock skew
-between the hypervisor and a SEV-SNP VM, leading to early timer interrupts as
-perceived by the guest.
-
-The guest kernel relies on the reported nominal frequency for TSC-based
-timekeeping, while the actual frequency set during SNP_LAUNCH_START may
-differ. This mismatch results in inaccurate time calculations, causing the
-guest to perceive hrtimers as firing earlier than expected.
-
-Utilize the TSC_FACTOR from the SEV firmware's secrets page (see "Secrets
-Page Format" in the SNP Firmware ABI Specification) to calculate the mean
-TSC frequency, ensuring accurate timekeeping and mitigating clock skew in
-SEV-SNP VMs.
-
-Use early_ioremap_encrypted() to map the secrets page as
-ioremap_encrypted() uses kmalloc() which is not available during early TSC
-initialization and causes a panic.
-
-  [ bp: Drop the silly dummy var:
-    https://lore.kernel.org/r/20250630192726.GBaGLlHl84xIopx4Pt@fat_crate.local ]
-
-Fixes: 73bbf3b0fbba ("x86/tsc: Init the TSC for Secure TSC guests")
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250630081858.485187-1-nikunj@amd.com
+Reported-by: Ziyan Xu <research@securitygossip.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/sev/core.c   |   22 +++++++++++++++++++---
- arch/x86/include/asm/sev.h |   17 ++++++++++++++++-
- 2 files changed, 35 insertions(+), 4 deletions(-)
+ fs/smb/server/smb2pdu.c |   29 +++++++++--------------------
+ 1 file changed, 9 insertions(+), 20 deletions(-)
 
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -103,7 +103,7 @@ static u64 secrets_pa __ro_after_init;
-  */
- static u64 snp_tsc_scale __ro_after_init;
- static u64 snp_tsc_offset __ro_after_init;
--static u64 snp_tsc_freq_khz __ro_after_init;
-+static unsigned long snp_tsc_freq_khz __ro_after_init;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8535,11 +8535,6 @@ static void smb20_oplock_break_ack(struc
+ 		goto err_out;
+ 	}
  
- /* #VC handler runtime per-CPU data */
- struct sev_es_runtime_data {
-@@ -3347,15 +3347,31 @@ static unsigned long securetsc_get_tsc_k
- 
- void __init snp_secure_tsc_init(void)
- {
--	unsigned long long tsc_freq_mhz;
-+	struct snp_secrets_page *secrets;
-+	unsigned long tsc_freq_mhz;
-+	void *mem;
- 
- 	if (!cc_platform_has(CC_ATTR_GUEST_SNP_SECURE_TSC))
- 		return;
- 
-+	mem = early_memremap_encrypted(secrets_pa, PAGE_SIZE);
-+	if (!mem) {
-+		pr_err("Unable to get TSC_FACTOR: failed to map the SNP secrets page.\n");
-+		sev_es_terminate(SEV_TERM_SET_LINUX, GHCB_TERM_SECURE_TSC);
+-	opinfo->op_state = OPLOCK_STATE_NONE;
+-	wake_up_interruptible_all(&opinfo->oplock_q);
+-	opinfo_put(opinfo);
+-	ksmbd_fd_put(work, fp);
+-
+ 	rsp->StructureSize = cpu_to_le16(24);
+ 	rsp->OplockLevel = rsp_oplevel;
+ 	rsp->Reserved = 0;
+@@ -8547,16 +8542,15 @@ static void smb20_oplock_break_ack(struc
+ 	rsp->VolatileFid = volatile_id;
+ 	rsp->PersistentFid = persistent_id;
+ 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_oplock_break));
+-	if (!ret)
+-		return;
+-
++	if (ret) {
+ err_out:
++		smb2_set_err_rsp(work);
 +	}
 +
-+	secrets = (__force struct snp_secrets_page *)mem;
-+
- 	setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
- 	rdmsrl(MSR_AMD64_GUEST_TSC_FREQ, tsc_freq_mhz);
--	snp_tsc_freq_khz = (unsigned long)(tsc_freq_mhz * 1000);
-+
-+	/* Extract the GUEST TSC MHZ from BIT[17:0], rest is reserved space */
-+	tsc_freq_mhz &= GENMASK_ULL(17, 0);
-+
-+	snp_tsc_freq_khz = SNP_SCALE_TSC_FREQ(tsc_freq_mhz * 1000, secrets->tsc_factor);
- 
- 	x86_platform.calibrate_cpu = securetsc_get_tsc_khz;
- 	x86_platform.calibrate_tsc = securetsc_get_tsc_khz;
-+
-+	early_memunmap(mem, PAGE_SIZE);
+ 	opinfo->op_state = OPLOCK_STATE_NONE;
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+-
+ 	opinfo_put(opinfo);
+ 	ksmbd_fd_put(work, fp);
+-	smb2_set_err_rsp(work);
  }
---- a/arch/x86/include/asm/sev.h
-+++ b/arch/x86/include/asm/sev.h
-@@ -192,6 +192,18 @@ struct snp_tsc_info_resp {
- 	u8 rsvd2[100];
- } __packed;
  
-+/*
-+ * Obtain the mean TSC frequency by decreasing the nominal TSC frequency with
-+ * TSC_FACTOR as documented in the SNP Firmware ABI specification:
-+ *
-+ * GUEST_TSC_FREQ * (1 - (TSC_FACTOR * 0.00001))
-+ *
-+ * which is equivalent to:
-+ *
-+ * GUEST_TSC_FREQ -= (GUEST_TSC_FREQ * TSC_FACTOR) / 100000;
-+ */
-+#define SNP_SCALE_TSC_FREQ(freq, factor) ((freq) - (freq) * (factor) / 100000)
+ static int check_lease_state(struct lease *lease, __le32 req_state)
+@@ -8686,11 +8680,6 @@ static void smb21_lease_break_ack(struct
+ 	}
+ 
+ 	lease_state = lease->state;
+-	opinfo->op_state = OPLOCK_STATE_NONE;
+-	wake_up_interruptible_all(&opinfo->oplock_q);
+-	atomic_dec(&opinfo->breaking_cnt);
+-	wake_up_interruptible_all(&opinfo->oplock_brk);
+-	opinfo_put(opinfo);
+ 
+ 	rsp->StructureSize = cpu_to_le16(36);
+ 	rsp->Reserved = 0;
+@@ -8699,16 +8688,16 @@ static void smb21_lease_break_ack(struct
+ 	rsp->LeaseState = lease_state;
+ 	rsp->LeaseDuration = 0;
+ 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_lease_ack));
+-	if (!ret)
+-		return;
+-
++	if (ret) {
+ err_out:
++		smb2_set_err_rsp(work);
++	}
 +
- struct snp_guest_req {
- 	void *req_buf;
- 	size_t req_sz;
-@@ -251,8 +263,11 @@ struct snp_secrets_page {
- 	u8 svsm_guest_vmpl;
- 	u8 rsvd3[3];
++	opinfo->op_state = OPLOCK_STATE_NONE;
+ 	wake_up_interruptible_all(&opinfo->oplock_q);
+ 	atomic_dec(&opinfo->breaking_cnt);
+ 	wake_up_interruptible_all(&opinfo->oplock_brk);
+-
+ 	opinfo_put(opinfo);
+-	smb2_set_err_rsp(work);
+ }
  
-+	/* The percentage decrease from nominal to mean TSC frequency. */
-+	u32 tsc_factor;
-+
- 	/* Remainder of page */
--	u8 rsvd4[3744];
-+	u8 rsvd4[3740];
- } __packed;
- 
- struct snp_msg_desc {
+ /**
 
 
