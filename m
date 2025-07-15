@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAEE2E49AA;
-	Tue, 15 Jul 2025 13:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68252E4997;
+	Tue, 15 Jul 2025 13:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587248; cv=none; b=oX9nwfRTqAfELi124xaIxty/iWUXGGMxOcXdUwCv4r0/5elbEZkawcCpfIO/r+4GgzS2BbWJp36Ts4j9vw+N3HwekKmmQDtuP4Uo9q5yaUrWBM0rRTd2jCn7qXvtvx/DvYPTmqCewvjuAZz4mJ2H65QjJRj1QC28f+UgCtNsG1s=
+	t=1752587250; cv=none; b=D/EyL/uPZCzF8De1nT/UeKTjIbH6yzDAJjql/x4QfzIczWs9kgqj2W+do63yHFzj7JOxIUQoTp+izRxdmqxULSLMEDJUQdxmhGdMU7QdVrsufCokoAiw2DumYj8LtmD64poEucRKlfTyPI3Byq3ooTHFj+GKprDCo0qL3WCfrqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587248; c=relaxed/simple;
-	bh=6poJBil8kklFAwN4bJpcG5cLuEUOhRHhSLGo43UCn/g=;
+	s=arc-20240116; t=1752587250; c=relaxed/simple;
+	bh=XzNqpbH0VEORTPMyzFUH5VdKctpo3iXoV+R4Wm7ABtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QYHi8ZlTvEgO3gPmMuBielIlPdgaZTI3yEXdZfgHpAklp8Tj5FFzntYoruk8pbRnMD/o7MEVAUybR33PF0H8we6UnnfF0StxUJuEWVanlX7v0OC0DfvCcYveow0POU1ekKnahV7JfBiYdx22Fa81TMFu1Rl3VRqPVT2pSDcbsjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpe229VU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xa3w1c5RoW7A4+FuptW1PEwAc1IJfrkNtWsX/b8RcfX5Lp7CPrPLc/xYW5kEdbliwLbNmbJqCiojKEIaqpJfrFPtknC1JG7IVnZjxIFllLLdU4mf3J/NSt/FoB12vT+WZNRAgzSAPg+Xo7Qb4fS+cIeRmdBqjWX843EcsAPNUnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMy4jDC5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpe229VU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54D4C4CEE3;
-	Tue, 15 Jul 2025 13:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMy4jDC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3C2C4CEE3;
+	Tue, 15 Jul 2025 13:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587248;
-	bh=6poJBil8kklFAwN4bJpcG5cLuEUOhRHhSLGo43UCn/g=;
+	s=korg; t=1752587250;
+	bh=XzNqpbH0VEORTPMyzFUH5VdKctpo3iXoV+R4Wm7ABtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpe229VUqwFdiEMkRJ85Afq6UOytPApucRC9uU4w8utlGdDH/J7yGtdxbCGeeMKCX
-	 A/GiURDnSgiYST+/4WqLSMNcmytWFX0N36nsN6fNwmjYflpMImtoKYWExhvdhy4Q1+
-	 BLPuHu32eyCiXWsWCTOWkcjNyC/Qc/EhU3FeiAyE=
+	b=DMy4jDC5tWHTHB9+STmNZWhLLQPvvi+e3lN/Vkmv8SN9Spl0Lu3+hndkR+LXq5WRh
+	 BDwnzV5jaQK0YtpwRL9gpfTXcrznyxfmDPcQNBEeBCpidDVqZ/+Ztm2FZH6NyjdTtC
+	 9tTGLf0Z3pYmHOMEpRZM9gKCpn2a2GyIcwFe8r20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerald Gibson <gerald.gibson@oracle.com>,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Yu Kuai <yukuai3@huawei.com>
-Subject: [PATCH 6.1 29/88] md/md-bitmap: fix GPF in bitmap_get_stats()
-Date: Tue, 15 Jul 2025 15:14:05 +0200
-Message-ID: <20250715130755.690513858@linuxfoundation.org>
+	Bjorn Andersson <andersson@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 30/88] pinctrl: qcom: msm: mark certain pins as invalid for interrupts
+Date: Tue, 15 Jul 2025 15:14:06 +0200
+Message-ID: <20250715130755.731517198@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -45,66 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit c17fb542dbd1db745c9feac15617056506dd7195 upstream.
+commit 93712205ce2f1fb047739494c0399a26ea4f0890 upstream.
 
-The commit message of commit 6ec1f0239485 ("md/md-bitmap: fix stats
-collection for external bitmaps") states:
+On some platforms, the UFS-reset pin has no interrupt logic in TLMM but
+is nevertheless registered as a GPIO in the kernel. This enables the
+user-space to trigger a BUG() in the pinctrl-msm driver by running, for
+example: `gpiomon -c 0 113` on RB2.
 
-    Remove the external bitmap check as the statistics should be
-    available regardless of bitmap storage location.
+The exact culprit is requesting pins whose intr_detection_width setting
+is not 1 or 2 for interrupts. This hits a BUG() in
+msm_gpio_irq_set_type(). Potentially crashing the kernel due to an
+invalid request from user-space is not optimal, so let's go through the
+pins and mark those that would fail the check as invalid for the irq chip
+as we should not even register them as available irqs.
 
-    Return -EINVAL only for invalid bitmap with no storage (neither in
-    superblock nor in external file).
+This function can be extended if we determine that there are more
+corner-cases like this.
 
-But, the code does not adhere to the above, as it does only check for
-a valid super-block for "internal" bitmaps. Hence, we observe:
-
-Oops: GPF, probably for non-canonical address 0x1cd66f1f40000028
-RIP: 0010:bitmap_get_stats+0x45/0xd0
-Call Trace:
-
- seq_read_iter+0x2b9/0x46a
- seq_read+0x12f/0x180
- proc_reg_read+0x57/0xb0
- vfs_read+0xf6/0x380
- ksys_read+0x6d/0xf0
- do_syscall_64+0x8c/0x1b0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-We fix this by checking the existence of a super-block for both the
-internal and external case.
-
-Fixes: 6ec1f0239485 ("md/md-bitmap: fix stats collection for external bitmaps")
+Fixes: f365be092572 ("pinctrl: Add Qualcomm TLMM driver")
 Cc: stable@vger.kernel.org
-Reported-by: Gerald Gibson <gerald.gibson@oracle.com>
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Link: https://lore.kernel.org/linux-raid/20250702091035.2061312-1-haakon.bugge@oracle.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/20250612091448.41546-1-brgl@bgdev.pl
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2029,8 +2029,7 @@ int md_bitmap_get_stats(struct bitmap *b
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1000,6 +1000,25 @@ static bool msm_gpio_needs_dual_edge_par
+ 	       test_bit(d->hwirq, pctrl->skip_wake_irqs);
+ }
  
- 	if (!bitmap)
- 		return -ENOENT;
--	if (!bitmap->mddev->bitmap_info.external &&
--	    !bitmap->storage.sb_page)
-+	if (!bitmap->storage.sb_page)
- 		return -EINVAL;
- 	sb = kmap_local_page(bitmap->storage.sb_page);
- 	stats->sync_size = le64_to_cpu(sb->sync_size);
++static void msm_gpio_irq_init_valid_mask(struct gpio_chip *gc,
++					 unsigned long *valid_mask,
++					 unsigned int ngpios)
++{
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++	const struct msm_pingroup *g;
++	int i;
++
++	bitmap_fill(valid_mask, ngpios);
++
++	for (i = 0; i < ngpios; i++) {
++		g = &pctrl->soc->groups[i];
++
++		if (g->intr_detection_width != 1 &&
++		    g->intr_detection_width != 2)
++			clear_bit(i, valid_mask);
++	}
++}
++
+ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -1358,6 +1377,7 @@ static int msm_gpio_init(struct msm_pinc
+ 	girq->default_type = IRQ_TYPE_NONE;
+ 	girq->handler = handle_bad_irq;
+ 	girq->parents[0] = pctrl->irq;
++	girq->init_valid_mask = msm_gpio_irq_init_valid_mask;
+ 
+ 	ret = gpiochip_add_data(&pctrl->chip, pctrl);
+ 	if (ret) {
 
 
