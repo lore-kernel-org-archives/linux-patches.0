@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EB72E4278;
-	Tue, 15 Jul 2025 13:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95CA2E4980;
+	Tue, 15 Jul 2025 13:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586362; cv=none; b=PJUGaxOtmD3VlqShK1YKlF4Z1Flxk2zLoRml0QE/1HBDexmeEZ7j5XTSum2xUvZryDAo9eMjB38ReV1DSSLdH9qE8QpKTHEkyem5O+vbzfKJGMhFvKttR//cgoOkFAOCPpF2QPpFxzp7VcZNnNIRRDCH6AZVSEb3/7ncQIXaK30=
+	t=1752586364; cv=none; b=Ru4qM9EaXUx9KZ1XL+kq7uim3kxwxGMs5EErnTj6UNEKxmyvFePrPHtPMaYWtUat3MCbVCD/MihcMXRh4pKfL5vzoqYAHxFEQQ3RRknz3/SIYEaEjSFpXybLeXUIKNbKFIMIGII/qlEZ/6sWq8p+Q/OQ5Kudes6HJBrGdaqfiGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586362; c=relaxed/simple;
-	bh=k8sRJOTy3O9oyFoCTCYJ0GpYlUJKI+T5dbli1/hiPsw=;
+	s=arc-20240116; t=1752586364; c=relaxed/simple;
+	bh=GVUGYWjz9mg8RTjF6q6sRxpjp7hxd0eUqBbSFHwNh/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eu3p9yoRV714T3DzoZbwV7EAVsqvBMTCOZSmVtS5TsMWASuZ9z9D3RhD8Uvnom5y5jKBHsljvcaZ9/5D9SVGrAxvku2V3QwkSzNOUNsj3LVGi+y69YDx+ZUjOi6o03aEo8iZyCYjIejhO1jy8SHMJ9cPnXmxC7ex4KtVgIwX2wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KB5cka/e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rYSFdkYdkROjO1ZApAiqi2QhPufWSM02t+CNwNk1m4QwD+go1qHGcgowOj2b7n+si0bMDvASQXjh4jCJfKpD4tW3GhOmQG6HgI+MLT1JsTk2mh0yUytfvgCCLRJ7dyaiwMNrKQx4p0k+WkD90qy0rTkhwgDj+n3E41h4h97lPvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcC4A9s3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KB5cka/e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1909C4CEE3;
-	Tue, 15 Jul 2025 13:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcC4A9s3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3A5C4CEE3;
+	Tue, 15 Jul 2025 13:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586362;
-	bh=k8sRJOTy3O9oyFoCTCYJ0GpYlUJKI+T5dbli1/hiPsw=;
+	s=korg; t=1752586364;
+	bh=GVUGYWjz9mg8RTjF6q6sRxpjp7hxd0eUqBbSFHwNh/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KB5cka/eNFuMrrTn+gl6o1hwlM5rqoF4hQigRtqaQzF2k251K2bPoMeE4SVF0sU1F
-	 orR+/TZEAGtIvLOr6wRa/QvvPVe5lbsiXPDZl6zzhoEjbJcfD+DiJ11dLIhRrcXMrD
-	 BJ41KbDGylIasEsz/KfjHj+GGAE14qNmA5zg+DEw=
+	b=DcC4A9s3X7V/J8t61TxIolqh46yY7g633bArwkC4PyTCcrgURlF99J7Vy1BtWZVkt
+	 2tP6b6BoHZRtgpVZ0i5tKltpbT2ZHskBZU4r4xvNFlhYbfxAvtONHTtfQ6Vhq6sm+N
+	 M08/UFYwTIdlhqR+/zV98KHEqRibjYAe0vtvzmBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yufeng <chenyufeng@iie.ac.cn>,
+	Jakub Lewalski <jakub.lewalski@nokia.com>,
+	Elodie Decerle <elodie.decerle@nokia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 007/148] usb: potential integer overflow in usbg_make_tpg()
-Date: Tue, 15 Jul 2025 15:12:09 +0200
-Message-ID: <20250715130800.596004161@linuxfoundation.org>
+Subject: [PATCH 5.4 008/148] tty: serial: uartlite: register uart driver in init
+Date: Tue, 15 Jul 2025 15:12:10 +0200
+Message-ID: <20250715130800.636958682@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -50,51 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yufeng <chenyufeng@iie.ac.cn>
+From: Jakub Lewalski <jakub.lewalski@nokia.com>
 
-[ Upstream commit 153874010354d050f62f8ae25cbb960c17633dc5 ]
+[ Upstream commit 6bd697b5fc39fd24e2aa418c7b7d14469f550a93 ]
 
-The variable tpgt in usbg_make_tpg() is defined as unsigned long and is
-assigned to tpgt->tport_tpgt, which is defined as u16. This may cause an
-integer overflow when tpgt is greater than USHRT_MAX (65535). I
-haven't tried to trigger it myself, but it is possible to trigger it
-by calling usbg_make_tpg() with a large value for tpgt.
+When two instances of uart devices are probing, a concurrency race can
+occur. If one thread calls uart_register_driver function, which first
+allocates and assigns memory to 'uart_state' member of uart_driver
+structure, the other instance can bypass uart driver registration and
+call ulite_assign. This calls uart_add_one_port, which expects the uart
+driver to be fully initialized. This leads to a kernel panic due to a
+null pointer dereference:
 
-I modified the type of tpgt to match tpgt->tport_tpgt and adjusted the
-relevant code accordingly.
+[    8.143581] BUG: kernel NULL pointer dereference, address: 00000000000002b8
+[    8.156982] #PF: supervisor write access in kernel mode
+[    8.156984] #PF: error_code(0x0002) - not-present page
+[    8.156986] PGD 0 P4D 0
+...
+[    8.180668] RIP: 0010:mutex_lock+0x19/0x30
+[    8.188624] Call Trace:
+[    8.188629]  ? __die_body.cold+0x1a/0x1f
+[    8.195260]  ? page_fault_oops+0x15c/0x290
+[    8.209183]  ? __irq_resolve_mapping+0x47/0x80
+[    8.209187]  ? exc_page_fault+0x64/0x140
+[    8.209190]  ? asm_exc_page_fault+0x22/0x30
+[    8.209196]  ? mutex_lock+0x19/0x30
+[    8.223116]  uart_add_one_port+0x60/0x440
+[    8.223122]  ? proc_tty_register_driver+0x43/0x50
+[    8.223126]  ? tty_register_driver+0x1ca/0x1e0
+[    8.246250]  ulite_probe+0x357/0x4b0 [uartlite]
 
-This patch is similar to commit 59c816c1f24d ("vhost/scsi: potential
-memory corruption").
+To prevent it, move uart driver registration in to init function. This
+will ensure that uart_driver is always registered when probe function
+is called.
 
-Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
-Link: https://lore.kernel.org/r/20250415065857.1619-1-chenyufeng@iie.ac.cn
+Signed-off-by: Jakub Lewalski <jakub.lewalski@nokia.com>
+Signed-off-by: Elodie Decerle <elodie.decerle@nokia.com>
+Link: https://lore.kernel.org/r/20250331160732.2042-1-elodie.decerle@nokia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_tcm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/uartlite.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
-index 90fe33f9e0950..48d02c5ff8491 100644
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1320,14 +1320,14 @@ static struct se_portal_group *usbg_make_tpg(struct se_wwn *wwn,
- 	struct usbg_tport *tport = container_of(wwn, struct usbg_tport,
- 			tport_wwn);
- 	struct usbg_tpg *tpg;
--	unsigned long tpgt;
-+	u16 tpgt;
- 	int ret;
- 	struct f_tcm_opts *opts;
- 	unsigned i;
+diff --git a/drivers/tty/serial/uartlite.c b/drivers/tty/serial/uartlite.c
+index 9a4049c894f7a..e323e9c0a321e 100644
+--- a/drivers/tty/serial/uartlite.c
++++ b/drivers/tty/serial/uartlite.c
+@@ -874,16 +874,25 @@ static struct platform_driver ulite_platform_driver = {
  
- 	if (strstr(name, "tpgt_") != name)
- 		return ERR_PTR(-EINVAL);
--	if (kstrtoul(name + 5, 0, &tpgt) || tpgt > UINT_MAX)
-+	if (kstrtou16(name + 5, 0, &tpgt))
- 		return ERR_PTR(-EINVAL);
- 	ret = -ENODEV;
- 	mutex_lock(&tpg_instances_lock);
+ static int __init ulite_init(void)
+ {
++	int ret;
++
++	pr_debug("uartlite: calling uart_register_driver()\n");
++	ret = uart_register_driver(&ulite_uart_driver);
++	if (ret)
++		return ret;
+ 
+ 	pr_debug("uartlite: calling platform_driver_register()\n");
+-	return platform_driver_register(&ulite_platform_driver);
++	ret = platform_driver_register(&ulite_platform_driver);
++	if (ret)
++		uart_unregister_driver(&ulite_uart_driver);
++
++	return ret;
+ }
+ 
+ static void __exit ulite_exit(void)
+ {
+ 	platform_driver_unregister(&ulite_platform_driver);
+-	if (ulite_uart_driver.state)
+-		uart_unregister_driver(&ulite_uart_driver);
++	uart_unregister_driver(&ulite_uart_driver);
+ }
+ 
+ module_init(ulite_init);
 -- 
 2.39.5
 
