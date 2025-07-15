@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB382EBBB2;
-	Tue, 15 Jul 2025 13:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B092EBDC3;
+	Tue, 15 Jul 2025 13:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587642; cv=none; b=AYfzwpyYtDeYlXWO5TWR5EjiaHq2y4YITgM7OWOm2nnxlQvLLQfkGlDLnJag7i6hmfHy+5bJXZSNQm6GfoHsAa8qIfB80/k0lh7qWo4i9ckA3liISob5tIhV+YlB9R/Cq8lbTz3RRFOwgwJnxc0SF05U0G4+QEzTuFLutHHuE6s=
+	t=1752587644; cv=none; b=sR0rKElgNMYTl/WebkAIHoHDkjAzbmG2BJrnOkGdE0zkn71c8EF4lxmgAsL34YcJfV06dDcTbjk/I+9zVvfRkKeOq3IWKjCChps52woVt7Pf8Yd0jMHxDZTtYtYVMw4UgvLPe9AI3K6zhsOLS6lBGshXP49TNVfJpiTiitWGL6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587642; c=relaxed/simple;
-	bh=pP2i/GAj0zxr4l5HysPMqbrDQLhMTvU0cVmBnK1Dmb8=;
+	s=arc-20240116; t=1752587644; c=relaxed/simple;
+	bh=Yl7V3Y7bPXrq+DUc9G3u1sCbXKk7szKaWlfvWeT0VEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATMPQxcPB8BUFTDgfg8fD4raOhHjulctoz695EIazWZXkqyPPKtYxhj2NctEgfPtgCRDfMwiiRSooDGuWEh2T5It4ZMLne1+RjT2WYQJi7WrAVc0bQtxVumWENWnfKezBid4yHNmeTyzEzOb8Ev7eQ+W4fyEqZXZAWxJOeCWB6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYZ9U/DN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krXPewE70YOI2jVmKTgawtuZp9pZeyBpg1qsOLdKpJUFrWjDxOa3cSlXtMDMwdRq8ManKr1uVflYQhMDZ+fiJHryzZcj3kMKEjBCmkZqBUFx/7HPEe4rvOyLCyG8fYr7W7jC0NB5f0yQ3D5rMm1MTZpq1PKCj6LAL3/ElpnVv7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TATeT4EH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYZ9U/DN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A071AC4CEE3;
-	Tue, 15 Jul 2025 13:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TATeT4EH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675C4C4CEF4;
+	Tue, 15 Jul 2025 13:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587642;
-	bh=pP2i/GAj0zxr4l5HysPMqbrDQLhMTvU0cVmBnK1Dmb8=;
+	s=korg; t=1752587644;
+	bh=Yl7V3Y7bPXrq+DUc9G3u1sCbXKk7szKaWlfvWeT0VEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYZ9U/DN1uz3jHBSCTCpeKubeTTzrM2CDbt2ADxfc0QtiWsJBHDYTrpJaEsur/K2e
-	 hdQII45DMqMcBRBqSA1mam5XiK0jLkTlb8je99jM06xKbfigZzgWFUpOkkPZn3EeLu
-	 H4AQkGz9HAbP8oaAaSGIQ66lbpEwy3INQpZbK9bw=
+	b=TATeT4EHapWBt94hLvcpb6Vd/nLe1+mK4JIhaGCT58sQPIP9vy97QMuICzyGTK6qY
+	 C4v1c5OuWEAuK/1Eu2xRHQtkE82eBojgIzFbY+O4JlEPDiDzesMnGGBT5ackH1Bl8U
+	 VTOYDJfyzlRknt3wTeE/d34IO5VYDcebrXzFFGVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/208] RDMA/mlx5: Fix CC counters query for MPV
-Date: Tue, 15 Jul 2025 15:13:17 +0200
-Message-ID: <20250715130814.466088892@linuxfoundation.org>
+Subject: [PATCH 5.10 089/208] btrfs: fix missing error handling when searching for inode refs during log replay
+Date: Tue, 15 Jul 2025 15:13:18 +0200
+Message-ID: <20250715130814.507367160@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,36 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit acd245b1e33fc4b9d0f2e3372021d632f7ee0652 ]
+[ Upstream commit 6561a40ceced9082f50c374a22d5966cf9fc5f5c ]
 
-In case, CC counters are querying for the second port use the correct
-core device for the query instead of always using the master core device.
+During log replay, at __add_inode_ref(), when we are searching for inode
+ref keys we totally ignore if btrfs_search_slot() returns an error. This
+may make a log replay succeed when there was an actual error and leave
+some metadata inconsistency in a subvolume tree. Fix this by checking if
+an error was returned from btrfs_search_slot() and if so, return it to
+the caller.
 
-Fixes: aac4492ef23a ("IB/mlx5: Update counter implementation for dual port RoCE")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Link: https://patch.msgid.link/9cace74dcf106116118bebfa9146d40d4166c6b0.1750064969.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: e02119d5a7b4 ("Btrfs: Add a write ahead tree log to optimize synchronous operations")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/counters.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/tree-log.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
-index f6bae1f7545b5..33636268d43d9 100644
---- a/drivers/infiniband/hw/mlx5/counters.c
-+++ b/drivers/infiniband/hw/mlx5/counters.c
-@@ -279,7 +279,7 @@ static int mlx5_ib_get_hw_stats(struct ib_device *ibdev,
- 			 */
- 			goto done;
- 		}
--		ret = mlx5_lag_query_cong_counters(dev->mdev,
-+		ret = mlx5_lag_query_cong_counters(mdev,
- 						   stats->value +
- 						   cnts->num_q_counters,
- 						   cnts->num_cong_counters,
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 4ee6814293279..dd1c40019412c 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1005,7 +1005,9 @@ static inline int __add_inode_ref(struct btrfs_trans_handle *trans,
+ 	search_key.type = BTRFS_INODE_REF_KEY;
+ 	search_key.offset = parent_objectid;
+ 	ret = btrfs_search_slot(NULL, root, &search_key, path, 0, 0);
+-	if (ret == 0) {
++	if (ret < 0) {
++		return ret;
++	} else if (ret == 0) {
+ 		struct btrfs_inode_ref *victim_ref;
+ 		unsigned long ptr;
+ 		unsigned long ptr_end;
 -- 
 2.39.5
 
