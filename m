@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E282D8790;
-	Tue, 15 Jul 2025 13:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B232E62CF;
+	Tue, 15 Jul 2025 13:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586984; cv=none; b=iZFWun5TGqiuPEloTDMSqBh+WBIpPEVhZdBcETxHiG2sSfMkxfOqrMiUzlSQ06cRZAdAv40W2h3nx1LPOtKxy63B10bLwGh0RnhuiHtyfgdMnwE8IwyB+nXQiYxrBAclRJzidUUCYZWxZYYlsDMWjrYfaRaJwkGGgB5zPMqHIQw=
+	t=1752586986; cv=none; b=ciqBJSthLVxX2I0zJ5PbiWDUsZwM8xDeP8tU/RAUdhE49nX8WETSEjssLFdlUPPiFggNsmHSqXURWzAI6yBWhLlBKXFdx/lJfcQk35ldr/39jzC8z/+xsqQnDmj1j2gYkA13adDRe0SMBl6BLIgbts6pAXy1TMewILxkEJWzZd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586984; c=relaxed/simple;
-	bh=wNuOyJgAwOWCfGgZrlEbj3Mh0MwC8GLsXK6i0GVYsSI=;
+	s=arc-20240116; t=1752586986; c=relaxed/simple;
+	bh=LOT6fMaHD1m5HnJ3ecY6h1xzPWp2suB8OuShk7PtQ4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xq9txjhIGyN52qX/k1TZFD/ysr99Ahm9QjydZ9Kap6sB47ulVEIaYkeyamaA6o/5fG7UegbHwCBng9xfksEvW7LaDHgcOVmk4cLidkwsaSN617uM94rcAYALGT1UXgCmWuzbSD/KA4gtvAVMarhLfXajIavIhFPYOijCiz+6Fjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FumPQ8sB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hvk0wmGY+1C9+MuNxc/I0HopIoHe+tletP4QsMgTmwPBpfQekNuHtv2W0fhKaRvvmCHzxSAAW5My2niuhl0w/3zCk3d/EejX2AADrod6VpONlK3WnivUQ/o4pooYhq7vmwwlcMNlGxh4Tq0xrQiR6FDT8fAfEQyFIAcnKKQYkHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBp95nIc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FumPQ8sB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFE4C4CEF6;
-	Tue, 15 Jul 2025 13:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBp95nIc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583A9C4CEE3;
+	Tue, 15 Jul 2025 13:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586984;
-	bh=wNuOyJgAwOWCfGgZrlEbj3Mh0MwC8GLsXK6i0GVYsSI=;
+	s=korg; t=1752586986;
+	bh=LOT6fMaHD1m5HnJ3ecY6h1xzPWp2suB8OuShk7PtQ4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FumPQ8sBB+0eak14Dy+4ZtWJQD+18jO4Awf01Kjiopz1EeaIlTRY6Rn6+0jxOlHRs
-	 X3Ur85vi/wSOma9f38yHgnl4SAl41rRIo2kz2zzGDm+U86dOyoe4ESMA26brk/2i01
-	 a/4T0vPZJGoNdgsQ5wTasK/xMXtV4vk6XJCFxdyA=
+	b=WBp95nIcjo/9hDQTJK0iEt+vFBD0fGnIx/FjtSQYrOQMR6GYkRr6r4nYYDJmMB5O7
+	 uZGRBBSy8R85foKwKv4eRmEVNWutp5Hmxvw0R2NiRGMryF85vEGP+kVWa1s/9W5GFS
+	 d8WBA3LgTz27vYIriqodYWizRcp2mOWMjwDm10ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Thompson <dev@aaront.org>,
-	Timur Tabi <ttabi@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.15 091/192] drm/nouveau: Do not fail module init on debugfs errors
-Date: Tue, 15 Jul 2025 15:13:06 +0200
-Message-ID: <20250715130818.559574810@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>,
+	Prashanth K <prashanth.k@oss.qualcomm.com>
+Subject: [PATCH 6.15 092/192] usb: gadget: u_serial: Fix race condition in TTY wakeup
+Date: Tue, 15 Jul 2025 15:13:07 +0200
+Message-ID: <20250715130818.598766572@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,92 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Thompson <dev@aaront.org>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-commit 78f88067d5c56d9aed69f27e238742841461cf67 upstream.
+commit c529c3730bd09115684644e26bf01ecbd7e2c2c9 upstream.
 
-If CONFIG_DEBUG_FS is enabled, nouveau_drm_init() returns an error if it
-fails to create the "nouveau" directory in debugfs. One case where that
-will happen is when debugfs access is restricted by
-CONFIG_DEBUG_FS_ALLOW_NONE or by the boot parameter debugfs=off, which
-cause the debugfs APIs to return -EPERM.
+A race condition occurs when gs_start_io() calls either gs_start_rx() or
+gs_start_tx(), as those functions briefly drop the port_lock for
+usb_ep_queue(). This allows gs_close() and gserial_disconnect() to clear
+port.tty and port_usb, respectively.
 
-So just ignore errors from debugfs. Note that nouveau_debugfs_root may
-be an error now, but that is a standard pattern for debugfs. From
-include/linux/debugfs.h:
+Use the null-safe TTY Port helper function to wake up TTY.
 
-"NOTE: it's expected that most callers should _ignore_ the errors
-returned by this function. Other debugfs functions handle the fact that
-the "dentry" passed to them could be an error and they don't crash in
-that case. Drivers should generally work fine even if debugfs fails to
-init anyway."
+Example
+  CPU1:			      CPU2:
+  gserial_connect() // lock
+  			      gs_close() // await lock
+  gs_start_rx()     // unlock
+  usb_ep_queue()
+  			      gs_close() // lock, reset port.tty and unlock
+  gs_start_rx()     // lock
+  tty_wakeup()      // NPE
 
-Fixes: 97118a1816d2 ("drm/nouveau: create module debugfs root")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aaron Thompson <dev@aaront.org>
-Acked-by: Timur Tabi <ttabi@nvidia.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20250703211949.9916-1-dev@aaront.org
+Fixes: 35f95fd7f234 ("TTY: usb/u_serial, use tty from tty_port")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Reviewed-by: Prashanth K <prashanth.k@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-usb/20240116141801.396398-1-khtsai@google.com/
+Link: https://lore.kernel.org/r/20250617050844.1848232-2-khtsai@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_debugfs.c |    6 +-----
- drivers/gpu/drm/nouveau/nouveau_debugfs.h |    5 ++---
- drivers/gpu/drm/nouveau/nouveau_drm.c     |    4 +---
- 3 files changed, 4 insertions(+), 11 deletions(-)
+ drivers/usb/gadget/function/u_serial.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_debugfs.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_debugfs.c
-@@ -314,14 +314,10 @@ nouveau_debugfs_fini(struct nouveau_drm
- 	drm->debugfs = NULL;
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -295,8 +295,8 @@ __acquires(&port->port_lock)
+ 			break;
+ 	}
+ 
+-	if (do_tty_wake && port->port.tty)
+-		tty_wakeup(port->port.tty);
++	if (do_tty_wake)
++		tty_port_tty_wakeup(&port->port);
+ 	return status;
  }
  
--int
-+void
- nouveau_module_debugfs_init(void)
- {
- 	nouveau_debugfs_root = debugfs_create_dir("nouveau", NULL);
--	if (IS_ERR(nouveau_debugfs_root))
--		return PTR_ERR(nouveau_debugfs_root);
--
--	return 0;
- }
- 
- void
---- a/drivers/gpu/drm/nouveau/nouveau_debugfs.h
-+++ b/drivers/gpu/drm/nouveau/nouveau_debugfs.h
-@@ -24,7 +24,7 @@ extern void nouveau_debugfs_fini(struct
- 
- extern struct dentry *nouveau_debugfs_root;
- 
--int  nouveau_module_debugfs_init(void);
-+void nouveau_module_debugfs_init(void);
- void nouveau_module_debugfs_fini(void);
- #else
- static inline void
-@@ -42,10 +42,9 @@ nouveau_debugfs_fini(struct nouveau_drm
- {
- }
- 
--static inline int
-+static inline void
- nouveau_module_debugfs_init(void)
- {
--	return 0;
- }
- 
- static inline void
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -1456,9 +1456,7 @@ nouveau_drm_init(void)
- 	if (!nouveau_modeset)
- 		return 0;
- 
--	ret = nouveau_module_debugfs_init();
--	if (ret)
--		return ret;
-+	nouveau_module_debugfs_init();
- 
- #ifdef CONFIG_NOUVEAU_PLATFORM_DRIVER
- 	platform_driver_register(&nouveau_platform_driver);
+@@ -578,7 +578,7 @@ static int gs_start_io(struct gs_port *p
+ 		gs_start_tx(port);
+ 		/* Unblock any pending writes into our circular buffer, in case
+ 		 * we didn't in gs_start_tx() */
+-		tty_wakeup(port->port.tty);
++		tty_port_tty_wakeup(&port->port);
+ 	} else {
+ 		/* Free reqs only if we are still connected */
+ 		if (port->port_usb) {
 
 
