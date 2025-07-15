@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E96B2E4997;
-	Tue, 15 Jul 2025 13:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73162E4997;
+	Tue, 15 Jul 2025 13:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587235; cv=none; b=mqnf6K7w4UUHdS08D8s49bVWn98VSARzGr/ORIRUGCD2vWLPi+uZM6ZBfeY9yKe4+mNgaOvLBoxDkVdkjTVfG/ffS88Gu4LxS5OCXYYYhH5BFIUeBdhmuovyw6MX7aczfr56niZI8h3SiRPSzjT5ffYQGIKY6A5aRtKKxtPkzXM=
+	t=1752587237; cv=none; b=hGzH4y6qU9iG6g5WqTEp51FmrKA20pkfo/TThNv9fx+U+saaTz760mz9tqO5sXrk2CSLb7dArboeaagAVudy3596a7Ht1f4wKVKKbG8qm0yIQt8WWIq4NCNj4/LyrhyIKSeyyoqO/s4/9y7F+cbGW0zinGKLGP0i47KeAf8GAGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587235; c=relaxed/simple;
-	bh=H+vhgr9XCq+lBpwRoKu0SoGG73WVTwRWDkFA7+WqcYQ=;
+	s=arc-20240116; t=1752587237; c=relaxed/simple;
+	bh=6GlMMl3xj1dN/zMs9O1B2nOK3f6Y/6xYo1F0lL/Ypns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pusiai4JHFMGY+FGrCLgpugJzm9AuheJgt3T0+3kSaZa5aGfiDQDSpmtvcEjV1+HURCTR+uro+DFJJ/gvGAOFqVB1atGwiDVqtXrNry4eyTp/MXD5tWZFd7lZvJZMMJkm9J9tGkXVGFUbaZZJ5jzQkZMTGEkWOd2oRXKaV4W9nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3kuWUhH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZNUvvBTRjbjnk4YFNpDGTIDtFAtZtYwWs/IHQ25vgrLKe20twBXs6Rz7/gWwDVLFEfsB8M8S/L7iuWwpZ1gXOIygU76uulrw2Iu44BkKJRGojPvQPDemxv2CH90ZrAfIyp8Dq8FRO+d4jvC6SO3Bj5BS9EDqV/UoXlixq31xyls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k54+8Gx+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3kuWUhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6F0C4CEF6;
-	Tue, 15 Jul 2025 13:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k54+8Gx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BD0C4CEE3;
+	Tue, 15 Jul 2025 13:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587234;
-	bh=H+vhgr9XCq+lBpwRoKu0SoGG73WVTwRWDkFA7+WqcYQ=;
+	s=korg; t=1752587237;
+	bh=6GlMMl3xj1dN/zMs9O1B2nOK3f6Y/6xYo1F0lL/Ypns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3kuWUhHsHEMSTHBZrX3P+HVdewS7G5iTz4oJViQDfOGD++E2D2jHMQpDaEsZU2vD
-	 wDH6T6kUErcnMyLtXOjq0oUZO5ALGQ0xAcMyFmBDYhFeWf3QBqqjp0g5N9vlMGBbpH
-	 5OhfQMdEfhngtDx+ustBxW0v5Kp4ejjCCxZHQqzc=
+	b=k54+8Gx++3ENow7IOWF83ZHPCWBdq6FI9IhgJt6pJwlM902pQIvSH3ql/oHp6IOdv
+	 Bg1EJ7j3DnIJPbusQUeKcaae+oeSpqYZLY0mBg2MWjjs4TZ+LgoSlbpS84al9rcw8+
+	 8sOvBzvP7liMjc4MdglPHdFmeohA+OP6VhvvBwaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Aijay Adams <aijay@meta.com>,
+	JP Kobryn <inwardvessel@gmail.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>,
 	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 6.1 24/88] x86/mce: Dont remove sysfs if thresholding sysfs init fails
-Date: Tue, 15 Jul 2025 15:14:00 +0200
-Message-ID: <20250715130755.484905320@linuxfoundation.org>
+	stable@kernel.org
+Subject: [PATCH 6.1 25/88] x86/mce: Make sure CMCI banks are cleared during shutdown on Intel
+Date: Tue, 15 Jul 2025 15:14:01 +0200
+Message-ID: <20250715130755.525458854@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -52,52 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: JP Kobryn <inwardvessel@gmail.com>
 
-commit 4c113a5b28bfd589e2010b5fc8867578b0135ed7 upstream.
+commit 30ad231a5029bfa16e46ce868497b1a5cdd3c24d upstream.
 
-Currently, the MCE subsystem sysfs interface will be removed if the
-thresholding sysfs interface fails to be created. A common failure is due to
-new MCA bank types that are not recognized and don't have a short name set.
+CMCI banks are not cleared during shutdown on Intel CPUs. As a side effect,
+when a kexec is performed, CPUs coming back online are unable to
+rediscover/claim these occupied banks which breaks MCE reporting.
 
-The MCA thresholding feature is optional and should not break the common MCE
-sysfs interface. Also, new MCA bank types are occasionally introduced, and
-updates will be needed to recognize them. But likewise, this should not break
-the common sysfs interface.
+Clear the CPU ownership during shutdown via cmci_clear() so the banks can
+be reclaimed and MCE reporting will become functional once more.
 
-Keep the MCE sysfs interface regardless of the status of the thresholding
-sysfs interface.
+  [ bp: Massage commit message. ]
 
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Reported-by: Aijay Adams <aijay@meta.com>
+Signed-off-by: JP Kobryn <inwardvessel@gmail.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Tony Luck <tony.luck@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-1-236dd74f645f@amd.com
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/20250627174935.95194-1-inwardvessel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/core.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ arch/x86/kernel/cpu/mce/intel.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2707,15 +2707,9 @@ static int mce_cpu_dead(unsigned int cpu
- static int mce_cpu_online(unsigned int cpu)
+--- a/arch/x86/kernel/cpu/mce/intel.c
++++ b/arch/x86/kernel/cpu/mce/intel.c
+@@ -500,6 +500,7 @@ void mce_intel_feature_init(struct cpuin
+ void mce_intel_feature_clear(struct cpuinfo_x86 *c)
  {
- 	struct timer_list *t = this_cpu_ptr(&mce_timer);
--	int ret;
+ 	intel_clear_lmce();
++	cmci_clear();
+ }
  
- 	mce_device_create(cpu);
--
--	ret = mce_threshold_create_device(cpu);
--	if (ret) {
--		mce_device_remove(cpu);
--		return ret;
--	}
-+	mce_threshold_create_device(cpu);
- 	mce_reenable_cpu();
- 	mce_start_timer(t);
- 	return 0;
+ bool intel_filter_mce(struct mce *m)
 
 
