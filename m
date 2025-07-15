@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4742E041E;
-	Tue, 15 Jul 2025 13:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145E72D5426;
+	Tue, 15 Jul 2025 13:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585777; cv=none; b=aQlQwyLVcTxEGFxZnqLbrx2JX/7PLGDjda2X3S8vexcBf2sdHk5rB4RW0mD1n3L8YG2LK3AlJ7iJNB5iS9ty/qO580RDjacVKPtkC5YJ42vX10BjFg/9QXb11fGsKfWvEbccLeU6bONNu4bbRifKXDahCpHwD3d1gQi8WE1814w=
+	t=1752585780; cv=none; b=lOZ7Elv885AaX/XBXHImGVi74XrKQN2UCY+RrTiYWMiEySvn590/totd0qyjShcidcIaftXUmv+ljqIP8hfNheDuqlXmPsVIIZSKmITp1eGCGwTPJvSs7TcXK+0X4M7TocKl+5pIZfKMx5317ypHk2k49zAXkdXoPvODxKRVGhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585777; c=relaxed/simple;
-	bh=kYKLFSVEEz4kwz0NYE84sQ7CexkcUCV5XLTecRDFCUs=;
+	s=arc-20240116; t=1752585780; c=relaxed/simple;
+	bh=L0vsRjS8lOZgSHKIWt3YrIzPZLq+SCowzWhWqlf5VOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvdtqatUcEqGYMKDLQD692fVqFajaNr4gXJgcxR8a+dqsrBTm0p1fkP1B8S7AJpMPGdLYN7NDRojDIsMHZ9RDc/qFFownoHYazQR6Yh4lG9LSwhpNLyHh5A/dQaRhDw+6ekB3FmvgD9Zj/5xetdD2XurR8FcdjapIWA8AQkfUMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M89Pu7sT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J77Yd79vWPsrLXgUlaEFIkLIUTv0m+mH5UJ2W1bpv7EFwL6lpPCZEX3JjKunPqzL/V0z9z87Eo5wl2MRydVzF88hsmMEVVVsrqtnwYSmgB5+7xikBHulz/B289eWmzsd4xjK0lLpdwrYLTHyzR+fuSu+zbo8cJux/2tTbo0FwXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSJGTKrh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M89Pu7sT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD384C4CEE3;
-	Tue, 15 Jul 2025 13:22:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSJGTKrh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A7EC4CEF1;
+	Tue, 15 Jul 2025 13:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585777;
-	bh=kYKLFSVEEz4kwz0NYE84sQ7CexkcUCV5XLTecRDFCUs=;
+	s=korg; t=1752585779;
+	bh=L0vsRjS8lOZgSHKIWt3YrIzPZLq+SCowzWhWqlf5VOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M89Pu7sTzXlldzQE/dY3Mv5oEB2ZnTOj4tc6UHwVb4yPUHtotDnlaLr+AZ6Efc+s3
-	 Wrmm4qAjxmPMX185dS6jwzqo1fGX6JrWTDT/4ffl6DNEDL1oV9AuNo42HZqbGyTJnm
-	 Vey5yvqBiehkpM9POEliUOPQYxHUUcd6bIS5fwRY=
+	b=hSJGTKrhOTtLvKJbbd4cCVmLHdvoW2JOLpo4YTbU+3zTRyEKiAPTCb2h74PsVJNXZ
+	 aW1lbF/L/lZJdaVAc3AsKApkOGJzf6WrbVh7t+z4WRbhlxVhMlRw1i+G3WaUjm7mss
+	 m711TGMV1J6tv5II43wtWyTrrjWy+X16lRIVAC8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	"Daniel J. Ogorchock" <djogorchock@gmail.com>,
+	Silvan Jegen <s.jegen@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/163] HID: quirks: Add quirk for 2 Chicony Electronics HP 5MP Cameras
-Date: Tue, 15 Jul 2025 15:13:44 +0200
-Message-ID: <20250715130815.096528354@linuxfoundation.org>
+Subject: [PATCH 6.12 157/163] HID: nintendo: avoid bluetooth suspend/resume stalls
+Date: Tue, 15 Jul 2025 15:13:45 +0200
+Message-ID: <20250715130815.134774263@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,52 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+From: Daniel J. Ogorchock <djogorchock@gmail.com>
 
-[ Upstream commit 54bae4c17c11688339eb73a04fd24203bb6e7494 ]
+[ Upstream commit 4a0381080397e77792a5168069f174d3e56175ff ]
 
-The Chicony Electronics HP 5MP Cameras (USB ID 04F2:B824 & 04F2:B82C)
-report a HID sensor interface that is not actually implemented.
-Attempting to access this non-functional sensor via iio_info causes
-system hangs as runtime PM tries to wake up an unresponsive sensor.
+Ensure we don't stall or panic the kernel when using bluetooth-connected
+controllers. This was reported as an issue on android devices using
+kernel 6.6 due to the resume hook which had been added for usb joycons.
 
-Add these 2 devices to the HID ignore list since the sensor interface is
-non-functional by design and should not be exposed to userspace.
+First, set a new state value to JOYCON_CTLR_STATE_SUSPENDED in a
+newly-added nintendo_hid_suspend. This makes sure we will not stall out
+the kernel waiting for input reports during led classdev suspend. The
+stalls could happen if connectivity is unreliable or lost to the
+controller prior to suspend.
 
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Second, since we lose connectivity during suspend, do not try
+joycon_init() for bluetooth controllers in the nintendo_hid_resume path.
+
+Tested via multiple suspend/resume flows when using the controller both
+in USB and bluetooth modes.
+
+Signed-off-by: Daniel J. Ogorchock <djogorchock@gmail.com>
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 2 ++
- drivers/hid/hid-quirks.c | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/hid/hid-nintendo.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index de6bab6a7394b..b472140421f5a 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -311,6 +311,8 @@
- #define USB_DEVICE_ID_ASUS_AK1D		0x1125
- #define USB_DEVICE_ID_CHICONY_TOSHIBA_WT10A	0x1408
- #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
+diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+index 55153a2f79886..2a3ae1068739d 100644
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -308,6 +308,7 @@ enum joycon_ctlr_state {
+ 	JOYCON_CTLR_STATE_INIT,
+ 	JOYCON_CTLR_STATE_READ,
+ 	JOYCON_CTLR_STATE_REMOVED,
++	JOYCON_CTLR_STATE_SUSPENDED,
+ };
  
- #define USB_VENDOR_ID_CHUNGHWAT		0x2247
- #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index e4d80307b898c..80372342c176a 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -747,6 +747,8 @@ static const struct hid_device_id hid_ignore_list[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AVERMEDIA, USB_DEVICE_ID_AVER_FM_MR800) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AXENTIA, USB_DEVICE_ID_AXENTIA_FM_RADIO) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
+ /* Controller type received as part of device info */
+@@ -2754,14 +2755,46 @@ static void nintendo_hid_remove(struct hid_device *hdev)
+ 
+ static int nintendo_hid_resume(struct hid_device *hdev)
+ {
+-	int ret = joycon_init(hdev);
++	struct joycon_ctlr *ctlr = hid_get_drvdata(hdev);
++	int ret;
++
++	hid_dbg(hdev, "resume\n");
++	if (!joycon_using_usb(ctlr)) {
++		hid_dbg(hdev, "no-op resume for bt ctlr\n");
++		ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
++		return 0;
++	}
+ 
++	ret = joycon_init(hdev);
+ 	if (ret)
+-		hid_err(hdev, "Failed to restore controller after resume");
++		hid_err(hdev,
++			"Failed to restore controller after resume: %d\n",
++			ret);
++	else
++		ctlr->ctlr_state = JOYCON_CTLR_STATE_READ;
+ 
+ 	return ret;
+ }
+ 
++static int nintendo_hid_suspend(struct hid_device *hdev, pm_message_t message)
++{
++	struct joycon_ctlr *ctlr = hid_get_drvdata(hdev);
++
++	hid_dbg(hdev, "suspend: %d\n", message.event);
++	/*
++	 * Avoid any blocking loops in suspend/resume transitions.
++	 *
++	 * joycon_enforce_subcmd_rate() can result in repeated retries if for
++	 * whatever reason the controller stops providing input reports.
++	 *
++	 * This has been observed with bluetooth controllers which lose
++	 * connectivity prior to suspend (but not long enough to result in
++	 * complete disconnection).
++	 */
++	ctlr->ctlr_state = JOYCON_CTLR_STATE_SUSPENDED;
++	return 0;
++}
++
+ #endif
+ 
+ static const struct hid_device_id nintendo_hid_devices[] = {
+@@ -2800,6 +2833,7 @@ static struct hid_driver nintendo_hid_driver = {
+ 
+ #ifdef CONFIG_PM
+ 	.resume		= nintendo_hid_resume,
++	.suspend	= nintendo_hid_suspend,
+ #endif
+ };
+ static int __init nintendo_init(void)
 -- 
 2.39.5
 
