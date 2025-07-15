@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAE02E3AE5;
-	Tue, 15 Jul 2025 13:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF092E3AE5;
+	Tue, 15 Jul 2025 13:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587865; cv=none; b=M57+NOKdwM2gl1oEB+nZpqCCdm0B1DFI+DSzLx1xBAS1omdkd9UCDK0YlL9oUizeeInwLszj09X7uSZO1sTnchmuUWm2m/t/uGH0I/YJOUahuX4oWTgcTw2cZgVv4N6u5dqPBjCEQRv4qEyz4gCgL0jFwVX86a5wCh9wc2yoxkw=
+	t=1752587867; cv=none; b=fdqYGXtfq23+ybTUO5POjR7gZET55JKSsf1iYrRq1PmNVxTvT92DCB5L6Dro6P1kYrHKx5qtXipjYhS4CzsJILNEKgZWhWwqbEFkbSdwEqjgo115tMXsTuG1Ozjv4vq64bPBnJHwC3Gtfrg9XuN0pumCYviEbQq4hLaDznxnmLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587865; c=relaxed/simple;
-	bh=umip7bTMYE96QKeBe3EmJEn09Mnh8Zh6OZfpR7CwGyQ=;
+	s=arc-20240116; t=1752587867; c=relaxed/simple;
+	bh=ZEL2p+V45oa3hfe8RMoWvZzyKCWbvyGYF4seJGFa6So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrptGD7nqRDt9UPAbuKupvDHQ6MUgjbnNh4qgL/JPFlS77lCjfQNLTfr/iMKeZm7xZhVZnNuRSlos6eKgSEyRR6InjDCnIQqvEXThutMw7yLIhWUjvHvhwyosneHVPnO3EPd/0FwFsCqYoIae/XwbB/sbbWHg83EdjRq4cUcAl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqMIKYd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AWYOMI6TmUgtFXT+Xk2bTgipIyUlr8QOvi0u3HS1hqXaOTrf4OBTw/C52Ok127EYZEJWmomnCvf9q3oWDFvtas9bHO91n7yCC+Qo9Dbdz3VtOyjzp/wdGci2aP18KBgGvCGcTww5zN0aqZW4KR6FcQV8C8oJQAVjqtfkw9eUlig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tGZEtqn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqMIKYd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A133AC4CEE3;
-	Tue, 15 Jul 2025 13:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tGZEtqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6378CC4CEE3;
+	Tue, 15 Jul 2025 13:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587865;
-	bh=umip7bTMYE96QKeBe3EmJEn09Mnh8Zh6OZfpR7CwGyQ=;
+	s=korg; t=1752587867;
+	bh=ZEL2p+V45oa3hfe8RMoWvZzyKCWbvyGYF4seJGFa6So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CqMIKYd/k9ZyoTVwJRNWjh88erFCblDeVnAdLtuy2rUDTw3fk0ZblMh1THvngY6En
-	 SKJINIFGgFCO8nhpuJAtNT3lcBtl7LhYEUb4P8Vsm1IUT48rwej6SAP6OL3ncKfI3x
-	 W7Fr/RirfOebVrz3FG4TvXMDDvU39siUuATv8904=
+	b=2tGZEtqnu419BUAD2pJUJsfelvATBLbe6tuE3XDnqkA5F5HDwaE1dzmui3kzopWiy
+	 G5PEk5CQOUlWGlhl9j8woRw7dam2GGRecMc+uyog5PHFSdVc+hW1hsoFCjp7QNAN3z
+	 ivmrzQqgXBNtEFrBRJ6jTTMt/zxndHpcsg+tWVyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aijay Adams <aijay@meta.com>,
-	JP Kobryn <inwardvessel@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.10 173/208] x86/mce: Make sure CMCI banks are cleared during shutdown on Intel
-Date: Tue, 15 Jul 2025 15:14:42 +0200
-Message-ID: <20250715130817.904391671@linuxfoundation.org>
+	Bjorn Andersson <andersson@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.10 174/208] pinctrl: qcom: msm: mark certain pins as invalid for interrupts
+Date: Tue, 15 Jul 2025 15:14:43 +0200
+Message-ID: <20250715130817.942259982@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -54,40 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: JP Kobryn <inwardvessel@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 30ad231a5029bfa16e46ce868497b1a5cdd3c24d upstream.
+commit 93712205ce2f1fb047739494c0399a26ea4f0890 upstream.
 
-CMCI banks are not cleared during shutdown on Intel CPUs. As a side effect,
-when a kexec is performed, CPUs coming back online are unable to
-rediscover/claim these occupied banks which breaks MCE reporting.
+On some platforms, the UFS-reset pin has no interrupt logic in TLMM but
+is nevertheless registered as a GPIO in the kernel. This enables the
+user-space to trigger a BUG() in the pinctrl-msm driver by running, for
+example: `gpiomon -c 0 113` on RB2.
 
-Clear the CPU ownership during shutdown via cmci_clear() so the banks can
-be reclaimed and MCE reporting will become functional once more.
+The exact culprit is requesting pins whose intr_detection_width setting
+is not 1 or 2 for interrupts. This hits a BUG() in
+msm_gpio_irq_set_type(). Potentially crashing the kernel due to an
+invalid request from user-space is not optimal, so let's go through the
+pins and mark those that would fail the check as invalid for the irq chip
+as we should not even register them as available irqs.
 
-  [ bp: Massage commit message. ]
+This function can be extended if we determine that there are more
+corner-cases like this.
 
-Reported-by: Aijay Adams <aijay@meta.com>
-Signed-off-by: JP Kobryn <inwardvessel@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/20250627174935.95194-1-inwardvessel@gmail.com
+Fixes: f365be092572 ("pinctrl: Add Qualcomm TLMM driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/20250612091448.41546-1-brgl@bgdev.pl
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/intel.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/qcom/pinctrl-msm.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/arch/x86/kernel/cpu/mce/intel.c
-+++ b/arch/x86/kernel/cpu/mce/intel.c
-@@ -522,6 +522,7 @@ void mce_intel_feature_init(struct cpuin
- void mce_intel_feature_clear(struct cpuinfo_x86 *c)
- {
- 	intel_clear_lmce();
-+	cmci_clear();
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -949,6 +949,25 @@ static bool msm_gpio_needs_dual_edge_par
+ 	       test_bit(d->hwirq, pctrl->skip_wake_irqs);
  }
  
- bool intel_filter_mce(struct mce *m)
++static void msm_gpio_irq_init_valid_mask(struct gpio_chip *gc,
++					 unsigned long *valid_mask,
++					 unsigned int ngpios)
++{
++	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
++	const struct msm_pingroup *g;
++	int i;
++
++	bitmap_fill(valid_mask, ngpios);
++
++	for (i = 0; i < ngpios; i++) {
++		g = &pctrl->soc->groups[i];
++
++		if (g->intr_detection_width != 1 &&
++		    g->intr_detection_width != 2)
++			clear_bit(i, valid_mask);
++	}
++}
++
+ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+@@ -1307,6 +1326,7 @@ static int msm_gpio_init(struct msm_pinc
+ 	girq->default_type = IRQ_TYPE_NONE;
+ 	girq->handler = handle_bad_irq;
+ 	girq->parents[0] = pctrl->irq;
++	girq->init_valid_mask = msm_gpio_irq_init_valid_mask;
+ 
+ 	ret = gpiochip_add_data(&pctrl->chip, pctrl);
+ 	if (ret) {
 
 
