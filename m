@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6184E2E7F05;
-	Tue, 15 Jul 2025 13:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323CE2EA494;
+	Tue, 15 Jul 2025 13:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587310; cv=none; b=auOzHGqv1zVyNl+Xq6o0qMsd+mR8ZJr2LWxqrPL1Ubmz8kHhTv9hZUMGZRM/8TU7BDlP1s9vxpIIkyr3tNSp/lSJcTl2UI8+veZGTqMLG5YFHAsl9wvUqKijZMn1htnfGdQ3RbT3gtqmbDXzSiWpv3nAPz/LG+fGKsK8OzPIoio=
+	t=1752587313; cv=none; b=E/MsS9cTLSL3C8F+BkbWKYUAsoTLeqLGsZ4oSIeOf+C24vAcEPya6MY6H/AnhCPlxmDC7V+OpOPytqTpFKW4RPvlaGoZ8NAHeYNOYMwao+U8rpD4FuHA+i4UUuZgZhDiZMcEt9HVVg/iZswh5YwyIY8cQ8GEkdakZQeQV3sgrhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587310; c=relaxed/simple;
-	bh=PSyYPcAsnAAwt+lNB3tFn0GEyW9NUVOI86VTIHLA8iI=;
+	s=arc-20240116; t=1752587313; c=relaxed/simple;
+	bh=mk8Oy78nE9uJZOi39ajZVtnrz8uk0yk/2wgTC/FqQZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QH9GVw6c2kJLbAGAZDLCRstKBHLsON0nmkMZPgGujMNePOuOLUjWPMq/OR+y4EfQLY2JLdqv1mAvluBqhK/K3iXM69tRz3nxDTsxsSQ8ZJLy5HF4b6p/YkW4mPVB7nNlCKgMuKKam07ZmiFMntVEvwgn1LqLXnFo4qgnBA/irXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVy0rn+N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r0gX4WRdKv4eu6EvtoPYvl69wQzyelhVgAbnjcjsMAvJ7uLzE3pMnlRRcUmxhgmtg0IPltdo6g1798ZOK+GpwIJ6PbE/UXzL1Nb8yDXAr3d2aA83ZDSDU+sTnp3ePBFnftsuyOKy5n5HLxtDhTLInmlE1AZl+8ptZXk8QDea2UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePq0Oii0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVy0rn+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E319BC4CEF1;
-	Tue, 15 Jul 2025 13:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePq0Oii0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C92C4CEF1;
+	Tue, 15 Jul 2025 13:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587310;
-	bh=PSyYPcAsnAAwt+lNB3tFn0GEyW9NUVOI86VTIHLA8iI=;
+	s=korg; t=1752587313;
+	bh=mk8Oy78nE9uJZOi39ajZVtnrz8uk0yk/2wgTC/FqQZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVy0rn+N/6WcTyXEHxFZEUqPxRGupFusgx0Lzafbn2QvAfQP68cc3qji/l/g2eb7J
-	 k+AdlHRldP/g0VvsutgJa3wCJDjWlFAodXAkhfYOdeIIal7BG6N9mSYV4QKrFV6xrG
-	 7A75ZVvZJEOpebiJWXCpgkVXbI4J4v1gJj5sMHlc=
+	b=ePq0Oii0tIE4zzryeJcoOP8recbJy7P2YyKnJ1Fi3ENh9SXDKM6b0S5olIFk6DDTj
+	 tBVIVDK8yEhr5FrnQO8X8iDzvXjvq7YIxyfiihTw4l35qwzP1yH09fkj84BOHdFYOh
+	 CiK0lK1DnOmGqj0UWyGZ0c/7yUtKq1zfjQqAL7OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Kurt Borja <kuurtb@gmail.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 53/88] platform/x86: think-lmi: Fix sysfs group cleanup
-Date: Tue, 15 Jul 2025 15:14:29 +0200
-Message-ID: <20250715130756.686654974@linuxfoundation.org>
+Subject: [PATCH 6.1 54/88] wifi: zd1211rw: Fix potential NULL pointer dereference in zd_mac_tx_to_dev()
+Date: Tue, 15 Jul 2025 15:14:30 +0200
+Message-ID: <20250715130756.727814453@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -46,84 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 4f30f946f27b7f044cf8f3f1f353dee1dcd3517a ]
+[ Upstream commit 74b1ec9f5d627d2bdd5e5b6f3f81c23317657023 ]
 
-Many error paths in tlmi_sysfs_init() lead to sysfs groups being removed
-when they were not even created.
+There is a potential NULL pointer dereference in zd_mac_tx_to_dev(). For
+example, the following is possible:
 
-Fix this by letting the kobject core manage these groups through their
-kobj_type's defult_groups.
+    	T0			    		T1
+zd_mac_tx_to_dev()
+  /* len == skb_queue_len(q) */
+  while (len > ZD_MAC_MAX_ACK_WAITERS) {
 
-Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://lore.kernel.org/r/20250630-lmi-fix-v3-3-ce4f81c9c481@gmail.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+					  filter_ack()
+					    spin_lock_irqsave(&q->lock, flags);
+					    /* position == skb_queue_len(q) */
+					    for (i=1; i<position; i++)
+				    	      skb = __skb_dequeue(q)
+
+					    if (mac->type == NL80211_IFTYPE_AP)
+					      skb = __skb_dequeue(q);
+					    spin_unlock_irqrestore(&q->lock, flags);
+
+    skb_dequeue() -> NULL
+
+Since there is a small gap between checking skb queue length and skb being
+unconditionally dequeued in zd_mac_tx_to_dev(), skb_dequeue() can return NULL.
+Then the pointer is passed to zd_mac_tx_status() where it is dereferenced.
+
+In order to avoid potential NULL pointer dereference due to situations like
+above, check if skb is not NULL before passing it to zd_mac_tx_status().
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 459c51ad6e1f ("zd1211rw: port to mac80211")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://patch.msgid.link/20250626114619.172631-1-d.dulov@aladdin.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/intel_rapl_common.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/net/wireless/zydas/zd1211rw/zd_mac.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index 26d00b1853b42..02787682b395e 100644
---- a/drivers/powercap/intel_rapl_common.c
-+++ b/drivers/powercap/intel_rapl_common.c
-@@ -21,6 +21,7 @@
- #include <linux/intel_rapl.h>
- #include <linux/processor.h>
- #include <linux/platform_device.h>
-+#include <linux/string_helpers.h>
+diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
+index 80b905d499542..57269c317ce22 100644
+--- a/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
++++ b/drivers/net/wireless/zydas/zd1211rw/zd_mac.c
+@@ -583,7 +583,11 @@ void zd_mac_tx_to_dev(struct sk_buff *skb, int error)
  
- #include <asm/iosf_mbi.h>
- #include <asm/cpu_device_id.h>
-@@ -227,17 +228,34 @@ static int find_nr_power_limit(struct rapl_domain *rd)
- static int set_domain_enable(struct powercap_zone *power_zone, bool mode)
- {
- 	struct rapl_domain *rd = power_zone_to_rapl_domain(power_zone);
-+	u64 val;
-+	int ret;
- 
- 	if (rd->state & DOMAIN_STATE_BIOS_LOCKED)
- 		return -EACCES;
- 
- 	cpus_read_lock();
--	rapl_write_data_raw(rd, PL1_ENABLE, mode);
-+	ret = rapl_write_data_raw(rd, PL1_ENABLE, mode);
-+	if (ret)
-+		goto end;
+ 		skb_queue_tail(q, skb);
+ 		while (skb_queue_len(q) > ZD_MAC_MAX_ACK_WAITERS) {
+-			zd_mac_tx_status(hw, skb_dequeue(q),
++			skb = skb_dequeue(q);
++			if (!skb)
++				break;
 +
-+	ret = rapl_read_data_raw(rd, PL1_ENABLE, true, &val);
-+	if (ret)
-+		goto end;
-+
-+	if (mode != val) {
-+		pr_debug("%s cannot be %s\n", power_zone->name,
-+			 str_enabled_disabled(mode));
-+		goto end;
-+	}
-+
- 	if (rapl_defaults->set_floor_freq)
- 		rapl_defaults->set_floor_freq(rd, mode);
-+
-+end:
- 	cpus_read_unlock();
- 
--	return 0;
-+	return ret;
- }
- 
- static int get_domain_enable(struct powercap_zone *power_zone, bool *mode)
++			zd_mac_tx_status(hw, skb,
+ 					 mac->ack_pending ? mac->ack_signal : 0,
+ 					 NULL);
+ 			mac->ack_pending = 0;
 -- 
 2.39.5
 
