@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AFA2561AE;
-	Tue, 15 Jul 2025 13:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CF32E3380;
+	Tue, 15 Jul 2025 13:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586754; cv=none; b=HCe0bkdY5kFXrBzAnpnVqPH6Bt94Q8saadBj1l5CezjWuRIALlXdzrRt7of+59vhJbeFhIk+DDmrTweG1Edp7L36/3qvX+4EK69EtAI5r3bhggoYvFZPgSzqKdlcyx8Mfky5SLPy89oFz56RF5K87DE2RYHuQ5s6Z+6fPKsJljg=
+	t=1752586756; cv=none; b=t8dq5Jd/j1puWri3Dby2rNN45mFlAyY1nG7o5kqCslK67ZsbQoTeeMCEpXpPSpWu2zx/ZiPMsfUF2kNB+fIPhmVm3ac8DimJaYyJy8wUo7YkdyHMWRc3NQYNrIgI+LsQpJleVeA6kixqx0E6qmJgm7zJzjA8iycqiLCaTcqwop4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586754; c=relaxed/simple;
-	bh=bjB5TloB9pmY+wGxm+VNMinRJMHynef/qQdtKIdSA44=;
+	s=arc-20240116; t=1752586756; c=relaxed/simple;
+	bh=P5SmTFDGW7qxjtsLR5GTbi0vET46VM9Uet5s9MxYltU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVamdBgh4Vx3/F918QID9zOzavD4w3h2r6nkYlRewMOnYeR4E6ihjsIXJ7TEhIK9ZrE71MbaYxEUq5C6o+94kISJAityPAgYm5dI/ayX7OvXGznPVMLhHD6A7HrccyxguERQ/ldspAAGtl/SBqqv8PMMnGGaOFe1jcWSy8+tikg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3IO3gCl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CROkA78UNlDYKdw3j2zZ087WR515pq0RT8zje2iOR836AkXkQQhgRRYp/cDfn0StCDrDR1lTH+n7d1vD+ZCDaAfRoLGkAeKxbLpJmaZ5wj/N5IPD8EMGti2wWBnQQmH9/nzh6K7f5YXgmynBicHbdKR2paRF9uxez3kqoURulIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrlKHlAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3IO3gCl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07A3C4CEE3;
-	Tue, 15 Jul 2025 13:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrlKHlAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8C3C4CEE3;
+	Tue, 15 Jul 2025 13:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586754;
-	bh=bjB5TloB9pmY+wGxm+VNMinRJMHynef/qQdtKIdSA44=;
+	s=korg; t=1752586756;
+	bh=P5SmTFDGW7qxjtsLR5GTbi0vET46VM9Uet5s9MxYltU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3IO3gClNscMM8IrSziAY+kkWs/X9RnyGg9tCU7vTq1xrA7xkvcQPSVpMBNMHVHRv
-	 8aj0g6czJGd3QKbogfTq49Fp5bZooczmymyuSr7zJNwWjelG2Y7lRED0KQGDQ1bqBc
-	 tdTcQfxulf1NBwLV2ey+SUmDeepyPFtKkF19XSi8=
+	b=rrlKHlAwn8HSmjXBn+JBpvGhUnzEmYNQ3WZNi+wUcIE7RDX3XXqXpaHaB44Lk/BxZ
+	 pZaN1AzpxuFi/KaWmC1s4utMzxVUtncMDgqOvsJdfy2LIwCm0Pqy4543sFDY8N2QXV
+	 PtQ+BdDvxpuPDEhWuWnjuZ+eveykFV3Jho2eWDXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
+	EricChan <chenchuangyu@xiaomi.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 036/192] module: Fix memory deallocation on error path in move_module()
-Date: Tue, 15 Jul 2025 15:12:11 +0200
-Message-ID: <20250715130816.305559220@linuxfoundation.org>
+Subject: [PATCH 6.15 037/192] net: stmmac: Fix interrupt handling for level-triggered mode in DWC_XGMAC2
+Date: Tue, 15 Jul 2025 15:12:12 +0200
+Message-ID: <20250715130816.346187112@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -52,56 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: EricChan <chenchuangyu@xiaomi.com>
 
-[ Upstream commit ca3881f6fd8e9b6eb2d51e8718d07d3b8029d886 ]
+[ Upstream commit 78b7920a03351a8402de2f81914c1d2e2bdf24b7 ]
 
-The function move_module() uses the variable t to track how many memory
-types it has allocated and consequently how many should be freed if an
-error occurs.
+According to the Synopsys Controller IP XGMAC-10G Ethernet MAC Databook
+v3.30a (section 2.7.2), when the INTM bit in the DMA_Mode register is set
+to 2, the sbd_perch_tx_intr_o[] and sbd_perch_rx_intr_o[] signals operate
+in level-triggered mode. However, in this configuration, the DMA does not
+assert the XGMAC_NIS status bit for Rx or Tx interrupt events.
 
-The variable is initially set to 0 and is updated when a call to
-module_memory_alloc() fails. However, move_module() can fail for other
-reasons as well, in which case t remains set to 0 and no memory is freed.
+This creates a functional regression where the condition
+if (likely(intr_status & XGMAC_NIS)) in dwxgmac2_dma_interrupt() will
+never evaluate to true, preventing proper interrupt handling for
+level-triggered mode. The hardware specification explicitly states that
+"The DMA does not assert the NIS status bit for the Rx or Tx interrupt
+events" (Synopsys DWC_XGMAC2 Databook v3.30a, sec. 2.7.2).
 
-Fix the problem by initializing t to MOD_MEM_NUM_TYPES. Additionally, make
-the deallocation loop more robust by not relying on the mod_mem_type_t enum
-having a signed integer as its underlying type.
+The fix ensures correct handling of both edge and level-triggered
+interrupts while maintaining backward compatibility with existing
+configurations. It has been tested on the hardware device (not publicly
+available), and it can properly trigger the RX and TX interrupt handling
+in both the INTM=0 and INTM=2 configurations.
 
-Fixes: c7ee8aebf6c0 ("module: add stop-grap sanity check on module memcpy()")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Link: https://lore.kernel.org/r/20250618122730.51324-2-petr.pavlu@suse.com
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Message-ID: <20250618122730.51324-2-petr.pavlu@suse.com>
+Fixes: d6ddfacd95c7 ("net: stmmac: Add DMA related callbacks for XGMAC2")
+Tested-by: EricChan <chenchuangyu@xiaomi.com>
+Signed-off-by: EricChan <chenchuangyu@xiaomi.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250703020449.105730-1-chenchuangyu@xiaomi.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../ethernet/stmicro/stmmac/dwxgmac2_dma.c    | 24 +++++++++----------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 9861c2ac5fd50..9d8a845d94665 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -2615,7 +2615,7 @@ static int find_module_sections(struct module *mod, struct load_info *info)
- static int move_module(struct module *mod, struct load_info *info)
- {
- 	int i;
--	enum mod_mem_type t = 0;
-+	enum mod_mem_type t = MOD_MEM_NUM_TYPES;
- 	int ret = -ENOMEM;
- 	bool codetag_section_found = false;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+index 7840bc403788e..5dcc95bc0ad28 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+@@ -364,19 +364,17 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
+ 	}
  
-@@ -2694,7 +2694,7 @@ static int move_module(struct module *mod, struct load_info *info)
- 	return 0;
- out_err:
- 	module_memory_restore_rox(mod);
--	for (t--; t >= 0; t--)
-+	while (t--)
- 		module_memory_free(mod, t);
- 	if (codetag_section_found)
- 		codetag_free_module_sections(mod);
+ 	/* TX/RX NORMAL interrupts */
+-	if (likely(intr_status & XGMAC_NIS)) {
+-		if (likely(intr_status & XGMAC_RI)) {
+-			u64_stats_update_begin(&stats->syncp);
+-			u64_stats_inc(&stats->rx_normal_irq_n[chan]);
+-			u64_stats_update_end(&stats->syncp);
+-			ret |= handle_rx;
+-		}
+-		if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
+-			u64_stats_update_begin(&stats->syncp);
+-			u64_stats_inc(&stats->tx_normal_irq_n[chan]);
+-			u64_stats_update_end(&stats->syncp);
+-			ret |= handle_tx;
+-		}
++	if (likely(intr_status & XGMAC_RI)) {
++		u64_stats_update_begin(&stats->syncp);
++		u64_stats_inc(&stats->rx_normal_irq_n[chan]);
++		u64_stats_update_end(&stats->syncp);
++		ret |= handle_rx;
++	}
++	if (likely(intr_status & (XGMAC_TI | XGMAC_TBU))) {
++		u64_stats_update_begin(&stats->syncp);
++		u64_stats_inc(&stats->tx_normal_irq_n[chan]);
++		u64_stats_update_end(&stats->syncp);
++		ret |= handle_tx;
+ 	}
+ 
+ 	/* Clear interrupts */
 -- 
 2.39.5
 
