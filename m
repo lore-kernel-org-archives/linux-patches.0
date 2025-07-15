@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667E62E337B;
-	Tue, 15 Jul 2025 13:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DEA2E498D;
+	Tue, 15 Jul 2025 13:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587227; cv=none; b=XQWohx5IIyLt3M5nVqq5YWP8LwbDVgCYsH/KjGVVOHjwaFRbd3GIhnXJDm9XwdTZtW4IXW6g+XW+SgWWuAqf6vcOenctO2tz3b76D6L6cJ2yoGX4K+LySPTt2EVJkYuTM3XFIQOFNAl+ohPySqwEbYxWAOYNee6Q8gbr5DIXCXE=
+	t=1752587229; cv=none; b=O6xRQDo07Ptq4qDJoxjwjKAdSs5NLCamEZTJAOdHqymORUxOrQKx7BZnWFjDS6F69rGGHWvBrRAbDfPICt6s67YiEWXClkGoZy6r7jM1JuhIicFqHbiB0zNgEezOSExKebO6iCaGGpfi4RHLkYQx1IIaqh7qT0bKmcSGJ2OUbtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587227; c=relaxed/simple;
-	bh=XvoVb+oNm2iWh93ScbduYY7mvcy9OkmRTY/hbPDkif8=;
+	s=arc-20240116; t=1752587229; c=relaxed/simple;
+	bh=VHQBAqAfiYbRUTjmTbQjjQl/GFaijqNiqKw3znw1FXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAj6L9ZL0O0Idxm0WPCOFdRvAFxIYnYmanjC/8eLBq8RO0BvEBcJpQuVsHQ+LB6GsOSDAeOT0gR05+fq2QZpz6JGWSlcI7E9Xj8mt7AO/SI33G304QZ2WiYfT1ldxHtSZfPhUnRiCR63NII9UsHaHsiH5ebKricyLES0PS5kBJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V11XtMZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtvUbUWTaw70OrI6J474/izGz5yRAi6kzRv/IZtMIJC2jGzzYJJVzzaF4gZJMPrlEnE6Tc54yIrB+6Obt9T/lSiX/BL7M6HYf1rZ/LM65ih2kGYAnyW9d0GGg6OfFhDqjeT5rIBhjZNhrJiXed8SVfDG8TcSWGHeve04c4HjZhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2o0/woaI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V11XtMZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F09C4CEF7;
-	Tue, 15 Jul 2025 13:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2o0/woaI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B85C4CEE3;
+	Tue, 15 Jul 2025 13:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587226;
-	bh=XvoVb+oNm2iWh93ScbduYY7mvcy9OkmRTY/hbPDkif8=;
+	s=korg; t=1752587229;
+	bh=VHQBAqAfiYbRUTjmTbQjjQl/GFaijqNiqKw3znw1FXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V11XtMZ6RnFxf5VR9p/L1+hLVCXqjGCn8laUNduaUD+3lhoTKntmwa/sVt/Z7NYYV
-	 KEHO1qNrmJDh6krMrM8dG5HnnSixhsOFITZfq+O/MIr33OYy2gO1B424gvTF8klvym
-	 o/2d6cjCoyArcwwFI1Im4rcOSYhnSOSWr8IEUzJw=
+	b=2o0/woaIhZzPx3KtAxQ4ZixinQNPfWPKP7ApmWd97J+UsjmcBEq2RB8JN3hvMCSx7
+	 1BkqHIfs9B32D/JRRkKURFncTcvm9ck1el7arMsmL9XgrKrDFDcg4c2L7S5n9Ttwwc
+	 X4HxTffCitX/YB6nSWxRSohvJ/AtThRsYIwRBdC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Corey Minyard <corey@minyard.net>,
-	Brendan Jackman <jackmanb@google.com>
-Subject: [PATCH 6.1 22/88] ipmi:msghandler: Fix potential memory corruption in ipmi_create_user()
-Date: Tue, 15 Jul 2025 15:13:58 +0200
-Message-ID: <20250715130755.405588993@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 05/88] Bluetooth: hci_sync: Fix not disabling advertising instance
+Date: Tue, 15 Jul 2025 15:13:41 +0200
+Message-ID: <20250715130754.721155236@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,49 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit fa332f5dc6fc662ad7d3200048772c96b861cf6b upstream.
+[ Upstream commit ef9675b0ef030d135413e8638989f3a7d1f3217a ]
 
-The "intf" list iterator is an invalid pointer if the correct
-"intf->intf_num" is not found.  Calling atomic_dec(&intf->nr_users) on
-and invalid pointer will lead to memory corruption.
+As the code comments on hci_setup_ext_adv_instance_sync suggests the
+advertising instance needs to be disabled in order to update its
+parameters, but it was wrongly checking that !adv->pending.
 
-We don't really need to call atomic_dec() if we haven't called
-atomic_add_return() so update the if (intf->in_shutdown) path as well.
-
-Fixes: 8e76741c3d8b ("ipmi: Add a limit on the number of users that may use IPMI")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <aBjMZ8RYrOt6NOgi@stanley.mountain>
-Signed-off-by: Corey Minyard <corey@minyard.net>
-[ - Dropped change to the `if (intf->in_shutdown)` block since that logic
-    doesn't exist yet.
-  - Modified out_unlock to release the srcu lock instead of the mutex
-    since we don't have the mutex here yet. ]
-Signed-off-by: Brendan Jackman <jackmanb@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -1241,7 +1241,7 @@ int ipmi_create_user(unsigned int
- 	}
- 	/* Not found, return an error */
- 	rv = -EINVAL;
--	goto out_kfree;
-+	goto out_unlock;
- 
-  found:
- 	if (atomic_add_return(1, &intf->nr_users) > max_users) {
-@@ -1283,6 +1283,7 @@ int ipmi_create_user(unsigned int
- 
- out_kfree:
- 	atomic_dec(&intf->nr_users);
-+out_unlock:
- 	srcu_read_unlock(&ipmi_interfaces_srcu, index);
- 	vfree(new_user);
- 	return rv;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index c1e018eaa6f4c..7d22b2b02745a 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1204,7 +1204,7 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ 	 * Command Disallowed error, so we must first disable the
+ 	 * instance if it is active.
+ 	 */
+-	if (adv && !adv->pending) {
++	if (adv) {
+ 		err = hci_disable_ext_adv_instance_sync(hdev, instance);
+ 		if (err)
+ 			return err;
+-- 
+2.39.5
+
 
 
