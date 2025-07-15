@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D597B2E62A8;
-	Tue, 15 Jul 2025 13:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102E22E339B;
+	Tue, 15 Jul 2025 13:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585967; cv=none; b=Vv1aQdlOCz5ZQDRvD292bxATHPvFwoCCuWnVwi3hSgyKg+gRin/C9oEnuroFmmF8jB3VAuYXy8FH2eQ+ROzZP1+D96K4+IosM8O2qC21qSH/l9uB0ArEWK/axmqTti7jfpR3Y46FJfqUhq/cAAGfnMJjlCso+MiCvdQLJZPTO3U=
+	t=1752585970; cv=none; b=OWgNhR5D3ELBto7BVhNgS+hlFk+nK/GSdfxHgl2oMKCCouoNgxYDaFJ2qj7dSDaggJJKoWeKNKJz8yPB2r7XNykcy3c9aqSoWK9dSR+Jb6D8BokBEmDKT0GC5Ixdewo0Rir3beh56aC/jZ74GxQOKE53cqm0kYu9A0TBrn7E4XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585967; c=relaxed/simple;
-	bh=NJajUqDZHgUiwhvhHtWL3/mfHSQCCcJWsRABP9KyokQ=;
+	s=arc-20240116; t=1752585970; c=relaxed/simple;
+	bh=UMA/9yZhYnpyzgTpQkS8ini2DO+8dlyE0QAb9CRTgsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZFePx5eSPkURu0sO7DnMmmZ5l52LKdgj3Uh617AperGgAEzNWNXrvWAcga6OWH/mASI2yJvX5aKsI5zU+zp7GchX7FCUM1u5TM825wQ/pnf9m/ioFISCP7xK1lwL0uoQKI0UTyECJC930A/BDPzZgiIOo1EDFuTNVSrt8akT90A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjUBpXZ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tqOU/um+XwRBmMm3rzkxUh452gGiUpovyYXkGppWW1rb6JjVNb4BpCQ8a14f3+twlIU/iAmTI0/E1thVdvcjcEpv9XZcfEcemkLSf4noG+IO8bVEhPF6PqIuHBDT+WpJpq59VJl0UtBPbDh91cgNtwJU37qYg2v2qUxwP7NRK7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAVzA/HV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjUBpXZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CFCC4CEE3;
-	Tue, 15 Jul 2025 13:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAVzA/HV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E39C4CEE3;
+	Tue, 15 Jul 2025 13:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585967;
-	bh=NJajUqDZHgUiwhvhHtWL3/mfHSQCCcJWsRABP9KyokQ=;
+	s=korg; t=1752585969;
+	bh=UMA/9yZhYnpyzgTpQkS8ini2DO+8dlyE0QAb9CRTgsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjUBpXZ4r44LPYGmrFNLPg+OeQzgZ6XsMKo4gkzT4AL5YrjpTFrOKLveFa7+ktJxv
-	 zf0FZtMeZv2v9kz7X72PkwIZ86EgcvvL0IBmzmqcQTgH8wM5Gg7g8eT1Ow/SPsuEor
-	 Kvow4aEMwnJ380UyruaCDoIAo8yjhKhog3lgIT/Y=
+	b=iAVzA/HVcxTEXP29r3o8i4YLehgF+vjcd2fUjUrHJu/hCC3/D8TKHj5JdAstQULvt
+	 fcF7iHSNDhqNlrigvE4iiEeWjx6kt4pdITR25/nLHL8sMBJiXD+URomwgMMDFjPfya
+	 ZsBMsikct4nKJpAw7yfXvCXT1own2Li92cNTid8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>
-Subject: [PATCH 6.6 044/109] drm/sched: Increment job count before swapping tail spsc queue
-Date: Tue, 15 Jul 2025 15:13:00 +0200
-Message-ID: <20250715130800.644336063@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 6.6 045/109] drm/ttm: fix error handling in ttm_buffer_object_transfer
+Date: Tue, 15 Jul 2025 15:13:01 +0200
+Message-ID: <20250715130800.683558095@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -51,47 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 8af39ec5cf2be522c8eb43a3d8005ed59e4daaee upstream.
+commit 97e000acf2e20a86a50a0ec8c2739f0846f37509 upstream.
 
-A small race exists between spsc_queue_push and the run-job worker, in
-which spsc_queue_push may return not-first while the run-job worker has
-already idled due to the job count being zero. If this race occurs, job
-scheduling stops, leading to hangs while waiting on the job’s DMA
-fences.
+Unlocking the resv object was missing in the error path, additionally to
+that we should move over the resource only after the fence slot was
+reserved.
 
-Seal this race by incrementing the job count before appending to the
-SPSC queue.
-
-This race was observed on a drm-tip 6.16-rc1 build with the Xe driver in
-an SVM test case.
-
-Fixes: 1b1f42d8fde4 ("drm: move amd_gpu_scheduler into common location")
-Fixes: 27105db6c63a ("drm/amdgpu: Add SPSC queue to scheduler.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://lore.kernel.org/r/20250613212013.719312-1-matthew.brost@intel.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Fixes: c8d4c18bfbc4a ("dma-buf/drivers: make reserving a shared slot mandatory v4")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20250616130726.22863-3-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/spsc_queue.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo_util.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/include/drm/spsc_queue.h
-+++ b/include/drm/spsc_queue.h
-@@ -70,9 +70,11 @@ static inline bool spsc_queue_push(struc
+--- a/drivers/gpu/drm/ttm/ttm_bo_util.c
++++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
+@@ -254,6 +254,13 @@ static int ttm_buffer_object_transfer(st
+ 	ret = dma_resv_trylock(&fbo->base.base._resv);
+ 	WARN_ON(!ret);
  
- 	preempt_disable();
- 
-+	atomic_inc(&queue->job_count);
-+	smp_mb__after_atomic();
++	ret = dma_resv_reserve_fences(&fbo->base.base._resv, 1);
++	if (ret) {
++		dma_resv_unlock(&fbo->base.base._resv);
++		kfree(fbo);
++		return ret;
++	}
 +
- 	tail = (struct spsc_node **)atomic_long_xchg(&queue->tail, (long)&node->next);
- 	WRITE_ONCE(*tail, node);
--	atomic_inc(&queue->job_count);
+ 	if (fbo->base.resource) {
+ 		ttm_resource_set_bo(fbo->base.resource, &fbo->base);
+ 		bo->resource = NULL;
+@@ -262,12 +269,6 @@ static int ttm_buffer_object_transfer(st
+ 		fbo->base.bulk_move = NULL;
+ 	}
  
- 	/*
- 	 * In case of first element verify new node will be visible to the consumer
+-	ret = dma_resv_reserve_fences(&fbo->base.base._resv, 1);
+-	if (ret) {
+-		kfree(fbo);
+-		return ret;
+-	}
+-
+ 	ttm_bo_get(bo);
+ 	fbo->bo = bo;
+ 
 
 
