@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFBF2EAD1E;
-	Tue, 15 Jul 2025 13:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3542E5B3F;
+	Tue, 15 Jul 2025 13:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586160; cv=none; b=dxOKhxw448LWnaoljkvmnuXZ/pI0M5adHSnmikYSiZawaqVNcqNmmIAgx0W/w0v0HvA/v91wNjhrkgHQNNqOWzWm8WzpAqzGX8YDcJ9Sd2dJmPkDRo3iI4W94/AmP3PJecRhco4NBvmSWEo2Pg3o3csH1x0QGa0CGGlLzb9Ggrg=
+	t=1752586163; cv=none; b=iZdcqCNdTSIOzWXJuXXqQk0MWuzca5PJU5dMd9G/+zm4EN1SyhrLVHULWY0SxjJTkpYTZI466pzJDP47QfUWlewrgneBX8oiTIUmurWaXJ62a15zW0Xn39SfAjiRo9/zVv9BsHwWpLQgs/RlSZ8Y7e8Dlli/hGIj9z+Ejt/iiz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586160; c=relaxed/simple;
-	bh=YSRcABzWaCrJYVGyr1NbV3kSK5Lv6BvGDJXNlDDU1wY=;
+	s=arc-20240116; t=1752586163; c=relaxed/simple;
+	bh=wa87xCwtBwQZhUd+X7Ld3os7EkHfbF+R5yQ7RStOstk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oyE93q3ems+DHLyXdBKagu+xlELuLePpPWIxq3mMlP6wrH7x8e/VBIpryPdW85LmtOI0aQ3I5W7pcP5DWlFhh9ftirc49ovFfVZI3ZgjAgm2gSbHSvvoowvs/3gLP/0yX5ff9k7SEdabaevpxKgIMIUd+pvX8DyLMzwl922QMjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+THsbRV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LjiD2rpE5ITo8u6AdH6usXCF+uptReSlxnPPI3JkqZI+mU9iiZWi4gXgZVTAvQ5kJaovcMUGctsTNEKZAlDX9jsa3Tqgr54iCXQLZqKluWjtocGqlOuzmZJapeGDwoAJhVsiaOUI3eJjEFg4wxHXMl5TDuu1dGvEkPjzGzmQ7LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BylhdMAc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+THsbRV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8E3C4CEE3;
-	Tue, 15 Jul 2025 13:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BylhdMAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C91C4CEF1;
+	Tue, 15 Jul 2025 13:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586160;
-	bh=YSRcABzWaCrJYVGyr1NbV3kSK5Lv6BvGDJXNlDDU1wY=;
+	s=korg; t=1752586163;
+	bh=wa87xCwtBwQZhUd+X7Ld3os7EkHfbF+R5yQ7RStOstk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+THsbRVhdcKTVVhi1/9fyCEBS/VvK5JvkAEUcgJpXSfWXax7nPiIa/eK0wOEjmCO
-	 pTZ87OqRj1rnXBsGPF+KChsVD9jGd3zxlJ6UPscz5pQhZMJtGh/9zvrGtqrnREn15j
-	 ud4XqT+FvsZkbwCIAp4bNaN1GW8oJb8Lm64OtrgA=
+	b=BylhdMAcWaJkjYGDY6MQmp9n/ZS6j27bZTIw+pr0DICGCIzVVSsKOuELPwE0qUqL1
+	 7ZYM9ezON3RsyxKxW3GZhGp0pQ2cC3fLnRwLQ1DQFG+JTkAiDXl4snXB+oWtdkxKCc
+	 n/Tx4tOlBRDcxM8/AGq+YdVjCGV74mJQhCilSJUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>
-Subject: [PATCH 5.15 31/77] drm/sched: Increment job count before swapping tail spsc queue
-Date: Tue, 15 Jul 2025 15:13:30 +0200
-Message-ID: <20250715130752.958059087@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 40/77] netlink: make sure we allow at least one dump skb
+Date: Tue, 15 Jul 2025 15:13:39 +0200
+Message-ID: <20250715130753.318565915@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -44,54 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 8af39ec5cf2be522c8eb43a3d8005ed59e4daaee upstream.
+commit a215b5723922f8099078478122f02100e489cb80 upstream.
 
-A small race exists between spsc_queue_push and the run-job worker, in
-which spsc_queue_push may return not-first while the run-job worker has
-already idled due to the job count being zero. If this race occurs, job
-scheduling stops, leading to hangs while waiting on the job’s DMA
-fences.
+Commit under Fixes tightened up the memory accounting for Netlink
+sockets. Looks like the accounting is too strict for some existing
+use cases, Marek reported issues with nl80211 / WiFi iw CLI.
 
-Seal this race by incrementing the job count before appending to the
-SPSC queue.
+To reduce number of iterations Netlink dumps try to allocate
+messages based on the size of the buffer passed to previous
+recvmsg() calls. If user space uses a larger buffer in recvmsg()
+than sk_rcvbuf we will allocate an skb we won't be able to queue.
 
-This race was observed on a drm-tip 6.16-rc1 build with the Xe driver in
-an SVM test case.
+Make sure we always allow at least one skb to be queued.
+Same workaround is already present in netlink_attachskb().
+Alternative would be to cap the allocation size to
+  rcvbuf - rmem_alloc
+but as I said, the workaround is already present in other places.
 
-Fixes: 1b1f42d8fde4 ("drm: move amd_gpu_scheduler into common location")
-Fixes: 27105db6c63a ("drm/amdgpu: Add SPSC queue to scheduler.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://lore.kernel.org/r/20250613212013.719312-1-matthew.brost@intel.com
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/9794af18-4905-46c6-b12c-365ea2f05858@samsung.com
+Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711001121.3649033-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/spsc_queue.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netlink/af_netlink.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/include/drm/spsc_queue.h
-+++ b/include/drm/spsc_queue.h
-@@ -70,9 +70,11 @@ static inline bool spsc_queue_push(struc
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2215,11 +2215,11 @@ static int netlink_dump(struct sock *sk,
+ 	struct netlink_ext_ack extack = {};
+ 	struct netlink_callback *cb;
+ 	struct sk_buff *skb = NULL;
++	unsigned int rmem, rcvbuf;
+ 	size_t max_recvmsg_len;
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
+-	unsigned int rmem;
+ 	int alloc_size;
  
- 	preempt_disable();
+ 	if (!lock_taken)
+@@ -2251,8 +2251,9 @@ static int netlink_dump(struct sock *sk,
+ 	if (!skb)
+ 		goto errout_skb;
  
-+	atomic_inc(&queue->job_count);
-+	smp_mb__after_atomic();
-+
- 	tail = (struct spsc_node **)atomic_long_xchg(&queue->tail, (long)&node->next);
- 	WRITE_ONCE(*tail, node);
--	atomic_inc(&queue->job_count);
- 
- 	/*
- 	 * In case of first element verify new node will be visible to the consumer
++	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+-	if (rmem >= READ_ONCE(sk->sk_rcvbuf)) {
++	if (rmem != skb->truesize && rmem >= rcvbuf) {
+ 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+ 		goto errout_skb;
+ 	}
 
 
