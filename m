@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B762227584E;
-	Tue, 15 Jul 2025 13:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB2D2E041E;
+	Tue, 15 Jul 2025 13:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585746; cv=none; b=Ghp7rmMKIuU021FN+0NO3DZEjojNW+2y7+j62TI5otBUjiVin9SMeEl2f0KGGtx6E4qkv+DgLKc2kQ/pRopUB8qp30zDOqwDy8cga4108llxqVJNj4j38bgFcuXx0cF//gfKuvbqTZEqT13yAJa4WnilZ9sY5LMoJhtd5SRMLvA=
+	t=1752585749; cv=none; b=t/NnUWxfQQKQG+vM7hJ6TofBI6wYDQMX8GwO6TvOcGCS7X7KmBYgRhqYBch0sWaxBINPmfvhSOWe+h1xJ1+18wBidIkNhRE+IGqGN/UoGYuF4bG5IaOR472vyoByfdzEiwiFzVJ7QBAqtxAIuqGeI4ViXVRbtVvMVCRgjsbMsEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585746; c=relaxed/simple;
-	bh=PGkWo5N+19Ec5p2V43mKNga0lVhg7+O4kwGNXuZNjsg=;
+	s=arc-20240116; t=1752585749; c=relaxed/simple;
+	bh=4jmm+g81anQBTCqMzfawFKIPIGRVAQ5PfbLtXNzQVG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNYt4owTuLPSL+8wTBEfKi6CNkMJtgMIyZRSydC9MQ7xvUpbPg1Ir46hc1ofmE12RU5jTFVV8Ll/6yYQKDV5Y+5uc9+a0AhvmCvE8EAnCLvaVfJE/nKcBZlF8/vDxX3AbhG5gG01cSlvOhDL1Ogb9wZn4nhmxPrTHlYhdRqRVxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvDXBpB1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UQ/FUWnf7EGwn5Qi2t+aFUnFkM/Ghxn0MjeK7pOYfvL6H4TPEhNJsmCtN5S/2p7oi755k+O3me3mzcEcdXhOtiYdALOp8wGdpsYK8hBVWv4qup2FYHymo9S1gbJyuEHMYp4XjaIVRJ/zGKlSWCuRAOz7dTOj6oXa/TfBAFcwFhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kqx5fH+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvDXBpB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9B2C4CEF1;
-	Tue, 15 Jul 2025 13:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kqx5fH+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6048C4CEE3;
+	Tue, 15 Jul 2025 13:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585746;
-	bh=PGkWo5N+19Ec5p2V43mKNga0lVhg7+O4kwGNXuZNjsg=;
+	s=korg; t=1752585749;
+	bh=4jmm+g81anQBTCqMzfawFKIPIGRVAQ5PfbLtXNzQVG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvDXBpB1CkGKqkLBtXLvmGfeiAjFheEjU/8t9Gb0JD3lH9S6oTiJcd5fv9tpV/+qM
-	 gog3CWGSUA4GagKBaf3fHEFi2CUB0AQOlKvRZjHFguyjIIZChe1M6v3xPyfY4s2zsK
-	 DdBsllIrPVb3Vp+w26FxNRLosAW7+YFzdJDTOq8o=
+	b=0kqx5fH+w6TdNI51lvqsvjA72uzBrlA6U8eZlcutO/Adw29mCJAzdDJqe67B6R7Oy
+	 izjQ9wHhfFT6Jm1kzwRhIsrYXG1sMHWUOHi8wV/sczVCUTwqD1YQdFSpLYz5RpK8DS
+	 IP7EFtKVzsLYJXosLavEETkEol+ANcDDpXZdNr/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kito Xu <veritas501@foxmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Henry Martin <bsdhenryma@tencent.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/163] net: appletalk: Fix device refcount leak in atrtr_create()
-Date: Tue, 15 Jul 2025 15:13:13 +0200
-Message-ID: <20250715130813.861930727@linuxfoundation.org>
+Subject: [PATCH 6.12 116/163] wifi: mt76: mt7925: Fix null-ptr-deref in mt7925_thermal_init()
+Date: Tue, 15 Jul 2025 15:13:04 +0200
+Message-ID: <20250715130813.507099782@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kito Xu <veritas501@foxmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 711c80f7d8b163d3ecd463cd96f07230f488e750 ]
+[ Upstream commit 03ee8f73801a8f46d83dfc2bf73fb9ffa5a21602 ]
 
-When updating an existing route entry in atrtr_create(), the old device
-reference was not being released before assigning the new device,
-leading to a device refcount leak. Fix this by calling dev_put() to
-release the old device reference before holding the new one.
+devm_kasprintf() returns NULL on error. Currently, mt7925_thermal_init()
+does not check for this case, which results in a NULL pointer
+dereference.
 
-Fixes: c7f905f0f6d4 ("[ATALK]: Add missing dev_hold() to atrtr_create().")
-Signed-off-by: Kito Xu <veritas501@foxmail.com>
-Link: https://patch.msgid.link/tencent_E1A26771CDAB389A0396D1681A90A49E5D09@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add NULL check after devm_kasprintf() to prevent this issue.
+
+Fixes: 396e41a74a88 ("wifi: mt76: mt7925: support temperature sensor")
+Signed-off-by: Henry Martin <bsdhenryma@tencent.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20250625124901.1839832-1-bsdhenryma@tencent.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/appletalk/ddp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/init.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/appletalk/ddp.c b/net/appletalk/ddp.c
-index b068651984fe3..fa7f002b14fa3 100644
---- a/net/appletalk/ddp.c
-+++ b/net/appletalk/ddp.c
-@@ -576,6 +576,7 @@ static int atrtr_create(struct rtentry *r, struct net_device *devhint)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/init.c b/drivers/net/wireless/mediatek/mt76/mt7925/init.c
+index 14553dcc61c57..02899320da5c1 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/init.c
+@@ -52,6 +52,8 @@ static int mt7925_thermal_init(struct mt792x_phy *phy)
  
- 	/* Fill in the routing entry */
- 	rt->target  = ta->sat_addr;
-+	dev_put(rt->dev); /* Release old device */
- 	dev_hold(devhint);
- 	rt->dev     = devhint;
- 	rt->flags   = r->rt_flags;
+ 	name = devm_kasprintf(&wiphy->dev, GFP_KERNEL, "mt7925_%s",
+ 			      wiphy_name(wiphy));
++	if (!name)
++		return -ENOMEM;
+ 
+ 	hwmon = devm_hwmon_device_register_with_groups(&wiphy->dev, name, phy,
+ 						       mt7925_hwmon_groups);
 -- 
 2.39.5
 
