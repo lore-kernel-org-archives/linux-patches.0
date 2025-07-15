@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED462D8790;
-	Tue, 15 Jul 2025 13:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D4F2E612F;
+	Tue, 15 Jul 2025 13:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585962; cv=none; b=uRyJ6rq8zplIx4YYrpTk9JTDnMTbLQ2rczI6526zgzwlZnx2A0pNQGfWwrQvLebWzCwi6keRJC4OUHZhMSRgb6PrEB3CAJMiekR6v9J+CZU/li9Q2JJW2BhmVD3mOwZhmCPvUvtVIGXQttYsn+gx8FGzXXrqwRukJU/WRSBmViw=
+	t=1752585965; cv=none; b=BPuhI24AeV+0hCn+oJiNYd3SsvbeeR5srlLPgOdN97xSaxeEV03ApueesOqu51CjivKKa5vWghXV1SiDFOFHt12U3bErdxqIFlS+L2lWlnI+H0j1v5n9lYdAL0s7hwABD/YT0Bo5Sdj3/BMw/gipWvnlSkkMSNGYV4KXhGscdPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585962; c=relaxed/simple;
-	bh=JxgUQhWwJmYyGs/CuUvCddTBSvdUsrmDSiZScEm2EsI=;
+	s=arc-20240116; t=1752585965; c=relaxed/simple;
+	bh=jvKop24sFrKkwzLsEaMNehHH5CtJHJJ4dw1F+3jOxnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ha8r0VkVsDgxCbpOTLgot3dBrah/fs+Zf8/k4/lxDytx09Fhj2VAfqgwOH0fnCkSiGaEHCm4gYphXyizXTmgI9nTUpP5RkxwPCm6QevBD7SfNvQBEtLYlZt2JRUvLGHnL1RDRXwbCnQ4n1aTx7Sp47+5IKJKR4Ufs8c3JfS652E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwMRHSu6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Aw74f/i3jBjg2XG2tJm11PY+BJs+AnDqYIL0GW53r9TysbLobj2RMEs9ENTycuMHG3LJOMm/gKoyUMb9AFrgXFzZYr0gy/fivkDfODpX2tggyECSy7RFwQaJE5eKYOPECBATkNNm+xS95yhIxP/ijm81gX/mQT27lg+qmnLZEho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqGzHLlC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwMRHSu6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62A7C4CEE3;
-	Tue, 15 Jul 2025 13:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqGzHLlC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BFF7C4CEF1;
+	Tue, 15 Jul 2025 13:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585962;
-	bh=JxgUQhWwJmYyGs/CuUvCddTBSvdUsrmDSiZScEm2EsI=;
+	s=korg; t=1752585964;
+	bh=jvKop24sFrKkwzLsEaMNehHH5CtJHJJ4dw1F+3jOxnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwMRHSu69UhiO5cKxvZ692aLeYeyvVnZ8WEUAc98a1GL6x4rZwKom4h8ut6yVPAb9
-	 s/FvcGm8zyJFvdpoShIoHO/Rf8nU92hNHxEAppsqKM6stNHix9/ZiZgUILHpde+6oi
-	 /Cq6wPTH75O1xxnPmCaglwETcbKR+3v1S7C2D2Ic=
+	b=QqGzHLlCp2QyZ6iLVSFL+zl8y8I9Fwh0KeZmUaWigIV8XjXErYWYGSiNzLpc64lWL
+	 wmh0/8AnHuI+/6VuCxJL7asH27hwe0TllENtX650xEpsPv6FUxWYWhDs1KtIWqM2sb
+	 aZxJxJ/JPOo5sSxnDDjqf/M+H2hg6g0kXkInlMdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 042/109] wifi: prevent A-MSDU attacks in mesh networks
-Date: Tue, 15 Jul 2025 15:12:58 +0200
-Message-ID: <20250715130800.564473468@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Anusha Srivatsa <asrivats@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org
+Subject: [PATCH 6.6 043/109] drm/gem: Acquire references on GEM handles for framebuffers
+Date: Tue, 15 Jul 2025 15:12:59 +0200
+Message-ID: <20250715130800.605137510@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -44,120 +51,231 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 737bb912ebbe4571195c56eba557c4d7315b26fb upstream.
+commit 5307dce878d4126e1b375587318955bd019c3741 upstream.
 
-This patch is a mitigation to prevent the A-MSDU spoofing vulnerability
-for mesh networks. The initial update to the IEEE 802.11 standard, in
-response to the FragAttacks, missed this case (CVE-2025-27558). It can
-be considered a variant of CVE-2020-24588 but for mesh networks.
+A GEM handle can be released while the GEM buffer object is attached
+to a DRM framebuffer. This leads to the release of the dma-buf backing
+the buffer object, if any. [1] Trying to use the framebuffer in further
+mode-setting operations leads to a segmentation fault. Most easily
+happens with driver that use shadow planes for vmap-ing the dma-buf
+during a page flip. An example is shown below.
 
-This patch tries to detect if a standard MSDU was turned into an A-MSDU
-by an adversary. This is done by parsing a received A-MSDU as a standard
-MSDU, calculating the length of the Mesh Control header, and seeing if
-the 6 bytes after this header equal the start of an rfc1042 header. If
-equal, this is a strong indication of an ongoing attack attempt.
+[  156.791968] ------------[ cut here ]------------
+[  156.796830] WARNING: CPU: 2 PID: 2255 at drivers/dma-buf/dma-buf.c:1527 dma_buf_vmap+0x224/0x430
+[...]
+[  156.942028] RIP: 0010:dma_buf_vmap+0x224/0x430
+[  157.043420] Call Trace:
+[  157.045898]  <TASK>
+[  157.048030]  ? show_trace_log_lvl+0x1af/0x2c0
+[  157.052436]  ? show_trace_log_lvl+0x1af/0x2c0
+[  157.056836]  ? show_trace_log_lvl+0x1af/0x2c0
+[  157.061253]  ? drm_gem_shmem_vmap+0x74/0x710
+[  157.065567]  ? dma_buf_vmap+0x224/0x430
+[  157.069446]  ? __warn.cold+0x58/0xe4
+[  157.073061]  ? dma_buf_vmap+0x224/0x430
+[  157.077111]  ? report_bug+0x1dd/0x390
+[  157.080842]  ? handle_bug+0x5e/0xa0
+[  157.084389]  ? exc_invalid_op+0x14/0x50
+[  157.088291]  ? asm_exc_invalid_op+0x16/0x20
+[  157.092548]  ? dma_buf_vmap+0x224/0x430
+[  157.096663]  ? dma_resv_get_singleton+0x6d/0x230
+[  157.101341]  ? __pfx_dma_buf_vmap+0x10/0x10
+[  157.105588]  ? __pfx_dma_resv_get_singleton+0x10/0x10
+[  157.110697]  drm_gem_shmem_vmap+0x74/0x710
+[  157.114866]  drm_gem_vmap+0xa9/0x1b0
+[  157.118763]  drm_gem_vmap_unlocked+0x46/0xa0
+[  157.123086]  drm_gem_fb_vmap+0xab/0x300
+[  157.126979]  drm_atomic_helper_prepare_planes.part.0+0x487/0xb10
+[  157.133032]  ? lockdep_init_map_type+0x19d/0x880
+[  157.137701]  drm_atomic_helper_commit+0x13d/0x2e0
+[  157.142671]  ? drm_atomic_nonblocking_commit+0xa0/0x180
+[  157.147988]  drm_mode_atomic_ioctl+0x766/0xe40
+[...]
+[  157.346424] ---[ end trace 0000000000000000 ]---
 
-This defense was tested with mac80211_hwsim against a mesh network that
-uses an empty Mesh Address Extension field, i.e., when four addresses
-are used, and when using a 12-byte Mesh Address Extension field, i.e.,
-when six addresses are used. Functionality of normal MSDUs and A-MSDUs
-was also tested, and confirmed working, when using both an empty and
-12-byte Mesh Address Extension field.
+Acquiring GEM handles for the framebuffer's GEM buffer objects prevents
+this from happening. The framebuffer's cleanup later puts the handle
+references.
 
-It was also tested with mac80211_hwsim that A-MSDU attacks in non-mesh
-networks keep being detected and prevented.
+Commit 1a148af06000 ("drm/gem-shmem: Use dma_buf from GEM object
+instance") triggers the segmentation fault easily by using the dma-buf
+field more widely. The underlying issue with reference counting has
+been present before.
 
-Note that the vulnerability being patched, and the defense being
-implemented, was also discussed in the following paper and in the
-following IEEE 802.11 presentation:
+v2:
+- acquire the handle instead of the BO (Christian)
+- fix comment style (Christian)
+- drop the Fixes tag (Christian)
+- rename err_ gotos
+- add missing Link tag
 
-https://papers.mathyvanhoef.com/wisec2025.pdf
-https://mentor.ieee.org/802.11/dcn/25/11-25-0949-00-000m-a-msdu-mesh-spoof-protection.docx
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>
-Link: https://patch.msgid.link/20250616004635.224344-1-Mathy.Vanhoef@kuleuven.be
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://elixir.bootlin.com/linux/v6.15/source/drivers/gpu/drm/drm_gem.c#L241 # [1]
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Anusha Srivatsa <asrivats@redhat.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: linux-media@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250630084001.293053-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/util.c |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_gem.c                    |   44 ++++++++++++++++++++++++---
+ drivers/gpu/drm/drm_gem_framebuffer_helper.c |   16 +++++----
+ drivers/gpu/drm/drm_internal.h               |    2 +
+ 3 files changed, 51 insertions(+), 11 deletions(-)
 
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -826,6 +826,52 @@ bool ieee80211_is_valid_amsdu(struct sk_
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -186,6 +186,35 @@ void drm_gem_private_object_fini(struct
  }
- EXPORT_SYMBOL(ieee80211_is_valid_amsdu);
+ EXPORT_SYMBOL(drm_gem_private_object_fini);
  
-+
-+/*
-+ * Detects if an MSDU frame was maliciously converted into an A-MSDU
-+ * frame by an adversary. This is done by parsing the received frame
-+ * as if it were a regular MSDU, even though the A-MSDU flag is set.
-+ *
-+ * For non-mesh interfaces, detection involves checking whether the
-+ * payload, when interpreted as an MSDU, begins with a valid RFC1042
-+ * header. This is done by comparing the A-MSDU subheader's destination
-+ * address to the start of the RFC1042 header.
-+ *
-+ * For mesh interfaces, the MSDU includes a 6-byte Mesh Control field
-+ * and an optional variable-length Mesh Address Extension field before
-+ * the RFC1042 header. The position of the RFC1042 header must therefore
-+ * be calculated based on the mesh header length.
-+ *
-+ * Since this function intentionally parses an A-MSDU frame as an MSDU,
-+ * it only assumes that the A-MSDU subframe header is present, and
-+ * beyond this it performs its own bounds checks under the assumption
-+ * that the frame is instead parsed as a non-aggregated MSDU.
-+ */
-+static bool
-+is_amsdu_aggregation_attack(struct ethhdr *eth, struct sk_buff *skb,
-+			    enum nl80211_iftype iftype)
++static void drm_gem_object_handle_get(struct drm_gem_object *obj)
 +{
-+	int offset;
++	struct drm_device *dev = obj->dev;
 +
-+	/* Non-mesh case can be directly compared */
-+	if (iftype != NL80211_IFTYPE_MESH_POINT)
-+		return ether_addr_equal(eth->h_dest, rfc1042_header);
++	drm_WARN_ON(dev, !mutex_is_locked(&dev->object_name_lock));
 +
-+	offset = __ieee80211_get_mesh_hdrlen(eth->h_dest[0]);
-+	if (offset == 6) {
-+		/* Mesh case with empty address extension field */
-+		return ether_addr_equal(eth->h_source, rfc1042_header);
-+	} else if (offset + ETH_ALEN <= skb->len) {
-+		/* Mesh case with non-empty address extension field */
-+		u8 temp[ETH_ALEN];
-+
-+		skb_copy_bits(skb, offset, temp, ETH_ALEN);
-+		return ether_addr_equal(temp, rfc1042_header);
-+	}
-+
-+	return false;
++	if (obj->handle_count++ == 0)
++		drm_gem_object_get(obj);
 +}
 +
- void ieee80211_amsdu_to_8023s(struct sk_buff *skb, struct sk_buff_head *list,
- 			      const u8 *addr, enum nl80211_iftype iftype,
- 			      const unsigned int extra_headroom,
-@@ -867,8 +913,10 @@ void ieee80211_amsdu_to_8023s(struct sk_
- 		/* the last MSDU has no padding */
- 		if (subframe_len > remaining)
- 			goto purge;
--		/* mitigate A-MSDU aggregation injection attacks */
--		if (ether_addr_equal(hdr.eth.h_dest, rfc1042_header))
-+		/* mitigate A-MSDU aggregation injection attacks, to be
-+		 * checked when processing first subframe (offset == 0).
-+		 */
-+		if (offset == 0 && is_amsdu_aggregation_attack(&hdr.eth, skb, iftype))
- 			goto purge;
++/**
++ * drm_gem_object_handle_get_unlocked - acquire reference on user-space handles
++ * @obj: GEM object
++ *
++ * Acquires a reference on the GEM buffer object's handle. Required
++ * to keep the GEM object alive. Call drm_gem_object_handle_put_unlocked()
++ * to release the reference.
++ */
++void drm_gem_object_handle_get_unlocked(struct drm_gem_object *obj)
++{
++	struct drm_device *dev = obj->dev;
++
++	guard(mutex)(&dev->object_name_lock);
++
++	drm_WARN_ON(dev, !obj->handle_count); /* first ref taken in create-tail helper */
++	drm_gem_object_handle_get(obj);
++}
++EXPORT_SYMBOL(drm_gem_object_handle_get_unlocked);
++
+ /**
+  * drm_gem_object_handle_free - release resources bound to userspace handles
+  * @obj: GEM object to clean up.
+@@ -216,8 +245,14 @@ static void drm_gem_object_exported_dma_
+ 	}
+ }
  
- 		offset += sizeof(struct ethhdr);
+-static void
+-drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj)
++/**
++ * drm_gem_object_handle_put_unlocked - releases reference on user-space handles
++ * @obj: GEM object
++ *
++ * Releases a reference on the GEM buffer object's handle. Possibly releases
++ * the GEM buffer object and associated dma-buf objects.
++ */
++void drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj)
+ {
+ 	struct drm_device *dev = obj->dev;
+ 	bool final = false;
+@@ -242,6 +277,7 @@ drm_gem_object_handle_put_unlocked(struc
+ 	if (final)
+ 		drm_gem_object_put(obj);
+ }
++EXPORT_SYMBOL(drm_gem_object_handle_put_unlocked);
+ 
+ /*
+  * Called at device or object close to release the file's
+@@ -363,8 +399,8 @@ drm_gem_handle_create_tail(struct drm_fi
+ 	int ret;
+ 
+ 	WARN_ON(!mutex_is_locked(&dev->object_name_lock));
+-	if (obj->handle_count++ == 0)
+-		drm_gem_object_get(obj);
++
++	drm_gem_object_handle_get(obj);
+ 
+ 	/*
+ 	 * Get the user-visible handle using idr.  Preload and perform
+--- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
++++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+@@ -99,7 +99,7 @@ void drm_gem_fb_destroy(struct drm_frame
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < fb->format->num_planes; i++)
+-		drm_gem_object_put(fb->obj[i]);
++		drm_gem_object_handle_put_unlocked(fb->obj[i]);
+ 
+ 	drm_framebuffer_cleanup(fb);
+ 	kfree(fb);
+@@ -182,8 +182,10 @@ int drm_gem_fb_init_with_funcs(struct dr
+ 		if (!objs[i]) {
+ 			drm_dbg_kms(dev, "Failed to lookup GEM object\n");
+ 			ret = -ENOENT;
+-			goto err_gem_object_put;
++			goto err_gem_object_handle_put_unlocked;
+ 		}
++		drm_gem_object_handle_get_unlocked(objs[i]);
++		drm_gem_object_put(objs[i]);
+ 
+ 		min_size = (height - 1) * mode_cmd->pitches[i]
+ 			 + drm_format_info_min_pitch(info, i, width)
+@@ -193,22 +195,22 @@ int drm_gem_fb_init_with_funcs(struct dr
+ 			drm_dbg_kms(dev,
+ 				    "GEM object size (%zu) smaller than minimum size (%u) for plane %d\n",
+ 				    objs[i]->size, min_size, i);
+-			drm_gem_object_put(objs[i]);
++			drm_gem_object_handle_put_unlocked(objs[i]);
+ 			ret = -EINVAL;
+-			goto err_gem_object_put;
++			goto err_gem_object_handle_put_unlocked;
+ 		}
+ 	}
+ 
+ 	ret = drm_gem_fb_init(dev, fb, mode_cmd, objs, i, funcs);
+ 	if (ret)
+-		goto err_gem_object_put;
++		goto err_gem_object_handle_put_unlocked;
+ 
+ 	return 0;
+ 
+-err_gem_object_put:
++err_gem_object_handle_put_unlocked:
+ 	while (i > 0) {
+ 		--i;
+-		drm_gem_object_put(objs[i]);
++		drm_gem_object_handle_put_unlocked(objs[i]);
+ 	}
+ 	return ret;
+ }
+--- a/drivers/gpu/drm/drm_internal.h
++++ b/drivers/gpu/drm/drm_internal.h
+@@ -155,6 +155,8 @@ void drm_sysfs_lease_event(struct drm_de
+ 
+ /* drm_gem.c */
+ int drm_gem_init(struct drm_device *dev);
++void drm_gem_object_handle_get_unlocked(struct drm_gem_object *obj);
++void drm_gem_object_handle_put_unlocked(struct drm_gem_object *obj);
+ int drm_gem_handle_create_tail(struct drm_file *file_priv,
+ 			       struct drm_gem_object *obj,
+ 			       u32 *handlep);
 
 
