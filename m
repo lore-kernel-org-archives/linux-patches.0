@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D063BBF2;
-	Tue, 15 Jul 2025 13:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8DA7261B;
+	Tue, 15 Jul 2025 13:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585370; cv=none; b=e9PjWa0jAhxh3Has7zh+0TjAWWpJSaXeSsHlKsUERP+1m2ZcfHzPwMildC1aqZXmDScNWZGcl3XUK/odG1B8SRHfkd+Ukmq1yC1lhPxpa6sJUi29/Wbejf3hBhzs9HzrFxEIKW+ZFZoI4s/tGzZEaHDWwp2tNV/0GQfqQHKvnsU=
+	t=1752585372; cv=none; b=O+5k2pzwzJh5j0KOd1eERhkaSoDSwnS9HYIBVKbTfsFo6Qm0epH+UJ/FYo0lycIPsN0FVGf8ZPBxt8NHtd0ABxVeaUC+schzEjOTNwKdbE67GdoVNBIXHeyArNP0h1RLemZPX4l8FdvEsADDT3HKFqk1Uw0DNOtvPlqN0yjMKwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585370; c=relaxed/simple;
-	bh=lGwf51EaPc3Q/c+CePCOn1pjxXtrehejRHw+JFMRgH0=;
+	s=arc-20240116; t=1752585372; c=relaxed/simple;
+	bh=glxWDdrLPpiDLpPijdWqeG7qEg2zRJ9kKiZ8nL/pGjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjbcrGjFIw0bF7h9rGfYDvDzWUWpFKmHhFEK7BzlGNCjJmxMWNVLeiPEnkOpCpeW3r6DPAjVLBRteQLheGqcK+DQpKvpWvTQMLT1HvKfg2GrpP4fRfweiI0wHgcaT/KINNwSLTb6TgPVg3welPA1oEl4Wz9aplmWD19wif+p2C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpL8fksV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A/ziVGosTETkbuTj8JxOU/w5JU6icugkqddTCvrFzcZc+d/DV2WjTE3hbPOa8r+wmo3Ztr4KUp45FbC2OC3A+l3GIDEkvBOcw62TwhDwS/ioeAkNgKAauQqetfLTTglyy/jRIqZMGkz7OFRJgpqBZg1gShs5Uv2xnb1tWgv14ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LslOsf+q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpL8fksV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549E6C4CEE3;
-	Tue, 15 Jul 2025 13:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LslOsf+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30C5C4CEE3;
+	Tue, 15 Jul 2025 13:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585369;
-	bh=lGwf51EaPc3Q/c+CePCOn1pjxXtrehejRHw+JFMRgH0=;
+	s=korg; t=1752585372;
+	bh=glxWDdrLPpiDLpPijdWqeG7qEg2zRJ9kKiZ8nL/pGjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpL8fksVlAXlgK1+u3/Bo0FHFjgWPuJ4wgLUIv3jopqKsnpdyYGyk5pSgubcVHwRL
-	 LLLZNL01saRbTadVAXdA2BvUqQnNpRghcCMiaFRS+H81eAHT1uln9l/1f7kuVKlIHz
-	 ne8LxdtEyFwFWaqTFrmsLndQIlUx6ozdm6coxNq8=
+	b=LslOsf+qK1p8SzuU+jx1mRPa3iTeEcPVZh8cdYsY5ZPURId3n251SGMVsJ4pwJy4m
+	 c3gaHSRIVgSftejuDSkJdjvaGIc8rJDb3WNIrRjTkmn1L02hHyMT/ld8BpsVXsJyg2
+	 JZkswuy2kHxZqO/FsoMSUoyjHoTbyHUhgDhkv5Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 6.12 002/163] drm/exynos: exynos7_drm_decon: add vblank check in IRQ handling
-Date: Tue, 15 Jul 2025 15:11:10 +0200
-Message-ID: <20250715130808.879336420@linuxfoundation.org>
+	Flora Cui <flora.cui@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jonathan Gray <jsg@jsg.id.au>
+Subject: [PATCH 6.12 003/163] drm/amdgpu/discovery: use specific ip_discovery.bin for legacy asics
+Date: Tue, 15 Jul 2025 15:11:11 +0200
+Message-ID: <20250715130808.918080565@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -50,47 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Flora Cui <flora.cui@amd.com>
 
-commit b846350aa272de99bf6fecfa6b08e64ebfb13173 upstream.
+commit 25f602fbbcc8271f6e72211b54808ba21e677762 upstream.
 
-If there's support for another console device (such as a TTY serial),
-the kernel occasionally panics during boot. The panic message and a
-relevant snippet of the call stack is as follows:
+vega10/vega12/vega20/raven/raven2/picasso/arcturus/aldebaran
 
-  Unable to handle kernel NULL pointer dereference at virtual address 000000000000000
-  Call trace:
-    drm_crtc_handle_vblank+0x10/0x30 (P)
-    decon_irq_handler+0x88/0xb4
-    [...]
-
-Otherwise, the panics don't happen. This indicates that it's some sort
-of race condition.
-
-Add a check to validate if the drm device can handle vblanks before
-calling drm_crtc_handle_vblank() to avoid this.
-
-Cc: stable@vger.kernel.org
-Fixes: 96976c3d9aff ("drm/exynos: Add DECON driver")
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Flora Cui <flora.cui@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Jonathan Gray <jsg@jsg.id.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos7_drm_decon.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |   28 +++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos7_drm_decon.c
-@@ -601,6 +601,10 @@ static irqreturn_t decon_irq_handler(int
- 	if (!ctx->drm_dev)
- 		goto out;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -112,6 +112,12 @@
+ #endif
  
-+	/* check if crtc and vblank have been initialized properly */
-+	if (!drm_dev_has_vblank(ctx->drm_dev))
-+		goto out;
-+
- 	if (!ctx->i80_if) {
- 		drm_crtc_handle_vblank(&ctx->crtc->base);
+ MODULE_FIRMWARE("amdgpu/ip_discovery.bin");
++MODULE_FIRMWARE("amdgpu/vega10_ip_discovery.bin");
++MODULE_FIRMWARE("amdgpu/vega12_ip_discovery.bin");
++MODULE_FIRMWARE("amdgpu/vega20_ip_discovery.bin");
++MODULE_FIRMWARE("amdgpu/raven_ip_discovery.bin");
++MODULE_FIRMWARE("amdgpu/raven2_ip_discovery.bin");
++MODULE_FIRMWARE("amdgpu/picasso_ip_discovery.bin");
  
+ #define mmIP_DISCOVERY_VERSION  0x16A00
+ #define mmRCC_CONFIG_MEMSIZE	0xde3
+@@ -400,7 +406,27 @@ static const char *amdgpu_discovery_get_
+ 	if (amdgpu_discovery == 2)
+ 		return "amdgpu/ip_discovery.bin";
+ 
+-	return NULL;
++	switch (adev->asic_type) {
++	case CHIP_VEGA10:
++		return "amdgpu/vega10_ip_discovery.bin";
++	case CHIP_VEGA12:
++		return "amdgpu/vega12_ip_discovery.bin";
++	case CHIP_RAVEN:
++		if (adev->apu_flags & AMD_APU_IS_RAVEN2)
++			return "amdgpu/raven2_ip_discovery.bin";
++		else if (adev->apu_flags & AMD_APU_IS_PICASSO)
++			return "amdgpu/picasso_ip_discovery.bin";
++		else
++			return "amdgpu/raven_ip_discovery.bin";
++	case CHIP_VEGA20:
++		return "amdgpu/vega20_ip_discovery.bin";
++	case CHIP_ARCTURUS:
++		return "amdgpu/arcturus_ip_discovery.bin";
++	case CHIP_ALDEBARAN:
++		return "amdgpu/aldebaran_ip_discovery.bin";
++	default:
++		return NULL;
++	}
+ }
+ 
+ static int amdgpu_discovery_init(struct amdgpu_device *adev)
 
 
