@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B589C1991D2;
-	Tue, 15 Jul 2025 13:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC1F2C327B;
+	Tue, 15 Jul 2025 13:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585635; cv=none; b=huwpQ/ASELJoo8PdkT3OwBYZGvm4yiG0bxGWuPpuA2Ax3sxA2NMoPiggVK6lj97fGkQdeO1/aXpbG5Xo4Q+xo/YD/SVt7bVslViQlMrgh5CU019uDE9yOmms/a05JnqDiqzTMPs0Sqkt04EJEVWWfe/OqYOruSh2Uk0hClSm8j0=
+	t=1752585638; cv=none; b=gPbPOQuxeVKdbwZId9M4xUqsvBCM6QeoRKRDuyQGeSgXqbi6O2uv/FslqBFJz3dD3wje1NsiFjDrlYEOtaQ46dhAH3UBQoM9d3W65dYRs67tsf96XJqnMYx8YpKALUPD2wd4M5xzD+1G4F3BiIW4odbjui9Y5dTd/XgN2OQBzd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585635; c=relaxed/simple;
-	bh=+oEWqwAe6PbZOfPklL2YDtBDD40OWX3+FquU54xyzVw=;
+	s=arc-20240116; t=1752585638; c=relaxed/simple;
+	bh=p1z5p33115nH6GUDefYCyHMxgSW8Zdo+Jx6+b3W7Zss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WyOrxEig5Bb+1dwVgiW/vDtURp4IzEG22KbgIw8RtiuYKWSH7rrK7c3elNNDyB8/rRV3Sqr62jFMm2RnHNRbnG6ZaaaW5gfGeSRwfxM/oA4Hxmwv5gfXG4XGSy6qtDsn1D52FpP+r/0bi3aaDksja/I+gCN1zys19EwFJyvVpdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3zyyDLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAYQq3jIQk3fK8FtVrz9vAy+nwm/jgPdQ2BdmKpDPhkxWAM6X+mvd7Y1NITfF7dtDsKgzKQOf3kNaWcy074eCmI+HUTnaPd6wwz6mcDoqeTOHOQay8+sZk8Umqljgps+rkcbi+vR77TJ7dFT7LLBOfuDAzHRfs9YRgBUhpa0/vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FX9tD/p/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3zyyDLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AF7C4CEE3;
-	Tue, 15 Jul 2025 13:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FX9tD/p/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDA95C4CEE3;
+	Tue, 15 Jul 2025 13:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585635;
-	bh=+oEWqwAe6PbZOfPklL2YDtBDD40OWX3+FquU54xyzVw=;
+	s=korg; t=1752585638;
+	bh=p1z5p33115nH6GUDefYCyHMxgSW8Zdo+Jx6+b3W7Zss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3zyyDLxy+/8nxSf/K8iNbCbkULa0pUqii5zdGobcgNjxQdgdzIuKSiShAjAnO5bV
-	 hUUYO9h5HqC5c9ba2QzaE3UHxQNKisWrh2X11oy0HGqBHlP+7Y8x0k0Xbxk8qUZYv1
-	 Nb8ZUij4hPMkCtRVJDjStSJzA1RtmhWsUFO0DQdQ=
+	b=FX9tD/p/EEDK54J+OxD5piv9ie9iE/WAw3NwHCg3cVRQocerMF1uOfMECmAxKEpF5
+	 KHAJ3ow+2iCliJmpEBQk9ElgcM7f4FCmwkKElqJ4mxTQT7e4RC13uUdzwZHYNZyfYI
+	 AuxW80tYIPBjRaC6H8T/C+ZnYbaQBj8DgMWWudms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael-CY Lee <michael-cy.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/163] wifi: mac80211: fix non-transmitted BSSID profile search
-Date: Tue, 15 Jul 2025 15:13:01 +0200
-Message-ID: <20250715130813.386188487@linuxfoundation.org>
+Subject: [PATCH 6.12 114/163] wifi: rt2x00: fix remove callback type mismatch
+Date: Tue, 15 Jul 2025 15:13:02 +0200
+Message-ID: <20250715130813.428084892@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,54 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e1e6ebf490e55fee1ae573aa443c1d4aea5e4a40 ]
+[ Upstream commit 2ce6ad9262256dd345cb104ba0ac6cf4aeed25a3 ]
 
-When the non-transmitted BSSID profile is found, immediately return
-from the search to not return the wrong profile_len when the profile
-is found in a multiple BSSID element that isn't the last one in the
-frame.
+The function is used as remove callback for a platform driver.
+It was missed during the conversion from int to void
 
-Fixes: 5023b14cf4df ("mac80211: support profile split between elements")
-Reported-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
-Link: https://patch.msgid.link/20250630154501.f26cd45a0ecd.I28e0525d06e8a99e555707301bca29265cf20dc8@changeid
+Fixes: 0edb555a65d1 ("platform: Make platform_driver::remove() return void")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20250706092053.97724-1-nbd@nbd.name
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/parse.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00soc.c | 4 +---
+ drivers/net/wireless/ralink/rt2x00/rt2x00soc.h | 2 +-
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac80211/parse.c b/net/mac80211/parse.c
-index 6da39c864f45b..922ea9a6e2412 100644
---- a/net/mac80211/parse.c
-+++ b/net/mac80211/parse.c
-@@ -758,7 +758,6 @@ static size_t ieee802_11_find_bssid_profile(const u8 *start, size_t len,
- {
- 	const struct element *elem, *sub;
- 	size_t profile_len = 0;
--	bool found = false;
- 
- 	if (!bss || !bss->transmitted_bss)
- 		return profile_len;
-@@ -809,15 +808,14 @@ static size_t ieee802_11_find_bssid_profile(const u8 *start, size_t len,
- 					       index[2],
- 					       new_bssid);
- 			if (ether_addr_equal(new_bssid, bss->bssid)) {
--				found = true;
- 				elems->bssid_index_len = index[1];
- 				elems->bssid_index = (void *)&index[2];
--				break;
-+				return profile_len;
- 			}
- 		}
- 	}
- 
--	return found ? profile_len : 0;
-+	return 0;
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
+index eface610178d2..f7f3a2340c392 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.c
+@@ -108,7 +108,7 @@ int rt2x00soc_probe(struct platform_device *pdev, const struct rt2x00_ops *ops)
  }
+ EXPORT_SYMBOL_GPL(rt2x00soc_probe);
  
- static void
+-int rt2x00soc_remove(struct platform_device *pdev)
++void rt2x00soc_remove(struct platform_device *pdev)
+ {
+ 	struct ieee80211_hw *hw = platform_get_drvdata(pdev);
+ 	struct rt2x00_dev *rt2x00dev = hw->priv;
+@@ -119,8 +119,6 @@ int rt2x00soc_remove(struct platform_device *pdev)
+ 	rt2x00lib_remove_dev(rt2x00dev);
+ 	rt2x00soc_free_reg(rt2x00dev);
+ 	ieee80211_free_hw(hw);
+-
+-	return 0;
+ }
+ EXPORT_SYMBOL_GPL(rt2x00soc_remove);
+ 
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
+index 021fd06b36272..d6226b8a10e00 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00soc.h
+@@ -17,7 +17,7 @@
+  * SoC driver handlers.
+  */
+ int rt2x00soc_probe(struct platform_device *pdev, const struct rt2x00_ops *ops);
+-int rt2x00soc_remove(struct platform_device *pdev);
++void rt2x00soc_remove(struct platform_device *pdev);
+ #ifdef CONFIG_PM
+ int rt2x00soc_suspend(struct platform_device *pdev, pm_message_t state);
+ int rt2x00soc_resume(struct platform_device *pdev);
 -- 
 2.39.5
 
