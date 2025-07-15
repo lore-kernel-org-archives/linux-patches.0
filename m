@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980EA2E6D0E;
-	Tue, 15 Jul 2025 13:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BAC2E6D28;
+	Tue, 15 Jul 2025 13:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585980; cv=none; b=CkX3aL8hwetCgzunzSlzzqw0VBVIEiHxMOKmEXm2YgjtGuVe96O1mFNX56n2Jcbn3pWtzWmTUj4yaLNfpAfKqkqfJHFeO9P2qnNVnKg7gwNlK1V7kY9n7xvk6wwiiE16Pu2gxLwv5SE+YCchBdb58BaU7iQz98cDr1ZCNZZ+Qsk=
+	t=1752585983; cv=none; b=rAfnM5/hdwW1NZreKJwvvW+peLPVRq1ntrigYl54A9XSjujtGG5Xg9HodgDfP7sWNgsgkDwLPpfyKITjvVbgxlRaG0KJx8a/2EPhEV/j90QOMI9m3kzz/bTl7vO0ZrwRnmV/N0QhTGwf7YyKeKNhTIp2Em+/wWWVOLM1pcP8ULQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585980; c=relaxed/simple;
-	bh=d6iMO7p5OlrhiSgMDMfw4jEZj0We5kazBnIHKD5naK4=;
+	s=arc-20240116; t=1752585983; c=relaxed/simple;
+	bh=yJU0tN77dJCmQb3rgE6XB9vcfUqMBvrsKvB4Qnk30gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRjStVlIYTWfOYyrWgApNaW9TAPDo7edzKeXkbmnHyD9RyisMO7skSoyYHy7gKDdk3KTMKIQ429hBc5CPB70gGWw+/NwUnIg5bBEKveLdIYp4BPv1peHCTr7ostxWmyCnIb0TevtDJT0e1zSryeDXB5vAuNt8Qdqn+9WoIc8U50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNMwy1Rs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z67+A7/wd8k+ItPyEd37NgSLEqlHdGhO/L6ZRYO3AsevZ1b7yuqA5g7RRokSrMITiw7sqjeZPZLOclszR1/6ydE95WYwNHtf116BjYq09Vd9mOWt3hoi3bQWvv/n3MO/kJ8vKBWp9vlXAxnl+F7TzQKVDZy1VdEdg3YedlK6cOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5HvsK24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNMwy1Rs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28821C4CEE3;
-	Tue, 15 Jul 2025 13:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5HvsK24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D1BC4CEE3;
+	Tue, 15 Jul 2025 13:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585980;
-	bh=d6iMO7p5OlrhiSgMDMfw4jEZj0We5kazBnIHKD5naK4=;
+	s=korg; t=1752585983;
+	bh=yJU0tN77dJCmQb3rgE6XB9vcfUqMBvrsKvB4Qnk30gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNMwy1RslCyMVQSnzZQpCXkY9KVlIf5gdmDdupxxz/q49etq+GMOd2+V/AvmCNRJf
-	 u1CjcjbnQdpjrMEfrL/9y9d8zgRtVLbt33wiokx1I83fLBaHQ/TeymFpcRFXW0uL3u
-	 QEJ99hpY7clGRdeJhu9Ubr3fRhu1jqxKMpT/e/go=
+	b=c5HvsK24/AN9mL/tUoMS4Bq61kWFkJ8Ge3NLvgbC9WQ9RCy8yynhWzTNud6U6U38a
+	 Oup/5c1qlQDtkGfIjU01SUyE83Q/scjcd9iu0z9KmF08TU74nznMYeREK/+S0GJbAl
+	 3A/nbjXJqZDMxFKOo94XsXgB6G9EFnzyLFBwdlN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nigel Croxon <ncroxon@redhat.com>,
+	syzbot+48240bab47e705c53126@syzkaller.appspotmail.com,
+	Zheng Qixing <zhengqixing@huawei.com>,
 	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/109] raid10: cleanup memleak at raid10_make_request
-Date: Tue, 15 Jul 2025 15:13:37 +0200
-Message-ID: <20250715130802.124899861@linuxfoundation.org>
+Subject: [PATCH 6.6 082/109] nbd: fix uaf in nbd_genl_connect() error path
+Date: Tue, 15 Jul 2025 15:13:38 +0200
+Message-ID: <20250715130802.164340872@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -51,79 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nigel Croxon <ncroxon@redhat.com>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-[ Upstream commit 43806c3d5b9bb7d74ba4e33a6a8a41ac988bde24 ]
+[ Upstream commit aa9552438ebf015fc5f9f890dbfe39f0c53cf37e ]
 
-If raid10_read_request or raid10_write_request registers a new
-request and the REQ_NOWAIT flag is set, the code does not
-free the malloc from the mempool.
+There is a use-after-free issue in nbd:
 
-unreferenced object 0xffff8884802c3200 (size 192):
-   comm "fio", pid 9197, jiffies 4298078271
-   hex dump (first 32 bytes):
-     00 00 00 00 00 00 00 00 88 41 02 00 00 00 00 00  .........A......
-     08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-   backtrace (crc c1a049a2):
-     __kmalloc+0x2bb/0x450
-     mempool_alloc+0x11b/0x320
-     raid10_make_request+0x19e/0x650 [raid10]
-     md_handle_request+0x3b3/0x9e0
-     __submit_bio+0x394/0x560
-     __submit_bio_noacct+0x145/0x530
-     submit_bio_noacct_nocheck+0x682/0x830
-     __blkdev_direct_IO_async+0x4dc/0x6b0
-     blkdev_read_iter+0x1e5/0x3b0
-     __io_read+0x230/0x1110
-     io_read+0x13/0x30
-     io_issue_sqe+0x134/0x1180
-     io_submit_sqes+0x48c/0xe90
-     __do_sys_io_uring_enter+0x574/0x8b0
-     do_syscall_64+0x5c/0xe0
-     entry_SYSCALL_64_after_hwframe+0x76/0x7e
+block nbd6: Receive control failed (result -104)
+block nbd6: shutting down sockets
+==================================================================
+BUG: KASAN: slab-use-after-free in recv_work+0x694/0xa80 drivers/block/nbd.c:1022
+Write of size 4 at addr ffff8880295de478 by task kworker/u33:0/67
 
-V4: changing backing tree to see if CKI tests will pass.
-The patch code has not changed between any versions.
+CPU: 2 UID: 0 PID: 67 Comm: kworker/u33:0 Not tainted 6.15.0-rc5-syzkaller-00123-g2c89c1b655c0 #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Workqueue: nbd6-recv recv_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xc3/0x670 mm/kasan/report.c:521
+ kasan_report+0xe0/0x110 mm/kasan/report.c:634
+ check_region_inline mm/kasan/generic.c:183 [inline]
+ kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
+ instrument_atomic_read_write include/linux/instrumented.h:96 [inline]
+ atomic_dec include/linux/atomic/atomic-instrumented.h:592 [inline]
+ recv_work+0x694/0xa80 drivers/block/nbd.c:1022
+ process_one_work+0x9cc/0x1b70 kernel/workqueue.c:3238
+ process_scheduled_works kernel/workqueue.c:3319 [inline]
+ worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
+ kthread+0x3c2/0x780 kernel/kthread.c:464
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:153
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
 
-Fixes: c9aa889b035f ("md: raid10 add nowait support")
-Signed-off-by: Nigel Croxon <ncroxon@redhat.com>
-Link: https://lore.kernel.org/linux-raid/c0787379-9caa-42f3-b5fc-369aed784400@redhat.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+nbd_genl_connect() does not properly stop the device on certain
+error paths after nbd_start_device() has been called. This causes
+the error path to put nbd->config while recv_work continue to use
+the config after putting it, leading to use-after-free in recv_work.
+
+This patch moves nbd_start_device() after the backend file creation.
+
+Reported-by: syzbot+48240bab47e705c53126@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68227a04.050a0220.f2294.00b5.GAE@google.com/T/
+Fixes: 6497ef8df568 ("nbd: provide a way for userspace processes to identify device backends")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250612132405.364904-1-zhengqixing@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/block/nbd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 36b6bf3f8b29f..a75d090a7fa15 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1205,8 +1205,11 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 		rcu_read_unlock();
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index 2203686156bfe..3742ddf46c55a 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -2120,9 +2120,7 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
+ 				goto out;
+ 		}
  	}
- 
--	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors))
-+	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
-+		raid_end_bio_io(r10_bio);
- 		return;
-+	}
+-	ret = nbd_start_device(nbd);
+-	if (ret)
+-		goto out;
 +
- 	rdev = read_balance(conf, r10_bio, &max_sectors);
- 	if (!rdev) {
- 		if (err_rdev) {
-@@ -1428,8 +1431,11 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
+ 	if (info->attrs[NBD_ATTR_BACKEND_IDENTIFIER]) {
+ 		nbd->backend = nla_strdup(info->attrs[NBD_ATTR_BACKEND_IDENTIFIER],
+ 					  GFP_KERNEL);
+@@ -2138,6 +2136,8 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
+ 		goto out;
  	}
- 
- 	sectors = r10_bio->sectors;
--	if (!regular_request_wait(mddev, conf, bio, sectors))
-+	if (!regular_request_wait(mddev, conf, bio, sectors)) {
-+		raid_end_bio_io(r10_bio);
- 		return;
-+	}
+ 	set_bit(NBD_RT_HAS_BACKEND_FILE, &config->runtime_flags);
 +
- 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery) &&
- 	    (mddev->reshape_backwards
- 	     ? (bio->bi_iter.bi_sector < conf->reshape_safe &&
++	ret = nbd_start_device(nbd);
+ out:
+ 	mutex_unlock(&nbd->config_lock);
+ 	if (!ret) {
 -- 
 2.39.5
 
