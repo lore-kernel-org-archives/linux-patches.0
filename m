@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD4B274FDB;
-	Tue, 15 Jul 2025 13:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6452472AE;
+	Tue, 15 Jul 2025 13:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585606; cv=none; b=XMTDR2sahXt4COZkl9fQq+eLpHTG2JpSGGiovvshhCgbKt09EF1vDofRKMM31uoQ7o79NEqTUYQUYJSJDOI4trFBrFHlcT3c+T0QmBpHJHeLjVQVFXIJ3j8sotNvoHcyKp8ZspAjxQr+g/0xAWzcyXfZNUs9y6blvIl+fPbfon4=
+	t=1752585609; cv=none; b=SEHoaCKZYJgroWzwqFA4YtQqDUlegwzeZdWZznJAu0MxgJvhrvL1kh8FAoFBjwO6NNMeTSM30Iz91VK3Sf++I/0/TApSDYJRa/bcQCc6N6XD7xPnsNulHd9xuHxrizMrFZNMtDCe62azP6XHS8O8bowkY4MsO61l3SvQxkDjWqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585606; c=relaxed/simple;
-	bh=9kJC49LgX0qrLZlepf+waZ5NeCMO+j/l8EMMEtm6V/M=;
+	s=arc-20240116; t=1752585609; c=relaxed/simple;
+	bh=svep4TRvTCJFUpV6/op7dIlowU1foafecS0s9B77HVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pCgO7gJkJwe/p/M/vRjmMzq6GBwUIQxuZS33iXMFv6eSCA0/9stcRyz/JNKYYTfRuTPFTaAnKbVWDdFN1eoL1tu7FcEkWApWdlT7TPCF1jzqUnqjY46jufm07j3VJb3DzGDkZvOF3dNSXzrDqMcGZQKFsTL5M2pnHA/phph9YCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEZicZsi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJApgs34iXBNabV7qd3T+nYFDc4JCiMxF3BEVwHfa3Yi7aqOkIYy5kueS+xoRPavYbUa2rXbzKEgtFNSHDFyFQliRq0hr6KZ6TGJtEEUavnYAjYI3flL1cOo6x+SZ4H6m66A4bdm9e095mYVdyd3QRpSKJlHXtY1K5wn2o3k0j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPWK2vYP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEZicZsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512BEC4CEE3;
-	Tue, 15 Jul 2025 13:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPWK2vYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58A0C4CEF8;
+	Tue, 15 Jul 2025 13:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585606;
-	bh=9kJC49LgX0qrLZlepf+waZ5NeCMO+j/l8EMMEtm6V/M=;
+	s=korg; t=1752585609;
+	bh=svep4TRvTCJFUpV6/op7dIlowU1foafecS0s9B77HVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XEZicZsiNvz1QQ7R1tswgTpGj75aH+gMxogzvBZFg/hSQig+RdELNS/lV3BIWlvn2
-	 bQ2aoxANoGK8mjfRL3coPbYJsx2+oMEWlYmCqLjaOmlUDrgQhcNSknmwN2p6AFRDaj
-	 k7USNcgsYPWOQv3sKOP84xlyn61Yg7YDgkGqLCpg=
+	b=kPWK2vYPdNkaqAmOWAEIlK9QZSwvQCyMwZP4G8+EZsWIsVB3hUCLhKFWbcygqMPHs
+	 QvyNAwJPBzBl9nstmzm0Q4UZrOaTPtC+T3jGEiG8L6YLuQ1BIrjwLz3StzLnQL1P9x
+	 FHDRpFXPoe1dGlHKvkrZV3LDhp1gJSen3facdm7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 103/163] ASoC: Intel: sof-function-topology-lib: Print out the unsupported dmic count
-Date: Tue, 15 Jul 2025 15:12:51 +0200
-Message-ID: <20250715130812.991931552@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 104/163] netlink: Fix rmem check in netlink_broadcast_deliver().
+Date: Tue, 15 Jul 2025 15:12:52 +0200
+Message-ID: <20250715130813.034518051@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -52,36 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 16ea4666bbb7f5bd1130fa2d75631ccf8b62362e upstream.
+commit a3c4a125ec725cefb40047eb05ff9eafd57830b4 upstream.
 
-It is better to print out the non supported num_dmics than printing that
-it is not matching with 2 or 4.
+We need to allow queuing at least one skb even when skb is
+larger than sk->sk_rcvbuf.
 
-Fixes: 2fbeff33381c ("ASoC: Intel: add sof_sdw_get_tplg_files ops")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20250619104705.26057-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The cited commit made a mistake while converting a condition
+in netlink_broadcast_deliver().
+
+Let's correct the rmem check for the allow-one-skb rule.
+
+Fixes: ae8f160e7eb24 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250711053208.2965945-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/common/sof-function-topology-lib.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netlink/af_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/intel/common/sof-function-topology-lib.c
-+++ b/sound/soc/intel/common/sof-function-topology-lib.c
-@@ -73,7 +73,8 @@ int sof_sdw_get_tplg_files(struct snd_so
- 				break;
- 			default:
- 				dev_warn(card->dev,
--					 "only -2ch and -4ch are supported for dmic\n");
-+					 "unsupported number of dmics: %d\n",
-+					 mach_params.dmic_num);
- 				continue;
- 			}
- 			tplg_dev = TPLG_DEVICE_INTEL_PCH_DMIC;
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1398,7 +1398,7 @@ static int netlink_broadcast_deliver(str
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+ 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+ 
+-	if ((rmem != skb->truesize || rmem <= rcvbuf) &&
++	if ((rmem == skb->truesize || rmem <= rcvbuf) &&
+ 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
+ 		netlink_skb_set_owner_r(skb, sk);
+ 		__netlink_sendskb(sk, skb);
 
 
