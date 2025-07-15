@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC49E2EBB88;
-	Tue, 15 Jul 2025 13:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805D626D4F2;
+	Tue, 15 Jul 2025 13:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587761; cv=none; b=b7CuEI/gp9gbGgU5Zqk4OU+9sDEZptaaO/CRETudzvhUCxH5mBIQkQiGsK/64vU6TUXIVPzGIcYyfccJKn21ODO2DQBfeHmTCWROrpX6gXA7fOGqO+A967iYQ2mb5Xt6s0jBtiOKQJF32atLH9KulVJhv8MzmaQnONtXS0p6D7c=
+	t=1752587764; cv=none; b=S3/IyKImBSTJsb+SgImSbXOj14njNW7Sb5hvGeS2PkJTcN3riuJuQc5yxClcPSQVy1N6ZK2oAWcYXwDH9PnkIeom4LMCwFSlK4WLSE8E3r2AUSR38GOFczVvT1+Oqh32FVnFbnirgWW0hm9jYK6kKiHIndVQo64G20zgF7uNp5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587761; c=relaxed/simple;
-	bh=A3efCJshF7X/5Fd62OoWlWPZeZYZY/SJ4EKiRIrk/yM=;
+	s=arc-20240116; t=1752587764; c=relaxed/simple;
+	bh=402+YQiFZZTu4DQjF19it5PQk95skh2WWHdIWpedYBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMofO63oveolWZNZQ0+RNbEOb9SX1FMRS8p/dDs96sWQc5wjubjdyJv3y3h2skQJpx29sjQsxeEO50YPZgyEd/dYmJVKSzKKf7HO3sWVZ61fI4nBK+wEwsR+wq8+7dv7OdtIQ9B4KjbZu+n5kyAyVPGoyADYfrCfNr2X7TE8FbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqqYjXbr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NtccV04jbEJFZqpIHbwCbKy5WofmBjWaahZva9dDNu10Xf/AnSOBXe/0/IudjQQc5enDzTByzsRzutzSk1Mz4uiV81VI29JX1N9qOlv4TgD6CeDhmwkCdwEvqfWMd8gVcmhmVfoon8Ej/rvgwjcxZGPTBm9++Ky5uUu0tgdnCoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1xUAtks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqqYjXbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46374C4CEE3;
-	Tue, 15 Jul 2025 13:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1xUAtks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B75C4CEE3;
+	Tue, 15 Jul 2025 13:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587761;
-	bh=A3efCJshF7X/5Fd62OoWlWPZeZYZY/SJ4EKiRIrk/yM=;
+	s=korg; t=1752587764;
+	bh=402+YQiFZZTu4DQjF19it5PQk95skh2WWHdIWpedYBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PqqYjXbr1ZGAEqiyVdjyEWx21HYYhkUrbxwy4Effae4KBaHCWVnZcetYcbfsJNeSB
-	 Joa0k6l7AkWFSZwqoLideX1pImtjij8qMQqEdaFSaR0mYgENXEGkfVcNlyojByc6qh
-	 8pAbqBlkRfyOOXCmkw8DkNKwUmiirTgOUkSiQ3UU=
+	b=M1xUAtksZ0KiGhFct01zifb5VtFEe642TUfbnv8uyRxo6X1PC/fboLNDESrBNzjv1
+	 0MlHdUWXC1HVQd655W5jL16uQtqZxXYJOHKoqmAnFgogOxIP/gmYgo3h+ljHq6TJW3
+	 pwwm0SmyfAQP6W1SspUQ0wBDcW7EUZjSNzb7wx3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Tulio Magno <tuliom@ascii.art.br>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Justin M. Forbes" <jforbes@fedoraproject.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/208] ata: pata_cs5536: fix build on 32-bit UML
-Date: Tue, 15 Jul 2025 15:13:31 +0200
-Message-ID: <20250715130815.033395070@linuxfoundation.org>
+Subject: [PATCH 5.10 103/208] powerpc: Fix struct termio related ioctl macros
+Date: Tue, 15 Jul 2025 15:13:32 +0200
+Message-ID: <20250715130815.073249587@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,36 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit fe5b391fc56f77cf3c22a9dd4f0ce20db0e3533f ]
+[ Upstream commit ab107276607af90b13a5994997e19b7b9731e251 ]
 
-On 32-bit ARCH=um, CONFIG_X86_32 is still defined, so it
-doesn't indicate building on real X86 machines. There's
-no MSR on UML though, so add a check for CONFIG_X86.
+Since termio interface is now obsolete, include/uapi/asm/ioctls.h
+has some constant macros referring to "struct termio", this caused
+build failure at userspace.
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20250606090110.15784-2-johannes@sipsolutions.net
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+In file included from /usr/include/asm/ioctl.h:12,
+                 from /usr/include/asm/ioctls.h:5,
+                 from tst-ioctls.c:3:
+tst-ioctls.c: In function 'get_TCGETA':
+tst-ioctls.c:12:10: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+   12 |   return TCGETA;
+      |          ^~~~~~
+
+Even though termios.h provides "struct termio", trying to juggle definitions around to
+make it compile could introduce regressions. So better to open code it.
+
+Reported-by: Tulio Magno <tuliom@ascii.art.br>
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Reviewed-by: Michael Ellerman <mpe@ellerman.id.au>
+Closes: https://lore.kernel.org/linuxppc-dev/8734dji5wl.fsf@ascii.art.br/
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250517142237.156665-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_cs5536.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/uapi/asm/ioctls.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ata/pata_cs5536.c b/drivers/ata/pata_cs5536.c
-index 760ac6e65216f..3737d1bf1539d 100644
---- a/drivers/ata/pata_cs5536.c
-+++ b/drivers/ata/pata_cs5536.c
-@@ -27,7 +27,7 @@
- #include <scsi/scsi_host.h>
- #include <linux/dmi.h>
+diff --git a/arch/powerpc/include/uapi/asm/ioctls.h b/arch/powerpc/include/uapi/asm/ioctls.h
+index 2c145da3b774a..b5211e413829a 100644
+--- a/arch/powerpc/include/uapi/asm/ioctls.h
++++ b/arch/powerpc/include/uapi/asm/ioctls.h
+@@ -23,10 +23,10 @@
+ #define TCSETSW		_IOW('t', 21, struct termios)
+ #define TCSETSF		_IOW('t', 22, struct termios)
  
--#ifdef CONFIG_X86_32
-+#if defined(CONFIG_X86) && defined(CONFIG_X86_32)
- #include <asm/msr.h>
- static int use_msr;
- module_param_named(msr, use_msr, int, 0644);
+-#define TCGETA		_IOR('t', 23, struct termio)
+-#define TCSETA		_IOW('t', 24, struct termio)
+-#define TCSETAW		_IOW('t', 25, struct termio)
+-#define TCSETAF		_IOW('t', 28, struct termio)
++#define TCGETA		0x40147417 /* _IOR('t', 23, struct termio) */
++#define TCSETA		0x80147418 /* _IOW('t', 24, struct termio) */
++#define TCSETAW		0x80147419 /* _IOW('t', 25, struct termio) */
++#define TCSETAF		0x8014741c /* _IOW('t', 28, struct termio) */
+ 
+ #define TCSBRK		_IO('t', 29)
+ #define TCXONC		_IO('t', 30)
 -- 
 2.39.5
 
