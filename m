@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31E62D8790;
-	Tue, 15 Jul 2025 13:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA45263F52;
+	Tue, 15 Jul 2025 13:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585923; cv=none; b=X0NJ1dKzT3RvalJP8RYluinb9iw1f9X4VcUTl+IgIcIvQhTA5nOI37THksl62u9vzSUzy5+jG2X1CJjmDkx23zeTtxKJoM2i4qTKfhNM37twu4bMpvoK2YQATIyaeMU2r3Ru5hj61bLhwUnyHh8sCykXB/axmLpZ57uyD3XiVIg=
+	t=1752585925; cv=none; b=TKA7eQSi0nRoK19xRBX9K/UBCtk9rTFamuE2j+CBoFLUhIoyOvVkU+M1leU/T3mQS5YpVIj4gjK5lgTLI5snyGz6okEjCecojRRbyFCQ2cjtoY4LhqdQrPHA8tbWqF8yCPnfrIExPcpYRPOK8pVqRm/TA8tmPM0sCqzKkpBgRmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585923; c=relaxed/simple;
-	bh=gBdUQb8x91ihvOIDuB4ae83toHUUpvIH4eFB0znGxpc=;
+	s=arc-20240116; t=1752585925; c=relaxed/simple;
+	bh=ujiSiOJaB4UG3vplyPUwbwK1sY+TNgbx1ztkVTXn1Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gkGrF3ch8MwxhXjghe6xk5UJyQj+bkyaE5EmdWUNkeVNicGoMNSOEAb/ybrC5NHWIN22OMxRhj20Pt8nJ8Xq/b11KJxTZRjh2coASfcZZ/b+JHCFxCYGjqgYkcSEiAizfAZ+UWmk7iPzr9XX6GAFgrlBaHs4h9Ol/AG2zJJI7ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xbnk3Gbc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liKakBzOJe8odkDFxlQTuXQP8nxaotruSRIyMKnQhxIeLOM8FvBDA155lM9acVfCeTMeaLtIPfH2qKg7jifCXIQXlwk1DZ6Tp8Ebd1usA90t0rVu78GBTlLOOmTR9oIvohrALRBQpoQDW0Dp5PuFx8a9fl7aV/5rMzJ4kEO7STg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cwu2zjp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xbnk3Gbc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E22C4CEE3;
-	Tue, 15 Jul 2025 13:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cwu2zjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147D5C4CEE3;
+	Tue, 15 Jul 2025 13:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585922;
-	bh=gBdUQb8x91ihvOIDuB4ae83toHUUpvIH4eFB0znGxpc=;
+	s=korg; t=1752585925;
+	bh=ujiSiOJaB4UG3vplyPUwbwK1sY+TNgbx1ztkVTXn1Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xbnk3GbczRct87oQ29fQ4ATrFjgiWcdNxk6larpt83j45OPQFFlNzXShrjRj0a/Cz
-	 6DzHPby6N2S09ojzNRuCeFuFlFM7btwOXyPUeKh12qEqKFAHphc/f6+U36WGw/jeL+
-	 q8zIe3g7dhk30THmS/DYyP/VO7LexDuw1LZzD2Cc=
+	b=0cwu2zjpUGlQq7mZxiRGOplvO0NmSmjnDvgAqwf0fCdv3sgc0x6xpgfbKmjyy9dmz
+	 dXbY+hpEh+QbLdvlNfeyMu900A767r95yisCVnEnqBVi/M2RAALsuQETWHimJYbtY9
+	 HTlxNOxd3PO3d9hmxfRQWbTc1ArcCoWOXzgWn6PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.6 058/109] pwm: mediatek: Ensure to disable clocks in error path
-Date: Tue, 15 Jul 2025 15:13:14 +0200
-Message-ID: <20250715130801.204544547@linuxfoundation.org>
+	Mikhail Paulyshka <me@mixaill.net>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.6 059/109] x86/rdrand: Disable RDSEED on AMD Cyan Skillfish
+Date: Tue, 15 Jul 2025 15:13:15 +0200
+Message-ID: <20250715130801.245074820@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -44,70 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Mikhail Paulyshka <me@mixaill.net>
 
-commit 505b730ede7f5c4083ff212aa955155b5b92e574 upstream.
+commit 5b937a1ed64ebeba8876e398110a5790ad77407c upstream.
 
-After enabling the clocks each error path must disable the clocks again.
-One of them failed to do so. Unify the error paths to use goto to make it
-harder for future changes to add a similar bug.
+AMD Cyan Skillfish (Family 17h, Model 47h, Stepping 0h) has an error that
+causes RDSEED to always return 0xffffffff, while RDRAND works correctly.
 
-Fixes: 7ca59947b5fc ("pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250704172728.626815-2-u.kleine-koenig@baylibre.com
-Cc: stable@vger.kernel.org
-[ukleinek: backported to 6.6.y]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Mask the RDSEED cap for this CPU so that both /proc/cpuinfo and direct CPUID
+read report RDSEED as unavailable.
+
+  [ bp: Move to amd.c, massage. ]
+
+Signed-off-by: Mikhail Paulyshka <me@mixaill.net>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/20250524145319.209075-1-me@mixaill.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-mediatek.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/msr-index.h       |    1 +
+ arch/x86/kernel/cpu/amd.c              |    7 +++++++
+ tools/arch/x86/include/asm/msr-index.h |    1 +
+ 3 files changed, 9 insertions(+)
 
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -133,8 +133,10 @@ static int pwm_mediatek_config(struct pw
- 		return ret;
- 
- 	clk_rate = clk_get_rate(pc->clk_pwms[pwm->hwpwm]);
--	if (!clk_rate)
--		return -EINVAL;
-+	if (!clk_rate) {
-+		ret = -EINVAL;
-+		goto out;
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -575,6 +575,7 @@
+ #define MSR_AMD64_OSVW_STATUS		0xc0010141
+ #define MSR_AMD_PPIN_CTL		0xc00102f0
+ #define MSR_AMD_PPIN			0xc00102f1
++#define MSR_AMD64_CPUID_FN_7		0xc0011002
+ #define MSR_AMD64_CPUID_FN_1		0xc0011004
+ #define MSR_AMD64_LS_CFG		0xc0011020
+ #define MSR_AMD64_DC_CFG		0xc0011022
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1154,6 +1154,13 @@ static void init_amd_zen2(struct cpuinfo
+ {
+ 	fix_erratum_1386(c);
+ 	zen2_zenbleed_check(c);
++
++	/* Disable RDSEED on AMD Cyan Skillfish because of an error. */
++	if (c->x86_model == 0x47 && c->x86_stepping == 0x0) {
++		clear_cpu_cap(c, X86_FEATURE_RDSEED);
++		msr_clear_bit(MSR_AMD64_CPUID_FN_7, 18);
++		pr_emerg("RDSEED is not reliable on this platform; disabling.\n");
 +	}
- 
- 	/* Make sure we use the bus clock and not the 26MHz clock */
- 	if (pc->soc->has_ck_26m_sel)
-@@ -153,9 +155,9 @@ static int pwm_mediatek_config(struct pw
- 	}
- 
- 	if (clkdiv > PWM_CLK_DIV_MAX) {
--		pwm_mediatek_clk_disable(chip, pwm);
- 		dev_err(chip->dev, "period of %d ns not supported\n", period_ns);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 
- 	if (pc->soc->pwm45_fixup && pwm->hwpwm > 2) {
-@@ -172,9 +174,10 @@ static int pwm_mediatek_config(struct pw
- 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period);
- 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty);
- 
-+out:
- 	pwm_mediatek_clk_disable(chip, pwm);
- 
--	return 0;
-+	return ret;
  }
  
- static int pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ static void init_amd_zen3(struct cpuinfo_x86 *c)
+--- a/tools/arch/x86/include/asm/msr-index.h
++++ b/tools/arch/x86/include/asm/msr-index.h
+@@ -550,6 +550,7 @@
+ #define MSR_AMD64_OSVW_STATUS		0xc0010141
+ #define MSR_AMD_PPIN_CTL		0xc00102f0
+ #define MSR_AMD_PPIN			0xc00102f1
++#define MSR_AMD64_CPUID_FN_7		0xc0011002
+ #define MSR_AMD64_CPUID_FN_1		0xc0011004
+ #define MSR_AMD64_LS_CFG		0xc0011020
+ #define MSR_AMD64_DC_CFG		0xc0011022
 
 
