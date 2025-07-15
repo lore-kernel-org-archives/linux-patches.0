@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B662192D8A;
-	Tue, 15 Jul 2025 13:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDAD2701B8;
+	Tue, 15 Jul 2025 13:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585500; cv=none; b=He7lyjskdRUIf5cZRCHU6E433ERLupbAqCoKxtvKt6sgEMLoHzWlHJYz4LTOyp2+YNMcpU/PT/EmzC/afQK3o/r4bFhqOxyiNITFG8Pt/8kxH0Qe/PE8il//dDcqMXGO7ASupZ0FiywQrGbgIgm2QmvmcijQGF9sUP6gYrIl1EQ=
+	t=1752585503; cv=none; b=is0gKp1BupJYm5+n+6spcfJjrrnN2E/k3FcBHlgBA7pOel8EXAZdReT0aRjlZ6XAyIcXAilz4pXMZZP7XUwPEvznJTvcqqNhJ3CwiU/TIa2bmF7Y+AtpC2S+NoziHKWfB3zMvAJ5D4UtycqityWbl/M+R1OEmuMJyYSafskdGHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585500; c=relaxed/simple;
-	bh=TkyT1mXx/OT0w6TlRbJ6H70zrL/N4zSdI69ibWMJegU=;
+	s=arc-20240116; t=1752585503; c=relaxed/simple;
+	bh=ePFS/8QiOfZ/OXeZ50ngNHXm5ubIOS/GpyDcBUie4Ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aZ7zMuZUwwT8d020mJ3Z6Nn0b3HpEz5r/6FHnB8L1i1ez/Im53NZz6PTvo6T9hIoHRLrs4L2upfjnFqjCTb+71gVOnFrVrD+NygII7Rml+WEX9MsWZrCNZDAXmwCEMbvCZ5ta9OOZJeNr/2oSfIoPYplNh+Zw7YFc0UYN79XZWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkZJeu03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RZLITrePYh1zhcsS5y//P+/YadZ92Tiv7xpH7HjlGrcLYBb1gB2WRVw6BDfbvicWsgsCNfp37nJ5ztyHJJBCDPqVdqSZtRVWPvG62StxwWe+24lr41SsZk2Fr9W5XR1Ivc6zvh8smq8FnDaMFvpi0Ez8cmBp3+H2a45Emx+kewQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDzPMwsE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkZJeu03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AACC4CEE3;
-	Tue, 15 Jul 2025 13:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDzPMwsE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CABC4CEE3;
+	Tue, 15 Jul 2025 13:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585500;
-	bh=TkyT1mXx/OT0w6TlRbJ6H70zrL/N4zSdI69ibWMJegU=;
+	s=korg; t=1752585503;
+	bh=ePFS/8QiOfZ/OXeZ50ngNHXm5ubIOS/GpyDcBUie4Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkZJeu03ovsKFNbNR3U617DCs/6u+y0TVj+064gP35KYigiYLvTckF9gtajq0CxeH
-	 fXgaHW7OYNW1nCk6Bc+hmn9VOMAgSAayN7diy/aUoN64LP3nnyKSUDv9/Z7H4MWq7Y
-	 cE3wai47W+uEOQ3/e7Og9Rh8oSK0PgZ6yHrQohF8=
+	b=mDzPMwsEOdkVXPqrYks0jOZFjvy/RaZm0cABnnc9bYxrT/D+PkIAXumd/FqNsmKyy
+	 8Fu7n24lnEqzHmw1WjfFl7HHOaocAOZuQYgRKsH0nghoX6gnUQbdBfvupmDvnVsgpn
+	 wA4wwWCqXz72vKhRjmWreBMCy6XMXKCFcePbdqOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.12 064/163] pwm: Fix invalid state detection
-Date: Tue, 15 Jul 2025 15:12:12 +0200
-Message-ID: <20250715130811.318286803@linuxfoundation.org>
+Subject: [PATCH 6.12 065/163] pwm: mediatek: Ensure to disable clocks in error path
+Date: Tue, 15 Jul 2025 15:12:13 +0200
+Message-ID: <20250715130811.356495162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -53,38 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 9ee124caae1b0defd0e02c65686f539845a3ac9b upstream.
+commit 505b730ede7f5c4083ff212aa955155b5b92e574 upstream.
 
-Commit 9dd42d019e63 ("pwm: Allow pwm state transitions from an invalid
-state") intended to allow some state transitions that were not allowed
-before. The idea is sane and back then I also got the code comment
-right, but the check for enabled is bogus. This resulted in state
-transitions for enabled states to be allowed to have invalid duty/period
-settings and thus it can happen that low-level drivers get requests for
-invalid states🙄.
+After enabling the clocks each error path must disable the clocks again.
+One of them failed to do so. Unify the error paths to use goto to make it
+harder for future changes to add a similar bug.
 
-Invert the check to allow state transitions for disabled states only.
-
-Fixes: 9dd42d019e63 ("pwm: Allow pwm state transitions from an invalid state")
+Fixes: 7ca59947b5fc ("pwm: mediatek: Prevent divide-by-zero in pwm_mediatek_config()")
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20250704172416.626433-2-u.kleine-koenig@baylibre.com
+Link: https://lore.kernel.org/r/20250704172728.626815-2-u.kleine-koenig@baylibre.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-mediatek.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/pwm/core.c
-+++ b/drivers/pwm/core.c
-@@ -148,7 +148,7 @@ static bool pwm_state_valid(const struct
- 	 * and supposed to be ignored. So also ignore any strange values and
- 	 * consider the state ok.
- 	 */
--	if (state->enabled)
-+	if (!state->enabled)
- 		return true;
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -130,8 +130,10 @@ static int pwm_mediatek_config(struct pw
+ 		return ret;
  
- 	if (!state->period)
+ 	clk_rate = clk_get_rate(pc->clk_pwms[pwm->hwpwm]);
+-	if (!clk_rate)
+-		return -EINVAL;
++	if (!clk_rate) {
++		ret = -EINVAL;
++		goto out;
++	}
+ 
+ 	/* Make sure we use the bus clock and not the 26MHz clock */
+ 	if (pc->soc->has_ck_26m_sel)
+@@ -150,9 +152,9 @@ static int pwm_mediatek_config(struct pw
+ 	}
+ 
+ 	if (clkdiv > PWM_CLK_DIV_MAX) {
+-		pwm_mediatek_clk_disable(chip, pwm);
+ 		dev_err(pwmchip_parent(chip), "period of %d ns not supported\n", period_ns);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 
+ 	if (pc->soc->pwm45_fixup && pwm->hwpwm > 2) {
+@@ -169,9 +171,10 @@ static int pwm_mediatek_config(struct pw
+ 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period);
+ 	pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty);
+ 
++out:
+ 	pwm_mediatek_clk_disable(chip, pwm);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int pwm_mediatek_enable(struct pwm_chip *chip, struct pwm_device *pwm)
 
 
