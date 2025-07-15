@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67822E3AF9;
-	Tue, 15 Jul 2025 13:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812802E3B16;
+	Tue, 15 Jul 2025 13:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585840; cv=none; b=c2UJkWV1BoViJ4GYLOpNJZ4cxluV1YNAF+Z9oxTb8Q34r+ofDNBwqm4ggzhVYOou+yj3ClxncsKtyRtv1sUAjahY86Exi3ntdvV0D8lRq+G/BXGR6l4r/4kRQQrejTnVw44guRTegVQc+t5PzWwcdfbuCAdVJgxxyWl38FxJ3G4=
+	t=1752585843; cv=none; b=orhBsJ/VtGofKEC4dER7WmpuCQp6BImRl4yZs18JmQjJ4fpOCtT6JF2hLOuyfqz0ZlcI4OxSWg4nBFhUSULIp5RSZAVp7Bjohuz6eJ7euPV/goRnLaXo7E5uveDepe0JH6qMCBcmc8vt7zrlJ40rrgu7BoYNp0N+Q3PUoU9o96Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585840; c=relaxed/simple;
-	bh=chKQqaTLnNShTwhfDY0GbUXT3vYF2/vAIVerGz8UMn0=;
+	s=arc-20240116; t=1752585843; c=relaxed/simple;
+	bh=R3Q/ISxcRTxJcY8BjVz3zuaEynW9q//vMosG9UP/i2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMnCLSEXPxdNNqgbJHOVs72vk921d7YdyrqClxeyT05/HCJamA15MwHNcb73v+pzYjGs9i1xmBsscDgQHlKKfF98+lzo/Uu0hH1CFtsFqEzlUfJ9c30KWDWbVl/ZDZfFagejWsqnNNUzGt8o4+U8QnkruGrkX0iP3maa2FD2oJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zI2b11r+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pEdknLC/QdnrSGutzMhqu3jUQ9zxMHOLRi0jDrJs+oo2kTlHGTh3KqYy6T9M6hL7Ix3dUEthExVWFNkzfZDAtVA87BxzJNONdRFPAox81OkTyPYASMZHHqav4ywBy+3oQLmqiLApaGG0pIiFojWcFgCe8kmBmN04YqclSYN+Zzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvDfbY0t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zI2b11r+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23629C4CEF1;
-	Tue, 15 Jul 2025 13:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvDfbY0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF31C4AF09;
+	Tue, 15 Jul 2025 13:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585840;
-	bh=chKQqaTLnNShTwhfDY0GbUXT3vYF2/vAIVerGz8UMn0=;
+	s=korg; t=1752585843;
+	bh=R3Q/ISxcRTxJcY8BjVz3zuaEynW9q//vMosG9UP/i2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zI2b11r+i5ZLR8i0Edua9M+i6HeW5RDeFvsbDwkwrIdjC86vb0U1pehBHwYwiUXn6
-	 Aw84N3M90Ns4gr3gEdnWq8nNNPRsqLAEYib5XETb3O91OKaaulPbs+H3HIqtBOLPC8
-	 cJDrticM/ULExofCpM++cLLAnQn9Tfbge7I+GPcM=
+	b=MvDfbY0tCeRAlgTnWm7CZ83MU5NzLWTl0B6BUgnqvg/c8Ok740cYr8tkduUDr9Lze
+	 W4poxm+yBcMPQ/ZOoPPn25CmzrYz9RXrM6DrEJdD9/nlYt0DE2w6KuA3MTRRxX+DX0
+	 p3VJM92ytHNLbOkWm0vTR1W61bhl0FwJaAj2tjLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
-	David Howells <dhowells@redhat.com>,
-	LePremierHomme <kwqcheii@proton.me>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/109] rxrpc: Fix bug due to prealloc collision
-Date: Tue, 15 Jul 2025 15:12:43 +0200
-Message-ID: <20250715130759.969824841@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
+	Hailong Liu <hailong.liu@oppo.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"zhangpeng.00@bytedance.com" <zhangpeng.00@bytedance.com>,
+	Steve Kang <Steve.Kang@unisoc.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 028/109] maple_tree: fix MA_STATE_PREALLOC flag in mas_preallocate()
+Date: Tue, 15 Jul 2025 15:12:44 +0200
+Message-ID: <20250715130800.010231825@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -56,57 +58,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Liam R. Howlett <Liam.Howlett@oracle.com>
 
-[ Upstream commit 69e4186773c6445b258fb45b6e1df18df831ec45 ]
+commit fba46a5d83ca8decb338722fb4899026d8d9ead2 upstream.
 
-When userspace is using AF_RXRPC to provide a server, it has to preallocate
-incoming calls and assign to them call IDs that will be used to thread
-related recvmsg() and sendmsg() together.  The preallocated call IDs will
-automatically be attached to calls as they come in until the pool is empty.
+Temporarily clear the preallocation flag when explicitly requesting
+allocations.  Pre-existing allocations are already counted against the
+request through mas_node_count_gfp(), but the allocations will not happen
+if the MA_STATE_PREALLOC flag is set.  This flag is meant to avoid
+re-allocating in bulk allocation mode, and to detect issues with
+preallocation calculations.
 
-To the kernel, the call IDs are just arbitrary numbers, but userspace can
-use the call ID to hold a pointer to prepared structs.  In any case, the
-user isn't permitted to create two calls with the same call ID (call IDs
-become available again when the call ends) and EBADSLT should result from
-sendmsg() if an attempt is made to preallocate a call with an in-use call
-ID.
+The MA_STATE_PREALLOC flag should also always be set on zero allocations
+so that detection of underflow allocations will print a WARN_ON() during
+consumption.
 
-However, the cleanup in the error handling will trigger both assertions in
-rxrpc_cleanup_call() because the call isn't marked complete and isn't
-marked as having been released.
+User visible effect of this flaw is a WARN_ON() followed by a null pointer
+dereference when subsequent requests for larger number of nodes is
+ignored, such as the vma merge retry in mmap_region() caused by drivers
+altering the vma flags (which happens in v6.6, at least)
 
-Fix this by setting the call state in rxrpc_service_prealloc_one() and then
-marking it as being released before calling the cleanup function.
-
-Fixes: 00e907127e6f ("rxrpc: Preallocate peers, conns and calls for incoming service requests")
-Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: LePremierHomme <kwqcheii@proton.me>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250708211506.2699012-2-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250616184521.3382795-3-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Reported-by: Hailong Liu <hailong.liu@oppo.com>
+Link: https://lore.kernel.org/all/1652f7eb-a51b-4fee-8058-c73af63bacd1@oppo.com/
+Link: https://lore.kernel.org/all/20250428184058.1416274-1-Liam.Howlett@oracle.com/
+Link: https://lore.kernel.org/all/20250429014754.1479118-1-Liam.Howlett@oracle.com/
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Hailong Liu <hailong.liu@oppo.com>
+Cc: zhangpeng.00@bytedance.com <zhangpeng.00@bytedance.com>
+Cc: Steve Kang <Steve.Kang@unisoc.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/call_accept.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/maple_tree.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/rxrpc/call_accept.c b/net/rxrpc/call_accept.c
-index 0f5a1d77b890f..65ef58ab7aa0c 100644
---- a/net/rxrpc/call_accept.c
-+++ b/net/rxrpc/call_accept.c
-@@ -149,6 +149,7 @@ static int rxrpc_service_prealloc_one(struct rxrpc_sock *rx,
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -5497,7 +5497,7 @@ int mas_preallocate(struct ma_state *mas
+ 	/* At this point, we are at the leaf node that needs to be altered. */
+ 	/* Exact fit, no nodes needed. */
+ 	if (wr_mas.r_min == mas->index && wr_mas.r_max == mas->last)
+-		return 0;
++		goto set_flag;
  
- id_in_use:
- 	write_unlock(&rx->call_lock);
-+	rxrpc_prefail_call(call, RXRPC_CALL_LOCAL_ERROR, -EBADSLT);
- 	rxrpc_cleanup_call(call);
- 	_leave(" = -EBADSLT");
- 	return -EBADSLT;
--- 
-2.39.5
-
+ 	mas_wr_end_piv(&wr_mas);
+ 	node_size = mas_wr_new_end(&wr_mas);
+@@ -5506,10 +5506,10 @@ int mas_preallocate(struct ma_state *mas
+ 	if (node_size == wr_mas.node_end) {
+ 		/* reuse node */
+ 		if (!mt_in_rcu(mas->tree))
+-			return 0;
++			goto set_flag;
+ 		/* shifting boundary */
+ 		if (wr_mas.offset_end - mas->offset == 1)
+-			return 0;
++			goto set_flag;
+ 	}
+ 
+ 	if (node_size >= mt_slots[wr_mas.type]) {
+@@ -5528,10 +5528,13 @@ int mas_preallocate(struct ma_state *mas
+ 
+ 	/* node store, slot store needs one node */
+ ask_now:
++	mas->mas_flags &= ~MA_STATE_PREALLOC;
+ 	mas_node_count_gfp(mas, request, gfp);
+-	mas->mas_flags |= MA_STATE_PREALLOC;
+-	if (likely(!mas_is_err(mas)))
++	if (likely(!mas_is_err(mas))) {
++set_flag:
++		mas->mas_flags |= MA_STATE_PREALLOC;
+ 		return 0;
++	}
+ 
+ 	mas_set_alloc_req(mas, 0);
+ 	ret = xa_err(mas->node);
 
 
