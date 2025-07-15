@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6551B2E716D;
-	Tue, 15 Jul 2025 13:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5482EF9A1;
+	Tue, 15 Jul 2025 13:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587828; cv=none; b=kUn8sRq+3o3d8EQkUntOHlyldOWveuEeCHFwpKnCQ+ELjytsNTvtNENAt+WsHBJ5JzrdVKYmrTOYs+6T9VqPXAzNRPawLrG1ksv3fwoh2Z2nUcwZ7baEDh7judJLrFgU8CAx77eMpUB9ZU8qEEWZQad5BVve7aAxI8xTFvbFCyc=
+	t=1752587830; cv=none; b=GpSve3wTbUddcwHc7ce81sBr0+djT9ZT7jy8Su+DTP03YPH2edy4xHWcX8GuwiAVSY6YLFmD9dq9Z5cRWSbNLfUhvJZ5d7seqSoKSieH6rm9Xjyxp2hyAmfAUuALvYRCPQJ+KF8ud3TmZLP2RKlUgAQcFF5zZgGQFQtRq9v+Ge0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587828; c=relaxed/simple;
-	bh=4vPP0HNWPXz9cCDv3RAQLyGRw3JWQIYy1wABmzhv9tg=;
+	s=arc-20240116; t=1752587830; c=relaxed/simple;
+	bh=XgdI4DG8FrywYjxtcXKUzJJrvg9+17CE7I9gC5aAer8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMrAOK6oopjUIvQaiPl1bGm/IhJW3yjcku9d9kt8Gqw1cX1XBp2baFj9bh8/6BthRfnlG7Y8RXRVaBDS4jNYPl5Z849DWnecFX1wuk5dNoVaayPgzxJT4WJzwZz7Nk4pP+ckcrTdS84lG3lO6154xxruU54TbJZCbpBzf7LoQKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=welHEIoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qf6aSZFsYwDfscXM4tBjFOxwURKhetakAHWnEX8v4e0cIpotqFpqm/i/1GYHqVNz3l8APHb2F40XVlXwSeCrrcbv/XrHocyhNipJzpoEPwO7j++ctlP4MsOJkzXBPQ86If6fcuoXvr8YGnGzXUkMA1ZH7sP0eT4acJ90bEZCxaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0q3mBBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="welHEIoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCC3C4CEE3;
-	Tue, 15 Jul 2025 13:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0q3mBBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40168C4CEF1;
+	Tue, 15 Jul 2025 13:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587828;
-	bh=4vPP0HNWPXz9cCDv3RAQLyGRw3JWQIYy1wABmzhv9tg=;
+	s=korg; t=1752587830;
+	bh=XgdI4DG8FrywYjxtcXKUzJJrvg9+17CE7I9gC5aAer8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=welHEIoh4MR7DFVn0Ya0JSGEk7XsixUPYoX3C6cMr4xACFPJTGheDV9koV5aSIXDG
-	 LQrRBLW8v149JOaQvL3YFAHCWlQ3mq5sZkClgjqnkFYMoUt8Uaa1iXwq+XMTH0yk+L
-	 yEYg/XIFTRlIvK5iJ/pJMRfXfuGl8McZx14xvuyY=
+	b=Q0q3mBBJu/RJ8OGFopGNOdsrgyqJok8lVL/9Zj9sV0tJ1KOYK+k74bBfUjI8V4uzc
+	 LivI7nxQ8Q9YVEo8bZgWWwNLF/qB8SBfvlP3c/iWEIo0l06p1Cfd0EcbcJ9UYlaluR
+	 ZuCckdYD4rtlcYMgrQif1/M9p1aMdAJWUxxnGghs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.10 131/208] media: uvcvideo: Rollback non processed entities on error
-Date: Tue, 15 Jul 2025 15:14:00 +0200
-Message-ID: <20250715130816.185942227@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 5.10 158/208] x86/alternatives: Introduce int3_emulate_jcc()
+Date: Tue, 15 Jul 2025 15:14:27 +0200
+Message-ID: <20250715130817.233603724@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,113 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit a70705d3c020d0d5c3ab6a5cc93e011ac35e7d48 upstream.
+commit db7adcfd1cec4e95155e37bc066fddab302c6340 upstream.
 
-If we fail to commit an entity, we need to restore the
-UVC_CTRL_DATA_BACKUP for the other uncommitted entities. Otherwise the
-control cache and the device would be out of sync.
+Move the kprobe Jcc emulation into int3_emulate_jcc() so it can be
+used by more code -- specifically static_call() will need this.
 
-Cc: stable@kernel.org
-Fixes: b4012002f3a3 ("[media] uvcvideo: Add support for control events")
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Closes: https://lore.kernel.org/linux-media/fe845e04-9fde-46ee-9763-a6f00867929a@redhat.com/
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Message-ID: <20250224-uvc-data-backup-v2-3-de993ed9823b@chromium.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20230123210607.057678245@infradead.org
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   42 ++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 14 deletions(-)
+ arch/x86/include/asm/text-patching.h |   31 ++++++++++++++++++++++++++++
+ arch/x86/kernel/kprobes/core.c       |   38 +++++++----------------------------
+ 2 files changed, 39 insertions(+), 30 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1577,7 +1577,7 @@ static int uvc_ctrl_commit_entity(struct
- 	unsigned int processed_ctrls = 0;
- 	struct uvc_control *ctrl;
- 	unsigned int i;
--	int ret;
-+	int ret = 0;
- 
- 	if (entity == NULL)
- 		return 0;
-@@ -1605,8 +1605,6 @@ static int uvc_ctrl_commit_entity(struct
- 				dev->intfnum, ctrl->info.selector,
- 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
- 				ctrl->info.size);
--		else
--			ret = 0;
- 
- 		if (!ret)
- 			processed_ctrls++;
-@@ -1618,14 +1616,22 @@ static int uvc_ctrl_commit_entity(struct
- 
- 		ctrl->dirty = 0;
- 
--		if (ret < 0)
--			return ret;
--
--		if (!rollback && handle &&
-+		if (!rollback && handle && !ret &&
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
- 			uvc_ctrl_set_handle(handle, ctrl, handle);
-+
-+		if (ret < 0 && !rollback) {
-+			/*
-+			 * If we fail to set a control, we need to rollback
-+			 * the next ones.
-+			 */
-+			rollback = 1;
-+		}
- 	}
- 
-+	if (ret)
-+		return ret;
-+
- 	return processed_ctrls;
+--- a/arch/x86/include/asm/text-patching.h
++++ b/arch/x86/include/asm/text-patching.h
+@@ -181,6 +181,37 @@ void int3_emulate_ret(struct pt_regs *re
+ 	unsigned long ip = int3_emulate_pop(regs);
+ 	int3_emulate_jmp(regs, ip);
  }
++
++static __always_inline
++void int3_emulate_jcc(struct pt_regs *regs, u8 cc, unsigned long ip, unsigned long disp)
++{
++	static const unsigned long jcc_mask[6] = {
++		[0] = X86_EFLAGS_OF,
++		[1] = X86_EFLAGS_CF,
++		[2] = X86_EFLAGS_ZF,
++		[3] = X86_EFLAGS_CF | X86_EFLAGS_ZF,
++		[4] = X86_EFLAGS_SF,
++		[5] = X86_EFLAGS_PF,
++	};
++
++	bool invert = cc & 1;
++	bool match;
++
++	if (cc < 0xc) {
++		match = regs->flags & jcc_mask[cc >> 1];
++	} else {
++		match = ((regs->flags & X86_EFLAGS_SF) >> X86_EFLAGS_SF_BIT) ^
++			((regs->flags & X86_EFLAGS_OF) >> X86_EFLAGS_OF_BIT);
++		if (cc >= 0xe)
++			match = match || (regs->flags & X86_EFLAGS_ZF);
++	}
++
++	if ((match && !invert) || (!match && invert))
++		ip += disp;
++
++	int3_emulate_jmp(regs, ip);
++}
++
+ #endif /* !CONFIG_UML_X86 */
  
-@@ -1635,23 +1641,31 @@ int __uvc_ctrl_commit(struct uvc_fh *han
+ #endif /* _ASM_X86_TEXT_PATCHING_H */
+--- a/arch/x86/kernel/kprobes/core.c
++++ b/arch/x86/kernel/kprobes/core.c
+@@ -462,50 +462,26 @@ static void kprobe_emulate_call(struct k
+ }
+ NOKPROBE_SYMBOL(kprobe_emulate_call);
+ 
+-static nokprobe_inline
+-void __kprobe_emulate_jmp(struct kprobe *p, struct pt_regs *regs, bool cond)
++static void kprobe_emulate_jmp(struct kprobe *p, struct pt_regs *regs)
  {
- 	struct uvc_video_chain *chain = handle->chain;
- 	struct uvc_entity *entity;
--	int ret = 0;
-+	int ret_out = 0;
-+	int ret;
+ 	unsigned long ip = regs->ip - INT3_INSN_SIZE + p->ainsn.size;
  
- 	/* Find the control. */
- 	list_for_each_entry(entity, &chain->entities, chain) {
- 		ret = uvc_ctrl_commit_entity(chain->dev, handle, entity,
- 					     rollback);
--		if (ret < 0)
--			goto done;
--		else if (ret > 0 && !rollback)
-+		if (ret < 0) {
-+			/*
-+			 * When we fail to commit an entity, we need to
-+			 * restore the UVC_CTRL_DATA_BACKUP for all the
-+			 * controls in the other entities, otherwise our cache
-+			 * and the hardware will be out of sync.
-+			 */
-+			rollback = 1;
-+
-+			ret_out = ret;
-+		} else if (ret > 0 && !rollback) {
- 			uvc_ctrl_send_events(handle, entity, xctrls,
- 					     xctrls_count);
-+		}
- 	}
- 
--	ret = 0;
--done:
- 	mutex_unlock(&chain->ctrl_mutex);
--	return ret;
-+	return ret_out;
+-	if (cond)
+-		ip += p->ainsn.rel32;
++	ip += p->ainsn.rel32;
+ 	int3_emulate_jmp(regs, ip);
  }
+-
+-static void kprobe_emulate_jmp(struct kprobe *p, struct pt_regs *regs)
+-{
+-	__kprobe_emulate_jmp(p, regs, true);
+-}
+ NOKPROBE_SYMBOL(kprobe_emulate_jmp);
  
- int uvc_ctrl_get(struct uvc_video_chain *chain,
+-static const unsigned long jcc_mask[6] = {
+-	[0] = X86_EFLAGS_OF,
+-	[1] = X86_EFLAGS_CF,
+-	[2] = X86_EFLAGS_ZF,
+-	[3] = X86_EFLAGS_CF | X86_EFLAGS_ZF,
+-	[4] = X86_EFLAGS_SF,
+-	[5] = X86_EFLAGS_PF,
+-};
+-
+ static void kprobe_emulate_jcc(struct kprobe *p, struct pt_regs *regs)
+ {
+-	bool invert = p->ainsn.jcc.type & 1;
+-	bool match;
++	unsigned long ip = regs->ip - INT3_INSN_SIZE + p->ainsn.size;
+ 
+-	if (p->ainsn.jcc.type < 0xc) {
+-		match = regs->flags & jcc_mask[p->ainsn.jcc.type >> 1];
+-	} else {
+-		match = ((regs->flags & X86_EFLAGS_SF) >> X86_EFLAGS_SF_BIT) ^
+-			((regs->flags & X86_EFLAGS_OF) >> X86_EFLAGS_OF_BIT);
+-		if (p->ainsn.jcc.type >= 0xe)
+-			match = match || (regs->flags & X86_EFLAGS_ZF);
+-	}
+-	__kprobe_emulate_jmp(p, regs, (match && !invert) || (!match && invert));
++	int3_emulate_jcc(regs, p->ainsn.jcc.type, ip, p->ainsn.rel32);
+ }
+ NOKPROBE_SYMBOL(kprobe_emulate_jcc);
+ 
+ static void kprobe_emulate_loop(struct kprobe *p, struct pt_regs *regs)
+ {
++	unsigned long ip = regs->ip - INT3_INSN_SIZE + p->ainsn.size;
+ 	bool match;
+ 
+ 	if (p->ainsn.loop.type != 3) {	/* LOOP* */
+@@ -533,7 +509,9 @@ static void kprobe_emulate_loop(struct k
+ 	else if (p->ainsn.loop.type == 1)	/* LOOPE */
+ 		match = match && (regs->flags & X86_EFLAGS_ZF);
+ 
+-	__kprobe_emulate_jmp(p, regs, match);
++	if (match)
++		ip += p->ainsn.rel32;
++	int3_emulate_jmp(regs, ip);
+ }
+ NOKPROBE_SYMBOL(kprobe_emulate_loop);
+ 
 
 
