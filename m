@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8003C2E6D2B;
-	Tue, 15 Jul 2025 13:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3692E7186;
+	Tue, 15 Jul 2025 13:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587052; cv=none; b=n803OcTaDqaXfYqLjE/bKR1wMBdA2ZNNQuPlKVKoKh7ouLPxPjSMgrHyxT4vKwLz50XMNuYF8B+R7Lhba+EB2dhD1pNGlqiewK/RF0nj9tuekOQx0iDwv6cBRXj3xuCeHK2jjJE84cors78G0CYKu/Glaj4VvBGnGs3imFNkQVg=
+	t=1752587055; cv=none; b=ZeU3tsni8LTtDK/YYr0gQAD6FCLjpr/of74BVYFrqzIwD9F4EJk8QXgRdfPHlh39ZpsraplMFk3NBGGTUUQ7eEwHfv6HS99Vf40rWqU9vfVp7S/8q7SBarIVGNlCQ1M9wkjAP23KJdkw/djL5iE19Hi/HR2F+ZxcZmci1yu26ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587052; c=relaxed/simple;
-	bh=9vTUqgJyRQX0It4WTZGkVMKsuyVZk8kHtaHISV5t7Uw=;
+	s=arc-20240116; t=1752587055; c=relaxed/simple;
+	bh=jI1bcSY3Tob9dwHMXCeAjepimVlcV5L3z2R0pH+Hf6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJqNXFg1TPcNsCKMJt7CkRjVVXGIVTonVq1wa3y2o9JxzFkLE/Ee7vgXP4B+OHAswVjhkX1h0Jk0Y2wAJq8ZGy2HOG4G3nztAj5NeIRZbpbIXyVbahl5gsd/HC7D0FdUZsFtQmP2YX+huF42tIj6L9jQGhX+DRij3k0chGV4ykE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0Js711X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAkjBW2rrE+Ie2kKuULxfsvA9wXNFqek60EARzburCHWgFeBHs/MpIzEdzl2y+6QWSJI9b1PA33ztKMD8aRxEHFJIkif5mcsJsy7RHwv75X+ukiOpK6qp/M1WURg/VUkL5I6845p4Pz8OkptS0GppMJR+w3HY81SL3pY+8kCF1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8kro404; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0Js711X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13410C4CEE3;
-	Tue, 15 Jul 2025 13:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8kro404"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83A5C4CEE3;
+	Tue, 15 Jul 2025 13:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587052;
-	bh=9vTUqgJyRQX0It4WTZGkVMKsuyVZk8kHtaHISV5t7Uw=;
+	s=korg; t=1752587055;
+	bh=jI1bcSY3Tob9dwHMXCeAjepimVlcV5L3z2R0pH+Hf6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0Js711XMmcyzfRotS1JD0uR9yFGUPQgP0hYsyXqG4CynrAv++hiu8hYbyI8z7tXV
-	 QdfBYiX0pr2cg1Oiz9hf8Tl4T42MT8ibgLj34IexygKO/u+o8bHvnsG6CdSTEzfSKh
-	 ++CUenM7UPYizS34bWd8Y6FzFzLb6dG4B9csSk9M=
+	b=T8kro404rqDOnFRd9ElYEc7+H3inGahGYJdq0qeIALtLTyQpBeC2glN6/FDH0DR5l
+	 OPrlinOdavQq3U1BId8xTDAOGkF2m2DDIv/i/nZCOSa7togS6s48vedA0RjFUrOGsu
+	 +Bfh3DQYNQifXuJD9Afq6ecvFvFOwjN18vDnvzaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Hongbo Li <lihongbo22@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 148/192] erofs: refine readahead tracepoint
-Date: Tue, 15 Jul 2025 15:14:03 +0200
-Message-ID: <20250715130820.850885955@linuxfoundation.org>
+Subject: [PATCH 6.15 149/192] erofs: fix to add missing tracepoint in erofs_readahead()
+Date: Tue, 15 Jul 2025 15:14:04 +0200
+Message-ID: <20250715130820.890777412@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,74 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 4eb56b0761e75034dd35067a81da4c280c178262 ]
+[ Upstream commit d53238b614e01266a3d36b417b60a502e0698504 ]
 
- - trace_erofs_readpages => trace_erofs_readahead;
+Commit 771c994ea51f ("erofs: convert all uncompressed cases to iomap")
+converts to use iomap interface, it removed trace_erofs_readahead()
+tracepoint in the meantime, let's add it back.
 
- - Rename a redundant statement `nrpages = readahead_count(rac);`;
-
- - Move the tracepoint to the beginning of z_erofs_readahead().
-
+Fixes: 771c994ea51f ("erofs: convert all uncompressed cases to iomap")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250707084832.2725677-1-chao@kernel.org
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://lore.kernel.org/r/20250514120820.2739288-1-hsiangkao@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Stable-dep-of: d53238b614e0 ("erofs: fix to add missing tracepoint in erofs_readahead()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fileio.c            | 2 +-
- fs/erofs/zdata.c             | 5 ++---
- include/trace/events/erofs.h | 2 +-
- 3 files changed, 4 insertions(+), 5 deletions(-)
+ fs/erofs/data.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
-index 4cb4497b2767d..da1304a9bb435 100644
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -180,7 +180,7 @@ static void erofs_fileio_readahead(struct readahead_control *rac)
- 	struct folio *folio;
- 	int err;
+diff --git a/fs/erofs/data.c b/fs/erofs/data.c
+index 0ab0e8ec70d03..33cb0a7330d23 100644
+--- a/fs/erofs/data.c
++++ b/fs/erofs/data.c
+@@ -363,6 +363,9 @@ static int erofs_read_folio(struct file *file, struct folio *folio)
  
--	trace_erofs_readpages(inode, readahead_index(rac),
-+	trace_erofs_readahead(inode, readahead_index(rac),
- 			      readahead_count(rac), true);
- 	while ((folio = readahead_folio(rac))) {
- 		err = erofs_fileio_scan_folio(&io, folio);
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 8791ecebcdce7..d21ae4802c7f1 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1855,13 +1855,12 @@ static void z_erofs_readahead(struct readahead_control *rac)
+ static void erofs_readahead(struct readahead_control *rac)
  {
- 	struct inode *const inode = rac->mapping->host;
- 	Z_EROFS_DEFINE_FRONTEND(f, inode, readahead_pos(rac));
--	struct folio *head = NULL, *folio;
- 	unsigned int nrpages = readahead_count(rac);
-+	struct folio *head = NULL, *folio;
- 	int err;
++	trace_erofs_readahead(rac->mapping->host, readahead_index(rac),
++					readahead_count(rac), true);
++
+ 	return iomap_readahead(rac, &erofs_iomap_ops);
+ }
  
-+	trace_erofs_readahead(inode, readahead_index(rac), nrpages, false);
- 	z_erofs_pcluster_readmore(&f, rac, true);
--	nrpages = readahead_count(rac);
--	trace_erofs_readpages(inode, readahead_index(rac), nrpages, false);
- 	while ((folio = readahead_folio(rac))) {
- 		folio->private = head;
- 		head = folio;
-diff --git a/include/trace/events/erofs.h b/include/trace/events/erofs.h
-index a71b19ed5d0cf..dad7360f42f95 100644
---- a/include/trace/events/erofs.h
-+++ b/include/trace/events/erofs.h
-@@ -113,7 +113,7 @@ TRACE_EVENT(erofs_read_folio,
- 		__entry->raw)
- );
- 
--TRACE_EVENT(erofs_readpages,
-+TRACE_EVENT(erofs_readahead,
- 
- 	TP_PROTO(struct inode *inode, pgoff_t start, unsigned int nrpage,
- 		bool raw),
 -- 
 2.39.5
 
