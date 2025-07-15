@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE042E6D2B;
-	Tue, 15 Jul 2025 13:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BF22E62B4;
+	Tue, 15 Jul 2025 13:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587066; cv=none; b=UMhn7W1BJSLU3uKVWjbfwIN4Y30qRydn7ZKZIx+hcrAER8GVLdZZT3x0im1kvrVE8gqqShllqOiXd8ri5eNevR6Q/f02yBcgEbiAao9Kfh3rKey0NRqbX4C5aGpykCFIH+omes3DxQOhmg4u6W5Pn2tGALi91VqqNYizcx0/efM=
+	t=1752587068; cv=none; b=bxVWLEIv7jXi9Fv+e3M/vr8L8UmR+OTgEvoQWohEitmQIEpEpI+upmR0SQn9G02h8MUH5ROKzUTNkc5gtfqerGvXyWM41Dl9M166moAHlj9g+WqOXKQIrUrxfG/3aTMvz6aP9dR7gFgh3PFXgdRFAEXKm29UxtVs5Plr7UJ7NVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587066; c=relaxed/simple;
-	bh=r5Sp3KX0QqbpWlTkdM6QFp/dwTkcsMvejn1T+MFBcSc=;
+	s=arc-20240116; t=1752587068; c=relaxed/simple;
+	bh=dqfV6IXA3S5uY53MhP6gjTl87RffaBdrryIwgViZ++c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfX/FEj7Inge1ot6Df6ocYtKSywUPFcdGM5j0ZqBfNTumDQH1eIsuF+U7I52eNNthPAU4771NiFoQXZwHRmaTZdHs4wSQkwuC7PFqsomEwGHW0qjlPHxh/0DDIIPtKNi4WRwNle7zY9AEM3w4UXgErKidjjPxIPqHQ43mBw2hNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoLKs4+X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RvM8VnMPWF8Pq8h/cDiymUNkA2PDfSd6SryIIuocEUZUJxnNJpAdfkyXs05xdL0pAg1NJWrMRjTlGHhPORmCPB2tsjo2hpVF9cJzFBRoGyPJtVvDnZmnXIgizRET4SmcTgBKvAX0/C4ZQ9i2joypnt0dI2yF25joIKy3dZmnZ5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqUvU7/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoLKs4+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71908C4CEE3;
-	Tue, 15 Jul 2025 13:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqUvU7/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E8DC4CEE3;
+	Tue, 15 Jul 2025 13:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587065;
-	bh=r5Sp3KX0QqbpWlTkdM6QFp/dwTkcsMvejn1T+MFBcSc=;
+	s=korg; t=1752587068;
+	bh=dqfV6IXA3S5uY53MhP6gjTl87RffaBdrryIwgViZ++c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoLKs4+XKTaTLgXEsAJC9YSpWcHWnmztyeUb/5ueCTdIh5d0Nn5YJu7PySu/kyo1G
-	 TMHkJkpNfdaa7niTmomTicjf3UmssM8/IuYeqQ89rPTaMjmksDqwouC5TwAtFbeFIi
-	 4+hcN20QHEvjHxjwrOwwTp0QZqetucZtT3qjKxEU=
+	b=SqUvU7/spHvymzJvCbrxtFQU/ASIkEjWj3gD5f+/Gt0WmjeReXjSYIbIb2dsfudgy
+	 iH1PacBiFhrdm0dIJLiEKbR4q+TnfytH/1C9ijLlYXgJfi3sZUiSzGQszSxjWEmQpZ
+	 9uT552oDsDOh5Kx+qbv2jjwNrsMjPjrazmIloftQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kito Xu <veritas501@foxmail.com>,
+	Mingming Cao <mmc@linux.ibm.com>,
+	Dave Marquardt <davemarq@linux.ibm.com>,
+	Haren Myneni <haren@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 152/192] net: appletalk: Fix device refcount leak in atrtr_create()
-Date: Tue, 15 Jul 2025 15:14:07 +0200
-Message-ID: <20250715130821.011750066@linuxfoundation.org>
+Subject: [PATCH 6.15 153/192] ibmvnic: Fix hardcoded NUM_RX_STATS/NUM_TX_STATS with dynamic sizeof
+Date: Tue, 15 Jul 2025 15:14:08 +0200
+Message-ID: <20250715130821.053427303@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,36 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kito Xu <veritas501@foxmail.com>
+From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 711c80f7d8b163d3ecd463cd96f07230f488e750 ]
+[ Upstream commit 01b8114b432d7baaa5e51ab229c12c4f36b8e2c6 ]
 
-When updating an existing route entry in atrtr_create(), the old device
-reference was not being released before assigning the new device,
-leading to a device refcount leak. Fix this by calling dev_put() to
-release the old device reference before holding the new one.
+The previous hardcoded definitions of NUM_RX_STATS and
+NUM_TX_STATS were not updated when new fields were added
+to the ibmvnic_{rx,tx}_queue_stats structures. Specifically,
+commit 2ee73c54a615 ("ibmvnic: Add stat for tx direct vs tx
+batched") added a fourth TX stat, but NUM_TX_STATS remained 3,
+leading to a mismatch.
 
-Fixes: c7f905f0f6d4 ("[ATALK]: Add missing dev_hold() to atrtr_create().")
-Signed-off-by: Kito Xu <veritas501@foxmail.com>
-Link: https://patch.msgid.link/tencent_E1A26771CDAB389A0396D1681A90A49E5D09@qq.com
+This patch replaces the static defines with dynamic sizeof-based
+calculations to ensure the stat arrays are correctly sized.
+This fixes incorrect indexing and prevents incomplete stat
+reporting in tools like ethtool.
+
+Fixes: 2ee73c54a615 ("ibmvnic: Add stat for tx direct vs tx batched")
+Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
+Reviewed-by: Dave Marquardt <davemarq@linux.ibm.com>
+Reviewed-by: Haren Myneni <haren@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250709153332.73892-1-mmc@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/appletalk/ddp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/ibm/ibmvnic.h | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/appletalk/ddp.c b/net/appletalk/ddp.c
-index b068651984fe3..fa7f002b14fa3 100644
---- a/net/appletalk/ddp.c
-+++ b/net/appletalk/ddp.c
-@@ -576,6 +576,7 @@ static int atrtr_create(struct rtentry *r, struct net_device *devhint)
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.h b/drivers/net/ethernet/ibm/ibmvnic.h
+index a189038d88df0..246ddce753f92 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.h
++++ b/drivers/net/ethernet/ibm/ibmvnic.h
+@@ -211,7 +211,6 @@ struct ibmvnic_statistics {
+ 	u8 reserved[72];
+ } __packed __aligned(8);
  
- 	/* Fill in the routing entry */
- 	rt->target  = ta->sat_addr;
-+	dev_put(rt->dev); /* Release old device */
- 	dev_hold(devhint);
- 	rt->dev     = devhint;
- 	rt->flags   = r->rt_flags;
+-#define NUM_TX_STATS 3
+ struct ibmvnic_tx_queue_stats {
+ 	u64 batched_packets;
+ 	u64 direct_packets;
+@@ -219,13 +218,18 @@ struct ibmvnic_tx_queue_stats {
+ 	u64 dropped_packets;
+ };
+ 
+-#define NUM_RX_STATS 3
++#define NUM_TX_STATS \
++	(sizeof(struct ibmvnic_tx_queue_stats) / sizeof(u64))
++
+ struct ibmvnic_rx_queue_stats {
+ 	u64 packets;
+ 	u64 bytes;
+ 	u64 interrupts;
+ };
+ 
++#define NUM_RX_STATS \
++	(sizeof(struct ibmvnic_rx_queue_stats) / sizeof(u64))
++
+ struct ibmvnic_acl_buffer {
+ 	__be32 len;
+ 	__be32 version;
 -- 
 2.39.5
 
