@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FED32E8E1D;
-	Tue, 15 Jul 2025 13:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344AF2E92A8;
+	Tue, 15 Jul 2025 13:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586642; cv=none; b=kAoY8uX7VgmPsWNw3T6lqeQxcj47S6LPKRhKaxtxFOM+fe5PVGM7CjqIIuglVFzfPGb6K9DWm6W2T/XvJ06u8sT7GZrTbV1E6I/lItWO4Fud52vzVT0IxHmb/i7NYjpP6Uxo3NIomZhnXKQKMDsPKdDIIxNdfMVsD/MNXm6VFq0=
+	t=1752586645; cv=none; b=cptLhevf5JzbqUdSEUAeni2Q8E7X/lO9xPYW7YPm/ONtpGh1nH5X+yjB3OxzaWlzHMHpHeQ/gXl/D2aN3yIivAfO5cTjgX5ngB1wTzPQ6t5yjy9QUJ69tLEqdNtmiZJmF8PcBITmUKkIiMW++d7aksqK1eTG0bGi0eJkYXXkx7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586642; c=relaxed/simple;
-	bh=9QOcu0CT7byNddjYsP0xw6odDAySL3oFSqrnC3Bhv64=;
+	s=arc-20240116; t=1752586645; c=relaxed/simple;
+	bh=habjh1iOJnEqgyLU1pnYZasRF4yVQxIGVWgUOD6RSdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=As5L5++fsxUVQlUrbrTsH9kaJxaqaazTQBWq+RIbX8l2kYMyXixe7TnWoHKrF0G2x0dO9NdBeELgXPcJbf9RqJIt5HcEqzPR9pEvQyYDjm+4OfFK9c0TdKGC1/Jyydj/zZ3ACv8QbKNtI12zwOuyYuSKK+WMhbvtWqUdCYQ1QZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGZKtXwy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/cFOCAts1iRPPLtIYymIhBpUEPbhK4ZcAxEN3LFWsIva6J8EeqhE80+DmUfJZnsDu45I8ciVO9uYSn83It/hdCvSwvczmdrBrLCPWhIaoO9ow2U43nhEm7UdJ6tz6dFzRIjSxiuAuXqZhuecVPh3XpVZTzQKx+J+ojU0msdbeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EP4qxZmC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGZKtXwy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF27CC4CEE3;
-	Tue, 15 Jul 2025 13:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EP4qxZmC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF534C4CEE3;
+	Tue, 15 Jul 2025 13:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586642;
-	bh=9QOcu0CT7byNddjYsP0xw6odDAySL3oFSqrnC3Bhv64=;
+	s=korg; t=1752586645;
+	bh=habjh1iOJnEqgyLU1pnYZasRF4yVQxIGVWgUOD6RSdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGZKtXwyRMZAXXBLxR86cQY7PegDXBg5o8//G3kkZT+CDxJVeXwlMHrddDqqVAHIB
-	 jOGKw11F11nQRSwKE6qrje2QAAiT+ZDXhnnAUDs8/mV3sdskwEwcnU7sI4UK66MVs5
-	 u1y8UZvh3kalHy8SrJvCa6evaopFZTRUduyYbYZU=
+	b=EP4qxZmCiRVMnGEPkbGDsZqsRp6zyFU+QZ7l0R6bDiGPmzn63ZzM/K15xPM+BqzDc
+	 G3sK0blUVMFzy3PLfKTAkdDT6uwlHs3KdUIr72mrZcZ1XK07B1i73FaX9qh4ojcjqr
+	 zCXYYItCHd2phgwkJ9ssRJUzm9NuruTrsj4oDcHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jinchao <wangjinchao600@gmail.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/148] md/raid1: Fix stack memory use after return in raid1_reshape
-Date: Tue, 15 Jul 2025 15:14:17 +0200
-Message-ID: <20250715130805.692785495@linuxfoundation.org>
+Subject: [PATCH 5.4 144/148] HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY
+Date: Tue, 15 Jul 2025 15:14:26 +0200
+Message-ID: <20250715130806.042517035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -51,78 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jinchao <wangjinchao600@gmail.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit d67ed2ccd2d1dcfda9292c0ea8697a9d0f2f0d98 ]
+[ Upstream commit 1a8953f4f7746c6a515989774fe03047c522c613 ]
 
-In the raid1_reshape function, newpool is
-allocated on the stack and assigned to conf->r1bio_pool.
-This results in conf->r1bio_pool.wait.head pointing
-to a stack address.
-Accessing this address later can lead to a kernel panic.
+MARTLINKTECHNOLOGY is a microphone device, when the HID interface in an
+audio device is requested to get specific report id, the following error
+may occur.
 
-Example access path:
+[  562.939373] usb 1-1.4.1.2: new full-speed USB device number 21 using xhci_hcd
+[  563.104908] usb 1-1.4.1.2: New USB device found, idVendor=4c4a, idProduct=4155, bcdDevice= 1.00
+[  563.104910] usb 1-1.4.1.2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[  563.104911] usb 1-1.4.1.2: Product: USB Composite Device
+[  563.104912] usb 1-1.4.1.2: Manufacturer: SmartlinkTechnology
+[  563.104913] usb 1-1.4.1.2: SerialNumber: 20201111000001
+[  563.229499] input: SmartlinkTechnology USB Composite Device as /devices/pci0000:00/0000:00:07.1/0000:04:00.3/usb1/1-1/1-1.4/1-1.4.1/1-1.4.1.2/1-1.4.1.2:1.2/0003:4C4A:4155.000F/input/input35
+[  563.291505] hid-generic 0003:4C4A:4155.000F: input,hidraw2: USB HID v2.01 Keyboard [SmartlinkTechnology USB Composite Device] on usb-0000:04:00.3-1.4.1.2/input2
+[  563.291557] usbhid 1-1.4.1.2:1.3: couldn't find an input interrupt endpoint
+[  568.506654] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  573.626656] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  578.746657] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  583.866655] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
+[  588.986657] usb 1-1.4.1.2: 1:1: usb_set_interface failed (-110)
 
-raid1_reshape()
-{
-	// newpool is on the stack
-	mempool_t newpool, oldpool;
-	// initialize newpool.wait.head to stack address
-	mempool_init(&newpool, ...);
-	conf->r1bio_pool = newpool;
-}
+Ignore HID interface. The device is working properly.
 
-raid1_read_request() or raid1_write_request()
-{
-	alloc_r1bio()
-	{
-		mempool_alloc()
-		{
-			// if pool->alloc fails
-			remove_element()
-			{
-				--pool->curr_nr;
-			}
-		}
-	}
-}
-
-mempool_free()
-{
-	if (pool->curr_nr < pool->min_nr) {
-		// pool->wait.head is a stack address
-		// wake_up() will try to access this invalid address
-		// which leads to a kernel panic
-		return;
-		wake_up(&pool->wait);
-	}
-}
-
-Fix:
-reinit conf->r1bio_pool.wait after assigning newpool.
-
-Fixes: afeee514ce7f ("md: convert to bioset_init()/mempool_init()")
-Signed-off-by: Wang Jinchao <wangjinchao600@gmail.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/linux-raid/20250612112901.3023950-1-wangjinchao600@gmail.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 395a279e2c885..dccf62e5b4978 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -3307,6 +3307,7 @@ static int raid1_reshape(struct mddev *mddev)
- 	/* ok, everything is stopped */
- 	oldpool = conf->r1bio_pool;
- 	conf->r1bio_pool = newpool;
-+	init_waitqueue_head(&conf->r1bio_pool.wait);
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 356916608cc49..3787bd508b616 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1347,4 +1347,7 @@
+ #define USB_VENDOR_ID_SIGNOTEC			0x2133
+ #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
  
- 	for (d = d2 = 0; d < conf->raid_disks; d++) {
- 		struct md_rdev *rdev = conf->mirrors[d].rdev;
++#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
++#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
++
+ #endif
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index ff1a9d142cddf..2cf58e3016e7b 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -879,6 +879,7 @@ static const struct hid_device_id hid_ignore_list[] = {
+ #endif
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
+ 	{ }
+ };
+ 
 -- 
 2.39.5
 
