@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090A119D09C;
-	Tue, 15 Jul 2025 13:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBF019D09C;
+	Tue, 15 Jul 2025 13:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585578; cv=none; b=kfZh1rYYvR3mH+pAGc4Dv03Xj7djvkWHwiMIgIw47uqFEkgC/ZRqq6sqtgMN+M5vrN+zn7Fzp0fn9M2/YDssTQ9uC4PDp/zhGP4K0z0FSmVDMlmmx3Pmfv66mmCA5KMCK9Ugg8aZvLUn+tyv5bIGkpBlFP9NnHkH+jQWm1TaA1Q=
+	t=1752585580; cv=none; b=noEt8ZPks9OqPIQQtWbeBRoEpKJW8Q4dxYUy5ppRmdeAURprSak9p0FnrXpV4an0YoPWqay8scrS4QP2kF1YWuX1s4UAzzHymW4VvyhEV0pibgNFFnGgjLc5VWWBKZQ3udAXr7fN+DufyJ6izcQUu7YamDUS110mH5NU6jRXWDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585578; c=relaxed/simple;
-	bh=43RqOH0vDyP4We00MaWJduNehIjGYYlIcpxYMQwmDgo=;
+	s=arc-20240116; t=1752585580; c=relaxed/simple;
+	bh=UMUy+pVoj8xLnSsGvtQhvO6Pe+AbjIvklv7YTFlGbrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQ9MQVqYmigVxOTTH9vpYJJVhdm3jqoGHCTflDnzwQxcwvT4eUmo7RJCTO/xrIkDyEVWqrUKdcC4Pejg6F2/U2lu2iQTlysdnFidmFoPfVNvzEsB1LhMh5Yn6XLkOuZK7jP2Ymhx3JRg0ki199rgBzkU9EPrV0NefTkdkkee/IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFqMUUOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6f6NUIHKLtXxKBNmiwERKRCui4XWLLueQToUie1N+rJ7+rY7VD8BxwJaKVN49IBIuoL8StRJQ3VsODUdD2Xq6J3uPT6S/36qoFt2LryDimB5aKNPPoTH00DnVC/WHx3UcT2Xu5aaL9uNAEDLo8vbVJSfr+IO1meR6rBYbcXSuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUr58hT9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFqMUUOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8F5C4CEE3;
-	Tue, 15 Jul 2025 13:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUr58hT9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34014C4CEE3;
+	Tue, 15 Jul 2025 13:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585577;
-	bh=43RqOH0vDyP4We00MaWJduNehIjGYYlIcpxYMQwmDgo=;
+	s=korg; t=1752585580;
+	bh=UMUy+pVoj8xLnSsGvtQhvO6Pe+AbjIvklv7YTFlGbrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFqMUUODL24Mmv8dH64OpGefe3WlTHtzcU/Xnm5afNQY3evXML2MTrH5hgAsE90uA
-	 TZ4UWsGK4l3jR6qsOd1K4IFZQVqjVHfVMF1RrEKhZqhTJ54TllquiQ26+q1OjHd66d
-	 r4eBdBMIkSSXJ11ExKYLn54kv9phnimMBT91ueWM=
+	b=eUr58hT9HSNfrpeUtdrWbU8Kyca4lKUr0dCBiA+k85gqIdWOddtCcg3RONL+KgE5V
+	 0JEBOwUP26p2ubD8S2W4LI58KuxJ9BKcWzHLZjHn00y2syhLiKNgVA92msBZe2heot
+	 1wh0xjQI6RPWZWh0zuJFakMkrjlFLLK/pe2HT/vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Yoo <harry.yoo@oracle.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Raghavendra K T <raghavendra.kt@amd.com>,
-	Casey Chen <cachen@purestorage.com>,
-	David Wang <00107082@163.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Yuanyuan Zhong <yzhong@purestorage.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 093/163] lib/alloc_tag: do not acquire non-existent lock in alloc_tag_top_users()
-Date: Tue, 15 Jul 2025 15:12:41 +0200
-Message-ID: <20250715130812.602175056@linuxfoundation.org>
+	Benno Lossin <lossin@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 094/163] rust: init: allow `dead_code` warnings for Rust >= 1.89.0
+Date: Tue, 15 Jul 2025 15:12:42 +0200
+Message-ID: <20250715130812.639666869@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -57,100 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Yoo <harry.yoo@oracle.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 99af22cd34688cc0d535a1919e0bea4cbc6c1ea1 upstream.
+Starting with Rust 1.89.0 (expected 2025-08-07), the Rust compiler
+may warn:
 
-alloc_tag_top_users() attempts to lock alloc_tag_cttype->mod_lock even
-when the alloc_tag_cttype is not allocated because:
+    error: trait `MustNotImplDrop` is never used
+       --> rust/kernel/init/macros.rs:927:15
+        |
+    927 |         trait MustNotImplDrop {}
+        |               ^^^^^^^^^^^^^^^
+        |
+       ::: rust/kernel/sync/arc.rs:133:1
+        |
+    133 | #[pin_data]
+        | ----------- in this procedural macro expansion
+        |
+        = note: `-D dead-code` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(dead_code)]`
+        = note: this error originates in the macro `$crate::__pin_data`
+                which comes from the expansion of the attribute macro
+                `pin_data` (in Nightly builds, run with
+                -Z macro-backtrace for more info)
 
-  1) alloc tagging is disabled because mem profiling is disabled
-     (!alloc_tag_cttype)
-  2) alloc tagging is enabled, but not yet initialized (!alloc_tag_cttype)
-  3) alloc tagging is enabled, but failed initialization
-     (!alloc_tag_cttype or IS_ERR(alloc_tag_cttype))
+Thus `allow` it to clean it up.
 
-In all cases, alloc_tag_cttype is not allocated, and therefore
-alloc_tag_top_users() should not attempt to acquire the semaphore.
+This does not happen in mainline nor 6.15.y, because there the macro was
+moved out of the `kernel` crate, and `dead_code` warnings are not
+emitted if the macro is foreign to the crate. Thus this patch is
+directly sent to stable and intended for 6.12.y only.
 
-This leads to a crash on memory allocation failure by attempting to
-acquire a non-existent semaphore:
+Similarly, it is not needed in previous LTSs, because there the Rust
+version is pinned.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc000000001b: 0000 [#3] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x00000000000000d8-0x00000000000000df]
-  CPU: 2 UID: 0 PID: 1 Comm: systemd Tainted: G      D             6.16.0-rc2 #1 VOLUNTARY
-  Tainted: [D]=DIE
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-  RIP: 0010:down_read_trylock+0xaa/0x3b0
-  Code: d0 7c 08 84 d2 0f 85 a0 02 00 00 8b 0d df 31 dd 04 85 c9 75 29 48 b8 00 00 00 00 00 fc ff df 48 8d 6b 68 48 89 ea 48 c1 ea 03 <80> 3c 02 00 0f 85 88 02 00 00 48 3b 5b 68 0f 85 53 01 00 00 65 ff
-  RSP: 0000:ffff8881002ce9b8 EFLAGS: 00010016
-  RAX: dffffc0000000000 RBX: 0000000000000070 RCX: 0000000000000000
-  RDX: 000000000000001b RSI: 000000000000000a RDI: 0000000000000070
-  RBP: 00000000000000d8 R08: 0000000000000001 R09: ffffed107dde49d1
-  R10: ffff8883eef24e8b R11: ffff8881002cec20 R12: 1ffff11020059d37
-  R13: 00000000003fff7b R14: ffff8881002cec20 R15: dffffc0000000000
-  FS:  00007f963f21d940(0000) GS:ffff888458ca6000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f963f5edf71 CR3: 000000010672c000 CR4: 0000000000350ef0
-  Call Trace:
-   <TASK>
-   codetag_trylock_module_list+0xd/0x20
-   alloc_tag_top_users+0x369/0x4b0
-   __show_mem+0x1cd/0x6e0
-   warn_alloc+0x2b1/0x390
-   __alloc_frozen_pages_noprof+0x12b9/0x21a0
-   alloc_pages_mpol+0x135/0x3e0
-   alloc_slab_page+0x82/0xe0
-   new_slab+0x212/0x240
-   ___slab_alloc+0x82a/0xe00
-   </TASK>
-
-As David Wang points out, this issue became easier to trigger after commit
-780138b12381 ("alloc_tag: check mem_profiling_support in alloc_tag_init").
-
-Before the commit, the issue occurred only when it failed to allocate and
-initialize alloc_tag_cttype or if a memory allocation fails before
-alloc_tag_init() is called.  After the commit, it can be easily triggered
-when memory profiling is compiled but disabled at boot.
-
-To properly determine whether alloc_tag_init() has been called and its
-data structures initialized, verify that alloc_tag_cttype is a valid
-pointer before acquiring the semaphore.  If the variable is NULL or an
-error value, it has not been properly initialized.  In such a case, just
-skip and do not attempt to acquire the semaphore.
-
-[harry.yoo@oracle.com: v3]
-  Link: https://lkml.kernel.org/r/20250624072513.84219-1-harry.yoo@oracle.com
-Link: https://lkml.kernel.org/r/20250620195305.1115151-1-harry.yoo@oracle.com
-Fixes: 780138b12381 ("alloc_tag: check mem_profiling_support in alloc_tag_init")
-Fixes: 1438d349d16b ("lib: add memory allocations report in show_mem()")
-Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202506181351.bba867dd-lkp@intel.com
-Acked-by: Suren Baghdasaryan <surenb@google.com>
-Tested-by: Raghavendra K T <raghavendra.kt@amd.com>
-Cc: Casey Chen <cachen@purestorage.com>
-Cc: David Wang <00107082@163.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Yuanyuan Zhong <yzhong@purestorage.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Benno Lossin <lossin@kernel.org>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/alloc_tag.c |    3 +++
- 1 file changed, 3 insertions(+)
+ rust/kernel/init/macros.rs |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/lib/alloc_tag.c
-+++ b/lib/alloc_tag.c
-@@ -113,6 +113,9 @@ size_t alloc_tag_top_users(struct codeta
- 	struct codetag_bytes n;
- 	unsigned int i, nr = 0;
- 
-+	if (IS_ERR_OR_NULL(alloc_tag_cttype))
-+		return 0;
-+
- 	if (can_sleep)
- 		codetag_lock_module_list(alloc_tag_cttype, true);
- 	else if (!codetag_trylock_module_list(alloc_tag_cttype))
+--- a/rust/kernel/init/macros.rs
++++ b/rust/kernel/init/macros.rs
+@@ -924,6 +924,7 @@ macro_rules! __pin_data {
+         // We prevent this by creating a trait that will be implemented for all types implementing
+         // `Drop`. Additionally we will implement this trait for the struct leading to a conflict,
+         // if it also implements `Drop`
++        #[allow(dead_code)]
+         trait MustNotImplDrop {}
+         #[expect(drop_bounds)]
+         impl<T: ::core::ops::Drop> MustNotImplDrop for T {}
+@@ -932,6 +933,7 @@ macro_rules! __pin_data {
+         // We also take care to prevent users from writing a useless `PinnedDrop` implementation.
+         // They might implement `PinnedDrop` correctly for the struct, but forget to give
+         // `PinnedDrop` as the parameter to `#[pin_data]`.
++        #[allow(dead_code)]
+         #[expect(non_camel_case_types)]
+         trait UselessPinnedDropImpl_you_need_to_specify_PinnedDrop {}
+         impl<T: $crate::init::PinnedDrop>
 
 
