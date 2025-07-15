@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3B82EA726;
-	Tue, 15 Jul 2025 13:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA065246BD7;
+	Tue, 15 Jul 2025 13:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587374; cv=none; b=clUvxJKceygQ3V+OsnfK++1r7e9h0tAM8rkGodzfOifxLqhmhKYGMLAX7YcdbDsXiqqF4WfQgHGV85CkULkZOxOf6qnyas8Nf2HrAkZob6ph59+neDgeZS24Ww4/G/0BS1aaZT44Ub0uH4cy6g/qsMeVjhYmI/kkXlHF4bodSWs=
+	t=1752587377; cv=none; b=V1qX3R2Xo05sK27IlGYoJj29XWubRsxiyCn/V9/YQxbWoe5Nh85Ej3ZERuJ1Zv2DO1oDZZnGSm6RjwA/45H2GKLw3ElXyhT62WLgm1MXGoTbXwqkSrHhqtr+kq8X+8XO+eMPDR2muiWGYF0s+Xe5QqmxEBknDb90ZyhcOB7HPt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587374; c=relaxed/simple;
-	bh=95c7cSpsjnXN2POgL9tV4RpmkHta3PFi9J0CUG76W9c=;
+	s=arc-20240116; t=1752587377; c=relaxed/simple;
+	bh=VlDEua+0El+jkrsYAa+1RzZSy1IJQrlXdC4WSs/Nygs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UP5MnEz4kVEe+9cwmrIZUeifA0yTQRc2MNp/vzbDU+Ylg4GtrPIoI5HZiQyh/9Z6Fo/cH8ClRfBIXq1TI6S4vx5cHC/Ljxm2TFenXG9Oe/9G+pbb+3oLUXnvIsca2mCLbokbm0MBtoAzsd/UpSFJC9u16et4bT0CjdlmPykIh7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltTAGaKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlQimbyKLL/q65tFyIxH3TFN4IA/pbd77swlHqp/3vsRLOG+2PKhZcaDJxuYuG2Zyd4AW6EO5/R5OmLnswRRVlNwvVaUmoyoZHRjEqq9wblgAr4/szytiuwq+BOcosQOWFUtYGNTdEDPoQY0iYVtaTHjE05zxRNwI239ZsWXX8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxAtKY/m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltTAGaKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E94CC4CEE3;
-	Tue, 15 Jul 2025 13:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxAtKY/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32692C4CEE3;
+	Tue, 15 Jul 2025 13:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587373;
-	bh=95c7cSpsjnXN2POgL9tV4RpmkHta3PFi9J0CUG76W9c=;
+	s=korg; t=1752587376;
+	bh=VlDEua+0El+jkrsYAa+1RzZSy1IJQrlXdC4WSs/Nygs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ltTAGaKmKDQTAs0wWwNjFKKj4nqp4XHEhUNJViesGnV2dWJ2eJe0akVuOfOE3mqhX
-	 rOBZlTr+q3kiCW8JUBk9OInZ0l9d8Bx2Zqu/yCtsHY86c+uXYCHAkoIeT2LGoW3hqe
-	 tCmgU/xe5PgEkkBs4BBktfBUXurowNabTcRhatYw=
+	b=TxAtKY/mW2feJfgVvfjDUHH3LMWBoSjGLxZJi1V7opeq2SyOy3gsMi/oTNd24jXq5
+	 c+ccC0eB9OpFdc3Sb4Cj2T581Sho7SdyO/mJ3ydyAhX1Tnc7LFyp7shXo/a6xCXzOL
+	 XegnouXwQP2KFr0i7TK3qvxSXvM88yMbxBOa1m24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 45/88] btrfs: propagate last_unlink_trans earlier when doing a rmdir
-Date: Tue, 15 Jul 2025 15:14:21 +0200
-Message-ID: <20250715130756.343011415@linuxfoundation.org>
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 36/88] Revert "ACPI: battery: negate current when discharging"
+Date: Tue, 15 Jul 2025 15:14:12 +0200
+Message-ID: <20250715130755.972000236@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -52,81 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit c466e33e729a0ee017d10d919cba18f503853c60 ]
+commit de1675de39aa945bad5937d1fde4df3682670639 upstream.
 
-In case the removed directory had a snapshot that was deleted, we are
-propagating its inode's last_unlink_trans to the parent directory after
-we removed the entry from the parent directory. This leaves a small race
-window where someone can log the parent directory after we removed the
-entry and before we updated last_unlink_trans, and as a result if we ever
-try to replay such a log tree, we will fail since we will attempt to
-remove a snapshot during log replay, which is currently not possible and
-results in the log replay (and mount) to fail. This is the type of failure
-described in commit 1ec9a1ae1e30 ("Btrfs: fix unreplayable log after
-snapshot delete + parent dir fsync").
+Revert commit 234f71555019 ("ACPI: battery: negate current when
+discharging") breaks not one but several userspace implementations
+of battery monitoring: Steam and MangoHud. Perhaps it breaks more,
+but those are the two that have been tested.
 
-So fix this by propagating the last_unlink_trans to the parent directory
-before we remove the entry from it.
-
-Fixes: 44f714dae50a ("Btrfs: improve performance on fsync against new inode after rename/unlink")
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Closes: https://lore.kernel.org/linux-acpi/87C1B2AF-D430-4568-B620-14B941A8ABA4@linux.dev/
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/acpi/battery.c |   19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 5ecc2f3dc3a99..469a622b440b6 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4881,6 +4881,23 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
- 		goto out_notrans;
- 	}
- 
-+	/*
-+	 * Propagate the last_unlink_trans value of the deleted dir to its
-+	 * parent directory. This is to prevent an unrecoverable log tree in the
-+	 * case we do something like this:
-+	 * 1) create dir foo
-+	 * 2) create snapshot under dir foo
-+	 * 3) delete the snapshot
-+	 * 4) rmdir foo
-+	 * 5) mkdir foo
-+	 * 6) fsync foo or some file inside foo
-+	 *
-+	 * This is because we can't unlink other roots when replaying the dir
-+	 * deletes for directory foo.
-+	 */
-+	if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
-+		BTRFS_I(dir)->last_unlink_trans = BTRFS_I(inode)->last_unlink_trans;
-+
- 	if (unlikely(btrfs_ino(BTRFS_I(inode)) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)) {
- 		err = btrfs_unlink_subvol(trans, dir, dentry);
- 		goto out;
-@@ -4895,17 +4912,6 @@ static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
- 				 &fname.disk_name);
- 	if (!err) {
- 		btrfs_i_size_write(BTRFS_I(inode), 0);
+--- a/drivers/acpi/battery.c
++++ b/drivers/acpi/battery.c
+@@ -241,23 +241,10 @@ static int acpi_battery_get_property(str
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+ 	case POWER_SUPPLY_PROP_POWER_NOW:
+-		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN) {
++		if (battery->rate_now == ACPI_BATTERY_VALUE_UNKNOWN)
+ 			ret = -ENODEV;
+-			break;
+-		}
+-
+-		val->intval = battery->rate_now * 1000;
 -		/*
--		 * Propagate the last_unlink_trans value of the deleted dir to
--		 * its parent directory. This is to prevent an unrecoverable
--		 * log tree in the case we do something like this:
--		 * 1) create dir foo
--		 * 2) create snapshot under dir foo
--		 * 3) delete the snapshot
--		 * 4) rmdir foo
--		 * 5) mkdir foo
--		 * 6) fsync foo or some file inside foo
+-		 * When discharging, the current should be reported as a
+-		 * negative number as per the power supply class interface
+-		 * definition.
 -		 */
- 		if (BTRFS_I(inode)->last_unlink_trans >= trans->transid)
- 			btrfs_record_snapshot_destroy(trans, BTRFS_I(dir));
- 	}
--- 
-2.39.5
-
+-		if (psp == POWER_SUPPLY_PROP_CURRENT_NOW &&
+-		    (battery->state & ACPI_BATTERY_STATE_DISCHARGING) &&
+-		    acpi_battery_handle_discharging(battery)
+-				== POWER_SUPPLY_STATUS_DISCHARGING)
+-			val->intval = -val->intval;
+-
++		else
++			val->intval = battery->rate_now * 1000;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
+ 	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
 
 
