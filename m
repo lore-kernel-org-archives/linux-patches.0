@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A79A2E62C9;
-	Tue, 15 Jul 2025 13:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E3B2E6D2B;
+	Tue, 15 Jul 2025 13:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587031; cv=none; b=Rf0QgrlhnIrT/X2lPHWZSXr1c+vuIy8MTQdduFdgvR3591t1ns7WnrnIbMf0Chlu7C3lFqzNPiblOvNfthPOTdIXUwPrwi6t229zpKalYWmadM2ncLwy55g7cg//faZz32pYe7zP0TWpEv5Lm4uCdHIhtY/FjMB0Ifeet/kwrhg=
+	t=1752587034; cv=none; b=EK7qBtywE+Hjh6WVjSCq/gtDayS4vQFQs/EQXIvTOzu2dpRqFH3EfOhKAI4NquMpRWvvUQFwk8a+VDn08T2bcT8rRuFCes+y78i6L+Jos5CjY4DdfyVBNP2p6qcwgtdch7ewoGUqYLM42n6RoAUq4IvVXV4XWvAo/qLWW1XKRrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587031; c=relaxed/simple;
-	bh=b9ItFOQbr7LAyezWkBoHgzKpHGljag5zvpv9hPxybNc=;
+	s=arc-20240116; t=1752587034; c=relaxed/simple;
+	bh=4mRYAG9kAEuYWG/S1xE6/Z4LDwoM4ZVg4NmdRs6PClA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEQB+52WTuOPvf1DHMzu5uyY+5eqAbNwK/g17H7xGMkwXukG3BR1+lMdFM2UuRPlO12oK8yZaeefjtWtslxsG5hWVNxwWSKZweeSW0Eq68DbOLl0gk+vAeaLfZi/4B6SaYDrcJt6I8qS67hyICzTIrByKbOIz6wtnaDPFY52Amk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3mf7Kb4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J7F2Npt+WCOJ8AZUfe5gaJCzstgxdpb5UtNz65YtwAn3VXkRQwzZevNQ/oSSWubTG1ojSfItJbpcIwGeVcb3ZCBdupvOdnJVhmL92Hjy1lbCHf33dJA4a7jQFaZh0aRKhECVVSJIdYckEdHp/05VvbzZOI4ZSNytCywN4A0hhOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdV+0cXu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3mf7Kb4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDE6C4CEE3;
-	Tue, 15 Jul 2025 13:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdV+0cXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0ECC4CEE3;
+	Tue, 15 Jul 2025 13:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587031;
-	bh=b9ItFOQbr7LAyezWkBoHgzKpHGljag5zvpv9hPxybNc=;
+	s=korg; t=1752587034;
+	bh=4mRYAG9kAEuYWG/S1xE6/Z4LDwoM4ZVg4NmdRs6PClA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3mf7Kb4neTYIgiQn5oRcqLYsJmgiqvnsyY941qHyx9precnTNelWslFcYvvOVJzO
-	 LPNt/2EFVKQ3uFcGIJhMlAfM7Z12AE9Grx0wyaCtqHFHxExmtfb0CVqPkILOQNCDqJ
-	 Df/JOEtEshTrGQKQqW+Jm5nPtRocT1EU/yqCeGpg=
+	b=HdV+0cXu3DP9Zc/MHKWeeeZzKJhIufC+FXtq7oJh9Fwtt6DiG/6gEIaY2ZlszbUj7
+	 J0bAmscV1K4wbYiQlgJLK1wnWJUcEXKAIX8m1J6PTMQXh9c77vXqif29NJshHo7qqq
+	 pg1PjpCdLKYFKr75PK3V6hnray9lk64ofN3nxkwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Fontaine <axel@axelfontaine.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.15 123/192] erofs: fix large fragment handling
-Date: Tue, 15 Jul 2025 15:13:38 +0200
-Message-ID: <20250715130819.829144037@linuxfoundation.org>
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 141/192] wifi: mt76: Move RCU section in mt7996_mcu_add_rate_ctrl_fixed()
+Date: Tue, 15 Jul 2025 15:13:56 +0200
+Message-ID: <20250715130820.560358826@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -50,96 +51,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-commit b44686c8391b427fb1c85a31c35077e6947c6d90 upstream.
+[ Upstream commit 28d519d0d493a8cf3f8ca01f10d962c56cec1825 ]
 
-Fragments aren't limited by Z_EROFS_PCLUSTER_MAX_DSIZE. However, if
-a fragment's logical length is larger than Z_EROFS_PCLUSTER_MAX_DSIZE
-but the fragment is not the whole inode, it currently returns
--EOPNOTSUPP because m_flags has the wrong EROFS_MAP_ENCODED flag set.
-It is not intended by design but should be rare, as it can only be
-reproduced by mkfs with `-Eall-fragments` in a specific case.
+Since mt7996_mcu_set_fixed_field() can't be executed in a RCU critical
+section, move RCU section in mt7996_mcu_add_rate_ctrl_fixed() and run
+mt7996_mcu_set_fixed_field() in non-atomic context. This is a
+preliminary patch to fix a 'sleep while atomic' issue in
+mt7996_mac_sta_rc_work().
 
-Let's normalize fragment m_flags using the new EROFS_MAP_FRAGMENT.
-
-Reported-by: Axel Fontaine <axel@axelfontaine.com>
-Closes: https://github.com/erofs/erofs-utils/issues/23
-Fixes: 7c3ca1838a78 ("erofs: restrict pcluster size limitations")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250711195826.3601157-1-hsiangkao@linux.alibaba.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0762bdd30279 ("wifi: mt76: mt7996: rework mt7996_mac_sta_rc_work to support MLO")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20250605-mt7996-sleep-while-atomic-v1-3-d46d15f9203c@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/internal.h |    4 +++-
- fs/erofs/zdata.c    |    2 +-
- fs/erofs/zmap.c     |    9 ++++-----
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 86 ++++++++++++-------
+ 1 file changed, 57 insertions(+), 29 deletions(-)
 
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -314,10 +314,12 @@ static inline struct folio *erofs_grab_f
- /* The length of extent is full */
- #define EROFS_MAP_FULL_MAPPED	0x0008
- /* Located in the special packed inode */
--#define EROFS_MAP_FRAGMENT	0x0010
-+#define __EROFS_MAP_FRAGMENT	0x0010
- /* The extent refers to partial decompressed data */
- #define EROFS_MAP_PARTIAL_REF	0x0020
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index d67ed58d7126d..6c2b258ce4ff6 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1955,51 +1955,74 @@ int mt7996_mcu_set_fixed_field(struct mt7996_dev *dev, struct mt7996_sta *msta,
+ }
  
-+#define EROFS_MAP_FRAGMENT	(EROFS_MAP_MAPPED | __EROFS_MAP_FRAGMENT)
+ static int
+-mt7996_mcu_add_rate_ctrl_fixed(struct mt7996_dev *dev,
+-			       struct ieee80211_link_sta *link_sta,
+-			       struct mt7996_vif_link *link,
+-			       struct mt7996_sta_link *msta_link,
+-			       u8 link_id)
++mt7996_mcu_add_rate_ctrl_fixed(struct mt7996_dev *dev, struct mt7996_sta *msta,
++			       struct ieee80211_vif *vif, u8 link_id)
+ {
+-	struct cfg80211_chan_def *chandef = &link->phy->mt76->chandef;
+-	struct cfg80211_bitrate_mask *mask = &link->bitrate_mask;
+-	enum nl80211_band band = chandef->chan->band;
+-	struct mt7996_sta *msta = msta_link->sta;
++	struct ieee80211_link_sta *link_sta;
++	struct cfg80211_bitrate_mask mask;
++	struct mt7996_sta_link *msta_link;
++	struct mt7996_vif_link *link;
+ 	struct sta_phy_uni phy = {};
+-	int ret, nrates = 0;
++	struct ieee80211_sta *sta;
++	int ret, nrates = 0, idx;
++	enum nl80211_band band;
++	bool has_he;
+ 
+ #define __sta_phy_bitrate_mask_check(_mcs, _gi, _ht, _he)			\
+ 	do {									\
+-		u8 i, gi = mask->control[band]._gi;				\
++		u8 i, gi = mask.control[band]._gi;				\
+ 		gi = (_he) ? gi : gi == NL80211_TXRATE_FORCE_SGI;		\
+ 		phy.sgi = gi;							\
+-		phy.he_ltf = mask->control[band].he_ltf;			\
+-		for (i = 0; i < ARRAY_SIZE(mask->control[band]._mcs); i++) {	\
+-			if (!mask->control[band]._mcs[i])			\
++		phy.he_ltf = mask.control[band].he_ltf;				\
++		for (i = 0; i < ARRAY_SIZE(mask.control[band]._mcs); i++) {	\
++			if (!mask.control[band]._mcs[i])			\
+ 				continue;					\
+-			nrates += hweight16(mask->control[band]._mcs[i]);	\
+-			phy.mcs = ffs(mask->control[band]._mcs[i]) - 1;		\
++			nrates += hweight16(mask.control[band]._mcs[i]);	\
++			phy.mcs = ffs(mask.control[band]._mcs[i]) - 1;		\
+ 			if (_ht)						\
+ 				phy.mcs += 8 * i;				\
+ 		}								\
+ 	} while (0)
+ 
+-	if (link_sta->he_cap.has_he) {
++	rcu_read_lock();
 +
- struct erofs_map_blocks {
- 	struct erofs_buf buf;
- 
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1003,7 +1003,7 @@ static int z_erofs_scan_folio(struct z_e
- 		if (!(map->m_flags & EROFS_MAP_MAPPED)) {
- 			folio_zero_segment(folio, cur, end);
- 			tight = false;
--		} else if (map->m_flags & EROFS_MAP_FRAGMENT) {
-+		} else if (map->m_flags & __EROFS_MAP_FRAGMENT) {
- 			erofs_off_t fpos = offset + cur - map->m_la;
- 
- 			err = z_erofs_read_fragment(inode->i_sb, folio, cur,
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -413,8 +413,7 @@ static int z_erofs_map_blocks_fo(struct
- 	    !vi->z_tailextent_headlcn) {
- 		map->m_la = 0;
- 		map->m_llen = inode->i_size;
--		map->m_flags = EROFS_MAP_MAPPED |
--			EROFS_MAP_FULL_MAPPED | EROFS_MAP_FRAGMENT;
-+		map->m_flags = EROFS_MAP_FRAGMENT;
- 		return 0;
++	link = mt7996_vif_link(dev, vif, link_id);
++	if (!link)
++		goto error_unlock;
++
++	msta_link = rcu_dereference(msta->link[link_id]);
++	if (!msta_link)
++		goto error_unlock;
++
++	sta = wcid_to_sta(&msta_link->wcid);
++	link_sta = rcu_dereference(sta->link[link_id]);
++	if (!link_sta)
++		goto error_unlock;
++
++	band = link->phy->mt76->chandef.chan->band;
++	has_he = link_sta->he_cap.has_he;
++	mask = link->bitrate_mask;
++	idx = msta_link->wcid.idx;
++
++	if (has_he) {
+ 		__sta_phy_bitrate_mask_check(he_mcs, he_gi, 0, 1);
+ 	} else if (link_sta->vht_cap.vht_supported) {
+ 		__sta_phy_bitrate_mask_check(vht_mcs, gi, 0, 0);
+ 	} else if (link_sta->ht_cap.ht_supported) {
+ 		__sta_phy_bitrate_mask_check(ht_mcs, gi, 1, 0);
+ 	} else {
+-		nrates = hweight32(mask->control[band].legacy);
+-		phy.mcs = ffs(mask->control[band].legacy) - 1;
++		nrates = hweight32(mask.control[band].legacy);
++		phy.mcs = ffs(mask.control[band].legacy) - 1;
  	}
- 	initial_lcn = ofs >> lclusterbits;
-@@ -489,7 +488,7 @@ static int z_erofs_map_blocks_fo(struct
- 			goto unmap_out;
- 		}
- 	} else if (fragment && m.lcn == vi->z_tailextent_headlcn) {
--		map->m_flags |= EROFS_MAP_FRAGMENT;
-+		map->m_flags = EROFS_MAP_FRAGMENT;
- 	} else {
- 		map->m_pa = erofs_pos(sb, m.pblk);
- 		err = z_erofs_get_extent_compressedlen(&m, initial_lcn);
-@@ -617,7 +616,7 @@ static int z_erofs_map_blocks_ext(struct
- 	if (lstart < lend) {
- 		map->m_la = lstart;
- 		if (last && (vi->z_advise & Z_EROFS_ADVISE_FRAGMENT_PCLUSTER)) {
--			map->m_flags |= EROFS_MAP_MAPPED | EROFS_MAP_FRAGMENT;
-+			map->m_flags = EROFS_MAP_FRAGMENT;
- 			vi->z_fragmentoff = map->m_plen;
- 			if (recsz > offsetof(struct z_erofs_extent, pstart_lo))
- 				vi->z_fragmentoff |= map->m_pa << 32;
-@@ -797,7 +796,7 @@ static int z_erofs_iomap_begin_report(st
- 	iomap->length = map.m_llen;
- 	if (map.m_flags & EROFS_MAP_MAPPED) {
- 		iomap->type = IOMAP_MAPPED;
--		iomap->addr = map.m_flags & EROFS_MAP_FRAGMENT ?
-+		iomap->addr = map.m_flags & __EROFS_MAP_FRAGMENT ?
- 			      IOMAP_NULL_ADDR : map.m_pa;
- 	} else {
- 		iomap->type = IOMAP_HOLE;
++
++	rcu_read_unlock();
++
+ #undef __sta_phy_bitrate_mask_check
+ 
+ 	/* fall back to auto rate control */
+-	if (mask->control[band].gi == NL80211_TXRATE_DEFAULT_GI &&
+-	    mask->control[band].he_gi == GENMASK(7, 0) &&
+-	    mask->control[band].he_ltf == GENMASK(7, 0) &&
++	if (mask.control[band].gi == NL80211_TXRATE_DEFAULT_GI &&
++	    mask.control[band].he_gi == GENMASK(7, 0) &&
++	    mask.control[band].he_ltf == GENMASK(7, 0) &&
+ 	    nrates != 1)
+ 		return 0;
+ 
+@@ -2012,16 +2035,16 @@ mt7996_mcu_add_rate_ctrl_fixed(struct mt7996_dev *dev,
+ 	}
+ 
+ 	/* fixed GI */
+-	if (mask->control[band].gi != NL80211_TXRATE_DEFAULT_GI ||
+-	    mask->control[band].he_gi != GENMASK(7, 0)) {
++	if (mask.control[band].gi != NL80211_TXRATE_DEFAULT_GI ||
++	    mask.control[band].he_gi != GENMASK(7, 0)) {
+ 		u32 addr;
+ 
+ 		/* firmware updates only TXCMD but doesn't take WTBL into
+ 		 * account, so driver should update here to reflect the
+ 		 * actual txrate hardware sends out.
+ 		 */
+-		addr = mt7996_mac_wtbl_lmac_addr(dev, msta_link->wcid.idx, 7);
+-		if (link_sta->he_cap.has_he)
++		addr = mt7996_mac_wtbl_lmac_addr(dev, idx, 7);
++		if (has_he)
+ 			mt76_rmw_field(dev, addr, GENMASK(31, 24), phy.sgi);
+ 		else
+ 			mt76_rmw_field(dev, addr, GENMASK(15, 12), phy.sgi);
+@@ -2033,7 +2056,7 @@ mt7996_mcu_add_rate_ctrl_fixed(struct mt7996_dev *dev,
+ 	}
+ 
+ 	/* fixed HE_LTF */
+-	if (mask->control[band].he_ltf != GENMASK(7, 0)) {
++	if (mask.control[band].he_ltf != GENMASK(7, 0)) {
+ 		ret = mt7996_mcu_set_fixed_field(dev, msta, &phy, link_id,
+ 						 RATE_PARAM_FIXED_HE_LTF);
+ 		if (ret)
+@@ -2041,6 +2064,11 @@ mt7996_mcu_add_rate_ctrl_fixed(struct mt7996_dev *dev,
+ 	}
+ 
+ 	return 0;
++
++error_unlock:
++	rcu_read_unlock();
++
++	return -ENODEV;
+ }
+ 
+ static void
+@@ -2159,6 +2187,7 @@ int mt7996_mcu_add_rate_ctrl(struct mt7996_dev *dev,
+ 			     struct mt7996_sta_link *msta_link,
+ 			     u8 link_id, bool changed)
+ {
++	struct mt7996_sta *msta = msta_link->sta;
+ 	struct sk_buff *skb;
+ 	int ret;
+ 
+@@ -2185,8 +2214,7 @@ int mt7996_mcu_add_rate_ctrl(struct mt7996_dev *dev,
+ 	if (ret)
+ 		return ret;
+ 
+-	return mt7996_mcu_add_rate_ctrl_fixed(dev, link_sta, link, msta_link,
+-					      link_id);
++	return mt7996_mcu_add_rate_ctrl_fixed(dev, msta, vif, link_id);
+ }
+ 
+ static int
+-- 
+2.39.5
+
 
 
