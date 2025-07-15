@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DFF2E4993;
-	Tue, 15 Jul 2025 13:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1792E3B1A;
+	Tue, 15 Jul 2025 13:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587976; cv=none; b=pJIK1TGj/gl0+0zvWL43550NnjqDJuLUB4C/nSKYnn0S7Ot7ns0FktycYg5www+ov3e9utJFxb1VUGI1L3SItsKRxUvqoIdhAMivSiSukCP2fmrTG5AcQpDFY6EgVyzEILgmMZazjUhmqhuLl5kSKXX5bJ0rnGv2SM4uu8zNYZA=
+	t=1752587979; cv=none; b=Dc+4sf/CFpqVYuOYgtyfJ4lO9sntelPNdB7dxfkwGq7lVIO9ViqOyYhGu2P56JEF2f7Rp+f4ag2Z5V1j/f5akvKU6sTlHpLB4cwl3vD9grifP8R+DJJGyCC2AMEsvHqev5fk7v8iP5DeihWGFiiabzzGiCf165GV/LR7bj+WkL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587976; c=relaxed/simple;
-	bh=KeqG5zBM1u9dtEE2WabSVjrOcd8k1VTPZ6uDcCbi1jg=;
+	s=arc-20240116; t=1752587979; c=relaxed/simple;
+	bh=x2MWRtyWuNd8nDcufZEQG+A1waI2TBIXqXbK+CuG3ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IgTOZEMGYY2dVWhrPnVSO5A44fAYTY8d4Jfwnw7jRgxXl9Q8aJjRZ7cIys8wzLfySi3uokEgyp+b9HqbcbVP1fpSKvjPwLcjGnlDPIgTpVPftGGSE2IujP2LTAh/nR7x5U5jtFLeMbhgohks4stTlOWqUggwOJIv5wc/1w6vm5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kag4WxN6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxoQkWz2MWrpv+Nbvq/rph2AaHPSsYGE62fhdnbLh/csPktvS/pSCuIYy3SjOa3VydHbQNHuh/RxhM+i44vm2nFLwCCorRZEQD5sbBCdZVTPFXc38e1nCqXhrlhkvJnEX6pAeRS0emJSwxD+TiWAP96q7qQarMZF0nXKRpdZp+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icRyDycQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kag4WxN6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10E2C4CEF1;
-	Tue, 15 Jul 2025 13:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icRyDycQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9566AC4CEF4;
+	Tue, 15 Jul 2025 13:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587976;
-	bh=KeqG5zBM1u9dtEE2WabSVjrOcd8k1VTPZ6uDcCbi1jg=;
+	s=korg; t=1752587978;
+	bh=x2MWRtyWuNd8nDcufZEQG+A1waI2TBIXqXbK+CuG3ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kag4WxN6jve+Yiwhc9WA4rHkHp5uGwIo4M8I1wlfyFqCn2ca/oyJzKko+Aptotmgc
-	 UrSZyBVSpHaxlDYLUknnuGlXxtgaqwyAPDJ5Q8wpTHihhJU1i/IHtMldxo27AQamI5
-	 mDKmUN2uHTggWdiGdVNLQio1aXmPAkuW9dFPv5sU=
+	b=icRyDycQFs76WZWlkaojg6+KjxE22I4ZTCSZeEB+dc34gmN1BpPVvevLOq4hVTnO5
+	 SnnVdubFEMfWP0CJqJfx4GplQoOFptXvp215Eh+W3DV9O5ZLThwN88zJK1E4wVNFfa
+	 XeH7frawjogTO40l4Tr4OTN5zYInnW/uSFi/wCQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Chikunov <vt@altlinux.org>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Jann Horn <jannh@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@redhat.com>
-Subject: [PATCH 5.10 203/208] x86/mm: Disable hugetlb page table sharing on 32-bit
-Date: Tue, 15 Jul 2025 15:15:12 +0200
-Message-ID: <20250715130819.064386819@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 5.10 204/208] x86/bugs: Rename MDS machinery to something more generic
+Date: Tue, 15 Jul 2025 15:15:13 +0200
+Message-ID: <20250715130819.103318362@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -54,55 +50,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Borislav Petkov <bp@kernel.org>
 
-commit 76303ee8d54bff6d9a6d55997acd88a6c2ba63cf upstream.
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-Only select ARCH_WANT_HUGE_PMD_SHARE on 64-bit x86.
-Page table sharing requires at least three levels because it involves
-shared references to PMD tables; 32-bit x86 has either two-level paging
-(without PAE) or three-level paging (with PAE), but even with
-three-level paging, having a dedicated PGD entry for hugetlb is only
-barely possible (because the PGD only has four entries), and it seems
-unlikely anyone's actually using PMD sharing on 32-bit.
+Commit f9af88a3d384c8b55beb5dc5483e5da0135fadbd upstream.
 
-Having ARCH_WANT_HUGE_PMD_SHARE enabled on non-PAE 32-bit X86 (which
-has 2-level paging) became particularly problematic after commit
-59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count"),
-since that changes `struct ptdesc` such that the `pt_mm` (for PGDs) and
-the `pt_share_count` (for PMDs) share the same union storage - and with
-2-level paging, PMDs are PGDs.
+It will be used by other x86 mitigations.
 
-(For comparison, arm64 also gates ARCH_WANT_HUGE_PMD_SHARE on the
-configuration of page tables such that it is never enabled with 2-level
-paging.)
+No functional changes.
 
-Closes: https://lore.kernel.org/r/srhpjxlqfna67blvma5frmy3aa@altlinux.org
-Fixes: cfe28c5d63d8 ("x86: mm: Remove x86 version of huge_pmd_share.")
-Reported-by: Vitaly Chikunov <vt@altlinux.org>
-Suggested-by: Dave Hansen <dave.hansen@intel.com>
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand <david@redhat.com>
-Tested-by: Vitaly Chikunov <vt@altlinux.org>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250702-x86-2level-hugetlb-v2-1-1a98096edf92%40google.com
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst |    4 -
+ arch/x86/entry/entry.S                                          |    8 +-
+ arch/x86/include/asm/irqflags.h                                 |    4 -
+ arch/x86/include/asm/mwait.h                                    |    5 +
+ arch/x86/include/asm/nospec-branch.h                            |   29 +++++-----
+ arch/x86/kernel/cpu/bugs.c                                      |   12 ++--
+ arch/x86/kvm/vmx/vmx.c                                          |    2 
+ 7 files changed, 32 insertions(+), 32 deletions(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -102,7 +102,7 @@ config X86
- 	select ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH
- 	select ARCH_WANT_DEFAULT_BPF_JIT	if X86_64
- 	select ARCH_WANTS_DYNAMIC_TASK_STRUCT
--	select ARCH_WANT_HUGE_PMD_SHARE
-+	select ARCH_WANT_HUGE_PMD_SHARE		if X86_64
- 	select ARCH_WANT_LD_ORPHAN_WARN
- 	select ARCH_WANTS_THP_SWAP		if X86_64
- 	select BUILDTIME_TABLE_SORT
+--- a/Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst
++++ b/Documentation/admin-guide/hw-vuln/processor_mmio_stale_data.rst
+@@ -157,9 +157,7 @@ This is achieved by using the otherwise
+ combination with a microcode update. The microcode clears the affected CPU
+ buffers when the VERW instruction is executed.
+ 
+-Kernel reuses the MDS function to invoke the buffer clearing:
+-
+-	mds_clear_cpu_buffers()
++Kernel does the buffer clearing with x86_clear_cpu_buffers().
+ 
+ On MDS affected CPUs, the kernel already invokes CPU buffer clear on
+ kernel/userspace, hypervisor/guest and C-state (idle) transitions. No
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -31,20 +31,20 @@ EXPORT_SYMBOL_GPL(entry_ibpb);
+ 
+ /*
+  * Define the VERW operand that is disguised as entry code so that
+- * it can be referenced with KPTI enabled. This ensure VERW can be
++ * it can be referenced with KPTI enabled. This ensures VERW can be
+  * used late in exit-to-user path after page tables are switched.
+  */
+ .pushsection .entry.text, "ax"
+ 
+ .align L1_CACHE_BYTES, 0xcc
+-SYM_CODE_START_NOALIGN(mds_verw_sel)
++SYM_CODE_START_NOALIGN(x86_verw_sel)
+ 	UNWIND_HINT_EMPTY
+ 	ANNOTATE_NOENDBR
+ 	.word __KERNEL_DS
+ .align L1_CACHE_BYTES, 0xcc
+-SYM_CODE_END(mds_verw_sel);
++SYM_CODE_END(x86_verw_sel);
+ /* For KVM */
+-EXPORT_SYMBOL_GPL(mds_verw_sel);
++EXPORT_SYMBOL_GPL(x86_verw_sel);
+ 
+ .popsection
+ 
+--- a/arch/x86/include/asm/irqflags.h
++++ b/arch/x86/include/asm/irqflags.h
+@@ -56,13 +56,13 @@ static __always_inline void native_irq_e
+ 
+ static inline __cpuidle void native_safe_halt(void)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 	asm volatile("sti; hlt": : :"memory");
+ }
+ 
+ static inline __cpuidle void native_halt(void)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 	asm volatile("hlt": : :"memory");
+ }
+ 
+--- a/arch/x86/include/asm/mwait.h
++++ b/arch/x86/include/asm/mwait.h
+@@ -43,7 +43,7 @@ static inline void __monitorx(const void
+ 
+ static inline void __mwait(unsigned long eax, unsigned long ecx)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
+ 
+ 	/* "mwait %eax, %ecx;" */
+ 	asm volatile(".byte 0x0f, 0x01, 0xc9;"
+@@ -88,7 +88,8 @@ static inline void __mwaitx(unsigned lon
+ 
+ static inline void __sti_mwait(unsigned long eax, unsigned long ecx)
+ {
+-	mds_idle_clear_cpu_buffers();
++	x86_idle_clear_cpu_buffers();
++
+ 	/* "mwait %eax, %ecx;" */
+ 	asm volatile("sti; .byte 0x0f, 0x01, 0xc9;"
+ 		     :: "a" (eax), "c" (ecx));
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -191,23 +191,23 @@
+ .endm
+ 
+ /*
+- * Macro to execute VERW instruction that mitigate transient data sampling
+- * attacks such as MDS. On affected systems a microcode update overloaded VERW
+- * instruction to also clear the CPU buffers. VERW clobbers CFLAGS.ZF.
+- *
++ * Macro to execute VERW insns that mitigate transient data sampling
++ * attacks such as MDS or TSA. On affected systems a microcode update
++ * overloaded VERW insns to also clear the CPU buffers. VERW clobbers
++ * CFLAGS.ZF.
+  * Note: Only the memory operand variant of VERW clears the CPU buffers.
+  */
+ .macro CLEAR_CPU_BUFFERS
+ 	ALTERNATIVE "jmp .Lskip_verw_\@", "", X86_FEATURE_CLEAR_CPU_BUF
+ #ifdef CONFIG_X86_64
+-	verw mds_verw_sel(%rip)
++	verw x86_verw_sel(%rip)
+ #else
+ 	/*
+ 	 * In 32bit mode, the memory operand must be a %cs reference. The data
+ 	 * segments may not be usable (vm86 mode), and the stack segment may not
+ 	 * be flat (ESPFIX32).
+ 	 */
+-	verw %cs:mds_verw_sel
++	verw %cs:x86_verw_sel
+ #endif
+ .Lskip_verw_\@:
+ .endm
+@@ -398,22 +398,22 @@ DECLARE_STATIC_KEY_FALSE(switch_to_cond_
+ DECLARE_STATIC_KEY_FALSE(switch_mm_cond_ibpb);
+ DECLARE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
+ 
+-DECLARE_STATIC_KEY_FALSE(mds_idle_clear);
++DECLARE_STATIC_KEY_FALSE(cpu_buf_idle_clear);
+ 
+ DECLARE_STATIC_KEY_FALSE(mmio_stale_data_clear);
+ 
+-extern u16 mds_verw_sel;
++extern u16 x86_verw_sel;
+ 
+ #include <asm/segment.h>
+ 
+ /**
+- * mds_clear_cpu_buffers - Mitigation for MDS and TAA vulnerability
++ * x86_clear_cpu_buffers - Buffer clearing support for different x86 CPU vulns
+  *
+  * This uses the otherwise unused and obsolete VERW instruction in
+  * combination with microcode which triggers a CPU buffer flush when the
+  * instruction is executed.
+  */
+-static __always_inline void mds_clear_cpu_buffers(void)
++static __always_inline void x86_clear_cpu_buffers(void)
+ {
+ 	static const u16 ds = __KERNEL_DS;
+ 
+@@ -430,14 +430,15 @@ static __always_inline void mds_clear_cp
+ }
+ 
+ /**
+- * mds_idle_clear_cpu_buffers - Mitigation for MDS vulnerability
++ * x86_idle_clear_cpu_buffers - Buffer clearing support in idle for the MDS
++ * vulnerability
+  *
+  * Clear CPU buffers if the corresponding static key is enabled
+  */
+-static inline void mds_idle_clear_cpu_buffers(void)
++static __always_inline void x86_idle_clear_cpu_buffers(void)
+ {
+-	if (static_branch_likely(&mds_idle_clear))
+-		mds_clear_cpu_buffers();
++	if (static_branch_likely(&cpu_buf_idle_clear))
++		x86_clear_cpu_buffers();
+ }
+ 
+ #endif /* __ASSEMBLY__ */
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -118,9 +118,9 @@ DEFINE_STATIC_KEY_FALSE(switch_mm_cond_i
+ /* Control unconditional IBPB in switch_mm() */
+ DEFINE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
+ 
+-/* Control MDS CPU buffer clear before idling (halt, mwait) */
+-DEFINE_STATIC_KEY_FALSE(mds_idle_clear);
+-EXPORT_SYMBOL_GPL(mds_idle_clear);
++/* Control CPU buffer clear before idling (halt, mwait) */
++DEFINE_STATIC_KEY_FALSE(cpu_buf_idle_clear);
++EXPORT_SYMBOL_GPL(cpu_buf_idle_clear);
+ 
+ /* Controls CPU Fill buffer clear before KVM guest MMIO accesses */
+ DEFINE_STATIC_KEY_FALSE(mmio_stale_data_clear);
+@@ -445,7 +445,7 @@ static void __init mmio_select_mitigatio
+ 	 * is required irrespective of SMT state.
+ 	 */
+ 	if (!(ia32_cap & ARCH_CAP_FBSDP_NO))
+-		static_branch_enable(&mds_idle_clear);
++		static_branch_enable(&cpu_buf_idle_clear);
+ 
+ 	/*
+ 	 * Check if the system has the right microcode.
+@@ -1922,10 +1922,10 @@ static void update_mds_branch_idle(void)
+ 		return;
+ 
+ 	if (sched_smt_active()) {
+-		static_branch_enable(&mds_idle_clear);
++		static_branch_enable(&cpu_buf_idle_clear);
+ 	} else if (mmio_mitigation == MMIO_MITIGATION_OFF ||
+ 		   (ia32_cap & ARCH_CAP_FBSDP_NO)) {
+-		static_branch_disable(&mds_idle_clear);
++		static_branch_disable(&cpu_buf_idle_clear);
+ 	}
+ }
+ 
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6810,7 +6810,7 @@ static noinstr void vmx_vcpu_enter_exit(
+ 		vmx_l1d_flush(vcpu);
+ 	else if (static_branch_unlikely(&mmio_stale_data_clear) &&
+ 		 kvm_arch_has_assigned_device(vcpu->kvm))
+-		mds_clear_cpu_buffers();
++		x86_clear_cpu_buffers();
+ 
+ 	vmx_disable_fb_clear(vmx);
+ 
 
 
