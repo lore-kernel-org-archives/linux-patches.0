@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE252E4980;
-	Tue, 15 Jul 2025 13:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E96B2E4997;
+	Tue, 15 Jul 2025 13:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587232; cv=none; b=UENozcnjvgwvGUaxyW+EWEnG9QAxKR6uKSYUVaQJmdu2mmBHG0GPWO6LkBlHDkowqXrcYmxq5YI02ciG2DAS8SZhd8cI8RNjfBf/PEHUqjBv0KzcK3I6XyjrnsloBnMozN+Tplj5KRHKilnM43Nzp+4Thur3f9l5M0+VcQ7aJ2E=
+	t=1752587235; cv=none; b=mqnf6K7w4UUHdS08D8s49bVWn98VSARzGr/ORIRUGCD2vWLPi+uZM6ZBfeY9yKe4+mNgaOvLBoxDkVdkjTVfG/ffS88Gu4LxS5OCXYYYhH5BFIUeBdhmuovyw6MX7aczfr56niZI8h3SiRPSzjT5ffYQGIKY6A5aRtKKxtPkzXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587232; c=relaxed/simple;
-	bh=ePWh2TEsBTukSARBuGy/KsYw0/CBvI1IN9T0SCqrSTE=;
+	s=arc-20240116; t=1752587235; c=relaxed/simple;
+	bh=H+vhgr9XCq+lBpwRoKu0SoGG73WVTwRWDkFA7+WqcYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CkehiMxLvrCo8iN9K0w1o7yTAtUwwFbrRrE5xeLiRwsVJHT6oeF8HXzVKEwRlsaXU7FKudp0iHdDB5s6OTP2jwtboKkcxVtmgLUw9KXPvAWcGuJ0RDqm3AnUlF5BxhJS4RTHnJJuV0pDAE0nVYcsS4vMG7lnNxbGICGeBv3ZaY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRes3F0r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pusiai4JHFMGY+FGrCLgpugJzm9AuheJgt3T0+3kSaZa5aGfiDQDSpmtvcEjV1+HURCTR+uro+DFJJ/gvGAOFqVB1atGwiDVqtXrNry4eyTp/MXD5tWZFd7lZvJZMMJkm9J9tGkXVGFUbaZZJ5jzQkZMTGEkWOd2oRXKaV4W9nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3kuWUhH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRes3F0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF03C4CEE3;
-	Tue, 15 Jul 2025 13:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3kuWUhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6F0C4CEF6;
+	Tue, 15 Jul 2025 13:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587232;
-	bh=ePWh2TEsBTukSARBuGy/KsYw0/CBvI1IN9T0SCqrSTE=;
+	s=korg; t=1752587234;
+	bh=H+vhgr9XCq+lBpwRoKu0SoGG73WVTwRWDkFA7+WqcYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRes3F0rGTugzhOszG6L7c5l8RFGEgjVdJJD/SXss2J9WAKD1Uf20LBYFys9LkHmy
-	 LYdNDMO0z/NMCq5ARv0I8GO9lGXbqvOfC5v5d/bBjKcbdlQgZzTJG8oG4CyUrtEriC
-	 ssoJ/AGWnukzzXWI6uoKCzl628jHVkRKIwTbjctQ=
+	b=v3kuWUhHsHEMSTHBZrX3P+HVdewS7G5iTz4oJViQDfOGD++E2D2jHMQpDaEsZU2vD
+	 wDH6T6kUErcnMyLtXOjq0oUZO5ALGQ0xAcMyFmBDYhFeWf3QBqqjp0g5N9vlMGBbpH
+	 5OhfQMdEfhngtDx+ustBxW0v5Kp4ejjCCxZHQqzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 23/88] x86/mce/amd: Fix threshold limit reset
-Date: Tue, 15 Jul 2025 15:13:59 +0200
-Message-ID: <20250715130755.445442540@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH 6.1 24/88] x86/mce: Dont remove sysfs if thresholding sysfs init fails
+Date: Tue, 15 Jul 2025 15:14:00 +0200
+Message-ID: <20250715130755.484905320@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -52,57 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 5f6e3b720694ad771911f637a51930f511427ce1 upstream.
+commit 4c113a5b28bfd589e2010b5fc8867578b0135ed7 upstream.
 
-The MCA threshold limit must be reset after servicing the interrupt.
+Currently, the MCE subsystem sysfs interface will be removed if the
+thresholding sysfs interface fails to be created. A common failure is due to
+new MCA bank types that are not recognized and don't have a short name set.
 
-Currently, the restart function doesn't have an explicit check for this.  It
-makes some assumptions based on the current limit and what's in the registers.
-These assumptions don't always hold, so the limit won't be reset in some
-cases.
+The MCA thresholding feature is optional and should not break the common MCE
+sysfs interface. Also, new MCA bank types are occasionally introduced, and
+updates will be needed to recognize them. But likewise, this should not break
+the common sysfs interface.
 
-Make the reset condition explicit. Either an interrupt/overflow has occurred
-or the bank is being initialized.
+Keep the MCE sysfs interface regardless of the status of the thresholding
+sysfs interface.
 
 Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Tested-by: Tony Luck <tony.luck@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-4-236dd74f645f@amd.com
+Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-1-236dd74f645f@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/amd.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/mce/core.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -333,7 +333,6 @@ static void smca_configure(unsigned int
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2707,15 +2707,9 @@ static int mce_cpu_dead(unsigned int cpu
+ static int mce_cpu_online(unsigned int cpu)
+ {
+ 	struct timer_list *t = this_cpu_ptr(&mce_timer);
+-	int ret;
  
- struct thresh_restart {
- 	struct threshold_block	*b;
--	int			reset;
- 	int			set_lvt_off;
- 	int			lvt_off;
- 	u16			old_limit;
-@@ -428,13 +427,13 @@ static void threshold_restart_bank(void
- 
- 	rdmsr(tr->b->address, lo, hi);
- 
--	if (tr->b->threshold_limit < (hi & THRESHOLD_MAX))
--		tr->reset = 1;	/* limit cannot be lower than err count */
+ 	mce_device_create(cpu);
 -
--	if (tr->reset) {		/* reset err count and overflow bit */
--		hi =
--		    (hi & ~(MASK_ERR_COUNT_HI | MASK_OVERFLOW_HI)) |
--		    (THRESHOLD_MAX - tr->b->threshold_limit);
-+	/*
-+	 * Reset error count and overflow bit.
-+	 * This is done during init or after handling an interrupt.
-+	 */
-+	if (hi & MASK_OVERFLOW_HI || tr->set_lvt_off) {
-+		hi &= ~(MASK_ERR_COUNT_HI | MASK_OVERFLOW_HI);
-+		hi |= THRESHOLD_MAX - tr->b->threshold_limit;
- 	} else if (tr->old_limit) {	/* change limit w/o reset */
- 		int new_count = (hi & THRESHOLD_MAX) +
- 		    (tr->old_limit - tr->b->threshold_limit);
+-	ret = mce_threshold_create_device(cpu);
+-	if (ret) {
+-		mce_device_remove(cpu);
+-		return ret;
+-	}
++	mce_threshold_create_device(cpu);
+ 	mce_reenable_cpu();
+ 	mce_start_timer(t);
+ 	return 0;
 
 
