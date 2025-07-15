@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B0D26D4F2;
-	Tue, 15 Jul 2025 13:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568AA2EBDCA;
+	Tue, 15 Jul 2025 13:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586938; cv=none; b=hcq1+7czsLu7ivuX36MCC1cbpqG7BWVaZwC679pO1rSeEeGjA8dD7ZmHMi6KAvfkVP5OG6pIUF3LIeBHsf3Fph/K/cadhat/BnlpERO6/xgZY5xWMKtUaXQU5TEa80pdl9pkimXaCYNg+FeFs6iWLu/PUkeB/NW6IDhuzH/Hyis=
+	t=1752586941; cv=none; b=I+3iTwJPu83K515WY3vvhh48+SyTVYXX8vgfRM3fGattKLExC1dN3MMyP3VDsHToyaAson3sdrdw3Fe5wh41/DkIDSnifALuwja+b4cPsurloeHlfpsh/cWkLTTLin9cYcx8/y7fjIyK4Bji96rQ4thQ7omgOvqTIzY9cMg6d9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586938; c=relaxed/simple;
-	bh=Uz9ARDR3tAgGhvBfjC0kzwgTfMo8ytARQ6YeCcW2lfU=;
+	s=arc-20240116; t=1752586941; c=relaxed/simple;
+	bh=Fz68Na8SOYc4FtOAPkOox6yqsbiXrLJez2DqChRPGbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mM3qwTiqeFZT/ylpMHItjK9PkxfCL5s0QsqPzWrj8UaxbyqxLElsJZj4aehE28iUIhl9vJPQHxwirZp/1b6aVM3MoA98kpc3C8H4zznGuF6avELMc0Ik1hYfUbC/L5ImnUpYO7xzgLlyWs+gfxuns03M9fheQr5508A2maeol+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pv6vsqFP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tnj7wz/X6A6J8K/QsTRviQAA7meACvEzTxeYt3MGEVzANYoxpCFH5YI0f30OW1EPe+ULCWUoQq0h5qBd8dBlhulZmtxgTLtTv/UmErpr2ROM81CyjvumlNPkUwaKv2COma6BqCochCYMDdg9fX8Kmc/DSML7dP0E2lo6uOMV4Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DspTENol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pv6vsqFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A17DC4CEE3;
-	Tue, 15 Jul 2025 13:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DspTENol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF94C4CEE3;
+	Tue, 15 Jul 2025 13:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586938;
-	bh=Uz9ARDR3tAgGhvBfjC0kzwgTfMo8ytARQ6YeCcW2lfU=;
+	s=korg; t=1752586941;
+	bh=Fz68Na8SOYc4FtOAPkOox6yqsbiXrLJez2DqChRPGbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pv6vsqFPUbe91qk8Tefth2Hu4frl6399euI8fhOaMWHWCZg4PFrphIxJ2vXyik4iQ
-	 1SrQ+HM0r7o6HGSMlC3QOwWopLjtn7Lf6VedN6aiZc2v3QItzZIvJETKweieuy83Mg
-	 8dhZHiHpoSLmGhNaN26d+gJ8BL6vKFdC1p+n0FjE=
+	b=DspTENollMyph+9E2JQDhvBjFbybhl6gl5P4mdANs81UsFWore/caf1BpAAFpZMve
+	 VGsYb7DnQkBWCO58/n8AU9cGuFGykRv4eXdQObg43SLvWmLMDGY9dJSz+Sp1aw6rdZ
+	 8E+STQ6/YzMKG/m/aJVC6ZVRsoXm7Q2MgX+SHNH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 106/192] mm/vmalloc: leave lazy MMU mode on PTE mapping error
-Date: Tue, 15 Jul 2025 15:13:21 +0200
-Message-ID: <20250715130819.143609927@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Akshata Jahagirdar <akshata.jahagirdar@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.15 089/192] drm/xe/bmg: fix compressed VRAM handling
+Date: Tue, 15 Jul 2025 15:13:04 +0200
+Message-ID: <20250715130818.480576520@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -47,75 +48,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit fea18c686320a53fce7ad62a87a3e1d10ad02f31 upstream.
+commit fee58ca135a7b979c8b75e6d2eac60d695f9209b upstream.
 
-vmap_pages_pte_range() enters the lazy MMU mode, but fails to leave it in
-case an error is encountered.
+There looks to be an issue in our compression handling when the BO pages
+are very fragmented, where we choose to skip the identity map and
+instead fall back to emitting the PTEs by hand when migrating memory,
+such that we can hopefully do more work per blit operation. However in
+such a case we need to ensure the src PTEs are correctly tagged with a
+compression enabled PAT index on dgpu xe2+, otherwise the copy will
+simply treat the src memory as uncompressed, leading to corruption if
+the memory was compressed by the user.
 
-Link: https://lkml.kernel.org/r/20250623075721.2817094-1-agordeev@linux.ibm.com
-Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202506132017.T1l1l6ME-lkp@intel.com/
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+To fix this pass along use_comp_pat into emit_pte() on the src side, to
+indicate that compression should be considered.
+
+v2 (Jonathan): tweak the commit message
+
+Fixes: 523f191cc0c7 ("drm/xe/xe_migrate: Handle migration logic for xe2+ dgfx")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Akshata Jahagirdar <akshata.jahagirdar@intel.com>
+Cc: <stable@vger.kernel.org> # v6.12+
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://lore.kernel.org/r/20250701103949.83116-2-matthew.auld@intel.com
+(cherry picked from commit f7a2fd776e57bd6468644bdecd91ab3aba57ba58)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/xe/xe_migrate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -487,6 +487,7 @@ static int vmap_pages_pte_range(pmd_t *p
- 		unsigned long end, pgprot_t prot, struct page **pages, int *nr,
- 		pgtbl_mod_mask *mask)
- {
-+	int err = 0;
- 	pte_t *pte;
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -860,7 +860,7 @@ struct dma_fence *xe_migrate_copy(struct
+ 		if (src_is_vram && xe_migrate_allow_identity(src_L0, &src_it))
+ 			xe_res_next(&src_it, src_L0);
+ 		else
+-			emit_pte(m, bb, src_L0_pt, src_is_vram, copy_system_ccs,
++			emit_pte(m, bb, src_L0_pt, src_is_vram, copy_system_ccs || use_comp_pat,
+ 				 &src_it, src_L0, src);
  
- 	/*
-@@ -500,18 +501,25 @@ static int vmap_pages_pte_range(pmd_t *p
- 	do {
- 		struct page *page = pages[*nr];
- 
--		if (WARN_ON(!pte_none(ptep_get(pte))))
--			return -EBUSY;
--		if (WARN_ON(!page))
--			return -ENOMEM;
--		if (WARN_ON(!pfn_valid(page_to_pfn(page))))
--			return -EINVAL;
-+		if (WARN_ON(!pte_none(ptep_get(pte)))) {
-+			err = -EBUSY;
-+			break;
-+		}
-+		if (WARN_ON(!page)) {
-+			err = -ENOMEM;
-+			break;
-+		}
-+		if (WARN_ON(!pfn_valid(page_to_pfn(page)))) {
-+			err = -EINVAL;
-+			break;
-+		}
- 
- 		set_pte_at(&init_mm, addr, pte, mk_pte(page, prot));
- 		(*nr)++;
- 	} while (pte++, addr += PAGE_SIZE, addr != end);
- 	*mask |= PGTBL_PTE_MODIFIED;
--	return 0;
-+
-+	return err;
- }
- 
- static int vmap_pages_pmd_range(pud_t *pud, unsigned long addr,
+ 		if (dst_is_vram && xe_migrate_allow_identity(src_L0, &dst_it))
 
 
