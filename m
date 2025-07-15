@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8392E7176;
-	Tue, 15 Jul 2025 13:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CC02E3AE1;
+	Tue, 15 Jul 2025 13:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586004; cv=none; b=LN9C1sjn0XAlzn4Nq0OXrM1K+jzdQfwLU0lzqjujZUXnOJM2IZzZ4xil1YP0VdS75pSaEAddp/nCT0zC+fGRY4QR1+3UYI0g4JL6az1XaFbh42533fACj2sioAlue0fLR8QzOo7224cUG1WXma0eMyJQlOvBveK93uZgO0+eUtI=
+	t=1752586007; cv=none; b=It0qO8ffSCGUzunhGKltSotJxUnPD0djWblFvaIsKPKtK35+ELOWKoaIp3KBqgtfefv64+ZTVFLxs2EwEeX20IQTLU/n6nnM/b0iJzx7llUyOL+nieT7M4uZYzlUezL2AytqiL9S86IOW6z1xR6a6ngI6FYA0z1eZDoxJK9e7oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586004; c=relaxed/simple;
-	bh=oqCCRvhZ4H/fz2hz77is6b10cfBIpaqb2w9z+kC2BF0=;
+	s=arc-20240116; t=1752586007; c=relaxed/simple;
+	bh=imNpF4gE2D5Xqwd/h8AwtQuFng37gp48Nm+5JOoT+mY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hh+zTks7zgxI1vZ/n5E/eRzf0ZW02jGwmcKinlUfytIsheENAssapNBpiaHgXv9+TwFdUMfWTXPrt6tJGv+DWNVp4ul5Ovv/y+Aasvp/Pmw4bvBAvg3DQfHDSullBhE42P5wpQSK8dUOO8ZwHZbPl3+drOmlUVR0lVzCY6OzY00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJ6LEcPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=USpMxo2Lm+FOnfUIPL4zK4czF1SHy5Di27MDEUJ0/Jd91EcCclrPnw1m3wYw8LGG1tTjqIZVodLG0gqB0DCqLQXIJ/19K/8GGePXH+208ZpSYhi7OnATFiGU4THJ5mMKRQGClEpMA959OPz7iK7XiH9uNRjfU8MqCo4cOan6UbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOUOmHbp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJ6LEcPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EC5C4CEE3;
-	Tue, 15 Jul 2025 13:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOUOmHbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96291C4CEE3;
+	Tue, 15 Jul 2025 13:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586004;
-	bh=oqCCRvhZ4H/fz2hz77is6b10cfBIpaqb2w9z+kC2BF0=;
+	s=korg; t=1752586007;
+	bh=imNpF4gE2D5Xqwd/h8AwtQuFng37gp48Nm+5JOoT+mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJ6LEcPCZR+4ahayz7tbx1FLu9sxJwsDLh0wIjxSqIyabrrtV9UTcdv0x22FwNWaQ
-	 dlYvpZuEuEYzWLjRLtV3s4S7/6PAUF85AIqEnv1FPfCebYaStAznWyC7Ky6rFDWyXU
-	 6mEVsLCMjZNEDkr+V9kxudhzdES+NHSQV2AfbM+U=
+	b=uOUOmHbp0eaM3pBfUWH69qid0QAuK5NMBeSHk1XPpuTuO4UK5VhG86GYh4bugEEwf
+	 SImIilyWcFWo4t1b+pZcFxuuXG1OMxv5Un7pcF2fMpERtknrSLRdTRDldKX0aMdrVs
+	 QDJ1FtViRmz+EmWGMYp9zV2Knky5/BB7ApHX2KKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable <stable@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/109] bnxt_en: Set DMA unmap len correctly for XDP_REDIRECT
-Date: Tue, 15 Jul 2025 15:13:46 +0200
-Message-ID: <20250715130802.488303380@linuxfoundation.org>
+Subject: [PATCH 6.6 073/109] usb: cdnsp: Fix issue with CV Bad Descriptor test
+Date: Tue, 15 Jul 2025 15:13:29 +0200
+Message-ID: <20250715130801.805510203@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -52,70 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Somnath Kotur <somnath.kotur@broadcom.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 3cdf199d4755d477972ee87110b2aebc88b3cfad ]
+[ Upstream commit 2831a81077f5162f104ba5a97a7d886eb371c21c ]
 
-When transmitting an XDP_REDIRECT packet, call dma_unmap_len_set()
-with the proper length instead of 0.  This bug triggers this warning
-on a system with IOMMU enabled:
+The SSP2 controller has extra endpoint state preserve bit (ESP) which
+setting causes that endpoint state will be preserved during
+Halt Endpoint command. It is used only for EP0.
+Without this bit the Command Verifier "TD 9.10 Bad Descriptor Test"
+failed.
+Setting this bit doesn't have any impact for SSP controller.
 
-WARNING: CPU: 36 PID: 0 at drivers/iommu/dma-iommu.c:842 __iommu_dma_unmap+0x159/0x170
-RIP: 0010:__iommu_dma_unmap+0x159/0x170
-Code: a8 00 00 00 00 48 c7 45 b0 00 00 00 00 48 c7 45 c8 00 00 00 00 48 c7 45 a0 ff ff ff ff 4c 89 45
-b8 4c 89 45 c0 e9 77 ff ff ff <0f> 0b e9 60 ff ff ff e8 8b bf 6a 00 66 66 2e 0f 1f 84 00 00 00 00
-RSP: 0018:ff22d31181150c88 EFLAGS: 00010206
-RAX: 0000000000002000 RBX: 00000000e13a0000 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ff22d31181150cf0 R08: ff22d31181150ca8 R09: 0000000000000000
-R10: 0000000000000000 R11: ff22d311d36c9d80 R12: 0000000000001000
-R13: ff13544d10645010 R14: ff22d31181150c90 R15: ff13544d0b2bac00
-FS: 0000000000000000(0000) GS:ff13550908a00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005be909dacff8 CR3: 0008000173408003 CR4: 0000000000f71ef0
-PKRU: 55555554
-Call Trace:
-<IRQ>
-? show_regs+0x6d/0x80
-? __warn+0x89/0x160
-? __iommu_dma_unmap+0x159/0x170
-? report_bug+0x17e/0x1b0
-? handle_bug+0x46/0x90
-? exc_invalid_op+0x18/0x80
-? asm_exc_invalid_op+0x1b/0x20
-? __iommu_dma_unmap+0x159/0x170
-? __iommu_dma_unmap+0xb3/0x170
-iommu_dma_unmap_page+0x4f/0x100
-dma_unmap_page_attrs+0x52/0x220
-? srso_alias_return_thunk+0x5/0xfbef5
-? xdp_return_frame+0x2e/0xd0
-bnxt_tx_int_xdp+0xdf/0x440 [bnxt_en]
-__bnxt_poll_work_done+0x81/0x1e0 [bnxt_en]
-bnxt_poll+0xd3/0x1e0 [bnxt_en]
-
-Fixes: f18c2b77b2e4 ("bnxt_en: optimized XDP_REDIRECT support")
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250710213938.1959625-4-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB95382CCD50549DABAEFD6156DD7CA@PH7PR07MB9538.namprd07.prod.outlook.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/cdnsp-debug.h  |  5 +++--
+ drivers/usb/cdns3/cdnsp-ep0.c    | 18 +++++++++++++++---
+ drivers/usb/cdns3/cdnsp-gadget.h |  6 ++++++
+ drivers/usb/cdns3/cdnsp-ring.c   |  3 ++-
+ 4 files changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 758f51366ef03..07a458ecb7cc9 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -115,7 +115,7 @@ static void __bnxt_xmit_xdp_redirect(struct bnxt *bp,
- 	tx_buf->action = XDP_REDIRECT;
- 	tx_buf->xdpf = xdpf;
- 	dma_unmap_addr_set(tx_buf, mapping, mapping);
--	dma_unmap_len_set(tx_buf, len, 0);
-+	dma_unmap_len_set(tx_buf, len, len);
+diff --git a/drivers/usb/cdns3/cdnsp-debug.h b/drivers/usb/cdns3/cdnsp-debug.h
+index cd138acdcce16..86860686d8363 100644
+--- a/drivers/usb/cdns3/cdnsp-debug.h
++++ b/drivers/usb/cdns3/cdnsp-debug.h
+@@ -327,12 +327,13 @@ static inline const char *cdnsp_decode_trb(char *str, size_t size, u32 field0,
+ 	case TRB_RESET_EP:
+ 	case TRB_HALT_ENDPOINT:
+ 		ret = scnprintf(str, size,
+-				"%s: ep%d%s(%d) ctx %08x%08x slot %ld flags %c",
++				"%s: ep%d%s(%d) ctx %08x%08x slot %ld flags %c %c",
+ 				cdnsp_trb_type_string(type),
+ 				ep_num, ep_id % 2 ? "out" : "in",
+ 				TRB_TO_EP_INDEX(field3), field1, field0,
+ 				TRB_TO_SLOT_ID(field3),
+-				field3 & TRB_CYCLE ? 'C' : 'c');
++				field3 & TRB_CYCLE ? 'C' : 'c',
++				field3 & TRB_ESP ? 'P' : 'p');
+ 		break;
+ 	case TRB_STOP_RING:
+ 		ret = scnprintf(str, size,
+diff --git a/drivers/usb/cdns3/cdnsp-ep0.c b/drivers/usb/cdns3/cdnsp-ep0.c
+index f317d3c847810..5cd9b898ce971 100644
+--- a/drivers/usb/cdns3/cdnsp-ep0.c
++++ b/drivers/usb/cdns3/cdnsp-ep0.c
+@@ -414,6 +414,7 @@ static int cdnsp_ep0_std_request(struct cdnsp_device *pdev,
+ void cdnsp_setup_analyze(struct cdnsp_device *pdev)
+ {
+ 	struct usb_ctrlrequest *ctrl = &pdev->setup;
++	struct cdnsp_ep *pep;
+ 	int ret = -EINVAL;
+ 	u16 len;
+ 
+@@ -427,10 +428,21 @@ void cdnsp_setup_analyze(struct cdnsp_device *pdev)
+ 		goto out;
+ 	}
+ 
++	pep = &pdev->eps[0];
++
+ 	/* Restore the ep0 to Stopped/Running state. */
+-	if (pdev->eps[0].ep_state & EP_HALTED) {
+-		trace_cdnsp_ep0_halted("Restore to normal state");
+-		cdnsp_halt_endpoint(pdev, &pdev->eps[0], 0);
++	if (pep->ep_state & EP_HALTED) {
++		if (GET_EP_CTX_STATE(pep->out_ctx) == EP_STATE_HALTED)
++			cdnsp_halt_endpoint(pdev, pep, 0);
++
++		/*
++		 * Halt Endpoint Command for SSP2 for ep0 preserve current
++		 * endpoint state and driver has to synchronize the
++		 * software endpoint state with endpoint output context
++		 * state.
++		 */
++		pep->ep_state &= ~EP_HALTED;
++		pep->ep_state |= EP_STOPPED;
+ 	}
+ 
+ 	/*
+diff --git a/drivers/usb/cdns3/cdnsp-gadget.h b/drivers/usb/cdns3/cdnsp-gadget.h
+index 2afa3e558f85c..a91cca509db08 100644
+--- a/drivers/usb/cdns3/cdnsp-gadget.h
++++ b/drivers/usb/cdns3/cdnsp-gadget.h
+@@ -987,6 +987,12 @@ enum cdnsp_setup_dev {
+ #define STREAM_ID_FOR_TRB(p)		((((p)) << 16) & GENMASK(31, 16))
+ #define SCT_FOR_TRB(p)			(((p) << 1) & 0x7)
+ 
++/*
++ * Halt Endpoint Command TRB field.
++ * The ESP bit only exists in the SSP2 controller.
++ */
++#define TRB_ESP				BIT(9)
++
+ /* Link TRB specific fields. */
+ #define TRB_TC				BIT(1)
+ 
+diff --git a/drivers/usb/cdns3/cdnsp-ring.c b/drivers/usb/cdns3/cdnsp-ring.c
+index 757fdd918286d..0758f171f73ec 100644
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -2485,7 +2485,8 @@ void cdnsp_queue_halt_endpoint(struct cdnsp_device *pdev, unsigned int ep_index)
+ {
+ 	cdnsp_queue_command(pdev, 0, 0, 0, TRB_TYPE(TRB_HALT_ENDPOINT) |
+ 			    SLOT_ID_FOR_TRB(pdev->slot_id) |
+-			    EP_ID_FOR_TRB(ep_index));
++			    EP_ID_FOR_TRB(ep_index) |
++			    (!ep_index ? TRB_ESP : 0));
  }
  
- void bnxt_tx_int_xdp(struct bnxt *bp, struct bnxt_napi *bnapi, int budget)
+ void cdnsp_force_header_wakeup(struct cdnsp_device *pdev, int intf_num)
 -- 
 2.39.5
 
