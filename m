@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746422DEA72;
-	Tue, 15 Jul 2025 13:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239572DEA72;
+	Tue, 15 Jul 2025 13:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587002; cv=none; b=hI2FmlYlBgItRUI0xN05GSr2MwXA0vL5Fu9efhnQDJUCU3l33oFuh6+JkI7Z+hhJLD0R0KwUOSS2O20X/y8xWiuDiwL1wAPmylbYBOszM2PWst+0ChyvYG65JqNmKyeaj+mcFQjB/ielqDKX7nK3Yd/4tU5ihP4et6Ajr6eET7A=
+	t=1752587005; cv=none; b=Ti8POJ9UOZ4o+9csD4ByFi7sL0LP9ACpYBKTii3d05SJwd+1fU5KaEUWiXOVjIs5g8rNtlKMFEV/TodXWQyTOZ2pUR47oLYCFY9FpxehiTf1Qly7GbgYvGaYof3At7HBQxNqawwbsBUFHpyCoFEfLlKPMu/ctY44LAahy+bwhZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587002; c=relaxed/simple;
-	bh=GEzmpVVdUkNKT7P4eDsOE1NgfY/uJtXuvNe4j/6cGSU=;
+	s=arc-20240116; t=1752587005; c=relaxed/simple;
+	bh=OHpGAv27Zp0dKGLXoDC6/+epby1B/MMYt6II+wZWbZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OM9CHtVqfk6LYmBZvH3svDGG1vhwlkD5pj0RRa8ArhhY4pwfHRZwp0wEXTXsX+ND04Vm+MxZXgQUvm+45tLD18D2c2VK3BgMoEm6qIoGfpL+mBugm2DAWm1TsO5kZYB7tE2slVTWRdzgUK+tyISMtq/mbbc1D7MCe/tf2AqN/uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBF25VvU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dFgK18isp6NB9yw9c4axmoAdzl+TYKp7mxGhX3nSt1v1OX1J3WQPBavhUZoZvUpJm4wwE+DVbDKowymKBxBElFTyVFKs7KzB/VjrRkjyxfrcaa0pTkM/3Z40B2ZXa9heP6no5diy0p1nVR/tyqxZJ9o2Uu+IJrasVU1p6EmAKGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0CHgzkH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBF25VvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0776DC4CEE3;
-	Tue, 15 Jul 2025 13:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0CHgzkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A955FC4CEE3;
+	Tue, 15 Jul 2025 13:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587002;
-	bh=GEzmpVVdUkNKT7P4eDsOE1NgfY/uJtXuvNe4j/6cGSU=;
+	s=korg; t=1752587005;
+	bh=OHpGAv27Zp0dKGLXoDC6/+epby1B/MMYt6II+wZWbZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBF25VvUIWPQtkVITr7h6bfVEiJ9NCI4bM9iSK+zeld2SHpfoMsSv26Gve9MEjwGd
-	 kaFB9q9jImkOLIhGdy5uAj8D0NQJr8qg4GlGwXsPRDUv0FQOutnDePZr8HoVu12nc8
-	 ACkeQKiTmuH761qiv/H4cX6zQnolbcf7O3qlBwws=
+	b=f0CHgzkH3AeXthN53Y07uSzR0PGm52txle286XGtXd5VJC5D61xNyENCIaUJDQbkn
+	 RwyEvX7hwDtNl0Abbaa/Kbu+itFOqvlhq5qCzxNzL7jCPq3jsoQohtMqFFSmFGbuUl
+	 TtQkyjnoCV9DsLQNNEpCiKWsqAjPbpe62ncdGMOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Stefan Kerkmann <s.kerkmann@pengutronix.de>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.15 122/192] erofs: address D-cache aliasing
-Date: Tue, 15 Jul 2025 15:13:37 +0200
-Message-ID: <20250715130819.787379412@linuxfoundation.org>
+	Nigel Croxon <ncroxon@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 131/192] raid10: cleanup memleak at raid10_make_request
+Date: Tue, 15 Jul 2025 15:13:46 +0200
+Message-ID: <20250715130820.153655262@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -51,174 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Nigel Croxon <ncroxon@redhat.com>
 
-commit 27917e8194f91dffd8b4825350c63cb68e98ce58 upstream.
+[ Upstream commit 43806c3d5b9bb7d74ba4e33a6a8a41ac988bde24 ]
 
-Flush the D-cache before unlocking folios for compressed inodes, as
-they are dirtied during decompression.
+If raid10_read_request or raid10_write_request registers a new
+request and the REQ_NOWAIT flag is set, the code does not
+free the malloc from the mempool.
 
-Avoid calling flush_dcache_folio() on every CPU write, since it's more
-like playing whack-a-mole without real benefit.
+unreferenced object 0xffff8884802c3200 (size 192):
+   comm "fio", pid 9197, jiffies 4298078271
+   hex dump (first 32 bytes):
+     00 00 00 00 00 00 00 00 88 41 02 00 00 00 00 00  .........A......
+     08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+   backtrace (crc c1a049a2):
+     __kmalloc+0x2bb/0x450
+     mempool_alloc+0x11b/0x320
+     raid10_make_request+0x19e/0x650 [raid10]
+     md_handle_request+0x3b3/0x9e0
+     __submit_bio+0x394/0x560
+     __submit_bio_noacct+0x145/0x530
+     submit_bio_noacct_nocheck+0x682/0x830
+     __blkdev_direct_IO_async+0x4dc/0x6b0
+     blkdev_read_iter+0x1e5/0x3b0
+     __io_read+0x230/0x1110
+     io_read+0x13/0x30
+     io_issue_sqe+0x134/0x1180
+     io_submit_sqes+0x48c/0xe90
+     __do_sys_io_uring_enter+0x574/0x8b0
+     do_syscall_64+0x5c/0xe0
+     entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-It has no impact on x86 and arm64/risc-v: on x86, flush_dcache_folio()
-is a no-op, and on arm64/risc-v, PG_dcache_clean (PG_arch_1) is clear
-for new page cache folios.  However, certain ARM boards are affected,
-as reported.
+V4: changing backing tree to see if CKI tests will pass.
+The patch code has not changed between any versions.
 
-Fixes: 3883a79abd02 ("staging: erofs: introduce VLE decompression support")
-Closes: https://lore.kernel.org/r/c1e51e16-6cc6-49d0-a63e-4e9ff6c4dd53@pengutronix.de
-Closes: https://lore.kernel.org/r/38d43fae-1182-4155-9c5b-ffc7382d9917@siemens.com
-Tested-by: Jan Kiszka <jan.kiszka@siemens.com>
-Tested-by: Stefan Kerkmann <s.kerkmann@pengutronix.de>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250709034614.2780117-2-hsiangkao@linux.alibaba.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c9aa889b035f ("md: raid10 add nowait support")
+Signed-off-by: Nigel Croxon <ncroxon@redhat.com>
+Link: https://lore.kernel.org/linux-raid/c0787379-9caa-42f3-b5fc-369aed784400@redhat.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/data.c         |   16 +++++++++++-----
- fs/erofs/decompressor.c |   12 ++++--------
- fs/erofs/fileio.c       |    4 ++--
- fs/erofs/internal.h     |    2 +-
- fs/erofs/zdata.c        |    6 +++---
- 5 files changed, 21 insertions(+), 19 deletions(-)
+ drivers/md/raid10.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -213,9 +213,11 @@ int erofs_map_dev(struct super_block *sb
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 54320a887ecc5..0443a479809f9 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1182,8 +1182,11 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+ 		}
+ 	}
  
- /*
-  * bit 30: I/O error occurred on this folio
-+ * bit 29: CPU has dirty data in D-cache (needs aliasing handling);
-  * bit 0 - 29: remaining parts to complete this folio
-  */
--#define EROFS_ONLINEFOLIO_EIO			(1 << 30)
-+#define EROFS_ONLINEFOLIO_EIO		30
-+#define EROFS_ONLINEFOLIO_DIRTY		29
- 
- void erofs_onlinefolio_init(struct folio *folio)
- {
-@@ -232,19 +234,23 @@ void erofs_onlinefolio_split(struct foli
- 	atomic_inc((atomic_t *)&folio->private);
- }
- 
--void erofs_onlinefolio_end(struct folio *folio, int err)
-+void erofs_onlinefolio_end(struct folio *folio, int err, bool dirty)
- {
- 	int orig, v;
- 
- 	do {
- 		orig = atomic_read((atomic_t *)&folio->private);
--		v = (orig - 1) | (err ? EROFS_ONLINEFOLIO_EIO : 0);
-+		DBG_BUGON(orig <= 0);
-+		v = dirty << EROFS_ONLINEFOLIO_DIRTY;
-+		v |= (orig - 1) | (!!err << EROFS_ONLINEFOLIO_EIO);
- 	} while (atomic_cmpxchg((atomic_t *)&folio->private, orig, v) != orig);
- 
--	if (v & ~EROFS_ONLINEFOLIO_EIO)
-+	if (v & (BIT(EROFS_ONLINEFOLIO_DIRTY) - 1))
+-	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors))
++	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
++		raid_end_bio_io(r10_bio);
  		return;
- 	folio->private = 0;
--	folio_end_read(folio, !(v & EROFS_ONLINEFOLIO_EIO));
-+	if (v & BIT(EROFS_ONLINEFOLIO_DIRTY))
-+		flush_dcache_folio(folio);
-+	folio_end_read(folio, !(v & BIT(EROFS_ONLINEFOLIO_EIO)));
- }
- 
- static int erofs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -301,13 +301,11 @@ static int z_erofs_transform_plain(struc
- 		cur = min(cur, rq->outputsize);
- 		if (cur && rq->out[0]) {
- 			kin = kmap_local_page(rq->in[nrpages_in - 1]);
--			if (rq->out[0] == rq->in[nrpages_in - 1]) {
-+			if (rq->out[0] == rq->in[nrpages_in - 1])
- 				memmove(kin + rq->pageofs_out, kin + pi, cur);
--				flush_dcache_page(rq->out[0]);
--			} else {
-+			else
- 				memcpy_to_page(rq->out[0], rq->pageofs_out,
- 					       kin + pi, cur);
--			}
- 			kunmap_local(kin);
- 		}
- 		rq->outputsize -= cur;
-@@ -325,14 +323,12 @@ static int z_erofs_transform_plain(struc
- 			po = (rq->pageofs_out + cur + pi) & ~PAGE_MASK;
- 			DBG_BUGON(no >= nrpages_out);
- 			cnt = min(insz - pi, PAGE_SIZE - po);
--			if (rq->out[no] == rq->in[ni]) {
-+			if (rq->out[no] == rq->in[ni])
- 				memmove(kin + po,
- 					kin + rq->pageofs_in + pi, cnt);
--				flush_dcache_page(rq->out[no]);
--			} else if (rq->out[no]) {
-+			else if (rq->out[no])
- 				memcpy_to_page(rq->out[no], po,
- 					       kin + rq->pageofs_in + pi, cnt);
--			}
- 			pi += cnt;
- 		} while (pi < insz);
- 		kunmap_local(kin);
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -38,7 +38,7 @@ static void erofs_fileio_ki_complete(str
- 	} else {
- 		bio_for_each_folio_all(fi, &rq->bio) {
- 			DBG_BUGON(folio_test_uptodate(fi.folio));
--			erofs_onlinefolio_end(fi.folio, ret);
-+			erofs_onlinefolio_end(fi.folio, ret, false);
- 		}
++	}
++
+ 	rdev = read_balance(conf, r10_bio, &max_sectors);
+ 	if (!rdev) {
+ 		if (err_rdev) {
+@@ -1370,8 +1373,11 @@ static void raid10_write_request(struct mddev *mddev, struct bio *bio,
  	}
- 	bio_uninit(&rq->bio);
-@@ -158,7 +158,7 @@ io_retry:
- 		}
- 		cur += len;
- 	}
--	erofs_onlinefolio_end(folio, err);
-+	erofs_onlinefolio_end(folio, err, false);
- 	return err;
- }
  
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -389,7 +389,7 @@ int erofs_fiemap(struct inode *inode, st
- int erofs_map_blocks(struct inode *inode, struct erofs_map_blocks *map);
- void erofs_onlinefolio_init(struct folio *folio);
- void erofs_onlinefolio_split(struct folio *folio);
--void erofs_onlinefolio_end(struct folio *folio, int err);
-+void erofs_onlinefolio_end(struct folio *folio, int err, bool dirty);
- struct inode *erofs_iget(struct super_block *sb, erofs_nid_t nid);
- int erofs_getattr(struct mnt_idmap *idmap, const struct path *path,
- 		  struct kstat *stat, u32 request_mask,
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1060,7 +1060,7 @@ static int z_erofs_scan_folio(struct z_e
- 			tight = (bs == PAGE_SIZE);
- 		}
- 	} while ((end = cur) > 0);
--	erofs_onlinefolio_end(folio, err);
-+	erofs_onlinefolio_end(folio, err, false);
- 	return err;
- }
- 
-@@ -1165,7 +1165,7 @@ static void z_erofs_fill_other_copies(st
- 			cur += len;
- 		}
- 		kunmap_local(dst);
--		erofs_onlinefolio_end(page_folio(bvi->bvec.page), err);
-+		erofs_onlinefolio_end(page_folio(bvi->bvec.page), err, true);
- 		list_del(p);
- 		kfree(bvi);
- 	}
-@@ -1324,7 +1324,7 @@ static int z_erofs_decompress_pcluster(s
- 
- 		DBG_BUGON(z_erofs_page_is_invalidated(page));
- 		if (!z_erofs_is_shortlived_page(page)) {
--			erofs_onlinefolio_end(page_folio(page), err);
-+			erofs_onlinefolio_end(page_folio(page), err, true);
- 			continue;
- 		}
- 		if (pcl->algorithmformat != Z_EROFS_COMPRESSION_LZ4) {
+ 	sectors = r10_bio->sectors;
+-	if (!regular_request_wait(mddev, conf, bio, sectors))
++	if (!regular_request_wait(mddev, conf, bio, sectors)) {
++		raid_end_bio_io(r10_bio);
+ 		return;
++	}
++
+ 	if (test_bit(MD_RECOVERY_RESHAPE, &mddev->recovery) &&
+ 	    (mddev->reshape_backwards
+ 	     ? (bio->bi_iter.bi_sector < conf->reshape_safe &&
+-- 
+2.39.5
+
 
 
