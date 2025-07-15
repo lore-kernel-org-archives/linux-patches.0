@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67E42E54B7;
-	Tue, 15 Jul 2025 13:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429102EAB84;
+	Tue, 15 Jul 2025 13:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586478; cv=none; b=fHNDDB/Y4T/LqdeMDYQdulNVyKtYdtBhRGQNAfUDiuuhjzGojW8S+h/Yeae2083UD3DOIVQEvMcKWecDCM1H+Z9s0wKPcJh8lrM+uqkUUUvj1pJgSpJt/HbiDxQaf+aM0OU2brn+mIMWrFr//u1jrxgdEOeDcVLg6XXE9oD+d24=
+	t=1752586481; cv=none; b=UcdGnlGAonWiIUjpEnHmHlDda+MiYlCVtCui5wRll0WtC7Apqq3YEpNzpySLh8FG0bkQHqBly2LIyOtzG6WQfWdCgW4zwPIhNmECPV0zABtn/aVx0MlCQBvuPNkXAwuZXe4ue0daoaFJnxYf/EpHL2J13wgNGsOI0PKR76stCNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586478; c=relaxed/simple;
-	bh=Qels/7FSUrJiI/CH+g+/+VtrnRWAtFJkKB7jWbK39SE=;
+	s=arc-20240116; t=1752586481; c=relaxed/simple;
+	bh=aHllR8XRlGMfwDE+8STM3zk3V5Q2jBIYVDoodFBBWEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/WzHl0exyr8jQ0P8KmuCl6Czil9BcfKGo4k0iBw9TzjVKYDJzpt0OUaeVPKiGi6yTRPQcgsTb819Fxr3I0CHhzCu42n44Lh7Bq20UmfEU7goiOo6zdS4UlNV/XQLDzV/ddFVxUepKnmjCTt38JAppTXjbixbGwyuq04IQbBPwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2A4jpsO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m3bVQ3FNMwZRsDmHolhouCxrN/Q0OuhehHKa7yTub3be8A+BbpABh9QM5qAJs+h48DnCV1vzTxspzypCMfs2yioLrBTcsN1FwfL6tgPhi+7xD3qF24shhE+/o6aGdiBmJTkJ5RkXIdz02kgZeCSCTAn1usLq98OXTHBV3al8P5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GhHMn1H+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2A4jpsO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29409C4CEE3;
-	Tue, 15 Jul 2025 13:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhHMn1H+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA600C4CEE3;
+	Tue, 15 Jul 2025 13:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586478;
-	bh=Qels/7FSUrJiI/CH+g+/+VtrnRWAtFJkKB7jWbK39SE=;
+	s=korg; t=1752586481;
+	bh=aHllR8XRlGMfwDE+8STM3zk3V5Q2jBIYVDoodFBBWEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2A4jpsO30GeIE6qe7dk6YCgd8IC/EsVWSAUkU+MX26BEbzq1cHb9uax2RbSYksvB
-	 Am6qD603dtUwWAPNanR1maFSAO2RAyInXehGHo8l4DHRXzJvxbXBI0Gz2ZkOsPDazD
-	 JKC4MI3QYuk9n3O3lXCNbtb4cq3Hq2oqWklXQvj8=
+	b=GhHMn1H+p7S43Yt4g+/Pw2UF4IFLh+boQPH0jYl/Us6z3mkfuHC9BXjexLVnmOBHh
+	 eiYjN4fySHcXsmXp4Sy3zLBcPDcyaFmcoD1QZFlFXqmSjrNGEq+7zmojGpqBaMy/0B
+	 Xr9zWeG9F1xIDr5DUlpbBhuSv06s9/fkpzyWlIM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@yulong.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 081/148] mmc: mediatek: use data instead of mrq parameter from msdc_{un}prepare_data()
-Date: Tue, 15 Jul 2025 15:13:23 +0200
-Message-ID: <20250715130803.565069705@linuxfoundation.org>
+Subject: [PATCH 5.4 082/148] mtk-sd: Prevent memory corruption from DMA map failure
+Date: Tue, 15 Jul 2025 15:13:24 +0200
+Message-ID: <20250715130803.604117768@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130800.293690950@linuxfoundation.org>
 References: <20250715130800.293690950@linuxfoundation.org>
@@ -51,96 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Hu <huyue2@yulong.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 151071351bb6f3d1861e99a22c4cebadf81911a0 ]
+[ Upstream commit f5de469990f19569627ea0dd56536ff5a13beaa3 ]
 
-We already have 'mrq->data' before calling these two functions, no
-need to find it again via 'mrq->data' internally. Also remove local
-data variable accordingly.
+If msdc_prepare_data() fails to map the DMA region, the request is
+not prepared for data receiving, but msdc_start_data() proceeds
+the DMA with previous setting.
+Since this will lead a memory corruption, we have to stop the
+request operation soon after the msdc_prepare_data() fails to
+prepare it.
 
-Signed-off-by: Yue Hu <huyue2@yulong.com>
-Link: https://lore.kernel.org/r/20210517100900.1620-1-zbestahu@gmail.com
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/174972756982.3337526.6755001617701603082.stgit@mhiramat.tok.corp.google.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: f5de469990f1 ("mtk-sd: Prevent memory corruption from DMA map failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/mmc/host/mtk-sd.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-index c87227bf6e68f..5d330f2a3faae 100644
+index 5d330f2a3faae..dbe3478cc2308 100644
 --- a/drivers/mmc/host/mtk-sd.c
 +++ b/drivers/mmc/host/mtk-sd.c
-@@ -676,10 +676,8 @@ static inline void msdc_dma_setup(struct msdc_host *host, struct msdc_dma *dma,
- 	writel(lower_32_bits(dma->gpd_addr), host->base + MSDC_DMA_SA);
- }
- 
--static void msdc_prepare_data(struct msdc_host *host, struct mmc_request *mrq)
-+static void msdc_prepare_data(struct msdc_host *host, struct mmc_data *data)
- {
--	struct mmc_data *data = mrq->data;
--
- 	if (!(data->host_cookie & MSDC_PREPARE_FLAG)) {
- 		data->sg_count = dma_map_sg(host->dev, data->sg, data->sg_len,
- 					    mmc_get_dma_dir(data));
-@@ -688,10 +686,8 @@ static void msdc_prepare_data(struct msdc_host *host, struct mmc_request *mrq)
+@@ -686,6 +686,11 @@ static void msdc_prepare_data(struct msdc_host *host, struct mmc_data *data)
  	}
  }
  
--static void msdc_unprepare_data(struct msdc_host *host, struct mmc_request *mrq)
-+static void msdc_unprepare_data(struct msdc_host *host, struct mmc_data *data)
++static bool msdc_data_prepared(struct mmc_data *data)
++{
++	return data->host_cookie & MSDC_PREPARE_FLAG;
++}
++
+ static void msdc_unprepare_data(struct msdc_host *host, struct mmc_data *data)
  {
--	struct mmc_data *data = mrq->data;
--
  	if (data->host_cookie & MSDC_ASYNC_FLAG)
- 		return;
- 
-@@ -1034,7 +1030,7 @@ static void msdc_request_done(struct msdc_host *host, struct mmc_request *mrq)
- 
- 	msdc_track_cmd_data(host, mrq->cmd, mrq->data);
- 	if (mrq->data)
--		msdc_unprepare_data(host, mrq);
-+		msdc_unprepare_data(host, mrq->data);
- 	if (host->error)
- 		msdc_reset_hw(host);
- 	mmc_request_done(host->mmc, mrq);
-@@ -1203,7 +1199,7 @@ static void msdc_ops_request(struct mmc_host *mmc, struct mmc_request *mrq)
+@@ -1198,8 +1203,18 @@ static void msdc_ops_request(struct mmc_host *mmc, struct mmc_request *mrq)
+ 	WARN_ON(host->mrq);
  	host->mrq = mrq;
  
- 	if (mrq->data)
--		msdc_prepare_data(host, mrq);
-+		msdc_prepare_data(host, mrq->data);
+-	if (mrq->data)
++	if (mrq->data) {
+ 		msdc_prepare_data(host, mrq->data);
++		if (!msdc_data_prepared(mrq->data)) {
++			/*
++			 * Failed to prepare DMA area, fail fast before
++			 * starting any commands.
++			 */
++			mrq->cmd->error = -ENOSPC;
++			mmc_request_done(mmc_from_priv(host), mrq);
++			return;
++		}
++	}
  
  	/* if SBC is required, we have HW option and SW option.
  	 * if HW option is enabled, and SBC does not have "special" flags,
-@@ -1224,7 +1220,7 @@ static void msdc_pre_req(struct mmc_host *mmc, struct mmc_request *mrq)
- 	if (!data)
- 		return;
- 
--	msdc_prepare_data(host, mrq);
-+	msdc_prepare_data(host, data);
- 	data->host_cookie |= MSDC_ASYNC_FLAG;
- }
- 
-@@ -1232,14 +1228,14 @@ static void msdc_post_req(struct mmc_host *mmc, struct mmc_request *mrq,
- 		int err)
- {
- 	struct msdc_host *host = mmc_priv(mmc);
--	struct mmc_data *data;
-+	struct mmc_data *data = mrq->data;
- 
--	data = mrq->data;
- 	if (!data)
- 		return;
-+
- 	if (data->host_cookie) {
- 		data->host_cookie &= ~MSDC_ASYNC_FLAG;
--		msdc_unprepare_data(host, mrq);
-+		msdc_unprepare_data(host, data);
- 	}
- }
- 
 -- 
 2.39.5
 
