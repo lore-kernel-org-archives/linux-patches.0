@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1563C2E88AC;
-	Tue, 15 Jul 2025 13:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CD12E7643;
+	Tue, 15 Jul 2025 13:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587509; cv=none; b=OT2yTi85wvlSPb1jBy63Vncyyftrk+yUI2Wsoj9dJ0jylsDy3aliXmn2bq76BbEbXPhhyFa/9kymCpGUSWESbcdptRExlKjEm2CuK2P38KhBg2n69IEvkA/6PUEumOHd038vf5xVbCW4CjE+vFN6GZONiXc2bSxr1oRi9m/DXWA=
+	t=1752587511; cv=none; b=uLlJ+GZaCJ2drIpFVmI7LxQtGnYvwbC84ZVxdl7q3ddEzMjcYddsCO0cpkqI6tl6CLbI1faE8RlfFnrq/i3TgpMRz3P/642E2mnBTuYDbArnX7WorMx/AT+xmMGp5lCfzfhN8iDm/N4eoPK0YOKIh9OcPo4cHQ4AhaOHa/euxsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587509; c=relaxed/simple;
-	bh=hxA3H3ilztMtA7CwsnjZ7Xu+PIbkG4rmOpzGCNwn+Mo=;
+	s=arc-20240116; t=1752587511; c=relaxed/simple;
+	bh=1quuOiItP4Wh7O0Pz81lnyn1F+peHOxIe1cJN6b8AHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d30v0YuCAV4PEr4+2Br/45BDSEV7YiABaf+NWxuqt7WSECA8VsNjTNAnrA6Ikrm2NPCA6dvlugqHCQ5TCye8omUftVX6QOQlB10UA9gXgvaqbCvogUmKabYBdHAzi/kgWU89w/uwcrRwMd+5KQV7UOCAclzvYwMzy/bgvcqGkAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEbBmQ4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHCIQHhZ5mXtUifYSjdUr+NfE7W7RqFPsix8qpqKk5pnd70Qt0cibF10n5wwy66a/LxbuUEG5pBqrz4AST4WYGZN1SThO1f/GOTdIxXUS4EEYg3+VD1Wqu/H7cKJCtdtk/IhIS+r+TKyzYxWuDediW2oSNcHRxPjAzpBAtDHU40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSKyYuJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEbBmQ4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A91C4CEE3;
-	Tue, 15 Jul 2025 13:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSKyYuJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A496C4CEE3;
+	Tue, 15 Jul 2025 13:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587508;
-	bh=hxA3H3ilztMtA7CwsnjZ7Xu+PIbkG4rmOpzGCNwn+Mo=;
+	s=korg; t=1752587511;
+	bh=1quuOiItP4Wh7O0Pz81lnyn1F+peHOxIe1cJN6b8AHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yEbBmQ4kBXqzA0LEAqvYxncuPPNQauGGMhGJQ1svmcS6+83G90YmKWXp+Jp5E6+nw
-	 XlN7LTYtHTnYz6ukDpKdRZOHeFNTTKZ4rV2sR+cPrj1qF1RMA6szg7VFyZkXn1VhNN
-	 YRokf+VS/uuLRUC7qI8520lMig8+4cVuvpKE1lIg=
+	b=tSKyYuJUt4PRKsOgZjfq4v1Oe7Sc5Up2hiisb7GQliFJUpgASe3tRiawyF20FU2sK
+	 4N9XOYBWqie4My8cskiuCBVQZlLYrqg/CPAquXyhtKCslWRKJZyCnGEv/mkRjGc7DU
+	 s6XL+ecisyHP/Bg3SpZf/RZdsN1ok7vzTp6MtKLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Long Li <longli@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/208] Drivers: hv: Rename alloced to allocated
-Date: Tue, 15 Jul 2025 15:12:28 +0200
-Message-ID: <20250715130812.525837718@linuxfoundation.org>
+Subject: [PATCH 5.10 040/208] Drivers: hv: vmbus: Add utility function for querying ring size
+Date: Tue, 15 Jul 2025 15:12:29 +0200
+Message-ID: <20250715130812.565350868@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -52,143 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit de96e8a09889b35dd8d1cb6d19ef2bb123b05be1 ]
+[ Upstream commit e8c4bd6c6e6b7e7b416c42806981c2a81370001e ]
 
-'Alloced' is not a real word and only saves us two letters, let's
-use 'allocated' instead.
+Add a function to query for the preferred ring buffer size of VMBus
+device. This will allow the drivers (eg. UIO) to allocate the most
+optimized ring buffer size for devices.
 
-No functional change intended.
-
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20220128103412.3033736-2-vkuznets@redhat.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Link: https://lore.kernel.org/r/1711788723-8593-2-git-send-email-ssengar@linux.microsoft.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 0315fef2aff9 ("uio_hv_generic: Align ring size to system page")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c | 18 +++++++++---------
- drivers/hv/hyperv_vmbus.h | 14 +++++++-------
- drivers/hv/vmbus_drv.c    |  2 +-
- 3 files changed, 17 insertions(+), 17 deletions(-)
+ drivers/hv/channel_mgmt.c | 15 ++++++++++++---
+ drivers/hv/hyperv_vmbus.h |  5 +++++
+ include/linux/hyperv.h    |  2 ++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index 9da36d87ee2c7..4ee8b9b22bb9d 100644
+index 4ee8b9b22bb9d..8300ffb1ea9ae 100644
 --- a/drivers/hv/channel_mgmt.c
 +++ b/drivers/hv/channel_mgmt.c
-@@ -429,7 +429,7 @@ void hv_process_channel_removal(struct vmbus_channel *channel)
- 	 * init_vp_index() can (re-)use the CPU.
- 	 */
- 	if (hv_is_perf_channel(channel))
--		hv_clear_alloced_cpu(channel->target_cpu);
-+		hv_clear_allocated_cpu(channel->target_cpu);
+@@ -106,7 +106,9 @@ const struct vmbus_device vmbus_devs[] = {
+ 	},
  
- 	/*
- 	 * Upon suspend, an in-use hv_sock channel is marked as "rescinded" and
-@@ -703,7 +703,7 @@ static void init_vp_index(struct vmbus_channel *channel)
- 	bool perf_chn = hv_is_perf_channel(channel);
- 	u32 i, ncpu = num_online_cpus();
- 	cpumask_var_t available_mask;
--	struct cpumask *alloced_mask;
-+	struct cpumask *allocated_mask;
- 	u32 target_cpu;
- 	int numa_node;
+ 	/* File copy */
+-	{ .dev_type = HV_FCOPY,
++	/* fcopy always uses 16KB ring buffer size and is working well for last many years */
++	{ .pref_ring_size = 0x4000,
++	  .dev_type = HV_FCOPY,
+ 	  HV_FCOPY_GUID,
+ 	  .perf_device = false,
+ 	},
+@@ -123,11 +125,18 @@ const struct vmbus_device vmbus_devs[] = {
+ 	  .perf_device = false,
+ 	},
  
-@@ -720,7 +720,7 @@ static void init_vp_index(struct vmbus_channel *channel)
- 		 */
- 		channel->target_cpu = VMBUS_CONNECT_CPU;
- 		if (perf_chn)
--			hv_set_alloced_cpu(VMBUS_CONNECT_CPU);
-+			hv_set_allocated_cpu(VMBUS_CONNECT_CPU);
- 		return;
- 	}
+-	/* Unknown GUID */
+-	{ .dev_type = HV_UNKNOWN,
++	/*
++	 * Unknown GUID
++	 * 64 KB ring buffer + 4 KB header should be sufficient size for any Hyper-V device apart
++	 * from HV_NIC and HV_SCSI. This case avoid the fallback for unknown devices to allocate
++	 * much bigger (2 MB) of ring size.
++	 */
++	{ .pref_ring_size = 0x11000,
++	  .dev_type = HV_UNKNOWN,
+ 	  .perf_device = false,
+ 	},
+ };
++EXPORT_SYMBOL_GPL(vmbus_devs);
  
-@@ -735,22 +735,22 @@ static void init_vp_index(struct vmbus_channel *channel)
- 				continue;
- 			break;
- 		}
--		alloced_mask = &hv_context.hv_numa_map[numa_node];
-+		allocated_mask = &hv_context.hv_numa_map[numa_node];
- 
--		if (cpumask_weight(alloced_mask) ==
-+		if (cpumask_weight(allocated_mask) ==
- 		    cpumask_weight(cpumask_of_node(numa_node))) {
- 			/*
- 			 * We have cycled through all the CPUs in the node;
--			 * reset the alloced map.
-+			 * reset the allocated map.
- 			 */
--			cpumask_clear(alloced_mask);
-+			cpumask_clear(allocated_mask);
- 		}
- 
--		cpumask_xor(available_mask, alloced_mask,
-+		cpumask_xor(available_mask, allocated_mask,
- 			    cpumask_of_node(numa_node));
- 
- 		target_cpu = cpumask_first(available_mask);
--		cpumask_set_cpu(target_cpu, alloced_mask);
-+		cpumask_set_cpu(target_cpu, allocated_mask);
- 
- 		if (channel->offermsg.offer.sub_channel_index >= ncpu ||
- 		    i > ncpu || !hv_cpuself_used(target_cpu, channel))
+ static const struct {
+ 	guid_t guid;
 diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index a785d790e0aae..323c56152fa1b 100644
+index 323c56152fa1b..1137c25d9a7ae 100644
 --- a/drivers/hv/hyperv_vmbus.h
 +++ b/drivers/hv/hyperv_vmbus.h
-@@ -406,7 +406,7 @@ static inline bool hv_is_perf_channel(struct vmbus_channel *channel)
+@@ -406,6 +406,11 @@ static inline bool hv_is_perf_channel(struct vmbus_channel *channel)
  	return vmbus_devs[channel->device_id].perf_device;
  }
  
--static inline bool hv_is_alloced_cpu(unsigned int cpu)
-+static inline bool hv_is_allocated_cpu(unsigned int cpu)
++static inline size_t hv_dev_ring_size(struct vmbus_channel *channel)
++{
++	return vmbus_devs[channel->device_id].pref_ring_size;
++}
++
+ static inline bool hv_is_allocated_cpu(unsigned int cpu)
  {
  	struct vmbus_channel *channel, *sc;
+diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
+index 5e019d26b5b72..987cc04f13182 100644
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -802,6 +802,8 @@ struct vmbus_requestor {
+ #define VMBUS_RQST_ID_NO_RESPONSE (U64_MAX - 2)
  
-@@ -428,23 +428,23 @@ static inline bool hv_is_alloced_cpu(unsigned int cpu)
- 	return false;
- }
- 
--static inline void hv_set_alloced_cpu(unsigned int cpu)
-+static inline void hv_set_allocated_cpu(unsigned int cpu)
- {
- 	cpumask_set_cpu(cpu, &hv_context.hv_numa_map[cpu_to_node(cpu)]);
- }
- 
--static inline void hv_clear_alloced_cpu(unsigned int cpu)
-+static inline void hv_clear_allocated_cpu(unsigned int cpu)
- {
--	if (hv_is_alloced_cpu(cpu))
-+	if (hv_is_allocated_cpu(cpu))
- 		return;
- 	cpumask_clear_cpu(cpu, &hv_context.hv_numa_map[cpu_to_node(cpu)]);
- }
- 
--static inline void hv_update_alloced_cpus(unsigned int old_cpu,
-+static inline void hv_update_allocated_cpus(unsigned int old_cpu,
- 					  unsigned int new_cpu)
- {
--	hv_set_alloced_cpu(new_cpu);
--	hv_clear_alloced_cpu(old_cpu);
-+	hv_set_allocated_cpu(new_cpu);
-+	hv_clear_allocated_cpu(old_cpu);
- }
- 
- #ifdef CONFIG_HYPERV_TESTING
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index e8bea7c791691..2fed2b169a910 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -1790,7 +1790,7 @@ static ssize_t target_cpu_store(struct vmbus_channel *channel,
- 
- 	/* See init_vp_index(). */
- 	if (hv_is_perf_channel(channel))
--		hv_update_alloced_cpus(origin_cpu, target_cpu);
-+		hv_update_allocated_cpus(origin_cpu, target_cpu);
- 
- 	/* Currently set only for storvsc channels. */
- 	if (channel->change_target_cpu_callback) {
+ struct vmbus_device {
++	/* preferred ring buffer size in KB, 0 means no preferred size for this device */
++	size_t pref_ring_size;
+ 	u16  dev_type;
+ 	guid_t guid;
+ 	bool perf_device;
 -- 
 2.39.5
 
