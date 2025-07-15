@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AC81EEA5D;
-	Tue, 15 Jul 2025 13:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C712E2EE7;
+	Tue, 15 Jul 2025 13:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586891; cv=none; b=cNGpu/DIvDN8E5pj9pkiMGhwwl3H5SEHY46xX4T/6o5BbOiDCEjHHVO0t1n1SKQMybCgDR4tnoqahy4q7daj6DbtkfqulQPMH8TWRNfpw37EwJT9BinRNsuxHuFDqDDrTXizFLJDId1DQnrTijoQ4jNeVNmCpKEjT7ksy2H/sdA=
+	t=1752586894; cv=none; b=lWDtJCIaOkCf7HpW9h011fFfqgTW5Oq+T1tjVcYXqt9GIY8Ng5tbTLDdchlNl5OcFq4aznZGa8DBtTiIelRB7K5nSe5QQfNZLTpom/2wFA8IYYpf8UBV65vuQRS2VxVcwVB0SDwVfRCrl0/MHemtuQ19zbfANrBsZmL4ySP8GQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586891; c=relaxed/simple;
-	bh=jMkjv4K6bdPK+jRam1kIEETLIOi4ka8BG/gH0dQJ12s=;
+	s=arc-20240116; t=1752586894; c=relaxed/simple;
+	bh=OLmrBTIUoWqWQImsFNLwMIGiUv1RXEibLu6XTkk7yRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fg6aryG+VE9IQx7bcj3auKTOsFVpVt7BJCGeaL7BS3d7OSrRLo8Vm4/YUu3/qVXvSxfzWfglC2fbTYfmsFIY6AdWo6+oHpAsj2oef2fi6pzzeiTiPqZ1wfYbntovwHVxZXiez3m7JzdBudKrncxb4cMZ0FWzZS5ZOMOBeKB4Olo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpAEOgd4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3r0PoguCmh3tM3lhR2Shx+hjsM2edqvlrC7+a5GYKWbG5r9oOa4TzbisZIXQ4t9Cf62HV75r4oraQ2v4/nUUV7FYL1DtTewFVJ0CRGg/pPpqjtPtgXk1ORmd4yuR1Fg28BFp8q1h6HuAOid2+gAbxd00X8yH4MhP75APzNwldI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnjA97FH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpAEOgd4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E97C4CEE3;
-	Tue, 15 Jul 2025 13:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnjA97FH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7B6C4CEE3;
+	Tue, 15 Jul 2025 13:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586891;
-	bh=jMkjv4K6bdPK+jRam1kIEETLIOi4ka8BG/gH0dQJ12s=;
+	s=korg; t=1752586894;
+	bh=OLmrBTIUoWqWQImsFNLwMIGiUv1RXEibLu6XTkk7yRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CpAEOgd4fM8xZ62oEoRYPaZ4XiZZ0PusjduG0GyIFbbNLK5b4BvYlM8Bg4UiNAB7p
-	 3kM4kwzSgqsfJKQ0zkvsurnalOgCChKWbW7Yu8qWwnqP8wFQAubP0u0Xfzg9oQSea+
-	 TtpeOPrVn4t5PkOAi1g8NkCOSXrjZ3lV5cm7LXdc=
+	b=mnjA97FHSCVsSmY8F584LkmxgS4nrN8cdm1bLiQDgsb+3kxV576Zwqk8m2c82u56z
+	 NOO4Hvwt0SJAlCJA48p5mvGXS9fcwn2/tZvgHBLHHCGGTcKJnzJ//jxRSJyvDKf3cY
+	 JXOIsVhoMe7tBHlVyDWr0/WH/CFgEUJEIQ9SQdyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>
-Subject: [PATCH 6.15 086/192] drm/sched: Increment job count before swapping tail spsc queue
-Date: Tue, 15 Jul 2025 15:13:01 +0200
-Message-ID: <20250715130818.366303572@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Vaishali Thakkar <vaishali.thakkar@suse.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.15 058/192] KVM: SVM: Add missing member in SNP_LAUNCH_START command structure
+Date: Tue, 15 Jul 2025 15:12:33 +0200
+Message-ID: <20250715130817.165985328@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
 References: <20250715130814.854109770@linuxfoundation.org>
@@ -44,54 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Nikunj A Dadhania <nikunj@amd.com>
 
-commit 8af39ec5cf2be522c8eb43a3d8005ed59e4daaee upstream.
+commit 51a4273dcab39dd1e850870945ccec664352d383 upstream.
 
-A small race exists between spsc_queue_push and the run-job worker, in
-which spsc_queue_push may return not-first while the run-job worker has
-already idled due to the job count being zero. If this race occurs, job
-scheduling stops, leading to hangs while waiting on the job’s DMA
-fences.
+The sev_data_snp_launch_start structure should include a 4-byte
+desired_tsc_khz field before the gosvw field, which was missed in the
+initial implementation. As a result, the structure is 4 bytes shorter than
+expected by the firmware, causing the gosvw field to start 4 bytes early.
+Fix this by adding the missing 4-byte member for the desired TSC frequency.
 
-Seal this race by incrementing the job count before appending to the
-SPSC queue.
-
-This race was observed on a drm-tip 6.16-rc1 build with the Xe driver in
-an SVM test case.
-
-Fixes: 1b1f42d8fde4 ("drm: move amd_gpu_scheduler into common location")
-Fixes: 27105db6c63a ("drm/amdgpu: Add SPSC queue to scheduler.")
+Fixes: 3a45dc2b419e ("crypto: ccp: Define the SEV-SNP commands")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://lore.kernel.org/r/20250613212013.719312-1-matthew.brost@intel.com
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Tested-by: Vaishali Thakkar <vaishali.thakkar@suse.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Link: https://lore.kernel.org/r/20250408093213.57962-3-nikunj@amd.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/spsc_queue.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/psp-sev.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/drm/spsc_queue.h
-+++ b/include/drm/spsc_queue.h
-@@ -70,9 +70,11 @@ static inline bool spsc_queue_push(struc
+--- a/include/linux/psp-sev.h
++++ b/include/linux/psp-sev.h
+@@ -594,6 +594,7 @@ struct sev_data_snp_addr {
+  * @imi_en: launch flow is launching an IMI (Incoming Migration Image) for the
+  *          purpose of guest-assisted migration.
+  * @rsvd: reserved
++ * @desired_tsc_khz: hypervisor desired mean TSC freq in kHz of the guest
+  * @gosvw: guest OS-visible workarounds, as defined by hypervisor
+  */
+ struct sev_data_snp_launch_start {
+@@ -603,6 +604,7 @@ struct sev_data_snp_launch_start {
+ 	u32 ma_en:1;				/* In */
+ 	u32 imi_en:1;				/* In */
+ 	u32 rsvd:30;
++	u32 desired_tsc_khz;			/* In */
+ 	u8 gosvw[16];				/* In */
+ } __packed;
  
- 	preempt_disable();
- 
-+	atomic_inc(&queue->job_count);
-+	smp_mb__after_atomic();
-+
- 	tail = (struct spsc_node **)atomic_long_xchg(&queue->tail, (long)&node->next);
- 	WRITE_ONCE(*tail, node);
--	atomic_inc(&queue->job_count);
- 
- 	/*
- 	 * In case of first element verify new node will be visible to the consumer
 
 
