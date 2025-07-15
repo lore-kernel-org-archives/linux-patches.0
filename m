@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557A52E4997;
-	Tue, 15 Jul 2025 13:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05602E49AA;
+	Tue, 15 Jul 2025 13:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587240; cv=none; b=ivpLvdA3SS1WdeVYJcd+IXeobqbrse2Ud58eAQz68SU4c6lBaREe1irYsfz3aU2JVRMeuDt3PM8Z3y6cfmJvNT59ukwILYxTuglo3VzN5RwHz6jE+6i120cV12v9ZAi4tB3GPcq3sl9KqT/NwNO3LlMgdJ4oym5O6+4DerIL0xY=
+	t=1752587243; cv=none; b=d6CWvSijQMhXeuSayGIobcXQowNkXBdXsFTavJzzSOagKguIZSgGmHmHvwkZfg7T29UUziuJeQB53fUlHOFndQkQ4DhGmN//eHz8Q3n4mAhHbBiC8G+jfXv0mxa96dmgLGzrEnD5MBlX+/exlo9mDnDVOO6FXp5SiDdrR/+Rj8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587240; c=relaxed/simple;
-	bh=8vnVMC5V3k0eXBtpPVdZkrbr+gvMNxEgBwQDlWr3ULs=;
+	s=arc-20240116; t=1752587243; c=relaxed/simple;
+	bh=WTUyfY2CKtGpQJuF6M8Gv2sD5nO/X0jGGRxNt90UFcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1JPYupM7jrwnYYUhcTtEh4t7w/Y5HnAcJBQRwVTWigGZTOE3nYd4mZI+n+rw8MpVywJC0PYVAd2jAlknSNDkhGAsyD7jLzHhYmk8zeKfY/9kWDULFr1Esz/pYhLdMQqLKTyuvD9opxJFQb8Q+Ckxg/yHabZdvb8DxtvpjhN7WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijy9CkLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfHvgcksaOnderxCmlpssMnu+rp5/tfx1G45SnhtoOlr6JEO4N83v3jyBOxGAj/tmiE7n/kmR4Ugz3kVJRtHH/9LkbD+7X6tkZ+cSM41nNQZCt7K8V85e/uS/vdDkbE83DW/cXcxIC0MvUL+e9laC0SAVhIlYdAe8tG0iDye8vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEcdkcut; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijy9CkLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE156C4CEE3;
-	Tue, 15 Jul 2025 13:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEcdkcut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83979C4CEE3;
+	Tue, 15 Jul 2025 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587240;
-	bh=8vnVMC5V3k0eXBtpPVdZkrbr+gvMNxEgBwQDlWr3ULs=;
+	s=korg; t=1752587242;
+	bh=WTUyfY2CKtGpQJuF6M8Gv2sD5nO/X0jGGRxNt90UFcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijy9CkLxJF17xPxzWg1OUUf8IKwMeVU48ZIYjEaS0FYCln4W5Wxgm+he0vl0xntFP
-	 9g6zfyUoW70B8JZ2b+YIfz/rNnKUAITnxi68ebwVPTPxNHho9eEgGOXjGQnVUf488d
-	 qEBeUoWTz+Z+ryfSjjneku1SOpEuSB3VfFqCfNBA=
+	b=vEcdkcutsHw/hZyAE96ggB+ogMZX7P+yKDzGecxshLh73Il2/SS5puuVkK/5be3n3
+	 ydnSathk/50mNzLQmZ4VaQ9lzFA3CIrJaE1nQOcqXU97NyYCgcss+MOikv9tDExuXD
+	 65C0/73TFPsu7hp1YJ7M5DpDsgBbb53anBsL6OhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Paul Durrant <paul@xen.org>,
+	Alexander Potapenko <glider@google.com>,
+	James Houghton <jthoughton@google.com>,
+	Peter Gonda <pgonda@google.com>,
+	Liam Merwick <liam.merwick@oracle.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 26/88] KVM: x86/xen: Allow out of range event channel ports in IRQ routing table.
-Date: Tue, 15 Jul 2025 15:14:02 +0200
-Message-ID: <20250715130755.565316821@linuxfoundation.org>
+Subject: [PATCH 6.1 27/88] KVM: SVM: Reject SEV{-ES} intra host migration if vCPU creation is in-flight
+Date: Tue, 15 Jul 2025 15:14:03 +0200
+Message-ID: <20250715130755.604900171@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -51,61 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Sean Christopherson <seanjc@google.com>
 
-commit a7f4dff21fd744d08fa956c243d2b1795f23cbf7 upstream.
+commit ecf371f8b02d5e31b9aa1da7f159f1b2107bdb01 upstream.
 
-To avoid imposing an ordering constraint on userspace, allow 'invalid'
-event channel targets to be configured in the IRQ routing table.
+Reject migration of SEV{-ES} state if either the source or destination VM
+is actively creating a vCPU, i.e. if kvm_vm_ioctl_create_vcpu() is in the
+section between incrementing created_vcpus and online_vcpus.  The bulk of
+vCPU creation runs _outside_ of kvm->lock to allow creating multiple vCPUs
+in parallel, and so sev_info.es_active can get toggled from false=>true in
+the destination VM after (or during) svm_vcpu_create(), resulting in an
+SEV{-ES} VM effectively having a non-SEV{-ES} vCPU.
 
-This is the same as accepting interrupts targeted at vCPUs which don't
-exist yet, which is already the case for both Xen event channels *and*
-for MSIs (which don't do any filtering of permitted APIC ID targets at
-all).
+The issue manifests most visibly as a crash when trying to free a vCPU's
+NULL VMSA page in an SEV-ES VM, but any number of things can go wrong.
 
-If userspace actually *triggers* an IRQ with an invalid target, that
-will fail cleanly, as kvm_xen_set_evtchn_fast() also does the same range
-check.
+  BUG: unable to handle page fault for address: ffffebde00000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  CPU: 227 UID: 0 PID: 64063 Comm: syz.5.60023 Tainted: G     U     O        6.15.0-smp-DEV #2 NONE
+  Tainted: [U]=USER, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.52.0-0 10/28/2024
+  RIP: 0010:constant_test_bit arch/x86/include/asm/bitops.h:206 [inline]
+  RIP: 0010:arch_test_bit arch/x86/include/asm/bitops.h:238 [inline]
+  RIP: 0010:_test_bit include/asm-generic/bitops/instrumented-non-atomic.h:142 [inline]
+  RIP: 0010:PageHead include/linux/page-flags.h:866 [inline]
+  RIP: 0010:___free_pages+0x3e/0x120 mm/page_alloc.c:5067
+  Code: <49> f7 06 40 00 00 00 75 05 45 31 ff eb 0c 66 90 4c 89 f0 4c 39 f0
+  RSP: 0018:ffff8984551978d0 EFLAGS: 00010246
+  RAX: 0000777f80000001 RBX: 0000000000000000 RCX: ffffffff918aeb98
+  RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffffebde00000000
+  RBP: 0000000000000000 R08: ffffebde00000007 R09: 1ffffd7bc0000000
+  R10: dffffc0000000000 R11: fffff97bc0000001 R12: dffffc0000000000
+  R13: ffff8983e19751a8 R14: ffffebde00000000 R15: 1ffffd7bc0000000
+  FS:  0000000000000000(0000) GS:ffff89ee661d3000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: ffffebde00000000 CR3: 000000793ceaa000 CR4: 0000000000350ef0
+  DR0: 0000000000000000 DR1: 0000000000000b5f DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   sev_free_vcpu+0x413/0x630 arch/x86/kvm/svm/sev.c:3169
+   svm_vcpu_free+0x13a/0x2a0 arch/x86/kvm/svm/svm.c:1515
+   kvm_arch_vcpu_destroy+0x6a/0x1d0 arch/x86/kvm/x86.c:12396
+   kvm_vcpu_destroy virt/kvm/kvm_main.c:470 [inline]
+   kvm_destroy_vcpus+0xd1/0x300 virt/kvm/kvm_main.c:490
+   kvm_arch_destroy_vm+0x636/0x820 arch/x86/kvm/x86.c:12895
+   kvm_put_kvm+0xb8e/0xfb0 virt/kvm/kvm_main.c:1310
+   kvm_vm_release+0x48/0x60 virt/kvm/kvm_main.c:1369
+   __fput+0x3e4/0x9e0 fs/file_table.c:465
+   task_work_run+0x1a9/0x220 kernel/task_work.c:227
+   exit_task_work include/linux/task_work.h:40 [inline]
+   do_exit+0x7f0/0x25b0 kernel/exit.c:953
+   do_group_exit+0x203/0x2d0 kernel/exit.c:1102
+   get_signal+0x1357/0x1480 kernel/signal.c:3034
+   arch_do_signal_or_restart+0x40/0x690 arch/x86/kernel/signal.c:337
+   exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+   exit_to_user_mode_prepare include/linux/entry-common.h:329 [inline]
+   __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+   syscall_exit_to_user_mode+0x67/0xb0 kernel/entry/common.c:218
+   do_syscall_64+0x7c/0x150 arch/x86/entry/syscall_64.c:100
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7f87a898e969
+   </TASK>
+  Modules linked in: gq(O)
+  gsmi: Log Shutdown Reason 0x03
+  CR2: ffffebde00000000
+  ---[ end trace 0000000000000000 ]---
 
-If KVM enforced that the IRQ target must be valid at the time it is
-*configured*, that would force userspace to create all vCPUs and do
-various other parts of setup (in this case, setting the Xen long_mode)
-before restoring the IRQ table.
+Deliberately don't check for a NULL VMSA when freeing the vCPU, as crashing
+the host is likely desirable due to the VMSA being consumed by hardware.
+E.g. if KVM manages to allow VMRUN on the vCPU, hardware may read/write a
+bogus VMSA page.  Accessing PFN 0 is "fine"-ish now that it's sequestered
+away thanks to L1TF, but panicking in this scenario is preferable to
+potentially running with corrupted state.
 
+Reported-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Fixes: 0b020f5af092 ("KVM: SEV: Add support for SEV-ES intra host migration")
+Fixes: b56639318bb2 ("KVM: SEV: Add support for SEV intra host migration")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Link: https://lore.kernel.org/r/e489252745ac4b53f1f7f50570b03fb416aa2065.camel@infradead.org
-[sean: massage comment]
+Cc: James Houghton <jthoughton@google.com>
+Cc: Peter Gonda <pgonda@google.com>
+Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
+Tested-by: Liam Merwick <liam.merwick@oracle.com>
+Reviewed-by: James Houghton <jthoughton@google.com>
+Link: https://lore.kernel.org/r/20250602224459.41505-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/xen.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/sev.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/kvm/xen.c
-+++ b/arch/x86/kvm/xen.c
-@@ -1536,8 +1536,19 @@ int kvm_xen_setup_evtchn(struct kvm *kvm
- {
- 	struct kvm_vcpu *vcpu;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -1755,6 +1755,10 @@ static int sev_check_source_vcpus(struct
+ 	struct kvm_vcpu *src_vcpu;
+ 	unsigned long i;
  
--	if (ue->u.xen_evtchn.port >= max_evtchn_port(kvm))
--		return -EINVAL;
-+	/*
-+	 * Don't check for the port being within range of max_evtchn_port().
-+	 * Userspace can configure what ever targets it likes; events just won't
-+	 * be delivered if/while the target is invalid, just like userspace can
-+	 * configure MSIs which target non-existent APICs.
-+	 *
-+	 * This allow on Live Migration and Live Update, the IRQ routing table
-+	 * can be restored *independently* of other things like creating vCPUs,
-+	 * without imposing an ordering dependency on userspace.  In this
-+	 * particular case, the problematic ordering would be with setting the
-+	 * Xen 'long mode' flag, which changes max_evtchn_port() to allow 4096
-+	 * instead of 1024 event channels.
-+	 */
++	if (src->created_vcpus != atomic_read(&src->online_vcpus) ||
++	    dst->created_vcpus != atomic_read(&dst->online_vcpus))
++		return -EBUSY;
++
+ 	if (!sev_es_guest(src))
+ 		return 0;
  
- 	/* We only support 2 level event channels for now */
- 	if (ue->u.xen_evtchn.priority != KVM_IRQ_ROUTING_XEN_EVTCHN_PRIO_2LEVEL)
 
 
