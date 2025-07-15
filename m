@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4B32566;
-	Tue, 15 Jul 2025 13:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D382561AE;
+	Tue, 15 Jul 2025 13:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587281; cv=none; b=BvyrTQUJ8jwPuyVpjr65sx2YvONVH0uZw7+TB5En9yOawq5XH6T2Qm6X/pPpyUOoqgax5SHB1FjFC2hMPMmasWlnyFiE9CJKUi909aSxtD4PGBxHU4fIhbYG+jTIYVUSeDdYSFm25cR8QqjXiDRaZKQd+IoQXW+sdUZ4z9z55bk=
+	t=1752587283; cv=none; b=mlLq4holxkrifWBNr/PEb0AVF53SWtV3mBonTCEwWC5xac6IdqkFtuEiy/s+SKC+i8ZOvzzcMUk9JHkaxwWAWvJZwgcPo52EX2Rc28+++InNOdbhgx2OZKniJhyYq5C2Baxgg5Qggm0xiNNUxPU8nighlebEIrqeovAPo05HMUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587281; c=relaxed/simple;
-	bh=xqlekwcaxr42tctdZzfpiT004gFbsGdZxLQpxLarN/8=;
+	s=arc-20240116; t=1752587283; c=relaxed/simple;
+	bh=A/rxr6PrC72lSGxn5hPRHdKrAqAJH7YJPtYKMlw+XuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/lemFwtu+F3qGbqU91YSc6G7aKWC/OzvoQgnmeLgl3Nb9Sy+Yzjb8DzObDWcVeucGMXLI/6EaHjVB3st/6X2LkxDvTN4OdnkliSJ8I4htdud6wOJuaKlZ7y4pKqZxnVPYu1nK1rP1FRt48tpG9y6PG8jDmLGniKqQVmQ0sjg8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNsj5E7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCu4CswPwSBKnVARAhM4yb6q7oZNZdo1Oq2QyhkL9B0vWU7xoRmpVnJPYzOTU37IsBu0Ti6PBrBwfvyW0EMixRsBtXuuAiHwSwBENHcapFSUgezh/dt3xLmh8/9uD2fehKXkN/22aEdOddEogG7OdeyjlKJvir89BuMM+giEnYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9nrrhOw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNsj5E7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C934C4CEE3;
-	Tue, 15 Jul 2025 13:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9nrrhOw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B01C4CEE3;
+	Tue, 15 Jul 2025 13:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587280;
-	bh=xqlekwcaxr42tctdZzfpiT004gFbsGdZxLQpxLarN/8=;
+	s=korg; t=1752587283;
+	bh=A/rxr6PrC72lSGxn5hPRHdKrAqAJH7YJPtYKMlw+XuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNsj5E7OycOsuLGQOU7WzNzhgHp9kK2q89IAfoiyHpKc5VTsHM8fvR2Fe9lhqjFsg
-	 S9mCNFjiKsMaCJXZun5jFHl+/Q5xxFT6UxcbJmLY64h0eCCm6t0o4OanAMVYGgX/LX
-	 isZz2JslfSXfrgJRMSLXlZEPrzzIQ1cINU0+zePY=
+	b=i9nrrhOwdhA+9HYjeR2JgXZ60CkUcAwgt7EcuWky7OPmYjhiaUabL9vQSRrJzTEGG
+	 D+6kbktARc0KbMBW/voluukATbiyFe/nIn7GstBFeU2jWe4sLDUiDmsVRnzd0k0qAJ
+	 ApewYkDzrg2uGCQJQTrtbDSS4k9qPnuyUkNsJYKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Michal Luczaj <mhal@rbox.co>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andre Edich <andre.edich@microchip.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 11/88] vsock: Fix IOCTL_VM_SOCKETS_GET_LOCAL_CID to check also `transport_local`
-Date: Tue, 15 Jul 2025 15:13:47 +0200
-Message-ID: <20250715130754.960271812@linuxfoundation.org>
+Subject: [PATCH 6.1 12/88] net: phy: smsc: Fix Auto-MDIX configuration when disabled by strap
+Date: Tue, 15 Jul 2025 15:13:48 +0200
+Message-ID: <20250715130754.999650393@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130754.497128560@linuxfoundation.org>
 References: <20250715130754.497128560@linuxfoundation.org>
@@ -52,37 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 1e7d9df379a04ccd0c2f82f39fbb69d482e864cc ]
+[ Upstream commit a141af8eb2272ab0f677a7f2653874840bc9b214 ]
 
-Support returning VMADDR_CID_LOCAL in case no other vsock transport is
-available.
+Correct the Auto-MDIX configuration to ensure userspace settings are
+respected when the feature is disabled by the AUTOMDIX_EN hardware strap.
 
-Fixes: 0e12190578d0 ("vsock: add local transport support in the vsock core")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Link: https://patch.msgid.link/20250703-vsock-transports-toctou-v4-3-98f0eb530747@rbox.co
+The LAN9500 PHY allows its default MDI-X mode to be configured via a
+hardware strap. If this strap sets the default to "MDI-X off", the
+driver was previously unable to enable Auto-MDIX from userspace.
+
+When handling the ETH_TP_MDI_AUTO case, the driver would set the
+SPECIAL_CTRL_STS_AMDIX_ENABLE_ bit but neglected to set the required
+SPECIAL_CTRL_STS_OVRRD_AMDIX_ bit. Without the override flag, the PHY
+falls back to its hardware strap default, ignoring the software request.
+
+This patch corrects the behavior by also setting the override bit when
+enabling Auto-MDIX. This ensures that the userspace configuration takes
+precedence over the hardware strap, allowing Auto-MDIX to be enabled
+correctly in all scenarios.
+
+Fixes: 05b35e7eb9a1 ("smsc95xx: add phylib support")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: Andre Edich <andre.edich@microchip.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20250703114941.3243890-2-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/phy/smsc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 060e971299873..678b809affe03 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -2365,6 +2365,8 @@ static long vsock_dev_do_ioctl(struct file *filp,
- 		cid = vsock_registered_transport_cid(&transport_g2h);
- 		if (cid == VMADDR_CID_ANY)
- 			cid = vsock_registered_transport_cid(&transport_h2g);
-+		if (cid == VMADDR_CID_ANY)
-+			cid = vsock_registered_transport_cid(&transport_local);
- 
- 		if (put_user(cid, p) != 0)
- 			retval = -EFAULT;
+diff --git a/drivers/net/phy/smsc.c b/drivers/net/phy/smsc.c
+index df2c5435c5c49..8726619466858 100644
+--- a/drivers/net/phy/smsc.c
++++ b/drivers/net/phy/smsc.c
+@@ -148,7 +148,8 @@ static int lan87xx_config_aneg(struct phy_device *phydev)
+ 			SPECIAL_CTRL_STS_AMDIX_STATE_;
+ 		break;
+ 	case ETH_TP_MDI_AUTO:
+-		val = SPECIAL_CTRL_STS_AMDIX_ENABLE_;
++		val = SPECIAL_CTRL_STS_OVRRD_AMDIX_ |
++			SPECIAL_CTRL_STS_AMDIX_ENABLE_;
+ 		break;
+ 	default:
+ 		return genphy_config_aneg(phydev);
 -- 
 2.39.5
 
