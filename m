@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333FF2E3AE1;
-	Tue, 15 Jul 2025 13:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4C92E3AF1;
+	Tue, 15 Jul 2025 13:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587458; cv=none; b=SrtAndy77oSUPx24YfXkD8150crPJvHB10hbWmfHaD31/aJvu2EmBMCIHo3wksXuF9AHvTpqZUsvMGh7d8wSIAucxpNUB35J3Da4LGS6g7SsGtVvGFn+uUhQVR02/AU3rCzeVFKuLdcNpKgk2VURHnqa9sR4NCbr6bykAF2+J2Y=
+	t=1752587461; cv=none; b=m3L6mBuVI3JILEMaubfJwzfXBOAEcAqhXdZ8Y2SCg7hupk2KKW4pVkOW7lwY6G5/re4RP/qdDTKJtdGKXbCo7vCIZMPsRs4goyOvR9astbEtpwZFrgR8iz9GaN5sdixkP08+TtWrbHgoKurTUdYV2HbM3BYMiD62l9A4RsfYlKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587458; c=relaxed/simple;
-	bh=YER0xUEPTE5LGhvK+AAcZd2ugifezz6EMBcpMRKXuig=;
+	s=arc-20240116; t=1752587461; c=relaxed/simple;
+	bh=DXj6ElBecYXCzCg3RsvLf9Sbzr07FZ8IYV5TKiUdXPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pHaZMdbp77T60SYe/Zq4E5V4FuJLd0mCIos27wR6h3N0wt3qzVfUUO3ytCJ82t6rnsqIh6ZOVK6x8wfV9b+/1lqO42jmKk/cOakPMQVRtBav/ifeXhxwzBwb0qfJaSqXAIu5W6Xcl/Yh46T6goqjH6F+8EDYg+JqfaFche5tCA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgDLbWr9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aBYk8hLGiYBpuypsaeSkywjs7ifTQNbYL/Dsnyv8dyB/XxlBWJlzH84JqAypANTZ2A2t+ITbBaDt3TsdYT/B/5S/dlywBHtsie2QRENJNKUpUpkwGJgLoEsbBZs7EdU5D4JZt/5u4ehF/fi7yDQG8pjHDT7FEkdylXn+Tsq0Mx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWrJaHQ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgDLbWr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA172C4CEE3;
-	Tue, 15 Jul 2025 13:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWrJaHQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EFCC4CEE3;
+	Tue, 15 Jul 2025 13:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752587458;
-	bh=YER0xUEPTE5LGhvK+AAcZd2ugifezz6EMBcpMRKXuig=;
+	s=korg; t=1752587461;
+	bh=DXj6ElBecYXCzCg3RsvLf9Sbzr07FZ8IYV5TKiUdXPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgDLbWr9tzoacAaAKzjekzrUgaWw8PqD6Yk/4+88Ir6VwvgLWRBh9gsqSgFdU1AZ9
-	 4n+vIIVFBHSWS0TqawHnxqytn0CaA60kLYTF02vYAuyfpmycYHUc7W8vmsXVFHqev7
-	 5fK2LzjilcfAsAaCC2SMxFk0lPrCm4XPTp3SI30Y=
+	b=vWrJaHQ9F9jOH0HXyrEtDSIl6OZdSdqgwIomSnySfUc2O1QJ9z7wMIyCOlWJ5S40r
+	 JvX4lMGw3kJXhzdhVvgY0Zc544W3mv0r7cqHyjKJb9AEF54NBiqcRaWiJEkdwxO7G3
+	 DEQhqcdmYy6+tT6vsCgbnw/QQOsaNDmTmBqzCj6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/208] NFSv4.2: fix listxattr to return selinux security label
-Date: Tue, 15 Jul 2025 15:11:51 +0200
-Message-ID: <20250715130810.932383721@linuxfoundation.org>
+Subject: [PATCH 5.10 020/208] ovl: Check for NULL d_inode() in ovl_dentry_upper()
+Date: Tue, 15 Jul 2025 15:12:09 +0200
+Message-ID: <20250715130811.644808764@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130810.830580412@linuxfoundation.org>
 References: <20250715130810.830580412@linuxfoundation.org>
@@ -51,54 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 243fea134633ba3d64aceb4c16129c59541ea2c6 ]
+[ Upstream commit 8a39f1c870e9d6fbac5638f3a42a6a6363829c49 ]
 
-Currently, when NFS is queried for all the labels present on the
-file via a command example "getfattr -d -m . /mnt/testfile", it
-does not return the security label. Yet when asked specifically for
-the label (getfattr -n security.selinux) it will be returned.
-Include the security label when all attributes are queried.
+In ovl_path_type() and ovl_is_metacopy_dentry() GCC notices that it is
+possible for OVL_E() to return NULL (which implies that d_inode(dentry)
+may be NULL). This would result in out of bounds reads via container_of(),
+seen with GCC 15's -Warray-bounds -fdiagnostics-details. For example:
 
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+In file included from arch/x86/include/generated/asm/rwonce.h:1,
+                 from include/linux/compiler.h:339,
+                 from include/linux/export.h:5,
+                 from include/linux/linkage.h:7,
+                 from include/linux/fs.h:5,
+                 from fs/overlayfs/util.c:7:
+In function 'ovl_upperdentry_dereference',
+    inlined from 'ovl_dentry_upper' at ../fs/overlayfs/util.c:305:9,
+    inlined from 'ovl_path_type' at ../fs/overlayfs/util.c:216:6:
+include/asm-generic/rwonce.h:44:26: error: array subscript 0 is outside array bounds of 'struct inode[7486503276667837]' [-Werror=array-bounds=]
+   44 | #define __READ_ONCE(x)  (*(const volatile __unqual_scalar_typeof(x) *)&(x))
+      |                         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+include/asm-generic/rwonce.h:50:9: note: in expansion of macro '__READ_ONCE'
+   50 |         __READ_ONCE(x);                                                 \
+      |         ^~~~~~~~~~~
+fs/overlayfs/ovl_entry.h:195:16: note: in expansion of macro 'READ_ONCE'
+  195 |         return READ_ONCE(oi->__upperdentry);
+      |                ^~~~~~~~~
+  'ovl_path_type': event 1
+  185 |         return inode ? OVL_I(inode)->oe : NULL;
+  'ovl_path_type': event 2
+
+Avoid this by allowing ovl_dentry_upper() to return NULL if d_inode() is
+NULL, as that means the problematic dereferencing can never be reached.
+Note that this fixes the over-eager compiler warning in an effort to
+being able to enable -Warray-bounds globally. There is no known
+behavioral bug here.
+
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/overlayfs/util.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 1005ecf7c250b..77cc1c4219e15 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10378,7 +10378,7 @@ const struct nfs4_minor_version_ops *nfs_v4_minor_ops[] = {
+diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
+index 62a258c2b59cd..26f29a3e5ada0 100644
+--- a/fs/overlayfs/util.c
++++ b/fs/overlayfs/util.c
+@@ -211,7 +211,9 @@ enum ovl_path_type ovl_path_real(struct dentry *dentry, struct path *path)
  
- static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
+ struct dentry *ovl_dentry_upper(struct dentry *dentry)
  {
--	ssize_t error, error2, error3;
-+	ssize_t error, error2, error3, error4;
- 	size_t left = size;
- 
- 	error = generic_listxattr(dentry, list, left);
-@@ -10401,8 +10401,16 @@ static ssize_t nfs4_listxattr(struct dentry *dentry, char *list, size_t size)
- 	error3 = nfs4_listxattr_nfs4_user(d_inode(dentry), list, left);
- 	if (error3 < 0)
- 		return error3;
-+	if (list) {
-+		list += error3;
-+		left -= error3;
-+	}
+-	return ovl_upperdentry_dereference(OVL_I(d_inode(dentry)));
++	struct inode *inode = d_inode(dentry);
 +
-+	error4 = security_inode_listsecurity(d_inode(dentry), list, left);
-+	if (error4 < 0)
-+		return error4;
++	return inode ? ovl_upperdentry_dereference(OVL_I(inode)) : NULL;
+ }
  
--	error += error2 + error3;
-+	error += error2 + error3 + error4;
- 	if (size && error > size)
- 		return -ERANGE;
- 	return error;
+ struct dentry *ovl_dentry_lower(struct dentry *dentry)
 -- 
 2.39.5
 
