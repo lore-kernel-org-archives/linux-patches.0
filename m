@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE0C2E3AF9;
-	Tue, 15 Jul 2025 13:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E458633F;
+	Tue, 15 Jul 2025 13:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585880; cv=none; b=e7FraSYetIMYQNGcdhIsDXonXRw5avYEAJ3lsc0YwpZZRS8y4dL7kV6AniiIvA0IejpVPa1JKf8CxKYU4JrUnfuybFf265tYu3Y5kJkwsJIhMvLFgOUXwSbRClbXkKCluzSZ4IYBiCAp9ml2B4hMraq+YtmPGXfKZIpqLZMZcxM=
+	t=1752585883; cv=none; b=fJQIkIXWK5tSklRM2cy+2ABcLpbFS5PrC4qTi/UIvuAVZ92NGwItPH7MqHTQ7xiD/cu6sKXmRSKph9TMyGS/nYGw2HIvFtiT8JI9hnzaMbG+QxvBQ+I7NvSZuF52bHEQb8gyVMgYxCw67JdfKXHRZpqQRe8UcJ+iHTrGdDVOdfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585880; c=relaxed/simple;
-	bh=cEJgvMiUzXVtoJnDBZZsuB40cgX3M/O4aBVqCGWag7w=;
+	s=arc-20240116; t=1752585883; c=relaxed/simple;
+	bh=72NrwuW/vdwZzWqHhS/EWjknYRxqKDu+0jfl2iI7wcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbmP02zEssAe6YCja9mJLEQ17LYzlXn+ucTp2QESxoXmZ2FIAPNRo4DZk04sDWwHvg2IC226xeQfB62a3d9fKh7vRyGd6VPWJG9+VnbiZAaqBe5YD1wZQeXBV4c9y40ERGKOC5cDfHSoPtXheZmulBrdEK+gDqDcX2/ECB1D5VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvjK7iH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GkoxfprC6H3nBxM0BxLb2nhHdr/GAL2y9xqlLxWya/4O1rpAmxV0VdnsHti/MuLxaU8UWzerq14agukPw7vaQuIZ/ELbJyzmykaiZ/5tsMMZq5lPJR/16urh71gJdd/xojWMfwu2zBGS5I6eZCJNU8NV7XWWkYBaMRTlA5PCkjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wxvw38f5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvjK7iH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DB9C4CEE3;
-	Tue, 15 Jul 2025 13:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wxvw38f5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04BDC4CEF1;
+	Tue, 15 Jul 2025 13:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585880;
-	bh=cEJgvMiUzXVtoJnDBZZsuB40cgX3M/O4aBVqCGWag7w=;
+	s=korg; t=1752585883;
+	bh=72NrwuW/vdwZzWqHhS/EWjknYRxqKDu+0jfl2iI7wcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvjK7iH4H+7ZWuX/0xJia3nouq66XZFFZ5ZHYx01/OlY3Id5gp+w3w8oK/AeSpNws
-	 /xw6dfpiz01Wq+peOEx/yqoZntYWuvGYmLHS00ChzOla2TW6mGgQ2tbXec6Dx/0WLu
-	 MhlNYt9ewmo8BA0copit8ZL7+CdmhYOUIJ+gswUk=
+	b=Wxvw38f58bvNm+hwbximKP9Y5VkZqMUpex52v43Od6CyF7ZS7Hry7OkooN0YCFQlu
+	 ju7pBLobYlHP7XlHD5e86QC6Q8ujvwsDx0aCtMzQAyiPLqm+V8C0H61jTeYJXGEKMX
+	 YoaHZ9DUkiQL2lTSgsbB9wuAsoz65qIUELW3vns0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	syzbot+d333febcf8f4bc5f6110@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 012/109] vsock: fix `vsock_proto` declaration
-Date: Tue, 15 Jul 2025 15:12:28 +0200
-Message-ID: <20250715130759.372770819@linuxfoundation.org>
+Subject: [PATCH 6.6 013/109] tipc: Fix use-after-free in tipc_conn_close().
+Date: Tue, 15 Jul 2025 15:12:29 +0200
+Message-ID: <20250715130759.412399379@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -52,48 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 1e3b66e326015f77bc4b36976bebeedc2ac0f588 ]
+[ Upstream commit 667eeab4999e981c96b447a4df5f20bdf5c26f13 ]
 
->From commit 634f1a7110b4 ("vsock: support sockmap"), `struct proto
-vsock_proto`, defined in af_vsock.c, is not static anymore, since it's
-used by vsock_bpf.c.
+syzbot reported a null-ptr-deref in tipc_conn_close() during netns
+dismantle. [0]
 
-If CONFIG_BPF_SYSCALL is not defined, `make C=2` will print a warning:
-    $ make O=build C=2 W=1 net/vmw_vsock/
-      ...
-      CC [M]  net/vmw_vsock/af_vsock.o
-      CHECK   ../net/vmw_vsock/af_vsock.c
-    ../net/vmw_vsock/af_vsock.c:123:14: warning: symbol 'vsock_proto' was not declared. Should it be static?
+tipc_topsrv_stop() iterates tipc_net(net)->topsrv->conn_idr and calls
+tipc_conn_close() for each tipc_conn.
 
-Declare `vsock_proto` regardless of CONFIG_BPF_SYSCALL, since it's defined
-in af_vsock.c, which is built regardless of CONFIG_BPF_SYSCALL.
+The problem is that tipc_conn_close() is called after releasing the
+IDR lock.
 
-Fixes: 634f1a7110b4 ("vsock: support sockmap")
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20250703112329.28365-1-sgarzare@redhat.com
+At the same time, there might be tipc_conn_recv_work() running and it
+could call tipc_conn_close() for the same tipc_conn and release its
+last ->kref.
+
+Once we release the IDR lock in tipc_topsrv_stop(), there is no
+guarantee that the tipc_conn is alive.
+
+Let's hold the ref before releasing the lock and put the ref after
+tipc_conn_close() in tipc_topsrv_stop().
+
+[0]:
+BUG: KASAN: use-after-free in tipc_conn_close+0x122/0x140 net/tipc/topsrv.c:165
+Read of size 8 at addr ffff888099305a08 by task kworker/u4:3/435
+
+CPU: 0 PID: 435 Comm: kworker/u4:3 Not tainted 4.19.204-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Workqueue: netns cleanup_net
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x1fc/0x2ef lib/dump_stack.c:118
+ print_address_description.cold+0x54/0x219 mm/kasan/report.c:256
+ kasan_report_error.cold+0x8a/0x1b9 mm/kasan/report.c:354
+ kasan_report mm/kasan/report.c:412 [inline]
+ __asan_report_load8_noabort+0x88/0x90 mm/kasan/report.c:433
+ tipc_conn_close+0x122/0x140 net/tipc/topsrv.c:165
+ tipc_topsrv_stop net/tipc/topsrv.c:701 [inline]
+ tipc_topsrv_exit_net+0x27b/0x5c0 net/tipc/topsrv.c:722
+ ops_exit_list+0xa5/0x150 net/core/net_namespace.c:153
+ cleanup_net+0x3b4/0x8b0 net/core/net_namespace.c:553
+ process_one_work+0x864/0x1570 kernel/workqueue.c:2153
+ worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
+ kthread+0x33f/0x460 kernel/kthread.c:259
+ ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
+
+Allocated by task 23:
+ kmem_cache_alloc_trace+0x12f/0x380 mm/slab.c:3625
+ kmalloc include/linux/slab.h:515 [inline]
+ kzalloc include/linux/slab.h:709 [inline]
+ tipc_conn_alloc+0x43/0x4f0 net/tipc/topsrv.c:192
+ tipc_topsrv_accept+0x1b5/0x280 net/tipc/topsrv.c:470
+ process_one_work+0x864/0x1570 kernel/workqueue.c:2153
+ worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
+ kthread+0x33f/0x460 kernel/kthread.c:259
+ ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
+
+Freed by task 23:
+ __cache_free mm/slab.c:3503 [inline]
+ kfree+0xcc/0x210 mm/slab.c:3822
+ tipc_conn_kref_release net/tipc/topsrv.c:150 [inline]
+ kref_put include/linux/kref.h:70 [inline]
+ conn_put+0x2cd/0x3a0 net/tipc/topsrv.c:155
+ process_one_work+0x864/0x1570 kernel/workqueue.c:2153
+ worker_thread+0x64c/0x1130 kernel/workqueue.c:2296
+ kthread+0x33f/0x460 kernel/kthread.c:259
+ ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:415
+
+The buggy address belongs to the object at ffff888099305a00
+ which belongs to the cache kmalloc-512 of size 512
+The buggy address is located 8 bytes inside of
+ 512-byte region [ffff888099305a00, ffff888099305c00)
+The buggy address belongs to the page:
+page:ffffea000264c140 count:1 mapcount:0 mapping:ffff88813bff0940 index:0x0
+flags: 0xfff00000000100(slab)
+raw: 00fff00000000100 ffffea00028b6b88 ffffea0002cd2b08 ffff88813bff0940
+raw: 0000000000000000 ffff888099305000 0000000100000006 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888099305900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888099305980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff888099305a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                      ^
+ ffff888099305a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888099305b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Fixes: c5fa7b3cf3cb ("tipc: introduce new TIPC server infrastructure")
+Reported-by: syzbot+d333febcf8f4bc5f6110@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=27169a847a70550d17be
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20250702014350.692213-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/af_vsock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/topsrv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/af_vsock.h b/include/net/af_vsock.h
-index f8b09a82f62e1..1820b87b8b7ff 100644
---- a/include/net/af_vsock.h
-+++ b/include/net/af_vsock.h
-@@ -236,8 +236,8 @@ int __vsock_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
- int vsock_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
- 			size_t len, int flags);
- 
--#ifdef CONFIG_BPF_SYSCALL
- extern struct proto vsock_proto;
-+#ifdef CONFIG_BPF_SYSCALL
- int vsock_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool restore);
- void __init vsock_bpf_build_proto(void);
- #else
+diff --git a/net/tipc/topsrv.c b/net/tipc/topsrv.c
+index 8ee0c07d00e9b..ffe577bf6b515 100644
+--- a/net/tipc/topsrv.c
++++ b/net/tipc/topsrv.c
+@@ -704,8 +704,10 @@ static void tipc_topsrv_stop(struct net *net)
+ 	for (id = 0; srv->idr_in_use; id++) {
+ 		con = idr_find(&srv->conn_idr, id);
+ 		if (con) {
++			conn_get(con);
+ 			spin_unlock_bh(&srv->idr_lock);
+ 			tipc_conn_close(con);
++			conn_put(con);
+ 			spin_lock_bh(&srv->idr_lock);
+ 		}
+ 	}
 -- 
 2.39.5
 
