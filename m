@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E172E5B06;
-	Tue, 15 Jul 2025 13:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839D72D372D;
+	Tue, 15 Jul 2025 13:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752586253; cv=none; b=gDQ52OTQESpHGHII053mpSkmbQgq4p9JNS++vv0UnpPs5rvgBe8kaRt9Bu0KdypPqcIFjJRMaEB39J+LW3DY8DTVyMCaulhWYzKjr8pF0k/O34P4ZwQzRlOPKdL/WUrRxSlzDCht66p3qxi+UMa0RTfpM72aEfwQYExcet4U72E=
+	t=1752586255; cv=none; b=c4Gi0ZoqpfvzPyAW0eiHz6ebGjxI3e9CfQ4Jr7Wvt53skG2UFkxk7/hWQAiJCWbpk1833HnlP9/Z58odeCBEGvggc/HgYrXYCoAr3RkPksuYyIU1OJ8VwpEaUB1lDmDLJmCJ7vz1JjSRcGB1JiDX0DYy26At0v7bbXRxTruyOcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752586253; c=relaxed/simple;
-	bh=sSTDWX/gzuo9ErBsCsXnbRgDCXUQjzjjS5MOXmLAJQ8=;
+	s=arc-20240116; t=1752586255; c=relaxed/simple;
+	bh=qE5AZm1Wu2JFz4meyV5NcFVyrYJLXdA9W9uO2GEmeME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKFsRzBXQn7eCsiLL2f8siRz9yg0PD9FvG4j8vI0dlzEgJPqLv1y539Keiu105/UfOhbo6sLPgDK03pZTc7mjK3nGJmHKWVKmk2ueG/iEyD8FpNZlx4O5q+8aUBGhQrPQI+oje/BmPXnZ6V5BGjXR8qhHK2NcmeOr9QPVA8/dXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzTSBqTp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/vYctp4wMWStptH0Tt222UOolAtiBboL+Xt6c4A7Lt5lX8J4OPFVb6kTKQJMlDBv1r75kxEZJSAsLPtAIXEzYFTxsKEjEMtoXl2beS4ivPmztaIFAtf6zB6KKj4xGXN/GwLLOB+EQfzHWLKjDPVfUG8ksm6S2Mr3A/cfWB3VYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLNWYTqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzTSBqTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764CAC4CEE3;
-	Tue, 15 Jul 2025 13:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLNWYTqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E08FC4CEE3;
+	Tue, 15 Jul 2025 13:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752586252;
-	bh=sSTDWX/gzuo9ErBsCsXnbRgDCXUQjzjjS5MOXmLAJQ8=;
+	s=korg; t=1752586255;
+	bh=qE5AZm1Wu2JFz4meyV5NcFVyrYJLXdA9W9uO2GEmeME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZzTSBqTpXnK61ZIw1clVAmoBVwYv8PAe7dV8fOTdq16IdDO8W6jUFDt1jWNQxnCd2
-	 OeJoN0jZdUzA6tQ1agZcmtNBjpLaW09lg7MGxPkoPRenTdCbqkj+Hp8NYp/ICx61uj
-	 2tP7kY5UYy1RGU0FCQAC+gqT0aa8L3lAp8Im1hBw=
+	b=hLNWYTqD0cq0ONFuO5cz/ky0CCV1Cl5REF8QrJUW+aae7ljRrG6nirS+EGdB1rdl5
+	 2q8Nkols1BotLEA5AqwprJtCiPZcg3+ZEauirucXX3G49dHCo06IX9Gkpfk8Wl8Ejl
+	 Svh1yJMNyzwmysOomgaw5RWcreSOSszZcj6yWvQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Wang Hai <wanghai38@huawei.com>
-Subject: [PATCH 5.15 74/77] Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID
-Date: Tue, 15 Jul 2025 15:14:13 +0200
-Message-ID: <20250715130754.695992312@linuxfoundation.org>
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xinyu Zheng <zhengxinyu6@huawei.com>
+Subject: [PATCH 5.15 75/77] vhost-scsi: protect vq->log_used with vq->mutex
+Date: Tue, 15 Jul 2025 15:14:14 +0200
+Message-ID: <20250715130754.735236323@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130751.668489382@linuxfoundation.org>
 References: <20250715130751.668489382@linuxfoundation.org>
@@ -52,48 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 upstream.
+commit f591cf9fce724e5075cc67488c43c6e39e8cbe27 upstream.
 
-After commit 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in
-translated mode") not only the getid command is skipped, but also
-the de-activating of the keyboard at the end of atkbd_probe(), potentially
-re-introducing the problem fixed by commit be2d7e4233a4 ("Input: atkbd -
-fix multi-byte scancode handling on reconnect").
+The vhost-scsi completion path may access vq->log_base when vq->log_used is
+already set to false.
 
-Make sure multi-byte scancode handling on reconnect is still handled
-correctly by not skipping the atkbd_deactivate() call.
+    vhost-thread                       QEMU-thread
 
-Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
-Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240126160724.13278-3-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
+vhost_scsi_complete_cmd_work()
+-> vhost_add_used()
+   -> vhost_add_used_n()
+      if (unlikely(vq->log_used))
+                                      QEMU disables vq->log_used
+                                      via VHOST_SET_VRING_ADDR.
+                                      mutex_lock(&vq->mutex);
+                                      vq->log_used = false now!
+                                      mutex_unlock(&vq->mutex);
+
+				      QEMU gfree(vq->log_base)
+        log_used()
+        -> log_write(vq->log_base)
+
+Assuming the VMM is QEMU. The vq->log_base is from QEMU userpace and can be
+reclaimed via gfree(). As a result, this causes invalid memory writes to
+QEMU userspace.
+
+The control queue path has the same issue.
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Message-Id: <20250403063028.16045-2-dongli.zhang@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+[ Resolved conflicts in drivers/vhost/scsi.c
+  bacause vhost_scsi_complete_cmd_work() has been refactored. ]
+Signed-off-by: Xinyu Zheng <zhengxinyu6@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/vhost/scsi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -817,7 +817,7 @@ static int atkbd_probe(struct atkbd *atk
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -563,8 +563,10 @@ static void vhost_scsi_complete_cmd_work
+ 		ret = copy_to_iter(&v_rsp, sizeof(v_rsp), &iov_iter);
+ 		if (likely(ret == sizeof(v_rsp))) {
+ 			struct vhost_scsi_virtqueue *q;
+-			vhost_add_used(cmd->tvc_vq, cmd->tvc_vq_desc, 0);
+ 			q = container_of(cmd->tvc_vq, struct vhost_scsi_virtqueue, vq);
++			mutex_lock(&q->vq.mutex);
++			vhost_add_used(cmd->tvc_vq, cmd->tvc_vq_desc, 0);
++			mutex_unlock(&q->vq.mutex);
+ 			vq = q - vs->vqs;
+ 			__set_bit(vq, signal);
+ 		} else
+@@ -1166,8 +1168,11 @@ static void vhost_scsi_tmf_resp_work(str
+ 	else
+ 		resp_code = VIRTIO_SCSI_S_FUNCTION_REJECTED;
  
- 	if (atkbd_skip_getid(atkbd)) {
- 		atkbd->id = 0xab83;
--		return 0;
-+		goto deactivate_kbd;
- 	}
++	mutex_lock(&tmf->svq->vq.mutex);
+ 	vhost_scsi_send_tmf_resp(tmf->vhost, &tmf->svq->vq, tmf->in_iovs,
+ 				 tmf->vq_desc, &tmf->resp_iov, resp_code);
++	mutex_unlock(&tmf->svq->vq.mutex);
++
+ 	vhost_scsi_release_tmf_res(tmf);
+ }
  
- /*
-@@ -854,6 +854,7 @@ static int atkbd_probe(struct atkbd *atk
- 		return -1;
- 	}
- 
-+deactivate_kbd:
- /*
-  * Make sure nothing is coming from the keyboard and disturbs our
-  * internal state.
 
 
