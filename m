@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B692E2F12;
-	Tue, 15 Jul 2025 13:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E772E339C;
+	Tue, 15 Jul 2025 13:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585801; cv=none; b=D2Z2L9njCkqZMsFfOh2P+uj9A3zlubBvW96uCnv5ylo+P9+mBCHUZ+VE6f8GvRbBkV2Hd8tiR8eA8BeYvGvrC+NiEjP+xLGMGgktVcuEr8L1l+75EN3wjKwyRoWc2SFQ9voj3R8uvgk2T1okoM0UUqac40dp3GW+nB21QqiVefA=
+	t=1752585804; cv=none; b=Uk2M8gGhkpgVWn4XMYxIUsu8fnV1GiViGWoh6TuDnaR4J4hxkg81wBxFv2HsmPqElBGHZPTsytnMEWsIRv5gh7ierYye3ejxuvkO8OBtPZ0E+An1ZsXpkwZ19x5gGh0UYi7hLXmyMzP/QzBBtjp6gKSx32cSZfirbqfKhn9dXBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585801; c=relaxed/simple;
-	bh=4tG8BeZJRwgc4srZfG2aBSDD6KCiTFGErMaEPLWniZQ=;
+	s=arc-20240116; t=1752585804; c=relaxed/simple;
+	bh=9VCPOr45Xw+wsaN66c44owxHf6U63mlgo8Xa1s/NCn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUWMO5RYPYHrMcFsqsQoPleNEYdOOQk+3Y0JzLn1Iudp00zX1lhk2LN/ca9tcMxcIEBley7OewYKsjEuuKp9ZrHkHny1mTpX2q2TtbqX6y3YtXHIZ9mCfQ44+0ltQziwnIi00Q76BX9+vJVNlxERuKcPBAiDS6zDPlxLk/HFwU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsXlqFLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oB0sfOS4b5dv6Afst1y6rKjRfSuKG8HMevunygpD7U3wP6xYpzdEDTC3qm0SO7RZnJOeRvI5q0iohSmr3h8zKuUnoF3OsGZIYozDK1Yf6DeY4Dqfr9k0fvMd1vooJmNZpm6RPtce8xbbYpXJ6t/rc668XKU1ezgMmp2qjv9BO+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATktzxIN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsXlqFLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCB3C4CEF1;
-	Tue, 15 Jul 2025 13:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATktzxIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56ECFC4CEE3;
+	Tue, 15 Jul 2025 13:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585801;
-	bh=4tG8BeZJRwgc4srZfG2aBSDD6KCiTFGErMaEPLWniZQ=;
+	s=korg; t=1752585803;
+	bh=9VCPOr45Xw+wsaN66c44owxHf6U63mlgo8Xa1s/NCn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsXlqFLxNZsaKHOpa341zch3IgSKeo9q35JfYxAGDDMmtpfbUvuhH2PQo2JXZWtLH
-	 d7CjeSHWRLVHyNJEK96CmKxfoCA8q0ZipNxNcHvYbYHtjCgjUfVLJc/aO2wNFadi1M
-	 R3SXstEKVqbZql7MeJm8oJ1qnmBsU4Q1owM787aY=
+	b=ATktzxIN7vTv3/A/4w99M6M+K0aYqQRNW2h2JcaB745Y87+Lab2s6QMj8GDoaLVYP
+	 RH0Qtmg2dJQVbTq4tImCbZbHB2HYVTXkblGs3CItfQDLUlsicc7624nWnXVm0Z6i3f
+	 CjSpHQ7SHpSIN7GXijI6InmMiMRrZOTqZyi6mFx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	syzbot+de6565462ab540f50e47@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	David Howells <dhowells@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/109] perf: Revert to requiring CAP_SYS_ADMIN for uprobes
-Date: Tue, 15 Jul 2025 15:12:21 +0200
-Message-ID: <20250715130759.090232478@linuxfoundation.org>
+Subject: [PATCH 6.6 014/109] tcp: Correct signedness in skb remaining space calculation
+Date: Tue, 15 Jul 2025 15:12:30 +0200
+Message-ID: <20250715130759.451162733@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130758.864940641@linuxfoundation.org>
 References: <20250715130758.864940641@linuxfoundation.org>
@@ -51,44 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit ba677dbe77af5ffe6204e0f3f547f3ba059c6302 ]
+[ Upstream commit d3a5f2871adc0c61c61869f37f3e697d97f03d8c ]
 
-Jann reports that uprobes can be used destructively when used in the
-middle of an instruction. The kernel only verifies there is a valid
-instruction at the requested offset, but due to variable instruction
-length cannot determine if this is an instruction as seen by the
-intended execution stream.
+Syzkaller reported a bug [1] where sk->sk_forward_alloc can overflow.
 
-Additionally, Mark Rutland notes that on architectures that mix data
-in the text segment (like arm64), a similar things can be done if the
-data word is 'mistaken' for an instruction.
+When we send data, if an skb exists at the tail of the write queue, the
+kernel will attempt to append the new data to that skb. However, the code
+that checks for available space in the skb is flawed:
+'''
+copy = size_goal - skb->len
+'''
 
-As such, require CAP_SYS_ADMIN for uprobes.
+The types of the variables involved are:
+'''
+copy: ssize_t (s64 on 64-bit systems)
+size_goal: int
+skb->len: unsigned int
+'''
 
-Fixes: c9e0924e5c2b ("perf/core: open access to probes for CAP_PERFMON privileged process")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/CAG48ez1n4520sq0XrWYDHKiKxE_+WCfAK+qt9qkY4ZiBGmL-5g@mail.gmail.com
+Due to C's type promotion rules, the signed size_goal is converted to an
+unsigned int to match skb->len before the subtraction. The result is an
+unsigned int.
+
+When this unsigned int result is then assigned to the s64 copy variable,
+it is zero-extended, preserving its non-negative value. Consequently, copy
+is always >= 0.
+
+Assume we are sending 2GB of data and size_goal has been adjusted to a
+value smaller than skb->len. The subtraction will result in copy holding a
+very large positive integer. In the subsequent logic, this large value is
+used to update sk->sk_forward_alloc, which can easily cause it to overflow.
+
+The syzkaller reproducer uses TCP_REPAIR to reliably create this
+condition. However, this can also occur in real-world scenarios. The
+tcp_bound_to_half_wnd() function can also reduce size_goal to a small
+value. This would cause the subsequent tcp_wmem_schedule() to set
+sk->sk_forward_alloc to a value close to INT_MAX. Further memory
+allocation requests would then cause sk_forward_alloc to wrap around and
+become negative.
+
+[1]: https://syzkaller.appspot.com/bug?extid=de6565462ab540f50e47
+
+Reported-by: syzbot+de6565462ab540f50e47@syzkaller.appspotmail.com
+Fixes: 270a1c3de47e ("tcp: Support MSG_SPLICE_PAGES")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20250707054112.101081-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 2 +-
+ net/ipv4/tcp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 5c6da8bd03b10..3a33d9c1b1b2b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -10473,7 +10473,7 @@ static int perf_uprobe_event_init(struct perf_event *event)
- 	if (event->attr.type != perf_uprobe.type)
- 		return -ENOENT;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index ff22060f9145f..a4bbe959d1e25 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1132,7 +1132,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
+ 		goto do_error;
  
--	if (!perfmon_capable())
-+	if (!capable(CAP_SYS_ADMIN))
- 		return -EACCES;
+ 	while (msg_data_left(msg)) {
+-		ssize_t copy = 0;
++		int copy = 0;
  
- 	/*
+ 		skb = tcp_write_queue_tail(sk);
+ 		if (skb)
 -- 
 2.39.5
 
