@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0A819066B;
-	Tue, 15 Jul 2025 13:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEA3193077;
+	Tue, 15 Jul 2025 13:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752585463; cv=none; b=YHONL2AbAws5eGIp4YpKs+7Xn/cNEUoYVQkZeS0kqOOS/a8cJDedrJ2l77zY0T9FZo/9m4PfuKlLMXJPJAH+DlX6aikXas+xIJfO9vl03WKXg0LiKVC7KUSHEmIvbpUYhp1o9uQmbiYWiG7J8/cGBD3JeFNxtaBuUZDT44iYFr0=
+	t=1752585465; cv=none; b=diGbODAjzMw9an86qg1geJ5IyxIxSnYuC9YATaZqj32k2lp6NB3s4WKs11RybbPQKEUOMAG29ykFgKP+QCiy/CoR3v8Cw+xSSZTNP2i1kFa6LGfsLzpvLomfzp/KqqbrWCJmZUL5m0R4S5+vfRlc3CYUvdZKv0nmLRhxLzNnzcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752585463; c=relaxed/simple;
-	bh=sIBx72P2wlQq/YkZpR6hbbK2I58Ulsms5R07glKwVpI=;
+	s=arc-20240116; t=1752585465; c=relaxed/simple;
+	bh=5oJ4vO3o6daH/UtrHktA/8DIUa3shE6lDS9KpyDgYBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2aqttsZVUKgpPDFC0lv2IG0j8Qs0ovhesShWbkLy7PCRD+Egzs+UnQmBxGm6jLzkQURw9VIrQHWEmhF0OjyB5s7ZAsh9xbwZOZxD+lg36QyysJ8vI278uIhNaCbe5PsWGKBhUfhJIyR3wVkXfs1HHcWOdcGOjmzF5w/YvtaH7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYiVp5Sv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nM/a3kWIgIqsP0AVUQc9NIybfJXoan37eQRthHbo9waqwWM2yA1+CLiAJAX+Li3tI5oehFY5cs8sOyHLa7DeMFT+GfG/uqxIHVRBpyYZuuw7LYopd4WVBGUi1QCoTko9lTTBvzVU0s1K/y+eE4pL6IloZTUPGhk8trKaOctEd7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5o5CPJQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYiVp5Sv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D59EC4CEE3;
-	Tue, 15 Jul 2025 13:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5o5CPJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4176AC4CEF1;
+	Tue, 15 Jul 2025 13:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1752585462;
-	bh=sIBx72P2wlQq/YkZpR6hbbK2I58Ulsms5R07glKwVpI=;
+	s=korg; t=1752585465;
+	bh=5oJ4vO3o6daH/UtrHktA/8DIUa3shE6lDS9KpyDgYBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYiVp5SvaBY53zmfTdeNnZvbmgM8Vxz/BYOi8ETAeb1skMK9Xb7GZWxTA50XLHnAI
-	 yH5T5sH+GNgziqJUOX+4TYhmWuac/IcMJwN14+sKQF73tw9V9fDkSeCE7Cb+GsHbWz
-	 QUA5tcbEU9RUcuAucUhI1RkjODal8fq7U9A+cLoM=
+	b=i5o5CPJQFIx433LQHQ077+bC4wXpMgAJx4R5+/pQ4kIZsHbiB673bm511ROzcidKm
+	 y3cpr87C4FX+Z6rv7dkdWts3nFgIp7dqPuqdEs9UeGsh5MOXYd+qfTc43IGfCrQy28
+	 whhj2HmSE80RVGrbDULavDzqUs6DLcyC1PaivGCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Corey Minyard <corey@minyard.net>,
-	Brendan Jackman <jackmanb@google.com>
-Subject: [PATCH 6.12 048/163] ipmi:msghandler: Fix potential memory corruption in ipmi_create_user()
-Date: Tue, 15 Jul 2025 15:11:56 +0200
-Message-ID: <20250715130810.688321528@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 019/163] ASoC: cs35l56: probe() should fail if the device ID is not recognized
+Date: Tue, 15 Jul 2025 15:11:27 +0200
+Message-ID: <20250715130809.539434877@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250715130808.777350091@linuxfoundation.org>
 References: <20250715130808.777350091@linuxfoundation.org>
@@ -51,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit fa332f5dc6fc662ad7d3200048772c96b861cf6b upstream.
+[ Upstream commit 3b3312f28ee2d9c386602f8521e419cfc69f4823 ]
 
-The "intf" list iterator is an invalid pointer if the correct
-"intf->intf_num" is not found.  Calling atomic_dec(&intf->nr_users) on
-and invalid pointer will lead to memory corruption.
+Return an error from driver probe if the DEVID read from the chip is not
+one supported by this driver.
 
-We don't really need to call atomic_dec() if we haven't called
-atomic_add_return() so update the if (intf->in_shutdown) path as well.
+In cs35l56_hw_init() there is a check for valid DEVID, but the invalid
+case was returning the value of ret. At this point in the code ret == 0
+so the caller would think that cs35l56_hw_init() was successful.
 
-Fixes: 8e76741c3d8b ("ipmi: Add a limit on the number of users that may use IPMI")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <aBjMZ8RYrOt6NOgi@stanley.mountain>
-Signed-off-by: Corey Minyard <corey@minyard.net>
-[ - Dropped change to the `if (intf->in_shutdown)` block since that logic
-    doesn't exist yet.
-  - Modified out_unlock to release the srcu lock instead of the mutex
-    since we don't have the mutex here yet. ]
-Signed-off-by: Brendan Jackman <jackmanb@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 84851aa055c8 ("ASoC: cs35l56: Move part of cs35l56_init() to shared library")
+Link: https://patch.msgid.link/20250703102521.54204-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs35l56-shared.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -1241,7 +1241,7 @@ int ipmi_create_user(unsigned int
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index 195841a567c3d..9007484b31c71 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -811,7 +811,7 @@ int cs35l56_hw_init(struct cs35l56_base *cs35l56_base)
+ 		break;
+ 	default:
+ 		dev_err(cs35l56_base->dev, "Unknown device %x\n", devid);
+-		return ret;
++		return -ENODEV;
  	}
- 	/* Not found, return an error */
- 	rv = -EINVAL;
--	goto out_kfree;
-+	goto out_unlock;
  
-  found:
- 	if (atomic_add_return(1, &intf->nr_users) > max_users) {
-@@ -1283,6 +1283,7 @@ int ipmi_create_user(unsigned int
- 
- out_kfree:
- 	atomic_dec(&intf->nr_users);
-+out_unlock:
- 	srcu_read_unlock(&ipmi_interfaces_srcu, index);
- 	vfree(new_user);
- 	return rv;
+ 	cs35l56_base->type = devid & 0xFF;
+-- 
+2.39.5
+
 
 
