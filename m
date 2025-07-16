@@ -1,110 +1,168 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BBE1D5CFB
-	for <patches@lists.linux.dev>; Wed, 16 Jul 2025 15:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C272B1D79BE;
+	Wed, 16 Jul 2025 15:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752679018; cv=none; b=d+CWB1g+FeB381phnk2Roys7QR/Ex2y9627KFkLawWmJ0crZrKAosltVaI5m8Tpk91cOsNww2b12jAXqbg8N6zWCOgkMLlLMAtqOPIdvWWFPb2eu7ID1F+C2ZwHUuiDLtjvwFEvOTGNDvmShMAXzu/9zIypbc+N50VwjaXror9w=
+	t=1752680588; cv=none; b=WmFPmi4uN+d936xx76pmQdXrL/2BBQL1TLwTpx19qoyg9gyYsD//NnREUxSvGpa4NYF+lb9O+n2C4NJsVDFu0nie1/5WVEmzAEPQmmd2mRiR6rHeivpOeZXWnyUFmx48494DhrI+fnSyzBIGx3A71MpswLxLxCR+kVuusry2W4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752679018; c=relaxed/simple;
-	bh=MAPCXd746dLBijiuAG9wc56q0nopYPabJGjrqlYl2NE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=usy9QA5PX/TWcrASphsDcPkaQ2Cwfhb6xW1uaJMtHDDnN0FqzMlFYIhupXFM8GnXH1TBD7O5ngMMZXHa8PkvfvUUp+t/mOftT39dX8CedE09fJqtRY1c8zy/iloMlllqLX9p7gy95gwlB4+wp7bSntgWXbJ81GtJ1VUBws+JRl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=LaAKxyL6; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1752680588; c=relaxed/simple;
+	bh=YmoYgi+Z8Rk0G8PfGmH0mIpcN33QeyjM51E5rSRT2ME=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=burBDj9nGAkW6NaHTleSQ27HgyofAx6n+wRpv2rBIKnJprwHem/qUmYfE4Pvhzh+erP042XwNTxvAntdhwEXMgYJlZNV6kO91Bouwla7CQ5fFJsEN5OYXiSDIMZ2BFt+xEQEOPp87QXX9BbZJbl6Qxq363Y6IfmdZTz03DTn2Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jbJ47Num; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="LaAKxyL6"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3b5e6bfb427so3549666f8f.2
-        for <patches@lists.linux.dev>; Wed, 16 Jul 2025 08:16:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1752679015; x=1753283815; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=avBWJ25ynfi1WXdhKE1sihofZACgr0iOjzJgTGpVu4I=;
-        b=LaAKxyL6/jyCtN6b2yIIRvCLnD1kQAH+3qH4AGP1YnzaEMh/0Ztmo+RnIhhRnI48pR
-         YgR9pnycph0QkTUPXe35klmZLJAVwgsoQ0yO+3zdBc0/ZPaoRQg4Ce/Gdbm8hOUaLzPp
-         axW2/mH5WNTNXt4j1pBn0sZYcXsYp9yj6WelZu0XjZCSWZHhLIPl5ESrdUp9VPD+2oBW
-         1EktZ0510Sa+ix6xkQuMOZqJqiZ8/n614JbdIdKmf7sifL4iqXQ+bAsX9PuFYxEioCjj
-         f8qTiHWe0Ixf8rvNM17iKViHnxvv/rSPLFfSBfxTjDv54EYME/kE29246CL4N3odIsqO
-         n+Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752679015; x=1753283815;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=avBWJ25ynfi1WXdhKE1sihofZACgr0iOjzJgTGpVu4I=;
-        b=V0rAPJizHaC60qVftOOYloCNQNCyA/b00ixTul+OH+rbdQV3foDGoGGsXaoUB5oc8E
-         K9nJcele1OPkn9plTWRLPFevXmrWbX6Z4xtXa2YMWzPq8yCOB2DDeouMG7RxadKRWq6H
-         bMonZOzvtWN9cilepCuVJNNumuRnQVcR8ZS502LKx1r96TWRqLdgOACnYmu3kwWxa9Dj
-         6iU4TbWXjHlQmksuoc755MXNvCUOlAlEE39mMmdKfFD6R8qWXTIWOzKufsXNFUZr5tVp
-         Tjd/SbhczUC8L5aFbvoC4hHvi3LK8laog19nHzRW1fzxGxOL2zDwgcE1pbthOLqvlCW9
-         bZ6Q==
-X-Gm-Message-State: AOJu0YzMIXSgQ+uQ5QEQLp/d1NXc0oPwCWTwTxs2Prq8W6IRleQy9B0t
-	el1KjImXFNHlGc5wpZq6Gh7tiKrwszCOi36SBTxED2Y00JaX+uTZwgs=
-X-Gm-Gg: ASbGncuk45vLwLIrsj5VKo3iN9UOCTorehQTCAnEgC/+sL3+TvxV6Ujfxcv01UZWpxI
-	WOSRJCCHVeeyb+8G60b5++GKp7o36as9Xsi4uwo9pDmlerM9jPqvgWFBF5ZBR+yn4uBHZZtXiM1
-	MyFHgvx6lzG5rQMJotgV/OfUQ3Xc481BfULhTwSha/U2LXDVCyAcbh2M0vCWSUJXeazlo3NtyTc
-	jm92VzTE/m1+sWHoPrPqAB7tGdclaZBi2W4kftls6RwiUNxlA9T/2BjUkyEoQai22DfRsuPON7g
-	A6g0CgS0ppje9sEkdwtmEA1xtZhX2SAjuytdTcuAm1rNn87lFom1U+vtXo1ZXw8yF7HKnzSCWKi
-	hRSFyV6d7R5+w3mgX7NhXV8kRhHuAFuKSidJ4cbUmFyzInp2QjsC8I9qtJJfMkSy5UXriK9kiQS
-	U0
-X-Google-Smtp-Source: AGHT+IEEwF9/Vt1NN9RTGjqLRAvAvAprCYcNaMdoOJjP5OOWxXTAo0qCZRqZKCsXUdsgjQgLX+bBVw==
-X-Received: by 2002:a05:6000:4a06:b0:3a4:dc32:6cbc with SMTP id ffacd0b85a97d-3b60dd53fe5mr3490110f8f.20.1752679014473;
-        Wed, 16 Jul 2025 08:16:54 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac571.dip0.t-ipconnect.de. [91.42.197.113])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e25e75sm18016432f8f.87.2025.07.16.08.16.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 08:16:53 -0700 (PDT)
-Message-ID: <da83a1d7-3609-4fda-932e-0a4e41be890c@googlemail.com>
-Date: Wed, 16 Jul 2025 17:16:52 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jbJ47Num"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0103C4CEE7;
+	Wed, 16 Jul 2025 15:43:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752680588;
+	bh=YmoYgi+Z8Rk0G8PfGmH0mIpcN33QeyjM51E5rSRT2ME=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jbJ47NumH3GUuFBTW5QfD5IpvqKhlX7KuiXX8+daoIHSQ9sshQUmFAfTdrM7QAzrR
+	 WaxN86aDlX5OwGKEYluRPdxzC7XuA8SAXgWFhzF55VAaY79UJukVtJ0QFWCPdsKPTl
+	 VJa424+P/dNroGHeFK47xpEU9EBGhyaWyP0r14OA2kufCJJqBkHryh3XlPB6fMPWJF
+	 x05wrOeDO6Yfp0HymWR1jOO6in8N0wYwHieQP6sL12LdWoMuSVdMPp8kRikksWPOr5
+	 ORsa6yEYRrBkNlUZALA4r/zRlPUbcUSgeSGsEl7WccxGbwl1sTxJhV7VMmriZATnrv
+	 TscymJJ5TeX1Q==
+Date: Wed, 16 Jul 2025 08:43:04 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: accessrunner-general@lists.sourceforge.net, linux-usb@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] usb: atm: cxacru: Zero initialize bp in
+ cxacru_heavy_init()
+Message-ID: <20250716154304.GA2740255@ax162>
+References: <20250715-usb-cxacru-fix-clang-21-uninit-warning-v1-1-de6c652c3079@kernel.org>
+ <2025071618-jester-outing-7fed@gregkh>
+ <20250716052450.GA1892301@ax162>
+ <2025071616-flap-mundane-7627@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 000/111] 6.6.99-rc2 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Jann Horn <jannh@google.com>, Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>
-References: <20250715163542.059429276@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250715163542.059429276@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2025071616-flap-mundane-7627@gregkh>
 
-Am 15.07.2025 um 18:37 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.99 release.
-> There are 111 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Jul 16, 2025 at 10:00:10AM +0200, Greg Kroah-Hartman wrote:
+> No, I take it back, it is unreasonable :)
+> 
+> At runtime, there never is a uninitialized use of this pointer, the
+> first time it is used, it is intended to be filled in if this is a "boot
+> rom patch":
+> 	ret = cxacru_find_firmware(instance, "bp", &bp);
+> 
+> Then if that call fails, the function exits, great.
+> 
+> Then later on, this is called:
+> 	cxacru_upload_firmware(instance, fw, bp);
+> so either bp IS valid, or it's still uninitialized, fair enough.
+> 
+> But then cxacru_upload_firmware() does the same check for "is this a
+> boot rom patch" and only then does it reference the variable.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+Right but how would you know this if you were unable to look at what's
+inside cxacru_upload_firmware()? That's basically what is happening with
+clang, it is only able to look at cxacru_heavy_init().
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+> And when it references it, it does NOT check if it is valid or not, so
+> even if you do pre-initialize this to NULL, surely some other static
+> checker is going to come along and say "Hey, you just dereferenced a
+> NULL pointer, this needs to be fixed!" when that too is just not true at
+> all.
+
+If a static checker has the ability to see the NULL passed to
+cxacru_upload_firmware() from cxacru_heavy_init(), I would expect it to
+notice the identical conditions but point taken :)
+
+> So the logic here is all "safe" for now, and if you set this to NULL,
+> you are just papering over the fact that it is right, AND setting us up
+> to get another patch that actually does nothing, while feeling like the
+> submitter just fixed a security bug, demanding a CVE for an impossible
+> code path :)
+
+Wouldn this be sufficient to avoid such a situation?
+
+diff --git a/drivers/usb/atm/cxacru.c b/drivers/usb/atm/cxacru.c
+index b7c3b224a759..fcff092fe826 100644
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -1026,7 +1026,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 	}
+ 
+ 	/* Boot ROM patch */
+-	if (instance->modem_type->boot_rom_patch) {
++	if (instance->modem_type->boot_rom_patch && bp) {
+ 		usb_info(usbatm, "loading boot ROM patch\n");
+ 		ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, BR_ADDR, bp->data, bp->size);
+ 		if (ret) {
 
 
-Beste Grüße,
-Peter Schneider
+> So let's leave this for now because:
+> 
+> > This type of warning
+> > is off for GCC because of how unreliable it was when it is done in the
+> > middle end with optimizations. Furthermore, it is my understanding based
+> > on [1] that just the passing of an uninitialized variable in this manner
+> > is UB.
+> > 
+> > [1]: https://lore.kernel.org/20220614214039.GA25951@gate.crashing.org/
+> 
+> As gcc can't handle this either, it seems that clang also can't handle
+> it.  So turning this on for the kernel surely is going to trip it up in
+> other places than just this one driver.
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+I turned this warning on in 5.3 in commit 3a61925e91ba ("kbuild: Enable
+-Wuninitialized"), so it is already enabled and it has found many, many
+legitimate instances in doing so, just go run 'git log
+--grep=Wuninitialized' or 'git log --grep=Wsometimes-uninitialized' in
+the kernel sources. While there have been other places in the kernel
+where this warning has been falsely triggered such as here, I have
+rarely received pushback from maintainers on fixes to silence them
+because the majority of them are legitimate (and the false positive
+fixes usually result in more robust code). For example, the
+strengthening of the warning in clang-21 resulted in what I would
+consider legitimate fixes:
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+https://lore.kernel.org/20250715-mt7996-fix-uninit-const-pointer-v1-1-b5d8d11d7b78@kernel.org/
+https://lore.kernel.org/20250715-net-phonet-fix-uninit-const-pointer-v1-1-8efd1bd188b3@kernel.org/
+https://lore.kernel.org/20250715-drm-msm-fix-const-uninit-warning-v1-1-d6a366fd9a32@kernel.org/
+https://lore.kernel.org/20250715-riscv-uaccess-fix-self-init-val-v1-1-82b8e911f120@kernel.org/
+https://lore.kernel.org/20250715-trace_probe-fix-const-uninit-warning-v1-1-98960f91dd04@kernel.org/
+https://lore.kernel.org/20250715-sdca_interrupts-fix-const-uninit-warning-v1-1-cc031c913499@kernel.org/
+
+> If you _really_ want to fix this, refactor the code to be more sane and
+> obvious from a C parsing standpoint, but really, it isn't that complex
+> for a human to read and understand, and I see why it was written this
+> way.
+
+Yes, I agree that it is not complex or hard to understand, so I would
+rather not refactor it, but I do need this fixed so that allmodconfig
+builds (which enable -Werror by default) with clang-21 do not break.
+Won't Android eventually hit this when they get a newer compiler?
+
+> As for the UB argument, bah, I don't care, sane compilers will do the
+> right thing, i.e. pass in the uninitialized value, or if we turned on
+> the 0-fill stack option, will be NULL anyway, otherwise why do we have
+> that option if not to "solve" the UB issue?).
+
+As far as I understand it, clang adds "noundef" to function parameters
+when lowering to LLVM IR, which codifies that passing an uninitialized
+value is UB. I suspect that cxacru_upload_firmware() gets inlined so
+that ends up not mattering in this case but it could in others.
+
+While '-ftrivial-auto-var-init=zero' does "solve" the UB issue, I see it
+more of a mitigation against missed initializations, not as a
+replacement for ensuring variables are consistently initialized, as zero
+might not be the expected initialization. Since that is the default for
+the kernel when compilers support it, why not just take this patch with
+that fixup above to make it consistent? I would be happy to send a v2 if
+you would be okay with it.
+
+Cheers,
+Nathan
