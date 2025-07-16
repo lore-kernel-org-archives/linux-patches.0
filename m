@@ -1,134 +1,165 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDAF2F5C24
-	for <patches@lists.linux.dev>; Wed, 16 Jul 2025 17:00:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A1A2F5C43
+	for <patches@lists.linux.dev>; Wed, 16 Jul 2025 17:27:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752685239; cv=none; b=IqVdPVEXZSjmYzU1geMaDHKpZKIPh7+g6rfkm8b4Hb4gF+EJwkX6ln8PzqZiogMQ55e5s4BOnmIFlPqh/3h3hy2GGiZ/WTv30tQiLnb7/Xt1M6XVuOqLuc1SraN2eiqQIm6bt6DFeaudtUgg/k8ssQ0eHjq9c9y99AIKm+O40ZQ=
+	t=1752686880; cv=none; b=c6ud599ajzLwNHFYaDogm6TNsCJM0rR152/qF/JphT9Z8t0Cc8zRq7OZa8y4SKYQ0yfC1qE/keeEtvDFc9yG8ulOepiMmI1UNzyD/ZTdvCPbB/sTN1JfKD01GHcWpn6/v/yG5EDms5Ere6W04UkyUafVVg2h3jl+ZUO7+2kSjOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752685239; c=relaxed/simple;
-	bh=VT2e/D8TNHzCkI96xQbHOMePD40bqojitO9TYfZwJRU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i9vlC68YLW3GK9m78Q+5d08U6ertMparZ56tDeqV7qdrHDKHDAC9rsV5YtqwiK3+PAB8ArWref83Dj1nhxbvJB/K8l9mQikX54nIHMKheWrgvxqNvfSf0AgOBzGk3NCS6CwEGahTZPlt6ZwXfuCpi1UypFpzq7NqYf+yx9Dlp6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EGW2SqND; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1752686880; c=relaxed/simple;
+	bh=m7HWsri4AR/rL9PRrA73dXiz7DSOs/HHIpXTIamRInk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T9FPdYlWH5j2R1VvAC25XvsDRUx+j2gJYvUYd0n8uy6i97wvLlj9xZiA2K0mEWUang08aiDExMffz15ozKdpjISRZlDrkbiiyNEfghfQcU0zrrPWTM7OOlc9RF1JbBDYqX7yR0EdDxBCJQopTIhBK3fIsLf7OfPBT13DbCMkBVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=O3hAp0Ci; arc=none smtp.client-ip=212.227.126.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EGW2SqND"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752685232;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9bKE/0cNtoQ/CuczzprbbV3beLrr2MpjH/0TxwAvYDI=;
-	b=EGW2SqNDS+bbvfZeAe7m0XkeSE/5InZp+3e8Cm9971xBLykYMr0Id2ZKD6lhZf2L14cb7E
-	m/7j21puwycBSAL1z5yPa+WPPIcNV7qCtSSmndOl4e2MIfmaQBvEJL0v9ZDdhcEouARXw7
-	N1R7nTs676nXIO0KAIF44/eoIk4Gb3s=
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-455-rQ6lWi_GNYyhpD2hQKQ9aw-1; Wed, 16 Jul 2025 13:00:31 -0400
-X-MC-Unique: rQ6lWi_GNYyhpD2hQKQ9aw-1
-X-Mimecast-MFC-AGG-ID: rQ6lWi_GNYyhpD2hQKQ9aw_1752685230
-Received: by mail-il1-f200.google.com with SMTP id e9e14a558f8ab-3df57df1eb3so55015ab.2
-        for <patches@lists.linux.dev>; Wed, 16 Jul 2025 10:00:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752685230; x=1753290030;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9bKE/0cNtoQ/CuczzprbbV3beLrr2MpjH/0TxwAvYDI=;
-        b=O0RwR/IHhrEDuB1TZ5uQpYVlJnqBelW8selntMGRJAnx5u3gTlnhs51RdkBs7y/lap
-         d3JftnFi1oPDo52jVZ24PXbfzVoCV28GwVrh4naasGckpislhRtEaJVsU178h4AaynfM
-         IADnnHb3ZNa2OVIOsvOorn7gXk0r/OlSOwMoX0CoVuzjpLjNT7OsaoUmbuw0F9yzxQ+l
-         n3Ce7gYlVu57T73ay6A1OGvRBRXafTm4UHYe8hnsgJEIeajw3zwjo2j53H6cug6eF+Kj
-         fS5xiRC3iFx4I0OHNVdxev1uA3R4IG7hDlKOK19QiSvLhxT/Dov1qyeOMhbkuO7WyCCE
-         NwRA==
-X-Forwarded-Encrypted: i=1; AJvYcCWVt1gt7GonXBeI3NopVfols+xFqQCxQRZA46fNREMG/WYhSzWlpBybDrnhEPzgwddL56P996So@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy+mooNa6pJIJjsILzntJpcXxk8j+kk/4GTxso6jK3gcc0Sst0A
-	09aJoNcjSuLST3Y/XxjlmoBvlD7jby+veygdr4cAQpPrgS14qCV/iy2ePO1Wll9EyCkpkyjsfKO
-	9YDDZ4Lspd87C4J6Tnep35DWVY2iExwQQ74lDwBX5iiJ/S16570+c+BWSWuU=
-X-Gm-Gg: ASbGncs62xfxNdZK56YhXeoPEjWSAexuKWooSsUF10frBt+VrIaTok6A8fbDozTR7HC
-	hjOcFodfb/+A3x4vqMnwXT9EanFpWZ77eFqqZVI22bCpYDiAXh45PnCXLX30/qhdZCoCwYCmGYz
-	WK8A5qQqw/Sw6FUHV1KJKirZPvWbaSLBHOriwBC9bg3e9JNdQM6GGWQ2sZz5PluCa8gRgrfa2kZ
-	e8syXVSpMVGSZIJS4MWyXpCNAyyq97HH+TsNJmWENKN/QitcYsX905lTuA8+gz3KrJBaj43qj3z
-	owf8qy91swmkW04/+UIdFmsCtplp5xOQLdWW6sEpjEI=
-X-Received: by 2002:a05:6602:1690:b0:85e:12c1:fe90 with SMTP id ca18e2360f4ac-879c096efeamr126747139f.5.1752685229878;
-        Wed, 16 Jul 2025 10:00:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+tZmWUIYwitvuBgGnxfswO12NMpp8mD2icMHkWg5+YtIZRRU8sqVvx4qLf0KrRuHgGBPToA==
-X-Received: by 2002:a05:6602:1690:b0:85e:12c1:fe90 with SMTP id ca18e2360f4ac-879c096efeamr126745539f.5.1752685229362;
-        Wed, 16 Jul 2025 10:00:29 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-505569d0e42sm3119302173.101.2025.07.16.10.00.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 10:00:28 -0700 (PDT)
-Date: Wed, 16 Jul 2025 11:00:27 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>, oe-kbuild@lists.linux.dev,
- Ankit Agrawal <ankita@nvidia.com>, Brett Creeley <brett.creeley@amd.com>,
- Giovanni Cabiddu <giovanni.cabiddu@intel.com>, Kevin Tian
- <kevin.tian@intel.com>, kvm@vger.kernel.org, Longfang Liu
- <liulongfang@huawei.com>, qat-linux@intel.com, Shameer Kolothum
- <shameerali.kolothum.thodi@huawei.com>, virtualization@lists.linux.dev, Xin
- Zeng <xin.zeng@intel.com>, Yishai Hadas <yishaih@nvidia.com>,
- lkp@intel.com, oe-kbuild-all@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH v3] vfio/pci: Do vf_token checks for
- VFIO_DEVICE_BIND_IOMMUFD
-Message-ID: <20250716110027.7e94129f.alex.williamson@redhat.com>
-In-Reply-To: <20250715230618.GV2067380@nvidia.com>
-References: <0-v3-bdd8716e85fe+3978a-vfio_token_jgg@nvidia.com>
-	<76f27eb9-7f56-45e7-813e-e3f595f3b6e9@suswa.mountain>
-	<20250715230618.GV2067380@nvidia.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="O3hAp0Ci"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1752686843; x=1753291643; i=christian@heusel.eu;
+	bh=vMiPG79BaSZ4L1hLtwrRDyKYn96Armmq5Ph/ugdG+P4=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=O3hAp0CifQ/eTBlPNqTIXYqKCCZatysp5C04WaQwjcR/FbHaaiqOPCYqgTaZBsFL
+	 D19/Fv9Kum/PtSSyDDBT6wmtOAfUtHYrZRjSCz1DNDXHAvioJB8sabEhAnX05VOCM
+	 Ichs/TvnZ6aDbEf+qH2l5gr4rQFUZe9wGO6/myUP94SSa9XeIxFmy0AvbSijLQlyl
+	 ULoTSqPdI20VHL50awZKDl2c7/4jNqcBb/rhoAJqUfEKrcXHM/NLG1w1+YdrUhACC
+	 jA1jcQLwr7WanqJoaszkZvYXcBO83E+DQADLsT7cZTyghA56Trho/j4cbA1O1Ugvc
+	 WpFGYK3fwbkna7D8Bg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([89.244.90.36]) by mrelayeu.kundenserver.de
+ (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1N8oKc-1uect32ncE-013Nfz; Wed, 16 Jul 2025 19:27:23 +0200
+Date: Wed, 16 Jul 2025 19:27:22 +0200
+From: Christian Heusel <christian@heusel.eu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	hargar@microsoft.com, broonie@kernel.org, linux-nvme@lists.infradead.org
+Subject: Re: [PATCH 6.15 000/192] 6.15.7-rc1 review
+Message-ID: <2e4ed0b4-2842-4800-aa66-f61daef0b8f9@heusel.eu>
+References: <20250715130814.854109770@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: JcpO9tYaYAxKasr25vBLjmU2mqj4gZi3266LN0Rjyd8_1752685230
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7sica6oli6b7agoc"
+Content-Disposition: inline
+In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
+X-Provags-ID: V03:K1:K6XnB3JWmNPX0QTV4zAROE7BZa14Co9A+1RIQI5s36x5KERsKud
+ D+u6I+gYRJyOodI3u2Gak/RMy8h+mAzNo/xhGKXj3xVMJZ2pAms4P4mtVbx2x83O6I28yFa
+ acAM8rCFQCyWR3m3LANEHCTjLFOV/+mGxvnpLgWsA6C46tbXycH8bp4ocTB8OLhTYbbFz7q
+ t++2iiE4+qVYNGKyOC1Ig==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:q2cKHfps5vY=;77Q1iHgHs+55l35VF827FJYriFE
+ U06oey8YgU20iuMtDTvsG8z2ej52dqCVWxpnq8+N54ZKJjszKG0PHMoqllnpwwJecSETH/ext
+ Y2Xj7xT/f2DUTQSX+fMnanlmfACreHydgpMc2gAlt62ZgQjJKBAl1MXPLxqA7k9xCxmCVQHff
+ atrOrcpAAH6HG6DqAitgZxNqVslFIbnLBXxMcX7Dm+3pZrUsINBaUpPX4HMCPuO85rQehYme2
+ nwtQ9Z/IEBvEDCzsgTg4N7gMlKrSXT33EvpuiXBEBWjCwOn4XDMjZe1eD1AemDK84sSopvFs5
+ eA1/Ps1d9JnYaD7uO9dED3wYEF66fex6Ac0Qsif4BoXr6Y+eGbfInxceY2y7pw/rrFYjQjWo3
+ P6qTgYj0aUTYw0Lx5BvQZFnnqw4BGAe1kQxIKIScmAPCu9q9elTgBOyYCteozLK7BJoKs69rA
+ Ys7oJGo7n5AlqG8HNpUHCndEmKbcUwCXhxs2W8BtJY4DpZy3TLNA5MF5c7XnHL+oknD7QBHjq
+ s5UsvtW0/+NxBwXbNLngJAKenqJrXi4/z4qxs6HqS+Vr8jo7INkaVVYehhU3IDt6m8vjAmkMr
+ BMWJaBALHF/vgcSrXlTbCfmr4pAhojfxUm17xCuqWEyk/nJR6S2cgBqVlAmdmsBzWnkvi0sAR
+ hDJYlRwwDSnDYNecKatpEsHC20Zk2TYLlc7oHRqe6bTE6nT+qP6PvgjHUPGq9Uw1b1vG/tHG/
+ Pi4xpx5WatVm+OYtIs2X8zyza3/8Yv2rMHRksM0d5NOjBNcIcPz69JkVRrny6OPO7VglhMZJW
+ 5cQ+HRRKSjbOUDXU/A+XZ/2berTOefSi6MGyc39QDELVl0j6ko+C0LDgcQFcYmXuNYcAV0HJy
+ ui3BeeWqXCW8osuQaKcRhcobpnFGukA+hDQmNaZb9x3YNrh58XQCRJiuLyld1hzqD1dMxwIx+
+ Z63ScXHSoxFZY9Yla9VzZPEDnqbttQAbDZuPmyne7Jrti/WLzULABOjFGNDSYQHDVScmyokiC
+ DubpyKdFIYli/3Cwx0dXN2br+BO6oGfE+tM4Pue/CbA3QdkzM4c53CazUhpnlA4gA+CGvF11S
+ XyU4d695wyQCTY4JhXDCEXlOXCdAo8tkgBSiGDV5rWofm2b+S/I6QBA/UvQaF1U3DXRW+5fwn
+ nwCepZg6Xge82m68fsVEA4dHChlBuUSodx/55wnIuGJnHDk5NduecL1IubsETphg1wuwwvOv5
+ PeXrec0iVKstkyzy1ZzWn2adGOo7HpRGFVXyfOuz9bXWiTFmVqcVj4vfBG5NEDVI6ICINGE0M
+ ijjmrtcnvGtSSpY+gxagRhioHpG2akSpzLwr7rGFb9Mihg7LfH0lr3uSkkMddoZ6KQt0RtuHA
+ NZnmUh8XbBjBE1mavlxkzYSs8i1LS0CRQlVbO42BeOKKH+3s7Ds+/2rzkVpIsOqOQeiFvQtsZ
+ w9THoldTDLWRaB+jr8gqTzh4O+s10t1TLk1hv0vD+lMTF3aJDuLdCYYpQ7V9ZurmN2DPKfQEI
+ XKLg8WYkNJF50nTxkXPC1s1AGVpXGFvZ0sMkeOzQRv9HJZ7o8vjBcod7x1PQvQ==
 
-On Tue, 15 Jul 2025 20:06:18 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-> On Wed, Jul 16, 2025 at 01:55:45AM +0300, Dan Carpenter wrote:
-> > 5fcc26969a164e Yi Liu          2023-07-18  117  	mutex_lock(&device->dev_set->lock);
-> > 5fcc26969a164e Yi Liu          2023-07-18  118  	/* one device cannot be bound twice */
-> > 5fcc26969a164e Yi Liu          2023-07-18  119  	if (df->access_granted) {
-> > 5fcc26969a164e Yi Liu          2023-07-18  120  		ret = -EINVAL;
-> > 5fcc26969a164e Yi Liu          2023-07-18  121  		goto out_unlock;
-> > 5fcc26969a164e Yi Liu          2023-07-18  122  	}
-> > 5fcc26969a164e Yi Liu          2023-07-18  123  
-> > be2e70b96c3e54 Jason Gunthorpe 2025-07-14  124  	ret = vfio_df_check_token(device, &bind);
-> > be2e70b96c3e54 Jason Gunthorpe 2025-07-14  125  	if (ret)
-> > be2e70b96c3e54 Jason Gunthorpe 2025-07-14 @126  		return ret;
-> > 
-> > This needs to be a goto unlock.  
-> 
-> Oop yes, thank you
-> 
-> Alex can you fix it up when applying?
+--7sica6oli6b7agoc
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 6.15 000/192] 6.15.7-rc1 review
+MIME-Version: 1.0
 
-Yes, I'll apply with:
+On 25/07/15 03:11PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.7 release.
+> There are 192 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Thu, 17 Jul 2025 13:07:32 +0000.
+> Anything received after that time might be too late.
 
-diff --git a/drivers/vfio/device_cdev.c b/drivers/vfio/device_cdev.c
-index 53a602563f00..480cac3a0c27 100644
---- a/drivers/vfio/device_cdev.c
-+++ b/drivers/vfio/device_cdev.c
-@@ -123,7 +123,7 @@ long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
- 
- 	ret = vfio_df_check_token(device, &bind);
- 	if (ret)
--		return ret;
-+		goto out_unlock;
- 
- 	df->iommufd = iommufd_ctx_from_fd(bind.iommufd);
- 	if (IS_ERR(df->iommufd)) {
+Tested-by: Christian Heusel <christian@heusel.eu>
 
+Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU.
+
+There was one oddity though, that under high IO pressure the following
+messages were emitted and I can't judge the severity of that:
+
+[65524.312500] nvme nvme0: I/O tag 956 (f3bc) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:8192
+[65524.312530] nvme nvme0: I/O tag 957 (e3bd) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:4096
+[65524.312544] nvme nvme0: I/O tag 958 (d3be) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:4096
+[65524.312556] nvme nvme0: I/O tag 959 (d3bf) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:4096
+[65524.312568] nvme nvme0: I/O tag 960 (23c0) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:4096
+[65524.312580] nvme nvme0: I/O tag 961 (73c1) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:4096
+[65524.312592] nvme nvme0: I/O tag 962 (13c2) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:4096
+[65524.312604] nvme nvme0: I/O tag 963 (13c3) opcode 0x1 (Write) QID 11 tim=
+eout, aborting req_op:WRITE(1) size:4096
+[65524.515650] nvme nvme0: Abort status: 0x0
+[65524.536423] nvme nvme0: Abort status: 0x0
+[65524.581238] nvme nvme0: Abort status: 0x0
+[65524.628017] nvme nvme0: Abort status: 0x0
+[65524.661905] nvme nvme0: Abort status: 0x0
+[65524.702179] nvme nvme0: Abort status: 0x0
+[65524.723759] nvme nvme0: Abort status: 0x0
+[65524.779577] nvme nvme0: Abort status: 0x0
+[65524.871981] nvme nvme0: I/O tag 2 (8002) opcode 0x1 (Write) QID 11 timeo=
+ut, aborting req_op:WRITE(1) size:16384
+[65525.019778] nvme nvme0: Abort status: 0x0
+
+I'll loop in the NVME list that they can maybe judge this.
+I also double checked and the device has no SMART issues whatsoever.
+
+Cheers,
+Chris
+
+--7sica6oli6b7agoc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmh34PkACgkQwEfU8yi1
+JYULEQ//ceaDj9+CH3XzBg48rQqsXWWdGAGcISr2cvNeb4c00Kjv4/p3p3q2IH0y
+hRCrtVLwffRzReZiJgFual8AfBxcYvM4f4IwwQAV9lPkfggpSONPxXUoTyrG35K7
+jWcJ4XgoV1tGCnCb7iZOwgvvUgDexa3SRlcFwJinNGyRN529sIwUfvIDR4VxGjuz
+1Y26oWUUuvXq6Es5uWMsYm8rv1ouwbTtFBA4+QFdrhNZT6ShDprMWRWAOml6hI9C
+QtOwTGJx91Lq2wkDSzJ4csbC7C4JxZwpHL89vNM1VQGvD9X+Ar1lfQPAMvdKDYKS
+I5pBsvBWZa7AG8QnIGS8a+RbGd/l1DFwpr3k0ZfXnECIu+H8IfbWUcVgYV5lIe01
+OnsA36NwRlAWvfXk791A0p4lIFRIGtDjuoQsNi0fU/MlLssdvHHwY5CxaMHnADqm
+Q6mJout05zaMVL4t6QfNGziDmLkUJfWNBrDuCt9lrvS5oJBuX6m6VjSR+lNo0nWC
+XdUQo+thpggBV0F+hs1cZwDPaD9ehdlpI4BZ2T0xKSMRC5bhjdOX4hgdM59HLmzt
+MaXnfC7XUN+fe1pJS6RfrueJjkSmpXaISUaNnJ5hMsUBlEl+At2u6cEzyOA6njYi
+DSIKRSp2rY+rjvXUMKFjnJ/tuwRgkAwnc5/kzZqh6RRmtapQRhs=
+=/7Mt
+-----END PGP SIGNATURE-----
+
+--7sica6oli6b7agoc--
