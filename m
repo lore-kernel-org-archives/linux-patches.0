@@ -1,168 +1,184 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2054.outbound.protection.outlook.com [40.107.95.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C272B1D79BE;
-	Wed, 16 Jul 2025 15:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752680588; cv=none; b=WmFPmi4uN+d936xx76pmQdXrL/2BBQL1TLwTpx19qoyg9gyYsD//NnREUxSvGpa4NYF+lb9O+n2C4NJsVDFu0nie1/5WVEmzAEPQmmd2mRiR6rHeivpOeZXWnyUFmx48494DhrI+fnSyzBIGx3A71MpswLxLxCR+kVuusry2W4U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752680588; c=relaxed/simple;
-	bh=YmoYgi+Z8Rk0G8PfGmH0mIpcN33QeyjM51E5rSRT2ME=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=burBDj9nGAkW6NaHTleSQ27HgyofAx6n+wRpv2rBIKnJprwHem/qUmYfE4Pvhzh+erP042XwNTxvAntdhwEXMgYJlZNV6kO91Bouwla7CQ5fFJsEN5OYXiSDIMZ2BFt+xEQEOPp87QXX9BbZJbl6Qxq363Y6IfmdZTz03DTn2Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jbJ47Num; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1291D79BE
+	for <patches@lists.linux.dev>; Wed, 16 Jul 2025 15:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.95.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752680593; cv=fail; b=LVDprq4iTrT9P9x+KAHPzhwKvXnHCIAlgP2Sk0yyxBOHmILHEDbjm9ZClgljGCfUtbEIrH34iSqgTySxsmj7+AMwZShOorSddVlb9vDbWS8Sw7JQQ4JvZb4CFnSMNY6VMar8Ios/rmn6F4E3z6NSZQwuffqY87sAhD0L5/mPpnw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752680593; c=relaxed/simple;
+	bh=pMbceGTmyuaBj9KEPJg2EMheG84uFNimd+xrXjRU8To=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=Cn3QWUsYZqIqwWvN5QaP68LK0YQzMevu4OtPi7pDZFCnvRPMVH4liaMdoSVrxEycEnqWsCIS+7Vuwz05fIR7Af9gQtpui9n3mRN7/va1Jjy/SbPt/tBlcCNJA2z1ACQ4Gg29xLNpXGNdcsBJEfEws4robkxJvb+ee3tKy/10kco=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kiLvyIor; arc=fail smtp.client-ip=40.107.95.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jbJ47Num"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0103C4CEE7;
-	Wed, 16 Jul 2025 15:43:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752680588;
-	bh=YmoYgi+Z8Rk0G8PfGmH0mIpcN33QeyjM51E5rSRT2ME=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jbJ47NumH3GUuFBTW5QfD5IpvqKhlX7KuiXX8+daoIHSQ9sshQUmFAfTdrM7QAzrR
-	 WaxN86aDlX5OwGKEYluRPdxzC7XuA8SAXgWFhzF55VAaY79UJukVtJ0QFWCPdsKPTl
-	 VJa424+P/dNroGHeFK47xpEU9EBGhyaWyP0r14OA2kufCJJqBkHryh3XlPB6fMPWJF
-	 x05wrOeDO6Yfp0HymWR1jOO6in8N0wYwHieQP6sL12LdWoMuSVdMPp8kRikksWPOr5
-	 ORsa6yEYRrBkNlUZALA4r/zRlPUbcUSgeSGsEl7WccxGbwl1sTxJhV7VMmriZATnrv
-	 TscymJJ5TeX1Q==
-Date: Wed, 16 Jul 2025 08:43:04 -0700
-From: Nathan Chancellor <nathan@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kiLvyIor"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BwTqP9wErHISZaXbAZBwQ+bDJBZrxmaqizVfNiWY3+ASRQunUcvfgQnc+YXVXtiP+BU3tWOCNutTx/DVousaLra7afcS2eQJfP1pGQO5BW2SbHzaBcaFrfRe+QMBgLSPm3+uUhIf2C6P5DfdL6+AvmCGZXWi62wHkSQVRL9xlqLcF/9YQoDUHbmnflMO0HqW4nQmMSvrDr/j8ciSj/vnFwlzmjk/NSNR48Mcq2AMEs5FELuqkednEtqS5jtbUxw/g5m/yPa2OupQFEhNBOBHkxtoMFANCVzx4k+Jc/irO+XXpQKYZ31Bru+T+DEld9gHiKjzcCIgdwZkmtJZTvIriw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7C24a5NQxuwr0Q9XaUWTJozsvizQgGr+MZIvZS5MJLw=;
+ b=MTgBlhpKdg99jCXiZSB3or/0/cXjXvHzvHYxKJ7kGbdffIhdVDBroWtvZHJq+QVnAvELSej8Q9L9tqfV0CQxwQBV8k8C6zqvQuyYLLT/huRs5kMowUiJd06EFqeGUoRWwXPiCqNiyLbGI11mOhqvwAva4F7x1vxQMeRqCqPGMNYxW7IxPG7HwJI1T72/wSZgMEmZnVOM1oJTle334CGPM+kP4JCFVJKXoUf4GCOIxoYke1f3HU7hgYkz/tU5MseXtPMniV2OZZUsT4FSe8U+f98L0k07Z91DhKcZKL5kky2ua6/AHdEm15AIIuGcjhNcDhj1qdtXyN2tDhRPeKMvuQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7C24a5NQxuwr0Q9XaUWTJozsvizQgGr+MZIvZS5MJLw=;
+ b=kiLvyIor9oKHmK+/5ZnCHTxkycWMwZFcCNc3L4OZ6K+TsBVsBwQfb5100ByPwnWncak8WzLXpAYLmZoWW4ab0Emuyd7YcPBIya5nvpwPq3flwsdb80j+INgU/5MdXshfrHKvzJAEWKe1wdgwHhPPcLkmF/TKJZliT/0w0zsVPm+6ZMwsuzvm7RKTGMmxcRczDUUxrE5pYBPu0fGZkzwOLDwzpyF+Z20DqDFrwweQP45LB4+PCmCzFzIO0D8vKa12TmPhsIfx78WMlZoWqLnEw3joIN1TLgnKXkZo2w8mFHwYDkQtJjDapswfOJRiHduyPf9/YBNvYQDV/80Ou1Haqw==
+Received: from SJ0PR13CA0034.namprd13.prod.outlook.com (2603:10b6:a03:2c2::9)
+ by IA4PR12MB9834.namprd12.prod.outlook.com (2603:10b6:208:5d3::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.32; Wed, 16 Jul
+ 2025 15:43:09 +0000
+Received: from CO1PEPF000042A8.namprd03.prod.outlook.com
+ (2603:10b6:a03:2c2:cafe::1e) by SJ0PR13CA0034.outlook.office365.com
+ (2603:10b6:a03:2c2::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.16 via Frontend Transport; Wed,
+ 16 Jul 2025 15:43:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CO1PEPF000042A8.mail.protection.outlook.com (10.167.243.37) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8922.22 via Frontend Transport; Wed, 16 Jul 2025 15:43:09 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 16 Jul
+ 2025 08:42:51 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 16 Jul
+ 2025 08:42:50 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 16 Jul 2025 08:42:50 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: accessrunner-general@lists.sourceforge.net, linux-usb@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] usb: atm: cxacru: Zero initialize bp in
- cxacru_heavy_init()
-Message-ID: <20250716154304.GA2740255@ax162>
-References: <20250715-usb-cxacru-fix-clang-21-uninit-warning-v1-1-de6c652c3079@kernel.org>
- <2025071618-jester-outing-7fed@gregkh>
- <20250716052450.GA1892301@ax162>
- <2025071616-flap-mundane-7627@gregkh>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <hargar@microsoft.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.4 000/144] 5.4.296-rc2 review
+In-Reply-To: <20250716141302.507854168@linuxfoundation.org>
+References: <20250716141302.507854168@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025071616-flap-mundane-7627@gregkh>
+Message-ID: <36661855-6678-4fdf-81e0-55d86ae40009@rnnvmail205.nvidia.com>
+Date: Wed, 16 Jul 2025 08:42:50 -0700
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000042A8:EE_|IA4PR12MB9834:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b633e72-e266-4fa0-22f2-08ddc47f76fa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700013|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?ZzZ3d1JYTnEzNUhEaFBtNy9QTDVMSDNIdG9jSFM0cGZJR25pTlU2d3lESjU4?=
+ =?utf-8?B?emloMDloU2JUUENYbmpoem1PYVBld2IvTE4wcXRnOGNlbGQ4Y2F2dDRLY3Jo?=
+ =?utf-8?B?ODRTdE9hUDZLT3pVdVdMY2dLS1c4Wk1zQzdENTZzendUZXJWeUhXUm9tSTZm?=
+ =?utf-8?B?RkVBWC91VzFVMjFpVXc5aVBVWGNtSStCYVNyMHN4R29rQk9WNlFReElydCtD?=
+ =?utf-8?B?N1UyZ3M0M1FkOFVzdE1xdnlzbVBxSUJRTDRXOFJHcDhQaU5FaGltaHlnT2Vl?=
+ =?utf-8?B?K2FoL3Y1c3RONzRoNHhtUWpSTEdJZ3MzY0xwZ1p1ZC82VDNLc0FOU1A5N0hY?=
+ =?utf-8?B?MUJmbVJGT0QrZlI3V0dOYnlXSnVWb3U0SzFhRFlvOHVza2s3Um4wRnQ2c1Rt?=
+ =?utf-8?B?a1dzaS85RDR2SEtNa21DZGpDOXNkWVF5TGVwdlJJcVJtSGxOWDUxbkRLY25y?=
+ =?utf-8?B?cHMwRHVnYVVJdDBSZWFTMlZscjdLVEVqd28zV1A5OGJOMlNNZkdFZ2h3ZVhj?=
+ =?utf-8?B?aVlheVB6MXpqUGtRdVBqN3VPdDI4S25VYkdEaTdOTW1qNmozU0JpOXFXRFBk?=
+ =?utf-8?B?b3k0TXF1eUdtZTUxK3VYUU42VmtDM2d6K1RpWTJFN1BSWXdyd3VGeDFFdW1n?=
+ =?utf-8?B?UktWdVVkSFBUOUpOS0I0aks2OXNaNDVUWWFtUFRhbUNtRlpVaDAyUDBIT0Jk?=
+ =?utf-8?B?a3ovdUpDRGtsWGFXQ1pGa3JEanhtQ3VNNG5UNW0wWEhvMVZiVy9DaDFkNVhz?=
+ =?utf-8?B?dnpva3ZjQ0VWc0FsMXpFdTdESG9JWXhWWHppMVUzbzhWbVZTL1RlcjdITWNL?=
+ =?utf-8?B?djd1K3pPdU8yYlpDeGhEcS9MNkxYY1N0V1NtMWlMclIvTlZaRnRGWjQzQ1Nx?=
+ =?utf-8?B?YktMZ2pIWDhFSW4vczh2U1pjcGEwTTdDWW1DTDNMS0NJSU9zNE80TmNXa0Qz?=
+ =?utf-8?B?eVVCNEllSi92Wnl4bHVabHJaRWpSeVBoT2ZhQjh2TEs0b212dEd5QndTTkJK?=
+ =?utf-8?B?S1ozVFN5VHdmVDBDZzhxM3JaR05BVUI4MXZMdmh4b2M5aWpKQ1NLSy91emJH?=
+ =?utf-8?B?b3U4L0Ftbkw3Y3FzQ2xITTFTSk1qQzI2cXd6Q0dmT0QzMHpnVXk4TXNyblFp?=
+ =?utf-8?B?NDJwbmZYemdJZEozK1dpYTdnMDFDVHErTXY4MnhLRmlseWl4WjN2Z3V6czVR?=
+ =?utf-8?B?dG01SDJzOXIrK1hteWptQTZ3UEVMc1hPeXFuc2ZGczBCelliQW85SWZwUUE1?=
+ =?utf-8?B?R29LRCsxdTdvY0d3MnpmTzFmeTR1cmJRenNMZVE1OXdCV2twdG8rT0Y2elFu?=
+ =?utf-8?B?UWNGT1ZWMVRPeWpvQVN6SWhOejM0dTV5TkNsS1hxaFk4bkg1N0V4U3FqZVN2?=
+ =?utf-8?B?NkhJUXFDQktMbjlwOWM4RGNvY0pKKzlCMTFzeE4rUkJFN0daNUoyd0FJcnA1?=
+ =?utf-8?B?QTVXVnlOamlNVDZ2Qit2TWFPOCsrNENUdUtLZ3JVY1ErRlB2ZnIrcndCWU9p?=
+ =?utf-8?B?dkE3Qm5YZWJONnpIcHlxY3NaaS9xNFlIV2F5M2dlNmRLc3NBdmh5cVlPNXJa?=
+ =?utf-8?B?SFpDajhweWlkbWd5MGxoYVZYbUNseTR1d0U4RkRRbC96Vkh2alJ3bmtzdjgx?=
+ =?utf-8?B?YjhGbDZXZTR4Snd4bVlwRWVLRWUxbVJuRWoxdjVLSkF4VkE3YzNnS2lvWmw2?=
+ =?utf-8?B?Uk4xMmlHN1lZa1lRTElLRUU4S1Zra3ZoQmp3Q0MvNkRpeHNRWHZlRiszQjJo?=
+ =?utf-8?B?QnU3UlNnU214WUNPb2JFS2xRM3BZMEU1M0l6dHMyU29JVWRyN012eG9kYisz?=
+ =?utf-8?B?YjhmMGNXNUdBSGpSeVI0TUdXK1BGTmI3cHdXbDNUWUw4T3duNDlveEFJTzJ3?=
+ =?utf-8?B?VlBGRi9jd1l5UktqcXFwcndKQmgvTnlLVmRNQ2s2cFRYZ2NUejFBY2dmWEpX?=
+ =?utf-8?B?ZE9Jd0gwM2JuckJaRGp5WFhpcmZydFk0Wm9MNytNWXRkZE9wZ0NSR3M1MEF2?=
+ =?utf-8?B?YUJFd28xYjVQOVdMaFZyNEs2MXM4VlFmbzZsSGNUN0pISUpkUGtHQUJEREdE?=
+ =?utf-8?B?ek8wa0pCWW1QYkpxYjZvelQvSXNaQS91cjRYUT09?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700013)(7416014)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2025 15:43:09.1043
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b633e72-e266-4fa0-22f2-08ddc47f76fa
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000042A8.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR12MB9834
 
-On Wed, Jul 16, 2025 at 10:00:10AM +0200, Greg Kroah-Hartman wrote:
-> No, I take it back, it is unreasonable :)
+On Wed, 16 Jul 2025 16:14:18 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.296 release.
+> There are 144 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> At runtime, there never is a uninitialized use of this pointer, the
-> first time it is used, it is intended to be filled in if this is a "boot
-> rom patch":
-> 	ret = cxacru_find_firmware(instance, "bp", &bp);
+> Responses should be made by Fri, 18 Jul 2025 14:12:35 +0000.
+> Anything received after that time might be too late.
 > 
-> Then if that call fails, the function exits, great.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.296-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
 > 
-> Then later on, this is called:
-> 	cxacru_upload_firmware(instance, fw, bp);
-> so either bp IS valid, or it's still uninitialized, fair enough.
+> thanks,
 > 
-> But then cxacru_upload_firmware() does the same check for "is this a
-> boot rom patch" and only then does it reference the variable.
+> greg k-h
 
-Right but how would you know this if you were unable to look at what's
-inside cxacru_upload_firmware()? That's basically what is happening with
-clang, it is only able to look at cxacru_heavy_init().
+All tests passing for Tegra ...
 
-> And when it references it, it does NOT check if it is valid or not, so
-> even if you do pre-initialize this to NULL, surely some other static
-> checker is going to come along and say "Hey, you just dereferenced a
-> NULL pointer, this needs to be fixed!" when that too is just not true at
-> all.
+Test results for stable-v5.4:
+    10 builds:	10 pass, 0 fail
+    24 boots:	24 pass, 0 fail
+    54 tests:	54 pass, 0 fail
 
-If a static checker has the ability to see the NULL passed to
-cxacru_upload_firmware() from cxacru_heavy_init(), I would expect it to
-notice the identical conditions but point taken :)
+Linux version:	5.4.296-rc2-g6d1abaaa322e
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra20-ventana,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
 
-> So the logic here is all "safe" for now, and if you set this to NULL,
-> you are just papering over the fact that it is right, AND setting us up
-> to get another patch that actually does nothing, while feeling like the
-> submitter just fixed a security bug, demanding a CVE for an impossible
-> code path :)
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-Wouldn this be sufficient to avoid such a situation?
-
-diff --git a/drivers/usb/atm/cxacru.c b/drivers/usb/atm/cxacru.c
-index b7c3b224a759..fcff092fe826 100644
---- a/drivers/usb/atm/cxacru.c
-+++ b/drivers/usb/atm/cxacru.c
-@@ -1026,7 +1026,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
- 	}
- 
- 	/* Boot ROM patch */
--	if (instance->modem_type->boot_rom_patch) {
-+	if (instance->modem_type->boot_rom_patch && bp) {
- 		usb_info(usbatm, "loading boot ROM patch\n");
- 		ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, BR_ADDR, bp->data, bp->size);
- 		if (ret) {
-
-
-> So let's leave this for now because:
-> 
-> > This type of warning
-> > is off for GCC because of how unreliable it was when it is done in the
-> > middle end with optimizations. Furthermore, it is my understanding based
-> > on [1] that just the passing of an uninitialized variable in this manner
-> > is UB.
-> > 
-> > [1]: https://lore.kernel.org/20220614214039.GA25951@gate.crashing.org/
-> 
-> As gcc can't handle this either, it seems that clang also can't handle
-> it.  So turning this on for the kernel surely is going to trip it up in
-> other places than just this one driver.
-
-I turned this warning on in 5.3 in commit 3a61925e91ba ("kbuild: Enable
--Wuninitialized"), so it is already enabled and it has found many, many
-legitimate instances in doing so, just go run 'git log
---grep=Wuninitialized' or 'git log --grep=Wsometimes-uninitialized' in
-the kernel sources. While there have been other places in the kernel
-where this warning has been falsely triggered such as here, I have
-rarely received pushback from maintainers on fixes to silence them
-because the majority of them are legitimate (and the false positive
-fixes usually result in more robust code). For example, the
-strengthening of the warning in clang-21 resulted in what I would
-consider legitimate fixes:
-
-https://lore.kernel.org/20250715-mt7996-fix-uninit-const-pointer-v1-1-b5d8d11d7b78@kernel.org/
-https://lore.kernel.org/20250715-net-phonet-fix-uninit-const-pointer-v1-1-8efd1bd188b3@kernel.org/
-https://lore.kernel.org/20250715-drm-msm-fix-const-uninit-warning-v1-1-d6a366fd9a32@kernel.org/
-https://lore.kernel.org/20250715-riscv-uaccess-fix-self-init-val-v1-1-82b8e911f120@kernel.org/
-https://lore.kernel.org/20250715-trace_probe-fix-const-uninit-warning-v1-1-98960f91dd04@kernel.org/
-https://lore.kernel.org/20250715-sdca_interrupts-fix-const-uninit-warning-v1-1-cc031c913499@kernel.org/
-
-> If you _really_ want to fix this, refactor the code to be more sane and
-> obvious from a C parsing standpoint, but really, it isn't that complex
-> for a human to read and understand, and I see why it was written this
-> way.
-
-Yes, I agree that it is not complex or hard to understand, so I would
-rather not refactor it, but I do need this fixed so that allmodconfig
-builds (which enable -Werror by default) with clang-21 do not break.
-Won't Android eventually hit this when they get a newer compiler?
-
-> As for the UB argument, bah, I don't care, sane compilers will do the
-> right thing, i.e. pass in the uninitialized value, or if we turned on
-> the 0-fill stack option, will be NULL anyway, otherwise why do we have
-> that option if not to "solve" the UB issue?).
-
-As far as I understand it, clang adds "noundef" to function parameters
-when lowering to LLVM IR, which codifies that passing an uninitialized
-value is UB. I suspect that cxacru_upload_firmware() gets inlined so
-that ends up not mattering in this case but it could in others.
-
-While '-ftrivial-auto-var-init=zero' does "solve" the UB issue, I see it
-more of a mitigation against missed initializations, not as a
-replacement for ensuring variables are consistently initialized, as zero
-might not be the expected initialization. Since that is the default for
-the kernel when compilers support it, why not just take this patch with
-that fixup above to make it consistent? I would be happy to send a v2 if
-you would be okay with it.
-
-Cheers,
-Nathan
+Jon
