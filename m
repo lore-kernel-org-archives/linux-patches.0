@@ -1,108 +1,134 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1342F5499
-	for <patches@lists.linux.dev>; Wed, 16 Jul 2025 16:59:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDAF2F5C24
+	for <patches@lists.linux.dev>; Wed, 16 Jul 2025 17:00:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752685160; cv=none; b=Q67QBx4fzBupcEB6orCdv8Ef99gYLrzPRMuI0/AxHSn6YgUnv2xSA9qXkM4w1LbNdyDTg3iuSSKJ3vLu5sI3m2rXv4BuxSGDXN46dL1lN4LavzrGzF5vSWYkUFAMX3o0M9bRS9yH30ZnwpD22R6EI/s6jeYqdZk1FefOWuo6ne0=
+	t=1752685239; cv=none; b=IqVdPVEXZSjmYzU1geMaDHKpZKIPh7+g6rfkm8b4Hb4gF+EJwkX6ln8PzqZiogMQ55e5s4BOnmIFlPqh/3h3hy2GGiZ/WTv30tQiLnb7/Xt1M6XVuOqLuc1SraN2eiqQIm6bt6DFeaudtUgg/k8ssQ0eHjq9c9y99AIKm+O40ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752685160; c=relaxed/simple;
-	bh=bgGIt5uwKo+8SRhGnRNrziln2a/zjnugSuIhacb/y3w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b4OSVrTwBvMD2bTkeTZP+wuRlXzHGh1feXQuq3nNqkcNz0Ziungbeh3duqrXh2ltnxtMAH4alOoWB0RSzgZWL7xyhYvLgzpCbS6Y7Cwt326g6d2Stwa/p8jyTErmNf0iCgEBY0hYV5VBbOVQ0orziykCinUfgvzVlviENRNNp70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=W1n8/2Ph; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1752685239; c=relaxed/simple;
+	bh=VT2e/D8TNHzCkI96xQbHOMePD40bqojitO9TYfZwJRU=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=i9vlC68YLW3GK9m78Q+5d08U6ertMparZ56tDeqV7qdrHDKHDAC9rsV5YtqwiK3+PAB8ArWref83Dj1nhxbvJB/K8l9mQikX54nIHMKheWrgvxqNvfSf0AgOBzGk3NCS6CwEGahTZPlt6ZwXfuCpi1UypFpzq7NqYf+yx9Dlp6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EGW2SqND; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="W1n8/2Ph"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-45629703011so576715e9.0
-        for <patches@lists.linux.dev>; Wed, 16 Jul 2025 09:59:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1752685153; x=1753289953; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bCi+0zlUCZ4Yn1DhG0pTHwDWnxFzOiBeKQ3YUvqQbIo=;
-        b=W1n8/2PhouJZcFIbC+mOWuBz8bP0Rhw+Ec3ON75M9PPOPwESBM8eAjn429yyIUOXHd
-         yotOGIMEA6IY2lJbNITLVM9hYfkryq5Rm5u8q2F0IfiA3xE10UgJlpF5P0N9gK7qO5nD
-         rK/vfhBH+QLesoSHI0jjoUY5vL8WBvWtKP9Mj5OCfDd2/I7zamFyk7P/iEVKFOMCvhSo
-         trF1RC/Y9SqaMdVBC+fBNNaEQL7VtTLoa+RT/YlXnEFbRA2HQc04q2C4fGYii9wFBHCQ
-         qVKn5wXPRUbKTZzQdrU7SW07yiKspxGwjuytyP2HfZXJE9Gcwahc/Hg3EA2vgOat1cE7
-         8g1A==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EGW2SqND"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1752685232;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9bKE/0cNtoQ/CuczzprbbV3beLrr2MpjH/0TxwAvYDI=;
+	b=EGW2SqNDS+bbvfZeAe7m0XkeSE/5InZp+3e8Cm9971xBLykYMr0Id2ZKD6lhZf2L14cb7E
+	m/7j21puwycBSAL1z5yPa+WPPIcNV7qCtSSmndOl4e2MIfmaQBvEJL0v9ZDdhcEouARXw7
+	N1R7nTs676nXIO0KAIF44/eoIk4Gb3s=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-455-rQ6lWi_GNYyhpD2hQKQ9aw-1; Wed, 16 Jul 2025 13:00:31 -0400
+X-MC-Unique: rQ6lWi_GNYyhpD2hQKQ9aw-1
+X-Mimecast-MFC-AGG-ID: rQ6lWi_GNYyhpD2hQKQ9aw_1752685230
+Received: by mail-il1-f200.google.com with SMTP id e9e14a558f8ab-3df57df1eb3so55015ab.2
+        for <patches@lists.linux.dev>; Wed, 16 Jul 2025 10:00:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752685153; x=1753289953;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bCi+0zlUCZ4Yn1DhG0pTHwDWnxFzOiBeKQ3YUvqQbIo=;
-        b=FuN+C+MrDc5UmAsnIVIV+TJqJs8t64qT/zp+bC+5kjrfD/HJEIJL8DWP8nJnOtz3Qr
-         HDiKqLCWPVeEe8ixOmutkON5PMJnaUHoiYASRKlnnv0LoPUWRwUo8woPDUpgfC+3h4gV
-         2gPCGXpN47pCCWgmlwQEKaI5chmckDKu3RUGxkFhAUMjsbD3CLKThfWOF6WrkAnwTrqL
-         3HCxDQAqO0073yeuu6O1GWY80u9H+mjn3CZe2fZl4pLJK5SuqzJMnRdeJHraCBR/gfkn
-         wXslqiQaq78arWEOPFA7QGAUG9TDCYbN3b28ut/JtaoEjif1jChOF9xK+eiWwC51uHxD
-         3fzw==
-X-Gm-Message-State: AOJu0YymgHQ4WANu77AFCpdeppYNo5Loy4Dt6gX1x3vjyWLaVKtFleWO
-	28P/IsJAAv1HLSlA66Lz6XzmnxKa1o7w3S+BmVAkJoS9QOS1MP/YWRQ=
-X-Gm-Gg: ASbGnct0wLMjiNd37Up24N38hb75/T9eFkGvP+PdHKVW9VgxsBvoMqXSbEpqvrhIy6k
-	wd+RwPr0Ivy8Pb0HQrl0kVqgowudKlMYXfoikqRF0YduZa72/49oKrXtrunUCyMe9OxT58+p/03
-	hYTXudAJcFV2MZANn5AwPfeosQZH0J2/Z+0ge5Mu5MhKlzYRWye8MKyxJIgG1KCrAfF8FVdRQvY
-	RFjRk0803Ikw7pMsshP1w9pmCDXhje/E/52zx5YTda57cNYNqudolC//LeXZjP9VRMql1Ssep7u
-	Ix/DIYS/QEQ/LkuOK60z5ODCzvwf8JB5s8UzHG964WG169onBaUNFeb1LII58/RA+7JN1ze75M8
-	ytNajKswWX0Dk/JoUK1r8IjLNBap3FuxG5hwP81MzL7JoeRPcP7hIN6abd81x7wCI3+yq0LIY/j
-	pr
-X-Google-Smtp-Source: AGHT+IH2fN99teaziIOWHGK7VxDqMgJou22bqD2enEg/CDdFsFnuRU01K01zYdPKcgsMarOaEboTeg==
-X-Received: by 2002:a05:6000:4805:b0:3a5:2182:bd17 with SMTP id ffacd0b85a97d-3b60dd6dc38mr2826716f8f.19.1752685153173;
-        Wed, 16 Jul 2025 09:59:13 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac571.dip0.t-ipconnect.de. [91.42.197.113])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d872sm18577119f8f.60.2025.07.16.09.59.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 09:59:12 -0700 (PDT)
-Message-ID: <04620255-73f0-4bf8-b7fe-4419e01b4022@googlemail.com>
-Date: Wed, 16 Jul 2025 18:59:11 +0200
+        d=1e100.net; s=20230601; t=1752685230; x=1753290030;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9bKE/0cNtoQ/CuczzprbbV3beLrr2MpjH/0TxwAvYDI=;
+        b=O0RwR/IHhrEDuB1TZ5uQpYVlJnqBelW8selntMGRJAnx5u3gTlnhs51RdkBs7y/lap
+         d3JftnFi1oPDo52jVZ24PXbfzVoCV28GwVrh4naasGckpislhRtEaJVsU178h4AaynfM
+         IADnnHb3ZNa2OVIOsvOorn7gXk0r/OlSOwMoX0CoVuzjpLjNT7OsaoUmbuw0F9yzxQ+l
+         n3Ce7gYlVu57T73ay6A1OGvRBRXafTm4UHYe8hnsgJEIeajw3zwjo2j53H6cug6eF+Kj
+         fS5xiRC3iFx4I0OHNVdxev1uA3R4IG7hDlKOK19QiSvLhxT/Dov1qyeOMhbkuO7WyCCE
+         NwRA==
+X-Forwarded-Encrypted: i=1; AJvYcCWVt1gt7GonXBeI3NopVfols+xFqQCxQRZA46fNREMG/WYhSzWlpBybDrnhEPzgwddL56P996So@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy+mooNa6pJIJjsILzntJpcXxk8j+kk/4GTxso6jK3gcc0Sst0A
+	09aJoNcjSuLST3Y/XxjlmoBvlD7jby+veygdr4cAQpPrgS14qCV/iy2ePO1Wll9EyCkpkyjsfKO
+	9YDDZ4Lspd87C4J6Tnep35DWVY2iExwQQ74lDwBX5iiJ/S16570+c+BWSWuU=
+X-Gm-Gg: ASbGncs62xfxNdZK56YhXeoPEjWSAexuKWooSsUF10frBt+VrIaTok6A8fbDozTR7HC
+	hjOcFodfb/+A3x4vqMnwXT9EanFpWZ77eFqqZVI22bCpYDiAXh45PnCXLX30/qhdZCoCwYCmGYz
+	WK8A5qQqw/Sw6FUHV1KJKirZPvWbaSLBHOriwBC9bg3e9JNdQM6GGWQ2sZz5PluCa8gRgrfa2kZ
+	e8syXVSpMVGSZIJS4MWyXpCNAyyq97HH+TsNJmWENKN/QitcYsX905lTuA8+gz3KrJBaj43qj3z
+	owf8qy91swmkW04/+UIdFmsCtplp5xOQLdWW6sEpjEI=
+X-Received: by 2002:a05:6602:1690:b0:85e:12c1:fe90 with SMTP id ca18e2360f4ac-879c096efeamr126747139f.5.1752685229878;
+        Wed, 16 Jul 2025 10:00:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+tZmWUIYwitvuBgGnxfswO12NMpp8mD2icMHkWg5+YtIZRRU8sqVvx4qLf0KrRuHgGBPToA==
+X-Received: by 2002:a05:6602:1690:b0:85e:12c1:fe90 with SMTP id ca18e2360f4ac-879c096efeamr126745539f.5.1752685229362;
+        Wed, 16 Jul 2025 10:00:29 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-505569d0e42sm3119302173.101.2025.07.16.10.00.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Jul 2025 10:00:28 -0700 (PDT)
+Date: Wed, 16 Jul 2025 11:00:27 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>, oe-kbuild@lists.linux.dev,
+ Ankit Agrawal <ankita@nvidia.com>, Brett Creeley <brett.creeley@amd.com>,
+ Giovanni Cabiddu <giovanni.cabiddu@intel.com>, Kevin Tian
+ <kevin.tian@intel.com>, kvm@vger.kernel.org, Longfang Liu
+ <liulongfang@huawei.com>, qat-linux@intel.com, Shameer Kolothum
+ <shameerali.kolothum.thodi@huawei.com>, virtualization@lists.linux.dev, Xin
+ Zeng <xin.zeng@intel.com>, Yishai Hadas <yishaih@nvidia.com>,
+ lkp@intel.com, oe-kbuild-all@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH v3] vfio/pci: Do vf_token checks for
+ VFIO_DEVICE_BIND_IOMMUFD
+Message-ID: <20250716110027.7e94129f.alex.williamson@redhat.com>
+In-Reply-To: <20250715230618.GV2067380@nvidia.com>
+References: <0-v3-bdd8716e85fe+3978a-vfio_token_jgg@nvidia.com>
+	<76f27eb9-7f56-45e7-813e-e3f595f3b6e9@suswa.mountain>
+	<20250715230618.GV2067380@nvidia.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.15 000/192] 6.15.7-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250715130814.854109770@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250715130814.854109770@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: JcpO9tYaYAxKasr25vBLjmU2mqj4gZi3266LN0Rjyd8_1752685230
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Am 15.07.2025 um 15:11 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.15.7 release.
-> There are 192 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, 15 Jul 2025 20:06:18 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+> On Wed, Jul 16, 2025 at 01:55:45AM +0300, Dan Carpenter wrote:
+> > 5fcc26969a164e Yi Liu          2023-07-18  117  	mutex_lock(&device->dev_set->lock);
+> > 5fcc26969a164e Yi Liu          2023-07-18  118  	/* one device cannot be bound twice */
+> > 5fcc26969a164e Yi Liu          2023-07-18  119  	if (df->access_granted) {
+> > 5fcc26969a164e Yi Liu          2023-07-18  120  		ret = -EINVAL;
+> > 5fcc26969a164e Yi Liu          2023-07-18  121  		goto out_unlock;
+> > 5fcc26969a164e Yi Liu          2023-07-18  122  	}
+> > 5fcc26969a164e Yi Liu          2023-07-18  123  
+> > be2e70b96c3e54 Jason Gunthorpe 2025-07-14  124  	ret = vfio_df_check_token(device, &bind);
+> > be2e70b96c3e54 Jason Gunthorpe 2025-07-14  125  	if (ret)
+> > be2e70b96c3e54 Jason Gunthorpe 2025-07-14 @126  		return ret;
+> > 
+> > This needs to be a goto unlock.  
+> 
+> Oop yes, thank you
+> 
+> Alex can you fix it up when applying?
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Yes, I'll apply with:
 
+diff --git a/drivers/vfio/device_cdev.c b/drivers/vfio/device_cdev.c
+index 53a602563f00..480cac3a0c27 100644
+--- a/drivers/vfio/device_cdev.c
++++ b/drivers/vfio/device_cdev.c
+@@ -123,7 +123,7 @@ long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
+ 
+ 	ret = vfio_df_check_token(device, &bind);
+ 	if (ret)
+-		return ret;
++		goto out_unlock;
+ 
+ 	df->iommufd = iommufd_ctx_from_fd(bind.iommufd);
+ 	if (IS_ERR(df->iommufd)) {
 
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
