@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE688B660;
-	Wed, 16 Jul 2025 02:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9313594E;
+	Wed, 16 Jul 2025 03:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752633938; cv=none; b=XJhohwGv4afCCZn9oKEeiar0LmvWnKT1eoGHeQgceNKUI9i1T82V6MHC+aOZ5mzYZZNqCu+hAxgxX07tMWvRU7HOu/go2uKXh2FiBbl/pxQ1MIqwR/yeoT4pktUmbMqiOvz6DfnbNMOCM3wdPxMbiL/Oid5Y5sHrgq6Hvtm52vQ=
+	t=1752636868; cv=none; b=c4rJEX6kO974TCs7JHddnBIFfFTbLMZEqGv0SuD8yyVDFgkYGAZNRgEmNK8SO6BzRz9oPds6/ilhhLTxY4tU72PXEaywOCEUrrPG0PkHoUx+9EPB7FxbzZnthgeGv0/UorfCVpQqHYmAm+PCSWBDJgGWo5haknicqR4kgaidUOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752633938; c=relaxed/simple;
-	bh=+1u16U4vS2dn7v0o/6oq4Gia80+YfN2DVuNgYAdEeeA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=j8QG/tLXkF3wYG9spR2wH3dQ7JxCAn3zlDLJJ6xkC9gopUmSsaA+oIfDbizuSyW3JL/RYmKS1wYN3PhncVJ2I8Nw481R+HKEm+Jlv4KiNjvcRjJST5F/zNbMH7/JzCkS0WAINnXbla/77bMtczLzqzkAdtJukhZLncU+5WqfD9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2JWK47u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752636868; c=relaxed/simple;
+	bh=JX9lPvW29HuWuNG0xMribnwysoHenlRGseyEaBMLynA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=heqx2Eofdu0/guYuBccRPV2yjRrx1uEg60a2IcMRT5bgIRfs/v1UKzYCihYxkIna1McVFYlNHG7TVE4gUFmP9EJ/nBe5twvUTkhPto3zWXcqaq7J/MwG9y8R629tSgXGdcCJirGy0GyHx3kBDoBe8aDtBoEFan0e+DeF8blFtws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JNn0DBeG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2JWK47u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F190FC4CEE3;
-	Wed, 16 Jul 2025 02:45:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JNn0DBeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4A6C4CEF0;
+	Wed, 16 Jul 2025 03:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752633937;
-	bh=+1u16U4vS2dn7v0o/6oq4Gia80+YfN2DVuNgYAdEeeA=;
+	s=k20201202; t=1752636867;
+	bh=JX9lPvW29HuWuNG0xMribnwysoHenlRGseyEaBMLynA=;
 	h=From:Date:Subject:To:Cc:From;
-	b=h2JWK47uhreeBPFGmYAom7RJvXOFQcdFGYGkYLAyaU+n6AL8GFwO4vvyiWfAN4yKm
-	 6u4DDs34IhMYLrdl30zgNdOR6hlLZLFobNXVAuCywq2WjpHiJfKfh/fJ6Cs1av64Jt
-	 8DuVY2VlsLxTBCyvL4BdF4jptwL4gFmV0NvxAu6oFUnoy9EGbiU0gpT4adZ+rHNSHx
-	 Ujc0+z5gn/KcJTtZe4ycPrzV6I0pg/4d4vnSiL8itLZSp1G6ysgqJG5NIPBeL0ZfEp
-	 vaz2BwtlnMnn3iTDmKT99M7ifwhbD3H12ANdFLhvChT0aHeb34poUoKeNPO7e3ZmzT
-	 4FCy+k9+4SQjg==
+	b=JNn0DBeG2jhiv8pTK0H87VAQoIEjSIt+i59xFsck7j531KjD6xtnpADiy8Bl+pa7R
+	 YvWnNhD6AgMh3/uggiDs77HaJfOLzgB8ugNi8n5iEJGV46EWLfUKgjFeOc1j8lMvXN
+	 WGrG3vxtiCxFCpg2xEjvmHk+hTBPTIm/VC17uqKRc/cSq90bEcMsgUe7RVZc6TXKS2
+	 7EdM03dG1WJsz3AgwDF0moBdnPgWsSerkgwkkpfOaO/Pj2GJh+CvNGWpUjMeCpaiex
+	 Q7Slwt5OVRUUZBxJvwOmzq9w7WXDZK+uXtLmy+xT5t/yQlgsySSs5eSU1ElvxyOzUF
+	 8xZ/z1QHXfOjQ==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 15 Jul 2025 19:45:23 -0700
-Subject: [PATCH] wifi: brcmsmac: Remove const from tbl_ptr parameter in
- wlc_lcnphy_common_read_table()
+Date: Tue, 15 Jul 2025 20:34:21 -0700
+Subject: [PATCH] ASoC: SDCA: Fix uninitialized use of name in
+ sdca_irq_populate()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,65 +37,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAEISd2gC/x2NQQqDMBAAvyJ77kKixtJ+pXhI49buwY3sRimIf
- zf0ODDMHGCkTAbP5gClnY2zVPC3BtI3ykzIU2VoXRvc3Qd8a1psiQk//MNNWLhgymIF18xSSHH
- qgvd9DO7RDVA7q1J1/4/XeJ4XUqdxNHMAAAA=
-X-Change-ID: 20250715-brcmsmac-fix-uninit-const-pointer-d35114a50936
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
- brcm80211-dev-list.pdl@broadcom.com, llvm@lists.linux.dev, 
- patches@lists.linux.dev, stable@vger.kernel.org, 
+Message-Id: <20250715-sdca_interrupts-fix-const-uninit-warning-v1-1-cc031c913499@kernel.org>
+X-B4-Tracking: v=1; b=H4sIALwdd2gC/x2NQQrCQAxFr1KyNjBTWkSvIiJxJtZs0pJMVSi9e
+ 4O79+Dx/wbOJuxw7TYw/ojLrCH51EF5k06MUsOhT/2YznlEr4Ueoo3N1qU5vuSHZVZvuKqoNPy
+ SBUxYhvq8ZE6FEkHMLcbR/q9u930/AJNRFh16AAAA
+X-Change-ID: 20250715-sdca_interrupts-fix-const-uninit-warning-c4db91e0ca0a
+To: Charles Keepax <ckeepax@opensource.cirrus.com>, 
+ Maciej Strozek <mstrozek@opensource.cirrus.com>, 
+ Bard Liao <yung-chuan.liao@linux.intel.com>, 
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, 
+ Mark Brown <broonie@kernel.org>
+Cc: linux-sound@vger.kernel.org, patches@opensource.cirrus.com, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2033; i=nathan@kernel.org;
- h=from:subject:message-id; bh=+1u16U4vS2dn7v0o/6oq4Gia80+YfN2DVuNgYAdEeeA=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBnlQv69i7iPCH66tmfp7Gl/HNNXNDqecKng+8HquHBJ1
- svXhWu6OkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEmioZGSb77nXUNsqYJsPV
- erD+dknSp+cPfQ/ubjWKbDvSU8Yq58LIMGNm2rVdB7LZZM0ehj8L6W0T/Jh2/RL/ZYtNmw51Szr
- uYgAA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1744; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=JX9lPvW29HuWuNG0xMribnwysoHenlRGseyEaBMLynA=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnlsgfn3Lz8uC34ka9IKu/PJ9zcYQ8lvjk894hasP/o3
+ 9WpPrJHOkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEdh9kZNh0fvUkrsrzk7ar
+ cUrZ7JM+3X1fc5LOkSrX0LlCbn7Pt15mZOgS+7qyVjFsj4iH0OnHqoIV0ext8wsnP/ba/ysy/GC
+ 2CAcA
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-A new warning in clang [1] complains that diq_start in
-wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
-wlc_lcnphy_common_read_table():
+After a recent change in clang to strengthen uninitialized warnings [1],
+it points out that name is used uninitialized in sdca_irq_populate():
 
-  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-   2728 |                                                      &diq_start, 1, 16, 69);
-        |                                                       ^~~~~~~~~
+  sound/soc/sdca/sdca_interrupts.c:388:6: error: variable 'name' is uninitialized when used here [-Werror,-Wuninitialized]
+    388 |                                         name, ret);
+        |                                         ^~~~
 
-The table pointer passed to wlc_lcnphy_common_read_table() should not be
-considered constant, as wlc_phy_read_table() is ultimately going to
-update it. Remove the const qualifier from the tbl_ptr to clear up the
-warning.
+Remove name and use the name member in the interrupt variable, as that
+is the proper string to print.
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Fixes: b126394d9ec6 ("ASoC: SDCA: Generic interrupt support")
+Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sdca/sdca_interrupts.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-index d0faba240561..b4bba67a45ec 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-@@ -919,7 +919,7 @@ void wlc_lcnphy_read_table(struct brcms_phy *pi, struct phytbl_info *pti)
+diff --git a/sound/soc/sdca/sdca_interrupts.c b/sound/soc/sdca/sdca_interrupts.c
+index 2f85fcc6e544..6df3b1a4d599 100644
+--- a/sound/soc/sdca/sdca_interrupts.c
++++ b/sound/soc/sdca/sdca_interrupts.c
+@@ -342,7 +342,6 @@ int sdca_irq_populate(struct sdca_function_data *function,
+ 			int irq = control->interrupt_position;
+ 			struct sdca_interrupt *interrupt;
+ 			irq_handler_t handler;
+-			const char *name;
+ 			int ret;
  
- static void
- wlc_lcnphy_common_read_table(struct brcms_phy *pi, u32 tbl_id,
--			     const u16 *tbl_ptr, u32 tbl_len,
-+			     u16 *tbl_ptr, u32 tbl_len,
- 			     u32 tbl_width, u32 tbl_offset)
- {
- 	struct phytbl_info tab;
+ 			if (irq == SDCA_NO_INTERRUPT) {
+@@ -385,7 +384,7 @@ int sdca_irq_populate(struct sdca_function_data *function,
+ 						      handler, interrupt);
+ 			if (ret) {
+ 				dev_err(dev, "failed to request irq %s: %d\n",
+-					name, ret);
++					interrupt->name, ret);
+ 				return ret;
+ 			}
+ 		}
 
 ---
-base-commit: bbc19fef578970158847a41d9b6b6b218034b8c2
-change-id: 20250715-brcmsmac-fix-uninit-const-pointer-d35114a50936
+base-commit: 6bd62e3ffe865ddcd9866856f7112dd3a7484b65
+change-id: 20250715-sdca_interrupts-fix-const-uninit-warning-c4db91e0ca0a
 
 Best regards,
 --  
