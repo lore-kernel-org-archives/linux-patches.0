@@ -1,95 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6949B28CF40;
-	Wed, 16 Jul 2025 11:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516FA2F2C70
+	for <patches@lists.linux.dev>; Wed, 16 Jul 2025 11:07:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752664030; cv=none; b=p9pMoZzMXxBJ3ppLqrJzlFIMF0P9ZcXJ+ZdSmWDUWD5XFXZPVsjs29pIAIfZuteFwnXk+NlkfPJttbBd6bLg62g5ohKrzyXzWNCl/UKgHZXJAbzYCy+LA91/ecLxpTsYtGC+sn2OVNI5qeTPm/+lcAxapfLvpeZ1DiC3a8X4txA=
+	t=1752664062; cv=none; b=GN51KE3WmH4AFjSxg0ogriBGL80cLZQ/3tpUjkKXz25F4TqZEhF6mpgDO6qzjUmw79G+RgXHiQSTf2ciI0jWvW1Efxi2wuV4lq9pe0m9RE49dJrXRgwxzidOOvV26qZDICY5k8O0KXch50FSAvyp/62euBBPVQYDTolzpxmD2jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752664030; c=relaxed/simple;
-	bh=7NSpoqakXrR2xpBagzxriXFs5hctx5GvgCdBRzFbstE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DRug8bBcw8GAGELx+S1Rlxmj0skO6CIGpgbZlABrdul/TEAZu3RWtcr93CppuFuAcL/ZCBCfRl8LlTX0eYKp6rhE0+4yFYfFMXBNuhsgYJe4uN7Y+oNUwkYrayS1XyL3ka5Ltp6REbH7DgZbRIs4vWNf8x1qJXukp9ZMetkumDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9h+yu86; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752664062; c=relaxed/simple;
+	bh=mwGp4R1gitGS/X93gxT7UmdwDzUd2/nf1PRus339koA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eboa8y+D8HSGj2Ya/P8e2XTzpxhse26+U7o4MS5HAUxrCJsw2HZITFnz7jQkSguY+lyLm3LkhPDJSCrJq32TA82q43Mi2saRNVAZq74w1pvjlzYuh7kC1GwuBO1uw+NJRBF0/SydrkbTmThXGwVJSbMtsT68Y1sOajqH7SsIdbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Lm3Py5m6; arc=none smtp.client-ip=35.89.44.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L9h+yu86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B195C4CEF0;
-	Wed, 16 Jul 2025 11:07:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752664029;
-	bh=7NSpoqakXrR2xpBagzxriXFs5hctx5GvgCdBRzFbstE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=L9h+yu86VFKbge0dQt2PeKkup+A39pfh1TAlgjW3PnswudrVo5PI7QwPfKP1Wls/8
-	 H1UM5+5R4magySqYBoPDi1vYIkQ2qlIISGh8qFWS5eyhst4I/MfaTFdgYcIXMcP6yA
-	 p1F23hy1clSC87J26HnblYmgH64HFEpDFZhPvvFpTAgOSYSxZ2Y6Dfzi0dXZrz/Cta
-	 bW//owyTdl3XYpgmFDu+PIM1+CrL9K/aaf601FEep0a5kaGHe3bqas/A4j3da1g08A
-	 UtuygH4muSgkea+eZeeCTqc5yDhsP+bily8Bw7F0X3FtFue9ZgAPvE7KLeN5j2YdHN
-	 cOXjBhmiotPRA==
-Date: Wed, 16 Jul 2025 12:07:03 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com
-Subject: Re: [PATCH 5.10 000/209] 5.10.240-rc3 review
-Message-ID: <78acc44e-54be-4cea-b429-3768a07ae24f@sirena.org.uk>
-References: <20250715163613.640534312@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Lm3Py5m6"
+Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
+	by cmsmtp with ESMTPS
+	id bxpBuuVixf1UXbzz4uASn3; Wed, 16 Jul 2025 11:07:34 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id bzz3u9lKdn1UKbzz3urHi2; Wed, 16 Jul 2025 11:07:33 +0000
+X-Authority-Analysis: v=2.4 cv=UIcWHzfy c=1 sm=1 tr=0 ts=687787f5
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=Jy6JTofK_kRrUkXSLyIA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=ZrOxz31SkqpEv52GkWlzMzZ9gXUywrNtFTdgYCDdzFw=; b=Lm3Py5m6K8c8HZxw45z8YnJI8c
+	Y9S7A6tMIBDo0Bd8dyELa+CGlqrRwfFpD5PGGNFdELWnwuH+j6LYLmxspfrx5kA8COuAlJlBGCmRu
+	s+RvD6WFHF/4lw/ylNMikWXtUnnbkWBBfe9kjq8H8aLljKj+e8E2nMsnMMEZ7YNmUny7HelrMaC+c
+	+vC51WYkAasFCMFy57qISNlCc/NsGBEsyFQJ5/ayQc22pziKekcNBZHx03Lyc3FKIzzhJhWqe67VJ
+	efyKLzI+vvIrfljStJKPoIWQPPJMflq8VkpFKKn2EFeSRsqdLISZv1ktOL+5oBE2P6goopVcmn8EG
+	CMcP8NzA==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:57448 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.1)
+	(envelope-from <re@w6rz.net>)
+	id 1ubzz2-00000002WC2-0i1v;
+	Wed, 16 Jul 2025 05:07:32 -0600
+Message-ID: <cd68564b-4775-47ba-800d-35b98f814883@w6rz.net>
+Date: Wed, 16 Jul 2025 04:07:24 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5V+6o/RPda7jPhaq"
-Content-Disposition: inline
-In-Reply-To: <20250715163613.640534312@linuxfoundation.org>
-X-Cookie: osteopornosis:
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/111] 6.6.99-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ Jann Horn <jannh@google.com>, Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>
+References: <20250715163542.059429276@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20250715163542.059429276@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1ubzz2-00000002WC2-0i1v
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:57448
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 21
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfGUQ1L5sNMGEvvkNwwz48JlYKlQe8lEtVb+wbziKaCBbuH3b9+eprMqthHbP4XD0kpcN0CuQW6k/IJCWK7r8t3zTRkNjHhVfBBEj0wCt8xPbF7BdAUof
+ Gpd6V7t4oO86/lcqPn2/aWo0UuNbks026PdIOb3jVO21XLlcXv6wKB9ZI98gIo6HzeGwwy5KLsq30A==
 
-
---5V+6o/RPda7jPhaq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Tue, Jul 15, 2025 at 06:36:46PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.240 release.
-> There are 209 patches in this series, all will be posted as a response
+On 7/15/25 09:37, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.99 release.
+> There are 111 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Thu, 17 Jul 2025 16:35:12 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.99-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-This started failing for me on the Raspberry Pi 3B+, I'm not 100% sure
-but it looks like it might be an infrastructure issue though it did fail
-three times in a row.  The boot just grinds to a halt in userspace:
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-    https://lava.sirena.org.uk/scheduler/job/1576221#L1381
+Tested-by: Ron Economos <re@w6rz.net>
 
-but a bisect came out at
-
-[e2e48a330876c82c72215fb9e880c6c3a7055af4] Input: xpad - add support for Amazon Game Controller
-
-which isn't at all credible - it looks like it's just running very
-slowly, I'm tempted to ignore the result.  Otherwise
-
-Tested-by: Mark Brown <broonie@kernel.org>
-
---5V+6o/RPda7jPhaq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmh3h9cACgkQJNaLcl1U
-h9CeFAf/ZgQPNdjgxY/26Naz6jAMXKqCwhOqfP+rESWFaazYH/vmFyBRqUGFvhxc
-ePVhxa41BSUcKnYf6VeC5Biix1r5JfmjTI/5PfhUQZ6YAQ/nHFdpAgYSIm4SRMbN
-bmqR0KuztwhZ/1kFZuZNQeX4f47vm2uialJN2sXaVU+jC4QJULF6xPkz2ZEw8Gnq
-6HX8Pqxvoil/jorTTUnhWla+h9jjQc7OGO5lM0//1ovGCayfqQxvhsPK4HkQSTq/
-7Qz/yv8otdPLnRhJdpRPzn7HKq9s5XOaMqjFlIaHJXoHoVl/QTopJqppjaKGXXuW
-wNDsRKelmJ4gzowe+9g1JaFNDrBXkA==
-=HArI
------END PGP SIGNATURE-----
-
---5V+6o/RPda7jPhaq--
