@@ -1,64 +1,80 @@
-Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E56E277C8E;
-	Thu, 17 Jul 2025 09:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435DB25A2BF;
+	Thu, 17 Jul 2025 10:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752744381; cv=none; b=GKScTr9prhrGVZ+fHrLhnQ/foXDMRLSV0EZ/jEog1k6yMuO7J5iA4gWagDgnbiUrWQsTz6+9kJPRF2mK0BnP3vWyczL6Tr1Kota0X98tcqzKGjC/KxbrMj8b5mSNnyQOfuyXmmwWb9EXjQVLzLFENqHgT8Be6RXU162Th1HLjlc=
+	t=1752746512; cv=none; b=jzykCcXgnNI2JaK8FS1XytjTWgvuRwLKX+Mq8F9p104uQKKQvdKim28LrWu2hMAEHXdVNxUAbizU1DZcmuPgQbRD+O/RK/HXrPVCfXtQd1+kSDX6Mi9YM1FSHb08veGA8pVBgcHD9SAQTYXubygdQj1pglkaVbqAbQr22j69Vxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752744381; c=relaxed/simple;
-	bh=aNiQp2Wd7yghYBQJcA0Zie/NUHtuO6IsWALt1Ns9420=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ogCKG0xR5HcehtIwt/0YYBVQuMInjLnahWvl4Y/oUJT2P8+DaNy4r0YfqSv2ZpCR0DRtYW/mTfsDPGhNooFRsDZyNUoGeZoA3Oq2rYjj0nWj2m79XlzOj6a8TIpYxraUD0CP5X9IU8xUPdw8AUj1IGPsoXuwWgGjJyXh5xZgXuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
-Received: from [2a0c:e303:0:7000:443b:adff:fe61:e05d] (port=45486 helo=auntie.gladserv.com)
-	by bregans-0.gladserv.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(envelope-from <bacs@librecast.net>)
-	id 1ucKsT-0098Od-2G;
-	Thu, 17 Jul 2025 09:26:09 +0000
-From: Brett A C Sheffield <bacs@librecast.net>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
+	s=arc-20240116; t=1752746512; c=relaxed/simple;
+	bh=sVoKi6hLlgnCt8S0NS3zNChb95ppDfaGtAOfDAQ9IrQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fXagF4jJA4quCDT5G9sEYS6s6pSuBRgS7uwihBw4kAGuCNN6varaDEnnaEJT7Q0tZoHZvwPDU3yfL/e/r1j9TESVkP8KNUZd2haH1FXNukBHCEaCAWJR61PDF2uotowI8M80cXQ6ipvghsK3WjUrfMdQb9eYpCA1plKxgoeIisQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qemyD5wT; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qemyD5wT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7981BC4CEE3;
+	Thu, 17 Jul 2025 10:01:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752746511;
+	bh=sVoKi6hLlgnCt8S0NS3zNChb95ppDfaGtAOfDAQ9IrQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qemyD5wTsmfEMDWoG/Lq0SFFFtgJZSFG/heMJg/P0vkYInatJS9sJXtxIOGIODwhY
+	 GCo18PIEEZvFQ0diPs2svO9MFaYMV2jdqqHB4MYkvo71Q3qFfpbJb26vc5s5ue141R
+	 SDeyzNcKmpovaAACUFTuZX3gYAKcKRG79l7aaH6SRY4tvU8gZSi6fEC2bURMM5wxwU
+	 jB/EHIUcz2hr9h0Spa/ljqj7Rkf4UMtbhPFWAxy6hb5A0pR2rxb/hEURzqDryK9inA
+	 I/gvYllQBQwcRoxut5DZcMxTzGdisMA//jzDAXwbQ5w+oY8TD3vin/ONPpkHaMekzZ
+	 3DWO41a0Awv2Q==
+From: Will Deacon <will@kernel.org>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
 	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 5.10 000/209] 5.10.240-rc3 review
-Date: Thu, 17 Jul 2025 09:25:54 +0000
-Message-ID: <20250717092553.14132-2-bacs@librecast.net>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20250715163613.640534312@linuxfoundation.org>
-References: <20250715163613.640534312@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>
+Subject: Re: [PATCH v2] iommu/amd: Fix geometry.aperture_end for V2 tables
+Date: Thu, 17 Jul 2025 11:01:29 +0100
+Message-Id: <175274393941.244938.6986955662855715479.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <0-v2-0615cc99b88a+1ce-amdv2_geo_jgg@nvidia.com>
+References: <0-v2-0615cc99b88a+1ce-amdv2_geo_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-# Librecast Test Results
+On Mon, 09 Jun 2025 20:58:05 -0300, Jason Gunthorpe wrote:
+> The AMD IOMMU documentation seems pretty clear that the V2 table follows
+> the normal CPU expectation of sign extension. This is shown in
+> 
+>   Figure 25: AMD64 Long Mode 4-Kbyte Page Address Translation
+> 
+> Where bits Sign-Extend [63:57] == [56]. This is typical for x86 which
+> would have three regions in the page table: lower, non-canonical, upper.
+> 
+> [...]
 
-010/010 [ OK ] libmld
-120/120 [ OK ] liblibrecast
+Applied to iommu (amd/amd-vi), thanks!
 
-CPU/kernel: Linux auntie 5.10.240-rc3-00210-g2067ea3274d0 #20 SMP Thu Jul 17 09:22:57 -00 2025 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+[1/1] iommu/amd: Fix geometry.aperture_end for V2 tables
+      https://git.kernel.org/iommu/c/8637afa79cfa
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
