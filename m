@@ -1,175 +1,195 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2045.outbound.protection.outlook.com [40.107.243.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A021EE7D5
-	for <patches@lists.linux.dev>; Thu, 17 Jul 2025 19:25:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752780344; cv=none; b=WG6+Bll59S1DHjzF5iwQXjtxnJRIqTvLZlmUNqDRWCfSIQzyfSOjqbJs/FDt7mKontDWf2brpXO673LKiM6f2/P8BsoG1hmUJ3v5c9aFwsofnrLTtZ2XSjVIcDyjyeKRJQFO9nVtX9PbBRfVYDBfmz02kGLlPd0DtiL/BEuZhJY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752780344; c=relaxed/simple;
-	bh=02CBJpA30ZmYUrtaYuKhiq5fm/WwvrZXQ7YWNnmbFHw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oxVLP4pg6L2IQLtZ/LP+p231lXMhkD8FXVPRGdFb18ghNV/twuBI63xQG+55u27jqKCAHX+gygAmDQudl/FXFjqi5VUQplVpcBfauyCEcnx8s0bK9wghr99YPdLl1xY25lUrBdOuLFMFVVkj7l39HKhQUNxj2sa1XbudGY3Bqfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Nz/+92uI; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7119C223DF5;
+	Thu, 17 Jul 2025 20:27:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752784069; cv=fail; b=RGupK+Ky4IlyzSdiRYnzOil9pSlyHQ/ohaB0aWtQRMTA44PRluXV0cmsJyBRXCYEQXlDFOyOucqItCAi4zQPRB/L1xNHyF0AhCzZFGxtursQ4Axh8dhjwXjF5DAWaJ2TmCcLIJNye0O0fSwrIIW8OjLIhIUzEpBDjD9uQoNl5nM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752784069; c=relaxed/simple;
+	bh=cOX8P3MvGMknP4/F2/Zwv0vp+3Y8JK4BUObzav0w4zY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=YSxN8dSDcBP8oYSlAPbT/arF+k3Q2Fpt3c6LqdVwWHw3zLyDBcgIDTnhnU2i9X//t4UVn8EoHXUQHNAzH9yGKwjx18q8X4BJ/LKlvcBFZs1qimXyImPOEBtBoFKeHMgH34uSFHR0RrOCJAgwHBFsdmJEzze9L/cAQmeHrx/0Gbg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hZI8TKR3; arc=fail smtp.client-ip=40.107.243.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Nz/+92uI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752780341;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7cjM6leMNWJaFyvB8pUYw1XsGkeqyh24r2b2Mr0FYMs=;
-	b=Nz/+92uIUhJt2HaC2XEF397dllZTerlkuD9MHzMUkuDTSoRiqMQJNSt+BOEMMxSzQFqp/M
-	OIE57t4E4TAmeUlkDwAM+RpmcAp0EihsoazzLfIBiZaZBRicIEW11jXf9BfdRQveoQThu1
-	9YUBjakjCcgO9+SADlPC2J/M77f21kc=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111-tXK7DRDaMMuIJYamKIMJ4Q-1; Thu, 17 Jul 2025 15:25:40 -0400
-X-MC-Unique: tXK7DRDaMMuIJYamKIMJ4Q-1
-X-Mimecast-MFC-AGG-ID: tXK7DRDaMMuIJYamKIMJ4Q_1752780340
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-704a8024e6aso33946156d6.1
-        for <patches@lists.linux.dev>; Thu, 17 Jul 2025 12:25:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752780340; x=1753385140;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7cjM6leMNWJaFyvB8pUYw1XsGkeqyh24r2b2Mr0FYMs=;
-        b=Jop2QFqs61WBPcPNdRzS2iFZwWa1i8VCO8H9wEmvBJ7Dzc1RyO43GVJjXz4Fpq26Wc
-         cq9/TfhnmC1BqYzWvtKLBioZ/6+QB9hySUVfiSdSgfOfMR2rB7TH+hhyYyieYIp+6gnR
-         VGS1GdDumaRVZAUdN2PgfhhUFd92DimkeFnlJuAU3lwzF6BWVnOzK894nWqITKaWYvQ1
-         nKYOw4XAcqwcvLkW6/3sspIla6ce6Dmj/k5+ER1UNvLvtYhDwA3Rh7ae8hwraCDZYpjI
-         3X1E5+8nwJ4a+XbF8OqFh7H71bRAnhOlyGTIpjop7XifVYAef68ldQY0NnqXng+R/AA+
-         E3Dg==
-X-Forwarded-Encrypted: i=1; AJvYcCX1GcG/25liCarVboMuo95hm3vEq91BFz+sTn6SoROGn2jsZEfGBZLdFIMU7jQQc8VOH26hRA02@lists.linux.dev
-X-Gm-Message-State: AOJu0YxCp9owvjOiR6KquIklF3Vyb4bFeSerFS4T0JhXihvAvuhRjfRD
-	VkrJXeXYpTRpDDI+YhdQ19Rk/GFISMeq0g4yVz3OAUM/t95fxXxPjzMDxkeNUKixwcEMbAmAk5G
-	ef2ppHRlZrdyS0V7kAw8bSbfD9PZ2bl5NKKHQYoxs4/2rpL+n1WOXma43W8M=
-X-Gm-Gg: ASbGncudRVv86MgHdz6uojWUNJdbWkbX4pvdk553Hfg7IuN5N17tbM+cSp53CQZ7SXo
-	mhuGpGP/v+9Xq/AqRYDggw6/ga2Fd7v0l0O3B/E4HguGh7NQzmbsdmI5uvwSLfk/MeWygltZyll
-	5VCJP1N1EsTCBzGC3ZettL5njrjEiOpmcu1MBXLwL3togGQhz/K55US19xCIKjadT+QQd+jNcCE
-	d77Zc480U4A3QhCwzw4Z57As2Tua1p/saUyn3e6oNmF0GEe6ttt3+lUQyZ/sZK0iKGU/yn+DBEC
-	yphjDTkm1tW/J6aBrEKVViXm7+H1Cw5eq5H1K0az
-X-Received: by 2002:a05:6214:3d0f:b0:704:a0be:87e9 with SMTP id 6a1803df08f44-7051a114f9bmr2753466d6.27.1752780339387;
-        Thu, 17 Jul 2025 12:25:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnouXokKlyOlp4XW8RUcaaVzppnw9rpmDfmEo0M//qCUQGk6pO2DfCJ8LdT9+rTbiA9leEEA==
-X-Received: by 2002:a05:6214:3d0f:b0:704:a0be:87e9 with SMTP id 6a1803df08f44-7051a114f9bmr2752986d6.27.1752780338822;
-        Thu, 17 Jul 2025 12:25:38 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-704979b48bdsm88133626d6.28.2025.07.17.12.25.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Jul 2025 12:25:38 -0700 (PDT)
-Message-ID: <c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
-Date: Thu, 17 Jul 2025 15:25:35 -0400
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hZI8TKR3"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VBgiEKxquy2kyRBC2941g8MJdS2euZqYHFRcX5w5NlTSIQosUHNmdsWihTnlSHZFat6svRg6gmSTM8bRVTpatrLtf86/v1jxHb5hgwS5FJtATMkQ93dEMI9jD7WTIoIqH+psHNadNuYtSqPANGbUMJmv38BEVjw91NS0MnPnin5WQvVFjBu9K+5gg2uCNvbPQFbVhAsgk8s6XCTxU6ZSXLbkta7MtJuAnu5AYRBEIle3CHvHoSvNu1s/bSBYYTuYzuA9+ILH+wHz20rTVhhmXxw45jQhtdMpcFeZaVTaeHhbl6pbGH/vjxR6KuYQV+iiZGdRfvWHFXElvPUvCzctLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A31TViRsZTCFZ8nI8UfhfPjYp//bd2az+xPtTfydqFY=;
+ b=KLEUb032gA1BMMK6eBsQEsbqayI6STYB4ohDm4LGGKpZC+6rNDC98GCCPl8ymIa1alrc/MZc00EfoEGioAfT/673dfV6+TLxUrk9nDRVgoLDMvkUJ3zCrZBqCL99xEWtU9kRH9+RGvSlhc5ffIye0wuIxGGQ2KUQy+MvqluRgdQFaXzMEAmkQGOBSf1tSpJw+B0F0ecNBfoiEulO9XrsZ1a15WspykNs6vDAB7tyY1UhDCIHVH8nUZOHAtwsAnzYccfEqrO3pLHnJmYV1qZD3KfKUZvJ9cRgYDZOxqiwpg4lHLqCzMfzW33d50S/M1vPSa88Hxup/6PS4Qo/MFZCrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A31TViRsZTCFZ8nI8UfhfPjYp//bd2az+xPtTfydqFY=;
+ b=hZI8TKR3QjtgsKogRHzO4mH5phuMVE06p8UTM26OxoHwhs2oNByDpMyh1DY653Nd1PMSH4/2gEUBOh7fXEMpfexgJ5daXh3iK9R0vQpSyjVxD5+iD1HwW4964S1Aa5knhbBj3IVy4nJJlbJbXnC5+onzB2WvwsRxJn0kd+IiHf3IGj4s0L8I9sJ+w2ySjgRbbM8nlUw/xj28bb/4vNbR5qQj3IGvvXirAjfZYYrBr3LKarfu3DzKC8oCZ5XTvVbLfhzjviQLUMOxvSBLlQypKdxDnpY9zOP4HwY08VOt80bd95BbE0Lc92eda349iNf3H0E+wAifHhNQ4QntHBRsUA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DS5PPF6BCF148B6.namprd12.prod.outlook.com (2603:10b6:f:fc00::652) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27; Thu, 17 Jul
+ 2025 20:27:45 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8901.033; Thu, 17 Jul 2025
+ 20:27:45 +0000
+Date: Thu, 17 Jul 2025 17:27:44 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Donald Dutile <ddutile@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
+	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
+ switches
+Message-ID: <20250717202744.GA2250220@nvidia.com>
+References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+ <3-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+ <20250701132905.67d29191.alex.williamson@redhat.com>
+ <20250702010407.GB1051729@nvidia.com>
+ <c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
+X-ClientProxiedBy: MN2PR04CA0023.namprd04.prod.outlook.com
+ (2603:10b6:208:d4::36) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
- switches
-To: Jason Gunthorpe <jgg@nvidia.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
- Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
- Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
- tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
- <3-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
- <20250701132905.67d29191.alex.williamson@redhat.com>
- <20250702010407.GB1051729@nvidia.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250702010407.GB1051729@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: dQgj3olRQq2VmiNpE7ckRXqAR9vq_KJCizRdP6XvXLY_1752780340
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DS5PPF6BCF148B6:EE_
+X-MS-Office365-Filtering-Correlation-Id: cb96606b-538a-4673-3ba8-08ddc57063a2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?G7ZJG87rVECLFh3OHZckECYcuMQ/R5qiQaETJijyIbwTpDhRAZBTdXX14WpH?=
+ =?us-ascii?Q?82WeaSJZlzwnpNcNdltOWJUqr2yoes9ABm5tTTv1FP9jmWDbwKyPHcNQd27b?=
+ =?us-ascii?Q?wU/sZyBYoKpgkAVpRuHcUOv2IG/OZM6ge4wq3Jnf4wo+XJb49MaHGd+w3nkS?=
+ =?us-ascii?Q?Q1vnh2zVHsUF+fpWJ3WlcHvkIXVXVUtwVKwS2HyDazx0TOo1kYegANMpMzb5?=
+ =?us-ascii?Q?m3zdY3OVsiJutxVFCm7aeue5rzZzuW/yn1tv2E97MYpS/C1J7PI4A8Vs6LE0?=
+ =?us-ascii?Q?x1bEmkrYFIv8IPXvDFf6SEW3g+PTExjqTxZSEDcvbKQLAh+j65SjPOUuoAWm?=
+ =?us-ascii?Q?5MtO78oX/47Y8Qy0CdjDwqhYI9wApgupSE7KE/x8l+NH7bVmnvl6wvoKe8e3?=
+ =?us-ascii?Q?a8OfyUJxproxnKKE0lbR3BfL92VmWKYvugV/iMUudl6dvgYmrwnWPwk+TqWt?=
+ =?us-ascii?Q?ruELwwYn/CIEbN3bziD9EVYktZvn9fRc0wt5QpfQwr8VJ6Kz2uojyU02X3pr?=
+ =?us-ascii?Q?YVfbS24NJkFUhWwk4OUIzaYAwNUk0TjIuiU/v8Of66YlvJm39DkmUUnMxz1b?=
+ =?us-ascii?Q?4o1xTX+d1GMpP88jCaVcVdGT3wzruUXyyirILj0KIou8pzZr/SsDIeLHXo2k?=
+ =?us-ascii?Q?ywPwQpypXyy4XYvfGcqlTB+LLoHm/slcJ5Aqz8KzjY3sENzgEj9+z3vYIhiI?=
+ =?us-ascii?Q?1zYkj+DFuo9DVT+C6jMF/cqGd1pG/xmC0oDQVJMtob/dALaWcOvq0sgXy3Xd?=
+ =?us-ascii?Q?L1pXpqHOJvCSBgXkwU5etRL9U7xW65G3hBfFlbPp0W2EP+etdUL9qSt6BQjx?=
+ =?us-ascii?Q?gu7TnuuYt1rapiNmXQognMFBKBIbPRPWwdDiMkg7mMm63FzG5mclTTOhbN9S?=
+ =?us-ascii?Q?OrT5k6wxAQWXkGe+og1K0QQBQRANZkBmX65exOuyFw4rEsV9aTgLgLMzeglr?=
+ =?us-ascii?Q?8rZ1k4DRztwYygsUAq3ecAyLvBH9hOZv149KMtqMzgvXL9xhJKWbMNBoukt4?=
+ =?us-ascii?Q?avBJobkKbs3G4iZ43SnSkhX/KchseR9ccaUa7Zu9ieEJm8e3K8xMLQ/u+lSj?=
+ =?us-ascii?Q?wctcadGdKp2Hkwc0pMH8ADZfgfWXfJUFAiOa1i/KkaaA7wIYEmYd4uoQf7eb?=
+ =?us-ascii?Q?OOmo3oyxyi3TSj2v8SY0SCpz2Fj2rwFZ3cRtaHpOdoBmdSpdRjplkLaznISa?=
+ =?us-ascii?Q?8Y1smOGUcj8gJweyAsNrQUbmu+ZJALKzzU1g2z3D6Cz/L0sFg/TexfkCFE/R?=
+ =?us-ascii?Q?mi9AXVI20yEE7pVqHSD9lQ0KqFRt6KhXqT8xBXmK7Js1vXaUVrE4uxU3f+lH?=
+ =?us-ascii?Q?e7/NfMX9C884JI4jJ4o9wiWW/2JhCiS97K3OFq59iiFgaDJo8Oi2sTxhVu54?=
+ =?us-ascii?Q?0plLYEQTEGuKOxy8tUxSkjME70V4oBrn7K/FIVZPHhNDzQ9o3dOy5unvfg2S?=
+ =?us-ascii?Q?OO7R5N/CrUk=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?8C98Kf2KKUmFYfCyg9HT8zm7QviP+WnSa9bIlJAi3CR7ZrkeE+lM4WvY56u1?=
+ =?us-ascii?Q?eGZDbPQeMHGopWYlx+y5vuyVES9umLr9SvwOPlgN7f8jgRIYDXrlapjCG0yw?=
+ =?us-ascii?Q?8f/6gR2CGr0L10KHMQeqPOxhfyxQe9/xrVH6pKstg+wBk2FyMU1GwMX8QIjB?=
+ =?us-ascii?Q?QnWyz/JL2BCSHck6O4/EIsSHU03TFC4lCplr1zU5/8pP95A+F49n6jAkT7zj?=
+ =?us-ascii?Q?F69S6ALBwy6huy7Wn2tBlokm6QxBUJLmdc1LiaSAe/7MCB2bI4g6R/NVc/Qu?=
+ =?us-ascii?Q?bvWHN204iNbQaaIYtYFfTP3mZgx/YCFBTQR533m4juofyKszgURc5N02ymHW?=
+ =?us-ascii?Q?1ZdEU1iggrLjtB0vCsxf0zFq7IWg/wCIfMTw8idUjVP8Hj2EQjK58iBUjoBo?=
+ =?us-ascii?Q?T2O7pl+GLUubbfeuxZPsW58aTVpk21gpaM1EeRV7A0/SChs4eBcQZLGpKM9c?=
+ =?us-ascii?Q?IRb/3vXPl4CFg8OrshES9spHhLrOGZbESp+qZSIphcQfWS2yJGTgfoK8s8zx?=
+ =?us-ascii?Q?MkCtyFwdK8Y8QMLPjeCYIgSnBU3M0a9ABwI2F/d+vOiKZK4s/oLIDpJ5cEiI?=
+ =?us-ascii?Q?o8DuiRW6Rflhz+4FwJM8CDFh3bnSGV0I2P/plWTrp2groboHF/U5OVwCBmxG?=
+ =?us-ascii?Q?kHE6jb6Y6ReIDt4QY6/EYsDTsR+CXIqYW9LJpXcxyOJqHDB5p6iXthKJzfpb?=
+ =?us-ascii?Q?c+qEyhi7tL0EcJivpt4YwrZSXPNzJdshZnf+hbYcueOHx2lEcHZaJey9h6Q8?=
+ =?us-ascii?Q?LPrP4P2vSBdxkpFEtvRMFpRd9HqR/aBl4LrTv/nRVBTR417Fjeth0YnlTxfT?=
+ =?us-ascii?Q?hM1J4gCeW+rr+Dh6yPoLtN/zOQUI7qoicc6b1c2aJt5zdjBLf9aFCIpkBNsM?=
+ =?us-ascii?Q?Cn6DFF8/houqRo+wfYESsxSTrphSm/3tN8CEP82CNmG91dbt8SDR6hmscE4W?=
+ =?us-ascii?Q?B2Cxy7YYr+MGuqpbRiwuuu7pLvq36fHuProm8C+0kT7nIlDAklHfwAX/9nZY?=
+ =?us-ascii?Q?YlWNMzZM05+U6gbk/eItLLgy899juQ7hmVp66tGY+dxRyGl2MQXPve/oUAiz?=
+ =?us-ascii?Q?KnRWjw3+UlaQHxsd/9AGGDETZArJvDD/d0WvIvfv6ViTyVqZ5Xa2Cnc4m9QV?=
+ =?us-ascii?Q?oKLwQ2PEWOIk2g0JuLb+9FOgwDXab+dz3C2UCcSjI7zGCqklznw2/tl6JmFV?=
+ =?us-ascii?Q?0/J3R5PzIPKZYjpgkSHHA8cspC9+4ZHS00S37bZpzMmyP5N/GkE3Mo0E1SB3?=
+ =?us-ascii?Q?yrl7AR0yRNRt6R5dwaAuqk/L1cPIOF9DJg/XGi+HPWSVxM2AdYDeykUOlLBG?=
+ =?us-ascii?Q?mnX4m3lU4C58di1/YQa+peTicrqQS79v8INsJoxDia7xF71UHVVRGOOWr5mD?=
+ =?us-ascii?Q?SYycdmyKSzj7mOwO0c6ihLfe6ZN5B7BnBnQvY8TRBK1Vr4fpOMn1PCdDo96t?=
+ =?us-ascii?Q?o7bWvOfHFNl+n2YKabLm51g2AMy1tJLeWx/1X/J45ysRd9h7nAZ+MOcuH0cG?=
+ =?us-ascii?Q?9zTZ3KU5bp8LBMhKbUTZyNylOk0KqN1jOlrESvvCzj7iJ3p7jRMYVrxC6Vqw?=
+ =?us-ascii?Q?tTPJhOb/bwZ4W4CZANVCph/eCfXpHRZ/iIDYdvto?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb96606b-538a-4673-3ba8-08ddc57063a2
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jul 2025 20:27:45.7858
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jlHjdw7BEkDERhKvXuBkjODr93XPWKk8lSwAkLhDARNbPO1AMN+rc1d5Qj4bT5Jc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPF6BCF148B6
 
+On Thu, Jul 17, 2025 at 03:25:35PM -0400, Donald Dutile wrote:
+> > What does a multi-function root port with different ACS flags even
+> > mean and how should we treat it? I had in mind that the first root
+> > port is the TA and immediately goes the IOMMU.
+> > 
+> I'm looking for clarification what you are asking...
+> 
+> when you say 'multi-function root port', do you mean an RP that is a function
+> in a MFD in an RC ?  other?  A more explicit (complex?) example be given to
+> clarify?
 
+A PCIE Root port with a downstream bus that is part of a MFD.
 
-On 7/1/25 9:04 PM, Jason Gunthorpe wrote:
-> On Tue, Jul 01, 2025 at 01:29:05PM -0600, Alex Williamson wrote:
->> On Mon, 30 Jun 2025 19:28:33 -0300
->> Jason Gunthorpe <jgg@nvidia.com> wrote:
->>> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
->>> index d265de874b14b6..f4584ffacbc03d 100644
->>> --- a/drivers/iommu/iommu.c
->>> +++ b/drivers/iommu/iommu.c
->>> @@ -65,8 +65,16 @@ struct iommu_group {
->>>   	struct list_head entry;
->>>   	unsigned int owner_cnt;
->>>   	void *owner;
->>> +
->>> +	/* Used by the device_group() callbacks */
->>> +	u32 bus_data;
->>>   };
->>>   
->>> +/*
->>> + * Everything downstream of this group should share it.
->>> + */
->>> +#define BUS_DATA_PCI_UNISOLATED BIT(0)
->>
->> NON_ISOLATED for consistency w/ enum from the previous patch?
-> 
-> Yes
-> 
->>> -	/* No shared group found, allocate new */
->>> -	return iommu_group_alloc();
->>> +	switch (pci_bus_isolated(pdev->bus)) {
->>> +	case PCIE_ISOLATED:
->>> +		/* Check multi-function groups and same-bus devfn aliases */
->>> +		group = pci_get_alias_group(pdev);
->>> +		if (group)
->>> +			return group;
->>> +
->>> +		/* No shared group found, allocate new */
->>> +		return iommu_group_alloc();
->>
->> I'm not following how we'd handle a multi-function root port w/o
->> consistent ACS isolation here.  How/where does the resulting group get
->> the UNISOLATED flag set?
-> 
-> Still wobbly on the root port/root bus.. So the answer is probably
-> that it doesn't.
-> 
-> What does a multi-function root port with different ACS flags even
-> mean and how should we treat it? I had in mind that the first root
-> port is the TA and immediately goes the IOMMU.
-> 
-I'm looking for clarification what you are asking...
+Maybe like this imaginary thing:
 
-when you say 'multi-function root port', do you mean an RP that is a function
-in a MFD in an RC ?  other?  A more explicit (complex?) example be given to
-clarify?
+00:1f.0 ISA bridge: Intel Corporation C236 Chipset LPC/eSPI Controller (rev 31)
+00:1f.2 Memory controller: Intel Corporation 100 Series/C230 Series Chipset Family Power Management Controller (rev 31)
+00:1f.3 Audio device: Intel Corporation 100 Series/C230 Series Chipset Family HD Audio Controller (rev 31)
+00:1f.4 SMBus: Intel Corporation 100 Series/C230 Series Chipset Family SMBus (rev 31)
+00:1f.5 PCI bridge: Intel Corporation 100 Series/C230 Series Chipset Family PCI Express Root Port #17 (rev f1)
 
-IMO, the rule of MFD in an RC applies here, and that means the per-function ACS rules
-for an MFD apply -- well, that's how I read section 6.12 (PCIe 7.0.-1.0-PUB).
-This may mean checking ACS P2P Egress Control.  Table 6-11 may help wrt Egress control bits & RPs & Fcns.
+> IMO, the rule of MFD in an RC applies here, and that means the per-function ACS rules
+> for an MFD apply -- well, that's how I read section 6.12 (PCIe 7.0.-1.0-PUB).
+> This may mean checking ACS P2P Egress Control.  Table 6-11 may help wrt Egress control bits & RPs & Fcns.
 
-If no (optional) ACS P2P Egress control, and no other ACS control, then I read/decode
-the spec to mean no p2p btwn functions is possible, b/c if it is possible, by spec,
-it must have an ACS cap to control it; ergo, no ACS cap, no p2p capability/routing.
+The spec says "I donno"
 
-- Don
-> If you can explain a bit more about how you see the root ports working
-> I can try to make an implementation.
-> 
-> AFAICT the spec sort of says 'implementation defined' for ACS on root
-> ports??
-> 
-> Thanks,
-> Jason
-> 
+ Implementation of ACS in RCiEPs is permitted but not required. It is
+ explicitly permitted that, within a single Root Complex, some RCiEPs
+ implement ACS and some do not. It is strongly recommended that Root
+ Complex implementations ensure that all accesses originating from
+ RCiEPs (PFs, VFs, and SDIs) without ACS support are first subjected to
+ processing by the Translation Agent (TA) in the Root Complex before
 
+"strongly recommended" is not "required".
+
+> If no (optional) ACS P2P Egress control, and no other ACS control, then I read/decode
+> the spec to mean no p2p btwn functions is possible, b/c if it is possible, by spec,
+> it must have an ACS cap to control it; ergo, no ACS cap, no p2p capability/routing.
+
+Where did you see this? Linux has never worked this way, we have
+extensive ACS quirks specifically because we've assumed no ACS cap
+means P2P is possible and not controllable.
+
+Jason
