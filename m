@@ -1,193 +1,200 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2078.outbound.protection.outlook.com [40.107.237.78])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDFF2E88A2;
-	Fri, 18 Jul 2025 18:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.78
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752864657; cv=fail; b=CTDCdVeNHf3FfMtwRygkcNxSE24WyRUuBHeSaT9soIo5M+9DN8mf/9phPMzkdEWa1izLtTo1hnNYRhckwQHiVg6f8OkAZXEP3qHg3EhyMYqTyEibtr0AOSX81I/pXs0mzYBdqIyemOf7YWEPK6tbKdQA69ZhNftmPBckiPpoZKc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752864657; c=relaxed/simple;
-	bh=v1Suxdf4q3Nxjx0bVnOqV7+5KITm9Di2g1Mr2USR81g=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=maq6LauAsENyAdm0TZTfXIu/Q1PaGRuyTsShL4WdwK0FLRuoXZE14Iyg/ty1za5WFFPQN4gR8Hkcbe4COAWQNvCaZRLtn3QMS2m7tPfMkjasmd6llIa2UeOj8JL/ffp81SHVdxaB3XVjVQKV9cjNyhaSznOYlp420hD6i8jTulM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=F7h7h8W2; arc=fail smtp.client-ip=40.107.237.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6F11F4C9F
+	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 19:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752865240; cv=none; b=VmoDV5im9Hnfr5aETOsGr9tePoZV3CipLA2DgCQmX1SQJKiQzX9qdjzJCnxdsPs0e8scVVOLzNTqwgchYZgj79OepTgQY3q1RI3LwJKlWtIBnhzAo9VZ7PXdjFonarOeFJkwe2IGD7OmxwPXllJ7P9ez5B0AvxVR7C81eRM3/DQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752865240; c=relaxed/simple;
+	bh=veoWHeeI1Gm+Z/VWrGPVgODw868Qai1kaliqd0AgE/4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dZJwFilrFAjYfpm6+nRtNtD03vniVERlDgAO4Rz83/DJpn4jC1RGf1HOTff6s1sOu2xFbvUu5o62iNQj2WHliWG/ZueqJr5bocmXK6m0igrJrcSUumn1tBnW7Mx9VX8nfpP5ldOpxxBcOFqhppTZziIeJxIkrpR67UQjOnqWp5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=G4Z6UVUU; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="F7h7h8W2"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lZLaaArotzdgd72osATc2hScO25zL3bGDBuBpbRgXx3vWtxPDjF5O/ISrmkHo8J35iJOI6DQOmDWNkLdF9GvQwI7LgUWYSoDxSWyfOz1jF6d4NY6u37wTwGPWrcq1/5opnct4Wb19RZAlFDErJ7zl/qyzuf6hamGEDal3Py/i4bh99pt9k7tdtliDmDQdqGl8cyKN9V4KZshwNZqz25ZPIaOBR4rdrvaF0oCXy23sP3DUl+WlxBfZ7yk2zPnl1xp8VAThMbdiK1CqNjyIQ8UrhiuACx6fQOC+R7YLsuandt+UkqKm+Vt4Plimj2S6T2kxHIty4tLJqpVZdMi+okMMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=30f6DdiM8avFiXqdZwudkmYm9NPVJ+QRBDHHrnKZlhI=;
- b=mPxA+7giB4BbLhNIMcD/sa8jMEfKlGNOirT1szoLc2yY+bXKLHg0JCD8HxcNxilRp+7pjgIJZGhB4M1OAml9VtmKz2JUexVz2HVr1DQEcWquMiNJvyE9OUVqeSKE6Eyun0nSzJdlswqJHn88Eabkej6NmIP7j8c/6SFppUEVUWX6cMmuPjwZ4QJIP/6c7282382xuYuk22MsoVKJ1Qrq3LDQ9n+ozQajFbbGXx+69tUNGQN+fWH2IMfu6TrgUn+y/uqeCQYtIJFBSSNwD0P5CfXrHn3IV4JAV9xpgGIOcysRG+2wBARe2ALRIwk/iQI5YsxNABWQuTVlRVZopZmJuw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=arm.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=30f6DdiM8avFiXqdZwudkmYm9NPVJ+QRBDHHrnKZlhI=;
- b=F7h7h8W2OpksWRfCiQQkfcGTLUOF4RFt8bRuo9yxC+7eLTygh9GkwbMhe6FI6+7lUfcWXXD/i4hTJt7+2+tz7HdS8PD8M/1nYhJ8xV4uuQPewkG2efsOW9FO6dAfns4tT3faG3ThwFRizsyr46vT2qg4uckJZtYJBv6ZWvateLVNmowSERxkZ4thwFlIUlUhp7KtiDq+Tn3w8K7AGppQ8Oc9/Gy3f8FCOdYbBRrEJcgN3lb8MB5B652EXHgMtB4WYC2Oh89VvpBq8RT2g4+IdLtbwkafalZo10BxzNjWrucGyCWEwPbRdWyVzIj7phxoDjX5qunoKw5iL5qMkK31Yw==
-Received: from BYAPR05CA0043.namprd05.prod.outlook.com (2603:10b6:a03:74::20)
- by DS4PR12MB9610.namprd12.prod.outlook.com (2603:10b6:8:277::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.39; Fri, 18 Jul
- 2025 18:50:49 +0000
-Received: from SJ5PEPF000001ED.namprd05.prod.outlook.com
- (2603:10b6:a03:74:cafe::1c) by BYAPR05CA0043.outlook.office365.com
- (2603:10b6:a03:74::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8964.15 via Frontend Transport; Fri,
- 18 Jul 2025 18:50:48 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SJ5PEPF000001ED.mail.protection.outlook.com (10.167.242.201) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8943.21 via Frontend Transport; Fri, 18 Jul 2025 18:50:48 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 18 Jul
- 2025 11:50:33 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 18 Jul
- 2025 11:50:33 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Fri, 18 Jul 2025 11:50:32 -0700
-Date: Fri, 18 Jul 2025 11:50:30 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Robin Murphy <robin.murphy@arm.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>, <iommu@lists.linux.dev>, Joerg Roedel
-	<joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	<linux-kselftest@vger.kernel.org>, Shuah Khan <shuah@kernel.org>, Will Deacon
-	<will@kernel.org>, Lixiao Yang <lixiao.yang@intel.com>, Matthew Rosato
-	<mjrosato@linux.ibm.com>, <patches@lists.linux.dev>,
-	<stable@vger.kernel.org>,
-	<syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com>, Yi Liu
-	<yi.l.liu@intel.com>
-Subject: Re: [PATCH 2/2] iommufd/selftest: Test reserved regions near
- ULONG_MAX
-Message-ID: <aHqXdjJbuO4e7r+X@Asurada-Nvidia>
-References: <0-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
- <2-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
- <aHm1WRAGgk/6HZMC@Asurada-Nvidia>
- <aHoCOnOAlwpoiDNe@Asurada-Nvidia>
- <d18d7013-e82e-456a-87da-8acffc90d8db@arm.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="G4Z6UVUU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1752865237;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fuzjkisuZnR7aiSCtO5mtZoLyIN2+57+reZAqeqjfrU=;
+	b=G4Z6UVUUApr4NVUuGh/RIBwoJnvWj5BDahPzvjDKokRLEaA07GZb+eodEOnDhF7SYU7QL5
+	yeHWqdzXcC0dHr+N4+n3Q+PwDuOFC0rFxNhl1iqXNAHfbRATP3UurborM2GTkJMMrJAd4x
+	6Q/8dMOVteN5ThSucLLQpvr3IYNkdmI=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-h7oEdSVgPQaOx4jtJLlsAQ-1; Fri, 18 Jul 2025 15:00:36 -0400
+X-MC-Unique: h7oEdSVgPQaOx4jtJLlsAQ-1
+X-Mimecast-MFC-AGG-ID: h7oEdSVgPQaOx4jtJLlsAQ_1752865235
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-313fab41f4bso3246545a91.0
+        for <patches@lists.linux.dev>; Fri, 18 Jul 2025 12:00:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752865235; x=1753470035;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fuzjkisuZnR7aiSCtO5mtZoLyIN2+57+reZAqeqjfrU=;
+        b=R2+RWoDhdOOUB6jVPAR1uT6x2HIAh2VN+onyxBj1YBwh3joQrjUhso+98imkfxhRje
+         Dl+EtDUu7NfhTAo9yPM6eBbnXVSef3mCHL5/X47MyWbPlO7KjSoIkC1MwEDhal5BbqW5
+         9f7T8JvKbkbZ+EBFULJZMx8gXcB7/r4VjwK8XRQD6FItJ/9zy/wa4zlAvWNT3n8m/BvK
+         OPkvT9lkcK3ROtsL2DS9iKLpSxDhM0p0C4lWx3VXLd/BpydzcBbAmXYa1U5wFDXD/jYa
+         Z0dBho+wO4yLhMaZTQTFF/aibtymz220pRuqn3+eM45z41/EpODthC3M0yiC0ocecpN9
+         bApA==
+X-Forwarded-Encrypted: i=1; AJvYcCVknNamZgneHrOZuruKv7nar77qnMoIIGC6n6HYXT51uXWNLWYV5GEJN3xi0LKBmGXFk16U95uG@lists.linux.dev
+X-Gm-Message-State: AOJu0YzLteM0zZIvDH9qQBqrROD4SD1TltEF8pCkYHpneEAvndr6ThGc
+	BOaA8Q54iMLxruJ6S4jeyYT7T4usks8W3IDy+/WXuvW95iCmDxeYRwmGIS7op3R0abddFR8+JOr
+	9dmsmR4zCZMDNRkHm27wLeqyNAT97NAQ3dL7uuY7nQXNPFBzHDZSwvfXOrZg=
+X-Gm-Gg: ASbGncuhHP+E44593E2U3xq5/Q1m4cDe+/8qalNlfwy0pSuCXbcYFqLEQ7XLlwX+k7F
+	YbD3JjS2mENZJ/tUffF2LFxPPtZrm+4XVSwFX36EX0QUe46ecsL0RoDwi3PW/nhe4MrivRwLr/U
+	+dqRMTc+5BmWOrI4+vTl935uuHdr8f1qMZ22xL7LTFN1mvy4C/JUG8UheQe1rMDhIMxeNGTlKNE
+	l9McOhp/bOZgR8XKyc6SWPadx+m/uxBWYXo04pqhvRh4NktJgN+U/0MM1Tkfo49ff5i4jxcNwlX
+	r6pY5a1jdP6BPrUjl0qYjE5dq+hGxPdQpnzSSMGj
+X-Received: by 2002:a17:90b:4ec8:b0:311:c970:c9ce with SMTP id 98e67ed59e1d1-31caf8f0311mr11212465a91.28.1752865234284;
+        Fri, 18 Jul 2025 12:00:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEuByiZID+4aMiL/O1DOKL6YE07GBrCSQNpOuPpUzXosmW3/GE0r8YaZaCryfvXqwrxsY8cDg==
+X-Received: by 2002:a17:90b:4ec8:b0:311:c970:c9ce with SMTP id 98e67ed59e1d1-31caf8f0311mr11212413a91.28.1752865233617;
+        Fri, 18 Jul 2025 12:00:33 -0700 (PDT)
+Received: from [192.168.40.164] ([70.105.235.240])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31cc33715b2sm1765550a91.24.2025.07.18.12.00.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Jul 2025 12:00:33 -0700 (PDT)
+Message-ID: <1b47ede0-bd64-46b4-a24f-4b01bbdd9710@redhat.com>
+Date: Fri, 18 Jul 2025 15:00:28 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <d18d7013-e82e-456a-87da-8acffc90d8db@arm.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001ED:EE_|DS4PR12MB9610:EE_
-X-MS-Office365-Filtering-Correlation-Id: b42ba17e-3907-4226-98cd-08ddc62c0315
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|82310400026|7416014|376014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?7hU50cA0KGakVGY/+PnasQp7aINgV43WPgTdlfSB6L/XjGZbPUoag45LmCan?=
- =?us-ascii?Q?mo2gj1ziM1gebLA7HHvQamqZyteUYi5wdf+e2QC28nrW6LuTi0wafKjnBAyg?=
- =?us-ascii?Q?RW+zhBmo4zJpa8AVR5ixHckBvcVOo+I7NqPaI+vencVgVHNCCO405krp4aBm?=
- =?us-ascii?Q?ecl3plABTl0bFxfJ3Yk3CsPUn7+7c02zXUp7Hqpxy+EOxKd/w6/UZwOIaj/l?=
- =?us-ascii?Q?NPRQqBV7FxMJqR5Lmx6gWOHXwlv8l/OuxJicQyjfBQhV/JbMzxwTSjYKW+Rk?=
- =?us-ascii?Q?pTJBuPpBnmQJzH1s5C7aujBeGYtZ2Sh1AZMlqDLUJY+3vHGx+kV1ohLzW4vQ?=
- =?us-ascii?Q?XOy4MRRFnr6ou54/srtaL2KIfvOOcYyVC2kAiMu2RPGljBT3Mh9N7UBJAlah?=
- =?us-ascii?Q?bZSvocME/3pr6F7ZNasNjrQTsro0pT5bk0VIOeMYh02lp4qIclUdkz/h9aeE?=
- =?us-ascii?Q?65yYzIZpA46SgJbm4TwO5s6gYAjnACTpqWPSGLdyxBMoeK9scrvJn/d98KvO?=
- =?us-ascii?Q?DaOKtxjV6xJE4KSATh+bIKDbjVUzSfSqAGUThIF7IjSiqCzygSgsaDhQVUBh?=
- =?us-ascii?Q?VYVsx5A6n5xke/6EAjxIVjPsUcUT4IRhzos+eKqy58FzKtQ4ssyruFB7iIL5?=
- =?us-ascii?Q?rpB/5ocb2u/ZaTuqFX9Cd687Kq9J2XhN43CX7o5ERUAZQunRe2XGxdgBe0vZ?=
- =?us-ascii?Q?8h/cqzJ1XAckJFCyP5mSSsuKG28t4avZJDaTL9YIXI4799C6RvYyYSeKRmQM?=
- =?us-ascii?Q?ACK9LNOVmpMJDkfSjJxzESGTDclLpVUBqF6HA164O6+Wjssj8pu5gVz9AWvH?=
- =?us-ascii?Q?4Mo6QiMSK14G+OcaC+LlmEQBI+furJ6gvxVnsoK8x5BfWBIX8HvmqGnh7cga?=
- =?us-ascii?Q?Rv+axXvmCpm7XedIOrKDpE5SK3taQ2Vn0ynOe0yfkONXXJWV73xoMSAxnpMT?=
- =?us-ascii?Q?fW5y1DR2MlE2nkohu3EjwaLCegqZBca1kkChyw7fStk/VcU31XCvxnkQfNjS?=
- =?us-ascii?Q?G6oMd4qbptoln7NK6Bf6WmDFzH7Cbi26mDNeuhCSCq8/TqJPkieprTVh+n3K?=
- =?us-ascii?Q?7d1W5P2toVbOeJqfXMeuZualKHZx3tGu9GQmThc1Qk+m4QrvuMNlpTAgkbqM?=
- =?us-ascii?Q?WQddQcSKZPglpH/uhVUfEwDkvLcAE8Ymvm3XO4rb8rDVOas2pdJ+H1D9Odgp?=
- =?us-ascii?Q?MV2+eJlwMd+cllnXoaV/XSqiYeVHD45TGnMuQB4kETSh/8zJi+OjEtgSlBJZ?=
- =?us-ascii?Q?msS4dpdG8axhgU5/lCG4VMjXNwWUSmMQMewoj7hDIV2FnlxSsUo5nfX/I/2Y?=
- =?us-ascii?Q?FC3EidaS9nxID5DRm8hVuNCYTDAqeop+Aw6qK6bKC7MufED94PYidyxjbxEf?=
- =?us-ascii?Q?+JxfIZQ0EkI6LF/TzvSwM2Y83ArPenIV7iwqzh3bRvMWNynZ0EORkLixx5H2?=
- =?us-ascii?Q?VcnXuRTPHbH6KR1ezlgjmNrOt9YrWOW8sFd0OizegXbjFGm1blMEP0cEj1xr?=
- =?us-ascii?Q?RoMi1GoV2J3kedkWcKFt4GgPpL4nXmKAM8ni?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(82310400026)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 18:50:48.7443
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b42ba17e-3907-4226-98cd-08ddc62c0315
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001ED.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9610
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/16] iommu: Compute iommu_groups properly for PCIe
+ switches
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
+ Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+ kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+ tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+References: <3-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+ <5b1f12e0-9113-41c4-accb-d8ab755cc7d7@redhat.com>
+ <20250718180947.GB2394663@nvidia.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <20250718180947.GB2394663@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: g2MdQqRIHfshPeBalzPuORKvTQqmRCsVymiYcVrm86w_1752865235
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 18, 2025 at 07:23:25PM +0100, Robin Murphy wrote:
-> On 2025-07-18 9:13 am, Nicolin Chen wrote:
-> > On Thu, Jul 17, 2025 at 07:45:51PM -0700, Nicolin Chen wrote:
-> > > On Thu, Jul 17, 2025 at 04:15:09PM -0300, Jason Gunthorpe wrote:
-> > > 
-> > > > +TEST_F(iommufd_ioas, reserved_overflow)
-> > > > +{
-> > > > +	struct iommu_test_cmd test_cmd = {
-> > > > +		.size = sizeof(test_cmd),
-> > > > +		.op = IOMMU_TEST_OP_ADD_RESERVED,
-> > > > +		.id = self->ioas_id,
-> > > > +		.add_reserved = { .start = 6,
-> > > > +				  .length = 0xffffffffffff8001 },
-> > > > +	};
-> > > > +	__u64 iova;
-> > > > +
-> > > > +	ASSERT_EQ(0,
-> > > > +		  ioctl(self->fd, _IOMMU_TEST_CMD(IOMMU_TEST_OP_ADD_RESERVED),
-> > > > +			&test_cmd));
-> > > > +	test_err_ioctl_ioas_map(ENOSPC, buffer, 0x5000, &iova);
-> > > 
-> > > When:
-> > > PAGE_SIZE=SZ_64K = 0x10000
-> > > MOCK_PAGE_SIZE = PAGE_SIZE / 2 = 0x8000
-> > > 
-> > > This likely fails the alignment test, returning -EINVAL instead:
-> > > 
-> > > # iommufd.c:988:reserved_overflow:Expected 28 (28) == errno (22)
-> > > # reserved_overflow: Test failed
-> > > #          FAIL  iommufd_ioas.mock_domain_limit.reserved_overflow
-> > > 
-> > > So, I think we'd have to pick a number aligned to MOCK_PAGE_SIZE?
-> > > e.g. changing to 0x18000 for example can pass.
-> > 
-> > I realized that we can't change the number as it won't reproduce
-> > on PAGE_SIZE=4K. So, perhaps it should just SKIP other page sizes
-> > than 4K.
+Jason,
+Thanks for replies, clarifications...
+Couple questions below.
+
+On 7/18/25 2:09 PM, Jason Gunthorpe wrote:
+> On Thu, Jul 17, 2025 at 06:03:42PM -0400, Donald Dutile wrote:
+>>> +static struct iommu_group *pci_get_alias_group(struct pci_dev *pdev)
+>> So, the former pci_device_group() is completely re-written below,
+>> and what it use to do is renamed pci_get_alias_group(), which shouldn't be
+>> (easily) confused with ...
+>>
+>>> +{
+>>> +	struct iommu_group *group;
+>>> +	DECLARE_BITMAP(devfns, 256) = {};
+>>>    	/*
+>>>    	 * Look for existing groups on device aliases.  If we alias another
+>>>    	 * device or another device aliases us, use the same group.
+>>>    	 */
+>>> -	group = get_pci_alias_group(pdev, (unsigned long *)devfns);
+>>> +	group = get_pci_alias_group(pdev, devfns);
+>> ... get_pci_alias_group() ?
+>>
+>> ... and it's only used for PCIe case below (in pci_device_group), so
+>> should it be named 'pcie_get_alias_group()' ?
 > 
-> Shouldn't it work to parametrise both numbers accordingly, e.g. (if my
-> Friday-evening maths holds up) reserve "1UL - MOCK_PAGE_SIZE * 16" then map
-> "MOCK_PAGE_SIZE * 10"?
+> Well, the naming is alot better after this is reworked with the
+> reachable set patch and these two functions are removed.
+> 
+Didn't notice that... will re-look.
 
-Ah, you are right, I forgot to change the reserved range.
+> But even then I guess it is not a great name.
+> 
+> How about:
+> 
+> /*
+>   * Return a group if the function has isolation restrictions related to
+>   * aliases or MFD ACS.
+>   */
+> static struct iommu_group *pci_get_function_group(struct pci_dev *pdev)
+> {
+> 
+sure...
 
-0xfffffffffff80001 and 0x50000 could repro with 64K pages,
-exactly what your math works :)
+>>> +static struct iommu_group *pci_hierarchy_group(struct pci_dev *pdev)
+>> although static, could you provide a function description for its purpose ?
+> 
+> /* Return a group if the upstream hierarchy has isolation restrictions. */
+> 
+>>> +	/*
+>>> +	 * !self is only for SRIOV virtual busses which should have been
+>>> +	 * excluded above.
+>> by pci_is_root_bus() ?? -- that checks if bus->parent exists...
+>> not sure how that excludes the case of !bus->self ...
+> 
+> Should be this:
+> 
+> 	/*
+> 	 * !self is only for SRIOV virtual busses which should have been
+> 	 * excluded by pci_physfn()
+> 	 */
+> 	if (WARN_ON(!bus->self))
+> 
+my Linux tree says its this:
+static inline bool pci_is_root_bus(struct pci_bus *pbus)
+{
+         return !(pbus->parent);
+}
 
-Thanks
-Nicolin
+is there a change to pci_is_root_bus() in a -next branch?
+
+>>> +	 */
+>>> +	if (WARN_ON(!bus->self))
+>>> +		return ERR_PTR(-EINVAL);
+>>> +
+>>> +	group = iommu_group_get(&bus->self->dev);
+>>> +	if (!group) {
+>>> +		/*
+>>> +		 * If the upstream bridge needs the same group as pdev then
+>>> +		 * there is no way for it's pci_device_group() to discover it.
+>>> +		 */
+>>> +		dev_err(&pdev->dev,
+>>> +			"PCI device is probing out of order, upstream bridge device of %s is not probed yet\n",
+>>> +			pci_name(bus->self));
+>>> +		return ERR_PTR(-EPROBE_DEFER);
+>>> +	}
+>>> +	if (group->bus_data & BUS_DATA_PCI_NON_ISOLATED)
+>>> +		return group;
+>>> +	iommu_group_put(group);
+>>> +	return NULL;
+>> ... and w/o the function description, I don't follow:
+>> -- rtn an iommu-group if it has NON_ISOLATED property ... but rtn null if all devices below it are isolated?
+> 
+> Yes. For all these internal functions non null means we found a group
+> to join, NULL means to keep checking isolation rules.
+> 
+ah, so !group == keep looking for for non-isolated conditions.. got it.
+Could that lead to two iommu-groups being created that could/should be one larger one?
+
+> Thanks,
+> Jason
+> 
+
