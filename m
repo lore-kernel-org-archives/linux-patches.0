@@ -1,162 +1,101 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2053.outbound.protection.outlook.com [40.107.92.53])
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2986249F9;
-	Fri, 18 Jul 2025 08:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752826625; cv=fail; b=DQR5WHgk3zflga961MQNjRl1IUqdv6vNrJfYXk2xWAugHNW7APxMf43S1UfH2/LzfrVm2NJkfduPkAsLFqRPd22dQ3877byv7gmcKIW5a/YBTh7Fh1oOR8NlddFOVvuldX/KfsOCZOlmKEEJVgVgY/wAwwpCKkRzz3Y6cvUfYNo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752826625; c=relaxed/simple;
-	bh=A16MMOeH8eVddNha29Ul/mMcjB81dI7ABVh8wbm688w=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cgHiSF3H8qNVyWbtAA4lmHF36B5qUI1j8tQspIASTj+7SY4ozUPUNcUQYB+UBogQzOfiGsrZSkkKTburOxowJatJOWDXASN2mvQciU/HgNv1Nn8HdwnWu+s8RauepW84ZxhA78uvo9VEsqP0dCCjsjALzmqZRAmllJiAvYZMINQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Ajr6kXGu; arc=fail smtp.client-ip=40.107.92.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F932222B6
+	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 08:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.61.82.184
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752827301; cv=none; b=TyzQYA5G3Y3o7KJzCYD+Y34QvXNYvBgnDd124BRpsYqRcr1trgsKdRgQmaS/+RT//El7/Ud+RWjErRLIMQPx/hTHSsp1Jn8XVh7t1xe8I7VMUk0CM2+W4GWR1qtB7JPZdM8hjUYJVl4ovpyAY5HqpclHa8RQ9GqQDqD/SHgIvX8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752827301; c=relaxed/simple;
+	bh=HbZBhh8aKvnhhix2oGCGJTp89m5dueVh/VgsyDh6rLI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=c7Sw7IpKfv/sSpq/+sXXp2t4iTavyhwc6ltNZiglqbjkYG92xQu+m4efGicqR/2QI270meUio1XHmnDj1GPRYrQzj6sHyDsIPna8bADH/m//2lwv1+u9KOtNH/uJ/3piqqxx83dZrgLvXYvz/jT35s9WWh74kBvLYtoohDN24Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=ufm+SFhk; arc=none smtp.client-ip=210.61.82.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Ajr6kXGu"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nQNfkBhNjUus6MOIRP+WDxhubpcpLQS0F7lA8nOC/WLrEkN+IFvAczYi7Vp7IiQi7GBj/8/uDoIjxkCDXxTca+VfC5hmDZBAWV+ClMuWM1h3vLXFPj6sLFUTKxqZLgcmhUJEJjYiPKopmz9T196FzC1UwqiN21LnUziYzIyIXf1BA532jdFMpslPkoO68pDrdy3imE4bVKNSbW1q0Ep09TwlR87Zy6ILp2U9yF/yHUpEjBGC8MDr47dKPQSOcHKYqKGA/9TESPTCV6FpeQmq0lar7wnjaqfMk5pyViIJCSklUIa/zQp2EN3pZeaPvKVh5qdYzRXh+Pu7sNdUlycO+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nCscc1Mj8zW5D6KeX+rSYnw+j9uwJ3K3JthqD8Ei4fs=;
- b=bX+uMub+IPKv6F2OjCjd/Esr6n9ISwHwGZUFOLRMiNn0AJORPaGZuEJMR2VXUlWw4vVzzulc8Ice5WxmM7qeXxT/jycLBGgcK8k7IkwDk2wC+SWlUGB+kcFUWB+E0/knr5VRVW5CV/m826hRYWn1C2kWupQ5xlaRO2RgTlKrmZ4aYAE+rL+wFeckMtGvnxsRa9mg3A9f8S016H4rBeiRhi3zcb56uzNgMyn6NCfYd4cxsvK5g/EB42TXHT+FZl/wqDX7WuF8Fb1S2mqf0/efRHScxJ5VOY4wC85p5k5w6RZ9B0HVRC3rE2D140gRtb6Wp69guZvwNeKSFwuSm6xdNQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nCscc1Mj8zW5D6KeX+rSYnw+j9uwJ3K3JthqD8Ei4fs=;
- b=Ajr6kXGuMlexwWVBKYBbuw5ybGMrQWB0Nn9iWabBZug/Cl/RVrcblZpxb0nzQOOXIM55zSGSr6QZmDyORsumxeSmkQ+3iFdNstGeGrhSV6Y4Ma3//I47XL4hjtRPepXJ7C55OzZoiM/hhVtkhitq5Komkqy+46S0e1kRsuP9CGs2N7QCPw1tTUmx+aC9R7+UA+xcyV2wXuNNWK5VReZkr0uYrxCDOgHi+KotPyS+NG1sqwK4jDbItUF3sDF4SLgmPgTM9zYSfaKHQKoF2B7APEfg1aSu+xfqnD62zOHg4w0SEUDrLBIRkv/eKlUnSMWhx2Ggotq4mN7kGQSzOK3lKA==
-Received: from BN9PR03CA0988.namprd03.prod.outlook.com (2603:10b6:408:109::33)
- by LV2PR12MB5893.namprd12.prod.outlook.com (2603:10b6:408:175::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.19; Fri, 18 Jul
- 2025 08:16:58 +0000
-Received: from BL6PEPF0001AB71.namprd02.prod.outlook.com
- (2603:10b6:408:109:cafe::16) by BN9PR03CA0988.outlook.office365.com
- (2603:10b6:408:109::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.23 via Frontend Transport; Fri,
- 18 Jul 2025 08:16:58 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL6PEPF0001AB71.mail.protection.outlook.com (10.167.242.164) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8943.21 via Frontend Transport; Fri, 18 Jul 2025 08:16:58 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 18 Jul
- 2025 01:16:40 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 18 Jul
- 2025 01:16:40 -0700
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Fri, 18 Jul 2025 01:16:39 -0700
-Date: Fri, 18 Jul 2025 01:16:37 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
-	<kevin.tian@intel.com>, <linux-kselftest@vger.kernel.org>, Robin Murphy
-	<robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, Will Deacon
-	<will@kernel.org>, Lixiao Yang <lixiao.yang@intel.com>, Matthew Rosato
-	<mjrosato@linux.ibm.com>, <patches@lists.linux.dev>,
-	<stable@vger.kernel.org>,
-	<syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com>, Yi Liu
-	<yi.l.liu@intel.com>
-Subject: Re: [PATCH 1/2] iommufd: Prevent ALIGN() overflow
-Message-ID: <aHoC5c/PSLSZfVXG@Asurada-Nvidia>
-References: <0-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
- <1-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="ufm+SFhk"
+X-UUID: 24f1958463b111f0b33aeb1e7f16c2b6-20250718
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=GPpm2gPg2nj0QzhFjf8hC7nhh7xr1REmHdo2vA7Y9Hs=;
+	b=ufm+SFhk52Dl4xbIp2INabMeaB8XUGraku5bsPaQytP8aPeqo+amRqWvhkBtPPmvwsfAVm5FAHGvYn96VALAQRh3lDiPnAsFlRJTMAk8q2jWu3xvKEYH1k+Ih35nozpQv8h6KzCO56KCyQX5vyFDEUUuCQ8QGFrPjiROYTMWHxo=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.2,REQID:da9e0b7a-f74c-4bd4-a871-1143ed360839,IP:0,UR
+	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:-5
+X-CID-META: VersionHash:9eb4ff7,CLOUDID:5bf89484-a7ec-4748-8ac1-dca5703e241f,B
+	ulkID:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0|50,EDM:-3,IP:ni
+	l,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES
+	:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 24f1958463b111f0b33aeb1e7f16c2b6-20250718
+Received: from mtkmbs11n2.mediatek.inc [(172.21.101.187)] by mailgw02.mediatek.com
+	(envelope-from <macpaul.lin@mediatek.com>)
+	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+	with ESMTP id 668366403; Fri, 18 Jul 2025 16:28:12 +0800
+Received: from mtkmbs13n2.mediatek.inc (172.21.101.108) by
+ MTKMBS09N1.mediatek.inc (172.21.101.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.39; Fri, 18 Jul 2025 16:28:11 +0800
+Received: from mtksitap99.mediatek.inc (10.233.130.16) by
+ mtkmbs13n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
+ 15.2.1258.39 via Frontend Transport; Fri, 18 Jul 2025 16:28:11 +0800
+From: Macpaul Lin <macpaul.lin@mediatek.com>
+To: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>, Peter Wang
+	<peter.wang@mediatek.com>, Stanley Jhu <chu.stanley@gmail.com>, "James E . J
+ . Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K . Petersen"
+	<martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-mediatek@lists.infradead.org>,
+	<openembedded-core@lists.openembedded.org>, <patches@lists.linux.dev>,
+	<stable@vger.kernel.org>
+CC: Bear Wang <bear.wang@mediatek.com>, Pablo Sun <pablo.sun@mediatek.com>,
+	Ramax Lo <ramax.lo@mediatek.com>, Macpaul Lin <macpaul.lin@mediatek.com>,
+	Macpaul Lin <macpaul@gmail.com>, MediaTek Chromebook Upstream
+	<Project_Global_Chrome_Upstream_Group@mediatek.com>
+Subject: [PATCH 1/3] scsi: ufs: ufs-mediatek: Add UFS host support for MT8195 SoC
+Date: Fri, 18 Jul 2025 16:27:16 +0800
+Message-ID: <20250718082719.653228-1-macpaul.lin@mediatek.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB71:EE_|LV2PR12MB5893:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0322bea-359f-4a11-cdf6-08ddc5d37751
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|36860700013|1800799024|82310400026|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?eftON92hKnMCTA2dESyIZO15Zi0kMfo8wFHDYnCR/qBEvQg4B8mggtlSPiOD?=
- =?us-ascii?Q?RxBoObDn9xQe8CqlFscZbCaANtw0GbATz1VgI0ZdenSzUiYeKvtvIGaavNlW?=
- =?us-ascii?Q?vs2N1mBYSpVXVqUEdE+ENkNzoD2nVvCmlqsFO6rPUAXIzf1Wqc4uYGJU5TiC?=
- =?us-ascii?Q?AJ2lGfsM2s1syv6duihjhOczOk0oiSrn+6Q0GiiB10F062SzRTx7W1U0+rby?=
- =?us-ascii?Q?xz163CVH8/U5rF8BV8yB8eNDI7tLqa47WjeESGig8lkFwtQLUOzvyFxpCCdn?=
- =?us-ascii?Q?1A+wpGpC5xrmJ5iodlKW4awJtehD5oWepeeVQWk13VugsmeNp/PXQwe+mJbL?=
- =?us-ascii?Q?AJYNnxcMylzVnCFZDWlbW6HujFz7YyQeNnhtKYq3mRFxY7sfr0FrDCpciTv7?=
- =?us-ascii?Q?SDtTh7u0cG6NpdCQExW79rQSa0sPXy6hX9fNSSMBuZTIjIpVm5SjyKtU2fJd?=
- =?us-ascii?Q?9e/P53I8px02eBd3jCkjQgM2QKXW1iQ4feWVjDWq33da861zEg+RXM6TF9H4?=
- =?us-ascii?Q?R9oEyhnuCTWjSnhtCSYMTH5PFzIpUyBP99MaK5FfTDYs4dBLgWbxIP0ASfuE?=
- =?us-ascii?Q?sJFzRhdC3gWR26fARaxVrhbTJP64cBkisLnm9Tri3jf7ywRwxXCLktvAlDMF?=
- =?us-ascii?Q?b3HDn3qrEL7m2+Wu9gVtT0ccOmY3TsE/ObFK4e595pKulk7kRB5HNwCq3mWD?=
- =?us-ascii?Q?/eJmfnRrlIMaBQPv3devjGSHPL8JbYrv+9wRr82ortLm1hKizUKGEgD+Bt2Y?=
- =?us-ascii?Q?4refx2nUeiKymecmKz1n/2x4triw1XcVPM6Hqd4VM1aofR9/qZtdoAshy8r4?=
- =?us-ascii?Q?EOOiE4Du/6KEO/L36jDgxotU8mceurN++YssQHnpf4RqidqzcMOkp4duK2Cs?=
- =?us-ascii?Q?Mbexw1QLjN5n3MxUMpb3ru/jz04cihpUJ6lyxhfPkKbLcGnY0LqowdVca6It?=
- =?us-ascii?Q?eXATu6MWf8nRhYaFK03mdxhlmph2QVrCjH0+Jw0/x95fWQGS5ztLO6YELDio?=
- =?us-ascii?Q?ojMPVJnjvy7GddC6I190Deo/rW2MpogSIqfW8aGJQXl8Vx12OrJ7NdsSkdpL?=
- =?us-ascii?Q?Z5ymH1DlGvpj7996VFJ0KeKT4hXRIOSmFdbkbry+EkcyB2IT9DJBwjZ9FdeX?=
- =?us-ascii?Q?hJxtCOXP35k0nyYUlAKVjyzy7ZyyBYT9zPMwjN7zntGjQ2ovs6vNTEcRg1RZ?=
- =?us-ascii?Q?q6lp7UzlPMK5DUrHVV8ZRmiHLVoVwsFxz2bGlqWSBV93M6VEv8E77NJiyaaF?=
- =?us-ascii?Q?xAk+T7z5w+m9GRHJt5J+q+fOSixdwHp0TWNSj9bnpClnsPrlaiJc8YsNZ4HN?=
- =?us-ascii?Q?UMMHjrz2Iw0Va40c12JjYWw8vsEq2Ur7XK/EY6Y9ZtnDICg4C3OT1TZ6eeMk?=
- =?us-ascii?Q?Lg1olsxDesDBw5KxHFe0boszwRzT6p+kmQjor05MHFfQdi4A03QCNtKfXuQD?=
- =?us-ascii?Q?by735sGbP0Jy7zLdp6xr9+c4BvyOgxMeABtx4+XD4J4OxmDnVm0BybRDuy/w?=
- =?us-ascii?Q?FqTcW3ty6rQmMwXhKRnKpt946NjilL/P8xPSf3WwmnyjRIXxXarOhe+mpw?=
- =?us-ascii?Q?=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(7416014)(36860700013)(1800799024)(82310400026)(13003099007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 08:16:58.5026
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0322bea-359f-4a11-cdf6-08ddc5d37751
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL6PEPF0001AB71.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5893
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-MTK: N
 
-On Thu, Jul 17, 2025 at 04:15:08PM -0300, Jason Gunthorpe wrote:
-> When allocating IOVA the candidate range gets aligned to the target
-> alignment. If the range is close to ULONG_MAX then the ALIGN() can
-> wrap resulting in a corrupted iova.
-> 
-> Open code the ALIGN() using get_add_overflow() to prevent this.
-> This simplifies the checks as we don't need to check for length earlier
-> either.
-> 
-> Consolidate the two copies of this code under a single helper.
-> 
-> This bug would allow userspace to create a mapping that overlaps with some
-> other mapping or a reserved range.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
-> Reported-by: syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com
-> Closes: https://lore.kernel.org/r/685af644.a00a0220.2e5631.0094.GAE@google.com
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Add "mediatek,mt8195-ufshci" to the of_device_id table to enable
+support for MediaTek MT8195/MT8395 UFS host controller. This matches the
+device node entry in the MT8195/MT8395 device tree and allows proper driver
+binding.
+
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+---
+ drivers/ufs/host/ufs-mediatek.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 182f58d0c9db..e1dbf0231c5e 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -50,6 +50,7 @@ static const struct ufs_dev_quirk ufs_mtk_dev_fixups[] = {
  
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+ static const struct of_device_id ufs_mtk_of_match[] = {
+ 	{ .compatible = "mediatek,mt8183-ufshci" },
++	{ .compatible = "mediatek,mt8195-ufshci" },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, ufs_mtk_of_match);
+-- 
+2.45.2
+
