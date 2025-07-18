@@ -1,165 +1,174 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2078.outbound.protection.outlook.com [40.107.236.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB9E1A23A5
-	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 02:31:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752805909; cv=none; b=R9FFyeMjROFeTdpjP5kgBpvGdzZIetrHrri+0GH6hVfvWV2xPwy1cG6Q/IMrHKCEp9hkKimAg1vWY/tmkfhOuG65JIBPC5FenhAsIbJAAVfORVyJFr/OIulQr24SIaI8yrKCzDbR464ir/Ql8OqmUpbkR787DwWxxW/a6j/QhP8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752805909; c=relaxed/simple;
-	bh=GKHMgIQjLp7KXkce3TSNrNDc4cs1kxoWV9ktElkfly4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H1cAgSECgZzCqi4BwiyWSuw32AQRkpL3o7N4ofC9ZNldHb3YCh/262E/PwgHx05J1V2PqGTmKQ1ZeEkVtQhM3EuLYPWDk1UjtmYmM+LWapfpWkhQ27qLBeu2xPeMYapl0g09TVOsPC6TpQOCxsJVfAJw4xXHNKJcIAF45G+aQfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IIhBC2Tw; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE121624E9;
+	Fri, 18 Jul 2025 02:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.78
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752806779; cv=fail; b=e0Unq2cbdvRSIoL2kCmI7KZDnKhEYxf+KUn5hY45BkWDbky04sRGFPn4mshxFycNQteVgUjbW7Nk1rETOQDMPQOvU4lD2Il5TAW9d6WSjnlMN8/tznk+++fpYxmWNwjfWfmGfOMCHzrT6+DU5vOfVfJ+EFR2KayzPeI+IQdhyZk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752806779; c=relaxed/simple;
+	bh=s3zhjWVK89Vq3ztI/frYrZD4vVt+W36lNeVd82u8yXU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TaaOMkDFByCW0qRnzefITVAhMxFghukX3N+RqtFX0MhbSSt/HWiylfDor1vbI8vVbpBlIKXhVnLTkbIiaEQ4Dijy81lwhXFByMBilDi3C0VteVdUUNmrjPA1zvBV1eX9yrtykfU7/9QRtMcoF0To5Ma4z6mEoefkrjbkLSY89wI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qSYBk9ri; arc=fail smtp.client-ip=40.107.236.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IIhBC2Tw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752805907;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GaZLU4GKhmRux2+I10jXp65n20V7jWRI51gsD8E69t4=;
-	b=IIhBC2TwE9NEpiz/EUaWv0haXUZ7vPC42a6GZVylvqnn84jKu4zrqz7xxvfrvy2KX6UIaw
-	LaHiMT+e5gSSnLKn6QRAM7gkoGZ+aWtzat6aWTOjpfq04qJhzzBX0i4ILAtgHtzJGaP/fP
-	LgAHdfNM4IvmHy2euzpnEAK95IZwk5s=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-GjwhUYpaPPebNbF2PnjuNg-1; Thu, 17 Jul 2025 22:31:45 -0400
-X-MC-Unique: GjwhUYpaPPebNbF2PnjuNg-1
-X-Mimecast-MFC-AGG-ID: GjwhUYpaPPebNbF2PnjuNg_1752805905
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e095227f5dso252778085a.1
-        for <patches@lists.linux.dev>; Thu, 17 Jul 2025 19:31:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752805905; x=1753410705;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GaZLU4GKhmRux2+I10jXp65n20V7jWRI51gsD8E69t4=;
-        b=Qcc7TPDm1QAWsk/N6wtL7B9aNniGHVbFEPsF24CSpOuxm/BdqGVTZofQL0tptgpZxH
-         I99YecGND+3jh2DSL+55dVLdec3Qs421a8t9jXA+1fK5zRZ7Wo/eNBBxjWP3P/nHQgHs
-         rTfy50gxopJrvviGHEUkIq/xk4PnAhzphVHAcVJkGnJwaH03Evvi5WYR8D9XPsvv444u
-         L5k4dFxIVyBwVS7k/8Z9+CI4EpqW8yDiQloiHfFq8viVF/4op5PiorCqjgnxa3d9zOGs
-         1YY6e7l6bn3+qb8BvJj+ztkQu3OcBxIS4108BxN1l1cs4/i5H398MQpxfLWmMOgn5ARa
-         EU7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUdylQkqzGlfBAxnB590DUw5Dpk0ABWwVjcmaCOPZXwJxwvTujutfSpLt+P3EZtw1vEq/Sqx0/m@lists.linux.dev
-X-Gm-Message-State: AOJu0YxMIIaefHhGlBfRh2XdKKYK9p2jPjkNS54hEF/vlrMopj68Opde
-	gnVl832QyIOjivkx507vzh0xyGcPPFjLofKNHt4+mXKPe25oqsPIdFZizUkMj+/Mk1Kzx/V0v0u
-	619yvt3bzZXQnLNK1jPDqbnAvKC4GcAGc7jJ1GITOwCcH6/Vk7xcMd/WQJ1o=
-X-Gm-Gg: ASbGncspzg2wIcIzG6PD2yzNuTuMgo320YvzvtLSrnqvkgtU6BuoVZ4k0xc9yn8HqcS
-	nBQA6IAdloHHJ8+bQ62ts1JUpZDGu7d78jwKWYlfPzhOPgbAIgfYz/MQsgsZ47lboboOaO44YGq
-	HDV27Rdqe46cKCt8n3IX+YjaOw7V8AMpftDA9+Zm7i7JNgHdkZe5VDqmtC+pvqrM/cTKx7NHA9F
-	jgfknkrKhZ13k5ugyNSHoXZ9GxVkipxNVjWJqEdqaTpEO2pobyUXusv4Nz5PMVZhs2pASFx1tBV
-	960ghKHvM8SmMTs5w6WrAs6MeYbUX4ufGpg63Y57
-X-Received: by 2002:a05:620a:6007:b0:7d4:3bcc:85bf with SMTP id af79cd13be357-7e342a5eda7mr1167333585a.12.1752805904804;
-        Thu, 17 Jul 2025 19:31:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJ7WNmhYxeTKTnJvjyZYFdY4Uy7qNdAA+omyn3onwql37C/+HhiaajQ3N5wll13LWDMCOCqQ==
-X-Received: by 2002:a05:620a:6007:b0:7d4:3bcc:85bf with SMTP id af79cd13be357-7e342a5eda7mr1167330085a.12.1752805904357;
-        Thu, 17 Jul 2025 19:31:44 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e356c9155csm34859285a.95.2025.07.17.19.31.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Jul 2025 19:31:43 -0700 (PDT)
-Message-ID: <2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
-Date: Thu, 17 Jul 2025 22:31:42 -0400
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qSYBk9ri"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KN0+RfsF2uhlPm99t0B5kVCfULgZbl9TBiMS8PNXc30yOp68YpnEv3OFwpWw5MmJcMATBzc/Pi2zYnfap9aDtD9PLYaJ/zP1IxGMFd+J9GTwSgq866BpbKV4HwCHeXZN0GUnhQsrsIILLP60Cjt91Mo+/7vqaRyKjTuaRtfEr+QmbLQc73/Q6pA4jWpkkQZ225zz1yMjdw8Agwuue/40pQQkODnA7zU0ph3z51NaB35TPIIz/oIVLomL6KdfOpTAteOYr2hSxjuXI37qt0QQ2D8BOPyVjGC6o8DSnKsZGxURRoqfzHCmjL7LD79cJhMfc0peB6jYx2Lw/mzxDJThOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WXVyvQsBCmUjIjt8itUCvxkt2b1xHkmM/8/7q6iBnPA=;
+ b=pMm1A5AjRVfN7kLq0gyfQw7KPlwBdLE+jztQeDghjJnBaHz3cGxjSo1uoH6itODsnkKC0trCUj/7BzI3XCAEQd58uyFRtof1p/0WuHmCj+M0Pb11xeZYWkEG3Pzq4f59Rq5UksBM1FzZ6iFTpIA9TlxEXKW3EBms3UTZOidab2vzz0yyY0jx2uYfGCreaItPb21NT1wQaHL2933/N7tz0ct7NwYs21jbhY9i1Icr8yEejET0E8e36YgLxwrx/oYQU+tWVF1eezzlpi5pwf0L6tlVlizWh3gSrMahvO9wxOXylvitniF+CqPZYxIwIGPmmJGAAv8oShhGzTQzt4YTLA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WXVyvQsBCmUjIjt8itUCvxkt2b1xHkmM/8/7q6iBnPA=;
+ b=qSYBk9ri0qOrqe/GfEw8tCxW4maJw4wu9nP1vlV6MdNOHMEt87GgWBLgJXDLU9IUInRqherj0zg14iCj6UUu2qbCCoQTpOm/jZ9kL88r6dY/tfRB61o/H3QKZwfNGnD7WyPIFewNRwdSutQ8qMFaGh+TnFNSCIJvoY2wz6gd4FkIbsqSsZOgnAO98D0CdbBUv1Fku3N4Cwp3ieFctqIzbqlzXN6Hjl9N9VICbU2w4gUrTjpSx4jUIIoLBmBPagqHfenxD/1zIjWpkJDP4L9w6SiuFxrXx61Cbn/lr/RhI2ZoW131s6bKZNPmoJqsqICMdMNqb+HT+3JRviPEtNDSaw==
+Received: from MW4PR04CA0375.namprd04.prod.outlook.com (2603:10b6:303:81::20)
+ by BL1PR12MB5946.namprd12.prod.outlook.com (2603:10b6:208:399::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.39; Fri, 18 Jul
+ 2025 02:46:13 +0000
+Received: from SJ1PEPF000026C5.namprd04.prod.outlook.com
+ (2603:10b6:303:81:cafe::d8) by MW4PR04CA0375.outlook.office365.com
+ (2603:10b6:303:81::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.21 via Frontend Transport; Fri,
+ 18 Jul 2025 02:46:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ1PEPF000026C5.mail.protection.outlook.com (10.167.244.102) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8943.21 via Frontend Transport; Fri, 18 Jul 2025 02:46:13 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 17 Jul
+ 2025 19:45:48 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 17 Jul
+ 2025 19:45:47 -0700
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Thu, 17 Jul 2025 19:45:46 -0700
+Date: Thu, 17 Jul 2025 19:45:45 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
+	<kevin.tian@intel.com>, <linux-kselftest@vger.kernel.org>, Robin Murphy
+	<robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, Will Deacon
+	<will@kernel.org>, Lixiao Yang <lixiao.yang@intel.com>, Matthew Rosato
+	<mjrosato@linux.ibm.com>, <patches@lists.linux.dev>,
+	<stable@vger.kernel.org>,
+	<syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com>, Yi Liu
+	<yi.l.liu@intel.com>
+Subject: Re: [PATCH 2/2] iommufd/selftest: Test reserved regions near
+ ULONG_MAX
+Message-ID: <aHm1WRAGgk/6HZMC@Asurada-Nvidia>
+References: <0-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
+ <2-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
- switches
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
- Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
- Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
- tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
- <3-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
- <20250701132905.67d29191.alex.williamson@redhat.com>
- <20250702010407.GB1051729@nvidia.com>
- <c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
- <20250717202744.GA2250220@nvidia.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250717202744.GA2250220@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: uJrxsWQPU5OFqkN1kgEVDvhkYOn7IH4JyFWzHBALiOI_1752805905
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <2-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000026C5:EE_|BL1PR12MB5946:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01b503fc-ca8c-4a03-0790-08ddc5a54283
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|376014|7416014|82310400026|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?/HUT/Ezk2VjVRzuRvKHF2LR6gg5fnyVnQCvYyh/v6CFzOQHaLKpfzNrXa9QO?=
+ =?us-ascii?Q?wLZzQk53PnchUINJAylbLQ7rd7HnINvLyZFweewjQ9b1vLpmwUSbA0UUHWIA?=
+ =?us-ascii?Q?UEdBwg3oW494CcBsT6SPDeNTqigV3mIv003aanyXR7UxTbC1xuBPJIczpHpB?=
+ =?us-ascii?Q?46Sk4GbomGsHExHJAyIGu4fbzxA3ev15d1X0xOb/cYx06UFNTa38her9ai5P?=
+ =?us-ascii?Q?KzTQX6agDU2nVSycVjqPZ2TI5NQ+h5d6Z5PLBjF9eFbUR6RYeoC31vQvaM5n?=
+ =?us-ascii?Q?AgQgF7LUn4KCX7JcV/cV8y7IuofnGjEcFK2Krg3RMl8uBvMAbo/8b1aqs0M4?=
+ =?us-ascii?Q?8eYMN56FZVwRaSvkQ9o9RZ0/4Wt6ECDoWmLO39NQaxpyDlgoQfFjASYgn42P?=
+ =?us-ascii?Q?+mW2agG15YDgEC+CX/AbEJdTkIl+D1BmAxuFVQjJ0850RPhtqxxfjwzS/38T?=
+ =?us-ascii?Q?77Oyo+QQMTfwWSxDPMF3755OqL7IobIKdkW4By2mZnsdKykIEOLzkzYaxmwE?=
+ =?us-ascii?Q?imRHUYTKTv6CRCaJQNHaWLmzHLSNufktwEJHpBFBq5dPUcR17PsdMxnO4m2a?=
+ =?us-ascii?Q?dcp6VgGVvqkvnB/VFfvaWQZnh36qiAKapzN0MmJxliozLv7KtYLkPHWDVuXn?=
+ =?us-ascii?Q?P/EQJ6bIVCqmTb3ZObg3ITmI7pTT4ryuD7/5QJxyoib0fE4sapycZlcCPYtl?=
+ =?us-ascii?Q?xJUXps9HdzlF1SIP8rEr/SQVPOCZaE+t2b+ANv+EHcvlDP8eMTncRIrArswV?=
+ =?us-ascii?Q?rBJGh0w+zzkW9yNsOiuYbcSlAvMxSlogpWakOzpRooraedswxU4SxXIcANX0?=
+ =?us-ascii?Q?bCvFVm4CtLgv6w1SFMLz0/kTI3KeWU8bvX+qJ5X2X07dvvGTMFSzS5R4hLOA?=
+ =?us-ascii?Q?SUWGoEH/iDSkTeF8BnK0LEy53ImZwdMk0jygtZIWHD2kJf1nEEq0hlsk6m5V?=
+ =?us-ascii?Q?bkTSrymml/DnggsKnjwibR+j0v/TMlvE1AqwwHprlSw88JjMAlT20nveTIy/?=
+ =?us-ascii?Q?PFafv6eoDFYTsD59Oe0xMS7KvpnuBcnNPKhYqIfullEdq719tRSY2cdU3jmB?=
+ =?us-ascii?Q?P4kmo7iIi2Tl09sVa0hVahyEalxSAvBgc7YJTavk+95HEBaqADAPVclijGRL?=
+ =?us-ascii?Q?kkwKbAccXwrpogqLpZaEwBLd/43ZWMgK/13roevO9U2BuqQ9GZtOpf3KUSz/?=
+ =?us-ascii?Q?CE32+H7gnneF7//MnKTRn7P9RaaLds1cjulunO3LdNlVLIPbK/MTT0e/jtsu?=
+ =?us-ascii?Q?WezLi1GET/2A31GHsrfxSXlo15VcrJHAkCbs4CKS95WvcP6wUX8ZMOUw/tLs?=
+ =?us-ascii?Q?qNCYGDDikbC4mTLZDEKbDSpN2p/QBZFrGKZbzSIW7ecQsulDBxvuYnDdzgbt?=
+ =?us-ascii?Q?XyRTNz03zh80HIOllQk7HPmcRih6beJvsz8nmEEjZR00Peo8klGRj7HrTh+5?=
+ =?us-ascii?Q?jI6lnlQ8kviqvcy2ju691MMHfIZB6bqGI8SDNhzaMDl+evOBscZsXBpZBOK/?=
+ =?us-ascii?Q?2Yr+6l9zmjdEBukXJKRJptIG2v2QL3QXRG9P?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(7416014)(82310400026)(1800799024);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 02:46:13.2001
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01b503fc-ca8c-4a03-0790-08ddc5a54283
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF000026C5.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5946
 
+On Thu, Jul 17, 2025 at 04:15:09PM -0300, Jason Gunthorpe wrote:
 
+> +TEST_F(iommufd_ioas, reserved_overflow)
+> +{
+> +	struct iommu_test_cmd test_cmd = {
+> +		.size = sizeof(test_cmd),
+> +		.op = IOMMU_TEST_OP_ADD_RESERVED,
+> +		.id = self->ioas_id,
+> +		.add_reserved = { .start = 6,
+> +				  .length = 0xffffffffffff8001 },
+> +	};
+> +	__u64 iova;
+> +
+> +	ASSERT_EQ(0,
+> +		  ioctl(self->fd, _IOMMU_TEST_CMD(IOMMU_TEST_OP_ADD_RESERVED),
+> +			&test_cmd));
+> +	test_err_ioctl_ioas_map(ENOSPC, buffer, 0x5000, &iova);
 
-On 7/17/25 4:27 PM, Jason Gunthorpe wrote:
-> On Thu, Jul 17, 2025 at 03:25:35PM -0400, Donald Dutile wrote:
->>> What does a multi-function root port with different ACS flags even
->>> mean and how should we treat it? I had in mind that the first root
->>> port is the TA and immediately goes the IOMMU.
->>>
->> I'm looking for clarification what you are asking...
->>
->> when you say 'multi-function root port', do you mean an RP that is a function
->> in a MFD in an RC ?  other?  A more explicit (complex?) example be given to
->> clarify?
-> 
-> A PCIE Root port with a downstream bus that is part of a MFD.
-> 
-> Maybe like this imaginary thing:
-> 
-> 00:1f.0 ISA bridge: Intel Corporation C236 Chipset LPC/eSPI Controller (rev 31)
-> 00:1f.2 Memory controller: Intel Corporation 100 Series/C230 Series Chipset Family Power Management Controller (rev 31)
-> 00:1f.3 Audio device: Intel Corporation 100 Series/C230 Series Chipset Family HD Audio Controller (rev 31)
-> 00:1f.4 SMBus: Intel Corporation 100 Series/C230 Series Chipset Family SMBus (rev 31)
-> 00:1f.5 PCI bridge: Intel Corporation 100 Series/C230 Series Chipset Family PCI Express Root Port #17 (rev f1)
-> 
->> IMO, the rule of MFD in an RC applies here, and that means the per-function ACS rules
->> for an MFD apply -- well, that's how I read section 6.12 (PCIe 7.0.-1.0-PUB).
->> This may mean checking ACS P2P Egress Control.  Table 6-11 may help wrt Egress control bits & RPs & Fcns.
-> 
-> The spec says "I donno"
-> 
->   Implementation of ACS in RCiEPs is permitted but not required. It is
->   explicitly permitted that, within a single Root Complex, some RCiEPs
->   implement ACS and some do not. It is strongly recommended that Root
->   Complex implementations ensure that all accesses originating from
->   RCiEPs (PFs, VFs, and SDIs) without ACS support are first subjected to
->   processing by the Translation Agent (TA) in the Root Complex before
-> 
-> "strongly recommended" is not "required".
-> 
-A bridge (00:1f.5) is not an EndPt(RCiEP). Thus the above doesn't apply to it.
-[A PF, VF or SDI can be a RCiEP -- 00:1f.3, 00:1f.2 ]
+When:
+PAGE_SIZE=SZ_64K = 0x10000
+MOCK_PAGE_SIZE = PAGE_SIZE / 2 = 0x8000
 
->> If no (optional) ACS P2P Egress control, and no other ACS control, then I read/decode
->> the spec to mean no p2p btwn functions is possible, b/c if it is possible, by spec,
->> it must have an ACS cap to control it; ergo, no ACS cap, no p2p capability/routing.
-> 
-> Where did you see this? Linux has never worked this way, we have
-> extensive ACS quirks specifically because we've assumed no ACS cap
-> means P2P is possible and not controllable.
-> 
-e.g., Section 6.12.1.2 ACS Functions in SR-IOV, SIOV, and Multi-Function Devices
-  ...
-  ACS P2P Request Redirect: must be implemented by Functions that support peer-to-peer traffic with other Functions.
-                            ^^^^
+This likely fails the alignment test, returning -EINVAL instead:
 
-It's been noted/stated/admitted that MFDs have not followed the ACS rules, and thus the quirks may/are needed.
+# iommufd.c:988:reserved_overflow:Expected 28 (28) == errno (22)
+# reserved_overflow: Test failed
+#          FAIL  iommufd_ioas.mock_domain_limit.reserved_overflow
 
-Linux default code should not be opposite of the spec, i.e., if no ACS, then P2P is possible, thus all fcns are part of an IOMMU group.
-The spec states that ACS support must be provided if p2p traffic with other functions is supported.
+So, I think we'd have to pick a number aligned to MOCK_PAGE_SIZE?
+e.g. changing to 0x18000 for example can pass.
 
-
-> Jason
-> 
-
+Thanks
+Nicolin
