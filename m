@@ -1,71 +1,71 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912E61A2541
-	for <patches@lists.linux.dev>; Thu, 17 Jul 2025 22:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB9E1A23A5
+	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 02:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752790640; cv=none; b=ee9MxwUOUn7x+xgG+3EauCgvOAgCd1/7lZ9V6UesXKiEUYCH9AjkMMlqvmXYYOl7Bpda8LJ0Zx1mdSezbB4oeJpcjo5LFE3lHDsXPsoPkm9r5fl8uHEM2Uv7EE2Wf4n1Z+gW77lHIJGcC/P26Nzd3VMODVqpA38LCO4+OQxtBMU=
+	t=1752805909; cv=none; b=R9FFyeMjROFeTdpjP5kgBpvGdzZIetrHrri+0GH6hVfvWV2xPwy1cG6Q/IMrHKCEp9hkKimAg1vWY/tmkfhOuG65JIBPC5FenhAsIbJAAVfORVyJFr/OIulQr24SIaI8yrKCzDbR464ir/Ql8OqmUpbkR787DwWxxW/a6j/QhP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752790640; c=relaxed/simple;
-	bh=58KJnD9NytLGJCW6oBveiJv4eE1/FvtFSAbReU6RBjw=;
+	s=arc-20240116; t=1752805909; c=relaxed/simple;
+	bh=GKHMgIQjLp7KXkce3TSNrNDc4cs1kxoWV9ktElkfly4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J+Q49936hv5XJ5EqdUkeIPq5nWYEc4Gex3E/NlEC56uzBvWFE3G0JMnIWaVIr0kJDPAwDFlJFYwsd5qXnuGOqD56uou0OCGWway3JO9jkJ4Na9IerQJ8QAE1w7bYPi64Ae6dFuMmM/FfOjE5qzhSjuQpkVF+6uvgYROcRwIO70Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TYC72W9G; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=H1cAgSECgZzCqi4BwiyWSuw32AQRkpL3o7N4ofC9ZNldHb3YCh/262E/PwgHx05J1V2PqGTmKQ1ZeEkVtQhM3EuLYPWDk1UjtmYmM+LWapfpWkhQ27qLBeu2xPeMYapl0g09TVOsPC6TpQOCxsJVfAJw4xXHNKJcIAF45G+aQfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IIhBC2Tw; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TYC72W9G"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IIhBC2Tw"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752790637;
+	s=mimecast20190719; t=1752805907;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=k2eLS7DZKuYaKmsCXE04egU2n+sc3hK3vsCJNQUw67k=;
-	b=TYC72W9GKBi/+ZJyXy5ITAHGL2YjDS6wy8K3MM4+S0tiXrDApbaYlb8R1hFrjDgCHWMvNb
-	z/QIDjcR1mwP6o85Sz7Ge/8z3wJhB0vRy5csqs2thV+0omFoHIBJlcYq1v59pGSdFoniym
-	MQvIxe62DFjuI3zWmsEViwMO7rgme9o=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=GaZLU4GKhmRux2+I10jXp65n20V7jWRI51gsD8E69t4=;
+	b=IIhBC2TwE9NEpiz/EUaWv0haXUZ7vPC42a6GZVylvqnn84jKu4zrqz7xxvfrvy2KX6UIaw
+	LaHiMT+e5gSSnLKn6QRAM7gkoGZ+aWtzat6aWTOjpfq04qJhzzBX0i4ILAtgHtzJGaP/fP
+	LgAHdfNM4IvmHy2euzpnEAK95IZwk5s=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-0XdWvfaQMTuZNjFi8zgxYg-1; Thu, 17 Jul 2025 18:17:16 -0400
-X-MC-Unique: 0XdWvfaQMTuZNjFi8zgxYg-1
-X-Mimecast-MFC-AGG-ID: 0XdWvfaQMTuZNjFi8zgxYg_1752790636
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6fe182a48acso41579976d6.1
-        for <patches@lists.linux.dev>; Thu, 17 Jul 2025 15:17:16 -0700 (PDT)
+ us-mta-632-GjwhUYpaPPebNbF2PnjuNg-1; Thu, 17 Jul 2025 22:31:45 -0400
+X-MC-Unique: GjwhUYpaPPebNbF2PnjuNg-1
+X-Mimecast-MFC-AGG-ID: GjwhUYpaPPebNbF2PnjuNg_1752805905
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e095227f5dso252778085a.1
+        for <patches@lists.linux.dev>; Thu, 17 Jul 2025 19:31:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752790636; x=1753395436;
+        d=1e100.net; s=20230601; t=1752805905; x=1753410705;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k2eLS7DZKuYaKmsCXE04egU2n+sc3hK3vsCJNQUw67k=;
-        b=kzR4I86rMLOSN4qhPpDBs9phKRk1iLiKZEQsPM8Pi2jUUBkfzgw03Gz2awplfphPHC
-         f5IHiJNpVETOt/+j9KBU4SvOeFxd49W16Whd+SCBdyoKoL4NmhaUk+SONU2VKtWtp+dR
-         lAcGKX4rgFrL93RUwsrOoGMJIHmliPaZTebuVG8RCIGeDCd7mWr1j0ORYqyqDUeC3wIH
-         Fz6xcGQBI3XeYbZr9D0Fmjn0rG/GvazMnPneKn1PBT+j7Ejvaacs2sQhvG2SViRACU30
-         n6G5ymFlPBg/0w8bqKOqTOLfy0rABX28fwgurxb/pL99jyE33E2Y10PEfKlELe3yn9z2
-         wu4g==
-X-Forwarded-Encrypted: i=1; AJvYcCWizBT+hCPjAd9YdaU1uAvmQ181lZ7l4Orfb6ORUzOVKe0rc9WlU3YJiYsiBT/ifnYpBTt63b7S@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy8aJmVnfTVHv+TuSMSwo1cjqtjizQxMlGXXfgt3vyBZg7GUzNx
-	39hFEbS8DNb4LjSxbiXE5vKqThuliHB6NNhgkAu6EWAiQDNk2g9o3DiFUBBfTEZExx3bO0IA6TH
-	dSTBoM0JA7Rhbo1Oen7O7dxC6U79cGjDedpBOCvKptwLnuDx7fu/5dCVuxLs=
-X-Gm-Gg: ASbGnct5noDIlAqzXGlKO+pFqHTcL8eU6DkHKZqSgMmEG/2PEkM2bjVzn2LdIyYFXBI
-	1+PwJotWw99NF+idHYg7SqFD+Rw3rqCpLW3Nlz43lGQhz0JJJsbkW6/6iIubyaCbLkelCFQvXjJ
-	CN4yGKJUucJqh7TuPstSqoHpRvIwNLYRNT/sxw/Ro63O0Mq6pkNqRcoPRwo8vmP0e9cfNxUvAM8
-	3tqbuDguLqTbyE076tXKfcF0hSKTtZIvQ95MdUvFf20+Q0C7N16mbOxEOr+7rMtQ8gapQ9k164c
-	LsxBe14gfkeTZSy6LtqcWV6rD2cLduLmg8tpEDgQ
-X-Received: by 2002:a05:6214:624:b0:702:c038:af78 with SMTP id 6a1803df08f44-705054fd174mr67554616d6.5.1752790635802;
-        Thu, 17 Jul 2025 15:17:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZdYk1t9nSSqx51KlhXGP3E6Q514XZRXomUyAlPzCL3RWf3fbz0HOn4/LJXtmlAmeSbwBFBw==
-X-Received: by 2002:a05:6214:624:b0:702:c038:af78 with SMTP id 6a1803df08f44-705054fd174mr67554116d6.5.1752790635341;
-        Thu, 17 Jul 2025 15:17:15 -0700 (PDT)
+        bh=GaZLU4GKhmRux2+I10jXp65n20V7jWRI51gsD8E69t4=;
+        b=Qcc7TPDm1QAWsk/N6wtL7B9aNniGHVbFEPsF24CSpOuxm/BdqGVTZofQL0tptgpZxH
+         I99YecGND+3jh2DSL+55dVLdec3Qs421a8t9jXA+1fK5zRZ7Wo/eNBBxjWP3P/nHQgHs
+         rTfy50gxopJrvviGHEUkIq/xk4PnAhzphVHAcVJkGnJwaH03Evvi5WYR8D9XPsvv444u
+         L5k4dFxIVyBwVS7k/8Z9+CI4EpqW8yDiQloiHfFq8viVF/4op5PiorCqjgnxa3d9zOGs
+         1YY6e7l6bn3+qb8BvJj+ztkQu3OcBxIS4108BxN1l1cs4/i5H398MQpxfLWmMOgn5ARa
+         EU7w==
+X-Forwarded-Encrypted: i=1; AJvYcCUdylQkqzGlfBAxnB590DUw5Dpk0ABWwVjcmaCOPZXwJxwvTujutfSpLt+P3EZtw1vEq/Sqx0/m@lists.linux.dev
+X-Gm-Message-State: AOJu0YxMIIaefHhGlBfRh2XdKKYK9p2jPjkNS54hEF/vlrMopj68Opde
+	gnVl832QyIOjivkx507vzh0xyGcPPFjLofKNHt4+mXKPe25oqsPIdFZizUkMj+/Mk1Kzx/V0v0u
+	619yvt3bzZXQnLNK1jPDqbnAvKC4GcAGc7jJ1GITOwCcH6/Vk7xcMd/WQJ1o=
+X-Gm-Gg: ASbGncspzg2wIcIzG6PD2yzNuTuMgo320YvzvtLSrnqvkgtU6BuoVZ4k0xc9yn8HqcS
+	nBQA6IAdloHHJ8+bQ62ts1JUpZDGu7d78jwKWYlfPzhOPgbAIgfYz/MQsgsZ47lboboOaO44YGq
+	HDV27Rdqe46cKCt8n3IX+YjaOw7V8AMpftDA9+Zm7i7JNgHdkZe5VDqmtC+pvqrM/cTKx7NHA9F
+	jgfknkrKhZ13k5ugyNSHoXZ9GxVkipxNVjWJqEdqaTpEO2pobyUXusv4Nz5PMVZhs2pASFx1tBV
+	960ghKHvM8SmMTs5w6WrAs6MeYbUX4ufGpg63Y57
+X-Received: by 2002:a05:620a:6007:b0:7d4:3bcc:85bf with SMTP id af79cd13be357-7e342a5eda7mr1167333585a.12.1752805904804;
+        Thu, 17 Jul 2025 19:31:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJ7WNmhYxeTKTnJvjyZYFdY4Uy7qNdAA+omyn3onwql37C/+HhiaajQ3N5wll13LWDMCOCqQ==
+X-Received: by 2002:a05:620a:6007:b0:7d4:3bcc:85bf with SMTP id af79cd13be357-7e342a5eda7mr1167330085a.12.1752805904357;
+        Thu, 17 Jul 2025 19:31:44 -0700 (PDT)
 Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7051ba8df3fsm857016d6.79.2025.07.17.15.17.12
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e356c9155csm34859285a.95.2025.07.17.19.31.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Jul 2025 15:17:14 -0700 (PDT)
-Message-ID: <aa84cbc8-6d7e-4e70-887d-b103f2e01a77@redhat.com>
-Date: Thu, 17 Jul 2025 18:17:11 -0400
+        Thu, 17 Jul 2025 19:31:43 -0700 (PDT)
+Message-ID: <2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
+Date: Thu, 17 Jul 2025 22:31:42 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -73,22 +73,27 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/16] PCI: Check ACS DSP/USP redirect bits in
- pci_enable_pasid()
-To: Jason Gunthorpe <jgg@nvidia.com>, Bjorn Helgaas <bhelgaas@google.com>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>
+Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
+ switches
+To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
  Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
  Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
  kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
  tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <15-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+ <3-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+ <20250701132905.67d29191.alex.williamson@redhat.com>
+ <20250702010407.GB1051729@nvidia.com>
+ <c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
+ <20250717202744.GA2250220@nvidia.com>
 From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <15-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+In-Reply-To: <20250717202744.GA2250220@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: KS2aNZc-y7pt_Sw58JldIJwBPR6mf2laUlE9kGeyEoY_1752790636
+X-Mimecast-MFC-PROC-ID: uJrxsWQPU5OFqkN1kgEVDvhkYOn7IH4JyFWzHBALiOI_1752805905
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -96,137 +101,65 @@ Content-Transfer-Encoding: 7bit
 
 
 
-On 7/9/25 10:52 AM, Jason Gunthorpe wrote:
-> Switches ignore the PASID when routing TLPs. This means the path from the
-> PASID issuing end point to the IOMMU must be direct with no possibility
-> for another device to claim the addresses.
+On 7/17/25 4:27 PM, Jason Gunthorpe wrote:
+> On Thu, Jul 17, 2025 at 03:25:35PM -0400, Donald Dutile wrote:
+>>> What does a multi-function root port with different ACS flags even
+>>> mean and how should we treat it? I had in mind that the first root
+>>> port is the TA and immediately goes the IOMMU.
+>>>
+>> I'm looking for clarification what you are asking...
+>>
+>> when you say 'multi-function root port', do you mean an RP that is a function
+>> in a MFD in an RC ?  other?  A more explicit (complex?) example be given to
+>> clarify?
 > 
-> This is done using ACS flags and pci_enable_pasid() checks for this.
+> A PCIE Root port with a downstream bus that is part of a MFD.
 > 
+> Maybe like this imaginary thing:
+> 
+> 00:1f.0 ISA bridge: Intel Corporation C236 Chipset LPC/eSPI Controller (rev 31)
+> 00:1f.2 Memory controller: Intel Corporation 100 Series/C230 Series Chipset Family Power Management Controller (rev 31)
+> 00:1f.3 Audio device: Intel Corporation 100 Series/C230 Series Chipset Family HD Audio Controller (rev 31)
+> 00:1f.4 SMBus: Intel Corporation 100 Series/C230 Series Chipset Family SMBus (rev 31)
+> 00:1f.5 PCI bridge: Intel Corporation 100 Series/C230 Series Chipset Family PCI Express Root Port #17 (rev f1)
+> 
+>> IMO, the rule of MFD in an RC applies here, and that means the per-function ACS rules
+>> for an MFD apply -- well, that's how I read section 6.12 (PCIe 7.0.-1.0-PUB).
+>> This may mean checking ACS P2P Egress Control.  Table 6-11 may help wrt Egress control bits & RPs & Fcns.
+> 
+> The spec says "I donno"
+> 
+>   Implementation of ACS in RCiEPs is permitted but not required. It is
+>   explicitly permitted that, within a single Root Complex, some RCiEPs
+>   implement ACS and some do not. It is strongly recommended that Root
+>   Complex implementations ensure that all accesses originating from
+>   RCiEPs (PFs, VFs, and SDIs) without ACS support are first subjected to
+>   processing by the Translation Agent (TA) in the Root Complex before
+> 
+> "strongly recommended" is not "required".
+> 
+A bridge (00:1f.5) is not an EndPt(RCiEP). Thus the above doesn't apply to it.
+[A PF, VF or SDI can be a RCiEP -- 00:1f.3, 00:1f.2 ]
 
-So a PASID device is a MFD, and it has ACS caps & bits to check?
+>> If no (optional) ACS P2P Egress control, and no other ACS control, then I read/decode
+>> the spec to mean no p2p btwn functions is possible, b/c if it is possible, by spec,
+>> it must have an ACS cap to control it; ergo, no ACS cap, no p2p capability/routing.
+> 
+> Where did you see this? Linux has never worked this way, we have
+> extensive ACS quirks specifically because we've assumed no ACS cap
+> means P2P is possible and not controllable.
+> 
+e.g., Section 6.12.1.2 ACS Functions in SR-IOV, SIOV, and Multi-Function Devices
+  ...
+  ACS P2P Request Redirect: must be implemented by Functions that support peer-to-peer traffic with other Functions.
+                            ^^^^
 
-> The new ACS Enhanced bits clarify some undefined behaviors in the spec
-> around what P2P Request Redirect means.
+It's been noted/stated/admitted that MFDs have not followed the ACS rules, and thus the quirks may/are needed.
+
+Linux default code should not be opposite of the spec, i.e., if no ACS, then P2P is possible, thus all fcns are part of an IOMMU group.
+The spec states that ACS support must be provided if p2p traffic with other functions is supported.
+
+
+> Jason
 > 
-> Linux has long assumed that PCI_ACS_RR implies PCI_ACS_DSP_MT_RR |
-> PCI_ACS_USP_MT_RR | PCI_ACS_UNCLAIMED_RR.
-> 
-> If the device supports ACS Enhanced then use the information it reports to
-> determine if PASID SVA is supported or not.
-> 
->   PCI_ACS_DSP_MT_RR: Prevents Downstream Port BAR's from claiming upstream
->                      flowing transactions
-> 
->   PCI_ACS_USP_MT_RR: Prevents Upstream Port BAR's from claiming upstream
->                      flowing transactions
-> 
->   PCI_ACS_UNCLAIMED_RR: Prevents a hole in the USP bridge window compared
->                         to all the DSP bridge windows from generating a
->                         error.
-> 
-> Each of these cases would poke a hole in the PASID address space which is
-> not permitted.
-> 
-> Enhance the comments around pci_acs_flags_enabled() to better explain the
-> reasoning for its logic. Continue to take the approach of assuming the
-> device is doing the "right ACS" if it does not explicitly declare
-> otherwise.
-> 
-> Fixes: 201007ef707a ("PCI: Enable PASID only when ACS RR & UF enabled on upstream path")
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/pci/ats.c |  4 +++-
->   drivers/pci/pci.c | 54 +++++++++++++++++++++++++++++++++++++++++------
->   2 files changed, 50 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
-> index ec6c8dbdc5e9c9..00603c2c4ff0ea 100644
-> --- a/drivers/pci/ats.c
-> +++ b/drivers/pci/ats.c
-> @@ -416,7 +416,9 @@ int pci_enable_pasid(struct pci_dev *pdev, int features)
->   	if (!pasid)
->   		return -EINVAL;
->   
-> -	if (!pci_acs_path_enabled(pdev, NULL, PCI_ACS_RR | PCI_ACS_UF))
-> +	if (!pci_acs_path_enabled(pdev, NULL,
-> +				  PCI_ACS_RR | PCI_ACS_UF | PCI_ACS_USP_MT_RR |
-> +				  PCI_ACS_DSP_MT_RR | PCI_ACS_UNCLAIMED_RR))
->   		return -EINVAL;
->   
->   	pci_read_config_word(pdev, pasid + PCI_PASID_CAP, &supported);
-> diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> index d16b92f3a0c881..e49370c90ec890 100644
-> --- a/drivers/pci/pci.c
-> +++ b/drivers/pci/pci.c
-> @@ -3601,6 +3601,52 @@ void pci_configure_ari(struct pci_dev *dev)
->   	}
->   }
->   
-> +
-> +/*
-> + * The spec is not clear what it means if the capability bit is 0. One view is
-> + * that the device acts as though the ctrl bit is zero, another view is the
-> + * device behavior is undefined.
-> + *
-> + * Historically Linux has taken the position that the capability bit as 0 means
-> + * the device supports the most favorable interpritation of the spec - ie that
-> + * things like P2P RR are always on. As this is security sensitive we expect
-> + * devices that do not follow this rule to be quirked.
-> + *
-> + * ACS Enhanced eliminated undefined areas of the spec around MMIO in root ports
-> + * and switch ports. If those ports have no MMIO then it is not relavent.
-> + * PCI_ACS_UNCLAIMED_RR eliminates the undefined area around an upstream switch
-> + * window that is not fully decoded by the downstream windows.
-> + *
-> + * This takes the same approach with ACS Enhanced, if the device does not
-> + * support it then we assume the ACS P2P RR has all the enhanced behaviors too.
-> + *
-> + * Due to ACS Enhanced bits being force set to 0 by older Linux kernels, and
-> + * those values would break old kernels on the edge cases they cover, the only
-> + * compatible thing for a new device to implement is ACS Enhanced supported with
-> + * the control bits (except PCI_ACS_IORB) wired to follow ACS_RR.
-> + */
-> +static u16 pci_acs_ctrl_mask(struct pci_dev *pdev, u16 hw_cap)
-> +{
-> +	/*
-> +	 * Egress Control enables use of the Egress Control Vector which is not
-> +	 * present without the cap.
-> +	 */
-> +	u16 mask = PCI_ACS_EC;
-> +
-> +	mask = hw_cap & (PCI_ACS_SV | PCI_ACS_TB | PCI_ACS_RR |
-> +				      PCI_ACS_CR | PCI_ACS_UF | PCI_ACS_DT);
-> +
-> +	/*
-> +	 * If ACS Enhanced is supported the device reports what it is doing
-> +	 * through these bits which may not be settable.
-> +	 */
-> +	if (hw_cap & PCI_ACS_ENHANCED)
-> +		mask |= PCI_ACS_IORB | PCI_ACS_DSP_MT_RB | PCI_ACS_DSP_MT_RR |
-> +			PCI_ACS_USP_MT_RB | PCI_ACS_USP_MT_RR |
-> +			PCI_ACS_UNCLAIMED_RR;
-> +	return mask;
-> +}
-> +
->   static bool pci_acs_flags_enabled(struct pci_dev *pdev, u16 acs_flags)
->   {
->   	int pos;
-> @@ -3610,15 +3656,9 @@ static bool pci_acs_flags_enabled(struct pci_dev *pdev, u16 acs_flags)
->   	if (!pos)
->   		return false;
->   
-> -	/*
-> -	 * Except for egress control, capabilities are either required
-> -	 * or only required if controllable.  Features missing from the
-> -	 * capability field can therefore be assumed as hard-wired enabled.
-> -	 */
->   	pci_read_config_word(pdev, pos + PCI_ACS_CAP, &cap);
-> -	acs_flags &= (cap | PCI_ACS_EC);
-> -
->   	pci_read_config_word(pdev, pos + PCI_ACS_CTRL, &ctrl);
-> +	acs_flags &= pci_acs_ctrl_mask(pdev, cap);
->   	return (ctrl & acs_flags) == acs_flags;
->   }
->   
 
