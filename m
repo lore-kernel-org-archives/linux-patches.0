@@ -1,227 +1,115 @@
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2086.outbound.protection.outlook.com [40.107.101.86])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1402E7639;
-	Fri, 18 Jul 2025 18:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.101.86
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752862193; cv=fail; b=m348YCaz4A8ASB4aklN5st2VhF3m1WTNdkkiMe/LrKGO4oiLGXZnIh3ZbbkOZ1i2xxCOddorX++PQwI4O+1hI8+1y/948LcvGcFGACIOefyOXxGUm6cBpSWECUXMxI2vo01hYIa4FHj68065rv8UvnC+Lw+Lhc40Th14iQgvrCg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752862193; c=relaxed/simple;
-	bh=V5lNPhHuH7aM03Tce+qi6XOvRSNpUrBTw/QjJGEYWbw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=qvxBx2kOnN6QsGRjJYLnODnLCM/MxN8jZMJwY2hTO7xXBVhVuqsIpnOnNhKTW70cbTQCBoBlMStZkWKwQJSpPLTnl7vtjJXDNpvq835AvwZd1TYDU0krfsarkc0creR8/1rChs9o0KC41SaENXQtkEoKpZ84A5jGsznYcrooju0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=n62eZz8F; arc=fail smtp.client-ip=40.107.101.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="n62eZz8F"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sl/QbJVRetroALWI71Zl6GwyTpzZTAj8msC47Pb1plfYSCuHQT/QBVCmXak1Py10HRRC/sJSc13u4pQ8Fel4F+g5cDLDvB2DDkSlLikkna6Ks4KLbmJShsJjT0Ad+MnMDk9F3WkvLoz9FUrH9BytXE58uhVFr5avdMNq9PqpZ86XdcMVy18FlX0HziJS1495O5NUc7ODdr4EgMZRVp5noTH/SFcjM8t8jtgrDAYIywxRSgc/6+bCX/3ismHWyHoH8PI9X+zoS8H+H5/9n7AArk72T7qIkvYY9x50igEP43qhkb52M87bDIf90F9vH+Dkeqe++13+FwlG5ZXifTfp0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MhUdXjsFdtqpK4Il/9f6d28JDHIHm4168xoE0ANfuE4=;
- b=qpwc4v6urWAqh4SWWNyB3gflzu4BVICtO9+FN5mwS2Y0u4kYKrAWxh0gFzcYC228ceBy6LyspvOxqFlli4xQGV7l950WxfCXjsaQ1EhVekr2XmEztvg3eAeanXelVlIyH+QQ6sP/qFFHue/nZ9V1n0laJsIaaZSUVDcW0ZFOyh9kaQ5OBtUZAetusOZgc8Jr//jIKvmuCbZsRRNck6xTNTca6MvnI1y4yIuFmu0a4PlqBmLKRojVwjvC8LuSsouLqNJzN2hrPq05DHHDDpE0vSe83mDmthutLs4uNb5EJ8V3Kg0DAIuUO4MC8IaBHBlV4lhZRnb1wr7EBPvrOE608A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MhUdXjsFdtqpK4Il/9f6d28JDHIHm4168xoE0ANfuE4=;
- b=n62eZz8F3A2h2KiSfXEx+S83COm9qfUxM84uvpHDlcqTMho6UIEdzllA1GPcaxBY4LEdzIu5fI4CMRuLCG6RRs3DN5unAchGLT58RMA8GJlW9GC3nlkdVsKQvpC3N4hBSnVjEqeIJ8MiHzsYPM4VBXQrmA4gX1//efePE+XAaw+bj0IfDdVQiYFg8P77UbyC+yZBp8XlsFn9bOy+khOkBrpL3FUVIl67pu2d4or9dJ8iLYQLa0o0qBAFvuUOt+6M9saON+NgTzlYB7TSzdqz1v+9/rc0rO56zVQAGzxidM2vgfBmQ4sE2fPHWWFcd7yQ0YJIqZx5Ya+bDJIL2cKaHQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by CH8PR12MB9766.namprd12.prod.outlook.com (2603:10b6:610:2b6::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.27; Fri, 18 Jul
- 2025 18:09:49 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8901.033; Fri, 18 Jul 2025
- 18:09:49 +0000
-Date: Fri, 18 Jul 2025 15:09:47 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Donald Dutile <ddutile@redhat.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
-	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
-	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
-	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-Subject: Re: [PATCH v2 03/16] iommu: Compute iommu_groups properly for PCIe
- switches
-Message-ID: <20250718180947.GB2394663@nvidia.com>
-References: <3-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <5b1f12e0-9113-41c4-accb-d8ab755cc7d7@redhat.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5b1f12e0-9113-41c4-accb-d8ab755cc7d7@redhat.com>
-X-ClientProxiedBy: BL1PR13CA0387.namprd13.prod.outlook.com
- (2603:10b6:208:2c0::32) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF86880C1C;
+	Fri, 18 Jul 2025 18:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752862215; cv=none; b=Ilv2rSSg4FEjYZ9LEuBLF/CQKizIrFz09aavJiZ3DLJ76CJ8OiX0pW2mNfOljh8tYhSveitu9Gbilrw9WmRhyle5x6I8J8Tpp8DJCXboThLZCJh2BEEBWnEFK8S02d86OHODTv0cZv9PPreIMmBlHQtIbqKqzQKYPx49c8HaYnA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752862215; c=relaxed/simple;
+	bh=WgxSzovmY/3HN+EA7KrCAS/u+NXYud7/dmBnI4yWUAo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sgl0V3YWtA2LIs5L9aJr0yVfvOHwNkzkuK1gTcE/8T2X5HX7c2R2AzmuO+PAhTaNT69g/laofiovUvh0wY9W4DrMNh7uVesPqX0yoOK1chgtzfCsysQhNVlFEVdAiEVxOaMGnclQGwyd/sRO2lnh4DVfazEWPOa6J7hMZlPzy3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA27C4CEEB;
+	Fri, 18 Jul 2025 18:10:09 +0000 (UTC)
+Date: Fri, 18 Jul 2025 19:10:06 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Will Deacon <will@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
+	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jijie Shao <shaojijie@huawei.com>
+Subject: Re: [PATCH v3 6/6] IB/mlx5: Use __iowrite64_copy() for write
+ combining stores
+Message-ID: <aHqN_hpJl84T1Usi@arm.com>
+References: <0-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
+ <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
+ <20250714215504.GA2083014@nvidia.com>
+ <aHYqPRqgcl5DQOpq@willie-the-truck>
+ <20250715115200.GJ2067380@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CH8PR12MB9766:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6095689f-f120-4b90-efac-08ddc62648cb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ac+/HHEyKp0IcZj0TPCbGzr53mecs9FS4b4QRL0kWqGjhpSeAlgNlsHxfg6+?=
- =?us-ascii?Q?zO9YS5t+52X3Rh2r+FdnbbhxHyMo+gVsnMnK+dMD02TBNcwb9jdM6lESXXeT?=
- =?us-ascii?Q?ti44llQ4WpPu5QqiXGjaEQvdUDA0S8CcmpEXvUO4bE8DZd/KpA4pfpLfknVo?=
- =?us-ascii?Q?2K8BYQAklprZtnjWBPWUvmDwWWTN5eH80/SAAtQ24d9Czz73nmb19vFhRUfv?=
- =?us-ascii?Q?fVuXVyNMEVDr4Je9v2lVMiAripXbrltohp9Kk7wSaEla3VpCEYhuV5jOZXNl?=
- =?us-ascii?Q?dSfNAfRNU+swLwbDeEa9UgIHwe4SuyYWG9bsLCZR9jqybw7bEb0DVNdWjQcT?=
- =?us-ascii?Q?7r+uaF/vDVuurdGZMEKHBftsojMDutBe5jZPTz6Z5L1MAk9hbG5Y9bcPXG0d?=
- =?us-ascii?Q?owrvujlr4DaA//4LR58i3xmc/uzTF57CaJw/5jxIOdDmJS9I4at927mOhwTY?=
- =?us-ascii?Q?YLO0v2xEA+8u4iqGvxKQJlEbTu0lgmmOkbOnG0v0Yq/2zSEs48/F6INTqg8v?=
- =?us-ascii?Q?JqKXYE2t6WH5bUltD86mv+/uCVfl7NUe7/nTA/cHZIsXgm/+BYh4wV2mNwwc?=
- =?us-ascii?Q?tPXKNLkI1ey+fLUCGOtqLSdmCQsDI7Rs3wJ6XzZ+O/RUrOkmLjgYG6xuoATS?=
- =?us-ascii?Q?RSfkOROc9Q9njpqaimahFYZLEiy+feVa4LGoNOnHIfXWelO8cyZtg6QXVsc2?=
- =?us-ascii?Q?OsJIlqGle+KPyKx0iKcRv56h3ccyTr6MgmjZRPevrJogaPA2XFgU4nUXnCk5?=
- =?us-ascii?Q?8dZkH6zAKV8dG682opFARBKV1Do8NUkaxOxglg2SyFVSQqFnDFwSpUlww05Y?=
- =?us-ascii?Q?skCwgKsf4kOs6W+BVVeAeb+McU7ggRDcOdiul57L3CW/rHl9hkZflenjdPyv?=
- =?us-ascii?Q?+bZfG5Gv80dzAn57pW0MNkd719CKKcX1tlIV1d++ZDLzPpNUs9EjByg17IwB?=
- =?us-ascii?Q?DZJjR6GHHxiY5gwb9xY36AGvOs6xzzC3a5xyCj2tT6/yBCsZ7YpHBLbNHoKn?=
- =?us-ascii?Q?jyFrPJWm/kYG/29eZ/EXUjoOI85p/1BnkmCP722RgFcnxqrlBf0XIdLy2j0f?=
- =?us-ascii?Q?uKeFQ/FvtJVe9qErHjC2PSmTO4gXHvA9Uw7YjdNiFbPhm+IV7jW07aUfsAev?=
- =?us-ascii?Q?J4ZZz62+OYtymtLXKNRXbh8WTk3AlS4neZdbLTF2evhTxtMuDbjgM+ArVN0Y?=
- =?us-ascii?Q?Yr7exEDDjVkGsNErSbeSFl17TFkR1ftqZCgbe5bwSNoQDXWj84J9swLSVQli?=
- =?us-ascii?Q?GbxONufMNTr5sz29hA7HD33ZwNAlbjBiNfMrepDN1ROx1voLLJTftyjX6nGr?=
- =?us-ascii?Q?BBBB29PAbKCSKiolNYv2GTwHPJF/R6CUdNtlQr5Y8O3hW5yGUyaBDuIumssr?=
- =?us-ascii?Q?XW9rdH+IRXIqBjpDy6FoAiYrLCoDuqu7cb5xRW5+9+bqIGX5h4DXl9yo79D4?=
- =?us-ascii?Q?CjjfFvJiHmA=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?zqy0zbcq3Hgv+Nf6uQV99dtZ4k8brGwoRQHdAl6N0pgNTrRpmYBm2DlLRpPS?=
- =?us-ascii?Q?B7pTbZVZoXvbAUj68HjRXWnRqjSsO4geLs5CerBLJ8fOwJcdn2MWVZgsvJpr?=
- =?us-ascii?Q?fTQyC/ScfpAIful1Xwt80IZB0SIHSxLARSuqz1Yjrv5zIE75iKlNH52S6LO/?=
- =?us-ascii?Q?HWl/vWgJ19Y3WslhAy429rjJT1jhMpohj6I6BFiclUOkW2j30SKUIhxOo8MK?=
- =?us-ascii?Q?e9iHQrCAcJ8eMsBk25jgyYWVtUeEJM5A7GLzTwX7CmCLvy0Ysc1hjaQmCc4s?=
- =?us-ascii?Q?uXBsbEGMuirGtHQtgkPBDNRsVjriF/wUrAgSW+w5EznScwQAsUgyTNbaItCS?=
- =?us-ascii?Q?WG9AJObKo9cRKt1DF5pz/oS6NoDIY0ZgfqgmILHjbyIi0d8guKAB07AZLmAY?=
- =?us-ascii?Q?upXSsxpbQDFsP2l97cI/3UNCV8k/MniQxKZ3aOvImIre7pEMCO73fVf91otX?=
- =?us-ascii?Q?1sVJGhzT78cGnEr5+Hr7CzpU9VZ70TGQzbC7eBU0dXYpU+XdDTWUcxbk/YaZ?=
- =?us-ascii?Q?zIGBMGdTCelXD0A0Yt5mO1SKczUbcDSNYtG05GIqpAZawljb17lULRUwGgC2?=
- =?us-ascii?Q?yXmj+ROyWilCtf/W7lFlaqYBq8wG5LmsSlHjoNHqAeDaSQYCjw7rm4ujz93R?=
- =?us-ascii?Q?vZNLZKWGJ5RG2TnacVYFxQHS8DUHp5YPmU06IVs3ir+u2B5JPoVJNvPwjfvB?=
- =?us-ascii?Q?cktv13HYcd9zeyKQ6vKDs5emZv/zAtKz8BlXhMq2dYXRLJcjwSD748+yDrDh?=
- =?us-ascii?Q?RugIxISxzSW6o4IS6Q4f6TjJIT9T+pBwPGtqHMKkAmMXnXbFHjG26jCitDVt?=
- =?us-ascii?Q?i1CDtVMQ6RbSA/xBWjZeGKqpnRfBMA3QN0oncee/CYojEp0wt9AE2gDbiBBR?=
- =?us-ascii?Q?Axc2uwvYMh/TiDUpGmH7/EoAK3/o9MDDCxDUDJXmG5MShAPNXrCPczVcZEfY?=
- =?us-ascii?Q?UdSRP1ZonJcrEse3XhKmCdGO9ZxPheJCuMcrjg6Y3OXO6orMR/AuFzjBxq7o?=
- =?us-ascii?Q?nOqAE7z6ycE1r2zm9Ihr404jeNYakXXAMnh6LKLpNmnLy/vGKU4voy1O5iuS?=
- =?us-ascii?Q?LeMH9Vanzp9JhFXJomAHEm8RAmKJpfTRucdF9EYrRtuNW68MAwynnLcQZyIo?=
- =?us-ascii?Q?JlCWpmKgetmEphVr7vbqo4bbbpQU7qh+y0+yQINVCgqYyNz8WxOu6OVKlBUg?=
- =?us-ascii?Q?ePIKm2FUPQ6NE1nncx/FDur5aYEAztT3DaVnzZdd7j9+xFygZEgNNlL8HMOr?=
- =?us-ascii?Q?NTx+54cmJcveyiMcXJMx1hKMeDXQOn5LHSgpgAWw9wFRc1gc0z7OG7l4EPe0?=
- =?us-ascii?Q?52t9kUMLpNE/ZTxmNOyq9gm6zvtu5JqeAr6mMQl5JNMPKs/aLyy0jNl2IVNn?=
- =?us-ascii?Q?4z9XfFx+jeAaNrAjMImV70QfMCOF4PvnPmHSUueQCR0la6/7nyxFEN/N8ynK?=
- =?us-ascii?Q?Ma7KzzPhJWS5ZPD5nQccrMFdSLN/8O/uYfEA8BvjcdyUqnViLVtVivpipOcc?=
- =?us-ascii?Q?NuVeqlWOK99gDGgEhw6cyqtRrpuLzH6zT8Yd2j0yxePfhsePEGhbhC+Vfx85?=
- =?us-ascii?Q?5SzHW2V+YbDugdx1/nmm0ZIBvbOm8LKDAerzZ4Kb?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6095689f-f120-4b90-efac-08ddc62648cb
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 18:09:49.0771
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zZVrXl3qbomrJWR0pXoRvDcsi+ospjo7lY2TIGTNBlHlgBNSow/SL7Tr5V8fb9eJ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR12MB9766
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250715115200.GJ2067380@nvidia.com>
 
-On Thu, Jul 17, 2025 at 06:03:42PM -0400, Donald Dutile wrote:
-> > +static struct iommu_group *pci_get_alias_group(struct pci_dev *pdev)
-> So, the former pci_device_group() is completely re-written below,
-> and what it use to do is renamed pci_get_alias_group(), which shouldn't be
-> (easily) confused with ...
+On Tue, Jul 15, 2025 at 08:52:00AM -0300, Jason Gunthorpe wrote:
+> On Tue, Jul 15, 2025 at 11:15:25AM +0100, Will Deacon wrote:
+> > > Since STP was rejected alread we've only tested the Neon version. It
+> > > does make a huge improvement, but it still somehow fails to combine
+> > > rarely sometimes. The CPU is really bad at this :(
+> > 
+> > I think the thread was from last year so I've forgotten most of the
+> > details, but wasn't STP rejected because it wasn't virtualisable? 
 > 
-> > +{
-> > +	struct iommu_group *group;
-> > +	DECLARE_BITMAP(devfns, 256) = {};
-> >   	/*
-> >   	 * Look for existing groups on device aliases.  If we alias another
-> >   	 * device or another device aliases us, use the same group.
-> >   	 */
-> > -	group = get_pci_alias_group(pdev, (unsigned long *)devfns);
-> > +	group = get_pci_alias_group(pdev, devfns);
-> ... get_pci_alias_group() ?
+> Yes, that was the claim.
 > 
-> ... and it's only used for PCIe case below (in pci_device_group), so
-> should it be named 'pcie_get_alias_group()' ?
+> > In which case, doesn't NEON suffer from exactly the same (or possibly
+> > worse) problem?
+> 
+> In general yes, in specific no.
 
-Well, the naming is alot better after this is reworked with the
-reachable set patch and these two functions are removed.
+For a generic iowrite function, I wouldn't use STP or Neon since it may
+end up being used on emulated MMIO.
 
-But even then I guess it is not a great name.
+BTW, for Neon, don't you need kernel_neon_begin/end()? This may have its
+own overhead and also BUG_ON for different contexts. Again, not suitable
+for a generic function.
 
-How about:
+Unfortunately, there's no way to know what this function is called on.
+We might try to infer that the kernel started at EL2 but even that is
+not entirely correct with nested virt. Or the OS may start at EL1 but
+have direct access to mlx5 where we'd want the faster option.
 
-/*
- * Return a group if the function has isolation restrictions related to
- * aliases or MFD ACS.
- */
-static struct iommu_group *pci_get_function_group(struct pci_dev *pdev)
-{
+> mlx5 (and other RDMA devices) have long used Neon for MMIO in
+> userspace, so any VMM assigning mlx5 devices simply must make this
+> work - it is already not optional. So we know that all VMs out there
+> with mlx5 support neon for mlx5, and it is safe for mlx5 to use.
 
-> > +static struct iommu_group *pci_hierarchy_group(struct pci_dev *pdev)
-> although static, could you provide a function description for its purpose ?
+I can't think of any generic solution here, it may have to be a hack
+specific to mlx5. We can also add add support for ST64B and have some
+condition on system_supports_st64b() for future systems.
 
-/* Return a group if the upstream hierarchy has isolation restrictions. */
+Even if we could handle virtualisation, I wonder whether
+__iowrite64_copy() is the right function to implement 128-bit stores or
+the larger 64-byte atomic stores. At least the comment for the generic
+function suggests that it writes in 64-bit quantities. Some MMIO may
+only handle such writes. A function like memcpy_toio() is more generic,
+it doesn't imply any restrictions on the size of the writes (though I
+think it guarantees natural alignment for the stores).
 
-> > +	/*
-> > +	 * !self is only for SRIOV virtual busses which should have been
-> > +	 * excluded above.
-> by pci_is_root_bus() ?? -- that checks if bus->parent exists...
-> not sure how that excludes the case of !bus->self ...
-
-Should be this:
-
-	/*
-	 * !self is only for SRIOV virtual busses which should have been
-	 * excluded by pci_physfn()
-	 */
-	if (WARN_ON(!bus->self))
-
-> > +	 */
-> > +	if (WARN_ON(!bus->self))
-> > +		return ERR_PTR(-EINVAL);
-> > +
-> > +	group = iommu_group_get(&bus->self->dev);
-> > +	if (!group) {
-> > +		/*
-> > +		 * If the upstream bridge needs the same group as pdev then
-> > +		 * there is no way for it's pci_device_group() to discover it.
-> > +		 */
-> > +		dev_err(&pdev->dev,
-> > +			"PCI device is probing out of order, upstream bridge device of %s is not probed yet\n",
-> > +			pci_name(bus->self));
-> > +		return ERR_PTR(-EPROBE_DEFER);
-> > +	}
-> > +	if (group->bus_data & BUS_DATA_PCI_NON_ISOLATED)
-> > +		return group;
-> > +	iommu_group_put(group);
-> > +	return NULL;
-> ... and w/o the function description, I don't follow:
-> -- rtn an iommu-group if it has NON_ISOLATED property ... but rtn null if all devices below it are isolated?
-
-Yes. For all these internal functions non null means we found a group
-to join, NULL means to keep checking isolation rules.
-
-Thanks,
-Jason
+-- 
+Catalin
