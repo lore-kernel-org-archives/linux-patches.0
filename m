@@ -1,115 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2042.outbound.protection.outlook.com [40.107.243.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF86880C1C;
-	Fri, 18 Jul 2025 18:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752862215; cv=none; b=Ilv2rSSg4FEjYZ9LEuBLF/CQKizIrFz09aavJiZ3DLJ76CJ8OiX0pW2mNfOljh8tYhSveitu9Gbilrw9WmRhyle5x6I8J8Tpp8DJCXboThLZCJh2BEEBWnEFK8S02d86OHODTv0cZv9PPreIMmBlHQtIbqKqzQKYPx49c8HaYnA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752862215; c=relaxed/simple;
-	bh=WgxSzovmY/3HN+EA7KrCAS/u+NXYud7/dmBnI4yWUAo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sgl0V3YWtA2LIs5L9aJr0yVfvOHwNkzkuK1gTcE/8T2X5HX7c2R2AzmuO+PAhTaNT69g/laofiovUvh0wY9W4DrMNh7uVesPqX0yoOK1chgtzfCsysQhNVlFEVdAiEVxOaMGnclQGwyd/sRO2lnh4DVfazEWPOa6J7hMZlPzy3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA27C4CEEB;
-	Fri, 18 Jul 2025 18:10:09 +0000 (UTC)
-Date: Fri, 18 Jul 2025 19:10:06 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC2280C1C;
+	Fri, 18 Jul 2025 18:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752862251; cv=fail; b=FnGUoe21xDUHB2BXaGKiywIyi4iiSoD8pnFzmHycEqLSpNhPIahjAkaN3xACtQ7XpXISunCRD+1ZsVP1vxDyD8Uo1qC6m6t0XH2WTDyFvy/YdwGrttrlpmr8cAED8sx1mQsAK8szwZejB3xSDzEMi0qGnShvjiHSUfxQuyLzkLk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752862251; c=relaxed/simple;
+	bh=SWLsfajP1nMwpOzRNYwzSt02sOMDEf1P4QIhQ2aPCpM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G16H2xx6XUx0kFAfnO/fGinNQR28GApOkueqydn1mTSjteHAMdwbC4FF9n0sTlI//MWcCaQgzE/9Y9/Vm7WfYuskA+XTUESdZlwzIEi72lmUPk02US2YeCQAu3cdpw/dXemai+XGDhFRruRfHZInIch/N9ybe7U5ZXBlorZbRwU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CR0JW46L; arc=fail smtp.client-ip=40.107.243.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CR0JW46L"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DDiIjfeNKX7e21PxWT1JV0OgB+vJ31BpgWFzQW/gVidn2XkJukwu8wXGLF7SihtFp84RKGisIQjWDOyAW1B5TJOSMzrpnv66uaGKOKQdA/fHCKZsEHYH1b75E1Q5EikXXdWCXd3bkD7TtD8Agr2XlhLLyiqS1k+Mb41m/bwgFtzp8NQQwzWMWFiKB9IGYMHElnxT+I5S8bEI7ecskhSErS799NoOFdp414tz+Fv3GgR8L6OvL9/EKRLAngdY3LoSD1nGrCt0Y8DNTKnczl36t/S/Mm7lW+JhnLJG6QuzbuUQK3/uk3WbFsiSzrGR3I2qCrmWUMumiJPFLpNs4GKmSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Gqx5BuRv9k9P/UT6Wb9iJAq3QVTkrS031m59kDRYAGw=;
+ b=m7KFGnGlrqfxZN7UVJGB9BobYs+mvzoEORqY/soEIjSQpNVNVGgTx723ReQTWAsh+VHd+6hyKA/83NSX+5DnzIQmQ9hUM0JXKBlwlDFFBYxZ/+q6v+lDrnIgAJ5DXzdFBKPdgNN8H8PMk1PydbrOt7HymYK7V0Oe5MO4ID7qB+GQ90YH3HWCambztLvtLhsInwwPc4WIsFax1yeiOx5//0xrGbN6sCRM4MlPs+A56fjPpLz2oVW16dTuu3dHJziL80FqbZlAn/0QF6rp88XcGw6UB3p3/3NJy2IV/5E2lHtSvTjGv3oAMSMdSG3UetNgpRMMTYK+Z+9NexgLP785Zg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Gqx5BuRv9k9P/UT6Wb9iJAq3QVTkrS031m59kDRYAGw=;
+ b=CR0JW46Lt6deArZOSWp0gqUjcWDkzgfkc0EVc3F2uMmhdhew7bFSvHheWZBzi5C9+jqQX9fyGcXeeooRNqHF8Mtn62n7Ccth8yPFz/4RhQYaZbtPvI40o+7G5pHat/Dmj8M2WxOP4I6JcCWOPJJU+t+oVSjXYY5SGcN7iY3Or2SEr6NkeBRtlyHE1WwWEUPPSHoqWtFQ+1dRnNfDLVhOuT4aAUK3h/zBgRAJNu/5wgjlDm3xDAvcCww/IqI24ZTkDMOuAYLQgHAWozlR4EYOaNT7gcrqZkirnPrvPeApMijO+9r6CmikQe75yuohotrG4hJ7LMs4Ej/IYXWB9uWU0Q==
+Received: from SA1P222CA0037.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:2d0::18)
+ by IA1PR12MB8519.namprd12.prod.outlook.com (2603:10b6:208:44c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.39; Fri, 18 Jul
+ 2025 18:10:46 +0000
+Received: from SA2PEPF00003AE6.namprd02.prod.outlook.com
+ (2603:10b6:806:2d0:cafe::4d) by SA1P222CA0037.outlook.office365.com
+ (2603:10b6:806:2d0::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8943.20 via Frontend Transport; Fri,
+ 18 Jul 2025 18:10:46 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ SA2PEPF00003AE6.mail.protection.outlook.com (10.167.248.6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8943.21 via Frontend Transport; Fri, 18 Jul 2025 18:10:46 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 18 Jul
+ 2025 11:10:28 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 18 Jul
+ 2025 11:10:28 -0700
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Fri, 18 Jul 2025 11:10:27 -0700
+Date: Fri, 18 Jul 2025 11:10:25 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Will Deacon <will@kernel.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
-	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
-	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
-	Bill Wendling <morbo@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Salil Mehta <salil.mehta@huawei.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
-	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Jijie Shao <shaojijie@huawei.com>
-Subject: Re: [PATCH v3 6/6] IB/mlx5: Use __iowrite64_copy() for write
- combining stores
-Message-ID: <aHqN_hpJl84T1Usi@arm.com>
-References: <0-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
- <6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com>
- <20250714215504.GA2083014@nvidia.com>
- <aHYqPRqgcl5DQOpq@willie-the-truck>
- <20250715115200.GJ2067380@nvidia.com>
+CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
+	<kevin.tian@intel.com>, <linux-kselftest@vger.kernel.org>, Robin Murphy
+	<robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, Will Deacon
+	<will@kernel.org>, Lixiao Yang <lixiao.yang@intel.com>, Matthew Rosato
+	<mjrosato@linux.ibm.com>, <patches@lists.linux.dev>,
+	<stable@vger.kernel.org>,
+	<syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com>, Yi Liu
+	<yi.l.liu@intel.com>
+Subject: Re: [PATCH 0/2] Fix undetected overflow when allocating IOVA
+Message-ID: <aHqOEWe1Babqr3Xq@Asurada-Nvidia>
+References: <0-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250715115200.GJ2067380@nvidia.com>
+In-Reply-To: <0-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00003AE6:EE_|IA1PR12MB8519:EE_
+X-MS-Office365-Filtering-Correlation-Id: 112fc91a-7ce4-40ec-63d7-08ddc6266afc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|36860700013|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?flRamOYnijiy6EIq4QkTxgmea9H1hlRBkENsJ7BpmzM7M1izg0FzJGAIBvse?=
+ =?us-ascii?Q?HeSAihiqnlHQMEpD7MZs1mXk0dJQnSnjnWHomd5u0/9IL2f4p/Y8x49cJqSE?=
+ =?us-ascii?Q?+EOFJt7/K0iEfblfTC2CAOtjK1lYKhKTev3UlN0Rj7zvzqMweOmCjgZ7pHMH?=
+ =?us-ascii?Q?sjVuUZ+2nf8FHx2cLqOzYzPmgptxpvK/Xt/63//PCU2Xb7pzM2zxP1g52h4I?=
+ =?us-ascii?Q?JcyjTU0MqaH3wAEujywmMgnYInfaIvdv07G6gUCD1jAC33gWEmq14vautHjt?=
+ =?us-ascii?Q?X5xY3zUqzkAZ6d5VNyVZin4ejM5HTnnj6W5sFJZV0+22ndF4RGE5BqRfnx6w?=
+ =?us-ascii?Q?Dsj/kZPE4JQwSGvPe7j/GK5SfJkO03364a4bo/kMGqZB0GWh3Tf7Uol4hH2/?=
+ =?us-ascii?Q?X1LMSx2ki49w03gSBAgFej7N48OYKpUMf0VqZUpudV2I1IXB7p0FiSp60sc7?=
+ =?us-ascii?Q?85ZuDNPjhHlk7Ppg6qNh9a55NS90LDZK90C3P+c9cfPIP28mEdNF8yZR4VUf?=
+ =?us-ascii?Q?MVaUcOJFD2B6J1YXO2T9x0wkw1w7h6qtkyO6WUaVgXGL8luPM/QmMF5ZZJSa?=
+ =?us-ascii?Q?r87OltTCdiv9m3IdPHPlMoXl/huDrUlp03aYOcll0EFC3sccJ8LDQSl0uTm+?=
+ =?us-ascii?Q?V2+OGbZFW052/OHZmbuOwicLxKDDAHGJvhheu7zFoMqZohEk4Q+XkUGrO9l1?=
+ =?us-ascii?Q?c9aqaNVQBOheIqy70JbiRdGGKp7KXj1IsIPi4ddpIzbxNnzu3n8uCusmj1UF?=
+ =?us-ascii?Q?9xx66JMnme9RIOGrCqQ8ZbphMwJ4RWDDwNO4tDMIkZZIRQidHWx3mL8IY61L?=
+ =?us-ascii?Q?dLeASnCjrluPin8OL0lllSQU6dTHA4l9tr/T/PlRcvJO0MzGCAR15QM+6KwH?=
+ =?us-ascii?Q?3gMAB0Xkb//V1bToxgqScRz6WtxtDX+v1yFn/k7atPHB2W+k8D691DU7Wdzp?=
+ =?us-ascii?Q?yBF39Vbap+5ziZIJtqRLKZdcT47xTuzA0PF/DeWMDKNGA11y0PfZy5SnJafT?=
+ =?us-ascii?Q?IY6JXUSs7j3+l/xNNhomIpSBoXIJtERDpNr51RId7ASumx/83K+9I+McwNP0?=
+ =?us-ascii?Q?KCoJBf2t2U3dLyZlFOwZQzK5r5RK2xVZGPfjKnZ34BsLZZM+wvl8pEf8fO6z?=
+ =?us-ascii?Q?kX9ZPg8VIGagOiMksgYcGiFYdcAWwxH9Bw50IeiVjbtuv/yXJd+VHe1wrvfd?=
+ =?us-ascii?Q?mOPscwDfzRcLpYiIPGgourB4r93OZPV+UBRkZ9umBP7k/r0x3fcEKfylC+o8?=
+ =?us-ascii?Q?SDY04wHMsx34oWYAANJ5SyPRK7FeUYJEk9Dra+os1/+9Y7662FsDtDB+QMXi?=
+ =?us-ascii?Q?Xv0K1mQl8i5ei2a/+pFKpd9A+Xp1/Ro40Qn4o1/ls0ygMvsP48wGTgMTOPoU?=
+ =?us-ascii?Q?1H7wzzpTlYEpETU5vOwz3Ad0IxZ46NBRo3AMLV9cuBCyIy4zCa+Pz4HQlT6D?=
+ =?us-ascii?Q?lVUeHIG931dXJGdxKVaK7Mfix8F9LWRNAM1mnci+Tw93nhc+Q4IfKFZJZ+5/?=
+ =?us-ascii?Q?6bxL9uYb+uBDpSp2lsHO4Hpkp84Y6HlQg9lp?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(36860700013)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 18:10:46.0401
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 112fc91a-7ce4-40ec-63d7-08ddc6266afc
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SA2PEPF00003AE6.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8519
 
-On Tue, Jul 15, 2025 at 08:52:00AM -0300, Jason Gunthorpe wrote:
-> On Tue, Jul 15, 2025 at 11:15:25AM +0100, Will Deacon wrote:
-> > > Since STP was rejected alread we've only tested the Neon version. It
-> > > does make a huge improvement, but it still somehow fails to combine
-> > > rarely sometimes. The CPU is really bad at this :(
-> > 
-> > I think the thread was from last year so I've forgotten most of the
-> > details, but wasn't STP rejected because it wasn't virtualisable? 
+On Thu, Jul 17, 2025 at 04:15:07PM -0300, Jason Gunthorpe wrote:
+> Syzkaller found this, the ALIGN() call can overflow and corrupt the
+> allocation process. Fix the bug and add some test coverage.
 > 
-> Yes, that was the claim.
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > 
-> > In which case, doesn't NEON suffer from exactly the same (or possibly
-> > worse) problem?
-> 
-> In general yes, in specific no.
+> Jason Gunthorpe (2):
+>   iommufd: Prevent ALIGN() overflow
+>   iommufd/selftest: Test reserved regions near ULONG_MAX
 
-For a generic iowrite function, I wouldn't use STP or Neon since it may
-end up being used on emulated MMIO.
+With the SKIP in PATCH-2:
 
-BTW, for Neon, don't you need kernel_neon_begin/end()? This may have its
-own overhead and also BUG_ON for different contexts. Again, not suitable
-for a generic function.
-
-Unfortunately, there's no way to know what this function is called on.
-We might try to infer that the kernel started at EL2 but even that is
-not entirely correct with nested virt. Or the OS may start at EL1 but
-have direct access to mlx5 where we'd want the faster option.
-
-> mlx5 (and other RDMA devices) have long used Neon for MMIO in
-> userspace, so any VMM assigning mlx5 devices simply must make this
-> work - it is already not optional. So we know that all VMs out there
-> with mlx5 support neon for mlx5, and it is safe for mlx5 to use.
-
-I can't think of any generic solution here, it may have to be a hack
-specific to mlx5. We can also add add support for ST64B and have some
-condition on system_supports_st64b() for future systems.
-
-Even if we could handle virtualisation, I wonder whether
-__iowrite64_copy() is the right function to implement 128-bit stores or
-the larger 64-byte atomic stores. At least the comment for the generic
-function suggests that it writes in 64-bit quantities. Some MMIO may
-only handle such writes. A function like memcpy_toio() is more generic,
-it doesn't imply any restrictions on the size of the writes (though I
-think it guarantees natural alignment for the stores).
-
--- 
-Catalin
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
