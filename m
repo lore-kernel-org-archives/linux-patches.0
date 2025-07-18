@@ -1,173 +1,161 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2071.outbound.protection.outlook.com [40.107.220.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48A721C9F4
-	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 21:41:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752874920; cv=none; b=M5vuNIvTFJxDF+DLzSB0YSkCFJF4Tud+l1xs348wauI7BRSjRY9buNhd4FkzPAe7wh0egwHzX1ZzMp7nTXqGpebYTkA2AFttP8lgsVfEyRC5w8tuqtTCB27t23NrS8+SBoYuBmCzzMQfsNyGzOzS1dZWuZ+hUZ5X+xWncxyk02k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752874920; c=relaxed/simple;
-	bh=uxXpdkcHdOrQaJc+eu4/GeOXinhx7hO5tirp5wkNhw8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l/YCNEKww0qkCUqW9BGO8DjhPxTh25cT22xbG30tmO2i0mHOaY7BUv9zHqYo2M+OKwbA6fGmr7IhopHWnhCkW4Dhnf20VyYQYU3tSAPTOK53CipvRY37XrkaQCvRLdfuFnb6Qb92/NJCNG+gZxRx0kj6aZ7C0j3AWYC5fYY9gek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=NrpmS24x; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958671799F;
+	Fri, 18 Jul 2025 22:52:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.71
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752879176; cv=fail; b=EC3XAEZitvOEEqL/Q99b5tMJoUDSFmKi3mftUrKg/tnU11aTUKvyo9xQlYJcJ9caA82xk9oyzELMYXWBzothGMdOMnJUlEI+V4haee92wLNUfmYOTKo23eJsTJz9xBkBt7tC27Wg6G6m7/p1ciinHKMeeSr2fFlRORFIVSIRW6s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752879176; c=relaxed/simple;
+	bh=mkgl5SUQy+bOaTQgItUFs168gZsD83TVbbg4vV7S01k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=hh5Xd0EKZaRdoyF+iL0Bet10pjL5pcVteZBr4vndJe9PC00kafOYDkGGlN1INcoexeCurGYlE1Zn2UnTns/5Pxhv9Lz9mWtZhDF2/0Jw6XCJMPQJ5S7mpLV2ivLjWKSuVRvhQliX8F9kWtHAM1aLAiBKgWzBE5mQ/J2r4dvre5c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LIvCHGUr; arc=fail smtp.client-ip=40.107.220.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="NrpmS24x"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752874918;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Pl8HYJY2kuf3xc5dYY1A2bTJiaSaxCFVikVVLsHu9SQ=;
-	b=NrpmS24xcQhFf7z3zT/77jdGQCvMJ90RGt8bYYURVEc4M0ttWaTWzXebb0nxLJsjVVyIuo
-	l09bxWed3YPytbDbPy2Ua0KrRazop3j6LAyeSJMxqQjuwcObJ2eO8f7MZwzyGNenAht3gX
-	h3EBiAANRHuIEdJPi0tWcPo0jHckT8c=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-0xVQ0i-COyOAw4BTZ86DLw-1; Fri, 18 Jul 2025 17:41:57 -0400
-X-MC-Unique: 0xVQ0i-COyOAw4BTZ86DLw-1
-X-Mimecast-MFC-AGG-ID: 0xVQ0i-COyOAw4BTZ86DLw_1752874914
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-234a102faa3so21941385ad.0
-        for <patches@lists.linux.dev>; Fri, 18 Jul 2025 14:41:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752874914; x=1753479714;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pl8HYJY2kuf3xc5dYY1A2bTJiaSaxCFVikVVLsHu9SQ=;
-        b=hAi1o3nRIICb78v0Vn7KdekjE2B5p7F+OVfHqdT0R/Kdt3slk4XvkwqPSbW1xiJqOW
-         XZLRF3QUgReIS/LPSSLnhDT9PgWiFM4OPSUhEqOgzK33dqRerrwl9B4MdZOGFlXxGGCF
-         oWSLSmDgy5kuXPb18HSPArp8SYx6ygsIbwZBitcSOqeuUz0WFCS5/BO7hiQWu9NDvQHD
-         +zXLM2abG0dF9Wt5SYfZEizJ9bs9ONEIFKW0sBwFqQN0sxH7f021Z3Ao7Ff6JwZtgwUE
-         dKtFGcuqtlUlS6qbb1hjbvAfTtNQ07ygf+Ekj9pR52RPSgphHp2G8cVabPimQ5VDOtmM
-         fYQw==
-X-Forwarded-Encrypted: i=1; AJvYcCUaxQbHrgibxfyZrua2VHyqqNYTajJLxuMwNbxWjPCXk138yl3S9PScx/QYsijEKrGAQHojQFwd@lists.linux.dev
-X-Gm-Message-State: AOJu0YznIS6z0LaF6esIQXMtLD6V8HE8zMQet3gAejKg9AgXejcpDG7K
-	j/+ncISMtGN1TKdBcK16HwPz1pCyLav3Nfw0rgo9FzIN8gLC/u1XII2rd2VterUIjN0Fqv8xocu
-	5ksBTPtoOjGOhPSVfousNIt5P90gwEgj+xsf+gSw5aKrCq5jBbTk10Md5NV8=
-X-Gm-Gg: ASbGncv6QXoW0Lam9MpXEkLGCrbdHnr5OJlIWlk0IRw3LhZtlorLX9lyCdqZXiYLATz
-	5DE/m6wPfEgC6MAtL0pqKxiI/cxkdRSxLO2DoYLZ4/qRkdP9EgFuvTFlBSXARURQj3Vj4GhwQgm
-	WTueXPzdrveUK6lEefj4gB/H4SL3aTHyGhLHh/e/NKQVAGgpX3SzvVuwxQeaTCK8mLju0KjHynv
-	i1hERAXZKVrXh6GkSEdQCkBn3qTnAyBN4pIToW3+wxYPc87UwnOjy1eJMJIixMlBOJpdQ3dkH5f
-	AU6tNzKv676hB9op+kRaXAmbMKbg74Xs6vT0A8LP
-X-Received: by 2002:a17:902:ef02:b0:234:9656:7db9 with SMTP id d9443c01a7336-23e24f4ae0emr193121245ad.32.1752874914361;
-        Fri, 18 Jul 2025 14:41:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElJIwNy/gAl1oOb5k7nEBq38Uon8tJbJo/3EEmGz51w51P0ZBbNDEpVhWKCJJ33lSWOle8bg==
-X-Received: by 2002:a17:902:ef02:b0:234:9656:7db9 with SMTP id d9443c01a7336-23e24f4ae0emr193120855ad.32.1752874913939;
-        Fri, 18 Jul 2025 14:41:53 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b6b4b20sm18055975ad.121.2025.07.18.14.41.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 14:41:53 -0700 (PDT)
-Message-ID: <1cda6f16-fb56-450e-8d33-b775f57ae949@redhat.com>
-Date: Fri, 18 Jul 2025 17:41:47 -0400
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LIvCHGUr"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=erq131FobmSjek3TktFPLcMKn+qBWCVMnpjUgFbGcvxb0ZwIFRnwfQwS8algys848BoOVyt/vMTJU+Eby5UnUK3X6OSrhgyUmKDxBw1/3soU7rzvG/GJRscAKPqHMKfncNYnH8yhw/wGIINHl/2T5QfV9yCnBc6SlM6K4CJkjblCxvO5EwmRQh2iakmjW1mIH+9PDsg6kBTElvIfIIrBp/koZD5bMESSaT2FOr+2RWW14cqnu7c2hpYh7l8pCRWkarROY9FDZBWJMpLjpySq9oJWdEKd2pTxHf9MUfJeXw3OhKg65TlQAivQBesV9dM1IU0FsYQQN8teqHp/q10Lwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SXjk5Pe0pFU5rfdOhMSiwPVybQX/XCl230Ir3XNVpjo=;
+ b=wT5HqyYQkfYcEXqVHiC+Rgr2kWnXtauDIcgNZZc3bbYEgPp9yPyT6c8xNEBz8tuQ87HmNmi8C/YTN0BoWnTLXR7K/ofQq+Mdrj24uhb8vIICI8iATPTde4Cf1Je6fTxfUyziJ4gZQtJkBPjudLdpolJ8bPfiBETNPNp611xNtsWvB6ajwcgB474VVv3plVeVXtKapVMH4d1WVPwGPv2G+uTl3DxlRN858DVyd4b6Upv8LM4nnvJAD1/RtptyMYBA0Zt5+AuCzkUGd2OOv5OE5Sg1v8lCetxQHnfqW7t/dyWsE+BS8Ids2ns++28F4jq5e7cGfFZochxtIymSyh5Wmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SXjk5Pe0pFU5rfdOhMSiwPVybQX/XCl230Ir3XNVpjo=;
+ b=LIvCHGUr8vuqilabHoEL160Wvp4oxU3OH+l/wKsx2kjdeWSYnCj8qxrFf//GJl+q8b/6UPYdrEg8ufc+kr2CYgdxMOZniNwC2mmu5LeDEIq1jzNBCCDSd7W+rBlxs2o8/6B+Lj9cRlOmIRfa9oF8Q8A4jTWqKZCtq36REoUaqBL+Wo4jFIz4/18HfJYv4PYD7tjNsm3TiIB3EmX7vZi2DtFb4rcl0ZzmgKOCcUeprnce3LxWW2X2Q83rt4LzFcYswq6frZzcjOLKLg5w5zO2FOd+zv57uyy3Wbev0sCR2mAhcjL6C09SroznlQESxEdGWEFUh4otdalovJemwPluMA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by CYYPR12MB8890.namprd12.prod.outlook.com (2603:10b6:930:c7::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.23; Fri, 18 Jul
+ 2025 22:52:50 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8901.033; Fri, 18 Jul 2025
+ 22:52:50 +0000
+Date: Fri, 18 Jul 2025 19:52:48 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Donald Dutile <ddutile@redhat.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
+	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+Subject: Re: [PATCH v2 03/16] iommu: Compute iommu_groups properly for PCIe
+ switches
+Message-ID: <20250718225248.GK2250220@nvidia.com>
+References: <3-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+ <5b1f12e0-9113-41c4-accb-d8ab755cc7d7@redhat.com>
+ <20250718180947.GB2394663@nvidia.com>
+ <1b47ede0-bd64-46b4-a24f-4b01bbdd9710@redhat.com>
+ <20250718201953.GI2250220@nvidia.com>
+ <1cda6f16-fb56-450e-8d33-b775f57ae949@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1cda6f16-fb56-450e-8d33-b775f57ae949@redhat.com>
+X-ClientProxiedBy: BLAPR05CA0038.namprd05.prod.outlook.com
+ (2603:10b6:208:335::19) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/16] iommu: Compute iommu_groups properly for PCIe
- switches
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
- Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
- tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <3-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <5b1f12e0-9113-41c4-accb-d8ab755cc7d7@redhat.com>
- <20250718180947.GB2394663@nvidia.com>
- <1b47ede0-bd64-46b4-a24f-4b01bbdd9710@redhat.com>
- <20250718201953.GI2250220@nvidia.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250718201953.GI2250220@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: ZGtjoej2YxxjFHE11B--Am-YD2doDjeLAyYg6dk8NCw_1752874914
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CYYPR12MB8890:EE_
+X-MS-Office365-Filtering-Correlation-Id: b71d88c0-97ec-420d-d06e-08ddc64dd23b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Sh8uvoTndKxidtmr3nzy/FrzV1+WYNxsgH+UjbG91iDVmU+FRvf+11YDyC67?=
+ =?us-ascii?Q?C6CKUQQSI0hDC95MaESh1iaY5iYHiOBayiaPYsJxf3KRB/4/eBkD6nCKSMfs?=
+ =?us-ascii?Q?Jt+pGInCvKmkLhvIGdmtTIkKmENvlu16vBhKDArUQh236QewqLDG9bg8n5P+?=
+ =?us-ascii?Q?yMixVbnORv41qncRfTV65GtQZibmnNqUK5fVnork2+gdjJQChhihcUmBP3Pi?=
+ =?us-ascii?Q?lrGYkDeRKA+BRRczhMoMoZuPnY6YDnGSkxXVk9xaMlq4iJw2l4qkgX3owQgh?=
+ =?us-ascii?Q?mHfJV8PbCoY9kkHbnAvupYrgiTIFSFt+59uTTSasxfOCWdEus/3Zva32hc13?=
+ =?us-ascii?Q?WSu6F/DkHv1JNAk8joGGKwjE29uGmLdtzUohmoizT6lSOOlNQjAOYlrKNVpQ?=
+ =?us-ascii?Q?1Oa9OkqrP9bWjTL4YBsxb3wW6iCjRj6DtzafEVJ+HH32ZQ9r8QXJ7POmOkji?=
+ =?us-ascii?Q?RnW9RSdQ9VRgW/46lyPe8uagtzL9YzrQ0pfkjT/aYufzVN2emY//hOqSvPR+?=
+ =?us-ascii?Q?Mm8nzggrxQ/XsNYvQ3T5vqxXghdYIWnR40Xhu3IGgtj+1nRJ+We+dY5r7KLc?=
+ =?us-ascii?Q?lrTGuFbt7+VbCzS7G8g0pQgeQdoxfo0fdRWwrdlt9CiWA/puDk2S3ydYfUhi?=
+ =?us-ascii?Q?JoXZLLcN9SyxxWMdGeDIvE5zINSE4sGQcmPQQZVQ9ro9DkHoA4fVX6foJeXK?=
+ =?us-ascii?Q?G25mmFVXZgqiJMal6TTTy63A9EWlK1cqKPOkDNefYEB09+ncDcLJK7l3JW3l?=
+ =?us-ascii?Q?+go/1LFfOdLyf+ZFjKoucRm8j623UgI3d31LcduKIX85ezKMOlBxiiva75cP?=
+ =?us-ascii?Q?Zc7QMnW0qrPa9l5mh41Mjfbf9smbMZi2uKTKKV7MX24fBfxk+KShUh7jjxaW?=
+ =?us-ascii?Q?QS5HrI/lHr01nfJnHc1IGRC+7LO85dM/v0Agu5YRt+q6NsqALQoCMTT2dVUS?=
+ =?us-ascii?Q?Vg1Nj757XOIwcgEUvpQoVYvBpGpR1zYLgjVgmg2zXCAL2l3GU+Xa14NJPZQS?=
+ =?us-ascii?Q?HsHPU5TOaaS/sTupU3nInNs9r1fOwS/9PNzAt3tNIVda26B5gN6Z6fn8e4G0?=
+ =?us-ascii?Q?FxTWMLn+GZI5MM3dUM3B2hpmdL0FiZDiy+ngyCbczTJwNpucXe02ssqBKCQr?=
+ =?us-ascii?Q?xIBfQObLqj30jMEINzzwJ/Yriadc/xfAN3Go/joKUQ4ZFvH9PymNkg2fpdoK?=
+ =?us-ascii?Q?RsZyPyqFKWe+yFKuGhXPJI1QmU+onQUncPJQ65iz/o65Y3OR/UU3U6f79jIa?=
+ =?us-ascii?Q?o4+bBoAWOGOrlVnHfqQJBZ7I67fg/a9QrVjElxPv3MNnqsa94lqFx7WxG4ty?=
+ =?us-ascii?Q?418tZv15v+uiGArUP0afDEUTjb4cIttEDBIom4kse7VhAGeWLJjgKorfdub1?=
+ =?us-ascii?Q?bcGSBnEP/+9RFLQOB37YLytfKsHwpZTvGFmDWEHoeBzUWjhwAA=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?XfYBKIgv8Gs94UA0RQWRyyUN15F1lEjqqe41pDu/qrjsfNgs3ZVLBqvdq1Fu?=
+ =?us-ascii?Q?go8SaOOJgXbJkZCcMnwa2UbzqwS8yldMTrFyCXlGmSZnw/WEfAQ/R1LRENLg?=
+ =?us-ascii?Q?aCZu91uf3qf5iOYhKiD0/2vHZwdUc1RKMNEJlNRKvG05a8IXbLQuaZpVMaAC?=
+ =?us-ascii?Q?DCkVJ5nFyU6qOzCm7jiRmEdUJJe9locOCkC/UZsa0rKuWMsCvom9cIiqkTYr?=
+ =?us-ascii?Q?w1AbC0EHjHjM2lQUlAB88SJA4xWiepQlZhPkSTyrXW2HH1u7TvmkM9VrHRLd?=
+ =?us-ascii?Q?CSFojBVzUgzuK1xpwduv9fv0AugF42/krXJ0pQErf0Gol2OCG/frU5hCj4V9?=
+ =?us-ascii?Q?n9wQBdEd1dRy/6+UczoxduMKIxzDyOCFTTJWWrFPqH+4bXVff8/BDuBNaMYs?=
+ =?us-ascii?Q?QEZSXVXYdjX0geY+Hsf6Dt6P5mjNfJe+E9tftP/ZEXRyek027lqhNLLQLxaN?=
+ =?us-ascii?Q?Tgy4qV5f/aJbuGLwd5inORanDp3oKswupusv6E5mL/cUK3EietLJykvHbrya?=
+ =?us-ascii?Q?pgDHulm4LxgWZSX7hbQvNoWPUbjdk3TEu4bsCg8rPofpy+0/mIx6JKP5oPBX?=
+ =?us-ascii?Q?jAhZFRGlUFbOryml4bvUKqeOMeNAhTTaIbkT46ioqfGBR3Dz0bAsE2K429pR?=
+ =?us-ascii?Q?DgrSAqu/Ov1ZA0KZfWJhKfijUbeq1R8ZuqAVvf5xtuJ7IBZRk/rj3j0V8toQ?=
+ =?us-ascii?Q?MAgeJmzJE0gegXHVyXpkM++4tuMkUmbyS2AwTXIGAw1oGuI4tgmB9JWMRJ+E?=
+ =?us-ascii?Q?3VY27ymfxjW755QPY9vDS18zgcIdP+jDa97dyYu0uoNZfCaRkqyDX2XsUbU7?=
+ =?us-ascii?Q?eMw6tHnrw533+KCbPfWYglR2UcKUm5cw30Xj9Y5stYWOidDAl/fo+FBNgAHN?=
+ =?us-ascii?Q?2IKNdHuVM69EZAYoEdQ8qhZyLhcsGAi3ZPsrKfCd8jK8tUXBq/ZzLl1yT9Lv?=
+ =?us-ascii?Q?wTdQubeSLl1Wu7+fwQ7yordFTxyFyNBrnDJV2cshkI7tmkJpXGL7YwNAqKvA?=
+ =?us-ascii?Q?XtVBzRG8l8ig0z9lb2izyslTa/nWnI3qadVwGpg0zVP3R6LResxiUmIvJmns?=
+ =?us-ascii?Q?mBiXbNk13yMYEvGruzZFXO7FV4DP2E4Tow1T5EBGKo3vUkIcz+r7gSxpzgNW?=
+ =?us-ascii?Q?x42ZA7gNx6FODrM9cL/J+GITLjA7KcnWypWPBndh6uy1nv1PXLVvljms0Srp?=
+ =?us-ascii?Q?5gH5Z4g69VPvWSo3l9nX4319f+3mUSWjoV8xUaERZXA0CCxjbV0eDWdBlzHE?=
+ =?us-ascii?Q?zZk8FoJhr3UFQgWKuHf/Cri6MRmanRyzRk6lg5ELeeZ6jiA/5vQJ95P13jbd?=
+ =?us-ascii?Q?i1MNElEaX/3mkNWFPZOeYcMMm1NNDW7TuHpXmvfFcVIxtgRohmdlc5fkBZ2D?=
+ =?us-ascii?Q?g3HUc2Urejo8GInFjpD2bg58Z4+U46tXdjzwFLQ4DpTDDkVN2GftQaLowIDh?=
+ =?us-ascii?Q?O+YFTeP5tq3GW+jjQzn5Sm9sWdXgdPwsTEcTpxs0bLCYCCU7JxOlNr60Q/p/?=
+ =?us-ascii?Q?hRjCfMBlYOvo9TguXDv2Jo0qh990Z4/sRiysSFQzRvvjFkeCAjRUd1bTK5YL?=
+ =?us-ascii?Q?CDAmR9BtjEtvoWLbzkQF5WBm7Nyj7p0ma39uOo5M?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b71d88c0-97ec-420d-d06e-08ddc64dd23b
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jul 2025 22:52:50.0522
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: fFHlThSezG0VIp/RQw6zTu4rK1Qu3iTFsLr0M+EOEY+Iq2la3T27aHR19yJqClIZ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8890
 
+On Fri, Jul 18, 2025 at 05:41:47PM -0400, Donald Dutile wrote:
+> > Not that, at the start of the function there is a pci_physfn(), the
+> > entire function never works on a VF, so bus is never a VF's bus.
+> > 
+> Well, i guess it depends on what you call 'a VF's bus' -- it returns the VF's->PF(pdev)->bus if virt-fn,
+> which I would call the VF's bus.
 
+There is "VF bus" that the PCI core creates if the VF's RID reaches
+outside the PF's bus. This bus - the "SRIOV virtual bus" has a NULL self.
 
-On 7/18/25 4:19 PM, Jason Gunthorpe wrote:
-> On Fri, Jul 18, 2025 at 03:00:28PM -0400, Donald Dutile wrote:
->>>>> +	/*
->>>>> +	 * !self is only for SRIOV virtual busses which should have been
->>>>> +	 * excluded above.
->>>> by pci_is_root_bus() ?? -- that checks if bus->parent exists...
->>>> not sure how that excludes the case of !bus->self ...
->>>
->>> Should be this:
->>>
->>> 	/*
->>> 	 * !self is only for SRIOV virtual busses which should have been
->>> 	 * excluded by pci_physfn()
->>> 	 */
->>> 	if (WARN_ON(!bus->self))
->>>
->> my Linux tree says its this:
->> static inline bool pci_is_root_bus(struct pci_bus *pbus)
->> {
->>          return !(pbus->parent);
->> }
->>
->> is there a change to pci_is_root_bus() in a -next branch?
-> 
-> Not that, at the start of the function there is a pci_physfn(), the
-> entire function never works on a VF, so bus is never a VF's bus.
-> 
-Well, i guess it depends on what you call 'a VF's bus' -- it returns the VF's->PF(pdev)->bus if virt-fn,
-which I would call the VF's bus.
-thanks for pointing further up... now I get your added edit above (which I didn't read carefully, /my bad).
-
->>>>> +	 */
->>>>> +	if (WARN_ON(!bus->self))
->>>>> +		return ERR_PTR(-EINVAL);
->>>>> +
->>>>> +	group = iommu_group_get(&bus->self->dev);
->>>>> +	if (!group) {
->>>>> +		/*
->>>>> +		 * If the upstream bridge needs the same group as pdev then
->>>>> +		 * there is no way for it's pci_device_group() to discover it.
->>>>> +		 */
->>>>> +		dev_err(&pdev->dev,
->>>>> +			"PCI device is probing out of order, upstream bridge device of %s is not probed yet\n",
->>>>> +			pci_name(bus->self));
->>>>> +		return ERR_PTR(-EPROBE_DEFER);
->>>>> +	}
->>>>> +	if (group->bus_data & BUS_DATA_PCI_NON_ISOLATED)
->>>>> +		return group;
->>>>> +	iommu_group_put(group);
->>>>> +	return NULL;
->>>> ... and w/o the function description, I don't follow:
->>>> -- rtn an iommu-group if it has NON_ISOLATED property ... but rtn null if all devices below it are isolated?
->>>
->>> Yes. For all these internal functions non null means we found a group
->>> to join, NULL means to keep checking isolation rules.
->>>
->> ah, so !group == keep looking for for non-isolated conditions.. got it.
->> Could that lead to two iommu-groups being created that could/should be one larger one?
-> 
-> The insistence on doing things in order should prevent that from
-> happening. So long as the larger group is present in the upstream
-> direction, or within the current bus, then it can be joined up.
-> 
-> This doesn't work if it randomly applies to PCI devices, it is why the
-> above has added the "PCI device is probing out of order" detection.
-> 
-ok, will keep that concept in mind when reviewing.
-
-> Jason
-> 
-
+Jason
