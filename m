@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8339E1514E4;
-	Fri, 18 Jul 2025 09:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A9229898B;
+	Fri, 18 Jul 2025 09:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752830451; cv=none; b=fdaLWDPw2p5ot+EVt4g3lE9s/weJQ8iUrtAGER+tE+bk975EOwSBgW4EpBNLd1G1Lg4d4AcPiDrcdptiCKzvywMBAZZcZiZ3ruOH4N4hW12zrIkIYeWBgdcFMmPSGHFxLqj0xe8OtozNMwVB/EDI+zA5yHtwJkVbXURXpbdWwEQ=
+	t=1752830492; cv=none; b=G7E6kwkfyjvqTAjd1255iF4NQEl6RDO3DbSXptPaHwRMVH6aHK7ONBXAwoemZTqBNSo8TbiSfBZjKoXH0kvqg/92XcV3yRemOLCQ7525IrhSPV9AO4MMNyeUvUQlpRvFKKJn7wJGDgwNhp1O6L50uWynIdJQIdDGoKlKd55AdO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752830451; c=relaxed/simple;
-	bh=k9/CVv+4i9ptFeZXg2rA+oUA16dyOUucS52Y1ENUYkI=;
+	s=arc-20240116; t=1752830492; c=relaxed/simple;
+	bh=Ya/gISIIGqu7VM02+8jqt0Jrm0RpnBc7A7ihxINk9yw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g/m8/8aFqIuAOQd7COoAl57HpSogWlsyWisddjYiREor7ajG2oybFAntee9ca+fjsyrIToDFt43eQkh7Z4OeUZMVbtfkl5AfqShp4pzHLx6SmIMPAa73EfecCMXhRGN+S+8AoXsZ4fmrs2w131o85uSsLr7NXLppuGXX/coMJT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YwBTvzZG; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=VvtBTuYo5kBLPTTGEQ7IlxQBZP6ibfkEKxsAJF9QfdskAdbSU0/JUNpQwsy2A9KXBCsf7Aq3aD1C/nWqcXvZOgVLB1qVjZhNZocAks1T8W0LHdhNXcJ7mDI7kOhVtuKq7JqFnxoQTzSsSKrCPgtPaZaXEh0Yv72lCxrtUij9Ucs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EHR3Ox39; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YwBTvzZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7699CC4CEF7;
-	Fri, 18 Jul 2025 09:20:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EHR3Ox39"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B0FC4CEEB;
+	Fri, 18 Jul 2025 09:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752830451;
-	bh=k9/CVv+4i9ptFeZXg2rA+oUA16dyOUucS52Y1ENUYkI=;
+	s=k20201202; t=1752830491;
+	bh=Ya/gISIIGqu7VM02+8jqt0Jrm0RpnBc7A7ihxINk9yw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YwBTvzZGOh4QkjjUYmc5a5vBzA6ZV+TinoXzyAH+wFOzYzLrHR+wzKI/ULUrIexMC
-	 0bBcplRx1Bjux7wwmKvIdbw6MRwzTNOScubWSVLBphYzhZMLsnF2TvSp19hL72uGtz
-	 u5L5T+WRlvK+9nhsO015Qr3jnpmQdHhTBG0FgaA3Q09l6r12o+v43Mnt98O9I2Ljsr
-	 bD8XP5TMQytAPb7/ne1SJ3c38Lpc5QG/x/Lqo8c6kI5nVWppTKxKnydBfXKD2KaZKq
-	 6FH70t5pk/rAQFT3+xcVcFVPmhxhTo0CNkSVMAiUog0NU/UOHM+W78iRNluInGNuab
-	 urbhrYDQIGnSA==
-Message-ID: <f91a7542-e0a6-4237-9dd3-db14508199f2@kernel.org>
-Date: Fri, 18 Jul 2025 11:20:44 +0200
+	b=EHR3Ox39JZLnNT4WbbCTNefctGWVrbmBb60q0rFMPD0WbJFVZaVI8P/1OhezBjXOl
+	 EmuMCCrwkLQ5LL4Yovl3PTyILz/QOKT8//w2gbU39q55APEka6WkizIYmLVgc+1Mh9
+	 9SgTKOnBLh+yXSlptsoYywYT4bc4yD0GekQt5UK9LjY5b14jApvFmcgeFsxRhIfzev
+	 Tid+kSkVnXx9N/Get6MzF4Zmi63oSlCRNgv8/NOjOMhfYzlfqwenu4FXgTZ74Hfza6
+	 7zNb75QCUgu/tebV7a+08HK5KJEFB6CuLrUzabaZ3dqtJUd5cCCNbkjJJCdQDFtuYX
+	 yQo3Ly9rHkDkw==
+Message-ID: <282af712-8832-422b-9933-1f9857307c29@kernel.org>
+Date: Fri, 18 Jul 2025 11:21:25 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,8 +35,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] arm64: dts: mediatek: mt8395-genio-1200-evk: Move
- common parts to dtsi
+Subject: Re: [PATCH 3/4] arm64: dts: mediatek: add device-tree for Genio 1200
+ EVK UFS board
 To: Macpaul Lin <macpaul.lin@mediatek.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>,
@@ -52,7 +52,7 @@ Cc: Bear Wang <bear.wang@mediatek.com>, Pablo Sun <pablo.sun@mediatek.com>,
  MediaTek Chromebook Upstream
  <Project_Global_Chrome_Upstream_Group@mediatek.com>
 References: <20250718083202.654568-1-macpaul.lin@mediatek.com>
- <20250718083202.654568-2-macpaul.lin@mediatek.com>
+ <20250718083202.654568-3-macpaul.lin@mediatek.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -98,25 +98,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250718083202.654568-2-macpaul.lin@mediatek.com>
+In-Reply-To: <20250718083202.654568-3-macpaul.lin@mediatek.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 18/07/2025 10:32, Macpaul Lin wrote:
-> In preparation for introducing the Genio 1200 EVK UFS board support, split
-> mt8395-genio-1200-evk.dts file in two to create mt8395-genio-common.dtsi
-> file, containing common definitions for both boards.
-> 
-> Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-> ---
->  .../dts/mediatek/mt8395-genio-1200-evk.dts    | 1133 +---------------
->  .../dts/mediatek/mt8395-genio-common.dtsi     | 1198 +++++++++++++++++
->  2 files changed, 1199 insertions(+), 1132 deletions(-)
->  create mode 100644 arch/arm64/boot/dts/mediatek/mt8395-genio-common.dtsi
-> 
+> +
+> +&mmc0 {
+> +	status = "disabled";
+> +};
+> +
+> +/ {
 
-This is impossible to review. Use proper -M/-C/-B arguments for
-format-patch.
+Root node is ALWAYS the first. Don't come with some other rules.
+
+> +	model = "MediaTek Genio 1200 EVK-P1V2-UFS";
+> +	compatible = "mediatek,mt8395-evk-ufs", "mediatek,mt8395",
+> +		     "mediatek,mt8195";
+> +};
+
 
 Best regards,
 Krzysztof
