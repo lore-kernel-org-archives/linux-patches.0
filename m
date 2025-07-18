@@ -1,72 +1,70 @@
-Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64152221557
-	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 08:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=60.244.123.138
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F942192EA
+	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 08:32:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.61.82.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752827302; cv=none; b=Stt+WeQ+GS03HKSgX9Pu4ftjVxZ3BytE6QIWr/JTk5wCvMbCLmJLJZFFdXz1BSdVR3BeBys7kLf3SsBsTvda558L2pE7FhhWC13irniL2smY4zgctTwwDjTMsp/gmPDUzhIpSsvR3EoObGJyz8TDteVrQSn2IDG1s5iV8G/VSlc=
+	t=1752827538; cv=none; b=ENfEi/WTf1AUbzC3vChRuz6HC8Qxb/0x61vAZarn7w1CWWJWqeNwmJwH77IrhAY6G19OZW31/MvJRI808P9rvYUIchcqaKVQUUM9cpFiUJXqK00qRu9hv/c6bhKX1Api0Ff8g4/7TeGtmJQeqBWpn1OWNCNZIJara/3iSST+Gl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752827302; c=relaxed/simple;
-	bh=IulC7aRAtOoD0ePVXC5qAMqQzHrKv266+g7lCVZ3ssU=;
+	s=arc-20240116; t=1752827538; c=relaxed/simple;
+	bh=UVNNFjToi62IKeQ4D11dtY4nWzuT48EKdqcQFbHSBcs=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HjEguYKKzJEP9SsZ8K+BQlIO3VYjfvwX2z0HHJYjv8wZeLmIBOhuI2N3L5bi6viqcQPzFdUskIliGowqpb2QpelUXIsA92Slpc5sgYF8yvOU7wyKsi8HqOxmJMaobtmek+S2Ux/VbWkXJiNlUplB5FWGOGsT9lrbLqlCxFUvItc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=TH8ppZSe; arc=none smtp.client-ip=60.244.123.138
+	 MIME-Version:Content-Type; b=s7fSZGjcmTC2SylJ1/uL704sZT+EFID1QVDR1gW1wC9WUm+RgWZMv0B+0KDHsq7vTDhW6Fbm/Uk/jod/T3yI06/lKNdwpJEaa4NAEVXWyPuMD5H+DyS1cdFZzZURbkRBO7kctsYJA4jaaGMzAgUQ6DlAj0NXBDXWaSYI3BqgI/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=nj33n3Y8; arc=none smtp.client-ip=210.61.82.184
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="TH8ppZSe"
-X-UUID: 2523f47063b111f08b7dc59d57013e23-20250718
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="nj33n3Y8"
+X-UUID: b490340263b111f0b33aeb1e7f16c2b6-20250718
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=au7Gm+cwAdzmzWZ7KtyI+fto0iWyCahRua7raPnIuJI=;
-	b=TH8ppZSeItjLgmkKxjaMFYKrJg6EDQekSo8KByIdlWgMCa8OOoLYi6E9Fn9qaeEyeAPW6pjlINVEuYc1jgJkOvSAZDKD7+y10BVWrAH5Q7+6Dq9xVyER3wRuoLWk6pE5YO95bpKekYnDBk/GPzjAvJDxn2kKk56Y56G4LqrwScI=;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=bbOhcVeC6+s+TuG0DtMpL3rCihlIFdMbY09xg4A7nlU=;
+	b=nj33n3Y8DD/1yCYuhpgkbniVyUVLgTNgXWNjSrVkEdcu1tiWJRGZ3WckSjr9hEPEtXcRuDmbxQRUnT7ci9QFgxHAWGP5RAKanEz6pgZyvGpmb7DFlfdAtoL4CZmquBmzlVmlm23rrZD91ElK0RyNYoFmpJM4AbD7XLXZX573Viw=;
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.2,REQID:46f32222-27e1-4f45-aa4a-bb1e73ae9bef,IP:0,UR
-	L:0,TC:0,Content:-25,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:-25
-X-CID-META: VersionHash:9eb4ff7,CLOUDID:4f832673-f565-4a89-86be-304708e7ad47,B
+X-CID-O-INFO: VERSION:1.3.2,REQID:1f4ff9b7-f9f2-4eb3-a1c8-8e50c3a75925,IP:0,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:0
+X-CID-META: VersionHash:9eb4ff7,CLOUDID:a686049a-32fc-44a3-90ac-aa371853f23f,B
 	ulkID:nil,BulkQuantity:0,Recheck:0,SF:81|82|102,TC:nil,Content:0|50,EDM:-3
 	,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV
 	:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 0,NGT
-X-CID-BAS: 0,NGT,0,_
+X-CID-BVR: 0
+X-CID-BAS: 0,_,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 2523f47063b111f08b7dc59d57013e23-20250718
-Received: from mtkmbs11n2.mediatek.inc [(172.21.101.187)] by mailgw01.mediatek.com
+X-UUID: b490340263b111f0b33aeb1e7f16c2b6-20250718
+Received: from mtkmbs14n1.mediatek.inc [(172.21.101.75)] by mailgw02.mediatek.com
 	(envelope-from <macpaul.lin@mediatek.com>)
 	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-	with ESMTP id 1122582082; Fri, 18 Jul 2025 16:28:13 +0800
+	with ESMTP id 2027246730; Fri, 18 Jul 2025 16:32:13 +0800
 Received: from mtkmbs13n2.mediatek.inc (172.21.101.108) by
- mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ MTKMBS09N1.mediatek.inc (172.21.101.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.39; Fri, 18 Jul 2025 16:28:10 +0800
+ 15.2.1258.39; Fri, 18 Jul 2025 16:32:12 +0800
 Received: from mtksitap99.mediatek.inc (10.233.130.16) by
  mtkmbs13n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
- 15.2.1258.39 via Frontend Transport; Fri, 18 Jul 2025 16:28:11 +0800
+ 15.2.1258.39 via Frontend Transport; Fri, 18 Jul 2025 16:32:11 +0800
 From: Macpaul Lin <macpaul.lin@mediatek.com>
-To: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>, Peter Wang
-	<peter.wang@mediatek.com>, Stanley Jhu <chu.stanley@gmail.com>, "James E . J
- . Bottomley" <James.Bottomley@HansenPartnership.com>, "Martin K . Petersen"
-	<martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-mediatek@lists.infradead.org>,
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
+	<matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>, Catalin Marinas
+	<catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, Sean Wang
+	<sean.wang@mediatek.com>, <devicetree@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-mediatek@lists.infradead.org>,
 	<openembedded-core@lists.openembedded.org>, <patches@lists.linux.dev>,
 	<stable@vger.kernel.org>
 CC: Bear Wang <bear.wang@mediatek.com>, Pablo Sun <pablo.sun@mediatek.com>,
 	Ramax Lo <ramax.lo@mediatek.com>, Macpaul Lin <macpaul.lin@mediatek.com>,
 	Macpaul Lin <macpaul@gmail.com>, MediaTek Chromebook Upstream
 	<Project_Global_Chrome_Upstream_Group@mediatek.com>
-Subject: [PATCH 2/3] dt-bindings: ufs: mediatek,ufs: add MT8195 compatible and update clock nodes
-Date: Fri, 18 Jul 2025 16:27:17 +0800
-Message-ID: <20250718082719.653228-2-macpaul.lin@mediatek.com>
+Subject: [PATCH 3/4] arm64: dts: mediatek: add device-tree for Genio 1200 EVK UFS board
+Date: Fri, 18 Jul 2025 16:32:01 +0800
+Message-ID: <20250718083202.654568-3-macpaul.lin@mediatek.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250718082719.653228-1-macpaul.lin@mediatek.com>
-References: <20250718082719.653228-1-macpaul.lin@mediatek.com>
+In-Reply-To: <20250718083202.654568-1-macpaul.lin@mediatek.com>
+References: <20250718083202.654568-1-macpaul.lin@mediatek.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -77,100 +75,70 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-MTK: N
 
-Add 'mediatek,mt8195-ufshci' to compatible list.
-Update clocks and clock-names constraints to allow one to eight entries.
-Introduce 'mediatek,ufs-disable-mcq' property to disable
-MCQ (Multi-Circular Queue). Update conditional schema for mt8195
-requiring eight 'clocks' and eight 'clock-names'.
+Add a basic device-tree (mt8395-genio-1200-evk-ufs.dts) in order to be able
+to use UFS storage as the main storage on Genio 1200 EVK board.
+
+This board is the origin Genio 1200 EVK already mounted two main storages,
+one is eMMC, and the other is UFS. The system automatically prioritizes
+between eMMC and UFS via BROM detection, so user could not use both storage
+types simultaneously. As a result, mt8395-evk-ufs must be treated as a
+separate board.
+
+It use mt8395-genio-common.dtsi file to use common definitions.
 
 Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
 ---
- .../devicetree/bindings/ufs/mediatek,ufs.yaml | 49 ++++++++++++++++---
- 1 file changed, 43 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/mediatek/Makefile         |  1 +
+ .../mediatek/mt8395-genio-1200-evk-ufs.dts    | 28 +++++++++++++++++++
+ 2 files changed, 29 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/mediatek/mt8395-genio-1200-evk-ufs.dts
 
-diff --git a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-index 32fd535a514a..9d6bcf735920 100644
---- a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-@@ -9,21 +9,20 @@ title: Mediatek Universal Flash Storage (UFS) Controller
- maintainers:
-   - Stanley Chu <stanley.chu@mediatek.com>
- 
--allOf:
--  - $ref: ufs-common.yaml
--
- properties:
-   compatible:
-     enum:
-       - mediatek,mt8183-ufshci
-       - mediatek,mt8192-ufshci
-+      - mediatek,mt8195-ufshci
- 
-   clocks:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 8
- 
-   clock-names:
--    items:
--      - const: ufs
-+    minItems: 1
-+    maxItems: 8
- 
-   phys:
-     maxItems: 1
-@@ -33,6 +32,11 @@ properties:
- 
-   vcc-supply: true
- 
-+  mediatek,ufs-disable-mcq:
-+    $ref: /schemas/types.yaml#/definitions/flag
-+    description: The mask to disable MCQ (Multi-Circular Queue) for UFS host.
-+    type: boolean
+diff --git a/arch/arm64/boot/dts/mediatek/Makefile b/arch/arm64/boot/dts/mediatek/Makefile
+index f68865d06edd..c34ca7ae3155 100644
+--- a/arch/arm64/boot/dts/mediatek/Makefile
++++ b/arch/arm64/boot/dts/mediatek/Makefile
+@@ -100,6 +100,7 @@ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8195-evb.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8365-evk.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8370-genio-510-evk.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8395-genio-1200-evk.dtb
++dtb-$(CONFIG_ARCH_MEDIATEK) += mt8395-genio-1200-evk-ufs.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8390-genio-700-evk.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8395-kontron-3-5-sbc-i1200.dtb
+ dtb-$(CONFIG_ARCH_MEDIATEK) += mt8395-radxa-nio-12l.dtb
+diff --git a/arch/arm64/boot/dts/mediatek/mt8395-genio-1200-evk-ufs.dts b/arch/arm64/boot/dts/mediatek/mt8395-genio-1200-evk-ufs.dts
+new file mode 100644
+index 000000000000..f362097489a2
+--- /dev/null
++++ b/arch/arm64/boot/dts/mediatek/mt8395-genio-1200-evk-ufs.dts
+@@ -0,0 +1,28 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++/*
++ * Copyright (C) 2025 MediaTek Inc.
++ * Author: Ramax Lo <ramax.lo@mediatek.com>
++ *         Macpaul Lin <macpaul.lin@mediatek.com>
++ */
++/dts-v1/;
++#include "mt8395-genio-common.dtsi"
 +
- required:
-   - compatible
-   - clocks
-@@ -43,6 +47,39 @@ required:
- 
- unevaluatedProperties: false
- 
-+allOf:
-+  - $ref: ufs-common.yaml
++&ufshci {
++	status = "okay";
++	vcc-supply = <&mt6359_vemc_1_ldo_reg>;
++	vccq2-supply = <&mt6359_vufs_ldo_reg>;
++};
 +
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - mediatek,mt8195-ufshci
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 8
-+          maxItems: 8
-+        clock-names:
-+          items:
-+            - const: ufs
-+            - const: ufs_aes
-+            - const: ufs_tick
-+            - const: unipro_sysclk
-+            - const: unipro_tick
-+            - const: unipro_mp_bclk
-+            - const: ufs_tx_symbol
-+            - const: ufs_mem_sub
-+    else:
-+      properties:
-+        clocks:
-+          minItems: 1
-+          maxItems: 1
-+        clock-names:
-+          items:
-+            - const: ufs
++&ufsphy {
++	status = "okay";
++};
 +
- examples:
-   - |
-     #include <dt-bindings/clock/mt8183-clk.h>
++&mmc0 {
++	status = "disabled";
++};
++
++/ {
++	model = "MediaTek Genio 1200 EVK-P1V2-UFS";
++	compatible = "mediatek,mt8395-evk-ufs", "mediatek,mt8395",
++		     "mediatek,mt8195";
++};
 -- 
 2.45.2
 
