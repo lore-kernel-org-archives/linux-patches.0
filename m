@@ -1,71 +1,66 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22431BD9CE
-	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 19:10:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A1618E20
+	for <patches@lists.linux.dev>; Fri, 18 Jul 2025 19:28:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752865854; cv=none; b=jb0LeniT5E4/6uhjhRpvxTgq+TpGffmq0UOIFJuYoQFVHJkyRn5NMXXw3M+zRKzZ8XNi+YULyAOREOKTmKwvBNO8q9Lg9BT9FJQgqdoeoshRcdhPwwFF4XGLnRSBg1rUbubl8s9/GrTm72oQl7k9yNJMY/jM2jisr4IuIUWhBRA=
+	t=1752866914; cv=none; b=ifBREOGn+P1SaRCKKvhce8ptl6qO7FV5QCc4TBDaO7a4kPz8vlh5JZ5LqKrs2KtsEtiWBSGDQfUBeUwWUkVhEXtPHt2JDxw3YrnFMXkseGVJeXH2+/nZAG6aB+RYmy/TLjN47JMyQzfpPCXvL5oORMCoXJCkuec9GARsGg42U8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752865854; c=relaxed/simple;
-	bh=12HnDqMeVgttmuY8covfcXjk4vazl0YNAz1/AvqhAPg=;
+	s=arc-20240116; t=1752866914; c=relaxed/simple;
+	bh=O1D+TB4i5fQHwMunOAC9P1z7yVAZnSMu2q/3jxcGGXI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OWP9Uysb6GhDWOElnoPEDt+i0eTCA3Uv36D1EH1VcXsl3kiBTFPgFQ2HepNXqh0jp0x5p/R08DWKc7330tmUVvhYTdEZ9RB9FByGdkWKUTV7BsQ7P6JM28lU0hiAfOaQcsofjJ3rwx+rW8H3Kju4CClrKWPRAlJ/6i5U1dvfV8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HLfZ2HeH; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 In-Reply-To:Content-Type; b=kXH6HVro//BoPV2eih0JPYbV5zK9Wl1TGQ4QafS3tpNU+v4xwNCG5W7o07el+/jum6rD1HIo3VJRZvcFbVm2df+TuXHi8oC3J9FSNu92Q07njUI675pCr/8F5BmUYG5ssK0oMHIaDiEp8DEq3kM/IWKXKwcuHWUrqeVkskSx544=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvHbkm3L; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HLfZ2HeH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752865851;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V8D+e9uBJDRczJqfQeOvVP8ReNAlQCGSx/AVjBJK5K4=;
-	b=HLfZ2HeHQQ+r4WIjb6054O1v8x6LrLeIZ2qwJk9A8dErwI23kuVghPIoFrRPXuPfyU2uGX
-	ybKenALIV77ARTTAtHtnmYD1ru6qsbuXk5HHnG6aBuEF+mgqMKou9Bd33ekVN7dL1egpgs
-	qavQLxicLVUEQa7ndsDE5GKDsnjo0/c=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-39-Nj91Uj-ROmCBuNOLYOpgtA-1; Fri, 18 Jul 2025 15:10:49 -0400
-X-MC-Unique: Nj91Uj-ROmCBuNOLYOpgtA-1
-X-Mimecast-MFC-AGG-ID: Nj91Uj-ROmCBuNOLYOpgtA_1752865848
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-311ae2b6647so2319290a91.0
-        for <patches@lists.linux.dev>; Fri, 18 Jul 2025 12:10:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvHbkm3L"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7426c44e014so2501498b3a.3
+        for <patches@lists.linux.dev>; Fri, 18 Jul 2025 12:28:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752866913; x=1753471713; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=cH5sJvHS1uO/3t5jCi2uFruDY/oe5mJBgjnDbAXMUPk=;
+        b=JvHbkm3LtJzAsznaFOqGRYRFpdStXPo84D4zE3uKmPpkWK1wsTDQtv7PqoS4+RTPRx
+         3z2vCfH7ctNB11XAVeDFnytSUZOph72U6Dil6cUfVEZQ2jnCycnc1UQs22C1wTNuKXIM
+         nNTUkEa954LFlsTc46YB4WKlIJvQw9m55ktxJq+cT0s+JhPDOOk6KC3Qj0OOXYSRef26
+         KF/mGVbgZdTXdE423c3UO8BgbRodLnUOQy2Hi6POv549cq0Bdfi7D8TZ7sB1Xbmc6c+m
+         ucJHSd+1eOqXJ9gdJjqotOotRIf6fa8LuQvCeE6C6yemAKvXFxW+CjvURRorNtJedvQe
+         qTaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752865848; x=1753470648;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V8D+e9uBJDRczJqfQeOvVP8ReNAlQCGSx/AVjBJK5K4=;
-        b=Ynt+RKYYzqZXiCONFEX2BQ3cwful5G/JMPEdrwXk9UouvSqAElFIEBfLKCkGnrK3+F
-         nEqoszRi8jiGUshtsVQzNRgyb1nCR4zY8A/6xBaP4F9XlS0afXu7oZZ61pIS9eQcRotH
-         Js8kM9srqvgyGynovgdDjwknTqy96g6deNfUoHSRf+/g3ZiTAW5N5Teq+W6fE2ZkBJj6
-         MDt6QTBajsL75Upb0WOXj7y1CU67lBlwfqyB08P+B8gYhvqruybkQ61wiuDxhN+pAEQ1
-         kC20dF9JNErYIe8nzUJ3n5jK/f8JToFtUSG9E/OcA3OgZ8EpJVBiSSr16pJkjqJl0wZe
-         XCfw==
-X-Forwarded-Encrypted: i=1; AJvYcCXEa7C26qNURzKnX2595yFkSOCtV7jz0JWp+1lQkgjjB6V08tRN3Z+1augzqNYEru1hEpJFKnnP@lists.linux.dev
-X-Gm-Message-State: AOJu0YwMyRty0/MRRYKbEo1ABH47MuLP6E+6xQAjkfY0kIsfeCWSpF/P
-	tTjMOjJ6tvgdFz33F7SMPe7pnQtVFOF3hdB6Mb4TiTYmWqDoTkr/u+5yqyMSguN9iFf1OLhL3dE
-	SmJqJnKjOpvnbKg9qJXmlUUVENGqzP2wj8ul98p0BynaD8gDqUECtG8Ew+SE=
-X-Gm-Gg: ASbGncsuwrPStEppSZRgAMqfLBY7g94Ox6nrwEkPe60ZSlKDdYSmKsK9t6Bq83WUodb
-	A10GqBbJtzqiDpAJN074xZyxnkm0S7YNIUm27TIO9I2P/KJ1e2PTcUN8K/qbz0WKidL5+I3Mxqj
-	7ZCbPjRt/E6Hs5svmp4Zf6SSxtQiJn3nKMtD2sVSsW+j7wdHd979noj31uzmv/IQ63t2RKvIPDL
-	DtTbb9HY/WyrhYYiuIoninSDprHgdAhyhzLrZw4h2Stb5rtHspq+YHp/1dnQX/WtM9HYzL/VrG4
-	eGXK3CiMotsaEFqVErTxECRMupu3HWAYkVBokcJ4
-X-Received: by 2002:a17:90b:6ce:b0:311:b5ac:6f6b with SMTP id 98e67ed59e1d1-31cc253d5c7mr6000478a91.9.1752865848248;
-        Fri, 18 Jul 2025 12:10:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIqj9LP2vHBGP1tqCvOrWc8j8Q/BDtDPfNNbouKYvr5XMtLMkhhPcn26wkmN3ctBxthZr59g==
-X-Received: by 2002:a17:90b:6ce:b0:311:b5ac:6f6b with SMTP id 98e67ed59e1d1-31cc253d5c7mr6000449a91.9.1752865847822;
-        Fri, 18 Jul 2025 12:10:47 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c9f1e6a68sm5667046a91.19.2025.07.18.12.10.43
+        d=1e100.net; s=20230601; t=1752866913; x=1753471713;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cH5sJvHS1uO/3t5jCi2uFruDY/oe5mJBgjnDbAXMUPk=;
+        b=oMrnDZQJjMMX4YgBPXJcpEVu7xxl4dLSlZdGCy7ZjlUmFrySxQUIJEeqn2GYDBjAhV
+         0frYlkGUcvJI8TQ1+yq98Dx4BV5xlFl0b9+7e3IwcRf+KPRqC9NBS1Q2D8j2erqQnlY1
+         kBZcqPstlHv0K8v2kzeizHzFTlsgXp2feHuw7G8ETdD1zA0QEHYPmI/ZaxcVW1c1uNAZ
+         HuHM/sp04ICLPGdvv7KIlSeqiOjaC5hbGhh+4bgt2eV1bwcfAT5AApO7012sckKTKO+/
+         U6NEM38fd8Lk/PEBwepkkmPclv5UWvFU6Ivn7MpD7WGb56i3NOCKEd46tMIS+IVUwljV
+         GHnw==
+X-Gm-Message-State: AOJu0YzHFMX/bvDcQKKtacXY3bML/lalV+oFLo/1PQv9qBC/6GS9LZzZ
+	h1GiSJjvVY9+oyIYLkvJAseMvCXRn0RHc9GcJ7/mbHb0HX10D/xjMy1o
+X-Gm-Gg: ASbGncsNevodCD6fs7nBDuAXztEia3P1rv7l/+TVvSvMKqlT3fZZHkR6D9oQ3HSouf2
+	LlOK395VNdws0oIAvYBlKdiunw10W7AsB4l1jQAMvmbekF03jiyyFvNJ4tqfTp2LgnwOIKXhrVx
+	8N0chbHk/BMM0w7Il4RlBJXpYGep+lBWDOsYq1lPnCbI1BkwZg6DNXTVwRrn//boPAUgqCjtWyN
+	MRvaKeKTFGvDAS3tZD01mnaw4vkGqn1WQR81E7GsAAc7uGVNTh+BkS7Ry/+AWDwPGlqvCVTH5HK
+	EZ0gIayb768x9kBVyy28EdYv3EXN1sz0TiSAKOhIkj+kR3YQiMyQP7T3p3fY7DOiGaG79DMDZrs
+	AZjGW7uYaBRSX7a9t0SV+9fvcH1RcDbHUqUlmqANmBjtUNlUNmpxVgnaB1PHSecumu0IQq6w=
+X-Google-Smtp-Source: AGHT+IG8qlq82B+AIq7C46cKEStshxtPfPkP/Y1y3IbPD1wLbAoNipxskgMD5DK61EEDCtMSolSuew==
+X-Received: by 2002:a05:6a00:ac0b:b0:757:51d:9dd9 with SMTP id d2e1a72fcca58-757051daa11mr14362912b3a.17.1752866912527;
+        Fri, 18 Jul 2025 12:28:32 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-759c89d55eesm1658401b3a.55.2025.07.18.12.28.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 12:10:47 -0700 (PDT)
-Message-ID: <519d8178-4cec-44c2-8b24-cc9ae9dbd221@redhat.com>
-Date: Fri, 18 Jul 2025 15:10:42 -0400
+        Fri, 18 Jul 2025 12:28:32 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <9db843ac-85f8-4dd8-8121-59376a8a97d5@roeck-us.net>
+Date: Fri, 18 Jul 2025 12:28:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -73,70 +68,87 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/16] PCI: Add pci_reachable_set()
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
- Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
- tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <5-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <3bf0f555-535d-4e47-8ff1-f31b561a188c@redhat.com>
- <20250718174921.GA2393667@nvidia.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250718174921.GA2393667@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: ymoyTVzt_SAzUJwD29TDneLENqMJfvnYKMKX1PB-VpQ_1752865848
-X-Mimecast-Originator: redhat.com
+Subject: Re: [PATCH 5.15 00/78] 5.15.189-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org
+References: <20250715163547.992191430@linuxfoundation.org>
 Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20250715163547.992191430@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+On 7/15/25 09:36, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.189 release.
+> There are 78 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 17 Jul 2025 16:35:29 +0000.
+> Anything received after that time might be too late.
+> 
+
+nios2 builds have been broken for several releases now.
 
 
-On 7/18/25 1:49 PM, Jason Gunthorpe wrote:
-> On Thu, Jul 17, 2025 at 06:04:04PM -0400, Donald Dutile wrote:
->>> Implement pci_reachable_set() to efficiently compute a set of devices on
->>> the same bus that are "reachable" from a starting device. The meaning of
->>> reachability is defined by the caller through a callback function.
->>>
->> This comment made me review get_pci_alias_group(), which states in its description:
->> * Look for aliases to or from the given device for existing groups. DMA
->>   * aliases are only supported on the same bus, therefore the search
->>   * space is quite small
->>
->> So why does it do the for loop:
->>    for_each_pci_dev(tmp) {
->>
->> vs getting the pdev->bus->devices -- list of devices on that bus, and only
->> scan that smaller list, vs all pci devices on the system?
-> 
-> Because it can't access the required lock pci_bus_sem to use that
-> list.
-ah, i see; it's only declared in drivers/pci/search.c, and it isn't
-a semaphone in a per-bus struct. :-/
-... so move the function to search.c ? /me runs...
-I know, not worth the churn; already have 'polluted' iommu w/pci, but not vice-versa.
-(although iommu-groups is really a bus-op (would be a different op, for say, platform devices going through another iommu).
+In file included from include/linux/pgtable.h:6,
+                  from include/linux/mm.h:33,
+                  from include/linux/pid_namespace.h:7,
+                  from include/linux/ptrace.h:10,
+                  from arch/nios2/kernel/asm-offsets.c:9:
+arch/nios2/include/asm/pgtable.h: In function 'ptep_set_access_flags':
+arch/nios2/include/asm/pgtable.h:286:17: error: implicit declaration of function 'set_ptes'; did you mean 'set_pte'?
 
-> 
-> The lock is only available within the PCI core itself which is why I
-> moved a few functions over there so they can use the lock.
-> 
->> Could we move this to just before patch 11 where it is used?
-> 
-> Yes
-> 
->> or could this be used to improve get_pci_alias_group() and get_pci_function_alias_group() ?
-> 
-> IMHO it is not really worth the churn
-> 
-Hey, your churning at the moment, so I figured you may want to churn some more! ;-)
-just a comment/suggestion; not required.
+This affects v5.15.y and older. I'll stop testing this architecture for
+the affected branches.
 
-> Jason
-> 
+Guenter
 
