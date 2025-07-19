@@ -1,59 +1,59 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65C67FD
-	for <patches@lists.linux.dev>; Sat, 19 Jul 2025 21:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2671C3BEB
+	for <patches@lists.linux.dev>; Sat, 19 Jul 2025 22:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752959177; cv=none; b=jPMzP8JIkpnZYrkAsJl59ODLxx6KsufVi+COiAGA51BIed6gJog74T+o93iGv61moF0B7FxbiGwz2aVNoV6KtvONO+uhL3ROulgBd3tLw0whkcCocijCLr8VQ6QHCyaZxnMoiKFOyMkzqQHbhtmSdbuvkYmwIaMK+DGYeFWXUQE=
+	t=1752963391; cv=none; b=XGz9rnxhypC5SWHf0JaMGhjFDU8RL2sbXAJXYGKYpFNoHMgL/6SFMgL12EVWtkBzkEPH+90zivGWOt0hh3oXagQUB5ygyyZR1updc0JMZdC04o04XN5qCqOIBwgWWL2XIKHCNbrnOQHnfjF1rKFkUVju0HDo6Q80f3kQ0QupPgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752959177; c=relaxed/simple;
-	bh=nyswjgChzex87fkUmGlz803mOXSUIG3Re0obcW/WBZk=;
+	s=arc-20240116; t=1752963391; c=relaxed/simple;
+	bh=NpkpzpedYY4EMfcvwrKPMwxu3YU5wekHKDu3bm/eEJU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lAZDCM7J4I1J/DHRh/IzC02xVFZ+ptArdoJjyOfi8hwW1S2+UHU1rNsKWF+RQ/dmZK2knt/y6wm8lUVDthvV/dS6XUjXZUTwysTMXy51z8f9FmVLg37/KGbIXc1O6UTpm5zh7hwp5QOGlCUzpIyTZRgBAq7rG0e+Y3g/n1fo8l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BtNv+WV8; arc=none smtp.client-ip=209.85.167.47
+	 To:Cc:Content-Type; b=hHs9nCqsEBlnLKKgvUmjKbHTRaAz80iDdBPiZKaAfULQiBCOcvIEvrRorcr8T+CEjP9s/3dejfjF73CFkPXCh89xXufNOUXqprQENAWOtZX1y2KEPmHMku0KPi+DeLBmAPVK6CeWCpeMjw5XyPitE5zZBIeLhK2X3yPKAkB74RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BUdsq88f; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BtNv+WV8"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-558f7472d64so3700488e87.0
-        for <patches@lists.linux.dev>; Sat, 19 Jul 2025 14:06:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BUdsq88f"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-312f53d0609so675786a91.1
+        for <patches@lists.linux.dev>; Sat, 19 Jul 2025 15:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752959174; x=1753563974; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752963389; x=1753568189; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KDD5lvVgbLQzMHEKqvD4drpjZqiteKdnziSv4nMIVYg=;
-        b=BtNv+WV8qFt9q+8C8XBoZ1iwzdnFU8cocWn5TYMQMH2se1jxOJ8EErGp+DOxgpcqtz
-         F1YBKeXIw3q04UF7kPSD2Q7A27PcqysdORW2roYk8hcM5RWx0jswiW3XZ5uQqY7ECC3f
-         1IhtlSzqylP+etOgaCJnN76fzj2wEx/97/9xXytgRE8NvsQCYg0Ely/no3ivYUnD1kX3
-         i0zjk+QNux1uO8i97uBbR8RzsoxVVzhinjamWzPY8IzMPzoN+nVw3Zibulf6DP+AP+/S
-         n06KBQE7yfHmp/s4lSjRHeLn1AO6nEXbwfs+WXfl9ku4l+eFc4CyFYf1C4dzPLrTVHuH
-         K3SQ==
+        bh=NpkpzpedYY4EMfcvwrKPMwxu3YU5wekHKDu3bm/eEJU=;
+        b=BUdsq88fRexs0uHZx3n0eaQitfpXWNJ3zvipVVdFL8i9FjjKFCZIBFIsPPLdj0JQwx
+         a33mlvySBrtYf5GATKb9O2BiEUDPtHBAmLFTUMQWt1/nrjcHaVhCGiLKhttgienzhC7m
+         nVysrwdOUiuMvvFE/CDlON32NVeIR/UuaA+1lTUq1DOBJYp4CjQqO1HtK/y6bWu1e9q8
+         vgc/RZVms2TTSrS/5FgcSmFrue9xdd/1XPUVFa0oc7JpH+QFD+JkTSWm3FxzAot3Eq6a
+         +0sbzfLWnhOdj+5p0GSDX6i7/MqidO+Zvmu/sWCCeg1NZjVl+h9V7vSzMRSA+xeZ/JXP
+         l9pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752959174; x=1753563974;
+        d=1e100.net; s=20230601; t=1752963389; x=1753568189;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KDD5lvVgbLQzMHEKqvD4drpjZqiteKdnziSv4nMIVYg=;
-        b=ibYZT4as1zkaYuFEFuLRKSnL9HJnVrJJ2+jWpQzeV9lIJFCWaiAjl/6YCwhmAERX7p
-         eT+mIOfqlpgoR99LYSLHaiHfleUuMlFl61/TnPnjW00WevkCljV2jfwDzc5vvawW5bdS
-         M8bxKLacj8ppl0+qfprKOV9ArQhBWNijutctcWjbzf2zGpEFApXvAqDf5Sn4x14xaT8o
-         NToSkwWONzXzHfE4++AHy7K+rGvtFOy1M2k/A4hmwie1n0qreUNF98ePNr+akrl/zrkY
-         2Z/tt3A2cyiV2KX56wZnOMSHsUc/6frPK4EPI2F15qQeWG0Dhh5b8e1hu14+i/7ATIog
-         4OPA==
-X-Forwarded-Encrypted: i=1; AJvYcCWinAgd3YJY7FhO+2bfRTMPFiEXxEaWSbkebS0+Qco/sOQklgjv4SJUmh35Djx493NEpUAYjSfh@lists.linux.dev
-X-Gm-Message-State: AOJu0YywEXbzWlilPFZ2kOZqsNL0jiMdduYPFs6wcG2OF2/ZEcL6xrfl
-	2MrXqOS776Nl3QUdinbcAcnxtLhEyc/bITKQiCylzzYxMFzrdbU4Y+YuUznxULeAA9VrRMWMR/9
-	xzrq5H+KF9mvdbytGbKtL6IGXV15ChwA=
-X-Gm-Gg: ASbGnctvqBdin3l8JnEJx+8EHLmNSG9OuKn+8O8eUoYYFw8v0+rzg4bSiF08LzOV423
-	qbh2MKd7vOlzLtg7K29HZ76xhLPvLWUFnY2gaGyGMyE4JRxhigXpWjP5HGwoiR1/eTFM+JSBBaC
-	wP3mXLKIwaJvMkGeeT6vGzEI+a3QUI4tsg25izSyrnFXZUceZWuteJGa97RCwF2aKRItNvDjP6C
-	hAHtADowEhJNFjy/h+BMMsh/dx8a3tLIIPXMy3PfA==
-X-Google-Smtp-Source: AGHT+IFel6LcPVo3L3MCsNHOrcdqbyyvw2loT4c8a3F8Eu9ST3sLv5A/WpAB8b1q4cUP+onWoJI49Fm8mHtQap8cx7Y=
-X-Received: by 2002:a05:651c:b28:b0:32b:9792:1029 with SMTP id
- 38308e7fff4ca-33098f6680amr28756151fa.14.1752959173475; Sat, 19 Jul 2025
- 14:06:13 -0700 (PDT)
+        bh=NpkpzpedYY4EMfcvwrKPMwxu3YU5wekHKDu3bm/eEJU=;
+        b=ZukfNPkiI4EKQSN1r6lqnEkon6wBi0FS97bxT/334iyblkEpwoiZrRg7gGcueq6Vuz
+         olfQs2B4ch0VYpdkGxvyZwU85wf6M0kSWD/gO6INu2kpIUx1/J6ttPsv1v2u9L6DV+lK
+         luhbuNULO1yYxbf0yR2nOBVF+WPEKng4JcbhbJGcWgVj1w73KmY/Ot8/hnOMuU2NJ/0g
+         xB0/bciNIVnQg4MQxzb7UNnsnzLfRERCEKXkkms+qcVk7vsRwU6Whvty9D6FEa9DMelX
+         G87JMIrC0VpomXWLvks4wWBcRE4g3uiUrxFMD7HFpkYm4Pd1pY3RxkCs99U6odpWeW84
+         3dog==
+X-Forwarded-Encrypted: i=1; AJvYcCUtrGQXulXqD2GBqozma9ijx+cRQrGYaOS88CoXmn4ivmDyj7xysdvr7TayTfRw0LdtRCtNaArP@lists.linux.dev
+X-Gm-Message-State: AOJu0YzxlKosSRLa7ORYlih8Pqjxkx+RKxFCmakcliBcoQEwQEtpFp9k
+	4C4MktaL/WJDhHE6Kb0SUXbCMzSt+hyPk8Ax8m/zyQj+5yFEqWS3Ghwf+sfW0sbPdfeEYERE4j+
+	oU34fuMZHqH06h6H/WB2tcv7yOpdQNGg=
+X-Gm-Gg: ASbGncs3BwiTb9Kh/PfLKEC1q77ZWTOwwFpe3p3rVhm9UCEkbqlXFM6T6uJd53/9WrV
+	mQDcUINw3QJ+QLLh2lxJmIBlxibBlTqltaht0/Q5+k4wwESTWhjgMzcryWIyavOnkxEiRqRCRqX
+	YypXFgCfx+apfmuOJcJ0el0ftwFLUeVSjjZ8YLF5chUIeqUk+KFZVnvbY+vkW1GchIcinPjZf6F
+	p3f3In6
+X-Google-Smtp-Source: AGHT+IH6BKo2lnSTjkKm7n7x884y5POek1ffq9Xc270brisl+upX+noMOrw7jbWwO/I56s4/GJsH0QZB9o1iIRnlP48=
+X-Received: by 2002:a17:90b:1348:b0:313:f9fc:7214 with SMTP id
+ 98e67ed59e1d1-31c9e6ec8c7mr9435742a91.1.1752963388984; Sat, 19 Jul 2025
+ 15:16:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,10 +62,10 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20250719183649.596051-1-ojeda@kernel.org>
 In-Reply-To: <20250719183649.596051-1-ojeda@kernel.org>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Sat, 19 Jul 2025 17:05:37 -0400
-X-Gm-Features: Ac12FXwNuJFlNB4FrlOz_4LZnrwumCxbRuVE87wbB2tt8bbMYaX8TCEyZEcw5sk
-Message-ID: <CAJ-ks9=Ye4v4g0roTu_CJSveRwj6c6P95kGfzy29VEh2c8XHKA@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 20 Jul 2025 00:16:16 +0200
+X-Gm-Features: Ac12FXwbHDJLi_zasTuQDMfRLkeGyZbrsVlDTOxOdBX5LYNwt4g6FSLKRrHf9Oo
+Message-ID: <CANiq72=6HE=wz3M1fqAKAUyypSKZXMe7vFXTyYNWSf_0+ysC4Q@mail.gmail.com>
 Subject: Re: [PATCH] rust: list: undo unintended replacement of method name
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -77,7 +77,7 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 19, 2025 at 2:37=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+On Sat, Jul 19, 2025 at 8:37=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
 > When we renamed `Opaque::raw_get` to `cast_into`, there was one
@@ -92,35 +92,7 @@ te:
 > Fixes: 64fb810bce03 ("rust: types: rename Opaque::raw_get to cast_into")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reviewed-by: Tamir Duberstein <tamird@gmail.com>
+Applied to `rust-next` -- thanks everyone!
 
-> ---
->  rust/kernel/list/impl_list_item_mod.rs | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/rust/kernel/list/impl_list_item_mod.rs b/rust/kernel/list/im=
-pl_list_item_mod.rs
-> index c1edba0a9501..3f6c30e14904 100644
-> --- a/rust/kernel/list/impl_list_item_mod.rs
-> +++ b/rust/kernel/list/impl_list_item_mod.rs
-> @@ -252,7 +252,7 @@ unsafe fn view_value(links_field: *mut $crate::list::=
-ListLinks<$num>) -> *const
->                  // the pointer stays in bounds of the allocation.
->                  let self_ptr =3D unsafe { (links_field as *const u8).add=
-(spoff) }
->                      as *const ::core::cell::UnsafeCell<*const Self>;
-> -                let cell_inner =3D ::core::cell::UnsafeCell::cast_into(s=
-elf_ptr);
-> +                let cell_inner =3D ::core::cell::UnsafeCell::raw_get(sel=
-f_ptr);
->                  // SAFETY: This is not a data race, because the only fun=
-ction that writes to this
->                  // value is `prepare_to_insert`, but by the safety requi=
-rements the
->                  // `prepare_to_insert` method may not be called in paral=
-lel with `view_value` or
->
-> base-commit: 23b128bba76776541dc09efaf3acf6242917e1f0
-> --
-> 2.50.1
->
+Cheers,
+Miguel
