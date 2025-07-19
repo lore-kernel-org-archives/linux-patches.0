@@ -1,115 +1,84 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA75222AE75;
-	Sat, 19 Jul 2025 08:25:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301891EF1D;
+	Sat, 19 Jul 2025 18:37:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752913556; cv=none; b=rO5cgVxBjp80Yra3XI+yIBwVADAXa5wHTH5V7Dpf0mXQ92gOikyBx2ukOjdQPkxGNVsLPKOSoDQKF0VziICmh00lGavbgPjfJ1CwKI0HkXtWAx0o0PSF8n4Ea0ylzpocFnycuuWTX3LTJkUo3LE6vMXGtNzmwJZX6xzYMuQdV8Y=
+	t=1752950225; cv=none; b=p7O/znEYle9gH8NWfKprwVLVyWjneB3gSA8wFy0QYCtP0qg6n2rLNYKpNpdom0OVVKppmje5aMor4OmzE5d277ZPly/3yYBh9MTf5z2ZHkR7e7cZv88MWs+xAgInifNUR5h4rX6nAzCRADk2EzBMT8xOwuqWFMDW1A7k4BY/RGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752913556; c=relaxed/simple;
-	bh=4eRGrkNw5Cb+IWU2kFLOeD/+YDj6S0Mo45vQlVKl17o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q6zGAsNIop7/EBpGTMSj9ATMJLbhafQDo492I+LQI3qNqWD/EJgl76BzbfN+JsxoxEWSIvGkf8HjqjLTGh9pqxQVH+wwb2+wsQZtY0pc004iigUwx2DBZ2VdyhfQsWBse4finsLAlYXe7HOe3tqDFg5kP9+Vt/12ZzOC8W0y32o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kI9y485Y; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1752950225; c=relaxed/simple;
+	bh=6S2MHYjCSvEbnYdKa6ZxyilifS2dWfn2HrXD97TZfPg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IYG2OyL84rqmhRvD93tSVAMMv0DPl6ExmiqfItmcGx2DgnCFTtBX4U3geV1e25E7mI9e/Gwp+JMlCeNIJO8n5weJ+JoFP485EYHc3g9LjtGiToM//WaogO4eGgBcXgdfjXGmc8I/8paaznjSJztypnyZKa8YwENtU5NsmB3E8/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3R/hiUJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kI9y485Y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752913554; x=1784449554;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4eRGrkNw5Cb+IWU2kFLOeD/+YDj6S0Mo45vQlVKl17o=;
-  b=kI9y485YfUYeGp0VUmgCsC1WxyZVbBRCZ6yGpJmqDoPkZGHFrrvN3l9C
-   10mBheUmdSvX1nec2XKHQguiuDoZvLf+DEx9IUl/+BPd6I5FQbFhWK6wC
-   1I39nr24+cdQQ2zMzTa9cnCh83QZX0wubSo8syURqJ7krxK9VgaurNPy6
-   AhK32E11rv+UHwHuA/UIMqV9LS3URyONWs5K0n4EvQoFBI+MBLBXq2EJq
-   POHPy7kVhim6LRMkHiCxVV22hA8l/C2Rz9oZCU0uQd68NCYk54IuNO4ot
-   sstqHIZQYIGYx+FlxDC6g+LODhGnQ3FnsaJWzFCAFPVOfzOoRAd5TSW38
-   A==;
-X-CSE-ConnectionGUID: lHNFTAdNSg6+q4VTs02xPA==
-X-CSE-MsgGUID: 3USG3rRmQ32Xf7i65IqCAw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11496"; a="59011634"
-X-IronPort-AV: E=Sophos;i="6.16,323,1744095600"; 
-   d="scan'208";a="59011634"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jul 2025 01:25:54 -0700
-X-CSE-ConnectionGUID: +7S6gRYbTFKNwAB/ImkwEw==
-X-CSE-MsgGUID: K0XQRP2vRl6ZkaKXZaYvSw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,323,1744095600"; 
-   d="scan'208";a="164052562"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by orviesa005.jf.intel.com with ESMTP; 19 Jul 2025 01:25:49 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ud2t9-000FLL-05;
-	Sat, 19 Jul 2025 08:25:47 +0000
-Date: Sat, 19 Jul 2025 16:24:47 +0800
-From: kernel test robot <lkp@intel.com>
-To: Macpaul Lin <macpaul.lin@mediatek.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Sean Wang <sean.wang@mediatek.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	openembedded-core@lists.openembedded.org, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Bear Wang <bear.wang@mediatek.com>,
-	Pablo Sun <pablo.sun@mediatek.com>,
-	Ramax Lo <ramax.lo@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	MediaTek Chromebook Upstream <Project_Global_Chrome_Upstream_Group@mediatek.com>
-Subject: Re: [PATCH 3/4] arm64: dts: mediatek: add device-tree for Genio 1200
- EVK UFS board
-Message-ID: <202507191640.Ghk47rXu-lkp@intel.com>
-References: <20250718083202.654568-3-macpaul.lin@mediatek.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3R/hiUJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3BDC4CEE3;
+	Sat, 19 Jul 2025 18:37:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752950224;
+	bh=6S2MHYjCSvEbnYdKa6ZxyilifS2dWfn2HrXD97TZfPg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=L3R/hiUJgBTPbjKMj30YmC985sG2vvBbkS1N8wHAPSYQvMwS1inkxSFh9ZyMte8BT
+	 yH7GmP0LniMlrL0WxfrJ9C4IbK595eSyET+Ik7hlU8tIpThv0WK0Q2ztIHCVIgZkpW
+	 h2CTQSfRTU7QX7r2/3TF3XGD3lYIQq7/5mpj5nppROCTMOrzOKLv5dfaLKovCoq2k4
+	 By/mZoRDwO562OyXm+Ebrf7nRWVZZ5g73W7NcZ0ahRpCBlwolfaqZ8aX/ggrmASmNq
+	 zq6u0BBLD+XfszANthrsItEUT8MDWHhK14H1fbcHTz2Ro+REZX1Zs3NilDWLot/yf8
+	 B7uATd9LkROcQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] rust: list: undo unintended replacement of method name
+Date: Sat, 19 Jul 2025 20:36:49 +0200
+Message-ID: <20250719183649.596051-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250718083202.654568-3-macpaul.lin@mediatek.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Macpaul,
+When we renamed `Opaque::raw_get` to `cast_into`, there was one
+replacement that was not supposed to be there.
 
-kernel test robot noticed the following build errors:
+It does not cause an issue so far because it is inside a macro rule (the
+`ListLinksSelfPtr` one) that is unused so far. However, it will start
+to be used soon.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on arm64/for-next/core krzk/for-next linus/master v6.16-rc6]
-[cannot apply to next-20250718]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Thus fix it now.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Macpaul-Lin/arm64-dts-mediatek-mt8395-genio-1200-evk-Move-common-parts-to-dtsi/20250718-163459
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20250718083202.654568-3-macpaul.lin%40mediatek.com
-patch subject: [PATCH 3/4] arm64: dts: mediatek: add device-tree for Genio 1200 EVK UFS board
-config: arm64-randconfig-001-20250719 (https://download.01.org/0day-ci/archive/20250719/202507191640.Ghk47rXu-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250719/202507191640.Ghk47rXu-lkp@intel.com/reproduce)
+Fixes: 64fb810bce03 ("rust: types: rename Opaque::raw_get to cast_into")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/kernel/list/impl_list_item_mod.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507191640.Ghk47rXu-lkp@intel.com/
+diff --git a/rust/kernel/list/impl_list_item_mod.rs b/rust/kernel/list/impl_list_item_mod.rs
+index c1edba0a9501..3f6c30e14904 100644
+--- a/rust/kernel/list/impl_list_item_mod.rs
++++ b/rust/kernel/list/impl_list_item_mod.rs
+@@ -252,7 +252,7 @@ unsafe fn view_value(links_field: *mut $crate::list::ListLinks<$num>) -> *const
+                 // the pointer stays in bounds of the allocation.
+                 let self_ptr = unsafe { (links_field as *const u8).add(spoff) }
+                     as *const ::core::cell::UnsafeCell<*const Self>;
+-                let cell_inner = ::core::cell::UnsafeCell::cast_into(self_ptr);
++                let cell_inner = ::core::cell::UnsafeCell::raw_get(self_ptr);
+                 // SAFETY: This is not a data race, because the only function that writes to this
+                 // value is `prepare_to_insert`, but by the safety requirements the
+                 // `prepare_to_insert` method may not be called in parallel with `view_value` or
 
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm64/boot/dts/mediatek/mt8395-genio-1200-evk-ufs.dts:10.1-8 Label or path ufshci not found
-   FATAL ERROR: Syntax error parsing input tree
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+base-commit: 23b128bba76776541dc09efaf3acf6242917e1f0
+--
+2.50.1
