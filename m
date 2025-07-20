@@ -1,59 +1,59 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C73FE4
-	for <patches@lists.linux.dev>; Sun, 20 Jul 2025 15:02:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03FD221D80
+	for <patches@lists.linux.dev>; Sun, 20 Jul 2025 20:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753023749; cv=none; b=Ls7WItSMEvTaZ0X9XbEu0ZwUT0QTSGtvFs/xH7qf2YHpGNegjWE7nfYDykogVStbD6PVidi8h0LdlyZ3zfzY/yMPz7ObXemZ1+wI5G9bsLgdEm6qE/UC2yjtnoxe4c4JT3RkShLK4PrnGID164QnrhLwNnhbcZ1GiRsiroBpW6k=
+	t=1753042450; cv=none; b=MBwzleg64erXYFqCnNf2eLKd+nrLM+foNuRpyPLqB2xaVAa8w3UGKYyQtpJPJnLKBf+UGGVGKlcKwcNoNwESQVs4wOQUhChdNVe4+4HCiC1GLyWkCEoKjIvnGbIye0S8RhAyYaSTYFa3UIvMQ1OVbBSSNCL/n2orSBhKn7d3eS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753023749; c=relaxed/simple;
-	bh=+NU0f4p4nwF4AjyVPqBrzsnpMY/oszbnf1fJk84DbU0=;
+	s=arc-20240116; t=1753042450; c=relaxed/simple;
+	bh=3XqnZ3lQ7EVpBDgAQl7576ulVBufGzapdE6biJkdf1c=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ar6kjo2pKVNh5f4pCz9PO6ORLdfv4ZxnxSDI+0L2nN+1vwbIGvyo7OdiQPxrY3dZz1MsAlppuyHtIJFTeueCvnG2ExntTnZ7uhg0Lr4MrGlUc9Pk01LY8SXx4w/N8B8lJJYwWCh5QBLKFG3wKP0f+e6WOmc+bjMV3GE8EMg/Mr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YkWPb1hs; arc=none smtp.client-ip=209.85.218.54
+	 To:Cc:Content-Type; b=pPYxN2Ei4d3xypsOOjOBD8P3bT45QH037djJSCyZuY6miypNi/RSFCgr38dxkYaPhZosVSZU2gn8EYgL8BqvmCldMvAXbHEGQfUd50lrYkvRktkf+se0nuVaRVoAHAbI8lbJkF+iwwlzKQP390fnSRLlRTb74l1+D/2T9TyFEUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TtJJHTny; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YkWPb1hs"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ad56cbc7b07so572714966b.0
-        for <patches@lists.linux.dev>; Sun, 20 Jul 2025 08:02:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TtJJHTny"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-312efc384fcso693525a91.3
+        for <patches@lists.linux.dev>; Sun, 20 Jul 2025 13:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753023746; x=1753628546; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1753042448; x=1753647248; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yBq4s7IgvgeI8LlVi+Zh51XwjN6MneGpapQDOgcp+VY=;
-        b=YkWPb1hs06zlZ6P3bW8PZbyk+WeCWdFQ1KSx6I07F+1t/sDfr/T8pieRxMygYevnxZ
-         wK21MccMf43RSsHxA+3kPQvM61fW7kZmece8bK4o2TmBo0e5CO2poFD0NTRuq/89jkdC
-         ZjD3rrDuwkqYZVVj3vT6NIukqQNWdVCleEvzLEm4zK2mHKeod951dFfZw1xBh52S5Gw0
-         kn3k5RkQ90bKr9qUReaXWjhZolHcuyVWdXjyao7fj7sZzeVlbRzQlczvQIliI8uwBYhg
-         /s3UANz2fJEUpXlJ57Fes/niSx4GZZ6OsfPxQ2IHpsqpOgkmOItLmzLRXNjU23Q54OgN
-         +uPw==
+        bh=3XqnZ3lQ7EVpBDgAQl7576ulVBufGzapdE6biJkdf1c=;
+        b=TtJJHTny1jri0QI59TvZDEeXmNa0wbuvys7oAzhsfFBiQaCmxYwyfwOPbOqlfCx8YK
+         QJtL2THn9sSZ4KoDabMtdMOBidJfs7HEJSH9mWR6RQFl/DynzIL5ThrXp0/VVrkpGWlT
+         0jE0+BqWOFkT00Zq8CCLRn3ocHZkspdaclrbdiWF1YLv1zmqFACVoRj9xv4NpZH4dtYI
+         NE6fsn02ssKrC7f8gVd31qn6Bn4E5FkVF6sjQp/Ngm4naSdA4ab5Wl1X+jQrLCcORkHB
+         FVZoB7izc5VDoRHBB0GojpvRglQb3iJ/7tQ2dXkhYJS+y76tLfu8GsyMqOG4/Bi00X+H
+         ts5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753023746; x=1753628546;
+        d=1e100.net; s=20230601; t=1753042448; x=1753647248;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yBq4s7IgvgeI8LlVi+Zh51XwjN6MneGpapQDOgcp+VY=;
-        b=wTMc71cLLvyCqxeJP1+ppWYQHAVH0sgEIKAvkYm50L6oD5meIJQ3j5KYL5gjjZ7Trf
-         cPK+Vntcz/IKqr36NMP2OaN2o/d30oK8frL5uqkWIJteCb2W8TYHm7Ia1HwP+h5ByLgG
-         6ZJrDbxqbXs8S7oMMnZkvkfvf7DpyhQTxlh8BvuyhKYJkEGrl2Awf47Yq6WKMPYyzyFy
-         JFxKi+dJ6cGQI455dGbVtOv7W4TTKIAu+B64V2cPpLnN7M7qPgJ1F3EsCseYSXwJ4SIS
-         xN1CNAur2zUwXzjRzOlr2Yp2OU3O/yEk0mT0TBdUrk/DvBYoFOK8GkIghjNvQqsnNeQN
-         Xhjg==
-X-Forwarded-Encrypted: i=1; AJvYcCWEIKTR3AcNWuDNchDqSH/3YaI8jXQlt/cucZ2ylleTmg4PGc93py4ccBRM9WjI49WpXAIx5Hc3@lists.linux.dev
-X-Gm-Message-State: AOJu0YyshPDRZ0u/OIm7UnT6H8Y1dBRka20QfW1EZDWuRwONOXMXTqxe
-	Ehp7imAfBxj6W6H5tC3Lc4CecMRI3B29qVRpd/AdTnLHOnKq9q3AdmIss56sNafW8VZRSD42YMa
-	2pblGgZZi90CDjDZjkcdwpfM8u/WiHq8=
-X-Gm-Gg: ASbGncug+4SR2YFP47WVyBa3q6DF+dHQh+sESvmoiarPWsQbvQ5zpVtClsFyz4R+cni
-	LSZnoSyc9Ts8dn/xNe3t5ocUaWGOL8VaUEIpBiMRsVIFB4JhyOTTLjcR8fQQ5CEvkZ+Nk+Rb+11
-	YO8tJbB0v9mU3oB+j+85A/4b2WlTZaXFNIKu+14TA5gMClEgBh7MbVUIJsr58ugPqXsaxmW7gVS
-	QGVAcPAkfPj7pfg41bSzQBIetB//uS6nssEchepZw==
-X-Google-Smtp-Source: AGHT+IG0lJPkWuVauq9Kk7wmPfK+95V5H7PAaLnR7rtecUWMdjLuVrjjOvS9g7KVdGyT92YjJl9LNkfMT+/MgwTDuo8=
-X-Received: by 2002:a17:907:1c17:b0:ad8:ae51:d16 with SMTP id
- a640c23a62f3a-ae9ce198bf6mr1743464466b.55.1753023745422; Sun, 20 Jul 2025
- 08:02:25 -0700 (PDT)
+        bh=3XqnZ3lQ7EVpBDgAQl7576ulVBufGzapdE6biJkdf1c=;
+        b=J47Tt3k+hhtw+ETvOxtCXdeoQDAJusvRrzl5aDSyV+RXb+v8zK/z12se7bIqreHx9O
+         pFkDI8Nrs99NmBszPF6vpQ6DleiKNs1w+8gmDLzom/oLYthNkS5eqdgbyWmr0P9K0zR9
+         7bAtBKYm9xnHF5Xe/ZP2zEWgEEry1/a14L/q9VhsN7NsxRvLIBR8jVVjye4mY/LB/Pt+
+         vqP7QV4zvRT1ATMF98k7wSzu4V0QjDYwwFVXj/GfuBJpswZ72amu8LVdP1PndPHSwN/+
+         foGefjBAGrM7uRPoazb6NFvt1d9hZKk94SgqbRsCHPToZxjUW5uQ+vjzwFPpcWs0lSVe
+         /frw==
+X-Forwarded-Encrypted: i=1; AJvYcCU7pF8Ht4sz9cjNP2eOE6Vtya6cL3yMEJVhri3t0Hf8QDQl0GCcfJPU/ZqrQxTedUmOgvuh/1kr@lists.linux.dev
+X-Gm-Message-State: AOJu0YxIuJRaiZOF4wREN3DeG3wcD/3d8dlolTLgzGLgJvnUa4TiFIRT
+	J2VLKZHKr29lnPJzOueNieGFTdXCTLXXmgm9tV40tTllYQyg4hhIqK55QZUnCd6kg0uz8s4ulMP
+	FulwrzKneL8ZPohe0OImgECcKMdGtkOI=
+X-Gm-Gg: ASbGncsISa0qXFWktawQmyTkwayA8HiyCumhzZKB6UTYbzNMyHemigmIxDRKemsLBNX
+	cBBFp7cK0LveKz3U/paf8csVPKl7WugCqS2ofNj7/M/IATxf5MsMs15XmfXOPYsRPdzmMkPgbfd
+	2JbYG3nUy8X7Rz5TDMz0LrEq+PW4DRATIFNx8ajQK2cC2AIrPtNldqfF2JtSTlMzeCzs0Df2xYZ
+	h+oHWygMP+2PeIdqQ0=
+X-Google-Smtp-Source: AGHT+IGGe7wNplwNP495bHYi0LizOC3vDHJ4gAQzN47ag/wp0xuN+oscFUl41uSFDjxAQY0aFBK4Zcz8LnBJ86GRkyw=
+X-Received: by 2002:a17:90b:2fc7:b0:2ff:7970:d2b6 with SMTP id
+ 98e67ed59e1d1-31c9e77a4f1mr10752184a91.5.1753042448310; Sun, 20 Jul 2025
+ 13:14:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,10 +62,10 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20250719232500.822313-1-ojeda@kernel.org>
 In-Reply-To: <20250719232500.822313-1-ojeda@kernel.org>
-From: Tamir Duberstein <tamird@gmail.com>
-Date: Sun, 20 Jul 2025 11:01:48 -0400
-X-Gm-Features: Ac12FXzqgH4mx0bfYQ1wCS2u-3aY2us21hvNcois8QEn62EbIRZeMeCNHcEFquk
-Message-ID: <CAJ-ks9nq0wC2xpAr_AiSFa_hD+ss1DSvy-Uw4NG66E_1FaYCag@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 20 Jul 2025 22:13:56 +0200
+X-Gm-Features: Ac12FXxb7ZG69y5dslaoRTvC7tHnGWA-2l9OwqxXbxYjAVnCX9uZ3NKFIYtXaO4
+Message-ID: <CANiq72mk8Mp3M5hWSzgskxqWbQLBix_7_Hvqej5OA3RQnr5VbQ@mail.gmail.com>
 Subject: Re: [PATCH] rust: list: remove nonexistent generic parameter in link
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -77,7 +77,7 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 19, 2025 at 7:25=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+On Sun, Jul 20, 2025 at 1:25=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
 > `ListLinks` does not take a `T` generic parameter, unlike
@@ -89,38 +89,7 @@ te:
 > Fixes: 40c53294596b ("rust: list: add macro for implementing ListItem")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reviewed-by: Tamir Duberstein <tamird@gmail.com>
+Applied to `rust-next` -- thanks!
 
-> ---
->  rust/kernel/list/impl_list_item_mod.rs | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/rust/kernel/list/impl_list_item_mod.rs b/rust/kernel/list/im=
-pl_list_item_mod.rs
-> index f4c91832a875..202bc6f97c13 100644
-> --- a/rust/kernel/list/impl_list_item_mod.rs
-> +++ b/rust/kernel/list/impl_list_item_mod.rs
-> @@ -17,13 +17,13 @@
->  /// [`ListLinks<ID>`]: crate::list::ListLinks
->  /// [`ListItem`]: crate::list::ListItem
->  pub unsafe trait HasListLinks<const ID: u64 =3D 0> {
-> -    /// Returns a pointer to the [`ListLinks<T, ID>`] field.
-> +    /// Returns a pointer to the [`ListLinks<ID>`] field.
->      ///
->      /// # Safety
->      ///
->      /// The provided pointer must point at a valid struct of type `Self`=
-.
->      ///
-> -    /// [`ListLinks<T, ID>`]: crate::list::ListLinks
-> +    /// [`ListLinks<ID>`]: crate::list::ListLinks
->      unsafe fn raw_get_list_links(ptr: *mut Self) -> *mut crate::list::Li=
-stLinks<ID>;
->  }
->
->
-> base-commit: cc84ef3b88f407e8bd5a5f7b6906d1e69851c856
-> --
-> 2.50.1
->
->
+Cheers,
+Miguel
