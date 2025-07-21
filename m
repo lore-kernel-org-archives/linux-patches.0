@@ -1,174 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8552E406;
-	Mon, 21 Jul 2025 00:26:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D688DF4F1;
+	Mon, 21 Jul 2025 08:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753057595; cv=none; b=IZZu2R2kyZD13s0ZtwpfjliHjxfU698ioEWEjYJ78bk9e4oMyrHTnoBUfL9ysQ+4Jau3I2Sr+JNokrmZm/eb5FCLo5O6M9xlxrIzX3R02M5yE+1P+Wrh11Gb5jhBdyAaD3S4czw/qa6xsetq734OKp8k07A4IDYyIXlDScGlr5w=
+	t=1753087270; cv=none; b=M9APmh0zaPCu9KBfkF8z/X7Z5QI0TdzTnsFs+hz++RiswBY9rD4hsvj6OJ/XGfvxBT4cgnaTh6hEBqtdZw9YRHVmpPcjOdq9fVFnOAAdk5BwY2ndTtQ1OCsTLtjR+twkuiVud3RCRc6YOP09kZaX+4xuRQ4lZdHA7Fbo8JlYyoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753057595; c=relaxed/simple;
-	bh=2jXD6fV2pi4XdodBU4IjziGtCooOyqc6QbykipInwFo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hCam2HEPPUcVJTCAweVx8AbTgKVh8qtv0xVtQj0ANWCa2ALjZoaCXnYLurkofrIXqd+vZkw886qcxfiddih/RS0mV8rpvovEtGIzI6NA8V/a5Q+3EDaXTAaXhlBAqa/LORkyhOjmaZHOcRa5RisOiYNn0ptq2Tlu3LOLliZMCtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdcfoYAM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753087270; c=relaxed/simple;
+	bh=yhdbVoA6G31ypH6Hzi6F5nyXwF6JKWxD59x9aU/23yQ=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=H50rXk9kPk0UO2Vw/iiAhbHtdMm+IQ4mwG0AtQzD81K7DqOqXvBZrnDZgzBP1+AP83JP0Tr7sASqrRN6FpXVU4fYgHGAMhlZq0olQOxw387plke3DNyuTaohc5mFOrqYmqS5duwh1ltyJPXFjTkQ0JasO9j0ADs/lXi7bS0qV8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jZe9bg/Z; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdcfoYAM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CF0C4CEE7;
-	Mon, 21 Jul 2025 00:26:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753057594;
-	bh=2jXD6fV2pi4XdodBU4IjziGtCooOyqc6QbykipInwFo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XdcfoYAMJGyOpwexECJfGYYaLJpKEJYaYhR7Ve456pp1Mu/xlx0GKy77EaNihR0qP
-	 bbNTuZ8BdR8SrB7V52lvnWlaWytC0BjVLaKfuxfcrSlflGZfDVJ6uQjJDyfd26XiJi
-	 fMa6nsR62qdGsIU+RMMsX1MTLVFKYZXHrT8eF36Hyv0351dK7+Nd14tTw0KWxznmaW
-	 Hy0UXyrAlM0GzSVNTcvup5NX/GBBqXfVt77RpIkmxeK52AdeepglwFzNzr+f3/QPAW
-	 XC89vjEWEpVDy8wdkBiDimVW/g9fiPtALjYmQYNvSslUw06gfM2CWvRgQtzjWaELm7
-	 OKLrf9nnyB8Qw==
-Date: Sun, 20 Jul 2025 19:26:33 -0500
-From: Rob Herring <robh@kernel.org>
-To: Macpaul Lin <macpaul.lin@mediatek.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Stanley Jhu <chu.stanley@gmail.com>,
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
-	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	openembedded-core@lists.openembedded.org, patches@lists.linux.dev,
-	stable@vger.kernel.org, Bear Wang <bear.wang@mediatek.com>,
-	Pablo Sun <pablo.sun@mediatek.com>,
-	Ramax Lo <ramax.lo@mediatek.com>, Macpaul Lin <macpaul@gmail.com>,
-	MediaTek Chromebook Upstream <Project_Global_Chrome_Upstream_Group@mediatek.com>
-Subject: Re: [PATCH 2/3] dt-bindings: ufs: mediatek,ufs: add MT8195
- compatible and update clock nodes
-Message-ID: <20250721002633.GA3083612-robh@kernel.org>
-References: <20250718082719.653228-1-macpaul.lin@mediatek.com>
- <20250718082719.653228-2-macpaul.lin@mediatek.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jZe9bg/Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1753087269; x=1784623269;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=yhdbVoA6G31ypH6Hzi6F5nyXwF6JKWxD59x9aU/23yQ=;
+  b=jZe9bg/ZqlH9OHFrzzgs5U+ph+WgT5nE6tSqoU37L6exyH3pTZbfBtvu
+   gJPZ2S1sIg/d4v/KHBmx24fDCwn1u7AV0YZ0Uyo5HYcfnwGMhd+Rhc7/Z
+   Nzv+Ad9NrnIAUjK/5LuYvQUwoyV8K5SYZ2noADgathHrEFXdL8z5MTSs+
+   ZgQg3KfpDuarVOMnxY8iyWd+wMEa/5bFI28Z4oObuhOV7u1ZxABuswl8B
+   MF2tBgbLe2kkZcQ+NxbostNB6EfKOGnzFaonsRmywW4W6k9oB0kMlYMTz
+   ho1A7IvHcOvbKr3aitr0rDXp90qjC37uTb2NSLvV01YrDNNH50h4v/mwl
+   w==;
+X-CSE-ConnectionGUID: +JjfrUoQTfGQbCy/wgJn9A==
+X-CSE-MsgGUID: UiBaHK44Sf6UCzupSrf7KA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11498"; a="57913004"
+X-IronPort-AV: E=Sophos;i="6.16,328,1744095600"; 
+   d="scan'208";a="57913004"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 01:41:08 -0700
+X-CSE-ConnectionGUID: 97xDEV/xRtqM92QXpat5Vw==
+X-CSE-MsgGUID: 9S7HUu/dTS66MGiBOC0w7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,328,1744095600"; 
+   d="scan'208";a="162819795"
+Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.243.252]) ([10.124.243.252])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jul 2025 01:41:06 -0700
+Message-ID: <00c5972b-a5d9-4604-aea6-cc0d8e2601a0@linux.intel.com>
+Date: Mon, 21 Jul 2025 16:41:03 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250718082719.653228-2-macpaul.lin@mediatek.com>
+User-Agent: Mozilla Thunderbird
+Cc: baolu.lu@linux.intel.com, Kevin Tian <kevin.tian@intel.com>,
+ patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>,
+ Wei Wang <wei.w.wang@intel.com>
+Subject: Re: [PATCH 1/9] iommu/pages: Add support for a incoherent IOMMU page
+ walker
+To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+References: <1-v1-bdb01ffac49c+be-iommu_pt_vtd_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <1-v1-bdb01ffac49c+be-iommu_pt_vtd_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 18, 2025 at 04:27:17PM +0800, Macpaul Lin wrote:
-> Add 'mediatek,mt8195-ufshci' to compatible list.
-> Update clocks and clock-names constraints to allow one to eight entries.
-> Introduce 'mediatek,ufs-disable-mcq' property to disable
-> MCQ (Multi-Circular Queue). Update conditional schema for mt8195
-> requiring eight 'clocks' and eight 'clock-names'.
-
-Don't just describe the diff, we can read it. Describe why you are 
-making the changes. How is the new h/w different (or the same).
-
-> 
-> Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-> ---
->  .../devicetree/bindings/ufs/mediatek,ufs.yaml | 49 ++++++++++++++++---
->  1 file changed, 43 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-> index 32fd535a514a..9d6bcf735920 100644
-> --- a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-> @@ -9,21 +9,20 @@ title: Mediatek Universal Flash Storage (UFS) Controller
->  maintainers:
->    - Stanley Chu <stanley.chu@mediatek.com>
->  
-> -allOf:
-> -  - $ref: ufs-common.yaml
-> -
->  properties:
->    compatible:
->      enum:
->        - mediatek,mt8183-ufshci
->        - mediatek,mt8192-ufshci
-> +      - mediatek,mt8195-ufshci
->  
->    clocks:
-> -    maxItems: 1
-> +    minItems: 1
-> +    maxItems: 8
->  
->    clock-names:
-> -    items:
-> -      - const: ufs
-> +    minItems: 1
-> +    maxItems: 8
->  
->    phys:
->      maxItems: 1
-> @@ -33,6 +32,11 @@ properties:
->  
->    vcc-supply: true
->  
-> +  mediatek,ufs-disable-mcq:
-> +    $ref: /schemas/types.yaml#/definitions/flag
-> +    description: The mask to disable MCQ (Multi-Circular Queue) for UFS host.
-> +    type: boolean
-
-Seems this was undocumented, but already in use. That should be a 
-separate patch.
-
+On 7/17/2025 3:57 AM, Jason Gunthorpe wrote:
+> @@ -98,4 +101,36 @@ static inline void *iommu_alloc_pages_sz(gfp_t gfp, size_t size)
+>   	return iommu_alloc_pages_node_sz(NUMA_NO_NODE, gfp, size);
+>   }
+>   
+> -#endif	/* __IOMMU_PAGES_H */
+> +int iommu_pages_start_incoherent(void *virt, struct device *dma_dev);
+> +int iommu_pages_start_incoherent_list(struct iommu_pages_list *list,
+> +                                      struct device *dma_dev);
 > +
->  required:
->    - compatible
->    - clocks
-> @@ -43,6 +47,39 @@ required:
->  
->  unevaluatedProperties: false
->  
-> +allOf:
-> +  - $ref: ufs-common.yaml
+> +#ifdef CONFIG_X86
+> +#include <asm/cacheflush.h>
 > +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - mediatek,mt8195-ufshci
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 8
-> +          maxItems: 8
-> +        clock-names:
-> +          items:
-> +            - const: ufs
-> +            - const: ufs_aes
-> +            - const: ufs_tick
-> +            - const: unipro_sysclk
-> +            - const: unipro_tick
-> +            - const: unipro_mp_bclk
-> +            - const: ufs_tx_symbol
-> +            - const: ufs_mem_sub
-> +    else:
-> +      properties:
-> +        clocks:
-> +          minItems: 1
+> +static inline void iommu_pages_flush_incoherent(struct device *dma_dev,
+> +						void *virt, size_t offset,
+> +						size_t len)
+> +{
+> +	clflush_cache_range(virt + offset, len);
+> +}
+> +static inline void
+> +iommu_pages_stop_incoherent_list(struct iommu_pages_list *list,
+> +				 struct device *dma_dev)
+> +{
 
-1 is already the minimum. Drop.
+Do we need to clear iopt->incoherent for X86, given that
+iopt->incoherent is set in the start path? If no need, can you please
+add a comment to explain it?
 
-> +          maxItems: 1
-> +        clock-names:
-> +          items:
-> +            - const: ufs
+> +}
+> +#else
+> +#include <linux/dma-mapping.h>
 > +
->  examples:
->    - |
->      #include <dt-bindings/clock/mt8183-clk.h>
-> -- 
-> 2.45.2
-> 
+> +static inline void iommu_pages_flush_incoherent(struct device *dma_dev,
+> +						void *virt, size_t offset,
+> +						size_t len)
+> +{
+> +	dma_sync_single_for_device(dma_dev, (uintptr_t)virt + offset, len,
+> +				   DMA_TO_DEVICE);
+> +}
+> +void iommu_pages_stop_incoherent_list(struct iommu_pages_list *list,
+> +                                      struct device *dma_dev);
+> +#endif
+> +
+> +#endif /* __IOMMU_PAGES_H */
+
+Thanks,
+baolu
