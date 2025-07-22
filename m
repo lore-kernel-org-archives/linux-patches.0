@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620122EA73F;
-	Tue, 22 Jul 2025 14:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D01176AC5;
+	Tue, 22 Jul 2025 14:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193078; cv=none; b=dPQZn5LOKG2zjxtm6MDvBdS0CENzEiCPBdejHOru2ALjlWCJNy24JS7Zn6t9RYrJAj5RK16BisGoktK9hD6HSUxw94GNlcstFlZnkZA49hHNa/CUGZeXiB2nZsmtPb9kkhGBYgSl6Qcv1jvhkrZMTHVmTLSFPji7EbH88As0g/s=
+	t=1753193081; cv=none; b=eq45KRZiO5edptQyrXZ0Osu2A1SuYScXINW7tHHEcR/n7MCvzgUIjS2QZk0FFfkzaIR9dwEDLzFlquo4L5hjI/ASQvBN/qkH8jtmJYCciToBkwn2iM+BFrywzaY7Gao2AbfdZppa8E+oa0/W+pf3P7yLj+pjDsEdKw8ZEDUEEMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193078; c=relaxed/simple;
-	bh=HiUanZnC0+KWnPlK5vRmJIi9ev57PfWLwyQJBHCQ+Yw=;
+	s=arc-20240116; t=1753193081; c=relaxed/simple;
+	bh=GCpWJfUJ4Eg4WOo68AJZt6ySOH93hLD0aXpl6yjPppo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CnR9hSphd0L8Pi4SQ6lliK+Nl+CPDDT5FRJRVPpLb1E9ceBM5ACB5HDrrJY3FL5Li5JwBfOYVNnMJF9sL4WkzC6I3GO7+vofabICrkQCGcuxFLdZNaHB9MqDXXZfNdN1pJxtOaXWa8QKfnUsy6T7OPpS0pabSK+cfdKSbRuMsV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJ//WGb9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOdB/5g72IWlIsj//zjxdwxsk50iZGS78G1M58V5lRQMnq9UdDTZE7P5bvJtkqEfBEDOp3PHVY6tjj52Z2WqyYemEs9a6Ds0yJL8wKq9df055y+yGJCFWvRX6SV5qLczkCchqzeMzVA2nOf57Nh1e9+11/xtFXBqPlej0w1OsTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLDRPdok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJ//WGb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33CBC4CEF6;
-	Tue, 22 Jul 2025 14:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLDRPdok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4543BC4CEEB;
+	Tue, 22 Jul 2025 14:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193078;
-	bh=HiUanZnC0+KWnPlK5vRmJIi9ev57PfWLwyQJBHCQ+Yw=;
+	s=korg; t=1753193081;
+	bh=GCpWJfUJ4Eg4WOo68AJZt6ySOH93hLD0aXpl6yjPppo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJ//WGb9a8UpDzmQfChXTrQdLQIJlQfovV1eI5kLn9fOgM5RB13LkCaCchuiJQj1e
-	 Vd2dYvfKrBD/wiEOsUkxZNqojHOkYcuu694OfzYa0vFhznA/r1VXFvTJvLwMcTa3en
-	 KQC2Pwrljdop6kPum+jAqLll37mKh+sgTAXzE01Q=
+	b=bLDRPdokPkbKmDNOxlNr6qRkbfBEx9zrBb5tOfyOLzOmJu5QeSO3hO/hmq7eFw4fz
+	 MNEMa0qBzdW7rRFOGTWKYqdWxslgEgfT65m4ctD1HiIGvWYLNSeYxO/f2T6myTrSbN
+	 beOE+H4El+UoCgEzaOHeXz309t1wmvk0KP6wT7YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason-JH Lin <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/158] drm/mediatek: Add wait_event_timeout when disabling plane
-Date: Tue, 22 Jul 2025 15:45:20 +0200
-Message-ID: <20250722134345.800323774@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH 6.12 145/158] usb: hub: Fix flushing of delayed work used for post resume purposes
+Date: Tue, 22 Jul 2025 15:45:29 +0200
+Message-ID: <20250722134346.129142053@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -53,114 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH Lin <jason-jh.lin@mediatek.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit d208261e9f7c66960587b10473081dc1cecbe50b ]
+commit 9bd9c8026341f75f25c53104eb7e656e357ca1a2 upstream.
 
-Our hardware registers are set through GCE, not by the CPU.
-DRM might assume the hardware is disabled immediately after calling
-atomic_disable() of drm_plane, but it is only truly disabled after the
-GCE IRQ is triggered.
+Delayed work that prevents USB3 hubs from runtime-suspending too early
+needed to be flushed in hub_quiesce() to resolve issues detected on
+QC SC8280XP CRD board during suspend resume testing.
 
-Additionally, the cursor plane in DRM uses async_commit, so DRM will
-not wait for vblank and will free the buffer immediately after calling
-atomic_disable().
+This flushing did however trigger new issues on Raspberry Pi 3B+, which
+doesn't have USB3 ports, and doesn't queue any post resume delayed work.
 
-To prevent the framebuffer from being freed before the layer disable
-settings are configured into the hardware, which can cause an IOMMU
-fault error, a wait_event_timeout has been added to wait for the
-ddp_cmdq_cb() callback,indicating that the GCE IRQ has been triggered.
+The flushed 'hub->init_work' item is used for several purposes, and
+is originally initialized with a 'NULL' work function. The work function
+is also changed on the fly, which may contribute to the issue.
 
-Fixes: 2f965be7f900 ("drm/mediatek: apply CMDQ control flow")
-Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20250624113223.443274-1-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Solve this by creating a dedicated delayed work item for post resume work,
+and flush that delayed work in hub_quiesce()
+
+Cc: stable <stable@kernel.org>
+Fixes: a49e1e2e785f ("usb: hub: Fix flushing and scheduling of delayed work that tunes runtime pm")
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/linux-usb/aF5rNp1l0LWITnEB@finisterre.sirena.org.uk
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SC8280XP CRD
+Tested-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250627164348.3982628-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_crtc.c  | 33 ++++++++++++++++++++++++++++
- drivers/gpu/drm/mediatek/mtk_crtc.h  |  1 +
- drivers/gpu/drm/mediatek/mtk_plane.c |  5 +++++
- 3 files changed, 39 insertions(+)
+ drivers/usb/core/hub.c |   21 ++++++++-------------
+ drivers/usb/core/hub.h |    1 +
+ 2 files changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
-index 8f6fba4217ece..6916c8925b412 100644
---- a/drivers/gpu/drm/mediatek/mtk_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
-@@ -719,6 +719,39 @@ int mtk_crtc_plane_check(struct drm_crtc *crtc, struct drm_plane *plane,
- 	return 0;
- }
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -1073,12 +1073,11 @@ int usb_remove_device(struct usb_device
  
-+void mtk_crtc_plane_disable(struct drm_crtc *crtc, struct drm_plane *plane)
-+{
-+#if IS_REACHABLE(CONFIG_MTK_CMDQ)
-+	struct mtk_crtc *mtk_crtc = to_mtk_crtc(crtc);
-+	struct mtk_plane_state *plane_state = to_mtk_plane_state(plane->state);
-+	int i;
-+
-+	/* no need to wait for disabling the plane by CPU */
-+	if (!mtk_crtc->cmdq_client.chan)
-+		return;
-+
-+	if (!mtk_crtc->enabled)
-+		return;
-+
-+	/* set pending plane state to disabled */
-+	for (i = 0; i < mtk_crtc->layer_nr; i++) {
-+		struct drm_plane *mtk_plane = &mtk_crtc->planes[i];
-+		struct mtk_plane_state *mtk_plane_state = to_mtk_plane_state(mtk_plane->state);
-+
-+		if (mtk_plane->index == plane->index) {
-+			memcpy(mtk_plane_state, plane_state, sizeof(*plane_state));
-+			break;
-+		}
-+	}
-+	mtk_crtc_update_config(mtk_crtc, false);
-+
-+	/* wait for planes to be disabled by CMDQ */
-+	wait_event_timeout(mtk_crtc->cb_blocking_queue,
-+			   mtk_crtc->cmdq_vblank_cnt == 0,
-+			   msecs_to_jiffies(500));
-+#endif
-+}
-+
- void mtk_crtc_async_update(struct drm_crtc *crtc, struct drm_plane *plane,
- 			   struct drm_atomic_state *state)
+ enum hub_activation_type {
+ 	HUB_INIT, HUB_INIT2, HUB_INIT3,		/* INITs must come first */
+-	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME, HUB_POST_RESUME,
++	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME,
+ };
+ 
+ static void hub_init_func2(struct work_struct *ws);
+ static void hub_init_func3(struct work_struct *ws);
+-static void hub_post_resume(struct work_struct *ws);
+ 
+ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
  {
-diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.h b/drivers/gpu/drm/mediatek/mtk_crtc.h
-index 388e900b6f4de..828f109b83e78 100644
---- a/drivers/gpu/drm/mediatek/mtk_crtc.h
-+++ b/drivers/gpu/drm/mediatek/mtk_crtc.h
-@@ -21,6 +21,7 @@ int mtk_crtc_create(struct drm_device *drm_dev, const unsigned int *path,
- 		    unsigned int num_conn_routes);
- int mtk_crtc_plane_check(struct drm_crtc *crtc, struct drm_plane *plane,
- 			 struct mtk_plane_state *state);
-+void mtk_crtc_plane_disable(struct drm_crtc *crtc, struct drm_plane *plane);
- void mtk_crtc_async_update(struct drm_crtc *crtc, struct drm_plane *plane,
- 			   struct drm_atomic_state *plane_state);
- struct device *mtk_crtc_dma_dev_get(struct drm_crtc *crtc);
-diff --git a/drivers/gpu/drm/mediatek/mtk_plane.c b/drivers/gpu/drm/mediatek/mtk_plane.c
-index 8a48b3b0a9567..1a855a75367a1 100644
---- a/drivers/gpu/drm/mediatek/mtk_plane.c
-+++ b/drivers/gpu/drm/mediatek/mtk_plane.c
-@@ -285,9 +285,14 @@ static void mtk_plane_atomic_disable(struct drm_plane *plane,
- 	struct drm_plane_state *new_state = drm_atomic_get_new_plane_state(state,
- 									   plane);
- 	struct mtk_plane_state *mtk_plane_state = to_mtk_plane_state(new_state);
-+	struct drm_plane_state *old_state = drm_atomic_get_old_plane_state(state,
-+									   plane);
-+
- 	mtk_plane_state->pending.enable = false;
- 	wmb(); /* Make sure the above parameter is set before update */
- 	mtk_plane_state->pending.dirty = true;
-+
-+	mtk_crtc_plane_disable(old_state->crtc, plane);
+@@ -1102,12 +1101,6 @@ static void hub_activate(struct usb_hub
+ 		goto init3;
+ 	}
+ 
+-	if (type == HUB_POST_RESUME) {
+-		usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
+-		hub_put(hub);
+-		return;
+-	}
+-
+ 	hub_get(hub);
+ 
+ 	/* The superspeed hub except for root hub has to use Hub Depth
+@@ -1361,8 +1354,8 @@ static void hub_activate(struct usb_hub
+ 		usb_autopm_get_interface_no_resume(
+ 			to_usb_interface(hub->intfdev));
+ 
+-		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
+-		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
++		queue_delayed_work(system_power_efficient_wq,
++				   &hub->post_resume_work,
+ 				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
+ 		return;
+ 	}
+@@ -1387,9 +1380,10 @@ static void hub_init_func3(struct work_s
+ 
+ static void hub_post_resume(struct work_struct *ws)
+ {
+-	struct usb_hub *hub = container_of(ws, struct usb_hub, init_work.work);
++	struct usb_hub *hub = container_of(ws, struct usb_hub, post_resume_work.work);
+ 
+-	hub_activate(hub, HUB_POST_RESUME);
++	usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
++	hub_put(hub);
  }
  
- static void mtk_plane_atomic_update(struct drm_plane *plane,
--- 
-2.39.5
-
+ enum hub_quiescing_type {
+@@ -1417,7 +1411,7 @@ static void hub_quiesce(struct usb_hub *
+ 
+ 	/* Stop hub_wq and related activity */
+ 	del_timer_sync(&hub->irq_urb_retry);
+-	flush_delayed_work(&hub->init_work);
++	flush_delayed_work(&hub->post_resume_work);
+ 	usb_kill_urb(hub->urb);
+ 	if (hub->has_indicators)
+ 		cancel_delayed_work_sync(&hub->leds);
+@@ -1976,6 +1970,7 @@ static int hub_probe(struct usb_interfac
+ 	hub->hdev = hdev;
+ 	INIT_DELAYED_WORK(&hub->leds, led_work);
+ 	INIT_DELAYED_WORK(&hub->init_work, NULL);
++	INIT_DELAYED_WORK(&hub->post_resume_work, hub_post_resume);
+ 	INIT_WORK(&hub->events, hub_event);
+ 	INIT_LIST_HEAD(&hub->onboard_devs);
+ 	spin_lock_init(&hub->irq_urb_lock);
+--- a/drivers/usb/core/hub.h
++++ b/drivers/usb/core/hub.h
+@@ -70,6 +70,7 @@ struct usb_hub {
+ 	u8			indicator[USB_MAXCHILDREN];
+ 	struct delayed_work	leds;
+ 	struct delayed_work	init_work;
++	struct delayed_work	post_resume_work;
+ 	struct work_struct      events;
+ 	spinlock_t		irq_urb_lock;
+ 	struct timer_list	irq_urb_retry;
 
 
