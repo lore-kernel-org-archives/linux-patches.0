@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C667A32;
-	Tue, 22 Jul 2025 14:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D760DA32;
+	Tue, 22 Jul 2025 14:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193654; cv=none; b=XVZEe7md4ReUhhRRCZ9QfCCLFNfRd8BE4NJ4gV5fTkoZ6j/Kp3z7ND6eJheXXMZdxtVpvSPFd8RyGHuaNaLJx6DTmw6g8v1RphcB3miZpkOLBDU9HGRHsWw6Uf5HBiW3TTNv9AK/DoaiZvwQEQgj4K9tcH0qQm0U1U65xcr1uww=
+	t=1753193657; cv=none; b=tJz7iMTKeBV2PZs+1PzW8g9+Uo7zOuDbaEeL+mGOyscf84wJ/hWeQQhI1WxPZ1o8Na3qH/WEtC9smAWa42FwGuXf5PgunvTy3qPhyszLUb3rWg11YMWAV40K5htE17QXGBd7zkf1uDG7cD1C6d3NGN8Wr3Fym1Zotmsrze7szus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193654; c=relaxed/simple;
-	bh=aPUjWvtS72G9jcG2z5KWYMqx5WrVg5NKdfcaIrdBBO4=;
+	s=arc-20240116; t=1753193657; c=relaxed/simple;
+	bh=G6xO+xurCB6bkhIijEY9EovtB8CopoqLs1VgmFqzhm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHI/qacxIxY44Hnt3jB51o1o3AbueXHX454foTxx9Ayh9p+1RB4yqBDxCm14B3XFCgdCIFA/Ju9yMreGNlJtyyl7yQ+0KTBcxlSNZy4fWtQuUnFzVUs4IhfX5IebVChFcJ12Kr6d+Bm9ljfgWQt3I3G4xryfKev2VogpzF7TEzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R77Qv+c8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tbaa52m75VDRW0sKd+C17j8XUyr0MeEB9NWmum3uKLd3/jhyqHwgDni4aVCpXavWMFt6V2wzCVMSIoynu2kOjzRjv8oWdP0S9/An959tE641/WoWtJWA5aQrxW67gNn9t8gCZFn32t3IRCeqr6/5Whr2rgYsN4FC1COVQfJd9Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SC2b8qRY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R77Qv+c8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0326EC4CEF5;
-	Tue, 22 Jul 2025 14:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SC2b8qRY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0CCC4CEEB;
+	Tue, 22 Jul 2025 14:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193654;
-	bh=aPUjWvtS72G9jcG2z5KWYMqx5WrVg5NKdfcaIrdBBO4=;
+	s=korg; t=1753193657;
+	bh=G6xO+xurCB6bkhIijEY9EovtB8CopoqLs1VgmFqzhm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R77Qv+c81m17Z7bLYVtKeBt51QnPRvW/L4k8ArLFH4jU0L7yDDOdo/WR759oHMNLz
-	 J1Y3AWM/I0kmPe26IdSdmN87rHtNXtco8p/FbmMsEFuYH50yWvt7qUUeDQmcZq2z5d
-	 zr6ntXCI48cE6GB2aKSxSwlsCyZ1t5kqoN2Ai6tc=
+	b=SC2b8qRYTtXeOmWjy5nbfHU06XQ7ByRhz1oxlb5qbd5TXZ7LxhCiqIMfGYseoEG7C
+	 k24Qkt42Mjr9D8MYp++jLWC1PyrYkE4GWuSmrg3KCCLyEI0LWxB0m2HPaA7+AFasLE
+	 8TQnaJRKUek2Dua1GWabwJtH6tOh3lQv0uCT0Boc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
+	LePremierHomme <kwqcheii@proton.me>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 140/187] Bluetooth: btusb: QCA: Fix downloading wrong NVM for WCN6855 GF variant without board ID
-Date: Tue, 22 Jul 2025 15:45:10 +0200
-Message-ID: <20250722134351.002379974@linuxfoundation.org>
+Subject: [PATCH 6.15 158/187] rxrpc: Fix notification vs call-release vs recvmsg
+Date: Tue, 22 Jul 2025 15:45:28 +0200
+Message-ID: <20250722134351.663559015@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,125 +57,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 43015955795a619f7ca4ae69b9c0ffc994c82818 ]
+[ Upstream commit 2fd895842d49c23137ae48252dd211e5d6d8a3ed ]
 
-For GF variant of WCN6855 without board ID programmed
-btusb_generate_qca_nvm_name() will chose wrong NVM
-'qca/nvm_usb_00130201.bin' to download.
+When a call is released, rxrpc takes the spinlock and removes it from
+->recvmsg_q in an effort to prevent racing recvmsg() invocations from
+seeing the same call.  Now, rxrpc_recvmsg() only takes the spinlock when
+actually removing a call from the queue; it doesn't, however, take it in
+the lead up to that when it checks to see if the queue is empty.  It *does*
+hold the socket lock, which prevents a recvmsg/recvmsg race - but this
+doesn't prevent sendmsg from ending the call because sendmsg() drops the
+socket lock and relies on the call->user_mutex.
 
-Fix by choosing right NVM 'qca/nvm_usb_00130201_gf.bin'.
-Also simplify NVM choice logic of btusb_generate_qca_nvm_name().
+Fix this by firstly removing the bit in rxrpc_release_call() that dequeues
+the released call and, instead, rely on recvmsg() to simply discard
+released calls (done in a preceding fix).
 
-Fixes: d6cba4e6d0e2 ("Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Secondly, rxrpc_notify_socket() is abandoned if the call is already marked
+as released rather than trying to be clever by setting both pointers in
+call->recvmsg_link to NULL to trick list_empty().  This isn't perfect and
+can still race, resulting in a released call on the queue, but recvmsg()
+will now clean that up.
+
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+cc: LePremierHomme <kwqcheii@proton.me>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20250717074350.3767366-4-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 78 ++++++++++++++++++++++-----------------
- 1 file changed, 44 insertions(+), 34 deletions(-)
+ include/trace/events/rxrpc.h |  3 ++-
+ net/rxrpc/call_object.c      | 28 ++++++++++++----------------
+ net/rxrpc/recvmsg.c          |  4 ++++
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 42350212db082..6f2fd043fd3fa 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3230,6 +3230,32 @@ static const struct qca_device_info qca_devices_table[] = {
- 	{ 0x00190200, 40, 4, 16 }, /* WCN785x 2.0 */
- };
- 
-+static u16 qca_extract_board_id(const struct qca_version *ver)
-+{
-+	u16 flag = le16_to_cpu(ver->flag);
-+	u16 board_id = 0;
-+
-+	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-+		/* The board_id should be split into two bytes
-+		 * The 1st byte is chip ID, and the 2nd byte is platform ID
-+		 * For example, board ID 0x010A, 0x01 is platform ID. 0x0A is chip ID
-+		 * we have several platforms, and platform IDs are continuously added
-+		 * Platform ID:
-+		 * 0x00 is for Mobile
-+		 * 0x01 is for X86
-+		 * 0x02 is for Automotive
-+		 * 0x03 is for Consumer electronic
-+		 */
-+		board_id = (ver->chip_id << 8) + ver->platform_id;
-+	}
-+
-+	/* Take 0xffff as invalid board ID */
-+	if (board_id == 0xffff)
-+		board_id = 0;
-+
-+	return board_id;
-+}
-+
- static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
- 				     void *data, u16 size)
+diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
+index a785b177c6927..f2ef106b61969 100644
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -275,10 +275,10 @@
+ 	EM(rxrpc_call_put_kernel,		"PUT kernel  ") \
+ 	EM(rxrpc_call_put_poke,			"PUT poke    ") \
+ 	EM(rxrpc_call_put_recvmsg,		"PUT recvmsg ") \
++	EM(rxrpc_call_put_release_recvmsg_q,	"PUT rls-rcmq") \
+ 	EM(rxrpc_call_put_release_sock,		"PUT rls-sock") \
+ 	EM(rxrpc_call_put_release_sock_tba,	"PUT rls-sk-a") \
+ 	EM(rxrpc_call_put_sendmsg,		"PUT sendmsg ") \
+-	EM(rxrpc_call_put_unnotify,		"PUT unnotify") \
+ 	EM(rxrpc_call_put_userid_exists,	"PUT u-exists") \
+ 	EM(rxrpc_call_put_userid,		"PUT user-id ") \
+ 	EM(rxrpc_call_see_accept,		"SEE accept  ") \
+@@ -291,6 +291,7 @@
+ 	EM(rxrpc_call_see_disconnected,		"SEE disconn ") \
+ 	EM(rxrpc_call_see_distribute_error,	"SEE dist-err") \
+ 	EM(rxrpc_call_see_input,		"SEE input   ") \
++	EM(rxrpc_call_see_notify_released,	"SEE nfy-rlsd") \
+ 	EM(rxrpc_call_see_recvmsg,		"SEE recvmsg ") \
+ 	EM(rxrpc_call_see_release,		"SEE release ") \
+ 	EM(rxrpc_call_see_userid_exists,	"SEE u-exists") \
+diff --git a/net/rxrpc/call_object.c b/net/rxrpc/call_object.c
+index fce58be65e7cf..4be3713a5a339 100644
+--- a/net/rxrpc/call_object.c
++++ b/net/rxrpc/call_object.c
+@@ -561,7 +561,7 @@ static void rxrpc_cleanup_rx_buffers(struct rxrpc_call *call)
+ void rxrpc_release_call(struct rxrpc_sock *rx, struct rxrpc_call *call)
  {
-@@ -3386,44 +3412,28 @@ static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
- 					const struct qca_version *ver)
- {
- 	u32 rom_version = le32_to_cpu(ver->rom_version);
--	u16 flag = le16_to_cpu(ver->flag);
-+	const char *variant;
-+	int len;
-+	u16 board_id;
+ 	struct rxrpc_connection *conn = call->conn;
+-	bool put = false, putu = false;
++	bool putu = false;
  
--	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
--		/* The board_id should be split into two bytes
--		 * The 1st byte is chip ID, and the 2nd byte is platform ID
--		 * For example, board ID 0x010A, 0x01 is platform ID. 0x0A is chip ID
--		 * we have several platforms, and platform IDs are continuously added
--		 * Platform ID:
--		 * 0x00 is for Mobile
--		 * 0x01 is for X86
--		 * 0x02 is for Automotive
--		 * 0x03 is for Consumer electronic
--		 */
--		u16 board_id = (ver->chip_id << 8) + ver->platform_id;
--		const char *variant;
-+	board_id = qca_extract_board_id(ver);
+ 	_enter("{%d,%d}", call->debug_id, refcount_read(&call->ref));
  
--		switch (le32_to_cpu(ver->ram_version)) {
--		case WCN6855_2_0_RAM_VERSION_GF:
--		case WCN6855_2_1_RAM_VERSION_GF:
--			variant = "_gf";
--			break;
--		default:
--			variant = "";
--			break;
--		}
+@@ -573,23 +573,13 @@ void rxrpc_release_call(struct rxrpc_sock *rx, struct rxrpc_call *call)
+ 
+ 	rxrpc_put_call_slot(call);
+ 
+-	/* Make sure we don't get any more notifications */
++	/* Note that at this point, the call may still be on or may have been
++	 * added back on to the socket receive queue.  recvmsg() must discard
++	 * released calls.  The CALL_RELEASED flag should prevent further
++	 * notifications.
++	 */
+ 	spin_lock_irq(&rx->recvmsg_lock);
 -
--		if (board_id == 0) {
--			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s.bin",
--				rom_version, variant);
--		} else {
--			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s_%04x.bin",
--				rom_version, variant, board_id);
--		}
--	} else {
--		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
--			rom_version);
-+	switch (le32_to_cpu(ver->ram_version)) {
-+	case WCN6855_2_0_RAM_VERSION_GF:
-+	case WCN6855_2_1_RAM_VERSION_GF:
-+		variant = "_gf";
-+		break;
-+	default:
-+		variant = NULL;
-+		break;
+-	if (!list_empty(&call->recvmsg_link)) {
+-		_debug("unlinking once-pending call %p { e=%lx f=%lx }",
+-		       call, call->events, call->flags);
+-		list_del(&call->recvmsg_link);
+-		put = true;
+-	}
+-
+-	/* list_empty() must return false in rxrpc_notify_socket() */
+-	call->recvmsg_link.next = NULL;
+-	call->recvmsg_link.prev = NULL;
+-
+ 	spin_unlock_irq(&rx->recvmsg_lock);
+-	if (put)
+-		rxrpc_put_call(call, rxrpc_call_put_unnotify);
+ 
+ 	write_lock(&rx->call_lock);
+ 
+@@ -638,6 +628,12 @@ void rxrpc_release_calls_on_socket(struct rxrpc_sock *rx)
+ 		rxrpc_put_call(call, rxrpc_call_put_release_sock);
  	}
  
-+	len = snprintf(fwname, max_size, "qca/nvm_usb_%08x", rom_version);
-+	if (variant)
-+		len += snprintf(fwname + len, max_size - len, "%s", variant);
-+	if (board_id)
-+		len += snprintf(fwname + len, max_size - len, "_%04x", board_id);
-+	len += snprintf(fwname + len, max_size - len, ".bin");
++	while ((call = list_first_entry_or_null(&rx->recvmsg_q,
++						struct rxrpc_call, recvmsg_link))) {
++		list_del_init(&call->recvmsg_link);
++		rxrpc_put_call(call, rxrpc_call_put_release_recvmsg_q);
++	}
++
+ 	_leave("");
  }
  
- static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
+index 1668495e4ae63..89dc612fb89e0 100644
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -29,6 +29,10 @@ void rxrpc_notify_socket(struct rxrpc_call *call)
+ 
+ 	if (!list_empty(&call->recvmsg_link))
+ 		return;
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		rxrpc_see_call(call, rxrpc_call_see_notify_released);
++		return;
++	}
+ 
+ 	rcu_read_lock();
+ 
 -- 
 2.39.5
 
