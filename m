@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5972EACEE;
-	Tue, 22 Jul 2025 14:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D1C28BA96;
+	Tue, 22 Jul 2025 14:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193608; cv=none; b=b4RNoeX0dyV8D5RN5yy89lNq7wbaoAtR7teRVHAKbwxWr004GJLvxATeKgLKRcG+cuObuIgSMVxqH1W8qYtm9wsyPhIrRBChN4QLKABVaIlbC7R9gmZIuL+n8GEb33JrjrXXxbLnn+g4a4zouteEwjCjzULuaKYU+zZN9hWx8+s=
+	t=1753193611; cv=none; b=cvQWZ01nsKLSTKAC9J16HJJo0QCprxooNfdTeL7c3Xok9d97bv0e9FvCdOw2N3gjk1x8XoQu6FMiCNG4okad+AHisYU0tBEGIkigFsLw8eb5MtNPW1JZUc7IvtD3ncOs0lMUprOeUzUnrUE0Ih01FUQHwqvddpzNtb6sl4vUroQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193608; c=relaxed/simple;
-	bh=pkO31r+I7tn6kI0CVt+XxllLdybK5duPsdu5TGEG5X8=;
+	s=arc-20240116; t=1753193611; c=relaxed/simple;
+	bh=buHslJC5sM/T+vAyoUMmYXTTWBVp+3UAGDbq5/am1K0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qO8/Bt9hjMlCFO+IGB6GCGpR2rBTEB/4KDbn51cspjh1AZQhoubn0mOvvVitSUfK7PaQAaYizsQw+2bMAS+6s0UdoI38LZlQTNq8qRHFMUSUxD7fataJRwsUgqJavhfX/1JeIv1D9/J6dQrn9dvoERmFsNE4s1q0QqarcjiEnj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfnhzLAV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4zAU02rkiuM37NRrxGgSrtgMcvamg0aiWSJSb6f7dm6msKJ3dDCkRz4+QgofkQLbyPZ4lm66AwwvOHR3p8Cmn/KdQGdgbb4O3y0rMb0soHDx9Lz2W/yaUyCtuu8TVyTWhtcIMN099R/g/DqitV0EZOYBeYj/gnojw5mmJWxNW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCz+7/1c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfnhzLAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5D3C4CEEB;
-	Tue, 22 Jul 2025 14:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCz+7/1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD92FC4CEF6;
+	Tue, 22 Jul 2025 14:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193607;
-	bh=pkO31r+I7tn6kI0CVt+XxllLdybK5duPsdu5TGEG5X8=;
+	s=korg; t=1753193611;
+	bh=buHslJC5sM/T+vAyoUMmYXTTWBVp+3UAGDbq5/am1K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PfnhzLAVjGQuu7iFvehGiIONjqZRHUlV+onWvAue2yD/jQ2hDGgAvHcQn3TwMfsRK
-	 c2lfN3vieMK7AcAaW8FQkXrsXsk9Z0/m89Xp59UGaNV86IOy6D5+DN0dDAcLkai5K8
-	 Ui59zgKKte0O/m41WUbu8wkI6ojoTqk4nZLio1A8=
+	b=RCz+7/1c34l14vAgdo+ZfTPvJN3+aPreGd7ThOOv3EttjY+r8+a8zPZHx7CyR8YDP
+	 41uttbw/wMrnGdDAtplq6yxQg7a0F0AvHNtZ4GoEAXYdbhRvb+jVC/+jBbVNHAkhSK
+	 +1AzH4OMoMRbXylkbrIQU7Owx3cePlGkiCWtQ/qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 110/187] net: emaclite: Fix missing pointer increment in aligned_read()
-Date: Tue, 22 Jul 2025 15:44:40 +0200
-Message-ID: <20250722134349.863054669@linuxfoundation.org>
+Subject: [PATCH 6.15 111/187] block: fix kobject leak in blk_unregister_queue
+Date: Tue, 22 Jul 2025 15:44:41 +0200
+Message-ID: <20250722134349.898992418@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,38 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 7727ec1523d7973defa1dff8f9c0aad288d04008 ]
+[ Upstream commit 3051247e4faa32a3d90c762a243c2c62dde310db ]
 
-Add missing post-increment operators for byte pointers in the
-loop that copies remaining bytes in xemaclite_aligned_read().
-Without the increment, the same byte was written repeatedly
-to the destination.
-This update aligns with xemaclite_aligned_write()
+The kobject for the queue, `disk->queue_kobj`, is initialized with a
+reference count of 1 via `kobject_init()` in `blk_register_queue()`.
+While `kobject_del()` is called during the unregister path to remove
+the kobject from sysfs, the initial reference is never released.
 
-Fixes: bb81b2ddfa19 ("net: add Xilinx emac lite device driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250710173849.2381003-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add a call to `kobject_put()` in `blk_unregister_queue()` to properly
+decrement the reference count and fix the leak.
+
+Fixes: 2bd85221a625 ("block: untangle request_queue refcounting from sysfs")
+Cc: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250711083009.2574432-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_emaclite.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-sysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_emaclite.c b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-index ecf47107146dc..4719d40a63ba3 100644
---- a/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-@@ -286,7 +286,7 @@ static void xemaclite_aligned_read(u32 *src_ptr, u8 *dest_ptr,
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 1f9b45b0b9ee7..12a5059089a2f 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -964,4 +964,5 @@ void blk_unregister_queue(struct gendisk *disk)
+ 	kobject_del(&disk->queue_kobj);
  
- 		/* Read the remaining data */
- 		for (; length > 0; length--)
--			*to_u8_ptr = *from_u8_ptr;
-+			*to_u8_ptr++ = *from_u8_ptr++;
- 	}
+ 	blk_debugfs_remove(disk);
++	kobject_put(&disk->queue_kobj);
  }
- 
 -- 
 2.39.5
 
