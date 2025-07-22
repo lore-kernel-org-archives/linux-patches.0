@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301C72EA752;
-	Tue, 22 Jul 2025 14:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BB82EA752;
+	Tue, 22 Jul 2025 14:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193594; cv=none; b=h1c/K1ULE8JhlaFzkrKfgNOnRBAv7zx/UH83BTQkwOndl4+2HPa0BTESRr2FF8MCRubVpe+IUUJtpnqaBHpDfH0RJ4roHUT6PQ0f97vPZ6a8XDHUmQmqws4hEONYM4rTjQVS5jcEQZXZDbSFEy9OhMX3HiL8G5hQ0OLkReO5MiQ=
+	t=1753193597; cv=none; b=SnCJwvk5UxMah/2iuwd9NSOsAIlcPVkJ2cIQfhyyYH5lpdaQ4hNYThZX4vyP3EbRkJ1lX3emOkfV1R5+pTWnZhMfjYaqX1dNpEpTg3FdkwM4HREpCK5qBuEschnQiJnPakOdrMVKjT0CmvKlJQvKZC8hoTj/Q0cx+3hYRD6K+Pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193594; c=relaxed/simple;
-	bh=KcA3SSB71rE/wuHB68wHlwIAP9hOq0Zwg100lHshdg4=;
+	s=arc-20240116; t=1753193597; c=relaxed/simple;
+	bh=XdVvzkzECuW7m1A6FPfpvU3QVVPkCsy9PHTcNU67l2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUOqfqJt1LxlHn56wU/2/lsSkvbsj6bZw2AyyxRLMhx2unPpduOG/RWxzC3cH7h7gA9LfH9Xr3P4QLd8L0p66jJREIFSHBJ6zt73FpqZCM5VfmBDiAs2tZbFMR0vxTR3qN+9ukGOBUojE0KM4TQbG/3cXOvQ0Jwyzni1/qEEIIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt3YuILM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKxhpoVDy6sLb10tXM7v5J8WG7JblX/E694oMvCng45ioiAE/ECjv9SqAHG9yKie0sHHoYftDD9FXRz5SSduKSLp7EK8LgQ+kBEyCwjdCYtXjKz3EkDUCeY02j9JIA91ZNioPO/V6gu/ig8eYruNxYI2T0G9ggcGedcqDOLXero=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNFVD+SW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt3YuILM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A62C4CEEB;
-	Tue, 22 Jul 2025 14:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNFVD+SW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BF8C4CEEB;
+	Tue, 22 Jul 2025 14:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193594;
-	bh=KcA3SSB71rE/wuHB68wHlwIAP9hOq0Zwg100lHshdg4=;
+	s=korg; t=1753193597;
+	bh=XdVvzkzECuW7m1A6FPfpvU3QVVPkCsy9PHTcNU67l2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wt3YuILM2RLXdjhk4s98QN3WDyDZ+1icT/E/yutDANEeyQi3gPaHF2zEcbS64IYyS
-	 ocEM4pBBzTmD76/bB/mhZHjgiyVMx0ajhjg+uqXrOLEg0N1wbs68+OdbC3yZdXA97a
-	 Y4qAkIz0osRwBTRODdlx+mq7GTcET9CKCLxd6pW4=
+	b=gNFVD+SWprWTkU5mIvoe3yz1UGrNcVXoiKVJybMxOwvkpoxJX3sEbZjHT3Cq7wMVV
+	 qIVo3ZjnyFwzydhmOIfomBLgEQCUYuNGU/Ibs0FLWDGXemlgiJS2gSuLn18j52/IE8
+	 ntC5bvkKHRqHC5JHGB0gVNhNM2UXNNHzpoyWPVmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Auld <pauld@redhat.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 106/187] selftests/sched_ext: Fix exit selftest hang on UP
-Date: Tue, 22 Jul 2025 15:44:36 +0200
-Message-ID: <20250722134349.717945809@linuxfoundation.org>
+Subject: [PATCH 6.15 107/187] wifi: iwlwifi: mask reserved bits in chan_state_active_bitmap
+Date: Tue, 22 Jul 2025 15:44:37 +0200
+Message-ID: <20250722134349.753771979@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -52,46 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit 7980ad7e4ca80f6c255f4473fba82a475342035a ]
+[ Upstream commit 5fde0fcbd7608dd5f97a5c0c23a316074d6f17f5 ]
 
-On single-CPU systems, ops.select_cpu() is never called, causing the
-EXIT_SELECT_CPU test case to wait indefinitely.
+Mask the reserved bits as firmware will assert if reserved bits are set.
 
-Avoid the stall by skipping this specific sub-test when only one CPU is
-available.
-
-Reported-by: Phil Auld <pauld@redhat.com>
-Fixes: a5db7817af780 ("sched_ext: Add selftests")
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Tested-by: Phil Auld <pauld@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: ef7ddf4e2f94 ("wifi: iwlwifi: Add support for LARI_CONFIG_CHANGE_CMD v12")
+Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709065608.7a72c70bdc9d.Ic9be0a3fc3aabde0c4b88568f3bb7b76e375f8d4@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sched_ext/exit.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h | 5 +++--
+ drivers/net/wireless/intel/iwlwifi/fw/regulatory.c  | 1 +
+ drivers/net/wireless/intel/iwlwifi/mld/regulatory.c | 4 +++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/sched_ext/exit.c b/tools/testing/selftests/sched_ext/exit.c
-index 9451782689de1..ee25824b1cbe6 100644
---- a/tools/testing/selftests/sched_ext/exit.c
-+++ b/tools/testing/selftests/sched_ext/exit.c
-@@ -22,6 +22,14 @@ static enum scx_test_status run(void *ctx)
- 		struct bpf_link *link;
- 		char buf[16];
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h b/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h
+index 5cdc09d465d4f..e90f3187e55c4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -754,7 +754,7 @@ struct iwl_lari_config_change_cmd_v10 {
+  *	according to the BIOS definitions.
+  *	For LARI cmd version 11 - bits 0:4 are supported.
+  *	For LARI cmd version 12 - bits 0:6 are supported and bits 7:31 are
+- *	reserved. No need to mask out the reserved bits.
++ *	reserved.
+  * @force_disable_channels_bitmap: Bitmap of disabled bands/channels.
+  *	Each bit represents a set of channels in a specific band that should be
+  *	disabled
+@@ -787,6 +787,7 @@ struct iwl_lari_config_change_cmd {
+ /* Activate UNII-1 (5.2GHz) for World Wide */
+ #define ACTIVATE_5G2_IN_WW_MASK			BIT(4)
+ #define CHAN_STATE_ACTIVE_BITMAP_CMD_V11	0x1F
++#define CHAN_STATE_ACTIVE_BITMAP_CMD_V12	0x7F
  
-+		/*
-+		 * On single-CPU systems, ops.select_cpu() is never
-+		 * invoked, so skip this test to avoid getting stuck
-+		 * indefinitely.
-+		 */
-+		if (tc == EXIT_SELECT_CPU && libbpf_num_possible_cpus() == 1)
-+			continue;
-+
- 		skel = exit__open();
- 		SCX_ENUM_INIT(skel);
- 		skel->rodata->exit_point = tc;
+ /**
+  * struct iwl_pnvm_init_complete_ntfy - PNVM initialization complete
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
+index 6adcfa6e214a0..9947ab7c2f4b3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
+@@ -603,6 +603,7 @@ int iwl_fill_lari_config(struct iwl_fw_runtime *fwrt,
+ 
+ 	ret = iwl_bios_get_dsm(fwrt, DSM_FUNC_ACTIVATE_CHANNEL, &value);
+ 	if (!ret) {
++		value &= CHAN_STATE_ACTIVE_BITMAP_CMD_V12;
+ 		if (cmd_ver < 8)
+ 			value &= ~ACTIVATE_5G2_IN_WW_MASK;
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c b/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c
+index a75af8c1e8ab0..2116b717b9267 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c
+@@ -251,8 +251,10 @@ void iwl_mld_configure_lari(struct iwl_mld *mld)
+ 			cpu_to_le32(value &= DSM_UNII4_ALLOW_BITMAP);
+ 
+ 	ret = iwl_bios_get_dsm(fwrt, DSM_FUNC_ACTIVATE_CHANNEL, &value);
+-	if (!ret)
++	if (!ret) {
++		value &= CHAN_STATE_ACTIVE_BITMAP_CMD_V12;
+ 		cmd.chan_state_active_bitmap = cpu_to_le32(value);
++	}
+ 
+ 	ret = iwl_bios_get_dsm(fwrt, DSM_FUNC_ENABLE_6E, &value);
+ 	if (!ret)
 -- 
 2.39.5
 
