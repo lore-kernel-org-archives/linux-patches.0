@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11D022094;
-	Tue, 22 Jul 2025 14:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FCF2EB5B9;
+	Tue, 22 Jul 2025 14:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193282; cv=none; b=cUPsuSVC0MhArbG8YW2fQ62tyNiQLXXGuX2RImTfAHDm9XeotoAPbPP2h9GnhtWdLJE1QhTnAQL6ghkGydkta3yKQZq42NXM8aJYC4qyAmo1syuzuT0cWoNqfUxcYiy08Q8OMTemGgym7zuT0kdI0Pe0o0NswlAq1mvmm2Ip6CM=
+	t=1753193286; cv=none; b=JNySP4ASQbpgPSf37DGgVtcBDzAJX3pWwxdmSRJL45iofoBTGcm0Pz1e/opePj3ld6EQ1ZXqzVIE9tUIXgPWFUrGNy1NElvHG3jzXmTfxtdHUJPpQa/qWOSjkStlqnx+l3kNCnx/zS1ytn/VVPm2jWEa5JE+gt/LA7S3xjnvie8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193282; c=relaxed/simple;
-	bh=67t/T/tL+wj4pF6eKrTNMY7Wigayhcmjb+NPiMv3o3I=;
+	s=arc-20240116; t=1753193286; c=relaxed/simple;
+	bh=lpRwbY1mSzuht14cBi8XYT9Qsc/2HKJieR5SKi/HIn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V72N3UaFddO3GQedU2b7vdSV0Kx276Qnn2Pp0Pkj1qg0iUsj0p4zUQZWITY42ZbfQahxuaL6h9GQ5A1sGJ3a/qnTQMti+WkHy+b4KeIzGt/4vHGtD1ez003XWVrVyHQnieSWUdd3SZH7I9eQTaWvO+0bbaDLxZSYKCOxS6+d10c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Re7q7mFC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8egaU3EQegYHloDTvtCpyelF+qr91KZFKp1tp5hImi1AkM1/b3WqogoD8OxKbkIkAjIU8NUrD81l58x1ueQgulRdNrDGd+6i2gV/UgBtaYEcdJeIBt0ALbOmTKzqUMM0y1iPexYRcavHfQk9qnaaSWuBE8mQV+3lQMwhlBkoPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEoZrzCh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Re7q7mFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E0FC4CEF1;
-	Tue, 22 Jul 2025 14:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEoZrzCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A86FC4CEEB;
+	Tue, 22 Jul 2025 14:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193282;
-	bh=67t/T/tL+wj4pF6eKrTNMY7Wigayhcmjb+NPiMv3o3I=;
+	s=korg; t=1753193285;
+	bh=lpRwbY1mSzuht14cBi8XYT9Qsc/2HKJieR5SKi/HIn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Re7q7mFCRk7P+iJeNME6Ve3BjHKGVPTqLpJywHX3jLObhUrehlIlLrkQvz0QdT0MG
-	 fB/soo8TrGTbjRdXAWyBWtE0Ro3CmOuqQniEiFwFi9Q0SvVzRxlS59Djegoe1Klfju
-	 loVD1P9RhpJFlYTW8WNmH+mgfvv8mewGHyZNSo+E=
+	b=UEoZrzChAeC9Wa/I6Ruzw8+V/Mp3cxwteHPOC++iUvszpdZh/8UBCXYxtCWyKPOVr
+	 w4eb94YS+LK18QBQsNJRQ9dkax/VAqTfohEGfbvpmPVhHCWbK7fM3rnEXLENb+RBuC
+	 Qxm8t1icLNKHaW69qZvN9ge7U8NE0KaQlj9T0SCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 046/187] mptcp: reset fallback status gracefully at disconnect() time
-Date: Tue, 22 Jul 2025 15:43:36 +0200
-Message-ID: <20250722134347.468164942@linuxfoundation.org>
+Subject: [PATCH 6.15 047/187] phonet/pep: Move call to pn_skb_get_dst_sockaddr() earlier in pep_sock_accept()
+Date: Tue, 22 Jul 2025 15:43:37 +0200
+Message-ID: <20250722134347.502852761@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,50 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit da9b2fc7b73d147d88abe1922de5ab72d72d7756 upstream.
+commit 17ba793f381eb813596d6de1cc6820bcbda5ed8b upstream.
 
-mptcp_disconnect() clears the fallback bit unconditionally, without
-touching the associated flags.
+A new warning in clang [1] points out a place in pep_sock_accept() where
+dst is uninitialized then passed as a const pointer to pep_find_pipe():
 
-The bit clear is safe, as no fallback operation can race with that --
-all subflow are already in TCP_CLOSE status thanks to the previous
-FASTCLOSE -- but we need to consistently reset all the fallback related
-status.
+  net/phonet/pep.c:829:37: error: variable 'dst' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+    829 |         newsk = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
+        |                                            ^~~:
 
-Also acquire the relevant lock, to avoid fouling static analyzers.
+Move the call to pn_skb_get_dst_sockaddr(), which initializes dst, to
+before the call to pep_find_pipe(), so that dst is consistently used
+initialized throughout the function.
 
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250714-net-mptcp-fallback-races-v1-3-391aff963322@kernel.org
+Fixes: f7ae8d59f661 ("Phonet: allocate sock from accept syscall rather than soft IRQ")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2101
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20250715-net-phonet-fix-uninit-const-pointer-v1-1-8efd1bd188b3@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/phonet/pep.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3140,7 +3140,16 @@ static int mptcp_disconnect(struct sock
- 	 * subflow
- 	 */
- 	mptcp_destroy_common(msk, MPTCP_CF_FASTCLOSE);
-+
-+	/* The first subflow is already in TCP_CLOSE status, the following
-+	 * can't overlap with a fallback anymore
-+	 */
-+	spin_lock_bh(&msk->fallback_lock);
-+	msk->allow_subflows = true;
-+	msk->allow_infinite_fallback = true;
- 	WRITE_ONCE(msk->flags, 0);
-+	spin_unlock_bh(&msk->fallback_lock);
-+
- 	msk->cb_flags = 0;
- 	msk->recovery = false;
- 	WRITE_ONCE(msk->can_ack, false);
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -826,6 +826,7 @@ static struct sock *pep_sock_accept(stru
+ 	}
+ 
+ 	/* Check for duplicate pipe handle */
++	pn_skb_get_dst_sockaddr(skb, &dst);
+ 	newsk = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
+ 	if (unlikely(newsk)) {
+ 		__sock_put(newsk);
+@@ -850,7 +851,6 @@ static struct sock *pep_sock_accept(stru
+ 	newsk->sk_destruct = pipe_destruct;
+ 
+ 	newpn = pep_sk(newsk);
+-	pn_skb_get_dst_sockaddr(skb, &dst);
+ 	pn_skb_get_src_sockaddr(skb, &src);
+ 	newpn->pn_sk.sobject = pn_sockaddr_get_object(&dst);
+ 	newpn->pn_sk.dobject = pn_sockaddr_get_object(&src);
 
 
