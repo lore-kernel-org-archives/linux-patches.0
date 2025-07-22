@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D1C28BA96;
-	Tue, 22 Jul 2025 14:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181EA22094;
+	Tue, 22 Jul 2025 14:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193611; cv=none; b=cvQWZ01nsKLSTKAC9J16HJJo0QCprxooNfdTeL7c3Xok9d97bv0e9FvCdOw2N3gjk1x8XoQu6FMiCNG4okad+AHisYU0tBEGIkigFsLw8eb5MtNPW1JZUc7IvtD3ncOs0lMUprOeUzUnrUE0Ih01FUQHwqvddpzNtb6sl4vUroQ=
+	t=1753193615; cv=none; b=X4gjshgrTu71EWSmTczGnPeV5gPUiGarAu7KDwr4pBXUpIkVSPvGqgBMvn8Awotdc6rog8E1MFmYZ/5A+5ckUo2mNpRqnRqEGRQw3Cwj2e82nFuLcAQIVdDYAzW0teVuhxTRddvfqWHzTMnFI4+Jgo/vV7YXSKIEkYlMZiAXnCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193611; c=relaxed/simple;
-	bh=buHslJC5sM/T+vAyoUMmYXTTWBVp+3UAGDbq5/am1K0=;
+	s=arc-20240116; t=1753193615; c=relaxed/simple;
+	bh=xHM1ZyKlE1q+6aruvRRFyqHBL7E0+z4jXhZDf95mq4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4zAU02rkiuM37NRrxGgSrtgMcvamg0aiWSJSb6f7dm6msKJ3dDCkRz4+QgofkQLbyPZ4lm66AwwvOHR3p8Cmn/KdQGdgbb4O3y0rMb0soHDx9Lz2W/yaUyCtuu8TVyTWhtcIMN099R/g/DqitV0EZOYBeYj/gnojw5mmJWxNW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCz+7/1c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rNhIRKZU4zeRNTD96eNkxS2314Vmuul9Emtm1Dp6N0GI1rqslC5uGyelWbw/GV10c5iL4jpr2paCoidhxXckDlaDv8Flbi34Yj2nGRV871P2s+Sb+6Om3Ep0C2iAKAKBiY5iwrCxN1C6jTDGwySCuHW80VxmJJbmdfbTRMJMlcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rk9Lso+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCz+7/1c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD92FC4CEF6;
-	Tue, 22 Jul 2025 14:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rk9Lso+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7B1C4CEEB;
+	Tue, 22 Jul 2025 14:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193611;
-	bh=buHslJC5sM/T+vAyoUMmYXTTWBVp+3UAGDbq5/am1K0=;
+	s=korg; t=1753193614;
+	bh=xHM1ZyKlE1q+6aruvRRFyqHBL7E0+z4jXhZDf95mq4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCz+7/1c34l14vAgdo+ZfTPvJN3+aPreGd7ThOOv3EttjY+r8+a8zPZHx7CyR8YDP
-	 41uttbw/wMrnGdDAtplq6yxQg7a0F0AvHNtZ4GoEAXYdbhRvb+jVC/+jBbVNHAkhSK
-	 +1AzH4OMoMRbXylkbrIQU7Owx3cePlGkiCWtQ/qs=
+	b=Rk9Lso+lAo8ddjDkDf6rrw5dm6VdCGH6XLUXQTm9TTCumV7L6voNxYG5LUyYoFyjR
+	 VJ68FCQEqVMhXiJEGCPsj/oqdwETRoEZCaOEe4w4Y7fBBUgMb6NYDjZ5yxjN/kGPTj
+	 YrkuWokV3Uc+SNvT/2cYKcgwcjCuaNFL5oCZ82So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Wei Fang <wei.fang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 111/187] block: fix kobject leak in blk_unregister_queue
-Date: Tue, 22 Jul 2025 15:44:41 +0200
-Message-ID: <20250722134349.898992418@linuxfoundation.org>
+Subject: [PATCH 6.15 102/187] arm64: dts: imx95-19x19-evk: fix the overshoot issue of NETC
+Date: Tue, 22 Jul 2025 15:44:32 +0200
+Message-ID: <20250722134349.570336263@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -52,38 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 3051247e4faa32a3d90c762a243c2c62dde310db ]
+[ Upstream commit 36c2bf42b6f02ded87a381edc6b500cd6aac5018 ]
 
-The kobject for the queue, `disk->queue_kobj`, is initialized with a
-reference count of 1 via `kobject_init()` in `blk_register_queue()`.
-While `kobject_del()` is called during the unregister path to remove
-the kobject from sysfs, the initial reference is never released.
+The overshoot of MDIO, MDC and ENET1_TDx is too high, so reduce the drive
+strength these pins.
 
-Add a call to `kobject_put()` in `blk_unregister_queue()` to properly
-decrement the reference count and fix the leak.
-
-Fixes: 2bd85221a625 ("block: untangle request_queue refcounting from sysfs")
-Cc: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20250711083009.2574432-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 025cf78938c2 ("arm64: dts: imx95-19x19-evk: add ENETC 0 support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 1f9b45b0b9ee7..12a5059089a2f 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -964,4 +964,5 @@ void blk_unregister_queue(struct gendisk *disk)
- 	kobject_del(&disk->queue_kobj);
+diff --git a/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts b/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts
+index 25ac331f03183..9a4d5f7f9e7f9 100644
+--- a/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx95-19x19-evk.dts
+@@ -536,17 +536,17 @@
+ &scmi_iomuxc {
+ 	pinctrl_emdio: emdiogrp{
+ 		fsl,pins = <
+-			IMX95_PAD_ENET1_MDC__NETCMIX_TOP_NETC_MDC		0x57e
+-			IMX95_PAD_ENET1_MDIO__NETCMIX_TOP_NETC_MDIO		0x97e
++			IMX95_PAD_ENET1_MDC__NETCMIX_TOP_NETC_MDC		0x50e
++			IMX95_PAD_ENET1_MDIO__NETCMIX_TOP_NETC_MDIO		0x90e
+ 		>;
+ 	};
  
- 	blk_debugfs_remove(disk);
-+	kobject_put(&disk->queue_kobj);
- }
+ 	pinctrl_enetc0: enetc0grp {
+ 		fsl,pins = <
+-			IMX95_PAD_ENET1_TD3__NETCMIX_TOP_ETH0_RGMII_TD3		0x57e
+-			IMX95_PAD_ENET1_TD2__NETCMIX_TOP_ETH0_RGMII_TD2		0x57e
+-			IMX95_PAD_ENET1_TD1__NETCMIX_TOP_ETH0_RGMII_TD1		0x57e
+-			IMX95_PAD_ENET1_TD0__NETCMIX_TOP_ETH0_RGMII_TD0		0x57e
++			IMX95_PAD_ENET1_TD3__NETCMIX_TOP_ETH0_RGMII_TD3		0x50e
++			IMX95_PAD_ENET1_TD2__NETCMIX_TOP_ETH0_RGMII_TD2		0x50e
++			IMX95_PAD_ENET1_TD1__NETCMIX_TOP_ETH0_RGMII_TD1		0x50e
++			IMX95_PAD_ENET1_TD0__NETCMIX_TOP_ETH0_RGMII_TD0		0x50e
+ 			IMX95_PAD_ENET1_TX_CTL__NETCMIX_TOP_ETH0_RGMII_TX_CTL	0x57e
+ 			IMX95_PAD_ENET1_TXC__NETCMIX_TOP_ETH0_RGMII_TX_CLK	0x58e
+ 			IMX95_PAD_ENET1_RX_CTL__NETCMIX_TOP_ETH0_RGMII_RX_CTL	0x57e
 -- 
 2.39.5
 
