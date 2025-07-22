@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFD422CBE9;
-	Tue, 22 Jul 2025 13:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A2F7263D;
+	Tue, 22 Jul 2025 13:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192762; cv=none; b=qloUNLo27eoOL+9QeClsMZQjkjSWKWDZbOOAO97MZe6apg66jvo5Jcn6H0OVF5q57ZCPPvqrASn7rG/BLP6aQUkcfNQLJaV9pMoZucHaQ5S0WlOh2KcPUB5YtaVHSpSpdvzThYzYzmt7OkmYKExkdMs7wJz4jd9ZlgQvhNehA70=
+	t=1753192765; cv=none; b=jMzZj9YTu6msbmu7rBj5JyDXHLuJV3LGIrgmZSfeyvPaP/UXbZovDiCSUd7Qc2QDI77DqrWrCZr8+emeuEQhGKNFpmDbny6Afi9HL9gtstFVosrHfEv4CFxN3BVHMTESkcWdK2tohryuHfbYMURbqZoZSfEIWx3RDsXMKKf9fUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192762; c=relaxed/simple;
-	bh=wz8ZR7ZH8l1iqg5d/aLYMJa76hRL5OLWKpHphRIpRMk=;
+	s=arc-20240116; t=1753192765; c=relaxed/simple;
+	bh=B3ZVGUxH1Fq1EcWpjCIUvu9Pfunkdc5E3VVj6a8vmUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpDc+ldinGIUgVzLQ0su6l5t1raFi3vvoMfy+U/QVChfRYufTNnEbHsl5a1pD0WrLqTX7E1sMWpQsaoxL0mlC38gI0TZFOYD2cXdnPYKrk/9g/ybhiH/xXMdTZ5nnsJ4zrwx8d7i7wYtBSU/ebH86pPmR9Oyyw8k/u+IL4eKvn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYyuJc/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUnsQAVQk1AzgIROmsxG+a27to1r3fajtCYjIGUCayQyl0IlnWHKq3l7CN3YKBv125TAOdAeh+GZICGpxXSffw5m0FxlV0iY8oSuhzHc3MeiKxLkQpAUXMDRbdK6EUtuDiX9YC5XIl6n1KtkulxAN0yVYHTdlvdzGdgzHsV3w/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWq4oxwS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYyuJc/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E80DC4CEEB;
-	Tue, 22 Jul 2025 13:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWq4oxwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8A7C4CEEB;
+	Tue, 22 Jul 2025 13:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192762;
-	bh=wz8ZR7ZH8l1iqg5d/aLYMJa76hRL5OLWKpHphRIpRMk=;
+	s=korg; t=1753192765;
+	bh=B3ZVGUxH1Fq1EcWpjCIUvu9Pfunkdc5E3VVj6a8vmUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DYyuJc/o/hqDuhMYRRT3WKSCqGot+PJQuGSeAgIe6r60EgCfdztT903eL+SfCMLPE
-	 /FN2NxrsR5YNTT9/mY4iOVucCO070Vt0ePDVCuPNrGrWemxfWF4/9mm9vAUwpQZpTK
-	 k6FhKdKXbQBqrDARaEVsRMeOb16Mo36coApn7tSA=
+	b=WWq4oxwSWukhcWPvIiSAagqalKZtA4o543Udub15wvPY7yZDpqO/m1Af2Lo31IMnT
+	 /X7ZR+yb6/4yZTawOtktSVmJzl2Dg2hUuEOdTFpEs2qLuBuSCXeq4jo6AGeEzW6GSP
+	 3TCLtqCiLl/d5hLhOcKP7zBYBxKQDHm4v1RPs9hU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	LongJun Tang <tanglongjun@kylinos.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.12 049/158] af_packet: fix soft lockup issue caused by tpacket_snd()
-Date: Tue, 22 Jul 2025 15:43:53 +0200
-Message-ID: <20250722134342.564878941@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sean Rhodes <sean@starlabs.systems>
+Subject: [PATCH 6.12 050/158] Bluetooth: btintel: Check if controller is ISO capable on btintel_classify_pkt_type
+Date: Tue, 22 Jul 2025 15:43:54 +0200
+Message-ID: <20250722134342.599709958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -53,103 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 55f0bfc0370539213202f4ce1a07615327ac4713 upstream.
+commit 6ec3185fbc3528f2284c347fb9bd8be6fa672ed4 upstream.
 
-When MSG_DONTWAIT is not set, the tpacket_snd operation will wait for
-pending_refcnt to decrement to zero before returning. The pending_refcnt
-is decremented by 1 when the skb->destructor function is called,
-indicating that the skb has been successfully sent and needs to be
-destroyed.
+Due to what seem to be a bug with variant version returned by some
+firmwares the code may set hdev->classify_pkt_type with
+btintel_classify_pkt_type when in fact the controller doesn't even
+support ISO channels feature but may use the handle range expected from
+a controllers that does causing the packets to be reclassified as ISO
+causing several bugs.
 
-If an error occurs during this process, the tpacket_snd() function will
-exit and return error, but pending_refcnt may not yet have decremented to
-zero. Assuming the next send operation is executed immediately, but there
-are no available frames to be sent in tx_ring (i.e., packet_current_frame
-returns NULL), and skb is also NULL, the function will not execute
-wait_for_completion_interruptible_timeout() to yield the CPU. Instead, it
-will enter a do-while loop, waiting for pending_refcnt to be zero. Even
-if the previous skb has completed transmission, the skb->destructor
-function can only be invoked in the ksoftirqd thread (assuming NAPI
-threading is enabled). When both the ksoftirqd thread and the tpacket_snd
-operation happen to run on the same CPU, and the CPU trapped in the
-do-while loop without yielding, the ksoftirqd thread will not get
-scheduled to run. As a result, pending_refcnt will never be reduced to
-zero, and the do-while loop cannot exit, eventually leading to a CPU soft
-lockup issue.
+To fix the above btintel_classify_pkt_type will attempt to check if the
+controller really supports ISO channels and in case it doesn't don't
+reclassify even if the handle range is considered to be ISO, this is
+considered safer than trying to fix the specific controller/firmware
+version as that could change over time and causing similar problems in
+the future.
 
-In fact, skb is true for all but the first iterations of that loop, and
-as long as pending_refcnt is not zero, even if incremented by a previous
-call, wait_for_completion_interruptible_timeout() should be executed to
-yield the CPU, allowing the ksoftirqd thread to be scheduled. Therefore,
-the execution condition of this function should be modified to check if
-pending_refcnt is not zero, instead of check skb.
-
--	if (need_wait && skb) {
-+	if (need_wait && packet_read_pending(&po->tx_ring)) {
-
-As a result, the judgment conditions are duplicated with the end code of
-the while loop, and packet_read_pending() is a very expensive function.
-Actually, this loop can only exit when ph is NULL, so the loop condition
-can be changed to while (1), and in the "ph = NULL" branch, if the
-subsequent condition of if is not met,  the loop can break directly. Now,
-the loop logic remains the same as origin but is clearer and more obvious.
-
-Fixes: 89ed5b519004 ("af_packet: Block execution of tasks waiting for transmit to complete in AF_PACKET")
-Cc: stable@kernel.org
-Suggested-by: LongJun Tang <tanglongjun@kylinos.cn>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219553
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2100565
+Link: https://github.com/StarLabsLtd/firmware/issues/180
+Fixes: f25b7fd36cc3 ("Bluetooth: Add vendor-specific packet classification for ISO data")
+Cc: stable@vger.kernel.org
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Sean Rhodes <sean@starlabs.systems>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/bluetooth/btintel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2845,15 +2845,21 @@ static int tpacket_snd(struct packet_soc
- 		ph = packet_current_frame(po, &po->tx_ring,
- 					  TP_STATUS_SEND_REQUEST);
- 		if (unlikely(ph == NULL)) {
--			if (need_wait && skb) {
-+			/* Note: packet_read_pending() might be slow if we
-+			 * have to call it as it's per_cpu variable, but in
-+			 * fast-path we don't have to call it, only when ph
-+			 * is NULL, we need to check the pending_refcnt.
-+			 */
-+			if (need_wait && packet_read_pending(&po->tx_ring)) {
- 				timeo = wait_for_completion_interruptible_timeout(&po->skb_completion, timeo);
- 				if (timeo <= 0) {
- 					err = !timeo ? -ETIMEDOUT : -ERESTARTSYS;
- 					goto out_put;
- 				}
--			}
--			/* check for additional frames */
--			continue;
-+				/* check for additional frames */
-+				continue;
-+			} else
-+				break;
- 		}
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -2656,7 +2656,7 @@ static u8 btintel_classify_pkt_type(stru
+ 	 * Distinguish ISO data packets form ACL data packets
+ 	 * based on their connection handle value range.
+ 	 */
+-	if (hci_skb_pkt_type(skb) == HCI_ACLDATA_PKT) {
++	if (iso_capable(hdev) && hci_skb_pkt_type(skb) == HCI_ACLDATA_PKT) {
+ 		__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
  
- 		skb = NULL;
-@@ -2942,14 +2948,7 @@ tpacket_error:
- 		}
- 		packet_increment_head(&po->tx_ring);
- 		len_sum += tp_len;
--	} while (likely((ph != NULL) ||
--		/* Note: packet_read_pending() might be slow if we have
--		 * to call it as it's per_cpu variable, but in fast-path
--		 * we already short-circuit the loop with the first
--		 * condition, and luckily don't have to go that path
--		 * anyway.
--		 */
--		 (need_wait && packet_read_pending(&po->tx_ring))));
-+	} while (1);
- 
- 	err = len_sum;
- 	goto out_put;
+ 		if (hci_handle(handle) >= BTINTEL_ISODATA_HANDLE_BASE)
 
 
