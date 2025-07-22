@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF2DA32;
-	Tue, 22 Jul 2025 13:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BB4A32;
+	Tue, 22 Jul 2025 13:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192417; cv=none; b=azJ9kLUkP8GCmxqudMrn7YyfmTKw6KZx8h23+FuDrnUuda9FTY7pnkgbtIgejEJOHfJDUU20ZI88qoOWQYIcFdVoC5zV05Uf2rAahivuyH93101qc+8bYCKE3Cmm45BXw1n9TxLxKMCADuJrQQMgxyIkEK0QumZv+BoBRR/wIxA=
+	t=1753192421; cv=none; b=JCwIV6eEsYTc3ZYgRLIohvt0a7WwPc/oulGK/SQYhJwZ0BwkkN31Fx5Hcv8UB4XfES2fGyw5Ch+V4ojhzHLvJ37kR7T51f1zAuNzkRH6mZ2kXC5DiJYE9D6ivJ7bQDEKY2b1VBbhlNVSEpjKfNF+6Ob8DPCUQk/alkiXgBAv+38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192417; c=relaxed/simple;
-	bh=ZCGPc4TjXOJmlK6YHn6Y9kBCVYlyV93b8V+eaQmfclc=;
+	s=arc-20240116; t=1753192421; c=relaxed/simple;
+	bh=dxvu9UMZuzKzzqMeSAhy4Qfp5BiL7BZ4xF+zEgH7tpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qL0pS0Am+bhlumRGIuQBIDYnGJnWpAP89l5+sIIy91sqBNnjvSpZNpdoXLvW8hXfMH0/Hic+uVPfOkrFb2iegjTKoPFQeTDcb5uOh3GC0zk8sSAH4ezfpWnRpv1aQ/4nS5uVJmGCO83T3lDeVoD2oxxtiWMwLmB5OCRAtrORWA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGlhyu2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m4JVoxOOFZk0haTnwQj6m8t434XJqe2w49qAMpcwy46PmisDcenB5T66cXv3HWkSEUHdFlwOxKotMt5AQLIOKbVFeiSg0AutgwuObCPbMLdf7W9X6T4eD2gmQ0hQtfunL3SMuVEjrDfS/672BWNc5JC8xLrqaSjFtz28zvBQJA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXYlKPRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGlhyu2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008E3C4CEEB;
-	Tue, 22 Jul 2025 13:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXYlKPRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750B1C4CEEB;
+	Tue, 22 Jul 2025 13:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192417;
-	bh=ZCGPc4TjXOJmlK6YHn6Y9kBCVYlyV93b8V+eaQmfclc=;
+	s=korg; t=1753192420;
+	bh=dxvu9UMZuzKzzqMeSAhy4Qfp5BiL7BZ4xF+zEgH7tpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGlhyu2pjZMX7wq1gf1qWgaYPRn8NgGSnf+QygkkY1BPrG/6pafJvsRG+H7lp1iKJ
-	 mUhzxBS8fI/tFlwssqQi5M7I9PirPJoPF668dQ+syhgxd+XOuanf/RIL7VKb3rSsAy
-	 gm+QUjSPTbARZjVtxqeRZ4jRlzFk0eUULXGY7p70=
+	b=gXYlKPRW4ljxGuaLsk421Rxn9QylRE5Py1kJTZlm2dp5/ocWQRqcmP3tx5jC7Aam2
+	 nIZ/Pw7VjPgD17jd7qIHOt1fCYWgWA6zfa0cbVx4KJqBAR1xCeTyLxLa+cnQRwbKQK
+	 COEujW8u/dZ7/zXywGQ2bX4JtU+a9KptAFpX+FrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/111] soundwire: amd: fix for handling slave alerts after link is down
-Date: Tue, 22 Jul 2025 15:44:34 +0200
-Message-ID: <20250722134335.588948951@linuxfoundation.org>
+Subject: [PATCH 6.6 060/111] soundwire: amd: fix for clearing command status register
+Date: Tue, 22 Jul 2025 15:44:35 +0200
+Message-ID: <20250722134335.624627610@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -53,52 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 86a4371b76976158be875dc654ceee35c574b27b ]
+[ Upstream commit a628e69b6412dc02757a6a23f7f16ce0c14d71f1 ]
 
-Sometimes, its observed that during system level suspend callback
-execution, after link is down, handling pending slave status workqueue
-results in mipi register access failures as shown below.
+To clear the valid result status, 1 should be written to
+ACP_SDW_IMM_CMD_STS register. Update the ACP_SW_IMM_CMD_STS register value
+as 1.
 
-soundwire sdw-master-0-0: trf on Slave 1 failed:-110 read addr 0 count 1
-rt722-sdca sdw:0:0:025d:0722:01: SDW_DP0_INT recheck read failed:-110
-rt722-sdca sdw:0:0:025d:0722:01: Slave 1 alert handling failed: -110
-amd_sdw_manager amd_sdw_manager.0: SDW0 cmd response timeout occurred
-amd_sdw_manager amd_sdw_manager.0: command timeout for Slave 1
-soundwire sdw-master-0-0: trf on Slave 1 failed:-110 write addr 5c count 1
-amd_sdw_manager amd_sdw_manager.0: SDW0 previous cmd status clear failed
-amd_sdw_manager amd_sdw_manager.0: command timeout for Slave 1
-soundwire sdw-master-0-0: trf on Slave 1 failed:-110 write addr 5d count 1
-amd_sdw_manager amd_sdw_manager.0: SDW0 previous cmd status clear failed
-amd_sdw_manager amd_sdw_manager.0: command timeout for Slave 1
-
-Cancel the pending slave status workqueue prior to initiating clock stop
-sequence during suspend callback execution for both the power modes.
-
-Fixes: 9cf1efc5ed2d ("soundwire: amd: add pm_prepare callback and pm ops support")
+Fixes: d8f48fbdfd9a ("soundwire: amd: Add support for AMD Manager driver")
 Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20250530054447.1645807-2-Vijendar.Mukunda@amd.com
+Link: https://lore.kernel.org/r/20250620102617.73437-1-Vijendar.Mukunda@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/amd_manager.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/soundwire/amd_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index 31b203ebbae0c..ce1c8e1372eed 100644
+index ce1c8e1372eed..b89f8067e6cdd 100644
 --- a/drivers/soundwire/amd_manager.c
 +++ b/drivers/soundwire/amd_manager.c
-@@ -1135,9 +1135,11 @@ static int __maybe_unused amd_suspend(struct device *dev)
- 	}
+@@ -205,7 +205,7 @@ static u64 amd_sdw_send_cmd_get_resp(struct amd_sdw_manager *amd_manager, u32 lo
  
- 	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
-+		cancel_work_sync(&amd_manager->amd_sdw_work);
- 		amd_sdw_wake_enable(amd_manager, false);
- 		return amd_sdw_clock_stop(amd_manager);
- 	} else if (amd_manager->power_mode_mask & AMD_SDW_POWER_OFF_MODE) {
-+		cancel_work_sync(&amd_manager->amd_sdw_work);
- 		amd_sdw_wake_enable(amd_manager, false);
- 		/*
- 		 * As per hardware programming sequence on AMD platforms,
+ 	if (sts & AMD_SDW_IMM_RES_VALID) {
+ 		dev_err(amd_manager->dev, "SDW%x manager is in bad state\n", amd_manager->instance);
+-		writel(0x00, amd_manager->mmio + ACP_SW_IMM_CMD_STS);
++		writel(AMD_SDW_IMM_RES_VALID, amd_manager->mmio + ACP_SW_IMM_CMD_STS);
+ 	}
+ 	writel(upper_data, amd_manager->mmio + ACP_SW_IMM_CMD_UPPER_WORD);
+ 	writel(lower_data, amd_manager->mmio + ACP_SW_IMM_CMD_LOWER_QWORD);
 -- 
 2.39.5
 
