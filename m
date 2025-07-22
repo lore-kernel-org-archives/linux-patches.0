@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27702C9A;
-	Tue, 22 Jul 2025 14:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567202C9A;
+	Tue, 22 Jul 2025 14:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193122; cv=none; b=LNmq6MC7gyqaPXYCWVSFWi0msCJ+pZjdrpymO/WQ7Ku34iNqXtF8MA0dZLLyb7+ofxWy+mPeDuW3JrUY8pav6vmOPmRxdZf8MguHSRskE4fFAxZOx8e8rlK1to7Vn9NtpLmHkmSdheOfb2YBbnGVu5o/kmb23wlB9qiYPuiAUnE=
+	t=1753193126; cv=none; b=XL41kxWJn2kY3zEd7fUdbBucTLOA6Z8fYlmftrIAs5dqVtvCmLigl9ojLH1FF3qQ7GmqOuqoElI/We1wr0k0XbdrSKDC5sBVpi6JFqwL5QO1HA94EFtUUYp+IhdU4UFCPC4kF5XyEgwKMHhptAV+jaLaD8n9xSUjWQnNbfnhSkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193122; c=relaxed/simple;
-	bh=XGVKyUkyuspg79EvpNrR1Nj/pq1YgpAFzgJsJuGwaS4=;
+	s=arc-20240116; t=1753193126; c=relaxed/simple;
+	bh=2c96gDvAL88IuquG7YdsRed3xt14jz9xuqTKBDNCX1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OoPUoCEaSKC0+3SnZUnzVOKjKHUaQDMme9/NYCovXg4lXerF3AtSHS0Xaj7UjTCsWjYl/L2Sxlotoeg/qYfKqSF1X/B/ac0EIckWVuWNzW1fYZSIwSXwYvGUw1A8T6by3Mdz7I5BeF5a1aYroFrEl2Ws4lXPXnTSUMfZCfmu9MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baAMxqpQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HLEXTIG7uUI8hUSmulpd+hBOOSw4GYDvGAqNt8AH0pyV+jGeXWpIYF9g2WwRgG6GwlXPR+i9XsKoRdPaoFYW+USQFS0Uw+ic0CD3u53e64SAXx5wTJWpNLlwXPpG8IjSdxJn79zu/MXNKyaGjG2I4cpEZw10eTMBTtUjrcppfd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7k/xNHM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baAMxqpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2304DC4CEEB;
-	Tue, 22 Jul 2025 14:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7k/xNHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E5AC4CEEB;
+	Tue, 22 Jul 2025 14:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193122;
-	bh=XGVKyUkyuspg79EvpNrR1Nj/pq1YgpAFzgJsJuGwaS4=;
+	s=korg; t=1753193125;
+	bh=2c96gDvAL88IuquG7YdsRed3xt14jz9xuqTKBDNCX1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=baAMxqpQ2ADdhPOmJyH9FSOqn3wq6HS6CYYJIZM8SPCTce0Iu42miVFpGXUbQrb0i
-	 2Jt+Ruvnvq8uaP7vM8tsLVFcPT4SacN1P/NztkuRIA5L+OHJCnQITw19leC4Qd1MD4
-	 bWztoh+ctVp6ZsWGGXks1kWTDkNm/e9vwj2Ssq04=
+	b=Y7k/xNHMvqiC8P5IxhM1dacP6Ysz0uv5lg7QkN4Mkk7S0PKF4BEV+VpbTVLlZQdLF
+	 UAN/3ToGUSV8j5whbJp9f8l3r4RU3cIGAEopW+4U7Os1tNb0Y+e3j9u0WNdWz4UvgB
+	 0lQCfGEcHE35II7zPlu7xdqOR6zOTVZHigo4CgDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Ravi Kumar Vodapalli <ravi.kumar.vodapalli@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/158] drm/xe/mocs: Initialize MOCS index early
-Date: Tue, 22 Jul 2025 15:45:40 +0200
-Message-ID: <20250722134346.532289704@linuxfoundation.org>
+Subject: [PATCH 6.12 157/158] drm/xe: Move page fault init after topology init
+Date: Tue, 22 Jul 2025 15:45:41 +0200
+Message-ID: <20250722134346.569816128@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -53,52 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 2a58b21adee3df10ca6f4491af965c4890d2d8e3 upstream.
+commit 3155ac89251dcb5e35a3ec2f60a74a6ed22c56fd upstream.
 
-MOCS uc_index is used even before it is initialized in the following
-callstack
-    guc_prepare_xfer()
-    __xe_guc_upload()
-    xe_guc_min_load_for_hwconfig()
-    xe_uc_init_hwconfig()
-    xe_gt_init_hwconfig()
+We need the topology to determine GT page fault queue size, move page
+fault init after topology init.
 
-Do MOCS index initialization earlier in the device probe.
-
-Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Reviewed-by: Ravi Kumar Vodapalli <ravi.kumar.vodapalli@intel.com>
-Link: https://lore.kernel.org/r/20250520142445.2792824-1-balasubramani.vivekanandan@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 241cc827c0987d7173714fc5a95a7c8fc9bf15c0)
+Cc: stable@vger.kernel.org
+Fixes: 3338e4f90c14 ("drm/xe: Use topology to determine page fault queue size")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://lore.kernel.org/r/20250710191208.1040215-1-matthew.brost@intel.com
+(cherry picked from commit beb72acb5b38dbe670d8eb752d1ad7a32f9c4119)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Stable-dep-of: 3155ac89251d ("drm/xe: Move page fault init after topology init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_gt.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_gt.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/gpu/drm/xe/xe_gt.c
 +++ b/drivers/gpu/drm/xe/xe_gt.c
-@@ -389,6 +389,8 @@ int xe_gt_init_early(struct xe_gt *gt)
+@@ -594,15 +594,15 @@ int xe_gt_init(struct xe_gt *gt)
+ 		xe_hw_fence_irq_init(&gt->fence_irq[i]);
+ 	}
+ 
+-	err = xe_gt_pagefault_init(gt);
++	err = xe_gt_sysfs_init(gt);
  	if (err)
  		return err;
  
-+	xe_mocs_init_early(gt);
-+
- 	return 0;
- }
- 
-@@ -596,8 +598,6 @@ int xe_gt_init(struct xe_gt *gt)
+-	err = xe_gt_sysfs_init(gt);
++	err = gt_fw_domain_init(gt);
  	if (err)
  		return err;
  
--	xe_mocs_init_early(gt);
--
- 	err = xe_gt_sysfs_init(gt);
+-	err = gt_fw_domain_init(gt);
++	err = xe_gt_pagefault_init(gt);
  	if (err)
  		return err;
+ 
 
 
