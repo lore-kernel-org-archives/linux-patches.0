@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE9C2EA16A;
-	Tue, 22 Jul 2025 13:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EEE23B614;
+	Tue, 22 Jul 2025 13:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192148; cv=none; b=EsbQszVepUvxSRPnOPYX7x/cgwJ1WLsDT6NjUSbKHubiiT+dNHWrqHnSgl5YU3ANbahWfiKWv8QVmqeW1oGGPK7Pyc4whTW/tlJ0gpETjhABv8c6FbvlznXXZWwPwiwwROHf0G9MkQA8N4LWdvrnJAC3bWuMe88stqSjbjgbZyE=
+	t=1753192151; cv=none; b=geNJ0tf8WZ6RGRXizBxuMDupwn1aipEQmJxqzNwZ7dQFc25yVmJfUCFo0unROHwvmMDskFDc1Z+NVm7o02ODYNX/tt6gnFmg57/JoVdKL3hHmnqUcgGGqNDn6XLLtiK5tzarH9tQg48vZB3ZTZGVKbmLFJ1xjzEwZuBds+KR/pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192148; c=relaxed/simple;
-	bh=rkZD5fU3tbwBcVcOZ3l8Ljr+2d70fi+/1Z3pcDeQKac=;
+	s=arc-20240116; t=1753192151; c=relaxed/simple;
+	bh=Ogl5L9ZQeOkKeK9F4J0k4HlygEhDwWxgsNQF5oNa35c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a2MxaYY6FnbT5d2ib3soX4Ak5Wf09tFpzWsn01+1L2eM5tyg/B0dqyyHWxu0O44l+eLklPK3E0HcY9E//hwrstkwPV61gjK5UvLMm7pf3sq8Tl73aycgZtkaXHmd78pVmrEQWpTHUGfRbLIJBdpzh+azirHOSShocdtf3mmLdWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FYMns1Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Mm87O5j/xK/uqFZfvWP/QTB60todvd9yevb6uj1FKRqhZpuhCRwwOv9ZeeW5Ugpu+RA+4dJoykC1dOpcRh3k4mSTDYS8PcLmzm4KdFkknOUPk+9c40gKq3zvCBhrvDCxU6rSwbhzRIR95owXrVk5jvlwcSo5pFZ3vr54EiDuwnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdGkSC/j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FYMns1Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71D0C4CEEB;
-	Tue, 22 Jul 2025 13:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdGkSC/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299E5C4CEEB;
+	Tue, 22 Jul 2025 13:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192148;
-	bh=rkZD5fU3tbwBcVcOZ3l8Ljr+2d70fi+/1Z3pcDeQKac=;
+	s=korg; t=1753192151;
+	bh=Ogl5L9ZQeOkKeK9F4J0k4HlygEhDwWxgsNQF5oNa35c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0FYMns1QLSUUWWdaEmWDs0YjsGwGPnHqqkAdVj5vM57s3XlrZb7/DNDsc8vB4Ges9
-	 faVe/751uaAB8PVA27xRW3NPHuQR79YZzSjlXB/wGAuJRphCBeYMyH8b3UBFi7dmV7
-	 7XjR6PVq60j2utVr4hjWOBgOKFxFbIyyc8v06Ctg=
+	b=wdGkSC/jlp5BUiLlV9EFEwISUM4TnyCwcub7jPsbcpjPQDPfWmqSlBi0UjICciMdS
+	 GIl8jFVPxLzF1WNghJkGsyFK3pkoAigJwtpEigCOyXuCnqEaicJtDKcT6wCHtG8mDL
+	 VUXGzHPZKJ2beZyp8M83/NaID/9H31HFqvRNXbJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Razvan Cojocaru <rzvncj@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 59/79] netfilter: nf_conntrack: fix crash due to removal of uninitialised entry
-Date: Tue, 22 Jul 2025 15:44:55 +0200
-Message-ID: <20250722134330.542894684@linuxfoundation.org>
+Subject: [PATCH 6.1 60/79] Bluetooth: L2CAP: Fix attempting to adjust outgoing MTU
+Date: Tue, 22 Jul 2025 15:44:56 +0200
+Message-ID: <20250722134330.581289735@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -46,248 +44,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 2d72afb340657f03f7261e9243b44457a9228ac7 ]
+[ Upstream commit d24e4a7fedae121d33fb32ad785b87046527eedb ]
 
-A crash in conntrack was reported while trying to unlink the conntrack
-entry from the hash bucket list:
-    [exception RIP: __nf_ct_delete_from_lists+172]
-    [..]
- #7 [ff539b5a2b043aa0] nf_ct_delete at ffffffffc124d421 [nf_conntrack]
- #8 [ff539b5a2b043ad0] nf_ct_gc_expired at ffffffffc124d999 [nf_conntrack]
- #9 [ff539b5a2b043ae0] __nf_conntrack_find_get at ffffffffc124efbc [nf_conntrack]
-    [..]
+Configuration request only configure the incoming direction of the peer
+initiating the request, so using the MTU is the other direction shall
+not be used, that said the spec allows the peer responding to adjust:
 
-The nf_conn struct is marked as allocated from slab but appears to be in
-a partially initialised state:
+Bluetooth Core 6.1, Vol 3, Part A, Section 4.5
 
- ct hlist pointer is garbage; looks like the ct hash value
- (hence crash).
- ct->status is equal to IPS_CONFIRMED|IPS_DYING, which is expected
- ct->timeout is 30000 (=30s), which is unexpected.
+ 'Each configuration parameter value (if any is present) in an
+ L2CAP_CONFIGURATION_RSP packet reflects an ‘adjustment’ to a
+ configuration parameter value that has been sent (or, in case of
+ default values, implied) in the corresponding
+ L2CAP_CONFIGURATION_REQ packet.'
 
-Everything else looks like normal udp conntrack entry.  If we ignore
-ct->status and pretend its 0, the entry matches those that are newly
-allocated but not yet inserted into the hash:
-  - ct hlist pointers are overloaded and store/cache the raw tuple hash
-  - ct->timeout matches the relative time expected for a new udp flow
-    rather than the absolute 'jiffies' value.
+That said adjusting the MTU in the response shall be limited to ERTM
+channels only as for older modes the remote stack may not be able to
+detect the adjustment causing it to silently drop packets.
 
-If it were not for the presence of IPS_CONFIRMED,
-__nf_conntrack_find_get() would have skipped the entry.
-
-Theory is that we did hit following race:
-
-cpu x 			cpu y			cpu z
- found entry E		found entry E
- E is expired		<preemption>
- nf_ct_delete()
- return E to rcu slab
-					init_conntrack
-					E is re-inited,
-					ct->status set to 0
-					reply tuplehash hnnode.pprev
-					stores hash value.
-
-cpu y found E right before it was deleted on cpu x.
-E is now re-inited on cpu z.  cpu y was preempted before
-checking for expiry and/or confirm bit.
-
-					->refcnt set to 1
-					E now owned by skb
-					->timeout set to 30000
-
-If cpu y were to resume now, it would observe E as
-expired but would skip E due to missing CONFIRMED bit.
-
-					nf_conntrack_confirm gets called
-					sets: ct->status |= CONFIRMED
-					This is wrong: E is not yet added
-					to hashtable.
-
-cpu y resumes, it observes E as expired but CONFIRMED:
-			<resumes>
-			nf_ct_expired()
-			 -> yes (ct->timeout is 30s)
-			confirmed bit set.
-
-cpu y will try to delete E from the hashtable:
-			nf_ct_delete() -> set DYING bit
-			__nf_ct_delete_from_lists
-
-Even this scenario doesn't guarantee a crash:
-cpu z still holds the table bucket lock(s) so y blocks:
-
-			wait for spinlock held by z
-
-					CONFIRMED is set but there is no
-					guarantee ct will be added to hash:
-					"chaintoolong" or "clash resolution"
-					logic both skip the insert step.
-					reply hnnode.pprev still stores the
-					hash value.
-
-					unlocks spinlock
-					return NF_DROP
-			<unblocks, then
-			 crashes on hlist_nulls_del_rcu pprev>
-
-In case CPU z does insert the entry into the hashtable, cpu y will unlink
-E again right away but no crash occurs.
-
-Without 'cpu y' race, 'garbage' hlist is of no consequence:
-ct refcnt remains at 1, eventually skb will be free'd and E gets
-destroyed via: nf_conntrack_put -> nf_conntrack_destroy -> nf_ct_destroy.
-
-To resolve this, move the IPS_CONFIRMED assignment after the table
-insertion but before the unlock.
-
-Pablo points out that the confirm-bit-store could be reordered to happen
-before hlist add resp. the timeout fixup, so switch to set_bit and
-before_atomic memory barrier to prevent this.
-
-It doesn't matter if other CPUs can observe a newly inserted entry right
-before the CONFIRMED bit was set:
-
-Such event cannot be distinguished from above "E is the old incarnation"
-case: the entry will be skipped.
-
-Also change nf_ct_should_gc() to first check the confirmed bit.
-
-The gc sequence is:
- 1. Check if entry has expired, if not skip to next entry
- 2. Obtain a reference to the expired entry.
- 3. Call nf_ct_should_gc() to double-check step 1.
-
-nf_ct_should_gc() is thus called only for entries that already failed an
-expiry check. After this patch, once the confirmed bit check passes
-ct->timeout has been altered to reflect the absolute 'best before' date
-instead of a relative time.  Step 3 will therefore not remove the entry.
-
-Without this change to nf_ct_should_gc() we could still get this sequence:
-
- 1. Check if entry has expired.
- 2. Obtain a reference.
- 3. Call nf_ct_should_gc() to double-check step 1:
-    4 - entry is still observed as expired
-    5 - meanwhile, ct->timeout is corrected to absolute value on other CPU
-      and confirm bit gets set
-    6 - confirm bit is seen
-    7 - valid entry is removed again
-
-First do check 6), then 4) so the gc expiry check always picks up either
-confirmed bit unset (entry gets skipped) or expiry re-check failure for
-re-inited conntrack objects.
-
-This change cannot be backported to releases before 5.19. Without
-commit 8a75a2c17410 ("netfilter: conntrack: remove unconfirmed list")
-|= IPS_CONFIRMED line cannot be moved without further changes.
-
-Cc: Razvan Cojocaru <rzvncj@gmail.com>
-Link: https://lore.kernel.org/netfilter-devel/20250627142758.25664-1-fw@strlen.de/
-Link: https://lore.kernel.org/netfilter-devel/4239da15-83ff-4ca4-939d-faef283471bb@gmail.com/
-Fixes: 1397af5bfd7d ("netfilter: conntrack: remove the percpu dying list")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://github.com/bluez/bluez/issues/1422
+Link: https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/149
+Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/4793
+Fixes: 042bb9603c44 ("Bluetooth: L2CAP: Fix L2CAP MTU negotiation")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack.h | 15 +++++++++++++--
- net/netfilter/nf_conntrack_core.c    | 26 ++++++++++++++++++++------
- 2 files changed, 33 insertions(+), 8 deletions(-)
+ net/bluetooth/l2cap_core.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/netfilter/nf_conntrack.h b/include/net/netfilter/nf_conntrack.h
-index 3dbf947285be2..be396d566b57b 100644
---- a/include/net/netfilter/nf_conntrack.h
-+++ b/include/net/netfilter/nf_conntrack.h
-@@ -306,8 +306,19 @@ static inline bool nf_ct_is_expired(const struct nf_conn *ct)
- /* use after obtaining a reference count */
- static inline bool nf_ct_should_gc(const struct nf_conn *ct)
- {
--	return nf_ct_is_expired(ct) && nf_ct_is_confirmed(ct) &&
--	       !nf_ct_is_dying(ct);
-+	if (!nf_ct_is_confirmed(ct))
-+		return false;
-+
-+	/* load ct->timeout after is_confirmed() test.
-+	 * Pairs with __nf_conntrack_confirm() which:
-+	 * 1. Increases ct->timeout value
-+	 * 2. Inserts ct into rcu hlist
-+	 * 3. Sets the confirmed bit
-+	 * 4. Unlocks the hlist lock
-+	 */
-+	smp_acquire__after_ctrl_dep();
-+
-+	return nf_ct_is_expired(ct) && !nf_ct_is_dying(ct);
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 514adb013f3f4..8bb6d2690e2b9 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3711,12 +3711,28 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
+ 		/* Configure output options and let the other side know
+ 		 * which ones we don't like. */
  
- #define	NF_CT_DAY	(86400 * HZ)
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index ec4c39641089b..002d53ded404e 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -1087,6 +1087,12 @@ static int nf_ct_resolve_clash_harder(struct sk_buff *skb, u32 repl_idx)
+-		/* If MTU is not provided in configure request, use the most recently
+-		 * explicitly or implicitly accepted value for the other direction,
+-		 * or the default value.
++		/* If MTU is not provided in configure request, try adjusting it
++		 * to the current output MTU if it has been set
++		 *
++		 * Bluetooth Core 6.1, Vol 3, Part A, Section 4.5
++		 *
++		 * Each configuration parameter value (if any is present) in an
++		 * L2CAP_CONFIGURATION_RSP packet reflects an ‘adjustment’ to a
++		 * configuration parameter value that has been sent (or, in case
++		 * of default values, implied) in the corresponding
++		 * L2CAP_CONFIGURATION_REQ packet.
+ 		 */
+-		if (mtu == 0)
+-			mtu = chan->imtu ? chan->imtu : L2CAP_DEFAULT_MTU;
++		if (!mtu) {
++			/* Only adjust for ERTM channels as for older modes the
++			 * remote stack may not be able to detect that the
++			 * adjustment causing it to silently drop packets.
++			 */
++			if (chan->mode == L2CAP_MODE_ERTM &&
++			    chan->omtu && chan->omtu != L2CAP_DEFAULT_MTU)
++				mtu = chan->omtu;
++			else
++				mtu = L2CAP_DEFAULT_MTU;
++		}
  
- 	hlist_nulls_add_head_rcu(&loser_ct->tuplehash[IP_CT_DIR_REPLY].hnnode,
- 				 &nf_conntrack_hash[repl_idx]);
-+	/* confirmed bit must be set after hlist add, not before:
-+	 * loser_ct can still be visible to other cpu due to
-+	 * SLAB_TYPESAFE_BY_RCU.
-+	 */
-+	smp_mb__before_atomic();
-+	set_bit(IPS_CONFIRMED_BIT, &loser_ct->status);
- 
- 	NF_CT_STAT_INC(net, clash_resolve);
- 	return NF_ACCEPT;
-@@ -1224,8 +1230,6 @@ __nf_conntrack_confirm(struct sk_buff *skb)
- 	 * user context, else we insert an already 'dead' hash, blocking
- 	 * further use of that particular connection -JM.
- 	 */
--	ct->status |= IPS_CONFIRMED;
--
- 	if (unlikely(nf_ct_is_dying(ct))) {
- 		NF_CT_STAT_INC(net, insert_failed);
- 		goto dying;
-@@ -1257,7 +1261,7 @@ __nf_conntrack_confirm(struct sk_buff *skb)
- 		}
- 	}
- 
--	/* Timer relative to confirmation time, not original
-+	/* Timeout is relative to confirmation time, not original
- 	   setting time, otherwise we'd get timer wrap in
- 	   weird delay cases. */
- 	ct->timeout += nfct_time_stamp;
-@@ -1265,11 +1269,21 @@ __nf_conntrack_confirm(struct sk_buff *skb)
- 	__nf_conntrack_insert_prepare(ct);
- 
- 	/* Since the lookup is lockless, hash insertion must be done after
--	 * starting the timer and setting the CONFIRMED bit. The RCU barriers
--	 * guarantee that no other CPU can find the conntrack before the above
--	 * stores are visible.
-+	 * setting ct->timeout. The RCU barriers guarantee that no other CPU
-+	 * can find the conntrack before the above stores are visible.
- 	 */
- 	__nf_conntrack_hash_insert(ct, hash, reply_hash);
-+
-+	/* IPS_CONFIRMED unset means 'ct not (yet) in hash', conntrack lookups
-+	 * skip entries that lack this bit.  This happens when a CPU is looking
-+	 * at a stale entry that is being recycled due to SLAB_TYPESAFE_BY_RCU
-+	 * or when another CPU encounters this entry right after the insertion
-+	 * but before the set-confirm-bit below.  This bit must not be set until
-+	 * after __nf_conntrack_hash_insert().
-+	 */
-+	smp_mb__before_atomic();
-+	set_bit(IPS_CONFIRMED_BIT, &ct->status);
-+
- 	nf_conntrack_double_unlock(hash, reply_hash);
- 	local_bh_enable();
- 
+ 		if (mtu < L2CAP_DEFAULT_MIN_MTU)
+ 			result = L2CAP_CONF_UNACCEPT;
 -- 
 2.39.5
 
