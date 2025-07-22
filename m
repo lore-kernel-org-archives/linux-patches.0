@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4572EBDE0;
-	Tue, 22 Jul 2025 14:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEBB2ECD06;
+	Tue, 22 Jul 2025 14:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193368; cv=none; b=paFIbtxTOmmtJeI/Ta8HZ+bz/TQzDE6rB5ZMD9qW3XKk3od3IS1cVFIDOlfMPs6AYR/HQn78QMm3RSmn7+Qqw24L23F+zRWlgVvW2gzQJGo2lG/8FVZdvActPR3VJh4StylIbrjeV1RQAEviGRtutjtOLAbLBHzNopBDsiU42vg=
+	t=1753193371; cv=none; b=PNsq2pycRuXwWCr7MUK8IB6Y71O9gKkB9WjRa06NgyhKQJ56TALkr3S9gipOVRNMf3P9Os7edjIcq5B9sd3vdUW2eFwvuK99gsZOo0T27Wh1TA76S/JBulaLhVEf/a+m4W0za0Wyob2izpTzLA61tLYdA8itbLBC9fJeKv34kJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193368; c=relaxed/simple;
-	bh=nGyBaBzgERxbV7PMR+Tsxthb6b774a3Q5Il2tLdLhiM=;
+	s=arc-20240116; t=1753193371; c=relaxed/simple;
+	bh=Z9qSj0KE84oYYRUfkF3tr8G0dEelpY7HNF4AVG43U3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5ksjWX8T7IjhnLKPXJd8auOGQIvkiatoyQjyz2bBb1o/qyRFZo9Es8UcufQETI+OXjinky1665hE3Rv1/oA4200f+y2yIRBQ/vxwls6p+Vw6sNRJPe7jGb/xhSJ6quEhX79UX3c046PZyiEV9OB694A1Pj8Gm7SdRZtbuctjvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmMvq6MK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rratcu+ENFdMvLoXpW6KsXjyiH1rtJe1WP298LmGtuoPH1Z/hU1Aq+UJs4fCrQzbnQr1/Hd/wEQjGZSziPsg9E98qwFRLZfkSU232kZq9l61NBhmGi73OBB3OM77NfFsYaFWNKa3SVkgxR5T8c/xoDQ87PpRhJZIn6m4HQBcj38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTi2UDEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmMvq6MK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD19C4CEEB;
-	Tue, 22 Jul 2025 14:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTi2UDEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5597DC4CEEB;
+	Tue, 22 Jul 2025 14:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193367;
-	bh=nGyBaBzgERxbV7PMR+Tsxthb6b774a3Q5Il2tLdLhiM=;
+	s=korg; t=1753193370;
+	bh=Z9qSj0KE84oYYRUfkF3tr8G0dEelpY7HNF4AVG43U3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmMvq6MKxmQ1c0riX5ILnwzhRgAsHPtLyETtqbMNBYCwkLvN4qUy1norUAQPacnOs
-	 L8i3+4g2+Z4iABjvs6bop4WiNmDJ38ItpO4Gy9jkuFtBBhI9ctmlc7YKvnA9Fze9ZS
-	 +f6JRD2F80QDJ1UC/iHQtYOBtMBPrbA+k+OVCJZk=
+	b=xTi2UDEUYZT8TVw+R/R5JK9TJ49vK8C50mVXMklYZrCviE73M8Mx8WgDfMDm0MUSV
+	 jVPYGaKKlVMaxEo72tl2BEy7O2Z3nHM6TpPKozbQ9fRy+j4nO6ToqObNffFvGYZCor
+	 h86j21M+D7GMJ5mxD7FQ41I8ADD+5GNTj11jXcJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Aberback <joshua.aberback@amd.com>,
-	Clayton King <clayton.king@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.15 037/187] drm/amd/display: Free memory allocation
-Date: Tue, 22 Jul 2025 15:43:27 +0200
-Message-ID: <20250722134347.139451101@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	netfs@lists.linux.dev,
+	ceph-devel@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.15 038/187] netfs: Fix copy-to-cache so that it performs collection with ceph+fscache
+Date: Tue, 22 Jul 2025 15:43:28 +0200
+Message-ID: <20250722134347.177757976@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -53,44 +58,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clayton King <clayton.king@amd.com>
+From: David Howells <dhowells@redhat.com>
 
-commit b2ee9fa0fe6416e16c532f61b909c79b5d4ed282 upstream.
+commit 4c238e30774e3022a505fa54311273add7570f13 upstream.
 
-[WHY]
+The netfs copy-to-cache that is used by Ceph with local caching sets up a
+new request to write data just read to the cache.  The request is started
+and then left to look after itself whilst the app continues.  The request
+gets notified by the backing fs upon completion of the async DIO write, but
+then tries to wake up the app because NETFS_RREQ_OFFLOAD_COLLECTION isn't
+set - but the app isn't waiting there, and so the request just hangs.
 
-Free memory to avoid memory leak
+Fix this by setting NETFS_RREQ_OFFLOAD_COLLECTION which causes the
+notification from the backing filesystem to put the collection onto a work
+queue instead.
 
-Reviewed-by: Joshua Aberback <joshua.aberback@amd.com>
-Signed-off-by: Clayton King <clayton.king@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fa699acb8e9be2341ee318077fa119acc7d5f329)
-Cc: stable@vger.kernel.org
+Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
+Reported-by: Max Kellermann <max.kellermann@ionos.com>
+Link: https://lore.kernel.org/r/CAKPOu+8z_ijTLHdiCYGU_Uk7yYD=shxyGLwfe-L7AV3DhebS3w@mail.gmail.com/
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/20250711151005.2956810-2-dhowells@redhat.com
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: Alex Markuze <amarkuze@redhat.com>
+cc: Ilya Dryomov <idryomov@gmail.com>
+cc: netfs@lists.linux.dev
+cc: ceph-devel@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/netfs/read_pgpriv2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
-@@ -1565,7 +1565,7 @@ struct clk_mgr_internal *dcn401_clk_mgr_
- 	clk_mgr->base.bw_params = kzalloc(sizeof(*clk_mgr->base.bw_params), GFP_KERNEL);
- 	if (!clk_mgr->base.bw_params) {
- 		BREAK_TO_DEBUGGER();
--		kfree(clk_mgr);
-+		kfree(clk_mgr401);
- 		return NULL;
- 	}
+diff --git a/fs/netfs/read_pgpriv2.c b/fs/netfs/read_pgpriv2.c
+index 5bbe906a551d..080d2a6a51d9 100644
+--- a/fs/netfs/read_pgpriv2.c
++++ b/fs/netfs/read_pgpriv2.c
+@@ -110,6 +110,7 @@ static struct netfs_io_request *netfs_pgpriv2_begin_copy_to_cache(
+ 	if (!creq->io_streams[1].avail)
+ 		goto cancel_put;
  
-@@ -1576,6 +1576,7 @@ struct clk_mgr_internal *dcn401_clk_mgr_
- 	if (!clk_mgr->wm_range_table) {
- 		BREAK_TO_DEBUGGER();
- 		kfree(clk_mgr->base.bw_params);
-+		kfree(clk_mgr401);
- 		return NULL;
- 	}
- 
++	__set_bit(NETFS_RREQ_OFFLOAD_COLLECTION, &creq->flags);
+ 	trace_netfs_write(creq, netfs_write_trace_copy_to_cache);
+ 	netfs_stat(&netfs_n_wh_copy_to_cache);
+ 	rreq->copy_to_cache = creq;
+-- 
+2.50.1
+
 
 
