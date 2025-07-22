@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CA52EA485;
-	Tue, 22 Jul 2025 14:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB4A6D17;
+	Tue, 22 Jul 2025 14:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193098; cv=none; b=BrM115HLauFTxKFeggB5/d9H+JCNImUz/BeiDUJlAUHCb28IDssazK3UrBycAW1yUJV5Mr5yhY9VFChQoSBdgA2TD0gzd/KQb10iHPnzvYMLvSV6zY/dchiuLfhJkO0nm2S4qEM1Zub2NOFCdLIsgxZS++yhCcdCU/4c8rqwvTM=
+	t=1753193101; cv=none; b=niXxlmOmhyTcc1Yk/eHI02MQJ9ksLffBZyyPyW/rOJXLexCSFHBMDwaQnPNinOyDzM6/ljJQQWUKWbqwmjwa4yVbVhHW8oLiSRoifJX/JUhVqVeTKoDtsjF/tUeBc2UOMSsekK8obe4nociZBfqtPMziiKRJHIq/ELLnp7kdry8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193098; c=relaxed/simple;
-	bh=F2ZzHhg+tlRAUclj4LbGWpJQ/QO8OG0JjCSDs0+eyc8=;
+	s=arc-20240116; t=1753193101; c=relaxed/simple;
+	bh=J/Ff5FaTw14TbiFJg++HCwtqojq5K6FjjgmKaoD3cIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQU4laeCB3X8bsVtjPMPDcaGyOopMjFSyUDZYhCOo7Ij93gSS+1N9hLs7gw9uwMihIXErxbAfc/vX0iaRo/MIxW5FF2ALiRp0du3Lq7Q4Rj36nJ/6pdqigN8SMH1NVp3YsDOe2b/dM1hc6dFOP1/pEhAatYi/pbSX59qAo0rKjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9i0zF6d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EvckopFqfkWK9VmZLoT3Re78m3ZpMjsdp67g1hCxwCWa/i4kkadcNSleerKIBZlVdJKTL49ELfjAe2s3rQvyk8NPZeSl7EG77WSgk8P0Bj58f+NtEghO9NYd/cQywOQIyT8y/xrYcE0VZr2DUcb8dmzyTpL0zs8qjoOWny+BkK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHijdATO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9i0zF6d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE523C4CEEB;
-	Tue, 22 Jul 2025 14:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHijdATO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D507C4CEF1;
+	Tue, 22 Jul 2025 14:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193098;
-	bh=F2ZzHhg+tlRAUclj4LbGWpJQ/QO8OG0JjCSDs0+eyc8=;
+	s=korg; t=1753193101;
+	bh=J/Ff5FaTw14TbiFJg++HCwtqojq5K6FjjgmKaoD3cIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9i0zF6dad7JIqxNL10NZ0h+ybuiTWzxo/eqgzr0Q9dfkHfVaEfmdUwd7dzs23bXd
-	 KPb/VO2uNUP830ObHjor2kTHjHq/WowUzCAUToxjf9m9PC6hKrgMbtJGQlxsXXu/wM
-	 vSGVBtCxyKMluMd+zQVD1VYQUuNiqxociQq4leKg=
+	b=iHijdATOqHJaW/5ROvmzcwnmI4FkzhKU/45Xo4NzjXvFCAxDsjhthfh/dxjf9WawM
+	 46Hr/vJiQngTWuT4rOKH2oXAw1XkW3v8YtYRi+VEV3t+NpW48WWYwJNfc+TrNO56Sb
+	 6FAsf1hYwIMs7whK66dUzjXQuwPt9S/98J7+mVh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihor Solodrai <ihor.solodrai@pm.me>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.12 150/158] selftests/bpf: Set test path for token/obj_priv_implicit_token_envvar
-Date: Tue, 22 Jul 2025 15:45:34 +0200
-Message-ID: <20250722134346.310524606@linuxfoundation.org>
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 151/158] i2c: omap: Add support for setting mux
+Date: Tue, 22 Jul 2025 15:45:35 +0200
+Message-ID: <20250722134346.347298935@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,88 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ihor Solodrai <ihor.solodrai@pm.me>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-commit f01750aecdfb8bfb02842f60af3d805a3ae7267a upstream.
+commit b6ef830c60b6f4adfb72d0780b4363df3a1feb9c upstream.
 
-token/obj_priv_implicit_token_envvar test may fail in an environment
-where the process executing tests can not write to the root path.
+Some SoCs require muxes in the routing for SDA and SCL lines.
+Therefore, add support for setting the mux by reading the mux-states
+property from the dt-node.
 
-Example:
-https://github.com/libbpf/libbpf/actions/runs/11844507007/job/33007897936
-
-Change default path used by the test to /tmp/bpf-token-fs, and make it
-runtime configurable via an environment variable.
-
-Signed-off-by: Ihor Solodrai <ihor.solodrai@pm.me>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241115003853.864397-1-ihor.solodrai@pm.me
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Link: https://lore.kernel.org/r/20250318103622.29979-3-j-choudhary@ti.com
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: a9503a2ecd95 ("i2c: omap: Handle omap_i2c_init() errors in omap_i2c_probe()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 ---
- tools/testing/selftests/bpf/prog_tests/token.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/i2c/busses/Kconfig    |    1 +
+ drivers/i2c/busses/i2c-omap.c |   22 ++++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
---- a/tools/testing/selftests/bpf/prog_tests/token.c
-+++ b/tools/testing/selftests/bpf/prog_tests/token.c
-@@ -828,8 +828,12 @@ static int userns_obj_priv_btf_success(i
- 	return validate_struct_ops_load(mnt_fd, true /* should succeed */);
- }
+--- a/drivers/i2c/busses/Kconfig
++++ b/drivers/i2c/busses/Kconfig
+@@ -937,6 +937,7 @@ config I2C_OMAP
+ 	tristate "OMAP I2C adapter"
+ 	depends on ARCH_OMAP || ARCH_K3 || COMPILE_TEST
+ 	default MACH_OMAP_OSK
++	select MULTIPLEXER
+ 	help
+ 	  If you say yes to this option, support will be included for the
+ 	  I2C interface on the Texas Instruments OMAP1/2 family of processors.
+--- a/drivers/i2c/busses/i2c-omap.c
++++ b/drivers/i2c/busses/i2c-omap.c
+@@ -24,6 +24,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/clk.h>
+ #include <linux/io.h>
++#include <linux/mux/consumer.h>
+ #include <linux/of.h>
+ #include <linux/slab.h>
+ #include <linux/platform_data/i2c-omap.h>
+@@ -211,6 +212,7 @@ struct omap_i2c_dev {
+ 	u16			syscstate;
+ 	u16			westate;
+ 	u16			errata;
++	struct mux_state	*mux_state;
+ };
  
-+static const char *token_bpffs_custom_dir()
-+{
-+	return getenv("BPF_SELFTESTS_BPF_TOKEN_DIR") ?: "/tmp/bpf-token-fs";
-+}
-+
- #define TOKEN_ENVVAR "LIBBPF_BPF_TOKEN_PATH"
--#define TOKEN_BPFFS_CUSTOM "/bpf-token-fs"
- 
- static int userns_obj_priv_implicit_token(int mnt_fd, struct token_lsm *lsm_skel)
- {
-@@ -892,6 +896,7 @@ static int userns_obj_priv_implicit_toke
- 
- static int userns_obj_priv_implicit_token_envvar(int mnt_fd, struct token_lsm *lsm_skel)
- {
-+	const char *custom_dir = token_bpffs_custom_dir();
- 	LIBBPF_OPTS(bpf_object_open_opts, opts);
- 	struct dummy_st_ops_success *skel;
- 	int err;
-@@ -909,10 +914,10 @@ static int userns_obj_priv_implicit_toke
- 	 * BPF token implicitly, unless pointed to it through
- 	 * LIBBPF_BPF_TOKEN_PATH envvar
- 	 */
--	rmdir(TOKEN_BPFFS_CUSTOM);
--	if (!ASSERT_OK(mkdir(TOKEN_BPFFS_CUSTOM, 0777), "mkdir_bpffs_custom"))
-+	rmdir(custom_dir);
-+	if (!ASSERT_OK(mkdir(custom_dir, 0777), "mkdir_bpffs_custom"))
- 		goto err_out;
--	err = sys_move_mount(mnt_fd, "", AT_FDCWD, TOKEN_BPFFS_CUSTOM, MOVE_MOUNT_F_EMPTY_PATH);
-+	err = sys_move_mount(mnt_fd, "", AT_FDCWD, custom_dir, MOVE_MOUNT_F_EMPTY_PATH);
- 	if (!ASSERT_OK(err, "move_mount_bpffs"))
- 		goto err_out;
- 
-@@ -925,7 +930,7 @@ static int userns_obj_priv_implicit_toke
- 		goto err_out;
+ static const u8 reg_map_ip_v1[] = {
+@@ -1452,6 +1454,23 @@ omap_i2c_probe(struct platform_device *p
+ 				       (1000 * omap->speed / 8);
  	}
  
--	err = setenv(TOKEN_ENVVAR, TOKEN_BPFFS_CUSTOM, 1 /*overwrite*/);
-+	err = setenv(TOKEN_ENVVAR, custom_dir, 1 /*overwrite*/);
- 	if (!ASSERT_OK(err, "setenv_token_path"))
- 		goto err_out;
++	if (of_property_read_bool(node, "mux-states")) {
++		struct mux_state *mux_state;
++
++		mux_state = devm_mux_state_get(&pdev->dev, NULL);
++		if (IS_ERR(mux_state)) {
++			r = PTR_ERR(mux_state);
++			dev_dbg(&pdev->dev, "failed to get I2C mux: %d\n", r);
++			goto err_disable_pm;
++		}
++		omap->mux_state = mux_state;
++		r = mux_state_select(omap->mux_state);
++		if (r) {
++			dev_err(&pdev->dev, "failed to select I2C mux: %d\n", r);
++			goto err_disable_pm;
++		}
++	}
++
+ 	/* reset ASAP, clearing any IRQs */
+ 	omap_i2c_init(omap);
  
-@@ -951,11 +956,11 @@ static int userns_obj_priv_implicit_toke
- 	if (!ASSERT_ERR(err, "obj_empty_token_path_load"))
- 		goto err_out;
+@@ -1511,6 +1530,9 @@ static void omap_i2c_remove(struct platf
  
--	rmdir(TOKEN_BPFFS_CUSTOM);
-+	rmdir(custom_dir);
- 	unsetenv(TOKEN_ENVVAR);
- 	return 0;
- err_out:
--	rmdir(TOKEN_BPFFS_CUSTOM);
-+	rmdir(custom_dir);
- 	unsetenv(TOKEN_ENVVAR);
- 	return -EINVAL;
- }
+ 	i2c_del_adapter(&omap->adapter);
+ 
++	if (omap->mux_state)
++		mux_state_deselect(omap->mux_state);
++
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0)
+ 		dev_err(omap->dev, "Failed to resume hardware, skip disable\n");
 
 
