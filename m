@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671B42ECD16;
-	Tue, 22 Jul 2025 14:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687AC2EBDD9;
+	Tue, 22 Jul 2025 14:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193691; cv=none; b=oz6+QU7w78WILJe31gAKTpaOPW2nw/AJ+9xYEATanAg1Uj8guKGm1EsxfVt3I0kf3r82rYAaX9scjNohIlYzNlqqSUE66c5X55KKtMP6Lh60heUvEE8ZjU3A2QPxVr44QYYZJYeJpVHNghQy6Rrzn/xyaj/RXmCZR5trUbFTRBM=
+	t=1753193694; cv=none; b=Ck3coDSJ4JICdi1MXhtOQgEUk0KnPvhqmFWr0BkO0uYBj1B/eVBu/n1nYAzDI9NVeSsnN+zGrBjw5Hse5kgx4+mQJi0ghVJoZjZWlMSEyjWtqXYnRHXAE6gGNJYojtQ7XPjA7yzoHUCg3Fc1X+YgruUtraE1xNAcCIp9vmXcPuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193691; c=relaxed/simple;
-	bh=u1m2cKgmEcV+2UMmfk9vm0afPF634E7wmey2dUAAHrs=;
+	s=arc-20240116; t=1753193694; c=relaxed/simple;
+	bh=okB9wVqVd/mOlZjPbC8z7gbqyW+pxRIvMguYGiMnw5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IWtylT0sYixGzu3qyWH4UwcoZMLSIFFQSvzvgfy4v0DRNoDefl5fhoVtKzBuaQs+UA1GWYrKrnuHjLUhtjfXbwq+mizVKYOJNU1Z7XwFYtLm3v1fHyVCN+GTlDDo0rRjeaS2vJEMLgMVFmXMUSxINP2h52UuzbzZDx5mcXSZC6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+9+BXu6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkYPLfLITej4loh3m8joIfxyJ69DXkGsuzcGi1Nzj119Sovh+7O8UHu0DKzcrQJi7jZ7tQUyhxP0X2U9HD8xwfo01VCR2HVCS0+qeURSJnqPhnd+7b1kNJQbPmBPJmfH2Lrpx0BBkcy7O6H6FtQ3vOSYqyiT/hcoLFdy890F1Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+3UJbSe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+9+BXu6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0E7C4CEEB;
-	Tue, 22 Jul 2025 14:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+3UJbSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE64BC4CEEB;
+	Tue, 22 Jul 2025 14:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193690;
-	bh=u1m2cKgmEcV+2UMmfk9vm0afPF634E7wmey2dUAAHrs=;
+	s=korg; t=1753193694;
+	bh=okB9wVqVd/mOlZjPbC8z7gbqyW+pxRIvMguYGiMnw5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+9+BXu6LmPGxFinQtIJ73sB7t9rQbFuT0Ap+zherVglzdDdhNCqLaAiGzzUdccSA
-	 ckRZHSUUgzrIsUOwZzv6CZStYIxwzvSmyMVyHVm/NJFO3rvHCOvhcyArgTuyJaOIPO
-	 2rOjR4Eqqe+YhbzcEjpU0h1SlacEUdyI9h93p38I=
+	b=0+3UJbSegXG3fZJB57s+42k/pM4h/XQoqUDQaJljzvg+Fv5x92S1lKgAxoVrrDGFB
+	 dDARQeUtnarTnHAX/Z+u9Fv3Tg4058D6vgVLHjU5hCeCvDJm4XkwzrwUR2ZFJ/3qAw
+	 cGPblYH1f3sVOyqqOEnWIE99/egXQ/CFGPPvewv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@openai.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 141/187] net/mlx5: Correctly set gso_size when LRO is used
-Date: Tue, 22 Jul 2025 15:45:11 +0200
-Message-ID: <20250722134351.038202384@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.15 168/187] usb: hub: Fix flushing and scheduling of delayed work that tunes runtime pm
+Date: Tue, 22 Jul 2025 15:45:38 +0200
+Message-ID: <20250722134352.026834875@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -53,84 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Paasch <cpaasch@openai.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 531d0d32de3e1b6b77a87bd37de0c2c6e17b496a ]
+commit a49e1e2e785fb3621f2d748581881b23a364998a upstream.
 
-gso_size is expected by the networking stack to be the size of the
-payload (thus, not including ethernet/IP/TCP-headers). However, cqe_bcnt
-is the full sized frame (including the headers). Dividing cqe_bcnt by
-lro_num_seg will then give incorrect results.
+Delayed work to prevent USB3 hubs from runtime-suspending immediately
+after resume was added in commit 8f5b7e2bec1c ("usb: hub: fix detection
+of high tier USB3 devices behind suspended hubs").
 
-For example, running a bpftrace higher up in the TCP-stack
-(tcp_event_data_recv), we commonly have gso_size set to 1450 or 1451 even
-though in reality the payload was only 1448 bytes.
+This delayed work needs be flushed if system suspends, or hub needs to
+be quiesced for other reasons right after resume. Not flushing it
+triggered issues on QC SC8280XP CRD board during suspend/resume testing.
 
-This can have unintended consequences:
-- In tcp_measure_rcv_mss() len will be for example 1450, but. rcv_mss
-will be 1448 (because tp->advmss is 1448). Thus, we will always
-recompute scaling_ratio each time an LRO-packet is received.
-- In tcp_gro_receive(), it will interfere with the decision whether or
-not to flush and thus potentially result in less gro'ed packets.
+Fix it by flushing the delayed resume work in hub_quiesce()
 
-So, we need to discount the protocol headers from cqe_bcnt so we can
-actually divide the payload by lro_num_seg to get the real gso_size.
+The delayed work item that allow hub runtime suspend is also scheduled
+just before calling autopm get. Alan pointed out there is a small risk
+that work is run before autopm get, which would call autopm put before
+get, and mess up the runtime pm usage order.
+Swap the order of work sheduling and calling autopm get to solve this.
 
-v2:
- - Use "(unsigned char *)tcp + tcp->doff * 4 - skb->data)" to compute header-len
-   (Tariq Toukan <tariqt@nvidia.com>)
- - Improve commit-message (Gal Pressman <gal@nvidia.com>)
-
-Fixes: e586b3b0baee ("net/mlx5: Ethernet Datapath files")
-Signed-off-by: Christoph Paasch <cpaasch@openai.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20250715-cpaasch-pf-925-investigate-incorrect-gso_size-on-cx-7-nic-v2-1-e06c3475f3ac@openai.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 8f5b7e2bec1c ("usb: hub: fix detection of high tier USB3 devices behind suspended hubs")
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Closes: https://lore.kernel.org/linux-usb/acaaa928-832c-48ca-b0ea-d202d5cd3d6c@oss.qualcomm.com
+Reported-by: Alan Stern <stern@rowland.harvard.edu>
+Closes: https://lore.kernel.org/linux-usb/c73fbead-66d7-497a-8fa1-75ea4761090a@rowland.harvard.edu
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250626130102.3639861-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/usb/core/hub.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index 5fd70b4d55beb..e37cf4f754c48 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -1154,8 +1154,9 @@ static void mlx5e_lro_update_tcp_hdr(struct mlx5_cqe64 *cqe, struct tcphdr *tcp)
- 	}
- }
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -1359,11 +1359,12 @@ static void hub_activate(struct usb_hub
  
--static void mlx5e_lro_update_hdr(struct sk_buff *skb, struct mlx5_cqe64 *cqe,
--				 u32 cqe_bcnt)
-+static unsigned int mlx5e_lro_update_hdr(struct sk_buff *skb,
-+					 struct mlx5_cqe64 *cqe,
-+					 u32 cqe_bcnt)
- {
- 	struct ethhdr	*eth = (struct ethhdr *)(skb->data);
- 	struct tcphdr	*tcp;
-@@ -1205,6 +1206,8 @@ static void mlx5e_lro_update_hdr(struct sk_buff *skb, struct mlx5_cqe64 *cqe,
- 		tcp->check = tcp_v6_check(payload_len, &ipv6->saddr,
- 					  &ipv6->daddr, check);
- 	}
+ 	if (type == HUB_RESUME && hub_is_superspeed(hub->hdev)) {
+ 		/* give usb3 downstream links training time after hub resume */
++		usb_autopm_get_interface_no_resume(
++			to_usb_interface(hub->intfdev));
 +
-+	return (unsigned int)((unsigned char *)tcp + tcp->doff * 4 - skb->data);
- }
+ 		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
+ 		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
+ 				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
+-		usb_autopm_get_interface_no_resume(
+-			to_usb_interface(hub->intfdev));
+ 		return;
+ 	}
  
- static void *mlx5e_shampo_get_packet_hd(struct mlx5e_rq *rq, u16 header_index)
-@@ -1561,8 +1564,9 @@ static inline void mlx5e_build_rx_skb(struct mlx5_cqe64 *cqe,
- 		mlx5e_macsec_offload_handle_rx_skb(netdev, skb, cqe);
+@@ -1417,6 +1418,7 @@ static void hub_quiesce(struct usb_hub *
  
- 	if (lro_num_seg > 1) {
--		mlx5e_lro_update_hdr(skb, cqe, cqe_bcnt);
--		skb_shinfo(skb)->gso_size = DIV_ROUND_UP(cqe_bcnt, lro_num_seg);
-+		unsigned int hdrlen = mlx5e_lro_update_hdr(skb, cqe, cqe_bcnt);
-+
-+		skb_shinfo(skb)->gso_size = DIV_ROUND_UP(cqe_bcnt - hdrlen, lro_num_seg);
- 		/* Subtract one since we already counted this as one
- 		 * "regular" packet in mlx5e_complete_rx_cqe()
- 		 */
--- 
-2.39.5
-
+ 	/* Stop hub_wq and related activity */
+ 	timer_delete_sync(&hub->irq_urb_retry);
++	flush_delayed_work(&hub->init_work);
+ 	usb_kill_urb(hub->urb);
+ 	if (hub->has_indicators)
+ 		cancel_delayed_work_sync(&hub->leds);
 
 
