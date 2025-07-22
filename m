@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B4CA32;
-	Tue, 22 Jul 2025 14:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7481B2E36E8;
+	Tue, 22 Jul 2025 14:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192983; cv=none; b=dku6JHDezVh7vJowHWJ1Fx2xH43uqBn2swoDugLwc3v/0lTim0nI5lXvNZvVJHeEv80oscpuoiVSHaRxurS6lvL5ClBu+dgNqQ8mIgTGkWx/PD5eRq3/LXbCjn8mDAd36iK28J1ntm4gU/r3BGGHtWBpAUG+DQCRPohnty0J3+0=
+	t=1753192986; cv=none; b=eeqqGekmXtf1RVjfJoF0AT/TDovci3iOfilNzuvbytvKEGZ4vz3uQos142bRyMly+9YrXkEF1ysIOPJNqd1qXYu8GQ7ofxoaNAYsYwO6ie+5UQxOErc1eIhPVev/OaJFyNk0Uug1TySAw8PY8aXuLGgAXhvjBc9QF+UGj6QmI44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192983; c=relaxed/simple;
-	bh=mjFy+YILhpYIV+5pGW+9UBNdcc2iIWcFPa0N4hPxXpE=;
+	s=arc-20240116; t=1753192986; c=relaxed/simple;
+	bh=RLUmy38GFA0JbZaFQR/c0DfA8TKW5s8C2uPjII3zxrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVINo+6a6e+bTi2/GslgGpUfNLXDacqecT/upWtN0CpX3f1lez75rRUjducqGEQcwwBVAd0X05h2NfJMuODMOUMoeUZyZVsD7udQuscgFAw6IhrLRHdf7TxX+cVc/xfS6Ab8FJHr+GWXD6rZHgRAIkUzbRp+R+hN4Qi7YGyMVHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEQxvUdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iZWLfpzKuqDsOWJc+nlDkMs62IwB04k2uLQMFuI2zf+fmRcAnwfcBDLXfhRlXCST85M816XlCSLNAo+HMv7JoB+VSH2+7NZsgjtjvSQvBEtsaKQbci0axh3cA+PQL3jnrzpudbkSuPReYVRoQ4ZOQK+vj1iGScfgecGf5I351Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksKFxlx3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEQxvUdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49FEC4CEEB;
-	Tue, 22 Jul 2025 14:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksKFxlx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE259C4CEEB;
+	Tue, 22 Jul 2025 14:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192983;
-	bh=mjFy+YILhpYIV+5pGW+9UBNdcc2iIWcFPa0N4hPxXpE=;
+	s=korg; t=1753192986;
+	bh=RLUmy38GFA0JbZaFQR/c0DfA8TKW5s8C2uPjII3zxrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEQxvUdM1hCc4hgTCkLi5YLBP2q6An3EFsqwb5Lf22b3Ogf+O7tmZ5JeX0J8PCq8G
-	 hV56x0lB3lSOGNUv3hpkbcjdKYH3ik3rtvrOmEDwA3BSTeJ4h4ln206zF4zPeipWmf
-	 MjL6IX1c0cO6npo5d+X/fA14OF6dEwzmX49M8ziU=
+	b=ksKFxlx3Ude6wJEFbgPKk9JGk9EX/vbIEHjEBKx2ZlWCdEo3Ly08zL42g0xnwCjMW
+	 2RDDNTuibCvWIs45g8mDel5YBFY1EdK/FTn7YkztkEXHUQ9GqS2EELkCjzbhLs0WOB
+	 ZrW+ELQ7dJm/HAzDSOPUwjlevUcHI4Kl7WLcCutk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 117/158] Bluetooth: hci_core: add missing braces when using macro parameters
-Date: Tue, 22 Jul 2025 15:45:01 +0200
-Message-ID: <20250722134345.111361909@linuxfoundation.org>
+Subject: [PATCH 6.12 118/158] Bluetooth: btusb: QCA: Fix downloading wrong NVM for WCN6855 GF variant without board ID
+Date: Tue, 22 Jul 2025 15:45:02 +0200
+Message-ID: <20250722134345.146324066@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,56 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit cdee6a4416b2a57c89082929cc60e2275bb32a3a ]
+[ Upstream commit 43015955795a619f7ca4ae69b9c0ffc994c82818 ]
 
-Macro parameters should always be put into braces when accessing it.
+For GF variant of WCN6855 without board ID programmed
+btusb_generate_qca_nvm_name() will chose wrong NVM
+'qca/nvm_usb_00130201.bin' to download.
 
-Fixes: 4fc9857ab8c6 ("Bluetooth: hci_sync: Add check simultaneous roles support")
-Signed-off-by: Christian Eggers <ceggers@arri.de>
+Fix by choosing right NVM 'qca/nvm_usb_00130201_gf.bin'.
+Also simplify NVM choice logic of btusb_generate_qca_nvm_name().
+
+Fixes: d6cba4e6d0e2 ("Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller")
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/bluetooth/btusb.c | 78 ++++++++++++++++++++++-----------------
+ 1 file changed, 44 insertions(+), 34 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 730aa0245aef9..3d1d7296aed91 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -817,20 +817,20 @@ extern struct mutex hci_cb_list_lock;
- #define hci_dev_test_and_clear_flag(hdev, nr)  test_and_clear_bit((nr), (hdev)->dev_flags)
- #define hci_dev_test_and_change_flag(hdev, nr) test_and_change_bit((nr), (hdev)->dev_flags)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index aa63852060500..72b5297573735 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3194,6 +3194,32 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00190200, 40, 4, 16 }, /* WCN785x 2.0 */
+ };
  
--#define hci_dev_clear_volatile_flags(hdev)			\
--	do {							\
--		hci_dev_clear_flag(hdev, HCI_LE_SCAN);		\
--		hci_dev_clear_flag(hdev, HCI_LE_ADV);		\
--		hci_dev_clear_flag(hdev, HCI_LL_RPA_RESOLUTION);\
--		hci_dev_clear_flag(hdev, HCI_PERIODIC_INQ);	\
--		hci_dev_clear_flag(hdev, HCI_QUALITY_REPORT);	\
-+#define hci_dev_clear_volatile_flags(hdev)				\
-+	do {								\
-+		hci_dev_clear_flag((hdev), HCI_LE_SCAN);		\
-+		hci_dev_clear_flag((hdev), HCI_LE_ADV);			\
-+		hci_dev_clear_flag((hdev), HCI_LL_RPA_RESOLUTION);	\
-+		hci_dev_clear_flag((hdev), HCI_PERIODIC_INQ);		\
-+		hci_dev_clear_flag((hdev), HCI_QUALITY_REPORT);		\
- 	} while (0)
++static u16 qca_extract_board_id(const struct qca_version *ver)
++{
++	u16 flag = le16_to_cpu(ver->flag);
++	u16 board_id = 0;
++
++	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
++		/* The board_id should be split into two bytes
++		 * The 1st byte is chip ID, and the 2nd byte is platform ID
++		 * For example, board ID 0x010A, 0x01 is platform ID. 0x0A is chip ID
++		 * we have several platforms, and platform IDs are continuously added
++		 * Platform ID:
++		 * 0x00 is for Mobile
++		 * 0x01 is for X86
++		 * 0x02 is for Automotive
++		 * 0x03 is for Consumer electronic
++		 */
++		board_id = (ver->chip_id << 8) + ver->platform_id;
++	}
++
++	/* Take 0xffff as invalid board ID */
++	if (board_id == 0xffff)
++		board_id = 0;
++
++	return board_id;
++}
++
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+ 				     void *data, u16 size)
+ {
+@@ -3350,44 +3376,28 @@ static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
+ 					const struct qca_version *ver)
+ {
+ 	u32 rom_version = le32_to_cpu(ver->rom_version);
+-	u16 flag = le16_to_cpu(ver->flag);
++	const char *variant;
++	int len;
++	u16 board_id;
  
- #define hci_dev_le_state_simultaneous(hdev) \
--	(!test_bit(HCI_QUIRK_BROKEN_LE_STATES, &hdev->quirks) && \
--	 (hdev->le_states[4] & 0x08) &&	/* Central */ \
--	 (hdev->le_states[4] & 0x40) &&	/* Peripheral */ \
--	 (hdev->le_states[3] & 0x10))	/* Simultaneous */
-+	(!test_bit(HCI_QUIRK_BROKEN_LE_STATES, &(hdev)->quirks) && \
-+	 ((hdev)->le_states[4] & 0x08) &&	/* Central */ \
-+	 ((hdev)->le_states[4] & 0x40) &&	/* Peripheral */ \
-+	 ((hdev)->le_states[3] & 0x10))		/* Simultaneous */
+-	if (((flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+-		/* The board_id should be split into two bytes
+-		 * The 1st byte is chip ID, and the 2nd byte is platform ID
+-		 * For example, board ID 0x010A, 0x01 is platform ID. 0x0A is chip ID
+-		 * we have several platforms, and platform IDs are continuously added
+-		 * Platform ID:
+-		 * 0x00 is for Mobile
+-		 * 0x01 is for X86
+-		 * 0x02 is for Automotive
+-		 * 0x03 is for Consumer electronic
+-		 */
+-		u16 board_id = (ver->chip_id << 8) + ver->platform_id;
+-		const char *variant;
++	board_id = qca_extract_board_id(ver);
  
- /* ----- HCI interface to upper protocols ----- */
- int l2cap_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr);
+-		switch (le32_to_cpu(ver->ram_version)) {
+-		case WCN6855_2_0_RAM_VERSION_GF:
+-		case WCN6855_2_1_RAM_VERSION_GF:
+-			variant = "_gf";
+-			break;
+-		default:
+-			variant = "";
+-			break;
+-		}
+-
+-		if (board_id == 0) {
+-			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s.bin",
+-				rom_version, variant);
+-		} else {
+-			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s_%04x.bin",
+-				rom_version, variant, board_id);
+-		}
+-	} else {
+-		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
+-			rom_version);
++	switch (le32_to_cpu(ver->ram_version)) {
++	case WCN6855_2_0_RAM_VERSION_GF:
++	case WCN6855_2_1_RAM_VERSION_GF:
++		variant = "_gf";
++		break;
++	default:
++		variant = NULL;
++		break;
+ 	}
+ 
++	len = snprintf(fwname, max_size, "qca/nvm_usb_%08x", rom_version);
++	if (variant)
++		len += snprintf(fwname + len, max_size - len, "%s", variant);
++	if (board_id)
++		len += snprintf(fwname + len, max_size - len, "_%04x", board_id);
++	len += snprintf(fwname + len, max_size - len, ".bin");
+ }
+ 
+ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
 -- 
 2.39.5
 
