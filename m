@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918932E8E0F;
-	Tue, 22 Jul 2025 13:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2289A2E2F10;
+	Tue, 22 Jul 2025 13:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192379; cv=none; b=ffdy5JUccP+g9SyEB+F9GU6AeFhJ7fDUBAO4VE44uwmyaFOrQYz8gM+IPApPVsLBVePlZrc/sGjm/8bJjPvemDqiwyVadomrmmpn1y63Q4GMy7Id51ogm/ltgBt2yfNQRzpRtuF4WIHgFZNltCJbee4bbSfoGDOywMxi/9CPapQ=
+	t=1753192383; cv=none; b=eoig+aEMaYch+ZYmp7u67JU5egzAlZrwrEIYWgD7xdBW1f0Dwlu/X0f9zpQmnd0swnK2gvfREKkgpKbY9GQePyrqvVDAHWiL3uO0cpf98H4WXn/t/chTU3pA4x6NUp633FgPM5wmCE9nO/RLbIYxc1mYjnEP1UI+XAOfcN7Uryg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192379; c=relaxed/simple;
-	bh=z6boaLnBtAGq6NS4BydHJdFiJC9De/hrZptA4uKLHZ4=;
+	s=arc-20240116; t=1753192383; c=relaxed/simple;
+	bh=Tk0yMiG8PFCiEvpeJx2zLUJvPTP3WMFUp08yZ6ZdUwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+rCvma8+A0mJGGuOj38rLqe9s+jEWHp7LEh8Thu+CcaY50f+IqsZeR56zKgJmldlw/AVTHMSVx742Wv/m/sfG+PFaf91mjnXfn6uGn9Y7NlHF6OH+LcVsTg4UmPRq3XgNxPca5g5m3npU2MJHFt0u2tvrhbCBbd9urcMqt7tUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvNIt6Oq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mmA1tUDpx/yycyit/rebleysFeOV82DVhiGGbuoTfQDk/ZNRJnsAMZ8XHEbV7yOXGeUQK7vvbtttPka1QFpzxuIFDfvr/QKExhJPYHtGQY10kk8gbENmW3Ayoz+ZVTidvEV5rqnX9HiqpGve6dIXlJk3azSMEXNL579RYJg0vC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nt7ZkoWI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvNIt6Oq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F95C4CEEB;
-	Tue, 22 Jul 2025 13:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nt7ZkoWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC4CC4CEEB;
+	Tue, 22 Jul 2025 13:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192379;
-	bh=z6boaLnBtAGq6NS4BydHJdFiJC9De/hrZptA4uKLHZ4=;
+	s=korg; t=1753192383;
+	bh=Tk0yMiG8PFCiEvpeJx2zLUJvPTP3WMFUp08yZ6ZdUwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vvNIt6OqcEJEeghzXv4BVEt25y55vyzH5W5gNv+8Dfqa09SSx5M6AB/CkdFGMrvln
-	 VKSnNXXTCqLFqYAt7Giu3JUl0rwKOS7kdzMPeaMUtGyfHttwp/579rh+f/BH+JezQQ
-	 e+pKVVidSRod3tG/cvgdI6yFfp9MHO+UmVQHvfPQ=
+	b=nt7ZkoWILF/7c0T5XGSYA1+DIO5eDDh+mP3twAkhTuzEK/5bMjUqmx1WstzFlmxAo
+	 J7iQD6e0oau9Y9C2EGpeXw9eXCZkkxHZ2nOCsAvl4WDmhxNJOV89rdje1pxqet427x
+	 mHvz356Alvq2swBm0J54SQ9BLa1oNuUT4fDMkM50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 049/111] iio: adc: max1363: Reorder mode_list[] entries
-Date: Tue, 22 Jul 2025 15:44:24 +0200
-Message-ID: <20250722134335.214879920@linuxfoundation.org>
+Subject: [PATCH 6.6 050/111] iio: adc: stm32-adc: Fix race in installing chained IRQ handler
+Date: Tue, 22 Jul 2025 15:44:25 +0200
+Message-ID: <20250722134335.250718987@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -45,97 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit 8d8d7c1dbc46aa07a76acab7336a42ddd900be10 upstream.
+commit e8ad595064f6ebd5d2d1a5d5d7ebe0efce623091 upstream.
 
-The IIO core issues warnings when a scan mask is a subset of a previous
-entry in the available_scan_masks array.
+Fix a race where a pending interrupt could be received and the handler
+called before the handler's data has been setup, by converting to
+irq_set_chained_handler_and_data().
 
-On a board using a MAX11601, the following warning is observed:
-
-max1363 1-0064: available_scan_mask 7 subset of 6. Never used
-
-This occurs because the entries in the max11607_mode_list[] array are not
-ordered correctly. To fix this, reorder the entries so that no scan mask is
-a subset of an earlier one.
-
-While at it, reorder the mode_list[] arrays for other supported chips as
-well, to prevent similar warnings on different variants.
-
-Note fixes tag dropped as these were introduced over many commits a long
-time back and the side effect until recently was a reduction in sampling
-rate due to reading too many channels when only a few were desired.
-Now we have a sanity check that reports this error but that is not
-where the issue was introduced.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Acked-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://patch.msgid.link/20250516173900.677821-2-festevam@gmail.com
+Fixes: 1add69880240 ("iio: adc: Add support for STM32 ADC core")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Tested-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://patch.msgid.link/20250515083101.3811350-1-nichen@iscas.ac.cn
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/max1363.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/iio/adc/stm32-adc-core.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/adc/max1363.c
-+++ b/drivers/iio/adc/max1363.c
-@@ -531,23 +531,23 @@ static const struct iio_chan_spec max136
- /* Applies to max1236, max1237 */
- static const enum max1363_modes max1236_mode_list[] = {
- 	_s0, _s1, _s2, _s3,
--	s0to1, s0to2, s0to3,
-+	s0to1, s0to2, s2to3, s0to3,
- 	d0m1, d2m3, d1m0, d3m2,
- 	d0m1to2m3, d1m0to3m2,
--	s2to3,
- };
+--- a/drivers/iio/adc/stm32-adc-core.c
++++ b/drivers/iio/adc/stm32-adc-core.c
+@@ -428,10 +428,9 @@ static int stm32_adc_irq_probe(struct pl
+ 		return -ENOMEM;
+ 	}
  
- /* Applies to max1238, max1239 */
- static const enum max1363_modes max1238_mode_list[] = {
- 	_s0, _s1, _s2, _s3, _s4, _s5, _s6, _s7, _s8, _s9, _s10, _s11,
- 	s0to1, s0to2, s0to3, s0to4, s0to5, s0to6,
-+	s6to7, s6to8, s6to9, s6to10, s6to11,
- 	s0to7, s0to8, s0to9, s0to10, s0to11,
- 	d0m1, d2m3, d4m5, d6m7, d8m9, d10m11,
- 	d1m0, d3m2, d5m4, d7m6, d9m8, d11m10,
--	d0m1to2m3, d0m1to4m5, d0m1to6m7, d0m1to8m9, d0m1to10m11,
--	d1m0to3m2, d1m0to5m4, d1m0to7m6, d1m0to9m8, d1m0to11m10,
--	s6to7, s6to8, s6to9, s6to10, s6to11,
--	d6m7to8m9, d6m7to10m11, d7m6to9m8, d7m6to11m10,
-+	d0m1to2m3, d0m1to4m5, d0m1to6m7, d6m7to8m9,
-+	d0m1to8m9, d6m7to10m11, d0m1to10m11, d1m0to3m2,
-+	d1m0to5m4, d1m0to7m6, d7m6to9m8, d1m0to9m8,
-+	d7m6to11m10, d1m0to11m10,
- };
+-	for (i = 0; i < priv->cfg->num_irqs; i++) {
+-		irq_set_chained_handler(priv->irq[i], stm32_adc_irq_handler);
+-		irq_set_handler_data(priv->irq[i], priv);
+-	}
++	for (i = 0; i < priv->cfg->num_irqs; i++)
++		irq_set_chained_handler_and_data(priv->irq[i],
++						 stm32_adc_irq_handler, priv);
  
- #define MAX1363_12X_CHANS(bits) {				\
-@@ -583,16 +583,15 @@ static const struct iio_chan_spec max123
- 
- static const enum max1363_modes max11607_mode_list[] = {
- 	_s0, _s1, _s2, _s3,
--	s0to1, s0to2, s0to3,
--	s2to3,
-+	s0to1, s0to2, s2to3,
-+	s0to3,
- 	d0m1, d2m3, d1m0, d3m2,
- 	d0m1to2m3, d1m0to3m2,
- };
- 
- static const enum max1363_modes max11608_mode_list[] = {
- 	_s0, _s1, _s2, _s3, _s4, _s5, _s6, _s7,
--	s0to1, s0to2, s0to3, s0to4, s0to5, s0to6, s0to7,
--	s6to7,
-+	s0to1, s0to2, s0to3, s0to4, s0to5, s0to6, s6to7, s0to7,
- 	d0m1, d2m3, d4m5, d6m7,
- 	d1m0, d3m2, d5m4, d7m6,
- 	d0m1to2m3, d0m1to4m5, d0m1to6m7,
+ 	return 0;
+ }
 
 
