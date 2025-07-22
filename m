@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F4C2EA166;
-	Tue, 22 Jul 2025 14:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B382EA49E;
+	Tue, 22 Jul 2025 14:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193725; cv=none; b=sMgFyI0Rsf5If83NydAU5aliqp2qQcwcLTGsLF8CG8XWo7rK/pkHcl9SKS+zGkslUFpjtOZC49aph15pdM3mcHgtmkhx1yiuBTXcRXB/nQnfb433Q4e+4kmWWZpJYNHAzT5equeV+Q13BEF9Bm6ojsfdF0LMI5ynllubcS4f7I8=
+	t=1753193728; cv=none; b=pkc4zaZm7Gh6DbOEi3IALJu/MTvK2dTGK1KubB8ndV5NE0MgCQcAo5U5WA+MsoKEonvuhuSdXnragtB3qbm+0B1By2FRHUmFmbpw4XGrpw1W0qkOkj8pghjaMWIUtjaFtIzPvlsLVlHsBFiDOmkUses138r12OLbvEBYAKKYFEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193725; c=relaxed/simple;
-	bh=UvI5m8d6Exr+o5/9Dxfkn2ElND+G7/Zj2/NFk8XS36A=;
+	s=arc-20240116; t=1753193728; c=relaxed/simple;
+	bh=s/z/GdOz/ahvuBG7P2+EueTtN+wYeL7KfI2a3W0C70Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WkQEhPW2EVjeqjLRqGlNGspyLJLwOL/JCk/yBM3iGD58bs/XAcaYbgNP3Csl/vS9CkCgHblYZtj6sM5JbxiuNUfxewjzprrT24dLmUEbCjSdAnVhqRHORNz2hJ+JJny15pe3hfhxCu5brt+Hw8BfJ5M6W6E+U+5HxZQR5pUBPGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNC38gsZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Pss6kPOSkVsqmqzZlkwjAK5odiYffjApLWyvURdRK+os4ht6PWkY8v+qJ7IGx3BqVrCDYAdESSastcEnhhOueU4y8au/Y5nOvnazMxIyE5n8zLtjtZW8wlag5GDp96NP0RIMRAbNU9pxm3C7GVtzS7Lkk/JeOKaIbueFp33+GMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1rqHt4w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNC38gsZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD35C4CEEB;
-	Tue, 22 Jul 2025 14:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1rqHt4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8E2C4CEEB;
+	Tue, 22 Jul 2025 14:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193725;
-	bh=UvI5m8d6Exr+o5/9Dxfkn2ElND+G7/Zj2/NFk8XS36A=;
+	s=korg; t=1753193728;
+	bh=s/z/GdOz/ahvuBG7P2+EueTtN+wYeL7KfI2a3W0C70Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNC38gsZE+a8qL+5FD6v/1ZXkDgJiH7Jn4AXPXzLDYZ/dNH3Uwx7OJnkBawChDR/n
-	 75zoeQZHOEjVE7NMFKkztaVbRvAH7Ea2SWkKmZx/4idu3W52XlYXjhWF13bzxIhs3T
-	 h1zW4Dd/OIjnS+x+pIizQaDf0eXH+aSqzdr5wOWo=
+	b=H1rqHt4wQH15BTK01sM7uI6on4Dr26GGMmZgln780/yS8CcFlSRU+//g0OfdpQfJc
+	 8Ocmwyj8VjeD8OHifY3ZMrbT70NLT6IGOn71y+m88QUKwAgWHGN1ky56POTuzCtSuI
+	 moNh2kcG9IOOJl0asWmjb75mt0etSs1tRq+oVCBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 146/187] drm/xe: Dont skip TLB invalidations on VF
-Date: Tue, 22 Jul 2025 15:45:16 +0200
-Message-ID: <20250722134351.223007379@linuxfoundation.org>
+Subject: [PATCH 6.15 147/187] drm/xe/pf: Prepare to stop SR-IOV support prior GT reset
+Date: Tue, 22 Jul 2025 15:45:17 +0200
+Message-ID: <20250722134351.263077950@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -46,102 +46,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejas Upadhyay <tejas.upadhyay@intel.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit fd25fa90edcfd4db5bf69c11621021a7cfd11d53 ]
+[ Upstream commit 81dccec448d204e448ae83e1fe60e8aaeaadadb8 ]
 
-Skipping TLB invalidations on VF causing unrecoverable
-faults. Probable reason for skipping TLB invalidations
-on SRIOV could be lack of support for instruction
-MI_FLUSH_DW_STORE_INDEX. Add back TLB flush with some
-additional handling.
+As part of the resume or GT reset, the PF driver schedules work
+which is then used to complete restarting of the SR-IOV support,
+including resending to the GuC configurations of provisioned VFs.
 
-Helps in resolving,
-[  704.913454] xe 0000:00:02.1: [drm:pf_queue_work_func [xe]]
-                ASID: 0
-                VFID: 0
-                PDATA: 0x0d92
-                Faulted Address: 0x0000000002fa0000
-                FaultType: 0
-                AccessType: 1
-                FaultLevel: 0
-                EngineClass: 3 bcs
-                EngineInstance: 8
-[  704.913551] xe 0000:00:02.1: [drm:pf_queue_work_func [xe]] Fault response: Unsuccessful -22
+However, in case of short delay between those two actions, which
+could be seen by triggering a GT reset on the suspened device:
 
-V2:
- - Use Xmas tree (MichalW)
+ $ echo 1 > /sys/kernel/debug/dri/0000:00:02.0/gt0/force_reset
 
-Suggested-by: Matthew Brost <matthew.brost@intel.com>
-Fixes: 97515d0b3ed92 ("drm/xe/vf: Don't emit access to Global HWSP if VF")
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250710045945.1023840-1-tejas.upadhyay@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit b528e896fa570844d654b5a4617a97fa770a1030)
+this PF worker might be still busy, which lead to errors due to
+just stopped or disabled GuC CTB communication:
+
+ [ ] xe 0000:00:02.0: [drm:xe_gt_resume [xe]] GT0: resumed
+ [ ] xe 0000:00:02.0: [drm] GT0: trying reset from force_reset_show [xe]
+ [ ] xe 0000:00:02.0: [drm] GT0: reset queued
+ [ ] xe 0000:00:02.0: [drm] GT0: reset started
+ [ ] xe 0000:00:02.0: [drm:guc_ct_change_state [xe]] GT0: GuC CT communication channel stopped
+ [ ] xe 0000:00:02.0: [drm:guc_ct_send_recv [xe]] GT0: H2G request 0x5503 canceled!
+ [ ] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF1 12 config KLVs (-ECANCELED)
+ [ ] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF1 configuration (-ECANCELED)
+ [ ] xe 0000:00:02.0: [drm:guc_ct_change_state [xe]] GT0: GuC CT communication channel disabled
+ [ ] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF2 12 config KLVs (-ENODEV)
+ [ ] xe 0000:00:02.0: [drm] GT0: PF: Failed to push VF2 configuration (-ENODEV)
+ [ ] xe 0000:00:02.0: [drm] GT0: PF: Failed to push 2 of 2 VFs configurations
+ [ ] xe 0000:00:02.0: [drm:pf_worker_restart_func [xe]] GT0: PF: restart completed
+
+While this VFs reprovisioning will be successful during next spin
+of the worker, to avoid those errors, make sure to cancel restart
+worker if we are about to trigger next reset.
+
+Fixes: 411220808cee ("drm/xe/pf: Restart VFs provisioning after GT reset")
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
+Link: https://lore.kernel.org/r/20250711193316.1920-2-michal.wajdeczko@intel.com
+(cherry picked from commit 9f50b729dd61dfb9f4d7c66900d22a7c7353a8c0)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_ring_ops.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/xe/xe_gt.c          |  3 +++
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.c | 19 +++++++++++++++++++
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.h |  5 +++++
+ 3 files changed, 27 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_ring_ops.c b/drivers/gpu/drm/xe/xe_ring_ops.c
-index bc1689db4cd71..7b50c7c1ee21d 100644
---- a/drivers/gpu/drm/xe/xe_ring_ops.c
-+++ b/drivers/gpu/drm/xe/xe_ring_ops.c
-@@ -110,13 +110,14 @@ static int emit_bb_start(u64 batch_addr, u32 ppgtt_flag, u32 *dw, int i)
- 	return i;
- }
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index 4bad8894fa12c..7b8556fa17435 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -797,6 +797,9 @@ static int gt_reset(struct xe_gt *gt)
+ 		goto err_out;
+ 	}
  
--static int emit_flush_invalidate(u32 *dw, int i)
-+static int emit_flush_invalidate(u32 addr, u32 val, u32 *dw, int i)
- {
- 	dw[i++] = MI_FLUSH_DW | MI_INVALIDATE_TLB | MI_FLUSH_DW_OP_STOREDW |
--		  MI_FLUSH_IMM_DW | MI_FLUSH_DW_STORE_INDEX;
--	dw[i++] = LRC_PPHWSP_FLUSH_INVAL_SCRATCH_ADDR;
--	dw[i++] = 0;
-+		  MI_FLUSH_IMM_DW;
++	if (IS_SRIOV_PF(gt_to_xe(gt)))
++		xe_gt_sriov_pf_stop_prepare(gt);
 +
-+	dw[i++] = addr | MI_FLUSH_DW_USE_GTT;
- 	dw[i++] = 0;
-+	dw[i++] = val;
- 
- 	return i;
+ 	xe_uc_gucrc_disable(&gt->uc);
+ 	xe_uc_stop_prepare(&gt->uc);
+ 	xe_gt_pagefault_reset(gt);
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+index c08efca6420e7..35489fa818259 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+@@ -172,6 +172,25 @@ void xe_gt_sriov_pf_sanitize_hw(struct xe_gt *gt, unsigned int vfid)
+ 	pf_clear_vf_scratch_regs(gt, vfid);
  }
-@@ -397,23 +398,20 @@ static void __emit_job_gen12_render_compute(struct xe_sched_job *job,
- static void emit_migration_job_gen12(struct xe_sched_job *job,
- 				     struct xe_lrc *lrc, u32 seqno)
+ 
++static void pf_cancel_restart(struct xe_gt *gt)
++{
++	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
++
++	if (cancel_work_sync(&gt->sriov.pf.workers.restart))
++		xe_gt_sriov_dbg_verbose(gt, "pending restart canceled!\n");
++}
++
++/**
++ * xe_gt_sriov_pf_stop_prepare() - Prepare to stop SR-IOV support.
++ * @gt: the &xe_gt
++ *
++ * This function can only be called on the PF.
++ */
++void xe_gt_sriov_pf_stop_prepare(struct xe_gt *gt)
++{
++	pf_cancel_restart(gt);
++}
++
+ static void pf_restart(struct xe_gt *gt)
  {
-+	u32 saddr = xe_lrc_start_seqno_ggtt_addr(lrc);
- 	u32 dw[MAX_JOB_SIZE_DW], i = 0;
+ 	struct xe_device *xe = gt_to_xe(gt);
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.h b/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
+index f474509411c0c..e2b2ff8132dc5 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
+@@ -13,6 +13,7 @@ int xe_gt_sriov_pf_init_early(struct xe_gt *gt);
+ int xe_gt_sriov_pf_init(struct xe_gt *gt);
+ void xe_gt_sriov_pf_init_hw(struct xe_gt *gt);
+ void xe_gt_sriov_pf_sanitize_hw(struct xe_gt *gt, unsigned int vfid);
++void xe_gt_sriov_pf_stop_prepare(struct xe_gt *gt);
+ void xe_gt_sriov_pf_restart(struct xe_gt *gt);
+ #else
+ static inline int xe_gt_sriov_pf_init_early(struct xe_gt *gt)
+@@ -29,6 +30,10 @@ static inline void xe_gt_sriov_pf_init_hw(struct xe_gt *gt)
+ {
+ }
  
- 	i = emit_copy_timestamp(lrc, dw, i);
- 
--	i = emit_store_imm_ggtt(xe_lrc_start_seqno_ggtt_addr(lrc),
--				seqno, dw, i);
-+	i = emit_store_imm_ggtt(saddr, seqno, dw, i);
- 
- 	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE; /* Enabled again below */
- 
- 	i = emit_bb_start(job->ptrs[0].batch_addr, BIT(8), dw, i);
- 
--	if (!IS_SRIOV_VF(gt_to_xe(job->q->gt))) {
--		/* XXX: Do we need this? Leaving for now. */
--		dw[i++] = preparser_disable(true);
--		i = emit_flush_invalidate(dw, i);
--		dw[i++] = preparser_disable(false);
--	}
-+	dw[i++] = preparser_disable(true);
-+	i = emit_flush_invalidate(saddr, seqno, dw, i);
-+	dw[i++] = preparser_disable(false);
- 
- 	i = emit_bb_start(job->ptrs[1].batch_addr, BIT(8), dw, i);
- 
++static inline void xe_gt_sriov_pf_stop_prepare(struct xe_gt *gt)
++{
++}
++
+ static inline void xe_gt_sriov_pf_restart(struct xe_gt *gt)
+ {
+ }
 -- 
 2.39.5
 
