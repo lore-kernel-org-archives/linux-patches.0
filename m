@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD307263D;
-	Tue, 22 Jul 2025 13:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31077263D;
+	Tue, 22 Jul 2025 13:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192785; cv=none; b=UgKTf18oR9TWdm9IC37xdbdF6uF3SUneShPUZ7+NdIvBU7i/a+ITMQRU3wkGOXvXFgqw2ft8dfGk7D0WEcwUWz3dcqzUC9A3bvcGsYmWravEzW+IwAldiL7eECYgalYS7LbYk+bDW1RKWEuYNLuWSKsBPigKbgXj8n7tX0Id6FI=
+	t=1753192788; cv=none; b=TiToTITC03EPVy3y3Iyea1nyrBrAUbS+h+8HldkpX5ot/acIwdyfuTZ8Zcb7yHsm/OOU/+SVgSK1ptrwqXDQbD4NBJomrHwuM/uAfmloTU0VHETlimPwpdI4fHt6WU+VmrBcSVfTJtqk2FAsiV/dTLbRksICUDDLPr2P7OfQwCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192785; c=relaxed/simple;
-	bh=8j2+C6oeXRZcozhj9cQQWVqWV3BXw+BV9dFWLDvj+pk=;
+	s=arc-20240116; t=1753192788; c=relaxed/simple;
+	bh=Xw4Ia8GATUItf+qQhzJtc+3D2W1EGd68aoIo83qNi+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UImKGUr+vyyzdguFt80Uajl7jcEbC4fou0z43DZ3Fwwi5i2fPqKxTMFEXmiXpj4YHmRwLY4nSOyDcER0a8Hsvk3ToV6tUWVgq1sF5tUl5v5eq+h13KB54z7f6JBnaf5tWNB+8yEkL4wngHmEwjjdfeO6bBt1FDBssbtRGL91LXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzi9qIhw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qIH3ikRELOZqjNFdKRkqBK2e/VFt8Y5nVTPeYQ2qUvVXOzqMtKeTxvIyJOSXS12sjalkaU4WDs2d3kAEZHviuZyuWbgeRA2lzTkSypkZCnoL6KVOVEHsj9JH5c0WiBr4jYJ+krykHEOIu9HLEiXlhE9U3JpebIl1N5OC/jjW/Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjsBDtbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzi9qIhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3107C4CEEB;
-	Tue, 22 Jul 2025 13:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjsBDtbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E88C4CEEB;
+	Tue, 22 Jul 2025 13:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192785;
-	bh=8j2+C6oeXRZcozhj9cQQWVqWV3BXw+BV9dFWLDvj+pk=;
+	s=korg; t=1753192788;
+	bh=Xw4Ia8GATUItf+qQhzJtc+3D2W1EGd68aoIo83qNi+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzi9qIhw6hTbTblOJUfDqoDZ3tmnZr8rWPLry8IZE2s03xG/3DGLwx21dzVJBC2qh
-	 smsmMM4/klRdGGaj5q16vtckLxSKyKFiiHJWAmE3LtIlXg8nv5r0HVsklHXKR4aHc0
-	 ujCxYNBeLQsVWYSTm6/vQCSz1X8P7kzO83AsxqvU=
+	b=sjsBDtbPZxJR8iR3CSvM+0FjJXpH1PdYpLMdY4zOP1SpE2c6IdOuSJotvucDiFqPG
+	 DDyWJDAHcxJwhBjmUl1rU0puVeDmHH2YftVm9y1AIirFrv47BSZEWjsOWvO1xPv9wp
+	 yqEA3JaMCfpjZEaOFTUPyOUv1tXchWCgtukC7jOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Judith Mendez <jm@ti.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 056/158] mmc: sdhci-pci: Quirk for broken command queuing on Intel GLK-based Positivo models
-Date: Tue, 22 Jul 2025 15:44:00 +0200
-Message-ID: <20250722134342.837611734@linuxfoundation.org>
+Subject: [PATCH 6.12 057/158] mmc: sdhci_am654: Workaround for Errata i2312
+Date: Tue, 22 Jul 2025 15:44:01 +0200
+Message-ID: <20250722134342.873865917@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,38 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Judith Mendez <jm@ti.com>
 
-commit 50c78f398e92fafa1cbba3469c95fe04b2e4206d upstream.
+commit 6d0b1c01847fedd7c85a5cdf59b8cfc7d14512e6 upstream.
 
-Disable command queuing on Intel GLK-based Positivo models.
+Errata i2312 [0] for K3 silicon mentions the maximum obtainable
+timeout through MMC host controller is 700ms. And for commands taking
+longer than 700ms, hardware timeout should be disabled and software
+timeout should be used.
 
-Without this quirk, CQE (Command Queuing Engine) causes instability
-or I/O errors during operation. Disabling it ensures stable
-operation on affected devices.
+The workaround for Errata i2312 can be achieved by adding
+SDHCI_QUIRK2_DISABLE_HW_TIMEOUT quirk in sdhci_am654.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Fixes: bedf9fc01ff1 ("mmc: sdhci: Workaround broken command queuing on Intel GLK")
-Cc: stable@vger.kernel.org
+[0] https://www.ti.com/lit/pdf/sprz487
+
+Signed-off-by: Judith Mendez <jm@ti.com>
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250626112442.9791-1-edson.drosdeck@gmail.com
+Fixes: 41fd4caeb00b ("mmc: sdhci_am654: Add Initial Support for AM654 SDHCI driver")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250626231452.3460987-1-jm@ti.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci_am654.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -912,7 +912,8 @@ static bool glk_broken_cqhci(struct sdhc
- {
- 	return slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_GLK_EMMC &&
- 	       (dmi_match(DMI_BIOS_VENDOR, "LENOVO") ||
--		dmi_match(DMI_SYS_VENDOR, "IRBIS"));
-+		dmi_match(DMI_SYS_VENDOR, "IRBIS") ||
-+		dmi_match(DMI_SYS_VENDOR, "Positivo Tecnologia SA"));
- }
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -588,7 +588,8 @@ static const struct sdhci_ops sdhci_am65
+ static const struct sdhci_pltfm_data sdhci_am654_pdata = {
+ 	.ops = &sdhci_am654_ops,
+ 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
+-	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
++	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
++		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
+ };
  
- static bool jsl_broken_hs400es(struct sdhci_pci_slot *slot)
+ static const struct sdhci_am654_driver_data sdhci_am654_sr1_drvdata = {
+@@ -618,7 +619,8 @@ static const struct sdhci_ops sdhci_j721
+ static const struct sdhci_pltfm_data sdhci_j721e_8bit_pdata = {
+ 	.ops = &sdhci_j721e_8bit_ops,
+ 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
+-	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
++	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
++		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
+ };
+ 
+ static const struct sdhci_am654_driver_data sdhci_j721e_8bit_drvdata = {
+@@ -642,7 +644,8 @@ static const struct sdhci_ops sdhci_j721
+ static const struct sdhci_pltfm_data sdhci_j721e_4bit_pdata = {
+ 	.ops = &sdhci_j721e_4bit_ops,
+ 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
+-	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
++	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
++		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
+ };
+ 
+ static const struct sdhci_am654_driver_data sdhci_j721e_4bit_drvdata = {
 
 
