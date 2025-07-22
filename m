@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17BAA32;
-	Tue, 22 Jul 2025 14:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C26F2DEA8E;
+	Tue, 22 Jul 2025 14:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193045; cv=none; b=TEQN/1lQ/sEVuU/s8wFMLbFDIIAjWpYrheJRpZoAy5RlGESlN5lv9VWPLEvBUkdcjvv5yya0qcDOAOvErDwsboCTXyNH1PWz/5RJOor/AwSPLkkLpi1J8ZuJsoaesC4nz9eHQtOa0RxgxavBBk85OZr6vm1btR6UDfk6jeWMbJE=
+	t=1753193048; cv=none; b=Y8nWoMfcKWjzTGxqxxD3seOkQjSw8SLp8htaBbGaiLEuZHAWyJPezVDlw81fh/RFVZwZI6O3TvrxKzX3ACJBDW95d0a07uY3ButizAp8diKSoRCAmX4wk+pI13Ye5V/WobUzXH7/RA2+mrudWqvbpe++WZegaor1AvAJmh88E8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193045; c=relaxed/simple;
-	bh=7zWefpgzwnsoagNjojLoRLVwGmd2RaxDEGt4UvWhphw=;
+	s=arc-20240116; t=1753193048; c=relaxed/simple;
+	bh=h+LpW9m/G+fDVL9datIpgqBu82dRYgiN3w1VVukQEKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKpmN9ZtYaRnDT9QsXzSxrHZCTVXNd9VTww8n6LvJ62piL1dblTRsYv+v5wFV28XCti1T0idTLApH0FLcS1P+nY7aMaosAugGaEj3B8X14f84zp7tRTgB8n59VGDEZ0FHd9AyGMXpbtGOma33kUnH5jeqYmCJscokfnFFGwJnkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGriRL/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IEcPJd7C1m+l8Sk8EXnM7lLfif8lB6F+gmW2/TdW/a6xdRxIzth5KuSwb7i88kQ9riA+zJL+4fRpCNPdKtU6fZ0otBSY6od9/o7sJ+H6CS1lFjH5x2/DdABPQ36WHobran/GRsb7ol+OQ20dfZKoSJjUaIRg+xr2+A0WfAgCNDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUT7Q5KC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGriRL/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5D3C4CEEB;
-	Tue, 22 Jul 2025 14:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUT7Q5KC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907DFC4CEEB;
+	Tue, 22 Jul 2025 14:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193044;
-	bh=7zWefpgzwnsoagNjojLoRLVwGmd2RaxDEGt4UvWhphw=;
+	s=korg; t=1753193048;
+	bh=h+LpW9m/G+fDVL9datIpgqBu82dRYgiN3w1VVukQEKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGriRL/g0gV5sYlSMp0i9+7TaJ9GSqkpgveNrfcqxVcVmXYmcGJ8p76gZWRdVafmc
-	 ook4uQDAiYsNWhzsF7EzpPzjCBVaaQGv9Zo8dAgzV/81U63fpmlQx8LhPgJOKUakEL
-	 HdeWK/u9vlTWI63NDuWFwVVHCo9c8T7D6sIuqK7E=
+	b=AUT7Q5KCayhg22t7Qoz7IiY7MMdFIsoDmUb4iOFsfku2yqJyyj5Rte3TuPiIBl+Dm
+	 aTliPfKbnkGJqfvAZH/fTlhW1NLuCjWndLwZSWZDPuyqixY71yAVgw3B2RtdbkeHib
+	 N8MKI7mTAkQDWyCvGRCs3Bf10VBbyCPwd/q54o6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
+	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	LePremierHomme <kwqcheii@proton.me>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 132/158] net/sched: Return NULL when htb_lookup_leaf encounters an empty rbtree
-Date: Tue, 22 Jul 2025 15:45:16 +0200
-Message-ID: <20250722134345.656047559@linuxfoundation.org>
+Subject: [PATCH 6.12 133/158] rxrpc: Fix recv-recv race of completed call
+Date: Tue, 22 Jul 2025 15:45:17 +0200
+Message-ID: <20250722134345.690575280@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -52,94 +57,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 0e1d5d9b5c5966e2e42e298670808590db5ed628 ]
+[ Upstream commit 962fb1f651c2cf2083e0c3ef53ba69e3b96d3fbc ]
 
-htb_lookup_leaf has a BUG_ON that can trigger with the following:
+If a call receives an event (such as incoming data), the call gets placed
+on the socket's queue and a thread in recvmsg can be awakened to go and
+process it.  Once the thread has picked up the call off of the queue,
+further events will cause it to be requeued, and once the socket lock is
+dropped (recvmsg uses call->user_mutex to allow the socket to be used in
+parallel), a second thread can come in and its recvmsg can pop the call off
+the socket queue again.
 
-tc qdisc del dev lo root
-tc qdisc add dev lo root handle 1: htb default 1
-tc class add dev lo parent 1: classid 1:1 htb rate 64bit
-tc qdisc add dev lo parent 1:1 handle 2: netem
-tc qdisc add dev lo parent 2:1 handle 3: blackhole
-ping -I lo -c1 -W0.001 127.0.0.1
+In such a case, the first thread will be receiving stuff from the call and
+the second thread will be blocked on call->user_mutex.  The first thread
+can, at this point, process both the event that it picked call for and the
+event that the second thread picked the call for and may see the call
+terminate - in which case the call will be "released", decoupling the call
+from the user call ID assigned to it (RXRPC_USER_CALL_ID in the control
+message).
 
-The root cause is the following:
+The first thread will return okay, but then the second thread will wake up
+holding the user_mutex and, if it sees that the call has been released by
+the first thread, it will BUG thusly:
 
-1. htb_dequeue calls htb_dequeue_tree which calls the dequeue handler on
-   the selected leaf qdisc
-2. netem_dequeue calls enqueue on the child qdisc
-3. blackhole_enqueue drops the packet and returns a value that is not
-   just NET_XMIT_SUCCESS
-4. Because of this, netem_dequeue calls qdisc_tree_reduce_backlog, and
-   since qlen is now 0, it calls htb_qlen_notify -> htb_deactivate ->
-   htb_deactiviate_prios -> htb_remove_class_from_row -> htb_safe_rb_erase
-5. As this is the only class in the selected hprio rbtree,
-   __rb_change_child in __rb_erase_augmented sets the rb_root pointer to
-   NULL
-6. Because blackhole_dequeue returns NULL, netem_dequeue returns NULL,
-   which causes htb_dequeue_tree to call htb_lookup_leaf with the same
-   hprio rbtree, and fail the BUG_ON
+	kernel BUG at net/rxrpc/recvmsg.c:474!
 
-The function graph for this scenario is shown here:
- 0)               |  htb_enqueue() {
- 0) + 13.635 us   |    netem_enqueue();
- 0)   4.719 us    |    htb_activate_prios();
- 0) # 2249.199 us |  }
- 0)               |  htb_dequeue() {
- 0)   2.355 us    |    htb_lookup_leaf();
- 0)               |    netem_dequeue() {
- 0) + 11.061 us   |      blackhole_enqueue();
- 0)               |      qdisc_tree_reduce_backlog() {
- 0)               |        qdisc_lookup_rcu() {
- 0)   1.873 us    |          qdisc_match_from_root();
- 0)   6.292 us    |        }
- 0)   1.894 us    |        htb_search();
- 0)               |        htb_qlen_notify() {
- 0)   2.655 us    |          htb_deactivate_prios();
- 0)   6.933 us    |        }
- 0) + 25.227 us   |      }
- 0)   1.983 us    |      blackhole_dequeue();
- 0) + 86.553 us   |    }
- 0) # 2932.761 us |    qdisc_warn_nonwc();
- 0)               |    htb_lookup_leaf() {
- 0)               |      BUG_ON();
- ------------------------------------------
+Fix this by just dequeuing the call and ignoring it if it is seen to be
+already released.  We can't tell userspace about it anyway as the user call
+ID has become stale.
 
-The full original bug report can be seen here [1].
-
-We can fix this just by returning NULL instead of the BUG_ON,
-as htb_dequeue_tree returns NULL when htb_lookup_leaf returns
-NULL.
-
-[1] https://lore.kernel.org/netdev/pF5XOOIim0IuEfhI-SOxTgRvNoDwuux7UHKnE_Y5-zVd4wmGvNk2ceHjKb8ORnzw0cGwfmVu42g9dL7XyJLf1NEzaztboTWcm0Ogxuojoeo=@willsroot.io/
-
-Fixes: 512bb43eb542 ("pkt_sched: sch_htb: Optimize WARN_ONs in htb_dequeue_tree() etc.")
-Signed-off-by: William Liu <will@willsroot.io>
-Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://patch.msgid.link/20250717022816.221364-1-will@willsroot.io
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: LePremierHomme <kwqcheii@proton.me>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20250717074350.3767366-3-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/trace/events/rxrpc.h |  3 +++
+ net/rxrpc/call_accept.c      |  1 +
+ net/rxrpc/recvmsg.c          | 19 +++++++++++++++++--
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index b2494d24a5425..1021681a57182 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -821,7 +821,9 @@ static struct htb_class *htb_lookup_leaf(struct htb_prio *hprio, const int prio)
- 		u32 *pid;
- 	} stk[TC_HTB_MAXDEPTH], *sp = stk;
+diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
+index e1a37e9c2d42d..eea3769765ac0 100644
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -282,12 +282,15 @@
+ 	EM(rxrpc_call_put_userid,		"PUT user-id ") \
+ 	EM(rxrpc_call_see_accept,		"SEE accept  ") \
+ 	EM(rxrpc_call_see_activate_client,	"SEE act-clnt") \
++	EM(rxrpc_call_see_already_released,	"SEE alrdy-rl") \
+ 	EM(rxrpc_call_see_connect_failed,	"SEE con-fail") \
+ 	EM(rxrpc_call_see_connected,		"SEE connect ") \
+ 	EM(rxrpc_call_see_conn_abort,		"SEE conn-abt") \
++	EM(rxrpc_call_see_discard,		"SEE discard ") \
+ 	EM(rxrpc_call_see_disconnected,		"SEE disconn ") \
+ 	EM(rxrpc_call_see_distribute_error,	"SEE dist-err") \
+ 	EM(rxrpc_call_see_input,		"SEE input   ") \
++	EM(rxrpc_call_see_recvmsg,		"SEE recvmsg ") \
+ 	EM(rxrpc_call_see_release,		"SEE release ") \
+ 	EM(rxrpc_call_see_userid_exists,	"SEE u-exists") \
+ 	EM(rxrpc_call_see_waiting_call,		"SEE q-conn  ") \
+diff --git a/net/rxrpc/call_accept.c b/net/rxrpc/call_accept.c
+index 773bdb2e37daf..37ac8a6656786 100644
+--- a/net/rxrpc/call_accept.c
++++ b/net/rxrpc/call_accept.c
+@@ -219,6 +219,7 @@ void rxrpc_discard_prealloc(struct rxrpc_sock *rx)
+ 	tail = b->call_backlog_tail;
+ 	while (CIRC_CNT(head, tail, size) > 0) {
+ 		struct rxrpc_call *call = b->call_backlog[tail];
++		rxrpc_see_call(call, rxrpc_call_see_discard);
+ 		rcu_assign_pointer(call->socket, rx);
+ 		if (rx->discard_new_call) {
+ 			_debug("discard %lx", call->user_call_ID);
+diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
+index a482f88c5fc5b..e24a44bae9a32 100644
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -351,6 +351,16 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		goto try_again;
+ 	}
  
--	BUG_ON(!hprio->row.rb_node);
-+	if (unlikely(!hprio->row.rb_node))
-+		return NULL;
-+
- 	sp->root = hprio->row.rb_node;
- 	sp->pptr = &hprio->ptr;
- 	sp->pid = &hprio->last_ptr_id;
++	rxrpc_see_call(call, rxrpc_call_see_recvmsg);
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		rxrpc_see_call(call, rxrpc_call_see_already_released);
++		list_del_init(&call->recvmsg_link);
++		spin_unlock_irq(&rx->recvmsg_lock);
++		release_sock(&rx->sk);
++		trace_rxrpc_recvmsg(call->debug_id, rxrpc_recvmsg_unqueue, 0);
++		rxrpc_put_call(call, rxrpc_call_put_recvmsg);
++		goto try_again;
++	}
+ 	if (!(flags & MSG_PEEK))
+ 		list_del_init(&call->recvmsg_link);
+ 	else
+@@ -374,8 +384,13 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 
+ 	release_sock(&rx->sk);
+ 
+-	if (test_bit(RXRPC_CALL_RELEASED, &call->flags))
+-		BUG();
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		rxrpc_see_call(call, rxrpc_call_see_already_released);
++		mutex_unlock(&call->user_mutex);
++		if (!(flags & MSG_PEEK))
++			rxrpc_put_call(call, rxrpc_call_put_recvmsg);
++		goto try_again;
++	}
+ 
+ 	if (test_bit(RXRPC_CALL_HAS_USERID, &call->flags)) {
+ 		if (flags & MSG_CMSG_COMPAT) {
 -- 
 2.39.5
 
