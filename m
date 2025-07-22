@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC185A32;
-	Tue, 22 Jul 2025 13:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7967A32;
+	Tue, 22 Jul 2025 13:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192400; cv=none; b=sgcsWLgPjgsbq4DkjLOFVPyAko//zFmNerg2W40EGYye79Dn34TKGzCFnwkZ2tHlHxA/3YlIhdEtvYiYNE73F3DrZQFLaCJ0KlkiuB913Dj4RjwmZUyCQRybWynePFX1vN1EZJNTCvAKH6GWNuSMO3geP3+sxY9Lda8ktAh5bq0=
+	t=1753192403; cv=none; b=dGW8KlxMT9ZuJwn7FRZnfWiSCQ59qRy/YJO6sBJ3EV5dFzaYuBWwF4Hk9EafOD0iPLEfiOFVh5Hci9ur7ZwZWop1MTBG/dA6W/V4MIV7QhZ0EdWwts/QLvawmZEeXrfRPJvb+zyQcvRrkpw9LJpQ0usY+GGlYyJ0/KHOxM9Ystw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192400; c=relaxed/simple;
-	bh=eLGZU3cf28R4t5D8ECn+nPWneOlStHAocv9FOaB3XTs=;
+	s=arc-20240116; t=1753192403; c=relaxed/simple;
+	bh=LV0d7vGdGG10/TQUReYgLyajSgJ+wcnYLSn4EAFr89c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYSldJ4OZg4wQkZbKcoMKudvI7/ayJ7PEFY54w5gVecipJgv96jB0ucXrDNYr7yPn3U36AcXt0nt7Jif3knabqV5UF1NmmXMSjLo3JsxJsS4d8jEtIoC7qJNl1zbb4hhUIoxSl/FMIMUNAUJyoXfasduJZd4iQLmnpSN5EXam80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xg6/gmm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajRKhscbdffujijphgE6HNf/32LayQwVvNDzzkHVlAl4h8tX5BMKar6mhBUwzAvdz5kCa/jHQms0kUAsZua0hnOvW7ugfjhmOVcAdd/1xUq+CnENqPNrRIFfe/WeH02GqnFMnRwgpf4tnHSrrDDlXTLbFatJGCmf3EARIKjdHZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQmRItMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xg6/gmm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299A1C4CEEB;
-	Tue, 22 Jul 2025 13:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQmRItMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEE8C4CEF5;
+	Tue, 22 Jul 2025 13:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192400;
-	bh=eLGZU3cf28R4t5D8ECn+nPWneOlStHAocv9FOaB3XTs=;
+	s=korg; t=1753192403;
+	bh=LV0d7vGdGG10/TQUReYgLyajSgJ+wcnYLSn4EAFr89c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xg6/gmm4OUpyiwuI9gWqp0SvfVXq48FfNdh6huuyq8gDK00B3K3in6OyhXZB/g3g3
-	 EpE78/tSsFC6AkMKrFTVnY64Xhv5rqgy2G1cHfIBGia2lcOs9YhaLlhOBzaC6u9M5P
-	 UslhiUGsSrZEU85TLfnvgcczE5XL6YLlj8dLD/Fg=
+	b=oQmRItMfFR/r7SCPBi9kxck56Z3IUP+CA+bY0O/lEADohoBSs/uoNH1/2f8Knew/a
+	 59ZUY786oNlgEkiNPjs7Y7SccHAsHYK+/xxaPfGdmDTR3SJK05qf9Fh73tR6hAhhgQ
+	 kNXMVBGD4n20WH25OqRPFYB9Cv2C4I2bf2Zk3DHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+d6995b62e5ac7d79557a@syzkaller.appspotmail.com,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.6 054/111] comedi: das6402: Fix bit shift out of bounds
-Date: Tue, 22 Jul 2025 15:44:29 +0200
-Message-ID: <20250722134335.397441703@linuxfoundation.org>
+Subject: [PATCH 6.6 055/111] comedi: Fail COMEDI_INSNLIST ioctl if n_insns is too large
+Date: Tue, 22 Jul 2025 15:44:30 +0200
+Message-ID: <20250722134335.438210133@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -51,40 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 70f2b28b5243df557f51c054c20058ae207baaac upstream.
+commit 08ae4b20f5e82101d77326ecab9089e110f224cc upstream.
 
-When checking for a supported IRQ number, the following test is used:
+The handling of the `COMEDI_INSNLIST` ioctl allocates a kernel buffer to
+hold the array of `struct comedi_insn`, getting the length from the
+`n_insns` member of the `struct comedi_insnlist` supplied by the user.
+The allocation will fail with a WARNING and a stack dump if it is too
+large.
 
-	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
-	if ((1 << it->options[1]) & 0x8cec) {
+Avoid that by failing with an `-EINVAL` error if the supplied `n_insns`
+value is unreasonable.
 
-However, `it->options[i]` is an unchecked `int` value from userspace, so
-the shift amount could be negative or out of bounds.  Fix the test by
-requiring `it->options[1]` to be within bounds before proceeding with
-the original test.  Valid `it->options[1]` values that select the IRQ
-will be in the range [1,15]. The value 0 explicitly disables the use of
-interrupts.
+Define the limit on the `n_insns` value in the `MAX_INSNS` macro.  Set
+this to the same value as `MAX_SAMPLES` (65536), which is the maximum
+allowed sum of the values of the member `n` in the array of `struct
+comedi_insn`, and sensible comedi instructions will have an `n` of at
+least 1.
 
-Fixes: 79e5e6addbb1 ("staging: comedi: das6402: rewrite broken driver")
+Reported-by: syzbot+d6995b62e5ac7d79557a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d6995b62e5ac7d79557a
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Tested-by: Ian Abbott <abbotti@mev.co.uk>
 Cc: stable@vger.kernel.org # 5.13+
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707135737.77448-1-abbotti@mev.co.uk
+Link: https://lore.kernel.org/r/20250704120405.83028-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/das6402.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/comedi/comedi_fops.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/comedi/drivers/das6402.c
-+++ b/drivers/comedi/drivers/das6402.c
-@@ -567,7 +567,8 @@ static int das6402_attach(struct comedi_
- 	das6402_reset(dev);
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -1589,6 +1589,16 @@ error:
+ 	return i;
+ }
  
- 	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
--	if ((1 << it->options[1]) & 0x8cec) {
-+	if (it->options[1] > 0 && it->options[1] < 16 &&
-+	    (1 << it->options[1]) & 0x8cec) {
- 		ret = request_irq(it->options[1], das6402_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0) {
++#define MAX_INSNS   MAX_SAMPLES
++static int check_insnlist_len(struct comedi_device *dev, unsigned int n_insns)
++{
++	if (n_insns > MAX_INSNS) {
++		dev_dbg(dev->class_dev, "insnlist length too large\n");
++		return -EINVAL;
++	}
++	return 0;
++}
++
+ /*
+  * COMEDI_INSN ioctl
+  * synchronous instruction
+@@ -2239,6 +2249,9 @@ static long comedi_unlocked_ioctl(struct
+ 			rc = -EFAULT;
+ 			break;
+ 		}
++		rc = check_insnlist_len(dev, insnlist.n_insns);
++		if (rc)
++			break;
+ 		insns = kcalloc(insnlist.n_insns, sizeof(*insns), GFP_KERNEL);
+ 		if (!insns) {
+ 			rc = -ENOMEM;
+@@ -3090,6 +3103,9 @@ static int compat_insnlist(struct file *
+ 	if (copy_from_user(&insnlist32, compat_ptr(arg), sizeof(insnlist32)))
+ 		return -EFAULT;
+ 
++	rc = check_insnlist_len(dev, insnlist32.n_insns);
++	if (rc)
++		return rc;
+ 	insns = kcalloc(insnlist32.n_insns, sizeof(*insns), GFP_KERNEL);
+ 	if (!insns)
+ 		return -ENOMEM;
 
 
