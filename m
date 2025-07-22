@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C6E2EA16A;
-	Tue, 22 Jul 2025 13:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D319A2E4271;
+	Tue, 22 Jul 2025 13:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192348; cv=none; b=NXj7EOsjcHFjGc/Icsuw3/VCUe3FDpwpxxdH+xqmyvS2AlOkRF7Bq02YzO9WAykiOXtuRTpR7u7zpcmRRJMsBvDA9hlue6WjZRGgsJFBMzgWO0Ds0ABA20+WQMDAmHfCviEiF/61jHfMioEBCX5cjK84ahXksbuHXWzeZYSLrog=
+	t=1753192351; cv=none; b=SBd+nCToW7eWBCJepE9UjDNPWoJ7lkyNJC6XD+jSw9g6770cTg6TaIWhrRHPE2VE/Cx76FTzokBLAnjqAlcdUMX2SGQ9TEcOdXekvU+0v+3qaNb64rq9m400cQBFsJ3b1JSq/GcAxvn3Fn3WwLmXSaiTZcai0luNcE7dWjjFyhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192348; c=relaxed/simple;
-	bh=0fo1TnrZrhHq2338lwMoyWuXELZPcx7vt5iUbpYYf8Y=;
+	s=arc-20240116; t=1753192351; c=relaxed/simple;
+	bh=l7HifNlMgSHguRdb6x/8oojN9JUKyk6oQhDnj8OW5JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KFu/wnxMdB81zJ0MRw18v83R19H9b6TGxbIvp+pzEL2bbgEHxSUGdfoM1Wn2P4N3/bgB2bHj2/+DhqIJHYgs0x/jc8aUEmCNr/iBJ488fukLqD8NdtpONa1wY9oYJx6ipAZtgDqKDo6jSD2Zr+BLpsavFpzTyvrAY6IrLoPVieU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y16dfSB0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5kgvNG6q3kxY+TRMVed+Q5SrvB7GH4Vs54mrx5D0B3lPwfvp2cT0oj5ho1J7J2nc9tVjSiTv1tX6CakZAfbmksgLgpPoypchwU77Y775XpCPzCA8i0JBZCoQr/wK9Iz3Vb1AvrzR1/Q6ZxrufKhtJHIYvUEk6rSKycaDF/+w5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOAHRl0Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y16dfSB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8E2C4CEEB;
-	Tue, 22 Jul 2025 13:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOAHRl0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408CFC4CEEB;
+	Tue, 22 Jul 2025 13:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192348;
-	bh=0fo1TnrZrhHq2338lwMoyWuXELZPcx7vt5iUbpYYf8Y=;
+	s=korg; t=1753192351;
+	bh=l7HifNlMgSHguRdb6x/8oojN9JUKyk6oQhDnj8OW5JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y16dfSB04q+FvXOX8fuWGpsHMniAG3kVUwfV23OCTMEJNaSKP+9s7VGLz7DiCEDMc
-	 xqu+ujrqc7JCOJ9zFysDsC8FDiWU4bZUBJEuP5BkYm2Dc75SyObv8obh8cqIn4Ro3Q
-	 zq85dBFP6iqlmzccJvq4XdjRYHaAnwumLbYf1cKw=
+	b=bOAHRl0YnokYmuAUZ19IVLNYK23icOW5WB+ZyvpD54AjfJR4KX9/CKAq5WDPuQZit
+	 SZZkndqMwllT5alk4lDBmxypZEcRoNSfAAnSsz/ii70PuYzOhMX1j6Q30ePSR92toG
+	 ntAeSF+X+Q7FSp8ER6Xn4Du8MyOX0y1F1PqhgYvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	LongJun Tang <tanglongjun@kylinos.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 032/111] af_packet: fix soft lockup issue caused by tpacket_snd()
-Date: Tue, 22 Jul 2025 15:44:07 +0200
-Message-ID: <20250722134334.602295080@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 041/111] net: libwx: properly reset Rx ring descriptor
+Date: Tue, 22 Jul 2025 15:44:16 +0200
+Message-ID: <20250722134334.927690171@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -53,103 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit 55f0bfc0370539213202f4ce1a07615327ac4713 upstream.
+commit d992ed7e1b687ad7df0763d3e015a5358646210b upstream.
 
-When MSG_DONTWAIT is not set, the tpacket_snd operation will wait for
-pending_refcnt to decrement to zero before returning. The pending_refcnt
-is decremented by 1 when the skb->destructor function is called,
-indicating that the skb has been successfully sent and needs to be
-destroyed.
+When device reset is triggered by feature changes such as toggling Rx
+VLAN offload, wx->do_reset() is called to reinitialize Rx rings. The
+hardware descriptor ring may retain stale values from previous sessions.
+And only set the length to 0 in rx_desc[0] would result in building
+malformed SKBs. Fix it to ensure a clean slate after device reset.
 
-If an error occurs during this process, the tpacket_snd() function will
-exit and return error, but pending_refcnt may not yet have decremented to
-zero. Assuming the next send operation is executed immediately, but there
-are no available frames to be sent in tx_ring (i.e., packet_current_frame
-returns NULL), and skb is also NULL, the function will not execute
-wait_for_completion_interruptible_timeout() to yield the CPU. Instead, it
-will enter a do-while loop, waiting for pending_refcnt to be zero. Even
-if the previous skb has completed transmission, the skb->destructor
-function can only be invoked in the ksoftirqd thread (assuming NAPI
-threading is enabled). When both the ksoftirqd thread and the tpacket_snd
-operation happen to run on the same CPU, and the CPU trapped in the
-do-while loop without yielding, the ksoftirqd thread will not get
-scheduled to run. As a result, pending_refcnt will never be reduced to
-zero, and the do-while loop cannot exit, eventually leading to a CPU soft
-lockup issue.
+[  549.186435] [     C16] ------------[ cut here ]------------
+[  549.186457] [     C16] kernel BUG at net/core/skbuff.c:2814!
+[  549.186468] [     C16] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[  549.186472] [     C16] CPU: 16 UID: 0 PID: 0 Comm: swapper/16 Kdump: loaded Not tainted 6.16.0-rc4+ #23 PREEMPT(voluntary)
+[  549.186476] [     C16] Hardware name: Micro-Star International Co., Ltd. MS-7E16/X670E GAMING PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
+[  549.186478] [     C16] RIP: 0010:__pskb_pull_tail+0x3ff/0x510
+[  549.186484] [     C16] Code: 06 f0 ff 4f 34 74 7b 4d 8b 8c 24 c8 00 00 00 45 8b 84 24 c0 00 00 00 e9 c8 fd ff ff 48 c7 44 24 08 00 00 00 00 e9 5e fe ff ff <0f> 0b 31 c0 e9 23 90 5b ff 41 f7 c6 ff 0f 00 00 75 bf 49 8b 06 a8
+[  549.186487] [     C16] RSP: 0018:ffffb391c0640d70 EFLAGS: 00010282
+[  549.186490] [     C16] RAX: 00000000fffffff2 RBX: ffff8fe7e4d40200 RCX: 00000000fffffff2
+[  549.186492] [     C16] RDX: ffff8fe7c3a4bf8e RSI: 0000000000000180 RDI: ffff8fe7c3a4bf40
+[  549.186494] [     C16] RBP: ffffb391c0640da8 R08: ffff8fe7c3a4c0c0 R09: 000000000000000e
+[  549.186496] [     C16] R10: ffffb391c0640d88 R11: 000000000000000e R12: ffff8fe7e4d40200
+[  549.186497] [     C16] R13: 00000000fffffff2 R14: ffff8fe7fa01a000 R15: 00000000fffffff2
+[  549.186499] [     C16] FS:  0000000000000000(0000) GS:ffff8fef5ae40000(0000) knlGS:0000000000000000
+[  549.186502] [     C16] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  549.186503] [     C16] CR2: 00007f77d81d6000 CR3: 000000051a032000 CR4: 0000000000750ef0
+[  549.186505] [     C16] PKRU: 55555554
+[  549.186507] [     C16] Call Trace:
+[  549.186510] [     C16]  <IRQ>
+[  549.186513] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186517] [     C16]  __skb_pad+0xc7/0xf0
+[  549.186523] [     C16]  wx_clean_rx_irq+0x355/0x3b0 [libwx]
+[  549.186533] [     C16]  wx_poll+0x92/0x120 [libwx]
+[  549.186540] [     C16]  __napi_poll+0x28/0x190
+[  549.186544] [     C16]  net_rx_action+0x301/0x3f0
+[  549.186548] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186551] [     C16]  ? __raw_spin_lock_irqsave+0x1e/0x50
+[  549.186554] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186557] [     C16]  ? wake_up_nohz_cpu+0x35/0x160
+[  549.186559] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186563] [     C16]  handle_softirqs+0xf9/0x2c0
+[  549.186568] [     C16]  __irq_exit_rcu+0xc7/0x130
+[  549.186572] [     C16]  common_interrupt+0xb8/0xd0
+[  549.186576] [     C16]  </IRQ>
+[  549.186577] [     C16]  <TASK>
+[  549.186579] [     C16]  asm_common_interrupt+0x22/0x40
+[  549.186582] [     C16] RIP: 0010:cpuidle_enter_state+0xc2/0x420
+[  549.186585] [     C16] Code: 00 00 e8 11 0e 5e ff e8 ac f0 ff ff 49 89 c5 0f 1f 44 00 00 31 ff e8 0d ed 5c ff 45 84 ff 0f 85 40 02 00 00 fb 0f 1f 44 00 00 <45> 85 f6 0f 88 84 01 00 00 49 63 d6 48 8d 04 52 48 8d 04 82 49 8d
+[  549.186587] [     C16] RSP: 0018:ffffb391c0277e78 EFLAGS: 00000246
+[  549.186590] [     C16] RAX: ffff8fef5ae40000 RBX: 0000000000000003 RCX: 0000000000000000
+[  549.186591] [     C16] RDX: 0000007fde0faac5 RSI: ffffffff826e53f6 RDI: ffffffff826fa9b3
+[  549.186593] [     C16] RBP: ffff8fe7c3a20800 R08: 0000000000000002 R09: 0000000000000000
+[  549.186595] [     C16] R10: 0000000000000000 R11: 000000000000ffff R12: ffffffff82ed7a40
+[  549.186596] [     C16] R13: 0000007fde0faac5 R14: 0000000000000003 R15: 0000000000000000
+[  549.186601] [     C16]  ? cpuidle_enter_state+0xb3/0x420
+[  549.186605] [     C16]  cpuidle_enter+0x29/0x40
+[  549.186609] [     C16]  cpuidle_idle_call+0xfd/0x170
+[  549.186613] [     C16]  do_idle+0x7a/0xc0
+[  549.186616] [     C16]  cpu_startup_entry+0x25/0x30
+[  549.186618] [     C16]  start_secondary+0x117/0x140
+[  549.186623] [     C16]  common_startup_64+0x13e/0x148
+[  549.186628] [     C16]  </TASK>
 
-In fact, skb is true for all but the first iterations of that loop, and
-as long as pending_refcnt is not zero, even if incremented by a previous
-call, wait_for_completion_interruptible_timeout() should be executed to
-yield the CPU, allowing the ksoftirqd thread to be scheduled. Therefore,
-the execution condition of this function should be modified to check if
-pending_refcnt is not zero, instead of check skb.
-
--	if (need_wait && skb) {
-+	if (need_wait && packet_read_pending(&po->tx_ring)) {
-
-As a result, the judgment conditions are duplicated with the end code of
-the while loop, and packet_read_pending() is a very expensive function.
-Actually, this loop can only exit when ph is NULL, so the loop condition
-can be changed to while (1), and in the "ph = NULL" branch, if the
-subsequent condition of if is not met,  the loop can break directly. Now,
-the loop logic remains the same as origin but is clearer and more obvious.
-
-Fixes: 89ed5b519004 ("af_packet: Block execution of tasks waiting for transmit to complete in AF_PACKET")
-Cc: stable@kernel.org
-Suggested-by: LongJun Tang <tanglongjun@kylinos.cn>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250714024755.17512-4-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_hw.c  |    7 +++----
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c |    5 +++++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2852,15 +2852,21 @@ static int tpacket_snd(struct packet_soc
- 		ph = packet_current_frame(po, &po->tx_ring,
- 					  TP_STATUS_SEND_REQUEST);
- 		if (unlikely(ph == NULL)) {
--			if (need_wait && skb) {
-+			/* Note: packet_read_pending() might be slow if we
-+			 * have to call it as it's per_cpu variable, but in
-+			 * fast-path we don't have to call it, only when ph
-+			 * is NULL, we need to check the pending_refcnt.
-+			 */
-+			if (need_wait && packet_read_pending(&po->tx_ring)) {
- 				timeo = wait_for_completion_interruptible_timeout(&po->skb_completion, timeo);
- 				if (timeo <= 0) {
- 					err = !timeo ? -ETIMEDOUT : -ERESTARTSYS;
- 					goto out_put;
- 				}
--			}
--			/* check for additional frames */
--			continue;
-+				/* check for additional frames */
-+				continue;
-+			} else
-+				break;
- 		}
+--- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
+@@ -1348,7 +1348,6 @@ static void wx_configure_rx_ring(struct
+ 				 struct wx_ring *ring)
+ {
+ 	u16 reg_idx = ring->reg_idx;
+-	union wx_rx_desc *rx_desc;
+ 	u64 rdba = ring->dma;
+ 	u32 rxdctl;
  
- 		skb = NULL;
-@@ -2949,14 +2955,7 @@ tpacket_error:
- 		}
- 		packet_increment_head(&po->tx_ring);
- 		len_sum += tp_len;
--	} while (likely((ph != NULL) ||
--		/* Note: packet_read_pending() might be slow if we have
--		 * to call it as it's per_cpu variable, but in fast-path
--		 * we already short-circuit the loop with the first
--		 * condition, and luckily don't have to go that path
--		 * anyway.
--		 */
--		 (need_wait && packet_read_pending(&po->tx_ring))));
-+	} while (1);
+@@ -1378,9 +1377,9 @@ static void wx_configure_rx_ring(struct
+ 	memset(ring->rx_buffer_info, 0,
+ 	       sizeof(struct wx_rx_buffer) * ring->count);
  
- 	err = len_sum;
- 	goto out_put;
+-	/* initialize Rx descriptor 0 */
+-	rx_desc = WX_RX_DESC(ring, 0);
+-	rx_desc->wb.upper.length = 0;
++	/* reset ntu and ntc to place SW in sync with hardware */
++	ring->next_to_clean = 0;
++	ring->next_to_use = 0;
+ 
+ 	/* enable receive descriptor ring */
+ 	wr32m(wx, WX_PX_RR_CFG(reg_idx),
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -357,6 +357,8 @@ void wx_alloc_rx_buffers(struct wx_ring
+ 
+ 		/* clear the status bits for the next_to_use descriptor */
+ 		rx_desc->wb.upper.status_error = 0;
++		/* clear the length for the next_to_use descriptor */
++		rx_desc->wb.upper.length = 0;
+ 
+ 		cleaned_count--;
+ 	} while (cleaned_count);
+@@ -2173,6 +2175,9 @@ static void wx_clean_rx_ring(struct wx_r
+ 		}
+ 	}
+ 
++	/* Zero out the descriptor ring */
++	memset(rx_ring->desc, 0, rx_ring->size);
++
+ 	rx_ring->next_to_alloc = 0;
+ 	rx_ring->next_to_clean = 0;
+ 	rx_ring->next_to_use = 0;
 
 
