@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCF32EA72E;
-	Tue, 22 Jul 2025 13:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5162EA140;
+	Tue, 22 Jul 2025 13:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192287; cv=none; b=NLoBVGZaww77n5JJzcgNoRHBRIELerDWl9bYv/V2kJJFj6hFHkUYtspjcorUNhL2HGRsAt9EsnBTeHFcgiWUOp+1FCuYlnSuDtF2Z4Qwvk8lcaQUrObD8562cDgoIjOPk0k27jQ0R+YBC4RrGHD1xm4X7BOItxpfslRV81mHPZs=
+	t=1753192290; cv=none; b=GQXhjNOic5/JCzPDfqPjYkS3IaPg459LaT2OKU3xkk/e2rVR5LzJD6DukmGv0jC//tfJTDfihym0OYovuAmT14gJ+3kR/0hg59iXqOMcvLJog6NU79u0YKvFBiN0IYrJ/+X2CWOBYs5hUuC4M9oUkaH1lgikgtQJ2CUsQR8jk+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192287; c=relaxed/simple;
-	bh=yP1jwwKdKueiDf16WEeNSh8UypEbGZW+q2G75m28bVY=;
+	s=arc-20240116; t=1753192290; c=relaxed/simple;
+	bh=JwLziuly0AjDSRzixG9uI5u9ZPaWOGETAqZcWS3FW6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i38WkewcKDKAA8IgXLUaZwIZSsGf3s/juonz7gIdAargggL4d+Kj6kqJcUERuuty49lyhAmVzeO+2V/LpDv2MBbdYZrljHwEC3zqn3rkXX+aEkqEBcWo60N+np+kRSvWEW9udBcf1gFley7XuSCXamqC+xlHzV1fqjtXVEXSRR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfLFaOxs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpg4efYZAGGHBWaNUbqzYxO3Ao6fv/yih7CiseggXt8gxrayhxnlQEtSQfzPdcGnRlGmh5RoRN4tEm+cNtNP/HG5s8nU0R2y1SSTacBI3TnScdyUBV7NJ7qD3FGmxo/haAzJfzTGjA7gd3Mm7kdBgxWeXW3LSWW5hbxhxhtChmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOD4ZDpC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfLFaOxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98E5C4CEEB;
-	Tue, 22 Jul 2025 13:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOD4ZDpC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD00AC4CEEB;
+	Tue, 22 Jul 2025 13:51:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192287;
-	bh=yP1jwwKdKueiDf16WEeNSh8UypEbGZW+q2G75m28bVY=;
+	s=korg; t=1753192290;
+	bh=JwLziuly0AjDSRzixG9uI5u9ZPaWOGETAqZcWS3FW6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfLFaOxsWDBJTGX5XUU9omn9g/kY/rXVzf//pmXN1I2fnuyGEGip7bSwVc3h1FgMX
-	 QXNqXJh5xFALM0lvBjrtXxYW1luFa/vQSZGPqrNhXy5ptp4W8qnlXPBnpkZYLHu8Ip
-	 8rhdg+g/Xgl5iBQVPHsa4svZJpLkw90Qo8sgrBKs=
+	b=WOD4ZDpCG3mCATWFVlWpfoEMVcbMXoFIk582HL62a8TA3O/pWFIAMSGoi+WawCQiv
+	 saa59D12oOSxB2iU4+isvzUyJUXaQtx6PvVH6S13n8M1OTdDdCIXdO6lX/5cQZTRkb
+	 GNdZdIxVeFN6xrF21ZSHd6AaOhoUJO8d/RAm+lug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	=?UTF-8?q?Fusheng=20Huang ?= <Fusheng.Huang@luxshare-ict.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 021/111] tracing: Add down_write(trace_event_sem) when adding trace event
-Date: Tue, 22 Jul 2025 15:43:56 +0200
-Message-ID: <20250722134334.184798155@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 004/111] USB: serial: option: add Telit Cinterion FE910C04 (ECM) composition
+Date: Tue, 22 Jul 2025 15:43:39 +0200
+Message-ID: <20250722134333.548600897@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -46,65 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit b5e8acc14dcb314a9b61ff19dcd9fdd0d88f70df upstream.
+commit 252f4ac08cd2f16ecd20e4c5e41ac2a17dd86942 upstream.
 
-When a module is loaded, it adds trace events defined by the module. It
-may also need to modify the modules trace printk formats to replace enum
-names with their values.
+Add Telit Cinterion FE910C04 (ECM) composition:
+0x10c7: ECM + tty (AT) + tty (AT) + tty (diag)
 
-If two modules are loaded at the same time, the adding of the event to the
-ftrace_events list can corrupt the walking of the list in the code that is
-modifying the printk format strings and crash the kernel.
-
-The addition of the event should take the trace_event_sem for write while
-it adds the new event.
-
-Also add a lockdep_assert_held() on that semaphore in
-__trace_add_event_dirs() as it iterates the list.
+usb-devices output:
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c7 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
 Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/20250718223158.799bfc0c@batman.local.home
-Reported-by: Fusheng Huang(黄富生)  <Fusheng.Huang@luxshare-ict.com>
-Closes: https://lore.kernel.org/all/20250717105007.46ccd18f@batman.local.home/
-Fixes: 110bf2b764eb6 ("tracing: add protection around module events unload")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -2845,7 +2845,10 @@ __register_event(struct trace_event_call
- 	if (ret < 0)
- 		return ret;
- 
-+	down_write(&trace_event_sem);
- 	list_add(&call->list, &ftrace_events);
-+	up_write(&trace_event_sem);
-+
- 	if (call->flags & TRACE_EVENT_FL_DYNAMIC)
- 		atomic_set(&call->refcnt, 0);
- 	else
-@@ -3437,6 +3440,8 @@ __trace_add_event_dirs(struct trace_arra
- 	struct trace_event_call *call;
- 	int ret;
- 
-+	lockdep_assert_held(&trace_event_sem);
-+
- 	list_for_each_entry(call, &ftrace_events, list) {
- 		ret = __trace_add_new_event(call, tr);
- 		if (ret < 0)
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1415,6 +1415,9 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x30),	/* Telit FE910C04 (ECM) */
++	  .driver_info = NCTRL(4) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x30),	/* Telit FN990B (MBIM) */
+ 	  .driver_info = NCTRL(6) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x40) },
 
 
