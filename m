@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12CF2E36E8;
-	Tue, 22 Jul 2025 13:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2372DF3CF;
+	Tue, 22 Jul 2025 13:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192675; cv=none; b=hgbFUcczr79ikYlmOloNbY7qUZ40l8t6pa5FAb3fcD3QxTsDtuNij6Q2ZaIjFB+VQTUfcPTESqwoShsEpYBbX50FNxK4AKT1bxPAdvX1jBIEMFnTNhPz4lGhVfmPc+AR8eXiu+GofyuFUX2X8xC20HYJWxcosSpFi4sUGniZpKg=
+	t=1753192678; cv=none; b=OmOnp4sRqdfiUWO+UE0mczUX1sp4ZmEayQsrhag18h2UWLGF3c+6gZv3Tl2fgrebJ9d8XpwB5vsaTBJE97jNAE3UhTS9nUTMY6cHR+C01FdxQvTZs5v3Z8lUauJjSp//5X09NmlurmtUIADW5S0LDGQcid/DyWAG/y4EXgAiL7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192675; c=relaxed/simple;
-	bh=7MhXFvdyDPiclDhg8Aa5Uqm+SSBiOFgu2owUb2Mdg60=;
+	s=arc-20240116; t=1753192678; c=relaxed/simple;
+	bh=f22M4RVhMbmE66LRzxXAy87AOHoJRnUVjIGZ1yj9Q4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYa3UtAsjQRkr7FVeQ+f2Lst4jtFYtDbLlyHZayCdojcHkYd09EbSyt4vMY52I7iCmVG0ayZw9Q/OXG5M7eYeip44DyzC5uP+EL7PRKwj0Rhp9Ndt0Vhn8edQU7wOPQR2myWsSuMrdIq5T1zkRwd373Ca5eplGoKVmCQ7ATINFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puaK0ND7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q19BpBa/NicsYLh0JjPFAmjxRRS0RzI2jW29v4r6tvGs5Nqo2LGL10OnET+MLBOtDcTL1+3qNP0/39jTrqAIG7hYEQi3UJ/d80Sw5480zWeTHk94Rn/EkEht9gAwV7bUPZ7cnRnb8Iy9AWKyKNpG9QbEw8B9mq55Fe7sUGhP6Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6PzPl0p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puaK0ND7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2BAC4CEEB;
-	Tue, 22 Jul 2025 13:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6PzPl0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7ABC4CEEB;
+	Tue, 22 Jul 2025 13:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192675;
-	bh=7MhXFvdyDPiclDhg8Aa5Uqm+SSBiOFgu2owUb2Mdg60=;
+	s=korg; t=1753192678;
+	bh=f22M4RVhMbmE66LRzxXAy87AOHoJRnUVjIGZ1yj9Q4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puaK0ND7w5kCB+fISCWZyzcuEJsqkNchDkRxzTM0BWoFXxMGl1JsCIWlOglr6cXTX
-	 /zsQrkpGtQqlDlas7PU+lu9doDB39g6iPJbcOre6huxMZ2VRGRHotVgaMipoOH1zKo
-	 MNQCRmymPF9GChbmaTjnghNZK9wbaTrBjwK2eXuI=
+	b=t6PzPl0p4AvrnDIk8Tq39R9CB+34hZFaNg+QK8HShK0CQka2HevDUJOJBoE7RhGSm
+	 PmrUIM6axh4K2obDdsIzypjCY8gb8l859ovLD73UnYzV8o/NcA7E8s6gt7zLG7kqnf
+	 dnR4XL/78fgkMVEb0+VKlZ+MBJhf8hmxYAyG0jxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.12 024/158] HID: core: do not bypass hid_hw_raw_request
-Date: Tue, 22 Jul 2025 15:43:28 +0200
-Message-ID: <20250722134341.637922093@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 025/158] tracing/probes: Avoid using params uninitialized in parse_btf_arg()
+Date: Tue, 22 Jul 2025 15:43:29 +0200
+Message-ID: <20250722134341.682349070@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -50,35 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit c2ca42f190b6714d6c481dfd3d9b62ea091c946b upstream.
+commit 1ed171a3afe81531b3ace96bd151a372dda3ee25 upstream.
 
-hid_hw_raw_request() is actually useful to ensure the provided buffer
-and length are valid. Directly calling in the low level transport driver
-function bypassed those checks and allowed invalid paramto be used.
+After a recent change in clang to strengthen uninitialized warnings [1],
+it points out that in one of the error paths in parse_btf_arg(), params
+is used uninitialized:
 
-Reported-by: Alan Stern <stern@rowland.harvard.edu>
-Closes: https://lore.kernel.org/linux-input/c75433e0-9b47-4072-bbe8-b1d14ea97b13@rowland.harvard.edu/
+  kernel/trace/trace_probe.c:660:19: warning: variable 'params' is uninitialized when used here [-Wuninitialized]
+    660 |                         return PTR_ERR(params);
+        |                                        ^~~~~~
+
+Match many other NO_BTF_ENTRY error cases and return -ENOENT, clearing
+up the warning.
+
+Link: https://lore.kernel.org/all/20250715-trace_probe-fix-const-uninit-warning-v1-1-98960f91dd04@kernel.org/
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250710-report-size-null-v2-3-ccf922b7c4e5@kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2110
+Fixes: d157d7694460 ("tracing/probes: Support BTF field access from $retval")
+Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/trace/trace_probe.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1986,8 +1986,7 @@ int __hid_request(struct hid_device *hid
- 	if (reqtype == HID_REQ_SET_REPORT)
- 		hid_output_report(report, data_buf);
- 
--	ret = hid->ll_driver->raw_request(hid, report->id, buf, len,
--					  report->type, reqtype);
-+	ret = hid_hw_raw_request(hid, report->id, buf, len, report->type, reqtype);
- 	if (ret < 0) {
- 		dbg_hid("unable to complete request: %d\n", ret);
- 		goto out;
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -657,7 +657,7 @@ static int parse_btf_arg(char *varname,
+ 		ret = query_btf_context(ctx);
+ 		if (ret < 0 || ctx->nr_params == 0) {
+ 			trace_probe_log_err(ctx->offset, NO_BTF_ENTRY);
+-			return PTR_ERR(params);
++			return -ENOENT;
+ 		}
+ 	}
+ 	params = ctx->params;
 
 
