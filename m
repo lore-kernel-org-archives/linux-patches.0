@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80FD2E11B6;
-	Tue, 22 Jul 2025 14:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C102E0B6E;
+	Tue, 22 Jul 2025 14:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192802; cv=none; b=Dk9cJ7w1Qxv3orsbhn3uRCzolP53gbAVIFuKFjYblFNbARD8KeRiZ0TF2K+IazacB8F60RZw82zhFczkqt7NmOuZfIvu9+qFIGTP+amqkhYphkHcZQMCEVhZLG0d9XrcJBwaCXdfhztRUhXAqbT1Van3CIRLbrBeT/78pFnHf+o=
+	t=1753192806; cv=none; b=FuQNKsOOkmASpcEDV3tg8PWEz0by1oyqhM9AHFW2Z9Q89fNYVCH+p+W5xkswOaorq7bF4xnbTo3JEc22CqQraNfdNDl5p5X273h/RP/WrfijYasxTMFQAkoyo/F2Lz6ii1XTPDVnlIyriJt4WNrrAqG3qV/MCykNf3a8+OeivIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192802; c=relaxed/simple;
-	bh=lDrCfDiv/OEa8K/TZTb1vMEoK9PYCAV4npZKh88nuy0=;
+	s=arc-20240116; t=1753192806; c=relaxed/simple;
+	bh=rHebapAEtWmQmNNvfPKRn5ttbs6p4wjK19e7GNIjAp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YbdORD6rAPYy3/Gole/SWymvZd1wcUikfliFAIQerTgWH/HgcnkFXXxnc2zzuGlIinlICIjJI5iIaCS/KNu/lTvUikcHMQNdx54bRxnpcF7vT5uV16UL9LjNbJlWDp4Kn0Rjo7SQeEs2gieaYX29YP5S60lUAzoXaJNNSCPgsrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9MdlDDi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GejrV6cUzqbrWfGlvlPHabF75PrqltKhn8aTyIgb1GoTE6H0Vd5HM2Q8yU11tY5V018yJijs8YrVT7Y4v8bqyqTtxL6hMnJPRakntA9JxSs2SmTTNoSgcl14vK3x/uk0v/OeuEjFvvjW16spP/X5A4BRApp/HvpMhs1AVDaT5DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvzjRoUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9MdlDDi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B97C4CEEB;
-	Tue, 22 Jul 2025 14:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvzjRoUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CDEC4CEF1;
+	Tue, 22 Jul 2025 14:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192802;
-	bh=lDrCfDiv/OEa8K/TZTb1vMEoK9PYCAV4npZKh88nuy0=;
+	s=korg; t=1753192805;
+	bh=rHebapAEtWmQmNNvfPKRn5ttbs6p4wjK19e7GNIjAp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9MdlDDii+85A2lNtBEUeqkE1YDdWWinx8HGX2xOUC459z5ezHOpOtUxlM636583o
-	 DPjW+Ov3J7+h/RAKcb9CRxhNU5G0u9889Q7KQGyznwUug1xH9MKu2uJhY6JroUpjlu
-	 2DQbPgQrkVE+F6WYPJzGQGSrH08FCviYMMd5/210=
+	b=YvzjRoUfaynwRqPjnstiFhSA/ZPR+7gXv5eqJ1g6n4P/bYepBGJ8V0DOJX2vslyW5
+	 joCxT1nvPAYeOStyJajuIkER6hLblTr74aTAXZyEhClSB0xLNIU23sMaxCl1+QEYUl
+	 QZo8TcpXgrkdIsqSFeDSTGLmtyNRzpn8xjsM0gGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiawen Wu <jiawenwu@trustnetic.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 060/158] net: libwx: fix the using of Rx buffer DMA
-Date: Tue, 22 Jul 2025 15:44:04 +0200
-Message-ID: <20250722134342.986566113@linuxfoundation.org>
+Subject: [PATCH 6.12 061/158] net: libwx: properly reset Rx ring descriptor
+Date: Tue, 22 Jul 2025 15:44:05 +0200
+Message-ID: <20250722134343.022119204@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -53,58 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit 5fd77cc6bd9b368431a815a780e407b7781bcca0 upstream.
+commit d992ed7e1b687ad7df0763d3e015a5358646210b upstream.
 
-The wx_rx_buffer structure contained two DMA address fields: 'dma' and
-'page_dma'. However, only 'page_dma' was actually initialized and used
-to program the Rx descriptor. But 'dma' was uninitialized and used in
-some paths.
+When device reset is triggered by feature changes such as toggling Rx
+VLAN offload, wx->do_reset() is called to reinitialize Rx rings. The
+hardware descriptor ring may retain stale values from previous sessions.
+And only set the length to 0 in rx_desc[0] would result in building
+malformed SKBs. Fix it to ensure a clean slate after device reset.
 
-This could lead to undefined behavior, including DMA errors or
-use-after-free, if the uninitialized 'dma' was used. Althrough such
-error has not yet occurred, it is worth fixing in the code.
+[  549.186435] [     C16] ------------[ cut here ]------------
+[  549.186457] [     C16] kernel BUG at net/core/skbuff.c:2814!
+[  549.186468] [     C16] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[  549.186472] [     C16] CPU: 16 UID: 0 PID: 0 Comm: swapper/16 Kdump: loaded Not tainted 6.16.0-rc4+ #23 PREEMPT(voluntary)
+[  549.186476] [     C16] Hardware name: Micro-Star International Co., Ltd. MS-7E16/X670E GAMING PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
+[  549.186478] [     C16] RIP: 0010:__pskb_pull_tail+0x3ff/0x510
+[  549.186484] [     C16] Code: 06 f0 ff 4f 34 74 7b 4d 8b 8c 24 c8 00 00 00 45 8b 84 24 c0 00 00 00 e9 c8 fd ff ff 48 c7 44 24 08 00 00 00 00 e9 5e fe ff ff <0f> 0b 31 c0 e9 23 90 5b ff 41 f7 c6 ff 0f 00 00 75 bf 49 8b 06 a8
+[  549.186487] [     C16] RSP: 0018:ffffb391c0640d70 EFLAGS: 00010282
+[  549.186490] [     C16] RAX: 00000000fffffff2 RBX: ffff8fe7e4d40200 RCX: 00000000fffffff2
+[  549.186492] [     C16] RDX: ffff8fe7c3a4bf8e RSI: 0000000000000180 RDI: ffff8fe7c3a4bf40
+[  549.186494] [     C16] RBP: ffffb391c0640da8 R08: ffff8fe7c3a4c0c0 R09: 000000000000000e
+[  549.186496] [     C16] R10: ffffb391c0640d88 R11: 000000000000000e R12: ffff8fe7e4d40200
+[  549.186497] [     C16] R13: 00000000fffffff2 R14: ffff8fe7fa01a000 R15: 00000000fffffff2
+[  549.186499] [     C16] FS:  0000000000000000(0000) GS:ffff8fef5ae40000(0000) knlGS:0000000000000000
+[  549.186502] [     C16] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  549.186503] [     C16] CR2: 00007f77d81d6000 CR3: 000000051a032000 CR4: 0000000000750ef0
+[  549.186505] [     C16] PKRU: 55555554
+[  549.186507] [     C16] Call Trace:
+[  549.186510] [     C16]  <IRQ>
+[  549.186513] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186517] [     C16]  __skb_pad+0xc7/0xf0
+[  549.186523] [     C16]  wx_clean_rx_irq+0x355/0x3b0 [libwx]
+[  549.186533] [     C16]  wx_poll+0x92/0x120 [libwx]
+[  549.186540] [     C16]  __napi_poll+0x28/0x190
+[  549.186544] [     C16]  net_rx_action+0x301/0x3f0
+[  549.186548] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186551] [     C16]  ? __raw_spin_lock_irqsave+0x1e/0x50
+[  549.186554] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186557] [     C16]  ? wake_up_nohz_cpu+0x35/0x160
+[  549.186559] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186563] [     C16]  handle_softirqs+0xf9/0x2c0
+[  549.186568] [     C16]  __irq_exit_rcu+0xc7/0x130
+[  549.186572] [     C16]  common_interrupt+0xb8/0xd0
+[  549.186576] [     C16]  </IRQ>
+[  549.186577] [     C16]  <TASK>
+[  549.186579] [     C16]  asm_common_interrupt+0x22/0x40
+[  549.186582] [     C16] RIP: 0010:cpuidle_enter_state+0xc2/0x420
+[  549.186585] [     C16] Code: 00 00 e8 11 0e 5e ff e8 ac f0 ff ff 49 89 c5 0f 1f 44 00 00 31 ff e8 0d ed 5c ff 45 84 ff 0f 85 40 02 00 00 fb 0f 1f 44 00 00 <45> 85 f6 0f 88 84 01 00 00 49 63 d6 48 8d 04 52 48 8d 04 82 49 8d
+[  549.186587] [     C16] RSP: 0018:ffffb391c0277e78 EFLAGS: 00000246
+[  549.186590] [     C16] RAX: ffff8fef5ae40000 RBX: 0000000000000003 RCX: 0000000000000000
+[  549.186591] [     C16] RDX: 0000007fde0faac5 RSI: ffffffff826e53f6 RDI: ffffffff826fa9b3
+[  549.186593] [     C16] RBP: ffff8fe7c3a20800 R08: 0000000000000002 R09: 0000000000000000
+[  549.186595] [     C16] R10: 0000000000000000 R11: 000000000000ffff R12: ffffffff82ed7a40
+[  549.186596] [     C16] R13: 0000007fde0faac5 R14: 0000000000000003 R15: 0000000000000000
+[  549.186601] [     C16]  ? cpuidle_enter_state+0xb3/0x420
+[  549.186605] [     C16]  cpuidle_enter+0x29/0x40
+[  549.186609] [     C16]  cpuidle_idle_call+0xfd/0x170
+[  549.186613] [     C16]  do_idle+0x7a/0xc0
+[  549.186616] [     C16]  cpu_startup_entry+0x25/0x30
+[  549.186618] [     C16]  start_secondary+0x117/0x140
+[  549.186623] [     C16]  common_startup_64+0x13e/0x148
+[  549.186628] [     C16]  </TASK>
 
 Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250714024755.17512-3-jiawenwu@trustnetic.com
+Link: https://patch.msgid.link/20250714024755.17512-4-jiawenwu@trustnetic.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c  |    4 ++--
- drivers/net/ethernet/wangxun/libwx/wx_type.h |    1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_hw.c  |    7 +++----
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c |    5 +++++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
+--- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
+@@ -1531,7 +1531,6 @@ static void wx_configure_rx_ring(struct
+ 				 struct wx_ring *ring)
+ {
+ 	u16 reg_idx = ring->reg_idx;
+-	union wx_rx_desc *rx_desc;
+ 	u64 rdba = ring->dma;
+ 	u32 rxdctl;
+ 
+@@ -1561,9 +1560,9 @@ static void wx_configure_rx_ring(struct
+ 	memset(ring->rx_buffer_info, 0,
+ 	       sizeof(struct wx_rx_buffer) * ring->count);
+ 
+-	/* initialize Rx descriptor 0 */
+-	rx_desc = WX_RX_DESC(ring, 0);
+-	rx_desc->wb.upper.length = 0;
++	/* reset ntu and ntc to place SW in sync with hardware */
++	ring->next_to_clean = 0;
++	ring->next_to_use = 0;
+ 
+ 	/* enable receive descriptor ring */
+ 	wr32m(wx, WX_PX_RR_CFG(reg_idx),
 --- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
 +++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -305,7 +305,7 @@ static bool wx_alloc_mapped_page(struct
- 		return false;
- 	dma = page_pool_get_dma_addr(page);
+@@ -355,6 +355,8 @@ void wx_alloc_rx_buffers(struct wx_ring
  
--	bi->page_dma = dma;
-+	bi->dma = dma;
- 	bi->page = page;
- 	bi->page_offset = 0;
+ 		/* clear the status bits for the next_to_use descriptor */
+ 		rx_desc->wb.upper.status_error = 0;
++		/* clear the length for the next_to_use descriptor */
++		rx_desc->wb.upper.length = 0;
  
-@@ -342,7 +342,7 @@ void wx_alloc_rx_buffers(struct wx_ring
- 						 DMA_FROM_DEVICE);
+ 		cleaned_count--;
+ 	} while (cleaned_count);
+@@ -2234,6 +2236,9 @@ static void wx_clean_rx_ring(struct wx_r
+ 		}
+ 	}
  
- 		rx_desc->read.pkt_addr =
--			cpu_to_le64(bi->page_dma + bi->page_offset);
-+			cpu_to_le64(bi->dma + bi->page_offset);
- 
- 		rx_desc++;
- 		bi++;
---- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
-@@ -874,7 +874,6 @@ struct wx_tx_buffer {
- struct wx_rx_buffer {
- 	struct sk_buff *skb;
- 	dma_addr_t dma;
--	dma_addr_t page_dma;
- 	struct page *page;
- 	unsigned int page_offset;
- };
++	/* Zero out the descriptor ring */
++	memset(rx_ring->desc, 0, rx_ring->size);
++
+ 	rx_ring->next_to_alloc = 0;
+ 	rx_ring->next_to_clean = 0;
+ 	rx_ring->next_to_use = 0;
 
 
