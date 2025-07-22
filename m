@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCEB2BE045;
-	Tue, 22 Jul 2025 13:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4341922CBE9;
+	Tue, 22 Jul 2025 13:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192638; cv=none; b=oeGhMMcrwQmRmhge5SnFWKkbd2bZg0wvEX4VawVnqOEZv7L3VvXXHfklThmqLCO28KCqiMRRXF6k2NLgGdfjj5b4lKatrum47fBQuzSbO9E3zLFgg5B8ZYOogYMWuV8OzP4goHG+SJutRIAfisDjbL96uZEMPOe+u2DNkUgonec=
+	t=1753192642; cv=none; b=GYcI6QJeBDJWN2S/00RA06MaaZzHfG0PlZE75TIGv443Pkk9jhYWKVU0u07tWy+oj6Sj2ibICEQlqIp8nwwqw4x7EvWaldppkDqtu8B6318QWL6m75rCJHx/jAso2DAX5doVWmNjyapg69Um1Yo4SGhsbZbyyW/DcCWjN6n6Yd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192638; c=relaxed/simple;
-	bh=XqnkB3TFXcg3enwsn4uEU7neCVEA29n8wyphF/HK5JY=;
+	s=arc-20240116; t=1753192642; c=relaxed/simple;
+	bh=l9a8kPfeBFX6Bf/PQ1HZiOdgF6WTX+e0ULvzJa0zSKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k+BbOZpgkepPquO8u1ZYyGaTo9WuJ0mRhe7MEE8FAfRUbeeypmhOvW4Mqj7jJ5NuDk0PX9HjZHwUx0R3IEwaiA6WIXXCjJDBsoad12dqd+TU7of92Y4Z6wi1htRcNHHuUhcRsgsdpQdjJ/b/89kbVls0Q1FJE0IjHPP6qXIIpS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQ77Uqcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YT5ExjN/0HZgg5+oySsEk0nxLur3i5ScdCuWkoWlK5A281pZVAWRVHwOEEhUWCvsLwmOpT53VZatURE5jKHOI3WFt3LC+SlOt7f3N5u7cvqUZWl8RvbaFrW/KcinpDlbgD4IGtJkCfqt/l+wPk+rknKKZyILVSP2ON6rARW1qWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clAvO0zf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQ77Uqcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8A4C4CEEB;
-	Tue, 22 Jul 2025 13:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clAvO0zf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D7BC4CEF7;
+	Tue, 22 Jul 2025 13:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192638;
-	bh=XqnkB3TFXcg3enwsn4uEU7neCVEA29n8wyphF/HK5JY=;
+	s=korg; t=1753192641;
+	bh=l9a8kPfeBFX6Bf/PQ1HZiOdgF6WTX+e0ULvzJa0zSKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQ77Uqcd/b9uq99ZExs5NOUBBsjpg546G6CJenncMKL5tDxx8wdyyQFPaXXVjN6qi
-	 bh8Jz9a5NsjLNx8jEduNbLGyaM2agv01mpWCX8P3qJRAX+XRIWPqVGdjoyOfwWak+Z
-	 TTGYp5rrUhK+5fcoePDUTc5BeiR+M2X4shFAhFUI=
+	b=clAvO0zfmCuixyhOoIVGYVdez5l9bJ2qHpGS1DX/CEhk5XDOkkGcnSQHoYmlLi98A
+	 wiu6EmEQPCqAP+8948tgnCUDtNo+5I7m+d5/cGYFq0NDXq7bcC+90xlp5ID4gsIIsC
+	 ud5dKu4G6BdoMW6nLvOQ0KQP5bPsRfybMWTOZNLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	stable@kernel.org,
-	Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH 6.12 014/158] Revert "staging: vchiq_arm: Create keep-alive thread during probe"
-Date: Tue, 22 Jul 2025 15:43:18 +0200
-Message-ID: <20250722134341.266885073@linuxfoundation.org>
+	=?UTF-8?q?Steffen=20B=C3=A4tz?= <steffen@innosonix.de>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.12 015/158] nvmem: imx-ocotp: fix MAC address byte length
+Date: Tue, 22 Jul 2025 15:43:19 +0200
+Message-ID: <20250722134341.302305135@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -52,137 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Steffen Bätz <steffen@innosonix.de>
 
-commit 228af5a58524fba09ec4b7d184694db4f7fe96f5 upstream.
+commit 2aa4ad626ee7f817a8f4715a47b318cfdc1714c9 upstream.
 
-The commit 86bc88217006 ("staging: vchiq_arm: Create keep-alive thread
-during probe") introduced a regression for certain configurations,
-which doesn't have a VCHIQ user. This results in a unused and hanging
-keep-alive thread:
+The commit "13bcd440f2ff nvmem: core: verify cell's raw_len" caused an
+extension of the "mac-address" cell from 6 to 8 bytes due to word_size
+of 4 bytes. This led to a required byte swap of the full buffer length,
+which caused truncation of the mac-address when read.
 
-  INFO: task vchiq-keep/0:85 blocked for more than 120 seconds.
-        Not tainted 6.12.34-v8-+ #13
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:vchiq-keep/0    state:D stack:0 pid:85    tgid:85    ppid:2
-  Call trace:
-   __switch_to+0x188/0x230
-   __schedule+0xa54/0xb28
-   schedule+0x80/0x120
-   schedule_preempt_disabled+0x30/0x50
-   kthread+0xd4/0x1a0
-   ret_from_fork+0x10/0x20
+Previously, the mac-address was incorrectly truncated from
+70:B3:D5:14:E9:0E to 00:00:70:B3:D5:14.
 
-Fixes: 86bc88217006 ("staging: vchiq_arm: Create keep-alive thread during probe")
-Reported-by: Maíra Canal <mcanal@igalia.com>
-Closes: https://lore.kernel.org/linux-staging/ba35b960-a981-4671-9f7f-060da10feaa1@usp.br/
-Cc: stable@kernel.org
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://lore.kernel.org/r/20250715161108.3411-3-wahrenst@gmx.net
+Fix the issue by swapping only the first 6 bytes to correctly pass the
+mac-address to the upper layers.
+
+Fixes: 13bcd440f2ff ("nvmem: core: verify cell's raw_len")
+Cc: stable@vger.kernel.org
+Signed-off-by: Steffen Bätz <steffen@innosonix.de>
+Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://lore.kernel.org/r/20250712181729.6495-3-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c |   69 +++++-----
- 1 file changed, 35 insertions(+), 34 deletions(-)
+ drivers/nvmem/imx-ocotp-ele.c |    5 ++++-
+ drivers/nvmem/imx-ocotp.c     |    5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -588,6 +588,29 @@ static int vchiq_platform_init(struct pl
+--- a/drivers/nvmem/imx-ocotp-ele.c
++++ b/drivers/nvmem/imx-ocotp-ele.c
+@@ -12,6 +12,7 @@
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
++#include <linux/if_ether.h>	/* ETH_ALEN */
+ 
+ enum fuse_type {
+ 	FUSE_FSB = BIT(0),
+@@ -118,9 +119,11 @@ static int imx_ocotp_cell_pp(void *conte
+ 	int i;
+ 
+ 	/* Deal with some post processing of nvmem cell data */
+-	if (id && !strcmp(id, "mac-address"))
++	if (id && !strcmp(id, "mac-address")) {
++		bytes = min(bytes, ETH_ALEN);
+ 		for (i = 0; i < bytes / 2; i++)
+ 			swap(buf[i], buf[bytes - i - 1]);
++	}
+ 
  	return 0;
  }
+--- a/drivers/nvmem/imx-ocotp.c
++++ b/drivers/nvmem/imx-ocotp.c
+@@ -23,6 +23,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/delay.h>
++#include <linux/if_ether.h>	/* ETH_ALEN */
  
-+int
-+vchiq_platform_init_state(struct vchiq_state *state)
-+{
-+	struct vchiq_arm_state *platform_state;
-+
-+	platform_state = devm_kzalloc(state->dev, sizeof(*platform_state), GFP_KERNEL);
-+	if (!platform_state)
-+		return -ENOMEM;
-+
-+	rwlock_init(&platform_state->susp_res_lock);
-+
-+	init_completion(&platform_state->ka_evt);
-+	atomic_set(&platform_state->ka_use_count, 0);
-+	atomic_set(&platform_state->ka_use_ack_count, 0);
-+	atomic_set(&platform_state->ka_release_count, 0);
-+
-+	platform_state->state = state;
-+
-+	state->platform_state = (struct opaque_platform_state *)platform_state;
-+
-+	return 0;
-+}
-+
- static struct vchiq_arm_state *vchiq_platform_get_arm_state(struct vchiq_state *state)
- {
- 	return (struct vchiq_arm_state *)state->platform_state;
-@@ -1336,39 +1359,6 @@ exit:
- }
+ #define IMX_OCOTP_OFFSET_B0W0		0x400 /* Offset from base address of the
+ 					       * OTP Bank0 Word0
+@@ -227,9 +228,11 @@ static int imx_ocotp_cell_pp(void *conte
+ 	int i;
  
- int
--vchiq_platform_init_state(struct vchiq_state *state)
--{
--	struct vchiq_arm_state *platform_state;
--	char threadname[16];
--
--	platform_state = devm_kzalloc(state->dev, sizeof(*platform_state), GFP_KERNEL);
--	if (!platform_state)
--		return -ENOMEM;
--
--	snprintf(threadname, sizeof(threadname), "vchiq-keep/%d",
--		 state->id);
--	platform_state->ka_thread = kthread_create(&vchiq_keepalive_thread_func,
--						   (void *)state, threadname);
--	if (IS_ERR(platform_state->ka_thread)) {
--		dev_err(state->dev, "couldn't create thread %s\n", threadname);
--		return PTR_ERR(platform_state->ka_thread);
--	}
--
--	rwlock_init(&platform_state->susp_res_lock);
--
--	init_completion(&platform_state->ka_evt);
--	atomic_set(&platform_state->ka_use_count, 0);
--	atomic_set(&platform_state->ka_use_ack_count, 0);
--	atomic_set(&platform_state->ka_release_count, 0);
--
--	platform_state->state = state;
--
--	state->platform_state = (struct opaque_platform_state *)platform_state;
--
--	return 0;
--}
--
--int
- vchiq_use_internal(struct vchiq_state *state, struct vchiq_service *service,
- 		   enum USE_TYPE_E use_type)
- {
-@@ -1688,6 +1678,7 @@ void vchiq_platform_conn_state_changed(s
- 				       enum vchiq_connstate newstate)
- {
- 	struct vchiq_arm_state *arm_state = vchiq_platform_get_arm_state(state);
-+	char threadname[16];
- 
- 	dev_dbg(state->dev, "suspend: %d: %s->%s\n",
- 		state->id, get_conn_state_name(oldstate), get_conn_state_name(newstate));
-@@ -1702,7 +1693,17 @@ void vchiq_platform_conn_state_changed(s
- 
- 	arm_state->first_connect = 1;
- 	write_unlock_bh(&arm_state->susp_res_lock);
--	wake_up_process(arm_state->ka_thread);
-+	snprintf(threadname, sizeof(threadname), "vchiq-keep/%d",
-+		 state->id);
-+	arm_state->ka_thread = kthread_create(&vchiq_keepalive_thread_func,
-+					      (void *)state,
-+					      threadname);
-+	if (IS_ERR(arm_state->ka_thread)) {
-+		dev_err(state->dev, "suspend: Couldn't create thread %s\n",
-+			threadname);
-+	} else {
-+		wake_up_process(arm_state->ka_thread);
+ 	/* Deal with some post processing of nvmem cell data */
+-	if (id && !strcmp(id, "mac-address"))
++	if (id && !strcmp(id, "mac-address")) {
++		bytes = min(bytes, ETH_ALEN);
+ 		for (i = 0; i < bytes / 2; i++)
+ 			swap(buf[i], buf[bytes - i - 1]);
 +	}
- }
  
- static const struct of_device_id vchiq_of_match[] = {
+ 	return 0;
+ }
 
 
