@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF152EAB7C;
-	Tue, 22 Jul 2025 14:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477F82EE5FC;
+	Tue, 22 Jul 2025 14:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193497; cv=none; b=ccuScJch1roG9J4fLJmyJeiHFteJYBHs311y5f5p3FYdYOx8Y40CaUweW7Vfv2MtOH5b8wukhmCLQbe8yZxXpvIU6cgfF6xlFMn97k3qKjT9cIdrzCabte+eY6avLwVheshYPnRiX4hZ907ZoT+FbcVnIMdTvR0TddQll/H59GI=
+	t=1753193500; cv=none; b=BkRjoELqxc1mdB16vw1cxxhAzBnIRtNzJTKwqGufI5BBIUzIHHXSV27IE1rwmgWgi6NKO42+ZlzQhdvAzCYiNxsSyjfNaJRWEhHIW22pcbeFkaAy+2WS+0e9l5ILWNNlOt2jJYoLqmihRiAx39Qcptgn1oH6eEleGjAF2BcGiyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193497; c=relaxed/simple;
-	bh=zquXD6Dh7rXxMzEnpGtZ9x5BagHVcgX2b0nU9OJ3lUw=;
+	s=arc-20240116; t=1753193500; c=relaxed/simple;
+	bh=N8VAX53QoXYNoy/YXmxN8mhnY9Ow9i3weu6/z5/QgHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUf2tQ2F8OKPrUCuGvqokpmoGwrU6ND9Sybv5Qa5OfR8c5/3w5FFsUTlWiRibHP9t5bZ4bGPB2ZTPGyV+seQSbg49dlzcX088X6AtHJW5JJA8/H8Ffa5Rxl94ce/PcYnkYGm7NmGSVKqYNxmv0ZGuf1bANVmtzt9bsDnZAxgZKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lmt2KzNe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M9Js2lkuL3qOcCQvyjKs5FsOgK1Sl4tckiKvB2+b6RlgxMmbo4TfJSupyI3+TcWDNeJUuJov1m47SCFGUprA2jGoNhu/Q2HOh4cJ+qVB7IArO0RgpVsv2aFkADGKuJ8ZDu8WSiqZyrNqUPW4lYftTnQyxwPtB2vYl3o63ipXMDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iuhTFSe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lmt2KzNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F110C4CEEB;
-	Tue, 22 Jul 2025 14:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iuhTFSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BD2C4CEEB;
+	Tue, 22 Jul 2025 14:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193497;
-	bh=zquXD6Dh7rXxMzEnpGtZ9x5BagHVcgX2b0nU9OJ3lUw=;
+	s=korg; t=1753193500;
+	bh=N8VAX53QoXYNoy/YXmxN8mhnY9Ow9i3weu6/z5/QgHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lmt2KzNelE4cLV7oBPK58fl638q+3AcXbAhkD4Z/MI8I1xKdF4Oe1RhLKY04czQUJ
-	 /h1ToGpP46xIzdSwwcQtifEjvGHmQy5y+yLoW/XZmUaNugahdm/GkuaI/WbRhswnaU
-	 uSCWng851AUtsedg/DN0iK6N/5v0xCP+tfz0cPRM=
+	b=1iuhTFSeu4aPxA2yuG8gUIItCiFVQNyXV4iO2yYLSsd4mqyiooG7h2+GcZDZbMn4d
+	 to+fGfXkEEXmB6A6NICMD57D3xeiVWYnL1i5MtfpKlZdsMHYkKfaG/EIfksTVmmY1y
+	 IpTMSW+6T6MRVGJ77/hOD19Yw0JqAlDUE+FIwt78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 103/187] arm64: dts: imx95-15x15-evk: fix the overshoot issue of NETC
-Date: Tue, 22 Jul 2025 15:44:33 +0200
-Message-ID: <20250722134349.605462758@linuxfoundation.org>
+Subject: [PATCH 6.15 112/187] net/sched: sch_qfq: Fix race condition on qfq_aggregate
+Date: Tue, 22 Jul 2025 15:44:42 +0200
+Message-ID: <20250722134349.935102575@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -52,65 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit e0322ac2a3cf7013b7af73b1293670f1e163c92e ]
+[ Upstream commit 5e28d5a3f774f118896aec17a3a20a9c5c9dfc64 ]
 
-The overshoot of MDIO, MDC, ENET1_TDx and ENET2_TDx is too high, so
-reduce the drive strength of these pins.
+A race condition can occur when 'agg' is modified in qfq_change_agg
+(called during qfq_enqueue) while other threads access it
+concurrently. For example, qfq_dump_class may trigger a NULL
+dereference, and qfq_delete_class may cause a use-after-free.
 
-Fixes: e3e8b199aff8 ("arm64: dts: imx95: Add imx95-15x15-evk support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+This patch addresses the issue by:
+
+1. Moved qfq_destroy_class into the critical section.
+
+2. Added sch_tree_lock protection to qfq_dump_class and
+qfq_dump_class_stats.
+
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/freescale/imx95-15x15-evk.dts    | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ net/sched/sch_qfq.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts b/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
-index 514f2429dcbc2..3ab4d27de1a22 100644
---- a/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
-+++ b/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
-@@ -558,17 +558,17 @@
- &scmi_iomuxc {
- 	pinctrl_emdio: emdiogrp {
- 		fsl,pins = <
--			IMX95_PAD_ENET2_MDC__NETCMIX_TOP_NETC_MDC		0x57e
--			IMX95_PAD_ENET2_MDIO__NETCMIX_TOP_NETC_MDIO		0x97e
-+			IMX95_PAD_ENET2_MDC__NETCMIX_TOP_NETC_MDC		0x50e
-+			IMX95_PAD_ENET2_MDIO__NETCMIX_TOP_NETC_MDIO		0x90e
- 		>;
- 	};
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index bf1282cb22eba..2b1b025c31a33 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -412,7 +412,7 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	bool existing = false;
+ 	struct nlattr *tb[TCA_QFQ_MAX + 1];
+ 	struct qfq_aggregate *new_agg = NULL;
+-	u32 weight, lmax, inv_w;
++	u32 weight, lmax, inv_w, old_weight, old_lmax;
+ 	int err;
+ 	int delta_w;
  
- 	pinctrl_enetc0: enetc0grp {
- 		fsl,pins = <
--			IMX95_PAD_ENET1_TD3__NETCMIX_TOP_ETH0_RGMII_TD3		0x57e
--			IMX95_PAD_ENET1_TD2__NETCMIX_TOP_ETH0_RGMII_TD2		0x57e
--			IMX95_PAD_ENET1_TD1__NETCMIX_TOP_ETH0_RGMII_TD1		0x57e
--			IMX95_PAD_ENET1_TD0__NETCMIX_TOP_ETH0_RGMII_TD0		0x57e
-+			IMX95_PAD_ENET1_TD3__NETCMIX_TOP_ETH0_RGMII_TD3		0x50e
-+			IMX95_PAD_ENET1_TD2__NETCMIX_TOP_ETH0_RGMII_TD2		0x50e
-+			IMX95_PAD_ENET1_TD1__NETCMIX_TOP_ETH0_RGMII_TD1		0x50e
-+			IMX95_PAD_ENET1_TD0__NETCMIX_TOP_ETH0_RGMII_TD0		0x50e
- 			IMX95_PAD_ENET1_TX_CTL__NETCMIX_TOP_ETH0_RGMII_TX_CTL	0x57e
- 			IMX95_PAD_ENET1_TXC__NETCMIX_TOP_ETH0_RGMII_TX_CLK	0x58e
- 			IMX95_PAD_ENET1_RX_CTL__NETCMIX_TOP_ETH0_RGMII_RX_CTL	0x57e
-@@ -582,10 +582,10 @@
+@@ -443,12 +443,16 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
  
- 	pinctrl_enetc1: enetc1grp {
- 		fsl,pins = <
--			IMX95_PAD_ENET2_TD3__NETCMIX_TOP_ETH1_RGMII_TD3		0x57e
--			IMX95_PAD_ENET2_TD2__NETCMIX_TOP_ETH1_RGMII_TD2		0x57e
--			IMX95_PAD_ENET2_TD1__NETCMIX_TOP_ETH1_RGMII_TD1		0x57e
--			IMX95_PAD_ENET2_TD0__NETCMIX_TOP_ETH1_RGMII_TD0		0x57e
-+			IMX95_PAD_ENET2_TD3__NETCMIX_TOP_ETH1_RGMII_TD3		0x50e
-+			IMX95_PAD_ENET2_TD2__NETCMIX_TOP_ETH1_RGMII_TD2		0x50e
-+			IMX95_PAD_ENET2_TD1__NETCMIX_TOP_ETH1_RGMII_TD1		0x50e
-+			IMX95_PAD_ENET2_TD0__NETCMIX_TOP_ETH1_RGMII_TD0		0x50e
- 			IMX95_PAD_ENET2_TX_CTL__NETCMIX_TOP_ETH1_RGMII_TX_CTL	0x57e
- 			IMX95_PAD_ENET2_TXC__NETCMIX_TOP_ETH1_RGMII_TX_CLK	0x58e
- 			IMX95_PAD_ENET2_RX_CTL__NETCMIX_TOP_ETH1_RGMII_RX_CTL	0x57e
+-	if (cl != NULL &&
+-	    lmax == cl->agg->lmax &&
+-	    weight == cl->agg->class_weight)
+-		return 0; /* nothing to change */
++	if (cl != NULL) {
++		sch_tree_lock(sch);
++		old_weight = cl->agg->class_weight;
++		old_lmax   = cl->agg->lmax;
++		sch_tree_unlock(sch);
++		if (lmax == old_lmax && weight == old_weight)
++			return 0; /* nothing to change */
++	}
+ 
+-	delta_w = weight - (cl ? cl->agg->class_weight : 0);
++	delta_w = weight - (cl ? old_weight : 0);
+ 
+ 	if (q->wsum + delta_w > QFQ_MAX_WSUM) {
+ 		NL_SET_ERR_MSG_FMT_MOD(extack,
+@@ -555,10 +559,10 @@ static int qfq_delete_class(struct Qdisc *sch, unsigned long arg,
+ 
+ 	qdisc_purge_queue(cl->qdisc);
+ 	qdisc_class_hash_remove(&q->clhash, &cl->common);
++	qfq_destroy_class(sch, cl);
+ 
+ 	sch_tree_unlock(sch);
+ 
+-	qfq_destroy_class(sch, cl);
+ 	return 0;
+ }
+ 
+@@ -625,6 +629,7 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
+ {
+ 	struct qfq_class *cl = (struct qfq_class *)arg;
+ 	struct nlattr *nest;
++	u32 class_weight, lmax;
+ 
+ 	tcm->tcm_parent	= TC_H_ROOT;
+ 	tcm->tcm_handle	= cl->common.classid;
+@@ -633,8 +638,13 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
+ 	nest = nla_nest_start_noflag(skb, TCA_OPTIONS);
+ 	if (nest == NULL)
+ 		goto nla_put_failure;
+-	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, cl->agg->class_weight) ||
+-	    nla_put_u32(skb, TCA_QFQ_LMAX, cl->agg->lmax))
++
++	sch_tree_lock(sch);
++	class_weight	= cl->agg->class_weight;
++	lmax		= cl->agg->lmax;
++	sch_tree_unlock(sch);
++	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, class_weight) ||
++	    nla_put_u32(skb, TCA_QFQ_LMAX, lmax))
+ 		goto nla_put_failure;
+ 	return nla_nest_end(skb, nest);
+ 
+@@ -651,8 +661,10 @@ static int qfq_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+ 
+ 	memset(&xstats, 0, sizeof(xstats));
+ 
++	sch_tree_lock(sch);
+ 	xstats.weight = cl->agg->class_weight;
+ 	xstats.lmax = cl->agg->lmax;
++	sch_tree_unlock(sch);
+ 
+ 	if (gnet_stats_copy_basic(d, NULL, &cl->bstats, true) < 0 ||
+ 	    gnet_stats_copy_rate_est(d, &cl->rate_est) < 0 ||
 -- 
 2.39.5
 
