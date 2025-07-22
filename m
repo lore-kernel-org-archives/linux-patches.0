@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABA1239E91;
-	Tue, 22 Jul 2025 14:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC4D2EA168;
+	Tue, 22 Jul 2025 14:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193350; cv=none; b=fPc6jy0dRqOsCePVErunWBwjlvogj1NTdTFJ1CZ7VLHIMmU3GhdJ4yxA3XUOda+brBqcWKfKHAdYzx7MTnx41dj7yM1qYiOmaAGHKxAwKD8cZGiIn8jC32POGnFS8oeMFsES4912hZh2Kxv+P6AE+IuEuC9FfyroHYL8GgIAqsE=
+	t=1753193353; cv=none; b=YxLbLygEgA9QTIRRWE7Vpuc4Xm3oiHUuvTElzOIE4Txw2hf69sWmTAx4a6xRDMasRzklG0ebBFVHD3WdX/hK/NBZV8ttBvaVKPbogc2iu2TzkEcQWBEDGPfQz57tlhX60qBmvdzPZTnMzvPLw4hfymkYQp9R4AU87aj2LHJwR3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193350; c=relaxed/simple;
-	bh=t3qgTA9ptIV8NhoE/8kK2281CmbqeS0OJutbb2GNGPI=;
+	s=arc-20240116; t=1753193353; c=relaxed/simple;
+	bh=hSZPZOCtU3mVjBeAGn+87bOHgaVtKJmxWdGiCus3Pag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/wSjhjgK1aZohqWu0qJLXUfqT4xc8nK7JIXEYBbA4WiH6a+vOiH1wj5F6xV6XRXDZRcv3xuTVbXfp1qwj+s47d2G9Fn4AHl0HwjZhvqmG+TreZfmRLfEDc0EU5iB0LdZoIP+79ZMCeyCXBPCsJ6uqIlQwdcqiacVgP9wggEows=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eNsarWy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wh6EDUe67iIWRpUn/RMPHdldg2u9J1wCwAC0MefQ7HbG/VaWx6KBHLBVU5lyGkbdqn0zB9gkqosJboR0h1fubzbf1q77XYNKjWoNfOr9Zz1ieMIfKyC0NL2qd4TGg045NkQcInxWvmXbGHT20LUqwnVWJ+aEU87yrvhfLEJIKtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGCzJNrw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eNsarWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875B0C4CEEB;
-	Tue, 22 Jul 2025 14:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGCzJNrw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835B3C4CEEB;
+	Tue, 22 Jul 2025 14:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193349;
-	bh=t3qgTA9ptIV8NhoE/8kK2281CmbqeS0OJutbb2GNGPI=;
+	s=korg; t=1753193352;
+	bh=hSZPZOCtU3mVjBeAGn+87bOHgaVtKJmxWdGiCus3Pag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1eNsarWyeob4hwTuWXWW+0zo9XkcWkYg093lUCrBpuZLotL8UZWWG5WbVEfA2WvBj
-	 BcfuC5M/f4Hw0Kag31IUdMewx0jjR5jt65kHt9mgDtzWGWcQN/gWI5OTDaWo72LtIi
-	 vURmq8F8K1my7PPCG9wySFdlpIJtq6emgb3sSfzM=
+	b=LGCzJNrwSC32uvmVCNOboi/SqOwTeaLHgMWl4uj6L7lZwxgY24GfQdmGg9dGCqMb4
+	 RnxHwSejzmHn4bELCS3U54i1DDo+oqZzVDAtVMHbdh6cRQ+iBr0uKr8pa1EbmPdfvM
+	 YBlbiXZgwLXDvmdwOzaqZNBBqI3S7RpSZslXRUuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.15 063/187] isofs: Verify inode mode when loading from disk
-Date: Tue, 22 Jul 2025 15:43:53 +0200
-Message-ID: <20250722134348.096567964@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.15 064/187] memstick: core: Zero initialize id_reg in h_memstick_read_dev_id()
+Date: Tue, 22 Jul 2025 15:43:54 +0200
+Message-ID: <20250722134348.133103986@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,43 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 0a9e7405131380b57e155f10242b2e25d2e51852 upstream.
+commit 21b34a3a204ed616373a12ec17dc127ebe51eab3 upstream.
 
-Verify that the inode mode is sane when loading it from the disk to
-avoid complaints from VFS about setting up invalid inodes.
+A new warning in clang [1] points out that id_reg is uninitialized then
+passed to memstick_init_req() as a const pointer:
 
-Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/20250709095545.31062-2-jack@suse.cz
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+  drivers/memstick/core/memstick.c:330:59: error: variable 'id_reg' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+    330 |                 memstick_init_req(&card->current_mrq, MS_TPC_READ_REG, &id_reg,
+        |                                                                         ^~~~~~
+
+Commit de182cc8e882 ("drivers/memstick/core/memstick.c: avoid -Wnonnull
+warning") intentionally passed this variable uninitialized to avoid an
+-Wnonnull warning from a NULL value that was previously there because
+id_reg is never read from the call to memstick_init_req() in
+h_memstick_read_dev_id(). Just zero initialize id_reg to avoid the
+warning, which is likely happening in the majority of builds using
+modern compilers that support '-ftrivial-auto-var-init=zero'.
+
+Cc: stable@vger.kernel.org
+Fixes: de182cc8e882 ("drivers/memstick/core/memstick.c: avoid -Wnonnull warning")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2105
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250715-memstick-fix-uninit-const-pointer-v1-1-f6753829c27a@kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/inode.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/memstick/core/memstick.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/isofs/inode.c
-+++ b/fs/isofs/inode.c
-@@ -1440,9 +1440,16 @@ static int isofs_read_inode(struct inode
- 		inode->i_op = &page_symlink_inode_operations;
- 		inode_nohighmem(inode);
- 		inode->i_data.a_ops = &isofs_symlink_aops;
--	} else
-+	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
-+		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
- 		/* XXX - parse_rock_ridge_inode() had already set i_rdev. */
- 		init_special_inode(inode, inode->i_mode, inode->i_rdev);
-+	} else {
-+		printk(KERN_DEBUG "ISOFS: Invalid file type 0%04o for inode %lu.\n",
-+			inode->i_mode, inode->i_ino);
-+		ret = -EIO;
-+		goto fail;
-+	}
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -324,7 +324,7 @@ EXPORT_SYMBOL(memstick_init_req);
+ static int h_memstick_read_dev_id(struct memstick_dev *card,
+ 				  struct memstick_request **mrq)
+ {
+-	struct ms_id_register id_reg;
++	struct ms_id_register id_reg = {};
  
- 	ret = 0;
- out:
+ 	if (!(*mrq)) {
+ 		memstick_init_req(&card->current_mrq, MS_TPC_READ_REG, &id_reg,
 
 
