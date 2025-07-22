@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE881433A8;
-	Tue, 22 Jul 2025 13:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73E92D9EE2;
+	Tue, 22 Jul 2025 13:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192041; cv=none; b=l3f6kdvP+sc5etAUmUsYoGX/L4N9D8uqCalNe47H7IGUz9CugPljzDHukFz1aIwLgfYIa12MAdXcMZIroamarhTHeHCqypoUFVoTTJNrY4HFzrGu4IZLPHQ6icB5AJ93Md7xoUH0UMd8pYDGlzl2UmqwKLUKSBmRsJTTNy+HVaU=
+	t=1753192043; cv=none; b=KuOPfzm6Cl2JpEOEkW2mTN6NiPK8DtUOtrlugk+aL2zHLpnlw5mA8FLQmNYOahd3uHRBBqSteV0YEzGUtFilH1g/M/1AE7+ZNWtWPeyUtVceQhsllzBFQNmBtM8ES++jdIQ1PtM9CXLGsPqZkPLiKLlC3cjioN5r2tn+8kxYS0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192041; c=relaxed/simple;
-	bh=9bMIiWhLPqqJqjoC5NJ9QkaT0Gm84MgScawmQ/E0CMo=;
+	s=arc-20240116; t=1753192043; c=relaxed/simple;
+	bh=y3U7WQBgFr+5xNiJE/kAAwMCnnb32GVjG7Q8nzfn5yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=quzCbEJRUKqbQIpZ09BpNNiXxL9qNI0iSD/kzWWPsKjuL2fQAHHuQv757gdc8xC8KNOLK30KAtM3ual59RWu0LoSJCXcAAYMbf0LTGlluOP1MmePAohOymuxS14wi/ECnpF0RdkteXhr2SXtaXTASi0U5aIsHSwFM8K+DyAw/HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqHXWan3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bsAXh8xy77eHxY5R4a7mRVXkFS506wiluFgDz5juC3citHvwgOIUcnPy8Gs7CzraHc3/rGWIabfS8qybNpWne6V75Z5NFYdvij09O4R2VwvudsaNX9NCW7ZEmogxEsFjLKYQBj616vfinA0ISl6eIrlmLf55t+csUPKPoyqOgco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoqKgLIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqHXWan3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F57C4CEF6;
-	Tue, 22 Jul 2025 13:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoqKgLIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205E7C4CEEB;
+	Tue, 22 Jul 2025 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192040;
-	bh=9bMIiWhLPqqJqjoC5NJ9QkaT0Gm84MgScawmQ/E0CMo=;
+	s=korg; t=1753192043;
+	bh=y3U7WQBgFr+5xNiJE/kAAwMCnnb32GVjG7Q8nzfn5yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqHXWan3HBdNo0Tks3PO8MCE2ei8S6s2RV0FgXsLYUWnZ8eEEMlg87Nl+FGPh8Fs6
-	 JbPST6VzQUgjnjIcR4Ar6lJ9m3jpVb4eP6YZ65ieGPjWvZcF387CjJ2rj4sXFQhXxb
-	 OI6oPbfsMZ2gh6k2zq+nqtWcB897YQUfQM+8OarE=
+	b=BoqKgLIWDIz4UPQGgFJ9/Wl2+GF6MpImcd+5XvE5dCEM5rT2HkI/AKXPluV7mYrKZ
+	 vnGJuQDRXQCIIDI+eztlMOhgTd4SFyLGBuR5PIaXXFUZ7DIhugYOR72ZpsffmbA7Q2
+	 NYFEP4lY/1Wcq/FTSmPTXH2bHlHhCnPLc2Us/5XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 27/79] smb: client: fix use-after-free in crypt_message when using async crypto
-Date: Tue, 22 Jul 2025 15:44:23 +0200
-Message-ID: <20250722134329.369300470@linuxfoundation.org>
+	Jean Delvare <jdelvare@suse.de>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PATCH 6.1 28/79] soc: aspeed: lpc-snoop: Cleanup resources in stack-order
+Date: Tue, 22 Jul 2025 15:44:24 +0200
+Message-ID: <20250722134329.408157067@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -51,81 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
 
-commit b220bed63330c0e1733dc06ea8e75d5b9962b6b6 upstream.
+commit 8481d59be606d2338dbfe14b04cdbd1a3402c150 upstream.
 
-The CVE-2024-50047 fix removed asynchronous crypto handling from
-crypt_message(), assuming all crypto operations are synchronous.
-However, when hardware crypto accelerators are used, this can cause
-use-after-free crashes:
+Free the kfifo after unregistering the miscdev in
+aspeed_lpc_disable_snoop() as the kfifo is initialised before the
+miscdev in aspeed_lpc_enable_snoop().
 
-  crypt_message()
-    // Allocate the creq buffer containing the req
-    creq = smb2_get_aead_req(..., &req);
-
-    // Async encryption returns -EINPROGRESS immediately
-    rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
-
-    // Free creq while async operation is still in progress
-    kvfree_sensitive(creq, ...);
-
-Hardware crypto modules often implement async AEAD operations for
-performance. When crypto_aead_encrypt/decrypt() returns -EINPROGRESS,
-the operation completes asynchronously. Without crypto_wait_req(),
-the function immediately frees the request buffer, leading to crashes
-when the driver later accesses the freed memory.
-
-This results in a use-after-free condition when the hardware crypto
-driver later accesses the freed request structure, leading to kernel
-crashes with NULL pointer dereferences.
-
-The issue occurs because crypto_alloc_aead() with mask=0 doesn't
-guarantee synchronous operation. Even without CRYPTO_ALG_ASYNC in
-the mask, async implementations can be selected.
-
-Fix by restoring the async crypto handling:
-- DECLARE_CRYPTO_WAIT(wait) for completion tracking
-- aead_request_set_callback() for async completion notification
-- crypto_wait_req() to wait for operation completion
-
-This ensures the request buffer isn't freed until the crypto operation
-completes, whether synchronous or asynchronous, while preserving the
-CVE-2024-50047 fix.
-
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Link: https://lore.kernel.org/all/8b784a13-87b0-4131-9ff9-7a8993538749@huaweicloud.com/
+Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
 Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Jean Delvare <jdelvare@suse.de>
+Acked-by: Jean Delvare <jdelvare@suse.de>
+Link: https://patch.msgid.link/20250616-aspeed-lpc-snoop-fixes-v2-1-3cdd59c934d3@codeconstruct.com.au
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4497,6 +4497,7 @@ crypt_message(struct TCP_Server_Info *se
- 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
- 	struct aead_request *req;
- 	u8 *iv;
-+	DECLARE_CRYPTO_WAIT(wait);
- 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
- 	void *creq;
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -264,8 +264,8 @@ static void aspeed_lpc_disable_snoop(str
+ 		return;
+ 	}
  
-@@ -4545,7 +4546,11 @@ crypt_message(struct TCP_Server_Info *se
- 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
- 	aead_request_set_ad(req, assoc_data_len);
+-	kfifo_free(&lpc_snoop->chan[channel].fifo);
+ 	misc_deregister(&lpc_snoop->chan[channel].miscdev);
++	kfifo_free(&lpc_snoop->chan[channel].fifo);
+ }
  
--	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
-+	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
-+				  crypto_req_done, &wait);
-+
-+	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
-+				: crypto_aead_decrypt(req), &wait);
- 
- 	if (!rc && enc)
- 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
+ static int aspeed_lpc_snoop_probe(struct platform_device *pdev)
 
 
