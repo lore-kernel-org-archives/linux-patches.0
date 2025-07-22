@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6C91A2C25;
-	Tue, 22 Jul 2025 14:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220B81A2C25;
+	Tue, 22 Jul 2025 14:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192969; cv=none; b=qbgUxQNveDc+1yyXIRl3j1w8rc0hEVFhc7L1Ieu4IaRhnOuZtvP9el97pe921kGTvMkSiMQrfXYOXIt5QLdvlylqlzse2ZfkKf3dlOwIb7zPaGkBGAR2YhMk0WrbqCRjHUYRoYD2oTE7OZRIlM7Go1iqybteG1wgFvAHHyq4Cr0=
+	t=1753192973; cv=none; b=eTNmZo68hNPXmE3ZiX1ERKROnJ/rmE2dnXRyGwmECVfxXdpHwb7DhfIvW2q/Q8ZKLTxoEJGt7dYUI6J6OStWuoc7vTjJCvBAGLbuR2nd23JzOo8Mlxs7kdsEVh0fUPW2QTvATUhYx6qLYCHTVwV/H6gLCzUCX85X14pD/e91a8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192969; c=relaxed/simple;
-	bh=/x5X3U9wM2iuLklJPggKAUgFERuy0wEdZjm48sPBJEk=;
+	s=arc-20240116; t=1753192973; c=relaxed/simple;
+	bh=W7rk+gUIjxwK6z0G+yzYxGoUVuqSH1futDcfRQIta+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+l3wM/AgARkZNURr/JAzupSalaCuTUiMhYn3svXamsC9Sepf+cHsQ1ySthz8WiF8nfWN4X2LfbYB/UoW+vuQ2YDPzuDPVnMnwQF1k/8cXWGOYisei2WeHP0iHNBWIT1eoFKBFTlFfmbdbqCdsClkhbffCUjvyf0VD7HcewWwRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgoO6MiO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMVSSJ2luyRa4Of/phalUFsC1npXrbt9TDWfGW99E86LGqOuowTND1PH3T5L6wDVOSM6j2lF8MJ8SqXkD3n9t7JxOI+RLIM5SM1cIL8szgTfJa87mhlMGg1HgYtFfv9k+heNPBqFEWBaJPDqaR27jng9rdJae+CIAQu+JDQGMNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlFBw3oB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgoO6MiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6ADC4CEEB;
-	Tue, 22 Jul 2025 14:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlFBw3oB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83105C4CEEB;
+	Tue, 22 Jul 2025 14:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192969;
-	bh=/x5X3U9wM2iuLklJPggKAUgFERuy0wEdZjm48sPBJEk=;
+	s=korg; t=1753192973;
+	bh=W7rk+gUIjxwK6z0G+yzYxGoUVuqSH1futDcfRQIta+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KgoO6MiOm9Ta7wvtlBKHI39IreT1SOGcqOOU3J9x1JqtkZxrZT/UF5ydcx5xAbU+P
-	 KigyyHn/w4EPKfXpWceUmejtP5H2BzbJ4uGnUR+YdulpHnKU6M82K9m4bU7ZtsP1h+
-	 rWInR07epKxf56olyXkBd4aiulwlz8KLR0Used/0=
+	b=nlFBw3oB+BT3TevhhoONImG419+X+du9H18pulBB9fcjRUBaLItpawSBDIkVRyCXs
+	 hBuOCc7yGu2uKmL5pK2qxNFwCOup///Q9lbTL0C7BFgJkAr2zAYXUwOK4ZPnPqCkm8
+	 WC3Wi49cDy/HDeMWgTJ8euu364i2x2NyWe/XIK4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Alessandro Gasbarroni <alex.gasbarroni@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/158] Bluetooth: Fix null-ptr-deref in l2cap_sock_resume_cb()
-Date: Tue, 22 Jul 2025 15:44:57 +0200
-Message-ID: <20250722134344.967434501@linuxfoundation.org>
+Subject: [PATCH 6.12 114/158] Bluetooth: hci_sync: fix connectable extended advertising when using static random address
+Date: Tue, 22 Jul 2025 15:44:58 +0200
+Message-ID: <20250722134345.005435839@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -52,78 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Alessandro Gasbarroni <alex.gasbarroni@gmail.com>
 
-[ Upstream commit a0075accbf0d76c2dad1ad3993d2e944505d99a0 ]
+[ Upstream commit d85edab911a4c1fcbe3f08336eff5c7feec567d0 ]
 
-syzbot reported null-ptr-deref in l2cap_sock_resume_cb(). [0]
+Currently, the connectable flag used by the setup of an extended
+advertising instance drives whether we require privacy when trying to pass
+a random address to the advertising parameters (Own Address).
+If privacy is not required, then it automatically falls back to using the
+controller's public address. This can cause problems when using controllers
+that do not have a public address set, but instead use a static random
+address.
 
-l2cap_sock_resume_cb() has a similar problem that was fixed by commit
-1bff51ea59a9 ("Bluetooth: fix use-after-free error in lock_sock_nested()").
+e.g. Assume a BLE controller that does not have a public address set.
+The controller upon powering is set with a random static address by default
+by the kernel.
 
-Since both l2cap_sock_kill() and l2cap_sock_resume_cb() are executed
-under l2cap_sock_resume_cb(), we can avoid the issue simply by checking
-if chan->data is NULL.
+	< HCI Command: LE Set Random Address (0x08|0x0005) plen 6
+        	Address: E4:AF:26:D8:3E:3A (Static)
+	> HCI Event: Command Complete (0x0e) plen 4
+	      LE Set Random Address (0x08|0x0005) ncmd 1
+	        Status: Success (0x00)
 
-Let's not access to the killed socket in l2cap_sock_resume_cb().
+Setting non-connectable extended advertisement parameters in bluetoothctl
+mgmt
 
-[0]:
-BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:82 [inline]
-BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-BUG: KASAN: null-ptr-deref in l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
-Write of size 8 at addr 0000000000000570 by task kworker/u9:0/52
+	add-ext-adv-params -r 0x801 -x 0x802 -P 2M -g 1
 
-CPU: 1 UID: 0 PID: 52 Comm: kworker/u9:0 Not tainted 6.16.0-rc4-syzkaller-g7482bb149b9f #0 PREEMPT
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Workqueue: hci0 hci_rx_work
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:501 (C)
- __dump_stack+0x30/0x40 lib/dump_stack.c:94
- dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
- print_report+0x58/0x84 mm/kasan/report.c:524
- kasan_report+0xb0/0x110 mm/kasan/report.c:634
- check_region_inline mm/kasan/generic.c:-1 [inline]
- kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:189
- __kasan_check_write+0x20/0x30 mm/kasan/shadow.c:37
- instrument_atomic_write include/linux/instrumented.h:82 [inline]
- clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
- l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
- l2cap_security_cfm+0x524/0xea0 net/bluetooth/l2cap_core.c:7357
- hci_auth_cfm include/net/bluetooth/hci_core.h:2092 [inline]
- hci_auth_complete_evt+0x2e8/0xa4c net/bluetooth/hci_event.c:3514
- hci_event_func net/bluetooth/hci_event.c:7511 [inline]
- hci_event_packet+0x650/0xe9c net/bluetooth/hci_event.c:7565
- hci_rx_work+0x320/0xb18 net/bluetooth/hci_core.c:4070
- process_one_work+0x7e8/0x155c kernel/workqueue.c:3238
- process_scheduled_works kernel/workqueue.c:3321 [inline]
- worker_thread+0x958/0xed8 kernel/workqueue.c:3402
- kthread+0x5fc/0x75c kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:847
+correctly sets Own address type as Random
 
-Fixes: d97c899bde33 ("Bluetooth: Introduce L2CAP channel callback for resuming")
-Reported-by: syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/686c12bd.a70a0220.29fe6c.0b13.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+	< HCI Command: LE Set Extended Advertising Parameters (0x08|0x0036)
+	plen 25
+		...
+	    Own address type: Random (0x01)
+
+Setting connectable extended advertisement parameters in bluetoothctl mgmt
+
+	add-ext-adv-params -r 0x801 -x 0x802 -P 2M -g -c 1
+
+mistakenly sets Own address type to Public (which causes to use Public
+Address 00:00:00:00:00:00)
+
+	< HCI Command: LE Set Extended Advertising Parameters (0x08|0x0036)
+	plen 25
+		...
+	    Own address type: Public (0x00)
+
+This causes either the controller to emit an Invalid Parameters error or to
+mishandle the advertising.
+
+This patch makes sure that we use the already set static random address
+when requesting a connectable extended advertising when we don't require
+privacy and our public address is not set (00:00:00:00:00:00).
+
+Fixes: 3fe318ee72c5 ("Bluetooth: move hci_get_random_address() to hci_sync")
+Signed-off-by: Alessandro Gasbarroni <alex.gasbarroni@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_sync.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index acd11b268b98a..615c18e290ab9 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1690,6 +1690,9 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
- {
- 	struct sock *sk = chan->data;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index bc01135e43f3e..bbd809414b2f2 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6789,8 +6789,8 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
+ 		return 0;
+ 	}
  
-+	if (!sk)
-+		return;
-+
- 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
- 		sk->sk_state = BT_CONNECTED;
- 		chan->state = BT_CONNECTED;
+-	/* No privacy so use a public address. */
+-	*own_addr_type = ADDR_LE_DEV_PUBLIC;
++	/* No privacy, use the current address */
++	hci_copy_identity_address(hdev, rand_addr, own_addr_type);
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
