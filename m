@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0637DA32;
-	Tue, 22 Jul 2025 14:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FE52D59E8;
+	Tue, 22 Jul 2025 14:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193356; cv=none; b=b8SJsFczfHUhJIrt16XINJhBZkh0f+tRRFZeR62eCUfCeqW+6dxKIm0kXyfJ4+24oPZnYK0PUcEpWxZ8KavsE2/NJoS8LGY/WVgOHCdge7jRky3+7PrUseYGKh1a+bhSGf1+pD0KDUntct4Psw8nInDbdDC8rMBwQkFJQaUfRps=
+	t=1753193359; cv=none; b=T6rBTrjn7l3qjm711MuEviUtrZrFlSoTCKk343Zx5cai7hycEiujytaSloh7gm6B08Me5alREnLqQEkVOHNjS1L+PbZWaeIhZd8+gTmxUw5lCo3dhAute0sP0CWLfLDciVNBHOHjfgS5RAzQWGUudCphngIOyPhQQavDTrJfseg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193356; c=relaxed/simple;
-	bh=SCheFc+i5xffdHKEW0jAy+WHWH/wEpf+aRQ8TMVFURc=;
+	s=arc-20240116; t=1753193359; c=relaxed/simple;
+	bh=xhZp0wj4bHPbcmqSHodW6b+Llp0KKh/zckF4RqNYsuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4LvVUOckkHzrB+DMX3+OCBJPY/I2yGTk7g0vytRO4O50byskE4QHtnobt4IOuzNZMjgbAtOIRIVZ4B2NXjfKMHWn2u/V8PfiL1reqX+hQ1aKe96l+tI3WC52lQ0jrNqK6nqvIkm82uaRWvXUH8YDyUFbIMcMRolBOFlfb7neDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IK38GTRa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUzxkBqZssfdIk6W4wCy4Qq2uPrVqlZedU1aCQ8XiqeT/JAIjnrgtjXLj/YoiMAAOlYqDrDdntHgqVC4zEWC7CNyec8akyyfWoa+XSGgSYsZ1PqHCsFIGZq9+z/bXOPULiVIzzqMZBJ6UJT0VQfKy3RGDRGGTJMC+6FS7N0BB8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zfv+Q8Qp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IK38GTRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7862DC4CEEB;
-	Tue, 22 Jul 2025 14:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zfv+Q8Qp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E087DC4CEEB;
+	Tue, 22 Jul 2025 14:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193355;
-	bh=SCheFc+i5xffdHKEW0jAy+WHWH/wEpf+aRQ8TMVFURc=;
+	s=korg; t=1753193359;
+	bh=xhZp0wj4bHPbcmqSHodW6b+Llp0KKh/zckF4RqNYsuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IK38GTRaMj1VArCxqSPB+Angs5ZXM+FqqsOqLgbti6A+I76IHm2p8QHDNyjlPhHMF
-	 hl/ehPQj3dULSacERW9dRhAwWZf0zx5dy6twgWRqlLWgaLwFE3HuUCfoZpdLRTYViG
-	 IH2+kg1f6ePaOuv7HUkPkn/Ze3oKkxam3oXojwHE=
+	b=Zfv+Q8QpX/P3oUv4T6MIWbXQzc7XZnZcqWlBIwJH/znJeZ2nIp3RHAuq787Y8C8aW
+	 6sadGjUU+j5dGLFbDIad3YxiXckE663ud/qccOGGbq24624pjZOcQM3cLxvgy2AZSw
+	 TbDwQeJvQ58zsAETD2s87VS/NqebaKXFVKqhYmZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.15 065/187] mmc: bcm2835: Fix dma_unmap_sg() nents value
-Date: Tue, 22 Jul 2025 15:43:55 +0200
-Message-ID: <20250722134348.169575160@linuxfoundation.org>
+Subject: [PATCH 6.15 066/187] mmc: sdhci-pci: Quirk for broken command queuing on Intel GLK-based Positivo models
+Date: Tue, 22 Jul 2025 15:43:56 +0200
+Message-ID: <20250722134348.204608316@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -50,34 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit ff09b71bf9daeca4f21d6e5e449641c9fad75b53 upstream.
+commit 50c78f398e92fafa1cbba3469c95fe04b2e4206d upstream.
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+Disable command queuing on Intel GLK-based Positivo models.
 
-Fixes: 2f5da678351f ("mmc: bcm2835: Properly handle dmaengine_prep_slave_sg")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Without this quirk, CQE (Command Queuing Engine) causes instability
+or I/O errors during operation. Disabling it ensures stable
+operation on affected devices.
+
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Fixes: bedf9fc01ff1 ("mmc: sdhci: Workaround broken command queuing on Intel GLK")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250630093510.82871-2-fourier.thomas@gmail.com
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250626112442.9791-1-edson.drosdeck@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/bcm2835.c |    3 ++-
+ drivers/mmc/host/sdhci-pci-core.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/bcm2835.c
-+++ b/drivers/mmc/host/bcm2835.c
-@@ -503,7 +503,8 @@ void bcm2835_prepare_dma(struct bcm2835_
- 				       DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+--- a/drivers/mmc/host/sdhci-pci-core.c
++++ b/drivers/mmc/host/sdhci-pci-core.c
+@@ -913,7 +913,8 @@ static bool glk_broken_cqhci(struct sdhc
+ {
+ 	return slot->chip->pdev->device == PCI_DEVICE_ID_INTEL_GLK_EMMC &&
+ 	       (dmi_match(DMI_BIOS_VENDOR, "LENOVO") ||
+-		dmi_match(DMI_SYS_VENDOR, "IRBIS"));
++		dmi_match(DMI_SYS_VENDOR, "IRBIS") ||
++		dmi_match(DMI_SYS_VENDOR, "Positivo Tecnologia SA"));
+ }
  
- 	if (!desc) {
--		dma_unmap_sg(dma_chan->device->dev, data->sg, sg_len, dir_data);
-+		dma_unmap_sg(dma_chan->device->dev, data->sg, data->sg_len,
-+			     dir_data);
- 		return;
- 	}
- 
+ static bool jsl_broken_hs400es(struct sdhci_pci_slot *slot)
 
 
