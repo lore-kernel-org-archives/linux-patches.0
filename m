@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311B82ED15D;
-	Tue, 22 Jul 2025 14:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001282EA75E;
+	Tue, 22 Jul 2025 14:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193235; cv=none; b=Bx5s6XJjSFzQn4qnOZyUl0yhKf7cBrrsLcko7dTsdOS+/phlFrtpFyXjhNNJqpNwHPMSrDZDj2yWI+W9kUE1QNnNuHdXkLzZ3d7l60i7emgox/AI5AUoFZwaztL4xUEc7tdaqWD0vcND8TmTJ5fV4Xu3OOhVl0gglVXNhz4RUEA=
+	t=1753193239; cv=none; b=AVIvKcVNEliJFnlRb0hNhMBKrThtlX56B8NquX0OsEFRycEDCDP8C279682VVYiPrNXOjTXoSPiXsYXxZARbxjonz8Rb1b7oM7sbGcKzL27B7wBXID6zjNl41eKizj+GUz/NHhw7JMAgZ+h4nLqltJjnwL3QeYPAeC3BpRHbbh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193235; c=relaxed/simple;
-	bh=Lu4CG4CM8Pcl6O709O0kwGE9dc3h3JRcFaw4FSh9DIs=;
+	s=arc-20240116; t=1753193239; c=relaxed/simple;
+	bh=+PpEKXleZsh6rsFWYZGOR8jWeCL7sOMJqNXYs30NZUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bp5HRyK6loAgYUs/fOkL3xecP6uiGmKvPRmGotkPNl+xxLMMnbIo6lxV13MeqoqMep7xssHS376NNAK8SxYnxVWp9lhPOgHPvforPNFio/MonNUFbQE5fIBNQTEJPmUEdrS97OpXpY2WY8EZfGVBDdzazsPDY025isNW+jGnhhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoHKzasF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWt7S+YTBKxIkB75xt+97Xl/SQsrKbq/vc4K79kZ3VMOAtyJcZP93jmS1PnA2AaTwPjks5GeZWJhKD+p6Hk+NlLhJ2yxEKNbFW3myOix0ZEToFb/Orb3oRLaHaVYDLAbJCIgXzGHVJ1H+8wNatXJ00bJL509az09bKoHhG3KIR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OXZmuyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoHKzasF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419F8C4CEF7;
-	Tue, 22 Jul 2025 14:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OXZmuyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9850C4CEEB;
+	Tue, 22 Jul 2025 14:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193234;
-	bh=Lu4CG4CM8Pcl6O709O0kwGE9dc3h3JRcFaw4FSh9DIs=;
+	s=korg; t=1753193238;
+	bh=+PpEKXleZsh6rsFWYZGOR8jWeCL7sOMJqNXYs30NZUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoHKzasF1iyJHqzcmV8jcgUwMMNvxCVrISfUi5R4aKFt/I7IIZuQ+r73XLFcZglQ8
-	 Makgb7YqbdtJMmcZ5inkDmZN+AaBy0Yoo+C/3v1CPa4c/6hrXlAOnXBeZMc40gfHsx
-	 JJktlMqEGUBsH/O0f/19GrY7WW190ahEW6H2dsHA=
+	b=1OXZmuyTt6BQmO676OP6kw1gqyaUfNdRMZjSgytuvWaaEOSQ7oEas43w0cWACNr3a
+	 E1+VcCmxLT6JUdTkPVR2gZnZlO+Gk95ns/QCFlJj0Ak/byvkIAVXPA4/Q7W5za8RVf
+	 +O8+5I1VOQJvGHjjH/jta+rQTm0GTd7IoDELCmeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Kacur <jkacur@redhat.com>,
-	Luis Goncalves <lgoncalv@redhat.com>,
-	Attila Fazekas <afazekas@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.15 030/187] tracing/osnoise: Fix crash in timerlat_dump_stack()
-Date: Tue, 22 Jul 2025 15:43:20 +0200
-Message-ID: <20250722134346.881116849@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.15 004/187] USB: serial: option: add Telit Cinterion FE910C04 (ECM) composition
+Date: Tue, 22 Jul 2025 15:42:54 +0200
+Message-ID: <20250722134345.924839162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -54,72 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 85a3bce695b361d85fc528e6fbb33e4c8089c806 upstream.
+commit 252f4ac08cd2f16ecd20e4c5e41ac2a17dd86942 upstream.
 
-We have observed kernel panics when using timerlat with stack saving,
-with the following dmesg output:
+Add Telit Cinterion FE910C04 (ECM) composition:
+0x10c7: ECM + tty (AT) + tty (AT) + tty (diag)
 
-memcpy: detected buffer overflow: 88 byte write of buffer size 0
-WARNING: CPU: 2 PID: 8153 at lib/string_helpers.c:1032 __fortify_report+0x55/0xa0
-CPU: 2 UID: 0 PID: 8153 Comm: timerlatu/2 Kdump: loaded Not tainted 6.15.3-200.fc42.x86_64 #1 PREEMPT(lazy)
-Call Trace:
- <TASK>
- ? trace_buffer_lock_reserve+0x2a/0x60
- __fortify_panic+0xd/0xf
- __timerlat_dump_stack.cold+0xd/0xd
- timerlat_dump_stack.part.0+0x47/0x80
- timerlat_fd_read+0x36d/0x390
- vfs_read+0xe2/0x390
- ? syscall_exit_to_user_mode+0x1d5/0x210
- ksys_read+0x73/0xe0
- do_syscall_64+0x7b/0x160
- ? exc_page_fault+0x7e/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-__timerlat_dump_stack() constructs the ftrace stack entry like this:
-
-struct stack_entry *entry;
-...
-memcpy(&entry->caller, fstack->calls, size);
-entry->size = fstack->nr_entries;
-
-Since commit e7186af7fb26 ("tracing: Add back FORTIFY_SOURCE logic to
-kernel_stack event structure"), struct stack_entry marks its caller
-field with __counted_by(size). At the time of the memcpy, entry->size
-contains garbage from the ringbuffer, which under some circumstances is
-zero, triggering a kernel panic by buffer overflow.
-
-Populate the size field before the memcpy so that the out-of-bounds
-check knows the correct size. This is analogous to
-__ftrace_trace_stack().
+usb-devices output:
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c7 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
 Cc: stable@vger.kernel.org
-Cc: John Kacur <jkacur@redhat.com>
-Cc: Luis Goncalves <lgoncalv@redhat.com>
-Cc: Attila Fazekas <afazekas@redhat.com>
-Link: https://lore.kernel.org/20250716143601.7313-1-tglozar@redhat.com
-Fixes: e7186af7fb26 ("tracing: Add back FORTIFY_SOURCE logic to kernel_stack event structure")
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -637,8 +637,8 @@ __timerlat_dump_stack(struct trace_buffe
- 
- 	entry = ring_buffer_event_data(event);
- 
--	memcpy(&entry->caller, fstack->calls, size);
- 	entry->size = fstack->nr_entries;
-+	memcpy(&entry->caller, fstack->calls, size);
- 
- 	trace_buffer_unlock_commit_nostack(buffer, event);
- }
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1415,6 +1415,9 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x30),	/* Telit FE910C04 (ECM) */
++	  .driver_info = NCTRL(4) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x30),	/* Telit FN990B (MBIM) */
+ 	  .driver_info = NCTRL(6) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x40) },
 
 
