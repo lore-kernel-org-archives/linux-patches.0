@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE742E1733;
-	Tue, 22 Jul 2025 13:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CFB2EA46A;
+	Tue, 22 Jul 2025 13:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192506; cv=none; b=rGBdKVWp4ZtHHpfF6IFFrnZLC9UrvB3E+3r9p9b7zUNjVR6fVmZ0Wle60nCUYFBJT1r385vJ+oLvzUh+zbmjuMF1i69VkQdKfwOEnbSmiET5Byp1but/UEHVHjpx0ceEkE9krviZHWxVvKXYGC0QWuRkKQ38LNIMaDUUwJzJV0Y=
+	t=1753192509; cv=none; b=M2lt7xlnY6bxfAm6lOy0RqgxP8TlYK2vAcFrsV2IvcfHG7S8BTp5e5yz3eYvq93+j4S+81mmVqEqVtnxAct/mArEFY+CWkReBeU+3OHBZUMH979/VzeHtfss432of7POxTaGSE/TFhAINW7t/rfGxbSccCM6+SKQDSl1NcAlNtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192506; c=relaxed/simple;
-	bh=Lm+UYyrzjUbAyiKmnAOwcMriocRlveVLpEAtSDpstCI=;
+	s=arc-20240116; t=1753192509; c=relaxed/simple;
+	bh=6AvkIYBEI2ulemTF3fsOd1Tp/ALlXRJDHM/Nnf22AX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdXmPROr+MS/fV9G1Eq+IHaKaOUej60/Ud3CiSsfN+58nw3qA9OSYv1cHuPl89VnQA2zN2Gcrd/tGo3CgSY14A+gcKT51Kk0ZQ/Pheu98GJezEwzjuXKsVoPDGUrkUFZUE0Xl9ZYgmHjAOmL1/kw1X+fVGUVKjfq0lRSgrxuGNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLqwr+bG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=okrgVLrbQghOZBqrzaGPCe6V5R46acL571ja56/7PetMlPmMqr1tAHVbxUP1+kf1moIGiH9Q8ZZZfl0ovYv2LNvIOWY6KVbhT0gqw8hTdOUl6QnHcLEjV1/CkeLD5dgn6kF09crg43RdcIey6fIqq82TOIe+r26+xKheDwanwEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFWG9fU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLqwr+bG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D67C4CEEB;
-	Tue, 22 Jul 2025 13:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFWG9fU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9115C4CEEB;
+	Tue, 22 Jul 2025 13:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192505;
-	bh=Lm+UYyrzjUbAyiKmnAOwcMriocRlveVLpEAtSDpstCI=;
+	s=korg; t=1753192509;
+	bh=6AvkIYBEI2ulemTF3fsOd1Tp/ALlXRJDHM/Nnf22AX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLqwr+bG/S1F6RhMqPwVruHwxXdSr/oZYz7YiLaoOKGjnnWvvLhEBd+WKMvGyuArX
-	 LbY9WClR59h2msPe6ZqI6s8tAYoPrqCJ0nvezx9aKIWq/vfC5bMf95KmzQrms9UvTL
-	 jeQM0C3fOkQ5WZaI7FNO8m5MUTM60fr4vqUmzrQM=
+	b=wFWG9fU0/qQVZefYPhLrjlq9nlGLFdbxxP6WiJXRrrqHObtCYcbCo68PEBjtd5Rwa
+	 dMX4sERYx+8aHnCYhd62AwKr7NlJAP7PdP3xCygeejifdveWygV/loJpuhiz23h5FW
+	 Qa8FpPpy62w/jnu2LexhZ8uZ0nn1duHZBXLv4q5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sean Anderson <sean.anderson@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/111] tls: always refresh the queue when reading sock
-Date: Tue, 22 Jul 2025 15:45:01 +0200
-Message-ID: <20250722134336.605530879@linuxfoundation.org>
+Subject: [PATCH 6.6 069/111] net: phy: Dont register LEDs for genphy
+Date: Tue, 22 Jul 2025 15:44:44 +0200
+Message-ID: <20250722134335.949926534@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -50,53 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 4ab26bce3969f8fd925fe6f6f551e4d1a508c68b ]
+[ Upstream commit f0f2b992d8185a0366be951685e08643aae17d6d ]
 
-After recent changes in net-next TCP compacts skbs much more
-aggressively. This unearthed a bug in TLS where we may try
-to operate on an old skb when checking if all skbs in the
-queue have matching decrypt state and geometry.
+If a PHY has no driver, the genphy driver is probed/removed directly in
+phy_attach/detach. If the PHY's ofnode has an "leds" subnode, then the
+LEDs will be (un)registered when probing/removing the genphy driver.
+This could occur if the leds are for a non-generic driver that isn't
+loaded for whatever reason. Synchronously removing the PHY device in
+phy_detach leads to the following deadlock:
 
-    BUG: KASAN: slab-use-after-free in tls_strp_check_rcv+0x898/0x9a0 [tls]
-    (net/tls/tls_strp.c:436 net/tls/tls_strp.c:530 net/tls/tls_strp.c:544)
-    Read of size 4 at addr ffff888013085750 by task tls/13529
+rtnl_lock()
+ndo_close()
+    ...
+    phy_detach()
+        phy_remove()
+            phy_leds_unregister()
+                led_classdev_unregister()
+                    led_trigger_set()
+                        netdev_trigger_deactivate()
+                            unregister_netdevice_notifier()
+                                rtnl_lock()
 
-    CPU: 2 UID: 0 PID: 13529 Comm: tls Not tainted 6.16.0-rc5-virtme
-    Call Trace:
-     kasan_report+0xca/0x100
-     tls_strp_check_rcv+0x898/0x9a0 [tls]
-     tls_rx_rec_wait+0x2c9/0x8d0 [tls]
-     tls_sw_recvmsg+0x40f/0x1aa0 [tls]
-     inet_recvmsg+0x1c3/0x1f0
+There is a corresponding deadlock on the open/register side of things
+(and that one is reported by lockdep), but it requires a race while this
+one is deterministic.
 
-Always reload the queue, fast path is to have the record in the queue
-when we wake, anyway (IOW the path going down "if !strp->stm.full_len").
+Generic PHYs do not support LEDs anyway, so don't bother registering
+them.
 
-Fixes: 0d87bbd39d7f ("tls: strp: make sure the TCP skbs do not have overlapping data")
-Link: https://patch.msgid.link/20250716143850.1520292-1-kuba@kernel.org
+Fixes: 01e5b728e9e4 ("net: phy: Add a binding for PHY LEDs")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20250707195803.666097-1-sean.anderson@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_strp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/phy/phy_device.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index 1852fac3e72b7..bea60b0160d1f 100644
---- a/net/tls/tls_strp.c
-+++ b/net/tls/tls_strp.c
-@@ -511,9 +511,8 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
- 	if (inq < strp->stm.full_len)
- 		return tls_strp_read_copy(strp, true);
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index cde0e80474a1d..875788918bcb3 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -3377,7 +3377,8 @@ static int phy_probe(struct device *dev)
+ 	/* Get the LEDs from the device tree, and instantiate standard
+ 	 * LEDs for them.
+ 	 */
+-	if (IS_ENABLED(CONFIG_PHYLIB_LEDS))
++	if (IS_ENABLED(CONFIG_PHYLIB_LEDS) && !phy_driver_is_genphy(phydev) &&
++	    !phy_driver_is_genphy_10g(phydev))
+ 		err = of_phy_leds(phydev);
  
-+	tls_strp_load_anchor_with_queue(strp, inq);
- 	if (!strp->stm.full_len) {
--		tls_strp_load_anchor_with_queue(strp, inq);
--
- 		sz = tls_rx_msg_size(strp, strp->anchor);
- 		if (sz < 0) {
- 			tls_strp_abort_strp(strp, sz);
+ out:
+@@ -3394,7 +3395,8 @@ static int phy_remove(struct device *dev)
+ 
+ 	cancel_delayed_work_sync(&phydev->state_queue);
+ 
+-	if (IS_ENABLED(CONFIG_PHYLIB_LEDS))
++	if (IS_ENABLED(CONFIG_PHYLIB_LEDS) && !phy_driver_is_genphy(phydev) &&
++	    !phy_driver_is_genphy_10g(phydev))
+ 		phy_leds_unregister(phydev);
+ 
+ 	phydev->state = PHY_DOWN;
 -- 
 2.39.5
 
