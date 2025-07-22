@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E1028C039;
-	Tue, 22 Jul 2025 13:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD342B9A5;
+	Tue, 22 Jul 2025 13:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192424; cv=none; b=olBXQTkIjD77d4sLwFrogfUH2YatbWUylRqP6SQcm0x/ZPBezPjmgYtxEAUQZaVpJ8vA745W+QwUAAI4qJ25+sZebAR4zrV8TPIpspRAP5+/abYhscGUnN/NEhfyYrdXatd8HxcQNlXyGJzEKH9UgjFhK3A+BVoPYGt1ImxgZdM=
+	t=1753192428; cv=none; b=oLxiUkjutzcjRGC09RqoTbOaT4rIMReAOV/SUEUpBbtpbHdF/rrk05s9f29UYtkX4Sjk5EGZ0HNSry/CcenZFVi/kt5ZnOot5F+sd4vdQRs06Q2AnXXnv8fNeseozOENO4XZLiQt760a2nUGpd7P6VAOLz/NyP34YNEjME28J0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192424; c=relaxed/simple;
-	bh=lxqemhfMZR3gZz8rKo5FT4DIPYn4KWwWtmrgOa/s19I=;
+	s=arc-20240116; t=1753192428; c=relaxed/simple;
+	bh=J58qexSGMwEWgqb4Nb3YztUHy+iFN+T9UpMxfN9cDUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TV33a1dLmX49jQNl2RiStEzVUlaPbxq1sa/yE9/SAS7MjJnCXMgbtZA0myA0ylc5scXDx1FXje0RYkz8rU6dZh22v9fITJSo6Lola11hXjhSqIPnvy7k+3jvkF5qNeGKzY9ZGVVzT3aGgW4La7cN09OE8ecBmXlIT9k4ERugt7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sv+IYiqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cylw/WwRAXaPS8MNY/yCB8IqsRKg97D6hoeoOgfFvFnBnS7pzqPrrcLNEcqSySbVFgNPL0pzR0v13Wp/Sx78MZT2OiAoeIqG8JhGUrQIf+jUJLZgjTVL9t1nst4wyscLx3zx7KpRhWXnllkTc025/C0gGr+23WO3DhNg9Dq+4c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM0oXuYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sv+IYiqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC71BC4CEEB;
-	Tue, 22 Jul 2025 13:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM0oXuYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3B2C4CEEB;
+	Tue, 22 Jul 2025 13:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192424;
-	bh=lxqemhfMZR3gZz8rKo5FT4DIPYn4KWwWtmrgOa/s19I=;
+	s=korg; t=1753192427;
+	bh=J58qexSGMwEWgqb4Nb3YztUHy+iFN+T9UpMxfN9cDUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sv+IYiqHSaxJ12O6RpFjksWl1NJOLsOy4OON7NHGscZ7GXavoDsPEfmNsJAn0A/96
-	 +7n1y/W+SN96rLjo568NS5J9OEpKyo8tJ2U6qqh2PLT6D20PGrTXCIexO8mBpeJHfN
-	 eVrKOZSZ2xrTEAew7+UgfLLAySv5S04aoJLKONbw=
+	b=bM0oXuYXTSGuSqOzNQJaqUkY5KchyxI4rbcKhbc9zLi20q0wnZHFVLd0eM/iePJcV
+	 b0rKmCMINq7mJIQHFuKSqCF5Sumiebr+7pxehoEW375gU951l0G03Q51uPYtiDAy7h
+	 MPg1xPk/KDeMIpB56zwEbcfZxuHNd8Yowv0NWrWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 034/111] isofs: Verify inode mode when loading from disk
-Date: Tue, 22 Jul 2025 15:44:09 +0200
-Message-ID: <20250722134334.677766627@linuxfoundation.org>
+	syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 061/111] bpf: Reject %p% format string in bprintf-like helpers
+Date: Tue, 22 Jul 2025 15:44:36 +0200
+Message-ID: <20250722134335.660004740@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -51,43 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit 0a9e7405131380b57e155f10242b2e25d2e51852 upstream.
+[ Upstream commit f8242745871f81a3ac37f9f51853d12854fd0b58 ]
 
-Verify that the inode mode is sane when loading it from the disk to
-avoid complaints from VFS about setting up invalid inodes.
+static const char fmt[] = "%p%";
+    bpf_trace_printk(fmt, sizeof(fmt));
 
-Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/20250709095545.31062-2-jack@suse.cz
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The above BPF program isn't rejected and causes a kernel warning at
+runtime:
+
+    Please remove unsupported %\x00 in format string
+    WARNING: CPU: 1 PID: 7244 at lib/vsprintf.c:2680 format_decode+0x49c/0x5d0
+
+This happens because bpf_bprintf_prepare skips over the second %,
+detected as punctuation, while processing %p. This patch fixes it by
+not skipping over punctuation. %\x00 is then processed in the next
+iteration and rejected.
+
+Reported-by: syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com
+Fixes: 48cac3f4a96d ("bpf: Implement formatted output helpers with bstr_printf")
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/a0e06cc479faec9e802ae51ba5d66420523251ee.1751395489.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/inode.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/bpf/helpers.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/fs/isofs/inode.c
-+++ b/fs/isofs/inode.c
-@@ -1486,9 +1486,16 @@ static int isofs_read_inode(struct inode
- 		inode->i_op = &page_symlink_inode_operations;
- 		inode_nohighmem(inode);
- 		inode->i_data.a_ops = &isofs_symlink_aops;
--	} else
-+	} else if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode) ||
-+		   S_ISFIFO(inode->i_mode) || S_ISSOCK(inode->i_mode)) {
- 		/* XXX - parse_rock_ridge_inode() had already set i_rdev. */
- 		init_special_inode(inode, inode->i_mode, inode->i_rdev);
-+	} else {
-+		printk(KERN_DEBUG "ISOFS: Invalid file type 0%04o for inode %lu.\n",
-+			inode->i_mode, inode->i_ino);
-+		ret = -EIO;
-+		goto fail;
-+	}
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 8f0b62b04deeb..4b20a72ab8cff 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -885,6 +885,13 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 		if (fmt[i] == 'p') {
+ 			sizeof_cur_arg = sizeof(long);
  
- 	ret = 0;
- out:
++			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
++			    ispunct(fmt[i + 1])) {
++				if (tmp_buf)
++					cur_arg = raw_args[num_spec];
++				goto nocopy_fmt;
++			}
++
+ 			if ((fmt[i + 1] == 'k' || fmt[i + 1] == 'u') &&
+ 			    fmt[i + 2] == 's') {
+ 				fmt_ptype = fmt[i + 1];
+@@ -892,11 +899,9 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 				goto fmt_str;
+ 			}
+ 
+-			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
+-			    ispunct(fmt[i + 1]) || fmt[i + 1] == 'K' ||
++			if (fmt[i + 1] == 'K' ||
+ 			    fmt[i + 1] == 'x' || fmt[i + 1] == 's' ||
+ 			    fmt[i + 1] == 'S') {
+-				/* just kernel pointers */
+ 				if (tmp_buf)
+ 					cur_arg = raw_args[num_spec];
+ 				i++;
+-- 
+2.39.5
+
 
 
