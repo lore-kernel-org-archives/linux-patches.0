@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB91A32;
-	Tue, 22 Jul 2025 14:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144CD19CCEC;
+	Tue, 22 Jul 2025 14:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193162; cv=none; b=UBCazoKTYfphZV2dJKqowWjWfqTdcmgsK/zUAUNWZzfZKwkYCacGl4EpD+SPKu6BZJmGE9QUj5BoNffoSMpz0tpuqK5yv0X4pdpM7wfyLqPK6lyIHQ92HSqbLpgkvut6sYZ4/2NugO6QwwCvhzPkxLjrxXMi/rTh7c/AyVS04A4=
+	t=1753193166; cv=none; b=e7Ph6o5WPTaP88BVKybP49BM0B1/alkbpwo7xulJ1ah1HiHRDUBdUVga+kabyUT0sZNtjkKqHwSHMTvmDm5dLf+LjGVcTO3NszyFw1Pm2blzO3Ulgavtx5PlVT5H+jtuuuatRsG3uJa6AQdpeS+eNuDAcY36HNrYq9OsYQROLOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193162; c=relaxed/simple;
-	bh=bkJG+2sRsJ0ln2gXfUMUBXFC7qiAIvG6o8zmLUiBEnw=;
+	s=arc-20240116; t=1753193166; c=relaxed/simple;
+	bh=nj48ZDStZ08ZniUMrFjZ1vqCNtGcaxLXUFJ0EvlL/Ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GPhyiMD6jHqDH96EG16u+hrkxiSll+xhS2KaMXDDFQjwDX2jhdWtFp2/tUHhqZ9cnabJWRBPW8Ce8sefaqWXrJsSFbi0e1WsqMOfAd+VL0Kf66cYEP9gTtREJeudcQfQE5Y85iAdGSmzBtYEgpbGUWP7S/t3fzU9ZDze3vjx1yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDRi3Coh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RHS8lhhMl6EM2hMTMhYKuLb7ql5805naQGEABj0pjnPiQFgegQDD7lR7sQ7uvz/BRNEEly+EY/aWWuYgvriWMovkH2MQ+n5g2ULURjXwRjS/k6vrHdYhnFbsNWiFsOlTizdtvoMaBrhA/AwbPB342M4jEQqFetxN8QcuqWtpRTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lC82fE39; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDRi3Coh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C44AC4CEEB;
-	Tue, 22 Jul 2025 14:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lC82fE39"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDA3C4CEEB;
+	Tue, 22 Jul 2025 14:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193162;
-	bh=bkJG+2sRsJ0ln2gXfUMUBXFC7qiAIvG6o8zmLUiBEnw=;
+	s=korg; t=1753193165;
+	bh=nj48ZDStZ08ZniUMrFjZ1vqCNtGcaxLXUFJ0EvlL/Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDRi3CohdgsdZ2NbI7KqtJCG0TUO2KHkirqhiOs5L5y/iehzX4XmdVUOC8Di1HPYg
-	 yMoRZjg64ytxQ+46XxhWHiJ+SbTTnHKMyGuFK7+2NNa6vQSYVFy4kQc3fUIf5ioPxc
-	 3Mx/5vc+1WHKKMIkGOOTQld9jV0DQwO08ve/CmDw=
+	b=lC82fE39Aq4NRCfcHsOhZgfr4kwGb3Bu6zEzacX28W42S0/hiABEFS5UYiFUfIc8T
+	 v/4Yu8PRs8DfP/mugVcTV8MhjxTqH17p68aunuVKcmLXFzNpDp87yoc13GoG7RH+l2
+	 EMUv6SBp7c7a8n2ZGavtvwCBrG41Q5tU1cQpZ1Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
 	Alain Volmat <alain.volmat@foss.st.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.15 010/187] i2c: stm32: fix the device used for the DMA map
-Date: Tue, 22 Jul 2025 15:43:00 +0200
-Message-ID: <20250722134346.137486715@linuxfoundation.org>
+Subject: [PATCH 6.15 011/187] i2c: stm32f7: unmap DMA mapped buffer
+Date: Tue, 22 Jul 2025 15:43:01 +0200
+Message-ID: <20250722134346.173576432@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -54,72 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Clément Le Goffic <clement.legoffic@foss.st.com>
 
-commit c870cbbd71fccda71d575f0acd4a8d2b7cd88861 upstream.
+commit 6aae87fe7f180cd93a74466cdb6cf2aa9bb28798 upstream.
 
-If the DMA mapping failed, it produced an error log with the wrong
-device name:
-"stm32-dma3 40400000.dma-controller: rejecting DMA map of vmalloc memory"
-Fix this issue by replacing the dev with the I2C dev.
+Before each I2C transfer using DMA, the I2C buffer is DMA'pped to make
+sure the memory buffer is DMA'able. This is handle in the function
+`stm32_i2c_prep_dma_xfer()`.
+If the transfer fails for any reason the I2C buffer must be unmap.
+Use the dma_callback to factorize the code and fix this issue.
 
-Fixes: bb8822cbbc53 ("i2c: i2c-stm32: Add generic DMA API")
+Note that the `stm32f7_i2c_dma_callback()` is now called in case of DMA
+transfer success and error and that the `complete()` on the dma_complete
+completion structure is done inconditionnally in case of transfer
+success or error as well as the `dmaengine_terminate_async()`.
+This is allowed as a `complete()` in case transfer error has no effect
+as well as a `dmaengine_terminate_async()` on a transfer success.
+
+Also fix the unneeded cast and remove not more needed variables.
+
+Fixes: 7ecc8cfde553 ("i2c: i2c-stm32f7: Add DMA support")
 Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
 Cc: <stable@vger.kernel.org> # v4.18+
 Acked-by: Alain Volmat <alain.volmat@foss.st.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250704-i2c-upstream-v4-1-84a095a2c728@foss.st.com
+Link: https://lore.kernel.org/r/20250704-i2c-upstream-v4-2-84a095a2c728@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32.c   |    8 +++-----
- drivers/i2c/busses/i2c-stm32f7.c |    4 ++--
- 2 files changed, 5 insertions(+), 7 deletions(-)
+ drivers/i2c/busses/i2c-stm32f7.c |   20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
---- a/drivers/i2c/busses/i2c-stm32.c
-+++ b/drivers/i2c/busses/i2c-stm32.c
-@@ -102,7 +102,6 @@ int stm32_i2c_prep_dma_xfer(struct devic
- 			    void *dma_async_param)
- {
- 	struct dma_async_tx_descriptor *txdesc;
--	struct device *chan_dev;
- 	int ret;
- 
- 	if (rd_wr) {
-@@ -116,11 +115,10 @@ int stm32_i2c_prep_dma_xfer(struct devic
- 	}
- 
- 	dma->dma_len = len;
--	chan_dev = dma->chan_using->device->dev;
- 
--	dma->dma_buf = dma_map_single(chan_dev, buf, dma->dma_len,
-+	dma->dma_buf = dma_map_single(dev, buf, dma->dma_len,
- 				      dma->dma_data_dir);
--	if (dma_mapping_error(chan_dev, dma->dma_buf)) {
-+	if (dma_mapping_error(dev, dma->dma_buf)) {
- 		dev_err(dev, "DMA mapping failed\n");
- 		return -EINVAL;
- 	}
-@@ -150,7 +148,7 @@ int stm32_i2c_prep_dma_xfer(struct devic
- 	return 0;
- 
- err:
--	dma_unmap_single(chan_dev, dma->dma_buf, dma->dma_len,
-+	dma_unmap_single(dev, dma->dma_buf, dma->dma_len,
- 			 dma->dma_data_dir);
- 	return ret;
- }
 --- a/drivers/i2c/busses/i2c-stm32f7.c
 +++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -741,10 +741,10 @@ static void stm32f7_i2c_dma_callback(voi
+@@ -739,10 +739,11 @@ static void stm32f7_i2c_disable_dma_req(
+ 
+ static void stm32f7_i2c_dma_callback(void *arg)
  {
- 	struct stm32f7_i2c_dev *i2c_dev = (struct stm32f7_i2c_dev *)arg;
+-	struct stm32f7_i2c_dev *i2c_dev = (struct stm32f7_i2c_dev *)arg;
++	struct stm32f7_i2c_dev *i2c_dev = arg;
  	struct stm32_i2c_dma *dma = i2c_dev->dma;
--	struct device *dev = dma->chan_using->device->dev;
  
  	stm32f7_i2c_disable_dma_req(i2c_dev);
--	dma_unmap_single(dev, dma->dma_buf, dma->dma_len, dma->dma_data_dir);
-+	dma_unmap_single(i2c_dev->dev, dma->dma_buf, dma->dma_len,
-+			 dma->dma_data_dir);
++	dmaengine_terminate_async(dma->chan_using);
+ 	dma_unmap_single(i2c_dev->dev, dma->dma_buf, dma->dma_len,
+ 			 dma->dma_data_dir);
  	complete(&dma->dma_complete);
- }
+@@ -1510,7 +1511,6 @@ static irqreturn_t stm32f7_i2c_handle_is
+ 	u16 addr = f7_msg->addr;
+ 	void __iomem *base = i2c_dev->base;
+ 	struct device *dev = i2c_dev->dev;
+-	struct stm32_i2c_dma *dma = i2c_dev->dma;
  
+ 	/* Bus error */
+ 	if (status & STM32F7_I2C_ISR_BERR) {
+@@ -1551,10 +1551,8 @@ static irqreturn_t stm32f7_i2c_handle_is
+ 	}
+ 
+ 	/* Disable dma */
+-	if (i2c_dev->use_dma) {
+-		stm32f7_i2c_disable_dma_req(i2c_dev);
+-		dmaengine_terminate_async(dma->chan_using);
+-	}
++	if (i2c_dev->use_dma)
++		stm32f7_i2c_dma_callback(i2c_dev);
+ 
+ 	i2c_dev->master_mode = false;
+ 	complete(&i2c_dev->complete);
+@@ -1600,7 +1598,6 @@ static irqreturn_t stm32f7_i2c_isr_event
+ {
+ 	struct stm32f7_i2c_dev *i2c_dev = data;
+ 	struct stm32f7_i2c_msg *f7_msg = &i2c_dev->f7_msg;
+-	struct stm32_i2c_dma *dma = i2c_dev->dma;
+ 	void __iomem *base = i2c_dev->base;
+ 	u32 status, mask;
+ 	int ret;
+@@ -1619,10 +1616,8 @@ static irqreturn_t stm32f7_i2c_isr_event
+ 		dev_dbg(i2c_dev->dev, "<%s>: Receive NACK (addr %x)\n",
+ 			__func__, f7_msg->addr);
+ 		writel_relaxed(STM32F7_I2C_ICR_NACKCF, base + STM32F7_I2C_ICR);
+-		if (i2c_dev->use_dma) {
+-			stm32f7_i2c_disable_dma_req(i2c_dev);
+-			dmaengine_terminate_async(dma->chan_using);
+-		}
++		if (i2c_dev->use_dma)
++			stm32f7_i2c_dma_callback(i2c_dev);
+ 		f7_msg->result = -ENXIO;
+ 	}
+ 
+@@ -1640,8 +1635,7 @@ static irqreturn_t stm32f7_i2c_isr_event
+ 			ret = wait_for_completion_timeout(&i2c_dev->dma->dma_complete, HZ);
+ 			if (!ret) {
+ 				dev_dbg(i2c_dev->dev, "<%s>: Timed out\n", __func__);
+-				stm32f7_i2c_disable_dma_req(i2c_dev);
+-				dmaengine_terminate_async(dma->chan_using);
++				stm32f7_i2c_dma_callback(i2c_dev);
+ 				f7_msg->result = -ETIMEDOUT;
+ 			}
+ 		}
 
 
