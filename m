@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD6C433A8;
-	Tue, 22 Jul 2025 13:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84C9433A8;
+	Tue, 22 Jul 2025 13:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753191997; cv=none; b=Nj7iGhAQ43fIJtkwbjTZTPaBL6gMqbCgrd4eg9dLu3y7vzdpdvg8CEjt3F8uxbnhpwF3+Xh9F6d6bZgTA6HeqiXzlJ7l+BNSCGI814xetClNcDtI8/XAw3o+hczc+iqV614BmND6d8vX3oKzOaPHUngHg/CmzUyMCKPaMOprBD0=
+	t=1753192000; cv=none; b=q2h8pD1cKStVHHTLSpTCT3nmp5IWKCDgc4HbFJ6MB5K0dlU8GMDvW+y7+4y8cOGWEfPpElr41lINW75ejnNc+AfYuThuP/VZY5cxwgBbrvk0wgbRUQimYo2sXvPkSueO8DvtNy7H6MYlaKJ1dwJ0/W0V+ZEmyTR/T9W0KZV5R9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753191997; c=relaxed/simple;
-	bh=O02lnFZcZk8w6I9y82k8mkmt6VGWH1Y3nCLkLR7Osmo=;
+	s=arc-20240116; t=1753192000; c=relaxed/simple;
+	bh=jQ2AXPVGYpJlMFhLlvkZ4C7Ug0giQysC39i/Ud1pOXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W6wvOkBp2cju9oNl/ROuADd84Hhu3s947L+JWlomLfq/GMFJQ1RRrU2uZlcxGfbJArnv5KKw43Bnn9nlUhgKmLvBtht6Of0YU6IrzRKSjgOfbImcc0IdZnBHNcxZ+VyRbrimZD6ocSwkqKP9+T+7+7jZTJ3t5PHSxqgUkMhspr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BB8X4ufm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CexkW1EaNWNXzJPaY7iWxq1vtF64QHA+JJTuIPal8uA2S65no2ZroCZKfmmTPvJS3ZiKzu2QGpw7QX0lyqjmO/qEz+94La2A6qdp2mK79GeRK67UagZLeo2rubDmFTEzA13SUAjcUs/TLfYhSS6xp9nCBe/0LRfpXvyWtGpdfmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUegOAyM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BB8X4ufm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E526BC4CEEB;
-	Tue, 22 Jul 2025 13:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUegOAyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3730AC4CEEB;
+	Tue, 22 Jul 2025 13:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753191997;
-	bh=O02lnFZcZk8w6I9y82k8mkmt6VGWH1Y3nCLkLR7Osmo=;
+	s=korg; t=1753192000;
+	bh=jQ2AXPVGYpJlMFhLlvkZ4C7Ug0giQysC39i/Ud1pOXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BB8X4ufmTcFRz+duL3JdaP5M0KOSnzFpggxRydgh1Mg3ix1DyQF/vLYmWUSh9R1d4
-	 +ldiAbygVktjrw9ElXjs4hJrnH3G1v0m/PNxP0aPLgphoj2WnqUvujMGBPigd929Fu
-	 mZryTh5QCTzQrmZaemM0vZhs3ZiXuHWSpH9Dqp0U=
+	b=QUegOAyMfwOfw4PS6RantLKld0mDTdw5xPr4bfuC6pT1/oREuen1p2qzS6Cig8PqW
+	 21ukxhpLC5BeNQ31hL2v6E74YA+R/SttonqA+x3iVYE2Wjm8WHsqgajo3JMd6Haiei
+	 nmCqnlBCjEHRjHU47mygsh7Zo5MCmlE37cnid8nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 06/79] i2c: stm32: fix the device used for the DMA map
-Date: Tue, 22 Jul 2025 15:44:02 +0200
-Message-ID: <20250722134328.616448696@linuxfoundation.org>
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 07/79] thunderbolt: Fix bit masking in tb_dp_port_set_hops()
+Date: Tue, 22 Jul 2025 15:44:03 +0200
+Message-ID: <20250722134328.651985984@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -45,81 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Le Goffic <clement.legoffic@foss.st.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-commit c870cbbd71fccda71d575f0acd4a8d2b7cd88861 upstream.
+commit 2cdde91c14ec358087f43287513946d493aef940 upstream.
 
-If the DMA mapping failed, it produced an error log with the wrong
-device name:
-"stm32-dma3 40400000.dma-controller: rejecting DMA map of vmalloc memory"
-Fix this issue by replacing the dev with the I2C dev.
+The tb_dp_port_set_hops() function was incorrectly clearing
+ADP_DP_CS_1_AUX_RX_HOPID_MASK twice. According to the function's
+purpose, it should clear both TX and RX AUX HopID fields.  Replace the
+first instance with ADP_DP_CS_1_AUX_TX_HOPID_MASK to ensure proper
+configuration of both AUX directions.
 
-Fixes: bb8822cbbc53 ("i2c: i2c-stm32: Add generic DMA API")
-Signed-off-by: Clément Le Goffic <clement.legoffic@foss.st.com>
-Cc: <stable@vger.kernel.org> # v4.18+
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250704-i2c-upstream-v4-1-84a095a2c728@foss.st.com
+Fixes: 98176380cbe5 ("thunderbolt: Convert DP adapter register names to follow the USB4 spec")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32.c   |    8 +++-----
- drivers/i2c/busses/i2c-stm32f7.c |    4 ++--
- 2 files changed, 5 insertions(+), 7 deletions(-)
+ drivers/thunderbolt/switch.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-stm32.c
-+++ b/drivers/i2c/busses/i2c-stm32.c
-@@ -102,7 +102,6 @@ int stm32_i2c_prep_dma_xfer(struct devic
- 			    void *dma_async_param)
- {
- 	struct dma_async_tx_descriptor *txdesc;
--	struct device *chan_dev;
- 	int ret;
+--- a/drivers/thunderbolt/switch.c
++++ b/drivers/thunderbolt/switch.c
+@@ -1491,7 +1491,7 @@ int tb_dp_port_set_hops(struct tb_port *
+ 		return ret;
  
- 	if (rd_wr) {
-@@ -116,11 +115,10 @@ int stm32_i2c_prep_dma_xfer(struct devic
- 	}
+ 	data[0] &= ~ADP_DP_CS_0_VIDEO_HOPID_MASK;
+-	data[1] &= ~ADP_DP_CS_1_AUX_RX_HOPID_MASK;
++	data[1] &= ~ADP_DP_CS_1_AUX_TX_HOPID_MASK;
+ 	data[1] &= ~ADP_DP_CS_1_AUX_RX_HOPID_MASK;
  
- 	dma->dma_len = len;
--	chan_dev = dma->chan_using->device->dev;
- 
--	dma->dma_buf = dma_map_single(chan_dev, buf, dma->dma_len,
-+	dma->dma_buf = dma_map_single(dev, buf, dma->dma_len,
- 				      dma->dma_data_dir);
--	if (dma_mapping_error(chan_dev, dma->dma_buf)) {
-+	if (dma_mapping_error(dev, dma->dma_buf)) {
- 		dev_err(dev, "DMA mapping failed\n");
- 		return -EINVAL;
- 	}
-@@ -150,7 +148,7 @@ int stm32_i2c_prep_dma_xfer(struct devic
- 	return 0;
- 
- err:
--	dma_unmap_single(chan_dev, dma->dma_buf, dma->dma_len,
-+	dma_unmap_single(dev, dma->dma_buf, dma->dma_len,
- 			 dma->dma_data_dir);
- 	return ret;
- }
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -727,10 +727,10 @@ static void stm32f7_i2c_dma_callback(voi
- {
- 	struct stm32f7_i2c_dev *i2c_dev = (struct stm32f7_i2c_dev *)arg;
- 	struct stm32_i2c_dma *dma = i2c_dev->dma;
--	struct device *dev = dma->chan_using->device->dev;
- 
- 	stm32f7_i2c_disable_dma_req(i2c_dev);
--	dma_unmap_single(dev, dma->dma_buf, dma->dma_len, dma->dma_data_dir);
-+	dma_unmap_single(i2c_dev->dev, dma->dma_buf, dma->dma_len,
-+			 dma->dma_data_dir);
- 	complete(&dma->dma_complete);
- }
- 
+ 	data[0] |= (video << ADP_DP_CS_0_VIDEO_HOPID_SHIFT) &
 
 
