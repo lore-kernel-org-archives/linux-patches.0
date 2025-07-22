@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB4A6D17;
-	Tue, 22 Jul 2025 14:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E412E1724;
+	Tue, 22 Jul 2025 14:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193101; cv=none; b=niXxlmOmhyTcc1Yk/eHI02MQJ9ksLffBZyyPyW/rOJXLexCSFHBMDwaQnPNinOyDzM6/ljJQQWUKWbqwmjwa4yVbVhHW8oLiSRoifJX/JUhVqVeTKoDtsjF/tUeBc2UOMSsekK8obe4nociZBfqtPMziiKRJHIq/ELLnp7kdry8=
+	t=1753193105; cv=none; b=ZcGbZbu6g6kRKZKGd8GHIIdnKw51BYRL1Rrn8oegely6gDnuRwCPPhB+yPN9QnAdQ7gHOe+UXAvJbyJaVKXmHuAFAWgbn9XOuMrjivgNMyU5G8dkpON/48SPRi98PcNjieA9pFfPEBBoZkh7yVmFRIRTxf64x6hijCb14I61UnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193101; c=relaxed/simple;
-	bh=J/Ff5FaTw14TbiFJg++HCwtqojq5K6FjjgmKaoD3cIk=;
+	s=arc-20240116; t=1753193105; c=relaxed/simple;
+	bh=AOEp3aBYa2Is8ViAw41UFhoqzZ2qeZCVWEdZHawBHyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EvckopFqfkWK9VmZLoT3Re78m3ZpMjsdp67g1hCxwCWa/i4kkadcNSleerKIBZlVdJKTL49ELfjAe2s3rQvyk8NPZeSl7EG77WSgk8P0Bj58f+NtEghO9NYd/cQywOQIyT8y/xrYcE0VZr2DUcb8dmzyTpL0zs8qjoOWny+BkK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHijdATO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SMZOpdKUmQOWxBIyaiMbvdD5fKMMS2K6+1hWVNxGYJWHScJBp8BSvr2UYrVpRda5UqO67uCrttJS6QACZXOum6CQaDIPes100n/WrPd094x8M1LEF+7WfrI5SP3FRX9OcuT3ZSyHOdMJHQZgLPN2D/a/OLmuSllbSrzOGWwJEwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GT7Adx8a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHijdATO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D507C4CEF1;
-	Tue, 22 Jul 2025 14:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GT7Adx8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F00C4CEF1;
+	Tue, 22 Jul 2025 14:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193101;
-	bh=J/Ff5FaTw14TbiFJg++HCwtqojq5K6FjjgmKaoD3cIk=;
+	s=korg; t=1753193105;
+	bh=AOEp3aBYa2Is8ViAw41UFhoqzZ2qeZCVWEdZHawBHyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHijdATOqHJaW/5ROvmzcwnmI4FkzhKU/45Xo4NzjXvFCAxDsjhthfh/dxjf9WawM
-	 46Hr/vJiQngTWuT4rOKH2oXAw1XkW3v8YtYRi+VEV3t+NpW48WWYwJNfc+TrNO56Sb
-	 6FAsf1hYwIMs7whK66dUzjXQuwPt9S/98J7+mVh0=
+	b=GT7Adx8a1qKzNWwDCq313WrIe78qf7z9ajmhOhbi3XKAQ8zixV6kzNno402YXbPVr
+	 qovUx7gyk2ZSbLGxXUFtSnV9vstoAwv2ZurmR2QllbrdY0SH3QilZdM6gBYVGI2XZ+
+	 rr68eBN5ODYo5y17a2Ikc9qQqTksCBLSGNy0oQ/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jayesh Choudhary <j-choudhary@ti.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/158] i2c: omap: Add support for setting mux
-Date: Tue, 22 Jul 2025 15:45:35 +0200
-Message-ID: <20250722134346.347298935@linuxfoundation.org>
+Subject: [PATCH 6.12 152/158] i2c: omap: Fix an error handling path in omap_i2c_probe()
+Date: Tue, 22 Jul 2025 15:45:36 +0200
+Message-ID: <20250722134346.383785228@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,86 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit b6ef830c60b6f4adfb72d0780b4363df3a1feb9c upstream.
+commit 666c23af755dccca8c25b5d5200ca28153c69a05 upstream.
 
-Some SoCs require muxes in the routing for SDA and SCL lines.
-Therefore, add support for setting the mux by reading the mux-states
-property from the dt-node.
+If an error occurs after calling mux_state_select(), mux_state_deselect()
+should be called as already done in the remove function.
 
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Link: https://lore.kernel.org/r/20250318103622.29979-3-j-choudhary@ti.com
+Fixes: b6ef830c60b6 ("i2c: omap: Add support for setting mux")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: <stable@vger.kernel.org> # v6.15+
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/998542981b6d2435c057dd8b9fe71743927babab.1749913149.git.christophe.jaillet@wanadoo.fr
 Stable-dep-of: a9503a2ecd95 ("i2c: omap: Handle omap_i2c_init() errors in omap_i2c_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/Kconfig    |    1 +
- drivers/i2c/busses/i2c-omap.c |   22 ++++++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ drivers/i2c/busses/i2c-omap.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/Kconfig
-+++ b/drivers/i2c/busses/Kconfig
-@@ -937,6 +937,7 @@ config I2C_OMAP
- 	tristate "OMAP I2C adapter"
- 	depends on ARCH_OMAP || ARCH_K3 || COMPILE_TEST
- 	default MACH_OMAP_OSK
-+	select MULTIPLEXER
- 	help
- 	  If you say yes to this option, support will be included for the
- 	  I2C interface on the Texas Instruments OMAP1/2 family of processors.
 --- a/drivers/i2c/busses/i2c-omap.c
 +++ b/drivers/i2c/busses/i2c-omap.c
-@@ -24,6 +24,7 @@
- #include <linux/platform_device.h>
- #include <linux/clk.h>
- #include <linux/io.h>
-+#include <linux/mux/consumer.h>
- #include <linux/of.h>
- #include <linux/slab.h>
- #include <linux/platform_data/i2c-omap.h>
-@@ -211,6 +212,7 @@ struct omap_i2c_dev {
- 	u16			syscstate;
- 	u16			westate;
- 	u16			errata;
-+	struct mux_state	*mux_state;
- };
- 
- static const u8 reg_map_ip_v1[] = {
-@@ -1452,6 +1454,23 @@ omap_i2c_probe(struct platform_device *p
- 				       (1000 * omap->speed / 8);
+@@ -1461,13 +1461,13 @@ omap_i2c_probe(struct platform_device *p
+ 		if (IS_ERR(mux_state)) {
+ 			r = PTR_ERR(mux_state);
+ 			dev_dbg(&pdev->dev, "failed to get I2C mux: %d\n", r);
+-			goto err_disable_pm;
++			goto err_put_pm;
+ 		}
+ 		omap->mux_state = mux_state;
+ 		r = mux_state_select(omap->mux_state);
+ 		if (r) {
+ 			dev_err(&pdev->dev, "failed to select I2C mux: %d\n", r);
+-			goto err_disable_pm;
++			goto err_put_pm;
+ 		}
  	}
  
-+	if (of_property_read_bool(node, "mux-states")) {
-+		struct mux_state *mux_state;
-+
-+		mux_state = devm_mux_state_get(&pdev->dev, NULL);
-+		if (IS_ERR(mux_state)) {
-+			r = PTR_ERR(mux_state);
-+			dev_dbg(&pdev->dev, "failed to get I2C mux: %d\n", r);
-+			goto err_disable_pm;
-+		}
-+		omap->mux_state = mux_state;
-+		r = mux_state_select(omap->mux_state);
-+		if (r) {
-+			dev_err(&pdev->dev, "failed to select I2C mux: %d\n", r);
-+			goto err_disable_pm;
-+		}
-+	}
-+
- 	/* reset ASAP, clearing any IRQs */
- 	omap_i2c_init(omap);
+@@ -1515,6 +1515,9 @@ omap_i2c_probe(struct platform_device *p
  
-@@ -1511,6 +1530,9 @@ static void omap_i2c_remove(struct platf
- 
- 	i2c_del_adapter(&omap->adapter);
- 
+ err_unuse_clocks:
+ 	omap_i2c_write_reg(omap, OMAP_I2C_CON_REG, 0);
 +	if (omap->mux_state)
 +		mux_state_deselect(omap->mux_state);
-+
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
- 		dev_err(omap->dev, "Failed to resume hardware, skip disable\n");
++err_put_pm:
+ 	pm_runtime_dont_use_autosuspend(omap->dev);
+ 	pm_runtime_put_sync(omap->dev);
+ err_disable_pm:
 
 
