@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D342EE5FB;
-	Tue, 22 Jul 2025 14:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF152EAB7C;
+	Tue, 22 Jul 2025 14:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193494; cv=none; b=QYO2A/dJJ35+b/Y12LeIVhG3OwGtvFfETAEB3XCYJAI49RUXywfwlMKd1Ds+iCHUmDJ060funwp82DgAeaMkWtee6/GFK5UjTnW2MbMI3IdSeHCy074KRr9RYS043iBGcoJHCQdVEw6m9QLjg83Gu0ypXBX9ehr8Zu2Joh7K1c4=
+	t=1753193497; cv=none; b=ccuScJch1roG9J4fLJmyJeiHFteJYBHs311y5f5p3FYdYOx8Y40CaUweW7Vfv2MtOH5b8wukhmCLQbe8yZxXpvIU6cgfF6xlFMn97k3qKjT9cIdrzCabte+eY6avLwVheshYPnRiX4hZ907ZoT+FbcVnIMdTvR0TddQll/H59GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193494; c=relaxed/simple;
-	bh=fbW+S1cDTqcvPRyZbKo0yWWeCKk5hYHwgHGgtWjrUxE=;
+	s=arc-20240116; t=1753193497; c=relaxed/simple;
+	bh=zquXD6Dh7rXxMzEnpGtZ9x5BagHVcgX2b0nU9OJ3lUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=celCxrLodEG+nFlJlY/vb3rcNLP1xUEzTv+IJdL089BV+9xEmpnqmTjnn7ZYyQjCUUU5yxote1herFb30GSD64fPYRc3lTKrll9ItlXKsNNTPo808/wEa90C81j2GOeNd9OiKlPBC0sMhdsAI1njzQNuEQxZElQHGlosdxU2Iok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4ydwvSH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rUf2tQ2F8OKPrUCuGvqokpmoGwrU6ND9Sybv5Qa5OfR8c5/3w5FFsUTlWiRibHP9t5bZ4bGPB2ZTPGyV+seQSbg49dlzcX088X6AtHJW5JJA8/H8Ffa5Rxl94ce/PcYnkYGm7NmGSVKqYNxmv0ZGuf1bANVmtzt9bsDnZAxgZKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lmt2KzNe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4ydwvSH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B865C4CEEB;
-	Tue, 22 Jul 2025 14:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lmt2KzNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F110C4CEEB;
+	Tue, 22 Jul 2025 14:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193493;
-	bh=fbW+S1cDTqcvPRyZbKo0yWWeCKk5hYHwgHGgtWjrUxE=;
+	s=korg; t=1753193497;
+	bh=zquXD6Dh7rXxMzEnpGtZ9x5BagHVcgX2b0nU9OJ3lUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4ydwvSHAPryF+7d4Yh6NwhY4EIucGXpNjjvK8MtYU1FZW0pG8LKqOcQWkstXu4bt
-	 mw1wazhHfMuUQdodU2SJwSlZ1Lm7N2W/09gokyvjV8TBQeeJKtxirzp1URcVfhkiDh
-	 Vv+9/K+iDOp2qW9FhNHVsiUB/FU75e/vAHR1HP5g=
+	b=Lmt2KzNelE4cLV7oBPK58fl638q+3AcXbAhkD4Z/MI8I1xKdF4Oe1RhLKY04czQUJ
+	 /h1ToGpP46xIzdSwwcQtifEjvGHmQy5y+yLoW/XZmUaNugahdm/GkuaI/WbRhswnaU
+	 uSCWng851AUtsedg/DN0iK6N/5v0xCP+tfz0cPRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.15 067/187] mmc: sdhci_am654: Workaround for Errata i2312
-Date: Tue, 22 Jul 2025 15:43:57 +0200
-Message-ID: <20250722134348.239904100@linuxfoundation.org>
+	Wei Fang <wei.fang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 103/187] arm64: dts: imx95-15x15-evk: fix the overshoot issue of NETC
+Date: Tue, 22 Jul 2025 15:44:33 +0200
+Message-ID: <20250722134349.605462758@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,62 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit 6d0b1c01847fedd7c85a5cdf59b8cfc7d14512e6 upstream.
+[ Upstream commit e0322ac2a3cf7013b7af73b1293670f1e163c92e ]
 
-Errata i2312 [0] for K3 silicon mentions the maximum obtainable
-timeout through MMC host controller is 700ms. And for commands taking
-longer than 700ms, hardware timeout should be disabled and software
-timeout should be used.
+The overshoot of MDIO, MDC, ENET1_TDx and ENET2_TDx is too high, so
+reduce the drive strength of these pins.
 
-The workaround for Errata i2312 can be achieved by adding
-SDHCI_QUIRK2_DISABLE_HW_TIMEOUT quirk in sdhci_am654.
-
-[0] https://www.ti.com/lit/pdf/sprz487
-
-Signed-off-by: Judith Mendez <jm@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: 41fd4caeb00b ("mmc: sdhci_am654: Add Initial Support for AM654 SDHCI driver")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250626231452.3460987-1-jm@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e3e8b199aff8 ("arm64: dts: imx95: Add imx95-15x15-evk support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ .../boot/dts/freescale/imx95-15x15-evk.dts    | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -613,7 +613,8 @@ static const struct sdhci_ops sdhci_am65
- static const struct sdhci_pltfm_data sdhci_am654_pdata = {
- 	.ops = &sdhci_am654_ops,
- 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
--	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
-+		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts b/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
+index 514f2429dcbc2..3ab4d27de1a22 100644
+--- a/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx95-15x15-evk.dts
+@@ -558,17 +558,17 @@
+ &scmi_iomuxc {
+ 	pinctrl_emdio: emdiogrp {
+ 		fsl,pins = <
+-			IMX95_PAD_ENET2_MDC__NETCMIX_TOP_NETC_MDC		0x57e
+-			IMX95_PAD_ENET2_MDIO__NETCMIX_TOP_NETC_MDIO		0x97e
++			IMX95_PAD_ENET2_MDC__NETCMIX_TOP_NETC_MDC		0x50e
++			IMX95_PAD_ENET2_MDIO__NETCMIX_TOP_NETC_MDIO		0x90e
+ 		>;
+ 	};
  
- static const struct sdhci_am654_driver_data sdhci_am654_sr1_drvdata = {
-@@ -643,7 +644,8 @@ static const struct sdhci_ops sdhci_j721
- static const struct sdhci_pltfm_data sdhci_j721e_8bit_pdata = {
- 	.ops = &sdhci_j721e_8bit_ops,
- 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
--	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
-+		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
- };
+ 	pinctrl_enetc0: enetc0grp {
+ 		fsl,pins = <
+-			IMX95_PAD_ENET1_TD3__NETCMIX_TOP_ETH0_RGMII_TD3		0x57e
+-			IMX95_PAD_ENET1_TD2__NETCMIX_TOP_ETH0_RGMII_TD2		0x57e
+-			IMX95_PAD_ENET1_TD1__NETCMIX_TOP_ETH0_RGMII_TD1		0x57e
+-			IMX95_PAD_ENET1_TD0__NETCMIX_TOP_ETH0_RGMII_TD0		0x57e
++			IMX95_PAD_ENET1_TD3__NETCMIX_TOP_ETH0_RGMII_TD3		0x50e
++			IMX95_PAD_ENET1_TD2__NETCMIX_TOP_ETH0_RGMII_TD2		0x50e
++			IMX95_PAD_ENET1_TD1__NETCMIX_TOP_ETH0_RGMII_TD1		0x50e
++			IMX95_PAD_ENET1_TD0__NETCMIX_TOP_ETH0_RGMII_TD0		0x50e
+ 			IMX95_PAD_ENET1_TX_CTL__NETCMIX_TOP_ETH0_RGMII_TX_CTL	0x57e
+ 			IMX95_PAD_ENET1_TXC__NETCMIX_TOP_ETH0_RGMII_TX_CLK	0x58e
+ 			IMX95_PAD_ENET1_RX_CTL__NETCMIX_TOP_ETH0_RGMII_RX_CTL	0x57e
+@@ -582,10 +582,10 @@
  
- static const struct sdhci_am654_driver_data sdhci_j721e_8bit_drvdata = {
-@@ -667,7 +669,8 @@ static const struct sdhci_ops sdhci_j721
- static const struct sdhci_pltfm_data sdhci_j721e_4bit_pdata = {
- 	.ops = &sdhci_j721e_4bit_ops,
- 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
--	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
-+		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
- };
- 
- static const struct sdhci_am654_driver_data sdhci_j721e_4bit_drvdata = {
+ 	pinctrl_enetc1: enetc1grp {
+ 		fsl,pins = <
+-			IMX95_PAD_ENET2_TD3__NETCMIX_TOP_ETH1_RGMII_TD3		0x57e
+-			IMX95_PAD_ENET2_TD2__NETCMIX_TOP_ETH1_RGMII_TD2		0x57e
+-			IMX95_PAD_ENET2_TD1__NETCMIX_TOP_ETH1_RGMII_TD1		0x57e
+-			IMX95_PAD_ENET2_TD0__NETCMIX_TOP_ETH1_RGMII_TD0		0x57e
++			IMX95_PAD_ENET2_TD3__NETCMIX_TOP_ETH1_RGMII_TD3		0x50e
++			IMX95_PAD_ENET2_TD2__NETCMIX_TOP_ETH1_RGMII_TD2		0x50e
++			IMX95_PAD_ENET2_TD1__NETCMIX_TOP_ETH1_RGMII_TD1		0x50e
++			IMX95_PAD_ENET2_TD0__NETCMIX_TOP_ETH1_RGMII_TD0		0x50e
+ 			IMX95_PAD_ENET2_TX_CTL__NETCMIX_TOP_ETH1_RGMII_TX_CTL	0x57e
+ 			IMX95_PAD_ENET2_TXC__NETCMIX_TOP_ETH1_RGMII_TX_CLK	0x58e
+ 			IMX95_PAD_ENET2_RX_CTL__NETCMIX_TOP_ETH1_RGMII_RX_CTL	0x57e
+-- 
+2.39.5
+
 
 
