@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6B62E36E8;
-	Tue, 22 Jul 2025 14:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6C91A2C25;
+	Tue, 22 Jul 2025 14:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192966; cv=none; b=APBYMzho7k0p1wnhGTheWE/1TRZvExLxuY3/PIld/DgDRf2peIBGzsg1iB8XON1xiK7n87oiy58yiOEYpCJuUbIfcPyWdeEEe1FZ63WXLcR1ijPQkMQWJz73yEAjbR0P17c7OUBqyqzjdoC6F7EQj4QaLnMWP3432l2mHOsi3P4=
+	t=1753192969; cv=none; b=qbgUxQNveDc+1yyXIRl3j1w8rc0hEVFhc7L1Ieu4IaRhnOuZtvP9el97pe921kGTvMkSiMQrfXYOXIt5QLdvlylqlzse2ZfkKf3dlOwIb7zPaGkBGAR2YhMk0WrbqCRjHUYRoYD2oTE7OZRIlM7Go1iqybteG1wgFvAHHyq4Cr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192966; c=relaxed/simple;
-	bh=wKVHvyZFfvN4vkl/pTJJ3bdsmboG+jjIvdISl5Y5w6A=;
+	s=arc-20240116; t=1753192969; c=relaxed/simple;
+	bh=/x5X3U9wM2iuLklJPggKAUgFERuy0wEdZjm48sPBJEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eS1/v+170/TKA2zjy97i2QlyOYBKugG47CNjHTsmNcJvkzNQC5YydSpI0MzloFzFmi8VlGt3HD8bfcB+VP4iM2QWWT4/kzaOK2xLgp3llMneP5ZCElLmkgYUEh6sTcUHGt6lRxxQZpGsiQTLYoCxsfroRLR1AfKyQaLc/EscxWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAFXdVnE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+l3wM/AgARkZNURr/JAzupSalaCuTUiMhYn3svXamsC9Sepf+cHsQ1ySthz8WiF8nfWN4X2LfbYB/UoW+vuQ2YDPzuDPVnMnwQF1k/8cXWGOYisei2WeHP0iHNBWIT1eoFKBFTlFfmbdbqCdsClkhbffCUjvyf0VD7HcewWwRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgoO6MiO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAFXdVnE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B939EC4CEEB;
-	Tue, 22 Jul 2025 14:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgoO6MiO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6ADC4CEEB;
+	Tue, 22 Jul 2025 14:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192966;
-	bh=wKVHvyZFfvN4vkl/pTJJ3bdsmboG+jjIvdISl5Y5w6A=;
+	s=korg; t=1753192969;
+	bh=/x5X3U9wM2iuLklJPggKAUgFERuy0wEdZjm48sPBJEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAFXdVnEB54B3Kk4YCkfMfZ9Vn98iZiESKH2XEhKgqb/kHCggmr7vFPoT6CHKO05C
-	 q6lls8GNHIBUfSqtFUBMkqED4SMI+wMBof3sMs1/lD3NE5pZU3FX6uG577t4c0XCb+
-	 10nE6KGegXHOxIyOr+XFzXysXbUfb5fz/w4WhWrA=
+	b=KgoO6MiOm9Ta7wvtlBKHI39IreT1SOGcqOOU3J9x1JqtkZxrZT/UF5ydcx5xAbU+P
+	 KigyyHn/w4EPKfXpWceUmejtP5H2BzbJ4uGnUR+YdulpHnKU6M82K9m4bU7ZtsP1h+
+	 rWInR07epKxf56olyXkBd4aiulwlz8KLR0Used/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Schwab <schwab@suse.de>,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/158] riscv: traps_misaligned: properly sign extend value in misaligned load handler
-Date: Tue, 22 Jul 2025 15:44:56 +0200
-Message-ID: <20250722134344.932619873@linuxfoundation.org>
+Subject: [PATCH 6.12 113/158] Bluetooth: Fix null-ptr-deref in l2cap_sock_resume_cb()
+Date: Tue, 22 Jul 2025 15:44:57 +0200
+Message-ID: <20250722134344.967434501@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -46,42 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Schwab <schwab@suse.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit b3510183ab7d63c71a3f5c89043d31686a76a34c ]
+[ Upstream commit a0075accbf0d76c2dad1ad3993d2e944505d99a0 ]
 
-Add missing cast to signed long.
+syzbot reported null-ptr-deref in l2cap_sock_resume_cb(). [0]
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
-Tested-by: Clément Léger <cleger@rivosinc.com>
-Link: https://lore.kernel.org/r/mvmikk0goil.fsf@suse.de
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+l2cap_sock_resume_cb() has a similar problem that was fixed by commit
+1bff51ea59a9 ("Bluetooth: fix use-after-free error in lock_sock_nested()").
+
+Since both l2cap_sock_kill() and l2cap_sock_resume_cb() are executed
+under l2cap_sock_resume_cb(), we can avoid the issue simply by checking
+if chan->data is NULL.
+
+Let's not access to the killed socket in l2cap_sock_resume_cb().
+
+[0]:
+BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:82 [inline]
+BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
+BUG: KASAN: null-ptr-deref in l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
+Write of size 8 at addr 0000000000000570 by task kworker/u9:0/52
+
+CPU: 1 UID: 0 PID: 52 Comm: kworker/u9:0 Not tainted 6.16.0-rc4-syzkaller-g7482bb149b9f #0 PREEMPT
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Workqueue: hci0 hci_rx_work
+Call trace:
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:501 (C)
+ __dump_stack+0x30/0x40 lib/dump_stack.c:94
+ dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
+ print_report+0x58/0x84 mm/kasan/report.c:524
+ kasan_report+0xb0/0x110 mm/kasan/report.c:634
+ check_region_inline mm/kasan/generic.c:-1 [inline]
+ kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:189
+ __kasan_check_write+0x20/0x30 mm/kasan/shadow.c:37
+ instrument_atomic_write include/linux/instrumented.h:82 [inline]
+ clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
+ l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
+ l2cap_security_cfm+0x524/0xea0 net/bluetooth/l2cap_core.c:7357
+ hci_auth_cfm include/net/bluetooth/hci_core.h:2092 [inline]
+ hci_auth_complete_evt+0x2e8/0xa4c net/bluetooth/hci_event.c:3514
+ hci_event_func net/bluetooth/hci_event.c:7511 [inline]
+ hci_event_packet+0x650/0xe9c net/bluetooth/hci_event.c:7565
+ hci_rx_work+0x320/0xb18 net/bluetooth/hci_core.c:4070
+ process_one_work+0x7e8/0x155c kernel/workqueue.c:3238
+ process_scheduled_works kernel/workqueue.c:3321 [inline]
+ worker_thread+0x958/0xed8 kernel/workqueue.c:3402
+ kthread+0x5fc/0x75c kernel/kthread.c:464
+ ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:847
+
+Fixes: d97c899bde33 ("Bluetooth: Introduce L2CAP channel callback for resuming")
+Reported-by: syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/686c12bd.a70a0220.29fe6c.0b13.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index d14bfc23e315b..4128aa5e0c763 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -436,7 +436,7 @@ int handle_misaligned_load(struct pt_regs *regs)
- 	}
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index acd11b268b98a..615c18e290ab9 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1690,6 +1690,9 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ {
+ 	struct sock *sk = chan->data;
  
- 	if (!fp)
--		SET_RD(insn, regs, val.data_ulong << shift >> shift);
-+		SET_RD(insn, regs, (long)(val.data_ulong << shift) >> shift);
- 	else if (len == 8)
- 		set_f64_rd(insn, regs, val.data_u64);
- 	else
++	if (!sk)
++		return;
++
+ 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
+ 		sk->sk_state = BT_CONNECTED;
+ 		chan->state = BT_CONNECTED;
 -- 
 2.39.5
 
