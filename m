@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7867BA32;
-	Tue, 22 Jul 2025 14:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A650A32;
+	Tue, 22 Jul 2025 14:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192953; cv=none; b=Ces4tdkyPLK3ijKy5Xy8egYMdzMZHKBMWJtB8DW7Zig3ownfT/3KWLi340LTl48fybe5Sl/myQiyQ/jCpXuuD11yJVVpiXFnes73EOnxZYYksFYYszH1iOwQ+izA19pnxIVFwT3qpb6Xe9JAik5JHXjR2SbuzNsGVYOnNdlPuAg=
+	t=1753192957; cv=none; b=lfEJqirijVk+TVlxkmL0+yg1FTalx8Giq0itcpwuvF1hJKLvM//60JMvsCRlu9wJeghAplHVRqspBdiudSEa5cdaoe8FzkWzsx+N1jSnPAavNIbEbcT/E2ALSOTH05gZkSSEH/Yb9psEIYuXJm9yJRwI7czRrS6rTqpXyEHRtsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192953; c=relaxed/simple;
-	bh=CcL7P1twAhA3kEvl4gE0fU96TvNy+DRuOXHkRMVrKlA=;
+	s=arc-20240116; t=1753192957; c=relaxed/simple;
+	bh=tCPsPIth+1pP8Ffb1gIh2Z8/6OYZL7F4g9MkOUQmimo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4zAMzHJaPedTmv2hU5UYZaDbIBu1j/dX3um7FEOEioeSRqrTr070b5loU1ttAuV+K41QGNmyb+J3VBON7qR2+866LCXgq2g6oDSJlVd4feFHTpIu3AdATfAXeuuXLdpcPPF3T3lnYgHNGdBwjPIqGbjoazBCp+d0ILFfhYVRBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=creGQ68x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pa9ryhgVnJvgYX6NqPDc9kY0SeKpprthvJZaJ1x1gjS+saMupBT6T+yKwQc7tNc0DT2VRMgyZhWq7adJIa5zd3SNz83g2/A9cVnpFaCeAqYoEcAEpK8kv8nmqhYLRv0IA5UFz0sF00YM6LoTwNe67ppW01H7dkVNdVQkcexNeTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qoapzou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="creGQ68x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A217BC4CEEB;
-	Tue, 22 Jul 2025 14:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qoapzou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F2BC4CEEB;
+	Tue, 22 Jul 2025 14:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192953;
-	bh=CcL7P1twAhA3kEvl4gE0fU96TvNy+DRuOXHkRMVrKlA=;
+	s=korg; t=1753192956;
+	bh=tCPsPIth+1pP8Ffb1gIh2Z8/6OYZL7F4g9MkOUQmimo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=creGQ68x5H9/NykskFiW4muWkw11N6LfqmvYVYaq0pu7aERYzQKhVUzr0giafWJOi
-	 vbk5TiyVLG6XXBLN3425OSLWkf1gXnx0idahyvf1ZnnfIugHYUvNB/dOqCvv8VfEZ5
-	 lBjp+nfg8Mr2i4zGjLfmAsaPDlPVGmgw1dX94PYw=
+	b=2qoapzouWOJRPazIoXeWGQHQ6lpNkdPpAxC2jKh5/hkOJWyQNuthVdRc3il73Cb8k
+	 PQ/1MW6uI5n7F8qYh4VBHua8GS8Ut4LbFjXnml2IWJwi5ypCQKimPMuCav6872AZNk
+	 Pmy2AldIEWVr8bRu49g6AlWsBq5BnoyOYwMzb2y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 064/158] smb: client: fix use-after-free in crypt_message when using async crypto
-Date: Tue, 22 Jul 2025 15:44:08 +0200
-Message-ID: <20250722134343.145088225@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 101/158] nvmet-tcp: fix callback lock for TLS handshake
+Date: Tue, 22 Jul 2025 15:44:45 +0200
+Message-ID: <20250722134344.516045650@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,81 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit b220bed63330c0e1733dc06ea8e75d5b9962b6b6 upstream.
+[ Upstream commit 0523c6cc87e558c50ff4489c87c54c55068b1169 ]
 
-The CVE-2024-50047 fix removed asynchronous crypto handling from
-crypt_message(), assuming all crypto operations are synchronous.
-However, when hardware crypto accelerators are used, this can cause
-use-after-free crashes:
+When restoring the default socket callbacks during a TLS handshake, we
+need to acquire a write lock on sk_callback_lock.  Previously, a read
+lock was used, which is insufficient for modifying sk_user_data and
+sk_data_ready.
 
-  crypt_message()
-    // Allocate the creq buffer containing the req
-    creq = smb2_get_aead_req(..., &req);
-
-    // Async encryption returns -EINPROGRESS immediately
-    rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
-
-    // Free creq while async operation is still in progress
-    kvfree_sensitive(creq, ...);
-
-Hardware crypto modules often implement async AEAD operations for
-performance. When crypto_aead_encrypt/decrypt() returns -EINPROGRESS,
-the operation completes asynchronously. Without crypto_wait_req(),
-the function immediately frees the request buffer, leading to crashes
-when the driver later accesses the freed memory.
-
-This results in a use-after-free condition when the hardware crypto
-driver later accesses the freed request structure, leading to kernel
-crashes with NULL pointer dereferences.
-
-The issue occurs because crypto_alloc_aead() with mask=0 doesn't
-guarantee synchronous operation. Even without CRYPTO_ALG_ASYNC in
-the mask, async implementations can be selected.
-
-Fix by restoring the async crypto handling:
-- DECLARE_CRYPTO_WAIT(wait) for completion tracking
-- aead_request_set_callback() for async completion notification
-- crypto_wait_req() to wait for operation completion
-
-This ensures the request buffer isn't freed until the crypto operation
-completes, whether synchronous or asynchronous, while preserving the
-CVE-2024-50047 fix.
-
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Link: https://lore.kernel.org/all/8b784a13-87b0-4131-9ff9-7a8993538749@huaweicloud.com/
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4342,6 +4342,7 @@ crypt_message(struct TCP_Server_Info *se
- 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
- 	struct aead_request *req;
- 	u8 *iv;
-+	DECLARE_CRYPTO_WAIT(wait);
- 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
- 	void *creq;
- 	size_t sensitive_size;
-@@ -4392,7 +4393,11 @@ crypt_message(struct TCP_Server_Info *se
- 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
- 	aead_request_set_ad(req, assoc_data_len);
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 259ad77c03c50..6268b18d24569 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1941,10 +1941,10 @@ static void nvmet_tcp_alloc_queue(struct nvmet_tcp_port *port,
+ 		struct sock *sk = queue->sock->sk;
  
--	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
-+	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
-+				  crypto_req_done, &wait);
-+
-+	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
-+				: crypto_aead_decrypt(req), &wait);
- 
- 	if (!rc && enc)
- 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
+ 		/* Restore the default callbacks before starting upcall */
+-		read_lock_bh(&sk->sk_callback_lock);
++		write_lock_bh(&sk->sk_callback_lock);
+ 		sk->sk_user_data = NULL;
+ 		sk->sk_data_ready = port->data_ready;
+-		read_unlock_bh(&sk->sk_callback_lock);
++		write_unlock_bh(&sk->sk_callback_lock);
+ 		if (!nvmet_tcp_try_peek_pdu(queue)) {
+ 			if (!nvmet_tcp_tls_handshake(queue))
+ 				return;
+-- 
+2.39.5
+
 
 
