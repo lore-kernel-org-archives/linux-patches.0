@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C321A2C25;
-	Tue, 22 Jul 2025 14:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105AA19CCEC;
+	Tue, 22 Jul 2025 14:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192864; cv=none; b=K0Yd0zYOWx13ojA7DbGGDMaUhI+jw8Lqo0OdY3eRH5xfk38xw+8el0sG9eASmyEfTWmQCjFcoxazJf+QyhEZi/ptcBtytpRJ9q2AdPc5p31YyVXq7EIzq2J7HUxl7cdT0Bu615GYNnvlRb3+e7zAT5Gqsv6G9yEgZAHipZfW2oU=
+	t=1753192868; cv=none; b=sGOaiW/rzKP6qWC30u9jBY4xG28PyMPQTmHhp/dYIlY/eK/QKzIfOYkDPCgO289211LfPwCLed3CF2w/VJwReygzaC6I1Ij8Hxm5wachkwrQn7YFL9rINXH+as10yw0cFCmZEEHvNJEUFxo+ysBrCzwnQXvxtsC6CATv9koOq2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192864; c=relaxed/simple;
-	bh=Ptq0XzByN+2YJEf8O3GRB8KnxOEV5Px/d8iKyXNyFxc=;
+	s=arc-20240116; t=1753192868; c=relaxed/simple;
+	bh=kRqYDGvsherRfBFnSvJPERkdvpC/VWkBVBzprUmLZCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrbqLMv4Howu768TuqrD/ehq2wifKkTUKfPb64nT0EcgqFrwKBc0CGij2hN7V7r+xzE84DWHJjVe9UzuDNDXSPBeT59jY5sJ3n5i6lJbKSkzHQqFBoB3XjomjnMOhSCjvhPYfhWYbATyQtGa0Z7XAfMzXHDfUFzBMvz+f/yVMMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZxELgqG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZU4zMmPiQXv4Ex6N/811NsVeAFVuXnuHK3qVl9pS/QeS9cewY31X7HZgZDltGci7rVnrozZu0hs/dpGf+C407zZOVsOOardHzlzi8Q0hJNjKmXavydBYrAEeCcrf4Ea3Fuo48sL3+PS/sD7JSKs4F2aLsETa0IjHDKml3k/2ftA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2+Ai+Qu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZxELgqG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7A2C4CEEB;
-	Tue, 22 Jul 2025 14:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2+Ai+Qu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4B5C4CEEB;
+	Tue, 22 Jul 2025 14:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192864;
-	bh=Ptq0XzByN+2YJEf8O3GRB8KnxOEV5Px/d8iKyXNyFxc=;
+	s=korg; t=1753192867;
+	bh=kRqYDGvsherRfBFnSvJPERkdvpC/VWkBVBzprUmLZCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZxELgqGgsvkAXrn7k7kIZ5JwbgNnyF03Lhs6t3K0CwI3JDYuq7WpwtLzR0j7E8qL
-	 bgb2eG4qo4nocZCDiIxglDyiUz7L5nyHNiYZbPlAun7awKZeWCAmRyT7KVR7Cf3Ofx
-	 E6vu3Jnq68mDnpzG8x08laOvB4D6363eWaeRsVSY=
+	b=g2+Ai+Qu93jSA7iRn+lPT52QFUk+Oau4gZhbGk/aDj0JUx9lzNYe7OK1s3DC+t8BY
+	 FAxFAXVkZAoh6DyCYzTgeKDHReUl88oN6xWD5549J5mCy4okZbLt46x+99JB7HpTeh
+	 ntrAarpZPHc1e9YZG6HuRma0ecgWA8VEBwr26PBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.12 081/158] comedi: Fix initialization of data for instructions that write to subdevice
-Date: Tue, 22 Jul 2025 15:44:25 +0200
-Message-ID: <20250722134343.800122338@linuxfoundation.org>
+	Andy Yan <andyshrk@163.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 082/158] arm64: dts: rockchip: Add cd-gpios for sdcard detect on Cool Pi CM5
+Date: Tue, 22 Jul 2025 15:44:26 +0200
+Message-ID: <20250722134343.835759308@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -49,77 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Andy Yan <andyshrk@163.com>
 
-commit 46d8c744136ce2454aa4c35c138cc06817f92b8e upstream.
+[ Upstream commit e625e284172d235be5cd906a98c6c91c365bb9b1 ]
 
-Some Comedi subdevice instruction handlers are known to access
-instruction data elements beyond the first `insn->n` elements in some
-cases.  The `do_insn_ioctl()` and `do_insnlist_ioctl()` functions
-allocate at least `MIN_SAMPLES` (16) data elements to deal with this,
-but they do not initialize all of that.  For Comedi instruction codes
-that write to the subdevice, the first `insn->n` data elements are
-copied from user-space, but the remaining elements are left
-uninitialized.  That could be a problem if the subdevice instruction
-handler reads the uninitialized data.  Ensure that the first
-`MIN_SAMPLES` elements are initialized before calling these instruction
-handlers, filling the uncopied elements with 0.  For
-`do_insnlist_ioctl()`, the same data buffer elements are used for
-handling a list of instructions, so ensure the first `MIN_SAMPLES`
-elements are initialized for each instruction that writes to the
-subdevice.
+cd-gpios is used for sdcard detects for sdmmc.
 
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Cc: stable@vger.kernel.org # 5.13+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707161439.88385-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 791c154c3982 ("arm64: dts: rockchip: Add support for rk3588 based board Cool Pi CM5 EVB")
+Signed-off-by: Andy Yan <andyshrk@163.com>
+Link: https://lore.kernel.org/r/20250524064223.5741-1-andyshrk@163.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/comedi_fops.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -1556,21 +1556,27 @@ static int do_insnlist_ioctl(struct come
- 	}
- 
- 	for (i = 0; i < n_insns; ++i) {
-+		unsigned int n = insns[i].n;
-+
- 		if (insns[i].insn & INSN_MASK_WRITE) {
- 			if (copy_from_user(data, insns[i].data,
--					   insns[i].n * sizeof(unsigned int))) {
-+					   n * sizeof(unsigned int))) {
- 				dev_dbg(dev->class_dev,
- 					"copy_from_user failed\n");
- 				ret = -EFAULT;
- 				goto error;
- 			}
-+			if (n < MIN_SAMPLES) {
-+				memset(&data[n], 0, (MIN_SAMPLES - n) *
-+						    sizeof(unsigned int));
-+			}
- 		}
- 		ret = parse_insn(dev, insns + i, data, file);
- 		if (ret < 0)
- 			goto error;
- 		if (insns[i].insn & INSN_MASK_READ) {
- 			if (copy_to_user(insns[i].data, data,
--					 insns[i].n * sizeof(unsigned int))) {
-+					 n * sizeof(unsigned int))) {
- 				dev_dbg(dev->class_dev,
- 					"copy_to_user failed\n");
- 				ret = -EFAULT;
-@@ -1643,6 +1649,10 @@ static int do_insn_ioctl(struct comedi_d
- 			ret = -EFAULT;
- 			goto error;
- 		}
-+		if (insn->n < MIN_SAMPLES) {
-+			memset(&data[insn->n], 0,
-+			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
-+		}
- 	}
- 	ret = parse_insn(dev, insn, data, file);
- 	if (ret < 0)
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi
+index fde8b228f2c7c..5825141d20076 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5.dtsi
+@@ -317,6 +317,7 @@
+ 	bus-width = <4>;
+ 	cap-mmc-highspeed;
+ 	cap-sd-highspeed;
++	cd-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;
+ 	disable-wp;
+ 	max-frequency = <150000000>;
+ 	no-sdio;
+-- 
+2.39.5
+
 
 
