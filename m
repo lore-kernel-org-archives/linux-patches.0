@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CA32EA462;
-	Tue, 22 Jul 2025 13:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BB32EA469;
+	Tue, 22 Jul 2025 13:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192469; cv=none; b=EVceEcU3JQTrpcw3JBfiwWS+gbUsUJhgwCDE9P60wj9eCwZAf4ZHUvc905uZhrIIvE912Tq0F87Slj4NZnREl8jJltMnela/Mo3GbPEVufdiGWMd11iA3GlV8xbkEN2ovH6TpvuMJ/PoVUGsQQ9SxL2AdbMWMtperQACiJh5OGw=
+	t=1753192472; cv=none; b=g44hIvuSWI5HjwCLtd4cDG+ytAm0H5xni9EanjGFdXNtoVc8o3TwjUJEthJdQIEFlECbkJdTNL8VCeEYnheO66f2PchXkNhnKzK5RSExNFxUOh/L6kOEgiFKTlVoe3c8gZguDrIHJZHAJ80Rz72Mml8sMCuUM2p3uicpepGMFdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192469; c=relaxed/simple;
-	bh=LhJZt1HBATc2CyHpNOEPtOeML/8EexyrGZ66CVnX7z4=;
+	s=arc-20240116; t=1753192472; c=relaxed/simple;
+	bh=mef4joxOg/HzGDwf9+hTAWkyzOkFshnp1BgXyOd5Opc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AckBgLDcwSWcDOxerQhN1JE1XvScQ7KBME/Uw6/U0WHo2FjxGgKryXmUUBaqlmxu12yBqih1vMdSP819aKoEHJGqrlKvrNXQfDus1mZt/8+6dzKS0G5/apYicSMCYnSdwsnlkuSbDu/6UB5VVoVImORtHsG4jQ5DPoH6+3Wr6WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9WZB0/k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8RSz8o4e7/SxzTCRpBze791D+8rJcPeuPgVBvEE57JtkndM+2o9QpnrzQRpHYKGGKiutAGnOGeWVcugD2BRlZOVrAburSVVJiDL6cJgmiKH0jQORwHepy6RkL7x0pNJOYK38IOyCPCQzd4LyN6yDNqKxdd04OHbI70ndPEozS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3n+xedV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9WZB0/k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACCBC4CEEB;
-	Tue, 22 Jul 2025 13:54:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3n+xedV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8989C4CEEB;
+	Tue, 22 Jul 2025 13:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192468;
-	bh=LhJZt1HBATc2CyHpNOEPtOeML/8EexyrGZ66CVnX7z4=;
+	s=korg; t=1753192472;
+	bh=mef4joxOg/HzGDwf9+hTAWkyzOkFshnp1BgXyOd5Opc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9WZB0/knaNcVhh2NhSuAAZzOaIdJjC1QVIl6ipjI9R4vdzZD1RjmHqGnEpyysVxJ
-	 aEnImQ7O4hDzc1hzdE0aT4uHkjzJfrWN44J5Kxj94LgLjSnAZ1GcWp2uuaq7BHC8VD
-	 XWePBMivLD20nd7xLfZWK2Sbvq0cy5+rfT4G6LUE=
+	b=a3n+xedVfxbd1JD/MzP4wPZ4+XomNALMTT6amS6SG28PmWKZGbpHREF+LDazhlV7V
+	 GKWFxSYBgj/oUxKbf1eCAFT/jLlbiaTYHl+Zxi+VHSBeOObzmPAKeekujWnpzcgXCU
+	 StrQNz/wrKlk+kBgCeVJ0Mg2CdvprpgwRC25MHK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Eric Dumazet <edumazet@google.com>,
-	Yun Lu <luyun@kylinos.cn>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 031/111] af_packet: fix the SO_SNDTIMEO constraint not effective on tpacked_snd()
-Date: Tue, 22 Jul 2025 15:44:06 +0200
-Message-ID: <20250722134334.564317083@linuxfoundation.org>
+	Zheng Qixing <zhengqixing@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 068/111] nvme: fix inconsistent RCU list manipulation in nvme_ns_add_to_ctrl_list()
+Date: Tue, 22 Jul 2025 15:44:43 +0200
+Message-ID: <20250722134335.912983048@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -53,59 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Zheng Qixing <zhengqixing@huawei.com>
 
-commit c1ba3c0cbdb5e53a8ec5d708e99cd4c497028a13 upstream.
+[ Upstream commit 80d7762e0a42307ee31b21f090e21349b98c14f6 ]
 
-Due to the changes in commit 581073f626e3 ("af_packet: do not call
-packet_read_pending() from tpacket_destruct_skb()"), every time
-tpacket_destruct_skb() is executed, the skb_completion is marked as
-completed. When wait_for_completion_interruptible_timeout() returns
-completed, the pending_refcnt has not yet been reduced to zero.
-Therefore, when ph is NULL, the wait function may need to be called
-multiple times until packet_read_pending() finally returns zero.
+When inserting a namespace into the controller's namespace list, the
+function uses list_add_rcu() when the namespace is inserted in the middle
+of the list, but falls back to a regular list_add() when adding at the
+head of the list.
 
-We should call sock_sndtimeo() only once, otherwise the SO_SNDTIMEO
-constraint could be way off.
+This inconsistency could lead to race conditions during concurrent
+access, as users might observe a partially updated list. Fix this by
+consistently using list_add_rcu() in both code paths to ensure proper
+RCU protection throughout the entire function.
 
-Fixes: 581073f626e3 ("af_packet: do not call packet_read_pending() from tpacket_destruct_skb()")
-Cc: stable@kernel.org
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
+Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2791,7 +2791,7 @@ static int tpacket_snd(struct packet_soc
- 	int len_sum = 0;
- 	int status = TP_STATUS_AVAILABLE;
- 	int hlen, tlen, copylen = 0;
--	long timeo = 0;
-+	long timeo;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 6e2d0fda3ba4a..9feb47a604659 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3596,7 +3596,7 @@ static void nvme_ns_add_to_ctrl_list(struct nvme_ns *ns)
+ 			return;
+ 		}
+ 	}
+-	list_add(&ns->list, &ns->ctrl->namespaces);
++	list_add_rcu(&ns->list, &ns->ctrl->namespaces);
+ }
  
- 	mutex_lock(&po->pg_vec_lock);
- 
-@@ -2845,6 +2845,7 @@ static int tpacket_snd(struct packet_soc
- 	if ((size_max > dev->mtu + reserve + VLAN_HLEN) && !vnet_hdr_sz)
- 		size_max = dev->mtu + reserve + VLAN_HLEN;
- 
-+	timeo = sock_sndtimeo(&po->sk, msg->msg_flags & MSG_DONTWAIT);
- 	reinit_completion(&po->skb_completion);
- 
- 	do {
-@@ -2852,7 +2853,6 @@ static int tpacket_snd(struct packet_soc
- 					  TP_STATUS_SEND_REQUEST);
- 		if (unlikely(ph == NULL)) {
- 			if (need_wait && skb) {
--				timeo = sock_sndtimeo(&po->sk, msg->msg_flags & MSG_DONTWAIT);
- 				timeo = wait_for_completion_interruptible_timeout(&po->skb_completion, timeo);
- 				if (timeo <= 0) {
- 					err = !timeo ? -ETIMEDOUT : -ERESTARTSYS;
+ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, struct nvme_ns_info *info)
+-- 
+2.39.5
+
 
 
