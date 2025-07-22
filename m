@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FD02EA491;
-	Tue, 22 Jul 2025 13:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E272D8766;
+	Tue, 22 Jul 2025 13:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192581; cv=none; b=YiS+H4vLaAws8YrJEeUB1FgIYl2iilzfsL31u1h+Cu6ALdB/aa9UZu+w2mia98w+uvenhJdSBk1UzdyzohWY7RckAnTSnQPz7vA5bsRliDXeFXlD02ROUQwdy/Vk1ApIMouJOnh1vVBPvMjU4xlJ6x4sk8HEZRoe1b/kVFYPaMM=
+	t=1753192584; cv=none; b=DJQXUoZygafoWNdnty8YyB64SgS1hP6YujKI7Rg4s7Fz9fN07nf98OS3DZ6EdWWbRbLhB8PObAWmQObhgGF1wRJ2ei5Z3mM5DH4l7qiWlcfF3ypV/SklQlqsPvLbxkENwnLOpkgpOCEW+4/AvMWxQg4jlHJd2KTEsk06T+avRCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192581; c=relaxed/simple;
-	bh=9FWxhZLjcMZ/kr+KAvjgynLm6ZupF1QRIK93rtFs5TM=;
+	s=arc-20240116; t=1753192584; c=relaxed/simple;
+	bh=DOG8uQLQhd1iqjR93VEKGil9QoFGRX0U6KrnpcRhqEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8iLt99EEjQgwOQpdwH9Io/ldCVxZO4k4uwV0w9kHypHH4cabISRVhjO+blpNS442L2nBdjG7ZwEmiXo8K4mGg+nfahSAqx9vW2f3VoyiCNk90NoPJ9axEAAWVXgMt+1jEaLHJqcRVJpzN/a0AKlFwS/7Dhgc1QWVPDCwUr0ygA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmjokI2n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHyoJPbCc93KhZcUtMtlGORioPH3PphpA8+MozTf+L+/QUHVoV/fiNWhkSqVhJt2BkhjR0UL50//oSNGJ3ppB1jaPlEbLNjgdlfFRJhe3MxurjdVe56d9Hzt8+8qNmkeV4e8fJD0UJAG2yCVzFHzJtidY0eToQYq6wDwX4SzgNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k44Hr6+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmjokI2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D397C4CEEB;
-	Tue, 22 Jul 2025 13:56:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k44Hr6+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B6BC4CEF1;
+	Tue, 22 Jul 2025 13:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192581;
-	bh=9FWxhZLjcMZ/kr+KAvjgynLm6ZupF1QRIK93rtFs5TM=;
+	s=korg; t=1753192584;
+	bh=DOG8uQLQhd1iqjR93VEKGil9QoFGRX0U6KrnpcRhqEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmjokI2nrcO+cZztAXnyLAqFJG18EzCgKN+jEjts4RPBuOuWzJXfph6mvEepsGPsS
-	 aYMZMYwj5C9WLyyDabDITnu7yFtZClkk44RIibH0xdPQYe957pJqGD/f5oIdlqksMq
-	 z7P0a3++ydgFL6qPp/aGTZPcErFEjZloGCNXMKb0=
+	b=k44Hr6+PmoYuv4ihPwRWwQMzR4wzM6DRNqFrQvbAuOo6Hp+aJNXB0azjgKrKWp5NC
+	 crCGZiolFaMbT+06f7jG86rFP3hMSE8joJrWQNFn8fUvSPZ/L9i7dfieewfUQmA/th
+	 V1vmZWJ500Vom5L/y0dDXNZJeW2RVonirLntchio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/111] Bluetooth: Fix null-ptr-deref in l2cap_sock_resume_cb()
-Date: Tue, 22 Jul 2025 15:44:51 +0200
-Message-ID: <20250722134336.225751409@linuxfoundation.org>
+Subject: [PATCH 6.6 067/111] smb: client: fix use-after-free in cifs_oplock_break
+Date: Tue, 22 Jul 2025 15:44:42 +0200
+Message-ID: <20250722134335.875504056@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -52,78 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
 
-[ Upstream commit a0075accbf0d76c2dad1ad3993d2e944505d99a0 ]
+[ Upstream commit 705c79101ccf9edea5a00d761491a03ced314210 ]
 
-syzbot reported null-ptr-deref in l2cap_sock_resume_cb(). [0]
+A race condition can occur in cifs_oplock_break() leading to a
+use-after-free of the cinode structure when unmounting:
 
-l2cap_sock_resume_cb() has a similar problem that was fixed by commit
-1bff51ea59a9 ("Bluetooth: fix use-after-free error in lock_sock_nested()").
+  cifs_oplock_break()
+    _cifsFileInfo_put(cfile)
+      cifsFileInfo_put_final()
+        cifs_sb_deactive()
+          [last ref, start releasing sb]
+            kill_sb()
+              kill_anon_super()
+                generic_shutdown_super()
+                  evict_inodes()
+                    dispose_list()
+                      evict()
+                        destroy_inode()
+                          call_rcu(&inode->i_rcu, i_callback)
+    spin_lock(&cinode->open_file_lock)  <- OK
+                            [later] i_callback()
+                              cifs_free_inode()
+                                kmem_cache_free(cinode)
+    spin_unlock(&cinode->open_file_lock)  <- UAF
+    cifs_done_oplock_break(cinode)       <- UAF
 
-Since both l2cap_sock_kill() and l2cap_sock_resume_cb() are executed
-under l2cap_sock_resume_cb(), we can avoid the issue simply by checking
-if chan->data is NULL.
+The issue occurs when umount has already released its reference to the
+superblock. When _cifsFileInfo_put() calls cifs_sb_deactive(), this
+releases the last reference, triggering the immediate cleanup of all
+inodes under RCU. However, cifs_oplock_break() continues to access the
+cinode after this point, resulting in use-after-free.
 
-Let's not access to the killed socket in l2cap_sock_resume_cb().
+Fix this by holding an extra reference to the superblock during the
+entire oplock break operation. This ensures that the superblock and
+its inodes remain valid until the oplock break completes.
 
-[0]:
-BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:82 [inline]
-BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-BUG: KASAN: null-ptr-deref in l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
-Write of size 8 at addr 0000000000000570 by task kworker/u9:0/52
-
-CPU: 1 UID: 0 PID: 52 Comm: kworker/u9:0 Not tainted 6.16.0-rc4-syzkaller-g7482bb149b9f #0 PREEMPT
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Workqueue: hci0 hci_rx_work
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:501 (C)
- __dump_stack+0x30/0x40 lib/dump_stack.c:94
- dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
- print_report+0x58/0x84 mm/kasan/report.c:524
- kasan_report+0xb0/0x110 mm/kasan/report.c:634
- check_region_inline mm/kasan/generic.c:-1 [inline]
- kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:189
- __kasan_check_write+0x20/0x30 mm/kasan/shadow.c:37
- instrument_atomic_write include/linux/instrumented.h:82 [inline]
- clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
- l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
- l2cap_security_cfm+0x524/0xea0 net/bluetooth/l2cap_core.c:7357
- hci_auth_cfm include/net/bluetooth/hci_core.h:2092 [inline]
- hci_auth_complete_evt+0x2e8/0xa4c net/bluetooth/hci_event.c:3514
- hci_event_func net/bluetooth/hci_event.c:7511 [inline]
- hci_event_packet+0x650/0xe9c net/bluetooth/hci_event.c:7565
- hci_rx_work+0x320/0xb18 net/bluetooth/hci_core.c:4070
- process_one_work+0x7e8/0x155c kernel/workqueue.c:3238
- process_scheduled_works kernel/workqueue.c:3321 [inline]
- worker_thread+0x958/0xed8 kernel/workqueue.c:3402
- kthread+0x5fc/0x75c kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:847
-
-Fixes: d97c899bde33 ("Bluetooth: Introduce L2CAP channel callback for resuming")
-Reported-by: syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/686c12bd.a70a0220.29fe6c.0b13.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220309
+Fixes: b98749cac4a6 ("CIFS: keep FileInfo handle live during oplock break")
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/client/file.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index aaaaf9733b589..9a906977c8723 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1687,6 +1687,9 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
- {
- 	struct sock *sk = chan->data;
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index d883ed75022c4..99a8c6fbd41a6 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -5042,7 +5042,8 @@ void cifs_oplock_break(struct work_struct *work)
+ 	struct cifsFileInfo *cfile = container_of(work, struct cifsFileInfo,
+ 						  oplock_break);
+ 	struct inode *inode = d_inode(cfile->dentry);
+-	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
++	struct super_block *sb = inode->i_sb;
++	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct cifsInodeInfo *cinode = CIFS_I(inode);
+ 	struct cifs_tcon *tcon;
+ 	struct TCP_Server_Info *server;
+@@ -5052,6 +5053,12 @@ void cifs_oplock_break(struct work_struct *work)
+ 	__u64 persistent_fid, volatile_fid;
+ 	__u16 net_fid;
  
-+	if (!sk)
-+		return;
-+
- 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
- 		sk->sk_state = BT_CONNECTED;
- 		chan->state = BT_CONNECTED;
++	/*
++	 * Hold a reference to the superblock to prevent it and its inodes from
++	 * being freed while we are accessing cinode. Otherwise, _cifsFileInfo_put()
++	 * may release the last reference to the sb and trigger inode eviction.
++	 */
++	cifs_sb_active(sb);
+ 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
+ 			TASK_UNINTERRUPTIBLE);
+ 
+@@ -5124,6 +5131,7 @@ void cifs_oplock_break(struct work_struct *work)
+ 	cifs_put_tlink(tlink);
+ out:
+ 	cifs_done_oplock_break(cinode);
++	cifs_sb_deactive(sb);
+ }
+ 
+ /*
 -- 
 2.39.5
 
