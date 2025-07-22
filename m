@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176182877FA;
-	Tue, 22 Jul 2025 13:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F0F2B9A5;
+	Tue, 22 Jul 2025 13:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192701; cv=none; b=hSatPlrrn+5l5l00mkp3kjf3pi3fyYpURoOSIBla6ucS5FU0d7qLR+mi27hTK5pF1875zPjaw6HG1v7qGL4ZXmn1MV77ClzVScMthRq7WPBQ3xwlSl52kmKGQSojBhlTYU8EC0rjBZ+Zs9DTODSM0KvIDEVqsffDDC+uhgqEBCw=
+	t=1753192704; cv=none; b=OVQklEkvV3sjEAMJTq+VzO6NUb6ut885x0rXv7wDzT3/DDHtsAp71fa1kJV+5FjNb7R69QJ7eeC0TKZ9xIKV/5Bx+BH8BJPr21z9YvnmzFhgjv7pdLh+rDIkO+n5IjeHzSexAQOdt9yJ07XI3sr4bhxkeP8VYcvGBk3dvHKMRQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192701; c=relaxed/simple;
-	bh=IrkJTQ1BPNLMQs4aqMwxIuyXMXMyOTKL+JyDRNMGo9M=;
+	s=arc-20240116; t=1753192704; c=relaxed/simple;
+	bh=tg/nISB6nLBSmjO5y7fNJtdR55+bp+kX9FB1wZqKEn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSn8vLgF9AT2DDloNn+ztFmbqFlraCJxcgGUbbYxuoCyXIZi01E4uRcjUKRL2V7A0L8gDMyfvnI01YESMzE8/YwI1GSwp8l9+MyUTFFVG1sfhqBYopg8Atxy1M1k7Gk2Lw3T5qoGOPsRQCj+8HYLGPDry6OFceE05bv/6n2GL5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqE+mp7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwCsEqelii2PkxfxC3Pa4QWRvvY5te+0xLU5Va+CN7sAcihEgrXRP3PvGA0iiP7TWwAny3bcGlzab1VXmu5Te0WUndUueM3Mr39DefvrjTH1Szuxt6dY2zUtwdlHt84/7tm4WuQjm0QMbxfo/ipsnt75Vyoy5GlK9lkMmivFQYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT8Hbr5k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqE+mp7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6C0C4CEEB;
-	Tue, 22 Jul 2025 13:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT8Hbr5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CC3C4CEEB;
+	Tue, 22 Jul 2025 13:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192700;
-	bh=IrkJTQ1BPNLMQs4aqMwxIuyXMXMyOTKL+JyDRNMGo9M=;
+	s=korg; t=1753192704;
+	bh=tg/nISB6nLBSmjO5y7fNJtdR55+bp+kX9FB1wZqKEn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OqE+mp7whi7Ek1gLi1yw6RnEFSLbNZ8nDOkb+v1vx0V1CMSfFzjQg4GSYz9YtiUnu
-	 yL8cv1xxB9S+N0YEocVfpRHYv6JNH4qZks/xXh+HTaVz2feJJ0JdxaWul2zX4cWA8Q
-	 8z6mKcIp4VBRpEQN8gyToOGc3TL+bSK9ordNgl9M=
+	b=WT8Hbr5kV/LmeoXRtFDQu80T2bb//hAkif9apK3n1JDCRjC1F9rqDh0rwuJrmF8Ep
+	 DpAgbpZMSAdUidiQ7d36c0g29fwXvw2B7h6UZ3BW0LduDuFF3/srtvknbxPtY66EDf
+	 V6bTC3MUTEwOLVMTDlSoBRxGCkzqAB4lI2sarJSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>,
-	Drew Hamilton <drew.hamilton@zetier.com>
-Subject: [PATCH 6.12 007/158] usb: musb: fix gadget state on disconnect
-Date: Tue, 22 Jul 2025 15:43:11 +0200
-Message-ID: <20250722134340.876733351@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Subject: [PATCH 6.12 008/158] usb: dwc2: gadget: Fix enter to hibernation for UTMI+ PHY
+Date: Tue, 22 Jul 2025 15:43:12 +0200
+Message-ID: <20250722134341.045643474@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -50,47 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Drew Hamilton <drew.hamilton@zetier.com>
+From: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
 
-commit 67a59f82196c8c4f50c83329f0577acfb1349b50 upstream.
+commit 5724ff190b22bd04fcfd7287a39c6e5494e40f0b upstream.
 
-When unplugging the USB cable or disconnecting a gadget in usb peripheral mode with
-echo "" > /sys/kernel/config/usb_gadget/<your_gadget>/UDC,
-/sys/class/udc/musb-hdrc.0/state does not change from USB_STATE_CONFIGURED.
+For UTMI+ PHY, according to programming guide, first should be set
+PMUACTV bit then STOPPCLK bit. Otherwise, when the device issues
+Remote Wakeup, then host notices disconnect instead.
+For ULPI PHY, above mentioned bits must be set in reversed order:
+STOPPCLK then PMUACTV.
 
-Testing on dwc2/3 shows they both update the state to USB_STATE_NOTATTACHED.
-
-Add calls to usb_gadget_set_state in musb_g_disconnect and musb_gadget_stop
-to fix both cases.
-
-Fixes: 49401f4169c0 ("usb: gadget: introduce gadget state tracking")
-Cc: stable@vger.kernel.org
-Co-authored-by: Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>
-Signed-off-by: Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>
-Signed-off-by: Drew Hamilton <drew.hamilton@zetier.com>
-Link: https://lore.kernel.org/r/20250701154126.8543-1-drew.hamilton@zetier.com
+Fixes: 4483ef3c1685 ("usb: dwc2: Add hibernation updates for ULPI PHY")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Minas Harutyunyan <Minas.Harutyunyan@synopsys.com>
+Link: https://lore.kernel.org/r/692110d3c3d9bb2a91cedf24528a7710adc55452.1751881374.git.Minas.Harutyunyan@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/musb_gadget.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc2/gadget.c |   38 ++++++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/musb/musb_gadget.c
-+++ b/drivers/usb/musb/musb_gadget.c
-@@ -1912,6 +1912,7 @@ static int musb_gadget_stop(struct usb_g
- 	 * gadget driver here and have everything work;
- 	 * that currently misbehaves.
- 	 */
-+	usb_gadget_set_state(g, USB_STATE_NOTATTACHED);
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -5352,20 +5352,34 @@ int dwc2_gadget_enter_hibernation(struct
+ 	if (gusbcfg & GUSBCFG_ULPI_UTMI_SEL) {
+ 		/* ULPI interface */
+ 		gpwrdn |= GPWRDN_ULPI_LATCH_EN_DURING_HIB_ENTRY;
+-	}
+-	dwc2_writel(hsotg, gpwrdn, GPWRDN);
+-	udelay(10);
++		dwc2_writel(hsotg, gpwrdn, GPWRDN);
++		udelay(10);
++
++		/* Suspend the Phy Clock */
++		pcgcctl = dwc2_readl(hsotg, PCGCTL);
++		pcgcctl |= PCGCTL_STOPPCLK;
++		dwc2_writel(hsotg, pcgcctl, PCGCTL);
++		udelay(10);
  
- 	/* Force check of devctl register for PM runtime */
- 	pm_runtime_mark_last_busy(musb->controller);
-@@ -2018,6 +2019,7 @@ void musb_g_disconnect(struct musb *musb
- 	case OTG_STATE_B_PERIPHERAL:
- 	case OTG_STATE_B_IDLE:
- 		musb_set_state(musb, OTG_STATE_B_IDLE);
-+		usb_gadget_set_state(&musb->g, USB_STATE_NOTATTACHED);
- 		break;
- 	case OTG_STATE_B_SRP_INIT:
- 		break;
+-	/* Suspend the Phy Clock */
+-	pcgcctl = dwc2_readl(hsotg, PCGCTL);
+-	pcgcctl |= PCGCTL_STOPPCLK;
+-	dwc2_writel(hsotg, pcgcctl, PCGCTL);
+-	udelay(10);
++		gpwrdn = dwc2_readl(hsotg, GPWRDN);
++		gpwrdn |= GPWRDN_PMUACTV;
++		dwc2_writel(hsotg, gpwrdn, GPWRDN);
++		udelay(10);
++	} else {
++		/* UTMI+ Interface */
++		dwc2_writel(hsotg, gpwrdn, GPWRDN);
++		udelay(10);
+ 
+-	gpwrdn = dwc2_readl(hsotg, GPWRDN);
+-	gpwrdn |= GPWRDN_PMUACTV;
+-	dwc2_writel(hsotg, gpwrdn, GPWRDN);
+-	udelay(10);
++		gpwrdn = dwc2_readl(hsotg, GPWRDN);
++		gpwrdn |= GPWRDN_PMUACTV;
++		dwc2_writel(hsotg, gpwrdn, GPWRDN);
++		udelay(10);
++
++		pcgcctl = dwc2_readl(hsotg, PCGCTL);
++		pcgcctl |= PCGCTL_STOPPCLK;
++		dwc2_writel(hsotg, pcgcctl, PCGCTL);
++		udelay(10);
++	}
+ 
+ 	/* Set flag to indicate that we are in hibernation */
+ 	hsotg->hibernated = 1;
 
 
