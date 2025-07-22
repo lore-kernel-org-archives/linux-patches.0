@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCA6548EE;
-	Tue, 22 Jul 2025 14:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA32522D785;
+	Tue, 22 Jul 2025 14:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192845; cv=none; b=dyuYiCA2amFYd02DfouOWC+J3Y2Zbn0HaFeCESkI4/JvNtRH8UwpoSBfcCaaU1yC8KFsIoFDWnVcauQvg2BpDIbv0XwQRhJw5/DkXOL9XdyvPqNZU8sSf1wQydH+RAfAPvMa0206shtDCZcoNwgXieokxLJ4xZ3NUmf7Y35sKjc=
+	t=1753192848; cv=none; b=Uo0fkuLJvcOD9YvJ/kXW5IrngV3hyHV8kgoX0p69qk+GnCTyXJX/WBgcHGrFPOmsNpzvO89iwwGKLVKCMRj4dcmVLi8CFAzFHsTcmer0xIt3+8G86rBBJSjECewIXldFyIAUbrlQn8ECe+Q8BRc40ZWR/hZTQBeE0hJRXO8/ImA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192845; c=relaxed/simple;
-	bh=/p++4HxgkL0jk50CHSwkv/nUpkdujZWWxjU5GhBlHqE=;
+	s=arc-20240116; t=1753192848; c=relaxed/simple;
+	bh=VTypfrgbSlPRgzCWXH3q03FoGWBufSrUouuyPm6KI+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfM+yKEGXv96rTw7QPMO00NV8CSSLiXXzoYpFVbB2xQ6qbR2CVMbYM/teiEOZJ67jvvl2/nsiXxqnKSV23yUJcvJ04N5AwDQnZ9HHngRQja7dOeDP1kPmbZHqVqBTye6Y/2edKv4n8Pjmr00uGZcv2QDKgkmqvj7+0vwOIsfCsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAZx4uQP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NyRJkEMr2C80lJBj1yIKVgS/xL97mWyY6nsjl0RvtZD8ZE4vXBFNlxHOREtZ6IzjWz+O+y+C8BBFgMYqV1nX5v42EWen5BinRAEvm5EdxgiGOeYOO1WqVvbbNvuqApociN1ECAOGlQHEhsAMuX+kuif9gpG/2pcScu27SGkoRXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nenYIQN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAZx4uQP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3C6C4CEEB;
-	Tue, 22 Jul 2025 14:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nenYIQN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3474AC4CEEB;
+	Tue, 22 Jul 2025 14:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192845;
-	bh=/p++4HxgkL0jk50CHSwkv/nUpkdujZWWxjU5GhBlHqE=;
+	s=korg; t=1753192848;
+	bh=VTypfrgbSlPRgzCWXH3q03FoGWBufSrUouuyPm6KI+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAZx4uQPWPVmsS7jOUkd9pUx8/I3yNfUon8DGQ1u2p0LNqk337W1OV5KSrT7cQ/Xm
-	 d95yiUCB+mAKSZLuqGmjetq9EX5U1C0WTinJipm/un2icIilzepyFODU5Ge+Fh8uhZ
-	 jXVII0upp8FLzC4DYPQLj5IK7A5/4SPLK4cQxdQ4=
+	b=nenYIQN72KxDfkLz7MPVLqR8kQP5qgsSu+/3bqKrUaJ86AZqHUqQuvtkkRHeGEAdz
+	 Nl0ZmmWkWk19WBQIjAjKe3lQMuSpUHSagxiy5x540+rhbFrL4qfZCMmXp2JGY0fmU9
+	 JGk4mgLJelhWCwioqTzKLyv5iyh0MRyyNJWljRfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com,
+	"Enju, Kohei" <enjuk@amazon.co.jp>,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.12 075/158] comedi: aio_iiro_16: Fix bit shift out of bounds
-Date: Tue, 22 Jul 2025 15:44:19 +0200
-Message-ID: <20250722134343.571080489@linuxfoundation.org>
+Subject: [PATCH 6.12 076/158] comedi: das16m1: Fix bit shift out of bounds
+Date: Tue, 22 Jul 2025 15:44:20 +0200
+Message-ID: <20250722134343.608006948@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,39 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 66acb1586737a22dd7b78abc63213b1bcaa100e4 upstream.
+commit ed93c6f68a3be06e4e0c331c6e751f462dee3932 upstream.
 
 When checking for a supported IRQ number, the following test is used:
 
+	/* only irqs 2, 3, 4, 5, 6, 7, 10, 11, 12, 14, and 15 are valid */
 	if ((1 << it->options[1]) & 0xdcfc) {
 
 However, `it->options[i]` is an unchecked `int` value from userspace, so
 the shift amount could be negative or out of bounds.  Fix the test by
 requiring `it->options[1]` to be within bounds before proceeding with
-the original test.  Valid `it->options[1]` values that select the IRQ
-will be in the range [1,15]. The value 0 explicitly disables the use of
-interrupts.
+the original test.
 
-Fixes: ad7a370c8be4 ("staging: comedi: aio_iiro_16: add command support for change of state detection")
+Reported-by: syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c52293513298e0fd9a94
+Fixes: 729988507680 ("staging: comedi: das16m1: tidy up the irq support in das16m1_attach()")
+Tested-by: syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com
+Suggested-by: "Enju, Kohei" <enjuk@amazon.co.jp>
 Cc: stable@vger.kernel.org # 5.13+
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707134622.75403-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250707130908.70758-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/aio_iiro_16.c |    3 ++-
+ drivers/comedi/drivers/das16m1.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/aio_iiro_16.c
-+++ b/drivers/comedi/drivers/aio_iiro_16.c
-@@ -177,7 +177,8 @@ static int aio_iiro_16_attach(struct com
- 	 * Digital input change of state interrupts are optionally supported
- 	 * using IRQ 2-7, 10-12, 14, or 15.
- 	 */
+--- a/drivers/comedi/drivers/das16m1.c
++++ b/drivers/comedi/drivers/das16m1.c
+@@ -522,7 +522,8 @@ static int das16m1_attach(struct comedi_
+ 	devpriv->extra_iobase = dev->iobase + DAS16M1_8255_IOBASE;
+ 
+ 	/* only irqs 2, 3, 4, 5, 6, 7, 10, 11, 12, 14, and 15 are valid */
 -	if ((1 << it->options[1]) & 0xdcfc) {
-+	if (it->options[1] > 0 && it->options[1] < 16 &&
++	if (it->options[1] >= 2 && it->options[1] <= 15 &&
 +	    (1 << it->options[1]) & 0xdcfc) {
- 		ret = request_irq(it->options[1], aio_iiro_16_cos, 0,
+ 		ret = request_irq(it->options[1], das16m1_interrupt, 0,
  				  dev->board_name, dev);
  		if (ret == 0)
 
