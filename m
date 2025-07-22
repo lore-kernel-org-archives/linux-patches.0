@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD9E2B9A5;
-	Tue, 22 Jul 2025 14:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A2938FA3;
+	Tue, 22 Jul 2025 14:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192998; cv=none; b=aaJ/TY37kBvmB3aXM6kC8XbAEH5J87PAEtRlBbaHGd2Sl5m5Rf83Qd0vxt2y8YP2POVKU0kiYFRJVFbAcw7ZM7kTN1TWeS3/QzGZIXVf3XjZwTeo8wvnKxssbCw91KFQnNX6NfTpA9AlKMgpvZ5OQf85Sc9mPsm6GH+Xhcq5x0Q=
+	t=1753193001; cv=none; b=goba3EQ8adMAfFaUYwDOnIi7KRYFZObA5IosBWuGdwNLSFEauSeY5y6OEF/4addtIR6umlD7HhuISrEkCIagedgUcUG3z2JXGakYLwlUAuo9sEqjwKvXk39xrkY2PhaqdjGGvZeczNHS9Ep6hfUevGbiIYPu65f0guTgJjPpx6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192998; c=relaxed/simple;
-	bh=c3aEsYWtS1YdMSGkzbre1CR3XHrlReWpFAobX8lA8ys=;
+	s=arc-20240116; t=1753193001; c=relaxed/simple;
+	bh=pDuGp6lEMtlgqXlbDl5d+5AniSbWaZ+oPnk6w7Fi8Ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sE3bUgm+Q0rWZdK4ou86FFfxW98BL/7sxnb3qhFAwvGSowRLLmh24ISTp833j4DmWAhEPZN/dgeWrm8WjGswwm9CanZrfSl0hhgLVABJqUtCh+KwSFdeQOyRrnRF24U73Jg75xRf+rCxKhB0xNmdvQVxmXipttXxrU6OgcmdPv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SL30xuv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ADXVbTpcv5DX3UbLJvgtz8wkP53yueLfUeoLpsDmwOKThk7SrhBE0dIbxrV1WYxTrGJ99pnVAtHVgu5UhFpMkuVjnbzWI9UYYr4DHjK5LRNV3hnbIAFcB0owsdP7Og7bUvjc2xP/sDyzJ0Z3BsyEv3HkJntVAP447odNb1X9ih8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raYWmWAN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SL30xuv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2287C4CEEB;
-	Tue, 22 Jul 2025 14:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raYWmWAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197E6C4CEEB;
+	Tue, 22 Jul 2025 14:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192998;
-	bh=c3aEsYWtS1YdMSGkzbre1CR3XHrlReWpFAobX8lA8ys=;
+	s=korg; t=1753193001;
+	bh=pDuGp6lEMtlgqXlbDl5d+5AniSbWaZ+oPnk6w7Fi8Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SL30xuvnipWfzVwN1nWHF3I6j7ynvc4Cy6TrLo5Pb2zgRXKg5Q5qx/OJFECINmXa
-	 ymId2sENlVcgueO8ARflVgldwwTiNLiJTMoGd+i8DMBJ26h14dXl7IWeIZkF0mrYJL
-	 eTOQxEfrQfyKh9zrebURG6eV/q0rcXBHd0dR5rFo=
+	b=raYWmWAN63lZR/JCFtT5aD1r0147VIjNzOyG7smMbCRA+kmAgtBTU+zBbtBr0UcLU
+	 1s5SkuaOEcfyQ6zz7Y0s+hZP+cRTYTM7Zuft+c3deuEY1shMZjSikei/v0CgSg36mN
+	 7TiyQRlB/WDjsmR+zANVf7zRLdCeCJKAnZkdztVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/158] ipv6: mcast: Delay put pmc->idev in mld_del_delrec()
-Date: Tue, 22 Jul 2025 15:45:04 +0200
-Message-ID: <20250722134345.219185491@linuxfoundation.org>
+Subject: [PATCH 6.12 121/158] net: fix segmentation after TCP/UDP fraglist GRO
+Date: Tue, 22 Jul 2025 15:45:05 +0200
+Message-ID: <20250722134345.254469795@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,36 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit ae3264a25a4635531264728859dbe9c659fad554 ]
+[ Upstream commit 9f735b6f8a77d7be7f8b0765dc93587774832cb1 ]
 
-pmc->idev is still used in ip6_mc_clear_src(), so as mld_clear_delrec()
-does, the reference should be put after ip6_mc_clear_src() return.
+Since "net: gro: use cb instead of skb->network_header", the skb network
+header is no longer set in the GRO path.
+This breaks fraglist segmentation, which relies on ip_hdr()/tcp_hdr()
+to check for address/port changes.
+Fix this regression by selectively setting the network header for merged
+segment skbs.
 
-Fixes: 63ed8de4be81 ("mld: add mc_lock for protecting per-interface mld data")
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Link: https://patch.msgid.link/20250714141957.3301871-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 186b1ea73ad8 ("net: gro: use cb instead of skb->network_header")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250705150622.10699-1-nbd@nbd.name
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_offload.c | 1 +
+ net/ipv4/udp_offload.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index b7b62e5a562e5..9949554e3211b 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -804,8 +804,8 @@ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *im)
- 		} else {
- 			im->mca_crcount = idev->mc_qrv;
- 		}
--		in6_dev_put(pmc->idev);
- 		ip6_mc_clear_src(pmc);
-+		in6_dev_put(pmc->idev);
- 		kfree_rcu(pmc, rcu);
- 	}
- }
+diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
+index e04ebe651c334..3a9c5c14c310e 100644
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -355,6 +355,7 @@ struct sk_buff *tcp_gro_receive(struct list_head *head, struct sk_buff *skb,
+ 		flush |= skb->ip_summed != p->ip_summed;
+ 		flush |= skb->csum_level != p->csum_level;
+ 		flush |= NAPI_GRO_CB(p)->count >= 64;
++		skb_set_network_header(skb, skb_gro_receive_network_offset(skb));
+ 
+ 		if (flush || skb_gro_receive_list(p, skb))
+ 			mss = 1;
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 845730184c5d3..5de47dd5e9093 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -604,6 +604,7 @@ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
+ 					NAPI_GRO_CB(skb)->flush = 1;
+ 					return NULL;
+ 				}
++				skb_set_network_header(skb, skb_gro_receive_network_offset(skb));
+ 				ret = skb_gro_receive_list(p, skb);
+ 			} else {
+ 				skb_gro_postpull_rcsum(skb, uh,
 -- 
 2.39.5
 
