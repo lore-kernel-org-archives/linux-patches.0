@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7A52EA15A;
-	Tue, 22 Jul 2025 13:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660072EA16A;
+	Tue, 22 Jul 2025 13:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192237; cv=none; b=G9Ew/gcuvNgDPA/HMI0zt6i37k5/KUsr5aBSXVOfH+hplupgFsmDqdd9aRoADYaYPG//ngeH0HzLZoobDaYK2fU0Xtd0OnnvfWmnYOnHhdHh06+8A3mmJpnDLW67/woscHyih32cPz1Bcll1ylUJboU96L4Sntu/sKSLGz07gWk=
+	t=1753192240; cv=none; b=DwYfWdwk8fLye/0xcTfLA6TK/Jbp+X+xXI2M1H8nBRCcjQdkdeg3DOSBa6N7oucUSBIpfPASA7QwFxzUVT2lMbHeHOCLRHypbHT4HfMuDRU0Q+U1kJw95CuDHAhD/K7G2338NdRF5kCOwqAUajyf6z6e6G8hHw6Nk/tjGY/BrJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192237; c=relaxed/simple;
-	bh=8V17qEMdliV8Wag4yVql/s0i2kJWDSWQhNxNA+XJ+ZI=;
+	s=arc-20240116; t=1753192240; c=relaxed/simple;
+	bh=1CqXKBdNMrFkbtZwDf+PcNFT2dSeFV0YzCrMcQbCojA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1I3/ssY9HaupJynkG0xwIEX/cC8+91M+8ze7IWLCtdlTAJReQZIkwkgLyzqU3bd1QusBw/TmyUn4RjOepd4ih/j4qQrXVlF50P9GrXdIxkYiCu7KZCLv0zv2f8Dw9ibSrkq8H67KHtJCBaZ7dt4XRc7cw7Neg9zG85gkPKOAi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSjSu+4a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hjw1jYdzDSvczjhtbJQemkf5QEVq5uF1ToUqSI3ZhO+b5eeEerIdL2fj2YLeG/HS0+Wn772jBuFAieHw6Am96VS4uo/dmoCgZwpm9AafJBnHzg4u32F0cG4vrT+yje2QvK9ivFgE+kVg/HVOzugg/ftXvnsKwk330TGh395ASlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3XBCGDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSjSu+4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A71C4CEF1;
-	Tue, 22 Jul 2025 13:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3XBCGDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEE0C4CEF5;
+	Tue, 22 Jul 2025 13:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192237;
-	bh=8V17qEMdliV8Wag4yVql/s0i2kJWDSWQhNxNA+XJ+ZI=;
+	s=korg; t=1753192240;
+	bh=1CqXKBdNMrFkbtZwDf+PcNFT2dSeFV0YzCrMcQbCojA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSjSu+4ahm+LBctGixFbjQXX9ZB3OS1rNhrEhFmAyjw5i1yQ1myYFp3DCvkinNMSS
-	 Cze0EdZ/WkOP1cv2zZMoZoalQvF52iGthuLNV7FMYV51XcEs57WC0E4oz7EiS0Eb5W
-	 egdg8s59AKmGznt353hHYstrvXhJFsjyywiu+W5w=
+	b=I3XBCGDtSihK59Pa5OVDP/rrHYqVBLN8GTx/zP0z6J6SwlBbQBauEmJYPSPKqo+BF
+	 8cxeme58QOCgRg17gCP+kC0LisQbXguhRp+WkxEKx+zQ1kl23m7BryCwHPXE3IWqUM
+	 Zq1ISIPJHtqxsx7+RVvNPVVjCGP+jXIMEyy7hvd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3f89ec3d1d0842e95d50@syzkaller.appspotmail.com,
-	Oliver Neukum <oneukum@suse.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 51/79] usb: net: sierra: check for no status endpoint
-Date: Tue, 22 Jul 2025 15:44:47 +0200
-Message-ID: <20250722134330.255577573@linuxfoundation.org>
+Subject: [PATCH 6.1 52/79] Bluetooth: Fix null-ptr-deref in l2cap_sock_resume_cb()
+Date: Tue, 22 Jul 2025 15:44:48 +0200
+Message-ID: <20250722134330.290744195@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -52,42 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 4c4ca3c46167518f8534ed70f6e3b4bf86c4d158 ]
+[ Upstream commit a0075accbf0d76c2dad1ad3993d2e944505d99a0 ]
 
-The driver checks for having three endpoints and
-having bulk in and out endpoints, but not that
-the third endpoint is interrupt input.
-Rectify the omission.
+syzbot reported null-ptr-deref in l2cap_sock_resume_cb(). [0]
 
-Reported-by: syzbot+3f89ec3d1d0842e95d50@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/686d5a9f.050a0220.1ffab7.0017.GAE@google.com/
-Tested-by: syzbot+3f89ec3d1d0842e95d50@syzkaller.appspotmail.com
-Fixes: eb4fd8cd355c8 ("net/usb: add sierra_net.c driver")
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20250714111326.258378-1-oneukum@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+l2cap_sock_resume_cb() has a similar problem that was fixed by commit
+1bff51ea59a9 ("Bluetooth: fix use-after-free error in lock_sock_nested()").
+
+Since both l2cap_sock_kill() and l2cap_sock_resume_cb() are executed
+under l2cap_sock_resume_cb(), we can avoid the issue simply by checking
+if chan->data is NULL.
+
+Let's not access to the killed socket in l2cap_sock_resume_cb().
+
+[0]:
+BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:82 [inline]
+BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
+BUG: KASAN: null-ptr-deref in l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
+Write of size 8 at addr 0000000000000570 by task kworker/u9:0/52
+
+CPU: 1 UID: 0 PID: 52 Comm: kworker/u9:0 Not tainted 6.16.0-rc4-syzkaller-g7482bb149b9f #0 PREEMPT
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Workqueue: hci0 hci_rx_work
+Call trace:
+ show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:501 (C)
+ __dump_stack+0x30/0x40 lib/dump_stack.c:94
+ dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
+ print_report+0x58/0x84 mm/kasan/report.c:524
+ kasan_report+0xb0/0x110 mm/kasan/report.c:634
+ check_region_inline mm/kasan/generic.c:-1 [inline]
+ kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:189
+ __kasan_check_write+0x20/0x30 mm/kasan/shadow.c:37
+ instrument_atomic_write include/linux/instrumented.h:82 [inline]
+ clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
+ l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
+ l2cap_security_cfm+0x524/0xea0 net/bluetooth/l2cap_core.c:7357
+ hci_auth_cfm include/net/bluetooth/hci_core.h:2092 [inline]
+ hci_auth_complete_evt+0x2e8/0xa4c net/bluetooth/hci_event.c:3514
+ hci_event_func net/bluetooth/hci_event.c:7511 [inline]
+ hci_event_packet+0x650/0xe9c net/bluetooth/hci_event.c:7565
+ hci_rx_work+0x320/0xb18 net/bluetooth/hci_core.c:4070
+ process_one_work+0x7e8/0x155c kernel/workqueue.c:3238
+ process_scheduled_works kernel/workqueue.c:3321 [inline]
+ worker_thread+0x958/0xed8 kernel/workqueue.c:3402
+ kthread+0x5fc/0x75c kernel/kthread.c:464
+ ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:847
+
+Fixes: d97c899bde33 ("Bluetooth: Introduce L2CAP channel callback for resuming")
+Reported-by: syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/686c12bd.a70a0220.29fe6c.0b13.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sierra_net.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/l2cap_sock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/usb/sierra_net.c b/drivers/net/usb/sierra_net.c
-index b3ae949e6f1c5..d067f09fc072b 100644
---- a/drivers/net/usb/sierra_net.c
-+++ b/drivers/net/usb/sierra_net.c
-@@ -689,6 +689,10 @@ static int sierra_net_bind(struct usbnet *dev, struct usb_interface *intf)
- 			status);
- 		return -ENODEV;
- 	}
-+	if (!dev->status) {
-+		dev_err(&dev->udev->dev, "No status endpoint found");
-+		return -ENODEV;
-+	}
- 	/* Initialize sierra private data */
- 	priv = kzalloc(sizeof *priv, GFP_KERNEL);
- 	if (!priv)
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index bdfc83eb7aefc..c89277848ca83 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1723,6 +1723,9 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ {
+ 	struct sock *sk = chan->data;
+ 
++	if (!sk)
++		return;
++
+ 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
+ 		sk->sk_state = BT_CONNECTED;
+ 		chan->state = BT_CONNECTED;
 -- 
 2.39.5
 
