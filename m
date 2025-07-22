@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BB32EA469;
-	Tue, 22 Jul 2025 13:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCBD2B9A5;
+	Tue, 22 Jul 2025 13:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192472; cv=none; b=g44hIvuSWI5HjwCLtd4cDG+ytAm0H5xni9EanjGFdXNtoVc8o3TwjUJEthJdQIEFlECbkJdTNL8VCeEYnheO66f2PchXkNhnKzK5RSExNFxUOh/L6kOEgiFKTlVoe3c8gZguDrIHJZHAJ80Rz72Mml8sMCuUM2p3uicpepGMFdY=
+	t=1753192475; cv=none; b=n6v9JnuSWvFmnxdVssK0RNbqtBDOlZnzfJ6kVgybe7frmunf5//wnSP9SB13wgPOJZEj7Dqu4w5KF6VwjjVXJEcFtrxAtmiuQ5cy6vOq8BPlywe/B8Sw8BlFmkekz4M3ihYd99DPeWwlt7cxpE3BHOl8BDQQj2wAITV0T2uf0/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192472; c=relaxed/simple;
-	bh=mef4joxOg/HzGDwf9+hTAWkyzOkFshnp1BgXyOd5Opc=;
+	s=arc-20240116; t=1753192475; c=relaxed/simple;
+	bh=fcFJB14nRbkG9w1dxQdXHPAsSL0LkNtEjUtgsRsP9AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8RSz8o4e7/SxzTCRpBze791D+8rJcPeuPgVBvEE57JtkndM+2o9QpnrzQRpHYKGGKiutAGnOGeWVcugD2BRlZOVrAburSVVJiDL6cJgmiKH0jQORwHepy6RkL7x0pNJOYK38IOyCPCQzd4LyN6yDNqKxdd04OHbI70ndPEozS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3n+xedV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEOepmRSFRJtHa4HUjfDcY+Gv795UfS7ayDmCPPwKRB+E8YLv41xZrD0E9fKbgO4gWkSxKx7HfXoawj48IVhkpuht1Zp4fVj5RtcvSx9V5iILW8BrsUtuiACVCJ0xrlivRjyOqUH0gBk9pStbsTawV+0KKOiBe0EHM+DqEUrRSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYhHF7Bc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3n+xedV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8989C4CEEB;
-	Tue, 22 Jul 2025 13:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYhHF7Bc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AB6C4CEEB;
+	Tue, 22 Jul 2025 13:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192472;
-	bh=mef4joxOg/HzGDwf9+hTAWkyzOkFshnp1BgXyOd5Opc=;
+	s=korg; t=1753192475;
+	bh=fcFJB14nRbkG9w1dxQdXHPAsSL0LkNtEjUtgsRsP9AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3n+xedVfxbd1JD/MzP4wPZ4+XomNALMTT6amS6SG28PmWKZGbpHREF+LDazhlV7V
-	 GKWFxSYBgj/oUxKbf1eCAFT/jLlbiaTYHl+Zxi+VHSBeOObzmPAKeekujWnpzcgXCU
-	 StrQNz/wrKlk+kBgCeVJ0Mg2CdvprpgwRC25MHK4=
+	b=VYhHF7BcMPTPmmv9br1cYKdm9BPtcij8FkSQEQGRFVKpXgqIsxMnXyPhyonzk6ZpP
+	 tra70NQdG4YyqUN4m3sAfgU5Is9fjLr2HZyRkJt5oNx6GguglnduIoaqgQGIr54BEh
+	 Z/79y4bwn37gw0C0qhpI3SRAdIagcq/IoIhcbavE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Alessandro Gasbarroni <alex.gasbarroni@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/111] nvme: fix inconsistent RCU list manipulation in nvme_ns_add_to_ctrl_list()
-Date: Tue, 22 Jul 2025 15:44:43 +0200
-Message-ID: <20250722134335.912983048@linuxfoundation.org>
+Subject: [PATCH 6.6 077/111] Bluetooth: hci_sync: fix connectable extended advertising when using static random address
+Date: Tue, 22 Jul 2025 15:44:52 +0200
+Message-ID: <20250722134336.263041182@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -51,41 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Alessandro Gasbarroni <alex.gasbarroni@gmail.com>
 
-[ Upstream commit 80d7762e0a42307ee31b21f090e21349b98c14f6 ]
+[ Upstream commit d85edab911a4c1fcbe3f08336eff5c7feec567d0 ]
 
-When inserting a namespace into the controller's namespace list, the
-function uses list_add_rcu() when the namespace is inserted in the middle
-of the list, but falls back to a regular list_add() when adding at the
-head of the list.
+Currently, the connectable flag used by the setup of an extended
+advertising instance drives whether we require privacy when trying to pass
+a random address to the advertising parameters (Own Address).
+If privacy is not required, then it automatically falls back to using the
+controller's public address. This can cause problems when using controllers
+that do not have a public address set, but instead use a static random
+address.
 
-This inconsistency could lead to race conditions during concurrent
-access, as users might observe a partially updated list. Fix this by
-consistently using list_add_rcu() in both code paths to ensure proper
-RCU protection throughout the entire function.
+e.g. Assume a BLE controller that does not have a public address set.
+The controller upon powering is set with a random static address by default
+by the kernel.
 
-Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+	< HCI Command: LE Set Random Address (0x08|0x0005) plen 6
+        	Address: E4:AF:26:D8:3E:3A (Static)
+	> HCI Event: Command Complete (0x0e) plen 4
+	      LE Set Random Address (0x08|0x0005) ncmd 1
+	        Status: Success (0x00)
+
+Setting non-connectable extended advertisement parameters in bluetoothctl
+mgmt
+
+	add-ext-adv-params -r 0x801 -x 0x802 -P 2M -g 1
+
+correctly sets Own address type as Random
+
+	< HCI Command: LE Set Extended Advertising Parameters (0x08|0x0036)
+	plen 25
+		...
+	    Own address type: Random (0x01)
+
+Setting connectable extended advertisement parameters in bluetoothctl mgmt
+
+	add-ext-adv-params -r 0x801 -x 0x802 -P 2M -g -c 1
+
+mistakenly sets Own address type to Public (which causes to use Public
+Address 00:00:00:00:00:00)
+
+	< HCI Command: LE Set Extended Advertising Parameters (0x08|0x0036)
+	plen 25
+		...
+	    Own address type: Public (0x00)
+
+This causes either the controller to emit an Invalid Parameters error or to
+mishandle the advertising.
+
+This patch makes sure that we use the already set static random address
+when requesting a connectable extended advertising when we don't require
+privacy and our public address is not set (00:00:00:00:00:00).
+
+Fixes: 3fe318ee72c5 ("Bluetooth: move hci_get_random_address() to hci_sync")
+Signed-off-by: Alessandro Gasbarroni <alex.gasbarroni@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 6e2d0fda3ba4a..9feb47a604659 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3596,7 +3596,7 @@ static void nvme_ns_add_to_ctrl_list(struct nvme_ns *ns)
- 			return;
- 		}
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index e1df1c62017d9..01aca07707117 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6796,8 +6796,8 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
+ 		return 0;
  	}
--	list_add(&ns->list, &ns->ctrl->namespaces);
-+	list_add_rcu(&ns->list, &ns->ctrl->namespaces);
- }
  
- static void nvme_alloc_ns(struct nvme_ctrl *ctrl, struct nvme_ns_info *info)
+-	/* No privacy so use a public address. */
+-	*own_addr_type = ADDR_LE_DEV_PUBLIC;
++	/* No privacy, use the current address */
++	hci_copy_identity_address(hdev, rand_addr, own_addr_type);
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
