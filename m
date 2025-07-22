@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580382C9A;
-	Tue, 22 Jul 2025 14:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FBC2EA15F;
+	Tue, 22 Jul 2025 14:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193129; cv=none; b=nW41QH2sW0fyAx9V2vwX0AGEuilm5r2hycSyETCBMjVati636bc2i9sYAwcyc4dY8kGt0xHZZfw+Gr0JOeGqaBaHQZhe+aOfFpgckNVpXXVd6DxWgt1AZj0jp4xAH2Gx/M3v05Rh2i1/AB0GPun6LeLWb2k5ti+PmdIEMIDbBHg=
+	t=1753193132; cv=none; b=sFbRVew/sbWirgVr8ObxkzRBIknAKFePnZyFxq6gdkMyS6THdKOlWtJManh6WhnEJ1uiryvBhiiawzWe+H2dEXXTBi8qgkRuCgQg9Y83VsbE1KXJ2kGSFHAAx+fz3IwOxh95TOpnuT4sQ2P1yXr1sD+JpvkaomyUVKZLDOwvusE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193129; c=relaxed/simple;
-	bh=xzvSeHrPGh2XlznE+GlKpmSmENqkZILt9kxSivrFbt0=;
+	s=arc-20240116; t=1753193132; c=relaxed/simple;
+	bh=LghWn5fmU2ubh2W+HqwQIjOF+J4IeDGYC1TZ53dJ+vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTENVJ3jbkXVag9cVNTQo7lhe41k2vYGdsxFamjXJIc+kyvr63lVIoBCngIOOZm8djHIkBu/pmaCKiqtaqMAfTX9zgJ+p6R7N/W6jpByjdIxhIB8EGJQvSg4uHaTCu2k1uNQlv78cLNwRa/g2SXtByHFwCTVNWwbJdp/O8dt/IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdktgeao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oh8Or8xxO0E6B4VqeqX5rT6Etaw15xDZA57vIr6GrN9lGS65sD58Pbhob3rr+H5smj/0O47ISunHOBPxjpdCfSSsWy0UhaCjlW+T9xgjBK079FBBLaBY4R+nrR9N8hW0PcdA+SJp0qgiEjf7RtzmySgrRwA7Oozj5W5hsDhAFng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAvo29H6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdktgeao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF8DC4CEEB;
-	Tue, 22 Jul 2025 14:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAvo29H6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D47C4CEF5;
+	Tue, 22 Jul 2025 14:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193128;
-	bh=xzvSeHrPGh2XlznE+GlKpmSmENqkZILt9kxSivrFbt0=;
+	s=korg; t=1753193132;
+	bh=LghWn5fmU2ubh2W+HqwQIjOF+J4IeDGYC1TZ53dJ+vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdktgeaoYOz3VSTzHFliA9m/q8afnYNmHO1/O8jVfAH48G69RRy6OD2twPQ3klIgL
-	 tshJy3Gj9OgKmUNQZhqCPanqLau6qQ78p0uyqUwUCdpPL6ozOqAXObjaNscQSwcMpI
-	 msqEKJ1kZoceofqAIvtKwk/W0v4rbJUrT5DZ5abA=
+	b=zAvo29H6P78Ro0A0e/D5BudciudLnlIYP40QwLIP7W9H11FKRqIIGHUY/bS6YRyyQ
+	 /F7WXPqzBF3ai5U2Ipid+lDQrVFEB+xZr0Z0Zkr7t2Jd9U5CJclB71Rb53YmXfcnMB
+	 f0mz8z4CUSSDPe8zx5pq4NGup7SqZ5drYWBOuQ7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
-	stable+noautosel@kernel.org
-Subject: [PATCH 6.12 158/158] smb: client: let smbd_post_send_iter() respect the peers max_send_size and transmit all data
-Date: Tue, 22 Jul 2025 15:45:42 +0200
-Message-ID: <20250722134346.605211690@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 138/158] libbpf: Fix handling of BPF arena relocations
+Date: Tue, 22 Jul 2025 15:45:22 +0200
+Message-ID: <20250722134345.878506951@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -55,132 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 1944f6ab4967db7ad8d4db527dceae8c77de76e9 upstream.
+[ Upstream commit 0238c45fbbf8228f52aa4642f0cdc21c570d1dfe ]
 
-We should not send smbdirect_data_transfer messages larger than
-the negotiated max_send_size, typically 1364 bytes, which means
-24 bytes of the smbdirect_data_transfer header + 1340 payload bytes.
+Initial __arena global variable support implementation in libbpf
+contains a bug: it remembers struct bpf_map pointer for arena, which is
+used later on to process relocations. Recording this pointer is
+problematic because map pointers are not stable during ELF relocation
+collection phase, as an array of struct bpf_map's can be reallocated,
+invalidating all the pointers. Libbpf is dealing with similar issues by
+using a stable internal map index, though for BPF arena map specifically
+this approach wasn't used due to an oversight.
 
-This happened when doing an SMB2 write with more than 1340 bytes
-(which is done inline as it's below rdma_readwrite_threshold).
+The resulting behavior is non-deterministic issue which depends on exact
+layout of ELF object file, number of actual maps, etc. We didn't hit
+this until very recently, when this bug started triggering crash in BPF
+CI when validating one of sched-ext BPF programs.
 
-It means the peer resets the connection.
+The fix is rather straightforward: we just follow an established pattern
+of remembering map index (just like obj->kconfig_map_idx, for example)
+instead of `struct bpf_map *`, and resolving index to a pointer at the
+point where map information is necessary.
 
-When testing between cifs.ko and ksmbd.ko something like this
-is logged:
+While at it also add debug-level message for arena-related relocation
+resolution information, which we already have for all other kinds of
+maps.
 
-client:
-
-    CIFS: VFS: RDMA transport re-established
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    siw: got TERMINATE. layer 1, type 2, code 2
-    CIFS: VFS: \\carina Send error in SessSetup = -11
-    smb2_reconnect: 12 callbacks suppressed
-    CIFS: VFS: reconnect tcon failed rc = -11
-    CIFS: VFS: reconnect tcon failed rc = -11
-    CIFS: VFS: reconnect tcon failed rc = -11
-    CIFS: VFS: SMB: Zero rsize calculated, using minimum value 65536
-
-and:
-
-    CIFS: VFS: RDMA transport re-established
-    siw: got TERMINATE. layer 1, type 2, code 2
-    CIFS: VFS: smbd_recv:1894 disconnected
-    siw: got TERMINATE. layer 1, type 2, code 2
-
-The ksmbd dmesg is showing things like:
-
-    smb_direct: Recv error. status='local length error (1)' opcode=128
-    smb_direct: disconnected
-    smb_direct: Recv error. status='local length error (1)' opcode=128
-    ksmbd: smb_direct: disconnected
-    ksmbd: sock_read failed: -107
-
-As smbd_post_send_iter() limits the transmitted number of bytes
-we need loop over it in order to transmit the whole iter.
-
-Reviewed-by: David Howells <dhowells@redhat.com>
-Tested-by: David Howells <dhowells@redhat.com>
-Tested-by: Meetakshi Setiya <msetiya@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: <stable+noautosel@kernel.org> # sp->max_send_size should be info->max_send_size in backports
-Fixes: 3d78fe73fa12 ("cifs: Build the RDMA SGE list directly from an iterator")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2e7ba4f8fd1f ("libbpf: Recognize __arena global variables.")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Tested-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20250718001009.610955-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c |   31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ tools/lib/bpf/libbpf.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -907,8 +907,10 @@ wait_send_queue:
- 			.local_dma_lkey	= sc->ib.pd->local_dma_lkey,
- 			.direction	= DMA_TO_DEVICE,
- 		};
-+		size_t payload_len = umin(*_remaining_data_length,
-+					  sp->max_send_size - sizeof(*packet));
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 36e341b4b77bf..747cef47e685b 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -726,7 +726,7 @@ struct bpf_object {
  
--		rc = smb_extract_iter_to_rdma(iter, *_remaining_data_length,
-+		rc = smb_extract_iter_to_rdma(iter, payload_len,
- 					      &extract);
- 		if (rc < 0)
- 			goto err_dma;
-@@ -1013,6 +1015,27 @@ static int smbd_post_send_empty(struct s
- 	return smbd_post_send_iter(info, NULL, &remaining_data_length);
- }
+ 	struct usdt_manager *usdt_man;
  
-+static int smbd_post_send_full_iter(struct smbd_connection *info,
-+				    struct iov_iter *iter,
-+				    int *_remaining_data_length)
-+{
-+	int rc = 0;
-+
-+	/*
-+	 * smbd_post_send_iter() respects the
-+	 * negotiated max_send_size, so we need to
-+	 * loop until the full iter is posted
-+	 */
-+
-+	while (iov_iter_count(iter) > 0) {
-+		rc = smbd_post_send_iter(info, iter, _remaining_data_length);
-+		if (rc < 0)
-+			break;
-+	}
-+
-+	return rc;
-+}
-+
- /*
-  * Post a receive request to the transport
-  * The remote peer can only send data when a receive request is posted
-@@ -1962,14 +1985,14 @@ int smbd_send(struct TCP_Server_Info *se
- 			klen += rqst->rq_iov[i].iov_len;
- 		iov_iter_kvec(&iter, ITER_SOURCE, rqst->rq_iov, rqst->rq_nvec, klen);
+-	struct bpf_map *arena_map;
++	int arena_map_idx;
+ 	void *arena_data;
+ 	size_t arena_data_sz;
  
--		rc = smbd_post_send_iter(info, &iter, &remaining_data_length);
-+		rc = smbd_post_send_full_iter(info, &iter, &remaining_data_length);
- 		if (rc < 0)
- 			break;
+@@ -1494,6 +1494,7 @@ static struct bpf_object *bpf_object__new(const char *path,
+ 	obj->efile.obj_buf_sz = obj_buf_sz;
+ 	obj->efile.btf_maps_shndx = -1;
+ 	obj->kconfig_map_idx = -1;
++	obj->arena_map_idx = -1;
  
- 		if (iov_iter_count(&rqst->rq_iter) > 0) {
- 			/* And then the data pages if there are any */
--			rc = smbd_post_send_iter(info, &rqst->rq_iter,
--						 &remaining_data_length);
-+			rc = smbd_post_send_full_iter(info, &rqst->rq_iter,
-+						      &remaining_data_length);
- 			if (rc < 0)
- 				break;
+ 	obj->kern_version = get_kernel_version();
+ 	obj->loaded = false;
+@@ -2935,7 +2936,7 @@ static int init_arena_map_data(struct bpf_object *obj, struct bpf_map *map,
+ 	const long page_sz = sysconf(_SC_PAGE_SIZE);
+ 	size_t mmap_sz;
+ 
+-	mmap_sz = bpf_map_mmap_sz(obj->arena_map);
++	mmap_sz = bpf_map_mmap_sz(map);
+ 	if (roundup(data_sz, page_sz) > mmap_sz) {
+ 		pr_warn("elf: sec '%s': declared ARENA map size (%zu) is too small to hold global __arena variables of size %zu\n",
+ 			sec_name, mmap_sz, data_sz);
+@@ -3009,12 +3010,12 @@ static int bpf_object__init_user_btf_maps(struct bpf_object *obj, bool strict,
+ 		if (map->def.type != BPF_MAP_TYPE_ARENA)
+ 			continue;
+ 
+-		if (obj->arena_map) {
++		if (obj->arena_map_idx >= 0) {
+ 			pr_warn("map '%s': only single ARENA map is supported (map '%s' is also ARENA)\n",
+-				map->name, obj->arena_map->name);
++				map->name, obj->maps[obj->arena_map_idx].name);
+ 			return -EINVAL;
  		}
+-		obj->arena_map = map;
++		obj->arena_map_idx = i;
+ 
+ 		if (obj->efile.arena_data) {
+ 			err = init_arena_map_data(obj, map, ARENA_SEC, obj->efile.arena_data_shndx,
+@@ -3024,7 +3025,7 @@ static int bpf_object__init_user_btf_maps(struct bpf_object *obj, bool strict,
+ 				return err;
+ 		}
+ 	}
+-	if (obj->efile.arena_data && !obj->arena_map) {
++	if (obj->efile.arena_data && obj->arena_map_idx < 0) {
+ 		pr_warn("elf: sec '%s': to use global __arena variables the ARENA map should be explicitly declared in SEC(\".maps\")\n",
+ 			ARENA_SEC);
+ 		return -ENOENT;
+@@ -4547,8 +4548,13 @@ static int bpf_program__record_reloc(struct bpf_program *prog,
+ 	if (shdr_idx == obj->efile.arena_data_shndx) {
+ 		reloc_desc->type = RELO_DATA;
+ 		reloc_desc->insn_idx = insn_idx;
+-		reloc_desc->map_idx = obj->arena_map - obj->maps;
++		reloc_desc->map_idx = obj->arena_map_idx;
+ 		reloc_desc->sym_off = sym->st_value;
++
++		map = &obj->maps[obj->arena_map_idx];
++		pr_debug("prog '%s': found arena map %d (%s, sec %d, off %zu) for insn %u\n",
++			 prog->name, obj->arena_map_idx, map->name, map->sec_idx,
++			 map->sec_offset, insn_idx);
+ 		return 0;
+ 	}
+ 
+-- 
+2.39.5
+
 
 
