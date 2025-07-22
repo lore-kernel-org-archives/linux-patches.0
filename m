@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5511433A8;
-	Tue, 22 Jul 2025 13:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11E1433A8;
+	Tue, 22 Jul 2025 13:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192120; cv=none; b=uvvKMkU4rVZo3fHn1cvmGfnVZ8Iacv4Uhw9ggAQe8RrqGMglXdwwowuLcnp7HZVn6TjursMlYI4s77C7pR4WjP9oZXkj2YEag8LGVPPUn8X13FRxXq4PxVlE7BHajPfhWHgZEN8GDfAZe2+H+UANsnV2gqqlqHsz5BdgAfN4XD0=
+	t=1753192123; cv=none; b=W4r5OghhhNoFJMlzia2NQDcnvGtnMJsP9ULn7gBxR1Itr8S9rQc4wrgVNYA1eHW3AYBbnk1NW2CiYa4pkBahET0hg4NsaqEaPmyjlMBs9nCnWvHlhZcmi2GZmaLoAOcDj9lalTA+rFIA+SI2+64lM5enzH/Duu4rtzR47liOHow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192120; c=relaxed/simple;
-	bh=UsmJf7QTk1DIZ5UST0y/tfAau2h4kwjA5TNU6dhDIDc=;
+	s=arc-20240116; t=1753192123; c=relaxed/simple;
+	bh=g7bFYv3vu6r0YIboeHmbyt776P5sLk0sipb4d7d1eKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dh6bKkzvrjcqh5qR0HY6zZ97YRmKBlwvEmqJjbOdXvGRiBuQKVTPl8PIU5Z1VQSdxVjChmEdI6xzte8LKfNN56DnELQJsEowXOVVJ9MhC8AiN9Ju5E4OqkLpIiQAIJ8Ct/HQPAGZ9ISepnlSnsSFkQ/b2pVkU9fxcK06XaEHvag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPztPPAm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVYrUKjvORN5msDtn+JzobqaacWEcPb7HQb9xsRH0hroihFxUajgTDL2DNvCE2LUsNHiAbZ1vA+u0hibrtotXeqmQLQiHv4V3kfGOWoctS2KAIl5k40NnRAKAbD3iN6+lrIhlHAPIYHmS9gZU9+Qprs0oVuOLEZuxgOorvp0UdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpq5jfuF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPztPPAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B36EC4CEEB;
-	Tue, 22 Jul 2025 13:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpq5jfuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C36FC4CEEB;
+	Tue, 22 Jul 2025 13:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192120;
-	bh=UsmJf7QTk1DIZ5UST0y/tfAau2h4kwjA5TNU6dhDIDc=;
+	s=korg; t=1753192123;
+	bh=g7bFYv3vu6r0YIboeHmbyt776P5sLk0sipb4d7d1eKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPztPPAmlftRwu77z+iO8xb8euRQBilV3VAAq+yheDjLaZFubtMwNbawetCMorpEC
-	 gE9iI61wyjAusuZTYzcgX2PIky/YCXO7smOxcLIF5xE1R42wZdAAr5IS8uJfoWbE0E
-	 Hta2wZXeujXPP5sP07jOI1rhone1uat/x8rpbsjc=
+	b=gpq5jfuFfLWyKcOAI0HJa4lUVIqYb7BrLtWE7cOYSRxM/pqidAbqV/WSsQ8G2X71K
+	 w/yMZuUmJAe1l32Zyv3nmj6R4wZIjAJHR8ZuDQopr3q4hbkPOv2dopfobcDEwIbNvZ
+	 pQ8rFYpZqMFzg7ZubyQbd3lpxCYNInTAhXwRJhAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Eric Dumazet <edumazet@google.com>,
-	Yun Lu <luyun@kylinos.cn>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 18/79] af_packet: fix the SO_SNDTIMEO constraint not effective on tpacked_snd()
-Date: Tue, 22 Jul 2025 15:44:14 +0200
-Message-ID: <20250722134329.050965650@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.1 09/79] pch_uart: Fix dma_sync_sg_for_device() nents value
+Date: Tue, 22 Jul 2025 15:44:05 +0200
+Message-ID: <20250722134328.721900871@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -53,59 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit c1ba3c0cbdb5e53a8ec5d708e99cd4c497028a13 upstream.
+commit 6c0e9f05c9d7875995b0e92ace71be947f280bbd upstream.
 
-Due to the changes in commit 581073f626e3 ("af_packet: do not call
-packet_read_pending() from tpacket_destruct_skb()"), every time
-tpacket_destruct_skb() is executed, the skb_completion is marked as
-completed. When wait_for_completion_interruptible_timeout() returns
-completed, the pending_refcnt has not yet been reduced to zero.
-Therefore, when ph is NULL, the wait function may need to be called
-multiple times until packet_read_pending() finally returns zero.
+The dma_sync_sg_for_device() functions should be called with the same
+nents as the dma_map_sg(), not the value the map function returned
+according to the documentation in Documentation/core-api/dma-api.rst:450:
+	With the sync_sg API, all the parameters must be the same
+	as those passed into the sg mapping API.
 
-We should call sock_sndtimeo() only once, otherwise the SO_SNDTIMEO
-constraint could be way off.
-
-Fixes: 581073f626e3 ("af_packet: do not call packet_read_pending() from tpacket_destruct_skb()")
-Cc: stable@kernel.org
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250701113452.18590-2-fourier.thomas@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/pch_uart.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2780,7 +2780,7 @@ static int tpacket_snd(struct packet_soc
- 	int len_sum = 0;
- 	int status = TP_STATUS_AVAILABLE;
- 	int hlen, tlen, copylen = 0;
--	long timeo = 0;
-+	long timeo;
- 
- 	mutex_lock(&po->pg_vec_lock);
- 
-@@ -2834,6 +2834,7 @@ static int tpacket_snd(struct packet_soc
- 	if ((size_max > dev->mtu + reserve + VLAN_HLEN) && !po->has_vnet_hdr)
- 		size_max = dev->mtu + reserve + VLAN_HLEN;
- 
-+	timeo = sock_sndtimeo(&po->sk, msg->msg_flags & MSG_DONTWAIT);
- 	reinit_completion(&po->skb_completion);
- 
- 	do {
-@@ -2841,7 +2842,6 @@ static int tpacket_snd(struct packet_soc
- 					  TP_STATUS_SEND_REQUEST);
- 		if (unlikely(ph == NULL)) {
- 			if (need_wait && skb) {
--				timeo = sock_sndtimeo(&po->sk, msg->msg_flags & MSG_DONTWAIT);
- 				timeo = wait_for_completion_interruptible_timeout(&po->skb_completion, timeo);
- 				if (timeo <= 0) {
- 					err = !timeo ? -ETIMEDOUT : -ERESTARTSYS;
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -971,7 +971,7 @@ static unsigned int dma_handle_tx(struct
+ 			__func__);
+ 		return 0;
+ 	}
+-	dma_sync_sg_for_device(port->dev, priv->sg_tx_p, nent, DMA_TO_DEVICE);
++	dma_sync_sg_for_device(port->dev, priv->sg_tx_p, num, DMA_TO_DEVICE);
+ 	priv->desc_tx = desc;
+ 	desc->callback = pch_dma_tx_complete;
+ 	desc->callback_param = priv;
 
 
