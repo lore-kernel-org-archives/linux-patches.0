@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAF72ED856;
-	Tue, 22 Jul 2025 14:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD3F23F413;
+	Tue, 22 Jul 2025 14:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193452; cv=none; b=NFjnM6CyofVFeaAiyX+k0+sDwS0OsEyw/PNVfP1fVJGtz+jJn1krwz67gr5LA1/9xIsBY+MGwdGYZ8uoifnUKXgXVpW4/7jURTNTlg3oG1efXQL2qKnHNluUMr9vT8VdKWyM0GyQ3N6xggI+gRpLK0e3p3UrSwtu3I+Emh9qI+A=
+	t=1753193455; cv=none; b=a0l9QWMtUT5Kj3xrGrbhaWIKBMlsoPeYB8kX9JI9wrackEmgYrvO34Rx5lghHu/v4EE4INFU6cozA/VdeId5FKrrF+AqLo1Kzr0TPNky28sNYq4O+EotxLVDrxcSYc/Fs6GD9MxEMK8ykmBLdBMQm9XM2pI1bJ52MiAMaZdy76U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193452; c=relaxed/simple;
-	bh=0hPjvl32p1oMfMP0C2SgR/z9rXjhtKTF+zYfAF/5kbg=;
+	s=arc-20240116; t=1753193455; c=relaxed/simple;
+	bh=J4SLfmTfRxvOooZwUZqtXHKzmH+TAofBeMZn6R/G5zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b2OARur+bCF7X7Llt90GiokpvNEL2VH1D9ucdNw95N2jeD5KVvNFVaNiLbAyFzyPfeYOjv1sCuTcokY4MY6Q6StOR917Qvf8zjqTswM2JfDI/ij5auUwaR8yVUN/VGyo65sAgKHdZtHbHlUlgJfHHAFEm2BgdO2ZS8vCabvvuJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFL+KOOV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LXnUz94AvAHqZ6Ir4gDBONbO7d35ZxG/vGm0++SIuHwu/WepfWTNCAFkWcrAvdYJROkd/Ay3yL7cy2GOMWOvlUQa4DWdYkHQIzVk36wsfdAYWiejHIx5/hkgfqJQSIX7DQwpzSQusehT0hI1TDDRdk2EG2/WdYosqXvuT44V/qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrDMzOMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFL+KOOV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52F8C4CEEB;
-	Tue, 22 Jul 2025 14:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrDMzOMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004E4C4CEEB;
+	Tue, 22 Jul 2025 14:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193452;
-	bh=0hPjvl32p1oMfMP0C2SgR/z9rXjhtKTF+zYfAF/5kbg=;
+	s=korg; t=1753193455;
+	bh=J4SLfmTfRxvOooZwUZqtXHKzmH+TAofBeMZn6R/G5zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFL+KOOVqETmjW8Pm5xmGwvcg3nHIBi0F3/mMn/TNq6Tk7E14eAOZh9oI3Ena0NBo
-	 IwjVSc2R0tmT75+wUNd+9745mByOXQ3+sOO6axpKKseami/fDj0cddf5OOnGptRx/i
-	 keTR6viiX+Ity29MDCEBuwAYcGSokvpjzK1xALzw=
+	b=zrDMzOMpZJ+4mROolfoGl72b4qf+DVgEAmdykcirLXrswUlBwibkMwJry0M6T3uR4
+	 5oJABEyiEuRelq8+VtV4xQoQC2ALRE1CsmtTl0oz4V3r3b6zOOZRc83N/z5mZTKnZF
+	 MsMxo+yedNEpCA/5s8/RSkFnLDlGFxIQk/US95xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.15 096/187] comedi: Fix initialization of data for instructions that write to subdevice
-Date: Tue, 22 Jul 2025 15:44:26 +0200
-Message-ID: <20250722134349.345406669@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 070/187] net: libwx: fix the using of Rx buffer DMA
+Date: Tue, 22 Jul 2025 15:44:00 +0200
+Message-ID: <20250722134348.346071599@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -49,77 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit 46d8c744136ce2454aa4c35c138cc06817f92b8e upstream.
+commit 5fd77cc6bd9b368431a815a780e407b7781bcca0 upstream.
 
-Some Comedi subdevice instruction handlers are known to access
-instruction data elements beyond the first `insn->n` elements in some
-cases.  The `do_insn_ioctl()` and `do_insnlist_ioctl()` functions
-allocate at least `MIN_SAMPLES` (16) data elements to deal with this,
-but they do not initialize all of that.  For Comedi instruction codes
-that write to the subdevice, the first `insn->n` data elements are
-copied from user-space, but the remaining elements are left
-uninitialized.  That could be a problem if the subdevice instruction
-handler reads the uninitialized data.  Ensure that the first
-`MIN_SAMPLES` elements are initialized before calling these instruction
-handlers, filling the uncopied elements with 0.  For
-`do_insnlist_ioctl()`, the same data buffer elements are used for
-handling a list of instructions, so ensure the first `MIN_SAMPLES`
-elements are initialized for each instruction that writes to the
-subdevice.
+The wx_rx_buffer structure contained two DMA address fields: 'dma' and
+'page_dma'. However, only 'page_dma' was actually initialized and used
+to program the Rx descriptor. But 'dma' was uninitialized and used in
+some paths.
 
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Cc: stable@vger.kernel.org # 5.13+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707161439.88385-1-abbotti@mev.co.uk
+This could lead to undefined behavior, including DMA errors or
+use-after-free, if the uninitialized 'dma' was used. Althrough such
+error has not yet occurred, it is worth fixing in the code.
+
+Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250714024755.17512-3-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/comedi_fops.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c  |    4 ++--
+ drivers/net/ethernet/wangxun/libwx/wx_type.h |    1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -1556,21 +1556,27 @@ static int do_insnlist_ioctl(struct come
- 	}
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -306,7 +306,7 @@ static bool wx_alloc_mapped_page(struct
+ 		return false;
+ 	dma = page_pool_get_dma_addr(page);
  
- 	for (i = 0; i < n_insns; ++i) {
-+		unsigned int n = insns[i].n;
-+
- 		if (insns[i].insn & INSN_MASK_WRITE) {
- 			if (copy_from_user(data, insns[i].data,
--					   insns[i].n * sizeof(unsigned int))) {
-+					   n * sizeof(unsigned int))) {
- 				dev_dbg(dev->class_dev,
- 					"copy_from_user failed\n");
- 				ret = -EFAULT;
- 				goto error;
- 			}
-+			if (n < MIN_SAMPLES) {
-+				memset(&data[n], 0, (MIN_SAMPLES - n) *
-+						    sizeof(unsigned int));
-+			}
- 		}
- 		ret = parse_insn(dev, insns + i, data, file);
- 		if (ret < 0)
- 			goto error;
- 		if (insns[i].insn & INSN_MASK_READ) {
- 			if (copy_to_user(insns[i].data, data,
--					 insns[i].n * sizeof(unsigned int))) {
-+					 n * sizeof(unsigned int))) {
- 				dev_dbg(dev->class_dev,
- 					"copy_to_user failed\n");
- 				ret = -EFAULT;
-@@ -1643,6 +1649,10 @@ static int do_insn_ioctl(struct comedi_d
- 			ret = -EFAULT;
- 			goto error;
- 		}
-+		if (insn->n < MIN_SAMPLES) {
-+			memset(&data[insn->n], 0,
-+			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
-+		}
- 	}
- 	ret = parse_insn(dev, insn, data, file);
- 	if (ret < 0)
+-	bi->page_dma = dma;
++	bi->dma = dma;
+ 	bi->page = page;
+ 	bi->page_offset = 0;
+ 
+@@ -343,7 +343,7 @@ void wx_alloc_rx_buffers(struct wx_ring
+ 						 DMA_FROM_DEVICE);
+ 
+ 		rx_desc->read.pkt_addr =
+-			cpu_to_le64(bi->page_dma + bi->page_offset);
++			cpu_to_le64(bi->dma + bi->page_offset);
+ 
+ 		rx_desc++;
+ 		bi++;
+--- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
++++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+@@ -947,7 +947,6 @@ struct wx_tx_buffer {
+ struct wx_rx_buffer {
+ 	struct sk_buff *skb;
+ 	dma_addr_t dma;
+-	dma_addr_t page_dma;
+ 	struct page *page;
+ 	unsigned int page_offset;
+ };
 
 
