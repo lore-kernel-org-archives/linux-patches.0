@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1CA2EA17E;
-	Tue, 22 Jul 2025 13:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B08E2EA481;
+	Tue, 22 Jul 2025 13:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192326; cv=none; b=ZE6QNui6df2Wt4PXHjqWVLtvXNEhnvp2KzDRYqJk3+Vw/7lo3X5JRzhe8F/7M2RtF24cyUbEvWvFPXBor3Aq7ZluQ50arovx0w45TFc751Vi8/nADIKo4xskB28iBFScxfPjE4O1/KXqW4vywRQJ7gVRuHyPbqBtajA6TiKYzDU=
+	t=1753192329; cv=none; b=aE6Abw6CVcELYkUd9SpfwxwgTIWrHdXsDZEU6mS6TmCGtbn5/8enQNXR1RGoDTYlFlrnqKIz6DU7AJdjTV2dVA3ZbOHYe0Bqr/it0seaovhFBFS5MvDFpt/tLb8NfyWGHygLrpXl6XnXFrDIm4jc/fythKseS7Ly2YJzOeQuRP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192326; c=relaxed/simple;
-	bh=8Rpg1iwCCccploiEQkt77UJL2HFJPn9Ih22ZA0v4/O8=;
+	s=arc-20240116; t=1753192329; c=relaxed/simple;
+	bh=3oR8L3udfiS9iUmWi3nH+OgjR0IRXFQ/c3WV9bqLmVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYW8KjHqPG0Wgo5ZWXTQJmpG/N2BC8+v25g0kMyj37WzfYEX+6p0y350bdZgLtcJoTx7IhStFA0DJQrHa5UfldQijqII7WH09TMP4kIqAILkMojLDsbTB/fIqo9sLLjNk97KqDi9SIu1L2iJA/I7oFlT2afdESoc5I8u5Zrpk04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAxNTt0u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CzfoWs347jylUOde9Gt0Q4R0NzwSskE92FvRiHmwCDKezOuyultzm92P6gs7MM7uSJ0jvUAz0rSqgyDqO2zHyU9U0eN7/GdhW8irckmYDUtYLUueCJZfOoFDKYVcA8uLrhAkPX7WbBTUEwUsJIzVVahrMsRsnk3nVA3tdu81YdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkRXYdyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAxNTt0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426B6C4CEEB;
-	Tue, 22 Jul 2025 13:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkRXYdyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4ACC4CEEB;
+	Tue, 22 Jul 2025 13:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192325;
-	bh=8Rpg1iwCCccploiEQkt77UJL2HFJPn9Ih22ZA0v4/O8=;
+	s=korg; t=1753192329;
+	bh=3oR8L3udfiS9iUmWi3nH+OgjR0IRXFQ/c3WV9bqLmVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAxNTt0u8NfZypVE4tSIUIIjmtarrr47aIC83gQzbFTzT6Leupf3wHAUhGk27jeWc
-	 lktNvE+kufzOmzZXns2UcMvY2L1poczpP85LB+btZ6fvWoUaROBHT5TBhtIzAYptRD
-	 ml9fYS9V/wk9RMG9R05RyLP0XKbNHfGI9+q85/FY=
+	b=UkRXYdyWFVdnMcwmoVuhsNaScLNjVBInIRY8amtvVdF5+ZstuKmf7gH00r9HMsxtJ
+	 1lRF4vKEwiE62hF98L4crlX8JqRDN6VmBZTbQttkNtDbluuN0SVSgrs4iaOPq2YacQ
+	 2dFxvmgUImK7ehPMH+Bb1c86QtS5AGh5b+85GH60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Mann <rmann@ndigital.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 006/111] USB: serial: ftdi_sio: add support for NDI EMGUIDE GEMINI
-Date: Tue, 22 Jul 2025 15:43:41 +0200
-Message-ID: <20250722134333.621497188@linuxfoundation.org>
+	Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>,
+	Drew Hamilton <drew.hamilton@zetier.com>
+Subject: [PATCH 6.6 007/111] usb: musb: fix gadget state on disconnect
+Date: Tue, 22 Jul 2025 15:43:42 +0200
+Message-ID: <20250722134333.655730920@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -50,46 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Mann (NDI) <rmann@ndigital.com>
+From: Drew Hamilton <drew.hamilton@zetier.com>
 
-commit c980666b6958d9a841597331b38115a29a32250e upstream.
+commit 67a59f82196c8c4f50c83329f0577acfb1349b50 upstream.
 
-NDI (Northern Digital Inc.) is introducing a new product called the
-EMGUIDE GEMINI that will use an FTDI chip for USB serial communications.
-Add the NDI EMGUIDE GEMINI product ID that uses the NDI Vendor ID
-rather than the FTDI Vendor ID, unlike older products.
+When unplugging the USB cable or disconnecting a gadget in usb peripheral mode with
+echo "" > /sys/kernel/config/usb_gadget/<your_gadget>/UDC,
+/sys/class/udc/musb-hdrc.0/state does not change from USB_STATE_CONFIGURED.
 
-Signed-off-by: Ryan Mann <rmann@ndigital.com>
+Testing on dwc2/3 shows they both update the state to USB_STATE_NOTATTACHED.
+
+Add calls to usb_gadget_set_state in musb_g_disconnect and musb_gadget_stop
+to fix both cases.
+
+Fixes: 49401f4169c0 ("usb: gadget: introduce gadget state tracking")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Co-authored-by: Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>
+Signed-off-by: Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>
+Signed-off-by: Drew Hamilton <drew.hamilton@zetier.com>
+Link: https://lore.kernel.org/r/20250701154126.8543-1-drew.hamilton@zetier.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/ftdi_sio.c     |    2 ++
- drivers/usb/serial/ftdi_sio_ids.h |    3 +++
- 2 files changed, 5 insertions(+)
+ drivers/usb/musb/musb_gadget.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -803,6 +803,8 @@ static const struct usb_device_id id_tab
- 		.driver_info = (kernel_ulong_t)&ftdi_NDI_device_quirk },
- 	{ USB_DEVICE(FTDI_VID, FTDI_NDI_AURORA_SCU_PID),
- 		.driver_info = (kernel_ulong_t)&ftdi_NDI_device_quirk },
-+	{ USB_DEVICE(FTDI_NDI_VID, FTDI_NDI_EMGUIDE_GEMINI_PID),
-+		.driver_info = (kernel_ulong_t)&ftdi_NDI_device_quirk },
- 	{ USB_DEVICE(TELLDUS_VID, TELLDUS_TELLSTICK_PID) },
- 	{ USB_DEVICE(NOVITUS_VID, NOVITUS_BONO_E_PID) },
- 	{ USB_DEVICE(FTDI_VID, RTSYSTEMS_USB_VX8_PID) },
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -204,6 +204,9 @@
- #define FTDI_NDI_FUTURE_3_PID		0xDA73	/* NDI future device #3 */
- #define FTDI_NDI_AURORA_SCU_PID		0xDA74	/* NDI Aurora SCU */
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1925,6 +1925,7 @@ static int musb_gadget_stop(struct usb_g
+ 	 * gadget driver here and have everything work;
+ 	 * that currently misbehaves.
+ 	 */
++	usb_gadget_set_state(g, USB_STATE_NOTATTACHED);
  
-+#define FTDI_NDI_VID			0x23F2
-+#define FTDI_NDI_EMGUIDE_GEMINI_PID	0x0003	/* NDI Emguide Gemini */
-+
- /*
-  * ChamSys Limited (www.chamsys.co.uk) USB wing/interface product IDs
-  */
+ 	/* Force check of devctl register for PM runtime */
+ 	pm_runtime_mark_last_busy(musb->controller);
+@@ -2031,6 +2032,7 @@ void musb_g_disconnect(struct musb *musb
+ 	case OTG_STATE_B_PERIPHERAL:
+ 	case OTG_STATE_B_IDLE:
+ 		musb_set_state(musb, OTG_STATE_B_IDLE);
++		usb_gadget_set_state(&musb->g, USB_STATE_NOTATTACHED);
+ 		break;
+ 	case OTG_STATE_B_SRP_INIT:
+ 		break;
 
 
