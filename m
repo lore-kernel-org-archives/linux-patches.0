@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD5A2D3EDD;
-	Tue, 22 Jul 2025 08:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8062DAFDB;
+	Tue, 22 Jul 2025 08:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753174517; cv=none; b=fRoRkIhSqOe3E5RVStzK4nGwJSD2y573/CtfibN2RLA21rWRuZPuaQzzZk0XpmwRfnZ3fLvxcARvZUNCne0ATydBSr2ntzhRkHx8tEXKDVXChQoUgh37O66zpa/6zV2DzuPK+Zc4TPXpE43/SCsIKzmzMj4R8Mirj3FA6FaEX+o=
+	t=1753174520; cv=none; b=JZF9JZxzQfZM+o404Hv81BXaSKUnQIkS8TRq5lu4ffXPgc1f1QoeaQ4GYDLQIdZgTMoIDXRif+K5R8NW86uPiH5HMR7gb21Hyaq8AoUF7W3h0GZUT1wZzTHGudCXxFgd0IMBKAoLepUmNsSSbaRffGMAmMzL3d6WjOROLUqDv0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753174517; c=relaxed/simple;
-	bh=Rq5GNyaaope0SfIt7slAATJYCCZekSTyEA+C+4d7Aws=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QmVqFU+m7z4LCXWD3LsLJMKlzno3t205UcuFgX1G38NchlyCVhSsBc9BXwHeh9BXELeUy8WJUOTE+RM7tBwyJTWO6QQnfUMAfsOxeW5XgPJqj5bM0DlxO+IvnR3qwAaet9nRfRvguBUwbNPMNmTH11q5WI9VW/XOA2WZr/axoa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MvNdnbY8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753174520; c=relaxed/simple;
+	bh=hcs0SRwtpZlg7CCra0T+s9QPfYSWVS5+CqJeyR/QnM8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hivbWp+5oWG8bAyvKGmzkolpiKQX2t7WmPHMbvON63x7Z3LFUlG4COAlKlxUrdN3cCwiw88mWryXZhQZ+I7tjrVjNqmH1+18nKIHCFS/a0FX/jlMM2EVapewtwqWjlpPA1dS8D0hraggRy6BPlaBAYWx/C7XBW0wIekOyadfvBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TBc8fFtE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MvNdnbY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F34C4CEF4;
-	Tue, 22 Jul 2025 08:55:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TBc8fFtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB66C4CEEB;
+	Tue, 22 Jul 2025 08:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753174516;
-	bh=Rq5GNyaaope0SfIt7slAATJYCCZekSTyEA+C+4d7Aws=;
-	h=From:To:Cc:Subject:Date:From;
-	b=MvNdnbY8deykr06Uv5PtaQtEi5nkQdNA39CzECVRlA2WCUw8Mw265nbnTYYD3oRK9
-	 6yZEfTPanYx+JPHx0EVOl7Pv1q+wkOYQOiy6/IBf/VeuTlNJReutiAbY1O8MGqmmUY
-	 qLg/17kcNymRblLGpiefnWGMdE6a4QnA8NVaPPdXyW6zXHX7nciYu+9W/tX7AupG07
-	 DGG/vlweq21YC/iajM7z4WEvPckOOqBddAVEkTyzNjRsoI0Hvk95yuoI1M+HrlquzB
-	 zOH9fAG6uDKrVmctQ7V/2UoC5WFkGRRuK3fhofKvt/XEM5bbjzvQ6/pg40xsXzqJUF
-	 4ddBW/quVa2OA==
+	s=k20201202; t=1753174520;
+	bh=hcs0SRwtpZlg7CCra0T+s9QPfYSWVS5+CqJeyR/QnM8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TBc8fFtEePsrwTUOmO0/6MpgABavFX1kIqqGjg+MqcWbPazwaYRGo3qA46abutdZk
+	 topzyFv812wrIV8LDDiN72XA+V2wYHMedwtlKG4fO68mUbuth8Kv/ISBUYZYd1BGmP
+	 iSiZYT9kQSukK5IGitJQ5GRP3+FNEusf7WCm4oeDAlXRXoL7h+y+/+ZvQFpZFZcC0q
+	 5/gF5DoHaNyfnGvgkaoXKYdbzBVo9kTj8rjKPIUgxlEcwLXurdX254nBtd2hCBf4oj
+	 LrmxU8JAdGPt8zTPRp3YW/pXRVr+6jwsLmqc5qQfzxo0FPSWhbXtEmdjUX/0BzjIGj
+	 2EIj/Jz7NxxPQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael@kernel.org>,
@@ -41,9 +42,11 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 1/2] rust: io: fix broken intra-doc link to missing `flags` module
-Date: Tue, 22 Jul 2025 10:54:59 +0200
-Message-ID: <20250722085500.1360401-1-ojeda@kernel.org>
+Subject: [PATCH 2/2] rust: io: fix broken intra-doc links to `platform::Device`
+Date: Tue, 22 Jul 2025 10:55:00 +0200
+Message-ID: <20250722085500.1360401-2-ojeda@kernel.org>
+In-Reply-To: <20250722085500.1360401-1-ojeda@kernel.org>
+References: <20250722085500.1360401-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,35 +55,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There is no `mod flags` in this case, unlike others. Instead, they are
-associated constants for the `Flags` type.
+`platform` is not accessible from here.
 
-Thus reword the sentence to fix the broken intra-doc link, providing
-an example of constant and linking to it to clarify which ones we are
-referring to.
+Thus fix the intra-doc links by qualifying the paths a bit more.
 
-Fixes: 493fc33ec252 ("rust: io: add resource abstraction")
+Fixes: 1d0d4b28513b ("rust: io: mem: add a generic iomem abstraction")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/io/resource.rs | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ rust/kernel/io/mem.rs | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/rust/kernel/io/resource.rs b/rust/kernel/io/resource.rs
-index 1d5f367a6e8a..bea3ee0ed87b 100644
---- a/rust/kernel/io/resource.rs
-+++ b/rust/kernel/io/resource.rs
-@@ -177,7 +177,8 @@ unsafe impl Sync for Resource {}
- ///
- /// They can be combined with the operators `|`, `&`, and `!`.
- ///
--/// Values can be used from the [`flags`] module.
-+/// Values can be used from the associated constants such as
-+/// [`Flags::IORESOURCE_IO`].
- #[derive(Clone, Copy, PartialEq)]
- pub struct Flags(c_ulong);
- 
-
-base-commit: 696b2a6ce9487ae278fd239658ca2714cd211e8e
+diff --git a/rust/kernel/io/mem.rs b/rust/kernel/io/mem.rs
+index cc9feb2897d8..6f99510bfc3a 100644
+--- a/rust/kernel/io/mem.rs
++++ b/rust/kernel/io/mem.rs
+@@ -40,8 +40,8 @@ pub(crate) unsafe fn new(device: &'a Device<Bound>, resource: &'a Resource) -> S
+     ///
+     /// # Examples
+     ///
+-    /// The following example uses a [`platform::Device`] for illustration
+-    /// purposes.
++    /// The following example uses a [`kernel::platform::Device`] for
++    /// illustration purposes.
+     ///
+     /// ```no_run
+     /// use kernel::{bindings, c_str, platform, of, device::Core};
+@@ -98,8 +98,8 @@ pub fn iomap_exclusive_sized<const SIZE: usize>(
+     ///
+     /// # Examples
+     ///
+-    /// The following example uses a [`platform::Device`] for illustration
+-    /// purposes.
++    /// The following example uses a [`kernel::platform::Device`] for
++    /// illustration purposes.
+     ///
+     /// ```no_run
+     /// use kernel::{bindings, c_str, platform, of, device::Core};
 -- 
 2.50.1
 
