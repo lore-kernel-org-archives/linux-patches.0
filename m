@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A292B9A5;
-	Tue, 22 Jul 2025 13:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575092B9A5;
+	Tue, 22 Jul 2025 13:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192535; cv=none; b=M6U4DxK7MJoax4nJyj9hO8pS5uLoR/9kBoib2paos7nbnP31KRN0SLo7u7qRd8ejnvZhZoeoFCVQ45feQjISJ1VJxdKXp66nzs7a6gg1516F1B1/MZY8kYdU91ARnl0+pmTg7i6VBVyIM7G+0KjYL0pGVvvSedqAEXm5VdBj5xc=
+	t=1753192540; cv=none; b=nCeYF3SncRKiO7aB9FPR04uiWpLfKpr2lQ7J+XXgTsEYIz8QHbO3CiQd/Vo6aYEYdoI0/L8bfASh3KjorEP2FyOLXhZr0yVg1dv2deUruRe17GOowVxSFZxLG97CYvM+YqT7vcketFsJTThuM0nGMv779jgYeHlef2GmaT+iZUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192535; c=relaxed/simple;
-	bh=oTqFxBXGo7s9rdokhze28szZMNW9ZlTpB4ZA6Bd+RpY=;
+	s=arc-20240116; t=1753192540; c=relaxed/simple;
+	bh=xawtXyHqOSwF6Pn7LbGW1yQWNLbaqk2xL2AehzTGpnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqxnI+PJc7KOPu0/2peweC5gS8dRuRe0jajFLVlF4H6IU4qi6AIJOsu9q8/B5X2zffuvbsHU3IMOmUHxbmjpsPjeNqiTmNXPwezZfE+8zppfyaqrM3CEW3qEy4EKDxQCGWBaikx6rVlimcYAWxJNkqvbfn+NKj9++Umw2EpK1mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ujt4rkjJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJTK9vg2ZGBQrYyq/dkF4rRozdzLr2QIgeWqe9+28+ibO+R5JElSsts6hROveBXcx2phyb/seWXhKYOSiJryX0V8bmf4vXh+IG9e3bCiUbOsoyQZQh/SchRgwvLnrbJrknykkIAhg+xY8NAj0gU0j+QFWvJyuq+CQa1WkqSh3uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BknddRsA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ujt4rkjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888E4C4CEEB;
-	Tue, 22 Jul 2025 13:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BknddRsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A8AC4CEEB;
+	Tue, 22 Jul 2025 13:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192534;
-	bh=oTqFxBXGo7s9rdokhze28szZMNW9ZlTpB4ZA6Bd+RpY=;
+	s=korg; t=1753192538;
+	bh=xawtXyHqOSwF6Pn7LbGW1yQWNLbaqk2xL2AehzTGpnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ujt4rkjJADc2u5ZcJnTaICBHueNvvIbDOhxupy4cFl3Li1bX6raB4dUgxThD/dwfo
-	 j/FoHdS/rEiGnNSVARrZbhG0nbmdeQ2UGUPbjf+ALhOMth8SsshM41QeoMnVwe5Drl
-	 6d+y8RKa7uGVZh7H2yWdpuGGTW41n/l7xrt3TG58=
+	b=BknddRsAe1vEv8mWar1CxYS6hs/LeigAcHtSJQ/UHynu040BOJSgdYqiUbq4oPKNN
+	 VQ72smWRpxCCteT9e5wnAloFHtQQKMAuqEYl5+UGh6qa1SRP6ywh9Ddus0TNxkjj55
+	 hl62dTHrAzooUHHGIT7NtR0N16qPKU9UGOn+cxIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: [PATCH 6.6 094/111] ipv6: make addrconf_wq single threaded
-Date: Tue, 22 Jul 2025 15:45:09 +0200
-Message-ID: <20250722134336.922030407@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	"Orlando, Noah" <Noah.Orlando@deshaw.com>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.6 095/111] clone_private_mnt(): make sure that caller has CAP_SYS_ADMIN in the right userns
+Date: Tue, 22 Jul 2025 15:45:10 +0200
+Message-ID: <20250722134336.959568788@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -52,34 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit dfd2ee086a63c730022cb095576a8b3a5a752109 upstream.
+commit c28f922c9dcee0e4876a2c095939d77fe7e15116 upstream.
 
-Both addrconf_verify_work() and addrconf_dad_work() acquire rtnl,
-there is no point trying to have one thread per cpu.
+What we want is to verify there is that clone won't expose something
+hidden by a mount we wouldn't be able to undo.  "Wouldn't be able to undo"
+may be a result of MNT_LOCKED on a child, but it may also come from
+lacking admin rights in the userns of the namespace mount belongs to.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240201173031.3654257-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Brett A C Sheffield <bacs@librecast.net>
+clone_private_mnt() checks the former, but not the latter.
+
+There's a number of rather confusing CAP_SYS_ADMIN checks in various
+userns during the mount, especially with the new mount API; they serve
+different purposes and in case of clone_private_mnt() they usually,
+but not always end up covering the missing check mentioned above.
+
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Reported-by: "Orlando, Noah" <Noah.Orlando@deshaw.com>
+Fixes: 427215d85e8d ("ovl: prevent private clone if bind mount is not allowed")
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+[ merge conflict resolution: clone_private_mount() was reworked in
+  db04662e2f4f ("fs: allow detached mounts in clone_private_mount()").
+  Tweak the relevant ns_capable check so that it works on older kernels ]
+Signed-off-by: Noah Orlando <Noah.Orlando@deshaw.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/addrconf.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/namespace.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -7383,7 +7383,8 @@ int __init addrconf_init(void)
- 	if (err < 0)
- 		goto out_addrlabel;
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2110,6 +2110,11 @@ struct vfsmount *clone_private_mount(con
+ 	if (!check_mnt(old_mnt))
+ 		goto invalid;
  
--	addrconf_wq = create_workqueue("ipv6_addrconf");
-+	/* All works using addrconf_wq need to lock rtnl. */
-+	addrconf_wq = create_singlethread_workqueue("ipv6_addrconf");
- 	if (!addrconf_wq) {
- 		err = -ENOMEM;
- 		goto out_nowq;
++	if (!ns_capable(old_mnt->mnt_ns->user_ns, CAP_SYS_ADMIN)) {
++		up_read(&namespace_sem);
++		return ERR_PTR(-EPERM);
++	}
++
+ 	if (has_locked_children(old_mnt, path->dentry))
+ 		goto invalid;
+ 
 
 
