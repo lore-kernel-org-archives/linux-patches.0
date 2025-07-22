@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09C0154457;
-	Tue, 22 Jul 2025 13:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6975022FDFF;
+	Tue, 22 Jul 2025 13:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192219; cv=none; b=b5G0p9UXv50fXfQQbxZtO9v7Ge3KayVww3dm4J+t0JE9uxQ9G3HGD7Bp3TmkF7qKxEGomvyyzgVajUTGcc5sJVAdwL11i3MAHvWBODv+XFCOPOJ09vWF83lTFS7A+W+aQ2cG26gf/ulEb3x8Uy9sKNexLe0aAIUBEENTMPtsiSc=
+	t=1753192223; cv=none; b=ixwvLxyo0K/VNXN4p193iM1WqpJqZfkXa+KA74f1PCOr0D/mTJvYrRoTCw6ob4tvxqq6lcHMTWmZqGAUC51bGGLWgeydiopt5pdG+ByvKZKX4JVFIzUy3kEdWs8PVmE4PwAdGCzBjhZk0xR6xwsREpDS4I/Tspydh8v6VJKUTEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192219; c=relaxed/simple;
-	bh=1b5NwTscfFzaNCmpoVezhpvRIbCpV0WXxspeE5S/5c8=;
+	s=arc-20240116; t=1753192223; c=relaxed/simple;
+	bh=/Se7Teyt4xmVh9rWX6IAH1HkHwkqyjCMrjS54KvWodM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxPgaOeTumr2bwJARDqlWYP4gh+eDDdvFmgR6bFvo27J6qBdjwi98KVKkA78mSYXvEti69OBGZYGjk87siPlRFkhjIfJXPpclcslJtXrI5LfR/YsSmAV34EnBC7SE502xQj2OHf3w9gRKRiBOdfiW47Tm4/6UpEZGgGVqj4lQPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOWjFVfS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O55T6MKsT7xVv3GpJAbZ3+lGsbvxbroBAcGRO0aU4aF+TvEftksUAaYlXzksWgRartvsRtjkQ0G8mCSVTcx5Tq8ON3D7y2Yyyzlfd10N4suwDCG1w+yAom1H1OosQrT4+m75/4AUyn1RswUmX9DCjm03zEP812e4y5hfmZ7mXck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eXxivaw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOWjFVfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C533C4CEEB;
-	Tue, 22 Jul 2025 13:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eXxivaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF172C4CEEB;
+	Tue, 22 Jul 2025 13:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192219;
-	bh=1b5NwTscfFzaNCmpoVezhpvRIbCpV0WXxspeE5S/5c8=;
+	s=korg; t=1753192223;
+	bh=/Se7Teyt4xmVh9rWX6IAH1HkHwkqyjCMrjS54KvWodM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOWjFVfSql33vS49Zul7J9aj7F9WpYK9GE8Iu7OQXS6M9PKiU/588OKAw+Hl2KYiX
-	 YJpD1tyJ6Y6cpDXqtul8xSGlt2aZauWsnWS/3ZFPXuIUfftv+wspDygWWMv9xajLSP
-	 nEUvGu5px3+5IYdlLPS3pRirDuqfZSQDiddSeqWE=
+	b=0eXxivawoWNqC9PVM6vvZ/5YKPQmXDCligWQc9xPEKMoOzUtrebEIGOxSO49aXCdS
+	 xtLA8K/Xp23qO9x4QgHSIRrygRKyyHz7PSAbFR6/DxbJZe9zUyN9tKrRzFPbydtL9N
+	 F8MT48HOVtz+5U/20Q+qr0urnqGFDNdzfI3aAtJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 78/79] mm/vmalloc: leave lazy MMU mode on PTE mapping error
-Date: Tue, 22 Jul 2025 15:45:14 +0200
-Message-ID: <20250722134331.266895503@linuxfoundation.org>
+	INAGAKI Hiroshi <musashino.open@gmail.com>,
+	"Michael C. Pratt" <mcpratt@pm.me>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 79/79] nvmem: layouts: u-boot-env: remove crc32 endianness conversion
+Date: Tue, 22 Jul 2025 15:45:15 +0200
+Message-ID: <20250722134331.302130274@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -53,69 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Michael C. Pratt <mcpratt@pm.me>
 
-commit fea18c686320a53fce7ad62a87a3e1d10ad02f31 upstream.
+commit 2d7521aa26ec2dc8b877bb2d1f2611a2df49a3cf upstream.
 
-vmap_pages_pte_range() enters the lazy MMU mode, but fails to leave it in
-case an error is encountered.
+On 11 Oct 2022, it was reported that the crc32 verification
+of the u-boot environment failed only on big-endian systems
+for the u-boot-env nvmem layout driver with the following error.
 
-Link: https://lkml.kernel.org/r/20250623075721.2817094-1-agordeev@linux.ibm.com
-Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202506132017.T1l1l6ME-lkp@intel.com/
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  Invalid calculated CRC32: 0x88cd6f09 (expected: 0x096fcd88)
+
+This problem has been present since the driver was introduced,
+and before it was made into a layout driver.
+
+The suggested fix at the time was to use further endianness
+conversion macros in order to have both the stored and calculated
+crc32 values to compare always represented in the system's endianness.
+This was not accepted due to sparse warnings
+and some disagreement on how to handle the situation.
+Later on in a newer revision of the patch, it was proposed to use
+cpu_to_le32() for both values to compare instead of le32_to_cpu()
+and store the values as __le32 type to remove compilation errors.
+
+The necessity of this is based on the assumption that the use of crc32()
+requires endianness conversion because the algorithm uses little-endian,
+however, this does not prove to be the case and the issue is unrelated.
+
+Upon inspecting the current kernel code,
+there already is an existing use of le32_to_cpu() in this driver,
+which suggests there already is special handling for big-endian systems,
+however, it is big-endian systems that have the problem.
+
+This, being the only functional difference between architectures
+in the driver combined with the fact that the suggested fix
+was to use the exact same endianness conversion for the values
+brings up the possibility that it was not necessary to begin with,
+as the same endianness conversion for two values expected to be the same
+is expected to be equivalent to no conversion at all.
+
+After inspecting the u-boot environment of devices of both endianness
+and trying to remove the existing endianness conversion,
+the problem is resolved in an equivalent way as the other suggested fixes.
+
+Ultimately, it seems that u-boot is agnostic to endianness
+at least for the purpose of environment variables.
+In other words, u-boot reads and writes the stored crc32 value
+with the same endianness that the crc32 value is calculated with
+in whichever endianness a certain architecture runs on.
+
+Therefore, the u-boot-env driver does not need to convert endianness.
+Remove the usage of endianness macros in the u-boot-env driver,
+and change the type of local variables to maintain the same return type.
+
+If there is a special situation in the case of endianness,
+it would be a corner case and should be handled by a unique "compatible".
+
+Even though it is not necessary to use endianness conversion macros here,
+it may be useful to use them in the future for consistent error printing.
+
+Fixes: d5542923f200 ("nvmem: add driver handling U-Boot environment variables")
+Reported-by: INAGAKI Hiroshi <musashino.open@gmail.com>
+Link: https://lore.kernel.org/all/20221011024928.1807-1-musashino.open@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: "Michael C. Pratt" <mcpratt@pm.me>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://lore.kernel.org/r/20250716144210.4804-1-srini@kernel.org
+[ applied changes to drivers/nvmem/u-boot-env.c after code was moved from drivers/nvmem/layouts/u-boot-env.c ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/nvmem/u-boot-env.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -467,6 +467,7 @@ static int vmap_pages_pte_range(pmd_t *p
- 		unsigned long end, pgprot_t prot, struct page **pages, int *nr,
- 		pgtbl_mod_mask *mask)
- {
-+	int err = 0;
- 	pte_t *pte;
+--- a/drivers/nvmem/u-boot-env.c
++++ b/drivers/nvmem/u-boot-env.c
+@@ -139,7 +139,7 @@ static int u_boot_env_parse(struct u_boo
+ 		data_offset = offsetof(struct u_boot_env_image_redundant, data);
+ 		break;
+ 	}
+-	crc32 = le32_to_cpu(*(__le32 *)(buf + crc32_offset));
++	crc32 = *(uint32_t *)(buf + crc32_offset);
+ 	crc32_data_len = priv->mtd->size - crc32_data_offset;
+ 	data_len = priv->mtd->size - data_offset;
  
- 	/*
-@@ -480,18 +481,25 @@ static int vmap_pages_pte_range(pmd_t *p
- 	do {
- 		struct page *page = pages[*nr];
- 
--		if (WARN_ON(!pte_none(*pte)))
--			return -EBUSY;
--		if (WARN_ON(!page))
--			return -ENOMEM;
--		if (WARN_ON(!pfn_valid(page_to_pfn(page))))
--			return -EINVAL;
-+		if (WARN_ON(!pte_none(*pte))) {
-+			err = -EBUSY;
-+			break;
-+		}
-+		if (WARN_ON(!page)) {
-+			err = -ENOMEM;
-+			break;
-+		}
-+		if (WARN_ON(!pfn_valid(page_to_pfn(page)))) {
-+			err = -EINVAL;
-+			break;
-+		}
- 
- 		set_pte_at(&init_mm, addr, pte, mk_pte(page, prot));
- 		(*nr)++;
- 	} while (pte++, addr += PAGE_SIZE, addr != end);
- 	*mask |= PGTBL_PTE_MODIFIED;
--	return 0;
-+
-+	return err;
- }
- 
- static int vmap_pages_pmd_range(pud_t *pud, unsigned long addr,
 
 
