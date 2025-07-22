@@ -1,142 +1,298 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160361422DD
-	for <patches@lists.linux.dev>; Tue, 22 Jul 2025 19:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD5727E077;
+	Tue, 22 Jul 2025 19:11:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753211320; cv=none; b=Lvj/1lFQVv4iW+YGcsRJwt0uIzvoJ3XaPOjqGGewB4/9819kp4xbIxsIqogLMlntY5kJw6V5KVfK4dcBEAJTFROn+eLCIcT5Qku4PylRfVK/sfcmiQJNggZfI0A8bIRllPoT2fJu8Elf7Nn00h1Mba14DqWi5DMsyXaHHqtEhdI=
+	t=1753211488; cv=none; b=qO9XPOWxXUa2rLt+kbUJvr7yuJh+2KCZA6qc84XR7QtCHUmwlhIwT+GOLu4h6t58iesPe5aei5AbSOdCZ4LycmyY9nrH0wE4pec4uOk8HVisCLZe8Nt/wjhlGfUMzpqSQTRKPmGmORPGlzIp7wVUDpXgVCmQYRvexwN61lyi7hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753211320; c=relaxed/simple;
-	bh=WhkRd3BMuVmcqkvwnUgVzQxYn1i3OPyNE6F/d7jYi/4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dusrADCzCK1PaolqCJaiocaFFYpF/wuzS+hSgok/nwHutOBayOIMY79JdrMgsy8dJjSIZTtMlOpgUrn9x6bqZWQwFibGSbXSBVhjv1y6HayHSw+AOIlmzygxK1xPeXQgze/FfXnToUr7yAMHGmCUrdsH3Qfputb1zplO8ZQr778=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ly+ZLSmk; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753211488; c=relaxed/simple;
+	bh=AlDGH8LMnbCC2+qZqNb7xkjTZR3D+b+9XwvWK4epyZQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aqUTrbaZjyLx3Xoqy/7ocq8YhnOrHXs4V2tMB22cFxD+jZHdcZqWY9rP1jcPSME1mIUeF8fnXdn+19Sb+DCgM/siNSv0yPpdT62k5BsR7fOZ+lLjxqDXWJ1VtRxHz/ZFW6vBwVayYtwsWQ0Kna4tj8bSJ8ORkZ77/ySbA9JFI9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q0YLnxi+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ly+ZLSmk"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7de159778d4so532912685a.1
-        for <patches@lists.linux.dev>; Tue, 22 Jul 2025 12:08:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753211318; x=1753816118; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FHLZA/TNhkdskUZodZoADZK/4mKalHq7MQxkf8qHFVU=;
-        b=ly+ZLSmkDrdgLdv+ky+m+U+GhaugL1BWPWth0gzEzSNgQqxCLs4AIn3t1WW9yo5/9T
-         +fKL4mRURippNei38bvMDN/VrYrPD2yQ3P7Ehs+PAjr07Lw6W3m+40TW4nRshblWcOaU
-         8SvQYROedD5DMSWbLaAZYSOppl4YgZdWVw1bUEYzE+TcEvT+BPYqfmxfLJO9K1nEXqYN
-         a1Y1knnL65WbDBp4BaxAnY4wl/d7iEAp6Lab6xMRNFpBI8xUSsLj2fVjjIdNmY8er1C9
-         NmndJruajGXRvzw6ZHvbiL+xoXh2VcRwOxxSa4LKwrPaM8dRLrHAy5nHNIi7zH56YkyR
-         atqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753211318; x=1753816118;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FHLZA/TNhkdskUZodZoADZK/4mKalHq7MQxkf8qHFVU=;
-        b=iSXnC2NehZlm5LDCDW0fUe+Xad1x56D44NwMJTMwBlIs688xOPSo2Ju8FRB295RBVN
-         oqIgyIval+CheNORIj7tOKSfXSmT30zZTUJyb55odsaYfualuRuTu9OW+PbTAj0yhR+E
-         S6FqlQbjSXL5kR/kXMTwdZj510WGCcHm/nSd+DsccWYMN55FCcvsd9xZw0Y199vsDIlQ
-         JGRaE+E3nngiXCqq90jrGu0pJ5uktI4yMSp0eM5dp+HM4gLJxgMPYrKRLIUESsoTyHeK
-         +osydWWX+fY5YUbB91O5Ycnp27+R3cyHL3a6nvlezSw5aX+GQ+wRK/aXmiaA+ini8gPw
-         KvtA==
-X-Gm-Message-State: AOJu0YxrUcfLzDBNnGHhusdo+qJr+2v6WqF8eds31QMo0WoJNhJQ3sAV
-	f20oelBviGc4GZKY3PbPxqRPG0JPPLyey8Fi33KGyOjT+xxX9Uhuqgrm
-X-Gm-Gg: ASbGncs82c5n01wgDClayh+rFCX2TgJgHBnKe8AUJTweRqej/4iK6pqpE2Z6IugXCB6
-	UrIPehYPFF4aJsLH4mcMsgzAjsoG5Z7Jo2DGNjhO7yZkPsBxdi8STSln44Z4Y7XawXT8/92H1f0
-	4hZ0ajt/ZFRH4xtrVwT5pQtACbz5el7J8aTB7r55CuMO/biW92NwmHlxrEGPAngoxy8AC1OuQCX
-	qv1P2exGtg9J7t6Y1VWdqzic2CYk3wDzB9TMAvwJU0BN0cFIVZmBpTRFz7JnqXOp+n4Eon9iAKI
-	zxmXRwi7BYIj+VXv/+hGiCT1YWJGmuhdRVEyDFl7sMJROY6RhUDr1kfE9lC8HAOwlnTzvw/oPeY
-	csnz7gna178yh1jxljMk1r1z2SarkaPiOKEZtfUbbjsikEn38Jw==
-X-Google-Smtp-Source: AGHT+IGNgcPjfLPdvGxIgYqVQy3cXB62yix4g1E9jrm8kyGNK60UwHpmSb9lrMeYKsJp90dZKBKbRg==
-X-Received: by 2002:a05:620a:454a:b0:7d5:e34d:faaf with SMTP id af79cd13be357-7e62a002111mr66499885a.0.1753211317744;
-        Tue, 22 Jul 2025 12:08:37 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e356c3f7acsm559967485a.51.2025.07.22.12.08.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 12:08:37 -0700 (PDT)
-Message-ID: <acf2e205-12a0-436d-a105-e06198d3544f@gmail.com>
-Date: Tue, 22 Jul 2025 12:08:27 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q0YLnxi+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C209EC4CEEB;
+	Tue, 22 Jul 2025 19:11:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753211488;
+	bh=AlDGH8LMnbCC2+qZqNb7xkjTZR3D+b+9XwvWK4epyZQ=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Q0YLnxi+Ysu6XkdzqTG4tTl81NcHj6SZYiJJNsjsli8hQLmsbJjK+i9bYjfjPfS/K
+	 5xNk/Ne4cKwwNUOdJvQ5MtThdXQqIqKKqkbWi+IOlyF4ISUw92JF0vVWPohP90fa1U
+	 o5P1Quu2eKE9oBGIPdV44xONi+mmFQs0ydh6ep2SKoaZJWEla7iewcsaiXmcpHdjSp
+	 FxUNxbI7e9txXUifEB6+/T8DmqYGsQpAdtyORAIfNMccGRfy89BrzfqwFVWGLS2vJt
+	 B7MkCigu14mt5L3Dai4mLD289K6SNO8q75QfDy+JHTwoEV0XxoLiLIo7RU9YIy13Ha
+	 ODyG8xjDfHPOQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 22 Jul 2025 12:11:18 -0700
+Subject: [PATCH v2] usb: atm: cxacru: Merge cxacru_upload_firmware() into
+ cxacru_heavy_init()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/158] 6.12.40-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250722134340.596340262@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- WlfRzlpjIPmdjgoicA==
-In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250722-usb-cxacru-fix-clang-21-uninit-warning-v2-1-6708a18decd2@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFXif2gC/5WNQQ6CQBAEv0L27JjdRSB48h+GAwwjTCSLmQXEE
+ P7uyA+8dXU6XZuJJEzRXJPNCC0ceQwK/pQY7OvQEXCrbLz1mS1cBnNsANcaZYYHr4CDjsA7mAM
+ HnuBdi4YOyktq2zLHvEFn9OwlpPNDdK+Ue47TKJ/Du7hf+7diceCgJXVkHlNblLcnSaDhPEpnq
+ n3fv6akkVHdAAAA
+X-Change-ID: 20250715-usb-cxacru-fix-clang-21-uninit-warning-9430d96c6bc1
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-usb@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8750; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=AlDGH8LMnbCC2+qZqNb7xkjTZR3D+b+9XwvWK4epyZQ=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBn1j+L+z+SY59s5Se8uH+MHi4lHJmzizpHqUXLuXJwkw
+ t2YeKypo5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEykqJWRYed30+OpB2ZfNO+M
+ 72jYdNfi8TX1mNKk/Czxty9FefKcFzD8FT531X3ifO2IJb//yUxsl2lZ/GP5xrOyl2NrtS3cX3K
+ +4gcA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 7/22/25 06:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.40 release.
-> There are 158 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 24 Jul 2025 13:43:10 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.40-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+After a recent change in clang to expose uninitialized warnings from
+const variables [1], there is a warning in cxacru_heavy_init():
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+  drivers/usb/atm/cxacru.c:1104:6: error: variable 'bp' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1113:39: note: uninitialized use occurs here
+   1113 |         cxacru_upload_firmware(instance, fw, bp);
+        |                                              ^~
+  drivers/usb/atm/cxacru.c:1104:2: note: remove the 'if' if its condition is always true
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1095:32: note: initialize the variable 'bp' to silence this warning
+   1095 |         const struct firmware *fw, *bp;
+        |                                       ^
+        |                                        = NULL
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+While the warning is technically correct that bp is conditionally passed
+uninitialized to cxacru_upload_firmware(), it is ultimately a false
+positive warning on the uninitialized use of bp because the same
+condition that initializes bp, instance->modem_type->boot_rom_patch, is
+the same one that gates the use of bp within cxacru_upload_firmware().
+As this warning occurs in clang's frontend before inlining occurs, it
+cannot know that these conditions are indentical to avoid the warning.
+
+Manually inline cxacru_upload_firmware() into cxacru_heavy_init(), as
+that is its only callsite, so that clang can see that bp is initialized
+and used under the same condition, clearing up the warning without any
+functional changes to the code (LLVM was already doing this inlining
+later).
+
+Cc: stable@vger.kernel.org
+Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2102
+Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Changes in v2:
+- Rather than initialize bp to NULL, manually inline
+  cxacru_upload_firmware() into cxacru_heavy_init() so that clang can
+  see the matching conditions for bp's initialization and use (based on
+  feedback from Greg).
+- Drop accessrunner-general@lists.sourceforge.net, as I got bounces when
+  sending to it unsubscribed.
+- Link to v1: https://lore.kernel.org/r/20250715-usb-cxacru-fix-clang-21-uninit-warning-v1-1-de6c652c3079@kernel.org
+---
+ drivers/usb/atm/cxacru.c | 106 ++++++++++++++++++++++-------------------------
+ 1 file changed, 49 insertions(+), 57 deletions(-)
+
+diff --git a/drivers/usb/atm/cxacru.c b/drivers/usb/atm/cxacru.c
+index a12ab90b3db75b230dcf319a949e6d10dbac0363..68a8e9de8b4fe95be31b561f7f5df7e3c59142ae 100644
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -980,25 +980,60 @@ static int cxacru_fw(struct usb_device *usb_dev, enum cxacru_fw_request fw,
+ 	return ret;
+ }
+ 
+-static void cxacru_upload_firmware(struct cxacru_data *instance,
+-				   const struct firmware *fw,
+-				   const struct firmware *bp)
++
++static int cxacru_find_firmware(struct cxacru_data *instance,
++				char *phase, const struct firmware **fw_p)
+ {
+-	int ret;
++	struct usbatm_data *usbatm = instance->usbatm;
++	struct device *dev = &usbatm->usb_intf->dev;
++	char buf[16];
++
++	sprintf(buf, "cxacru-%s.bin", phase);
++	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
++
++	if (request_firmware(fw_p, buf, dev)) {
++		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
++		return -ENOENT;
++	}
++
++	usb_info(usbatm, "found firmware %s\n", buf);
++
++	return 0;
++}
++
++static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
++			     struct usb_interface *usb_intf)
++{
++	const struct firmware *fw, *bp;
++	struct cxacru_data *instance = usbatm_instance->driver_data;
+ 	struct usbatm_data *usbatm = instance->usbatm;
+ 	struct usb_device *usb_dev = usbatm->usb_dev;
+ 	__le16 signature[] = { usb_dev->descriptor.idVendor,
+ 			       usb_dev->descriptor.idProduct };
+ 	__le32 val;
++	int ret;
+ 
+-	usb_dbg(usbatm, "%s\n", __func__);
++	ret = cxacru_find_firmware(instance, "fw", &fw);
++	if (ret) {
++		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
++		return ret;
++	}
++
++	if (instance->modem_type->boot_rom_patch) {
++		ret = cxacru_find_firmware(instance, "bp", &bp);
++		if (ret) {
++			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
++			release_firmware(fw);
++			return ret;
++		}
++	}
+ 
+ 	/* FirmwarePllFClkValue */
+ 	val = cpu_to_le32(instance->modem_type->pll_f_clk);
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLFCLK_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "FirmwarePllFClkValue failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* FirmwarePllBClkValue */
+@@ -1006,7 +1041,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLBCLK_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "FirmwarePllBClkValue failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Enable SDRAM */
+@@ -1014,7 +1049,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SDRAMEN_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "Enable SDRAM failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Firmware */
+@@ -1022,7 +1057,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, FW_ADDR, fw->data, fw->size);
+ 	if (ret) {
+ 		usb_err(usbatm, "Firmware upload failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Boot ROM patch */
+@@ -1031,7 +1066,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 		ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, BR_ADDR, bp->data, bp->size);
+ 		if (ret) {
+ 			usb_err(usbatm, "Boot ROM patching failed: %d\n", ret);
+-			return;
++			goto done;
+ 		}
+ 	}
+ 
+@@ -1039,7 +1074,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SIG_ADDR, (u8 *) signature, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "Signature storing failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	usb_info(usbatm, "starting device\n");
+@@ -1051,7 +1086,7 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 	}
+ 	if (ret) {
+ 		usb_err(usbatm, "Passing control to firmware failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Delay to allow firmware to start up. */
+@@ -1065,53 +1100,10 @@ static void cxacru_upload_firmware(struct cxacru_data *instance,
+ 	ret = cxacru_cm(instance, CM_REQUEST_CARD_GET_STATUS, NULL, 0, NULL, 0);
+ 	if (ret < 0) {
+ 		usb_err(usbatm, "modem failed to initialize: %d\n", ret);
+-		return;
+-	}
+-}
+-
+-static int cxacru_find_firmware(struct cxacru_data *instance,
+-				char *phase, const struct firmware **fw_p)
+-{
+-	struct usbatm_data *usbatm = instance->usbatm;
+-	struct device *dev = &usbatm->usb_intf->dev;
+-	char buf[16];
+-
+-	sprintf(buf, "cxacru-%s.bin", phase);
+-	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
+-
+-	if (request_firmware(fw_p, buf, dev)) {
+-		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
+-		return -ENOENT;
+-	}
+-
+-	usb_info(usbatm, "found firmware %s\n", buf);
+-
+-	return 0;
+-}
+-
+-static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
+-			     struct usb_interface *usb_intf)
+-{
+-	const struct firmware *fw, *bp;
+-	struct cxacru_data *instance = usbatm_instance->driver_data;
+-	int ret = cxacru_find_firmware(instance, "fw", &fw);
+-
+-	if (ret) {
+-		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
+-		return ret;
++		goto done;
+ 	}
+ 
+-	if (instance->modem_type->boot_rom_patch) {
+-		ret = cxacru_find_firmware(instance, "bp", &bp);
+-		if (ret) {
+-			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
+-			release_firmware(fw);
+-			return ret;
+-		}
+-	}
+-
+-	cxacru_upload_firmware(instance, fw, bp);
+-
++done:
+ 	if (instance->modem_type->boot_rom_patch)
+ 		release_firmware(bp);
+ 	release_firmware(fw);
+
+---
+base-commit: fdfa018c6962c86d2faa183187669569be4d513f
+change-id: 20250715-usb-cxacru-fix-clang-21-uninit-warning-9430d96c6bc1
+
+Best regards,
 -- 
-Florian
+Nathan Chancellor <nathan@kernel.org>
+
