@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BB82EA752;
-	Tue, 22 Jul 2025 14:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2772B2EA752;
+	Tue, 22 Jul 2025 14:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193597; cv=none; b=SnCJwvk5UxMah/2iuwd9NSOsAIlcPVkJ2cIQfhyyYH5lpdaQ4hNYThZX4vyP3EbRkJ1lX3emOkfV1R5+pTWnZhMfjYaqX1dNpEpTg3FdkwM4HREpCK5qBuEschnQiJnPakOdrMVKjT0CmvKlJQvKZC8hoTj/Q0cx+3hYRD6K+Pg=
+	t=1753193601; cv=none; b=muImjTUp7qXeHuBmgU23cNQjdlftcjMjAJX0ii1P8rDBa9I/Jy3eXFFMPqnrKT5vuBBCq+OZIJRbX7+K/fdUhyNugqOEQ598XS2ivRybCIpDcATau1oK97jNrzCca1EcibpFl3DgL4HeYsa8kX1ZSfTSbTV7kZxWBpoxOmXsIic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193597; c=relaxed/simple;
-	bh=XdVvzkzECuW7m1A6FPfpvU3QVVPkCsy9PHTcNU67l2A=;
+	s=arc-20240116; t=1753193601; c=relaxed/simple;
+	bh=VVBoDv7gXeQCTFbnDOFp4773UAUg5DDESQxDjvB72Ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKxhpoVDy6sLb10tXM7v5J8WG7JblX/E694oMvCng45ioiAE/ECjv9SqAHG9yKie0sHHoYftDD9FXRz5SSduKSLp7EK8LgQ+kBEyCwjdCYtXjKz3EkDUCeY02j9JIA91ZNioPO/V6gu/ig8eYruNxYI2T0G9ggcGedcqDOLXero=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNFVD+SW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b5Qx3+tg+V1bH+IGxXRTxqD89pcMmN1M0mW6Q0ecvHeC8GYYzuiPq5i5WZHPPnLmDYjRPv9uEUPF8qNmdxYZLZkJKrPRT745BrXToBDxwrXsX4bzQw5LqC456kmp5ZANwnp4gzv5Q/OBymDCv/rX+wyTq626bd1f5kypWHS9w5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGowerEg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNFVD+SW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BF8C4CEEB;
-	Tue, 22 Jul 2025 14:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGowerEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EB7C4CEEB;
+	Tue, 22 Jul 2025 14:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193597;
-	bh=XdVvzkzECuW7m1A6FPfpvU3QVVPkCsy9PHTcNU67l2A=;
+	s=korg; t=1753193601;
+	bh=VVBoDv7gXeQCTFbnDOFp4773UAUg5DDESQxDjvB72Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gNFVD+SWprWTkU5mIvoe3yz1UGrNcVXoiKVJybMxOwvkpoxJX3sEbZjHT3Cq7wMVV
-	 qIVo3ZjnyFwzydhmOIfomBLgEQCUYuNGU/Ibs0FLWDGXemlgiJS2gSuLn18j52/IE8
-	 ntC5bvkKHRqHC5JHGB0gVNhNM2UXNNHzpoyWPVmQ=
+	b=XGowerEgj0b7+0btb8d+oe4wdSKX3xJuR/EeYwLIOLboqYLtUe3sA9kjmcmuBtYr6
+	 crjeeSZlRRTWyTKqkFwmhiPSv37ebsDnTGIWOMgU3mmqN2N+VgFw1AD0zoAqqct/vg
+	 yrscEocN4Dnk2dJ0Xf38gg4rOIbFqCXUCh4mX8/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 107/187] wifi: iwlwifi: mask reserved bits in chan_state_active_bitmap
-Date: Tue, 22 Jul 2025 15:44:37 +0200
-Message-ID: <20250722134349.753771979@linuxfoundation.org>
+Subject: [PATCH 6.15 108/187] cachefiles: Fix the incorrect return value in __cachefiles_write()
+Date: Tue, 22 Jul 2025 15:44:38 +0200
+Message-ID: <20250722134349.788533907@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,80 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 5fde0fcbd7608dd5f97a5c0c23a316074d6f17f5 ]
+[ Upstream commit 6b89819b06d8d339da414f06ef3242f79508be5e ]
 
-Mask the reserved bits as firmware will assert if reserved bits are set.
+In __cachefiles_write(), if the return value of the write operation > 0, it
+is set to 0. This makes it impossible to distinguish scenarios where a
+partial write has occurred, and will affect the outer calling functions:
 
-Fixes: ef7ddf4e2f94 ("wifi: iwlwifi: Add support for LARI_CONFIG_CHANGE_CMD v12")
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250709065608.7a72c70bdc9d.Ic9be0a3fc3aabde0c4b88568f3bb7b76e375f8d4@changeid
+ 1) cachefiles_write_complete() will call "term_func" such as
+netfs_write_subrequest_terminated(). When "ret" in __cachefiles_write()
+is used as the "transferred_or_error" of this function, it can not
+distinguish the amount of data written, makes the WARN meaningless.
+
+ 2) cachefiles_ondemand_fd_write_iter() can only assume all writes were
+successful by default when "ret" is 0, and unconditionally return the full
+length specified by user space.
+
+Fix it by modifying "ret" to reflect the actual number of bytes written.
+Furthermore, returning a value greater than 0 from __cachefiles_write()
+does not affect other call paths, such as cachefiles_issue_write() and
+fscache_write().
+
+Fixes: 047487c947e8 ("cachefiles: Implement the I/O routines")
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://lore.kernel.org/20250703024418.2809353-1-wozizhi@huaweicloud.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h | 5 +++--
- drivers/net/wireless/intel/iwlwifi/fw/regulatory.c  | 1 +
- drivers/net/wireless/intel/iwlwifi/mld/regulatory.c | 4 +++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ fs/cachefiles/io.c       | 2 --
+ fs/cachefiles/ondemand.c | 4 +---
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h b/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h
-index 5cdc09d465d4f..e90f3187e55c4 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/api/nvm-reg.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-- * Copyright (C) 2012-2014, 2018-2024 Intel Corporation
-+ * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
-  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
-  * Copyright (C) 2016-2017 Intel Deutschland GmbH
-  */
-@@ -754,7 +754,7 @@ struct iwl_lari_config_change_cmd_v10 {
-  *	according to the BIOS definitions.
-  *	For LARI cmd version 11 - bits 0:4 are supported.
-  *	For LARI cmd version 12 - bits 0:6 are supported and bits 7:31 are
-- *	reserved. No need to mask out the reserved bits.
-+ *	reserved.
-  * @force_disable_channels_bitmap: Bitmap of disabled bands/channels.
-  *	Each bit represents a set of channels in a specific band that should be
-  *	disabled
-@@ -787,6 +787,7 @@ struct iwl_lari_config_change_cmd {
- /* Activate UNII-1 (5.2GHz) for World Wide */
- #define ACTIVATE_5G2_IN_WW_MASK			BIT(4)
- #define CHAN_STATE_ACTIVE_BITMAP_CMD_V11	0x1F
-+#define CHAN_STATE_ACTIVE_BITMAP_CMD_V12	0x7F
+diff --git a/fs/cachefiles/io.c b/fs/cachefiles/io.c
+index c08e4a66ac07a..3e0576d9db1d2 100644
+--- a/fs/cachefiles/io.c
++++ b/fs/cachefiles/io.c
+@@ -347,8 +347,6 @@ int __cachefiles_write(struct cachefiles_object *object,
+ 	default:
+ 		ki->was_async = false;
+ 		cachefiles_write_complete(&ki->iocb, ret);
+-		if (ret > 0)
+-			ret = 0;
+ 		break;
+ 	}
  
- /**
-  * struct iwl_pnvm_init_complete_ntfy - PNVM initialization complete
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
-index 6adcfa6e214a0..9947ab7c2f4b3 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
-@@ -603,6 +603,7 @@ int iwl_fill_lari_config(struct iwl_fw_runtime *fwrt,
+diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
+index d9bc671761282..a7ed86fa98bb8 100644
+--- a/fs/cachefiles/ondemand.c
++++ b/fs/cachefiles/ondemand.c
+@@ -83,10 +83,8 @@ static ssize_t cachefiles_ondemand_fd_write_iter(struct kiocb *kiocb,
  
- 	ret = iwl_bios_get_dsm(fwrt, DSM_FUNC_ACTIVATE_CHANNEL, &value);
- 	if (!ret) {
-+		value &= CHAN_STATE_ACTIVE_BITMAP_CMD_V12;
- 		if (cmd_ver < 8)
- 			value &= ~ACTIVATE_5G2_IN_WW_MASK;
+ 	trace_cachefiles_ondemand_fd_write(object, file_inode(file), pos, len);
+ 	ret = __cachefiles_write(object, file, pos, iter, NULL, NULL);
+-	if (!ret) {
+-		ret = len;
++	if (ret > 0)
+ 		kiocb->ki_pos += ret;
+-	}
  
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c b/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c
-index a75af8c1e8ab0..2116b717b9267 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/regulatory.c
-@@ -251,8 +251,10 @@ void iwl_mld_configure_lari(struct iwl_mld *mld)
- 			cpu_to_le32(value &= DSM_UNII4_ALLOW_BITMAP);
- 
- 	ret = iwl_bios_get_dsm(fwrt, DSM_FUNC_ACTIVATE_CHANNEL, &value);
--	if (!ret)
-+	if (!ret) {
-+		value &= CHAN_STATE_ACTIVE_BITMAP_CMD_V12;
- 		cmd.chan_state_active_bitmap = cpu_to_le32(value);
-+	}
- 
- 	ret = iwl_bios_get_dsm(fwrt, DSM_FUNC_ENABLE_6E, &value);
- 	if (!ret)
+ out:
+ 	fput(file);
 -- 
 2.39.5
 
