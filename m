@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3632877FA;
-	Tue, 22 Jul 2025 13:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF40288C01;
+	Tue, 22 Jul 2025 13:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192731; cv=none; b=OtRK60dBWnqG2T8a+G0TYl8v/5/mU8nnbRdpYJsMFp6vsdlfYK64LZTtCmA69L04RfyZginPURV9KfVuhENEhAum/U9ZXjemgMCsJ0JZ+XtIdcMOLu66QN4SbZEAqtFOnz/LsjJrk5uvTEx8qe8PS2yfJlBkK+yuMQhxoBrqgZ4=
+	t=1753192735; cv=none; b=h9qo+Af/pAAmMHg6Ni5mzBPLAvKdxUrb2kVlXXA8/Mc9rUZjDjDgX7w/Xm8oobozcm9ZRDBOPNJGOu6WBI72vbsuRF8R42ItUfhzNEY+x0lNUe6Ft5z2HVDVnic94/Ui/xtimWDtzHfdm1+KUAXPy6+1MLKclYGXCiIs8NagvIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192731; c=relaxed/simple;
-	bh=1sLnQs1gLUBwenA6MIBVDmQ7cg0Yy0aA0gzJOfOlQz4=;
+	s=arc-20240116; t=1753192735; c=relaxed/simple;
+	bh=mbGIytzGu8stPNHRxTRguXGs8GJeUaUK2BG2BQvbV9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Okvswle8wO0jJWbpMALTUVGVIg7VsISIpfDLC8yXVXsGHHZ3/C2Za/O2w1OhWThp8Qi3uZW20ZX85k4CJNgMY2u1+i3AgRnKt1wW6UZ8fFWD1TOSUiA4Myrf+9tO7WndvqoDEaEtKfWaSd6N5YNE92MNq0+E71o1jok3mYl4ix8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doEUnR8s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMWm8jXxEAeZlV4OdDuqyLzDtKLobgU7ECZ84rYoUCPj0e5PUf4uqGDAQkUHfg6Z5QbvJmQX5hfkVkOjRjqGdHv432hojU9gj8ZRPEiR4dZBWIPOW5Q6kRq87BwETcaBFsjeNxib5lNtEnucROl8854rQhUNSRtn0PE1CLSZsMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpugiUIu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doEUnR8s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41189C4CEEB;
-	Tue, 22 Jul 2025 13:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpugiUIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F078C4CEEB;
+	Tue, 22 Jul 2025 13:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192731;
-	bh=1sLnQs1gLUBwenA6MIBVDmQ7cg0Yy0aA0gzJOfOlQz4=;
+	s=korg; t=1753192735;
+	bh=mbGIytzGu8stPNHRxTRguXGs8GJeUaUK2BG2BQvbV9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=doEUnR8sv5FMIFIij9O3izQxMXY/KpqxZ5WvLeoQvORVYhPovITXsYUJg5e1NObJE
-	 At+NRSZFw9XrILc1qnRccVG+NKqEBmRtAlZy4r6kLATSwjm55dPNFmV1LBlGhTx71q
-	 z3BEWj9akOVQoF8nlkXQluoCHbCB5r3mR06No1ak=
+	b=dpugiUIulrP5n590/HMeME6EH4RHCZNsSjAiiP89W4v+wK6N9fcNthYC9j4qpy+dj
+	 vl5txE1mCSeKu/1QPDGmpv8J7M5g9YsmM7PAJR92DVjifhdE1DjUKKh6/94W9rRfYf
+	 uIYnO2eQgq/T/4vlWdlkDtnfJ5IKKdQytxWhFE54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
+	Meng Li <Meng.Li@windriver.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
 	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.12 041/158] arm64: dts: imx8mp-venice-gw74xx: fix TPM SPI frequency
-Date: Tue, 22 Jul 2025 15:43:45 +0200
-Message-ID: <20250722134342.273901847@linuxfoundation.org>
+Subject: [PATCH 6.12 042/158] arm64: dts: add big-endian property back into watchdog node
+Date: Tue, 22 Jul 2025 15:43:46 +0200
+Message-ID: <20250722134342.310377980@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -50,37 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: Meng Li <Meng.Li@windriver.com>
 
-commit 0bdaca0922175478ddeadf8e515faa5269f6fae6 upstream.
+commit 720fd1cbc0a0f3acdb26aedb3092ab10fe05e7ae upstream.
 
-The IMX8MPDS Table 37 [1] shows that the max SPI master read frequency
-depends on the pins the interface is muxed behind with ECSPI2
-muxed behind ECSPI2 supporting up to 25MHz.
+Watchdog doesn't work on NXP ls1046ardb board because in commit
+7c8ffc5555cb("arm64: dts: layerscape: remove big-endian for mmc nodes"),
+it intended to remove the big-endian from mmc node, but the big-endian of
+watchdog node is also removed by accident. So, add watchdog big-endian
+property back.
 
-Adjust the spi-max-frequency based on these findings.
+In addition, add compatible string fsl,ls1046a-wdt, which allow big-endian
+property.
 
-[1] https://www.nxp.com/webapp/Download?colCode=IMX8MPIEC
-
-Fixes: 531936b218d8 ("arm64: dts: imx8mp-venice-gw74xx: update to revB PCB")
+Fixes: 7c8ffc5555cb ("arm64: dts: layerscape: remove big-endian for mmc nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Signed-off-by: Meng Li <Meng.Li@windriver.com>
+Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/fsl-ls1046a.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw74xx.dts
-@@ -199,7 +199,7 @@
- 	tpm@0 {
- 		compatible = "atmel,attpm20p", "tcg,tpm_tis-spi";
- 		reg = <0x0>;
--		spi-max-frequency = <36000000>;
-+		spi-max-frequency = <25000000>;
- 	};
- };
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1046a.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls1046a.dtsi
+index 0baf256b4400..983b2f0e8797 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls1046a.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-ls1046a.dtsi
+@@ -687,11 +687,12 @@ lpuart5: serial@29a0000 {
+ 		};
  
+ 		wdog0: watchdog@2ad0000 {
+-			compatible = "fsl,imx21-wdt";
++			compatible = "fsl,ls1046a-wdt", "fsl,imx21-wdt";
+ 			reg = <0x0 0x2ad0000 0x0 0x10000>;
+ 			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&clockgen QORIQ_CLK_PLATFORM_PLL
+ 					    QORIQ_CLK_PLL_DIV(2)>;
++			big-endian;
+ 		};
+ 
+ 		edma0: dma-controller@2c00000 {
+-- 
+2.50.1
+
 
 
