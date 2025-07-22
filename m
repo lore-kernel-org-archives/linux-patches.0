@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E212923B611;
-	Tue, 22 Jul 2025 13:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0508B2EA17E;
+	Tue, 22 Jul 2025 13:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192131; cv=none; b=EQz1QaLx1o2iq66XfmMXTGNNZXw8WaC2cy32KP3WDvOorsG+UE2HSBBcrRudU00+vpcb7LalXs0T2VCdtPaCAn5IP1cD9IyS3bvUULL2FzppdD3WlkzKcaAwSijjng5GH0XI76/jJua757/nG9aruKhQlmMH+AYeuksJHuw5AVk=
+	t=1753192134; cv=none; b=cajvbWMprN0u7iNz7TzXEfnCcQUYkcHsLPjpByClqj0Zls3u1U8GzhbTVR3ySEKV5bSD9ohU/sr5h+miH+Zr/B16Q5zVLyglXLvn9TXAFyYWhmLcYvogYKnnH/7WcI7v0VNqOqerexxOaBcG5fSUYhRH8WXZZTu9JX4IET04dvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192131; c=relaxed/simple;
-	bh=7vK2JPBK8v9qF237u+++9ohlsG1wYJ9XJZ46INnogQo=;
+	s=arc-20240116; t=1753192134; c=relaxed/simple;
+	bh=Op0BXKu0Dd5o5AqkCfWP0ED7pOB4WfaSZ6PoMu7E98I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSZD07fbbzmK/R+PjhF4zZG9/2zinbldMmqICdzlN6Nm2NsRF6WHRXVYTcBdJvRW7VyvsbsmakOEfhVgn2rcshSwkESAUv1GpvFiIhhXfyoL9V2uzuW68HVD7+EPkT2e4g+j2jkKYM4aVV/7E58bhcoIWvgzC9ft2G0W9AfL1pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukNoDwnt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kZec69Zn/VvpQb6bQ0KH8kzFsDUoy8msfqUwLvE3x1DW0LVQHY2vhaDagb0Gx9xEGbeLRHBAdWb9lCqrFdj14+ue9UU3LzG8KTA514SJX53kKmie7X2MzkKrecikRmvwqDwltxFkWdvi8sSq6NnSyor44i/uOnBl9MjBRZyZWjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGM039qW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukNoDwnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEBF5C4CEEB;
-	Tue, 22 Jul 2025 13:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGM039qW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1E8C4CEEB;
+	Tue, 22 Jul 2025 13:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192130;
-	bh=7vK2JPBK8v9qF237u+++9ohlsG1wYJ9XJZ46INnogQo=;
+	s=korg; t=1753192133;
+	bh=Op0BXKu0Dd5o5AqkCfWP0ED7pOB4WfaSZ6PoMu7E98I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukNoDwntPqt+L5WMTzHXiaW6C4I1NEkaMSZWbiITnDuQSHwdiobVpgIoVhL8lFpbq
-	 LG1qhViG9oosJH03A0mKmYTPUcNQPHP4FeM2PFkjqR5pgB+UJ52KI7w0JA1AfBmqlu
-	 ORNJs4b04QJxFw+KUUgjvrujL5h5eEoCCKLNyQSY=
+	b=hGM039qWqz72EVDqtXP6Zq475yGnNf87kTjDKBcmcm3OIYjxk5q01NzZ/gNuYcuuC
+	 ROSA0Qs0jyVKaNzRmZwRXAXYKvw6A7Nu94dcMcgFEhaHAFc1CyGnwghhVUye/k5fSI
+	 12usxy1XtLc5TdYtdew7BEtQYEzrnYcXs7C1xaoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 54/79] Bluetooth: SMP: If an unallowed command is received consider it a failure
-Date: Tue, 22 Jul 2025 15:44:50 +0200
-Message-ID: <20250722134330.365893463@linuxfoundation.org>
+Subject: [PATCH 6.1 55/79] Bluetooth: SMP: Fix using HCI_ERROR_REMOTE_USER_TERM on timeout
+Date: Tue, 22 Jul 2025 15:44:51 +0200
+Message-ID: <20250722134330.401065326@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -52,125 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit fe4840df0bdf341f376885271b7680764fe6b34e ]
+[ Upstream commit 6ef99c917688a8510259e565bd1b168b7146295a ]
 
-If a command is received while a bonding is ongoing consider it a
-pairing failure so the session is cleanup properly and the device is
-disconnected immediately instead of continuing with other commands that
-may result in the session to get stuck without ever completing such as
-the case bellow:
+This replaces the usage of HCI_ERROR_REMOTE_USER_TERM, which as the name
+suggest is to indicate a regular disconnection initiated by an user,
+with HCI_ERROR_AUTH_FAILURE to indicate the session has timeout thus any
+pairing shall be considered as failed.
 
-> ACL Data RX: Handle 2048 flags 0x02 dlen 21
-      SMP: Identity Information (0x08) len 16
-        Identity resolving key[16]: d7e08edef97d3e62cd2331f82d8073b0
-> ACL Data RX: Handle 2048 flags 0x02 dlen 21
-      SMP: Signing Information (0x0a) len 16
-        Signature key[16]: 1716c536f94e843a9aea8b13ffde477d
-Bluetooth: hci0: unexpected SMP command 0x0a from XX:XX:XX:XX:XX:XX
-> ACL Data RX: Handle 2048 flags 0x02 dlen 12
-      SMP: Identity Address Information (0x09) len 7
-        Address: XX:XX:XX:XX:XX:XX (Intel Corporate)
-
-While accourding to core spec 6.1 the expected order is always BD_ADDR
-first first then CSRK:
-
-When using LE legacy pairing, the keys shall be distributed in the
-following order:
-
-    LTK by the Peripheral
-
-    EDIV and Rand by the Peripheral
-
-    IRK by the Peripheral
-
-    BD_ADDR by the Peripheral
-
-    CSRK by the Peripheral
-
-    LTK by the Central
-
-    EDIV and Rand by the Central
-
-    IRK by the Central
-
-    BD_ADDR by the Central
-
-    CSRK by the Central
-
-When using LE Secure Connections, the keys shall be distributed in the
-following order:
-
-    IRK by the Peripheral
-
-    BD_ADDR by the Peripheral
-
-    CSRK by the Peripheral
-
-    IRK by the Central
-
-    BD_ADDR by the Central
-
-    CSRK by the Central
-
-According to the Core 6.1 for commands used for key distribution "Key
-Rejected" can be used:
-
-  '3.6.1. Key distribution and generation
-
-  A device may reject a distributed key by sending the Pairing Failed command
-  with the reason set to "Key Rejected".
-
-Fixes: b28b4943660f ("Bluetooth: Add strict checks for allowed SMP PDUs")
+Fixes: 1e91c29eb60c ("Bluetooth: Use hci_disconnect for immediate disconnection from SMP")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 19 ++++++++++++++++++-
- net/bluetooth/smp.h |  1 +
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ net/bluetooth/smp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index b93494790877f..2ed57a71f1b2f 100644
+index 2ed57a71f1b2f..a03920fe44d94 100644
 --- a/net/bluetooth/smp.c
 +++ b/net/bluetooth/smp.c
-@@ -2971,8 +2971,25 @@ static int smp_sig_channel(struct l2cap_chan *chan, struct sk_buff *skb)
- 	if (code > SMP_CMD_MAX)
- 		goto drop;
+@@ -1373,7 +1373,7 @@ static void smp_timeout(struct work_struct *work)
  
--	if (smp && !test_and_clear_bit(code, &smp->allow_cmd))
-+	if (smp && !test_and_clear_bit(code, &smp->allow_cmd)) {
-+		/* If there is a context and the command is not allowed consider
-+		 * it a failure so the session is cleanup properly.
-+		 */
-+		switch (code) {
-+		case SMP_CMD_IDENT_INFO:
-+		case SMP_CMD_IDENT_ADDR_INFO:
-+		case SMP_CMD_SIGN_INFO:
-+			/* 3.6.1. Key distribution and generation
-+			 *
-+			 * A device may reject a distributed key by sending the
-+			 * Pairing Failed command with the reason set to
-+			 * "Key Rejected".
-+			 */
-+			smp_failure(conn, SMP_KEY_REJECTED);
-+			break;
-+		}
- 		goto drop;
-+	}
+ 	bt_dev_dbg(conn->hcon->hdev, "conn %p", conn);
  
- 	/* If we don't have a context the only allowed commands are
- 	 * pairing request and security request.
-diff --git a/net/bluetooth/smp.h b/net/bluetooth/smp.h
-index 87a59ec2c9f02..c5da53dfab04f 100644
---- a/net/bluetooth/smp.h
-+++ b/net/bluetooth/smp.h
-@@ -138,6 +138,7 @@ struct smp_cmd_keypress_notify {
- #define SMP_NUMERIC_COMP_FAILED		0x0c
- #define SMP_BREDR_PAIRING_IN_PROGRESS	0x0d
- #define SMP_CROSS_TRANSP_NOT_ALLOWED	0x0e
-+#define SMP_KEY_REJECTED		0x0f
+-	hci_disconnect(conn->hcon, HCI_ERROR_REMOTE_USER_TERM);
++	hci_disconnect(conn->hcon, HCI_ERROR_AUTH_FAILURE);
+ }
  
- #define SMP_MIN_ENC_KEY_SIZE		7
- #define SMP_MAX_ENC_KEY_SIZE		16
+ static struct smp_chan *smp_chan_create(struct l2cap_conn *conn)
 -- 
 2.39.5
 
