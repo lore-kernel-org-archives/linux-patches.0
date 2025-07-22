@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606F02B9A5;
-	Tue, 22 Jul 2025 14:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA272C9A;
+	Tue, 22 Jul 2025 14:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193172; cv=none; b=d4GtnAor96EjGSwD6KUmMq2mK2L99eElzwgPqQpgTZUE9pKgJ4c9c5SDu+WMC+7NqaaNxhnM8LN3bSCt49qk+n9M1JGhA2Ibl7diUnY8+wkA46LQvJmg7awgB91K16r2krQPlMX4p3rzOUwwk2Kz+6xPBTZi0Wt/s1uXpKU9dkk=
+	t=1753193176; cv=none; b=CLoODV64VFvsSzMEW9in/VmT1xZB/LrIWe7Ubw6AW2bnxj/mpwVNrCioAlx8aJschONesd6mK96NrnLWTWULGUCoxVi8w3vJ0/deJGjr2vOmAjvHTipCnxlbU1spawY/CiGkYsW82eSZ9NlfoWnQfEqzWCreqiUm2CJSpfP2oAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193172; c=relaxed/simple;
-	bh=yO9RPKUSu5v6YGYA0t5n7BVvWhGGKY24Yw2qYc+LQ/M=;
+	s=arc-20240116; t=1753193176; c=relaxed/simple;
+	bh=8pEwQO5X+tZT0A3XDOqihVmX3C4B6dxP7ZE3kg8P8Pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=biWVpRZZjKvGN7DyM+pnNt1jaFc+MzGH6hyIpFycZ3IYNeH9aP5qPNfZJoM7r3MF9Bqum2rRhiP293bz9zU7LfTE4fGrOmnhzqERUFzR3iAI4oGBqfeW628aq9ryV/5DcZEh2K0n2EunL17Lw2qv6k956zwRNjBgTQuhb7i4LQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJizhb4M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ty9fzf+jO89BmPMD00yPOOQipU/voM8nE4/+PNZnsX2NU+lQ7YCfH0ib7Wm8Nhc55x1J8ORaMmJF0PIXXZokET+zKuaZiohAzSudgy27ENAlwCClubVuXpLih7BTrDhODj3fZgMUkUfhDtXps+AzsO5ZW14j6XDg+HUDIcfNu5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+Xh9v4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJizhb4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E63C4CEEB;
-	Tue, 22 Jul 2025 14:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+Xh9v4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF28C4CEEB;
+	Tue, 22 Jul 2025 14:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193172;
-	bh=yO9RPKUSu5v6YGYA0t5n7BVvWhGGKY24Yw2qYc+LQ/M=;
+	s=korg; t=1753193175;
+	bh=8pEwQO5X+tZT0A3XDOqihVmX3C4B6dxP7ZE3kg8P8Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJizhb4MeGghtj+YyLRbm1SBsqomsPcX0nY/dKxdiBGAumWKQcEdzmDu+eCYgnJoO
-	 293SpHcNG9A9SgPTiuvwdH2Tx3bCcpEtAsidLBfSs2ttSeTZb3W+f6TjJXyLS21cmV
-	 oYpPi74Huw7d1hVZPwdg8qxq50M3wWimlFjL77lo=
+	b=P+Xh9v4AwBO58CSjBbH+jHf6YrYYKPELYMalaDAeuzYxnp94R+kL/1MtfZIotkdgX
+	 XeQsS+nViNRPj///LXIqL+gD6PMEbyzU8r03JKxdBVqYedm5F+MfLxAAbmuFYidWrf
+	 GG+o5LOYtaewG6zDkteEuDTyMHqStphkg4mGxSiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.15 013/187] i2c: omap: Fix an error handling path in omap_i2c_probe()
-Date: Tue, 22 Jul 2025 15:43:03 +0200
-Message-ID: <20250722134346.254698201@linuxfoundation.org>
+	Alexander Kovacs <Alexander.Kovacs@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.15 014/187] thunderbolt: Fix wake on connect at runtime
+Date: Tue, 22 Jul 2025 15:43:04 +0200
+Message-ID: <20250722134346.290884227@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -50,39 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 60c016afccac7acb78a43b9c75480887ed3ce48e upstream.
+commit 58d71d4242ce057955c783a14c82270c71f9e1e8 upstream.
 
-If an error occurs after pm_runtime_use_autosuspend(), a corresponding
-pm_runtime_dont_use_autosuspend() should be called.
+commit 1a760d10ded37 ("thunderbolt: Fix a logic error in wake on connect")
+fixated on the USB4 port sysfs wakeup file not working properly to control
+policy, but it had an unintended side effect that the sysfs file controls
+policy both at runtime and at suspend time. The sysfs file is supposed to
+only control behavior while system is suspended.
 
-In case of error in pm_runtime_resume_and_get(), it is not the case because
-the error handling path is wrongly ordered.
-Fix it.
+Pass whether programming a port for runtime into usb4_switch_set_wake()
+and if runtime then ignore the value in the sysfs file.
 
-Fixes: 780f62974125 ("i2c: omap: fix reference leak when pm_runtime_get_sync fails")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: <stable@vger.kernel.org> # v5.13+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/af8a9b62996bebbaaa7c02986aa2a8325ef11596.1751701715.git.christophe.jaillet@wanadoo.fr
+Cc: stable@vger.kernel.org
+Reported-by: Alexander Kovacs <Alexander.Kovacs@amd.com>
+Tested-by: Alexander Kovacs <Alexander.Kovacs@amd.com>
+Fixes: 1a760d10ded37 ("thunderbolt: Fix a logic error in wake on connect")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-omap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thunderbolt/switch.c |    8 ++++----
+ drivers/thunderbolt/tb.h     |    2 +-
+ drivers/thunderbolt/usb4.c   |   12 +++++-------
+ 3 files changed, 10 insertions(+), 12 deletions(-)
 
---- a/drivers/i2c/busses/i2c-omap.c
-+++ b/drivers/i2c/busses/i2c-omap.c
-@@ -1521,9 +1521,9 @@ err_mux_state_deselect:
- 	if (omap->mux_state)
- 		mux_state_deselect(omap->mux_state);
- err_put_pm:
--	pm_runtime_dont_use_autosuspend(omap->dev);
- 	pm_runtime_put_sync(omap->dev);
- err_disable_pm:
-+	pm_runtime_dont_use_autosuspend(omap->dev);
- 	pm_runtime_disable(&pdev->dev);
+--- a/drivers/thunderbolt/switch.c
++++ b/drivers/thunderbolt/switch.c
+@@ -3437,7 +3437,7 @@ void tb_sw_set_unplugged(struct tb_switc
+ 	}
+ }
  
- 	return r;
+-static int tb_switch_set_wake(struct tb_switch *sw, unsigned int flags)
++static int tb_switch_set_wake(struct tb_switch *sw, unsigned int flags, bool runtime)
+ {
+ 	if (flags)
+ 		tb_sw_dbg(sw, "enabling wakeup: %#x\n", flags);
+@@ -3445,7 +3445,7 @@ static int tb_switch_set_wake(struct tb_
+ 		tb_sw_dbg(sw, "disabling wakeup\n");
+ 
+ 	if (tb_switch_is_usb4(sw))
+-		return usb4_switch_set_wake(sw, flags);
++		return usb4_switch_set_wake(sw, flags, runtime);
+ 	return tb_lc_set_wake(sw, flags);
+ }
+ 
+@@ -3521,7 +3521,7 @@ int tb_switch_resume(struct tb_switch *s
+ 		tb_switch_check_wakes(sw);
+ 
+ 	/* Disable wakes */
+-	tb_switch_set_wake(sw, 0);
++	tb_switch_set_wake(sw, 0, true);
+ 
+ 	err = tb_switch_tmu_init(sw);
+ 	if (err)
+@@ -3602,7 +3602,7 @@ void tb_switch_suspend(struct tb_switch
+ 		flags |= TB_WAKE_ON_USB4 | TB_WAKE_ON_USB3 | TB_WAKE_ON_PCIE;
+ 	}
+ 
+-	tb_switch_set_wake(sw, flags);
++	tb_switch_set_wake(sw, flags, runtime);
+ 
+ 	if (tb_switch_is_usb4(sw))
+ 		usb4_switch_set_sleep(sw);
+--- a/drivers/thunderbolt/tb.h
++++ b/drivers/thunderbolt/tb.h
+@@ -1304,7 +1304,7 @@ int usb4_switch_read_uid(struct tb_switc
+ int usb4_switch_drom_read(struct tb_switch *sw, unsigned int address, void *buf,
+ 			  size_t size);
+ bool usb4_switch_lane_bonding_possible(struct tb_switch *sw);
+-int usb4_switch_set_wake(struct tb_switch *sw, unsigned int flags);
++int usb4_switch_set_wake(struct tb_switch *sw, unsigned int flags, bool runtime);
+ int usb4_switch_set_sleep(struct tb_switch *sw);
+ int usb4_switch_nvm_sector_size(struct tb_switch *sw);
+ int usb4_switch_nvm_read(struct tb_switch *sw, unsigned int address, void *buf,
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -403,12 +403,12 @@ bool usb4_switch_lane_bonding_possible(s
+  * usb4_switch_set_wake() - Enabled/disable wake
+  * @sw: USB4 router
+  * @flags: Wakeup flags (%0 to disable)
++ * @runtime: Wake is being programmed during system runtime
+  *
+  * Enables/disables router to wake up from sleep.
+  */
+-int usb4_switch_set_wake(struct tb_switch *sw, unsigned int flags)
++int usb4_switch_set_wake(struct tb_switch *sw, unsigned int flags, bool runtime)
+ {
+-	struct usb4_port *usb4;
+ 	struct tb_port *port;
+ 	u64 route = tb_route(sw);
+ 	u32 val;
+@@ -438,13 +438,11 @@ int usb4_switch_set_wake(struct tb_switc
+ 			val |= PORT_CS_19_WOU4;
+ 		} else {
+ 			bool configured = val & PORT_CS_19_PC;
+-			usb4 = port->usb4;
++			bool wakeup = runtime || device_may_wakeup(&port->usb4->dev);
+ 
+-			if (((flags & TB_WAKE_ON_CONNECT) &&
+-			      device_may_wakeup(&usb4->dev)) && !configured)
++			if ((flags & TB_WAKE_ON_CONNECT) && wakeup && !configured)
+ 				val |= PORT_CS_19_WOC;
+-			if (((flags & TB_WAKE_ON_DISCONNECT) &&
+-			      device_may_wakeup(&usb4->dev)) && configured)
++			if ((flags & TB_WAKE_ON_DISCONNECT) && wakeup && configured)
+ 				val |= PORT_CS_19_WOD;
+ 			if ((flags & TB_WAKE_ON_USB4) && configured)
+ 				val |= PORT_CS_19_WOU4;
 
 
