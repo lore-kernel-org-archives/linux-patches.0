@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96792238D57;
-	Tue, 22 Jul 2025 13:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE71D154457;
+	Tue, 22 Jul 2025 13:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192226; cv=none; b=tcipr7qEAFlA0/Vs3gX4AGO069C/yp+zNr0gKzQgFDj0xGMc3FXXwpzYdtEABbC7D7wPbfhJhT8y5ARTvBwOYIAD8SK6sDb/YxKZhj0J2rUElRs6ZKxJwlKYNL1BSxWo0hleJkG+nKepv6ijf/WbFkaAj5oMBnbuUw+3MHcj4hg=
+	t=1753192229; cv=none; b=Z2eCDOiJl7tkXIdVVHfHxXAuB6+GxqQS+ByWFuGa1BjB2g8csbukAm/WAL8pn+kYRXJlDI9uY1a87L8I0Mhme3ep67J22Vh1Rpcqmi9gvY0xsRIpUeETgA2Pn81UdLQvHLHGj5h8iSDa212aDMaDK7Az2YJtub9PBV1kw6u8Tl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192226; c=relaxed/simple;
-	bh=jqZrRbUfK0AJo7kx2QXcBYR0JdUSvhIQ/AoWQAwa3Kg=;
+	s=arc-20240116; t=1753192229; c=relaxed/simple;
+	bh=snJSgwxlR2GTWtau0XXLksW9hZrgrhl+DGqkFYzSHVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVXXGKnaiuLBx+rUbfVKZ4QKvf9viQnf6TC+HMMTn6S9ilXd8FPcZirpe06km7naAdbuZRHlQMZW7pBewzlCyb54DVZNK9HVOxycOwkMazkaopk8QB35a26NMQmNinT3HXhQX2MapMh5gZicWP4JXe16qELn0424b5boe81xYAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cghMRLPw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQvkLucSKLZo9ozQ7T3fb7OTN2+3t5FdjofLAEuXPQp6OnYbSX7RVEjQWffjkcrB5Bao5UaGjiXtgSJq0hnYxGxfC/mbKk2bi2r/Pzg7kD1ti9NUJJ4NPfxQxxsqJ3pnBkOumhEmCzU2y/vOoMUMC5lFWPUBkqwpo5UMcLzEhTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djVyGn6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cghMRLPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B51C4CEEB;
-	Tue, 22 Jul 2025 13:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djVyGn6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B32DC4CEEB;
+	Tue, 22 Jul 2025 13:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192226;
-	bh=jqZrRbUfK0AJo7kx2QXcBYR0JdUSvhIQ/AoWQAwa3Kg=;
+	s=korg; t=1753192229;
+	bh=snJSgwxlR2GTWtau0XXLksW9hZrgrhl+DGqkFYzSHVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cghMRLPws+beUcEt77OXYBZTN3z9tDEOtevsbxuEs8Qt6coKOxbs8aNfBxil3+xOM
-	 GPzqtbgypwbdwidG6+Cib2TfiY9/X/v8xkGxnpoBfAnMErmxAZ/wmi8ZOc4FQBfeWb
-	 SeJYkCfMjIg+MAb/0SEgEPVaK+JgeDA2UZf0HyCs=
+	b=djVyGn6ZHMbOXRw0uLkfAATPs2DqhgZfrZ6HFmCLowBfK4T7/v/YRoz8VlGJsK2fj
+	 f8bO6J+4d3k3WPQQ/Zh+IfXOxg8M01I80YJtfC2e8IESV9oB2QKarnZO5dKFesB/Th
+	 6JlH7Px06cMdQmT6xffGQjbAGnpPrYXJ1NuJPHzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 48/79] nvme: fix misaccounting of nvme-mpath inflight I/O
-Date: Tue, 22 Jul 2025 15:44:44 +0200
-Message-ID: <20250722134330.145804366@linuxfoundation.org>
+Subject: [PATCH 6.1 49/79] selftests: net: increase inter-packet timeout in udpgro.sh
+Date: Tue, 22 Jul 2025 15:44:45 +0200
+Message-ID: <20250722134330.181901200@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -52,50 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 71257925e83eae1cb6913d65ca71927d2220e6d1 ]
+[ Upstream commit 0e9418961f897be59b1fab6e31ae1b09a0bae902 ]
 
-Procedures for nvme-mpath IO accounting:
+The mentioned test is not very stable when running on top of
+debug kernel build. Increase the inter-packet timeout to allow
+more slack in such environments.
 
- 1) initialize nvme_request and clear flags;
- 2) set NVME_MPATH_IO_STATS and increase inflight counter when IO
-    started;
- 3) check NVME_MPATH_IO_STATS and decrease inflight counter when IO is
-    done;
-
-However, for the case nvme_fail_nonready_command(), both step 1) and 2)
-are skipped, and if old nvme_request set NVME_MPATH_IO_STATS and then
-request is reused, step 3) will still be executed, causing inflight I/O
-counter to be negative.
-
-Fix the problem by clearing nvme_request in nvme_fail_nonready_command().
-
-Fixes: ea5e5f42cd2c ("nvme-fabrics: avoid double completions in nvmf_fail_nonready_command")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/all/CAHj4cs_+dauobyYyP805t33WMJVzOWj=7+51p4_j9rA63D9sog@mail.gmail.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/b0370c06ddb3235debf642c17de0284b2cd3c652.1752163107.git.pabeni@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/testing/selftests/net/udpgro.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index fbe3fb4fbe95f..7d3759f875b23 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -706,6 +706,10 @@ blk_status_t nvme_fail_nonready_command(struct nvme_ctrl *ctrl,
- 	    !test_bit(NVME_CTRL_FAILFAST_EXPIRED, &ctrl->flags) &&
- 	    !blk_noretry_request(rq) && !(rq->cmd_flags & REQ_NVME_MPATH))
- 		return BLK_STS_RESOURCE;
-+
-+	if (!(rq->rq_flags & RQF_DONTPREP))
-+		nvme_clear_nvme_request(rq);
-+
- 	return nvme_host_path_error(rq);
- }
- EXPORT_SYMBOL_GPL(nvme_fail_nonready_command);
+diff --git a/tools/testing/selftests/net/udpgro.sh b/tools/testing/selftests/net/udpgro.sh
+index 241c6c37994d8..f6e50824c5eb9 100755
+--- a/tools/testing/selftests/net/udpgro.sh
++++ b/tools/testing/selftests/net/udpgro.sh
+@@ -50,7 +50,7 @@ run_one() {
+ 
+ 	cfg_veth
+ 
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${rx_args} &
+ 	local PID1=$!
+ 
+ 	wait_local_port_listen ${PEER_NS} 8000 udp
+@@ -97,7 +97,7 @@ run_one_nat() {
+ 	# will land on the 'plain' one
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -G ${family} -b ${addr1} -n 0 &
+ 	local PID1=$!
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${family} -b ${addr2%/*} ${rx_args} &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${family} -b ${addr2%/*} ${rx_args} &
+ 	local PID2=$!
+ 
+ 	wait_local_port_listen "${PEER_NS}" 8000 udp
+@@ -119,9 +119,9 @@ run_one_2sock() {
+ 
+ 	cfg_veth
+ 
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} -p 12345 &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${rx_args} -p 12345 &
+ 	local PID1=$!
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 10 ${rx_args} &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 100 ${rx_args} &
+ 	local PID2=$!
+ 
+ 	wait_local_port_listen "${PEER_NS}" 12345 udp
 -- 
 2.39.5
 
