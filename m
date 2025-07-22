@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629B62E8E0F;
-	Tue, 22 Jul 2025 13:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78E92EA498;
+	Tue, 22 Jul 2025 13:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192243; cv=none; b=rCMLjYetvPOrhdM5SsyKjfOFGyPrnQ+YzpKj8dT3Fpm6DLmTrxfXkYv6eT6ZOAo1EBYIHbLi36FDK+niOZbc7VO6vxZjWUHzYeSga573X1bPgkMHkuyKMs7M83xYfIpPeXimfJUu30xHaUEHzYQZRCYD4HG9eoFtNHaTYSSpXEA=
+	t=1753192246; cv=none; b=MejfatYegP/7hOq2mHUtRqn7636X9iVHV9pZoXzODkqeuGikdb8GUf6X22c9KNewSCUT10i+fNvz0S0XZZ8il/7tw2DcqI7dI+QK8jylVxojAUIE54JjyEFKH9xF/DUCzFR4b/Ywt8/3qHBuO7NuG3a12xBlHwpRS8QO/Ll7jb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192243; c=relaxed/simple;
-	bh=DhMJpvnVG3tWuAy0S76HFv1032GnYyAd2CIYHwSVTmw=;
+	s=arc-20240116; t=1753192246; c=relaxed/simple;
+	bh=y4tZxu4lmuF5dL+STKmGsfV2e4bpoIMPmaMXf41ZcsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9e71UDmzw6nigLbCdTibfEHvKpo56fKgky/injuOFNd8eeFIoOpg7WBscTeBiz8khzi1HJroJ+8k4VQk6vCCOf6S3zsWXqgPNkvexHfo+Pq8Bc9JEd9hhB5PAr8ufkuwuwndS7EtX0RDYCE5sCn59B64W6lgq6DEjxHZfrcHhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhbDSnV9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5iKYbRw/eRVPnIDb5bZmFEYExb+G0UXsUUBj+b13vg3r79qY2KiXn4FHWuTVUaspRvbhGGoa4vcjwjRmyjiYCNWGJrMBDmubL1XL+REolI/z5nhp5JN56N/W1ne8CqUOr6DNXNMSw0dUG2G2BlnMi+npWF5BuW0FzwlPNnXUYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gl4M99j5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhbDSnV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5F3C4CEEB;
-	Tue, 22 Jul 2025 13:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gl4M99j5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281CEC4CEEB;
+	Tue, 22 Jul 2025 13:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192243;
-	bh=DhMJpvnVG3tWuAy0S76HFv1032GnYyAd2CIYHwSVTmw=;
+	s=korg; t=1753192246;
+	bh=y4tZxu4lmuF5dL+STKmGsfV2e4bpoIMPmaMXf41ZcsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhbDSnV9SjUGdPViIddM3dfq/VAKIQHE5i/Gsq3SPLulRkT64cb+KfEOoyfFzbm9d
-	 Y2FQtmJVvnqFsSZis0FPRrc9Irh9gmFxMED9v3jP1SJ9NWsXxEdWLaitdQnlrYHDUV
-	 4zYp6el+7hziW7n+NlIw14FIejzI4HJVsvalMRrs=
+	b=gl4M99j5gyf8K6f+k0D4os0lJaykn40xahpkP7o42JuqX4kp7MubCRsP27Zm7aNxJ
+	 /hAVGMqTm813xa1sMpQnfJN1w7q0uO3k54qx02gfVezY/CCd2qINic/240JbIixOUn
+	 KPijfgLCv1yafluQlxxYnToCbBuRE7MrRjU4J/NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Gasbarroni <alex.gasbarroni@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 53/79] Bluetooth: hci_sync: fix connectable extended advertising when using static random address
-Date: Tue, 22 Jul 2025 15:44:49 +0200
-Message-ID: <20250722134330.328274464@linuxfoundation.org>
+Subject: [PATCH 6.1 44/79] net: emaclite: Fix missing pointer increment in aligned_read()
+Date: Tue, 22 Jul 2025 15:44:40 +0200
+Message-ID: <20250722134329.998333681@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -51,82 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Gasbarroni <alex.gasbarroni@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit d85edab911a4c1fcbe3f08336eff5c7feec567d0 ]
+[ Upstream commit 7727ec1523d7973defa1dff8f9c0aad288d04008 ]
 
-Currently, the connectable flag used by the setup of an extended
-advertising instance drives whether we require privacy when trying to pass
-a random address to the advertising parameters (Own Address).
-If privacy is not required, then it automatically falls back to using the
-controller's public address. This can cause problems when using controllers
-that do not have a public address set, but instead use a static random
-address.
+Add missing post-increment operators for byte pointers in the
+loop that copies remaining bytes in xemaclite_aligned_read().
+Without the increment, the same byte was written repeatedly
+to the destination.
+This update aligns with xemaclite_aligned_write()
 
-e.g. Assume a BLE controller that does not have a public address set.
-The controller upon powering is set with a random static address by default
-by the kernel.
-
-	< HCI Command: LE Set Random Address (0x08|0x0005) plen 6
-        	Address: E4:AF:26:D8:3E:3A (Static)
-	> HCI Event: Command Complete (0x0e) plen 4
-	      LE Set Random Address (0x08|0x0005) ncmd 1
-	        Status: Success (0x00)
-
-Setting non-connectable extended advertisement parameters in bluetoothctl
-mgmt
-
-	add-ext-adv-params -r 0x801 -x 0x802 -P 2M -g 1
-
-correctly sets Own address type as Random
-
-	< HCI Command: LE Set Extended Advertising Parameters (0x08|0x0036)
-	plen 25
-		...
-	    Own address type: Random (0x01)
-
-Setting connectable extended advertisement parameters in bluetoothctl mgmt
-
-	add-ext-adv-params -r 0x801 -x 0x802 -P 2M -g -c 1
-
-mistakenly sets Own address type to Public (which causes to use Public
-Address 00:00:00:00:00:00)
-
-	< HCI Command: LE Set Extended Advertising Parameters (0x08|0x0036)
-	plen 25
-		...
-	    Own address type: Public (0x00)
-
-This causes either the controller to emit an Invalid Parameters error or to
-mishandle the advertising.
-
-This patch makes sure that we use the already set static random address
-when requesting a connectable extended advertising when we don't require
-privacy and our public address is not set (00:00:00:00:00:00).
-
-Fixes: 3fe318ee72c5 ("Bluetooth: move hci_get_random_address() to hci_sync")
-Signed-off-by: Alessandro Gasbarroni <alex.gasbarroni@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: bb81b2ddfa19 ("net: add Xilinx emac lite device driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250710173849.2381003-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_emaclite.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 7d22b2b02745a..27d1209da0df9 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6508,8 +6508,8 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
- 		return 0;
+diff --git a/drivers/net/ethernet/xilinx/xilinx_emaclite.c b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+index ad2c30d9a4824..fb0e42ddb3adb 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_emaclite.c
++++ b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+@@ -285,7 +285,7 @@ static void xemaclite_aligned_read(u32 *src_ptr, u8 *dest_ptr,
+ 
+ 		/* Read the remaining data */
+ 		for (; length > 0; length--)
+-			*to_u8_ptr = *from_u8_ptr;
++			*to_u8_ptr++ = *from_u8_ptr++;
  	}
- 
--	/* No privacy so use a public address. */
--	*own_addr_type = ADDR_LE_DEV_PUBLIC;
-+	/* No privacy, use the current address */
-+	hci_copy_identity_address(hdev, rand_addr, own_addr_type);
- 
- 	return 0;
  }
+ 
 -- 
 2.39.5
 
