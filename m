@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE432D130C;
-	Tue, 22 Jul 2025 13:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BAC2D130C;
+	Tue, 22 Jul 2025 13:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192561; cv=none; b=dW+jjXDcFjCCJD0qvsoedQGzQdS54abz8KZfAK3BQ1WkXAs2aXLLhp9D+p7LbG7LejZPGNDV0Pm3gJHbxk7p7saE4CN3c1c3NpNp4QmnklHYFmY4wydhCLIkZBdwuJG81R1KFdBTfS0PwP+bvGrduskn4PsG/Yc1iz4nyiM7ptU=
+	t=1753192565; cv=none; b=jJJkNZvbmXafYO7bR4AlPOSP6tjN+7zx9e2Fx37uHwgZpzZS8Yi7g0vql1Jqm1j0Ht07WKE9YYJyVBPLAJWvtiY9qAIIwttml23bazDNhoUm69p/bz6Kuu7UT1ZKzKavyViakBIk3U58sBMmYmib1aCtHmKFK8YJbx8gv/hiaW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192561; c=relaxed/simple;
-	bh=06dGb2/8bGAr0RtocbI1mMs9rzsMIF5zjlt8dpz9Rmw=;
+	s=arc-20240116; t=1753192565; c=relaxed/simple;
+	bh=PyUd33XSp86hgqj4bMlXgGthcL7qLLIiARBXjy13SrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pO6/PbCJrCGCDijRI//zONqAebEeT+nB4vtz0jxYsosiNKy77CCtlV6gQOXQRsBzoFJ93G8LOilUw5g0uYYI3/bAa3htXH58QN0SPG7++FQEjQFXz/rpqSpap/JWUYRQfxUjMyhTCcHUqPq6GB0gsI3UhX9g3IrpkHf9ZFd/Z7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kH4b+PCR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dn9Cpn394IPbSqz+1sJnTOmEKbB4W6PbLCdtPQFTCm6pZNRJgskn5X/1upm7/3G6onT0w/FFrrWTO/q7P3oA5fsN7trUswGk+YNt+Pln2PFRJa7PyWZh2YcQdq0tz39aM4EdHjt01zpUJfi4O6VVlh89zsGRgri2APaqN0T04K8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4eY8id7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kH4b+PCR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4814C4CEEB;
-	Tue, 22 Jul 2025 13:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4eY8id7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7286C4CEEB;
+	Tue, 22 Jul 2025 13:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192561;
-	bh=06dGb2/8bGAr0RtocbI1mMs9rzsMIF5zjlt8dpz9Rmw=;
+	s=korg; t=1753192564;
+	bh=PyUd33XSp86hgqj4bMlXgGthcL7qLLIiARBXjy13SrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kH4b+PCRUxbsExmPxoM5y2+l5gsdyJTsoEBdl4igezYRwrjhr6OrAnB14s17G166o
-	 ZbW4mYWbZKskNe/hVUied2fHlY4B6KY1HIKzHYw24b/rAulfXIf0LhX4e/TnA7k9lz
-	 F6vCJPjFj7o7DSDjeAm+1SsbuHoFVdgL1s/0Hqhc=
+	b=s4eY8id7shMhiwuy7RhdHc69PhWFq88BNH3SXKFD6rlAIHjPBG6pynj/hJLaH/n2l
+	 HPc9iX5bwDX74JBXtpJaa2CfBSDeHO6xktfe9UvkttxryVLMGD8tmL6uJSBkSNSsc+
+	 /a6B+MUpwvuOlLJEer0nQqcZ9KwvXYl0ytkpFkyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+	syzbot+e834e757bd9b3d3e1251@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/111] usb: dwc3: qcom: Dont leave BCR asserted
-Date: Tue, 22 Jul 2025 15:45:16 +0200
-Message-ID: <20250722134337.177874290@linuxfoundation.org>
+Subject: [PATCH 6.6 071/111] wifi: cfg80211: remove scan request n_channels counted_by
+Date: Tue, 22 Jul 2025 15:44:46 +0200
+Message-ID: <20250722134336.036965705@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -53,66 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit ef8abc0ba49ce717e6bc4124e88e59982671f3b5 upstream.
+[ Upstream commit 444020f4bf06fb86805ee7e7ceec0375485fd94d ]
 
-Leaving the USB BCR asserted prevents the associated GDSC to turn on. This
-blocks any subsequent attempts of probing the device, e.g. after a probe
-deferral, with the following showing in the log:
+This reverts commit e3eac9f32ec0 ("wifi: cfg80211: Annotate struct
+cfg80211_scan_request with __counted_by").
 
-[    1.332226] usb30_prim_gdsc status stuck at 'off'
+This really has been a completely failed experiment. There were
+no actual bugs found, and yet at this point we already have four
+"fixes" to it, with nothing to show for but code churn, and it
+never even made the code any safer.
 
-Leave the BCR deasserted when exiting the driver to avoid this issue.
+In all of the cases that ended up getting "fixed", the structure
+is also internally inconsistent after the n_channels setting as
+the channel list isn't actually filled yet. You cannot scan with
+such a structure, that's just wrong. In mac80211, the struct is
+also reused multiple times, so initializing it once is no good.
 
-Cc: stable <stable@kernel.org>
-Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250709132900.3408752-1-krishna.kurapati@oss.qualcomm.com
-[ adapted to individual clock management instead of bulk clock operations ]
+Some previous "fixes" (e.g. one in brcm80211) are also just setting
+n_channels before accessing the array, under the assumption that the
+code is correct and the array can be accessed, further showing that
+the whole thing is just pointless when the allocation count and use
+count are not separate.
+
+If we really wanted to fix it, we'd need to separately track the
+number of channels allocated and the number of channels currently
+used, but given that no bugs were found despite the numerous syzbot
+reports, that'd just be a waste of time.
+
+Remove the __counted_by() annotation. We really should also remove
+a number of the n_channels settings that are setting up a structure
+that's inconsistent, but that can wait.
+
+Reported-by: syzbot+e834e757bd9b3d3e1251@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e834e757bd9b3d3e1251
+Fixes: e3eac9f32ec0 ("wifi: cfg80211: Annotate struct cfg80211_scan_request with __counted_by")
+Link: https://patch.msgid.link/20250714142130.9b0bbb7e1f07.I09112ccde72d445e11348fc2bef68942cb2ffc94@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ include/net/cfg80211.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -854,13 +854,13 @@ static int dwc3_qcom_probe(struct platfo
- 	ret = reset_control_deassert(qcom->resets);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to deassert resets, err=%d\n", ret);
--		goto reset_assert;
-+		return ret;
- 	}
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 802ea3080d0b3..2fb3151ea7c9e 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -2543,7 +2543,7 @@ struct cfg80211_scan_request {
+ 	struct cfg80211_scan_6ghz_params *scan_6ghz_params;
  
- 	ret = dwc3_qcom_clk_init(qcom, of_clk_get_parent_count(np));
- 	if (ret) {
- 		dev_err_probe(dev, ret, "failed to get clocks\n");
--		goto reset_assert;
-+		return ret;
- 	}
+ 	/* keep last */
+-	struct ieee80211_channel *channels[] __counted_by(n_channels);
++	struct ieee80211_channel *channels[];
+ };
  
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-@@ -964,8 +964,6 @@ clk_disable:
- 		clk_disable_unprepare(qcom->clks[i]);
- 		clk_put(qcom->clks[i]);
- 	}
--reset_assert:
--	reset_control_assert(qcom->resets);
- 
- 	return ret;
- }
-@@ -995,8 +993,6 @@ static void dwc3_qcom_remove(struct plat
- 	qcom->num_clocks = 0;
- 
- 	dwc3_qcom_interconnect_exit(qcom);
--	reset_control_assert(qcom->resets);
--
- 	pm_runtime_allow(dev);
- 	pm_runtime_disable(dev);
- }
+ static inline void get_random_mask_addr(u8 *buf, const u8 *addr, const u8 *mask)
+-- 
+2.39.5
+
 
 
