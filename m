@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD912B9A5;
-	Tue, 22 Jul 2025 14:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770AC2E1724;
+	Tue, 22 Jul 2025 14:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193625; cv=none; b=qcjamrCTa/n0YoUVBhzdrO5I3Qme9SkVK6F1J3iTBJH4PTra+l84nH3k4F73P7oQM1on6ujffQOoUjLhtXjXUQyHyGl2ZBY9JLV/ZiQ1szn35IB/egQgSjc4Ls9deixy1UcQppwJs+/6/1Mr+0ZaWVEIT6ZYbR5kj8Awh5cqObw=
+	t=1753193628; cv=none; b=vDG/Qfo6BtrbBkbeUkiVtWqNAdfu5HHrgdcONIFpdnNIOH3EVBuAD/7MxV6YNm3kwEwwSRdr/8AIQg9Cap/cGoCnlCdfCo8QmoBmKeqSf1/FpTnQmTVvm9khlJx+GtLOUB1TXR1AqBNP5L+V1S6JA/s9pRGKI1/tQ9kgbj7P+EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193625; c=relaxed/simple;
-	bh=4jtu9eEBB+uHyF0M5callP7U4PVBr8jfAnacjIoZeNQ=;
+	s=arc-20240116; t=1753193628; c=relaxed/simple;
+	bh=Nw/Kdk5bAeWAzCSeC8g2QMYAkznsawCxEs3d5oDgjYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aSSS9TiQ/YdJCsAOXayutBhOLUG8jxdDoNqRFbBbSp8JF2GzBYd7JrzNjNbS2zPPl8X+44BBMKph/YGH3sef7eqglXejDRRqTpeyOOiTl5HhQCADDElmxLOrz2J/MCDKkjPyxF4j6YAGFn7rUKzXENZD1iC40kkNYhXvU5gYXJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykinijEo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aiwp5Z+WVKl7oqrCYDncA/AZjMcb3P7sPDWyyAOMn1ZPhGANbzRJoaxOSCe+wO7UhjsTjiMYJtchCDZ9Z5luiycTvic+YNcmR3t6K2QGCTpyMpycA3r4xtcxMmWsh+Mnm/99QsCTAUWQOuAray4nnAX18KnwLdqqUW/kY2FbDNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1LMFiWF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykinijEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D95BC4CEEB;
-	Tue, 22 Jul 2025 14:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1LMFiWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7E0C4CEEB;
+	Tue, 22 Jul 2025 14:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193625;
-	bh=4jtu9eEBB+uHyF0M5callP7U4PVBr8jfAnacjIoZeNQ=;
+	s=korg; t=1753193628;
+	bh=Nw/Kdk5bAeWAzCSeC8g2QMYAkznsawCxEs3d5oDgjYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykinijEoB8sGILhZb7YJGSxr3oVtQLwa3pXgpjy53kSiFeCPm1hDn3Pp7SyasGASK
-	 7gBIJR7285eJ6ShseEkbOLiO1M8rUTK33TITiDk+vRZiQ3twfQhysg71AeB3mU43CN
-	 oKryiIbMBdswq6z83XM35jxy8E8s36cHpF+gtlmI=
+	b=Y1LMFiWFneztmhj7ZJ1ECrZgJXW+YysbZbO5mxpRM8LTYAKjK1j39XfVinPZv1mcI
+	 aT3VFN/3Bqr5xEhXJCC+CYOhSvrsIw5iTQvqdx/xePSlqjXA0253OaGTEBGtm3kJu2
+	 LHhz1Kkl+jeHp6QS919kzEGmAhKQ7F/EGMnsArrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Cathy Avery <cavery@redhat.com>,
+	Li Tian <litian@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 149/187] Bluetooth: L2CAP: Fix attempting to adjust outgoing MTU
-Date: Tue, 22 Jul 2025 15:45:19 +0200
-Message-ID: <20250722134351.336263314@linuxfoundation.org>
+Subject: [PATCH 6.15 150/187] hv_netvsc: Set VF priv_flags to IFF_NO_ADDRCONF before open to prevent IPv6 addrconf
+Date: Tue, 22 Jul 2025 15:45:20 +0200
+Message-ID: <20250722134351.376889870@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -44,81 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Li Tian <litian@redhat.com>
 
-[ Upstream commit d24e4a7fedae121d33fb32ad785b87046527eedb ]
+[ Upstream commit d7501e076d859d2f381d57bd984ff6db13172727 ]
 
-Configuration request only configure the incoming direction of the peer
-initiating the request, so using the MTU is the other direction shall
-not be used, that said the spec allows the peer responding to adjust:
+Set an additional flag IFF_NO_ADDRCONF to prevent ipv6 addrconf.
 
-Bluetooth Core 6.1, Vol 3, Part A, Section 4.5
+Commit under Fixes added a new flag change that was not made
+to hv_netvsc resulting in the VF being assinged an IPv6.
 
- 'Each configuration parameter value (if any is present) in an
- L2CAP_CONFIGURATION_RSP packet reflects an ‘adjustment’ to a
- configuration parameter value that has been sent (or, in case of
- default values, implied) in the corresponding
- L2CAP_CONFIGURATION_REQ packet.'
-
-That said adjusting the MTU in the response shall be limited to ERTM
-channels only as for older modes the remote stack may not be able to
-detect the adjustment causing it to silently drop packets.
-
-Link: https://github.com/bluez/bluez/issues/1422
-Link: https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/149
-Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/4793
-Fixes: 042bb9603c44 ("Bluetooth: L2CAP: Fix L2CAP MTU negotiation")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 8a321cf7becc ("net: add IFF_NO_ADDRCONF and use it in bonding to prevent ipv6 addrconf")
+Suggested-by: Cathy Avery <cavery@redhat.com>
+Signed-off-by: Li Tian <litian@redhat.com>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250716002607.4927-1-litian@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/net/hyperv/netvsc_drv.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 40daa38276f35..805c752ac0a9d 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3520,12 +3520,28 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
- 		/* Configure output options and let the other side know
- 		 * which ones we don't like. */
+diff --git a/drivers/net/hyperv/netvsc_drv.c b/drivers/net/hyperv/netvsc_drv.c
+index 31242921c8285..8c73f71051020 100644
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -2317,8 +2317,11 @@ static int netvsc_prepare_bonding(struct net_device *vf_netdev)
+ 	if (!ndev)
+ 		return NOTIFY_DONE;
  
--		/* If MTU is not provided in configure request, use the most recently
--		 * explicitly or implicitly accepted value for the other direction,
--		 * or the default value.
-+		/* If MTU is not provided in configure request, try adjusting it
-+		 * to the current output MTU if it has been set
-+		 *
-+		 * Bluetooth Core 6.1, Vol 3, Part A, Section 4.5
-+		 *
-+		 * Each configuration parameter value (if any is present) in an
-+		 * L2CAP_CONFIGURATION_RSP packet reflects an ‘adjustment’ to a
-+		 * configuration parameter value that has been sent (or, in case
-+		 * of default values, implied) in the corresponding
-+		 * L2CAP_CONFIGURATION_REQ packet.
- 		 */
--		if (mtu == 0)
--			mtu = chan->imtu ? chan->imtu : L2CAP_DEFAULT_MTU;
-+		if (!mtu) {
-+			/* Only adjust for ERTM channels as for older modes the
-+			 * remote stack may not be able to detect that the
-+			 * adjustment causing it to silently drop packets.
-+			 */
-+			if (chan->mode == L2CAP_MODE_ERTM &&
-+			    chan->omtu && chan->omtu != L2CAP_DEFAULT_MTU)
-+				mtu = chan->omtu;
-+			else
-+				mtu = L2CAP_DEFAULT_MTU;
-+		}
+-	/* set slave flag before open to prevent IPv6 addrconf */
++	/* Set slave flag and no addrconf flag before open
++	 * to prevent IPv6 addrconf.
++	 */
+ 	vf_netdev->flags |= IFF_SLAVE;
++	vf_netdev->priv_flags |= IFF_NO_ADDRCONF;
+ 	return NOTIFY_DONE;
+ }
  
- 		if (mtu < L2CAP_DEFAULT_MIN_MTU)
- 			result = L2CAP_CONF_UNACCEPT;
 -- 
 2.39.5
 
