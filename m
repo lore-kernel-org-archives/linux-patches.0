@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403692EBDCB;
-	Tue, 22 Jul 2025 14:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F12EBDCB;
+	Tue, 22 Jul 2025 14:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193684; cv=none; b=Y1+AvCJEt8Kg1AqIc1ywNtfRMfo7gMf/tLXWLi/S3Rl2Qg0GZdPHp6FvZBy63uDPe7wagRhKWjKghzGlSKDXdL7oKmLWIVOafOy+fEGlQjILrKL+P+ZjyAyzrdQ2k8zvCsZ5qUlKzFIhSGKJQRPalWWZcyCJfwSDRY9KpVyphC8=
+	t=1753193687; cv=none; b=t/S7HmHhOmYPEpHeZnQY2vtyqqeXnWlWgruJQOpz3IVNmnkFQCnuxc4DsCVZsTPYT/Mk+xLp/lppUvPrKdUPSM8qSu1uaq0ng+f6thcrtSxwJsK77E5+P4KknhKnnnNl/oIU2urIy0xMYwnAsIa6g6Szx3K6/uwpB8vjxDUQcOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193684; c=relaxed/simple;
-	bh=Y7Uh8X3/6O7+UBAT4/RPeoltPQ6p0P98pqLWrD8ZKe8=;
+	s=arc-20240116; t=1753193687; c=relaxed/simple;
+	bh=+geQYFsefC8tzABoxLbV1EYS+u+7edUzrCiFd38Nx6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ager9ePIootrCNm4kl1dK2B2PP51qMvDq4avJQh7gcAjGBIZgm/YxNVJmilplm+U3z0zeJORkZXDUy9afOtnVlPjQQWhD7gcLfaBnqgSZK92YZw9W71tH5jf+618AqiHj3CTPHBsJf5s2zJ/ikbkQ+iNGawhTPbX2KCbOrsTWyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HX998JG/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YOtrvhOL/hHioJEnoEMJTmKAWKyXsWfPn5HV7NBDTrRdtacApqbqrHhCsGrcV+2rBF+xxST+yFkO6JBQCDw8P2lKa1fw8zF00+4tYyWilA4BqHfU19ouC8B3ObCGpGODs38NYgMVwgHaAlg5Q0yLAkEcag8ykrIfF8u6PZsasBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYxUrCGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HX998JG/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEA0C4CEEB;
-	Tue, 22 Jul 2025 14:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYxUrCGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1401C4CEEB;
+	Tue, 22 Jul 2025 14:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193684;
-	bh=Y7Uh8X3/6O7+UBAT4/RPeoltPQ6p0P98pqLWrD8ZKe8=;
+	s=korg; t=1753193687;
+	bh=+geQYFsefC8tzABoxLbV1EYS+u+7edUzrCiFd38Nx6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HX998JG/n4Lxd79pOMjto/O+clJYLF9c3+QqbaBslY4D3ltAPPbnYJPKXwaS2Emt8
-	 Xoawd93aAlZ3LfUPi+je+0gQ48N+FCyuK7ZOXDwqCzUiTqtRCgl8e4TctFYN0AFfSe
-	 Yj94oW0xoPDh1LhC7PMC/r4DxUwmJHzhyK1o7DrI=
+	b=FYxUrCGVZ8D21olgqzXgYZy4kdkzvpe8/wLJBqfSo2SED8QX2SkWDr7AaU8Hozgv7
+	 ZcL1x0jl2v2uT5PcYFiphETxxyIRPkvSAzJ74yhLgC4FirBj5oSzPiJE41NWNuj/B8
+	 S3feceu9jmtt8DyvYTbw348ahrm+EHFlsiIfmiJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.15 166/187] sched: Change nr_uninterruptible type to unsigned long
-Date: Tue, 22 Jul 2025 15:45:36 +0200
-Message-ID: <20250722134351.955582392@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.15 167/187] usb: hub: fix detection of high tier USB3 devices behind suspended hubs
+Date: Tue, 22 Jul 2025 15:45:37 +0200
+Message-ID: <20250722134351.990303451@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -50,54 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 36569780b0d64de283f9d6c2195fd1a43e221ee8 upstream.
+commit 8f5b7e2bec1c36578fdaa74a6951833541103e27 upstream.
 
-The commit e6fe3f422be1 ("sched: Make multiple runqueue task counters
-32-bit") changed nr_uninterruptible to an unsigned int. But the
-nr_uninterruptible values for each of the CPU runqueues can grow to
-large numbers, sometimes exceeding INT_MAX. This is valid, if, over
-time, a large number of tasks are migrated off of one CPU after going
-into an uninterruptible state. Only the sum of all nr_interruptible
-values across all CPUs yields the correct result, as explained in a
-comment in kernel/sched/loadavg.c.
+USB3 devices connected behind several external suspended hubs may not
+be detected when plugged in due to aggressive hub runtime pm suspend.
 
-Change the type of nr_uninterruptible back to unsigned long to prevent
-overflows, and thus the miscalculation of load average.
+The hub driver immediately runtime-suspends hubs if there are no
+active children or port activity.
 
-Fixes: e6fe3f422be1 ("sched: Make multiple runqueue task counters 32-bit")
+There is a delay between the wake signal causing hub resume, and driver
+visible port activity on the hub downstream facing ports.
+Most of the LFPS handshake, resume signaling and link training done
+on the downstream ports is not visible to the hub driver until completed,
+when device then will appear fully enabled and running on the port.
 
-Signed-off-by: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20250709173328.606794-1-aruna.ramakrishna@oracle.com
+This delay between wake signal and detectable port change is even more
+significant with chained suspended hubs where the wake signal will
+propagate upstream first. Suspended hubs will only start resuming
+downstream ports after upstream facing port resumes.
+
+The hub driver may resume a USB3 hub, read status of all ports, not
+yet see any activity, and runtime suspend back the hub before any
+port activity is visible.
+
+This exact case was seen when conncting USB3 devices to a suspended
+Thunderbolt dock.
+
+USB3 specification defines a 100ms tU3WakeupRetryDelay, indicating
+USB3 devices expect to be resumed within 100ms after signaling wake.
+if not then device will resend the wake signal.
+
+Give the USB3 hubs twice this time (200ms) to detect any port
+changes after resume, before allowing hub to runtime suspend again.
+
+Cc: stable <stable@kernel.org>
+Fixes: 2839f5bcfcfc ("USB: Turn on auto-suspend for USB 3.0 hubs.")
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250611112441.2267883-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/loadavg.c |    2 +-
- kernel/sched/sched.h   |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/core/hub.c |   33 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/loadavg.c
-+++ b/kernel/sched/loadavg.c
-@@ -80,7 +80,7 @@ long calc_load_fold_active(struct rq *th
- 	long nr_active, delta = 0;
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -68,6 +68,12 @@
+  */
+ #define USB_SHORT_SET_ADDRESS_REQ_TIMEOUT	500  /* ms */
  
- 	nr_active = this_rq->nr_running - adjust;
--	nr_active += (int)this_rq->nr_uninterruptible;
-+	nr_active += (long)this_rq->nr_uninterruptible;
++/*
++ * Give SS hubs 200ms time after wake to train downstream links before
++ * assuming no port activity and allowing hub to runtime suspend back.
++ */
++#define USB_SS_PORT_U0_WAKE_TIME	200  /* ms */
++
+ /* Protect struct usb_device->state and ->children members
+  * Note: Both are also protected by ->dev.sem, except that ->state can
+  * change to USB_STATE_NOTATTACHED even when the semaphore isn't held. */
+@@ -1068,11 +1074,12 @@ int usb_remove_device(struct usb_device
  
- 	if (nr_active != this_rq->calc_load_active) {
- 		delta = nr_active - this_rq->calc_load_active;
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1147,7 +1147,7 @@ struct rq {
- 	 * one CPU and if it got migrated afterwards it may decrease
- 	 * it on another CPU. Always updated under the runqueue lock:
- 	 */
--	unsigned int		nr_uninterruptible;
-+	unsigned long 		nr_uninterruptible;
+ enum hub_activation_type {
+ 	HUB_INIT, HUB_INIT2, HUB_INIT3,		/* INITs must come first */
+-	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME,
++	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME, HUB_POST_RESUME,
+ };
  
- 	union {
- 		struct task_struct __rcu *donor; /* Scheduler context */
+ static void hub_init_func2(struct work_struct *ws);
+ static void hub_init_func3(struct work_struct *ws);
++static void hub_post_resume(struct work_struct *ws);
+ 
+ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
+ {
+@@ -1095,6 +1102,13 @@ static void hub_activate(struct usb_hub
+ 			goto init2;
+ 		goto init3;
+ 	}
++
++	if (type == HUB_POST_RESUME) {
++		usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
++		hub_put(hub);
++		return;
++	}
++
+ 	hub_get(hub);
+ 
+ 	/* The superspeed hub except for root hub has to use Hub Depth
+@@ -1343,6 +1357,16 @@ static void hub_activate(struct usb_hub
+ 		device_unlock(&hdev->dev);
+ 	}
+ 
++	if (type == HUB_RESUME && hub_is_superspeed(hub->hdev)) {
++		/* give usb3 downstream links training time after hub resume */
++		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
++		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
++				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
++		usb_autopm_get_interface_no_resume(
++			to_usb_interface(hub->intfdev));
++		return;
++	}
++
+ 	hub_put(hub);
+ }
+ 
+@@ -1361,6 +1385,13 @@ static void hub_init_func3(struct work_s
+ 	hub_activate(hub, HUB_INIT3);
+ }
+ 
++static void hub_post_resume(struct work_struct *ws)
++{
++	struct usb_hub *hub = container_of(ws, struct usb_hub, init_work.work);
++
++	hub_activate(hub, HUB_POST_RESUME);
++}
++
+ enum hub_quiescing_type {
+ 	HUB_DISCONNECT, HUB_PRE_RESET, HUB_SUSPEND
+ };
 
 
