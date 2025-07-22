@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E53272624;
-	Tue, 22 Jul 2025 13:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D188289340;
+	Tue, 22 Jul 2025 13:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192055; cv=none; b=N8xtud8frphFidpazzr7Pw9i03p7uzKTO3M6ypvkeS4rQw5UNNmZpsuBUKHlomzk9WhUIf5ThNL06PYdECNygD8OdmnF1bsxZB0zpHVNC+X0yN1Cc7vUXamsik2lSrhphJSkm9TTYAoXkzHPSBQ1xHr+8I9J65lj0ZJSfzWRZNY=
+	t=1753192058; cv=none; b=DplPk3CNST+QhxhXaL5huBUGrThCH4O3puxhOsqiLCs+g+t/xrBKZsLl9Tgv9lSHnrdqYijOWPWKVhOjrLtJ0OA14SvGsjMubxaojIp3gtRhgAsX2QeU47YHdHtv8VvSIEESHLk2tNO1NvwD0GLrjYfvX4kIBbxnD6B4tSfP3hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192055; c=relaxed/simple;
-	bh=o1jH7MLj8IVyaPrOtHlTowBF/e0KOkwNYMM33a8zazg=;
+	s=arc-20240116; t=1753192058; c=relaxed/simple;
+	bh=7VD5UCWB6QzZrG+pruR80wxCdhAAVGsnVO6+jrWx6oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QBz9ybt1mjKHxxtRNKEggyprOSL4Mcmn9t1S9oftCqEfgAppaP3PUnkwtIjisziHkpQjcIZKm5maQVz8Zn+JTNNaoSy4mHcZ8craKfnEWmzDg+Q3xPX6Yh0Xradl4XgVbDm1SFcrxDYiHrPZb7o6BUKHaHzLMcrNitqwUt2YdGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KERMQGM4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hcc/+alW2siT4QUh4XuO5jXL003AeI5cU1j3BZh+B+sL2Yy8fPGAyol0/I8LHxu/3S6rrTNeLclyxXkNptazPXntZwQIa7Fds+XOytoENaRvnfTVjFaFVjtMCpIZNF7hkFeB3jsB1yVUOHFobGVcC2ihztgNC4fxr+gF8IR2e7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kA45zvNV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KERMQGM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C4FC4CEEB;
-	Tue, 22 Jul 2025 13:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kA45zvNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2B3C4CEEB;
+	Tue, 22 Jul 2025 13:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192053;
-	bh=o1jH7MLj8IVyaPrOtHlTowBF/e0KOkwNYMM33a8zazg=;
+	s=korg; t=1753192057;
+	bh=7VD5UCWB6QzZrG+pruR80wxCdhAAVGsnVO6+jrWx6oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KERMQGM4E2M4mYLjjJlftutjHthlVaacRN/6ZIYuIGSL1NxQlNn8P1wU2RtAA10Bz
-	 ifvzlCHZeWhSTHKRvHu/iNhlkWZVP+cq+aRmScsPQ324Uzu2XnoDo+P9SHbsj+jdHL
-	 ktWPM20mgebVm7HtKkIPDV+L5TWnYY1avotI7BNE=
+	b=kA45zvNVx+kMCEF2WP+1ghqZqHqwkL+JYuUzRr731LNThxvD1Eb/yp5vPwlygEFm6
+	 XBNQqxBexk7HnRpFauFgkyaj82IUF5MCNjwv66La3SsZpRPru8YJkSG69dsBH43tZ0
+	 WpTnecagBWDBgFfXSBBhVSAs2KCmBK9fkjFFfX9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Sean Nyekjaer <sean@geanix.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Fabio Estevam <festevam@denx.de>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 30/79] iio: accel: fxls8962af: Fix use after free in fxls8962af_fifo_flush
-Date: Tue, 22 Jul 2025 15:44:26 +0200
-Message-ID: <20250722134329.480181385@linuxfoundation.org>
+Subject: [PATCH 6.1 31/79] iio: adc: max1363: Fix MAX1363_4X_CHANS/MAX1363_8X_CHANS[]
+Date: Tue, 22 Jul 2025 15:44:27 +0200
+Message-ID: <20250722134329.515938592@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -51,48 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Fabio Estevam <festevam@denx.de>
 
-commit 1fe16dc1a2f5057772e5391ec042ed7442966c9a upstream.
+commit 6d21f2c2dd843bceefd9455f2919f6bb526797f0 upstream.
 
-fxls8962af_fifo_flush() uses indio_dev->active_scan_mask (with
-iio_for_each_active_channel()) without making sure the indio_dev
-stays in buffer mode.
-There is a race if indio_dev exits buffer mode in the middle of the
-interrupt that flushes the fifo. Fix this by calling
-synchronize_irq() to ensure that no interrupt is currently running when
-disabling buffer mode.
+Since commit 2718f15403fb ("iio: sanity check available_scan_masks array"),
+booting a board populated with a MAX11601 results in a flood of warnings:
 
-Unable to handle kernel NULL pointer dereference at virtual address 00000000 when read
-[...]
-_find_first_bit_le from fxls8962af_fifo_flush+0x17c/0x290
-fxls8962af_fifo_flush from fxls8962af_interrupt+0x80/0x178
-fxls8962af_interrupt from irq_thread_fn+0x1c/0x7c
-irq_thread_fn from irq_thread+0x110/0x1f4
-irq_thread from kthread+0xe0/0xfc
-kthread from ret_from_fork+0x14/0x2c
+max1363 1-0064: available_scan_mask 8 subset of 0. Never used
+max1363 1-0064: available_scan_mask 9 subset of 0. Never used
+max1363 1-0064: available_scan_mask 10 subset of 0. Never used
+max1363 1-0064: available_scan_mask 11 subset of 0. Never used
+max1363 1-0064: available_scan_mask 12 subset of 0. Never used
+max1363 1-0064: available_scan_mask 13 subset of 0. Never used
+...
 
-Fixes: 79e3a5bdd9ef ("iio: accel: fxls8962af: add hw buffered sampling")
+These warnings are caused by incorrect offsets used for differential
+channels in the MAX1363_4X_CHANS() and MAX1363_8X_CHANS() macros.
+
+The max1363_mode_table[] defines the differential channel mappings as
+follows:
+
+MAX1363_MODE_DIFF_SINGLE(0, 1, 1 << 12),
+MAX1363_MODE_DIFF_SINGLE(2, 3, 1 << 13),
+MAX1363_MODE_DIFF_SINGLE(4, 5, 1 << 14),
+MAX1363_MODE_DIFF_SINGLE(6, 7, 1 << 15),
+MAX1363_MODE_DIFF_SINGLE(8, 9, 1 << 16),
+MAX1363_MODE_DIFF_SINGLE(10, 11, 1 << 17),
+MAX1363_MODE_DIFF_SINGLE(1, 0, 1 << 18),
+MAX1363_MODE_DIFF_SINGLE(3, 2, 1 << 19),
+MAX1363_MODE_DIFF_SINGLE(5, 4, 1 << 20),
+MAX1363_MODE_DIFF_SINGLE(7, 6, 1 << 21),
+MAX1363_MODE_DIFF_SINGLE(9, 8, 1 << 22),
+MAX1363_MODE_DIFF_SINGLE(11, 10, 1 << 23),
+
+Update the macros to follow this same pattern, ensuring that the scan masks
+are valid and preventing the warnings.
+
 Cc: stable@vger.kernel.org
-Suggested-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://patch.msgid.link/20250603-fxlsrace-v2-1-5381b36ba1db@geanix.com
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Acked-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://patch.msgid.link/20250516173900.677821-1-festevam@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/fxls8962af-core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/max1363.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/iio/accel/fxls8962af-core.c
-+++ b/drivers/iio/accel/fxls8962af-core.c
-@@ -866,6 +866,8 @@ static int fxls8962af_buffer_predisable(
- 	if (ret)
- 		return ret;
+--- a/drivers/iio/adc/max1363.c
++++ b/drivers/iio/adc/max1363.c
+@@ -512,10 +512,10 @@ static const struct iio_event_spec max13
+ 	MAX1363_CHAN_U(1, _s1, 1, bits, ev_spec, num_ev_spec),		\
+ 	MAX1363_CHAN_U(2, _s2, 2, bits, ev_spec, num_ev_spec),		\
+ 	MAX1363_CHAN_U(3, _s3, 3, bits, ev_spec, num_ev_spec),		\
+-	MAX1363_CHAN_B(0, 1, d0m1, 4, bits, ev_spec, num_ev_spec),	\
+-	MAX1363_CHAN_B(2, 3, d2m3, 5, bits, ev_spec, num_ev_spec),	\
+-	MAX1363_CHAN_B(1, 0, d1m0, 6, bits, ev_spec, num_ev_spec),	\
+-	MAX1363_CHAN_B(3, 2, d3m2, 7, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(0, 1, d0m1, 12, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(2, 3, d2m3, 13, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(1, 0, d1m0, 18, bits, ev_spec, num_ev_spec),	\
++	MAX1363_CHAN_B(3, 2, d3m2, 19, bits, ev_spec, num_ev_spec),	\
+ 	IIO_CHAN_SOFT_TIMESTAMP(8)					\
+ 	}
  
-+	synchronize_irq(data->irq);
-+
- 	ret = __fxls8962af_fifo_set_mode(data, false);
- 
- 	if (data->enable_event)
+@@ -610,14 +610,14 @@ static const enum max1363_modes max11608
+ 	MAX1363_CHAN_U(5, _s5, 5, bits, NULL, 0),	\
+ 	MAX1363_CHAN_U(6, _s6, 6, bits, NULL, 0),	\
+ 	MAX1363_CHAN_U(7, _s7, 7, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(0, 1, d0m1, 8, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(2, 3, d2m3, 9, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(4, 5, d4m5, 10, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(6, 7, d6m7, 11, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(1, 0, d1m0, 12, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(3, 2, d3m2, 13, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(5, 4, d5m4, 14, bits, NULL, 0),	\
+-	MAX1363_CHAN_B(7, 6, d7m6, 15, bits, NULL, 0),	\
++	MAX1363_CHAN_B(0, 1, d0m1, 12, bits, NULL, 0),	\
++	MAX1363_CHAN_B(2, 3, d2m3, 13, bits, NULL, 0),	\
++	MAX1363_CHAN_B(4, 5, d4m5, 14, bits, NULL, 0),	\
++	MAX1363_CHAN_B(6, 7, d6m7, 15, bits, NULL, 0),	\
++	MAX1363_CHAN_B(1, 0, d1m0, 18, bits, NULL, 0),	\
++	MAX1363_CHAN_B(3, 2, d3m2, 19, bits, NULL, 0),	\
++	MAX1363_CHAN_B(5, 4, d5m4, 20, bits, NULL, 0),	\
++	MAX1363_CHAN_B(7, 6, d7m6, 21, bits, NULL, 0),	\
+ 	IIO_CHAN_SOFT_TIMESTAMP(16)			\
+ }
+ static const struct iio_chan_spec max11602_channels[] = MAX1363_8X_CHANS(8);
 
 
