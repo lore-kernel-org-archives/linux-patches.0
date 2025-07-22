@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C102E0B6E;
-	Tue, 22 Jul 2025 14:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6262E2652;
+	Tue, 22 Jul 2025 14:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192806; cv=none; b=FuQNKsOOkmASpcEDV3tg8PWEz0by1oyqhM9AHFW2Z9Q89fNYVCH+p+W5xkswOaorq7bF4xnbTo3JEc22CqQraNfdNDl5p5X273h/RP/WrfijYasxTMFQAkoyo/F2Lz6ii1XTPDVnlIyriJt4WNrrAqG3qV/MCykNf3a8+OeivIk=
+	t=1753192809; cv=none; b=eEU8VzNXa9smaLolPN3RXbcqir23PAII9Vr8VrykhdHEOhKOfUxdfsgCY9kIVJPiFUZnFSg6DMPwa78Kkmm5W5gBLdPYVzdS3hGHfXJ6Hxr5hgzefttZEVnn2JkilwHIkUecuh10VEiF21AiiqBifHy7yw+eZAndbsUWi4JoDY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192806; c=relaxed/simple;
-	bh=rHebapAEtWmQmNNvfPKRn5ttbs6p4wjK19e7GNIjAp0=;
+	s=arc-20240116; t=1753192809; c=relaxed/simple;
+	bh=OjPQ6StDeUliAXLvxKofNHebpsgIekQXIu3ErexjRYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GejrV6cUzqbrWfGlvlPHabF75PrqltKhn8aTyIgb1GoTE6H0Vd5HM2Q8yU11tY5V018yJijs8YrVT7Y4v8bqyqTtxL6hMnJPRakntA9JxSs2SmTTNoSgcl14vK3x/uk0v/OeuEjFvvjW16spP/X5A4BRApp/HvpMhs1AVDaT5DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvzjRoUf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cP3fGhJIebeVI9lnPZJtRkoEFA4zkSHSeeiOnFc6gWvOW0I0eeYjSGDPrkHXRK+/I/DBM1i4yguO/C0kymZxzVomZ9URXLoA8BaHLea6EYVpp/k7mZyG2/+80+VYT/X6sfcrGlzCHu8W4O1h2LLqmSTsRaB92YPUWYmH/TFI1Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CkgIvcIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvzjRoUf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CDEC4CEF1;
-	Tue, 22 Jul 2025 14:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CkgIvcIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1363C4CEF5;
+	Tue, 22 Jul 2025 14:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192805;
-	bh=rHebapAEtWmQmNNvfPKRn5ttbs6p4wjK19e7GNIjAp0=;
+	s=korg; t=1753192809;
+	bh=OjPQ6StDeUliAXLvxKofNHebpsgIekQXIu3ErexjRYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YvzjRoUfaynwRqPjnstiFhSA/ZPR+7gXv5eqJ1g6n4P/bYepBGJ8V0DOJX2vslyW5
-	 joCxT1nvPAYeOStyJajuIkER6hLblTr74aTAXZyEhClSB0xLNIU23sMaxCl1+QEYUl
-	 QZo8TcpXgrkdIsqSFeDSTGLmtyNRzpn8xjsM0gGY=
+	b=CkgIvcIt+pqcfP2F0rkPTf4vDl4PX2AU0TYhm+K6g/4POB5tvzGrlm7mneTz8BK6o
+	 AGbq7+IN5zo6/08bNkPj1PZcieSSscmwDMm5tq1yaqF37S0dzDQ2HDn+bQThnR3HcQ
+	 5jOWxkrHcx/OCOMBiQfxRDHver3rBEos4NVrwJjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 061/158] net: libwx: properly reset Rx ring descriptor
-Date: Tue, 22 Jul 2025 15:44:05 +0200
-Message-ID: <20250722134343.022119204@linuxfoundation.org>
+	Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 062/158] pmdomain: governor: Consider CPU latency tolerance from pm_domain_cpu_gov
+Date: Tue, 22 Jul 2025 15:44:06 +0200
+Message-ID: <20250722134343.058554187@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,124 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-commit d992ed7e1b687ad7df0763d3e015a5358646210b upstream.
+commit 500ba33284416255b9a5b50ace24470b6fe77ea5 upstream.
 
-When device reset is triggered by feature changes such as toggling Rx
-VLAN offload, wx->do_reset() is called to reinitialize Rx rings. The
-hardware descriptor ring may retain stale values from previous sessions.
-And only set the length to 0 in rx_desc[0] would result in building
-malformed SKBs. Fix it to ensure a clean slate after device reset.
+pm_domain_cpu_gov is selecting a cluster idle state but does not consider
+latency tolerance of child CPUs. This results in deeper cluster idle state
+whose latency does not meet latency tolerance requirement.
 
-[  549.186435] [     C16] ------------[ cut here ]------------
-[  549.186457] [     C16] kernel BUG at net/core/skbuff.c:2814!
-[  549.186468] [     C16] Oops: invalid opcode: 0000 [#1] SMP NOPTI
-[  549.186472] [     C16] CPU: 16 UID: 0 PID: 0 Comm: swapper/16 Kdump: loaded Not tainted 6.16.0-rc4+ #23 PREEMPT(voluntary)
-[  549.186476] [     C16] Hardware name: Micro-Star International Co., Ltd. MS-7E16/X670E GAMING PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
-[  549.186478] [     C16] RIP: 0010:__pskb_pull_tail+0x3ff/0x510
-[  549.186484] [     C16] Code: 06 f0 ff 4f 34 74 7b 4d 8b 8c 24 c8 00 00 00 45 8b 84 24 c0 00 00 00 e9 c8 fd ff ff 48 c7 44 24 08 00 00 00 00 e9 5e fe ff ff <0f> 0b 31 c0 e9 23 90 5b ff 41 f7 c6 ff 0f 00 00 75 bf 49 8b 06 a8
-[  549.186487] [     C16] RSP: 0018:ffffb391c0640d70 EFLAGS: 00010282
-[  549.186490] [     C16] RAX: 00000000fffffff2 RBX: ffff8fe7e4d40200 RCX: 00000000fffffff2
-[  549.186492] [     C16] RDX: ffff8fe7c3a4bf8e RSI: 0000000000000180 RDI: ffff8fe7c3a4bf40
-[  549.186494] [     C16] RBP: ffffb391c0640da8 R08: ffff8fe7c3a4c0c0 R09: 000000000000000e
-[  549.186496] [     C16] R10: ffffb391c0640d88 R11: 000000000000000e R12: ffff8fe7e4d40200
-[  549.186497] [     C16] R13: 00000000fffffff2 R14: ffff8fe7fa01a000 R15: 00000000fffffff2
-[  549.186499] [     C16] FS:  0000000000000000(0000) GS:ffff8fef5ae40000(0000) knlGS:0000000000000000
-[  549.186502] [     C16] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  549.186503] [     C16] CR2: 00007f77d81d6000 CR3: 000000051a032000 CR4: 0000000000750ef0
-[  549.186505] [     C16] PKRU: 55555554
-[  549.186507] [     C16] Call Trace:
-[  549.186510] [     C16]  <IRQ>
-[  549.186513] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  549.186517] [     C16]  __skb_pad+0xc7/0xf0
-[  549.186523] [     C16]  wx_clean_rx_irq+0x355/0x3b0 [libwx]
-[  549.186533] [     C16]  wx_poll+0x92/0x120 [libwx]
-[  549.186540] [     C16]  __napi_poll+0x28/0x190
-[  549.186544] [     C16]  net_rx_action+0x301/0x3f0
-[  549.186548] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  549.186551] [     C16]  ? __raw_spin_lock_irqsave+0x1e/0x50
-[  549.186554] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  549.186557] [     C16]  ? wake_up_nohz_cpu+0x35/0x160
-[  549.186559] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  549.186563] [     C16]  handle_softirqs+0xf9/0x2c0
-[  549.186568] [     C16]  __irq_exit_rcu+0xc7/0x130
-[  549.186572] [     C16]  common_interrupt+0xb8/0xd0
-[  549.186576] [     C16]  </IRQ>
-[  549.186577] [     C16]  <TASK>
-[  549.186579] [     C16]  asm_common_interrupt+0x22/0x40
-[  549.186582] [     C16] RIP: 0010:cpuidle_enter_state+0xc2/0x420
-[  549.186585] [     C16] Code: 00 00 e8 11 0e 5e ff e8 ac f0 ff ff 49 89 c5 0f 1f 44 00 00 31 ff e8 0d ed 5c ff 45 84 ff 0f 85 40 02 00 00 fb 0f 1f 44 00 00 <45> 85 f6 0f 88 84 01 00 00 49 63 d6 48 8d 04 52 48 8d 04 82 49 8d
-[  549.186587] [     C16] RSP: 0018:ffffb391c0277e78 EFLAGS: 00000246
-[  549.186590] [     C16] RAX: ffff8fef5ae40000 RBX: 0000000000000003 RCX: 0000000000000000
-[  549.186591] [     C16] RDX: 0000007fde0faac5 RSI: ffffffff826e53f6 RDI: ffffffff826fa9b3
-[  549.186593] [     C16] RBP: ffff8fe7c3a20800 R08: 0000000000000002 R09: 0000000000000000
-[  549.186595] [     C16] R10: 0000000000000000 R11: 000000000000ffff R12: ffffffff82ed7a40
-[  549.186596] [     C16] R13: 0000007fde0faac5 R14: 0000000000000003 R15: 0000000000000000
-[  549.186601] [     C16]  ? cpuidle_enter_state+0xb3/0x420
-[  549.186605] [     C16]  cpuidle_enter+0x29/0x40
-[  549.186609] [     C16]  cpuidle_idle_call+0xfd/0x170
-[  549.186613] [     C16]  do_idle+0x7a/0xc0
-[  549.186616] [     C16]  cpu_startup_entry+0x25/0x30
-[  549.186618] [     C16]  start_secondary+0x117/0x140
-[  549.186623] [     C16]  common_startup_64+0x13e/0x148
-[  549.186628] [     C16]  </TASK>
+Select deeper idle state only if global and device latency tolerance of all
+child CPUs meet.
 
-Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
+Test results on SM8750 with 300 usec PM-QoS on CPU0 which is less than
+domain idle state entry (2150) + exit (1983) usec latency mentioned in
+devicetree, demonstrate the issue.
+
+	# echo 300 > /sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us
+
+Before: (Usage is incrementing)
+======
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             29817          537        8          270        0
+
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             30348          542        8          271        0
+
+After: (Usage is not incrementing due to latency tolerance)
+======
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             39319          626        14         307        0
+
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             39319          626        14         307        0
+
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Fixes: e94999688e3a ("PM / Domains: Add genpd governor for CPUs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250714024755.17512-4-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20250709-pmdomain_qos-v2-1-976b12257899@oss.qualcomm.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_hw.c  |    7 +++----
- drivers/net/ethernet/wangxun/libwx/wx_lib.c |    5 +++++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/pmdomain/governor.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-@@ -1531,7 +1531,6 @@ static void wx_configure_rx_ring(struct
- 				 struct wx_ring *ring)
- {
- 	u16 reg_idx = ring->reg_idx;
--	union wx_rx_desc *rx_desc;
- 	u64 rdba = ring->dma;
- 	u32 rxdctl;
+--- a/drivers/pmdomain/governor.c
++++ b/drivers/pmdomain/governor.c
+@@ -8,6 +8,7 @@
+ #include <linux/pm_domain.h>
+ #include <linux/pm_qos.h>
+ #include <linux/hrtimer.h>
++#include <linux/cpu.h>
+ #include <linux/cpuidle.h>
+ #include <linux/cpumask.h>
+ #include <linux/ktime.h>
+@@ -349,6 +350,8 @@ static bool cpu_power_down_ok(struct dev
+ 	struct cpuidle_device *dev;
+ 	ktime_t domain_wakeup, next_hrtimer;
+ 	ktime_t now = ktime_get();
++	struct device *cpu_dev;
++	s64 cpu_constraint, global_constraint;
+ 	s64 idle_duration_ns;
+ 	int cpu, i;
  
-@@ -1561,9 +1560,9 @@ static void wx_configure_rx_ring(struct
- 	memset(ring->rx_buffer_info, 0,
- 	       sizeof(struct wx_rx_buffer) * ring->count);
+@@ -359,6 +362,7 @@ static bool cpu_power_down_ok(struct dev
+ 	if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
+ 		return true;
  
--	/* initialize Rx descriptor 0 */
--	rx_desc = WX_RX_DESC(ring, 0);
--	rx_desc->wb.upper.length = 0;
-+	/* reset ntu and ntc to place SW in sync with hardware */
-+	ring->next_to_clean = 0;
-+	ring->next_to_use = 0;
- 
- 	/* enable receive descriptor ring */
- 	wr32m(wx, WX_PX_RR_CFG(reg_idx),
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -355,6 +355,8 @@ void wx_alloc_rx_buffers(struct wx_ring
- 
- 		/* clear the status bits for the next_to_use descriptor */
- 		rx_desc->wb.upper.status_error = 0;
-+		/* clear the length for the next_to_use descriptor */
-+		rx_desc->wb.upper.length = 0;
- 
- 		cleaned_count--;
- 	} while (cleaned_count);
-@@ -2234,6 +2236,9 @@ static void wx_clean_rx_ring(struct wx_r
++	global_constraint = cpu_latency_qos_limit();
+ 	/*
+ 	 * Find the next wakeup for any of the online CPUs within the PM domain
+ 	 * and its subdomains. Note, we only need the genpd->cpus, as it already
+@@ -372,8 +376,16 @@ static bool cpu_power_down_ok(struct dev
+ 			if (ktime_before(next_hrtimer, domain_wakeup))
+ 				domain_wakeup = next_hrtimer;
  		}
++
++		cpu_dev = get_cpu_device(cpu);
++		if (cpu_dev) {
++			cpu_constraint = dev_pm_qos_raw_resume_latency(cpu_dev);
++			if (cpu_constraint < global_constraint)
++				global_constraint = cpu_constraint;
++		}
  	}
  
-+	/* Zero out the descriptor ring */
-+	memset(rx_ring->desc, 0, rx_ring->size);
-+
- 	rx_ring->next_to_alloc = 0;
- 	rx_ring->next_to_clean = 0;
- 	rx_ring->next_to_use = 0;
++	global_constraint *= NSEC_PER_USEC;
+ 	/* The minimum idle duration is from now - until the next wakeup. */
+ 	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
+ 	if (idle_duration_ns <= 0)
+@@ -389,8 +401,10 @@ static bool cpu_power_down_ok(struct dev
+ 	 */
+ 	i = genpd->state_idx;
+ 	do {
+-		if (idle_duration_ns >= (genpd->states[i].residency_ns +
+-		    genpd->states[i].power_off_latency_ns)) {
++		if ((idle_duration_ns >= (genpd->states[i].residency_ns +
++		    genpd->states[i].power_off_latency_ns)) &&
++		    (global_constraint >= (genpd->states[i].power_on_latency_ns +
++		    genpd->states[i].power_off_latency_ns))) {
+ 			genpd->state_idx = i;
+ 			return true;
+ 		}
 
 
