@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1889E2EE29E;
-	Tue, 22 Jul 2025 14:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFA32EF64A;
+	Tue, 22 Jul 2025 14:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193567; cv=none; b=NOmP5FauHJLL/2Tpx4F4GhthBWnrrKj8+7Vn3tNCXu/N8AbLLqAzTEbLqCtklU2W5HI6a0uC41l+FBJTtXBx26NfPWHOyIVo4YA+1biHqgfDnbsXvIO2P9upFmWJBEwujaarHTUBsFPZ/IE75zZvIuDPWwHhmk172IEtnNU3UcM=
+	t=1753193570; cv=none; b=HLgfLrBAj1zQKw57bQZfjcV7z+zabe6qNQGznGEAa3EkiTGDdswrNIKCGOdtJAA90MV5v3mi3/Z/CaOPZ6Nyw/RlxyUvVmFOswRUCauDZL90QsauJPoYyv+mYhJxMy9XnXoIR7hfoY48EaNV20+gglpwOds4GRSws29cFU+4tbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193567; c=relaxed/simple;
-	bh=jxklIuCUnaTigWsohVEUgke1/2i1VJTQANXRROrDH8U=;
+	s=arc-20240116; t=1753193570; c=relaxed/simple;
+	bh=IOOL2zqinpgvYpTFgpiceBVgjcn+QdDFp++Zp8Sct60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFlAYA9j7HxviJVY1NP+TrcGXH/XnOXWtaNYMNYvDdpE7SvSEqN8lz76SPQIo4DxCUYUXB3TSM48dBuXxqmwAiDTn0B8QxROPnVslUz6+mjS6/7bFTsJPBOmyHObI6mTTsjVG6ry1ntLAJq7DxawzcxRmQQosVR1UpR8czdNN24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9KLZWPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMz80Q1X6GHXd2k3riPhrtKOj8tjTzkNY2tsrBFmYI2mdKFJk7lwxpyuhNzgZd39eh5lgbg0TOe77MJxmM1xfS9ppvaWacf/R7/6pwjNBIz9e8nF7YuZML+LUiqrdDWyUD70b/K1V8Csl1KrPSMeIokZRVC0HDTPIHrPQpkOGn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnKRj4+u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9KLZWPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70220C4CEF1;
-	Tue, 22 Jul 2025 14:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnKRj4+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8DEC4CEF6;
+	Tue, 22 Jul 2025 14:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193566;
-	bh=jxklIuCUnaTigWsohVEUgke1/2i1VJTQANXRROrDH8U=;
+	s=korg; t=1753193570;
+	bh=IOOL2zqinpgvYpTFgpiceBVgjcn+QdDFp++Zp8Sct60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9KLZWPCsLjZI4H4E2TygZfShupKwxPZtBVi9jlaym6h9NznxPXQifrKL9C5F/qiT
-	 greVhEjTgaUGNx+nFJcJo1SboDbH5uHe19ZMIB79CDX8Vcy8ivFX6sZyi5Aw+jNC8c
-	 7tbI5t0iH/7zDagTQq+SZKWGX13x++9fcq2O49NM=
+	b=LnKRj4+un4GV9xBpgZluDbXtezGgI+yCXuniy54WzfASys/r2gFkg4eM5cdyqvSl+
+	 M6td24DobhSkXqI49VhyGCh67AMA6EH7UR45VoeOqK3l6ro88Gp1PAz6kynZd0HBIg
+	 HwW4D3XD+oZ5FpIXoYdj0GuW2zoYKMZ8EkCUt8AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Nam Cao <namcao@linutronix.de>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
+	syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 131/187] riscv: Enable interrupt during exception handling
-Date: Tue, 22 Jul 2025 15:45:01 +0200
-Message-ID: <20250722134350.619736735@linuxfoundation.org>
+Subject: [PATCH 6.15 105/187] bpf: Reject %p% format string in bprintf-like helpers
+Date: Tue, 22 Jul 2025 15:44:35 +0200
+Message-ID: <20250722134349.675050096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -53,89 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 969f028bf2c40573ef18061f702ede3ebfe12b42 ]
+[ Upstream commit f8242745871f81a3ac37f9f51853d12854fd0b58 ]
 
-force_sig_fault() takes a spinlock, which is a sleeping lock with
-CONFIG_PREEMPT_RT=y. However, exception handling calls force_sig_fault()
-with interrupt disabled, causing a sleeping in atomic context warning.
+static const char fmt[] = "%p%";
+    bpf_trace_printk(fmt, sizeof(fmt));
 
-This can be reproduced using userspace programs such as:
-    int main() { asm ("ebreak"); }
-or
-    int main() { asm ("unimp"); }
+The above BPF program isn't rejected and causes a kernel warning at
+runtime:
 
-There is no reason that interrupt must be disabled while handling
-exceptions from userspace.
+    Please remove unsupported %\x00 in format string
+    WARNING: CPU: 1 PID: 7244 at lib/vsprintf.c:2680 format_decode+0x49c/0x5d0
 
-Enable interrupt while handling user exceptions. This also has the added
-benefit of avoiding unnecessary delays in interrupt handling.
+This happens because bpf_bprintf_prepare skips over the second %,
+detected as punctuation, while processing %p. This patch fixes it by
+not skipping over punctuation. %\x00 is then processed in the next
+iteration and rejected.
 
-Fixes: f0bddf50586d ("riscv: entry: Convert to generic entry")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20250625085630.3649485-1-namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@dabbelt.com>
+Reported-by: syzbot+e2c932aec5c8a6e1d31c@syzkaller.appspotmail.com
+Fixes: 48cac3f4a96d ("bpf: Implement formatted output helpers with bstr_printf")
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/a0e06cc479faec9e802ae51ba5d66420523251ee.1751395489.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/bpf/helpers.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index 9c83848797a78..80230de167def 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -6,6 +6,7 @@
- #include <linux/cpu.h>
- #include <linux/kernel.h>
- #include <linux/init.h>
-+#include <linux/irqflags.h>
- #include <linux/randomize_kstack.h>
- #include <linux/sched.h>
- #include <linux/sched/debug.h>
-@@ -151,7 +152,9 @@ asmlinkage __visible __trap_section void name(struct pt_regs *regs)		\
- {										\
- 	if (user_mode(regs)) {							\
- 		irqentry_enter_from_user_mode(regs);				\
-+		local_irq_enable();						\
- 		do_trap_error(regs, signo, code, regs->epc, "Oops - " str);	\
-+		local_irq_disable();						\
- 		irqentry_exit_to_user_mode(regs);				\
- 	} else {								\
- 		irqentry_state_t state = irqentry_nmi_enter(regs);		\
-@@ -173,17 +176,14 @@ asmlinkage __visible __trap_section void do_trap_insn_illegal(struct pt_regs *re
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index a71aa4cb85fae..52d02bc0abb2b 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -883,6 +883,13 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 		if (fmt[i] == 'p') {
+ 			sizeof_cur_arg = sizeof(long);
  
- 	if (user_mode(regs)) {
- 		irqentry_enter_from_user_mode(regs);
--
- 		local_irq_enable();
++			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
++			    ispunct(fmt[i + 1])) {
++				if (tmp_buf)
++					cur_arg = raw_args[num_spec];
++				goto nocopy_fmt;
++			}
++
+ 			if ((fmt[i + 1] == 'k' || fmt[i + 1] == 'u') &&
+ 			    fmt[i + 2] == 's') {
+ 				fmt_ptype = fmt[i + 1];
+@@ -890,11 +897,9 @@ int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
+ 				goto fmt_str;
+ 			}
  
- 		handled = riscv_v_first_use_handler(regs);
--
--		local_irq_disable();
--
- 		if (!handled)
- 			do_trap_error(regs, SIGILL, ILL_ILLOPC, regs->epc,
- 				      "Oops - illegal instruction");
- 
-+		local_irq_disable();
- 		irqentry_exit_to_user_mode(regs);
- 	} else {
- 		irqentry_state_t state = irqentry_nmi_enter(regs);
-@@ -308,9 +308,11 @@ asmlinkage __visible __trap_section void do_trap_break(struct pt_regs *regs)
- {
- 	if (user_mode(regs)) {
- 		irqentry_enter_from_user_mode(regs);
-+		local_irq_enable();
- 
- 		handle_break(regs);
- 
-+		local_irq_disable();
- 		irqentry_exit_to_user_mode(regs);
- 	} else {
- 		irqentry_state_t state = irqentry_nmi_enter(regs);
+-			if (fmt[i + 1] == 0 || isspace(fmt[i + 1]) ||
+-			    ispunct(fmt[i + 1]) || fmt[i + 1] == 'K' ||
++			if (fmt[i + 1] == 'K' ||
+ 			    fmt[i + 1] == 'x' || fmt[i + 1] == 's' ||
+ 			    fmt[i + 1] == 'S') {
+-				/* just kernel pointers */
+ 				if (tmp_buf)
+ 					cur_arg = raw_args[num_spec];
+ 				i++;
 -- 
 2.39.5
 
