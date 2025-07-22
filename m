@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9BF2EB5BC;
-	Tue, 22 Jul 2025 14:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2267E1D6193;
+	Tue, 22 Jul 2025 14:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193632; cv=none; b=iU5Z9aZc0fnF0uxmhsaWFqrBx4UMYInNnFCHotK4zCZuBUGTs7ZMfKyM+zp/q7gcsmx6OiCTwYVjN4q8eIt2ACVJZ7f8S3L4xEA8/EQYhYRLFZS80JTtES+1ksxZlFUJXbdG+ktI1jUiKwsPv9lGBRyaMr80yw68ivQeZWgN9Uw=
+	t=1753193635; cv=none; b=sk0tNwJTBuO99fqnhGkxVWiAptvBYKXqCphfkN2CBNUO1xAnpyX4aaXPwtUzsW1E8tn9UWXB1WB6LdgcR1P6krQoVZ1FSat3yh7EOt4mi7qAGYpyV+qADFiqB/AYan/LYKtGiRJ7A0CHuC94VrZ9VpSAlsatJxlQUD2HKY0pW04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193632; c=relaxed/simple;
-	bh=E5P8n1Z85bTqOQO/jYXZIxeaqka6GUYXqR4zZDjdytA=;
+	s=arc-20240116; t=1753193635; c=relaxed/simple;
+	bh=vPH0+FfvWt36PVkeiuMKDHr0l6SIm5QdN36hX33ik3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKIVYOtFSzk5eW0zLR2m2lAFtlM42RAS7sqOnUnRXEShpG/s0qgc5rMeey4SIAtgL4S0hWYYg2eIOlcp3KYz3LU+kyovm84nHLUjqHc1zpmLHZqm0z50d8qnvK7M0gMg1OwxdKrWt6i89AouB1mqi7U2qNcr8be0roKq6iD+jf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zy+22P/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qNwZLZSa5xCXRGLPk6MRcmCfRetHZ75bvgGEYR92tMebRe0nMb0G+7cEdQnFyB6fL+yGuobY2sknqwjs/ZBg1d6ezKYJaw1/UIbt/uafw/CvKkc9YnUKIDLshwQciZ7ic1ZxruyKVRz2G4GzbLkqQUymLIgshTkP4lKWjAyGdaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZwGzMF9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zy+22P/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF34C4CEEB;
-	Tue, 22 Jul 2025 14:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZwGzMF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A2DC4CEEB;
+	Tue, 22 Jul 2025 14:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193631;
-	bh=E5P8n1Z85bTqOQO/jYXZIxeaqka6GUYXqR4zZDjdytA=;
+	s=korg; t=1753193635;
+	bh=vPH0+FfvWt36PVkeiuMKDHr0l6SIm5QdN36hX33ik3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zy+22P/DKyh1aeIznRpuvCT39pI+LJn394Lb1Aj1IBcaKb/4G2qP0wttQcQoT4iQp
-	 lTJodOE3TmPzIYsI2IfpA8A75Pvt4cHQKfayleWyqxzbCSwSeTz3l9z7vdJSpmrKFs
-	 eSNMjJkWbnkXzqDkHAEEQ7UNi/eRacc87kDLrSYY=
+	b=aZwGzMF9wHpKCnsKLbfdSJfOUzYCWxEj/XGI3xjdXG90jOW4GrmchBbw8/dI0dOdy
+	 2D2Wp3VrmweNk6JhxvUWHmbQr/YU966rsoaOwaTM7edz895An+2bChtNbAqKWVhyEs
+	 OmRHn8FSzmd1cjAtKYaJElX/K75xGQI/S/9Lh5Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zigit Zo <zuozhijie@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 151/187] virtio-net: fix recursived rtnl_lock() during probe()
-Date: Tue, 22 Jul 2025 15:45:21 +0200
-Message-ID: <20250722134351.411990406@linuxfoundation.org>
+Subject: [PATCH 6.15 152/187] tls: always refresh the queue when reading sock
+Date: Tue, 22 Jul 2025 15:45:22 +0200
+Message-ID: <20250722134351.447705477@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -53,48 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zigit Zo <zuozhijie@bytedance.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit be5dcaed694e4255dc02dd0acfe036708c535def ]
+[ Upstream commit 4ab26bce3969f8fd925fe6f6f551e4d1a508c68b ]
 
-The deadlock appears in a stack trace like:
+After recent changes in net-next TCP compacts skbs much more
+aggressively. This unearthed a bug in TLS where we may try
+to operate on an old skb when checking if all skbs in the
+queue have matching decrypt state and geometry.
 
-  virtnet_probe()
-    rtnl_lock()
-    virtio_config_changed_work()
-      netdev_notify_peers()
-        rtnl_lock()
+    BUG: KASAN: slab-use-after-free in tls_strp_check_rcv+0x898/0x9a0 [tls]
+    (net/tls/tls_strp.c:436 net/tls/tls_strp.c:530 net/tls/tls_strp.c:544)
+    Read of size 4 at addr ffff888013085750 by task tls/13529
 
-It happens if the VMM sends a VIRTIO_NET_S_ANNOUNCE request while the
-virtio-net driver is still probing.
+    CPU: 2 UID: 0 PID: 13529 Comm: tls Not tainted 6.16.0-rc5-virtme
+    Call Trace:
+     kasan_report+0xca/0x100
+     tls_strp_check_rcv+0x898/0x9a0 [tls]
+     tls_rx_rec_wait+0x2c9/0x8d0 [tls]
+     tls_sw_recvmsg+0x40f/0x1aa0 [tls]
+     inet_recvmsg+0x1c3/0x1f0
 
-The config_work in probe() will get scheduled until virtnet_open() enables
-the config change notification via virtio_config_driver_enable().
+Always reload the queue, fast path is to have the record in the queue
+when we wake, anyway (IOW the path going down "if !strp->stm.full_len").
 
-Fixes: df28de7b0050 ("virtio-net: synchronize operstate with admin state on up/down")
-Signed-off-by: Zigit Zo <zuozhijie@bytedance.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://patch.msgid.link/20250716115717.1472430-1-zuozhijie@bytedance.com
+Fixes: 0d87bbd39d7f ("tls: strp: make sure the TCP skbs do not have overlapping data")
+Link: https://patch.msgid.link/20250716143850.1520292-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tls/tls_strp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index d5be73a964708..c69c241948019 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -7074,7 +7074,7 @@ static int virtnet_probe(struct virtio_device *vdev)
- 	   otherwise get link status from config. */
- 	netif_carrier_off(dev);
- 	if (virtio_has_feature(vi->vdev, VIRTIO_NET_F_STATUS)) {
--		virtnet_config_changed_work(&vi->config_work);
-+		virtio_config_changed(vi->vdev);
- 	} else {
- 		vi->status = VIRTIO_NET_S_LINK_UP;
- 		virtnet_update_settings(vi);
+diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
+index 65b0da6fdf6a7..095cf31bae0ba 100644
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -512,9 +512,8 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
+ 	if (inq < strp->stm.full_len)
+ 		return tls_strp_read_copy(strp, true);
+ 
++	tls_strp_load_anchor_with_queue(strp, inq);
+ 	if (!strp->stm.full_len) {
+-		tls_strp_load_anchor_with_queue(strp, inq);
+-
+ 		sz = tls_rx_msg_size(strp, strp->anchor);
+ 		if (sz < 0) {
+ 			tls_strp_abort_strp(strp, sz);
 -- 
 2.39.5
 
