@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F05A288C01;
-	Tue, 22 Jul 2025 13:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF4B7263D;
+	Tue, 22 Jul 2025 13:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192768; cv=none; b=RB4m3oDaRbHwlD7GqbWZ4os0SlK10uDq0t5+OU5WG9yfa4YnsS+rUSae2Kj/LkrEVBPKjFihmbEDZDwvKFAaTrpFZdU339XxFW3xKZqdg4YeBl0Ag+cNq6Cz2x6Ww2Xvo0/mCCWONy3/wDLWbWJ9RaEds5AvyPO+VF005KTwkvA=
+	t=1753192772; cv=none; b=uaH9NIkrqHgLOP1MIgRRdtJ1IEShT2l+HgXPCp2Q6F/fa3b1ryBLXesJFcdS938eAWyfy8bAGZs2/6YQkXcjlgGl+/wLLJIKXyfFhPj9VHuxAoQ8HUscMDheFixyRNWGxLpR1Q9QKWT3aovljejm/BvVfrNrRsSmYoxI0Bi68O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192768; c=relaxed/simple;
-	bh=jenrdlaf+U3X1iBhXnSf8ZP1uk5ZT+IbLx6fgJYdTIQ=;
+	s=arc-20240116; t=1753192772; c=relaxed/simple;
+	bh=Es600DhQjtDs+AB6LryGZoqo1RCGW1d8XSV5fooO+ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kIMbewWvqDSxxsPx0xdyuI6xWv02c518T6ayhFU/LExv8uxYvTGakosDSb/yOMkj3H73wJyYHt0nTDWnwNPCimVn+ePd64/wTfL92OXTQpr1Ac1kZfCQWTQw9NtD4k/VUhlRy5gHjxJo4NUy6QWacCA4DMGvXwAJ2yFAK1kGLsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCJcTuwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J8vdYH3OeZS7NZ/UZTYV7Q2QeLkvUbNHCCxbriRPy6EO/vXSYOwPGoZPghh665eXF+vs0sWDzoHe7G2hnvbKLVrc+ofkhVCctkwI/oTk6TPT37bYEvs8smewsVP72oS7pCIA+wAr6UQEDAG3mvA8PpJ2mSb+1/ff7mKTYgIcGxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cb27011l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCJcTuwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2167EC4CEEB;
-	Tue, 22 Jul 2025 13:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cb27011l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD2EC4CEEB;
+	Tue, 22 Jul 2025 13:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192768;
-	bh=jenrdlaf+U3X1iBhXnSf8ZP1uk5ZT+IbLx6fgJYdTIQ=;
+	s=korg; t=1753192771;
+	bh=Es600DhQjtDs+AB6LryGZoqo1RCGW1d8XSV5fooO+ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCJcTuwg37Gzw9Sxx2dkGaW13cFl7MDwAOeimboazSXGEVrqDlUlbcbf8cTEiBkp4
-	 WwVYgZvWXbGLGONFnt4siiN7MnVqiZsi3db8PiXxUpIp4DSu0DWDHftLECIDm36jql
-	 nJvPojfp+lfP+pkJ/J7766/s7ZzZM8CMHvte4yDg=
+	b=cb27011lnRZmR5pMbL10LmwSCUcDkJWnaw4p+c2IrvX6hTlKYgpBYroMCQV3ZVCsm
+	 Eqzb0mD/Tx3FpvAzhYqUNPijUkOfFW07oo72GqEh6zpULQNbkCwcT43yj1BVYqTDiY
+	 8Hj8bXMvirfx6rBiK0T15601djIkmHoa9G6CPZOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghavendra Kakarla <quic_rkakarla@quicinc.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 051/158] cpuidle: psci: Fix cpuhotplug routine with PREEMPT_RT=y
-Date: Tue, 22 Jul 2025 15:43:55 +0200
-Message-ID: <20250722134342.634626595@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.12 052/158] dmaengine: nbpfaxi: Fix memory corruption in probe()
+Date: Tue, 22 Jul 2025 15:43:56 +0200
+Message-ID: <20250722134342.675598175@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -52,115 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 621a88dbfe9006c318a0cafbd12e677ccfe006e7 upstream.
+commit 188c6ba1dd925849c5d94885c8bbdeb0b3dcf510 upstream.
 
-Currently cpu hotplug with the PREEMPT_RT option set in the kernel is
-not supported because the underlying generic power domain functions
-used in the cpu hotplug callbacks are incompatible from a lock point
-of view. This situation prevents the suspend to idle to reach the
-deepest idle state for the "cluster" as identified in the
-undermentioned commit.
+The nbpf->chan[] array is allocated earlier in the nbpf_probe() function
+and it has "num_channels" elements.  These three loops iterate one
+element farther than they should and corrupt memory.
 
-Use the compatible ones when PREEMPT_RT is enabled and remove the
-boolean disabling the hotplug callbacks with this option.
+The changes to the second loop are more involved.  In this case, we're
+copying data from the irqbuf[] array into the nbpf->chan[] array.  If
+the data in irqbuf[i] is the error IRQ then we skip it, so the iterators
+are not in sync.  I added a check to ensure that we don't go beyond the
+end of the irqbuf[] array.  I'm pretty sure this can't happen, but it
+seemed harmless to add a check.
 
-With this change the platform can reach the deepest idle state
-allowing at suspend time to consume less power.
+On the other hand, after the loop has ended there is a check to ensure
+that the "chan" iterator is where we expect it to be.  In the original
+code we went one element beyond the end of the array so the iterator
+wasn't in the correct place and it would always return -EINVAL.  However,
+now it will always be in the correct place.  I deleted the check since
+we know the result.
 
-Tested-on Lenovo T14s with the following script:
-
-echo 0 > /sys/devices/system/cpu/cpu3/online
-BEFORE=$(cat /sys/kernel/debug/pm_genpd/power-domain-cpu-cluster0/idle_states | grep S0 | awk '{ print $3 }') ;
-rtcwake -s 1 -m mem;
-AFTER=$(cat /sys/kernel/debug/pm_genpd/power-domain-cpu-cluster0/idle_states | grep S0 | awk '{ print $3 }');
-if [ $BEFORE -lt $AFTER ]; then
-    echo "Test successful"
-else
-    echo "Test failed"
-fi
-echo 1 > /sys/devices/system/cpu/cpu3/online
-
-Fixes: 1c4b2932bd62 ("cpuidle: psci: Enable the hierarchical topology for s2idle on PREEMPT_RT")
-Cc: Raghavendra Kakarla <quic_rkakarla@quicinc.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250709154728.733920-1-daniel.lezcano@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: b45b262cefd5 ("dmaengine: add a driver for AMBA AXI NBPF DMAC IP cores")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/b13c5225-7eff-448c-badc-a2c98e9bcaca@sabinyo.mountain
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-psci.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/dma/nbpfaxi.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/cpuidle/cpuidle-psci.c
-+++ b/drivers/cpuidle/cpuidle-psci.c
-@@ -38,7 +38,6 @@ struct psci_cpuidle_data {
- static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
- static DEFINE_PER_CPU(u32, domain_state);
- static bool psci_cpuidle_use_syscore;
--static bool psci_cpuidle_use_cpuhp;
+--- a/drivers/dma/nbpfaxi.c
++++ b/drivers/dma/nbpfaxi.c
+@@ -1351,7 +1351,7 @@ static int nbpf_probe(struct platform_de
+ 	if (irqs == 1) {
+ 		eirq = irqbuf[0];
  
- void psci_set_domain_state(u32 state)
- {
-@@ -105,8 +104,12 @@ static int psci_idle_cpuhp_up(unsigned i
- {
- 	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
+-		for (i = 0; i <= num_channels; i++)
++		for (i = 0; i < num_channels; i++)
+ 			nbpf->chan[i].irq = irqbuf[0];
+ 	} else {
+ 		eirq = platform_get_irq_byname(pdev, "error");
+@@ -1361,16 +1361,15 @@ static int nbpf_probe(struct platform_de
+ 		if (irqs == num_channels + 1) {
+ 			struct nbpf_channel *chan;
  
--	if (pd_dev)
--		pm_runtime_get_sync(pd_dev);
-+	if (pd_dev) {
-+		if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-+			pm_runtime_get_sync(pd_dev);
-+		else
-+			dev_pm_genpd_resume(pd_dev);
-+	}
- 
- 	return 0;
- }
-@@ -116,7 +119,11 @@ static int psci_idle_cpuhp_down(unsigned
- 	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
- 
- 	if (pd_dev) {
--		pm_runtime_put_sync(pd_dev);
-+		if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-+			pm_runtime_put_sync(pd_dev);
-+		else
-+			dev_pm_genpd_suspend(pd_dev);
-+
- 		/* Clear domain state to start fresh at next online. */
- 		psci_set_domain_state(0);
- 	}
-@@ -177,9 +184,6 @@ static void psci_idle_init_cpuhp(void)
- {
- 	int err;
- 
--	if (!psci_cpuidle_use_cpuhp)
--		return;
+-			for (i = 0, chan = nbpf->chan; i <= num_channels;
++			for (i = 0, chan = nbpf->chan; i < num_channels;
+ 			     i++, chan++) {
+ 				/* Skip the error IRQ */
+ 				if (irqbuf[i] == eirq)
+ 					i++;
++				if (i >= ARRAY_SIZE(irqbuf))
++					return -EINVAL;
+ 				chan->irq = irqbuf[i];
+ 			}
 -
- 	err = cpuhp_setup_state_nocalls(CPUHP_AP_CPU_PM_STARTING,
- 					"cpuidle/psci:online",
- 					psci_idle_cpuhp_up,
-@@ -240,10 +244,8 @@ static int psci_dt_cpu_init_topology(str
- 	 * s2ram and s2idle.
- 	 */
- 	drv->states[state_count - 1].enter_s2idle = psci_enter_s2idle_domain_idle_state;
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT)) {
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT))
- 		drv->states[state_count - 1].enter = psci_enter_domain_idle_state;
--		psci_cpuidle_use_cpuhp = true;
--	}
+-			if (chan != nbpf->chan + num_channels)
+-				return -EINVAL;
+ 		} else {
+ 			/* 2 IRQs and more than one channel */
+ 			if (irqbuf[0] == eirq)
+@@ -1378,7 +1377,7 @@ static int nbpf_probe(struct platform_de
+ 			else
+ 				irq = irqbuf[0];
  
- 	return 0;
- }
-@@ -320,7 +322,6 @@ static void psci_cpu_deinit_idle(int cpu
- 
- 	dt_idle_detach_cpu(data->dev);
- 	psci_cpuidle_use_syscore = false;
--	psci_cpuidle_use_cpuhp = false;
- }
- 
- static int psci_idle_init_cpu(struct device *dev, int cpu)
+-			for (i = 0; i <= num_channels; i++)
++			for (i = 0; i < num_channels; i++)
+ 				nbpf->chan[i].irq = irq;
+ 		}
+ 	}
 
 
