@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5D0A32;
-	Tue, 22 Jul 2025 14:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC21FA32;
+	Tue, 22 Jul 2025 14:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192929; cv=none; b=LLM02zLvaMdAufJC4dF7Sv8tKEft34aX9QY03ipE+8I88yiL6ZTYNSzRbjJ2pF8SAXMNEklAxrBDbRRjBLz8mZxHulycEMs9rot4pA2on81VPIdALb0Tt8KJERUkw9efROB/9HkdPoAy3VIwS4G+cclxWqFvJce+5sku2MMQVFQ=
+	t=1753192932; cv=none; b=bFRKs27VP0PB4QI7rlbHl19DDA1n9y6uBh+mbU+e+IFo/rGKmjz9PcPYvyFTnUmCVztb5kTWNqdF1tVa6W9GiBJGjr/bbDx/uR6h/opAqRFURXitDWTWnICKms1zGJniPBVUGSMjvVJbFIACu9OztwcC8GOkCBKHsciNXB5o3ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192929; c=relaxed/simple;
-	bh=h1QMUQ784L03HtdOSHYimMybxvJqC5AXLT17wX9Duv0=;
+	s=arc-20240116; t=1753192932; c=relaxed/simple;
+	bh=J5+h4I/pINuYt2rXZzpXYWW6s3RuzFacV+OltdeKcQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XzL5Ja/Px7GXT0oJEUr8ESnn/vrUNJcgfouInnFkMdP4b89BpeSACD1vdi1vJ8bGMpzJ7ydbvNpwSPTy1aOSOAJRfhqzpjLcus76M/n/Jcq+s1jlXRVFUBI6sge/YYv/H0cXzJa0iifprpW6Z2Zai+KviwHYUfKKMlVHVG4SoQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3U5CIV+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMCrVwPAlVDVL4MOOk1z3ysIyrAT561/GlIvc7r2MLvzn20Y4CV/77ux5Y/nEg4NAItsd/m982GH5ZMIGdgHc9Xc+dI/KhsInn8g7gNNaGhZIuoiMtjhGJ23/CX6patt//QEny594+ZuocFThuLyQN7oMAsZ/ESmjL/dkLstcWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgjJf0XQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3U5CIV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD878C4CEEB;
-	Tue, 22 Jul 2025 14:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgjJf0XQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A381C4CEEB;
+	Tue, 22 Jul 2025 14:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192929;
-	bh=h1QMUQ784L03HtdOSHYimMybxvJqC5AXLT17wX9Duv0=;
+	s=korg; t=1753192932;
+	bh=J5+h4I/pINuYt2rXZzpXYWW6s3RuzFacV+OltdeKcQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F3U5CIV+GAj37pDHke69Zygi1PqDeHj9lbz9NJMUPGCUB8KXtLzuKGT2ZDd7aINrX
-	 s20lKy9hVHnHMe1A6+OszU8gZj/t2dobQApz0yilRGBXW0LGJ0drpZ/VtyPXrkGaL4
-	 wwoweTYsjWCJK/hEUsNI9lw7ucubz4MOJuK0anow=
+	b=fgjJf0XQPjl9ZYHJ82cKIiX460tCuzSikOHvotD2cMoKwra1zj3jtPCOtjVFkq2Kx
+	 DOUjm1A7zrvI4bJ3UqwpebUgJwKNX9HEpKe1wX0P9zCmSxC1AvtPqNPGKjMcRGlUlP
+	 PE/v0tcOTZzGO9tFM+bbProibR/LIqe1kWjRVkZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/158] net: phy: Dont register LEDs for genphy
-Date: Tue, 22 Jul 2025 15:44:43 +0200
-Message-ID: <20250722134344.446427884@linuxfoundation.org>
+	Chen-Yu Tsai <wens@csie.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 068/158] iio: adc: axp20x_adc: Add missing sentinel to AXP717 ADC channel maps
+Date: Tue, 22 Jul 2025 15:44:12 +0200
+Message-ID: <20250722134343.310649752@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,71 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit f0f2b992d8185a0366be951685e08643aae17d6d ]
+commit 3281ddcea6429f7bc1fdb39d407752dd1371aba9 upstream.
 
-If a PHY has no driver, the genphy driver is probed/removed directly in
-phy_attach/detach. If the PHY's ofnode has an "leds" subnode, then the
-LEDs will be (un)registered when probing/removing the genphy driver.
-This could occur if the leds are for a non-generic driver that isn't
-loaded for whatever reason. Synchronously removing the PHY device in
-phy_detach leads to the following deadlock:
+The AXP717 ADC channel maps is missing a sentinel entry at the end. This
+causes a KASAN warning.
 
-rtnl_lock()
-ndo_close()
-    ...
-    phy_detach()
-        phy_remove()
-            phy_leds_unregister()
-                led_classdev_unregister()
-                    led_trigger_set()
-                        netdev_trigger_deactivate()
-                            unregister_netdevice_notifier()
-                                rtnl_lock()
+Add the missing sentinel entry.
 
-There is a corresponding deadlock on the open/register side of things
-(and that one is reported by lockdep), but it requires a race while this
-one is deterministic.
-
-Generic PHYs do not support LEDs anyway, so don't bother registering
-them.
-
-Fixes: 01e5b728e9e4 ("net: phy: Add a binding for PHY LEDs")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250707195803.666097-1-sean.anderson@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5ba0cb92584b ("iio: adc: axp20x_adc: add support for AXP717 ADC")
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://patch.msgid.link/20250607135627.2086850-1-wens@kernel.org
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/iio/adc/axp20x_adc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 13dea33d86ffa..834624a61060e 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3663,7 +3663,8 @@ static int phy_probe(struct device *dev)
- 	/* Get the LEDs from the device tree, and instantiate standard
- 	 * LEDs for them.
- 	 */
--	if (IS_ENABLED(CONFIG_PHYLIB_LEDS))
-+	if (IS_ENABLED(CONFIG_PHYLIB_LEDS) && !phy_driver_is_genphy(phydev) &&
-+	    !phy_driver_is_genphy_10g(phydev))
- 		err = of_phy_leds(phydev);
+--- a/drivers/iio/adc/axp20x_adc.c
++++ b/drivers/iio/adc/axp20x_adc.c
+@@ -217,6 +217,7 @@ static struct iio_map axp717_maps[] = {
+ 		.consumer_channel = "batt_chrg_i",
+ 		.adc_channel_label = "batt_chrg_i",
+ 	},
++	{ }
+ };
  
- out:
-@@ -3680,7 +3681,8 @@ static int phy_remove(struct device *dev)
- 
- 	cancel_delayed_work_sync(&phydev->state_queue);
- 
--	if (IS_ENABLED(CONFIG_PHYLIB_LEDS))
-+	if (IS_ENABLED(CONFIG_PHYLIB_LEDS) && !phy_driver_is_genphy(phydev) &&
-+	    !phy_driver_is_genphy_10g(phydev))
- 		phy_leds_unregister(phydev);
- 
- 	phydev->state = PHY_DOWN;
--- 
-2.39.5
-
+ /*
 
 
