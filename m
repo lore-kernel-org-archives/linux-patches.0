@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B297B2ED14C;
-	Tue, 22 Jul 2025 14:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295AD28C852;
+	Tue, 22 Jul 2025 14:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193731; cv=none; b=AW9v2K4e7dDdRXRYf+k8N1a8A8Th60fV8keNtt0vc2jurDiDFCpOyCQvIZw1Md2+L6H+VH75kxQVLPlga0Dd3q3xo6++V6JkDR3Jtqc2gMtoYlDHKZr42iCRDiEf886bP5LcLDlvQT5iJfaGwBYGOHdgDtCmJ5MZI7dzGJjM53A=
+	t=1753193735; cv=none; b=gNNp9DpHzfKnc6vEA2SWNDXmSjHJrb8XQ4c+tySGKbqqgdjNNvCaMJYB+r61JDht/DTw8lB4VZ331Ey463oUau1W52SKsyXtS0G5l3ewU95Ac3ROKNpuxfraqeHKnxUX5UY6yThc8MTSsVGcSoK9czySBRsUSRHUM9erdBM2Y7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193731; c=relaxed/simple;
-	bh=Em3yKPLIiaWbAonSyxXmYbReDndBNx9p1+Ats8TJZqw=;
+	s=arc-20240116; t=1753193735; c=relaxed/simple;
+	bh=oFReC/Hn+6JGXZPlXXBa8vVl4NnoF0Kj9pjEVEVBPQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2w2y22pZUxEPvOuZ481plmVDckVETDRHm/X3wxZgbu6jGQvLN0eUItazjuip9Zbo6TDddJc8rYKXrodGgwBqk4GiFQrPIb9VmcqB9VgknaYy9M5JYCQI4GHXHYhdwUGIz3TR/YCj9kn3k8ocJeU/+TSx4Yi5lfSa9Glw51nHXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eG/YsrOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LJkgNgdnrrQHH44HrJTjZOzN8lZL1LLge2fQ5tXm+06cufU1hrErJoayCfOwwx6G3YWBgmGbAkrU5rbsNcIaUnaPbMPS7KJ1Ygi9cUeNE572cFC3NkRlYp176cJPChpKRDlSmFJ/z29CLQIC8r4g70uXWSNEqQ4xzf84ih70Sw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAOlnTZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eG/YsrOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B08C4CEEB;
-	Tue, 22 Jul 2025 14:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAOlnTZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4D8C4CEEB;
+	Tue, 22 Jul 2025 14:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193731;
-	bh=Em3yKPLIiaWbAonSyxXmYbReDndBNx9p1+Ats8TJZqw=;
+	s=korg; t=1753193734;
+	bh=oFReC/Hn+6JGXZPlXXBa8vVl4NnoF0Kj9pjEVEVBPQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eG/YsrODO2IYA1PAD48+qvKrvl0U0dX+f0BZq9xWHNqt/uqce99Jesdrzy9rkdkmc
-	 3kmtkHGMQd+Try/qPnivbhJIkYeY6gzwp1mRkmwY9vLflIJ1bdQwJJYTbJjV3YsYDH
-	 iczt9t+7aTBG43JpVDOu7mLQXqRIOVyLccApz/eY=
+	b=gAOlnTZfMt0x3zls5F3u+C8xiCnZhX0TzbXL8KJaRYWqikF00EvxNTuvvsZwi87+P
+	 qZdG08CA/XUEYivTCF4o7CMWErEBEcvO2Iq/CNYbrzGEXEoAhAqP5Z10TqwzvT087e
+	 nFksGTobyQZvvGy9YXq/gQqtsgWRP7LaPG4UJKkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 138/187] Bluetooth: hci_core: add missing braces when using macro parameters
-Date: Tue, 22 Jul 2025 15:45:08 +0200
-Message-ID: <20250722134350.888761773@linuxfoundation.org>
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Meetakshi Setiya <meetakshisetiyaoss@gmail.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.15 174/187] smb: smbdirect: add smbdirect_pdu.h with protocol definitions
+Date: Tue, 22 Jul 2025 15:45:44 +0200
+Message-ID: <20250722134352.252880111@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,58 +58,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit cdee6a4416b2a57c89082929cc60e2275bb32a3a ]
+commit 00fab6cf323fa5850e6cbe283b23e605e6e97912 upstream.
 
-Macro parameters should always be put into braces when accessing it.
+This is just a start moving into a common smbdirect layer.
 
-Fixes: 4fc9857ab8c6 ("Bluetooth: hci_sync: Add check simultaneous roles support")
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It will be used in the next commits...
+
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Hyunchul Lee <hyc.lee@gmail.com>
+Cc: Meetakshi Setiya <meetakshisetiyaoss@gmail.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ fs/smb/common/smbdirect/smbdirect_pdu.h |   55 ++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100644 fs/smb/common/smbdirect/smbdirect_pdu.h
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 08cc5db8240ed..f7f7e1974dddb 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -825,20 +825,20 @@ extern struct mutex hci_cb_list_lock;
- #define hci_dev_test_and_clear_flag(hdev, nr)  test_and_clear_bit((nr), (hdev)->dev_flags)
- #define hci_dev_test_and_change_flag(hdev, nr) test_and_change_bit((nr), (hdev)->dev_flags)
- 
--#define hci_dev_clear_volatile_flags(hdev)			\
--	do {							\
--		hci_dev_clear_flag(hdev, HCI_LE_SCAN);		\
--		hci_dev_clear_flag(hdev, HCI_LE_ADV);		\
--		hci_dev_clear_flag(hdev, HCI_LL_RPA_RESOLUTION);\
--		hci_dev_clear_flag(hdev, HCI_PERIODIC_INQ);	\
--		hci_dev_clear_flag(hdev, HCI_QUALITY_REPORT);	\
-+#define hci_dev_clear_volatile_flags(hdev)				\
-+	do {								\
-+		hci_dev_clear_flag((hdev), HCI_LE_SCAN);		\
-+		hci_dev_clear_flag((hdev), HCI_LE_ADV);			\
-+		hci_dev_clear_flag((hdev), HCI_LL_RPA_RESOLUTION);	\
-+		hci_dev_clear_flag((hdev), HCI_PERIODIC_INQ);		\
-+		hci_dev_clear_flag((hdev), HCI_QUALITY_REPORT);		\
- 	} while (0)
- 
- #define hci_dev_le_state_simultaneous(hdev) \
--	(!test_bit(HCI_QUIRK_BROKEN_LE_STATES, &hdev->quirks) && \
--	 (hdev->le_states[4] & 0x08) &&	/* Central */ \
--	 (hdev->le_states[4] & 0x40) &&	/* Peripheral */ \
--	 (hdev->le_states[3] & 0x10))	/* Simultaneous */
-+	(!test_bit(HCI_QUIRK_BROKEN_LE_STATES, &(hdev)->quirks) && \
-+	 ((hdev)->le_states[4] & 0x08) &&	/* Central */ \
-+	 ((hdev)->le_states[4] & 0x40) &&	/* Peripheral */ \
-+	 ((hdev)->le_states[3] & 0x10))		/* Simultaneous */
- 
- /* ----- HCI interface to upper protocols ----- */
- int l2cap_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr);
--- 
-2.39.5
-
+--- /dev/null
++++ b/fs/smb/common/smbdirect/smbdirect_pdu.h
+@@ -0,0 +1,55 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *   Copyright (c) 2017 Stefan Metzmacher
++ */
++
++#ifndef __FS_SMB_COMMON_SMBDIRECT_SMBDIRECT_PDU_H__
++#define __FS_SMB_COMMON_SMBDIRECT_SMBDIRECT_PDU_H__
++
++#define SMBDIRECT_V1 0x0100
++
++/* SMBD negotiation request packet [MS-SMBD] 2.2.1 */
++struct smbdirect_negotiate_req {
++	__le16 min_version;
++	__le16 max_version;
++	__le16 reserved;
++	__le16 credits_requested;
++	__le32 preferred_send_size;
++	__le32 max_receive_size;
++	__le32 max_fragmented_size;
++} __packed;
++
++/* SMBD negotiation response packet [MS-SMBD] 2.2.2 */
++struct smbdirect_negotiate_resp {
++	__le16 min_version;
++	__le16 max_version;
++	__le16 negotiated_version;
++	__le16 reserved;
++	__le16 credits_requested;
++	__le16 credits_granted;
++	__le32 status;
++	__le32 max_readwrite_size;
++	__le32 preferred_send_size;
++	__le32 max_receive_size;
++	__le32 max_fragmented_size;
++} __packed;
++
++#define SMBDIRECT_DATA_MIN_HDR_SIZE 0x14
++#define SMBDIRECT_DATA_OFFSET       0x18
++
++#define SMBDIRECT_FLAG_RESPONSE_REQUESTED 0x0001
++
++/* SMBD data transfer packet with payload [MS-SMBD] 2.2.3 */
++struct smbdirect_data_transfer {
++	__le16 credits_requested;
++	__le16 credits_granted;
++	__le16 flags;
++	__le16 reserved;
++	__le32 remaining_data_length;
++	__le32 data_offset;
++	__le32 data_length;
++	__le32 padding;
++	__u8 buffer[];
++} __packed;
++
++#endif /* __FS_SMB_COMMON_SMBDIRECT_SMBDIRECT_PDU_H__ */
 
 
