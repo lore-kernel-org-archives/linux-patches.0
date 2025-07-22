@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C9C548EE;
-	Tue, 22 Jul 2025 14:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40071548EE;
+	Tue, 22 Jul 2025 14:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192894; cv=none; b=VNsweDRG1C8S8YSYzSGUA0RhoDtXnpxY9rnglFP/U51qxaZkPuk7yDWEEl6Ho/GGXQTquqSwAS1u5ToPHTxQNZ9wFhXXLvZXtCuwwGaPvPEDIOHsHWhKD77YP71tsD9C1x3u4dT4EB8b6JKdvRJ60ozyK2ROu4Ebhz6vpU1MM/I=
+	t=1753192897; cv=none; b=WD75E23PgShP0CWIHPx2VnkGyLDqeVdbcVW/R09AiBOk41kqsEwrD96pGJGRjaXq3OUZZuOjeNe0t0MzqE+jD0mrazDIMVIM+DTJdw0ZR5M7AKbhJWcLnnhxlsR+DLi3QHTNQ3xbp6AlROSBfFUa0Ddm9KG99lnNCXy8rtzN2Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192894; c=relaxed/simple;
-	bh=DbkrQjxhCtAfsm9wwPUDKnT2x/+ExxVCbdAJXK0a2Fg=;
+	s=arc-20240116; t=1753192897; c=relaxed/simple;
+	bh=a31M/d2Q5YZkXc0I2gtZoqXr5L91Wfm80ROcfdsbBxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLq2zJIZWSTM8E/CMDKdxmN8MHbacioIdmZk9EVEwvw2SuAOMQ0ljPQgPbtcHEqlbcAos+jOQDDdBmKOeb+Fct0D2aYIk2nPBz83hlkXa/iX5g4Jpy6a1yzMB1Ujw77/AdZMZB7RNIjmPp057UHK+NVqwTqIXRZqu4fFpZq6aTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myu4TOqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0VUdtLVgRr6E6aFTq3UN5QaC0lD4gSXeS9SV5hDYYDBDBXJqc6heZpTfA8TaJCcPFmD7FNyOJQ7o+3JPTFzHUm9fIWFOhW4PkPhJXqiV/YPDzIUlvNJlcFK7Qbyzj88kqwz4iMZ/nZ64qQ0ThgPSVn0poalvN7i0XcxARjKUuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwQDJ9qB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myu4TOqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DCDC4CEEB;
-	Tue, 22 Jul 2025 14:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwQDJ9qB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBBCC4CEEB;
+	Tue, 22 Jul 2025 14:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192893;
-	bh=DbkrQjxhCtAfsm9wwPUDKnT2x/+ExxVCbdAJXK0a2Fg=;
+	s=korg; t=1753192897;
+	bh=a31M/d2Q5YZkXc0I2gtZoqXr5L91Wfm80ROcfdsbBxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=myu4TOqZ37N0Pb0AIoTQxETHab6XHNaFdtPm9tcagJSDs9fS+PB9kB3I/JQK/ad8O
-	 qr26ltks/COzdLKKEu0AF18+dVHYJ5wOUzuQb6UXGv8x0ICzfZr+7yAsA4uGWgMTw2
-	 AfYRytoT6DK4KrJDPU8ToR4Wu6yYdYhENkXl9Qig=
+	b=iwQDJ9qBoTn0E2id3reOOzzFihzopKLlI06emVmg93Ub4utvMSFnCIc2s+wcIj/i/
+	 bWNLtM6qT4HwOZ3GaSwcKJZvdUf4PO0QA7lUGvkJFlhyvNVdH/+5E95VLQlIgv4hjY
+	 MUalhTsr6MvqRNHIBB7y32xyeDvB89r8gj2nndU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/158] cachefiles: Fix the incorrect return value in __cachefiles_write()
-Date: Tue, 22 Jul 2025 15:44:33 +0200
-Message-ID: <20250722134344.084590904@linuxfoundation.org>
+Subject: [PATCH 6.12 090/158] net: emaclite: Fix missing pointer increment in aligned_read()
+Date: Tue, 22 Jul 2025 15:44:34 +0200
+Message-ID: <20250722134344.120307303@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,67 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 6b89819b06d8d339da414f06ef3242f79508be5e ]
+[ Upstream commit 7727ec1523d7973defa1dff8f9c0aad288d04008 ]
 
-In __cachefiles_write(), if the return value of the write operation > 0, it
-is set to 0. This makes it impossible to distinguish scenarios where a
-partial write has occurred, and will affect the outer calling functions:
+Add missing post-increment operators for byte pointers in the
+loop that copies remaining bytes in xemaclite_aligned_read().
+Without the increment, the same byte was written repeatedly
+to the destination.
+This update aligns with xemaclite_aligned_write()
 
- 1) cachefiles_write_complete() will call "term_func" such as
-netfs_write_subrequest_terminated(). When "ret" in __cachefiles_write()
-is used as the "transferred_or_error" of this function, it can not
-distinguish the amount of data written, makes the WARN meaningless.
-
- 2) cachefiles_ondemand_fd_write_iter() can only assume all writes were
-successful by default when "ret" is 0, and unconditionally return the full
-length specified by user space.
-
-Fix it by modifying "ret" to reflect the actual number of bytes written.
-Furthermore, returning a value greater than 0 from __cachefiles_write()
-does not affect other call paths, such as cachefiles_issue_write() and
-fscache_write().
-
-Fixes: 047487c947e8 ("cachefiles: Implement the I/O routines")
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Link: https://lore.kernel.org/20250703024418.2809353-1-wozizhi@huaweicloud.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: bb81b2ddfa19 ("net: add Xilinx emac lite device driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250710173849.2381003-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/io.c       | 2 --
- fs/cachefiles/ondemand.c | 4 +---
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_emaclite.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cachefiles/io.c b/fs/cachefiles/io.c
-index 6a821a959b59e..6c378b230de20 100644
---- a/fs/cachefiles/io.c
-+++ b/fs/cachefiles/io.c
-@@ -346,8 +346,6 @@ int __cachefiles_write(struct cachefiles_object *object,
- 	default:
- 		ki->was_async = false;
- 		cachefiles_write_complete(&ki->iocb, ret);
--		if (ret > 0)
--			ret = 0;
- 		break;
+diff --git a/drivers/net/ethernet/xilinx/xilinx_emaclite.c b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+index 940452d0a4d2a..258096543b08a 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_emaclite.c
++++ b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+@@ -285,7 +285,7 @@ static void xemaclite_aligned_read(u32 *src_ptr, u8 *dest_ptr,
+ 
+ 		/* Read the remaining data */
+ 		for (; length > 0; length--)
+-			*to_u8_ptr = *from_u8_ptr;
++			*to_u8_ptr++ = *from_u8_ptr++;
  	}
+ }
  
-diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
-index fe3de9ad57bf6..00e1f2471b9e2 100644
---- a/fs/cachefiles/ondemand.c
-+++ b/fs/cachefiles/ondemand.c
-@@ -83,10 +83,8 @@ static ssize_t cachefiles_ondemand_fd_write_iter(struct kiocb *kiocb,
- 
- 	trace_cachefiles_ondemand_fd_write(object, file_inode(file), pos, len);
- 	ret = __cachefiles_write(object, file, pos, iter, NULL, NULL);
--	if (!ret) {
--		ret = len;
-+	if (ret > 0)
- 		kiocb->ki_pos += ret;
--	}
- 
- out:
- 	fput(file);
 -- 
 2.39.5
 
