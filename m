@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E642EA168;
-	Tue, 22 Jul 2025 14:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA98E2DEA8E;
+	Tue, 22 Jul 2025 14:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193333; cv=none; b=VW2EL/CvOnMjfDfX6613H235/ykN91pPAnSNsPzqNzILEcShVMJ7/SqypZO+zuv9Dnt7j3TkB7ge5zdu7Nh6rKrBJJGaDdFktCkUq/ZETueAkkDPxu4GVoZBlVtrALVNpJiGxjNct/RG+gw6jr31bV1gGHkcxYPxxJ08b+miIys=
+	t=1753193337; cv=none; b=EUd1CATT3hv6FLTGTqooGxE1fES8beDoU/ee9cG7BDarfsgmKJ4fP1w1VJO3QLRNPNnPl75F3lxWD/wQVt6FKuOc3jYIVQBZjBr+Xir2EWTL1cGA5R3dP52jSUc454gLJanWuigmZbUKV1J0x2AVmpaF6SMKRpkTl3v6nFN/48A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193333; c=relaxed/simple;
-	bh=l4MZZ+KIFsRMYNcMNoLQC8GzKLu6RWqi9PZ/y57rZv8=;
+	s=arc-20240116; t=1753193337; c=relaxed/simple;
+	bh=qxJsiimbuUrreW7S6i6QZamuhJN2zOX6vL0kgYcdLoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5oUo4RbcNymW5DlzuPdhUgs2p10gSAxmJysxMIN7JFaObAbWjccbe8V4w963YGVLepBXq40eJtYVGiFPbSPjf0kGpm0wyZM3Njde5Yue9Wm3y6G0kw1TzoT2B8oHisM0ZEUi5VxfE15e5uvW0S+WR2eUr2z/kbB9gKJuvtO400=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFCdtrp2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkcsP5ebz/wq3ugSYpDOaV+B3jNGILL/w0/xSJf5VI9cgvxdQZfsys8WVifsEfWbq2cncfBjI66aQ62kjUEyWEjDeclrCI89RlTu/eEjXIih+geVFD8yR6TB1UuK++uGyIoLnBWPyZT5vPJzePK6IcubvbgEk6VL8SwVPMwulCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GQ2u1IR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFCdtrp2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7087C4CEEB;
-	Tue, 22 Jul 2025 14:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GQ2u1IR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C3AC4CEF1;
+	Tue, 22 Jul 2025 14:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193333;
-	bh=l4MZZ+KIFsRMYNcMNoLQC8GzKLu6RWqi9PZ/y57rZv8=;
+	s=korg; t=1753193337;
+	bh=qxJsiimbuUrreW7S6i6QZamuhJN2zOX6vL0kgYcdLoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFCdtrp26ypybhF8caB5Up52nZN8vYbUmQRkk6MGsG8bRKmauP7k9mzxxgvvkAKTv
-	 D/kWYs5sSZDEwkTYrme/BDJupwJHK5d6fHA2+yla+0Psn37Py44TYH4A7WySq44U6T
-	 hGhgcgbFtpARh52gmslmdYET6Ms/7Mv2wGepKZg4=
+	b=2GQ2u1IRbJrFzHuXfDMBXB5PDq30g+r6wzF2Modr+hpAG4FrzRNeWh0uPIJnk9pOq
+	 XMbPd8Uxs4LowzHPYPC7x1RJBM51jOpBKT4ZYXpoHyQV+D4x8k2oGSzC9Wq7n5rXub
+	 qA6XRqaJUxyETxe+uwAta9SwYgrMnjd01n1o6xpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghavendra Kakarla <quic_rkakarla@quicinc.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.15 060/187] cpuidle: psci: Fix cpuhotplug routine with PREEMPT_RT=y
-Date: Tue, 22 Jul 2025 15:43:50 +0200
-Message-ID: <20250722134347.992291537@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 6.15 034/187] drm/panfrost: Fix scheduler workqueue bug
+Date: Tue, 22 Jul 2025 15:43:24 +0200
+Message-ID: <20250722134347.028250308@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -52,115 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Philipp Stanner <phasta@kernel.org>
 
-commit 621a88dbfe9006c318a0cafbd12e677ccfe006e7 upstream.
+commit cb345f954eacd162601e7d07ca2f0f0a17b54ee3 upstream.
 
-Currently cpu hotplug with the PREEMPT_RT option set in the kernel is
-not supported because the underlying generic power domain functions
-used in the cpu hotplug callbacks are incompatible from a lock point
-of view. This situation prevents the suspend to idle to reach the
-deepest idle state for the "cluster" as identified in the
-undermentioned commit.
+When the GPU scheduler was ported to using a struct for its
+initialization parameters, it was overlooked that panfrost creates a
+distinct workqueue for timeout handling.
 
-Use the compatible ones when PREEMPT_RT is enabled and remove the
-boolean disabling the hotplug callbacks with this option.
+The pointer to this new workqueue is not initialized to the struct,
+resulting in NULL being passed to the scheduler, which then uses the
+system_wq for timeout handling.
 
-With this change the platform can reach the deepest idle state
-allowing at suspend time to consume less power.
+Set the correct workqueue to the init args struct.
 
-Tested-on Lenovo T14s with the following script:
-
-echo 0 > /sys/devices/system/cpu/cpu3/online
-BEFORE=$(cat /sys/kernel/debug/pm_genpd/power-domain-cpu-cluster0/idle_states | grep S0 | awk '{ print $3 }') ;
-rtcwake -s 1 -m mem;
-AFTER=$(cat /sys/kernel/debug/pm_genpd/power-domain-cpu-cluster0/idle_states | grep S0 | awk '{ print $3 }');
-if [ $BEFORE -lt $AFTER ]; then
-    echo "Test successful"
-else
-    echo "Test failed"
-fi
-echo 1 > /sys/devices/system/cpu/cpu3/online
-
-Fixes: 1c4b2932bd62 ("cpuidle: psci: Enable the hierarchical topology for s2idle on PREEMPT_RT")
-Cc: Raghavendra Kakarla <quic_rkakarla@quicinc.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250709154728.733920-1-daniel.lezcano@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: stable@vger.kernel.org # 6.15+
+Fixes: 796a9f55a8d1 ("drm/sched: Use struct for drm_sched_init() params")
+Reported-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Closes: https://lore.kernel.org/dri-devel/b5d0921c-7cbf-4d55-aa47-c35cd7861c02@igalia.com/
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250709102957.100849-2-phasta@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-psci.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_job.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/cpuidle/cpuidle-psci.c
-+++ b/drivers/cpuidle/cpuidle-psci.c
-@@ -39,7 +39,6 @@ struct psci_cpuidle_data {
- static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, psci_cpuidle_data);
- static DEFINE_PER_CPU(u32, domain_state);
- static bool psci_cpuidle_use_syscore;
--static bool psci_cpuidle_use_cpuhp;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm/panfrost/panfrost_job.c
+index 5657106c2f7d..15e2d505550f 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_job.c
++++ b/drivers/gpu/drm/panfrost/panfrost_job.c
+@@ -841,7 +841,6 @@ int panfrost_job_init(struct panfrost_device *pfdev)
+ 		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
+ 		.credit_limit = 2,
+ 		.timeout = msecs_to_jiffies(JOB_TIMEOUT_MS),
+-		.timeout_wq = pfdev->reset.wq,
+ 		.name = "pan_js",
+ 		.dev = pfdev->dev,
+ 	};
+@@ -879,6 +878,7 @@ int panfrost_job_init(struct panfrost_device *pfdev)
+ 	pfdev->reset.wq = alloc_ordered_workqueue("panfrost-reset", 0);
+ 	if (!pfdev->reset.wq)
+ 		return -ENOMEM;
++	args.timeout_wq = pfdev->reset.wq;
  
- void psci_set_domain_state(u32 state)
- {
-@@ -108,8 +107,12 @@ static int psci_idle_cpuhp_up(unsigned i
- {
- 	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
- 
--	if (pd_dev)
--		pm_runtime_get_sync(pd_dev);
-+	if (pd_dev) {
-+		if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-+			pm_runtime_get_sync(pd_dev);
-+		else
-+			dev_pm_genpd_resume(pd_dev);
-+	}
- 
- 	return 0;
- }
-@@ -119,7 +122,11 @@ static int psci_idle_cpuhp_down(unsigned
- 	struct device *pd_dev = __this_cpu_read(psci_cpuidle_data.dev);
- 
- 	if (pd_dev) {
--		pm_runtime_put_sync(pd_dev);
-+		if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-+			pm_runtime_put_sync(pd_dev);
-+		else
-+			dev_pm_genpd_suspend(pd_dev);
-+
- 		/* Clear domain state to start fresh at next online. */
- 		psci_set_domain_state(0);
- 	}
-@@ -180,9 +187,6 @@ static void psci_idle_init_cpuhp(void)
- {
- 	int err;
- 
--	if (!psci_cpuidle_use_cpuhp)
--		return;
--
- 	err = cpuhp_setup_state_nocalls(CPUHP_AP_CPU_PM_STARTING,
- 					"cpuidle/psci:online",
- 					psci_idle_cpuhp_up,
-@@ -243,10 +247,8 @@ static int psci_dt_cpu_init_topology(str
- 	 * s2ram and s2idle.
- 	 */
- 	drv->states[state_count - 1].enter_s2idle = psci_enter_s2idle_domain_idle_state;
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT)) {
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT))
- 		drv->states[state_count - 1].enter = psci_enter_domain_idle_state;
--		psci_cpuidle_use_cpuhp = true;
--	}
- 
- 	return 0;
- }
-@@ -323,7 +325,6 @@ static void psci_cpu_deinit_idle(int cpu
- 
- 	dt_idle_detach_cpu(data->dev);
- 	psci_cpuidle_use_syscore = false;
--	psci_cpuidle_use_cpuhp = false;
- }
- 
- static int psci_idle_init_cpu(struct device *dev, int cpu)
+ 	for (j = 0; j < NUM_JOB_SLOTS; j++) {
+ 		js->queue[j].fence_context = dma_fence_context_alloc(1);
+-- 
+2.50.1
+
 
 
