@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680482ED87F;
-	Tue, 22 Jul 2025 14:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CDB2EAB6E;
+	Tue, 22 Jul 2025 14:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193242; cv=none; b=p4vhgyPxgcnWUHrQ2PWdZ26sAMnxC/KGU6+5LtOMd9F8lnAnBobyc65A/wfc6YgLNrnsZOd9v5WPGxqTvjLAo0+Y3YcVNvsZDRHz2STqJrRgtS9abRFnUUbB9PNhTdl6BYNX5fMS+GmAVtXp/9gaOh+eFUqMg1hnOF8YHk3n3GE=
+	t=1753193245; cv=none; b=KZ8qFXlVIPiyDc+Nfc+Z2fYEiAKZlh6enpjf3AOOkb2vjKSVarFu8jlNDgLVfTeS1HYhEMMLN1QyArv2vtWJBmdjZwCvQV1N3AmIWgp28u1cB0yafEWbIzSpTy2o6843j6ZK7FtjEZkU5z/zELPCD6phEyhSMpdoqDqDEetFAzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193242; c=relaxed/simple;
-	bh=lgjJnXeJzrI9MGz3ZBNT+YT7q6cfz8QAs3W8rH/Y+T4=;
+	s=arc-20240116; t=1753193245; c=relaxed/simple;
+	bh=tXWDLrNHhDx8d9wKmKXqoFEE+GdrwNv9fe9LjxesP58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjmU2xCgjqvFIIQFmFUVfA739ecLwLfL6iNvn9+YOCB9fZdMqD//TwCP0AjctQvcITTu1BJ9EsGneNUn2GXJnRWysCSwx8fe/JcrwZLXfdm02LOzrTrmjad36PaFhaOVFigE0CTYo01v3a0q4JEFQuuckw4OSWx36u20qPf+Lvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1eLesLR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rrHoCmrAYbXhHqLKfnkNzhGujSULJQUO84ZtMmfLM99fhXZeaxnvawyWLpsLKhYFDMivGSD0XBy7gvYksBicYVHqBPmjrG+FMjvIt4/z5k7qoL8Ju+ZDs3c1wKNMiU6kR4HQdSIiIErgRCyPM0w5wvlpsFLdpoob2RhEdfFb5rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRHoyh0u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1eLesLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C68AC4CEEB;
-	Tue, 22 Jul 2025 14:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRHoyh0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0644C4CEF5;
+	Tue, 22 Jul 2025 14:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193241;
-	bh=lgjJnXeJzrI9MGz3ZBNT+YT7q6cfz8QAs3W8rH/Y+T4=;
+	s=korg; t=1753193245;
+	bh=tXWDLrNHhDx8d9wKmKXqoFEE+GdrwNv9fe9LjxesP58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1eLesLRrlChx65dtSQWGb8Zxbt3a7gLv8QxfVSfY+SdKoOlywkVAolwtKLGu9mz4
-	 KKArAT2EtLGvuiv0LdWvXpXPDPM63LklBWrRIO/VxsPGtYwzJdQLBR54UMRLdd1aX7
-	 agnw4WQ/R5zKb+X2aJFQ8RkOKvF5lmOLBKCRkeaU=
+	b=cRHoyh0uo9nlbTCG8fVISZ7pTC1zwiwxwWqZiSeNL9UXupcVeb9UXlcj/Xild8Puz
+	 P8sH0UNyiRHma2HfQudGZIQSBGNKceAgdm5u2ImU1SKtnbYM9H6s7frpwNWzaPaEns
+	 rOrsHR3ENDL+d1NhACsHGTUi+25c4LMTawaVlh/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
+	Ryan Mann <rmann@ndigital.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.15 005/187] USB: serial: option: add Foxconn T99W640
-Date: Tue, 22 Jul 2025 15:42:55 +0200
-Message-ID: <20250722134345.959639060@linuxfoundation.org>
+Subject: [PATCH 6.15 006/187] USB: serial: ftdi_sio: add support for NDI EMGUIDE GEMINI
+Date: Tue, 22 Jul 2025 15:42:56 +0200
+Message-ID: <20250722134345.993952623@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -50,60 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Ryan Mann (NDI) <rmann@ndigital.com>
 
-commit 08f49cdb71f3759368fded4dbc9dde35a404ec2b upstream.
+commit c980666b6958d9a841597331b38115a29a32250e upstream.
 
-T99W640 is designed based on Qualconn SDX72 chip. There are 3
-serial ports to be enumerated: Diag, NMEA and AT.
+NDI (Northern Digital Inc.) is introducing a new product called the
+EMGUIDE GEMINI that will use an FTDI chip for USB serial communications.
+Add the NDI EMGUIDE GEMINI product ID that uses the NDI Vendor ID
+rather than the FTDI Vendor ID, unlike older products.
 
-Test evidence as below:
-T:  Bus=04 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  1
-P:  Vendor=0489 ProdID=e167 Rev=05.15
-S:  Manufacturer=QCOM
-S:  Product=SDXPINNL USB WWAN Adapter
-S:  SerialNumber=cc1f1d92
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-0&1: MBIM, 2:Modem, 3:GNSS(non-serial port), 4: NMEA, 5:Diag
-
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Signed-off-by: Ryan Mann <rmann@ndigital.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/ftdi_sio.c     |    2 ++
+ drivers/usb/serial/ftdi_sio_ids.h |    3 +++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
- 	  .driver_info = RSVD(5) | RSVD(6) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
-+	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
- 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
- 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -803,6 +803,8 @@ static const struct usb_device_id id_tab
+ 		.driver_info = (kernel_ulong_t)&ftdi_NDI_device_quirk },
+ 	{ USB_DEVICE(FTDI_VID, FTDI_NDI_AURORA_SCU_PID),
+ 		.driver_info = (kernel_ulong_t)&ftdi_NDI_device_quirk },
++	{ USB_DEVICE(FTDI_NDI_VID, FTDI_NDI_EMGUIDE_GEMINI_PID),
++		.driver_info = (kernel_ulong_t)&ftdi_NDI_device_quirk },
+ 	{ USB_DEVICE(TELLDUS_VID, TELLDUS_TELLSTICK_PID) },
+ 	{ USB_DEVICE(NOVITUS_VID, NOVITUS_BONO_E_PID) },
+ 	{ USB_DEVICE(FTDI_VID, RTSYSTEMS_USB_VX8_PID) },
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -204,6 +204,9 @@
+ #define FTDI_NDI_FUTURE_3_PID		0xDA73	/* NDI future device #3 */
+ #define FTDI_NDI_AURORA_SCU_PID		0xDA74	/* NDI Aurora SCU */
+ 
++#define FTDI_NDI_VID			0x23F2
++#define FTDI_NDI_EMGUIDE_GEMINI_PID	0x0003	/* NDI Emguide Gemini */
++
+ /*
+  * ChamSys Limited (www.chamsys.co.uk) USB wing/interface product IDs
+  */
 
 
