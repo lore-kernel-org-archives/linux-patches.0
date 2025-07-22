@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A6B2ED870;
-	Tue, 22 Jul 2025 14:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2092ECE9D;
+	Tue, 22 Jul 2025 14:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193471; cv=none; b=FtXTnkKwb49fl1x7qgUCsbBX5MMzhtwWEAZel6ZqyaiiM/DDOvfj+kNorMR+Ng1+TsOC1BWjTekeTg4vZvC+mFTNGUabrdeSK/CHmW5Zjhw5WLvIIZxlBuT4FRNAuBjYFXf5xj9769iRUjvkHBfq/eQByIh+/QzJPsLg6hudYS0=
+	t=1753193474; cv=none; b=e5EwX/zumDNz8wkIqk4kYEWrEinklAnpHGA4kiAeI2EdxUFDHKjzrFecEbkZGeML/FWdm1mJkGidKL2ANazkOUo1LwagY2LhTKSXgsmlOlS4/gqlJaBC3E9JynQdNAxNdg+uI/cqt8YYbLjwNUjmDacbNxoeCxTgAVXvJhzf0XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193471; c=relaxed/simple;
-	bh=XKuplCVpJV+CKJO2uwPdvUWwPMcWp11xP48qAYJ6A0w=;
+	s=arc-20240116; t=1753193474; c=relaxed/simple;
+	bh=uE965IDG76ziTWZ6bN2qrUrG8MKk4imRuX5jmlAYCpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkJEN/9ESL/+VOX6pKVZ7q8q9oE7Jv2L30UZNHonhc5MGrmQVuLfKA6ZPF3HFX0sumFg7ZmgZK/33ECmxFvZdhgRsYxu69hHpppBd6w7/ddCp6z3xXC8rTStVopZa2ePzgeJVW5usug4NvPmnSNbHxRWt6Pa9bqTuIfzaWvCPmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+d+4P29; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eg1sRtvqI13qFilyASFTbxE/LGBxbqZ7CalKHqnczkI6ZbXwyU3LfkUpzLXrd2lT/2GuRJo8lykEGtSO5KbPfenCEeSzKaqpWws4IFV4ltrRlFu9CQ/ssKZa8djwN8+7W6MPwP7v0LPdpl3rPioYWXGKo/oH8u0BApKu9wwbGS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcAQXltf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+d+4P29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95BDC4CEEB;
-	Tue, 22 Jul 2025 14:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcAQXltf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49FDC4CEEB;
+	Tue, 22 Jul 2025 14:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193471;
-	bh=XKuplCVpJV+CKJO2uwPdvUWwPMcWp11xP48qAYJ6A0w=;
+	s=korg; t=1753193474;
+	bh=uE965IDG76ziTWZ6bN2qrUrG8MKk4imRuX5jmlAYCpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+d+4P29pWsiin1+mLWXGxwlg1pYLYP1NwKllC3vOf1DDHafFABQox//zU9439fuO
-	 wZSGilUZj67Q4xJqD8WfmWTO22KE5383sV2tVTYqxwqK0QiMdx4ub6DamaxkY9jBHu
-	 Pe2gVgSYz4O3hjfvbArQChhd8zmXvI4EJaqCt1J8=
+	b=NcAQXltfI8CwPw+c+rvYxZ9SePxIh+vZpEoUneCyP0Ft4J2XF1QHMLe/kC3LRqRhe
+	 LctC8RMnZc5L2I0MQOCXnsON6lD7+NPUbrpV+k3rao0mQ1MGQlYk0IiCWFzMaMA+y2
+	 5jfXseHzmEFUrJ1NUaQBee5qlQdvbrq9szBeKy2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 101/187] soundwire: amd: fix for clearing command status register
-Date: Tue, 22 Jul 2025 15:44:31 +0200
-Message-ID: <20250722134349.535452184@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 071/187] net: libwx: properly reset Rx ring descriptor
+Date: Tue, 22 Jul 2025 15:44:01 +0200
+Message-ID: <20250722134348.381433003@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,38 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit a628e69b6412dc02757a6a23f7f16ce0c14d71f1 ]
+commit d992ed7e1b687ad7df0763d3e015a5358646210b upstream.
 
-To clear the valid result status, 1 should be written to
-ACP_SDW_IMM_CMD_STS register. Update the ACP_SW_IMM_CMD_STS register value
-as 1.
+When device reset is triggered by feature changes such as toggling Rx
+VLAN offload, wx->do_reset() is called to reinitialize Rx rings. The
+hardware descriptor ring may retain stale values from previous sessions.
+And only set the length to 0 in rx_desc[0] would result in building
+malformed SKBs. Fix it to ensure a clean slate after device reset.
 
-Fixes: d8f48fbdfd9a ("soundwire: amd: Add support for AMD Manager driver")
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20250620102617.73437-1-Vijendar.Mukunda@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[  549.186435] [     C16] ------------[ cut here ]------------
+[  549.186457] [     C16] kernel BUG at net/core/skbuff.c:2814!
+[  549.186468] [     C16] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[  549.186472] [     C16] CPU: 16 UID: 0 PID: 0 Comm: swapper/16 Kdump: loaded Not tainted 6.16.0-rc4+ #23 PREEMPT(voluntary)
+[  549.186476] [     C16] Hardware name: Micro-Star International Co., Ltd. MS-7E16/X670E GAMING PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
+[  549.186478] [     C16] RIP: 0010:__pskb_pull_tail+0x3ff/0x510
+[  549.186484] [     C16] Code: 06 f0 ff 4f 34 74 7b 4d 8b 8c 24 c8 00 00 00 45 8b 84 24 c0 00 00 00 e9 c8 fd ff ff 48 c7 44 24 08 00 00 00 00 e9 5e fe ff ff <0f> 0b 31 c0 e9 23 90 5b ff 41 f7 c6 ff 0f 00 00 75 bf 49 8b 06 a8
+[  549.186487] [     C16] RSP: 0018:ffffb391c0640d70 EFLAGS: 00010282
+[  549.186490] [     C16] RAX: 00000000fffffff2 RBX: ffff8fe7e4d40200 RCX: 00000000fffffff2
+[  549.186492] [     C16] RDX: ffff8fe7c3a4bf8e RSI: 0000000000000180 RDI: ffff8fe7c3a4bf40
+[  549.186494] [     C16] RBP: ffffb391c0640da8 R08: ffff8fe7c3a4c0c0 R09: 000000000000000e
+[  549.186496] [     C16] R10: ffffb391c0640d88 R11: 000000000000000e R12: ffff8fe7e4d40200
+[  549.186497] [     C16] R13: 00000000fffffff2 R14: ffff8fe7fa01a000 R15: 00000000fffffff2
+[  549.186499] [     C16] FS:  0000000000000000(0000) GS:ffff8fef5ae40000(0000) knlGS:0000000000000000
+[  549.186502] [     C16] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  549.186503] [     C16] CR2: 00007f77d81d6000 CR3: 000000051a032000 CR4: 0000000000750ef0
+[  549.186505] [     C16] PKRU: 55555554
+[  549.186507] [     C16] Call Trace:
+[  549.186510] [     C16]  <IRQ>
+[  549.186513] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186517] [     C16]  __skb_pad+0xc7/0xf0
+[  549.186523] [     C16]  wx_clean_rx_irq+0x355/0x3b0 [libwx]
+[  549.186533] [     C16]  wx_poll+0x92/0x120 [libwx]
+[  549.186540] [     C16]  __napi_poll+0x28/0x190
+[  549.186544] [     C16]  net_rx_action+0x301/0x3f0
+[  549.186548] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186551] [     C16]  ? __raw_spin_lock_irqsave+0x1e/0x50
+[  549.186554] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186557] [     C16]  ? wake_up_nohz_cpu+0x35/0x160
+[  549.186559] [     C16]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  549.186563] [     C16]  handle_softirqs+0xf9/0x2c0
+[  549.186568] [     C16]  __irq_exit_rcu+0xc7/0x130
+[  549.186572] [     C16]  common_interrupt+0xb8/0xd0
+[  549.186576] [     C16]  </IRQ>
+[  549.186577] [     C16]  <TASK>
+[  549.186579] [     C16]  asm_common_interrupt+0x22/0x40
+[  549.186582] [     C16] RIP: 0010:cpuidle_enter_state+0xc2/0x420
+[  549.186585] [     C16] Code: 00 00 e8 11 0e 5e ff e8 ac f0 ff ff 49 89 c5 0f 1f 44 00 00 31 ff e8 0d ed 5c ff 45 84 ff 0f 85 40 02 00 00 fb 0f 1f 44 00 00 <45> 85 f6 0f 88 84 01 00 00 49 63 d6 48 8d 04 52 48 8d 04 82 49 8d
+[  549.186587] [     C16] RSP: 0018:ffffb391c0277e78 EFLAGS: 00000246
+[  549.186590] [     C16] RAX: ffff8fef5ae40000 RBX: 0000000000000003 RCX: 0000000000000000
+[  549.186591] [     C16] RDX: 0000007fde0faac5 RSI: ffffffff826e53f6 RDI: ffffffff826fa9b3
+[  549.186593] [     C16] RBP: ffff8fe7c3a20800 R08: 0000000000000002 R09: 0000000000000000
+[  549.186595] [     C16] R10: 0000000000000000 R11: 000000000000ffff R12: ffffffff82ed7a40
+[  549.186596] [     C16] R13: 0000007fde0faac5 R14: 0000000000000003 R15: 0000000000000000
+[  549.186601] [     C16]  ? cpuidle_enter_state+0xb3/0x420
+[  549.186605] [     C16]  cpuidle_enter+0x29/0x40
+[  549.186609] [     C16]  cpuidle_idle_call+0xfd/0x170
+[  549.186613] [     C16]  do_idle+0x7a/0xc0
+[  549.186616] [     C16]  cpu_startup_entry+0x25/0x30
+[  549.186618] [     C16]  start_secondary+0x117/0x140
+[  549.186623] [     C16]  common_startup_64+0x13e/0x148
+[  549.186628] [     C16]  </TASK>
+
+Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250714024755.17512-4-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/amd_manager.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/wangxun/libwx/wx_hw.c  |    7 +++----
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c |    5 +++++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index a9a57cb6257cc..7a671a7861979 100644
---- a/drivers/soundwire/amd_manager.c
-+++ b/drivers/soundwire/amd_manager.c
-@@ -238,7 +238,7 @@ static u64 amd_sdw_send_cmd_get_resp(struct amd_sdw_manager *amd_manager, u32 lo
+--- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
+@@ -1699,7 +1699,6 @@ static void wx_configure_rx_ring(struct
+ 				 struct wx_ring *ring)
+ {
+ 	u16 reg_idx = ring->reg_idx;
+-	union wx_rx_desc *rx_desc;
+ 	u64 rdba = ring->dma;
+ 	u32 rxdctl;
  
- 	if (sts & AMD_SDW_IMM_RES_VALID) {
- 		dev_err(amd_manager->dev, "SDW%x manager is in bad state\n", amd_manager->instance);
--		writel(0x00, amd_manager->mmio + ACP_SW_IMM_CMD_STS);
-+		writel(AMD_SDW_IMM_RES_VALID, amd_manager->mmio + ACP_SW_IMM_CMD_STS);
+@@ -1729,9 +1728,9 @@ static void wx_configure_rx_ring(struct
+ 	memset(ring->rx_buffer_info, 0,
+ 	       sizeof(struct wx_rx_buffer) * ring->count);
+ 
+-	/* initialize Rx descriptor 0 */
+-	rx_desc = WX_RX_DESC(ring, 0);
+-	rx_desc->wb.upper.length = 0;
++	/* reset ntu and ntc to place SW in sync with hardware */
++	ring->next_to_clean = 0;
++	ring->next_to_use = 0;
+ 
+ 	/* enable receive descriptor ring */
+ 	wr32m(wx, WX_PX_RR_CFG(reg_idx),
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -356,6 +356,8 @@ void wx_alloc_rx_buffers(struct wx_ring
+ 
+ 		/* clear the status bits for the next_to_use descriptor */
+ 		rx_desc->wb.upper.status_error = 0;
++		/* clear the length for the next_to_use descriptor */
++		rx_desc->wb.upper.length = 0;
+ 
+ 		cleaned_count--;
+ 	} while (cleaned_count);
+@@ -2303,6 +2305,9 @@ static void wx_clean_rx_ring(struct wx_r
+ 		}
  	}
- 	writel(upper_data, amd_manager->mmio + ACP_SW_IMM_CMD_UPPER_WORD);
- 	writel(lower_data, amd_manager->mmio + ACP_SW_IMM_CMD_LOWER_QWORD);
--- 
-2.39.5
-
+ 
++	/* Zero out the descriptor ring */
++	memset(rx_ring->desc, 0, rx_ring->size);
++
+ 	rx_ring->next_to_alloc = 0;
+ 	rx_ring->next_to_clean = 0;
+ 	rx_ring->next_to_use = 0;
 
 
