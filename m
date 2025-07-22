@@ -1,107 +1,129 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532EF285C9B
-	for <patches@lists.linux.dev>; Tue, 22 Jul 2025 21:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7A1285C8B
+	for <patches@lists.linux.dev>; Tue, 22 Jul 2025 21:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753219449; cv=none; b=SRT8ZVcDejOmRuHCOr83YYb+pM+LrHnG6lpiI2dwdwRBqGAQCgxcToJMRaG9IrUWnS3iHm9/LgN6RcuwbqR9w5ltml/+AH9L2J4Z1K8oukcj8QbrON6x+xegkCiKcJ3IN2jrKYAHdnEzUKgd54aPZ7jmbITdeDPdK2MHDrTqT1w=
+	t=1753219472; cv=none; b=jjVcbxm8bheODLL5CX7gVXAcrt/xWv6Qah6XPyLsZ5zMQK+q6vdljVT7Bgw6Ouc21Z8l2/qHMW/ye7xIGRIKYbI2h4YUjqVB9rUWlmyZzpOvVI79H0B05qIM04urtjYJDatrAMGTXk8UNYCsOIjC0aflXbMDaJ7B3BvLLLqHFIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753219449; c=relaxed/simple;
-	bh=eYL1o47Kleefpqy0F6S/ozw8zz+oDdKbrjvaR7zhri4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TlYNdpnIKffpT00tx1RZgtflTdZg4z3FQCYJXDDZ0F2YdNSfkv0LHh6TtG67KwbXY8PnXNobJy/lIKGUGA8lHgNxkAoxLpp1DVvbvph/wV8DL3F9c4YoHo3QeBurg0LKyJF3LwXrmqcIDB+oMHJpKvy/cFjlyjNr6LrBF9o7pBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFMPqocj; arc=none smtp.client-ip=209.85.166.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1753219472; c=relaxed/simple;
+	bh=r4C21SkimRR08+NTBL+o805O4fZz3IMa1+Az8OJAWJg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AuniP0L2t6YV/NW1dZepVBfJiSxlcBznWGNFuKpsoT11sCvH/PuQa9yJXCPOvwZE/rDua1vzaBSq2PbNpCcaPJumvhSvNQ1FjqghF2qKvbnabFKdBta+6I8bolJcOyEbq4LHDEbJSejGmo1tTHNbS6L9zafdAfflVgB1KycWUPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=Td+elVCx; arc=none smtp.client-ip=212.227.126.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFMPqocj"
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3df2f937370so23085165ab.3
-        for <patches@lists.linux.dev>; Tue, 22 Jul 2025 14:24:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1753219446; x=1753824246; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qHBg2rMZuWIVzQC6BiR69k3jKDmsa5yJmHZY1CaYlic=;
-        b=eFMPqocjE1T4RvQj3twIyUVXXNzTBoNYua8ThoQRaUPVtOAFCVR2c8DiB/aJ+V5tmf
-         /N2kwozOLyHrYzX96SH2RBy/RmgmioFQ+1IMrPAG4ELjIVy5wWPHeSUuPKRC2afbBTwE
-         00Tr6UPetb6lk0rLB0eAfrySKS8EpH3JK2qKg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753219446; x=1753824246;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qHBg2rMZuWIVzQC6BiR69k3jKDmsa5yJmHZY1CaYlic=;
-        b=JbZgdc8a59TDodPmoJwvlxE/14ZMRPMMj8AqVDTbQH/ICe9n7RrAuMn94ELWUFsHPU
-         a6b0db7B42AQDpxMlXaBvmM545ft5aknC71UbNJIfKNJq8KlMvstnB+ONooQrn6zoMxn
-         hTCMgbstrTFjTqFI38VLTiTRWKg7k8LNI5o8eM6/tSPzC5ltqbWDUX1JdEvcpv0l5khi
-         o9D+vizzNpY1X8QDgQzyQieYzXZ30murZ35Q+IEu+aF2ynoQ9+rRHoXpfgA2YSbBQETh
-         NHGazXPZyhc9L9SP5wdvn47EcEgUHp+do9fcqoUvUbuqBMVCMbqmZWhFH5DN2MpH3FuE
-         PxaA==
-X-Gm-Message-State: AOJu0YxuW/zive3EyfwWwjuqxijkqz9931trUbtvfpCIrImT1rtWN9RS
-	8q8x4WoeChcZ0UMzXnytinGltpglgIR2Tdu9I7QnUCW/nluJ4CZjmw8a01gSgqoNkRA=
-X-Gm-Gg: ASbGncu1kCMucV6VabcFm11Wc4kOjzNDhzWiOwL+Y4N+qeXhH9tlo/9VLS/QC4neVqc
-	tJdjJ5mQafHb+BqovbRzOMIzZwE1SgvPLQ7eyVCb3OIN0ZwpF6+WO87EgWtjAeEs+Zkom/Ia2Qp
-	LLBBElzJDkMYjDTWqZTt2NkzeCQZaPx33TIIbcbRlxhBEESa3/eenHI3J3InJZldBMWPnYNN+vO
-	ZdoJeDUjge/2kpZdCEfy0u30++9+8s+qawkkRKkmqhBVY2/vimB/9tnc9lh2sgNEm3uAuDQPLDd
-	P+7X+smRRtxpEOQFn6MP/KFQAaBdWkQLVvqJwrVlftGFMgbEJNQDDOIYoXeV2Fw5MatH9RhtZ/K
-	uk5js2+tauVTu2bxNRDvzPQkO9HHXme8VmQ==
-X-Google-Smtp-Source: AGHT+IGf2Vg6LS2KrJKv9TjiWcHOJsVguQEuNaQuu7hVEhq6SSyxnQbG7sJ1OKFBgaprLgEFn+Tfnw==
-X-Received: by 2002:a05:6e02:4404:10b0:3e3:843c:9d16 with SMTP id e9e14a558f8ab-3e3843ca037mr2668115ab.12.1753219446313;
-        Tue, 22 Jul 2025 14:24:06 -0700 (PDT)
-Received: from [192.168.1.14] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-5084ca03da6sm2781182173.100.2025.07.22.14.24.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Jul 2025 14:24:05 -0700 (PDT)
-Message-ID: <c1c09085-afdb-4b1b-971d-8428993a6364@linuxfoundation.org>
-Date: Tue, 22 Jul 2025 15:24:04 -0600
+	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="Td+elVCx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
+	s=s1-ionos; t=1753219461; x=1753824261; i=christian@heusel.eu;
+	bh=xi0dLzoPvspJ0Thu656QhGnHYoK1rauDUKPcuEJO+pU=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Td+elVCxBKjTYSaJhdpIiPBKtD/J9VHjQC76tGmPSObcJSGi/ca6/L0MFXBYxvgH
+	 +3kO+MZIPBF/c9hfgQ3LflDj5P+fyrRZ3ZO2qHHLGQ+wS+t0769rStE872lop9/3E
+	 VHP4CG41yRqY0zFIBD+DkhJDRw8gmQKoGG7udwNKcau64lIGImcOismWdQTL4b/Oo
+	 4XC5F4kN7gPRYq101/QEHQP9jwuxF12jFWOC5H3+rKtqLnT0HxwEdlgTGFs8krt7Z
+	 WHQvt+17QjiUlKM/GHq5UzlcxJqWPoer0ZPK1AKbtzb+rgdcR2RRVwAGwkIX5xDnl
+	 UkCTKnCnBSf5szYWVw==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from localhost ([89.244.90.40]) by mrelayeu.kundenserver.de
+ (mreue010 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MpD7H-1uw04I1HhP-00jFYm; Tue, 22 Jul 2025 22:57:09 +0200
+Date: Tue, 22 Jul 2025 22:57:06 +0200
+From: Christian Heusel <christian@heusel.eu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.15 000/187] 6.15.8-rc1 review
+Message-ID: <b82800d6-0849-4b88-8026-6a8596ff4276@heusel.eu>
+References: <20250722134345.761035548@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/111] 6.6.100-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20250722134333.375479548@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nssu6z7k4mv5iuds"
+Content-Disposition: inline
+In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
+X-Provags-ID: V03:K1:cUTCdnko56eAGlcXq0rMTE3VMELH5cEz6YWh/nlebymBc0yaR8S
+ qkMxzV9k74diggYDMxJkWYgd4RGTKxw2FxRS4P+ig0J8QZu4h8cubKynbFBuK9XrLfXBWMX
+ G5v4QPanUeHPjZ7DHvCU8noZP2hj/BuufVjmvBJsrlBuKhQTwKb9IO8z9gZOq6ysrrG3yVP
+ KPOPyC1iUG8IVMcN9Orug==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:aJKT+a72dWU=;60FzdMGv7oGWqteEKuYhv0vA4Rz
+ 8OzwabrhRjMM7cJ+we0ShP49Z8j2ybmSDtULmC6NBaw5rKzmOmRIo1GqMEpWQuibd56vMBEbl
+ k9WGJj7/87/VVneRIVlvu3IJG1PQu2oOmubgtiuuNUBD5M0iQFeA5hlAUcsOnGJMZA17+RMpV
+ mc3Hntd3jjDRCcHCqIj5yfkLRit3tsHtkQ6ieXlfUvLqkdnXIp8jT9iGDpmWKNBym+OXhD4ns
+ Pa4DOB8zi03ocRFh3jnIFddh4mPDrXeaDtOSbjeSVEjxBp8AOTDP5FovMn+E+MdCTV1v8Ykhe
+ PzVtZ0qmDWrhawrFKsV+WjKpeope/hw3vwTKhv3fG7eKxMf9sLN+QU9eyQyuHgCqL7n6FpZrg
+ UZv7hdyP49FwAopmfbu8M48gklx590sRRvbnq95syC95HEi7ALNinw5pFeHrIsaU9kNfhoP6y
+ 5SJhOeLecOrbCyFhTIVZ+vJsyj0RFFCLMhVdEBZxa7cIbTRe0AcfBXa82ylwdbViJRCG8wYZQ
+ J+eKphL9ZQAO610rZBs9Pm/D6LNSM3jvP9iYTb0Gts1NkTbKbZ2Qia4Sla6xTncAtnIaWn5eR
+ vmrCQmPElHtX8rQzI8ILDl7GuF6ZlTGS74J1nrevJI03fQhLlQOpTGhUKQFo4wCPkxjI0uqfv
+ AL6mIGM4XuEQxjh9uaGdshEjvRMzAkYxwa6gCGQt0ciGIIyrDIFlmT8TuCz0XHePKRul0pUQk
+ zaIfnxlo2maMsHTdXZdqKZ+w0jZJV/SIYzAFEUoQejFtgBUQlBghIBZB24T6E26cKXPSCUlkX
+ YjKs8aK7cof7X89UsT5LS4msL65Rmu9RbRvNkkSzBMB4ZImIxpE/IOxlDJ+twJ3u0VLs4nR1s
+ 7DoI26FrDv9emKbZN35qVyLE6obQJxm4zd0SY0ZdyYr9CNJ3t0MIyDY+3fVG0ipsctFt6zE3w
+ sgZo80/f89RhlpUe4x0bshxZf07PXTlw33m/0q69TRJ1oFzFXa4kujRlWlDiy9KDDUadWx9Hq
+ 9aW5wHeegCx0RyLmnzxF5CJ7AgL3JMEEnouA8NVvGgDJtwIeMo64YsqqgT7vD7+wSqEKX/rRS
+ x/qQXwABetS16YUOf58u1HcImpG51N3oBichIowMCKVwod/aV7TSK378kse1v7Wwsa6wpaffu
+ uS+BCn9pkt37oE1ZxNOdce1oPQgeW7/wWeXhQzZ+gM54RxC50iHVAHjpwO/2ZgaoIpZCxWqn/
+ deioIsNRL+QTplyxNvnRMbqv5TJ3xDadawzlEtFm4M/tWff2YarpmG6aJy/lcgNF0PYudS0DF
+ GQQntbxHXImznvpxTJAxgWWtdsPyI801wksgxEv8hukjicHNjnpdofe8S1TMOwUqUYodmvAj3
+ 5PFRQz70Acb5qdqUnPyIPvCh5U5JUOx4WKavGR506TXPSQ+/yWNqoENQIXDZnSDYPgDSY0T3K
+ V7HdUes+eERTpbvJM2RH6IBF4+Oc+RPdx+EjRpXMB8tKG1JeMCEeG4z4Em3/tBhwFPbawtf2O
+ RrZdzyCLxwcsxdb+tbrbWskgOkuLOwNBGWgtuR2onETNNusVldy+4Ba2jko0Ew==
 
-On 7/22/25 07:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.100 release.
-> There are 111 patches in this series, all will be posted as a response
+
+--nssu6z7k4mv5iuds
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 6.15 000/187] 6.15.8-rc1 review
+MIME-Version: 1.0
+
+On 25/07/22 03:42PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.8 release.
+> There are 187 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>=20
 > Responses should be made by Thu, 24 Jul 2025 13:43:10 +0000.
 > Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.100-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+Tested-by: Christian Heusel <christian@heusel.eu>
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU and a
+Framework Desktop.
 
-thanks,
--- Shuah
+--nssu6z7k4mv5iuds
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmh/+yIACgkQwEfU8yi1
+JYVD2w//SHeaSPH5JVhapqeMyaq7CZhnD4yWi2do1hgNshN0JSPiYUDb5Nc9FxaP
+licsd1ulDwLVdRynevsqrsyKs+vrpmK1cKE6eYifcSovRknsCoN8lurmNtKMuYU6
+250Fq8nkjPQeLZ/H5pAHYVNxI1LfBwfNHfM3ZD5XQegTsUM8cqe7EroDbHAhqUgm
+uTKQLejWSKNw4Ln01qLRysSa5j6ie/Zd7v/yHAlJFJcERg9T2nTFjf6MKp+KSVGK
+ewD+6dMElbUU4RKxm2upzkqGuArCWl2JO6Ozpe1pRr3sJ1qbjAtT7ToUvOGTq7BZ
+sMjFODvNQ/nTOsi7msEVG+v7p8BGOBgqb/MqTqSy9ZYFGt+C3QIXjltAgxm/JmMq
+xfoaXTdP94HnzZN/9gnDGpqlXAfHycP4Kw0DFGl9IFzXmWoc2uPawuRosBc3SxXd
+MY2YNdQNVSg7qlTIrl/eZFC/d63TNCUD53ELNwrenfwZ8rgEtEgWpSex9zRKui4v
+qO/nJNSk8C37SjfrrH5kswiSUhddkQMnzFGTw+iOjm74il9AGkcDOILu5hXdPp+D
+j7gFoVlFt+u1srsT43A8xfqrVt/v3mVmOHYkrnIjXMymDfTLmaKTrIPHLTirAHqE
+hd3OnzmX7BjGYJqvC2iI0xTttkXViT77pBlNMaxVUQQmprLVR9o=
+=iD6y
+-----END PGP SIGNATURE-----
+
+--nssu6z7k4mv5iuds--
