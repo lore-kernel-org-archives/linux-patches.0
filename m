@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FC8548EE;
-	Tue, 22 Jul 2025 14:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CA52EA485;
+	Tue, 22 Jul 2025 14:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193095; cv=none; b=KGeZKjeECzm0VqGYBCmT8ogBbTHBMlSYrMxfYWbHKdS0f1VCW49+Gn90WfqbHRrx3i56xOEz4dkGuKbLIzoCzbWJYbJvMWAipiFhD4eIei/0Ese3OpN/J2DE6YcJEwwX7K2+ZBzAEiiAF28t94FO1MYKiifvv9pTFCEIm22xAVg=
+	t=1753193098; cv=none; b=BrM115HLauFTxKFeggB5/d9H+JCNImUz/BeiDUJlAUHCb28IDssazK3UrBycAW1yUJV5Mr5yhY9VFChQoSBdgA2TD0gzd/KQb10iHPnzvYMLvSV6zY/dchiuLfhJkO0nm2S4qEM1Zub2NOFCdLIsgxZS++yhCcdCU/4c8rqwvTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193095; c=relaxed/simple;
-	bh=bYEVWaYVD6Z2m98ffH+mJAKjNZf+CLQxmTqIF9jd3pM=;
+	s=arc-20240116; t=1753193098; c=relaxed/simple;
+	bh=F2ZzHhg+tlRAUclj4LbGWpJQ/QO8OG0JjCSDs0+eyc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SyAYWy+5+l3CLXS7xc+TfdO+BxB1dEFSX29CKm3uGpV+dvR0TndoTd0coidfmLUVgwE+mvXRW8VQqHghzzXbGibGHvqFnfA3Ln59jSrGAbv9Ba4ZNTeqPkuAh/mr35o1PTEwp+b/fYN+aCUn94QvklrApyjg+S9RQGIhCBniR1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcdnosXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQU4laeCB3X8bsVtjPMPDcaGyOopMjFSyUDZYhCOo7Ij93gSS+1N9hLs7gw9uwMihIXErxbAfc/vX0iaRo/MIxW5FF2ALiRp0du3Lq7Q4Rj36nJ/6pdqigN8SMH1NVp3YsDOe2b/dM1hc6dFOP1/pEhAatYi/pbSX59qAo0rKjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9i0zF6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcdnosXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A745DC4CEF5;
-	Tue, 22 Jul 2025 14:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9i0zF6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE523C4CEEB;
+	Tue, 22 Jul 2025 14:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193095;
-	bh=bYEVWaYVD6Z2m98ffH+mJAKjNZf+CLQxmTqIF9jd3pM=;
+	s=korg; t=1753193098;
+	bh=F2ZzHhg+tlRAUclj4LbGWpJQ/QO8OG0JjCSDs0+eyc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KcdnosXp9e3WN0H5tdJtwQ2t7dSBh+WWAs6yaxF2eMUCRbgMhaf+mWNYpttd0CZt6
-	 DCutdAKIsQ2l04eN2AmcR+aX2rgpDiEvsdLfVhCdsJcvYYugLRrLygu9D486ZbHege
-	 p0wHSnPlsF1H6uJyx4YbBVhDxGhxD9wTRmMOmIew=
+	b=p9i0zF6dad7JIqxNL10NZ0h+ybuiTWzxo/eqgzr0Q9dfkHfVaEfmdUwd7dzs23bXd
+	 KPb/VO2uNUP830ObHjor2kTHjHq/WowUzCAUToxjf9m9PC6hKrgMbtJGQlxsXXu/wM
+	 vSGVBtCxyKMluMd+zQVD1VYQUuNiqxociQq4leKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wood <david@davidtw.co>,
-	Wesley Wiser <wwiser@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 149/158] rust: use `#[used(compiler)]` to fix build and `modpost` with Rust >= 1.89.0
-Date: Tue, 22 Jul 2025 15:45:33 +0200
-Message-ID: <20250722134346.273947264@linuxfoundation.org>
+	Ihor Solodrai <ihor.solodrai@pm.me>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 150/158] selftests/bpf: Set test path for token/obj_priv_implicit_token_envvar
+Date: Tue, 22 Jul 2025 15:45:34 +0200
+Message-ID: <20250722134346.310524606@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -47,146 +45,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Ihor Solodrai <ihor.solodrai@pm.me>
 
-commit 7498159226772d66f150dd406be462d75964a366 upstream.
+commit f01750aecdfb8bfb02842f60af3d805a3ae7267a upstream.
 
-Starting with Rust 1.89.0 (expected 2025-08-07), the Rust compiler fails
-to build the `rusttest` target due to undefined references such as:
+token/obj_priv_implicit_token_envvar test may fail in an environment
+where the process executing tests can not write to the root path.
 
-    kernel...-cgu.0:(.text....+0x116): undefined reference to
-    `rust_helper_kunit_get_current_test'
+Example:
+https://github.com/libbpf/libbpf/actions/runs/11844507007/job/33007897936
 
-Moreover, tooling like `modpost` gets confused:
+Change default path used by the test to /tmp/bpf-token-fs, and make it
+runtime configurable via an environment variable.
 
-    WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/nova/nova.o
-    ERROR: modpost: missing MODULE_LICENSE() in drivers/gpu/nova-core/nova_core.o
-
-The reason behind both issues is that the Rust compiler will now [1]
-treat `#[used]` as `#[used(linker)]` instead of `#[used(compiler)]`
-for our targets. This means that the retain section flag (`R`,
-`SHF_GNU_RETAIN`) will be used and that they will be marked as `unique`
-too, with different IDs. In turn, that means we end up with undefined
-references that did not get discarded in `rusttest` and that multiple
-`.modinfo` sections are generated, which confuse tooling like `modpost`
-because they only expect one.
-
-Thus start using `#[used(compiler)]` to keep the previous behavior
-and to be explicit about what we want. Sadly, it is an unstable feature
-(`used_with_arg`) [2] -- we will talk to upstream Rust about it. The good
-news is that it has been available for a long time (Rust >= 1.60) [3].
-
-The changes should also be fine for previous Rust versions, since they
-behave the same way as before [4].
-
-Alternatively, we could use `#[no_mangle]` or `#[export_name = ...]`
-since those still behave like `#[used(compiler)]`, but of course it is
-not really what we want to express, and it requires other changes to
-avoid symbol conflicts.
-
-Cc: David Wood <david@davidtw.co>
-Cc: Wesley Wiser <wwiser@gmail.com>
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust/pull/140872 [1]
-Link: https://github.com/rust-lang/rust/issues/93798 [2]
-Link: https://github.com/rust-lang/rust/pull/91504 [3]
-Link: https://godbolt.org/z/sxzWTMfzW [4]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
-Link: https://lore.kernel.org/r/20250712160103.1244945-3-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Ihor Solodrai <ihor.solodrai@pm.me>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241115003853.864397-1-ihor.solodrai@pm.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 ---
- rust/Makefile          |    1 +
- rust/kernel/lib.rs     |    1 +
- rust/macros/module.rs  |   10 +++++-----
- scripts/Makefile.build |    2 +-
- 4 files changed, 8 insertions(+), 6 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/token.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -157,6 +157,7 @@ quiet_cmd_rustdoc_test = RUSTDOC T $<
-       cmd_rustdoc_test = \
- 	OBJTREE=$(abspath $(objtree)) \
- 	$(RUSTDOC) --test $(rust_common_flags) \
-+		-Zcrate-attr='feature(used_with_arg)' \
- 		@$(objtree)/include/generated/rustc_cfg \
- 		$(rustc_target_flags) $(rustdoc_test_target_flags) \
- 		$(rustdoc_test_quiet) \
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -18,6 +18,7 @@
- #![feature(inline_const)]
- #![feature(lint_reasons)]
- #![feature(unsize)]
-+#![feature(used_with_arg)]
+--- a/tools/testing/selftests/bpf/prog_tests/token.c
++++ b/tools/testing/selftests/bpf/prog_tests/token.c
+@@ -828,8 +828,12 @@ static int userns_obj_priv_btf_success(i
+ 	return validate_struct_ops_load(mnt_fd, true /* should succeed */);
+ }
  
- // Ensure conditional compilation based on the kernel configuration works;
- // otherwise we may silently break things like initcall handling.
---- a/rust/macros/module.rs
-+++ b/rust/macros/module.rs
-@@ -57,7 +57,7 @@ impl<'a> ModInfoBuilder<'a> {
-                 {cfg}
-                 #[doc(hidden)]
-                 #[link_section = \".modinfo\"]
--                #[used]
-+                #[used(compiler)]
-                 pub static __{module}_{counter}: [u8; {length}] = *{string};
-             ",
-             cfg = if builtin {
-@@ -230,7 +230,7 @@ pub(crate) fn module(ts: TokenStream) ->
-                     // key or a new section. For the moment, keep it simple.
-                     #[cfg(MODULE)]
-                     #[doc(hidden)]
--                    #[used]
-+                    #[used(compiler)]
-                     static __IS_RUST_MODULE: () = ();
++static const char *token_bpffs_custom_dir()
++{
++	return getenv("BPF_SELFTESTS_BPF_TOKEN_DIR") ?: "/tmp/bpf-token-fs";
++}
++
+ #define TOKEN_ENVVAR "LIBBPF_BPF_TOKEN_PATH"
+-#define TOKEN_BPFFS_CUSTOM "/bpf-token-fs"
  
-                     static mut __MOD: Option<{type_}> = None;
-@@ -253,7 +253,7 @@ pub(crate) fn module(ts: TokenStream) ->
+ static int userns_obj_priv_implicit_token(int mnt_fd, struct token_lsm *lsm_skel)
+ {
+@@ -892,6 +896,7 @@ static int userns_obj_priv_implicit_toke
  
-                     #[cfg(MODULE)]
-                     #[doc(hidden)]
--                    #[used]
-+                    #[used(compiler)]
-                     #[link_section = \".init.data\"]
-                     static __UNIQUE_ID___addressable_init_module: unsafe extern \"C\" fn() -> i32 = init_module;
+ static int userns_obj_priv_implicit_token_envvar(int mnt_fd, struct token_lsm *lsm_skel)
+ {
++	const char *custom_dir = token_bpffs_custom_dir();
+ 	LIBBPF_OPTS(bpf_object_open_opts, opts);
+ 	struct dummy_st_ops_success *skel;
+ 	int err;
+@@ -909,10 +914,10 @@ static int userns_obj_priv_implicit_toke
+ 	 * BPF token implicitly, unless pointed to it through
+ 	 * LIBBPF_BPF_TOKEN_PATH envvar
+ 	 */
+-	rmdir(TOKEN_BPFFS_CUSTOM);
+-	if (!ASSERT_OK(mkdir(TOKEN_BPFFS_CUSTOM, 0777), "mkdir_bpffs_custom"))
++	rmdir(custom_dir);
++	if (!ASSERT_OK(mkdir(custom_dir, 0777), "mkdir_bpffs_custom"))
+ 		goto err_out;
+-	err = sys_move_mount(mnt_fd, "", AT_FDCWD, TOKEN_BPFFS_CUSTOM, MOVE_MOUNT_F_EMPTY_PATH);
++	err = sys_move_mount(mnt_fd, "", AT_FDCWD, custom_dir, MOVE_MOUNT_F_EMPTY_PATH);
+ 	if (!ASSERT_OK(err, "move_mount_bpffs"))
+ 		goto err_out;
  
-@@ -273,7 +273,7 @@ pub(crate) fn module(ts: TokenStream) ->
+@@ -925,7 +930,7 @@ static int userns_obj_priv_implicit_toke
+ 		goto err_out;
+ 	}
  
-                     #[cfg(MODULE)]
-                     #[doc(hidden)]
--                    #[used]
-+                    #[used(compiler)]
-                     #[link_section = \".exit.data\"]
-                     static __UNIQUE_ID___addressable_cleanup_module: extern \"C\" fn() = cleanup_module;
+-	err = setenv(TOKEN_ENVVAR, TOKEN_BPFFS_CUSTOM, 1 /*overwrite*/);
++	err = setenv(TOKEN_ENVVAR, custom_dir, 1 /*overwrite*/);
+ 	if (!ASSERT_OK(err, "setenv_token_path"))
+ 		goto err_out;
  
-@@ -283,7 +283,7 @@ pub(crate) fn module(ts: TokenStream) ->
-                     #[cfg(not(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS))]
-                     #[doc(hidden)]
-                     #[link_section = \"{initcall_section}\"]
--                    #[used]
-+                    #[used(compiler)]
-                     pub static __{name}_initcall: extern \"C\" fn() -> kernel::ffi::c_int = __{name}_init;
+@@ -951,11 +956,11 @@ static int userns_obj_priv_implicit_toke
+ 	if (!ASSERT_ERR(err, "obj_empty_token_path_load"))
+ 		goto err_out;
  
-                     #[cfg(not(MODULE))]
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -248,7 +248,7 @@ $(obj)/%.lst: $(obj)/%.c FORCE
- # Compile Rust sources (.rs)
- # ---------------------------------------------------------------------------
- 
--rust_allowed_features := arbitrary_self_types,lint_reasons
-+rust_allowed_features := arbitrary_self_types,lint_reasons,used_with_arg
- 
- # `--out-dir` is required to avoid temporaries being created by `rustc` in the
- # current working directory, which may be not accessible in the out-of-tree
+-	rmdir(TOKEN_BPFFS_CUSTOM);
++	rmdir(custom_dir);
+ 	unsetenv(TOKEN_ENVVAR);
+ 	return 0;
+ err_out:
+-	rmdir(TOKEN_BPFFS_CUSTOM);
++	rmdir(custom_dir);
+ 	unsetenv(TOKEN_ENVVAR);
+ 	return -EINVAL;
+ }
 
 
