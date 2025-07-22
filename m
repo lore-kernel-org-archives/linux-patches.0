@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0EF2E4266;
-	Tue, 22 Jul 2025 13:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE881433A8;
+	Tue, 22 Jul 2025 13:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192037; cv=none; b=KoRs/O8XCqhfdjgh6onmvW1TOj6L62PrUlRPwPS3MMVX8pwCoYv0UfDvB1IcdxJk9G4ykU3L0mfmuugnlwXEEU4GGafyTneoHuTEJgoONfjnVOso3EraNdai0D0cAQr5HrLLbkd/S1+cfQS6Gzmc3qNcjeHgLUtB2deknal7qf4=
+	t=1753192041; cv=none; b=l3f6kdvP+sc5etAUmUsYoGX/L4N9D8uqCalNe47H7IGUz9CugPljzDHukFz1aIwLgfYIa12MAdXcMZIroamarhTHeHCqypoUFVoTTJNrY4HFzrGu4IZLPHQ6icB5AJ93Md7xoUH0UMd8pYDGlzl2UmqwKLUKSBmRsJTTNy+HVaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192037; c=relaxed/simple;
-	bh=NPUO9EprdkWX8qs/uymZqBAd8AKjeRgx10MpIdGhb7M=;
+	s=arc-20240116; t=1753192041; c=relaxed/simple;
+	bh=9bMIiWhLPqqJqjoC5NJ9QkaT0Gm84MgScawmQ/E0CMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHFM3vhwdHgCLmLmYQ1CBuvJfOBFj0fFYatcofrvpFdp5RXgfHydaDkd2/Zk86gDRh/7HlGOB+TUS2en59CAlVmi/GqdJ8R62u5ukiz7+k2b7vaN0VeyDeSNe4Vurv5JAvNMxFXg84efZrRBoqEl0P78VC14Tib7cutexTBIObw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zg68ECVF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quzCbEJRUKqbQIpZ09BpNNiXxL9qNI0iSD/kzWWPsKjuL2fQAHHuQv757gdc8xC8KNOLK30KAtM3ual59RWu0LoSJCXcAAYMbf0LTGlluOP1MmePAohOymuxS14wi/ECnpF0RdkteXhr2SXtaXTASi0U5aIsHSwFM8K+DyAw/HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqHXWan3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zg68ECVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E11FC4CEEB;
-	Tue, 22 Jul 2025 13:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqHXWan3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F57C4CEF6;
+	Tue, 22 Jul 2025 13:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192037;
-	bh=NPUO9EprdkWX8qs/uymZqBAd8AKjeRgx10MpIdGhb7M=;
+	s=korg; t=1753192040;
+	bh=9bMIiWhLPqqJqjoC5NJ9QkaT0Gm84MgScawmQ/E0CMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zg68ECVFcKyt6zUqWLtomi8ajoAIv7lU0mksRZS107mJPcwNn3oO/UVi6pCzJDc1m
-	 +vMP56qgnIrS+1IYrXW9asu+YrPttAzK5eSjZs8UePYcy9aeyIrclQoFakx+5sk3Rg
-	 PpjN0Td88dFJduIDVjtSNoCs2yUBRsTOXTgkeF78=
+	b=JqHXWan3HBdNo0Tks3PO8MCE2ei8S6s2RV0FgXsLYUWnZ8eEEMlg87Nl+FGPh8Fs6
+	 JbPST6VzQUgjnjIcR4Ar6lJ9m3jpVb4eP6YZ65ieGPjWvZcF387CjJ2rj4sXFQhXxb
+	 OI6oPbfsMZ2gh6k2zq+nqtWcB897YQUfQM+8OarE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 26/79] pmdomain: governor: Consider CPU latency tolerance from pm_domain_cpu_gov
-Date: Tue, 22 Jul 2025 15:44:22 +0200
-Message-ID: <20250722134329.334091729@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 27/79] smb: client: fix use-after-free in crypt_message when using async crypto
+Date: Tue, 22 Jul 2025 15:44:23 +0200
+Message-ID: <20250722134329.369300470@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -50,109 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
 
-commit 500ba33284416255b9a5b50ace24470b6fe77ea5 upstream.
+commit b220bed63330c0e1733dc06ea8e75d5b9962b6b6 upstream.
 
-pm_domain_cpu_gov is selecting a cluster idle state but does not consider
-latency tolerance of child CPUs. This results in deeper cluster idle state
-whose latency does not meet latency tolerance requirement.
+The CVE-2024-50047 fix removed asynchronous crypto handling from
+crypt_message(), assuming all crypto operations are synchronous.
+However, when hardware crypto accelerators are used, this can cause
+use-after-free crashes:
 
-Select deeper idle state only if global and device latency tolerance of all
-child CPUs meet.
+  crypt_message()
+    // Allocate the creq buffer containing the req
+    creq = smb2_get_aead_req(..., &req);
 
-Test results on SM8750 with 300 usec PM-QoS on CPU0 which is less than
-domain idle state entry (2150) + exit (1983) usec latency mentioned in
-devicetree, demonstrate the issue.
+    // Async encryption returns -EINPROGRESS immediately
+    rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
 
-	# echo 300 > /sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us
+    // Free creq while async operation is still in progress
+    kvfree_sensitive(creq, ...);
 
-Before: (Usage is incrementing)
-======
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             29817          537        8          270        0
+Hardware crypto modules often implement async AEAD operations for
+performance. When crypto_aead_encrypt/decrypt() returns -EINPROGRESS,
+the operation completes asynchronously. Without crypto_wait_req(),
+the function immediately frees the request buffer, leading to crashes
+when the driver later accesses the freed memory.
 
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             30348          542        8          271        0
+This results in a use-after-free condition when the hardware crypto
+driver later accesses the freed request structure, leading to kernel
+crashes with NULL pointer dereferences.
 
-After: (Usage is not incrementing due to latency tolerance)
-======
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             39319          626        14         307        0
+The issue occurs because crypto_alloc_aead() with mask=0 doesn't
+guarantee synchronous operation. Even without CRYPTO_ALG_ASYNC in
+the mask, async implementations can be selected.
 
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             39319          626        14         307        0
+Fix by restoring the async crypto handling:
+- DECLARE_CRYPTO_WAIT(wait) for completion tracking
+- aead_request_set_callback() for async completion notification
+- crypto_wait_req() to wait for operation completion
 
-Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Fixes: e94999688e3a ("PM / Domains: Add genpd governor for CPUs")
+This ensures the request buffer isn't freed until the crypto operation
+completes, whether synchronous or asynchronous, while preserving the
+CVE-2024-50047 fix.
+
+Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+Link: https://lore.kernel.org/all/8b784a13-87b0-4131-9ff9-7a8993538749@huaweicloud.com/
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250709-pmdomain_qos-v2-1-976b12257899@oss.qualcomm.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/domain_governor.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/base/power/domain_governor.c
-+++ b/drivers/base/power/domain_governor.c
-@@ -8,6 +8,7 @@
- #include <linux/pm_domain.h>
- #include <linux/pm_qos.h>
- #include <linux/hrtimer.h>
-+#include <linux/cpu.h>
- #include <linux/cpuidle.h>
- #include <linux/cpumask.h>
- #include <linux/ktime.h>
-@@ -345,6 +346,8 @@ static bool cpu_power_down_ok(struct dev
- 	struct cpuidle_device *dev;
- 	ktime_t domain_wakeup, next_hrtimer;
- 	ktime_t now = ktime_get();
-+	struct device *cpu_dev;
-+	s64 cpu_constraint, global_constraint;
- 	s64 idle_duration_ns;
- 	int cpu, i;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4497,6 +4497,7 @@ crypt_message(struct TCP_Server_Info *se
+ 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
+ 	struct aead_request *req;
+ 	u8 *iv;
++	DECLARE_CRYPTO_WAIT(wait);
+ 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
+ 	void *creq;
  
-@@ -355,6 +358,7 @@ static bool cpu_power_down_ok(struct dev
- 	if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
- 		return true;
+@@ -4545,7 +4546,11 @@ crypt_message(struct TCP_Server_Info *se
+ 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
+ 	aead_request_set_ad(req, assoc_data_len);
  
-+	global_constraint = cpu_latency_qos_limit();
- 	/*
- 	 * Find the next wakeup for any of the online CPUs within the PM domain
- 	 * and its subdomains. Note, we only need the genpd->cpus, as it already
-@@ -368,8 +372,16 @@ static bool cpu_power_down_ok(struct dev
- 			if (ktime_before(next_hrtimer, domain_wakeup))
- 				domain_wakeup = next_hrtimer;
- 		}
+-	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
++	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
++				  crypto_req_done, &wait);
 +
-+		cpu_dev = get_cpu_device(cpu);
-+		if (cpu_dev) {
-+			cpu_constraint = dev_pm_qos_raw_resume_latency(cpu_dev);
-+			if (cpu_constraint < global_constraint)
-+				global_constraint = cpu_constraint;
-+		}
- 	}
++	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
++				: crypto_aead_decrypt(req), &wait);
  
-+	global_constraint *= NSEC_PER_USEC;
- 	/* The minimum idle duration is from now - until the next wakeup. */
- 	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
- 	if (idle_duration_ns <= 0)
-@@ -382,8 +394,10 @@ static bool cpu_power_down_ok(struct dev
- 	 */
- 	i = genpd->state_idx;
- 	do {
--		if (idle_duration_ns >= (genpd->states[i].residency_ns +
--		    genpd->states[i].power_off_latency_ns)) {
-+		if ((idle_duration_ns >= (genpd->states[i].residency_ns +
-+		    genpd->states[i].power_off_latency_ns)) &&
-+		    (global_constraint >= (genpd->states[i].power_on_latency_ns +
-+		    genpd->states[i].power_off_latency_ns))) {
- 			genpd->state_idx = i;
- 			return true;
- 		}
+ 	if (!rc && enc)
+ 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
 
 
