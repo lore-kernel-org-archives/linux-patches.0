@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2F82E9EDD;
-	Tue, 22 Jul 2025 14:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA8E2EAB69;
+	Tue, 22 Jul 2025 14:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193776; cv=none; b=lYHptIYH11EByhXcDwXI7CtdRcbQImF+pK40+7IXKNbFDjS5Gj8yyUMDYAQ7aCOdlSVX2h2O2Fn3eirLmhxmIQacDGQJLKnJYFZcCayX/hiVshKGM4DdrDgrXGMJBsi2Ho4eogzQelozy2B1R8+PP8L3scUWAN48zmFJHnsMCIQ=
+	t=1753193779; cv=none; b=B2XrJCH7UFq3LPhtfUDXj9IOmRVaP+YD5ZKn1PSFJYNnvgeBHxb+Iw/QAJSqNeFnNXYH62boKcTND9Hfb9ULmUx+Ix1qV4UFPF8l1dy0tK7GbVUTWyzWLuBLPrbry1t1QsOru4pMqwsZe1v7zejtkpr2vNxbc4kCOwqP1Pce3Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193776; c=relaxed/simple;
-	bh=Jxgdmvd9vf1XrSrHHguHFUN5ilgi3qa8RuE51H3F0HU=;
+	s=arc-20240116; t=1753193779; c=relaxed/simple;
+	bh=TSzan+PDCy02PuGG+Crw22/WUiL9v2cJkzvw1Xc2mLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kc5qIgKTxwieaotZComh6fd8qQnH82UlfJ2048eE7udbcVADWP79XaLLGWp9UtIj14NnRV+i9dZb3sUW2CD/8BxR+yE5vAFVLRkDOWCDd03z57NOsA/tOtAysA8dOKFmO9DNUWGSnAL2rQ7h/7JNNT4a/5iPN8C3XmpaQTFs1CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQoLICh0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VICDnjrJfXgPVPcZP2L82TI0nXLl3fqj61uaK05RPTIeZxLbes44wI7vZX1ViWJyL/4SXsVpF1ihfe1bV4jYFbeXLeOkLHuWQ88Tv9RHo4L5hRqpM4K7xl3xVrCFwLftSAAErsAbATwfk45vb1gnryE+MWbPYJV0Ip43oSFGujM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxD78bKi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQoLICh0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11529C4CEEB;
-	Tue, 22 Jul 2025 14:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxD78bKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2A9C4CEEB;
+	Tue, 22 Jul 2025 14:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193776;
-	bh=Jxgdmvd9vf1XrSrHHguHFUN5ilgi3qa8RuE51H3F0HU=;
+	s=korg; t=1753193779;
+	bh=TSzan+PDCy02PuGG+Crw22/WUiL9v2cJkzvw1Xc2mLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQoLICh0sKa2yM2evAXiVRJs1TfjGLhr3tE+eYN2G+YlruBD6Ulfy0TA4OI0/nBiL
-	 N1j36a3QYk65j/CkrZSC9pjQXQ0uS9ab93cA8eiRUzI1k1UmBBTuK0tUCKtIuvuJYT
-	 jDk1JRv8srs/LheuKVvcOvfVnxUFE37cxOjPFgVU=
+	b=NxD78bKiC5dtgDCZA66g4isqJwxz/PznrLtX6wWd/JTNSzRg6dOBdE0YRokpPvzXF
+	 NMK/BaVd5gtWSt9oNdXd9fgxonebijGEqUa2GbNkPOSEb0GxoXO3UW7av2O7LoqJWE
+	 e4QhdUMhrMMzDtSFh6crB+FgPSsXW/3UPnzOChWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.15 182/187] cifs: Fix reading into an ITER_FOLIOQ from the smbdirect code
-Date: Tue, 22 Jul 2025 15:45:52 +0200
-Message-ID: <20250722134352.547987931@linuxfoundation.org>
+	David Wood <david@davidtw.co>,
+	Wesley Wiser <wwiser@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.15 173/187] rust: use `#[used(compiler)]` to fix build and `modpost` with Rust >= 1.89.0
+Date: Tue, 22 Jul 2025 15:45:43 +0200
+Message-ID: <20250722134352.214605714@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,203 +47,171 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 263debecb4aa7cec0a86487e6f409814f6194a21 upstream.
+commit 7498159226772d66f150dd406be462d75964a366 upstream.
 
-When performing a file read from RDMA, smbd_recv() prints an "Invalid msg
-type 4" error and fails the I/O.  This is due to the switch-statement there
-not handling the ITER_FOLIOQ handed down from netfslib.
+Starting with Rust 1.89.0 (expected 2025-08-07), the Rust compiler fails
+to build the `rusttest` target due to undefined references such as:
 
-Fix this by collapsing smbd_recv_buf() and smbd_recv_page() into
-smbd_recv() and just using copy_to_iter() instead of memcpy().  This
-future-proofs the function too, in case more ITER_* types are added.
+    kernel...-cgu.0:(.text....+0x116): undefined reference to
+    `rust_helper_kunit_get_current_test'
 
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Reported-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Tom Talpey <tom@talpey.com>
-cc: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Moreover, tooling like `modpost` gets confused:
+
+    WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/nova/nova.o
+    ERROR: modpost: missing MODULE_LICENSE() in drivers/gpu/nova-core/nova_core.o
+
+The reason behind both issues is that the Rust compiler will now [1]
+treat `#[used]` as `#[used(linker)]` instead of `#[used(compiler)]`
+for our targets. This means that the retain section flag (`R`,
+`SHF_GNU_RETAIN`) will be used and that they will be marked as `unique`
+too, with different IDs. In turn, that means we end up with undefined
+references that did not get discarded in `rusttest` and that multiple
+`.modinfo` sections are generated, which confuse tooling like `modpost`
+because they only expect one.
+
+Thus start using `#[used(compiler)]` to keep the previous behavior
+and to be explicit about what we want. Sadly, it is an unstable feature
+(`used_with_arg`) [2] -- we will talk to upstream Rust about it. The good
+news is that it has been available for a long time (Rust >= 1.60) [3].
+
+The changes should also be fine for previous Rust versions, since they
+behave the same way as before [4].
+
+Alternatively, we could use `#[no_mangle]` or `#[export_name = ...]`
+since those still behave like `#[used(compiler)]`, but of course it is
+not really what we want to express, and it requires other changes to
+avoid symbol conflicts.
+
+Cc: David Wood <david@davidtw.co>
+Cc: Wesley Wiser <wwiser@gmail.com>
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://github.com/rust-lang/rust/pull/140872 [1]
+Link: https://github.com/rust-lang/rust/issues/93798 [2]
+Link: https://github.com/rust-lang/rust/pull/91504 [3]
+Link: https://godbolt.org/z/sxzWTMfzW [4]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Björn Roy Baron <bjorn3_gh@protonmail.com>
+Link: https://lore.kernel.org/r/20250712160103.1244945-3-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smbdirect.c |  112 ++++++----------------------------------------
- 1 file changed, 17 insertions(+), 95 deletions(-)
+ rust/Makefile           |    1 +
+ rust/kernel/firmware.rs |    2 +-
+ rust/kernel/kunit.rs    |    2 +-
+ rust/kernel/lib.rs      |    2 ++
+ rust/macros/module.rs   |   10 +++++-----
+ scripts/Makefile.build  |    2 +-
+ 6 files changed, 11 insertions(+), 8 deletions(-)
 
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -1755,35 +1755,39 @@ try_again:
- }
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -194,6 +194,7 @@ quiet_cmd_rustdoc_test = RUSTDOC T $<
+ 	RUST_MODFILE=test.rs \
+ 	OBJTREE=$(abspath $(objtree)) \
+ 	$(RUSTDOC) --test $(rust_common_flags) \
++		-Zcrate-attr='feature(used_with_arg)' \
+ 		@$(objtree)/include/generated/rustc_cfg \
+ 		$(rustc_target_flags) $(rustdoc_test_target_flags) \
+ 		$(rustdoc_test_quiet) \
+--- a/rust/kernel/firmware.rs
++++ b/rust/kernel/firmware.rs
+@@ -202,7 +202,7 @@ macro_rules! module_firmware {
+             };
  
- /*
-- * Receive data from receive reassembly queue
-+ * Receive data from the transport's receive reassembly queue
-  * All the incoming data packets are placed in reassembly queue
-- * buf: the buffer to read data into
-+ * iter: the buffer to read data into
-  * size: the length of data to read
-  * return value: actual data read
-- * Note: this implementation copies the data from reassebmly queue to receive
-+ *
-+ * Note: this implementation copies the data from reassembly queue to receive
-  * buffers used by upper layer. This is not the optimal code path. A better way
-  * to do it is to not have upper layer allocate its receive buffers but rather
-  * borrow the buffer from reassembly queue, and return it after data is
-  * consumed. But this will require more changes to upper layer code, and also
-  * need to consider packet boundaries while they still being reassembled.
-  */
--static int smbd_recv_buf(struct smbd_connection *info, char *buf,
--		unsigned int size)
-+int smbd_recv(struct smbd_connection *info, struct msghdr *msg)
- {
- 	struct smbdirect_socket *sc = &info->socket;
- 	struct smbd_response *response;
- 	struct smbdirect_data_transfer *data_transfer;
-+	size_t size = iov_iter_count(&msg->msg_iter);
- 	int to_copy, to_read, data_read, offset;
- 	u32 data_length, remaining_data_length, data_offset;
- 	int rc;
+             #[link_section = ".modinfo"]
+-            #[used]
++            #[used(compiler)]
+             static __MODULE_FIRMWARE: [u8; $($builder)*::create(__MODULE_FIRMWARE_PREFIX)
+                 .build_length()] = $($builder)*::create(__MODULE_FIRMWARE_PREFIX).build();
+         };
+--- a/rust/kernel/kunit.rs
++++ b/rust/kernel/kunit.rs
+@@ -278,7 +278,7 @@ macro_rules! kunit_unsafe_test_suite {
+                     is_init: false,
+                 };
  
-+	if (WARN_ON_ONCE(iov_iter_rw(&msg->msg_iter) == WRITE))
-+		return -EINVAL; /* It's a bug in upper layer to get there */
-+
- again:
- 	/*
- 	 * No need to hold the reassembly queue lock all the time as we are
- 	 * the only one reading from the front of the queue. The transport
- 	 * may add more entries to the back of the queue at the same time
- 	 */
--	log_read(INFO, "size=%d info->reassembly_data_length=%d\n", size,
-+	log_read(INFO, "size=%zd info->reassembly_data_length=%d\n", size,
- 		info->reassembly_data_length);
- 	if (info->reassembly_data_length >= size) {
- 		int queue_length;
-@@ -1821,7 +1825,10 @@ again:
- 			if (response->first_segment && size == 4) {
- 				unsigned int rfc1002_len =
- 					data_length + remaining_data_length;
--				*((__be32 *)buf) = cpu_to_be32(rfc1002_len);
-+				__be32 rfc1002_hdr = cpu_to_be32(rfc1002_len);
-+				if (copy_to_iter(&rfc1002_hdr, sizeof(rfc1002_hdr),
-+						 &msg->msg_iter) != sizeof(rfc1002_hdr))
-+					return -EFAULT;
- 				data_read = 4;
- 				response->first_segment = false;
- 				log_read(INFO, "returning rfc1002 length %d\n",
-@@ -1830,10 +1837,9 @@ again:
- 			}
+-            #[used]
++            #[used(compiler)]
+             #[allow(unused_unsafe)]
+             #[cfg_attr(not(target_os = "macos"), link_section = ".kunit_test_suites")]
+             static mut KUNIT_TEST_SUITE_ENTRY: *const ::kernel::bindings::kunit_suite =
+--- a/rust/kernel/lib.rs
++++ b/rust/kernel/lib.rs
+@@ -26,6 +26,8 @@
+ #![feature(const_mut_refs)]
+ #![feature(const_ptr_write)]
+ #![feature(const_refs_to_cell)]
++// To be determined.
++#![feature(used_with_arg)]
  
- 			to_copy = min_t(int, data_length - offset, to_read);
--			memcpy(
--				buf + data_read,
--				(char *)data_transfer + data_offset + offset,
--				to_copy);
-+			if (copy_to_iter((char *)data_transfer + data_offset + offset,
-+					 to_copy, &msg->msg_iter) != to_copy)
-+				return -EFAULT;
+ // Ensure conditional compilation based on the kernel configuration works;
+ // otherwise we may silently break things like initcall handling.
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -57,7 +57,7 @@ impl<'a> ModInfoBuilder<'a> {
+                 {cfg}
+                 #[doc(hidden)]
+                 #[cfg_attr(not(target_os = \"macos\"), link_section = \".modinfo\")]
+-                #[used]
++                #[used(compiler)]
+                 pub static __{module}_{counter}: [u8; {length}] = *{string};
+             ",
+             cfg = if builtin {
+@@ -247,7 +247,7 @@ pub(crate) fn module(ts: TokenStream) ->
+                     // key or a new section. For the moment, keep it simple.
+                     #[cfg(MODULE)]
+                     #[doc(hidden)]
+-                    #[used]
++                    #[used(compiler)]
+                     static __IS_RUST_MODULE: () = ();
  
- 			/* move on to the next buffer? */
- 			if (to_copy == data_length - offset) {
-@@ -1899,90 +1905,6 @@ read_rfc1002_done:
- }
+                     static mut __MOD: core::mem::MaybeUninit<{type_}> =
+@@ -271,7 +271,7 @@ pub(crate) fn module(ts: TokenStream) ->
  
- /*
-- * Receive a page from receive reassembly queue
-- * page: the page to read data into
-- * to_read: the length of data to read
-- * return value: actual data read
-- */
--static int smbd_recv_page(struct smbd_connection *info,
--		struct page *page, unsigned int page_offset,
--		unsigned int to_read)
--{
--	struct smbdirect_socket *sc = &info->socket;
--	int ret;
--	char *to_address;
--	void *page_address;
--
--	/* make sure we have the page ready for read */
--	ret = wait_event_interruptible(
--		info->wait_reassembly_queue,
--		info->reassembly_data_length >= to_read ||
--			sc->status != SMBDIRECT_SOCKET_CONNECTED);
--	if (ret)
--		return ret;
--
--	/* now we can read from reassembly queue and not sleep */
--	page_address = kmap_atomic(page);
--	to_address = (char *) page_address + page_offset;
--
--	log_read(INFO, "reading from page=%p address=%p to_read=%d\n",
--		page, to_address, to_read);
--
--	ret = smbd_recv_buf(info, to_address, to_read);
--	kunmap_atomic(page_address);
--
--	return ret;
--}
--
--/*
-- * Receive data from transport
-- * msg: a msghdr point to the buffer, can be ITER_KVEC or ITER_BVEC
-- * return: total bytes read, or 0. SMB Direct will not do partial read.
-- */
--int smbd_recv(struct smbd_connection *info, struct msghdr *msg)
--{
--	char *buf;
--	struct page *page;
--	unsigned int to_read, page_offset;
--	int rc;
--
--	if (iov_iter_rw(&msg->msg_iter) == WRITE) {
--		/* It's a bug in upper layer to get there */
--		cifs_dbg(VFS, "Invalid msg iter dir %u\n",
--			 iov_iter_rw(&msg->msg_iter));
--		rc = -EINVAL;
--		goto out;
--	}
--
--	switch (iov_iter_type(&msg->msg_iter)) {
--	case ITER_KVEC:
--		buf = msg->msg_iter.kvec->iov_base;
--		to_read = msg->msg_iter.kvec->iov_len;
--		rc = smbd_recv_buf(info, buf, to_read);
--		break;
--
--	case ITER_BVEC:
--		page = msg->msg_iter.bvec->bv_page;
--		page_offset = msg->msg_iter.bvec->bv_offset;
--		to_read = msg->msg_iter.bvec->bv_len;
--		rc = smbd_recv_page(info, page, page_offset, to_read);
--		break;
--
--	default:
--		/* It's a bug in upper layer to get there */
--		cifs_dbg(VFS, "Invalid msg type %d\n",
--			 iov_iter_type(&msg->msg_iter));
--		rc = -EINVAL;
--	}
--
--out:
--	/* SMBDirect will read it all or nothing */
--	if (rc > 0)
--		msg->msg_iter.count = 0;
--	return rc;
--}
--
--/*
-  * Send data to transport
-  * Each rqst is transported as a SMBDirect payload
-  * rqst: the data to write
+                     #[cfg(MODULE)]
+                     #[doc(hidden)]
+-                    #[used]
++                    #[used(compiler)]
+                     #[link_section = \".init.data\"]
+                     static __UNIQUE_ID___addressable_init_module: unsafe extern \"C\" fn() -> i32 = init_module;
+ 
+@@ -291,7 +291,7 @@ pub(crate) fn module(ts: TokenStream) ->
+ 
+                     #[cfg(MODULE)]
+                     #[doc(hidden)]
+-                    #[used]
++                    #[used(compiler)]
+                     #[link_section = \".exit.data\"]
+                     static __UNIQUE_ID___addressable_cleanup_module: extern \"C\" fn() = cleanup_module;
+ 
+@@ -301,7 +301,7 @@ pub(crate) fn module(ts: TokenStream) ->
+                     #[cfg(not(CONFIG_HAVE_ARCH_PREL32_RELOCATIONS))]
+                     #[doc(hidden)]
+                     #[link_section = \"{initcall_section}\"]
+-                    #[used]
++                    #[used(compiler)]
+                     pub static __{name}_initcall: extern \"C\" fn() -> kernel::ffi::c_int = __{name}_init;
+ 
+                     #[cfg(not(MODULE))]
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -222,7 +222,7 @@ $(obj)/%.lst: $(obj)/%.c FORCE
+ # Compile Rust sources (.rs)
+ # ---------------------------------------------------------------------------
+ 
+-rust_allowed_features := asm_const,asm_goto,arbitrary_self_types,lint_reasons,raw_ref_op
++rust_allowed_features := asm_const,asm_goto,arbitrary_self_types,lint_reasons,raw_ref_op,used_with_arg
+ 
+ # `--out-dir` is required to avoid temporaries being created by `rustc` in the
+ # current working directory, which may be not accessible in the out-of-tree
 
 
