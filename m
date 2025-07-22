@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2492372624;
-	Tue, 22 Jul 2025 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D18372624;
+	Tue, 22 Jul 2025 13:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192074; cv=none; b=UFK/vW+Sq8CEmeJQbIKsJYbnvpLK5eowKwvopSZ0bkOz+PrY6BtmPJJdLzfANj/uErOoV3yW8j9UNzSZY0N1NsKk4BLU1Cn0xG0jUGWrlq5nceKK92grgwuzEpY6n4uoctMxLn5NTWsB54tM6d7RQD0u1Ec+grkYU65xmXfBiLc=
+	t=1753192077; cv=none; b=F4bvpXViDWxwY93tH/rZNjxRoFCCJtpTerntRHVhJW9ZeTdS7TfiCK9XaGBVfJhVColgMgIssyTZ8Ret3CZvo8zU7zLZteuFbf6wV2UyyOn7DMJ9Jgs2fVtK7BptnVU/APcVMrj8DCNyfsROM51UzyDkUvsoKavofxfOsV6yD+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192074; c=relaxed/simple;
-	bh=EyWbWh9oBhqROD1S6AoSp0Ujlrv5UfYMZlQ6UzYbOcA=;
+	s=arc-20240116; t=1753192077; c=relaxed/simple;
+	bh=mDoF7L2y3Ypw62wFfRs8vvPc6TeRqijWahwDXlGk6Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7k6SNlybyYHBM1nlqOCo7Q9iTHmsE/YFM2wB6PIBGFt8OQP/UWLvUXtRoXSJQvv+0hN4P4Jy97a/A1QQCOyUxCLo3N2bL8zcA7sMSmR/9cpQ5DTMWTdyxvCtnKT4xFuxcl7w1vH1RrLxeDsvpWsE21tKt2H6I2FycrnVVj2R7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOKAqsfy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kx+g8kv8r8rQABV++taYA3/KSnliF52TEmkgSVAuubuO1ozFZk8UULreEWvXWd6H82UdpqC02EEx8+cCI0WSL3lMnSAL6FmVZBbspfgMR+4b+ORfJMWXq3Db1kQlV/7z96Q3Ie++qIHz7Kv/ndL9tM7QcjPvYdIdtVcnw95JUb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZrcKIIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOKAqsfy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C2EC4CEEB;
-	Tue, 22 Jul 2025 13:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZrcKIIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DACC4CEEB;
+	Tue, 22 Jul 2025 13:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192074;
-	bh=EyWbWh9oBhqROD1S6AoSp0Ujlrv5UfYMZlQ6UzYbOcA=;
+	s=korg; t=1753192077;
+	bh=mDoF7L2y3Ypw62wFfRs8vvPc6TeRqijWahwDXlGk6Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOKAqsfycE1BYO1uJ0vTNOrTzFuWBZUzcH+KmaTUXTqbB23gDrs8Radi+Rtu4gYfZ
-	 FnYIhNUPGBx/PTlTJjG94XhR9mQTPh0i1uG7uAUtxNUOLZEM6pB4g5MGHq/r7AOPMq
-	 2JfbzfrP1koBx2CswN3GLPRwcw9hqsTOuJE6OyuE=
+	b=rZrcKIIr++dGMvkKYUGOLH4WxFjdViv5AaPfKEKZjlwllZkoM8G7/bbX9QIYKMG1u
+	 0W7bRmHsZKKu/rNRmBnPIfPDzMDKdEyMBDyXl5q0hX8xoLjmeqQ7GmoerdLPyFiAAS
+	 ZJ5o8rkGtJ4qZwZ+B3ILC/oE1GZsedcWspsMC+S8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com,
-	"Enju, Kohei" <enjuk@amazon.co.jp>,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.1 36/79] comedi: das16m1: Fix bit shift out of bounds
-Date: Tue, 22 Jul 2025 15:44:32 +0200
-Message-ID: <20250722134329.696910863@linuxfoundation.org>
+Subject: [PATCH 6.1 37/79] comedi: das6402: Fix bit shift out of bounds
+Date: Tue, 22 Jul 2025 15:44:33 +0200
+Message-ID: <20250722134329.733028047@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -53,42 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-commit ed93c6f68a3be06e4e0c331c6e751f462dee3932 upstream.
+commit 70f2b28b5243df557f51c054c20058ae207baaac upstream.
 
 When checking for a supported IRQ number, the following test is used:
 
-	/* only irqs 2, 3, 4, 5, 6, 7, 10, 11, 12, 14, and 15 are valid */
-	if ((1 << it->options[1]) & 0xdcfc) {
+	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
+	if ((1 << it->options[1]) & 0x8cec) {
 
 However, `it->options[i]` is an unchecked `int` value from userspace, so
 the shift amount could be negative or out of bounds.  Fix the test by
 requiring `it->options[1]` to be within bounds before proceeding with
-the original test.
+the original test.  Valid `it->options[1]` values that select the IRQ
+will be in the range [1,15]. The value 0 explicitly disables the use of
+interrupts.
 
-Reported-by: syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c52293513298e0fd9a94
-Fixes: 729988507680 ("staging: comedi: das16m1: tidy up the irq support in das16m1_attach()")
-Tested-by: syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com
-Suggested-by: "Enju, Kohei" <enjuk@amazon.co.jp>
+Fixes: 79e5e6addbb1 ("staging: comedi: das6402: rewrite broken driver")
 Cc: stable@vger.kernel.org # 5.13+
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707130908.70758-1-abbotti@mev.co.uk
+Link: https://lore.kernel.org/r/20250707135737.77448-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/das16m1.c |    3 ++-
+ drivers/comedi/drivers/das6402.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/das16m1.c
-+++ b/drivers/comedi/drivers/das16m1.c
-@@ -522,7 +522,8 @@ static int das16m1_attach(struct comedi_
- 	devpriv->extra_iobase = dev->iobase + DAS16M1_8255_IOBASE;
+--- a/drivers/comedi/drivers/das6402.c
++++ b/drivers/comedi/drivers/das6402.c
+@@ -567,7 +567,8 @@ static int das6402_attach(struct comedi_
+ 	das6402_reset(dev);
  
- 	/* only irqs 2, 3, 4, 5, 6, 7, 10, 11, 12, 14, and 15 are valid */
--	if ((1 << it->options[1]) & 0xdcfc) {
-+	if (it->options[1] >= 2 && it->options[1] <= 15 &&
-+	    (1 << it->options[1]) & 0xdcfc) {
- 		ret = request_irq(it->options[1], das16m1_interrupt, 0,
+ 	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
+-	if ((1 << it->options[1]) & 0x8cec) {
++	if (it->options[1] > 0 && it->options[1] < 16 &&
++	    (1 << it->options[1]) & 0x8cec) {
+ 		ret = request_irq(it->options[1], das6402_interrupt, 0,
  				  dev->board_name, dev);
- 		if (ret == 0)
+ 		if (ret == 0) {
 
 
