@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517562E9759;
-	Tue, 22 Jul 2025 14:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E0A2EA739;
+	Tue, 22 Jul 2025 14:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193741; cv=none; b=I7DhFrEY8eWtprWp4Jfrm+z2F5DfTzpiIRnw0O9O6w/JR9Jxrcxsf7zwgrI+ozN2hlPgV2Rbg/MCxybvgoyZgyqBHa4J6VOfrsiRG7mqLtfKwPqtywwkK1Jso3kYTVudezag+iiD+0y6bxmDsGyR90h/+7w052+ZZEFs84bryaI=
+	t=1753193744; cv=none; b=aMidsiy8MDPzkapT+eMkul+LmfMpZjoanSpp90mPaymGVI99pPT8MHBuIo0l0lI8Pc940B0Oa8irtSw4vatkzG3x4cXBlcadx/+vhEl98zuyVGXtNFDg5Y4dCfgqVvUqedaPy2b4cE7Ttbf3gak1sGBzR4x/rt4k6B+PNFhvTp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193741; c=relaxed/simple;
-	bh=fvKUBFc05hQTM7si+h+iNeVv0JeGsMDJiVS6GC0+lmQ=;
+	s=arc-20240116; t=1753193744; c=relaxed/simple;
+	bh=AWRUZ8pzIzvYVwwNFmNExXHLt3QbY+RL/lvPcDThnH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=om8bntVa8wYVZXox5V98wTXRFKhg6MPfmAJbYaetIECCL7ibeRfDhC6/iUf0QPxFzRNN2qRSQp4YmLoISpeEzEbQquYK+CoorMABbfKT3T8yRxZWsu3m/fhjn15VQ7S4Y5I6VJYY1z2WJQAnNzdOF2mOYyUjlZgU5XGfGibIufI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naVTC5Pp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERBZvesXUlNAyrBg356eEIHIv38MVZPKZBQVHPkKkPSbVZxV+mpRQAW4DGPlxALmJrn8PsnIVrPnDRwcwTwjfy/Wmng1WXoC8jWAfBoRe6X9jj3njXtIk8jS92ZmfxbeOB67Fs2m9JmRSzoqH3fddrFKuc8HgT4OZPcWHlz7/3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DG0uxGuu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naVTC5Pp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34E0C4CEF1;
-	Tue, 22 Jul 2025 14:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DG0uxGuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FC6C4CEEB;
+	Tue, 22 Jul 2025 14:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193741;
-	bh=fvKUBFc05hQTM7si+h+iNeVv0JeGsMDJiVS6GC0+lmQ=;
+	s=korg; t=1753193744;
+	bh=AWRUZ8pzIzvYVwwNFmNExXHLt3QbY+RL/lvPcDThnH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=naVTC5PppNlbNeKA8LfT1ngAMDStAY/m89HeWydr8Pjwx0HalJjvZkXepYZ95x1tp
-	 41uzMWEjtY21nzRSGrFvy/NOJoiUgvH5on9DQEc5YiD7BrtC5mSaePgwaZ1vjB1mXS
-	 /iFBg6AsGU9qCn7JcOa53gY4byzbSLjX5d5SAs3M=
+	b=DG0uxGuuMNKmxcE1JkMz489T9jd63PtSDVrhv3ariHhd1FBCcL7j7dR7+1MpteSE2
+	 8ZaQIG39MJ/88AvfsH0C5RXtUe5cu36BMiubbEUDUENKc1cCHQYjwOlAJXA4uUBuex
+	 GVw2z+1SvcaYHpErIl1w+sHXdj2PezSI4LEzhmFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Breno Leitao <leitao@debian.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Ravi Kumar Vodapalli <ravi.kumar.vodapalli@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 184/187] sched/ext: Prevent update_locked_rq() calls with NULL rq
-Date: Tue, 22 Jul 2025 15:45:54 +0200
-Message-ID: <20250722134352.621609662@linuxfoundation.org>
+Subject: [PATCH 6.15 185/187] drm/xe/mocs: Initialize MOCS index early
+Date: Tue, 22 Jul 2025 15:45:55 +0200
+Message-ID: <20250722134352.660345975@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -53,78 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
 
-commit e14fd98c6d66cb76694b12c05768e4f9e8c95664 upstream.
+commit 2a58b21adee3df10ca6f4491af965c4890d2d8e3 upstream.
 
-Avoid invoking update_locked_rq() when the runqueue (rq) pointer is NULL
-in the SCX_CALL_OP and SCX_CALL_OP_RET macros.
+MOCS uc_index is used even before it is initialized in the following
+callstack
+    guc_prepare_xfer()
+    __xe_guc_upload()
+    xe_guc_min_load_for_hwconfig()
+    xe_uc_init_hwconfig()
+    xe_gt_init_hwconfig()
 
-Previously, calling update_locked_rq(NULL) with preemption enabled could
-trigger the following warning:
+Do MOCS index initialization earlier in the device probe.
 
-    BUG: using __this_cpu_write() in preemptible [00000000]
-
-This happens because __this_cpu_write() is unsafe to use in preemptible
-context.
-
-rq is NULL when an ops invoked from an unlocked context. In such cases, we
-don't need to store any rq, since the value should already be NULL
-(unlocked). Ensure that update_locked_rq() is only called when rq is
-non-NULL, preventing calling __this_cpu_write() on preemptible context.
-
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Fixes: 18853ba782bef ("sched_ext: Track currently locked rq")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: stable@vger.kernel.org # v6.15
+Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Reviewed-by: Ravi Kumar Vodapalli <ravi.kumar.vodapalli@intel.com>
+Link: https://lore.kernel.org/r/20250520142445.2792824-1-balasubramani.vivekanandan@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 241cc827c0987d7173714fc5a95a7c8fc9bf15c0)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: 3155ac89251d ("drm/xe: Move page fault init after topology init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_gt.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1149,7 +1149,8 @@ static inline struct rq *scx_locked_rq(v
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -375,6 +375,8 @@ int xe_gt_init_early(struct xe_gt *gt)
+ 	if (err)
+ 		return err;
  
- #define SCX_CALL_OP(mask, op, rq, args...)					\
- do {										\
--	update_locked_rq(rq);							\
-+	if (rq)									\
-+		update_locked_rq(rq);						\
- 	if (mask) {								\
- 		scx_kf_allow(mask);						\
- 		scx_ops.op(args);						\
-@@ -1157,14 +1158,16 @@ do {										\
- 	} else {								\
- 		scx_ops.op(args);						\
- 	}									\
--	update_locked_rq(NULL);							\
-+	if (rq)									\
-+		update_locked_rq(NULL);						\
- } while (0)
++	xe_mocs_init_early(gt);
++
+ 	return 0;
+ }
  
- #define SCX_CALL_OP_RET(mask, op, rq, args...)					\
- ({										\
- 	__typeof__(scx_ops.op(args)) __ret;					\
- 										\
--	update_locked_rq(rq);							\
-+	if (rq)									\
-+		update_locked_rq(rq);						\
- 	if (mask) {								\
- 		scx_kf_allow(mask);						\
- 		__ret = scx_ops.op(args);					\
-@@ -1172,7 +1175,8 @@ do {										\
- 	} else {								\
- 		__ret = scx_ops.op(args);					\
- 	}									\
--	update_locked_rq(NULL);							\
-+	if (rq)									\
-+		update_locked_rq(NULL);						\
- 	__ret;									\
- })
+@@ -592,8 +594,6 @@ int xe_gt_init(struct xe_gt *gt)
+ 	if (err)
+ 		return err;
  
+-	xe_mocs_init_early(gt);
+-
+ 	err = xe_gt_sysfs_init(gt);
+ 	if (err)
+ 		return err;
 
 
