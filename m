@@ -1,148 +1,180 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF2727F013
-	for <patches@lists.linux.dev>; Tue, 22 Jul 2025 18:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF3B280339
+	for <patches@lists.linux.dev>; Tue, 22 Jul 2025 18:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753207247; cv=none; b=aNNN63jw/RED63+crzvQ7sxFO9LtDoKZqGF9sPXDicR086HnzcmKYDhCwMBav/nI80pt8O7oOEDMGerpl+3E85Bwxce+p2u93K8kaowxM/iQZt31zYb6iCNMw+IXXMRBWvaJOYwR3sTkXDMmeobGaMOFpPt4eMcq0teXKzhGmqs=
+	t=1753208839; cv=none; b=mRBtU0ncL94rttZ/yxaa3P2AA9kmF+weNPeawFO2J0IaKYFR0lQMuHBxqM5vxA3SPjUSEWmBLjNGdqJsQb8emzJOlpPcJbOJhDsYZJHM/KZR8eQnkMJj0ZXyTjbbK6DQFpKH7HFa4umlLhlubAY3mEWJBR3FoeSmGg/uWSCXQrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753207247; c=relaxed/simple;
-	bh=YVtu41alI3J1y0N+ZggPSzt7lkdH9t/iPzc26jPFrYQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=chYC4H165zTfGZ8R0CzxGY8Vhv71Z5QgL9i+BU4+z8hS92rR1xPPF2PNvhCIGXXHg380sawZpe98ISebyK706KitXwXSnTR3Ky22oGm8r3Pe3YFoTkmEQXqJcqrdyfy0HG06X/jC6DxuMDdjm+pUf7XCao2pI2XQsB7ZZlVE/DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qQsnW8xe; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1753208839; c=relaxed/simple;
+	bh=TzuX4mInNFL0Y71HlZ/CxdY52DbWevcbHeKa5VEl6b4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F3qXjypiL7gWf0At+OatwUbji0RmLoGR9+7Ih8DQ7/KmcaEhpAWP20d9RQMQLs8lKXQ6iDfMD9LPFbwZbJfvO+ZG15WtTz7WM4UdSusaipRbL6MfL9FVgC4tdgwChxCL5JFSPgLJrs8OABjSA+KrCmUdfCAeAQGdDNQBatbK+Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NXGaLC4Y; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qQsnW8xe"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b321bd36a41so4842369a12.2
-        for <patches@lists.linux.dev>; Tue, 22 Jul 2025 11:00:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NXGaLC4Y"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a6d77b43c9so4487493f8f.3
+        for <patches@lists.linux.dev>; Tue, 22 Jul 2025 11:27:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1753207244; x=1753812044; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Px2ISLgVozuB6r8zgwA8tkISmDkVGlK4ZTL8goB7E8M=;
-        b=qQsnW8xepJ2d2CB+6vDhi69tUSVyW/QhwJYxRe5VgOFL4hXicOMd8ghhBEAIOs9wvb
-         yKLww7uukt0uHRpnfslbo/qNt9bFtvfHh6JWVwy9Ar8dVVow+eDhTikibzo+MOQVDEgO
-         PoO/DKnr+t/Q7h/xEt9fM5T3zmzx3N2T2Q9MtPGnJUdTQj9J9AsqyPjT3yzD+6HzImze
-         Ao89qIpidIV4mRq1OcgyVdslnfaV15LUW290VMF4aTruohitsG0qb5BGbmUcFs+S9k1o
-         kAbKxBCYMG4pC/3woVrUG7LKGkrcIzdeTMMWzt8OC0NuAowOUEO3coNmzwX/N8DBRlnc
-         hCSA==
+        d=google.com; s=20230601; t=1753208836; x=1753813636; darn=lists.linux.dev;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0Z8+WxTUCxaG+bKBH/CjfFqMsRzOrc36DXiZRhX8IKQ=;
+        b=NXGaLC4YQDhDqpZnCZgw6woSAs4CUYTnDFFgSWsG1VBJ36tW5huNmlkaazDdnm0wLy
+         T1N+bDp9nNx4U9bVVK3E3yxj12MWGZ2TTaE3PgVNWwf2UnqsfY5SvHoKvTTstSiMh5xH
+         C1y5M15A+GvMrymP6kTmFl50yNQATOryFXTa1rcNlp6q4mO3YOE7IccytJ1qsxU18c5h
+         DMuZ91eEStQnbRSOwg69hn+NCCHDLtAMsn6vz0Y+T07g7dZjdW+KPQHTurx1s7b5W18e
+         QheXQ+srPruZ+VDbFhD4SQ+MfjLXjdTsPS1PpWU1GscyyuS/nhsAkGY/lkZQA67KpfSC
+         i59g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753207244; x=1753812044;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Px2ISLgVozuB6r8zgwA8tkISmDkVGlK4ZTL8goB7E8M=;
-        b=wiOwg3aV6Xc2o2KzhlMYjwyagbgx0pxlssMB3x0cVAXbHwyrEQEOebL9jsoEbZN+Yk
-         I6ovx2N49IG7Mnbxqss/b9SSBhKSlB1jMm5goJebMZX90OAMpqoAfSs7kpA5YgEToPOw
-         h9yN/dCMrDs7lsY3Y6tVePG0gkytyAFXL4m02kegdeRuWDkshsDX/HotBpAG3MwLOomE
-         GiO6I+iqYSDfZ+tIVKfLqMpz/8Hi7Hcqnrh07bnnQqDCLXAOpHGNYUD0oasMmsX/EHjU
-         ua7aNJfTYz4Mn3dWMktTjJiz22OdYVGAnz3BYW0OGQFQswvGmcMn5LvWNPiIAlsWjQ27
-         lEyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWe0SPt+q+KWFirXYo2r9oIsxiJhz/eQtlSXge2UpwR7XtNILFO/Ix/CGFv5JZ8YmMC/hQEpYlV@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw1XkBaqdpwvffiOtwNgowqrvPqWEbjwdzAUOb6qXavp4i7Kvh2
-	bQ05MqEnFxzEYSCs/Y1sohnLoCqq9YIcCTgO5/SRANVW6YIZifApKquLKa8tssWojKkgwHqHV6q
-	4rQdxnr8fAlTRGSOOD0BMBiX2ZvosbrJ39EO9nSeDbw==
-X-Gm-Gg: ASbGncs6NWIHITDpBwc2R2yJYt5mSEbqhj2Q6y1M1vMJGCQ/KProZ4YNXYeNcHv9Amr
-	Fkp1RSXWrV4qA7EgjR9cdymuQX2I6LiSss+TWDvcN833bhWu2Oj1gHE1t9Ynkwt5bZHCI3v8h+9
-	Dqd5t8jwvxstJtz11YsvmnUX7ChNLYm2ufQ8PmAq3f1eWBwuOUB/45xjaQliD5lVA92fCwpBWcM
-	vYZlsy6tGuOnZNukEYx6Kg35aMKFsPJGDhNgw==
-X-Google-Smtp-Source: AGHT+IF1c0ECz1dHQBMozDVaGJegjDQ+xVWv6X/ujXbFpey4CFIuQxZFRfSj60viTUAnlrJuZLxqs44XGNMAeZvlUx8=
-X-Received: by 2002:a17:90a:d60b:b0:311:f30b:c21 with SMTP id
- 98e67ed59e1d1-31e5082cc31mr280553a91.26.1753207244493; Tue, 22 Jul 2025
- 11:00:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753208836; x=1753813636;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0Z8+WxTUCxaG+bKBH/CjfFqMsRzOrc36DXiZRhX8IKQ=;
+        b=scJVR0hCMf/EzBdnPosXO/Ib2DcYUqtc53EECCTQ/SR1Kvh3AG6PmI0nUZqWUbE5Qz
+         MDAFEETBcOQKowouPjR56hH4R9YpgIyYQy+zLo3wLOAlr7TqvIPWCrZTtispif7ZY6kF
+         iJ2lZLUh7ABg02B2iK8uSCeaNgMdMMZ717DwFsV5SL6JKc+i2M0tZPIYdiEZcKygGfuS
+         q5A/URLubhLh1tRerIOPh/WyQ4EVDnb9u8Fh/3bPW9o1+3e67LwAUVzbXmYNw1Yhu4m8
+         JtJ7KMjuoAKugGnp8UcDNkWNzXHN+KPNyc1zg14pqKL4AzE8aBI/o5H5tiChFdRKE7xa
+         BN3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCU1dg0wVafNUVr80eNOJqm80tlpiDx7xGgIzEbcNUSUzEdfA5TbE/agNPZMM9h2k2ewJE8AaRIN@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyz2JHUGItk1hci+ufs4V/4FMw7wvZTOj2T/znod3UIEutZ1XGt
+	lZQHFrorm5ho3Milxliwjh+Z4NrPNw/l6NmvgctsKhxTs850YKuKb4to+tfBcf6LaA==
+X-Gm-Gg: ASbGncuVNAgphWZDHsQnZiTNCrAhQGpbuL/90+8iz2WkDRRyuuUyu5JfIEdJEI/bzxz
+	0p4nkrp7EOz/MlJa8O84Pw3FAJvMIqzd0Tn0IZOS5ebHz6H87a0vWy1PaDyDbxF73mVRP3oOGMP
+	YHQskTaD/C2U1FETpRagyMzrPSS5fjLyduSf39LVjoJU1XBfTk6CtNy369Cez/pNGjjOjs0x7dN
+	j3BZVgD94CZIyAH1UZI5Ydr0uBwkxVTiRg6kqSVHSAJb1yJzcfUQNQ1gFlRdafI687P9Eil9Zb1
+	c4WbM88eGA1e06qietBX/6da5KbbQwLdPOOoYV8eaRSJLGXqhAm05/Jhc0xtYcsZ/MWd8OJDQCt
+	/8nJ9sw40jo90iSCNeot/BfjINl91P0WbK5RYKd5b8SRZPOUnIAsQapY5tw==
+X-Google-Smtp-Source: AGHT+IHWIMlQSVzvAq85Yom5KJ9BYmsTxVnjI5RbzJDAcwDVZQTDVOTdmdUULBd3ut0q8DI1kuLuUA==
+X-Received: by 2002:a05:6000:1885:b0:3a4:f644:95f0 with SMTP id ffacd0b85a97d-3b768f165f7mr219753f8f.54.1753208835850;
+        Tue, 22 Jul 2025 11:27:15 -0700 (PDT)
+Received: from elver.google.com ([2a00:79e0:2834:9:53e1:3729:be19:c80])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca4d807sm14296542f8f.73.2025.07.22.11.27.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jul 2025 11:27:15 -0700 (PDT)
+Date: Tue, 22 Jul 2025 20:27:08 +0200
+From: Marco Elver <elver@google.com>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	clang-built-linux <llvm@lists.linux.dev>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Ben Copeland <benjamin.copeland@linaro.org>
+Subject: Re: [PATCH 6.12 000/158] 6.12.40-rc1 review
+Message-ID: <aH_X_AVUDoP7oB0E@elver.google.com>
+References: <20250722134340.596340262@linuxfoundation.org>
+ <CA+G9fYu8JY=k-r0hnBRSkQQrFJ1Bz+ShdXNwC1TNeMt0eXaxeA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250722134340.596340262@linuxfoundation.org>
-In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 22 Jul 2025 23:30:32 +0530
-X-Gm-Features: Ac12FXzKOsmLQ8yujNcTxBZG6536oHN-0krbleAUzT7bCEwfhEyQGS7hbv_zCoY
-Message-ID: <CA+G9fYu8JY=k-r0hnBRSkQQrFJ1Bz+ShdXNwC1TNeMt0eXaxeA@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/158] 6.12.40-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, clang-built-linux <llvm@lists.linux.dev>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, Nathan Chancellor <nathan@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Dan Carpenter <dan.carpenter@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
-	Ben Copeland <benjamin.copeland@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYu8JY=k-r0hnBRSkQQrFJ1Bz+ShdXNwC1TNeMt0eXaxeA@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Tue, 22 Jul 2025 at 19:27, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.40 release.
-> There are 158 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 24 Jul 2025 13:43:10 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.40-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Jul 22, 2025 at 11:30PM +0530, Naresh Kamboju wrote:
+> On Tue, 22 Jul 2025 at 19:27, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.12.40 release.
+> > There are 158 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 24 Jul 2025 13:43:10 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.40-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> With addition to the previous report on the stable-rc 6.15.8-rc1 review
+> While building allyesconfig build for arm64 and x86 with the toolchain
+> clang-nightly version 22.0.0 the following build warnings / errors
+> noticed on the stable-rc 6.12.40-rc1 review.
+> 
+> Regression Analysis:
+> - New regression? Yes
+> - Reproducibility? Yes
+> 
+> Build regression: arm64 x86 kcsan_test.c error variable 'dummy' is
+> uninitialized when passed as a const pointer argument here
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> ## Build log
+> 
+> kernel/kcsan/kcsan_test.c:591:41: error: variable 'dummy' is
+> uninitialized when passed as a const pointer argument here
+> [-Werror,-Wuninitialized-const-pointer]
+>   591 |         KCSAN_EXPECT_READ_BARRIER(atomic_read(&dummy), false);
+>       |                                                ^~~~~
+> 1 error generated.
 
-With addition to the previous report on the stable-rc 6.15.8-rc1 review
-While building allyesconfig build for arm64 and x86 with the toolchain
-clang-nightly version 22.0.0 the following build warnings / errors
-noticed on the stable-rc 6.12.40-rc1 review.
+Thanks for catching this. Newer versions of Clang seem to be getting
+smarter. We can silence the warning with the below patch:
 
-Regression Analysis:
-- New regression? Yes
-- Reproducibility? Yes
+From 56c920457a4e7077b83aafb0c9c8105fb98b0158 Mon Sep 17 00:00:00 2001
+From: Marco Elver <elver@google.com>
+Date: Tue, 22 Jul 2025 20:19:17 +0200
+Subject: [PATCH] kcsan/test: Initialize dummy variable
 
-Build regression: arm64 x86 kcsan_test.c error variable 'dummy' is
-uninitialized when passed as a const pointer argument here
+Newer compiler versions rightfully point out:
 
+ kernel/kcsan/kcsan_test.c:591:41: error: variable 'dummy' is
+ uninitialized when passed as a const pointer argument here
+ [-Werror,-Wuninitialized-const-pointer]
+   591 |         KCSAN_EXPECT_READ_BARRIER(atomic_read(&dummy), false);
+       |                                                ^~~~~
+ 1 error generated.
+
+Although this particular test does not care about the value stored in
+the dummy atomic variable, let's silence the warning.
+
+Link: https://lkml.kernel.org/r/CA+G9fYu8JY=k-r0hnBRSkQQrFJ1Bz+ShdXNwC1TNeMt0eXaxeA@mail.gmail.com
+Fixes: 8bc32b348178 ("kcsan: test: Add test cases for memory barrier instrumentation")
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Signed-off-by: Marco Elver <elver@google.com>
+---
+ kernel/kcsan/kcsan_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-## Build log
-
-kernel/kcsan/kcsan_test.c:591:41: error: variable 'dummy' is
-uninitialized when passed as a const pointer argument here
-[-Werror,-Wuninitialized-const-pointer]
-  591 |         KCSAN_EXPECT_READ_BARRIER(atomic_read(&dummy), false);
-      |                                                ^~~~~
-1 error generated.
-
-
-## Source
-* Git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* Git sha: 596aae841edf981aab1df1845e6df012bed94594
-* Git describe: v6.12.39-159-g596aae841edf
-* Architectures: arm64 x86
-* Toolchains: Debian clang version 22.0.0
-(++20250721112855+43a829a7e894-1~exp1~20250721112913.1588)
-* Kconfigs: allyesconfig
-
-## Build
-* Build log: https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.12.y/v6.12.39-159-g596aae841edf/build/clang-nightly-allyesconfig/
-* Build run: https://regressions.linaro.org/lkft/linux-stable-rc-linux-6.12.y/v6.12.39-159-g596aae841edf/testruns/1703644/
-* Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/30EXE6Cnct6e7DCgsWWrXlMdO0z/
-* Kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/30EXE6Cnct6e7DCgsWWrXlMdO0z/config
-
-## Steps to reproduce
-* tuxmake --runtime podman --target-arch arm64 --toolchain
-clang-nightly --kconfig allyesconfig LLVM=1 LLVM_IAS=1
-
---
-Linaro LKFT
-https://lkft.linaro.org
+diff --git a/kernel/kcsan/kcsan_test.c b/kernel/kcsan/kcsan_test.c
+index c2871180edcc..49ab81faaed9 100644
+--- a/kernel/kcsan/kcsan_test.c
++++ b/kernel/kcsan/kcsan_test.c
+@@ -533,7 +533,7 @@ static void test_barrier_nothreads(struct kunit *test)
+ 	struct kcsan_scoped_access *reorder_access = NULL;
+ #endif
+ 	arch_spinlock_t arch_spinlock = __ARCH_SPIN_LOCK_UNLOCKED;
+-	atomic_t dummy;
++	atomic_t dummy = ATOMIC_INIT(0);
+ 
+ 	KCSAN_TEST_REQUIRES(test, reorder_access != NULL);
+ 	KCSAN_TEST_REQUIRES(test, IS_ENABLED(CONFIG_SMP));
+-- 
+2.50.0.727.gbf7dc18ff4-goog
