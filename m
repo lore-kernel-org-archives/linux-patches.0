@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F256C2E36E8;
-	Tue, 22 Jul 2025 14:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7867BA32;
+	Tue, 22 Jul 2025 14:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192950; cv=none; b=YYcYga+nUYPJRSpLv6prnydgZzDrNHTXFiVJtXoO8q8d3NEg7pzJEwkv0k6huqe6gQCTgtpghaXiLemqhuG7IIRW1478m5N9skygAk5H3oMhORiNZ0U6pTHg5ibVp4ru3/QXNc//KUn0BRbO+BkCS5wfJUyyHpsTyeX1UijDHjE=
+	t=1753192953; cv=none; b=Ces4tdkyPLK3ijKy5Xy8egYMdzMZHKBMWJtB8DW7Zig3ownfT/3KWLi340LTl48fybe5Sl/myQiyQ/jCpXuuD11yJVVpiXFnes73EOnxZYYksFYYszH1iOwQ+izA19pnxIVFwT3qpb6Xe9JAik5JHXjR2SbuzNsGVYOnNdlPuAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192950; c=relaxed/simple;
-	bh=GGW2HFAc2EQSq86Yg44sHEo/noX+wIl8QwlvrdY5J/c=;
+	s=arc-20240116; t=1753192953; c=relaxed/simple;
+	bh=CcL7P1twAhA3kEvl4gE0fU96TvNy+DRuOXHkRMVrKlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KC8pf9BsLvpsMGxUO+tAd8Kmk8rEg+UgUQEFvD0WXs1YmMY9LJzdelnamI3rVi5phL9hEpTS+TMXj9FfBeaaAu2JkljxOmxmKQBb25KKQe32JeGLXHrrNbLymvkDslSqJDUUPmGj7WwBa+m3IsNZINdPph1LjvJCoFQufxJ9icU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJR5FQ4l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H4zAMzHJaPedTmv2hU5UYZaDbIBu1j/dX3um7FEOEioeSRqrTr070b5loU1ttAuV+K41QGNmyb+J3VBON7qR2+866LCXgq2g6oDSJlVd4feFHTpIu3AdATfAXeuuXLdpcPPF3T3lnYgHNGdBwjPIqGbjoazBCp+d0ILFfhYVRBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=creGQ68x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJR5FQ4l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781E9C4CEEB;
-	Tue, 22 Jul 2025 14:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="creGQ68x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A217BC4CEEB;
+	Tue, 22 Jul 2025 14:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192949;
-	bh=GGW2HFAc2EQSq86Yg44sHEo/noX+wIl8QwlvrdY5J/c=;
+	s=korg; t=1753192953;
+	bh=CcL7P1twAhA3kEvl4gE0fU96TvNy+DRuOXHkRMVrKlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJR5FQ4l67xSSuaueic60DrNMwXdIndWxK5x2iiDrRLoygvCdzt2CydYOQhbP2MGk
-	 hMuvVoUimD7q2paQdSMIsglxk0+bUeh/qy2Pti3bk4/hiPFK6nsHNv83FiMTPk9XkB
-	 iQ5af44nQypxY1Xzz+GvvZZLibHRBROALp2Bf6+Y=
+	b=creGQ68x5H9/NykskFiW4muWkw11N6LfqmvYVYaq0pu7aERYzQKhVUzr0giafWJOi
+	 vbk5TiyVLG6XXBLN3425OSLWkf1gXnx0idahyvf1ZnnfIugHYUvNB/dOqCvv8VfEZ5
+	 lBjp+nfg8Mr2i4zGjLfmAsaPDlPVGmgw1dX94PYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maud Spierings <maudspierings@gocontroll.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 073/158] iio: common: st_sensors: Fix use of uninitialize device structs
-Date: Tue, 22 Jul 2025 15:44:17 +0200
-Message-ID: <20250722134343.497139934@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 064/158] smb: client: fix use-after-free in crypt_message when using async crypto
+Date: Tue, 22 Jul 2025 15:44:08 +0200
+Message-ID: <20250722134343.145088225@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,282 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maud Spierings <maudspierings@gocontroll.com>
+From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
 
-commit 9f92e93e257b33e73622640a9205f8642ec16ddd upstream.
+commit b220bed63330c0e1733dc06ea8e75d5b9962b6b6 upstream.
 
-Throughout the various probe functions &indio_dev->dev is used before it
-is initialized. This caused a kernel panic in st_sensors_power_enable()
-when the call to devm_regulator_bulk_get_enable() fails and then calls
-dev_err_probe() with the uninitialized device.
+The CVE-2024-50047 fix removed asynchronous crypto handling from
+crypt_message(), assuming all crypto operations are synchronous.
+However, when hardware crypto accelerators are used, this can cause
+use-after-free crashes:
 
-This seems to only cause a panic with dev_err_probe(), dev_err(),
-dev_warn() and dev_info() don't seem to cause a panic, but are fixed
-as well.
+  crypt_message()
+    // Allocate the creq buffer containing the req
+    creq = smb2_get_aead_req(..., &req);
 
-The issue is reported and traced here: [1]
+    // Async encryption returns -EINPROGRESS immediately
+    rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
 
-Link: https://lore.kernel.org/all/AM7P189MB100986A83D2F28AF3FFAF976E39EA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM/ [1]
+    // Free creq while async operation is still in progress
+    kvfree_sensitive(creq, ...);
+
+Hardware crypto modules often implement async AEAD operations for
+performance. When crypto_aead_encrypt/decrypt() returns -EINPROGRESS,
+the operation completes asynchronously. Without crypto_wait_req(),
+the function immediately frees the request buffer, leading to crashes
+when the driver later accesses the freed memory.
+
+This results in a use-after-free condition when the hardware crypto
+driver later accesses the freed request structure, leading to kernel
+crashes with NULL pointer dereferences.
+
+The issue occurs because crypto_alloc_aead() with mask=0 doesn't
+guarantee synchronous operation. Even without CRYPTO_ALG_ASYNC in
+the mask, async implementations can be selected.
+
+Fix by restoring the async crypto handling:
+- DECLARE_CRYPTO_WAIT(wait) for completion tracking
+- aead_request_set_callback() for async completion notification
+- crypto_wait_req() to wait for operation completion
+
+This ensures the request buffer isn't freed until the crypto operation
+completes, whether synchronous or asynchronous, while preserving the
+CVE-2024-50047 fix.
+
+Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+Link: https://lore.kernel.org/all/8b784a13-87b0-4131-9ff9-7a8993538749@huaweicloud.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://... [1]
-Link: https://patch.msgid.link/20250527-st_iio_fix-v4-1-12d89801c761@gocontroll.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/st_accel_core.c                  |   10 ++---
- drivers/iio/common/st_sensors/st_sensors_core.c    |   36 +++++++++------------
- drivers/iio/common/st_sensors/st_sensors_trigger.c |   20 +++++------
- 3 files changed, 31 insertions(+), 35 deletions(-)
+ fs/smb/client/smb2ops.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/accel/st_accel_core.c
-+++ b/drivers/iio/accel/st_accel_core.c
-@@ -1353,6 +1353,7 @@ static int apply_acpi_orientation(struct
- 	union acpi_object *ont;
- 	union acpi_object *elements;
- 	acpi_status status;
-+	struct device *parent = indio_dev->dev.parent;
- 	int ret = -EINVAL;
- 	unsigned int val;
- 	int i, j;
-@@ -1371,7 +1372,7 @@ static int apply_acpi_orientation(struct
- 	};
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4342,6 +4342,7 @@ crypt_message(struct TCP_Server_Info *se
+ 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
+ 	struct aead_request *req;
+ 	u8 *iv;
++	DECLARE_CRYPTO_WAIT(wait);
+ 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
+ 	void *creq;
+ 	size_t sensitive_size;
+@@ -4392,7 +4393,11 @@ crypt_message(struct TCP_Server_Info *se
+ 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
+ 	aead_request_set_ad(req, assoc_data_len);
  
+-	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
++	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
++				  crypto_req_done, &wait);
++
++	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
++				: crypto_aead_decrypt(req), &wait);
  
--	adev = ACPI_COMPANION(indio_dev->dev.parent);
-+	adev = ACPI_COMPANION(parent);
- 	if (!adev)
- 		return -ENXIO;
- 
-@@ -1380,8 +1381,7 @@ static int apply_acpi_orientation(struct
- 	if (status == AE_NOT_FOUND) {
- 		return -ENXIO;
- 	} else if (ACPI_FAILURE(status)) {
--		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
--			 status);
-+		dev_warn(parent, "failed to execute _ONT: %d\n", status);
- 		return status;
- 	}
- 
-@@ -1457,12 +1457,12 @@ static int apply_acpi_orientation(struct
- 	}
- 
- 	ret = 0;
--	dev_info(&indio_dev->dev, "computed mount matrix from ACPI\n");
-+	dev_info(parent, "computed mount matrix from ACPI\n");
- 
- out:
- 	kfree(buffer.pointer);
- 	if (ret)
--		dev_dbg(&indio_dev->dev,
-+		dev_dbg(parent,
- 			"failed to apply ACPI orientation data: %d\n", ret);
- 
- 	return ret;
---- a/drivers/iio/common/st_sensors/st_sensors_core.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_core.c
-@@ -154,7 +154,7 @@ static int st_sensors_set_fullscale(stru
- 	return err;
- 
- st_accel_set_fullscale_error:
--	dev_err(&indio_dev->dev, "failed to set new fullscale.\n");
-+	dev_err(indio_dev->dev.parent, "failed to set new fullscale.\n");
- 	return err;
- }
- 
-@@ -231,8 +231,7 @@ int st_sensors_power_enable(struct iio_d
- 					     ARRAY_SIZE(regulator_names),
- 					     regulator_names);
- 	if (err)
--		return dev_err_probe(&indio_dev->dev, err,
--				     "unable to enable supplies\n");
-+		return dev_err_probe(parent, err, "unable to enable supplies\n");
- 
- 	return 0;
- }
-@@ -241,13 +240,14 @@ EXPORT_SYMBOL_NS(st_sensors_power_enable
- static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 
- 	/* Sensor does not support interrupts */
- 	if (!sdata->sensor_settings->drdy_irq.int1.addr &&
- 	    !sdata->sensor_settings->drdy_irq.int2.addr) {
- 		if (pdata->drdy_int_pin)
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "DRDY on pin INT%d specified, but sensor does not support interrupts\n",
- 				 pdata->drdy_int_pin);
- 		return 0;
-@@ -256,29 +256,27 @@ static int st_sensors_set_drdy_int_pin(s
- 	switch (pdata->drdy_int_pin) {
- 	case 1:
- 		if (!sdata->sensor_settings->drdy_irq.int1.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT1 not available.\n");
-+			dev_err(parent, "DRDY on INT1 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 1;
- 		break;
- 	case 2:
- 		if (!sdata->sensor_settings->drdy_irq.int2.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT2 not available.\n");
-+			dev_err(parent, "DRDY on INT2 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 2;
- 		break;
- 	default:
--		dev_err(&indio_dev->dev, "DRDY on pdata not valid.\n");
-+		dev_err(parent, "DRDY on pdata not valid.\n");
- 		return -EINVAL;
- 	}
- 
- 	if (pdata->open_drain) {
- 		if (!sdata->sensor_settings->drdy_irq.int1.addr_od &&
- 		    !sdata->sensor_settings->drdy_irq.int2.addr_od)
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"open drain requested but unsupported.\n");
- 		else
- 			sdata->int_pin_open_drain = true;
-@@ -336,6 +334,7 @@ EXPORT_SYMBOL_NS(st_sensors_dev_name_pro
- int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 	struct st_sensors_platform_data *of_pdata;
- 	int err = 0;
-@@ -343,7 +342,7 @@ int st_sensors_init_sensor(struct iio_de
- 	mutex_init(&sdata->odr_lock);
- 
- 	/* If OF/DT pdata exists, it will take precedence of anything else */
--	of_pdata = st_sensors_dev_probe(indio_dev->dev.parent, pdata);
-+	of_pdata = st_sensors_dev_probe(parent, pdata);
- 	if (IS_ERR(of_pdata))
- 		return PTR_ERR(of_pdata);
- 	if (of_pdata)
-@@ -370,7 +369,7 @@ int st_sensors_init_sensor(struct iio_de
- 		if (err < 0)
- 			return err;
- 	} else
--		dev_info(&indio_dev->dev, "Full-scale not possible\n");
-+		dev_info(parent, "Full-scale not possible\n");
- 
- 	err = st_sensors_set_odr(indio_dev, sdata->odr);
- 	if (err < 0)
-@@ -405,7 +404,7 @@ int st_sensors_init_sensor(struct iio_de
- 			mask = sdata->sensor_settings->drdy_irq.int2.mask_od;
- 		}
- 
--		dev_info(&indio_dev->dev,
-+		dev_info(parent,
- 			 "set interrupt line to open drain mode on pin %d\n",
- 			 sdata->drdy_int_pin);
- 		err = st_sensors_write_data_with_mask(indio_dev, addr,
-@@ -594,21 +593,20 @@ EXPORT_SYMBOL_NS(st_sensors_get_settings
- int st_sensors_verify_id(struct iio_dev *indio_dev)
- {
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
-+	struct device *parent = indio_dev->dev.parent;
- 	int wai, err;
- 
- 	if (sdata->sensor_settings->wai_addr) {
- 		err = regmap_read(sdata->regmap,
- 				  sdata->sensor_settings->wai_addr, &wai);
- 		if (err < 0) {
--			dev_err(&indio_dev->dev,
--				"failed to read Who-Am-I register.\n");
--			return err;
-+			return dev_err_probe(parent, err,
-+					     "failed to read Who-Am-I register.\n");
- 		}
- 
- 		if (sdata->sensor_settings->wai != wai) {
--			dev_warn(&indio_dev->dev,
--				"%s: WhoAmI mismatch (0x%x).\n",
--				indio_dev->name, wai);
-+			dev_warn(parent, "%s: WhoAmI mismatch (0x%x).\n",
-+				 indio_dev->name, wai);
- 		}
- 	}
- 
---- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
-@@ -127,7 +127,7 @@ int st_sensors_allocate_trigger(struct i
- 	sdata->trig = devm_iio_trigger_alloc(parent, "%s-trigger",
- 					     indio_dev->name);
- 	if (sdata->trig == NULL) {
--		dev_err(&indio_dev->dev, "failed to allocate iio trigger.\n");
-+		dev_err(parent, "failed to allocate iio trigger.\n");
- 		return -ENOMEM;
- 	}
- 
-@@ -143,7 +143,7 @@ int st_sensors_allocate_trigger(struct i
- 	case IRQF_TRIGGER_FALLING:
- 	case IRQF_TRIGGER_LOW:
- 		if (!sdata->sensor_settings->drdy_irq.addr_ihl) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"falling/low specified for IRQ but hardware supports only rising/high: will request rising/high\n");
- 			if (irq_trig == IRQF_TRIGGER_FALLING)
- 				irq_trig = IRQF_TRIGGER_RISING;
-@@ -156,21 +156,19 @@ int st_sensors_allocate_trigger(struct i
- 				sdata->sensor_settings->drdy_irq.mask_ihl, 1);
- 			if (err < 0)
- 				return err;
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "interrupts on the falling edge or active low level\n");
- 		}
- 		break;
- 	case IRQF_TRIGGER_RISING:
--		dev_info(&indio_dev->dev,
--			 "interrupts on the rising edge\n");
-+		dev_info(parent, "interrupts on the rising edge\n");
- 		break;
- 	case IRQF_TRIGGER_HIGH:
--		dev_info(&indio_dev->dev,
--			 "interrupts active high level\n");
-+		dev_info(parent, "interrupts active high level\n");
- 		break;
- 	default:
- 		/* This is the most preferred mode, if possible */
--		dev_err(&indio_dev->dev,
-+		dev_err(parent,
- 			"unsupported IRQ trigger specified (%lx), enforce rising edge\n", irq_trig);
- 		irq_trig = IRQF_TRIGGER_RISING;
- 	}
-@@ -179,7 +177,7 @@ int st_sensors_allocate_trigger(struct i
- 	if (irq_trig == IRQF_TRIGGER_FALLING ||
- 	    irq_trig == IRQF_TRIGGER_RISING) {
- 		if (!sdata->sensor_settings->drdy_irq.stat_drdy.addr) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"edge IRQ not supported w/o stat register.\n");
- 			return -EOPNOTSUPP;
- 		}
-@@ -214,13 +212,13 @@ int st_sensors_allocate_trigger(struct i
- 					sdata->trig->name,
- 					sdata->trig);
- 	if (err) {
--		dev_err(&indio_dev->dev, "failed to request trigger IRQ.\n");
-+		dev_err(parent, "failed to request trigger IRQ.\n");
- 		return err;
- 	}
- 
- 	err = devm_iio_trigger_register(parent, sdata->trig);
- 	if (err < 0) {
--		dev_err(&indio_dev->dev, "failed to register iio trigger.\n");
-+		dev_err(parent, "failed to register iio trigger.\n");
- 		return err;
- 	}
- 	indio_dev->trig = iio_trigger_get(sdata->trig);
+ 	if (!rc && enc)
+ 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
 
 
