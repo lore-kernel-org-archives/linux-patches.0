@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AD12C9A;
-	Tue, 22 Jul 2025 14:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC0E2D8766;
+	Tue, 22 Jul 2025 14:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193055; cv=none; b=Zsu3XqeI4GNbjN/HCjOgJKzc8xFQv6+XY6vn+bcTYKLb5XVUWK/0870nO04a7eh+ZiIZ4lnQ+gBpCpeo5BuOYswpSj6dR3Ok1oBcqR2k3bRt7PRcRfqRz9VVwe1tyybL3lEtPBPEbO2K877uo2ag/h/qbl8r2sWRGSwhaDt6O1s=
+	t=1753193058; cv=none; b=fmHjO7+hCSiJmrRXCy4zupoYKjLjBInE6f2D5atl77oTyE3MueS5wPwXs19W+OsGPYchhbyzEILKNydtUxddPRStrnEtQ+/Kda792FIjwVZhrgImq7azgn4Cf0/qIGv/V/JDHki3UeBcbY8kdNMm4Zc18otenAanvKrJjR8VRyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193055; c=relaxed/simple;
-	bh=28a6Unym1sm4zdQ/l6nQAY+F2GG8N4Q9HIkoR7aVffY=;
+	s=arc-20240116; t=1753193058; c=relaxed/simple;
+	bh=ohw8TuUPck12aeX7ZQj0I/r2/hREdoxu//+FbiAD6V4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=epX5tHymGRTYHfpMJjC926xZlz35TQPAJQB/K1vypG5ekAnDg0HXxya/zHxtoHh1hJMgxBdJZaKaWasTqgezdccFyu03C9HzeXe6CeCn2WnF+YsY1bKL26MfIHF+LpotBHvxg32cg64mUT0qUYdzZXpHLxxVAeB5YvVRjoPwItE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qh+VZBpf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QSpXH04BBvcMOfmtyzqBE0M0z6z6/cOSvJKHgVU7xQQnvHOuY95OKgbIoDhsG+7ALogXNESoIEvQuWUYxiZuz8kKSUkN7QYnuAzMPMEHXg+R3SHDcPEueni7LIh2xl7klyHGcF9U/f02rW/JxNaNt1OTjStAABmPQ1r5gnG/obY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksOBTNrP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qh+VZBpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558BAC4CEF5;
-	Tue, 22 Jul 2025 14:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksOBTNrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2422C4CEEB;
+	Tue, 22 Jul 2025 14:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193054;
-	bh=28a6Unym1sm4zdQ/l6nQAY+F2GG8N4Q9HIkoR7aVffY=;
+	s=korg; t=1753193058;
+	bh=ohw8TuUPck12aeX7ZQj0I/r2/hREdoxu//+FbiAD6V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qh+VZBpfu9C24oNEYcfM9ke6L+t0O51x8e1Iq73MzfRMlsrpNgyxh7ZJU60U2lVFF
-	 q3yjBzPochlfcLUir6rxyq3epoPzFstRUKKfRIABqMKwLrOTse2wJumO103xeEkra9
-	 PWeak992hnGATMRCqbvw8oGcv3CiK2B4O0GaYCiU=
+	b=ksOBTNrPpuk2F1KLoStmm95iCyjVjixeuAwazCaEGrnvKH38p6g1yz28Dvz+0WgWk
+	 y8RdFMHl7LedDO/ba6YX//lt3+8A1Ke7BoknNvcDZMODCh4AcrErmZspeNEhXwnLrc
+	 T+LBzTP+OBKXg99POi7QsN6uLLi3EYdgpwD5mR2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Werling <brett.werling@garmin.com>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/158] can: tcan4x5x: fix reset gpio usage during probe
-Date: Tue, 22 Jul 2025 15:44:48 +0200
-Message-ID: <20250722134344.625032471@linuxfoundation.org>
+Subject: [PATCH 6.12 105/158] selftests: net: increase inter-packet timeout in udpgro.sh
+Date: Tue, 22 Jul 2025 15:44:49 +0200
+Message-ID: <20250722134344.660472753@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -52,137 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Werling <brett.werling@garmin.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 0f97a7588db7a545ea07ee0d512789bfad4931d8 ]
+[ Upstream commit 0e9418961f897be59b1fab6e31ae1b09a0bae902 ]
 
-Fixes reset GPIO usage during probe by ensuring we retrieve the GPIO and
-take the device out of reset (if it defaults to being in reset) before
-we attempt to communicate with the device. This is achieved by moving
-the call to tcan4x5x_get_gpios() before tcan4x5x_find_version() and
-avoiding any device communication while getting the GPIOs. Once we
-determine the version, we can then take the knowledge of which GPIOs we
-obtained and use it to decide whether we need to disable the wake or
-state pin functions within the device.
+The mentioned test is not very stable when running on top of
+debug kernel build. Increase the inter-packet timeout to allow
+more slack in such environments.
 
-This change is necessary in a situation where the reset GPIO is pulled
-high externally before the CPU takes control of it, meaning we need to
-explicitly bring the device out of reset before we can start
-communicating with it at all.
-
-This also has the effect of fixing an issue where a reset of the device
-would occur after having called tcan4x5x_disable_wake(), making the
-original behavior not actually disable the wake. This patch should now
-disable wake or state pin functions well after the reset occurs.
-
-Signed-off-by: Brett Werling <brett.werling@garmin.com>
-Link: https://patch.msgid.link/20250711141728.1826073-1-brett.werling@garmin.com
-Cc: Markus Schneider-Pargmann <msp@baylibre.com>
-Fixes: 142c6dc6d9d7 ("can: tcan4x5x: Add support for tcan4552/4553")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/b0370c06ddb3235debf642c17de0284b2cd3c652.1752163107.git.pabeni@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/tcan4x5x-core.c | 61 ++++++++++++++++++---------
- 1 file changed, 41 insertions(+), 20 deletions(-)
+ tools/testing/selftests/net/udpgro.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
-index 7062a2939f501..e8995738cf996 100644
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -335,21 +335,19 @@ static void tcan4x5x_get_dt_data(struct m_can_classdev *cdev)
- 		of_property_read_bool(cdev->dev->of_node, "ti,nwkrq-voltage-vio");
- }
+diff --git a/tools/testing/selftests/net/udpgro.sh b/tools/testing/selftests/net/udpgro.sh
+index d5ffd8c9172e1..799dbc2b4b01c 100755
+--- a/tools/testing/selftests/net/udpgro.sh
++++ b/tools/testing/selftests/net/udpgro.sh
+@@ -48,7 +48,7 @@ run_one() {
  
--static int tcan4x5x_get_gpios(struct m_can_classdev *cdev,
--			      const struct tcan4x5x_version_info *version_info)
-+static int tcan4x5x_get_gpios(struct m_can_classdev *cdev)
- {
- 	struct tcan4x5x_priv *tcan4x5x = cdev_to_priv(cdev);
- 	int ret;
+ 	cfg_veth
  
--	if (version_info->has_wake_pin) {
--		tcan4x5x->device_wake_gpio = devm_gpiod_get(cdev->dev, "device-wake",
--							    GPIOD_OUT_HIGH);
--		if (IS_ERR(tcan4x5x->device_wake_gpio)) {
--			if (PTR_ERR(tcan4x5x->device_wake_gpio) == -EPROBE_DEFER)
--				return -EPROBE_DEFER;
-+	tcan4x5x->device_wake_gpio = devm_gpiod_get_optional(cdev->dev,
-+							     "device-wake",
-+							     GPIOD_OUT_HIGH);
-+	if (IS_ERR(tcan4x5x->device_wake_gpio)) {
-+		if (PTR_ERR(tcan4x5x->device_wake_gpio) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${rx_args} &
+ 	local PID1=$!
  
--			tcan4x5x_disable_wake(cdev);
--		}
-+		tcan4x5x->device_wake_gpio = NULL;
- 	}
+ 	wait_local_port_listen ${PEER_NS} 8000 udp
+@@ -95,7 +95,7 @@ run_one_nat() {
+ 	# will land on the 'plain' one
+ 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -G ${family} -b ${addr1} -n 0 &
+ 	local PID1=$!
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${family} -b ${addr2%/*} ${rx_args} &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${family} -b ${addr2%/*} ${rx_args} &
+ 	local PID2=$!
  
- 	tcan4x5x->reset_gpio = devm_gpiod_get_optional(cdev->dev, "reset",
-@@ -361,14 +359,31 @@ static int tcan4x5x_get_gpios(struct m_can_classdev *cdev,
- 	if (ret)
- 		return ret;
+ 	wait_local_port_listen "${PEER_NS}" 8000 udp
+@@ -117,9 +117,9 @@ run_one_2sock() {
  
--	if (version_info->has_state_pin) {
--		tcan4x5x->device_state_gpio = devm_gpiod_get_optional(cdev->dev,
--								      "device-state",
--								      GPIOD_IN);
--		if (IS_ERR(tcan4x5x->device_state_gpio)) {
--			tcan4x5x->device_state_gpio = NULL;
--			tcan4x5x_disable_state(cdev);
--		}
-+	tcan4x5x->device_state_gpio = devm_gpiod_get_optional(cdev->dev,
-+							      "device-state",
-+							      GPIOD_IN);
-+	if (IS_ERR(tcan4x5x->device_state_gpio))
-+		tcan4x5x->device_state_gpio = NULL;
-+
-+	return 0;
-+}
-+
-+static int tcan4x5x_check_gpios(struct m_can_classdev *cdev,
-+				const struct tcan4x5x_version_info *version_info)
-+{
-+	struct tcan4x5x_priv *tcan4x5x = cdev_to_priv(cdev);
-+	int ret;
-+
-+	if (version_info->has_wake_pin && !tcan4x5x->device_wake_gpio) {
-+		ret = tcan4x5x_disable_wake(cdev);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (version_info->has_state_pin && !tcan4x5x->device_state_gpio) {
-+		ret = tcan4x5x_disable_state(cdev);
-+		if (ret)
-+			return ret;
- 	}
+ 	cfg_veth
  
- 	return 0;
-@@ -459,15 +474,21 @@ static int tcan4x5x_can_probe(struct spi_device *spi)
- 		goto out_m_can_class_free_dev;
- 	}
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} -p 12345 &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${rx_args} -p 12345 &
+ 	local PID1=$!
+-	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 10 ${rx_args} &
++	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 100 ${rx_args} &
+ 	local PID2=$!
  
-+	ret = tcan4x5x_get_gpios(mcan_class);
-+	if (ret) {
-+		dev_err(&spi->dev, "Getting gpios failed %pe\n", ERR_PTR(ret));
-+		goto out_power;
-+	}
-+
- 	version_info = tcan4x5x_find_version(priv);
- 	if (IS_ERR(version_info)) {
- 		ret = PTR_ERR(version_info);
- 		goto out_power;
- 	}
- 
--	ret = tcan4x5x_get_gpios(mcan_class, version_info);
-+	ret = tcan4x5x_check_gpios(mcan_class, version_info);
- 	if (ret) {
--		dev_err(&spi->dev, "Getting gpios failed %pe\n", ERR_PTR(ret));
-+		dev_err(&spi->dev, "Checking gpios failed %pe\n", ERR_PTR(ret));
- 		goto out_power;
- 	}
- 
+ 	wait_local_port_listen "${PEER_NS}" 12345 udp
 -- 
 2.39.5
 
