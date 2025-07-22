@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A9422CBE9;
-	Tue, 22 Jul 2025 13:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8ED22CBE9;
+	Tue, 22 Jul 2025 13:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192738; cv=none; b=owngWw6L0XdjwQqSaw1ssz+GSllcmDvMQUseFapmrXlk2FbNN39WXw5nNrkLLKyxGDT4G4zFsV3F1CL43f8jKHjc6EA1HMM+AeVQSeKRHjt3yXoQb7OI9yxZxPN9iqFoZz4aS1Nf5xjfSPoTMzN33+XenGyta5UJZCPgdcn06OQ=
+	t=1753192741; cv=none; b=YF6ZXUxybe6AMV/ryPlFULskkjHXHGJgDPBv2GgBt5DSCsBeS3lbkeQ7CoCr1/VsMKLowM3OaqMraEJRzP0JzFcN0IAPJ29s1P056GmtHVQWoF9ZBCEMdz54Ozwgp38lJ6MIxDamGucAWq+6FgjQ3L8qckb1XyGnZgH99xhGPQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192738; c=relaxed/simple;
-	bh=fp0HywTeEb27KlhscUqpUilFufq344QQKlvaxdBgpr0=;
+	s=arc-20240116; t=1753192741; c=relaxed/simple;
+	bh=oHRxizxfwYizJGNRYgeFhGw0N4msBtAciVJlPDUnmvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvSsiLsnfgE6ScGu2UUw3FT4zj+UM8F+sudzIP6v7ZLnkctrTEbwJhDmAb/CCbFm4PGiAWwggO6+4u6qgMqu4Q7KNQLEDaQom4J4VGTi6MHXRoQ0JLvgMrI1Wk5SHrHxMRR3UGo2Rtv1Y9Ogb2Ctx3OalR04dOv9keZrd/IL5Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJCrlKeF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FLHqGLMz0jGX159rnVs/qAhEzEXovqbB+8Z/fyJe6GeQ1uq8eQfV56/oFK0Cz+Dsps1WyAAzJeX91cei8z2gaCbHZB07WE2dAkBMwZHEEQa7Qx4z/fhQwRPKLkpn52e8c2SypNhrhwiNkmjfaVftuLxnN6MWVPbvfHXAKSnSSv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFsV4r6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJCrlKeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078C9C4CEEB;
-	Tue, 22 Jul 2025 13:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFsV4r6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CB8C4CEEB;
+	Tue, 22 Jul 2025 13:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192738;
-	bh=fp0HywTeEb27KlhscUqpUilFufq344QQKlvaxdBgpr0=;
+	s=korg; t=1753192741;
+	bh=oHRxizxfwYizJGNRYgeFhGw0N4msBtAciVJlPDUnmvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJCrlKeF4AAGoca9//Rm5xpeUWtGVjxoILA5YqxzFWVXEVrq7Qsm9I9jSKTgrf/0h
-	 jeTOJmga04EyXE1dQNyCdyb+v1UjeTNNjAJeXkNZHUUgmCqUMAYN+uvdMwhUhr64ND
-	 kCbTor7uNbGopUC6I4AWBZDtTIIFvTjVx3wrc5y8=
+	b=zFsV4r6Dqg/gAo7Ohnc1ZSUPYYoyIPBv/apbmZhojVL3IJDhOzwLjC85jXH3p2TZ3
+	 G74sAehiWjEYQqSSpDxo+uf1klLZdboCwvHWhss4J245dVjcJnV3lw6INvhiIlH2as
+	 MGdeGFl7textkCIT1CPOD9f/pUBUSytXL5dPDYG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Tim Harvey <tharvey@gateworks.com>,
 	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.12 043/158] arm64: dts: freescale: imx8mm-verdin: Keep LDO5 always on
-Date: Tue, 22 Jul 2025 15:43:47 +0200
-Message-ID: <20250722134342.348200279@linuxfoundation.org>
+Subject: [PATCH 6.12 044/158] arm64: dts: imx8mp-venice-gw71xx: fix TPM SPI frequency
+Date: Tue, 22 Jul 2025 15:43:48 +0200
+Message-ID: <20250722134342.385110787@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,45 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-commit fbe94be09fa81343d623a86ec64a742759b669b3 upstream.
+commit 528e2d3125ad8d783e922033a0a8e2adb17b400e upstream.
 
-LDO5 regulator is used to power the i.MX8MM NVCC_SD2 I/O supply, that is
-used for the SD2 card interface and also for some GPIOs.
+The IMX8MPDS Table 37 [1] shows that the max SPI master read frequency
+depends on the pins the interface is muxed behind with ECSPI2
+muxed behind ECSPI2 supporting up to 25MHz.
 
-When the SD card interface is not enabled the regulator subsystem could
-turn off this supply, since it is not used anywhere else, however this
-will also remove the power to some other GPIOs, for example one I/O that
-is used to power the ethernet phy, leading to a non working ethernet
-interface.
+Adjust the spi-max-frequency based on these findings.
 
-[   31.820515] On-module +V3.3_1.8_SD (LDO5): disabling
-[   31.821761] PMIC_USDHC_VSELECT: disabling
-[   32.764949] fec 30be0000.ethernet end0: Link is Down
+[1] https://www.nxp.com/webapp/Download?colCode=IMX8MPIEC
 
-Fix this keeping the LDO5 supply always on.
-
+Fixes: 1a8f6ff6a291 ("arm64: dts: imx8mp-venice-gw71xx: add TPM device")
 Cc: stable@vger.kernel.org
-Fixes: 6a57f224f734 ("arm64: dts: freescale: add initial support for verdin imx8m mini")
-Fixes: f5aab0438ef1 ("regulator: pca9450: Fix enable register for LDO5")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Link: https://lore.kernel.org/stable/20250523173723.4167474-1-tharvey%40gateworks.com
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8mp-venice-gw71xx.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
-@@ -484,6 +484,7 @@
- 			};
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw71xx.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw71xx.dtsi
+@@ -70,7 +70,7 @@
+ 	tpm@1 {
+ 		compatible = "atmel,attpm20p", "tcg,tpm_tis-spi";
+ 		reg = <0x1>;
+-		spi-max-frequency = <36000000>;
++		spi-max-frequency = <25000000>;
+ 	};
+ };
  
- 			reg_nvcc_sd: LDO5 {
-+				regulator-always-on;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-min-microvolt = <1800000>;
- 				regulator-name = "On-module +V3.3_1.8_SD (LDO5)";
 
 
