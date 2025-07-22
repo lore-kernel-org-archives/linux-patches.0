@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50F151C5A;
-	Tue, 22 Jul 2025 14:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6825622D785;
+	Tue, 22 Jul 2025 14:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192816; cv=none; b=O2rQN1j9Rlp8PU7e0III4uGGMUFyvXVsZ7QyWicFbTICMSzhfuWedxAd+ksAC0vE5q0YrqIbaAQMMIu162xXM1Six4L8urJbl2HCMWTFtyRihbwi72GSgnA3w9X7bp6pzWsi2P8D6LjjTJDw/sr4zpYHqXjgB8+69w0af1x0PAk=
+	t=1753192819; cv=none; b=fQsq+dG+CFeiTGdG2+3PwySpPbNViOywbPZXB4vI4TqNhKbBcq/qJQz/dqnGmFvAThFADtGNg54suk6HMxGWms5g54UKbzHJmiVygrPCbBMpCuwyUyPtwp9cDOqyT+A2wYDIkN9KNKLXWzc7qj61/cpgymBvjZslomENX0Sf6Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192816; c=relaxed/simple;
-	bh=hKIUt5LXnifjK916PvIbxCc/HKymS+uMQdQ5iDhI9vU=;
+	s=arc-20240116; t=1753192819; c=relaxed/simple;
+	bh=iz7feAaAEpPH0t6I2NGWvB7LS1xnjMYR5fC48bfBdDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMYJA/UcO3m9bgZP2vhgSttHPGRzk7X7wOJe5nommD+7BdJmOs3Ys/ivoTUY1xfLwnc2a3kAI97WwCQ51E2dknLyMEekzCZKLzZNENqHMZ29HHWNX/IIz2Y/GtFxFWjaJ01rc2fXbuIdM/J+GQ7HjT6bMlo1nMs4vb6qJab4Gfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYsA/a2r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s16+H9PFHisc7VMWh+Jb+mKzFWVtnC4mV3GCyekxNupOPx8cttaGQjfwzR5bED9rel9a3yezZGa+FX97VAo/46wQLedqCqvelT8jABSa1ZB5kOxqSfvIhMnjanQB9kedB0aZM1zTNVsDi7b1aCaEAAX2Ao6du01JRntrI9uFpn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWpQKeQG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYsA/a2r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541B1C4CEEB;
-	Tue, 22 Jul 2025 14:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWpQKeQG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB4CC4CEEB;
+	Tue, 22 Jul 2025 14:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192815;
-	bh=hKIUt5LXnifjK916PvIbxCc/HKymS+uMQdQ5iDhI9vU=;
+	s=korg; t=1753192819;
+	bh=iz7feAaAEpPH0t6I2NGWvB7LS1xnjMYR5fC48bfBdDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYsA/a2raEIc1Z/fqY7F1c0bQzK+b9U3FMgA7IIPbz4Iyi1UnHZIg0Rj3HKvAFOkn
-	 jEEkqVXhaz96UDsGiVK4XeNAgl3lJkoV9ZxVJOCSiFF4KJSMw/HUcs5K7Qc2LByZIP
-	 k19zzjmG0ea2sGkPLxISkM0OCtfl0D0KYCiV0a18=
+	b=vWpQKeQG7+Wq3xdK/lna0LJ80C0wbxMW/lVbEupF8/D2zJDNCjEEw15IBdNV6OjfH
+	 XG0+HiHGh0UIq7Wp69xIhJQPWhVMVJkDxP6QTNGauIjmc9U5rLAfrfzXAlxOrpSyEO
+	 bi+Tu9ibj6TDTpOE7yhb24qmTQLy7Weq/ARw64Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Aberback <joshua.aberback@amd.com>,
-	Clayton King <clayton.king@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 032/158] drm/amd/display: Free memory allocation
-Date: Tue, 22 Jul 2025 15:43:36 +0200
-Message-ID: <20250722134341.942997514@linuxfoundation.org>
+	Edip Hazuri <edip@medip.dev>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 033/158] ALSA: hda/realtek - Fix mute LED for HP Victus 16-r0xxx
+Date: Tue, 22 Jul 2025 15:43:37 +0200
+Message-ID: <20250722134341.987212335@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -53,44 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clayton King <clayton.king@amd.com>
+From: Edip Hazuri <edip@medip.dev>
 
-commit b2ee9fa0fe6416e16c532f61b909c79b5d4ed282 upstream.
+commit d9b99eb3d76a603442311926617654f0e35581d4 upstream.
 
-[WHY]
+The mute led on this laptop is using ALC245 but requires a quirk to work
+This patch enables the existing quirk for the device.
 
-Free memory to avoid memory leak
+Tested on Victus 16-r0xxx Laptop. The LED behaviour works
+as intended.
 
-Reviewed-by: Joshua Aberback <joshua.aberback@amd.com>
-Signed-off-by: Clayton King <clayton.king@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fa699acb8e9be2341ee318077fa119acc7d5f329)
-Cc: stable@vger.kernel.org
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Edip Hazuri <edip@medip.dev>
+Link: https://patch.msgid.link/20250710131812.27509-1-edip@medip.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
-@@ -1700,7 +1700,7 @@ struct clk_mgr_internal *dcn401_clk_mgr_
- 	clk_mgr->base.bw_params = kzalloc(sizeof(*clk_mgr->base.bw_params), GFP_KERNEL);
- 	if (!clk_mgr->base.bw_params) {
- 		BREAK_TO_DEBUGGER();
--		kfree(clk_mgr);
-+		kfree(clk_mgr401);
- 		return NULL;
- 	}
- 
-@@ -1711,6 +1711,7 @@ struct clk_mgr_internal *dcn401_clk_mgr_
- 	if (!clk_mgr->wm_range_table) {
- 		BREAK_TO_DEBUGGER();
- 		kfree(clk_mgr->base.bw_params);
-+		kfree(clk_mgr401);
- 		return NULL;
- 	}
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10731,6 +10731,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8b97, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8bb3, "HP Slim OMEN", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8bb4, "HP Slim OMEN", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8bbe, "HP Victus 16-r0xxx (MB 8BBE)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8bc8, "HP Victus 15-fa1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8bcd, "HP Omen 16-xd0xxx", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8bdd, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
 
 
