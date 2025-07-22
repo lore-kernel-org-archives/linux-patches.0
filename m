@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC0E2D8766;
-	Tue, 22 Jul 2025 14:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F621917E3;
+	Tue, 22 Jul 2025 14:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193058; cv=none; b=fmHjO7+hCSiJmrRXCy4zupoYKjLjBInE6f2D5atl77oTyE3MueS5wPwXs19W+OsGPYchhbyzEILKNydtUxddPRStrnEtQ+/Kda792FIjwVZhrgImq7azgn4Cf0/qIGv/V/JDHki3UeBcbY8kdNMm4Zc18otenAanvKrJjR8VRyU=
+	t=1753193061; cv=none; b=oJwO3cs6muGyOqcf7G+tm1p5VweE/RHVPt9bVM7kBolex2PC6OwXSLGyqsf7APb9ZcTJexPJDSe866pBi5FdL5S6IlRzCFu9RIYT3gjUGvPJd+eAl/aXnu+gR/1e7mIf1h/jd/CJtJ3SxfNGQRyDeo3ZAWHEA6a8aE1M3QibUw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193058; c=relaxed/simple;
-	bh=ohw8TuUPck12aeX7ZQj0I/r2/hREdoxu//+FbiAD6V4=;
+	s=arc-20240116; t=1753193061; c=relaxed/simple;
+	bh=fHZhFWd4avnJM0DHGG3jyoUMuPAmm34l6RP8snHww98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QSpXH04BBvcMOfmtyzqBE0M0z6z6/cOSvJKHgVU7xQQnvHOuY95OKgbIoDhsG+7ALogXNESoIEvQuWUYxiZuz8kKSUkN7QYnuAzMPMEHXg+R3SHDcPEueni7LIh2xl7klyHGcF9U/f02rW/JxNaNt1OTjStAABmPQ1r5gnG/obY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksOBTNrP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fnzHs6rFnGeT0x4ysHhMoYZu4jJVFVLa1oQRfdwEpYQef4eCYaCtsGR9/st65j9fGn8KYEo92lzLptV3PEkdZaMSv6KecY07H2uu+JGzn4UFad1pRHwuuGCP9hIl+Z12tIIDbyYcL4rgg4Gds2jRrPUk8daEb4iGMyW98JTTs0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr+2pjiD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksOBTNrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2422C4CEEB;
-	Tue, 22 Jul 2025 14:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr+2pjiD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34284C4CEEB;
+	Tue, 22 Jul 2025 14:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193058;
-	bh=ohw8TuUPck12aeX7ZQj0I/r2/hREdoxu//+FbiAD6V4=;
+	s=korg; t=1753193061;
+	bh=fHZhFWd4avnJM0DHGG3jyoUMuPAmm34l6RP8snHww98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksOBTNrPpuk2F1KLoStmm95iCyjVjixeuAwazCaEGrnvKH38p6g1yz28Dvz+0WgWk
-	 y8RdFMHl7LedDO/ba6YX//lt3+8A1Ke7BoknNvcDZMODCh4AcrErmZspeNEhXwnLrc
-	 T+LBzTP+OBKXg99POi7QsN6uLLi3EYdgpwD5mR2k=
+	b=vr+2pjiDaMyywaeB4d/y8T7nMpogy8l4xhDNI+EbM4im46pZ7z5PVoZSfCmYg1BA4
+	 T1eT94Yb+k7AI5cHGg7yBGHyB2bXBsDuYCHcJMt2bMuk5rc4zVG5ZTknoEVKyzFE9r
+	 zqDNNwpcavOJZCIQLtBxxyJhK4bDyp9zQW8Rlorw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+3bbbade4e1a7ab45ca3b@syzkaller.appspotmail.com,
+	Marius Zachmann <mail@mariuszachmann.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/158] selftests: net: increase inter-packet timeout in udpgro.sh
-Date: Tue, 22 Jul 2025 15:44:49 +0200
-Message-ID: <20250722134344.660472753@linuxfoundation.org>
+Subject: [PATCH 6.12 106/158] hwmon: (corsair-cpro) Validate the size of the received input buffer
+Date: Tue, 22 Jul 2025 15:44:50 +0200
+Message-ID: <20250722134344.696383320@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -51,57 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Marius Zachmann <mail@mariuszachmann.de>
 
-[ Upstream commit 0e9418961f897be59b1fab6e31ae1b09a0bae902 ]
+[ Upstream commit 495a4f0dce9c8c4478c242209748f1ee9e4d5820 ]
 
-The mentioned test is not very stable when running on top of
-debug kernel build. Increase the inter-packet timeout to allow
-more slack in such environments.
+Add buffer_recv_size to store the size of the received bytes.
+Validate buffer_recv_size in send_usb_cmd().
 
-Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/b0370c06ddb3235debf642c17de0284b2cd3c652.1752163107.git.pabeni@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: syzbot+3bbbade4e1a7ab45ca3b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-hwmon/61233ba1-e5ad-4d7a-ba31-3b5d0adcffcc@roeck-us.net
+Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
+Signed-off-by: Marius Zachmann <mail@mariuszachmann.de>
+Link: https://lore.kernel.org/r/20250619132817.39764-5-mail@mariuszachmann.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgro.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hwmon/corsair-cpro.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/testing/selftests/net/udpgro.sh b/tools/testing/selftests/net/udpgro.sh
-index d5ffd8c9172e1..799dbc2b4b01c 100755
---- a/tools/testing/selftests/net/udpgro.sh
-+++ b/tools/testing/selftests/net/udpgro.sh
-@@ -48,7 +48,7 @@ run_one() {
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index e1a7f7aa7f804..b7b911f8359c7 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -89,6 +89,7 @@ struct ccp_device {
+ 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
+ 	u8 *cmd_buffer;
+ 	u8 *buffer;
++	int buffer_recv_size; /* number of received bytes in buffer */
+ 	int target[6];
+ 	DECLARE_BITMAP(temp_cnct, NUM_TEMP_SENSORS);
+ 	DECLARE_BITMAP(fan_cnct, NUM_FANS);
+@@ -146,6 +147,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ 	if (!t)
+ 		return -ETIMEDOUT;
  
- 	cfg_veth
++	if (ccp->buffer_recv_size != IN_BUFFER_SIZE)
++		return -EPROTO;
++
+ 	return ccp_get_errno(ccp);
+ }
  
--	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} &
-+	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${rx_args} &
- 	local PID1=$!
- 
- 	wait_local_port_listen ${PEER_NS} 8000 udp
-@@ -95,7 +95,7 @@ run_one_nat() {
- 	# will land on the 'plain' one
- 	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -G ${family} -b ${addr1} -n 0 &
- 	local PID1=$!
--	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${family} -b ${addr2%/*} ${rx_args} &
-+	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${family} -b ${addr2%/*} ${rx_args} &
- 	local PID2=$!
- 
- 	wait_local_port_listen "${PEER_NS}" 8000 udp
-@@ -117,9 +117,9 @@ run_one_2sock() {
- 
- 	cfg_veth
- 
--	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 10 ${rx_args} -p 12345 &
-+	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 1000 -R 100 ${rx_args} -p 12345 &
- 	local PID1=$!
--	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 10 ${rx_args} &
-+	ip netns exec "${PEER_NS}" ./udpgso_bench_rx -C 2000 -R 100 ${rx_args} &
- 	local PID2=$!
- 
- 	wait_local_port_listen "${PEER_NS}" 12345 udp
+@@ -157,6 +161,7 @@ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 	spin_lock(&ccp->wait_input_report_lock);
+ 	if (!completion_done(&ccp->wait_input_report)) {
+ 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
++		ccp->buffer_recv_size = size;
+ 		complete_all(&ccp->wait_input_report);
+ 	}
+ 	spin_unlock(&ccp->wait_input_report_lock);
 -- 
 2.39.5
 
