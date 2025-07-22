@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCA92B9A5;
-	Tue, 22 Jul 2025 13:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB002877FA;
+	Tue, 22 Jul 2025 13:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192718; cv=none; b=R6Zx5+e6r7rJYtb1xQi+ldss9XfR3RqW1iHJcHek9zWFr0J7iaB2o+QBIMfVM3ggI+5t/cgo85g5PlJ1MCL5O40ZGuz7+pvxhHo9vDZGIv2npJaUMj+8SUPurj5UenRPAbLHfN4HD31ZYTIQPwXr0Hb6iUh5kG81vT3tfU9RwtU=
+	t=1753192721; cv=none; b=TUAj+AIG3TQ65ZmJ5ICx2YCJ6ckD70BlTKTpzJLUKF64jl9G9VsbcADkOPj9mb9icGEX44uW1Gi/03kXDRlF5NJsutX+8EmrmurcdIP55b6J39aFN/8CBnOjnFmyhS9ILv+hLyN06HDTYwn6l+wvkH0MEXDtl6chzbrfaaGTRO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192718; c=relaxed/simple;
-	bh=FMxA9ZmutRAU68yI9tptZSNTFaby4TS7IFCw7iei6y8=;
+	s=arc-20240116; t=1753192721; c=relaxed/simple;
+	bh=Y1e9DpiA9jQY+SElKuH9AxBuDmXK8MIiLqn5hPva4dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dp7DBVBmrBlh/nrC+BHdUUfwHxWkwIYremLSwHbGccLVK/lsGQayriG4gjF+KCtAWSammRS2US/BHNXrRfTrpV2f1VMJ05TP+OAQMfmxoEPrfUUDQCv4AEsMcnbqN46mh8eMt9QfjrpMsXKWXLIhjvFXSIzVbhVFivt7Ny9eQQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebBBXVG7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FWcH63pKJaQ4+nrEwYOBifq+MamcK0EA01pT93MSreDBdmawYv9enaKcaYR6GONy/Mzo0ZyQv0wphoTtfrkGEv9MuD8/exZYY7GfbKLtEhcMO8x1dHP39dSTob/KKYhWi4oioZjvPAZQTds1MZuVVrZ8IZ4qC4obFTODAGLlVN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJkISgWY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebBBXVG7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22A0C4CEEB;
-	Tue, 22 Jul 2025 13:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJkISgWY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5355CC4CEEB;
+	Tue, 22 Jul 2025 13:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192718;
-	bh=FMxA9ZmutRAU68yI9tptZSNTFaby4TS7IFCw7iei6y8=;
+	s=korg; t=1753192721;
+	bh=Y1e9DpiA9jQY+SElKuH9AxBuDmXK8MIiLqn5hPva4dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebBBXVG7nXSlUaWS4qbXFXEER+APyT/+DOl2qeIWsiU5iHYgccJ+p1C/u/KKoofRP
-	 PnRU45dNaqfRuMPDbqb7orSYukyzYZSM8FC4c//ZchwiABJLPgCqtTB2F30+tGEPtq
-	 ZkxMvNNh4v2QEEd54FYAqHbjB+wdtSSTWhl4s0G8=
+	b=OJkISgWYBJ8kHiebrmvMBv0iuFieFN9w7pGSIS7kAtsW1TPgrVWLSUyXSAiHiTyh+
+	 rHU70ilRPTfwNX4QljxI4qZtOfUtTQNr3fiv4TeS0uG82rXS8jt/ZJnI1VpuiNC8Y5
+	 5tM94/kCNodr+cHB/Rm/6B4ndmCZMGtPX1pW1044=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eeli Haapalainen <eeli.haapalainen@protonmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 029/158] drm/amdgpu/gfx8: reset compute ring wptr on the GPU on resume
-Date: Tue, 22 Jul 2025 15:43:33 +0200
-Message-ID: <20250722134341.832654127@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 038/158] mptcp: reset fallback status gracefully at disconnect() time
+Date: Tue, 22 Jul 2025 15:43:42 +0200
+Message-ID: <20250722134342.165783979@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -50,36 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eeli Haapalainen <eeli.haapalainen@protonmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 83261934015c434fabb980a3e613b01d9976e877 upstream.
+commit da9b2fc7b73d147d88abe1922de5ab72d72d7756 upstream.
 
-Commit 42cdf6f687da ("drm/amdgpu/gfx8: always restore kcq MQDs") made the
-ring pointer always to be reset on resume from suspend. This caused compute
-rings to fail since the reset was done without also resetting it for the
-firmware. Reset wptr on the GPU to avoid a disconnect between the driver
-and firmware wptr.
+mptcp_disconnect() clears the fallback bit unconditionally, without
+touching the associated flags.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3911
-Fixes: 42cdf6f687da ("drm/amdgpu/gfx8: always restore kcq MQDs")
-Signed-off-by: Eeli Haapalainen <eeli.haapalainen@protonmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2becafc319db3d96205320f31cc0de4ee5a93747)
+The bit clear is safe, as no fallback operation can race with that --
+all subflow are already in TCP_CLOSE status thanks to the previous
+FASTCLOSE -- but we need to consistently reset all the fallback related
+status.
+
+Also acquire the relevant lock, to avoid fouling static analyzers.
+
+Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
 Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250714-net-mptcp-fallback-races-v1-3-391aff963322@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/protocol.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
-@@ -4652,6 +4652,7 @@ static int gfx_v8_0_kcq_init_queue(struc
- 			memcpy(mqd, adev->gfx.mec.mqd_backup[mqd_idx], sizeof(struct vi_mqd_allocation));
- 		/* reset ring buffer */
- 		ring->wptr = 0;
-+		atomic64_set((atomic64_t *)ring->wptr_cpu_addr, 0);
- 		amdgpu_ring_clear_ring(ring);
- 	}
- 	return 0;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3249,7 +3249,16 @@ static int mptcp_disconnect(struct sock
+ 	 * subflow
+ 	 */
+ 	mptcp_destroy_common(msk, MPTCP_CF_FASTCLOSE);
++
++	/* The first subflow is already in TCP_CLOSE status, the following
++	 * can't overlap with a fallback anymore
++	 */
++	spin_lock_bh(&msk->fallback_lock);
++	msk->allow_subflows = true;
++	msk->allow_infinite_fallback = true;
+ 	WRITE_ONCE(msk->flags, 0);
++	spin_unlock_bh(&msk->fallback_lock);
++
+ 	msk->cb_flags = 0;
+ 	msk->recovery = false;
+ 	WRITE_ONCE(msk->can_ack, false);
 
 
