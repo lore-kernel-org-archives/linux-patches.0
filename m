@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CE82EA74A;
-	Tue, 22 Jul 2025 14:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98352EA16D;
+	Tue, 22 Jul 2025 14:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193419; cv=none; b=unR045t2+uzAxDGDwyGk7ZyLLezfdJqTQ0T9CAOXdVEifiEbp/NKWMpUss/gzWhK4ZxFinJ00IJ/VMIheSjsmz5kHRNJixWToWd+ujUI/YXDJ1ctG0tWm+mjICMsBa+y2xJx2FB06ouE6CkAX4Hz4PIhdv4z371K/BGphqgqSSk=
+	t=1753193421; cv=none; b=eh0Mgq7z/QL1Edhd28ooe/RrKwSjlw9cskowrueyNtLrTxB/cuPeMW7jlNj/t9Bi5x3BWcpv1Nl8dbdTls2h+5zwOfklYvOIYtJifNMsdjES5a6PY3CKmSayDjhWiMiJOWpp9yXAoWqY7KMBTQUzbem518WCwZ0JyEcvo3vB10E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193419; c=relaxed/simple;
-	bh=mRf/eg5sDBFOTO+zhWQiX5O8UUFGAKoPmLyZLyUeymU=;
+	s=arc-20240116; t=1753193421; c=relaxed/simple;
+	bh=Cw95j5JLrxv5b1c4DfYmloKNSbv1Pe0Z20zm/8YpSkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMRJ7ENK3qHk7NeIBYm5SuJ3qtyqsvnb2aaz0r2n8PKWGJVBdb4gWH4IBcnumgUaZXX9LFYgvh4iyPv+jxoN9LJYZ5LiKHQG4BC9+fDLqnaR0rHMeCpYkgCPajVw91pR+fGZZYFmSwpZjIyLsaLqeqRKCwVHYRLtjb+8CMtcWFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwQfviRi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+dRJaMq3d906JxflDqv0UnG09N8d1BX35FhvlnQMW2eKWccz1Gh9NRzTYoOqa2AGLYZerknMBZrGBtKg82/a5wIpyja9zlFa/qx4AF2AVb2b9rWbtwsswGjl3d5Tnzz2Ji7CqGjj8p4XuriZX71zobzBIesQ8nQCWbRofZ5bVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxuXi93l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwQfviRi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF44C4CEF1;
-	Tue, 22 Jul 2025 14:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxuXi93l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7ACC4CEEB;
+	Tue, 22 Jul 2025 14:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193418;
-	bh=mRf/eg5sDBFOTO+zhWQiX5O8UUFGAKoPmLyZLyUeymU=;
+	s=korg; t=1753193421;
+	bh=Cw95j5JLrxv5b1c4DfYmloKNSbv1Pe0Z20zm/8YpSkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwQfviRidz2z4E0+YMNvfv2OFDF4r9l9QThytGT9UHL87oDgkBD/whh0gdy5qUKXX
-	 lW7YXe5FxkfYaeI3somkbQuKWI1VgdZY36K83pRWigyzQ7lPaHnH5a4Kr42CBtp6Ji
-	 5gP7S0fXcmJ3ODP83Rlz+dWV4LyOlYIK+n7OnsXk=
+	b=dxuXi93llWUSu8QQACdv3VMZIu9Q7C53BJ+H+D/ds8jfRCR5nEuFtq2P3KDQRe1Za
+	 6NSEyJdKuY5Agpcl9k3lXqri10L37VzUimsEP7hA4lQgd08fNrvl5g6EaJLb7qZYf/
+	 753ca7ZV85hXyckln04Vp8GexxMZ+WKs2b386qiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 069/187] net: libwx: remove duplicate page_pool_put_full_page()
-Date: Tue, 22 Jul 2025 15:43:59 +0200
-Message-ID: <20250722134348.311188311@linuxfoundation.org>
+	Maud Spierings <maudspierings@gocontroll.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.15 087/187] iio: common: st_sensors: Fix use of uninitialize device structs
+Date: Tue, 22 Jul 2025 15:44:17 +0200
+Message-ID: <20250722134348.961533374@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -45,177 +45,288 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Maud Spierings <maudspierings@gocontroll.com>
 
-commit 1b7e585c04cd5f0731dd25ffd396277e55fae0e6 upstream.
+commit 9f92e93e257b33e73622640a9205f8642ec16ddd upstream.
 
-page_pool_put_full_page() should only be invoked when freeing Rx buffers
-or building a skb if the size is too short. At other times, the pages
-need to be reused. So remove the redundant page put. In the original
-code, double free pages cause kernel panic:
+Throughout the various probe functions &indio_dev->dev is used before it
+is initialized. This caused a kernel panic in st_sensors_power_enable()
+when the call to devm_regulator_bulk_get_enable() fails and then calls
+dev_err_probe() with the uninitialized device.
 
-[  876.949834]  __irq_exit_rcu+0xc7/0x130
-[  876.949836]  common_interrupt+0xb8/0xd0
-[  876.949838]  </IRQ>
-[  876.949838]  <TASK>
-[  876.949840]  asm_common_interrupt+0x22/0x40
-[  876.949841] RIP: 0010:cpuidle_enter_state+0xc2/0x420
-[  876.949843] Code: 00 00 e8 d1 1d 5e ff e8 ac f0 ff ff 49 89 c5 0f 1f 44 =
-00 00 31 ff e8 cd fc 5c ff 45 84 ff 0f 85 40 02 00 00 fb 0f 1f 44 00 00 <45=
-> 85 f6 0f 88 84 01 00 00 49 63 d6 48 8d 04 52 48 8d 04 82 49 8d
-[  876.949844] RSP: 0018:ffffaa7340267e78 EFLAGS: 00000246
-[  876.949845] RAX: ffff9e3f135be000 RBX: 0000000000000002 RCX: 00000000000=
-00000
-[  876.949846] RDX: 000000cc2dc4cb7c RSI: ffffffff89ee49ae RDI: ffffffff89e=
-f9f9e
-[  876.949847] RBP: ffff9e378f940800 R08: 0000000000000002 R09: 00000000000=
-000ed
-[  876.949848] R10: 000000000000afc8 R11: ffff9e3e9e5a9b6c R12: ffffffff8a6=
-d8580
-[  876.949849] R13: 000000cc2dc4cb7c R14: 0000000000000002 R15: 00000000000=
-00000
-[  876.949852]  ? cpuidle_enter_state+0xb3/0x420
-[  876.949855]  cpuidle_enter+0x29/0x40
-[  876.949857]  cpuidle_idle_call+0xfd/0x170
-[  876.949859]  do_idle+0x7a/0xc0
-[  876.949861]  cpu_startup_entry+0x25/0x30
-[  876.949862]  start_secondary+0x117/0x140
-[  876.949864]  common_startup_64+0x13e/0x148
-[  876.949867]  </TASK>
-[  876.949868] ---[ end trace 0000000000000000 ]---
-[  876.949869] ------------[ cut here ]------------
-[  876.949870] list_del corruption, ffffead40445a348->next is NULL
-[  876.949873] WARNING: CPU: 14 PID: 0 at lib/list_debug.c:52 __list_del_en=
-try_valid_or_report+0x67/0x120
-[  876.949875] Modules linked in: snd_hrtimer(E) bnep(E) binfmt_misc(E) amd=
-gpu(E) squashfs(E) vfat(E) loop(E) fat(E) amd_atl(E) snd_hda_codec_realtek(=
-E) intel_rapl_msr(E) snd_hda_codec_generic(E) intel_rapl_common(E) snd_hda_=
-scodec_component(E) snd_hda_codec_hdmi(E) snd_hda_intel(E) edac_mce_amd(E) =
-snd_intel_dspcfg(E) snd_hda_codec(E) snd_hda_core(E) amdxcp(E) kvm_amd(E) s=
-nd_hwdep(E) gpu_sched(E) drm_panel_backlight_quirks(E) cec(E) snd_pcm(E) dr=
-m_buddy(E) snd_seq_dummy(E) drm_ttm_helper(E) btusb(E) kvm(E) snd_seq_oss(E=
-) btrtl(E) ttm(E) btintel(E) snd_seq_midi(E) btbcm(E) drm_exec(E) snd_seq_m=
-idi_event(E) i2c_algo_bit(E) snd_rawmidi(E) bluetooth(E) drm_suballoc_helpe=
-r(E) irqbypass(E) snd_seq(E) ghash_clmulni_intel(E) sha512_ssse3(E) drm_dis=
-play_helper(E) aesni_intel(E) snd_seq_device(E) rfkill(E) snd_timer(E) gf12=
-8mul(E) drm_client_lib(E) drm_kms_helper(E) snd(E) i2c_piix4(E) joydev(E) s=
-oundcore(E) wmi_bmof(E) ccp(E) k10temp(E) i2c_smbus(E) gpio_amdpt(E) i2c_de=
-signware_platform(E) gpio_generic(E) sg(E)
-[  876.949914]  i2c_designware_core(E) sch_fq_codel(E) parport_pc(E) drm(E)=
- ppdev(E) lp(E) parport(E) fuse(E) nfnetlink(E) ip_tables(E) ext4 crc16 mbc=
-ache jbd2 sd_mod sfp mdio_i2c i2c_core txgbe ahci ngbe pcs_xpcs libahci lib=
-wx r8169 phylink libata realtek ptp pps_core video wmi
-[  876.949933] CPU: 14 UID: 0 PID: 0 Comm: swapper/14 Kdump: loaded Tainted=
-: G        W   E       6.16.0-rc2+ #20 PREEMPT(voluntary)
-[  876.949935] Tainted: [W]=3DWARN, [E]=3DUNSIGNED_MODULE
-[  876.949936] Hardware name: Micro-Star International Co., Ltd. MS-7E16/X6=
-70E GAMING PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
-[  876.949936] RIP: 0010:__list_del_entry_valid_or_report+0x67/0x120
-[  876.949938] Code: 00 00 00 48 39 7d 08 0f 85 a6 00 00 00 5b b8 01 00 00 =
-00 5d 41 5c e9 73 0d 93 ff 48 89 fe 48 c7 c7 a0 31 e8 89 e8 59 7c b3 ff <0f=
-> 0b 31 c0 5b 5d 41 5c e9 57 0d 93 ff 48 89 fe 48 c7 c7 c8 31 e8
-[  876.949940] RSP: 0018:ffffaa73405d0c60 EFLAGS: 00010282
-[  876.949941] RAX: 0000000000000000 RBX: ffffead40445a348 RCX: 00000000000=
-00000
-[  876.949942] RDX: 0000000000000105 RSI: 0000000000000001 RDI: 00000000fff=
-fffff
-[  876.949943] RBP: 0000000000000000 R08: 000000010006dfde R09: ffffffff8a4=
-7d150
-[  876.949944] R10: ffffffff8a47d150 R11: 0000000000000003 R12: dead0000000=
-00122
-[  876.949945] R13: ffff9e3e9e5af700 R14: ffffead40445a348 R15: ffff9e3e9e5=
-af720
-[  876.949946] FS:  0000000000000000(0000) GS:ffff9e3f135be000(0000) knlGS:=
-0000000000000000
-[  876.949947] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  876.949948] CR2: 00007fa58b480048 CR3: 0000000156724000 CR4: 00000000007=
-50ef0
-[  876.949949] PKRU: 55555554
-[  876.949950] Call Trace:
-[  876.949951]  <IRQ>
-[  876.949952]  __rmqueue_pcplist+0x53/0x2c0
-[  876.949955]  alloc_pages_bulk_noprof+0x2e0/0x660
-[  876.949958]  __page_pool_alloc_pages_slow+0xa9/0x400
-[  876.949961]  page_pool_alloc_pages+0xa/0x20
-[  876.949963]  wx_alloc_rx_buffers+0xd7/0x110 [libwx]
-[  876.949967]  wx_clean_rx_irq+0x262/0x430 [libwx]
-[  876.949971]  wx_poll+0x92/0x130 [libwx]
-[  876.949975]  __napi_poll+0x28/0x190
-[  876.949977]  net_rx_action+0x301/0x3f0
-[  876.949980]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  876.949981]  ? profile_tick+0x30/0x70
-[  876.949983]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  876.949984]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  876.949986]  ? timerqueue_add+0xa3/0xc0
-[  876.949988]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  876.949989]  ? __raise_softirq_irqoff+0x16/0x70
-[  876.949991]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  876.949993]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  876.949994]  ? wx_msix_clean_rings+0x41/0x50 [libwx]
-[  876.949998]  handle_softirqs+0xf9/0x2c0
+This seems to only cause a panic with dev_err_probe(), dev_err(),
+dev_warn() and dev_info() don't seem to cause a panic, but are fixed
+as well.
 
-Fixes: 3c47e8ae113a ("net: libwx: Support to receive packets in NAPI")
+The issue is reported and traced here: [1]
+
+Link: https://lore.kernel.org/all/AM7P189MB100986A83D2F28AF3FFAF976E39EA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM/ [1]
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250714024755.17512-2-jiawenwu@trustnetic.c=
-om
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://... [1]
+Link: https://patch.msgid.link/20250527-st_iio_fix-v4-1-12d89801c761@gocontroll.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c  |   11 -----------
- drivers/net/ethernet/wangxun/libwx/wx_type.h |    1 -
- 2 files changed, 12 deletions(-)
+ drivers/iio/accel/st_accel_core.c                  |   10 ++---
+ drivers/iio/common/st_sensors/st_sensors_core.c    |   36 +++++++++------------
+ drivers/iio/common/st_sensors/st_sensors_trigger.c |   20 +++++------
+ 3 files changed, 31 insertions(+), 35 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -173,10 +173,6 @@ static void wx_dma_sync_frag(struct wx_r
- 				      skb_frag_off(frag),
- 				      skb_frag_size(frag),
- 				      DMA_FROM_DEVICE);
--
--	/* If the page was released, just unmap it. */
--	if (unlikely(WX_CB(skb)->page_released))
--		page_pool_put_full_page(rx_ring->page_pool, rx_buffer->page, false);
+--- a/drivers/iio/accel/st_accel_core.c
++++ b/drivers/iio/accel/st_accel_core.c
+@@ -1353,6 +1353,7 @@ static int apply_acpi_orientation(struct
+ 	union acpi_object *ont;
+ 	union acpi_object *elements;
+ 	acpi_status status;
++	struct device *parent = indio_dev->dev.parent;
+ 	int ret = -EINVAL;
+ 	unsigned int val;
+ 	int i, j;
+@@ -1371,7 +1372,7 @@ static int apply_acpi_orientation(struct
+ 	};
+ 
+ 
+-	adev = ACPI_COMPANION(indio_dev->dev.parent);
++	adev = ACPI_COMPANION(parent);
+ 	if (!adev)
+ 		return -ENXIO;
+ 
+@@ -1380,8 +1381,7 @@ static int apply_acpi_orientation(struct
+ 	if (status == AE_NOT_FOUND) {
+ 		return -ENXIO;
+ 	} else if (ACPI_FAILURE(status)) {
+-		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
+-			 status);
++		dev_warn(parent, "failed to execute _ONT: %d\n", status);
+ 		return status;
+ 	}
+ 
+@@ -1457,12 +1457,12 @@ static int apply_acpi_orientation(struct
+ 	}
+ 
+ 	ret = 0;
+-	dev_info(&indio_dev->dev, "computed mount matrix from ACPI\n");
++	dev_info(parent, "computed mount matrix from ACPI\n");
+ 
+ out:
+ 	kfree(buffer.pointer);
+ 	if (ret)
+-		dev_dbg(&indio_dev->dev,
++		dev_dbg(parent,
+ 			"failed to apply ACPI orientation data: %d\n", ret);
+ 
+ 	return ret;
+--- a/drivers/iio/common/st_sensors/st_sensors_core.c
++++ b/drivers/iio/common/st_sensors/st_sensors_core.c
+@@ -154,7 +154,7 @@ static int st_sensors_set_fullscale(stru
+ 	return err;
+ 
+ st_accel_set_fullscale_error:
+-	dev_err(&indio_dev->dev, "failed to set new fullscale.\n");
++	dev_err(indio_dev->dev.parent, "failed to set new fullscale.\n");
+ 	return err;
  }
-=20
- static struct wx_rx_buffer *wx_get_rx_buffer(struct wx_ring *rx_ring,
-@@ -226,10 +222,6 @@ static void wx_put_rx_buffer(struct wx_r
- 			     struct sk_buff *skb,
- 			     int rx_buffer_pgcnt)
+ 
+@@ -231,8 +231,7 @@ int st_sensors_power_enable(struct iio_d
+ 					     ARRAY_SIZE(regulator_names),
+ 					     regulator_names);
+ 	if (err)
+-		return dev_err_probe(&indio_dev->dev, err,
+-				     "unable to enable supplies\n");
++		return dev_err_probe(parent, err, "unable to enable supplies\n");
+ 
+ 	return 0;
+ }
+@@ -241,13 +240,14 @@ EXPORT_SYMBOL_NS(st_sensors_power_enable
+ static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
+ 					struct st_sensors_platform_data *pdata)
  {
--	if (!IS_ERR(skb) && WX_CB(skb)->dma =3D=3D rx_buffer->dma)
--		/* the page has been released from the ring */
--		WX_CB(skb)->page_released =3D true;
--
- 	/* clear contents of rx_buffer */
- 	rx_buffer->page =3D NULL;
- 	rx_buffer->skb =3D NULL;
-@@ -2288,9 +2280,6 @@ static void wx_clean_rx_ring(struct wx_r
- 		if (rx_buffer->skb) {
- 			struct sk_buff *skb =3D rx_buffer->skb;
-=20
--			if (WX_CB(skb)->page_released)
--				page_pool_put_full_page(rx_ring->page_pool, rx_buffer->page, false);
--
- 			dev_kfree_skb(skb);
++	struct device *parent = indio_dev->dev.parent;
+ 	struct st_sensor_data *sdata = iio_priv(indio_dev);
+ 
+ 	/* Sensor does not support interrupts */
+ 	if (!sdata->sensor_settings->drdy_irq.int1.addr &&
+ 	    !sdata->sensor_settings->drdy_irq.int2.addr) {
+ 		if (pdata->drdy_int_pin)
+-			dev_info(&indio_dev->dev,
++			dev_info(parent,
+ 				 "DRDY on pin INT%d specified, but sensor does not support interrupts\n",
+ 				 pdata->drdy_int_pin);
+ 		return 0;
+@@ -256,29 +256,27 @@ static int st_sensors_set_drdy_int_pin(s
+ 	switch (pdata->drdy_int_pin) {
+ 	case 1:
+ 		if (!sdata->sensor_settings->drdy_irq.int1.mask) {
+-			dev_err(&indio_dev->dev,
+-					"DRDY on INT1 not available.\n");
++			dev_err(parent, "DRDY on INT1 not available.\n");
+ 			return -EINVAL;
  		}
-=20
---- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
-@@ -859,7 +859,6 @@ enum wx_reset_type {
- struct wx_cb {
- 	dma_addr_t dma;
- 	u16     append_cnt;      /* number of skb's appended */
--	bool    page_released;
- 	bool    dma_released;
- };
-=20
+ 		sdata->drdy_int_pin = 1;
+ 		break;
+ 	case 2:
+ 		if (!sdata->sensor_settings->drdy_irq.int2.mask) {
+-			dev_err(&indio_dev->dev,
+-					"DRDY on INT2 not available.\n");
++			dev_err(parent, "DRDY on INT2 not available.\n");
+ 			return -EINVAL;
+ 		}
+ 		sdata->drdy_int_pin = 2;
+ 		break;
+ 	default:
+-		dev_err(&indio_dev->dev, "DRDY on pdata not valid.\n");
++		dev_err(parent, "DRDY on pdata not valid.\n");
+ 		return -EINVAL;
+ 	}
+ 
+ 	if (pdata->open_drain) {
+ 		if (!sdata->sensor_settings->drdy_irq.int1.addr_od &&
+ 		    !sdata->sensor_settings->drdy_irq.int2.addr_od)
+-			dev_err(&indio_dev->dev,
++			dev_err(parent,
+ 				"open drain requested but unsupported.\n");
+ 		else
+ 			sdata->int_pin_open_drain = true;
+@@ -336,6 +334,7 @@ EXPORT_SYMBOL_NS(st_sensors_dev_name_pro
+ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+ 					struct st_sensors_platform_data *pdata)
+ {
++	struct device *parent = indio_dev->dev.parent;
+ 	struct st_sensor_data *sdata = iio_priv(indio_dev);
+ 	struct st_sensors_platform_data *of_pdata;
+ 	int err = 0;
+@@ -343,7 +342,7 @@ int st_sensors_init_sensor(struct iio_de
+ 	mutex_init(&sdata->odr_lock);
+ 
+ 	/* If OF/DT pdata exists, it will take precedence of anything else */
+-	of_pdata = st_sensors_dev_probe(indio_dev->dev.parent, pdata);
++	of_pdata = st_sensors_dev_probe(parent, pdata);
+ 	if (IS_ERR(of_pdata))
+ 		return PTR_ERR(of_pdata);
+ 	if (of_pdata)
+@@ -370,7 +369,7 @@ int st_sensors_init_sensor(struct iio_de
+ 		if (err < 0)
+ 			return err;
+ 	} else
+-		dev_info(&indio_dev->dev, "Full-scale not possible\n");
++		dev_info(parent, "Full-scale not possible\n");
+ 
+ 	err = st_sensors_set_odr(indio_dev, sdata->odr);
+ 	if (err < 0)
+@@ -405,7 +404,7 @@ int st_sensors_init_sensor(struct iio_de
+ 			mask = sdata->sensor_settings->drdy_irq.int2.mask_od;
+ 		}
+ 
+-		dev_info(&indio_dev->dev,
++		dev_info(parent,
+ 			 "set interrupt line to open drain mode on pin %d\n",
+ 			 sdata->drdy_int_pin);
+ 		err = st_sensors_write_data_with_mask(indio_dev, addr,
+@@ -594,21 +593,20 @@ EXPORT_SYMBOL_NS(st_sensors_get_settings
+ int st_sensors_verify_id(struct iio_dev *indio_dev)
+ {
+ 	struct st_sensor_data *sdata = iio_priv(indio_dev);
++	struct device *parent = indio_dev->dev.parent;
+ 	int wai, err;
+ 
+ 	if (sdata->sensor_settings->wai_addr) {
+ 		err = regmap_read(sdata->regmap,
+ 				  sdata->sensor_settings->wai_addr, &wai);
+ 		if (err < 0) {
+-			dev_err(&indio_dev->dev,
+-				"failed to read Who-Am-I register.\n");
+-			return err;
++			return dev_err_probe(parent, err,
++					     "failed to read Who-Am-I register.\n");
+ 		}
+ 
+ 		if (sdata->sensor_settings->wai != wai) {
+-			dev_warn(&indio_dev->dev,
+-				"%s: WhoAmI mismatch (0x%x).\n",
+-				indio_dev->name, wai);
++			dev_warn(parent, "%s: WhoAmI mismatch (0x%x).\n",
++				 indio_dev->name, wai);
+ 		}
+ 	}
+ 
+--- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
++++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
+@@ -127,7 +127,7 @@ int st_sensors_allocate_trigger(struct i
+ 	sdata->trig = devm_iio_trigger_alloc(parent, "%s-trigger",
+ 					     indio_dev->name);
+ 	if (sdata->trig == NULL) {
+-		dev_err(&indio_dev->dev, "failed to allocate iio trigger.\n");
++		dev_err(parent, "failed to allocate iio trigger.\n");
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -143,7 +143,7 @@ int st_sensors_allocate_trigger(struct i
+ 	case IRQF_TRIGGER_FALLING:
+ 	case IRQF_TRIGGER_LOW:
+ 		if (!sdata->sensor_settings->drdy_irq.addr_ihl) {
+-			dev_err(&indio_dev->dev,
++			dev_err(parent,
+ 				"falling/low specified for IRQ but hardware supports only rising/high: will request rising/high\n");
+ 			if (irq_trig == IRQF_TRIGGER_FALLING)
+ 				irq_trig = IRQF_TRIGGER_RISING;
+@@ -156,21 +156,19 @@ int st_sensors_allocate_trigger(struct i
+ 				sdata->sensor_settings->drdy_irq.mask_ihl, 1);
+ 			if (err < 0)
+ 				return err;
+-			dev_info(&indio_dev->dev,
++			dev_info(parent,
+ 				 "interrupts on the falling edge or active low level\n");
+ 		}
+ 		break;
+ 	case IRQF_TRIGGER_RISING:
+-		dev_info(&indio_dev->dev,
+-			 "interrupts on the rising edge\n");
++		dev_info(parent, "interrupts on the rising edge\n");
+ 		break;
+ 	case IRQF_TRIGGER_HIGH:
+-		dev_info(&indio_dev->dev,
+-			 "interrupts active high level\n");
++		dev_info(parent, "interrupts active high level\n");
+ 		break;
+ 	default:
+ 		/* This is the most preferred mode, if possible */
+-		dev_err(&indio_dev->dev,
++		dev_err(parent,
+ 			"unsupported IRQ trigger specified (%lx), enforce rising edge\n", irq_trig);
+ 		irq_trig = IRQF_TRIGGER_RISING;
+ 	}
+@@ -179,7 +177,7 @@ int st_sensors_allocate_trigger(struct i
+ 	if (irq_trig == IRQF_TRIGGER_FALLING ||
+ 	    irq_trig == IRQF_TRIGGER_RISING) {
+ 		if (!sdata->sensor_settings->drdy_irq.stat_drdy.addr) {
+-			dev_err(&indio_dev->dev,
++			dev_err(parent,
+ 				"edge IRQ not supported w/o stat register.\n");
+ 			return -EOPNOTSUPP;
+ 		}
+@@ -214,13 +212,13 @@ int st_sensors_allocate_trigger(struct i
+ 					sdata->trig->name,
+ 					sdata->trig);
+ 	if (err) {
+-		dev_err(&indio_dev->dev, "failed to request trigger IRQ.\n");
++		dev_err(parent, "failed to request trigger IRQ.\n");
+ 		return err;
+ 	}
+ 
+ 	err = devm_iio_trigger_register(parent, sdata->trig);
+ 	if (err < 0) {
+-		dev_err(&indio_dev->dev, "failed to register iio trigger.\n");
++		dev_err(parent, "failed to register iio trigger.\n");
+ 		return err;
+ 	}
+ 	indio_dev->trig = iio_trigger_get(sdata->trig);
 
 
