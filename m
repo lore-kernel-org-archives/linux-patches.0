@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EBA7BAEC;
-	Tue, 22 Jul 2025 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8BF21578D;
+	Tue, 22 Jul 2025 13:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192192; cv=none; b=he45rMkphRectTZcQKcmPvh9BLLOiWWc2KnU3pf6NuAdNdfk4THFOal8a3prJ34CD4XZ+58QZG20WhN2cbqpDFdvxfe/2W+4IdtDHug3lHaAK6B1ijpmLiQoRgD39EB5gJruJyu9VLGMtO6DVU3zvrFh67tWjSw90uQqGEKEFbQ=
+	t=1753192195; cv=none; b=s4UalQ7485grJgGAh2PA+aIyI1gx9dQ0WTZehCgiopqWsXqlCpI10Mjm1OTx3rEqUPUwRm2+Pbz29eJhkY+4nJ5PXDqcvKnEvx3HNXRMl9/AXjZpITTGkkU+pns0+PV+bFtRgpl9MJLSbnEwLya6xhn0NiWz47szFq72CuBQif8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192192; c=relaxed/simple;
-	bh=2iH50VZ4vgxBT4f5geBZ4cFQezLtBbLtRN8fJeobOkU=;
+	s=arc-20240116; t=1753192195; c=relaxed/simple;
+	bh=+5JztpkMwu45Sr6MIknpY/ensHC5wwh6CG2NuJ70wsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMBz/XAtFBVB5yMicpmd8WdwO7aYjR+V0rouCYCK86ePrpCw190iwAfpEglng/Bky738ncwoR167KHJK3ZUndHQ1qKrAgyJ+kqE6D+VgNc1DKHpSTwZR4bR6/iVI1vZzqPFJJAvKysdorMId9TjmTqZxzYu51En/P5ir3ejEaoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYIOrPCO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HmnXAJlNDvBc6VSoqvBmWKiW9unuyg+Zi2pnh8XQxFdzeicUW7WYfL5bAQ2F+b3SQawSMRfWRaCJ6M0d+GejsZhRwi10Hu+L0jBl7NGJzIBKxtjMafVmDVaR5ggxffkpgXCV67cm9cL0x8egZ0Ak13zStq1z2MyxHAmLT4XOT+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/FKgv77; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYIOrPCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD02C4CEEB;
-	Tue, 22 Jul 2025 13:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/FKgv77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3101AC4CEF1;
+	Tue, 22 Jul 2025 13:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192192;
-	bh=2iH50VZ4vgxBT4f5geBZ4cFQezLtBbLtRN8fJeobOkU=;
+	s=korg; t=1753192195;
+	bh=+5JztpkMwu45Sr6MIknpY/ensHC5wwh6CG2NuJ70wsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYIOrPCODBmJBQf8QaPnlijN6psyFjZh/M9V5FedyMxrJcGCUZDgLvXIN/1CWpstu
-	 MTx8xQCB4rTUQnyw989ndJPMWApohEXCH6gRTUln9R0uJfFcdJxvng0Oe/pOX5x/RV
-	 E0cP/hDJguFS3fmfO8ojl+OqTIoDBYQDEi+c43MY=
+	b=n/FKgv772+MzCeR+/0ygOuFRpUm4pRuu0BNQHTMmQoZOheU0c89BBVIHNlqJMOd2F
+	 E5vbUf/sUhnXwj47GI5onKX6IpBmyasGmHo3WR+I6/ZEDOcUNbpSIGU86ek6i2EEIN
+	 l/x+oqaTKgk9+jLdNbL/angLyhXT4YhQtP132aYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH 6.1 71/79] usb: hub: Fix flushing of delayed work used for post resume purposes
-Date: Tue, 22 Jul 2025 15:45:07 +0200
-Message-ID: <20250722134330.988984754@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 72/79] usb: hub: Dont try to recover devices lost during warm reset.
+Date: Tue, 22 Jul 2025 15:45:08 +0200
+Message-ID: <20250722134331.034837456@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -46,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -54,115 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 9bd9c8026341f75f25c53104eb7e656e357ca1a2 upstream.
+commit 2521106fc732b0b75fd3555c689b1ed1d29d273c upstream.
 
-Delayed work that prevents USB3 hubs from runtime-suspending too early
-needed to be flushed in hub_quiesce() to resolve issues detected on
-QC SC8280XP CRD board during suspend resume testing.
+Hub driver warm-resets ports in SS.Inactive or Compliance mode to
+recover a possible connected device. The port reset code correctly
+detects if a connection is lost during reset, but hub driver
+port_event() fails to take this into account in some cases.
+port_event() ends up using stale values and assumes there is a
+connected device, and will try all means to recover it, including
+power-cycling the port.
 
-This flushing did however trigger new issues on Raspberry Pi 3B+, which
-doesn't have USB3 ports, and doesn't queue any post resume delayed work.
+Details:
+This case was triggered when xHC host was suspended with DbC (Debug
+Capability) enabled and connected. DbC turns one xHC port into a simple
+usb debug device, allowing debugging a system with an A-to-A USB debug
+cable.
 
-The flushed 'hub->init_work' item is used for several purposes, and
-is originally initialized with a 'NULL' work function. The work function
-is also changed on the fly, which may contribute to the issue.
+xhci DbC code disables DbC when xHC is system suspended to D3, and
+enables it back during resume.
+We essentially end up with two hosts connected to each other during
+suspend, and, for a short while during resume, until DbC is enabled back.
+The suspended xHC host notices some activity on the roothub port, but
+can't train the link due to being suspended, so xHC hardware sets a CAS
+(Cold Attach Status) flag for this port to inform xhci host driver that
+the port needs to be warm reset once xHC resumes.
 
-Solve this by creating a dedicated delayed work item for post resume work,
-and flush that delayed work in hub_quiesce()
+CAS is xHCI specific, and not part of USB specification, so xhci driver
+tells usb core that the port has a connection and link is in compliance
+mode. Recovery from complinace mode is similar to CAS recovery.
 
-Cc: stable <stable@kernel.org>
-Fixes: a49e1e2e785f ("usb: hub: Fix flushing and scheduling of delayed work that tunes runtime pm")
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://lore.kernel.org/linux-usb/aF5rNp1l0LWITnEB@finisterre.sirena.org.uk
+xhci CAS driver support that fakes a compliance mode connection was added
+in commit 8bea2bd37df0 ("usb: Add support for root hub port status CAS")
+
+Once xHCI resumes and DbC is enabled back, all activity on the xHC
+roothub host side port disappears. The hub driver will anyway think
+port has a connection and link is in compliance mode, and hub driver
+will try to recover it.
+
+The port power-cycle during recovery seems to cause issues to the active
+DbC connection.
+
+Fix this by clearing connect_change flag if hub_port_reset() returns
+-ENOTCONN, thus avoiding the whole unnecessary port recovery and
+initialization attempt.
+
+Cc: stable@vger.kernel.org
+Fixes: 8bea2bd37df0 ("usb: Add support for root hub port status CAS")
+Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SC8280XP CRD
-Tested-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20250627164348.3982628-2-mathias.nyman@linux.intel.com
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250623133947.3144608-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   21 ++++++++-------------
- drivers/usb/core/hub.h |    1 +
- 2 files changed, 9 insertions(+), 13 deletions(-)
+ drivers/usb/core/hub.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 --- a/drivers/usb/core/hub.c
 +++ b/drivers/usb/core/hub.c
-@@ -1044,12 +1044,11 @@ int usb_remove_device(struct usb_device
+@@ -5702,6 +5702,7 @@ static void port_event(struct usb_hub *h
+ 	struct usb_device *hdev = hub->hdev;
+ 	u16 portstatus, portchange;
+ 	int i = 0;
++	int err;
  
- enum hub_activation_type {
- 	HUB_INIT, HUB_INIT2, HUB_INIT3,		/* INITs must come first */
--	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME, HUB_POST_RESUME,
-+	HUB_POST_RESET, HUB_RESUME, HUB_RESET_RESUME,
- };
- 
- static void hub_init_func2(struct work_struct *ws);
- static void hub_init_func3(struct work_struct *ws);
--static void hub_post_resume(struct work_struct *ws);
- 
- static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
- {
-@@ -1073,12 +1072,6 @@ static void hub_activate(struct usb_hub
- 		goto init3;
- 	}
- 
--	if (type == HUB_POST_RESUME) {
--		usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
--		hub_put(hub);
--		return;
--	}
--
- 	hub_get(hub);
- 
- 	/* The superspeed hub except for root hub has to use Hub Depth
-@@ -1332,8 +1325,8 @@ static void hub_activate(struct usb_hub
- 		usb_autopm_get_interface_no_resume(
- 			to_usb_interface(hub->intfdev));
- 
--		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
--		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
-+		queue_delayed_work(system_power_efficient_wq,
-+				   &hub->post_resume_work,
- 				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
- 		return;
- 	}
-@@ -1358,9 +1351,10 @@ static void hub_init_func3(struct work_s
- 
- static void hub_post_resume(struct work_struct *ws)
- {
--	struct usb_hub *hub = container_of(ws, struct usb_hub, init_work.work);
-+	struct usb_hub *hub = container_of(ws, struct usb_hub, post_resume_work.work);
- 
--	hub_activate(hub, HUB_POST_RESUME);
-+	usb_autopm_put_interface_async(to_usb_interface(hub->intfdev));
-+	hub_put(hub);
- }
- 
- enum hub_quiescing_type {
-@@ -1388,7 +1382,7 @@ static void hub_quiesce(struct usb_hub *
- 
- 	/* Stop hub_wq and related activity */
- 	del_timer_sync(&hub->irq_urb_retry);
--	flush_delayed_work(&hub->init_work);
-+	flush_delayed_work(&hub->post_resume_work);
- 	usb_kill_urb(hub->urb);
- 	if (hub->has_indicators)
- 		cancel_delayed_work_sync(&hub->leds);
-@@ -1947,6 +1941,7 @@ static int hub_probe(struct usb_interfac
- 	hub->hdev = hdev;
- 	INIT_DELAYED_WORK(&hub->leds, led_work);
- 	INIT_DELAYED_WORK(&hub->init_work, NULL);
-+	INIT_DELAYED_WORK(&hub->post_resume_work, hub_post_resume);
- 	INIT_WORK(&hub->events, hub_event);
- 	INIT_LIST_HEAD(&hub->onboard_hub_devs);
- 	spin_lock_init(&hub->irq_urb_lock);
---- a/drivers/usb/core/hub.h
-+++ b/drivers/usb/core/hub.h
-@@ -69,6 +69,7 @@ struct usb_hub {
- 	u8			indicator[USB_MAXCHILDREN];
- 	struct delayed_work	leds;
- 	struct delayed_work	init_work;
-+	struct delayed_work	post_resume_work;
- 	struct work_struct      events;
- 	spinlock_t		irq_urb_lock;
- 	struct timer_list	irq_urb_retry;
+ 	connect_change = test_bit(port1, hub->change_bits);
+ 	clear_bit(port1, hub->event_bits);
+@@ -5794,8 +5795,11 @@ static void port_event(struct usb_hub *h
+ 		} else if (!udev || !(portstatus & USB_PORT_STAT_CONNECTION)
+ 				|| udev->state == USB_STATE_NOTATTACHED) {
+ 			dev_dbg(&port_dev->dev, "do warm reset, port only\n");
+-			if (hub_port_reset(hub, port1, NULL,
+-					HUB_BH_RESET_TIME, true) < 0)
++			err = hub_port_reset(hub, port1, NULL,
++					     HUB_BH_RESET_TIME, true);
++			if (!udev && err == -ENOTCONN)
++				connect_change = 0;
++			else if (err < 0)
+ 				hub_port_disable(hub, port1, 1);
+ 		} else {
+ 			dev_dbg(&port_dev->dev, "do warm reset, full device\n");
 
 
