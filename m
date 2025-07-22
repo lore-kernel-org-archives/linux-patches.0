@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9327D2E36E8;
-	Tue, 22 Jul 2025 13:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D542E36E8;
+	Tue, 22 Jul 2025 13:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753191982; cv=none; b=hOJf1paA80kh3hmsyUHUQmu0QPlfJDblZrkxYQVTS3HaeEtEF0kRpkrJlam7yESbypOuG9h0Q33khU2v47+YVIUu1IE9axqa3E9OFgrypDLGh0H5RryaixWv+1FUrqGJ/FHpHU2AQwz1nhFByz4lm6Eg8/SNvExZpzDdb9VtdIY=
+	t=1753191985; cv=none; b=AS4yufEvC596OmxHJ6BncLrTq7e++iGlHj6GnJO/aMa1nnuHvj0PgAq46VyMtrWANNl3UMaGvgF1+GbaJYfCEfWLkNzWF9OzxJZZMf5dLdkSLaKx0aELJMOWtwdXucg3Om64UqfHsl4NL+HN4gUFbzVfSRfD4eRo7mzAqdwgnPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753191982; c=relaxed/simple;
-	bh=pYe71XyNOxcL9Q4tUg+NlrSaas45/8podPjJGfk4RFE=;
+	s=arc-20240116; t=1753191985; c=relaxed/simple;
+	bh=EdA7ezVqS3RlOihp+IRYdm3/CJL6BUEriMolmZ5al8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/fDheIq67zQCnT3j5/d3j8G/EtZMALVo8KIE9VSU9sstwRIMT3ABbze5fZitxRSKCkVjeBvNfC/4IshZlvWNraUU5zXllzVBkjIbOFFjemVOul56wK+aiF6HVk7ICj7MepNQCpYba1X4+0KltjmVTgp+fcjujpr3jnahxZj8xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzKFbPSg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=btSLqdY93QfmUDQ0TvrvCz6KGLuks1rOVAo7TI3nl8bAeky6lAj93eAm0feKNth+FrYTaBlA5zFlXM8SLRlnphlDKAJUdkaq4vSWo8hQUzYEa58uH72o0BH75Rn4iCEcW9P8OG9+Vfxiieb1uDx8DtkaIdq7GhNA7IsitaBmyuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c7Ho3yh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzKFbPSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CCCC4CEEB;
-	Tue, 22 Jul 2025 13:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c7Ho3yh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FFAC4CEEB;
+	Tue, 22 Jul 2025 13:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753191982;
-	bh=pYe71XyNOxcL9Q4tUg+NlrSaas45/8podPjJGfk4RFE=;
+	s=korg; t=1753191985;
+	bh=EdA7ezVqS3RlOihp+IRYdm3/CJL6BUEriMolmZ5al8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IzKFbPSglFQyY2GDI6zhXy7YjrTwKkqcPnbGld19De6gJZAC2C2yim3k1Iz9bYiIR
-	 TbWrV8zgQzMyZPFFrdflUeCj9Crof5Tz7cUxU2W1TCgJQ+/VkpBdClFF/cTFtBdtxc
-	 anps2eUZj+22czD7NLsidhX7wegGy6XKfuqfQoaE=
+	b=2c7Ho3yhaCioKkTeba9efZesOKMk6tqIDhEScAzlShVNrxMFFa6CV7//OUhIGZuR3
+	 73nRohmFRJrxK9XfZcHLfNZaCgOp7SQ207o4vfAYYEcQfgObKcH+TVt1an78ne6H4q
+	 KTxT4/wyUnNzhuPh+3a35gD56gSLmh+n27Tgc9c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 01/79] phy: tegra: xusb: Fix unbalanced regulator disable in UTMI PHY mode
-Date: Tue, 22 Jul 2025 15:43:57 +0200
-Message-ID: <20250722134328.441045784@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 02/79] USB: serial: option: add Telit Cinterion FE910C04 (ECM) composition
+Date: Tue, 22 Jul 2025 15:43:58 +0200
+Message-ID: <20250722134328.475863939@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -51,137 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Chang <waynec@nvidia.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit cefc1caee9dd06c69e2d807edc5949b329f52b22 upstream.
+commit 252f4ac08cd2f16ecd20e4c5e41ac2a17dd86942 upstream.
 
-When transitioning from USB_ROLE_DEVICE to USB_ROLE_NONE, the code
-assumed that the regulator should be disabled. However, if the regulator
-is marked as always-on, regulator_is_enabled() continues to return true,
-leading to an incorrect attempt to disable a regulator which is not
-enabled.
+Add Telit Cinterion FE910C04 (ECM) composition:
+0x10c7: ECM + tty (AT) + tty (AT) + tty (diag)
 
-This can result in warnings such as:
+usb-devices output:
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c7 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-[  250.155624] WARNING: CPU: 1 PID: 7326 at drivers/regulator/core.c:3004
-_regulator_disable+0xe4/0x1a0
-[  250.155652] unbalanced disables for VIN_SYS_5V0
-
-To fix this, we move the regulator control logic into
-tegra186_xusb_padctl_id_override() function since it's directly related
-to the ID override state. The regulator is now only disabled when the role
-transitions from USB_ROLE_HOST to USB_ROLE_NONE, by checking the VBUS_ID
-register. This ensures that regulator enable/disable operations are
-properly balanced and only occur when actually transitioning to/from host
-mode.
-
-Fixes: 49d46e3c7e59 ("phy: tegra: xusb: Add set_mode support for UTMI phy on Tegra186")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20250502092606.2275682-1-waynec@nvidia.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb-tegra186.c |   59 +++++++++++++++++++++++---------------
- 1 file changed, 37 insertions(+), 22 deletions(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/phy/tegra/xusb-tegra186.c
-+++ b/drivers/phy/tegra/xusb-tegra186.c
-@@ -719,13 +719,15 @@ static int tegra186_xusb_padctl_vbus_ove
- }
- 
- static int tegra186_xusb_padctl_id_override(struct tegra_xusb_padctl *padctl,
--					    bool status)
-+					    struct tegra_xusb_usb2_port *port, bool status)
- {
--	u32 value;
-+	u32 value, id_override;
-+	int err = 0;
- 
- 	dev_dbg(padctl->dev, "%s id override\n", status ? "set" : "clear");
- 
- 	value = padctl_readl(padctl, USB2_VBUS_ID);
-+	id_override = value & ID_OVERRIDE(~0);
- 
- 	if (status) {
- 		if (value & VBUS_OVERRIDE) {
-@@ -736,14 +738,34 @@ static int tegra186_xusb_padctl_id_overr
- 			value = padctl_readl(padctl, USB2_VBUS_ID);
- 		}
- 
--		value &= ~ID_OVERRIDE(~0);
--		value |= ID_OVERRIDE_GROUNDED;
-+		if (id_override != ID_OVERRIDE_GROUNDED) {
-+			value &= ~ID_OVERRIDE(~0);
-+			value |= ID_OVERRIDE_GROUNDED;
-+			padctl_writel(padctl, value, USB2_VBUS_ID);
-+
-+			err = regulator_enable(port->supply);
-+			if (err) {
-+				dev_err(padctl->dev, "Failed to enable regulator: %d\n", err);
-+				return err;
-+			}
-+		}
- 	} else {
--		value &= ~ID_OVERRIDE(~0);
--		value |= ID_OVERRIDE_FLOATING;
--	}
-+		if (id_override == ID_OVERRIDE_GROUNDED) {
-+			/*
-+			 * The regulator is disabled only when the role transitions
-+			 * from USB_ROLE_HOST to USB_ROLE_NONE.
-+			 */
-+			err = regulator_disable(port->supply);
-+			if (err) {
-+				dev_err(padctl->dev, "Failed to disable regulator: %d\n", err);
-+				return err;
-+			}
- 
--	padctl_writel(padctl, value, USB2_VBUS_ID);
-+			value &= ~ID_OVERRIDE(~0);
-+			value |= ID_OVERRIDE_FLOATING;
-+			padctl_writel(padctl, value, USB2_VBUS_ID);
-+		}
-+	}
- 
- 	return 0;
- }
-@@ -763,27 +785,20 @@ static int tegra186_utmi_phy_set_mode(st
- 
- 	if (mode == PHY_MODE_USB_OTG) {
- 		if (submode == USB_ROLE_HOST) {
--			tegra186_xusb_padctl_id_override(padctl, true);
--
--			err = regulator_enable(port->supply);
-+			err = tegra186_xusb_padctl_id_override(padctl, port, true);
-+			if (err)
-+				goto out;
- 		} else if (submode == USB_ROLE_DEVICE) {
- 			tegra186_xusb_padctl_vbus_override(padctl, true);
- 		} else if (submode == USB_ROLE_NONE) {
--			/*
--			 * When port is peripheral only or role transitions to
--			 * USB_ROLE_NONE from USB_ROLE_DEVICE, regulator is not
--			 * enabled.
--			 */
--			if (regulator_is_enabled(port->supply))
--				regulator_disable(port->supply);
--
--			tegra186_xusb_padctl_id_override(padctl, false);
-+			err = tegra186_xusb_padctl_id_override(padctl, port, false);
-+			if (err)
-+				goto out;
- 			tegra186_xusb_padctl_vbus_override(padctl, false);
- 		}
- 	}
--
-+out:
- 	mutex_unlock(&padctl->lock);
--
- 	return err;
- }
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1415,6 +1415,9 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x30),	/* Telit FE910C04 (ECM) */
++	  .driver_info = NCTRL(4) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x30),	/* Telit FN990B (MBIM) */
+ 	  .driver_info = NCTRL(6) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x40) },
 
 
