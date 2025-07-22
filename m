@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4C42E9ECA;
-	Tue, 22 Jul 2025 14:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5722E1724;
+	Tue, 22 Jul 2025 14:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193299; cv=none; b=M/O/prfwq/+Laq9XirEkq5pzhoF8HNzCMDDoYovmW5JnAH2TLPYemNYKndWOD3nShwggmtdweQR8QcXqkoEVtSEQdC/vU6FYH8eGbmynfNCiKJ1Mnbow3t16RfLAd2C9RDmkJvRx3eVFR/ZVipmBtek8vORXDklaX9EERUuwZWg=
+	t=1753193302; cv=none; b=cVl8rk9ZcncLCkaxLNmG5w0gKpoC67SGCw9hk/EbIKRcf+iF02IGggvEX0lXqmpB75zFTQULDG7I16wU8QKmkkVMMlsAqyGqSghYVsKq2Rq24boQyo1OAvnfZMjmK2d/DbAkwevrDaUNgIFUGS0wJKa3XDt+3c2LhXCFcg4XarM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193299; c=relaxed/simple;
-	bh=GYSMXA9bYKIJ6g+SWwiqlcrpbNnQjGPItDgVuqO76E0=;
+	s=arc-20240116; t=1753193302; c=relaxed/simple;
+	bh=cPKNXm8XnPreJ+rOGMPXM+ditlnMgTvgXk8jXeL0h0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1VY7B6osFLv+NffME1Z9/7HdOHkpvDjn9jqRB1WoDFr1wR5YrMh6J3wYGoyzWiqfnAWWCnLhuQYUUm+HP50u6JwAbaGWtWFvmCdTG2H89xgZtH1HueWUvubqbyrHMWnpV/5ojzZZn/Lyf+yowHqILJfX9fXjnmhBENSMDf4078=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRLU6Qa+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r9S51aqIunTSq2LP/W2hyClW0FyMrLYc+Eb6qp01HQRYKzhTj5w95a3d+XLlxqkGFsFxwUxP9KU1aer6ZHe7ecLB1nIow68d+YDmPQl0LCazq5tdHRisBI/F8KNv0uwuFRV8wViMCmSAAqyt9gOOYANaaCzqFWFH51R/rmtae0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5+mTzA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRLU6Qa+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF538C4CEEB;
-	Tue, 22 Jul 2025 14:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5+mTzA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3E7C4CEF1;
+	Tue, 22 Jul 2025 14:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193299;
-	bh=GYSMXA9bYKIJ6g+SWwiqlcrpbNnQjGPItDgVuqO76E0=;
+	s=korg; t=1753193302;
+	bh=cPKNXm8XnPreJ+rOGMPXM+ditlnMgTvgXk8jXeL0h0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRLU6Qa+1Zhi7xDLua+KC6KvvW3hfeZJX0x3JmBkSXdiZE+dOmk+0BZ2LtbKbyhjW
-	 3QXtm48n6K4WZGwJshmh/vK0uoHx38SrUGD3GVMKwUcK/HuCtFBIWRaSMs5gFcam1F
-	 IawOb0Buq8Z9jwCMjfm+V3NHrPwQi0odlM+SAi3A=
+	b=Q5+mTzA8umaCMOWmbVihhTPR5gxLSMjgi20cHZ2Kqd2IoB7J9hJTXIXaq1bMThlQV
+	 8qNHRRTnH/sBJ8qaWvxWYzl64E6rPHs533XmJjrqe5IFrULcaeTlvtV2hULyc7rxez
+	 9DC6+OfU1qugmSTEQBn8DaF5mQB+JzZxKYSYA25M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eeli Haapalainen <eeli.haapalainen@protonmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.15 033/187] drm/amdgpu/gfx8: reset compute ring wptr on the GPU on resume
-Date: Tue, 22 Jul 2025 15:43:23 +0200
-Message-ID: <20250722134346.992023904@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.15 051/187] arm64: dts: freescale: imx8mm-verdin: Keep LDO5 always on
+Date: Tue, 22 Jul 2025 15:43:41 +0200
+Message-ID: <20250722134347.660630963@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -50,36 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eeli Haapalainen <eeli.haapalainen@protonmail.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit 83261934015c434fabb980a3e613b01d9976e877 upstream.
+commit fbe94be09fa81343d623a86ec64a742759b669b3 upstream.
 
-Commit 42cdf6f687da ("drm/amdgpu/gfx8: always restore kcq MQDs") made the
-ring pointer always to be reset on resume from suspend. This caused compute
-rings to fail since the reset was done without also resetting it for the
-firmware. Reset wptr on the GPU to avoid a disconnect between the driver
-and firmware wptr.
+LDO5 regulator is used to power the i.MX8MM NVCC_SD2 I/O supply, that is
+used for the SD2 card interface and also for some GPIOs.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3911
-Fixes: 42cdf6f687da ("drm/amdgpu/gfx8: always restore kcq MQDs")
-Signed-off-by: Eeli Haapalainen <eeli.haapalainen@protonmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2becafc319db3d96205320f31cc0de4ee5a93747)
+When the SD card interface is not enabled the regulator subsystem could
+turn off this supply, since it is not used anywhere else, however this
+will also remove the power to some other GPIOs, for example one I/O that
+is used to power the ethernet phy, leading to a non working ethernet
+interface.
+
+[   31.820515] On-module +V3.3_1.8_SD (LDO5): disabling
+[   31.821761] PMIC_USDHC_VSELECT: disabling
+[   32.764949] fec 30be0000.ethernet end0: Link is Down
+
+Fix this keeping the LDO5 supply always on.
+
 Cc: stable@vger.kernel.org
+Fixes: 6a57f224f734 ("arm64: dts: freescale: add initial support for verdin imx8m mini")
+Fixes: f5aab0438ef1 ("regulator: pca9450: Fix enable register for LDO5")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c |    1 +
+ arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
-@@ -4664,6 +4664,7 @@ static int gfx_v8_0_kcq_init_queue(struc
- 			memcpy(mqd, adev->gfx.mec.mqd_backup[mqd_idx], sizeof(struct vi_mqd_allocation));
- 		/* reset ring buffer */
- 		ring->wptr = 0;
-+		atomic64_set((atomic64_t *)ring->wptr_cpu_addr, 0);
- 		amdgpu_ring_clear_ring(ring);
- 	}
- 	return 0;
+--- a/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin.dtsi
+@@ -464,6 +464,7 @@
+ 			};
+ 
+ 			reg_nvcc_sd: LDO5 {
++				regulator-always-on;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-name = "On-module +V3.3_1.8_SD (LDO5)";
 
 
