@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F621917E3;
-	Tue, 22 Jul 2025 14:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110CA2B9A5;
+	Tue, 22 Jul 2025 14:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193061; cv=none; b=oJwO3cs6muGyOqcf7G+tm1p5VweE/RHVPt9bVM7kBolex2PC6OwXSLGyqsf7APb9ZcTJexPJDSe866pBi5FdL5S6IlRzCFu9RIYT3gjUGvPJd+eAl/aXnu+gR/1e7mIf1h/jd/CJtJ3SxfNGQRyDeo3ZAWHEA6a8aE1M3QibUw8=
+	t=1753193065; cv=none; b=l2zV125luTOlr7lG81l4G245q/eluk24IMi5zYIiCNLfl3KD3tarwMMadFxmrzhBo3R3WO0x4mK06oXJ3fITxRVFu9JmUl1pLk43APZwkUNCdXGyOEiK1TfZt7l0AaPmr46aHLmsgsiAgdo616uZCDSAjhoz6zVgAyOhcCmyjjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193061; c=relaxed/simple;
-	bh=fHZhFWd4avnJM0DHGG3jyoUMuPAmm34l6RP8snHww98=;
+	s=arc-20240116; t=1753193065; c=relaxed/simple;
+	bh=BOYRw+jzwC9QyT/Gt65dBP0W3tgTvSxtr4+hFZ5L6T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnzHs6rFnGeT0x4ysHhMoYZu4jJVFVLa1oQRfdwEpYQef4eCYaCtsGR9/st65j9fGn8KYEo92lzLptV3PEkdZaMSv6KecY07H2uu+JGzn4UFad1pRHwuuGCP9hIl+Z12tIIDbyYcL4rgg4Gds2jRrPUk8daEb4iGMyW98JTTs0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr+2pjiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8XY+CMbEDgxjmseu6gpQh6NSwrd0Wd9Wgst9+g0t1pnLZ++lvOoSXdGkLa1hnRa4ssugZauvpWlgNK9PtS2JXxK5BRR35UX2pMf4Q9xsP5SvJrX3L/6Tq5nfEMc4vsvhmNKF36N2fJ/kECxs1N9hw0gQOXrApn3HJIIkk7lNcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuBtVZBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr+2pjiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34284C4CEEB;
-	Tue, 22 Jul 2025 14:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuBtVZBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EDCC4CEEB;
+	Tue, 22 Jul 2025 14:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193061;
-	bh=fHZhFWd4avnJM0DHGG3jyoUMuPAmm34l6RP8snHww98=;
+	s=korg; t=1753193064;
+	bh=BOYRw+jzwC9QyT/Gt65dBP0W3tgTvSxtr4+hFZ5L6T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vr+2pjiDaMyywaeB4d/y8T7nMpogy8l4xhDNI+EbM4im46pZ7z5PVoZSfCmYg1BA4
-	 T1eT94Yb+k7AI5cHGg7yBGHyB2bXBsDuYCHcJMt2bMuk5rc4zVG5ZTknoEVKyzFE9r
-	 zqDNNwpcavOJZCIQLtBxxyJhK4bDyp9zQW8Rlorw=
+	b=iuBtVZBNuNTioo4csCXzQLCj/ucLc+U72vmd+TgIhD89I5N5T2lIXlFCP7cZFlYLl
+	 NL3G+EZMcus9Kpus52u5TUGog/pdktF78RruvWyzwHFiM2XU+nbnYb7kDVBP6PvQFX
+	 d+Z/jMyrjFqnrzQnPwqBH1fAJWDRr3y4kaLXVmVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3bbbade4e1a7ab45ca3b@syzkaller.appspotmail.com,
-	Marius Zachmann <mail@mariuszachmann.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Dave Ertman <david.m.ertman@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/158] hwmon: (corsair-cpro) Validate the size of the received input buffer
-Date: Tue, 22 Jul 2025 15:44:50 +0200
-Message-ID: <20250722134344.696383320@linuxfoundation.org>
+Subject: [PATCH 6.12 107/158] ice: add NULL check in eswitch lag check
+Date: Tue, 22 Jul 2025 15:44:51 +0200
+Message-ID: <20250722134344.738813117@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -52,54 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marius Zachmann <mail@mariuszachmann.de>
+From: Dave Ertman <david.m.ertman@intel.com>
 
-[ Upstream commit 495a4f0dce9c8c4478c242209748f1ee9e4d5820 ]
+[ Upstream commit 3ce58b01ada408b372f15b7c992ed0519840e3cf ]
 
-Add buffer_recv_size to store the size of the received bytes.
-Validate buffer_recv_size in send_usb_cmd().
+The function ice_lag_is_switchdev_running() is being called from outside of
+the LAG event handler code.  This results in the lag->upper_netdev being
+NULL sometimes.  To avoid a NULL-pointer dereference, there needs to be a
+check before it is dereferenced.
 
-Reported-by: syzbot+3bbbade4e1a7ab45ca3b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-hwmon/61233ba1-e5ad-4d7a-ba31-3b5d0adcffcc@roeck-us.net
-Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
-Signed-off-by: Marius Zachmann <mail@mariuszachmann.de>
-Link: https://lore.kernel.org/r/20250619132817.39764-5-mail@mariuszachmann.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 776fe19953b0 ("ice: block default rule setting on LAG interface")
+Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_lag.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index e1a7f7aa7f804..b7b911f8359c7 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -89,6 +89,7 @@ struct ccp_device {
- 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
- 	u8 *cmd_buffer;
- 	u8 *buffer;
-+	int buffer_recv_size; /* number of received bytes in buffer */
- 	int target[6];
- 	DECLARE_BITMAP(temp_cnct, NUM_TEMP_SENSORS);
- 	DECLARE_BITMAP(fan_cnct, NUM_FANS);
-@@ -146,6 +147,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	if (!t)
- 		return -ETIMEDOUT;
+diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
+index 2410aee59fb2d..d132eb4775513 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lag.c
++++ b/drivers/net/ethernet/intel/ice/ice_lag.c
+@@ -2226,7 +2226,8 @@ bool ice_lag_is_switchdev_running(struct ice_pf *pf)
+ 	struct ice_lag *lag = pf->lag;
+ 	struct net_device *tmp_nd;
  
-+	if (ccp->buffer_recv_size != IN_BUFFER_SIZE)
-+		return -EPROTO;
-+
- 	return ccp_get_errno(ccp);
- }
+-	if (!ice_is_feature_supported(pf, ICE_F_SRIOV_LAG) || !lag)
++	if (!ice_is_feature_supported(pf, ICE_F_SRIOV_LAG) ||
++	    !lag || !lag->upper_netdev)
+ 		return false;
  
-@@ -157,6 +161,7 @@ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	spin_lock(&ccp->wait_input_report_lock);
- 	if (!completion_done(&ccp->wait_input_report)) {
- 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
-+		ccp->buffer_recv_size = size;
- 		complete_all(&ccp->wait_input_report);
- 	}
- 	spin_unlock(&ccp->wait_input_report_lock);
+ 	rcu_read_lock();
 -- 
 2.39.5
 
