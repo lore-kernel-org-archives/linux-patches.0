@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2712EA16D;
-	Tue, 22 Jul 2025 13:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E912E8E0F;
+	Tue, 22 Jul 2025 13:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192303; cv=none; b=j5WowO1lLZrPgufgJTi34MJ9313UoKIfmWc+7xsQqq1tSdKCi2/TbFaBH+twyWwdiLk+HuThU9crqCDmKx55v5WlcimOzUfESGFaD+3l4z+b8whN5b9NMtWg4sjTD+2ppkjkFnwDyHRMp2kbBXamg/K2HKdvTsQz/+7AOkkC75E=
+	t=1753192306; cv=none; b=gc83OK4WfBeA1AwMjdP6YyU1WboXaIvdLwFY2Xo8DraQ7q2jGVnVpdu5o+Uwc8u7lMgvfsVdW1BSBjpLudU7CC9sEvDW9Db17cp/Xabx6XruN+39P0Ca082GQL4rijBN+HYN8axwBjIICPMhmee0OykbkVbWmYWr1UWiKy0wOfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192303; c=relaxed/simple;
-	bh=XZEeLoUaW6RY6n+cl8WZwY0OWF7z0mXgY4s4V7dChrk=;
+	s=arc-20240116; t=1753192306; c=relaxed/simple;
+	bh=7ZysJNVniMNEqkU1w/OGGj4t4TOuphGuKUvVHNCJC8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTTrfVQKQvKn4f1rD8dmuMt6u7JCWkSLHFP0HOlh8raHsQ1a3CiZFoz9xtm6NuN/j1gYGmBGgPl7RSq87BngYluC9LsRohzjKVfUhBrdXnNq1dZUcnXjcXfOiDbc+eHAaQiJUd+f6dEWdglY79FgIVRmbJTNmYUkYJmgMrFK7mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/HkeT/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yq8+kDf9gXTQji0zz6xy2uyMul7P4DiGwtaDI3b/8vrVdmVl5+X1FKsdrcxz4bvme1byJvQHnpcOQvzMGmSK/Ax2Bl33s2tdjbkQhnTpId7ESlZIJFwctpRON/3PCMDsrKKtFs6Hty5N7t9ZhOTtOxGEfJqbj62hgTAuZkFX1sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekiDxnFC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/HkeT/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF99C4CEEB;
-	Tue, 22 Jul 2025 13:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekiDxnFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB061C4CEEB;
+	Tue, 22 Jul 2025 13:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192303;
-	bh=XZEeLoUaW6RY6n+cl8WZwY0OWF7z0mXgY4s4V7dChrk=;
+	s=korg; t=1753192306;
+	bh=7ZysJNVniMNEqkU1w/OGGj4t4TOuphGuKUvVHNCJC8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/HkeT/P5WmTvOVkyrq+USYuh7Krk6ZqyjP/ONVRAqvpTnUV7RMzkFOtVd9zyK/QU
-	 xhobAef8bSRCtFqnQ75RUAM4jhWhP20bORwEPt9ZOcy9nyp06hkmMAZTpFFLFuF8m0
-	 eqnfYY/2Zma+h3TSqSxd2yTWezdQqlQayoWU0lqo=
+	b=ekiDxnFCw4yeJFS0RQHF3UuOwkabEGjdaaO+qloZ/G1IGchPwNM0UNhW8JFaonrgg
+	 /pAgDiNLEZ7QkMJDvlgJ74PJGWjOplohR5Se9yEblUmSu9W1WbmCThsoSEk0xIdeF9
+	 QlDi0PfH7l6FcXZ3raBSA5AjgCHfw5EZe1J7e6wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 025/111] io_uring/poll: fix POLLERR handling
-Date: Tue, 22 Jul 2025 15:44:00 +0200
-Message-ID: <20250722134334.335869448@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 026/111] phonet/pep: Move call to pn_skb_get_dst_sockaddr() earlier in pep_sock_accept()
+Date: Tue, 22 Jul 2025 15:44:01 +0200
+Message-ID: <20250722134334.372300709@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -50,71 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit c7cafd5b81cc07fb402e3068d134c21e60ea688c upstream.
+commit 17ba793f381eb813596d6de1cc6820bcbda5ed8b upstream.
 
-8c8492ca64e7 ("io_uring/net: don't retry connect operation on EPOLLERR")
-is a little dirty hack that
-1) wrongfully assumes that POLLERR equals to a failed request, which
-breaks all POLLERR users, e.g. all error queue recv interfaces.
-2) deviates the connection request behaviour from connect(2), and
-3) racy and solved at a wrong level.
+A new warning in clang [1] points out a place in pep_sock_accept() where
+dst is uninitialized then passed as a const pointer to pep_find_pipe():
 
-Nothing can be done with 2) now, and 3) is beyond the scope of the
-patch. At least solve 1) by moving the hack out of generic poll handling
-into io_connect().
+  net/phonet/pep.c:829:37: error: variable 'dst' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+    829 |         newsk = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
+        |                                            ^~~:
+
+Move the call to pn_skb_get_dst_sockaddr(), which initializes dst, to
+before the call to pep_find_pipe(), so that dst is consistently used
+initialized throughout the function.
 
 Cc: stable@vger.kernel.org
-Fixes: 8c8492ca64e79 ("io_uring/net: don't retry connect operation on EPOLLERR")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/3dc89036388d602ebd84c28e5042e457bdfc952b.1752682444.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: f7ae8d59f661 ("Phonet: allocate sock from accept syscall rather than soft IRQ")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2101
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20250715-net-phonet-fix-uninit-const-pointer-v1-1-8efd1bd188b3@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c  |   12 ++++++++----
- io_uring/poll.c |    2 --
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ net/phonet/pep.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1537,9 +1537,11 @@ int io_connect(struct io_kiocb *req, uns
- 		io = &__io;
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -826,6 +826,7 @@ static struct sock *pep_sock_accept(stru
  	}
  
--	if (unlikely(req->flags & REQ_F_FAIL)) {
--		ret = -ECONNRESET;
--		goto out;
-+	if (connect->in_progress) {
-+		struct poll_table_struct pt = { ._key = EPOLLERR };
-+
-+		if (vfs_poll(req->file, &pt) & EPOLLERR)
-+			goto get_sock_err;
- 	}
+ 	/* Check for duplicate pipe handle */
++	pn_skb_get_dst_sockaddr(skb, &dst);
+ 	newsk = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
+ 	if (unlikely(newsk)) {
+ 		__sock_put(newsk);
+@@ -850,7 +851,6 @@ static struct sock *pep_sock_accept(stru
+ 	newsk->sk_destruct = pipe_destruct;
  
- 	file_flags = force_nonblock ? O_NONBLOCK : 0;
-@@ -1571,8 +1573,10 @@ int io_connect(struct io_kiocb *req, uns
- 		 * which means the previous result is good. For both of these,
- 		 * grab the sock_error() and use that for the completion.
- 		 */
--		if (ret == -EBADFD || ret == -EISCONN)
-+		if (ret == -EBADFD || ret == -EISCONN) {
-+get_sock_err:
- 			ret = sock_error(sock_from_file(req->file)->sk);
-+		}
- 	}
- 	if (ret == -ERESTARTSYS)
- 		ret = -EINTR;
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -308,8 +308,6 @@ static int io_poll_check_events(struct i
- 				return IOU_POLL_REISSUE;
- 			}
- 		}
--		if (unlikely(req->cqe.res & EPOLLERR))
--			req_set_fail(req);
- 		if (req->apoll_events & EPOLLONESHOT)
- 			return IOU_POLL_DONE;
- 
+ 	newpn = pep_sk(newsk);
+-	pn_skb_get_dst_sockaddr(skb, &dst);
+ 	pn_skb_get_src_sockaddr(skb, &src);
+ 	newpn->pn_sk.sobject = pn_sockaddr_get_object(&dst);
+ 	newpn->pn_sk.dobject = pn_sockaddr_get_object(&src);
 
 
