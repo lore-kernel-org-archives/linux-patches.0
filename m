@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFD5548EE;
-	Tue, 22 Jul 2025 14:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F1B548EE;
+	Tue, 22 Jul 2025 14:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192874; cv=none; b=AL+ykDEsiBtvTCEqP3kZOMzb2l3TUYvzCn1t8muSELDy4djdlI81oDNltd2oo15o3cg0+DaL29M8hN4GEU99NjDHTbVHj/HljyefB+yQUl95wbxQFoKZ4iTVrjzSJihe+CzoaurXnK7eSfVQGW4oJrrjWtOtUJy0YqoaVzmmXJQ=
+	t=1753192878; cv=none; b=WeJqTCbpss8PLX2HnugRVAAkyxqE9z4bp5vC4CugwrLqSAuNej3ZY5qC+GywgGgOgeJRrhOoUs3u9g3IgwnVuKG+p403DG9aY3T1IhWjid/oW6vqag9kyoz9b5ehd38DumIX6PmyMNEJuSRKbsdiZW2MXSjdalKbGtnPTfh/Jjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192874; c=relaxed/simple;
-	bh=TpKfHqnX75uS2J+Tpkieh1so8aoarbF/3U8ARbi4SY8=;
+	s=arc-20240116; t=1753192878; c=relaxed/simple;
+	bh=EL4Rhs//jDFYE4pCXQVfTVsoKVYiIrWfHtXqM0YXJRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I58cr9nuTCQHhe/4tsvcA23DDB0Uytq3cg+xNbtmpopfV1sTJ3S3Itbo1jpvDHOSfBbueFX71UIseVNDexoLV6E2p/hggT/ypxyf4DbOgvWwUtuL7ix6g95gwiQcwQzSoEAj5LhPaiQolUZk8zZeTDiSbIGUwH492Z1hsRkemag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUKVlQsk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4I6iYgX7ai43zOi/vIAV02U1ALDxPUakfhB24oqSfnURgJyNENb0vsfUIohMtXxrAqLIY1kAPNr66MoO4vN8uT0+WGCFQNb+tGJt+xCHXpIPGy7hDOKWFzcFzDbbLae+pW+yB1x+nJuy8d5YbQpeQYFc+UclLsZBgcuonK/dvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VblWEMjM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUKVlQsk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2B9C4CEEB;
-	Tue, 22 Jul 2025 14:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VblWEMjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615A5C4CEEB;
+	Tue, 22 Jul 2025 14:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192874;
-	bh=TpKfHqnX75uS2J+Tpkieh1so8aoarbF/3U8ARbi4SY8=;
+	s=korg; t=1753192877;
+	bh=EL4Rhs//jDFYE4pCXQVfTVsoKVYiIrWfHtXqM0YXJRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUKVlQskUGoGeoMqxMQ2YFZWn7s3Y77gYa371Pzp77cjXBh3thXi8qTFN9/NQuCXl
-	 zSZPXNJ+8xxrdcQUwJslNPFkhBmEMTd5aXY6U2RgTL5cU3xbGjbENs9ZHdPbtiKh5r
-	 isNcY4qUojuiER+Q2rPumaKKWjyMCgenaGZFoXWI=
+	b=VblWEMjMq5OmueSB/ooquuljGTEnWv9N+aYLjjyk5F10AQJGawc8lEqMj2KL6fdob
+	 8LALwGfJdQTzH8AkNxxyJaZawz0xn4mSkteZ7x4dshjdjuzPQwonq8LDAQyyCbIchg
+	 wyuzdFmzcMwkJYz9UG4IZ6b3YvbZO/NPVOfHPUOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.de>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PATCH 6.12 066/158] soc: aspeed: lpc-snoop: Dont disable channels that arent enabled
-Date: Tue, 22 Jul 2025 15:44:10 +0200
-Message-ID: <20250722134343.225271232@linuxfoundation.org>
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 084/158] soundwire: amd: fix for handling slave alerts after link is down
+Date: Tue, 22 Jul 2025 15:44:28 +0200
+Message-ID: <20250722134343.906493522@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -50,83 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-commit 56448e78a6bb4e1a8528a0e2efe94eff0400c247 upstream.
+[ Upstream commit 86a4371b76976158be875dc654ceee35c574b27b ]
 
-Mitigate e.g. the following:
+Sometimes, its observed that during system level suspend callback
+execution, after link is down, handling pending slave status workqueue
+results in mipi register access failures as shown below.
 
-    # echo 1e789080.lpc-snoop > /sys/bus/platform/drivers/aspeed-lpc-snoop/unbind
-    ...
-    [  120.363594] Unable to handle kernel NULL pointer dereference at virtual address 00000004 when write
-    [  120.373866] [00000004] *pgd=00000000
-    [  120.377910] Internal error: Oops: 805 [#1] SMP ARM
-    [  120.383306] CPU: 1 UID: 0 PID: 315 Comm: sh Not tainted 6.15.0-rc1-00009-g926217bc7d7d-dirty #20 NONE
-    ...
-    [  120.679543] Call trace:
-    [  120.679559]  misc_deregister from aspeed_lpc_snoop_remove+0x84/0xac
-    [  120.692462]  aspeed_lpc_snoop_remove from platform_remove+0x28/0x38
-    [  120.700996]  platform_remove from device_release_driver_internal+0x188/0x200
-    ...
+soundwire sdw-master-0-0: trf on Slave 1 failed:-110 read addr 0 count 1
+rt722-sdca sdw:0:0:025d:0722:01: SDW_DP0_INT recheck read failed:-110
+rt722-sdca sdw:0:0:025d:0722:01: Slave 1 alert handling failed: -110
+amd_sdw_manager amd_sdw_manager.0: SDW0 cmd response timeout occurred
+amd_sdw_manager amd_sdw_manager.0: command timeout for Slave 1
+soundwire sdw-master-0-0: trf on Slave 1 failed:-110 write addr 5c count 1
+amd_sdw_manager amd_sdw_manager.0: SDW0 previous cmd status clear failed
+amd_sdw_manager amd_sdw_manager.0: command timeout for Slave 1
+soundwire sdw-master-0-0: trf on Slave 1 failed:-110 write addr 5d count 1
+amd_sdw_manager amd_sdw_manager.0: SDW0 previous cmd status clear failed
+amd_sdw_manager amd_sdw_manager.0: command timeout for Slave 1
 
-Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
-Cc: stable@vger.kernel.org
-Cc: Jean Delvare <jdelvare@suse.de>
-Acked-by: Jean Delvare <jdelvare@suse.de>
-Link: https://patch.msgid.link/20250616-aspeed-lpc-snoop-fixes-v2-2-3cdd59c934d3@codeconstruct.com.au
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cancel the pending slave status workqueue prior to initiating clock stop
+sequence during suspend callback execution for both the power modes.
+
+Fixes: 9cf1efc5ed2d ("soundwire: amd: add pm_prepare callback and pm ops support")
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20250530054447.1645807-2-Vijendar.Mukunda@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/soundwire/amd_manager.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -58,6 +58,7 @@ struct aspeed_lpc_snoop_model_data {
- };
- 
- struct aspeed_lpc_snoop_channel {
-+	bool enabled;
- 	struct kfifo		fifo;
- 	wait_queue_head_t	wq;
- 	struct miscdevice	miscdev;
-@@ -190,6 +191,9 @@ static int aspeed_lpc_enable_snoop(struc
- 	const struct aspeed_lpc_snoop_model_data *model_data =
- 		of_device_get_match_data(dev);
- 
-+	if (WARN_ON(lpc_snoop->chan[channel].enabled))
-+		return -EBUSY;
-+
- 	init_waitqueue_head(&lpc_snoop->chan[channel].wq);
- 	/* Create FIFO datastructure */
- 	rc = kfifo_alloc(&lpc_snoop->chan[channel].fifo,
-@@ -236,6 +240,8 @@ static int aspeed_lpc_enable_snoop(struc
- 		regmap_update_bits(lpc_snoop->regmap, HICRB,
- 				hicrb_en, hicrb_en);
- 
-+	lpc_snoop->chan[channel].enabled = true;
-+
- 	return 0;
- 
- err_misc_deregister:
-@@ -248,6 +254,9 @@ err_free_fifo:
- static void aspeed_lpc_disable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
- 				     int channel)
- {
-+	if (!lpc_snoop->chan[channel].enabled)
-+		return;
-+
- 	switch (channel) {
- 	case 0:
- 		regmap_update_bits(lpc_snoop->regmap, HICR5,
-@@ -263,6 +272,8 @@ static void aspeed_lpc_disable_snoop(str
- 		return;
+diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
+index e3d5e6c1d582c..2912f874a1352 100644
+--- a/drivers/soundwire/amd_manager.c
++++ b/drivers/soundwire/amd_manager.c
+@@ -1107,9 +1107,11 @@ static int __maybe_unused amd_suspend(struct device *dev)
  	}
  
-+	lpc_snoop->chan[channel].enabled = false;
-+	/* Consider improving safety wrt concurrent reader(s) */
- 	misc_deregister(&lpc_snoop->chan[channel].miscdev);
- 	kfifo_free(&lpc_snoop->chan[channel].fifo);
- }
+ 	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
++		cancel_work_sync(&amd_manager->amd_sdw_work);
+ 		amd_sdw_wake_enable(amd_manager, false);
+ 		return amd_sdw_clock_stop(amd_manager);
+ 	} else if (amd_manager->power_mode_mask & AMD_SDW_POWER_OFF_MODE) {
++		cancel_work_sync(&amd_manager->amd_sdw_work);
+ 		amd_sdw_wake_enable(amd_manager, false);
+ 		/*
+ 		 * As per hardware programming sequence on AMD platforms,
+-- 
+2.39.5
+
 
 
