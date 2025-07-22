@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236682EA168;
-	Tue, 22 Jul 2025 14:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4FE2DEA8E;
+	Tue, 22 Jul 2025 14:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193325; cv=none; b=b9Bg1UEzktTdeDDGZfguVscFHunfvFlyEjzFcr5+sBm1c0RQzISAjMOOGGzuDY2GpEHw3oSSUnvMnOte+8Dv8Uc4558bmXq8v9Ca6Zo0OxAVcsjsyd70iwT2FKCuFhHcKwMpdSVxzO4AC4jKMFVkeUIDPZt94WU3osWX/G3ogGs=
+	t=1753193326; cv=none; b=GW6eObKyUjn8vEBUDaV8qa9eLlFqBy+EplF2x1R5wCb7mCwtRA/X1VFkGlop6y6fBXLmzraazOAHS5SIjCnMiXqyojxF1xqM/8BxxVnYouJ8+hfjtYn7twMrNGvco9GflgAUJmg+/5IqlUd0O2S4KNAw2TxC9PPBFUqXJLruytE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193325; c=relaxed/simple;
-	bh=X4QW/hiKJOlERZJjujqw5H8A3M5QyflkFYsXoqvtvK0=;
+	s=arc-20240116; t=1753193326; c=relaxed/simple;
+	bh=6xHqv56uvWVo6la5YhIRTpshRkJxLQBv2XX9EULiVwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajjzfbtdzIi+NDBd135qF5aZXWxGWK6mdtRPeCKz2Ph1xFm4IHUtpTbBf/jpP50oTBniiE+cPfaSdjZrxgnRNBjG9mmA24NO1wUwoRrQzdUG1iWZov1pWt/8ujEcYLJ1c6bS2V3FlLMxxWd07w+QOQZk9WpODDotOjaw1rLf/ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBv42hth; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UqtmMAy8sgiFDCjuxMdyU3DktyuMW5wDCUDcROJWfwyWu72GRXawbSVs9Zch8TlU+w7+H+ItUrq7T3BjhuhAyz+JmMvuuuEmW1CHffGV+osOUIFLkS0CoPXV3d7LSvRu3FfiLOY+3IjEeVBDSqm29zTmEZWXfSVc4rUO2VCfG2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShFk8JRz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBv42hth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51596C4CEEB;
-	Tue, 22 Jul 2025 14:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShFk8JRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6027CC4CEEB;
+	Tue, 22 Jul 2025 14:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193322;
-	bh=X4QW/hiKJOlERZJjujqw5H8A3M5QyflkFYsXoqvtvK0=;
+	s=korg; t=1753193326;
+	bh=6xHqv56uvWVo6la5YhIRTpshRkJxLQBv2XX9EULiVwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBv42hth3RkD8Yo6wyaP0TTjqq3taC5sr3J9Szb19tueXr7RvWI4w5nvzfdUUrHcN
-	 9FxAaEfJXmbBxOH+T43LC252Bfvgl0gyYXuA8yiCLMYcNEl+HCFE3qq3cQb9OzNGvY
-	 Jt/2DhKrFB7lxMCIyVkp9Z8LW02JOp2PubI27NCA=
+	b=ShFk8JRz5r7YyvJ65TEMz6zqI5CLXkKYAqdSvWsX3qOM0+jxuihF31TMBMRk2sPDA
+	 fZBt/+0qmd++ktXqHYSp/RkTHYSP+QFA5ccVepYprO1zf5gvN6mx7yD9C5/5PdO2VG
+	 o+wJetrT0XGueZfNEoaUeuv0p7fj/uV/kyevNGyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Eric Dumazet <edumazet@google.com>,
+	LongJun Tang <tanglongjun@kylinos.cn>,
 	Yun Lu <luyun@kylinos.cn>,
 	Willem de Bruijn <willemb@google.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.15 057/187] af_packet: fix the SO_SNDTIMEO constraint not effective on tpacked_snd()
-Date: Tue, 22 Jul 2025 15:43:47 +0200
-Message-ID: <20250722134347.888627896@linuxfoundation.org>
+Subject: [PATCH 6.15 058/187] af_packet: fix soft lockup issue caused by tpacket_snd()
+Date: Tue, 22 Jul 2025 15:43:48 +0200
+Message-ID: <20250722134347.922449943@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -55,57 +55,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Yun Lu <luyun@kylinos.cn>
 
-commit c1ba3c0cbdb5e53a8ec5d708e99cd4c497028a13 upstream.
+commit 55f0bfc0370539213202f4ce1a07615327ac4713 upstream.
 
-Due to the changes in commit 581073f626e3 ("af_packet: do not call
-packet_read_pending() from tpacket_destruct_skb()"), every time
-tpacket_destruct_skb() is executed, the skb_completion is marked as
-completed. When wait_for_completion_interruptible_timeout() returns
-completed, the pending_refcnt has not yet been reduced to zero.
-Therefore, when ph is NULL, the wait function may need to be called
-multiple times until packet_read_pending() finally returns zero.
+When MSG_DONTWAIT is not set, the tpacket_snd operation will wait for
+pending_refcnt to decrement to zero before returning. The pending_refcnt
+is decremented by 1 when the skb->destructor function is called,
+indicating that the skb has been successfully sent and needs to be
+destroyed.
 
-We should call sock_sndtimeo() only once, otherwise the SO_SNDTIMEO
-constraint could be way off.
+If an error occurs during this process, the tpacket_snd() function will
+exit and return error, but pending_refcnt may not yet have decremented to
+zero. Assuming the next send operation is executed immediately, but there
+are no available frames to be sent in tx_ring (i.e., packet_current_frame
+returns NULL), and skb is also NULL, the function will not execute
+wait_for_completion_interruptible_timeout() to yield the CPU. Instead, it
+will enter a do-while loop, waiting for pending_refcnt to be zero. Even
+if the previous skb has completed transmission, the skb->destructor
+function can only be invoked in the ksoftirqd thread (assuming NAPI
+threading is enabled). When both the ksoftirqd thread and the tpacket_snd
+operation happen to run on the same CPU, and the CPU trapped in the
+do-while loop without yielding, the ksoftirqd thread will not get
+scheduled to run. As a result, pending_refcnt will never be reduced to
+zero, and the do-while loop cannot exit, eventually leading to a CPU soft
+lockup issue.
 
-Fixes: 581073f626e3 ("af_packet: do not call packet_read_pending() from tpacket_destruct_skb()")
+In fact, skb is true for all but the first iterations of that loop, and
+as long as pending_refcnt is not zero, even if incremented by a previous
+call, wait_for_completion_interruptible_timeout() should be executed to
+yield the CPU, allowing the ksoftirqd thread to be scheduled. Therefore,
+the execution condition of this function should be modified to check if
+pending_refcnt is not zero, instead of check skb.
+
+-	if (need_wait && skb) {
++	if (need_wait && packet_read_pending(&po->tx_ring)) {
+
+As a result, the judgment conditions are duplicated with the end code of
+the while loop, and packet_read_pending() is a very expensive function.
+Actually, this loop can only exit when ph is NULL, so the loop condition
+can be changed to while (1), and in the "ph = NULL" branch, if the
+subsequent condition of if is not met,  the loop can break directly. Now,
+the loop logic remains the same as origin but is clearer and more obvious.
+
+Fixes: 89ed5b519004 ("af_packet: Block execution of tasks waiting for transmit to complete in AF_PACKET")
 Cc: stable@kernel.org
-Suggested-by: Eric Dumazet <edumazet@google.com>
+Suggested-by: LongJun Tang <tanglongjun@kylinos.cn>
 Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c |   23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
 --- a/net/packet/af_packet.c
 +++ b/net/packet/af_packet.c
-@@ -2785,7 +2785,7 @@ static int tpacket_snd(struct packet_soc
- 	int len_sum = 0;
- 	int status = TP_STATUS_AVAILABLE;
- 	int hlen, tlen, copylen = 0;
--	long timeo = 0;
-+	long timeo;
- 
- 	mutex_lock(&po->pg_vec_lock);
- 
-@@ -2839,6 +2839,7 @@ static int tpacket_snd(struct packet_soc
- 	if ((size_max > dev->mtu + reserve + VLAN_HLEN) && !vnet_hdr_sz)
- 		size_max = dev->mtu + reserve + VLAN_HLEN;
- 
-+	timeo = sock_sndtimeo(&po->sk, msg->msg_flags & MSG_DONTWAIT);
- 	reinit_completion(&po->skb_completion);
- 
- 	do {
-@@ -2846,7 +2847,6 @@ static int tpacket_snd(struct packet_soc
+@@ -2846,15 +2846,21 @@ static int tpacket_snd(struct packet_soc
+ 		ph = packet_current_frame(po, &po->tx_ring,
  					  TP_STATUS_SEND_REQUEST);
  		if (unlikely(ph == NULL)) {
- 			if (need_wait && skb) {
--				timeo = sock_sndtimeo(&po->sk, msg->msg_flags & MSG_DONTWAIT);
+-			if (need_wait && skb) {
++			/* Note: packet_read_pending() might be slow if we
++			 * have to call it as it's per_cpu variable, but in
++			 * fast-path we don't have to call it, only when ph
++			 * is NULL, we need to check the pending_refcnt.
++			 */
++			if (need_wait && packet_read_pending(&po->tx_ring)) {
  				timeo = wait_for_completion_interruptible_timeout(&po->skb_completion, timeo);
  				if (timeo <= 0) {
  					err = !timeo ? -ETIMEDOUT : -ERESTARTSYS;
+ 					goto out_put;
+ 				}
+-			}
+-			/* check for additional frames */
+-			continue;
++				/* check for additional frames */
++				continue;
++			} else
++				break;
+ 		}
+ 
+ 		skb = NULL;
+@@ -2943,14 +2949,7 @@ tpacket_error:
+ 		}
+ 		packet_increment_head(&po->tx_ring);
+ 		len_sum += tp_len;
+-	} while (likely((ph != NULL) ||
+-		/* Note: packet_read_pending() might be slow if we have
+-		 * to call it as it's per_cpu variable, but in fast-path
+-		 * we already short-circuit the loop with the first
+-		 * condition, and luckily don't have to go that path
+-		 * anyway.
+-		 */
+-		 (need_wait && packet_read_pending(&po->tx_ring))));
++	} while (1);
+ 
+ 	err = len_sum;
+ 	goto out_put;
 
 
