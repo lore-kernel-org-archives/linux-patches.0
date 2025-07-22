@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54033238D57;
-	Tue, 22 Jul 2025 13:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8C32EA16A;
+	Tue, 22 Jul 2025 13:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192024; cv=none; b=YbSmjV0bIG4z4+EulfDdhZDCfe1B5Hp7AW9Lmn/CI8WVZNfX/gPScIEUk6vWl/wXzDvidw5k/09G6GQKJcQkTXLbnbdlQs2s8NO5+gJbqCskP74YSfojs32KRHAR046fiA6/UNvjEZouWrBoV1wGkfKDqKr4Ol55LF9wVJSreLY=
+	t=1753192027; cv=none; b=Pgi/vOxtum8iEMvKQMESjR1mvnpXwe6elzGP0G75AdanO6de2BXRsjwhKscHeyFVemyfOcvOA0EES4W+Pj5ouGFAjiMV29JzX/s6VPVLT2mEH8lhWTdiQnUZQ9s/sC4zrF11uHh8BoeyxALu1iZUKj/2fhq7XypHkHgE0BihQRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192024; c=relaxed/simple;
-	bh=ITuDusjd7f74KqP+P/IS21E5JFLm/Nnddlvwp39YGZ0=;
+	s=arc-20240116; t=1753192027; c=relaxed/simple;
+	bh=R9Zn5D5B9HUmqwGTgWxWHNDvDzFO5BobPVOAFHRO1mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqtDBcMEjTePq3HLhJXCjXl8EtYmudnUOfcIeHdOsneEYNxhebmgIJw/RjqiKokhZj7utepkf1/PVsvwiDh7WA0UotkVxD8jiJkeUZQN2P/1ZVjQd+BTXq4YbCidIOzJlrlwWktxW5ztnjVq9hcdbQ+Xw+/5cfMjP9/cFXEvi+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGFQsKgC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzYCwB/vfucSu9E8vvqbVGp14I0GnfcH0KNazZYT+ISZbGcdfAHNHyV0MWDL+mvokKz/daLcIzdQUlVpjkSTV/19jxj9IvH1Kzs9eLVV2rnNYZ5GCfcc/ACoqyWKNjGM6L0hvgtb73TBQS4GCdUl6n7rOQ06P7xCdhGt+6QUvaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Da8W0J9G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGFQsKgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AA9C4CEEB;
-	Tue, 22 Jul 2025 13:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Da8W0J9G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7788C4CEEB;
+	Tue, 22 Jul 2025 13:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192023;
-	bh=ITuDusjd7f74KqP+P/IS21E5JFLm/Nnddlvwp39YGZ0=;
+	s=korg; t=1753192027;
+	bh=R9Zn5D5B9HUmqwGTgWxWHNDvDzFO5BobPVOAFHRO1mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGFQsKgCnLiG2SJhLZIGXGDiCIEUR7x8/hjFSEkNZzH33kx8MUtvzhYG55oQLvO4d
-	 aubdbW+nBkOAJL8K5z5lgVPqVvpFTM407Ib76Q56l3kf7nHc04fWW7CIsRwc4EzqFw
-	 7DvvuP/YPWx2vbRXxQTVWD3o/f4TGMEXUpSV1ndo=
+	b=Da8W0J9GzOUOQ21fu9tMzi5STUkp6sn57M2S6ysz5F7Keo/GfOX1QIAu2tVKjbybk
+	 gRqPNyQHtSGtu0i5boGIPfHfK9vmkNMx93sFMLyRszvSVBU2L3sqktMjUJAOCMMrX3
+	 KWAhRlQ8sKZ+bhfzfn83VyGiyl6TP2hPqc2z1C3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 22/79] memstick: core: Zero initialize id_reg in h_memstick_read_dev_id()
-Date: Tue, 22 Jul 2025 15:44:18 +0200
-Message-ID: <20250722134329.194171164@linuxfoundation.org>
+Subject: [PATCH 6.1 23/79] mmc: bcm2835: Fix dma_unmap_sg() nents value
+Date: Tue, 22 Jul 2025 15:44:19 +0200
+Message-ID: <20250722134329.228682822@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -50,47 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 21b34a3a204ed616373a12ec17dc127ebe51eab3 upstream.
+commit ff09b71bf9daeca4f21d6e5e449641c9fad75b53 upstream.
 
-A new warning in clang [1] points out that id_reg is uninitialized then
-passed to memstick_init_req() as a const pointer:
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-  drivers/memstick/core/memstick.c:330:59: error: variable 'id_reg' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-    330 |                 memstick_init_req(&card->current_mrq, MS_TPC_READ_REG, &id_reg,
-        |                                                                         ^~~~~~
-
-Commit de182cc8e882 ("drivers/memstick/core/memstick.c: avoid -Wnonnull
-warning") intentionally passed this variable uninitialized to avoid an
--Wnonnull warning from a NULL value that was previously there because
-id_reg is never read from the call to memstick_init_req() in
-h_memstick_read_dev_id(). Just zero initialize id_reg to avoid the
-warning, which is likely happening in the majority of builds using
-modern compilers that support '-ftrivial-auto-var-init=zero'.
-
+Fixes: 2f5da678351f ("mmc: bcm2835: Properly handle dmaengine_prep_slave_sg")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: de182cc8e882 ("drivers/memstick/core/memstick.c: avoid -Wnonnull warning")
-Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2105
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250715-memstick-fix-uninit-const-pointer-v1-1-f6753829c27a@kernel.org
+Link: https://lore.kernel.org/r/20250630093510.82871-2-fourier.thomas@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/memstick.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/bcm2835.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/memstick/core/memstick.c
-+++ b/drivers/memstick/core/memstick.c
-@@ -323,7 +323,7 @@ EXPORT_SYMBOL(memstick_init_req);
- static int h_memstick_read_dev_id(struct memstick_dev *card,
- 				  struct memstick_request **mrq)
- {
--	struct ms_id_register id_reg;
-+	struct ms_id_register id_reg = {};
+--- a/drivers/mmc/host/bcm2835.c
++++ b/drivers/mmc/host/bcm2835.c
+@@ -507,7 +507,8 @@ void bcm2835_prepare_dma(struct bcm2835_
+ 				       DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
  
- 	if (!(*mrq)) {
- 		memstick_init_req(&card->current_mrq, MS_TPC_READ_REG, &id_reg,
+ 	if (!desc) {
+-		dma_unmap_sg(dma_chan->device->dev, data->sg, sg_len, dir_data);
++		dma_unmap_sg(dma_chan->device->dev, data->sg, data->sg_len,
++			     dir_data);
+ 		return;
+ 	}
+ 
 
 
