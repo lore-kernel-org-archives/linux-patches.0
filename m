@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EC022FDFF;
-	Tue, 22 Jul 2025 13:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44EA15624B;
+	Tue, 22 Jul 2025 13:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192047; cv=none; b=k1PcsT9JwNNfq4Q3OwNJPg2qV+CQjtjHKR4MT05DN/ZYIBWxBHmJDKfPS2RN76aGxGYxbkd0aUwbqBSxsXCrSvEe4mWDXBEAjAK5+sfejBMRKzuWYyArF8S5oZoQUrWbqL9xzbIl7ELIzh/oI9VzgebU5cir6jr1bt++QF5FH3M=
+	t=1753192050; cv=none; b=oqfu/f+uuMYc4LdHS8SOfCSACN6ej6ianzJthzcjE5WoNNT8vR8X+4HWqeM8AbxCMns/9fjBzFOOhQ4py3JNDWMNKvJJDZ7R2gULVeS1atxKJi/H89hZMEssrPyy1P4gYD5/8VzIF2wX1h9WGlwqK2trgjGJDoJfM0DeG/WAQgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192047; c=relaxed/simple;
-	bh=fcaahyw6Le9rMJMbAowbhEmLwm1b/gjK8w7IXUWw8qc=;
+	s=arc-20240116; t=1753192050; c=relaxed/simple;
+	bh=BxtBPVZ6YGn2WIvfxbESJBuhPHtmkxoj6giDqf5rWno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDJvep4de61IHSWOKpAUH1c1+oZD46qg7AENoIZ0fI8b4YQvWZDveotHONu0/me5Q02RBJr6rapXHygvjUjrBmVyPH37gJFR97rb/gmEloNH25dFylRO+/xbc8ZLuTpTP2jrU/BGkJQaVWorHr66FRNhrwoCKKGsOW+MT3p84Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axsgLLne; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ID4Jq5rOW8KDsFxES7nbzFTcgwabW78ZLf7f16lNRWn6eBy+Ux6Y3W7QT8nTSoIrXQxCmyOhTvl8ftRn9wccYqK3JevLLzyV5M1BxWBQUc7IT2vvBHIKgFNvrpcKSQBk94T5wT0KFAdXO4zxEoFlJKDFOQKBKWs/mDjs8WOzxL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnP0sj7/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axsgLLne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65916C4CEEB;
-	Tue, 22 Jul 2025 13:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnP0sj7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C0BC4CEEB;
+	Tue, 22 Jul 2025 13:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192046;
-	bh=fcaahyw6Le9rMJMbAowbhEmLwm1b/gjK8w7IXUWw8qc=;
+	s=korg; t=1753192050;
+	bh=BxtBPVZ6YGn2WIvfxbESJBuhPHtmkxoj6giDqf5rWno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axsgLLne+cOO0VAhAN+go4/y5xDAF323hLrx9W9wuUDYlChE/q+3JVAgF7EgTVoRW
-	 dm7bSJ7VNC9/uY0SYaNMuxyY7dLwW5DIHuKwWUPIedouh5On+rr3nHoHiD61QJRaXt
-	 qk2AjxUOqqSBUWprrIGJOf8NcU29KqMTw21svJns=
+	b=mnP0sj7/E1LkFNKyZGIAZI+av9S4RufeWP8Iy26A1ADEeLXL4oViHSDspgfSU5GK5
+	 1z8/AuADGQiBzJ3Bz9uX9tXQyjOkx3q/oMV2H+0D8sg6qpau25Jgqyjn201qi6kc5/
+	 rF1nSod1X/AuXKyrWpuvCUuMa924cAITj4SVieN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+8258d5439c49d4c35f43@syzkaller.appspotmail.com,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.1 11/79] HID: core: ensure __hid_request reserves the report ID as the first byte
-Date: Tue, 22 Jul 2025 15:44:07 +0200
-Message-ID: <20250722134328.799238320@linuxfoundation.org>
+	Jean Delvare <jdelvare@suse.de>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PATCH 6.1 29/79] soc: aspeed: lpc-snoop: Dont disable channels that arent enabled
+Date: Tue, 22 Jul 2025 15:44:25 +0200
+Message-ID: <20250722134329.445189041@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
 References: <20250722134328.384139905@linuxfoundation.org>
@@ -51,82 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
 
-commit 0d0777ccaa2d46609d05b66ba0096802a2746193 upstream.
+commit 56448e78a6bb4e1a8528a0e2efe94eff0400c247 upstream.
 
-The low level transport driver expects the first byte to be the report
-ID, even when the report ID is not use (in which case they just shift
-the buffer).
+Mitigate e.g. the following:
 
-However, __hid_request() whas not offsetting the buffer it used by one
-in this case, meaning that the raw_request() callback emitted by the
-transport driver would be stripped of the first byte.
+    # echo 1e789080.lpc-snoop > /sys/bus/platform/drivers/aspeed-lpc-snoop/unbind
+    ...
+    [  120.363594] Unable to handle kernel NULL pointer dereference at virtual address 00000004 when write
+    [  120.373866] [00000004] *pgd=00000000
+    [  120.377910] Internal error: Oops: 805 [#1] SMP ARM
+    [  120.383306] CPU: 1 UID: 0 PID: 315 Comm: sh Not tainted 6.15.0-rc1-00009-g926217bc7d7d-dirty #20 NONE
+    ...
+    [  120.679543] Call trace:
+    [  120.679559]  misc_deregister from aspeed_lpc_snoop_remove+0x84/0xac
+    [  120.692462]  aspeed_lpc_snoop_remove from platform_remove+0x28/0x38
+    [  120.700996]  platform_remove from device_release_driver_internal+0x188/0x200
+    ...
 
-Note: this changes the API for uhid devices when a request is made
-through hid_hw_request. However, several considerations makes me think
-this is fine:
-- every request to a HID device made through hid_hw_request() would see
-  that change, but every request made through hid_hw_raw_request()
-  already has the new behaviour. So that means that the users are
-  already facing situations where they might have or not the first byte
-  being the null report ID when it is 0. We are making things more
-  straightforward in the end.
-- uhid is mainly used for BLE devices
-- uhid is also used for testing, but I don't see that change a big issue
-- for BLE devices, we can check which kernel module is calling
-  hid_hw_request()
-- and in those modules, we can check which are using a Bluetooth device
-- and then we can check if the command is used with a report ID or not.
-- surprise: none of the kernel module are using a report ID 0
-- and finally, bluez, in its function set_report()[0], does the same
-  shift if the report ID is 0 and the given buffer has a size > 0.
-
-[0] https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/profiles/input/hog-lib.c#n879
-
-Reported-by: Alan Stern <stern@rowland.harvard.edu>
-Closes: https://lore.kernel.org/linux-input/c75433e0-9b47-4072-bbe8-b1d14ea97b13@rowland.harvard.edu/
-Reported-by: syzbot+8258d5439c49d4c35f43@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8258d5439c49d4c35f43
-Tested-by: syzbot+8258d5439c49d4c35f43@syzkaller.appspotmail.com
-Fixes: 4fa5a7f76cc7 ("HID: core: implement generic .request()")
+Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250710-report-size-null-v2-2-ccf922b7c4e5@kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Jean Delvare <jdelvare@suse.de>
+Acked-by: Jean Delvare <jdelvare@suse.de>
+Link: https://patch.msgid.link/20250616-aspeed-lpc-snoop-fixes-v2-2-3cdd59c934d3@codeconstruct.com.au
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1944,7 +1944,7 @@ static struct hid_report *hid_get_report
- int __hid_request(struct hid_device *hid, struct hid_report *report,
- 		enum hid_class_request reqtype)
- {
--	char *buf;
-+	char *buf, *data_buf;
- 	int ret;
- 	u32 len;
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -59,6 +59,7 @@ struct aspeed_lpc_snoop_model_data {
+ };
  
-@@ -1952,10 +1952,17 @@ int __hid_request(struct hid_device *hid
- 	if (!buf)
- 		return -ENOMEM;
+ struct aspeed_lpc_snoop_channel {
++	bool enabled;
+ 	struct kfifo		fifo;
+ 	wait_queue_head_t	wq;
+ 	struct miscdevice	miscdev;
+@@ -191,6 +192,9 @@ static int aspeed_lpc_enable_snoop(struc
+ 	const struct aspeed_lpc_snoop_model_data *model_data =
+ 		of_device_get_match_data(dev);
  
-+	data_buf = buf;
- 	len = hid_report_len(report);
- 
-+	if (report->id == 0) {
-+		/* reserve the first byte for the report ID */
-+		data_buf++;
-+		len++;
-+	}
++	if (WARN_ON(lpc_snoop->chan[channel].enabled))
++		return -EBUSY;
 +
- 	if (reqtype == HID_REQ_SET_REPORT)
--		hid_output_report(report, buf);
-+		hid_output_report(report, data_buf);
+ 	init_waitqueue_head(&lpc_snoop->chan[channel].wq);
+ 	/* Create FIFO datastructure */
+ 	rc = kfifo_alloc(&lpc_snoop->chan[channel].fifo,
+@@ -237,6 +241,8 @@ static int aspeed_lpc_enable_snoop(struc
+ 		regmap_update_bits(lpc_snoop->regmap, HICRB,
+ 				hicrb_en, hicrb_en);
  
- 	ret = hid->ll_driver->raw_request(hid, report->id, buf, len,
- 					  report->type, reqtype);
++	lpc_snoop->chan[channel].enabled = true;
++
+ 	return 0;
+ 
+ err_misc_deregister:
+@@ -249,6 +255,9 @@ err_free_fifo:
+ static void aspeed_lpc_disable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 				     int channel)
+ {
++	if (!lpc_snoop->chan[channel].enabled)
++		return;
++
+ 	switch (channel) {
+ 	case 0:
+ 		regmap_update_bits(lpc_snoop->regmap, HICR5,
+@@ -264,6 +273,8 @@ static void aspeed_lpc_disable_snoop(str
+ 		return;
+ 	}
+ 
++	lpc_snoop->chan[channel].enabled = false;
++	/* Consider improving safety wrt concurrent reader(s) */
+ 	misc_deregister(&lpc_snoop->chan[channel].miscdev);
+ 	kfifo_free(&lpc_snoop->chan[channel].fifo);
+ }
 
 
