@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A63E548EE;
-	Tue, 22 Jul 2025 14:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5A52E1724;
+	Tue, 22 Jul 2025 14:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192839; cv=none; b=pB4iij4mHv2bxIyxmwwRn7+3RnLicZtOmUZqtkKR0FMHf6GdATev+ynr2jZjgLrUHEcnEcpTl+DtXKLfPWDHDdfCzUyIwxu9YwBXg5TkBCENaN46IruQwx6aQg7vbi+PhH4+h0n6C+KXN6oTG0tUlk55Ih/JpGzqa6JUloRArWk=
+	t=1753192842; cv=none; b=ABdCg3suCtEJkbRooCj7sLHYEMYyDTpcGgKRbGsGdbAttDF3gp1C3jtzFbKKgp5cJf66pjrhgFFqG++4lPh4xXrKcrh3tmrCJJvK2BLxHB+0/zud5T8qtcj9s+vRkKcfiBNAzPFPEX0ccDaY5SIrD0Fqcqx7AQAusQv6V0PjgMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192839; c=relaxed/simple;
-	bh=PjgXgsXOtW4wd2jjoic3f+zb+EwLGR++7l9S0MPB3AI=;
+	s=arc-20240116; t=1753192842; c=relaxed/simple;
+	bh=tF6ammELxN6GS7q1tp89O++eF78UQJoNCD1jvps2aeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFZ1EqxSA2XJFMGQEGgvxq7YHD7FWT7zKtCn0JVruTYwyvMvduszQ9L7qJMi2UL3GPZx0c8EWhghVsDumEjItgF9jXRto9QG2el8yXRkOhh85H5hYqZ3IsZcogLTrsBpUQ0XeLnLCvIQvvwV0Q5O0t93JGYU9HMkeUkCssOuKwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJdYpegp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gnEgmLW4LDtbDqbHeSFwuvYYca4WeagDjK5JDKdcbLh6sF3ZDepaQhs41CE3wN9Git5zXRCqfVw7Sm9dVIOLPrUWMl2ml5GfKWxkpzWBzhZTxqv9gGae2xSmcw1C/Lxfb4rt0/KKZ8CVWCyrrO9ySqG8ND0QUH+gHBCJ2vbqcus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSm4qDbg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJdYpegp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904C9C4CEEB;
-	Tue, 22 Jul 2025 14:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSm4qDbg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ACDC4CEEB;
+	Tue, 22 Jul 2025 14:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192839;
-	bh=PjgXgsXOtW4wd2jjoic3f+zb+EwLGR++7l9S0MPB3AI=;
+	s=korg; t=1753192842;
+	bh=tF6ammELxN6GS7q1tp89O++eF78UQJoNCD1jvps2aeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJdYpegpeQcfuyRtfd7/0veNxDiqSGwS0YgdWdcPZ5WmwbIha47DlXA1X/2CuMSe6
-	 z8XJf8ub6t7p910MUjPfqO3CJMsPXpd2eaRIQWed9D2xIrbFnCvOCdkrUC5hG/DnV1
-	 639OlDXrrwjCw7IFnQf27LsMap/c37A6t2FT2l98=
+	b=OSm4qDbg3wKUvNbG88/BpG/ydMBwOcrwyDeQtuGC/4Jj2bjyfPMe6vyCmaXeiDNdJ
+	 j2VCWYnXDr09pkW2Kcw//fLxGRDS0rGfmfoAY2WxFgC5KgAlDy97g+YoVmq2kOrv/O
+	 XD7N1RaTh95A5zWWa49mebqfBsMI7FeYxOo6HWV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.de>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PATCH 6.12 065/158] soc: aspeed: lpc-snoop: Cleanup resources in stack-order
-Date: Tue, 22 Jul 2025 15:44:09 +0200
-Message-ID: <20250722134343.181508708@linuxfoundation.org>
+	syzbot+32de323b0addb9e114ff@syzkaller.appspotmail.com,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.12 074/158] comedi: pcl812: Fix bit shift out of bounds
+Date: Tue, 22 Jul 2025 15:44:18 +0200
+Message-ID: <20250722134343.533927243@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -50,36 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 8481d59be606d2338dbfe14b04cdbd1a3402c150 upstream.
+commit b14b076ce593f72585412fc7fd3747e03a5e3632 upstream.
 
-Free the kfifo after unregistering the miscdev in
-aspeed_lpc_disable_snoop() as the kfifo is initialised before the
-miscdev in aspeed_lpc_enable_snoop().
+When checking for a supported IRQ number, the following test is used:
 
-Fixes: 3772e5da4454 ("drivers/misc: Aspeed LPC snoop output using misc chardev")
-Cc: stable@vger.kernel.org
-Cc: Jean Delvare <jdelvare@suse.de>
-Acked-by: Jean Delvare <jdelvare@suse.de>
-Link: https://patch.msgid.link/20250616-aspeed-lpc-snoop-fixes-v2-1-3cdd59c934d3@codeconstruct.com.au
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+	if ((1 << it->options[1]) & board->irq_bits) {
+
+However, `it->options[i]` is an unchecked `int` value from userspace, so
+the shift amount could be negative or out of bounds.  Fix the test by
+requiring `it->options[1]` to be within bounds before proceeding with
+the original test.  Valid `it->options[1]` values that select the IRQ
+will be in the range [1,15]. The value 0 explicitly disables the use of
+interrupts.
+
+Reported-by: syzbot+32de323b0addb9e114ff@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=32de323b0addb9e114ff
+Fixes: fcdb427bc7cf ("Staging: comedi: add pcl821 driver")
+Cc: stable@vger.kernel.org # 5.13+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250707133429.73202-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/aspeed/aspeed-lpc-snoop.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/comedi/drivers/pcl812.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -263,8 +263,8 @@ static void aspeed_lpc_disable_snoop(str
- 		return;
- 	}
+--- a/drivers/comedi/drivers/pcl812.c
++++ b/drivers/comedi/drivers/pcl812.c
+@@ -1149,7 +1149,8 @@ static int pcl812_attach(struct comedi_d
+ 		if (IS_ERR(dev->pacer))
+ 			return PTR_ERR(dev->pacer);
  
--	kfifo_free(&lpc_snoop->chan[channel].fifo);
- 	misc_deregister(&lpc_snoop->chan[channel].miscdev);
-+	kfifo_free(&lpc_snoop->chan[channel].fifo);
- }
- 
- static int aspeed_lpc_snoop_probe(struct platform_device *pdev)
+-		if ((1 << it->options[1]) & board->irq_bits) {
++		if (it->options[1] > 0 && it->options[1] < 16 &&
++		    (1 << it->options[1]) & board->irq_bits) {
+ 			ret = request_irq(it->options[1], pcl812_interrupt, 0,
+ 					  dev->board_name, dev);
+ 			if (ret == 0)
 
 
