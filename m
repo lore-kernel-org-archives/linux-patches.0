@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6731A2C25;
-	Tue, 22 Jul 2025 14:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B96B2E9ECA;
+	Tue, 22 Jul 2025 14:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193009; cv=none; b=GtVa7lsRHw6QIb8Y8LAKlMnHy9A6uAooyP18NuXcuMphYx55ywnKHohGHPXjeRR/o6rnOGxqDR8/AML3oAASHiQ2vAoiPUL5g6wbY7FCNmox6PEF3nnKQWaSv2A2OZDXmP33X8UM2ru4Nwl/L215839R/HCsxiYqOgVGWIRsDUQ=
+	t=1753193013; cv=none; b=mqPkBYfUqDWSLt8CxTV4fUSVEGsyJP9i20Dv2t9KWtkRl2P8inIBoyCaJ20CUAbkJQTN3fSmqjV7ySdkY9Z9g9LOrzCZPnIlcXbM2bGg/xiqUeS8VmoxRhuZNtYlfmTYkY8h9CQ8WQAlKAjyp4d9+JLIbViTI/nBW9V3Z7lQDpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193009; c=relaxed/simple;
-	bh=3NZUBpciBJ4lu/UveIJnRgERyCJu0Vkv0rJVxxxHs7o=;
+	s=arc-20240116; t=1753193013; c=relaxed/simple;
+	bh=6Cr7NhAZeHoRkRm0L9f2oHerul0luAFkx4Qks6lqjgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qz9+WKOtry+KvFMLebBJFXSkFyf0wH6KLgw3Bgplyvl2M3qEu+YZwUyjscav7vgQbpRRRnd+Kkxl+rFvsT6zSuO6fAGuvFvaV6OXejKb1JeFNZ6G+cLqxwIXksD91VgVIqDzAEiG+vuy1qO1gn4r6/0mmAHGB68G7LTwrQSpAPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlvltWYf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QeQ2WH1y+12aRiODlNNtJCdjYdAWejBrNy+OmKN0TY63GQFQsR6Uqad2itsxj8Fis0wL0Ph+DUVnEpamqBPInhJLtKwgoNseIURJW8SHUYNKHmxNNAFaVVZygJfHRUaOykyo1EAwUzJPfXPckU54MwNCH4HXc6F8cBucnTowbBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jF9iPAr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlvltWYf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB667C4CEF1;
-	Tue, 22 Jul 2025 14:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jF9iPAr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB1AC4CEEB;
+	Tue, 22 Jul 2025 14:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193009;
-	bh=3NZUBpciBJ4lu/UveIJnRgERyCJu0Vkv0rJVxxxHs7o=;
+	s=korg; t=1753193012;
+	bh=6Cr7NhAZeHoRkRm0L9f2oHerul0luAFkx4Qks6lqjgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dlvltWYfU69AeHutFZ4SbBGyV5a5153t4JoZYjRPk40TPQ1bUuhEEQ42DfGRovfyS
-	 75iYhK+eHfTitlswIF9EbX+2bJf7f/iTdNl9SYQb9hPPUWRB+uwVQOnvj3JoLZeMHo
-	 uT5Un6k/CBs9Kd+tENLZxh+Too4/JIuzbmKO2le4=
+	b=2jF9iPAr7E2XwVfjmRGe2HV2C2XqHa+/xqAZCp9Z3laHk4eVd3rIbmBth0rPzXDWV
+	 3tbhk8CsXUOOelQfZCzUJhtJ8KBqd6PbuRpPEaWrIWdb+5GBjb2AgDChVm/xDzF0e7
+	 QaxmU/esPvEAxjQBM37hhIpibT23LkaBSiSvORlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 123/158] drm/xe/pf: Sanitize VF scratch registers on FLR
-Date: Tue, 22 Jul 2025 15:45:07 +0200
-Message-ID: <20250722134345.326577398@linuxfoundation.org>
+Subject: [PATCH 6.12 124/158] drm/xe/pf: Move VFs reprovisioning to worker
+Date: Tue, 22 Jul 2025 15:45:08 +0200
+Message-ID: <20250722134345.362612294@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134340.596340262@linuxfoundation.org>
 References: <20250722134340.596340262@linuxfoundation.org>
@@ -54,131 +57,141 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 13a48a0fa52352f9fe58e2e1927670dcfea64c3a ]
+[ Upstream commit a4d1c5d0b99b75263a5626d2e52d569db3844b33 ]
 
-Some VF accessible registers (like GuC scratch registers) must be
-explicitly reset during the FLR. While this is today done by the GuC
-firmware, according to the design, this should be responsibility of
-the PF driver, as future platforms may require more registers to be
-reset. Likewise GuC, the PF can access VFs registers by adding some
-platform specific offset to the original register address.
+Since the GuC is reset during GT reset, we need to re-send the
+entire SR-IOV provisioning configuration to the GuC. But since
+this whole configuration is protected by the PF master mutex and
+we can't avoid making allocations under this mutex (like during
+LMEM provisioning), we can't do this reprovisioning from gt-reset
+path if we want to be reclaim-safe. Move VFs reprovisioning to a
+async worker that we will start from the gt-reset path.
 
 Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240902192953.1792-1-michal.wajdeczko@intel.com
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Michał Winiarski <michal.winiarski@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250125215505.720-1-michal.wajdeczko@intel.com
 Stable-dep-of: 81dccec448d2 ("drm/xe/pf: Prepare to stop SR-IOV support prior GT reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_pf.c         | 52 +++++++++++++++++++++
- drivers/gpu/drm/xe/xe_gt_sriov_pf.h         |  1 +
- drivers/gpu/drm/xe/xe_gt_sriov_pf_control.c |  3 +-
- 3 files changed, 55 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.c       | 43 +++++++++++++++++++++--
+ drivers/gpu/drm/xe/xe_gt_sriov_pf_types.h | 10 ++++++
+ 2 files changed, 51 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-index 905f409db74b0..919d960165d51 100644
+index 919d960165d51..1c3ba7dcb4ace 100644
 --- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
 +++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
-@@ -5,8 +5,10 @@
- 
- #include <drm/drm_managed.h>
- 
-+#include "regs/xe_guc_regs.h"
- #include "regs/xe_regs.h"
- 
-+#include "xe_gt.h"
- #include "xe_gt_sriov_pf.h"
- #include "xe_gt_sriov_pf_config.h"
+@@ -14,7 +14,11 @@
  #include "xe_gt_sriov_pf_control.h"
-@@ -89,6 +91,56 @@ void xe_gt_sriov_pf_init_hw(struct xe_gt *gt)
- 	xe_gt_sriov_pf_service_update(gt);
+ #include "xe_gt_sriov_pf_helpers.h"
+ #include "xe_gt_sriov_pf_service.h"
++#include "xe_gt_sriov_printk.h"
+ #include "xe_mmio.h"
++#include "xe_pm.h"
++
++static void pf_worker_restart_func(struct work_struct *w);
+ 
+ /*
+  * VF's metadata is maintained in the flexible array where:
+@@ -40,6 +44,11 @@ static int pf_alloc_metadata(struct xe_gt *gt)
+ 	return 0;
  }
  
-+static u32 pf_get_vf_regs_stride(struct xe_device *xe)
++static void pf_init_workers(struct xe_gt *gt)
 +{
-+	return GRAPHICS_VERx100(xe) > 1200 ? 0x400 : 0x1000;
++	INIT_WORK(&gt->sriov.pf.workers.restart, pf_worker_restart_func);
 +}
 +
-+static struct xe_reg xe_reg_vf_to_pf(struct xe_reg vf_reg, unsigned int vfid, u32 stride)
+ /**
+  * xe_gt_sriov_pf_init_early - Prepare SR-IOV PF data structures on PF.
+  * @gt: the &xe_gt to initialize
+@@ -64,6 +73,8 @@ int xe_gt_sriov_pf_init_early(struct xe_gt *gt)
+ 	if (err)
+ 		return err;
+ 
++	pf_init_workers(gt);
++
+ 	return 0;
+ }
+ 
+@@ -141,6 +152,35 @@ void xe_gt_sriov_pf_sanitize_hw(struct xe_gt *gt, unsigned int vfid)
+ 	pf_clear_vf_scratch_regs(gt, vfid);
+ }
+ 
++static void pf_restart(struct xe_gt *gt)
 +{
-+	struct xe_reg pf_reg = vf_reg;
++	struct xe_device *xe = gt_to_xe(gt);
 +
-+	pf_reg.vf = 0;
-+	pf_reg.addr += stride * vfid;
++	xe_pm_runtime_get(xe);
++	xe_gt_sriov_pf_config_restart(gt);
++	xe_gt_sriov_pf_control_restart(gt);
++	xe_pm_runtime_put(xe);
 +
-+	return pf_reg;
++	xe_gt_sriov_dbg(gt, "restart completed\n");
 +}
 +
-+static void pf_clear_vf_scratch_regs(struct xe_gt *gt, unsigned int vfid)
++static void pf_worker_restart_func(struct work_struct *w)
 +{
-+	u32 stride = pf_get_vf_regs_stride(gt_to_xe(gt));
-+	struct xe_reg scratch;
-+	int n, count;
++	struct xe_gt *gt = container_of(w, typeof(*gt), sriov.pf.workers.restart);
 +
-+	if (xe_gt_is_media_type(gt)) {
-+		count = MED_VF_SW_FLAG_COUNT;
-+		for (n = 0; n < count; n++) {
-+			scratch = xe_reg_vf_to_pf(MED_VF_SW_FLAG(n), vfid, stride);
-+			xe_mmio_write32(gt, scratch, 0);
-+		}
-+	} else {
-+		count = VF_SW_FLAG_COUNT;
-+		for (n = 0; n < count; n++) {
-+			scratch = xe_reg_vf_to_pf(VF_SW_FLAG(n), vfid, stride);
-+			xe_mmio_write32(gt, scratch, 0);
-+		}
-+	}
++	pf_restart(gt);
 +}
 +
-+/**
-+ * xe_gt_sriov_pf_sanitize_hw() - Reset hardware state related to a VF.
-+ * @gt: the &xe_gt
-+ * @vfid: the VF identifier
-+ *
-+ * This function can only be called on PF.
-+ */
-+void xe_gt_sriov_pf_sanitize_hw(struct xe_gt *gt, unsigned int vfid)
++static void pf_queue_restart(struct xe_gt *gt)
 +{
-+	xe_gt_assert(gt, IS_SRIOV_PF(gt_to_xe(gt)));
++	struct xe_device *xe = gt_to_xe(gt);
 +
-+	pf_clear_vf_scratch_regs(gt, vfid);
++	xe_gt_assert(gt, IS_SRIOV_PF(xe));
++
++	if (!queue_work(xe->sriov.wq, &gt->sriov.pf.workers.restart))
++		xe_gt_sriov_dbg(gt, "restart already in queue!\n");
 +}
 +
  /**
   * xe_gt_sriov_pf_restart - Restart SR-IOV support after a GT reset.
   * @gt: the &xe_gt
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.h b/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
-index f0cb726a6919f..96fab779a906f 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
-@@ -11,6 +11,7 @@ struct xe_gt;
- #ifdef CONFIG_PCI_IOV
- int xe_gt_sriov_pf_init_early(struct xe_gt *gt);
- void xe_gt_sriov_pf_init_hw(struct xe_gt *gt);
-+void xe_gt_sriov_pf_sanitize_hw(struct xe_gt *gt, unsigned int vfid);
- void xe_gt_sriov_pf_restart(struct xe_gt *gt);
- #else
- static inline int xe_gt_sriov_pf_init_early(struct xe_gt *gt)
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_control.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_control.c
-index 02f7328bd6cea..b4fd5a81aff1f 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_control.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_control.c
-@@ -9,6 +9,7 @@
+@@ -149,6 +189,5 @@ void xe_gt_sriov_pf_sanitize_hw(struct xe_gt *gt, unsigned int vfid)
+  */
+ void xe_gt_sriov_pf_restart(struct xe_gt *gt)
+ {
+-	xe_gt_sriov_pf_config_restart(gt);
+-	xe_gt_sriov_pf_control_restart(gt);
++	pf_queue_restart(gt);
+ }
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_types.h b/drivers/gpu/drm/xe/xe_gt_sriov_pf_types.h
+index 28e1b130bf87c..a69d128c4f45a 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_types.h
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_types.h
+@@ -31,8 +31,17 @@ struct xe_gt_sriov_metadata {
+ 	struct xe_gt_sriov_pf_service_version version;
+ };
  
- #include "xe_device.h"
- #include "xe_gt.h"
-+#include "xe_gt_sriov_pf.h"
- #include "xe_gt_sriov_pf_config.h"
- #include "xe_gt_sriov_pf_control.h"
- #include "xe_gt_sriov_pf_helpers.h"
-@@ -1008,7 +1009,7 @@ static bool pf_exit_vf_flr_reset_mmio(struct xe_gt *gt, unsigned int vfid)
- 	if (!pf_exit_vf_state(gt, vfid, XE_GT_SRIOV_STATE_FLR_RESET_MMIO))
- 		return false;
- 
--	/* XXX: placeholder */
-+	xe_gt_sriov_pf_sanitize_hw(gt, vfid);
- 
- 	pf_enter_vf_flr_send_finish(gt, vfid);
- 	return true;
++/**
++ * struct xe_gt_sriov_pf_workers - GT level workers used by the PF.
++ */
++struct xe_gt_sriov_pf_workers {
++	/** @restart: worker that executes actions post GT reset */
++	struct work_struct restart;
++};
++
+ /**
+  * struct xe_gt_sriov_pf - GT level PF virtualization data.
++ * @workers: workers data.
+  * @service: service data.
+  * @control: control data.
+  * @policy: policy data.
+@@ -40,6 +49,7 @@ struct xe_gt_sriov_metadata {
+  * @vfs: metadata for all VFs.
+  */
+ struct xe_gt_sriov_pf {
++	struct xe_gt_sriov_pf_workers workers;
+ 	struct xe_gt_sriov_pf_service service;
+ 	struct xe_gt_sriov_pf_control control;
+ 	struct xe_gt_sriov_pf_policy policy;
 -- 
 2.39.5
 
