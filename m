@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E922EBB91;
-	Tue, 22 Jul 2025 14:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD4D2EBB91;
+	Tue, 22 Jul 2025 14:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193664; cv=none; b=bGGYVzKMGyPDg2wMbvFf24YhKMKclx79XUfpobHQ4AcC8BybBrltmFN5ec96U3wi6TetLS21WGCBTx+Pn+olKZEJSSidLHigC5FtMPOR+y3fPzvWUg6lk28oBUk7puLcO5pIgalLw732UwGOeMN0m67MuG8E7D/YSmK06C2miSk=
+	t=1753193668; cv=none; b=mrsOGBACTYFCr9QQOcmyM8ShGE7MsjyzMRET1O2I/ifeU1DriCvClzB8Y5clu8khp06y/P93Q+hSr2XLUTkYHHIFbG9OnoBVSwRAFKveIxjzZRVaXb3EV9evM89O/Z5YUhPgvMVpbCsGEuOPytMs0EHApx5dawJYdZ4VJmfnJCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193664; c=relaxed/simple;
-	bh=LrUKkTTHBQznKyaxy4GkIO93qc+wvPvH1I9iEXfjjQ8=;
+	s=arc-20240116; t=1753193668; c=relaxed/simple;
+	bh=PeEif+shIe7qVQi6zbDSgDNNT+UZ56RkwFWFj2ELMNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAT5KKENnK3Ey52nO6p3Ey4D017nNgl++le1BY46iEyM+eQq+HrrNmLg9hCHYybPDG6UBVihUH/VAanpxaJyFNTuP+/NqsKKczSTKxhJqoXGxuyyArTRhW61vAHBKtb1oeutciSYuaenXK9zbFg0WIIEx/P2Pv+jsB7sQk5VhpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZJhCCAn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b+yiX9oXl9Ojt4E9iLzzhe/oDRVE2kHEFN1CxBvp1HlR0z7W9HdoLF+TiNEH71uA92ZE/ejxFtFK9AvjmwF8um91uBavkp43hqT0jZCcdhed4N24S7w3DDVS2BE7CLiuaLTiIYw3pjmqEhQMZFNwHmE1RcCaR1rrSMe8MAmSlJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwU2VDGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZJhCCAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0F0C4CEEB;
-	Tue, 22 Jul 2025 14:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwU2VDGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CF4C4CEEB;
+	Tue, 22 Jul 2025 14:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193664;
-	bh=LrUKkTTHBQznKyaxy4GkIO93qc+wvPvH1I9iEXfjjQ8=;
+	s=korg; t=1753193668;
+	bh=PeEif+shIe7qVQi6zbDSgDNNT+UZ56RkwFWFj2ELMNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZJhCCAn45pEx6/z+VkeQbPIPZ1rEWJUwIHPMVh/dFpEbuICzM+ermAljOQm7uVFW
-	 1ecdnnuM5lOhAGP6hA5iOa1xIqKnHKqKg7B0fUnPh1L89aGdWzgMJOoCFOLfPCdQ32
-	 z9/WgrE70Lanwk1XxeyUQOaRaYyUZwX0hO0PTXbU=
+	b=LwU2VDGHT1sGCgiDdEuc0IWIGQ11oBp2rs0W0cYsaweBAwCwzr0TwGAgol7mRU+Bq
+	 NkpjuEoS0h7ECcCAPCbEvtEKayR0tZGmavxy4HeblrIr86LV7EHaN8Ut8zhbG6ikXJ
+	 EgYVfIJQa8f+fy+u0z/RMS6AjE42FVBOkD32o+IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Altman <jaltman@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhong Jiawei <zhongjiawei1@huawei.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 160/187] rxrpc: Fix to use conn aborts for conn-wide failures
-Date: Tue, 22 Jul 2025 15:45:30 +0200
-Message-ID: <20250722134351.743109652@linuxfoundation.org>
+Subject: [PATCH 6.15 161/187] Revert "cgroup_freezer: cgroup_freezing: Check if not frozen"
+Date: Tue, 22 Jul 2025 15:45:31 +0200
+Message-ID: <20250722134351.777878181@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -55,177 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit f0295678ad304195927829b1dbf06553aa2187b0 ]
+[ Upstream commit 14a67b42cb6f3ab66f41603c062c5056d32ea7dd ]
 
-Fix rxrpc to use connection-level aborts for things that affect the whole
-connection, such as the service ID not matching a local service.
+This reverts commit cff5f49d433fcd0063c8be7dd08fa5bf190c6c37.
 
-Fixes: 57af281e5389 ("rxrpc: Tidy up abort generation infrastructure")
-Reported-by: Jeffrey Altman <jaltman@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250717074350.3767366-6-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if not
+frozen") modified the cgroup_freezing() logic to verify that the FROZEN
+flag is not set, affecting the return value of the freezing() function,
+in order to address a warning in __thaw_task.
+
+A race condition exists that may allow tasks to escape being frozen. The
+following scenario demonstrates this issue:
+
+CPU 0 (get_signal path)		CPU 1 (freezer.state reader)
+try_to_freeze			read freezer.state
+__refrigerator			freezer_read
+				update_if_frozen
+WRITE_ONCE(current->__state, TASK_FROZEN);
+				...
+				/* Task is now marked frozen */
+				/* frozen(task) == true */
+				/* Assuming other tasks are frozen */
+				freezer->state |= CGROUP_FROZEN;
+/* freezing(current) returns false */
+/* because cgroup is frozen (not freezing) */
+break out
+__set_current_state(TASK_RUNNING);
+/* Bug: Task resumes running when it should remain frozen */
+
+The existing !frozen(p) check in __thaw_task makes the
+WARN_ON_ONCE(freezing(p)) warning redundant. Removing this warning enables
+reverting the commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check
+if not frozen") to resolve the issue.
+
+The warning has been removed in the previous patch. This patch revert the
+commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if not
+frozen") to complete the fix.
+
+Fixes: cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if not frozen")
+Reported-by: Zhong Jiawei<zhongjiawei1@huawei.com>
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/ar-internal.h |  3 +++
- net/rxrpc/call_accept.c | 12 ++++++------
- net/rxrpc/io_thread.c   | 14 ++++++++++++++
- net/rxrpc/output.c      | 19 ++++++++++---------
- net/rxrpc/security.c    |  8 ++++----
- 5 files changed, 37 insertions(+), 19 deletions(-)
+ kernel/cgroup/legacy_freezer.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index b2d64586958fb..c4891a538ded0 100644
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -42,6 +42,7 @@ enum rxrpc_skb_mark {
- 	RXRPC_SKB_MARK_SERVICE_CONN_SECURED, /* Service connection response has been verified */
- 	RXRPC_SKB_MARK_REJECT_BUSY,	/* Reject with BUSY */
- 	RXRPC_SKB_MARK_REJECT_ABORT,	/* Reject with ABORT (code in skb->priority) */
-+	RXRPC_SKB_MARK_REJECT_CONN_ABORT, /* Reject with connection ABORT (code in skb->priority) */
- };
- 
- /*
-@@ -1197,6 +1198,8 @@ int rxrpc_encap_rcv(struct sock *, struct sk_buff *);
- void rxrpc_error_report(struct sock *);
- bool rxrpc_direct_abort(struct sk_buff *skb, enum rxrpc_abort_reason why,
- 			s32 abort_code, int err);
-+bool rxrpc_direct_conn_abort(struct sk_buff *skb, enum rxrpc_abort_reason why,
-+			     s32 abort_code, int err);
- int rxrpc_io_thread(void *data);
- static inline void rxrpc_wake_up_io_thread(struct rxrpc_local *local)
+diff --git a/kernel/cgroup/legacy_freezer.c b/kernel/cgroup/legacy_freezer.c
+index 507b8f19a262e..dd9417425d929 100644
+--- a/kernel/cgroup/legacy_freezer.c
++++ b/kernel/cgroup/legacy_freezer.c
+@@ -66,15 +66,9 @@ static struct freezer *parent_freezer(struct freezer *freezer)
+ bool cgroup_freezing(struct task_struct *task)
  {
-diff --git a/net/rxrpc/call_accept.c b/net/rxrpc/call_accept.c
-index 978f0c6ee3c8a..3259916c926ae 100644
---- a/net/rxrpc/call_accept.c
-+++ b/net/rxrpc/call_accept.c
-@@ -373,8 +373,8 @@ bool rxrpc_new_incoming_call(struct rxrpc_local *local,
- 	spin_lock(&rx->incoming_lock);
- 	if (rx->sk.sk_state == RXRPC_SERVER_LISTEN_DISABLED ||
- 	    rx->sk.sk_state == RXRPC_CLOSE) {
--		rxrpc_direct_abort(skb, rxrpc_abort_shut_down,
--				   RX_INVALID_OPERATION, -ESHUTDOWN);
-+		rxrpc_direct_conn_abort(skb, rxrpc_abort_shut_down,
-+					RX_INVALID_OPERATION, -ESHUTDOWN);
- 		goto no_call;
- 	}
+ 	bool ret;
+-	unsigned int state;
  
-@@ -420,12 +420,12 @@ bool rxrpc_new_incoming_call(struct rxrpc_local *local,
+ 	rcu_read_lock();
+-	/* Check if the cgroup is still FREEZING, but not FROZEN. The extra
+-	 * !FROZEN check is required, because the FREEZING bit is not cleared
+-	 * when the state FROZEN is reached.
+-	 */
+-	state = task_freezer(task)->state;
+-	ret = (state & CGROUP_FREEZING) && !(state & CGROUP_FROZEN);
++	ret = task_freezer(task)->state & CGROUP_FREEZING;
+ 	rcu_read_unlock();
  
- unsupported_service:
- 	read_unlock_irq(&local->services_lock);
--	return rxrpc_direct_abort(skb, rxrpc_abort_service_not_offered,
--				  RX_INVALID_OPERATION, -EOPNOTSUPP);
-+	return rxrpc_direct_conn_abort(skb, rxrpc_abort_service_not_offered,
-+				       RX_INVALID_OPERATION, -EOPNOTSUPP);
- unsupported_security:
- 	read_unlock_irq(&local->services_lock);
--	return rxrpc_direct_abort(skb, rxrpc_abort_service_not_offered,
--				  RX_INVALID_OPERATION, -EKEYREJECTED);
-+	return rxrpc_direct_conn_abort(skb, rxrpc_abort_service_not_offered,
-+				       RX_INVALID_OPERATION, -EKEYREJECTED);
- no_call:
- 	spin_unlock(&rx->incoming_lock);
- 	read_unlock_irq(&local->services_lock);
-diff --git a/net/rxrpc/io_thread.c b/net/rxrpc/io_thread.c
-index 64f8d77b87312..23dbcc4819990 100644
---- a/net/rxrpc/io_thread.c
-+++ b/net/rxrpc/io_thread.c
-@@ -97,6 +97,20 @@ bool rxrpc_direct_abort(struct sk_buff *skb, enum rxrpc_abort_reason why,
- 	return false;
- }
- 
-+/*
-+ * Directly produce a connection abort from a packet.
-+ */
-+bool rxrpc_direct_conn_abort(struct sk_buff *skb, enum rxrpc_abort_reason why,
-+			     s32 abort_code, int err)
-+{
-+	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
-+
-+	trace_rxrpc_abort(0, why, sp->hdr.cid, 0, sp->hdr.seq, abort_code, err);
-+	skb->mark = RXRPC_SKB_MARK_REJECT_CONN_ABORT;
-+	skb->priority = abort_code;
-+	return false;
-+}
-+
- static bool rxrpc_bad_message(struct sk_buff *skb, enum rxrpc_abort_reason why)
- {
- 	return rxrpc_direct_abort(skb, why, RX_PROTOCOL_ERROR, -EBADMSG);
-diff --git a/net/rxrpc/output.c b/net/rxrpc/output.c
-index d0d04ee9667ef..a480e7e2325eb 100644
---- a/net/rxrpc/output.c
-+++ b/net/rxrpc/output.c
-@@ -829,7 +829,13 @@ void rxrpc_reject_packet(struct rxrpc_local *local, struct sk_buff *skb)
- 	msg.msg_controllen = 0;
- 	msg.msg_flags = 0;
- 
--	memset(&whdr, 0, sizeof(whdr));
-+	whdr = (struct rxrpc_wire_header) {
-+		.epoch		= htonl(sp->hdr.epoch),
-+		.cid		= htonl(sp->hdr.cid),
-+		.callNumber	= htonl(sp->hdr.callNumber),
-+		.serviceId	= htons(sp->hdr.serviceId),
-+		.flags		= ~sp->hdr.flags & RXRPC_CLIENT_INITIATED,
-+	};
- 
- 	switch (skb->mark) {
- 	case RXRPC_SKB_MARK_REJECT_BUSY:
-@@ -837,6 +843,9 @@ void rxrpc_reject_packet(struct rxrpc_local *local, struct sk_buff *skb)
- 		size = sizeof(whdr);
- 		ioc = 1;
- 		break;
-+	case RXRPC_SKB_MARK_REJECT_CONN_ABORT:
-+		whdr.callNumber	= 0;
-+		fallthrough;
- 	case RXRPC_SKB_MARK_REJECT_ABORT:
- 		whdr.type = RXRPC_PACKET_TYPE_ABORT;
- 		code = htonl(skb->priority);
-@@ -850,14 +859,6 @@ void rxrpc_reject_packet(struct rxrpc_local *local, struct sk_buff *skb)
- 	if (rxrpc_extract_addr_from_skb(&srx, skb) == 0) {
- 		msg.msg_namelen = srx.transport_len;
- 
--		whdr.epoch	= htonl(sp->hdr.epoch);
--		whdr.cid	= htonl(sp->hdr.cid);
--		whdr.callNumber	= htonl(sp->hdr.callNumber);
--		whdr.serviceId	= htons(sp->hdr.serviceId);
--		whdr.flags	= sp->hdr.flags;
--		whdr.flags	^= RXRPC_CLIENT_INITIATED;
--		whdr.flags	&= RXRPC_CLIENT_INITIATED;
--
- 		iov_iter_kvec(&msg.msg_iter, WRITE, iov, ioc, size);
- 		ret = do_udp_sendmsg(local->socket, &msg, size);
- 		if (ret < 0)
-diff --git a/net/rxrpc/security.c b/net/rxrpc/security.c
-index 9784adc8f2759..7a48fee3a6b1a 100644
---- a/net/rxrpc/security.c
-+++ b/net/rxrpc/security.c
-@@ -137,15 +137,15 @@ const struct rxrpc_security *rxrpc_get_incoming_security(struct rxrpc_sock *rx,
- 
- 	sec = rxrpc_security_lookup(sp->hdr.securityIndex);
- 	if (!sec) {
--		rxrpc_direct_abort(skb, rxrpc_abort_unsupported_security,
--				   RX_INVALID_OPERATION, -EKEYREJECTED);
-+		rxrpc_direct_conn_abort(skb, rxrpc_abort_unsupported_security,
-+					RX_INVALID_OPERATION, -EKEYREJECTED);
- 		return NULL;
- 	}
- 
- 	if (sp->hdr.securityIndex != RXRPC_SECURITY_NONE &&
- 	    !rx->securities) {
--		rxrpc_direct_abort(skb, rxrpc_abort_no_service_key,
--				   sec->no_key_abort, -EKEYREJECTED);
-+		rxrpc_direct_conn_abort(skb, rxrpc_abort_no_service_key,
-+					sec->no_key_abort, -EKEYREJECTED);
- 		return NULL;
- 	}
- 
+ 	return ret;
 -- 
 2.39.5
 
