@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFBF2EACE8;
-	Tue, 22 Jul 2025 13:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2712EA16D;
+	Tue, 22 Jul 2025 13:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192299; cv=none; b=i8fsfoCTHBL5RqRqdiA1/pV9Zqc0OM1eYYQV74Hg6snXa8vmCYp7eVsaScYNI+ICSa+7tFMnPk8Uqy2l7dU97MsGp7u0O/rZqiX0tKamd636cgPY94AaoOGGrPg/3MdT/n+dKXOC4wa8VblZyJyPXABGR8snD91UmguUpNY2XtU=
+	t=1753192303; cv=none; b=j5WowO1lLZrPgufgJTi34MJ9313UoKIfmWc+7xsQqq1tSdKCi2/TbFaBH+twyWwdiLk+HuThU9crqCDmKx55v5WlcimOzUfESGFaD+3l4z+b8whN5b9NMtWg4sjTD+2ppkjkFnwDyHRMp2kbBXamg/K2HKdvTsQz/+7AOkkC75E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192299; c=relaxed/simple;
-	bh=WEzvyWoYscKeYFlIyoudNASbW7Ho5YrHiohVrkaMoLw=;
+	s=arc-20240116; t=1753192303; c=relaxed/simple;
+	bh=XZEeLoUaW6RY6n+cl8WZwY0OWF7z0mXgY4s4V7dChrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jE+CyAMcBBltalB+5VPzcPf5C4tIeVL+C1TergUwQ5ufYqi3lHQv7p4e0BHvUTAqROGV5nW+gqP6uYNKBVBvDkaejRX+avVPWCCyVuNSt3IQbZ9/OOA2g8+AeZARpDF3f7BaLi/Hu3/1oz+HOWyp7qcK0fU7l+kN88DMhZUQjGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXi5Yiup; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTTrfVQKQvKn4f1rD8dmuMt6u7JCWkSLHFP0HOlh8raHsQ1a3CiZFoz9xtm6NuN/j1gYGmBGgPl7RSq87BngYluC9LsRohzjKVfUhBrdXnNq1dZUcnXjcXfOiDbc+eHAaQiJUd+f6dEWdglY79FgIVRmbJTNmYUkYJmgMrFK7mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/HkeT/P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXi5Yiup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5186C4CEEB;
-	Tue, 22 Jul 2025 13:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/HkeT/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF99C4CEEB;
+	Tue, 22 Jul 2025 13:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192299;
-	bh=WEzvyWoYscKeYFlIyoudNASbW7Ho5YrHiohVrkaMoLw=;
+	s=korg; t=1753192303;
+	bh=XZEeLoUaW6RY6n+cl8WZwY0OWF7z0mXgY4s4V7dChrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXi5YiupuHWv8wqZ9kHGZegUFFcJwHuRHCZN/52EqegZxkYluedgO4B2/Zki/fzuI
-	 vC+AMTHK+sPI5T6imR9gPpWZZClgZOEX/zK9y+fPhBbn6GxPjl3WX/sG5Wrk9AEs/3
-	 gi+vMp0mUbGSEMUesNqtBIY964JkXit1eVL7Mpx8=
+	b=v/HkeT/P5WmTvOVkyrq+USYuh7Krk6ZqyjP/ONVRAqvpTnUV7RMzkFOtVd9zyK/QU
+	 xhobAef8bSRCtFqnQ75RUAM4jhWhP20bORwEPt9ZOcy9nyp06hkmMAZTpFFLFuF8m0
+	 eqnfYY/2Zma+h3TSqSxd2yTWezdQqlQayoWU0lqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 024/111] ALSA: hda/realtek: Add quirk for ASUS ROG Strix G712LWS
-Date: Tue, 22 Jul 2025 15:43:59 +0200
-Message-ID: <20250722134334.300342430@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 025/111] io_uring/poll: fix POLLERR handling
+Date: Tue, 22 Jul 2025 15:44:00 +0200
+Message-ID: <20250722134334.335869448@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -49,32 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit e201c19ddeed6b37f05617e529d8efa079657ed7 upstream.
+commit c7cafd5b81cc07fb402e3068d134c21e60ea688c upstream.
 
-ASUS ROG Strix G712LWS (PCI SSID 1043:1a83) requires the quirk for
-ALC294 headset mode in order to make the speaker and headset I/O
-working properly.
+8c8492ca64e7 ("io_uring/net: don't retry connect operation on EPOLLERR")
+is a little dirty hack that
+1) wrongfully assumes that POLLERR equals to a failed request, which
+breaks all POLLERR users, e.g. all error queue recv interfaces.
+2) deviates the connection request behaviour from connect(2), and
+3) racy and solved at a wrong level.
 
-Cc: <stable@vger.kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220334
-Link: https://patch.msgid.link/20250715062906.11857-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Nothing can be done with 2) now, and 3) is beyond the scope of the
+patch. At least solve 1) by moving the hack out of generic poll handling
+into io_connect().
+
+Cc: stable@vger.kernel.org
+Fixes: 8c8492ca64e79 ("io_uring/net: don't retry connect operation on EPOLLERR")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/3dc89036388d602ebd84c28e5042e457bdfc952b.1752682444.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/net.c  |   12 ++++++++----
+ io_uring/poll.c |    2 --
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10303,6 +10303,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1043, 0x1a13, "Asus G73Jw", ALC269_FIXUP_ASUS_G73JW),
- 	SND_PCI_QUIRK(0x1043, 0x1a63, "ASUS UX3405MA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1a83, "ASUS UM5302LA", ALC294_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1043, 0x1a8e, "ASUS G712LWS", ALC294_FIXUP_LENOVO_MIC_LOCATION),
- 	SND_PCI_QUIRK(0x1043, 0x1a8f, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1b11, "ASUS UX431DA", ALC294_FIXUP_ASUS_COEF_1B),
- 	SND_PCI_QUIRK(0x1043, 0x1b13, "Asus U41SV", ALC269_FIXUP_INV_DMIC),
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1537,9 +1537,11 @@ int io_connect(struct io_kiocb *req, uns
+ 		io = &__io;
+ 	}
+ 
+-	if (unlikely(req->flags & REQ_F_FAIL)) {
+-		ret = -ECONNRESET;
+-		goto out;
++	if (connect->in_progress) {
++		struct poll_table_struct pt = { ._key = EPOLLERR };
++
++		if (vfs_poll(req->file, &pt) & EPOLLERR)
++			goto get_sock_err;
+ 	}
+ 
+ 	file_flags = force_nonblock ? O_NONBLOCK : 0;
+@@ -1571,8 +1573,10 @@ int io_connect(struct io_kiocb *req, uns
+ 		 * which means the previous result is good. For both of these,
+ 		 * grab the sock_error() and use that for the completion.
+ 		 */
+-		if (ret == -EBADFD || ret == -EISCONN)
++		if (ret == -EBADFD || ret == -EISCONN) {
++get_sock_err:
+ 			ret = sock_error(sock_from_file(req->file)->sk);
++		}
+ 	}
+ 	if (ret == -ERESTARTSYS)
+ 		ret = -EINTR;
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -308,8 +308,6 @@ static int io_poll_check_events(struct i
+ 				return IOU_POLL_REISSUE;
+ 			}
+ 		}
+-		if (unlikely(req->cqe.res & EPOLLERR))
+-			req_set_fail(req);
+ 		if (req->apoll_events & EPOLLONESHOT)
+ 			return IOU_POLL_DONE;
+ 
 
 
