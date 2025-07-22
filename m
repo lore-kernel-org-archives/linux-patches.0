@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E272D8766;
-	Tue, 22 Jul 2025 13:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94692877F1;
+	Tue, 22 Jul 2025 13:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192584; cv=none; b=DJQXUoZygafoWNdnty8YyB64SgS1hP6YujKI7Rg4s7Fz9fN07nf98OS3DZ6EdWWbRbLhB8PObAWmQObhgGF1wRJ2ei5Z3mM5DH4l7qiWlcfF3ypV/SklQlqsPvLbxkENwnLOpkgpOCEW+4/AvMWxQg4jlHJd2KTEsk06T+avRCg=
+	t=1753192587; cv=none; b=n447m/fs8WjV3LWOhwSN5WBPpROu+8saD+C7UNAJkrtpfAzkkmPH937z5LtqOCNq7jDx8n6oRwx2a9mYkboP7LLYIfLOnGa53ZUEPiE/3X44hVPeIn6WCpCApLFS2J+PY5HzHVUpuQX8oFvOk1m9D898LTeTC7VM6lygnpWsWbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192584; c=relaxed/simple;
-	bh=DOG8uQLQhd1iqjR93VEKGil9QoFGRX0U6KrnpcRhqEA=;
+	s=arc-20240116; t=1753192587; c=relaxed/simple;
+	bh=b5e3RDXMxqWfI3RhIzmb3019sSVALe5g2hu8Y3v7kIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHyoJPbCc93KhZcUtMtlGORioPH3PphpA8+MozTf+L+/QUHVoV/fiNWhkSqVhJt2BkhjR0UL50//oSNGJ3ppB1jaPlEbLNjgdlfFRJhe3MxurjdVe56d9Hzt8+8qNmkeV4e8fJD0UJAG2yCVzFHzJtidY0eToQYq6wDwX4SzgNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k44Hr6+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEdiLwn4/+xDyscCWnKXIHJnSXOimCN85plFpSvPajGLxVcA//Kh7eFK5ofSjvBrEMahnWeIXxS5Xjf7QNuXA60FzllbsAQfqfTTBiUQF235eHjFmBMEJEPr9rWMVkG3uZVnlLztsumOB3UJ3842EjSq7WGG+UdOaJodUxNYftw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5f8gA18; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k44Hr6+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B6BC4CEF1;
-	Tue, 22 Jul 2025 13:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5f8gA18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F981C4CEEB;
+	Tue, 22 Jul 2025 13:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192584;
-	bh=DOG8uQLQhd1iqjR93VEKGil9QoFGRX0U6KrnpcRhqEA=;
+	s=korg; t=1753192587;
+	bh=b5e3RDXMxqWfI3RhIzmb3019sSVALe5g2hu8Y3v7kIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k44Hr6+PmoYuv4ihPwRWwQMzR4wzM6DRNqFrQvbAuOo6Hp+aJNXB0azjgKrKWp5NC
-	 crCGZiolFaMbT+06f7jG86rFP3hMSE8joJrWQNFn8fUvSPZ/L9i7dfieewfUQmA/th
-	 V1vmZWJ500Vom5L/y0dDXNZJeW2RVonirLntchio=
+	b=k5f8gA18z98w1f09Q3KdGpooHSS+deNX0Sa9vR2eKkClJU3uMCO2P5SR1qnNXQPP/
+	 RGnWHwa6N1xmoUc6KxKDDEwyxgJndKBKAQriuBu1iCHs2Y2OYNpC8fKe4c3OMn4LL6
+	 zkUQGNvSDPdF4yPTIKTVdvfzVgrDbXVcaRoavdrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
-	Steve French <stfrench@microsoft.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/111] smb: client: fix use-after-free in cifs_oplock_break
-Date: Tue, 22 Jul 2025 15:44:42 +0200
-Message-ID: <20250722134335.875504056@linuxfoundation.org>
+Subject: [PATCH 6.6 103/111] i2c: omap: Fix an error handling path in omap_i2c_probe()
+Date: Tue, 22 Jul 2025 15:45:18 +0200
+Message-ID: <20250722134337.250359816@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -52,90 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 705c79101ccf9edea5a00d761491a03ced314210 ]
+commit 666c23af755dccca8c25b5d5200ca28153c69a05 upstream.
 
-A race condition can occur in cifs_oplock_break() leading to a
-use-after-free of the cinode structure when unmounting:
+If an error occurs after calling mux_state_select(), mux_state_deselect()
+should be called as already done in the remove function.
 
-  cifs_oplock_break()
-    _cifsFileInfo_put(cfile)
-      cifsFileInfo_put_final()
-        cifs_sb_deactive()
-          [last ref, start releasing sb]
-            kill_sb()
-              kill_anon_super()
-                generic_shutdown_super()
-                  evict_inodes()
-                    dispose_list()
-                      evict()
-                        destroy_inode()
-                          call_rcu(&inode->i_rcu, i_callback)
-    spin_lock(&cinode->open_file_lock)  <- OK
-                            [later] i_callback()
-                              cifs_free_inode()
-                                kmem_cache_free(cinode)
-    spin_unlock(&cinode->open_file_lock)  <- UAF
-    cifs_done_oplock_break(cinode)       <- UAF
-
-The issue occurs when umount has already released its reference to the
-superblock. When _cifsFileInfo_put() calls cifs_sb_deactive(), this
-releases the last reference, triggering the immediate cleanup of all
-inodes under RCU. However, cifs_oplock_break() continues to access the
-cinode after this point, resulting in use-after-free.
-
-Fix this by holding an extra reference to the superblock during the
-entire oplock break operation. This ensures that the superblock and
-its inodes remain valid until the oplock break completes.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220309
-Fixes: b98749cac4a6 ("CIFS: keep FileInfo handle live during oplock break")
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: b6ef830c60b6 ("i2c: omap: Add support for setting mux")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: <stable@vger.kernel.org> # v6.15+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/998542981b6d2435c057dd8b9fe71743927babab.1749913149.git.christophe.jaillet@wanadoo.fr
+Stable-dep-of: a9503a2ecd95 ("i2c: omap: Handle omap_i2c_init() errors in omap_i2c_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-omap.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index d883ed75022c4..99a8c6fbd41a6 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -5042,7 +5042,8 @@ void cifs_oplock_break(struct work_struct *work)
- 	struct cifsFileInfo *cfile = container_of(work, struct cifsFileInfo,
- 						  oplock_break);
- 	struct inode *inode = d_inode(cfile->dentry);
--	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-+	struct super_block *sb = inode->i_sb;
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
- 	struct cifsInodeInfo *cinode = CIFS_I(inode);
- 	struct cifs_tcon *tcon;
- 	struct TCP_Server_Info *server;
-@@ -5052,6 +5053,12 @@ void cifs_oplock_break(struct work_struct *work)
- 	__u64 persistent_fid, volatile_fid;
- 	__u16 net_fid;
+--- a/drivers/i2c/busses/i2c-omap.c
++++ b/drivers/i2c/busses/i2c-omap.c
+@@ -1464,13 +1464,13 @@ omap_i2c_probe(struct platform_device *p
+ 		if (IS_ERR(mux_state)) {
+ 			r = PTR_ERR(mux_state);
+ 			dev_dbg(&pdev->dev, "failed to get I2C mux: %d\n", r);
+-			goto err_disable_pm;
++			goto err_put_pm;
+ 		}
+ 		omap->mux_state = mux_state;
+ 		r = mux_state_select(omap->mux_state);
+ 		if (r) {
+ 			dev_err(&pdev->dev, "failed to select I2C mux: %d\n", r);
+-			goto err_disable_pm;
++			goto err_put_pm;
+ 		}
+ 	}
  
-+	/*
-+	 * Hold a reference to the superblock to prevent it and its inodes from
-+	 * being freed while we are accessing cinode. Otherwise, _cifsFileInfo_put()
-+	 * may release the last reference to the sb and trigger inode eviction.
-+	 */
-+	cifs_sb_active(sb);
- 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
- 			TASK_UNINTERRUPTIBLE);
+@@ -1518,6 +1518,9 @@ omap_i2c_probe(struct platform_device *p
  
-@@ -5124,6 +5131,7 @@ void cifs_oplock_break(struct work_struct *work)
- 	cifs_put_tlink(tlink);
- out:
- 	cifs_done_oplock_break(cinode);
-+	cifs_sb_deactive(sb);
- }
- 
- /*
--- 
-2.39.5
-
+ err_unuse_clocks:
+ 	omap_i2c_write_reg(omap, OMAP_I2C_CON_REG, 0);
++	if (omap->mux_state)
++		mux_state_deselect(omap->mux_state);
++err_put_pm:
+ 	pm_runtime_dont_use_autosuspend(omap->dev);
+ 	pm_runtime_put_sync(omap->dev);
+ err_disable_pm:
 
 
