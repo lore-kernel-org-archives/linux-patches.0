@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8BA2EA739;
-	Tue, 22 Jul 2025 14:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517562E9759;
+	Tue, 22 Jul 2025 14:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193738; cv=none; b=XhBhcAAqDUugkQVZ73qkYyDNybmxtlhOWrBEuZ8fnC44L5C9Rb8cylLwIm2Lfs+L1lbLPKv3/sgDDPa46ssVhQ5rnHxy8GGkE+BsYDnJtHk3EiNUHP5RzklEWg8HSUp8pLL/RQM65xqIc8MMw5Cs6DZFfsmtjRIx32NV61Ijg1M=
+	t=1753193741; cv=none; b=I7DhFrEY8eWtprWp4Jfrm+z2F5DfTzpiIRnw0O9O6w/JR9Jxrcxsf7zwgrI+ozN2hlPgV2Rbg/MCxybvgoyZgyqBHa4J6VOfrsiRG7mqLtfKwPqtywwkK1Jso3kYTVudezag+iiD+0y6bxmDsGyR90h/+7w052+ZZEFs84bryaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193738; c=relaxed/simple;
-	bh=e6CjX2c7bSjxb8D2qfHaPYquCltjelwW8dqyndRsbMg=;
+	s=arc-20240116; t=1753193741; c=relaxed/simple;
+	bh=fvKUBFc05hQTM7si+h+iNeVv0JeGsMDJiVS6GC0+lmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGdeUi/4/j4pFhNnUEHhqGPjALAtcjONsjZUzw/Rh8aWdZ+wCsmCtCCeD1qkNmOF+vObU14ZsqSA0pWHQ/33dBy9VNFoqDmND+rShRe8V32Cdmblk956BzQCzNEUOBKZyQKvudt+XlDKOMgd6kTEFwDgTgP7iq61ccG2qFp2r+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cISrMAvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=om8bntVa8wYVZXox5V98wTXRFKhg6MPfmAJbYaetIECCL7ibeRfDhC6/iUf0QPxFzRNN2qRSQp4YmLoISpeEzEbQquYK+CoorMABbfKT3T8yRxZWsu3m/fhjn15VQ7S4Y5I6VJYY1z2WJQAnNzdOF2mOYyUjlZgU5XGfGibIufI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naVTC5Pp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cISrMAvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A7FC4CEEB;
-	Tue, 22 Jul 2025 14:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naVTC5Pp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34E0C4CEF1;
+	Tue, 22 Jul 2025 14:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753193737;
-	bh=e6CjX2c7bSjxb8D2qfHaPYquCltjelwW8dqyndRsbMg=;
+	s=korg; t=1753193741;
+	bh=fvKUBFc05hQTM7si+h+iNeVv0JeGsMDJiVS6GC0+lmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cISrMAvRNcF/AqiDRqMB8a3HD1BeT7x0g+ovW8ihxuM6z+Qvzk4EGUhT5mVi1MadJ
-	 MLWv0ebz9oKDfGJrT0dqKyvoCruwI/azCG4GDFcvS46++LXkwyFGWBC7YSIhxsVlag
-	 hGWRQcINTX/qPYTD3+yufHLyku0svTtvM/BOXji8=
+	b=naVTC5PppNlbNeKA8LfT1ngAMDStAY/m89HeWydr8Pjwx0HalJjvZkXepYZ95x1tp
+	 41uzMWEjtY21nzRSGrFvy/NOJoiUgvH5on9DQEc5YiD7BrtC5mSaePgwaZ1vjB1mXS
+	 /iFBg6AsGU9qCn7JcOa53gY4byzbSLjX5d5SAs3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhong Jiawei <zhongjiawei1@huawei.com>,
-	Chen Ridong <chenridong@huawei.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.15 183/187] sched,freezer: Remove unnecessary warning in __thaw_task
-Date: Tue, 22 Jul 2025 15:45:53 +0200
-Message-ID: <20250722134352.585987270@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	Breno Leitao <leitao@debian.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 184/187] sched/ext: Prevent update_locked_rq() calls with NULL rq
+Date: Tue, 22 Jul 2025 15:45:54 +0200
+Message-ID: <20250722134352.621609662@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
 References: <20250722134345.761035548@linuxfoundation.org>
@@ -51,74 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 9beb8c5e77dc10e3889ff5f967eeffba78617a88 upstream.
+commit e14fd98c6d66cb76694b12c05768e4f9e8c95664 upstream.
 
-Commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if not
-frozen") modified the cgroup_freezing() logic to verify that the FROZEN
-flag is not set, affecting the return value of the freezing() function,
-in order to address a warning in __thaw_task.
+Avoid invoking update_locked_rq() when the runqueue (rq) pointer is NULL
+in the SCX_CALL_OP and SCX_CALL_OP_RET macros.
 
-A race condition exists that may allow tasks to escape being frozen. The
-following scenario demonstrates this issue:
+Previously, calling update_locked_rq(NULL) with preemption enabled could
+trigger the following warning:
 
-CPU 0 (get_signal path)		CPU 1 (freezer.state reader)
-try_to_freeze			read freezer.state
-__refrigerator			freezer_read
-				update_if_frozen
-WRITE_ONCE(current->__state, TASK_FROZEN);
-				...
-				/* Task is now marked frozen */
-				/* frozen(task) == true */
-				/* Assuming other tasks are frozen */
-				freezer->state |= CGROUP_FROZEN;
-/* freezing(current) returns false */
-/* because cgroup is frozen (not freezing) */
-break out
-__set_current_state(TASK_RUNNING);
-/* Bug: Task resumes running when it should remain frozen */
+    BUG: using __this_cpu_write() in preemptible [00000000]
 
-The existing !frozen(p) check in __thaw_task makes the
-WARN_ON_ONCE(freezing(p)) warning redundant. Removing this warning enables
-reverting commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if
-not frozen") to resolve the issue.
+This happens because __this_cpu_write() is unsafe to use in preemptible
+context.
 
-This patch removes the warning from __thaw_task. A subsequent patch will
-revert commit cff5f49d433f ("cgroup_freezer: cgroup_freezing: Check if
-not frozen") to complete the fix.
+rq is NULL when an ops invoked from an unlocked context. In such cases, we
+don't need to store any rq, since the value should already be NULL
+(unlocked). Ensure that update_locked_rq() is only called when rq is
+non-NULL, preventing calling __this_cpu_write() on preemptible context.
 
-Reported-by: Zhong Jiawei<zhongjiawei1@huawei.com>
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Fixes: 18853ba782bef ("sched_ext: Track currently locked rq")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: stable@vger.kernel.org # v6.15
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/freezer.c |   15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ kernel/sched/ext.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/kernel/freezer.c
-+++ b/kernel/freezer.c
-@@ -201,18 +201,9 @@ static int __restore_freezer_state(struc
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1149,7 +1149,8 @@ static inline struct rq *scx_locked_rq(v
  
- void __thaw_task(struct task_struct *p)
- {
--	unsigned long flags;
--
--	spin_lock_irqsave(&freezer_lock, flags);
--	if (WARN_ON_ONCE(freezing(p)))
--		goto unlock;
--
--	if (!frozen(p) || task_call_func(p, __restore_freezer_state, NULL))
--		goto unlock;
--
--	wake_up_state(p, TASK_FROZEN);
--unlock:
--	spin_unlock_irqrestore(&freezer_lock, flags);
-+	guard(spinlock_irqsave)(&freezer_lock);
-+	if (frozen(p) && !task_call_func(p, __restore_freezer_state, NULL))
-+		wake_up_state(p, TASK_FROZEN);
- }
+ #define SCX_CALL_OP(mask, op, rq, args...)					\
+ do {										\
+-	update_locked_rq(rq);							\
++	if (rq)									\
++		update_locked_rq(rq);						\
+ 	if (mask) {								\
+ 		scx_kf_allow(mask);						\
+ 		scx_ops.op(args);						\
+@@ -1157,14 +1158,16 @@ do {										\
+ 	} else {								\
+ 		scx_ops.op(args);						\
+ 	}									\
+-	update_locked_rq(NULL);							\
++	if (rq)									\
++		update_locked_rq(NULL);						\
+ } while (0)
  
- /**
+ #define SCX_CALL_OP_RET(mask, op, rq, args...)					\
+ ({										\
+ 	__typeof__(scx_ops.op(args)) __ret;					\
+ 										\
+-	update_locked_rq(rq);							\
++	if (rq)									\
++		update_locked_rq(rq);						\
+ 	if (mask) {								\
+ 		scx_kf_allow(mask);						\
+ 		__ret = scx_ops.op(args);					\
+@@ -1172,7 +1175,8 @@ do {										\
+ 	} else {								\
+ 		__ret = scx_ops.op(args);					\
+ 	}									\
+-	update_locked_rq(NULL);							\
++	if (rq)									\
++		update_locked_rq(NULL);						\
+ 	__ret;									\
+ })
+ 
 
 
