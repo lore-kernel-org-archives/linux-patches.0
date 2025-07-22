@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6192EAB6B;
-	Tue, 22 Jul 2025 13:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC242EA484;
+	Tue, 22 Jul 2025 13:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753192272; cv=none; b=N4bNQ0Hdn70W8mdb9f1WOMvgLYWpM7O54b9aEP+6/sAXLYHjhCM1RpLsCCYg2q9Fh5jdCdWxRKMKs8U0iOoVskd+lYmj1kKUJxkku1YnULIxaX3t/jST8wUG5GsKboXna1TlAgwWuVusNuRoBBrcN365yJc8iadTaBMrLlCYo8M=
+	t=1753192277; cv=none; b=qou+CV7iS8dTErjWhNmfILIYeYlmQG/1PHoZgjtA5bALxAst8tpy7s2Ad6IO92hIC6vKYP70sRgLe66xrZ70jPlGC62/is1keA6DgdI/eK4zEAgaxK2l1UsfzbsFFdI2R8uNRUIP5vaDeixf2bRkdf266LvbLhaoxjs87yHKpRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753192272; c=relaxed/simple;
-	bh=rm2lFuyOdXMtiwjMUOt4VHIAzvwJ1GqCDI0owRGwTUE=;
+	s=arc-20240116; t=1753192277; c=relaxed/simple;
+	bh=HJq3u9RqSGSte9nAOcGYCw2NZtSKEOQt1qy2HdAadNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQavYfR6ckqEzGSEo+V6dcOJTknvDqld8iaaa3o3xhTIsphKE7jUxCU0tRqEFAHKXrraiuitfP7MudtEtautc4KyF9o6Z6QtAFJyj8cwLXsfhplFJmmItrplvq7pWoe5XOQYy2g1+y3lQMmZTGlcJTGFhnmAW0Ml3BSrvMiHY4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mErVmtPu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JiwIe8W3JDV1NyY9LWWBjzEEGSv6BwI3wSvL45R5sOUZ9rKBYgxdMwJMHPvUx8zkjPaogYfogIbmojctYNG3s8kkkMSkHj2JQvY+xRfcXH63SGApE6bFwdL26v+MVdPu6Ft1RWVn8IQjl9AyM9Viqb5L72LPIoKiWvt8YPDEsVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMpo/uhl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mErVmtPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91529C4CEEB;
-	Tue, 22 Jul 2025 13:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMpo/uhl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCC8C4CEEB;
+	Tue, 22 Jul 2025 13:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753192272;
-	bh=rm2lFuyOdXMtiwjMUOt4VHIAzvwJ1GqCDI0owRGwTUE=;
+	s=korg; t=1753192275;
+	bh=HJq3u9RqSGSte9nAOcGYCw2NZtSKEOQt1qy2HdAadNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mErVmtPuTW9fcUH7nW9mSoZZXwo93vv0QicGFzuEKzm3bVz2QvNHFz370xRpp0KXU
-	 T6OlkJqR32RP1w7cLLiaMnAYX8ulcltv1H5cUk0EQmEj1QIVY9kTZ6BJC3NRlPxqdg
-	 0DForCxHuTg+6OuAmkWODneGoXpsw/JGT07Dp5tQ=
+	b=rMpo/uhlyDyiYBrXguUa2oWqa+oqw3BLiS6RS+e5V43XG5KUd1F/im+t+xEmk1A6F
+	 edtE0T4ujvY0Fd59Ov5DAWdhf0YTtkDGCBjRY4VdZBDbgVa5/fuY8jSKgLrvpwqzqE
+	 8CfAPz8gqvAx1rEafsUGnMzKhIdF0ddeJQUCQj/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Shuai <wangshuai12@xiaomi.com>,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 016/111] dm-bufio: fix sched in atomic context
-Date: Tue, 22 Jul 2025 15:43:51 +0200
-Message-ID: <20250722134333.996771005@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.6 017/111] HID: core: ensure the allocated report buffer can contain the reserved report ID
+Date: Tue, 22 Jul 2025 15:43:52 +0200
+Message-ID: <20250722134334.034053447@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
 References: <20250722134333.375479548@linuxfoundation.org>
@@ -51,74 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheng Yong <shengyong1@xiaomi.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-commit b1bf1a782fdf5c482215c0c661b5da98b8e75773 upstream.
+commit 4f15ee98304b96e164ff2340e1dfd6181c3f42aa upstream.
 
-If "try_verify_in_tasklet" is set for dm-verity, DM_BUFIO_CLIENT_NO_SLEEP
-is enabled for dm-bufio. However, when bufio tries to evict buffers, there
-is a chance to trigger scheduling in spin_lock_bh, the following warning
-is hit:
+When the report ID is not used, the low level transport drivers expect
+the first byte to be 0. However, currently the allocated buffer not
+account for that extra byte, meaning that instead of having 8 guaranteed
+bytes for implement to be working, we only have 7.
 
-BUG: sleeping function called from invalid context at drivers/md/dm-bufio.c:2745
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 123, name: kworker/2:2
-preempt_count: 201, expected: 0
-RCU nest depth: 0, expected: 0
-4 locks held by kworker/2:2/123:
- #0: ffff88800a2d1548 ((wq_completion)dm_bufio_cache){....}-{0:0}, at: process_one_work+0xe46/0x1970
- #1: ffffc90000d97d20 ((work_completion)(&dm_bufio_replacement_work)){....}-{0:0}, at: process_one_work+0x763/0x1970
- #2: ffffffff8555b528 (dm_bufio_clients_lock){....}-{3:3}, at: do_global_cleanup+0x1ce/0x710
- #3: ffff88801d5820b8 (&c->spinlock){....}-{2:2}, at: do_global_cleanup+0x2a5/0x710
-Preemption disabled at:
-[<0000000000000000>] 0x0
-CPU: 2 UID: 0 PID: 123 Comm: kworker/2:2 Not tainted 6.16.0-rc3-g90548c634bd0 #305 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: dm_bufio_cache do_global_cleanup
-Call Trace:
- <TASK>
- dump_stack_lvl+0x53/0x70
- __might_resched+0x360/0x4e0
- do_global_cleanup+0x2f5/0x710
- process_one_work+0x7db/0x1970
- worker_thread+0x518/0xea0
- kthread+0x359/0x690
- ret_from_fork+0xf3/0x1b0
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-That can be reproduced by:
-
-  veritysetup format --data-block-size=4096 --hash-block-size=4096 /dev/vda /dev/vdb
-  SIZE=$(blockdev --getsz /dev/vda)
-  dmsetup create myverity -r --table "0 $SIZE verity 1 /dev/vda /dev/vdb 4096 4096 <data_blocks> 1 sha256 <root_hash> <salt> 1 try_verify_in_tasklet"
-  mount /dev/dm-0 /mnt -o ro
-  echo 102400 > /sys/module/dm_bufio/parameters/max_cache_size_bytes
-  [read files in /mnt]
-
-Cc: stable@vger.kernel.org	# v6.4+
-Fixes: 450e8dee51aa ("dm bufio: improve concurrent IO performance")
-Signed-off-by: Wang Shuai <wangshuai12@xiaomi.com>
-Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Alan Stern <stern@rowland.harvard.edu>
+Closes: https://lore.kernel.org/linux-input/c75433e0-9b47-4072-bbe8-b1d14ea97b13@rowland.harvard.edu/
+Cc: stable@vger.kernel.org
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20250710-report-size-null-v2-1-ccf922b7c4e5@kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-bufio.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hid/hid-core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -2708,7 +2708,11 @@ static unsigned long __evict_many(struct
- 		__make_buffer_clean(b);
- 		__free_buffer_wake(b);
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1873,9 +1873,12 @@ u8 *hid_alloc_report_buf(struct hid_repo
+ 	/*
+ 	 * 7 extra bytes are necessary to achieve proper functionality
+ 	 * of implement() working on 8 byte chunks
++	 * 1 extra byte for the report ID if it is null (not used) so
++	 * we can reserve that extra byte in the first position of the buffer
++	 * when sending it to .raw_request()
+ 	 */
  
--		cond_resched();
-+		if (need_resched()) {
-+			dm_bufio_unlock(c);
-+			cond_resched();
-+			dm_bufio_lock(c);
-+		}
- 	}
+-	u32 len = hid_report_len(report) + 7;
++	u32 len = hid_report_len(report) + 7 + (report->id == 0);
  
- 	return count;
+ 	return kzalloc(len, flags);
+ }
 
 
