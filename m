@@ -1,53 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C34B23A6;
-	Wed, 23 Jul 2025 00:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE2323A6;
+	Wed, 23 Jul 2025 00:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753232370; cv=none; b=rGfFzAfGEL4WOi81PVxfrvWcA+QSA5SeFKGg/u5RLZgIWf9uggqZXf73sHJxCtY8rrWURy6Ee7aNZYknHl/imXTKzxu5/tScgldn5nWdaXMf0t5QWreLP7OGcPnsm+rCr+Odp62NgsVnBb9vxt6qavIFPqmfZuBEBfqq89huusA=
+	t=1753232375; cv=none; b=pwR6yObNvJzSviur9lBYqr6OoyR4f4EoJPNr+RXMe8p62qr69ajoLld/utqjqBruWL8OXVAxM0Klm8Hw6rTjIAhxuZB2OeFwYQ+eqdZ+SR6s/zjmy9Lq8EMjTP58j4MHG9H/u9q561+zU0qkTaOCF0sdZTBAlfof6Ws+2ns6qtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753232370; c=relaxed/simple;
-	bh=hzBxAooqxaH73dOWBczz2r0GKTXKr+B5PW7NY3kPFUE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=LugRQqF+HoD0gKpa2Rq7fuLN+sgsIKJE8N4+t7FFzPvfYlqCKxJ7Xa4JysVDJ/Vo4iUHlb0CjL96tGZUbZbibwibNCz4EQOHud/LK5ZETLY6LLgEpRnaQ94dC+ajkB0qKhsjn/9knp2N6oOPwN7DowQa2xYnPn9jlmU/fu52GDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TxVLgB7p; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753232375; c=relaxed/simple;
+	bh=e5J8yQmG9q44EUuPcFE/9GQaRcJcLbOxXIRzPnmuqUU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=oSn28BSvqpys14hwg8T4L1sV1MpoNGweDkVpXoQXyxQiB3CrDTllkT1ibpKla2z30zFCAYecACvMWrHASll6PqMA+KD5TVSbttBEp/L4EmNHxBBiz0T76XNiDQxZVHJTYE1BSVXkKzHITVYPh9H4ZKzVeJs3cD6ifdje9/Dwq1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=csRNLXQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TxVLgB7p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD82BC4CEEB;
-	Wed, 23 Jul 2025 00:59:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="csRNLXQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AE8C4CEF6;
+	Wed, 23 Jul 2025 00:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753232370;
-	bh=hzBxAooqxaH73dOWBczz2r0GKTXKr+B5PW7NY3kPFUE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=TxVLgB7p5A30z3eBe3aq9a+HYs/spAMn6oCGrFsnaosqF46s1AhtYQixLIFXcxp1d
-	 XytloXlxeZClZJGe86C/DxLY+A6yp/Cy8Hz4xFLjrPi8661IGCtZCB7JDdvQtoZ19H
-	 HwHmxgGcUY+vkcqv7tHp/ZD0vaXCF0dV1UWNRbrE/FrrrqqIWOpC7zs2AzGE/aZEGJ
-	 Sc9k5Ia+w2z+tSDInUWWMq1koaGgRZO+YvNHpMlHIS5ilyBKZUwLtENFfidJ+bOfGS
-	 bP4JTkjYBCJNr0+/BXjW3TgvXOMTaZLi1zw/M6nNhID4CcrNJJ7WeaSaaED4t+BlT0
-	 9tkPCu6lIkY8g==
+	s=k20201202; t=1753232375;
+	bh=e5J8yQmG9q44EUuPcFE/9GQaRcJcLbOxXIRzPnmuqUU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=csRNLXQ6Ni8Esgx8Ulo+jyk9K5ENeTmz2YF4t3rWM3AqCUttBhTOCBbUfUGm5/2NR
+	 Ppns7GzpcKl1caIcED5UuJDEoPd5sgjYnrn0I/ifljULYq+QQqgoQWRLqqqIRzUZkE
+	 aV9kJkwvrfZvGZEhca0GJXah1UU4ogbzDN+wYFwwN6QJoRsW2KgOyGMxf/QtcwRthA
+	 zpisauVNXWKtwAUtG7YgXoEpuKuu9WD7sK7LGltLqwGS/a0UnYFcUVxFGaHK7eUa3T
+	 p4yYDcmMm1y3i0TTGF3/PqJoSfiFZ6LR170w69VJitgqtwHXtNyYNJqtRJgdEFr6nw
+	 vdKONp6NS+hUA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Arnd Bergmann <arnd@arndb.de>,
-	"David S . Miller" <davem@davemloft.net>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	przemyslaw.kitszel@intel.com,
-	intel-wired-lan@lists.osuosl.org
-Subject: [PATCH AUTOSEL 5.10 1/2] ethernet: intel: fix building with large NR_CPUS
-Date: Tue, 22 Jul 2025 20:59:24 -0400
-Message-Id: <20250723005925.1023630-1-sashal@kernel.org>
+	cezary.rojewski@intel.com,
+	andriy.shevchenko@linux.intel.com,
+	yung-chuan.liao@linux.intel.com,
+	pierre-louis.bossart@linux.dev,
+	brent.lu@intel.com,
+	koike@igalia.com,
+	lachlan.hodges@morsemicro.com
+Subject: [PATCH AUTOSEL 5.10 2/2] ASoC: Intel: fix SND_SOC_SOF dependencies
+Date: Tue, 22 Jul 2025 20:59:25 -0400
+Message-Id: <20250723005925.1023630-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250723005925.1023630-1-sashal@kernel.org>
+References: <20250723005925.1023630-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.240
@@ -55,148 +58,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 24171a5a4a952c26568ff0d2a0bc8c4708a95e1d ]
+[ Upstream commit e837b59f8b411b5baf5e3de7a5aea10b1c545a63 ]
 
-With large values of CONFIG_NR_CPUS, three Intel ethernet drivers fail to
-compile like:
+It is currently possible to configure a kernel with all Intel SoC
+configs as loadable modules, but the board config as built-in. This
+causes a link failure in the reference to the snd_soc_sof.ko module:
 
-In function ‘i40e_free_q_vector’,
-    inlined from ‘i40e_vsi_alloc_q_vectors’ at drivers/net/ethernet/intel/i40e/i40e_main.c:12112:3:
-  571 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-include/linux/rcupdate.h:1084:17: note: in expansion of macro ‘BUILD_BUG_ON’
- 1084 |                 BUILD_BUG_ON(offsetof(typeof(*(ptr)), rhf) >= 4096);    \
-drivers/net/ethernet/intel/i40e/i40e_main.c:5113:9: note: in expansion of macro ‘kfree_rcu’
- 5113 |         kfree_rcu(q_vector, rcu);
-      |         ^~~~~~~~~
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_hw_params':
+sof_rt5682.c:(.text+0x1f9): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sof_rt5682.c:(.text+0x234): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_codec_init':
+sof_rt5682.c:(.text+0x3e0): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cs42l42.o: in function `sof_cs42l42_hw_params':
+sof_cs42l42.c:(.text+0x2a): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_nau8825.o: in function `sof_nau8825_hw_params':
+sof_nau8825.c:(.text+0x7f): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_da7219.o: in function `da7219_codec_init':
+sof_da7219.c:(.text+0xbf): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_maxim_common.o: in function `max_98373_hw_params':
+sof_maxim_common.c:(.text+0x6f9): undefined reference to `sof_dai_get_tdm_slots'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1015_hw_params':
+sof_realtek_common.c:(.text+0x54c): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1308_hw_params':
+sof_realtek_common.c:(.text+0x702): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cirrus_common.o: in function `cs35l41_hw_params':
+sof_cirrus_common.c:(.text+0x2f): undefined reference to `sof_dai_get_bclk'
 
-The problem is that the 'rcu' member in 'q_vector' is too far from the start
-of the structure. Move this member before the CPU mask instead, in all three
-drivers.
+Add an optional dependency on SND_SOC_SOF_INTEL_COMMON, to ensure that whenever
+the SOF support is in a loadable module, none of the board code can be built-in.
+
+This may be be a little heavy-handed, but I also don't see a reason why one would
+want the boards to be built-in but not the SoC, so it shouldn't actually cause
+any usability problems.
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: David S. Miller <davem@davemloft.net>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20250709145626.64125-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+Based on my analysis of the commit and its context, here is my
+assessment:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+**YES** - This commit should be backported to stable kernel trees.
 
-1. **Compilation Failure Fix**: This fixes a build-time compilation
-   failure that occurs with large values of CONFIG_NR_CPUS. The error
-   prevents the kernel from building successfully, which is a
-   significant issue for systems configured with high CPU counts.
+## Extensive Explanation:
 
-2. **Root Cause**: The issue stems from the `kfree_rcu()` macro in
-   `include/linux/rcupdate.h:1084` which includes a
-   `BUILD_BUG_ON(offsetof(typeof(*(ptr)), rhf) >= 4096)` check. This
-   compile-time assertion ensures that the RCU head field is within the
-   first 4096 bytes of the structure.
+### 1. **The commit fixes a critical build failure**
+The commit addresses link errors that occur when Intel ASoC board
+drivers are built-in (=y) while the SOF core module is built as a
+loadable module (=m). The error messages show undefined references to
+SOF DAI functions:
+- `sof_dai_get_mclk`
+- `sof_dai_get_bclk`
+- `sof_dai_get_tdm_slots`
 
-3. **Simple and Safe Fix**: The fix is straightforward - it moves the
-   `struct rcu_head rcu` member earlier in the structure, placing it
-   before the `cpumask_t affinity_mask` member. This is a safe change
-   because:
-   - It only reorders structure members
-   - The RCU head doesn't need to be at any specific location
-     functionally
-   - Moving it earlier reduces the offset from the structure start
-   - No functional code changes are required
+These functions are exported from the `snd-sof` module (defined in
+`sound/soc/sof/sof-audio.c`), but when board drivers are built-in, they
+cannot reference symbols from loadable modules.
 
-4. **Affects Multiple Drivers**: The issue affects three Intel ethernet
-   drivers (i40e, ixgbe, fm10k), all of which are fixed identically by
-   moving the rcu member earlier in their respective q_vector
-   structures.
+### 2. **The fix is minimal and contained**
+The change is a single-line modification to the Kconfig dependency:
+```diff
+-if SND_SOC_INTEL_MACH
++if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON ||
+!SND_SOC_SOF_INTEL_COMMON)
+```
 
-5. **Configuration-Dependent Bug**: This bug only manifests with large
-   CONFIG_NR_CPUS values (likely >= 512 or higher), where the
-   `cpumask_t` type becomes large enough to push the rcu member beyond
-   the 4096-byte offset limit. Systems with high core counts are
-   becoming more common in production environments.
+This clever dependency ensures that when `SND_SOC_SOF_INTEL_COMMON` is
+built as a module (=m), the Intel machine drivers cannot be built-in
+(=y). The `|| !SND_SOC_SOF_INTEL_COMMON` part allows the machine drivers
+to be enabled when SOF support is completely disabled.
 
-6. **No Risk of Regression**: The change is minimal and doesn't alter
-   any functionality. It's purely a structural reordering that maintains
-   all existing behavior while fixing the compilation issue.
+### 3. **Similar to previous backported fixes**
+Looking at the historical commits:
+- Commit `8d0872f6239f` (Similar Commit #1) fixed a similar link failure
+  for `sof-nau8825` and was backported (YES)
+- Commit `f4df4e4042b0` (Similar Commit #4) fixed a similar dependency
+  issue with SOF IMX and was backported (YES)
 
-7. **Meets Stable Criteria**: This fix clearly meets the stable kernel
-   criteria as it:
-   - Fixes a real bug (compilation failure)
-   - Is minimal and contained
-   - Has no risk of introducing new issues
-   - Affects users with legitimate configurations
+Both of these commits addressed build/link failures caused by incorrect
+Kconfig dependencies, just like this commit.
 
-The commit is an excellent candidate for stable backporting as it fixes
-a real compilation issue that prevents kernel builds on systems with
-large CPU counts, and the fix is trivial with no risk of regression.
+### 4. **No risk of regression**
+The change only affects build configuration and doesn't modify any
+runtime code. It prevents invalid configurations that would fail to
+build anyway. As the commit message states: "it shouldn't actually cause
+any usability problems" because there's no practical reason to have
+board drivers built-in while the SOF core is a module.
 
- drivers/net/ethernet/intel/fm10k/fm10k.h | 3 ++-
- drivers/net/ethernet/intel/i40e/i40e.h   | 2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe.h | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+### 5. **Meets stable tree criteria**
+- Fixes a real bug (build failure)
+- Small and contained change
+- No new features or architectural changes
+- Similar fixes have been backported before
+- Low risk of introducing new issues
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k.h b/drivers/net/ethernet/intel/fm10k/fm10k.h
-index 6119a41088381..65a2816142d96 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k.h
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k.h
-@@ -189,13 +189,14 @@ struct fm10k_q_vector {
- 	struct fm10k_ring_container rx, tx;
+The commit follows the pattern of other Kconfig dependency fixes in the
+Intel ASoC subsystem that have been successfully backported to stable
+trees.
+
+ sound/soc/intel/boards/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index dddb672a6d553..0e1166c4f89b6 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -11,7 +11,7 @@ menuconfig SND_SOC_INTEL_MACH
+ 	 kernel: saying N will just cause the configurator to skip all
+ 	 the questions about Intel ASoC machine drivers.
  
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
-+
- 	cpumask_t affinity_mask;
- 	char name[IFNAMSIZ + 9];
+-if SND_SOC_INTEL_MACH
++if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON || !SND_SOC_SOF_INTEL_COMMON)
  
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *dbg_q_vector;
- #endif /* CONFIG_DEBUG_FS */
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 
- 	/* for dynamic allocation of rings associated with this q_vector */
- 	struct fm10k_ring ring[] ____cacheline_internodealigned_in_smp;
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index dd630b6bc74bd..add9a3107d9a0 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -863,6 +863,7 @@ struct i40e_q_vector {
- 	u16 reg_idx;		/* register index of the interrupt */
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 
- 	struct i40e_ring_container rx;
- 	struct i40e_ring_container tx;
-@@ -873,7 +874,6 @@ struct i40e_q_vector {
- 	cpumask_t affinity_mask;
- 	struct irq_affinity_notify affinity_notify;
- 
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[I40E_INT_NAME_STR_LEN];
- 	bool arm_wb_state;
- } ____cacheline_internodealigned_in_smp;
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe.h b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-index 18251edbfabfb..3ea7095fc04f5 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-@@ -457,9 +457,10 @@ struct ixgbe_q_vector {
- 	struct ixgbe_ring_container rx, tx;
- 
- 	struct napi_struct napi;
-+	struct rcu_head rcu;	/* to avoid race with update stats on free */
-+
- 	cpumask_t affinity_mask;
- 	int numa_node;
--	struct rcu_head rcu;	/* to avoid race with update stats on free */
- 	char name[IFNAMSIZ + 9];
- 
- 	/* for dynamic allocation of rings associated with this q_vector */
+ config SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES
+ 	bool "Use more user friendly long card names"
 -- 
 2.39.5
 
