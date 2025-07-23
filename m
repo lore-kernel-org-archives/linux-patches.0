@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CD615B0EF;
-	Wed, 23 Jul 2025 00:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03DB156CA;
+	Wed, 23 Jul 2025 00:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753232277; cv=none; b=qBnJyoWsGEM8xE+1krGerE7e6y/wy2xGAa9bh5Yxl9qPX5Xo1YDWakU+20OmhhRtyNl1i4U1CstSCb3xJq1zFuOPv4L6RgUrN5s2+5FcUlp23GQJ1D6UeeTiGucpnV9ZzyJv+UCjRInykQ8zsQMQhIZqA4bhSn5tkROBGRdsb6o=
+	t=1753232282; cv=none; b=N4nGtm4EcacZo0tUIllR6SCHxbcYElN/xEaB+ooFowkUtjKAXHhkCpi+j/rI8ZmJfT97+7/K/JN6zDo9STLSMalHs0OeMi+lRoAh9vPbjShtxIYk9YKJIuUdRBKK9g9vWHL7Co7a4iT3KOA18sla5TjMKsXd5XkY5AF/gr9tZ94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753232277; c=relaxed/simple;
-	bh=l+n1R8HMKYVFbbZ2Cv2bsnSKQw7/cJ5qIg1y4Ef0NnA=;
+	s=arc-20240116; t=1753232282; c=relaxed/simple;
+	bh=hyTr1k1HK7RieUTrDMiDA64SVDGqangiL+mAc6/S0XA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LxFZbHQ6lNg5tei2FrCihC9P5ZxEc+D8u3W1509XcfKVkSGFxC/NRMDhMXd+a2uzzMlm4pRFTY0oCQlSJ4IEDXFWS41XxKCgt61oJwVV7Ut4AO8aKY4Cw6tIojTzO+Z/hbVldtHBt3wkHvBXFau+QHdk2KcPFAGP4Z9PGt6BRXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lgixXZNM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Sw8LYVUFGS4Szv4eKNPeSwgCQL3iUFTUJy2N9YhDVg5piPHdGXwAgpGH2l8gbr9ITHuKNapmcvc7Rzfe2P0O/JMMZRJnXzrGmQSMlmL2Op2IY7g6AnwRnB+6tMCGPZfS2bEXcbjHK+oyZzJRgS+6OdHnjucHLkih2uKeRlSB74Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jRosREXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lgixXZNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5CFC4CEF1;
-	Wed, 23 Jul 2025 00:57:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jRosREXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACA1C4CEF1;
+	Wed, 23 Jul 2025 00:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753232276;
-	bh=l+n1R8HMKYVFbbZ2Cv2bsnSKQw7/cJ5qIg1y4Ef0NnA=;
+	s=k20201202; t=1753232281;
+	bh=hyTr1k1HK7RieUTrDMiDA64SVDGqangiL+mAc6/S0XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgixXZNMM5MKjOpgjZyblf6qQXRTFvzTvd6abSpTv66rzZj6UWZo/5ZbQSCHz0qvD
-	 PKkVphWa+kVdBeAaJKHk7y+HSEuo76o/3lfGNyG5nzYZ2jVztUFYl4m+QzVeEND6zQ
-	 +wsPYlZNc3jjpLIsrQlPe0R2gkENwjsGlmdy9kCQM7gGYtF4ZsO3Ixo+rcJjq1ArUL
-	 lDgM8UH2Pu2jhXAu6aVgqh/+K/KCtQ2V+mwTrvaJw2yo14w2UP30cxnAN9st0nq5Is
-	 xFl6Tu8TPuDVR6JyDlH/ymdq3nxd6dmrNs6bKDI+voAWBOD+lGgl6towgiCPPe9wDx
-	 r649oUNaOnZlw==
+	b=jRosREXqe92Bh3GsJuA+bOL9rJrPD/hGUGKRz54QjbpeRigur3ExKMuHHGdStcso4
+	 96B8fj63vle059BafbAFwjcolwh2bWkKxJXFs0AxbHTrKs4dI38HwiwGwtrCkpVorc
+	 WNzV/+4o3fpPKpb0KkFOylth+/fEz4a5gJsBmYGojJJzSJKsjJso9MaTJfn7ROcrfo
+	 qNUmK4iJnupezEHSHCAVGwhABCWJWe1AotjVSouFp0WORO4zZZQa0bMtH02HTVwicz
+	 Nk74NQ5fBIqgkV82HkM0he83p3B4xdG7D8JIKZdEEzc+o38cCcARbRyBbIVsvG+UlD
+	 t0YYMQhu/JTQA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
+Cc: Alexandru Andries <alex.andries.aa@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andriy.shevchenko@linux.intel.com,
-	cezary.rojewski@intel.com,
-	yung-chuan.liao@linux.intel.com,
-	pierre-louis.bossart@linux.dev,
-	brent.lu@intel.com,
-	jack.yu@realtek.com,
-	koike@igalia.com,
-	lachlan.hodges@morsemicro.com
-Subject: [PATCH AUTOSEL 6.15 7/8] ASoC: Intel: fix SND_SOC_SOF dependencies
-Date: Tue, 22 Jul 2025 20:57:20 -0400
-Message-Id: <20250723005722.1022962-7-sashal@kernel.org>
+	venkataprasad.potturu@amd.com,
+	mario.limonciello@amd.com,
+	tiwai@suse.de,
+	lachlan.hodges@morsemicro.com,
+	talhah.peerbhai@gmail.com
+Subject: [PATCH AUTOSEL 6.15 8/8] ASoC: amd: yc: add DMI quirk for ASUS M6501RM
+Date: Tue, 22 Jul 2025 20:57:21 -0400
+Message-Id: <20250723005722.1022962-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250723005722.1022962-1-sashal@kernel.org>
 References: <20250723005722.1022962-1-sashal@kernel.org>
@@ -55,128 +52,125 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.7
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alexandru Andries <alex.andries.aa@gmail.com>
 
-[ Upstream commit e837b59f8b411b5baf5e3de7a5aea10b1c545a63 ]
+[ Upstream commit 6f80be548588429100eb1f5e25dc2a714d583ffe ]
 
-It is currently possible to configure a kernel with all Intel SoC
-configs as loadable modules, but the board config as built-in. This
-causes a link failure in the reference to the snd_soc_sof.ko module:
+add DMI entry for ASUS Vivobook PRO 15X (M6501RM)
+to make the internal microphone function
 
-x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_hw_params':
-sof_rt5682.c:(.text+0x1f9): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sof_rt5682.c:(.text+0x234): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_codec_init':
-sof_rt5682.c:(.text+0x3e0): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_cs42l42.o: in function `sof_cs42l42_hw_params':
-sof_cs42l42.c:(.text+0x2a): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_nau8825.o: in function `sof_nau8825_hw_params':
-sof_nau8825.c:(.text+0x7f): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_da7219.o: in function `da7219_codec_init':
-sof_da7219.c:(.text+0xbf): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_maxim_common.o: in function `max_98373_hw_params':
-sof_maxim_common.c:(.text+0x6f9): undefined reference to `sof_dai_get_tdm_slots'
-x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1015_hw_params':
-sof_realtek_common.c:(.text+0x54c): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1308_hw_params':
-sof_realtek_common.c:(.text+0x702): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_cirrus_common.o: in function `cs35l41_hw_params':
-sof_cirrus_common.c:(.text+0x2f): undefined reference to `sof_dai_get_bclk'
-
-Add an optional dependency on SND_SOC_SOF_INTEL_COMMON, to ensure that whenever
-the SOF support is in a loadable module, none of the board code can be built-in.
-
-This may be be a little heavy-handed, but I also don't see a reason why one would
-want the boards to be built-in but not the SoC, so it shouldn't actually cause
-any usability problems.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250709145626.64125-1-arnd@kernel.org
+Signed-off-by: Alexandru Andries <alex.andries.aa@gmail.com>
+Link: https://patch.msgid.link/20250707220730.361290-1-alex.andries.aa@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and its context, here is my
-assessment:
+**YES**
 
-**YES** - This commit should be backported to stable kernel trees.
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Extensive Explanation:
+## Analysis of the Commit
 
-### 1. **The commit fixes a critical build failure**
-The commit addresses link errors that occur when Intel ASoC board
-drivers are built-in (=y) while the SOF core module is built as a
-loadable module (=m). The error messages show undefined references to
-SOF DAI functions:
-- `sof_dai_get_mclk`
-- `sof_dai_get_bclk`
-- `sof_dai_get_tdm_slots`
+### 1. **Nature of the Change**
+The commit adds a DMI (Desktop Management Interface) quirk entry for the
+ASUS Vivobook PRO 15X (M6501RM) laptop to enable its internal microphone
+functionality. The change is minimal - it simply adds 7 lines to the
+`yc_acp_quirk_table[]` array in `sound/soc/amd/yc/acp6x-mach.c`:
 
-These functions are exported from the `snd-sof` module (defined in
-`sound/soc/sof/sof-audio.c`), but when board drivers are built-in, they
-cannot reference symbols from loadable modules.
-
-### 2. **The fix is minimal and contained**
-The change is a single-line modification to the Kconfig dependency:
-```diff
--if SND_SOC_INTEL_MACH
-+if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON ||
-!SND_SOC_SOF_INTEL_COMMON)
+```c
++       {
++               .driver_data = &acp6x_card,
++               .matches = {
++                       DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER
+INC."),
++                       DMI_MATCH(DMI_PRODUCT_NAME, "M6501RM"),
++               }
++       },
 ```
 
-This clever dependency ensures that when `SND_SOC_SOF_INTEL_COMMON` is
-built as a module (=m), the Intel machine drivers cannot be built-in
-(=y). The `|| !SND_SOC_SOF_INTEL_COMMON` part allows the machine drivers
-to be enabled when SOF support is completely disabled.
+### 2. **Impact and Bug Fix Nature**
+This is a classic hardware enablement fix that:
+- **Fixes a real user-facing bug**: The internal microphone on this
+  specific laptop model doesn't work without this quirk
+- **Has zero functional impact on other systems**: DMI quirks only
+  activate when the exact hardware match is found
+- **Follows an established pattern**: The file contains dozens of
+  similar DMI quirks for various laptop models
 
-### 3. **Similar to previous backported fixes**
-Looking at the historical commits:
-- Commit `8d0872f6239f` (Similar Commit #1) fixed a similar link failure
-  for `sof-nau8825` and was backported (YES)
-- Commit `f4df4e4042b0` (Similar Commit #4) fixed a similar dependency
-  issue with SOF IMX and was backported (YES)
+### 3. **Code Context Analysis**
+From examining the kernel repository:
+- The `yc_acp_quirk_table[]` is used in the `acp6x_probe()` function to
+  enable DMIC (Digital Microphone) support for AMD Yellow Carp platform
+- The driver first tries ACPI methods to detect DMIC capability, but
+  falls back to DMI quirks for systems that don't properly advertise
+  this capability
+- Without this quirk, the microphone simply won't be detected or
+  function on the affected laptop model
 
-Both of these commits addressed build/link failures caused by incorrect
-Kconfig dependencies, just like this commit.
+### 4. **Comparison with Similar Commits**
+Looking at the historical patterns:
+- **3 out of 5 similar DMI quirk additions were marked for stable**
+  (commits with "Cc: stable@vger.kernel.org")
+- All commits marked "YES" for backporting share these characteristics:
+  - Fix microphone functionality issues
+  - Add simple DMI entries
+  - Have bug reports or user confirmations
+  - Minimal risk of regression
 
-### 4. **No risk of regression**
-The change only affects build configuration and doesn't modify any
-runtime code. It prevents invalid configurations that would fail to
-build anyway. As the commit message states: "it shouldn't actually cause
-any usability problems" because there's no practical reason to have
-board drivers built-in while the SOF core is a module.
+### 5. **Stable Tree Criteria Evaluation**
+This commit meets all the key stable tree criteria:
+- ✅ **Fixes a real bug**: Broken microphone functionality
+- ✅ **Small and contained**: Only 7 lines added
+- ✅ **No side effects**: Only affects the specific laptop model
+- ✅ **No architectural changes**: Simple table entry addition
+- ✅ **Minimal regression risk**: Cannot affect other hardware
+- ✅ **User-reported issue**: Commit message indicates user need
 
-### 5. **Meets stable tree criteria**
-- Fixes a real bug (build failure)
-- Small and contained change
-- No new features or architectural changes
-- Similar fixes have been backported before
-- Low risk of introducing new issues
+### 6. **Risk Assessment**
+The risk is essentially zero because:
+- DMI matching is exact - it requires both vendor and product name to
+  match
+- The quirk only enables existing functionality, doesn't modify behavior
+- Similar quirks have been added hundreds of times without issues
+- The pattern is well-established in this subsystem
 
-The commit follows the pattern of other Kconfig dependency fixes in the
-Intel ASoC subsystem that have been successfully backported to stable
-trees.
+### 7. **Additional Considerations**
+While this commit doesn't have an explicit "Cc: stable@vger.kernel.org"
+tag, this is not unusual for AMD audio quirks. The maintainers often
+rely on stable maintainers to pick up these obvious hardware enablement
+fixes based on their merit.
 
- sound/soc/intel/boards/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This type of hardware enablement fix is exactly what stable kernels
+should include - it makes Linux work properly on real hardware that
+users have purchased, without any risk to existing functionality.
 
-diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
-index 4db7931ba561e..4a93242329362 100644
---- a/sound/soc/intel/boards/Kconfig
-+++ b/sound/soc/intel/boards/Kconfig
-@@ -11,7 +11,7 @@ menuconfig SND_SOC_INTEL_MACH
- 	 kernel: saying N will just cause the configurator to skip all
- 	 the questions about Intel ASoC machine drivers.
- 
--if SND_SOC_INTEL_MACH
-+if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON || !SND_SOC_SOF_INTEL_COMMON)
- 
- config SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES
- 	bool "Use more user friendly long card names"
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 4bde41663f421..e362c2865ec13 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -409,6 +409,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "M6500RC"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "M6501RM"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.5
 
