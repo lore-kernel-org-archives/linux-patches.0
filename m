@@ -1,65 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2445223A6;
-	Wed, 23 Jul 2025 00:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD1D23A6;
+	Wed, 23 Jul 2025 00:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753232318; cv=none; b=tW83CWrDwj9Z7kkSRgJwY6/ZYXkE4UO5ZJxzgXRjTbRwGRIgWXqHaATVMkLwJZHioj9rEXO8pwcV3cN0qgkCWoswviDdYZmra7ObeHNwf7uZ5pX61HdcDZoEXQsiKncZt81D0Y4be0LWfRepr41wm+y4cRt38vd3hS9nxDLrX94=
+	t=1753232321; cv=none; b=NgZ7jjPW5X6nf4VQX9gPSFx+QlGG/CfZZsyBkzjr7A3q24fsL+wxJtLKQBJGTlf6mCJ4337IoTQwHcKqTZjREhTUisF2Ds5DQXeSUHczfwVfg/c4wVN0+6JEP/Jx9+CbYuc1k/UNHKljpAAPD8QPFe+YXx5sTeoj+1hzpqQlkWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753232318; c=relaxed/simple;
-	bh=cp0AYlgp6+j2l8Hmf7dW3HPkQuyZNkpKebCps9bXrf4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RwJDU9lIzARO5aw9RxLKWtJs7KAx8eJ7wP3r2SK4ndmQsnzv/b2/llnHMvdEkC0U2sPDgcIIu74iHyFyBHhhP/LQsKtWtpfg89rMTcazdncBPRYJDQmtzZbwBFdlxdyTJRA6ahxT6tUZbfgBG3RjGRCfXK/UDx/+EOSW4QOCIk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=msAmV7aY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753232321; c=relaxed/simple;
+	bh=4G0bgVi1RVDDgAIUFZL1U3SDhdVtKTFgSQxxXsA0X5s=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PyBunWE0drm66j34cnX5ku/IvGktG7d+deEP3UsNBvzUHNAhHGN47syluZMIMR+Robc+aIqu2JzDGujHXkR8OjeaF5d8PMQiTbLsfyTOuwEC6PggcVVsxjB10KZ6hWvsJ3XUX61RS5LPKGrE7dkJUw6oqRAeWJm5VWxafN0m/Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FXE4aXFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="msAmV7aY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE01EC4CEEB;
-	Wed, 23 Jul 2025 00:58:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FXE4aXFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFEBC4CEF6;
+	Wed, 23 Jul 2025 00:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753232318;
-	bh=cp0AYlgp6+j2l8Hmf7dW3HPkQuyZNkpKebCps9bXrf4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=msAmV7aYseKrLcNZJS2jf4mGP+CFHZO+/eVw1JA055PPgmjsOmx+kDWoWvqY8Zx+X
-	 hMkeiDcegpmVv9ZFOB2nRRMPFpLPsGIjp6Ps7mS61oqwWAzJ89xQRaqEi0TwTOc6sU
-	 qwtKcvdbJGwrvvgb3f8O5pcWuubwd83wAeJe3Hy0fOpKyb/TFW0rba0w2AQ6whoDFX
-	 /RxqmsLhkChwxX55MrqB3aHo2oADbjVHLlWrhtN1RieIKf3ttmciA+wpqIeihIRZaw
-	 PbiobHvKTxiiJs3Qk6OlJrRtMa+1uKBJlJswzMJVjH6UaRKd1kKRe28z+1OlLAHmHm
-	 8Eyfy77Im26Hg==
+	s=k20201202; t=1753232321;
+	bh=4G0bgVi1RVDDgAIUFZL1U3SDhdVtKTFgSQxxXsA0X5s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=FXE4aXFVKrKBWplCcCafnD4cuhgXVpCBjiLMFZVJFaUVAuvb9Knv9CWuWSgX9sWgf
+	 2xD4rC0bWg/R4vvSWXnB7ekf55NViPy8bK2nPo9aMkJnld9e4rtPxNGbXoAIgbnAWU
+	 PngZ8B9ZtjJc09ePdXisUoNIsdJYY9/51BGB6iN68HkEMVfYrIkUJbagNorA3DoMGc
+	 k8o3J3SaxABUrAGt7y2UvEC9WFNMl2mAI7USme44aRrZjqrc8MSjORhq/sYT9UV5Uk
+	 bZjldJrIILf6mDD0VehPPgNjr4Th6+kN7ILNPIQqrSPOCw8thG/WaqWQWL3l5FmSlp
+	 YNZZmA+oD1YZQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lane Odenbach <laodenbach@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	"David S . Miller" <davem@davemloft.net>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	venkataprasad.potturu@amd.com,
-	tiwai@suse.de,
-	mario.limonciello@amd.com,
-	lachlan.hodges@morsemicro.com,
-	talhah.peerbhai@gmail.com
-Subject: [PATCH AUTOSEL 6.6 1/5] ASoC: amd: yc: Add DMI quirk for HP Laptop 17 cp-2033dx
-Date: Tue, 22 Jul 2025 20:58:27 -0400
-Message-Id: <20250723005833.1023337-1-sashal@kernel.org>
+	przemyslaw.kitszel@intel.com,
+	intel-wired-lan@lists.osuosl.org
+Subject: [PATCH AUTOSEL 6.6 2/5] ethernet: intel: fix building with large NR_CPUS
+Date: Tue, 22 Jul 2025 20:58:28 -0400
+Message-Id: <20250723005833.1023337-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250723005833.1023337-1-sashal@kernel.org>
+References: <20250723005833.1023337-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.99
 Content-Transfer-Encoding: 8bit
 
-From: Lane Odenbach <laodenbach@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7bab1bd9fdf15b9fa7e6a4b0151deab93df3c80d ]
+[ Upstream commit 24171a5a4a952c26568ff0d2a0bc8c4708a95e1d ]
 
-This fixes the internal microphone in the stated device
+With large values of CONFIG_NR_CPUS, three Intel ethernet drivers fail to
+compile like:
 
-Signed-off-by: Lane Odenbach <laodenbach@gmail.com>
-Link: https://patch.msgid.link/20250715182038.10048-1-laodenbach@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+In function ‘i40e_free_q_vector’,
+    inlined from ‘i40e_vsi_alloc_q_vectors’ at drivers/net/ethernet/intel/i40e/i40e_main.c:12112:3:
+  571 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+include/linux/rcupdate.h:1084:17: note: in expansion of macro ‘BUILD_BUG_ON’
+ 1084 |                 BUILD_BUG_ON(offsetof(typeof(*(ptr)), rhf) >= 4096);    \
+drivers/net/ethernet/intel/i40e/i40e_main.c:5113:9: note: in expansion of macro ‘kfree_rcu’
+ 5113 |         kfree_rcu(q_vector, rcu);
+      |         ^~~~~~~~~
+
+The problem is that the 'rcu' member in 'q_vector' is too far from the start
+of the structure. Move this member before the CPU mask instead, in all three
+drivers.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,74 +92,114 @@ LLM Generated explanations, may be completely bogus:
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Bug Fix for Hardware Functionality**: The commit fixes a non-
-   functional internal microphone on the HP Laptop 17 cp-2033dx. This is
-   a hardware enablement bug fix that prevents users from using a core
-   functionality of their laptop.
+1. **Compilation Failure Fix**: This fixes a build-time compilation
+   failure that occurs with large values of CONFIG_NR_CPUS. The error
+   prevents the kernel from building successfully, which is a
+   significant issue for systems configured with high CPU counts.
 
-2. **Minimal and Contained Change**: The change is extremely minimal -
-   it only adds 7 lines to the DMI quirk table:
-  ```c
-  +       {
-  +               .driver_data = &acp6x_card,
-  +               .matches = {
-  +                       DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-  +                       DMI_MATCH(DMI_BOARD_NAME, "8A81"),
-  +               }
-  +       },
-  ```
-  This is a simple DMI match addition with no algorithmic changes or
-  side effects.
+2. **Root Cause**: The issue stems from the `kfree_rcu()` macro in
+   `include/linux/rcupdate.h:1084` which includes a
+   `BUILD_BUG_ON(offsetof(typeof(*(ptr)), rhf) >= 4096)` check. This
+   compile-time assertion ensures that the RCU head field is within the
+   first 4096 bytes of the structure.
 
-3. **Low Risk of Regression**: DMI quirk additions are inherently safe
-   as they only affect the specific hardware model being added. The
-   change cannot impact any other system that doesn't match the exact
-   DMI strings.
+3. **Simple and Safe Fix**: The fix is straightforward - it moves the
+   `struct rcu_head rcu` member earlier in the structure, placing it
+   before the `cpumask_t affinity_mask` member. This is a safe change
+   because:
+   - It only reorders structure members
+   - The RCU head doesn't need to be at any specific location
+     functionally
+   - Moving it earlier reduces the offset from the structure start
+   - No functional code changes are required
 
-4. **Follows Established Pattern**: All five similar commits provided as
-   reference (for HP models with board names 8BD6, 8A3E, 8A22, 8A27, and
-   other manufacturers) were marked as "Backport Status: YES". This type
-   of commit has a well-established history of being backported.
+4. **Affects Multiple Drivers**: The issue affects three Intel ethernet
+   drivers (i40e, ixgbe, fm10k), all of which are fixed identically by
+   moving the rcu member earlier in their respective q_vector
+   structures.
 
-5. **User-Impacting Issue**: Without this quirk, users of the HP Laptop
-   17 cp-2033dx cannot use their internal microphone, which is essential
-   functionality for video calls, recording, and voice commands. This
-   significantly degrades the user experience.
+5. **Configuration-Dependent Bug**: This bug only manifests with large
+   CONFIG_NR_CPUS values (likely >= 512 or higher), where the
+   `cpumask_t` type becomes large enough to push the rcu member beyond
+   the 4096-byte offset limit. Systems with high core counts are
+   becoming more common in production environments.
 
-6. **Consistent with Stable Tree Rules**: The commit meets the stable
-   kernel criteria:
-   - It fixes a real bug that bothers users (non-functional microphone)
-   - It's obviously correct and tested (standard DMI quirk pattern)
-   - It's small (7 lines)
-   - It doesn't add new features, only fixes existing functionality
+6. **No Risk of Regression**: The change is minimal and doesn't alter
+   any functionality. It's purely a structural reordering that maintains
+   all existing behavior while fixing the compilation issue.
 
-The AMD Yellow Carp (YC) audio driver uses DMI quirks to enable the
-internal microphone on specific laptop models. Without these quirks, the
-DMIC (Digital Microphone) won't be properly initialized on affected
-systems. This is a common pattern in the Linux kernel for handling
-hardware-specific configurations.
+7. **Meets Stable Criteria**: This fix clearly meets the stable kernel
+   criteria as it:
+   - Fixes a real bug (compilation failure)
+   - Is minimal and contained
+   - Has no risk of introducing new issues
+   - Affects users with legitimate configurations
 
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+The commit is an excellent candidate for stable backporting as it fixes
+a real compilation issue that prevents kernel builds on systems with
+large CPU counts, and the fix is trivial with no risk of regression.
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 66ef8f4fd02cd..74f8e12aa7107 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -577,6 +577,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "8A7F"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_BOARD_NAME, "8A81"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+ drivers/net/ethernet/intel/fm10k/fm10k.h | 3 ++-
+ drivers/net/ethernet/intel/i40e/i40e.h   | 2 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe.h | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k.h b/drivers/net/ethernet/intel/fm10k/fm10k.h
+index 6119a41088381..65a2816142d96 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k.h
++++ b/drivers/net/ethernet/intel/fm10k/fm10k.h
+@@ -189,13 +189,14 @@ struct fm10k_q_vector {
+ 	struct fm10k_ring_container rx, tx;
+ 
+ 	struct napi_struct napi;
++	struct rcu_head rcu;	/* to avoid race with update stats on free */
++
+ 	cpumask_t affinity_mask;
+ 	char name[IFNAMSIZ + 9];
+ 
+ #ifdef CONFIG_DEBUG_FS
+ 	struct dentry *dbg_q_vector;
+ #endif /* CONFIG_DEBUG_FS */
+-	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 
+ 	/* for dynamic allocation of rings associated with this q_vector */
+ 	struct fm10k_ring ring[] ____cacheline_internodealigned_in_smp;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
+index 68f403dd2f526..9fb7c5fe05d15 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e.h
++++ b/drivers/net/ethernet/intel/i40e/i40e.h
+@@ -953,6 +953,7 @@ struct i40e_q_vector {
+ 	u16 reg_idx;		/* register index of the interrupt */
+ 
+ 	struct napi_struct napi;
++	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 
+ 	struct i40e_ring_container rx;
+ 	struct i40e_ring_container tx;
+@@ -963,7 +964,6 @@ struct i40e_q_vector {
+ 	cpumask_t affinity_mask;
+ 	struct irq_affinity_notify affinity_notify;
+ 
+-	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 	char name[I40E_INT_NAME_STR_LEN];
+ 	bool arm_wb_state;
+ 	bool in_busy_poll;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe.h b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
+index b6f0376e42f4b..d15182657cead 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe.h
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
+@@ -503,9 +503,10 @@ struct ixgbe_q_vector {
+ 	struct ixgbe_ring_container rx, tx;
+ 
+ 	struct napi_struct napi;
++	struct rcu_head rcu;	/* to avoid race with update stats on free */
++
+ 	cpumask_t affinity_mask;
+ 	int numa_node;
+-	struct rcu_head rcu;	/* to avoid race with update stats on free */
+ 	char name[IFNAMSIZ + 9];
+ 
+ 	/* for dynamic allocation of rings associated with this q_vector */
 -- 
 2.39.5
 
