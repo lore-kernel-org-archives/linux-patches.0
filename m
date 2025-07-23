@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3372A179A3;
-	Wed, 23 Jul 2025 00:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D69C23A6;
+	Wed, 23 Jul 2025 00:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753232326; cv=none; b=Jvm1T3uxgfVNG+rownK0xWRGJE3iRo+gwwgMY+L2LvNpt8BR5GUuzPCz+iKCm2cjiKAzwZkN72VJEdstSKVJp4P4oijUkfdfvS1NMA7n/Y+jhS8SCyMyPOogpyEwVZtrcFjx63JZLaTBa/sLMD9PnThsAHnkVvfHbXKcUCTNzLQ=
+	t=1753232331; cv=none; b=gLYM7E0IeHAHzjlxpyVIdd6tkOKGYgCxn6FNBvPPjpyT8XSLhUwKvaZQ3+s1loNkr6ps+8WCG7+HuNw9IPbADFbmfbMAalVV00Xx4C9la8LVIZLUrvjeXEPoSnzjOWVK9HEdBQ5pOUte9Tj5L1PRBUqTMPGTjM5cARGZ2UtkP8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753232326; c=relaxed/simple;
-	bh=uEBCw4RgS6WCNRqG7gCKoCKk8gOgFtEzEOTkEhRpxy0=;
+	s=arc-20240116; t=1753232331; c=relaxed/simple;
+	bh=0gC6TWowPht6B682fQMRinDCof3u/OHk6Wov2PhLbo8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lTy1igXUgV8tM7SpBdF1dZ+6RQIVIv2wTS+BjaFUjCt+ONUMermdglM+DazvMm0On1okXHTVSLxPVi3+Pg3VyOJeNF080RyBan/wfTkNhIlR7TBqovrLLJlEk5Dv0/Z8/U8h/jli42jX5WzPYb/9gq1srAzb3reUnUq9wTl4Ydk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pWWZybxZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iDUiHqT30K/g3+lf657vTFz+FzqcUK+BNmg5TBVq2lSwXD7vsYaYJyIN42mkgwfV56TzMtzxVs1mTUlXyauIbPhpEaYAk/sJSNBO45z4oQJ0VD+4PsZdlIpemtzaXzT+oGWerikLRwIktWyHGhKNUyz2yAEEENQW+hxcUlnnQ1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OfcPsPAJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pWWZybxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0726C4CEF1;
-	Wed, 23 Jul 2025 00:58:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OfcPsPAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E179DC4CEEB;
+	Wed, 23 Jul 2025 00:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753232326;
-	bh=uEBCw4RgS6WCNRqG7gCKoCKk8gOgFtEzEOTkEhRpxy0=;
+	s=k20201202; t=1753232331;
+	bh=0gC6TWowPht6B682fQMRinDCof3u/OHk6Wov2PhLbo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWWZybxZ8gNgefQVn8gHmueX5CqrkbVmte36b/SDnESywA5aq6gAh91Ugosy58fmx
-	 5yEeyeGzzNGLk5JB6R4pDDMePrzaiPelcEP/jPKmRPnuv5hioG369D5O7zpJdUgbvw
-	 0XhVC4Q3CdkK2mNVPA57uftj39ZmqFDoCc6IEtf9BI3UvN/5ICdTBqJyMRKu/H8FwS
-	 h8a5CNdvLs58jSQPoQssJ6dp4zGA6Kl0dKFmtk+0rOxd7NY3WysTiWiCYG/H7RQ4NQ
-	 2J/McyoL5IEvRDzq1RU9Y4Iv4c5EA41uOsw+CCVEF/tP2D1LB60Otky0yN1o2P9D5J
-	 8N5LauYQY+7Rw==
+	b=OfcPsPAJ79vlCaVkuL7dcugEBwpjLeLuzyCBtyrfAF0od2x0Z2hqc+KL+4yZldrmQ
+	 zZ9uMo00M/6Bh9+2LRN0gEfaG5WbKoDsKiQwtdrUSP0BASMqb44XFL1uL9YN2wAuMf
+	 nEJ/M8yGoO+GEL9cWUiii2HiJrYRMyBq7GaSVZGhEwCP7hwulDC5Gq2cjdDS3O1lgM
+	 JUaQ2BDUoZdXHJZ/D+0fzIbJYklCocUHPxRZN2pSZonYjoyHddS5nG4So/1m2d5ywf
+	 3F5AuIHOuDR+1riF8+UgoVsKnIBO3QX+fv+kEzE46MbX+VhHnDIFfcfINAQ1oYYiI8
+	 5bsPuYjIALyXQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Adam Queler <queler@gmail.com>,
-	Adam Queler <queler+k@gmail.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mario.limonciello@amd.com,
-	tiwai@suse.de,
-	venkataprasad.potturu@amd.com,
+	cezary.rojewski@intel.com,
+	andriy.shevchenko@linux.intel.com,
+	yung-chuan.liao@linux.intel.com,
+	pierre-louis.bossart@linux.dev,
+	brent.lu@intel.com,
+	Vijendar.Mukunda@amd.com,
 	lachlan.hodges@morsemicro.com,
-	talhah.peerbhai@gmail.com
-Subject: [PATCH AUTOSEL 6.6 3/5] ASoC: amd: yc: Add DMI entries to support HP 15-fb1xxx
-Date: Tue, 22 Jul 2025 20:58:29 -0400
-Message-Id: <20250723005833.1023337-3-sashal@kernel.org>
+	koike@igalia.com
+Subject: [PATCH AUTOSEL 6.6 4/5] ASoC: Intel: fix SND_SOC_SOF dependencies
+Date: Tue, 22 Jul 2025 20:58:30 -0400
+Message-Id: <20250723005833.1023337-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250723005833.1023337-1-sashal@kernel.org>
 References: <20250723005833.1023337-1-sashal@kernel.org>
@@ -55,109 +57,126 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.99
 Content-Transfer-Encoding: 8bit
 
-From: Adam Queler <queler@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 949ddec3728f3a793a13c1c9003028b9b159aefc ]
+[ Upstream commit e837b59f8b411b5baf5e3de7a5aea10b1c545a63 ]
 
-This model requires an additional detection quirk to
-enable the internal microphone.
+It is currently possible to configure a kernel with all Intel SoC
+configs as loadable modules, but the board config as built-in. This
+causes a link failure in the reference to the snd_soc_sof.ko module:
 
-Signed-off-by: Adam Queler <queler+k@gmail.com>
-Link: https://patch.msgid.link/20250715031434.222062-1-queler+k@gmail.com
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_hw_params':
+sof_rt5682.c:(.text+0x1f9): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sof_rt5682.c:(.text+0x234): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_codec_init':
+sof_rt5682.c:(.text+0x3e0): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cs42l42.o: in function `sof_cs42l42_hw_params':
+sof_cs42l42.c:(.text+0x2a): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_nau8825.o: in function `sof_nau8825_hw_params':
+sof_nau8825.c:(.text+0x7f): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_da7219.o: in function `da7219_codec_init':
+sof_da7219.c:(.text+0xbf): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_maxim_common.o: in function `max_98373_hw_params':
+sof_maxim_common.c:(.text+0x6f9): undefined reference to `sof_dai_get_tdm_slots'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1015_hw_params':
+sof_realtek_common.c:(.text+0x54c): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1308_hw_params':
+sof_realtek_common.c:(.text+0x702): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cirrus_common.o: in function `cs35l41_hw_params':
+sof_cirrus_common.c:(.text+0x2f): undefined reference to `sof_dai_get_bclk'
+
+Add an optional dependency on SND_SOC_SOF_INTEL_COMMON, to ensure that whenever
+the SOF support is in a loadable module, none of the board code can be built-in.
+
+This may be be a little heavy-handed, but I also don't see a reason why one would
+want the boards to be built-in but not the SoC, so it shouldn't actually cause
+any usability problems.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250709145626.64125-1-arnd@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+Based on my analysis of the commit and its context, here is my
+assessment:
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+**YES** - This commit should be backported to stable kernel trees.
 
-## Nature of the Change
+## Extensive Explanation:
 
-This commit adds a simple DMI (Desktop Management Interface) quirk entry
-for the HP Victus Gaming Laptop 15-fb1xxx model to enable internal
-microphone support. The change is:
-- Adding a new entry to the `yc_acp_quirk_table[]` array
-- The entry matches DMI_BOARD_VENDOR "HP" and DMI_PRODUCT_NAME "Victus
-  by HP Gaming Laptop 15-fb1xxx"
-- Associates the match with `&acp6x_card` driver data
+### 1. **The commit fixes a critical build failure**
+The commit addresses link errors that occur when Intel ASoC board
+drivers are built-in (=y) while the SOF core module is built as a
+loadable module (=m). The error messages show undefined references to
+SOF DAI functions:
+- `sof_dai_get_mclk`
+- `sof_dai_get_bclk`
+- `sof_dai_get_tdm_slots`
 
-## Comparison with Similar Commits
+These functions are exported from the `snd-sof` module (defined in
+`sound/soc/sof/sof-audio.c`), but when board drivers are built-in, they
+cannot reference symbols from loadable modules.
 
-All 5 similar commits with "Backport Status: YES" follow the exact same
-pattern:
-1. They add DMI entries for HP laptops (HP OMEN, HP Victus) or other
-   brands
-2. They enable internal microphone functionality for specific hardware
-   models
-3. They are minimal, self-contained changes adding only DMI match
-   entries
-4. They fix hardware enablement issues that affect users
+### 2. **The fix is minimal and contained**
+The change is a single-line modification to the Kconfig dependency:
+```diff
+-if SND_SOC_INTEL_MACH
++if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON ||
+!SND_SOC_SOF_INTEL_COMMON)
+```
 
-## Backport Suitability Analysis
+This clever dependency ensures that when `SND_SOC_SOF_INTEL_COMMON` is
+built as a module (=m), the Intel machine drivers cannot be built-in
+(=y). The `|| !SND_SOC_SOF_INTEL_COMMON` part allows the machine drivers
+to be enabled when SOF support is completely disabled.
 
-**Reasons this qualifies for stable backporting:**
+### 3. **Similar to previous backported fixes**
+Looking at the historical commits:
+- Commit `8d0872f6239f` (Similar Commit #1) fixed a similar link failure
+  for `sof-nau8825` and was backported (YES)
+- Commit `f4df4e4042b0` (Similar Commit #4) fixed a similar dependency
+  issue with SOF IMX and was backported (YES)
 
-1. **Bug Fix**: This fixes a hardware functionality issue where the
-   internal microphone doesn't work on HP Victus 15-fb1xxx laptops
-   without this quirk
+Both of these commits addressed build/link failures caused by incorrect
+Kconfig dependencies, just like this commit.
 
-2. **User Impact**: Without this patch, users of this specific laptop
-   model cannot use their internal microphone, which is a significant
-   functionality regression
+### 4. **No risk of regression**
+The change only affects build configuration and doesn't modify any
+runtime code. It prevents invalid configurations that would fail to
+build anyway. As the commit message states: "it shouldn't actually cause
+any usability problems" because there's no practical reason to have
+board drivers built-in while the SOF core is a module.
 
-3. **Minimal Risk**: The change is:
-   - Extremely localized (only adds one DMI entry)
-   - Cannot affect other hardware (DMI matching is specific to this
-     model)
-   - Uses the same pattern as dozens of other entries in the same table
-   - No algorithmic changes or new features
+### 5. **Meets stable tree criteria**
+- Fixes a real bug (build failure)
+- Small and contained change
+- No new features or architectural changes
+- Similar fixes have been backported before
+- Low risk of introducing new issues
 
-4. **Self-Contained**: The patch is completely self-contained with no
-   dependencies on other changes
+The commit follows the pattern of other Kconfig dependency fixes in the
+Intel ASoC subsystem that have been successfully backported to stable
+trees.
 
-5. **Hardware Enablement**: This falls under the stable tree criteria
-   for "hardware that is broken by design and needs a quirk"
+ sound/soc/intel/boards/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-6. **Precedent**: The git history shows numerous similar DMI quirk
-   additions for this driver have been backported to stable
-
-## Code Safety Analysis
-
-The code change is safe because:
-- It only adds a static data structure entry
-- The DMI matching system is well-established and reliable
-- The `acp6x_card` driver data is already used by many other entries
-- No memory allocations, no new logic paths, no behavioral changes for
-  existing hardware
-
-This is a textbook example of a stable-appropriate patch: it fixes a
-real user-facing bug with minimal risk and follows established patterns.
-
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 74f8e12aa7107..1063a19b39aa0 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -528,6 +528,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16z-n000"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Victus by HP Gaming Laptop 15-fb1xxx"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index 0ae6eecc88519..033be4d3e02db 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -11,7 +11,7 @@ menuconfig SND_SOC_INTEL_MACH
+ 	 kernel: saying N will just cause the configurator to skip all
+ 	 the questions about Intel ASoC machine drivers.
+ 
+-if SND_SOC_INTEL_MACH
++if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON || !SND_SOC_SOF_INTEL_COMMON)
+ 
+ config SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES
+ 	bool "Use more user friendly long card names"
 -- 
 2.39.5
 
