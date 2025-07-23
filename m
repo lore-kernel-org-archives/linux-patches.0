@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B8E156CA;
-	Wed, 23 Jul 2025 00:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E487C23A6;
+	Wed, 23 Jul 2025 00:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753232300; cv=none; b=agNrFD9oCDCJLuXSH2R8cvoqLsW1itho/DrBsHAlB68HUloWTDI0Tma/BIiZb004Z1ebdNujNumC0M5EaaiWwAaRjMrcEVv1baUWQiVXIeHO6pC/+b+fOF84UsOIZtbaXT9VSIVB+Um2l8jaVxTB623l7W2/svZFRux/DVV3BWo=
+	t=1753232306; cv=none; b=lIQ8nWVuap5U6fs6NtMb+CHQkkRV0x2o87FEeG8UEyoDK2ACwrvbUJerHYB/7c+xZPouW14piMj5qx+y9aW9kuh0tAvvYFM+uhHlt/ZEcXcGUz1y9MTFQDFFouxPITsfjtwX4radHl45VL3Hzh7KQGsI0yCnu8FrA+mfru/YKGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753232300; c=relaxed/simple;
-	bh=vOHOgokDtL3IhjlFG4dnU+SlLuPvdFfFn7MASvPJpPE=;
+	s=arc-20240116; t=1753232306; c=relaxed/simple;
+	bh=BbdBWdIC/Byr57PKWUC01X9uQM3lKyLsNW1/raUwdpU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VzxY3R2hnPwpbHrg2oozgRTB50aZcMgOm7mX3ACLcURyoz2L7t2EisTg9FRQMw+c8nBP/ugCWQevWyVg31kKKc3NFyroQ/h2iQ9WY67yZ4Xo2utGouyMuR+2Z/zvE74/pCijjEfWdsMt7gng/7EPh5L/FAO/VLV2wXxAFqDehcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cD7ikT63; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I4bQGkm9XMUNzuATfjTT0GFHc5Z3/NppGrKq7gji/EI0BK1wgO4WWq+hxf2sLXFuQN1tDum2J13KjEPxyRuZw55HQg/dpBUDhZ/k30bl4XEq6lRoYQ2/ub+31GSP5h2H384SwiLWsbqefzKH7jPIF2U/IXlNeq2N3Uw14QbM6Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VfkOpzhD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cD7ikT63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AD5C4CEEB;
-	Wed, 23 Jul 2025 00:58:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VfkOpzhD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC99C4CEEB;
+	Wed, 23 Jul 2025 00:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753232300;
-	bh=vOHOgokDtL3IhjlFG4dnU+SlLuPvdFfFn7MASvPJpPE=;
+	s=k20201202; t=1753232305;
+	bh=BbdBWdIC/Byr57PKWUC01X9uQM3lKyLsNW1/raUwdpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cD7ikT63JFz959L6u6WL9PxotSbjLgrD8KpIon5eo+ZfHQ64Ize0NsJ27kp4waUEt
-	 CK32ImE6cpM7bYs2fGuy6+1A+r/G6riDNXK3Eq16v3yaguXBTh0Ia5NR81+pDyAtVq
-	 /SKa41PCcynsoHTto07jXMzAWv5OC1aOWuCAXFwvaFdh8dxHKi1zzcpBGo0VHtAA/o
-	 JfFxhotal02EZ1YWI7i0ybTbgZoTDfHRpewFVcdVsMhfJ1eBM15PjT8I4Q6l2e4Bmv
-	 Xt71RZhG/fhz0vTZGJGIy7WfAF3OMUTy8MkWiUh0oh36W5FvrclXfq79UiuWx2Ulsd
-	 6cPn2NqsNB4xw==
+	b=VfkOpzhDjJ8jwdq1NTxjvz1HD0S/CsPGAhYCSXIoaEcIRU+2scWlxS3dVYzT72DJb
+	 nng+rWanNElx8u+MiXRk7axsEOcbQrhg0SEVwRE/eacn3VkIZES5RCNLvh7tn4jO/x
+	 EQQ1S0xyKcGFV45ZVhmARQ8QbZB+JiMBFwshpCLTwmYzTEDvhOhOqvIp74V3xkUY3j
+	 Un5DajwMfrMkPKIXYVnbBigAQhNyGV3FClmEnOY7T8VlVFyEsvJ1E2TKkQAaL/rbOj
+	 uPc9GOHI70WuvfzhvyqMpaV0DnrnsS1ZKo1KLGetY3svGGOSHTAXOE048IxX/Ej2bT
+	 IYHpXo/uYXstw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Brian Howard <blhoward2@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	david.rhodes@cirrus.com,
-	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com
-Subject: [PATCH AUTOSEL 6.12 4/6] ALSA: hda/cs35l56: Workaround bad dev-index on Lenovo Yoga Book 9i GenX
-Date: Tue, 22 Jul 2025 20:58:00 -0400
-Message-Id: <20250723005805.1023184-4-sashal@kernel.org>
+	andriy.shevchenko@linux.intel.com,
+	cezary.rojewski@intel.com,
+	yung-chuan.liao@linux.intel.com,
+	pierre-louis.bossart@linux.dev,
+	brent.lu@intel.com,
+	koike@igalia.com,
+	lachlan.hodges@morsemicro.com
+Subject: [PATCH AUTOSEL 6.12 5/6] ASoC: Intel: fix SND_SOC_SOF dependencies
+Date: Tue, 22 Jul 2025 20:58:01 -0400
+Message-Id: <20250723005805.1023184-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250723005805.1023184-1-sashal@kernel.org>
 References: <20250723005805.1023184-1-sashal@kernel.org>
@@ -53,225 +56,126 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.39
 Content-Transfer-Encoding: 8bit
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 40b1c2f9b299295ed0482e1fee6f46521e6e79e5 ]
+[ Upstream commit e837b59f8b411b5baf5e3de7a5aea10b1c545a63 ]
 
-The Lenovo Yoga Book 9i GenX has the wrong values in the cirrus,dev-index
-_DSD property. Add a fixup for this model to ignore the property and
-hardcode the index from the I2C bus address.
+It is currently possible to configure a kernel with all Intel SoC
+configs as loadable modules, but the board config as built-in. This
+causes a link failure in the reference to the snd_soc_sof.ko module:
 
-The error in the cirrus,dev-index property would prevent the second amp
-instance from probing. The component binding would never see all the
-required instances and so there would not be a binding between
-patch_realtek.c and the cs35l56 driver.
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_hw_params':
+sof_rt5682.c:(.text+0x1f9): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sof_rt5682.c:(.text+0x234): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_codec_init':
+sof_rt5682.c:(.text+0x3e0): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cs42l42.o: in function `sof_cs42l42_hw_params':
+sof_cs42l42.c:(.text+0x2a): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_nau8825.o: in function `sof_nau8825_hw_params':
+sof_nau8825.c:(.text+0x7f): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_da7219.o: in function `da7219_codec_init':
+sof_da7219.c:(.text+0xbf): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_maxim_common.o: in function `max_98373_hw_params':
+sof_maxim_common.c:(.text+0x6f9): undefined reference to `sof_dai_get_tdm_slots'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1015_hw_params':
+sof_realtek_common.c:(.text+0x54c): undefined reference to `sof_dai_get_bclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1308_hw_params':
+sof_realtek_common.c:(.text+0x702): undefined reference to `sof_dai_get_mclk'
+x86_64-linux-ld: sound/soc/intel/boards/sof_cirrus_common.o: in function `cs35l41_hw_params':
+sof_cirrus_common.c:(.text+0x2f): undefined reference to `sof_dai_get_bclk'
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reported-by: Brian Howard <blhoward2@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220228
-Link: https://patch.msgid.link/20250714110154.204740-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add an optional dependency on SND_SOC_SOF_INTEL_COMMON, to ensure that whenever
+the SOF support is in a loadable module, none of the board code can be built-in.
+
+This may be be a little heavy-handed, but I also don't see a reason why one would
+want the boards to be built-in but not the SoC, so it shouldn't actually cause
+any usability problems.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250709145626.64125-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze the actual changes in the current commit more
-carefully. The commit adds:
+Based on my analysis of the commit and its context, here is my
+assessment:
 
-1. A fixup function for the Yoga Book 9i GenX that hardcodes the device
-   index based on I2C address
-2. A fixup table mechanism to apply platform-specific workarounds
-3. Modified the cs35l56_hda_read_acpi function to apply fixups before
-   reading the device index
+**YES** - This commit should be backported to stable kernel trees.
 
-**Analysis and Backport Decision: YES**
+## Extensive Explanation:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+### 1. **The commit fixes a critical build failure**
+The commit addresses link errors that occur when Intel ASoC board
+drivers are built-in (=y) while the SOF core module is built as a
+loadable module (=m). The error messages show undefined references to
+SOF DAI functions:
+- `sof_dai_get_mclk`
+- `sof_dai_get_bclk`
+- `sof_dai_get_tdm_slots`
 
-1. **Fixes a real bug affecting users**: The commit fixes a hardware
-   initialization failure on the Lenovo Yoga Book 9i GenX laptop where
-   the second amplifier would fail to probe due to incorrect cirrus,dev-
-   index values in the ACPI _DSD property. This prevents audio from
-   working properly on this device.
+These functions are exported from the `snd-sof` module (defined in
+`sound/soc/sof/sof-audio.c`), but when board drivers are built-in, they
+cannot reference symbols from loadable modules.
 
-2. **Small and contained fix**: The changes are minimal and localized
-   to:
-   - Adding a platform-specific fixup function that maps I2C addresses
-     to correct device indices
-   - Adding infrastructure to apply platform fixups
-   - Modifying the initialization flow to check for fixups before
-     reading ACPI properties
+### 2. **The fix is minimal and contained**
+The change is a single-line modification to the Kconfig dependency:
+```diff
+-if SND_SOC_INTEL_MACH
++if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON ||
+!SND_SOC_SOF_INTEL_COMMON)
+```
 
-3. **Low regression risk**:
-   - The fixup only applies to one specific laptop model (17AA390B)
-   - The fixup infrastructure is designed to be non-invasive - it only
-     activates for specific subsystem IDs
-   - The changes don't affect the behavior for any other devices
+This clever dependency ensures that when `SND_SOC_SOF_INTEL_COMMON` is
+built as a module (=m), the Intel machine drivers cannot be built-in
+(=y). The `|| !SND_SOC_SOF_INTEL_COMMON` part allows the machine drivers
+to be enabled when SOF support is completely disabled.
 
-4. **Follows stable kernel criteria**:
-   - Fixes a real bug that bothers people (audio not working on a
-     consumer laptop)
-   - The fix is obviously correct and tested (reported by a user and has
-     a bug report)
-   - Small change (adds ~60 lines, mostly the fixup infrastructure)
-   - No new features, just a workaround for broken firmware
+### 3. **Similar to previous backported fixes**
+Looking at the historical commits:
+- Commit `8d0872f6239f` (Similar Commit #1) fixed a similar link failure
+  for `sof-nau8825` and was backported (YES)
+- Commit `f4df4e4042b0` (Similar Commit #4) fixed a similar dependency
+  issue with SOF IMX and was backported (YES)
 
-5. **Similar to previously backported commits**: Looking at the
-   historical commits, we see that:
-   - Commit 91191a6e50a2 ("ALSA: hda: cs35l56: Don't use the device
-     index as a calibration index") was marked as backport-worthy (YES)
-     and addressed a similar issue with device index handling
-   - Multiple commits adding quirks for Lenovo devices with
-     CS35L41/CS35L56 have been backported (marked YES)
+Both of these commits addressed build/link failures caused by incorrect
+Kconfig dependencies, just like this commit.
 
-6. **Hardware enablement**: This falls into the category of hardware
-   enablement fixes which are generally considered appropriate for
-   stable kernels when they fix broken hardware without risking existing
-   functionality.
+### 4. **No risk of regression**
+The change only affects build configuration and doesn't modify any
+runtime code. It prevents invalid configurations that would fail to
+build anyway. As the commit message states: "it shouldn't actually cause
+any usability problems" because there's no practical reason to have
+board drivers built-in while the SOF core is a module.
 
-The commit message clearly indicates this is fixing a specific hardware
-issue where "The error in the cirrus,dev-index property would prevent
-the second amp instance from probing" which would result in no audio
-binding and broken audio on this laptop model.
+### 5. **Meets stable tree criteria**
+- Fixes a real bug (build failure)
+- Small and contained change
+- No new features or architectural changes
+- Similar fixes have been backported before
+- Low risk of introducing new issues
 
- sound/pci/hda/cs35l56_hda.c | 110 +++++++++++++++++++++++++++---------
- 1 file changed, 82 insertions(+), 28 deletions(-)
+The commit follows the pattern of other Kconfig dependency fixes in the
+Intel ASoC subsystem that have been successfully backported to stable
+trees.
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 7baf3b506eefe..7823f71012a8a 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -876,6 +876,52 @@ static int cs35l56_hda_system_resume(struct device *dev)
- 	return 0;
- }
+ sound/soc/intel/boards/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index 8dee46abf346d..aed95d1583e09 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -11,7 +11,7 @@ menuconfig SND_SOC_INTEL_MACH
+ 	 kernel: saying N will just cause the configurator to skip all
+ 	 the questions about Intel ASoC machine drivers.
  
-+static int cs35l56_hda_fixup_yoga9(struct cs35l56_hda *cs35l56, int *bus_addr)
-+{
-+	/* The cirrus,dev-index property has the wrong values */
-+	switch (*bus_addr) {
-+	case 0x30:
-+		cs35l56->index = 1;
-+		return 0;
-+	case 0x31:
-+		cs35l56->index = 0;
-+		return 0;
-+	default:
-+		/* There is a pseudo-address for broadcast to both amps - ignore it */
-+		dev_dbg(cs35l56->base.dev, "Ignoring I2C address %#x\n", *bus_addr);
-+		return 0;
-+	}
-+}
-+
-+static const struct {
-+	const char *sub;
-+	int (*fixup_fn)(struct cs35l56_hda *cs35l56, int *bus_addr);
-+} cs35l56_hda_fixups[] = {
-+	{
-+		.sub = "17AA390B", /* Lenovo Yoga Book 9i GenX */
-+		.fixup_fn = cs35l56_hda_fixup_yoga9,
-+	},
-+};
-+
-+static int cs35l56_hda_apply_platform_fixups(struct cs35l56_hda *cs35l56, const char *sub,
-+					     int *bus_addr)
-+{
-+	int i;
-+
-+	if (IS_ERR(sub))
-+		return 0;
-+
-+	for (i = 0; i < ARRAY_SIZE(cs35l56_hda_fixups); i++) {
-+		if (strcasecmp(cs35l56_hda_fixups[i].sub, sub) == 0) {
-+			dev_dbg(cs35l56->base.dev, "Applying fixup for %s\n",
-+				cs35l56_hda_fixups[i].sub);
-+			return (cs35l56_hda_fixups[i].fixup_fn)(cs35l56, bus_addr);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
- {
- 	u32 values[HDA_MAX_COMPONENTS];
-@@ -900,39 +946,47 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
- 		ACPI_COMPANION_SET(cs35l56->base.dev, adev);
- 	}
+-if SND_SOC_INTEL_MACH
++if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON || !SND_SOC_SOF_INTEL_COMMON)
  
--	property = "cirrus,dev-index";
--	ret = device_property_count_u32(cs35l56->base.dev, property);
--	if (ret <= 0)
--		goto err;
--
--	if (ret > ARRAY_SIZE(values)) {
--		ret = -EINVAL;
--		goto err;
--	}
--	nval = ret;
-+	/* Initialize things that could be overwritten by a fixup */
-+	cs35l56->index = -1;
- 
--	ret = device_property_read_u32_array(cs35l56->base.dev, property, values, nval);
-+	sub = acpi_get_subsystem_id(ACPI_HANDLE(cs35l56->base.dev));
-+	ret = cs35l56_hda_apply_platform_fixups(cs35l56, sub, &id);
- 	if (ret)
--		goto err;
-+		return ret;
- 
--	cs35l56->index = -1;
--	for (i = 0; i < nval; i++) {
--		if (values[i] == id) {
--			cs35l56->index = i;
--			break;
--		}
--	}
--	/*
--	 * It's not an error for the ID to be missing: for I2C there can be
--	 * an alias address that is not a real device. So reject silently.
--	 */
- 	if (cs35l56->index == -1) {
--		dev_dbg(cs35l56->base.dev, "No index found in %s\n", property);
--		ret = -ENODEV;
--		goto err;
--	}
-+		property = "cirrus,dev-index";
-+		ret = device_property_count_u32(cs35l56->base.dev, property);
-+		if (ret <= 0)
-+			goto err;
- 
--	sub = acpi_get_subsystem_id(ACPI_HANDLE(cs35l56->base.dev));
-+		if (ret > ARRAY_SIZE(values)) {
-+			ret = -EINVAL;
-+			goto err;
-+		}
-+		nval = ret;
-+
-+		ret = device_property_read_u32_array(cs35l56->base.dev, property, values, nval);
-+		if (ret)
-+			goto err;
-+
-+		for (i = 0; i < nval; i++) {
-+			if (values[i] == id) {
-+				cs35l56->index = i;
-+				break;
-+			}
-+		}
-+
-+		/*
-+		 * It's not an error for the ID to be missing: for I2C there can be
-+		 * an alias address that is not a real device. So reject silently.
-+		 */
-+		if (cs35l56->index == -1) {
-+			dev_dbg(cs35l56->base.dev, "No index found in %s\n", property);
-+			ret = -ENODEV;
-+			goto err;
-+		}
-+	}
- 
- 	if (IS_ERR(sub)) {
- 		dev_info(cs35l56->base.dev,
+ config SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES
+ 	bool "Use more user friendly long card names"
 -- 
 2.39.5
 
