@@ -1,165 +1,229 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DBD273F9;
-	Thu, 24 Jul 2025 06:51:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D0F221703
+	for <patches@lists.linux.dev>; Thu, 24 Jul 2025 08:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753339867; cv=none; b=bDchE/NOXdSRHZlm5QR4sT/QBkaQYplbMHiituKqcW6QqTd5gAdO79pQ5chm9MVSZBwLLsg7ParBxMOdh4dR2jEe6nlg07FHc0QnkDeQMZDwVrneRE/BMnx+7BF4mh3/UNKbH2TqfmYoU44jlFmh6Z9hYlDz8pgH7iSlhKeNN/M=
+	t=1753344094; cv=none; b=JavZbpeNrtgcqSIo/J6uKotqlTJhmSMje+19KPfDkasYbrfxQeVdrQeQTn9rhCp9rYIiWReK9Jxp6y36YTzQ1bNj66KWWzzg8GYn3gwAIcFTPDCSlfFrNR6uKiqfbFMKzPBH0PVK98zV5xAWMEnGYlFcwUz5QREcG/0HePeEaMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753339867; c=relaxed/simple;
-	bh=w0X0br7o2eWaC/sCuDPbuNtjMrXI9dlkmLAYFCHsKxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k0PgkO+7lqkuB0JLlsyVVqkkQvYdCa3iKvVT7bjrTB0lg2PZc3HpiVv0zv8LyqN177LWkOH70UJhCUPGZiu2xfO2RP458edLQ+zj0VMoINmu1l+y2NLuNZaJ56GGKjTACyhkmCwBHMGDEaF+ZkTU/yc+GvVpQwv1dxVhS6ahZMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xy1Kov0k; arc=none smtp.client-ip=209.85.128.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753344094; c=relaxed/simple;
+	bh=5A3Z8slNVEBZE3CFg2MqlP9x7DnuosBp4IhM0ZpDKlA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ths/ahovgdHPSzq/84bt1zmdaEdtBRIhHXmF1x9iAyUuvniW4xBEEnPQTk0vLxhM4qE4mQdL4cxmJ+6Idq3b/vuLev3qc/MdcIMpxfon455sx0rhWrXwZIjxXRSq0L9BthcPGQpbI0q9yftQYavyN1BOs6SuTP105+P+yfhwBLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NbW1v757; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xy1Kov0k"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4537edf2c3cso5902585e9.3;
-        Wed, 23 Jul 2025 23:51:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NbW1v757"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3138e64b42aso676762a91.0
+        for <patches@lists.linux.dev>; Thu, 24 Jul 2025 01:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753339864; x=1753944664; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yzVCG5SoHn4Tr6BCxb/1N9GpLGi9jl777U0laKdYkLA=;
-        b=Xy1Kov0kwcLFFBRuL+WrmeriUznodUADl43e6hIYCWj2xAoTXjp+Xjc3otkgtO/Oz6
-         g66EAcr9zvVkFQd37pKwHAOcm/g5I1FkUAp7Idu0gM2gyGGykGKeLocp1QB6ZhrHx/gU
-         ztwvhCdMF6COazyhpI1odNJUrLEVItPapPQzGP2JzQVC8BxkeZPKQDDd2/v8O6EvJ1yv
-         lB+cjWdj3sXEHm/ayRjIXn2UJeH811gMouF3aN6214TnaWQQ+SzwAb8JO8xeI4ed9wUM
-         WR/L6VSyb+xgCLaP65FiEPYXgLZiBXZonEMVoMYwxmo/JvtoigU3JuBEjn+pC9QSTdPS
-         CjYw==
+        d=linaro.org; s=google; t=1753344092; x=1753948892; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rm9KNNBxAABgp5gOoV12tf0eMIaYYncc2PwDjjv+oEY=;
+        b=NbW1v757Yx4EX+5DRG5WjtYOyq18M3AXl3uJ/iq5DrB7GiVjknwg2zRBtD+Y63EB2N
+         /aVhk+xd9o2huwdf28IaQQqaFu6eiOSLdx2cE6wauae7Ci9pPeF0+ykXwdkIA6yMvbBg
+         l+EdtZEBWZRA4B7jeVmetrUPbRwDa3jfkOcFMUKJS5MBBFj71e4KD3JDC+KP4F8fy06k
+         3cgkO/vBswMs01ACHIdTi+wL41HlLj2H6TqLQlVLpiAEtPBOl/jPbeBilePj08aoH9uH
+         TSfu6LYRMGjDV2BETtMNhub9vnIePU3k2ZTY4Z6fdi6QiWF0bVIn1MyRicXyi3u82OFO
+         Gxeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753339864; x=1753944664;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yzVCG5SoHn4Tr6BCxb/1N9GpLGi9jl777U0laKdYkLA=;
-        b=fW86RjTr3ogXQ/Hyjy/UN9ucRa69v0gZMv9MTJFUb9kIQUHoW9C83igyDjBvayWw8D
-         bTMPjfn37qz06BaeVd7Vi7QTNonSuNqMUJS+V/lifQZzVjatvu/pae3h529VZMbn+Asu
-         QGdZX+TjUu+a4bO5yBfyyVZtp3ljEalHJdvAUANuiQfSKUMVgPxzvVcx8EJSt8I1nyh+
-         gv1GLdBQ3+hgeIwLRESczjt/yhqqQy8XV9l45WNMPwryjwPiKEmufPZ5z/TRdT9lrG8m
-         sFBi/i25m9rZ+8ls6oYElwx9BZU7xyXG3w4WL064vvRxHHCA6lVH8jktiWszi/L4Bvn6
-         ShDw==
-X-Forwarded-Encrypted: i=1; AJvYcCWOpikr7zRFgo7rq+skPyontN6ZJVClHyhNE2quTT3eSF3fPXy7v+0tu4Nss6guIcwhNkgzyctH@lists.linux.dev
-X-Gm-Message-State: AOJu0YxnJ/AImf10imEJWOLsOPxmId5Gn2RmKMF7aoO6tnio260W31vL
-	0wpjoy/gJeoJlbWg0kPOR7XUl3TR4iDh37aw+tT32JzdzxIPgkIUi1Rd
-X-Gm-Gg: ASbGnctoikhdQtzHzCAFZKYw7iBi/LAUMBvN+gi9GxvRxms0kpymDml5l8o9sp3H3JL
-	z+Y8KA8mBYg+pYXXQAX/cqTC1CZAGoilt0Q8vkmgo3ZfZ73yCFmh4ahaMWvMHYRGq0CRDKtHa3I
-	cm6osJSvfwv8SMbctpxQbhaWReF+ARABpiltIZvRVrDfst0PynVkFJz4NK08IaIHkHuWMV1Njeb
-	CsLBkcMY3ZorAdJtlvFTIRcq7unSKSTeB3hRyL2Cqt/vlm8/Gw3daCy4AR3/w2gOGcgT76iBtv5
-	q2RxNyYThd7YQNq308Mhe0N1IgYNqr5XxkyLOPBL4uAm5TiYkyW00ALMEATBdBCvBH8sa9/VqKH
-	w8ba4lIAidfek80SkwpbYkdE05vSSU2i5OWdJKCsxoo97gnFj3oYLQW8FxA/mAPjyLVkY4FL+1H
-	Lh5xBWM8oManhZaA==
-X-Google-Smtp-Source: AGHT+IE9DAuzXlfO0T8BGbEaaDzrFKFbm9v9bayHfXRPMGOtvkB3z1CVZtyVEbYlFxT1eRAuNH/DWg==
-X-Received: by 2002:a05:600c:1e26:b0:456:25e7:bed with SMTP id 5b1f17b1804b1-45868c97accmr53096245e9.14.1753339863187;
-        Wed, 23 Jul 2025 23:51:03 -0700 (PDT)
-Received: from [26.26.26.1] (9.126.207.35.bc.googleusercontent.com. [35.207.126.9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcace54sm1166324f8f.45.2025.07.23.23.50.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Jul 2025 23:51:02 -0700 (PDT)
-Message-ID: <4f7e4bfb-1bc7-4c87-a9f1-8c8b6ee9a336@gmail.com>
-Date: Thu, 24 Jul 2025 14:50:53 +0800
+        d=1e100.net; s=20230601; t=1753344092; x=1753948892;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rm9KNNBxAABgp5gOoV12tf0eMIaYYncc2PwDjjv+oEY=;
+        b=iHFlEyD6sy6I2ihuFeDcslcma3DxbQvD/Y2LRH2p3y1j3arlXdZq+G286Hd0HzlsGn
+         gT5sLnvZBfpbiv9BwuiQIG/aeGAjuxnKHqhz5gK3hF22HL42aiHqRx95Cg4z6ng7GAaq
+         l+WTZYH7gdmzqf0XU0YyALAS85xrRjxO/HZskz6jORbqnYwoaaCqc2WJSZdVMKPmnqsF
+         Ik48Lojiu2sTs2QO0898cbIShdyFxpU6vRINDipcVDFNe6bYEkISJJw8htZjXJe+6wAG
+         wEQuUtZIuOR8E80SwIrcFhw8jTTOcwmSqQ1/FI1NsDeRBvW2ZW0AsN7iwPJAHHH176xB
+         ntnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWy5L8YCvaM8UUCQccd2AZt3ai4Ym/+YMc1yPpKti8iMINfkgaL94eHPblDVtMmPtvuuWifsBhR@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy4w8wChC7nXT4KYw3e59LQKQCj4eJGLT400x6Uun0lOJXfg3OU
+	59267l1jHj3Yr6EE1hn1j+XwIztADmpnXjS8CAvnSreB+wDst3k5KQ/IlZz6sSoKhyMjwm8MHbh
+	7W4sZ5pQVfOf4Upqr++i2N6KAsRtqfGZpHox4x3Wf9w==
+X-Gm-Gg: ASbGncuUscxaDu0MdHGrIOHwaf0UDd2CfvlN0rDM/pzebw07NDy5HdaV/SyIuaJRBW5
+	fFkZZM2y5FHTcGvw+Ln4tzgjyNWfiHFnD6W/2mK1vN/xOXmDUQxi9yf3gjA4OflG4XWlywGTfiM
+	uQzfFxLOFqIXY2ZmuNxfUsjFMNjSIppt6gM/p3fMpYE5BHoRrPYMgZ3fshMXIMv0+NnMxsmIxGi
+	F5fr/e1AbSASJvgbGr5lL1R+rfDcZ5koQ6Jd4e3
+X-Google-Smtp-Source: AGHT+IFXFMQVdedGPzwZ8qOT6jbiIBrxpwBPcrccxmouRbGeo3CqtPlJjH+Rc35UCS+AMgP/xcts90SLDCaiAhef8fE=
+X-Received: by 2002:a17:90a:d60b:b0:311:c970:c9ce with SMTP id
+ 98e67ed59e1d1-31e5082bbbdmr9159726a91.28.1753344091532; Thu, 24 Jul 2025
+ 01:01:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 0/4] Disable ATS via iommu during PCI resets
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, joro@8bytes.org,
- will@kernel.org, robin.murphy@arm.com, rafael@kernel.org, lenb@kernel.org,
- bhelgaas@google.com
-Cc: iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
- patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
- helgaas@kernel.org, baolu.lu@linux.intel.com
-References: <cover.1751096303.git.nicolinc@nvidia.com>
-Content-Language: en-US
-From: Ethan Zhao <etzhao1900@gmail.com>
-In-Reply-To: <cover.1751096303.git.nicolinc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250722134345.761035548@linuxfoundation.org>
+In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 24 Jul 2025 13:31:19 +0530
+X-Gm-Features: Ac12FXxtcOgLqPqroSSzbVA9m-CKAZYmLOPXu521BJctLr01UlzJ4sQIX0UGpVk
+Message-ID: <CA+G9fYsh9j5qBXLgcnJ-vJXSQojhUQU8CH=1oGGBbj3iXApZpw@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/187] 6.15.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, 22 Jul 2025 at 19:37, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.15.8 release.
+> There are 187 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 24 Jul 2025 13:43:10 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.15.8-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-On 6/28/2025 3:42 PM, Nicolin Chen wrote:
-> Hi all,
-> 
-> PCIe permits a device to ignore ATS invalidation TLPs, while processing a
-> reset. This creates a problem visible to the OS where an ATS invalidation
-> command will time out: e.g. an SVA domain will have no coordination with a
-> reset event and can racily issue ATS invalidations to a resetting device.
-> 
-> The OS should do something to mitigate this as we do not want production
-> systems to be reporting critical ATS failures, especially in a hypervisor
-> environment. Broadly, OS could arrange to ignore the timeouts, block page
-> table mutations to prevent invalidations, or disable and block ATS.
-> 
-> The PCIe spec in sec 10.3.1 IMPLEMENTATION NOTE recommends to disable and
-> block ATS before initiating a Function Level Reset. It also mentions that
-> other reset methods could have the same vulnerability as well.
-> 
-> Provide a callback from the PCI subsystem that will enclose the reset and
-> have the iommu core temporarily change all the attached domain to BLOCKED.
-> After attaching a BLOCKED domain, IOMMU drivers should fence any incoming
-> ATS queries, synchronously stop issuing new ATS invalidations, and wait
-> for all ATS invalidations to complete. This can avoid any ATS invaliation
-> timeouts.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-This approach seems effective for reset operations initiated through 
-software interface functions, but how would we handle those triggered by 
-hardware mechanisms? For example, resets caused by PCIe DPC mechanisms, 
-device firmware, or manual hot-plug operations?
+## Build
+* kernel: 6.15.8-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: 81bcc8b99854ba689a8c85fb1d39d5acdce0385a
+* git describe: v6.15.7-188-g81bcc8b99854
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.15.y/build/v6.15=
+.7-188-g81bcc8b99854
 
-Thanks,
-Ethan
-> 
-> When a device is resetting, any new domain attachment should be deferred,
-> until the reset is finished. The iommu callback will log the
-> 
-> However, if there is a domain attachment/replacement happening during an
-> ongoing reset, the ATS might be re-enabled between the two function calls.
-> Introduce a new pending_reset flag in iommu_group to defer any attachment
-> during a reset, allowing iommu core to cache the target domains in the SW
-> level but bypassing the driver. The iommu_dev_reset_done() will re-attach
-> these soft-attached domains via __iommu_attach_device/set_group_pasid().
-> 
-> Notes:
-> - This only works for IOMMU drivers that implemented ops->blocked_domain
-> correctly with pci_disable_ats().
-> - This only works for IOMMU drivers that will not issue ATS invalidation
-> requests to the device, after it's docked at ops->blocked_domain.
-> Driver should fix itself to align with the aforementioned notes.
-> 
-> This is on Github:
-> https://github.com/nicolinc/iommufd/commits/iommu_dev_reset-rfcv2
-> 
-> Changelog
-> v2
->   * [iommu] Update kdocs, inline comments, and commit logs
->   * [iommu] Replace long-holding group->mutex with a pending_reset flag
->   * [pci] Abort reset routines if iommu_dev_reset_prepare() fails
->   * [pci] Apply the same vulnerability fix to other reset functions
-> v1
->   https://lore.kernel.org/all/cover.1749494161.git.nicolinc@nvidia.com/
-> 
-> Thanks
-> Nicolin
-> 
-> Nicolin Chen (4):
->    iommu: Lock group->mutex in iommu_deferred_attach
->    iommu: Pass in gdev to __iommu_device_set_domain
->    iommu: Introduce iommu_dev_reset_prepare() and iommu_dev_reset_done()
->    pci: Suspend iommu function prior to resetting a device
-> 
->   include/linux/iommu.h  |  12 +++
->   drivers/iommu/iommu.c  | 180 ++++++++++++++++++++++++++++++++++++++---
->   drivers/pci/pci-acpi.c |  21 ++++-
->   drivers/pci/pci.c      |  84 +++++++++++++++++--
->   drivers/pci/quirks.c   |  27 ++++++-
->   5 files changed, 307 insertions(+), 17 deletions(-)
-> 
+## Test Regressions (compared to v6.15.6-193-ge6001d5f7944)
 
+## Metric Regressions (compared to v6.15.6-193-ge6001d5f7944)
+
+## Test Fixes (compared to v6.15.6-193-ge6001d5f7944)
+
+## Metric Fixes (compared to v6.15.6-193-ge6001d5f7944)
+
+## Test result summary
+total: 329387, pass: 302234, fail: 7786, skip: 19367, xfail: 0
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 139 total, 138 passed, 1 failed
+* arm64: 57 total, 56 passed, 1 failed
+* i386: 18 total, 18 passed, 0 failed
+* mips: 34 total, 27 passed, 7 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 40 total, 39 passed, 1 failed
+* riscv: 25 total, 25 passed, 0 failed
+* s390: 22 total, 22 passed, 0 failed
+* sh: 5 total, 5 passed, 0 failed
+* sparc: 4 total, 3 passed, 1 failed
+* x86_64: 49 total, 47 passed, 2 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-rust
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* modules
+* perf
+* rcutorture
+* rt-tests-cyclicdeadline
+* rt-tests-pi-stress
+* rt-tests-pmqtest
+* rt-tests-rt-migrate-test
+* rt-tests-signaltest
+
+--
+Linaro LKFT
+https://lkft.linaro.org
