@@ -1,52 +1,66 @@
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8138F58
-	for <patches@lists.linux.dev>; Thu, 24 Jul 2025 03:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DBD273F9;
+	Thu, 24 Jul 2025 06:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753329340; cv=none; b=c5YrCiZSsFh10uarko44JOz8a3AOFG20UDxr2PrFiNHUIBG7Avj0DPGwUl70rAJrIMiLtgY4GgnH7bsDwc0IZOx5y+/MCYpui6vsfC4QFVbs0s9A+KwYZoOcsRvigPh3311uhT2AwQQtXXsjraWoOVKCTGkI5AUZZNVvLWiPAgM=
+	t=1753339867; cv=none; b=bDchE/NOXdSRHZlm5QR4sT/QBkaQYplbMHiituKqcW6QqTd5gAdO79pQ5chm9MVSZBwLLsg7ParBxMOdh4dR2jEe6nlg07FHc0QnkDeQMZDwVrneRE/BMnx+7BF4mh3/UNKbH2TqfmYoU44jlFmh6Z9hYlDz8pgH7iSlhKeNN/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753329340; c=relaxed/simple;
-	bh=Oarvq+wQqiFzEyNJw/6RYDRteFE1q10gB5gGU70BGzw=;
+	s=arc-20240116; t=1753339867; c=relaxed/simple;
+	bh=w0X0br7o2eWaC/sCuDPbuNtjMrXI9dlkmLAYFCHsKxw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HAK9iEbN80gGMquSSt6RJcplpV5YHw899UU+vNHs33EOtxwgtXlHaXdyRwpQyQX1pn9zV8WmSIBYzh7SDZcjj+zV3tvk/+c3aq6X6+bi0FF8XRNEGg0cqBYbAQjkb3V97+i0vDVTSc/VBAHAduLN+oSpqyRo/I9E5d7LYQrsMaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=GMjQAnch; arc=none smtp.client-ip=44.202.169.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	 In-Reply-To:Content-Type; b=k0PgkO+7lqkuB0JLlsyVVqkkQvYdCa3iKvVT7bjrTB0lg2PZc3HpiVv0zv8LyqN177LWkOH70UJhCUPGZiu2xfO2RP458edLQ+zj0VMoINmu1l+y2NLuNZaJ56GGKjTACyhkmCwBHMGDEaF+ZkTU/yc+GvVpQwv1dxVhS6ahZMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xy1Kov0k; arc=none smtp.client-ip=209.85.128.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="GMjQAnch"
-Received: from eig-obgw-5009a.ext.cloudfilter.net ([10.0.29.176])
-	by cmsmtp with ESMTPS
-	id eZf8uFA42OFUaen3Lu1XGM; Thu, 24 Jul 2025 03:55:31 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id en3KujRYHItcUen3LuL5WU; Thu, 24 Jul 2025 03:55:31 +0000
-X-Authority-Analysis: v=2.4 cv=F5tRdLhN c=1 sm=1 tr=0 ts=6881aeb3
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=CIo_2QJ3nJB9J6BkDI8A:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=kF1JFqSObNDfCWx+LTptk98C2mGHZ7Lrf0dTfA2MK9k=; b=GMjQAnch/ncY4T+eOAxMyxMZES
-	QzBEa6/f7SXIBZ3WmqpT8/bnsjyr5YwyFN99QCZxVQ5pEnJOS8w4W/+pNZZ6ACeFk9I8lEn4WaoZg
-	c3BLo7NsVNfx9ugnsQv9ZEGvJi1gekfqeTn0owsATcz8DwuZlgH/ztUK+PRmDqmn1BhnjXPtsqUQS
-	ZhVM0dd+8+YeNcimcUgmoyR5O4jUPVhZ7TzWhS071H/d3qsYyYjgafu2FA5hS5amq2e69jB62EiCb
-	mEPTcjQejdJ5k5EIiyIG2x9gVW9p/L8RK8tLyLNMC8NPNevKE1QhjlRFcWnhmth5IDYqUVQmniK9S
-	MF98Ta0Q==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:57774 helo=[10.0.1.116])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.1)
-	(envelope-from <re@w6rz.net>)
-	id 1uen3J-00000000Eiq-2tGB;
-	Wed, 23 Jul 2025 21:55:29 -0600
-Message-ID: <b8ba5911-650d-4a52-8eac-104dee740770@w6rz.net>
-Date: Wed, 23 Jul 2025 20:55:23 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xy1Kov0k"
+Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4537edf2c3cso5902585e9.3;
+        Wed, 23 Jul 2025 23:51:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753339864; x=1753944664; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yzVCG5SoHn4Tr6BCxb/1N9GpLGi9jl777U0laKdYkLA=;
+        b=Xy1Kov0kwcLFFBRuL+WrmeriUznodUADl43e6hIYCWj2xAoTXjp+Xjc3otkgtO/Oz6
+         g66EAcr9zvVkFQd37pKwHAOcm/g5I1FkUAp7Idu0gM2gyGGykGKeLocp1QB6ZhrHx/gU
+         ztwvhCdMF6COazyhpI1odNJUrLEVItPapPQzGP2JzQVC8BxkeZPKQDDd2/v8O6EvJ1yv
+         lB+cjWdj3sXEHm/ayRjIXn2UJeH811gMouF3aN6214TnaWQQ+SzwAb8JO8xeI4ed9wUM
+         WR/L6VSyb+xgCLaP65FiEPYXgLZiBXZonEMVoMYwxmo/JvtoigU3JuBEjn+pC9QSTdPS
+         CjYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753339864; x=1753944664;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yzVCG5SoHn4Tr6BCxb/1N9GpLGi9jl777U0laKdYkLA=;
+        b=fW86RjTr3ogXQ/Hyjy/UN9ucRa69v0gZMv9MTJFUb9kIQUHoW9C83igyDjBvayWw8D
+         bTMPjfn37qz06BaeVd7Vi7QTNonSuNqMUJS+V/lifQZzVjatvu/pae3h529VZMbn+Asu
+         QGdZX+TjUu+a4bO5yBfyyVZtp3ljEalHJdvAUANuiQfSKUMVgPxzvVcx8EJSt8I1nyh+
+         gv1GLdBQ3+hgeIwLRESczjt/yhqqQy8XV9l45WNMPwryjwPiKEmufPZ5z/TRdT9lrG8m
+         sFBi/i25m9rZ+8ls6oYElwx9BZU7xyXG3w4WL064vvRxHHCA6lVH8jktiWszi/L4Bvn6
+         ShDw==
+X-Forwarded-Encrypted: i=1; AJvYcCWOpikr7zRFgo7rq+skPyontN6ZJVClHyhNE2quTT3eSF3fPXy7v+0tu4Nss6guIcwhNkgzyctH@lists.linux.dev
+X-Gm-Message-State: AOJu0YxnJ/AImf10imEJWOLsOPxmId5Gn2RmKMF7aoO6tnio260W31vL
+	0wpjoy/gJeoJlbWg0kPOR7XUl3TR4iDh37aw+tT32JzdzxIPgkIUi1Rd
+X-Gm-Gg: ASbGnctoikhdQtzHzCAFZKYw7iBi/LAUMBvN+gi9GxvRxms0kpymDml5l8o9sp3H3JL
+	z+Y8KA8mBYg+pYXXQAX/cqTC1CZAGoilt0Q8vkmgo3ZfZ73yCFmh4ahaMWvMHYRGq0CRDKtHa3I
+	cm6osJSvfwv8SMbctpxQbhaWReF+ARABpiltIZvRVrDfst0PynVkFJz4NK08IaIHkHuWMV1Njeb
+	CsLBkcMY3ZorAdJtlvFTIRcq7unSKSTeB3hRyL2Cqt/vlm8/Gw3daCy4AR3/w2gOGcgT76iBtv5
+	q2RxNyYThd7YQNq308Mhe0N1IgYNqr5XxkyLOPBL4uAm5TiYkyW00ALMEATBdBCvBH8sa9/VqKH
+	w8ba4lIAidfek80SkwpbYkdE05vSSU2i5OWdJKCsxoo97gnFj3oYLQW8FxA/mAPjyLVkY4FL+1H
+	Lh5xBWM8oManhZaA==
+X-Google-Smtp-Source: AGHT+IE9DAuzXlfO0T8BGbEaaDzrFKFbm9v9bayHfXRPMGOtvkB3z1CVZtyVEbYlFxT1eRAuNH/DWg==
+X-Received: by 2002:a05:600c:1e26:b0:456:25e7:bed with SMTP id 5b1f17b1804b1-45868c97accmr53096245e9.14.1753339863187;
+        Wed, 23 Jul 2025 23:51:03 -0700 (PDT)
+Received: from [26.26.26.1] (9.126.207.35.bc.googleusercontent.com. [35.207.126.9])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcace54sm1166324f8f.45.2025.07.23.23.50.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Jul 2025 23:51:02 -0700 (PDT)
+Message-ID: <4f7e4bfb-1bc7-4c87-a9f1-8c8b6ee9a336@gmail.com>
+Date: Thu, 24 Jul 2025 14:50:53 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,61 +68,98 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/79] 6.1.147-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250722134328.384139905@linuxfoundation.org>
+Subject: Re: [PATCH RFC v2 0/4] Disable ATS via iommu during PCI resets
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, joro@8bytes.org,
+ will@kernel.org, robin.murphy@arm.com, rafael@kernel.org, lenb@kernel.org,
+ bhelgaas@google.com
+Cc: iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
+ patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
+ helgaas@kernel.org, baolu.lu@linux.intel.com
+References: <cover.1751096303.git.nicolinc@nvidia.com>
 Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20250722134328.384139905@linuxfoundation.org>
+From: Ethan Zhao <etzhao1900@gmail.com>
+In-Reply-To: <cover.1751096303.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1uen3J-00000000Eiq-2tGB
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:57774
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 74
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfNrA4xu8FmJTq5XtO0rWA62ba3Q5zq1wWs/jFgLsd53HdkB3ONTYlH6JayJhf5Bkz5lAl0fuJzlY0zrIEtk8PArXnV51Zn8hsuWJJkAn5+BwZLHRqrqZ
- qsyELRJDYk3LnPdQydPNu5duPBkCgZi1YyK7G4LNNDkmX4xlIVAyLuhgrwxZfeJFql0QeDGeo+EkuQ==
 
-On 7/22/25 06:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.147 release.
-> There are 79 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 24 Jul 2025 13:43:10 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.147-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Tested-by: Ron Economos <re@w6rz.net>
+On 6/28/2025 3:42 PM, Nicolin Chen wrote:
+> Hi all,
+> 
+> PCIe permits a device to ignore ATS invalidation TLPs, while processing a
+> reset. This creates a problem visible to the OS where an ATS invalidation
+> command will time out: e.g. an SVA domain will have no coordination with a
+> reset event and can racily issue ATS invalidations to a resetting device.
+> 
+> The OS should do something to mitigate this as we do not want production
+> systems to be reporting critical ATS failures, especially in a hypervisor
+> environment. Broadly, OS could arrange to ignore the timeouts, block page
+> table mutations to prevent invalidations, or disable and block ATS.
+> 
+> The PCIe spec in sec 10.3.1 IMPLEMENTATION NOTE recommends to disable and
+> block ATS before initiating a Function Level Reset. It also mentions that
+> other reset methods could have the same vulnerability as well.
+> 
+> Provide a callback from the PCI subsystem that will enclose the reset and
+> have the iommu core temporarily change all the attached domain to BLOCKED.
+> After attaching a BLOCKED domain, IOMMU drivers should fence any incoming
+> ATS queries, synchronously stop issuing new ATS invalidations, and wait
+> for all ATS invalidations to complete. This can avoid any ATS invaliation
+> timeouts.
+
+This approach seems effective for reset operations initiated through 
+software interface functions, but how would we handle those triggered by 
+hardware mechanisms? For example, resets caused by PCIe DPC mechanisms, 
+device firmware, or manual hot-plug operations?
+
+Thanks,
+Ethan
+> 
+> When a device is resetting, any new domain attachment should be deferred,
+> until the reset is finished. The iommu callback will log the
+> 
+> However, if there is a domain attachment/replacement happening during an
+> ongoing reset, the ATS might be re-enabled between the two function calls.
+> Introduce a new pending_reset flag in iommu_group to defer any attachment
+> during a reset, allowing iommu core to cache the target domains in the SW
+> level but bypassing the driver. The iommu_dev_reset_done() will re-attach
+> these soft-attached domains via __iommu_attach_device/set_group_pasid().
+> 
+> Notes:
+> - This only works for IOMMU drivers that implemented ops->blocked_domain
+> correctly with pci_disable_ats().
+> - This only works for IOMMU drivers that will not issue ATS invalidation
+> requests to the device, after it's docked at ops->blocked_domain.
+> Driver should fix itself to align with the aforementioned notes.
+> 
+> This is on Github:
+> https://github.com/nicolinc/iommufd/commits/iommu_dev_reset-rfcv2
+> 
+> Changelog
+> v2
+>   * [iommu] Update kdocs, inline comments, and commit logs
+>   * [iommu] Replace long-holding group->mutex with a pending_reset flag
+>   * [pci] Abort reset routines if iommu_dev_reset_prepare() fails
+>   * [pci] Apply the same vulnerability fix to other reset functions
+> v1
+>   https://lore.kernel.org/all/cover.1749494161.git.nicolinc@nvidia.com/
+> 
+> Thanks
+> Nicolin
+> 
+> Nicolin Chen (4):
+>    iommu: Lock group->mutex in iommu_deferred_attach
+>    iommu: Pass in gdev to __iommu_device_set_domain
+>    iommu: Introduce iommu_dev_reset_prepare() and iommu_dev_reset_done()
+>    pci: Suspend iommu function prior to resetting a device
+> 
+>   include/linux/iommu.h  |  12 +++
+>   drivers/iommu/iommu.c  | 180 ++++++++++++++++++++++++++++++++++++++---
+>   drivers/pci/pci-acpi.c |  21 ++++-
+>   drivers/pci/pci.c      |  84 +++++++++++++++++--
+>   drivers/pci/quirks.c   |  27 ++++++-
+>   5 files changed, 307 insertions(+), 17 deletions(-)
+> 
 
