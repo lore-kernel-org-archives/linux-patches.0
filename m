@@ -1,104 +1,114 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E581EB5DD
-	for <patches@lists.linux.dev>; Wed, 23 Jul 2025 16:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7EF1DF24F
+	for <patches@lists.linux.dev>; Thu, 24 Jul 2025 03:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753288055; cv=none; b=RmmKbJcVlAkYQRsnmB0YqbTM7mBcct7s9Ae0SplKO+R03A2BMqfCLyUKfgxQKCgi7QcG2EjF0Mz8DgXlOnT1R4lIBMClKzpKZh7+n8yxCPU4zkFjgfrDGqceifcrlo8zmIZxVmvbmNhiELhuFlxkk/VFcIfk/dLFCJT++RdlUVg=
+	t=1753328180; cv=none; b=Kpj2GFpvd32nN0Y6w9x2qH+l0SG9H3U5WQjfLBZYun4/sSLEbKSvtzwtUOlGNP1wtWqUXjJyHFQErbsCeJrOjWTr0Sykd7v5FwvkxCxQFX4qTkq+875rnhq2qLlvgeFH4eqptQhDV/wTfo/GHhv4urEFCX2gTw8ILxZKwny7XD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753288055; c=relaxed/simple;
-	bh=QHsEWJ65EKEeUAnjRO62w45lv6VLZRWBmcs6bu8I5Y0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L9gIyuq2OUZSeDbvRi6SITSrHxEo93v1slp1PDENir3dfNuIJZPMecMaFgGRahN+UesW0oFUwY6P/nW1OGXYbevRUd7Lw4Pb1uWT8j5r84kAnnFJX5NvC/15CXABBUpfysWLXj1pXIK13XTjSHRYr74jw90odlgZUg41uhSGxTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=fZ2fer8N; arc=none smtp.client-ip=209.85.160.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1753328180; c=relaxed/simple;
+	bh=6RGZZzwq1RVcl552iNQdR3Qa3UKwnf49Lhs6Z+EddBs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K4WuCPYTc4S5KxnxId4J9R8lf5jISB2ptlIrgKU9qK4pe8o6fgMqO7Vg12aM5NKbwpGcpN0M1qbooCvaMeWiW8anG1BRBMiJV9wCKrEPaInQLOSuwI/miiW4TSr0RF30Hbonir5Dn0QbBmG3JcbKk3szCrd7s507b4Q83h7tDaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=JFKjFrQ5; arc=none smtp.client-ip=35.89.44.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="fZ2fer8N"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-306db05b292so46119fac.1
-        for <patches@lists.linux.dev>; Wed, 23 Jul 2025 09:27:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1753288052; x=1753892852; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/6A0ra1sbjas+5Ydcn1mY51RGT/qA9lEFtptxsAU7TM=;
-        b=fZ2fer8Ncs6HzfNskq3STaWq+kzgLsnIITKb/haBIwoxUv0mAorRtcVRF1YaXTsR9r
-         yXIQGNzWljW7C59vpJc/Fmp1znDyEQ9CsRNNncZcIR4IBPZDHSVUQ07tXRyKN3o5Q978
-         kDVgbdagSTn+ZZIGiM/vBpRRY6WjS9bAukljA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753288052; x=1753892852;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/6A0ra1sbjas+5Ydcn1mY51RGT/qA9lEFtptxsAU7TM=;
-        b=L3T6q5Wn5ocEUVlE9Mtr01VL3JufIXgDZoUNoKS/E4WPBrocanr/T7vDIjp29OHnG5
-         2KP3XDktwhcTCAUhmcWD4RvdKbRMHjnBUzml+911uK/MPheTvl2KEf8XkzAcNyEYj13J
-         BQyxp13JxsVv58nhhK/2zjJdQ2I6iLb7J7aAZ9K2Jr5BlOcAOkHWYeXBcvdfBgiqFz+G
-         dgxiPk0QxMm/EaEeJ6H5P9uj7rgW2IhwJkWcaJm9yvumyqcQAyE7QNgHXpuZTG/y7WAP
-         bXmsZI9Vu70YMkCrVQAFDi0E3LJLCrIfORv8M/mEf0gR6FY7IwN+8qaa8J5ZEcqoRLW7
-         3AWw==
-X-Forwarded-Encrypted: i=1; AJvYcCVc4P7UANbQp5RrETUzZC4u+hPdryQ2bzDorPWtodRAl0YE/YeXx7FLKGsbRMRgY6QI+xTe9Pxq@lists.linux.dev
-X-Gm-Message-State: AOJu0YyYKeMkGXcSUmnPf7S8Xzl+E6D9ddNiv2vfuXxTK1Ybh5vccgmC
-	RkFOYGi3arUWizsidcA+A81BOARw1fxFJkLUDNEzZ1TmuiwyN9yYqRGw7GrdiyjU2A==
-X-Gm-Gg: ASbGnctT4EZZzBPyuxbXSh2ktb/M6cs+H/LYpt7w0C+FKd/gfodhtt3Z3URo6UVAXIz
-	g7noEQAxC6wells4+eZZFB06xnM593Il799d9b/LDr0Z6F09R5+D4M/Q7z+j/Lth54UJ51blT1N
-	RQJ7LYYtZ8DGZKq2DXd4W53v8y9eIZwPKWWIY5Kca6ZPsNZfFI4I9SfPWzu9bAK/aO2FCIQo9vV
-	R0HGcEwXKcxhLiefTZ+IUYzOHhn3YoXfqS7tBptGDTco5j7CtRqB8isA0yBFEa02UPArBvTeiyf
-	0sa/L/pvP5KUOPStOj9X4Qt56CROjRqMVPp1oVIIRgKFX1GXBF2EW1hLTznAcdOWKKIE42OC2WV
-	Sq1k91hyLioc4QdjKkBz7jylsCTaeO7K0EjnnT2c=
-X-Google-Smtp-Source: AGHT+IEO8bpmfpwvvlzRcmZt1Ivg71kovZ+W+IOSknlxinA5MmpXthLTgUWvuZ4sxkkWAFZMhb/IIQ==
-X-Received: by 2002:a05:6871:10e:b0:2ff:9663:ca48 with SMTP id 586e51a60fabf-306c7350031mr2041806fac.39.1753288052151;
-        Wed, 23 Jul 2025 09:27:32 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([72.42.103.70])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-30103d1b601sm5150726fac.24.2025.07.23.09.27.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 09:27:31 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 23 Jul 2025 10:27:29 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.15 000/187] 6.15.8-rc1 review
-Message-ID: <aIENcUTPkxpM8nlO@fedora64.linuxtx.org>
-References: <20250722134345.761035548@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="JFKjFrQ5"
+Received: from eig-obgw-6004a.ext.cloudfilter.net ([10.0.30.197])
+	by cmsmtp with ESMTPS
+	id efK7uUF9vf1UXemj9uL2u7; Thu, 24 Jul 2025 03:34:39 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id emj7uXc3KG6h1emj8uQso1; Thu, 24 Jul 2025 03:34:38 +0000
+X-Authority-Analysis: v=2.4 cv=H/MQwPYi c=1 sm=1 tr=0 ts=6881a9ce
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=ScgFMeR7n2JIvPbK2CgA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=y5LIDLyJPqcD/dy7AI+rdWrOWNWHHviMXkH8I49vgOA=; b=JFKjFrQ5b+Me+O9IIIoHIXBo3j
+	KxYbrSkJglzfidy52guqzu9ZPWWfksstOK8BbBSqhT9ZQPhcfN3riDfsAleC16JAo234FEQQmeOku
+	TvyOpbvixy+AmIH4JGqO1FbMqm6rPDHyXGAnH5lGNaHBLhURn/fLMOkUAfqVIUAkSBLIjCWnxZGLn
+	v6C5nBL/fjigmykfcJ/thUToyxxKx6SoSyJJlSmEL5KDy6o51ZMipRhnfkX4ivJA+P356/ekPRzMA
+	DirDqGUyUgqXy7c8NznbMkCNOLnZALw0798J7EGaVxBfhr98cy0QOl+5HGCdqb3pHtFxZxeuYp8VF
+	0tUu8TsQ==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:37616 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.1)
+	(envelope-from <re@w6rz.net>)
+	id 1uemj6-000000006a5-3kZo;
+	Wed, 23 Jul 2025 21:34:36 -0600
+Message-ID: <0a54bcf5-e5ca-4841-abbe-89739243837d@w6rz.net>
+Date: Wed, 23 Jul 2025 20:34:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.15 000/187] 6.15.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250722134345.761035548@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
 In-Reply-To: <20250722134345.761035548@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1uemj6-000000006a5-3kZo
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:37616
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 17
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfGIhRjvUL5wVSzFXSTPyWaulE0hrVIabcbHgiZmAXHGWmFLq9iBJbBpOMXWg/5aggbq7t01BS2TOWNu6Q08wuu+gA+SWhRaphhoPuuDAbFEaPOnv51CB
+ iF2Nkhd+Jf9RDsFyF5EvKhB32k2KYqvxPbtnD6rEmYEahkY0M5wy8vU9fV8TNMgE7xkthu8HtpdVsQ==
 
-On Tue, Jul 22, 2025 at 03:42:50PM +0200, Greg Kroah-Hartman wrote:
+On 7/22/25 06:42, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.15.8 release.
 > There are 187 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Thu, 24 Jul 2025 13:43:10 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
 > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.8-rc1.gz
 > or in the git tree and branch at:
 > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Tested-by: Ron Economos <re@w6rz.net>
+
