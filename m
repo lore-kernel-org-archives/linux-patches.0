@@ -1,99 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56A624677D;
-	Thu, 24 Jul 2025 09:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94262274FED;
+	Thu, 24 Jul 2025 16:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753349635; cv=none; b=RVSRDCIf7PjDreE3hSMuxVwFu5ACtZGxW8krRZAdMxt3lDB4OQgfCP1nbQj4u1yl5ngunT6FAt/V9dziOn8gZjQgPaczZslAnfWA9diEmgi7d5sPAf6zf7MDITADo5UaOANOwvt0iyLL+ZVttyfhPj3d7Br2gP/T+H4of4mPXXM=
+	t=1753376098; cv=none; b=uGABJsD0F7wFKkQw1zTAxZBj/vd+wJHYHxzTUAbYCfvDoqj5+ocZr7+Vo5qoKs7Kj7mOU2U1AZPhBo9otZTTv3P7niVFysppiYBRMset+xpviCtyAXzNOdXqy//pjvHIVujYny9pKgTBtrBnFLIp4KNxCFNgxsr6CZM0karOOvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753349635; c=relaxed/simple;
-	bh=SBONkVjsyY/VAVA5PVkqpHEDoKp8UhHde5k4WBO3d4o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MRnH4XYj/BkCKA4ho7jAZ2qCcwnQ0gBX2wJQpfskCmknAw8YcZeIORrY0KpiuJNYsYhVVqeND4dAXndnyJ0xzoS5vpwtnVl7shHuNPH9ot4XkHmao+Tj2ozwykoJHw+UVyM/XxEIXvUiEVdybT9hiLUxPJjBY1wE+libqdqpDzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRpa85so; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753376098; c=relaxed/simple;
+	bh=+8vMFcg7Tsq0mO858hZbLULWT+KkS4qq2g4dlZowKp0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FD9sa7Vi8EOpctOSrBV/LKSMvQfckfvSsx/oKOA31e5S/nhd5gEDD8wZa7s7pZKcK6E8hBinop0xXrXulmbGJLGiiu+rSu8oN6/ex3Mjhyb1/1zxvwPLCYnhsNncRcAud3GluLwmZ867mVHt1vmKC6MRPc3lJ2rHsnvA1+d1gVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JT8cmGuI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRpa85so"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2F2C4CEED;
-	Thu, 24 Jul 2025 09:33:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753349634;
-	bh=SBONkVjsyY/VAVA5PVkqpHEDoKp8UhHde5k4WBO3d4o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cRpa85soK6UIr0qZrSQOYwi8+zbeZr3Kou0/F3pEbAnoj5YwDSrAuYxx6ZkJXOSjR
-	 aDqZpVhXSZyQ8QYXQ7MIvCi7ASaCBgtI3i4Iazm9TiWyHYZBa6qydiizNJBqyAq8RT
-	 +TcfNUd9tN89gmKklaGYdLZeljPBe+JbZSchRbi0=
-Date: Thu, 24 Jul 2025 11:33:51 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: linux-usb@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH v2] usb: atm: cxacru: Merge cxacru_upload_firmware() into
- cxacru_heavy_init()
-Message-ID: <2025072433-professed-breeding-152a@gregkh>
-References: <20250722-usb-cxacru-fix-clang-21-uninit-warning-v2-1-6708a18decd2@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JT8cmGuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C2BC4CEED;
+	Thu, 24 Jul 2025 16:54:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753376098;
+	bh=+8vMFcg7Tsq0mO858hZbLULWT+KkS4qq2g4dlZowKp0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=JT8cmGuIREx1jz6ZKLidnrP3vP9wPZx5FmQO9CyMH5soqG65rEsumGoy4WN8AjO/U
+	 7WsBfIfnZIm1ggedysQicNr1LPjOapqk3qhhU9l1rerj4X+QcSa3Ix6/GvflBrclNj
+	 Z2gR8+K+BhKr71/Ra9zSNujcESjfYviYz3sfjXMX3OwH+LQM2yzpGffprDW3h7ik1N
+	 WXj+rIl/FRCFyUgMsZ4yhcC/gHsqCJRzU/qHooOZzjU38AJuOLmZBZV/X2yA9801w8
+	 ywA0I2dtPAWwQEkilqnoVpGAn2+EHUopUPGgpRkcQ6k6emfEWPp5Tlj+jqB67IfJt4
+	 ZFj8Vc46xiugA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Danilo Krummrich <dakr@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: nouveau@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] drm: nova-drm: fix 32-bit arm build
+Date: Thu, 24 Jul 2025 18:54:41 +0200
+Message-ID: <20250724165441.2105632-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250722-usb-cxacru-fix-clang-21-uninit-warning-v2-1-6708a18decd2@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 22, 2025 at 12:11:18PM -0700, Nathan Chancellor wrote:
-> After a recent change in clang to expose uninitialized warnings from
-> const variables [1], there is a warning in cxacru_heavy_init():
-> 
->   drivers/usb/atm/cxacru.c:1104:6: error: variable 'bp' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
->    1104 |         if (instance->modem_type->boot_rom_patch) {
->         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   drivers/usb/atm/cxacru.c:1113:39: note: uninitialized use occurs here
->    1113 |         cxacru_upload_firmware(instance, fw, bp);
->         |                                              ^~
->   drivers/usb/atm/cxacru.c:1104:2: note: remove the 'if' if its condition is always true
->    1104 |         if (instance->modem_type->boot_rom_patch) {
->         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   drivers/usb/atm/cxacru.c:1095:32: note: initialize the variable 'bp' to silence this warning
->    1095 |         const struct firmware *fw, *bp;
->         |                                       ^
->         |                                        = NULL
-> 
-> While the warning is technically correct that bp is conditionally passed
-> uninitialized to cxacru_upload_firmware(), it is ultimately a false
-> positive warning on the uninitialized use of bp because the same
-> condition that initializes bp, instance->modem_type->boot_rom_patch, is
-> the same one that gates the use of bp within cxacru_upload_firmware().
-> As this warning occurs in clang's frontend before inlining occurs, it
-> cannot know that these conditions are indentical to avoid the warning.
-> 
-> Manually inline cxacru_upload_firmware() into cxacru_heavy_init(), as
-> that is its only callsite, so that clang can see that bp is initialized
-> and used under the same condition, clearing up the warning without any
-> functional changes to the code (LLVM was already doing this inlining
-> later).
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2102
-> Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> Changes in v2:
-> - Rather than initialize bp to NULL, manually inline
->   cxacru_upload_firmware() into cxacru_heavy_init() so that clang can
->   see the matching conditions for bp's initialization and use (based on
->   feedback from Greg).
-> - Drop accessrunner-general@lists.sourceforge.net, as I got bounces when
->   sending to it unsubscribed.
-> - Link to v1: https://lore.kernel.org/r/20250715-usb-cxacru-fix-clang-21-uninit-warning-v1-1-de6c652c3079@kernel.org
-> ---
->  drivers/usb/atm/cxacru.c | 106 ++++++++++++++++++++++-------------------------
->  1 file changed, 49 insertions(+), 57 deletions(-)
+In 32-bit arm, the build fails with:
 
-Sorry for the churn, but hey, it's less code now!
+    error[E0308]: mismatched types
+      --> drivers/gpu/drm/nova/file.rs:42:28
+       |
+    42 |         getparam.set_value(value);
+       |                  --------- ^^^^^ expected `u64`, found `u32`
+       |                  |
+       |                  arguments to this method are incorrect
+       |
+    note: method defined here
+      --> drivers/gpu/drm/nova/uapi.rs:29:12
+       |
+    29 |     pub fn set_value(&self, v: u64) {
+       |            ^^^^^^^^^        ------
+    help: you can convert a `u32` to a `u64`
+       |
+    42 |         getparam.set_value(value.into());
+       |                                 +++++++
 
-Nice work :)
+The reason is that `Getparam::set_value` takes a `u64` (from the UAPI),
+but `pci::Device::resource_len()` returns a `resource_size_t`, which is a
+`phys_addr_t`, which may be 32- or 64-bit.
 
-greg k-h
+Thus add an `into()` call to support the 32-bit case, while allowing the
+Clippy lint that complains in the 64-bit case where the type is the same.
+
+Fixes: cdeaeb9dd762 ("drm: nova-drm: add initial driver skeleton")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+As discussed, it may be best to have a newtype, or at least a function
+to perform this -- here it is the minimal fix nevertheless.
+
+ drivers/gpu/drm/nova/file.rs | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/nova/file.rs b/drivers/gpu/drm/nova/file.rs
+index 7e59a34b830d..4fe62cf98a23 100644
+--- a/drivers/gpu/drm/nova/file.rs
++++ b/drivers/gpu/drm/nova/file.rs
+@@ -39,7 +39,8 @@ pub(crate) fn get_param(
+             _ => return Err(EINVAL),
+         };
+
+-        getparam.set_value(value);
++        #[allow(clippy::useless_conversion)]
++        getparam.set_value(value.into());
+
+         Ok(0)
+     }
+
+base-commit: 89be9a83ccf1f88522317ce02f854f30d6115c41
+--
+2.50.1
