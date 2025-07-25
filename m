@@ -1,67 +1,67 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2A72356BA
-	for <patches@lists.linux.dev>; Fri, 25 Jul 2025 23:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3290258CE8
+	for <patches@lists.linux.dev>; Fri, 25 Jul 2025 23:41:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753486817; cv=fail; b=E0nm3s8N5tyHocRrGTLJ3DPeZ6JV6FYvlGuGKbbPJgmiQBFPx86nWOZ9FRPqY21/Wptg4vlR1cX1eWnM0EOByYahVJ5CU1MHkcCIACGeSz65lsDwl/dE0XvG+fWX6dK/8ZsEFpubABcCyRHw6y6s+tizG1JDuHkXM5gpDSlCUwc=
+	t=1753486886; cv=fail; b=aYi4z0KFRfFzinoqOIcbhglg3MTciDE6f/TLP18AVpW5C1vEU+xuBBcgIloTYcliV4LjecEwRoD9clzAeYGO2Fezj4j/tuJcVTUa06V8h6Fr1ZLBRRTPhcA+sgb87w0t8eRMD/XDNNj9kZvSTXk8yU8bVbyZl7N/kgMMcu6NZw0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753486817; c=relaxed/simple;
-	bh=gkH4B7ziaNH3ITLZDmG24VJlIfBvpkqrGuA+NffsDkM=;
+	s=arc-20240116; t=1753486886; c=relaxed/simple;
+	bh=ZrnIQyTzhBd9kLfP0i8u+qd+IL/agwOBCgYazVWY+Wk=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=p8NnpmJHiXMUDQsDdiRg8RBZchKUngYWN9N8O3puNs3pWO42INkidhwQ+EynUg3YHnuSyXIwEVi9+NNOYvKk92slO4xawsBFB6v3r79lOAPbcNApAALW6+BmSQFvAlEt17cYEhGNoo3nK17EZx+YUmaFxsUVV2TBAngcksIzCIM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VgKZMAIb; arc=fail smtp.client-ip=192.198.163.12
+	 Content-Type:MIME-Version; b=Kq5cG2rk60hbJ0rWKtl4j3fBJ4izbkN6TbQB5wFYawUGFKQCEufWe99pqi7nTRHxXpBypnGGm/ztmyO1GKbCGCbKG1P1AiP3jUMGYKwQrBI39GL7L6oeO07wxb5uNQB2bI2gNH2M3s3Tp7xcSaeBhB2LYRal7fXbSOqpNZW8CLo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ccBlFt4F; arc=fail smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VgKZMAIb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ccBlFt4F"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753486816; x=1785022816;
+  t=1753486885; x=1785022885;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=gkH4B7ziaNH3ITLZDmG24VJlIfBvpkqrGuA+NffsDkM=;
-  b=VgKZMAIbZ1b0F52Kbwj9biNuWiRd9UzqyDdAidIDxhBKSV2GdAGR9ugi
-   tv8b4SuBYK+4kvUeuiItm4JtqPLQvRD5BKSQz/y3CBxmCwOE0OgirvlwD
-   sBSinGYf98kXGxFf9CIoVCNEWDYvFoFDuICp6KiDKgNKtT2xi4qwPG11h
-   ibBnYN7Alt8AOfMw/OBiEXkerjjXvWzrrMlahMPLzxh+X3R9uakTwPwZk
-   KREuwx7t+ePw9IxwtV8F1jbLzlGdRN5P9tPMkleh5seG64t6qoyVzWv19
-   4xQlyEXfB8XxSX86iNgmwsfqFHQNVwEdiPYriNfiCzG+wxwpjH6sp0Aoy
+  bh=ZrnIQyTzhBd9kLfP0i8u+qd+IL/agwOBCgYazVWY+Wk=;
+  b=ccBlFt4FFqZ1nx/5J76xyOeUA2mYB8FdMro00Pazpm+uGMIr2ZQ8G5SY
+   QmLXKJ36NcUoFpCwDW/5lJ8ZeFWKojc6Jeax4nRdGEWYf7WUhPTHVoyGT
+   5GYdUof63XuTk+FyH3zkIKpSwi/kaRYaKf9wMubFe1Xl2e2kKQqUoKVDW
+   /9ftZQrRS4VBg3KQqZkazh9/RreC4QaH700O0jLY7AfdIMSMT02vwakqK
+   FIdUoD0iCYMZeOkQ99vNxhF1yf5u5WIcpNLZUZpxw8pZ/jjTHtdWSMpUJ
+   XLrxba4YTr6igGVI1n/izDbqBCutBaid/5y7bID7/INMWKCbhj6nS//TQ
    w==;
-X-CSE-ConnectionGUID: h+2MJVJYTt+Xg5ooGXA6pw==
-X-CSE-MsgGUID: KhSSLN97Sm2NMsfBHlBsaQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11503"; a="59648298"
+X-CSE-ConnectionGUID: susZb9bcSbeuG8To5iYIjg==
+X-CSE-MsgGUID: 4zhPE3liSY6qUj7jhFr9Sg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11503"; a="66394952"
 X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; 
-   d="scan'208";a="59648298"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2025 16:40:14 -0700
-X-CSE-ConnectionGUID: 6Yp08uldRSWkEbMOUN5HIw==
-X-CSE-MsgGUID: 03UqciN2RzCTgHOmoTjPCA==
+   d="scan'208";a="66394952"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2025 16:41:24 -0700
+X-CSE-ConnectionGUID: YOQXNKRRQwu5vpc0WVHgNg==
+X-CSE-MsgGUID: 84nHd1ttQ2KL9VwmYDj7jA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,339,1744095600"; 
-   d="scan'208";a="160520396"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2025 16:40:15 -0700
+   d="scan'208";a="160803797"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2025 16:41:24 -0700
 Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.26; Fri, 25 Jul 2025 16:40:13 -0700
+ 15.2.1748.26; Fri, 25 Jul 2025 16:41:23 -0700
 Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
  ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.26 via Frontend Transport; Fri, 25 Jul 2025 16:40:13 -0700
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (40.107.237.59)
+ 15.2.1748.26 via Frontend Transport; Fri, 25 Jul 2025 16:41:23 -0700
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (40.107.101.89)
  by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.26; Fri, 25 Jul 2025 16:40:13 -0700
+ 15.2.1748.26; Fri, 25 Jul 2025 16:41:23 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RXlPyG0qqWWGcNpHwKw4ZUJapScWxjznoYgwtXaUKXxa1TSUA3qow5duTc/RI5aCe9PxugNwpjPO6lGxIhB/yE40iwKKa6FpbNcYoncG54mL73+2jFi/8IghTcpoNrRto/zw2brod5xWz4P3i3q96kCIij1y7i3Zk+YlTFlpw+V32CO9luZTDW0dQO8KnIG/TuA7+ETwqSCGf0GjtFQBmu8CCQckFHiCs75yKi/RsRzeccNzFaZwgIuFufVoBbtwzb3T//qjAvfYRt+SJu5mj34LUWv3BYEYC4VdspM+FbN4iiM9b33Ss11PBqshP9WUlfPnFkSHklLKWt0gFI/1+Q==
+ b=XHlmHs1EhQ/9wHvekksfRBInUDugI00w9qBcsFM6IB9IX/Zts9j1hf1jkQQd57/bdlwAea0vjiNE7/0fgjyH1yClUdZGR6qKbOLQKq1HLQGJL3qDFM9Hb/wWtwjPLtG4QD05Am058bGSrldlzloodY8+1wt6RaxuYR+I7u2+1lL74G/eYrxXaiCi+iyjAuAbn5x6zzxOIrnjVV2jZpvg1RjCj6vd2NMDL6xsLLhWDe3UWs6fG1QG8/QxLAAFZDBMCiel1T/Wti0Pdmsk2Z/4HngHtrSJ/3vWL+BY4i30bldDEEgeFtampnNtEakM1y2JIutYilNQVp8rLGeoetgUGg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UQAV/C3t+g/sI0wB6ulFzRbxRD/CiA/wz2Kth4RojOs=;
- b=qXYYNcs0VRWyO9t6tCvN/IajhOhChBEr+FgQbYvo4HSnzOreri83U3by7hEu8d/JERqUNViBOk9BpwIQrg3gkr8eb+NGhylO2kfHVfqDmxvjC7xMzw0RKLT8jdBXZUwDjbtchFWzIEK7scDevX/1rGUnmGLseMh/2R215suJlWEDcimuzYISuvIgtISVayYpw9N7yR/RGRwLjCvfOfZrbwUL54wTJSyhMXX1AM5haSaHIGBZd8btMMBm8nx4TLF47avT/aujNLktXsuXJOClOF1CgtAaa8KN3V5Or0LVRGqz1Lw5h3wWN5k0+G90f/RBZ6i0k8iQlY10fdlxE8MBKA==
+ bh=AJ744Vl4JZXGvXKUVq/PJHikimuq1svm5VvwJRooR50=;
+ b=Snxuah40J8PEIpgLQxPoO9lCMWR5/55JKeEcmsnUcn1TxciOlXVEHpzHU5iT61BoPNUshhRmRk1U+Wc8rrP0kENu99eyDCF+WZC+pfCFg7C+7wOwHjFzmgpTys5tEPkyrclskV3vB9IdLxSt9ZGMjcqlvaRXLM5S3cTR1iv+TJ690fk1T53/kJSFdksmyl3+E/NI444nr9xUJq0O5kZKGOtGNu4gk1RZvzquRGahB3nPUjzgUIKIZ1fYvjTzJumeBEm/l/JvDTAPhMllKlyEtbWhW2ArptplJwTqb5aKbsbwWVVoG7I4dXm4AmgSimWj5vSaD+u2gwi8PSf7Z4OPKA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -71,16 +71,16 @@ Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
  by IA1PR11MB6491.namprd11.prod.outlook.com (2603:10b6:208:3a5::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.24; Fri, 25 Jul
- 2025 23:40:11 +0000
+ 2025 23:41:21 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf%4]) with mapi id 15.20.8943.028; Fri, 25 Jul 2025
- 23:40:11 +0000
-Message-ID: <ba0eebf2-12e7-4783-bfb6-81773d3b25b1@intel.com>
-Date: Fri, 25 Jul 2025 16:40:09 -0700
+ 23:41:20 +0000
+Message-ID: <765d3f16-6ecd-4581-940f-d062d3340c14@intel.com>
+Date: Fri, 25 Jul 2025 16:41:19 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 18/31] x86/resctrl: Count valid telemetry aggregators
- per package
+Subject: Re: [PATCH v7 19/31] x86/resctrl: Complete telemetry event
+ enumeration
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
  Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
@@ -89,14 +89,14 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
 CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
 References: <20250711235341.113933-1-tony.luck@intel.com>
- <20250711235341.113933-19-tony.luck@intel.com>
-Content-Language: en-US
+ <20250711235341.113933-20-tony.luck@intel.com>
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20250711235341.113933-19-tony.luck@intel.com>
+Content-Language: en-US
+In-Reply-To: <20250711235341.113933-20-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0041.namprd03.prod.outlook.com
- (2603:10b6:303:8e::16) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR03CA0045.namprd03.prod.outlook.com
+ (2603:10b6:303:8e::20) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -106,126 +106,284 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|IA1PR11MB6491:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5a1a5935-1793-40a0-23cc-08ddcbd498bb
+X-MS-Office365-Filtering-Correlation-Id: eebedf2a-581e-460e-8972-08ddcbd4c231
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?K3dZV0xMZlRoc2k1c1RhYUEzK2h2dlJhelFlWFJhMkNkalhrQXFCbHU2QmJq?=
- =?utf-8?B?cGF1eTQ1aDVLcGQ3VmtKZ1dTcDVvMFNlZ2VTQ2oxc0hJYjZ3V3JHc1N1eDhR?=
- =?utf-8?B?bUp5TUVud1hxZHpra0NwZzFKRXlFQXJ5OTM0emN2Zk02MDcxck01SVlwOFRB?=
- =?utf-8?B?ZEtSSUNZalB3WENFQmZ3ZjJieGhsS3EvTHlMYjFrR3JPZFBlT1ZCY2x2OTJ4?=
- =?utf-8?B?K2tXOE8vbnN6MXY3OEk0ZFFkZ0xRQ1BEME5idWRNakdmUHYrdmxOb1ZGUVgy?=
- =?utf-8?B?THJMREdPT1BTa1E4SlNjTnFDZkJQcUs0eENxYXh3djhsK3BBbi9MR1ZLOWNZ?=
- =?utf-8?B?UlJ4MGpJcUtzakFqQng3aCszcE9ndXRDRTBOK2w2d0JaZXZDV2tWY3VTbnVU?=
- =?utf-8?B?V1FKdGYwOEhZSkJtU1hQS2NQVVhqSDZzMSttQ1dsb1lDUlVyRGtBd21kM1NJ?=
- =?utf-8?B?bmN6akc0dHRna0E5dGNmem9MYW1HRjN1bWtPaWxEQTdnL25UbHZrU3lhZGVD?=
- =?utf-8?B?b2F5ZVZKM0FjSmNKS2l2L3NXQmtCdU5rRnQvUXlRL2dGNk9nOGZoY2RMSVVG?=
- =?utf-8?B?UFV0cEYyY0kwb1Y1UWdxZnFSVFpIYi82TWcrd000TDNTSzROUXhBZGhqYUVX?=
- =?utf-8?B?KzdIc0xWaDFHYVk4M1RTU0tOSWZHb0R6L0thTnN5WHh4c0lWQ3RvY1RtNkh2?=
- =?utf-8?B?KzF4RGdpbklQMXpsVGljdXB3bjgyZmtsbTRFRGdtSGVMeExvaGJGS21EcVhF?=
- =?utf-8?B?bXNGSHVvcTB1VHowbG9wQ3lOb2dGR1BWNGRmeHg2dTRjQnZTeTkyOVQweDVZ?=
- =?utf-8?B?czdjUDdld3duOWZRZXkwOElVcWQzSWhMQTI5SW1vdHVCNUdtckdhUFVVUktR?=
- =?utf-8?B?TGN5V08vZzFJNHFjdFBQT3lqSjI4VzhrNVlLMTR4aVg2RUF3aThMUWJnY3Na?=
- =?utf-8?B?MDh6bi9ERk50bmkrUWdIa29kd0dobW85bHBtNHJQOThGS1RvRDc5V2V6MXVn?=
- =?utf-8?B?SzZyeGZ2b2wxcHg3THhsamZzRXVGQ29lNVlaemtUSGVTQXJ3Q1p1QjYwS0Mz?=
- =?utf-8?B?WHBvcXV0UStCM1hZZHF3Ymp0NThJZ2xmL2RwTXlvKzlMTlFScEhtYXJWMkZY?=
- =?utf-8?B?ZGRCZGNqUWhKOFZ3RDl2UnRqemJTaXlLYXgzVUcxVmxBOEtMcTN1cUtYMlNW?=
- =?utf-8?B?cmVQV1ZaMjRrK2IxZG1Td1g5cXl1blBUM2FlWHI1ZjVsMnd0Tm9lSmhuejdH?=
- =?utf-8?B?Tlh4RDhISkNjWmljR1dnb3RCcHlVdDNVajlEUXhXSk9ESTRPZHE3ZGd0c1M4?=
- =?utf-8?B?WGliUjV0U0RJMHlmNzJKNy9zUVZEeUxMK3diZzdCKzBFdFhsWGN1RHZGVWdW?=
- =?utf-8?B?ZnEzZU5ld1N4bnFIZmJIelQ0SlZtaTM0VlNPck85dDl2QjZIb0YxczNtTlRh?=
- =?utf-8?B?Z0Via2UrZDQwVkx6cDd6M095UDZrUTA5MUZyRWdMWEN6RzlKTnY1QytUd2sv?=
- =?utf-8?B?eDEzSk5DMjZsRnVIUW5jOEsya05WdDNwRVR1a3puaURCZmtGR0w2V1lseWJY?=
- =?utf-8?B?cS9UQVBDL3NDUFQycmN2U1BqaHNmQTc0WjY2ZklYSmlRczdJTS9ZOTV0NE5B?=
- =?utf-8?B?LzlucDdORW0xbjQ1UFFHbTN4SnVpRXFYdGRpRm5mTW5qOUU5T1dYOEM0aTEz?=
- =?utf-8?B?ODRaUm5zNDNkOEUwdDRBWWg3ME9oeDZzZk5XL2VXclM1dzFNbGE1czV1d1BM?=
- =?utf-8?B?d0xBMzF1SGozWmVUei9tclBIUzdQcGM0RUhrQ1QrNysrWDNhTDhTUmZtSk1v?=
- =?utf-8?B?TTZUMlUySW84NkpUS2NXUHoxTzVPa1lZL3BON1prdExvM0ViaHo3UFNRczY1?=
- =?utf-8?B?SWR3UVp0d1UvQnNzcUo2bnJBSjB1bFJKMzFqb0JMazFXWVVRKzRYY0ZQNW5x?=
- =?utf-8?Q?pPthguPZRTo=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UTdtSHoyTmduYUdHYjNFMUpKemhMR1FjNm0zNG9DZHF6YmtrMTU4cmJST0tR?=
+ =?utf-8?B?QjI2OTdDZU53S0p4U3d4UGsvMTJGdzRSWTNINGJHM1FSU01XZE9hSmd2T1F5?=
+ =?utf-8?B?ZmtpSS9QR0s0OVpEUFF4bFVNRm4veS9OTG9mZlhMdm1xNnFBaVRFeU9helRS?=
+ =?utf-8?B?V3Z1cWxmQWVRRXh3ZGVycURVaS9nQW5GV3V5UzRXMzRyZTdmRTV5RDZzOGg4?=
+ =?utf-8?B?YXBPaFZ3RXpaajZaOTBpY0NUZGp0bmprdkpMdXNpNjBQckdDQnFGOFVhVEdY?=
+ =?utf-8?B?WXM0V0JwZk9hQUlQYW55TFZaQXhKcUw3dWhaclNwSVQrY2tmQ21uZkU0a0JY?=
+ =?utf-8?B?a0tqUTNZVlArMzJpOGF0VGpoN3hWSHFCUFp1VkxxR2poRE84L2VNalloaTdB?=
+ =?utf-8?B?VmhPWEo2ZjJHNWJ2dGhLYWYydnlwdWZQY1NMK09kZzZqZDIrc2JJcnRVV2ZT?=
+ =?utf-8?B?Yi9Wc09XL2JjU082RGdsNUFyZ3lLRmZUelNjRTV6elNlNTMrTm1BMitDcm1R?=
+ =?utf-8?B?aXRneFpWUjdMS0p6Z0F5UGZNYWpwT3pNMncyeGdtRm96a3gyTXYzaFJrSzZJ?=
+ =?utf-8?B?ZXpML01QbGxTMVU5bXV6NXNReEhzT3R0WjBLdU1SOUhVRHhzdW9xVnc4VVNY?=
+ =?utf-8?B?Q2hVQmRhdndhd2ovak1FRXJSZDRQa3RpaHBsZmczQWIzN3BoNGN4c2tXb1VP?=
+ =?utf-8?B?YUxQUEpJczlSQnQxSHVCdzlUVm1BNDZId1FlOStXSTdKRUFzZTY2cm9hRmcv?=
+ =?utf-8?B?Vm9PT2FhK1JqczFidGlXZjNhd3lEWlowTzg3WDVQWmRwek1GWjkwREZpT2dy?=
+ =?utf-8?B?OGFQUnkrNngvaFNnSk11SmwydlVQNWpGcjJlMW9LVlFYTWVidTdVMTQ3SFZR?=
+ =?utf-8?B?UUhIQWVEcVhhVkFEZWdEVzdrYWd1TmN3YVU1dVZ6VmgxVzNaTXIwakt2dVN4?=
+ =?utf-8?B?R3QzcmNSdXdCT3dpTDJLakhFRW1saXZ6QWJPQ2dNRmhtWWF3akJ3R3NwcWFS?=
+ =?utf-8?B?U2tOYUpyZU1OL0dHdjNxTC9Bd2FLL1IvZEVDdk80ZDlQWjIvaFhWditjbURP?=
+ =?utf-8?B?VC9jZlJBMzBPSHp3bHk2RE9Xc25WUFdSWC9UeDArQ2JoZWJQcmtHc0psSWpV?=
+ =?utf-8?B?cUVPL0ttbllTZ0JUc0hsU2o4UVhxVjJJdmVNRkdSZVpSQVV2NmV0SVpiQXYz?=
+ =?utf-8?B?NWpKMy84SVluUXVzUy81aGtiWmRQamZXanRuRUdJbm84RjFGMU01Yk1qMVMw?=
+ =?utf-8?B?S04xY3c0QW8zbW1jNjYzVXlSUHBJN28xVjZDTnBERUtQdDZiVzJNTFBPd3lZ?=
+ =?utf-8?B?RUwzR3BUTkYzY1pBZ0d3cVRlaGNaQkp3blBuSGhoaEZkNWNaUGtSVWxmbDVU?=
+ =?utf-8?B?NXF5OFhDT0ZUa2pRTkZ4MEhuYm9lUW80WjlvQ3NQYXFxTjlOWEVGbU56cmQ2?=
+ =?utf-8?B?WWRIOThOOWMralVNNGd1TXA3WHh1VG5XZDFhaGs1SitYTDIzbVhuUmVETDZS?=
+ =?utf-8?B?MjgzYzNkcGJrY1p0Yy84cUVnN3pMRkhKdG0veVU0Y2JLd0dmVmJSalk5M21P?=
+ =?utf-8?B?ZGU0Tm0rYkZJNEFNQVkrMXpOeDRRM05ieWlaUnE5RlBRUHYwM3dYaXBZWkZa?=
+ =?utf-8?B?cnFJVVhnd1pGQ3ZJQjhTakRXSFRXOWlUUllaSDdjdHdWdGI0USszckpXV2I1?=
+ =?utf-8?B?aHJzL0Nmbm1ISytPWE83UXd2WDZycnJ4L3V4Ym1EMlFIR0ZtZWljQ0FUaGlO?=
+ =?utf-8?B?UGZVMDVneWY0TEszUFFvRE1lUk9IZ0ZXNUxUOHlhWjdNaGJFZVRZV3FsQkVP?=
+ =?utf-8?B?cVhHODRIUUdpSkMvSlBSb1pyVjN6QWlHTDJMUGI0aGVBamdmMVhGcVpaeXBy?=
+ =?utf-8?B?VU9xcS9zL3RMK1hOY3AvbllMM0VrKzl5RUNic1hhcnVna3MxcGc4Z3d4QlRQ?=
+ =?utf-8?Q?NtChxqqVMXI=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bDh6anRWSlRQU09UaDY1S3g1dDN6NFVXZXlIMkgxM3h2TVVMQnBiSEoxSkJU?=
- =?utf-8?B?d1h5bloxYzVneUpYNjJaUlNmcE1xOGNUTEFwTWpFakYyM0REY1lmclZrYUhF?=
- =?utf-8?B?N2NURFlXTFNSb0FwYTFrMVBYcW8yOFN6TE1QOUFjSXU2Y3ZuNkRZTGE1ZzlU?=
- =?utf-8?B?SHFOWFhZb0JMN01hVmhyNk5ja2IyQlRqLzlPRGU2QmhNZndmellHbU5KZUps?=
- =?utf-8?B?WUs0TnBJaFpmRngwYjNuTHhuYy91YTVRUG04NUphaE9RM3U5QkNsYlNpbzdp?=
- =?utf-8?B?YVlJbVRobVBXRnRYRlgwSDVUcWZ0SkZ2WjJlZ056M2xTbjNJcXFkZStidkh2?=
- =?utf-8?B?VmdqVVFrZVByMWtIZmpRU2hjMS90VmhyNkVIOFBRc2dZakVCdFYwVkNUYnJC?=
- =?utf-8?B?OGMzV3ZlUjVoQzZuUVBlRWJ0UDJrUWZreStxVFNQdjd2MGVIZ21xdzZub2or?=
- =?utf-8?B?YktKQ29LTkZ0MVRIV1pLbHYwR2MxS0RMbTh1MkcrWDQ2R1lvcUFuaVNzeXVO?=
- =?utf-8?B?Q1N3MWo2ekw0M0Y4L2JhcnVjOFdxZlBnZmwrMHcwcDNVTTlZNXlTYm1rVDNW?=
- =?utf-8?B?TFcrU3pmL3N1enhWQlMwVG9TcmxhdlJYR1orem82eWFhNG5LZU9SZXdNNk9o?=
- =?utf-8?B?TCt4UUs0RHRLUzdsZGhVRndHdWlleXRYUE5DWFd2WXNoTkxITnhneWM0Z1Qz?=
- =?utf-8?B?NFp5V05RWmpWaE5NOGVBc2JBMzlLS1Q2MkExMTZtL1U2QXl3TlQ0SDZZdzdU?=
- =?utf-8?B?QTlKYXFkTlVEU0pXL0JpNDdHNk1sU0R2dFVBa2lJQjRhbU55QXpWSFNib0l6?=
- =?utf-8?B?UEd2TFBKSDFUUkpYOWdrZkZ5V3hvQmVLR2tlcDluUlF1a251Ry9ZNk5zUlNo?=
- =?utf-8?B?SGRXVVlFQUxheStzUFg2R1R2SGQ5RStZUmNIOC9CSGQzSmh4VFQyWEttRE5p?=
- =?utf-8?B?dHdhaGdVaEF4eVJnMFFDdStaUVVsLzgrejZNTVVrcWJpNXJzcmRBbzZWMjlm?=
- =?utf-8?B?eEFYNm9oTWIzeTRWKzJDZjZhTzloMHh6YTNkNmF5VmE3TGIrYW1VM010bk8v?=
- =?utf-8?B?cnpvcW4yT2ZTRDlnaFlqRlRzRGZucWtuOHBmS2tHTTA0cVNqcW5QaFZyUXhY?=
- =?utf-8?B?M0s1eTdmSncrRlNtdVg2Nk9jSDBibW82MDRaQmV4ZWthMk1wOVlZaHVqRmMr?=
- =?utf-8?B?ZTJneHJUbDBZSGFNMGtYakdKNXhnRmhTU21xd2ZscVVrNHlGbTN6a1JIZnhZ?=
- =?utf-8?B?RTdJRVdEK09BMkxXdUluRW42N1pXL3Y2UDlFem5lN3RzSnp5M09RVmd6MWNS?=
- =?utf-8?B?L01zd0RRUW5kVkQrb2hNNUdEWHdxMUI5ajBaRlFPRmdVOWZwcEJzeVdodFBH?=
- =?utf-8?B?VkFIZkRPbi9LVFdZeUQ3UmlWNXJlNFpKM1FxZWQrdllXVDVMcmVQc2NKc1hY?=
- =?utf-8?B?eWhpZ0p5bCt4cFhoUjZUZUFIRkxwQVdwRE1TdThWQjlVMjZpeTBmN3duMjJW?=
- =?utf-8?B?UnlVTTFETjNtc3NsSWU2NzQ0cGJjbjlHUU05clF0RkFhc2FaSzZTWTFZczdO?=
- =?utf-8?B?Mk5wSUMxTXp3ang1eWhTZzVHRVlkajBic2tHRENYMkgzUmlqak1VLzRUUXBN?=
- =?utf-8?B?QWg1OUhXbjQzTEtVN1YyZnhlM2MwZlhQd252Yy9VaWhDVEk5N1dyeHdvWW44?=
- =?utf-8?B?akFrNDJkWnluKzN4TXY4WUxGODhlZnUxYWlpa2ZBdjQ1dmVVY3JCcXAvQjhs?=
- =?utf-8?B?S1R2U1ZzRzBRNEJVZDZkSmxnUWRyVG1qeWhSSWlIWjE3aXlJbmVYMnE1TFow?=
- =?utf-8?B?WXl0a1R5bXdULzVYU09EQ3NreVFiYzUxZGh6TlkzYytmeE5OSkorS294eVNx?=
- =?utf-8?B?c3FNOWo2MkNXQ1dYZ1h3RTFFbE9EVUJvdWtLSDhYZzlWOUtFYXBwSzlCWUdU?=
- =?utf-8?B?S2JES2hjR2YzUTFZdzdJYmNOaEFNOFpCNTllQVZneiswU01QekN6YWliMlpK?=
- =?utf-8?B?T2xjcFhSQ3p0alFjTnFJTVk3SHZFeHVzazFXSk9DZytUT1Q5UGFwanRpNFFk?=
- =?utf-8?B?UnppeWJOT1JPMTkrN05GSk9sYWRJb1RyeGZqMG9pOUZFQlVYSGJTOHRHd09X?=
- =?utf-8?B?N21JU1ZSRU1HZzZHM1NiT3p6OG5EeW5jK3FhVnlGYUdqWHY2SW04S2tUTWhj?=
- =?utf-8?B?R3c9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5a1a5935-1793-40a0-23cc-08ddcbd498bb
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TkY2WHQvZHc4UnhkWVZ6d0VWL1RTTDBvVXNIaFBGZVZDQ0ZpSXltQW9QaCtr?=
+ =?utf-8?B?WlpCQ00wS2xOT2ZQQlNLeDhCekdycWxrallxbGM1V1RNZ0dMY2w3bytGUTNT?=
+ =?utf-8?B?NmpzZnFwY1I4WFkxM3VaL3FnSUJVQXV3UEVOVmhlNFFUOUJIU2tNa3d0Vng5?=
+ =?utf-8?B?S3RsTVdwQW0xWEJ4OU44WWNia2VhVm5WMzUzR2RnVEZkY2RnK1gwTnkyZHMr?=
+ =?utf-8?B?NWJ6d1RDMWUrQWswT3dYd2F2TlhtMVgwNzRFczgxS0RwcUR5RDFSWkN2R3c1?=
+ =?utf-8?B?Q0hDVU80REtpQkFmamNrOVJSVUZPZlpUVlNzc3FrVlRFZ3FYanR6ckk0K0k0?=
+ =?utf-8?B?bVorZTZJM2VwNDR1SXNWdzNEbzNaSnh1OXlqUGdJWVV1eVdHN05kbnJ6akRH?=
+ =?utf-8?B?MWY4T2dXMUNRdlk1dStJTS83aFhvTjlBWDlZVEhLbllCQzAwbTJnOUprdkJu?=
+ =?utf-8?B?UTVla3ZCUXF2eXB1OFZTS0w1MDh0L0wwVElpWERoaU9tWEZld0JLS3VjcVdR?=
+ =?utf-8?B?NXVlQU13TTljNGJBRFBTaE94QzgvMVYvTDBsMGY3ajVvaGE1VTYwbjBkcWZ1?=
+ =?utf-8?B?Mnl6cmt1SXlvNlo1dG5yV213YnkxS2hyWWRyS1JEWFdmbzZtaUY0RlFRVmR2?=
+ =?utf-8?B?TTNOc050cjdiWno3NHh4TytCenJwWHBldGZNQUlIb0E4ZVJNbEsvYy8yUjF3?=
+ =?utf-8?B?dFoxdlUvSCtaKzBrMHdweW55Uis3WUtxd2tTblNoNENoc2tiRklTV254d1Nh?=
+ =?utf-8?B?RFd6c2lZbWtlM1VkeFhwQXIrOTBQVmVDMnYrUXFQM3pVMTFLWXJhRnBnRWM5?=
+ =?utf-8?B?ck5JUi9DVGlZTWdMZi8zdGg0cm9OVWQyR09yMWJST2NieU0xdnd5VytuaDJP?=
+ =?utf-8?B?eWR1NWlqSVZOSjZRTXBIbDNmYkZzSVQ1K0QraitISmVwaVI0UEFwcGpQTVZK?=
+ =?utf-8?B?a2krbWdlVDJ0YXd3ODBldm9xSWkrMWxHMElUWVI2d3ROV3pDOE0yY3Y3VHI3?=
+ =?utf-8?B?SDlQVEFCTXdaVVJSTFBUeENHanRET2Y3Z2JFalRUdVQ0L3M4S0JNVG9wRG9Z?=
+ =?utf-8?B?UW5SeVd6cVRNWHczb3g1dkhjc0czdGJETHcwdFdhenJrZmYydVBCSWpZc1Qv?=
+ =?utf-8?B?bURza2RERXgwNWJKZlZLMSs0M0gzdGxFVzEwV2p6ZkhCQXBQOXd0MVBwWE1i?=
+ =?utf-8?B?b0Jud25NUkJoRHFJcmQ0U1dYT0tnYitrQlZkcGpVdFU4MHFQaXNaVWM1eFl0?=
+ =?utf-8?B?NlkrWXpXVmRZbUprTk52bG5lVDJrVXRtVVYyb2pmaDV5TjFUbEdaQjJmelJo?=
+ =?utf-8?B?TzM2TVVnbjhlOGN1SFNXVXdyNGRtUys1WXV6YzF6RlFYdkhhd2hiaHhOWHd0?=
+ =?utf-8?B?MGhZM096RlZaM3BBcCtWc2pidklKdkR2RFVSK2NmUUVXNktBT0VIQlYwM3d6?=
+ =?utf-8?B?NXJiTk10TjFERzl6cmEwTXlpbndYdllmMGdHY0RIcmVvS2t1TnNZL0ltL3hT?=
+ =?utf-8?B?WVNtcUswSTlPdWxRUU1LMVIzT3E3K0JUa2JLbE9FazQwV2t3Ry9sYVBsZ3F5?=
+ =?utf-8?B?NmRFNllRRTZGcTVqZU5FVndnbXVoVllaQTN1SzhFbTVWbGp2M2hhaERydkdj?=
+ =?utf-8?B?Z1RDRUxYWHVwdDhYSmNQUzNrU3ZIYXcvMnA2WklUUC9hUS9oamZPVkJubGI0?=
+ =?utf-8?B?QWtaMVI1czMrZ3VIeGUyNU9IWDRyaWZIcEF4WFJLUGFOckg1ZTFoWXBBWXJt?=
+ =?utf-8?B?UHd3OE5hbU9xbXpSclRpK2hnMXU1ejFHejZKLzQvQTF5d2p3S05PTTFabFJP?=
+ =?utf-8?B?SUcxK2RlcGlvN3NqSlFDeEVHUnpJZTBvMTZFMVJKblA1NGp1d1duQVJaOUFh?=
+ =?utf-8?B?bE1CRUwxdGdFWURGRnVZd3BYWllXNzVITGl3bCs4Q0Q0bGRid2lCRTg3bndj?=
+ =?utf-8?B?WkxuR01pc0F1TTZHYVMzUllDMzVaeFU4R0F5eHBIUFpSZnVZWDFheDgzYmZP?=
+ =?utf-8?B?RlpNUFRBc2dkd1VtM2FueWVOTXBKa1V3dTRmMm10bjc3dWxRMU9OVjJiVHAx?=
+ =?utf-8?B?OC85ZXhsMGtISS8wWG1jNlNibk1PNzErWk5UOC9PUjF3NG5rSWpucEdkMlJk?=
+ =?utf-8?B?S3BjdmhHQjdBRHR4aHBJem9KODB4Z0dxOFJTMUd0T2ZJYUNzS3hMUTRQTVhH?=
+ =?utf-8?B?K1E9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: eebedf2a-581e-460e-8972-08ddcbd4c231
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2025 23:40:11.3426
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2025 23:41:20.9073
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: K3qfRZ9kXq/6/lMSxaU1/jzHbZ67A5zlXDnonqO0S5o3XibLVLxYUiy7fCtrP19SigUuJ3Q7wejy08olWDRs8gcYCBiQCDT1szmhQKPS5iA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: yp+/mPvi+VIF0nsy1VFPateQI0gmDvmJ27/CGw1EXn4vf6PaP/17Eeiaets5at+x8veHEzRS54VnUHhgMDdE28ZaOz90cTJcVOiQcmvPYR0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6491
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 7/11/25 4:53 PM, Tony Luck wrote:
-> There may be multiple telemetry aggregators per package, each enumerated
-> by a telemetry region structure in the feature group.
+> Counters for telemetry events are in MMIO space. Each telemetry_region
+> structure returned in the pmt_feature_group returned from OOBMSM contains
+> the base MMIO address for the counters.
 > 
-> Scan the array of telemetry region structures and count how many are
-> in each package in preparation to allocate structures to save the MMIO
-> addresses for each in a convenient format for use when reading event
-> counters.
+> There may be multiple aggregators per package. Scan all the
+> telemetry_region structures again and save the number of regions together
+> with a flex array of the MMIO addresses for each aggregator indexed by
+> package id.
+
+I do not see why it is needed to switch back and forth between interchangeable
+regions and aggregators. Why not just stick with telemetry regions? It is
+confusing when, for example, saying "number of regions" followed by "for each
+aggregator"? Why not just say "number of regions" followed by "for each
+region"?
+
 > 
-> Sanity check that the telemetry region structures have a valid
-> package_id and that the size they report for the MMIO space is as
+> Completed structure for each event group looks like this:
+> 
+>              +---------------------+---------------------+
+> pkginfo** -->|pkginfo[package ID 0]|pkginfo[package ID 1]|
+>              +---------------------+---------------------+
+>                         |                     |
+>                         v                     v
+>                 +----------------+    +----------------+
+>                 |struct mmio_info|    |struct mmio_info|
 
-package_id -> package id
+mmio_info -> pkg_mmio_info
 
-> large as expected from the XML description of the registers in
-> the region.
+>                 +----------------+    +----------------+
+>                 |num_regions = N |    |num_regions = N |
 
-The above two paragraphs seem to describe the actual flow backwards:
-first is mentions that telemetry regions are counted (above implies that
-all telemetry regions are counted, valid as well as invalid) and then how
-to actually determine if a telemetry region is valid?
-It will be less confusing to first describe how it is determined that a
-telemetry region is valid and then it will be easier to explain that only
-*valid* telemetry regions are counted?
+The above "There may be multiple aggregators (telemetry regions?) per
+package." could add that the number of telemetry regions per package may
+be different and supported by an example where one package has "N"
+regions and the other "M".
 
+>                 |  addrs[0]      |    |  addrs[0]      |
+>                 |  addrs[1]      |    |  addrs[1]      |
+>                 |    ...         |    |    ...         |
+>                 |  addrs[N-1]    |    |  addrs[N-1]    |
+>                 +----------------+    +----------------+
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
+>  arch/x86/kernel/cpu/resctrl/intel_aet.c | 64 ++++++++++++++++++++++++-
+>  1 file changed, 63 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> index 7cd6c06f9205..3f383f0a9d08 100644
+> --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> @@ -19,12 +19,26 @@
+>  
+>  #include "internal.h"
+>  
+> +/**
+> + * struct pkg_mmio_info - MMIO address information for one event group of a package.
+> + * @num_regions:	Number of telemetry regions on this package.
+> + * @addrs:		Array of MMIO addresses, one per telemetry region on this package.
+> + *
+> + * Provides convenient access to all MMIO addresses of one event group
+> + * for one package. Used when reading event data on a package.
+> + */
+> +struct pkg_mmio_info {
+> +	unsigned int	num_regions;
+> +	void __iomem	*addrs[] __counted_by(num_regions);
+> +};
+> +
+>  /**
+>   * struct event_group - All information about a group of telemetry events.
+>   * @pfg:		Points to the aggregated telemetry space information
+>   *			within the OOBMSM driver that contains data for all
+>   *			telemetry regions.
+>   * @list:		List of active event groups.
+> + * @pkginfo:		Per-package MMIO addresses of telemetry regions belonging to this group.
+>   * @guid:		Unique number per XML description file.
+>   * @mmio_size:		Number of bytes of MMIO registers for this group.
+>   */
+> @@ -32,6 +46,7 @@ struct event_group {
+>  	/* Data fields for additional structures to manage this group. */
+>  	struct pmt_feature_group	*pfg;
+>  	struct list_head		list;
+> +	struct pkg_mmio_info		**pkginfo;
+>  
+>  	/* Remaining fields initialized from XML file. */
+>  	u32				guid;
+> @@ -90,15 +105,32 @@ static bool skip_this_region(struct telemetry_region *tr, struct event_group *e)
+>  	return false;
+>  }
+>  
+> +static void free_pkg_mmio_info(struct pkg_mmio_info **mmi)
+> +{
+> +	int num_pkgs = topology_max_packages();
+> +
+> +	if (!mmi)
+> +		return;
+> +
+> +	for (int i = 0; i < num_pkgs; i++)
+> +		kfree(mmi[i]);
+> +	kfree(mmi);
+> +}
+> +
+> +DEFINE_FREE(pkg_mmio_info, struct pkg_mmio_info **, free_pkg_mmio_info(_T))
+> +
+>  /*
+>   * Discover events from one pmt_feature_group.
+>   * 1) Count how many usable telemetry regions per package.
+> - * 2...) To be continued.
+> + * 2) Allocate per-package structures and populate with MMIO
+> + *    addresses of the telemetry regions used by each aggregator.
 
-Patch looks good.
+"the telemetry regions used by each aggregator" does not sound right. "telemetry region == aggregator", no?
+
+>   */
+>  static int discover_events(struct event_group *e, struct pmt_feature_group *p)
+>  {
+> +	struct pkg_mmio_info **pkginfo __free(pkg_mmio_info) = NULL;
+>  	int *pkgcounts __free(kfree) = NULL;
+>  	struct telemetry_region *tr;
+> +	struct pkg_mmio_info *mmi;
+>  	int num_pkgs;
+>  
+>  	num_pkgs = topology_max_packages();
+> @@ -108,6 +140,7 @@ static int discover_events(struct event_group *e, struct pmt_feature_group *p)
+>  		tr = &p->regions[i];
+>  		if (skip_this_region(tr, e))
+>  			continue;
+> +
+>  		if (!pkgcounts) {
+>  			pkgcounts = kcalloc(num_pkgs, sizeof(*pkgcounts), GFP_KERNEL);
+>  			if (!pkgcounts)
+
+squash with previous patch.
+
+> @@ -119,6 +152,32 @@ static int discover_events(struct event_group *e, struct pmt_feature_group *p)
+>  	if (!pkgcounts)
+>  		return -ENODEV;
+>  
+> +	/* Allocate array for per-package struct pkg_mmio_info data */
+> +	pkginfo = kcalloc(num_pkgs, sizeof(*pkginfo), GFP_KERNEL);
+> +	if (!pkginfo)
+> +		return -ENOMEM;
+> +
+> +	/*
+> +	 * Allocate per-package pkg_mmio_info structures and initialize
+> +	 * count of telemetry_regions in each one.
+> +	 */
+> +	for (int i = 0; i < num_pkgs; i++) {
+> +		pkginfo[i] = kzalloc(struct_size(pkginfo[i], addrs, pkgcounts[i]), GFP_KERNEL);
+> +		if (!pkginfo[i])
+> +			return -ENOMEM;
+> +		pkginfo[i]->num_regions = pkgcounts[i];
+> +	}
+> +
+> +	/* Save MMIO address(es) for each telemetry region in per-package structures */
+> +	for (int i = 0; i < p->count; i++) {
+> +		tr = &p->regions[i];
+> +		if (skip_this_region(tr, e))
+> +			continue;
+> +		mmi = pkginfo[tr->plat_info.package_id];
+> +		mmi->addrs[--pkgcounts[tr->plat_info.package_id]] = tr->addr;
+> +	}
+> +	e->pkginfo = no_free_ptr(pkginfo);
+> +
+>  	return 0;
+>  }
+>  
+> @@ -151,6 +210,7 @@ static bool get_pmt_feature(enum pmt_feature_id feature, struct event_group **ev
+>  			(*peg)->pfg = no_free_ptr(p);
+>  			return true;
+>  		}
+> +		free_pkg_mmio_info((*peg)->pkginfo);
+
+Is this necessary? pkginfo will only be set on success, no?
+
+>  	}
+>  
+>  	return false;
+> @@ -179,6 +239,8 @@ void __exit intel_aet_exit(void)
+>  	list_for_each_entry_safe(evg, tmp, &active_event_groups, list) {
+>  		intel_pmt_put_feature_group(evg->pfg);
+>  		evg->pfg = NULL;
+> +		free_pkg_mmio_info(evg->pkginfo);
+> +		evg->pkginfo = NULL;
+>  		list_del(&evg->list);
+>  	}
+>  }
 
 Reinette
 
