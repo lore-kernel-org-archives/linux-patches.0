@@ -1,55 +1,55 @@
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DDC2EE985
-	for <patches@lists.linux.dev>; Fri, 25 Jul 2025 15:56:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EFEAD2C
+	for <patches@lists.linux.dev>; Fri, 25 Jul 2025 15:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753458973; cv=none; b=U0S8R8mxRd5PS2Ke5gHhIwdONvVbeRwNbQj0aR1JUhx2NOPC65o1brszKj3JUQKMN1yzTHlnt740jVtaCjYLnN/OdEHcw/TgVYPnY/b3VNdQ21R7hpgUV+v+ciq7FR9vbEOP55ZSZztQ/loJNK0nh8yPyagihw2J68XrJCcbUvI=
+	t=1753458981; cv=none; b=O3QomP0FPwmWQbMu7MY7P4cXsVhcXqmFMNdK4W4XdGyF5FqhSNdsdrJieV/iy8qZ6f4P/yP5cxcUc9bRAzECfiYFmctWRDtvTWW6KDMvxdLFj+DcWdlKvoJdqdwBS9uAfaVi3aDp8xsHcnHGih1jpgpDtrnSFQM00Jy6Bj4L41Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753458973; c=relaxed/simple;
-	bh=ApCzPWuqEIv8w5oR0HLgtv4+D/wwTnZTqBn4R3B/HRU=;
+	s=arc-20240116; t=1753458981; c=relaxed/simple;
+	bh=BSxaPKuNloUL/cDT7M06s92nsOQVtb5e4t2sIacSZjE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=lCjH5S+7tE0VHXHa+31ILlAFaHjOUdjC9fhrp3L6abKt/v8wMBdbG+mRAVlR7iSJ0yDp52h3fPNH57CS5YUSwH756dPCiFGHiH2qjzzaUmAgKMz8Fr4FldEnhPm3DKWlDoA1MgST8khdxS6l8kjO51UD7wjT8eKRkt++yUIhEhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=roxoh8AK; arc=none smtp.client-ip=203.254.224.34
+	 Content-Type:References; b=nem6Af4RJJMGpSZ2rQERbk/K/zO7O6kV2HFtGwg6KBTQiXzy3lXrM9zlSFXYQjBlx9yzb27j6qWm2q7sMSPH8Uv4a3bjat8U3DzJZx/0b6DZWSyBk3WH35zEfXzkQHcIZePZ2Gnl1ZbmsNg2FOcLO14AMuQXsSVRaKVXFEl8FyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=WmrgdZcE; arc=none smtp.client-ip=203.254.224.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="roxoh8AK"
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250725155609epoutp049696f363dc60139a44297eef37e29571~ViaSXPeXT2040320403epoutp045
-	for <patches@lists.linux.dev>; Fri, 25 Jul 2025 15:56:09 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250725155609epoutp049696f363dc60139a44297eef37e29571~ViaSXPeXT2040320403epoutp045
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="WmrgdZcE"
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250725155612epoutp0304f569f667570b2edd811a55f9939118~ViaUkQ4AC0926709267epoutp03k
+	for <patches@lists.linux.dev>; Fri, 25 Jul 2025 15:56:12 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250725155612epoutp0304f569f667570b2edd811a55f9939118~ViaUkQ4AC0926709267epoutp03k
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1753458969;
-	bh=gsFsMIu+qmP5Pk/U6/E+nZJ61/APVl3sjNSY2NmttmM=;
+	s=mail20170921; t=1753458972;
+	bh=4o6oYdxTCDb5MxCwoYrSW6KFwtCZdYzt3XyL1AmnZ98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roxoh8AKSYXrvCGuFdf8XH8kQu51QfVQLUdOFyczUN7Vq/hh5zsQ2qS7573JuGVKF
-	 4N/0SxsXAT09mXEL2wiuBBzb3AAVrthKQoXDru2BiTrD1VkuA082DJYDkQM3gIotgV
-	 hfgsrd3jq6GdF+p0FP8e/qBK5H3l+21Y8g0FzHCw=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
-	20250725155608epcas5p2c7efd9d50354672154572ea819fbf37d~ViaRK2uxM3273532735epcas5p26;
-	Fri, 25 Jul 2025 15:56:08 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.90]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4bpXXl5FHWz2SSKX; Fri, 25 Jul
-	2025 15:56:07 +0000 (GMT)
+	b=WmrgdZcEC7S1aUEmUUxzclmCG4tuYuLgzYUzsFGI3PkHgHPGejZysS/wKYP3L8IRq
+	 PNeIelbvsA6PzdmhRNuNH1ir1TnfnRMeB1+ggHyF5xytwoYKv2ne4puT1JdWoehOXm
+	 W/oAcTJxW8y7CJy3ZrXSgKoxkSzQ2mjKe3VgwohA=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+	20250725155611epcas5p1409cdf77bfd3eef5d516015619a70e4f~ViaUDtonF2299122991epcas5p1h;
+	Fri, 25 Jul 2025 15:56:11 +0000 (GMT)
+Received: from epcas5p3.samsung.com (unknown [182.195.38.86]) by
+	epsnrtp01.localdomain (Postfix) with ESMTP id 4bpXXp5mmWz6B9m4; Fri, 25 Jul
+	2025 15:56:10 +0000 (GMT)
 Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
 	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-	20250725155505epcas5p3981ad791c6c044c7abc6d232c05d54f9~ViZWfgzL-2330123301epcas5p3P;
-	Fri, 25 Jul 2025 15:55:05 +0000 (GMT)
+	20250725155506epcas5p3db90b1c2f47ed6f67c18825f0a39c51b~ViZXUcNct2330323303epcas5p3E;
+	Fri, 25 Jul 2025 15:55:06 +0000 (GMT)
 Received: from localhost.localdomain (unknown [107.99.41.245]) by
 	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250725155504epsmtip2f5c8d60b1fa487031b91537de75e1e72~ViZV4T2xO0442304423epsmtip2R;
-	Fri, 25 Jul 2025 15:55:04 +0000 (GMT)
+	20250725155505epsmtip26a888cd1f22c88a16004564641b2fe42~ViZWuS0aa3233232332epsmtip2T;
+	Fri, 25 Jul 2025 15:55:05 +0000 (GMT)
 From: Kundan Kumar <kundan.kumar@samsung.com>
 To: mcgrof@kernel.org
 Cc: patches@lists.linux.dev, Kundan Kumar <kundan.kumar@samsung.com>, Anuj
 	Gupta <anuj20.g@samsung.com>
-Subject: [PATCH v2 08/15] writeback: add support to collect stats for all
- writeback ctxs
-Date: Fri, 25 Jul 2025 21:24:14 +0530
-Message-Id: <20250725155421.3234-9-kundan.kumar@samsung.com>
+Subject: [PATCH v2 09/15] f2fs: add support in f2fs to handle multiple
+ writeback contexts
+Date: Fri, 25 Jul 2025 21:24:15 +0530
+Message-Id: <20250725155421.3234-10-kundan.kumar@samsung.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250725155421.3234-1-kundan.kumar@samsung.com>
 Precedence: bulk
@@ -59,153 +59,103 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250725155505epcas5p3981ad791c6c044c7abc6d232c05d54f9
+X-CMS-MailID: 20250725155506epcas5p3db90b1c2f47ed6f67c18825f0a39c51b
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250725155505epcas5p3981ad791c6c044c7abc6d232c05d54f9
+X-CMS-RootMailID: 20250725155506epcas5p3db90b1c2f47ed6f67c18825f0a39c51b
 References: <20250725155421.3234-1-kundan.kumar@samsung.com>
-	<CGME20250725155505epcas5p3981ad791c6c044c7abc6d232c05d54f9@epcas5p3.samsung.com>
+	<CGME20250725155506epcas5p3db90b1c2f47ed6f67c18825f0a39c51b@epcas5p3.samsung.com>
 
-Modified stats collection to collect stats for all the writeback
-contexts within a bdi.
+Add support to handle multiple writeback contexts and check for
+dirty_exceeded across all the writeback contexts.
+
+Made a new helper for same.
 
 Signed-off-by: Kundan Kumar <kundan.kumar@samsung.com>
 Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
 ---
- mm/backing-dev.c | 72 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 42 insertions(+), 30 deletions(-)
+ fs/f2fs/node.c              |  4 ++--
+ fs/f2fs/segment.h           |  2 +-
+ include/linux/backing-dev.h | 20 ++++++++++++++++----
+ 3 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/mm/backing-dev.c b/mm/backing-dev.c
-index 754f2f6c6d7c..0a772d984ecf 100644
---- a/mm/backing-dev.c
-+++ b/mm/backing-dev.c
-@@ -50,6 +50,7 @@ struct wb_stats {
- 	unsigned long nr_written;
- 	unsigned long dirty_thresh;
- 	unsigned long wb_thresh;
-+	unsigned long state;
- };
- 
- static struct dentry *bdi_debug_root;
-@@ -81,6 +82,7 @@ static void collect_wb_stats(struct wb_stats *stats,
- 	stats->nr_dirtied += wb_stat(wb, WB_DIRTIED);
- 	stats->nr_written += wb_stat(wb, WB_WRITTEN);
- 	stats->wb_thresh += wb_calc_thresh(wb, stats->dirty_thresh);
-+	stats->state |= wb->state;
- }
- 
- #ifdef CONFIG_CGROUP_WRITEBACK
-@@ -89,22 +91,27 @@ static void bdi_collect_stats(struct backing_dev_info *bdi,
- 			      struct wb_stats *stats)
- {
- 	struct bdi_writeback *wb;
-+	struct bdi_writeback_ctx *bdi_wb_ctx;
- 
- 	rcu_read_lock();
--	list_for_each_entry_rcu(wb, &bdi->wb_ctx[0]->wb_list, bdi_node) {
--		if (!wb_tryget(wb))
--			continue;
-+	for_each_bdi_wb_ctx(bdi, bdi_wb_ctx)
-+		list_for_each_entry_rcu(wb, &bdi_wb_ctx->wb_list, bdi_node) {
-+			if (!wb_tryget(wb))
-+				continue;
- 
--		collect_wb_stats(stats, wb);
--		wb_put(wb);
--	}
-+			collect_wb_stats(stats, wb);
-+			wb_put(wb);
-+		}
- 	rcu_read_unlock();
- }
- #else
- static void bdi_collect_stats(struct backing_dev_info *bdi,
- 			      struct wb_stats *stats)
- {
--	collect_wb_stats(stats, &bdi->wb_ctx[0]->wb);
-+	struct bdi_writeback_ctx *bdi_wb_ctx;
-+
-+	for_each_bdi_wb_ctx(bdi, bdi_wb_ctx)
-+		collect_wb_stats(stats, &bdi_wb_ctx->wb);
- }
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 6c89c8f025c2..8e0220ffea29 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -73,7 +73,7 @@ bool f2fs_available_free_memory(struct f2fs_sb_info *sbi, int type)
+ 		if (excess_cached_nats(sbi))
+ 			res = false;
+ 	} else if (type == DIRTY_DENTS) {
+-		if (sbi->sb->s_bdi->wb_ctx[0]->wb.dirty_exceeded)
++		if (bdi_wb_dirty_limit_exceeded(sbi->sb->s_bdi))
+ 			return false;
+ 		mem_size = get_pages(sbi, F2FS_DIRTY_DENTS);
+ 		res = mem_size < ((avail_ram * nm_i->ram_thresh / 100) >> 1);
+@@ -114,7 +114,7 @@ bool f2fs_available_free_memory(struct f2fs_sb_info *sbi, int type)
+ 		res = false;
  #endif
- 
-@@ -150,7 +157,7 @@ static int bdi_debug_stats_show(struct seq_file *m, void *v)
- 		   stats.nr_io,
- 		   stats.nr_more_io,
- 		   stats.nr_dirty_time,
--		   !list_empty(&bdi->bdi_list), bdi->wb_ctx[0]->wb.state);
-+		   !list_empty(&bdi->bdi_list), stats.state);
- 
- 	return 0;
- }
-@@ -195,35 +202,40 @@ static int cgwb_debug_stats_show(struct seq_file *m, void *v)
- {
- 	struct backing_dev_info *bdi = m->private;
- 	struct bdi_writeback *wb;
-+	struct bdi_writeback_ctx *bdi_wb_ctx;
- 	unsigned long background_thresh;
- 	unsigned long dirty_thresh;
-+	struct wb_stats stats;
- 
- 	global_dirty_limits(&background_thresh, &dirty_thresh);
-+	stats.dirty_thresh = dirty_thresh;
- 
- 	rcu_read_lock();
--	list_for_each_entry_rcu(wb, &bdi->wb_ctx[0]->wb_list, bdi_node) {
--		struct wb_stats stats = { .dirty_thresh = dirty_thresh };
--
--		if (!wb_tryget(wb))
--			continue;
--
--		collect_wb_stats(&stats, wb);
--
--		/*
--		 * Calculate thresh of wb in writeback cgroup which is min of
--		 * thresh in global domain and thresh in cgroup domain. Drop
--		 * rcu lock because cgwb_calc_thresh may sleep in
--		 * cgroup_rstat_flush. We can do so here because we have a ref.
--		 */
--		if (mem_cgroup_wb_domain(wb)) {
--			rcu_read_unlock();
--			stats.wb_thresh = min(stats.wb_thresh, cgwb_calc_thresh(wb));
--			rcu_read_lock();
-+	for_each_bdi_wb_ctx(bdi, bdi_wb_ctx) {
-+		list_for_each_entry_rcu(wb, &bdi_wb_ctx->wb_list, bdi_node) {
-+			if (!wb_tryget(wb))
-+				continue;
-+
-+			collect_wb_stats(&stats, wb);
-+
-+			/*
-+			 * Calculate thresh of wb in writeback cgroup which is
-+			 * min of thresh in global domain and thresh in cgroup
-+			 * domain. Drop rcu lock because cgwb_calc_thresh may
-+			 * sleep in cgroup_rstat_flush. We can do so here
-+			 * because we have a ref.
-+			 */
-+			if (mem_cgroup_wb_domain(wb)) {
-+				rcu_read_unlock();
-+				stats.wb_thresh = min(stats.wb_thresh,
-+						      cgwb_calc_thresh(wb));
-+				rcu_read_lock();
-+			}
-+
-+			wb_stats_show(m, wb, &stats);
-+
-+			wb_put(wb);
- 		}
--
--		wb_stats_show(m, wb, &stats);
--
--		wb_put(wb);
+ 	} else {
+-		if (!sbi->sb->s_bdi->wb_ctx[0]->wb.dirty_exceeded)
++		if (!bdi_wb_dirty_limit_exceeded(sbi->sb->s_bdi))
+ 			return true;
  	}
- 	rcu_read_unlock();
+ 	return res;
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index ca8f8e53c80d..7d13b75c4fdc 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -1000,7 +1000,7 @@ static inline bool sec_usage_check(struct f2fs_sb_info *sbi, unsigned int secno)
+  */
+ static inline int nr_pages_to_skip(struct f2fs_sb_info *sbi, int type)
+ {
+-	if (sbi->sb->s_bdi->wb_ctx[0]->wb.dirty_exceeded)
++	if (bdi_wb_dirty_limit_exceeded(sbi->sb->s_bdi))
+ 		return 0;
  
+ 	if (type == DATA)
+diff --git a/include/linux/backing-dev.h b/include/linux/backing-dev.h
+index 6f744aadd83e..831cd9f51162 100644
+--- a/include/linux/backing-dev.h
++++ b/include/linux/backing-dev.h
+@@ -51,6 +51,22 @@ static inline bool wb_has_dirty_io(struct bdi_writeback *wb)
+ 	return test_bit(WB_has_dirty_io, &wb->state);
+ }
+ 
++#define for_each_bdi_wb_ctx(bdi, wbctx) \
++	for (int __i = 0; __i < (bdi)->nr_wb_ctx \
++		&& ((wbctx) = (bdi)->wb_ctx[__i]) != NULL; __i++)
++
++
++static inline bool bdi_wb_dirty_limit_exceeded(struct backing_dev_info *bdi)
++{
++	struct bdi_writeback_ctx *bdi_wb_ctx;
++
++	for_each_bdi_wb_ctx(bdi, bdi_wb_ctx) {
++		if (bdi_wb_ctx->wb.dirty_exceeded)
++			return true;
++	}
++	return false;
++}
++
+ static inline bool bdi_has_dirty_io(struct backing_dev_info *bdi)
+ {
+ 	/*
+@@ -148,10 +164,6 @@ static inline bool mapping_can_writeback(struct address_space *mapping)
+ 	return inode_to_bdi(mapping->host)->capabilities & BDI_CAP_WRITEBACK;
+ }
+ 
+-#define for_each_bdi_wb_ctx(bdi, wbctx) \
+-	for (int __i = 0; __i < (bdi)->nr_wb_ctx \
+-		&& ((wbctx) = (bdi)->wb_ctx[__i]) != NULL; __i++)
+-
+ static inline struct bdi_writeback_ctx *
+ fetch_bdi_writeback_ctx(struct inode *inode)
+ {
 -- 
 2.25.1
 
