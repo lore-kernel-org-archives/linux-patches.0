@@ -1,69 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9233017A317;
-	Sat, 26 Jul 2025 06:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C20242D68;
+	Sat, 26 Jul 2025 13:34:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753512428; cv=none; b=dNpxbVkdTL7FOkACh8JdISQ3L9S3mV2xLRicKjNLarkp+braiZ2nXQV3BBp1BtYRex7iFuMPQaJTrCDAPMriF0gb27LQj7Q7VRiPuAD3YlFgdhd0qbxkn66yDQzWSb0g8A8N9AQ88Q0BAR2yrrY+LDR/mMVosAgNcztOLXsjJ2w=
+	t=1753536892; cv=none; b=Iy1EWiPe3Q8M4nkuLBzh6hdiOoOxut6NlLDumj/zyWLhoUqhESVYgg4s7qqb27RxTjCiDi3cjNCZKRRxuLWZ4OEg7LM9sLoRip+weU5/SBIDoxAvK/kzdplZCss89FFIrSW8JG7k3liScGjDCFYOfHfL9qrZB5gCw+vLFS44j+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753512428; c=relaxed/simple;
-	bh=1aSJGaabBb0DAn6eDpk1lw68m8J48ib5wrwSM06FVgI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nbt1a7K6lB9GOM5bksynNDkNrQttybCug9gop8hMYp8HgRRjEGnnT/Mmx0rf3OxUmmLxV+y0QLobWnxYr1B/UIUxp1AALQ4sJ1Nq1fZ3bJo/GADjjWoL9cx/bLIowenafD2ySqa+pO2A6Fmx9hGMVW0nA1EBoqFQKPTfx6lNvXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvIeHZgh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753536892; c=relaxed/simple;
+	bh=+XbzViTfrt1TfYbQ9nIGtTF251tWEMyhnVpl9OCmyHI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CjM0Aqt30XJy8oNYSSBhUZDv61o98bsrdZl5L0lozQODH3NfaYtr4et4UJAf+GnMrrp0TE9FPxMx+dz5AB/FQX7ngLEzM+sPdoc6dTOtCJlWEzMoXiUy7bFkmY2MnSKszvrCDI4Lc0kpxa4zpbv1s6xz/pU7Qcg9f5iuc/z1GEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gq6sgy5D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvIeHZgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B7BC4CEED;
-	Sat, 26 Jul 2025 06:47:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753512428;
-	bh=1aSJGaabBb0DAn6eDpk1lw68m8J48ib5wrwSM06FVgI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dvIeHZgh0VhuQFoxG9H8MmXVo/xZLD8piMOcx64ieTjq23h2hcOhVyzw/H2REN+HG
-	 DrQH2KUWJWbl3PG2hcHomFN1tJKtph/blWBRJm+wHJYPVIcz9uB56adj8F5VIAgV2r
-	 Rr3soFbLMFBbXDqlHCG7jZp+219GPcna00BR0QsU=
-Date: Sat, 26 Jul 2025 08:47:05 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gq6sgy5D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F25BC4CEED;
+	Sat, 26 Jul 2025 13:34:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753536891;
+	bh=+XbzViTfrt1TfYbQ9nIGtTF251tWEMyhnVpl9OCmyHI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Gq6sgy5DYh2FVWjdUx+aTU477fJ4QZuCrcqepppTBOcvVUzJGXTicrEheTNeGiZgx
+	 K1O5NNqTZqgCAGhD7qIkLmAC+kITA8xilBwz00jbmV2tKWqrvRLTmn1o/JD+VOEMMK
+	 Z7aGI1a2wEU1c67jje1Z/TtsJIFzXhVQuW/43mDKHUIu0g63pOV7mllI1gJGc3Qxn0
+	 xoFvUlx9oYgglbsJ9s4cavJ3hyihHxn4vqpaG3NgZuEfmpS2uSaiMVxNnN0FLX+sf7
+	 TSYq4uf23p9BAI3910uCuBpKnXJ/2bYnU/U1lGB+JZtMo0oawiLRFd3+4Rw8NZLVGJ
+	 RPiS+AA2KNQPA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
 	Benno Lossin <lossin@kernel.org>,
 	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
+	stable@vger.kernel.org,
 	Daniel Almeida <daniel.almeida@collabora.com>
-Subject: Re: [PATCH] MAINTAINERS: add "DEVICE I/O & IRQ [RUST]" entry
-Message-ID: <2025072654-amicably-denim-e6da@gregkh>
-References: <20250725202840.2251768-1-ojeda@kernel.org>
+Subject: [PATCH] rust: kbuild: clean output before running `rustdoc`
+Date: Sat, 26 Jul 2025 15:34:35 +0200
+Message-ID: <20250726133435.2460085-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250725202840.2251768-1-ojeda@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 25, 2025 at 10:28:40PM +0200, Miguel Ojeda wrote:
-> This entry will handle device I/O patches and abstractions (such as
-> memory-mapped IO and system resources series [1]), as well as IRQ ones
-> (such as the `request_irq` series [2]).
-> 
-> Patches will flow through driver-core, at least for the time being.
-> 
-> Danilo, Alice and Daniel will maintain it.
-> 
-> Cc: Danilo Krummrich <dakr@kernel.org>
-> Cc: Alice Ryhl <aliceryhl@google.com>
-> Cc: Daniel Almeida <daniel.almeida@collabora.com>
-> Link: https://lore.kernel.org/rust-for-linux/20250717-topics-tyr-platform_iomem-v15-0-beca780b77e3@collabora.com/ [1]
-> Link: https://lore.kernel.org/rust-for-linux/20250715-topics-tyr-request_irq2-v7-0-d469c0f37c07@collabora.com/ [2]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+`rustdoc` can get confused when generating documentation into a folder
+that contains generated files from other `rustdoc` versions.
 
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For instance, running something like:
+
+    rustup default 1.78.0
+    make LLVM=1 rustdoc
+    rustup default 1.88.0
+    make LLVM=1 rustdoc
+
+may generate errors like:
+
+    error: couldn't generate documentation: invalid template: last line expected to start with a comment
+      |
+      = note: failed to create or modify "./Documentation/output/rust/rustdoc/src-files.js"
+
+Thus just always clean the output folder before generating the
+documentation -- we are anyway regenerating it every time the `rustdoc`
+target gets called, at least for the time being.
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Reported-by: Daniel Almeida <daniel.almeida@collabora.com>
+Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/288089/topic/x/near/527201113
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/Makefile | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/rust/Makefile b/rust/Makefile
+index 115b63b7d1e3..771246bc7ae6 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -103,14 +103,14 @@ rustdoc: rustdoc-core rustdoc-macros rustdoc-compiler_builtins \
+ rustdoc-macros: private rustdoc_host = yes
+ rustdoc-macros: private rustc_target_flags = --crate-type proc-macro \
+     --extern proc_macro
+-rustdoc-macros: $(src)/macros/lib.rs FORCE
++rustdoc-macros: $(src)/macros/lib.rs rustdoc-clean FORCE
+ 	+$(call if_changed,rustdoc)
+ 
+ # Starting with Rust 1.82.0, skipping `-Wrustdoc::unescaped_backticks` should
+ # not be needed -- see https://github.com/rust-lang/rust/pull/128307.
+ rustdoc-core: private skip_flags = --edition=2021 -Wrustdoc::unescaped_backticks
+ rustdoc-core: private rustc_target_flags = --edition=$(core-edition) $(core-cfgs)
+-rustdoc-core: $(RUST_LIB_SRC)/core/src/lib.rs FORCE
++rustdoc-core: $(RUST_LIB_SRC)/core/src/lib.rs rustdoc-clean FORCE
+ 	+$(call if_changed,rustdoc)
+ 
+ rustdoc-compiler_builtins: $(src)/compiler_builtins.rs rustdoc-core FORCE
+@@ -122,7 +122,8 @@ rustdoc-ffi: $(src)/ffi.rs rustdoc-core FORCE
+ rustdoc-pin_init_internal: private rustdoc_host = yes
+ rustdoc-pin_init_internal: private rustc_target_flags = --cfg kernel \
+     --extern proc_macro --crate-type proc-macro
+-rustdoc-pin_init_internal: $(src)/pin-init/internal/src/lib.rs FORCE
++rustdoc-pin_init_internal: $(src)/pin-init/internal/src/lib.rs \
++    rustdoc-clean FORCE
+ 	+$(call if_changed,rustdoc)
+ 
+ rustdoc-pin_init: private rustdoc_host = yes
+@@ -140,6 +141,9 @@ rustdoc-kernel: $(src)/kernel/lib.rs rustdoc-core rustdoc-ffi rustdoc-macros \
+     $(obj)/bindings.o FORCE
+ 	+$(call if_changed,rustdoc)
+ 
++rustdoc-clean: FORCE
++	$(Q)rm -rf $(rustdoc_output)
++
+ quiet_cmd_rustc_test_library = $(RUSTC_OR_CLIPPY_QUIET) TL $<
+       cmd_rustc_test_library = \
+ 	OBJTREE=$(abspath $(objtree)) \
+
+base-commit: 89be9a83ccf1f88522317ce02f854f30d6115c41
+-- 
+2.50.1
+
