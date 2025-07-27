@@ -1,125 +1,127 @@
-Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E6B6FB9
-	for <patches@lists.linux.dev>; Sun, 27 Jul 2025 07:34:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787C85BAF0;
+	Sun, 27 Jul 2025 09:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753601677; cv=none; b=JC1sE1DmtR3luxAfQ+iWcBnrb3pLPwVyrAHl3xTAAeQ8LlTPDG3voJVDvxQWVRdbNDTEct4IHTorVsrWsbOZ2gue4qOOGbtJr5v/BkTob5YhBTwvSG9j6JaFDxiarUvtFWBtHm9yNBc1O1PHKng1Dvc14iJmp+TxlDsLJ+xokk0=
+	t=1753608211; cv=none; b=JZbA8BQHfbSiMtQjzXRBlxVe5BzUvb9JKagk1k8tkz/toDTrDuiOvnu37Ay+Y8xDe7nrWw4NUcyQyTDao8AImVW5zhpIyuRMd/e2RLKga1ogVSuvOzn9m+w2y3myV42ovF6VNP3ctxkcWgMx94O0va4NXqccIAT43arVn2G92ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753601677; c=relaxed/simple;
-	bh=8+bnU58LaspktJem6W/nlUrpzrNHGPqCKrRuXE0xU68=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=l7LNmsOl3mcVa23NwSg9VtcY9pirlfQYL9DJfSguj6+DOYaC/Hvsdv12reQP6ffUO7yBWP6yPL1LALI3zR8DaFksWMKC7fqqN0VW7tLACPGCPRl5AE4mnFded7lVJ69nYLOsraUuwG93NOAzDOWpKtuddjGWGkwp1bcMznRFLfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ddNubQaC; arc=none smtp.client-ip=209.85.221.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	s=arc-20240116; t=1753608211; c=relaxed/simple;
+	bh=n6hN9T/Z+2neDj8Lv66Tiym0tHWZpRrvvyIE6tdVN/o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SSQ3pkOOkeNbwnyr3TeT+5NW4e2FB83d46/u52a+4OneWgPluH1K7mUpUcdWSFXTHC7kGSye6haGy0alsde9j98gcgo8ITp331HJUOUjQd/SIxHxrQ4x/U3k2ZQKAjB14u+54UTwCSETpCyqOb5+OKCr3FY3Acl27gFLRYuitsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bkr5kBJd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ddNubQaC"
-Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-3a50049f8eeso1365556f8f.3
-        for <patches@lists.linux.dev>; Sun, 27 Jul 2025 00:34:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753601674; x=1754206474; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=68/AY/ySukW1KvXzDtVzgA9hvMtx8WltT8ZbSyTDtt8=;
-        b=ddNubQaCOuAkN9kd5Vq2o3OXkqzhsiyp2o38PmD1Y2NBISj1XbebKS8kA3/tnEi7zx
-         PTC3kBGt9eNotAPDELl8GZNN5KcXggDOQ4OwMROLTBqzUk8T+j4OEwR5ASMvd46J0yHM
-         q9gZHOZZKtik13DmPgbosZbh50+vsaOZRWMBejXuqDOq5AK2wLi98X5UG/SUxOC02Ilo
-         JeVC9Tbso9PX0gh3pwx0wRvL1BLgkIXrkjFww6urzqU7O0RSOn4OLEppbOfwZkoYz5qV
-         LgppCAhiU3CrGT49mUSTEpiNHWwhEZvWVG7J/2DjPIEoeja5X4xfRR59/NIV3rvfZSPN
-         iPuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753601674; x=1754206474;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=68/AY/ySukW1KvXzDtVzgA9hvMtx8WltT8ZbSyTDtt8=;
-        b=Is6/WLpvJPjhx+d2WmpT53xibjSA5/f27+fHDz3EWgrHtteEqVpTJRYDTbkXACzvds
-         /AKNRF+rgwpvkmITQ9Y4mxeJrkdnZwlglyjlb5qIY7iow/0gDBKblgfYtSH2OJHXhHB3
-         tl84WHKVBDKuOz9mvNmGGA6Rd0X/SH8kQpL4v95dGIMcT2TZhbhtXD3F4//O+8DfakVZ
-         u3eu4rJry8qNRwcSUvocoBlbX3onyT5Vu/qKTPpFSed5Mff6eI5Y8a6RB/wU+ED+WvsD
-         HPkpIZqCGpjtAbpSP/1D3w29J/gilv9cniqkD8kGAjcw+1W8U+Kv1bMyxg7k+FqvJ7cd
-         cb/w==
-X-Forwarded-Encrypted: i=1; AJvYcCWIXsTkwSJeqZtvaElo8tjeGcfg6evlyE7unWk5MeB4duPxRAME9xW6ksgNWFSYYCPmtrM5LfvU@lists.linux.dev
-X-Gm-Message-State: AOJu0YzcVIC5QstAMGyp8Q639ywfZZl/wwWBVaxE1Q3sbZctxd9BAL9B
-	tQ1VqBKPP0bCd1bnr6I9rQN/IV6LHvoYk8NJwczdBE/AcSbljfRaFFdYecV9IikkAaVz+Netmgc
-	YHjGclt/OqsdeHwG4uw==
-X-Google-Smtp-Source: AGHT+IHoTwJpLl6IfPSiJvLh0y07TsSZ8n5EfvV9N25CW1WA4KKDIWG6gN/cQjkXU4JcZHm5rVLArTDuOg174jw=
-X-Received: from wmqb14.prod.google.com ([2002:a05:600c:4e0e:b0:456:1a41:f922])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:290a:b0:3b7:6804:9362 with SMTP id ffacd0b85a97d-3b7765fda75mr5447346f8f.26.1753601674392;
- Sun, 27 Jul 2025 00:34:34 -0700 (PDT)
-Date: Sun, 27 Jul 2025 07:34:33 +0000
-In-Reply-To: <20250725202840.2251768-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bkr5kBJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173C9C4CEEB;
+	Sun, 27 Jul 2025 09:23:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753608211;
+	bh=n6hN9T/Z+2neDj8Lv66Tiym0tHWZpRrvvyIE6tdVN/o=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bkr5kBJdg04KbxaI83qsRlhou3E59OyVHUGKPyTVb4roQyvx0VNmf1Op/0vL2rOY6
+	 NGJeCL/HgbIOsbg9pi2ViRSU668Z7WBN8Yx5Zamprfoe4FatJsh8/9cvVLeCdoj8tS
+	 Pnf/stasPgO9NGt2J+nZVUSegHe8/kcvqNcur336OlSCCHsrxwKqMXytijK8h986pC
+	 osjF1nvqKA1GOdFS97S06Quk+sZWxjQxpyXKyf1JA3vWdpVhMG3UnmWHAPdbfi1gPm
+	 KTfoiEqCiUVFR1irnALIHGiCr5/9zfnCx8HpLoyHLyeeSg6AtwubIUSZlb8WngmoLa
+	 GKXkQ4MLjuf+w==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH] rust: workaround `rustdoc` target modifiers bug
+Date: Sun, 27 Jul 2025 11:23:17 +0200
+Message-ID: <20250727092317.2930617-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20250725202840.2251768-1-ojeda@kernel.org>
-Message-ID: <aIXWiYB5LiFYTN6p@google.com>
-Subject: Re: [PATCH] MAINTAINERS: add "DEVICE I/O & IRQ [RUST]" entry
-From: Alice Ryhl <aliceryhl@google.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <lossin@kernel.org>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Daniel Almeida <daniel.almeida@collabora.com>
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 25, 2025 at 10:28:40PM +0200, Miguel Ojeda wrote:
-> This entry will handle device I/O patches and abstractions (such as
-> memory-mapped IO and system resources series [1]), as well as IRQ ones
-> (such as the `request_irq` series [2]).
-> 
-> Patches will flow through driver-core, at least for the time being.
-> 
-> Danilo, Alice and Daniel will maintain it.
-> 
-> Cc: Danilo Krummrich <dakr@kernel.org>
-> Cc: Alice Ryhl <aliceryhl@google.com>
-> Cc: Daniel Almeida <daniel.almeida@collabora.com>
-> Link: https://lore.kernel.org/rust-for-linux/20250717-topics-tyr-platform_iomem-v15-0-beca780b77e3@collabora.com/ [1]
-> Link: https://lore.kernel.org/rust-for-linux/20250715-topics-tyr-request_irq2-v7-0-d469c0f37c07@collabora.com/ [2]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Starting with Rust 1.88.0 (released 2025-06-26), `rustdoc` complains
+about a target modifier mismatch in configurations where `-Zfixed-x18`
+is passed:
 
-Acked-by: Alice Ryhl <aliceryhl@google.com>
+    error: mixing `-Zfixed-x18` will cause an ABI mismatch in crate `rust_out`
+      |
+      = help: the `-Zfixed-x18` flag modifies the ABI so Rust crates compiled with different values of this flag cannot be used together safely
+      = note: unset `-Zfixed-x18` in this crate is incompatible with `-Zfixed-x18=` in dependency `core`
+      = help: set `-Zfixed-x18=` in this crate or unset `-Zfixed-x18` in `core`
+      = help: if you are sure this will not cause problems, you may use `-Cunsafe-allow-abi-mismatch=fixed-x18` to silence this error
 
->  MAINTAINERS | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 10850512c118..ededa04ef97b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -6920,6 +6920,21 @@ F:	drivers/devfreq/event/
->  F:	include/dt-bindings/pmu/exynos_ppmu.h
->  F:	include/linux/devfreq-event.h
->  
-> +DEVICE I/O & IRQ [RUST]
-> +M:	Danilo Krummrich <dakr@kernel.org>
-> +M:	Alice Ryhl <aliceryhl@google.com>
-> +M:	Daniel Almeida <daniel.almeida@collabora.com>
-> +L:	rust-for-linux@vger.kernel.org
-> +S:	Supported
-> +W:	https://rust-for-linux.com
-> +B:	https://github.com/Rust-for-Linux/linux/issues
-> +C:	https://rust-for-linux.zulipchat.com
-> +T:	git git://git.kernel.org/pub/scm/linux/kernel/git/driver-core/driver-core.git
-> +F:	rust/kernel/io.rs
-> +F:	rust/kernel/io/
-> +F:	rust/kernel/irq.rs
-> +F:	rust/kernel/irq/
-> +
->  DEVICE RESOURCE MANAGEMENT HELPERS
->  M:	Hans de Goede <hansg@kernel.org>
->  R:	Matti Vaittinen <mazziesaccount@gmail.com>
-> 
-> base-commit: 89be9a83ccf1f88522317ce02f854f30d6115c41
-> -- 
-> 2.50.1
-> 
+The reason is that `rustdoc` was not passing the target modifiers when
+configuring the session options, and thus it would report a mismatch
+that did not exist as soon as a target modifier is used in a dependency.
+
+We did not notice it in the kernel until now because `-Zfixed-x18` has
+been a target modifier only since 1.88.0 (and it is the only one we use
+so far).
+
+The issue has been reported upstream [1] and a fix has been submitted
+[2], including a test similar to the kernel case.
+
+Meanwhile, conditionally pass `-Cunsafe-allow-abi-mismatch=fixed-x18`
+to workaround the issue on our side.
+
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Closes: https://lore.kernel.org/rust-for-linux/36cdc798-524f-4910-8b77-d7b9fac08d77@oss.qualcomm.com/
+Link: https://github.com/rust-lang/rust/issues/144521 [1]
+Link: https://github.com/rust-lang/rust/pull/144523 [2]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/rust/Makefile b/rust/Makefile
+index 115b63b7d1e3..f5883152fd5d 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -62,6 +62,10 @@ core-cfgs = \
+ 
+ core-edition := $(if $(call rustc-min-version,108700),2024,2021)
+ 
++# `rustdoc` did not save the target modifiers, thus workaround for
++# the time being (https://github.com/rust-lang/rust/issues/144521).
++rustdoc_modifiers_workaround := $(if $(call rustc-min-version,108800),-Cunsafe-allow-abi-mismatch=fixed-x18)
++
+ # `rustc` recognizes `--remap-path-prefix` since 1.26.0, but `rustdoc` only
+ # since Rust 1.81.0. Moreover, `rustdoc` ICEs on out-of-tree builds since Rust
+ # 1.82.0 (https://github.com/rust-lang/rust/issues/138520). Thus workaround both
+@@ -74,6 +78,7 @@ quiet_cmd_rustdoc = RUSTDOC $(if $(rustdoc_host),H, ) $<
+ 		-Zunstable-options --generate-link-to-definition \
+ 		--output $(rustdoc_output) \
+ 		--crate-name $(subst rustdoc-,,$@) \
++		$(rustdoc_modifiers_workaround) \
+ 		$(if $(rustdoc_host),,--sysroot=/dev/null) \
+ 		@$(objtree)/include/generated/rustc_cfg $<
+ 
+@@ -212,6 +217,7 @@ quiet_cmd_rustdoc_test_kernel = RUSTDOC TK $<
+ 		--extern bindings --extern uapi \
+ 		--no-run --crate-name kernel -Zunstable-options \
+ 		--sysroot=/dev/null \
++		$(rustdoc_modifiers_workaround) \
+ 		--test-builder $(objtree)/scripts/rustdoc_test_builder \
+ 		$< $(rustdoc_test_kernel_quiet); \
+ 	$(objtree)/scripts/rustdoc_test_gen
+
+base-commit: 89be9a83ccf1f88522317ce02f854f30d6115c41
+-- 
+2.50.1
+
