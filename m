@@ -1,276 +1,190 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2067.outbound.protection.outlook.com [40.107.220.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2241A2872
-	for <patches@lists.linux.dev>; Tue, 29 Jul 2025 14:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753799068; cv=none; b=pYoNlqJTJr2JHlDNi9GtagBF0Tw3pIzZBofsFBRbAKRGtQs2gOCaI3Zv9zC/wTfLpPcNbPwpd/pcuSeQRnE8lg2P3/5RDl/SO3nLJEyFuxGDee4Q6uu0c3ozaIXvJ8vqqTRFvtAra20Uiv08SO76diObeebi6BPcM89KEuJIxgU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753799068; c=relaxed/simple;
-	bh=xRXyGwni6xiYtnm8ZbqUkc6iEgaQ7Xp7nL19BSMO+nE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=BFT+ZWSZxc3e4LlVddztZ9Sq4VCoz4o2WjqqP1U1qwPLDkCA+kr8MtSZXUgrBq73oplAQrvGjK/NQA3oCwEqnrh0VW8FaXFNwY1be+QZi5Qi0deTubkhYdkaTDSnJiPWEe589UgsleAvZ2BW0uNFJDAvaEP2dp7X1JoSz1PqCE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=xfFLC9s9; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29AE125B2;
+	Tue, 29 Jul 2025 22:32:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753828366; cv=fail; b=hA38GkP59M99FnaVZ2CbPNnbpfB7hE2ohbRowPpOaTlIF7HdOlKXwz2wOfxI9A76sim4HtWFCb3vtH5qB4NpQ1tOAYJ9Zy8KjBx1BcNCu/5CnwO9DMCnSZ2tQwCE9ev5BUrTJHzFP3dJwUETbAx4zuIf1wh++2k5aA8jMhqEAuk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753828366; c=relaxed/simple;
+	bh=22KQ0uip53TXswxcCujpKT5+cMRzt/ajrfH4HjamFVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=eebsCORLCke2yhuOnfb2Iri1FaoiBDeBVZGCC2HqX0JTH4WSFq/b0sqY6nQRN4WcorRKeuc+rHd0G5kFhN2oKHonntDT1+oUSkUaBxKy6y/wIbbnzE4CsMJgHoJWs3I5pkgJ/vSstyAf/PXSpfR0vswGNkOe4nkqIS38uOpjhVk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Gg0lbIpq; arc=fail smtp.client-ip=40.107.220.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="xfFLC9s9"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4ab39fb71dbso58145581cf.3
-        for <patches@lists.linux.dev>; Tue, 29 Jul 2025 07:24:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1753799066; x=1754403866; darn=lists.linux.dev;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rmeKc3jet6u3gOUQd2X+WQs6A8Udrvi7OwSfi5a8wj0=;
-        b=xfFLC9s9b2N7Hf6MKwL6PnITT025+U2wn3uCsOZTGX3Kag6eeRuZpkYlh5pAjELbs9
-         XnaZ8apXwLo5YI2eCqNl52qn55UauzwIPvDH8l7Y8WOK5FjpY8noOtWdPn7bZyr/XDoi
-         f92zwHWTU4jvBMNcfsy0xP9WslCYfouK96Uo6/CBHA6fYY+JCr+tDQtsWnq1H8WdOoeM
-         Z8jrHi+SCD34QWZTmxNpwF2RcZxX615B3jxEqjmEdOgoBQroa0XQ2bqxuIzGNr4dttS3
-         AMLwrI+5wY3giC86jxFCD7ZDmf8T9jTjiMmvBcuc1I2LDtiUBxqzRtGA4Jd072NozguW
-         nh5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753799066; x=1754403866;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rmeKc3jet6u3gOUQd2X+WQs6A8Udrvi7OwSfi5a8wj0=;
-        b=RSD5/1K+9L6jI8fTir46wUgwR4ol26N5UIcDuAzJyE0ZdX9bS0z7sM3fYIaJC1C/Nd
-         4a7RKohmbQaSUahJbMomtRcV/SbF6FTvinA9ZUlijezeRLX41zN9F8FrMxutaBvoF10C
-         zhZ8jXQxI+l7pkxnOof8QIgrF0td0NyOvtODHrtN0SwvG07KZDv27qCOrhA72Jl8NvtM
-         ifh33AjPgTqEQ+90RJCidXaMMSU7CBB6ClNSfu4JLX7mokXcTLT4vLmCOUumIC3AdrLr
-         2vJxyOLW0K0FhCn2JsaqNBFzkgxGDcCgk1V9DoXZed9Ni4yaXAV7h+i0ipe9NhaJkN5U
-         cqNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQ54m9AwSEh+ibDKQG7rGg7jQEQlQDMGpKU/6GVXYGAuIwEvGYXEXIN90ke1F2Vf+1S3lsMYJ9@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx4JGfRAyaKgsV8Ag60ygEMdccuVJ2TlAjUQz57xXGADdorOeGD
-	GVQLmlxPPw4RJDGj0sTjMHfo6kIR1Wx14wRDWu6YigE9YyljwBg9VMzU3GolVjkyCYI=
-X-Gm-Gg: ASbGncvOmvlxlt990xJ53Pc44U24Z2C6lx+eQcZckP2uZivufi/Oxf2i0BbLDUbpej0
-	4BPxPHM6pXExGaLiY3jv7L3rtcu/2+kqXdAqlMPSKXQMwHKRabtYScQ/Z0R0iM9VDmHJNqpzaG3
-	QsFE9K/PSUS/CRXZKYGK070GJI9K+pr7F5gkgPZUu7IQmfPT5NN82kVy/xQXX90R5lzPqMOAFmO
-	7bw+ZoM+iHtz53LVM7cNtBBrjrEGmTjL+3pGRhUqIkdFjx94/ZfvzgViH2qfxu7Wi7rYhiKTEXv
-	Ao9FdwuE+zrrOrk/XtdWRvGulSwYem6Zo9LJoxtDxbaJkmd/yYQGGJJZxp7nllX3UoJutvGzvBV
-	pG+vdXz7/TC0DnAr399Jg+TbkQreHjU+2wyz5NQ==
-X-Google-Smtp-Source: AGHT+IEls/QVu7ZlIlUQJ28Xm3RrlwZ4/ODLxhT+f7gRkpVOEKn45LTTgozTNCaJLKONRyTYZ09YoQ==
-X-Received: by 2002:ac8:7c47:0:b0:4ab:6531:1288 with SMTP id d75a77b69052e-4ae8f08eb9dmr256458761cf.35.1753799065474;
-        Tue, 29 Jul 2025 07:24:25 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:11:5a76::5ac? ([2606:6d00:11:5a76::5ac])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ae9963b732sm48999481cf.39.2025.07.29.07.24.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jul 2025 07:24:24 -0700 (PDT)
-Message-ID: <9650d2e240a9170175069e3a4f6d6d9512d62aa3.camel@ndufresne.ca>
-Subject: Re: [PATCH] media: s5p-mfc: Always pass NULL to
- s5p_mfc_cmd_host2risc_v6()
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Nathan Chancellor <nathan@kernel.org>, Marek Szyprowski
-	 <m.szyprowski@samsung.com>, Andrzej Hajda <andrzej.hajda@intel.com>, Mauro
- Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
-Date: Tue, 29 Jul 2025 10:24:22 -0400
-In-Reply-To: <20250715-media-s5p-mfc-fix-uninit-const-pointer-v1-1-4d52b58cafe9@kernel.org>
-References: 
-	<20250715-media-s5p-mfc-fix-uninit-const-pointer-v1-1-4d52b58cafe9@kernel.org>
-Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0MU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAY29sbGFib3JhLmNvbT6ImQQTFg
- oAQQIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBO8NUoEVxMPCGgRvEtlBlFEpYHL0BQJ
- oLLLGBQkJZfd1AAoJENlBlFEpYHL0BEkA/3qkWYt99myYFSmTJUF8UB/7OroEm3vr1HRqXeQe9Qp2
- AP0bsoAe6KjEPa/pJfuJ2khrOPPHxvyt/PBNbI5BYcIABLQnTmljb2xhcyBEdWZyZXNuZSA8bmljb
- 2xhc0BuZHVmcmVzbmUuY2E+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQ
- TvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyy+AUJCWX3dQAKCRDZQZRRKWBy9FJ5AQCNy8SX8DpHbLa
- cy58vgDwyIpB89mok9eWGGejY9mqpRwEAhHzs+/n5xlVlM3bqy1yHnAzJqVwqBE1D0jG0a9V6VQI=
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-eEnUSaAdqhTct/4k3GEr"
-User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Gg0lbIpq"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ywfewiquUReGlELgoGBNNM2Ewp2GdiQIcblbDzUG8n88vwdY8Dc2YGDe6CRcz82CdGJjhE66nJIOPmIjMYS6A1RQSd1sXO+dSnB5jJl1P7HP9Nbj0v/32PkzwoXWO2s6hcGFX5Ajk/ZTcI11burxXRrpQ+TocHLTihsiTuYeMxzBtuY5i5GLYXpzBJWO+7JDG4Ins3v8kE5W21l8CVhiRKV7lXA+HHwexUxBI1CNMTfSA//4+wH2YkfJrpizmOxqgTxoh/ql32ikLC/LSJQO9FB6I/7uUUl5nIYrH+F8qSE44F6SUCgjPngjo6kbXydHuexwZXj5yYei9XNU2TAhmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fekyo60JRYuYpwsWKvMyoy6pK72zCU9o1mawPoCoiUM=;
+ b=yYSEyT83cvpA8KHSfMfbQcGrDA/dZJL2HDJ9teearJs+BDYTeIKjQgSmmFYVSzL86XWYTp9sCKlbKuZWkM2AK5p7a+xFJnX8qsWhmsEARDPU2pGD7GJfC32TiN5hfAuTmS9L0Vm8w3YM7+q62T/lnOAcuvuOThNR4WbWtKLK6Qm9yxJ2hDn0kUIKWVOfYRLGbT5XT1tbvYHFh9+bczkM4UmUyPfAdiYC8D0/+8HPAr4WXMczrQd4SfODFhtPmslsCjaGuCUZkrNc7EkIRC2Bnq/3LGcpQkD50lhAKmMXfBBqi9sLtvV5GmRCv9by6oZS1NOkWJxuR87/QKE5+EtfYQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fekyo60JRYuYpwsWKvMyoy6pK72zCU9o1mawPoCoiUM=;
+ b=Gg0lbIpqlFE1irWmNrFE4iH45UQO0DIG0r12CYJfL4lGIjEbxjoYpSdHhDUwI9RqHIkFRToHAWfyM1c065uLBCoD/HQx0itiO+zhfpxZUONinbMRfrqueIqNgUTQ2XxQq8qzRsLOtsLptU/cptfL3nlFwD69eWmzwR4lTbfeBElQe4PaxIJ+Inn9zOygt4fsfKS/TUMw3XFxxBc07nE0EZgHp5BJVwT4PNkRFQ07uXUgsmtbFlRVD6glJQLun0qFX5LnKF2dvYKZEfz82IFZgiPu3z1qaozCp/I7OWNsVkZqt0INtNrZmpWVaGtLkYckoimrprZy5qQSzAlAQ2Zm+g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by SJ1PR12MB6025.namprd12.prod.outlook.com (2603:10b6:a03:48c::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.11; Tue, 29 Jul
+ 2025 22:32:41 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8964.024; Tue, 29 Jul 2025
+ 22:32:41 +0000
+Date: Tue, 29 Jul 2025 19:32:40 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Baolu Lu <baolu.lu@linux.intel.com>
+Cc: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>, Kevin Tian <kevin.tian@intel.com>,
+	patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>,
+	Wei Wang <wei.w.wang@intel.com>
+Subject: Re: [PATCH 1/9] iommu/pages: Add support for a incoherent IOMMU page
+ walker
+Message-ID: <20250729223240.GC82395@nvidia.com>
+References: <1-v1-bdb01ffac49c+be-iommu_pt_vtd_jgg@nvidia.com>
+ <00c5972b-a5d9-4604-aea6-cc0d8e2601a0@linux.intel.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <00c5972b-a5d9-4604-aea6-cc0d8e2601a0@linux.intel.com>
+X-ClientProxiedBy: MN2PR02CA0025.namprd02.prod.outlook.com
+ (2603:10b6:208:fc::38) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ1PR12MB6025:EE_
+X-MS-Office365-Filtering-Correlation-Id: 70bd91df-dd12-49ae-a6d1-08ddceefd41c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?AAdYnxMSrvSElwuxXC1ppNh3Yd1crOsAtnU+8+YohHlGf/BVrRO+UwcSwDd8?=
+ =?us-ascii?Q?/wGfCXtzyykzS453VNDzlXJydgM3YLme3XDPXQqlOQ7xpnSoxYf3mH+azeA+?=
+ =?us-ascii?Q?WzNm/U4YT/JbgZItgPzBMIEycXw0n/qKEGoFPevB+GjEDjfy2VBZWHAlZmNg?=
+ =?us-ascii?Q?XY8HKX3kFFAOqenn++U6JxkiFzlk6Xfq+b1Zu+ZCCckx9FU3WttLff7vyXT+?=
+ =?us-ascii?Q?igkCWsdr0Qn6QSJroutcUMgX7iNiRWz68efzRgA+MFbaU677UoErpPgttOjI?=
+ =?us-ascii?Q?zn9NPY2h3ZgPkzOcmyODwqK0XjukgE4T9NNZw+kaqXs5G0yXcO83n5fZgpud?=
+ =?us-ascii?Q?RQv+tlY0WgB1/Y3ik9BCQCL1+Hgq4kCz6c5EFLsOq5WgLG1RYefz3JDrqOsq?=
+ =?us-ascii?Q?7mWNvEU/O3m5O0nKEvqM5oM0vuDYF0AZuK5CTmgiBMogBHA/pJTiBL3L+DkJ?=
+ =?us-ascii?Q?AopVYK0VIJtTyrym49a5LKFFEih52OBJlYroJvtD6xbmM0b4WupClJkHSM0r?=
+ =?us-ascii?Q?wrP1SbO53uGwIfBsmt5UjGWEOm/3ZXGPo3YNNBP7XCfrF+vpS3HP2UNtjJ0R?=
+ =?us-ascii?Q?gT7rRQtUJGpbqV4OMn2ib61rqW7o2gFGEUEy1TCdMRi/Q1i3SSy4IEi0vEwm?=
+ =?us-ascii?Q?78kjImO4EWqWrw5jWoE5wJ+lB8Igj7GQyyFLTTXyiNKoA2nL/V4Nk9F1zVYs?=
+ =?us-ascii?Q?+dbqbZzlMJsnQIYV0dIfUTjyOP889VnOm9UlWNOnOKJth5fMr70+F0c7z3TJ?=
+ =?us-ascii?Q?CvTlf8TEa8G99bVumtwiNq682H6VYcwxFwYD73AsRi0W7qMMPjE9h5hbbvua?=
+ =?us-ascii?Q?m+rwwUIgZScjuqwq6xPkTrpmF02hkT2PqZgScKkOOGykXKx1+sOYgL1oZN3t?=
+ =?us-ascii?Q?jJtpR2uzMqDF2YKfXIgiBBG+UtfrOdisIXnh/YjZ6Fz538Kc3IvFxRWHu1o9?=
+ =?us-ascii?Q?YvwCMCAB+KWVMKZOxLd9hSpmN2uS6L5THmTk+3HzvCQ2Cm4y9y4ga/WuIPNz?=
+ =?us-ascii?Q?oC8vVbQ194x6XMQ4+ypF2VI0kDHMK4JNIJTc4q/6+zsK/yqIljBgGfQ5VPu4?=
+ =?us-ascii?Q?v6u6Ns5myvqlLCPosFWF8KntTa9RHeKsDKV6Hq/ST1+p0qwfYzHGP+TrXfpH?=
+ =?us-ascii?Q?2+2B3+7+t2WrBzc+OY2Dz4f+w2m6lrr1tgXOJXGk+KgecWRzBm4Rc9Y90wcg?=
+ =?us-ascii?Q?InKGDqrt0RqUI31G1VOJV3tEV9plqdvf8KRxHNTtg+ZjcEuPSWHLnmh9DV2A?=
+ =?us-ascii?Q?Xq/1yGn2AHHNZcXwpjHDbgFOM+l24WO8KJ53miCdHIxTb5cCvNJrmBDwU3Hb?=
+ =?us-ascii?Q?w6W3Fquh47AilaiCx0GcT2Hf5r2qrnJNlbNVMvhLSUBR872cD1zy/FIBj7sl?=
+ =?us-ascii?Q?IgkiD+KGa0iy7M+BBuKaoj1a1hM2yagKHVN8BdtASUQa49SMog=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?fXzk4fACzgTZ3FBSlHXEpnp7f7wxe4LJ+KF7j9QkmEQiQ5Mq6aRJ3Mgs29g+?=
+ =?us-ascii?Q?Zgy+JDO7cVLXAbF1n7+tW6wqoKpmUTWKN7S2av+k6YP3nJ0SyTdC39nwRhjS?=
+ =?us-ascii?Q?HvT9UjSrod4HMMUmfg8nZyNjA14V6G5PvgXoapeJcPUnNzt1Di3jaEq8hAE9?=
+ =?us-ascii?Q?cykRgxYsSEov+bBjyB8w60pUCzm47DG21+f6KwWNkwFybJ/c13dOk5mMuLAj?=
+ =?us-ascii?Q?jFRqLdyqtKQFitiKlX5A75EHH1cF06el3u7noK+PgHOO/eOJmAVYIcCXGcIs?=
+ =?us-ascii?Q?cawp9J1XP2gqHWIz9o20k8FFLw4lD5jPNsfZw0L//lgDvn6R2ImbH0TBJiIp?=
+ =?us-ascii?Q?LpwkHL/PY4/NIaGgrh6x6ksiqp6odzPueEUOZIzcS/5cqfyNRDkqGdnOmr7w?=
+ =?us-ascii?Q?TODmUi51RdAppHg1nrPKwSdBs6N5N22mSVYJ87rOAR7SvxF1rk5Qy+gtL/gl?=
+ =?us-ascii?Q?1l61ZZrSlwGErl5UOVwzTAy4j3zHaB77EnPUneSy6P72Xz+21UiUpbnQ54Zq?=
+ =?us-ascii?Q?jM5iXaf7S5Jw5bW9jmId47LkjC0Nakq5w1WonnYOiuzTRVvDUHL8+OXOf06s?=
+ =?us-ascii?Q?vwx/5UiAvfVonhOArguuED7aHO2ycCL4msqYlls40x8lS2r98lWwzclsjxqW?=
+ =?us-ascii?Q?vpOThlXauCr8HPQ1r55bufRsAMTL6x7UIowMCaZRPNDyQ1sip/REBCvpnbvl?=
+ =?us-ascii?Q?PI4hKcHzQZRZEICOiWVLz940N5E8sTW48rgwOoOyTPl2igCiz7nOimWPwj2v?=
+ =?us-ascii?Q?q0IkMSnqluv/R2m2m6UzBfAUxhIGuc0C1J1SpWxh43Nqq+4WqDDkd86blUo5?=
+ =?us-ascii?Q?cmkUTLaNHXVvU9DWobVx8y+N89M3E8cyfMKPgmMHVJAdOC14MxdctV06EgCQ?=
+ =?us-ascii?Q?DIBpU8h+VhjMDgbjbP4F+KKTiLAfg7q2A7pfvcK7O3wpC5T6VNuMG5oQumuK?=
+ =?us-ascii?Q?2D+v2Lc/4zzC/xQ+Oo0n63i6PyRc9pfJBKIfsFdQ089p0HcsLOSmCGbfz/lH?=
+ =?us-ascii?Q?7diHXnXs6ywBx9KYxGfWWMFfcsLf6tm/nzfD7D8VjVnSbrstEJDdtel7Gcd7?=
+ =?us-ascii?Q?wj3fdrHySvMbYUct8q+YsK/LUKrqeeBN56e4fhBanngzHb3y3JUmYUtUbIP6?=
+ =?us-ascii?Q?9dLPjpi3xSAbcBm78T1PLs/P13HJn8P2PmEDIWR6r78O98l/qa4bKyWcEyqN?=
+ =?us-ascii?Q?7b4f6kTDMPT/MicWuTk6E77QDfNO6xAbA0ogQraAw/ecXsrcT8DvczY5jXP1?=
+ =?us-ascii?Q?Gv/0d68ZoomeAGRZk1g/kyFoKrPUl7tsegbkC+AdskwjewSkWVp5DjasTJWH?=
+ =?us-ascii?Q?d5vvS0mlq7sE4kfnNQhJrOFYT4rrqlfimFEM3rZ0ekRd/7AYa89AKnnGslkS?=
+ =?us-ascii?Q?/x+QwOkeE6Jm7afDbt0xYU1IHG6ppDLai9nxb3PVDKsApTZH1kGJJpE6bju5?=
+ =?us-ascii?Q?Z7Ezh7dIXAnkel5/UhxGbsLWkCTdfv7CJfcD/4aWkhsZq2Ect+EA/thaeYDx?=
+ =?us-ascii?Q?iDYRtKiGrXu5LxTTzsIA+ff7syHIcZCLTuEj0s3NJj/r4BflPFsqCXSaSUPq?=
+ =?us-ascii?Q?KESlESPhOpd6ZTDvYbM=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 70bd91df-dd12-49ae-a6d1-08ddceefd41c
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2025 22:32:40.9685
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: V1puBELaA9yfuCeY+u3RrlGXt1907aXbHdETb304XH/nkm8jglVl7t6XKWvAxJkx
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6025
 
+On Mon, Jul 21, 2025 at 04:41:03PM +0800, Baolu Lu wrote:
+> On 7/17/2025 3:57 AM, Jason Gunthorpe wrote:
+> > @@ -98,4 +101,36 @@ static inline void *iommu_alloc_pages_sz(gfp_t gfp, size_t size)
+> >   	return iommu_alloc_pages_node_sz(NUMA_NO_NODE, gfp, size);
+> >   }
+> > -#endif	/* __IOMMU_PAGES_H */
+> > +int iommu_pages_start_incoherent(void *virt, struct device *dma_dev);
+> > +int iommu_pages_start_incoherent_list(struct iommu_pages_list *list,
+> > +                                      struct device *dma_dev);
+> > +
+> > +#ifdef CONFIG_X86
+> > +#include <asm/cacheflush.h>
+> > +
+> > +static inline void iommu_pages_flush_incoherent(struct device *dma_dev,
+> > +						void *virt, size_t offset,
+> > +						size_t len)
+> > +{
+> > +	clflush_cache_range(virt + offset, len);
+> > +}
+> > +static inline void
+> > +iommu_pages_stop_incoherent_list(struct iommu_pages_list *list,
+> > +				 struct device *dma_dev)
+> > +{
+> 
+> Do we need to clear iopt->incoherent for X86, given that
+> iopt->incoherent is set in the start path? 
 
---=-eEnUSaAdqhTct/4k3GEr
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+No.. When I wrote this I felt we may as well keep x86 fast since it
+doesn't use the DMA API and did it like this:
 
-Hi Nathan,
+static void __iommu_free_desc(struct ioptdesc *iopt)
+{
+[..]
+	if (!IS_ENABLED(CONFIG_X86))
+		WARN_ON_ONCE(iopt->incoherent);
 
-Le mardi 15 juillet 2025 =C3=A0 15:13 -0700, Nathan Chancellor a =C3=A9crit=
-=C2=A0:
-> A new warning in clang [1] points out a few places in s5p_mfc_cmd_v6.c
-> where an uninitialized variable is passed as a const pointer:
->=20
-> =C2=A0 drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:45:7: erro=
-r: variable 'h2r_args' is uninitialized when passed as a const pointer argu=
-ment here [-Werror,-Wuninitialized-const-pointer]
-> =C2=A0=C2=A0=C2=A0=C2=A0 45 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &h2r_args);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~=
-~~~
-> =C2=A0 drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:133:7: err=
-or: variable 'h2r_args' is uninitialized when passed as a const pointer arg=
-ument here [-Werror,-Wuninitialized-const-pointer]
-> =C2=A0=C2=A0=C2=A0 133 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &h2r_args);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~=
-~~~
-> =C2=A0 drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:148:7: err=
-or: variable 'h2r_args' is uninitialized when passed as a const pointer arg=
-ument here [-Werror,-Wuninitialized-const-pointer]
-> =C2=A0=C2=A0=C2=A0 148 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &h2r_args);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~=
-~~~
->=20
-> The args parameter in s5p_mfc_cmd_host2risc_v6() is never actually used,
-> so just pass NULL to it in the places where h2r_args is currently
-> passed, clearing up the warning and not changing the functionality of
-> the code.
->=20
-> Cc: stable@vger.kernel.org
-> Fixes: f96f3cfa0bb8 ("[media] s5p-mfc: Update MFC v4l2 driver to support =
-MFC6.x")
-> Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14=
-cd091d441f19b319e=C2=A0[1]
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2103
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> From what I can tell, it seems like ->cmd_host2risc() is only ever
-> called from v6 code, which always passes NULL? It seems like it should
-> be possible to just drop .cmd_host2risc on the v5 side, then update
-> .cmd_host2risc to only take two parameters? If so, I can send a follow
-> up as a clean up, so that this can go back relatively conflict free.
+To largely ignore the incoherent flag.
 
-It seems so yes. For this specific patch, I would probably rename "args" to
-"__unused" to make the reading faster. But does not matter so much if you l=
-ater
-remove it.
+So:
 
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+	/*
+	 * For performance leave the incoherent flag alone which turns this into
+	 * a NOP. For X86 the rest of the stop/free flow ignores the flag.
+	 */
 
-> ---
-> =C2=A0.../platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 22 +++++-----------------
-> =C2=A01 file changed, 5 insertions(+), 17 deletions(-)
->=20
-> diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c b/dr=
-ivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
-> index 47bc3014b5d8..735471c50dbb 100644
-> --- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
-> +++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
-> @@ -31,7 +31,6 @@ static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev =
-*dev, int cmd,
-> =C2=A0
-> =C2=A0static int s5p_mfc_sys_init_cmd_v6(struct s5p_mfc_dev *dev)
-> =C2=A0{
-> -	struct s5p_mfc_cmd_args h2r_args;
-> =C2=A0	const struct s5p_mfc_buf_size_v6 *buf_size =3D dev->variant->buf_s=
-ize->priv;
-> =C2=A0	int ret;
-> =C2=A0
-> @@ -41,33 +40,23 @@ static int s5p_mfc_sys_init_cmd_v6(struct s5p_mfc_dev=
- *dev)
-> =C2=A0
-> =C2=A0	mfc_write(dev, dev->ctx_buf.dma, S5P_FIMV_CONTEXT_MEM_ADDR_V6);
-> =C2=A0	mfc_write(dev, buf_size->dev_ctx, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
-> -	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6,
-> -					&h2r_args);
-> +	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6, NULL=
-);
-> =C2=A0}
-> =C2=A0
-> =C2=A0static int s5p_mfc_sleep_cmd_v6(struct s5p_mfc_dev *dev)
-> =C2=A0{
-> -	struct s5p_mfc_cmd_args h2r_args;
-> -
-> -	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
-> -	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6,
-> -			&h2r_args);
-> +	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6, NULL);
-> =C2=A0}
-> =C2=A0
-> =C2=A0static int s5p_mfc_wakeup_cmd_v6(struct s5p_mfc_dev *dev)
-> =C2=A0{
-> -	struct s5p_mfc_cmd_args h2r_args;
-> -
-> -	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
-> -	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6,
-> -					&h2r_args);
-> +	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6, NULL);
-> =C2=A0}
-> =C2=A0
-> =C2=A0/* Open a new instance and get its number */
-> =C2=A0static int s5p_mfc_open_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
-> =C2=A0{
-> =C2=A0	struct s5p_mfc_dev *dev =3D ctx->dev;
-> -	struct s5p_mfc_cmd_args h2r_args;
-> =C2=A0	int codec_type;
-> =C2=A0
-> =C2=A0	mfc_debug(2, "Requested codec mode: %d\n", ctx->codec_mode);
-> @@ -130,14 +119,13 @@ static int s5p_mfc_open_inst_cmd_v6(struct s5p_mfc_=
-ctx *ctx)
-> =C2=A0	mfc_write(dev, 0, S5P_FIMV_D_CRC_CTRL_V6); /* no crc */
-> =C2=A0
-> =C2=A0	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANC=
-E_V6,
-> -					&h2r_args);
-> +					NULL);
-> =C2=A0}
-> =C2=A0
-> =C2=A0/* Close instance */
-> =C2=A0static int s5p_mfc_close_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
-> =C2=A0{
-> =C2=A0	struct s5p_mfc_dev *dev =3D ctx->dev;
-> -	struct s5p_mfc_cmd_args h2r_args;
-> =C2=A0	int ret =3D 0;
-> =C2=A0
-> =C2=A0	dev->curr_ctx =3D ctx->num;
-> @@ -145,7 +133,7 @@ static int s5p_mfc_close_inst_cmd_v6(struct s5p_mfc_c=
-tx *ctx)
-> =C2=A0		mfc_write(dev, ctx->inst_no, S5P_FIMV_INSTANCE_ID_V6);
-> =C2=A0		ret =3D s5p_mfc_cmd_host2risc_v6(dev,
-> =C2=A0					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6,
-> -					&h2r_args);
-> +					NULL);
-> =C2=A0	} else {
-> =C2=A0		ret =3D -EINVAL;
-> =C2=A0	}
->=20
-> ---
-> base-commit: 347e9f5043c89695b01e66b3ed111755afcf1911
-> change-id: 20250715-media-s5p-mfc-fix-uninit-const-pointer-cbf944ae4b4b
->=20
-> Best regards,
-> --=C2=A0=20
-> Nathan Chancellor <nathan@kernel.org>
->=20
-
---=-eEnUSaAdqhTct/4k3GEr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaIjZlwAKCRDZQZRRKWBy
-9MSgAPoDXRwf5Lxtcq7Hp7OG4Atltr1GrYd2XN3KIA0gsC/AKwD9FHG0AEjkTtQA
-V4fMhdBvUCT66a8f4JosODa/RnqNtwE=
-=4vZk
------END PGP SIGNATURE-----
-
---=-eEnUSaAdqhTct/4k3GEr--
+Thanks,
+Jason
