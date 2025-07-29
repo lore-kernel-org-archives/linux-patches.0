@@ -1,189 +1,276 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2057.outbound.protection.outlook.com [40.107.94.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A571224FA;
-	Tue, 29 Jul 2025 13:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753794163; cv=fail; b=suikIKJovmecRkps5UsZQDjIHMseGMiZYLs4o3Q1tXYZYJMj0udlLBjJs/IyciFR3zR+hoAeNrP4Dx+lY/59k0l+pf6pRiIAvE0Z7HScyvePLncVbokYw6DPnSpQ7xLsObKPTS+IwCAQUTXthb0+ICL5cYoE63ufTqGqSesL4YE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753794163; c=relaxed/simple;
-	bh=BGojEvqKF2nFfx5gWhSKDTt+iGSZ5WliIYle5nVqejQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=qCH4V5Ag6IACXN0NzV3xcffQnjeWQPBJiYtNXcrBuOtRSQJA0g8uEFP7vIZtmpmAYUzFeWETeXCImhd4gOTi8Oalq/rcSPM+W/hArMYBkUu1iiEWimDGRsHRtQNJeT14laNLD7YGT6owfCTHWMCG1gN2DD7iIXWfYacN7YNpU0I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Isu4BC9V; arc=fail smtp.client-ip=40.107.94.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2241A2872
+	for <patches@lists.linux.dev>; Tue, 29 Jul 2025 14:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753799068; cv=none; b=pYoNlqJTJr2JHlDNi9GtagBF0Tw3pIzZBofsFBRbAKRGtQs2gOCaI3Zv9zC/wTfLpPcNbPwpd/pcuSeQRnE8lg2P3/5RDl/SO3nLJEyFuxGDee4Q6uu0c3ozaIXvJ8vqqTRFvtAra20Uiv08SO76diObeebi6BPcM89KEuJIxgU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753799068; c=relaxed/simple;
+	bh=xRXyGwni6xiYtnm8ZbqUkc6iEgaQ7Xp7nL19BSMO+nE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=BFT+ZWSZxc3e4LlVddztZ9Sq4VCoz4o2WjqqP1U1qwPLDkCA+kr8MtSZXUgrBq73oplAQrvGjK/NQA3oCwEqnrh0VW8FaXFNwY1be+QZi5Qi0deTubkhYdkaTDSnJiPWEe589UgsleAvZ2BW0uNFJDAvaEP2dp7X1JoSz1PqCE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=xfFLC9s9; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Isu4BC9V"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vsTXfx0Sj2i9IowQInqdhCn8EMBme/VPakG1Ivxxy7zt/XOSDaitamyMsqScfPGe/W/toIjJ+dMbjYl50aKZimsV4iW+Y9CinULmcOxsqBB+X2fXSMn0OpJryTZmOMG98Yz8vOPhXwvpRtbRbGJ81+9HM8yJ2uWvglNK1v9t8PTFAhgypKQQ0xbtRUi+j6K/5MlZBdaC0I+ayuoJZIdbWf3W/q+FVuOY4XitW+OUpeWwZw13A3GwPE7rhpjORAol0J0vi7ahHHgy11tZm/KXy+khI5bj3XdVo9FW2opTz6Qu9ZbEqOrGRnXchvMLGJU09VwlX5c1j283JqOjMHmqlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=I+VSgsbf8UwcL/hFN5+r060OV01hNMa/zCgjQsIEVho=;
- b=YiXjltiB+cj6PFtQFMopcmRvD9xjG6Ol6n8WS3Ki+QjXXzNZqms2ec4BBaYo49bR7H/Bl/OsIde9V0MaJMngkJ1SH5uInDktMK5mhDPjiIkh4E0rM62lZLNXXKcMm2a6Dj+hMCTlBswLbtYflnYOBq4pyhwmoFToBu2FHaFOkiqKSGmDc4FllXLXUwXWuKGEXhu31oCS0XWIZD9e9F86k7vv+34hy7w9XRlBCeShih3YCMC8Z+kFiPVr0Y+VjpNkOlkMxeQ3CLfLsU9EorM5XLOu8Sr7g+ZECWgqZAEBuVVB3GJbiGZLjxTsvvfuoAJPnXjyMzXLgMI6CXBTQNeHQQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I+VSgsbf8UwcL/hFN5+r060OV01hNMa/zCgjQsIEVho=;
- b=Isu4BC9V9IV7mqHm3llrC1GIYhMvotfKCYa+9S83k0gHxStmzbQpEE6/N1LgOQAPBJ7lcEKQ5ao4HUt+mC4tf2Q8wgiyKAuISpKGR/MpsviJHh5V4fPuhC3ZSD+9g7pftGOe6DIRKlMnNBxHI8oPR8F5KZ/QDsnxXQmTrKZRtBgnkdhTKUXTRoAHRQZtGTThtGJV8ThwptMANUOhsNf6iLKSpgIt8FMwM72yHCcrVeOU/Znb1ybKZauypAqG2D+l0qfVjczb0e/bpp07zW5e5nzri6zISvn7gUMkrrLbnVsAD9/0SCkBGdkq7E3eDrlPrCr4QnmPyUVOMrAojJSDgQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by MW4PR12MB5627.namprd12.prod.outlook.com (2603:10b6:303:16a::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.27; Tue, 29 Jul
- 2025 13:02:38 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8964.024; Tue, 29 Jul 2025
- 13:02:38 +0000
-Date: Tue, 29 Jul 2025 10:02:36 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
-	rafael@kernel.org, lenb@kernel.org, bhelgaas@google.com,
-	iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
-	patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
-	helgaas@kernel.org, baolu.lu@linux.intel.com
-Subject: Re: [PATCH RFC v2 3/4] iommu: Introduce iommu_dev_reset_prepare()
- and iommu_dev_reset_done()
-Message-ID: <20250729130236.GI36037@nvidia.com>
-References: <cover.1751096303.git.nicolinc@nvidia.com>
- <9042270b6c2d15a53e66d22d29b87c1c59e60669.1751096303.git.nicolinc@nvidia.com>
- <20250704154342.GN1410929@nvidia.com>
- <aIAJfYMKYKyZZRqx@Asurada-Nvidia>
- <20250727162501.GD7551@nvidia.com>
- <aIfKjyvMeIYac23A@Asurada-Nvidia>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aIfKjyvMeIYac23A@Asurada-Nvidia>
-X-ClientProxiedBy: YT4PR01CA0408.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:108::13) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="xfFLC9s9"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4ab39fb71dbso58145581cf.3
+        for <patches@lists.linux.dev>; Tue, 29 Jul 2025 07:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1753799066; x=1754403866; darn=lists.linux.dev;
+        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rmeKc3jet6u3gOUQd2X+WQs6A8Udrvi7OwSfi5a8wj0=;
+        b=xfFLC9s9b2N7Hf6MKwL6PnITT025+U2wn3uCsOZTGX3Kag6eeRuZpkYlh5pAjELbs9
+         XnaZ8apXwLo5YI2eCqNl52qn55UauzwIPvDH8l7Y8WOK5FjpY8noOtWdPn7bZyr/XDoi
+         f92zwHWTU4jvBMNcfsy0xP9WslCYfouK96Uo6/CBHA6fYY+JCr+tDQtsWnq1H8WdOoeM
+         Z8jrHi+SCD34QWZTmxNpwF2RcZxX615B3jxEqjmEdOgoBQroa0XQ2bqxuIzGNr4dttS3
+         AMLwrI+5wY3giC86jxFCD7ZDmf8T9jTjiMmvBcuc1I2LDtiUBxqzRtGA4Jd072NozguW
+         nh5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753799066; x=1754403866;
+        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+         :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rmeKc3jet6u3gOUQd2X+WQs6A8Udrvi7OwSfi5a8wj0=;
+        b=RSD5/1K+9L6jI8fTir46wUgwR4ol26N5UIcDuAzJyE0ZdX9bS0z7sM3fYIaJC1C/Nd
+         4a7RKohmbQaSUahJbMomtRcV/SbF6FTvinA9ZUlijezeRLX41zN9F8FrMxutaBvoF10C
+         zhZ8jXQxI+l7pkxnOof8QIgrF0td0NyOvtODHrtN0SwvG07KZDv27qCOrhA72Jl8NvtM
+         ifh33AjPgTqEQ+90RJCidXaMMSU7CBB6ClNSfu4JLX7mokXcTLT4vLmCOUumIC3AdrLr
+         2vJxyOLW0K0FhCn2JsaqNBFzkgxGDcCgk1V9DoXZed9Ni4yaXAV7h+i0ipe9NhaJkN5U
+         cqNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXQ54m9AwSEh+ibDKQG7rGg7jQEQlQDMGpKU/6GVXYGAuIwEvGYXEXIN90ke1F2Vf+1S3lsMYJ9@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx4JGfRAyaKgsV8Ag60ygEMdccuVJ2TlAjUQz57xXGADdorOeGD
+	GVQLmlxPPw4RJDGj0sTjMHfo6kIR1Wx14wRDWu6YigE9YyljwBg9VMzU3GolVjkyCYI=
+X-Gm-Gg: ASbGncvOmvlxlt990xJ53Pc44U24Z2C6lx+eQcZckP2uZivufi/Oxf2i0BbLDUbpej0
+	4BPxPHM6pXExGaLiY3jv7L3rtcu/2+kqXdAqlMPSKXQMwHKRabtYScQ/Z0R0iM9VDmHJNqpzaG3
+	QsFE9K/PSUS/CRXZKYGK070GJI9K+pr7F5gkgPZUu7IQmfPT5NN82kVy/xQXX90R5lzPqMOAFmO
+	7bw+ZoM+iHtz53LVM7cNtBBrjrEGmTjL+3pGRhUqIkdFjx94/ZfvzgViH2qfxu7Wi7rYhiKTEXv
+	Ao9FdwuE+zrrOrk/XtdWRvGulSwYem6Zo9LJoxtDxbaJkmd/yYQGGJJZxp7nllX3UoJutvGzvBV
+	pG+vdXz7/TC0DnAr399Jg+TbkQreHjU+2wyz5NQ==
+X-Google-Smtp-Source: AGHT+IEls/QVu7ZlIlUQJ28Xm3RrlwZ4/ODLxhT+f7gRkpVOEKn45LTTgozTNCaJLKONRyTYZ09YoQ==
+X-Received: by 2002:ac8:7c47:0:b0:4ab:6531:1288 with SMTP id d75a77b69052e-4ae8f08eb9dmr256458761cf.35.1753799065474;
+        Tue, 29 Jul 2025 07:24:25 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:11:5a76::5ac? ([2606:6d00:11:5a76::5ac])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ae9963b732sm48999481cf.39.2025.07.29.07.24.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Jul 2025 07:24:24 -0700 (PDT)
+Message-ID: <9650d2e240a9170175069e3a4f6d6d9512d62aa3.camel@ndufresne.ca>
+Subject: Re: [PATCH] media: s5p-mfc: Always pass NULL to
+ s5p_mfc_cmd_host2risc_v6()
+From: Nicolas Dufresne <nicolas@ndufresne.ca>
+To: Nathan Chancellor <nathan@kernel.org>, Marek Szyprowski
+	 <m.szyprowski@samsung.com>, Andrzej Hajda <andrzej.hajda@intel.com>, Mauro
+ Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+Date: Tue, 29 Jul 2025 10:24:22 -0400
+In-Reply-To: <20250715-media-s5p-mfc-fix-uninit-const-pointer-v1-1-4d52b58cafe9@kernel.org>
+References: 
+	<20250715-media-s5p-mfc-fix-uninit-const-pointer-v1-1-4d52b58cafe9@kernel.org>
+Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
+ keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
+ /e0MU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAY29sbGFib3JhLmNvbT6ImQQTFg
+ oAQQIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBO8NUoEVxMPCGgRvEtlBlFEpYHL0BQJ
+ oLLLGBQkJZfd1AAoJENlBlFEpYHL0BEkA/3qkWYt99myYFSmTJUF8UB/7OroEm3vr1HRqXeQe9Qp2
+ AP0bsoAe6KjEPa/pJfuJ2khrOPPHxvyt/PBNbI5BYcIABLQnTmljb2xhcyBEdWZyZXNuZSA8bmljb
+ 2xhc0BuZHVmcmVzbmUuY2E+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQ
+ TvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyy+AUJCWX3dQAKCRDZQZRRKWBy9FJ5AQCNy8SX8DpHbLa
+ cy58vgDwyIpB89mok9eWGGejY9mqpRwEAhHzs+/n5xlVlM3bqy1yHnAzJqVwqBE1D0jG0a9V6VQI=
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-eEnUSaAdqhTct/4k3GEr"
+User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|MW4PR12MB5627:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1cfa3e50-6e59-42ad-20a8-08ddcea031c1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?l/x9Lq1vDs+xspyAa+wLQC+JGsIbZ/5ZEqPinCUKVaYQG8hSsCWZt2WJHYnq?=
- =?us-ascii?Q?jHwOHzBxiq1jHOzQITTA8Z9+HywaNkSAni2CwQ3M1KrkCDIWY4/ltgyQA6n2?=
- =?us-ascii?Q?urhshTYsjew6Qhb84E6BAQWOcjKoc+AE6LGWOSVjssp+lBK7LoPC51iT3rw9?=
- =?us-ascii?Q?ohW0vccYra+Ikeq/0tsVSnh6pfI2wz5/OQs7OhDJ2Z2N4mvmI/OV4Zy1ZTdN?=
- =?us-ascii?Q?MPoqDbcM8NhoiQ5TU0g4/FNGUWNneSaCajCAiMjolaIm2M01FpAMFyoZQegd?=
- =?us-ascii?Q?uqSbLK53pU41Y0fz3uIF6Kd6XRw5b+SIAksqsbgufiTaAJSyWnrLxtruB2ZT?=
- =?us-ascii?Q?v65u9hnc9dulbLati8aT9p77W0bYn0UuWOCpug0dPtfAbdwGQeS6auYC42BI?=
- =?us-ascii?Q?yHWRq9W1BWLo8Qykxey6aXVQJb53WSkaBZ0Q8tly1d9O5qyy5DbRqMv/W/zV?=
- =?us-ascii?Q?JghfhI8T+GYcQB+Ybpx/LfXYNEPiJBY7NM70Ngc2jbkl7a1VJHoVIq81WxfY?=
- =?us-ascii?Q?yupKWT9YYY1rVzX00t7Uee7cSgB7a4dJVhjMKuNcmk0R02LatbIK5nrJG6Rx?=
- =?us-ascii?Q?BmtblQej7n0bsBz0UVnJG4ZSFMnZZ9dSNnyQ+J8xIfEpWlYqAajh0jnB+DSD?=
- =?us-ascii?Q?9DiPRUMwe2rVBoxnFZzvWHgGCBJgVwxX9jEQcpfPKB8Me8mCYPfbP5FSqBGt?=
- =?us-ascii?Q?uDgDA+EFqKc9uyjZbThj83LdEgz6KC91riz8L6MLCbFwleVKKcQ4tue0i/hc?=
- =?us-ascii?Q?4wmW1Y4ifivfFxPlXGUWsXNS/QrbImVmehrR/Tr/QFSmri4Hvd3AL+glxD2n?=
- =?us-ascii?Q?AZdRrdT4EpEBWw0eCRGUvGEGoPL9N8D8Q7bS5KXYOPuLuNxlv0+RWbrukAV/?=
- =?us-ascii?Q?MsDrMPowGCC3acYMkL6sW7kpHExyne1ZIpT5oOuIfcsKprzacAWJ3fGbfXSC?=
- =?us-ascii?Q?/Av6hk+NwJjlwghQb4oc0wPnKabvFwUXgL1aWKRpuNBaZL1II2x/syFmx8C8?=
- =?us-ascii?Q?rtxCIHNVzekBo5wuk/qb7IMj0cptb82zq31XjqvO+Ib1QujRfVZ2n+acuTDI?=
- =?us-ascii?Q?oLVBp4KmXcsGzyjYmQJzOEfUmvW7nJoJqKr9oXFHM40T5Y1Ve7XYpt/zt2P9?=
- =?us-ascii?Q?5IlhHazcaOC5Ptq406tH7UUfnIzRrQmuTfD/2yO/LFsq84oTc5y3cUBg2yWM?=
- =?us-ascii?Q?cxIIazTRo2UfYjw2uIKgU19eVqI5Nb1j6EDOGYJyLI9LcxZilWY7gpvI+Nk8?=
- =?us-ascii?Q?py+GoSh+0r7qFqjhaf/IZgd+RujXNtYPN4hih/abUKDzUE4F+TBXADltAKwm?=
- =?us-ascii?Q?1KNucIvzOazYTdW7K8TXE84qddbF17cRGW1qvLgnzJUp6kNAjwcxMAqWF6by?=
- =?us-ascii?Q?lKqDOhXKFsxtrv5u93fA6xm9QwzuL0Uz9tm3Kd8c1KLv2yQvfcuahxknSJ6b?=
- =?us-ascii?Q?6zmbp/BoIJY=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?vCACplZDCKTXYXUsALKGCKKN0xYGHzGYl+Cr0JIUBDM7xy5zFFsvv7giIdpf?=
- =?us-ascii?Q?PICwwQxY65hzGQt8UKQZtzVQpxPyXoGjSQcg+RAFBMiU8nTbC9S9dqXjWgDZ?=
- =?us-ascii?Q?zAfkbRcQQu2oNsuJ4b/q2MrDhYmLj3aCbSLPrSQlOMHKV+XysOf61Biv95ZO?=
- =?us-ascii?Q?uskA8+jIKTBoXkI8VMq4vWIoycAJlgIUM2D/EfoDMn3wAMpRDypK7N2aavQF?=
- =?us-ascii?Q?yvImnMGqi30FiTvmKUBVZZfndB6ejJdZ29H4e9ln4Uc0vtTBmSE2SX3GYnFV?=
- =?us-ascii?Q?vsI9JooTN3WHMpcW+pDeM9D1bFjcXOZK+dFb4erw4eJHjlWpC/dk2LeElFvU?=
- =?us-ascii?Q?UPVdZjjkqX2VfunPv0I2oiazhOCGnf2CbuTz4Yt+8qgiYPqm3z48CqiC1nlr?=
- =?us-ascii?Q?1VxdQiZB39ecfNWdTIiBUnsUxu5w0tANGOZ1qJDfvhg8cDyWlGKo99RjV44S?=
- =?us-ascii?Q?QdthN4r+uDpHaMmmG0XWrviB+HgzCBdMQopQk0w7LVxsNuXkzkGaFSyS6Q3y?=
- =?us-ascii?Q?QKhDnH51Wohws8H17zTwpnCCXI9c8MpI/N6JfSFPFdhGlRFkaEKNLxkkZoE6?=
- =?us-ascii?Q?rqc39V2z4nUyJYSmeQ0qU/hHvDmLEuhZ9rf1ZXodOCf4eK6m3CnhcMg66TIT?=
- =?us-ascii?Q?wFQ7BJkMUDgH4dtocxY5jnhL02hMKDEWVMvGJuevVGFSMPX4koyjc7OFztk/?=
- =?us-ascii?Q?9xZbYYewAx/rRIJqKbwzZOtkH9hXQoJhpUkryMIgvwln6b+Xlyae5dfmMffC?=
- =?us-ascii?Q?YPOOZ/rPHC2HH3VC+eESQvzDdwYikpakF2CkPPZ7x5bKjBPx2t97xVKiodSW?=
- =?us-ascii?Q?sW31CxRBdsRDO10sWsMnNmFoIjOlkW3yMLf3reuH9+8zS3v9rhBlvRnktuBM?=
- =?us-ascii?Q?20i96GMnyXvTiqDErN7GKQF+D401jkkxe0pa6aNBJYnI3ZgneVf2KBXAkAwA?=
- =?us-ascii?Q?n0NARKlYxl0qM7P9oQocjGcLprgR2vk4cEyMVQS2YvcuucbLDy5HCMEtP4t5?=
- =?us-ascii?Q?BIU6dSLTlj7O3cbDNmbPN9PCImZwqblG3ZaW3cunBT9EgCJS8fnAmrnIXbYf?=
- =?us-ascii?Q?wptg9ZeZdR7DJ6ihpTAksD3Eci92GSGWCQcBUMolI21VxYNShFUjfMv4Jnrv?=
- =?us-ascii?Q?bpuUCdC2qbx+ODOPeR7EOE5dYZ/KGCmswoWks2BnX4XaefQAqhKU4YqBO7ic?=
- =?us-ascii?Q?1gbP+u6aTL2nHJpvxrxVe7WUnsLkdpaWw1sZBbfu7CFd7QF4zsWgRZiXPKaM?=
- =?us-ascii?Q?FY4HgeBMAh+/FDYbzA3oT1CViqJ9hqEdJrzJPpiKfByPhLgqnv2fy+Hn5H04?=
- =?us-ascii?Q?lJE6tOFWOMj2gsig+QLaDG82x0/gBuJM1fGkBj1gGieZ/O8NRJk8jA7r5v6G?=
- =?us-ascii?Q?4QUHG61asS6py2f2535LeqXmNiFEELo7jR0C3eCDnkq5LFvwnRjDY2RYiUMu?=
- =?us-ascii?Q?3yI47o6CaTC++Ivp2ru9F/E8i+pgZwMaa331fFUiUNRn49GHQ80ffj/B3H9c?=
- =?us-ascii?Q?DkdRaslq8wa8oykPqY6XvH7CFkyz90O8lBoxmDk6MTe2sGMnO8UpTXU37lNx?=
- =?us-ascii?Q?rjw/yRKDxbO1bmqIUW4=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1cfa3e50-6e59-42ad-20a8-08ddcea031c1
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2025 13:02:38.3273
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xEzkb2/j1eNM0kSs8SX1RWGdzpkxN/kdGKRW/uH3DzKOvrXJi1dQ1JS5G2uQBak3
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5627
 
-On Mon, Jul 28, 2025 at 12:07:59PM -0700, Nicolin Chen wrote:
-> On Sun, Jul 27, 2025 at 01:25:01PM -0300, Jason Gunthorpe wrote:
-> > On Tue, Jul 22, 2025 at 02:58:21PM -0700, Nicolin Chen wrote:
-> > > > /*
-> > > >  * This is called on the dma mapping fast path so avoid locking. This
-> > > >  * is racy, but we have an expectation that the driver will setup its
-> > > >  * DMAs inside probe while still single threaded to avoid racing.
-> > > >  */
-> > > > if (dev->iommu && !READ_ONCE(dev->iommu->attach_deferred))
-> > > 
-> > > This triggers a build error as attach_deferred is a bit-field. So I
-> > > am changing it from "u32 attach_deferred:1" to "bool" for this.
-> > 
-> > Bleck, that seems undesirable.
-> 
-> But inevitable for READ_ONCE :(
 
-I guess drop the READ_ONCE change
- 
-> > > And, to keep the original logic, I think it should be:
-> > > 	if (!dev->iommu || !READ_ONCE(dev->iommu->attach_deferred))
-> > 
-> > That doesn't seem right, if there is no iommu by the time a driver is
-> > probed there never will be an iommu and this device should be running
-> > in direct mode only.
-> 
-> Well, the current function does:
-> 	if (dev->iommu && dev->iommu->attach_deferred)
-> 		return __iommu_attach_device(domain, dev);
-> 	return 0;
-> 
-> So, matching to that logic, it would be:
-> 	if (!dev->iommu || !dev->iommu->attach_deferred)
-> 		return 0;
-> 	return __iommu_attach_device(domain, dev);
-> then add guard(mutex).
+--=-eEnUSaAdqhTct/4k3GEr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yeah Ok
+Hi Nathan,
 
-Jason
+Le mardi 15 juillet 2025 =C3=A0 15:13 -0700, Nathan Chancellor a =C3=A9crit=
+=C2=A0:
+> A new warning in clang [1] points out a few places in s5p_mfc_cmd_v6.c
+> where an uninitialized variable is passed as a const pointer:
+>=20
+> =C2=A0 drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:45:7: erro=
+r: variable 'h2r_args' is uninitialized when passed as a const pointer argu=
+ment here [-Werror,-Wuninitialized-const-pointer]
+> =C2=A0=C2=A0=C2=A0=C2=A0 45 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &h2r_args);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~=
+~~~
+> =C2=A0 drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:133:7: err=
+or: variable 'h2r_args' is uninitialized when passed as a const pointer arg=
+ument here [-Werror,-Wuninitialized-const-pointer]
+> =C2=A0=C2=A0=C2=A0 133 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &h2r_args);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~=
+~~~
+> =C2=A0 drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c:148:7: err=
+or: variable 'h2r_args' is uninitialized when passed as a const pointer arg=
+ument here [-Werror,-Wuninitialized-const-pointer]
+> =C2=A0=C2=A0=C2=A0 148 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &h2r_args);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~=
+~~~
+>=20
+> The args parameter in s5p_mfc_cmd_host2risc_v6() is never actually used,
+> so just pass NULL to it in the places where h2r_args is currently
+> passed, clearing up the warning and not changing the functionality of
+> the code.
+>=20
+> Cc: stable@vger.kernel.org
+> Fixes: f96f3cfa0bb8 ("[media] s5p-mfc: Update MFC v4l2 driver to support =
+MFC6.x")
+> Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14=
+cd091d441f19b319e=C2=A0[1]
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/2103
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> From what I can tell, it seems like ->cmd_host2risc() is only ever
+> called from v6 code, which always passes NULL? It seems like it should
+> be possible to just drop .cmd_host2risc on the v5 side, then update
+> .cmd_host2risc to only take two parameters? If so, I can send a follow
+> up as a clean up, so that this can go back relatively conflict free.
+
+It seems so yes. For this specific patch, I would probably rename "args" to
+"__unused" to make the reading faster. But does not matter so much if you l=
+ater
+remove it.
+
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+
+> ---
+> =C2=A0.../platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 | 22 +++++-----------------
+> =C2=A01 file changed, 5 insertions(+), 17 deletions(-)
+>=20
+> diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c b/dr=
+ivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
+> index 47bc3014b5d8..735471c50dbb 100644
+> --- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
+> +++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_cmd_v6.c
+> @@ -31,7 +31,6 @@ static int s5p_mfc_cmd_host2risc_v6(struct s5p_mfc_dev =
+*dev, int cmd,
+> =C2=A0
+> =C2=A0static int s5p_mfc_sys_init_cmd_v6(struct s5p_mfc_dev *dev)
+> =C2=A0{
+> -	struct s5p_mfc_cmd_args h2r_args;
+> =C2=A0	const struct s5p_mfc_buf_size_v6 *buf_size =3D dev->variant->buf_s=
+ize->priv;
+> =C2=A0	int ret;
+> =C2=A0
+> @@ -41,33 +40,23 @@ static int s5p_mfc_sys_init_cmd_v6(struct s5p_mfc_dev=
+ *dev)
+> =C2=A0
+> =C2=A0	mfc_write(dev, dev->ctx_buf.dma, S5P_FIMV_CONTEXT_MEM_ADDR_V6);
+> =C2=A0	mfc_write(dev, buf_size->dev_ctx, S5P_FIMV_CONTEXT_MEM_SIZE_V6);
+> -	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6,
+> -					&h2r_args);
+> +	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SYS_INIT_V6, NULL=
+);
+> =C2=A0}
+> =C2=A0
+> =C2=A0static int s5p_mfc_sleep_cmd_v6(struct s5p_mfc_dev *dev)
+> =C2=A0{
+> -	struct s5p_mfc_cmd_args h2r_args;
+> -
+> -	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
+> -	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6,
+> -			&h2r_args);
+> +	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_SLEEP_V6, NULL);
+> =C2=A0}
+> =C2=A0
+> =C2=A0static int s5p_mfc_wakeup_cmd_v6(struct s5p_mfc_dev *dev)
+> =C2=A0{
+> -	struct s5p_mfc_cmd_args h2r_args;
+> -
+> -	memset(&h2r_args, 0, sizeof(struct s5p_mfc_cmd_args));
+> -	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6,
+> -					&h2r_args);
+> +	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_WAKEUP_V6, NULL);
+> =C2=A0}
+> =C2=A0
+> =C2=A0/* Open a new instance and get its number */
+> =C2=A0static int s5p_mfc_open_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
+> =C2=A0{
+> =C2=A0	struct s5p_mfc_dev *dev =3D ctx->dev;
+> -	struct s5p_mfc_cmd_args h2r_args;
+> =C2=A0	int codec_type;
+> =C2=A0
+> =C2=A0	mfc_debug(2, "Requested codec mode: %d\n", ctx->codec_mode);
+> @@ -130,14 +119,13 @@ static int s5p_mfc_open_inst_cmd_v6(struct s5p_mfc_=
+ctx *ctx)
+> =C2=A0	mfc_write(dev, 0, S5P_FIMV_D_CRC_CTRL_V6); /* no crc */
+> =C2=A0
+> =C2=A0	return s5p_mfc_cmd_host2risc_v6(dev, S5P_FIMV_H2R_CMD_OPEN_INSTANC=
+E_V6,
+> -					&h2r_args);
+> +					NULL);
+> =C2=A0}
+> =C2=A0
+> =C2=A0/* Close instance */
+> =C2=A0static int s5p_mfc_close_inst_cmd_v6(struct s5p_mfc_ctx *ctx)
+> =C2=A0{
+> =C2=A0	struct s5p_mfc_dev *dev =3D ctx->dev;
+> -	struct s5p_mfc_cmd_args h2r_args;
+> =C2=A0	int ret =3D 0;
+> =C2=A0
+> =C2=A0	dev->curr_ctx =3D ctx->num;
+> @@ -145,7 +133,7 @@ static int s5p_mfc_close_inst_cmd_v6(struct s5p_mfc_c=
+tx *ctx)
+> =C2=A0		mfc_write(dev, ctx->inst_no, S5P_FIMV_INSTANCE_ID_V6);
+> =C2=A0		ret =3D s5p_mfc_cmd_host2risc_v6(dev,
+> =C2=A0					S5P_FIMV_H2R_CMD_CLOSE_INSTANCE_V6,
+> -					&h2r_args);
+> +					NULL);
+> =C2=A0	} else {
+> =C2=A0		ret =3D -EINVAL;
+> =C2=A0	}
+>=20
+> ---
+> base-commit: 347e9f5043c89695b01e66b3ed111755afcf1911
+> change-id: 20250715-media-s5p-mfc-fix-uninit-const-pointer-cbf944ae4b4b
+>=20
+> Best regards,
+> --=C2=A0=20
+> Nathan Chancellor <nathan@kernel.org>
+>=20
+
+--=-eEnUSaAdqhTct/4k3GEr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaIjZlwAKCRDZQZRRKWBy
+9MSgAPoDXRwf5Lxtcq7Hp7OG4Atltr1GrYd2XN3KIA0gsC/AKwD9FHG0AEjkTtQA
+V4fMhdBvUCT66a8f4JosODa/RnqNtwE=
+=4vZk
+-----END PGP SIGNATURE-----
+
+--=-eEnUSaAdqhTct/4k3GEr--
