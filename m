@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A02036124;
-	Wed, 30 Jul 2025 09:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F1326D4F9;
+	Wed, 30 Jul 2025 09:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868528; cv=none; b=nGOMY/bYpLU6DoUJ7vzqceioZJXxnQJPG0o0KeygU4DngwkMxX95/55wdtTHp5IRpfe1rImyHk16uBOza65Vd5cXlDUMJ68aIEs714PJxc1tMwUVyCNGATEijUXb8+FiGLhWYxA5pm1RCzXlcGg6tEaHDKDb3+81zlI5GfXN+t0=
+	t=1753868531; cv=none; b=cQaj7M5GO6zO8mRHHETyR5k4704bxJbjgXGQdcyqUJK9Ita7WtFoDh+5P5EKmUdJp1P3KU5d0xo2WOC4k3tD80BmNQPJ4iKP+4wos9JwYf1WpkcpJp0Q1FQ8zfFzFkE+8lzJHYFZKjlnCAGavmolQ7xdgAxfCfeemhYGkSSc0G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868528; c=relaxed/simple;
-	bh=JzQwLew3a+gRJ2TmNrZ2DIBv1bQfNo+rVWEZzMcp4ik=;
+	s=arc-20240116; t=1753868531; c=relaxed/simple;
+	bh=XsEnYG4nEfObFacGmz/W2Rz7/7ZRmT5IEp7c5gMjRKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nAhxTmphppoOUj5brnScHlFvbthn6HbGufwzhqYk02r5hbRftrMUhIJhKmR5/KgN6zBzK2EaJEXUvpiGJgCwISfQpN8vjvDDBdfDXCrfVl52Y5XSzxf9gSiX6K5P+wckilpsJ6ZL3/ubSYQOJT7RtNyoZ0TrT87oj439ti6DuE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8H/nslu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KrZ5kTWiwLqQ7W/y1ZD4Gs1zD5wycl23kFdXonAtGr6rnKLCxOBQY5eX9XP4EtrhHV8hHGfo9LPuuLgtjP9k6uHayZs6gYAypWxdOfyLXo36LyjG+5obn2uXO+fNjXa3E9n7zdXt3Tf+6f0r92y8dESq6N1FnYEU8fjzpRICJd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZ4NaJKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8H/nslu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DE2C4CEE7;
-	Wed, 30 Jul 2025 09:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZ4NaJKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11BFC4CEE7;
+	Wed, 30 Jul 2025 09:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868528;
-	bh=JzQwLew3a+gRJ2TmNrZ2DIBv1bQfNo+rVWEZzMcp4ik=;
+	s=korg; t=1753868531;
+	bh=XsEnYG4nEfObFacGmz/W2Rz7/7ZRmT5IEp7c5gMjRKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8H/nsluiWmkmJKyOJgdv/eMfoVTHZPXJ+2VMd6rHsUldknuTAjVOzp9L4Pcx25+X
-	 pRKuzNPbIjWyoObnp6/fdsIyaHi/mte3cntiy5ue3pKGrKtYasFE9RqrvOAXi5nm6d
-	 r7CUBKoUOM+DnHL09RzVlc3Up9qbmPlTPgIwF6ic=
+	b=PZ4NaJKGYxQfa9dmRy05/fOOZ+vQf2FR6JBbyHoE2UvpaJTrfq61Zyv05luKx+YHN
+	 9cjHp1EyCXHZ67EEZnGZxO6l7SXaZdNgfqOSmBXML48wK0TjygzRGosxfGECvaxi+8
+	 V7/Z66KmPfzVhQ4pMogPorzaHhk8zs1w64UdZfO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Thompson <davthompson@nvidia.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/117] platform/mellanox: mlxbf-pmc: Validate event/enable input
-Date: Wed, 30 Jul 2025 11:34:41 +0200
-Message-ID: <20250730093234.065424226@linuxfoundation.org>
+Subject: [PATCH 6.12 013/117] platform/mellanox: mlxbf-pmc: Use kstrtobool() to check 0/1 input
+Date: Wed, 30 Jul 2025 11:34:42 +0200
+Message-ID: <20250730093234.102955788@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -55,12 +55,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Shravan Kumar Ramani <shravankr@nvidia.com>
 
-[ Upstream commit f8c1311769d3b2c82688b294b4ae03e94f1c326d ]
+[ Upstream commit 0e2cebd72321caeef84b6ba7084e85be0287fb4b ]
 
-Before programming the event info, validate the event number received as input
-by checking if it exists in the event_list. Also fix a typo in the comment for
-mlxbf_pmc_get_event_name() to correctly mention that it returns the event name
-when taking the event number as input, and not the other way round.
+For setting the enable value, the input should be 0 or 1 only. Use
+kstrtobool() in place of kstrtoint() in mlxbf_pmc_enable_store() to
+accept only valid input.
 
 Fixes: 423c3361855c ("platform/mellanox: mlxbf-pmc: Add support for BlueField-3")
 Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
@@ -71,32 +70,46 @@ Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index afc07905e235e..d305d23cf5199 100644
+index d305d23cf5199..9a0220b4de3c8 100644
 --- a/drivers/platform/mellanox/mlxbf-pmc.c
 +++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -1068,7 +1068,7 @@ static int mlxbf_pmc_get_event_num(const char *blk, const char *evt)
- 	return -ENODEV;
- }
- 
--/* Get the event number given the name */
-+/* Get the event name given the number */
- static char *mlxbf_pmc_get_event_name(const char *blk, u32 evt)
+@@ -1731,13 +1731,14 @@ static ssize_t mlxbf_pmc_enable_store(struct device *dev,
  {
- 	const struct mlxbf_pmc_events *events;
-@@ -1648,6 +1648,9 @@ static ssize_t mlxbf_pmc_event_store(struct device *dev,
- 		err = kstrtouint(buf, 0, &evt_num);
- 		if (err < 0)
- 			return err;
-+
-+		if (!mlxbf_pmc_get_event_name(pmc->block_name[blk_num], evt_num))
-+			return -EINVAL;
- 	}
+ 	struct mlxbf_pmc_attribute *attr_enable = container_of(
+ 		attr, struct mlxbf_pmc_attribute, dev_attr);
+-	unsigned int en, blk_num;
++	unsigned int blk_num;
+ 	u32 word;
+ 	int err;
++	bool en;
  
- 	if (strstr(pmc->block_name[blk_num], "l3cache"))
+ 	blk_num = attr_enable->nr;
+ 
+-	err = kstrtouint(buf, 0, &en);
++	err = kstrtobool(buf, &en);
+ 	if (err < 0)
+ 		return err;
+ 
+@@ -1757,14 +1758,11 @@ static ssize_t mlxbf_pmc_enable_store(struct device *dev,
+ 			MLXBF_PMC_CRSPACE_PERFMON_CTL(pmc->block[blk_num].counters),
+ 			MLXBF_PMC_WRITE_REG_32, word);
+ 	} else {
+-		if (en && en != 1)
+-			return -EINVAL;
+-
+ 		err = mlxbf_pmc_config_l3_counters(blk_num, false, !!en);
+ 		if (err)
+ 			return err;
+ 
+-		if (en == 1) {
++		if (en) {
+ 			err = mlxbf_pmc_config_l3_counters(blk_num, true, false);
+ 			if (err)
+ 				return err;
 -- 
 2.39.5
 
