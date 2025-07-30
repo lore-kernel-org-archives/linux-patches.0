@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C31E2877D3;
-	Wed, 30 Jul 2025 09:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10079276058;
+	Wed, 30 Jul 2025 09:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868774; cv=none; b=rQPpUBXHjdJ06a0sgQo7hkdO/sqgXzkdgI4t0/JHh/JXfX5brwtfNp1hhQ1oDSxX0H3gi4r/DIU+VITnQVtLXknFJ0oiHVn0xawEJdhtWV86/f1BSLSjjPT53YB/DS4LOlFkxTyd42dW7cb8R19AzM+SpLlboa/7afJx3gXdSEE=
+	t=1753868778; cv=none; b=DFIzd2qHu7Ws772LYU9YFZiOBvdUl58vFJC98X4nWxKuznB4AlXj5//iCo+XWJBDHk0szbdMFousuX+6k51rRRc/t6SDxDueRMfw1au0SG/yIkpIG2vIV/qAiAXmCVf7JiYanMe0tA9l+ZTm/mf1KrV6SxUVVoYeFDkjuJkEDqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868774; c=relaxed/simple;
-	bh=ERB+HogELJPUpTDPBTllpQVRHs6osO80qJ1cbJIdoLc=;
+	s=arc-20240116; t=1753868778; c=relaxed/simple;
+	bh=kG7nQef9EJmn/DA+QVrqGMf53QA4l6040bMMUNiQDvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zo+ndb0JRvkJjSx+cJd+Yk/7amPpXUurR8K3/1aL8ym5q/Kpe+s4x8t91g8S1SMJWkHw6kv2GjEfKlOXAtOaGaBk+cUOov2x8HpEH5gfBBK/4jz1E6yHGT6a9JAAIr5uIzM+paT1+Rglk6+YiVAVF5sgewhhOkG8kzFzCVdl+ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzZJO24z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1KrPaJYZa+MZEoHHAlaZkKi6781wzTivcAO7oEuHo1GNDr7FrAiSeP/lnKzWvmrnufMfmraVyTL2iE84JBou6y7d4Jz55L/X/TAoV4Qkz3Q1hHohJG1jgYQXggLJDp9XHV2dMYBJtm/tsT3pjmX/BllMSpjG4+4ZVqW1lJVjc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNOAg+H8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzZJO24z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188B1C4CEF5;
-	Wed, 30 Jul 2025 09:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNOAg+H8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51092C4CEF5;
+	Wed, 30 Jul 2025 09:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868774;
-	bh=ERB+HogELJPUpTDPBTllpQVRHs6osO80qJ1cbJIdoLc=;
+	s=korg; t=1753868777;
+	bh=kG7nQef9EJmn/DA+QVrqGMf53QA4l6040bMMUNiQDvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzZJO24zb5VnYkGpbf3dbLfWg/FVXWYCOQMmKyTP8WBqI1XTm76MvGmdUXUZ2uZ84
-	 CiTubK9M9pPekDpp+vdxecoTIS0T0W9KBHQ5pVZzPcgbahc2dBtZCCeeB2doigLnqS
-	 ZLVUg+pQpp30txBW3a4fYRzNKIcLDjpME2htHTlw=
+	b=qNOAg+H8uIAIahIA21NaJmZCwDG0ZnzJcLJD0McAt6lO5U9jpJWNTqu/dUUmqM7cA
+	 3z3diRpcdILv261kx63we4aSxxGGGtu37+aYVhcP+MWEM3nyhyHY0eLjF3aaNFqgms
+	 n1pSlImpn4PgoVmsg0ABCLwqBKG57YZmdQDy2tSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 063/117] selftests: mptcp: connect: also cover alt modes
-Date: Wed, 30 Jul 2025 11:35:32 +0200
-Message-ID: <20250730093235.998627431@linuxfoundation.org>
+	Khairul Anuar Romli <khairul.anuar.romli@altera.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 072/117] spi: cadence-quadspi: fix cleanup of rx_chan on failure paths
+Date: Wed, 30 Jul 2025 11:35:41 +0200
+Message-ID: <20250730093236.341291268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -51,64 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
 
-commit 37848a456fc38c191aedfe41f662cc24db8c23d9 upstream.
+commit 04a8ff1bc3514808481ddebd454342ad902a3f60 upstream.
 
-The "mmap" and "sendfile" alternate modes for mptcp_connect.sh/.c are
-available from the beginning, but only tested when mptcp_connect.sh is
-manually launched with "-m mmap" or "-m sendfile", not via the
-kselftests helpers.
+Remove incorrect checks on cqspi->rx_chan that cause driver breakage
+during failure cleanup. Ensure proper resource freeing on the success
+path when operating in cqspi->use_direct_mode, preventing leaks and
+improving stability.
 
-The MPTCP CI was manually running "mptcp_connect.sh -m mmap", but not
-"-m sendfile". Plus other CIs, especially the ones validating the stable
-releases, were not validating these alternate modes.
-
-To make sure these modes are validated by these CIs, add two new test
-programs executing mptcp_connect.sh with the alternate modes.
-
-Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250715-net-mptcp-sft-connect-alt-v2-1-8230ddd82454@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/89765a2b94f047ded4f14babaefb7ef92ba07cb2.1751274389.git.khairul.anuar.romli@altera.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/Makefile                  |    3 ++-
- tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh     |    5 +++++
- tools/testing/selftests/net/mptcp/mptcp_connect_sendfile.sh |    5 +++++
- 3 files changed, 12 insertions(+), 1 deletion(-)
- create mode 100755 tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh
- create mode 100755 tools/testing/selftests/net/mptcp/mptcp_connect_sendfile.sh
+ drivers/spi/spi-cadence-quadspi.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/Makefile
-+++ b/tools/testing/selftests/net/mptcp/Makefile
-@@ -4,7 +4,8 @@ top_srcdir = ../../../../..
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1931,11 +1931,6 @@ static int cqspi_probe(struct platform_d
  
- CFLAGS += -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
+ 	pm_runtime_enable(dev);
  
--TEST_PROGS := mptcp_connect.sh pm_netlink.sh mptcp_join.sh diag.sh \
-+TEST_PROGS := mptcp_connect.sh mptcp_connect_mmap.sh mptcp_connect_sendfile.sh \
-+	      pm_netlink.sh mptcp_join.sh diag.sh \
- 	      simult_flows.sh mptcp_sockopt.sh userspace_pm.sh
- 
- TEST_GEN_FILES = mptcp_connect pm_nl_ctl mptcp_sockopt mptcp_inq
---- /dev/null
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh
-@@ -0,0 +1,5 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+MPTCP_LIB_KSFT_TEST="$(basename "${0}" .sh)" \
-+	"$(dirname "${0}")/mptcp_connect.sh" -m mmap "${@}"
---- /dev/null
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect_sendfile.sh
-@@ -0,0 +1,5 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+MPTCP_LIB_KSFT_TEST="$(basename "${0}" .sh)" \
-+	"$(dirname "${0}")/mptcp_connect.sh" -m sendfile "${@}"
+-	if (cqspi->rx_chan) {
+-		dma_release_channel(cqspi->rx_chan);
+-		goto probe_setup_failed;
+-	}
+-
+ 	pm_runtime_set_autosuspend_delay(dev, CQSPI_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_get_noresume(dev);
 
 
