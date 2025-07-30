@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629F3226D17;
-	Wed, 30 Jul 2025 09:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060FA277CAF;
+	Wed, 30 Jul 2025 09:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869021; cv=none; b=DJBm6eBydK49eH0WUpTVy1H7+nEOYTNpFl9jEoFA+APvRjMSZraFdUYJDlZitOib0j9hI11up2pwkzGQJ8vbajrAXT0PEAa8DnXGwOqmwjCUMr4mJnAL36ysFEgxFJxuiHwqO71ROoYSUG6L5pLx1bDbtR5do5ou1B0JzsHElYs=
+	t=1753869026; cv=none; b=PpKIGKzSGQF/VuTfNr2ef2b1iM9HqrIFwP2acR8ambtM+6Fj0F2aJSpeAOtaimBXquy7WWKRgWgrrgvnGs2hkQYEyBe1ZgqG7c0rssWy7qlxV8ZLIphE2qOm5rgCajagt5Fqpj4/aoThZN6Z8c2PTU59nNBHOcwOiKpimReh4hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869021; c=relaxed/simple;
-	bh=XSYwBgke3tBq7uJk1YuSalUv2VLaEP8J/fV+X0G+mLo=;
+	s=arc-20240116; t=1753869026; c=relaxed/simple;
+	bh=c7fjIHT83/2l3Q4exOXv6h+zP+uMZ2jknDM3tpTZgHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LTGdzddbxx8BQB/PivFGRcjwJnPMZ+6RyORe0eZubfw38f9FtEwEruRwZIJf4suauOcsF3vG45FQOZ1oe4wthOzzJJry4W53oZnGKQ/us5vhSFTaLbvV0VRnuFyWP7rtFKTfyYmTuhBI94nUt3v859jjR0TXq+3Y7ZKSRC9hH64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QmcN65w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dh7Dt+kB8ArvlXvBiLafxUtjLRsKm8q+Pisvd09gzDX2DTYBipOBRaOTvJMI3bRE8aax9IYqofdmKZv7NUOtP9VL7FZGKHXScq3BLPQ3xvB3548O6nSW///8yLj+hR2q210qMf7bCRl1/Xcb95O9CAOIBv2mpgihJzBRY8gCm9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZRxB8lg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QmcN65w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D4CC4CEF6;
-	Wed, 30 Jul 2025 09:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZRxB8lg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF329C4CEF6;
+	Wed, 30 Jul 2025 09:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869021;
-	bh=XSYwBgke3tBq7uJk1YuSalUv2VLaEP8J/fV+X0G+mLo=;
+	s=korg; t=1753869025;
+	bh=c7fjIHT83/2l3Q4exOXv6h+zP+uMZ2jknDM3tpTZgHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1QmcN65wXc8gIBG1XFu+JBf9Y2VqNYTh/vr73CPadOnb552l+Wiy+7kQrmjSN4G++
-	 94DwJ0hkxBP8rP2ZaEdyCic8v7O3f7ZDTN0VcZNjh0+PZrrf6ERGFUb+hDq5E1lR+W
-	 vSrMeqokuKbmqdOcBYflHaXk0TRjbgp0riDjqfAY=
+	b=aZRxB8lgqWddvQ7R/ACPD3FioFbchSJr4DpTq7hbrgb8d5Ne5huXk3SSZeXgyhVvK
+	 BuLf7dIm4cV6AyoMwnedrGEpcAp8pKS007KzkeDHZeonkPfceCSGNLBKoEKtg4w6YV
+	 q/kRivoZj3Qqn6a4Gl5p1NfPbyBY9Bw3l5dfrZbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Torsten Hilbrich <torsten.hilbrich@secunet.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 18/92] platform/x86: Fix initialization order for firmware_attributes_class
-Date: Wed, 30 Jul 2025 11:35:26 +0200
-Message-ID: <20250730093231.322317758@linuxfoundation.org>
+Subject: [PATCH 6.15 19/92] staging: vchiq_arm: Make vchiq_shutdown never fail
+Date: Wed, 30 Jul 2025 11:35:27 +0200
+Message-ID: <20250730093231.358828398@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -45,53 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Torsten Hilbrich <torsten.hilbrich@secunet.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 2bfe3ae1aa45f8b61cb0dc462114fd0c9636ad32 ]
+[ Upstream commit f2b8ebfb867011ddbefbdf7b04ad62626cbc2afd ]
 
-The think-lmi driver uses the firwmare_attributes_class. But this class
-is registered after think-lmi, causing the "think-lmi" directory in
-"/sys/class/firmware-attributes" to be missing when the driver is
-compiled as builtin.
+Most of the users of vchiq_shutdown ignore the return value,
+which is bad because this could lead to resource leaks.
+So instead of changing all calls to vchiq_shutdown, it's easier
+to make vchiq_shutdown never fail.
 
-Fixes: 55922403807a ("platform/x86: think-lmi: Directly use firmware_attributes_class")
-Signed-off-by: Torsten Hilbrich <torsten.hilbrich@secunet.com>
-Link: https://lore.kernel.org/r/7dce5f7f-c348-4350-ac53-d14a8e1e8034@secunet.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 71bad7f08641 ("staging: add bcm2708 vchiq driver")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20250715161108.3411-4-wahrenst@gmx.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/Makefile b/drivers/platform/x86/Makefile
-index 650dfbebb6c8c..9a1884b03215a 100644
---- a/drivers/platform/x86/Makefile
-+++ b/drivers/platform/x86/Makefile
-@@ -58,6 +58,8 @@ obj-$(CONFIG_X86_PLATFORM_DRIVERS_HP)	+= hp/
- # Hewlett Packard Enterprise
- obj-$(CONFIG_UV_SYSFS)       += uv_sysfs.o
+diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+index 6434cbdc1a6ef..721b15b7e13b9 100644
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
+@@ -393,8 +393,7 @@ int vchiq_shutdown(struct vchiq_instance *instance)
+ 	struct vchiq_state *state = instance->state;
+ 	int ret = 0;
  
-+obj-$(CONFIG_FW_ATTR_CLASS)	+= firmware_attributes_class.o
-+
- # IBM Thinkpad and Lenovo
- obj-$(CONFIG_IBM_RTL)		+= ibm_rtl.o
- obj-$(CONFIG_IDEAPAD_LAPTOP)	+= ideapad-laptop.o
-@@ -122,7 +124,6 @@ obj-$(CONFIG_SYSTEM76_ACPI)	+= system76_acpi.o
- obj-$(CONFIG_TOPSTAR_LAPTOP)	+= topstar-laptop.o
+-	if (mutex_lock_killable(&state->mutex))
+-		return -EAGAIN;
++	mutex_lock(&state->mutex);
  
- # Platform drivers
--obj-$(CONFIG_FW_ATTR_CLASS)		+= firmware_attributes_class.o
- obj-$(CONFIG_SERIAL_MULTI_INSTANTIATE)	+= serial-multi-instantiate.o
- obj-$(CONFIG_TOUCHSCREEN_DMI)		+= touchscreen_dmi.o
- obj-$(CONFIG_WIRELESS_HOTKEY)		+= wireless-hotkey.o
+ 	/* Remove all services */
+ 	vchiq_shutdown_internal(state, instance);
 -- 
 2.39.5
 
