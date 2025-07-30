@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F1336124;
-	Wed, 30 Jul 2025 09:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E69D274666;
+	Wed, 30 Jul 2025 09:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869047; cv=none; b=pelcelrwCirximteUK001y+teqqLBR5OeLP+qV1B9G8Py2yLrbToUm0OcWIhqEDtNQktQz6t+7zT/8h+kXmaGtY+TRVjazlfCsjExLwj4iQG8BWLiAvGF4mzM0iPfjIXX7a+S1ep9zeHuX/GFHiUeUfhJMnXly8bL2Vozp2217g=
+	t=1753869058; cv=none; b=JEd/+ujO2XFG9VYaCFxvNz0HuHzdMEbH8Gn6kfdiqRLZbSUnZi9D1//dgLo25hmlq8S5iv1kudtAhrlei2pIhhl6YypEnL4NK2XNo37GZVqEq/NJCz2J+6WN1lFvvZ/H0VTjznt+LOYYpHKXAFZc6Qt3OvvGc2XcOvFmgKGexD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869047; c=relaxed/simple;
-	bh=VX//OmU7/gFEHby7Owy6Bjw7TMORw+UsP+/Cw4CqUHc=;
+	s=arc-20240116; t=1753869058; c=relaxed/simple;
+	bh=Z/fmA3Q5r+a+6I/Ihin6/HANR9fYCeMHgLY7SyM70kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBf4LpSy8RH8jn7UWbdmcPUwWcgBYdGIljcre2TBtk92DG1S0zs2a71oPr2gln84FWi4z4u+taTF6/3MQ9rvZmRuZ88rBtkourr1hr2n/o0C4CcRJHWCY5dIiOieHmB9VZPbNtTqToMEngHK7a9Ko5rY3MsVT/5pYQTzsSZtfIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J1kivC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFBiZ74uJ+Z93k5oD+ufpDu0J76e9j5cbkvMegFT5J9WxltKPGxhVymqareDpfxhmgUR+8sXcIdru5HZwKSS9sZBi1XQGC6KHvpLyxa7U19anJMz5s60KVwFfHLvm/2V3hiUqQiAXPsDP96WHeFkx7cgfA8xXpcS72JJkH9SFH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcBnzVrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J1kivC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5D5C4CEF5;
-	Wed, 30 Jul 2025 09:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcBnzVrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651A0C4CEF9;
+	Wed, 30 Jul 2025 09:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869046;
-	bh=VX//OmU7/gFEHby7Owy6Bjw7TMORw+UsP+/Cw4CqUHc=;
+	s=korg; t=1753869057;
+	bh=Z/fmA3Q5r+a+6I/Ihin6/HANR9fYCeMHgLY7SyM70kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1J1kivC8rWGNs1+HEsOV/6/m9MClSvReiNLgZ2Bd0FaRszVi5XnHNxifdemSInQ6G
-	 lQPISLv/cJ72ozQiN343yDWt13nrvcHcP5xlSqQ/dLmHtwz9t3rCYxcDcqLkTrI+Bb
-	 FZQ0Pu46TV7a3zr1xn0+AQYO7gqWklLQjGKK7OqA=
+	b=GcBnzVrzGI/Eb79rnbhh1MDB0dPy17u7+U6HA5QH/Z6lb33AnvJOayuVlNmdTZABG
+	 K+pqcE/xI7gkm3YmlGemdhCAFx/5SJQ3VbPqUKbBH6CBi4PUfLO7A+WyAB29iHBzCN
+	 mXE+Xvvo6qjPQhgbMUUGXX/1jKvkl2lVbHmzn0oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Lonial Con <kongln9170@gmail.com>,
+	Eyal Birger <eyal.birger@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 24/92] xfrm: ipcomp: adjust transport header after decompressing
-Date: Wed, 30 Jul 2025 11:35:32 +0200
-Message-ID: <20250730093231.548487935@linuxfoundation.org>
+Subject: [PATCH 6.15 25/92] xfrm: interface: fix use-after-free after changing collect_md xfrm interface
+Date: Wed, 30 Jul 2025 11:35:33 +0200
+Message-ID: <20250730093231.584755646@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -52,53 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Eyal Birger <eyal.birger@gmail.com>
 
-[ Upstream commit 2ca58d87ebae20906cf808ef813d747db0177a18 ]
+[ Upstream commit a90b2a1aaacbcf0f91d7e4868ad6c51c5dee814b ]
 
-The skb transport header pointer needs to be adjusted by network header
-pointer plus the size of the ipcomp header.
+collect_md property on xfrm interfaces can only be set on device creation,
+thus xfrmi_changelink() should fail when called on such interfaces.
 
-This shows up when running traffic over ipcomp using transport mode.
-After being reinjected, packets are dropped because the header isn't
-adjusted properly and some checks can be triggered. E.g the skb is
-mistakenly considered as IP fragmented packet and later dropped.
+The check to enforce this was done only in the case where the xi was
+returned from xfrmi_locate() which doesn't look for the collect_md
+interface, and thus the validation was never reached.
 
-kworker/30:1-mm     443 [030]   102.055250:     skb:kfree_skb:skbaddr=0xffff8f104aa3ce00 rx_sk=(
-        ffffffff8419f1f4 sk_skb_reason_drop+0x94 ([kernel.kallsyms])
-        ffffffff8419f1f4 sk_skb_reason_drop+0x94 ([kernel.kallsyms])
-        ffffffff84281420 ip_defrag+0x4b0 ([kernel.kallsyms])
-        ffffffff8428006e ip_local_deliver+0x4e ([kernel.kallsyms])
-        ffffffff8432afb1 xfrm_trans_reinject+0xe1 ([kernel.kallsyms])
-        ffffffff83758230 process_one_work+0x190 ([kernel.kallsyms])
-        ffffffff83758f37 worker_thread+0x2d7 ([kernel.kallsyms])
-        ffffffff83761cc9 kthread+0xf9 ([kernel.kallsyms])
-        ffffffff836c3437 ret_from_fork+0x197 ([kernel.kallsyms])
-        ffffffff836718da ret_from_fork_asm+0x1a ([kernel.kallsyms])
+Calling changelink would thus errornously place the special interface xi
+in the xfrmi_net->xfrmi hash, but since it also exists in the
+xfrmi_net->collect_md_xfrmi pointer it would lead to a double free when
+the net namespace was taken down [1].
 
-Fixes: eb2953d26971 ("xfrm: ipcomp: Use crypto_acomp interface")
-Link: https://bugzilla.suse.com/1244532
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Change the check to use the xi from netdev_priv which is available earlier
+in the function to prevent changes in xfrm collect_md interfaces.
+
+[1] resulting oops:
+[    8.516540] kernel BUG at net/core/dev.c:12029!
+[    8.516552] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[    8.516559] CPU: 0 UID: 0 PID: 12 Comm: kworker/u80:0 Not tainted 6.15.0-virtme #5 PREEMPT(voluntary)
+[    8.516565] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    8.516569] Workqueue: netns cleanup_net
+[    8.516579] RIP: 0010:unregister_netdevice_many_notify+0x101/0xab0
+[    8.516590] Code: 90 0f 0b 90 48 8b b0 78 01 00 00 48 8b 90 80 01 00 00 48 89 56 08 48 89 32 4c 89 80 78 01 00 00 48 89 b8 80 01 00 00 eb ac 90 <0f> 0b 48 8b 45 00 4c 8d a0 88 fe ff ff 48 39 c5 74 5c 41 80 bc 24
+[    8.516593] RSP: 0018:ffffa93b8006bd30 EFLAGS: 00010206
+[    8.516598] RAX: ffff98fe4226e000 RBX: ffffa93b8006bd58 RCX: ffffa93b8006bc60
+[    8.516601] RDX: 0000000000000004 RSI: 0000000000000000 RDI: dead000000000122
+[    8.516603] RBP: ffffa93b8006bdd8 R08: dead000000000100 R09: ffff98fe4133c100
+[    8.516605] R10: 0000000000000000 R11: 00000000000003d2 R12: ffffa93b8006be00
+[    8.516608] R13: ffffffff96c1a510 R14: ffffffff96c1a510 R15: ffffa93b8006be00
+[    8.516615] FS:  0000000000000000(0000) GS:ffff98fee73b7000(0000) knlGS:0000000000000000
+[    8.516619] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    8.516622] CR2: 00007fcd2abd0700 CR3: 000000003aa40000 CR4: 0000000000752ef0
+[    8.516625] PKRU: 55555554
+[    8.516627] Call Trace:
+[    8.516632]  <TASK>
+[    8.516635]  ? rtnl_is_locked+0x15/0x20
+[    8.516641]  ? unregister_netdevice_queue+0x29/0xf0
+[    8.516650]  ops_undo_list+0x1f2/0x220
+[    8.516659]  cleanup_net+0x1ad/0x2e0
+[    8.516664]  process_one_work+0x160/0x380
+[    8.516673]  worker_thread+0x2aa/0x3c0
+[    8.516679]  ? __pfx_worker_thread+0x10/0x10
+[    8.516686]  kthread+0xfb/0x200
+[    8.516690]  ? __pfx_kthread+0x10/0x10
+[    8.516693]  ? __pfx_kthread+0x10/0x10
+[    8.516697]  ret_from_fork+0x82/0xf0
+[    8.516705]  ? __pfx_kthread+0x10/0x10
+[    8.516709]  ret_from_fork_asm+0x1a/0x30
+[    8.516718]  </TASK>
+
+Fixes: abc340b38ba2 ("xfrm: interface: support collect metadata mode")
+Reported-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_ipcomp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/xfrm_interface_core.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/net/xfrm/xfrm_ipcomp.c b/net/xfrm/xfrm_ipcomp.c
-index 907c3ccb440da..a38545413b801 100644
---- a/net/xfrm/xfrm_ipcomp.c
-+++ b/net/xfrm/xfrm_ipcomp.c
-@@ -97,7 +97,7 @@ static int ipcomp_input_done2(struct sk_buff *skb, int err)
- 	struct ip_comp_hdr *ipch = ip_comp_hdr(skb);
- 	const int plen = skb->len;
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index 622445f041d32..fed96bedd54e3 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -875,7 +875,7 @@ static int xfrmi_changelink(struct net_device *dev, struct nlattr *tb[],
+ 		return -EINVAL;
+ 	}
  
--	skb_reset_transport_header(skb);
-+	skb->transport_header = skb->network_header + sizeof(*ipch);
+-	if (p.collect_md) {
++	if (p.collect_md || xi->p.collect_md) {
+ 		NL_SET_ERR_MSG(extack, "collect_md can't be changed");
+ 		return -EINVAL;
+ 	}
+@@ -886,11 +886,6 @@ static int xfrmi_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	} else {
+ 		if (xi->dev != dev)
+ 			return -EEXIST;
+-		if (xi->p.collect_md) {
+-			NL_SET_ERR_MSG(extack,
+-				       "device can't be changed to collect_md");
+-			return -EINVAL;
+-		}
+ 	}
  
- 	return ipcomp_post_acomp(skb, err, 0) ?:
- 	       skb->len < (plen + sizeof(ip_comp_hdr)) ? -EINVAL :
+ 	return xfrmi_update(xi, &p);
 -- 
 2.39.5
 
