@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4234D1E25E1;
-	Wed, 30 Jul 2025 09:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB8D293C59;
+	Wed, 30 Jul 2025 09:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869106; cv=none; b=FRQ/qnICSxR1RIpEzsnypEU5oKk4KmjxNPJ8XA3ntI5sJ0y4/SeDEd+Z/9OuyXbXoZwyLV3ykrYfK/vh3BaBjc1TWlf39yiLHtLYQ5HuJoPKc6xzBznfJdPVtLZrIk+jtB6X6ZBFzbXlnHKgl7GYvMpkWOh2RIiwIeSdcFXBFk0=
+	t=1753869107; cv=none; b=UFJAudgfOAzEmTSTfXk4C54m7npMe/1/hJenku8Jvm+lR9jSqxjkDnVu95HNxxMhKFiLUFN7A3H7jROZww6kPd5IwMh7Gv6pb/ri2Yj8D1Mu+1BtbrdmEz4Bn3DWoY6abAOUpeF95oWWxmAvMHpho4tBWIGLr6deQKk5tT4suXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869106; c=relaxed/simple;
-	bh=SlQ3XPnbpQdrfLWk2oA/mKBTb+z6viWJa0S5bQLj/DU=;
+	s=arc-20240116; t=1753869107; c=relaxed/simple;
+	bh=ANSojn3stC4brBv0a+xoZ6ehrx+nWcOV/lQO80j8s1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPGskF9D5AlIbxHPQlUcRua+GHSSqWpIIUknoqR4VeNZFEpftKmGN0mDvkSrovoBnr/vTioa1Lkz7OKOIy4P2mivEYp3gycM1MXieIL+J1Qm/mogQETr+4VucPpKjxbcwMPgniTdlowGat9T3VTjoV1vMNwdHeg6uko1nKPRMLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVZeospG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SNXVpdijkxjkZ4iS6RReH2mI/YAa+kJPn7myTjZImnsUogLMQQBoEXIL7T3Nm6Hx2gxUe4r5qKabzwHPoVeqC2fxUE3JiMb8JWgPF/decVsnR4tH0eGzfh68/hJ7iJgH6i3xHXgauYiYDz9Ykpell/zwzD08HDsmhxKkhxceotQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=df9F8THg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVZeospG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D158C4CEF6;
-	Wed, 30 Jul 2025 09:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="df9F8THg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A023FC4CEF5;
+	Wed, 30 Jul 2025 09:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869103;
-	bh=SlQ3XPnbpQdrfLWk2oA/mKBTb+z6viWJa0S5bQLj/DU=;
+	s=korg; t=1753869107;
+	bh=ANSojn3stC4brBv0a+xoZ6ehrx+nWcOV/lQO80j8s1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVZeospGsiauV4Zsus5FlU6ZPCWmpVyLVhegwInqLSsSMGv7iT+8MA8i/LmaQgrAk
-	 CXIrsQd1170aaBNtdgTy1+brSt2RlR5RTJbu7eNnKReJ+7BO+kaygoMBWi+msf7Mf+
-	 +xtsKT4k2zSxDjHLgV1OxrAiPfRK0ecFl8bWEq9M=
+	b=df9F8THgWrhqi65dAOQhCT6vm1kZkNU16XaFPvJADSg/OY+0VZiJDmk02dpXvUXzX
+	 rMUG6roN5pDElqGfGQlsGRyJh0ufaiOICYiSQszY70+nmv+ZeVmH+xAaO2hQKHfrgv
+	 9wtqjsG5bOaeHjQrM1EqyBL/uUSMxOsjcDS2dock=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Chen <dechen@redhat.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 30/92] i40e: report VF tx_dropped with tx_errors instead of tx_discards
-Date: Wed, 30 Jul 2025 11:35:38 +0200
-Message-ID: <20250730093231.920260981@linuxfoundation.org>
+Subject: [PATCH 6.15 39/92] net: hns3: fix concurrent setting vlan filter issue
+Date: Wed, 30 Jul 2025 11:35:47 +0200
+Message-ID: <20250730093232.272184457@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -53,106 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dennis Chen <dechen@redhat.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 50b2af451597ca6eefe9d4543f8bbf8de8aa00e7 ]
+[ Upstream commit 4555f8f8b6aa46940f55feb6a07704c2935b6d6e ]
 
-Currently the tx_dropped field in VF stats is not updated correctly
-when reading stats from the PF. This is because it reads from
-i40e_eth_stats.tx_discards which seems to be unused for per VSI stats,
-as it is not updated by i40e_update_eth_stats() and the corresponding
-register, GLV_TDPC, is not implemented[1].
+The vport->req_vlan_fltr_en may be changed concurrently by function
+hclge_sync_vlan_fltr_state() called in periodic work task and
+function hclge_enable_vport_vlan_filter() called by user configuration.
+It may cause the user configuration inoperative. Fixes it by protect
+the vport->req_vlan_fltr by vport_lock.
 
-Use i40e_eth_stats.tx_errors instead, which is actually updated by
-i40e_update_eth_stats() by reading from GLV_TEPC.
-
-To test, create a VF and try to send bad packets through it:
-
-$ echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
-$ cat test.py
-from scapy.all import *
-
-vlan_pkt = Ether(dst="ff:ff:ff:ff:ff:ff") / Dot1Q(vlan=999) / IP(dst="192.168.0.1") / ICMP()
-ttl_pkt = IP(dst="8.8.8.8", ttl=0) / ICMP()
-
-print("Send packet with bad VLAN tag")
-sendp(vlan_pkt, iface="enp2s0f0v0")
-print("Send packet with TTL=0")
-sendp(ttl_pkt, iface="enp2s0f0v0")
-$ ip -s link show dev enp2s0f0
-16: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether e2:c6:fd:c1:1e:92 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        0
-$ python test.py
-Send packet with bad VLAN tag
-.
-Sent 1 packets.
-Send packet with TTL=0
-.
-Sent 1 packets.
-$ ip -s link show dev enp2s0f0
-16: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether e2:c6:fd:c1:1e:92 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        0
-
-A packet with non-existent VLAN tag and a packet with TTL = 0 are sent,
-but tx_dropped is not incremented.
-
-After patch:
-
-$ ip -s link show dev enp2s0f0
-19: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether 4a:b7:3d:37:f7:56 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        2
-
-Fixes: dc645daef9af5bcbd9c ("i40e: implement VF stats NDO")
-Signed-off-by: Dennis Chen <dechen@redhat.com>
-Link: https://www.intel.com/content/www/us/en/content-details/596333/intel-ethernet-controller-x710-tm4-at2-carlsville-datasheet.html
+Fixes: 2ba306627f59 ("net: hns3: add support for modify VLAN filter state")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20250722125423.1270673-2-shaojijie@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../hisilicon/hns3/hns3pf/hclge_main.c        | 36 +++++++++++--------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 88e6bef69342c..2dbe38eb94941 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -5006,7 +5006,7 @@ int i40e_get_vf_stats(struct net_device *netdev, int vf_id,
- 	vf_stats->broadcast  = stats->rx_broadcast;
- 	vf_stats->multicast  = stats->rx_multicast;
- 	vf_stats->rx_dropped = stats->rx_discards + stats->rx_discards_other;
--	vf_stats->tx_dropped = stats->tx_discards;
-+	vf_stats->tx_dropped = stats->tx_errors;
- 
- 	return 0;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 3e28a08934abd..4ea19c089578e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -9576,33 +9576,36 @@ static bool hclge_need_enable_vport_vlan_filter(struct hclge_vport *vport)
+ 	return false;
  }
+ 
+-int hclge_enable_vport_vlan_filter(struct hclge_vport *vport, bool request_en)
++static int __hclge_enable_vport_vlan_filter(struct hclge_vport *vport,
++					    bool request_en)
+ {
+-	struct hclge_dev *hdev = vport->back;
+ 	bool need_en;
+ 	int ret;
+ 
+-	mutex_lock(&hdev->vport_lock);
+-
+-	vport->req_vlan_fltr_en = request_en;
+-
+ 	need_en = hclge_need_enable_vport_vlan_filter(vport);
+-	if (need_en == vport->cur_vlan_fltr_en) {
+-		mutex_unlock(&hdev->vport_lock);
++	if (need_en == vport->cur_vlan_fltr_en)
+ 		return 0;
+-	}
+ 
+ 	ret = hclge_set_vport_vlan_filter(vport, need_en);
+-	if (ret) {
+-		mutex_unlock(&hdev->vport_lock);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	vport->cur_vlan_fltr_en = need_en;
+ 
++	return 0;
++}
++
++int hclge_enable_vport_vlan_filter(struct hclge_vport *vport, bool request_en)
++{
++	struct hclge_dev *hdev = vport->back;
++	int ret;
++
++	mutex_lock(&hdev->vport_lock);
++	vport->req_vlan_fltr_en = request_en;
++	ret = __hclge_enable_vport_vlan_filter(vport, request_en);
+ 	mutex_unlock(&hdev->vport_lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int hclge_enable_vlan_filter(struct hnae3_handle *handle, bool enable)
+@@ -10623,16 +10626,19 @@ static void hclge_sync_vlan_fltr_state(struct hclge_dev *hdev)
+ 					&vport->state))
+ 			continue;
+ 
+-		ret = hclge_enable_vport_vlan_filter(vport,
+-						     vport->req_vlan_fltr_en);
++		mutex_lock(&hdev->vport_lock);
++		ret = __hclge_enable_vport_vlan_filter(vport,
++						       vport->req_vlan_fltr_en);
+ 		if (ret) {
+ 			dev_err(&hdev->pdev->dev,
+ 				"failed to sync vlan filter state for vport%u, ret = %d\n",
+ 				vport->vport_id, ret);
+ 			set_bit(HCLGE_VPORT_STATE_VLAN_FLTR_CHANGE,
+ 				&vport->state);
++			mutex_unlock(&hdev->vport_lock);
+ 			return;
+ 		}
++		mutex_unlock(&hdev->vport_lock);
+ 	}
+ }
+ 
 -- 
 2.39.5
 
