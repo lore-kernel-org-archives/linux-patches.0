@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F1326D4F9;
-	Wed, 30 Jul 2025 09:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F6236124;
+	Wed, 30 Jul 2025 09:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868531; cv=none; b=cQaj7M5GO6zO8mRHHETyR5k4704bxJbjgXGQdcyqUJK9Ita7WtFoDh+5P5EKmUdJp1P3KU5d0xo2WOC4k3tD80BmNQPJ4iKP+4wos9JwYf1WpkcpJp0Q1FQ8zfFzFkE+8lzJHYFZKjlnCAGavmolQ7xdgAxfCfeemhYGkSSc0G4=
+	t=1753868540; cv=none; b=kRRevyXi1L+hk+tUMZ6n3PyMlEEVXG+bGOW3h7gO198pXA1jj7lEbJ4IjFx0T+30pX9sy+iwH7n6IDk103MjQBQw2/d1h8oF+p2TMKYWjD/eu0TUz1P52kTpnvZMAlcnNjilUing0mXSlTdf9kOFCGjHzIWLGtXMOk2XuKfbKjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868531; c=relaxed/simple;
-	bh=XsEnYG4nEfObFacGmz/W2Rz7/7ZRmT5IEp7c5gMjRKo=;
+	s=arc-20240116; t=1753868540; c=relaxed/simple;
+	bh=Q44wi1mZROHcD/syr7LNwYnRQWzeskBnWshEzgoBOEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KrZ5kTWiwLqQ7W/y1ZD4Gs1zD5wycl23kFdXonAtGr6rnKLCxOBQY5eX9XP4EtrhHV8hHGfo9LPuuLgtjP9k6uHayZs6gYAypWxdOfyLXo36LyjG+5obn2uXO+fNjXa3E9n7zdXt3Tf+6f0r92y8dESq6N1FnYEU8fjzpRICJd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZ4NaJKG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYRgElgqDwhK4JMIWKuJcU2qOtLUtxWRVZbnfxZA2Q01Ci/RjeCv0ZPx7gAMTB57WwSndqWHPdfNQj6UoU9bpOEaSAmgHOaU/Vh6dabEZYAZ1TZWkaaOfuxrsvvRhXxabDpHbWbC0z3FaXybfu4x6Sj/D6e/KaDBx+XIMu+BaIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyz0ATFr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZ4NaJKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11BFC4CEE7;
-	Wed, 30 Jul 2025 09:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyz0ATFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F013C4CEE7;
+	Wed, 30 Jul 2025 09:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868531;
-	bh=XsEnYG4nEfObFacGmz/W2Rz7/7ZRmT5IEp7c5gMjRKo=;
+	s=korg; t=1753868539;
+	bh=Q44wi1mZROHcD/syr7LNwYnRQWzeskBnWshEzgoBOEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZ4NaJKGYxQfa9dmRy05/fOOZ+vQf2FR6JBbyHoE2UvpaJTrfq61Zyv05luKx+YHN
-	 9cjHp1EyCXHZ67EEZnGZxO6l7SXaZdNgfqOSmBXML48wK0TjygzRGosxfGECvaxi+8
-	 V7/Z66KmPfzVhQ4pMogPorzaHhk8zs1w64UdZfO0=
+	b=tyz0ATFrLBfN1N+QPQjlNHRxUETL9vxjONQcfq+da6mLapnd4BbVP3oWnEZ8Z9+pI
+	 VnZ58tzDdREBoo9ju7UgYDljZdhqigzN0dFj3HiVmwkxImO7lOPpagTqpvCqpg22d7
+	 bmngcR3s7DPOIr12/mouK5VUdbqYmxNMXPR8majQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shravan Kumar Ramani <shravankr@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Yasumasa Suenaga <yasuenag@gmail.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/117] platform/mellanox: mlxbf-pmc: Use kstrtobool() to check 0/1 input
-Date: Wed, 30 Jul 2025 11:34:42 +0200
-Message-ID: <20250730093234.102955788@linuxfoundation.org>
+Subject: [PATCH 6.12 014/117] tools/hv: fcopy: Fix incorrect file path conversion
+Date: Wed, 30 Jul 2025 11:34:43 +0200
+Message-ID: <20250730093234.139536727@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -46,70 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shravan Kumar Ramani <shravankr@nvidia.com>
+From: Yasumasa Suenaga <yasuenag@gmail.com>
 
-[ Upstream commit 0e2cebd72321caeef84b6ba7084e85be0287fb4b ]
+[ Upstream commit 0d86a8d65c1e69610bfe1a7a774f71ff111ed8c1 ]
 
-For setting the enable value, the input should be 0 or 1 only. Use
-kstrtobool() in place of kstrtoint() in mlxbf_pmc_enable_store() to
-accept only valid input.
+The hv_fcopy_uio_daemon fails to correctly handle file copy requests
+from Windows hosts (e.g. via Copy-VMFile) due to wchar_t size
+differences between Windows and Linux. On Linux, wchar_t is 32 bit,
+whereas Windows uses 16 bit wide characters.
 
-Fixes: 423c3361855c ("platform/mellanox: mlxbf-pmc: Add support for BlueField-3")
-Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/2ee618c59976bcf1379d5ddce2fc60ab5014b3a9.1751380187.git.shravankr@nvidia.com
-[ij: split kstrbool() change to own commit.]
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fix this by ensuring that file transfers from host to Linux guest
+succeed with correctly decoded file names and paths.
+
+- Treats file name and path as __u16 arrays, not wchar_t*.
+- Allocates fixed-size buffers (W_MAX_PATH) for converted strings
+  instead of using malloc.
+- Adds a check for target path length to prevent snprintf() buffer
+  overflow.
+
+Fixes: 82b0945ce2c2 ("tools: hv: Add new fcopy application based on uio driver")
+Signed-off-by: Yasumasa Suenaga <yasuenag@gmail.com>
+Reviewed-by: Naman Jain <namjain@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250628022217.1514-2-yasuenag@gmail.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20250628022217.1514-2-yasuenag@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ tools/hv/hv_fcopy_uio_daemon.c | 37 +++++++++++++---------------------
+ 1 file changed, 14 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index d305d23cf5199..9a0220b4de3c8 100644
---- a/drivers/platform/mellanox/mlxbf-pmc.c
-+++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -1731,13 +1731,14 @@ static ssize_t mlxbf_pmc_enable_store(struct device *dev,
+diff --git a/tools/hv/hv_fcopy_uio_daemon.c b/tools/hv/hv_fcopy_uio_daemon.c
+index 12743d7f164f0..9caa24caa0801 100644
+--- a/tools/hv/hv_fcopy_uio_daemon.c
++++ b/tools/hv/hv_fcopy_uio_daemon.c
+@@ -62,8 +62,11 @@ static int hv_fcopy_create_file(char *file_name, char *path_name, __u32 flags)
+ 
+ 	filesize = 0;
+ 	p = path_name;
+-	snprintf(target_fname, sizeof(target_fname), "%s/%s",
+-		 path_name, file_name);
++	if (snprintf(target_fname, sizeof(target_fname), "%s/%s",
++		     path_name, file_name) >= sizeof(target_fname)) {
++		syslog(LOG_ERR, "target file name is too long: %s/%s", path_name, file_name);
++		goto done;
++	}
+ 
+ 	/*
+ 	 * Check to see if the path is already in place; if not,
+@@ -270,7 +273,7 @@ static void wcstoutf8(char *dest, const __u16 *src, size_t dest_size)
  {
- 	struct mlxbf_pmc_attribute *attr_enable = container_of(
- 		attr, struct mlxbf_pmc_attribute, dev_attr);
--	unsigned int en, blk_num;
-+	unsigned int blk_num;
- 	u32 word;
- 	int err;
-+	bool en;
+ 	size_t len = 0;
  
- 	blk_num = attr_enable->nr;
+-	while (len < dest_size) {
++	while (len < dest_size && *src) {
+ 		if (src[len] < 0x80)
+ 			dest[len++] = (char)(*src++);
+ 		else
+@@ -282,27 +285,15 @@ static void wcstoutf8(char *dest, const __u16 *src, size_t dest_size)
  
--	err = kstrtouint(buf, 0, &en);
-+	err = kstrtobool(buf, &en);
- 	if (err < 0)
- 		return err;
- 
-@@ -1757,14 +1758,11 @@ static ssize_t mlxbf_pmc_enable_store(struct device *dev,
- 			MLXBF_PMC_CRSPACE_PERFMON_CTL(pmc->block[blk_num].counters),
- 			MLXBF_PMC_WRITE_REG_32, word);
- 	} else {
--		if (en && en != 1)
--			return -EINVAL;
+ static int hv_fcopy_start(struct hv_start_fcopy *smsg_in)
+ {
+-	setlocale(LC_ALL, "en_US.utf8");
+-	size_t file_size, path_size;
+-	char *file_name, *path_name;
+-	char *in_file_name = (char *)smsg_in->file_name;
+-	char *in_path_name = (char *)smsg_in->path_name;
 -
- 		err = mlxbf_pmc_config_l3_counters(blk_num, false, !!en);
- 		if (err)
- 			return err;
+-	file_size = wcstombs(NULL, (const wchar_t *restrict)in_file_name, 0) + 1;
+-	path_size = wcstombs(NULL, (const wchar_t *restrict)in_path_name, 0) + 1;
+-
+-	file_name = (char *)malloc(file_size * sizeof(char));
+-	path_name = (char *)malloc(path_size * sizeof(char));
+-
+-	if (!file_name || !path_name) {
+-		free(file_name);
+-		free(path_name);
+-		syslog(LOG_ERR, "Can't allocate memory for file name and/or path name");
+-		return HV_E_FAIL;
+-	}
++	/*
++	 * file_name and path_name should have same length with appropriate
++	 * member of hv_start_fcopy.
++	 */
++	char file_name[W_MAX_PATH], path_name[W_MAX_PATH];
  
--		if (en == 1) {
-+		if (en) {
- 			err = mlxbf_pmc_config_l3_counters(blk_num, true, false);
- 			if (err)
- 				return err;
+-	wcstoutf8(file_name, (__u16 *)in_file_name, file_size);
+-	wcstoutf8(path_name, (__u16 *)in_path_name, path_size);
++	setlocale(LC_ALL, "en_US.utf8");
++	wcstoutf8(file_name, smsg_in->file_name, W_MAX_PATH - 1);
++	wcstoutf8(path_name, smsg_in->path_name, W_MAX_PATH - 1);
+ 
+ 	return hv_fcopy_create_file(file_name, path_name, smsg_in->copy_flags);
+ }
 -- 
 2.39.5
 
