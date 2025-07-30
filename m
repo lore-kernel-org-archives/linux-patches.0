@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BA5293B4F;
-	Wed, 30 Jul 2025 09:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4538226E71A;
+	Wed, 30 Jul 2025 09:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868639; cv=none; b=eNtbzbrSVQhRZNWAC77SU6G+s9NqRlveQQ45fXYBseYyomINeGYMaN6BcisCw4VVYu7Q3Fiqe0bao4Rr3mzyGlUQBR1dYlJ8/rBLwOyrmjkOiqlPfa36ILr3uMF8yJh6Tr0XYZoH18TYeJ2u3LyUXBma6VxY0G8iyuYsbfP25tc=
+	t=1753868643; cv=none; b=j0RiJW1FjDtNlX6Zh7Rp3WmQJz+wKBSl8BOXveTyisF6LOW0RYfNcwDUIaBS+v/CixmgZcK/TpKl8KHvvEXQCBdIHRC0NLzJpEUc0RdfY6kwArCZWAnLpJmriK/2XnVZcAb1W2pcGhH0uywtJ2GuLkvrgltR4GqTuA8+u7UHsA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868639; c=relaxed/simple;
-	bh=gQqsOS/NvzVvVsTwPyFH7M9xF1a5o/E9Uhp3l4y53DI=;
+	s=arc-20240116; t=1753868643; c=relaxed/simple;
+	bh=PAfgvNWC/QK+eWoNodSFaDiYUr8sGbeuyS9C8d3LAEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EpvGFSCynOsn4LTd1/kh4EW6xv6NdoV7sLdkrmLmlAMaIpfWR+jW34J+KmNI6CSOjWLVBA+iYspX4ogy/eZKdfjlMeylww+kKQjpFTXYmyISnbvvpCZLZSmeEf/G+LqkacSf+J6BpiaB2fj2N0MX6Lj6pNFzXcOavsnZi/cel2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awXrsXDv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=psp7PAJZpfqkZ+pFdHpPFxYui0jbS9Z2ZxQUyx1OdZj9yOr6+kUjnc5YQ9ljzN2YF/34aaNOdMk+4AwYsD++pKECDaOlTuErWHZ3sAW7TWi3/1iK02rDCm9eEHC0NwVScZE6nE8pFslGXU3RpAnoCinIBN90Cjk0Nr1KA2J6b4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJkOPsaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awXrsXDv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF57C4CEE7;
-	Wed, 30 Jul 2025 09:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJkOPsaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD271C4CEF5;
+	Wed, 30 Jul 2025 09:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868639;
-	bh=gQqsOS/NvzVvVsTwPyFH7M9xF1a5o/E9Uhp3l4y53DI=;
+	s=korg; t=1753868643;
+	bh=PAfgvNWC/QK+eWoNodSFaDiYUr8sGbeuyS9C8d3LAEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awXrsXDvOJBqykYpD1VIYvpOwc/dFqKW0P1z7eHXXTofkpbeHuMmU3LsTqCcvyo72
-	 Q9ilObX0v1FtelJuuIOYuamWlC/ijQZBNc3NpGvX6YMXypyBLgQFIo+IjrhuKe937k
-	 PyhZa5rCxkpAWUTL2Bwr8IVlNZd/jGIrB3vsQjF4=
+	b=xJkOPsaUuNG7bmZVgJW5qCdRF5WHLV9PU3XEftzd2ed5qwBrSxemjgQceDBvlMnGz
+	 EMN5I1PmaChCn48ysaxvRCFglEPebRup3VRPHJqaZVtdW8RWeqRlP+uBqWwoe9Lz7C
+	 jAGr5CoeRv2yiv/fLAcr4bvKDrVeg9Zxwji0pDvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rong Zhang <i@rong.moe>,
 	Hans de Goede <hansg@kernel.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 039/117] platform/x86: ideapad-laptop: Fix FnLock not remembered among boots
-Date: Wed, 30 Jul 2025 11:35:08 +0200
-Message-ID: <20250730093235.087364338@linuxfoundation.org>
+Subject: [PATCH 6.12 040/117] platform/x86: ideapad-laptop: Fix kbd backlight not remembered among boots
+Date: Wed, 30 Jul 2025 11:35:09 +0200
+Message-ID: <20250730093235.123011693@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -54,24 +54,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Rong Zhang <i@rong.moe>
 
-commit 9533b789df7e8d273543a5991aec92447be043d7 upstream.
+commit e10981075adce203eac0be866389309eeb8ef11e upstream.
 
-On devices supported by ideapad-laptop, the HW/FW can remember the
-FnLock state among boots. However, since the introduction of the FnLock
-LED class device, it is turned off while shutting down, as a side effect
-of the LED class device unregistering sequence.
+On some models supported by ideapad-laptop, the HW/FW can remember the
+state of keyboard backlight among boots. However, it is always turned
+off while shutting down, as a side effect of the LED class device
+unregistering sequence.
 
-Many users always turn on FnLock because they use function keys much
-more frequently than multimedia keys. The behavior change is
-inconvenient for them. Thus, set LED_RETAIN_AT_SHUTDOWN on the LED class
-device so that the FnLock state gets remembered, which also aligns with
-the behavior of manufacturer utilities on Windows.
+This is inconvenient for users who always prefer turning on the
+keyboard backlight. Thus, set LED_RETAIN_AT_SHUTDOWN on the LED class
+device so that the state of keyboard backlight gets remembered, which
+also aligns with the behavior of manufacturer utilities on Windows.
 
-Fixes: 07f48f668fac ("platform/x86: ideapad-laptop: add FnLock LED class device")
+Fixes: 503325f84bc0 ("platform/x86: ideapad-laptop: add keyboard backlight control support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Rong Zhang <i@rong.moe>
 Reviewed-by: Hans de Goede <hansg@kernel.org>
-Link: https://lore.kernel.org/r/20250707163808.155876-2-i@rong.moe
+Link: https://lore.kernel.org/r/20250707163808.155876-3-i@rong.moe
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -81,14 +80,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/platform/x86/ideapad-laptop.c
 +++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -1731,7 +1731,7 @@ static int ideapad_fn_lock_led_init(stru
- 	priv->fn_lock.led.name                    = "platform::" LED_FUNCTION_FNLOCK;
- 	priv->fn_lock.led.brightness_get          = ideapad_fn_lock_led_cdev_get;
- 	priv->fn_lock.led.brightness_set_blocking = ideapad_fn_lock_led_cdev_set;
--	priv->fn_lock.led.flags                   = LED_BRIGHT_HW_CHANGED;
-+	priv->fn_lock.led.flags                   = LED_BRIGHT_HW_CHANGED | LED_RETAIN_AT_SHUTDOWN;
+@@ -1672,7 +1672,7 @@ static int ideapad_kbd_bl_init(struct id
+ 	priv->kbd_bl.led.name                    = "platform::" LED_FUNCTION_KBD_BACKLIGHT;
+ 	priv->kbd_bl.led.brightness_get          = ideapad_kbd_bl_led_cdev_brightness_get;
+ 	priv->kbd_bl.led.brightness_set_blocking = ideapad_kbd_bl_led_cdev_brightness_set;
+-	priv->kbd_bl.led.flags                   = LED_BRIGHT_HW_CHANGED;
++	priv->kbd_bl.led.flags                   = LED_BRIGHT_HW_CHANGED | LED_RETAIN_AT_SHUTDOWN;
  
- 	err = led_classdev_register(&priv->platform_device->dev, &priv->fn_lock.led);
+ 	err = led_classdev_register(&priv->platform_device->dev, &priv->kbd_bl.led);
  	if (err)
 
 
