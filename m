@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907F9270ED4;
-	Wed, 30 Jul 2025 09:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE0A277CBA;
+	Wed, 30 Jul 2025 09:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868677; cv=none; b=Rcm4y1U+PN7EFhrkqj1nA4PIGq327E6+4bVSRDWI+irKfM+DL/Nw66+tk91NmUECUUfmd94lNggrRJHUtJqhxvnQNBaS5h4b9Z2FuF0jG7o22ljkQZeS5iGcAazDyy9z+orpFkM+8jDArGlhZ2hbRGh00ciozyfs9Y6gE0wTBbM=
+	t=1753868683; cv=none; b=InlM60i+n2VJSPhYq/PqVMPfyILf8EqTuqMNu6YCapyLZ660DsJluriLkQPY99d84G7ydZXtxJZx9bEmtM784u9u+AdAgF2IWBb3wJxm+k0tN0sDaT/zXUC2yVtPsabEMjbFOcpK8nUSniQZeO4Y8tHNqkOhkKefw2qA7snmXZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868677; c=relaxed/simple;
-	bh=IGqxl0XE5/g4ylj9Ksi04pybJQpRhtvsC+iCPECE3ss=;
+	s=arc-20240116; t=1753868683; c=relaxed/simple;
+	bh=aIZxF6HAYCQjblq3IeZDlJ0er3JfHbSIW/5HDB3gTzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbCz1rsREG3bsrOeZ2gQ3Jo/bVS5XSiG4pse110Nly7qkrEH+nFjUfYN5/oTZNDShD2rnYswSXprmXgNnKasNkKk4XqjUIAh57410T93FcCiktBjJ+TkdjHzWQ2qe9/SSC5joMDhoSdQsM8TJZvchCsaiCDu9CqsmW/gAg77xsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCCcxRHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqIqTCquyMqcy4fQwceuqPnJ/piWg90Ap57JREdY5DNaahUj70ugY0+K5JY3iPrO8Rj4Wpst7TmKrKYNYdNPrfVULrKC8+q5GyrfRCXcewGxPplBjTa2QsTCfS0h58U1+5oHy+UXKlnOheTwGUogUyvFg+K8qO7SSHLLo8E25p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hr0aVPy7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCCcxRHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB63C4CEF5;
-	Wed, 30 Jul 2025 09:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hr0aVPy7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5E2C4CEF5;
+	Wed, 30 Jul 2025 09:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868677;
-	bh=IGqxl0XE5/g4ylj9Ksi04pybJQpRhtvsC+iCPECE3ss=;
+	s=korg; t=1753868681;
+	bh=aIZxF6HAYCQjblq3IeZDlJ0er3JfHbSIW/5HDB3gTzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCCcxRHMNA+nAn4RAxO3/BkUZQrWMggqDBzGF0/RRZlEUX5m+gyUYAwpUdWR0zxSM
-	 H8287LquYLM7x2VReE/WIEZx/tgoxrlb5TUleELl52roJt3+Dv4UHd6wxsyr/xHI3S
-	 oJ3vgQxEuTxaVx6kHTOURE6Tu/PG+CiU8pDd+T9A=
+	b=Hr0aVPy7WofsJO1TN5TN06R1nvKA11N9/m3Fb6QBK7J793aLPnJfkqEQO+2VNL0KQ
+	 vZrsVtrNpS774ZgXYk9tQ4OOCvQ8md1Rztf8qpiTh5uHyuQ6oo7ytA3BE+2FLgCoU2
+	 oOvofB47GRrFi0s3CY/UopcIvqPRhbcEs6tozjco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 048/117] i2c: virtio: Avoid hang by using interruptible completion wait
-Date: Wed, 30 Jul 2025 11:35:17 +0200
-Message-ID: <20250730093235.425313466@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 049/117] bus: fsl-mc: Fix potential double device reference in fsl_mc_get_endpoint()
+Date: Wed, 30 Jul 2025 11:35:18 +0200
+Message-ID: <20250730093235.466825562@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -50,51 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit a663b3c47ab10f66130818cf94eb59c971541c3f upstream.
+commit bddbe13d36a02d5097b99cf02354d5752ad1ac60 upstream.
 
-The current implementation uses wait_for_completion(), which can cause
-the caller to hang indefinitely if the transfer never completes.
+The fsl_mc_get_endpoint() function may call fsl_mc_device_lookup()
+twice, which would increment the device's reference count twice if
+both lookups find a device. This could lead to a reference count leak.
 
-Switch to wait_for_completion_interruptible() so that the operation can
-be interrupted by signals.
+Found by code review.
 
-Fixes: 84e1d0bf1d71 ("i2c: virtio: disable timeout handling")
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: <stable@vger.kernel.org> # v5.16+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/b8944e9cab8eb959d888ae80add6f2a686159ba2.1751541962.git.viresh.kumar@linaro.org
+Cc: stable@vger.kernel.org
+Fixes: 1ac210d128ef ("bus: fsl-mc: add the fsl_mc_get_endpoint function")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 8567494cebe5 ("bus: fsl-mc: rescan devices if endpoint not found")
+Link: https://patch.msgid.link/20250717022309.3339976-1-make24@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-virtio.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/drivers/i2c/busses/i2c-virtio.c
-+++ b/drivers/i2c/busses/i2c-virtio.c
-@@ -116,15 +116,16 @@ static int virtio_i2c_complete_reqs(stru
- 	for (i = 0; i < num; i++) {
- 		struct virtio_i2c_req *req = &reqs[i];
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -942,6 +942,7 @@ struct fsl_mc_device *fsl_mc_get_endpoin
+ 	struct fsl_mc_obj_desc endpoint_desc = {{ 0 }};
+ 	struct dprc_endpoint endpoint1 = {{ 0 }};
+ 	struct dprc_endpoint endpoint2 = {{ 0 }};
++	struct fsl_mc_bus *mc_bus;
+ 	int state, err;
  
--		wait_for_completion(&req->completion);
--
--		if (!failed && req->in_hdr.status != VIRTIO_I2C_MSG_OK)
--			failed = true;
-+		if (!failed) {
-+			if (wait_for_completion_interruptible(&req->completion))
-+				failed = true;
-+			else if (req->in_hdr.status != VIRTIO_I2C_MSG_OK)
-+				failed = true;
-+			else
-+				j++;
-+		}
+ 	mc_bus_dev = to_fsl_mc_device(mc_dev->dev.parent);
+@@ -965,6 +966,8 @@ struct fsl_mc_device *fsl_mc_get_endpoin
+ 	strcpy(endpoint_desc.type, endpoint2.type);
+ 	endpoint_desc.id = endpoint2.id;
+ 	endpoint = fsl_mc_device_lookup(&endpoint_desc, mc_bus_dev);
++	if (endpoint)
++		return endpoint;
  
- 		i2c_put_dma_safe_msg_buf(reqs[i].buf, &msgs[i], !failed);
+ 	/*
+ 	 * We know that the device has an endpoint because we verified by
+@@ -972,17 +975,13 @@ struct fsl_mc_device *fsl_mc_get_endpoin
+ 	 * yet discovered by the fsl-mc bus, thus the lookup returned NULL.
+ 	 * Force a rescan of the devices in this container and retry the lookup.
+ 	 */
+-	if (!endpoint) {
+-		struct fsl_mc_bus *mc_bus = to_fsl_mc_bus(mc_bus_dev);
 -
--		if (!failed)
--			j++;
+-		if (mutex_trylock(&mc_bus->scan_mutex)) {
+-			err = dprc_scan_objects(mc_bus_dev, true);
+-			mutex_unlock(&mc_bus->scan_mutex);
+-		}
+-
+-		if (err < 0)
+-			return ERR_PTR(err);
++	mc_bus = to_fsl_mc_bus(mc_bus_dev);
++	if (mutex_trylock(&mc_bus->scan_mutex)) {
++		err = dprc_scan_objects(mc_bus_dev, true);
++		mutex_unlock(&mc_bus->scan_mutex);
  	}
++	if (err < 0)
++		return ERR_PTR(err);
  
- 	return j;
+ 	endpoint = fsl_mc_device_lookup(&endpoint_desc, mc_bus_dev);
+ 	/*
 
 
