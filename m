@@ -1,17 +1,17 @@
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158ED132122;
-	Wed, 30 Jul 2025 17:03:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CBA2DE6F1;
+	Wed, 30 Jul 2025 17:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753895035; cv=none; b=lbewRvwn0EZLnWgP4if1NQBvkFkvtluXnG6Qvqkh+/pkK4jh7mNAVIRARK/83cryq8qTXTeR80WXaYAkz4HYEKmG2ge0Gi0AU8R2yk9mxaqd0XfwjO4f7VvCnCGXXGXYpTAixWJv5mXvfZPnQiydyQVYNxEcJzmFf0cz0mCp7c4=
+	t=1753896027; cv=none; b=uEz8ZBuhrqi/JMcRIaZFzGipqQt+Qtd/yrERKehW/W5XMaAY3rCni8VYNVkNioNISZMM3vSa2ikndIeQnpweDPYdM3tzH7ZrSR99psXkGPrKqK0m3zjX7HiVMG0ov4v7OxBBbX8ptrOzrks/iQ35sshJrvXgjMWhoeT8zr+rBXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753895035; c=relaxed/simple;
+	s=arc-20240116; t=1753896027; c=relaxed/simple;
 	bh=m/rDzWAlOo6y3gOCHwAlb/5G7CUl/K81mlWb1hMbAt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2CFYXW5tlXiSRTWgQenCGEYR0Fn6hPyqel25KXErTSbGR6jAVSw2IGmobzisu/yl+QbIl+sG3UhKS9Poj4T2EyNnfGal+3imb8q0Stb0qaZ38znZRtjOKatjCL3qjYLGkKc6YPxB0kqQ1S9uBs34eYaVNk8wnPR2v7RG3SBd9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+	 MIME-Version; b=IiqDWFC+rtcKi1oRa6SgR+lhUGA6R50BIwFrL7b91O7hWj1uht0CdfRXwnP22U1wf5O5IIT1lOX0x2/n/dhxZTb0zXXxELdBSSyZht6NAwvf+1G2gGe4mu/O3wr9aB2nlG3iYgEOAEqkjklv3ON12liVCIgRW7QPWThxNcvwg0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
 From: Brett A C Sheffield <bacs@librecast.net>
@@ -35,12 +35,12 @@ Cc: stable@vger.kernel.org,
 	hargar@microsoft.com,
 	broonie@kernel.org,
 	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: 6.6.101-rc1-g1a25720a319a review
-Date: Wed, 30 Jul 2025 16:59:12 +0000
-Message-ID: <20250730165911.29371-2-bacs@librecast.net>
+Subject: Re: [PATCH 6.6 00/76] 6.6.101-rc1 review
+Date: Wed, 30 Jul 2025 17:19:55 +0000
+Message-ID: <20250730171954.29840-2-bacs@librecast.net>
 X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20250722134333.375479548@linuxfoundation.org>
-References: <20250722134333.375479548@linuxfoundation.org>
+In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
+References: <20250730093226.854413920@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
