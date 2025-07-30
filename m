@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28662641F9;
-	Wed, 30 Jul 2025 09:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47052226D17;
+	Wed, 30 Jul 2025 09:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869238; cv=none; b=nHlOOC6CguXqCL37gsm2jfD35S+AQhVLwRUscXcAhSBe1aMu4U5NB9+7DwXtjrRl0h+iz4dez37iVr3EMYYM2ZS2Pt4VHR2dNujZK6K/4Zp6z6xsMsIkAyVaBbIyEk0CClMmb/Pq62dl7G1YpI+V/5AKPkVaVieaMwXK+9jlJA0=
+	t=1753869242; cv=none; b=Im9hJ5KcTBF9GDpBxR9/0OvkJTlxFCkYletAYlmlBn6x90/n2a8z1IVPqsIku9lTWOhpbwsJxs9Ag8arVJVlfel9PC3KWv2J2eGsOUt6KLn0N0NIp0JTLBlk+LTsWJWI+C9Ov+2WLrMan6L0A6h+Qrb7m6oErYOGu3cdJMNDH0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869238; c=relaxed/simple;
-	bh=ArwOFvVFY5KrRyQ3W85qiTh3LcQly5fCoT7MfZV36r8=;
+	s=arc-20240116; t=1753869242; c=relaxed/simple;
+	bh=DBRQY2NM7kKiPdFiguhiIhViRemLQQFU6/648JAY9uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGXWzELQao+OjWO/QdbUiWGWP4pIuROr6+4kgbeR7IEzCuGxJmPiEdZ7iI9hQkS3hvJNMSQfwSjldmnHwcE2CHdQ38cU3yR9s4firxsrUF0BOkM3BuEug3C+uWgqYZNj97VmrdlOmyIddWzIZyadFn+CQFv2ZP2ntLALSn8IC3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9D+zESb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N87UYWHK++9qkCjdgW/54ISYOtT7rOgYQ8wQn8hNZlzyW3j3Iapwy9Ipdnk5iSAnY8AqLvW73KXMQpJpVB+X8Roz/Z1ZxA0irrSzV1opMx5EwdeEZoVourl/3K95jQCFMw32axbaGYWVuetWma3E3q+2QbjTBVvRfk0oiISTLec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjczXnLU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9D+zESb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88FBC4CEF5;
-	Wed, 30 Jul 2025 09:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjczXnLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C45C4CEF5;
+	Wed, 30 Jul 2025 09:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869238;
-	bh=ArwOFvVFY5KrRyQ3W85qiTh3LcQly5fCoT7MfZV36r8=;
+	s=korg; t=1753869241;
+	bh=DBRQY2NM7kKiPdFiguhiIhViRemLQQFU6/648JAY9uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9D+zESb4NpWL1ufKQtuLtAwjGlxN2OplS2pGauQiIG4rHwrnDNs7qgJ1HKfSoiz/
-	 ymd30BpNWR54D68D4p30wfwTf112NMDWCbntEQ51EQRXT7I9dMHRqLvuofIofbGRb6
-	 zD8cp2AKORE0/A33eC56n7C9EvinfrelyHAgf5tY=
+	b=mjczXnLUQW6L/4++SuD/FcmDdyuH1Vsx0HJ2ee3vgEVl/lhxTb2uRO0WiLAd8ytO/
+	 lW78oqOJ9zWGH67U2GEWxGjX9wDLFmG7fWJtZjJUWHYfi++rYUkwzY4OkcDN9jAVFg
+	 T9j+vtDar4nHiGNkBSHM+whkxcY/zB/Tgficu9LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aliaksei Makarau <Aliaksei.Makarau@ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 38/92] s390/ism: fix concurrency management in ism_cmd()
-Date: Wed, 30 Jul 2025 11:35:46 +0200
-Message-ID: <20250730093232.224648260@linuxfoundation.org>
+Subject: [PATCH 6.15 29/92] net/mlx5: E-Switch, Fix peer miss rules to use peer eswitch
+Date: Wed, 30 Jul 2025 11:35:37 +0200
+Message-ID: <20250730093231.883832570@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -55,98 +54,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Halil Pasic <pasic@linux.ibm.com>
+From: Shahar Shitrit <shshitrit@nvidia.com>
 
-[ Upstream commit 897e8601b9cff1d054cdd53047f568b0e1995726 ]
+[ Upstream commit 5b4c56ad4da0aa00b258ab50b1f5775b7d3108c7 ]
 
-The s390x ISM device data sheet clearly states that only one
-request-response sequence is allowable per ISM function at any point in
-time.  Unfortunately as of today the s390/ism driver in Linux does not
-honor that requirement. This patch aims to rectify that.
+In the original design, it is assumed local and peer eswitches have the
+same number of vfs. However, in new firmware, local and peer eswitches
+can have different number of vfs configured by mlxconfig.  In such
+configuration, it is incorrect to derive the number of vfs from the
+local device's eswitch.
 
-This problem was discovered based on Aliaksei's bug report which states
-that for certain workloads the ISM functions end up entering error state
-(with PEC 2 as seen from the logs) after a while and as a consequence
-connections handled by the respective function break, and for future
-connection requests the ISM device is not considered -- given it is in a
-dysfunctional state. During further debugging PEC 3A was observed as
-well.
+Fix this by updating the peer miss rules add and delete functions to use
+the peer device's eswitch and vf count instead of the local device's
+information, ensuring correct behavior regardless of vf configuration
+differences.
 
-A kernel message like
-[ 1211.244319] zpci: 061a:00:00.0: Event 0x2 reports an error for PCI function 0x61a
-is a reliable indicator of the stated function entering error state
-with PEC 2. Let me also point out that a kernel message like
-[ 1211.244325] zpci: 061a:00:00.0: The ism driver bound to the device does not support error recovery
-is a reliable indicator that the ISM function won't be auto-recovered
-because the ISM driver currently lacks support for it.
-
-On a technical level, without this synchronization, commands (inputs to
-the FW) may be partially or fully overwritten (corrupted) by another CPU
-trying to issue commands on the same function. There is hard evidence that
-this can lead to DMB token values being used as DMB IOVAs, leading to
-PEC 2 PCI events indicating invalid DMA. But this is only one of the
-failure modes imaginable. In theory even completely losing one command
-and executing another one twice and then trying to interpret the outputs
-as if the command we intended to execute was actually executed and not
-the other one is also possible.  Frankly, I don't feel confident about
-providing an exhaustive list of possible consequences.
-
-Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
-Reported-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
-Tested-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Tested-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
-Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Fixes: ac004b832128 ("net/mlx5e: E-Switch, Add peer miss rules")
+Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250722161817.1298473-1-wintera@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/1752753970-261832-3-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 3 +++
- include/linux/ism.h        | 1 +
- 2 files changed, 4 insertions(+)
+ .../mellanox/mlx5/core/eswitch_offloads.c     | 108 +++++++++---------
+ 1 file changed, 54 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index 60ed70a39d2cc..b8464d9433e96 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -130,6 +130,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
- 	struct ism_req_hdr *req = cmd;
- 	struct ism_resp_hdr *resp = cmd;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 0e3a977d53329..bee906661282a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -1182,19 +1182,19 @@ static void esw_set_peer_miss_rule_source_port(struct mlx5_eswitch *esw,
+ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 				       struct mlx5_core_dev *peer_dev)
+ {
++	struct mlx5_eswitch *peer_esw = peer_dev->priv.eswitch;
+ 	struct mlx5_flow_destination dest = {};
+ 	struct mlx5_flow_act flow_act = {0};
+ 	struct mlx5_flow_handle **flows;
+-	/* total vports is the same for both e-switches */
+-	int nvports = esw->total_vports;
+ 	struct mlx5_flow_handle *flow;
++	struct mlx5_vport *peer_vport;
+ 	struct mlx5_flow_spec *spec;
+-	struct mlx5_vport *vport;
+ 	int err, pfindex;
+ 	unsigned long i;
+ 	void *misc;
  
-+	spin_lock(&ism->cmd_lock);
- 	__ism_write_cmd(ism, req + 1, sizeof(*req), req->len - sizeof(*req));
- 	__ism_write_cmd(ism, req, 0, sizeof(*req));
+-	if (!MLX5_VPORT_MANAGER(esw->dev) && !mlx5_core_is_ecpf_esw_manager(esw->dev))
++	if (!MLX5_VPORT_MANAGER(peer_dev) &&
++	    !mlx5_core_is_ecpf_esw_manager(peer_dev))
+ 		return 0;
  
-@@ -143,6 +144,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
+ 	spec = kvzalloc(sizeof(*spec), GFP_KERNEL);
+@@ -1203,7 +1203,7 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 
+ 	peer_miss_rules_setup(esw, peer_dev, spec, &dest);
+ 
+-	flows = kvcalloc(nvports, sizeof(*flows), GFP_KERNEL);
++	flows = kvcalloc(peer_esw->total_vports, sizeof(*flows), GFP_KERNEL);
+ 	if (!flows) {
+ 		err = -ENOMEM;
+ 		goto alloc_flows_err;
+@@ -1213,10 +1213,10 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 	misc = MLX5_ADDR_OF(fte_match_param, spec->match_value,
+ 			    misc_parameters);
+ 
+-	if (mlx5_core_is_ecpf_esw_manager(esw->dev)) {
+-		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_PF);
+-		esw_set_peer_miss_rule_source_port(esw, peer_dev->priv.eswitch,
+-						   spec, MLX5_VPORT_PF);
++	if (mlx5_core_is_ecpf_esw_manager(peer_dev)) {
++		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_PF);
++		esw_set_peer_miss_rule_source_port(esw, peer_esw, spec,
++						   MLX5_VPORT_PF);
+ 
+ 		flow = mlx5_add_flow_rules(mlx5_eswitch_get_slow_fdb(esw),
+ 					   spec, &flow_act, &dest, 1);
+@@ -1224,11 +1224,11 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 			err = PTR_ERR(flow);
+ 			goto add_pf_flow_err;
+ 		}
+-		flows[vport->index] = flow;
++		flows[peer_vport->index] = flow;
  	}
- 	__ism_read_cmd(ism, resp + 1, sizeof(*resp), resp->len - sizeof(*resp));
- out:
-+	spin_unlock(&ism->cmd_lock);
- 	return resp->ret;
- }
  
-@@ -606,6 +608,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		return -ENOMEM;
+-	if (mlx5_ecpf_vport_exists(esw->dev)) {
+-		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_ECPF);
++	if (mlx5_ecpf_vport_exists(peer_dev)) {
++		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_ECPF);
+ 		MLX5_SET(fte_match_set_misc, misc, source_port, MLX5_VPORT_ECPF);
+ 		flow = mlx5_add_flow_rules(mlx5_eswitch_get_slow_fdb(esw),
+ 					   spec, &flow_act, &dest, 1);
+@@ -1236,13 +1236,14 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 			err = PTR_ERR(flow);
+ 			goto add_ecpf_flow_err;
+ 		}
+-		flows[vport->index] = flow;
++		flows[peer_vport->index] = flow;
+ 	}
  
- 	spin_lock_init(&ism->lock);
-+	spin_lock_init(&ism->cmd_lock);
- 	dev_set_drvdata(&pdev->dev, ism);
- 	ism->pdev = pdev;
- 	ism->dev.parent = &pdev->dev;
-diff --git a/include/linux/ism.h b/include/linux/ism.h
-index 5428edd909823..8358b4cd7ba6a 100644
---- a/include/linux/ism.h
-+++ b/include/linux/ism.h
-@@ -28,6 +28,7 @@ struct ism_dmb {
+-	mlx5_esw_for_each_vf_vport(esw, i, vport, mlx5_core_max_vfs(esw->dev)) {
++	mlx5_esw_for_each_vf_vport(peer_esw, i, peer_vport,
++				   mlx5_core_max_vfs(peer_dev)) {
+ 		esw_set_peer_miss_rule_source_port(esw,
+-						   peer_dev->priv.eswitch,
+-						   spec, vport->vport);
++						   peer_esw,
++						   spec, peer_vport->vport);
  
- struct ism_dev {
- 	spinlock_t lock; /* protects the ism device */
-+	spinlock_t cmd_lock; /* serializes cmds */
- 	struct list_head list;
- 	struct pci_dev *pdev;
+ 		flow = mlx5_add_flow_rules(mlx5_eswitch_get_slow_fdb(esw),
+ 					   spec, &flow_act, &dest, 1);
+@@ -1250,22 +1251,22 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 			err = PTR_ERR(flow);
+ 			goto add_vf_flow_err;
+ 		}
+-		flows[vport->index] = flow;
++		flows[peer_vport->index] = flow;
+ 	}
  
+-	if (mlx5_core_ec_sriov_enabled(esw->dev)) {
+-		mlx5_esw_for_each_ec_vf_vport(esw, i, vport, mlx5_core_max_ec_vfs(esw->dev)) {
+-			if (i >= mlx5_core_max_ec_vfs(peer_dev))
+-				break;
+-			esw_set_peer_miss_rule_source_port(esw, peer_dev->priv.eswitch,
+-							   spec, vport->vport);
++	if (mlx5_core_ec_sriov_enabled(peer_dev)) {
++		mlx5_esw_for_each_ec_vf_vport(peer_esw, i, peer_vport,
++					      mlx5_core_max_ec_vfs(peer_dev)) {
++			esw_set_peer_miss_rule_source_port(esw, peer_esw,
++							   spec,
++							   peer_vport->vport);
+ 			flow = mlx5_add_flow_rules(esw->fdb_table.offloads.slow_fdb,
+ 						   spec, &flow_act, &dest, 1);
+ 			if (IS_ERR(flow)) {
+ 				err = PTR_ERR(flow);
+ 				goto add_ec_vf_flow_err;
+ 			}
+-			flows[vport->index] = flow;
++			flows[peer_vport->index] = flow;
+ 		}
+ 	}
+ 
+@@ -1282,25 +1283,27 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 	return 0;
+ 
+ add_ec_vf_flow_err:
+-	mlx5_esw_for_each_ec_vf_vport(esw, i, vport, mlx5_core_max_ec_vfs(esw->dev)) {
+-		if (!flows[vport->index])
++	mlx5_esw_for_each_ec_vf_vport(peer_esw, i, peer_vport,
++				      mlx5_core_max_ec_vfs(peer_dev)) {
++		if (!flows[peer_vport->index])
+ 			continue;
+-		mlx5_del_flow_rules(flows[vport->index]);
++		mlx5_del_flow_rules(flows[peer_vport->index]);
+ 	}
+ add_vf_flow_err:
+-	mlx5_esw_for_each_vf_vport(esw, i, vport, mlx5_core_max_vfs(esw->dev)) {
+-		if (!flows[vport->index])
++	mlx5_esw_for_each_vf_vport(peer_esw, i, peer_vport,
++				   mlx5_core_max_vfs(peer_dev)) {
++		if (!flows[peer_vport->index])
+ 			continue;
+-		mlx5_del_flow_rules(flows[vport->index]);
++		mlx5_del_flow_rules(flows[peer_vport->index]);
+ 	}
+-	if (mlx5_ecpf_vport_exists(esw->dev)) {
+-		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_ECPF);
+-		mlx5_del_flow_rules(flows[vport->index]);
++	if (mlx5_ecpf_vport_exists(peer_dev)) {
++		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_ECPF);
++		mlx5_del_flow_rules(flows[peer_vport->index]);
+ 	}
+ add_ecpf_flow_err:
+-	if (mlx5_core_is_ecpf_esw_manager(esw->dev)) {
+-		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_PF);
+-		mlx5_del_flow_rules(flows[vport->index]);
++	if (mlx5_core_is_ecpf_esw_manager(peer_dev)) {
++		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_PF);
++		mlx5_del_flow_rules(flows[peer_vport->index]);
+ 	}
+ add_pf_flow_err:
+ 	esw_warn(esw->dev, "FDB: Failed to add peer miss flow rule err %d\n", err);
+@@ -1313,37 +1316,34 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ static void esw_del_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+ 					struct mlx5_core_dev *peer_dev)
+ {
++	struct mlx5_eswitch *peer_esw = peer_dev->priv.eswitch;
+ 	u16 peer_index = mlx5_get_dev_index(peer_dev);
+ 	struct mlx5_flow_handle **flows;
+-	struct mlx5_vport *vport;
++	struct mlx5_vport *peer_vport;
+ 	unsigned long i;
+ 
+ 	flows = esw->fdb_table.offloads.peer_miss_rules[peer_index];
+ 	if (!flows)
+ 		return;
+ 
+-	if (mlx5_core_ec_sriov_enabled(esw->dev)) {
+-		mlx5_esw_for_each_ec_vf_vport(esw, i, vport, mlx5_core_max_ec_vfs(esw->dev)) {
+-			/* The flow for a particular vport could be NULL if the other ECPF
+-			 * has fewer or no VFs enabled
+-			 */
+-			if (!flows[vport->index])
+-				continue;
+-			mlx5_del_flow_rules(flows[vport->index]);
+-		}
++	if (mlx5_core_ec_sriov_enabled(peer_dev)) {
++		mlx5_esw_for_each_ec_vf_vport(peer_esw, i, peer_vport,
++					      mlx5_core_max_ec_vfs(peer_dev))
++			mlx5_del_flow_rules(flows[peer_vport->index]);
+ 	}
+ 
+-	mlx5_esw_for_each_vf_vport(esw, i, vport, mlx5_core_max_vfs(esw->dev))
+-		mlx5_del_flow_rules(flows[vport->index]);
++	mlx5_esw_for_each_vf_vport(peer_esw, i, peer_vport,
++				   mlx5_core_max_vfs(peer_dev))
++		mlx5_del_flow_rules(flows[peer_vport->index]);
+ 
+-	if (mlx5_ecpf_vport_exists(esw->dev)) {
+-		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_ECPF);
+-		mlx5_del_flow_rules(flows[vport->index]);
++	if (mlx5_ecpf_vport_exists(peer_dev)) {
++		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_ECPF);
++		mlx5_del_flow_rules(flows[peer_vport->index]);
+ 	}
+ 
+-	if (mlx5_core_is_ecpf_esw_manager(esw->dev)) {
+-		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_PF);
+-		mlx5_del_flow_rules(flows[vport->index]);
++	if (mlx5_core_is_ecpf_esw_manager(peer_dev)) {
++		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_PF);
++		mlx5_del_flow_rules(flows[peer_vport->index]);
+ 	}
+ 
+ 	kvfree(flows);
 -- 
 2.39.5
 
