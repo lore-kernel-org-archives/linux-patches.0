@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41EE275AE9;
-	Wed, 30 Jul 2025 09:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8B3442C;
+	Wed, 30 Jul 2025 09:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869256; cv=none; b=iUK/Log2bjj+AP3PvVlmkN1dTzBqvvdB9zTFlkf1OJ5TTrAt2NATSKD0T2svzEnEjn4qUhOppwLh5uqHjflggP+AxLcE1DGHeonIzwaxbLEO843xLh3lBiq/sDvKWP1ck98hPpu7wnDcLcJWsLXSlXkPfVW1ls8D/fmBDF6XNCQ=
+	t=1753869261; cv=none; b=CY5r0gufOI3CkZg1hWB6nzE/32Ga4fzfVpv6+yEj837EBoTHz8lSGa7O0zbhtt2VFyhXztraIpnhDdAFs+xvhKkkWxdHiscdrZcZh1SeOAZVwwnNNwuTz3xq+BeljMEL7ITAer1kJAuJx0SyTbyX7qbnev0/VnEFg1euOT7WnpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869256; c=relaxed/simple;
-	bh=kf5m3p7O/XxnWyOSdDYhKpBpdFinr19TNZT3cVEJD3Q=;
+	s=arc-20240116; t=1753869261; c=relaxed/simple;
+	bh=4mCSbOo6ZMLOJ4zx5qgPJUF56ieFg8VNb5GhPEw678Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avkRh9/Zc3iF59zsVSxGXyhR6AL/BeqgDBdIbOHZkibNQtwn/7uWShQz3EkHunj57VgIf/FwuIiLYd35fAZoX3U2l9hiu0efmgIF2aWmur11+pbz3yYkIWqMteMiaCaew9H7cSgx82KINEBpkwnKDOnE0An5JbLPrzwvZon/qLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFYlX6OC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nrCJzBZR/cCmvrK2u/V6otn4G5bG+8blZyqiGbRATTwg37fwwkzvspAtVFSkivgy9Y1avT7BY2e9vCQsyC5Mo9z0w/5n7cv9xUvSNjLlgdsrhLaS7ykdXgh6zYXt4S7vqDXbrlyKnl/9sI+jRCQcLVsmXtUM+QXEq9ROl75ZDbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I82Bk0Cv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFYlX6OC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24335C4CEF5;
-	Wed, 30 Jul 2025 09:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I82Bk0Cv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9779C4CEF5;
+	Wed, 30 Jul 2025 09:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869256;
-	bh=kf5m3p7O/XxnWyOSdDYhKpBpdFinr19TNZT3cVEJD3Q=;
+	s=korg; t=1753869260;
+	bh=4mCSbOo6ZMLOJ4zx5qgPJUF56ieFg8VNb5GhPEw678Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFYlX6OCnIiBWQbv5AAXMmmCBe13igxV7H6Tiy3b9xOb+u7MsuX6g7KlBiTTy2os9
-	 opb2q7SI6QTA4twbn418EtLdbYvG1xR4I4wqh0/P/+dVrf1t8Peu7LKF8CBWQnGlzl
-	 RlJowEnmRkDvN2JJ0pKTpUcnHaoeLhUyOKMNdyXw=
+	b=I82Bk0Cvlaxl7bczjHD5P7bU6fC8LC4CdFqaUitx4WgjJYUPEoUj071Ar/oMmf7kg
+	 u8SahZHMemRDc4l3AOZevFiZizqCaEgiNEt7Vs/rSccQb7HK6P7J+EnOde2YNQw84d
+	 FR9wDfsHq6NkHQRZayGaQzZfAnR2gAgD9FTmt1mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 76/92] selftests: mptcp: connect: also cover checksum
-Date: Wed, 30 Jul 2025 11:36:24 +0200
-Message-ID: <20250730093233.700145477@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Mariano Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 77/92] selftests/mm: fix split_huge_page_test for folio_split() tests
+Date: Wed, 30 Jul 2025 11:36:25 +0200
+Message-ID: <20250730093233.737855508@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -51,48 +60,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Zi Yan <ziy@nvidia.com>
 
-commit fdf0f60a2bb02ba581d9e71d583e69dd0714a521 upstream.
+commit 7563fcbfd484b347b776aeed4d7dac78b30884aa upstream.
 
-The checksum mode has been added a while ago, but it is only validated
-when manually launching mptcp_connect.sh with "-C".
+PID_FMT does not have an offset field, so folio_split() tests are not
+performed.  Add PID_FMT_OFFSET with an offset field and use it to perform
+folio_split() tests.
 
-The different CIs were then not validating these MPTCP Connect tests
-with checksum enabled. To make sure they do, add a new test program
-executing mptcp_connect.sh with the checksum mode.
-
-Fixes: 94d66ba1d8e4 ("selftests: mptcp: enable checksum in mptcp_connect.sh")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250715-net-mptcp-sft-connect-alt-v2-2-8230ddd82454@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20250709012800.3225727-1-ziy@nvidia.com
+Fixes: 80a5c494c89f ("selftests/mm: add tests for folio_split(), buddy allocator like split")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Donet Tom <donettom@linux.ibm.com>
+Tested-by : Donet Tom <donettom@linux.ibm.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Mariano Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/Makefile                  |    2 +-
- tools/testing/selftests/net/mptcp/mptcp_connect_checksum.sh |    5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
- create mode 100755 tools/testing/selftests/net/mptcp/mptcp_connect_checksum.sh
+ tools/testing/selftests/mm/split_huge_page_test.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/Makefile
-+++ b/tools/testing/selftests/net/mptcp/Makefile
-@@ -5,7 +5,7 @@ top_srcdir = ../../../../..
- CFLAGS += -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
+diff --git a/tools/testing/selftests/mm/split_huge_page_test.c b/tools/testing/selftests/mm/split_huge_page_test.c
+index aa7400ed0e99..f0d9c035641d 100644
+--- a/tools/testing/selftests/mm/split_huge_page_test.c
++++ b/tools/testing/selftests/mm/split_huge_page_test.c
+@@ -31,6 +31,7 @@ uint64_t pmd_pagesize;
+ #define INPUT_MAX 80
  
- TEST_PROGS := mptcp_connect.sh mptcp_connect_mmap.sh mptcp_connect_sendfile.sh \
--	      pm_netlink.sh mptcp_join.sh diag.sh \
-+	      mptcp_connect_checksum.sh pm_netlink.sh mptcp_join.sh diag.sh \
- 	      simult_flows.sh mptcp_sockopt.sh userspace_pm.sh
+ #define PID_FMT "%d,0x%lx,0x%lx,%d"
++#define PID_FMT_OFFSET "%d,0x%lx,0x%lx,%d,%d"
+ #define PATH_FMT "%s,0x%lx,0x%lx,%d"
  
- TEST_GEN_FILES = mptcp_connect pm_nl_ctl mptcp_sockopt mptcp_inq mptcp_diag
---- /dev/null
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect_checksum.sh
-@@ -0,0 +1,5 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
-+
-+MPTCP_LIB_KSFT_TEST="$(basename "${0}" .sh)" \
-+	"$(dirname "${0}")/mptcp_connect.sh" -C "${@}"
+ #define PFN_MASK     ((1UL<<55)-1)
+@@ -483,7 +484,7 @@ void split_thp_in_pagecache_to_order_at(size_t fd_size, const char *fs_loc,
+ 		write_debugfs(PID_FMT, getpid(), (uint64_t)addr,
+ 			      (uint64_t)addr + fd_size, order);
+ 	else
+-		write_debugfs(PID_FMT, getpid(), (uint64_t)addr,
++		write_debugfs(PID_FMT_OFFSET, getpid(), (uint64_t)addr,
+ 			      (uint64_t)addr + fd_size, order, offset);
+ 
+ 	for (i = 0; i < fd_size; i++)
+-- 
+2.50.1
+
 
 
