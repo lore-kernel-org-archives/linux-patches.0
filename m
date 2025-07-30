@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55AA277804;
-	Wed, 30 Jul 2025 09:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6208B26E71A;
+	Wed, 30 Jul 2025 09:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869331; cv=none; b=BIy8m0lHKt0rHhDP9K75USm7464TZyhGWog8iIn2rHjPQw3xGaAtGZuxY1pAv0Yvb+nLrS9aQJU7CMN2W09rRtYc2XMvSvOV+6cUeCn1EZqeKl7D0T+xTV/oo+K9u0ekKq4k20QYEx1w6q6G6b8RAHYWRPfNefe/eWty1e0+pec=
+	t=1753869335; cv=none; b=bMY76V/IVMqW3FStnto01ULVIm7l0LLsmQs/v/QOtQnl4T2ruQHIVbyVqlZbdfdWrYOj3z0gL5qQKzV1ordg1Kp6wKZ3po6aOvqWqP8c4m5ADdPjZ3Z7G1j/u/VTiADnL1erW6fsaUCFfcbk9io2LOOZVBEZRlqczLesaxKtu18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869331; c=relaxed/simple;
-	bh=jT5av/rosBy6ZeP1QeB1qVTqcfN0SqoOM0HzBV7XF1o=;
+	s=arc-20240116; t=1753869335; c=relaxed/simple;
+	bh=Jld5m5RUZizbLmVkJO4RRLSl9zzBBT4t1MZyeIrNPtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLbD6/mNTR9tslYyTkxKy3zOcojcUhIBi5Bt+GeDuODT8d7qocS7xxnnCfJP3WZiFmQJ6kmFUQ4xeB2ryUBg1adjbiZbxLydADRQ5hgBIHk5xLa7lqedEqvxCw88c771QFkEPBQEIc+Kg0haPNyJqq1cenRrqKSpRVzB2dJvclc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTbFDD14; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlRTZlFIWneWNdmxERWVQZJ5hMhOgPG3ymBRtIv3iM+lRtnBVHdxwdtUx4qRUxG5vPR59gmvthJnK7mGt73Hx6GavaPFNzEDvofHp/yHdJB9HlkrKgvNil5R6QNcbWLGnQwBP+0SaGOCj1TvTQjbb/GnfWBGnuzNxXoCIe0jX9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFc/nhq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTbFDD14"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E898C4CEF5;
-	Wed, 30 Jul 2025 09:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFc/nhq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C25C4CEF5;
+	Wed, 30 Jul 2025 09:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869331;
-	bh=jT5av/rosBy6ZeP1QeB1qVTqcfN0SqoOM0HzBV7XF1o=;
+	s=korg; t=1753869335;
+	bh=Jld5m5RUZizbLmVkJO4RRLSl9zzBBT4t1MZyeIrNPtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTbFDD14y+Wk2vOP5DpB/pj+ggbXX0/CeypAw0327oyJnqvOFb0SMeB8Ci9v4Tpu/
-	 VTSQqzEszXiZrC3XN3Ga6JiWhbBDLUB7Nbr3LU+Vf1n+ezSdrmukZNrpnOQRF9ISXU
-	 jd9aYzY1Qx+ZElMY+DZ509St2ODqhBiweH+EAriM=
+	b=WFc/nhq0KFWpDQPa6BhJevLxhKA3Qatrl/l6C/hgFdibsFLyowtZdb42FF6eegvUl
+	 qteZUlwdDIj9HtahtznGk+DoXm7tL5wpab4u/I/Qx+5pgbgt6MvYdUAbC8Khum4n+p
+	 uvOf+O8BSBJ4kH+20v5lyN4HptU+JnJjb9C89Hls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Dadap <ddadap@nvidia.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 92/92] ALSA: hda: Add missing NVIDIA HDA codec IDs
-Date: Wed, 30 Jul 2025 11:36:40 +0200
-Message-ID: <20250730093234.289754885@linuxfoundation.org>
+	Jacek Kowalski <jacek@jacekk.info>,
+	Simon Horman <horms@kernel.org>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.15 67/92] e1000e: disregard NVM checksum on tgp when valid checksum bit is not set
+Date: Wed, 30 Jul 2025 11:36:15 +0200
+Message-ID: <20250730093233.345647128@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -51,67 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Dadap <ddadap@nvidia.com>
+From: Jacek Kowalski <jacek@jacekk.info>
 
-commit e0a911ac86857a73182edde9e50d9b4b949b7f01 upstream.
+commit 536fd741c7ac907d63166cdae1081b1febfab613 upstream.
 
-Add codec IDs for several NVIDIA products with HDA controllers to the
-snd_hda_id_hdmi[] patch table.
+As described by Vitaly Lifshits:
 
-Signed-off-by: Daniel Dadap <ddadap@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/aF24rqwMKFWoHu12@ddadap-lakeline.nvidia.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Starting from Tiger Lake, LAN NVM is locked for writes by SW, so the
+> driver cannot perform checksum validation and correction. This means
+> that all NVM images must leave the factory with correct checksum and
+> checksum valid bit set. Since Tiger Lake devices were the first to have
+> this lock, some systems in the field did not meet this requirement.
+> Therefore, for these transitional devices we skip checksum update and
+> verification, if the valid bit is not set.
+
+Signed-off-by: Jacek Kowalski <jacek@jacekk.info>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Fixes: 4051f68318ca9 ("e1000e: Do not take care about recovery NVM checksum")
+Cc: stable@vger.kernel.org
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/ethernet/intel/e1000e/ich8lan.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -4551,7 +4551,9 @@ HDA_CODEC_ENTRY(0x10de002e, "Tegra186 HD
- HDA_CODEC_ENTRY(0x10de002f, "Tegra194 HDMI/DP2", patch_tegra_hdmi),
- HDA_CODEC_ENTRY(0x10de0030, "Tegra194 HDMI/DP3", patch_tegra_hdmi),
- HDA_CODEC_ENTRY(0x10de0031, "Tegra234 HDMI/DP", patch_tegra234_hdmi),
-+HDA_CODEC_ENTRY(0x10de0033, "SoC 33 HDMI/DP",	patch_tegra234_hdmi),
- HDA_CODEC_ENTRY(0x10de0034, "Tegra264 HDMI/DP",	patch_tegra234_hdmi),
-+HDA_CODEC_ENTRY(0x10de0035, "SoC 35 HDMI/DP",	patch_tegra234_hdmi),
- HDA_CODEC_ENTRY(0x10de0040, "GPU 40 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de0041, "GPU 41 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de0042, "GPU 42 HDMI/DP",	patch_nvhdmi),
-@@ -4590,15 +4592,32 @@ HDA_CODEC_ENTRY(0x10de0097, "GPU 97 HDMI
- HDA_CODEC_ENTRY(0x10de0098, "GPU 98 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de0099, "GPU 99 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009a, "GPU 9a HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de009b, "GPU 9b HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de009c, "GPU 9c HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009d, "GPU 9d HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009e, "GPU 9e HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009f, "GPU 9f HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a0, "GPU a0 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a1, "GPU a1 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a3, "GPU a3 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a4, "GPU a4 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a5, "GPU a5 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a6, "GPU a6 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a7, "GPU a7 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a8, "GPU a8 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a9, "GPU a9 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00aa, "GPU aa HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00ab, "GPU ab HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00ad, "GPU ad HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00ae, "GPU ae HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00af, "GPU af HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00b0, "GPU b0 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00b1, "GPU b1 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c0, "GPU c0 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c1, "GPU c1 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c3, "GPU c3 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c4, "GPU c4 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c5, "GPU c5 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de8001, "MCP73 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x10de8067, "MCP67/68 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x67663d82, "Arise 82 HDMI/DP",	patch_gf_hdmi),
+--- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
++++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+@@ -4274,6 +4274,8 @@ static s32 e1000_validate_nvm_checksum_i
+ 			ret_val = e1000e_update_nvm_checksum(hw);
+ 			if (ret_val)
+ 				return ret_val;
++		} else if (hw->mac.type == e1000_pch_tgp) {
++			return 0;
+ 		}
+ 	}
+ 
 
 
