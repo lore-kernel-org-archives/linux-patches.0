@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5376736124;
-	Wed, 30 Jul 2025 09:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C55157E6B;
+	Wed, 30 Jul 2025 09:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868495; cv=none; b=YcIPY0QKUP7q9G/lgZxzbGCL2NnsO5fhRHr1NlWxHTu+W1XLvujf/3ArSoCevsDHtA72FGvIaabPhVc74dKCBR4jhnFzFTH0aJG+Do/OGb95jd4x7oUC+iuXrRm7F2Wp8VhNnEabI/oyGKdU9e7k7fPQf0fdPXBRKGCChYoYkXM=
+	t=1753868498; cv=none; b=Ai4TRbzFvbzKCuZwAW+NoX8FJLKQqHDtSxyoIEK32bBqjvww0CoH7s00oI3qRSSAfVzZniOdFn5j9I0dnkexh+4XvsUCBqitw46uW+XOy61Gzkxe/Z2Q/XaiR5MZRG6d+zCzNg7KJaoQ/gA0sSbHaqolDZZu8MC+SRNYOG080RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868495; c=relaxed/simple;
-	bh=4TSW7yy5fcjYmI4LXIRhaBldDOMHvoQyCohtgtsxz9A=;
+	s=arc-20240116; t=1753868498; c=relaxed/simple;
+	bh=Drjeizqsm4a8hfvFqaDooaHTFQTr9gnsnFIAuft5JAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y67k8zO0NUSbhqjkue7YgrDanBMPsCyI+BeMygJp0BmlMKE8H2fzf+7bmZhlh8P3Yi9ft/o8iwydTMsl2x7NL3IIbfDqj5/GhCm1WpiTalr54TQBOB+nSo0QXrVLM0Tw5seKWmkewM9gxGSdefXyy55mpnNU8YDz0/Gt/kjttoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLz0pjaZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gELpFJo6uWjF4vZ871PWaHBuiJmoTFM6PJjSzOzsGcprXjE+R5I4uyJ/zlB/8H0JB5oAs0X+EiYviDaFSWVQQlsVVJkqFynt30x6iglb+Oyv+ESZ0tM3xFGuYHDb1YYck5pqIyoJyuq4cfuis6wpw98Xvu83xOZgMgpoTbc86sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U74bloUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLz0pjaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDE9C4CEE7;
-	Wed, 30 Jul 2025 09:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U74bloUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC9AC4CEE7;
+	Wed, 30 Jul 2025 09:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868495;
-	bh=4TSW7yy5fcjYmI4LXIRhaBldDOMHvoQyCohtgtsxz9A=;
+	s=korg; t=1753868498;
+	bh=Drjeizqsm4a8hfvFqaDooaHTFQTr9gnsnFIAuft5JAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLz0pjaZRV8xzdZ5Gfn9jiypUgf0TW5Ny/svy9C8aYn3KWmek0zKprbh5HnmzvruU
-	 FbNB4VYuVlq1ORKdMkyBdoppSnktIS0eybeR6CHPxmI/8So0kyPPJ2gu6KtgCUzlxj
-	 yOU5Rs01sCVSHfoM/V2M3GXszBqAmjMd6L+AXoPQ=
+	b=U74bloUAQ0Gc0PQls0po5VS4gkD/gwu979rj2LZ2KRnJoGiV8mn3ZubngQZPXWrUK
+	 f5iwXWOGthK4steRmCpDa0Lah89u1eJPV8NdzVsZb1jhutoIj8TTPdFKebJR7W5dBO
+	 547s6V7Rj6F7HvhDHNguBDU4b9dq0R470JmbZU2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lakshmi Sowjanya D <quic_laksd@quicinc.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Vince Weaver <vincent.weaver@maine.edu>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 65/76] mtd: rawnand: qcom: Fix last codeword read in qcom_param_page_type_exec()
-Date: Wed, 30 Jul 2025 11:35:58 +0200
-Message-ID: <20250730093229.388750996@linuxfoundation.org>
+Subject: [PATCH 6.6 66/76] perf/x86/intel: Fix crash in icl_update_topdown_event()
+Date: Wed, 30 Jul 2025 11:35:59 +0200
+Message-ID: <20250730093229.429384297@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -53,68 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 47bddabbf69da50999ec68be92b58356c687e1d6 ]
+[ Upstream commit b0823d5fbacb1c551d793cbfe7af24e0d1fa45ed ]
 
-For QPIC V2 onwards there is a separate register to read
-last code word "QPIC_NAND_READ_LOCATION_LAST_CW_n".
+The perf_fuzzer found a hard-lockup crash on a RaptorLake machine:
 
-qcom_param_page_type_exec() is used to read only one code word
-If it configures the number of code words to 1 in QPIC_NAND_DEV0_CFG0
-register then QPIC controller thinks its reading the last code word,
-since we are having separate register to read the last code word,
-we have to configure "QPIC_NAND_READ_LOCATION_LAST_CW_n" register
-to fetch data from QPIC buffer to system memory.
+  Oops: general protection fault, maybe for address 0xffff89aeceab400: 0000
+  CPU: 23 UID: 0 PID: 0 Comm: swapper/23
+  Tainted: [W]=WARN
+  Hardware name: Dell Inc. Precision 9660/0VJ762
+  RIP: 0010:native_read_pmc+0x7/0x40
+  Code: cc e8 8d a9 01 00 48 89 03 5b cd cc cc cc cc 0f 1f ...
+  RSP: 000:fffb03100273de8 EFLAGS: 00010046
+  ....
+  Call Trace:
+    <TASK>
+    icl_update_topdown_event+0x165/0x190
+    ? ktime_get+0x38/0xd0
+    intel_pmu_read_event+0xf9/0x210
+    __perf_event_read+0xf9/0x210
 
-Without this change page read was failing with timeout error
+CPUs 16-23 are E-core CPUs that don't support the perf metrics feature.
+The icl_update_topdown_event() should not be invoked on these CPUs.
 
-/ # hexdump -C /dev/mtd1
-[  129.206113] qcom-nandc 1cc8000.nand-controller: failure to read page/oob
-hexdump: /dev/mtd1: Connection timed out
+It's a regression of commit:
 
-This issue only seen on SDX targets since SDX target used QPICv2. But
-same working on IPQ targets since IPQ used QPICv1.
+  f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
 
-Cc: stable@vger.kernel.org
-Fixes: 89550beb098e ("mtd: rawnand: qcom: Implement exec_op()")
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Tested-by: Lakshmi Sowjanya D <quic_laksd@quicinc.com>
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+The bug introduced by that commit is that the is_topdown_event() function
+is mistakenly used to replace the is_topdown_count() call to check if the
+topdown functions for the perf metrics feature should be invoked.
+
+Fix it.
+
+Fixes: f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
+Closes: https://lore.kernel.org/lkml/352f0709-f026-cd45-e60c-60dfd97f73f3@maine.edu/
+Reported-by: Vince Weaver <vincent.weaver@maine.edu>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Vince Weaver <vincent.weaver@maine.edu>
+Cc: stable@vger.kernel.org # v6.15+
+Link: https://lore.kernel.org/r/20250612143818.2889040-1-kan.liang@linux.intel.com
+[ omitted PEBS check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2858,7 +2858,12 @@ static int qcom_param_page_type_exec(str
- 	const struct nand_op_instr *instr = NULL;
- 	unsigned int op_id = 0;
- 	unsigned int len = 0;
--	int ret;
-+	int ret, reg_base;
-+
-+	reg_base = NAND_READ_LOCATION_0;
-+
-+	if (nandc->props->qpic_v2)
-+		reg_base = NAND_READ_LOCATION_LAST_CW_0;
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2734,7 +2734,7 @@ static void intel_pmu_read_event(struct
+ 		if (pmu_enabled)
+ 			intel_pmu_disable_all();
  
- 	ret = qcom_parse_instructions(chip, subop, &q_op);
- 	if (ret)
-@@ -2910,7 +2915,10 @@ static int qcom_param_page_type_exec(str
- 	op_id = q_op.data_instr_idx;
- 	len = nand_subop_get_data_len(subop, op_id);
- 
--	nandc_set_read_loc(chip, 0, 0, 0, len, 1);
-+	if (nandc->props->qpic_v2)
-+		nandc_set_read_loc_last(chip, reg_base, 0, len, 1);
-+	else
-+		nandc_set_read_loc_first(chip, reg_base, 0, len, 1);
- 
- 	if (!nandc->props->qpic_v2) {
- 		write_reg_dma(nandc, NAND_DEV_CMD_VLD, 1, 0);
+-		if (is_topdown_event(event))
++		if (is_topdown_count(event))
+ 			static_call(intel_pmu_update_topdown_event)(event);
+ 		else
+ 			intel_pmu_drain_pebs_buffer();
 
 
