@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3F426F462;
-	Wed, 30 Jul 2025 09:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826EA292B4D;
+	Wed, 30 Jul 2025 09:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868367; cv=none; b=l+rnNyoR90jWB9kK2G0LXZridnqg7Xpx3Zgcnk0naLDeLQD5yw/t4prc51sll0P7472oRM3xi/WfrccKJ7folPbIOFu4F0pXgm6YZb8ebJ9sCR8ZvGuyFDeoFOmr/Shu+Uc48EzXSjFrjzV8J/nyMRDCe2Z39sA6eqnCZTxDuKA=
+	t=1753868370; cv=none; b=Nc8S08hiyvWyBJ6vRCIqo3CkJNVUvZzzcXJOkLRMK+5eEnewITMJeyGgkFrn9UxfqiONknSPiEcGaW4ZNZrtjMl/GT0u6I6MvWt3fuiEAvW/yY9+6cZCf7R1QgwuWJhbtbAK1DsjHgoVuLG3ILXag2nFoCJEZM1EGef51hIZNow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868367; c=relaxed/simple;
-	bh=/gDcrEUrt9yfNLihPkpynrRLbnnxw0oymohmiYp9tJk=;
+	s=arc-20240116; t=1753868370; c=relaxed/simple;
+	bh=5ccB52zpJsvgVuynQmP1zld1fi8Y78MKBr0AAjMK+tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VU5Pntxwr+iQIvwFNtgnDUG2X5gc05YNbn5Uwdzx6pOcQCja7e8BQor4gj8W3UG5TqZe8MiX2r6+iyLKYWmNsaIV8Lus3sfI37Rz284GShgN+W7+KnwH8VYFw/hKfE2DbC1DbFy+72VY9guaXptzdW8fMsuHDoxi6Qf6E9v0dhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO8s6eBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lcXKoVt2LfPddWSxpLm/FxzY6KkJynczdxHjjrTL69WlSVMg7FF9QgCff1a9zfl+vp4RglJchDqOykcTlZvSs3sJej8WXgUiBEZMHykB48K77dTu0r+7aDYqf9NCJXdeZjQVD2MDz6zHSoAY0HsAmjuB2zDVADye7CwyJFERU2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcKbvF0F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO8s6eBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB750C4CEFF;
-	Wed, 30 Jul 2025 09:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcKbvF0F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1B7C4CEF5;
+	Wed, 30 Jul 2025 09:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868367;
-	bh=/gDcrEUrt9yfNLihPkpynrRLbnnxw0oymohmiYp9tJk=;
+	s=korg; t=1753868370;
+	bh=5ccB52zpJsvgVuynQmP1zld1fi8Y78MKBr0AAjMK+tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lO8s6eBUwzCUh5Ok8bHCRSBEiTPRffTBKUnkRvW1mv3qdfiOp8uNcK2kDGmYv4d1a
-	 +sv30dO8YQM2xoJ4bdFxSYHE8m39sOMcst0O8bly9H7nCsKOoStpgVBPiHU0eoyhtR
-	 GlX6dxbxVTdeGuWN41aCeabvNa52vQh9nBBbtISw=
+	b=lcKbvF0F0Ib2e8JONHYdnDVcybPeP2tfkVSnANeJllPytCM29yCJ3XziiFsCMq8G5
+	 2Y8FroT9U9fFOlb+I2BmDXHmZMawbNl+nbXAQsyeXVGKJNGS/vlLyCRSq7d+TYWE+G
+	 8H4vQDP9o92sZ0uBVcGS0vFjZUuaAtU5lYZ/n748=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 46/76] selftests: mptcp: connect: also cover checksum
-Date: Wed, 30 Jul 2025 11:35:39 +0200
-Message-ID: <20250730093228.626592458@linuxfoundation.org>
+	Harry Yoo <harry.yoo@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 47/76] mm/zsmalloc: do not pass __GFP_MOVABLE if CONFIG_COMPACTION=n
+Date: Wed, 30 Jul 2025 11:35:40 +0200
+Message-ID: <20250730093228.672716433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -51,48 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-commit fdf0f60a2bb02ba581d9e71d583e69dd0714a521 upstream.
+commit 694d6b99923eb05a8fd188be44e26077d19f0e21 upstream.
 
-The checksum mode has been added a while ago, but it is only validated
-when manually launching mptcp_connect.sh with "-C".
+Commit 48b4800a1c6a ("zsmalloc: page migration support") added support for
+migrating zsmalloc pages using the movable_operations migration framework.
+However, the commit did not take into account that zsmalloc supports
+migration only when CONFIG_COMPACTION is enabled.  Tracing shows that
+zsmalloc was still passing the __GFP_MOVABLE flag even when compaction is
+not supported.
 
-The different CIs were then not validating these MPTCP Connect tests
-with checksum enabled. To make sure they do, add a new test program
-executing mptcp_connect.sh with the checksum mode.
+This can result in unmovable pages being allocated from movable page
+blocks (even without stealing page blocks), ZONE_MOVABLE and CMA area.
 
-Fixes: 94d66ba1d8e4 ("selftests: mptcp: enable checksum in mptcp_connect.sh")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250715-net-mptcp-sft-connect-alt-v2-2-8230ddd82454@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Possible user visible effects:
+- Some ZONE_MOVABLE memory can be not actually movable
+- CMA allocation can fail because of this
+- Increased memory fragmentation due to ignoring the page mobility
+  grouping feature
+I'm not really sure who uses kernels without compaction support, though :(
+
+
+To fix this, clear the __GFP_MOVABLE flag when
+!IS_ENABLED(CONFIG_COMPACTION).
+
+Link: https://lkml.kernel.org/r/20250704103053.6913-1-harry.yoo@oracle.com
+Fixes: 48b4800a1c6a ("zsmalloc: page migration support")
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/Makefile                  |    2 +-
- tools/testing/selftests/net/mptcp/mptcp_connect_checksum.sh |    5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
- create mode 100755 tools/testing/selftests/net/mptcp/mptcp_connect_checksum.sh
+ mm/zsmalloc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/Makefile
-+++ b/tools/testing/selftests/net/mptcp/Makefile
-@@ -5,7 +5,7 @@ top_srcdir = ../../../../..
- CFLAGS =  -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -988,6 +988,9 @@ static struct zspage *alloc_zspage(struc
+ 	if (!zspage)
+ 		return NULL;
  
- TEST_PROGS := mptcp_connect.sh mptcp_connect_mmap.sh mptcp_connect_sendfile.sh \
--	      pm_netlink.sh mptcp_join.sh diag.sh \
-+	      mptcp_connect_checksum.sh pm_netlink.sh mptcp_join.sh diag.sh \
- 	      simult_flows.sh mptcp_sockopt.sh userspace_pm.sh
- 
- TEST_GEN_FILES = mptcp_connect pm_nl_ctl mptcp_sockopt mptcp_inq
---- /dev/null
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect_checksum.sh
-@@ -0,0 +1,5 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
++	if (!IS_ENABLED(CONFIG_COMPACTION))
++		gfp &= ~__GFP_MOVABLE;
 +
-+MPTCP_LIB_KSFT_TEST="$(basename "${0}" .sh)" \
-+	"$(dirname "${0}")/mptcp_connect.sh" -C "${@}"
+ 	zspage->magic = ZSPAGE_MAGIC;
+ 	migrate_lock_init(zspage);
+ 
 
 
