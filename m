@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674C0267733;
-	Wed, 30 Jul 2025 09:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC961F09B6;
+	Wed, 30 Jul 2025 09:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868999; cv=none; b=kXB1VDkd2eqze2JbzR2dkrvvNqftXpme9Dg4xnWRgpBeEf2cHEMv7cONIkUg/mId4Xiw3YM/NkkKDCPoQAIWlMyILXSCbn9i3sIPSTrgjo1fhdVv1DGmaoIBLK94hHbhJ/RfsZwDhlKHYciCvZteKqSm0//6zfGyB55IaYn5FHY=
+	t=1753869002; cv=none; b=YNCY1lEY602qwf9p92zh6MDKC1OkqQ65AOxeHIivHNCdUxG+Ry2QfSAtHdBObjcPBaCixT16qrmAaX2dmaUU2uv+BHUKjMKRAxhKFmPYrAswwqVTlsGxxLmU2ITzmZpHabPJx2UzWLJ+yQmBpAdF96h9+OdCRzdT2tPmvNnDagw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868999; c=relaxed/simple;
-	bh=359M4AtKHKcdqS47VEXOtEPwy95Jr3kmPiaJO6NNY98=;
+	s=arc-20240116; t=1753869002; c=relaxed/simple;
+	bh=xZg/pNGiGtRzLu5oEKiQqx3FmWYF7fNmtIoq1DJjcas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjKBJ2L2UiWp7J2eNoOK/dXh7YOpeUZaXsEurL31v/Uhlz2uIq57Qb0/N0Z2jURxmrtT/QU2bwD4BR/+cSDMV7ZqdQ8qJP9ZPqzEyL3PBsSpZTL5mAS1g3KrXR1fBpDVYBLTWFA/MuHSBMae1eG/FpjXmPc6Y4S4cb1tV+vbUZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InTBKN2n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PveeEKmjN1WNRGVLVZwxu3KSaIOWF7KLR++6Ia6V9/ZV27u146mV2MSBf4ctfRmMcCumfdi6Zlc8Ff2ntBA45vNZrrXwOODArfhD/hUacAn7txBpTv8ApDIaui+TUOSaUs/DWupSG5wJWT4VpyekbrVuPWeuztSOHIDhIeBWq+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDv8winq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InTBKN2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D1CC4CEF5;
-	Wed, 30 Jul 2025 09:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDv8winq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16710C4CEF5;
+	Wed, 30 Jul 2025 09:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868999;
-	bh=359M4AtKHKcdqS47VEXOtEPwy95Jr3kmPiaJO6NNY98=;
+	s=korg; t=1753869002;
+	bh=xZg/pNGiGtRzLu5oEKiQqx3FmWYF7fNmtIoq1DJjcas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InTBKN2nr1WNtWvCH2AHhoz0Ju1K6xlF4LrBLGKhI+xsTYrQBKhbbU7DgUvNL5pQQ
-	 3TgyTp24U5PGaGGKfByU/0j3hhzYixU5d8rLAcc3acgccJO8Ar6AxwoiNT5q03PRkP
-	 XocN6rPCEIJwptvhqqjlR2XDhLeYTURXWvcQdW9Y=
+	b=EDv8winqGylFoEE/C4ZdhgKk6qdb7gqAzoxjU72S9D1CNuCeahEXHqKdyFCgZiEsO
+	 33w7jfFaJsJzqefxOvHFvx7d1SPiWuwgj1ctQs1RYFI6QFvpPqnFGvNmMplfNjduG+
+	 Lg+FxDOf4XucmoU2mDG6iyTO3pN4MxFXMLtb166w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 12/92] regmap: fix potential memory leak of regmap_bus
-Date: Wed, 30 Jul 2025 11:35:20 +0200
-Message-ID: <20250730093231.096852237@linuxfoundation.org>
+Subject: [PATCH 6.15 13/92] platform/mellanox: mlxbf-pmc: Remove newline char from event name input
+Date: Wed, 30 Jul 2025 11:35:21 +0200
+Message-ID: <20250730093231.134499249@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -45,48 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Shravan Kumar Ramani <shravankr@nvidia.com>
 
-[ Upstream commit c871c199accb39d0f4cb941ad0dccabfc21e9214 ]
+[ Upstream commit 44e6ca8faeeed12206f3e7189c5ac618b810bb9c ]
 
-When __regmap_init() is called from __regmap_init_i2c() and
-__regmap_init_spi() (and their devm versions), the bus argument
-obtained from regmap_get_i2c_bus() and regmap_get_spi_bus(), may be
-allocated using kmemdup() to support quirks. In those cases, the
-bus->free_on_exit field is set to true.
+Since the input string passed via the command line appends a newline char,
+it needs to be removed before comparison with the event_list.
 
-However, inside __regmap_init(), buf is not freed on any error path.
-This could lead to a memory leak of regmap_bus when __regmap_init()
-fails. Fix that by freeing bus on error path when free_on_exit is set.
-
-Fixes: ea030ca68819 ("regmap-i2c: Set regmap max raw r/w from quirks")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Link: https://patch.msgid.link/20250626172823.18725-1-abdun.nihaal@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/4978c18e33313b48fa2ae7f3aa6dbcfce40877e4.1751380187.git.shravankr@nvidia.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/mellanox/mlxbf-pmc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index f2843f8146751..1f3f782a04ba2 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1173,6 +1173,8 @@ struct regmap *__regmap_init(struct device *dev,
- err_map:
- 	kfree(map);
- err:
-+	if (bus && bus->free_on_exit)
-+		kfree(bus);
- 	return ERR_PTR(ret);
- }
- EXPORT_SYMBOL_GPL(__regmap_init);
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 771a24c397c12..b8fe51e6d4d3f 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -15,6 +15,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/platform_device.h>
+ #include <linux/string.h>
++#include <linux/string_helpers.h>
+ #include <uapi/linux/psci.h>
+ 
+ #define MLXBF_PMC_WRITE_REG_32 0x82000009
+@@ -1666,6 +1667,7 @@ static ssize_t mlxbf_pmc_event_store(struct device *dev,
+ 		attr, struct mlxbf_pmc_attribute, dev_attr);
+ 	unsigned int blk_num, cnt_num;
+ 	bool is_l3 = false;
++	char *evt_name;
+ 	int evt_num;
+ 	int err;
+ 
+@@ -1673,8 +1675,14 @@ static ssize_t mlxbf_pmc_event_store(struct device *dev,
+ 	cnt_num = attr_event->index;
+ 
+ 	if (isalpha(buf[0])) {
++		/* Remove the trailing newline character if present */
++		evt_name = kstrdup_and_replace(buf, '\n', '\0', GFP_KERNEL);
++		if (!evt_name)
++			return -ENOMEM;
++
+ 		evt_num = mlxbf_pmc_get_event_num(pmc->block_name[blk_num],
+-						  buf);
++						  evt_name);
++		kfree(evt_name);
+ 		if (evt_num < 0)
+ 			return -EINVAL;
+ 	} else {
 -- 
 2.39.5
 
