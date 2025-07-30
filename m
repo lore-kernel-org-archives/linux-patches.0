@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E25442C;
-	Wed, 30 Jul 2025 09:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD4D13D53B;
+	Wed, 30 Jul 2025 09:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868951; cv=none; b=m9JtPsNCnOoQdtS2okJi0iQihgseq+E6zAi99XTaHmGC2ephPduB3esLTeSAvQKO7MwAVcjXRE8H4x3qUlf8KlpWYfl9vgXq6alCqCqEoQHg1FzUUouV3LrA1R68gYEaPv8jt4hRZjehK98flIDBxtGj0AV6Cm8/I3aC+xwXXLM=
+	t=1753868953; cv=none; b=BQpUuwpe9HbBjBaVA5o/Evdk9j/5/S37csDHd7XjJFRVck1LV7bd/+kr4547eHU5Qgvbtjo5iUf8sloYfe49gJQCJvla/Nf+Ntj68HLmp41Jhb7evsVWx5gbH5tfu2FWc12N2CRYpBP+/i4xX7xDAtGSfv+EaGa3KMAIuiiMH+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868951; c=relaxed/simple;
-	bh=Mv4FNN+voKJlbmTM6+Be6IjhUmqolSSQHCiVTHJXVTU=;
+	s=arc-20240116; t=1753868953; c=relaxed/simple;
+	bh=kr+qoyFHenjK7TIhWZtPHbJND6VKiQPaCtwvfuJ6eNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJ55c4r7knMDPT4XyfZdnVfBs4bpVE70gFepVysg95wgpBW9LtMZeNiccvjlcTt6L8FsG2bqSlGB2uFJkO7ahWUAgEumghDyiHsja4xH4/HL0goKQAz9Y+gZ6d5GHpnZ/36attr5o4NQxWwXGF4wvbZcpiAdjjE+/Hm+4gJb5N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISnsjFAE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTXCasAYK7EXvPZTQPZ/WURS37Ya4+nu4tgwQBVLWYESaX/bIyFUuLD4y/ubKVUQ1FcXAywb4KWeMTV0sRtOE72uObF7uscvOh/HvzNWGBFLVrhY3EbB/eBOpSX1OBEaTnnw/k4xEzo0f2sTXhV3DZjyYQeO+vs85BMT7vxOJ3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hp58H0gq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISnsjFAE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCDCC4CEF5;
-	Wed, 30 Jul 2025 09:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hp58H0gq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE32BC4CEF5;
+	Wed, 30 Jul 2025 09:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868950;
-	bh=Mv4FNN+voKJlbmTM6+Be6IjhUmqolSSQHCiVTHJXVTU=;
+	s=korg; t=1753868953;
+	bh=kr+qoyFHenjK7TIhWZtPHbJND6VKiQPaCtwvfuJ6eNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISnsjFAENFof70OJue6VfKCJnEn8/x3h+jN8opOcd3sbrN59xTvr326TJjKY8LkWb
-	 9IJhpPrL3W3G2JMHLZjV6PFbg5NtlAhqQ6c3qSQeRINGpwU0KixyN4U+2UK8ViI/YH
-	 WDw+cxwRLG5vtPqlWsy70AGMt4cb2HssHtvjI+sI=
+	b=hp58H0gqKTOmVpyYoZTLyhXtDfzinmyigIXiLtn8Q3rRJ8pNXU9lMSTbpPlyIjShW
+	 xy3qINPS3mKlbvBUJc0LGU6u0AVWQWhb0VANHIIn4tafhCQyLLYPfYNK8CT+o8zXLU
+	 VBcbqV69673e2KLHrAHgRRDwLGtjSovLFj274Ktg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
+	Aaron Lewis <aaronlewis@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Yan Zhao <yan.y.zhao@intel.com>,
+	Rick P Edgecombe <rick.p.edgecombe@intel.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Isaku Yamahata <isaku.yamahata@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/117] KVM: x86: Add X86EMUL_F_MSR and X86EMUL_F_DT_LOAD to aid canonical checks
-Date: Wed, 30 Jul 2025 11:36:07 +0200
-Message-ID: <20250730093237.611864919@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Kevin Cheng <chengkev@google.com>
+Subject: [PATCH 6.12 116/117] KVM: x86: Free vCPUs before freeing VM state
+Date: Wed, 30 Jul 2025 11:36:25 +0200
+Message-ID: <20250730093238.323882107@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -51,108 +57,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit c534b37b7584e2abc5d487b4e017f61a61959ca9 ]
+commit 17bcd714426386fda741a4bccd96a2870179344b upstream.
 
-Add emulation flags for MSR accesses and Descriptor Tables loads, and pass
-the new flags as appropriate to emul_is_noncanonical_address().  The flags
-will be used to perform the correct canonical check, as the type of access
-affects whether or not CR4.LA57 is consulted when determining the canonical
-bit.
+Free vCPUs before freeing any VM state, as both SVM and VMX may access
+VM state when "freeing" a vCPU that is currently "in" L2, i.e. that needs
+to be kicked out of nested guest mode.
 
-No functional change is intended.
+Commit 6fcee03df6a1 ("KVM: x86: avoid loading a vCPU after .vm_destroy was
+called") partially fixed the issue, but for unknown reasons only moved the
+MMU unloading before VM destruction.  Complete the change, and free all
+vCPU state prior to destroying VM state, as nVMX accesses even more state
+than nSVM.
 
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20240906221824.491834-3-mlevitsk@redhat.com
-[sean: split to separate patch, massage changelog]
+In addition to the AVIC, KVM can hit a use-after-free on MSR filters:
+
+  kvm_msr_allowed+0x4c/0xd0
+  __kvm_set_msr+0x12d/0x1e0
+  kvm_set_msr+0x19/0x40
+  load_vmcs12_host_state+0x2d8/0x6e0 [kvm_intel]
+  nested_vmx_vmexit+0x715/0xbd0 [kvm_intel]
+  nested_vmx_free_vcpu+0x33/0x50 [kvm_intel]
+  vmx_free_vcpu+0x54/0xc0 [kvm_intel]
+  kvm_arch_vcpu_destroy+0x28/0xf0
+  kvm_vcpu_destroy+0x12/0x50
+  kvm_arch_destroy_vm+0x12c/0x1c0
+  kvm_put_kvm+0x263/0x3c0
+  kvm_vm_release+0x21/0x30
+
+and an upcoming fix to process injectable interrupts on nested VM-Exit
+will access the PIC:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000090
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  CPU: 23 UID: 1000 PID: 2658 Comm: kvm-nx-lpage-re
+  RIP: 0010:kvm_cpu_has_extint+0x2f/0x60 [kvm]
+  Call Trace:
+   <TASK>
+   kvm_cpu_has_injectable_intr+0xe/0x60 [kvm]
+   nested_vmx_vmexit+0x2d7/0xdf0 [kvm_intel]
+   nested_vmx_free_vcpu+0x40/0x50 [kvm_intel]
+   vmx_vcpu_free+0x2d/0x80 [kvm_intel]
+   kvm_arch_vcpu_destroy+0x2d/0x130 [kvm]
+   kvm_destroy_vcpus+0x8a/0x100 [kvm]
+   kvm_arch_destroy_vm+0xa7/0x1d0 [kvm]
+   kvm_destroy_vm+0x172/0x300 [kvm]
+   kvm_vcpu_release+0x31/0x50 [kvm]
+
+Inarguably, both nSVM and nVMX need to be fixed, but punt on those
+cleanups for the moment.  Conceptually, vCPUs should be freed before VM
+state.  Assets like the I/O APIC and PIC _must_ be allocated before vCPUs
+are created, so it stands to reason that they must be freed _after_ vCPUs
+are destroyed.
+
+Reported-by: Aaron Lewis <aaronlewis@google.com>
+Closes: https://lore.kernel.org/all/20240703175618.2304869-2-aaronlewis@google.com
+Cc: Jim Mattson <jmattson@google.com>
+Cc: Yan Zhao <yan.y.zhao@intel.com>
+Cc: Rick P Edgecombe <rick.p.edgecombe@intel.com>
+Cc: Kai Huang <kai.huang@intel.com>
+Cc: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: fa787ac07b3c ("KVM: x86/hyper-v: Skip non-canonical addresses during PV TLB flush")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Message-ID: <20250224235542.2562848-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Kevin Cheng <chengkev@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/emulate.c     |   15 +++++++++------
- arch/x86/kvm/kvm_emulate.h |    5 ++++-
- arch/x86/kvm/x86.c         |    2 +-
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ arch/x86/kvm/x86.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -651,9 +651,10 @@ static inline u8 ctxt_virt_addr_bits(str
- }
- 
- static inline bool emul_is_noncanonical_address(u64 la,
--						struct x86_emulate_ctxt *ctxt)
-+						struct x86_emulate_ctxt *ctxt,
-+						unsigned int flags)
- {
--	return !ctxt->ops->is_canonical_addr(ctxt, la);
-+	return !ctxt->ops->is_canonical_addr(ctxt, la, flags);
- }
- 
- /*
-@@ -1733,7 +1734,8 @@ static int __load_segment_descriptor(str
- 		if (ret != X86EMUL_CONTINUE)
- 			return ret;
- 		if (emul_is_noncanonical_address(get_desc_base(&seg_desc) |
--						 ((u64)base3 << 32), ctxt))
-+						 ((u64)base3 << 32), ctxt,
-+						 X86EMUL_F_DT_LOAD))
- 			return emulate_gp(ctxt, err_code);
- 	}
- 
-@@ -2516,8 +2518,8 @@ static int em_sysexit(struct x86_emulate
- 		ss_sel = cs_sel + 8;
- 		cs.d = 0;
- 		cs.l = 1;
--		if (emul_is_noncanonical_address(rcx, ctxt) ||
--		    emul_is_noncanonical_address(rdx, ctxt))
-+		if (emul_is_noncanonical_address(rcx, ctxt, 0) ||
-+		    emul_is_noncanonical_address(rdx, ctxt, 0))
- 			return emulate_gp(ctxt, 0);
- 		break;
- 	}
-@@ -3494,7 +3496,8 @@ static int em_lgdt_lidt(struct x86_emula
- 	if (rc != X86EMUL_CONTINUE)
- 		return rc;
- 	if (ctxt->mode == X86EMUL_MODE_PROT64 &&
--	    emul_is_noncanonical_address(desc_ptr.address, ctxt))
-+	    emul_is_noncanonical_address(desc_ptr.address, ctxt,
-+					 X86EMUL_F_DT_LOAD))
- 		return emulate_gp(ctxt, 0);
- 	if (lgdt)
- 		ctxt->ops->set_gdt(ctxt, &desc_ptr);
---- a/arch/x86/kvm/kvm_emulate.h
-+++ b/arch/x86/kvm/kvm_emulate.h
-@@ -94,6 +94,8 @@ struct x86_instruction_info {
- #define X86EMUL_F_FETCH			BIT(1)
- #define X86EMUL_F_IMPLICIT		BIT(2)
- #define X86EMUL_F_INVLPG		BIT(3)
-+#define X86EMUL_F_MSR			BIT(4)
-+#define X86EMUL_F_DT_LOAD		BIT(5)
- 
- struct x86_emulate_ops {
- 	void (*vm_bugged)(struct x86_emulate_ctxt *ctxt);
-@@ -236,7 +238,8 @@ struct x86_emulate_ops {
- 	gva_t (*get_untagged_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr,
- 				   unsigned int flags);
- 
--	bool (*is_canonical_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr);
-+	bool (*is_canonical_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr,
-+				  unsigned int flags);
- };
- 
- /* Type, address-of, and value of an instruction's operand. */
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -8609,7 +8609,7 @@ static gva_t emulator_get_untagged_addr(
- }
- 
- static bool emulator_is_canonical_addr(struct x86_emulate_ctxt *ctxt,
--				       gva_t addr)
-+				       gva_t addr, unsigned int flags)
- {
- 	return !is_noncanonical_address(addr, emul_to_vcpu(ctxt));
- }
+@@ -12895,11 +12895,11 @@ void kvm_arch_destroy_vm(struct kvm *kvm
+ 		mutex_unlock(&kvm->slots_lock);
+ 	}
+ 	kvm_unload_vcpu_mmus(kvm);
++	kvm_destroy_vcpus(kvm);
+ 	kvm_x86_call(vm_destroy)(kvm);
+ 	kvm_free_msr_filter(srcu_dereference_check(kvm->arch.msr_filter, &kvm->srcu, 1));
+ 	kvm_pic_destroy(kvm);
+ 	kvm_ioapic_destroy(kvm);
+-	kvm_destroy_vcpus(kvm);
+ 	kvfree(rcu_dereference_check(kvm->arch.apic_map, 1));
+ 	kfree(srcu_dereference_check(kvm->arch.pmu_event_filter, &kvm->srcu, 1));
+ 	kvm_mmu_uninit_vm(kvm);
 
 
