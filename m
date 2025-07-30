@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DB41D63F2;
-	Wed, 30 Jul 2025 09:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80BF28751E;
+	Wed, 30 Jul 2025 09:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869250; cv=none; b=jpRLqA1/gQ7dl0lxaqTHdnn2BHDSWK/ui5RC6ejllUYIvFUwbWJsMvrF5nfCXDk2iy/8UENCHNBQkIA8lw1JSOd3Iy8v/Rj5Ifhw66D6AzMXrwAMuAANmTr/18qAJav9TmD2gxc6jJsJR3VHuwC7Ny50Lghi6B93VTsXNmUeNsI=
+	t=1753869253; cv=none; b=j+55ONCmRjS2IKOxCkF8KKjFLKk79nKDv1bVr1M5AFA466H88ObRHc5u77DLno7uyd/bl40Xg3QExjn01Lk5bPU6UEYljsdj41f7B9T/cY4JQT7wIrh56sMJU2DnyOi0GjGnLX4nJskJI4vOkjcDsF7XOujhmOoZKVexydt6Yiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869250; c=relaxed/simple;
-	bh=xq1ZMFn7hxVvdg5rY8mZockn9mkPhHww8CBWJz/bWkg=;
+	s=arc-20240116; t=1753869253; c=relaxed/simple;
+	bh=Bla+K5SgDprZaR4xR362QTRGa5lfgdv4+9QJ8/7u6VY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZfvOERvPQ/ygBxNkhXcvD+ltZCu7mK0c0Pfkon+7ZfDxXnVFgtwsdckgsBHQPAWJC4Oa9Y3TeFk8WY9JiMYjPGnLmt1uZPWcqMx5UhF1uyBX8H3JIkZcJWMIKxufLu26jt7u+4MneOxoxAZ8ojaMGBFXIsB5QO9qJQMvd57OOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snwvsL9g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iqaMj9pkMlGg7ZNdQRZJOofoD1zhQCjDjbT5huCMG73t+eEdmEHbGDqat3C/VO4SsVdiFD2/0Fjq/pJrd4fVHtDPeNruBnl+oNXcfPnIaIxHjzCSM+Hb2XX2UYIK/LS5gl+6548ov3yT/N5EWLRGdOT0RCA85e6mLOxtX1yX+bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RcReM37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snwvsL9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE6AC4CEF6;
-	Wed, 30 Jul 2025 09:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RcReM37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED03C4CEF9;
+	Wed, 30 Jul 2025 09:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869250;
-	bh=xq1ZMFn7hxVvdg5rY8mZockn9mkPhHww8CBWJz/bWkg=;
+	s=korg; t=1753869253;
+	bh=Bla+K5SgDprZaR4xR362QTRGa5lfgdv4+9QJ8/7u6VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snwvsL9gAiRVGMdXJaQg7392wc9PcJqYiD0OIw1Gu5UoA/8MBDJT5N+nGmOt4UeNQ
-	 6YtWMsI3ujiEZIbtPK16q7eJPhfnhkYQSdkZvIviTGoMrwEw+JzNA8q+oBEi+dUKvz
-	 B+z8tG4w69umDdjZj2q6UK3UV8MuBW6yrmg1u6Cc=
+	b=2RcReM37u4oOQnnQuWecouDqFCzO+8KdGNqnQps+xTaDcVzzogOPfMHAPRzReWT9G
+	 8Cvy4VkNoNDQ0QvMrMcs+nV5PVQMLxGPLOjCxTLhuI+qp3puvxT/hVZ68ttV8YSTe0
+	 E8UsF5oKwch/OxI32z1BtjSif7+g2FrdtvzzgnxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 74/92] resource: fix false warning in __request_region()
-Date: Wed, 30 Jul 2025 11:36:22 +0200
-Message-ID: <20250730093233.626144296@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.15 75/92] selftests: mptcp: connect: also cover alt modes
+Date: Wed, 30 Jul 2025 11:36:23 +0200
+Message-ID: <20250730093233.663151102@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -51,51 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 91a229bb7ba86b2592c3f18c54b7b2c5e6fe0f95 upstream.
+commit 37848a456fc38c191aedfe41f662cc24db8c23d9 upstream.
 
-A warning is raised when __request_region() detects a conflict with a
-resource whose resource.desc is IORES_DESC_DEVICE_PRIVATE_MEMORY.
+The "mmap" and "sendfile" alternate modes for mptcp_connect.sh/.c are
+available from the beginning, but only tested when mptcp_connect.sh is
+manually launched with "-m mmap" or "-m sendfile", not via the
+kselftests helpers.
 
-But this warning is only valid for iomem_resources.
-The hmem device resource uses resource.desc as the numa node id, which can
-cause spurious warnings.
+The MPTCP CI was manually running "mptcp_connect.sh -m mmap", but not
+"-m sendfile". Plus other CIs, especially the ones validating the stable
+releases, were not validating these alternate modes.
 
-This warning appeared on a machine with multiple cxl memory expanders.
-One of the NUMA node id is 6, which is the same as the value of
-IORES_DESC_DEVICE_PRIVATE_MEMORY.
+To make sure these modes are validated by these CIs, add two new test
+programs executing mptcp_connect.sh with the alternate modes.
 
-In this environment it was just a spurious warning, but when I saw the
-warning I suspected a real problem so it's better to fix it.
-
-This change fixes this by restricting the warning to only iomem_resource.
-This also adds a missing new line to the warning message.
-
-Link: https://lkml.kernel.org/r/20250719112604.25500-1-akinobu.mita@gmail.com
-Fixes: 7dab174e2e27 ("dax/hmem: Move hmem device registration to dax_hmem.ko")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
+Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250715-net-mptcp-sft-connect-alt-v2-1-8230ddd82454@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/resource.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/Makefile                  |    3 ++-
+ tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh     |    5 +++++
+ tools/testing/selftests/net/mptcp/mptcp_connect_sendfile.sh |    5 +++++
+ 3 files changed, 12 insertions(+), 1 deletion(-)
+ create mode 100755 tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh
+ create mode 100755 tools/testing/selftests/net/mptcp/mptcp_connect_sendfile.sh
 
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -1279,8 +1279,9 @@ static int __request_region_locked(struc
- 		 * become unavailable to other users.  Conflicts are
- 		 * not expected.  Warn to aid debugging if encountered.
- 		 */
--		if (conflict->desc == IORES_DESC_DEVICE_PRIVATE_MEMORY) {
--			pr_warn("Unaddressable device %s %pR conflicts with %pR",
-+		if (parent == &iomem_resource &&
-+		    conflict->desc == IORES_DESC_DEVICE_PRIVATE_MEMORY) {
-+			pr_warn("Unaddressable device %s %pR conflicts with %pR\n",
- 				conflict->name, conflict, res);
- 		}
- 		if (conflict != parent) {
+--- a/tools/testing/selftests/net/mptcp/Makefile
++++ b/tools/testing/selftests/net/mptcp/Makefile
+@@ -4,7 +4,8 @@ top_srcdir = ../../../../..
+ 
+ CFLAGS += -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
+ 
+-TEST_PROGS := mptcp_connect.sh pm_netlink.sh mptcp_join.sh diag.sh \
++TEST_PROGS := mptcp_connect.sh mptcp_connect_mmap.sh mptcp_connect_sendfile.sh \
++	      pm_netlink.sh mptcp_join.sh diag.sh \
+ 	      simult_flows.sh mptcp_sockopt.sh userspace_pm.sh
+ 
+ TEST_GEN_FILES = mptcp_connect pm_nl_ctl mptcp_sockopt mptcp_inq mptcp_diag
+--- /dev/null
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect_mmap.sh
+@@ -0,0 +1,5 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++MPTCP_LIB_KSFT_TEST="$(basename "${0}" .sh)" \
++	"$(dirname "${0}")/mptcp_connect.sh" -m mmap "${@}"
+--- /dev/null
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect_sendfile.sh
+@@ -0,0 +1,5 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++MPTCP_LIB_KSFT_TEST="$(basename "${0}" .sh)" \
++	"$(dirname "${0}")/mptcp_connect.sh" -m sendfile "${@}"
 
 
