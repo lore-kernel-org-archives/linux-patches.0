@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089ED36124;
-	Wed, 30 Jul 2025 09:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB7623D2A2;
+	Wed, 30 Jul 2025 09:41:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868476; cv=none; b=bkWMRy5zrfy0El76bzioWliwxArlUsToVZDIXNENSGrw68U70nDD4vuDH1/T0josWz2FvJXMEEbOaGEMVK928lgRMfz5F36Fxov7huI3dJN5SGV1cG9jLvNA9cPuv72yZCx+IvOmpYehjfh626qGf2cZfV6oK+YB1uzv5FFUMzU=
+	t=1753868479; cv=none; b=s1C2toUDuOa4NkVOYXG1igUfC+Jz9P1F/N88jSl/pY4E42Leu838yAUZQXf70U4+9fvq6+SRaqQiia8xxF22sIl7qgswT/Z3+cbcc1IlF1UFUvzksDTyZVQJliVoU0BEGYaGf1ECeBMNh5chFKq0fD0tth1EHIqWltNIt3JaGS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868476; c=relaxed/simple;
-	bh=7aEnrgzJaBZ8Yb976yP9ut0Shck1wGy19paUE2iJa2E=;
+	s=arc-20240116; t=1753868479; c=relaxed/simple;
+	bh=FqvBBoPtgNHICNqRXwItvALM0LaSxBW/YnQDqcyrZMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVlKwBGLZjzBkd8A12DM7UmpNe8+MwsboLWqTfNintZNfA+2MMztP6BJB+8q3kvcBPmoT980sl67bDdur1lVll10iesh77XADtj1wx3OLNt1niizKRxhOyQAWd78eAqLJJ8F+5iIwEIhgWeCM8gGy2sdGJvkCwv1MvPsyRPwk4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjT1GW5w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ECWVm96WMlS/ATyXJB9QJfvrVprE2Gi97cmXvBq0EtJcx1cc+7hyMKhp+yj8wyEIA7OU4K4C4p6eBGpQdHkdUDqg80tP3zx6P+MjvvpMhZcEGPx9la4h0vToPE8sW71pj50MEljWEF9QS8QAP2PqWCHKGYRQjORe5IWAnfcoMWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/wrB0RU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjT1GW5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC14C4CEF5;
-	Wed, 30 Jul 2025 09:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/wrB0RU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AAAC4CEE7;
+	Wed, 30 Jul 2025 09:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868475;
-	bh=7aEnrgzJaBZ8Yb976yP9ut0Shck1wGy19paUE2iJa2E=;
+	s=korg; t=1753868478;
+	bh=FqvBBoPtgNHICNqRXwItvALM0LaSxBW/YnQDqcyrZMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kjT1GW5w/0PRowhgiCknJn85OfC1bwhw+ARqvlNLmIXF6GQaYPRTBho+W+BzPEjMQ
-	 L01cRwmBb852w/fDI6X0nwQAQJkvFRc0RW9g4RGtFMK8JwYrxaHZgT/j57+Ouz01/u
-	 IieEMCDRUhLXdr/9Co3glNIeo/USUlTKh9qguiJU=
+	b=t/wrB0RUu3G9Ux5H2ZatRYiuqgn/pxkW0R3Rxh8mdwqWVNPDxJOzDZAaLbYX1mCIt
+	 YQPdzZ+uxMQALdc/GWor6lQd2lsRWlQNeXNf3xdfyB+GIWEnWdiuGq5ycF2f1yfU1x
+	 54ZGHub/gyZ8fm4EdNDYFk8TruzdFqSYvtkRRRvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khairul Anuar Romli <khairul.anuar.romli@altera.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Ronald Wahl <ronald.wahl@legrand.com>
-Subject: [PATCH 6.6 75/76] spi: cadence-quadspi: fix cleanup of rx_chan on failure paths
-Date: Wed, 30 Jul 2025 11:36:08 +0200
-Message-ID: <20250730093229.770650564@linuxfoundation.org>
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.6 76/76] Revert "selftests/bpf: Add a cgroup prog bpf_get_ns_current_pid_tgid() test"
+Date: Wed, 30 Jul 2025 11:36:09 +0200
+Message-ID: <20250730093229.809198629@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -52,39 +49,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-commit 04a8ff1bc3514808481ddebd454342ad902a3f60 upstream.
+This reverts commit 4730b07ef7745d7cd48c6aa9f72d75ac136d436f.
 
-Remove incorrect checks on cqspi->rx_chan that cause driver breakage
-during failure cleanup. Ensure proper resource freeing on the success
-path when operating in cqspi->use_direct_mode, preventing leaks and
-improving stability.
+The test depends on commit eb166e522c77 "bpf: Allow helper
+bpf_get_[ns_]current_pid_tgid() for all prog types", which was not part of the
+stable 6.6 code base, and thus the test will fail. Revert it since it is a
+false positive.
 
-Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/89765a2b94f047ded4f14babaefb7ef92ba07cb2.1751274389.git.khairul.anuar.romli@altera.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[Minor conflict resolved due to code context change.]
-Signed-off-by: Ronald Wahl <ronald.wahl@legrand.com>
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |    5 -----
- 1 file changed, 5 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c |   73 -----------
+ tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c |    7 -
+ 2 files changed, 80 deletions(-)
 
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1870,11 +1870,6 @@ static int cqspi_probe(struct platform_d
+--- a/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
++++ b/tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
+@@ -12,7 +12,6 @@
+ #include <sys/wait.h>
+ #include <sys/mount.h>
+ #include <fcntl.h>
+-#include "network_helpers.h"
  
- 	pm_runtime_enable(dev);
+ #define STACK_SIZE (1024 * 1024)
+ static char child_stack[STACK_SIZE];
+@@ -75,50 +74,6 @@ cleanup:
+ 	return ret;
+ }
  
--	if (cqspi->rx_chan) {
--		dma_release_channel(cqspi->rx_chan);
--		goto probe_setup_failed;
--	}
+-static int test_current_pid_tgid_cgrp(void *args)
+-{
+-	struct test_ns_current_pid_tgid__bss *bss;
+-	struct test_ns_current_pid_tgid *skel;
+-	int server_fd = -1, ret = -1, err;
+-	int cgroup_fd = *(int *)args;
+-	pid_t tgid, pid;
 -
- 	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to register SPI ctlr %d\n", ret);
+-	skel = test_ns_current_pid_tgid__open();
+-	if (!ASSERT_OK_PTR(skel, "test_ns_current_pid_tgid__open"))
+-		return ret;
+-
+-	bpf_program__set_autoload(skel->progs.cgroup_bind4, true);
+-
+-	err = test_ns_current_pid_tgid__load(skel);
+-	if (!ASSERT_OK(err, "test_ns_current_pid_tgid__load"))
+-		goto cleanup;
+-
+-	bss = skel->bss;
+-	if (get_pid_tgid(&pid, &tgid, bss))
+-		goto cleanup;
+-
+-	skel->links.cgroup_bind4 = bpf_program__attach_cgroup(
+-		skel->progs.cgroup_bind4, cgroup_fd);
+-	if (!ASSERT_OK_PTR(skel->links.cgroup_bind4, "bpf_program__attach_cgroup"))
+-		goto cleanup;
+-
+-	server_fd = start_server(AF_INET, SOCK_STREAM, NULL, 0, 0);
+-	if (!ASSERT_GE(server_fd, 0, "start_server"))
+-		goto cleanup;
+-
+-	if (!ASSERT_EQ(bss->user_pid, pid, "pid"))
+-		goto cleanup;
+-	if (!ASSERT_EQ(bss->user_tgid, tgid, "tgid"))
+-		goto cleanup;
+-	ret = 0;
+-
+-cleanup:
+-	if (server_fd >= 0)
+-		close(server_fd);
+-	test_ns_current_pid_tgid__destroy(skel);
+-	return ret;
+-}
+-
+ static void test_ns_current_pid_tgid_new_ns(int (*fn)(void *), void *arg)
+ {
+ 	int wstatus;
+@@ -140,25 +95,6 @@ static void test_ns_current_pid_tgid_new
+ 		return;
+ }
+ 
+-static void test_in_netns(int (*fn)(void *), void *arg)
+-{
+-	struct nstoken *nstoken = NULL;
+-
+-	SYS(cleanup, "ip netns add ns_current_pid_tgid");
+-	SYS(cleanup, "ip -net ns_current_pid_tgid link set dev lo up");
+-
+-	nstoken = open_netns("ns_current_pid_tgid");
+-	if (!ASSERT_OK_PTR(nstoken, "open_netns"))
+-		goto cleanup;
+-
+-	test_ns_current_pid_tgid_new_ns(fn, arg);
+-
+-cleanup:
+-	if (nstoken)
+-		close_netns(nstoken);
+-	SYS_NOFAIL("ip netns del ns_current_pid_tgid");
+-}
+-
+ /* TODO: use a different tracepoint */
+ void serial_test_ns_current_pid_tgid(void)
+ {
+@@ -166,13 +102,4 @@ void serial_test_ns_current_pid_tgid(voi
+ 		test_current_pid_tgid_tp(NULL);
+ 	if (test__start_subtest("new_ns_tp"))
+ 		test_ns_current_pid_tgid_new_ns(test_current_pid_tgid_tp, NULL);
+-	if (test__start_subtest("new_ns_cgrp")) {
+-		int cgroup_fd = -1;
+-
+-		cgroup_fd = test__join_cgroup("/sock_addr");
+-		if (ASSERT_GE(cgroup_fd, 0, "join_cgroup")) {
+-			test_in_netns(test_current_pid_tgid_cgrp, &cgroup_fd);
+-			close(cgroup_fd);
+-		}
+-	}
+ }
+--- a/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
++++ b/tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
+@@ -28,11 +28,4 @@ int tp_handler(const void *ctx)
+ 	return 0;
+ }
+ 
+-SEC("?cgroup/bind4")
+-int cgroup_bind4(struct bpf_sock_addr *ctx)
+-{
+-	get_pid_tgid();
+-	return 1;
+-}
+-
+ char _license[] SEC("license") = "GPL";
 
 
