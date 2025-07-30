@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B6D442C;
-	Wed, 30 Jul 2025 09:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B975293C4B;
+	Wed, 30 Jul 2025 09:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869264; cv=none; b=TOgufjLsvauH0f1HZFprWe6FNXI8GflM8lW1XiJHA0AnVqGj3YJdKHzGaaLO3y3KEBggnDswec3g89xTqAyl6qHp/ZyZj7ipoXM5TT7V4iBUoSbiCtri/SZzY05WRp+qbqUaLm4OrC+3ZywPab0c+GpomsYZYbSM9Qh2dJIb2jk=
+	t=1753869269; cv=none; b=lOOw5RBy8niUy9o2OUHKEnOUKyElLg/UFNXcdzO3LglFSfjkWS4JXl1cKNnWpIICl2vRcfRbkXdoLl4MCrP+ymaFK18Ox32WeyLISAoGmF5DitN1vXLnR2LFXX9hVmR8DjI/ISGjMyF3RkcIKi4eNaSbyrEqn9ldI5vsUVL6kGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869264; c=relaxed/simple;
-	bh=5/j08/R9ToaZftSESL5A3QIT/pX+ePFfm4w7WMXQaFA=;
+	s=arc-20240116; t=1753869269; c=relaxed/simple;
+	bh=+oznMkJv7HfzA60uyCd3JCf0vK/mdL+8agN7IkiE2gA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpPoml0O6ZlFSe11mNzzkd8ZZI2YFk21UrE4p/vSpmnGCVjIdg/cD7CI8AHI/m8i2kTgvI3l7FQekwOhV85l/TL43Ycbu1m5JWMi0rDLKRHCcKNa7Ov+MUClpFVFg1TaXD+BgVRxExa8TOT2hUqmbAwp9uTaEymPfglncVhUPG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzR3K6tj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=az4L2mcKXOemGPkMd7EJvg8dot70XgR3jMdDZkQy60SYZOpz27CCe6Y2yG6PNPQCqwBkkCTWRx5LpgwZqEpI2q7s2KfXVIwKMP8N7bUAaieY4QhKhCG7+JREbw/NtyYoYirFaPNeifsgd7JbG8rOmHHJ3Zr+KjqycGQP4cvaZHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgOThebd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzR3K6tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FDBC4CEF5;
-	Wed, 30 Jul 2025 09:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgOThebd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2513AC4CEFA;
+	Wed, 30 Jul 2025 09:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869264;
-	bh=5/j08/R9ToaZftSESL5A3QIT/pX+ePFfm4w7WMXQaFA=;
+	s=korg; t=1753869269;
+	bh=+oznMkJv7HfzA60uyCd3JCf0vK/mdL+8agN7IkiE2gA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KzR3K6tjIzBR8jG5/C622EQFxZUh8mYbf0IeeNg/mOlcnRsjkquCtpv62zj/jy0C5
-	 7aSMf+LzK/yR2WDMhZYVvgFszdpU8wGlagoB7kdCSNInZX9+Osne0QpcBzGF8LmUTF
-	 rUQfMVNue2o2rnY7mGD1X+S+t43BSv5CNeWV44dg=
+	b=EgOThebd4yug9hIpTz/2QTy3qtOLkGq53VXSqhTWDw+l1NDxl+vnPKCxEYp3mxvNx
+	 vO27Z7G820VQGOaRs5dWGqTOmvySAN0tOrOrASEokRLmHNfK+B+KOy+vqE8GC88XR1
+	 gQcR26dveSiRzgcouPNzaJFtUV/bMQc6W/DB1UqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	syzbot+3b220254df55d8ca8a61@syzkaller.appspotmail.com,
+	Harry Yoo <harry.yoo@oracle.com>,
 	David Hildenbrand <david@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Michal Hocko <mhocko@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 78/92] mm/vmscan: fix hwpoisoned large folio handling in shrink_folio_list
-Date: Wed, 30 Jul 2025 11:36:26 +0200
-Message-ID: <20250730093233.774349408@linuxfoundation.org>
+Subject: [PATCH 6.15 79/92] mm/zsmalloc: do not pass __GFP_MOVABLE if CONFIG_COMPACTION=n
+Date: Wed, 30 Jul 2025 11:36:27 +0200
+Message-ID: <20250730093233.811136065@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -57,84 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-commit 9f1e8cd0b7c4c944e9921b52a6661b5eda2705ab upstream.
+commit 694d6b99923eb05a8fd188be44e26077d19f0e21 upstream.
 
-In shrink_folio_list(), the hwpoisoned folio may be large folio, which
-can't be handled by unmap_poisoned_folio().  For THP, try_to_unmap_one()
-must be passed with TTU_SPLIT_HUGE_PMD to split huge PMD first and then
-retry.  Without TTU_SPLIT_HUGE_PMD, we will trigger null-ptr deref of
-pvmw.pte.  Even we passed TTU_SPLIT_HUGE_PMD, we will trigger a
-WARN_ON_ONCE due to the page isn't in swapcache.
+Commit 48b4800a1c6a ("zsmalloc: page migration support") added support for
+migrating zsmalloc pages using the movable_operations migration framework.
+However, the commit did not take into account that zsmalloc supports
+migration only when CONFIG_COMPACTION is enabled.  Tracing shows that
+zsmalloc was still passing the __GFP_MOVABLE flag even when compaction is
+not supported.
 
-Since UCE is rare in real world, and race with reclaimation is more rare,
-just skipping the hwpoisoned large folio is enough.  memory_failure() will
-handle it if the UCE is triggered again.
+This can result in unmovable pages being allocated from movable page
+blocks (even without stealing page blocks), ZONE_MOVABLE and CMA area.
 
-This happens when memory reclaim for large folio races with
-memory_failure(), and will lead to kernel panic.  The race is as
-follows:
+Possible user visible effects:
+- Some ZONE_MOVABLE memory can be not actually movable
+- CMA allocation can fail because of this
+- Increased memory fragmentation due to ignoring the page mobility
+  grouping feature
+I'm not really sure who uses kernels without compaction support, though :(
 
-cpu0      cpu1
- shrink_folio_list memory_failure
-  TestSetPageHWPoison
-  unmap_poisoned_folio
-  --> trigger BUG_ON due to
-  unmap_poisoned_folio couldn't
-   handle large folio
 
-[tujinjiang@huawei.com: add comment to unmap_poisoned_folio()]
-  Link: https://lkml.kernel.org/r/69fd4e00-1b13-d5f7-1c82-705c7d977ea4@huawei.com
-Link: https://lkml.kernel.org/r/20250627125747.3094074-2-tujinjiang@huawei.com
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Fixes: 1b0449544c64 ("mm/vmscan: don't try to reclaim hwpoison folio")
-Reported-by: syzbot+3b220254df55d8ca8a61@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68412d57.050a0220.2461cf.000e.GAE@google.com/
+To fix this, clear the __GFP_MOVABLE flag when
+!IS_ENABLED(CONFIG_COMPACTION).
+
+Link: https://lkml.kernel.org/r/20250704103053.6913-1-harry.yoo@oracle.com
+Fixes: 48b4800a1c6a ("zsmalloc: page migration support")
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
 Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Minchan Kim <minchan@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    4 ++++
- mm/vmscan.c         |    8 ++++++++
- 2 files changed, 12 insertions(+)
+ mm/zsmalloc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1561,6 +1561,10 @@ static int get_hwpoison_page(struct page
- 	return ret;
- }
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1053,6 +1053,9 @@ static struct zspage *alloc_zspage(struc
+ 	if (!zspage)
+ 		return NULL;
  
-+/*
-+ * The caller must guarantee the folio isn't large folio, except hugetlb.
-+ * try_to_unmap() can't handle it.
-+ */
- int unmap_poisoned_folio(struct folio *folio, unsigned long pfn, bool must_kill)
- {
- 	enum ttu_flags ttu = TTU_IGNORE_MLOCK | TTU_SYNC | TTU_HWPOISON;
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1128,6 +1128,14 @@ retry:
- 			goto keep;
- 
- 		if (folio_contain_hwpoisoned_page(folio)) {
-+			/*
-+			 * unmap_poisoned_folio() can't handle large
-+			 * folio, just skip it. memory_failure() will
-+			 * handle it if the UCE is triggered again.
-+			 */
-+			if (folio_test_large(folio))
-+				goto keep_locked;
++	if (!IS_ENABLED(CONFIG_COMPACTION))
++		gfp &= ~__GFP_MOVABLE;
 +
- 			unmap_poisoned_folio(folio, folio_pfn(folio), false);
- 			folio_unlock(folio);
- 			folio_put(folio);
+ 	zspage->magic = ZSPAGE_MAGIC;
+ 	zspage->pool = pool;
+ 	zspage->class = class->index;
 
 
