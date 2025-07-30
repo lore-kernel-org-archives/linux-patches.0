@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80802292B5C;
-	Wed, 30 Jul 2025 09:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EEE275AE9;
+	Wed, 30 Jul 2025 09:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869093; cv=none; b=MsHRa41+8wBD/HvBcN7Hi/TDOfcrUqmJ4RMZc2d9kBfybdrJOqhY84pMw7KItwAUrAq36jS5xToxoDlfeUz9IwI6RTWl7K1z40AjoigpvUhR09/+HddZc0tDSTPNOkxgo/ERokUMPIVOVvo6YcD6nf0uZYEkinCw/goeb1njdYs=
+	t=1753869096; cv=none; b=gixfYLAmwU3r/HCTeoK1/D/kCqZ4b9mIXlI73v06QxNSpkHb+RjOBT4RKCVXpz3LKIrvol489s0U8fnxYkSOf3cUTlNRfyiOgyfeISHBq+9liX0bwBUjQVyKloV5Y8gDswDY5oRXrkR1cuNBOYdPW+ZH1/NIG23alIkcNhruJcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869093; c=relaxed/simple;
-	bh=ACb3iwt/KxWp59ZWLE2HGeL+PFZQKVTgUyx07pe0P/w=;
+	s=arc-20240116; t=1753869096; c=relaxed/simple;
+	bh=Z5ulYsprUqu+aKRngLNirmiAiJwG00nbh2mzalTefMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YjitPtmnnn2RmkN2fpkqd7t3/sVhCvWOPwXBFy2EprdGda5oILgJZgncBpBfv1ZMXoXCIEdSMXYBAhGOhpX9gY2vIFpZ5Q2dFOi3KSAMcr4t17Iu82WykFohQpeEfCaJSQsUDbkQzsTxhgAyl8WXSxfSOJRWr2t9/qT4uqHN9TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ti0i37nL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlqJRjYQ47aHONCYH9V5oztJcvqCzJ85369hX8wo2aD8BaFeME4BlgWHey0bTvRhCnIBmh/fFNgOFKcMAojKcSbCPtpfor4X1G/AURHIdQrOhoNFRS+9f8uBKBEZP2LKhY+tIZfGoe07RtG8I3jdZu+ycmwa7hksF5iWGqKEkA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aqf6qMQR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ti0i37nL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E03C4CEFF;
-	Wed, 30 Jul 2025 09:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aqf6qMQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F0DC4CEF8;
+	Wed, 30 Jul 2025 09:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869093;
-	bh=ACb3iwt/KxWp59ZWLE2HGeL+PFZQKVTgUyx07pe0P/w=;
+	s=korg; t=1753869096;
+	bh=Z5ulYsprUqu+aKRngLNirmiAiJwG00nbh2mzalTefMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ti0i37nLt5roYzZcdtzoFH6sv3ucrUoizlPGV0TlbKaag/7jGFoq4kE4ZxE9nBYzy
-	 eLZygXGWg3NGgCOgevbJiD1D3ydVH/AwC66P2aSCdFrSBYvS67gb0byLQsd6PKHXc8
-	 tnq98u2QJcby/aKTr0QyVxC4qjd3JVPmNLJinuyc=
+	b=Aqf6qMQRL4i9prTJgCUZMVOQwx1JBD9WGZX9ESgmVxFNLI0O4FUiMwWhLx5I29k8h
+	 fN5a6DqXkqGhdoop3NSdpFX3P+6B860xEvNYMpiC5mjxcTO/QzhxUWwxof24IWk1UF
+	 GxSbv+jDFIUu0uCGRdTYPDFp7Rh1wMO9cfVI4yig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Burri <markus.burri@mt.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Xilin Wu <sophon@radxa.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 08/92] iio: fix potential out-of-bound write
-Date: Wed, 30 Jul 2025 11:35:16 +0200
-Message-ID: <20250730093230.952332951@linuxfoundation.org>
+Subject: [PATCH 6.15 09/92] interconnect: qcom: sc7280: Add missing num_links to xm_pcie3_1 node
+Date: Wed, 30 Jul 2025 11:35:17 +0200
+Message-ID: <20250730093230.989157378@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -51,44 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Burri <markus.burri@mt.com>
+From: Xilin Wu <sophon@radxa.com>
 
-[ Upstream commit 16285a0931869baa618b1f5d304e1e9d090470a8 ]
+[ Upstream commit 886a94f008dd1a1702ee66dd035c266f70fd9e90 ]
 
-The buffer is set to 20 characters. If a caller write more characters,
-count is truncated to the max available space in "simple_write_to_buffer".
-To protect from OoB access, check that the input size fit into buffer and
-add a zero terminator after copy to the end of the copied data.
+This allows adding interconnect paths for PCIe 1 in device tree later.
 
-Fixes: 6d5dd486c715 iio: core: make use of simple_write_to_buffer()
-Signed-off-by: Markus Burri <markus.burri@mt.com>
-Link: https://patch.msgid.link/20250508130612.82270-4-markus.burri@mt.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 46bdcac533cc ("interconnect: qcom: Add SC7280 interconnect provider driver")
+Signed-off-by: Xilin Wu <sophon@radxa.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250613-sc7280-icc-pcie1-fix-v1-1-0b09813e3b09@radxa.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/interconnect/qcom/sc7280.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/industrialio-core.c b/drivers/iio/industrialio-core.c
-index b9f4113ae5fc3..ebf17ea5a5f93 100644
---- a/drivers/iio/industrialio-core.c
-+++ b/drivers/iio/industrialio-core.c
-@@ -410,12 +410,15 @@ static ssize_t iio_debugfs_write_reg(struct file *file,
- 	char buf[80];
- 	int ret;
- 
-+	if (count >= sizeof(buf))
-+		return -EINVAL;
-+
- 	ret = simple_write_to_buffer(buf, sizeof(buf) - 1, ppos, userbuf,
- 				     count);
- 	if (ret < 0)
- 		return ret;
- 
--	buf[count] = '\0';
-+	buf[ret] = '\0';
- 
- 	ret = sscanf(buf, "%i %i", &reg, &val);
+diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+index 346f18d70e9e5..905403a3a930a 100644
+--- a/drivers/interconnect/qcom/sc7280.c
++++ b/drivers/interconnect/qcom/sc7280.c
+@@ -238,6 +238,7 @@ static struct qcom_icc_node xm_pcie3_1 = {
+ 	.id = SC7280_MASTER_PCIE_1,
+ 	.channels = 1,
+ 	.buswidth = 8,
++	.num_links = 1,
+ 	.links = { SC7280_SLAVE_ANOC_PCIE_GEM_NOC },
+ };
  
 -- 
 2.39.5
