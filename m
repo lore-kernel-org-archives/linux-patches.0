@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D3F2641F9;
-	Wed, 30 Jul 2025 09:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28662641F9;
+	Wed, 30 Jul 2025 09:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869235; cv=none; b=VoAgEiwSHlvtYFMYxCHZeiTzWIhx/AtPGwDyqflVOF67aRU3xcWcoNHENmPIQ83R96ccCnOCXC5j6C4RYRS4BQfwX9Ynezu3ubsP8EJACVQ7GmGmSG4ssll67IQZ4PlNvXBJqZj/8u+1YNvHzHCTDJVSkLYxWsF/48b/mWCqyVc=
+	t=1753869238; cv=none; b=nHlOOC6CguXqCL37gsm2jfD35S+AQhVLwRUscXcAhSBe1aMu4U5NB9+7DwXtjrRl0h+iz4dez37iVr3EMYYM2ZS2Pt4VHR2dNujZK6K/4Zp6z6xsMsIkAyVaBbIyEk0CClMmb/Pq62dl7G1YpI+V/5AKPkVaVieaMwXK+9jlJA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869235; c=relaxed/simple;
-	bh=ptamTgDw4GP4dVo4bDC1yxpuVRIl67Gd07Ez7yJhhGg=;
+	s=arc-20240116; t=1753869238; c=relaxed/simple;
+	bh=ArwOFvVFY5KrRyQ3W85qiTh3LcQly5fCoT7MfZV36r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKU/TCg8mSSxXTsu5tFBwU/jnf4oTPsa44ZkTSSHYezMv4BpL8gxW53h7CbY06HEpcPXCtPv4vDhQVyPXF9ZWauraLNv+SIgly8T9F5oNlkApod7gLX+wmRaKiDit/PsmxX8TKsorZz5WXrjCDVIkIxzhtb756Zfap+1hjTsM58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOUhTc5c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IGXWzELQao+OjWO/QdbUiWGWP4pIuROr6+4kgbeR7IEzCuGxJmPiEdZ7iI9hQkS3hvJNMSQfwSjldmnHwcE2CHdQ38cU3yR9s4firxsrUF0BOkM3BuEug3C+uWgqYZNj97VmrdlOmyIddWzIZyadFn+CQFv2ZP2ntLALSn8IC3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9D+zESb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOUhTc5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D96C4CEF5;
-	Wed, 30 Jul 2025 09:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9D+zESb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88FBC4CEF5;
+	Wed, 30 Jul 2025 09:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869235;
-	bh=ptamTgDw4GP4dVo4bDC1yxpuVRIl67Gd07Ez7yJhhGg=;
+	s=korg; t=1753869238;
+	bh=ArwOFvVFY5KrRyQ3W85qiTh3LcQly5fCoT7MfZV36r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOUhTc5cd9CX1+Zl78Wlu63VYgnFwXHC4cZQfobDEXkjmVgMJrpM3wL5tIvjKpgbu
-	 r7HpOOCHMeNMO6WsOQoqS+n73ZiDlELf825M2gV5bpj0GgyZwUa0oPKYE0sbH/bTol
-	 Sckr7DpRMhZLyhWvEuJ5ARxPmuNg0PqsH1nyRUlw=
+	b=v9D+zESb4NpWL1ufKQtuLtAwjGlxN2OplS2pGauQiIG4rHwrnDNs7qgJ1HKfSoiz/
+	 ymd30BpNWR54D68D4p30wfwTf112NMDWCbntEQ51EQRXT7I9dMHRqLvuofIofbGRb6
+	 zD8cp2AKORE0/A33eC56n7C9EvinfrelyHAgf5tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nimrod Oren <noren@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
+	Aliaksei Makarau <Aliaksei.Makarau@ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 37/92] selftests: drv-net: wait for iperf client to stop sending
-Date: Wed, 30 Jul 2025 11:35:45 +0200
-Message-ID: <20250730093232.187380646@linuxfoundation.org>
+Subject: [PATCH 6.15 38/92] s390/ism: fix concurrency management in ism_cmd()
+Date: Wed, 30 Jul 2025 11:35:46 +0200
+Message-ID: <20250730093232.224648260@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -54,85 +55,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nimrod Oren <noren@nvidia.com>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 86941382508850d58c11bdafe0fec646dfd31b09 ]
+[ Upstream commit 897e8601b9cff1d054cdd53047f568b0e1995726 ]
 
-A few packets may still be sent out during the termination of iperf
-processes. These late packets cause failures in rss_ctx.py when they
-arrive on queues expected to be empty.
+The s390x ISM device data sheet clearly states that only one
+request-response sequence is allowable per ISM function at any point in
+time.  Unfortunately as of today the s390/ism driver in Linux does not
+honor that requirement. This patch aims to rectify that.
 
-Example failure observed:
+This problem was discovered based on Aliaksei's bug report which states
+that for certain workloads the ISM functions end up entering error state
+(with PEC 2 as seen from the logs) after a while and as a consequence
+connections handled by the respective function break, and for future
+connection requests the ISM device is not considered -- given it is in a
+dysfunctional state. During further debugging PEC 3A was observed as
+well.
 
-  Check failed 2 != 0 traffic on inactive queues (context 1):
-    [0, 0, 1, 1, 386385, 397196, 0, 0, 0, 0, ...]
+A kernel message like
+[ 1211.244319] zpci: 061a:00:00.0: Event 0x2 reports an error for PCI function 0x61a
+is a reliable indicator of the stated function entering error state
+with PEC 2. Let me also point out that a kernel message like
+[ 1211.244325] zpci: 061a:00:00.0: The ism driver bound to the device does not support error recovery
+is a reliable indicator that the ISM function won't be auto-recovered
+because the ISM driver currently lacks support for it.
 
-  Check failed 4 != 0 traffic on inactive queues (context 2):
-    [0, 0, 0, 0, 2, 2, 247152, 253013, 0, 0, ...]
+On a technical level, without this synchronization, commands (inputs to
+the FW) may be partially or fully overwritten (corrupted) by another CPU
+trying to issue commands on the same function. There is hard evidence that
+this can lead to DMB token values being used as DMB IOVAs, leading to
+PEC 2 PCI events indicating invalid DMA. But this is only one of the
+failure modes imaginable. In theory even completely losing one command
+and executing another one twice and then trying to interpret the outputs
+as if the command we intended to execute was actually executed and not
+the other one is also possible.  Frankly, I don't feel confident about
+providing an exhaustive list of possible consequences.
 
-  Check failed 2 != 0 traffic on inactive queues (context 3):
-    [0, 0, 0, 0, 0, 0, 1, 1, 282434, 283070, ...]
-
-To avoid such failures, wait until all client sockets for the requested
-port are either closed or in the TIME_WAIT state.
-
-Fixes: 847aa551fa78 ("selftests: drv-net: rss_ctx: factor out send traffic and check")
-Signed-off-by: Nimrod Oren <noren@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
+Reported-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
+Tested-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Tested-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250722122655.3194442-1-noren@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20250722161817.1298473-1-wintera@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/drivers/net/lib/py/load.py      | 23 +++++++++++++++----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/s390/net/ism_drv.c | 3 +++
+ include/linux/ism.h        | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/drivers/net/lib/py/load.py b/tools/testing/selftests/drivers/net/lib/py/load.py
-index da5af2c680faa..1a9d57c3efa3c 100644
---- a/tools/testing/selftests/drivers/net/lib/py/load.py
-+++ b/tools/testing/selftests/drivers/net/lib/py/load.py
-@@ -1,5 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index 60ed70a39d2cc..b8464d9433e96 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -130,6 +130,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
+ 	struct ism_req_hdr *req = cmd;
+ 	struct ism_resp_hdr *resp = cmd;
  
-+import re
- import time
++	spin_lock(&ism->cmd_lock);
+ 	__ism_write_cmd(ism, req + 1, sizeof(*req), req->len - sizeof(*req));
+ 	__ism_write_cmd(ism, req, 0, sizeof(*req));
  
- from lib.py import ksft_pr, cmd, ip, rand_port, wait_port_listen, bkg
-@@ -10,12 +11,11 @@ class GenerateTraffic:
+@@ -143,6 +144,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
+ 	}
+ 	__ism_read_cmd(ism, resp + 1, sizeof(*resp), resp->len - sizeof(*resp));
+ out:
++	spin_unlock(&ism->cmd_lock);
+ 	return resp->ret;
+ }
  
-         self.env = env
+@@ -606,6 +608,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		return -ENOMEM;
  
--        if port is None:
--            port = rand_port()
--        self._iperf_server = cmd(f"iperf3 -s -1 -p {port}", background=True)
--        wait_port_listen(port)
-+        self.port = rand_port() if port is None else port
-+        self._iperf_server = cmd(f"iperf3 -s -1 -p {self.port}", background=True)
-+        wait_port_listen(self.port)
-         time.sleep(0.1)
--        self._iperf_client = cmd(f"iperf3 -c {env.addr} -P 16 -p {port} -t 86400",
-+        self._iperf_client = cmd(f"iperf3 -c {env.addr} -P 16 -p {self.port} -t 86400",
-                                  background=True, host=env.remote)
+ 	spin_lock_init(&ism->lock);
++	spin_lock_init(&ism->cmd_lock);
+ 	dev_set_drvdata(&pdev->dev, ism);
+ 	ism->pdev = pdev;
+ 	ism->dev.parent = &pdev->dev;
+diff --git a/include/linux/ism.h b/include/linux/ism.h
+index 5428edd909823..8358b4cd7ba6a 100644
+--- a/include/linux/ism.h
++++ b/include/linux/ism.h
+@@ -28,6 +28,7 @@ struct ism_dmb {
  
-         # Wait for traffic to ramp up
-@@ -74,3 +74,16 @@ class GenerateTraffic:
-             ksft_pr(">> Server:")
-             ksft_pr(self._iperf_server.stdout)
-             ksft_pr(self._iperf_server.stderr)
-+        self._wait_client_stopped()
-+
-+    def _wait_client_stopped(self, sleep=0.005, timeout=5):
-+        end = time.monotonic() + timeout
-+
-+        live_port_pattern = re.compile(fr":{self.port:04X} 0[^6] ")
-+
-+        while time.monotonic() < end:
-+            data = cmd("cat /proc/net/tcp*", host=self.env.remote).stdout
-+            if not live_port_pattern.search(data):
-+                return
-+            time.sleep(sleep)
-+        raise Exception(f"Waiting for client to stop timed out after {timeout}s")
+ struct ism_dev {
+ 	spinlock_t lock; /* protects the ism device */
++	spinlock_t cmd_lock; /* serializes cmds */
+ 	struct list_head list;
+ 	struct pci_dev *pdev;
+ 
 -- 
 2.39.5
 
