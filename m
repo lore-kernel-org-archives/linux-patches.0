@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EC81F1306;
-	Wed, 30 Jul 2025 09:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEFF635;
+	Wed, 30 Jul 2025 09:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868300; cv=none; b=sSqltc+a92qZMX2feORnqYFeWoWLRJoWOzb325mil+0M3tIyKZP/mj6Yx5t37juY615sk+Lh63bNwY12dD3MwQdiLbtvTYtnSmGaqXPWzLn4g91nl+AVqyavsUMPBbCPNuzAZjSF9kw7XyQpECo0aL0PIJhHjmgyKZIQnLkAQ7o=
+	t=1753868302; cv=none; b=TjqaobfnmKN+EtT/qMMoIz00wFEe+qxAuZNqs8mReHZf18XzMuzwJ80Zes2JJ/jVZjjU0725c/R76O4dxUQqDTdg1kbOr+h5hEgWs3fMm+PDCsuBLfULHbCawbYpEPRYjivuwc+xUIdr7yVDFDj8UZ2r+Xq6yERsxD+EAL4ndH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868300; c=relaxed/simple;
-	bh=YsJRGLY2nKpsJphJVQ8y/t1yyNuHQvpcNR9AFHirFpg=;
+	s=arc-20240116; t=1753868302; c=relaxed/simple;
+	bh=7yApHBvo59AI2mGMWu79MbZKVXz3WsF1iYm7ohhFLVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKIp43SA0ChQ5qaz0XzI785CKLmgersqvIGZqSQ4zw5LJm4YwumTNEjW9DNghfzmqf3cvWRLWwD5QlU4LJY39JQlRAlleMz7A4mHss4aiij5ZKrHGPj9VPICU3CZajzD6SYGrj0K8V2CkDYVZji91g1olz3jcsl/HUZma3RyCjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NT3o53g/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K68r3721DaIqnBHrw7IDNVHUi35Kyo/M9voycWGFJGuHFTPOwuVEJ4VzEkrOpPJXyjitvsUgaUNWYWz3F6yZwUmjVm1ZB2pMT1TPDoGPVRFBhkl+IP2tkoLguV53OZ1777Irx2afGgonn0lSz/56ql/YGZu33Ar1aBDElOR3A0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpSO6mMi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NT3o53g/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD142C4CEE7;
-	Wed, 30 Jul 2025 09:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpSO6mMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8F7C4CEE7;
+	Wed, 30 Jul 2025 09:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868299;
-	bh=YsJRGLY2nKpsJphJVQ8y/t1yyNuHQvpcNR9AFHirFpg=;
+	s=korg; t=1753868302;
+	bh=7yApHBvo59AI2mGMWu79MbZKVXz3WsF1iYm7ohhFLVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NT3o53g/TpT7OE2VJLW583BIunrT9jRg+KXRPNH8fn5LMLhG/OqxwObP2ouz0WHbG
-	 rQ4tcnRlk1bjHrsC0MXH0k9yN7lXDM33MVVIgQkZpOE+Z3ZkvhYu/Ab2nZBCSYvtA8
-	 VIziwBI0g5cvzM5rHpJ3K9x2t5aESBIrSp+k3M+c=
+	b=wpSO6mMiAZtDFP5b5OSEpMdkw0SsyU34Hft0JLyn01y0m9MyylnIoBPoBAHWmdGeF
+	 5Ok1nGIQ2TloJMlDrxvQ2asty32/qKCtjqe3OQ8DDjbB8vN0k9kV6Nm1LVpemeCKjF
+	 +PzfS8uuE18o4EcX6XMAu2znZX1IfFO4R76+be3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 07/76] regmap: fix potential memory leak of regmap_bus
-Date: Wed, 30 Jul 2025 11:35:00 +0200
-Message-ID: <20250730093227.138656343@linuxfoundation.org>
+Subject: [PATCH 6.6 08/76] x86/hyperv: Fix usage of cpu_online_mask to get valid cpu
+Date: Wed, 30 Jul 2025 11:35:01 +0200
+Message-ID: <20250730093227.176076126@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -51,42 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 
-[ Upstream commit c871c199accb39d0f4cb941ad0dccabfc21e9214 ]
+[ Upstream commit bb169f80ed5a156ec3405e0e49c6b8e9ae264718 ]
 
-When __regmap_init() is called from __regmap_init_i2c() and
-__regmap_init_spi() (and their devm versions), the bus argument
-obtained from regmap_get_i2c_bus() and regmap_get_spi_bus(), may be
-allocated using kmemdup() to support quirks. In those cases, the
-bus->free_on_exit field is set to true.
+Accessing cpu_online_mask here is problematic because the cpus read lock
+is not held in this context.
 
-However, inside __regmap_init(), buf is not freed on any error path.
-This could lead to a memory leak of regmap_bus when __regmap_init()
-fails. Fix that by freeing bus on error path when free_on_exit is set.
+However, cpu_online_mask isn't needed here since the effective affinity
+mask is guaranteed to be valid in this callback. So, just use
+cpumask_first() to get the cpu instead of ANDing it with cpus_online_mask
+unnecessarily.
 
-Fixes: ea030ca68819 ("regmap-i2c: Set regmap max raw r/w from quirks")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Link: https://patch.msgid.link/20250626172823.18725-1-abdun.nihaal@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e39397d1fd68 ("x86/hyperv: implement an MSI domain for root partition")
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Closes: https://lore.kernel.org/linux-hyperv/SN6PR02MB4157639630F8AD2D8FD8F52FD475A@SN6PR02MB4157.namprd02.prod.outlook.com/
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/1751582677-30930-4-git-send-email-nunodasneves@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1751582677-30930-4-git-send-email-nunodasneves@linux.microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/hyperv/irqdomain.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index 3011f7f9381b7..1209e01f8c7f9 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1173,6 +1173,8 @@ struct regmap *__regmap_init(struct device *dev,
- err_map:
- 	kfree(map);
- err:
-+	if (bus && bus->free_on_exit)
-+		kfree(bus);
- 	return ERR_PTR(ret);
- }
- EXPORT_SYMBOL_GPL(__regmap_init);
+diff --git a/arch/x86/hyperv/irqdomain.c b/arch/x86/hyperv/irqdomain.c
+index 42c70d28ef272..865ae4be233b3 100644
+--- a/arch/x86/hyperv/irqdomain.c
++++ b/arch/x86/hyperv/irqdomain.c
+@@ -192,7 +192,6 @@ static void hv_irq_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+ 	struct pci_dev *dev;
+ 	struct hv_interrupt_entry out_entry, *stored_entry;
+ 	struct irq_cfg *cfg = irqd_cfg(data);
+-	const cpumask_t *affinity;
+ 	int cpu;
+ 	u64 status;
+ 
+@@ -204,8 +203,7 @@ static void hv_irq_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+ 		return;
+ 	}
+ 
+-	affinity = irq_data_get_effective_affinity_mask(data);
+-	cpu = cpumask_first_and(affinity, cpu_online_mask);
++	cpu = cpumask_first(irq_data_get_effective_affinity_mask(data));
+ 
+ 	if (data->chip_data) {
+ 		/*
 -- 
 2.39.5
 
