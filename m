@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542B9635;
-	Wed, 30 Jul 2025 09:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA015230981;
+	Wed, 30 Jul 2025 09:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869202; cv=none; b=T4s0be0RF5/3vIN23w8+vIOm5j2HExSJw/B7r+RmmkOb8CWFKCwcveZ+BFPfkMZysBdWFqa+dqMQLNe4LhOjx/P8stMF6NhS4dnM8Uary5uWvoQ755Zj56byViGjgTB43On+pbRXeTAEfF9enQ1bsOHeACgUOKOvT9BqOePIeuY=
+	t=1753869206; cv=none; b=eWVL+9T8Jv7Dor0NDEfj7L+onv73doP92mcP2YYAhFj1D4qEw9By/GIauOedhy+pg9fn6Zfvjau6+AHs1VJ5NbSGqSP/2SPyxwUJESCwDdJkpIbQj6Jx/KZ2TdF7ZVbulsyiGm+h/CTm7MINohXcje43PIQ0Bspyor9NpxhsQKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869202; c=relaxed/simple;
-	bh=OiVWgjyO4kSXUOZmcc8dvKtbp9fdQYp8gwFzuY+CIsI=;
+	s=arc-20240116; t=1753869206; c=relaxed/simple;
+	bh=CfmGNZWF9I/tqV7vd0OktedLdT8AUmConF4RvzTjHdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CtRpBxgClFMuX0Xsu/XAQFigqo161kjef4sYBUd0L2Qfm0QsOOzn2AhSh/ss+iYDZg4inE0L8JtJqtPK6lqqT3spDR7wRjoGEmcF8T3x/lnK9Yh3YY5xw4rYhCwriI+qBHgPsRGbvw8pQu+9yMVjEoO3QLXSHMPzfGRQW6gfjYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sn/8+kWw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tai7UoWy8M/R9GlJtI+OyAi/7oYhKAQOW/VZQLEV5cgdsVjWL71N7b3H6veBM3/9m7xf9T0OsXQzo0HtFgjQzFBLXM1yxAsjq+bKnfBAK4FlTJ5qAyTfWuanxYOesA9ZvutXpU9tntmQ/YG7R+P/nlEdb3/w86v95XWSGPFiPWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+IIEQ//; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sn/8+kWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C22BC4CEF8;
-	Wed, 30 Jul 2025 09:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+IIEQ//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9B7C4CEF5;
+	Wed, 30 Jul 2025 09:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869202;
-	bh=OiVWgjyO4kSXUOZmcc8dvKtbp9fdQYp8gwFzuY+CIsI=;
+	s=korg; t=1753869205;
+	bh=CfmGNZWF9I/tqV7vd0OktedLdT8AUmConF4RvzTjHdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sn/8+kWwjoHKcaUsSwPA23DxBazqmYmHDyuQ1IZh6R96fkDpXpQu+1bf+YIkY7tz2
-	 EfgSXXYI+D7zsloiyTqS/GNOzB6gUyaZQgLJS4V2iwx+XxSOY1dHAS+ecAJ8tnzbqZ
-	 9/MlTePsNInXTw42vE03Ko+rx54brqeHzXXsYSD8=
+	b=b+IIEQ//1pdMg7PN33xFLt8yrdY0eHXIM9miESb4XpH/nQy8VL8yU+2eSMDqn9H/1
+	 uK+3tC8YdnoNIadT0a7o+0z8bnFQvNge7wgHvYG28IOmWMTnpPDI2peiUYO4qZgd+c
+	 cHYLDJuiRC88vXDUcPVzdGVmV/UqrhgI/5OtZPaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 59/92] bus: fsl-mc: Fix potential double device reference in fsl_mc_get_endpoint()
-Date: Wed, 30 Jul 2025 11:36:07 +0200
-Message-ID: <20250730093233.040831501@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Petr Mladek <pmladek@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 60/92] sprintf.h requires stdarg.h
+Date: Wed, 30 Jul 2025 11:36:08 +0200
+Message-ID: <20250730093233.077992246@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -52,71 +56,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
 
-commit bddbe13d36a02d5097b99cf02354d5752ad1ac60 upstream.
+commit 0dec7201788b9152f06321d0dab46eed93834cda upstream.
 
-The fsl_mc_get_endpoint() function may call fsl_mc_device_lookup()
-twice, which would increment the device's reference count twice if
-both lookups find a device. This could lead to a reference count leak.
+In file included from drivers/crypto/intel/qat/qat_common/adf_pm_dbgfs_utils.c:4:
+include/linux/sprintf.h:11:54: error: unknown type name 'va_list'
+   11 | __printf(2, 0) int vsprintf(char *buf, const char *, va_list);
+      |                                                      ^~~~~~~
+include/linux/sprintf.h:1:1: note: 'va_list' is defined in header '<stdarg.h>'; this is probably fixable by adding '#include <stdarg.h>'
 
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: 1ac210d128ef ("bus: fsl-mc: add the fsl_mc_get_endpoint function")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 8567494cebe5 ("bus: fsl-mc: rescan devices if endpoint not found")
-Link: https://patch.msgid.link/20250717022309.3339976-1-make24@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20250721173754.42865913@canb.auug.org.au
+Fixes: 39ced19b9e60 ("lib/vsprintf: split out sprintf() and friends")
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ include/linux/sprintf.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -943,6 +943,7 @@ struct fsl_mc_device *fsl_mc_get_endpoin
- 	struct fsl_mc_obj_desc endpoint_desc = {{ 0 }};
- 	struct dprc_endpoint endpoint1 = {{ 0 }};
- 	struct dprc_endpoint endpoint2 = {{ 0 }};
-+	struct fsl_mc_bus *mc_bus;
- 	int state, err;
+--- a/include/linux/sprintf.h
++++ b/include/linux/sprintf.h
+@@ -4,6 +4,7 @@
  
- 	mc_bus_dev = to_fsl_mc_device(mc_dev->dev.parent);
-@@ -966,6 +967,8 @@ struct fsl_mc_device *fsl_mc_get_endpoin
- 	strcpy(endpoint_desc.type, endpoint2.type);
- 	endpoint_desc.id = endpoint2.id;
- 	endpoint = fsl_mc_device_lookup(&endpoint_desc, mc_bus_dev);
-+	if (endpoint)
-+		return endpoint;
+ #include <linux/compiler_attributes.h>
+ #include <linux/types.h>
++#include <linux/stdarg.h>
  
- 	/*
- 	 * We know that the device has an endpoint because we verified by
-@@ -973,17 +976,13 @@ struct fsl_mc_device *fsl_mc_get_endpoin
- 	 * yet discovered by the fsl-mc bus, thus the lookup returned NULL.
- 	 * Force a rescan of the devices in this container and retry the lookup.
- 	 */
--	if (!endpoint) {
--		struct fsl_mc_bus *mc_bus = to_fsl_mc_bus(mc_bus_dev);
--
--		if (mutex_trylock(&mc_bus->scan_mutex)) {
--			err = dprc_scan_objects(mc_bus_dev, true);
--			mutex_unlock(&mc_bus->scan_mutex);
--		}
--
--		if (err < 0)
--			return ERR_PTR(err);
-+	mc_bus = to_fsl_mc_bus(mc_bus_dev);
-+	if (mutex_trylock(&mc_bus->scan_mutex)) {
-+		err = dprc_scan_objects(mc_bus_dev, true);
-+		mutex_unlock(&mc_bus->scan_mutex);
- 	}
-+	if (err < 0)
-+		return ERR_PTR(err);
+ int num_to_str(char *buf, int size, unsigned long long num, unsigned int width);
  
- 	endpoint = fsl_mc_device_lookup(&endpoint_desc, mc_bus_dev);
- 	/*
 
 
