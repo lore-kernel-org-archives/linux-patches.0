@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD60275AF5;
-	Wed, 30 Jul 2025 09:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2294279792;
+	Wed, 30 Jul 2025 09:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868619; cv=none; b=HwcifcuUVV6pEcsV8OxTGP5R5acnPJ05YviELuTahZjI7dw2kYBhbbRiSNct9JEhYm1CJkzKeNomPhdZS+7eCpnFntIMbCz4vBVjNf/NTMEKuEhzBu18KIzq4FzhfsOp8fGvLVYWMcjHairHS26t3onLmiNjQFcx524GN526gd0=
+	t=1753868622; cv=none; b=ILvNP8PtGKTrwc5Gml2icWaS/9oBcJw7kMEBA2Jslx5tGQmNaEuzJfGtaqHLHtEcnL2PCQz5+BWblfwdBVnWQJV28rTrLAYgf7dkj7VWEeR+VkR15YCdTzkMzTM5TYbWMwU4x0qNIrANOxVCid4U5MENVjCJkOjZTnhPSPYVNv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868619; c=relaxed/simple;
-	bh=aHCVCbbkC+vtDPN8V+aXdukNbK131a8ttKVNkfZ6b5Y=;
+	s=arc-20240116; t=1753868622; c=relaxed/simple;
+	bh=+GTjaESE2GUIdaZOgWVBdD2QhMPvT0ioQZk7EnSQHa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6zioytyfD3WReSJKVzH681jWNIshDF7DStXyIjxqjaOuFkIv4gANex4MZT5zKhVrw6H+H5284NaSpsKZIcvR1YWzO7jKkDEloQbOj9cqvCZtkMByZQa06BGQnnHVHhLIXUybxIVncVcAji8XX5jVXK1kGwglNcqEw7jDkuqHhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vU97tD1G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBat7tBT0JABdz58zA08ibqKMuWIvsFv9r/9FAFJvozCgpNLh/sstlRFvZtK5pZldnn8RxBNB3Kp9nh08kpQ5uCRJfYOGx5OKVCbZwUm+KHR0Dd7HBcY0n8MZSW01+KCl5ZtyiBoHzDwe2PEgrZ/WGoT9VGt8a7VhRy5tdCs8uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p13igeP1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vU97tD1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8CAC4CEE7;
-	Wed, 30 Jul 2025 09:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p13igeP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1590C4CEE7;
+	Wed, 30 Jul 2025 09:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868619;
-	bh=aHCVCbbkC+vtDPN8V+aXdukNbK131a8ttKVNkfZ6b5Y=;
+	s=korg; t=1753868622;
+	bh=+GTjaESE2GUIdaZOgWVBdD2QhMPvT0ioQZk7EnSQHa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vU97tD1GJGFubzsDQ7JOI31sh7ExvgG0JmP71lsX4dnjDfbCaMVJWB9HtFca+zixn
-	 eFHoStBsPGkTBaEtGxYpLniXIieMNUP7gUD6fI+4ApONNfWh//vNE1p8bcUbjI91tf
-	 +AMIW6uOIFhvB+SzJTsGijdVuBdw2lqivcUWLbqU=
+	b=p13igeP1IWy5gZ30RbpjeUQ8VbnGriyQhjPgY4qLIFpd8ww8w22G1KbFhhazwlLd3
+	 tnCrD92uCJFjLD7I6msXK4jfu/tujpF7RZ9qlehCr9mlfmoeJ2tRDd2xBJBASi3BQz
+	 PaWEMuWd+iM5VJ/LsLxKmpEdfQmiBMfQfpGkilJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Xilin Wu <sophon@radxa.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/117] RDMA/core: Rate limit GID cache warning messages
-Date: Wed, 30 Jul 2025 11:34:36 +0200
-Message-ID: <20250730093233.877464556@linuxfoundation.org>
+Subject: [PATCH 6.12 008/117] interconnect: qcom: sc7280: Add missing num_links to xm_pcie3_1 node
+Date: Wed, 30 Jul 2025 11:34:37 +0200
+Message-ID: <20250730093233.915655025@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -52,41 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maor Gottlieb <maorg@nvidia.com>
+From: Xilin Wu <sophon@radxa.com>
 
-[ Upstream commit 333e4d79316c9ed5877d7aac8b8ed22efc74e96d ]
+[ Upstream commit 886a94f008dd1a1702ee66dd035c266f70fd9e90 ]
 
-The GID cache warning messages can flood the kernel log when there are
-multiple failed attempts to add GIDs. This can happen when creating many
-virtual interfaces without having enough space for their GIDs in the GID
-table.
+This allows adding interconnect paths for PCIe 1 in device tree later.
 
-Change pr_warn to pr_warn_ratelimited to prevent log flooding while still
-maintaining visibility of the issue.
-
-Link: https://patch.msgid.link/r/fd45ed4a1078e743f498b234c3ae816610ba1b18.1750062357.git.leon@kernel.org
-Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 46bdcac533cc ("interconnect: qcom: Add SC7280 interconnect provider driver")
+Signed-off-by: Xilin Wu <sophon@radxa.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250613-sc7280-icc-pcie1-fix-v1-1-0b09813e3b09@radxa.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/sc7280.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index b7c078b7f7cfd..a1291f475466d 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -582,8 +582,8 @@ static int __ib_cache_gid_add(struct ib_device *ib_dev, u32 port,
- out_unlock:
- 	mutex_unlock(&table->lock);
- 	if (ret)
--		pr_warn("%s: unable to add gid %pI6 error=%d\n",
--			__func__, gid->raw, ret);
-+		pr_warn_ratelimited("%s: unable to add gid %pI6 error=%d\n",
-+				    __func__, gid->raw, ret);
- 	return ret;
- }
+diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+index 167971f8e8bec..fdb02a87e3124 100644
+--- a/drivers/interconnect/qcom/sc7280.c
++++ b/drivers/interconnect/qcom/sc7280.c
+@@ -238,6 +238,7 @@ static struct qcom_icc_node xm_pcie3_1 = {
+ 	.id = SC7280_MASTER_PCIE_1,
+ 	.channels = 1,
+ 	.buswidth = 8,
++	.num_links = 1,
+ 	.links = { SC7280_SLAVE_ANOC_PCIE_GEM_NOC },
+ };
  
 -- 
 2.39.5
