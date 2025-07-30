@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE47B157E6B;
-	Wed, 30 Jul 2025 09:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC2223D2A2;
+	Wed, 30 Jul 2025 09:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868573; cv=none; b=cGC4dHxx60ugGdjkSVr01/ux4sqz4OtN1WErbZ1wfm/CIVIKUmVS9kAs+/KMU29mp/Zrp7ZHuJENEmhl5t3Wg1CZ94UKaZD2CvuTt0ccDUEgk3cuFurJTtt9gu4W4SwAZL58G4E2TmhpkK0w/tKM2HJ0JsWrgKhB2AFI3E6guAY=
+	t=1753868578; cv=none; b=P3ocwf0Db5i328Q23RT8pMHwbT1No4s3HQCjVzd7xRNn1RX9JIBF/A3Mbb+qQ6/WiXvfoHq2zVQBWNdYe1vkBg6k3I8zQ715DAT7QA/c3/aEPdsXveVmyhsXtmmm8/YTehlmjg5HfnlBrTG0NGWRZSzX5UIoMYUT0GH2RBg9W7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868573; c=relaxed/simple;
-	bh=Bqx2Wllxe0Qlj/KzwcsLTcHWRj6ZoNUaSWAIonHJR+E=;
+	s=arc-20240116; t=1753868578; c=relaxed/simple;
+	bh=WnKsgNiL6NEtZsrKEgLL7/9oPcCIWcqeq5Qr1GOiAKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dljVARw1CJwQIN7wYqcd8vApkIhwxYt8rduEQ/sv4uMHIsb/+TZaVmEcTIQzLMn/A8kNd7BdvhUjb3d4iGdzy6B1GC57mKgw8II3zuJZjaBQCCRXe6IXO9HR5XsIgxhPYgB3LIt08QLwT6F+WzpU4cL8yBaPklbNWDXtAD6Snf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCn38aZm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MLECutXMuXvovMlJSENhXApyRTXXf5A2sfXmZf0RwW0qcUDa+2Cl6YB8dNIpWTh/CIhwlYoh+yez/2MoIlyKKFXTW1r4OWOdlpHAFjrpRzCIAe73RVERt3IDScJ3+kpWGTyq/wAXzxRsjT1rvIpFIqNMmdPp1x3+b+CGAINVWfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sR6tQqxw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCn38aZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D0EC4CEE7;
-	Wed, 30 Jul 2025 09:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sR6tQqxw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95753C4CEE7;
+	Wed, 30 Jul 2025 09:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868573;
-	bh=Bqx2Wllxe0Qlj/KzwcsLTcHWRj6ZoNUaSWAIonHJR+E=;
+	s=korg; t=1753868578;
+	bh=WnKsgNiL6NEtZsrKEgLL7/9oPcCIWcqeq5Qr1GOiAKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCn38aZmQSBFckToclwvOBuAxkI/urE+F4rPx4K6cD4rJGHQ1c1rJnFPSGMJODtlc
-	 Ia4PUex0Y7OqI/N4xutKG0ckkTHzlxtisHtFF+ZIfkNS8Wjwc4qGlWrVfIfmN8rWZO
-	 tDZpkpHhCkyyWlwGE+hV9FAHM5/Zx8OP4kr4iNEY=
+	b=sR6tQqxwZjt/DZ1YfG/Vcjf/jCCXzJXIKRM5k8pYjtrs8mXpvKgsajyflXO+OZI55
+	 qtukgmGj3U9BeAA0zUClAAUQjX/ChCyokWfR1TdeohvnLe/ZTKX8clc3C3dK5VsMFR
+	 cxOqhwIIz1iA8ZKHOa2LaKMhTiMkeY6p/lSBRbnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Brunner <tobias@strongswan.org>,
+	Lonial Con <kongln9170@gmail.com>,
+	Eyal Birger <eyal.birger@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/117] xfrm: Set transport header to fix UDP GRO handling
-Date: Wed, 30 Jul 2025 11:34:49 +0200
-Message-ID: <20250730093234.360032481@linuxfoundation.org>
+Subject: [PATCH 6.12 021/117] xfrm: interface: fix use-after-free after changing collect_md xfrm interface
+Date: Wed, 30 Jul 2025 11:34:50 +0200
+Message-ID: <20250730093234.400653752@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -51,54 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Brunner <tobias@strongswan.org>
+From: Eyal Birger <eyal.birger@gmail.com>
 
-[ Upstream commit 3ac9e29211fa2df5539ba0d742c8fe9fe95fdc79 ]
+[ Upstream commit a90b2a1aaacbcf0f91d7e4868ad6c51c5dee814b ]
 
-The referenced commit replaced a call to __xfrm4|6_udp_encap_rcv() with
-a custom check for non-ESP markers.  But what the called function also
-did was setting the transport header to the ESP header.  The function
-that follows, esp4|6_gro_receive(), relies on that being set when it calls
-xfrm_parse_spi().  We have to set the full offset as the skb's head was
-not moved yet so adding just the UDP header length won't work.
+collect_md property on xfrm interfaces can only be set on device creation,
+thus xfrmi_changelink() should fail when called on such interfaces.
 
-Fixes: e3fd05777685 ("xfrm: Fix UDP GRO handling for some corner cases")
-Signed-off-by: Tobias Brunner <tobias@strongswan.org>
+The check to enforce this was done only in the case where the xi was
+returned from xfrmi_locate() which doesn't look for the collect_md
+interface, and thus the validation was never reached.
+
+Calling changelink would thus errornously place the special interface xi
+in the xfrmi_net->xfrmi hash, but since it also exists in the
+xfrmi_net->collect_md_xfrmi pointer it would lead to a double free when
+the net namespace was taken down [1].
+
+Change the check to use the xi from netdev_priv which is available earlier
+in the function to prevent changes in xfrm collect_md interfaces.
+
+[1] resulting oops:
+[    8.516540] kernel BUG at net/core/dev.c:12029!
+[    8.516552] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[    8.516559] CPU: 0 UID: 0 PID: 12 Comm: kworker/u80:0 Not tainted 6.15.0-virtme #5 PREEMPT(voluntary)
+[    8.516565] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    8.516569] Workqueue: netns cleanup_net
+[    8.516579] RIP: 0010:unregister_netdevice_many_notify+0x101/0xab0
+[    8.516590] Code: 90 0f 0b 90 48 8b b0 78 01 00 00 48 8b 90 80 01 00 00 48 89 56 08 48 89 32 4c 89 80 78 01 00 00 48 89 b8 80 01 00 00 eb ac 90 <0f> 0b 48 8b 45 00 4c 8d a0 88 fe ff ff 48 39 c5 74 5c 41 80 bc 24
+[    8.516593] RSP: 0018:ffffa93b8006bd30 EFLAGS: 00010206
+[    8.516598] RAX: ffff98fe4226e000 RBX: ffffa93b8006bd58 RCX: ffffa93b8006bc60
+[    8.516601] RDX: 0000000000000004 RSI: 0000000000000000 RDI: dead000000000122
+[    8.516603] RBP: ffffa93b8006bdd8 R08: dead000000000100 R09: ffff98fe4133c100
+[    8.516605] R10: 0000000000000000 R11: 00000000000003d2 R12: ffffa93b8006be00
+[    8.516608] R13: ffffffff96c1a510 R14: ffffffff96c1a510 R15: ffffa93b8006be00
+[    8.516615] FS:  0000000000000000(0000) GS:ffff98fee73b7000(0000) knlGS:0000000000000000
+[    8.516619] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    8.516622] CR2: 00007fcd2abd0700 CR3: 000000003aa40000 CR4: 0000000000752ef0
+[    8.516625] PKRU: 55555554
+[    8.516627] Call Trace:
+[    8.516632]  <TASK>
+[    8.516635]  ? rtnl_is_locked+0x15/0x20
+[    8.516641]  ? unregister_netdevice_queue+0x29/0xf0
+[    8.516650]  ops_undo_list+0x1f2/0x220
+[    8.516659]  cleanup_net+0x1ad/0x2e0
+[    8.516664]  process_one_work+0x160/0x380
+[    8.516673]  worker_thread+0x2aa/0x3c0
+[    8.516679]  ? __pfx_worker_thread+0x10/0x10
+[    8.516686]  kthread+0xfb/0x200
+[    8.516690]  ? __pfx_kthread+0x10/0x10
+[    8.516693]  ? __pfx_kthread+0x10/0x10
+[    8.516697]  ret_from_fork+0x82/0xf0
+[    8.516705]  ? __pfx_kthread+0x10/0x10
+[    8.516709]  ret_from_fork_asm+0x1a/0x30
+[    8.516718]  </TASK>
+
+Fixes: abc340b38ba2 ("xfrm: interface: support collect metadata mode")
+Reported-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/xfrm4_input.c | 3 +++
- net/ipv6/xfrm6_input.c | 3 +++
- 2 files changed, 6 insertions(+)
+ net/xfrm/xfrm_interface_core.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
-index 17d3fc2fab4cc..12a1a0f421956 100644
---- a/net/ipv4/xfrm4_input.c
-+++ b/net/ipv4/xfrm4_input.c
-@@ -202,6 +202,9 @@ struct sk_buff *xfrm4_gro_udp_encap_rcv(struct sock *sk, struct list_head *head,
- 	if (len <= sizeof(struct ip_esp_hdr) || udpdata32[0] == 0)
- 		goto out;
+diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
+index 98f1e2b67c76b..b95d882f9dbcb 100644
+--- a/net/xfrm/xfrm_interface_core.c
++++ b/net/xfrm/xfrm_interface_core.c
+@@ -874,7 +874,7 @@ static int xfrmi_changelink(struct net_device *dev, struct nlattr *tb[],
+ 		return -EINVAL;
+ 	}
  
-+	/* set the transport header to ESP */
-+	skb_set_transport_header(skb, offset);
-+
- 	NAPI_GRO_CB(skb)->proto = IPPROTO_UDP;
+-	if (p.collect_md) {
++	if (p.collect_md || xi->p.collect_md) {
+ 		NL_SET_ERR_MSG(extack, "collect_md can't be changed");
+ 		return -EINVAL;
+ 	}
+@@ -885,11 +885,6 @@ static int xfrmi_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	} else {
+ 		if (xi->dev != dev)
+ 			return -EEXIST;
+-		if (xi->p.collect_md) {
+-			NL_SET_ERR_MSG(extack,
+-				       "device can't be changed to collect_md");
+-			return -EINVAL;
+-		}
+ 	}
  
- 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 841c81abaaf4f..9005fc156a20e 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -202,6 +202,9 @@ struct sk_buff *xfrm6_gro_udp_encap_rcv(struct sock *sk, struct list_head *head,
- 	if (len <= sizeof(struct ip_esp_hdr) || udpdata32[0] == 0)
- 		goto out;
- 
-+	/* set the transport header to ESP */
-+	skb_set_transport_header(skb, offset);
-+
- 	NAPI_GRO_CB(skb)->proto = IPPROTO_UDP;
- 
- 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
+ 	return xfrmi_update(xi, &p);
 -- 
 2.39.5
 
