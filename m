@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD6428DF0B;
-	Wed, 30 Jul 2025 09:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF73292B42;
+	Wed, 30 Jul 2025 09:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868691; cv=none; b=Z0SQQjvlUPRxs6ovsE4AtlqzUPHBTQTYOT5xHy9tb11pfqnToAaIKRSuMqflQ+fxvzkr8U954T+oXXBkRBzp+qkURGsryvhbeX9NbrgUyqNe8kJmPaDz96XQLOpI+FXGSkNMWehTS1WlC5wvhvtcZv7qQoE4ZbmxYr3IOdzi6mo=
+	t=1753868695; cv=none; b=HebsP/SNYNDbshpA2/MdMJ2ccnnT0wLz7O6VIqKrrC+DfIYXRRoY6GvtPoqXphyTfTgAkgCpXLGpzqwQDEr2H0w/7rlmxBFanTpzOPx6nSayPlDi2G1sir/FcebkzFNg7VObKe3awIZ5iC2BHQJs80PVMA7TXs7hoaQMs30AYpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868691; c=relaxed/simple;
-	bh=UUjbi+YD1sM+pUCuM4IUsiSpebdOSwAZR9vfGvumWTE=;
+	s=arc-20240116; t=1753868695; c=relaxed/simple;
+	bh=+Fd83sTqtwxUznjJNW2NrXOBOr8Twy84VZVl9Z05ggE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8vY7gGpD0Rn/JE0P5S+5PAaL577MdCMn+wrhQU99UyaesKp+DKzEEn9VRL0A0fwSO334RIOwPy3tPtv4JLE+SKMbxcIQR0SfyLPDtwRLxa8q5YZcIQNnYm2mPos1qGKIyNFETYnVl10LCP5JYHJNMidl2RrF1T3KaeVDaq3uTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVJf81Nz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DBnwu0eBnIOUg3CiX5eAaLaDYWyxsIB/6LZB25Tb/mUEz6k51V8gYPdYWK//1Jop4O0OGhXGtBs9HSLnoXdZfp6DTUKiTYr/bYVf28eG8UMNnw8ezip2k+MdR7d1wLuYwBJHajeY9GJM3fsghownSP2OjQkLr/S57KdUk9hkR0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOi06P9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVJf81Nz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBC8C4CEF6;
-	Wed, 30 Jul 2025 09:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOi06P9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AFEC4CEF5;
+	Wed, 30 Jul 2025 09:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868691;
-	bh=UUjbi+YD1sM+pUCuM4IUsiSpebdOSwAZR9vfGvumWTE=;
+	s=korg; t=1753868694;
+	bh=+Fd83sTqtwxUznjJNW2NrXOBOr8Twy84VZVl9Z05ggE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVJf81NzhL2dJU6qu2xUNsQ5GSSess96naB538ugiOjEp4mKW+970rcYJ2WFheZNh
-	 m3taROewaHl1Ezrwd5OgQ86aFKIC2/N6TZ50HxZAbdOZzs6aF8nkcR9u1Rx+d+plNS
-	 6jXjz+/I1DyZHVt3W7G7LiCfg9mmxAsQ+R6Wk9gY=
+	b=MOi06P9Xzlywxs3BBamOA2OxH3FTRq7lOPWpl4Cxa1fLscAzCaKU59GsPJN9YNbDZ
+	 4HljREXvVomWLsUa5VevbCt4jYmDrAA5f+bRWTYr7C+VajeLR8IW3cG0Jpk7MGYlA7
+	 wjGF9Uv0GOkqlsUvnbLcy7Cx7LBw5XmOVKsagXoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edip Hazuri <edip@medip.dev>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 052/117] ALSA: hda/realtek - Add mute LED support for HP Victus 15-fa0xxx
-Date: Wed, 30 Jul 2025 11:35:21 +0200
-Message-ID: <20250730093235.586508922@linuxfoundation.org>
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Cristian Prundeanu <cpru@amazon.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 053/117] arm64/entry: Mask DAIF in cpu_switch_to(), call_on_irq_stack()
+Date: Wed, 30 Jul 2025 11:35:22 +0200
+Message-ID: <20250730093235.625924582@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -50,34 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edip Hazuri <edip@medip.dev>
+From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 
-commit 21c8ed9047b7f44c1c49b889d4ba2f555d9ee17e upstream.
+commit d42e6c20de6192f8e4ab4cf10be8c694ef27e8cb upstream.
 
-The mute led on this laptop is using ALC245 but requires a quirk to work
-This patch enables the existing quirk for the device.
+`cpu_switch_to()` and `call_on_irq_stack()` manipulate SP to change
+to different stacks along with the Shadow Call Stack if it is enabled.
+Those two stack changes cannot be done atomically and both functions
+can be interrupted by SErrors or Debug Exceptions which, though unlikely,
+is very much broken : if interrupted, we can end up with mismatched stacks
+and Shadow Call Stack leading to clobbered stacks.
 
-Tested on my Victus 15-fa0xxx Laptop. The LED behaviour works
-as intended.
+In `cpu_switch_to()`, it can happen when SP_EL0 points to the new task,
+but x18 stills points to the old task's SCS. When the interrupt handler
+tries to save the task's SCS pointer, it will save the old task
+SCS pointer (x18) into the new task struct (pointed to by SP_EL0),
+clobbering it.
+
+In `call_on_irq_stack()`, it can happen when switching from the task stack
+to the IRQ stack and when switching back. In both cases, we can be
+interrupted when the SCS pointer points to the IRQ SCS, but SP points to
+the task stack. The nested interrupt handler pushes its return addresses
+on the IRQ SCS. It then detects that SP points to the task stack,
+calls `call_on_irq_stack()` and clobbers the task SCS pointer with
+the IRQ SCS pointer, which it will also use !
+
+This leads to tasks returning to addresses on the wrong SCS,
+or even on the IRQ SCS, triggering kernel panics via CONFIG_VMAP_STACK
+or FPAC if enabled.
+
+This is possible on a default config, but unlikely.
+However, when enabling CONFIG_ARM64_PSEUDO_NMI, DAIF is unmasked and
+instead the GIC is responsible for filtering what interrupts the CPU
+should receive based on priority.
+Given the goal of emulating NMIs, pseudo-NMIs can be received by the CPU
+even in `cpu_switch_to()` and `call_on_irq_stack()`, possibly *very*
+frequently depending on the system configuration and workload, leading
+to unpredictable kernel panics.
+
+Completely mask DAIF in `cpu_switch_to()` and restore it when returning.
+Do the same in `call_on_irq_stack()`, but restore and mask around
+the branch.
+Mask DAIF even if CONFIG_SHADOW_CALL_STACK is not enabled for consistency
+of behaviour between all configurations.
+
+Introduce and use an assembly macro for saving and masking DAIF,
+as the existing one saves but only masks IF.
 
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Edip Hazuri <edip@medip.dev>
-Link: https://patch.msgid.link/20250717212625.366026-2-edip@medip.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Reported-by: Cristian Prundeanu <cpru@amazon.com>
+Fixes: 59b37fe52f49 ("arm64: Stash shadow stack pointer in the task struct on interrupt")
+Tested-by: Cristian Prundeanu <cpru@amazon.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250718142814.133329-1-ada.coupriediaz@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/assembler.h |    5 +++++
+ arch/arm64/kernel/entry.S          |    6 ++++++
+ 2 files changed, 11 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10687,6 +10687,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8a30, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8a31, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8a6e, "HP EDNA 360", ALC287_FIXUP_CS35L41_I2C_4),
- 	SND_PCI_QUIRK(0x103c, 0x8a74, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
+--- a/arch/arm64/include/asm/assembler.h
++++ b/arch/arm64/include/asm/assembler.h
+@@ -41,6 +41,11 @@
+ /*
+  * Save/restore interrupts.
+  */
++	.macro save_and_disable_daif, flags
++	mrs	\flags, daif
++	msr	daifset, #0xf
++	.endm
++
+ 	.macro	save_and_disable_irq, flags
+ 	mrs	\flags, daif
+ 	msr	daifset, #3
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -823,6 +823,7 @@ SYM_CODE_END(__bp_harden_el1_vectors)
+  *
+  */
+ SYM_FUNC_START(cpu_switch_to)
++	save_and_disable_daif x11
+ 	mov	x10, #THREAD_CPU_CONTEXT
+ 	add	x8, x0, x10
+ 	mov	x9, sp
+@@ -846,6 +847,7 @@ SYM_FUNC_START(cpu_switch_to)
+ 	ptrauth_keys_install_kernel x1, x8, x9, x10
+ 	scs_save x0
+ 	scs_load_current
++	restore_irq x11
+ 	ret
+ SYM_FUNC_END(cpu_switch_to)
+ NOKPROBE(cpu_switch_to)
+@@ -872,6 +874,7 @@ NOKPROBE(ret_from_fork)
+  * Calls func(regs) using this CPU's irq stack and shadow irq stack.
+  */
+ SYM_FUNC_START(call_on_irq_stack)
++	save_and_disable_daif x9
+ #ifdef CONFIG_SHADOW_CALL_STACK
+ 	get_current_task x16
+ 	scs_save x16
+@@ -886,8 +889,10 @@ SYM_FUNC_START(call_on_irq_stack)
+ 
+ 	/* Move to the new stack and call the function there */
+ 	add	sp, x16, #IRQ_STACK_SIZE
++	restore_irq x9
+ 	blr	x1
+ 
++	save_and_disable_daif x9
+ 	/*
+ 	 * Restore the SP from the FP, and restore the FP and LR from the frame
+ 	 * record.
+@@ -895,6 +900,7 @@ SYM_FUNC_START(call_on_irq_stack)
+ 	mov	sp, x29
+ 	ldp	x29, x30, [sp], #16
+ 	scs_load_current
++	restore_irq x9
+ 	ret
+ SYM_FUNC_END(call_on_irq_stack)
+ NOKPROBE(call_on_irq_stack)
 
 
