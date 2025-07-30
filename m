@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8B3442C;
-	Wed, 30 Jul 2025 09:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B6D442C;
+	Wed, 30 Jul 2025 09:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869261; cv=none; b=CY5r0gufOI3CkZg1hWB6nzE/32Ga4fzfVpv6+yEj837EBoTHz8lSGa7O0zbhtt2VFyhXztraIpnhDdAFs+xvhKkkWxdHiscdrZcZh1SeOAZVwwnNNwuTz3xq+BeljMEL7ITAer1kJAuJx0SyTbyX7qbnev0/VnEFg1euOT7WnpI=
+	t=1753869264; cv=none; b=TOgufjLsvauH0f1HZFprWe6FNXI8GflM8lW1XiJHA0AnVqGj3YJdKHzGaaLO3y3KEBggnDswec3g89xTqAyl6qHp/ZyZj7ipoXM5TT7V4iBUoSbiCtri/SZzY05WRp+qbqUaLm4OrC+3ZywPab0c+GpomsYZYbSM9Qh2dJIb2jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869261; c=relaxed/simple;
-	bh=4mCSbOo6ZMLOJ4zx5qgPJUF56ieFg8VNb5GhPEw678Q=;
+	s=arc-20240116; t=1753869264; c=relaxed/simple;
+	bh=5/j08/R9ToaZftSESL5A3QIT/pX+ePFfm4w7WMXQaFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrCJzBZR/cCmvrK2u/V6otn4G5bG+8blZyqiGbRATTwg37fwwkzvspAtVFSkivgy9Y1avT7BY2e9vCQsyC5Mo9z0w/5n7cv9xUvSNjLlgdsrhLaS7ykdXgh6zYXt4S7vqDXbrlyKnl/9sI+jRCQcLVsmXtUM+QXEq9ROl75ZDbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I82Bk0Cv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WpPoml0O6ZlFSe11mNzzkd8ZZI2YFk21UrE4p/vSpmnGCVjIdg/cD7CI8AHI/m8i2kTgvI3l7FQekwOhV85l/TL43Ycbu1m5JWMi0rDLKRHCcKNa7Ov+MUClpFVFg1TaXD+BgVRxExa8TOT2hUqmbAwp9uTaEymPfglncVhUPG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzR3K6tj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I82Bk0Cv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9779C4CEF5;
-	Wed, 30 Jul 2025 09:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzR3K6tj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FDBC4CEF5;
+	Wed, 30 Jul 2025 09:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869260;
-	bh=4mCSbOo6ZMLOJ4zx5qgPJUF56ieFg8VNb5GhPEw678Q=;
+	s=korg; t=1753869264;
+	bh=5/j08/R9ToaZftSESL5A3QIT/pX+ePFfm4w7WMXQaFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I82Bk0Cvlaxl7bczjHD5P7bU6fC8LC4CdFqaUitx4WgjJYUPEoUj071Ar/oMmf7kg
-	 u8SahZHMemRDc4l3AOZevFiZizqCaEgiNEt7Vs/rSccQb7HK6P7J+EnOde2YNQw84d
-	 FR9wDfsHq6NkHQRZayGaQzZfAnR2gAgD9FTmt1mE=
+	b=KzR3K6tjIzBR8jG5/C622EQFxZUh8mYbf0IeeNg/mOlcnRsjkquCtpv62zj/jy0C5
+	 7aSMf+LzK/yR2WDMhZYVvgFszdpU8wGlagoB7kdCSNInZX9+Osne0QpcBzGF8LmUTF
+	 rUQfMVNue2o2rnY7mGD1X+S+t43BSv5CNeWV44dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Donet Tom <donettom@linux.ibm.com>,
-	Barry Song <baohua@kernel.org>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	syzbot+3b220254df55d8ca8a61@syzkaller.appspotmail.com,
 	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Mariano Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Michal Hocko <mhocko@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 77/92] selftests/mm: fix split_huge_page_test for folio_split() tests
-Date: Wed, 30 Jul 2025 11:36:25 +0200
-Message-ID: <20250730093233.737855508@linuxfoundation.org>
+Subject: [PATCH 6.15 78/92] mm/vmscan: fix hwpoisoned large folio handling in shrink_folio_list
+Date: Wed, 30 Jul 2025 11:36:26 +0200
+Message-ID: <20250730093233.774349408@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -60,58 +57,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-commit 7563fcbfd484b347b776aeed4d7dac78b30884aa upstream.
+commit 9f1e8cd0b7c4c944e9921b52a6661b5eda2705ab upstream.
 
-PID_FMT does not have an offset field, so folio_split() tests are not
-performed.  Add PID_FMT_OFFSET with an offset field and use it to perform
-folio_split() tests.
+In shrink_folio_list(), the hwpoisoned folio may be large folio, which
+can't be handled by unmap_poisoned_folio().  For THP, try_to_unmap_one()
+must be passed with TTU_SPLIT_HUGE_PMD to split huge PMD first and then
+retry.  Without TTU_SPLIT_HUGE_PMD, we will trigger null-ptr deref of
+pvmw.pte.  Even we passed TTU_SPLIT_HUGE_PMD, we will trigger a
+WARN_ON_ONCE due to the page isn't in swapcache.
 
-Link: https://lkml.kernel.org/r/20250709012800.3225727-1-ziy@nvidia.com
-Fixes: 80a5c494c89f ("selftests/mm: add tests for folio_split(), buddy allocator like split")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Donet Tom <donettom@linux.ibm.com>
-Tested-by : Donet Tom <donettom@linux.ibm.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Mariano Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shuah Khan <shuah@kernel.org>
+Since UCE is rare in real world, and race with reclaimation is more rare,
+just skipping the hwpoisoned large folio is enough.  memory_failure() will
+handle it if the UCE is triggered again.
+
+This happens when memory reclaim for large folio races with
+memory_failure(), and will lead to kernel panic.  The race is as
+follows:
+
+cpu0      cpu1
+ shrink_folio_list memory_failure
+  TestSetPageHWPoison
+  unmap_poisoned_folio
+  --> trigger BUG_ON due to
+  unmap_poisoned_folio couldn't
+   handle large folio
+
+[tujinjiang@huawei.com: add comment to unmap_poisoned_folio()]
+  Link: https://lkml.kernel.org/r/69fd4e00-1b13-d5f7-1c82-705c7d977ea4@huawei.com
+Link: https://lkml.kernel.org/r/20250627125747.3094074-2-tujinjiang@huawei.com
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Fixes: 1b0449544c64 ("mm/vmscan: don't try to reclaim hwpoison folio")
+Reported-by: syzbot+3b220254df55d8ca8a61@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68412d57.050a0220.2461cf.000e.GAE@google.com/
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/split_huge_page_test.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/memory-failure.c |    4 ++++
+ mm/vmscan.c         |    8 ++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/tools/testing/selftests/mm/split_huge_page_test.c b/tools/testing/selftests/mm/split_huge_page_test.c
-index aa7400ed0e99..f0d9c035641d 100644
---- a/tools/testing/selftests/mm/split_huge_page_test.c
-+++ b/tools/testing/selftests/mm/split_huge_page_test.c
-@@ -31,6 +31,7 @@ uint64_t pmd_pagesize;
- #define INPUT_MAX 80
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -1561,6 +1561,10 @@ static int get_hwpoison_page(struct page
+ 	return ret;
+ }
  
- #define PID_FMT "%d,0x%lx,0x%lx,%d"
-+#define PID_FMT_OFFSET "%d,0x%lx,0x%lx,%d,%d"
- #define PATH_FMT "%s,0x%lx,0x%lx,%d"
++/*
++ * The caller must guarantee the folio isn't large folio, except hugetlb.
++ * try_to_unmap() can't handle it.
++ */
+ int unmap_poisoned_folio(struct folio *folio, unsigned long pfn, bool must_kill)
+ {
+ 	enum ttu_flags ttu = TTU_IGNORE_MLOCK | TTU_SYNC | TTU_HWPOISON;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1128,6 +1128,14 @@ retry:
+ 			goto keep;
  
- #define PFN_MASK     ((1UL<<55)-1)
-@@ -483,7 +484,7 @@ void split_thp_in_pagecache_to_order_at(size_t fd_size, const char *fs_loc,
- 		write_debugfs(PID_FMT, getpid(), (uint64_t)addr,
- 			      (uint64_t)addr + fd_size, order);
- 	else
--		write_debugfs(PID_FMT, getpid(), (uint64_t)addr,
-+		write_debugfs(PID_FMT_OFFSET, getpid(), (uint64_t)addr,
- 			      (uint64_t)addr + fd_size, order, offset);
- 
- 	for (i = 0; i < fd_size; i++)
--- 
-2.50.1
-
+ 		if (folio_contain_hwpoisoned_page(folio)) {
++			/*
++			 * unmap_poisoned_folio() can't handle large
++			 * folio, just skip it. memory_failure() will
++			 * handle it if the UCE is triggered again.
++			 */
++			if (folio_test_large(folio))
++				goto keep_locked;
++
+ 			unmap_poisoned_folio(folio, folio_pfn(folio), false);
+ 			folio_unlock(folio);
+ 			folio_put(folio);
 
 
