@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A676D20E6;
-	Wed, 30 Jul 2025 09:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED12C36124;
+	Wed, 30 Jul 2025 09:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868400; cv=none; b=RN3DWyYe4+a9ff2tpLRPdRUV81q/8pcOvLDFQQKXFhEDSgBzKc+i8Lpg2aBn7OCp6UJP4uAW7e7FxI7VerQYS+Z4utLuNYCnKSCuBv5lfYKzHMw5RRi5lolW1SkTITcIBenSPkaIBQDjbll5iTDR8DkKdpb7KmvdwzUGV+Kxnv0=
+	t=1753868404; cv=none; b=futIK1zNtk8p+7VYIQX0EST5kV3PoV62cI4afL91xLjKsVOjq14d+AXiH1BXOEgCUtyss82BjHnhI8U+1q1BB1yJNJ4AMb0Q7OxDDyTNjQNmbzmqpFZQvXvvGJ8o1PQbh9QOXeo0VtsxNhw1lEBc5XAbfezZkkEAAV6gSSo9Xf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868400; c=relaxed/simple;
-	bh=wB7xaDhLWKw5dEci/CyFticOuK0rh4C0mvxrJVCTczo=;
+	s=arc-20240116; t=1753868404; c=relaxed/simple;
+	bh=xBvIb0I0Pklhm3WLSKDJrOMGSltesO42yF5XDRQvflQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJ3Sfi5rSJZYJlmWVV/fMoLy4BPzUqmyYasAFP+n5jytmdyCbiK3T2N2+eEtM+p4Y0ISruVIKop42Sq3kXMS+4VaZ+Cg0nkAQxq2wg8xsFZJiUc/SPCszTLweIGtqQD2uBIoZowkkiwai4YCZ7EMlTDwpIdUbThQi6MwEX8SPfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmFdkSVE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DrBv04g6GKH5pqk5vmIZjfxVr/4d3CeMUe+cnq1cIpl0AB5g8cJ85VUOGRag7DhLMGIwL5dfOn1KjBLJyVaCtqc74KMotoAgKbOGhpfzQ5wiN/8MGVFTaWcHRY0/XDx86L29S8gPOKe0AIVuf75/p/S26kiYZByDH/6WSW3zrhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g48Z9+y7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmFdkSVE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDB4C4CEE7;
-	Wed, 30 Jul 2025 09:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g48Z9+y7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F4DC4CEE7;
+	Wed, 30 Jul 2025 09:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868400;
-	bh=wB7xaDhLWKw5dEci/CyFticOuK0rh4C0mvxrJVCTczo=;
+	s=korg; t=1753868403;
+	bh=xBvIb0I0Pklhm3WLSKDJrOMGSltesO42yF5XDRQvflQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vmFdkSVEV42zCorIjdeNHikEMkffMEz7G9OZff5tVHT2NMFianCuH21tjzj3ats7U
-	 GAHgmQfm3C9F/QsL208/ShZSn9IRNoopjTQwwBhpxFh7rMWS0wsJVdrsrh0ho5Oee5
-	 6ZRK1GCXV9rqdgIk4dwXvPYDHe/D9ZEFfGXHURoU=
+	b=g48Z9+y7qUOD6q5vSMWjDpsjic9saFodkEzqNLJcf606ecdBrTdNjGUsnJ/IEx6up
+	 /+Ekrs0KsoGNENWtH6EH4/QdPBzm6mkgBRrxoZkA9oi4R41dwyTnFw2M707nJy4jsm
+	 2OENcKYNX6BFzXqkKMEHfVdr1UhCm3nvgm/R5eRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ac2116e48989e84a2893@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Aditya Dutt <duttaditya18@gmail.com>
-Subject: [PATCH 6.6 53/76] jfs: reject on-disk inodes of an unsupported type
-Date: Wed, 30 Jul 2025 11:35:46 +0200
-Message-ID: <20250730093228.899276718@linuxfoundation.org>
+	Peiyang Wang <wangpeiyang1@huawei.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 27/76] net: hns3: default enable tx bounce buffer when smmu enabled
+Date: Wed, 30 Jul 2025 11:35:20 +0200
+Message-ID: <20250730093227.894837130@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -52,112 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Jijie Shao <shaojijie@huawei.com>
 
-commit 8c3f9a70d2d4dd6c640afe294b05c6a0a45434d9 upstream.
+[ Upstream commit e6ab19443b36a45ebfb392775cb17d6a78dd07ea ]
 
-Syzbot has reported the following BUG:
+The SMMU engine on HIP09 chip has a hardware issue.
+SMMU pagetable prefetch features may prefetch and use a invalid PTE
+even the PTE is valid at that time. This will cause the device trigger
+fake pagefaults. The solution is to avoid prefetching by adding a
+SYNC command when smmu mapping a iova. But the performance of nic has a
+sharp drop. Then we do this workaround, always enable tx bounce buffer,
+avoid mapping/unmapping on TX path.
 
-kernel BUG at fs/inode.c:668!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 3 UID: 0 PID: 139 Comm: jfsCommit Not tainted 6.12.0-rc4-syzkaller-00085-g4e46774408d9 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
-RIP: 0010:clear_inode+0x168/0x190
-Code: 4c 89 f7 e8 ba fe e5 ff e9 61 ff ff ff 44 89 f1 80 e1 07 80 c1 03 38 c1 7c c1 4c 89 f7 e8 90 ff e5 ff eb b7
- 0b e8 01 5d 7f ff 90 0f 0b e8 f9 5c 7f ff 90 0f 0b e8 f1 5c 7f
-RSP: 0018:ffffc900027dfae8 EFLAGS: 00010093
-RAX: ffffffff82157a87 RBX: 0000000000000001 RCX: ffff888104d4b980
-RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000000
-RBP: ffffc900027dfc90 R08: ffffffff82157977 R09: fffff520004fbf38
-R10: dffffc0000000000 R11: fffff520004fbf38 R12: dffffc0000000000
-R13: ffff88811315bc00 R14: ffff88811315bda8 R15: ffff88811315bb80
-FS:  0000000000000000(0000) GS:ffff888135f00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005565222e0578 CR3: 0000000026ef0000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- ? __die_body+0x5f/0xb0
- ? die+0x9e/0xc0
- ? do_trap+0x15a/0x3a0
- ? clear_inode+0x168/0x190
- ? do_error_trap+0x1dc/0x2c0
- ? clear_inode+0x168/0x190
- ? __pfx_do_error_trap+0x10/0x10
- ? report_bug+0x3cd/0x500
- ? handle_invalid_op+0x34/0x40
- ? clear_inode+0x168/0x190
- ? exc_invalid_op+0x38/0x50
- ? asm_exc_invalid_op+0x1a/0x20
- ? clear_inode+0x57/0x190
- ? clear_inode+0x167/0x190
- ? clear_inode+0x168/0x190
- ? clear_inode+0x167/0x190
- jfs_evict_inode+0xb5/0x440
- ? __pfx_jfs_evict_inode+0x10/0x10
- evict+0x4ea/0x9b0
- ? __pfx_evict+0x10/0x10
- ? iput+0x713/0xa50
- txUpdateMap+0x931/0xb10
- ? __pfx_txUpdateMap+0x10/0x10
- jfs_lazycommit+0x49a/0xb80
- ? _raw_spin_unlock_irqrestore+0x8f/0x140
- ? lockdep_hardirqs_on+0x99/0x150
- ? __pfx_jfs_lazycommit+0x10/0x10
- ? __pfx_default_wake_function+0x10/0x10
- ? __kthread_parkme+0x169/0x1d0
- ? __pfx_jfs_lazycommit+0x10/0x10
- kthread+0x2f2/0x390
- ? __pfx_jfs_lazycommit+0x10/0x10
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x4d/0x80
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+This issue only affects HNS3, so we always enable
+tx bounce buffer when smmu enabled to improve performance.
 
-This happens when 'clear_inode()' makes an attempt to finalize an underlying
-JFS inode of unknown type. According to JFS layout description from
-https://jfs.sourceforge.net/project/pub/jfslayout.pdf, inode types from 5 to
-15 are reserved for future extensions and should not be encountered on a valid
-filesystem. So add an extra check for valid inode type in 'copy_from_dinode()'.
-
-Reported-by: syzbot+ac2116e48989e84a2893@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ac2116e48989e84a2893
-Fixes: 79ac5a46c5c1 ("jfs_lookup(): don't bother with . or ..")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Aditya Dutt <duttaditya18@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 295ba232a8c3 ("net: hns3: add device version to replace pci revision")
+Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 49ade8630f36 ("net: hns3: default enable tx bounce buffer when smmu enabled")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 31 +++++++++++++++++++
+ .../net/ethernet/hisilicon/hns3/hns3_enet.h   |  2 ++
+ 2 files changed, 33 insertions(+)
 
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -3029,14 +3029,23 @@ static void duplicateIXtree(struct super
-  *
-  * RETURN VALUES:
-  *	0	- success
-- *	-ENOMEM	- insufficient memory
-+ *	-EINVAL	- unexpected inode type
-  */
- static int copy_from_dinode(struct dinode * dip, struct inode *ip)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 0ed01f4d68061..dbf44a17987eb 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -11,6 +11,7 @@
+ #include <linux/irq.h>
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
++#include <linux/iommu.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/skbuff.h>
+@@ -1039,6 +1040,8 @@ static bool hns3_can_use_tx_sgl(struct hns3_enet_ring *ring,
+ static void hns3_init_tx_spare_buffer(struct hns3_enet_ring *ring)
  {
- 	struct jfs_inode_info *jfs_ip = JFS_IP(ip);
- 	struct jfs_sb_info *sbi = JFS_SBI(ip->i_sb);
-+	int fileset = le32_to_cpu(dip->di_fileset);
+ 	u32 alloc_size = ring->tqp->handle->kinfo.tx_spare_buf_size;
++	struct net_device *netdev = ring_to_netdev(ring);
++	struct hns3_nic_priv *priv = netdev_priv(netdev);
+ 	struct hns3_tx_spare *tx_spare;
+ 	struct page *page;
+ 	dma_addr_t dma;
+@@ -1080,6 +1083,7 @@ static void hns3_init_tx_spare_buffer(struct hns3_enet_ring *ring)
+ 	tx_spare->buf = page_address(page);
+ 	tx_spare->len = PAGE_SIZE << order;
+ 	ring->tx_spare = tx_spare;
++	ring->tx_copybreak = priv->tx_copybreak;
+ 	return;
  
--	jfs_ip->fileset = le32_to_cpu(dip->di_fileset);
-+	switch (fileset) {
-+	case AGGR_RESERVED_I: case AGGREGATE_I: case BMAP_I:
-+	case LOG_I: case BADBLOCK_I: case FILESYSTEM_I:
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
+ dma_mapping_error:
+@@ -4879,6 +4883,30 @@ static void hns3_nic_dealloc_vector_data(struct hns3_nic_priv *priv)
+ 	devm_kfree(&pdev->dev, priv->tqp_vector);
+ }
+ 
++static void hns3_update_tx_spare_buf_config(struct hns3_nic_priv *priv)
++{
++#define HNS3_MIN_SPARE_BUF_SIZE (2 * 1024 * 1024)
++#define HNS3_MAX_PACKET_SIZE (64 * 1024)
 +
-+	jfs_ip->fileset = fileset;
- 	jfs_ip->mode2 = le32_to_cpu(dip->di_mode);
- 	jfs_set_inode_flags(ip);
++	struct iommu_domain *domain = iommu_get_domain_for_dev(priv->dev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(priv->ae_handle);
++	struct hnae3_handle *handle = priv->ae_handle;
++
++	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V3)
++		return;
++
++	if (!(domain && iommu_is_dma_domain(domain)))
++		return;
++
++	priv->min_tx_copybreak = HNS3_MAX_PACKET_SIZE;
++	priv->min_tx_spare_buf_size = HNS3_MIN_SPARE_BUF_SIZE;
++
++	if (priv->tx_copybreak < priv->min_tx_copybreak)
++		priv->tx_copybreak = priv->min_tx_copybreak;
++	if (handle->kinfo.tx_spare_buf_size < priv->min_tx_spare_buf_size)
++		handle->kinfo.tx_spare_buf_size = priv->min_tx_spare_buf_size;
++}
++
+ static void hns3_ring_get_cfg(struct hnae3_queue *q, struct hns3_nic_priv *priv,
+ 			      unsigned int ring_type)
+ {
+@@ -5113,6 +5141,7 @@ int hns3_init_all_ring(struct hns3_nic_priv *priv)
+ 	int i, j;
+ 	int ret;
  
++	hns3_update_tx_spare_buf_config(priv);
+ 	for (i = 0; i < ring_num; i++) {
+ 		ret = hns3_alloc_ring_memory(&priv->ring[i]);
+ 		if (ret) {
+@@ -5317,6 +5346,8 @@ static int hns3_client_init(struct hnae3_handle *handle)
+ 	priv->ae_handle = handle;
+ 	priv->tx_timeout_count = 0;
+ 	priv->max_non_tso_bd_num = ae_dev->dev_specs.max_non_tso_bd_num;
++	priv->min_tx_copybreak = 0;
++	priv->min_tx_spare_buf_size = 0;
+ 	set_bit(HNS3_NIC_STATE_DOWN, &priv->state);
+ 
+ 	handle->msg_enable = netif_msg_init(debug, DEFAULT_MSG_LEVEL);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
+index d36c4ed16d8dd..caf7a4df85852 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.h
+@@ -596,6 +596,8 @@ struct hns3_nic_priv {
+ 	struct hns3_enet_coalesce rx_coal;
+ 	u32 tx_copybreak;
+ 	u32 rx_copybreak;
++	u32 min_tx_copybreak;
++	u32 min_tx_spare_buf_size;
+ };
+ 
+ union l3_hdr_info {
+-- 
+2.39.5
+
 
 
