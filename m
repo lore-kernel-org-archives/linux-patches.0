@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223FE1F5834;
-	Wed, 30 Jul 2025 09:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F217442C;
+	Wed, 30 Jul 2025 09:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868800; cv=none; b=YlzDEnsH/D8pZ9O1dML/CCqQ1J+2Qrvco7Wk0YVb0QZX0OMbNDH869Jp+IUyxG4Wb7S9GDK7Lmf32eCBKWxePXXrdi5uxF+YpFhW6qGQxBSCnGN0S5ajStr4i3UDmMeEbEhmsOjSXgQR1RMigRm/EWyJJFd3YshK70worbHCpTs=
+	t=1753868804; cv=none; b=kENH3saTy9wb8UIzVfVgyqmzyYzVRYAPj4nWJizlZWJ+a+H/pTOTDKLEf5jYkZC8vpb07+W4nJ7qGCgk2sxi6NcazaqC4OHYHDAatUvFwuQ9DeylRsg54KRyMq6N8y4YezBVEDIXx0bpgzzJj8wnWVfwUHlT9P5P1a/LunCZ9CU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868800; c=relaxed/simple;
-	bh=5Yq4Ob6jUcWxHfavLp19GSQ8gxeryI3mDYPxjf1pUyw=;
+	s=arc-20240116; t=1753868804; c=relaxed/simple;
+	bh=ZySLQLRQ4+0DNQ8z+8ZyhtuloqEIFXenrwyoPIO2paA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmA12uufJ2EgjVJBlaiDu1aXhmSToGZemQbdTC28qzXHP25SbFV8o2/FSvZNEdWpYlCSLd+fSQazuU3QmY9QmUu5FOLdD/tRuC3tJwZi0UZ7ppzUox0qfx9XQ7baf7A5TaSgKuW6IvFTUbPgT5AgpqmPEh7/77qsXE6d0bKcgNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcq6vptv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ta4H+dmJPg39c/asw7VR0Odc1c4Dp6A8fvcEUxOxTWOXwWH6rDS3OJdZc5pB0Fyy9Fa0McevbmqxflruiFQm6sOeMVX2cmivYpAfaUqnpFHV3/BfeIr697pY2stSjQ/3/JCE1TjjJBPCZ8FOYClLw+rL2hfyjQzPqRx6SRKnyzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxE+nM+h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcq6vptv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAA7C4CEF6;
-	Wed, 30 Jul 2025 09:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxE+nM+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10257C4CEF5;
+	Wed, 30 Jul 2025 09:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868799;
-	bh=5Yq4Ob6jUcWxHfavLp19GSQ8gxeryI3mDYPxjf1pUyw=;
+	s=korg; t=1753868803;
+	bh=ZySLQLRQ4+0DNQ8z+8ZyhtuloqEIFXenrwyoPIO2paA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcq6vptveXxJNmDcYf4OraGxsJE0iVErXP6xfFDpYaAj85ZHGK7GXMGvTZMGsm8Os
-	 fbsp8Aq3NnmvQKr3sSxZNGzyr24qfGwvoADr8WSXEHSU9a7LVQ4AbcM5AFYENhSR5R
-	 6CJOJ5qUb9gTUyyXEzsU8YJD/KyuH7/qR2UpmRpQ=
+	b=VxE+nM+hZPxFLkLxJYqo0rxv3DCWvH3n1OZ2tTQlAMX3faxRYLpIwRaQBWEgs3n/m
+	 tt+245pygdeC/tsmiI9x/jLziW1iB5W725WTl/BqaxHJWEzWfMPrDTftTXCaIyuJ1J
+	 gsrLLo5dRqIYHkQJiPvkRIelkdBncYevPjfHnORQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/117] erofs: simplify z_erofs_load_compact_lcluster()
-Date: Wed, 30 Jul 2025 11:35:48 +0200
-Message-ID: <20250730093236.832499065@linuxfoundation.org>
+Subject: [PATCH 6.12 080/117] erofs: refine z_erofs_get_extent_compressedlen()
+Date: Wed, 30 Jul 2025 11:35:49 +0200
+Message-ID: <20250730093236.869836209@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -53,140 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 2a810ea79cd7a6d5f134ea69ca2ba726e600cbc4 ]
+[ Upstream commit 8f9530aeeb4f756bdfa70510b40e5d28ea3c742e ]
 
- - Get rid of unpack_compacted_index() and fold it into
-   z_erofs_load_compact_lcluster();
+ - Set `compressedblks = 1` directly for non-bigpcluster cases.  This
+   simplifies the logic a bit since lcluster sizes larger than one block
+   are unsupported and the details remain unclear.
 
- - Avoid a goto.
+ - For Z_EROFS_LCLUSTER_TYPE_PLAIN pclusters, avoid assuming
+   `compressedblks = 1` by default.  Instead, check if
+   Z_EROFS_ADVISE_BIG_PCLUSTER_2 is set.
 
-Reviewed-by: Chao Yu <chao@kernel.org>
+It basically has no impact to existing valid images, but it's useful to
+find the gap to prepare for large PLAIN pclusters.
+
+Link: https://lore.kernel.org/r/20250123090109.973463-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250114034429.431408-1-hsiangkao@linux.alibaba.com
 Stable-dep-of: b44686c8391b ("erofs: fix large fragment handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zmap.c |   89 ++++++++++++++++++++++----------------------------------
- 1 file changed, 36 insertions(+), 53 deletions(-)
+ fs/erofs/zmap.c |   36 ++++++++++++++++--------------------
+ 1 file changed, 16 insertions(+), 20 deletions(-)
 
 --- a/fs/erofs/zmap.c
 +++ b/fs/erofs/zmap.c
-@@ -97,17 +97,48 @@ static int get_compacted_la_distance(uns
- 	return d1;
- }
- 
--static int unpack_compacted_index(struct z_erofs_maprecorder *m,
--				  unsigned int amortizedshift,
--				  erofs_off_t pos, bool lookahead)
-+static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
-+					 unsigned long lcn, bool lookahead)
+@@ -294,27 +294,23 @@ err_bogus:
+ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
+ 					    unsigned int initial_lcn)
  {
+-	struct super_block *sb = m->inode->i_sb;
 -	struct erofs_inode *const vi = EROFS_I(m->inode);
-+	struct inode *const inode = m->inode;
-+	struct erofs_inode *const vi = EROFS_I(inode);
-+	const erofs_off_t ebase = sizeof(struct z_erofs_map_header) +
-+		ALIGN(erofs_iloc(inode) + vi->inode_isize + vi->xattr_isize, 8);
- 	const unsigned int lclusterbits = vi->z_logical_clusterbits;
-+	const unsigned int totalidx = erofs_iblks(inode);
-+	unsigned int compacted_4b_initial, compacted_2b, amortizedshift;
- 	unsigned int vcnt, lo, lobits, encodebits, nblk, bytes;
--	bool big_pcluster;
-+	bool big_pcluster = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1;
-+	erofs_off_t pos;
- 	u8 *in, type;
- 	int i;
+-	struct erofs_map_blocks *const map = m->map;
+-	const unsigned int lclusterbits = vi->z_logical_clusterbits;
+-	unsigned long lcn;
++	struct inode *inode = m->inode;
++	struct super_block *sb = inode->i_sb;
++	struct erofs_inode *vi = EROFS_I(inode);
++	bool bigpcl1 = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1;
++	bool bigpcl2 = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_2;
++	unsigned long lcn = m->lcn + 1;
+ 	int err;
  
-+	if (lcn >= totalidx || lclusterbits > 14)
-+		return -EINVAL;
+-	DBG_BUGON(m->type != Z_EROFS_LCLUSTER_TYPE_PLAIN &&
+-		  m->type != Z_EROFS_LCLUSTER_TYPE_HEAD1 &&
+-		  m->type != Z_EROFS_LCLUSTER_TYPE_HEAD2);
++	DBG_BUGON(m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD);
+ 	DBG_BUGON(m->type != m->headtype);
+ 
+-	if (m->headtype == Z_EROFS_LCLUSTER_TYPE_PLAIN ||
+-	    ((m->headtype == Z_EROFS_LCLUSTER_TYPE_HEAD1) &&
+-	     !(vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1)) ||
+-	    ((m->headtype == Z_EROFS_LCLUSTER_TYPE_HEAD2) &&
+-	     !(vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_2))) {
+-		map->m_plen = 1ULL << lclusterbits;
+-		return 0;
+-	}
+-	lcn = m->lcn + 1;
++	if ((m->headtype == Z_EROFS_LCLUSTER_TYPE_HEAD1 && !bigpcl1) ||
++	    ((m->headtype == Z_EROFS_LCLUSTER_TYPE_PLAIN ||
++	      m->headtype == Z_EROFS_LCLUSTER_TYPE_HEAD2) && !bigpcl2) ||
++	    (lcn << vi->z_logical_clusterbits) >= inode->i_size)
++		m->compressedblks = 1;
 +
-+	m->lcn = lcn;
-+	/* used to align to 32-byte (compacted_2b) alignment */
-+	compacted_4b_initial = ((32 - ebase % 32) / 4) & 7;
-+	compacted_2b = 0;
-+	if ((vi->z_advise & Z_EROFS_ADVISE_COMPACTED_2B) &&
-+	    compacted_4b_initial < totalidx)
-+		compacted_2b = rounddown(totalidx - compacted_4b_initial, 16);
-+
-+	pos = ebase;
-+	amortizedshift = 2;	/* compact_4b */
-+	if (lcn >= compacted_4b_initial) {
-+		pos += compacted_4b_initial * 4;
-+		lcn -= compacted_4b_initial;
-+		if (lcn < compacted_2b) {
-+			amortizedshift = 1;
-+		} else {
-+			pos += compacted_2b * 2;
-+			lcn -= compacted_2b;
-+		}
-+	}
-+	pos += lcn * (1 << amortizedshift);
-+
-+	/* figure out the lcluster count in this pack */
- 	if (1 << amortizedshift == 4 && lclusterbits <= 14)
- 		vcnt = 2;
- 	else if (1 << amortizedshift == 2 && lclusterbits <= 12)
-@@ -122,7 +153,6 @@ static int unpack_compacted_index(struct
- 	/* it doesn't equal to round_up(..) */
- 	m->nextpackoff = round_down(pos, vcnt << amortizedshift) +
- 			 (vcnt << amortizedshift);
--	big_pcluster = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1;
- 	lobits = max(lclusterbits, ilog2(Z_EROFS_LI_D0_CBLKCNT) + 1U);
- 	encodebits = ((vcnt << amortizedshift) - sizeof(__le32)) * 8 / vcnt;
- 	bytes = pos & ((vcnt << amortizedshift) - 1);
-@@ -207,53 +237,6 @@ static int unpack_compacted_index(struct
+ 	if (m->compressedblks)
+ 		goto out;
+ 
+@@ -339,9 +335,9 @@ static int z_erofs_get_extent_compressed
+ 	case Z_EROFS_LCLUSTER_TYPE_HEAD2:
+ 		/*
+ 		 * if the 1st NONHEAD lcluster is actually PLAIN or HEAD type
+-		 * rather than CBLKCNT, it's a 1 lcluster-sized pcluster.
++		 * rather than CBLKCNT, it's a 1 block-sized pcluster.
+ 		 */
+-		m->compressedblks = 1 << (lclusterbits - sb->s_blocksize_bits);
++		m->compressedblks = 1;
+ 		break;
+ 	case Z_EROFS_LCLUSTER_TYPE_NONHEAD:
+ 		if (m->delta[0] != 1)
+@@ -356,7 +352,7 @@ static int z_erofs_get_extent_compressed
+ 		return -EFSCORRUPTED;
+ 	}
+ out:
+-	map->m_plen = erofs_pos(sb, m->compressedblks);
++	m->map->m_plen = erofs_pos(sb, m->compressedblks);
  	return 0;
- }
- 
--static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
--					 unsigned long lcn, bool lookahead)
--{
--	struct inode *const inode = m->inode;
--	struct erofs_inode *const vi = EROFS_I(inode);
--	const erofs_off_t ebase = sizeof(struct z_erofs_map_header) +
--		ALIGN(erofs_iloc(inode) + vi->inode_isize + vi->xattr_isize, 8);
--	unsigned int totalidx = erofs_iblks(inode);
--	unsigned int compacted_4b_initial, compacted_2b;
--	unsigned int amortizedshift;
--	erofs_off_t pos;
--
--	if (lcn >= totalidx || vi->z_logical_clusterbits > 14)
--		return -EINVAL;
--
--	m->lcn = lcn;
--	/* used to align to 32-byte (compacted_2b) alignment */
--	compacted_4b_initial = (32 - ebase % 32) / 4;
--	if (compacted_4b_initial == 32 / 4)
--		compacted_4b_initial = 0;
--
--	if ((vi->z_advise & Z_EROFS_ADVISE_COMPACTED_2B) &&
--	    compacted_4b_initial < totalidx)
--		compacted_2b = rounddown(totalidx - compacted_4b_initial, 16);
--	else
--		compacted_2b = 0;
--
--	pos = ebase;
--	if (lcn < compacted_4b_initial) {
--		amortizedshift = 2;
--		goto out;
--	}
--	pos += compacted_4b_initial * 4;
--	lcn -= compacted_4b_initial;
--
--	if (lcn < compacted_2b) {
--		amortizedshift = 1;
--		goto out;
--	}
--	pos += compacted_2b * 2;
--	lcn -= compacted_2b;
--	amortizedshift = 2;
--out:
--	pos += lcn * (1 << amortizedshift);
--	return unpack_compacted_index(m, amortizedshift, pos, lookahead);
--}
--
- static int z_erofs_load_lcluster_from_disk(struct z_erofs_maprecorder *m,
- 					   unsigned int lcn, bool lookahead)
- {
+ err_bonus_cblkcnt:
+ 	erofs_err(sb, "bogus CBLKCNT @ lcn %lu of nid %llu", lcn, vi->nid);
 
 
