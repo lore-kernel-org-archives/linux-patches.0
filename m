@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C1442C;
-	Wed, 30 Jul 2025 09:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4E0275AE9;
+	Wed, 30 Jul 2025 09:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868940; cv=none; b=EwePBj9bvcH/SALAlwtVPwm+tadMIpumrG7SuRIY8Molpqn/ZWrTnMjO9hTarS57KeGg0iDLeyb7LX2iOqu2IWhd3+NmtEimgBDWF31dnLdjL3ThoKMAa2iIAVlJKGp2c8Hix1p6CxASHTdAmsyI2u/A1fCbJEZGvyHAh8lkctc=
+	t=1753868944; cv=none; b=icv6eXt9C4ajbuJXmi5fHqElkCyS0XUlvBPLB0rChNSzUeOPiapJDXkcH5I39HrXLLPvQarOy/Lrj9WFd1Priw9YJRwjUgpGDkFZ7crpzPlbio25kz7boDb2V8FauAyQ2bmvBth0LJ+/Epo9Lxc4EVOtELhVMTeP1W4YYhv6NC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868940; c=relaxed/simple;
-	bh=+d6Y7/FAv+3eUk88zbe2KQXiskPBUDBz0xR2ZKCuznw=;
+	s=arc-20240116; t=1753868944; c=relaxed/simple;
+	bh=b0bepjW1Ipi/X932vRhh4TXxeVCWFPU3l5/++QfcE7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9tr5/B+WotHCvYGXDFoqYwMtux5kvEtkEdDxuB/8cN9j72JE70Hmv/Nu2MntwuNuuIGRo6w3AXvL+5OCgUIuyFofVi5WNnUcOygudTdROLOG/xIXWoF82zTaWrt9Li7eHyTVGhhYGQOa7X6vf8UOxrIjQiYkXvtcnZukCjSEA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJcZwyLi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oXzH9Wt3kjKNtqSlpLq74IlKa3YXxtg8B+GOrP76bgV5IapDzR/QUB1YTY79nh8rwsVbrV/2XYnUH01PyvbtJd6MmfX7bmL3kb+qU7W2QN44SEckIeTBb6tr1VXPguZwlAcPygH8OTOX7OFrseQZuUu1xbe/6VbOvz4dFy712AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4uxrhKf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJcZwyLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F98C4CEF5;
-	Wed, 30 Jul 2025 09:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4uxrhKf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE8DC4CEF5;
+	Wed, 30 Jul 2025 09:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868940;
-	bh=+d6Y7/FAv+3eUk88zbe2KQXiskPBUDBz0xR2ZKCuznw=;
+	s=korg; t=1753868944;
+	bh=b0bepjW1Ipi/X932vRhh4TXxeVCWFPU3l5/++QfcE7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJcZwyLiB7/NBwPucnXjGSZS/wXh75rz6TFdcuTp3rJa1DeZJCI/eHqOZaKkPCdYB
-	 ecsFrW5rHd3SVz9+Sj286GFkvqFPrLcNN5z8l9TE0FCTiUh0+djCcaJORgpYWkagWD
-	 CnJVR/cZnS8Ysd5o+abardY9vBkuXZ7QuW8twlhI=
+	b=K4uxrhKfbaHj8IM9F63gFW9WStDLjZW0qInP5olxx+1evN0vIsjjzNnCAg8Roa6Yo
+	 GifYdrE/0ERiBuzZPE60mWn+OH3hUIOlVqytB6ZrnY3tQgwqQUrwv1VDFAikvOdAhf
+	 ND0kDH2UPcj8UbIB+OOPTQiKMCkyRI3KrZdguYw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nirmoy Das <nirmoy.das@intel.com>,
 	Badal Nilawar <badal.nilawar@intel.com>,
 	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH 6.12 113/117] Revert "drm/xe/tests/mocs: Update xe_force_wake_get() return handling"
-Date: Wed, 30 Jul 2025 11:36:22 +0200
-Message-ID: <20250730093238.208290861@linuxfoundation.org>
+Subject: [PATCH 6.12 114/117] Revert "drm/xe/devcoredump: Update handling of xe_force_wake_get return"
+Date: Wed, 30 Jul 2025 11:36:23 +0200
+Message-ID: <20250730093238.246476008@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -56,7 +56,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomita Moeko <tomitamoeko@gmail.com>
 
-This reverts commit 95a75ed2b005447f96fbd4ac61758ccda44069d1.
+This reverts commit 9ffd6ec2de08ef4ac5f17f6131d1db57613493f9.
 
 The reverted commit updated the handling of xe_force_wake_get to match
 the new "return refcounted domain mask" semantics introduced in commit
@@ -65,7 +65,7 @@ that API change only exists in 6.13 and later.
 
 In 6.12 stable kernel, xe_force_wake_get still returns a status code.
 The update incorrectly treats the return value as a mask, causing the
-return value of 0 to be misinterpreted as an error.
+return value of 0 to be misinterpreted as an error
 
 Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Cc: Lucas De Marchi <lucas.demarchi@intel.com>
@@ -76,66 +76,63 @@ Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/tests/xe_mocs.c |   21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/xe/xe_devcoredump.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/xe/tests/xe_mocs.c
-+++ b/drivers/gpu/drm/xe/tests/xe_mocs.c
-@@ -43,14 +43,12 @@ static void read_l3cc_table(struct xe_gt
- {
- 	struct kunit *test = kunit_get_current_test();
- 	u32 l3cc, l3cc_expected;
--	unsigned int fw_ref, i;
-+	unsigned int i;
- 	u32 reg_val;
-+	u32 ret;
+--- a/drivers/gpu/drm/xe/xe_devcoredump.c
++++ b/drivers/gpu/drm/xe/xe_devcoredump.c
+@@ -197,7 +197,6 @@ static void xe_devcoredump_deferred_snap
+ 	struct xe_devcoredump_snapshot *ss = container_of(work, typeof(*ss), work);
+ 	struct xe_devcoredump *coredump = container_of(ss, typeof(*coredump), snapshot);
+ 	struct xe_device *xe = coredump_to_xe(coredump);
+-	unsigned int fw_ref;
  
--	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
--	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL)) {
--		xe_force_wake_put(gt_to_fw(gt), fw_ref);
--		KUNIT_ASSERT_TRUE_MSG(test, true, "Forcewake Failed.\n");
--	}
-+	ret = xe_force_wake_get(gt_to_fw(gt), XE_FORCEWAKE_ALL);
-+	KUNIT_ASSERT_EQ_MSG(test, ret, 0, "Forcewake Failed.\n");
+ 	/*
+ 	 * NB: Despite passing a GFP_ flags parameter here, more allocations are done
+@@ -211,12 +210,11 @@ static void xe_devcoredump_deferred_snap
+ 	xe_pm_runtime_get(xe);
  
- 	for (i = 0; i < info->num_mocs_regs; i++) {
- 		if (!(i & 1)) {
-@@ -74,7 +72,7 @@ static void read_l3cc_table(struct xe_gt
- 		KUNIT_EXPECT_EQ_MSG(test, l3cc_expected, l3cc,
- 				    "l3cc idx=%u has incorrect val.\n", i);
- 	}
--	xe_force_wake_put(gt_to_fw(gt), fw_ref);
-+	xe_force_wake_put(gt_to_fw(gt), XE_FORCEWAKE_ALL);
- }
+ 	/* keep going if fw fails as we still want to save the memory and SW data */
+-	fw_ref = xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
+-	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
++	if (xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL))
+ 		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
+ 	xe_vm_snapshot_capture_delayed(ss->vm);
+ 	xe_guc_exec_queue_snapshot_capture_delayed(ss->ge);
+-	xe_force_wake_put(gt_to_fw(ss->gt), fw_ref);
++	xe_force_wake_put(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
  
- static void read_mocs_table(struct xe_gt *gt,
-@@ -82,14 +80,15 @@ static void read_mocs_table(struct xe_gt
- {
- 	struct kunit *test = kunit_get_current_test();
- 	u32 mocs, mocs_expected;
--	unsigned int fw_ref, i;
-+	unsigned int i;
- 	u32 reg_val;
-+	u32 ret;
+ 	xe_pm_runtime_put(xe);
  
- 	KUNIT_EXPECT_TRUE_MSG(test, info->unused_entries_index,
- 			      "Unused entries index should have been defined\n");
+@@ -243,9 +241,8 @@ static void devcoredump_snapshot(struct
+ 	u32 width_mask = (0x1 << q->width) - 1;
+ 	const char *process_name = "no process";
  
--	fw_ref = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
--	KUNIT_ASSERT_NE_MSG(test, fw_ref, 0, "Forcewake Failed.\n");
-+	ret = xe_force_wake_get(gt_to_fw(gt), XE_FW_GT);
-+	KUNIT_ASSERT_EQ_MSG(test, ret, 0, "Forcewake Failed.\n");
+-	unsigned int fw_ref;
+-	bool cookie;
+ 	int i;
++	bool cookie;
  
- 	for (i = 0; i < info->num_mocs_regs; i++) {
- 		if (regs_are_mcr(gt))
-@@ -107,7 +106,7 @@ static void read_mocs_table(struct xe_gt
- 				    "mocs reg 0x%x has incorrect val.\n", i);
+ 	ss->snapshot_time = ktime_get_real();
+ 	ss->boot_time = ktime_get_boottime();
+@@ -268,7 +265,8 @@ static void devcoredump_snapshot(struct
  	}
  
--	xe_force_wake_put(gt_to_fw(gt), fw_ref);
-+	xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
+ 	/* keep going if fw fails as we still want to save the memory and SW data */
+-	fw_ref = xe_force_wake_get(gt_to_fw(q->gt), XE_FORCEWAKE_ALL);
++	if (xe_force_wake_get(gt_to_fw(q->gt), XE_FORCEWAKE_ALL))
++		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
+ 
+ 	ss->ct = xe_guc_ct_snapshot_capture(&guc->ct, true);
+ 	ss->ge = xe_guc_exec_queue_snapshot_capture(q);
+@@ -286,7 +284,7 @@ static void devcoredump_snapshot(struct
+ 
+ 	queue_work(system_unbound_wq, &ss->work);
+ 
+-	xe_force_wake_put(gt_to_fw(q->gt), fw_ref);
++	xe_force_wake_put(gt_to_fw(q->gt), XE_FORCEWAKE_ALL);
+ 	dma_fence_end_signalling(cookie);
  }
  
- static int mocs_kernel_test_run_device(struct xe_device *xe)
 
 
