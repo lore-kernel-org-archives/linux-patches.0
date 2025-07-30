@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8ED157E6B;
-	Wed, 30 Jul 2025 09:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907F9270ED4;
+	Wed, 30 Jul 2025 09:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868673; cv=none; b=u/vPQzxkOkK5l/27Wtu6Gzua96YhBvGxDUgQbqDqASs7MKMwz/Ia7dP5uJDmnhZN/tgjmIdisu4g1vBT0mr/iGTpwtgKoa9wTKkYH8ICSwUcKBDqGSmzDt+qMW8lpv4GwtYq/EqiQw90hj0dWSvR2R+KWvUtk16h+uQfT+IXtXg=
+	t=1753868677; cv=none; b=Rcm4y1U+PN7EFhrkqj1nA4PIGq327E6+4bVSRDWI+irKfM+DL/Nw66+tk91NmUECUUfmd94lNggrRJHUtJqhxvnQNBaS5h4b9Z2FuF0jG7o22ljkQZeS5iGcAazDyy9z+orpFkM+8jDArGlhZ2hbRGh00ciozyfs9Y6gE0wTBbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868673; c=relaxed/simple;
-	bh=eCtIvERHBfHdDYGhhzB2oMqgHyL4/Gst/y290dxSYRA=;
+	s=arc-20240116; t=1753868677; c=relaxed/simple;
+	bh=IGqxl0XE5/g4ylj9Ksi04pybJQpRhtvsC+iCPECE3ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guUbMh3o/b22fwLUZTDho6Vm5SEroFkC/pIgqJxANgsRXTrOkVLAP6hbD75u+HHPwT6N968P85F5AJ0zhHkZPBVezU6RPTZzKUqiMXGGs7DaUINFpHYruRlo4JTLaH/T6dsJfN9frOASsDmoUxZ2c81lw3rJs5rFjbqAANgfP8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOJUyJ9o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbCz1rsREG3bsrOeZ2gQ3Jo/bVS5XSiG4pse110Nly7qkrEH+nFjUfYN5/oTZNDShD2rnYswSXprmXgNnKasNkKk4XqjUIAh57410T93FcCiktBjJ+TkdjHzWQ2qe9/SSC5joMDhoSdQsM8TJZvchCsaiCDu9CqsmW/gAg77xsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCCcxRHM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOJUyJ9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AA7C4CEF5;
-	Wed, 30 Jul 2025 09:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCCcxRHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB63C4CEF5;
+	Wed, 30 Jul 2025 09:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868673;
-	bh=eCtIvERHBfHdDYGhhzB2oMqgHyL4/Gst/y290dxSYRA=;
+	s=korg; t=1753868677;
+	bh=IGqxl0XE5/g4ylj9Ksi04pybJQpRhtvsC+iCPECE3ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOJUyJ9oYTBLZvHTO1KTUfnmQ/0hnnoOL6ZV5paKszuch4gV4Q8jRK/RTMFE2Hws9
-	 VFdhTUiAjhny4+a99IqfTGv8AFrOKXzu4nIoacH9/r/pJ6SwdEvM0bYAceoAO72dSy
-	 71xBS4qGwB+1Kks0OxTpr8dV1C5N84dxjE9uWIso=
+	b=cCCcxRHMNA+nAn4RAxO3/BkUZQrWMggqDBzGF0/RRZlEUX5m+gyUYAwpUdWR0zxSM
+	 H8287LquYLM7x2VReE/WIEZx/tgoxrlb5TUleELl52roJt3+Dv4UHd6wxsyr/xHI3S
+	 oJ3vgQxEuTxaVx6kHTOURE6Tu/PG+CiU8pDd+T9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Lalaev <andrey.lalaev@gmail.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/117] can: netlink: can_changelink(): fix NULL pointer deref of struct can_priv::do_set_mode
-Date: Wed, 30 Jul 2025 11:34:59 +0200
-Message-ID: <20250730093234.738002245@linuxfoundation.org>
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 048/117] i2c: virtio: Avoid hang by using interruptible completion wait
+Date: Wed, 30 Jul 2025 11:35:17 +0200
+Message-ID: <20250730093235.425313466@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -51,118 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit c1f3f9797c1f44a762e6f5f72520b2e520537b52 ]
+commit a663b3c47ab10f66130818cf94eb59c971541c3f upstream.
 
-Andrei Lalaev reported a NULL pointer deref when a CAN device is
-restarted from Bus Off and the driver does not implement the struct
-can_priv::do_set_mode callback.
+The current implementation uses wait_for_completion(), which can cause
+the caller to hang indefinitely if the transfer never completes.
 
-There are 2 code path that call struct can_priv::do_set_mode:
-- directly by a manual restart from the user space, via
-  can_changelink()
-- delayed automatic restart after bus off (deactivated by default)
+Switch to wait_for_completion_interruptible() so that the operation can
+be interrupted by signals.
 
-To prevent the NULL pointer deference, refuse a manual restart or
-configure the automatic restart delay in can_changelink() and report
-the error via extack to user space.
-
-As an additional safety measure let can_restart() return an error if
-can_priv::do_set_mode is not set instead of dereferencing it
-unchecked.
-
-Reported-by: Andrei Lalaev <andrey.lalaev@gmail.com>
-Closes: https://lore.kernel.org/all/20250714175520.307467-1-andrey.lalaev@gmail.com
-Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
-Link: https://patch.msgid.link/20250718-fix-nullptr-deref-do_set_mode-v1-1-0b520097bb96@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 84e1d0bf1d71 ("i2c: virtio: disable timeout handling")
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: <stable@vger.kernel.org> # v5.16+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/b8944e9cab8eb959d888ae80add6f2a686159ba2.1751541962.git.viresh.kumar@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/dev/dev.c     | 12 +++++++++---
- drivers/net/can/dev/netlink.c | 12 ++++++++++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-virtio.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
-index 681643ab37804..63e4a495b1371 100644
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -147,13 +147,16 @@ void can_change_state(struct net_device *dev, struct can_frame *cf,
- EXPORT_SYMBOL_GPL(can_change_state);
+--- a/drivers/i2c/busses/i2c-virtio.c
++++ b/drivers/i2c/busses/i2c-virtio.c
+@@ -116,15 +116,16 @@ static int virtio_i2c_complete_reqs(stru
+ 	for (i = 0; i < num; i++) {
+ 		struct virtio_i2c_req *req = &reqs[i];
  
- /* CAN device restart for bus-off recovery */
--static void can_restart(struct net_device *dev)
-+static int can_restart(struct net_device *dev)
- {
- 	struct can_priv *priv = netdev_priv(dev);
- 	struct sk_buff *skb;
- 	struct can_frame *cf;
- 	int err;
- 
-+	if (!priv->do_set_mode)
-+		return -EOPNOTSUPP;
-+
- 	if (netif_carrier_ok(dev))
- 		netdev_err(dev, "Attempt to restart for bus-off recovery, but carrier is OK?\n");
- 
-@@ -175,10 +178,14 @@ static void can_restart(struct net_device *dev)
- 	if (err) {
- 		netdev_err(dev, "Restart failed, error %pe\n", ERR_PTR(err));
- 		netif_carrier_off(dev);
-+
-+		return err;
- 	} else {
- 		netdev_dbg(dev, "Restarted\n");
- 		priv->can_stats.restarts++;
- 	}
-+
-+	return 0;
- }
- 
- static void can_restart_work(struct work_struct *work)
-@@ -203,9 +210,8 @@ int can_restart_now(struct net_device *dev)
- 		return -EBUSY;
- 
- 	cancel_delayed_work_sync(&priv->restart_work);
--	can_restart(dev);
- 
--	return 0;
-+	return can_restart(dev);
- }
- 
- /* CAN bus-off
-diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
-index 01aacdcda2606..abe8dc051d94f 100644
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -285,6 +285,12 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
- 	}
- 
- 	if (data[IFLA_CAN_RESTART_MS]) {
-+		if (!priv->do_set_mode) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Device doesn't support restart from Bus Off");
-+			return -EOPNOTSUPP;
+-		wait_for_completion(&req->completion);
+-
+-		if (!failed && req->in_hdr.status != VIRTIO_I2C_MSG_OK)
+-			failed = true;
++		if (!failed) {
++			if (wait_for_completion_interruptible(&req->completion))
++				failed = true;
++			else if (req->in_hdr.status != VIRTIO_I2C_MSG_OK)
++				failed = true;
++			else
++				j++;
 +		}
-+
- 		/* Do not allow changing restart delay while running */
- 		if (dev->flags & IFF_UP)
- 			return -EBUSY;
-@@ -292,6 +298,12 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
+ 
+ 		i2c_put_dma_safe_msg_buf(reqs[i].buf, &msgs[i], !failed);
+-
+-		if (!failed)
+-			j++;
  	}
  
- 	if (data[IFLA_CAN_RESTART]) {
-+		if (!priv->do_set_mode) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Device doesn't support restart from Bus Off");
-+			return -EOPNOTSUPP;
-+		}
-+
- 		/* Do not allow a restart while not running */
- 		if (!(dev->flags & IFF_UP))
- 			return -EINVAL;
--- 
-2.39.5
-
+ 	return j;
 
 
