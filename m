@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2FE255F5C;
-	Wed, 30 Jul 2025 09:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD12273D95;
+	Wed, 30 Jul 2025 09:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868922; cv=none; b=HsdBh5rb+2eavHljEZGQVmb8/ud4An+Wgo+Ij6zW4utpNbhp79NDj4zqcG8w8C8N38Q0GMwYPH7i8l2ecMe2gUnEjXIKKhoV77mKun4d15E14V4766rujynai7dKrGXKATw4Ae90kZbliuOAcF7v0Yuutm4vUqcwHyGwpFQZKwo=
+	t=1753868925; cv=none; b=qSbGzcIF2qeK3+c9lmhtTZYFlvqH9C0fHpQV5rQDBewTAaWJ9HgeT0wHsDLzVvYhjfvWVZyrwss+QjqePC9S98vA9NcThl9S/0Wj5QF2bp6+X835Fm/uW9F4S8jkKbv2BXtrabtW0CJfuOpnkxGpmLHYybC9MOuMcE6kVrJw9Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868922; c=relaxed/simple;
-	bh=ac+RcAlDVViT1pjyaQ3/hLrH2gsv2ixHsbwDLMCDn+w=;
+	s=arc-20240116; t=1753868925; c=relaxed/simple;
+	bh=kXIOlWIv4wqDFAXuB6qN6ulepzgz0GoL+mGf5X/6l4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAI0oJT33ACe5aQkrQnHEJVUapF21TsfON/SIU/20UHE6/d2GDn6+uQO4BEfHPMtjOHMulyLft7mW0qZf6TukIqCV/h77VrI9Vv2evbXnFae+PA0f2e+RAXueJfP3BsSBjGvVxpZJBNo5RrVS7sKdkKSW7GFYyjsYx83O7C6GYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIOLNBwl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F9ol3WzpCpIIxGgJg9+O2g/AbAPWO8k+mig1LcXAbcsxlGMNUafryCpPsAfbYugtIdn5ebVoj9/qCh4cF8eeWVJWhz9ldPFaNo6KuQQVkLxX+lqve3ST5JeFVNEehLhPxz3HnV2y+nVqkmnMu/nI1u182rmAap6ydmMEMHt0PuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vl+JyO5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIOLNBwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6EAC4CEF5;
-	Wed, 30 Jul 2025 09:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vl+JyO5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BC3C4CEF5;
+	Wed, 30 Jul 2025 09:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868922;
-	bh=ac+RcAlDVViT1pjyaQ3/hLrH2gsv2ixHsbwDLMCDn+w=;
+	s=korg; t=1753868925;
+	bh=kXIOlWIv4wqDFAXuB6qN6ulepzgz0GoL+mGf5X/6l4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIOLNBwlF4za1HMtQdU9fdZgwEPf5SCj15B2YkkKAIy9dcb9WqybFarVVeoZ13Nnn
-	 i0NlTvmIJ7tYyUGZDWYK8u8Gb3Ktvm6D5Nft+upHsE9XQdvhHFpq4Tbw+HEkclepZz
-	 d3HiVPPhAtVGhCzO4Ogzmg9mcOUCihoLuUACoKlE=
+	b=vl+JyO5wb7YoQkBzBl5oU4O+FVvUxwgl2p4GY1a3LwPZCJFq+EABjdzw7LDiNGjCM
+	 1jU46Z/5yn5grYmxHQj3oqidotDzt8dQs8zNArpQRPv8YlQc5w5seMfM+YBgWtumS8
+	 4Yq+71djZvZ0wvPsXSWArwgTdISK/TZG+U0D17vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Dadap <ddadap@nvidia.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/117] ALSA: hda: Add missing NVIDIA HDA codec IDs
-Date: Wed, 30 Jul 2025 11:36:19 +0200
-Message-ID: <20250730093238.089248656@linuxfoundation.org>
+Subject: [PATCH 6.12 111/117] drm/i915/dp: Fix 2.7 Gbps DP_LINK_BW value on g4x
+Date: Wed, 30 Jul 2025 11:36:20 +0200
+Message-ID: <20250730093238.130013268@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -45,73 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Dadap <ddadap@nvidia.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit e0a911ac86857a73182edde9e50d9b4b949b7f01 upstream.
+commit 9e0c433d0c05fde284025264b89eaa4ad59f0a3e upstream.
 
-Add codec IDs for several NVIDIA products with HDA controllers to the
-snd_hda_id_hdmi[] patch table.
+On g4x we currently use the 96MHz non-SSC refclk, which can't actually
+generate an exact 2.7 Gbps link rate. In practice we end up with 2.688
+Gbps which seems to be close enough to actually work, but link training
+is currently failing due to miscalculating the DP_LINK_BW value (we
+calcualte it directly from port_clock which reflects the actual PLL
+outpout frequency).
 
-Signed-off-by: Daniel Dadap <ddadap@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/aF24rqwMKFWoHu12@ddadap-lakeline.nvidia.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Ideas how to fix this:
+- nudge port_clock back up to 270000 during PLL computation/readout
+- track port_clock and the nominal link rate separately so they might
+  differ a bit
+- switch to the 100MHz refclk, but that one should be SSC so perhaps
+  not something we want
+
+While we ponder about a better solution apply some band aid to the
+immediate issue of miscalculated DP_LINK_BW value. With this
+I can again use 2.7 Gbps link rate on g4x.
+
+Cc: stable@vger.kernel.org
+Fixes: 665a7b04092c ("drm/i915: Feed the DPLL output freq back into crtc_state")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250710201718.25310-2-ville.syrjala@linux.intel.com
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+(cherry picked from commit a8b874694db5cae7baaf522756f87acd956e6e66)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[ changed display->platform.g4x to IS_G4X(i915) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dp.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -4551,7 +4551,9 @@ HDA_CODEC_ENTRY(0x10de002e, "Tegra186 HD
- HDA_CODEC_ENTRY(0x10de002f, "Tegra194 HDMI/DP2", patch_tegra_hdmi),
- HDA_CODEC_ENTRY(0x10de0030, "Tegra194 HDMI/DP3", patch_tegra_hdmi),
- HDA_CODEC_ENTRY(0x10de0031, "Tegra234 HDMI/DP", patch_tegra234_hdmi),
-+HDA_CODEC_ENTRY(0x10de0033, "SoC 33 HDMI/DP",	patch_tegra234_hdmi),
- HDA_CODEC_ENTRY(0x10de0034, "Tegra264 HDMI/DP",	patch_tegra234_hdmi),
-+HDA_CODEC_ENTRY(0x10de0035, "SoC 35 HDMI/DP",	patch_tegra234_hdmi),
- HDA_CODEC_ENTRY(0x10de0040, "GPU 40 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de0041, "GPU 41 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de0042, "GPU 42 HDMI/DP",	patch_nvhdmi),
-@@ -4590,15 +4592,32 @@ HDA_CODEC_ENTRY(0x10de0097, "GPU 97 HDMI
- HDA_CODEC_ENTRY(0x10de0098, "GPU 98 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de0099, "GPU 99 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009a, "GPU 9a HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de009b, "GPU 9b HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de009c, "GPU 9c HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009d, "GPU 9d HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009e, "GPU 9e HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009f, "GPU 9f HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a0, "GPU a0 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a1, "GPU a1 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a3, "GPU a3 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a4, "GPU a4 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a5, "GPU a5 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a6, "GPU a6 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a7, "GPU a7 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a8, "GPU a8 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a9, "GPU a9 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00aa, "GPU aa HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00ab, "GPU ab HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00ad, "GPU ad HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00ae, "GPU ae HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00af, "GPU af HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00b0, "GPU b0 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00b1, "GPU b1 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c0, "GPU c0 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c1, "GPU c1 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c3, "GPU c3 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c4, "GPU c4 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00c5, "GPU c5 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de8001, "MCP73 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x10de8067, "MCP67/68 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x67663d82, "Arise 82 HDMI/DP",	patch_gf_hdmi),
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -1506,6 +1506,12 @@ int intel_dp_rate_select(struct intel_dp
+ void intel_dp_compute_rate(struct intel_dp *intel_dp, int port_clock,
+ 			   u8 *link_bw, u8 *rate_select)
+ {
++	struct drm_i915_private *i915 = dp_to_i915(intel_dp);
++
++	/* FIXME g4x can't generate an exact 2.7GHz with the 96MHz non-SSC refclk */
++	if (IS_G4X(i915) && port_clock == 268800)
++		port_clock = 270000;
++
+ 	/* eDP 1.4 rate select method. */
+ 	if (intel_dp->use_rate_select) {
+ 		*link_bw = 0;
 
 
