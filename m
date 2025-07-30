@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F8225DB1A;
-	Wed, 30 Jul 2025 09:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560E623D2A2;
+	Wed, 30 Jul 2025 09:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868597; cv=none; b=PhaAGvK/gLIFif2bQWhBKsvALG8WYmXDlSr1C+vlTQg1z+s9eYHbVrLu4SJax+Qe7NR7k4uqyzBcLpxIgCwo+hR2Mc0EktCaAedrkvONHQHjuEx+KC0xl7TS7eE53mr0GVtEy5hZKj4X59QKG1xXf4GNLaenXNNmPlDaUYLGWrQ=
+	t=1753868601; cv=none; b=M4XvZq+d9lhfNc2KxVAuLOktqJFg7V9EhcMNPxCx1HS95+9FpoCIxPoudYfxncR4ZawUvJp+bTLFhsIvN3RMCSPauUUeEBiBbJU2Dwt1UMXClMsL6ieys3cRXpYrHKUtzHwkqlz30Utv+Tsuu3kgxO6S2E6sF4O3R29AqTIk9do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868597; c=relaxed/simple;
-	bh=56WdRDSLmE0wQGj/7XeZY1X3JEB60qLXYcYDINnyacU=;
+	s=arc-20240116; t=1753868601; c=relaxed/simple;
+	bh=jL8Fkny9RYhuYvDBxtkQxg0d9YfgJMasFFBedYtmEVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLrAhws9GVAXza/BtRcAfX8jdyO93JRJHrsmhU8WsC3u/FiOaGR7J5/BFqmoA8oA3nMNiYvF/ovO62joq5G4kiZIOyNKp69D4JkjuYfzFRHyjO5OSy+aZi0dVLzYQUmtnFdP4dbHddfghwHTipn1GNhghGsngCV8Hf7XLi0eVFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yaj6ByHN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=otZwXGgybaHYicIFG3npGCYpsmzqEski6AwuD/dPxlwFUdC2x2InthjkXCZ1/VcnznvsZ+qIMm5rXSlTe3vTgXWnc3yjm10pieSLRfZ6l2Nfc57zMVu9GfzvBcHhsDYom1IVjhDe2V8taAasdlOgnJJ8H9HOeqlN2F3y6tZx0BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GW6r3AGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yaj6ByHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C52C4CEE7;
-	Wed, 30 Jul 2025 09:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GW6r3AGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844FBC4CEF5;
+	Wed, 30 Jul 2025 09:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868595;
-	bh=56WdRDSLmE0wQGj/7XeZY1X3JEB60qLXYcYDINnyacU=;
+	s=korg; t=1753868598;
+	bh=jL8Fkny9RYhuYvDBxtkQxg0d9YfgJMasFFBedYtmEVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yaj6ByHN98Hx1CeWhvDGEXGAT+CsyXZAmLE8eiNXPwGTnfYzNEf3PCilnSO50ntQV
-	 d+gzTDYz+8/CmffdBYEObnpxCRTS3AJVsnzh7lK/YTFeHyZLgHEff+K/bu/76uZYKm
-	 z5N9y+MpmtjERDL7ORZHnCY2NtsArQVhiTWQIVtg=
+	b=GW6r3AGHEd20UcaPKT8+fG3w7kWk8a6ox2emJDiqw61Rr04c424IS24jA9bVWlurL
+	 VOuLXyBbGGmV96n0lPPkGZVm4yj9CVuIi3M7JxQz2QOgzF0r09v05FbF1EiQ9wBTfq
+	 9ChB144w+kCbeQfS6BCNwtXbwbgEOZ+j04EFJKHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Chen <dechen@redhat.com>,
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/117] i40e: report VF tx_dropped with tx_errors instead of tx_discards
-Date: Wed, 30 Jul 2025 11:34:55 +0200
-Message-ID: <20250730093234.587450319@linuxfoundation.org>
+Subject: [PATCH 6.12 027/117] i40e: When removing VF MAC filters, only check PF-set MAC
+Date: Wed, 30 Jul 2025 11:34:56 +0200
+Message-ID: <20250730093234.625438748@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -53,106 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dennis Chen <dechen@redhat.com>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit 50b2af451597ca6eefe9d4543f8bbf8de8aa00e7 ]
+[ Upstream commit 5a0df02999dbe838c3feed54b1d59e9445f68b89 ]
 
-Currently the tx_dropped field in VF stats is not updated correctly
-when reading stats from the PF. This is because it reads from
-i40e_eth_stats.tx_discards which seems to be unused for per VSI stats,
-as it is not updated by i40e_update_eth_stats() and the corresponding
-register, GLV_TDPC, is not implemented[1].
+When the PF is processing an Admin Queue message to delete a VF's MACs
+from the MAC filter, we currently check if the PF set the MAC and if
+the VF is trusted.
 
-Use i40e_eth_stats.tx_errors instead, which is actually updated by
-i40e_update_eth_stats() by reading from GLV_TEPC.
+This results in undesirable behaviour, where if a trusted VF with a
+PF-set MAC sets itself down (which sends an AQ message to delete the
+VF's MAC filters) then the VF MAC is erased from the interface.
 
-To test, create a VF and try to send bad packets through it:
+This results in the VF losing its PF-set MAC which should not happen.
 
-$ echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
-$ cat test.py
-from scapy.all import *
+There is no need to check for trust at all, because an untrusted VF
+cannot change its own MAC. The only check needed is whether the PF set
+the MAC. If the PF set the MAC, then don't erase the MAC on link-down.
 
-vlan_pkt = Ether(dst="ff:ff:ff:ff:ff:ff") / Dot1Q(vlan=999) / IP(dst="192.168.0.1") / ICMP()
-ttl_pkt = IP(dst="8.8.8.8", ttl=0) / ICMP()
+Resolve this by changing the deletion check only for PF-set MAC.
 
-print("Send packet with bad VLAN tag")
-sendp(vlan_pkt, iface="enp2s0f0v0")
-print("Send packet with TTL=0")
-sendp(ttl_pkt, iface="enp2s0f0v0")
-$ ip -s link show dev enp2s0f0
-16: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether e2:c6:fd:c1:1e:92 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        0
-$ python test.py
-Send packet with bad VLAN tag
-.
-Sent 1 packets.
-Send packet with TTL=0
-.
-Sent 1 packets.
-$ ip -s link show dev enp2s0f0
-16: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether e2:c6:fd:c1:1e:92 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        0
+(the out-of-tree driver has also intentionally removed the check for VF
+trust here with OOT driver version 2.26.8, this changes the Linux kernel
+driver behaviour and comment to match the OOT driver behaviour)
 
-A packet with non-existent VLAN tag and a packet with TTL = 0 are sent,
-but tx_dropped is not incremented.
-
-After patch:
-
-$ ip -s link show dev enp2s0f0
-19: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether 4a:b7:3d:37:f7:56 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        2
-
-Fixes: dc645daef9af5bcbd9c ("i40e: implement VF stats NDO")
-Signed-off-by: Dennis Chen <dechen@redhat.com>
-Link: https://www.intel.com/content/www/us/en/content-details/596333/intel-ethernet-controller-x710-tm4-at2-carlsville-datasheet.html
+Fixes: ea2a1cfc3b201 ("i40e: Fix VF MAC filter removal")
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 625fa93fc18bb..8814909168039 100644
+index 8814909168039..97f32a0c68d09 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -5006,7 +5006,7 @@ int i40e_get_vf_stats(struct net_device *netdev, int vf_id,
- 	vf_stats->broadcast  = stats->rx_broadcast;
- 	vf_stats->multicast  = stats->rx_multicast;
- 	vf_stats->rx_dropped = stats->rx_discards + stats->rx_discards_other;
--	vf_stats->tx_dropped = stats->tx_discards;
-+	vf_stats->tx_dropped = stats->tx_errors;
+@@ -3137,10 +3137,10 @@ static int i40e_vc_del_mac_addr_msg(struct i40e_vf *vf, u8 *msg)
+ 		const u8 *addr = al->list[i].addr;
  
- 	return 0;
- }
+ 		/* Allow to delete VF primary MAC only if it was not set
+-		 * administratively by PF or if VF is trusted.
++		 * administratively by PF.
+ 		 */
+ 		if (ether_addr_equal(addr, vf->default_lan_addr.addr)) {
+-			if (i40e_can_vf_change_mac(vf))
++			if (!vf->pf_set_mac)
+ 				was_unimac_deleted = true;
+ 			else
+ 				continue;
 -- 
 2.39.5
 
