@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696D7277CAF;
-	Wed, 30 Jul 2025 09:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9486B255F5C;
+	Wed, 30 Jul 2025 09:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869168; cv=none; b=I8x7hlpEy9F6xSNXlEYvyQr9wxrpXM5dLfXv2z1ijzp1WzFX0n5mFJ5F2+REntK2W+1YS6qHcxHj3+oibn9FG/ZQcjZMvfIIkKWJE6LPfU726w7BRd9melIFWbH8tulXd09SYjXvEGYl7Eaa7yszNe+GXfyvFGLu6qwvqKi7Zoo=
+	t=1753869171; cv=none; b=Jtj96843Y//TtfEurQ23qSNpgupRkRao/OE+0V5VWMfI1xIXz7g/5iv7S/RDiWfo3wvXQqo2+BMccPk+ZNIh/b2NVfQpoXRC8SAwEmVjKPRzS/JUuPaznJlRwDOUxi/onJPe7wXV/m04vcWSQlTy8zNRAvPKb0l/AKkxUTWoLug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869168; c=relaxed/simple;
-	bh=zMwQYpmbJz9IoFih20BO7wau8SzFr9giWXUS7bFnYl0=;
+	s=arc-20240116; t=1753869171; c=relaxed/simple;
+	bh=aWLeVLPL/3MwD9WupB8EKqrc4BRC3xIwndWrVNx3550=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdCc1+Vx3lg8IaUjwCqisQXSlAjU/Lhjb3ogrwvBazh4cRfiTYVoEYx5bHZyaVCykXAr3RWOJw6a3Y1RUJWsSJRpQlNnOgy9b4F60ZNNZqWbmFWKNeR3W78RFxomh4sTGnm8Ob/O57QklzqUI7gnCW4twyI27mM0YuDkr8b968Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDisaYyY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wg0kCCZ8252ue+9F/Y3T8Ns6eJ+B7HeKRlnrw258tEPfXmufT6ZZRZ/A/ZSJ9WqHEhhRribvm7q2HUUgYDeR0XYaSoMwb2TaJFJVkyVCwUblqAnFNVwgwwe1ji9bbcIY6SjMbzHeTfwr22FWZukpx6Z9ncGLmqOQ1PNHpg8hpew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgCl2nmQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDisaYyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D30EC4CEF5;
-	Wed, 30 Jul 2025 09:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgCl2nmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFCFC4CEF5;
+	Wed, 30 Jul 2025 09:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869168;
-	bh=zMwQYpmbJz9IoFih20BO7wau8SzFr9giWXUS7bFnYl0=;
+	s=korg; t=1753869171;
+	bh=aWLeVLPL/3MwD9WupB8EKqrc4BRC3xIwndWrVNx3550=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDisaYyYog5PR2SpxPqnaIDHN9VpZf4eGiqrFtLpJO+LkqiQRnthMCdGPmwxFmLoX
-	 NCW9Wc0IithiFzqgI+B1W00McQ7qCO1HIFr1fNROJ+yfUlcR7zRjbZiAhbTDPTVm9j
-	 5FGC7kKaiwES3/dXptA8HODN3xjOgYMNdy2JLBx4=
+	b=MgCl2nmQbwrsklyHdLq2LuMZaoLa5yl4rLgbdhDAEPm+Z+fqERT60aPhBQ/qTyr3T
+	 6dvYrkzGzKyXI9vMK51QNkVsoNMRS6f1QodyMo6+RYr4JVB7U7gJMcAMmms1ZArz8B
+	 L2kOXaj+zdo84w4NDT93uu0fjc2ZpEOGNEOILgAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KernelCI bot <bot@kernelci.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Rob Landley <rob@landley.net>,
+	Martin Wetterwald <martin@wetterwald.eu>,
 	Nathan Chancellor <nathan@kernel.org>,
 	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.15 53/92] ARM: 9448/1: Use an absolute path to unified.h in KBUILD_AFLAGS
-Date: Wed, 30 Jul 2025 11:36:01 +0200
-Message-ID: <20250730093232.804116945@linuxfoundation.org>
+Subject: [PATCH 6.15 54/92] ARM: 9450/1: Fix allowing linker DCE with binutils < 2.36
+Date: Wed, 30 Jul 2025 11:36:02 +0200
+Message-ID: <20250730093232.841134980@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -54,53 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-commit 87c4e1459e80bf65066f864c762ef4dc932fad4b upstream.
+commit 53e7e1fb81cc8ba2da1cb31f8917ef397caafe91 upstream.
 
-After commit d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper
-flags and language target"), which updated as-instr to use the
-'assembler-with-cpp' language option, the Kbuild version of as-instr
-always fails internally for arch/arm with
+Commit e7607f7d6d81 ("ARM: 9443/1: Require linker to support KEEP within
+OVERLAY for DCE") accidentally broke the binutils version restriction
+that was added in commit 0d437918fb64 ("ARM: 9414/1: Fix build issue
+with LD_DEAD_CODE_DATA_ELIMINATION"), reintroducing the segmentation
+fault addressed by that workaround.
 
-  <command-line>: fatal error: asm/unified.h: No such file or directory
-  compilation terminated.
+Restore the binutils version dependency by using
+CONFIG_LD_CAN_USE_KEEP_IN_OVERLAY as an additional condition to ensure
+that CONFIG_HAVE_LD_DEAD_CODE_DATA_ELIMINATION is only enabled with
+binutils >= 2.36 and ld.lld >= 21.0.0.
 
-because '-include' flags are now taken into account by the compiler
-driver and as-instr does not have '$(LINUXINCLUDE)', so unified.h is not
-found.
-
-This went unnoticed at the time of the Kbuild change because the last
-use of as-instr in Kbuild that arch/arm could reach was removed in 5.7
-by commit 541ad0150ca4 ("arm: Remove 32bit KVM host support") but a
-stable backport of the Kbuild change to before that point exposed this
-potential issue if one were to be reintroduced.
-
-Follow the general pattern of '-include' paths throughout the tree and
-make unified.h absolute using '$(srctree)' to ensure KBUILD_AFLAGS can
-be used independently.
-
-Closes: https://lore.kernel.org/CACo-S-1qbCX4WAVFA63dWfHtrRHZBTyyr2js8Lx=Az03XHTTHg@mail.gmail.com/
+Closes: https://lore.kernel.org/6739da7d-e555-407a-b5cb-e5681da71056@landley.net/
+Closes: https://lore.kernel.org/CAFERDQ0zPoya5ZQfpbeuKVZEo_fKsonLf6tJbp32QnSGAtbi+Q@mail.gmail.com/
 
 Cc: stable@vger.kernel.org
-Fixes: d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper flags and language target")
-Reported-by: KernelCI bot <bot@kernelci.org>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: e7607f7d6d81 ("ARM: 9443/1: Require linker to support KEEP within OVERLAY for DCE")
+Reported-by: Rob Landley <rob@landley.net>
+Tested-by: Rob Landley <rob@landley.net>
+Reported-by: Martin Wetterwald <martin@wetterwald.eu>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/Makefile |    2 +-
+ arch/arm/Kconfig |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/Makefile
-+++ b/arch/arm/Makefile
-@@ -149,7 +149,7 @@ endif
- # Need -Uarm for gcc < 3.x
- KBUILD_CPPFLAGS	+=$(cpp-y)
- KBUILD_CFLAGS	+=$(CFLAGS_ABI) $(CFLAGS_ISA) $(arch-y) $(tune-y) $(call cc-option,-mshort-load-bytes,$(call cc-option,-malignment-traps,)) -msoft-float -Uarm
--KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) -Wa,$(arch-y) $(tune-y) -include asm/unified.h -msoft-float
-+KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) -Wa,$(arch-y) $(tune-y) -include $(srctree)/arch/arm/include/asm/unified.h -msoft-float
- KBUILD_RUSTFLAGS += --target=arm-unknown-linux-gnueabi
- 
- CHECKFLAGS	+= -D__arm__
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -121,7 +121,7 @@ config ARM
+ 	select HAVE_KERNEL_XZ
+ 	select HAVE_KPROBES if !XIP_KERNEL && !CPU_ENDIAN_BE32 && !CPU_V7M
+ 	select HAVE_KRETPROBES if HAVE_KPROBES
+-	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION if (LD_VERSION >= 23600 || LD_CAN_USE_KEEP_IN_OVERLAY)
++	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION if (LD_VERSION >= 23600 || LD_IS_LLD) && LD_CAN_USE_KEEP_IN_OVERLAY
+ 	select HAVE_MOD_ARCH_SPECIFIC
+ 	select HAVE_NMI
+ 	select HAVE_OPTPROBES if !THUMB2_KERNEL
 
 
