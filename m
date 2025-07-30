@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F672957AD;
-	Wed, 30 Jul 2025 09:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C68274666;
+	Wed, 30 Jul 2025 09:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869074; cv=none; b=UhLuWZ3cNCsYONQh3zhlL9Rs9SkZk+3v16+c445duOrYT+M762oTmkZdG3pJz5QpAZ6xf2DQC2P08Rt/ZzbvJhovC3csN/j7UwopwCCz2Gk/0xwDMqX+N0LVsFAgBihlxQtynoZ3DcsmpJHY4ccfWJjC8UxhWuJDwzvdyfoD4Vs=
+	t=1753869080; cv=none; b=TzCizCxw2eHMZfsMS/BK90NRV2XLYejDAH7KZ9p/x716IEdnVVtPjgQjvYNfR2QtuSyqYz0HXYQ1pbe4R7KXGNEEXLI3o9jM5pJJIle0gpXfSwkJVQo2zYzLHbLOOJrqKGthRbNb+aIMUPKsCKaogppIeFI8/4lH9PnPwiAImS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869074; c=relaxed/simple;
-	bh=Iom35eJIMuZSQMM8HDPd3YLBa+vVwLNQfCwA9/aXgNQ=;
+	s=arc-20240116; t=1753869080; c=relaxed/simple;
+	bh=pJiNb5x7hbhKcLwdf71UUhEAy8Lim3cvLxK5TxJ2sJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFYUHCCKTVlcur0VFl6EXkT9jWGyS0Mkd/5J2NI6OgC580FtBMdLDf9we1oWQ3KqMDgK4FISG8oPgq2pvIco4Ievn8F1CN2YKdsRC0+3ESeHDG3qlaRe0qIUGiqlwV7DJ8mTC8bYtSGn1t94/CjfeEtTpqIRmtZoo4wLOnlZuRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCXHB8go; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SL/PWHH5nCZMkloU4vZ+jaVc1lGXh9+pSynLyXLTkXPQrYhO6U+hpokRqt5uuUllUKSoE4lvgMZaz3uPyJWK7Gcn7o7dnxmkEydmNbgf1ajE3WTghdpRJ9oxoDEoMbJYOVG3X3zRJDOyBQT7K90hQQQd5TXoztHjKmKXT9QJ5BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kyx9BJtP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCXHB8go"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849EFC4CEF6;
-	Wed, 30 Jul 2025 09:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kyx9BJtP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA81C4CEF6;
+	Wed, 30 Jul 2025 09:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869074;
-	bh=Iom35eJIMuZSQMM8HDPd3YLBa+vVwLNQfCwA9/aXgNQ=;
+	s=korg; t=1753869077;
+	bh=pJiNb5x7hbhKcLwdf71UUhEAy8Lim3cvLxK5TxJ2sJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCXHB8gob8LK7D23AAzrATDas5x42cz3j3Mt1dHTFZQIkuyXAXOJWiMEf+zNxdm8a
-	 fDf5lL+cnguHYtzQQjoDxhs4QoVECzxNHlHg+OQXq2C8sPuNcubK1NbJEM4jbi+rPJ
-	 QypjjohgrGmV83Hi8HNQFq571V3WRUx3opGOQibY=
+	b=Kyx9BJtPyzEYuRzpMaXnl5k9gF0P0t2ZsitJjbApgj8HWtJAZGWzm9Jf9sRwKAJYe
+	 27eggsOYlvdR+kVXaO+PodJiTzRpUGlKtp7XDTrBpSKzp3Cpq8PCqOmouxaoGQci7g
+	 fiVNh3/qpDUHkOR22ZNolh/U11N/90OJnEg6thGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xuanzhuo@linux.alibaba.com,
-	Laurent Vivier <lvivier@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 03/92] virtio_ring: Fix error reporting in virtqueue_resize
-Date: Wed, 30 Jul 2025 11:35:11 +0200
-Message-ID: <20250730093230.766052292@linuxfoundation.org>
+Subject: [PATCH 6.15 04/92] drm/amd/display: Dont allow OLED to go down to fully off
+Date: Wed, 30 Jul 2025 11:35:12 +0200
+Message-ID: <20250730093230.805950628@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -55,64 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 45ebc7e6c125ce93d2ddf82cd5bea20121bb0258 ]
+[ Upstream commit 39d81457ad3417a98ac826161f9ca0e642677661 ]
 
-The virtqueue_resize() function was not correctly propagating error codes
-from its internal resize helper functions, specifically
-virtqueue_resize_packet() and virtqueue_resize_split(). If these helpers
-returned an error, but the subsequent call to virtqueue_enable_after_reset()
-succeeded, the original error from the resize operation would be masked.
-Consequently, virtqueue_resize() could incorrectly report success to its
-caller despite an underlying resize failure.
+[Why]
+OLED panels can be fully off, but this behavior is unexpected.
 
-This change restores the original code behavior:
+[How]
+Ensure that minimum luminance is at least 1.
 
-       if (vdev->config->enable_vq_after_reset(_vq))
-               return -EBUSY;
-
-       return err;
-
-Fix: commit ad48d53b5b3f ("virtio_ring: separate the logic of reset/enable from virtqueue_resize")
-Cc: xuanzhuo@linux.alibaba.com
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://patch.msgid.link/20250521092236.661410-2-lvivier@redhat.com
-Tested-by: Lei Yang <leiyang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4338
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 51496c7737d06a74b599d0aa7974c3d5a4b1162e)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index b784aab668670..4397392bfef00 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -2797,7 +2797,7 @@ int virtqueue_resize(struct virtqueue *_vq, u32 num,
- 		     void (*recycle_done)(struct virtqueue *vq))
- {
- 	struct vring_virtqueue *vq = to_vvq(_vq);
--	int err;
-+	int err, err_reset;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 87c2bc5f64a6c..f6d71bf7c89c2 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3548,13 +3548,15 @@ static void update_connector_ext_caps(struct amdgpu_dm_connector *aconnector)
  
- 	if (num > vq->vq.num_max)
- 		return -E2BIG;
-@@ -2819,7 +2819,11 @@ int virtqueue_resize(struct virtqueue *_vq, u32 num,
- 	else
- 		err = virtqueue_resize_split(_vq, num);
+ 	luminance_range = &conn_base->display_info.luminance_range;
  
--	return virtqueue_enable_after_reset(_vq);
-+	err_reset = virtqueue_enable_after_reset(_vq);
-+	if (err_reset)
-+		return err_reset;
+-	if (luminance_range->max_luminance) {
+-		caps->aux_min_input_signal = luminance_range->min_luminance;
++	if (luminance_range->max_luminance)
+ 		caps->aux_max_input_signal = luminance_range->max_luminance;
+-	} else {
+-		caps->aux_min_input_signal = 0;
++	else
+ 		caps->aux_max_input_signal = 512;
+-	}
 +
-+	return err;
- }
- EXPORT_SYMBOL_GPL(virtqueue_resize);
++	if (luminance_range->min_luminance)
++		caps->aux_min_input_signal = luminance_range->min_luminance;
++	else
++		caps->aux_min_input_signal = 1;
  
+ 	min_input_signal_override = drm_get_panel_min_brightness_quirk(aconnector->drm_edid);
+ 	if (min_input_signal_override >= 0)
 -- 
 2.39.5
 
