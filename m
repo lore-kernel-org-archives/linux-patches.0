@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B1536124;
-	Wed, 30 Jul 2025 09:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B35F23D2A2;
+	Wed, 30 Jul 2025 09:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868552; cv=none; b=IgXZa6KIjS23xt0qEEM/L4L8OD5BIk3fjUv6Jj9SZlKBXb9TFBIq6k3sJVr9u9VDwt1yq9FOXLphGRN7v7+GXCo1fOZFvwxhiLoJGWiYinmmMiRit53+h33cB1QLwAToFHcQ5cnstP1mavOHmQ4BBg6rFq+w4hJ1z30WzqLMkZo=
+	t=1753868556; cv=none; b=ScWFGhH7Q864CPAJ/TWUElwhm1rj3814dVdui7tRFg/mZ5hN8TP9RI/6cl70Rpj+G5SkUgw/Xe8ySh1nTBKhdApiGeSqPSl8Vplmz3/gPMXGnkCWvc+J+qnsQtQszEOzmeueGVbmQ61ly0W3FGRWPMDjz7pBdPSSF5CJUPdkv6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868552; c=relaxed/simple;
-	bh=Feh2uBkmB/MxPv6EHWLcYf6W4IAu9Emt3rubsL3GRvo=;
+	s=arc-20240116; t=1753868556; c=relaxed/simple;
+	bh=+zeQakzBckWsFqy1our8N2B3Xw1cUc+PnSWQEB7ZcgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gLxcR8tFjCPpck/bfCmbSCtoYg3XRNLwzfB0/bd/dktGAQYwqShFWTFRf76IdKXtuNvftth0c4HFeVxHh+/I7QoZhfRg+4AB/cL7foqXT1XXdZUfQT1N/JSmMPZwjza0bEal1VJNnXpLSfqraHN74Us7cSnHYmY9nXm2hUg3P6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+4wFY2a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cr3fmvighsfr7SygxR0sw9D/QK2VRqD0UXay4sHXgsP19HrGWglso6S5BF7uNPFFwk3JAOI33TF44SXwMWIxSPlVtwNozXOFgf20SMaqYQBOMvoGHT7DMaw7P9I53Dd7X1gEdkqRsJSg5/kkm026ER1uw1wRpBhrAUqI57xZWh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVIo85Ms; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+4wFY2a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCFCC4CEE7;
-	Wed, 30 Jul 2025 09:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVIo85Ms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CEDC4CEE7;
+	Wed, 30 Jul 2025 09:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868551;
-	bh=Feh2uBkmB/MxPv6EHWLcYf6W4IAu9Emt3rubsL3GRvo=;
+	s=korg; t=1753868556;
+	bh=+zeQakzBckWsFqy1our8N2B3Xw1cUc+PnSWQEB7ZcgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+4wFY2alnPdJPi8dyxJaln3wRCBfJ3WkJUQK125WBcxDXHMPv65bmN9QmJ32dq8s
-	 XZ4Yro9jkfDRhfYl0HOq3k+EpsEJnrb5znRrTmuRz0YVBpcyWvRG/yC7rjL3PeZ8zB
-	 JCJ0q/7UFuCuTNxVczCrw7gxSKoKRh2ktbN4q6SM=
+	b=VVIo85Ms1nvIZrcyk2pmhhvg9uBDArPG2u9dCxhquKMIiwCXMtF2Js5GlGBIouUFo
+	 RiCjiHjfvvaSjJi3bqTGvIF+FF+haV0aRQCo7QVK3q+gUmhTfnLtoZ720sION32XOJ
+	 676ToP0W3ZX/shNs87aZwIYv1Eir0hiIvzgW0ilc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
+	syzbot+7ed9d47e15e88581dc5b@syzkaller.appspotmail.com,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Florian Westphal <fw@strlen.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/117] staging: vchiq_arm: Make vchiq_shutdown never fail
-Date: Wed, 30 Jul 2025 11:34:46 +0200
-Message-ID: <20250730093234.248576276@linuxfoundation.org>
+Subject: [PATCH 6.12 018/117] xfrm: state: initialize state_ptrs earlier in xfrm_state_find
+Date: Wed, 30 Jul 2025 11:34:47 +0200
+Message-ID: <20250730093234.285387093@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -50,38 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit f2b8ebfb867011ddbefbdf7b04ad62626cbc2afd ]
+[ Upstream commit 94d077c331730510d5611b438640a292097341f0 ]
 
-Most of the users of vchiq_shutdown ignore the return value,
-which is bad because this could lead to resource leaks.
-So instead of changing all calls to vchiq_shutdown, it's easier
-to make vchiq_shutdown never fail.
+In case of preemption, xfrm_state_look_at will find a different
+pcpu_id and look up states for that other CPU. If we matched a state
+for CPU2 in the state_cache while the lookup started on CPU1, we will
+jump to "found", but the "best" state that we got will be ignored and
+we will enter the "acquire" block. This block uses state_ptrs, which
+isn't initialized at this point.
 
-Fixes: 71bad7f08641 ("staging: add bcm2708 vchiq driver")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20250715161108.3411-4-wahrenst@gmx.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Let's initialize state_ptrs just after taking rcu_read_lock. This will
+also prevent a possible misuse in the future, if someone adjusts this
+function.
+
+Reported-by: syzbot+7ed9d47e15e88581dc5b@syzkaller.appspotmail.com
+Fixes: e952837f3ddb ("xfrm: state: fix out-of-bounds read during lookup")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/xfrm/xfrm_state.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-index 97787002080a1..20ad6b1e44bc4 100644
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c
-@@ -739,8 +739,7 @@ int vchiq_shutdown(struct vchiq_instance *instance)
- 	struct vchiq_state *state = instance->state;
- 	int ret = 0;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 7a298058fc16c..912a4161a7420 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -1324,6 +1324,8 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
+ 	sequence = read_seqcount_begin(&net->xfrm.xfrm_state_hash_generation);
  
--	if (mutex_lock_killable(&state->mutex))
--		return -EAGAIN;
-+	mutex_lock(&state->mutex);
+ 	rcu_read_lock();
++	xfrm_hash_ptrs_get(net, &state_ptrs);
++
+ 	hlist_for_each_entry_rcu(x, &pol->state_cache_list, state_cache) {
+ 		if (x->props.family == encap_family &&
+ 		    x->props.reqid == tmpl->reqid &&
+@@ -1364,8 +1366,6 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
+ 	else if (acquire_in_progress) /* XXX: acquire_in_progress should not happen */
+ 		WARN_ON(1);
  
- 	/* Remove all services */
- 	vchiq_shutdown_internal(state, instance);
+-	xfrm_hash_ptrs_get(net, &state_ptrs);
+-
+ 	h = __xfrm_dst_hash(daddr, saddr, tmpl->reqid, encap_family, state_ptrs.hmask);
+ 	hlist_for_each_entry_rcu(x, state_ptrs.bydst + h, bydst) {
+ #ifdef CONFIG_XFRM_OFFLOAD
 -- 
 2.39.5
 
