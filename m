@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF15292B5F;
-	Wed, 30 Jul 2025 09:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE34F1E25E1;
+	Wed, 30 Jul 2025 09:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868897; cv=none; b=dk9nYEuQYuhqzP2Q6+sz6/Z51VJJVFaRcFtX+sTlpUL0isDfMpswppo+2WTliHLrGieQOvdUDfVbLBV5a8DmioenzZI9JgY9Ty90LCU+a5OFq40AFULwfurgiJUAtFtNlwJhg5li/P1SBXFsfxj6vkAOuP2d73lfI0X4ndFoN8U=
+	t=1753868903; cv=none; b=Hc83+EjvmQ737BtTWKTZn4/EMQtyXS+87Io2oMJD38P4z/Ha03t8HVq3Y61/GoM9iVD7wM11hYIAJomDmn4MZZvyk6rfIGJk2NNs2RReTaXsnind/fKKdlw3J4CpFFcen8yAHlupQVxwHOMVNKJtjz1R9X9k6waPl07qfp/ilwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868897; c=relaxed/simple;
-	bh=Fpk9DlX4wpoXHZcYLD9bBuoM9WQn6GPWejjV/I1OT3A=;
+	s=arc-20240116; t=1753868903; c=relaxed/simple;
+	bh=ouAfiu1+CiqXe3/yrb2QRj5iXPyrwd97oe+iC1NQrPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGzcW1XdRpE3W4CRNvb6/4OrGLOYLVDh+XmdXMOAZ5Qt0pklpd084ONQZSQnvhYdko3c1xwwyKT6VOocYEropxhLKYBVYzDeH4hlGUSv551mhWo8NEOtwNXrZkL19QVsXMMGcaJsAbDolf7EWYa6dEmpwSNRtj8lag0vPSnyO70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2kEBE22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pWMVpnyk6dwTIjvizEP6fgCHKAwKHTzH+3SLgoDZ7dE1NV7t7w+ZYmP3/oke71OX+XQCk8qmNrTBSNEE5mq0vfLt/DXH7st8XPF3M0t1MHw45VR4L4rybtCyxC/ZHXXv+8FTgekhjVPkm0PWxNM6rQBEQoIR+LiO1YgP1LckA1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0Ea93f8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2kEBE22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D50C4CEF5;
-	Wed, 30 Jul 2025 09:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0Ea93f8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2A5C4CEF5;
+	Wed, 30 Jul 2025 09:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868896;
-	bh=Fpk9DlX4wpoXHZcYLD9bBuoM9WQn6GPWejjV/I1OT3A=;
+	s=korg; t=1753868903;
+	bh=ouAfiu1+CiqXe3/yrb2QRj5iXPyrwd97oe+iC1NQrPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2kEBE22mMIhPiekpwaX3eXVBO3Pyxganv5WTMKI+T4P5OEhvqUe6mK6wGYnrTRL/
-	 yJd23vvG4khQ0gcuYDTX/LIO+aPrD5dLZxjQ/ue/nrz2AmJlGAU0fOh2fRs9B66yg2
-	 GjqiqZb8GZq7luPvzaWHEfESk8qNfGlxzc+n2nAc=
+	b=j0Ea93f8kkFTMWA6o2ArAuLQhzADgN43H9H/GmaXS/MYC8Zo9QQTfUxL0fB+26b9t
+	 nAC5Q6BNgiyjzaXNvZw5/Kj5QxxmWXcM4GOaWfDBFC+y4YW+Tq8jG4SDIaMp6vJnhg
+	 YBAoSSQ2RdpM8Ezxhay0Atonwx2BenjiT57V4AKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/117] KVM: x86: Route non-canonical checks in emulator through emulate_ops
-Date: Wed, 30 Jul 2025 11:36:06 +0200
-Message-ID: <20250730093237.570184114@linuxfoundation.org>
+Subject: [PATCH 6.12 106/117] iio: hid-sensor-prox: Fix incorrect OFFSET calculation
+Date: Wed, 30 Jul 2025 11:36:15 +0200
+Message-ID: <20250730093237.933652513@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -51,74 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit 16ccadefa295af434ca296e566f078223ecd79ca ]
+[ Upstream commit 79dabbd505210e41c88060806c92c052496dd61c ]
 
-Add emulate_ops.is_canonical_addr() to perform (non-)canonical checks in
-the emulator, which will allow extending is_noncanonical_address() to
-support different flavors of canonical checks, e.g. for descriptor table
-bases vs. MSRs, without needing duplicate logic in the emulator.
+The OFFSET calculation in the prox_read_raw() was incorrectly using the
+unit exponent, which is intended for SCALE calculations.
 
-No functional change is intended.
+Remove the incorrect OFFSET calculation and set it to a fixed value of 0.
 
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20240906221824.491834-3-mlevitsk@redhat.com
-[sean: separate from additional of flags, massage changelog]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: fa787ac07b3c ("KVM: x86/hyper-v: Skip non-canonical addresses during PV TLB flush")
+Cc: stable@vger.kernel.org
+Fixes: 39a3a0138f61 ("iio: hid-sensors: Added Proximity Sensor Driver")
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20250331055022.1149736-4-lixu.zhang@intel.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ adapted prox_attr array access to single structure member access ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/emulate.c     |    2 +-
- arch/x86/kvm/kvm_emulate.h |    2 ++
- arch/x86/kvm/x86.c         |    7 +++++++
- 3 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/iio/light/hid-sensor-prox.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -653,7 +653,7 @@ static inline u8 ctxt_virt_addr_bits(str
- static inline bool emul_is_noncanonical_address(u64 la,
- 						struct x86_emulate_ctxt *ctxt)
- {
--	return !__is_canonical_address(la, ctxt_virt_addr_bits(ctxt));
-+	return !ctxt->ops->is_canonical_addr(ctxt, la);
- }
- 
- /*
---- a/arch/x86/kvm/kvm_emulate.h
-+++ b/arch/x86/kvm/kvm_emulate.h
-@@ -235,6 +235,8 @@ struct x86_emulate_ops {
- 
- 	gva_t (*get_untagged_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr,
- 				   unsigned int flags);
-+
-+	bool (*is_canonical_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr);
- };
- 
- /* Type, address-of, and value of an instruction's operand. */
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -8608,6 +8608,12 @@ static gva_t emulator_get_untagged_addr(
- 					       addr, flags);
- }
- 
-+static bool emulator_is_canonical_addr(struct x86_emulate_ctxt *ctxt,
-+				       gva_t addr)
-+{
-+	return !is_noncanonical_address(addr, emul_to_vcpu(ctxt));
-+}
-+
- static const struct x86_emulate_ops emulate_ops = {
- 	.vm_bugged           = emulator_vm_bugged,
- 	.read_gpr            = emulator_read_gpr,
-@@ -8654,6 +8660,7 @@ static const struct x86_emulate_ops emul
- 	.triple_fault        = emulator_triple_fault,
- 	.set_xcr             = emulator_set_xcr,
- 	.get_untagged_addr   = emulator_get_untagged_addr,
-+	.is_canonical_addr   = emulator_is_canonical_addr,
- };
- 
- static void toggle_interruptibility(struct kvm_vcpu *vcpu, u32 mask)
+--- a/drivers/iio/light/hid-sensor-prox.c
++++ b/drivers/iio/light/hid-sensor-prox.c
+@@ -102,8 +102,7 @@ static int prox_read_raw(struct iio_dev
+ 		ret_type = prox_state->scale_precision;
+ 		break;
+ 	case IIO_CHAN_INFO_OFFSET:
+-		*val = hid_sensor_convert_exponent(
+-				prox_state->prox_attr.unit_expo);
++		*val = 0;
+ 		ret_type = IIO_VAL_INT;
+ 		break;
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
 
 
