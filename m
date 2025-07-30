@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53375635;
-	Wed, 30 Jul 2025 09:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7254A32;
+	Wed, 30 Jul 2025 09:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869222; cv=none; b=W0RUrzjdZIkOlEaNb4zrJBko+d7+utaBQ1aotwn5bkySScgVR4RWzXRCUkUjTN55ezVICFDm8oQo82w1HOKchZHBJhbz1nKdQrinemrbq5Q5xq3FDPgJ5K09ERcVOKRMg1xib91OMNg/Z63yfAbHf7asWdGPcOYSFRnKYvmxuZY=
+	t=1753869224; cv=none; b=m51CjyDV5s0fGsAK6SbN4DJv5Ecxo5xrRoa13069cB1zbwzpHR4O9yn6wKVDODXyLvSx7ULnvtlVQsz7QUgh//FDNyo0bZxJdL6gcZBApYClbJd2fMoipx1jAtI6MjKVbRmXbfPDmkZWoiszZ3Xe8IlcQjCLOZ6tBrQ+6qdx06I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869222; c=relaxed/simple;
-	bh=YGRNjLnxUDRni/ADeHJTbCGTUiKInnIy/PqUhzF/5hw=;
+	s=arc-20240116; t=1753869224; c=relaxed/simple;
+	bh=hHNNbQmoxwoWPcbknwMOQSI1YnzRd/+lTz6dy9gMtIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8pVoAq98El7ugec7LE3BELQ4Fje4RH220Gy/TkQoC6K+qE5oOlNWUtND36Hfi8gwiXYDwfqzwuZ/9thW5Bl6I2JomQX+tK0BSnwO+hhXgYrHaNcJLRKnBNiw99svBQcCQ9o5nc1tPUXb2fxcrv1sScJ/ALB1izMKBNxrqOJ/cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifKKmlrG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gI8g3avQk2Olvss/DpjI16WBX9q2TnvPVJY7HvsYhBP+tGY/a68+CzXk00AqU+V/L9Cs4ylqEtmBpa2OkpN3oxhxnX/H9ut5WNNVQpcoUoXMp4xowt0XnzIDrBC48KoGU5RgpRLi8zybVtFRakwOnQxaML0/MyyEcWpWEsU+qHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDANE8cM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifKKmlrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22624C4CEF5;
-	Wed, 30 Jul 2025 09:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDANE8cM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAADC4CEF5;
+	Wed, 30 Jul 2025 09:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869221;
-	bh=YGRNjLnxUDRni/ADeHJTbCGTUiKInnIy/PqUhzF/5hw=;
+	s=korg; t=1753869224;
+	bh=hHNNbQmoxwoWPcbknwMOQSI1YnzRd/+lTz6dy9gMtIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ifKKmlrGY8iHNA2lf54nWEdLGi0P0l7hAeZ2/NPLRvIGu5xfjU0YUwKFoxyi5veHI
-	 VLRVdHYt/6+pg0DckYW1XdLaklCBGE+VdchcC7afDDOmOohIFd0uM9nH5xdrfZU+bx
-	 qz6FeG5bmvQsBBons3j0+2qaqZPnoSNS4L/O4D1I=
+	b=PDANE8cMKAkmkuijqeoVfJSv8ILOsUviYqOKGXupRqOGrB2RjY5bpe7JGgFc+yBkv
+	 qUuUBTccPYOYXud2pgV30KpOsM1a6S16Lb+AGFJXp4joWPMU1ttp8mab3Iek0KyE9D
+	 /8mr3EVGVI8qNPTHl4m9QT9IRQ/ePpIGwprvz1hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Xiang Mei <xmei5@asu.edu>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Andrei Lalaev <andrey.lalaev@gmail.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 33/92] net/sched: sch_qfq: Avoid triggering might_sleep in atomic context in qfq_delete_class
-Date: Wed, 30 Jul 2025 11:35:41 +0200
-Message-ID: <20250730093232.035098422@linuxfoundation.org>
+Subject: [PATCH 6.15 34/92] can: netlink: can_changelink(): fix NULL pointer deref of struct can_priv::do_set_mode
+Date: Wed, 30 Jul 2025 11:35:42 +0200
+Message-ID: <20250730093232.073342189@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -53,71 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit cf074eca0065bc5142e6004ae236bb35a2687fdf ]
+[ Upstream commit c1f3f9797c1f44a762e6f5f72520b2e520537b52 ]
 
-might_sleep could be trigger in the atomic context in qfq_delete_class.
+Andrei Lalaev reported a NULL pointer deref when a CAN device is
+restarted from Bus Off and the driver does not implement the struct
+can_priv::do_set_mode callback.
 
-qfq_destroy_class was moved into atomic context locked
-by sch_tree_lock to avoid a race condition bug on
-qfq_aggregate. However, might_sleep could be triggered by
-qfq_destroy_class, which introduced sleeping in atomic context (path:
-qfq_destroy_class->qdisc_put->__qdisc_destroy->lockdep_unregister_key
-->might_sleep).
+There are 2 code path that call struct can_priv::do_set_mode:
+- directly by a manual restart from the user space, via
+  can_changelink()
+- delayed automatic restart after bus off (deactivated by default)
 
-Considering the race is on the qfq_aggregate objects, keeping
-qfq_rm_from_agg in the lock but moving the left part out can solve
-this issue.
+To prevent the NULL pointer deference, refuse a manual restart or
+configure the automatic restart delay in can_changelink() and report
+the error via extack to user space.
 
-Fixes: 5e28d5a3f774 ("net/sched: sch_qfq: Fix race condition on qfq_aggregate")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/4a04e0cc-a64b-44e7-9213-2880ed641d77@sabinyo.mountain
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250717230128.159766-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+As an additional safety measure let can_restart() return an error if
+can_priv::do_set_mode is not set instead of dereferencing it
+unchecked.
+
+Reported-by: Andrei Lalaev <andrey.lalaev@gmail.com>
+Closes: https://lore.kernel.org/all/20250714175520.307467-1-andrey.lalaev@gmail.com
+Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
+Link: https://patch.msgid.link/20250718-fix-nullptr-deref-do_set_mode-v1-1-0b520097bb96@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_qfq.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/can/dev/dev.c     | 12 +++++++++---
+ drivers/net/can/dev/netlink.c | 12 ++++++++++++
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index 2b1b025c31a33..51cc2cfb40936 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -536,9 +536,6 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
+index 5ec3170b896a4..3fa805ac2c65b 100644
+--- a/drivers/net/can/dev/dev.c
++++ b/drivers/net/can/dev/dev.c
+@@ -145,13 +145,16 @@ void can_change_state(struct net_device *dev, struct can_frame *cf,
+ EXPORT_SYMBOL_GPL(can_change_state);
  
- static void qfq_destroy_class(struct Qdisc *sch, struct qfq_class *cl)
+ /* CAN device restart for bus-off recovery */
+-static void can_restart(struct net_device *dev)
++static int can_restart(struct net_device *dev)
  {
--	struct qfq_sched *q = qdisc_priv(sch);
--
--	qfq_rm_from_agg(q, cl);
- 	gen_kill_estimator(&cl->rate_est);
- 	qdisc_put(cl->qdisc);
- 	kfree(cl);
-@@ -559,10 +556,11 @@ static int qfq_delete_class(struct Qdisc *sch, unsigned long arg,
+ 	struct can_priv *priv = netdev_priv(dev);
+ 	struct sk_buff *skb;
+ 	struct can_frame *cf;
+ 	int err;
  
- 	qdisc_purge_queue(cl->qdisc);
- 	qdisc_class_hash_remove(&q->clhash, &cl->common);
--	qfq_destroy_class(sch, cl);
-+	qfq_rm_from_agg(q, cl);
++	if (!priv->do_set_mode)
++		return -EOPNOTSUPP;
++
+ 	if (netif_carrier_ok(dev))
+ 		netdev_err(dev, "Attempt to restart for bus-off recovery, but carrier is OK?\n");
  
- 	sch_tree_unlock(sch);
- 
-+	qfq_destroy_class(sch, cl);
- 	return 0;
+@@ -173,10 +176,14 @@ static void can_restart(struct net_device *dev)
+ 	if (err) {
+ 		netdev_err(dev, "Restart failed, error %pe\n", ERR_PTR(err));
+ 		netif_carrier_off(dev);
++
++		return err;
+ 	} else {
+ 		netdev_dbg(dev, "Restarted\n");
+ 		priv->can_stats.restarts++;
+ 	}
++
++	return 0;
  }
  
-@@ -1503,6 +1501,7 @@ static void qfq_destroy_qdisc(struct Qdisc *sch)
- 	for (i = 0; i < q->clhash.hashsize; i++) {
- 		hlist_for_each_entry_safe(cl, next, &q->clhash.hash[i],
- 					  common.hnode) {
-+			qfq_rm_from_agg(q, cl);
- 			qfq_destroy_class(sch, cl);
- 		}
+ static void can_restart_work(struct work_struct *work)
+@@ -201,9 +208,8 @@ int can_restart_now(struct net_device *dev)
+ 		return -EBUSY;
+ 
+ 	cancel_delayed_work_sync(&priv->restart_work);
+-	can_restart(dev);
+ 
+-	return 0;
++	return can_restart(dev);
+ }
+ 
+ /* CAN bus-off
+diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
+index f1db9b7ffd4d0..d5aa8da87961e 100644
+--- a/drivers/net/can/dev/netlink.c
++++ b/drivers/net/can/dev/netlink.c
+@@ -285,6 +285,12 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
  	}
+ 
+ 	if (data[IFLA_CAN_RESTART_MS]) {
++		if (!priv->do_set_mode) {
++			NL_SET_ERR_MSG(extack,
++				       "Device doesn't support restart from Bus Off");
++			return -EOPNOTSUPP;
++		}
++
+ 		/* Do not allow changing restart delay while running */
+ 		if (dev->flags & IFF_UP)
+ 			return -EBUSY;
+@@ -292,6 +298,12 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	}
+ 
+ 	if (data[IFLA_CAN_RESTART]) {
++		if (!priv->do_set_mode) {
++			NL_SET_ERR_MSG(extack,
++				       "Device doesn't support restart from Bus Off");
++			return -EOPNOTSUPP;
++		}
++
+ 		/* Do not allow a restart while not running */
+ 		if (!(dev->flags & IFF_UP))
+ 			return -EINVAL;
 -- 
 2.39.5
 
