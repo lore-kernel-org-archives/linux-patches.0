@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7747326C383;
-	Wed, 30 Jul 2025 09:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53375635;
+	Wed, 30 Jul 2025 09:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869218; cv=none; b=ZqmQ5mBDxIFTTjouRh4Xw4+/DYqpfHT6P62DN3l/IfwRUQcNpNlDpVWqHB/tYbAyABTiw+f9Xf1KPSlwkqiD2sjFvTRnz/2/88nCF4UFAnri851nn2X+lzjirgSx9pxL8u5BeG1hD0DkJ1Z56/Te3KBNAWRZ6cJ41622xjltisQ=
+	t=1753869222; cv=none; b=W0RUrzjdZIkOlEaNb4zrJBko+d7+utaBQ1aotwn5bkySScgVR4RWzXRCUkUjTN55ezVICFDm8oQo82w1HOKchZHBJhbz1nKdQrinemrbq5Q5xq3FDPgJ5K09ERcVOKRMg1xib91OMNg/Z63yfAbHf7asWdGPcOYSFRnKYvmxuZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869218; c=relaxed/simple;
-	bh=G0z44GJa47QT+EQBgcA9Twyazuqs10yC23eRib88Y/Y=;
+	s=arc-20240116; t=1753869222; c=relaxed/simple;
+	bh=YGRNjLnxUDRni/ADeHJTbCGTUiKInnIy/PqUhzF/5hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siDxPsXhA8Rl/IakKHjFWSXLV7IkDtPom3qNqNc1AqF/qZlm+XSa7s+xnESZy14wZ1ZolgtRcPLsn+UR8ZjjDYL89Z4eH1zYdsC/T7f4ogFUAueX4o7yQmzAHb66a+cwNx0ZMQhc1AuXkfHXZvTwO2mMGpLagCQDlUstR/mmOgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBbyVlum; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h8pVoAq98El7ugec7LE3BELQ4Fje4RH220Gy/TkQoC6K+qE5oOlNWUtND36Hfi8gwiXYDwfqzwuZ/9thW5Bl6I2JomQX+tK0BSnwO+hhXgYrHaNcJLRKnBNiw99svBQcCQ9o5nc1tPUXb2fxcrv1sScJ/ALB1izMKBNxrqOJ/cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifKKmlrG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBbyVlum"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2899C4CEF5;
-	Wed, 30 Jul 2025 09:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifKKmlrG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22624C4CEF5;
+	Wed, 30 Jul 2025 09:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869218;
-	bh=G0z44GJa47QT+EQBgcA9Twyazuqs10yC23eRib88Y/Y=;
+	s=korg; t=1753869221;
+	bh=YGRNjLnxUDRni/ADeHJTbCGTUiKInnIy/PqUhzF/5hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uBbyVlumpjQ02M9TkMNR3pnEeSPjHJmKGOR9Xme3wimsEjVMg8EN5SfuuGFDe3mFo
-	 /UkzXOYtzqIXNlWQtMcBKvv+03LePO6PrrzH/qM3PJzVAGioeOX3O8pY5NjJUnPdEW
-	 DH2xJJrDd6lMcYrOMbBuq41owF0FEsu+zJsx2JKI=
+	b=ifKKmlrGY8iHNA2lf54nWEdLGi0P0l7hAeZ2/NPLRvIGu5xfjU0YUwKFoxyi5veHI
+	 VLRVdHYt/6+pg0DckYW1XdLaklCBGE+VdchcC7afDDOmOohIFd0uM9nH5xdrfZU+bx
+	 qz6FeG5bmvQsBBons3j0+2qaqZPnoSNS4L/O4D1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Cristian Prundeanu <cpru@amazon.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.15 63/92] arm64/entry: Mask DAIF in cpu_switch_to(), call_on_irq_stack()
-Date: Wed, 30 Jul 2025 11:36:11 +0200
-Message-ID: <20250730093233.190205295@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.15 33/92] net/sched: sch_qfq: Avoid triggering might_sleep in atomic context in qfq_delete_class
+Date: Wed, 30 Jul 2025 11:35:41 +0200
+Message-ID: <20250730093232.035098422@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -51,125 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit d42e6c20de6192f8e4ab4cf10be8c694ef27e8cb upstream.
+[ Upstream commit cf074eca0065bc5142e6004ae236bb35a2687fdf ]
 
-`cpu_switch_to()` and `call_on_irq_stack()` manipulate SP to change
-to different stacks along with the Shadow Call Stack if it is enabled.
-Those two stack changes cannot be done atomically and both functions
-can be interrupted by SErrors or Debug Exceptions which, though unlikely,
-is very much broken : if interrupted, we can end up with mismatched stacks
-and Shadow Call Stack leading to clobbered stacks.
+might_sleep could be trigger in the atomic context in qfq_delete_class.
 
-In `cpu_switch_to()`, it can happen when SP_EL0 points to the new task,
-but x18 stills points to the old task's SCS. When the interrupt handler
-tries to save the task's SCS pointer, it will save the old task
-SCS pointer (x18) into the new task struct (pointed to by SP_EL0),
-clobbering it.
+qfq_destroy_class was moved into atomic context locked
+by sch_tree_lock to avoid a race condition bug on
+qfq_aggregate. However, might_sleep could be triggered by
+qfq_destroy_class, which introduced sleeping in atomic context (path:
+qfq_destroy_class->qdisc_put->__qdisc_destroy->lockdep_unregister_key
+->might_sleep).
 
-In `call_on_irq_stack()`, it can happen when switching from the task stack
-to the IRQ stack and when switching back. In both cases, we can be
-interrupted when the SCS pointer points to the IRQ SCS, but SP points to
-the task stack. The nested interrupt handler pushes its return addresses
-on the IRQ SCS. It then detects that SP points to the task stack,
-calls `call_on_irq_stack()` and clobbers the task SCS pointer with
-the IRQ SCS pointer, which it will also use !
+Considering the race is on the qfq_aggregate objects, keeping
+qfq_rm_from_agg in the lock but moving the left part out can solve
+this issue.
 
-This leads to tasks returning to addresses on the wrong SCS,
-or even on the IRQ SCS, triggering kernel panics via CONFIG_VMAP_STACK
-or FPAC if enabled.
-
-This is possible on a default config, but unlikely.
-However, when enabling CONFIG_ARM64_PSEUDO_NMI, DAIF is unmasked and
-instead the GIC is responsible for filtering what interrupts the CPU
-should receive based on priority.
-Given the goal of emulating NMIs, pseudo-NMIs can be received by the CPU
-even in `cpu_switch_to()` and `call_on_irq_stack()`, possibly *very*
-frequently depending on the system configuration and workload, leading
-to unpredictable kernel panics.
-
-Completely mask DAIF in `cpu_switch_to()` and restore it when returning.
-Do the same in `call_on_irq_stack()`, but restore and mask around
-the branch.
-Mask DAIF even if CONFIG_SHADOW_CALL_STACK is not enabled for consistency
-of behaviour between all configurations.
-
-Introduce and use an assembly macro for saving and masking DAIF,
-as the existing one saves but only masks IF.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Reported-by: Cristian Prundeanu <cpru@amazon.com>
-Fixes: 59b37fe52f49 ("arm64: Stash shadow stack pointer in the task struct on interrupt")
-Tested-by: Cristian Prundeanu <cpru@amazon.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20250718142814.133329-1-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5e28d5a3f774 ("net/sched: sch_qfq: Fix race condition on qfq_aggregate")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/4a04e0cc-a64b-44e7-9213-2880ed641d77@sabinyo.mountain
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20250717230128.159766-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/assembler.h |    5 +++++
- arch/arm64/kernel/entry.S          |    6 ++++++
- 2 files changed, 11 insertions(+)
+ net/sched/sch_qfq.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/include/asm/assembler.h
-+++ b/arch/arm64/include/asm/assembler.h
-@@ -41,6 +41,11 @@
- /*
-  * Save/restore interrupts.
-  */
-+	.macro save_and_disable_daif, flags
-+	mrs	\flags, daif
-+	msr	daifset, #0xf
-+	.endm
-+
- 	.macro	save_and_disable_irq, flags
- 	mrs	\flags, daif
- 	msr	daifset, #3
---- a/arch/arm64/kernel/entry.S
-+++ b/arch/arm64/kernel/entry.S
-@@ -825,6 +825,7 @@ SYM_CODE_END(__bp_harden_el1_vectors)
-  *
-  */
- SYM_FUNC_START(cpu_switch_to)
-+	save_and_disable_daif x11
- 	mov	x10, #THREAD_CPU_CONTEXT
- 	add	x8, x0, x10
- 	mov	x9, sp
-@@ -848,6 +849,7 @@ SYM_FUNC_START(cpu_switch_to)
- 	ptrauth_keys_install_kernel x1, x8, x9, x10
- 	scs_save x0
- 	scs_load_current
-+	restore_irq x11
- 	ret
- SYM_FUNC_END(cpu_switch_to)
- NOKPROBE(cpu_switch_to)
-@@ -874,6 +876,7 @@ NOKPROBE(ret_from_fork)
-  * Calls func(regs) using this CPU's irq stack and shadow irq stack.
-  */
- SYM_FUNC_START(call_on_irq_stack)
-+	save_and_disable_daif x9
- #ifdef CONFIG_SHADOW_CALL_STACK
- 	get_current_task x16
- 	scs_save x16
-@@ -888,8 +891,10 @@ SYM_FUNC_START(call_on_irq_stack)
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 2b1b025c31a33..51cc2cfb40936 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -536,9 +536,6 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
  
- 	/* Move to the new stack and call the function there */
- 	add	sp, x16, #IRQ_STACK_SIZE
-+	restore_irq x9
- 	blr	x1
+ static void qfq_destroy_class(struct Qdisc *sch, struct qfq_class *cl)
+ {
+-	struct qfq_sched *q = qdisc_priv(sch);
+-
+-	qfq_rm_from_agg(q, cl);
+ 	gen_kill_estimator(&cl->rate_est);
+ 	qdisc_put(cl->qdisc);
+ 	kfree(cl);
+@@ -559,10 +556,11 @@ static int qfq_delete_class(struct Qdisc *sch, unsigned long arg,
  
-+	save_and_disable_daif x9
- 	/*
- 	 * Restore the SP from the FP, and restore the FP and LR from the frame
- 	 * record.
-@@ -897,6 +902,7 @@ SYM_FUNC_START(call_on_irq_stack)
- 	mov	sp, x29
- 	ldp	x29, x30, [sp], #16
- 	scs_load_current
-+	restore_irq x9
- 	ret
- SYM_FUNC_END(call_on_irq_stack)
- NOKPROBE(call_on_irq_stack)
+ 	qdisc_purge_queue(cl->qdisc);
+ 	qdisc_class_hash_remove(&q->clhash, &cl->common);
+-	qfq_destroy_class(sch, cl);
++	qfq_rm_from_agg(q, cl);
+ 
+ 	sch_tree_unlock(sch);
+ 
++	qfq_destroy_class(sch, cl);
+ 	return 0;
+ }
+ 
+@@ -1503,6 +1501,7 @@ static void qfq_destroy_qdisc(struct Qdisc *sch)
+ 	for (i = 0; i < q->clhash.hashsize; i++) {
+ 		hlist_for_each_entry_safe(cl, next, &q->clhash.hash[i],
+ 					  common.hnode) {
++			qfq_rm_from_agg(q, cl);
+ 			qfq_destroy_class(sch, cl);
+ 		}
+ 	}
+-- 
+2.39.5
+
 
 
