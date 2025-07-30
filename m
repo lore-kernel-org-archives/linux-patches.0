@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B701E25E1;
-	Wed, 30 Jul 2025 09:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACC91714B7;
+	Wed, 30 Jul 2025 09:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868821; cv=none; b=G5aI8TlvlZbG31WWf56DKRR1Pvd6jL8aZ8/QvL5WnVmcj7ug7QvcE+ckySyt4uJWCxNBxV7p4SRN6L+3h7dpgCGbAw3frWDFnueY1eYdk+d095mBkp8ixJorNLajts3G9BE+gOp4g0yMyctS0vdq66yYuyN/I80s/p9hIp8SVo4=
+	t=1753868824; cv=none; b=ry3Li+TadABVSj0OwN0VAQnjpFjUmPjBfat/z5WQoXnlECfFStEyeY8ZQwwXZbPE5SFMDMWAmhmZ6/UVkLcuDkbLCNQ7rERxIWkzNu+3MRmR9f0BR9k5rXYATJsazz7aqSsSrrczXIxKNUP/8BOxoFAf/PR86+pKn5UfjxHq/L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868821; c=relaxed/simple;
-	bh=c/4meQAkmQHxFPkZNQXcMih3R1rWC9QolGWqSPeP77Q=;
+	s=arc-20240116; t=1753868824; c=relaxed/simple;
+	bh=Pe2KLYrmqgj5IjrT8Mrw4FnaZrdqT04ot29IZACfRLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IhpjSVjnrvh60V/UUOQjf1KuY196Bxz5M0ACvH+xAs7Ev1K1k0sbGoS5J6m8/ntrc4l03oLlZK6OCqhBwvjRa6/RhTn4tEjjr85upp3DS7YteXNWRIv/ACn/En98PcIQ9dQN/DNfSJYry3VT2pY4Irf+7n6ysUp70uRqNShrpbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxXRr+6T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VCNsaEZKd0qTJiya8KRyUCadeSFseW66pVrpCkqTDDRF2NOkkHC8bNUihtQ7lnnZRkXQzcR2F40PEVS0ZF+zMQhndj19Q4AMX/0M1GxyjOHksY0+T+7iBD4ZY/+iZyCUCtzYoKpAlVbIWUwRrFbKqEb78mH3qb0lbwh3MzMXaY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvRI3aYC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxXRr+6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE145C4CEF5;
-	Wed, 30 Jul 2025 09:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvRI3aYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D24C4CEF5;
+	Wed, 30 Jul 2025 09:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868821;
-	bh=c/4meQAkmQHxFPkZNQXcMih3R1rWC9QolGWqSPeP77Q=;
+	s=korg; t=1753868824;
+	bh=Pe2KLYrmqgj5IjrT8Mrw4FnaZrdqT04ot29IZACfRLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxXRr+6TqLQoEwe5RVIc2VplhHyxctj6UhjhW2L7OeDGVmKw9fY8M2KdOWKpOL3ZH
-	 sbZfpCXTlec1BaJrDrYIT2FdRKoQRzRxN4qKizFZeXxJ63ESMBaTNWh6HDjM5tWGgR
-	 VbNgprt85A+LtlCSZ6YpR2bPmoDXF9DOJSRsyZmc=
+	b=OvRI3aYCbDTs6SSRTjEufpMAHuc3S1ZZnRRrlN5hYITPye4bRIfslnzjoxHuHSK4D
+	 cQVpRO+90rgxy9iJKeX2nHK4wZp4bt+RvTT8+D0DiLoQP7rKXVkI3MSe7uBDRFu/eV
+	 3KNZRljh9a9bVpmBJP6EbDGSsXtM57vERH7es6aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Fontaine <axel@axelfontaine.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/117] erofs: fix large fragment handling
-Date: Wed, 30 Jul 2025 11:35:53 +0200
-Message-ID: <20250730093237.042258210@linuxfoundation.org>
+Subject: [PATCH 6.12 085/117] ext4: dont explicit update times in ext4_fallocate()
+Date: Wed, 30 Jul 2025 11:35:54 +0200
+Message-ID: <20250730093237.084733249@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -51,88 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit b44686c8391b427fb1c85a31c35077e6947c6d90 ]
+[ Upstream commit 73ae756ecdfa9684446134590eef32b0f067249c ]
 
-Fragments aren't limited by Z_EROFS_PCLUSTER_MAX_DSIZE. However, if
-a fragment's logical length is larger than Z_EROFS_PCLUSTER_MAX_DSIZE
-but the fragment is not the whole inode, it currently returns
--EOPNOTSUPP because m_flags has the wrong EROFS_MAP_ENCODED flag set.
-It is not intended by design but should be rare, as it can only be
-reproduced by mkfs with `-Eall-fragments` in a specific case.
+After commit 'ad5cd4f4ee4d ("ext4: fix fallocate to use file_modified to
+update permissions consistently"), we can update mtime and ctime
+appropriately through file_modified() when doing zero range, collapse
+rage, insert range and punch hole, hence there is no need to explicit
+update times in those paths, just drop them.
 
-Let's normalize fragment m_flags using the new EROFS_MAP_FRAGMENT.
-
-Reported-by: Axel Fontaine <axel@axelfontaine.com>
-Closes: https://github.com/erofs/erofs-utils/issues/23
-Fixes: 7c3ca1838a78 ("erofs: restrict pcluster size limitations")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250711195826.3601157-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20241220011637.1157197-3-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 29ec9bed2395 ("ext4: fix incorrect punch max_end")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/internal.h |    4 +++-
- fs/erofs/zdata.c    |    2 +-
- fs/erofs/zmap.c     |    7 +++----
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ fs/ext4/extents.c |    5 -----
+ fs/ext4/inode.c   |    1 -
+ 2 files changed, 6 deletions(-)
 
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -324,10 +324,12 @@ static inline struct folio *erofs_grab_f
- /* The length of extent is full */
- #define EROFS_MAP_FULL_MAPPED	0x0008
- /* Located in the special packed inode */
--#define EROFS_MAP_FRAGMENT	0x0010
-+#define __EROFS_MAP_FRAGMENT	0x0010
- /* The extent refers to partial decompressed data */
- #define EROFS_MAP_PARTIAL_REF	0x0020
- 
-+#define EROFS_MAP_FRAGMENT	(EROFS_MAP_MAPPED | __EROFS_MAP_FRAGMENT)
-+
- struct erofs_map_blocks {
- 	struct erofs_buf buf;
- 
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1016,7 +1016,7 @@ static int z_erofs_scan_folio(struct z_e
- 		if (!(map->m_flags & EROFS_MAP_MAPPED)) {
- 			folio_zero_segment(folio, cur, end);
- 			tight = false;
--		} else if (map->m_flags & EROFS_MAP_FRAGMENT) {
-+		} else if (map->m_flags & __EROFS_MAP_FRAGMENT) {
- 			erofs_off_t fpos = offset + cur - map->m_la;
- 
- 			err = z_erofs_read_fragment(inode->i_sb, folio, cur,
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -481,7 +481,7 @@ static int z_erofs_do_map_blocks(struct
- 			goto unmap_out;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -4675,8 +4675,6 @@ static long ext4_zero_range(struct file
+ 			goto out_mutex;
  		}
- 	} else if (fragment && m.lcn == vi->z_tailextent_headlcn) {
--		map->m_flags |= EROFS_MAP_FRAGMENT;
-+		map->m_flags = EROFS_MAP_FRAGMENT;
- 	} else {
- 		map->m_pa = erofs_pos(sb, m.pblk);
- 		err = z_erofs_get_extent_compressedlen(&m, initial_lcn);
-@@ -644,8 +644,7 @@ int z_erofs_map_blocks_iter(struct inode
- 			    !vi->z_tailextent_headlcn) {
- 				map->m_la = 0;
- 				map->m_llen = inode->i_size;
--				map->m_flags = EROFS_MAP_MAPPED |
--					EROFS_MAP_FULL_MAPPED | EROFS_MAP_FRAGMENT;
-+				map->m_flags = EROFS_MAP_FRAGMENT;
- 			} else {
- 				err = z_erofs_do_map_blocks(inode, map, flags);
- 			}
-@@ -678,7 +677,7 @@ static int z_erofs_iomap_begin_report(st
- 	iomap->length = map.m_llen;
- 	if (map.m_flags & EROFS_MAP_MAPPED) {
- 		iomap->type = IOMAP_MAPPED;
--		iomap->addr = map.m_flags & EROFS_MAP_FRAGMENT ?
-+		iomap->addr = map.m_flags & __EROFS_MAP_FRAGMENT ?
- 			      IOMAP_NULL_ADDR : map.m_pa;
- 	} else {
- 		iomap->type = IOMAP_HOLE;
+ 
+-		inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+-
+ 		ret = ext4_alloc_file_blocks(file, lblk, max_blocks, new_size,
+ 					     flags);
+ 		filemap_invalidate_unlock(mapping);
+@@ -4700,7 +4698,6 @@ static long ext4_zero_range(struct file
+ 		goto out_mutex;
+ 	}
+ 
+-	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	if (new_size)
+ 		ext4_update_inode_size(inode, new_size);
+ 	ret = ext4_mark_inode_dirty(handle, inode);
+@@ -5431,7 +5428,6 @@ static int ext4_collapse_range(struct fi
+ 	up_write(&EXT4_I(inode)->i_data_sem);
+ 	if (IS_SYNC(inode))
+ 		ext4_handle_sync(handle);
+-	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	ret = ext4_mark_inode_dirty(handle, inode);
+ 	ext4_update_inode_fsync_trans(handle, inode, 1);
+ 
+@@ -5541,7 +5537,6 @@ static int ext4_insert_range(struct file
+ 	/* Expand file to avoid data loss if there is error while shifting */
+ 	inode->i_size += len;
+ 	EXT4_I(inode)->i_disksize += len;
+-	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	ret = ext4_mark_inode_dirty(handle, inode);
+ 	if (ret)
+ 		goto out_stop;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4113,7 +4113,6 @@ int ext4_punch_hole(struct file *file, l
+ 	if (IS_SYNC(inode))
+ 		ext4_handle_sync(handle);
+ 
+-	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	ret2 = ext4_mark_inode_dirty(handle, inode);
+ 	if (unlikely(ret2))
+ 		ret = ret2;
 
 
