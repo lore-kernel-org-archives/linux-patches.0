@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F0936124;
-	Wed, 30 Jul 2025 09:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8C526E71A;
+	Wed, 30 Jul 2025 09:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868510; cv=none; b=ae4OQ0VffjYYS2IHHb3SR7fibkTBn9ZQ0gfndsyoMxUlqQ907v28zda+IMl2rEGD9utMF1msU6iZDFltPP4kuLOhGt+pOYGOE6TnpkT8jP53a2wKe5IO4i2DvIZkAw9+5QpTOW3TxYsJNd8vRuYbQ7XknWp3RNx/lCsrdMbmAQc=
+	t=1753868513; cv=none; b=HrTjLjj/TOgYeDjDFXwYIGI7cme9LAxr2HYPdViOAOpzd3LYnnJUcrlVCMYR+zs7yil/MdzYlR2oxDpStktR1o5HgfPmFyDAKL1nI2KKnRkcFeMbkfLSbP0Jx1cHxAqLqMZG2ZLdM+iDIaPkpqzblwN/hfnX/9FXv0LidGiUV6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868510; c=relaxed/simple;
-	bh=HvcGCVzBsqQn24K3or10/cYxJS5OMprvp34AIP0ePew=;
+	s=arc-20240116; t=1753868513; c=relaxed/simple;
+	bh=w44HPRPZsJS2ikZxmanEzLsb6cruhpraQjASB/oKVI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXHfMB6HxrB/6MI6YZKcvW+W0uYARnjptS3qorksrvLBiRSgP3AD8WEIBJkG3wO+l2+ww3Z2cIz8DOKtPGa1un/MGikGiqXuHyblxl3DI/FHSSwlZ2yxB46WgEg7KWo4Z6I7LY7bThaJYLddzMBjy1ZU04InNN7xEbenmID2GiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMo5AIkY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQekLxJmGGQiInHF5i+bW+c0vEGKaPLB4XDdnqJBnKbGCsqa/iyAihvG7tWQoXK42sUEsn7IuwlG3nR9tZha0ZuhcBkSzfv00/sLcbWuY+l9Zz+1J1uHVg3mCWvdzRZ+1H85rOJA6Uij/GwI/VQCkao1jRZPQG9h8VynBjfW6PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cp5tZaSY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMo5AIkY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E222C4CEE7;
-	Wed, 30 Jul 2025 09:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cp5tZaSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BB1C4CEE7;
+	Wed, 30 Jul 2025 09:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868509;
-	bh=HvcGCVzBsqQn24K3or10/cYxJS5OMprvp34AIP0ePew=;
+	s=korg; t=1753868513;
+	bh=w44HPRPZsJS2ikZxmanEzLsb6cruhpraQjASB/oKVI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MMo5AIkYpE9vO4zY0ssA77LmzR//WZlx9qN/cQZLxrNVFfOCSj9wE1buT7+vX9XZB
-	 +iIZZolmVv8SLvurYxjXRY6EriTwKVLXGWrimfjdMbrH6EHZ7bWSZA3v+A/CL1ii1r
-	 Vv3ogkVDFuG8lLwthWXmfbjslsGEixOX0whkWmII=
+	b=cp5tZaSYd35WbnKUK3XS0ftF4lJjKsCCDIPj6TCkgMO9SxD+PIu1NcuYU0p5GCqF1
+	 D1RFy1474Qx4zbtDmEIrRLxYgDhBSsUZfC+nuRvsUr93w+XLvojSmHEykBY8EOu8sz
+	 seLmYNpHggycrQ6hwILFX7cBxmrVT9f2qqNeZ2Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Stefan Kerkmann <s.kerkmann@pengutronix.de>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.6 59/76] erofs: address D-cache aliasing
-Date: Wed, 30 Jul 2025 11:35:52 +0200
-Message-ID: <20250730093229.143225707@linuxfoundation.org>
+	"Xin Li (Intel)" <xin@zytor.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/117] x86/traps: Initialize DR7 by writing its architectural reset value
+Date: Wed, 30 Jul 2025 11:34:30 +0200
+Message-ID: <20250730093233.653454976@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
-References: <20250730093226.854413920@linuxfoundation.org>
+In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
+References: <20250730093233.592541778@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,137 +51,165 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Xin Li (Intel) <xin@zytor.com>
 
-commit 27917e8194f91dffd8b4825350c63cb68e98ce58 upstream.
+commit fa7d0f83c5c4223a01598876352473cb3d3bd4d7 upstream.
 
-Flush the D-cache before unlocking folios for compressed inodes, as
-they are dirtied during decompression.
+Initialize DR7 by writing its architectural reset value to always set
+bit 10, which is reserved to '1', when "clearing" DR7 so as not to
+trigger unanticipated behavior if said bit is ever unreserved, e.g. as
+a feature enabling flag with inverted polarity.
 
-Avoid calling flush_dcache_folio() on every CPU write, since it's more
-like playing whack-a-mole without real benefit.
-
-It has no impact on x86 and arm64/risc-v: on x86, flush_dcache_folio()
-is a no-op, and on arm64/risc-v, PG_dcache_clean (PG_arch_1) is clear
-for new page cache folios.  However, certain ARM boards are affected,
-as reported.
-
-Fixes: 3883a79abd02 ("staging: erofs: introduce VLE decompression support")
-Closes: https://lore.kernel.org/r/c1e51e16-6cc6-49d0-a63e-4e9ff6c4dd53@pengutronix.de
-Closes: https://lore.kernel.org/r/38d43fae-1182-4155-9c5b-ffc7382d9917@siemens.com
-Tested-by: Jan Kiszka <jan.kiszka@siemens.com>
-Tested-by: Stefan Kerkmann <s.kerkmann@pengutronix.de>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250709034614.2780117-2-hsiangkao@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250620231504.2676902-3-xin%40zytor.com
+[ context adjusted: no KVM_DEBUGREG_AUTO_SWITCH flag test" ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor.c |    6 ++----
- fs/erofs/zdata.c        |   32 +++++++++++++++++++-------------
- 2 files changed, 21 insertions(+), 17 deletions(-)
+ arch/x86/include/asm/debugreg.h |   19 +++++++++++++++----
+ arch/x86/include/asm/kvm_host.h |    2 +-
+ arch/x86/kernel/cpu/common.c    |    2 +-
+ arch/x86/kernel/kgdb.c          |    2 +-
+ arch/x86/kernel/process_32.c    |    2 +-
+ arch/x86/kernel/process_64.c    |    2 +-
+ arch/x86/kvm/x86.c              |    4 ++--
+ 7 files changed, 22 insertions(+), 11 deletions(-)
 
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -342,14 +342,12 @@ static int z_erofs_transform_plain(struc
+--- a/arch/x86/include/asm/debugreg.h
++++ b/arch/x86/include/asm/debugreg.h
+@@ -9,6 +9,14 @@
+ #include <asm/cpufeature.h>
+ #include <asm/msr.h>
  
- 	if (outpages > inpages) {
- 		DBG_BUGON(!rq->out[outpages - 1]);
--		if (rq->out[outpages - 1] != rq->in[inpages - 1]) {
-+		if (rq->out[outpages - 1] != rq->in[inpages - 1])
- 			memcpy_to_page(rq->out[outpages - 1], 0, src +
- 					(interlaced_offset ? 0 : righthalf),
- 				       lefthalf);
--		} else if (!interlaced_offset) {
-+		else if (!interlaced_offset)
- 			memmove(src, src + righthalf, lefthalf);
--			flush_dcache_page(rq->in[inpages - 1]);
--		}
- 	}
- 	kunmap_local(src);
- 	return 0;
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -122,9 +122,11 @@ static inline unsigned int z_erofs_pclus
++/*
++ * Define bits that are always set to 1 in DR7, only bit 10 is
++ * architecturally reserved to '1'.
++ *
++ * This is also the init/reset value for DR7.
++ */
++#define DR7_FIXED_1	0x00000400
++
+ DECLARE_PER_CPU(unsigned long, cpu_dr7);
  
- /*
-  * bit 30: I/O error occurred on this page
-+ * bit 29: CPU has dirty data in D-cache (needs aliasing handling);
-  * bit 0 - 29: remaining parts to complete this page
-  */
--#define Z_EROFS_PAGE_EIO			(1 << 30)
-+#define Z_EROFS_ONLINEPAGE_EIO		30
-+#define Z_EROFS_ONLINEPAGE_DIRTY	29
+ #ifndef CONFIG_PARAVIRT_XXL
+@@ -100,8 +108,8 @@ static __always_inline void native_set_d
  
- static inline void z_erofs_onlinepage_init(struct page *page)
+ static inline void hw_breakpoint_disable(void)
  {
-@@ -143,7 +145,7 @@ static inline void z_erofs_onlinepage_sp
- 	atomic_inc((atomic_t *)&page->private);
- }
+-	/* Zero the control register for HW Breakpoint */
+-	set_debugreg(0UL, 7);
++	/* Reset the control register for HW Breakpoint */
++	set_debugreg(DR7_FIXED_1, 7);
  
--static void z_erofs_onlinepage_endio(struct page *page, int err)
-+static void z_erofs_onlinepage_end(struct page *page, int err, bool dirty)
+ 	/* Zero-out the individual HW breakpoint address registers */
+ 	set_debugreg(0UL, 0);
+@@ -125,9 +133,12 @@ static __always_inline unsigned long loc
+ 		return 0;
+ 
+ 	get_debugreg(dr7, 7);
+-	dr7 &= ~0x400; /* architecturally set bit */
++
++	/* Architecturally set bit */
++	dr7 &= ~DR7_FIXED_1;
+ 	if (dr7)
+-		set_debugreg(0, 7);
++		set_debugreg(DR7_FIXED_1, 7);
++
+ 	/*
+ 	 * Ensure the compiler doesn't lower the above statements into
+ 	 * the critical section; disabling breakpoints late would not
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -31,6 +31,7 @@
+ 
+ #include <asm/apic.h>
+ #include <asm/pvclock-abi.h>
++#include <asm/debugreg.h>
+ #include <asm/desc.h>
+ #include <asm/mtrr.h>
+ #include <asm/msr-index.h>
+@@ -246,7 +247,6 @@ enum x86_intercept_stage;
+ #define DR7_BP_EN_MASK	0x000000ff
+ #define DR7_GE		(1 << 9)
+ #define DR7_GD		(1 << 13)
+-#define DR7_FIXED_1	0x00000400
+ #define DR7_VOLATILE	0xffff2bff
+ 
+ #define KVM_GUESTDBG_VALID_MASK \
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2160,7 +2160,7 @@ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard)
+ static void initialize_debug_regs(void)
  {
- 	int orig, v;
+ 	/* Control register first -- to make sure everything is disabled. */
+-	set_debugreg(0, 7);
++	set_debugreg(DR7_FIXED_1, 7);
+ 	set_debugreg(DR6_RESERVED, 6);
+ 	/* dr5 and dr4 don't exist */
+ 	set_debugreg(0, 3);
+--- a/arch/x86/kernel/kgdb.c
++++ b/arch/x86/kernel/kgdb.c
+@@ -385,7 +385,7 @@ static void kgdb_disable_hw_debug(struct
+ 	struct perf_event *bp;
  
-@@ -151,16 +153,20 @@ static void z_erofs_onlinepage_endio(str
- 
- 	do {
- 		orig = atomic_read((atomic_t *)&page->private);
--		v = (orig - 1) | (err ? Z_EROFS_PAGE_EIO : 0);
-+		DBG_BUGON(orig <= 0);
-+		v = dirty << Z_EROFS_ONLINEPAGE_DIRTY;
-+		v |= (orig - 1) | (!!err << Z_EROFS_ONLINEPAGE_EIO);
- 	} while (atomic_cmpxchg((atomic_t *)&page->private, orig, v) != orig);
- 
--	if (!(v & ~Z_EROFS_PAGE_EIO)) {
--		set_page_private(page, 0);
--		ClearPagePrivate(page);
--		if (!(v & Z_EROFS_PAGE_EIO))
--			SetPageUptodate(page);
--		unlock_page(page);
--	}
-+	if (v & (BIT(Z_EROFS_ONLINEPAGE_DIRTY) - 1))
-+		return;
-+	set_page_private(page, 0);
-+	ClearPagePrivate(page);
-+	if (v & BIT(Z_EROFS_ONLINEPAGE_DIRTY))
-+		flush_dcache_page(page);
-+	if (!(v & BIT(Z_EROFS_ONLINEPAGE_EIO)))
-+		SetPageUptodate(page);
-+	unlock_page(page);
- }
- 
- #define Z_EROFS_ONSTACK_PAGES		32
-@@ -1060,7 +1066,7 @@ next_part:
- 		goto repeat;
- 
- out:
--	z_erofs_onlinepage_endio(page, err);
-+	z_erofs_onlinepage_end(page, err, false);
- 	return err;
- }
- 
-@@ -1163,7 +1169,7 @@ static void z_erofs_fill_other_copies(st
- 			cur += len;
- 		}
- 		kunmap_local(dst);
--		z_erofs_onlinepage_endio(bvi->bvec.page, err);
-+		z_erofs_onlinepage_end(bvi->bvec.page, err, true);
- 		list_del(p);
- 		kfree(bvi);
- 	}
-@@ -1333,7 +1339,7 @@ out:
- 		/* recycle all individual short-lived pages */
- 		if (z_erofs_put_shortlivedpage(be->pagepool, page))
+ 	/* Disable hardware debugging while we are in kgdb: */
+-	set_debugreg(0UL, 7);
++	set_debugreg(DR7_FIXED_1, 7);
+ 	for (i = 0; i < HBP_NUM; i++) {
+ 		if (!breakinfo[i].enabled)
  			continue;
--		z_erofs_onlinepage_endio(page, err);
-+		z_erofs_onlinepage_end(page, err, true);
+--- a/arch/x86/kernel/process_32.c
++++ b/arch/x86/kernel/process_32.c
+@@ -93,7 +93,7 @@ void __show_regs(struct pt_regs *regs, e
+ 
+ 	/* Only print out debug registers if they are in their non-default state. */
+ 	if ((d0 == 0) && (d1 == 0) && (d2 == 0) && (d3 == 0) &&
+-	    (d6 == DR6_RESERVED) && (d7 == 0x400))
++	    (d6 == DR6_RESERVED) && (d7 == DR7_FIXED_1))
+ 		return;
+ 
+ 	printk("%sDR0: %08lx DR1: %08lx DR2: %08lx DR3: %08lx\n",
+--- a/arch/x86/kernel/process_64.c
++++ b/arch/x86/kernel/process_64.c
+@@ -132,7 +132,7 @@ void __show_regs(struct pt_regs *regs, e
+ 
+ 	/* Only print out debug registers if they are in their non-default state. */
+ 	if (!((d0 == 0) && (d1 == 0) && (d2 == 0) && (d3 == 0) &&
+-	    (d6 == DR6_RESERVED) && (d7 == 0x400))) {
++	    (d6 == DR6_RESERVED) && (d7 == DR7_FIXED_1))) {
+ 		printk("%sDR0: %016lx DR1: %016lx DR2: %016lx\n",
+ 		       log_lvl, d0, d1, d2);
+ 		printk("%sDR3: %016lx DR6: %016lx DR7: %016lx\n",
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10959,7 +10959,7 @@ static int vcpu_enter_guest(struct kvm_v
+ 		wrmsrl(MSR_IA32_XFD_ERR, vcpu->arch.guest_fpu.xfd_err);
+ 
+ 	if (unlikely(vcpu->arch.switch_db_regs)) {
+-		set_debugreg(0, 7);
++		set_debugreg(DR7_FIXED_1, 7);
+ 		set_debugreg(vcpu->arch.eff_db[0], 0);
+ 		set_debugreg(vcpu->arch.eff_db[1], 1);
+ 		set_debugreg(vcpu->arch.eff_db[2], 2);
+@@ -10968,7 +10968,7 @@ static int vcpu_enter_guest(struct kvm_v
+ 		if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
+ 			kvm_x86_call(set_dr6)(vcpu, vcpu->arch.dr6);
+ 	} else if (unlikely(hw_breakpoint_active())) {
+-		set_debugreg(0, 7);
++		set_debugreg(DR7_FIXED_1, 7);
  	}
  
- 	if (be->decompressed_pages != be->onstack_pages)
+ 	vcpu->arch.host_debugctl = get_debugctlmsr();
 
 
