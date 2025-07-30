@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79049635;
-	Wed, 30 Jul 2025 09:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E25442C;
+	Wed, 30 Jul 2025 09:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868947; cv=none; b=BSgOVuHvMpfena/0hrKWTKYsQLL1TalgKBp4ijnWt5OUC3q5TETujdyYKtUYm2JAmU982h3jJkBz9y0tgKPwCXFtgcBToVZanBlQAAjfvYYEPE/kDVo+iOwoZ+2TNvjC3U1b5i9Je7KsBZIa1EsnArJBTzEP1fF66uS4WODlBsw=
+	t=1753868951; cv=none; b=m9JtPsNCnOoQdtS2okJi0iQihgseq+E6zAi99XTaHmGC2ephPduB3esLTeSAvQKO7MwAVcjXRE8H4x3qUlf8KlpWYfl9vgXq6alCqCqEoQHg1FzUUouV3LrA1R68gYEaPv8jt4hRZjehK98flIDBxtGj0AV6Cm8/I3aC+xwXXLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868947; c=relaxed/simple;
-	bh=4hFiwACNAGr3bF6jTFBJiE3LK/oXIa5qj9zNLBl3OoI=;
+	s=arc-20240116; t=1753868951; c=relaxed/simple;
+	bh=Mv4FNN+voKJlbmTM6+Be6IjhUmqolSSQHCiVTHJXVTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBsle3Gj+UP+jKv+Q38Yb/iV7r3YVZ11ws/D/0ygKT7OPRjGG502C4eMI8C+zkdJNq++S0XtE4T3ivKYawbvzkwUnp5Iw2TCaH+a9Xqrs3P2d7jgCvK6/Z/GBJTfhiigqr/GoaokKroPePgNa4CpVVGXdp8wdkhalMVMI1kvtJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfhSG0JU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJ55c4r7knMDPT4XyfZdnVfBs4bpVE70gFepVysg95wgpBW9LtMZeNiccvjlcTt6L8FsG2bqSlGB2uFJkO7ahWUAgEumghDyiHsja4xH4/HL0goKQAz9Y+gZ6d5GHpnZ/36attr5o4NQxWwXGF4wvbZcpiAdjjE+/Hm+4gJb5N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISnsjFAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfhSG0JU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B10C4CEF5;
-	Wed, 30 Jul 2025 09:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISnsjFAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCDCC4CEF5;
+	Wed, 30 Jul 2025 09:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868947;
-	bh=4hFiwACNAGr3bF6jTFBJiE3LK/oXIa5qj9zNLBl3OoI=;
+	s=korg; t=1753868950;
+	bh=Mv4FNN+voKJlbmTM6+Be6IjhUmqolSSQHCiVTHJXVTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfhSG0JU+PiovthwsV1LhQxvCjoTVUV0gXzVdNDPa+OU1S8zBIsdaPn68ZSRTFcyF
-	 btB9uSO+1NhYrWpQhIDXYtNYSmfNSbQHxz1J9Ux4RsRk1AbPAjkXmvfjCPiqz7sB64
-	 chCfDRpo4BJ1i5EY8diqGm+E7KBA6iNLgYme2x+Y=
+	b=ISnsjFAENFof70OJue6VfKCJnEn8/x3h+jN8opOcd3sbrN59xTvr326TJjKY8LkWb
+	 9IJhpPrL3W3G2JMHLZjV6PFbg5NtlAhqQ6c3qSQeRINGpwU0KixyN4U+2UK8ViI/YH
+	 WDw+cxwRLG5vtPqlWsy70AGMt4cb2HssHtvjI+sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Badal Nilawar <badal.nilawar@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH 6.12 115/117] Revert "drm/xe/forcewake: Add a helper xe_force_wake_ref_has_domain()"
-Date: Wed, 30 Jul 2025 11:36:24 +0200
-Message-ID: <20250730093238.284249319@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 098/117] KVM: x86: Add X86EMUL_F_MSR and X86EMUL_F_DT_LOAD to aid canonical checks
+Date: Wed, 30 Jul 2025 11:36:07 +0200
+Message-ID: <20250730093237.611864919@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -53,48 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomita Moeko <tomitamoeko@gmail.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-This reverts commit deb05f8431f31e08fd6ab99a56069fc98014dbec.
+[ Upstream commit c534b37b7584e2abc5d487b4e017f61a61959ca9 ]
 
-The helper function introduced in the reverted commit is for handling
-the "refcounted domain mask" introduced in commit a7ddcea1f5ac
-("drm/xe: Error handling in xe_force_wake_get()"). Since that API change
-only exists in 6.13 and later, this helper is unnecessary in 6.12 stable
-kernel.
+Add emulation flags for MSR accesses and Descriptor Tables loads, and pass
+the new flags as appropriate to emul_is_noncanonical_address().  The flags
+will be used to perform the correct canonical check, as the type of access
+affects whether or not CR4.LA57 is consulted when determining the canonical
+bit.
 
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Badal Nilawar <badal.nilawar@intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+No functional change is intended.
+
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20240906221824.491834-3-mlevitsk@redhat.com
+[sean: split to separate patch, massage changelog]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: fa787ac07b3c ("KVM: x86/hyper-v: Skip non-canonical addresses during PV TLB flush")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_force_wake.h |   16 ----------------
- 1 file changed, 16 deletions(-)
+ arch/x86/kvm/emulate.c     |   15 +++++++++------
+ arch/x86/kvm/kvm_emulate.h |    5 ++++-
+ arch/x86/kvm/x86.c         |    2 +-
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_force_wake.h
-+++ b/drivers/gpu/drm/xe/xe_force_wake.h
-@@ -46,20 +46,4 @@ xe_force_wake_assert_held(struct xe_forc
- 	xe_gt_assert(fw->gt, fw->awake_domains & domain);
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -651,9 +651,10 @@ static inline u8 ctxt_virt_addr_bits(str
  }
  
--/**
-- * xe_force_wake_ref_has_domain - verifies if the domains are in fw_ref
-- * @fw_ref : the force_wake reference
-- * @domain : forcewake domain to verify
-- *
-- * This function confirms whether the @fw_ref includes a reference to the
-- * specified @domain.
-- *
-- * Return: true if domain is refcounted.
-- */
--static inline bool
--xe_force_wake_ref_has_domain(unsigned int fw_ref, enum xe_force_wake_domains domain)
--{
--	return fw_ref & domain;
--}
--
- #endif
+ static inline bool emul_is_noncanonical_address(u64 la,
+-						struct x86_emulate_ctxt *ctxt)
++						struct x86_emulate_ctxt *ctxt,
++						unsigned int flags)
+ {
+-	return !ctxt->ops->is_canonical_addr(ctxt, la);
++	return !ctxt->ops->is_canonical_addr(ctxt, la, flags);
+ }
+ 
+ /*
+@@ -1733,7 +1734,8 @@ static int __load_segment_descriptor(str
+ 		if (ret != X86EMUL_CONTINUE)
+ 			return ret;
+ 		if (emul_is_noncanonical_address(get_desc_base(&seg_desc) |
+-						 ((u64)base3 << 32), ctxt))
++						 ((u64)base3 << 32), ctxt,
++						 X86EMUL_F_DT_LOAD))
+ 			return emulate_gp(ctxt, err_code);
+ 	}
+ 
+@@ -2516,8 +2518,8 @@ static int em_sysexit(struct x86_emulate
+ 		ss_sel = cs_sel + 8;
+ 		cs.d = 0;
+ 		cs.l = 1;
+-		if (emul_is_noncanonical_address(rcx, ctxt) ||
+-		    emul_is_noncanonical_address(rdx, ctxt))
++		if (emul_is_noncanonical_address(rcx, ctxt, 0) ||
++		    emul_is_noncanonical_address(rdx, ctxt, 0))
+ 			return emulate_gp(ctxt, 0);
+ 		break;
+ 	}
+@@ -3494,7 +3496,8 @@ static int em_lgdt_lidt(struct x86_emula
+ 	if (rc != X86EMUL_CONTINUE)
+ 		return rc;
+ 	if (ctxt->mode == X86EMUL_MODE_PROT64 &&
+-	    emul_is_noncanonical_address(desc_ptr.address, ctxt))
++	    emul_is_noncanonical_address(desc_ptr.address, ctxt,
++					 X86EMUL_F_DT_LOAD))
+ 		return emulate_gp(ctxt, 0);
+ 	if (lgdt)
+ 		ctxt->ops->set_gdt(ctxt, &desc_ptr);
+--- a/arch/x86/kvm/kvm_emulate.h
++++ b/arch/x86/kvm/kvm_emulate.h
+@@ -94,6 +94,8 @@ struct x86_instruction_info {
+ #define X86EMUL_F_FETCH			BIT(1)
+ #define X86EMUL_F_IMPLICIT		BIT(2)
+ #define X86EMUL_F_INVLPG		BIT(3)
++#define X86EMUL_F_MSR			BIT(4)
++#define X86EMUL_F_DT_LOAD		BIT(5)
+ 
+ struct x86_emulate_ops {
+ 	void (*vm_bugged)(struct x86_emulate_ctxt *ctxt);
+@@ -236,7 +238,8 @@ struct x86_emulate_ops {
+ 	gva_t (*get_untagged_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr,
+ 				   unsigned int flags);
+ 
+-	bool (*is_canonical_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr);
++	bool (*is_canonical_addr)(struct x86_emulate_ctxt *ctxt, gva_t addr,
++				  unsigned int flags);
+ };
+ 
+ /* Type, address-of, and value of an instruction's operand. */
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8609,7 +8609,7 @@ static gva_t emulator_get_untagged_addr(
+ }
+ 
+ static bool emulator_is_canonical_addr(struct x86_emulate_ctxt *ctxt,
+-				       gva_t addr)
++				       gva_t addr, unsigned int flags)
+ {
+ 	return !is_noncanonical_address(addr, emul_to_vcpu(ctxt));
+ }
 
 
