@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B32167DB7;
-	Wed, 30 Jul 2025 09:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666B8292B38;
+	Wed, 30 Jul 2025 09:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868231; cv=none; b=d8h0xqgk0hRmRwhbHlJAO1dtwZGhg1Ge6In7p2uHklMj/Tq3wqxHGdRKRSh8iKDPLsTgyxs3gmSLproDlpgv5c2K1/WrlYfqixnjTfGQASFgr7+JI9JxgZuNceJoTcU8lB7jXhy2GKlDLRx0RAz2NCBzRaGc0EDTR1FZ581iOUo=
+	t=1753868238; cv=none; b=rGkoy2uiTb7MHrtBVnevgI1hieB4UvchxsCXeJ9h/QPObC+kpOYzM+d5V9xIIQhjqcw8BksQX+BDRkWwk5P1H00SOyKScSTUYDZZKuDUBXlJimLafj+voRqOVQACnXQ5ss241VTlvCh+S38rmlxIJ26UyLRPMHTbjZ/sfy96saA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868231; c=relaxed/simple;
-	bh=HqMviqCcPtvJUYlyAnLbhdl5dVBmyTtTmdvWLLnC2eo=;
+	s=arc-20240116; t=1753868238; c=relaxed/simple;
+	bh=QYKqeBawB5aO4xzBT7Xt1XhpIbJX+VEH606F2RuGOLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bgAqDa2D0aGrgT4q0yO58MdxVwLxW383dF5QOemnOLtsdb+abreqe8Cdb4T2QoCI2r9XtCaPsFv4N/ajB4aHQOeFXwUy91gp7sxxSh3Mh/hw6Tx/tTYFsYlnES/sy/FJox8EdFFGmbIf/KDLm+OaDw5CiXFzHJIYKU/yusqYiLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aq9PZwqa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L81dP/aNlKUQmd41xQcKxZW7PCa/rkW6qDxcn5OZeqTCJGZmqpwAVYEwOhTKq2xphMZogEbs/XqVJd2P2W9OrkR6obO5pMY58NhjwAyY8rZqQHR21Pj32GoEXSuNTDoetG9JcGKreuw8n0YEGNWoEe4bsHJkD0BUM0/FoPWBWBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tvrfl2lP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aq9PZwqa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DA1C4CEF8;
-	Wed, 30 Jul 2025 09:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tvrfl2lP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB298C4CEF6;
+	Wed, 30 Jul 2025 09:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868231;
-	bh=HqMviqCcPtvJUYlyAnLbhdl5dVBmyTtTmdvWLLnC2eo=;
+	s=korg; t=1753868238;
+	bh=QYKqeBawB5aO4xzBT7Xt1XhpIbJX+VEH606F2RuGOLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aq9PZwqaFh9e5YbSKIahUKL1qmF1PceoqVresaRfHpMwke9hGtKzTZbPFvSBItDmS
-	 i1C55HTcJ/HiSUeNR5KC22fb3EJxxbU67sNb5OB/9hyZ2hh2GtKuH9X1tVUclXZU5K
-	 crQ4QvFW6UrKLG+lXl34y+QwGHKCVolM3SlJVOxY=
+	b=Tvrfl2lP6td3w/D3JxsSWY9gHVYpiRRoY3WKR1HxoA+ITPlx26sx8r4SO7yXZDnVk
+	 et2a6iCgmFX/Pjqnv5TW1WNflLZwEUOnKvOSPl1EFamxfvdk0yaFbZOuQT2OcLaHqm
+	 KncZu7ziM1bXh5+xkQeBy0BseRREsyqDeiZWBbBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 13/76] net/mlx5: E-Switch, Fix peer miss rules to use peer eswitch
-Date: Wed, 30 Jul 2025 11:35:06 +0200
-Message-ID: <20250730093227.365523545@linuxfoundation.org>
+	Yajun Deng <yajun.deng@linux.dev>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Arpana Arland <arpanax.arland@intel.com>
+Subject: [PATCH 6.6 14/76] i40e: Add rx_missed_errors for buffer exhaustion
+Date: Wed, 30 Jul 2025 11:35:07 +0200
+Message-ID: <20250730093227.405451311@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -54,243 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Yajun Deng <yajun.deng@linux.dev>
 
-[ Upstream commit 5b4c56ad4da0aa00b258ab50b1f5775b7d3108c7 ]
+[ Upstream commit 5337d294973331660e84e41836a54014de22e5b0 ]
 
-In the original design, it is assumed local and peer eswitches have the
-same number of vfs. However, in new firmware, local and peer eswitches
-can have different number of vfs configured by mlxconfig.  In such
-configuration, it is incorrect to derive the number of vfs from the
-local device's eswitch.
+As the comment in struct rtnl_link_stats64, rx_dropped should not
+include packets dropped by the device due to buffer exhaustion.
+They are counted in rx_missed_errors, procfs folds those two counters
+together.
 
-Fix this by updating the peer miss rules add and delete functions to use
-the peer device's eswitch and vf count instead of the local device's
-information, ensuring correct behavior regardless of vf configuration
-differences.
+Add rx_missed_errors for buffer exhaustion, rx_missed_errors corresponds
+to rx_discards, rx_dropped corresponds to rx_discards_other.
 
-Fixes: ac004b832128 ("net/mlx5e: E-Switch, Add peer miss rules")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1752753970-261832-3-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Tested-by: Arpana Arland <arpanax.arland@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 50b2af451597 ("i40e: report VF tx_dropped with tx_errors instead of tx_discards")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/eswitch_offloads.c     | 108 +++++++++---------
- 1 file changed, 54 insertions(+), 54 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_ethtool.c |  3 ++-
+ drivers/net/ethernet/intel/i40e/i40e_main.c    | 18 +++++++-----------
+ .../net/ethernet/intel/i40e/i40e_virtchnl_pf.c |  2 +-
+ 3 files changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 326c72b3df867..86fb8197594f5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -1170,19 +1170,19 @@ static void esw_set_peer_miss_rule_source_port(struct mlx5_eswitch *esw,
- static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
- 				       struct mlx5_core_dev *peer_dev)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+index 4e90570ba7803..a89f7ca510fdb 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
+@@ -246,6 +246,7 @@ static const struct i40e_stats i40e_gstrings_net_stats[] = {
+ 	I40E_NETDEV_STAT(rx_errors),
+ 	I40E_NETDEV_STAT(tx_errors),
+ 	I40E_NETDEV_STAT(rx_dropped),
++	I40E_NETDEV_STAT(rx_missed_errors),
+ 	I40E_NETDEV_STAT(tx_dropped),
+ 	I40E_NETDEV_STAT(collisions),
+ 	I40E_NETDEV_STAT(rx_length_errors),
+@@ -322,7 +323,7 @@ static const struct i40e_stats i40e_gstrings_stats[] = {
+ 	I40E_PF_STAT("port.rx_broadcast", stats.eth.rx_broadcast),
+ 	I40E_PF_STAT("port.tx_broadcast", stats.eth.tx_broadcast),
+ 	I40E_PF_STAT("port.tx_errors", stats.eth.tx_errors),
+-	I40E_PF_STAT("port.rx_dropped", stats.eth.rx_discards),
++	I40E_PF_STAT("port.rx_discards", stats.eth.rx_discards),
+ 	I40E_PF_STAT("port.tx_dropped_link_down", stats.tx_dropped_link_down),
+ 	I40E_PF_STAT("port.rx_crc_errors", stats.crc_errors),
+ 	I40E_PF_STAT("port.illegal_bytes", stats.illegal_bytes),
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 806cec458a072..b749aa3e783ff 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -509,6 +509,7 @@ static void i40e_get_netdev_stats_struct(struct net_device *netdev,
+ 	stats->tx_dropped	= vsi_stats->tx_dropped;
+ 	stats->rx_errors	= vsi_stats->rx_errors;
+ 	stats->rx_dropped	= vsi_stats->rx_dropped;
++	stats->rx_missed_errors	= vsi_stats->rx_missed_errors;
+ 	stats->rx_crc_errors	= vsi_stats->rx_crc_errors;
+ 	stats->rx_length_errors	= vsi_stats->rx_length_errors;
+ }
+@@ -700,17 +701,13 @@ i40e_stats_update_rx_discards(struct i40e_vsi *vsi, struct i40e_hw *hw,
+ 			      struct i40e_eth_stats *stat_offset,
+ 			      struct i40e_eth_stats *stat)
  {
-+	struct mlx5_eswitch *peer_esw = peer_dev->priv.eswitch;
- 	struct mlx5_flow_destination dest = {};
- 	struct mlx5_flow_act flow_act = {0};
- 	struct mlx5_flow_handle **flows;
--	/* total vports is the same for both e-switches */
--	int nvports = esw->total_vports;
- 	struct mlx5_flow_handle *flow;
-+	struct mlx5_vport *peer_vport;
- 	struct mlx5_flow_spec *spec;
--	struct mlx5_vport *vport;
- 	int err, pfindex;
- 	unsigned long i;
- 	void *misc;
+-	u64 rx_rdpc, rx_rxerr;
+-
+ 	i40e_stat_update32(hw, I40E_GLV_RDPC(stat_idx), offset_loaded,
+-			   &stat_offset->rx_discards, &rx_rdpc);
++			   &stat_offset->rx_discards, &stat->rx_discards);
+ 	i40e_stat_update64(hw,
+ 			   I40E_GL_RXERR1H(i40e_compute_pci_to_hw_id(vsi, hw)),
+ 			   I40E_GL_RXERR1L(i40e_compute_pci_to_hw_id(vsi, hw)),
+ 			   offset_loaded, &stat_offset->rx_discards_other,
+-			   &rx_rxerr);
+-
+-	stat->rx_discards = rx_rdpc + rx_rxerr;
++			   &stat->rx_discards_other);
+ }
  
--	if (!MLX5_VPORT_MANAGER(esw->dev) && !mlx5_core_is_ecpf_esw_manager(esw->dev))
-+	if (!MLX5_VPORT_MANAGER(peer_dev) &&
-+	    !mlx5_core_is_ecpf_esw_manager(peer_dev))
- 		return 0;
+ /**
+@@ -732,9 +729,6 @@ void i40e_update_eth_stats(struct i40e_vsi *vsi)
+ 	i40e_stat_update32(hw, I40E_GLV_TEPC(stat_idx),
+ 			   vsi->stat_offsets_loaded,
+ 			   &oes->tx_errors, &es->tx_errors);
+-	i40e_stat_update32(hw, I40E_GLV_RDPC(stat_idx),
+-			   vsi->stat_offsets_loaded,
+-			   &oes->rx_discards, &es->rx_discards);
+ 	i40e_stat_update32(hw, I40E_GLV_RUPP(stat_idx),
+ 			   vsi->stat_offsets_loaded,
+ 			   &oes->rx_unknown_protocol, &es->rx_unknown_protocol);
+@@ -991,8 +985,10 @@ static void i40e_update_vsi_stats(struct i40e_vsi *vsi)
+ 	ns->tx_errors = es->tx_errors;
+ 	ons->multicast = oes->rx_multicast;
+ 	ns->multicast = es->rx_multicast;
+-	ons->rx_dropped = oes->rx_discards;
+-	ns->rx_dropped = es->rx_discards;
++	ons->rx_dropped = oes->rx_discards_other;
++	ns->rx_dropped = es->rx_discards_other;
++	ons->rx_missed_errors = oes->rx_discards;
++	ns->rx_missed_errors = es->rx_discards;
+ 	ons->tx_dropped = oes->tx_discards;
+ 	ns->tx_dropped = es->tx_discards;
  
- 	spec = kvzalloc(sizeof(*spec), GFP_KERNEL);
-@@ -1191,7 +1191,7 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 80036942dc764..18720e9c24f73 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -5010,7 +5010,7 @@ int i40e_get_vf_stats(struct net_device *netdev, int vf_id,
+ 	vf_stats->tx_bytes   = stats->tx_bytes;
+ 	vf_stats->broadcast  = stats->rx_broadcast;
+ 	vf_stats->multicast  = stats->rx_multicast;
+-	vf_stats->rx_dropped = stats->rx_discards;
++	vf_stats->rx_dropped = stats->rx_discards + stats->rx_discards_other;
+ 	vf_stats->tx_dropped = stats->tx_discards;
  
- 	peer_miss_rules_setup(esw, peer_dev, spec, &dest);
- 
--	flows = kvcalloc(nvports, sizeof(*flows), GFP_KERNEL);
-+	flows = kvcalloc(peer_esw->total_vports, sizeof(*flows), GFP_KERNEL);
- 	if (!flows) {
- 		err = -ENOMEM;
- 		goto alloc_flows_err;
-@@ -1201,10 +1201,10 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
- 	misc = MLX5_ADDR_OF(fte_match_param, spec->match_value,
- 			    misc_parameters);
- 
--	if (mlx5_core_is_ecpf_esw_manager(esw->dev)) {
--		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_PF);
--		esw_set_peer_miss_rule_source_port(esw, peer_dev->priv.eswitch,
--						   spec, MLX5_VPORT_PF);
-+	if (mlx5_core_is_ecpf_esw_manager(peer_dev)) {
-+		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_PF);
-+		esw_set_peer_miss_rule_source_port(esw, peer_esw, spec,
-+						   MLX5_VPORT_PF);
- 
- 		flow = mlx5_add_flow_rules(mlx5_eswitch_get_slow_fdb(esw),
- 					   spec, &flow_act, &dest, 1);
-@@ -1212,11 +1212,11 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
- 			err = PTR_ERR(flow);
- 			goto add_pf_flow_err;
- 		}
--		flows[vport->index] = flow;
-+		flows[peer_vport->index] = flow;
- 	}
- 
--	if (mlx5_ecpf_vport_exists(esw->dev)) {
--		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_ECPF);
-+	if (mlx5_ecpf_vport_exists(peer_dev)) {
-+		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_ECPF);
- 		MLX5_SET(fte_match_set_misc, misc, source_port, MLX5_VPORT_ECPF);
- 		flow = mlx5_add_flow_rules(mlx5_eswitch_get_slow_fdb(esw),
- 					   spec, &flow_act, &dest, 1);
-@@ -1224,13 +1224,14 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
- 			err = PTR_ERR(flow);
- 			goto add_ecpf_flow_err;
- 		}
--		flows[vport->index] = flow;
-+		flows[peer_vport->index] = flow;
- 	}
- 
--	mlx5_esw_for_each_vf_vport(esw, i, vport, mlx5_core_max_vfs(esw->dev)) {
-+	mlx5_esw_for_each_vf_vport(peer_esw, i, peer_vport,
-+				   mlx5_core_max_vfs(peer_dev)) {
- 		esw_set_peer_miss_rule_source_port(esw,
--						   peer_dev->priv.eswitch,
--						   spec, vport->vport);
-+						   peer_esw,
-+						   spec, peer_vport->vport);
- 
- 		flow = mlx5_add_flow_rules(mlx5_eswitch_get_slow_fdb(esw),
- 					   spec, &flow_act, &dest, 1);
-@@ -1238,22 +1239,22 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
- 			err = PTR_ERR(flow);
- 			goto add_vf_flow_err;
- 		}
--		flows[vport->index] = flow;
-+		flows[peer_vport->index] = flow;
- 	}
- 
--	if (mlx5_core_ec_sriov_enabled(esw->dev)) {
--		mlx5_esw_for_each_ec_vf_vport(esw, i, vport, mlx5_core_max_ec_vfs(esw->dev)) {
--			if (i >= mlx5_core_max_ec_vfs(peer_dev))
--				break;
--			esw_set_peer_miss_rule_source_port(esw, peer_dev->priv.eswitch,
--							   spec, vport->vport);
-+	if (mlx5_core_ec_sriov_enabled(peer_dev)) {
-+		mlx5_esw_for_each_ec_vf_vport(peer_esw, i, peer_vport,
-+					      mlx5_core_max_ec_vfs(peer_dev)) {
-+			esw_set_peer_miss_rule_source_port(esw, peer_esw,
-+							   spec,
-+							   peer_vport->vport);
- 			flow = mlx5_add_flow_rules(esw->fdb_table.offloads.slow_fdb,
- 						   spec, &flow_act, &dest, 1);
- 			if (IS_ERR(flow)) {
- 				err = PTR_ERR(flow);
- 				goto add_ec_vf_flow_err;
- 			}
--			flows[vport->index] = flow;
-+			flows[peer_vport->index] = flow;
- 		}
- 	}
- 
-@@ -1270,25 +1271,27 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
  	return 0;
- 
- add_ec_vf_flow_err:
--	mlx5_esw_for_each_ec_vf_vport(esw, i, vport, mlx5_core_max_ec_vfs(esw->dev)) {
--		if (!flows[vport->index])
-+	mlx5_esw_for_each_ec_vf_vport(peer_esw, i, peer_vport,
-+				      mlx5_core_max_ec_vfs(peer_dev)) {
-+		if (!flows[peer_vport->index])
- 			continue;
--		mlx5_del_flow_rules(flows[vport->index]);
-+		mlx5_del_flow_rules(flows[peer_vport->index]);
- 	}
- add_vf_flow_err:
--	mlx5_esw_for_each_vf_vport(esw, i, vport, mlx5_core_max_vfs(esw->dev)) {
--		if (!flows[vport->index])
-+	mlx5_esw_for_each_vf_vport(peer_esw, i, peer_vport,
-+				   mlx5_core_max_vfs(peer_dev)) {
-+		if (!flows[peer_vport->index])
- 			continue;
--		mlx5_del_flow_rules(flows[vport->index]);
-+		mlx5_del_flow_rules(flows[peer_vport->index]);
- 	}
--	if (mlx5_ecpf_vport_exists(esw->dev)) {
--		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_ECPF);
--		mlx5_del_flow_rules(flows[vport->index]);
-+	if (mlx5_ecpf_vport_exists(peer_dev)) {
-+		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_ECPF);
-+		mlx5_del_flow_rules(flows[peer_vport->index]);
- 	}
- add_ecpf_flow_err:
--	if (mlx5_core_is_ecpf_esw_manager(esw->dev)) {
--		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_PF);
--		mlx5_del_flow_rules(flows[vport->index]);
-+	if (mlx5_core_is_ecpf_esw_manager(peer_dev)) {
-+		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_PF);
-+		mlx5_del_flow_rules(flows[peer_vport->index]);
- 	}
- add_pf_flow_err:
- 	esw_warn(esw->dev, "FDB: Failed to add peer miss flow rule err %d\n", err);
-@@ -1301,37 +1304,34 @@ static int esw_add_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
- static void esw_del_fdb_peer_miss_rules(struct mlx5_eswitch *esw,
- 					struct mlx5_core_dev *peer_dev)
- {
-+	struct mlx5_eswitch *peer_esw = peer_dev->priv.eswitch;
- 	u16 peer_index = mlx5_get_dev_index(peer_dev);
- 	struct mlx5_flow_handle **flows;
--	struct mlx5_vport *vport;
-+	struct mlx5_vport *peer_vport;
- 	unsigned long i;
- 
- 	flows = esw->fdb_table.offloads.peer_miss_rules[peer_index];
- 	if (!flows)
- 		return;
- 
--	if (mlx5_core_ec_sriov_enabled(esw->dev)) {
--		mlx5_esw_for_each_ec_vf_vport(esw, i, vport, mlx5_core_max_ec_vfs(esw->dev)) {
--			/* The flow for a particular vport could be NULL if the other ECPF
--			 * has fewer or no VFs enabled
--			 */
--			if (!flows[vport->index])
--				continue;
--			mlx5_del_flow_rules(flows[vport->index]);
--		}
-+	if (mlx5_core_ec_sriov_enabled(peer_dev)) {
-+		mlx5_esw_for_each_ec_vf_vport(peer_esw, i, peer_vport,
-+					      mlx5_core_max_ec_vfs(peer_dev))
-+			mlx5_del_flow_rules(flows[peer_vport->index]);
- 	}
- 
--	mlx5_esw_for_each_vf_vport(esw, i, vport, mlx5_core_max_vfs(esw->dev))
--		mlx5_del_flow_rules(flows[vport->index]);
-+	mlx5_esw_for_each_vf_vport(peer_esw, i, peer_vport,
-+				   mlx5_core_max_vfs(peer_dev))
-+		mlx5_del_flow_rules(flows[peer_vport->index]);
- 
--	if (mlx5_ecpf_vport_exists(esw->dev)) {
--		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_ECPF);
--		mlx5_del_flow_rules(flows[vport->index]);
-+	if (mlx5_ecpf_vport_exists(peer_dev)) {
-+		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_ECPF);
-+		mlx5_del_flow_rules(flows[peer_vport->index]);
- 	}
- 
--	if (mlx5_core_is_ecpf_esw_manager(esw->dev)) {
--		vport = mlx5_eswitch_get_vport(esw, MLX5_VPORT_PF);
--		mlx5_del_flow_rules(flows[vport->index]);
-+	if (mlx5_core_is_ecpf_esw_manager(peer_dev)) {
-+		peer_vport = mlx5_eswitch_get_vport(peer_esw, MLX5_VPORT_PF);
-+		mlx5_del_flow_rules(flows[peer_vport->index]);
- 	}
- 
- 	kvfree(flows);
 -- 
 2.39.5
 
