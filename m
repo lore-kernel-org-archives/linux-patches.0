@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F7C1F09B6;
-	Wed, 30 Jul 2025 09:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE644255F5C;
+	Wed, 30 Jul 2025 09:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869040; cv=none; b=ijv132QVvS/PBSe5Pn7yErhGGTQnOmxAUJvUMvqy9Ymf2a56kbVgfn6gtcTJrtwdAc0tUrVOX2vxx3TrFxZQvfj7AcvLa94EpAORvwm+JT+JmAY4M8ryzCjUh0YAj/E1ANEi+cIT3Gn7TUz6OZFqfdIyci9oUv0DyxChc8x1YB4=
+	t=1753869043; cv=none; b=Lj7a+b8nnlF5xpbRLBEidVrPcelWbBMMXVxDl7Cp0RgHUk6aR/pVWooMGKp2kVhPGYAE7ML3p9ldXmY/jrXWXcfGPgCkcewtMIsQQA9CQte4a3fJ74Y0KqjbuyxO7NQBFUihpg8jlvm9kbF/J7QnYjLyGFHo21g2VmP6F+i7Mrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869040; c=relaxed/simple;
-	bh=wm2zKLTYvmay6+07Dom2diIVXpsAHr95p0V96zWe8I4=;
+	s=arc-20240116; t=1753869043; c=relaxed/simple;
+	bh=k1vaAncHF4O4uLllmst3BBd5ctEBkxIihWWgHCFVi2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlY7imZTief56mOFtPqdqgfNGyBF0DzRsiSDm/ds2+v8kLOh1m8amkDhDcMOYRztaP9hyZO+QIF6/hNJROh8DBjUauJ8j0nYIv+Piv2vgR3BfxxhUJAvhpzawpIo3IbBOGwCtpEL1RkRD2Q3ph0MhvnaU4igSoPHm7uIDt5BAo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E11/Lswu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=inPxDjvwGnihfw2NXnbZNlHl0uq+TVqXwooPhrUXZVGl3RE42/p8tbAPzQlTsTL5yQ3rFKBJbGwJRO055TJHhFPek7ECooVSvjMZsb0Fcoxvkb0oXJORs4sWrFzPFXJJm2rYu5aLRT/YuwvUcTVlfRvNfkKdT2J+hhVzGI9dm6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqsiV2Kk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E11/Lswu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE741C4CEF5;
-	Wed, 30 Jul 2025 09:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqsiV2Kk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D470C4CEF5;
+	Wed, 30 Jul 2025 09:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869040;
-	bh=wm2zKLTYvmay6+07Dom2diIVXpsAHr95p0V96zWe8I4=;
+	s=korg; t=1753869043;
+	bh=k1vaAncHF4O4uLllmst3BBd5ctEBkxIihWWgHCFVi2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E11/LswuVjfKGA6WfCOQeYDwggZ/r+MS2X5fwkfS8rA20GQnBy/BG/4jw37r8aiqz
-	 9hym0/NElAJRxxTcQNITOPTdC6rmEmjKEmmI+de63pnLBk6+a9PHPXHzy4h/xKy5+Z
-	 7xAYVrxIFkUaQzt3e6AzZVM4mZ3JdgeY/PcFrf2U=
+	b=kqsiV2KkMNROKY4HXFWCMq6PBxMZTh15Xcbtzw2RcH2j7GD75+p6/YQ8qfh/n+YjX
+	 WvLVAEvkz3pT01YmQVmrjGxl2TNpGv3rgLKrKyRjCmmaMWyUabvClN8td7ml2QMTXe
+	 v+jG8w2jeGND2uE/owmk2uOYrkk5A8EX+EvCG/nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Tobias Brunner <tobias@strongswan.org>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 22/92] xfrm: always initialize offload path
-Date: Wed, 30 Jul 2025 11:35:30 +0200
-Message-ID: <20250730093231.467781618@linuxfoundation.org>
+Subject: [PATCH 6.15 23/92] xfrm: Set transport header to fix UDP GRO handling
+Date: Wed, 30 Jul 2025 11:35:31 +0200
+Message-ID: <20250730093231.506665581@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -52,97 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Tobias Brunner <tobias@strongswan.org>
 
-[ Upstream commit c0f21029f123d1b15f8eddc8e3976bf0c8781c43 ]
+[ Upstream commit 3ac9e29211fa2df5539ba0d742c8fe9fe95fdc79 ]
 
-Offload path is used for GRO with SW IPsec, and not just for HW
-offload. So initialize it anyway.
+The referenced commit replaced a call to __xfrm4|6_udp_encap_rcv() with
+a custom check for non-ESP markers.  But what the called function also
+did was setting the transport header to the ESP header.  The function
+that follows, esp4|6_gro_receive(), relies on that being set when it calls
+xfrm_parse_spi().  We have to set the full offset as the skb's head was
+not moved yet so adding just the UDP header length won't work.
 
-Fixes: 585b64f5a620 ("xfrm: delay initialization of offload path till its actually requested")
-Reported-by: Sabrina Dubroca <sd@queasysnail.net>
-Closes: https://lore.kernel.org/all/aEGW_5HfPqU1rFjl@krikkit
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: e3fd05777685 ("xfrm: Fix UDP GRO handling for some corner cases")
+Signed-off-by: Tobias Brunner <tobias@strongswan.org>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h     | 2 +-
- net/xfrm/xfrm_device.c | 1 -
- net/xfrm/xfrm_state.c  | 6 ++----
- net/xfrm/xfrm_user.c   | 1 +
- 4 files changed, 4 insertions(+), 6 deletions(-)
+ net/ipv4/xfrm4_input.c | 3 +++
+ net/ipv6/xfrm6_input.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 1f1861c57e2ad..29a0759d5582c 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -474,7 +474,7 @@ struct xfrm_type_offload {
+diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
+index 0d31a8c108d4f..f28cfd88eaf59 100644
+--- a/net/ipv4/xfrm4_input.c
++++ b/net/ipv4/xfrm4_input.c
+@@ -202,6 +202,9 @@ struct sk_buff *xfrm4_gro_udp_encap_rcv(struct sock *sk, struct list_head *head,
+ 	if (len <= sizeof(struct ip_esp_hdr) || udpdata32[0] == 0)
+ 		goto out;
  
- int xfrm_register_type_offload(const struct xfrm_type_offload *type, unsigned short family);
- void xfrm_unregister_type_offload(const struct xfrm_type_offload *type, unsigned short family);
--void xfrm_set_type_offload(struct xfrm_state *x);
-+void xfrm_set_type_offload(struct xfrm_state *x, bool try_load);
- static inline void xfrm_unset_type_offload(struct xfrm_state *x)
- {
- 	if (!x->type_offload)
-diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
-index f46a9e5764f01..a2d3a5f3b4852 100644
---- a/net/xfrm/xfrm_device.c
-+++ b/net/xfrm/xfrm_device.c
-@@ -305,7 +305,6 @@ int xfrm_dev_state_add(struct net *net, struct xfrm_state *x,
- 		return -EINVAL;
- 	}
++	/* set the transport header to ESP */
++	skb_set_transport_header(skb, offset);
++
+ 	NAPI_GRO_CB(skb)->proto = IPPROTO_UDP;
  
--	xfrm_set_type_offload(x);
- 	if (!x->type_offload) {
- 		NL_SET_ERR_MSG(extack, "Type doesn't support offload");
- 		dev_put(dev);
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index cef8d3c20f652..0cf516b4e6d92 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -424,11 +424,10 @@ void xfrm_unregister_type_offload(const struct xfrm_type_offload *type,
- }
- EXPORT_SYMBOL(xfrm_unregister_type_offload);
+ 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
+diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
+index 841c81abaaf4f..9005fc156a20e 100644
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -202,6 +202,9 @@ struct sk_buff *xfrm6_gro_udp_encap_rcv(struct sock *sk, struct list_head *head,
+ 	if (len <= sizeof(struct ip_esp_hdr) || udpdata32[0] == 0)
+ 		goto out;
  
--void xfrm_set_type_offload(struct xfrm_state *x)
-+void xfrm_set_type_offload(struct xfrm_state *x, bool try_load)
- {
- 	const struct xfrm_type_offload *type = NULL;
- 	struct xfrm_state_afinfo *afinfo;
--	bool try_load = true;
++	/* set the transport header to ESP */
++	skb_set_transport_header(skb, offset);
++
+ 	NAPI_GRO_CB(skb)->proto = IPPROTO_UDP;
  
- retry:
- 	afinfo = xfrm_state_get_afinfo(x->props.family);
-@@ -607,6 +606,7 @@ static void ___xfrm_state_destroy(struct xfrm_state *x)
- 	kfree(x->coaddr);
- 	kfree(x->replay_esn);
- 	kfree(x->preplay_esn);
-+	xfrm_unset_type_offload(x);
- 	if (x->type) {
- 		x->type->destructor(x);
- 		xfrm_put_type(x->type);
-@@ -780,8 +780,6 @@ void xfrm_dev_state_free(struct xfrm_state *x)
- 	struct xfrm_dev_offload *xso = &x->xso;
- 	struct net_device *dev = READ_ONCE(xso->dev);
- 
--	xfrm_unset_type_offload(x);
--
- 	if (dev && dev->xfrmdev_ops) {
- 		spin_lock_bh(&xfrm_state_dev_gc_lock);
- 		if (!hlist_unhashed(&x->dev_gclist))
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 614b58cb26ab7..d17ea437a1587 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -977,6 +977,7 @@ static struct xfrm_state *xfrm_state_construct(struct net *net,
- 	/* override default values from above */
- 	xfrm_update_ae_params(x, attrs, 0);
- 
-+	xfrm_set_type_offload(x, attrs[XFRMA_OFFLOAD_DEV]);
- 	/* configure the hardware if offload is requested */
- 	if (attrs[XFRMA_OFFLOAD_DEV]) {
- 		err = xfrm_dev_state_add(net, x,
+ 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
 -- 
 2.39.5
 
