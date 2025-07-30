@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43756157E6B;
-	Wed, 30 Jul 2025 09:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906642698BF;
+	Wed, 30 Jul 2025 09:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868566; cv=none; b=b9vgtcXahqoQytrgWnPCWUEXfdLz8Ff5lF2lChTW+OU1SXutImLMVu8m0o2pBsQUVQ3pDvBcSRdf53gvKRUq8uaL2yDv6PRiaAkHWxyJRxO66uoYUGjlVj5QN52xyZwXDo+QeFymKzxR1lPxxtVyR/xuqiDVJS2R8ElsJmO5gN4=
+	t=1753868570; cv=none; b=XsKEEjylRDMJc8EdaDD6aAKkYSjOmbW+eyYDuwZY7iNr8It9EB2/nf+48BzeBrdKmuVl7BkRQSTHYmU58zSrtW17CDekXBOcZeH16m1BPv/5u6vllTnQLuxwgiUCrk9w2uNCiMn4MALev6ZWfX5KEWUReEy99eC3zRdh1tYEoq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868566; c=relaxed/simple;
-	bh=O4GuPZ7fOV2zNRZlKLpZ1+1V6ExEe8bDP8xOT6QC72Q=;
+	s=arc-20240116; t=1753868570; c=relaxed/simple;
+	bh=uTDM3dlR601AS9bvJBdDFr8OQbiq0shVM7xOQXbCX8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvwFqxdSopMcTvbEe3gfjUV7khJlhCVrLN+YjBr4iJaMSeonZAaSGOojYA+vxy8EUuLzNub+JDWYC8bQJm7FWGHqVkMAbBE+5iOC31JqgXwZUa+P0M4oJWjnR6OWgjZVQ+/cr69hXJTrp08CDABoWGRBkzlJ1ato5pEXnGp8PoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVfVviUf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VztEeVVxZeL1vOqkiEWpP7v0B68I5w9wi7PYX+hzGJv4VsV67K0Oci3jUjaUkfXb36C42QIRTuDFwaC6Fos0RJdiUdDG8ahMVUeWw5yCe1pUd0r4odaEhHZJXuzqyCCUz276NKfYXcAfVCPB2oQe1wRR1e43hOvdfAUB4FpPSu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8EBudWM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVfVviUf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5F2C4CEE7;
-	Wed, 30 Jul 2025 09:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8EBudWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80C2C4CEE7;
+	Wed, 30 Jul 2025 09:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868566;
-	bh=O4GuPZ7fOV2zNRZlKLpZ1+1V6ExEe8bDP8xOT6QC72Q=;
+	s=korg; t=1753868570;
+	bh=uTDM3dlR601AS9bvJBdDFr8OQbiq0shVM7xOQXbCX8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVfVviUfv3g1j2e91PD3u4YX22+pzbTZxafTnJsUBAGmdY5GfXsquO4soZaBYno7i
-	 g4myJDCyfJDBdkQ0fjptA4jcoO8txbv+AeoqM0m7HDedkuzEycQaGPPY1WL8+0g6eU
-	 VgFUZNxLuqODdMnF6fdy+2XNdFAJRc5+g/+VaGHI=
+	b=q8EBudWMGIDBHnAxn7BPtrjuvjimnyB/bFnN1QKwThDGHlMNPDl4fhEsgnc2vBU9l
+	 AtTS0jcpCC0ggVt1YCvAG+cgNEHaOMR5avvv22uqfZpXqclirUT92OOGdAu33vzFF+
+	 5p7eSz6BW9rM5fnKvCI/c+yG6v3uvENb66WOTR4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Florian Westphal <fw@strlen.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Gatien Chevallier <gatien.chevallier@foss.st.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/117] xfrm: state: use a consistent pcpu_id in xfrm_state_find
-Date: Wed, 30 Jul 2025 11:34:48 +0200
-Message-ID: <20250730093234.321651374@linuxfoundation.org>
+Subject: [PATCH 6.12 002/117] Input: gpio-keys - fix a sleep while atomic with PREEMPT_RT
+Date: Wed, 30 Jul 2025 11:34:31 +0200
+Message-ID: <20250730093233.690945148@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -52,113 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit 7eb11c0ab70777b9e5145a5ba1c0a2312c3980b2 ]
+commit f4a8f561d08e39f7833d4a278ebfb12a41eef15f upstream.
 
-If we get preempted during xfrm_state_find, we could run
-xfrm_state_look_at using a different pcpu_id than the one
-xfrm_state_find saw. This could lead to ignoring states that should
-have matched, and triggering acquires on a CPU that already has a pcpu
-state.
+When enabling PREEMPT_RT, the gpio_keys_irq_timer() callback runs in
+hard irq context, but the input_event() takes a spin_lock, which isn't
+allowed there as it is converted to a rt_spin_lock().
 
-    xfrm_state_find starts on CPU1
-    pcpu_id = 1
-    lookup starts
-    <preemption, we're now on CPU2>
-    xfrm_state_look_at pcpu_id = 2
-       finds a state
-found:
-    best->pcpu_num != pcpu_id (2 != 1)
-    if (!x && !error && !acquire_in_progress) {
-        ...
-        xfrm_state_alloc
-        xfrm_init_tempstate
-        ...
+[ 4054.289999] BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+[ 4054.290028] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/0
+...
+[ 4054.290195]  __might_resched+0x13c/0x1f4
+[ 4054.290209]  rt_spin_lock+0x54/0x11c
+[ 4054.290219]  input_event+0x48/0x80
+[ 4054.290230]  gpio_keys_irq_timer+0x4c/0x78
+[ 4054.290243]  __hrtimer_run_queues+0x1a4/0x438
+[ 4054.290257]  hrtimer_interrupt+0xe4/0x240
+[ 4054.290269]  arch_timer_handler_phys+0x2c/0x44
+[ 4054.290283]  handle_percpu_devid_irq+0x8c/0x14c
+[ 4054.290297]  handle_irq_desc+0x40/0x58
+[ 4054.290307]  generic_handle_domain_irq+0x1c/0x28
+[ 4054.290316]  gic_handle_irq+0x44/0xcc
 
-This can be avoided by passing the original pcpu_id down to all
-xfrm_state_look_at() calls.
+Considering the gpio_keys_irq_isr() can run in any context, e.g. it can
+be threaded, it seems there's no point in requesting the timer isr to
+run in hard irq context.
 
-Also switch to raw_smp_processor_id, disabling preempting just to
-re-enable it immediately doesn't really make sense.
+Relax the hrtimer not to use the hard context.
 
-Fixes: 1ddf9916ac09 ("xfrm: Add support for per cpu xfrm state handling.")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 019002f20cb5 ("Input: gpio-keys - use hrtimer for release timer")
+Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
+Link: https://lore.kernel.org/r/20250528-gpio_keys_preempt_rt-v2-1-3fc55a9c3619@foss.st.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ adjusted context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_state.c | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ drivers/input/keyboard/gpio_keys.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 912a4161a7420..ad0fe88494714 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1242,14 +1242,8 @@ static void xfrm_hash_grow_check(struct net *net, int have_hash_collision)
- static void xfrm_state_look_at(struct xfrm_policy *pol, struct xfrm_state *x,
- 			       const struct flowi *fl, unsigned short family,
- 			       struct xfrm_state **best, int *acq_in_progress,
--			       int *error)
-+			       int *error, unsigned int pcpu_id)
- {
--	/* We need the cpu id just as a lookup key,
--	 * we don't require it to be stable.
--	 */
--	unsigned int pcpu_id = get_cpu();
--	put_cpu();
--
- 	/* Resolution logic:
- 	 * 1. There is a valid state with matching selector. Done.
- 	 * 2. Valid state with inappropriate selector. Skip.
-@@ -1316,8 +1310,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 	/* We need the cpu id just as a lookup key,
- 	 * we don't require it to be stable.
- 	 */
--	pcpu_id = get_cpu();
--	put_cpu();
-+	pcpu_id = raw_smp_processor_id();
+--- a/drivers/input/keyboard/gpio_keys.c
++++ b/drivers/input/keyboard/gpio_keys.c
+@@ -488,7 +488,7 @@ static irqreturn_t gpio_keys_irq_isr(int
+ 	if (bdata->release_delay)
+ 		hrtimer_start(&bdata->release_timer,
+ 			      ms_to_ktime(bdata->release_delay),
+-			      HRTIMER_MODE_REL_HARD);
++			      HRTIMER_MODE_REL);
+ out:
+ 	return IRQ_HANDLED;
+ }
+@@ -633,7 +633,7 @@ static int gpio_keys_setup_key(struct pl
  
- 	to_put = NULL;
+ 		bdata->release_delay = button->debounce_interval;
+ 		hrtimer_init(&bdata->release_timer,
+-			     CLOCK_REALTIME, HRTIMER_MODE_REL_HARD);
++			     CLOCK_REALTIME, HRTIMER_MODE_REL);
+ 		bdata->release_timer.function = gpio_keys_irq_timer;
  
-@@ -1337,7 +1330,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 		    tmpl->id.proto == x->id.proto &&
- 		    (tmpl->id.spi == x->id.spi || !tmpl->id.spi))
- 			xfrm_state_look_at(pol, x, fl, encap_family,
--					   &best, &acquire_in_progress, &error);
-+					   &best, &acquire_in_progress, &error, pcpu_id);
- 	}
- 
- 	if (best)
-@@ -1354,7 +1347,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 		    tmpl->id.proto == x->id.proto &&
- 		    (tmpl->id.spi == x->id.spi || !tmpl->id.spi))
- 			xfrm_state_look_at(pol, x, fl, family,
--					   &best, &acquire_in_progress, &error);
-+					   &best, &acquire_in_progress, &error, pcpu_id);
- 	}
- 
- cached:
-@@ -1395,7 +1388,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 		    tmpl->id.proto == x->id.proto &&
- 		    (tmpl->id.spi == x->id.spi || !tmpl->id.spi))
- 			xfrm_state_look_at(pol, x, fl, family,
--					   &best, &acquire_in_progress, &error);
-+					   &best, &acquire_in_progress, &error, pcpu_id);
- 	}
- 	if (best || acquire_in_progress)
- 		goto found;
-@@ -1430,7 +1423,7 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
- 		    tmpl->id.proto == x->id.proto &&
- 		    (tmpl->id.spi == x->id.spi || !tmpl->id.spi))
- 			xfrm_state_look_at(pol, x, fl, family,
--					   &best, &acquire_in_progress, &error);
-+					   &best, &acquire_in_progress, &error, pcpu_id);
- 	}
- 
- found:
--- 
-2.39.5
-
+ 		isr = gpio_keys_irq_isr;
 
 
