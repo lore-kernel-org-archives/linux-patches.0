@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3334C167DB7;
-	Wed, 30 Jul 2025 09:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F54274666;
+	Wed, 30 Jul 2025 09:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868333; cv=none; b=kKcgG+TLezWLRZ9TsmWZGqwDB9ExSw73w6mCOmGEPXQ8jnZsVp338KIdFkNo0kJ01C2ljrOszS+VEfYf8TjHRqrOSSJJT1BLgul9YUJ1cmrUEOYShvvfhBtscYe0HBwlcKyjP6YslN3Aps2PmrFxWZ30FJTxCVGM4X4ttbXbrfk=
+	t=1753868335; cv=none; b=uinJu725gJVxlkvKbj1HvIA/HKtoiMLKsJAI5RAZFYgaCSUBNrn7eA0QaX/TyDgA1JKfVtwMhoo1KkO835hRWyFo6kI2nhBb4IuTiliwAaXCxjOpdvQSLkW6mDkotiFgaadA1dg9P2amSQqSgdo+0kNpgjKG9GVTTEn/4vUJnC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868333; c=relaxed/simple;
-	bh=x83MnKvb1IovLhRUzJRo7CfM7qkejx15Tk9oZM1VFws=;
+	s=arc-20240116; t=1753868335; c=relaxed/simple;
+	bh=UjSAH+AUSduLobz9ttuIkEIWqJVeb3a5eu0YBJHCqCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kq7FO8TGJFXu4u7pxR5rJEqtlzZ23ltJJJo0ubcrfguJhdBl6hFsFZlk1ttSnaJCJpB2BftgYwIYRncU+JBbMB9K1IvL9YlFhfbTK6YKwy+E2ELK9XpUg2Ypdh0ArTagHehtFsbklJCPzP8VDOcQlzYzZgU89zYe8qSSt2WfbAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyjVqaao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=flKOfy43CS7aJyret0HzEVRM25R/Tk8Z8owArDLuzrMQxTSbyavHwS2MH8dHLjWpRWHlgA8wn3+7QEHhKSvPLO9Y3ILsFx5gvngevkG1R5O7nZZLTWemQuTtv6b6XnCrK1PegAtzdFL6BsnKD2UOpIvdmhhgKOm3ftpuMRLIm1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOz0EHjq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyjVqaao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B07DC4CEE7;
-	Wed, 30 Jul 2025 09:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOz0EHjq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D447C4CEE7;
+	Wed, 30 Jul 2025 09:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868332;
-	bh=x83MnKvb1IovLhRUzJRo7CfM7qkejx15Tk9oZM1VFws=;
+	s=korg; t=1753868335;
+	bh=UjSAH+AUSduLobz9ttuIkEIWqJVeb3a5eu0YBJHCqCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyjVqaaoWkvycf8Bf5thRlkOXtQT8LbKMytu87qHJdg/BQ07mBY40y1abxEuwcXna
-	 xUkvJIjqD0rVm9WcunBneO5suxHm+jXGtF+UPblOOJrQ99dd+OyUD1I/zH+/kAn2W1
-	 tRSmnjINgiqY9cK2GAgC+OJh4pcQZOm4LvL7kSNI=
+	b=UOz0EHjq6YN1wuqe3hx35CUnfsCBAB9OAFFHACtifJaPUqk4ejSbtVaJzbNY7x6Rh
+	 FuvMWjVIQ5GvopIl9PAJ+gaIZi92iV9eUwhEMGxEgQx/CiX6UHFOVNR5t3Rm1xUhke
+	 x0DV1xjePXL7PHyrCG9er9fwNFcl2nbPq52asRKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jacek Kowalski <jacek@jacekk.info>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 37/76] dpaa2-switch: Fix device reference count leak in MAC endpoint handling
-Date: Wed, 30 Jul 2025 11:35:30 +0200
-Message-ID: <20250730093228.277058556@linuxfoundation.org>
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.6 38/76] e1000e: disregard NVM checksum on tgp when valid checksum bit is not set
+Date: Wed, 30 Jul 2025 11:35:31 +0200
+Message-ID: <20250730093228.314259311@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -52,68 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Jacek Kowalski <jacek@jacekk.info>
 
-commit 96e056ffba912ef18a72177f71956a5b347b5177 upstream.
+commit 536fd741c7ac907d63166cdae1081b1febfab613 upstream.
 
-The fsl_mc_get_endpoint() function uses device_find_child() for
-localization, which implicitly calls get_device() to increment the
-device's reference count before returning the pointer. However, the
-caller dpaa2_switch_port_connect_mac() fails to properly release this
-reference in multiple scenarios. We should call put_device() to
-decrement reference count properly.
+As described by Vitaly Lifshits:
 
-As comment of device_find_child() says, 'NOTE: you will need to drop
-the reference with put_device() after use'.
+> Starting from Tiger Lake, LAN NVM is locked for writes by SW, so the
+> driver cannot perform checksum validation and correction. This means
+> that all NVM images must leave the factory with correct checksum and
+> checksum valid bit set. Since Tiger Lake devices were the first to have
+> this lock, some systems in the field did not meet this requirement.
+> Therefore, for these transitional devices we skip checksum update and
+> verification, if the valid bit is not set.
 
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Jacek Kowalski <jacek@jacekk.info>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250717022309.3339976-3-make24@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Fixes: 4051f68318ca9 ("e1000e: Do not take care about recovery NVM checksum")
+Cc: stable@vger.kernel.org
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/e1000e/ich8lan.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -1447,12 +1447,19 @@ static int dpaa2_switch_port_connect_mac
- 	if (PTR_ERR(dpmac_dev) == -EPROBE_DEFER)
- 		return PTR_ERR(dpmac_dev);
- 
--	if (IS_ERR(dpmac_dev) || dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type)
-+	if (IS_ERR(dpmac_dev))
- 		return 0;
- 
-+	if (dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type) {
-+		err = 0;
-+		goto out_put_device;
-+	}
-+
- 	mac = kzalloc(sizeof(*mac), GFP_KERNEL);
--	if (!mac)
--		return -ENOMEM;
-+	if (!mac) {
-+		err = -ENOMEM;
-+		goto out_put_device;
-+	}
- 
- 	mac->mc_dev = dpmac_dev;
- 	mac->mc_io = port_priv->ethsw_data->mc_io;
-@@ -1482,6 +1489,8 @@ err_close_mac:
- 	dpaa2_mac_close(mac);
- err_free_mac:
- 	kfree(mac);
-+out_put_device:
-+	put_device(&dpmac_dev->dev);
- 	return err;
- }
+--- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
++++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+@@ -4274,6 +4274,8 @@ static s32 e1000_validate_nvm_checksum_i
+ 			ret_val = e1000e_update_nvm_checksum(hw);
+ 			if (ret_val)
+ 				return ret_val;
++		} else if (hw->mac.type == e1000_pch_tgp) {
++			return 0;
+ 		}
+ 	}
  
 
 
