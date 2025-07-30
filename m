@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E0D1F1306;
-	Wed, 30 Jul 2025 09:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE32126C396;
+	Wed, 30 Jul 2025 09:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868279; cv=none; b=InkglX+Jl1uZHuW4ZB/sEbq32hkURQZpqMYzPBS8P10Hfd7HRkWS0JEld9EZgs1vUESE0gQL6Nws9RvRZoKtnxLoxy4D7tWTwlpIXJNkEMLXFggCo7sHZwZ47OeUSPh4UQOKQyhXmSMRBplOLvdRxQ58vUWjN0Nrze/iUQVpfQo=
+	t=1753868283; cv=none; b=NEk7FNp3UdfFwI8gVnNhC9UwAfEsPcqd/9+szc+qvT1nM6q/IOmfr8ByHiRUjCFCYcwM1ipQ7YQod29ajixQGUyWwuG5Nrvf3E/IZGtRtn9VSEavhQcVSSSho9a+OueS8vZSSaaJSjHQ+gTNQTcW6yYLQAusdvNTIWXvX43SdUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868279; c=relaxed/simple;
-	bh=b/SlJ/kVFqfFd7ppPFmnUkCtnvn/a+GsHh9EAS5Av2k=;
+	s=arc-20240116; t=1753868283; c=relaxed/simple;
+	bh=R0C7QC088vFjnsmiOQnYVb2XYL71UagoWVFoh11vkG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2s6XoHnDyLT9pDweEtyyM7OYG5o3jt83dzscbgLp+0ypc9OQt10CzZiuFWzKoSAXxw8yrhkf4EJff+hk+Yz4PGuvRm4b6RV3uhw2FiP0EqkHxZS1sH+ub3LeaHor/RgctZ8UA4wLGgDSYfri/zNaITFR9/nv1E9fIaZACJMkcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjLdt4IE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J7uEwPzrIfEvEnKCYsyzYI7ScErEmIXMnW+LerAytXc8rTbpt7BCE95hVEtjoXXipzDK2lPi28PGFTApZqRkMJc1JAY5P4e2bFExUeiDbkpwk9yDpE7rnlc5MQV8SNh9A9TUa2jOc3iKVfLuSv8DkP3WnYDRprWijXK98Bigq6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syf3zmws; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjLdt4IE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAB2C4CEE7;
-	Wed, 30 Jul 2025 09:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syf3zmws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A38C4CEE7;
+	Wed, 30 Jul 2025 09:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868279;
-	bh=b/SlJ/kVFqfFd7ppPFmnUkCtnvn/a+GsHh9EAS5Av2k=;
+	s=korg; t=1753868283;
+	bh=R0C7QC088vFjnsmiOQnYVb2XYL71UagoWVFoh11vkG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LjLdt4IEhkbHjPyOCLC0H8sbibs362joQEiDS6REnJYS+EbuNnhQDDpfebnrhhelj
-	 KDgDnwn0cOlAoGl0KyAvbz+V3fecRXUED+2xexwBeh5fuKGyYvFQFeUkSiRHmnxhdr
-	 Dr+9ExhjlgthR8kZsmuo9hYimHKN4zNK5+IHojxA=
+	b=syf3zmwsinR+joR72b8xoHSEIa7yp3Gl2y8soIY778vsXnprpnTJBD9dtCFPlCy5G
+	 XRkt1PEcxK8waNXnb3JApkcDrFfQOGRprV8kd5MoMplF/Dp5SG/J8bUec4WtE0N4CS
+	 tWmNgrfYK0z008ie3nG0BT99VNyV7h2e04PFwxUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aliaksei Makarau <Aliaksei.Makarau@ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alessandro Carminati <acarmina@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 23/76] s390/ism: fix concurrency management in ism_cmd()
-Date: Wed, 30 Jul 2025 11:35:16 +0200
-Message-ID: <20250730093227.742807414@linuxfoundation.org>
+Subject: [PATCH 6.6 03/76] regulator: core: fix NULL dereference on unbind due to stale coupling data
+Date: Wed, 30 Jul 2025 11:34:56 +0200
+Message-ID: <20250730093226.991355236@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -55,98 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Halil Pasic <pasic@linux.ibm.com>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-[ Upstream commit 897e8601b9cff1d054cdd53047f568b0e1995726 ]
+[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
 
-The s390x ISM device data sheet clearly states that only one
-request-response sequence is allowable per ISM function at any point in
-time.  Unfortunately as of today the s390/ism driver in Linux does not
-honor that requirement. This patch aims to rectify that.
+Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
+lead to NULL pointer dereference when regulators are accessed post-unbind.
 
-This problem was discovered based on Aliaksei's bug report which states
-that for certain workloads the ISM functions end up entering error state
-(with PEC 2 as seen from the logs) after a while and as a consequence
-connections handled by the respective function break, and for future
-connection requests the ISM device is not considered -- given it is in a
-dysfunctional state. During further debugging PEC 3A was observed as
-well.
+This can happen during runtime PM or other regulator operations that rely
+on coupling metadata.
 
-A kernel message like
-[ 1211.244319] zpci: 061a:00:00.0: Event 0x2 reports an error for PCI function 0x61a
-is a reliable indicator of the stated function entering error state
-with PEC 2. Let me also point out that a kernel message like
-[ 1211.244325] zpci: 061a:00:00.0: The ism driver bound to the device does not support error recovery
-is a reliable indicator that the ISM function won't be auto-recovered
-because the ISM driver currently lacks support for it.
+For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
+a panic in regulator_lock_recursive() due to stale coupling state.
 
-On a technical level, without this synchronization, commands (inputs to
-the FW) may be partially or fully overwritten (corrupted) by another CPU
-trying to issue commands on the same function. There is hard evidence that
-this can lead to DMB token values being used as DMB IOVAs, leading to
-PEC 2 PCI events indicating invalid DMA. But this is only one of the
-failure modes imaginable. In theory even completely losing one command
-and executing another one twice and then trying to interpret the outputs
-as if the command we intended to execute was actually executed and not
-the other one is also possible.  Frankly, I don't feel confident about
-providing an exhaustive list of possible consequences.
+Ensure n_coupled is set to 0 to prevent access to invalid pointers.
 
-Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
-Reported-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
-Tested-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Tested-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
-Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250722161817.1298473-1-wintera@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 3 +++
- include/linux/ism.h        | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index af0d90beba638..76ba36c83e522 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -130,6 +130,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
- 	struct ism_req_hdr *req = cmd;
- 	struct ism_resp_hdr *resp = cmd;
- 
-+	spin_lock(&ism->cmd_lock);
- 	__ism_write_cmd(ism, req + 1, sizeof(*req), req->len - sizeof(*req));
- 	__ism_write_cmd(ism, req, 0, sizeof(*req));
- 
-@@ -143,6 +144,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index d2e21dc61dd7d..1d49612eeb7e5 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5422,6 +5422,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+ 				 ERR_PTR(err));
  	}
- 	__ism_read_cmd(ism, resp + 1, sizeof(*resp), resp->len - sizeof(*resp));
- out:
-+	spin_unlock(&ism->cmd_lock);
- 	return resp->ret;
+ 
++	rdev->coupling_desc.n_coupled = 0;
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	rdev->coupling_desc.coupled_rdevs = NULL;
  }
- 
-@@ -630,6 +632,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		return -ENOMEM;
- 
- 	spin_lock_init(&ism->lock);
-+	spin_lock_init(&ism->cmd_lock);
- 	dev_set_drvdata(&pdev->dev, ism);
- 	ism->pdev = pdev;
- 	ism->dev.parent = &pdev->dev;
-diff --git a/include/linux/ism.h b/include/linux/ism.h
-index 9a4c204df3da1..04e2fc1973ce4 100644
---- a/include/linux/ism.h
-+++ b/include/linux/ism.h
-@@ -28,6 +28,7 @@ struct ism_dmb {
- 
- struct ism_dev {
- 	spinlock_t lock; /* protects the ism device */
-+	spinlock_t cmd_lock; /* serializes cmds */
- 	struct list_head list;
- 	struct pci_dev *pdev;
- 
 -- 
 2.39.5
 
