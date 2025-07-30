@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6208B26E71A;
-	Wed, 30 Jul 2025 09:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B138267733;
+	Wed, 30 Jul 2025 09:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869335; cv=none; b=bMY76V/IVMqW3FStnto01ULVIm7l0LLsmQs/v/QOtQnl4T2ruQHIVbyVqlZbdfdWrYOj3z0gL5qQKzV1ordg1Kp6wKZ3po6aOvqWqP8c4m5ADdPjZ3Z7G1j/u/VTiADnL1erW6fsaUCFfcbk9io2LOOZVBEZRlqczLesaxKtu18=
+	t=1753869338; cv=none; b=mk3LwC1Pwms46xtFVqHURJ/sgEOQZOHAHVaHNJ6e2FdWmgYH+AluaTG4V9TNjnaTX/7HZJ4CcVX9gPzv3kh87w4FbPoo5x4tSEyM+MsFEQc3Ttx8LAMSHqBcLmWO//jAtKRkPVyCvOxuwZ5P697LQ3esOBtXRURVRCMOMbWBhqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869335; c=relaxed/simple;
-	bh=Jld5m5RUZizbLmVkJO4RRLSl9zzBBT4t1MZyeIrNPtg=;
+	s=arc-20240116; t=1753869338; c=relaxed/simple;
+	bh=Co9bmhSiRwO4sIQH0ByKPC0oKWvMDMUOp9/OnAng9Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlRTZlFIWneWNdmxERWVQZJ5hMhOgPG3ymBRtIv3iM+lRtnBVHdxwdtUx4qRUxG5vPR59gmvthJnK7mGt73Hx6GavaPFNzEDvofHp/yHdJB9HlkrKgvNil5R6QNcbWLGnQwBP+0SaGOCj1TvTQjbb/GnfWBGnuzNxXoCIe0jX9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFc/nhq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oj1jN7RJzxT/V8hggpRev0ED/uwKyr9Hvf9tR0WA6xKMX/XW1OmzwLHjww4V4Hx1Y0cW2w02bE/JMYYkuVTiRYARPDTe3TbJeqSxiVrky5CW9EyBbzLS/S2CezK5B6amPtLkGUNEi2irVoE2qy43eytOqZHvoMW0+nT05gcVFA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KB7MO0Br; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFc/nhq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C25C4CEF5;
-	Wed, 30 Jul 2025 09:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KB7MO0Br"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF252C4CEF6;
+	Wed, 30 Jul 2025 09:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869335;
-	bh=Jld5m5RUZizbLmVkJO4RRLSl9zzBBT4t1MZyeIrNPtg=;
+	s=korg; t=1753869338;
+	bh=Co9bmhSiRwO4sIQH0ByKPC0oKWvMDMUOp9/OnAng9Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFc/nhq0KFWpDQPa6BhJevLxhKA3Qatrl/l6C/hgFdibsFLyowtZdb42FF6eegvUl
-	 qteZUlwdDIj9HtahtznGk+DoXm7tL5wpab4u/I/Qx+5pgbgt6MvYdUAbC8Khum4n+p
-	 uvOf+O8BSBJ4kH+20v5lyN4HptU+JnJjb9C89Hls=
+	b=KB7MO0BrvAD5GfzA003RXlaYGgwUqXCvBp8iUN7LYkqJDVjP8IUvMSOWCoRPRkbJu
+	 +a9rI5MKq/gl/s8l7hAy2LNgJQAFk6Nvgv6O4R0m/T3MkHAD9ADtggeYolLQ2lk8Av
+	 7x572v6b9nlKJY93h2sb6psre3axf0xlJXTpPmp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jacek Kowalski <jacek@jacekk.info>,
+	Vlad URSU <vlad@ursu.me>,
 	Simon Horman <horms@kernel.org>,
 	Vitaly Lifshits <vitaly.lifshits@intel.com>,
 	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.15 67/92] e1000e: disregard NVM checksum on tgp when valid checksum bit is not set
-Date: Wed, 30 Jul 2025 11:36:15 +0200
-Message-ID: <20250730093233.345647128@linuxfoundation.org>
+Subject: [PATCH 6.15 68/92] e1000e: ignore uninitialized checksum word on tgp
+Date: Wed, 30 Jul 2025 11:36:16 +0200
+Message-ID: <20250730093233.380534849@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -55,40 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacek Kowalski <jacek@jacekk.info>
 
-commit 536fd741c7ac907d63166cdae1081b1febfab613 upstream.
+commit 61114910a5f6a71d0b6ea3b95082dfe031b19dfe upstream.
 
 As described by Vitaly Lifshits:
 
 > Starting from Tiger Lake, LAN NVM is locked for writes by SW, so the
 > driver cannot perform checksum validation and correction. This means
 > that all NVM images must leave the factory with correct checksum and
-> checksum valid bit set. Since Tiger Lake devices were the first to have
-> this lock, some systems in the field did not meet this requirement.
-> Therefore, for these transitional devices we skip checksum update and
-> verification, if the valid bit is not set.
+> checksum valid bit set.
+
+Unfortunately some systems have left the factory with an uninitialized
+value of 0xFFFF at register address 0x3F (checksum word location).
+So on Tiger Lake platform we ignore the computed checksum when such
+condition is encountered.
 
 Signed-off-by: Jacek Kowalski <jacek@jacekk.info>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Vlad URSU <vlad@ursu.me>
 Fixes: 4051f68318ca9 ("e1000e: Do not take care about recovery NVM checksum")
 Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
 Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000e/ich8lan.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/e1000e/defines.h |    3 +++
+ drivers/net/ethernet/intel/e1000e/nvm.c     |    6 ++++++
+ 2 files changed, 9 insertions(+)
 
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -4274,6 +4274,8 @@ static s32 e1000_validate_nvm_checksum_i
- 			ret_val = e1000e_update_nvm_checksum(hw);
- 			if (ret_val)
- 				return ret_val;
-+		} else if (hw->mac.type == e1000_pch_tgp) {
-+			return 0;
- 		}
+--- a/drivers/net/ethernet/intel/e1000e/defines.h
++++ b/drivers/net/ethernet/intel/e1000e/defines.h
+@@ -638,6 +638,9 @@
+ /* For checksumming, the sum of all words in the NVM should equal 0xBABA. */
+ #define NVM_SUM                    0xBABA
+ 
++/* Uninitialized ("empty") checksum word value */
++#define NVM_CHECKSUM_UNINITIALIZED 0xFFFF
++
+ /* PBA (printed board assembly) number words */
+ #define NVM_PBA_OFFSET_0           8
+ #define NVM_PBA_OFFSET_1           9
+--- a/drivers/net/ethernet/intel/e1000e/nvm.c
++++ b/drivers/net/ethernet/intel/e1000e/nvm.c
+@@ -558,6 +558,12 @@ s32 e1000e_validate_nvm_checksum_generic
+ 		checksum += nvm_data;
  	}
  
++	if (hw->mac.type == e1000_pch_tgp &&
++	    nvm_data == NVM_CHECKSUM_UNINITIALIZED) {
++		e_dbg("Uninitialized NVM Checksum on TGP platform - ignoring\n");
++		return 0;
++	}
++
+ 	if (checksum != (u16)NVM_SUM) {
+ 		e_dbg("NVM Checksum Invalid\n");
+ 		return -E1000_ERR_NVM;
 
 
