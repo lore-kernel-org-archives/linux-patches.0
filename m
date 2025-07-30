@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E5A635;
-	Wed, 30 Jul 2025 09:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8D113D53B;
+	Wed, 30 Jul 2025 09:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868910; cv=none; b=q6eSgxllRs2zsrL/oc4D2kSmnrWveLYhcIC/o9D6gNEb6CYA7z7+TM2s+cLiyaG0oWUzYHXJZzp+aaqo1FXBjhX8LcA/5PcSOOgzDTkQzFkBN2fihH5lRug6v4Lnul+G12RIl2DsO6MDUA9ue+ScuXA6KBgQK7euUf/ZqGVoUZU=
+	t=1753868915; cv=none; b=mJhuey8vifH4Z5rC0hG5w07wmkW4FEgZF35rMYPRpUAgQdDbhiHZujT8HjON75oSlGOXyZ75VR0v2T35s95UXVr53z+dYOh1NXJEy9GFZ2RWXnPQHKXfluC+6Hj/LQSRaTsKI/lkiIzDirYeKRj78AMzALDu9zS8WHpeSGf/HoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868910; c=relaxed/simple;
-	bh=xLe0vPcO6wfGXee9Go0syfeol3NdUcLIx6oZz5S3Ekk=;
+	s=arc-20240116; t=1753868915; c=relaxed/simple;
+	bh=pKQGaElXS4DLradfcemFUXVCBKSc9LplVYeagKPzTgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDvUsaVxkFU3LT06FP3AMN3D8qNtI2tCWee9NVZMQP+9WB63OP+dvGgzUqw2GGUFpCxTcJQB4UNQR4MeK047r3iC1+rp9KqsG6623DyIoxphWGF7zqmjEmAUN1lRkxrPC37X6JVhMKed1MHzkz7h2jyWHc91nxEXCs+iJu6+wCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPhj7+6M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i381hVGzixD0bZYxPpizqdxhojOA0utUXzLYJGtDWU7x8NPo7FakassqbLzKnuk1L9TyEb6HkpkESJWo9VES4FNSGhyUYGUAd+j5HKydK1vHoauiqrdPLTfsEQHr4TYknLU1MsZMlrY0VzaKkNlxN9VvZDuk9Mrhk2jdqfkp9E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nqpur6KZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPhj7+6M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99563C4CEF5;
-	Wed, 30 Jul 2025 09:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nqpur6KZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B00C4CEF5;
+	Wed, 30 Jul 2025 09:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868909;
-	bh=xLe0vPcO6wfGXee9Go0syfeol3NdUcLIx6oZz5S3Ekk=;
+	s=korg; t=1753868915;
+	bh=pKQGaElXS4DLradfcemFUXVCBKSc9LplVYeagKPzTgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPhj7+6MF4N0WDX2bsp2Jjs5IHkvgCnp95vuuDfkfzSGoa/P6WNxODrRd9Kph+MkZ
-	 DK7D5kRnnWZPCv5RYl8eRVwLENjUC/J4YzAvnf+vUbt7vor8gmzybhGaA9xbvOgbCt
-	 HkSEl7EXVkIM9dTu2/94Kc0wr2mMcMdNV1G0keM8=
+	b=Nqpur6KZHPX0ygODGJv3Ir2YQjZUbbRFFEFOMTDXPEPq0Vok3NHGE49g8++k3egUc
+	 t2r1GLxtI/KL+dHtQRvDacRrbLkudd/nGEjtGeKAQH9fAHg7MlYxOVzcQdreimP+Cq
+	 G4yT/y54flKDUe3ERtiu0xQ5mFdLXoPJm3Go4Jr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KernelCI bot <bot@kernelci.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/117] ARM: 9448/1: Use an absolute path to unified.h in KBUILD_AFLAGS
-Date: Wed, 30 Jul 2025 11:36:16 +0200
-Message-ID: <20250730093237.972643677@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>
+Subject: [PATCH 6.12 108/117] Drivers: hv: Make the sysfs node size for the ring buffer dynamic
+Date: Wed, 30 Jul 2025 11:36:17 +0200
+Message-ID: <20250730093238.012215866@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -53,57 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-[ Upstream commit 87c4e1459e80bf65066f864c762ef4dc932fad4b ]
+commit 65995e97a1caacf0024bebda3332b8d1f0f443c4 upstream.
 
-After commit d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper
-flags and language target"), which updated as-instr to use the
-'assembler-with-cpp' language option, the Kbuild version of as-instr
-always fails internally for arch/arm with
+The ring buffer size varies across VMBus channels. The size of sysfs
+node for the ring buffer is currently hardcoded to 4 MB. Userspace
+clients either use fstat() or hardcode this size for doing mmap().
+To address this, make the sysfs node size dynamic to reflect the
+actual ring buffer size for each channel. This will ensure that
+fstat() on ring sysfs node always returns the correct size of
+ring buffer.
 
-  <command-line>: fatal error: asm/unified.h: No such file or directory
-  compilation terminated.
-
-because '-include' flags are now taken into account by the compiler
-driver and as-instr does not have '$(LINUXINCLUDE)', so unified.h is not
-found.
-
-This went unnoticed at the time of the Kbuild change because the last
-use of as-instr in Kbuild that arch/arm could reach was removed in 5.7
-by commit 541ad0150ca4 ("arm: Remove 32bit KVM host support") but a
-stable backport of the Kbuild change to before that point exposed this
-potential issue if one were to be reintroduced.
-
-Follow the general pattern of '-include' paths throughout the tree and
-make unified.h absolute using '$(srctree)' to ensure KBUILD_AFLAGS can
-be used independently.
-
-Closes: https://lore.kernel.org/CACo-S-1qbCX4WAVFA63dWfHtrRHZBTyyr2js8Lx=Az03XHTTHg@mail.gmail.com/
-
-Cc: stable@vger.kernel.org
-Fixes: d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper flags and language target")
-Reported-by: KernelCI bot <bot@kernelci.org>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-[ No KBUILD_RUSTFLAGS in 6.12 ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250502074811.2022-3-namjain@linux.microsoft.com
+[ The structure "struct attribute_group" does not have bin_size field in
+  v6.12.x kernel so the logic of configuring size of sysfs node for ring buffer
+  has been moved to vmbus_chan_bin_attr_is_visible().
+  Original change was not a fix, but it needs to be backported to fix size
+  related discrepancy caused by the commit mentioned in Fixes tag. ]
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/Makefile |    2 +-
+ drivers/hv/vmbus_drv.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/Makefile
-+++ b/arch/arm/Makefile
-@@ -149,7 +149,7 @@ endif
- # Need -Uarm for gcc < 3.x
- KBUILD_CPPFLAGS	+=$(cpp-y)
- KBUILD_CFLAGS	+=$(CFLAGS_ABI) $(CFLAGS_ISA) $(arch-y) $(tune-y) $(call cc-option,-mshort-load-bytes,$(call cc-option,-malignment-traps,)) -msoft-float -Uarm
--KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) -Wa,$(arch-y) $(tune-y) -include asm/unified.h -msoft-float
-+KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) -Wa,$(arch-y) $(tune-y) -include $(srctree)/arch/arm/include/asm/unified.h -msoft-float
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -1810,7 +1810,6 @@ static struct bin_attribute chan_attr_ri
+ 		.name = "ring",
+ 		.mode = 0600,
+ 	},
+-	.size = 2 * SZ_2M,
+ 	.mmap = hv_mmap_ring_buffer_wrapper,
+ };
+ static struct attribute *vmbus_chan_attrs[] = {
+@@ -1866,6 +1865,7 @@ static umode_t vmbus_chan_bin_attr_is_vi
+ 	/* Hide ring attribute if channel's ring_sysfs_visible is set to false */
+ 	if (attr ==  &chan_attr_ring_buffer && !channel->ring_sysfs_visible)
+ 		return 0;
++	attr->size = channel->ringbuffer_pagecount << PAGE_SHIFT;
  
- CHECKFLAGS	+= -D__arm__
- 
+ 	return attr->attr.mode;
+ }
 
 
