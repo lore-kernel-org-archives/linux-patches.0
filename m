@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8C526E71A;
-	Wed, 30 Jul 2025 09:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2338D277CA8;
+	Wed, 30 Jul 2025 09:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868513; cv=none; b=HrTjLjj/TOgYeDjDFXwYIGI7cme9LAxr2HYPdViOAOpzd3LYnnJUcrlVCMYR+zs7yil/MdzYlR2oxDpStktR1o5HgfPmFyDAKL1nI2KKnRkcFeMbkfLSbP0Jx1cHxAqLqMZG2ZLdM+iDIaPkpqzblwN/hfnX/9FXv0LidGiUV6Y=
+	t=1753868522; cv=none; b=GipZmQF6udwWJR54Ty5dLEVG9g+bWRZtd/DlbFGdwcIXJxRkJ/JFyIRAHYJZ/QWvNTf7yYJstgEsx7D5+WG1+6cEbzh//8nQpatQc29Ww1fZ1wWxPvd4j35+F9DkP0zDQi6spCS9Jnr+Ofg1dkHSvT6aJvv1tGCtlZdy5HtLD1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868513; c=relaxed/simple;
-	bh=w44HPRPZsJS2ikZxmanEzLsb6cruhpraQjASB/oKVI0=;
+	s=arc-20240116; t=1753868522; c=relaxed/simple;
+	bh=jUak4c/8qy0OK1IVw9BjPrQbuOmckLM9SAsBT5izXgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQekLxJmGGQiInHF5i+bW+c0vEGKaPLB4XDdnqJBnKbGCsqa/iyAihvG7tWQoXK42sUEsn7IuwlG3nR9tZha0ZuhcBkSzfv00/sLcbWuY+l9Zz+1J1uHVg3mCWvdzRZ+1H85rOJA6Uij/GwI/VQCkao1jRZPQG9h8VynBjfW6PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cp5tZaSY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9XTGwDjXv3uwezP5kYVkPIZPmRbKEVWJySaTHEZHHdfbpi4Ou02c1UUzBnWyXunytZ6xiMAxACBDnoJQel4dLEDR+5A1QXBww9hsPGELNJ1KGyQ0xpnJ9q5V7X4TKLYKN5xQnwDHqoubbBQfsQKGMkyTE9rTOIn3ghJyq5RuUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZecNJ1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cp5tZaSY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BB1C4CEE7;
-	Wed, 30 Jul 2025 09:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZecNJ1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF79C4CEE7;
+	Wed, 30 Jul 2025 09:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868513;
-	bh=w44HPRPZsJS2ikZxmanEzLsb6cruhpraQjASB/oKVI0=;
+	s=korg; t=1753868521;
+	bh=jUak4c/8qy0OK1IVw9BjPrQbuOmckLM9SAsBT5izXgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cp5tZaSYd35WbnKUK3XS0ftF4lJjKsCCDIPj6TCkgMO9SxD+PIu1NcuYU0p5GCqF1
-	 D1RFy1474Qx4zbtDmEIrRLxYgDhBSsUZfC+nuRvsUr93w+XLvojSmHEykBY8EOu8sz
-	 seLmYNpHggycrQ6hwILFX7cBxmrVT9f2qqNeZ2Z4=
+	b=bZecNJ1vhnAc5lpqiZrDX3Wn6XmWJsvQvy+o9ffvAqH6BFuafGm5LD0jmoLHkdCOW
+	 Lygz2LTdNC6YmW+r3I/Tgf/FZFxslvlSxlZt1gGga1I6aXA+R6gMPO5tC7S/9/AB/N
+	 Bz+SqaVXzshUByTK/Z+9tKbMqMDkg+baW3TmMrNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xin Li (Intel)" <xin@zytor.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/117] x86/traps: Initialize DR7 by writing its architectural reset value
-Date: Wed, 30 Jul 2025 11:34:30 +0200
-Message-ID: <20250730093233.653454976@linuxfoundation.org>
+Subject: [PATCH 6.12 010/117] regmap: fix potential memory leak of regmap_bus
+Date: Wed, 30 Jul 2025 11:34:39 +0200
+Message-ID: <20250730093233.991160026@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -55,161 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-commit fa7d0f83c5c4223a01598876352473cb3d3bd4d7 upstream.
+[ Upstream commit c871c199accb39d0f4cb941ad0dccabfc21e9214 ]
 
-Initialize DR7 by writing its architectural reset value to always set
-bit 10, which is reserved to '1', when "clearing" DR7 so as not to
-trigger unanticipated behavior if said bit is ever unreserved, e.g. as
-a feature enabling flag with inverted polarity.
+When __regmap_init() is called from __regmap_init_i2c() and
+__regmap_init_spi() (and their devm versions), the bus argument
+obtained from regmap_get_i2c_bus() and regmap_get_spi_bus(), may be
+allocated using kmemdup() to support quirks. In those cases, the
+bus->free_on_exit field is set to true.
 
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Sean Christopherson <seanjc@google.com>
-Tested-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250620231504.2676902-3-xin%40zytor.com
-[ context adjusted: no KVM_DEBUGREG_AUTO_SWITCH flag test" ]
+However, inside __regmap_init(), buf is not freed on any error path.
+This could lead to a memory leak of regmap_bus when __regmap_init()
+fails. Fix that by freeing bus on error path when free_on_exit is set.
+
+Fixes: ea030ca68819 ("regmap-i2c: Set regmap max raw r/w from quirks")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Link: https://patch.msgid.link/20250626172823.18725-1-abdun.nihaal@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/debugreg.h |   19 +++++++++++++++----
- arch/x86/include/asm/kvm_host.h |    2 +-
- arch/x86/kernel/cpu/common.c    |    2 +-
- arch/x86/kernel/kgdb.c          |    2 +-
- arch/x86/kernel/process_32.c    |    2 +-
- arch/x86/kernel/process_64.c    |    2 +-
- arch/x86/kvm/x86.c              |    4 ++--
- 7 files changed, 22 insertions(+), 11 deletions(-)
+ drivers/base/regmap/regmap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/include/asm/debugreg.h
-+++ b/arch/x86/include/asm/debugreg.h
-@@ -9,6 +9,14 @@
- #include <asm/cpufeature.h>
- #include <asm/msr.h>
- 
-+/*
-+ * Define bits that are always set to 1 in DR7, only bit 10 is
-+ * architecturally reserved to '1'.
-+ *
-+ * This is also the init/reset value for DR7.
-+ */
-+#define DR7_FIXED_1	0x00000400
-+
- DECLARE_PER_CPU(unsigned long, cpu_dr7);
- 
- #ifndef CONFIG_PARAVIRT_XXL
-@@ -100,8 +108,8 @@ static __always_inline void native_set_d
- 
- static inline void hw_breakpoint_disable(void)
- {
--	/* Zero the control register for HW Breakpoint */
--	set_debugreg(0UL, 7);
-+	/* Reset the control register for HW Breakpoint */
-+	set_debugreg(DR7_FIXED_1, 7);
- 
- 	/* Zero-out the individual HW breakpoint address registers */
- 	set_debugreg(0UL, 0);
-@@ -125,9 +133,12 @@ static __always_inline unsigned long loc
- 		return 0;
- 
- 	get_debugreg(dr7, 7);
--	dr7 &= ~0x400; /* architecturally set bit */
-+
-+	/* Architecturally set bit */
-+	dr7 &= ~DR7_FIXED_1;
- 	if (dr7)
--		set_debugreg(0, 7);
-+		set_debugreg(DR7_FIXED_1, 7);
-+
- 	/*
- 	 * Ensure the compiler doesn't lower the above statements into
- 	 * the critical section; disabling breakpoints late would not
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -31,6 +31,7 @@
- 
- #include <asm/apic.h>
- #include <asm/pvclock-abi.h>
-+#include <asm/debugreg.h>
- #include <asm/desc.h>
- #include <asm/mtrr.h>
- #include <asm/msr-index.h>
-@@ -246,7 +247,6 @@ enum x86_intercept_stage;
- #define DR7_BP_EN_MASK	0x000000ff
- #define DR7_GE		(1 << 9)
- #define DR7_GD		(1 << 13)
--#define DR7_FIXED_1	0x00000400
- #define DR7_VOLATILE	0xffff2bff
- 
- #define KVM_GUESTDBG_VALID_MASK \
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2160,7 +2160,7 @@ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard)
- static void initialize_debug_regs(void)
- {
- 	/* Control register first -- to make sure everything is disabled. */
--	set_debugreg(0, 7);
-+	set_debugreg(DR7_FIXED_1, 7);
- 	set_debugreg(DR6_RESERVED, 6);
- 	/* dr5 and dr4 don't exist */
- 	set_debugreg(0, 3);
---- a/arch/x86/kernel/kgdb.c
-+++ b/arch/x86/kernel/kgdb.c
-@@ -385,7 +385,7 @@ static void kgdb_disable_hw_debug(struct
- 	struct perf_event *bp;
- 
- 	/* Disable hardware debugging while we are in kgdb: */
--	set_debugreg(0UL, 7);
-+	set_debugreg(DR7_FIXED_1, 7);
- 	for (i = 0; i < HBP_NUM; i++) {
- 		if (!breakinfo[i].enabled)
- 			continue;
---- a/arch/x86/kernel/process_32.c
-+++ b/arch/x86/kernel/process_32.c
-@@ -93,7 +93,7 @@ void __show_regs(struct pt_regs *regs, e
- 
- 	/* Only print out debug registers if they are in their non-default state. */
- 	if ((d0 == 0) && (d1 == 0) && (d2 == 0) && (d3 == 0) &&
--	    (d6 == DR6_RESERVED) && (d7 == 0x400))
-+	    (d6 == DR6_RESERVED) && (d7 == DR7_FIXED_1))
- 		return;
- 
- 	printk("%sDR0: %08lx DR1: %08lx DR2: %08lx DR3: %08lx\n",
---- a/arch/x86/kernel/process_64.c
-+++ b/arch/x86/kernel/process_64.c
-@@ -132,7 +132,7 @@ void __show_regs(struct pt_regs *regs, e
- 
- 	/* Only print out debug registers if they are in their non-default state. */
- 	if (!((d0 == 0) && (d1 == 0) && (d2 == 0) && (d3 == 0) &&
--	    (d6 == DR6_RESERVED) && (d7 == 0x400))) {
-+	    (d6 == DR6_RESERVED) && (d7 == DR7_FIXED_1))) {
- 		printk("%sDR0: %016lx DR1: %016lx DR2: %016lx\n",
- 		       log_lvl, d0, d1, d2);
- 		printk("%sDR3: %016lx DR6: %016lx DR7: %016lx\n",
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10959,7 +10959,7 @@ static int vcpu_enter_guest(struct kvm_v
- 		wrmsrl(MSR_IA32_XFD_ERR, vcpu->arch.guest_fpu.xfd_err);
- 
- 	if (unlikely(vcpu->arch.switch_db_regs)) {
--		set_debugreg(0, 7);
-+		set_debugreg(DR7_FIXED_1, 7);
- 		set_debugreg(vcpu->arch.eff_db[0], 0);
- 		set_debugreg(vcpu->arch.eff_db[1], 1);
- 		set_debugreg(vcpu->arch.eff_db[2], 2);
-@@ -10968,7 +10968,7 @@ static int vcpu_enter_guest(struct kvm_v
- 		if (unlikely(vcpu->arch.switch_db_regs & KVM_DEBUGREG_WONT_EXIT))
- 			kvm_x86_call(set_dr6)(vcpu, vcpu->arch.dr6);
- 	} else if (unlikely(hw_breakpoint_active())) {
--		set_debugreg(0, 7);
-+		set_debugreg(DR7_FIXED_1, 7);
- 	}
- 
- 	vcpu->arch.host_debugctl = get_debugctlmsr();
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 5962ea1230a17..de4e2f3db942a 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1174,6 +1174,8 @@ struct regmap *__regmap_init(struct device *dev,
+ err_map:
+ 	kfree(map);
+ err:
++	if (bus && bus->free_on_exit)
++		kfree(bus);
+ 	return ERR_PTR(ret);
+ }
+ EXPORT_SYMBOL_GPL(__regmap_init);
+-- 
+2.39.5
+
 
 
