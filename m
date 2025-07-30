@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA015230981;
-	Wed, 30 Jul 2025 09:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FFB442C;
+	Wed, 30 Jul 2025 09:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869206; cv=none; b=eWVL+9T8Jv7Dor0NDEfj7L+onv73doP92mcP2YYAhFj1D4qEw9By/GIauOedhy+pg9fn6Zfvjau6+AHs1VJ5NbSGqSP/2SPyxwUJESCwDdJkpIbQj6Jx/KZ2TdF7ZVbulsyiGm+h/CTm7MINohXcje43PIQ0Bspyor9NpxhsQKs=
+	t=1753869210; cv=none; b=qrw+pL//O3/ZMrZkxX6Fb/Q5QgfIA+AZ4UcmN/62LfUjJXJnTBKFMy1Fk8aCqzRcmUr9IUAoZJL9jMRkZ+hA6vSCF689jTqZILLP4RLt5KSzutXDCHf1n94tPKgnLB4CdF4ZyJ7SzTy/CFefQuoykiEQQ2qPWUkzf7UIkQF9PGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869206; c=relaxed/simple;
-	bh=CfmGNZWF9I/tqV7vd0OktedLdT8AUmConF4RvzTjHdw=;
+	s=arc-20240116; t=1753869210; c=relaxed/simple;
+	bh=+RQAYDybCgQmQRl36rz2AuQXqqpYLujdsRqJZg73YkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tai7UoWy8M/R9GlJtI+OyAi/7oYhKAQOW/VZQLEV5cgdsVjWL71N7b3H6veBM3/9m7xf9T0OsXQzo0HtFgjQzFBLXM1yxAsjq+bKnfBAK4FlTJ5qAyTfWuanxYOesA9ZvutXpU9tntmQ/YG7R+P/nlEdb3/w86v95XWSGPFiPWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+IIEQ//; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUS3e835cpFCeQqy9cCLwXjFUty/zBGC5F8sa5RNCN8NymcCHrhEYgELthGwxqtOWfbf81lRgHBe/GloxZ6KSpzlIcHIBDHzjow1L2DmJXbFE2MwUjpUQRbu0BFHcaIfCXHWfTVA+g9ZmOsyhcGv1QKh92qJ6dwdLk+2NiTNIkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTYrf8/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+IIEQ//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9B7C4CEF5;
-	Wed, 30 Jul 2025 09:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTYrf8/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84660C4CEF5;
+	Wed, 30 Jul 2025 09:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869205;
-	bh=CfmGNZWF9I/tqV7vd0OktedLdT8AUmConF4RvzTjHdw=;
+	s=korg; t=1753869210;
+	bh=+RQAYDybCgQmQRl36rz2AuQXqqpYLujdsRqJZg73YkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+IIEQ//1pdMg7PN33xFLt8yrdY0eHXIM9miESb4XpH/nQy8VL8yU+2eSMDqn9H/1
-	 uK+3tC8YdnoNIadT0a7o+0z8bnFQvNge7wgHvYG28IOmWMTnpPDI2peiUYO4qZgd+c
-	 cHYLDJuiRC88vXDUcPVzdGVmV/UqrhgI/5OtZPaI=
+	b=UTYrf8/5vY2sG2dCi4WPpDQUyAzJcUM+mmLYOF5OmKoG88eNfz2lbci3QjQJoJEvv
+	 N4/PXoHuiWnLSulMi1bI9OrG3Bvmf8416om86998x+wXz2xNKgdPQsyuTmx1ef83mq
+	 rW7F3vET/sWwLVTi4xhlFO2AJoYTYUzx7HUjDRgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Petr Mladek <pmladek@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.15 60/92] sprintf.h requires stdarg.h
-Date: Wed, 30 Jul 2025 11:36:08 +0200
-Message-ID: <20250730093233.077992246@linuxfoundation.org>
+	Dawid Rezler <dawidrezler.patches@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.15 61/92] ALSA: hda/realtek - Add mute LED support for HP Pavilion 15-eg0xxx
+Date: Wed, 30 Jul 2025 11:36:09 +0200
+Message-ID: <20250730093233.115375289@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -56,41 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Rothwell <sfr@canb.auug.org.au>
+From: Dawid Rezler <dawidrezler.patches@gmail.com>
 
-commit 0dec7201788b9152f06321d0dab46eed93834cda upstream.
+commit 9744ede7099e8a69c04aa23fbea44c15bc390c04 upstream.
 
-In file included from drivers/crypto/intel/qat/qat_common/adf_pm_dbgfs_utils.c:4:
-include/linux/sprintf.h:11:54: error: unknown type name 'va_list'
-   11 | __printf(2, 0) int vsprintf(char *buf, const char *, va_list);
-      |                                                      ^~~~~~~
-include/linux/sprintf.h:1:1: note: 'va_list' is defined in header '<stdarg.h>'; this is probably fixable by adding '#include <stdarg.h>'
+The mute LED on the HP Pavilion Laptop 15-eg0xxx,
+which uses the ALC287 codec, didn't work.
+This patch fixes the issue by enabling the ALC287_FIXUP_HP_GPIO_LED quirk.
 
-Link: https://lkml.kernel.org/r/20250721173754.42865913@canb.auug.org.au
-Fixes: 39ced19b9e60 ("lib/vsprintf: split out sprintf() and friends")
-Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Tested on a physical device, the LED now works as intended.
+
+Signed-off-by: Dawid Rezler <dawidrezler.patches@gmail.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://patch.msgid.link/20250720154907.80815-2-dawidrezler.patches@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sprintf.h |    1 +
+ sound/pci/hda/patch_realtek.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/include/linux/sprintf.h
-+++ b/include/linux/sprintf.h
-@@ -4,6 +4,7 @@
- 
- #include <linux/compiler_attributes.h>
- #include <linux/types.h>
-+#include <linux/stdarg.h>
- 
- int num_to_str(char *buf, int size, unsigned long long num, unsigned int width);
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10668,6 +10668,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 
 
