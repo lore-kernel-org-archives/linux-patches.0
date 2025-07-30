@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC2223D2A2;
-	Wed, 30 Jul 2025 09:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00E5267733;
+	Wed, 30 Jul 2025 09:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868578; cv=none; b=P3ocwf0Db5i328Q23RT8pMHwbT1No4s3HQCjVzd7xRNn1RX9JIBF/A3Mbb+qQ6/WiXvfoHq2zVQBWNdYe1vkBg6k3I8zQ715DAT7QA/c3/aEPdsXveVmyhsXtmmm8/YTehlmjg5HfnlBrTG0NGWRZSzX5UIoMYUT0GH2RBg9W7s=
+	t=1753868582; cv=none; b=EI9ihM91PtBvYmRGaHvfA133HXAPFLUy/pQV+jYkcranBv2pSPYRj0wd2RTNACjgzvPCCQPxW8LyANxN2Js83gzL2K6tKCoSeyt9Fy9DCvdU0aqJmQuROHP+QnODDxrrBaU1k8s5I0vFje8Tjtj9es5Jv2IFD/aaPUYiWsdnPW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868578; c=relaxed/simple;
-	bh=WnKsgNiL6NEtZsrKEgLL7/9oPcCIWcqeq5Qr1GOiAKk=;
+	s=arc-20240116; t=1753868582; c=relaxed/simple;
+	bh=falxwSb1B8ZDeEGk+yTdRcnn9D6JTpJlO9x0TIbC/z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLECutXMuXvovMlJSENhXApyRTXXf5A2sfXmZf0RwW0qcUDa+2Cl6YB8dNIpWTh/CIhwlYoh+yez/2MoIlyKKFXTW1r4OWOdlpHAFjrpRzCIAe73RVERt3IDScJ3+kpWGTyq/wAXzxRsjT1rvIpFIqNMmdPp1x3+b+CGAINVWfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sR6tQqxw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h6Q3f50QgvUgeilSf22lzsB+e5GS7Y8Es+mg0pIXtbBW4mMiyQPiklwoSoG6qRTyDw7HigxfbVW6ylTRMrCY/kT2/iNqTq/Y1/pBJGoZeF9DT9gZLmmZuAiBY6ubwaqfuaBFJ6nm2lZIePf5J8q0jSQbF0P0aHgGfIsBP9q5mbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SeaGIC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sR6tQqxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95753C4CEE7;
-	Wed, 30 Jul 2025 09:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SeaGIC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B626C4CEE7;
+	Wed, 30 Jul 2025 09:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868578;
-	bh=WnKsgNiL6NEtZsrKEgLL7/9oPcCIWcqeq5Qr1GOiAKk=;
+	s=korg; t=1753868581;
+	bh=falxwSb1B8ZDeEGk+yTdRcnn9D6JTpJlO9x0TIbC/z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sR6tQqxwZjt/DZ1YfG/Vcjf/jCCXzJXIKRM5k8pYjtrs8mXpvKgsajyflXO+OZI55
-	 qtukgmGj3U9BeAA0zUClAAUQjX/ChCyokWfR1TdeohvnLe/ZTKX8clc3C3dK5VsMFR
-	 cxOqhwIIz1iA8ZKHOa2LaKMhTiMkeY6p/lSBRbnI=
+	b=0SeaGIC8MU5SNMMGn9YHiMefe+umTZW6nxMB6N0cNjJgxqg7GjJDHLR8HA/bO467W
+	 MR+tOS0meru60xxXvy+uQd1S4oYIGdQyTlik18+ODOF+wQqRnS5mWd3hKSzBr9vnJ5
+	 A2m+wzhVgN+l645bAdJ+QuSnBAvlGjAqzvMF356U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lonial Con <kongln9170@gmail.com>,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Guoqing Jiang <guoqing.jiang@canonical.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/117] xfrm: interface: fix use-after-free after changing collect_md xfrm interface
-Date: Wed, 30 Jul 2025 11:34:50 +0200
-Message-ID: <20250730093234.400653752@linuxfoundation.org>
+Subject: [PATCH 6.12 022/117] ASoC: mediatek: mt8365-dai-i2s: pass correct size to mt8365_dai_set_priv
+Date: Wed, 30 Jul 2025 11:34:51 +0200
+Message-ID: <20250730093234.437672848@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -52,94 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eyal Birger <eyal.birger@gmail.com>
+From: Guoqing Jiang <guoqing.jiang@canonical.com>
 
-[ Upstream commit a90b2a1aaacbcf0f91d7e4868ad6c51c5dee814b ]
+[ Upstream commit 6bea85979d05470e6416a2bb504a9bcd9178304c ]
 
-collect_md property on xfrm interfaces can only be set on device creation,
-thus xfrmi_changelink() should fail when called on such interfaces.
+Given mt8365_dai_set_priv allocate priv_size space to copy priv_data which
+means we should pass mt8365_i2s_priv[i] or "struct mtk_afe_i2s_priv"
+instead of afe_priv which has the size of "struct mt8365_afe_private".
 
-The check to enforce this was done only in the case where the xi was
-returned from xfrmi_locate() which doesn't look for the collect_md
-interface, and thus the validation was never reached.
+Otherwise the KASAN complains about.
 
-Calling changelink would thus errornously place the special interface xi
-in the xfrmi_net->xfrmi hash, but since it also exists in the
-xfrmi_net->collect_md_xfrmi pointer it would lead to a double free when
-the net namespace was taken down [1].
+[   59.389765] BUG: KASAN: global-out-of-bounds in mt8365_dai_set_priv+0xc8/0x168 [snd_soc_mt8365_pcm]
+...
+[   59.394789] Call trace:
+[   59.395167]  dump_backtrace+0xa0/0x128
+[   59.395733]  show_stack+0x20/0x38
+[   59.396238]  dump_stack_lvl+0xe8/0x148
+[   59.396806]  print_report+0x37c/0x5e0
+[   59.397358]  kasan_report+0xac/0xf8
+[   59.397885]  kasan_check_range+0xe8/0x190
+[   59.398485]  asan_memcpy+0x3c/0x98
+[   59.399022]  mt8365_dai_set_priv+0xc8/0x168 [snd_soc_mt8365_pcm]
+[   59.399928]  mt8365_dai_i2s_register+0x1e8/0x2b0 [snd_soc_mt8365_pcm]
+[   59.400893]  mt8365_afe_pcm_dev_probe+0x4d0/0xdf0 [snd_soc_mt8365_pcm]
+[   59.401873]  platform_probe+0xcc/0x228
+[   59.402442]  really_probe+0x340/0x9e8
+[   59.402992]  driver_probe_device+0x16c/0x3f8
+[   59.403638]  driver_probe_device+0x64/0x1d8
+[   59.404256]  driver_attach+0x1dc/0x4c8
+[   59.404840]  bus_for_each_dev+0x100/0x190
+[   59.405442]  driver_attach+0x44/0x68
+[   59.405980]  bus_add_driver+0x23c/0x500
+[   59.406550]  driver_register+0xf8/0x3d0
+[   59.407122]  platform_driver_register+0x68/0x98
+[   59.407810]  mt8365_afe_pcm_driver_init+0x2c/0xff8 [snd_soc_mt8365_pcm]
 
-Change the check to use the xi from netdev_priv which is available earlier
-in the function to prevent changes in xfrm collect_md interfaces.
-
-[1] resulting oops:
-[    8.516540] kernel BUG at net/core/dev.c:12029!
-[    8.516552] Oops: invalid opcode: 0000 [#1] SMP NOPTI
-[    8.516559] CPU: 0 UID: 0 PID: 12 Comm: kworker/u80:0 Not tainted 6.15.0-virtme #5 PREEMPT(voluntary)
-[    8.516565] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    8.516569] Workqueue: netns cleanup_net
-[    8.516579] RIP: 0010:unregister_netdevice_many_notify+0x101/0xab0
-[    8.516590] Code: 90 0f 0b 90 48 8b b0 78 01 00 00 48 8b 90 80 01 00 00 48 89 56 08 48 89 32 4c 89 80 78 01 00 00 48 89 b8 80 01 00 00 eb ac 90 <0f> 0b 48 8b 45 00 4c 8d a0 88 fe ff ff 48 39 c5 74 5c 41 80 bc 24
-[    8.516593] RSP: 0018:ffffa93b8006bd30 EFLAGS: 00010206
-[    8.516598] RAX: ffff98fe4226e000 RBX: ffffa93b8006bd58 RCX: ffffa93b8006bc60
-[    8.516601] RDX: 0000000000000004 RSI: 0000000000000000 RDI: dead000000000122
-[    8.516603] RBP: ffffa93b8006bdd8 R08: dead000000000100 R09: ffff98fe4133c100
-[    8.516605] R10: 0000000000000000 R11: 00000000000003d2 R12: ffffa93b8006be00
-[    8.516608] R13: ffffffff96c1a510 R14: ffffffff96c1a510 R15: ffffa93b8006be00
-[    8.516615] FS:  0000000000000000(0000) GS:ffff98fee73b7000(0000) knlGS:0000000000000000
-[    8.516619] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    8.516622] CR2: 00007fcd2abd0700 CR3: 000000003aa40000 CR4: 0000000000752ef0
-[    8.516625] PKRU: 55555554
-[    8.516627] Call Trace:
-[    8.516632]  <TASK>
-[    8.516635]  ? rtnl_is_locked+0x15/0x20
-[    8.516641]  ? unregister_netdevice_queue+0x29/0xf0
-[    8.516650]  ops_undo_list+0x1f2/0x220
-[    8.516659]  cleanup_net+0x1ad/0x2e0
-[    8.516664]  process_one_work+0x160/0x380
-[    8.516673]  worker_thread+0x2aa/0x3c0
-[    8.516679]  ? __pfx_worker_thread+0x10/0x10
-[    8.516686]  kthread+0xfb/0x200
-[    8.516690]  ? __pfx_kthread+0x10/0x10
-[    8.516693]  ? __pfx_kthread+0x10/0x10
-[    8.516697]  ret_from_fork+0x82/0xf0
-[    8.516705]  ? __pfx_kthread+0x10/0x10
-[    8.516709]  ret_from_fork_asm+0x1a/0x30
-[    8.516718]  </TASK>
-
-Fixes: abc340b38ba2 ("xfrm: interface: support collect metadata mode")
-Reported-by: Lonial Con <kongln9170@gmail.com>
-Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 402bbb13a195 ("ASoC: mediatek: mt8365: Add I2S DAI support")
+Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20250710011806.134507-1-guoqing.jiang@canonical.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_interface_core.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ sound/soc/mediatek/mt8365/mt8365-dai-i2s.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
-index 98f1e2b67c76b..b95d882f9dbcb 100644
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -874,7 +874,7 @@ static int xfrmi_changelink(struct net_device *dev, struct nlattr *tb[],
- 		return -EINVAL;
- 	}
+diff --git a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
+index 11b9a5bc71638..89575bb8afedd 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
++++ b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
+@@ -812,11 +812,10 @@ static const struct snd_soc_dapm_route mtk_dai_i2s_routes[] = {
+ static int mt8365_dai_i2s_set_priv(struct mtk_base_afe *afe)
+ {
+ 	int i, ret;
+-	struct mt8365_afe_private *afe_priv = afe->platform_priv;
  
--	if (p.collect_md) {
-+	if (p.collect_md || xi->p.collect_md) {
- 		NL_SET_ERR_MSG(extack, "collect_md can't be changed");
- 		return -EINVAL;
- 	}
-@@ -885,11 +885,6 @@ static int xfrmi_changelink(struct net_device *dev, struct nlattr *tb[],
- 	} else {
- 		if (xi->dev != dev)
- 			return -EEXIST;
--		if (xi->p.collect_md) {
--			NL_SET_ERR_MSG(extack,
--				       "device can't be changed to collect_md");
--			return -EINVAL;
--		}
- 	}
- 
- 	return xfrmi_update(xi, &p);
+ 	for (i = 0; i < DAI_I2S_NUM; i++) {
+ 		ret = mt8365_dai_set_priv(afe, mt8365_i2s_priv[i].id,
+-					  sizeof(*afe_priv),
++					  sizeof(mt8365_i2s_priv[i]),
+ 					  &mt8365_i2s_priv[i]);
+ 		if (ret)
+ 			return ret;
 -- 
 2.39.5
 
