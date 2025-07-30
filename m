@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631621F1306;
-	Wed, 30 Jul 2025 09:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E0D1F1306;
+	Wed, 30 Jul 2025 09:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868276; cv=none; b=rbYfQV6BVZa+yCAB0LJfJWfsP3QO0se8MVvXN9sFHptrQO47J4HfwBleM3nF8caAQA5pfYDPv3i2+3P+jTodW/ZEIjDzuf2BUOUxEenlSIrimDyQ/wAwZscUm0DfBBln7EtPJsplI/gB+XLRj26JncLJl+Z2gDU1QyOJ9lYugos=
+	t=1753868279; cv=none; b=InkglX+Jl1uZHuW4ZB/sEbq32hkURQZpqMYzPBS8P10Hfd7HRkWS0JEld9EZgs1vUESE0gQL6Nws9RvRZoKtnxLoxy4D7tWTwlpIXJNkEMLXFggCo7sHZwZ47OeUSPh4UQOKQyhXmSMRBplOLvdRxQ58vUWjN0Nrze/iUQVpfQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868276; c=relaxed/simple;
-	bh=iWjPBoHL27Ot6AKUZWnq9dknp3EP/IPd5eHQErVggLo=;
+	s=arc-20240116; t=1753868279; c=relaxed/simple;
+	bh=b/SlJ/kVFqfFd7ppPFmnUkCtnvn/a+GsHh9EAS5Av2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dO6TVzCVkM2BRKaRths67B4CGtJ3B7ubk5qKkfEzZ+YbpDuhLcz7gX/r/7G0mlJ1JuJJalG+aqHa5WM1cS5+kNsK7Eh40c5VYH6KBHvB0cKbl9HzuMcg/RD38XywinrN3sprK16yhEU+JD6nrbP81EhqN33wcNE3WdRN/AblI+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PacikRy8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h2s6XoHnDyLT9pDweEtyyM7OYG5o3jt83dzscbgLp+0ypc9OQt10CzZiuFWzKoSAXxw8yrhkf4EJff+hk+Yz4PGuvRm4b6RV3uhw2FiP0EqkHxZS1sH+ub3LeaHor/RgctZ8UA4wLGgDSYfri/zNaITFR9/nv1E9fIaZACJMkcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjLdt4IE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PacikRy8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7C8C4CEE7;
-	Wed, 30 Jul 2025 09:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjLdt4IE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAB2C4CEE7;
+	Wed, 30 Jul 2025 09:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868276;
-	bh=iWjPBoHL27Ot6AKUZWnq9dknp3EP/IPd5eHQErVggLo=;
+	s=korg; t=1753868279;
+	bh=b/SlJ/kVFqfFd7ppPFmnUkCtnvn/a+GsHh9EAS5Av2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PacikRy8bea5mzMSSLWtUg0cT0d18xGblf5rcjJ4XxFaYcy3o4Yb9npknq7qLDDyU
-	 iYNjr2vP18LY8bebrh/fNzBI4fLeMjJFkJR9W8iHRomRs/BoSLks670b9kKAvKvpWH
-	 c2h58bLUErvelz/n4Uqeju0tuCGZKwRrzcURZaSg=
+	b=LjLdt4IEhkbHjPyOCLC0H8sbibs362joQEiDS6REnJYS+EbuNnhQDDpfebnrhhelj
+	 KDgDnwn0cOlAoGl0KyAvbz+V3fecRXUED+2xexwBeh5fuKGyYvFQFeUkSiRHmnxhdr
+	 Dr+9ExhjlgthR8kZsmuo9hYimHKN4zNK5+IHojxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Aliaksei Makarau <Aliaksei.Makarau@ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 22/76] drm/bridge: ti-sn65dsi86: Remove extra semicolon in ti_sn_bridge_probe()
-Date: Wed, 30 Jul 2025 11:35:15 +0200
-Message-ID: <20250730093227.706523384@linuxfoundation.org>
+Subject: [PATCH 6.6 23/76] s390/ism: fix concurrency management in ism_cmd()
+Date: Wed, 30 Jul 2025 11:35:16 +0200
+Message-ID: <20250730093227.742807414@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -52,36 +55,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 15a7ca747d9538c2ad8b0c81dd4c1261e0736c82 ]
+[ Upstream commit 897e8601b9cff1d054cdd53047f568b0e1995726 ]
 
-As reported by the kernel test robot, a recent patch introduced an
-unnecessary semicolon. Remove it.
+The s390x ISM device data sheet clearly states that only one
+request-response sequence is allowable per ISM function at any point in
+time.  Unfortunately as of today the s390/ism driver in Linux does not
+honor that requirement. This patch aims to rectify that.
 
-Fixes: 55e8ff842051 ("drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506301704.0SBj6ply-lkp@intel.com/
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20250714130631.1.I1cfae3222e344a3b3c770d079ee6b6f7f3b5d636@changeid
+This problem was discovered based on Aliaksei's bug report which states
+that for certain workloads the ISM functions end up entering error state
+(with PEC 2 as seen from the logs) after a while and as a consequence
+connections handled by the respective function break, and for future
+connection requests the ISM device is not considered -- given it is in a
+dysfunctional state. During further debugging PEC 3A was observed as
+well.
+
+A kernel message like
+[ 1211.244319] zpci: 061a:00:00.0: Event 0x2 reports an error for PCI function 0x61a
+is a reliable indicator of the stated function entering error state
+with PEC 2. Let me also point out that a kernel message like
+[ 1211.244325] zpci: 061a:00:00.0: The ism driver bound to the device does not support error recovery
+is a reliable indicator that the ISM function won't be auto-recovered
+because the ISM driver currently lacks support for it.
+
+On a technical level, without this synchronization, commands (inputs to
+the FW) may be partially or fully overwritten (corrupted) by another CPU
+trying to issue commands on the same function. There is hard evidence that
+this can lead to DMB token values being used as DMB IOVAs, leading to
+PEC 2 PCI events indicating invalid DMA. But this is only one of the
+failure modes imaginable. In theory even completely losing one command
+and executing another one twice and then trying to interpret the outputs
+as if the command we intended to execute was actually executed and not
+the other one is also possible.  Frankly, I don't feel confident about
+providing an exhaustive list of possible consequences.
+
+Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
+Reported-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
+Tested-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Tested-by: Aliaksei Makarau <Aliaksei.Makarau@ibm.com>
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250722161817.1298473-1-wintera@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/net/ism_drv.c | 3 +++
+ include/linux/ism.h        | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 002f8aaa509bc..59cbff209acd6 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -1352,7 +1352,7 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 			regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG,
- 					   HPD_DISABLE, 0);
- 		mutex_unlock(&pdata->comms_mutex);
--	};
-+	}
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index af0d90beba638..76ba36c83e522 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -130,6 +130,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
+ 	struct ism_req_hdr *req = cmd;
+ 	struct ism_resp_hdr *resp = cmd;
  
- 	drm_bridge_add(&pdata->bridge);
++	spin_lock(&ism->cmd_lock);
+ 	__ism_write_cmd(ism, req + 1, sizeof(*req), req->len - sizeof(*req));
+ 	__ism_write_cmd(ism, req, 0, sizeof(*req));
+ 
+@@ -143,6 +144,7 @@ static int ism_cmd(struct ism_dev *ism, void *cmd)
+ 	}
+ 	__ism_read_cmd(ism, resp + 1, sizeof(*resp), resp->len - sizeof(*resp));
+ out:
++	spin_unlock(&ism->cmd_lock);
+ 	return resp->ret;
+ }
+ 
+@@ -630,6 +632,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		return -ENOMEM;
+ 
+ 	spin_lock_init(&ism->lock);
++	spin_lock_init(&ism->cmd_lock);
+ 	dev_set_drvdata(&pdev->dev, ism);
+ 	ism->pdev = pdev;
+ 	ism->dev.parent = &pdev->dev;
+diff --git a/include/linux/ism.h b/include/linux/ism.h
+index 9a4c204df3da1..04e2fc1973ce4 100644
+--- a/include/linux/ism.h
++++ b/include/linux/ism.h
+@@ -28,6 +28,7 @@ struct ism_dmb {
+ 
+ struct ism_dev {
+ 	spinlock_t lock; /* protects the ism device */
++	spinlock_t cmd_lock; /* serializes cmds */
+ 	struct list_head list;
+ 	struct pci_dev *pdev;
  
 -- 
 2.39.5
