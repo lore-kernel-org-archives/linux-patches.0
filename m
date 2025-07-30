@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DE1279DA0;
-	Wed, 30 Jul 2025 09:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF67E276058;
+	Wed, 30 Jul 2025 09:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868849; cv=none; b=Tl3Pk9LuA/i9TkBStrRf1ghpqP78hy5rig3gzswiQ2B37a2YOB5rLDWwXXUwFQ/WxwbpsDJAkoRu6g666+JOMOgFaGeYqX10lqiEDO3DnrA0EmCXK2kiVSdOaAjauBW/aZOysIqM4ZC49ZeNTPVaYXLK0y5SSxYkhFBxMjY+g5U=
+	t=1753868852; cv=none; b=kbK9+pNBZf7dykxZYcoMiqY8O35wL4wHZtX0fUOLXCiHTmF8lSwJYG3Boyj5gd8LtynUZGWBGLohbJvoGu/wcSCw3mkBJLQhJqSXj1e1v8sqb0zUvxiIeWElHhh1VAGXTP7zlicv1Af2+gvW3aowmPTV6GBZ3cWi9lrw6RNVKWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868849; c=relaxed/simple;
-	bh=crGsTXcHv3aUJ+7IJweXWUGxNivCKHP5B/FZri6vKaE=;
+	s=arc-20240116; t=1753868852; c=relaxed/simple;
+	bh=EI/hIrdyOUVsOGpC40jnBIAZy+QB5cndkl0jTVHdIjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8noJVqV6Fyx4KLkPz5yy2ftmm4BLpPXdydOaGWCPIMWB1q6rHvhZp+Fn/lZ6To0FE8IuULKq6NswK+hOtpy0IUQHRl0ULqVtRGis1OFvSpK56XQU1iZgINZ653/AA0GAQaIXay5Wuf0lLHjdfLUmyC6oVZpsO4Wmj7gkejeWgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcpuQmuu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qzxuNxc/YdtPMOVqsoIH7rJ1obqHOqwtrjaXaPF+FTo47EhVqQeWLLjlgny5OJWNFJW+cNpG7/ORvV0MtirV48v73PBsuNu+SblQVJObdvpvj1H1Z2wRZ13blWU3y/Qnyp2UKveoqS/VB62MuY15sT3pkIahqhKEl1xvyFQVEdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av4Mx7KS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcpuQmuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1F6C4CEF5;
-	Wed, 30 Jul 2025 09:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av4Mx7KS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDB5C4CEF5;
+	Wed, 30 Jul 2025 09:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868849;
-	bh=crGsTXcHv3aUJ+7IJweXWUGxNivCKHP5B/FZri6vKaE=;
+	s=korg; t=1753868852;
+	bh=EI/hIrdyOUVsOGpC40jnBIAZy+QB5cndkl0jTVHdIjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcpuQmuu2g/VT/cq3Fh8QCW4xPTTFla63d5RUfOtRd8idHBSuOrmXBe1t0wSOPL7X
-	 cH7nLtknxjWu92L378EOSsEG4N5T/ikNPSRaHbz786WQF+T0j+QFSq0TnCiMFATKDB
-	 ut/y2uvbeRC0Qphzpnz+3gWDtX4Mai3bm3szFWcA=
+	b=av4Mx7KSY8fYlFZXTMvN+fuPTVHN1QYG65+V7LN1YcktqDxdHZ/vUicHoC84CtKVg
+	 jiQ3nTnaIkcyoEC2C0ejAf57Siyd7v3Dd3bw5uDf6zDw/YiF4Rqf8ZkssQ/vAQJC1J
+	 HY/kXPQdmsqhtc6AqN6h3WuljdGjXxcp61OhjYas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	syzbot+3b220254df55d8ca8a61@syzkaller.appspotmail.com,
-	David Hildenbrand <david@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 065/117] mm/vmscan: fix hwpoisoned large folio handling in shrink_folio_list
-Date: Wed, 30 Jul 2025 11:35:34 +0200
-Message-ID: <20250730093236.072393604@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 092/117] ext4: move out common parts into ext4_fallocate()
+Date: Wed, 30 Jul 2025 11:36:01 +0200
+Message-ID: <20250730093237.370598132@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -57,84 +53,349 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjiang Tu <tujinjiang@huawei.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 9f1e8cd0b7c4c944e9921b52a6661b5eda2705ab upstream.
+[ Upstream commit 2890e5e0f49e10f3dadc5f7b7ea434e3e77e12a6 ]
 
-In shrink_folio_list(), the hwpoisoned folio may be large folio, which
-can't be handled by unmap_poisoned_folio().  For THP, try_to_unmap_one()
-must be passed with TTU_SPLIT_HUGE_PMD to split huge PMD first and then
-retry.  Without TTU_SPLIT_HUGE_PMD, we will trigger null-ptr deref of
-pvmw.pte.  Even we passed TTU_SPLIT_HUGE_PMD, we will trigger a
-WARN_ON_ONCE due to the page isn't in swapcache.
+Currently, all zeroing ranges, punch holes, collapse ranges, and insert
+ranges first wait for all existing direct I/O workers to complete, and
+then they acquire the mapping's invalidate lock before performing the
+actual work. These common components are nearly identical, so we can
+simplify the code by factoring them out into the ext4_fallocate().
 
-Since UCE is rare in real world, and race with reclaimation is more rare,
-just skipping the hwpoisoned large folio is enough.  memory_failure() will
-handle it if the UCE is triggered again.
-
-This happens when memory reclaim for large folio races with
-memory_failure(), and will lead to kernel panic.  The race is as
-follows:
-
-cpu0      cpu1
- shrink_folio_list memory_failure
-  TestSetPageHWPoison
-  unmap_poisoned_folio
-  --> trigger BUG_ON due to
-  unmap_poisoned_folio couldn't
-   handle large folio
-
-[tujinjiang@huawei.com: add comment to unmap_poisoned_folio()]
-  Link: https://lkml.kernel.org/r/69fd4e00-1b13-d5f7-1c82-705c7d977ea4@huawei.com
-Link: https://lkml.kernel.org/r/20250627125747.3094074-2-tujinjiang@huawei.com
-Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
-Fixes: 1b0449544c64 ("mm/vmscan: don't try to reclaim hwpoison folio")
-Reported-by: syzbot+3b220254df55d8ca8a61@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68412d57.050a0220.2461cf.000e.GAE@google.com/
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20241220011637.1157197-11-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 29ec9bed2395 ("ext4: fix incorrect punch max_end")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    4 ++++
- mm/vmscan.c         |    8 ++++++++
- 2 files changed, 12 insertions(+)
+ fs/ext4/extents.c |  124 ++++++++++++++++++------------------------------------
+ fs/ext4/inode.c   |   25 +---------
+ 2 files changed, 45 insertions(+), 104 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1559,6 +1559,10 @@ static int get_hwpoison_page(struct page
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -4569,7 +4569,6 @@ static long ext4_zero_range(struct file
+ 			    loff_t len, int mode)
+ {
+ 	struct inode *inode = file_inode(file);
+-	struct address_space *mapping = file->f_mapping;
+ 	handle_t *handle = NULL;
+ 	loff_t new_size = 0;
+ 	loff_t end = offset + len;
+@@ -4593,23 +4592,6 @@ static long ext4_zero_range(struct file
+ 			return ret;
+ 	}
+ 
+-	/* Wait all existing dio workers, newcomers will block on i_rwsem */
+-	inode_dio_wait(inode);
+-
+-	ret = file_modified(file);
+-	if (ret)
+-		return ret;
+-
+-	/*
+-	 * Prevent page faults from reinstantiating pages we have released
+-	 * from page cache.
+-	 */
+-	filemap_invalidate_lock(mapping);
+-
+-	ret = ext4_break_layouts(inode);
+-	if (ret)
+-		goto out_invalidate_lock;
+-
+ 	flags = EXT4_GET_BLOCKS_CREATE_UNWRIT_EXT;
+ 	/* Preallocate the range including the unaligned edges */
+ 	if (!IS_ALIGNED(offset | end, blocksize)) {
+@@ -4619,17 +4601,17 @@ static long ext4_zero_range(struct file
+ 		ret = ext4_alloc_file_blocks(file, alloc_lblk, len_lblk,
+ 					     new_size, flags);
+ 		if (ret)
+-			goto out_invalidate_lock;
++			return ret;
+ 	}
+ 
+ 	ret = ext4_update_disksize_before_punch(inode, offset, len);
+ 	if (ret)
+-		goto out_invalidate_lock;
++		return ret;
+ 
+ 	/* Now release the pages and zero block aligned part of pages */
+ 	ret = ext4_truncate_page_cache_block_range(inode, offset, end);
+ 	if (ret)
+-		goto out_invalidate_lock;
++		return ret;
+ 
+ 	/* Zero range excluding the unaligned edges */
+ 	start_lblk = EXT4_B_TO_LBLK(inode, offset);
+@@ -4641,11 +4623,11 @@ static long ext4_zero_range(struct file
+ 		ret = ext4_alloc_file_blocks(file, start_lblk, zero_blks,
+ 					     new_size, flags);
+ 		if (ret)
+-			goto out_invalidate_lock;
++			return ret;
+ 	}
+ 	/* Finish zeroing out if it doesn't contain partial block */
+ 	if (IS_ALIGNED(offset | end, blocksize))
+-		goto out_invalidate_lock;
++		return ret;
+ 
+ 	/*
+ 	 * In worst case we have to writeout two nonadjacent unwritten
+@@ -4658,7 +4640,7 @@ static long ext4_zero_range(struct file
+ 	if (IS_ERR(handle)) {
+ 		ret = PTR_ERR(handle);
+ 		ext4_std_error(inode->i_sb, ret);
+-		goto out_invalidate_lock;
++		return ret;
+ 	}
+ 
+ 	/* Zero out partial block at the edges of the range */
+@@ -4678,8 +4660,6 @@ static long ext4_zero_range(struct file
+ 
+ out_handle:
+ 	ext4_journal_stop(handle);
+-out_invalidate_lock:
+-	filemap_invalidate_unlock(mapping);
  	return ret;
  }
  
-+/*
-+ * The caller must guarantee the folio isn't large folio, except hugetlb.
-+ * try_to_unmap() can't handle it.
-+ */
- int unmap_poisoned_folio(struct folio *folio, unsigned long pfn, bool must_kill)
- {
- 	enum ttu_flags ttu = TTU_IGNORE_MLOCK | TTU_SYNC | TTU_HWPOISON;
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1080,6 +1080,14 @@ retry:
- 			goto keep;
+@@ -4712,13 +4692,6 @@ static long ext4_do_fallocate(struct fil
+ 			goto out;
+ 	}
  
- 		if (folio_contain_hwpoisoned_page(folio)) {
-+			/*
-+			 * unmap_poisoned_folio() can't handle large
-+			 * folio, just skip it. memory_failure() will
-+			 * handle it if the UCE is triggered again.
-+			 */
-+			if (folio_test_large(folio))
-+				goto keep_locked;
+-	/* Wait all existing dio workers, newcomers will block on i_rwsem */
+-	inode_dio_wait(inode);
+-
+-	ret = file_modified(file);
+-	if (ret)
+-		goto out;
+-
+ 	ret = ext4_alloc_file_blocks(file, start_lblk, len_lblk, new_size,
+ 				     EXT4_GET_BLOCKS_CREATE_UNWRIT_EXT);
+ 	if (ret)
+@@ -4743,6 +4716,7 @@ out:
+ long ext4_fallocate(struct file *file, int mode, loff_t offset, loff_t len)
+ {
+ 	struct inode *inode = file_inode(file);
++	struct address_space *mapping = file->f_mapping;
+ 	int ret;
+ 
+ 	/*
+@@ -4766,6 +4740,29 @@ long ext4_fallocate(struct file *file, i
+ 	if (ret)
+ 		goto out_inode_lock;
+ 
++	/* Wait all existing dio workers, newcomers will block on i_rwsem */
++	inode_dio_wait(inode);
 +
- 			unmap_poisoned_folio(folio, folio_pfn(folio), false);
- 			folio_unlock(folio);
- 			folio_put(folio);
++	ret = file_modified(file);
++	if (ret)
++		return ret;
++
++	if ((mode & FALLOC_FL_MODE_MASK) == FALLOC_FL_ALLOCATE_RANGE) {
++		ret = ext4_do_fallocate(file, offset, len, mode);
++		goto out_inode_lock;
++	}
++
++	/*
++	 * Follow-up operations will drop page cache, hold invalidate lock
++	 * to prevent page faults from reinstantiating pages we have
++	 * released from page cache.
++	 */
++	filemap_invalidate_lock(mapping);
++
++	ret = ext4_break_layouts(inode);
++	if (ret)
++		goto out_invalidate_lock;
++
+ 	if (mode & FALLOC_FL_PUNCH_HOLE)
+ 		ret = ext4_punch_hole(file, offset, len);
+ 	else if (mode & FALLOC_FL_COLLAPSE_RANGE)
+@@ -4775,7 +4772,10 @@ long ext4_fallocate(struct file *file, i
+ 	else if (mode & FALLOC_FL_ZERO_RANGE)
+ 		ret = ext4_zero_range(file, offset, len, mode);
+ 	else
+-		ret = ext4_do_fallocate(file, offset, len, mode);
++		ret = -EOPNOTSUPP;
++
++out_invalidate_lock:
++	filemap_invalidate_unlock(mapping);
+ out_inode_lock:
+ 	inode_unlock(inode);
+ 	return ret;
+@@ -5297,23 +5297,6 @@ static int ext4_collapse_range(struct fi
+ 	if (end >= inode->i_size)
+ 		return -EINVAL;
+ 
+-	/* Wait for existing dio to complete */
+-	inode_dio_wait(inode);
+-
+-	ret = file_modified(file);
+-	if (ret)
+-		return ret;
+-
+-	/*
+-	 * Prevent page faults from reinstantiating pages we have released from
+-	 * page cache.
+-	 */
+-	filemap_invalidate_lock(mapping);
+-
+-	ret = ext4_break_layouts(inode);
+-	if (ret)
+-		goto out_invalidate_lock;
+-
+ 	/*
+ 	 * Write tail of the last page before removed range and data that
+ 	 * will be shifted since they will get removed from the page cache
+@@ -5327,16 +5310,15 @@ static int ext4_collapse_range(struct fi
+ 	if (!ret)
+ 		ret = filemap_write_and_wait_range(mapping, end, LLONG_MAX);
+ 	if (ret)
+-		goto out_invalidate_lock;
++		return ret;
+ 
+ 	truncate_pagecache(inode, start);
+ 
+ 	credits = ext4_writepage_trans_blocks(inode);
+ 	handle = ext4_journal_start(inode, EXT4_HT_TRUNCATE, credits);
+-	if (IS_ERR(handle)) {
+-		ret = PTR_ERR(handle);
+-		goto out_invalidate_lock;
+-	}
++	if (IS_ERR(handle))
++		return PTR_ERR(handle);
++
+ 	ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_FALLOC_RANGE, handle);
+ 
+ 	start_lblk = offset >> inode->i_blkbits;
+@@ -5375,8 +5357,6 @@ static int ext4_collapse_range(struct fi
+ 
+ out_handle:
+ 	ext4_journal_stop(handle);
+-out_invalidate_lock:
+-	filemap_invalidate_unlock(mapping);
+ 	return ret;
+ }
+ 
+@@ -5417,23 +5397,6 @@ static int ext4_insert_range(struct file
+ 	if (len > inode->i_sb->s_maxbytes - inode->i_size)
+ 		return -EFBIG;
+ 
+-	/* Wait for existing dio to complete */
+-	inode_dio_wait(inode);
+-
+-	ret = file_modified(file);
+-	if (ret)
+-		return ret;
+-
+-	/*
+-	 * Prevent page faults from reinstantiating pages we have released from
+-	 * page cache.
+-	 */
+-	filemap_invalidate_lock(mapping);
+-
+-	ret = ext4_break_layouts(inode);
+-	if (ret)
+-		goto out_invalidate_lock;
+-
+ 	/*
+ 	 * Write out all dirty pages. Need to round down to align start offset
+ 	 * to page size boundary for page size > block size.
+@@ -5441,16 +5404,15 @@ static int ext4_insert_range(struct file
+ 	start = round_down(offset, PAGE_SIZE);
+ 	ret = filemap_write_and_wait_range(mapping, start, LLONG_MAX);
+ 	if (ret)
+-		goto out_invalidate_lock;
++		return ret;
+ 
+ 	truncate_pagecache(inode, start);
+ 
+ 	credits = ext4_writepage_trans_blocks(inode);
+ 	handle = ext4_journal_start(inode, EXT4_HT_TRUNCATE, credits);
+-	if (IS_ERR(handle)) {
+-		ret = PTR_ERR(handle);
+-		goto out_invalidate_lock;
+-	}
++	if (IS_ERR(handle))
++		return PTR_ERR(handle);
++
+ 	ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_FALLOC_RANGE, handle);
+ 
+ 	/* Expand file to avoid data loss if there is error while shifting */
+@@ -5521,8 +5483,6 @@ static int ext4_insert_range(struct file
+ 
+ out_handle:
+ 	ext4_journal_stop(handle);
+-out_invalidate_lock:
+-	filemap_invalidate_unlock(mapping);
+ 	return ret;
+ }
+ 
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -3992,7 +3992,6 @@ int ext4_punch_hole(struct file *file, l
+ 	struct inode *inode = file_inode(file);
+ 	struct super_block *sb = inode->i_sb;
+ 	ext4_lblk_t start_lblk, end_lblk;
+-	struct address_space *mapping = inode->i_mapping;
+ 	loff_t max_end = EXT4_SB(sb)->s_bitmap_maxbytes - sb->s_blocksize;
+ 	loff_t end = offset + length;
+ 	handle_t *handle;
+@@ -4027,31 +4026,15 @@ int ext4_punch_hole(struct file *file, l
+ 			return ret;
+ 	}
+ 
+-	/* Wait all existing dio workers, newcomers will block on i_rwsem */
+-	inode_dio_wait(inode);
+-
+-	ret = file_modified(file);
+-	if (ret)
+-		return ret;
+-
+-	/*
+-	 * Prevent page faults from reinstantiating pages we have released from
+-	 * page cache.
+-	 */
+-	filemap_invalidate_lock(mapping);
+-
+-	ret = ext4_break_layouts(inode);
+-	if (ret)
+-		goto out_invalidate_lock;
+ 
+ 	ret = ext4_update_disksize_before_punch(inode, offset, length);
+ 	if (ret)
+-		goto out_invalidate_lock;
++		return ret;
+ 
+ 	/* Now release the pages and zero block aligned part of pages*/
+ 	ret = ext4_truncate_page_cache_block_range(inode, offset, end);
+ 	if (ret)
+-		goto out_invalidate_lock;
++		return ret;
+ 
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
+ 		credits = ext4_writepage_trans_blocks(inode);
+@@ -4061,7 +4044,7 @@ int ext4_punch_hole(struct file *file, l
+ 	if (IS_ERR(handle)) {
+ 		ret = PTR_ERR(handle);
+ 		ext4_std_error(sb, ret);
+-		goto out_invalidate_lock;
++		return ret;
+ 	}
+ 
+ 	ret = ext4_zero_partial_blocks(handle, inode, offset, length);
+@@ -4106,8 +4089,6 @@ int ext4_punch_hole(struct file *file, l
+ 		ext4_handle_sync(handle);
+ out_handle:
+ 	ext4_journal_stop(handle);
+-out_invalidate_lock:
+-	filemap_invalidate_unlock(mapping);
+ 	return ret;
+ }
+ 
 
 
