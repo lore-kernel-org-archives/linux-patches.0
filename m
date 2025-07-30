@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7A82957B6;
-	Wed, 30 Jul 2025 09:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45022900A8;
+	Wed, 30 Jul 2025 09:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868712; cv=none; b=TrNLeLs2ZnxAMwYbFSGiaRVXVoizXEJgBluomqNupypJso93/iA+912Zy34Xxhb24jsBZHjcKB62X9is/cVbdetEbz1udXv67h5YHWQ+ZUpYgDs/b6gyuid7NjIJE3bmCuQrwMG/0lXnNaMPoTNUiXu4XzzWRCDW8DMzgfM35gI=
+	t=1753868715; cv=none; b=Wk0BusseYxy40BIRMn2fVpyxZbMpCgVb9ImgjCJlc60deO2FRiRBLddLBP8TEnH7bs4E73ivRGkSnlYz9fRw8ZR03FFnf4ZZ/SDoUn9zU95//SBOv4AMIAmixFzcxGmmp4tDl+3B7tUfAeZZ6d+sBHzNsxBpntBA9/q5vg4YIoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868712; c=relaxed/simple;
-	bh=ohusYJfAAvhBRw9a1FsHTRPQI0Pxn4mZN2S1tyAMGNY=;
+	s=arc-20240116; t=1753868715; c=relaxed/simple;
+	bh=k1+wNki0b9roZAGwaNSel1+s1SHfNLYKwQTKnrX56TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDyHUHUhq2+3LuAZ+b5trbLIHDvRy0Xt7bYbVtxn5Lgk+19dqBM1KrXesCE001wob2raJZA6QVMchLJ5+g+c2zHxRQ5IhIeH2aGSw0pRun5pOl022D2oLO+y1gF2bVO1AUwOhZ5/BA+fcvYwwV2uXhhn9hyMb1L+EmyQ6wxvFcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMcsAuSo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVyQbcRjKM4pqy1MD4rOkGxnYGrwTZNIli/Pyur8z/HcOqiNMtGYxXwKW36/M603BhvI5JYgkhf/9qVwxxkrWwreJKNVcl55N2OGf2OHZuPzE20f9e6FW2sSNy/AeR6c/mSZPBDUtNie+ZwQ/MzF3THM7Uuv/sbAlSZFh/AsXRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtPSvWNZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMcsAuSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD94C4CEF5;
-	Wed, 30 Jul 2025 09:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtPSvWNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A186C4CEF5;
+	Wed, 30 Jul 2025 09:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868712;
-	bh=ohusYJfAAvhBRw9a1FsHTRPQI0Pxn4mZN2S1tyAMGNY=;
+	s=korg; t=1753868715;
+	bh=k1+wNki0b9roZAGwaNSel1+s1SHfNLYKwQTKnrX56TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMcsAuSowJv+iWXQ889wAJXGbAb5EFB5rZmUsFmv6j95zCBOMBz+grzaXEhOWeaKg
-	 dbVi9DaQlKQa/ZKWLmUS0dqaipz9LAzpF6U17PPb4oKm/3rgU97A6vtnlDHxYw1tdw
-	 0r7KKxEtMQNy5LOiAGdN70vm5sJBf7WmhV9mGpZM=
+	b=wtPSvWNZWxjawwUJkIjUAkHthaF4uj1MAupdrwsOZW/dPCCERgytG4D1G+2FV4eFC
+	 2hnO878jREBq7QRz5VC9wbKbgkgHAfqQA1F9fDUVAMQqiwrn5kC41AcQYFrIv6t26s
+	 cgKVUTKOWwje/RMKSlmEfD25dBZxLGkFiu3I/tYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/117] drm/bridge: ti-sn65dsi86: Remove extra semicolon in ti_sn_bridge_probe()
-Date: Wed, 30 Jul 2025 11:35:00 +0200
-Message-ID: <20250730093234.773862388@linuxfoundation.org>
+	Tim Hostetler <thostet@google.com>,
+	Praveen Kaligineedi <pkaligineedi@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 058/117] gve: Fix stuck TX queue for DQ queue format
+Date: Wed, 30 Jul 2025 11:35:27 +0200
+Message-ID: <20250730093235.812296632@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093233.592541778@linuxfoundation.org>
 References: <20250730093233.592541778@linuxfoundation.org>
@@ -52,39 +52,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Praveen Kaligineedi <pkaligineedi@google.com>
 
-[ Upstream commit 15a7ca747d9538c2ad8b0c81dd4c1261e0736c82 ]
+commit b03f15c0192b184078206760c839054ae6eb4eaa upstream.
 
-As reported by the kernel test robot, a recent patch introduced an
-unnecessary semicolon. Remove it.
+gve_tx_timeout was calculating missed completions in a way that is only
+relevant in the GQ queue format. Additionally, it was attempting to
+disable device interrupts, which is not needed in either GQ or DQ queue
+formats.
 
-Fixes: 55e8ff842051 ("drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506301704.0SBj6ply-lkp@intel.com/
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20250714130631.1.I1cfae3222e344a3b3c770d079ee6b6f7f3b5d636@changeid
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As a result, TX timeouts with the DQ queue format likely would have
+triggered early resets without kicking the queue at all.
+
+This patch drops the check for pending work altogether and always kicks
+the queue after validating the queue has not seen a TX timeout too
+recently.
+
+Cc: stable@vger.kernel.org
+Fixes: 87a7f321bb6a ("gve: Recover from queue stall due to missed IRQ")
+Co-developed-by: Tim Hostetler <thostet@google.com>
+Signed-off-by: Tim Hostetler <thostet@google.com>
+Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20250717192024.1820931-1-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_main.c |   71 +++++++++++++++--------------
+ 1 file changed, 39 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 5500767cda7e4..4d17d1e1c38b4 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -1352,7 +1352,7 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 			regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG,
- 					   HPD_DISABLE, 0);
- 		mutex_unlock(&pdata->comms_mutex);
--	};
-+	}
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -1972,49 +1972,56 @@ static void gve_turnup_and_check_status(
+ 	gve_handle_link_status(priv, GVE_DEVICE_STATUS_LINK_STATUS_MASK & status);
+ }
  
- 	drm_bridge_add(&pdata->bridge);
+-static void gve_tx_timeout(struct net_device *dev, unsigned int txqueue)
++static struct gve_notify_block *gve_get_tx_notify_block(struct gve_priv *priv,
++							unsigned int txqueue)
+ {
+-	struct gve_notify_block *block;
+-	struct gve_tx_ring *tx = NULL;
+-	struct gve_priv *priv;
+-	u32 last_nic_done;
+-	u32 current_time;
+ 	u32 ntfy_idx;
  
--- 
-2.39.5
-
+-	netdev_info(dev, "Timeout on tx queue, %d", txqueue);
+-	priv = netdev_priv(dev);
+ 	if (txqueue > priv->tx_cfg.num_queues)
+-		goto reset;
++		return NULL;
+ 
+ 	ntfy_idx = gve_tx_idx_to_ntfy(priv, txqueue);
+ 	if (ntfy_idx >= priv->num_ntfy_blks)
+-		goto reset;
++		return NULL;
++
++	return &priv->ntfy_blocks[ntfy_idx];
++}
++
++static bool gve_tx_timeout_try_q_kick(struct gve_priv *priv,
++				      unsigned int txqueue)
++{
++	struct gve_notify_block *block;
++	u32 current_time;
+ 
+-	block = &priv->ntfy_blocks[ntfy_idx];
+-	tx = block->tx;
++	block = gve_get_tx_notify_block(priv, txqueue);
++
++	if (!block)
++		return false;
+ 
+ 	current_time = jiffies_to_msecs(jiffies);
+-	if (tx->last_kick_msec + MIN_TX_TIMEOUT_GAP > current_time)
+-		goto reset;
++	if (block->tx->last_kick_msec + MIN_TX_TIMEOUT_GAP > current_time)
++		return false;
++
++	netdev_info(priv->dev, "Kicking queue %d", txqueue);
++	napi_schedule(&block->napi);
++	block->tx->last_kick_msec = current_time;
++	return true;
++}
++
++static void gve_tx_timeout(struct net_device *dev, unsigned int txqueue)
++{
++	struct gve_notify_block *block;
++	struct gve_priv *priv;
++
++	netdev_info(dev, "Timeout on tx queue, %d", txqueue);
++	priv = netdev_priv(dev);
++
++	if (!gve_tx_timeout_try_q_kick(priv, txqueue))
++		gve_schedule_reset(priv);
+ 
+-	/* Check to see if there are missed completions, which will allow us to
+-	 * kick the queue.
+-	 */
+-	last_nic_done = gve_tx_load_event_counter(priv, tx);
+-	if (last_nic_done - tx->done) {
+-		netdev_info(dev, "Kicking queue %d", txqueue);
+-		iowrite32be(GVE_IRQ_MASK, gve_irq_doorbell(priv, block));
+-		napi_schedule(&block->napi);
+-		tx->last_kick_msec = current_time;
+-		goto out;
+-	} // Else reset.
+-
+-reset:
+-	gve_schedule_reset(priv);
+-
+-out:
+-	if (tx)
+-		tx->queue_timeout++;
++	block = gve_get_tx_notify_block(priv, txqueue);
++	if (block)
++		block->tx->queue_timeout++;
+ 	priv->tx_timeo_cnt++;
+ }
+ 
 
 
