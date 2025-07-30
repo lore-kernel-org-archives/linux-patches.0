@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013A26D4F9;
-	Wed, 30 Jul 2025 09:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE58622156D;
+	Wed, 30 Jul 2025 09:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868465; cv=none; b=S/biKIJJqqB4bgMy+an01xFz75y9pAz9tI83Z35UqvJzbIJ1wyabk5MVY+ra3irCYat94FZSOoiyhzZnDW7+S2s4vwN/KS8Ln1HzZmhCTTZ8lFwPkVMZhZLqkmfHJWhklRF9Rpzx2pEXb58Mjol0oRx1LbmxTQWnFJXwwrKYptg=
+	t=1753868469; cv=none; b=pBiq9fIgVgiWr8nm3//QvFwTiUmFwlKRAlL0vT/GobW4FgB8gsHlH5hqDyKIsW6cgDiJn5zNwwVyhFg8l1i7mslGhInbdoDG8qblkPnVDgzMWONvRN+zr9QvOsmWA6caxfxM9Y24ZhbLaG7VZQsiQyijL5Rnax7W2elDHsfw9wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868465; c=relaxed/simple;
-	bh=Aw3qbmxO2I9h+B2QyfaxdcVg9LwdrasSn9owZNLPTOE=;
+	s=arc-20240116; t=1753868469; c=relaxed/simple;
+	bh=i34Naeetb7ooY3kY+Ed7J+FCT5dIlrX73+Zu93HvoBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lt/V3nfhHX2aNPS8klRNU1PggnvZ8iJidzz9N/9dEGRm4rs+XS0BE9clUCgc8jTtuwcn4KpEIBFsqha25DIuc5JqTho6v5bWQCPlT7lnvQ4O4NN9s5HBhR+e57Fgpaw2cGkOdX680oxnKe0cNFg2Rcdmnbm6fiHAVsdIJ3Js/co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HydYjluX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/yZbBn+yeE5928Vcu/uS0gpUMot0Fo/0n8HJ1RUkfFHYK894NhTT0pkVMp0qEopVypmZl1qLkOwom802O0R/8Ui3LooRjqiK6aDguC+1YMvDvpY0i1HzLjAoCLSiciXAO1JQ/W7/Oz86q1CaMCoKqrC8B7pET8l4/QNEGsEiKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lbCYu+4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HydYjluX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9DBC4CEE7;
-	Wed, 30 Jul 2025 09:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lbCYu+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5BAC4CEE7;
+	Wed, 30 Jul 2025 09:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868465;
-	bh=Aw3qbmxO2I9h+B2QyfaxdcVg9LwdrasSn9owZNLPTOE=;
+	s=korg; t=1753868468;
+	bh=i34Naeetb7ooY3kY+Ed7J+FCT5dIlrX73+Zu93HvoBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HydYjluXGZ+C61I5lbfX1KGLzUwmnBTF9lSgg7sqdE7lzpeEnf7jbZJu/DTthUUrI
-	 rprN6rJn4RX2sGQjj74+ZTDQ4MMb1W1qocS1HmxepL0ubtZ1KsgHVPDQcPNqH4bpVs
-	 P4yfNCKZaGUysXAXz8Pr8nhI0Z6sxoTkip9zBbiE=
+	b=1lbCYu+4Vs2aDVOipAfD2M0RLww2XcrjXCrv127KdMSzkmTzQ5KrhJiEOdsLPXQfp
+	 veG0GlrzMcRjS7PAkeMgHluWXf4U7GwmJLP9mCcImlfb6lCEoOVgwMRpX/P1GTUEzl
+	 nd/eZUPvjqXHGahzSMenQ4Yd2FDWbTWDHClwfcvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 72/76] mptcp: reset fallback status gracefully at disconnect() time
-Date: Wed, 30 Jul 2025 11:36:05 +0200
-Message-ID: <20250730093229.656732347@linuxfoundation.org>
+	KernelCI bot <bot@kernelci.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 73/76] ARM: 9448/1: Use an absolute path to unified.h in KBUILD_AFLAGS
+Date: Wed, 30 Jul 2025 11:36:06 +0200
+Message-ID: <20250730093229.695162812@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -51,51 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit da9b2fc7b73d147d88abe1922de5ab72d72d7756 upstream.
+[ Upstream commit 87c4e1459e80bf65066f864c762ef4dc932fad4b ]
 
-mptcp_disconnect() clears the fallback bit unconditionally, without
-touching the associated flags.
+After commit d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper
+flags and language target"), which updated as-instr to use the
+'assembler-with-cpp' language option, the Kbuild version of as-instr
+always fails internally for arch/arm with
 
-The bit clear is safe, as no fallback operation can race with that --
-all subflow are already in TCP_CLOSE status thanks to the previous
-FASTCLOSE -- but we need to consistently reset all the fallback related
-status.
+  <command-line>: fatal error: asm/unified.h: No such file or directory
+  compilation terminated.
 
-Also acquire the relevant lock, to avoid fouling static analyzers.
+because '-include' flags are now taken into account by the compiler
+driver and as-instr does not have '$(LINUXINCLUDE)', so unified.h is not
+found.
 
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
+This went unnoticed at the time of the Kbuild change because the last
+use of as-instr in Kbuild that arch/arm could reach was removed in 5.7
+by commit 541ad0150ca4 ("arm: Remove 32bit KVM host support") but a
+stable backport of the Kbuild change to before that point exposed this
+potential issue if one were to be reintroduced.
+
+Follow the general pattern of '-include' paths throughout the tree and
+make unified.h absolute using '$(srctree)' to ensure KBUILD_AFLAGS can
+be used independently.
+
+Closes: https://lore.kernel.org/CACo-S-1qbCX4WAVFA63dWfHtrRHZBTyyr2js8Lx=Az03XHTTHg@mail.gmail.com/
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250714-net-mptcp-fallback-races-v1-3-391aff963322@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper flags and language target")
+Reported-by: KernelCI bot <bot@kernelci.org>
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+[ No KBUILD_RUSTFLAGS in <=6.12 ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3208,7 +3208,16 @@ static int mptcp_disconnect(struct sock
- 	 * subflow
- 	 */
- 	mptcp_destroy_common(msk, MPTCP_CF_FASTCLOSE);
-+
-+	/* The first subflow is already in TCP_CLOSE status, the following
-+	 * can't overlap with a fallback anymore
-+	 */
-+	spin_lock_bh(&msk->fallback_lock);
-+	msk->allow_subflows = true;
-+	msk->allow_infinite_fallback = true;
- 	WRITE_ONCE(msk->flags, 0);
-+	spin_unlock_bh(&msk->fallback_lock);
-+
- 	msk->cb_flags = 0;
- 	msk->recovery = false;
- 	msk->can_ack = false;
+--- a/arch/arm/Makefile
++++ b/arch/arm/Makefile
+@@ -142,7 +142,7 @@ endif
+ # Need -Uarm for gcc < 3.x
+ KBUILD_CPPFLAGS	+=$(cpp-y)
+ KBUILD_CFLAGS	+=$(CFLAGS_ABI) $(CFLAGS_ISA) $(arch-y) $(tune-y) $(call cc-option,-mshort-load-bytes,$(call cc-option,-malignment-traps,)) -msoft-float -Uarm
+-KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) -Wa,$(arch-y) $(tune-y) -include asm/unified.h -msoft-float
++KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) -Wa,$(arch-y) $(tune-y) -include $(srctree)/arch/arm/include/asm/unified.h -msoft-float
+ 
+ CHECKFLAGS	+= -D__arm__
+ 
 
 
