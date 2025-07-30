@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAD818CC1C;
-	Wed, 30 Jul 2025 01:51:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D199917BD9;
+	Wed, 30 Jul 2025 02:02:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753840288; cv=none; b=St1RWBLQIdgpHnc3Xv87O4nGHzW7bBib/209pS1mEqVC9rDPf+WWQBD1rgHm8M4uqAaIPMT/Zr4Oj1ul9+tHgcEnWO1e/nT2iB+xt/54GCghk/qVHg2yrhaIonDM46naRNZWb4T3/7TEvuOuhs9zWoWacMa3+3EfdTEROso87oI=
+	t=1753840948; cv=none; b=dKslIBGtMi0ZwmG6q01maF/qeewjnzZles7mgVuOzjaaUUlePrq85QuHnm/O+JgWadhdI2wF8JSC60/eOJDlBMzKW1za25bR2n6zx1UpsX8EwjSH9+Y8TePLPh84xo7j9NfrV3B8JOipOHKd70sEv54tsVUyAn5c8KvHmTu57OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753840288; c=relaxed/simple;
-	bh=chE0nrptDiMGRwfHI6m+QULdM9SQGcKdEzKcM0LjWr4=;
+	s=arc-20240116; t=1753840948; c=relaxed/simple;
+	bh=fnyCNz+4iMDEG9ouRGchQ7hEGKbqymufcyH6SUVKndE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XuaXlN5/K4fltbz+Fognmgvii93gdceUqRWelMcRItuRZ4TAQiB4JWRaYGTam2zv1johH4sztoTI++KS/LHWaI9LZNJ0vWbGwRzlRqxDYW8gtWd17kYD9kL3t73TZZRoI9OXHtUs2tHIWhHUAMFLiDCGdN4XqRhlid0gmcNTPf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=S/VNYNJ6; arc=none smtp.client-ip=192.198.163.9
+	 In-Reply-To:Content-Type; b=rixjDb+pyjmkeLVwb+0hms1rwHG2LWe3MqqdOuB8TlyPOcNBXpcoLo6gLJvdo6sQzGh/T6KZJr5m+Mul+l9m0SuOyFoji107dfij8vrua2WXbQXt5ObY+kX2M/AKr9TjKJ0icGx9e67Fih7N3f41XM461QYpXL0CtztfMEKo6W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CQnKegVZ; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="S/VNYNJ6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CQnKegVZ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753840287; x=1785376287;
+  t=1753840947; x=1785376947;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=chE0nrptDiMGRwfHI6m+QULdM9SQGcKdEzKcM0LjWr4=;
-  b=S/VNYNJ6dT5yf4IyeDqVUwWuZvOXJcfhCqn06QX7NkPVd3Ekt8sY+ZyY
-   +mS2M2dRMkSn1ZkDCwC3aRJbmaFNxOH7NY6rNqOrO5wqy1S2VFbHaN29A
-   aTVjvBQPpllReco806i5N6QXrzWMS2hjI2sRav8gIRLWcM1WUp9tpcXoF
-   5t7EQm78Irw3ppUST8O+zzLw5R8fzt+dDj39kD25JSaHhXYDk6c5jUuD6
-   yF8lH7CAf8VMkzYzpH1CfosewmRKknUMSJebO//MYRukhOjxCvKkiTo7l
-   owA/8y61jMdi3ur3tIC5VZdkhHDS9Maw+aFbmsQAvBfTzLC37hGyMJSH1
-   Q==;
-X-CSE-ConnectionGUID: /bLnr92QT16m6UWGflRlZQ==
-X-CSE-MsgGUID: ADseGT4CRA2pOIJTucNaMw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11506"; a="66828996"
+  bh=fnyCNz+4iMDEG9ouRGchQ7hEGKbqymufcyH6SUVKndE=;
+  b=CQnKegVZVlAuIXB56NJb1Q9zQ27h+dcgqztI/kkguH+NVt6YlHsruydh
+   wIs64cGeG32YE58xRbltM5lsT20/vnb+/UQFvp1p5QGlU5IzDcP47iwfh
+   FAZMJJuwJPWidOvRP5utqVbPAzFBrCROkr7ayF1RhPkM6siiG0G4s7iOA
+   05wG/t69r37ku/6tPYlFXshb+wtXSIRVFhRa4mT8qwM3VPZNXN5nR6qSe
+   0VlxJrY1WTzNKfLx5GSS5frO7M2/Ei9Mxqh1Jr3YaCp5LtcXRuOVahJSt
+   NJx9uu1BtesBO1uoMhxoJt+j+80abtmI7EkuJiJYeWY1/Mz06xvE+FanG
+   g==;
+X-CSE-ConnectionGUID: t6QC11kFTZKwjraU3V+ZCA==
+X-CSE-MsgGUID: OoyTkVQDRHmwkIXm5++5Wg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11506"; a="58752672"
 X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; 
-   d="scan'208";a="66828996"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2025 18:51:26 -0700
-X-CSE-ConnectionGUID: CpwUweFlQACPdurvCHXT4g==
-X-CSE-MsgGUID: Yigpge2UTX+ybyzDipC/ew==
+   d="scan'208";a="58752672"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2025 19:02:26 -0700
+X-CSE-ConnectionGUID: 5EDOjo7fQSu/VPbLVpDGWA==
+X-CSE-MsgGUID: 35hUmqlSTP+mVIOxIKeZIg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,350,1744095600"; 
-   d="scan'208";a="167110844"
+   d="scan'208";a="193850522"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2025 18:51:23 -0700
-Message-ID: <e94c33e4-7ef3-4777-aa28-852f4a013580@linux.intel.com>
-Date: Wed, 30 Jul 2025 09:49:08 +0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2025 19:02:24 -0700
+Message-ID: <0069af21-1238-4a5d-8e23-c2db07d3b124@linux.intel.com>
+Date: Wed, 30 Jul 2025 10:00:08 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,72 +52,152 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] iommu/pages: Add support for a incoherent IOMMU page
- walker
+Subject: Re: [PATCH 5/9] iommupt: Add the Intel VT-D second stage page table
+ format
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
  Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
  Will Deacon <will@kernel.org>, Kevin Tian <kevin.tian@intel.com>,
  patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>,
  Wei Wang <wei.w.wang@intel.com>
-References: <1-v1-bdb01ffac49c+be-iommu_pt_vtd_jgg@nvidia.com>
- <00c5972b-a5d9-4604-aea6-cc0d8e2601a0@linux.intel.com>
- <20250729223240.GC82395@nvidia.com>
+References: <5-v1-bdb01ffac49c+be-iommu_pt_vtd_jgg@nvidia.com>
+ <529ca56f-5bdc-47ad-8d0d-6b3b5c800c7a@linux.intel.com>
+ <20250729230518.GD82395@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20250729223240.GC82395@nvidia.com>
+In-Reply-To: <20250729230518.GD82395@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/30/25 06:32, Jason Gunthorpe wrote:
-> On Mon, Jul 21, 2025 at 04:41:03PM +0800, Baolu Lu wrote:
->> On 7/17/2025 3:57 AM, Jason Gunthorpe wrote:
->>> @@ -98,4 +101,36 @@ static inline void *iommu_alloc_pages_sz(gfp_t gfp, size_t size)
->>>    	return iommu_alloc_pages_node_sz(NUMA_NO_NODE, gfp, size);
->>>    }
->>> -#endif	/* __IOMMU_PAGES_H */
->>> +int iommu_pages_start_incoherent(void *virt, struct device *dma_dev);
->>> +int iommu_pages_start_incoherent_list(struct iommu_pages_list *list,
->>> +                                      struct device *dma_dev);
->>> +
->>> +#ifdef CONFIG_X86
->>> +#include <asm/cacheflush.h>
->>> +
->>> +static inline void iommu_pages_flush_incoherent(struct device *dma_dev,
->>> +						void *virt, size_t offset,
->>> +						size_t len)
->>> +{
->>> +	clflush_cache_range(virt + offset, len);
->>> +}
->>> +static inline void
->>> +iommu_pages_stop_incoherent_list(struct iommu_pages_list *list,
->>> +				 struct device *dma_dev)
->>> +{
->> Do we need to clear iopt->incoherent for X86, given that
->> iopt->incoherent is set in the start path?
-> No.. When I wrote this I felt we may as well keep x86 fast since it
-> doesn't use the DMA API and did it like this:
+On 7/30/25 07:05, Jason Gunthorpe wrote:
+> On Tue, Jul 22, 2025 at 11:11:02AM +0800, Baolu Lu wrote:
+>>> diff --git a/drivers/iommu/generic_pt/Kconfig b/drivers/iommu/generic_pt/Kconfig
+>>> index 953856e4b48369..b631cf00eba559 100644
+>>> --- a/drivers/iommu/generic_pt/Kconfig
+>>> +++ b/drivers/iommu/generic_pt/Kconfig
+>>> @@ -56,6 +56,17 @@ config IOMMU_PT_RISCV64
+>>>    	  Selected automatically by an IOMMU driver that uses this format.
+>>> +config IOMMU_PT_VTDSS
+>>> +       tristate "IOMMU page table for Intel VT-D IOMMU Second Stage"
+>>> +	depends on !GENERIC_ATOMIC64 # for cmpxchg64
+>>> +	default n
+>>
+>> The default value is a "n". So what's the value of putting a "default n"
+>> here?
 > 
-> static void __iommu_free_desc(struct ioptdesc *iopt)
-> {
-> [..]
-> 	if (!IS_ENABLED(CONFIG_X86))
-> 		WARN_ON_ONCE(iopt->incoherent);
-> 
-> To largely ignore the incoherent flag.
-> 
-> So:
-> 
-> 	/*
-> 	 * For performance leave the incoherent flag alone which turns this into
-> 	 * a NOP. For X86 the rest of the stop/free flow ignores the flag.
-> 	 */
+> I do not know, I cargo culted this from somewhere else, lots of
+> examples. Do you think we should drop it?
 
-Okay.
+If there's no special purpose, I'd suggest dropping it.
 
-I was just thinking about that: this field overlays struct page, so it
-makes more sense to clear it before repurposing it. It's fine as long as
-there's no functionality issue.
+> 
+>>> @@ -72,6 +83,7 @@ config IOMMU_PT_KUNIT_TEST
+>>>    	depends on KUNIT
+>>>    	depends on IOMMU_PT_AMDV1 || !IOMMU_PT_AMDV1
+>>>    	depends on IOMMU_PT_RISCV64 || !IOMMU_PT_RISCV64
+>>> +	depends on IOMMU_PT_VTDSS || !IOMMU_PT_VTDSS
+>>
+>> This line implies that the IOMMU_PT kunit test functions regardless of
+>> whether IOMMU_PT_VTDSS is enabled. But if IOMMU_PT_VTDSS is enabled,
+>> this kunit test will also cover it. Do I understand this correctly?
+> 
+> Yes.
+> 
+> The kunit test will build a unique:
+> 
+> kunit_test_suites(&NS(generic_pt_suite));
+> 
+> For VTDSS if it is compiled in and that macro eventually drops an ELF section:
+> 
+> 	__used __section(".kunit_test_suites") = { __VA_ARGS__ }
+> 
+> And then the linker and some kunit magic will automatically run it
+> just be virtue of having compiled it.
+> 
+> The odd || expression is a kconfig trick that ensures that the kunit
+> and vtdss have compatible modularity. ie the kunit cannot be built in
+> while the vtdss is modular.
+
+Thanks for the explanation.
+
+> 
+>>> +static inline enum pt_entry_type vtdss_pt_load_entry_raw(struct pt_state *pts)
+>>> +{
+>>> +	const u64 *tablep = pt_cur_table(pts, u64);
+>>> +	u64 entry;
+>>> +
+>>> +	pts->entry = entry = READ_ONCE(tablep[pts->index]);
+>>> +	if (!entry)
+>>> +		return PT_ENTRY_EMPTY;
+>>
+>> Would it be more reasonable to check the present bit of the entry
+>> here?
+> 
+> VTDSS has no present bit? Did I misunderstand that in the spec?
+
+You are right. The VT-d spec doesn't define the present bit for the SS
+paging entries. Historically, the VT-d driver treats the R (bit 0) field
+as the present bit.
+
+> 
+> IIRC this design uses all bits as 0 to mean non-present.
+> 
+>> Otherwise, it implies that when a PTE is non-present, all fields must be
+>> cleared. I'm concerned about any potential corner cases.
+> 
+> Since this code makes all the PTEs it does do that correctly, and we
+> have a great test suite that looks for corner cases :)
+
+Okay, fair enough.
+
+> 
+>>> +static inline int vtdss_pt_iommu_set_prot(struct pt_common *common,
+>>> +					  struct pt_write_attrs *attrs,
+>>> +					  unsigned int iommu_prot)
+>>> +{
+>>> +	u64 pte = 0;
+>>> +
+>>> +	/*
+>>> +	 * VTDSS does not have a present bit, so we tell if any entry is present
+>>> +	 * by checking for R or W.
+>>> +	 */
+>>> +	if (!(iommu_prot & (IOMMU_READ | IOMMU_WRITE)))
+>>> +		return -EINVAL;
+>>> +
+>>> +	if (iommu_prot & IOMMU_READ)
+>>> +		pte |= VTDSS_FMT_R;
+>>> +	if (iommu_prot & IOMMU_WRITE)
+>>> +		pte |= VTDSS_FMT_W;
+>>> +	if (pt_feature(common, PT_FEAT_VTDSS_FORCE_COHERENCE))
+>>> +		pte |= VTDSS_FMT_SNP;
+>>
+>> The comment says:
+>>
+>>   /*
+>>    * The PTEs are set to prevent cache incoherent traffic, such as PCI no
+>>    * snoop. This is set either at creation time or before the first map
+>>    * operation.
+>>    */
+>>    PT_FEAT_VTDSS_FORCE_COHERENCE = PT_FEAT_FMT_START,
+>>
+>> It seems that you are okay with setting this feature after iommu_pt
+>> creation and before the first map operation?
+> 
+> Yes it works as it is now.
+> 
+>> Do we still need to reform the enforce_cache_coherency callback
+>> mechanism?
+> 
+> I think that was motivated by the code in the driver, not so much this
+> code?
+
+I ever thought both.
+
+> I can't recall the detail right now but I didn't think it was a
+> very high priority.
+
+Okay, so I'll treat that as a driver improvement, not a feature required
+by this series.
 
 Thanks,
 baolu
