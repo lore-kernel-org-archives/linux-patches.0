@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A53526980D;
-	Wed, 30 Jul 2025 09:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3334C167DB7;
+	Wed, 30 Jul 2025 09:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753868329; cv=none; b=uzjiCNDE/obhFRuOxauzEobv21Lm0edHkuRnuhPeeFojCEIl9X6op1bslpQy9aTa8HlqZ93ktUwApiuoN+IafGN4X3rcPs2mlEzYIl3UoKpV13PrN8EKwSCBna5KkbJLeHxT6G6u+ThvYOk3/BcE47KNlxv69GHlgNPypEZUSss=
+	t=1753868333; cv=none; b=kKcgG+TLezWLRZ9TsmWZGqwDB9ExSw73w6mCOmGEPXQ8jnZsVp338KIdFkNo0kJ01C2ljrOszS+VEfYf8TjHRqrOSSJJT1BLgul9YUJ1cmrUEOYShvvfhBtscYe0HBwlcKyjP6YslN3Aps2PmrFxWZ30FJTxCVGM4X4ttbXbrfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753868329; c=relaxed/simple;
-	bh=kMGypcpcDZUP9NcvPKFisXGTz1EHwKnsBxEPAVRhdqc=;
+	s=arc-20240116; t=1753868333; c=relaxed/simple;
+	bh=x83MnKvb1IovLhRUzJRo7CfM7qkejx15Tk9oZM1VFws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qGLPFGfMwqfepuEbtAqqiIiOL2819eKmsWW77SBMwj/Bmyk/LaTOpOvlgYqBy7T81IVKIUcXGfQX9kRu8j3qGjvwgIkt635bQb5pcol75ENAqAuCWOcwAUWaeV1yvWmUX211WSfBvEHoJcEyuOA1OmArpLCfA4SEI8CEu+R1ljo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNybK0DF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kq7FO8TGJFXu4u7pxR5rJEqtlzZ23ltJJJo0ubcrfguJhdBl6hFsFZlk1ttSnaJCJpB2BftgYwIYRncU+JBbMB9K1IvL9YlFhfbTK6YKwy+E2ELK9XpUg2Ypdh0ArTagHehtFsbklJCPzP8VDOcQlzYzZgU89zYe8qSSt2WfbAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyjVqaao; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNybK0DF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7773CC4CEE7;
-	Wed, 30 Jul 2025 09:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyjVqaao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B07DC4CEE7;
+	Wed, 30 Jul 2025 09:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753868329;
-	bh=kMGypcpcDZUP9NcvPKFisXGTz1EHwKnsBxEPAVRhdqc=;
+	s=korg; t=1753868332;
+	bh=x83MnKvb1IovLhRUzJRo7CfM7qkejx15Tk9oZM1VFws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNybK0DF0RQXDd4SeDIwYi1P1c+IBM1MqxSFvCNoohqKVsvIV6R+kqJ26JCKaHR2z
-	 ymun2SsZED1fbJxTjVWwoT2DmYphGk3o9IokjCCz44ZBrySbzsl4MPULlR5VmSdjNx
-	 J9WcN6tISFK1lZyI4A3ygQ+CJkyytL6tCbb053KI=
+	b=DyjVqaaoWkvycf8Bf5thRlkOXtQT8LbKMytu87qHJdg/BQ07mBY40y1abxEuwcXna
+	 xUkvJIjqD0rVm9WcunBneO5suxHm+jXGtF+UPblOOJrQ99dd+OyUD1I/zH+/kAn2W1
+	 tRSmnjINgiqY9cK2GAgC+OJh4pcQZOm4LvL7kSNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 36/76] dpaa2-eth: Fix device reference count leak in MAC endpoint handling
-Date: Wed, 30 Jul 2025 11:35:29 +0200
-Message-ID: <20250730093228.237209419@linuxfoundation.org>
+Subject: [PATCH 6.6 37/76] dpaa2-switch: Fix device reference count leak in MAC endpoint handling
+Date: Wed, 30 Jul 2025 11:35:30 +0200
+Message-ID: <20250730093228.277058556@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093226.854413920@linuxfoundation.org>
 References: <20250730093226.854413920@linuxfoundation.org>
@@ -54,12 +54,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Ma Ke <make24@iscas.ac.cn>
 
-commit ee9f3a81ab08dfe0538dbd1746f81fd4d5147fdc upstream.
+commit 96e056ffba912ef18a72177f71956a5b347b5177 upstream.
 
 The fsl_mc_get_endpoint() function uses device_find_child() for
 localization, which implicitly calls get_device() to increment the
 device's reference count before returning the pointer. However, the
-caller dpaa2_eth_connect_mac() fails to properly release this
+caller dpaa2_switch_port_connect_mac() fails to properly release this
 reference in multiple scenarios. We should call put_device() to
 decrement reference count properly.
 
@@ -69,23 +69,23 @@ the reference with put_device() after use'.
 Found by code review.
 
 Cc: stable@vger.kernel.org
-Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
+Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
 Signed-off-by: Ma Ke <make24@iscas.ac.cn>
 Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250717022309.3339976-2-make24@iscas.ac.cn
+Link: https://patch.msgid.link/20250717022309.3339976-3-make24@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c |   15 ++++++++++++---
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c |   15 ++++++++++++---
  1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -4654,12 +4654,19 @@ static int dpaa2_eth_connect_mac(struct
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -1447,12 +1447,19 @@ static int dpaa2_switch_port_connect_mac
+ 	if (PTR_ERR(dpmac_dev) == -EPROBE_DEFER)
  		return PTR_ERR(dpmac_dev);
- 	}
  
 -	if (IS_ERR(dpmac_dev) || dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type)
 +	if (IS_ERR(dpmac_dev))
@@ -96,7 +96,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +		goto out_put_device;
 +	}
 +
- 	mac = kzalloc(sizeof(struct dpaa2_mac), GFP_KERNEL);
+ 	mac = kzalloc(sizeof(*mac), GFP_KERNEL);
 -	if (!mac)
 -		return -ENOMEM;
 +	if (!mac) {
@@ -105,8 +105,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	}
  
  	mac->mc_dev = dpmac_dev;
- 	mac->mc_io = priv->mc_io;
-@@ -4693,6 +4700,8 @@ err_close_mac:
+ 	mac->mc_io = port_priv->ethsw_data->mc_io;
+@@ -1482,6 +1489,8 @@ err_close_mac:
  	dpaa2_mac_close(mac);
  err_free_mac:
  	kfree(mac);
