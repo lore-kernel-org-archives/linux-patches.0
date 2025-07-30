@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FC020E6;
-	Wed, 30 Jul 2025 09:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DB41D63F2;
+	Wed, 30 Jul 2025 09:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869247; cv=none; b=OfY0Leydh1nDdV/q1msExUo7ieNNNQWrSrHnTqAObRKbAsEgL89CLyrT9Z1aYdrTJCQcDsOS3mNmx1bXKZ1Y5B319aO3Mi94fAOoPyVWfc34FI8SoG5qalcjBv9XQ8g8KNOHMfMbfWrHqeZynFLzNh06C8y6S6ZjdUCm39U2uiY=
+	t=1753869250; cv=none; b=jpRLqA1/gQ7dl0lxaqTHdnn2BHDSWK/ui5RC6ejllUYIvFUwbWJsMvrF5nfCXDk2iy/8UENCHNBQkIA8lw1JSOd3Iy8v/Rj5Ifhw66D6AzMXrwAMuAANmTr/18qAJav9TmD2gxc6jJsJR3VHuwC7Ny50Lghi6B93VTsXNmUeNsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869247; c=relaxed/simple;
-	bh=Kk0BePpvO5tWZrBaghTq6zHgRwc/+vwJl52pO/tMpzg=;
+	s=arc-20240116; t=1753869250; c=relaxed/simple;
+	bh=xq1ZMFn7hxVvdg5rY8mZockn9mkPhHww8CBWJz/bWkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pk5b0lor37f/NRVFi8rINrfTC1TIpca5G0Ij2Cfef56v6lCsiHosY1bxe3bz7Mgph6xwgEpE8W18BbxqqY42bG4fAfIBzwlW1nicgpglmpDNlp9Gwpss2sgxjxp2j7zpfM3Eou2usNpd93KdknphTxlrYHwNU5Axnjhe2+mKlU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZbAbc5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZfvOERvPQ/ygBxNkhXcvD+ltZCu7mK0c0Pfkon+7ZfDxXnVFgtwsdckgsBHQPAWJC4Oa9Y3TeFk8WY9JiMYjPGnLmt1uZPWcqMx5UhF1uyBX8H3JIkZcJWMIKxufLu26jt7u+4MneOxoxAZ8ojaMGBFXIsB5QO9qJQMvd57OOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snwvsL9g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZbAbc5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFBEC4CEF6;
-	Wed, 30 Jul 2025 09:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snwvsL9g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE6AC4CEF6;
+	Wed, 30 Jul 2025 09:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869247;
-	bh=Kk0BePpvO5tWZrBaghTq6zHgRwc/+vwJl52pO/tMpzg=;
+	s=korg; t=1753869250;
+	bh=xq1ZMFn7hxVvdg5rY8mZockn9mkPhHww8CBWJz/bWkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZbAbc5S4iQdsV+3qYKg/5RULC40GKxMeI29d1qkXOHT4sTW8aiSm7CkOXtbNr27o
-	 oGKkKxcWbxqmbFzYQtYSpd41W/5lCIHaexNcCCP/JfmZSsNcGGp1Muc/3gHerHtUsn
-	 rDfVnWGw4qpN+cssF7VmdJfy/DiyNHLfLvy7KzfE=
+	b=snwvsL9gAiRVGMdXJaQg7392wc9PcJqYiD0OIw1Gu5UoA/8MBDJT5N+nGmOt4UeNQ
+	 6YtWMsI3ujiEZIbtPK16q7eJPhfnhkYQSdkZvIviTGoMrwEw+JzNA8q+oBEi+dUKvz
+	 B+z8tG4w69umDdjZj2q6UK3UV8MuBW6yrmg1u6Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.15 65/92] dpaa2-eth: Fix device reference count leak in MAC endpoint handling
-Date: Wed, 30 Jul 2025 11:36:13 +0200
-Message-ID: <20250730093233.269600121@linuxfoundation.org>
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.15 74/92] resource: fix false warning in __request_region()
+Date: Wed, 30 Jul 2025 11:36:22 +0200
+Message-ID: <20250730093233.626144296@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -52,68 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Akinobu Mita <akinobu.mita@gmail.com>
 
-commit ee9f3a81ab08dfe0538dbd1746f81fd4d5147fdc upstream.
+commit 91a229bb7ba86b2592c3f18c54b7b2c5e6fe0f95 upstream.
 
-The fsl_mc_get_endpoint() function uses device_find_child() for
-localization, which implicitly calls get_device() to increment the
-device's reference count before returning the pointer. However, the
-caller dpaa2_eth_connect_mac() fails to properly release this
-reference in multiple scenarios. We should call put_device() to
-decrement reference count properly.
+A warning is raised when __request_region() detects a conflict with a
+resource whose resource.desc is IORES_DESC_DEVICE_PRIVATE_MEMORY.
 
-As comment of device_find_child() says, 'NOTE: you will need to drop
-the reference with put_device() after use'.
+But this warning is only valid for iomem_resources.
+The hmem device resource uses resource.desc as the numa node id, which can
+cause spurious warnings.
 
-Found by code review.
+This warning appeared on a machine with multiple cxl memory expanders.
+One of the NUMA node id is 6, which is the same as the value of
+IORES_DESC_DEVICE_PRIVATE_MEMORY.
 
-Cc: stable@vger.kernel.org
-Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250717022309.3339976-2-make24@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+In this environment it was just a spurious warning, but when I saw the
+warning I suspected a real problem so it's better to fix it.
+
+This change fixes this by restricting the warning to only iomem_resource.
+This also adds a missing new line to the warning message.
+
+Link: https://lkml.kernel.org/r/20250719112604.25500-1-akinobu.mita@gmail.com
+Fixes: 7dab174e2e27 ("dax/hmem: Move hmem device registration to dax_hmem.ko")
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ kernel/resource.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -4655,12 +4655,19 @@ static int dpaa2_eth_connect_mac(struct
- 		return PTR_ERR(dpmac_dev);
- 	}
- 
--	if (IS_ERR(dpmac_dev) || dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type)
-+	if (IS_ERR(dpmac_dev))
- 		return 0;
- 
-+	if (dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type) {
-+		err = 0;
-+		goto out_put_device;
-+	}
-+
- 	mac = kzalloc(sizeof(struct dpaa2_mac), GFP_KERNEL);
--	if (!mac)
--		return -ENOMEM;
-+	if (!mac) {
-+		err = -ENOMEM;
-+		goto out_put_device;
-+	}
- 
- 	mac->mc_dev = dpmac_dev;
- 	mac->mc_io = priv->mc_io;
-@@ -4694,6 +4701,8 @@ err_close_mac:
- 	dpaa2_mac_close(mac);
- err_free_mac:
- 	kfree(mac);
-+out_put_device:
-+	put_device(&dpmac_dev->dev);
- 	return err;
- }
- 
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1279,8 +1279,9 @@ static int __request_region_locked(struc
+ 		 * become unavailable to other users.  Conflicts are
+ 		 * not expected.  Warn to aid debugging if encountered.
+ 		 */
+-		if (conflict->desc == IORES_DESC_DEVICE_PRIVATE_MEMORY) {
+-			pr_warn("Unaddressable device %s %pR conflicts with %pR",
++		if (parent == &iomem_resource &&
++		    conflict->desc == IORES_DESC_DEVICE_PRIVATE_MEMORY) {
++			pr_warn("Unaddressable device %s %pR conflicts with %pR\n",
+ 				conflict->name, conflict, res);
+ 		}
+ 		if (conflict != parent) {
 
 
