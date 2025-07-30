@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7254A32;
-	Wed, 30 Jul 2025 09:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FDD28727F;
+	Wed, 30 Jul 2025 09:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753869224; cv=none; b=m51CjyDV5s0fGsAK6SbN4DJv5Ecxo5xrRoa13069cB1zbwzpHR4O9yn6wKVDODXyLvSx7ULnvtlVQsz7QUgh//FDNyo0bZxJdL6gcZBApYClbJd2fMoipx1jAtI6MjKVbRmXbfPDmkZWoiszZ3Xe8IlcQjCLOZ6tBrQ+6qdx06I=
+	t=1753869228; cv=none; b=OZdmNqaa6IFyXDAVMsd65y5ag8FUkj9R9ApqWbwf5vfQjq98KdQF/w5bJnVPUpdLiiZMBTMRAYmfCZy/USH0Pam5hg8Z1dkX6hVLqDnPjKSG4aQ2EPQA44q7HGtpajI7gqPxClx+Yf9bWZb7bbBrYAFCzyns5yVIChSGnserLu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753869224; c=relaxed/simple;
-	bh=hHNNbQmoxwoWPcbknwMOQSI1YnzRd/+lTz6dy9gMtIQ=;
+	s=arc-20240116; t=1753869228; c=relaxed/simple;
+	bh=ILzrtlGsMXLbaqMvdtidNCSQOVvvJ+bXiFCOZczwVIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gI8g3avQk2Olvss/DpjI16WBX9q2TnvPVJY7HvsYhBP+tGY/a68+CzXk00AqU+V/L9Cs4ylqEtmBpa2OkpN3oxhxnX/H9ut5WNNVQpcoUoXMp4xowt0XnzIDrBC48KoGU5RgpRLi8zybVtFRakwOnQxaML0/MyyEcWpWEsU+qHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDANE8cM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nc90aGz4NRmb9kIdGviRA+CY2GvakBv5w76LLeg7qzFJVweN6lfPBfZz3VkO7O04z70qmgyPDLEjvH2xyEySLe7WLhHl8O2SYs+LNg93qdW3RHGYhwa0gOn31zRdKVVCN4poYq8ebEP0HWmuuJmVMQSykyclEXZncVRMudL/oaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usyaNAUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDANE8cM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAADC4CEF5;
-	Wed, 30 Jul 2025 09:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usyaNAUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A01C4CEF5;
+	Wed, 30 Jul 2025 09:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1753869224;
-	bh=hHNNbQmoxwoWPcbknwMOQSI1YnzRd/+lTz6dy9gMtIQ=;
+	s=korg; t=1753869228;
+	bh=ILzrtlGsMXLbaqMvdtidNCSQOVvvJ+bXiFCOZczwVIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDANE8cMKAkmkuijqeoVfJSv8ILOsUviYqOKGXupRqOGrB2RjY5bpe7JGgFc+yBkv
-	 qUuUBTccPYOYXud2pgV30KpOsM1a6S16Lb+AGFJXp4joWPMU1ttp8mab3Iek0KyE9D
-	 /8mr3EVGVI8qNPTHl4m9QT9IRQ/ePpIGwprvz1hY=
+	b=usyaNAUF9FVKRTt+/7345zTxIGf2v5gtiQBWf4hUn2B+M70jGFCkbU0bW/ZruFGMS
+	 /5vNdgaBWHR/fszKLqzuwvdiG0trlFJa8PgUIWXegExfud1KfBx2Gs0gRRCln1B1wn
+	 pPMc2Ge1OJqUg3ke50/4kuHy7PoEcMS5b4hsZ54w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Lalaev <andrey.lalaev@gmail.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 34/92] can: netlink: can_changelink(): fix NULL pointer deref of struct can_priv::do_set_mode
-Date: Wed, 30 Jul 2025 11:35:42 +0200
-Message-ID: <20250730093232.073342189@linuxfoundation.org>
+Subject: [PATCH 6.15 35/92] drm/bridge: ti-sn65dsi86: Remove extra semicolon in ti_sn_bridge_probe()
+Date: Wed, 30 Jul 2025 11:35:43 +0200
+Message-ID: <20250730093232.113688303@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 References: <20250730093230.629234025@linuxfoundation.org>
@@ -51,116 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit c1f3f9797c1f44a762e6f5f72520b2e520537b52 ]
+[ Upstream commit 15a7ca747d9538c2ad8b0c81dd4c1261e0736c82 ]
 
-Andrei Lalaev reported a NULL pointer deref when a CAN device is
-restarted from Bus Off and the driver does not implement the struct
-can_priv::do_set_mode callback.
+As reported by the kernel test robot, a recent patch introduced an
+unnecessary semicolon. Remove it.
 
-There are 2 code path that call struct can_priv::do_set_mode:
-- directly by a manual restart from the user space, via
-  can_changelink()
-- delayed automatic restart after bus off (deactivated by default)
-
-To prevent the NULL pointer deference, refuse a manual restart or
-configure the automatic restart delay in can_changelink() and report
-the error via extack to user space.
-
-As an additional safety measure let can_restart() return an error if
-can_priv::do_set_mode is not set instead of dereferencing it
-unchecked.
-
-Reported-by: Andrei Lalaev <andrey.lalaev@gmail.com>
-Closes: https://lore.kernel.org/all/20250714175520.307467-1-andrey.lalaev@gmail.com
-Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
-Link: https://patch.msgid.link/20250718-fix-nullptr-deref-do_set_mode-v1-1-0b520097bb96@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 55e8ff842051 ("drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506301704.0SBj6ply-lkp@intel.com/
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20250714130631.1.I1cfae3222e344a3b3c770d079ee6b6f7f3b5d636@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/dev.c     | 12 +++++++++---
- drivers/net/can/dev/netlink.c | 12 ++++++++++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
-index 5ec3170b896a4..3fa805ac2c65b 100644
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -145,13 +145,16 @@ void can_change_state(struct net_device *dev, struct can_frame *cf,
- EXPORT_SYMBOL_GPL(can_change_state);
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 4ea13e5a3a54a..48766b6abd29a 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -1351,7 +1351,7 @@ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 			regmap_update_bits(pdata->regmap, SN_HPD_DISABLE_REG,
+ 					   HPD_DISABLE, 0);
+ 		mutex_unlock(&pdata->comms_mutex);
+-	};
++	}
  
- /* CAN device restart for bus-off recovery */
--static void can_restart(struct net_device *dev)
-+static int can_restart(struct net_device *dev)
- {
- 	struct can_priv *priv = netdev_priv(dev);
- 	struct sk_buff *skb;
- 	struct can_frame *cf;
- 	int err;
+ 	drm_bridge_add(&pdata->bridge);
  
-+	if (!priv->do_set_mode)
-+		return -EOPNOTSUPP;
-+
- 	if (netif_carrier_ok(dev))
- 		netdev_err(dev, "Attempt to restart for bus-off recovery, but carrier is OK?\n");
- 
-@@ -173,10 +176,14 @@ static void can_restart(struct net_device *dev)
- 	if (err) {
- 		netdev_err(dev, "Restart failed, error %pe\n", ERR_PTR(err));
- 		netif_carrier_off(dev);
-+
-+		return err;
- 	} else {
- 		netdev_dbg(dev, "Restarted\n");
- 		priv->can_stats.restarts++;
- 	}
-+
-+	return 0;
- }
- 
- static void can_restart_work(struct work_struct *work)
-@@ -201,9 +208,8 @@ int can_restart_now(struct net_device *dev)
- 		return -EBUSY;
- 
- 	cancel_delayed_work_sync(&priv->restart_work);
--	can_restart(dev);
- 
--	return 0;
-+	return can_restart(dev);
- }
- 
- /* CAN bus-off
-diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
-index f1db9b7ffd4d0..d5aa8da87961e 100644
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -285,6 +285,12 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
- 	}
- 
- 	if (data[IFLA_CAN_RESTART_MS]) {
-+		if (!priv->do_set_mode) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Device doesn't support restart from Bus Off");
-+			return -EOPNOTSUPP;
-+		}
-+
- 		/* Do not allow changing restart delay while running */
- 		if (dev->flags & IFF_UP)
- 			return -EBUSY;
-@@ -292,6 +298,12 @@ static int can_changelink(struct net_device *dev, struct nlattr *tb[],
- 	}
- 
- 	if (data[IFLA_CAN_RESTART]) {
-+		if (!priv->do_set_mode) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Device doesn't support restart from Bus Off");
-+			return -EOPNOTSUPP;
-+		}
-+
- 		/* Do not allow a restart while not running */
- 		if (!(dev->flags & IFF_UP))
- 			return -EINVAL;
 -- 
 2.39.5
 
