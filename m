@@ -1,137 +1,104 @@
-Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF8472601;
-	Thu, 31 Jul 2025 01:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AA6A94F
+	for <patches@lists.linux.dev>; Thu, 31 Jul 2025 02:30:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753924270; cv=none; b=BgdNIDNW+QIoreewuHZ3mkm0+LzoTAiWGOPEEs34ygL4CaHzTVTU1WIWSFqCVjTbWi4ZXh7S+Qcp8iq+m9b3Jo3dQpazHw8DVpJkoOWjFMCoBuueKTMSDv/ZOYVAriWbvTjLkcK10DAvpr7KEdPTF08bJTszoIxGKQiR6/9dAx8=
+	t=1753929045; cv=none; b=F1Ee1xjcNvi7GiUD4GF9tWcS5/9A5LTSuskq4zQVweaVZsenVrYk/7BDjk/7D+BusZRXocsz2hmRnMdNH0Fme03+4SGtrfVrWUVLXfN0iL6Y9Mgt2tIs0cVLV06L3/drtdHgaUsQekQvE8Fkfa3MK+lcykEc1lG/d/MKdreV8NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753924270; c=relaxed/simple;
-	bh=n8iDS1RpoPyRX/SV8PZbQm2pUtZk45w8CetxLYbszh4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DZmSsxAogsfLjoZyFCH7V7brhn/KS+xhuwQebQK7BwBUx5RKu0xlHpjab6AjBQ6apOGtjnI3oSLlkqU5H5l+KvdXhqxGT9hqUSayZjiQcNmnGESGvtOeh72/aV+Vri4G9ztFVxaUju0HJfFjzkQ0YuxxXojonLIa9QVLgPkCFbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iF7pQW1d; arc=none smtp.client-ip=209.85.128.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753929045; c=relaxed/simple;
+	bh=BGP4l7+uPxiYh3sDyFOdJBPQva2qULDdcMFHkX14DB4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k3R4ZmohcK98oNV4uo9Y9jo+mMOPFtJE3P/o2dVD6oovZ4Yg1NSyq9Z3GqlZj2bnIjTLxQL0ozzv5mmw3Opf/Zm328kAzXl9lXHzw14wGmX+o+ZRNLHa4Y/1dR/rsOVh28dNr1j9G3jgVobVME6kCf7r5itgGDnePEsEG//mqd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=P0ayw2DZ; arc=none smtp.client-ip=209.85.166.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iF7pQW1d"
-Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-45892deb25bso2548205e9.3;
-        Wed, 30 Jul 2025 18:11:08 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="P0ayw2DZ"
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3e3faafe30fso3921375ab.0
+        for <patches@lists.linux.dev>; Wed, 30 Jul 2025 19:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753924267; x=1754529067; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kXpCg7fFUSCjtaBdVRkAIltng+73iOIw95qBFbgU4OY=;
-        b=iF7pQW1dEpTlsHSpqhIWHSkl3v3+wE3GMMtrfgUeqMwD7npKSR550N0LcwTDUOuZuA
-         KLPbHkOytf/uQdb2KmsHdMgqwiBr1ZQmnlgWOoR0sfjRjBbiZrKZ4+RzfgB0HVjQF9f4
-         KZbZuqPhK7zkjQOKJcUR55TEpi4Gc4KTj6L6MzIHwSEpZPwwv+tUCHRddjOecgCwX/rw
-         mAzzj825z3Lx2SmfuUKsaIHfPLMFA9gS3r7jFx70ad0Jpz2AF06lpx8w+23tMApazG0f
-         n6CyM1qNaeBhF7IpZEp3WyGAxXs/8J11OinLGmHi0au0ZiyDG7B1eZ1oynxL2/r24Zvm
-         aENA==
+        d=linuxtx.org; s=google; t=1753929041; x=1754533841; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+ushCqJt1jxq6Hv7PpAxgFKijmgypw1mO/90AreCqXA=;
+        b=P0ayw2DZGLOXxwOU9ZPAmWNsZy/ydCzCOzujXHt6lN7Aqjz5qybdukfPoyb+A5O2YS
+         HYbRvjPaA7XwVqFqA6sfQ3ZsSLSovaMj9P5cGniPBdV+FcsFo6e4hl6Kx/gBUb+pN07T
+         x7xw0YV3qy1sSwf+fHDRkrZHzEKz/mEjYaBOE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753924267; x=1754529067;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kXpCg7fFUSCjtaBdVRkAIltng+73iOIw95qBFbgU4OY=;
-        b=ZiUazfxiHNHhYVnkw0PFwgo4xmGVoX4vDn/v/t2mi4o9zipTdJhrpOzl7HF7tevJdS
-         juiLlUorrnTyE3vlDd54u+ncB4Zm4C54sP2M9tduLM/0u5mh66F0fxaTLmVYCrG80a6P
-         ojnVzgcZfdF6g9qZmN8JeNJP8jYVTEoXkv8Aa/R1RtQ9Q/4TjwCzo6ZYP/VkzSHWOo0K
-         WlMcQfnY4nTVrqrAvEz6/P/XzN+suReXOWyQKoGIcEKVxLrXpfg/BF3SxZRqWSP2R6jE
-         RsFeGNIS62vRZKqPxNSELM5eyG/KDw5mnqNySFc3VgOeDWO8ugfCrY4G6hQEtaWpkJgF
-         oOkA==
-X-Forwarded-Encrypted: i=1; AJvYcCV4t0ZkPnx9ypAJBT2fJKEb+WlFw48o4sD/Z4WNhaXcTrEUZd/JwAiopb13h/HtoGNdsytATzHSgw==@lists.linux.dev, AJvYcCVzxmp6YZhmfy+qoi7qBgawZaoJ4bqtXMuQAz6d5p1HOC9TJziYQk3KOvM5xoMx+8idHTddDg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyKZgtuwYgnVYy+Q1cE9BNzEEHr4CWH/5dWcwD1oTmv5iZVx2EY
-	G/SMm5KNGzFh56+ySgFqYwATIfy7yOXfKgsRpS5JYu7gmwUZYOKbMZtv
-X-Gm-Gg: ASbGncuzKvqFy331/q2zUWNQY2GA/4mlEXpWnv8k8skTBh+pvKtNuhlhHZlPyy4c9oo
-	1pN/9Agk2kOib8GM2lC9Ka2TQTqqvD5UVJg/IG43qGTop8ahNaMva48j5Wr6JSMoXTL780tqdhn
-	GhPLXk0ajNx1Sv/aE44walcPCO/B1DqbWUmNqurm7Z0DNxgq0f1hzan/gGZExYU0PFXYrBmJbdq
-	84wqb0FiwSRNmbBBxEwgMwy8UQe7Rt/MBVtWtpnohyTNXn1xvky/ySj2AjvPdFLT3deWP5e1w5u
-	5hItSbo79foaC1z+VO1MbkcgjIJFE3C4m2RzRIksnFsf9nUqQo62bFdcJpORCFXEaUBd/B/ANqC
-	niUrXRflQGxShJHYmuYg5pqko8lrrv7x4WmAtlZtciUEEzL+6Xj2kt956XY/XIdruBWxpQWwJ4p
-	5kEWYhWFfJgFhjRNdjpZs5xpcaVgSzgA==
-X-Google-Smtp-Source: AGHT+IGeOhsBMERvvbOw6f+hFFGfN4gChqdxVvN8hhQLKCb/w62XE3iGf0rhBUe+NyG0AtkhK5k1Tw==
-X-Received: by 2002:a05:600c:3b16:b0:456:19b2:6aa8 with SMTP id 5b1f17b1804b1-45892bc5940mr47464205e9.19.1753924266281;
-        Wed, 30 Jul 2025 18:11:06 -0700 (PDT)
-Received: from [26.26.26.1] (ec2-3-75-144-20.eu-central-1.compute.amazonaws.com. [3.75.144.20])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4589edfcdc3sm7151015e9.12.2025.07.30.18.11.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Jul 2025 18:11:05 -0700 (PDT)
-Message-ID: <f6fedc6c-9f3a-4ffe-adb1-38b4f1632647@gmail.com>
-Date: Thu, 31 Jul 2025 09:10:59 +0800
+        d=1e100.net; s=20230601; t=1753929041; x=1754533841;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+ushCqJt1jxq6Hv7PpAxgFKijmgypw1mO/90AreCqXA=;
+        b=e/TrntR51Y10QG/MJCpWfgp9NT+5T51Fnb/UZg/AcBporyprrsmOdir8RsaLgqtcvE
+         DlpGQNiQ+gGh5FxvCHNtaWCQdCb2HkSjKoB8XcSrvHyTa1dUfd/vJfraXkR06ygAoHqs
+         Ik4Q+AesdQcQ3xIiKD1h9A0rHBGWpEkJcdi8Ubo7tq7weilhJTDPZIuF4Oii57fypV9N
+         crGkH7qcJsakzLU3s5099/IG6kmB12mLeAw9xzxZcKt3rLlBf+vMx0gue3FIT/oXf0vf
+         BI+7+Z3X2W+4dr/fA5p3zxADxbY46rv3H6JztjeojMQ+bliU/k0bkQWt64hod+stYLcE
+         m1BQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU/zcprBYrL1jEmCzwWmKIT9xVeybc1ConzszrtJcIfN5o+JVBtycqD7dQGZ00uZLpo2gz8SN8+@lists.linux.dev
+X-Gm-Message-State: AOJu0YxWlQ9E56h7R+/n/ONr1FLAL5d+ECkWvBzHj9RkrQAe/fU1w9Xt
+	0B31N3Y9Tk+1nl/QhaIP9byGAosEyOgxVPpq+GBYZzKafynMfhap2Jc87lGSkxf2/w==
+X-Gm-Gg: ASbGncuFLaaDsSALwDbRBfNpaObRnT//HcroCKAp04ioLH1Nqd4qAGebulrfnaxve1F
+	A4hI+QAkzhXIqYKsr0eJyKf39hRhD1hyiE9ot6OowwlvVIfHHURAzCaosoqZ65OevbsLLq8r8Gq
+	lk1KVqNSZzKk7z12dP5cVYFCw1ZhaPa4roIZAVnZL3y6AvHQB+Tu92hS6hmJsOpZOqOwykZYn2k
+	kXqeswuIyBixUxxYsOeInwSHFeDScq1HmnGK8y1x5MF1O+9WkW9QNmatAvOGwC7Hdm3FzIBZwjq
+	m7UvkoL27+66ZySuXtc/c3aUyT2WmSWTYxh7VbfYGFwYVXBU2budg4swiDAOn+pLnLTv337QPy8
+	Ly0TJOtyg+ZGT9Gq2xVrmwsPjEFP3CgctPKjEJgs=
+X-Google-Smtp-Source: AGHT+IEpDkOSfzGioCL1XlJHEiBvLDgHoxybZGActJKiPQtp5q7HYKT7qH3LFaZFNhuA+F7wTTjKVw==
+X-Received: by 2002:a05:6e02:216a:b0:3e0:4f66:310a with SMTP id e9e14a558f8ab-3e3f624ff19mr92076215ab.16.1753929041210;
+        Wed, 30 Jul 2025 19:30:41 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([72.42.103.70])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3e402b018f7sm2521125ab.43.2025.07.30.19.30.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Jul 2025 19:30:40 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Wed, 30 Jul 2025 20:30:38 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.15 00/92] 6.15.9-rc1 review
+Message-ID: <aIrVTm6WHKLbiThw@fedora64.linuxtx.org>
+References: <20250730093230.629234025@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 0/4] Disable ATS via iommu during PCI resets
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Nicolin Chen <nicolinc@nvidia.com>, joro@8bytes.org, will@kernel.org,
- robin.murphy@arm.com, rafael@kernel.org, lenb@kernel.org,
- bhelgaas@google.com, iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
- patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
- helgaas@kernel.org, baolu.lu@linux.intel.com
-References: <cover.1751096303.git.nicolinc@nvidia.com>
- <4f7e4bfb-1bc7-4c87-a9f1-8c8b6ee9a336@gmail.com>
- <aIOz1bzgfK9q0n4b@Asurada-Nvidia>
- <606f65e1-ccfc-4492-a32f-90343be654e7@gmail.com>
- <20250727162041.GC7551@nvidia.com>
- <d7543795-b172-4452-8789-e1c810d8075a@gmail.com>
- <20250729125953.GH36037@nvidia.com>
-Content-Language: en-US
-From: Ethan Zhao <etzhao1900@gmail.com>
-In-Reply-To: <20250729125953.GH36037@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250730093230.629234025@linuxfoundation.org>
 
-
-
-On 7/29/2025 8:59 PM, Jason Gunthorpe wrote:
-> On Tue, Jul 29, 2025 at 02:16:43PM +0800, Ethan Zhao wrote:
->>
->>
->> On 7/28/2025 12:20 AM, Jason Gunthorpe wrote:
->>> On Sun, Jul 27, 2025 at 08:48:26PM +0800, Ethan Zhao wrote:
->>>
->>>> At least, we can do some attempt in DPC and Hot-plug driver, and then
->>>> push the hardware specification update to provide pre-reset notification for
->>>> DPC & hotplug. does it make sense ?
->>>
->>> I think DPC is a different case..
->> More complex and practical case.
+On Wed, Jul 30, 2025 at 11:35:08AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.15.9 release.
+> There are 92 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I'm not sure about that, we do FLRs all the time as a normal part of
-> VFIO and VMM operations. DPC is pretty rare, IMHO.
-DPC reset could be triggered by simply accessing its control bit, that 
-is boring, while data corruption hardware issue is really rare.  >
->>> If we get a DPC we should also push the iommu into blocking, disable
->>> ATS and abandon any outstanding ATC invalidations as part of
->>> recovering from the DPC. Once everythings is cleaned up we can set the
->> Yup, even pure software resets, there might be ATC invalidation pending
->>   (in software queue or HW queue).
+> Responses should be made by Fri, 01 Aug 2025 09:32:07 +0000.
+> Anything received after that time might be too late.
 > 
-> The design of this patch series will require the iommu driver to wait
-> for the in-flight ATC invalidations during the blocking domain
-I see there is pci_wait_for_pending_transaction() before the blocking
-domain attachment.> attach. So for the SW initiated resets there should 
-not be pending ATC
-> invalidations when the FLR is triggered.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.15.9-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.15.y
+> and the diffstat can be found below.
 > 
-> We have been talking about DPC internally, and I think it will need a
-> related, but different flow since DPC can unavoidably trigger ATC
-> invalidation timeouts/failures and we must sensibly handle them in the
-There is race window for software to handle.
-And for DPC containing data corruption as priority, seems not rational 
-to issue notification to software and then do resetting. alternative
-way might be async modal support in iommu ATC invalidation path ?
+> thanks,
+> 
+> greg k-h
 
-Thanks,
-Ethan   > driver.
-> 
-> Jason
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
