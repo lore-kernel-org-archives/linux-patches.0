@@ -1,56 +1,48 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE010288C81
-	for <patches@lists.linux.dev>; Fri,  1 Aug 2025 16:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B283D1A0BF3;
+	Fri,  1 Aug 2025 16:18:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754064036; cv=none; b=KxTC3hpuCjFVDoH2QaOxNE46y74vuqxXcqU3ZFtc9BTseGHp0ioFa9ugHkvElu90lkx/K4k8ntPKgl7O0ApKg+6RNwWsASS97nNb5bP75vra1Chw6BeP6GipmH9f4AghFJSp+aXx5rK7QuZ4Pw1LwvllEODiJ0J/qmksApGZMik=
+	t=1754065091; cv=none; b=UwXqRa9uyM23MRfgCSoDPxrR5KbjXV19jqlS1k9rPt9kzscR2eoByKvrCoY4xSPDPACwsiDYgepYm9EI4QuICy2f1KgITGW509x2kVeKR4tc48Of00OndfJ4Qdw9qY10CLdfKsA1/T+UVg2MkmZH1ZA1iaqynJ68Bn63F7P4bBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754064036; c=relaxed/simple;
-	bh=ZUY87GzRvFHQkF0nij+YKn4SpY1J6OfNu611Gs2XbSo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VrDYnuDIw/y4kal7WMQ5ufxGsDO8qvIuXVL2u4QdXTt3Ub4XZmmKA9H+jXtOthCVHgOJ6EOpyCzsPRDWzhbJrWG7N4sIg+YNXKmmKd1JTxousguv7LbuS5rI2hUzK9pDWem1DYsDN8zLwwvf6OKMor53GvxazvhECNjJDjYtPvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=g6QCCxpv; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1754065091; c=relaxed/simple;
+	bh=yFaqUizzdoWOiqGVh6MjpjtilluZGlU0Tj1trX0kkmo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JBQ6MfQjN02v1/JxcUSD8KKZIw+u4Gygv8cjz1BiuRnSaEC0rHQFktG4uIOAFFZUtBkWL/DLtkZpP7CbXzomSfqXZpznB9uEFD38tMwfNsExmzBeHGoPCsWCBM/bBeMOWwsKKY6SWk2zecF/U5AU+rvJF5f4T7rwoj5btxy9xvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LU94o7vT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="g6QCCxpv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1754064035; x=1785600035;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=ZUY87GzRvFHQkF0nij+YKn4SpY1J6OfNu611Gs2XbSo=;
-  b=g6QCCxpv/BsKwyzUMnEXwSZwlCM3vTG8lD8E9WwA7qNIlIdSwKinoRTY
-   /dWWvDklgqRtL3/P6MxELnrXBKEN74hb4m4YhGuN/L/agKbZxXbpb2vqw
-   tLpP4Dg+9IoHggJXQfkbtnTW6gzlU9Fw63tbJioTzyQXSYYkYaJC6rOxS
-   4LSECOQSTyU9d4JQ09DYdZ270b2/oCTd9IxBXLtVMhetq2DKOgoKdFzER
-   FFmBF654pScYW8lkvjap64qlL9vH45SVpihu7bE+SJzAdvlIxqA7cCDGM
-   /OiUq8+dYlXywpoEVKUr4yXhZwpquZlDHzRn9U7lvWianTzC7ooJJY3uI
-   A==;
-X-CSE-ConnectionGUID: FsRjnvnBRj6R1GIlS4ttoQ==
-X-CSE-MsgGUID: 0gAOLMfOTrqvP5R1stOMPw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11508"; a="59036581"
-X-IronPort-AV: E=Sophos;i="6.17,255,1747724400"; 
-   d="scan'208";a="59036581"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2025 09:00:34 -0700
-X-CSE-ConnectionGUID: qPoyF8sqQe2T1llBeQa1Jg==
-X-CSE-MsgGUID: 4xK55f8ASlOjs8PQqHvWMQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,255,1747724400"; 
-   d="scan'208";a="163610857"
-Received: from bjrankin-mobl3.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.217])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2025 09:00:34 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: x86@kernel.org
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] x86/cpu: Add CPU model numbers for Novalake
-Date: Fri,  1 Aug 2025 09:00:27 -0700
-Message-ID: <20250801160028.4799-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LU94o7vT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E951C4CEE7;
+	Fri,  1 Aug 2025 16:18:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754065091;
+	bh=yFaqUizzdoWOiqGVh6MjpjtilluZGlU0Tj1trX0kkmo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=LU94o7vT1m7ulhc3OmvYbaBqeFADggIKRkJBdwXHTuNt4iG8RQSsFU5bptUV6Rnu6
+	 +Yolqh6AVw2mxcmBAIxboDg5RWQUljwRGOSNA5OzIvitHJcjpAfKAaBSmtbthQUW22
+	 iLjXGixaEOKOh1857is6vyOsgV1XImr/AfUvZ8DAJ02j6OsRZfbj4/7h79lbUIbgYm
+	 J+WFGtgUAkzaUg13PtH5g2d2QVAazx+V3DngwAG3N8dASVykM5ChoadcL5T4qOnzNJ
+	 HHSnz5AuUTSXyzsG+SNAn4dXzVLF2GLEvY04o1N/JOYOL53Qxg6VNBbY5gZHqZeCq2
+	 YyUk+PArR1CcA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] rust: prelude: re-export `core::mem::{align,size}_of{,_val}`
+Date: Fri,  1 Aug 2025 18:17:52 +0200
+Message-ID: <20250801161752.443431-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,31 +51,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Novalake has both desktop and mobile versions.
+Rust 1.80.0 added:
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+    align_of
+    align_of_val
+    size_of
+    size_of_val
+
+from `core::mem` to the prelude [1].
+
+For similar reasons, and to minimize potential confusion when code may
+work in later versions but not in our current minimum, add it to our
+prelude too.
+
+Link: https://github.com/rust-lang/rust/pull/123168 [1]
+Link: https://lore.kernel.org/rust-for-linux/CANiq72kOLYR2A95o0ji2mDmEqOKh9e9_60zZKmgF=vZmsW6DRg@mail.gmail.com/ [2]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
+ rust/kernel/prelude.rs | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Note this patch is on top of earlier Wildcatlake patch:
-Link: https://lore.kernel.org/all/20250730150437.4701-1-tony.luck@intel.com/
+diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+index 25fe97aafd02..198d09a31449 100644
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -12,7 +12,10 @@
+ //! ```
+ 
+ #[doc(no_inline)]
+-pub use core::pin::Pin;
++pub use core::{
++    mem::{align_of, align_of_val, size_of, size_of_val},
++    pin::Pin,
++};
+ 
+ pub use ::ffi::{
+     c_char, c_int, c_long, c_longlong, c_schar, c_short, c_uchar, c_uint, c_ulong, c_ulonglong,
 
- arch/x86/include/asm/intel-family.h | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 5367dcbf5b30..e345dbdf933e 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -152,6 +152,9 @@
- 
- #define INTEL_WILDCATLAKE_L		IFM(6, 0xD5)
- 
-+#define INTEL_NOVALAKE			IFM(18, 0x01)
-+#define INTEL_NOVALAKE_L		IFM(18, 0x03)
-+
- /* "Small Core" Processors (Atom/E-Core) */
- 
- #define INTEL_ATOM_BONNELL		IFM(6, 0x1C) /* Diamondville, Pineview */
+base-commit: dff64b072708ffef23c117fa1ee1ea59eb417807
 -- 
 2.50.1
 
