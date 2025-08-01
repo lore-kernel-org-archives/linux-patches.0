@@ -1,123 +1,81 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D091D188CC9
-	for <patches@lists.linux.dev>; Fri,  1 Aug 2025 18:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754072569; cv=pass; b=UMYz8TuXbRIV41OnCE0HWsAn22KNMp+2vmPxK1Jr0kCrr9QaOy+zTV+jurNaXorCrMoth4Ix1Gh2D++vynQYrXZQuHv21ItVoGTpanYucTEiBmLAKe5faRBtiGfZ2eM73sL4iY9+5B/XQ56m1Go3lGpWoYyHjqUMqfEi3dpyUKo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754072569; c=relaxed/simple;
-	bh=N0u5f7kywmoobUvfvaV9GxGqtJRaOTPYcha1RtJqso4=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=HI/73vbTyhFdnuOYp6E8H7nHFzT5drxsGz7GdCvIf9UE1ZDshErm7lvhU9/d9BVBUm8bL9MvSBj2Na6kYPFP21DuJsYli0wNtckOAlswQZtusT6nwLwO6dLqs2u2eklHSD0IANKLQgL9IFEKVC2WS6Pl2/OcDstlmiitQgcVROM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b=hShYNIy5; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB5C347DD;
+	Fri,  1 Aug 2025 19:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754075367; cv=none; b=YwLHsR4YI5qD5d30zx9gDp4xHGFNkRWHYDCxHOrHY6UVP002dUQ+BSwgA5zBYJsS8r/jlWeMzmTeykbTpcb7RYdU5LgeYl/xYUxjJAj3dfm/nL3YCUaSBokV9opLAX9nxkqIveLDUF6ih1J/gRoeXFphqnfkQH1majeWQeZUUFQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754075367; c=relaxed/simple;
+	bh=kO9wrnucrOAW44UKJumefrBMsdJJKbh3QjKVipeFrYc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=NpzHLhd6N9PgiqkaIHJbIIMt7eHwpu8Rrvq4nTF8bOBgRFk/jynYdGHP0wZWl0RlCzRasMfZYeAmbwypftxfG2THfqjAnztDZmxl5+7paXJI0+gHDP0ZBnH8cbpQOKE5pPKVm0oIorGmMO3jtRpuDIVL+Kiz54yenVG4Z82Hcbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kzUL/xBB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b="hShYNIy5"
-ARC-Seal: i=1; a=rsa-sha256; t=1754072562; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=SGI5SBFIreyJVvQFlLuxwq5c3Lw+RNKf5bISz1hplzyD3CEo0vAJQH8+D+usYXyyJUStMqBhwyGH9pXyDHWpQ4t3kEPaO87zyS74LJ495v7ZxvP0JT/ZhGZicQkglas5nQ1qCckH7r9Pp3gtofd1XS46kJOF8Vi7GhiF1ufECJg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1754072562; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=rufzHIlOrILnFZqJtVdpasY2ZRGvC6jraxfocnHfUe8=; 
-	b=B41sD11ihG6Y4LCm2taddBdV5AAvG4qawutrk0yI5J5IaiCvhSv5WWF/cO2Cdx6fT42s1jxS37G0MeHfoFT6J+xhNeqkkOlJdLMqHOcX3ERa4w8+bWs/5+dvJ5ac/AMFJss8HhnNUuS0H8uBsUD3TjNuTMEVgmITpMHir1uVgPI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=daniel.almeida@collabora.com;
-	dmarc=pass header.from=<daniel.almeida@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1754072562;
-	s=zohomail; d=collabora.com; i=daniel.almeida@collabora.com;
-	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
-	bh=rufzHIlOrILnFZqJtVdpasY2ZRGvC6jraxfocnHfUe8=;
-	b=hShYNIy5HDP28xS7IXS1sxaR+DCCg0fGHEyo/p4v0NJvRGuwXMtVPkIEti8l9ukU
-	wTHCxsQHlfWQTQrm8xYLtzPj7KA9PDS2DoWXwjuWvFZVW/kSd3ZqpoZm0fc6zuhJfKs
-	T9mIxYIXByrI/nhAPWyZV2de3jNctoT4n6kRpdlw=
-Received: by mx.zohomail.com with SMTPS id 1754072559074845.5866054817981;
-	Fri, 1 Aug 2025 11:22:39 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kzUL/xBB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782CAC4CEE7;
+	Fri,  1 Aug 2025 19:09:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754075366;
+	bh=kO9wrnucrOAW44UKJumefrBMsdJJKbh3QjKVipeFrYc=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=kzUL/xBBvzl9N2h4bMfuiw7qvFdTG6dMbf3sn2aCa26GA6oKfrqSrjeElHLM7PviX
+	 9pJIA5zMO+/MFKH2ajDenZpBwQgfQ5iQ7Uo4sHry7nLZMsyDYl30C1EYubzeice+sL
+	 yVsGLyEP9WolnqkXOdOu5ZNS8CHdEMeorDhC0y3T3psk89PBye1pPQQlJ6N3Ryc2t4
+	 qt2JBbMwCHcwLdHfiCGkdbSrWhD13GIbm0aqmDrz8bbAyqpDgW5EekjIPUQ6th6aaB
+	 oOtd+1zKMj8/puH/BW9oeOEsrqWRlbpoCKRLfS2Kp0xExzPALqwPGKY+lBZoMkgDnX
+	 W+UXyoJ6FBq2g==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 01 Aug 2025 21:09:22 +0200
+Message-Id: <DBRBTLBPR9AT.3TB5N5Z79DQ6W@kernel.org>
+Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
+ Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
+ "Alexandre Courbot" <acourbot@nvidia.com>,
+ <rust-for-linux@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <patches@lists.linux.dev>
 Subject: Re: [PATCH] rust: prelude: re-export
  `core::mem::{align,size}_of{,_val}`
-From: Daniel Almeida <daniel.almeida@collabora.com>
-In-Reply-To: <20250801161752.443431-1-ojeda@kernel.org>
-Date: Fri, 1 Aug 2025 15:22:24 -0300
-Cc: Alex Gaynor <alex.gaynor@gmail.com>,
- Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <lossin@kernel.org>,
- Andreas Hindborg <a.hindborg@kernel.org>,
- Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>,
- Danilo Krummrich <dakr@kernel.org>,
- Alexandre Courbot <acourbot@nvidia.com>,
- rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5D95B1A1-E994-4E9F-AB31-3DC5E2E9CD0F@collabora.com>
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>
+X-Mailer: aerc 0.20.1
 References: <20250801161752.443431-1-ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-ZohoMailClient: External
+In-Reply-To: <20250801161752.443431-1-ojeda@kernel.org>
 
-
-
-> On 1 Aug 2025, at 13:17, Miguel Ojeda <ojeda@kernel.org> wrote:
->=20
+On Fri Aug 1, 2025 at 6:17 PM CEST, Miguel Ojeda wrote:
 > Rust 1.80.0 added:
->=20
->    align_of
->    align_of_val
->    size_of
->    size_of_val
->=20
+>
+>     align_of
+>     align_of_val
+>     size_of
+>     size_of_val
+>
 > from `core::mem` to the prelude [1].
->=20
+>
 > For similar reasons, and to minimize potential confusion when code may
 > work in later versions but not in our current minimum, add it to our
 > prelude too.
->=20
+>
 > Link: https://github.com/rust-lang/rust/pull/123168 [1]
-> Link: =
-https://lore.kernel.org/rust-for-linux/CANiq72kOLYR2A95o0ji2mDmEqOKh9e9_60=
-zZKmgF=3DvZmsW6DRg@mail.gmail.com/ [2]
+> Link: https://lore.kernel.org/rust-for-linux/CANiq72kOLYR2A95o0ji2mDmEqOK=
+h9e9_60zZKmgF=3DvZmsW6DRg@mail.gmail.com/ [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+
+Reviewed-by: Benno Lossin <lossin@kernel.org>
+
+---
+Cheers,
+Benno
+
 > ---
-> rust/kernel/prelude.rs | 5 ++++-
-> 1 file changed, 4 insertions(+), 1 deletion(-)
->=20
-> diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
-> index 25fe97aafd02..198d09a31449 100644
-> --- a/rust/kernel/prelude.rs
-> +++ b/rust/kernel/prelude.rs
-> @@ -12,7 +12,10 @@
-> //! ```
->=20
-> #[doc(no_inline)]
-> -pub use core::pin::Pin;
-> +pub use core::{
-> +    mem::{align_of, align_of_val, size_of, size_of_val},
-> +    pin::Pin,
-> +};
->=20
-> pub use ::ffi::{
->     c_char, c_int, c_long, c_longlong, c_schar, c_short, c_uchar, =
-c_uint, c_ulong, c_ulonglong,
->=20
-> base-commit: dff64b072708ffef23c117fa1ee1ea59eb417807
-> --=20
-> 2.50.1
->=20
->=20
-
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-
+>  rust/kernel/prelude.rs | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
