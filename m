@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B13C20296C;
-	Sun,  3 Aug 2025 21:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05862040A8;
+	Sun,  3 Aug 2025 21:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255901; cv=none; b=IL9y7zec4s433EU7rydWJViOfFC4qj++9odvF30Z6Z6Hj5K8qTMaLu6If2MrLEh/YePr47XaMJrtvjxP2CasjRWH9otzsmcdK2XL2MM1y/PhuJPiGVxpGUU96OsfkI6IhekiJ/1ledUQvdLiwjUUvIWCEJRO03fc41GuO3v2+4c=
+	t=1754255904; cv=none; b=dASHdIrUD+JIilMqFRc+1zzWoAoYnJHVXmw3YtX9VeYbt4nnc3aa2dgNejCi6TkDyIlBECpt0zdVyGU4kD9zHD04DKD7jI5YPfsm/O1mWcykvpKrEdSCZfEHMZWWEjRPR7ROr5/xeRf4fYURoLzsSQezsfxhpkXvd70n8FRFVyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255901; c=relaxed/simple;
-	bh=uhzGJSz8LdwkbICpxmBzCUxDVA8J99qTVctNCgs7AUs=;
+	s=arc-20240116; t=1754255904; c=relaxed/simple;
+	bh=2dEuj7p703l6NyH3twdGut9EEm0uWyILxE4O/eacSPs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kcvUV5+ZrK/HNyALvQmcu1LJRts5miov1Br3iHhToA77a1TcRU3SI4okUpL6jkBuZyGDUVxSRjf2lqvp4QZxk3N7hbCqlwzUkBlBnKT4nKMDa969cVC+lPQFNGVtZ4yRJ3w1Wl9xkdDLWT6tYcgajzDeN0sCF2080k0pUKR+1YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n3YR+kpK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CsiZSbnSckBtXO2ENQw5t38KuW7M3ImhJYyvTLTuFz/9fVTUNunG4SN7Cefctf81DOnWO51aacS6nMQHll629CTbBpcLNgGeJ47/yrBQetDD3ARbl7ZLR2/Bpjzr8SLR2QDWHvKaxqLePGjgXPNCr2WqZegevKEcyDiLdsllL3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtnBAKCu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n3YR+kpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C1EC4CEF0;
-	Sun,  3 Aug 2025 21:18:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtnBAKCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED406C4CEFB;
+	Sun,  3 Aug 2025 21:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255901;
-	bh=uhzGJSz8LdwkbICpxmBzCUxDVA8J99qTVctNCgs7AUs=;
+	s=k20201202; t=1754255903;
+	bh=2dEuj7p703l6NyH3twdGut9EEm0uWyILxE4O/eacSPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3YR+kpKq5NYvlqB+amizFrUh4vG2MWxQyZQHAWuD1iY7bD8AJijl7GmiY8gTBCr9
-	 A0w6JOXo8JCc/pcoobOuLIIV9FqdPYuI3FYs3zjA/CexX6Umwjqv/Kfx7kS6LEZ/ug
-	 c2pYHE67r/HM2LuZveK6F1MMRxDh/chgHl1TPYIsAz/mbzBv8VNlSxgrFSRigsYqRC
-	 EPKeRhrORppu5tXAXsE+mbOUf94tBUs3u+kObcPX5b0tULs53rohugW9MLPX1KYHQ7
-	 9Ak9ZL0fbshF7zpdujiopld116i1xS0BD0HfuFYMR2aE6K/3BfJb/+8jkSk3YD8OQY
-	 yr/HDyMRiMHbA==
+	b=OtnBAKCuJOpdyzkNyV59mviDfB+4xkvTt2ZOOVh6AeUz1oP24ekqJqq+UcZlrJjWl
+	 t9niBDh3XkdZecaSV6IT79ZRPaOoGslsR7juLzAPuOVAHGUucjc6g/6Khx/r4gM34n
+	 uc6pfSFK+1Iey2WJAw7CUOCnEegZhG4totVEgoh7z3esmCPbxR8P0KEkdf7mpka742
+	 nDotOGbSQyAFoCR1Q5XHnIgpqJx7WZgfat5qehoHmz1DG+KrOn9c6vq9QX2AzZ/aE4
+	 R12rGr85LB2J2v86jbhhW9rtzWOBc5oVatjF1nGO3EFT8U2ZXT7bXOvLd1xPo7ihRR
+	 kQdIMIpq/r1WQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiao Ni <xni@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+Cc: Jan Kara <jack@suse.cz>,
+	syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 18/35] md: call del_gendisk in control path
-Date: Sun,  3 Aug 2025 17:17:18 -0400
-Message-Id: <20250803211736.3545028-18-sashal@kernel.org>
+	linux-block@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 19/35] loop: Avoid updating block size under exclusive owner
+Date: Sun,  3 Aug 2025 17:17:19 -0400
+Message-Id: <20250803211736.3545028-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211736.3545028-1-sashal@kernel.org>
 References: <20250803211736.3545028-1-sashal@kernel.org>
@@ -51,46 +51,27 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Xiao Ni <xni@redhat.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 9e59d609763f70a992a8f3808dabcce60f14eb5c ]
+[ Upstream commit 7e49538288e523427beedd26993d446afef1a6fb ]
 
-Now del_gendisk and put_disk are called asynchronously in workqueue work.
-The asynchronous way has a problem that the device node can still exist
-after mdadm --stop command returns in a short window. So udev rule can
-open this device node and create the struct mddev in kernel again. So put
-del_gendisk in control path and still leave put_disk in md_kobj_release
-to avoid uaf of gendisk.
+Syzbot came up with a reproducer where a loop device block size is
+changed underneath a mounted filesystem. This causes a mismatch between
+the block device block size and the block size stored in the superblock
+causing confusion in various places such as fs/buffer.c. The particular
+issue triggered by syzbot was a warning in __getblk_slow() due to
+requested buffer size not matching block device block size.
 
-Function del_gendisk can't be called with reconfig_mutex. If it's called
-with reconfig mutex, a deadlock can happen. del_gendisk waits all sysfs
-files access to finish and sysfs file access waits reconfig mutex. So
-put del_gendisk after releasing reconfig mutex.
+Fix the problem by getting exclusive hold of the loop device to change
+its block size. This fails if somebody (such as filesystem) has already
+an exclusive ownership of the block device and thus prevents modifying
+the loop device under some exclusive owner which doesn't expect it.
 
-But there is still a window that sysfs can be accessed between mddev_unlock
-and del_gendisk. So some actions (add disk, change level, .e.g) can happen
-which lead unexpected results. MD_DELETED is used to resolve this problem.
-MD_DELETED is set before releasing reconfig mutex and it should be checked
-for these sysfs access which need reconfig mutex. For sysfs access which
-don't need reconfig mutex, del_gendisk will wait them to finish.
-
-But it doesn't need to do this in function mddev_lock_nointr. There are
-ten places that call it.
-* Five of them are in dm raid which we don't need to care. MD_DELETED is
-only used for md raid.
-* stop_sync_thread, md_do_sync and md_start_sync are related sync request,
-and it needs to wait sync thread to finish before stopping an array.
-* md_ioctl: md_open is called before md_ioctl, so ->openers is added. It
-will fail to stop the array. So it doesn't need to check MD_DELETED here
-* md_set_readonly:
-It needs to call mddev_set_closing_and_sync_blockdev when setting readonly
-or read_auto. So it will fail to stop the array too because MD_CLOSING is
-already set.
-
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Link: https://lore.kernel.org/linux-raid/20250611073108.25463-2-xni@redhat.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reported-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/20250711163202.19623-2-jack@suse.cz
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -98,234 +79,140 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit is a strong candidate for stable backporting based on the
+following analysis:
 
-## 1. **Critical Race Condition Fix**
+1. **Fixes a Real User-Impacting Bug**: The commit addresses a syzbot-
+   reported issue where changing a loop device's block size while it's
+   mounted can cause filesystem corruption and warnings. The specific
+   issue is a warning in `__getblk_slow()` in fs/buffer.c due to
+   mismatched buffer and block device sizes.
 
-The commit addresses a serious race condition between `mdadm --stop` and
-udev that can lead to unexpected behavior:
+2. **Security and Data Integrity Issue**: This bug can lead to
+   filesystem corruption when the block size is changed underneath a
+   mounted filesystem, which is a serious data integrity concern that
+   affects users in production environments.
 
-```c
-// Before: del_gendisk was called asynchronously in md_kobj_release
-- del_gendisk(mddev->gendisk);
-  put_disk(mddev->gendisk);
+3. **Small and Contained Fix**: The changes are limited to the loop
+   driver (drivers/block/loop.c) and specifically to the
+   `loop_set_block_size()` function. The fix adds proper exclusive
+   ownership checks before allowing block size changes.
 
-// After: del_gendisk moved to control path in mddev_unlock
-+ if (test_bit(MD_DELETED, &mddev->flags))
-+     del_gendisk(mddev->gendisk);
-```
+4. **Clear Fix Strategy**: The solution is straightforward - it uses
+   existing kernel mechanisms (`bd_prepare_to_claim()` and
+   `bd_abort_claiming()`) to ensure exclusive access before modifying
+   the block size. This prevents concurrent modifications when the
+   device is already exclusively owned (e.g., by a mounted filesystem).
 
-The race window allows udev to reopen the device node after `mdadm
---stop` returns but before `del_gendisk()` completes, creating a new
-`struct mddev` in the kernel unexpectedly.
+5. **Minimal Risk of Regression**: The change only affects the
+   LOOP_SET_BLOCK_SIZE ioctl path and adds additional safety checks. It
+   doesn't modify the core functionality but rather adds protection
+   against an unsafe operation.
 
-## 2. **Use-After-Free Prevention**
+6. **Follows Stable Rules**: The commit:
+   - Fixes a real bug (filesystem corruption/warnings)
+   - Is small and self-contained
+   - Has been tested (confirmed by syzbot)
+   - Doesn't introduce new features
+   - Has minimal performance impact
 
-The commit prevents a potential use-after-free (UAF) of gendisk by
-properly sequencing the cleanup:
-- `del_gendisk()` is called synchronously in the control path
-- `put_disk()` remains in `md_kobj_release()` to avoid UAF
+The key code changes show the fix properly handles the exclusive
+ownership by:
+- Checking if the caller already has exclusive access (`!(mode &
+  BLK_OPEN_EXCL)`)
+- If not, attempting to claim exclusive access via
+  `bd_prepare_to_claim()`
+- Properly releasing the claim with `bd_abort_claiming()` if the
+  operation completes without exclusive mode
+- Moving the operation out of `lo_simple_ioctl()` to handle the block
+  device parameter
 
-## 3. **Deadlock Avoidance**
+This is exactly the type of bug fix that stable kernels should receive -
+it prevents data corruption with minimal code changes and low regression
+risk.
 
-The implementation carefully avoids deadlocks by calling `del_gendisk()`
-after releasing `reconfig_mutex`:
+ drivers/block/loop.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
-```c
-// In mddev_unlock():
-+ /* Call del_gendisk after release reconfig_mutex to avoid
-+  * deadlock (e.g. call del_gendisk under the lock and an
-+  * access to sysfs files waits the lock)
-+  */
-+ if (test_bit(MD_DELETED, &mddev->flags))
-+     del_gendisk(mddev->gendisk);
-```
-
-## 4. **MD_DELETED Flag Protection**
-
-The commit introduces proper synchronization using the `MD_DELETED`
-flag:
-
-```c
-// In mddev_lock():
-+ if (!ret && test_bit(MD_DELETED, &mddev->flags)) {
-+     ret = -ENODEV;
-+     mutex_unlock(&mddev->reconfig_mutex);
-+ }
-```
-
-This prevents sysfs operations from racing with array shutdown.
-
-## 5. **Minimal and Contained Changes**
-
-The fix is:
-- Relatively small (~100 lines)
-- Confined to the md subsystem
-- Does not introduce new features
-- Does not make architectural changes
-- Only modifies the cleanup path timing
-
-## 6. **Clear Bug Fix Criteria**
-
-This meets all stable backport criteria:
-- Fixes a real bug that affects users (race condition causing unexpected
-  device recreation)
-- Prevents potential data corruption/loss scenarios
-- Has minimal risk of regression (only affects shutdown path)
-- Is well-tested (has Reviewed-by tag)
-- Fixes behavior that violates expected semantics (device should be gone
-  after `mdadm --stop`)
-
-## 7. **Related UAF History**
-
-Recent commit history shows ongoing UAF issues in md:
-- `8542870237c3 md: fix mddev uaf while iterating all_mddevs list`
-- This indicates the subsystem has had similar issues that required
-  fixes
-
-The synchronous `del_gendisk()` approach is the correct fix for this
-class of problems, making this an important stability improvement for
-the md subsystem.
-
- drivers/md/md.c | 33 +++++++++++++++++++++++----------
- drivers/md/md.h | 26 ++++++++++++++++++++++++--
- 2 files changed, 47 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 0f03b21e66e4..7445e44eabff 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -636,9 +636,6 @@ static void __mddev_put(struct mddev *mddev)
- 	    mddev->ctime || mddev->hold_active)
- 		return;
- 
--	/* Array is not configured at all, and not held active, so destroy it */
--	set_bit(MD_DELETED, &mddev->flags);
--
- 	/*
- 	 * Call queue_work inside the spinlock so that flush_workqueue() after
- 	 * mddev_find will succeed in waiting for the work to be done.
-@@ -873,6 +870,16 @@ void mddev_unlock(struct mddev *mddev)
- 		kobject_del(&rdev->kobj);
- 		export_rdev(rdev, mddev);
- 	}
-+
-+	/* Call del_gendisk after release reconfig_mutex to avoid
-+	 * deadlock (e.g. call del_gendisk under the lock and an
-+	 * access to sysfs files waits the lock)
-+	 * And MD_DELETED is only used for md raid which is set in
-+	 * do_md_stop. dm raid only uses md_stop to stop. So dm raid
-+	 * doesn't need to check MD_DELETED when getting reconfig lock
-+	 */
-+	if (test_bit(MD_DELETED, &mddev->flags))
-+		del_gendisk(mddev->gendisk);
- }
- EXPORT_SYMBOL_GPL(mddev_unlock);
- 
-@@ -5774,19 +5781,30 @@ md_attr_store(struct kobject *kobj, struct attribute *attr,
- 	struct md_sysfs_entry *entry = container_of(attr, struct md_sysfs_entry, attr);
- 	struct mddev *mddev = container_of(kobj, struct mddev, kobj);
- 	ssize_t rv;
-+	struct kernfs_node *kn = NULL;
- 
- 	if (!entry->store)
- 		return -EIO;
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EACCES;
-+
-+	if (entry->store == array_state_store && cmd_match(page, "clear"))
-+		kn = sysfs_break_active_protection(kobj, attr);
-+
- 	spin_lock(&all_mddevs_lock);
- 	if (!mddev_get(mddev)) {
- 		spin_unlock(&all_mddevs_lock);
-+		if (kn)
-+			sysfs_unbreak_active_protection(kn);
- 		return -EBUSY;
- 	}
- 	spin_unlock(&all_mddevs_lock);
- 	rv = entry->store(mddev, page, length);
- 	mddev_put(mddev);
-+
-+	if (kn)
-+		sysfs_unbreak_active_protection(kn);
-+
- 	return rv;
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index 8d994cae3b83..1b6ee91f8eb9 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1431,17 +1431,34 @@ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
+ 	return 0;
  }
  
-@@ -5794,12 +5812,6 @@ static void md_kobj_release(struct kobject *ko)
+-static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
++static int loop_set_block_size(struct loop_device *lo, blk_mode_t mode,
++			       struct block_device *bdev, unsigned long arg)
  {
- 	struct mddev *mddev = container_of(ko, struct mddev, kobj);
+ 	struct queue_limits lim;
+ 	unsigned int memflags;
+ 	int err = 0;
  
--	if (mddev->sysfs_state)
--		sysfs_put(mddev->sysfs_state);
--	if (mddev->sysfs_level)
--		sysfs_put(mddev->sysfs_level);
--
--	del_gendisk(mddev->gendisk);
- 	put_disk(mddev->gendisk);
- }
- 
-@@ -6646,8 +6658,9 @@ static int do_md_stop(struct mddev *mddev, int mode)
- 		mddev->bitmap_info.offset = 0;
- 
- 		export_array(mddev);
--
- 		md_clean(mddev);
-+		set_bit(MD_DELETED, &mddev->flags);
-+
- 		if (mddev->hold_active == UNTIL_STOP)
- 			mddev->hold_active = 0;
- 	}
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index d45a9e6ead80..67b365621507 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -700,11 +700,26 @@ static inline bool reshape_interrupted(struct mddev *mddev)
- 
- static inline int __must_check mddev_lock(struct mddev *mddev)
- {
--	return mutex_lock_interruptible(&mddev->reconfig_mutex);
-+	int ret;
-+
-+	ret = mutex_lock_interruptible(&mddev->reconfig_mutex);
-+
-+	/* MD_DELETED is set in do_md_stop with reconfig_mutex.
-+	 * So check it here.
+-	if (lo->lo_state != Lo_bound)
+-		return -ENXIO;
++	/*
++	 * If we don't hold exclusive handle for the device, upgrade to it
++	 * here to avoid changing device under exclusive owner.
 +	 */
-+	if (!ret && test_bit(MD_DELETED, &mddev->flags)) {
-+		ret = -ENODEV;
-+		mutex_unlock(&mddev->reconfig_mutex);
++	if (!(mode & BLK_OPEN_EXCL)) {
++		err = bd_prepare_to_claim(bdev, loop_set_block_size, NULL);
++		if (err)
++			return err;
 +	}
 +
-+	return ret;
- }
- 
- /* Sometimes we need to take the lock in a situation where
-  * failure due to interrupts is not acceptable.
-+ * It doesn't need to check MD_DELETED here, the owner which
-+ * holds the lock here can't be stopped. And all paths can't
-+ * call this function after do_md_stop.
-  */
- static inline void mddev_lock_nointr(struct mddev *mddev)
- {
-@@ -713,7 +728,14 @@ static inline void mddev_lock_nointr(struct mddev *mddev)
- 
- static inline int mddev_trylock(struct mddev *mddev)
- {
--	return mutex_trylock(&mddev->reconfig_mutex);
-+	int ret;
++	err = mutex_lock_killable(&lo->lo_mutex);
++	if (err)
++		goto abort_claim;
 +
-+	ret = mutex_trylock(&mddev->reconfig_mutex);
-+	if (!ret && test_bit(MD_DELETED, &mddev->flags)) {
-+		ret = -ENODEV;
-+		mutex_unlock(&mddev->reconfig_mutex);
++	if (lo->lo_state != Lo_bound) {
++		err = -ENXIO;
++		goto unlock;
 +	}
-+	return ret;
- }
- extern void mddev_unlock(struct mddev *mddev);
  
+ 	if (lo->lo_queue->limits.logical_block_size == arg)
+-		return 0;
++		goto unlock;
+ 
+ 	sync_blockdev(lo->lo_device);
+ 	invalidate_bdev(lo->lo_device);
+@@ -1454,6 +1471,11 @@ static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
+ 	loop_update_dio(lo);
+ 	blk_mq_unfreeze_queue(lo->lo_queue, memflags);
+ 
++unlock:
++	mutex_unlock(&lo->lo_mutex);
++abort_claim:
++	if (!(mode & BLK_OPEN_EXCL))
++		bd_abort_claiming(bdev, loop_set_block_size);
+ 	return err;
+ }
+ 
+@@ -1472,9 +1494,6 @@ static int lo_simple_ioctl(struct loop_device *lo, unsigned int cmd,
+ 	case LOOP_SET_DIRECT_IO:
+ 		err = loop_set_dio(lo, arg);
+ 		break;
+-	case LOOP_SET_BLOCK_SIZE:
+-		err = loop_set_block_size(lo, arg);
+-		break;
+ 	default:
+ 		err = -EINVAL;
+ 	}
+@@ -1529,9 +1548,12 @@ static int lo_ioctl(struct block_device *bdev, blk_mode_t mode,
+ 		break;
+ 	case LOOP_GET_STATUS64:
+ 		return loop_get_status64(lo, argp);
++	case LOOP_SET_BLOCK_SIZE:
++		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
++			return -EPERM;
++		return loop_set_block_size(lo, mode, bdev, arg);
+ 	case LOOP_SET_CAPACITY:
+ 	case LOOP_SET_DIRECT_IO:
+-	case LOOP_SET_BLOCK_SIZE:
+ 		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
+ 			return -EPERM;
+ 		fallthrough;
 -- 
 2.39.5
 
