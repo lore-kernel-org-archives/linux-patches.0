@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05862040A8;
-	Sun,  3 Aug 2025 21:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D6A2040A8;
+	Sun,  3 Aug 2025 21:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255904; cv=none; b=dASHdIrUD+JIilMqFRc+1zzWoAoYnJHVXmw3YtX9VeYbt4nnc3aa2dgNejCi6TkDyIlBECpt0zdVyGU4kD9zHD04DKD7jI5YPfsm/O1mWcykvpKrEdSCZfEHMZWWEjRPR7ROr5/xeRf4fYURoLzsSQezsfxhpkXvd70n8FRFVyI=
+	t=1754255905; cv=none; b=ARXEvXtb5+Zpi1bspi07v3WPumxK4cBmbvtnzcjXtf9k0A+W77cy96tUzcmI4BVXTUzygkB1/O7z7ijwBFD9WLisePLBvR5K7U6AK/Alh04hYhGWw9t5VKbmDPmXbWyTZGLmKnaF148Pj/Ndn/ptZYxIXRwfMxYIspa3Q4eTofE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255904; c=relaxed/simple;
-	bh=2dEuj7p703l6NyH3twdGut9EEm0uWyILxE4O/eacSPs=;
+	s=arc-20240116; t=1754255905; c=relaxed/simple;
+	bh=3dTYzuGnZd3LM/DJnChQci1PIZnNPwjGX4pMVqkY1fo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CsiZSbnSckBtXO2ENQw5t38KuW7M3ImhJYyvTLTuFz/9fVTUNunG4SN7Cefctf81DOnWO51aacS6nMQHll629CTbBpcLNgGeJ47/yrBQetDD3ARbl7ZLR2/Bpjzr8SLR2QDWHvKaxqLePGjgXPNCr2WqZegevKEcyDiLdsllL3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtnBAKCu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RXUrWY/jE68ScP7Jjr56EnWrqtYT3//JZDePFoog871jKriEPMwPeZlhnIlsoHWTqgDmZAtlwtU7EiFJ3uL8GTJqEdDG0ashR3LN2RpVihafKz8YgiALmUTDiVZVSKLBJY8p7twqzk+F4d6i1skF/ULdSdW2xkFD3wghppUJAAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LzcIxNUG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtnBAKCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED406C4CEFB;
-	Sun,  3 Aug 2025 21:18:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LzcIxNUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16447C4CEF0;
+	Sun,  3 Aug 2025 21:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255903;
-	bh=2dEuj7p703l6NyH3twdGut9EEm0uWyILxE4O/eacSPs=;
+	s=k20201202; t=1754255905;
+	bh=3dTYzuGnZd3LM/DJnChQci1PIZnNPwjGX4pMVqkY1fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtnBAKCuJOpdyzkNyV59mviDfB+4xkvTt2ZOOVh6AeUz1oP24ekqJqq+UcZlrJjWl
-	 t9niBDh3XkdZecaSV6IT79ZRPaOoGslsR7juLzAPuOVAHGUucjc6g/6Khx/r4gM34n
-	 uc6pfSFK+1Iey2WJAw7CUOCnEegZhG4totVEgoh7z3esmCPbxR8P0KEkdf7mpka742
-	 nDotOGbSQyAFoCR1Q5XHnIgpqJx7WZgfat5qehoHmz1DG+KrOn9c6vq9QX2AzZ/aE4
-	 R12rGr85LB2J2v86jbhhW9rtzWOBc5oVatjF1nGO3EFT8U2ZXT7bXOvLd1xPo7ihRR
-	 kQdIMIpq/r1WQ==
+	b=LzcIxNUG91D/J/Zdp+oecpQrAmq02OZgZgIUicNQMRxEddBtlXQbnH8zxCJRUri7D
+	 ujmjEILdsRfyXO7vyjjAPHOBYh6ame4gM42kSrFSrifdnyJmBFP2e7ZlEPzTc0hOcC
+	 QqrgVL5iHvv2HiiuP4g3ZG5HnhoYVrGdB/AhVGO/Rdbe13kgm7Fn1HfY2Wza+fqGVj
+	 tRqWSUNdnX0+yC8io0frqX+xF7WMmfrdsikxuWrirO4uBcZ7i3hgYcFJkK+fuPILXT
+	 80pYwlagjfyZw1xogSipGSVPHGZt/xaed9+/nhUx9PWJ+6VjczeqLdtCpbSzO0wG+A
+	 s1n43FRnfHZ8w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Jan Kara <jack@suse.cz>,
-	syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 19/35] loop: Avoid updating block size under exclusive owner
-Date: Sun,  3 Aug 2025 17:17:19 -0400
-Message-Id: <20250803211736.3545028-19-sashal@kernel.org>
+	jack@suse.com
+Subject: [PATCH AUTOSEL 6.16 20/35] udf: Verify partition map count
+Date: Sun,  3 Aug 2025 17:17:20 -0400
+Message-Id: <20250803211736.3545028-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211736.3545028-1-sashal@kernel.org>
 References: <20250803211736.3545028-1-sashal@kernel.org>
@@ -53,25 +52,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 7e49538288e523427beedd26993d446afef1a6fb ]
+[ Upstream commit 1a11201668e8635602577dcf06f2e96c591d8819 ]
 
-Syzbot came up with a reproducer where a loop device block size is
-changed underneath a mounted filesystem. This causes a mismatch between
-the block device block size and the block size stored in the superblock
-causing confusion in various places such as fs/buffer.c. The particular
-issue triggered by syzbot was a warning in __getblk_slow() due to
-requested buffer size not matching block device block size.
+Verify that number of partition maps isn't insanely high which can lead
+to large allocation in udf_sb_alloc_partition_maps(). All partition maps
+have to fit in the LVD which is in a single block.
 
-Fix the problem by getting exclusive hold of the loop device to change
-its block size. This fails if somebody (such as filesystem) has already
-an exclusive ownership of the block device and thus prevents modifying
-the loop device under some exclusive owner which doesn't expect it.
-
-Reported-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
+Reported-by: syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
-Tested-by: syzbot+01ef7a8da81a975e1ccd@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/20250711163202.19623-2-jack@suse.cz
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,140 +67,86 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit is a strong candidate for stable backporting based on the
+This commit should be backported to stable kernel trees based on the
 following analysis:
 
-1. **Fixes a Real User-Impacting Bug**: The commit addresses a syzbot-
-   reported issue where changing a loop device's block size while it's
-   mounted can cause filesystem corruption and warnings. The specific
-   issue is a warning in `__getblk_slow()` in fs/buffer.c due to
-   mismatched buffer and block device sizes.
+1. **Security Fix**: The commit addresses a security vulnerability
+   reported by syzbot
+   (syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com), indicating
+   this is fixing a real bug discovered through fuzzing. The issue could
+   lead to excessive memory allocation in
+   `udf_sb_alloc_partition_maps()`.
 
-2. **Security and Data Integrity Issue**: This bug can lead to
-   filesystem corruption when the block size is changed underneath a
-   mounted filesystem, which is a serious data integrity concern that
-   affects users in production environments.
+2. **Integer Overflow/Memory Exhaustion Prevention**: The code adds a
+   crucial bounds check that prevents potentially huge allocations.
+   Without this check, a malformed UDF filesystem could specify an
+   arbitrarily large `numPartitionMaps` value, causing `kcalloc()` in
+   `udf_sb_alloc_partition_maps()` to allocate excessive memory or fail.
 
-3. **Small and Contained Fix**: The changes are limited to the loop
-   driver (drivers/block/loop.c) and specifically to the
-   `loop_set_block_size()` function. The fix adds proper exclusive
-   ownership checks before allowing block size changes.
+3. **Small, Contained Fix**: The change is minimal - only 11 lines added
+   and 2 modified. It adds a simple validation check:
+  ```c
+  if (part_map_count > table_len / sizeof(struct genericPartitionMap1))
+  ```
+  This ensures the partition map count doesn't exceed what can
+  physically fit in the table.
 
-4. **Clear Fix Strategy**: The solution is straightforward - it uses
-   existing kernel mechanisms (`bd_prepare_to_claim()` and
-   `bd_abort_claiming()`) to ensure exclusive access before modifying
-   the block size. This prevents concurrent modifications when the
-   device is already exclusively owned (e.g., by a mounted filesystem).
+4. **Clear Bug Fix Pattern**: The fix follows a standard pattern of
+   input validation before allocation, which is a well-understood
+   security best practice. The logic is straightforward: all partition
+   maps must fit within the Logical Volume Descriptor (LVD) block.
 
-5. **Minimal Risk of Regression**: The change only affects the
-   LOOP_SET_BLOCK_SIZE ioctl path and adds additional safety checks. It
-   doesn't modify the core functionality but rather adds protection
-   against an unsafe operation.
+5. **No Feature Changes**: This is purely a defensive check that
+   prevents invalid input from causing problems. It doesn't change any
+   functionality for valid UDF filesystems.
 
-6. **Follows Stable Rules**: The commit:
-   - Fixes a real bug (filesystem corruption/warnings)
-   - Is small and self-contained
-   - Has been tested (confirmed by syzbot)
-   - Doesn't introduce new features
-   - Has minimal performance impact
+6. **Affects User-Facing Code**: UDF filesystem mounting is user-facing
+   functionality that could be triggered by inserting malicious media or
+   mounting crafted filesystem images, making this an important security
+   boundary.
 
-The key code changes show the fix properly handles the exclusive
-ownership by:
-- Checking if the caller already has exclusive access (`!(mode &
-  BLK_OPEN_EXCL)`)
-- If not, attempting to claim exclusive access via
-  `bd_prepare_to_claim()`
-- Properly releasing the claim with `bd_abort_claiming()` if the
-  operation completes without exclusive mode
-- Moving the operation out of `lo_simple_ioctl()` to handle the block
-  device parameter
+7. **Low Risk of Regression**: The added check only rejects invalid
+   filesystems that would likely cause problems anyway. Valid UDF
+   filesystems will pass this check without issue.
 
-This is exactly the type of bug fix that stable kernels should receive -
-it prevents data corruption with minimal code changes and low regression
-risk.
+The commit follows stable kernel rules by fixing an important bug
+(potential DoS through memory exhaustion) with minimal, low-risk changes
+to a filesystem that handles untrusted input.
 
- drivers/block/loop.c | 38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ fs/udf/super.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 8d994cae3b83..1b6ee91f8eb9 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1431,17 +1431,34 @@ static int loop_set_dio(struct loop_device *lo, unsigned long arg)
- 	return 0;
- }
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index 1c8a736b3309..b2f168b0a0d1 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1440,7 +1440,7 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 	struct genericPartitionMap *gpm;
+ 	uint16_t ident;
+ 	struct buffer_head *bh;
+-	unsigned int table_len;
++	unsigned int table_len, part_map_count;
+ 	int ret;
  
--static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
-+static int loop_set_block_size(struct loop_device *lo, blk_mode_t mode,
-+			       struct block_device *bdev, unsigned long arg)
- {
- 	struct queue_limits lim;
- 	unsigned int memflags;
- 	int err = 0;
- 
--	if (lo->lo_state != Lo_bound)
--		return -ENXIO;
-+	/*
-+	 * If we don't hold exclusive handle for the device, upgrade to it
-+	 * here to avoid changing device under exclusive owner.
-+	 */
-+	if (!(mode & BLK_OPEN_EXCL)) {
-+		err = bd_prepare_to_claim(bdev, loop_set_block_size, NULL);
-+		if (err)
-+			return err;
-+	}
+ 	bh = udf_read_tagged(sb, block, block, &ident);
+@@ -1461,7 +1461,16 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 					   "logical volume");
+ 	if (ret)
+ 		goto out_bh;
+-	ret = udf_sb_alloc_partition_maps(sb, le32_to_cpu(lvd->numPartitionMaps));
 +
-+	err = mutex_lock_killable(&lo->lo_mutex);
-+	if (err)
-+		goto abort_claim;
-+
-+	if (lo->lo_state != Lo_bound) {
-+		err = -ENXIO;
-+		goto unlock;
++	part_map_count = le32_to_cpu(lvd->numPartitionMaps);
++	if (part_map_count > table_len / sizeof(struct genericPartitionMap1)) {
++		udf_err(sb, "error loading logical volume descriptor: "
++			"Too many partition maps (%u > %u)\n", part_map_count,
++			table_len / (unsigned)sizeof(struct genericPartitionMap1));
++		ret = -EIO;
++		goto out_bh;
 +	}
++	ret = udf_sb_alloc_partition_maps(sb, part_map_count);
+ 	if (ret)
+ 		goto out_bh;
  
- 	if (lo->lo_queue->limits.logical_block_size == arg)
--		return 0;
-+		goto unlock;
- 
- 	sync_blockdev(lo->lo_device);
- 	invalidate_bdev(lo->lo_device);
-@@ -1454,6 +1471,11 @@ static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
- 	loop_update_dio(lo);
- 	blk_mq_unfreeze_queue(lo->lo_queue, memflags);
- 
-+unlock:
-+	mutex_unlock(&lo->lo_mutex);
-+abort_claim:
-+	if (!(mode & BLK_OPEN_EXCL))
-+		bd_abort_claiming(bdev, loop_set_block_size);
- 	return err;
- }
- 
-@@ -1472,9 +1494,6 @@ static int lo_simple_ioctl(struct loop_device *lo, unsigned int cmd,
- 	case LOOP_SET_DIRECT_IO:
- 		err = loop_set_dio(lo, arg);
- 		break;
--	case LOOP_SET_BLOCK_SIZE:
--		err = loop_set_block_size(lo, arg);
--		break;
- 	default:
- 		err = -EINVAL;
- 	}
-@@ -1529,9 +1548,12 @@ static int lo_ioctl(struct block_device *bdev, blk_mode_t mode,
- 		break;
- 	case LOOP_GET_STATUS64:
- 		return loop_get_status64(lo, argp);
-+	case LOOP_SET_BLOCK_SIZE:
-+		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
-+			return -EPERM;
-+		return loop_set_block_size(lo, mode, bdev, arg);
- 	case LOOP_SET_CAPACITY:
- 	case LOOP_SET_DIRECT_IO:
--	case LOOP_SET_BLOCK_SIZE:
- 		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
- 			return -EPERM;
- 		fallthrough;
 -- 
 2.39.5
 
