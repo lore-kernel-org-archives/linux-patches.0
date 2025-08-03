@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02FD2116F6;
-	Sun,  3 Aug 2025 21:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188B81F5838;
+	Sun,  3 Aug 2025 21:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256122; cv=none; b=kPSiZRclDbTM6TjvxUBsgxiXA1SKKGovdTY6YsSAUMJTYrT7utQ87TFSGeHf926UYGyebXNDOPMkBAiVvGebCdiTZN3hHTXSS3EvvX7sK9C1VqbVaimMCHYdlm2IAmr356E9ZlPDg7bh1VFkQAr2kSUhNJUyYdS2nYVBN6C3ow8=
+	t=1754256125; cv=none; b=M/WmB5q9Ps64xd+MGb3xaQLfDJbQxL6xECMDRqZVNxXkIqMLeaKx8mOn2uvnFFq9efsvKXQIJUetD/pezlclpK4HmeHQ4C4KKFVtdHZt76EGHL71BbiywMWqSWpAI1Xh/O4Yjd/e5iZZtUPySzjCJrM8OQrOuuU4wXNO8jMG4T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256122; c=relaxed/simple;
-	bh=dbHS6CNTpnoPdKy8f8le1Pr4AWbEiwr/AJ6pVNRjXJg=;
+	s=arc-20240116; t=1754256125; c=relaxed/simple;
+	bh=ypW0rxu6CPke5sHwiG6FaiHwUEHIiqglPxR7OI4ZONk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=urqWFmk/mRZwMJOtj/Iz9EBfp7FGMqNReyZdU8omUJ/VudHQadOkdzwWoNiN9qp1dbnLE5XAQPvw+MFcqJVhQ3GWeHYD3auXdzZQE9GqxA1/kPqNzubYOWJW80zUzb7sg4/mZGZJmQKpuWNfL9kNLN0JcPAszyd+Oxk58PUUoGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z/3tT8rZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DpzqoeWG5ILnNHx7fv77mphl0XxoA8El6w9DoUXjNx6rdFYblP9ev+0mAjafwwKYQx8U/zE/qXiUQIuHhgNopA7kjo1zZzgcZUO4qJ/i4e7uE26zDlS1ym12fBRIsLPy1qkJE7s3pWgfmsAI/PE7vS2hs2s+D/hUQSMu2L81FTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jxAzs+m8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z/3tT8rZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BB3C4CEEB;
-	Sun,  3 Aug 2025 21:22:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jxAzs+m8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4B3C4CEF0;
+	Sun,  3 Aug 2025 21:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256122;
-	bh=dbHS6CNTpnoPdKy8f8le1Pr4AWbEiwr/AJ6pVNRjXJg=;
+	s=k20201202; t=1754256124;
+	bh=ypW0rxu6CPke5sHwiG6FaiHwUEHIiqglPxR7OI4ZONk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/3tT8rZXT7HayIpdS5CWqxTSDoeW5hfLjSlmtQU16TROHq+FXbxPjoY4X5E+g6wM
-	 J1Hhr3FYReP3PADgcM6rLWdSYyXrHXz6XUL+Fj2fnLseAA2Qtnyci5TPPk53fac1PQ
-	 O5J3Ud6HpcSf+8V6sJ5JSOCs7AJCmFiuafWH9TBicN+HSg7ofXohY0T6wNKO0TRh3T
-	 itu3xS5SuxmPPAm/KzdLK8QezfAH7u57BjZ9nShPjce5wU0sh1GVhwpkbGgEwNPAjd
-	 alftPc0R10f/pWD7KT9NMYGtcYj3KW37ERyWaI8qf5l7/Fk4ddhfZpBP9TXuNWcT28
-	 g7EoEXT6mozDg==
+	b=jxAzs+m8fSoxs2DkbmJR1ZNw5/adXTtOAN/cMu+4pGcRwAPi0KiiHRic05PZ0qgoL
+	 Ncakg3c8F87aujxmz17UB+OKKYONzGxHflZFsY2w9o4HKvANk6sy5PXZfzZtnbUw7w
+	 +eRFzviKXixPNyuvQZwHiZDNzO5x+FS1Z/NT8LcI12ySwoMn7O74O3i6+dgAx0n2Qp
+	 2fMYJfzsRLpNSl5lxzlFsEZ5tVZeOqH5SSj3Nu12sbiwkrML3m94MW4vYvmZ82DCso
+	 54fgymIJ7+OexUHIDr7tGgq5yESqoGKDoYhvzAkvmCELNUikx+QslEUjZ47wEio3sc
+	 oxgrwq5Tfm2+g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.1 15/16] fix locking in efi_secret_unlink()
-Date: Sun,  3 Aug 2025 17:21:25 -0400
-Message-Id: <20250803212127.3548367-15-sashal@kernel.org>
+	Sasha Levin <sashal@kernel.org>,
+	paul@paul-moore.com,
+	jmorris@namei.org,
+	serge@hallyn.com,
+	linux-security-module@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.1 16/16] securityfs: don't pin dentries twice, once is enough...
+Date: Sun,  3 Aug 2025 17:21:26 -0400
+Message-Id: <20250803212127.3548367-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212127.3548367-1-sashal@kernel.org>
 References: <20250803212127.3548367-1-sashal@kernel.org>
@@ -46,19 +50,17 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.147
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 2c58d42de71f9c73e40afacc9d062892d2cc8862 ]
+[ Upstream commit 27cd1bf1240d482e4f02ca4f9812e748f3106e4f ]
 
-We used to need securityfs_remove() to undo simple_pin_fs() done when
-the file had been created and to drop the second extra reference
-taken at the same time.  Now that neither is needed (or done by
-securityfs_remove()), we can simply call simple_unlink() and be done
-with that - the broken games with locking had been there only for the
-sake of securityfs_remove().
+incidentally, securityfs_recursive_remove() is broken without that -
+it leaks dentries, since simple_recursive_removal() does not expect
+anything of that sort.  It could be worked around by dput() in
+remove_one() callback, but it's easier to just drop that double-get
+stuff.
 
 Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -66,105 +68,95 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a clear understanding of the situation. Let me analyze
-whether this commit should be backported.
+Now I have a clear understanding of the issue. Let me analyze this:
 
-**Backport Status: YES**
+**YES**
 
-This commit fixes a real locking bug in the efi_secret driver that was
-introduced or exposed by recent VFS/securityfs changes. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees. Here's the
+extensive analysis:
 
-**1. Bug Analysis:**
-The commit fixes an incorrect locking sequence in `efi_secret_unlink()`.
-The old code (lines 143-145) had a problematic pattern:
-```c
-inode_unlock(dir);
-securityfs_remove(dentry);
-inode_lock(dir);
-```
+## Analysis of the Double Dentry Reference Issue
 
-This pattern was necessary because `securityfs_remove()` internally
-tries to lock the directory inode, but the unlink callback is called
-when the directory inode is already locked by the VFS layer. This
-creates a potential deadlock or incorrect locking state.
+The commit fixes a clear bug in securityfs where dentries are being
+pinned twice:
 
-**2. Root Cause:**
-From the commit message and the related commits by Al Viro, we can see
-that:
-- The complex locking dance was originally needed because
-  `securityfs_remove()` used to do `simple_pin_fs()` and take extra
-  references
-- Recent changes (commits 27cd1bf1240d and e4de72650202) removed the
-  need for the extra pinning and reference counting
-- Now `securityfs_remove()` is no longer needed in the unlink path - a
-  simple `simple_unlink()` suffices
+1. **The Bug**: In `securityfs_create_dentry()` at line 162, there's a
+   `dget(dentry)` call immediately after `d_instantiate(dentry, inode)`.
+   This creates an extra reference count on the dentry that is never
+   properly balanced.
 
-**3. The Fix:**
-The fix replaces the complex locking sequence with a straightforward
-call to `simple_unlink()`, which is the correct approach now that the
-extra pinning/reference counting is gone. The change at line 139:
-```c
-- return 0;
-+       return simple_unlink(inode, dentry);
-```
+2. **Impact on `securityfs_remove()`**: The traditional
+   `securityfs_remove()` function does call `dput(dentry)` at line 309,
+   which would balance the extra `dget()`. However, this only happens
+   for the simple remove case.
 
-Note there's a typo in the diff - it should be `simple_unlink(dir,
-dentry)` not `simple_unlink(inode, dentry)`.
+3. **Critical Impact on `securityfs_recursive_remove()`**: The newly
+   added `securityfs_recursive_remove()` function (added in commit
+   7138679ff2a2) uses `simple_recursive_removal()` which expects normal
+   dentry reference counting. The `simple_recursive_removal()` function
+   in fs/libfs.c:
+   - Takes its own reference with `dget(dentry)` at the beginning
+   - Properly releases references with `dput()` calls throughout its
+     execution
+   - Does NOT expect the dentries to have extra references
 
-**4. Impact Assessment:**
-- **Severity**: Medium - This is a locking correctness issue that could
-  lead to deadlocks or race conditions
-- **Scope**: Limited to the efi_secret driver, which is used for
-  confidential computing environments
-- **Risk**: Low - The fix is minimal and straightforward, replacing
-  problematic code with the standard VFS pattern
+4. **The Leak**: When `securityfs_recursive_remove()` is called, the
+   extra reference from the `dget()` in `securityfs_create_dentry()` is
+   never released because:
+   - `simple_recursive_removal()` only releases the references it takes
+   - The `remove_one()` callback only calls `simple_release_fs()` but
+     doesn't do any `dput()`
+   - This results in dentries being leaked with a refcount that never
+     reaches zero
 
-**5. Stable Criteria:**
-- ✓ Fixes a real bug (incorrect locking sequence)
-- ✓ Small and contained fix (removes 8 lines, adds 1 line)
-- ✓ No architectural changes
-- ✓ Minimal risk of regression
-- ✓ Important for users of confidential computing features
+5. **Pattern Consistency**: Looking at similar filesystem
+   implementations like debugfs (fs/debugfs/inode.c), they do NOT add an
+   extra `dget()` after `d_instantiate()`. The pattern is simply:
+  ```c
+  d_instantiate(dentry, inode);
+  return end_creating(dentry);
+  ```
+  No extra reference is taken.
 
-**6. Additional Considerations:**
-- This driver is relatively new (added in 2022) and is specific to
-  confidential computing environments
-- The bug affects the ability to properly remove secret entries from the
-  securityfs interface
-- Without this fix, attempts to unlink secret files could lead to
-  locking issues
+6. **Backport Criteria Met**:
+   - **Fixes a real bug**: Memory leak of dentries when using
+     `securityfs_recursive_remove()`
+   - **Small and contained**: Single-line removal in two locations
+   - **No side effects**: Removing the extra `dget()` brings the code in
+     line with standard VFS patterns
+   - **Low regression risk**: The fix makes securityfs consistent with
+     other similar filesystems
+   - **Important for stability**: Memory leaks in kernel filesystem code
+     can accumulate over time
 
-The commit clearly fixes a locking bug that affects the correctness of
-the efi_secret driver's file removal operations. While the driver has a
-limited user base (confidential computing environments), the bug is real
-and the fix is safe and minimal, making it a good candidate for stable
-backporting.
+The commit message clearly identifies this as a bug fix
+("securityfs_recursive_remove() is broken without that - it leaks
+dentries"), and the fix is minimal and correct. This makes it an ideal
+candidate for stable backporting.
 
- drivers/virt/coco/efi_secret/efi_secret.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ security/inode.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/virt/coco/efi_secret/efi_secret.c b/drivers/virt/coco/efi_secret/efi_secret.c
-index e700a5ef7043..d996feb0509a 100644
---- a/drivers/virt/coco/efi_secret/efi_secret.c
-+++ b/drivers/virt/coco/efi_secret/efi_secret.c
-@@ -136,15 +136,7 @@ static int efi_secret_unlink(struct inode *dir, struct dentry *dentry)
- 		if (s->fs_files[i] == dentry)
- 			s->fs_files[i] = NULL;
+diff --git a/security/inode.c b/security/inode.c
+index 6c326939750d..e6e07787eec9 100644
+--- a/security/inode.c
++++ b/security/inode.c
+@@ -159,7 +159,6 @@ static struct dentry *securityfs_create_dentry(const char *name, umode_t mode,
+ 		inode->i_fop = fops;
+ 	}
+ 	d_instantiate(dentry, inode);
+-	dget(dentry);
+ 	inode_unlock(dir);
+ 	return dentry;
  
--	/*
--	 * securityfs_remove tries to lock the directory's inode, but we reach
--	 * the unlink callback when it's already locked
--	 */
--	inode_unlock(dir);
--	securityfs_remove(dentry);
--	inode_lock(dir);
--
--	return 0;
-+	return simple_unlink(inode, dentry);
- }
- 
- static const struct inode_operations efi_secret_dir_inode_operations = {
+@@ -306,7 +305,6 @@ void securityfs_remove(struct dentry *dentry)
+ 			simple_rmdir(dir, dentry);
+ 		else
+ 			simple_unlink(dir, dentry);
+-		dput(dentry);
+ 	}
+ 	inode_unlock(dir);
+ 	simple_release_fs(&mount, &mount_count);
 -- 
 2.39.5
 
