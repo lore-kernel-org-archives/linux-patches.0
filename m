@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9691EDA3A;
-	Sun,  3 Aug 2025 21:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6AC1EDA3A;
+	Sun,  3 Aug 2025 21:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255951; cv=none; b=GQXk4I7QE1En1DhZAWcZIqv8t9hXMQAuZJCxW1m+0ARKNHeX/Mn2RW7rZlBqVK2kIVWjgMyYkorWoTPScrGrSlqwpCzmLlhuYvIcmDuZuIE+9sUGxdwzDLj8xjihx9XqfTcLlh5gtL8jc+k+juLVf6NwRNPqCBty1CD+pmElWQA=
+	t=1754255952; cv=none; b=JX/QpsDVWvVdWNNuRxtw7I4/hfCf15pz4Jp8dLmjEv2uxOp18AKvvBe6KIl0njeb6sUIrpOUSza4RqMkgh+n1LrMRYkMJ7QN3NrxJZ1myIoK2vtm4Qt21J10Nm36bRvJUNnl9rNp/u43dLUNlHbuwS3DokdFtlG+y7UxQTtz95w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255951; c=relaxed/simple;
-	bh=ZtJ4MVvve5KmVXBeKkdCKrHnKHy/2catN6/KMNxQwqY=;
+	s=arc-20240116; t=1754255952; c=relaxed/simple;
+	bh=d1yVetX8aerPMO3B5Hzujmr72qW21koOX/V+ry9klWE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VLI0UbQIwnCa4CEE1ZEu4YAmRnbQ0mLUQzY4/C3XViGku2X+AmHbycArhy/dlcOgxayltBlbv2dWLbcp/tzVOHAQdR7kQhq9uC7dftS+5nArrllhopxXTi/pNzlKadOvoUVtaskUZQl+b+J+vrl73SU0bqn6uafuvYtOAL+naVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZrZRYgVP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NChDjBbp/JRCfnX1ubO9YSFAxTvzZ7ZW1Sn5kp+qhAYszqRFEEijHQ27W4l+FCnN2H7J0O9GL9/is6cXa3SU+7OESUToEvg99mbRTwdLEU8B/Jzu7HzpT7FyZwfZSJ2i/FgD80nzv8Y9IHuo9wv+jPEk3egy6qRmVHyhmzbVQ54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nwiFP8hr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZrZRYgVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90881C4CEEB;
-	Sun,  3 Aug 2025 21:19:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nwiFP8hr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB6CC4CEF8;
+	Sun,  3 Aug 2025 21:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255949;
-	bh=ZtJ4MVvve5KmVXBeKkdCKrHnKHy/2catN6/KMNxQwqY=;
+	s=k20201202; t=1754255952;
+	bh=d1yVetX8aerPMO3B5Hzujmr72qW21koOX/V+ry9klWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrZRYgVPuuOgj4k5RmjWRSvUXBAWUXf8qibWjXL3IlDIjtq7Pxt2JEOtbHFrm/3WT
-	 skreTDNsHsrisdDZDEa7bc/qTF7csC26of1uSRvm9xnp8QTxuOiUIaKPVDl9irPNN/
-	 6v0K3pmTbgVQx4AvOv25GUJC9pvn5jM9mTK2rc9kVjtCdjoVYyT+atZiruIY2amEs+
-	 bQMc68/bUfBZLRwnpXlHHvfEaFTWCe4K81fHm0mV5dFFyixw3C0Wy2A2520jRnZhYk
-	 n3NPUYIZ/5OkIjJNcgdiGqzW6mV7WebDuFxrmJxmVuTjhZKePcXmm/Zo4jrL/DF0h0
-	 EpV/jDJOkQ2Xg==
+	b=nwiFP8hrCUFK/M1GAzDgNcaF2KaW4qOfvWeMkK6AP/uwvQby0X7xyv+3yy/RKCIAz
+	 dmimp7G/FE8BgAbugaPEIO7MWCqJdnYEx2kiHhd5/NhgIJ3Et41ImgoS8yTciiZ44k
+	 hA8GU7WdchJ2KbSuGzn34Pp+61GZSPF6xDT8+ccRMoggmRcCb5I438zdz41hfCg6nP
+	 ZuJUKlQXXkOLO/DUBD4ZSdUcTwlXcyRprzt6CDIMU5YZ0cyKP2YYoh5HgWqQNhXj2m
+	 0/R+QL09c3ZqkntumBtf713QhkFKHeal8pA0jljCxSAv+A1dPjRmg8qxXTypSselHg
+	 dpCrhAXrv2fpA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Garry <john.g.garry@oracle.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 13/34] md/raid10: set chunk_sectors limit
-Date: Sun,  3 Aug 2025 17:18:15 -0400
-Message-Id: <20250803211836.3546094-13-sashal@kernel.org>
+	kbusch@kernel.org,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.15 14/34] nvme-tcp: log TLS handshake failures at error level
+Date: Sun,  3 Aug 2025 17:18:16 -0400
+Message-Id: <20250803211836.3546094-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211836.3546094-1-sashal@kernel.org>
 References: <20250803211836.3546094-1-sashal@kernel.org>
@@ -54,87 +54,92 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: John Garry <john.g.garry@oracle.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 7ef50c4c6a9c36fa3ea6f1681a80c0bf9a797345 ]
+[ Upstream commit 5a58ac9bfc412a58c3cf26c6a7e54d4308e9d109 ]
 
-Same as done for raid0, set chunk_sectors limit to appropriately set the
-atomic write size limit.
+Update the nvme_tcp_start_tls() function to use dev_err() instead of
+dev_dbg() when a TLS error is detected. This ensures that handshake
+failures are visible by default, aiding in debugging.
 
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20250711105258.3135198-5-john.g.garry@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
-
-Based on my analysis, here's my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Bug Fix for Correctness**: The commit fixes a missing configuration
-   that causes incorrect atomic write size limits in RAID10. The code
-   shows that `lim.chunk_sectors` needs to be set properly for the
-   atomic writes feature to work correctly. Without this, the
-   `blk_stack_atomic_writes_chunk_sectors()` function in block/blk-
-   settings.c won't have the correct chunk size information, leading to
-   incorrect atomic write size calculations.
+1. **Fixes a Real Debugging Issue**: The commit addresses a genuine
+   problem where TLS handshake failures were being logged at debug level
+   (`dev_dbg()`), making them invisible in production environments
+   unless debug logging is explicitly enabled. This change promotes
+   error visibility by using `dev_err()` for actual error conditions.
 
+2. **Small and Contained Change**: The patch is minimal - it only
+   changes logging behavior by:
+   - Adding a conditional check `if (queue->tls_err)`
+   - Moving the error case from `dev_dbg()` to `dev_err()`
+   - Keeping successful handshakes at debug level
 
-3. **Small and Contained Change**: The fix is a single line addition:
-  ```c
-  lim.chunk_sectors = mddev->chunk_sectors;
-  ```
-  This is a minimal change that only affects the RAID10 queue limits
-  setup.
+   The diff shows only about 10 lines changed with no functional
+modifications.
 
-4. **No Architectural Changes**: The change doesn't introduce new
-   features or modify existing architecture. It simply ensures an
-   existing field is properly initialized with the correct value that's
-   already available (`mddev->chunk_sectors`).
+3. **No Architectural Changes**: This is purely a logging improvement
+   that doesn't alter any control flow, data structures, or protocol
+   behavior. It simply makes existing errors more visible.
 
-5. **Prevents Data Corruption Risk**: Without proper chunk_sectors
-   limits, atomic writes may not work correctly on RAID10 arrays. This
-   could lead to writes that are supposed to be atomic being split
-   incorrectly, potentially causing data integrity issues.
+4. **Important for Production Debugging**: TLS handshake failures in
+   NVMe-TCP can be caused by various issues (certificate problems, key
+   mismatches, network issues) that are critical to diagnose in
+   production. Having these errors hidden at debug level severely
+   hampers troubleshooting.
 
-6. **Affects Users**: Any system using RAID10 with applications that
-   rely on atomic writes (databases, filesystems) would be affected by
-   this missing configuration. The fix ensures that atomic write
-   guarantees are properly honored.
+5. **Mature Feature Area**: NVMe-TCP TLS support was introduced in
+   kernel 6.5 (around August 2023 based on commit be8e82caa685), making
+   it a relatively mature feature that's likely deployed in production
+   systems requiring proper error visibility.
 
-7. **Low Risk**: The change has minimal risk of regression as it only
-   sets a field that was previously uninitialized. The value being set
-   (`mddev->chunk_sectors`) is already validated and used elsewhere in
-   the RAID10 code.
+6. **No Risk of Regression**: The change only affects logging output and
+   cannot introduce functional regressions. The worst case is slightly
+   more verbose kernel logs when TLS errors occur, which is the intended
+   behavior.
 
-The commit is clearly a bug fix that corrects an oversight where RAID10
-wasn't setting the chunk_sectors limit while RAID0 was already fixed for
-the same issue. This makes it an excellent candidate for stable
-backporting.
+7. **Follows Stable Rules**: This meets the stable kernel criteria as
+   it's a small fix that improves debuggability of an existing feature
+   without introducing new functionality or risks.
 
- drivers/md/raid10.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/tcp.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 6a55374a6ba3..e946abe62084 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -4019,6 +4019,7 @@ static int raid10_set_queue_limits(struct mddev *mddev)
- 	md_init_stacking_limits(&lim);
- 	lim.max_write_zeroes_sectors = 0;
- 	lim.io_min = mddev->chunk_sectors << 9;
-+	lim.chunk_sectors = mddev->chunk_sectors;
- 	lim.io_opt = lim.io_min * raid10_nr_stripes(conf);
- 	lim.features |= BLK_FEAT_ATOMIC_WRITES;
- 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index b882ee6ef40f..d0ee9e2a3294 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1776,9 +1776,14 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
+ 			qid, ret);
+ 		tls_handshake_cancel(queue->sock->sk);
+ 	} else {
+-		dev_dbg(nctrl->device,
+-			"queue %d: TLS handshake complete, error %d\n",
+-			qid, queue->tls_err);
++		if (queue->tls_err) {
++			dev_err(nctrl->device,
++				"queue %d: TLS handshake complete, error %d\n",
++				qid, queue->tls_err);
++		} else {
++			dev_dbg(nctrl->device,
++				"queue %d: TLS handshake complete\n", qid);
++		}
+ 		ret = queue->tls_err;
+ 	}
+ 	return ret;
 -- 
 2.39.5
 
