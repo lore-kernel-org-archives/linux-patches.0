@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFE51FCF7C;
-	Sun,  3 Aug 2025 21:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDDE1F55FA;
+	Sun,  3 Aug 2025 21:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256000; cv=none; b=Ov9qkh7r/v9Q65sxTqSADLEHMGQ40w0Y+E9ebRXfEZ0w2ikiZgsXwHJ3tHIomfQ8yMoWBO+Qx05AijujIuW91oGYH0zRBRtwKznOzyeotFYt83dlUfK5cmRsv2XITTUK0VW6m7pFglG8CZjNbSPXmjrtRKiBbGVWhzxSkCD9Q24=
+	t=1754256002; cv=none; b=TgOvah1a8rdROjdd9zIIOJ92eOzwMwKGvBZIRz3bG1XgNfrzVobdSkYIegGFT5cGBbxBS9rZBgznqXRzYeB6UBMZHlDUSthYSQ+oWjOCXNWFSxUoRWdbSVZNUytt0G6ooEbqIgXNVYscqcU0b0q4RRTyMfStES3ZCnz3VET1od8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256000; c=relaxed/simple;
-	bh=R2bC7O+Y/NmTVupnnQ7W+mSwYOgf9soiaysMl4Sit1k=;
+	s=arc-20240116; t=1754256002; c=relaxed/simple;
+	bh=hjI4CdUTuBWqeLFvopqANcynEjjuQN5haYx8a5NAI8o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=N6FhQgBq6R95t4Mcb5QjiDQCEd7OSmzccTH1lljCSt+3S9J4GKw/rePN2kRIROpSVzYBIsxsQ5aS0rxxkH3Zw3Hc5M3PKzeSwaqqsMeX0CU1BH3JuoVYwD9I01jxJtzeW8qXK6WewvTVyNfPttIeDgAbgbhZEcKh7daRIXX/9xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oVLZ8UcF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTqVnIuEGraBksJOlT/Q4LRKAJLMfUNqmpmEtPHZDHBLuP+z4CPNkAn+PiEPNJSURhxePOiVSp+rcCjvkF0YbrbubXGw9Xl7utEf93zlNpp/g/f7YMZhNWXLHpgpKeqlk9Zb6suoWZ8dxdELlm6QbxItRCgSu60t/H3fmAatrO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TbdybJrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oVLZ8UcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FA7C4CEF9;
-	Sun,  3 Aug 2025 21:19:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TbdybJrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C259C4CEF0;
+	Sun,  3 Aug 2025 21:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255999;
-	bh=R2bC7O+Y/NmTVupnnQ7W+mSwYOgf9soiaysMl4Sit1k=;
+	s=k20201202; t=1754256002;
+	bh=hjI4CdUTuBWqeLFvopqANcynEjjuQN5haYx8a5NAI8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVLZ8UcFiriA3OFjUqQl9rxHQ4lyRqA9c0UUeTPMMWzfE2WPhAjh6xfUrkF0q0XY7
-	 KZiIrtgOi+33zBIP2Ku6+waDIF8bVACVrkAut7NFcUbiYhstxnunjA6zL5KnsDCG+8
-	 yyUS9fCNLNwdSo64HyY9qLWPfHaa79P/w3nasSVSXkR8h/cdxtO70hMIjoSMX1PHMY
-	 WQDazaW8qmsb8HflWeNQncue30vtqWFRceRh+Tc3MnFSHQnL9FRgvYz7OJ6i2f6l8x
-	 Q3BDL2VIBn99XhwyohMU3cLipxhJrdb8nixPeBJ3fcBBObyAJnDdyvPwL2pIpEsQ6X
-	 sG+/DKxeBIhbw==
+	b=TbdybJrWy0z3vbeUN6PVCCDxYU+iu6U2jtfJNeuuOABFRf4Mz0ahFadnsZbG4XvVY
+	 vzYwMK6KZ3nbQg5TMBQ6HNA+7s4BjezqgjcnfuKw7vZkraWVfBCnu8nJjkECUaxHdZ
+	 9900o2ux3lTi74PIyyJn6N9Q3wi6ttdBxiQEpPNsNrF59rLSWDJdqq1THr5dEnq/+/
+	 z+J8WdQsXFoYM95b90bsQKdXS6v4PznmdT1gYbD5jNzSRM2izPhn0UK0Q9Ln3xDWfz
+	 YgqZIPMAozFmqPRx7apM6x56a1JuQn7NjSMaY4Ddxo1rrxfb/ueI8GmTl4bi/h7ZZW
+	 xpqolt+ZbgHEQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Keith Busch <kbusch@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Nitesh Shetty <nj.shetty@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
+Cc: John Garry <john.g.garry@oracle.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.12 09/31] nvme-pci: try function level reset on init failure
-Date: Sun,  3 Aug 2025 17:19:12 -0400
-Message-Id: <20250803211935.3547048-9-sashal@kernel.org>
+	agk@redhat.com,
+	snitzer@kernel.org,
+	dm-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.12 10/31] dm-stripe: limit chunk_sectors to the stripe size
+Date: Sun,  3 Aug 2025 17:19:13 -0400
+Message-Id: <20250803211935.3547048-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211935.3547048-1-sashal@kernel.org>
 References: <20250803211935.3547048-1-sashal@kernel.org>
@@ -53,135 +55,90 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 5b2c214a95942f7997d1916a4c44017becbc3cac ]
+[ Upstream commit 5fb9d4341b782a80eefa0dc1664d131ac3c8885d ]
 
-NVMe devices from multiple vendors appear to get stuck in a reset state
-that we can't get out of with an NVMe level Controller Reset. The kernel
-would report these with messages that look like:
+Same as done for raid0, set chunk_sectors limit to appropriately set the
+atomic write size limit.
 
-  Device not ready; aborting reset, CSTS=0x1
+Setting chunk_sectors limit in this way overrides the stacked limit
+already calculated based on the bottom device limits. This is ok, as
+when any bios are sent to the bottom devices, the block layer will still
+respect the bottom device chunk_sectors.
 
-These have historically required a power cycle to make them usable
-again, but in many cases, a PCIe FLR is sufficient to restart operation
-without a power cycle. Try it if the initial controller reset fails
-during any nvme reset attempt.
-
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20250711105258.3135198-6-john.g.garry@oracle.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of the commit and the kernel repository context,
+here is my assessment:
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees based on the
-following analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## 1. Fixes a Real User-Impacting Bug
+1. **Bug Fix**: This commit fixes a correctness issue where dm-stripe
+   was not properly setting the `chunk_sectors` limit. The commit
+   message explains that this is needed to "appropriately set the atomic
+   write size limit." Without this fix, atomic writes on dm-stripe
+   devices may not work correctly or may have incorrect size limits.
 
-The commit addresses a significant hardware issue where NVMe devices
-from multiple vendors get stuck in a reset state showing "Device not
-ready; aborting reset, CSTS=0x1". This is a real-world problem that:
-- Affects multiple vendors' devices (not vendor-specific)
-- Historically required a full power cycle to recover
-- Renders the storage device completely unusable
 
-## 2. Minimal and Contained Fix
+3. **Small and Contained**: The change is minimal - just a single line
+   addition:
+  ```c
+  limits->chunk_sectors = sc->chunk_size;
+  ```
+  This sets the chunk_sectors field in the io_hints function, which is a
+  straightforward fix with minimal risk.
 
-The code change is very focused and minimal:
-- Only adds ~20 lines of code in a single location
-- The fix is contained within the `nvme_pci_configure_admin_queue()`
-  function
-- Only executes when the initial controller reset fails (error path)
-- No architectural changes or new features
+4. **Fixes Regression/Incorrect Behavior**: The block layer commit
+   `add194b01e4a` shows that the stacking code now relies on
+   `chunk_sectors` instead of `io_min` to determine atomic write limits.
+   Without this dm-stripe fix, atomic writes would be incorrectly
+   limited or potentially fail on dm-stripe devices because the
+   chunk_sectors field would be unset.
 
-## 3. Clear Recovery Mechanism
+5. **No New Features**: This doesn't add new functionality - it simply
+   ensures that an existing feature (atomic writes, enabled by commit
+   `30b88ed06f80`) works correctly by providing the required
+   chunk_sectors information.
 
-The fix implements a well-understood recovery mechanism:
-```c
-if (result < 0) {
-    struct pci_dev *pdev = to_pci_dev(dev->dev);
-    result = pcie_reset_flr(pdev, false);
-    if (result < 0)
-        return result;
+6. **Clear Dependencies**: The commit is self-contained and only depends
+   on the atomic writes infrastructure already being present
+   (DM_TARGET_ATOMIC_WRITES flag), which was added earlier.
 
-    pci_restore_state(pdev);
-    result = nvme_disable_ctrl(&dev->ctrl, false);
-```
+The fix addresses a real issue where atomic write operations on dm-
+stripe devices would have incorrect size limits because the block layer
+stacking code expects chunk_sectors to be set but dm-stripe wasn't
+providing this value. This is exactly the type of bug fix that stable
+kernels should receive - it's small, fixes incorrect behavior, and has
+minimal risk of introducing regressions.
 
-It uses PCIe Function Level Reset (FLR) as a "bigger hammer" when the
-NVMe-level controller reset fails, which is a standard PCIe recovery
-mechanism.
+ drivers/md/dm-stripe.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-## 4. Low Risk of Regression
-
-- Only triggers in error conditions (when `nvme_disable_ctrl` fails)
-- Falls back gracefully if FLR also fails
-- Uses existing, well-tested PCIe APIs (`pcie_reset_flr`,
-  `pci_restore_state`)
-- Adds informative logging when recovery succeeds
-
-## 5. Follows Stable Tree Rules
-
-- Fixes a bug that prevents device initialization
-- No new features or functionality
-- Small, self-contained change
-- Clear benefit (avoiding power cycles) with minimal risk
-
-## 6. Similar Issues Fixed in Stable
-
-The git history shows multiple commits addressing "stuck reset" issues
-in the NVMe driver (e.g., `3f674e7b670b`, `ebef7368571d`), indicating
-this is an ongoing class of problems that stable kernels need to handle.
-
-The commit message explicitly states this affects devices from "multiple
-vendors" and provides a solution that avoids requiring power cycles,
-making it a clear candidate for stable backporting to improve system
-reliability.
-
- drivers/nvme/host/pci.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 37fd1a8ace12..2bddc9f60fec 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1888,8 +1888,28 @@ static int nvme_pci_configure_admin_queue(struct nvme_dev *dev)
- 	 * might be pointing at!
- 	 */
- 	result = nvme_disable_ctrl(&dev->ctrl, false);
--	if (result < 0)
--		return result;
-+	if (result < 0) {
-+		struct pci_dev *pdev = to_pci_dev(dev->dev);
-+
-+		/*
-+		 * The NVMe Controller Reset method did not get an expected
-+		 * CSTS.RDY transition, so something with the device appears to
-+		 * be stuck. Use the lower level and bigger hammer PCIe
-+		 * Function Level Reset to attempt restoring the device to its
-+		 * initial state, and try again.
-+		 */
-+		result = pcie_reset_flr(pdev, false);
-+		if (result < 0)
-+			return result;
-+
-+		pci_restore_state(pdev);
-+		result = nvme_disable_ctrl(&dev->ctrl, false);
-+		if (result < 0)
-+			return result;
-+
-+		dev_info(dev->ctrl.device,
-+			"controller reset completed after pcie flr\n");
-+	}
+diff --git a/drivers/md/dm-stripe.c b/drivers/md/dm-stripe.c
+index 4112071de0be..c68dc1653cfd 100644
+--- a/drivers/md/dm-stripe.c
++++ b/drivers/md/dm-stripe.c
+@@ -459,6 +459,7 @@ static void stripe_io_hints(struct dm_target *ti,
+ 	struct stripe_c *sc = ti->private;
+ 	unsigned int chunk_size = sc->chunk_size << SECTOR_SHIFT;
  
- 	result = nvme_alloc_queue(dev, 0, NVME_AQ_DEPTH);
- 	if (result)
++	limits->chunk_sectors = sc->chunk_size;
+ 	limits->io_min = chunk_size;
+ 	limits->io_opt = chunk_size * sc->stripes;
+ }
 -- 
 2.39.5
 
