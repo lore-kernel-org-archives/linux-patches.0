@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F2F21FF25;
-	Sun,  3 Aug 2025 21:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D216221B9DE;
+	Sun,  3 Aug 2025 21:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256179; cv=none; b=hDSMlfxKPJojS6Mt5QCDMer0c4OlFtePSqOQSgvkeHz2EpoRzW0N/Npx2DM4oQ+u3nTVk1m2fsAoGO4KWkRnLIfwDoK8ynuB4qlYM4s+XQSqz/UnnTjrNYvJ36pyvwzmJzm+LBgaeIvT1A/v/JWhYrpjYmSAmlqAWYSgmoYEHQI=
+	t=1754256181; cv=none; b=tz90NNR0qcpS4uRwrV7cPODTK+xBqXEfhWAYIBZdF9ExND+TBcap/F5ACqbog6aFixX+9avtO2GMDJEZRG5A0QdoXWSzcUk1a+b+Z1IPa2dx4dWWRMgoi1ieZI4SpTKbggulZIO3Pf0asxPGjh2Gp5fP0BMxqOFFlhqrEHY4gfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256179; c=relaxed/simple;
-	bh=pI1CNLvWoz+2PN6IfkztRvrQSDDw1cC2BLqB6TiWH6k=;
+	s=arc-20240116; t=1754256181; c=relaxed/simple;
+	bh=Xz0qXBXassRqVnxlrXrAVFGa0XgFnmgYBvILCHLENWY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QYXyezabL6t/XWaLTsu0I29OEK/bKq94ralPbtVwXY8j8xY9IGxbR8KA1xMpbCLXocInbRsk5O1NIWZkpX+Vfg543udDTU6YUrwRpX9Rk9HBeXGsITuITCcXjd7mxbYJeF5kcPSt7TOTCITLprWHY6JMRoKFvcvKZW9DlKJte+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hwjfXbpB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dm9t1wwy9mxJ7s2RrGlSjI7/VVZ3LLNyNDTPO7mO6U2V0hFzb+nXCn1vA9RvSv8uDdhTC+TRMkRAbz7Z+HzerbZ0oBryUfkfEcTgg2wmTtao2Vfw4pWseTfoETDe/k1XyFbOLWxYJIlMgAqLnm3xnoWIGmjIgaciO+4WeKjcgms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pt9E/tvJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hwjfXbpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCF3C4CEF0;
-	Sun,  3 Aug 2025 21:22:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pt9E/tvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE55C4CEEB;
+	Sun,  3 Aug 2025 21:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256179;
-	bh=pI1CNLvWoz+2PN6IfkztRvrQSDDw1cC2BLqB6TiWH6k=;
+	s=k20201202; t=1754256181;
+	bh=Xz0qXBXassRqVnxlrXrAVFGa0XgFnmgYBvILCHLENWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwjfXbpBexRCQD5ytWzT4A7NF//8YCUcsGZeOdzu+jDhnduRSpmcsDvj8XvpsoASB
-	 mgQ2XiOOr+Lx+wkO1RF9Ekk4nBsnFYvOBxBxt5a73a2DsoFNYhaznq2hqeliRjG3ZG
-	 s5LKA2jtlsMfK5Q66VQRVTlazbHGsIuHtZRbNVFrwlvMUvZvcjF9WsTOLI5TmMKbMK
-	 gDm2X+TyfaHqdoiHNrYHaE1Y2kQ0T1SDJvT0pfhGyV7aLsSnWgMTT1GWm2IZbJ5cPB
-	 vBEJKaX1oZJEBOjt8OJOzoDF8kSjetsYAprplgsl9bmk/UjNqUUrj7d6m5VFmjb/KH
-	 HW/WglkHMBCFQ==
+	b=pt9E/tvJ8SZCgJhVfQdgcfEuAvdEVLTvuXdFZzWXINfECGEnpHRov6lghtl3VKDNO
+	 cQfoUGPCCw2eGSeYj6BTAwDtxccxDjusoaBuMdqhLitopOjkOGQKO40HpWkO3ScAEL
+	 KTkK+2hV1alUkEGBS/HgRip9R/GWaObeU7Gbmh0qXkydZYCXSzmluqGEKTe3qpGluC
+	 sThDWOcpjX31OlAZ79bnW74XeMjJGtetz4/ruAWMK80levx2CPR/IZCgkDPpY2GEWm
+	 Cq+0V2LTxPod9NO22BhpcH3FvGQz2fLyekhxwdMB5Df/INH7cdoG1HZhwpEQQAJ3D/
+	 fM6LIXGiNatOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sarah Newman <srn@prgmr.com>,
-	Lars Ellenberg <lars@linbit.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Sasha Levin <sashal@kernel.org>,
-	philipp.reisner@linbit.com,
-	lars.ellenberg@linbit.com,
-	drbd-dev@lists.linbit.com
-Subject: [PATCH AUTOSEL 5.10 07/11] drbd: add missing kref_get in handle_write_conflicts
-Date: Sun,  3 Aug 2025 17:22:37 -0400
-Message-Id: <20250803212242.3549318-7-sashal@kernel.org>
+	frank.li@vivo.com,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 08/11] hfs: fix not erasing deleted b-tree node issue
+Date: Sun,  3 Aug 2025 17:22:38 -0400
+Message-Id: <20250803212242.3549318-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212242.3549318-1-sashal@kernel.org>
 References: <20250803212242.3549318-1-sashal@kernel.org>
@@ -49,127 +46,164 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.240
 Content-Transfer-Encoding: 8bit
 
-From: Sarah Newman <srn@prgmr.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 00c9c9628b49e368d140cfa61d7df9b8922ec2a8 ]
+[ Upstream commit d3ed6d6981f4756f145766753c872482bc3b28d3 ]
 
-With `two-primaries` enabled, DRBD tries to detect "concurrent" writes
-and handle write conflicts, so that even if you write to the same sector
-simultaneously on both nodes, they end up with the identical data once
-the writes are completed.
+The generic/001 test of xfstests suite fails and corrupts
+the HFS volume:
 
-In handling "superseeded" writes, we forgot a kref_get,
-resulting in a premature drbd_destroy_device and use after free,
-and further to kernel crashes with symptoms.
+sudo ./check generic/001
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2>
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Relevance: No one should use DRBD as a random data generator, and apparently
-all users of "two-primaries" handle concurrent writes correctly on layer up.
-That is cluster file systems use some distributed lock manager,
-and live migration in virtualization environments stops writes on one node
-before starting writes on the other node.
+generic/001 32s ... _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
+(see /home/slavad/XFSTESTS-2/xfstests-dev/results//generic/001.full for details)
 
-Which means that other than for "test cases",
-this code path is never taken in real life.
+Ran: generic/001
+Failures: generic/001
+Failed 1 of 1 tests
 
-FYI, in DRBD 9, things are handled differently nowadays.  We still detect
-"write conflicts", but no longer try to be smart about them.
-We decided to disconnect hard instead: upper layers must not submit concurrent
-writes. If they do, that's their fault.
+fsck.hfs -d -n ./test-image.bin
+** ./test-image.bin (NO WRITE)
+	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking HFS volume.
+   The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+   Unused node is not erased (node = 2)
+   Unused node is not erased (node = 4)
+<skipped>
+   Unused node is not erased (node = 253)
+   Unused node is not erased (node = 254)
+   Unused node is not erased (node = 255)
+   Unused node is not erased (node = 256)
+** Checking catalog hierarchy.
+** Checking volume bitmap.
+** Checking volume information.
+   Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
+                  CBTStat = 0x0004 CatStat = 0x00000000
+** The volume untitled was found corrupt and needs to be repaired.
+	volume type is HFS
+	primary MDB is at block 2 0x02
+	alternate MDB is at block 20971518 0x13ffffe
+	primary VHB is at block 0 0x00
+	alternate VHB is at block 0 0x00
+	sector size = 512 0x200
+	VolumeObject flags = 0x19
+	total sectors for volume = 20971520 0x1400000
+	total sectors for embedded volume = 0 0x00
 
-Signed-off-by: Sarah Newman <srn@prgmr.com>
-Signed-off-by: Lars Ellenberg <lars@linbit.com>
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://lore.kernel.org/r/20250627095728.800688-1-christoph.boehmwalder@linbit.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This patch adds logic of clearing the deleted b-tree node.
+
+sudo ./check generic/001
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/001 9s ...  32s
+Ran: generic/001
+Passed all 1 tests
+
+fsck.hfs -d -n ./test-image.bin
+** ./test-image.bin (NO WRITE)
+	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+   Executing fsck_hfs (version 540.1-Linux).
+** Checking HFS volume.
+   The volume name is untitled
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking catalog hierarchy.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume untitled appears to be OK.
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20250430001211.1912533-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the surrounding code context,
-here is my assessment:
+Based on my analysis of the commit and the surrounding code, I can now
+provide a determination on whether this should be backported to stable
+kernel trees.
 
-**YES** - This commit should be backported to stable kernel trees.
+**Backport Status: YES**
 
-Here's my extensive explanation:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-1. **Critical Bug Fix**: This commit fixes a missing `kref_get` that
-   causes a use-after-free vulnerability. The code at
-   drivers/block/drbd/drbd_receiver.c:2503-2507 shows the fix adds the
-   missing reference count increment before queuing work that will later
-   decrement the reference count in `drbd_send_acks_wf()`.
+1. **Fixes a real bug that causes filesystem corruption**: The commit
+   fixes a bug where deleted b-tree nodes in HFS filesystems are not
+   properly erased, leading to filesystem corruption that is detected by
+   fsck.hfs. The commit message shows clear evidence of filesystem
+   corruption with "Unused node is not erased" errors across multiple
+   nodes (2, 4, 253-256).
 
-2. **Clear Use-After-Free Pattern**: Looking at the code pattern:
-   - Before the fix: The code queues work (`queue_work`) that will call
-     `drbd_send_acks_wf()`, which contains `kref_put(&device->kref,
-     drbd_destroy_device)` at line 6119
-   - Without the matching `kref_get`, this leads to premature
-     destruction of the device structure
-   - The commit message explicitly states this results in "premature
-     drbd_destroy_device and use after free"
+2. **Small and contained fix**: The patch is only 1 line of code
+   addition (`hfs_bnode_clear(node, 0, tree->node_size);`), well within
+   the 100-line stable tree limit. The fix is localized to the HFS
+   b-tree node management code and doesn't affect other subsystems.
 
-3. **Follows Established Pattern**: The fix follows the exact same
-   pattern used elsewhere in the DRBD code. At
-   drivers/block/drbd/drbd_worker.c:150-152, we see:
-  ```c
-  kref_get(&device->kref); /* put is in drbd_send_acks_wf() */
-  if (!queue_work(connection->ack_sender, &peer_device->send_acks_work))
-  kref_put(&device->kref, drbd_destroy_device);
-  ```
-  This shows the fix is correct and consistent with the codebase.
+3. **Obviously correct**: The fix adds a missing step that already
+   exists in the HFS+ implementation. Looking at
+   fs/hfsplus/bnode.c:728-729, the HFS+ code already calls
+   `hfs_bnode_clear()` when deleting b-tree nodes (conditionally based
+   on a volume attribute). The HFS code was missing this critical step
+   entirely.
 
-4. **Small and Contained Fix**: The change is minimal (adding 4 lines),
-   well-understood, and doesn't introduce any architectural changes. It
-   simply ensures proper reference counting.
+4. **Tested with concrete results**: The commit message includes before
+   and after test results using xfstests generic/001, showing that the
+   filesystem corruption is resolved after applying the patch. The
+   "after" test shows "The volume untitled appears to be OK" from
+   fsck.hfs.
 
-5. **Real Security Issue**: Use-after-free bugs can lead to kernel
-   crashes and potentially be exploited for privilege escalation. Even
-   though the commit notes this code path is rarely taken in production
-   ("two-primaries" mode with concurrent writes), when it is triggered,
-   it causes kernel crashes.
+5. **Data corruption prevention**: Without this fix, HFS filesystems can
+   become corrupted during normal operations that involve b-tree node
+   deletion, potentially leading to data loss. This is a serious issue
+   that affects filesystem integrity.
 
-6. **Meets Stable Criteria**: According to Documentation/process/stable-
-   kernel-rules.rst:
-   - It fixes "a real bug that bothers people" (kernel crashes)
-   - It's "obviously correct and tested" (follows established pattern)
-   - It's under 100 lines
-   - It fixes "data corruption, a real security issue" (use-after-free)
+6. **No architectural changes**: The commit doesn't introduce any new
+   features or architectural changes - it simply adds a missing cleanup
+   step that should have been there all along.
 
-7. **No Side Effects**: The fix only adds proper reference counting and
-   doesn't change any logic or introduce new features. The only behavior
-   change is preventing the use-after-free bug.
+7. **Low regression risk**: The `hfs_bnode_clear()` function being
+   called already exists and is used elsewhere in the HFS code. The fix
+   follows the established pattern from HFS+ and uses existing, tested
+   infrastructure.
 
-The fact that this affects a rarely-used code path ("two-primaries"
-mode) doesn't diminish its importance for backporting, as users who do
-use this feature would experience kernel crashes without this fix. The
-fix is safe, minimal, and prevents a serious bug.
+The commit meets all the stable kernel rules criteria: it fixes a real
+bug that causes filesystem corruption, is small and contained, is
+obviously correct (matches HFS+ implementation), and has been tested to
+resolve the issue.
 
- drivers/block/drbd/drbd_receiver.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/hfs/bnode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
-index 405e09575f08..b4d4e4a41b08 100644
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -2532,7 +2532,11 @@ static int handle_write_conflicts(struct drbd_device *device,
- 			peer_req->w.cb = superseded ? e_send_superseded :
- 						   e_send_retry_write;
- 			list_add_tail(&peer_req->w.list, &device->done_ee);
--			queue_work(connection->ack_sender, &peer_req->peer_device->send_acks_work);
-+			/* put is in drbd_send_acks_wf() */
-+			kref_get(&device->kref);
-+			if (!queue_work(connection->ack_sender,
-+					&peer_req->peer_device->send_acks_work))
-+				kref_put(&device->kref, drbd_destroy_device);
- 
- 			err = -ENOENT;
- 			goto out;
+diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
+index 2039cb6d5f66..219e3b8fd6a8 100644
+--- a/fs/hfs/bnode.c
++++ b/fs/hfs/bnode.c
+@@ -586,6 +586,7 @@ void hfs_bnode_put(struct hfs_bnode *node)
+ 		if (test_bit(HFS_BNODE_DELETED, &node->flags)) {
+ 			hfs_bnode_unhash(node);
+ 			spin_unlock(&tree->hash_lock);
++			hfs_bnode_clear(node, 0, tree->node_size);
+ 			hfs_bmap_free(node);
+ 			hfs_bnode_free(node);
+ 			return;
 -- 
 2.39.5
 
