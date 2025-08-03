@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993251FC0F0;
-	Sun,  3 Aug 2025 21:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51061FC0F0;
+	Sun,  3 Aug 2025 21:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255882; cv=none; b=H9zL3dexc4zrKbQ44IeF4ObxiqOF2WA3qkt0y1HmMfT36IRoq8MexvQ7UL16huKXa4JixvIf9v/RGdbOLJp56QCs2iJanyi1CLvV4pjEtrzkymnOv8dFYrahN42MUwcpgv1Iej1o19xDTzz80OLcmiA2bML0w3w14mcsz+VP4k8=
+	t=1754255885; cv=none; b=tp8J++TS7vOmYGYj47tpk+YsgJepDqviG8po4unyKAX9+6mydALVNoXi2deJxi92wCRvwmGDmzLfI74LdraSfedbB/cTE/YOz/1zAvvSo4wHvJILfnS1dq2mKQ9zFWw9oFTIVe4IBbFEuiIK2NhcQehH7hYqt3+7N6H2Ca8DmEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255882; c=relaxed/simple;
-	bh=zO1SJIgsdDjXqsBmIcmGPU93WITEO7f49l+qJhB1O8Q=;
+	s=arc-20240116; t=1754255885; c=relaxed/simple;
+	bh=e4jAUNsPqeu366ZDtnh7El4UN6Exn/WzIQm6cTVFkPc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kXb7KrkCw7olwRXcp25X/U9BpaOQ2zFnaCGnTIlL5Dwdrr1q4TzxIlFDa33uS+wZ5h1io7LUTphH026hp+o1NwZi5IY8tCcqFOsZOHq2SiNKrCkmnalu9u+DyUJm6Uqc72xIaSOvq2upKfFJrbQ4/y2uAJOwS6nR6gURB1MPiFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gxWNObGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vz/4KvQ+E2ZboaKes+QTYdH+TDGWQnLQewcOHWeyxWs7PRzH+zZVwZtgm9kGVty6YxMvxoi/SX+Dm8o1kvMvgUH3LPiHSFuhexK+7u0AWJKz89OugFyuEkAqvAFmZJi8GXslzC/9vnYjapWsEAla6GvdA5M6fAY3OFioKI/M9mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SgjmNRXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gxWNObGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651D1C4CEEB;
-	Sun,  3 Aug 2025 21:18:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgjmNRXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68C0C4CEF0;
+	Sun,  3 Aug 2025 21:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255882;
-	bh=zO1SJIgsdDjXqsBmIcmGPU93WITEO7f49l+qJhB1O8Q=;
+	s=k20201202; t=1754255884;
+	bh=e4jAUNsPqeu366ZDtnh7El4UN6Exn/WzIQm6cTVFkPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxWNObGCWVYXO8WFt2q0pwAuZypozEdF88diPuA5tN58Rd+FcfxA0eKs997a5QUOV
-	 MGIOanezeoBBu5xAFxcolEFl8+XsviWMzSi/NgOfFPLLINVGPG6gPeGmu2/iHVTY9z
-	 ViNjbTyNUiI46GqUoLJ275UcgvFRgqY7NX5Nk1wRrz1ZFcCPSwPtjI6YS+rDOW0ixa
-	 BRpfTfLd6keSXh+m3G7iuMnYL8QcS/ufwLYqQ6urbB46j06lzHa0POn6pDxcHHpmLT
-	 r6HN7IdZMKoStcrONjziGp66T3aEJDkl7ZZePfaiqawQYQymib30HT5QTGDIQ9C9eb
-	 GuFAAmvmTsFzQ==
+	b=SgjmNRXP94CJVQOAk506EtmMAcr7zWa5+shTTDAZzvUd7Z+wC5FXbnyEzxI1qgf5D
+	 uFpJiHuniCh4k0UuOru6OLGveFFCVoLYn+Jv8MvVb7OE5Fiewa44G5YPouMO3we/ZO
+	 u65heahtlN05UmM/G6hd1MK67RDR13D74zb6NpCkvP46NQRTgmmMewrvmUfdmR1r63
+	 rnApwZKylI+ehPUf9xiCn74GF/MLKyxTJocDX+zTGg7uabndZr2aRO39DxqMB94tU3
+	 Xd5Rc2i224rR3nVFenezesGDUB6mT4CPY4c2xhINmihke6OmByXwysyxjVjSSFPUZO
+	 o4iNsTblOe5jg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: NeilBrown <neil@brown.name>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	josef@toxicpanda.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 10/35] btrfs: fix -ENOSPC mmap write failure on NOCOW files/extents
-Date: Sun,  3 Aug 2025 17:17:10 -0400
-Message-Id: <20250803211736.3545028-10-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 11/35] smb/server: avoid deadlock when linking with ReplaceIfExists
+Date: Sun,  3 Aug 2025 17:17:11 -0400
+Message-Id: <20250803211736.3545028-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211736.3545028-1-sashal@kernel.org>
 References: <20250803211736.3545028-1-sashal@kernel.org>
@@ -53,245 +52,143 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 6599716de2d68ab7b3c0429221deca306dbda878 ]
+[ Upstream commit d5fc1400a34b4ea5e8f2ce296ea12bf8c8421694 ]
 
-If we attempt a mmap write into a NOCOW file or a prealloc extent when
-there is no more available data space (or unallocated space to allocate a
-new data block group) and we can do a NOCOW write (there are no reflinks
-for the target extent or snapshots), we always fail due to -ENOSPC, unlike
-for the regular buffered write and direct IO paths where we check that we
-can do a NOCOW write in case we can't reserve data space.
+If smb2_create_link() is called with ReplaceIfExists set and the name
+does exist then a deadlock will happen.
 
-Simple reproducer:
+ksmbd_vfs_kern_path_locked() will return with success and the parent
+directory will be locked.  ksmbd_vfs_remove_file() will then remove the
+file.  ksmbd_vfs_link() will then be called while the parent is still
+locked.  It will try to lock the same parent and will deadlock.
 
-  $ cat test.sh
-  #!/bin/bash
+This patch moves the ksmbd_vfs_kern_path_unlock() call to *before*
+ksmbd_vfs_link() and then simplifies the code, removing the file_present
+flag variable.
 
-  DEV=/dev/sdi
-  MNT=/mnt/sdi
-
-  umount $DEV &> /dev/null
-  mkfs.btrfs -f -b $((512 * 1024 * 1024)) $DEV
-  mount $DEV $MNT
-
-  touch $MNT/foobar
-  # Make it a NOCOW file.
-  chattr +C $MNT/foobar
-
-  # Add initial data to file.
-  xfs_io -c "pwrite -S 0xab 0 1M" $MNT/foobar
-
-  # Fill all the remaining data space and unallocated space with data.
-  dd if=/dev/zero of=$MNT/filler bs=4K &> /dev/null
-
-  # Overwrite the file with a mmap write. Should succeed.
-  xfs_io -c "mmap -w 0 1M"        \
-         -c "mwrite -S 0xcd 0 1M" \
-         -c "munmap"              \
-         $MNT/foobar
-
-  # Unmount, mount again and verify the new data was persisted.
-  umount $MNT
-  mount $DEV $MNT
-
-  od -A d -t x1 $MNT/foobar
-
-  umount $MNT
-
-Running this:
-
-  $ ./test.sh
-  (...)
-  wrote 1048576/1048576 bytes at offset 0
-  1 MiB, 256 ops; 0.0008 sec (1.188 GiB/sec and 311435.5231 ops/sec)
-  ./test.sh: line 24: 234865 Bus error               xfs_io -c "mmap -w 0 1M" -c "mwrite -S 0xcd 0 1M" -c "munmap" $MNT/foobar
-  0000000 ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab ab
-  *
-  1048576
-
-Fix this by not failing in case we can't allocate data space and we can
-NOCOW into the target extent - reserving only metadata space in this case.
-
-After this change the test passes:
-
-  $ ./test.sh
-  (...)
-  wrote 1048576/1048576 bytes at offset 0
-  1 MiB, 256 ops; 0.0007 sec (1.262 GiB/sec and 330749.3540 ops/sec)
-  0000000 cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd
-  *
-  1048576
-
-A test case for fstests will be added soon.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: NeilBrown <neil@brown.name>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of this commit, here is my determination:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-1. **Fixes a real user-visible bug**: The commit fixes a clear
-   functional regression where mmap writes to NOCOW files fail with
-   -ENOSPC even when they shouldn't. The bug causes legitimate write
-   operations to fail when the filesystem is nearly full, even though
-   NOCOW writes should succeed without requiring new data space
-   allocation.
+## Bug Analysis
 
-2. **Contains a simple reproducer**: The commit message includes a clear
-   test case that demonstrates the problem, showing it's a reproducible
-   issue that users can encounter in normal usage scenarios.
+This commit fixes a critical **deadlock** issue in the ksmbd (SMB
+server) subsystem. The deadlock occurs in the `smb2_create_link()`
+function when creating a hard link with the `ReplaceIfExists` flag set
+and the target file already exists.
 
-3. **Limited scope and risk**: The fix is confined to the
-   `btrfs_page_mkwrite()` function in fs/btrfs/file.c. It doesn't touch
-   multiple subsystems or introduce architectural changes. The
-   modification follows the same pattern already used in buffered write
-   and direct IO paths.
+### Deadlock Sequence:
 
-4. **Follows existing patterns**: The fix applies the same NOCOW
-   handling logic that already exists for regular buffered writes and
-   direct IO. It's essentially fixing an inconsistency where mmap writes
-   didn't have the same NOCOW fallback logic.
+1. `ksmbd_vfs_kern_path_locked()` is called and locks the parent
+   directory
+2. If the file exists and `ReplaceIfExists` is true,
+   `ksmbd_vfs_remove_file()` is called while the parent is still locked
+3. `ksmbd_vfs_link()` is then called, which attempts to lock the same
+   parent directory again
+4. **Result: Deadlock** - the function tries to acquire a lock it
+   already holds
 
-5. **Clear fix with minimal changes**: The patch adds proper NOCOW
-   checking when data space reservation fails, similar to what's done in
-   other write paths. It uses existing functions like
-   `btrfs_check_nocow_lock()` and `btrfs_check_nocow_unlock()`.
+### Fix Implementation:
 
-6. **No new features**: This is purely a bug fix that restores expected
-   behavior. It doesn't add any new functionality or APIs.
+The fix reorders the operations by:
+- Moving the `ksmbd_vfs_kern_path_unlock()` call to execute **before**
+  `ksmbd_vfs_link()`
+- This ensures the parent directory is unlocked before attempting the
+  link operation
+- The code is also simplified by removing the `file_present` flag
+  variable
 
+## Backport Justification:
 
-The code changes show a straightforward fix that:
-- Adds `only_release_metadata` flag to track NOCOW write scenarios
-- When data space reservation fails, checks if NOCOW write is possible
-- If NOCOW is possible, only reserves metadata space instead of failing
-- Properly releases resources in error paths based on whether it's a
-  NOCOW operation
+1. **Critical Bug**: This fixes a deadlock that can hang the kernel's
+   SMB server functionality
+2. **User Impact**: The deadlock can be triggered by normal SMB
+   operations (creating hard links with replace), affecting file server
+   availability
+3. **Small and Contained**: The fix is minimal - just reordering
+   function calls and simplifying logic
+4. **No Architectural Changes**: This is a straightforward bug fix with
+   no feature additions
+5. **Low Risk**: The change only affects the specific error path in link
+   creation
+6. **Similar to Other Fixes**: The kernel has accepted similar deadlock
+   fixes in ksmbd (e.g., commit 864fb5d37163 "ksmbd: fix possible
+   deadlock in smb2_open")
+
+## Code Quality:
+
+The fix properly maintains the locking semantics while avoiding the
+deadlock. The simplified code flow makes the logic clearer and less
+error-prone.
 
 This is exactly the type of bug fix that stable kernels should receive -
-it fixes a specific functional problem without introducing new risks or
-complexity.
+it fixes a real issue that affects users, has minimal risk of
+regression, and improves system stability.
 
- fs/btrfs/file.c | 59 ++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 51 insertions(+), 8 deletions(-)
+ fs/smb/server/smb2pdu.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index 8ce6f45f45e0..0a468bbfe015 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1842,6 +1842,7 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	loff_t size;
- 	size_t fsize = folio_size(folio);
- 	int ret;
-+	bool only_release_metadata = false;
- 	u64 reserved_space;
- 	u64 page_start;
- 	u64 page_end;
-@@ -1862,10 +1863,34 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	 * end up waiting indefinitely to get a lock on the page currently
- 	 * being processed by btrfs_page_mkwrite() function.
- 	 */
--	ret = btrfs_delalloc_reserve_space(BTRFS_I(inode), &data_reserved,
--					   page_start, reserved_space);
--	if (ret < 0)
-+	ret = btrfs_check_data_free_space(BTRFS_I(inode), &data_reserved,
-+					  page_start, reserved_space, false);
-+	if (ret < 0) {
-+		size_t write_bytes = reserved_space;
-+
-+		if (btrfs_check_nocow_lock(BTRFS_I(inode), page_start,
-+					   &write_bytes, false) <= 0)
-+			goto out_noreserve;
-+
-+		only_release_metadata = true;
-+
-+		/*
-+		 * Can't write the whole range, there may be shared extents or
-+		 * holes in the range, bail out with @only_release_metadata set
-+		 * to true so that we unlock the nocow lock before returning the
-+		 * error.
-+		 */
-+		if (write_bytes < reserved_space)
-+			goto out_noreserve;
-+	}
-+	ret = btrfs_delalloc_reserve_metadata(BTRFS_I(inode), reserved_space,
-+					      reserved_space, false);
-+	if (ret < 0) {
-+		if (!only_release_metadata)
-+			btrfs_free_reserved_data_space(BTRFS_I(inode), data_reserved,
-+						       page_start, reserved_space);
- 		goto out_noreserve;
-+	}
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 63d17cea2e95..27d04180789d 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6053,7 +6053,6 @@ static int smb2_create_link(struct ksmbd_work *work,
+ {
+ 	char *link_name = NULL, *target_name = NULL, *pathname = NULL;
+ 	struct path path, parent_path;
+-	bool file_present = false;
+ 	int rc;
  
- 	ret = file_update_time(vmf->vma->vm_file);
- 	if (ret < 0)
-@@ -1906,10 +1931,16 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	if (folio_contains(folio, (size - 1) >> PAGE_SHIFT)) {
- 		reserved_space = round_up(size - page_start, fs_info->sectorsize);
- 		if (reserved_space < fsize) {
-+			const u64 to_free = fsize - reserved_space;
-+
- 			end = page_start + reserved_space - 1;
--			btrfs_delalloc_release_space(BTRFS_I(inode),
--					data_reserved, end + 1,
--					fsize - reserved_space, true);
-+			if (only_release_metadata)
-+				btrfs_delalloc_release_metadata(BTRFS_I(inode),
-+								to_free, true);
-+			else
-+				btrfs_delalloc_release_space(BTRFS_I(inode),
-+							     data_reserved, end + 1,
-+							     to_free, true);
+ 	if (buf_len < (u64)sizeof(struct smb2_file_link_info) +
+@@ -6086,11 +6085,8 @@ static int smb2_create_link(struct ksmbd_work *work,
+ 	if (rc) {
+ 		if (rc != -ENOENT)
+ 			goto out;
+-	} else
+-		file_present = true;
+-
+-	if (file_info->ReplaceIfExists) {
+-		if (file_present) {
++	} else {
++		if (file_info->ReplaceIfExists) {
+ 			rc = ksmbd_vfs_remove_file(work, &path);
+ 			if (rc) {
+ 				rc = -EINVAL;
+@@ -6098,21 +6094,17 @@ static int smb2_create_link(struct ksmbd_work *work,
+ 					    link_name);
+ 				goto out;
+ 			}
+-		}
+-	} else {
+-		if (file_present) {
++		} else {
+ 			rc = -EEXIST;
+ 			ksmbd_debug(SMB, "link already exists\n");
+ 			goto out;
  		}
++		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
  	}
- 
-@@ -1946,10 +1977,16 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 
- 	btrfs_set_inode_last_sub_trans(BTRFS_I(inode));
- 
-+	if (only_release_metadata)
-+		btrfs_set_extent_bit(io_tree, page_start, end, EXTENT_NORESERVE,
-+				     &cached_state);
-+
- 	btrfs_unlock_extent(io_tree, page_start, page_end, &cached_state);
- 	up_read(&BTRFS_I(inode)->i_mmap_lock);
- 
- 	btrfs_delalloc_release_extents(BTRFS_I(inode), fsize);
-+	if (only_release_metadata)
-+		btrfs_check_nocow_unlock(BTRFS_I(inode));
- 	sb_end_pagefault(inode->i_sb);
- 	extent_changeset_free(data_reserved);
- 	return VM_FAULT_LOCKED;
-@@ -1959,10 +1996,16 @@ static vm_fault_t btrfs_page_mkwrite(struct vm_fault *vmf)
- 	up_read(&BTRFS_I(inode)->i_mmap_lock);
+-
+ 	rc = ksmbd_vfs_link(work, target_name, link_name);
+ 	if (rc)
+ 		rc = -EINVAL;
  out:
- 	btrfs_delalloc_release_extents(BTRFS_I(inode), fsize);
--	btrfs_delalloc_release_space(BTRFS_I(inode), data_reserved, page_start,
--				     reserved_space, true);
-+	if (only_release_metadata)
-+		btrfs_delalloc_release_metadata(BTRFS_I(inode), reserved_space, true);
-+	else
-+		btrfs_delalloc_release_space(BTRFS_I(inode), data_reserved,
-+					     page_start, reserved_space, true);
- 	extent_changeset_free(data_reserved);
- out_noreserve:
-+	if (only_release_metadata)
-+		btrfs_check_nocow_unlock(BTRFS_I(inode));
-+
- 	sb_end_pagefault(inode->i_sb);
+-	if (file_present)
+-		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
  
- 	if (ret < 0)
+ 	if (!IS_ERR(link_name))
+ 		kfree(link_name);
 -- 
 2.39.5
 
