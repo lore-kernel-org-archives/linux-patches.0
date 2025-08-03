@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061D11D5CC6;
-	Sun,  3 Aug 2025 21:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52FA1D5CC6;
+	Sun,  3 Aug 2025 21:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256021; cv=none; b=H335FjsWPb+X4P3a5RTjLZFmjZwytdrWsSmkKnfVCKGGWZa+49HNNfqxj6lx7wIeYrRdAz6xlXyEJpuGV0XcR65PxK4X7JiDwLGOEA4F2xaLhaNRbpAoF9iseBb2zG2pkuNJoag4914YxqL/B73nssu31m+PPoRQu2lUs3IromU=
+	t=1754256022; cv=none; b=J5aPthgGxdIVreZDk0ntr/xQXtDmdyAeOk/iusp8adfNN95dD4ohyGm5ewlAz6fD9MgqW4LsN41rE2KeOp/yIZNNC5l+K+ueFMSK4FO8CYpAuI2dH+Kd1jKGyw5BDVJaCa74nzGhvl1ZvL7BbyVI4gbx+Qdwuu8jhcFj+MqSwH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256021; c=relaxed/simple;
-	bh=3dTYzuGnZd3LM/DJnChQci1PIZnNPwjGX4pMVqkY1fo=;
+	s=arc-20240116; t=1754256022; c=relaxed/simple;
+	bh=Rh/F+b1+EeifgjTntQ60lYwrmwhNS9BJmu9Hil2tCDQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=j3eS2Vy8m1l6O+tDV0Iwlrqtux3O6PCkXfQ9sZMxTvQWHs1ovIglHz1FnLLZP32YAYnMWHMeKQf12rfOchfs5bmoTYv8C4BJDzv34MkcKHCSEFcj2P1BagvoRmlEwTekqzoPxGs0ivjSpqBF82qDQ0AQkTuSOVWCNsqg11FgOJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVUd54f4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OTWZd8ORldB4CqgK4hyUO1GRgmuEXwpOETfdAqTu5MWHbi+ujCkEASL7JRpohWvJBXitXvYLOkdUDTvpaGmjJNxFJrVE0FO292mVuSbb/E4158D7wxiRpm30gUyuXcukWVYWY4oE7ODiKlnvDAxAmzCylYYkUfxTvsKaN76sXnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GhUCvVdF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVUd54f4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1478C4CEFB;
-	Sun,  3 Aug 2025 21:20:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GhUCvVdF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5840BC4CEF0;
+	Sun,  3 Aug 2025 21:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256019;
-	bh=3dTYzuGnZd3LM/DJnChQci1PIZnNPwjGX4pMVqkY1fo=;
+	s=k20201202; t=1754256022;
+	bh=Rh/F+b1+EeifgjTntQ60lYwrmwhNS9BJmu9Hil2tCDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVUd54f4QLyw4IHC0ZcNKrCWPuSpgLTOPP+s5LA4rTxqQIGgzl9FkO3mHXWXAf1Yi
-	 ruLPHrZMj76+w9qI4+sUeKn9wmHeges+PwIQTP+Z5uLEFQvJ03M7+ctrRhwxPDvUH1
-	 43Up+cmqT8JCSssHw+IzpS4yh35uRzPIvjQF8k5kwnccecuJZYJyog9v8/FYV38AOh
-	 0hcAGKV5oOJQzvJMZ6mPlrm63hQRpjjHdTS0DKqDJPuUg/YdzupVce6jFDQlzjX7H0
-	 neaK00iJIWYv6E+Snp3TcAqvSVj667qOfuVIihCL9Lss/V8qBpZi37VHsBjfC7aIUq
-	 Cn6lqjZgNwgAA==
+	b=GhUCvVdFv6VRCG8gSEaieGnuPA8Ik25cwRjoMdI3ZoAhu6OETAnt0jAgl6GnbaAJM
+	 6d7C55zz6HaBA7FHwMdFJk8hW0MLTTLIraZRanRK+vSQNhIVpMNT5PcyTiCcQE3AUX
+	 RDZ4MevEfuLAHa5JcHj/gI9IAgRz8DPidClXXF/n5kgARSnHduS8zbZWyfH4hB5IbH
+	 l5cu8EvF80VZp+2xH1Zn+mTzMOpVgM+JJYnJa7y3DWLUs0lKB5xIki5lBUuQ57V+t0
+	 54KzUi7WxROOJK83+lolWSVfz+NcHzirOwwdgCwdt2biGUaYm3QzDV8Os8A5wfh2Zr
+	 cnVSVKm/PwScQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jan Kara <jack@suse.cz>,
-	syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com,
+Cc: Sarah Newman <srn@prgmr.com>,
+	Lars Ellenberg <lars@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	jack@suse.com
-Subject: [PATCH AUTOSEL 6.12 17/31] udf: Verify partition map count
-Date: Sun,  3 Aug 2025 17:19:20 -0400
-Message-Id: <20250803211935.3547048-17-sashal@kernel.org>
+	philipp.reisner@linbit.com,
+	lars.ellenberg@linbit.com,
+	drbd-dev@lists.linbit.com
+Subject: [PATCH AUTOSEL 6.12 18/31] drbd: add missing kref_get in handle_write_conflicts
+Date: Sun,  3 Aug 2025 17:19:21 -0400
+Message-Id: <20250803211935.3547048-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211935.3547048-1-sashal@kernel.org>
 References: <20250803211935.3547048-1-sashal@kernel.org>
@@ -45,108 +49,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Sarah Newman <srn@prgmr.com>
 
-[ Upstream commit 1a11201668e8635602577dcf06f2e96c591d8819 ]
+[ Upstream commit 00c9c9628b49e368d140cfa61d7df9b8922ec2a8 ]
 
-Verify that number of partition maps isn't insanely high which can lead
-to large allocation in udf_sb_alloc_partition_maps(). All partition maps
-have to fit in the LVD which is in a single block.
+With `two-primaries` enabled, DRBD tries to detect "concurrent" writes
+and handle write conflicts, so that even if you write to the same sector
+simultaneously on both nodes, they end up with the identical data once
+the writes are completed.
 
-Reported-by: syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+In handling "superseeded" writes, we forgot a kref_get,
+resulting in a premature drbd_destroy_device and use after free,
+and further to kernel crashes with symptoms.
+
+Relevance: No one should use DRBD as a random data generator, and apparently
+all users of "two-primaries" handle concurrent writes correctly on layer up.
+That is cluster file systems use some distributed lock manager,
+and live migration in virtualization environments stops writes on one node
+before starting writes on the other node.
+
+Which means that other than for "test cases",
+this code path is never taken in real life.
+
+FYI, in DRBD 9, things are handled differently nowadays.  We still detect
+"write conflicts", but no longer try to be smart about them.
+We decided to disconnect hard instead: upper layers must not submit concurrent
+writes. If they do, that's their fault.
+
+Signed-off-by: Sarah Newman <srn@prgmr.com>
+Signed-off-by: Lars Ellenberg <lars@linbit.com>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://lore.kernel.org/r/20250627095728.800688-1-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+Based on my analysis of the commit and the surrounding code context,
+here is my assessment:
 
-This commit should be backported to stable kernel trees based on the
-following analysis:
+**YES** - This commit should be backported to stable kernel trees.
 
-1. **Security Fix**: The commit addresses a security vulnerability
-   reported by syzbot
-   (syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com), indicating
-   this is fixing a real bug discovered through fuzzing. The issue could
-   lead to excessive memory allocation in
-   `udf_sb_alloc_partition_maps()`.
+Here's my extensive explanation:
 
-2. **Integer Overflow/Memory Exhaustion Prevention**: The code adds a
-   crucial bounds check that prevents potentially huge allocations.
-   Without this check, a malformed UDF filesystem could specify an
-   arbitrarily large `numPartitionMaps` value, causing `kcalloc()` in
-   `udf_sb_alloc_partition_maps()` to allocate excessive memory or fail.
+1. **Critical Bug Fix**: This commit fixes a missing `kref_get` that
+   causes a use-after-free vulnerability. The code at
+   drivers/block/drbd/drbd_receiver.c:2503-2507 shows the fix adds the
+   missing reference count increment before queuing work that will later
+   decrement the reference count in `drbd_send_acks_wf()`.
 
-3. **Small, Contained Fix**: The change is minimal - only 11 lines added
-   and 2 modified. It adds a simple validation check:
+2. **Clear Use-After-Free Pattern**: Looking at the code pattern:
+   - Before the fix: The code queues work (`queue_work`) that will call
+     `drbd_send_acks_wf()`, which contains `kref_put(&device->kref,
+     drbd_destroy_device)` at line 6119
+   - Without the matching `kref_get`, this leads to premature
+     destruction of the device structure
+   - The commit message explicitly states this results in "premature
+     drbd_destroy_device and use after free"
+
+3. **Follows Established Pattern**: The fix follows the exact same
+   pattern used elsewhere in the DRBD code. At
+   drivers/block/drbd/drbd_worker.c:150-152, we see:
   ```c
-  if (part_map_count > table_len / sizeof(struct genericPartitionMap1))
+  kref_get(&device->kref); /* put is in drbd_send_acks_wf() */
+  if (!queue_work(connection->ack_sender, &peer_device->send_acks_work))
+  kref_put(&device->kref, drbd_destroy_device);
   ```
-  This ensures the partition map count doesn't exceed what can
-  physically fit in the table.
+  This shows the fix is correct and consistent with the codebase.
 
-4. **Clear Bug Fix Pattern**: The fix follows a standard pattern of
-   input validation before allocation, which is a well-understood
-   security best practice. The logic is straightforward: all partition
-   maps must fit within the Logical Volume Descriptor (LVD) block.
+4. **Small and Contained Fix**: The change is minimal (adding 4 lines),
+   well-understood, and doesn't introduce any architectural changes. It
+   simply ensures proper reference counting.
 
-5. **No Feature Changes**: This is purely a defensive check that
-   prevents invalid input from causing problems. It doesn't change any
-   functionality for valid UDF filesystems.
+5. **Real Security Issue**: Use-after-free bugs can lead to kernel
+   crashes and potentially be exploited for privilege escalation. Even
+   though the commit notes this code path is rarely taken in production
+   ("two-primaries" mode with concurrent writes), when it is triggered,
+   it causes kernel crashes.
 
-6. **Affects User-Facing Code**: UDF filesystem mounting is user-facing
-   functionality that could be triggered by inserting malicious media or
-   mounting crafted filesystem images, making this an important security
-   boundary.
+6. **Meets Stable Criteria**: According to Documentation/process/stable-
+   kernel-rules.rst:
+   - It fixes "a real bug that bothers people" (kernel crashes)
+   - It's "obviously correct and tested" (follows established pattern)
+   - It's under 100 lines
+   - It fixes "data corruption, a real security issue" (use-after-free)
 
-7. **Low Risk of Regression**: The added check only rejects invalid
-   filesystems that would likely cause problems anyway. Valid UDF
-   filesystems will pass this check without issue.
+7. **No Side Effects**: The fix only adds proper reference counting and
+   doesn't change any logic or introduce new features. The only behavior
+   change is preventing the use-after-free bug.
 
-The commit follows stable kernel rules by fixing an important bug
-(potential DoS through memory exhaustion) with minimal, low-risk changes
-to a filesystem that handles untrusted input.
+The fact that this affects a rarely-used code path ("two-primaries"
+mode) doesn't diminish its importance for backporting, as users who do
+use this feature would experience kernel crashes without this fix. The
+fix is safe, minimal, and prevents a serious bug.
 
- fs/udf/super.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/block/drbd/drbd_receiver.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 1c8a736b3309..b2f168b0a0d1 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1440,7 +1440,7 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
- 	struct genericPartitionMap *gpm;
- 	uint16_t ident;
- 	struct buffer_head *bh;
--	unsigned int table_len;
-+	unsigned int table_len, part_map_count;
- 	int ret;
+diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
+index 0c9f54197768..ac18d36b0ea8 100644
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -2500,7 +2500,11 @@ static int handle_write_conflicts(struct drbd_device *device,
+ 			peer_req->w.cb = superseded ? e_send_superseded :
+ 						   e_send_retry_write;
+ 			list_add_tail(&peer_req->w.list, &device->done_ee);
+-			queue_work(connection->ack_sender, &peer_req->peer_device->send_acks_work);
++			/* put is in drbd_send_acks_wf() */
++			kref_get(&device->kref);
++			if (!queue_work(connection->ack_sender,
++					&peer_req->peer_device->send_acks_work))
++				kref_put(&device->kref, drbd_destroy_device);
  
- 	bh = udf_read_tagged(sb, block, block, &ident);
-@@ -1461,7 +1461,16 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
- 					   "logical volume");
- 	if (ret)
- 		goto out_bh;
--	ret = udf_sb_alloc_partition_maps(sb, le32_to_cpu(lvd->numPartitionMaps));
-+
-+	part_map_count = le32_to_cpu(lvd->numPartitionMaps);
-+	if (part_map_count > table_len / sizeof(struct genericPartitionMap1)) {
-+		udf_err(sb, "error loading logical volume descriptor: "
-+			"Too many partition maps (%u > %u)\n", part_map_count,
-+			table_len / (unsigned)sizeof(struct genericPartitionMap1));
-+		ret = -EIO;
-+		goto out_bh;
-+	}
-+	ret = udf_sb_alloc_partition_maps(sb, part_map_count);
- 	if (ret)
- 		goto out_bh;
- 
+ 			err = -ENOENT;
+ 			goto out;
 -- 
 2.39.5
 
