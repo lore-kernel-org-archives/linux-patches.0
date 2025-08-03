@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7043621C176;
-	Sun,  3 Aug 2025 21:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037781F55FA;
+	Sun,  3 Aug 2025 21:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256202; cv=none; b=ivejLYmiPRmWuSH8kYK+CqNG2MXRzzhyMPW4vTk9ujy6T2uZGHDD+Ej4H2pnzJJRa1wPAIvc4s9kmjmuMF4f7I14XHJyqsRHqZbKTWt6c1Rn3ZL/wonf4t4wwoY4SPuE+pA9RxoywtQX8OSprdnxzrZ/qgsZsCKk+rqYVTLyWk8=
+	t=1754256204; cv=none; b=ERf5wx7C56egwhBG9KHTVjCkr1yLVEbrtTkk9N4Spt+WIdmqZd8HpFkQoZm73Icd/bu507YKQ97f9f8G7ZRFF0C7SkW8WwavQ+vj9lmWpOyr7Fsj6jCfASddPutYCV8S2D2ZDN1tQ0oS6oSnIajFTXrhrGMfsp+8yJLAEAyd0Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256202; c=relaxed/simple;
-	bh=uF9qpFX3ed7leyRa7f8E5DkG+FodscKwZGF5TkXRHUM=;
+	s=arc-20240116; t=1754256204; c=relaxed/simple;
+	bh=5eRjwmdA++Hi3jyKGUs8JeJLBqo8QzjlGY85SRMDf1I=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Tj7qOHrr/8b94CUSUsMA3DwkEXwg1PPKYwlyPDjN+5o/YaeyT2di2zF/xlOxzh47+uJStdEMwkOZv4tVidTkTwGD/su5D7tuupZCFkWxOHZEc9BfNFnYHYYuovR/SEirgtymmx2/z1Xjz3T4aw7EEn7cNTdFyt3brNEkvcPzf4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NMihE+/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvZ2jFsrNqhpMyHOJcpkvhTKdTNirMDkNN4kEhg0/Cc5s75GJBIfstt/5fwmOtHVcPJU4S3O11PG/yB+1RjurN7EGkxdcT6EIwIPyWhorqQDjA2oTLB/JbAGzLN6SuKsN7QJwolznZdKLUaBlxiDVOSWVUxRaj8qYQJaWy0UcWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GxNs76xZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NMihE+/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16489C4CEEB;
-	Sun,  3 Aug 2025 21:23:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GxNs76xZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7574C4CEEB;
+	Sun,  3 Aug 2025 21:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256202;
-	bh=uF9qpFX3ed7leyRa7f8E5DkG+FodscKwZGF5TkXRHUM=;
+	s=k20201202; t=1754256203;
+	bh=5eRjwmdA++Hi3jyKGUs8JeJLBqo8QzjlGY85SRMDf1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMihE+/YRNhlNp7yiYzqz5L9M0XMdmlIeVDklr+lDf2KPq+p+9RGzPCQY34d8ReVC
-	 +Dx4O8AhCLD6nEjVsC6HIv9+7FCz7qskjirGMfy5HJwTpPzwIxh/5zeSgeABjaHp5x
-	 NuzKyG2JxlGJPXygMhgZdJ+HhKFbUM+FTA12EKrWFUiiAZRJo8979b9lETWBPHwS1X
-	 9C05PQ7OZkBZctJ4Umb9cnkDxc63SVCZPGR4j73srMTblIfFmrBxnHeKL2l2Ypch7P
-	 LNBVm8AmmnJhuzcFwT8m42gRE8nKAoN5P/8l3I5BmEOTDn/VI8v/KCYigQrvvISJd7
-	 gJU6l+qGYGxxQ==
+	b=GxNs76xZTPd4wrdoNc0W6ElBaf7QTgtYmE0PAoUmTdhRmYWjI8wkvJkUYTmC1Jyvb
+	 igzdqyaP5Zn221RtSqg5LWmSCUMgXRTejbWptG/f17XZ1/r+zw16QZ3b47I4dhegEA
+	 ucE6RLgICtcHtO7J62aIckY2RBkUoDzpVNJXYA+7rdIqcE5Tq3tVHwBUG0SIG3YtzB
+	 VcW4piomPPIfuFVCD2cDA/U0AMORkqJn7s8KKifmv9gJnyXYkZc75KzXGwQwpiN/oj
+	 ztVGJrQSJN6uwkSHV3i6eMV5OKcHbu1FtMRHBhQfCujnHaFkxY9eJygCpc3p0MMMPU
+	 ndkJPHUttTD9A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 5/9] arm64: Handle KCOV __init vs inline mismatches
-Date: Sun,  3 Aug 2025 17:23:05 -0400
-Message-Id: <20250803212309.3549683-5-sashal@kernel.org>
+Cc: Jan Kara <jack@suse.cz>,
+	syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com,
+	Sasha Levin <sashal@kernel.org>,
+	jack@suse.com
+Subject: [PATCH AUTOSEL 5.4 6/9] udf: Verify partition map count
+Date: Sun,  3 Aug 2025 17:23:06 -0400
+Message-Id: <20250803212309.3549683-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212309.3549683-1-sashal@kernel.org>
 References: <20250803212309.3549683-1-sashal@kernel.org>
@@ -48,97 +50,103 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.296
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <kees@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 65c430906efffee9bd7551d474f01a6b1197df90 ]
+[ Upstream commit 1a11201668e8635602577dcf06f2e96c591d8819 ]
 
-GCC appears to have kind of fragile inlining heuristics, in the
-sense that it can change whether or not it inlines something based on
-optimizations. It looks like the kcov instrumentation being added (or in
-this case, removed) from a function changes the optimization results,
-and some functions marked "inline" are _not_ inlined. In that case,
-we end up with __init code calling a function not marked __init, and we
-get the build warnings I'm trying to eliminate in the coming patch that
-adds __no_sanitize_coverage to __init functions:
+Verify that number of partition maps isn't insanely high which can lead
+to large allocation in udf_sb_alloc_partition_maps(). All partition maps
+have to fit in the LVD which is in a single block.
 
-WARNING: modpost: vmlinux: section mismatch in reference: acpi_get_enable_method+0x1c (section: .text.unlikely) -> acpi_psci_present (section: .init.text)
-
-This problem is somewhat fragile (though using either __always_inline
-or __init will deterministically solve it), but we've tripped over
-this before with GCC and the solution has usually been to just use
-__always_inline and move on.
-
-For arm64 this requires forcing one ACPI function to be inlined with
-__always_inline.
-
-Link: https://lore.kernel.org/r/20250724055029.3623499-1-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reported-by: syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, here is my determination:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees based on the
+following analysis:
 
-1. **Fixes a real build warning/bug**: The commit addresses section
-   mismatch warnings that occur when GCC's inlining heuristics change
-   due to KCOV instrumentation. These warnings indicate potential
-   runtime issues where __init code (which gets discarded after boot)
-   calls non-__init functions, which could lead to crashes if those
-   functions are called after the __init sections are freed.
+1. **Security Fix**: The commit addresses a security vulnerability
+   reported by syzbot
+   (syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com), indicating
+   this is fixing a real bug discovered through fuzzing. The issue could
+   lead to excessive memory allocation in
+   `udf_sb_alloc_partition_maps()`.
 
-2. **Minimal and contained change**: The fix is extremely simple - it
-   only changes one function declaration from `static inline` to `static
-   __always_inline` in arch/arm64/include/asm/acpi.h:153. This is a
-   minimal change with very low risk.
+2. **Integer Overflow/Memory Exhaustion Prevention**: The code adds a
+   crucial bounds check that prevents potentially huge allocations.
+   Without this check, a malformed UDF filesystem could specify an
+   arbitrarily large `numPartitionMaps` value, causing `kcalloc()` in
+   `udf_sb_alloc_partition_maps()` to allocate excessive memory or fail.
 
+3. **Small, Contained Fix**: The change is minimal - only 11 lines added
+   and 2 modified. It adds a simple validation check:
+  ```c
+  if (part_map_count > table_len / sizeof(struct genericPartitionMap1))
+  ```
+  This ensures the partition map count doesn't exceed what can
+  physically fit in the table.
 
-4. **Prevents build regressions**: Without this fix, enabling KCOV
-   instrumentation could cause build failures or warnings in stable
-   kernels, which would be a regression for users who need to use KCOV
-   for testing.
+4. **Clear Bug Fix Pattern**: The fix follows a standard pattern of
+   input validation before allocation, which is a well-understood
+   security best practice. The logic is straightforward: all partition
+   maps must fit within the Logical Volume Descriptor (LVD) block.
 
-5. **Well-understood issue**: The commit message clearly explains the
-   root cause - GCC's fragile inlining heuristics that change based on
-   optimizations/instrumentation. The solution (__always_inline) is a
-   well-established pattern in the kernel for forcing inlining.
+5. **No Feature Changes**: This is purely a defensive check that
+   prevents invalid input from causing problems. It doesn't change any
+   functionality for valid UDF filesystems.
 
-6. **No functional change**: The change only affects compilation
-   behavior by forcing inlining. The actual runtime behavior remains
-   identical - `acpi_get_enable_method()` still calls
-   `acpi_psci_present()` (marked __init) and returns the same values.
+6. **Affects User-Facing Code**: UDF filesystem mounting is user-facing
+   functionality that could be triggered by inserting malicious media or
+   mounting crafted filesystem images, making this an important security
+   boundary.
 
-The specific code change shows `acpi_get_enable_method()` being changed
-from `static inline` to `static __always_inline`. This function calls
-`acpi_psci_present()`, which is marked `__init` (as seen in
-arch/arm64/kernel/acpi.c:110). Without forced inlining, GCC might not
-inline `acpi_get_enable_method()`, resulting in non-__init code calling
-__init code, triggering the section mismatch warning.
+7. **Low Risk of Regression**: The added check only rejects invalid
+   filesystems that would likely cause problems anyway. Valid UDF
+   filesystems will pass this check without issue.
 
-This is exactly the type of targeted, low-risk fix that stable trees are
-meant to include.
+The commit follows stable kernel rules by fixing an important bug
+(potential DoS through memory exhaustion) with minimal, low-risk changes
+to a filesystem that handles untrusted input.
 
- arch/arm64/include/asm/acpi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/super.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index cbf97e648d19..d1ddf5575973 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -141,7 +141,7 @@ acpi_set_mailbox_entry(int cpu, struct acpi_madt_generic_interrupt *processor)
- {}
- #endif
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index 9f2de5e7c6e1..361bc8acfb0f 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1417,7 +1417,7 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 	struct genericPartitionMap *gpm;
+ 	uint16_t ident;
+ 	struct buffer_head *bh;
+-	unsigned int table_len;
++	unsigned int table_len, part_map_count;
+ 	int ret;
  
--static inline const char *acpi_get_enable_method(int cpu)
-+static __always_inline const char *acpi_get_enable_method(int cpu)
- {
- 	if (acpi_psci_present())
- 		return "psci";
+ 	bh = udf_read_tagged(sb, block, block, &ident);
+@@ -1438,7 +1438,16 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 					   "logical volume");
+ 	if (ret)
+ 		goto out_bh;
+-	ret = udf_sb_alloc_partition_maps(sb, le32_to_cpu(lvd->numPartitionMaps));
++
++	part_map_count = le32_to_cpu(lvd->numPartitionMaps);
++	if (part_map_count > table_len / sizeof(struct genericPartitionMap1)) {
++		udf_err(sb, "error loading logical volume descriptor: "
++			"Too many partition maps (%u > %u)\n", part_map_count,
++			table_len / (unsigned)sizeof(struct genericPartitionMap1));
++		ret = -EIO;
++		goto out_bh;
++	}
++	ret = udf_sb_alloc_partition_maps(sb, part_map_count);
+ 	if (ret)
+ 		goto out_bh;
+ 
 -- 
 2.39.5
 
