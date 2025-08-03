@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371901F4612;
-	Sun,  3 Aug 2025 21:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272FA2040A8;
+	Sun,  3 Aug 2025 21:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256040; cv=none; b=OlnRQGHQ8zY8PfH60uoa5gr/l94WBM1wDoK54JcJRDSVsOyuO/QGpWseTBjpoJyjlMMrZTFSzH2cYgeg+j0QPIOOzVASLwKFcuM2cJEyTzXkUKf1YK2y+0c5mEOJ/M648v4vwvbZh8GGKk54YHiSZk6S4Bxrde4uRf4a10fv4rM=
+	t=1754256045; cv=none; b=C3FmezNXprqEqLszGMTvpfpyB5ZIdxkPwuW1dG+GzCHGtGF7XGDyN3bfiva+EB6gyez+RsPNJygGs8YSA17R/JygpgCVkrjQfWTSWhajNnmuIonnk5SOiWJN7Zj5lhNWZ7sVPKKBm2wg8JbAxoVLAqzdJ3bxENiT2Jj1SiYHS+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256040; c=relaxed/simple;
-	bh=xqduM+7UPYooC2P26PRqAhZbtI7xdJSBjRkE/Y6aUNQ=;
+	s=arc-20240116; t=1754256045; c=relaxed/simple;
+	bh=2LK/g5UpKAcQvdGs5mw3rovHeY79/5O62YuslKEy0lY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZHb9Xf/CJBn+76LdPJ/In+cT0fe+YVkNJPNhrfrIbMWgDwJkwrsIPf3EQmHi0BJynqQvbqbnG2hr2WcT0V3qGcXUJYutrWCI6lO53/ylY7ZKIVi4zM3ug2Wgo7e5AaiQ78qtpxxxQluDIymxiLINj9rIAm5wTKwG70UGyovaSEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FrzXVZoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bV/N5z5qnM3VStCKE32144GrzZCUENmg2vZ1h4QIvZogRr/rWqI/3Fsm6r+/+u9rEnS1VdXfoNhMm3IOlUr4EtKB48tuF9xj4QgbnvXURyO3SsTHui70H/B6Rx1JyAUquG+u6/ep+wY9wU1p9FXmSzqElU6W014Pze+t9/lT4Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=czHGulkZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FrzXVZoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C058C4CEF8;
-	Sun,  3 Aug 2025 21:20:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="czHGulkZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F626C4CEF8;
+	Sun,  3 Aug 2025 21:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256040;
-	bh=xqduM+7UPYooC2P26PRqAhZbtI7xdJSBjRkE/Y6aUNQ=;
+	s=k20201202; t=1754256045;
+	bh=2LK/g5UpKAcQvdGs5mw3rovHeY79/5O62YuslKEy0lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FrzXVZoBmzQlL1JtBUloDD+ek0qA5O+GrbthVYF1ku1MWKp1597LRgJR3T3NnM8Ql
-	 DFal+3Vhezz2tYwbCJDZnEpGJpdHvAT/qtXwBP4uxUvb7tzilAU/RNNl3oDfxODxAB
-	 3rxr5MbY1pzC5spyfeFa4a6Csd7BHT4GoC2YX5/wLeDjc+GV0sNEe5J25ZtK+gaquq
-	 NTNrFZTMlA8Zmp6yT3g9REvoPVNyWyYsrUKnXCqdGXfXemmACTkjWPPHsao8eWYeZy
-	 u/cSUt/jqfPNtkeCsQYwb3r2n+9KnmZKXeQt2qr/mv5iTTt6GMhLc2puMmK00NxxcJ
-	 OApiGAbdp2WnA==
+	b=czHGulkZlI2Ow5T9AOhqD69SFd6EQA02fcuwu2960qeGueSdJas8fawXcsA7XXTnD
+	 f1JZLhssiiWdiTUPKfoOER1q0XhPCpc6h67+EALxv9fL88DL/FXRy1z28s+lwK9Gx4
+	 HdkmXb/gPn6um9ZsaOY7UvOqoU1Y+cc45/YX3c3vDQuNNkTyFhbKQ0tDUh1JYXdlgG
+	 VrN2YU7Rh+dOhOVqChg9BhOhksYtE/MFut2YCQteCbslftUQqsF+uZJC/CtZbTUQe0
+	 EaJtIxCU2dxT2kas1VAZtgjLBq8+K5PBi/bFr22tVwdirfZE+cVC8xKLNCZnS7cnYM
+	 TxfFG38UBQ6Tw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
-	Kun Hu <huk23@m.fudan.edu.cn>,
-	Jiaji Qin <jjtan24@m.fudan.edu.cn>,
-	Shuoran Bai <baishuoran@hrbeu.edu.cn>,
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+1107451c16b9eb9d29e6@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>,
 	frank.li@vivo.com,
 	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 03/23] hfsplus: fix slab-out-of-bounds in hfsplus_bnode_read()
-Date: Sun,  3 Aug 2025 17:20:10 -0400
-Message-Id: <20250803212031.3547641-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 05/23] hfsplus: don't use BUG_ON() in hfsplus_create_attributes_file()
+Date: Sun,  3 Aug 2025 17:20:12 -0400
+Message-Id: <20250803212031.3547641-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212031.3547641-1-sashal@kernel.org>
 References: <20250803212031.3547641-1-sashal@kernel.org>
@@ -53,389 +52,98 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit c80aa2aaaa5e69d5219c6af8ef7e754114bd08d2 ]
+[ Upstream commit c7c6363ca186747ebc2df10c8a1a51e66e0e32d9 ]
 
-The hfsplus_bnode_read() method can trigger the issue:
+When the volume header contains erroneous values that do not reflect
+the actual state of the filesystem, hfsplus_fill_super() assumes that
+the attributes file is not yet created, which later results in hitting
+BUG_ON() when hfsplus_create_attributes_file() is called. Replace this
+BUG_ON() with -EIO error with a message to suggest running fsck tool.
 
-[  174.852007][ T9784] ==================================================================
-[  174.852709][ T9784] BUG: KASAN: slab-out-of-bounds in hfsplus_bnode_read+0x2f4/0x360
-[  174.853412][ T9784] Read of size 8 at addr ffff88810b5fc6c0 by task repro/9784
-[  174.854059][ T9784]
-[  174.854272][ T9784] CPU: 1 UID: 0 PID: 9784 Comm: repro Not tainted 6.16.0-rc3 #7 PREEMPT(full)
-[  174.854281][ T9784] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  174.854286][ T9784] Call Trace:
-[  174.854289][ T9784]  <TASK>
-[  174.854292][ T9784]  dump_stack_lvl+0x10e/0x1f0
-[  174.854305][ T9784]  print_report+0xd0/0x660
-[  174.854315][ T9784]  ? __virt_addr_valid+0x81/0x610
-[  174.854323][ T9784]  ? __phys_addr+0xe8/0x180
-[  174.854330][ T9784]  ? hfsplus_bnode_read+0x2f4/0x360
-[  174.854337][ T9784]  kasan_report+0xc6/0x100
-[  174.854346][ T9784]  ? hfsplus_bnode_read+0x2f4/0x360
-[  174.854354][ T9784]  hfsplus_bnode_read+0x2f4/0x360
-[  174.854362][ T9784]  hfsplus_bnode_dump+0x2ec/0x380
-[  174.854370][ T9784]  ? __pfx_hfsplus_bnode_dump+0x10/0x10
-[  174.854377][ T9784]  ? hfsplus_bnode_write_u16+0x83/0xb0
-[  174.854385][ T9784]  ? srcu_gp_start+0xd0/0x310
-[  174.854393][ T9784]  ? __mark_inode_dirty+0x29e/0xe40
-[  174.854402][ T9784]  hfsplus_brec_remove+0x3d2/0x4e0
-[  174.854411][ T9784]  __hfsplus_delete_attr+0x290/0x3a0
-[  174.854419][ T9784]  ? __pfx_hfs_find_1st_rec_by_cnid+0x10/0x10
-[  174.854427][ T9784]  ? __pfx___hfsplus_delete_attr+0x10/0x10
-[  174.854436][ T9784]  ? __asan_memset+0x23/0x50
-[  174.854450][ T9784]  hfsplus_delete_all_attrs+0x262/0x320
-[  174.854459][ T9784]  ? __pfx_hfsplus_delete_all_attrs+0x10/0x10
-[  174.854469][ T9784]  ? rcu_is_watching+0x12/0xc0
-[  174.854476][ T9784]  ? __mark_inode_dirty+0x29e/0xe40
-[  174.854483][ T9784]  hfsplus_delete_cat+0x845/0xde0
-[  174.854493][ T9784]  ? __pfx_hfsplus_delete_cat+0x10/0x10
-[  174.854507][ T9784]  hfsplus_unlink+0x1ca/0x7c0
-[  174.854516][ T9784]  ? __pfx_hfsplus_unlink+0x10/0x10
-[  174.854525][ T9784]  ? down_write+0x148/0x200
-[  174.854532][ T9784]  ? __pfx_down_write+0x10/0x10
-[  174.854540][ T9784]  vfs_unlink+0x2fe/0x9b0
-[  174.854549][ T9784]  do_unlinkat+0x490/0x670
-[  174.854557][ T9784]  ? __pfx_do_unlinkat+0x10/0x10
-[  174.854565][ T9784]  ? __might_fault+0xbc/0x130
-[  174.854576][ T9784]  ? getname_flags.part.0+0x1c5/0x550
-[  174.854584][ T9784]  __x64_sys_unlink+0xc5/0x110
-[  174.854592][ T9784]  do_syscall_64+0xc9/0x480
-[  174.854600][ T9784]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  174.854608][ T9784] RIP: 0033:0x7f6fdf4c3167
-[  174.854614][ T9784] Code: f0 ff ff 73 01 c3 48 8b 0d 26 0d 0e 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 08
-[  174.854622][ T9784] RSP: 002b:00007ffcb948bca8 EFLAGS: 00000206 ORIG_RAX: 0000000000000057
-[  174.854630][ T9784] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f6fdf4c3167
-[  174.854636][ T9784] RDX: 00007ffcb948bcc0 RSI: 00007ffcb948bcc0 RDI: 00007ffcb948bd50
-[  174.854641][ T9784] RBP: 00007ffcb948cd90 R08: 0000000000000001 R09: 00007ffcb948bb40
-[  174.854645][ T9784] R10: 00007f6fdf564fc0 R11: 0000000000000206 R12: 0000561e1bc9c2d0
-[  174.854650][ T9784] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-[  174.854658][ T9784]  </TASK>
-[  174.854661][ T9784]
-[  174.879281][ T9784] Allocated by task 9784:
-[  174.879664][ T9784]  kasan_save_stack+0x20/0x40
-[  174.880082][ T9784]  kasan_save_track+0x14/0x30
-[  174.880500][ T9784]  __kasan_kmalloc+0xaa/0xb0
-[  174.880908][ T9784]  __kmalloc_noprof+0x205/0x550
-[  174.881337][ T9784]  __hfs_bnode_create+0x107/0x890
-[  174.881779][ T9784]  hfsplus_bnode_find+0x2d0/0xd10
-[  174.882222][ T9784]  hfsplus_brec_find+0x2b0/0x520
-[  174.882659][ T9784]  hfsplus_delete_all_attrs+0x23b/0x320
-[  174.883144][ T9784]  hfsplus_delete_cat+0x845/0xde0
-[  174.883595][ T9784]  hfsplus_rmdir+0x106/0x1b0
-[  174.884004][ T9784]  vfs_rmdir+0x206/0x690
-[  174.884379][ T9784]  do_rmdir+0x2b7/0x390
-[  174.884751][ T9784]  __x64_sys_rmdir+0xc5/0x110
-[  174.885167][ T9784]  do_syscall_64+0xc9/0x480
-[  174.885568][ T9784]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  174.886083][ T9784]
-[  174.886293][ T9784] The buggy address belongs to the object at ffff88810b5fc600
-[  174.886293][ T9784]  which belongs to the cache kmalloc-192 of size 192
-[  174.887507][ T9784] The buggy address is located 40 bytes to the right of
-[  174.887507][ T9784]  allocated 152-byte region [ffff88810b5fc600, ffff88810b5fc698)
-[  174.888766][ T9784]
-[  174.888976][ T9784] The buggy address belongs to the physical page:
-[  174.889533][ T9784] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10b5fc
-[  174.890295][ T9784] flags: 0x57ff00000000000(node=1|zone=2|lastcpupid=0x7ff)
-[  174.890927][ T9784] page_type: f5(slab)
-[  174.891284][ T9784] raw: 057ff00000000000 ffff88801b4423c0 ffffea000426dc80 dead000000000002
-[  174.892032][ T9784] raw: 0000000000000000 0000000080100010 00000000f5000000 0000000000000000
-[  174.892774][ T9784] page dumped because: kasan: bad access detected
-[  174.893327][ T9784] page_owner tracks the page as allocated
-[  174.893825][ T9784] page last allocated via order 0, migratetype Unmovable, gfp_mask 0x52c00(GFP_NOIO|__GFP_NOWARN|__GFP_NO1
-[  174.895373][ T9784]  post_alloc_hook+0x1c0/0x230
-[  174.895801][ T9784]  get_page_from_freelist+0xdeb/0x3b30
-[  174.896284][ T9784]  __alloc_frozen_pages_noprof+0x25c/0x2460
-[  174.896810][ T9784]  alloc_pages_mpol+0x1fb/0x550
-[  174.897242][ T9784]  new_slab+0x23b/0x340
-[  174.897614][ T9784]  ___slab_alloc+0xd81/0x1960
-[  174.898028][ T9784]  __slab_alloc.isra.0+0x56/0xb0
-[  174.898468][ T9784]  __kmalloc_noprof+0x2b0/0x550
-[  174.898896][ T9784]  usb_alloc_urb+0x73/0xa0
-[  174.899289][ T9784]  usb_control_msg+0x1cb/0x4a0
-[  174.899718][ T9784]  usb_get_string+0xab/0x1a0
-[  174.900133][ T9784]  usb_string_sub+0x107/0x3c0
-[  174.900549][ T9784]  usb_string+0x307/0x670
-[  174.900933][ T9784]  usb_cache_string+0x80/0x150
-[  174.901355][ T9784]  usb_new_device+0x1d0/0x19d0
-[  174.901786][ T9784]  register_root_hub+0x299/0x730
-[  174.902231][ T9784] page last free pid 10 tgid 10 stack trace:
-[  174.902757][ T9784]  __free_frozen_pages+0x80c/0x1250
-[  174.903217][ T9784]  vfree.part.0+0x12b/0xab0
-[  174.903645][ T9784]  delayed_vfree_work+0x93/0xd0
-[  174.904073][ T9784]  process_one_work+0x9b5/0x1b80
-[  174.904519][ T9784]  worker_thread+0x630/0xe60
-[  174.904927][ T9784]  kthread+0x3a8/0x770
-[  174.905291][ T9784]  ret_from_fork+0x517/0x6e0
-[  174.905709][ T9784]  ret_from_fork_asm+0x1a/0x30
-[  174.906128][ T9784]
-[  174.906338][ T9784] Memory state around the buggy address:
-[  174.906828][ T9784]  ffff88810b5fc580: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-[  174.907528][ T9784]  ffff88810b5fc600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[  174.908222][ T9784] >ffff88810b5fc680: 00 00 00 fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  174.908917][ T9784]                                            ^
-[  174.909481][ T9784]  ffff88810b5fc700: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[  174.910432][ T9784]  ffff88810b5fc780: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-[  174.911401][ T9784] ==================================================================
-
-The reason of the issue that code doesn't check the correctness
-of the requested offset and length. As a result, incorrect value
-of offset or/and length could result in access out of allocated
-memory.
-
-This patch introduces is_bnode_offset_valid() method that checks
-the requested offset value. Also, it introduces
-check_and_correct_requested_length() method that checks and
-correct the requested length (if it is necessary). These methods
-are used in hfsplus_bnode_read(), hfsplus_bnode_write(),
-hfsplus_bnode_clear(), hfsplus_bnode_copy(), and hfsplus_bnode_move()
-with the goal to prevent the access out of allocated memory
-and triggering the crash.
-
-Reported-by: Kun Hu <huk23@m.fudan.edu.cn>
-Reported-by: Jiaji Qin <jjtan24@m.fudan.edu.cn>
-Reported-by: Shuoran Bai <baishuoran@hrbeu.edu.cn>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20250703214804.244077-1-slava@dubeyko.com
+Reported-by: syzbot <syzbot+1107451c16b9eb9d29e6@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=1107451c16b9eb9d29e6
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/7b587d24-c8a1-4413-9b9a-00a33fbd849f@I-love.SAKURA.ne.jp
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I notice I was analyzing the wrong commit. Let me analyze the actual
-commit about hfsplus that was provided.
+**Backport Status: YES**
 
-**YES** - This commit should be backported to stable kernel trees.
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Extensive Explanation:
+1. **Fixes a Critical Bug**: The commit replaces a `BUG_ON()` that could
+   crash the entire system with proper error handling. The original code
+   at line 175 had `BUG_ON(i_size_read(attr_file) != 0);` which would
+   trigger a kernel panic when the HFS+ filesystem metadata is corrupted
+   or inconsistent.
 
-### 1. **Critical Security Bug Fix**
-This commit fixes a serious **slab-out-of-bounds** vulnerability in the
-HFS+ filesystem driver. The KASAN report shows:
-```
-BUG: KASAN: slab-out-of-bounds in hfsplus_bnode_read+0x2f4/0x360
-Read of size 8 at addr ffff88810b5fc6c0 by task repro/9784
-```
-This is a memory safety bug that can lead to kernel crashes and
-potentially security exploits.
+2. **Real-World Issue**: This was reported by syzbot (a kernel fuzzer),
+   indicating it's a reachable code path that can be triggered with
+   malformed filesystem data. The bug report link confirms this is a
+   reproducible issue.
 
-### 2. **Root Cause Analysis**
-The commit message clearly identifies the root cause:
-> "The reason of the issue that code doesn't check the correctness of
-the requested offset and length. As a result, incorrect value of offset
-or/and length could result in access out of allocated memory."
+3. **Simple and Contained Fix**: The change is minimal - it replaces the
+   BUG_ON with:
+  ```c
+  if (i_size_read(attr_file) != 0) {
+  err = -EIO;
+  pr_err("detected inconsistent attributes file, running fsck.hfsplus is
+  recommended.\n");
+  goto end_attr_file_creation;
+  }
+  ```
+  This is a straightforward conversion that maintains the same logic but
+  handles the error gracefully.
 
-The code changes confirm this by adding two new validation functions:
-- `is_bnode_offset_valid()` - validates that offsets don't exceed node
-  boundaries
-- `check_and_correct_requested_length()` - ensures length doesn't cause
-  reads beyond allocated memory
+4. **Prevents System Crashes**: BUG_ON() causes a kernel panic, which is
+   particularly severe. Converting it to return -EIO allows the system
+   to continue running and provides users with actionable guidance (run
+   fsck.hfsplus).
 
-### 3. **Widespread Impact**
-The fix is applied to multiple critical HFS+ bnode operations:
-- `hfs_bnode_read()`
-- `hfs_bnode_write()`
-- `hfs_bnode_clear()`
-- `hfs_bnode_copy()`
-- `hfs_bnode_move()`
+5. **Low Risk of Regression**: The change only affects error handling
+   when filesystem corruption is detected. It doesn't alter normal
+   operation paths and follows established error handling patterns in
+   the kernel.
 
-This indicates the vulnerability affects core filesystem operations that
-are commonly used.
+6. **Follows Stable Tree Rules**: This is a classic example of a stable-
+   worthy fix:
+   - Fixes a real bug (system crash on corrupted filesystem)
+   - Small, easily reviewable change
+   - No new features or architectural changes
+   - High benefit (prevents crashes) with minimal risk
 
-### 4. **Meets Stable Criteria**
-According to stable kernel rules, this commit qualifies because:
-- **Fixes a real bug**: Out-of-bounds memory access that crashes the
-  kernel
-- **Small and contained**: The fix adds simple bounds checking (~150
-  lines)
-- **Already in mainline**: Has been accepted into Linus's tree
-- **No new features**: Only adds safety checks, no functionality changes
-- **Security implications**: Memory corruption bugs are security-
-  relevant
+The commit message clearly indicates this addresses filesystem
+corruption scenarios where "the volume header contains erroneous values
+that do not reflect the actual state of the filesystem," making it an
+important robustness improvement for stable kernels.
 
-### 5. **Minimal Risk of Regression**
-The fix is conservative:
-- Only adds validation checks before existing operations
-- Logs errors when invalid parameters are detected
-- Attempts to correct lengths rather than failing operations
-- Doesn't change the fundamental behavior of working code
+ fs/hfsplus/xattr.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-### 6. **Clear Reproducer**
-The commit includes a detailed KASAN trace from a reproducer, showing:
-- The exact call path through HFS+ deletion operations
-- Memory allocation details
-- The specific out-of-bounds access location
-
-This indicates the bug is reproducible and the fix can be verified.
-
-### 7. **Defensive Programming**
-The added checks follow good defensive programming practices:
-```c
-if (!is_bnode_offset_valid(node, off))
-    return;
-
-len = check_and_correct_requested_length(node, off, len);
-```
-These prevent crashes while maintaining compatibility.
-
-### 8. **Critical Subsystem**
-Filesystem drivers are critical kernel components. Bugs in filesystem
-code can:
-- Lead to data corruption
-- Cause system crashes
-- Be exploited for privilege escalation
-- Affect any user mounting HFS+ filesystems
-
-### Conclusion
-This commit fixes a serious memory safety vulnerability in the HFS+
-filesystem driver that can cause kernel crashes and has potential
-security implications. The fix is well-contained, adds only necessary
-validation checks, and meets all criteria for stable kernel backporting.
-It should be backported to all stable kernels that include the HFS+
-driver to protect users from this vulnerability.
-
- fs/hfsplus/bnode.c | 92 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
-
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index 079ea80534f7..14f4995588ff 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -18,12 +18,68 @@
- #include "hfsplus_fs.h"
- #include "hfsplus_raw.h"
+diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
+index f7f9d0889df3..d5fd8e068486 100644
+--- a/fs/hfsplus/xattr.c
++++ b/fs/hfsplus/xattr.c
+@@ -172,7 +172,11 @@ static int hfsplus_create_attributes_file(struct super_block *sb)
+ 		return PTR_ERR(attr_file);
+ 	}
  
-+static inline
-+bool is_bnode_offset_valid(struct hfs_bnode *node, int off)
-+{
-+	bool is_valid = off < node->tree->node_size;
-+
-+	if (!is_valid) {
-+		pr_err("requested invalid offset: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off);
+-	BUG_ON(i_size_read(attr_file) != 0);
++	if (i_size_read(attr_file) != 0) {
++		err = -EIO;
++		pr_err("detected inconsistent attributes file, running fsck.hfsplus is recommended.\n");
++		goto end_attr_file_creation;
 +	}
-+
-+	return is_valid;
-+}
-+
-+static inline
-+int check_and_correct_requested_length(struct hfs_bnode *node, int off, int len)
-+{
-+	unsigned int node_size;
-+
-+	if (!is_bnode_offset_valid(node, off))
-+		return 0;
-+
-+	node_size = node->tree->node_size;
-+
-+	if ((off + len) > node_size) {
-+		int new_len = (int)node_size - off;
-+
-+		pr_err("requested length has been corrected: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, "
-+		       "requested_len %d, corrected_len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len, new_len);
-+
-+		return new_len;
-+	}
-+
-+	return len;
-+}
-+
- /* Copy a specified range of bytes from the raw data of a node */
- void hfs_bnode_read(struct hfs_bnode *node, void *buf, int off, int len)
- {
- 	struct page **pagep;
- 	int l;
  
-+	if (!is_bnode_offset_valid(node, off))
-+		return;
-+
-+	if (len == 0) {
-+		pr_err("requested zero length: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len);
-+		return;
-+	}
-+
-+	len = check_and_correct_requested_length(node, off, len);
-+
- 	off += node->page_offset;
- 	pagep = node->page + (off >> PAGE_SHIFT);
- 	off &= ~PAGE_MASK;
-@@ -81,6 +137,20 @@ void hfs_bnode_write(struct hfs_bnode *node, void *buf, int off, int len)
- 	struct page **pagep;
- 	int l;
+ 	hip = HFSPLUS_I(attr_file);
  
-+	if (!is_bnode_offset_valid(node, off))
-+		return;
-+
-+	if (len == 0) {
-+		pr_err("requested zero length: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len);
-+		return;
-+	}
-+
-+	len = check_and_correct_requested_length(node, off, len);
-+
- 	off += node->page_offset;
- 	pagep = node->page + (off >> PAGE_SHIFT);
- 	off &= ~PAGE_MASK;
-@@ -109,6 +179,20 @@ void hfs_bnode_clear(struct hfs_bnode *node, int off, int len)
- 	struct page **pagep;
- 	int l;
- 
-+	if (!is_bnode_offset_valid(node, off))
-+		return;
-+
-+	if (len == 0) {
-+		pr_err("requested zero length: "
-+		       "NODE: id %u, type %#x, height %u, "
-+		       "node_size %u, offset %d, len %d\n",
-+		       node->this, node->type, node->height,
-+		       node->tree->node_size, off, len);
-+		return;
-+	}
-+
-+	len = check_and_correct_requested_length(node, off, len);
-+
- 	off += node->page_offset;
- 	pagep = node->page + (off >> PAGE_SHIFT);
- 	off &= ~PAGE_MASK;
-@@ -133,6 +217,10 @@ void hfs_bnode_copy(struct hfs_bnode *dst_node, int dst,
- 	hfs_dbg(BNODE_MOD, "copybytes: %u,%u,%u\n", dst, src, len);
- 	if (!len)
- 		return;
-+
-+	len = check_and_correct_requested_length(src_node, src, len);
-+	len = check_and_correct_requested_length(dst_node, dst, len);
-+
- 	src += src_node->page_offset;
- 	dst += dst_node->page_offset;
- 	src_page = src_node->page + (src >> PAGE_SHIFT);
-@@ -187,6 +275,10 @@ void hfs_bnode_move(struct hfs_bnode *node, int dst, int src, int len)
- 	hfs_dbg(BNODE_MOD, "movebytes: %u,%u,%u\n", dst, src, len);
- 	if (!len)
- 		return;
-+
-+	len = check_and_correct_requested_length(node, src, len);
-+	len = check_and_correct_requested_length(node, dst, len);
-+
- 	src += node->page_offset;
- 	dst += node->page_offset;
- 	if (dst > src) {
 -- 
 2.39.5
 
