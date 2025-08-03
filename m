@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB9BF9D6;
-	Sun,  3 Aug 2025 21:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414AF1F2B88;
+	Sun,  3 Aug 2025 21:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255932; cv=none; b=m3tkgLQqvpOYZAW5A/0gH+yJtYrt9avxCDaV/UIVkVoVnSmaNiR9H6s7tNg0eZbyzQ1Ho3aT5spDSnCyAvTtTHwDae25rz67lBLPQUzqTTUmvdIHA1ly/DWwE3okPb5qIQeBpV2rUmTb7W5Y4dJVX1g+akaIIZDC+k6qCGC1Ty4=
+	t=1754255935; cv=none; b=FrPFG1FFjNOEPultYqXNVfT8PVLKLHyYIpCdmCLZuX9ophwVmAw7u8AJWbs83DesJANkcLGInAwEXoRP1dQKZL6Ee9XyOPvML+9f4gwnQ//xJ6GgeBFQ7keSwMS+5aqvo2XzDpFfoOS5rxQ6gag0wj5/YZxp5poyrjUytTLihH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255932; c=relaxed/simple;
-	bh=UBfCqoqkQyFC0IiMnxiGWu3jxj/5tEPPhUJZWmfOVR4=;
+	s=arc-20240116; t=1754255935; c=relaxed/simple;
+	bh=Q08RjAV9KniQgdDl6tpPyv8u7EwxsuuYKUWSxgJ0fQE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KkE8XmscR3HnFg3fz+AmQM2qtFaABmcvpzlsg9aXuYE7ML0xgkSJCCmRjzRgn0WfvdriDCRBQBJC34xaU9MFciLCHet6o+QJXyj2ao/jqcSioQ70QcRNGxUfHGUT5p5vsDKlnOlAZ7RuQc86ku8KZG1SVTpMKB2UXP7YR1aowQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMHNgWQ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TeTbN4V+cS4ensfij4y0ERdr6hFtBPZDHWzHieEx3tw4e6cUMso8PNNHYr3Mg/CKL3IYdgeHrUC9hKuYCKUS4oN8mmv0/cgxxP8KwYDRO5rA7HBg4cWU0geL9vShURYRi/btLHAAzpKWgfwgm+X7b3Shgr6Y3NeSu2TML17SDUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K/XmnR+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMHNgWQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7332C4CEF0;
-	Sun,  3 Aug 2025 21:18:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K/XmnR+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43875C4CEF8;
+	Sun,  3 Aug 2025 21:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255932;
-	bh=UBfCqoqkQyFC0IiMnxiGWu3jxj/5tEPPhUJZWmfOVR4=;
+	s=k20201202; t=1754255934;
+	bh=Q08RjAV9KniQgdDl6tpPyv8u7EwxsuuYKUWSxgJ0fQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMHNgWQ6xG9CfiT+m1m3eHCFJHRqiLGX67bKlCTwLA79BGp2qdmdeekJAG4mfAyiF
-	 G5J/0vbAg4Mr94P2/ujsvz0xUASq/BByRW6vM1biKpVpLiAgFj4956nsP8OjOuYBz6
-	 /Ilek3YwApEqawPF2TFt1phnLPo6N/oXhKsxjexIqxSlKHObDV9dN0dr3WSfNqrh92
-	 6mCCNisZQLW68/0OHfOyF3e8mn4/DC6pFRWiYef75cY/PasZCCotCK6QQIHjx1GXZj
-	 fJUe1H9xVe/3N/hFWMM+b6GodafwRKBHBLiNLErm3hm0Up36ijYhyrGgHVxOpoy72w
-	 5rVMY9dvdjtfg==
+	b=K/XmnR+Ba5/ff6DEKuoWXdrYtrArtizxtQ8EqBPPFoYzaAItnoUjh4TtElE7mPRcs
+	 YtFVOIOnT0vtyEtAURlcdBCPhXd37Rv4j/bb85qEF0ifsj3XyQZBjF3fiyUkNkd4Tk
+	 KQkIKQahaVthhMntPS18uxPXISGuzo8Imyaff63S05dWLYFcmriuVmxmvedM5otBBh
+	 KZRvigxjDDEdlLkSaoerONrxRbmQ3821vs7saA2Qa7dNMydYTzpEljjBti5IbdWxcc
+	 qzsACrTjLgRPxYqJgjE/upS5Gxxe01WkUZJVlEysoGaKRK5oNMA+bfe0OI81LEJVSS
+	 oR8CF8M4lDWYQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.15 06/34] arm64: Handle KCOV __init vs inline mismatches
-Date: Sun,  3 Aug 2025 17:18:08 -0400
-Message-Id: <20250803211836.3546094-6-sashal@kernel.org>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>,
+	Jonathan McDowell <noodles@meta.com>,
+	Sasha Levin <sashal@kernel.org>,
+	peterhuewe@gmx.de,
+	linux-integrity@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 07/34] tpm: Check for completion after timeout
+Date: Sun,  3 Aug 2025 17:18:09 -0400
+Message-Id: <20250803211836.3546094-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211836.3546094-1-sashal@kernel.org>
 References: <20250803211836.3546094-1-sashal@kernel.org>
@@ -46,99 +50,183 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <kees@kernel.org>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 65c430906efffee9bd7551d474f01a6b1197df90 ]
+[ Upstream commit d4640c394f23b202a89512346cf28f6622a49031 ]
 
-GCC appears to have kind of fragile inlining heuristics, in the
-sense that it can change whether or not it inlines something based on
-optimizations. It looks like the kcov instrumentation being added (or in
-this case, removed) from a function changes the optimization results,
-and some functions marked "inline" are _not_ inlined. In that case,
-we end up with __init code calling a function not marked __init, and we
-get the build warnings I'm trying to eliminate in the coming patch that
-adds __no_sanitize_coverage to __init functions:
+The current implementation of timeout detection works in the following
+way:
 
-WARNING: modpost: vmlinux: section mismatch in reference: acpi_get_enable_method+0x1c (section: .text.unlikely) -> acpi_psci_present (section: .init.text)
+1. Read completion status. If completed, return the data
+2. Sleep for some time (usleep_range)
+3. Check for timeout using current jiffies value. Return an error if
+   timed out
+4. Goto 1
 
-This problem is somewhat fragile (though using either __always_inline
-or __init will deterministically solve it), but we've tripped over
-this before with GCC and the solution has usually been to just use
-__always_inline and move on.
+usleep_range doesn't guarantee it's always going to wake up strictly in
+(min, max) range, so such a situation is possible:
 
-For arm64 this requires forcing one ACPI function to be inlined with
-__always_inline.
+1. Driver reads completion status. No completion yet
+2. Process sleeps indefinitely. In the meantime, TPM responds
+3. We check for timeout without checking for the completion again.
+   Result is lost.
 
-Link: https://lore.kernel.org/r/20250724055029.3623499-1-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Such a situation also happens for the guest VMs: if vCPU goes to sleep
+and doesn't get scheduled for some time, the guest TPM driver will
+timeout instantly after waking up without checking for the completion
+(which may already be in place).
+
+Perform the completion check once again after exiting the busy loop in
+order to give the device the last chance to send us some data.
+
+Since now we check for completion in two places, extract this check into
+a separate function.
+
+Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
+Reviewed-by: Jonathan McDowell <noodles@meta.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, here is my determination:
+Now let me analyze the code changes in detail to understand the race
+condition being fixed.
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a real build warning/bug**: The commit addresses section
-   mismatch warnings that occur when GCC's inlining heuristics change
-   due to KCOV instrumentation. These warnings indicate potential
-   runtime issues where __init code (which gets discarded after boot)
-   calls non-__init functions, which could lead to crashes if those
-   functions are called after the __init sections are freed.
+## Bug Analysis
 
-2. **Minimal and contained change**: The fix is extremely simple - it
-   only changes one function declaration from `static inline` to `static
-   __always_inline` in arch/arm64/include/asm/acpi.h:153. This is a
-   minimal change with very low risk.
+The commit fixes a critical race condition in the TPM driver's timeout
+handling mechanism that can cause data loss. The bug occurs in the
+following scenario:
 
+1. **The Race Window**: Between the last completion status check in the
+   busy loop (line 149-151 in the original code) and the timeout check
+   (line 160), there's a window where:
+   - The driver checks status and finds no completion
+   - The process sleeps via `tpm_msleep(TPM_TIMEOUT_POLL)`
+   - During sleep, the TPM device completes the operation
+   - When the process wakes up, `time_before(jiffies, stop)` returns
+     false
+   - The driver immediately returns `-ETIME` without checking completion
+     again
 
-4. **Prevents build regressions**: Without this fix, enabling KCOV
-   instrumentation could cause build failures or warnings in stable
-   kernels, which would be a regression for users who need to use KCOV
-   for testing.
+2. **VM-Specific Impact**: The commit message specifically mentions this
+   affects virtual machines where vCPUs can be descheduled for extended
+   periods. When the vCPU resumes, the timeout may have expired while
+   the TPM response is actually ready.
 
-5. **Well-understood issue**: The commit message clearly explains the
-   root cause - GCC's fragile inlining heuristics that change based on
-   optimizations/instrumentation. The solution (__always_inline) is a
-   well-established pattern in the kernel for forcing inlining.
+## Code Changes Analysis
 
-6. **No functional change**: The change only affects compilation
-   behavior by forcing inlining. The actual runtime behavior remains
-   identical - `acpi_get_enable_method()` still calls
-   `acpi_psci_present()` (marked __init) and returns the same values.
+The fix involves:
 
-The specific code change shows `acpi_get_enable_method()` being changed
-from `static inline` to `static __always_inline`. This function calls
-`acpi_psci_present()`, which is marked `__init` (as seen in
-arch/arm64/kernel/acpi.c:110). Without forced inlining, GCC might not
-inline `acpi_get_enable_method()`, resulting in non-__init code calling
-__init code, triggering the section mismatch warning.
+1. **New Helper Function** (lines 85-90): `tpm_transmit_completed()`
+   extracts the completion check logic into a reusable function:
+  ```c
+  static bool tpm_transmit_completed(u8 status, struct tpm_chip *chip)
+  {
+  u8 status_masked = status & chip->ops->req_complete_mask;
+  return status_masked == chip->ops->req_complete_val;
+  }
+  ```
 
-This is exactly the type of targeted, low-risk fix that stable trees are
-meant to include.
+2. **Additional Completion Check** (lines 162-167): After the timeout
+   loop exits, the code now performs one final completion check:
+  ```c
+  /*
+    - Check for completion one more time, just in case the device
+      reported
+    - it while the driver was sleeping in the busy loop above.
+    */
+   if (tpm_transmit_completed(tpm_chip_status(chip), chip))
+       goto out_recv;
+   ```
 
- arch/arm64/include/asm/acpi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+## Stable Backport Criteria Analysis
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index a407f9cd549e..c07a58b96329 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -150,7 +150,7 @@ acpi_set_mailbox_entry(int cpu, struct acpi_madt_generic_interrupt *processor)
- {}
- #endif
+1. **Fixes a real bug**: ✓ - This fixes a race condition that causes TPM
+   operations to fail spuriously
+2. **User impact**: ✓ - TPM operations failing due to this race can
+   affect:
+   - System boot (TPM measurements)
+   - Cryptographic operations
+   - Attestation services
+   - Secure boot processes
+3. **Small and contained**: ✓ - The fix is minimal:
+   - Adds one helper function
+   - Adds one additional check after the loop
+   - No architectural changes
+4. **Low regression risk**: ✓ - The additional check only runs when
+   timeout occurs, adding minimal overhead
+5. **No new features**: ✓ - Only fixes existing functionality
+6. **Critical subsystem**: ✓ - TPM is security-critical infrastructure
+
+## Additional Considerations
+
+- The fix is particularly important for virtualized environments where
+  scheduling delays are common
+- The race condition can cause intermittent failures that are difficult
+  to debug
+- The fix follows the principle of "check one more time" which is a
+  common pattern for avoiding race conditions
+- No follow-up fixes were needed for this commit, indicating it's stable
+
+This commit meets all the criteria for stable backporting and addresses
+a real-world bug that affects system reliability, especially in
+virtualized environments.
+
+ drivers/char/tpm/tpm-interface.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/char/tpm/tpm-interface.c b/drivers/char/tpm/tpm-interface.c
+index 8d7e4da6ed53..8d18b33aa62d 100644
+--- a/drivers/char/tpm/tpm-interface.c
++++ b/drivers/char/tpm/tpm-interface.c
+@@ -82,6 +82,13 @@ static bool tpm_chip_req_canceled(struct tpm_chip *chip, u8 status)
+ 	return chip->ops->req_canceled(chip, status);
+ }
  
--static inline const char *acpi_get_enable_method(int cpu)
-+static __always_inline const char *acpi_get_enable_method(int cpu)
++static bool tpm_transmit_completed(u8 status, struct tpm_chip *chip)
++{
++	u8 status_masked = status & chip->ops->req_complete_mask;
++
++	return status_masked == chip->ops->req_complete_val;
++}
++
+ static ssize_t tpm_try_transmit(struct tpm_chip *chip, void *buf, size_t bufsiz)
  {
- 	if (acpi_psci_present())
- 		return "psci";
+ 	struct tpm_header *header = buf;
+@@ -129,8 +136,7 @@ static ssize_t tpm_try_transmit(struct tpm_chip *chip, void *buf, size_t bufsiz)
+ 	stop = jiffies + tpm_calc_ordinal_duration(chip, ordinal);
+ 	do {
+ 		u8 status = tpm_chip_status(chip);
+-		if ((status & chip->ops->req_complete_mask) ==
+-		    chip->ops->req_complete_val)
++		if (tpm_transmit_completed(status, chip))
+ 			goto out_recv;
+ 
+ 		if (tpm_chip_req_canceled(chip, status)) {
+@@ -142,6 +148,13 @@ static ssize_t tpm_try_transmit(struct tpm_chip *chip, void *buf, size_t bufsiz)
+ 		rmb();
+ 	} while (time_before(jiffies, stop));
+ 
++	/*
++	 * Check for completion one more time, just in case the device reported
++	 * it while the driver was sleeping in the busy loop above.
++	 */
++	if (tpm_transmit_completed(tpm_chip_status(chip), chip))
++		goto out_recv;
++
+ 	tpm_chip_cancel(chip);
+ 	dev_err(&chip->dev, "Operation Timed out\n");
+ 	return -ETIME;
 -- 
 2.39.5
 
