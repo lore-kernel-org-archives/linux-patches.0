@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DA5155CBD;
-	Sun,  3 Aug 2025 21:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522ED155CBD;
+	Sun,  3 Aug 2025 21:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256208; cv=none; b=h961A7quT9QtbyeZOVgHgCFTrgSL7w/Jk05ULBH9SXyXaUTZk5qDq16tMWViTW3IM5MujQP75oYHVGa/f1dNdYxHtmmccoIHBdBe5L4fjJG9nYh/t0UVijx+E0dwempTYu/JmLnBNIvcx/k6RQshRe5dt9eAqcoZI3+HVwHzPsY=
+	t=1754256211; cv=none; b=r2Oo3nePr/XMo0acV/CqY5Vrc0mygtpkBRjRqrzvtKTh7D243Az6Ym9dHOAInumIy7Yqku1LR/qvt/w1hva8hDQNq4BupmgorB9E6I5HiwYJky70dJrzQdJGk9umN6ZKH/zduM2n5LAD/JE76TJzz4/207TbT1+2zEOFdjc8kSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256208; c=relaxed/simple;
-	bh=Xz0qXBXassRqVnxlrXrAVFGa0XgFnmgYBvILCHLENWY=;
+	s=arc-20240116; t=1754256211; c=relaxed/simple;
+	bh=ypW0rxu6CPke5sHwiG6FaiHwUEHIiqglPxR7OI4ZONk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IGSmpczVCImy8BLLEfCAAhjov86f9almhcOWhJsj51NWpqOiRBoZ/y6X/22Qcx0k+Dv/ISXDDqrI/BiwNL07zIczRA9Odp2Ryyg5DNTc8SGqmQQj/BURSVAWS5UfLdiSXU/9ryBlVKhgrulE2q6yUGPE74JaplqIL+Yn+QHtcMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EThaOxpZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MfKK+EX6ulXX3KnL70eh26s8CTEVDJ69RJi3f3HlhujUmsWMGlyJ0hL22NHZ++o9kFjVJNQnpDNYqabz44Izij36Hw4aCguY3cZ1nOHrooY/HmMjofTzkl4FULGu+YWPRsWwxGlPadtV45XNxeMfrMd0ZEHj3XoTVpZYJoctn3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=avkK870b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EThaOxpZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE13C4CEEB;
-	Sun,  3 Aug 2025 21:23:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="avkK870b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA22C4CEF0;
+	Sun,  3 Aug 2025 21:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256208;
-	bh=Xz0qXBXassRqVnxlrXrAVFGa0XgFnmgYBvILCHLENWY=;
+	s=k20201202; t=1754256210;
+	bh=ypW0rxu6CPke5sHwiG6FaiHwUEHIiqglPxR7OI4ZONk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EThaOxpZ18kAU48xtOSR0iN5B/0accQY+SqBuPBvU2RH3Y1IiepvtfMO897rlPNYX
-	 UQOJHM6zpSwwzhQEvPSAVph0SgWqR0oKPqPwtv6a+eO6cBSrwrnY5kWeWflt5cnDJC
-	 nTN++jW90PV46efolJuzlnSuVfhbRI96KD78p50cgJXqdNZgQJBWTLKktDs4iRf/2+
-	 vXG6pkshvEozrkylDEZU8XIZxs/4lGwRXI0E1q5I6aNWBElVZw/ItsMy6rz8HmcLB5
-	 uQOG+kAWZ8OoeI+1q0G1NKhDMcJzk+/jAaESf+rujDzBwANJJPbMi5OU4k2uMKsntT
-	 aWN3DFfbIxVoQ==
+	b=avkK870bD3f7OG2qsyezVfMu4ZYZMj4UJuM/FGfNe/gpLyawlwiSdLIx4gKAXvyBn
+	 n1rz4ZpVcNE/pP/RmvKd2xE8kFvOZORw9jnHUz2IqpEyMfrgRt8726AYDEG+to4Wum
+	 w4d8oq5A/WiBLkWCqInDNOuG7DfwOMMrSOvpErc7NjX578hWeVPSy6vx0HLIjYwNpg
+	 7v0lyqkStGL49diCarbzsVDwFwLzLrZwryApN1CEX/P6kkZIIO4K0E8iSWgd6VODP9
+	 bgV+gbzvH4aq4CADy4COweofVIE/iLq6Nh3bD6U+Fqem/WaSUQQ68ff52Di2DIH3hH
+	 qTf/lMa5QdguA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>,
-	frank.li@vivo.com,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 8/9] hfs: fix not erasing deleted b-tree node issue
-Date: Sun,  3 Aug 2025 17:23:08 -0400
-Message-Id: <20250803212309.3549683-8-sashal@kernel.org>
+	paul@paul-moore.com,
+	jmorris@namei.org,
+	serge@hallyn.com,
+	linux-security-module@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 9/9] securityfs: don't pin dentries twice, once is enough...
+Date: Sun,  3 Aug 2025 17:23:09 -0400
+Message-Id: <20250803212309.3549683-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212309.3549683-1-sashal@kernel.org>
 References: <20250803212309.3549683-1-sashal@kernel.org>
@@ -51,159 +52,111 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.296
 Content-Transfer-Encoding: 8bit
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit d3ed6d6981f4756f145766753c872482bc3b28d3 ]
+[ Upstream commit 27cd1bf1240d482e4f02ca4f9812e748f3106e4f ]
 
-The generic/001 test of xfstests suite fails and corrupts
-the HFS volume:
+incidentally, securityfs_recursive_remove() is broken without that -
+it leaks dentries, since simple_recursive_removal() does not expect
+anything of that sort.  It could be worked around by dput() in
+remove_one() callback, but it's easier to just drop that double-get
+stuff.
 
-sudo ./check generic/001
-FSTYP         -- hfs
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2>
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/001 32s ... _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
-(see /home/slavad/XFSTESTS-2/xfstests-dev/results//generic/001.full for details)
-
-Ran: generic/001
-Failures: generic/001
-Failed 1 of 1 tests
-
-fsck.hfs -d -n ./test-image.bin
-** ./test-image.bin (NO WRITE)
-	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-   Executing fsck_hfs (version 540.1-Linux).
-** Checking HFS volume.
-   The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-   Unused node is not erased (node = 2)
-   Unused node is not erased (node = 4)
-<skipped>
-   Unused node is not erased (node = 253)
-   Unused node is not erased (node = 254)
-   Unused node is not erased (node = 255)
-   Unused node is not erased (node = 256)
-** Checking catalog hierarchy.
-** Checking volume bitmap.
-** Checking volume information.
-   Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0000
-                  CBTStat = 0x0004 CatStat = 0x00000000
-** The volume untitled was found corrupt and needs to be repaired.
-	volume type is HFS
-	primary MDB is at block 2 0x02
-	alternate MDB is at block 20971518 0x13ffffe
-	primary VHB is at block 0 0x00
-	alternate VHB is at block 0 0x00
-	sector size = 512 0x200
-	VolumeObject flags = 0x19
-	total sectors for volume = 20971520 0x1400000
-	total sectors for embedded volume = 0 0x00
-
-This patch adds logic of clearing the deleted b-tree node.
-
-sudo ./check generic/001
-FSTYP         -- hfs
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc2+ #3 SMP PREEMPT_DYNAMIC Fri Apr 25 17:13:00 PDT 2025
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/001 9s ...  32s
-Ran: generic/001
-Passed all 1 tests
-
-fsck.hfs -d -n ./test-image.bin
-** ./test-image.bin (NO WRITE)
-	Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-   Executing fsck_hfs (version 540.1-Linux).
-** Checking HFS volume.
-   The volume name is untitled
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking catalog hierarchy.
-** Checking volume bitmap.
-** Checking volume information.
-** The volume untitled appears to be OK.
-
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20250430001211.1912533-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the surrounding code, I can now
-provide a determination on whether this should be backported to stable
-kernel trees.
+Now I have a clear understanding of the issue. Let me analyze this:
 
-**Backport Status: YES**
+**YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's the
+extensive analysis:
 
-1. **Fixes a real bug that causes filesystem corruption**: The commit
-   fixes a bug where deleted b-tree nodes in HFS filesystems are not
-   properly erased, leading to filesystem corruption that is detected by
-   fsck.hfs. The commit message shows clear evidence of filesystem
-   corruption with "Unused node is not erased" errors across multiple
-   nodes (2, 4, 253-256).
+## Analysis of the Double Dentry Reference Issue
 
-2. **Small and contained fix**: The patch is only 1 line of code
-   addition (`hfs_bnode_clear(node, 0, tree->node_size);`), well within
-   the 100-line stable tree limit. The fix is localized to the HFS
-   b-tree node management code and doesn't affect other subsystems.
+The commit fixes a clear bug in securityfs where dentries are being
+pinned twice:
 
-3. **Obviously correct**: The fix adds a missing step that already
-   exists in the HFS+ implementation. Looking at
-   fs/hfsplus/bnode.c:728-729, the HFS+ code already calls
-   `hfs_bnode_clear()` when deleting b-tree nodes (conditionally based
-   on a volume attribute). The HFS code was missing this critical step
-   entirely.
+1. **The Bug**: In `securityfs_create_dentry()` at line 162, there's a
+   `dget(dentry)` call immediately after `d_instantiate(dentry, inode)`.
+   This creates an extra reference count on the dentry that is never
+   properly balanced.
 
-4. **Tested with concrete results**: The commit message includes before
-   and after test results using xfstests generic/001, showing that the
-   filesystem corruption is resolved after applying the patch. The
-   "after" test shows "The volume untitled appears to be OK" from
-   fsck.hfs.
+2. **Impact on `securityfs_remove()`**: The traditional
+   `securityfs_remove()` function does call `dput(dentry)` at line 309,
+   which would balance the extra `dget()`. However, this only happens
+   for the simple remove case.
 
-5. **Data corruption prevention**: Without this fix, HFS filesystems can
-   become corrupted during normal operations that involve b-tree node
-   deletion, potentially leading to data loss. This is a serious issue
-   that affects filesystem integrity.
+3. **Critical Impact on `securityfs_recursive_remove()`**: The newly
+   added `securityfs_recursive_remove()` function (added in commit
+   7138679ff2a2) uses `simple_recursive_removal()` which expects normal
+   dentry reference counting. The `simple_recursive_removal()` function
+   in fs/libfs.c:
+   - Takes its own reference with `dget(dentry)` at the beginning
+   - Properly releases references with `dput()` calls throughout its
+     execution
+   - Does NOT expect the dentries to have extra references
 
-6. **No architectural changes**: The commit doesn't introduce any new
-   features or architectural changes - it simply adds a missing cleanup
-   step that should have been there all along.
+4. **The Leak**: When `securityfs_recursive_remove()` is called, the
+   extra reference from the `dget()` in `securityfs_create_dentry()` is
+   never released because:
+   - `simple_recursive_removal()` only releases the references it takes
+   - The `remove_one()` callback only calls `simple_release_fs()` but
+     doesn't do any `dput()`
+   - This results in dentries being leaked with a refcount that never
+     reaches zero
 
-7. **Low regression risk**: The `hfs_bnode_clear()` function being
-   called already exists and is used elsewhere in the HFS code. The fix
-   follows the established pattern from HFS+ and uses existing, tested
-   infrastructure.
+5. **Pattern Consistency**: Looking at similar filesystem
+   implementations like debugfs (fs/debugfs/inode.c), they do NOT add an
+   extra `dget()` after `d_instantiate()`. The pattern is simply:
+  ```c
+  d_instantiate(dentry, inode);
+  return end_creating(dentry);
+  ```
+  No extra reference is taken.
 
-The commit meets all the stable kernel rules criteria: it fixes a real
-bug that causes filesystem corruption, is small and contained, is
-obviously correct (matches HFS+ implementation), and has been tested to
-resolve the issue.
+6. **Backport Criteria Met**:
+   - **Fixes a real bug**: Memory leak of dentries when using
+     `securityfs_recursive_remove()`
+   - **Small and contained**: Single-line removal in two locations
+   - **No side effects**: Removing the extra `dget()` brings the code in
+     line with standard VFS patterns
+   - **Low regression risk**: The fix makes securityfs consistent with
+     other similar filesystems
+   - **Important for stability**: Memory leaks in kernel filesystem code
+     can accumulate over time
 
- fs/hfs/bnode.c | 1 +
- 1 file changed, 1 insertion(+)
+The commit message clearly identifies this as a bug fix
+("securityfs_recursive_remove() is broken without that - it leaks
+dentries"), and the fix is minimal and correct. This makes it an ideal
+candidate for stable backporting.
 
-diff --git a/fs/hfs/bnode.c b/fs/hfs/bnode.c
-index 2039cb6d5f66..219e3b8fd6a8 100644
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -586,6 +586,7 @@ void hfs_bnode_put(struct hfs_bnode *node)
- 		if (test_bit(HFS_BNODE_DELETED, &node->flags)) {
- 			hfs_bnode_unhash(node);
- 			spin_unlock(&tree->hash_lock);
-+			hfs_bnode_clear(node, 0, tree->node_size);
- 			hfs_bmap_free(node);
- 			hfs_bnode_free(node);
- 			return;
+ security/inode.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/security/inode.c b/security/inode.c
+index 6c326939750d..e6e07787eec9 100644
+--- a/security/inode.c
++++ b/security/inode.c
+@@ -159,7 +159,6 @@ static struct dentry *securityfs_create_dentry(const char *name, umode_t mode,
+ 		inode->i_fop = fops;
+ 	}
+ 	d_instantiate(dentry, inode);
+-	dget(dentry);
+ 	inode_unlock(dir);
+ 	return dentry;
+ 
+@@ -306,7 +305,6 @@ void securityfs_remove(struct dentry *dentry)
+ 			simple_rmdir(dir, dentry);
+ 		else
+ 			simple_unlink(dir, dentry);
+-		dput(dentry);
+ 	}
+ 	inode_unlock(dir);
+ 	simple_release_fs(&mount, &mount_count);
 -- 
 2.39.5
 
