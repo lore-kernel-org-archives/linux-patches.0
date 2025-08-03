@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5A120F076;
-	Sun,  3 Aug 2025 21:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887E3215F6B;
+	Sun,  3 Aug 2025 21:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256103; cv=none; b=eL5g5L0Qmuqqw+ZH4WcGrYn3o6VrKx59/iqrbfBNNIph+5OCQP7DbMe7Da87U5xWUw+WrUsRZtBvQETyXVXKWSJaQmPrRzVPt3A2ch08XzhvyBbc+sx0JaHJQra+wpb3QyP06oDm50ndXyLABnNTwvV1QmHr3iFDwTKY1gKSftc=
+	t=1754256105; cv=none; b=hW5ruIWfi5DZtyQtxtvcf6co5C9n5xjKmcPigu/XXEfzYffGF7P17ayUeqcwk5tgEnZEPkA9YBt7dJg6na8GY2tFZeF/51LjCwUwi0MdlTkhRQfO7qUN0RMdFXkIdyLSwBVthwyVGxEzeAzgl2oq6do8ud5rpnXghBPbAZEDmLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256103; c=relaxed/simple;
-	bh=o7LNMXG5wsUTLLMrhOYXm6RvzrNO5p37SSGbgKbQFEA=;
+	s=arc-20240116; t=1754256105; c=relaxed/simple;
+	bh=4/RMrSbP7Sh5wcs1ijQzctCVO4DMZUYEMSLXmicyTqc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TzL7rfGdsa+alDIO7A9XljJSI4jPlS9agZaG/nZNhGodCsNIPs8bQGt9DtbmnTMSNzoP1f90eOR8M3DChfZOsh8mAUFS2MIFoHvE1FlcAX84SKHTtloJTx1uEyx/cDP8H35tL8BxMVt+H4Pmi1yewB8IPTTpADiifp1lqQJYuos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HOioW1lX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YOxFPv1CuoOtk9sMxtE50juZabTXDH4AJTVlkIhWwhk3u/l5YEi5mz1IxwM/61p0ZJxVF4UYVMwucYgum661EzAxC5lrNUgYuE2wxVZpWefFKQi62XRitCFd9mseHPzkAX2ol1msoZMGER6sHq1VOX0XYZ+h3Bo6UreUFRViRLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TZdtIaL8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HOioW1lX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20261C4CEEB;
-	Sun,  3 Aug 2025 21:21:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TZdtIaL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3577CC4CEEB;
+	Sun,  3 Aug 2025 21:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256103;
-	bh=o7LNMXG5wsUTLLMrhOYXm6RvzrNO5p37SSGbgKbQFEA=;
+	s=k20201202; t=1754256105;
+	bh=4/RMrSbP7Sh5wcs1ijQzctCVO4DMZUYEMSLXmicyTqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOioW1lXlz0Vm67RnFAnetLwxR6IwxocE+kHT3f1Iv9qoofzzIMvRzoo2bJBeuDmU
-	 n9TbabnSchUY3UW61ACFZiylMg+BsfDz9+U+GKCQvfVN3A+X5eSWX6kmZvIyoPZ8Ah
-	 UsBtcR9ILyX3vtcHs4DHlrd36Lo+C8NFk4AGFTpLvHNM63EawjHwAi+OcUBb9/LQ8P
-	 ee8BjaG/dLRo7yaoE3hDT2lRPA6JiYPcX+YDI3vNr4y54UKbpFwhySZE8YqLGlStSd
-	 XWiUcvYJ3RbIz819mXHxO8EdwpGgPKSAEd8RRNPb9cgbBRlVuA+zKMjObD8eobV0WU
-	 GXL5gUlnG2Xvw==
+	b=TZdtIaL8oG5Tbg+iNywLl6Hgp+acSVkLygb18bZu/WaFaStdVarOF8pdVs9BEvQt8
+	 0HxphQLuLLp6rf7T20g4CG+g4Xur6wSIj2G+//RvOzw/rn43sDGzVnBDSTicd4SFsF
+	 cNfmjsBdfAa/wZ+Kc+NRzu5KMz7X2tRNp4xmTzNHxanass7ivDzJhnsFY0HXOO8yqn
+	 Di3uDfRtuzOVZqWVSe27qSK2EhLyRFfgFgZz1bYgkh2pHPDNnXVaPFNg492BaUvOU+
+	 L1ZFREsVz5lbbea8FHotzb67Hef7c7Mm9xP7VXsEAW7E7qYSdnFOwKtEZDn4bfXwDI
+	 fv/ZXfUIIXpog==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: NeilBrown <neil@brown.name>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Jan Kara <jack@suse.cz>,
+	syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 06/16] smb/server: avoid deadlock when linking with ReplaceIfExists
-Date: Sun,  3 Aug 2025 17:21:16 -0400
-Message-Id: <20250803212127.3548367-6-sashal@kernel.org>
+	jack@suse.com
+Subject: [PATCH AUTOSEL 6.1 07/16] udf: Verify partition map count
+Date: Sun,  3 Aug 2025 17:21:17 -0400
+Message-Id: <20250803212127.3548367-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212127.3548367-1-sashal@kernel.org>
 References: <20250803212127.3548367-1-sashal@kernel.org>
@@ -52,25 +50,16 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.147
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neil@brown.name>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit d5fc1400a34b4ea5e8f2ce296ea12bf8c8421694 ]
+[ Upstream commit 1a11201668e8635602577dcf06f2e96c591d8819 ]
 
-If smb2_create_link() is called with ReplaceIfExists set and the name
-does exist then a deadlock will happen.
+Verify that number of partition maps isn't insanely high which can lead
+to large allocation in udf_sb_alloc_partition_maps(). All partition maps
+have to fit in the LVD which is in a single block.
 
-ksmbd_vfs_kern_path_locked() will return with success and the parent
-directory will be locked.  ksmbd_vfs_remove_file() will then remove the
-file.  ksmbd_vfs_link() will then be called while the parent is still
-locked.  It will try to lock the same parent and will deadlock.
-
-This patch moves the ksmbd_vfs_kern_path_unlock() call to *before*
-ksmbd_vfs_link() and then simplifies the code, removing the file_present
-flag variable.
-
-Signed-off-by: NeilBrown <neil@brown.name>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -78,117 +67,86 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees based on the
+following analysis:
 
-## Bug Analysis
+1. **Security Fix**: The commit addresses a security vulnerability
+   reported by syzbot
+   (syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com), indicating
+   this is fixing a real bug discovered through fuzzing. The issue could
+   lead to excessive memory allocation in
+   `udf_sb_alloc_partition_maps()`.
 
-This commit fixes a critical **deadlock** issue in the ksmbd (SMB
-server) subsystem. The deadlock occurs in the `smb2_create_link()`
-function when creating a hard link with the `ReplaceIfExists` flag set
-and the target file already exists.
+2. **Integer Overflow/Memory Exhaustion Prevention**: The code adds a
+   crucial bounds check that prevents potentially huge allocations.
+   Without this check, a malformed UDF filesystem could specify an
+   arbitrarily large `numPartitionMaps` value, causing `kcalloc()` in
+   `udf_sb_alloc_partition_maps()` to allocate excessive memory or fail.
 
-### Deadlock Sequence:
+3. **Small, Contained Fix**: The change is minimal - only 11 lines added
+   and 2 modified. It adds a simple validation check:
+  ```c
+  if (part_map_count > table_len / sizeof(struct genericPartitionMap1))
+  ```
+  This ensures the partition map count doesn't exceed what can
+  physically fit in the table.
 
-1. `ksmbd_vfs_kern_path_locked()` is called and locks the parent
-   directory
-2. If the file exists and `ReplaceIfExists` is true,
-   `ksmbd_vfs_remove_file()` is called while the parent is still locked
-3. `ksmbd_vfs_link()` is then called, which attempts to lock the same
-   parent directory again
-4. **Result: Deadlock** - the function tries to acquire a lock it
-   already holds
+4. **Clear Bug Fix Pattern**: The fix follows a standard pattern of
+   input validation before allocation, which is a well-understood
+   security best practice. The logic is straightforward: all partition
+   maps must fit within the Logical Volume Descriptor (LVD) block.
 
-### Fix Implementation:
+5. **No Feature Changes**: This is purely a defensive check that
+   prevents invalid input from causing problems. It doesn't change any
+   functionality for valid UDF filesystems.
 
-The fix reorders the operations by:
-- Moving the `ksmbd_vfs_kern_path_unlock()` call to execute **before**
-  `ksmbd_vfs_link()`
-- This ensures the parent directory is unlocked before attempting the
-  link operation
-- The code is also simplified by removing the `file_present` flag
-  variable
+6. **Affects User-Facing Code**: UDF filesystem mounting is user-facing
+   functionality that could be triggered by inserting malicious media or
+   mounting crafted filesystem images, making this an important security
+   boundary.
 
-## Backport Justification:
+7. **Low Risk of Regression**: The added check only rejects invalid
+   filesystems that would likely cause problems anyway. Valid UDF
+   filesystems will pass this check without issue.
 
-1. **Critical Bug**: This fixes a deadlock that can hang the kernel's
-   SMB server functionality
-2. **User Impact**: The deadlock can be triggered by normal SMB
-   operations (creating hard links with replace), affecting file server
-   availability
-3. **Small and Contained**: The fix is minimal - just reordering
-   function calls and simplifying logic
-4. **No Architectural Changes**: This is a straightforward bug fix with
-   no feature additions
-5. **Low Risk**: The change only affects the specific error path in link
-   creation
-6. **Similar to Other Fixes**: The kernel has accepted similar deadlock
-   fixes in ksmbd (e.g., commit 864fb5d37163 "ksmbd: fix possible
-   deadlock in smb2_open")
+The commit follows stable kernel rules by fixing an important bug
+(potential DoS through memory exhaustion) with minimal, low-risk changes
+to a filesystem that handles untrusted input.
 
-## Code Quality:
+ fs/udf/super.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-The fix properly maintains the locking semantics while avoiding the
-deadlock. The simplified code flow makes the logic clearer and less
-error-prone.
-
-This is exactly the type of bug fix that stable kernels should receive -
-it fixes a real issue that affects users, has minimal risk of
-regression, and improves system stability.
-
- fs/smb/server/smb2pdu.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
-
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index a04413095b23..cfc48223b74e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5638,7 +5638,6 @@ static int smb2_create_link(struct ksmbd_work *work,
- {
- 	char *link_name = NULL, *target_name = NULL, *pathname = NULL;
- 	struct path path, parent_path;
--	bool file_present = false;
- 	int rc;
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index fa790be4f19f..a186d2418b50 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1410,7 +1410,7 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 	struct genericPartitionMap *gpm;
+ 	uint16_t ident;
+ 	struct buffer_head *bh;
+-	unsigned int table_len;
++	unsigned int table_len, part_map_count;
+ 	int ret;
  
- 	if (buf_len < (u64)sizeof(struct smb2_file_link_info) +
-@@ -5671,11 +5670,8 @@ static int smb2_create_link(struct ksmbd_work *work,
- 	if (rc) {
- 		if (rc != -ENOENT)
- 			goto out;
--	} else
--		file_present = true;
--
--	if (file_info->ReplaceIfExists) {
--		if (file_present) {
-+	} else {
-+		if (file_info->ReplaceIfExists) {
- 			rc = ksmbd_vfs_remove_file(work, &path);
- 			if (rc) {
- 				rc = -EINVAL;
-@@ -5683,21 +5679,17 @@ static int smb2_create_link(struct ksmbd_work *work,
- 					    link_name);
- 				goto out;
- 			}
--		}
--	} else {
--		if (file_present) {
-+		} else {
- 			rc = -EEXIST;
- 			ksmbd_debug(SMB, "link already exists\n");
- 			goto out;
- 		}
-+		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 	}
--
- 	rc = ksmbd_vfs_link(work, target_name, link_name);
- 	if (rc)
- 		rc = -EINVAL;
- out:
--	if (file_present)
--		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
+ 	bh = udf_read_tagged(sb, block, block, &ident);
+@@ -1431,7 +1431,16 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 					   "logical volume");
+ 	if (ret)
+ 		goto out_bh;
+-	ret = udf_sb_alloc_partition_maps(sb, le32_to_cpu(lvd->numPartitionMaps));
++
++	part_map_count = le32_to_cpu(lvd->numPartitionMaps);
++	if (part_map_count > table_len / sizeof(struct genericPartitionMap1)) {
++		udf_err(sb, "error loading logical volume descriptor: "
++			"Too many partition maps (%u > %u)\n", part_map_count,
++			table_len / (unsigned)sizeof(struct genericPartitionMap1));
++		ret = -EIO;
++		goto out_bh;
++	}
++	ret = udf_sb_alloc_partition_maps(sb, part_map_count);
+ 	if (ret)
+ 		goto out_bh;
  
- 	if (!IS_ERR(link_name))
- 		kfree(link_name);
 -- 
 2.39.5
 
