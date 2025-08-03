@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9C61F91D6;
-	Sun,  3 Aug 2025 21:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A70C1F55FA;
+	Sun,  3 Aug 2025 21:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255995; cv=none; b=LAbBJvu86SGcNv5b0mBB4kes6j1HoY5EfvtWYrwtKnoeCE43TbFId55GraGdYWC8B+ZWAhuqcPx71tYP+MhyLncFto9A9lqkcIZE7Dm6c8sxNWN8x5+pbo/+0aC2XebXhqxVmQoSZl1CvvZMuoog2OO9LZjvmlDKfHj8U0QjLIs=
+	t=1754255997; cv=none; b=lF1skrBYPl4Aq+dmRMKPoRZCl8iI4VzosJjT9BnWtOU3AnuHtbWrqtAv3/38IgMMCICk7DauXasBQPUBDZtzKFPD+FYgw/xV5w0uou0jZEUBFCZJr5kes0z7ic4PNso83CDaRoT0CleNEsnov4vDa7VdVW66ploxqK4dlfbP9v0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255995; c=relaxed/simple;
-	bh=dsFFt10BbQJYnX+TuufFrES91w5IxxNZcwePwelbtvs=;
+	s=arc-20240116; t=1754255997; c=relaxed/simple;
+	bh=lV/u4IEv91CMs8yD9ZwTnQGKcIj8qRopJyPO8M21Cpw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hxCECaPOMtdHuGWxQrvy2mjNazsMlg9nXMO9ipTnPT5aMUU6QPqwo1UGXXZqrVqntRrxvW1e4GKrQLSqi25+5CH/f+22y4k2fTQ3vYSJnA3M4q/vptYtECfY/QMxlBrOqJxProoluCvceMoIstQbLjqIM0Ic44W73tJ3GE7mUbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dKoH8ioN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Md4evZkbEf6fwqQxg88GFqbmQP2yrg+bYGL1onukuJBfS4WXWmrFw5HmaG1L5HEcy8zxVRJPS1bf8MJlcJXgidjbTwkDTfeVpxNYy7kgNL+mSGI8AkTyFSXAbpS+yJNkt3wFFXv64b87vqAZKXFYaRWPTuTrHKwjr7sz+jTDWMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t63ZtGsS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dKoH8ioN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC06C4CEEB;
-	Sun,  3 Aug 2025 21:19:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t63ZtGsS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF33C4CEF0;
+	Sun,  3 Aug 2025 21:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255995;
-	bh=dsFFt10BbQJYnX+TuufFrES91w5IxxNZcwePwelbtvs=;
+	s=k20201202; t=1754255997;
+	bh=lV/u4IEv91CMs8yD9ZwTnQGKcIj8qRopJyPO8M21Cpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKoH8ioNQN5RGN4n3YcYzEEdLR4sU6D8Rb0vgFtBoiJZUtBqGGR7Flj9ieQpQvdYi
-	 Ovdn7tPNs1xRLtkbjCWphjQE7d423pGj34AX3mLyM9qAXxY1w9C0/9EqSuimRjNXsR
-	 +sTDP9AbRHGTbT+IxQGlbSVJPdTdiRnLO0OPsFD5nHPhvoRBTXCxRzMn3Tw0d5mZ4R
-	 Z8Php+kmjDA9hnBshg9wIxK5C3qRMDDpiS1MHjjZU+0LQxUaouoLkrsV+W7zIDMRhg
-	 I2pVFOImkkN29SDvAkLcOZ0odMOcD7Qqg/hsNKGKK9EandJ7jrhOxInhTz+WWPmC5/
-	 V62w4jz0e8ncw==
+	b=t63ZtGsS0CpuMrjy4DEfq8Gt/FtO+vE6DQug2nyagvRgoqGuK12cotPstw2L1sa1y
+	 4iFCPijJe78Uoe/eYwlOLplx/ihR/vrU+HbIZlhUGaiuKJeDDhRPgPIuhB+ABVfgAJ
+	 lmQxFymLPMjdd5jF763aq0wYz/G+fe7m06y7QR0GW5dGkIVGz7/HGumJgY75F5He/X
+	 MqmNAXoeOB4gudrcWxE3s1dLb6zZcBGmzxQOTBfclecQN6fsadCeLdlh1wpBSePDDa
+	 0JiypisFFfsD3zL/DY9bQRNg1JUia8Ni8UQGIvWFCAzVg+MDcT2INLpK0Ub7MSYsFW
+	 eZNNB5Qi+OYsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+Cc: NeilBrown <neil@brown.name>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.12 07/31] firmware: arm_ffa: Change initcall level of ffa_init() to rootfs_initcall
-Date: Sun,  3 Aug 2025 17:19:10 -0400
-Message-Id: <20250803211935.3547048-7-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 08/31] smb/server: avoid deadlock when linking with ReplaceIfExists
+Date: Sun,  3 Aug 2025 17:19:11 -0400
+Message-Id: <20250803211935.3547048-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211935.3547048-1-sashal@kernel.org>
 References: <20250803211935.3547048-1-sashal@kernel.org>
@@ -47,63 +47,30 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 0e0546eabcd6c19765a8dbf5b5db3723e7b0ea75 ]
+[ Upstream commit d5fc1400a34b4ea5e8f2ce296ea12bf8c8421694 ]
 
-The Linux IMA (Integrity Measurement Architecture) subsystem used for
-secure boot, file integrity, or remote attestation cannot be a loadable
-module for few reasons listed below:
+If smb2_create_link() is called with ReplaceIfExists set and the name
+does exist then a deadlock will happen.
 
- o Boot-Time Integrity: IMA’s main role is to measure and appraise files
- before they are used. This includes measuring critical system files during
- early boot (e.g., init, init scripts, login binaries). If IMA were a
- module, it would be loaded too late to cover those.
+ksmbd_vfs_kern_path_locked() will return with success and the parent
+directory will be locked.  ksmbd_vfs_remove_file() will then remove the
+file.  ksmbd_vfs_link() will then be called while the parent is still
+locked.  It will try to lock the same parent and will deadlock.
 
- o TPM Dependency: IMA integrates tightly with the TPM to record
- measurements into PCRs. The TPM must be initialized early (ideally before
- init_ima()), which aligns with IMA being built-in.
+This patch moves the ksmbd_vfs_kern_path_unlock() call to *before*
+ksmbd_vfs_link() and then simplifies the code, removing the file_present
+flag variable.
 
- o Security Model: IMA is part of a Trusted Computing Base (TCB). Making it
- a module would weaken the security model, as a potentially compromised
- system could delay or tamper with its initialization.
-
-IMA must be built-in to ensure it starts measuring from the earliest
-possible point in boot which inturn implies TPM must be initialised and
-ready to use before IMA.
-
-To enable integration of tpm_event_log with the IMA subsystem, the TPM
-drivers (tpm_crb and tpm_crb_ffa) also needs to be built-in. However with
-FF-A driver also being initialised at device initcall level, it can lead to
-an initialization order issue where:
- - crb_acpi_driver_init() may run before tpm_crb_ffa_driver()_init and
-   ffa_init()
- - As a result, probing the TPM device via CRB over FFA is deferred
- - ima_init() (called as a late initcall) runs before deferred probe
-   completes, IMA fails to find the TPM and logs the below error:
-
-   |  ima: No TPM chip found, activating TPM-bypass!
-
-Eventually it fails to generate boot_aggregate with PCR values.
-
-Because of the above stated dependency, the ffa driver needs to initialised
-before tpm_crb_ffa module to ensure IMA finds the TPM successfully when
-present.
-
-[ jarkko: reformatted some of the paragraphs because they were going past
-  the 75 character boundary. ]
-
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -111,61 +78,117 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-1. **Fixes a real bug affecting users**: The commit fixes a boot
-   initialization order issue where IMA (Integrity Measurement
-   Architecture) fails to find the TPM device when using TPM over FF-A
-   (Firmware Framework for Arm Architecture). Without this fix, systems
-   with TPM accessed via FF-A get the error "ima: No TPM chip found,
-   activating TPM-bypass!" and fail to generate boot_aggregate with PCR
-   values, breaking secure boot attestation.
+## Bug Analysis
 
-2. **Small and contained change**: The code change is minimal - just
-   changing `module_init(ffa_init)` to `rootfs_initcall(ffa_init)`. This
-   is a one-line change that only affects initialization timing.
+This commit fixes a critical **deadlock** issue in the ksmbd (SMB
+server) subsystem. The deadlock occurs in the `smb2_create_link()`
+function when creating a hard link with the `ReplaceIfExists` flag set
+and the target file already exists.
 
-3. **No architectural changes**: This is purely an initialization order
-   fix that doesn't introduce new features or change the architecture of
-   the FF-A driver.
+### Deadlock Sequence:
 
-4. **Security-critical fix**: IMA is a security subsystem used for
-   secure boot, file integrity, and remote attestation. The bug prevents
-   proper boot measurements from being recorded in the TPM, which is a
-   critical security failure for systems relying on measured boot.
+1. `ksmbd_vfs_kern_path_locked()` is called and locks the parent
+   directory
+2. If the file exists and `ReplaceIfExists` is true,
+   `ksmbd_vfs_remove_file()` is called while the parent is still locked
+3. `ksmbd_vfs_link()` is then called, which attempts to lock the same
+   parent directory again
+4. **Result: Deadlock** - the function tries to acquire a lock it
+   already holds
 
-5. **Clear problem and solution**: The commit message clearly explains
-   the initialization order dependency between FF-A, TPM drivers
-   (tpm_crb_ffa), and IMA. The fix ensures FF-A initializes earlier (at
-   rootfs_initcall level) so the TPM is available when IMA initializes
-   (at late_initcall level).
+### Fix Implementation:
 
+The fix reorders the operations by:
+- Moving the `ksmbd_vfs_kern_path_unlock()` call to execute **before**
+  `ksmbd_vfs_link()`
+- This ensures the parent directory is unlocked before attempting the
+  link operation
+- The code is also simplified by removing the `file_present` flag
+  variable
 
-7. **Multiple reviewers**: The patch has been reviewed by relevant
-   maintainers including Mimi Zohar (IMA maintainer), Sudeep Holla (FF-A
-   maintainer), and Jarkko Sakkinen (TPM maintainer).
+## Backport Justification:
 
-The change meets all stable kernel criteria: it fixes an important bug,
-has minimal risk of regression, and is confined to fixing the specific
-initialization order issue without side effects.
+1. **Critical Bug**: This fixes a deadlock that can hang the kernel's
+   SMB server functionality
+2. **User Impact**: The deadlock can be triggered by normal SMB
+   operations (creating hard links with replace), affecting file server
+   availability
+3. **Small and Contained**: The fix is minimal - just reordering
+   function calls and simplifying logic
+4. **No Architectural Changes**: This is a straightforward bug fix with
+   no feature additions
+5. **Low Risk**: The change only affects the specific error path in link
+   creation
+6. **Similar to Other Fixes**: The kernel has accepted similar deadlock
+   fixes in ksmbd (e.g., commit 864fb5d37163 "ksmbd: fix possible
+   deadlock in smb2_open")
 
- drivers/firmware/arm_ffa/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+## Code Quality:
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 83dad9c2da06..9fdfccbc6479 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -1815,7 +1815,7 @@ static int __init ffa_init(void)
- 	kfree(drv_info);
- 	return ret;
- }
--module_init(ffa_init);
-+rootfs_initcall(ffa_init);
- 
- static void __exit ffa_exit(void)
+The fix properly maintains the locking semantics while avoiding the
+deadlock. The simplified code flow makes the logic clearer and less
+error-prone.
+
+This is exactly the type of bug fix that stable kernels should receive -
+it fixes a real issue that affects users, has minimal risk of
+regression, and improves system stability.
+
+ fs/smb/server/smb2pdu.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
+
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index a97a2885730d..ab1ea8fe1c1b 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6013,7 +6013,6 @@ static int smb2_create_link(struct ksmbd_work *work,
  {
+ 	char *link_name = NULL, *target_name = NULL, *pathname = NULL;
+ 	struct path path, parent_path;
+-	bool file_present = false;
+ 	int rc;
+ 
+ 	if (buf_len < (u64)sizeof(struct smb2_file_link_info) +
+@@ -6046,11 +6045,8 @@ static int smb2_create_link(struct ksmbd_work *work,
+ 	if (rc) {
+ 		if (rc != -ENOENT)
+ 			goto out;
+-	} else
+-		file_present = true;
+-
+-	if (file_info->ReplaceIfExists) {
+-		if (file_present) {
++	} else {
++		if (file_info->ReplaceIfExists) {
+ 			rc = ksmbd_vfs_remove_file(work, &path);
+ 			if (rc) {
+ 				rc = -EINVAL;
+@@ -6058,21 +6054,17 @@ static int smb2_create_link(struct ksmbd_work *work,
+ 					    link_name);
+ 				goto out;
+ 			}
+-		}
+-	} else {
+-		if (file_present) {
++		} else {
+ 			rc = -EEXIST;
+ 			ksmbd_debug(SMB, "link already exists\n");
+ 			goto out;
+ 		}
++		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
+ 	}
+-
+ 	rc = ksmbd_vfs_link(work, target_name, link_name);
+ 	if (rc)
+ 		rc = -EINVAL;
+ out:
+-	if (file_present)
+-		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
+ 
+ 	if (!IS_ERR(link_name))
+ 		kfree(link_name);
 -- 
 2.39.5
 
