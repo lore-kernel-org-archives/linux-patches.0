@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B249204592;
-	Sun,  3 Aug 2025 21:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DE32063FD;
+	Sun,  3 Aug 2025 21:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256068; cv=none; b=ROH2/DfokfsmCkzx1Wl+EgzQlJwFxzVeii+h16IUDqGz5itlWTPvjmKsRWeTkg3OuZnvoptCHVGrYJDJTArwWP6SlP6BFRFi2jlVGkVCs2UKxEzRimbcVG9QyIxOuCEJFES8TclwkjME+jicRM64J+xi36HfkTncF5nYZYNU33M=
+	t=1754256070; cv=none; b=WF98AjfHv5L2NLgBJQ23qQgSQCDehtXEDcCoN+r8DPKBE3KJK1wOSko2xmplQcOJgbEbkZd0gkruWby9ISni3oa4pM9Ffjpoc/rJLlFjaSnt1u3m6m1DsYrkqVn7gxHXsFvv1+0evJWA7q9Wa2rkaNlE39Zhy/62+6yuKR0B7pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256068; c=relaxed/simple;
-	bh=7249Z87x3BhR9dYHxco/DKcjT9jMKVpA65JxApM3NXM=;
+	s=arc-20240116; t=1754256070; c=relaxed/simple;
+	bh=KkDLhHi0fI+glXGVi4pwz7Y7bzQYNf6ZLbw1ruplX98=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Nob393JGoQoWKmkLVU/6AZ2N3taMmt4YnU7VuBsY1hOAMDjjTkK9Ki2tJpq6Rpdq11z8KdjttQhYDlNqbQkDZPkdUFAhdYihS5ybiFpXzF3nf/B2w5xy/HQZluqkY7N8sd1GchV9GasHwppQMEwj3Pl4HofIynZjJzkBCw9AkUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=igVAFN8J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k5Vt4dNnynIkqe3Y8/6EtlinUWTqW3XSEf/Mij/PTjPOEXFa2L/23VIhz+e65PEG9ycQ2aJxdvNFbOuycQ5pQo+Mhm9XZ7BvDWiQ+UfJuREdPzvqkU1X1FILhpFshT3pKlF0fmFVPSu2NrsZ89wGU7xPhWjCq3Zl2eLKkw4f3zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A8VR5pBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="igVAFN8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6511AC4CEF9;
-	Sun,  3 Aug 2025 21:21:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A8VR5pBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8502AC4CEEB;
+	Sun,  3 Aug 2025 21:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256067;
-	bh=7249Z87x3BhR9dYHxco/DKcjT9jMKVpA65JxApM3NXM=;
+	s=k20201202; t=1754256070;
+	bh=KkDLhHi0fI+glXGVi4pwz7Y7bzQYNf6ZLbw1ruplX98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igVAFN8JKD6tZkBKh0iPHYtCRVql+B+uQchrTFWnB+nOYNBHeJudO5o7JAim9xep6
-	 9DtHeoCxvNZlcMipLwwS+Qdg1Rx8WXrngX0MITU2ya1JIqbfTCvUg7FVJgLyvAOyR0
-	 NeiQ+sxtJwu1BUDoKOLOx+Gda1S0nqJoi33a4LsRabLIzmG4Fz7y1+PEjMyR+kn/Df
-	 1gVJhbLxsuBj+3T/rXeQomK+SaN7+fe1med/68kPy/bL5rBylvvPSO4P4hUKJ2quFT
-	 o6UuWF6vR87UTkb/AQKhQA/0/XlMful5dvuSz42MFKU/4MwWZrUBlRIwEFsAPFi5Dx
-	 RurfAwsDliS1Q==
+	b=A8VR5pBVSHBHCvM4IG+S2C1UwwBEMlZg6kMaQasAVAt3DI/x7uUS8TnImKvPG5/Sb
+	 znhVXcG6/0oqaWzgD4985J/4uvriB1GmCK/km0YxiPZEaZ3H53hhnT1LVHtefnA4po
+	 JNj29PIijIhwhcp6ffM3Y+4PSSxWSVmD6qxCafQnhTItHXOIvvFPsTNoV/UVUi6e2G
+	 JJ/ijBaR4mV6vz2ACpTLDIlAHZTL3Dh6b4CszUCXAdFTLSyos+Qz0m9pM5SVzhS4xG
+	 CXGeQvbfwPen9hYYjJkCE7iQ/GJW9701WrGlAhlM22vfs/iwRRWp7ugc+rlLLAE6Sx
+	 Q3K9kXKEVg82g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
-	syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com,
+Cc: Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	brauner@kernel.org,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 15/23] better lockdep annotations for simple_recursive_removal()
-Date: Sun,  3 Aug 2025 17:20:22 -0400
-Message-Id: <20250803212031.3547641-15-sashal@kernel.org>
+	linux-ide@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 16/23] ata: libata-sata: Disallow changing LPM state if not supported
+Date: Sun,  3 Aug 2025 17:20:23 -0400
+Message-Id: <20250803212031.3547641-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212031.3547641-1-sashal@kernel.org>
 References: <20250803212031.3547641-1-sashal@kernel.org>
@@ -51,103 +51,87 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 2a8061ee5e41034eb14170ec4517b5583dbeff9f ]
+[ Upstream commit 413e800cadbf67550d76c77c230b2ecd96bce83a ]
 
-We want a class that nests outside of I_MUTEX_NORMAL (for the sake of
-callbacks that might want to lock the victim) and inside I_MUTEX_PARENT
-(so that a variant of that could be used with parent of the victim
-held locked by the caller).
+Modify ata_scsi_lpm_store() to return an error if a user attempts to set
+a link power management policy for a port that does not support LPM,
+that is, ports flagged with ATA_FLAG_NO_LPM.
 
-In reality, simple_recursive_removal()
-	* never holds two locks at once
-	* holds the lock on parent of dentry passed to callback
-	* is used only on the trees with fixed topology, so the depths
-are not changing.
-
-So the locking order is actually fine.
-
-AFAICS, the best solution is to assign I_MUTEX_CHILD to the locks
-grabbed by that thing.
-
-Reported-by: syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Link: https://lore.kernel.org/r/20250701125321.69496-6-dlemoal@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
+
+Based on my analysis of the commit and the surrounding code context,
+here's my determination:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a lockdep warning reported by syzbot**: The commit message
-   explicitly mentions "Reported-by:
-   syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com", indicating
-   this fixes a real issue detected by kernel testing infrastructure.
+1. **Fixes a clear bug**: Without this check, users can attempt to
+   change LPM policy on ports that don't support LPM (flagged with
+   ATA_FLAG_NO_LPM), which could lead to undefined behavior or system
+   issues. The code already prevents setting the policy but doesn't
+   inform the user that the operation failed.
 
-2. **Small and contained fix**: The change is minimal - only 2 lines
-   changed, replacing `inode_lock(inode)` with `inode_lock_nested(inode,
-   I_MUTEX_CHILD)` in two locations. This is exactly the type of
-   targeted fix suitable for stable backports.
+2. **User-visible issue**: The bug allows sysfs writes to succeed
+   silently when they should fail with an error. This violates the
+   principle of least surprise - users expect operations to either
+   succeed or return an error, not silently fail.
 
-3. **Fixes incorrect lockdep annotations**: The commit corrects lockdep
-   annotations without changing actual runtime behavior. According to
-   the commit message, "the locking order is actually fine" - this is
-   purely fixing false positive lockdep warnings that could mask real
-   locking issues.
+3. **Small and contained fix**: The patch adds just 5 lines of code
+   (lines 927-930) that perform a simple flag check and return
+   -EOPNOTSUPP if the port doesn't support LPM. This is a minimal change
+   with low risk of regression.
 
-4. **No functional changes**: The code only changes lockdep annotations
-   by using `inode_lock_nested()` with `I_MUTEX_CHILD` instead of plain
-   `inode_lock()`. This doesn't change the actual locking behavior, just
-   tells lockdep about the correct locking hierarchy.
+4. **Consistency with existing checks**: The function already has
+   similar validation for device-level quirks (ATA_QUIRK_NOLPM at lines
+   934-937). This patch adds the missing port-level validation, making
+   the code more consistent and complete.
 
-5. **Prevents false positives in debugging**: False lockdep warnings can
-   obscure real locking problems and make kernel debugging more
-   difficult. Fixing these annotations helps maintain the effectiveness
-   of lockdep as a debugging tool.
+5. **Related to recent fixes**: Looking at recent commits (65b2c92f69d3,
+   4edf1505b76d), there's been work to properly handle ports that don't
+   support LPM. This patch completes that work by ensuring the sysfs
+   interface properly rejects invalid operations.
 
-6. **Used by multiple filesystems**: Based on my grep results,
-   `simple_recursive_removal()` is used by several filesystems including
-   debugfs, tracefs, efivarfs, fuse, and nfsd. A lockdep false positive
-   here could affect debugging across multiple subsystems.
+6. **Prevents potential hardware issues**: Attempting to set LPM
+   policies on hardware that doesn't support them could potentially
+   cause hardware malfunctions or unexpected behavior. This fix prevents
+   such attempts at the sysfs interface level.
 
-7. **Low risk**: Since this only changes lockdep annotations and not
-   actual locking behavior, the risk of regression is minimal. The worst
-   case would be if the annotation was wrong, which would just result in
-   lockdep warnings again.
+The fix follows stable kernel rules: it's a clear bug fix, minimal in
+scope, doesn't introduce new features, and addresses a real user-facing
+issue where invalid operations appear to succeed when they should fail
+with an appropriate error code.
 
-The commit follows stable kernel rules by being a targeted fix for a
-specific issue (lockdep false positive) without introducing new features
-or architectural changes.
+ drivers/ata/libata-sata.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
- fs/libfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/fs/libfs.c b/fs/libfs.c
-index f5566964aa7d..b913ab238cc1 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -610,7 +610,7 @@ void simple_recursive_removal(struct dentry *dentry,
- 		struct dentry *victim = NULL, *child;
- 		struct inode *inode = this->d_inode;
+diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
+index be72030a500d..9e0a820d6961 100644
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -817,6 +817,11 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
  
--		inode_lock(inode);
-+		inode_lock_nested(inode, I_MUTEX_CHILD);
- 		if (d_is_dir(this))
- 			inode->i_flags |= S_DEAD;
- 		while ((child = find_next_child(this, victim)) == NULL) {
-@@ -622,7 +622,7 @@ void simple_recursive_removal(struct dentry *dentry,
- 			victim = this;
- 			this = this->d_parent;
- 			inode = this->d_inode;
--			inode_lock(inode);
-+			inode_lock_nested(inode, I_MUTEX_CHILD);
- 			if (simple_positive(victim)) {
- 				d_invalidate(victim);	// avoid lost mounts
- 				if (d_is_dir(victim))
+ 	spin_lock_irqsave(ap->lock, flags);
+ 
++	if (ap->flags & ATA_FLAG_NO_LPM) {
++		count = -EOPNOTSUPP;
++		goto out_unlock;
++	}
++
+ 	ata_for_each_link(link, ap, EDGE) {
+ 		ata_for_each_dev(dev, &ap->link, ENABLED) {
+ 			if (dev->horkage & ATA_HORKAGE_NOLPM) {
 -- 
 2.39.5
 
