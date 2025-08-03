@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5239F1EDA3A;
-	Sun,  3 Aug 2025 21:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536A6219E93;
+	Sun,  3 Aug 2025 21:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255913; cv=none; b=r88X0LkEVfV3tpTgZNpURIgsE2YpZFGvTXNpky8ubDizyEatLV2pKi56jUZfLSvJ2MLvHtVCKeETq0DFJLug1KJ37nqaJ6SDEjEFxTPBl8z3E2Ygj8R8+kvHUpJJmZFWl7baabJsYTeoTcmdh5rsu3cjkdjsBQyKWllEQ1qY5Ew=
+	t=1754255914; cv=none; b=mQMqk5SzZ8dhGp/Yvnj2aqu5qmAzA301WY2YEpgZX4M5trumayQrkMhtWUWmeyzMOSo/IN6F45PITrj35QizNG7RTwur/TMNstPOdxJzbnZoaaZu+ZFVJMPpKklByaip/S9m162MWiaRpWFX5ye6nYKpocAuJsS1+nZWeg0VkzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255913; c=relaxed/simple;
-	bh=NsdI5fa27Rancp9pGw3GzGbip3xRvDEnB1StCt81dt8=;
+	s=arc-20240116; t=1754255914; c=relaxed/simple;
+	bh=6zBWg0sDxk6NYE+kNcKXUHKlBQAdQGpQDafHZln9pVE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=HraMfC6inyhzClRZb4QpgjZ6JUq5AlWy3NE3qJcCA1cMr4aSlsgEP+xCmbjFj6njhELHGJeaP6YtONoD5MIR2odNq1wXtoYv391/kJv/NyQxJtbNndZ5lFhJ3FemZBIhpz0WXeIUGPrFDzjr9C3KTDJo0Xu/SnL8RVkd+5DfJxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QEtLq8kE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YcPpqJZM/DMdeG2NoqJ8B+SiOIJxLPOhsZ1vUTOk/+6ax9BagiPPG3PHCWWC3xRWcju7Gnx3gvKOEbDIdsproIumj1zL+O+aoOBK33sWQgMCF5CzQ+TsJpZ3SidgTIQr7PSdL+CBh9oEFR29x/AeNaSjjUstUARjX++EBrWcMlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tfogFSm9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QEtLq8kE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CAF6C4CEF8;
-	Sun,  3 Aug 2025 21:18:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tfogFSm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFF2C4CEEB;
+	Sun,  3 Aug 2025 21:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255911;
-	bh=NsdI5fa27Rancp9pGw3GzGbip3xRvDEnB1StCt81dt8=;
+	s=k20201202; t=1754255914;
+	bh=6zBWg0sDxk6NYE+kNcKXUHKlBQAdQGpQDafHZln9pVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEtLq8kEt6+KswgtVWyL2MMc9xXMeLbBfVayHFoZnefy1a67dM1Zy8RwaPJMD/Zil
-	 IT8DX9ND5VlAJvwuA+mXpdkEBn5Y3GnAtgwU9Hp4qhjOwBmdb1LzMAhvDBi/ORXhjI
-	 BjMU5QLCfxdPnFwQ41biP3pY3oTvGEuYWGzqWgW6hghcs3BGEYuNiBn8RYOkIxh8wg
-	 iPyzjZQXBEjG56eeVJUEi5OcBNfu9maqhEZN7RdQGzATMgERRSU6fC6TyHjhanW21C
-	 9a0sI3IpDf3hVncCF5jh5qehw69G43vWGMwd+7Vu5jpoU59bXusz9EieTLliqL9dew
-	 YVkocuVYfxVdQ==
+	b=tfogFSm94kN8ZYbTCJ3sKs8freztf3hmalVwNQlNkulvnLSCXPwK2+UKX7+uYlGNf
+	 RA7+n9ct2qNQ5kDj1YYpEhNBGsu6E8qrH7f+L+jiPHMTaoUDXNXNY5LCxbXpQU1HEJ
+	 lImDvO9xr3BGTZBicge8c8IciY/OkYZMlBthHZcWX0luNGFnVzoqe3Js4MMa1WAH5t
+	 a/wX/t3IYasewwWHgRGT0wPn2+ptnxbS55uxwo1cfZ7+2sbJlFKIkNyaV6zqefLbPG
+	 0EFwZb0wo3sub+ghERMJSoluBEwfqM1xO/OwMz+11ZL5tJgdRPJRyG5PPHY8S6xvks
+	 JtPA9nezQ8G6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
-	syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com,
+Cc: Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	brauner@kernel.org,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 23/35] better lockdep annotations for simple_recursive_removal()
-Date: Sun,  3 Aug 2025 17:17:23 -0400
-Message-Id: <20250803211736.3545028-23-sashal@kernel.org>
+	linux-ide@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 24/35] ata: ahci: Disallow LPM policy control if not supported
+Date: Sun,  3 Aug 2025 17:17:24 -0400
+Message-Id: <20250803211736.3545028-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211736.3545028-1-sashal@kernel.org>
 References: <20250803211736.3545028-1-sashal@kernel.org>
@@ -51,103 +51,108 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 2a8061ee5e41034eb14170ec4517b5583dbeff9f ]
+[ Upstream commit 65b2c92f69d3df81422d27e5be012e357e733241 ]
 
-We want a class that nests outside of I_MUTEX_NORMAL (for the sake of
-callbacks that might want to lock the victim) and inside I_MUTEX_PARENT
-(so that a variant of that could be used with parent of the victim
-held locked by the caller).
+Commit fa997b0576c9 ("ata: ahci: Do not enable LPM if no LPM states are
+supported by the HBA") introduced an early return in
+ahci_update_initial_lpm_policy() to ensure that the target_lpm_policy
+of ports belonging to a host that does not support the Partial, Slumber
+and DevSleep power states is unchanged and remains set to
+ATA_LPM_UNKNOWN and thus prevents the execution of
+ata_eh_link_set_lpm().
 
-In reality, simple_recursive_removal()
-	* never holds two locks at once
-	* holds the lock on parent of dentry passed to callback
-	* is used only on the trees with fixed topology, so the depths
-are not changing.
+However, a user or a system daemon (e.g. systemd-udevd) may still
+attempt changing the LPM policy through the sysfs
+link_power_management_policy of the host.
 
-So the locking order is actually fine.
+Improve this to prevent sysfs LPM policy changes by setting the flag
+ATA_FLAG_NO_LPM for the port of such host, and initialize the port
+target_lpm_policy to ATA_LPM_MAX_POWER to guarantee that no unsupported
+low power state is being used on the port and its link.
 
-AFAICS, the best solution is to assign I_MUTEX_CHILD to the locks
-grabbed by that thing.
-
-Reported-by: syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/r/20250701125321.69496-9-dlemoal@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
+
+Based on my analysis of the commit message, code changes, and
+examination of the kernel repository context, I can provide the
+following assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a lockdep warning reported by syzbot**: The commit message
-   explicitly mentions "Reported-by:
-   syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com", indicating
-   this fixes a real issue detected by kernel testing infrastructure.
+1. **Bug Fix Nature**: This commit fixes a real bug where users could
+   still change LPM (Link Power Management) policy through sysfs even
+   when the hardware doesn't support any LPM states. The original commit
+   fa997b0576c9 only prevented automatic LPM enablement but didn't block
+   manual sysfs changes.
 
-2. **Small and contained fix**: The change is minimal - only 2 lines
-   changed, replacing `inode_lock(inode)` with `inode_lock_nested(inode,
-   I_MUTEX_CHILD)` in two locations. This is exactly the type of
-   targeted fix suitable for stable backports.
+2. **User-Visible Issue**: The commit message explicitly mentions that
+   "a user or a system daemon (e.g. systemd-udevd) may still attempt
+   changing the LPM policy through the sysfs
+   link_power_management_policy". This is a user-visible issue that
+   could lead to unexpected behavior or system instability.
 
-3. **Fixes incorrect lockdep annotations**: The commit corrects lockdep
-   annotations without changing actual runtime behavior. According to
-   the commit message, "the locking order is actually fine" - this is
-   purely fixing false positive lockdep warnings that could mask real
-   locking issues.
+3. **Small and Contained Fix**: The code changes are minimal and well-
+   contained:
+   - Only adds 2 lines setting `ATA_FLAG_NO_LPM` flag and
+     `target_lpm_policy = ATA_LPM_MAX_POWER`
+   - Changes one debug message from "not enabling LPM" to "forcing LPM
+     max_power"
+   - The fix is localized to the `ahci_update_initial_lpm_policy()`
+     function
 
-4. **No functional changes**: The code only changes lockdep annotations
-   by using `inode_lock_nested()` with `I_MUTEX_CHILD` instead of plain
-   `inode_lock()`. This doesn't change the actual locking behavior, just
-   tells lockdep about the correct locking hierarchy.
+4. **Follows Established Pattern**: The code already uses this exact
+   same pattern for external ports (lines above show `ap->flags |=
+   ATA_FLAG_NO_LPM; ap->target_lpm_policy = ATA_LPM_MAX_POWER;`), so
+   this is extending an existing, proven approach.
 
-5. **Prevents false positives in debugging**: False lockdep warnings can
-   obscure real locking problems and make kernel debugging more
-   difficult. Fixing these annotations helps maintain the effectiveness
-   of lockdep as a debugging tool.
+5. **Prevents Invalid Configuration**: Looking at the sysfs handler
+   `ata_scsi_lpm_store()` in libata-sata.c, it checks for
+   `ATA_FLAG_NO_LPM` and returns `-EOPNOTSUPP`, which is the correct
+   behavior this patch enables for unsupported hardware.
 
-6. **Used by multiple filesystems**: Based on my grep results,
-   `simple_recursive_removal()` is used by several filesystems including
-   debugfs, tracefs, efivarfs, fuse, and nfsd. A lockdep false positive
-   here could affect debugging across multiple subsystems.
+6. **Builds on Previous Stable Fix**: The referenced commit fa997b0576c9
+   was already marked for stable ("Cc: stable@vger.kernel.org"), and
+   this commit completes that fix by closing the remaining gap.
 
-7. **Low risk**: Since this only changes lockdep annotations and not
-   actual locking behavior, the risk of regression is minimal. The worst
-   case would be if the annotation was wrong, which would just result in
-   lockdep warnings again.
+7. **Low Risk**: The change has minimal risk of regression since it only
+   affects hardware that doesn't support any LPM states, and for such
+   hardware, preventing LPM policy changes is the correct behavior.
 
-The commit follows stable kernel rules by being a targeted fix for a
-specific issue (lockdep false positive) without introducing new features
-or architectural changes.
+The commit follows stable kernel rules by fixing an important bug with
+minimal changes and low regression risk, making it an ideal candidate
+for stable backporting.
 
- fs/libfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ata/ahci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index 6f487fc6be34..972b95cc7433 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -613,7 +613,7 @@ void simple_recursive_removal(struct dentry *dentry,
- 		struct dentry *victim = NULL, *child;
- 		struct inode *inode = this->d_inode;
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index aa93b0ecbbc6..04c9b601cac1 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -1782,7 +1782,10 @@ static void ahci_update_initial_lpm_policy(struct ata_port *ap)
+ 	if ((ap->host->flags & ATA_HOST_NO_PART) &&
+ 	    (ap->host->flags & ATA_HOST_NO_SSC) &&
+ 	    (ap->host->flags & ATA_HOST_NO_DEVSLP)) {
+-		ata_port_dbg(ap, "no LPM states supported, not enabling LPM\n");
++		ata_port_dbg(ap,
++			"No LPM states supported, forcing LPM max_power\n");
++		ap->flags |= ATA_FLAG_NO_LPM;
++		ap->target_lpm_policy = ATA_LPM_MAX_POWER;
+ 		return;
+ 	}
  
--		inode_lock(inode);
-+		inode_lock_nested(inode, I_MUTEX_CHILD);
- 		if (d_is_dir(this))
- 			inode->i_flags |= S_DEAD;
- 		while ((child = find_next_child(this, victim)) == NULL) {
-@@ -625,7 +625,7 @@ void simple_recursive_removal(struct dentry *dentry,
- 			victim = this;
- 			this = this->d_parent;
- 			inode = this->d_inode;
--			inode_lock(inode);
-+			inode_lock_nested(inode, I_MUTEX_CHILD);
- 			if (simple_positive(victim)) {
- 				d_invalidate(victim);	// avoid lost mounts
- 				if (d_is_dir(victim))
 -- 
 2.39.5
 
