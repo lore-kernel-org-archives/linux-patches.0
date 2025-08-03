@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B252A204592;
-	Sun,  3 Aug 2025 21:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B69C1F55FA;
+	Sun,  3 Aug 2025 21:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256074; cv=none; b=oiHvnChzRC7fO+eOCS+Nr84fmCYdres/YCfmC9NAt8fPmZ/7KoKyByFT3NNXzwOJ4/6nNbSig5DQBibQLRqG3cdqEGP3mQBALUOwAD7/G2/PzwonRTA+ja4fb9xXe9pkfboDb5ydjwzCnbdUoSjKqrc58B3RBD3LwHK6844D7Tg=
+	t=1754256076; cv=none; b=oayzebSJRJBxwF8gWWXG6hNVF6TXPNCnn6I5hjN1U2zK28hwOJN8YwGxCdUltNMQlAmcMkhHawXGEtHXww8u0hY0IzbHgm/C6ZmOFDVxI3aMLyrVKb18HCEkI3bjo2NJbiTN33FtTAr/HRybDw5xtXeJFOhKnz6asfq9nwm6EtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256074; c=relaxed/simple;
-	bh=jY7DzFbg9JcGe8zSCwlKRviOSwbJDR5I7rw+jOSA23A=;
+	s=arc-20240116; t=1754256076; c=relaxed/simple;
+	bh=jlJhr40poqXDoxNXVvHpbKesB3ADgvLtN2+9mZLMAg4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rRO0tz43UuXwXSyFkgOGmdumvWdUlF0c5XRgKEJ6doXhln9vaIvXNWY2IcQof4vLX9pg3hbRlsbKdCJ81Tsmcqd+rLnC26OhewVHkR9GC+JWT3sF1BF9gZjSgkLO++DlG6WFTD6o86B9z+rt9IqvcnQRjE1rNIf76ZbI+EOYhp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bXPm3tAD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FxYXX13u6ee9jfCTtR+Opbc6Zwm+N7x0S81ZDtMxtlgJaz4b8MSx5ys4ZpUzQhJQ87EzjJ7fGeglnTAIYx2zCElrLRrgEEfksrStB789Ll5FCLfOfjliYA4FDjqhng8404qNaLdPxMRtPKdS58EzcxDwJZUnmVdgzFA6uLIxs0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qk+yBJd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bXPm3tAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17F4C4CEEB;
-	Sun,  3 Aug 2025 21:21:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qk+yBJd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D22C4CEEB;
+	Sun,  3 Aug 2025 21:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256074;
-	bh=jY7DzFbg9JcGe8zSCwlKRviOSwbJDR5I7rw+jOSA23A=;
+	s=k20201202; t=1754256076;
+	bh=jlJhr40poqXDoxNXVvHpbKesB3ADgvLtN2+9mZLMAg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXPm3tADJqMQXlM16q68oTxcXGLIO3g/N2+gZZirqK0DtlbmptgiEiNRw5rd2U3Wj
-	 X//ZpoW3qFWTfZthg1wa+dy3cfJWzkb7QJkEkMNNMxaBuiyZcNmxCr5oxAC+v3yrjg
-	 UVPSENGD62spBFQuhGEGe9G1yxAbmHu+rM7g+4Fa3w81q5an12JPy72r4PX45BJ7IM
-	 2HUGM5twfacM38PlvFMkOd/xpJeUAkO68ry3PEF+IFwDajkPMmfMVyQS5BejAehnuk
-	 RlQkU8rTMiiZZPI86Xqv63lz+QiqdzbR14cMN9Aza52Eaf+P51nK6SaXYtPHcJEBvm
-	 OgLNsTo1lIR7g==
+	b=qk+yBJd4yS+RWci0rjM8Qp209NuIdU88rBGJPAGqNzvxZWFthLZ32GL591Oz4qL5g
+	 6OZFecbN4zVKaKKcJJRPu52VPaScPHVQ6gEVwAmHZIj43nYXeDxeew43VdJIy7JmgM
+	 be0yGu5e+LjZ0zARRUcELWziuiZZyl/MyFKE3gH6FpjodcJnpaBXdkD7oI8AhOSFkc
+	 F/wRgfX6ryeAsfB/LTp6i4yEiDdy+AssDQi/BcNltSVfRfQBN/8kfTDNJA+9aMZx5N
+	 RxSw84BtZr3F1EZB9dy1yWFxWYwxwB+elBXS+CJaogWX6PgyDE1gy9G8FcpTdmfoJS
+	 RHdlSuBk1nKSA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rong Zhang <ulin0208@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Xiao Ni <xni@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.6 18/23] fs/ntfs3: correctly create symlink for relative path
-Date: Sun,  3 Aug 2025 17:20:25 -0400
-Message-Id: <20250803212031.3547641-18-sashal@kernel.org>
+	song@kernel.org,
+	linux-raid@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 19/23] md: Don't clear MD_CLOSING until mddev is freed
+Date: Sun,  3 Aug 2025 17:20:26 -0400
+Message-Id: <20250803212031.3547641-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212031.3547641-1-sashal@kernel.org>
 References: <20250803212031.3547641-1-sashal@kernel.org>
@@ -48,20 +49,24 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rong Zhang <ulin0208@gmail.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit b1e9d89408f402858c00103f9831b25ffa0994d3 ]
+[ Upstream commit 5f286f33553d600e6c2fb5a23dd6afcf99b3ebac ]
 
-After applying this patch, could correctly create symlink:
+UNTIL_STOP is used to avoid mddev is freed on the last close before adding
+disks to mddev. And it should be cleared when stopping an array which is
+mentioned in commit efeb53c0e572 ("md: Allow md devices to be created by
+name."). So reset ->hold_active to 0 in md_clean.
 
-ln -s "relative/path/to/file" symlink
+And MD_CLOSING should be kept until mddev is freed to avoid reopen.
 
-Signed-off-by: Rong Zhang <ulin0208@gmail.com>
-[almaz.alexandrovich@paragon-software.com: added cpu_to_le32 macro to
-rs->Flags assignment]
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/linux-raid/20250611073108.25463-3-xni@redhat.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -69,133 +74,105 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-1. **Bug Fix for User-Facing Functionality**: The commit fixes a
-   specific bug where creating relative symlinks in NTFS3 filesystems
-   would fail. The commit message clearly states it fixes the ability to
-   run `ln -s "relative/path/to/file" symlink`, which is a basic
-   filesystem operation that users expect to work correctly.
+## Bug Fix Analysis
 
-2. **Small and Contained Change**: The fix is relatively small and well-
-   contained within the NTFS3 symlink creation code. The changes are
-   limited to:
-   - Adding an `is_absolute` parameter to `ntfs_reparse_bytes()`
-     function
-   - Modifying buffer size calculations based on whether the path is
-     absolute or relative
-   - Setting the `SYMLINK_FLAG_RELATIVE` flag correctly in `rs->Flags`
-   - Conditionally adding the Windows path decoration (`\??\`) only for
-     absolute paths
+This commit fixes a race condition in the MD (Multiple Device) subsystem
+where the MD_CLOSING flag could be cleared prematurely, allowing an
+mddev to be reopened while it's in the process of being freed. This is a
+clear use-after-free vulnerability.
 
-3. **Clear Root Cause**: The original code always treated symlinks as
-   absolute paths by:
-   - Always setting `rs->Flags = 0` (line 1125 in original), which means
-     absolute path
-   - Always adding 4 extra characters for the `\??\` prefix in buffer
-     calculations
-   - Always decorating paths with `\??\` prefix regardless of path type
+## Key Issues Fixed
 
-4. **Minimal Risk of Regression**: The changes are straightforward:
-   - The fix correctly identifies absolute paths by checking if the
-     second character is ':' (Windows drive letter format)
-   - It properly sets `SYMLINK_FLAG_RELATIVE` (value 1) for relative
-     paths using `cpu_to_le32()` for endianness
-   - Buffer calculations and path decorations are adjusted accordingly
+1. **Race condition with MD_CLOSING flag**: The old code would
+   conditionally clear MD_CLOSING based on whether `hold_active` was
+   set:
+  ```c
+  if (mddev->hold_active)
+  mddev->flags = 0;  // This clears MD_CLOSING!
+  else
+  mddev->flags &= BIT_ULL_MASK(MD_CLOSING);
+  ```
 
-5. **No Architectural Changes**: This is purely a bug fix that corrects
-   the handling of relative symlinks. It doesn't introduce new features
-   or change any fundamental behavior of the filesystem.
+2. **Improper hold_active handling**: The commit properly moves the
+   clearing of `hold_active` from `do_md_stop()` into `md_clean()`,
+   making the code cleaner and more predictable.
 
-6. **Important for Interoperability**: NTFS3 is used for compatibility
-   with Windows filesystems. Having broken relative symlink support
-   impacts users who need to share filesystems between Linux and
-   Windows, making this an important functionality fix.
+## Impact on Users
 
-The commit follows stable kernel rules by being a clear bug fix with
-minimal changes and low risk of introducing new issues. The fact that
-the maintainer added the proper endianness conversion (`cpu_to_le32`)
-shows careful attention to correctness.
+- **Security Impact**: This prevents a potential use-after-free
+  vulnerability where an mddev could be reopened while being freed.
+- **Stability Impact**: Prevents crashes or undefined behavior when
+  racing between mddev close/free and reopen operations.
+- **Data Integrity**: Could prevent corruption scenarios where
+  operations are performed on a partially freed mddev structure.
 
- fs/ntfs3/inode.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+## Code Changes Analysis
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index af7c0cbba74e..0150a2210209 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1130,10 +1130,10 @@ int inode_write_data(struct inode *inode, const void *data, size_t bytes)
-  * Number of bytes for REPARSE_DATA_BUFFER(IO_REPARSE_TAG_SYMLINK)
-  * for unicode string of @uni_len length.
-  */
--static inline u32 ntfs_reparse_bytes(u32 uni_len)
-+static inline u32 ntfs_reparse_bytes(u32 uni_len, bool is_absolute)
- {
- 	/* Header + unicode string + decorated unicode string. */
--	return sizeof(short) * (2 * uni_len + 4) +
-+	return sizeof(short) * (2 * uni_len + (is_absolute ? 4 : 0)) +
- 	       offsetof(struct REPARSE_DATA_BUFFER,
- 			SymbolicLinkReparseBuffer.PathBuffer);
- }
-@@ -1146,8 +1146,11 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
- 	struct REPARSE_DATA_BUFFER *rp;
- 	__le16 *rp_name;
- 	typeof(rp->SymbolicLinkReparseBuffer) *rs;
-+	bool is_absolute;
- 
--	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2), GFP_NOFS);
-+	is_absolute = (strlen(symname) > 1 && symname[1] == ':');
-+
-+	rp = kzalloc(ntfs_reparse_bytes(2 * size + 2, is_absolute), GFP_NOFS);
- 	if (!rp)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -1162,7 +1165,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
- 		goto out;
- 
- 	/* err = the length of unicode name of symlink. */
--	*nsize = ntfs_reparse_bytes(err);
-+	*nsize = ntfs_reparse_bytes(err, is_absolute);
- 
- 	if (*nsize > sbi->reparse.max_size) {
- 		err = -EFBIG;
-@@ -1182,7 +1185,7 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
- 
- 	/* PrintName + SubstituteName. */
- 	rs->SubstituteNameOffset = cpu_to_le16(sizeof(short) * err);
--	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + 8);
-+	rs->SubstituteNameLength = cpu_to_le16(sizeof(short) * err + (is_absolute ? 8 : 0));
- 	rs->PrintNameLength = rs->SubstituteNameOffset;
- 
- 	/*
-@@ -1190,16 +1193,18 @@ ntfs_create_reparse_buffer(struct ntfs_sb_info *sbi, const char *symname,
- 	 * parse this path.
- 	 * 0-absolute path 1- relative path (SYMLINK_FLAG_RELATIVE).
- 	 */
--	rs->Flags = 0;
-+	rs->Flags = cpu_to_le32(is_absolute ? 0 : SYMLINK_FLAG_RELATIVE);
- 
--	memmove(rp_name + err + 4, rp_name, sizeof(short) * err);
-+	memmove(rp_name + err + (is_absolute ? 4 : 0), rp_name, sizeof(short) * err);
- 
--	/* Decorate SubstituteName. */
--	rp_name += err;
--	rp_name[0] = cpu_to_le16('\\');
--	rp_name[1] = cpu_to_le16('?');
--	rp_name[2] = cpu_to_le16('?');
--	rp_name[3] = cpu_to_le16('\\');
-+	if (is_absolute) {
-+		/* Decorate SubstituteName. */
-+		rp_name += err;
-+		rp_name[0] = cpu_to_le16('\\');
-+		rp_name[1] = cpu_to_le16('?');
-+		rp_name[2] = cpu_to_le16('?');
-+		rp_name[3] = cpu_to_le16('\\');
-+	}
- 
- 	return rp;
- out:
+The changes are minimal and focused:
+1. Removes the conditional logic that could clear MD_CLOSING
+   inappropriately
+2. Always preserves MD_CLOSING flag in `md_clean()` with: `mddev->flags
+   &= BIT_ULL_MASK(MD_CLOSING)`
+3. Moves `hold_active = 0` assignment from `do_md_stop()` to
+   `md_clean()` for better code organization
+4. Updates comments to clarify the behavior
+
+## Stable Tree Criteria
+
+✓ **Fixes a real bug**: Yes - race condition leading to potential use-
+after-free
+✓ **Small and contained**: Yes - only 15 lines changed in a single
+function
+✓ **No new features**: Correct - only fixes existing behavior
+✓ **Minimal regression risk**: Yes - preserves existing semantics while
+fixing the race
+✓ **Important enough**: Yes - security/stability issue in core storage
+subsystem
+
+The commit message explicitly references commit efeb53c0e572 which
+introduced the UNTIL_STOP mechanism, showing this is fixing a long-
+standing issue in the MD subsystem's lifecycle management.
+
+ drivers/md/md.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 2758c3ee2f56..60b49f7c74c2 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6265,15 +6265,10 @@ static void md_clean(struct mddev *mddev)
+ 	mddev->persistent = 0;
+ 	mddev->level = LEVEL_NONE;
+ 	mddev->clevel[0] = 0;
+-	/*
+-	 * Don't clear MD_CLOSING, or mddev can be opened again.
+-	 * 'hold_active != 0' means mddev is still in the creation
+-	 * process and will be used later.
+-	 */
+-	if (mddev->hold_active)
+-		mddev->flags = 0;
+-	else
+-		mddev->flags &= BIT_ULL_MASK(MD_CLOSING);
++	/* if UNTIL_STOP is set, it's cleared here */
++	mddev->hold_active = 0;
++	/* Don't clear MD_CLOSING, or mddev can be opened again. */
++	mddev->flags &= BIT_ULL_MASK(MD_CLOSING);
+ 	mddev->sb_flags = 0;
+ 	mddev->ro = MD_RDWR;
+ 	mddev->metadata_type[0] = 0;
+@@ -6545,9 +6540,6 @@ static int do_md_stop(struct mddev *mddev, int mode,
+ 		export_array(mddev);
+ 		md_clean(mddev);
+ 		set_bit(MD_DELETED, &mddev->flags);
+-
+-		if (mddev->hold_active == UNTIL_STOP)
+-			mddev->hold_active = 0;
+ 	}
+ 	md_new_event();
+ 	sysfs_notify_dirent_safe(mddev->sysfs_state);
 -- 
 2.39.5
 
