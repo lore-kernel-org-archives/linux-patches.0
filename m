@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFB3207DE2;
-	Sun,  3 Aug 2025 21:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE418207DE2;
+	Sun,  3 Aug 2025 21:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754256187; cv=none; b=PAwfDzVxHehS+hV+TebpkDd0TX9Z9LC1yN9Sn+Z2dn9HYyqBKJvZ8wiKtIOBrSXcpHYqeJAQP1cl3riZD6UOU38d4ZYdR7Y3qCl8VPzDW7Jcb5mcrkK/5CsiB4X3Zr3cDDLswg8y7GEMV6cSoTkeJIrocUz8I2C2bLxsORDmdj8=
+	t=1754256188; cv=none; b=UwYooMXdDxCqKlJiB5iMYUwh7ORRhQhwtRmdg79dPPNSJF3BYgNi7U45jBpChXe2jbCseXvT1+w95Pz5aH5JVt5zWiSoNAla5RXMWSK41HtYC2NgwjPg0UxcR9CZIE2z1Ia33VkBWHRYDHFDe53uQtzp6wncrj9mMBxD1QYGaFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754256187; c=relaxed/simple;
-	bh=vtP0ddkQY16bUWzQzHbOitoM8teSFYWwWy1rK0XM8Eg=;
+	s=arc-20240116; t=1754256188; c=relaxed/simple;
+	bh=ypW0rxu6CPke5sHwiG6FaiHwUEHIiqglPxR7OI4ZONk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LCOHwU9priE51JyxGp6PccWbOSCndKeDvN+2+0vQ2I7r/0MdAM1PQvti3dva7UEGRde8AEPXgOSPALWWbACCCCUePy3ugLOR0bzXAKdHJgRLrc11uxcccisnByNq6Bc8GYPkhqH5eIeHnrCj3EtWLX6vGCSLC/+YGQ2LgDE4HOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RV9Dsueq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lEAZzr7SS1U5eRV4krs7uuRAYh9Dr5Pe56e7UtoTO78j3DEZMFmLQU81GUz2oGuwmcMZqsJTx+v2EO0PeOZp1xrCjpZ3iEDKqGteeeZbwARMXDBPY6ivAugnPUlVuF3aoDG1c6Apyn0g05dUdAOlm7atzkXK1FniVndpIi2esMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qh3cHfN8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RV9Dsueq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A504C4CEF0;
-	Sun,  3 Aug 2025 21:23:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qh3cHfN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C901C4CEEB;
+	Sun,  3 Aug 2025 21:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754256185;
-	bh=vtP0ddkQY16bUWzQzHbOitoM8teSFYWwWy1rK0XM8Eg=;
+	s=k20201202; t=1754256188;
+	bh=ypW0rxu6CPke5sHwiG6FaiHwUEHIiqglPxR7OI4ZONk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RV9DsueqANkbXstSbNN91qbaz91E2nAsrMskbPCN06DV6fG3y9UyP3IRA4Glf0DC6
-	 3Imm0euTAVex9hJ7m0IfkwwYPn8uYTlQeUn0O7HFEosCI6iV0lwZt8p/54dpJrtybG
-	 zu8RDzFsT/K/mtrwF93JZG5RB7LGYnR6XfwnUMqcuPvBfW2VdwYRU84N4yZS8PMuHW
-	 m1uG+yheZBNDKDD5hNwWqvrBmaiioKbjjzIC0jhFUlPhTpp1w9nj+TzfMtJt3yqwyX
-	 whV2ZsTz3qfpVf6fw0fgQbVvY//qIvUluAs0bJABsGknxtVMpd6JVJDYp2TIGp7yGK
-	 xklrxyK+InzOA==
+	b=Qh3cHfN80s8GVViOxEyMwwf6PpCsiUsFwdxJmISH4ghyxrZuRPGeH4a1y8CWJpONz
+	 /FNpWJ94uz2Zy5FbVIjDuySgDUU6yiAqTQ3mW69SOVMrPSD3orpb3XMKCrt3t7zQ2f
+	 vcO+XZe+4538A3/fsIkZ2cno1eMFoiAfy/hMjKMyPVPk5xQPx+paU8nMrsSirdApZ6
+	 f15Il9a+FUesXYiUsHACWyNAlkF8jX6j/Iai8p0yD+oOEq7sAx3lCezipExWcjkjj8
+	 jqWYAqP7Y+E12R/MiOBXq69Nh7avbpwTORZQTaMJU452WkDdvc+/Zz+ZRaGeNdgMr5
+	 Su7KLBtWQD4zQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-ide@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 10/11] ata: libata-sata: Disallow changing LPM state if not supported
-Date: Sun,  3 Aug 2025 17:22:40 -0400
-Message-Id: <20250803212242.3549318-10-sashal@kernel.org>
+	paul@paul-moore.com,
+	jmorris@namei.org,
+	serge@hallyn.com,
+	linux-security-module@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 11/11] securityfs: don't pin dentries twice, once is enough...
+Date: Sun,  3 Aug 2025 17:22:41 -0400
+Message-Id: <20250803212242.3549318-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803212242.3549318-1-sashal@kernel.org>
 References: <20250803212242.3549318-1-sashal@kernel.org>
@@ -51,87 +52,111 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.240
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 413e800cadbf67550d76c77c230b2ecd96bce83a ]
+[ Upstream commit 27cd1bf1240d482e4f02ca4f9812e748f3106e4f ]
 
-Modify ata_scsi_lpm_store() to return an error if a user attempts to set
-a link power management policy for a port that does not support LPM,
-that is, ports flagged with ATA_FLAG_NO_LPM.
+incidentally, securityfs_recursive_remove() is broken without that -
+it leaks dentries, since simple_recursive_removal() does not expect
+anything of that sort.  It could be worked around by dput() in
+remove_one() callback, but it's easier to just drop that double-get
+stuff.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://lore.kernel.org/r/20250701125321.69496-6-dlemoal@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the surrounding code context,
-here's my determination:
+Now I have a clear understanding of the issue. Let me analyze this:
 
-**Backport Status: YES**
+**YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's the
+extensive analysis:
 
-1. **Fixes a clear bug**: Without this check, users can attempt to
-   change LPM policy on ports that don't support LPM (flagged with
-   ATA_FLAG_NO_LPM), which could lead to undefined behavior or system
-   issues. The code already prevents setting the policy but doesn't
-   inform the user that the operation failed.
+## Analysis of the Double Dentry Reference Issue
 
-2. **User-visible issue**: The bug allows sysfs writes to succeed
-   silently when they should fail with an error. This violates the
-   principle of least surprise - users expect operations to either
-   succeed or return an error, not silently fail.
+The commit fixes a clear bug in securityfs where dentries are being
+pinned twice:
 
-3. **Small and contained fix**: The patch adds just 5 lines of code
-   (lines 927-930) that perform a simple flag check and return
-   -EOPNOTSUPP if the port doesn't support LPM. This is a minimal change
-   with low risk of regression.
+1. **The Bug**: In `securityfs_create_dentry()` at line 162, there's a
+   `dget(dentry)` call immediately after `d_instantiate(dentry, inode)`.
+   This creates an extra reference count on the dentry that is never
+   properly balanced.
 
-4. **Consistency with existing checks**: The function already has
-   similar validation for device-level quirks (ATA_QUIRK_NOLPM at lines
-   934-937). This patch adds the missing port-level validation, making
-   the code more consistent and complete.
+2. **Impact on `securityfs_remove()`**: The traditional
+   `securityfs_remove()` function does call `dput(dentry)` at line 309,
+   which would balance the extra `dget()`. However, this only happens
+   for the simple remove case.
 
-5. **Related to recent fixes**: Looking at recent commits (65b2c92f69d3,
-   4edf1505b76d), there's been work to properly handle ports that don't
-   support LPM. This patch completes that work by ensuring the sysfs
-   interface properly rejects invalid operations.
+3. **Critical Impact on `securityfs_recursive_remove()`**: The newly
+   added `securityfs_recursive_remove()` function (added in commit
+   7138679ff2a2) uses `simple_recursive_removal()` which expects normal
+   dentry reference counting. The `simple_recursive_removal()` function
+   in fs/libfs.c:
+   - Takes its own reference with `dget(dentry)` at the beginning
+   - Properly releases references with `dput()` calls throughout its
+     execution
+   - Does NOT expect the dentries to have extra references
 
-6. **Prevents potential hardware issues**: Attempting to set LPM
-   policies on hardware that doesn't support them could potentially
-   cause hardware malfunctions or unexpected behavior. This fix prevents
-   such attempts at the sysfs interface level.
+4. **The Leak**: When `securityfs_recursive_remove()` is called, the
+   extra reference from the `dget()` in `securityfs_create_dentry()` is
+   never released because:
+   - `simple_recursive_removal()` only releases the references it takes
+   - The `remove_one()` callback only calls `simple_release_fs()` but
+     doesn't do any `dput()`
+   - This results in dentries being leaked with a refcount that never
+     reaches zero
 
-The fix follows stable kernel rules: it's a clear bug fix, minimal in
-scope, doesn't introduce new features, and addresses a real user-facing
-issue where invalid operations appear to succeed when they should fail
-with an appropriate error code.
+5. **Pattern Consistency**: Looking at similar filesystem
+   implementations like debugfs (fs/debugfs/inode.c), they do NOT add an
+   extra `dget()` after `d_instantiate()`. The pattern is simply:
+  ```c
+  d_instantiate(dentry, inode);
+  return end_creating(dentry);
+  ```
+  No extra reference is taken.
 
- drivers/ata/libata-sata.c | 5 +++++
- 1 file changed, 5 insertions(+)
+6. **Backport Criteria Met**:
+   - **Fixes a real bug**: Memory leak of dentries when using
+     `securityfs_recursive_remove()`
+   - **Small and contained**: Single-line removal in two locations
+   - **No side effects**: Removing the extra `dget()` brings the code in
+     line with standard VFS patterns
+   - **Low regression risk**: The fix makes securityfs consistent with
+     other similar filesystems
+   - **Important for stability**: Memory leaks in kernel filesystem code
+     can accumulate over time
 
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index 45656067c547..d5c97dba2dd4 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -815,6 +815,11 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
+The commit message clearly identifies this as a bug fix
+("securityfs_recursive_remove() is broken without that - it leaks
+dentries"), and the fix is minimal and correct. This makes it an ideal
+candidate for stable backporting.
+
+ security/inode.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/security/inode.c b/security/inode.c
+index 6c326939750d..e6e07787eec9 100644
+--- a/security/inode.c
++++ b/security/inode.c
+@@ -159,7 +159,6 @@ static struct dentry *securityfs_create_dentry(const char *name, umode_t mode,
+ 		inode->i_fop = fops;
+ 	}
+ 	d_instantiate(dentry, inode);
+-	dget(dentry);
+ 	inode_unlock(dir);
+ 	return dentry;
  
- 	spin_lock_irqsave(ap->lock, flags);
- 
-+	if (ap->flags & ATA_FLAG_NO_LPM) {
-+		count = -EOPNOTSUPP;
-+		goto out_unlock;
-+	}
-+
- 	ata_for_each_link(link, ap, EDGE) {
- 		ata_for_each_dev(dev, &ap->link, ENABLED) {
- 			if (dev->horkage & ATA_HORKAGE_NOLPM) {
+@@ -306,7 +305,6 @@ void securityfs_remove(struct dentry *dentry)
+ 			simple_rmdir(dir, dentry);
+ 		else
+ 			simple_unlink(dir, dentry);
+-		dput(dentry);
+ 	}
+ 	inode_unlock(dir);
+ 	simple_release_fs(&mount, &mount_count);
 -- 
 2.39.5
 
