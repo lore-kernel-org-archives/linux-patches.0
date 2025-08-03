@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383401D5CC6;
-	Sun,  3 Aug 2025 21:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFF41D5CC6;
+	Sun,  3 Aug 2025 21:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754255942; cv=none; b=owh6zlbze4dgRUJTSoTmsfYuPULhp2LbDDKcsHTZ8lReUodxCfSgr+CKtsYed1gPl0etCoaVvu4cU/pQ7AgGE1QEgCVQ38t/Ugwlt2p2K0d8bzjlBnQTJ3VigNOykeXoqcGJeVhrm9f5mk11s4Pk38NK+w4OqgD1i14PsWKwwHo=
+	t=1754255944; cv=none; b=DWAlqhmpJTm3vetlqK0L62qx2TMvP/HJ7KG7vKY0D/CLzc1Z74OsVWryyv88pE4SHZVmNGvLpwLMVZwBVQ1K6yHaPET9+4srH+AVsZbMhdvJuBDLn1rjsxTtpzdUThtC9Tx8kbF18f37fR2YLKMjrHEKyd7np3Zyh8hY2hG8nsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754255942; c=relaxed/simple;
-	bh=7sjZMEQKGAx0sRMw18dNziC3xa86QGlmck6KHfuHM0s=;
+	s=arc-20240116; t=1754255944; c=relaxed/simple;
+	bh=YD5bJJPMFlk6eY28GHSUHhs2Z82VE8Kd4QBHLV+/TxE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jTk7SED87fO+diAkMmonw6q5vaRjR/aDwDFCNaUISER0PIWMBd3DoUlQcIDgEf36NOfnnATtlfbgZwPEuTy+z+Z1PFf/Hud3nI2tJg1dAobTQSee56CXjwFVF8A2jOLJc8O988pXC0tgkjoy9nsg0WLQEq5ntF93BbXgK4rDkew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=atfg5Ish; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IFLa6rprQDFqc5cPDcaRZMfaWVVXD7/0UvAyFV4hq+6UFhtFsvKF2CPgi3S7umHqb9glnbKWNNeSXbUah3VdRtQ19SnTTOkMOMEvijzwIDJjkaEQGFHdmXzwnZcWlxh11jqyR/6ETVMmCUjaxifJ5XVPBnavoSm95LzntYi97G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VmxMrjIx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="atfg5Ish"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B6DC4CEF8;
-	Sun,  3 Aug 2025 21:18:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VmxMrjIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6594FC4CEF8;
+	Sun,  3 Aug 2025 21:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754255941;
-	bh=7sjZMEQKGAx0sRMw18dNziC3xa86QGlmck6KHfuHM0s=;
+	s=k20201202; t=1754255944;
+	bh=YD5bJJPMFlk6eY28GHSUHhs2Z82VE8Kd4QBHLV+/TxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atfg5Ish1ZCn7MKDRWgLhEcUQ1ucj6cLGAufaXrQ9v+mrQUg5D/t61KWypqgawod/
-	 z/l0wlfhTcvlSEVDvPZCkimMFzpOWXsVsSST+6N+TeWbDR8Y9HDpta83mQVD5eMP6S
-	 YxLJjZWWiWzRw+xcKqAaj5JjmQJt7mTFzrzaKCfyzxGsmUaXvQfO/p7qQFrUlBS/RD
-	 BPnEsS7/HJJasViLI5aLMnzay4/oux34TJ3+KQPyhAdwCQXEhY0/NybthljSVyIMAj
-	 6lff/+hJmvBVAQkDVJCgyFqzxMQyBVQ6sfSG3aloheh94TCReBGxYVdPg+sU9hbGZ1
-	 e1K+R4/qmJbpw==
+	b=VmxMrjIxlqzu3gZEcsIjmVOTwYW+by4SOT8N3Qkc1pkPT/x905eTAwA2JGwmKQI66
+	 1vW5tvpbc/jDCtk6NU/9sHyD/yl91/toS7hjed73V8779NHnFYy9dJO9fZEpfyA+Ir
+	 bEsUf68L2u/BQ3Jk+Z41a8Q8ZDoX9ib9a9fgWV6LYsSlQLLdJeR4DMMvr0aiweYhqK
+	 WLJslL0+ky8m+Ck1ShmCkuPWLs5rqRRvLgTx9eixfkuErr4/eb2HtjPreKyV0nD7wa
+	 nPDQvITvCLGoDrkeN+WoIUTS3KRKaBYw3nkd0mbw8AfFso+FswPZZKu4b10qmm+899
+	 4JCVpm3YjvabA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: NeilBrown <neil@brown.name>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Keith Busch <kbusch@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 10/34] smb/server: avoid deadlock when linking with ReplaceIfExists
-Date: Sun,  3 Aug 2025 17:18:12 -0400
-Message-Id: <20250803211836.3546094-10-sashal@kernel.org>
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.15 11/34] nvme-pci: try function level reset on init failure
+Date: Sun,  3 Aug 2025 17:18:13 -0400
+Message-Id: <20250803211836.3546094-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250803211836.3546094-1-sashal@kernel.org>
 References: <20250803211836.3546094-1-sashal@kernel.org>
@@ -52,25 +53,25 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neil@brown.name>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit d5fc1400a34b4ea5e8f2ce296ea12bf8c8421694 ]
+[ Upstream commit 5b2c214a95942f7997d1916a4c44017becbc3cac ]
 
-If smb2_create_link() is called with ReplaceIfExists set and the name
-does exist then a deadlock will happen.
+NVMe devices from multiple vendors appear to get stuck in a reset state
+that we can't get out of with an NVMe level Controller Reset. The kernel
+would report these with messages that look like:
 
-ksmbd_vfs_kern_path_locked() will return with success and the parent
-directory will be locked.  ksmbd_vfs_remove_file() will then remove the
-file.  ksmbd_vfs_link() will then be called while the parent is still
-locked.  It will try to lock the same parent and will deadlock.
+  Device not ready; aborting reset, CSTS=0x1
 
-This patch moves the ksmbd_vfs_kern_path_unlock() call to *before*
-ksmbd_vfs_link() and then simplifies the code, removing the file_present
-flag variable.
+These have historically required a power cycle to make them usable
+again, but in many cases, a PCIe FLR is sufficient to restart operation
+without a power cycle. Try it if the initial controller reset fails
+during any nvme reset attempt.
 
-Signed-off-by: NeilBrown <neil@brown.name>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -78,117 +79,109 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees based on the
+following analysis:
 
-## Bug Analysis
+## 1. Fixes a Real User-Impacting Bug
 
-This commit fixes a critical **deadlock** issue in the ksmbd (SMB
-server) subsystem. The deadlock occurs in the `smb2_create_link()`
-function when creating a hard link with the `ReplaceIfExists` flag set
-and the target file already exists.
+The commit addresses a significant hardware issue where NVMe devices
+from multiple vendors get stuck in a reset state showing "Device not
+ready; aborting reset, CSTS=0x1". This is a real-world problem that:
+- Affects multiple vendors' devices (not vendor-specific)
+- Historically required a full power cycle to recover
+- Renders the storage device completely unusable
 
-### Deadlock Sequence:
+## 2. Minimal and Contained Fix
 
-1. `ksmbd_vfs_kern_path_locked()` is called and locks the parent
-   directory
-2. If the file exists and `ReplaceIfExists` is true,
-   `ksmbd_vfs_remove_file()` is called while the parent is still locked
-3. `ksmbd_vfs_link()` is then called, which attempts to lock the same
-   parent directory again
-4. **Result: Deadlock** - the function tries to acquire a lock it
-   already holds
+The code change is very focused and minimal:
+- Only adds ~20 lines of code in a single location
+- The fix is contained within the `nvme_pci_configure_admin_queue()`
+  function
+- Only executes when the initial controller reset fails (error path)
+- No architectural changes or new features
 
-### Fix Implementation:
+## 3. Clear Recovery Mechanism
 
-The fix reorders the operations by:
-- Moving the `ksmbd_vfs_kern_path_unlock()` call to execute **before**
-  `ksmbd_vfs_link()`
-- This ensures the parent directory is unlocked before attempting the
-  link operation
-- The code is also simplified by removing the `file_present` flag
-  variable
+The fix implements a well-understood recovery mechanism:
+```c
+if (result < 0) {
+    struct pci_dev *pdev = to_pci_dev(dev->dev);
+    result = pcie_reset_flr(pdev, false);
+    if (result < 0)
+        return result;
 
-## Backport Justification:
+    pci_restore_state(pdev);
+    result = nvme_disable_ctrl(&dev->ctrl, false);
+```
 
-1. **Critical Bug**: This fixes a deadlock that can hang the kernel's
-   SMB server functionality
-2. **User Impact**: The deadlock can be triggered by normal SMB
-   operations (creating hard links with replace), affecting file server
-   availability
-3. **Small and Contained**: The fix is minimal - just reordering
-   function calls and simplifying logic
-4. **No Architectural Changes**: This is a straightforward bug fix with
-   no feature additions
-5. **Low Risk**: The change only affects the specific error path in link
-   creation
-6. **Similar to Other Fixes**: The kernel has accepted similar deadlock
-   fixes in ksmbd (e.g., commit 864fb5d37163 "ksmbd: fix possible
-   deadlock in smb2_open")
+It uses PCIe Function Level Reset (FLR) as a "bigger hammer" when the
+NVMe-level controller reset fails, which is a standard PCIe recovery
+mechanism.
 
-## Code Quality:
+## 4. Low Risk of Regression
 
-The fix properly maintains the locking semantics while avoiding the
-deadlock. The simplified code flow makes the logic clearer and less
-error-prone.
+- Only triggers in error conditions (when `nvme_disable_ctrl` fails)
+- Falls back gracefully if FLR also fails
+- Uses existing, well-tested PCIe APIs (`pcie_reset_flr`,
+  `pci_restore_state`)
+- Adds informative logging when recovery succeeds
 
-This is exactly the type of bug fix that stable kernels should receive -
-it fixes a real issue that affects users, has minimal risk of
-regression, and improves system stability.
+## 5. Follows Stable Tree Rules
 
- fs/smb/server/smb2pdu.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+- Fixes a bug that prevents device initialization
+- No new features or functionality
+- Small, self-contained change
+- Clear benefit (avoiding power cycles) with minimal risk
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index f1c7ed1a6ca5..f46e9216106e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6025,7 +6025,6 @@ static int smb2_create_link(struct ksmbd_work *work,
- {
- 	char *link_name = NULL, *target_name = NULL, *pathname = NULL;
- 	struct path path, parent_path;
--	bool file_present = false;
- 	int rc;
+## 6. Similar Issues Fixed in Stable
+
+The git history shows multiple commits addressing "stuck reset" issues
+in the NVMe driver (e.g., `3f674e7b670b`, `ebef7368571d`), indicating
+this is an ongoing class of problems that stable kernels need to handle.
+
+The commit message explicitly states this affects devices from "multiple
+vendors" and provides a solution that avoids requiring power cycles,
+making it a clear candidate for stable backporting to improve system
+reliability.
+
+ drivers/nvme/host/pci.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 776c867fb64d..5396282015a2 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1888,8 +1888,28 @@ static int nvme_pci_configure_admin_queue(struct nvme_dev *dev)
+ 	 * might be pointing at!
+ 	 */
+ 	result = nvme_disable_ctrl(&dev->ctrl, false);
+-	if (result < 0)
+-		return result;
++	if (result < 0) {
++		struct pci_dev *pdev = to_pci_dev(dev->dev);
++
++		/*
++		 * The NVMe Controller Reset method did not get an expected
++		 * CSTS.RDY transition, so something with the device appears to
++		 * be stuck. Use the lower level and bigger hammer PCIe
++		 * Function Level Reset to attempt restoring the device to its
++		 * initial state, and try again.
++		 */
++		result = pcie_reset_flr(pdev, false);
++		if (result < 0)
++			return result;
++
++		pci_restore_state(pdev);
++		result = nvme_disable_ctrl(&dev->ctrl, false);
++		if (result < 0)
++			return result;
++
++		dev_info(dev->ctrl.device,
++			"controller reset completed after pcie flr\n");
++	}
  
- 	if (buf_len < (u64)sizeof(struct smb2_file_link_info) +
-@@ -6058,11 +6057,8 @@ static int smb2_create_link(struct ksmbd_work *work,
- 	if (rc) {
- 		if (rc != -ENOENT)
- 			goto out;
--	} else
--		file_present = true;
--
--	if (file_info->ReplaceIfExists) {
--		if (file_present) {
-+	} else {
-+		if (file_info->ReplaceIfExists) {
- 			rc = ksmbd_vfs_remove_file(work, &path);
- 			if (rc) {
- 				rc = -EINVAL;
-@@ -6070,21 +6066,17 @@ static int smb2_create_link(struct ksmbd_work *work,
- 					    link_name);
- 				goto out;
- 			}
--		}
--	} else {
--		if (file_present) {
-+		} else {
- 			rc = -EEXIST;
- 			ksmbd_debug(SMB, "link already exists\n");
- 			goto out;
- 		}
-+		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 	}
--
- 	rc = ksmbd_vfs_link(work, target_name, link_name);
- 	if (rc)
- 		rc = -EINVAL;
- out:
--	if (file_present)
--		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
- 
- 	if (!IS_ERR(link_name))
- 		kfree(link_name);
+ 	result = nvme_alloc_queue(dev, 0, NVME_AQ_DEPTH);
+ 	if (result)
 -- 
 2.39.5
 
