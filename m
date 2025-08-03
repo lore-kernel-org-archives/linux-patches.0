@@ -1,164 +1,445 @@
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2054.outbound.protection.outlook.com [40.107.96.54])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6426323C4E9;
-	Sat,  2 Aug 2025 15:18:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754147904; cv=fail; b=KwCQByf85bUuX5Ux9UaFumepBJrso8xAKtnr+4BKUO8gS6gaAOduhQxk1bkE+hr4qUTr9Ym0ZnK9kDUDck6bheEqhbfAS9s62pfFEgnxprTQGvs/m8ButdvLvQqpSSTJvVa4BYbiFVPC9R5ReCZY26/WNHk+BPPH/bc3IfzUvWg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754147904; c=relaxed/simple;
-	bh=9EOVCzeRQAuDotY7+MedyDr6n1ixhnXJ9J13lTVJKrM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=QD0X6/Iq+ACroGk/TL7qMhcdlXSDGGpNxL0PT7HMsDvy8BFf6akLbf38VUu2mA/OeHzsdUYBaT7hi3iEGyxLqxNtyO7gbkdYVpnk7DKibC51a6E0I8oBivodoYqXt6YUu3ibDeq5evbngH7ZyA9wPKo2BUlt+Hfmy2BvZm6bemc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nNDm7oJ1; arc=fail smtp.client-ip=40.107.96.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085BCF9D6;
+	Sun,  3 Aug 2025 21:17:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754255861; cv=none; b=M4qYQeW7/hk4mgh1qhbU5pZsfmxO7IFsTSuB7svdLUXYb3JHRnw4Qb9l1BvPrjdRCv4BwGy7nzZdv65Cw8RpUvVteeshMYkdcTgW78YjOwL0GzmzlNCAiLIszPnoxfVaNhEHr+sEdpgbjCCD5YN3wigPTUhV97FMxp/5OjWQcYY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754255861; c=relaxed/simple;
+	bh=P4aI6WkE8WTDcnNa8bsV5CGbPMjZlFabXQyaxRm60Fc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fa6fDWG0VKwJM+U+4SHdLIVJ3K8m8qCnWEEhPCyr8sf2oKSj76X+vwkAVGWHw8xuJgoT5Z521PJzTJE9xVQBnJo8DUKIEcnDtUoLT105mtsBXPslP9grvEZXd2Wb/8S3yTc4hZ2nuEldy3a04hc5CXSr2FJC1ueCo77idwn+zB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ri3XKQ6H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nNDm7oJ1"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Sg5Sc43xM6onJ8Viju8gEn0cAbqjcJSnvNSwbhA30/fTs8AHgevjd/p92hHrSlHeIKWddREAZ4PCMboGqXnc8mZ4JYox4slH7r4NGrR5XBDTXobTw9gkA1lOc9YKjk9DgZmfeyp/2mJ4orBzjGYgPqSYLHvYSwT2kD7cmiTz04DuFzsxBMlk0JcOMQAoLBmDSUlCqO1HBam1tbKLnC9h2Z4OYlUDhO48iHlbbANk39JLgeF+Wg8Tz0sjL/90c1CSLHavGs/ysoRRrdaG715zRwZSus8bjvU4Am5NwP744zDfC1d3LlCzIjX3p8w8R95TdrUOTU1thXIkJMYcuk8LnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PhmBpuuuTMf8cw8s3e3J6O6LmTe9sVfraQkfb8AiwN8=;
- b=RUVRZl4tjTrLZUJMiSabM/CR+CgVKjz92as1tlHvWOGcdhFoTc3hQKHobYJyHgApgR5VgInDf5hPGqBDRUGf2v1ZCIzyCVxMN5eolaEuJtVqqp5AniH5jVWCvvyBylGm3Y9av/IgxSIv2aGsxv94L+u25vNMjoejSTZTRfMckD50erhFG0R09vs72sVcqmdG1AtTGxNx0EuS9YMhObEBRnWQXKe8utS67YHUxb0TdnwxVAWY+kajqpMOFFPLp3Tl27MyRIxoaz0wvZghFD1Y5L2ZErnkUzY45WPvz8PRfn6cA/zJbAgiEtAh+mSR5cTrCh0rdWt7hugCfJiqjRzDrQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PhmBpuuuTMf8cw8s3e3J6O6LmTe9sVfraQkfb8AiwN8=;
- b=nNDm7oJ1CMjvjq7Ouf+IOb8AVYjOKHLiooMcP4pXHXscesptra+XtVAA6/V8oF5pmsiF39QU+rt+7fLl1QF/Z1dIS3ptcSrOc2/VKZVVv2gcjTVd+esqi/puaFs9R4mG03Oz7xfMJGRCIfd4gIGsp2opZBGgdz1793vVYNDtEao9bm5ZbpOeQ+77MEM3A5Yy72qZezTpYyKMcbFm7wjhF7IlvR34Y0O8uwxp/8gY2eLmMZI8umJm1BVvD+ZAXM2Oj74/mR4u/GzmqIE/sH4DUTHWLvtBFMwFfqrWEvbpcQ8Adk5zDWZw/fenS3tmXShZIFDyqa7gLcEbO6c7kT6/aA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by IA1PR12MB7640.namprd12.prod.outlook.com (2603:10b6:208:424::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.18; Sat, 2 Aug
- 2025 15:18:18 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%7]) with mapi id 15.20.8989.011; Sat, 2 Aug 2025
- 15:18:17 +0000
-Date: Sat, 2 Aug 2025 12:18:16 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Ethan Zhao <etzhao1900@gmail.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
-	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
-	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
-	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-Subject: Re: [PATCH v2 00/16] Fix incorrect iommu_groups with PCIe ACS
-Message-ID: <20250802151816.GC184255@nvidia.com>
-References: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
-X-ClientProxiedBy: YT3PR01CA0099.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:85::19) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ri3XKQ6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936E6C4CEEB;
+	Sun,  3 Aug 2025 21:17:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754255860;
+	bh=P4aI6WkE8WTDcnNa8bsV5CGbPMjZlFabXQyaxRm60Fc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ri3XKQ6HAiiHfu6Udt0tz26186H+wtTzWQUNhaOnXwGajsWfte2z5QgW8D/w9CYcn
+	 YGkccK1Gll1QHSOxyp3dWwMOiqNWBGHHaqotzrN1XKuwq40+51+cWg4fiADHNOmWjM
+	 DQ3QauGu96nWaetoNe2w/m9i8RCnPN7pkoKj4pbQYGwQ17xWyoL/MpJYJGOgmYzvTn
+	 ATQJMcVQQ2JRMGEfurPVRuvsdTQRdju0kybCGi9LXj1F/At/GX8fwMtNsj73ryOtM2
+	 CTlzax2L2kF9NO/JloO9pEVYj8ZR1RVByeQ9uTyQsPavtQJFIb9iv8Y7D0X5FU6GhK
+	 /5+h7MNG6KHlg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
+	Wenzhi Wang <wenzhi.wang@uwaterloo.ca>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 01/35] hfs: fix general protection fault in hfs_find_init()
+Date: Sun,  3 Aug 2025 17:17:01 -0400
+Message-Id: <20250803211736.3545028-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|IA1PR12MB7640:EE_
-X-MS-Office365-Filtering-Correlation-Id: 27c06469-ef9c-47d0-69a4-08ddd1d7ceeb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?1SSsbb8ZOZQJOaiy4h1BxtA8gAOh09HoSozwytbOvpAsifsER3f4rGEyYFgM?=
- =?us-ascii?Q?7qg7outHteGPGWd0z3BQOE+OJhU5dlai8diHiNwmy3zCFCaluESWg5FPNofL?=
- =?us-ascii?Q?+Mcqhj2vZZbkHt7aHxzRi0Wz0IVIIASFss0w2RYGB9mHXo5IVG8IdE10mcns?=
- =?us-ascii?Q?M3EbZlgNFXNwxvnuK6WtBpqsE194qyWBw1Hfrc0wXg8+4EHCMeHTzHrFscSr?=
- =?us-ascii?Q?jCVgmYOncP7tu8lt1SwHeAPKHHpkD5bpPNRjiIPQXQPn1mDLS5lz5i7/kBhr?=
- =?us-ascii?Q?5RwS0zBkWKvlygPhlrn2naGOxdIAO9L1w23I5y5/D0wmr9bkdNflgaocRWbd?=
- =?us-ascii?Q?sKUvWhof0yexWZgKmRRuRMM5trXbQUME4oe1wNNqtiUvWOsXrmCF0t/e3C4D?=
- =?us-ascii?Q?3EdE+1145v6JPmV4hn2uqN66UpDk1xrzXBdJYIdnAuDxYd9lnRXwHlKCrNc3?=
- =?us-ascii?Q?epDkFa8WZtc18j7nmXTdGI4d9InKe1xbF48uBFK+oKbx9BXEs0RePZexq6RL?=
- =?us-ascii?Q?CJOXYx+8nTIdHBxAQk2+AtWbB3sqyJpJK9I0XqXfftgkyL2W45h5LlX81RbB?=
- =?us-ascii?Q?Y2KWXFFBY8XKQD9f/v7rb3GYl0Vtt7r63d17aLGPIhOjhW6/LTWrtslzfaeQ?=
- =?us-ascii?Q?uCv17XYSkEDyvYTJ8T5ZO4L0Ot/AlypVJ1h1yzuknVxkY8+WICMPlBsg8FGg?=
- =?us-ascii?Q?qAFdIEOkrYY3pDbeZ/XPBeN9RgdWOjfsXev+xBOmgBwIjZRMBL+KJt7rjwIH?=
- =?us-ascii?Q?x1YtCzFzEqplSRRJVsKOHARiu9x1M1QXFXoQtu/bqo2M/dQm1TZYa1WiaTfb?=
- =?us-ascii?Q?WX3+4XE1gGXQTwSgYCUd4jtIfQpfhDwo1uY9mmiAcZyB0XjTcH6HDY6fxzta?=
- =?us-ascii?Q?CNanJg6EToHMTn0g0UzIgmh7E2QA8KaI19KwtmHkHzzBYG6kkg8qjF1YK3+u?=
- =?us-ascii?Q?G6ynrT6Z5ihNIVx5NTeQlf67bpC0kKG/iDSoQRqotPUn4tQMJwt3j26TcTWZ?=
- =?us-ascii?Q?mq32g8p+FGyG6evd2rdayOXjLGMVoE0C4NO1azGoJ84Vg+GmobkqxJTcdJO6?=
- =?us-ascii?Q?8Ro+G/zj6Or9QWMdmrQVONCPfreUisZPGVoFG5ULsgoh1yRCaPpC2rIMjGG9?=
- =?us-ascii?Q?3uDNzPYyzlifdx1nuhlKDzp/jXT9JYxa2O1ZFmGC+ayC5gItaLIud9bOQsIj?=
- =?us-ascii?Q?/J/ZNTMGzTVIKBBr4Mm6DAtc5aMCnOPsOQuDCJdRF4w37IAKDxgWCfUnNPza?=
- =?us-ascii?Q?cqrmOqtbbMWjVtIGGcEF8TAiHKk05Uwry/p5N+/8AjLN5Y7teHUkeeZgFGgS?=
- =?us-ascii?Q?SG01HXITCzNSJGIyVlY/+a8btaPkHiFSvclvlvxk1cB3CLqZQZo61DymPR4b?=
- =?us-ascii?Q?zxvuv8EYWOjDc7OiHPo6YEFNso6u3nzJ12Um/QrJ9D66JOOBjQ=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Zfd2qdYs39ZpXo4ArAppSU0tqXLBhf0dB6KSPhMHFHO0plNiSTM5+FlCZ34f?=
- =?us-ascii?Q?b/N1KzmIqppCozx/Qw/A0hjI6H/5QaI8pDCptfLdetr+8XYzbd+RvBcNP2AY?=
- =?us-ascii?Q?cvWLhyIFsk9O3XVbT8AqttPjJB3uFWCYTpHsupzp0T5iwqRSb6JUqMGQm8g2?=
- =?us-ascii?Q?myZIlPf42clVfHg7BWr7pp+FGLv5buTXAhHwLTg37Cg15+20pXnZ7h3tuMKz?=
- =?us-ascii?Q?2drjvgUEqzE0IG0aZQsSr+Q+7XP634VpJNPx4d6pDSfRaT4W9S/n7mSu3IgW?=
- =?us-ascii?Q?26kimrOl0iKPPxr+FtJEeBCIy8pTxNLn3FFC50kLvLBdqoD+HmYN7RYLy1a6?=
- =?us-ascii?Q?rNx0Ve/sLLTBu2ABi/RgGb+cxZH4gUuY8OHkPryvX/MOfFUS5eFHizQtog9+?=
- =?us-ascii?Q?4VwWvm5SFMAayNfYnaAnLv54Gbb94JfnC+TtA/WIzBVM94IH7QlzTzJylPAw?=
- =?us-ascii?Q?wtJjJ5DS94oopBH/pcluMr58PIchcjcZqQd2pffPBJQrgwu2X7Gb0lE4na7l?=
- =?us-ascii?Q?Mkt/hUbXgFPgKg6x1oEheRkC/YU6hwdHlbgJk4CmOfdZJLB02Um+30yDySK4?=
- =?us-ascii?Q?Dm2w0PbTrxiUA90a1uR+hsmxX6gVW1KFYUO5qayqcMNG9Aa/kcuNKABtsyqg?=
- =?us-ascii?Q?JszbilPJP9p/GkiNUk6oqV5yx/BBqpUGi1lkVu4NTRJhB+VWVuLvpWd0jiYY?=
- =?us-ascii?Q?QLn1qaxDC0xeBHp5e7q/oa8u/an1w+NbEZgtHO0PyZEh0atOnmoG6IXxEMhG?=
- =?us-ascii?Q?HdXjrT2hx9b07VudD6yQS9axZRMJ34zbcXnMoT8AZMcvV3guGUQ75KhLsrkZ?=
- =?us-ascii?Q?Xau0VpgMVYMYKgqHUxyLpQhHeJuseMtvM5zmnYqg6rX7mQJ2gN88VLlxg49Q?=
- =?us-ascii?Q?CV4fMuBieX9qe3kRU2IFJB6S/rTvElTLQJHPeYY7o7ketCXN2X6atsMlbobX?=
- =?us-ascii?Q?TaRBvmuthHPQJRYjqidwVMWegTycpqXcsxarcccGLsvVuNVr4oVCJO2HNAON?=
- =?us-ascii?Q?bpbs+ZNp3cAw5JftB5wCEgccH4lLIdtrFdJ4/ezIFPcXeXwvzQDAxY/AFSia?=
- =?us-ascii?Q?Waplo24E9lxxSPnMGQq2ErQMIwo/Bk0E+ZBsqeHLyu77pz9X6nRzWHaVLjoh?=
- =?us-ascii?Q?PjGMYxZGGpW+sZu64aXVtDIBRMtyuPG9PL8NOMBqYWiL9lf8JegGqxssfNBT?=
- =?us-ascii?Q?IHPPUMDoufOAp8vBb34v0pBppFAlCrxmHS3FIuhdZIRThzY4QG2SsewAlLy3?=
- =?us-ascii?Q?FIqLVUluXQeYV9Prq59Mxe4uZlAcinaCdxFWM9N3PF9UeXfRa5KXGo3KZjqf?=
- =?us-ascii?Q?iHCPMeyZfRTks5tJgiIkhpG2KaJacINiSxHGgeN3drKrouWYHFc416hxiQwB?=
- =?us-ascii?Q?o68b2CvrvIA+OyUzo6B6JBpk6WSk0U39WEn27mZHHXBiOy3zy9oTRqgI3GnL?=
- =?us-ascii?Q?gfaojeCFXKH8UAIloze8CjNSH7YCI+XVYfOy3w2ZUB9iewaGSv2Z3jtz31Rl?=
- =?us-ascii?Q?XM0vobOrPd1c+C7Cszr1yqcLAcoEQfQhf39hUIBsTqilpM56PFIbTJGuKpCH?=
- =?us-ascii?Q?Aid0caZf5xXQDe5gzGk=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 27c06469-ef9c-47d0-69a4-08ddd1d7ceeb
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Aug 2025 15:18:17.8473
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PWNxN8roxtlsMPSI7IaKYOU42XnjplVVc809vWFgS5OmHBa3Tmp+bZMjoU23q4HN
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7640
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.16
+Content-Transfer-Encoding: 8bit
 
-On Sat, Aug 02, 2025 at 09:45:08AM +0800, Ethan Zhao wrote:
-> 
-> 
-> On 7/9/2025 10:52 PM, Jason Gunthorpe wrote:
-> > The series patches have extensive descriptions as to the problem and
-> > solution, but in short the ACS flags are not analyzed according to the
-> > spec to form the iommu_groups that VFIO is expecting for security.
-> > 
-> > ACS is an egress control only. For a path the ACS flags on each hop only
-> > effect what other devices the TLP is allowed to reach. It does not prevent
-> > other devices from reaching into this path.
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-> Perhaps I was a little confused here, the egress control vector on the
+[ Upstream commit 736a0516a16268995f4898eded49bfef077af709 ]
 
-Linux does not support egress control vector. Enabling that is a
-different project and we would indeed need to introduce different
-logic.
+The hfs_find_init() method can trigger the crash
+if tree pointer is NULL:
 
-Jason
+[   45.746290][ T9787] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000008: 0000 [#1] SMP KAI
+[   45.747287][ T9787] KASAN: null-ptr-deref in range [0x0000000000000040-0x0000000000000047]
+[   45.748716][ T9787] CPU: 2 UID: 0 PID: 9787 Comm: repro Not tainted 6.16.0-rc3 #10 PREEMPT(full)
+[   45.750250][ T9787] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   45.751983][ T9787] RIP: 0010:hfs_find_init+0x86/0x230
+[   45.752834][ T9787] Code: c1 ea 03 80 3c 02 00 0f 85 9a 01 00 00 4c 8d 6b 40 48 c7 45 18 00 00 00 00 48 b8 00 00 00 00 00 fc
+[   45.755574][ T9787] RSP: 0018:ffffc90015157668 EFLAGS: 00010202
+[   45.756432][ T9787] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff819a4d09
+[   45.757457][ T9787] RDX: 0000000000000008 RSI: ffffffff819acd3a RDI: ffffc900151576e8
+[   45.758282][ T9787] RBP: ffffc900151576d0 R08: 0000000000000005 R09: 0000000000000000
+[   45.758943][ T9787] R10: 0000000080000000 R11: 0000000000000001 R12: 0000000000000004
+[   45.759619][ T9787] R13: 0000000000000040 R14: ffff88802c50814a R15: 0000000000000000
+[   45.760293][ T9787] FS:  00007ffb72734540(0000) GS:ffff8880cec64000(0000) knlGS:0000000000000000
+[   45.761050][ T9787] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   45.761606][ T9787] CR2: 00007f9bd8225000 CR3: 000000010979a000 CR4: 00000000000006f0
+[   45.762286][ T9787] Call Trace:
+[   45.762570][ T9787]  <TASK>
+[   45.762824][ T9787]  hfs_ext_read_extent+0x190/0x9d0
+[   45.763269][ T9787]  ? submit_bio_noacct_nocheck+0x2dd/0xce0
+[   45.763766][ T9787]  ? __pfx_hfs_ext_read_extent+0x10/0x10
+[   45.764250][ T9787]  hfs_get_block+0x55f/0x830
+[   45.764646][ T9787]  block_read_full_folio+0x36d/0x850
+[   45.765105][ T9787]  ? __pfx_hfs_get_block+0x10/0x10
+[   45.765541][ T9787]  ? const_folio_flags+0x5b/0x100
+[   45.765972][ T9787]  ? __pfx_hfs_read_folio+0x10/0x10
+[   45.766415][ T9787]  filemap_read_folio+0xbe/0x290
+[   45.766840][ T9787]  ? __pfx_filemap_read_folio+0x10/0x10
+[   45.767325][ T9787]  ? __filemap_get_folio+0x32b/0xbf0
+[   45.767780][ T9787]  do_read_cache_folio+0x263/0x5c0
+[   45.768223][ T9787]  ? __pfx_hfs_read_folio+0x10/0x10
+[   45.768666][ T9787]  read_cache_page+0x5b/0x160
+[   45.769070][ T9787]  hfs_btree_open+0x491/0x1740
+[   45.769481][ T9787]  hfs_mdb_get+0x15e2/0x1fb0
+[   45.769877][ T9787]  ? __pfx_hfs_mdb_get+0x10/0x10
+[   45.770316][ T9787]  ? find_held_lock+0x2b/0x80
+[   45.770731][ T9787]  ? lockdep_init_map_type+0x5c/0x280
+[   45.771200][ T9787]  ? lockdep_init_map_type+0x5c/0x280
+[   45.771674][ T9787]  hfs_fill_super+0x38e/0x720
+[   45.772092][ T9787]  ? __pfx_hfs_fill_super+0x10/0x10
+[   45.772549][ T9787]  ? snprintf+0xbe/0x100
+[   45.772931][ T9787]  ? __pfx_snprintf+0x10/0x10
+[   45.773350][ T9787]  ? do_raw_spin_lock+0x129/0x2b0
+[   45.773796][ T9787]  ? find_held_lock+0x2b/0x80
+[   45.774215][ T9787]  ? set_blocksize+0x40a/0x510
+[   45.774636][ T9787]  ? sb_set_blocksize+0x176/0x1d0
+[   45.775087][ T9787]  ? setup_bdev_super+0x369/0x730
+[   45.775533][ T9787]  get_tree_bdev_flags+0x384/0x620
+[   45.775985][ T9787]  ? __pfx_hfs_fill_super+0x10/0x10
+[   45.776453][ T9787]  ? __pfx_get_tree_bdev_flags+0x10/0x10
+[   45.776950][ T9787]  ? bpf_lsm_capable+0x9/0x10
+[   45.777365][ T9787]  ? security_capable+0x80/0x260
+[   45.777803][ T9787]  vfs_get_tree+0x8e/0x340
+[   45.778203][ T9787]  path_mount+0x13de/0x2010
+[   45.778604][ T9787]  ? kmem_cache_free+0x2b0/0x4c0
+[   45.779052][ T9787]  ? __pfx_path_mount+0x10/0x10
+[   45.779480][ T9787]  ? getname_flags.part.0+0x1c5/0x550
+[   45.779954][ T9787]  ? putname+0x154/0x1a0
+[   45.780335][ T9787]  __x64_sys_mount+0x27b/0x300
+[   45.780758][ T9787]  ? __pfx___x64_sys_mount+0x10/0x10
+[   45.781232][ T9787]  do_syscall_64+0xc9/0x480
+[   45.781631][ T9787]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   45.782149][ T9787] RIP: 0033:0x7ffb7265b6ca
+[   45.782539][ T9787] Code: 48 8b 0d c9 17 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48
+[   45.784212][ T9787] RSP: 002b:00007ffc0c10cfb8 EFLAGS: 00000206 ORIG_RAX: 00000000000000a5
+[   45.784935][ T9787] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffb7265b6ca
+[   45.785626][ T9787] RDX: 0000200000000240 RSI: 0000200000000280 RDI: 00007ffc0c10d100
+[   45.786316][ T9787] RBP: 00007ffc0c10d190 R08: 00007ffc0c10d000 R09: 0000000000000000
+[   45.787011][ T9787] R10: 0000000000000048 R11: 0000000000000206 R12: 0000560246733250
+[   45.787697][ T9787] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[   45.788393][ T9787]  </TASK>
+[   45.788665][ T9787] Modules linked in:
+[   45.789058][ T9787] ---[ end trace 0000000000000000 ]---
+[   45.789554][ T9787] RIP: 0010:hfs_find_init+0x86/0x230
+[   45.790028][ T9787] Code: c1 ea 03 80 3c 02 00 0f 85 9a 01 00 00 4c 8d 6b 40 48 c7 45 18 00 00 00 00 48 b8 00 00 00 00 00 fc
+[   45.792364][ T9787] RSP: 0018:ffffc90015157668 EFLAGS: 00010202
+[   45.793155][ T9787] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff819a4d09
+[   45.794123][ T9787] RDX: 0000000000000008 RSI: ffffffff819acd3a RDI: ffffc900151576e8
+[   45.795105][ T9787] RBP: ffffc900151576d0 R08: 0000000000000005 R09: 0000000000000000
+[   45.796135][ T9787] R10: 0000000080000000 R11: 0000000000000001 R12: 0000000000000004
+[   45.797114][ T9787] R13: 0000000000000040 R14: ffff88802c50814a R15: 0000000000000000
+[   45.798024][ T9787] FS:  00007ffb72734540(0000) GS:ffff8880cec64000(0000) knlGS:0000000000000000
+[   45.799019][ T9787] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   45.799822][ T9787] CR2: 00007f9bd8225000 CR3: 000000010979a000 CR4: 00000000000006f0
+[   45.800747][ T9787] Kernel panic - not syncing: Fatal exception
+
+The hfs_fill_super() calls hfs_mdb_get() method that tries
+to construct Extents Tree and Catalog Tree:
+
+HFS_SB(sb)->ext_tree = hfs_btree_open(sb, HFS_EXT_CNID, hfs_ext_keycmp);
+if (!HFS_SB(sb)->ext_tree) {
+	pr_err("unable to open extent tree\n");
+	goto out;
+}
+HFS_SB(sb)->cat_tree = hfs_btree_open(sb, HFS_CAT_CNID, hfs_cat_keycmp);
+if (!HFS_SB(sb)->cat_tree) {
+	pr_err("unable to open catalog tree\n");
+	goto out;
+}
+
+However, hfs_btree_open() calls read_mapping_page() that
+calls hfs_get_block(). And this method calls hfs_ext_read_extent():
+
+static int hfs_ext_read_extent(struct inode *inode, u16 block)
+{
+	struct hfs_find_data fd;
+	int res;
+
+	if (block >= HFS_I(inode)->cached_start &&
+	    block < HFS_I(inode)->cached_start + HFS_I(inode)->cached_blocks)
+		return 0;
+
+	res = hfs_find_init(HFS_SB(inode->i_sb)->ext_tree, &fd);
+	if (!res) {
+		res = __hfs_ext_cache_extent(&fd, inode, block);
+		hfs_find_exit(&fd);
+	}
+	return res;
+}
+
+The problem here that hfs_find_init() is trying to use
+HFS_SB(inode->i_sb)->ext_tree that is not initialized yet.
+It will be initailized when hfs_btree_open() finishes
+the execution.
+
+The patch adds checking of tree pointer in hfs_find_init()
+and it reworks the logic of hfs_btree_open() by reading
+the b-tree's header directly from the volume. The read_mapping_page()
+is exchanged on filemap_grab_folio() that grab the folio from
+mapping. Then, sb_bread() extracts the b-tree's header
+content and copy it into the folio.
+
+Reported-by: Wenzhi Wang <wenzhi.wang@uwaterloo.ca>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250710213657.108285-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+**YES**
+
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
+
+## Critical Bug Fix Analysis
+
+This commit fixes a **critical kernel panic** (general protection fault)
+that can be triggered during normal HFS filesystem operations. The bug
+represents a serious stability issue that meets stable kernel criteria.
+
+## Root Cause Analysis
+
+The crash occurs due to a **use-before-initialization bug** in the HFS
+filesystem code:
+
+1. **Initialization Order Issue**: When `hfs_fill_super()` is called, it
+   tries to construct the Extents Tree via:
+  ```c
+  HFS_SB(sb)->ext_tree = hfs_btree_open(sb, HFS_EXT_CNID,
+  hfs_ext_keycmp);
+  ```
+
+2. **Circular Dependency**: During `hfs_btree_open()` execution:
+   - It calls `read_mapping_page()` to read the btree header
+   - This triggers `hfs_get_block()`
+   - Which calls `hfs_ext_read_extent()`
+   - Which tries to use `HFS_SB(inode->i_sb)->ext_tree` via
+     `hfs_find_init()`
+   - But `ext_tree` is NULL because we're still in the process of
+     initializing it!
+
+3. **NULL Pointer Dereference**: The crash stack trace shows:
+  ```
+  KASAN: null-ptr-deref in range [0x0000000000000040-0x0000000000000047]
+  ```
+  This occurs when trying to access `tree->max_key_len` at offset 0x40
+  from a NULL tree pointer.
+
+## Fix Implementation
+
+The patch implements two key fixes:
+
+1. **Defensive Programming**: Adds NULL checks in `hfs_find_init()`:
+  ```c
+  +       if (!tree || !fd)
+  +               return -EINVAL;
+  ```
+
+2. **Breaking the Circular Dependency**: Reworks `hfs_btree_open()` to
+   avoid the problematic code path:
+   - Replaces `read_mapping_page()` with `filemap_grab_folio()`
+   - Uses `sb_bread()` to read the btree header directly from disk
+   - Avoids going through the extent management code during
+     initialization
+
+## Backport Justification
+
+This commit meets all stable kernel criteria:
+
+1. **Fixes a Real Bug**: Prevents a kernel panic that can be triggered
+   during normal filesystem operations
+2. **Small and Contained**: The changes are limited to HFS filesystem
+   code with no impact on other subsystems
+3. **Clear Fix**: The solution directly addresses the root cause without
+   architectural changes
+4. **No New Features**: Only fixes the existing bug without adding
+   functionality
+5. **High Impact**: Kernel panics are critical issues that affect system
+   stability
+6. **Minimal Risk**: Changes are confined to HFS subsystem with clear
+   boundaries
+
+## Additional Context
+
+- The commit includes a detailed crash trace showing this is a real-
+  world issue
+- Recent commit history shows HFS has had multiple similar stability
+  fixes (slab-out-of-bounds, OOB reads/writes)
+- The fix follows established patterns for handling initialization order
+  issues
+- The reporter is credited (Wenzhi Wang from University of Waterloo),
+  indicating this was found through testing/research
+
+This is exactly the type of bug fix that stable kernels exist to
+incorporate - preventing kernel crashes without introducing new risks.
+
+ fs/hfs/bfind.c  |  3 +++
+ fs/hfs/btree.c  | 57 +++++++++++++++++++++++++++++++++++++++----------
+ fs/hfs/extent.c |  2 +-
+ fs/hfs/hfs_fs.h |  1 +
+ 4 files changed, 51 insertions(+), 12 deletions(-)
+
+diff --git a/fs/hfs/bfind.c b/fs/hfs/bfind.c
+index ef9498a6e88a..34e9804e0f36 100644
+--- a/fs/hfs/bfind.c
++++ b/fs/hfs/bfind.c
+@@ -16,6 +16,9 @@ int hfs_find_init(struct hfs_btree *tree, struct hfs_find_data *fd)
+ {
+ 	void *ptr;
+ 
++	if (!tree || !fd)
++		return -EINVAL;
++
+ 	fd->tree = tree;
+ 	fd->bnode = NULL;
+ 	ptr = kmalloc(tree->max_key_len * 2 + 4, GFP_KERNEL);
+diff --git a/fs/hfs/btree.c b/fs/hfs/btree.c
+index 2fa4b1f8cc7f..e86e1e235658 100644
+--- a/fs/hfs/btree.c
++++ b/fs/hfs/btree.c
+@@ -21,8 +21,12 @@ struct hfs_btree *hfs_btree_open(struct super_block *sb, u32 id, btree_keycmp ke
+ 	struct hfs_btree *tree;
+ 	struct hfs_btree_header_rec *head;
+ 	struct address_space *mapping;
+-	struct page *page;
++	struct folio *folio;
++	struct buffer_head *bh;
+ 	unsigned int size;
++	u16 dblock;
++	sector_t start_block;
++	loff_t offset;
+ 
+ 	tree = kzalloc(sizeof(*tree), GFP_KERNEL);
+ 	if (!tree)
+@@ -75,12 +79,40 @@ struct hfs_btree *hfs_btree_open(struct super_block *sb, u32 id, btree_keycmp ke
+ 	unlock_new_inode(tree->inode);
+ 
+ 	mapping = tree->inode->i_mapping;
+-	page = read_mapping_page(mapping, 0, NULL);
+-	if (IS_ERR(page))
++	folio = filemap_grab_folio(mapping, 0);
++	if (IS_ERR(folio))
+ 		goto free_inode;
+ 
++	folio_zero_range(folio, 0, folio_size(folio));
++
++	dblock = hfs_ext_find_block(HFS_I(tree->inode)->first_extents, 0);
++	start_block = HFS_SB(sb)->fs_start + (dblock * HFS_SB(sb)->fs_div);
++
++	size = folio_size(folio);
++	offset = 0;
++	while (size > 0) {
++		size_t len;
++
++		bh = sb_bread(sb, start_block);
++		if (!bh) {
++			pr_err("unable to read tree header\n");
++			goto put_folio;
++		}
++
++		len = min_t(size_t, folio_size(folio), sb->s_blocksize);
++		memcpy_to_folio(folio, offset, bh->b_data, sb->s_blocksize);
++
++		brelse(bh);
++
++		start_block++;
++		offset += len;
++		size -= len;
++	}
++
++	folio_mark_uptodate(folio);
++
+ 	/* Load the header */
+-	head = (struct hfs_btree_header_rec *)(kmap_local_page(page) +
++	head = (struct hfs_btree_header_rec *)(kmap_local_folio(folio, 0) +
+ 					       sizeof(struct hfs_bnode_desc));
+ 	tree->root = be32_to_cpu(head->root);
+ 	tree->leaf_count = be32_to_cpu(head->leaf_count);
+@@ -95,22 +127,22 @@ struct hfs_btree *hfs_btree_open(struct super_block *sb, u32 id, btree_keycmp ke
+ 
+ 	size = tree->node_size;
+ 	if (!is_power_of_2(size))
+-		goto fail_page;
++		goto fail_folio;
+ 	if (!tree->node_count)
+-		goto fail_page;
++		goto fail_folio;
+ 	switch (id) {
+ 	case HFS_EXT_CNID:
+ 		if (tree->max_key_len != HFS_MAX_EXT_KEYLEN) {
+ 			pr_err("invalid extent max_key_len %d\n",
+ 			       tree->max_key_len);
+-			goto fail_page;
++			goto fail_folio;
+ 		}
+ 		break;
+ 	case HFS_CAT_CNID:
+ 		if (tree->max_key_len != HFS_MAX_CAT_KEYLEN) {
+ 			pr_err("invalid catalog max_key_len %d\n",
+ 			       tree->max_key_len);
+-			goto fail_page;
++			goto fail_folio;
+ 		}
+ 		break;
+ 	default:
+@@ -121,12 +153,15 @@ struct hfs_btree *hfs_btree_open(struct super_block *sb, u32 id, btree_keycmp ke
+ 	tree->pages_per_bnode = (tree->node_size + PAGE_SIZE - 1) >> PAGE_SHIFT;
+ 
+ 	kunmap_local(head);
+-	put_page(page);
++	folio_unlock(folio);
++	folio_put(folio);
+ 	return tree;
+ 
+-fail_page:
++fail_folio:
+ 	kunmap_local(head);
+-	put_page(page);
++put_folio:
++	folio_unlock(folio);
++	folio_put(folio);
+ free_inode:
+ 	tree->inode->i_mapping->a_ops = &hfs_aops;
+ 	iput(tree->inode);
+diff --git a/fs/hfs/extent.c b/fs/hfs/extent.c
+index 4a0ce131e233..580c62981dbd 100644
+--- a/fs/hfs/extent.c
++++ b/fs/hfs/extent.c
+@@ -71,7 +71,7 @@ int hfs_ext_keycmp(const btree_key *key1, const btree_key *key2)
+  *
+  * Find a block within an extent record
+  */
+-static u16 hfs_ext_find_block(struct hfs_extent *ext, u16 off)
++u16 hfs_ext_find_block(struct hfs_extent *ext, u16 off)
+ {
+ 	int i;
+ 	u16 count;
+diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
+index a0c7cb0f79fc..732c5c4c7545 100644
+--- a/fs/hfs/hfs_fs.h
++++ b/fs/hfs/hfs_fs.h
+@@ -190,6 +190,7 @@ extern const struct inode_operations hfs_dir_inode_operations;
+ 
+ /* extent.c */
+ extern int hfs_ext_keycmp(const btree_key *, const btree_key *);
++extern u16 hfs_ext_find_block(struct hfs_extent *ext, u16 off);
+ extern int hfs_free_fork(struct super_block *, struct hfs_cat_file *, int);
+ extern int hfs_ext_write_extent(struct inode *);
+ extern int hfs_extend_file(struct inode *);
+-- 
+2.39.5
+
