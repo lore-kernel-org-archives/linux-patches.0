@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5EE1519A0;
-	Mon,  4 Aug 2025 00:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFC418FC86;
+	Mon,  4 Aug 2025 00:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267570; cv=none; b=o5cOQ/wN54zL4mGpM4ox3/aMiQsDgncA1P2lueFWFC+kMGsDZY6PYu+shyrFkksFj/v1Y3N2r+HPHqFYNRB2KQxkcbLTggsSZkjtoVPphB1xYjh+cgReBVDTS+m1/7iBMSMND2VH6pcRtU5Lsw0Y1YlRFH/i4dJP8T4bG5vlLE0=
+	t=1754267572; cv=none; b=jQ7uzCu1h7IxAAuEMHT+cT3d/eBE1ezLH3CcpcaWgZf8KFjH3/sLErooWg5TH5t8FM7JzUMaLYnDH4YR5DmQI8eldBUPHBHyWlJBNbwyV4hKu8JFnFYq4S2rGq57SLHbXzq7h6vZfSh/moVQ8hz4PvVwSphLnMFlWUD8ODI6yUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267570; c=relaxed/simple;
-	bh=36k2kzJQnwalS6kxkh2DRBoVmv1e/6kwottWw8Nag98=;
+	s=arc-20240116; t=1754267572; c=relaxed/simple;
+	bh=IGT7qNVTARoFc4ErWWeNZEbqvnUwEU7bMP6KBeGBfgc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hqF+gBZoEnWuAhTECP+QF7BqXxngGyO18V+sow8FtYMT0F+bP8/px9x2ytT6mhYYIjQixroM93Xm/k5vjhE73SJ0v9/Q3d4ZtZCPJcVWXCDKP9a0HpA8A9ucKXl5SmW7nvRpzAiLpLjeGDnBVxviNz6RXb/yMUjc+YJqx6oRhDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f/iRG0E6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PnC2rmUVI3kfzIITNmnrPbEznbFn+hNBPKOf52Zh0jkKYQgWuaW4YFQuUqpcTaP8AXjpB1921oIuX5OeeP9msBxTJOagpSl1Gz1iYKnXX8BPjzECksHIIhuGSDJ1PPJSg1Dlv77v9hivzwGUR760JII3JZgDiBT3Mnyr6z6fFTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=udx0WwCv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f/iRG0E6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEB1C4CEEB;
-	Mon,  4 Aug 2025 00:32:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="udx0WwCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA08AC4CEEB;
+	Mon,  4 Aug 2025 00:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267570;
-	bh=36k2kzJQnwalS6kxkh2DRBoVmv1e/6kwottWw8Nag98=;
+	s=k20201202; t=1754267572;
+	bh=IGT7qNVTARoFc4ErWWeNZEbqvnUwEU7bMP6KBeGBfgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/iRG0E6HWBGt4qEGbJcb2Nc3uQeoJCJ+C0I10UW6+ozBVVvX6BciAlvL5jlcBjYc
-	 792fJ32nJWrWkGXdZH9oPhkSVODAZbqDXFoYts/QJiyepv4xtsbglYJJgtYfPpEHno
-	 9jVMdwm8gYTJUv/tkI9qXqeeI9TfE38VbyFnKAyaHRui17XuhtP6xWHKULD9DNgcJa
-	 Z9xOXYpsXQez2VafaiNvAWgn9SJwIf3Q4kB7Uoh6lMbLi/f5EahvrSwe/n7WOOlnKl
-	 gJLueeyPv7QtSumStcTuUwa5npfADpo5+Cc9x3Tk1EOr897hCH0+ZrcXED+pPc41no
-	 2zZ8ObrkPRk1w==
+	b=udx0WwCvvJgmJN+IR1/f9YnCkhZHh2nfOtG3eH3mk73//dTLblPO+KIw3olypg2+c
+	 A6PpJdq8ayy9izB58MYty9fr2qiEgE4oV4hArRy4cYTgExR5Me/WDcqVmoqJHIS8Gt
+	 h/kkS7QaFr1r854j6RxZPn6QQ23UFdSDqvbz8u/upqB2Ic/XpPTEDuL/px6m2OBz1F
+	 JAbgL67MVDhejGiYDloNuUKeQJ1htm2YmulHRQOmk1BXFPwVQ487JKkIYYYY3qN8Sx
+	 htIS22YM9I1BC0gdsziQXuIdv22cVXL5f3yysBJvVXeT2w2CfflxgRDmwK76/5pcd0
+	 JES3WK0fwV0Ug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sebastian Ott <sebott@redhat.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Sarthak Garg <quic_sartgarg@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 38/69] ACPI: processor: fix acpi_object initialization
-Date: Sun,  3 Aug 2025 20:30:48 -0400
-Message-Id: <20250804003119.3620476-38-sashal@kernel.org>
+	linux-mmc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 39/69] mmc: sdhci-msm: Ensure SD card power isn't ON when card removed
+Date: Sun,  3 Aug 2025 20:30:49 -0400
+Message-Id: <20250804003119.3620476-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -51,108 +52,125 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Ott <sebott@redhat.com>
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
 
-[ Upstream commit 13edf7539211d8f7d0068ce3ed143005f1da3547 ]
+[ Upstream commit db58532188ebf51d52b1d7693d9e94c76b926e9f ]
 
-Initialization of the local acpi_object in acpi_processor_get_info()
-only sets the first 4 bytes to zero and is thus incomplete. This is
-indicated by messages like:
-	acpi ACPI0007:be: Invalid PBLK length [166288104]
+Many mobile phones feature multi-card tray designs, where the same
+tray is used for both SD and SIM cards. If the SD card is placed
+at the outermost location in the tray, the SIM card may come in
+contact with SD card power-supply while removing the tray, possibly
+resulting in SIM damage.
 
-Fix this by initializing all 16 bytes of the processor member of that
-union.
+To prevent that, make sure the SD card is really inserted by reading
+the Card Detect pin state. If it's not, turn off the power in
+sdhci_msm_check_power_status() and also set the BUS_FAIL power state
+on the controller as part of pwr_irq handling for BUS_ON request.
 
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Link: https://patch.msgid.link/20250703124215.12522-1-sebott@redhat.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250701100659.3310386-1-quic_sartgarg@quicinc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, here is my determination:
-
 **Backport Status: YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-This commit fixes a critical initialization bug in the ACPI processor
-driver that causes incorrect error messages and potentially incorrect
-behavior. Here's why this is a good candidate for stable backport:
+1. **Hardware Damage Prevention**: This is a critical safety fix that
+   prevents potential hardware damage to SIM cards. The commit message
+   clearly describes a real-world scenario where SD card power can
+   damage SIM cards in multi-card tray designs when the tray is removed.
+   This is a serious hardware safety issue that affects end users'
+   devices.
 
-### 1. **Clear Bug Fix**
-The commit fixes an incomplete initialization issue where `union
-acpi_object object = { 0 };` only initializes the first 4 bytes (the
-size of `acpi_object_type type`), leaving the remaining bytes of the
-union uninitialized. This results in garbage values in fields like
-`object.processor.pblk_length`, causing spurious error messages like
-"Invalid PBLK length [166288104]".
+2. **Bug Fix Nature**: The commit fixes a specific bug where SD card
+   power remains ON even when the card is physically removed. The code
+   changes show two key additions:
+   - In `sdhci_msm_check_power_status()`: Added check at lines 1625-1629
+     that turns off power (writes 0 to SDHCI_POWER_CONTROL) when card is
+     not detected (`!mmc->ops->get_cd(mmc)`)
+   - In `sdhci_msm_handle_pwr_irq()`: Added check at lines 1689-1694
+     that sets BUS_FAIL state when attempting to power on the bus while
+     card is not present
 
-### 2. **User-Visible Impact**
-The bug causes confusing error messages in system logs during ACPI
-processor initialization. The error message shown in the commit (`acpi
-ACPI0007:be: Invalid PBLK length [166288104]`) indicates that
-uninitialized memory is being read and interpreted as a length value.
+3. **Small and Contained Fix**: The changes are minimal and well-
+   contained:
+   - Only 13 lines of actual code changes
+   - Changes are localized to the sdhci-msm driver
+   - No architectural changes or new features
+   - Simple logic additions that check card presence before power
+     operations
 
-### 3. **Minimal and Contained Fix**
-The fix is extremely simple - changing:
-```c
-union acpi_object object = { 0 };
-```
-to:
-```c
-union acpi_object object = { .processor = { 0 } };
-```
+4. **Low Risk of Regression**: The fix adds defensive checks that only
+   activate when:
+   - A card is physically not present (detected via get_cd)
+   - Power operations are being performed
+   - This doesn't affect normal operation when cards are properly
+     inserted
 
-This ensures proper initialization of all 16 bytes (as mentioned in the
-commit message) of the processor member of the union, which is 24 bytes
-in total based on my analysis.
+5. **Platform-Specific Critical Fix**: This affects Qualcomm MSM-based
+   devices which are widely used in mobile phones. The multi-card tray
+   design mentioned is common in many smartphones, making this a
+   widespread potential issue.
 
-### 4. **No Architectural Changes**
-This is a pure bug fix with no feature additions or architectural
-changes. It simply corrects the initialization to prevent reading
-uninitialized memory.
+6. **Clear Problem and Solution**: The commit has a clear problem
+   statement (SIM damage from SD power) and a straightforward solution
+   (turn off power when card is removed). This makes it easy to verify
+   the fix is correct.
 
-### 5. **Low Risk of Regression**
-The change is minimal and only affects initialization. It doesn't alter
-any logic or behavior beyond ensuring that the union is properly zeroed
-out. The designated initializer syntax is standard C and well-supported.
+The commit follows stable tree rules perfectly - it's a important bugfix
+that prevents hardware damage, has minimal code changes, doesn't
+introduce new features, and has very low regression risk. This is
+exactly the type of safety-critical fix that stable kernels should
+include.
 
-### 6. **Critical Subsystem**
-While ACPI is a critical subsystem, this fix is confined to the
-initialization of a local variable in `acpi_processor_get_info()`. The
-scope is limited and the fix is conservative.
+ drivers/mmc/host/sdhci-msm.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-### 7. **Follows Stable Rules**
-This commit perfectly follows the stable kernel rules:
-- Fixes a real bug (uninitialized memory access)
-- Small change (single line)
-- Obviously correct
-- Already tested (merged into mainline)
-- Fixes an issue that users see (error messages in logs)
-
-The uninitialized memory access could potentially lead to more serious
-issues beyond just incorrect error messages, as the code makes decisions
-based on the `pblk_length` value (checking if it equals 6). This makes
-the fix even more important for stable kernels.
-
- drivers/acpi/acpi_processor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
-index 7cf6101cb4c7..2a99f5eb6962 100644
---- a/drivers/acpi/acpi_processor.c
-+++ b/drivers/acpi/acpi_processor.c
-@@ -275,7 +275,7 @@ static inline int acpi_processor_hotadd_init(struct acpi_processor *pr,
- 
- static int acpi_processor_get_info(struct acpi_device *device)
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 82808cc373f6..c2144a3efb30 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -1564,6 +1564,7 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
  {
--	union acpi_object object = { 0 };
-+	union acpi_object object = { .processor = { 0 } };
- 	struct acpi_buffer buffer = { sizeof(union acpi_object), &object };
- 	struct acpi_processor *pr = acpi_driver_data(device);
- 	int device_declaration = 0;
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	struct mmc_host *mmc = host->mmc;
+ 	bool done = false;
+ 	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
+ 	const struct sdhci_msm_offset *msm_offset =
+@@ -1621,6 +1622,12 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
+ 				 "%s: pwr_irq for req: (%d) timed out\n",
+ 				 mmc_hostname(host->mmc), req_type);
+ 	}
++
++	if ((req_type & REQ_BUS_ON) && mmc->card && !mmc->ops->get_cd(mmc)) {
++		sdhci_writeb(host, 0, SDHCI_POWER_CONTROL);
++		host->pwr = 0;
++	}
++
+ 	pr_debug("%s: %s: request %d done\n", mmc_hostname(host->mmc),
+ 			__func__, req_type);
+ }
+@@ -1679,6 +1686,13 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 		udelay(10);
+ 	}
+ 
++	if ((irq_status & CORE_PWRCTL_BUS_ON) && mmc->card &&
++	    !mmc->ops->get_cd(mmc)) {
++		msm_host_writel(msm_host, CORE_PWRCTL_BUS_FAIL, host,
++				msm_offset->core_pwrctl_ctl);
++		return;
++	}
++
+ 	/* Handle BUS ON/OFF*/
+ 	if (irq_status & CORE_PWRCTL_BUS_ON) {
+ 		pwr_state = REQ_BUS_ON;
 -- 
 2.39.5
 
