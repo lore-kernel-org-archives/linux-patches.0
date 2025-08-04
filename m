@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946A4129E6E;
-	Mon,  4 Aug 2025 00:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453B429A2;
+	Mon,  4 Aug 2025 00:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267209; cv=none; b=OSqH5k0JNfj2eEesvlW0MaWX5GYdCabyApraCo1rrhDNeZP+ZzM53fqF1AxxdWo+00REUu3kH7kCkZiWnrwmvERB/WnpkmGmL+j8yL7tJXYoATuSGdLsEi6AvwGBE2CLAamHMAiPB6Oc8KROHkAUf1Ko2VAiSI3OKjypbtHaqoA=
+	t=1754267212; cv=none; b=XCv0QFxq+6LyH1ejnylFyEo0PlZ4sP1m1bLKNy05GYPjmWxcj2COQ+sSGAWv/3zEXuOgE4OKETR/f7UGD4H+t5wKSNNIcae2667kfc8U7+1h45GBy5qqv4ZoW0fWGHNDXwP4GjdO/DMxZgXmBXs6AH369zTXLn9wOr+Z1f421Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267209; c=relaxed/simple;
-	bh=mi9oNuEcs+6cLyMBLFxbQSTwZf/t39StHHgwg3HDoUY=;
+	s=arc-20240116; t=1754267212; c=relaxed/simple;
+	bh=SlFiCbJqCwwiH8zN6swVJIeIFnzwPa4ZhinIix2iI9w=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=c6U+2L6FLflHijBUmWhtSmm/nVWOiIptS9id0KJ7MhNT+ELUrmQHVFhti6Jfw2eAk4iibefnKkaEiN821+iZnPtdMbbJh5Ix96nxh6BlPOQ255xaGm9XunV444Bf9QnKWNegkTdQEpwnRjXbzmF6tTAUIyt11wWJbB9zAsb1WCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NuGLw/c+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q4O2VNqqEuncjHHoq5we07j1jriIM413S/CcqrDA71Y3SS6thuRwWF0Wpp7787zMLBWK2FyxbACEuwovwuRA9LtAneWNBnsSDzu9Q45q1vHGuFtlArJr0idUSUcRBPL+QPQfuw9FnyUt0lG0gRjFMVaEP41c50sagJ5SwfmB7u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KfjIH5p9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NuGLw/c+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FC0C4CEEB;
-	Mon,  4 Aug 2025 00:26:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KfjIH5p9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC64EC4CEEB;
+	Mon,  4 Aug 2025 00:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267209;
-	bh=mi9oNuEcs+6cLyMBLFxbQSTwZf/t39StHHgwg3HDoUY=;
+	s=k20201202; t=1754267212;
+	bh=SlFiCbJqCwwiH8zN6swVJIeIFnzwPa4ZhinIix2iI9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuGLw/c+tseAwDuXyDBLZPNa2+deWba2wLRhQq427LmFv1/Kz+ss2my6GKPJXk34l
-	 WpgPLwhLtZ/oseGsS+twJyRqhW6k6m2p3pg5FfoVCfGs1V/WSK2kP3ZTgSH7lDnV+X
-	 0H7yT4fPR4IGH0jT75upz7cfYXr5RTGBhjVTxl/8Q8N3WnNJS7lLyqk0NInuHm/ts1
-	 UJUlumaskFD+cmMbD8V8UL+dXwIT7X/+KHA13eq3pOHmfd8RyfOFZd71qWW75q0DDu
-	 HoOKbrJsgpwgh46uuYWZVV8bSt0Zc6mWHbrDFD/MUlOLl5iFW2oV+awEqYo57JVaOt
-	 1m50YgvxEEbcw==
+	b=KfjIH5p9WruDGI9eATBRxd4qrMui8LtwxVJY3yde2qNiItuw75xwsW+w8GEw6Zco2
+	 dgpTfLoZZ/WvtIbN5ElTtqkqhRgE97lxHJkQsog6BwgtqAu5yq9nDN+787WcMIE+DS
+	 2/h2uvJW980EJ79jKey2YrbAoB17A62qEK6RTsEq2GiIsbhFpUkl+liJ3+Qr8Zr2pz
+	 rJiE+4ZaEMJXvRXoN/iNgaHLmqMmi+7QRkeZ2b03eLL6EnxIM/y0hysXLD2g8IAcSM
+	 +vTdoP7Gu+FEc1Jur7LbiwbW9ps+xfLfZjWZ+CNEA5LDms6weP2pTe1dbmVsGiFzzH
+	 wCZWXbjdHGAqA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Borislav Petkov <bp@alien8.de>,
+Cc: Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@linutronix.de,
-	peterz@infradead.org,
-	jpoimboe@kernel.org
-Subject: [PATCH AUTOSEL 6.16 64/85] x86/bugs: Avoid AUTO after the select step in the retbleed mitigation
-Date: Sun,  3 Aug 2025 20:23:13 -0400
-Message-Id: <20250804002335.3613254-64-sashal@kernel.org>
+	tiwai@suse.de,
+	ckeepax@opensource.cirrus.com,
+	kuninori.morimoto.gx@renesas.com,
+	raag.jadav@intel.com
+Subject: [PATCH AUTOSEL 6.16 65/85] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
+Date: Sun,  3 Aug 2025 20:23:14 -0400
+Message-Id: <20250804002335.3613254-65-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -52,142 +52,114 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 98ff5c071d1cde9426b0bfa449c43d49ec58f1c4 ]
+[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
 
-The retbleed select function leaves the mitigation to AUTO in some cases.
-Moreover, the update function can also set the mitigation to AUTO. This
-is inconsistent with other mitigations and requires explicit handling of
-AUTO at the end of update step.
+We currently log parse failures for ELD data and some disconnection events
+as errors without rate limiting. These log messages can be triggered very
+frequently in some situations, especially ELD parsing when there is nothing
+connected to a HDMI port which will generate:
 
-Make sure a mitigation gets selected in the select step, and do not change
-it to AUTO in the update step. When no mitigation can be selected leave it
-to NONE, which is what AUTO was getting changed to in the end.
+hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
 
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250611-eibrs-fix-v4-1-5ff86cac6c61@linux.intel.com
+While there's doubtless work that could be done on reducing the number of
+connection notification callbacks it's possible these may be legitimately
+generated by poor quality physical connections so let's use rate limiting
+to mitigate the log spam for the parse errors and lower the severity for
+disconnect logging to debug level.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze the impact and determine if this should be
-backported:
+**Backport Status: YES**
 
-## Backport Status: YES
+This commit is a good candidate for backporting to stable kernel trees
+for the following reasons:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+1. **Fixes a real user-facing bug**: The commit addresses log spam
+   issues that can fill system logs with repeated error messages. When
+   no HDMI display is connected, the driver continuously logs "HDMI:
+   Unknown ELD version 0" errors, which can consume disk space and make
+   logs difficult to analyze.
 
-### 1. **Fixes a Bug in Security Mitigation Logic**
-The commit fixes an inconsistency in the RETBleed mitigation selection
-logic where the mitigation could remain in the `AUTO` state after the
-selection and update steps. This is a bug in the security mitigation
-implementation that could potentially leave systems incorrectly
-configured.
+2. **Small and contained fix**: The changes are minimal and focused:
+   - Changes `dev_err()` to `dev_err_ratelimited()` in two locations
+     within `hdac_hdmi_parse_eld()` (lines 1233-1234 and 1242-1243)
+   - Changes `dev_err()` to `dev_dbg()` for disconnect messages in
+     `hdac_hdmi_present_sense()` (lines 1302-1303)
+   - Total of just 3 logging statement modifications
 
-### 2. **Small and Contained Fix**
-The changes are minimal and well-contained:
-- Removes the problematic `AUTO` state assignments in
-  `retbleed_update_mitigation()`
-- Adds proper mitigation selection for Intel CPUs in
-  `retbleed_select_mitigation()`
-- Removes unnecessary code paths (the `goto out` pattern)
-- Total changes are limited to ~30 lines of code in a single file
+3. **No functional changes**: The commit only modifies logging behavior
+   without changing any driver logic, state management, or hardware
+   interaction. This minimizes regression risk.
 
-### 3. **Fixes Security Mitigation Consistency**
-The commit message explicitly states: "This is inconsistent with other
-mitigations and requires explicit handling of AUTO at the end of update
-step." This inconsistency in security mitigation handling is exactly the
-type of bug that should be fixed in stable kernels.
+4. **Affects a common use case**: The issue occurs when HDMI ports are
+   unconnected, which is a normal operating condition for many systems.
+   Users may have HDMI ports they never use, or may frequently
+   plug/unplug monitors.
 
-### 4. **Low Risk of Regression**
-The changes are straightforward:
-- Instead of leaving mitigation as `AUTO`, it now explicitly selects
-  `NONE` when no mitigation is available
-- For Intel CPUs, it properly selects EIBRS/IBRS/NONE based on CPU
-  features during the select phase
-- The logic flow is simplified by removing the `goto out` pattern
+5. **No architectural changes**: The fix doesn't introduce new features
+   or modify the driver's architecture. It simply rate-limits existing
+   error messages and downgrades one message's severity.
 
-### 5. **Security-Critical Subsystem**
-RETBleed is a serious CPU vulnerability (CVE-2022-29900 and
-CVE-2022-29901) that allows arbitrary speculative code execution. Any
-bugs in its mitigation logic should be promptly fixed in stable kernels
-to ensure users are properly protected.
+6. **Clear problem and solution**: The commit message clearly describes
+   the issue (log spam from ELD parsing failures) and the
+   straightforward solution (rate limiting and severity adjustment).
 
-### 6. **Clear Intent for Stable**
-While not explicitly marked with a "Cc: stable" tag, this is clearly a
-bugfix for security mitigation code, which typically qualifies for
-stable backporting according to stable kernel rules.
+The specific code changes show:
+- In `hdac_hdmi_parse_eld()`: Rate-limiting prevents flooding logs when
+  ELD data is invalid/unavailable
+- In `hdac_hdmi_present_sense()`: Downgrading disconnect messages from
+  error to debug level is appropriate since disconnection is a normal
+  event, not an error condition
 
-The commit ensures that the RETBleed mitigation selection process works
-correctly and consistently, preventing situations where the mitigation
-might be left in an undefined `AUTO` state. This is particularly
-important for security-conscious environments that rely on proper CPU
-vulnerability mitigations.
+This meets the stable kernel criteria of being a simple fix for an
+annoying bug that affects users without introducing new risks.
 
- arch/x86/kernel/cpu/bugs.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index ea7f94438254..1f4146b9101a 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1250,6 +1250,14 @@ static void __init retbleed_select_mitigation(void)
- 			retbleed_mitigation = RETBLEED_MITIGATION_IBPB;
- 		else
- 			retbleed_mitigation = RETBLEED_MITIGATION_NONE;
-+	} else if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL) {
-+		/* Final mitigation depends on spectre-v2 selection */
-+		if (boot_cpu_has(X86_FEATURE_IBRS_ENHANCED))
-+			retbleed_mitigation = RETBLEED_MITIGATION_EIBRS;
-+		else if (boot_cpu_has(X86_FEATURE_IBRS))
-+			retbleed_mitigation = RETBLEED_MITIGATION_IBRS;
-+		else
-+			retbleed_mitigation = RETBLEED_MITIGATION_NONE;
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 1139a2754ca3..056d98154682 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1232,7 +1232,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 						>> DRM_ELD_VER_SHIFT;
+ 
+ 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
+-		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: Unknown ELD version %d\n", ver);
+ 		return -EINVAL;
  	}
- }
  
-@@ -1258,9 +1266,6 @@ static void __init retbleed_update_mitigation(void)
- 	if (!boot_cpu_has_bug(X86_BUG_RETBLEED) || cpu_mitigations_off())
- 		return;
+@@ -1240,7 +1241,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
  
--	if (retbleed_mitigation == RETBLEED_MITIGATION_NONE)
--		goto out;
--
- 	/*
- 	 * retbleed=stuff is only allowed on Intel.  If stuffing can't be used
- 	 * then a different mitigation will be selected below.
-@@ -1271,7 +1276,7 @@ static void __init retbleed_update_mitigation(void)
- 	    its_mitigation == ITS_MITIGATION_RETPOLINE_STUFF) {
- 		if (spectre_v2_enabled != SPECTRE_V2_RETPOLINE) {
- 			pr_err("WARNING: retbleed=stuff depends on spectre_v2=retpoline\n");
--			retbleed_mitigation = RETBLEED_MITIGATION_AUTO;
-+			retbleed_mitigation = RETBLEED_MITIGATION_NONE;
- 		} else {
- 			if (retbleed_mitigation != RETBLEED_MITIGATION_STUFF)
- 				pr_info("Retbleed mitigation updated to stuffing\n");
-@@ -1297,15 +1302,11 @@ static void __init retbleed_update_mitigation(void)
- 			if (retbleed_mitigation != RETBLEED_MITIGATION_STUFF)
- 				pr_err(RETBLEED_INTEL_MSG);
- 		}
--		/* If nothing has set the mitigation yet, default to NONE. */
--		if (retbleed_mitigation == RETBLEED_MITIGATION_AUTO)
--			retbleed_mitigation = RETBLEED_MITIGATION_NONE;
+ 	if (mnl > ELD_MAX_MNL) {
+-		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: MNL Invalid %d\n", mnl);
+ 		return -EINVAL;
  	}
--out:
-+
- 	pr_info("%s\n", retbleed_strings[retbleed_mitigation]);
- }
  
--
- static void __init retbleed_apply_mitigation(void)
- {
- 	bool mitigate_smt = false;
+@@ -1299,8 +1301,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
+ 
+ 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
+ 
+-		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
+-						__func__, pin->nid, port->id);
++		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
++			__func__, pin->nid, port->id);
+ 
+ 		/*
+ 		 * PCMs are not registered during device probe, so don't
 -- 
 2.39.5
 
