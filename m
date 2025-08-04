@@ -1,172 +1,185 @@
-Received: from smtpcmd02101.aruba.it (smtpcmd02101.aruba.it [62.149.158.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D8A235C1E
-	for <patches@lists.linux.dev>; Mon,  4 Aug 2025 06:59:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.149.158.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE5815DBC1;
+	Mon,  4 Aug 2025 10:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754290748; cv=none; b=fq0cDCWN5mqD94UykMkNRTWhLPzT8G/ut8+Ii2zH+bMJ9C/CLT87Bb50Tsy13Thd3IQRXl0s1ABbhTOuZPsNprom02dB/4AX/4Pp4l/DL4zWBk2gKUXejP9BPB93mrLfJmBxHh+c46uLf4rUOz4WCHphrjZWqUB4uEh7kpuT+/I=
+	t=1754303898; cv=none; b=fiizblvlwdJ/eB/zpwvsWFF1dpNOBjjDEbZCBMXWzsuqj4QjOdtqJZVAOKaZhvNEs0AXU8Qu7F93f5YXfAlvHtA1DUA36QmxlnFnfyTRvzyGpkK7qCgJYRRpVDDFnjeOofzUxpQ34jnMlnpodnpebKQjo7k9KemAMJz8Ogyo7k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754290748; c=relaxed/simple;
-	bh=LSgysigogsq8Vu6IcegPLAJWwCo8lYdgNcydMlXMnL8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ENnnEz+BeTCT9y1n4XBrzYoZcUmwRWXIwhJHgXgEz2LfQcywDkqOZygSqulff5+ydq26oj+rd5vLpWuyzL84WNu8jK5ZaHR91N9wvSK+Wvl1YRUbBfxqTEWvZlYmVhfsaNGXuGUakOXCN3TbCCXPU336IfGJOjHDcK5QMLfud80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=enneenne.com; spf=pass smtp.mailfrom=enneenne.com; dkim=pass (2048-bit key) header.d=aruba.it header.i=@aruba.it header.b=VYy8Z2n8; arc=none smtp.client-ip=62.149.158.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=enneenne.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=enneenne.com
+	s=arc-20240116; t=1754303898; c=relaxed/simple;
+	bh=IqtOYEY67cnFw38l0aA60iFvDRXwR+z0X41m7vP9EjM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DZ1wYCNG4wNQA8RndEaxlST3AnA+Gn6d7s3znahibHLPllAev9m6PbfAw6Gk5h3o1p9SKxJJrq3GOkBYb3oHkFl+bTYIyQLmCxaNQSgiTbrPo6p5EVWRYOosB1F+uYHw8lRptXcrj2fuU9iBHGMfxC//PVWuKxMulBVJ3BM+idc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UW1lm50m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aruba.it header.i=@aruba.it header.b="VYy8Z2n8"
-Received: from [192.168.1.57] ([79.0.204.227])
-	by Aruba SMTP with ESMTPSA
-	id ip78umBpeloieip78u0GqW; Mon, 04 Aug 2025 08:56:06 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aruba.it; s=a1;
-	t=1754290566; bh=LSgysigogsq8Vu6IcegPLAJWwCo8lYdgNcydMlXMnL8=;
-	h=Date:MIME-Version:Subject:To:From:Content-Type;
-	b=VYy8Z2n8jbbL7C6mzzLMa6VQwA2YtGgoeZJlwAUT0yz9Fn7Say2nLt//YESLQWRqS
-	 WiMRYAN+c0KmcxN3h4u0LN9xTP4z7gck8tIsZd12uXVaqe68HYDpbf3p8UXV2fxstH
-	 omxDLt+DkxHHc7vMkuq4H2bRb2S/NBXNRtWlng/pBniYnH1kjwxPfgfMXLXGJI4syd
-	 DNrlQCutHBe+nRx5pt2RPudgjWgC/69WWczBPkWuDcNMeOExlME4kriw8LZHTDpdG0
-	 1GwFyxHy0DmTDf7OXMsOAauRHeWmErTmnpzzONr3f71K+GF7D1PTFu7DEW2Ky23sVn
-	 qM0FrymblBvsg==
-Message-ID: <42f15255-9182-4c33-b41e-be7c9682d4e3@enneenne.com>
-Date: Mon, 4 Aug 2025 08:56:04 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UW1lm50m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB150C4CEE7;
+	Mon,  4 Aug 2025 10:38:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754303898;
+	bh=IqtOYEY67cnFw38l0aA60iFvDRXwR+z0X41m7vP9EjM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UW1lm50mSYKT/tfvcbbBAGCiwc7WntZMM20TZIi2BpApiFiYIECaat6VZTV8PBehB
+	 lDGFW9un4oJ3hiVRKwkxOYsFbX0WiG8EGTJb38+1mOVrzC0qAKndC8t7RtPkH1a7dP
+	 vJB8TKC0Q7Tb5htbHp3n1mxS60SwBCBrkHD4isWRS4pIYpXDQfR/bMteWtQXgSmwiG
+	 wMu46Eiwg08TX024ixGM97h3Huga/IBIqExpFvSqwD+PVQyVHyjulpXH7FQgBSyuJ7
+	 BLp3MAtF/z8F+njhr0f6P3ycEez6WIciYGBxGftQOdmQYuVKNvr0/YPTNf/DUYicr1
+	 tY3sTcp1XEm8g==
+Date: Mon, 4 Aug 2025 12:38:15 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
+	Nylon Chen <nylon.chen@sifive.com>, Zong Li <zong.li@sifive.com>, 
+	Vincent Chen <vincent.chen@sifive.com>, paul.walmsley@sifive.com, samuel.holland@sifive.com, 
+	linux-pwm@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH AUTOSEL 6.1 24/51] pwm: sifive: Fix PWM algorithm and
+ clarify inverted compare behavior
+Message-ID: <52ycm5nf2jrxdmdmcijz57xhm2twspjmmiign6zq6rp3d5wt6t@tq5w47fmiwgg>
+References: <20250804003643.3625204-1-sashal@kernel.org>
+ <20250804003643.3625204-24-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.1 31/51] pps: clients: gpio: fix interrupt
- handling order in remove path
-Content-Language: en-US
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
- stable@vger.kernel.org
-Cc: Eliav Farber <farbere@amazon.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, tglx@linutronix.de,
- mingo@kernel.org, bastien.curutchet@bootlin.com, calvin@wbinvd.org
-References: <20250804003643.3625204-1-sashal@kernel.org>
- <20250804003643.3625204-31-sashal@kernel.org>
-From: Rodolfo Giometti <giometti@enneenne.com>
-In-Reply-To: <20250804003643.3625204-31-sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfIiPnIGAED+sXC8HXBL3BWpNdGa56CCnOTvHkYHLVxhMZnXUBtPylEjWy4N7Y6TNtOaW9D01tpACnR7pH4mOLtyE8MlbDmKzBZkwAipFLIrwoSBuTjDl
- sIPrTAp2+gEyZnYWKg0/WHGjTf7rW+Uh2syxrOxMuUQ/qhivKslZvzrv8u/Nw6+B43tKXQbL4suQTyYymm7qetps6K5Q2J3losJjD9Acnw6+xFliiuRAn9n0
- hvLtGd5c39rlFC5Ae38BMKtj8EGN0owIwKktnd7n55bvGSDaPbzrU7gnhDMcnoLSasmVCucAgZ14hp2ceOjfvEZumDe6dDE9yD2lXI+RulwiVJWX+IRFQA+I
- YfEsyMUn1/Hw7h6HxoxKkREXBh2UqO3YoYJbMu9+BDoztwMpLK3ZFQtpZssISVj8Ef+/gTWQstoaDiz+EqiFKp5geHSp/FvXXz1hFiBJCi3wHA02HOQ=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qfo5vfkivwrbc725"
+Content-Disposition: inline
+In-Reply-To: <20250804003643.3625204-24-sashal@kernel.org>
 
-On 04/08/25 02:36, Sasha Levin wrote:
-> From: Eliav Farber <farbere@amazon.com>
-> 
-> [ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
-> 
-> The interrupt handler in pps_gpio_probe() is registered after calling
-> pps_register_source() using devm_request_irq(). However, in the
-> corresponding remove function, pps_unregister_source() is called before
-> the IRQ is freed, since devm-managed resources are released after the
-> remove function completes.
-> 
-> This creates a potential race condition where an interrupt may occur
-> after the PPS source is unregistered but before the handler is removed,
-> possibly leading to a kernel panic.
-> 
-> To prevent this, switch from devm-managed IRQ registration to manual
-> management by using request_irq() and calling free_irq() explicitly in
-> the remove path before unregistering the PPS source. This ensures the
-> interrupt handler is safely removed before deactivating the PPS source.
-> 
-> Signed-off-by: Eliav Farber <farbere@amazon.com>
-> Link: https://lore.kernel.org/r/20250527053355.37185-1-farbere@amazon.com
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+--qfo5vfkivwrbc725
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH AUTOSEL 6.1 24/51] pwm: sifive: Fix PWM algorithm and
+ clarify inverted compare behavior
+MIME-Version: 1.0
+
+Hello,
+
+On Sun, Aug 03, 2025 at 08:36:16PM -0400, Sasha Levin wrote:
+> From: Nylon Chen <nylon.chen@sifive.com>
+>=20
+> [ Upstream commit 7dbc4432ea6bf9d709391eb57f1e9fb44e99845a ]
+>=20
+> The `frac` variable represents the pulse inactive time, and the result
+> of this algorithm is the pulse active time. Therefore, we must reverse
+> the result.
+>=20
+> Although the SiFive Reference Manual states "pwms >=3D pwmcmpX -> HIGH",
+> the hardware behavior is inverted due to a fixed XNOR with 0. As a result,
+> the pwmcmp register actually defines the low (inactive) portion of the pu=
+lse.
+>=20
+> The reference is SiFive FU740-C000 Manual[0]
+>=20
+> Link: https://sifive.cdn.prismic.io/sifive/1a82e600-1f93-4f41-b2d8-86ed8b=
+16acba_fu740-c000-manual-v1p6.pdf [0]
+>=20
+> Co-developed-by: Zong Li <zong.li@sifive.com>
+> Signed-off-by: Zong Li <zong.li@sifive.com>
+> Co-developed-by: Vincent Chen <vincent.chen@sifive.com>
+> Signed-off-by: Vincent Chen <vincent.chen@sifive.com>
+> Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
+> Link: https://lore.kernel.org/r/20250529035341.51736-3-nylon.chen@sifive.=
+com
+> Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@kernel.org>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
-
-Signed-off-by: Rodolfo Giometti <giometti@enneenne.com>
-
 > ---
-> 
+>=20
 > LLM Generated explanations, may be completely bogus:
-> 
-> Based on my analysis of the commit and the surrounding context, here is
-> my assessment:
-> 
+>=20
 > **Backport Status: YES**
-> 
-> This commit should be backported to stable kernel trees for the
-> following reasons:
-> 
-> 1. **Fixes a Real Bug**: The commit addresses a genuine race condition
->     where an interrupt can occur after the PPS source is unregistered but
->     before the IRQ handler is freed. This can lead to a kernel panic - a
->     serious stability issue that affects users.
-> 
-> 2. **Clear Race Condition Pattern**: The code shows the problematic
->     ordering:
->     - In probe: `pps_register_source()` → `devm_request_irq()`
->     - In remove: `pps_unregister_source()` → (implicit devm cleanup frees
->       IRQ)
-> 
->     This creates a window where the hardware can generate an interrupt
-> after the PPS source is gone but before the handler is removed, causing
-> the handler to access freed memory.
-> 
-> 3. **Minimal and Contained Fix**: The change is small and focused:
->     - Changes `devm_request_irq()` to `request_irq()`
->     - Adds explicit `free_irq()` call before `pps_unregister_source()`
->     - Only 3 lines of functional code changes
->     - No new features or architectural changes
-> 
-> 4. **Similar to Other Stable Fixes**: This follows a common pattern seen
->     in other drivers where devm resource ordering causes issues in
->     removal paths. The kernel has many similar fixes for CAN drivers,
->     network drivers, and other subsystems that have been backported to
->     stable.
-> 
-> 5. **Low Risk of Regression**: The change is straightforward and doesn't
->     modify the driver's functionality - it only fixes the resource
->     cleanup ordering. The manual IRQ management is a well-established
->     pattern.
-> 
-> 6. **Affects User-Visible Stability**: A kernel panic during device
->     removal/module unload is a serious issue that can affect system
->     stability, especially in environments where PPS devices might be
->     dynamically added/removed or during system shutdown.
-> 
-> The commit message clearly describes the problem, the root cause, and
-> the solution. The fix is conservative and follows established kernel
-> patterns for fixing devm ordering issues. This is exactly the type of
-> bug fix that stable kernel rules recommend for backporting.
-> 
->   drivers/pps/clients/pps-gpio.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-> index bf3b6f1aa984..41e1fdbcda16 100644
-> --- a/drivers/pps/clients/pps-gpio.c
-> +++ b/drivers/pps/clients/pps-gpio.c
-> @@ -206,8 +206,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
->   	}
->   
->   	/* register IRQ interrupt handler */
-> -	ret = devm_request_irq(dev, data->irq, pps_gpio_irq_handler,
-> -			get_irqf_trigger_flags(data), data->info.name, data);
-> +	ret = request_irq(data->irq, pps_gpio_irq_handler,
-> +			  get_irqf_trigger_flags(data), data->info.name, data);
->   	if (ret) {
->   		pps_unregister_source(data->pps);
->   		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
-> @@ -224,6 +224,7 @@ static int pps_gpio_remove(struct platform_device *pdev)
->   {
->   	struct pps_gpio_device_data *data = platform_get_drvdata(pdev);
->   
-> +	free_irq(data->irq, data);
->   	pps_unregister_source(data->pps);
->   	del_timer_sync(&data->echo_timer);
->   	/* reset echo pin in any case */
+>=20
+> This commit should be backported to stable kernel trees. Here's my
+> extensive analysis:
+>=20
+> ## Critical Bug Fix Analysis
+>=20
+> 1. **The commit fixes a significant functional bug** - The PWM algorithm
+>    was fundamentally broken:
+>    - The `frac` variable was incorrectly used (lines 158-161 in
+>      original, now 168-171)
+>    - The driver was writing the duty cycle value directly to PWMCMP
+>      register (line 193), but the hardware actually expects the
+>      **inactive** (low) time
+>    - This results in inverted PWM output behavior where users get the
+>      opposite duty cycle from what they request
+>=20
+> 2. **Hardware behavior discrepancy** - The commit reveals and fixes a
+>    critical mismatch between documentation and actual hardware:
+>    - The documentation states "pwms >=3D pwmcmpX -> HIGH"
+>    - But the hardware has a hard-tied XNOR with 0 that inverts this
+>      behavior
+>    - The driver now correctly compensates for this hardware quirk
+>=20
+> 3. **User-visible impact**:
+>    - **In `pwm_sifive_get_state()`**: The driver now correctly inverts
+>      the value read from hardware (lines 115->122-126)
+>    - **In `pwm_sifive_apply()`**: The driver now inverts the duty cycle
+>      before writing to hardware (lines 162->171)
+>    - **Polarity change**: Changed from `PWM_POLARITY_INVERSED` to
+>      `PWM_POLARITY_NORMAL` (lines 126->137, 142->152)
+>    - **Documentation fix**: Updated comment from "cannot generate 100%
+>      duty" to "cannot generate 0% duty" (lines 11->27, 160->170)
+>=20
+> 4. **The fix is relatively small and contained**:
+>    - Changes are isolated to the PWM algorithm logic
+>    - No architectural changes or new features
+>    - Simple mathematical inversion: `duty =3D (1U << PWM_SIFIVE_CMPWIDTH)
+>      - 1 - inactive`
+>=20
+> 5. **No risky side effects**:
+>    - The change is straightforward and mathematically correct
+>    - Doesn't affect other subsystems
+>    - Maintains the same register interface
+>=20
+> 6. **Affects all SiFive PWM users**:
+>    - Any system using SiFive FU540 or FU740 SoCs would have incorrect
+>      PWM output
+>    - This includes various RISC-V development boards and embedded
+>      systems
+>    - Users would get inverted duty cycles, potentially breaking motor
+>      controls, LED dimming, etc.
+>=20
+> 7. **Clear documentation reference**:
+>    - The commit references the official SiFive FU740-C000 Manual
+>    - Provides clear explanation of the hardware behavior mismatch
+>=20
+> The bug causes PWM outputs to be inverted from user expectations, which
+> is a significant functional issue that would affect any system relying
+> on proper PWM behavior for motor control, LED dimming, or other PWM-
+> dependent functionality. The fix is clean, minimal, and addresses a
+> clear hardware/software mismatch that exists in production systems.
 
+What your LLM missed is that the device trees using this PWM relied on
+this "bug" and so this commit should be applied either together with
+f4bcf818e5d6 ("riscv: dts: sifive: unleashed/unmatched: Remove PWM
+controlled LED's active-low properties") or not at all.
 
--- 
-GNU/Linux Solutions                  e-mail: giometti@enneenne.com
-Linux Device Driver                          giometti@linux.it
-Embedded Systems                     phone:  +39 349 2432127
-UNIX programming
+Given that there might be device trees in use that are not in mainline
+and that break in the same way without a possiblity for us to fix that I
+tend to prefer not to backport this breaking change to stable.
+
+Best regards
+Uwe
+
+--qfo5vfkivwrbc725
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmiQjZQACgkQj4D7WH0S
+/k4P/Af9Es0+24qpGdgkAMPcr7a3SUM2X2+zjV+eo73yCNLcWS5ouW1qTVL+nVL8
+HlvFVt1Haf4FecuV3O4WuR00mJfnYsG1W6Nrf0+PGHUnlO+j5XBwdf9TmxWC018g
+BXrW8UDgMotiE5ybc7ySZtRVkCd8oCf0BkJNrS+wl40nTN2NZHZggQ9Q72P2slNY
+X6NObEAaJkZLoST2Wn70e1A5MarBNfTmmZUsURdrsCXdTx/rxncC7yxfYloKYxzr
+iC91hksP/r24EGgHS8x5s3E5KvKrqYfg+jvpQMlj2N33T4DohSKJarQDue5+YBr8
+7gTU73kN36h9lunrIfPfqQYJNBjqbQ==
+=TUM5
+-----END PGP SIGNATURE-----
+
+--qfo5vfkivwrbc725--
