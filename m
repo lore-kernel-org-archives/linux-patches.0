@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F5E1F1527;
-	Mon,  4 Aug 2025 00:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284611FDD;
+	Mon,  4 Aug 2025 00:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267999; cv=none; b=WoVEKuMoZzFWDHDqaJA8H7JUA+D6AoZib8LM3X6fCC7ZEM7J6E8GAFtj+/Upr9nIWYXNR98yMSwE9UOzDmjfgVnCQvSbr99ixwrzgWPrd1FEgbBCyHId0UWIgnj5el2plCnTnrrH8B+gLeSUpofJsgu9vxgd8ew6Ugc89pEn2H8=
+	t=1754268002; cv=none; b=j+13CEL6waq1jO/4ILuatpwbbD3ylpsFKEngeG3AYHeCQNXUVSMjkO6ZcO8E1aW6+IVaCgcUWBY6C3erHtMDxJgRihS01xI389DB2bVoulrJk9PJEILW2i6drlBxDF0LhVQtkogtCV3jnbtV6dshu8SZ3MiCInXFL4Sw07Fn/f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267999; c=relaxed/simple;
-	bh=NBfkoVspTHZgH1II3lTp35ypMdHlo7/HLcXJdZrIzsY=;
+	s=arc-20240116; t=1754268002; c=relaxed/simple;
+	bh=WdKMC9U0AeiatoXp541KLydlJFB0Nt5DO347CO4RqVg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bFYZYLfhaoWUFP79IdSYkDxsW9Hyz2IAHW1LLfpbrvNa7uBH+FGhm7AfIiuKMp6Oq84+U8FycsG5H8bBMI6CVVQfkdYrPSmsgSzkfrgm85WYLSwa2Ev6jvseFNrStPCeWozmR3fGJhwgxcZSrPbDo744U0yOl3tSVzDPrf6wcJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HEd9EG2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxgiNcq8vXdky/3Jj5PO1clwznZ8K1tcQdxqihAzR82TD9x6pn4+VZmh29FuQwTpCQmSE2SB7uDUjuYjcEzApSd64oZbGCwKlgiAzdWC+BEXAEuF2mqjbh/ncGsh7FCwBbo9bw7kdIgAc1zUOjOn8CiQhJr+WZaftCC/aKcUAk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SSL+JBYW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HEd9EG2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9381EC4CEF0;
-	Mon,  4 Aug 2025 00:39:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SSL+JBYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F174C4CEFA;
+	Mon,  4 Aug 2025 00:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267999;
-	bh=NBfkoVspTHZgH1II3lTp35ypMdHlo7/HLcXJdZrIzsY=;
+	s=k20201202; t=1754268001;
+	bh=WdKMC9U0AeiatoXp541KLydlJFB0Nt5DO347CO4RqVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEd9EG2SG7YqfIqRJKvX7rXKmqRk71g5417AOmHgtGVj/4h5c0dVUd9L70ghiU5y1
-	 ZtaECJDEMc76kmiuOnQtgD5taWZG3P/RFQpcITGfh7KHkQRQgYHfqQHOE3+1AO2M1x
-	 aPwP83XUzGEqm4W1C6xEUHAgB/Z4oWUN5lK9BXAWxrc2Nk8fqrvFGQFo7q62wrK/+M
-	 toP6ynxbWh5f1k5eGqugMNL8cvGTaiFzvVQdvNYZqfDl+6Vs+nX7S1RSi5eJE0Mvaq
-	 PZggRxcrtPsOKDuNdIEk4thB03OwKp1UgobScjQeqqBQFuWrzhIf9HubQzJ4y5/YxL
-	 2/6i4qnOAik0A==
+	b=SSL+JBYWwg6XjiqUf7a+vA6TUEgtLiuU5H6khJpfFcQxu73qi0ty8KMxXa01YC0Me
+	 3TzlBc27uO6Zh9SrAqZHtvCXsqVk/C7PG1AtBef6BqpwKgge9eBdNd5TOhJ9tDksMQ
+	 6mqt17nsem/EBx9VXdPE6S4B1RSDDLh35iw4OyPUraug7JCRZ2o3kunqq2j7MpsKVY
+	 Y/5AIcmTwQSi3PBg8/qafLSUmGMxskEt+WpPejGXO2x0gsy42q3+cnPi0ukAZTsuaQ
+	 0qMMoQvq019dGnK82SZlhtfljmCeo7QoCYC6GUZ3mwHqyOzGVFLaEPl+GV5EvOIlHK
+	 F19uHPddm55ow==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ulf Hansson <ulf.hansson@linaro.org>,
-	Avri Altman <avri.altman@sandisk.com>,
-	Ricky Wu <ricky_wu@realtek.com>,
+Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>,
-	zhoubinbin@loongson.cn,
-	u.kleine-koenig@baylibre.com,
-	nathan@kernel.org,
-	viro@zeniv.linux.org.uk
-Subject: [PATCH AUTOSEL 5.15 29/44] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
-Date: Sun,  3 Aug 2025 20:38:34 -0400
-Message-Id: <20250804003849.3627024-29-sashal@kernel.org>
+	tglx@linutronix.de,
+	peterz@infradead.org,
+	jpoimboe@kernel.org
+Subject: [PATCH AUTOSEL 5.15 30/44] x86/bugs: Avoid warning when overriding return thunk
+Date: Sun,  3 Aug 2025 20:38:35 -0400
+Message-Id: <20250804003849.3627024-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -54,18 +52,22 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
+[ Upstream commit 9f85fdb9fc5a1bd308a10a0a7d7e34f2712ba58b ]
 
-In the error path of sd_set_power_mode() we don't update host->power_mode,
-which could lead to an imbalance of the runtime PM usage count. Fix this by
-always updating host->power_mode.
+The purpose of the warning is to prevent an unexpected change to the return
+thunk mitigation. However, there are legitimate cases where the return
+thunk is intentionally set more than once. For example, ITS and SRSO both
+can set the return thunk after retbleed has set it. In both the cases
+retbleed is still mitigated.
 
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Ricky Wu <ricky_wu@realtek.com>
-Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
+Replace the warning with an info about the active return thunk.
+
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250611-eibrs-fix-v4-3-5ff86cac6c61@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,92 +78,96 @@ LLM Generated explanations, may be completely bogus:
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Bug Analysis
+## Key Reasons for Backporting:
 
-The commit fixes a **runtime PM reference counting bug** in the
-`sd_set_power_mode()` function. The issue is in the error handling path:
-
-### Original Code Problem:
+### 1. **Fixes a Real User-Visible Issue**
+The code change shows that the original warning was triggering in
+legitimate scenarios:
 ```c
-if (power_mode == MMC_POWER_OFF) {
-    err = sd_power_off(host);
-    pm_runtime_put_noidle(sdmmc_dev(host));
-} else {
-    pm_runtime_get_noresume(sdmmc_dev(host));
-    err = sd_power_on(host);
-}
+- if (x86_return_thunk != __x86_return_thunk)
+- pr_warn("x86/bugs: return thunk changed\n");
+```
+This warning would appear in kernel logs whenever multiple CPU
+vulnerability mitigations interact, which is a normal and expected
+behavior. The false positive warnings could:
+- Cause unnecessary alarm for system administrators
+- Clutter kernel logs with misleading information
+- Potentially mask real issues by creating noise
 
-if (!err)
-    host->power_mode = power_mode;  // Only updated on success
+### 2. **Small, Contained Change**
+The commit is minimal and focused:
+- Only modifies 3 lines of functional code
+- Changes are confined to a single function (`set_return_thunk()`)
+- Simply replaces a conditional warning with an unconditional info
+  message:
+```c
++       pr_info("active return thunk: %ps\n", thunk);
 ```
 
-### The Bug:
-1. When transitioning to `MMC_POWER_OFF`, the code calls
-   `pm_runtime_put_noidle()` **regardless** of whether `sd_power_off()`
-   succeeded
-2. When transitioning to `MMC_POWER_ON`, the code calls
-   `pm_runtime_get_noresume()` **before** calling `sd_power_on()`
-3. However, `host->power_mode` is only updated if there's no error
+### 3. **No Risk of Regression**
+The change is safe because:
+- It doesn't modify any security logic or mitigation behavior
+- The function still sets the return thunk exactly as before
+- The new info message provides better visibility into which mitigation
+  is active
+- The `%ps` format specifier safely prints the function symbol name
 
-This creates a **runtime PM reference count imbalance** because:
-- If `sd_power_off()` fails, the runtime PM reference is still
-  decremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_ON`)
-- If `sd_power_on()` fails, the runtime PM reference is still
-  incremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_OFF`)
-- The early return check `if (power_mode == host->power_mode)` at the
-  beginning of the function will prevent future attempts to fix the
-  power state, leaving the runtime PM count permanently imbalanced
+### 4. **Addresses Security Mitigation Interactions**
+The commit message explicitly states that "ITS and SRSO both can set the
+return thunk after retbleed has set it" and that "retbleed is still
+mitigated." This is important for stable kernels because:
+- Multiple CVE mitigations (Retbleed, SRSO, ITS) need to coexist
+- The warning was incorrectly flagging legitimate mitigation sequences
+- Stable kernels need these mitigations to work together without false
+  alarms
 
-## Why This Is Suitable for Stable:
+### 5. **Part of Critical Security Infrastructure**
+The x86/bugs subsystem handles CPU vulnerability mitigations for:
+- CVE-2023-20569 (SRSO)
+- CVE-2024-28956 (ITS)
+- Retbleed vulnerabilities
+These are critical security features that need to function correctly in
+stable kernels.
 
-1. **Fixes a real bug**: Runtime PM reference count imbalances can lead
-   to:
-   - Device staying powered when it should be suspended
-   - Device being suspended when it should be active
-   - Power management failures
-   - Potential system hangs or crashes
+### 6. **Improves Operational Visibility**
+The new info message (`pr_info("active return thunk: %ps\n", thunk);`)
+actually improves debugging and system monitoring by:
+- Showing which specific return thunk is currently active
+- Providing better audit trail for security mitigation changes
+- Using proper function symbol printing with `%ps`
 
-2. **Minimal change**: The fix is a simple one-liner that always updates
-   `host->power_mode` regardless of error status
+## Conclusion:
+This commit meets all the criteria for stable backporting:
+- Fixes a real issue (false positive warnings)
+- Minimal risk (3-line change, no logic modifications)
+- Improves system behavior without introducing new features
+- Addresses interaction between critical security mitigations
+- Makes the kernel more reliable and less confusing for operators
 
-3. **Low regression risk**:
-   - The change doesn't introduce new functionality
-   - It doesn't alter the control flow
-   - It simply ensures state consistency
+The change is particularly important for stable kernels that need to
+support multiple CPU vulnerability mitigations simultaneously without
+generating misleading warnings.
 
-4. **Clear bug fix**: This is not a feature addition or optimization -
-   it's fixing incorrect error handling that violates runtime PM rules
+ arch/x86/kernel/cpu/bugs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-5. **Affects users**: This bug can manifest in real-world scenarios when
-   SD card power operations fail, particularly with flaky hardware or
-   during system stress
-
-6. **Subsystem contained**: The fix is limited to a single MMC host
-   driver and doesn't affect core kernel infrastructure
-
-The commit follows stable kernel rules by being a minimal, targeted fix
-for a real bug that can affect system stability and power management.
-
- drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 1be3a355f10d..ab7023d956eb 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1032,9 +1032,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
- 		err = sd_power_on(host);
- 	}
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 261aa716971d..9e313ee9ba66 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -70,10 +70,9 @@ void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
  
--	if (!err)
--		host->power_mode = power_mode;
+ static void __init set_return_thunk(void *thunk)
+ {
+-	if (x86_return_thunk != __x86_return_thunk)
+-		pr_warn("x86/bugs: return thunk changed\n");
 -
-+	host->power_mode = power_mode;
- 	return err;
+ 	x86_return_thunk = thunk;
++
++	pr_info("active return thunk: %ps\n", thunk);
  }
  
+ /* Update SPEC_CTRL MSR and its cached copy unconditionally */
 -- 
 2.39.5
 
