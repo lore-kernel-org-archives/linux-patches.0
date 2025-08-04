@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A111D9A5F;
-	Mon,  4 Aug 2025 00:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3577D1C84C6;
+	Mon,  4 Aug 2025 00:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267717; cv=none; b=VC1uerYWzssDf9UoBETWNICv29gdcEiiQaniyFwisFT38Go8vCa78J6a1Ek3zxAhEdXrewvZWGAyTUG4qYa6TVsMNrkciCnCxpQylzdCosbJmhi0/IjVS0ygtEA7/LrZZbSqR+fHrw69WMqaVGX5kf/pNd7yUausO2p6JnfUqj0=
+	t=1754267720; cv=none; b=eI5Pkk3JW+K4nVeDdE84pBhVniI0AnRGOzduJDly0Z2VepXRf6jPAsCz385+V+Xl5W8ik7a0ZHZGNKSlqRbSW8Xi94Bta2L60IOoomGbmtK/VIHX4IvIDFnd7UtCc57bPMHOs1rhV/DV5870CAs61Aurg5ha4XVprPSgg02Tels=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267717; c=relaxed/simple;
-	bh=VmfqS2RbIP7Vd53dCfx2HE/dv2zG9GIOqPJ6FEpxTVk=;
+	s=arc-20240116; t=1754267720; c=relaxed/simple;
+	bh=c14/7h2BR8AnkqUWruedKzxdC1c/Vm1opCnop1/jvqg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=MeBaN+RGFNAIldSJm86aD9oTB0CNwbg+HxtKkN4dmcVLDSA+8EB+i4tS2jKktwySNqENfuIJDbOzJJCzbq1ltNfmIwcz5jlV6I5Vmx7rxRGkx95Hi6Q8CDYPksl+87JL6Ct0kmrGFfHG+75C2C5nTXwSfAlb9SPoBK+MxoeE1Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b5k8ZI0s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ChHJxnBGJXYlGlPoHLGRrquuV6xGj6dEoAgMBvPoKkNnrIwleXJOxxwrur5986UifYp1i+hUs5XszKEe2GTT8skRYPvyOzz7fE073XAr5p8u10xqQW9SdiUgQ0xdYsFwHGVJvti71B3m9tzsW8azRaQ4NNQhlwTxOZoiDotVJww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NpU5+6qK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b5k8ZI0s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D2CC4CEF8;
-	Mon,  4 Aug 2025 00:35:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NpU5+6qK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79652C4CEEB;
+	Mon,  4 Aug 2025 00:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267716;
-	bh=VmfqS2RbIP7Vd53dCfx2HE/dv2zG9GIOqPJ6FEpxTVk=;
+	s=k20201202; t=1754267720;
+	bh=c14/7h2BR8AnkqUWruedKzxdC1c/Vm1opCnop1/jvqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5k8ZI0s1zzwrk18JpBOG4MO8ViKqA+t9s3OCgzV6g7PJvatr3SqRJFqUB2GRtAh3
-	 52fI8dYMBq3yY0py6fs16JsMEWK68LlBT7a5GgbfJiLFNXa/CPvpa/gMyLplX4Nytq
-	 XRZQKA2TZgKdlut80Xx1er8mKlwlJPH8Aldlx8jMLgE6Ytwvo33vssOZ4qVJCqRPOg
-	 0/acS9y/Vh4upDEHC+cCo5cuaZL0R+J+BmSwsyw/RnCmh9vWd+Q9QB8ClGY1N9/DSM
-	 OM2XY3wXLUWci80iXwjvWU/2sxNQQaASpxk6DFqCM4SHDGMeDufiyOXql3+kKVXDcO
-	 i/i/fhTviDEZw==
+	b=NpU5+6qKLAqycUH78xfMvHx6Az4QqxDS5nQ5IMLdey557LkZLUXoiqAKf9aNv7o0E
+	 sEondKgXl0nJfVOD7OZ0njwdpb6cnzIFlf8UHW7LcmAg4mRSeEBjkZyisdN1jnUi5F
+	 bZIr8r1Z6kWJI2cVAc8rVtdj9AwMVFMgWPhOReOn78B7LUrj5yJvnJjxESyVu7BDq5
+	 UsGt+hyni2g3p4g+QXDi1ZxNB0hfhXV4OAekbynq1HFO5I+g8B8fARM/JweUv9VAhR
+	 1xgGpOaS9JDCY5pJJFDtP4A8pDfcNPYokQVIiPY6JPBuMMnGjrC1h+lGWyrSHPmSV2
+	 5IiTn8jHG5U1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhu Qiyu <qiyuzhu2@amd.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 26/59] ACPI: PRM: Reduce unnecessary printing to avoid user confusion
-Date: Sun,  3 Aug 2025 20:33:40 -0400
-Message-Id: <20250804003413.3622950-26-sashal@kernel.org>
+	thierry.reding@gmail.com,
+	jonathanh@nvidia.com,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 27/59] firmware: tegra: Fix IVC dependency problems
+Date: Sun,  3 Aug 2025 20:33:41 -0400
+Message-Id: <20250804003413.3622950-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -51,139 +51,111 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Qiyu <qiyuzhu2@amd.com>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 3db5648c4d608b5483470efc1da9780b081242dd ]
+[ Upstream commit 78eb18020a88a4eed15f5af7700ed570642ff8f1 ]
 
-Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
-handler and context") introduced non-essential printing "Failed to find
-VA for GUID: xxxx, PA: 0x0" which may confuse users to think that
-something wrong is going on while it is not the case.
+The IVC code is library code that other drivers need to select if they
+need that library. However, if the symbol is user-selectable this can
+lead to conflicts.
 
-According to the PRM Spec Section 4.1.2 [1], both static data buffer
-address and ACPI parameter buffer address may be NULL if they are not
-needed, so there is no need to print out the "Failed to find VA ... "
-in those cases.
+Fix this by making the symbol only selectable for COMPILE_TEST and add
+a select TEGRA_IVC to TEGRA_BPMP, which is currently the only user.
 
-Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
-Signed-off-by: Zhu Qiyu <qiyuzhu2@amd.com>
-Link: https://patch.msgid.link/20250704014104.82524-1-qiyuzhu2@amd.com
-[ rjw: Edits in new comments, subject and changelog ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20250506133118.1011777-10-thierry.reding@gmail.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit is suitable for backporting to stable kernel trees. Here's
+an extensive analysis based on the commit message and code changes:
 
-## Bug Fix for User-Visible Issue
-The commit fixes false warning messages that were confusing users. The
-original commit 088984c8d54c (which was already backported to stable
-with "Cc: All applicable <stable@vger.kernel.org>") introduced an
-unconditional warning in `efi_pa_va_lookup()`:
+## Analysis
 
-```c
-pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
-```
+### 1. Bug Fix Nature
+The commit fixes a genuine Kconfig dependency problem where TEGRA_IVC
+being user-selectable can lead to configuration conflicts. The commit
+message explicitly states "The IVC code is library code that other
+drivers need to select if they need that library. However, if the symbol
+is user-selectable this can lead to conflicts."
 
-This warning was printed even when the physical address (PA) was
-legitimately 0/NULL, which according to the PRM specification is valid
-for both `static_data_buffer_address` and `acpi_param_buffer_address`
-when they are not needed.
+### 2. Size and Scope
+The fix is minimal and contained - only 4 lines changed in a single
+Kconfig file:
+- Line 5: Changed `bool "Tegra IVC protocol"` to `bool "Tegra IVC
+  protocol" if COMPILE_TEST`
+- Line 16: Removed `TEGRA_IVC` from the depends line
+- Line 18: Added `select TEGRA_IVC`
 
-## Small and Contained Fix
-The fix is minimal and surgical:
-1. Removes the unconditional warning from `efi_pa_va_lookup()`
-2. Adds conditional warnings only when addresses are non-zero but lookup
-   fails:
-   - For handler_addr: warns if lookup fails (this should never be zero)
-   - For static_data_buffer_addr: only warns if
-     `handler_info->static_data_buffer_address` is non-zero but lookup
-     fails
-   - For acpi_param_buffer_addr: only warns if
-     `handler_info->acpi_param_buffer_address` is non-zero but lookup
-     fails
+### 3. No Major Side Effects
+The change doesn't introduce any functional modifications to the code
+itself. It only changes how the Kconfig symbol is selected:
+- TEGRA_IVC becomes non-user-selectable (except for COMPILE_TEST)
+- TEGRA_BPMP now explicitly selects TEGRA_IVC instead of depending on it
 
-## Regression Fix
-Since the problematic commit 088984c8d54c has been backported to v6.12
-stable kernels, this fix addresses a regression in stable trees where
-users are seeing confusing warning messages for legitimate NULL
-addresses.
+### 4. No Architectural Changes
+This is purely a Kconfig dependency fix with no changes to the actual
+driver implementation or kernel architecture.
 
-## Low Risk
-The change:
-- Does not modify any functional behavior
-- Only adjusts when warning messages are printed
-- Has no architectural changes or side effects
-- Is confined to the ACPI PRM subsystem
+### 5. Critical Subsystem Impact
+While this touches firmware drivers, the change is limited to
+configuration logic and doesn't modify any runtime behavior.
 
-## Clear Benefit
-The fix eliminates user confusion from false warnings while maintaining
-proper warnings for actual error conditions (when a non-zero address
-fails lookup).
+### 6. Stable Tree Considerations
+Based on my investigation:
+- TEGRA_IVC is indeed library code (as seen in
+  drivers/firmware/tegra/ivc.c)
+- Multiple SoC configs (ARCH_TEGRA_186_SOC, ARCH_TEGRA_194_SOC,
+  ARCH_TEGRA_234_SOC) also select TEGRA_IVC
+- Currently, TEGRA_BPMP appears to be the only driver module using the
+  IVC library functions directly
+- The library exports functions like `tegra_ivc_*` that are used by BPMP
 
-Given that the original problematic commit is in stable kernels and this
-is a targeted fix for that regression with minimal risk, it clearly
-meets the stable backporting criteria.
+### 7. Risk Assessment
+The risk is minimal because:
+- The change converts a user-visible dependency into an automatic
+  selection
+- This prevents users from creating invalid configurations
+- The actual IVC and BPMP code remains unchanged
+- The fix aligns with standard kernel practice for library code (should
+  be selected, not user-configurable)
 
- drivers/acpi/prmt.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+This is a classic example of a good stable backport candidate: it fixes
+a real configuration issue that could cause build problems, the fix is
+small and contained, and it doesn't introduce any functional changes or
+risks to the kernel operation.
 
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index a34f7d37877c..eb8f2a1ce138 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -85,8 +85,6 @@ static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
- 		}
- 	}
+ drivers/firmware/tegra/Kconfig | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/firmware/tegra/Kconfig b/drivers/firmware/tegra/Kconfig
+index cde1ab8bd9d1..91f2320c0d0f 100644
+--- a/drivers/firmware/tegra/Kconfig
++++ b/drivers/firmware/tegra/Kconfig
+@@ -2,7 +2,7 @@
+ menu "Tegra firmware driver"
  
--	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
--
- 	return 0;
- }
+ config TEGRA_IVC
+-	bool "Tegra IVC protocol"
++	bool "Tegra IVC protocol" if COMPILE_TEST
+ 	depends on ARCH_TEGRA
+ 	help
+ 	  IVC (Inter-VM Communication) protocol is part of the IPC
+@@ -13,8 +13,9 @@ config TEGRA_IVC
  
-@@ -154,13 +152,37 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
-+		/*
-+		 * Print a warning message if handler_addr is zero which is not expected to
-+		 * ever happen.
-+		 */
-+		if (unlikely(!th->handler_addr))
-+			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->handler_address);
- 
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
-+		/*
-+		 * According to the PRM specification, static_data_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->static_data_buffer_addr && handler_info->static_data_buffer_address))
-+			pr_warn("Failed to find VA of static data buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->static_data_buffer_address);
- 
- 		th->acpi_param_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
- 
-+		/*
-+		 * According to the PRM specification, acpi_param_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->acpi_param_buffer_addr && handler_info->acpi_param_buffer_address))
-+			pr_warn("Failed to find VA of acpi param buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->acpi_param_buffer_address);
-+
- 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
- 
- 	return 0;
+ config TEGRA_BPMP
+ 	bool "Tegra BPMP driver"
+-	depends on ARCH_TEGRA && TEGRA_HSP_MBOX && TEGRA_IVC
++	depends on ARCH_TEGRA && TEGRA_HSP_MBOX
+ 	depends on !CPU_BIG_ENDIAN
++	select TEGRA_IVC
+ 	help
+ 	  BPMP (Boot and Power Management Processor) is designed to off-loading
+ 	  the PM functions which include clock/DVFS/thermal/power from the CPU.
 -- 
 2.39.5
 
