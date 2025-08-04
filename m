@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38B81DF269;
-	Mon,  4 Aug 2025 00:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590FC1EBA19;
+	Mon,  4 Aug 2025 00:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268039; cv=none; b=JB9zphcNqg9WbMRWX1h5Kdsv1jURCNw2BHa8NQd2nNw544eAXBtDlOfR//pUK4Yb1MEYO2j3UULC0rUCFxdYm1ivOisOKoS/+SYOQClgtQBw4e8USRAHu0gqhDKzOdj7OJ22FHCfV/gjFX3Pncdfpx8DNqumZskQCsglIjy8oGU=
+	t=1754268040; cv=none; b=Nj6DLXZ7DsaFiBD/CVMEEQy8xmEDRo3kq3RrOq+qaQxv+icOIySUnElQG46/8JiJWfKdXq5KBNl7sHC8Tkw7nazXZsIWvEEKiR6t3eTWdV5S3qUxgsqmtMZUQl4kiYyKlBhKSwtKH3CbC/0YglURHuZLcq/jBLdsh1fj/mH45SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268039; c=relaxed/simple;
-	bh=GrZMN1ctYClu+Qt27newfYtAy9wGy5zkAcrdofZY1HQ=;
+	s=arc-20240116; t=1754268040; c=relaxed/simple;
+	bh=3jMBFX5PGV09QaHVB1+rfIGI12NJtBhLppl5XSwKCnU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PnSM4HjIDRNp1cXuXrla0jP5l1tnwhxL248OVJdwpCIyRS0r9pTKJrujI6XRCDLcEeS9W/OyND307m6ENsZcsMlCKwcBP3JIitfsJHLQ0o5zmRB/5cwPCxac7giRjSwy7HmM5lv5U9Mq7hdarsZtdllqL8osSXBktxQd2wsic30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cg5JGiEm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jc+WJiO86+6JBfxkaWyGILic+i9H1R11foJ7n9824CZo98KsPprdMXqc4QGlTd4E+JMGCT00FvqIm5u/z5ZD/8r83jlrPGqGW8cZ4EvsxPRswr/J0kC29/8xIv/IzGdiUo7zXBvXQfaVWfG8ZVKdPIKVLNXCtKVT2+R+w8ENbpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lb2fREJq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cg5JGiEm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78755C4CEEB;
-	Mon,  4 Aug 2025 00:40:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lb2fREJq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DEEC4CEFA;
+	Mon,  4 Aug 2025 00:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268038;
-	bh=GrZMN1ctYClu+Qt27newfYtAy9wGy5zkAcrdofZY1HQ=;
+	s=k20201202; t=1754268036;
+	bh=3jMBFX5PGV09QaHVB1+rfIGI12NJtBhLppl5XSwKCnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cg5JGiEmEsz1YMTXL18r0YKaaekFoHwmp5m3LhR5vJH2uovKECxRUQ7TxxDLgiD5a
-	 3UhBWktXmeRo7O/FMyfQkcC8H5NrneZ6Znbo98QV1F1icbJycRi/RXvMetoDsicdWW
-	 Bc8TxViYqNDBRW2TSufVHZ4gOeF9C6SRr2CX+yIjS3OkFmRAM5ItsIpJpHd+DKLuFc
-	 C+atvKLP7hY5psj8AeZ6OAieuW61Dzy2DLsHgSFFuWTIzf/kdHfSn9YGyMobYlrSPR
-	 nCNbe4UPPBYyYHLDnJJ1+xtCx7c/fATZWUF8PCi7pmLkujv5u0dQ6+9pU/6tLx0sdX
-	 P39zE9SfGUAiw==
+	b=lb2fREJqI81hBWEW6DvOl5NOc+VM37jvQcyEBDexJR1ummdW6nNryWc4u/O/EdaiT
+	 8IcB+2aezHyupaNfSfHEYNSUVwDZMq5C0FDA5bpdG9s6fMhwJjSKXLiIuzbNXvQte4
+	 2mv10LCrldzk09T9IucG23k1hmlVBD/aYuPTHMXLuanJ6wZOWtpRkZ+itg5nBUnhRV
+	 H0ZM0WwhNRdtceyC6vI1Hzp/Ww5uV7iVQAUXnWxCu+deszw4JEfV5OfEIInGlVWbNZ
+	 HCxZ8hMfYRtp4F+1EajKBrY7VoN45grk05P4rv2MLTAxF6nN5GOx67rEcpMD1QqHEI
+	 imvXn8d93Abww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xinxin Wan <xinxin.wan@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Jonathan Santos <Jonathan.Santos@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	oder_chiou@realtek.com
-Subject: [PATCH AUTOSEL 5.15 44/44] ASoC: codecs: rt5640: Retry DEVICE_ID verification
-Date: Sun,  3 Aug 2025 20:38:49 -0400
-Message-Id: <20250804003849.3627024-44-sashal@kernel.org>
+	Michael.Hennerich@analog.com,
+	lars@metafoo.de,
+	linux-iio@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 43/44] iio: adc: ad7768-1: Ensure SYNC_IN pulse minimum timing requirement
+Date: Sun,  3 Aug 2025 20:38:48 -0400
+Message-Id: <20250804003849.3627024-43-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -53,22 +55,19 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
 Content-Transfer-Encoding: 8bit
 
-From: Xinxin Wan <xinxin.wan@intel.com>
+From: Jonathan Santos <Jonathan.Santos@analog.com>
 
-[ Upstream commit 19f971057b2d7b99c80530ec1052b45de236a8da ]
+[ Upstream commit 7e54d932873d91a55d1b89b7389876d78aeeab32 ]
 
-To be more resilient to codec-detection failures when the hardware
-powers on slowly, add retry mechanism to the device verification check.
-Similar pattern is found throughout a number of Realtek codecs. Our
-tests show that 60ms delay is sufficient to address readiness issues on
-rt5640 chip.
+The SYNC_IN pulse width must be at least 1.5 x Tmclk, corresponding to
+~2.5 µs at the lowest supported MCLK frequency. Add a 3 µs delay to
+ensure reliable synchronization timing even for the worst-case scenario.
 
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Xinxin Wan <xinxin.wan@intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250530142120.2944095-3-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/d3ee92a533cd1207cf5c5cc4d7bdbb5c6c267f68.1749063024.git.Jonathan.Santos@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,89 +76,114 @@ LLM Generated explanations, may be completely bogus:
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+extensive analysis:
 
-## Analysis of the Commit
+**1. Bug Fix Nature:**
+The commit fixes a timing violation bug where the SYNC_IN pulse width
+was not meeting the hardware's minimum timing requirement. According to
+the datasheet (as noted in the commit), the SYNC_IN pulse must be at
+least 1.5 × Tmclk (MCLK period). Without the proper delay, the
+synchronization pulse may be too short, especially at lower MCLK
+frequencies, causing unreliable synchronization.
 
-### 1. Bug Fix Nature
-This commit fixes a real-world hardware detection issue where the RT5640
-codec device ID verification fails on systems where the hardware powers
-on slowly. The failure results in the driver returning `-ENODEV` and the
-audio codec not being initialized, causing complete audio failure.
+**2. Specific Code Analysis:**
 
-### 2. Small and Contained Change
-The fix is minimal and highly contained:
-- Only adds 3 lines of code
-- The change is isolated to the probe function's device ID verification
-  logic
-- No architectural changes or new features introduced
-- The retry logic is simple: if initial ID read doesn't match, wait
-  60-100ms and retry once
-
-### 3. Clear Purpose with No Major Side Effects
-The code change:
+The original code had a critical timing issue:
 ```c
-regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+if (val != RT5640_DEVICE_ID) {
-+    usleep_range(60000, 100000);
-+    regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+}
+gpiod_set_value(st->gpio_sync_in, 1);
+gpiod_set_value(st->gpio_sync_in, 0);
 ```
-- Only adds a single retry with delay if the first read fails
-- The delay (60-100ms) is reasonable for probe-time initialization
-- No impact on normal operation when hardware is ready
 
-### 4. Follows Established Pattern
-The commit message mentions "Similar pattern is found throughout a
-number of Realtek codecs," and the probe function already contains a
-400ms delay after enabling LDO1 (line 3004), showing that power-on
-delays are expected for this hardware.
+This creates a pulse with essentially zero width (just the GPIO toggle
+time), which violates the hardware specification. The fix adds:
+- A new dedicated function `ad7768_send_sync_pulse()` that ensures
+  proper timing
+- Uses `gpiod_set_value_cansleep()` instead of `gpiod_set_value()` for
+  better reliability
+- Adds a 3 µs delay using `fsleep(3)` to guarantee the minimum pulse
+  width
 
-### 5. Minimal Risk of Regression
-- The retry only occurs when device ID verification would have failed
-  anyway
-- In the worst case, it adds a 60-100ms delay to failed probe attempts
-- Systems where the codec is ready immediately continue to work without
-  delay
-- The pattern is conservative: only one retry attempt
+**3. Impact Analysis:**
+- **User Impact**: Without this fix, users may experience unreliable ADC
+  synchronization, particularly when changing filter decimation rates or
+  when operating at lower MCLK frequencies (0.6 MHz)
+- **Worst Case**: At 0.6 MHz, Tmclk = 1.67 µs, requiring a minimum pulse
+  width of 2.5 µs. The original code provides essentially 0 µs
+- **Data Integrity**: Improper synchronization can lead to incorrect ADC
+  readings or timing issues in multi-device setups
 
-### 6. Important User Impact
-Without this fix, affected systems experience:
-- Complete audio failure on boot
-- No audio codec detection
-- Requires manual intervention or multiple reboots to get audio working
+**4. Risk Assessment:**
+- **Low Risk**: The change is minimal and contained - it only adds a 3
+  µs delay and switches to the cansleep GPIO variant
+- **No API Changes**: The fix is internal to the driver with no external
+  interface changes
+- **Conservative Fix**: The 3 µs delay provides margin above the 2.5 µs
+  worst-case requirement
 
-### 7. Stable Tree Suitability
-This fix meets all stable kernel criteria:
-- Fixes a real bug affecting users
-- Minimal change with clear purpose
-- No new features or APIs
-- Low risk of introducing new issues
-- Self-contained within a single driver
+**5. Stable Kernel Criteria:**
+✓ Fixes a real bug that affects users (timing violation)
+✓ Small, contained change (adds one function, modifies one call site)
+✓ No new features or architectural changes
+✓ Minimal risk of regression
+✓ Clear hardware specification violation being fixed
 
-The commit represents a classic hardware quirk fix that improves
-reliability without adding complexity, making it an ideal candidate for
-stable backport.
+**6. Supporting Evidence:**
+- The driver has had multiple previous fixes backported (as seen in git
+  log with "Fixes:" tags)
+- Similar timing-related fixes are commonly backported for hardware
+  drivers
+- The AD7768-1 is an active production part used in data acquisition
+  systems where reliability is critical
 
- sound/soc/codecs/rt5640.c | 5 +++++
- 1 file changed, 5 insertions(+)
+The commit meets all stable kernel criteria for backporting - it's a
+clear bug fix for a hardware timing violation that could cause
+unreliable operation, implemented with minimal changes and low
+regression risk.
 
-diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
-index cd1db5caabad..9998bdb954ba 100644
---- a/sound/soc/codecs/rt5640.c
-+++ b/sound/soc/codecs/rt5640.c
-@@ -2837,6 +2837,11 @@ static int rt5640_i2c_probe(struct i2c_client *i2c,
- 	}
+ drivers/iio/adc/ad7768-1.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
+index e240fac8b6b3..c518aeb35c70 100644
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -203,6 +203,24 @@ static int ad7768_spi_reg_write(struct ad7768_state *st,
+ 	return spi_write(st->spi, st->data.d8, 2);
+ }
  
- 	regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+	if (val != RT5640_DEVICE_ID) {
-+		usleep_range(60000, 100000);
-+		regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+	}
++static int ad7768_send_sync_pulse(struct ad7768_state *st)
++{
++	/*
++	 * The datasheet specifies a minimum SYNC_IN pulse width of 1.5 × Tmclk,
++	 * where Tmclk is the MCLK period. The supported MCLK frequencies range
++	 * from 0.6 MHz to 17 MHz, which corresponds to a minimum SYNC_IN pulse
++	 * width of approximately 2.5 µs in the worst-case scenario (0.6 MHz).
++	 *
++	 * Add a delay to ensure the pulse width is always sufficient to
++	 * trigger synchronization.
++	 */
++	gpiod_set_value_cansleep(st->gpio_sync_in, 1);
++	fsleep(3);
++	gpiod_set_value_cansleep(st->gpio_sync_in, 0);
 +
- 	if (val != RT5640_DEVICE_ID) {
- 		dev_err(&i2c->dev,
- 			"Device with ID register %#x is not rt5640/39\n", val);
++	return 0;
++}
++
+ static int ad7768_set_mode(struct ad7768_state *st,
+ 			   enum ad7768_conv_mode mode)
+ {
+@@ -288,10 +306,7 @@ static int ad7768_set_dig_fil(struct ad7768_state *st,
+ 		return ret;
+ 
+ 	/* A sync-in pulse is required every time the filter dec rate changes */
+-	gpiod_set_value(st->gpio_sync_in, 1);
+-	gpiod_set_value(st->gpio_sync_in, 0);
+-
+-	return 0;
++	return ad7768_send_sync_pulse(st);
+ }
+ 
+ static int ad7768_set_freq(struct ad7768_state *st,
 -- 
 2.39.5
 
