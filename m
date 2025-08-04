@@ -1,100 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2AA26B955;
-	Mon,  4 Aug 2025 13:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67FB3AC1C;
+	Mon,  4 Aug 2025 17:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754314042; cv=none; b=d3+QMeH0GlFJYCn1BNS8j41gDlmvIjX6OsBO4SYZpQnTk+hTx9cx982wi0N+To41QDTS91V9igwtU2UWzk1bSHDq7E40Nw1bA0D6qtL0DwAGIYpJjZMcccYif+ULjpiriFohUTNozBDYMgw6lMuG3G4m1z9sz+ws9s075vCs2dA=
+	t=1754327614; cv=none; b=Alr+3PROaLGUzpEWtTlCXceadFt8jHKUDnTg0ccvEJ0J83bSO0K1yNBgH8HnEksIrKYCh6bsN6iy81OuFAxkDgsps6oH83zPhdrWdlzR2pGlqedVfUM5mBmpCbD/pYX9Q5325CDx/mqKjqblX1LoA2X8dtwUM/oLs0qz2WtFNmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754314042; c=relaxed/simple;
-	bh=0HpcXxVZIlcEaVB1NIukOwjT1SSDL2dg2xYzNVFQc9w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=us9KS9EillxyVDCvzyHpulI44/IW75208XZAeLiHJgwuaYrxCf7cknEoB7RMn2UFhN2dvqDInLUuLJez5ZAJKiQVgbeDQP4Atg6q6UQtVDjSO6WTwRP8zcPCKS7bt3w9AIWP8UdLoofsKUc1+G2MGBVYaPH+CmX12+lc38Hi7ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b4B75eB+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754327614; c=relaxed/simple;
+	bh=7E1lY8jxWW3f7BiTEDhPp5QNAEv+WgKZsbaaNANDdAg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BLktqUFmirsFQyFY1zFXN+NSAj/00OF/gX6vU53QVNPmKhuWbDdhvi5acsLDJ/Td4TKNmXe53uOQNxO60IzPZ4KNYpzNYn2XK678pO7qOcBccTDObOCJNJ0gSEXWyzs2D7QNUV/iI1vUjyAAnQRcmOTQ0xqFgPoV0fynzwHwWhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f2PxFW+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b4B75eB+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1FBC4CEE7;
-	Mon,  4 Aug 2025 13:27:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f2PxFW+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E75C4CEE7;
+	Mon,  4 Aug 2025 17:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754314041;
-	bh=0HpcXxVZIlcEaVB1NIukOwjT1SSDL2dg2xYzNVFQc9w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b4B75eB+imckBwOM7aVBIuKE25ep/01n0T6A9iHBEI1lGT/k1tOQAiro/SUYXTNOf
-	 gF57RRMZmybPQDkZ5zp2UvBQhkwhkOYRdZw490b7RzSCG7Fdr/bOqwZFOVFTNMFs+j
-	 H6QJxcKN4tyRNKmqpNBMM2tjUrDPMaQCrnmvNMn1QnBgD4Z9Mh6EP7YSbHRVZ20cyG
-	 NYxYtSN8ZlGCat07jXLIhHEJGSZaZgHggmxBGI1ZV1slvsQc8Q6UaKy80RgKrNPsJn
-	 snSzkDiBA3lPt4HGaVRkM1HmW+pCwWfB2pXj4TD68CHICZtWRJUmN3sANzvznt4nLZ
-	 oIcDJhLyHCc1A==
-Date: Mon, 4 Aug 2025 09:27:19 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Nylon Chen <nylon.chen@sifive.com>, Zong Li <zong.li@sifive.com>,
-	Vincent Chen <vincent.chen@sifive.com>, paul.walmsley@sifive.com,
-	samuel.holland@sifive.com, linux-pwm@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH AUTOSEL 6.6 28/59] pwm: sifive: Fix PWM algorithm and
- clarify inverted compare behavior
-Message-ID: <aJC1N93BVEVZjnWp@lappy>
-References: <20250804003413.3622950-1-sashal@kernel.org>
- <20250804003413.3622950-28-sashal@kernel.org>
- <xgy4dio2oqwqow7k5nlbf2vgrx63ptmtsi533wad7pfa3v23tk@nzrkhb2nytpb>
+	s=k20201202; t=1754327614;
+	bh=7E1lY8jxWW3f7BiTEDhPp5QNAEv+WgKZsbaaNANDdAg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=f2PxFW+JAlum/Xf0ViNxMPvlP0p1YuzO0nTd7i4M5MvIfwW40L0Y6ijajAYSl0o3n
+	 8ukO1tV77iIcaowbl9YckrKEKdPVoVj3xRO2kcTDH+pTVdbP/uCjjoxLW7YZIlfwkA
+	 cfsEbSavtVnMez51N1b6TKaS9EGdq3dv9ttgW0u/6e5MEy9uKotaYYhg30TBP++Z/1
+	 6NohQhYSusxq8xWUL1himR5i65OB17jw7I7osjco2vNmsw1WMzzQAW9Y06/aQ0xSQt
+	 ZrDfLpvgbsLZbxXXegmusihRR3ipmGlwCKOHUc4u+CAv5pDpy3WtfSAjPIu4CwZOQw
+	 IiYYAbsUYvZjA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: [PATCH] rust: faux: fix C header link
+Date: Mon,  4 Aug 2025 19:13:11 +0200
+Message-ID: <20250804171311.1186538-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xgy4dio2oqwqow7k5nlbf2vgrx63ptmtsi533wad7pfa3v23tk@nzrkhb2nytpb>
 
-On Mon, Aug 04, 2025 at 12:45:24PM +0200, Uwe Kleine-König wrote:
->Hello,
->
->On Sun, Aug 03, 2025 at 08:33:42PM -0400, Sasha Levin wrote:
->> From: Nylon Chen <nylon.chen@sifive.com>
->>
->> [ Upstream commit 7dbc4432ea6bf9d709391eb57f1e9fb44e99845a ]
->>
->> The `frac` variable represents the pulse inactive time, and the result
->> of this algorithm is the pulse active time. Therefore, we must reverse
->> the result.
->>
->> Although the SiFive Reference Manual states "pwms >= pwmcmpX -> HIGH",
->> the hardware behavior is inverted due to a fixed XNOR with 0. As a result,
->> the pwmcmp register actually defines the low (inactive) portion of the pulse.
->>
->> The reference is SiFive FU740-C000 Manual[0]
->>
->> Link: https://sifive.cdn.prismic.io/sifive/1a82e600-1f93-4f41-b2d8-86ed8b16acba_fu740-c000-manual-v1p6.pdf [0]
->>
->> Co-developed-by: Zong Li <zong.li@sifive.com>
->> Signed-off-by: Zong Li <zong.li@sifive.com>
->> Co-developed-by: Vincent Chen <vincent.chen@sifive.com>
->> Signed-off-by: Vincent Chen <vincent.chen@sifive.com>
->> Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
->> Link: https://lore.kernel.org/r/20250529035341.51736-3-nylon.chen@sifive.com
->> Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->
->Please drop this patch from your queue, see
->https://lore.kernel.org/all/52ycm5nf2jrxdmdmcijz57xhm2twspjmmiign6zq6rp3d5wt6t@tq5w47fmiwgg/
->for the rationale.
+Starting with Rust 1.91.0 (expected 2025-10-30), `rustdoc` has improved
+some false negatives around intra-doc links [1], and it found a broken
+intra-doc link we currently have:
 
-Will do.
+    error: unresolved link to `include/linux/device/faux.h`
+     --> rust/kernel/faux.rs:7:17
+      |
+    7 | //! C header: [`include/linux/device/faux.h`]
+      |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `include/linux/device/faux.h` in scope
+      |
+      = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+      = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
+      = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
 
->This is the fourth mail of this type I'm writing. For the future: Is it
->enough to raise these concerns once only and maybe even make it easier
->on your end, too? If so, should I better pick the oldest or the newest
->base version series to reply?
+Our `srctree/` C header links are not intra-doc links, thus they need
+the link destination.
 
-Sorry about that. Just replying to just one of the mails (really doesn't
-matter which) would work.
+Thus fix it.
 
--- 
-Thanks,
-Sasha
+Cc: stable@vger.kernel.org
+Link: https://github.com/rust-lang/rust/pull/132748 [1]
+Fixes: 78418f300d39 ("rust/kernel: Add faux device bindings")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+It may have been in 1.90, but the beta branch does not have it, and the
+rollup PR says 1.91, unlike the PR itself, so I picked 1.91. It happened
+just after the version bump to 1.91, so it may have to do with that.
+
+ rust/kernel/faux.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rust/kernel/faux.rs b/rust/kernel/faux.rs
+index 7a906099993f..7fe2dd197e37 100644
+--- a/rust/kernel/faux.rs
++++ b/rust/kernel/faux.rs
+@@ -4,7 +4,7 @@
+ //!
+ //! This module provides bindings for working with faux devices in kernel modules.
+ //!
+-//! C header: [`include/linux/device/faux.h`]
++//! C header: [`include/linux/device/faux.h`](srctree/include/linux/device/faux.h)
+
+ use crate::{bindings, device, error::code::*, prelude::*};
+ use core::ptr::{addr_of_mut, null, null_mut, NonNull};
+
+base-commit: d2eedaa3909be9102d648a4a0a50ccf64f96c54f
+--
+2.50.1
