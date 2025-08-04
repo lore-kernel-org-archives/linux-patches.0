@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982D61D90AD;
-	Mon,  4 Aug 2025 00:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296FC211F;
+	Mon,  4 Aug 2025 00:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267500; cv=none; b=Urz5TrTRG4K9wu17eiHsTVvglrxs0ziZIcLMqEZlN+aSnVuB46zPkIHwBi8PlAeT9rUT0vl3zO2meRGpLvden6bv2st4F2ogUKMIu3KCWqPI2aPmGHDRBJnsIZsMOUPnJ6Ik8WlLoKNi2IQrQn2XJE3m3Oo5MswzqbY1br8UjDc=
+	t=1754267505; cv=none; b=RI1UZOtUMrgxXNrl2j9IweD/pOTErCIrNLFJXCPthwUInCUk7ZY7ziizQLOiVpGo8JXw30zU62DMIUftDUfiNydCBa6lQ6jQhMe/NlcWPFwJA6zpU25Rx3NDe0CwmbGewF3mQeaQqkeuuBn+STN3r1KDvzSSDOVzIsOlIVft4u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267500; c=relaxed/simple;
-	bh=lyP6FxNqXVnJ4tuOBrTSH4VCi1STys1mgjfyQdDTP50=;
+	s=arc-20240116; t=1754267505; c=relaxed/simple;
+	bh=hQYVG7MBPq/lYAi3ZcX7k7xnBgWQPlhgZtYUUnLzYt0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GX6hKoaR8HCFN7Cn7xooT2RGz+Xn5qX4abBJABWAXQDEGw8k+pa5uI6MPLVg5+iULO8NjxjiO0sPgsUqF1IefbedWWn6iHriqaC9Q9EbUSneWHN/8Hl1JZahi4QHMDkGnw6nLYyCdCHp6WTOvjZCOhSBRWxGbfV98fuTSP5vngA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JkZnNZZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hqNERslhnvGymESmtZ5Zin+8cKAAgv/hC+iViksGSDzNuYax7gNNbIOnU0Vj+rEZFnyW1dckbExMU2ojaEXvuZvhZTkXe0vgMuOgvmFIVCC+hEeT3JV2wwGROgMbBiWK1zPEEDZbUBdVNG4g4PY5OclRW9TJyAgnlrSYuEurml8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hFIFGL1h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JkZnNZZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC69C4CEF8;
-	Mon,  4 Aug 2025 00:31:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hFIFGL1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F70C4CEF0;
+	Mon,  4 Aug 2025 00:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267500;
-	bh=lyP6FxNqXVnJ4tuOBrTSH4VCi1STys1mgjfyQdDTP50=;
+	s=k20201202; t=1754267505;
+	bh=hQYVG7MBPq/lYAi3ZcX7k7xnBgWQPlhgZtYUUnLzYt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JkZnNZZWzf0lm0gNfYPFts10moFW823wYg26jtNTNZRPcfvdFRkAIiYsir/eT+yDZ
-	 QxFno2oVaor1uMo1KEM/D6jPsguls7lm1ZtyXdlvSbTjWm4ksxWmI0Mxl/ueszfzbt
-	 +rzzvW+zU6ZAFCR6rwHXM6OHwsaoi0f6Auap+RHIP6YtUhnKlSLESAuEYOthYQRRHe
-	 ImGkzhuSRthD20hQFRdKJ1beJK21XfdYOtDbOUDe1wuolcWsGfyVAS1Bi0AvGS4FZS
-	 zAYvxsw1QdO/MIR0aI2m80q2ZN6hvR13ox/DYjymJSTvHQ7B2NDNubOHrbiky38nHf
-	 p0PyCs5k50iyQ==
+	b=hFIFGL1hQF2JM313KtSGvE8CHpNSXQ55fuQCQAMXOP9xZHOX4EDBiN68j/FQQpCPP
+	 OppUMnzEWGbSS0lUf1cMVlmjkmcHcrrMmjbrb5oZv7VexT/NV9BFYg126M8MY3R5hL
+	 3XrIIlGJsi8DaiJG6YjhhbWwlhb3iMN9LMzGckbhkecuepzL/kRMoWjRiYMuBJU6wY
+	 9Noh/aAO+FAvRvAc5SEwaqks5hZ7PBdo/TdVZnPpbZo9PpJpng1qwAnjrjMLTDqyk2
+	 h7MDFgkHZEAE4z1SyM+7NKNqd/P24BGo9GkCeeZQEsHRV4OWZF0+hbYQf++qDkiq/n
+	 OAJ731eriEgNg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -35,9 +35,9 @@ Cc: Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
 	mathias.nyman@intel.com,
 	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 07/69] usb: xhci: Avoid showing warnings for dying controller
-Date: Sun,  3 Aug 2025 20:30:17 -0400
-Message-Id: <20250804003119.3620476-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 09/69] usb: xhci: Avoid showing errors during surprise removal
+Date: Sun,  3 Aug 2025 20:30:19 -0400
+Message-Id: <20250804003119.3620476-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -50,105 +50,105 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 65fc0fc137b5da3ee1f4ca4f61050fcb203d7582 ]
+[ Upstream commit 4b9c60e440525b729ac5f071e00bcee12e0a7e84 ]
 
 When a USB4 dock is unplugged from a system it won't respond to ring
 events. The PCI core handles the surprise removal event and notifies
 all PCI drivers. The XHCI PCI driver sets a flag that the device is
-being removed, and when the device stops responding a flag is also
-added to indicate it's dying.
+being removed as well.
 
-When that flag is set don't bother to show warnings about a missing
-controller.
+When that flag is set don't show messages in the cleanup path for
+marking the controller dead.
 
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
 Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-3-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20250717073107.488599-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of this commit, here is my assessment:
+Now let me analyze this commit properly:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a real user-visible bug**: The commit addresses spurious
-   warning messages that appear when USB4 docks are unplugged. When a
-   USB4 dock is removed, the controller becomes inaccessible (reads
-   return 0xffffffff), but the driver still attempts operations and logs
-   warnings that are misleading to users.
+1. **Fixes a user-visible issue**: The commit addresses spurious error
+   messages that appear when USB4 docks are unplugged. The original code
+   shows `xhci_err(xhci, "xHCI host controller not responding, assume
+   dead\n")` even during expected surprise removals, which can confuse
+   users and fill system logs unnecessarily.
 
-2. **Small and contained fix**: The changes are minimal - only adding
-   conditional checks before logging warnings in two functions
-   (`xhci_halt()` and `xhci_reset()`). The fix simply checks if the
-   `XHCI_STATE_DYING` flag is set before printing warnings.
+2. **Small and contained fix**: The change is minimal - it only adds a
+   local `notify` variable and conditionalizes two operations based on
+   whether the device is being removed:
+   - The error message printing (line 1384 → lines 1379-1381)
+   - The `usb_hc_died()` notification (reusing the same condition)
 
-3. **Low risk of regression**: The changes only affect warning messages,
-   not functional behavior. The actual error paths and return values
-   remain unchanged. This is a purely cosmetic fix that improves the
-   user experience by avoiding confusing warnings during expected
-   hardware removal scenarios.
+3. **No architectural changes**: This is a simple behavioral fix that
+   doesn't modify any data structures, APIs, or core functionality. It
+   merely suppresses error messages during an expected removal scenario.
 
-4. **Clear problem and solution**: The commit message clearly describes
-   the issue (USB4 dock removal causes warnings) and the solution
-   (suppress warnings when controller is dying). The code changes
-   directly implement this solution.
+4. **Clear bug fix**: The commit clearly fixes an issue where error
+   messages are shown during normal USB4 dock removal operations. When
+   `XHCI_STATE_REMOVING` is set (indicating PCI removal is in progress),
+   the error message is now suppressed since it's an expected condition.
 
-5. **Affects common hardware scenarios**: USB4 docks are becoming
-   increasingly common, and surprise removal is a normal use case that
-   shouldn't generate alarming warnings in system logs.
+5. **Low risk of regression**: The change only affects logging behavior
+   and maintains the same functional flow. The `usb_hc_died()` call was
+   already conditional on `!XHCI_STATE_REMOVING`, so this commit just
+   applies the same logic to the error message.
 
-6. **Follows stable tree criteria**: This is a bug fix that improves
-   user experience without introducing new features or making
-   architectural changes. It's exactly the type of fix that stable trees
-   are meant to include.
+6. **Improves user experience**: USB4/Thunderbolt docks are increasingly
+   common, and users frequently unplug them. Avoiding spurious error
+   messages during normal operations is important for user experience
+   and log clarity.
 
-The code changes show:
-- In `xhci_halt()`: Added check `if (!(xhci->xhc_state &
-  XHCI_STATE_DYING))` before `xhci_warn()`
-- In `xhci_reset()`: Added the same check before another `xhci_warn()`
+The commit follows stable tree rules by being a minimal fix for a real
+issue that affects users, without introducing new features or making
+risky changes to core functionality.
 
-Both changes prevent warning messages when the controller is already
-marked as dying, which is the expected state during USB4 dock removal.
-This is a classic example of a stable-worthy fix that improves system
-behavior without functional changes.
+ drivers/usb/host/xhci-ring.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
- drivers/usb/host/xhci.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 09a5a6604962..e399638d6000 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -119,7 +119,8 @@ int xhci_halt(struct xhci_hcd *xhci)
- 	ret = xhci_handshake(&xhci->op_regs->status,
- 			STS_HALT, STS_HALT, XHCI_MAX_HALT_USEC);
- 	if (ret) {
--		xhci_warn(xhci, "Host halt failed, %d\n", ret);
-+		if (!(xhci->xhc_state & XHCI_STATE_DYING))
-+			xhci_warn(xhci, "Host halt failed, %d\n", ret);
- 		return ret;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 19978f02bb9e..f6ecb3b9fb14 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1313,12 +1313,15 @@ static void xhci_kill_endpoint_urbs(struct xhci_hcd *xhci,
+  */
+ void xhci_hc_died(struct xhci_hcd *xhci)
+ {
++	bool notify;
+ 	int i, j;
+ 
+ 	if (xhci->xhc_state & XHCI_STATE_DYING)
+ 		return;
+ 
+-	xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
++	notify = !(xhci->xhc_state & XHCI_STATE_REMOVING);
++	if (notify)
++		xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
+ 	xhci->xhc_state |= XHCI_STATE_DYING;
+ 
+ 	xhci_cleanup_command_queue(xhci);
+@@ -1332,7 +1335,7 @@ void xhci_hc_died(struct xhci_hcd *xhci)
  	}
  
-@@ -178,7 +179,8 @@ int xhci_reset(struct xhci_hcd *xhci, u64 timeout_us)
- 	state = readl(&xhci->op_regs->status);
- 
- 	if (state == ~(u32)0) {
--		xhci_warn(xhci, "Host not accessible, reset failed.\n");
-+		if (!(xhci->xhc_state & XHCI_STATE_DYING))
-+			xhci_warn(xhci, "Host not accessible, reset failed.\n");
- 		return -ENODEV;
- 	}
+ 	/* inform usb core hc died if PCI remove isn't already handling it */
+-	if (!(xhci->xhc_state & XHCI_STATE_REMOVING))
++	if (notify)
+ 		usb_hc_died(xhci_to_hcd(xhci));
+ }
  
 -- 
 2.39.5
