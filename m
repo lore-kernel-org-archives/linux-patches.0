@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FAD7260B;
-	Mon,  4 Aug 2025 00:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705317260B;
+	Mon,  4 Aug 2025 00:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268066; cv=none; b=HHmH6wWmZLCpBfMD386ZVbNCldRYr1GsMo0bV2ty6dxdCEtKJzgX6JFNIBP011uk8y+Mn9tzPVTwgK8biJes7o4bQX2s3+GzQuacI1iTqf3Bybm2fh8x5FwwMTPyvRrz9T6BGZjui0F1Mla05aGYcnA6SLcQVkNiBpzwH/EdjOA=
+	t=1754268068; cv=none; b=p/IzEse03oeg8dzI9CjkxAvncSoh5HUKo7D8muFSUJEybYuBNEmmQhRFUKXYs5bnWDdU9E2kpfhldhanSi6Wp+Gh8VgHjc/WuDoubGm2n7ooqnRgrpl3uN6W/KDQ4+YQNwLRcWuDcbYspktnCsqSdvetMuAl1PZNSWK6vgJf6G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268066; c=relaxed/simple;
-	bh=8eZUrqzetqGBCjKnX1dwDPFNLSNpgksz0bneRQqIx+I=;
+	s=arc-20240116; t=1754268068; c=relaxed/simple;
+	bh=+6hOsHeZejnvwMM2WNAg9HzFEdOpWRhimC/FODzZniY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XBOa8PRTa/5R/Wzem6R5OAO+kwXXfllRMF4LGJQZF8QjhBy1Ei0qTVEX62Bi6qBodussFmBk0PLPmiQrWuWsIGbrae4GiZod7vdxHPaVLRxrweBXaIDWbsu1NxNN9IJ6SkD+VuCG35dyhEC4wbupfrU99DzWdbDBXAEhEErWgjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MB2VpbAb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lKpswLCS4UcTBxG1JhSLS0Ap89u7KTSdfoOjEKwZ2/8v+CctJ/f4Ycl5OzheNs/leV84Xzwea4ONBYfc1lOPw2It9bYb6FGPrClHkrH9NeiwAnsP86qa/Ri2oNGRM21TvhvQSoNXoUgaiU3os+3q/OE8VJH4q18cEnfLWOOpXZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DD1HMCht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MB2VpbAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFFFC4CEEB;
-	Mon,  4 Aug 2025 00:41:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DD1HMCht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DCEC4CEEB;
+	Mon,  4 Aug 2025 00:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268066;
-	bh=8eZUrqzetqGBCjKnX1dwDPFNLSNpgksz0bneRQqIx+I=;
+	s=k20201202; t=1754268068;
+	bh=+6hOsHeZejnvwMM2WNAg9HzFEdOpWRhimC/FODzZniY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MB2VpbAbGdRRU1qkDjyGdEHYS+WW/Q3ahhHWPOxQJv/pvmaVT5EK37nhgN8FG/sK+
-	 1hLlIOmHQDcQZOdlXwRdTjJftYMGtq43mqjsPjUgsvdDawhu4pJZqWwcBeLmbWEtdA
-	 eMLRRlUQ+FRhip+R//V+IQwGVuHYqYzr6xu282elmfriA8io8R6eixa3ivsWejenWh
-	 dAfCSnFA5SBfubCruFaloM5LWAuNhh3cWyYGUTXPGZnRpOuSF+HVb9XD22N402IKUf
-	 ZzI9Pw8vp/8ET+p2tRubFK3niyXzgLX6V6/g5Azi3FqnLG2R5MbxOK25VrniBt8dJC
-	 ATSD6jhpqSmPg==
+	b=DD1HMChtMi5KlSjy3ZgEySo7b7wKQViHKnKMjXkjJehWjjqsbMM3D74Guh+FoTLho
+	 grZnjJtTy1j/VjzYAQE+Lma2Oo0BuiJVgW32LaavRZ92jCX13hwAEZEt7W0IDdcQVf
+	 uzP+ei+jqQiNpKhQIRN285U+UQOzSq+Zt2HnHTQQG2dkZuuVWu2RG0qjKROh+fEeh+
+	 a3M8W0cJWOvDi4fDwX3AGNobTQLNo+lAk62u1tSs8GCQ9wBqDd/feqhmy2KQpKw1rA
+	 ngDhtco2GwSfjFsfXDwYd3COZV6N5JP+vOw18CrqYb8R73WY0vaF/hCPLWC4uKbUZl
+	 +vR0Ra5F8NphQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+Cc: Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linus.walleij@linaro.org,
-	brgl@bgdev.pl,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 09/39] gpio: wcd934x: check the return value of regmap_update_bits()
-Date: Sun,  3 Aug 2025 20:40:11 -0400
-Message-Id: <20250804004041.3628812-9-sashal@kernel.org>
+	rafael@kernel.org,
+	viresh.kumar@linaro.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 10/39] cpufreq: Exit governor when failed to start old governor
+Date: Sun,  3 Aug 2025 20:40:12 -0400
+Message-Id: <20250804004041.3628812-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004041.3628812-1-sashal@kernel.org>
 References: <20250804004041.3628812-1-sashal@kernel.org>
@@ -51,92 +52,124 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.240
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit ff0f0d7c6587e38c308be9905e36f86e98fb9c1f ]
+[ Upstream commit 0ae204405095abfbc2d694ee0fbb49bcbbe55c57 ]
 
-regmap_update_bits() can fail so check its return value in
-wcd_gpio_direction_output() for consistency with the rest of the code
-and propagate any errors.
+Detect the result of starting old governor in cpufreq_set_policy(). If it
+fails, exit the governor and clear policy->governor.
 
-Link: https://lore.kernel.org/r/20250709-gpiochip-set-rv-gpio-remaining-v1-2-b8950f69618d@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/20250709104145.2348017-5-zhenglifeng1@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, here's my determination:
+**Backport Status: YES**
 
-**YES**
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Bug Analysis
 
-1. **It fixes a real bug**: The `wcd_gpio_direction_output()` function
-   in drivers/gpio/gpio-wcd934x.c was not checking the return value of
-   the first `regmap_update_bits()` call (lines 50-51 in the original
-   code). This could lead to silent failures where the GPIO direction
-   register update fails, but the function continues to update the value
-   register, potentially leaving the GPIO in an inconsistent state.
+The commit fixes a **resource leak and inconsistent state bug** in the
+cpufreq governor switching code. Looking at the code changes in
+`cpufreq_set_policy()`:
 
-2. **The fix is minimal and contained**: The change is very small - it
-   only adds 4 lines of code to check the return value and propagate the
-   error. This minimizes the risk of introducing regressions.
+### The Bug:
+In the original code (lines 2716-2721), when switching governors fails
+and we need to restore the old governor:
+```c
+if (old_gov) {
+    policy->governor = old_gov;
+    if (cpufreq_init_governor(policy))
+        policy->governor = NULL;
+    else
+        cpufreq_start_governor(policy);  // Bug: no error handling here
+}
+```
 
-3. **Consistency with the rest of the driver**: Looking at the code,
-   other functions in the same driver already properly check regmap
-   operation return values:
-   - `wcd_gpio_get_direction()` checks the return value of
-     `regmap_read()` at line 27-29
-   - `wcd_gpio_direction_input()` already returns the result of
-     `regmap_update_bits()` directly
+If `cpufreq_start_governor()` fails, the code doesn't handle the error.
+This leaves the system in an **inconsistent state** where:
+1. The governor is initialized (`cpufreq_init_governor` succeeded)
+2. But the governor failed to start (`cpufreq_start_governor` failed)
+3. The policy still points to a non-functional governor
+4. Resources allocated during `cpufreq_init_governor` are **leaked**
+   (module reference count, governor's init() allocations)
 
-4. **Consistency with other GPIO drivers**: My examination of other GPIO
-   drivers (gpio-lp87565.c, gpio-lp873x.c, gpio-tps65912.c, gpio-
-   adp5585.c) shows that properly checking return values from regmap
-   operations in `direction_output` functions is the standard practice.
+### The Fix:
+```c
+if (cpufreq_init_governor(policy)) {
+    policy->governor = NULL;
+} else if (cpufreq_start_governor(policy)) {
+    cpufreq_exit_governor(policy);  // NEW: Clean up on failure
+    policy->governor = NULL;        // NEW: Clear the governor pointer
+}
+```
 
-5. **Potential for real-world impact**: The WCD934x is an audio codec
-   used in Qualcomm SoCs like SDM845. A failure to properly set GPIO
-   direction could cause issues with audio functionality or other
-   peripherals connected through these GPIOs. The bug could manifest as
-   intermittent failures that are hard to debug.
+## Why This Should Be Backported:
 
-6. **No architectural changes**: The commit doesn't introduce new
-   features or change any APIs. It's purely a bug fix that adds proper
-   error handling.
+1. **Fixes a Real Bug**: This addresses a resource leak where
+   `cpufreq_init_governor()` acquires resources (notably
+   `try_module_get()` at line 2442 and potential governor->init()
+   allocations) that aren't cleaned up if `cpufreq_start_governor()`
+   fails.
 
-7. **Clear bug pattern**: The pattern of not checking the first regmap
-   operation but checking (returning) the second one suggests this was
-   an oversight rather than intentional behavior.
+2. **Small and Contained Fix**: The change is minimal - just 4 lines
+   modified to add proper error handling. It doesn't change any APIs or
+   introduce new functionality.
 
-The commit follows stable kernel rules by being a clear bug fix that
-addresses a potential reliability issue without introducing new
-functionality or making architectural changes.
+3. **Prevents System Instability**: Leaving the cpufreq subsystem in an
+   inconsistent state (initialized but not started governor) could lead
+   to:
+   - Module reference count leaks
+   - Memory leaks from governor init allocations
+   - Potential crashes if the partially-initialized governor is accessed
+     later
 
- drivers/gpio/gpio-wcd934x.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+4. **Error Path Fix**: This is clearly an error handling path that was
+   incorrectly implemented. The pattern of calling
+   `cpufreq_exit_governor()` after a failed `cpufreq_start_governor()`
+   is already used elsewhere in the code (line 2711).
 
-diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
-index 97e6caedf1f3..c00968ce7a56 100644
---- a/drivers/gpio/gpio-wcd934x.c
-+++ b/drivers/gpio/gpio-wcd934x.c
-@@ -45,9 +45,12 @@ static int wcd_gpio_direction_output(struct gpio_chip *chip, unsigned int pin,
- 				     int val)
- {
- 	struct wcd_gpio_data *data = gpiochip_get_data(chip);
-+	int ret;
+5. **No Architectural Changes**: The fix simply adds missing cleanup
+   code in an error path. It doesn't change the normal operation flow or
+   introduce new features.
+
+6. **Critical Subsystem**: The cpufreq subsystem is critical for power
+   management and system stability. Bugs here can affect system
+   reliability.
+
+The commit follows the stable kernel rules perfectly - it's a clear bug
+fix that prevents resource leaks and system instability, with minimal
+risk of regression since it only affects an error path that was already
+broken.
+
+ drivers/cpufreq/cpufreq.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 6294e10657b4..2f1e8669a15b 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2544,10 +2544,12 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
+ 	pr_debug("starting governor %s failed\n", policy->governor->name);
+ 	if (old_gov) {
+ 		policy->governor = old_gov;
+-		if (cpufreq_init_governor(policy))
++		if (cpufreq_init_governor(policy)) {
+ 			policy->governor = NULL;
+-		else
+-			cpufreq_start_governor(policy);
++		} else if (cpufreq_start_governor(policy)) {
++			cpufreq_exit_governor(policy);
++			policy->governor = NULL;
++		}
+ 	}
  
--	regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
--			   WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
-+	ret = regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
-+				 WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
-+	if (ret)
-+		return ret;
- 
- 	return regmap_update_bits(data->map, WCD_REG_VAL_CTL_OFFSET,
- 				  WCD_PIN_MASK(pin),
+ 	return ret;
 -- 
 2.39.5
 
