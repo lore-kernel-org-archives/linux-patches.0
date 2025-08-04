@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEA835957;
-	Mon,  4 Aug 2025 00:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E2435957;
+	Mon,  4 Aug 2025 00:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267578; cv=none; b=JLqvbEUdxOopjeCzyDgYQGr4vlEpIrLxCfo/wbvq9mgg9t7OibGrwC0IKfKY+9aXa5DWwJObB+RpeRKkkTTVH6MZf8IEjPjlcdX+2Nted9FTynG7U38pIA4i0afuKT9v8kGIgJmn7ud4A4UJhpvTjZcpoAIzkuVREAHEs6M++/M=
+	t=1754267582; cv=none; b=FSwe8Pk1TEHRb36JCyGBRBWaiecll3wZEo3ZjWnLdPsg0fk/WpGt0f90cO04iL5Xwf2xyT7Nno/tufXjEa/m6bPqNOKhJSckhRv9F8aDsIW11IImMKyg1P3DsWUmuBchn4mMqnuABRVTrVJgRCIMM11DRzOoNcrzyRuiJgFBmgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267578; c=relaxed/simple;
-	bh=nc0GlFSDATH8sVj1eJgpNU/mOdF2nC52mzR120WkNPI=;
+	s=arc-20240116; t=1754267582; c=relaxed/simple;
+	bh=VAQLpdcfMeBd9zb4e4f0K7L1oa/NPS9OFKstLYbdELc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/S32Sso7dnO/r8GNKrcqmAXoIeSl3F+Y8MvrMhJyOb52pVer7pLS46PczXMgRDa2rFQDYb6PEdODZP2fCGpDzsaYE7OJsAtA79sXxJVzF1Q8OGMsbU0Vp9kMxbEDZj2491M5plqlad8fahPe496k95UySjzgHFnkZPhL2Y1b6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dcaSDJGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YBjUWbmUB9LQ97QPlpCfY9A92WewwNCy3hkm9apGWI0GXKG9x2iLsqm1V5okcl8twVf9JdTqyIa2h7Ky9orQXHX+a0W4UWy/Cmz/ImOA2YqX9jWbfp2WBPrNskZSjbHSXLEMT2G0D+6DE3Ci9gceZipovkDzlak9OdOjioHfJ98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fj4f65sN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dcaSDJGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF799C4CEEB;
-	Mon,  4 Aug 2025 00:32:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fj4f65sN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B089C4CEF0;
+	Mon,  4 Aug 2025 00:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267578;
-	bh=nc0GlFSDATH8sVj1eJgpNU/mOdF2nC52mzR120WkNPI=;
+	s=k20201202; t=1754267582;
+	bh=VAQLpdcfMeBd9zb4e4f0K7L1oa/NPS9OFKstLYbdELc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcaSDJGCj05z/6NBlzln3hV2rqzcgsAQUpXsRrwR2/mkzKgH9W+yETXjPAzoGrehH
-	 qALMEZszzLUyrzZFJlijRD8m7SdbTOK44MUx6g2DOZ+1bwJT3Y8ShER3R14BkAXNwS
-	 9yuhSkvklXe+kaxO67ok/JMJ37+0uHFwqXUn3c+iIJB1o9dCrbKCMnwwXWd2MhoVoF
-	 n6du79WuF5gpeWEk/RQoLxFnaM13jW39aLNBffc4dzuOs6R/Yd2y/0ltlxxTJ6mN5V
-	 j2vD9tBDVdOzyEvYKc/rPKsVdwAK4NV+fuBg5H+mKCykdUKdo7p3EsBH/Vpx6YcibM
-	 432qeThddFT+w==
+	b=Fj4f65sNWAHnNuU5I4o4h3kXU/ktzZOdIlnFWOcj0sOPIYl1LiOWXOV3VoTG9LkZ+
+	 8fuXzTcEz4FfdveTMYJuwXCXz39aKPV8VJ6wCAuPGAzp9FEuGxFCwy/+/032sYRFx9
+	 ob6ysBTM+apwJXZ6eTZPQgZdziH+2tuNbXq/tVsnYrWb0P0kD5X1o6JG0fMol262WQ
+	 PxyDDyNL+7Abd/Gw5spWm9FkC2GMvg4i/GymsdT2ct0siTTUdVLMJO9MIwvHc3k3S6
+	 Stc+FlJgTHqZGC8PqD4dvN5+dLfd/9JVmMSfCPA6on4xpvJCaO+6Ork6Uksx5XArhf
+	 HrXj9oxteKPrg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+Cc: Eliav Farber <farbere@amazon.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	luto@kernel.org,
-	vincenzo.frascino@arm.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 41/69] selftests: vDSO: vdso_test_getrandom: Always print TAP header
-Date: Sun,  3 Aug 2025 20:30:51 -0400
-Message-Id: <20250804003119.3620476-41-sashal@kernel.org>
+	mingo@kernel.org,
+	tglx@linutronix.de,
+	bastien.curutchet@bootlin.com,
+	mschmidt@redhat.com,
+	calvin@wbinvd.org
+Subject: [PATCH AUTOSEL 6.12 42/69] pps: clients: gpio: fix interrupt handling order in remove path
+Date: Sun,  3 Aug 2025 20:30:52 -0400
+Message-Id: <20250804003119.3620476-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -48,174 +49,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Eliav Farber <farbere@amazon.com>
 
-[ Upstream commit 1158220b24674edaf885433153deb4f0e5c7d331 ]
+[ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
 
-The TAP specification requires that the output begins with a header line.
-If vgetrandom_init() fails and skips the test, that header line is missing.
+The interrupt handler in pps_gpio_probe() is registered after calling
+pps_register_source() using devm_request_irq(). However, in the
+corresponding remove function, pps_unregister_source() is called before
+the IRQ is freed, since devm-managed resources are released after the
+remove function completes.
 
-Call vgetrandom_init() after ksft_print_header().
+This creates a potential race condition where an interrupt may occur
+after the PPS source is unregistered but before the handler is removed,
+possibly leading to a kernel panic.
 
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/all/20250611-selftests-vdso-fixes-v3-8-e62e37a6bcf5@linutronix.de
+To prevent this, switch from devm-managed IRQ registration to manual
+management by using request_irq() and calling free_irq() explicitly in
+the remove path before unregistering the PPS source. This ensures the
+interrupt handler is safely removed before deactivating the PPS source.
+
+Signed-off-by: Eliav Farber <farbere@amazon.com>
+Link: https://lore.kernel.org/r/20250527053355.37185-1-farbere@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of the commit and the surrounding context, here is
+my assessment:
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis of the Commit
+1. **Fixes a Real Bug**: The commit addresses a genuine race condition
+   where an interrupt can occur after the PPS source is unregistered but
+   before the IRQ handler is freed. This can lead to a kernel panic - a
+   serious stability issue that affects users.
 
-### 1. Bug Description
-The commit fixes a test output formatting bug in the vDSO getrandom
-selftest. Looking at the code changes in
-`tools/testing/selftests/vDSO/vdso_test_getrandom.c`:
+2. **Clear Race Condition Pattern**: The code shows the problematic
+   ordering:
+   - In probe: `pps_register_source()` → `devm_request_irq()`
+   - In remove: `pps_unregister_source()` → (implicit devm cleanup frees
+     IRQ)
 
-**Before the fix (lines 239-245 and 296-298 in the original file):**
-```c
-static void kselftest(void)
-{
-    // ... variables ...
-    ksft_print_header();
-    ksft_set_plan(2);
-    // ... test code ...
-}
+   This creates a window where the hardware can generate an interrupt
+after the PPS source is gone but before the handler is removed, causing
+the handler to access freed memory.
 
-int main(int argc, char *argv[])
-{
-    vgetrandom_init();  // This was called BEFORE ksft_print_header()
+3. **Minimal and Contained Fix**: The change is small and focused:
+   - Changes `devm_request_irq()` to `request_irq()`
+   - Adds explicit `free_irq()` call before `pps_unregister_source()`
+   - Only 3 lines of functional code changes
+   - No new features or architectural changes
 
-    if (argc == 1) {
-        kselftest();
-        return 0;
-    }
-    // ...
-}
-```
+4. **Similar to Other Stable Fixes**: This follows a common pattern seen
+   in other drivers where devm resource ordering causes issues in
+   removal paths. The kernel has many similar fixes for CAN drivers,
+   network drivers, and other subsystems that have been backported to
+   stable.
 
-**After the fix:**
-```c
-static void kselftest(void)
-{
-    // ... variables ...
-    ksft_print_header();
-    vgetrandom_init();  // Moved AFTER ksft_print_header()
-    ksft_set_plan(2);
-    // ... test code ...
-}
+5. **Low Risk of Regression**: The change is straightforward and doesn't
+   modify the driver's functionality - it only fixes the resource
+   cleanup ordering. The manual IRQ management is a well-established
+   pattern.
 
-int main(int argc, char *argv[])
-{
-    if (argc == 1) {
-        kselftest();
-        return 0;
-    }
+6. **Affects User-Visible Stability**: A kernel panic during device
+   removal/module unload is a serious issue that can affect system
+   stability, especially in environments where PPS devices might be
+   dynamically added/removed or during system shutdown.
 
-    // ...
-    vgetrandom_init();  // Called here for non-test modes
-    // ...
-}
-```
+The commit message clearly describes the problem, the root cause, and
+the solution. The fix is conservative and follows established kernel
+patterns for fixing devm ordering issues. This is exactly the type of
+bug fix that stable kernel rules recommend for backporting.
 
-### 2. Why This is a Bug
+ drivers/pps/clients/pps-gpio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-The TAP (Test Anything Protocol) specification requires that test output
-begins with a version header line (`TAP version 13`). The
-`ksft_print_header()` function prints this required header.
-
-Looking at `vgetrandom_init()` (lines 113-131), it contains multiple
-`ksft_exit_skip()` calls that can terminate the test early:
-- Line 121: If `AT_SYSINFO_EHDR` is not present
-- Line 125: If the vDSO symbol is missing
-- Line 128: If the CPU doesn't have runtime support
-
-When `vgetrandom_init()` was called before `ksft_print_header()`, these
-skip conditions would exit the test without printing the TAP header,
-violating the TAP specification and potentially breaking test harnesses
-that parse the output.
-
-### 3. Stable Backport Criteria Assessment
-
-✓ **Fixes a bug that affects users**: Yes, this fixes incorrect test
-output that can break automated test systems and CI/CD pipelines that
-parse TAP output.
-
-✓ **Relatively small and contained**: Yes, the fix is minimal - it just
-reorders two function calls to ensure proper TAP header output.
-
-✓ **No major side effects**: The change only affects test output
-ordering, not functionality. The test logic remains identical.
-
-✓ **No architectural changes**: This is a simple reordering of existing
-calls with no structural changes.
-
-✓ **Minimal risk**: The change is confined to the selftest code and
-cannot affect kernel runtime behavior.
-
-✓ **Important for testing infrastructure**: Correct TAP output is
-crucial for test automation systems used in continuous integration and
-validation of stable kernels.
-
-### 4. Additional Considerations
-
-- The commit message clearly describes the problem and solution
-- The fix follows established kselftest patterns (header before any
-  potential exits)
-- This is a test-only change with zero impact on production kernel code
-- The bug could cause false test results in automated systems that
-  expect valid TAP output
-
-This is an ideal candidate for stable backporting as it fixes a real bug
-in test infrastructure with minimal risk and clear benefits for kernel
-testing and validation.
-
- tools/testing/selftests/vDSO/vdso_test_getrandom.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/tools/testing/selftests/vDSO/vdso_test_getrandom.c b/tools/testing/selftests/vDSO/vdso_test_getrandom.c
-index 95057f7567db..ff8d5675da2b 100644
---- a/tools/testing/selftests/vDSO/vdso_test_getrandom.c
-+++ b/tools/testing/selftests/vDSO/vdso_test_getrandom.c
-@@ -242,6 +242,7 @@ static void kselftest(void)
- 	pid_t child;
- 
- 	ksft_print_header();
-+	vgetrandom_init();
- 	ksft_set_plan(2);
- 
- 	for (size_t i = 0; i < 1000; ++i) {
-@@ -295,8 +296,6 @@ static void usage(const char *argv0)
- 
- int main(int argc, char *argv[])
- {
--	vgetrandom_init();
--
- 	if (argc == 1) {
- 		kselftest();
- 		return 0;
-@@ -306,6 +305,9 @@ int main(int argc, char *argv[])
- 		usage(argv[0]);
- 		return 1;
+diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
+index 93e662912b53..1412f8af15f2 100644
+--- a/drivers/pps/clients/pps-gpio.c
++++ b/drivers/pps/clients/pps-gpio.c
+@@ -206,8 +206,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
  	}
-+
-+	vgetrandom_init();
-+
- 	if (!strcmp(argv[1], "bench-single"))
- 		bench_single();
- 	else if (!strcmp(argv[1], "bench-multi"))
+ 
+ 	/* register IRQ interrupt handler */
+-	ret = devm_request_irq(dev, data->irq, pps_gpio_irq_handler,
+-			get_irqf_trigger_flags(data), data->info.name, data);
++	ret = request_irq(data->irq, pps_gpio_irq_handler,
++			  get_irqf_trigger_flags(data), data->info.name, data);
+ 	if (ret) {
+ 		pps_unregister_source(data->pps);
+ 		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
+@@ -224,6 +224,7 @@ static void pps_gpio_remove(struct platform_device *pdev)
+ {
+ 	struct pps_gpio_device_data *data = platform_get_drvdata(pdev);
+ 
++	free_irq(data->irq, data);
+ 	pps_unregister_source(data->pps);
+ 	del_timer_sync(&data->echo_timer);
+ 	/* reset echo pin in any case */
 -- 
 2.39.5
 
