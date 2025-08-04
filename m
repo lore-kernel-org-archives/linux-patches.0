@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC71B481DD;
-	Mon,  4 Aug 2025 00:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB24F481DD;
+	Mon,  4 Aug 2025 00:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267032; cv=none; b=W8WdEN28BngQcAMHsBlO31KfCW3X5it3xn/XZh5AotJm7uC2nxfxAuHi2lk5pwjDK0oU4dt/wUDACvvUC0Lit/rsXqz0xSmzHelSHfCv4+ooFjDOxfnWxupT+U5CXwUMfNdd1dFpxC0cYVleAePzM8IyBWIc4GQoccJ09TvGeBI=
+	t=1754267035; cv=none; b=I28nKja9CiZm2Wx/Q2JYmWFz7nuFAqF1wnGVMaBRNXTdJUp8FR3Dmmjzly9agnGQUKx21EzrvS2+DDmZnRVJKwXj0QBRG3mcQ+73MU6tLe1xQepwYzcip8iz6qiCsxH07sl9mi03S3gjNakbGU9MCoeODFD5cBZRZSeuQqbAnkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267032; c=relaxed/simple;
-	bh=k3GEGDOOa0AgPbMBKM3Bez/wll+kW5k1UWqNHwMV5WM=;
+	s=arc-20240116; t=1754267035; c=relaxed/simple;
+	bh=R5osiizlX4NUJFba/l1mcPZLTaX6FoghUr7mlubTo3k=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=i8062OsSGpaGXirD9ZFmag+XRw9qCGFYRLsXDSfXbSDJe20ljoidpYx85DeGnFh1FBozyOZ2kmo0zugciSxsBlkhA++ZYXulYRYh44KBJ6onSSBiGlND3C4CgDh7WeR9peAur4zkxBl7div6jpLhlk7GSGL84JJZCiQbmNFj3xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iNjYUYSB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jlEb29cqtIlBRx3ZyLkpAmHptBGQXJHIDS5YcSM4m1kUdpdSwZ0TZy8L9sQjz2Kohg+0KswzzSf0Lr5bJMqzCIJZ0XL1FN428qDHe5rXr7ZzYLkAQ+3XDogx9WAcvsRNQxdp15qMQD3Kcpauw1oqscpX3OjVRlsPaCk9lIlsISs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nAiV0dwM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iNjYUYSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AD6C4CEEB;
-	Mon,  4 Aug 2025 00:23:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nAiV0dwM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D565C4CEEB;
+	Mon,  4 Aug 2025 00:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267032;
-	bh=k3GEGDOOa0AgPbMBKM3Bez/wll+kW5k1UWqNHwMV5WM=;
+	s=k20201202; t=1754267034;
+	bh=R5osiizlX4NUJFba/l1mcPZLTaX6FoghUr7mlubTo3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNjYUYSB0AMXl9Eaj6XYLzdbcqo0AXWgORZ1/stnyPI6/cvOgNPAnYwp9clpd9ord
-	 7JJ/HEV48AiR4Txfs65ik0dZkioGnCCFI9LvuNJlIxJgLXe3h6GN1cq4KzMR/tJFPt
-	 6C4VCMcoXiXrLon+R12PTBs5oq91eq81OUhkQ82SK8jZKWvkUJSE36FE2OB94Hovpk
-	 mmnO93BobRfl4WYlr2JnDIMTouxu/saTN7aAqoxVHURA/xSfYSkR5nKowYDAs+7x4q
-	 vwQvWG1X7nlvXaVj/7y9pmO1rLmwjeMjm5vRtZDV5kc63b3ProwOKkQHjgrmqbKrG9
-	 za82kOaI0492g==
+	b=nAiV0dwMmAXp0SFX4KX9xt5CCcnJwBkP+eW3tpsC5koLJ0+CZ6RjEHR/kIcghYget
+	 uohbtFQ9PINhHblSQMjJxCmUOQ7l3RiKpsKZVatnfU9EnpzHP2KL6eVsPaNVIgZsjJ
+	 GQI4JXc1lqif3D/gCxkjOiUZ6roa/3Bjyt5ZjXDUiRiMX837EkWgwFARc71R55fts5
+	 oselkZSnl7s2mfSzJjBU+nWiy/B1FY56g1UvJJJB5w9QNlCRGZTnCmYo+LEeqs7g59
+	 9Ee+7hLvRafls9B1DDly1BQiC5W+gN0xEwnsBmZdBdoV3eJw0uK3PRhfKPvPZ8Abzn
+	 a3wnVw1OHv+9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Moon Hee Lee <moonhee.lee.ca@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Baoquan He <bhe@redhat.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Adam Berglund <adam.f.berglund@hotmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@kernel.org
-Subject: [PATCH AUTOSEL 6.16 03/85] selftests/kexec: fix test_kexec_jump build
-Date: Sun,  3 Aug 2025 20:22:12 -0400
-Message-Id: <20250804002335.3613254-3-sashal@kernel.org>
+	Shyam-sundar.S-k@amd.com,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 04/85] platform/x86/amd: pmc: Add Lenovo Yoga 6 13ALC6 to pmc quirk list
+Date: Sun,  3 Aug 2025 20:22:13 -0400
+Message-Id: <20250804002335.3613254-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -47,108 +48,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 661e9cd196598c7d2502260ebbe60970546cca35 ]
+[ Upstream commit 4ff3aeb664f7dfe824ba91ffb0b203397a8d431e ]
 
-The test_kexec_jump program builds correctly when invoked from the top-level
-selftests/Makefile, which explicitly sets the OUTPUT variable. However,
-building directly in tools/testing/selftests/kexec fails with:
+The Lenovo Yoga 6 13ACL6 82ND has a similar BIOS problem as other Lenovo
+laptops from that vintage that causes a rather long resume from suspend.
 
-  make: *** No rule to make target '/test_kexec_jump', needed by 'test_kexec_jump.sh'.  Stop.
+Add it to the quirk list that manipulates the scratch register to avoid
+the issue.
 
-This failure occurs because the Makefile rule relies on $(OUTPUT), which is
-undefined in direct builds.
-
-Fix this by listing test_kexec_jump in TEST_GEN_PROGS, the standard way to
-declare generated test binaries in the kselftest framework. This ensures the
-binary is built regardless of invocation context and properly removed by
-make clean.
-
-Link: https://lore.kernel.org/r/20250702171704.22559-2-moonhee.lee.ca@gmail.com
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Acked-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Reported-by: Adam Berglund <adam.f.berglund@hotmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4434
+Tested-by: Adam Berglund <adam.f.berglund@hotmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250718172307.1928744-1-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Perfect! This confirms the exact build issue described in the commit
-message. The problem is that `$(OUTPUT)` is undefined when building
-directly in the kexec directory.
+**YES**
 
-**Backport Status: YES**
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Backport Justification
 
-1. **Fixes a real bug**: The commit fixes a build failure that prevents
-   the kexec selftests from building when invoked directly from
-   `tools/testing/selftests/kexec/`. The error message confirms this:
-   `make: *** No rule to make target '/test_kexec_jump', needed by
-   'test_kexec_jump.sh'. Stop.`
+1. **Fixes a real user-impacting bug**: The commit addresses a BIOS
+   firmware bug that causes "rather long resume from suspend" on the
+   Lenovo Yoga 6 13ALC6 laptop. This is a significant usability issue
+   that affects users of this specific hardware model during
+   suspend/resume operations.
 
-2. **Small and contained fix**: The change is minimal - it simply
-   replaces the custom Makefile rule:
-  ```makefile
-  test_kexec_jump.sh: $(OUTPUT)/test_kexec_jump
+2. **Minimal and contained change**: The patch simply adds 8 lines to an
+   existing DMI quirk table (lines 193-201 in the diff). It adds one new
+   entry:
+  ```c
+  {
+  .ident = "Lenovo Yoga 6 13ALC6",
+  .driver_data = &quirk_s2idle_bug,
+  .matches = {
+  DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+  DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
+  }
+  },
   ```
-  with the standard kselftest framework approach:
-  ```makefile
-  TEST_GEN_PROGS := test_kexec_jump
-  ```
 
-3. **No architectural changes**: This is purely a build system fix that
-   doesn't change any kernel functionality or introduce new features. It
-   just fixes the Makefile to use the standard kselftest variables.
+3. **Follows established pattern**: The fix uses the exact same
+   mechanism (`quirk_s2idle_bug`) that's already applied to 20+ other
+   Lenovo laptops in the same file. The workaround manipulates a scratch
+   register (FCH_PM_SCRATCH) to skip a problematic SMI handler during
+   suspend-to-idle resume, as documented in the comment at lines
+   241-248.
 
-4. **Minimal risk**: The change uses the established kselftest framework
-   pattern (`TEST_GEN_PROGS`) which is well-tested and widely used
-   throughout the kernel selftests. From examining `lib.mk`, we can see
-   that `TEST_GEN_PROGS` automatically handles the `$(OUTPUT)` prefix
-   and proper clean targets.
+4. **No architectural changes**: This is purely a device-specific quirk
+   addition to an existing quirk framework. No new functionality is
+   introduced, no APIs are changed, and no kernel subsystem architecture
+   is modified.
 
-5. **Fixes testing infrastructure**: Having working selftests is
-   important for kernel stability testing. This fix ensures that the
-   kexec jump functionality can be properly tested in stable kernels,
-   which is particularly important given that kexec is a critical
-   feature for system reliability.
+5. **Low regression risk**: The change only affects systems that match
+   the specific DMI strings (LENOVO board vendor + 82ND product name).
+   It cannot affect any other hardware.
 
-6. **Clear regression**: The bug prevents a previously working test from
-   building in certain scenarios. While the test builds correctly when
-   invoked from the top-level selftests Makefile (which sets OUTPUT),
-   direct builds fail. This is a regression in usability that affects
-   developers and CI systems.
+6. **Tested by reporter**: The commit message indicates "Tested-by: Adam
+   Berglund" who was also the reporter of the issue, confirming the fix
+   works on the affected hardware.
 
-The fix follows the documented pattern for kselftest Makefiles and will
-ensure consistent behavior regardless of how the tests are invoked. This
-is exactly the type of targeted bug fix that belongs in stable kernels -
-it fixes a specific issue without introducing new functionality or risk.
+7. **Follows stable tree rules**: This is exactly the type of commit
+   that stable trees want:
+   - Fixes a real bug (long resume times)
+   - Minimal change (8 lines)
+   - Hardware-specific fix with no broader impact
+   - Already tested on affected hardware
 
- tools/testing/selftests/kexec/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The issue being fixed is documented at
+https://gitlab.freedesktop.org/drm/amd/-/issues/4434, and the workaround
+applies the same proven fix that's been working for numerous other
+Lenovo models with similar BIOS issues related to suspend-to-idle resume
+performance when IOMMU is enabled for NVMe devices.
 
-diff --git a/tools/testing/selftests/kexec/Makefile b/tools/testing/selftests/kexec/Makefile
-index e3000ccb9a5d..874cfdd3b75b 100644
---- a/tools/testing/selftests/kexec/Makefile
-+++ b/tools/testing/selftests/kexec/Makefile
-@@ -12,7 +12,7 @@ include ../../../scripts/Makefile.arch
- 
- ifeq ($(IS_64_BIT)$(ARCH_PROCESSED),1x86)
- TEST_PROGS += test_kexec_jump.sh
--test_kexec_jump.sh: $(OUTPUT)/test_kexec_jump
-+TEST_GEN_PROGS := test_kexec_jump
- endif
- 
- include ../lib.mk
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 131f10b68308..ded4c84f5ed1 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -190,6 +190,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+ 		}
+ 	},
++	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
++	{
++		.ident = "Lenovo Yoga 6 13ALC6",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
+ 	{
+ 		.ident = "HP Laptop 15s-eq2xxx",
 -- 
 2.39.5
 
