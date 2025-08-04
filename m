@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9D01C5D7B;
-	Mon,  4 Aug 2025 00:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5EE1519A0;
+	Mon,  4 Aug 2025 00:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267568; cv=none; b=CAmW1UGaVlPbnV3uM67FsCwvkaiCzZTKefQssx3ZHJ2PgksifCfuyjedE4dBKCEb+m0YPii2J9rbm2nDZAfMUe3iOOhk/+kc267EvTZ5TJm+Gvii0uEhkNVEEdSjDDR7TYN7KqlJokg1voN8oYlZqs1y8ROD7jHMX/WUCAZ58uc=
+	t=1754267570; cv=none; b=o5cOQ/wN54zL4mGpM4ox3/aMiQsDgncA1P2lueFWFC+kMGsDZY6PYu+shyrFkksFj/v1Y3N2r+HPHqFYNRB2KQxkcbLTggsSZkjtoVPphB1xYjh+cgReBVDTS+m1/7iBMSMND2VH6pcRtU5Lsw0Y1YlRFH/i4dJP8T4bG5vlLE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267568; c=relaxed/simple;
-	bh=OxKNcqewlJuWFNCRUA6yktG1W19uNKAs95onhupDJlc=;
+	s=arc-20240116; t=1754267570; c=relaxed/simple;
+	bh=36k2kzJQnwalS6kxkh2DRBoVmv1e/6kwottWw8Nag98=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hY5YxuvwDL82Ii7Jmxv6YsrXr1ccNFwQ7UcXXzBvG4NBLJyfXDCRY3Pf7Tc0QTjS9XgH/zS5wAl12lAgANDoPjfMd7qqnOUSI7k6rm9VsYD6dLZNgV+eZKsJ4HzyODVKhAsmkaNPdbJ5uGIlYoksVPgtP9GMlpLQXejreWwheMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6RhfvLH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqF+gBZoEnWuAhTECP+QF7BqXxngGyO18V+sow8FtYMT0F+bP8/px9x2ytT6mhYYIjQixroM93Xm/k5vjhE73SJ0v9/Q3d4ZtZCPJcVWXCDKP9a0HpA8A9ucKXl5SmW7nvRpzAiLpLjeGDnBVxviNz6RXb/yMUjc+YJqx6oRhDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f/iRG0E6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6RhfvLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AB3C4CEEB;
-	Mon,  4 Aug 2025 00:32:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f/iRG0E6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEB1C4CEEB;
+	Mon,  4 Aug 2025 00:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267568;
-	bh=OxKNcqewlJuWFNCRUA6yktG1W19uNKAs95onhupDJlc=;
+	s=k20201202; t=1754267570;
+	bh=36k2kzJQnwalS6kxkh2DRBoVmv1e/6kwottWw8Nag98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6RhfvLHXFys7A8B5JWImtgJ5ny1C1C4orObSFT3VyFgVPNIFWh0FTGulGIk/LVow
-	 P/2baLjISlUFGUpfRROp7dbNAAsZhPw9MqotymGYiF2/LATR6iUVHTZfKrg3DTCDoi
-	 iXTXs6xdEJj5agQ6T8ZbaImU7WFQ7mmD1ad9kvPDMUxVfPEJvWoLtplCb+5+hVCaSE
-	 L3Nxr+TC9EZM/iBcwLIjJdxQcKJBtLKiP6fZ1zjWMr0O9xHqQNpiPrynlr5ZuPqfC3
-	 Vt4oeBgutX5f8DJr6ARsil4cVpGizjke6GOaXA4N8a4dUzGWoP6xLmv0N+PfmZQgrP
-	 PPqqUyk0lb0Ww==
+	b=f/iRG0E6HWBGt4qEGbJcb2Nc3uQeoJCJ+C0I10UW6+ozBVVvX6BciAlvL5jlcBjYc
+	 792fJ32nJWrWkGXdZH9oPhkSVODAZbqDXFoYts/QJiyepv4xtsbglYJJgtYfPpEHno
+	 9jVMdwm8gYTJUv/tkI9qXqeeI9TfE38VbyFnKAyaHRui17XuhtP6xWHKULD9DNgcJa
+	 Z9xOXYpsXQez2VafaiNvAWgn9SJwIf3Q4kB7Uoh6lMbLi/f5EahvrSwe/n7WOOlnKl
+	 gJLueeyPv7QtSumStcTuUwa5npfADpo5+Cc9x3Tk1EOr897hCH0+ZrcXED+pPc41no
+	 2zZ8ObrkPRk1w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: tuhaowen <tuhaowen@uniontech.com>,
+Cc: Sebastian Ott <sebott@redhat.com>,
 	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	rafael@kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 37/69] PM: sleep: console: Fix the black screen issue
-Date: Sun,  3 Aug 2025 20:30:47 -0400
-Message-Id: <20250804003119.3620476-37-sashal@kernel.org>
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 38/69] ACPI: processor: fix acpi_object initialization
+Date: Sun,  3 Aug 2025 20:30:48 -0400
+Message-Id: <20250804003119.3620476-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -51,142 +51,108 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: tuhaowen <tuhaowen@uniontech.com>
+From: Sebastian Ott <sebott@redhat.com>
 
-[ Upstream commit 4266e8fa56d3d982bf451d382a410b9db432015c ]
+[ Upstream commit 13edf7539211d8f7d0068ce3ed143005f1da3547 ]
 
-When the computer enters sleep status without a monitor
-connected, the system switches the console to the virtual
-terminal tty63(SUSPEND_CONSOLE).
+Initialization of the local acpi_object in acpi_processor_get_info()
+only sets the first 4 bytes to zero and is thus incomplete. This is
+indicated by messages like:
+	acpi ACPI0007:be: Invalid PBLK length [166288104]
 
-If a monitor is subsequently connected before waking up,
-the system skips the required VT restoration process
-during wake-up, leaving the console on tty63 instead of
-switching back to tty1.
+Fix this by initializing all 16 bytes of the processor member of that
+union.
 
-To fix this issue, a global flag vt_switch_done is introduced
-to record whether the system has successfully switched to
-the suspend console via vt_move_to_console() during suspend.
-
-If the switch was completed, vt_switch_done is set to 1.
-Later during resume, this flag is checked to ensure that
-the original console is restored properly by calling
-vt_move_to_console(orig_fgconsole, 0).
-
-This prevents scenarios where the resume logic skips console
-restoration due to incorrect detection of the console state,
-especially when a monitor is reconnected before waking up.
-
-Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
-Link: https://patch.msgid.link/20250611032345.29962-1-tuhaowen@uniontech.com
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Link: https://patch.msgid.link/20250703124215.12522-1-sebott@redhat.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis, here is my determination:
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+## Extensive Explanation:
 
-**1. Bug Fix Nature:**
-The commit fixes a clear user-visible bug - a black screen issue that
-occurs when:
-- A computer enters sleep without a monitor connected
-- A monitor is connected while the system is asleep
-- Upon wake, the console remains on tty63 (SUSPEND_CONSOLE) instead of
-  returning to tty1
+This commit fixes a critical initialization bug in the ACPI processor
+driver that causes incorrect error messages and potentially incorrect
+behavior. Here's why this is a good candidate for stable backport:
 
-This is a functional regression that impacts user experience, making the
-system appear unresponsive or broken after resume.
+### 1. **Clear Bug Fix**
+The commit fixes an incomplete initialization issue where `union
+acpi_object object = { 0 };` only initializes the first 4 bytes (the
+size of `acpi_object_type type`), leaving the remaining bytes of the
+union uninitialized. This results in garbage values in fields like
+`object.processor.pblk_length`, causing spurious error messages like
+"Invalid PBLK length [166288104]".
 
-**2. Small and Contained Fix:**
-The fix is minimal and well-contained:
-- Adds a single `static bool vt_switch_done` flag
-- Modifies only two functions: `pm_prepare_console()` and
-  `pm_restore_console()`
-- Total change is just 6 lines of code (excluding whitespace)
-- The logic is straightforward: track whether VT switch happened during
-  suspend, and ensure restoration happens during resume
+### 2. **User-Visible Impact**
+The bug causes confusing error messages in system logs during ACPI
+processor initialization. The error message shown in the commit (`acpi
+ACPI0007:be: Invalid PBLK length [166288104]`) indicates that
+uninitialized memory is being read and interpreted as a length value.
 
-**3. Low Risk of Side Effects:**
-The change has minimal risk:
-- The new flag (`vt_switch_done`) is only set when
-  `vt_move_to_console()` succeeds
-- The restoration logic preserves existing behavior when
-  `pm_vt_switch()` returns true
-- The fix only adds an additional condition `!vt_switch_done` to ensure
-  restoration happens even when `pm_vt_switch()` returns false during
-  resume
-- No architectural changes or new features are introduced
+### 3. **Minimal and Contained Fix**
+The fix is extremely simple - changing:
+```c
+union acpi_object object = { 0 };
+```
+to:
+```c
+union acpi_object object = { .processor = { 0 } };
+```
 
-**4. Critical Subsystem but Safe Change:**
-While this touches the PM/console subsystem (critical for
-suspend/resume), the change is safe:
-- It doesn't modify the core VT switching mechanism
-- It only ensures the existing restoration path is executed when needed
-- The file has been stable since 2013 (last major change was
-  f43f627d2f17e)
+This ensures proper initialization of all 16 bytes (as mentioned in the
+commit message) of the processor member of the union, which is 24 bytes
+in total based on my analysis.
 
-**5. Clear Problem Description:**
-The commit message clearly describes:
-- The specific scenario that triggers the bug
-- The root cause (skipped VT restoration)
-- The solution (tracking VT switch state)
+### 4. **No Architectural Changes**
+This is a pure bug fix with no feature additions or architectural
+changes. It simply corrects the initialization to prevent reading
+uninitialized memory.
 
-**6. Follows Stable Rules:**
-This aligns perfectly with stable tree criteria:
-- Fixes a real bug affecting users
-- Minimal change (6 lines)
-- No new features
-- Clear fix for a specific problem
-- Low regression risk
+### 5. **Low Risk of Regression**
+The change is minimal and only affects initialization. It doesn't alter
+any logic or behavior beyond ensuring that the union is properly zeroed
+out. The designated initializer syntax is standard C and well-supported.
 
-The commit addresses a real-world scenario where users connecting
-monitors to sleeping systems experience black screens upon wake - a
-frustrating issue that makes systems appear broken. The fix is surgical,
-adding only the minimum tracking needed to ensure proper console
-restoration.
+### 6. **Critical Subsystem**
+While ACPI is a critical subsystem, this fix is confined to the
+initialization of a local variable in `acpi_processor_get_info()`. The
+scope is limited and the fix is conservative.
 
- kernel/power/console.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+### 7. **Follows Stable Rules**
+This commit perfectly follows the stable kernel rules:
+- Fixes a real bug (uninitialized memory access)
+- Small change (single line)
+- Obviously correct
+- Already tested (merged into mainline)
+- Fixes an issue that users see (error messages in logs)
 
-diff --git a/kernel/power/console.c b/kernel/power/console.c
-index fcdf0e14a47d..19c48aa5355d 100644
---- a/kernel/power/console.c
-+++ b/kernel/power/console.c
-@@ -16,6 +16,7 @@
- #define SUSPEND_CONSOLE	(MAX_NR_CONSOLES-1)
+The uninitialized memory access could potentially lead to more serious
+issues beyond just incorrect error messages, as the code makes decisions
+based on the `pblk_length` value (checking if it equals 6). This makes
+the fix even more important for stable kernels.
+
+ drivers/acpi/acpi_processor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index 7cf6101cb4c7..2a99f5eb6962 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -275,7 +275,7 @@ static inline int acpi_processor_hotadd_init(struct acpi_processor *pr,
  
- static int orig_fgconsole, orig_kmsg;
-+static bool vt_switch_done;
- 
- static DEFINE_MUTEX(vt_switch_mutex);
- 
-@@ -136,17 +137,21 @@ void pm_prepare_console(void)
- 	if (orig_fgconsole < 0)
- 		return;
- 
-+	vt_switch_done = true;
-+
- 	orig_kmsg = vt_kmsg_redirect(SUSPEND_CONSOLE);
- 	return;
- }
- 
- void pm_restore_console(void)
+ static int acpi_processor_get_info(struct acpi_device *device)
  {
--	if (!pm_vt_switch())
-+	if (!pm_vt_switch() && !vt_switch_done)
- 		return;
- 
- 	if (orig_fgconsole >= 0) {
- 		vt_move_to_console(orig_fgconsole, 0);
- 		vt_kmsg_redirect(orig_kmsg);
- 	}
-+
-+	vt_switch_done = false;
- }
+-	union acpi_object object = { 0 };
++	union acpi_object object = { .processor = { 0 } };
+ 	struct acpi_buffer buffer = { sizeof(union acpi_object), &object };
+ 	struct acpi_processor *pr = acpi_driver_data(device);
+ 	int device_declaration = 0;
 -- 
 2.39.5
 
