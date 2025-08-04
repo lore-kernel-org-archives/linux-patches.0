@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D091DD0C7;
-	Mon,  4 Aug 2025 00:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B438E1C84B8;
+	Mon,  4 Aug 2025 00:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267590; cv=none; b=K3zyUz23rYcF7i99azlo/xyEAHtxcwgJsHg4Tg02d2C0Cvw6qVRv3zLXJTwGaJqD/RjtitklIWJaqIbtALvrz0QxV8L0UOKqP6cpRp/zt/esRBBJUm4z96cjGtmuKvE8Xy3tiPD5gi1v5WTuECJGd7zaR/glZnyDMgpokScBUnU=
+	t=1754267592; cv=none; b=geNgox4TJlXAh8kNMkfBwGiWLdFOQwoM+wQwWBvIQrE470jygnk8ar1Hz5W9+WGhRIE+UOlEsbYILKTBbD/ZFn2z/yJP+jw3nsBg7cA+iE6prAIUNsue79Q+jyzJqfP3HG2j4vwS/BizX9zpVTStaJ7ExUIK89vkd/URUMLwDBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267590; c=relaxed/simple;
-	bh=9GXRLZk2ZZl3eainpwXerzCU4hE4yiaWq8hY2/i2wHc=;
+	s=arc-20240116; t=1754267592; c=relaxed/simple;
+	bh=zcedYNa5zL016K3XMpbB9rAfhfDmoOYDSvzyv/PdQYU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Okl8YRCtj4LZeBsPjdNzKddNB0gt49v4p6Di3dhXrqhc2hLEvB/i4PcS4trv0PeDQ3RtOn3AASUAyRazcFMsuO4EIb5GsCI6PveGk8BchF/ofaRd/4qUnt1hqheI0Wj6iG1+DhCYR+ZNtYmeJnsC3VjslBnycJYXtyakDuNgpwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=odeRSsej; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=enEDl92XSVP46aub5t1W6duCNalgKnotZoSTXsI921p6J4iw4vaO0G1g63t7AQx+moRXIlqmrseRk5/as+fjRJHmNtidd04DJAHNXv44tHFQbALOnfyZO5DBoYE3PCtpuQDg3+BA27Bw0DeTshlwaOjA3CueNMnbphOIbLTatAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uc4rfgh2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="odeRSsej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF921C4CEEB;
-	Mon,  4 Aug 2025 00:33:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uc4rfgh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38424C4CEEB;
+	Mon,  4 Aug 2025 00:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267590;
-	bh=9GXRLZk2ZZl3eainpwXerzCU4hE4yiaWq8hY2/i2wHc=;
+	s=k20201202; t=1754267592;
+	bh=zcedYNa5zL016K3XMpbB9rAfhfDmoOYDSvzyv/PdQYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=odeRSsejKpMOVsgUvQOIYq4MVB/QD3QzdY6k8ZCgVdJPQv2vjEqgpvf/Vk/EhsiII
-	 X5n7W8vdr8Edxc8KwemF+PJJpeEm9go7ENFn3kgGM6HkzdzMbw9KkoTh2s6kc8Fy88
-	 24uB6uxVni7cx2rrHkWyYsbnlLnarIeN/FO92jUMymZaNtWKn0NG0a/YL5XHbnTKss
-	 4BOdaMeomNSiX697+kBOzlRkJPNgpSJUyk6BN/NfzwNzKkahYflJKx+Kn23P/CHfy1
-	 AJ8DVB4lyoWLbT2rck+QBG1Mb0xhlWMhV6mUtRgdg3qWSU5kjWH45kxiS0esPxfcKN
-	 S+Ew7Z+lDfmGQ==
+	b=uc4rfgh2Ukbt5AfQRPlp25ptXrzCb0hRumzliUsnvWEA3nnxgOwF3gMBBTBj/6qLh
+	 s30Hs//iJ6H+EsxMnqxJDLjJfSEdGmsagjeF27rmhGsxxA0pLIdJFHet4pjN5AQ7Gc
+	 jiFj4mrkCwRnluN63vokEHdwdXTu+MAH0lGP8TuZ0cGa8rinSjVtiYI/3pCk2sjefr
+	 joC99ktmuu3hEcyRDV0hGlegReYmYeXx3QJh1xdWHkY+Lq/uVE8IvAxQjxC9tY5Xq7
+	 413VtIUp4VyYlEMjnotXANXF7lunMcbbAOdAPya3N1tYZircr+wi3HpnjVDvsVRzuX
+	 TRxORB0fz/8qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ulf Hansson <ulf.hansson@linaro.org>,
-	Avri Altman <avri.altman@sandisk.com>,
-	Ricky Wu <ricky_wu@realtek.com>,
+Cc: Gwendal Grignou <gwendal@chromium.org>,
+	Gwendal Grignou <gwendal@google.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	chenhuacai@kernel.org,
-	u.kleine-koenig@baylibre.com,
-	viro@zeniv.linux.org.uk,
-	nathan@kernel.org,
-	zhoubinbin@loongson.cn
-Subject: [PATCH AUTOSEL 6.12 46/69] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
-Date: Sun,  3 Aug 2025 20:30:56 -0400
-Message-Id: <20250804003119.3620476-46-sashal@kernel.org>
+	bleung@chromium.org,
+	chrome-platform@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.12 47/69] platform/chrome: cros_ec_sensorhub: Retries when a sensor is not ready
+Date: Sun,  3 Aug 2025 20:30:57 -0400
+Message-Id: <20250804003119.3620476-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -55,114 +52,133 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Gwendal Grignou <gwendal@chromium.org>
 
-[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
+[ Upstream commit 981d7f91aeda17424b29f033249f4fa7cd2a7556 ]
 
-In the error path of sd_set_power_mode() we don't update host->power_mode,
-which could lead to an imbalance of the runtime PM usage count. Fix this by
-always updating host->power_mode.
+When the EC/ISH starts, it can take a while for all the sensors to be up
+and running or declared broken.
 
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Ricky Wu <ricky_wu@realtek.com>
-Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
+If the sensor stack return -EBUSY when checking for sensor information,
+retry up to 50 times.
+It has been observed 100ms wait time is enough to have valid sensors
+ready. It can take more time in case a sensor is really broken and is
+not coming up.
+
+Signed-off-by: Gwendal Grignou <gwendal@google.com>
+Link: https://lore.kernel.org/r/20250623210518.306740-1-gwendal@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Bug Analysis
+1. **Fixes a real user-impacting bug**: The commit addresses a race
+   condition where the ChromeOS EC sensor hub fails to initialize
+   sensors properly during EC/ISH startup. Without this fix, sensors may
+   appear as broken or unavailable to userspace when they are actually
+   just slow to initialize.
 
-The commit fixes a **runtime PM reference counting bug** in the
-`sd_set_power_mode()` function. The issue is in the error handling path:
+2. **Small and contained fix**: The change is minimal - it only adds:
+   - A retry loop around `cros_ec_cmd_xfer_status()` for -EBUSY errors
+   - A 5-6ms delay between retries
+   - A maximum of 50 retries (approximately 250-300ms total timeout)
+   - A warning message when retries were needed
 
-### Original Code Problem:
-```c
-if (power_mode == MMC_POWER_OFF) {
-    err = sd_power_off(host);
-    pm_runtime_put_noidle(sdmmc_dev(host));
-} else {
-    pm_runtime_get_noresume(sdmmc_dev(host));
-    err = sd_power_on(host);
-}
+3. **Clear bug fix pattern**: The EC returning -EBUSY (EC_RES_BUSY) is
+   documented behavior indicating "Up but too busy. Should retry". The
+   original code didn't handle this case, leading to sensors being
+   skipped during initialization.
 
-if (!err)
-    host->power_mode = power_mode;  // Only updated on success
-```
+4. **Low regression risk**:
+   - The retry logic only triggers on -EBUSY errors, not affecting the
+     normal path
+   - The change is isolated to sensor initialization during probe
+   - Similar retry patterns exist in other parts of the cros_ec
+     subsystem (e.g., commit 11799564fc7e)
+   - The dev_warn to dev_err change is appropriate as sensor
+     initialization failure is an error condition
 
-### The Bug:
-1. When transitioning to `MMC_POWER_OFF`, the code calls
-   `pm_runtime_put_noidle()` **regardless** of whether `sd_power_off()`
-   succeeded
-2. When transitioning to `MMC_POWER_ON`, the code calls
-   `pm_runtime_get_noresume()` **before** calling `sd_power_on()`
-3. However, `host->power_mode` is only updated if there's no error
+5. **Hardware-specific timing issue**: This fixes a timing-dependent
+   hardware initialization issue that can manifest differently across
+   different EC/ISH firmware versions and boot conditions, making it
+   important for stable operation across various Chromebook models.
 
-This creates a **runtime PM reference count imbalance** because:
-- If `sd_power_off()` fails, the runtime PM reference is still
-  decremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_ON`)
-- If `sd_power_on()` fails, the runtime PM reference is still
-  incremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_OFF`)
-- The early return check `if (power_mode == host->power_mode)` at the
-  beginning of the function will prevent future attempts to fix the
-  power state, leaving the runtime PM count permanently imbalanced
+6. **No architectural changes**: The commit doesn't introduce new
+   features or change any interfaces - it simply makes the existing
+   sensor initialization more robust by handling a known EC busy state.
 
-## Why This Is Suitable for Stable:
+The commit follows established patterns in the cros_ec subsystem for
+handling EC_RES_BUSY responses and is a straightforward reliability
+improvement that should be included in stable kernels to ensure
+consistent sensor availability on ChromeOS devices.
 
-1. **Fixes a real bug**: Runtime PM reference count imbalances can lead
-   to:
-   - Device staying powered when it should be suspended
-   - Device being suspended when it should be active
-   - Power management failures
-   - Potential system hangs or crashes
+ drivers/platform/chrome/cros_ec_sensorhub.c | 23 +++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-2. **Minimal change**: The fix is a simple one-liner that always updates
-   `host->power_mode` regardless of error status
-
-3. **Low regression risk**:
-   - The change doesn't introduce new functionality
-   - It doesn't alter the control flow
-   - It simply ensures state consistency
-
-4. **Clear bug fix**: This is not a feature addition or optimization -
-   it's fixing incorrect error handling that violates runtime PM rules
-
-5. **Affects users**: This bug can manifest in real-world scenarios when
-   SD card power operations fail, particularly with flaky hardware or
-   during system stress
-
-6. **Subsystem contained**: The fix is limited to a single MMC host
-   driver and doesn't affect core kernel infrastructure
-
-The commit follows stable kernel rules by being a minimal, targeted fix
-for a real bug that can affect system stability and power management.
-
- drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 4e86f0a705b6..2bf51fe11a09 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1032,9 +1032,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
- 		err = sd_power_on(host);
- 	}
+diff --git a/drivers/platform/chrome/cros_ec_sensorhub.c b/drivers/platform/chrome/cros_ec_sensorhub.c
+index 50cdae67fa32..9bad8f72680e 100644
+--- a/drivers/platform/chrome/cros_ec_sensorhub.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub.c
+@@ -8,6 +8,7 @@
  
--	if (!err)
--		host->power_mode = power_mode;
--
-+	host->power_mode = power_mode;
- 	return err;
- }
+ #include <linux/init.h>
+ #include <linux/device.h>
++#include <linux/delay.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_data/cros_ec_commands.h>
+@@ -18,6 +19,7 @@
+ #include <linux/types.h>
  
+ #define DRV_NAME		"cros-ec-sensorhub"
++#define CROS_EC_CMD_INFO_RETRIES 50
+ 
+ static void cros_ec_sensorhub_free_sensor(void *arg)
+ {
+@@ -53,7 +55,7 @@ static int cros_ec_sensorhub_register(struct device *dev,
+ 	int sensor_type[MOTIONSENSE_TYPE_MAX] = { 0 };
+ 	struct cros_ec_command *msg = sensorhub->msg;
+ 	struct cros_ec_dev *ec = sensorhub->ec;
+-	int ret, i;
++	int ret, i, retries;
+ 	char *name;
+ 
+ 
+@@ -65,12 +67,25 @@ static int cros_ec_sensorhub_register(struct device *dev,
+ 		sensorhub->params->cmd = MOTIONSENSE_CMD_INFO;
+ 		sensorhub->params->info.sensor_num = i;
+ 
+-		ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
++		retries = CROS_EC_CMD_INFO_RETRIES;
++		do {
++			ret = cros_ec_cmd_xfer_status(ec->ec_dev, msg);
++			if (ret == -EBUSY) {
++				/* The EC is still busy initializing sensors. */
++				usleep_range(5000, 6000);
++				retries--;
++			}
++		} while (ret == -EBUSY && retries);
++
+ 		if (ret < 0) {
+-			dev_warn(dev, "no info for EC sensor %d : %d/%d\n",
+-				 i, ret, msg->result);
++			dev_err(dev, "no info for EC sensor %d : %d/%d\n",
++				i, ret, msg->result);
+ 			continue;
+ 		}
++		if (retries < CROS_EC_CMD_INFO_RETRIES) {
++			dev_warn(dev, "%d retries needed to bring up sensor %d\n",
++				 CROS_EC_CMD_INFO_RETRIES - retries, i);
++		}
+ 
+ 		switch (sensorhub->resp->info.type) {
+ 		case MOTIONSENSE_TYPE_ACCEL:
 -- 
 2.39.5
 
