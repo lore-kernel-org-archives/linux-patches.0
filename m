@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FE41FDD;
-	Mon,  4 Aug 2025 00:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AF91FDD;
+	Mon,  4 Aug 2025 00:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267967; cv=none; b=cCs5S8tmYO6ErRWiNzJE92ISnVqXGym+Bek+MkpjND625enYhbY1Rjib7HqfFvq0bn7ln46WcWjWmmmOtGgk2fZB+s5duu1fn3tJiVoy2smkhWDha9dcqueg6CPaQ4KSXnWw4U6uxgUd0thZm5zaZbG5kIDXNSOX7TYJBVXSgBM=
+	t=1754267969; cv=none; b=G60ZBsdw1xL5kSn/3oAZu8FcbkfAkdJzqrdHx/PnqyM4II6dn+pvuqLLv+KwCtJsSFga4Qu0G8qpMdOCa+KMzqgm3XTyKr3Teb/4XqprMgeLbXK72VTgu9y54hjEIpXhlTQib3SbcnVcjRd/SksLtgefWf9nlqDzmqK+lC4Yo0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267967; c=relaxed/simple;
-	bh=+pYwS4WTvi/EAOfs6kaV9zLl/d2GTGR+hcGJOV+TOvc=;
+	s=arc-20240116; t=1754267969; c=relaxed/simple;
+	bh=7M06c9i6jttEbYev5rW+GxpX144x7L0u7eR4g5iVWd0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mZ0YhqpAN7RQ4mwdwVY9I0m9LXMq57mHdwmUKkuHj0vaq+CfRZf/NO4SpG8us4f0YwsKKbVV91cHH3MK+gr0FBmNqAo2aIgTRMzvaY2Vg6rzGaN+whDk+tWCvWO6KkGeH4nri63Lmx4yG1Pvh70V4eT7UDypoLFkbF6g3PSVYDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NuvQC3d0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SmdTG8Ce5F32UlSUqc7z5lqxOFcZiJF3tYdtBU8AMw80vp7wy5eqy5M8LiUZ0m0kFlq/+OKKaCaZHtgGvBEum0Rbot/d8u95tWiygl88+RTesweZYXO8p0VCzr91bNpiXXcoNbqh5Y19m4a/5RM09c9OgftnYnL9eXOiLKIxRoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qvEQLxOq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NuvQC3d0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082A0C4CEFB;
-	Mon,  4 Aug 2025 00:39:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qvEQLxOq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B2FC4AF09;
+	Mon,  4 Aug 2025 00:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267967;
-	bh=+pYwS4WTvi/EAOfs6kaV9zLl/d2GTGR+hcGJOV+TOvc=;
+	s=k20201202; t=1754267968;
+	bh=7M06c9i6jttEbYev5rW+GxpX144x7L0u7eR4g5iVWd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuvQC3d0a7zKcUvO6YjPB15emR0y+vXGpO0J9iJFsi9AXvbtw/A+O7xlEaxs0WF86
-	 E86h1Uu8VpKijJpbz9sP2pJ+D6HTA1ltrU+ByOIfg5JS3mtR5W8aoD0CiQFzlz8SFl
-	 GqnWwq9tTJcPoSdGXFh7DD4n9EVlEQCxVa62V95n7nGmcSVrbuD/mwKZx7MdFb/iGa
-	 v53QfB8c6wHSqxJRiK1Ff0rAIyGKYcHP0B7EfZn1G38xWjjRnJTmuaoQQl4hh24NQO
-	 EyqEunfo4YYk97UrkbVi03735gIestvb3onN8Hr1gIP79oIuOTPOzAc+/s/nScelEP
-	 TDqokT+nbLZ2Q==
+	b=qvEQLxOqLqd0kjcAdrplNPOagCmCSNCKcy+yO+XVmSozqCbGKR4Ug4sPkOw5CrQ2E
+	 Qh2WUo9ZOD66XzXzKPIMPeVOTxl8359QqovtE+YtYJw+FhJOGTVQnYGL38a2wY6nmB
+	 MDQXjD6bVaHkNVvufFBnljPz+S2gtlpIQnhibD9F0UqNjP0wzRo544vCcI7A+o3Stw
+	 ghDnp0kfJFslb6621DEunLwZ/CV0YYawjyxw51Yf+B/TFkYSP6LVNxzgS2+/+ed+3i
+	 +oDVkcBrJcWJoEPT2FEmPe9Qjpgql7u7peP9Q7zkslUUKEkdZH3a5nZ2SAI7TNBYzf
+	 XjJ5k1Tr/HCQQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Willy Tarreau <w@1wt.eu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.15 16/44] tools/nolibc: define time_t in terms of __kernel_old_time_t
-Date: Sun,  3 Aug 2025 20:38:21 -0400
-Message-Id: <20250804003849.3627024-16-sashal@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 17/44] gpio: tps65912: check the return value of regmap_update_bits()
+Date: Sun,  3 Aug 2025 20:38:22 -0400
+Message-Id: <20250804003849.3627024-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -44,105 +46,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit d5094bcb5bfdfea2cf0de8aaf77cc65db56cbdb5 ]
+[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
 
-Nolibc assumes that the kernel ABI is using a time values that are as
-large as a long integer. For most ABIs this holds true.
-But for x32 this is not correct, as it uses 32bit longs but 64bit times.
+regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver.
 
-Also the 'struct stat' implementation of nolibc relies on timespec::tv_sec
-and time_t being the same type. While timespec::tv_sec comes from the
-kernel and is of type __kernel_old_time_t, time_t is defined within nolibc.
-
-Switch to the __kernel_old_time_t to always get the correct type.
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20250712-nolibc-x32-v1-1-6d81cb798710@weissschuh.net
-Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
-
-Based on my analysis of this commit, here is my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Bug Fix**: This fixes a real ABI compatibility bug where nolibc
-   incorrectly assumes `time_t` is always the same size as `long`. On
-   x32 architecture (x86-64 with 32-bit pointers), `long` is 32-bit but
-   kernel time values are 64-bit, causing type mismatches.
+1. **Bug Fix with Real Impact**: The commit fixes a bug where the return
+   value of `regmap_update_bits()` in `tps65912_gpio_direction_output()`
+   is not checked (line 54-55 in the original code). This could lead to
+   silent failures where the GPIO initial value is not set correctly,
+   but the function continues to configure the direction, potentially
+   leaving the GPIO in an inconsistent state.
 
-2. **Clear Impact**: The commit message clearly explains the issue - the
-   `struct stat` implementation in nolibc relies on `timespec::tv_sec`
-   and `time_t` being the same type. Looking at the code:
-   - In `/include/uapi/linux/time.h:12`, `struct timespec` uses
-     `__kernel_old_time_t tv_sec`
-   - In the original nolibc code at `tools/include/nolibc/std.h:30`,
-     `time_t` was defined as `signed long`
-   - In `tools/include/nolibc/types.h:183-185`, the stat structure uses
-     unions that expect `time_t` and `struct timespec` members to be
-     compatible
+2. **Consistency with Driver Pattern**: The driver already checks return
+   values of `regmap_update_bits()` in other functions:
+   - `tps65912_gpio_direction_input()` (line 44) properly returns the
+     result
+   - The second `regmap_update_bits()` call in
+     `tps65912_gpio_direction_output()` (line 57) also returns the
+     result
+   - `tps65912_gpio_get_direction()` checks the return value of
+     `regmap_read()`
 
-3. **Small and Contained Fix**: The change is minimal - just changing
-   one typedef from `signed long` to `__kernel_old_time_t` and adding
-   the necessary include. This is exactly the kind of focused fix
-   suitable for stable.
+3. **Small and Contained Fix**: The patch is minimal - it only adds:
+   - An `int ret` variable declaration
+   - Captures the return value of the first `regmap_update_bits()` call
+   - Adds an error check that returns early if the operation failed
 
-4. **No Feature Changes**: This doesn't add new functionality or change
-   the API - it just corrects the type definition to match what the
-   kernel actually uses.
+4. **No Side Effects**: This change doesn't introduce any new
+   functionality or alter the existing behavior when operations succeed.
+   It only adds proper error handling that was missing.
 
-5. **Low Risk**: The change uses the kernel's own type definition
-   (`__kernel_old_time_t`) which is already defined as `__kernel_long_t`
-   in the generic case, so for most architectures this is a no-op. It
-   only changes behavior on architectures like x32 where it's actually
-   needed.
+5. **Hardware Communication Reliability**: The TPS65912 is a PMIC (Power
+   Management IC) that communicates over I2C/SPI. Hardware communication
+   can fail due to various reasons (bus errors, device issues), and not
+   checking return values can lead to incorrect GPIO states which could
+   affect system stability or connected peripherals.
 
-6. **Prevents Runtime Failures**: Without this fix, nolibc programs on
-   x32 would have incorrect stat structures where time fields don't
-   align properly with kernel expectations, potentially causing data
-   corruption or incorrect time values.
+6. **Follows Kernel Best Practices**: The kernel coding standards
+   require checking return values of functions that can fail, especially
+   for hardware operations. This fix brings the code in line with those
+   standards.
 
-The commit follows stable kernel rules by fixing an important bug with
-minimal changes and low regression risk. It's a clear correctness fix
-for a specific architecture compatibility issue.
+The commit message clearly indicates this is a bug fix
+("regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver"), making it a perfect candidate for stable
+backporting as it improves driver reliability without any risk of
+regression.
 
- tools/include/nolibc/std.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-tps65912.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tools/include/nolibc/std.h b/tools/include/nolibc/std.h
-index 1747ae125392..a0ea830e1ba1 100644
---- a/tools/include/nolibc/std.h
-+++ b/tools/include/nolibc/std.h
-@@ -33,6 +33,8 @@ typedef unsigned long     uintptr_t;
- typedef   signed long      intptr_t;
- typedef   signed long     ptrdiff_t;
+diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
+index fab771cb6a87..bac757c191c2 100644
+--- a/drivers/gpio/gpio-tps65912.c
++++ b/drivers/gpio/gpio-tps65912.c
+@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
+ 					  unsigned offset, int value)
+ {
+ 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
++	int ret;
  
-+#include <linux/types.h>
-+
- /* those are commonly provided by sys/types.h */
- typedef unsigned int          dev_t;
- typedef unsigned long         ino_t;
-@@ -44,6 +46,6 @@ typedef unsigned long       nlink_t;
- typedef   signed long         off_t;
- typedef   signed long     blksize_t;
- typedef   signed long      blkcnt_t;
--typedef   signed long        time_t;
-+typedef __kernel_old_time_t  time_t;
+ 	/* Set the initial value */
+-	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+-			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
++				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	if (ret)
++		return ret;
  
- #endif /* _NOLIBC_STD_H */
+ 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+ 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
 -- 
 2.39.5
 
