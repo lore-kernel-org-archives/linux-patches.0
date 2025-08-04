@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296FC211F;
-	Mon,  4 Aug 2025 00:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B691381BA;
+	Mon,  4 Aug 2025 00:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267505; cv=none; b=RI1UZOtUMrgxXNrl2j9IweD/pOTErCIrNLFJXCPthwUInCUk7ZY7ziizQLOiVpGo8JXw30zU62DMIUftDUfiNydCBa6lQ6jQhMe/NlcWPFwJA6zpU25Rx3NDe0CwmbGewF3mQeaQqkeuuBn+STN3r1KDvzSSDOVzIsOlIVft4u4=
+	t=1754267505; cv=none; b=mJrzPUzhXCY5mZV7DTSwJ4hlt8sXOMik+q84i0Fws4bgVzoe/plTCwlfyEr5DHAPBHlEH3gn4M10Y9AUoAv3Cp59evlNR328pEO9eNawavT5fYIUENOv7g1hetYXSIMpbfmXQsRSe1Vj81f9nTORQSdg3Tsle1+2Gjajc75BVKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754267505; c=relaxed/simple;
-	bh=hQYVG7MBPq/lYAi3ZcX7k7xnBgWQPlhgZtYUUnLzYt0=;
+	bh=9tsAOu8I212p0VJTnmhO8HtTx9RQZeFmrnub2DoCO+Y=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hqNERslhnvGymESmtZ5Zin+8cKAAgv/hC+iViksGSDzNuYax7gNNbIOnU0Vj+rEZFnyW1dckbExMU2ojaEXvuZvhZTkXe0vgMuOgvmFIVCC+hEeT3JV2wwGROgMbBiWK1zPEEDZbUBdVNG4g4PY5OclRW9TJyAgnlrSYuEurml8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hFIFGL1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDIRTuGCxif5l2YmcQ65U9ORLpEGgWw2N+AtNWHHjWkqfwD2B5ecRhf7QFgERSDxHZF/6xbsyvxhSnqXeT1LuxT/YYGIR6CpYKF5RvDJx/ICIaLSuXQQ4NP7i3MSRUAOi3Hu0F3l0HTV8aA6Kq+KEYGe2tQ2i803TYtPulxHdFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aIe+udnX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hFIFGL1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F70C4CEF0;
-	Mon,  4 Aug 2025 00:31:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aIe+udnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D767CC4CEF9;
+	Mon,  4 Aug 2025 00:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267505;
-	bh=hQYVG7MBPq/lYAi3ZcX7k7xnBgWQPlhgZtYUUnLzYt0=;
+	s=k20201202; t=1754267502;
+	bh=9tsAOu8I212p0VJTnmhO8HtTx9RQZeFmrnub2DoCO+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFIFGL1hQF2JM313KtSGvE8CHpNSXQ55fuQCQAMXOP9xZHOX4EDBiN68j/FQQpCPP
-	 OppUMnzEWGbSS0lUf1cMVlmjkmcHcrrMmjbrb5oZv7VexT/NV9BFYg126M8MY3R5hL
-	 3XrIIlGJsi8DaiJG6YjhhbWwlhb3iMN9LMzGckbhkecuepzL/kRMoWjRiYMuBJU6wY
-	 9Noh/aAO+FAvRvAc5SEwaqks5hZ7PBdo/TdVZnPpbZo9PpJpng1qwAnjrjMLTDqyk2
-	 h7MDFgkHZEAE4z1SyM+7NKNqd/P24BGo9GkCeeZQEsHRV4OWZF0+hbYQf++qDkiq/n
-	 OAJ731eriEgNg==
+	b=aIe+udnXuKXEe1iPoV+OElwj6WIxM8sOrl7QGlDH9QkJQQFVkV8UeyX5qsEZfAz/3
+	 NZ/BqWW3FVdY+af5xuKY9Eg4YNF4TVY73VjQ8J5jfa0n3xkMRI6Ud3FH8SPPZLvePR
+	 rEmwUmCp6Gu4ffE4TocaGTFH8oJozJ8dVQzgIVJvFTt02e3RSQTWMiBwZtmrP8Wdd9
+	 aQgy4Uq4W350O+j25L4MAS3NvH6P9GdA/MZpVy2qkM/V+7RZNBxT0C9DrqjnxVJyCR
+	 4EjmsmrQmqZ9iCZJN7SLWFAo/398GE/CwF77t4DzJLH7DzcuNLv6vpp/g501XVnhPt
+	 enZp6k47odotw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
+Cc: Jay Chen <shawn2000100@gmail.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
 	mathias.nyman@intel.com,
 	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 09/69] usb: xhci: Avoid showing errors during surprise removal
-Date: Sun,  3 Aug 2025 20:30:19 -0400
-Message-Id: <20250804003119.3620476-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 08/69] usb: xhci: Set avg_trb_len = 8 for EP0 during Address Device Command
+Date: Sun,  3 Aug 2025 20:30:18 -0400
+Message-Id: <20250804003119.3620476-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -50,106 +50,112 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jay Chen <shawn2000100@gmail.com>
 
-[ Upstream commit 4b9c60e440525b729ac5f071e00bcee12e0a7e84 ]
+[ Upstream commit f72b9aa821a2bfe4b6dfec4be19f264d0673b008 ]
 
-When a USB4 dock is unplugged from a system it won't respond to ring
-events. The PCI core handles the surprise removal event and notifies
-all PCI drivers. The XHCI PCI driver sets a flag that the device is
-being removed as well.
+There is a subtle contradiction between sections of the xHCI 1.2 spec
+regarding the initialization of Input Endpoint Context fields. Section
+4.8.2 ("Endpoint Context Initialization") states that all fields should
+be initialized to 0. However, Section 6.2.3 ("Endpoint Context", p.453)
+specifies that the Average TRB Length (avg_trb_len) field shall be
+greater than 0, and explicitly notes (p.454): "Software shall set
+Average TRB Length to '8' for control endpoints."
 
-When that flag is set don't show messages in the cleanup path for
-marking the controller dead.
+Strictly setting all fields to 0 during initialization conflicts with
+the specific recommendation for control endpoints. In practice, setting
+avg_trb_len = 0 is not meaningful for the hardware/firmware, as the
+value is used for bandwidth calculation.
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Motivation: Our company is developing a custom Virtual xHC hardware
+platform that strictly follows the xHCI spec and its recommendations.
+During validation, we observed that enumeration fails and a parameter
+error (TRB Completion Code = 5) is reported if avg_trb_len for EP0 is
+not set to 8 as recommended by Section 6.2.3. This demonstrates the
+importance of assigning a meaningful, non-zero value to avg_trb_len,
+even in virtualized or emulated environments.
+
+This patch explicitly sets avg_trb_len to 8 for EP0 in
+xhci_setup_addressable_virt_dev(), as recommended in Section 6.2.3, to
+prevent potential issues with xHCI host controllers that enforce the
+spec strictly.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220033
+Signed-off-by: Jay Chen <shawn2000100@gmail.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-2-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20250717073107.488599-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze this commit properly:
+Based on my analysis of the commit and code, here's my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a user-visible issue**: The commit addresses spurious error
-   messages that appear when USB4 docks are unplugged. The original code
-   shows `xhci_err(xhci, "xHCI host controller not responding, assume
-   dead\n")` even during expected surprise removals, which can confuse
-   users and fill system logs unnecessarily.
+1. **Fixes a real bug**: The commit addresses a specification compliance
+   issue where setting `avg_trb_len = 0` for EP0 (control endpoint)
+   violates the xHCI 1.2 specification. Section 6.2.3 explicitly states
+   that Average TRB Length shall be greater than 0 and specifically
+   recommends setting it to 8 for control endpoints.
 
-2. **Small and contained fix**: The change is minimal - it only adds a
-   local `notify` variable and conditionalizes two operations based on
-   whether the device is being removed:
-   - The error message printing (line 1384 → lines 1379-1381)
-   - The `usb_hc_died()` notification (reusing the same condition)
+2. **Small and contained fix**: The change is minimal - just adding a
+   single line:
+  ```c
+  ep0_ctx->tx_info = cpu_to_le32(EP_AVG_TRB_LENGTH(8));
+  ```
+  This sets the average TRB length field to 8 as recommended by the
+  spec.
 
-3. **No architectural changes**: This is a simple behavioral fix that
-   doesn't modify any data structures, APIs, or core functionality. It
-   merely suppresses error messages during an expected removal scenario.
+3. **Prevents hardware failures**: The commit message indicates this
+   causes actual enumeration failures with parameter errors (TRB
+   Completion Code = 5) on hardware that strictly follows the xHCI
+   specification. This means real devices can fail to enumerate without
+   this fix.
 
-4. **Clear bug fix**: The commit clearly fixes an issue where error
-   messages are shown during normal USB4 dock removal operations. When
-   `XHCI_STATE_REMOVING` is set (indicating PCI removal is in progress),
-   the error message is now suppressed since it's an expected condition.
+4. **No architectural changes**: This is a simple initialization fix
+   that doesn't change any architectural aspects of the driver. It only
+   ensures proper initialization of a field that was previously left at
+   0.
 
-5. **Low risk of regression**: The change only affects logging behavior
-   and maintains the same functional flow. The `usb_hc_died()` call was
-   already conditional on `!XHCI_STATE_REMOVING`, so this commit just
-   applies the same logic to the error message.
+5. **Low regression risk**: Setting avg_trb_len to 8 for control
+   endpoints follows the xHCI specification recommendation. Existing
+   hardware that doesn't strictly check this value will continue to
+   work, while hardware that does enforce the spec will now work
+   correctly.
 
-6. **Improves user experience**: USB4/Thunderbolt docks are increasingly
-   common, and users frequently unplug them. Avoiding spurious error
-   messages during normal operations is important for user experience
-   and log clarity.
+6. **Clear bug with clear fix**: The contradiction between spec sections
+   is well-documented in the commit message, and the fix directly
+   addresses this by following the more specific recommendation for
+   control endpoints.
 
-The commit follows stable tree rules by being a minimal fix for a real
-issue that affects users, without introducing new features or making
-risky changes to core functionality.
+The commit fixes a specification compliance bug that can cause real
+hardware failures during USB device enumeration. The fix is minimal,
+follows the xHCI specification, and has very low risk of causing
+regressions, making it an ideal candidate for stable backporting.
 
- drivers/usb/host/xhci-ring.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-mem.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 19978f02bb9e..f6ecb3b9fb14 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1313,12 +1313,15 @@ static void xhci_kill_endpoint_urbs(struct xhci_hcd *xhci,
-  */
- void xhci_hc_died(struct xhci_hcd *xhci)
- {
-+	bool notify;
- 	int i, j;
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index 91178b8dbbf0..1111650757ea 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -1172,6 +1172,8 @@ int xhci_setup_addressable_virt_dev(struct xhci_hcd *xhci, struct usb_device *ud
+ 	ep0_ctx->deq = cpu_to_le64(dev->eps[0].ring->first_seg->dma |
+ 				   dev->eps[0].ring->cycle_state);
  
- 	if (xhci->xhc_state & XHCI_STATE_DYING)
- 		return;
++	ep0_ctx->tx_info = cpu_to_le32(EP_AVG_TRB_LENGTH(8));
++
+ 	trace_xhci_setup_addressable_virt_device(dev);
  
--	xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
-+	notify = !(xhci->xhc_state & XHCI_STATE_REMOVING);
-+	if (notify)
-+		xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
- 	xhci->xhc_state |= XHCI_STATE_DYING;
- 
- 	xhci_cleanup_command_queue(xhci);
-@@ -1332,7 +1335,7 @@ void xhci_hc_died(struct xhci_hcd *xhci)
- 	}
- 
- 	/* inform usb core hc died if PCI remove isn't already handling it */
--	if (!(xhci->xhc_state & XHCI_STATE_REMOVING))
-+	if (notify)
- 		usb_hc_died(xhci_to_hcd(xhci));
- }
- 
+ 	/* Steps 7 and 8 were done in xhci_alloc_virt_device() */
 -- 
 2.39.5
 
