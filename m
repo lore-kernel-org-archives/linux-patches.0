@@ -1,143 +1,165 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9CD2E40B;
-	Mon,  4 Aug 2025 00:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0208A29A2;
+	Mon,  4 Aug 2025 00:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267656; cv=none; b=IpIjJXeVAcQmn1vMjwuvyt9gMxZcJ69nuqr2M88pA5XrGpcKATldTemQTWieXtiSML9JLtSQ3fnBVbUwtMetkPlcD6rZ+PcepdMPUX7gwjoWK6F0GwbSzBgwpLVmGwcwpjt7Bj7kxPvJ1VfQCP/Ju7kJdMYfuNaU9eoGMnJ8Ujk=
+	t=1754267660; cv=none; b=lmOPqKZRFqY0t398DqTNCGpJlHCSt8XOr5WomU9pUpsa1FZHd3WhS71KKbtTAgTfV5zpAf0nky26rLbQOxHncqSvZES3kYpfMypnCweExQEZAIHdkGoubZD/pe09INYYMMETC8I2WTRREGou/2zNJu2iaA5TuDZ0qQyJiKhg864=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267656; c=relaxed/simple;
-	bh=t7x85OUppVhlJPVxsfQeW0DXiPwlcdMVvc5bzBRMzk8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gmi2l9UHkas3z2/aKGmCa6qdHmRYTMuu7wRcVQi29TwZVslxpSy/B+i0Ox/+t9YBrWdiYNBhM7VyAoWYkmpJMxe1wS2Bw3u/oFxLiy3dTbjb6eOF1dbBM0z0/rmX+CG9+Qzj4FtezSJxvpFGG2QE8j3XeILmPwKHZF04a+FQPm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jak014Mf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754267660; c=relaxed/simple;
+	bh=MVYERXRYEmAzADDBO7PTJjCByP1qg4y7LfqCnncXkG0=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Df94L8uK7Hj9yrVgI6MmhwGjLt48Axa11WT5701nbmV1SNsf4SB0whMoPcjJhBU2rFd9YViIzqQ11FDn03LrXg68snTQu3nOOoS97U4xNwk8apazfCsIobBCQUAnfxYVgOunTyk1b+bnKwoJ+hOUwSSpr2DSM59BPCzIdoqAoUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wk085tWo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jak014Mf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A440C4CEEB;
-	Mon,  4 Aug 2025 00:34:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wk085tWo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23F1C4CEEB;
+	Mon,  4 Aug 2025 00:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267656;
-	bh=t7x85OUppVhlJPVxsfQeW0DXiPwlcdMVvc5bzBRMzk8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=jak014MfVYCW0gFu9MtOXNknVIZQ3rABmJLynOUj4giJE/S1xyWydOT5TPSm7RuNb
-	 3Difg8GSFCCTIc1cLHTjY5/XaCOMYK1IQ1AxoFpzpxiPoLdHTopiSQzKkn4x+Hitsv
-	 ZGMRgz4VZUrE8b6haGzyajPXirrT+PQR1j31liNPN2zoPf24xtN84yIIiLQU4jgT8Q
-	 C2NGGxG1f/ZH4neAVCcju/PQFk8h2Iu61+NV7YFGymt29wGdhv2B5X43ADbSkNE7dV
-	 6G+hY4H7fPusIQTxyP84Uylo8ZWUDuidiqpQg3dAlaXYw2pkydQyucrfkSYJPSNGOe
-	 zjfA8JafLQ3Ig==
+	s=k20201202; t=1754267658;
+	bh=MVYERXRYEmAzADDBO7PTJjCByP1qg4y7LfqCnncXkG0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Wk085tWoIoq71p4VTgUkPlDBmPzMhTrrGpMF/Kt/UvKTVZnUmEFz4yGNezKoYWRKN
+	 1QZqmSP9S+svar9RvZB865sF0t/RJnhAjs/HKtAl2XkCsjJbkpYfeZQ3mQtilen3h/
+	 FGzE2KZtL4M3FwcpoGn7MHqfSPAGtZuYCAwHgL5rCZhKLHlO4488eLw3WrmHG2LLk6
+	 5gb5B1SxJxtfMKp5MZQfUuzKonF7Mkzkb93PTkfmTgSOWZr2iT6KEa/eHxBFo4ujPA
+	 6SfethINoYimQ4SblnNZBWF6AEbjWUtZDRuorMS6jVyrCRlAqZlNRDfRsyTNQGw2ct
+	 jgRwD/GD+CDtw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Su Hui <suhui@nfschina.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Mario Limonciello <mario.limonciello@amd.com>,
+	Adam Berglund <adam.f.berglund@hotmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 01/59] usb: xhci: print xhci->xhc_state when queue_command failed
-Date: Sun,  3 Aug 2025 20:33:15 -0400
-Message-Id: <20250804003413.3622950-1-sashal@kernel.org>
+	Shyam-sundar.S-k@amd.com,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 02/59] platform/x86/amd: pmc: Add Lenovo Yoga 6 13ALC6 to pmc quirk list
+Date: Sun,  3 Aug 2025 20:33:16 -0400
+Message-Id: <20250804003413.3622950-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
+References: <20250804003413.3622950-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Su Hui <suhui@nfschina.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 7919407eca2ef562fa6c98c41cfdf6f6cdd69d92 ]
+[ Upstream commit 4ff3aeb664f7dfe824ba91ffb0b203397a8d431e ]
 
-When encounters some errors like these:
-xhci_hcd 0000:4a:00.2: xHCI dying or halted, can't queue_command
-xhci_hcd 0000:4a:00.2: FIXME: allocate a command ring segment
-usb usb5-port6: couldn't allocate usb_device
+The Lenovo Yoga 6 13ACL6 82ND has a similar BIOS problem as other Lenovo
+laptops from that vintage that causes a rather long resume from suspend.
 
-It's hard to know whether xhc_state is dying or halted. So it's better
-to print xhc_state's value which can help locate the resaon of the bug.
+Add it to the quirk list that manipulates the scratch register to avoid
+the issue.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20250725060117.1773770-1-suhui@nfschina.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Adam Berglund <adam.f.berglund@hotmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4434
+Tested-by: Adam Berglund <adam.f.berglund@hotmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250718172307.1928744-1-superm1@kernel.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
-This commit is suitable for backporting to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Enhanced Debugging for Real-World Issues**: The commit improves
-   debugging of USB xHCI host controller failures by printing the actual
-   `xhc_state` value when `queue_command` fails. The commit message
-   shows real error messages users encounter ("xHCI dying or halted,
-   can't queue_command"), demonstrating this is a real-world debugging
-   problem.
+## Backport Justification
 
-2. **Minimal and Safe Change**: The change is extremely small and safe -
-   it only modifies a debug print statement from:
+1. **Fixes a real user-impacting bug**: The commit addresses a BIOS
+   firmware bug that causes "rather long resume from suspend" on the
+   Lenovo Yoga 6 13ALC6 laptop. This is a significant usability issue
+   that affects users of this specific hardware model during
+   suspend/resume operations.
+
+2. **Minimal and contained change**: The patch simply adds 8 lines to an
+   existing DMI quirk table (lines 193-201 in the diff). It adds one new
+   entry:
   ```c
-  xhci_dbg(xhci, "xHCI dying or halted, can't queue_command\n");
+  {
+  .ident = "Lenovo Yoga 6 13ALC6",
+  .driver_data = &quirk_s2idle_bug,
+  .matches = {
+  DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+  DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
+  }
+  },
   ```
-  to:
-  ```c
-  xhci_dbg(xhci, "xHCI dying or halted, can't queue_command. state:
-  0x%x\n", xhci->xhc_state);
-  ```
 
-3. **No Functional Changes**: This is a pure diagnostic improvement. It
-   doesn't change any logic, control flow, or data structures. It only
-   adds the state value (0x%x format) to an existing debug message.
+3. **Follows established pattern**: The fix uses the exact same
+   mechanism (`quirk_s2idle_bug`) that's already applied to 20+ other
+   Lenovo laptops in the same file. The workaround manipulates a scratch
+   register (FCH_PM_SCRATCH) to skip a problematic SMI handler during
+   suspend-to-idle resume, as documented in the comment at lines
+   241-248.
 
-4. **Important for Troubleshooting**: The xHCI driver is critical for
-   USB functionality, and when it fails with "dying or halted" states,
-   knowing the exact state helps diagnose whether:
-   - `XHCI_STATE_DYING` (0x1) - controller is dying
-   - `XHCI_STATE_HALTED` (0x2) - controller is halted
-   - Both states (0x3) - controller has both flags set
+4. **No architectural changes**: This is purely a device-specific quirk
+   addition to an existing quirk framework. No new functionality is
+   introduced, no APIs are changed, and no kernel subsystem architecture
+   is modified.
 
-   This distinction is valuable for debugging hardware issues, driver
-bugs, or system problems.
+5. **Low regression risk**: The change only affects systems that match
+   the specific DMI strings (LENOVO board vendor + 82ND product name).
+   It cannot affect any other hardware.
 
-5. **Zero Risk of Regression**: Adding a parameter to a debug print
-   statement has no risk of introducing regressions. The worst case is
-   the debug message prints the state value.
+6. **Tested by reporter**: The commit message indicates "Tested-by: Adam
+   Berglund" who was also the reporter of the issue, confirming the fix
+   works on the affected hardware.
 
-6. **Follows Stable Rules**: This meets stable kernel criteria as it:
-   - Fixes a real debugging limitation
-   - Is obviously correct
-   - Has been tested (signed-off and accepted by Greg KH)
-   - Is small (single line change)
-   - Doesn't add new features, just improves existing diagnostics
+7. **Follows stable tree rules**: This is exactly the type of commit
+   that stable trees want:
+   - Fixes a real bug (long resume times)
+   - Minimal change (8 lines)
+   - Hardware-specific fix with no broader impact
+   - Already tested on affected hardware
 
-The commit helps system administrators and developers diagnose USB
-issues more effectively by providing the actual state value rather than
-just saying "dying or halted", making it a valuable debugging
-enhancement for stable kernels.
+The issue being fixed is documented at
+https://gitlab.freedesktop.org/drm/amd/-/issues/4434, and the workaround
+applies the same proven fix that's been working for numerous other
+Lenovo models with similar BIOS issues related to suspend-to-idle resume
+performance when IOMMU is enabled for NVMe devices.
 
- drivers/usb/host/xhci-ring.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 44352df58c9e..c6d89b51c678 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -4454,7 +4454,8 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
- 
- 	if ((xhci->xhc_state & XHCI_STATE_DYING) ||
- 		(xhci->xhc_state & XHCI_STATE_HALTED)) {
--		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command\n");
-+		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command. state: 0x%x\n",
-+			 xhci->xhc_state);
- 		return -ESHUTDOWN;
- 	}
- 
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 7ed12c1d3b34..04686ae1e976 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -189,6 +189,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+ 		}
+ 	},
++	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
++	{
++		.ident = "Lenovo Yoga 6 13ALC6",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
+ 	{
+ 		.ident = "HP Laptop 15s-eq2xxx",
 -- 
 2.39.5
 
