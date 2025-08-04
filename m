@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3B71D555;
-	Mon,  4 Aug 2025 00:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A0D15A8;
+	Mon,  4 Aug 2025 00:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268205; cv=none; b=I9mxoiTgmfGTuJWkvh0PN4VYkVwDg+Wx7V6XcZrRLdtlurfro+K6pSVxx4SnkfmCIHAsLcSYGVgzu12CMXHN16TwGaTZ+s3Argt2xDxjJyawKDU7g+G7IF9wy764lOTdLBCQggekmZ6tO6VAJ/k4gtO1iFL8cIfNdHS0rdd3vVg=
+	t=1754268208; cv=none; b=Bn98DYmoMDIz0FAbchW3tmNpFU8SjUcsMOTVRQ6bcmPks0H1y8SHOvATQZ7lPl/YwUf47Wjh9V1mVHAAFgJnrRwfyCtVB//mvSQRwBnl8TGFhn6vz3uHew38Ru6JW1CF8mSSLr3sCAqZrpebrQ5q6O0jDyuSqDTf3BY1xVmuj98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268205; c=relaxed/simple;
-	bh=DsKKpt/BfqDg8SW+KpXJMP0WYTw0BkWeSrolWOZJB+o=;
+	s=arc-20240116; t=1754268208; c=relaxed/simple;
+	bh=+O/p8jZmtXWSeCT2cDVmWygfSf0mIMjP2v6MAlfwZOc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aOYxb1WrXrNuGSQODD/qZ2dN7ZPIC6Jp4Euz6dvDlQhPi0yuvu53QSBrMR8qooJQhoGPWP8GAOtxDZ0K7/RLmyPJaqoNPpqIBfkNngZk3HjKgkAfGttEqp4Nz1JBq5+zYsb1VbqOjGSmKl2KLOkRYdhipbfiis+MY//0w8WGR+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LFjeM3mD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h/MRaRFjwqTF0HiyvdDh/BFg9prkqj9dbfihsaBpiMjH9fMjTfAkxw1Gedku5TuDlMdFQRm/MnffFOwu7dqWtydB6R6ZaJ3THiiZEMC4nKjK68Qr3/Y6Y+YERw98UNDErWwbT25yVPGHrkVjLbYMf+9CoDtlDc/njnCmdj3JsvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r0A0/wkf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LFjeM3mD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4DCC4CEEB;
-	Mon,  4 Aug 2025 00:43:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r0A0/wkf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC85FC4CEEB;
+	Mon,  4 Aug 2025 00:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268205;
-	bh=DsKKpt/BfqDg8SW+KpXJMP0WYTw0BkWeSrolWOZJB+o=;
+	s=k20201202; t=1754268208;
+	bh=+O/p8jZmtXWSeCT2cDVmWygfSf0mIMjP2v6MAlfwZOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LFjeM3mDHFNx6Hk/YjRc+/zc+PyOReIduWd4sTwLPzUjmzCPcC6uB4duHWZoQNer/
-	 661FoeR5Hf5Fwo09T4ddyT8PwH7w07l1P3Whut4VhKZgPkB6wMh3kHCDqIkLSJuDDt
-	 J0LFYklZFv9u+Jy73LnOaavuxd3O+qyMhHC1jOW12hPOJq4j7APg4QiluBy6pq7up1
-	 1Gj6C8i36xQUr5FISWyJB1G33a0aLJE4QldhMTnuh2Q3ocBwPh+Aiz16asUU2fshK/
-	 sqA/irXJlEcgrCRSFhCFx/5Ji5XaJI2VbiXzOxQJAzspuIFVn7bKwD/xde8qJ8QJhW
-	 x8KN5nC+X7QIA==
+	b=r0A0/wkf4RO7Hdm4JPF3T9a9XB63sfRkRs8QpSfPHVRU7f9Q6IOUcUCqMPaO53Vqg
+	 UUeyCFiCdxv+GjMPY1QOcX7jnIoM+R1R/tKQfSbgab7gb5Hy7OoXN/gsh3xlCpHbJg
+	 akEddVfri1BxE8Kq2ADnecHIUiXgI8zXAEvN88sqAG5AzPjTuc6twirKnBejgnkTdB
+	 wFr3znK2joWv/mUb/QTSPMKxeQBqWsCPe2x7N66cTljNFZEfjym0Wc+CAs7sYWbHtt
+	 rLEckwjgbat3xze2z3Bksg+RxSKL0uhqmvFIC94ctkunymtAPpuib5N8e9nd0XZ0lE
+	 JNRHYcVplaEaw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yongbo Zhang <giraffesnn123@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: "Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sebastian.reichel@collabora.com,
-	krzysztof.kozlowski@linaro.org
-Subject: [PATCH AUTOSEL 5.4 23/28] usb: typec: fusb302: fix scheduling while atomic when using virtio-gpio
-Date: Sun,  3 Aug 2025 20:42:22 -0400
-Message-Id: <20250804004227.3630243-23-sashal@kernel.org>
+	wangfushuai@baidu.com,
+	herongguang@linux.alibaba.com
+Subject: [PATCH AUTOSEL 5.4 24/28] pm: cpupower: Fix the snapshot-order of tsc,mperf, clock in mperf_stop()
+Date: Sun,  3 Aug 2025 20:42:23 -0400
+Message-Id: <20250804004227.3630243-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004227.3630243-1-sashal@kernel.org>
 References: <20250804004227.3630243-1-sashal@kernel.org>
@@ -53,54 +52,22 @@ X-stable-base: Linux 5.4.296
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yongbo Zhang <giraffesnn123@gmail.com>
+From: "Gautham R. Shenoy" <gautham.shenoy@amd.com>
 
-[ Upstream commit 1c2d81bded1993bb2c7125a911db63612cdc8d40 ]
+[ Upstream commit cda7ac8ce7de84cf32a3871ba5f318aa3b79381e ]
 
-When the gpio irqchip connected to a slow bus(e.g., i2c bus or virtio
-bus), calling disable_irq_nosync() in top-half ISR handler will trigger
-the following kernel BUG:
+In the function mperf_start(), mperf_monitor snapshots the time, tsc
+and finally the aperf,mperf MSRs. However, this order of snapshotting
+in is reversed in mperf_stop(). As a result, the C0 residency (which
+is computed as delta_mperf * 100 / delta_tsc) is under-reported on
+CPUs that is 100% busy.
 
-BUG: scheduling while atomic: RenderEngine/253/0x00010002
-...
-Call trace:
- dump_backtrace+0x0/0x1c8
- show_stack+0x1c/0x2c
- dump_stack_lvl+0xdc/0x12c
- dump_stack+0x1c/0x64
- __schedule_bug+0x64/0x80
- schedule_debug+0x98/0x118
- __schedule+0x68/0x704
- schedule+0xa0/0xe8
- schedule_timeout+0x38/0x124
- wait_for_common+0xa4/0x134
- wait_for_completion+0x1c/0x2c
- _virtio_gpio_req+0xf8/0x198
- virtio_gpio_irq_bus_sync_unlock+0x94/0xf0
- __irq_put_desc_unlock+0x50/0x54
- disable_irq_nosync+0x64/0x94
- fusb302_irq_intn+0x24/0x84
- __handle_irq_event_percpu+0x84/0x278
- handle_irq_event+0x64/0x14c
- handle_level_irq+0x134/0x1d4
- generic_handle_domain_irq+0x40/0x68
- virtio_gpio_event_vq+0xb0/0x130
- vring_interrupt+0x7c/0x90
- vm_interrupt+0x88/0xd8
- __handle_irq_event_percpu+0x84/0x278
- handle_irq_event+0x64/0x14c
- handle_fasteoi_irq+0x110/0x210
- __handle_domain_irq+0x80/0xd0
- gic_handle_irq+0x78/0x154
- el0_irq_naked+0x60/0x6c
+Fix this by snapshotting time, tsc and then aperf,mperf in
+mperf_stop() in the same order as in mperf_start().
 
-This patch replaces request_irq() with devm_request_threaded_irq() to
-avoid the use of disable_irq_nosync().
-
-Signed-off-by: Yongbo Zhang <giraffesnn123@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250526043433.673097-1-giraffesnn123@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250612122355.19629-2-gautham.shenoy@amd.com
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -108,132 +75,66 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Bug Analysis
+1. **Clear bug fix with user impact**: The commit fixes a calculation
+   bug in the cpupower tool where C0 residency (processor active time)
+   is under-reported on 100% busy CPUs. This directly affects users
+   monitoring CPU performance and power states.
 
-The commit fixes a critical "scheduling while atomic" bug that occurs
-when the fusb302 USB Type-C controller uses GPIO interrupts connected
-through slow buses (like I2C or virtio). The bug manifests as a kernel
-BUG with the following call trace showing `__schedule_bug` being
-triggered from within an atomic context.
+2. **Simple and contained fix**: The change is minimal - it only
+   reorders three function calls in `mperf_stop()` to match the order in
+   `mperf_start()`:
+   - Before: `mperf_measure_stats()` → `mperf_get_tsc()` →
+     `clock_gettime()`
+   - After: `clock_gettime()` → `mperf_get_tsc()` →
+     `mperf_measure_stats()`
 
-## Technical Details of the Bug
+3. **Low risk of regression**: The fix simply ensures consistent
+   snapshot ordering between start and stop measurements. This is a
+   logical correction that aligns the measurement methodology without
+   introducing new functionality.
 
-1. **Root Cause**: The fusb302 driver's interrupt handler
-   (`fusb302_irq_intn`) calls `disable_irq_nosync()` from the top-half
-   ISR context (lines 1480-1481 in the original code). When the GPIO
-   controller is connected via a slow bus like virtio-gpio, the
-   `disable_irq_nosync()` operation requires bus transactions that can
-   sleep, which is forbidden in atomic/interrupt context.
+4. **Clear root cause**: The bug occurs because the reversed snapshot
+   order causes timing skew in the C0 residency calculation
+   (`delta_mperf * 100 / delta_tsc`). When snapshots are taken in
+   different orders at start vs stop, the time windows don't align
+   properly, leading to incorrect calculations.
 
-2. **The Problem Flow**:
-   - Hardware interrupt occurs → `fusb302_irq_intn` ISR runs in atomic
-     context
-   - ISR calls `disable_irq_nosync(chip->gpio_int_n_irq)`
-   - virtio-gpio's `virtio_gpio_irq_bus_sync_unlock()` needs to
-     communicate over virtio bus
-   - This requires `wait_for_completion()` which can sleep
-   - Sleeping in atomic context triggers the kernel BUG
+5. **Affects monitoring tool accuracy**: While this is a userspace tool
+   bug rather than a kernel bug, cpupower is an important diagnostic
+   tool shipped with the kernel. Incorrect C0 residency reporting could
+   mislead system administrators and developers analyzing CPU
+   performance.
 
-## The Fix
+6. **No architectural changes**: The fix doesn't change any data
+   structures, APIs, or fundamental behavior - it simply corrects the
+   measurement sequence.
 
-The fix replaces `request_irq()` with `devm_request_threaded_irq()` and
-removes the problematic `disable_irq_nosync()`/`enable_irq()` pattern:
+The commit meets stable tree criteria as it fixes a real bug affecting
+users, is minimal in scope, and has very low risk of introducing new
+issues.
 
-1. **Before**: Used regular IRQ handler that disabled the interrupt in
-   top-half, scheduled work, then re-enabled in bottom-half
-2. **After**: Uses threaded IRQ handler which naturally handles the
-   interrupt masking/unmasking without explicit calls
+ tools/power/cpupower/utils/idle_monitor/mperf_monitor.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Key changes:
-- Line 1751-1754: Changed from `request_irq()` to
-  `devm_request_threaded_irq()` with NULL top-half handler
-- Line 1481: Removed `disable_irq_nosync()` call from ISR
-- Line 1625: Removed corresponding `enable_irq()` call from work
-  function
-- Line 1750: Removed `free_irq()` call (handled by devm_*)
-
-## Stable Backport Criteria Evaluation
-
-1. **Fixes a bug affecting users**: YES - This fixes a kernel BUG that
-   causes system instability
-2. **Relatively small and contained**: YES - Only 7 lines changed,
-   confined to one driver file
-3. **Clear side effects**: NO - The fix is straightforward with no
-   architectural changes
-4. **Major architectural changes**: NO - Simply changes IRQ registration
-   method
-5. **Critical kernel subsystems**: NO - Limited to USB Type-C controller
-   driver
-6. **Stable tree mention**: NO - But follows stable tree rules perfectly
-7. **Follows stable rules**: YES - Important bugfix with minimal risk
-
-## Additional Considerations
-
-- The bug only manifests with specific hardware configurations (virtio-
-  gpio or slow I2C GPIO expanders)
-- The fix is a standard pattern used throughout the kernel for similar
-  issues
-- Using `devm_request_threaded_irq()` is actually cleaner and provides
-  automatic cleanup
-- No functional changes to the driver's behavior, only fixes the atomic
-  scheduling violation
-- Similar fixes have been applied to other drivers facing the same issue
-  pattern
-
-This is an ideal stable backport candidate: it fixes a real bug that
-causes kernel panics, the fix is minimal and well-understood, and
-there's virtually no risk of regression.
-
- drivers/usb/typec/tcpm/fusb302.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/usb/typec/tcpm/fusb302.c b/drivers/usb/typec/tcpm/fusb302.c
-index 5e661bae3997..c1200d0412b7 100644
---- a/drivers/usb/typec/tcpm/fusb302.c
-+++ b/drivers/usb/typec/tcpm/fusb302.c
-@@ -1470,9 +1470,6 @@ static irqreturn_t fusb302_irq_intn(int irq, void *dev_id)
- 	struct fusb302_chip *chip = dev_id;
- 	unsigned long flags;
+diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+index 0e8c0b879d4b..09c606760464 100644
+--- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+@@ -201,9 +201,9 @@ static int mperf_stop(void)
+ 	int cpu;
  
--	/* Disable our level triggered IRQ until our irq_work has cleared it */
--	disable_irq_nosync(chip->gpio_int_n_irq);
--
- 	spin_lock_irqsave(&chip->irq_lock, flags);
- 	if (chip->irq_suspended)
- 		chip->irq_while_suspended = true;
-@@ -1615,7 +1612,6 @@ static void fusb302_irq_work(struct work_struct *work)
- 	}
- done:
- 	mutex_unlock(&chip->lock);
--	enable_irq(chip->gpio_int_n_irq);
- }
- 
- static int init_gpio(struct fusb302_chip *chip)
-@@ -1755,9 +1751,10 @@ static int fusb302_probe(struct i2c_client *client,
- 		goto destroy_workqueue;
+ 	for (cpu = 0; cpu < cpu_count; cpu++) {
+-		mperf_measure_stats(cpu);
+-		mperf_get_tsc(&tsc_at_measure_end[cpu]);
+ 		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
++		mperf_get_tsc(&tsc_at_measure_end[cpu]);
++		mperf_measure_stats(cpu);
  	}
  
--	ret = request_irq(chip->gpio_int_n_irq, fusb302_irq_intn,
--			  IRQF_ONESHOT | IRQF_TRIGGER_LOW,
--			  "fsc_interrupt_int_n", chip);
-+	ret = devm_request_threaded_irq(dev, chip->gpio_int_n_irq,
-+					NULL, fusb302_irq_intn,
-+					IRQF_ONESHOT | IRQF_TRIGGER_LOW,
-+					"fsc_interrupt_int_n", chip);
- 	if (ret < 0) {
- 		dev_err(dev, "cannot request IRQ for GPIO Int_N, ret=%d", ret);
- 		goto tcpm_unregister_port;
-@@ -1782,7 +1779,6 @@ static int fusb302_remove(struct i2c_client *client)
- 	struct fusb302_chip *chip = i2c_get_clientdata(client);
- 
- 	disable_irq_wake(chip->gpio_int_n_irq);
--	free_irq(chip->gpio_int_n_irq, chip);
- 	cancel_work_sync(&chip->irq_work);
- 	cancel_delayed_work_sync(&chip->bc_lvl_handler);
- 	tcpm_unregister_port(chip->tcpm_port);
+ 	return 0;
 -- 
 2.39.5
 
