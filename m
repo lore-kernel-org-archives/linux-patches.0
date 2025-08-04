@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63355481DD;
-	Mon,  4 Aug 2025 00:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDC4481DD;
+	Mon,  4 Aug 2025 00:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267047; cv=none; b=gvKLKHFuTe427dg3izUkZqdA+EAMSkc3/3knH9N2DxS6BdWDqJAu1s/i400GEnUtikO9PMAv1tTP2p6ZpVDwFroBrsSp40nLQZG426wWREkhePudypVzo+R1FNt65gq4jph1JhBMUqwdEXJ6uVM4JNQ4dlbA7o/ty4bqMHtcNHU=
+	t=1754267051; cv=none; b=OS0zqmWQ/e1rq6i6b5oBrdjnAnxZv/Oqr0APwFDOpZH11FYahQtK4v3xBO6FArhLju6TBA6NoIp03FqWl08wbEC2uChszGYrm89unahE/UA1Fdz6Q0RAUQUASiKEW7K7dfX80Eeu+JBmmyS4I2gCUF2VZ9GRAHgc+5Eegm9a5DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267047; c=relaxed/simple;
-	bh=9yl34AuDo5VJmNgu8Ln9VKmiPKC9lrTDnVLtokXKakM=;
+	s=arc-20240116; t=1754267051; c=relaxed/simple;
+	bh=L3afjqCzpdfZT8/wqFNVDEpuWOwL2SuP7Op3WUPYEgw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ZwhvRQ5Jpa16L5kisXgCaInwlgx62tp1NytsweoYx8KKQsS7wzhsTX4IbQdX+mT4dbOeg3hfd3oa7Xhoe44A2mXHEWBSQDMJwZRQIfSvD6l/DGAHFvvhBGkIIWlGquK/K740sK9w0WCyTzfJkWE5U7wCJZf4qgyDg0nXgBHcO5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e8wsIRTQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SfigWEY9S4D76Ps7/UTmYJEtHwjwJNIm1S/Ym7xiyOWyx+t2VFtera7gn6SORnzo3Qvdem0LZeXrbQzcdi8ofTzK24ikTQCmO3d2n6Klkf1vWporNp4o0iY3k/bXrKbqBA3Wv1I+cP2PRiS37jnsRqAFDV3tFQBGjotTK8nDX2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KwHxzaa6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e8wsIRTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2EAC4CEEB;
-	Mon,  4 Aug 2025 00:24:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KwHxzaa6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0CEC4CEEB;
+	Mon,  4 Aug 2025 00:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267047;
-	bh=9yl34AuDo5VJmNgu8Ln9VKmiPKC9lrTDnVLtokXKakM=;
+	s=k20201202; t=1754267051;
+	bh=L3afjqCzpdfZT8/wqFNVDEpuWOwL2SuP7Op3WUPYEgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8wsIRTQZDn0bUhMkWv89Nw/RJ2B2OWyei24zzi0rralJhmDEAmXAUdsHxGiT2UyF
-	 13lmlsQEcYODnavHQHfP65/DZs/B/uRXdY8rBV9g4g8i0NvcjKGGg4NdLbBQ7cbZA5
-	 FGYt3Gg+Y1kwW2fOm67bPobxsuYDq6VZqnaZ8NUoBSdVXKC1aTS919bz2RQvMn9fdr
-	 //Av1UYOzsEjpB1+t1n1obAVziSFCWfrSRQejt9XhbPSXg+UDNmO6WYMlJXyDExWj6
-	 jmXJGmUqm+7J2QHNbp0Cc5A08Cyq/k9PeemeyUGN7kPfsbogCWwNWTm1dvn61yxz9O
-	 SCtU8QrsmpqkA==
+	b=KwHxzaa6SS7XQycJhSxsUIa98tTYgrd4Izh/POvm1DN3ABaXy8P8qdwFQX1TFh2gp
+	 yx3ka3xKxoczyoc0CeiABbUva4CHT1XB05cHKuulSIpY0qg9pSQRaBGEgts7HqeOV2
+	 W9mY2Qrq1w2uPEedaIsXsSm+zBu+jyfb/Blz3p0wTMrj+Z2Ka3CnVH9lItTzj6ftTj
+	 K+4OiR5cHMQlsXyZwPjlGyBYZ8insVXVwU5jZk6c/Cbhk1D+wSdHU2iCpd+SWw5nhg
+	 bUSK7A4SiQ5zpjaI1XvpaqffA5q2mRdiExtKT9yqZ281bNiuxuL6Ifp3X8Tdwl6Abo
+	 0vLLo2ONao58A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Benson Leung <bleung@chromium.org>,
-	Jameson Thies <jthies@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Daniele Palmas <dnlplm@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	madhu.m@intel.com
-Subject: [PATCH AUTOSEL 6.16 07/85] usb: typec: ucsi: psy: Set current max to 100mA for BC 1.2 and Default
-Date: Sun,  3 Aug 2025 20:22:16 -0400
-Message-Id: <20250804002335.3613254-7-sashal@kernel.org>
+	slark_xiao@163.com,
+	quic_vpernami@quicinc.com,
+	tglx@linutronix.de,
+	johan+linaro@kernel.org,
+	quic_msarkar@quicinc.com,
+	mank.wang@netprisma.us,
+	quic_skananth@quicinc.com
+Subject: [PATCH AUTOSEL 6.16 08/85] bus: mhi: host: pci_generic: Add Telit FN990B40 modem support
+Date: Sun,  3 Aug 2025 20:22:17 -0400
+Message-Id: <20250804002335.3613254-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -55,121 +56,105 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Benson Leung <bleung@chromium.org>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit af833e7f7db3cf4c82f063668e1b52297a30ec18 ]
+[ Upstream commit 00559ba3ae740e7544b48fb509b2b97f56615892 ]
 
-ucsi_psy_get_current_max would return 0mA as the maximum current if
-UCSI detected a BC or a Default USB Power sporce.
+Add SDX72 based modem Telit FN990B40, reusing FN920C04 configuration.
 
-The comment in this function is true that we can't tell the difference
-between DCP/CDP or SDP chargers, but we can guarantee that at least 1-unit
-of USB 1.1/2.0 power is available, which is 100mA, which is a better
-fallback value than 0, which causes some userspaces, including the ChromeOS
-power manager, to regard this as a power source that is not providing
-any power.
+01:00.0 Unassigned class [ff00]: Qualcomm Device 0309
+        Subsystem: Device 1c5d:201a
 
-In reality, 100mA is guaranteed from all sources in these classes.
-
-Signed-off-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20250717200805.3710473-1-bleung@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+[mani: added sdx72 in the comment to identify the chipset]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20250716091836.999364-1-dnlplm@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Let me analyze the code changes more carefully. The commit introduces a
-new constant `UCSI_TYPEC_DEFAULT_CURRENT` set to 100mA and changes the
-behavior for BC 1.2 and Default USB power sources from returning 0mA to
-returning 100mA.
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's the
+extensive analysis:
 
-1. **Bug Fix for User-Facing Issue**: The commit fixes a clear bug where
-   the UCSI driver was reporting 0mA as the maximum current for BC 1.2
-   and Default USB power sources. This incorrect value causes userspace
-   power managers (specifically mentioned: ChromeOS power manager) to
-   incorrectly interpret these power sources as not providing any power.
-   This is a functionality bug that affects end users.
+## Analysis of the Commit
 
-2. **Small and Contained Change**: The fix is minimal - it only changes
-   two lines in the actual logic:
-   - Line 167 in `ucsi_psy_get_current_max()`: Changes from `val->intval
-     = 0;` to `val->intval = UCSI_TYPEC_DEFAULT_CURRENT * 1000;`
-   - Adds a new constant definition in the header file
+The commit adds support for the Telit FN990B40 modem, which is an
+SDX72-based device. The changes are:
 
-3. **Minimal Risk of Regression**: The change is very conservative:
-   - It only affects the BC (Battery Charging) and DEFAULT power
-     operation modes
-   - The 100mA value is the guaranteed minimum from USB 1.1/2.0
-     specification (1 unit load)
-   - It doesn't change behavior for any other power modes (PD, TypeC
-     1.5A, TypeC 3.0A)
-   - The change is read-only (only affects reported values, doesn't
-     change any hardware behavior)
+1. **Addition of a new device info structure**
+   (`mhi_telit_fn990b40_info`) that reuses the existing
+   `modem_telit_fn920c04_config` configuration
+2. **Addition of a PCI device ID entry** in the `mhi_pci_id_table` for
+   the new hardware (PCI ID 0x0309, subsystem 0x1c5d:0x201a)
 
-4. **Clear Technical Justification**: The commit message correctly
-   explains that while UCSI cannot distinguish between DCP/CDP or SDP
-   chargers, all USB sources in these classes guarantee at least 100mA
-   (1 unit load per USB specification). This is technically accurate and
-   represents the minimum guaranteed current.
+## Rationale for Backporting
 
-5. **No Architectural Changes**: This is a simple value correction that
-   doesn't introduce new features or change any interfaces. It maintains
-   the existing API while providing more accurate information.
+1. **Meets stable kernel rules**: According to
+   Documentation/process/stable-kernel-rules.rst line 15, patches that
+   "just add a device ID" are explicitly allowed in stable trees.
 
-6. **Fixes Real-World Issues**: The commit explicitly mentions that
-   returning 0mA causes problems with userspace power management
-   software, which would treat the power source as non-functional. This
-   could lead to incorrect battery status reporting or power management
-   decisions.
+2. **Small and contained change**: The patch adds only 11 lines of code
+   (well under the 100-line limit) and is purely additive - it doesn't
+   modify any existing functionality.
 
-The change follows stable kernel rules by being a targeted fix for a
-specific bug that affects users, with minimal code changes and low
-regression risk.
+3. **Hardware enablement**: This enables users with Telit FN990B40
+   modems to use their hardware on stable kernel versions. Without this
+   patch, the modem won't be recognized by the kernel.
 
- drivers/usb/typec/ucsi/psy.c  | 2 +-
- drivers/usb/typec/ucsi/ucsi.h | 7 ++++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+4. **Low risk**: The change reuses an existing configuration
+   (`modem_telit_fn920c04_config`), which minimizes the risk of
+   introducing bugs. The new device entry only affects systems with this
+   specific hardware.
 
-diff --git a/drivers/usb/typec/ucsi/psy.c b/drivers/usb/typec/ucsi/psy.c
-index 62ac69730405..62a9d68bb66d 100644
---- a/drivers/usb/typec/ucsi/psy.c
-+++ b/drivers/usb/typec/ucsi/psy.c
-@@ -164,7 +164,7 @@ static int ucsi_psy_get_current_max(struct ucsi_connector *con,
- 	case UCSI_CONSTAT_PWR_OPMODE_DEFAULT:
- 	/* UCSI can't tell b/w DCP/CDP or USB2/3x1/3x2 SDP chargers */
- 	default:
--		val->intval = 0;
-+		val->intval = UCSI_TYPEC_DEFAULT_CURRENT * 1000;
- 		break;
- 	}
- 	return 0;
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index 5a8f947fcece..f644bc251863 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -481,9 +481,10 @@ struct ucsi {
- #define UCSI_MAX_SVID		5
- #define UCSI_MAX_ALTMODES	(UCSI_MAX_SVID * 6)
+5. **Similar patches pattern**: Looking at the commit history, similar
+   hardware enablement commits for MHI modems (like commit 6348f62ef7ec
+   for Telit FN920C04 and commit 0724869ede9c for Telit FE990) follow
+   the same pattern of adding device IDs and configurations.
+
+6. **No architectural changes**: This is purely a device ID addition
+   with no changes to the driver's core functionality or architecture.
+
+The commit perfectly fits the stable kernel criteria as a simple device
+ID addition that enables hardware support without any risk to existing
+functionality.
+
+ drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 589cb6722316..3fde90fe660d 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -818,6 +818,16 @@ static const struct mhi_pci_dev_info mhi_telit_fn920c04_info = {
+ 	.edl_trigger = true,
+ };
  
--#define UCSI_TYPEC_VSAFE5V	5000
--#define UCSI_TYPEC_1_5_CURRENT	1500
--#define UCSI_TYPEC_3_0_CURRENT	3000
-+#define UCSI_TYPEC_VSAFE5V		5000
-+#define UCSI_TYPEC_DEFAULT_CURRENT	 100
-+#define UCSI_TYPEC_1_5_CURRENT		1500
-+#define UCSI_TYPEC_3_0_CURRENT		3000
- 
- struct ucsi_connector {
- 	int num;
++static const struct mhi_pci_dev_info mhi_telit_fn990b40_info = {
++	.name = "telit-fn990b40",
++	.config = &modem_telit_fn920c04_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++	.mru_default = 32768,
++	.edl_trigger = true,
++};
++
+ static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+ 	.name = "netprisma-lcur57",
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+@@ -865,6 +875,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fe990a_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
++	/* Telit FN990B40 (sdx72) */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x201a),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fn990b40_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
+ 	/* QDU100, x100-DU */
 -- 
 2.39.5
 
