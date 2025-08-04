@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8E91891AB;
-	Mon,  4 Aug 2025 00:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870991519A0;
+	Mon,  4 Aug 2025 00:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267352; cv=none; b=FTTLWzjHnvoTLVpU+i9t1Q/ZQI9F6aMJEw06yI/OgUp9cUGWq8t9/TJ+KDYyrGVEQ0sVNd8lpmtPNH0EbAaKRHrgimSe8uGg1/QUd2dQ4xD1Lbtdd6qK3t2RO17sMbi4XE3U2kTbIT54gcmNEHLmsJEDWKlDoxF8qTh9lKrlwvI=
+	t=1754267354; cv=none; b=uWsqMYONEPMM7Uy+j47k3DeiWacGTMOdPxzrlUhtX2CWYVTm5BhQiyg4+ijMOjpVbfXi3rwFuI407RR9InDYyKejWfcZnmjm1P36CgVmjjHYbGg2TU94d2Im2z+sb3QMSYQNTRSzbDN/ZG1pIU6gLK59itWQVYrCk89sHM+FXIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267352; c=relaxed/simple;
-	bh=7M06c9i6jttEbYev5rW+GxpX144x7L0u7eR4g5iVWd0=;
+	s=arc-20240116; t=1754267354; c=relaxed/simple;
+	bh=PDEs/OAddArWftKcYhFFbcMHSEqIEg34zuQdBPEVPx8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Y+oGx7PPIriFpBm6rjtqjyxsSZ8rSEtjZ88YEVLmiNImNct2mhiczPZvOpGIQXxH7+xJXKiCycCTIH6OqndZBuQ1u0KE/aDKnmR/xtFvU5kc92lwIJpdEHog2Lp6VGx577cbIgpHCBFaCzTy9ZR0NMJj4goECq3PTiksY3zn2/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UoqMGGMq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJppoSgeiu3FCNp/vyiAk9Q9GwBFatcphck6XY9OhIGO8DDFq4HzI8BHhW7Ci3hnf1l6VLSirD84cp5OPCo6irRkLXT0fEuqDq/nCmu3CyTBSI7Ge7kAdfdczs4se+RgOrWaNbv+tlOUALydWgA7eMR77Q6CMD2xeE5MmMlUyOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nx1GtxRd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UoqMGGMq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521D0C4CEF9;
-	Mon,  4 Aug 2025 00:29:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nx1GtxRd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A545C4CEEB;
+	Mon,  4 Aug 2025 00:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267352;
-	bh=7M06c9i6jttEbYev5rW+GxpX144x7L0u7eR4g5iVWd0=;
+	s=k20201202; t=1754267354;
+	bh=PDEs/OAddArWftKcYhFFbcMHSEqIEg34zuQdBPEVPx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UoqMGGMqVUVh+6sfq00ybRC0t+lpV7Sigb7L7xsnuWGIyDH42/44XMv+kETmlwXH/
-	 JtHMWrW8/w+vhcVAnzWYQyoIEQJX+eYjp6enI+vVLeAlHDx4yrdcpwRkk9YNv2PObX
-	 g06y2S1oKP3hYc/+RANXwMEhFJvE+z+GmAm1zYdmeTvkLecGHM6BMNxCHhlx9OKhXi
-	 LLLjxsVTm1M1BYkC5g1yunNFhLMv+FBnU47wn7xTSR2p00gYX4YjL3S/5aS1yy/3iH
-	 Guy/QZCUH4Et8SWkOKg3bZPLaKs7UNsbEe1HLw2ayY/oTa7jYNzXYBHjaYsJhZebug
-	 w5maHqW9Bo66Q==
+	b=nx1GtxRdZEGqi6t94Gtfl/HzS5SSKruztJb1HUeteLYwOo1u4yX+kvZQ7VWwPzhPS
+	 RMbLqFArAJPmQagTZ/8dmhQQN1NFJ6ieEVbJrt1040pPZixhh2whKmDyGa3rgoAFya
+	 HxWu1VgKWGK3FzkYU8ql7mLFHObPdYKE3lForNCdXHFm3eHOjH8617h/270D910ISU
+	 tdXih2ltvwm/ve6FLF6I97LP1x0yqDjtT6JdPgsWyunK4ENvzBxJd2PvITvoUCcGT2
+	 hGPHYSzQ8Rq9QRwXnwxlwV5+dHepHNKRETkQ1Zq0uaOtfteEAZ6qeIkEKu8mh0Jgdy
+	 abewDtbua2Jhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	linus.walleij@linaro.org,
-	brgl@bgdev.pl,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 32/80] gpio: tps65912: check the return value of regmap_update_bits()
-Date: Sun,  3 Aug 2025 20:26:59 -0400
-Message-Id: <20250804002747.3617039-32-sashal@kernel.org>
+Cc: Michael Walle <mwalle@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.15 33/80] mfd: tps6594: Add TI TPS652G1 support
+Date: Sun,  3 Aug 2025 20:27:00 -0400
+Message-Id: <20250804002747.3617039-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -51,91 +49,294 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
+[ Upstream commit 626bb0a45584d544d84eab909795ccb355062bcc ]
 
-regmap_update_bits() can fail, check its return value like we do
-elsewhere in the driver.
+The TPS652G1 is a stripped down version of the TPS65224. From a software
+point of view, it lacks any voltage monitoring, the watchdog, the ESM
+and the ADC.
 
-Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Link: https://lore.kernel.org/r/20250613114518.1772109-2-mwalle@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Bug Fix with Real Impact**: The commit fixes a bug where the return
-   value of `regmap_update_bits()` in `tps65912_gpio_direction_output()`
-   is not checked (line 54-55 in the original code). This could lead to
-   silent failures where the GPIO initial value is not set correctly,
-   but the function continues to configure the direction, potentially
-   leaving the GPIO in an inconsistent state.
+1. **Hardware Enablement (Device ID Addition)**: This patch adds support
+   for a new PMIC variant (TPS652G1) by adding its device ID and
+   configuration. According to stable kernel rules, patches that "just
+   add a device ID" are explicitly allowed for stable backporting.
 
-2. **Consistency with Driver Pattern**: The driver already checks return
-   values of `regmap_update_bits()` in other functions:
-   - `tps65912_gpio_direction_input()` (line 44) properly returns the
-     result
-   - The second `regmap_update_bits()` call in
-     `tps65912_gpio_direction_output()` (line 57) also returns the
-     result
-   - `tps65912_gpio_get_direction()` checks the return value of
-     `regmap_read()`
+2. **Self-Contained Changes**: The modifications are isolated to adding
+   support for the new device without altering existing functionality:
+   - Adds `TPS652G1` to the `enum pmic_id`
+   - Adds TPS652G1-specific MFD cells configuration
+   - Adds device-specific IRQ mappings (subset of TPS65224 IRQs)
+   - Adds compatible strings "ti,tps652g1" to I2C and SPI device tables
+   - Properly handles the stripped-down nature of TPS652G1 (no RTC, ADC,
+     watchdog, ESM)
 
-3. **Small and Contained Fix**: The patch is minimal - it only adds:
-   - An `int ret` variable declaration
-   - Captures the return value of the first `regmap_update_bits()` call
-   - Adds an error check that returns early if the operation failed
+3. **Low Risk**: The changes follow the existing driver pattern and only
+   add conditional paths for the new device:
+  ```c
+  if (tps->chip_id == TPS65224 || tps->chip_id == TPS652G1)
+  ```
+  This ensures existing device support remains unaffected.
 
-4. **No Side Effects**: This change doesn't introduce any new
-   functionality or alter the existing behavior when operations succeed.
-   It only adds proper error handling that was missing.
+4. **User Benefit**: Without this patch, users with TPS652G1 hardware
+   cannot use their devices on stable kernels. This directly impacts
+   hardware functionality for affected users.
 
-5. **Hardware Communication Reliability**: The TPS65912 is a PMIC (Power
-   Management IC) that communicates over I2C/SPI. Hardware communication
-   can fail due to various reasons (bus errors, device issues), and not
-   checking return values can lead to incorrect GPIO states which could
-   affect system stability or connected peripherals.
+5. **Proper Implementation**: The patch correctly handles the TPS652G1
+   as a feature-reduced variant of TPS65224, sharing the same register
+   layout and CRC handling while properly excluding unsupported
+   features.
 
-6. **Follows Kernel Best Practices**: The kernel coding standards
-   require checking return values of functions that can fail, especially
-   for hardware operations. This fix brings the code in line with those
-   standards.
+The patch is relatively small, follows established driver patterns, and
+enables essential hardware support without introducing architectural
+changes or new features beyond device enablement.
 
-The commit message clearly indicates this is a bug fix
-("regmap_update_bits() can fail, check its return value like we do
-elsewhere in the driver"), making it a perfect candidate for stable
-backporting as it improves driver reliability without any risk of
-regression.
+ drivers/mfd/tps6594-core.c  | 88 ++++++++++++++++++++++++++++++++++---
+ drivers/mfd/tps6594-i2c.c   | 10 ++++-
+ drivers/mfd/tps6594-spi.c   | 10 ++++-
+ include/linux/mfd/tps6594.h |  1 +
+ 4 files changed, 99 insertions(+), 10 deletions(-)
 
- drivers/gpio/gpio-tps65912.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
-index fab771cb6a87..bac757c191c2 100644
---- a/drivers/gpio/gpio-tps65912.c
-+++ b/drivers/gpio/gpio-tps65912.c
-@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
- 					  unsigned offset, int value)
+diff --git a/drivers/mfd/tps6594-core.c b/drivers/mfd/tps6594-core.c
+index a7223e873cd1..c16c37e36617 100644
+--- a/drivers/mfd/tps6594-core.c
++++ b/drivers/mfd/tps6594-core.c
+@@ -1,6 +1,11 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * Core functions for TI TPS65224/TPS6594/TPS6593/LP8764 PMICs
++ * Core functions for following TI PMICs:
++ *  - LP8764
++ *  - TPS65224
++ *  - TPS652G1
++ *  - TPS6593
++ *  - TPS6594
+  *
+  * Copyright (C) 2023 BayLibre Incorporated - https://www.baylibre.com/
+  */
+@@ -414,6 +419,61 @@ static const unsigned int tps65224_irq_reg[] = {
+ 	TPS6594_REG_INT_FSM_ERR,
+ };
+ 
++/* TPS652G1 Resources */
++
++static const struct mfd_cell tps652g1_common_cells[] = {
++	MFD_CELL_RES("tps6594-pfsm", tps65224_pfsm_resources),
++	MFD_CELL_RES("tps6594-pinctrl", tps65224_pinctrl_resources),
++	MFD_CELL_NAME("tps6594-regulator"),
++};
++
++static const struct regmap_irq tps652g1_irqs[] = {
++	/* INT_GPIO register */
++	REGMAP_IRQ_REG(TPS65224_IRQ_GPIO1, 2, TPS65224_BIT_GPIO1_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_GPIO2, 2, TPS65224_BIT_GPIO2_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_GPIO3, 2, TPS65224_BIT_GPIO3_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_GPIO4, 2, TPS65224_BIT_GPIO4_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_GPIO5, 2, TPS65224_BIT_GPIO5_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_GPIO6, 2, TPS65224_BIT_GPIO6_INT),
++
++	/* INT_STARTUP register */
++	REGMAP_IRQ_REG(TPS65224_IRQ_VSENSE, 3, TPS65224_BIT_VSENSE_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_ENABLE, 3, TPS6594_BIT_ENABLE_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_PB_SHORT, 3, TPS65224_BIT_PB_SHORT_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_FSD, 3, TPS6594_BIT_FSD_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_SOFT_REBOOT, 3, TPS6594_BIT_SOFT_REBOOT_INT),
++
++	/* INT_MISC register */
++	REGMAP_IRQ_REG(TPS65224_IRQ_BIST_PASS, 4, TPS6594_BIT_BIST_PASS_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_EXT_CLK, 4, TPS6594_BIT_EXT_CLK_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_REG_UNLOCK, 4, TPS65224_BIT_REG_UNLOCK_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_TWARN, 4, TPS6594_BIT_TWARN_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_PB_LONG, 4, TPS65224_BIT_PB_LONG_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_PB_FALL, 4, TPS65224_BIT_PB_FALL_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_PB_RISE, 4, TPS65224_BIT_PB_RISE_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_ADC_CONV_READY, 4, TPS65224_BIT_ADC_CONV_READY_INT),
++
++	/* INT_MODERATE_ERR register */
++	REGMAP_IRQ_REG(TPS65224_IRQ_TSD_ORD, 5, TPS6594_BIT_TSD_ORD_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_BIST_FAIL, 5, TPS6594_BIT_BIST_FAIL_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_REG_CRC_ERR, 5, TPS6594_BIT_REG_CRC_ERR_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_RECOV_CNT, 5, TPS6594_BIT_RECOV_CNT_INT),
++
++	/* INT_SEVERE_ERR register */
++	REGMAP_IRQ_REG(TPS65224_IRQ_TSD_IMM, 6, TPS6594_BIT_TSD_IMM_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_VCCA_OVP, 6, TPS6594_BIT_VCCA_OVP_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_PFSM_ERR, 6, TPS6594_BIT_PFSM_ERR_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_BG_XMON, 6, TPS65224_BIT_BG_XMON_INT),
++
++	/* INT_FSM_ERR register */
++	REGMAP_IRQ_REG(TPS65224_IRQ_IMM_SHUTDOWN, 7, TPS6594_BIT_IMM_SHUTDOWN_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_ORD_SHUTDOWN, 7, TPS6594_BIT_ORD_SHUTDOWN_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_MCU_PWR_ERR, 7, TPS6594_BIT_MCU_PWR_ERR_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_SOC_PWR_ERR, 7, TPS6594_BIT_SOC_PWR_ERR_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_COMM_ERR, 7, TPS6594_BIT_COMM_ERR_INT),
++	REGMAP_IRQ_REG(TPS65224_IRQ_I2C2_ERR, 7, TPS65224_BIT_I2C2_ERR_INT),
++};
++
+ static inline unsigned int tps6594_get_irq_reg(struct regmap_irq_chip_data *data,
+ 					       unsigned int base, int index)
  {
- 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
-+	int ret;
+@@ -443,7 +503,7 @@ static int tps6594_handle_post_irq(void *irq_drv_data)
+ 	 * a new interrupt.
+ 	 */
+ 	if (tps->use_crc) {
+-		if (tps->chip_id == TPS65224) {
++		if (tps->chip_id == TPS65224 || tps->chip_id == TPS652G1) {
+ 			regmap_reg = TPS6594_REG_INT_FSM_ERR;
+ 			mask_val = TPS6594_BIT_COMM_ERR_INT;
+ 		} else {
+@@ -481,6 +541,18 @@ static struct regmap_irq_chip tps65224_irq_chip = {
+ 	.handle_post_irq = tps6594_handle_post_irq,
+ };
  
- 	/* Set the initial value */
--	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
--			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
-+	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
-+				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
-+	if (ret)
-+		return ret;
++static struct regmap_irq_chip tps652g1_irq_chip = {
++	.ack_base = TPS6594_REG_INT_BUCK,
++	.ack_invert = 1,
++	.clear_ack = 1,
++	.init_ack_masked = 1,
++	.num_regs = ARRAY_SIZE(tps65224_irq_reg),
++	.irqs = tps652g1_irqs,
++	.num_irqs = ARRAY_SIZE(tps652g1_irqs),
++	.get_irq_reg = tps65224_get_irq_reg,
++	.handle_post_irq = tps6594_handle_post_irq,
++};
++
+ static const struct regmap_range tps6594_volatile_ranges[] = {
+ 	regmap_reg_range(TPS6594_REG_INT_TOP, TPS6594_REG_STAT_READBACK_ERR),
+ 	regmap_reg_range(TPS6594_REG_RTC_STATUS, TPS6594_REG_RTC_STATUS),
+@@ -507,7 +579,7 @@ static int tps6594_check_crc_mode(struct tps6594 *tps, bool primary_pmic)
+ 	int ret;
+ 	unsigned int regmap_reg, mask_val;
  
- 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
- 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
+-	if (tps->chip_id == TPS65224) {
++	if (tps->chip_id == TPS65224 || tps->chip_id == TPS652G1) {
+ 		regmap_reg = TPS6594_REG_CONFIG_2;
+ 		mask_val = TPS65224_BIT_I2C1_SPI_CRC_EN;
+ 	} else {
+@@ -537,7 +609,7 @@ static int tps6594_set_crc_feature(struct tps6594 *tps)
+ 	int ret;
+ 	unsigned int regmap_reg, mask_val;
+ 
+-	if (tps->chip_id == TPS65224) {
++	if (tps->chip_id == TPS65224 || tps->chip_id == TPS652G1) {
+ 		regmap_reg = TPS6594_REG_CONFIG_2;
+ 		mask_val = TPS65224_BIT_I2C1_SPI_CRC_EN;
+ 	} else {
+@@ -628,6 +700,10 @@ int tps6594_device_init(struct tps6594 *tps, bool enable_crc)
+ 		irq_chip = &tps65224_irq_chip;
+ 		n_cells = ARRAY_SIZE(tps65224_common_cells);
+ 		cells = tps65224_common_cells;
++	} else if (tps->chip_id == TPS652G1) {
++		irq_chip = &tps652g1_irq_chip;
++		n_cells = ARRAY_SIZE(tps652g1_common_cells);
++		cells = tps652g1_common_cells;
+ 	} else {
+ 		irq_chip = &tps6594_irq_chip;
+ 		n_cells = ARRAY_SIZE(tps6594_common_cells);
+@@ -651,8 +727,8 @@ int tps6594_device_init(struct tps6594 *tps, bool enable_crc)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to add common child devices\n");
+ 
+-	/* No RTC for LP8764 and TPS65224 */
+-	if (tps->chip_id != LP8764 && tps->chip_id != TPS65224) {
++	/* No RTC for LP8764, TPS65224 and TPS652G1 */
++	if (tps->chip_id != LP8764 && tps->chip_id != TPS65224 && tps->chip_id != TPS652G1) {
+ 		ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_AUTO, tps6594_rtc_cells,
+ 					   ARRAY_SIZE(tps6594_rtc_cells), NULL, 0,
+ 					   regmap_irq_get_domain(tps->irq_data));
+diff --git a/drivers/mfd/tps6594-i2c.c b/drivers/mfd/tps6594-i2c.c
+index 4ab91c34d9fb..7ff7516286fd 100644
+--- a/drivers/mfd/tps6594-i2c.c
++++ b/drivers/mfd/tps6594-i2c.c
+@@ -1,6 +1,11 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * I2C access driver for TI TPS65224/TPS6594/TPS6593/LP8764 PMICs
++ * I2C access driver for the following TI PMICs:
++ *  - LP8764
++ *  - TPS65224
++ *  - TPS652G1
++ *  - TPS6593
++ *  - TPS6594
+  *
+  * Copyright (C) 2023 BayLibre Incorporated - https://www.baylibre.com/
+  */
+@@ -197,6 +202,7 @@ static const struct of_device_id tps6594_i2c_of_match_table[] = {
+ 	{ .compatible = "ti,tps6593-q1", .data = (void *)TPS6593, },
+ 	{ .compatible = "ti,lp8764-q1",  .data = (void *)LP8764,  },
+ 	{ .compatible = "ti,tps65224-q1", .data = (void *)TPS65224, },
++	{ .compatible = "ti,tps652g1", .data = (void *)TPS652G1, },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, tps6594_i2c_of_match_table);
+@@ -222,7 +228,7 @@ static int tps6594_i2c_probe(struct i2c_client *client)
+ 		return dev_err_probe(dev, -EINVAL, "Failed to find matching chip ID\n");
+ 	tps->chip_id = (unsigned long)match->data;
+ 
+-	if (tps->chip_id == TPS65224)
++	if (tps->chip_id == TPS65224 || tps->chip_id == TPS652G1)
+ 		tps6594_i2c_regmap_config.volatile_table = &tps65224_volatile_table;
+ 
+ 	tps->regmap = devm_regmap_init(dev, NULL, client, &tps6594_i2c_regmap_config);
+diff --git a/drivers/mfd/tps6594-spi.c b/drivers/mfd/tps6594-spi.c
+index 6ebccb79f0cc..944b7313a1d9 100644
+--- a/drivers/mfd/tps6594-spi.c
++++ b/drivers/mfd/tps6594-spi.c
+@@ -1,6 +1,11 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * SPI access driver for TI TPS65224/TPS6594/TPS6593/LP8764 PMICs
++ * SPI access driver for the following TI PMICs:
++ *  - LP8764
++ *  - TPS65224
++ *  - TPS652G1
++ *  - TPS6593
++ *  - TPS6594
+  *
+  * Copyright (C) 2023 BayLibre Incorporated - https://www.baylibre.com/
+  */
+@@ -82,6 +87,7 @@ static const struct of_device_id tps6594_spi_of_match_table[] = {
+ 	{ .compatible = "ti,tps6593-q1", .data = (void *)TPS6593, },
+ 	{ .compatible = "ti,lp8764-q1",  .data = (void *)LP8764,  },
+ 	{ .compatible = "ti,tps65224-q1", .data = (void *)TPS65224, },
++	{ .compatible = "ti,tps652g1", .data = (void *)TPS652G1, },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, tps6594_spi_of_match_table);
+@@ -107,7 +113,7 @@ static int tps6594_spi_probe(struct spi_device *spi)
+ 		return dev_err_probe(dev, -EINVAL, "Failed to find matching chip ID\n");
+ 	tps->chip_id = (unsigned long)match->data;
+ 
+-	if (tps->chip_id == TPS65224)
++	if (tps->chip_id == TPS65224 || tps->chip_id == TPS652G1)
+ 		tps6594_spi_regmap_config.volatile_table = &tps65224_volatile_table;
+ 
+ 	tps->regmap = devm_regmap_init(dev, NULL, spi, &tps6594_spi_regmap_config);
+diff --git a/include/linux/mfd/tps6594.h b/include/linux/mfd/tps6594.h
+index 16543fd4d83e..021db8875963 100644
+--- a/include/linux/mfd/tps6594.h
++++ b/include/linux/mfd/tps6594.h
+@@ -19,6 +19,7 @@ enum pmic_id {
+ 	TPS6593,
+ 	LP8764,
+ 	TPS65224,
++	TPS652G1,
+ };
+ 
+ /* Macro to get page index from register address */
 -- 
 2.39.5
 
