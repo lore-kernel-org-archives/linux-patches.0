@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324F5481DD;
-	Mon,  4 Aug 2025 00:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8E91891AB;
+	Mon,  4 Aug 2025 00:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267351; cv=none; b=tKKj9r/6kjfitWg7yJ8Xv5de97n+53nm4QiYO87J2jIjwTzfHMkJVk9CqMfMPenamCUmvnSX2Yc+lxXQ2ZZ9W78B8Yq1AIirZMRgVL63Hp/WXCjDeTG18t8WdVNoqBmxFx6Fm94bkD0AxsW3YFqweJExtn05CyGUEO3vAgl6VeQ=
+	t=1754267352; cv=none; b=FTTLWzjHnvoTLVpU+i9t1Q/ZQI9F6aMJEw06yI/OgUp9cUGWq8t9/TJ+KDYyrGVEQ0sVNd8lpmtPNH0EbAaKRHrgimSe8uGg1/QUd2dQ4xD1Lbtdd6qK3t2RO17sMbi4XE3U2kTbIT54gcmNEHLmsJEDWKlDoxF8qTh9lKrlwvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267351; c=relaxed/simple;
-	bh=aTPv+xjAr6TJo90MCp9pMjW1VnsjCB9dZW4cIZXjwSY=;
+	s=arc-20240116; t=1754267352; c=relaxed/simple;
+	bh=7M06c9i6jttEbYev5rW+GxpX144x7L0u7eR4g5iVWd0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h03WgK4D/mQaVY99mA5TnyWaALGa8xPy4uBNT2gxXH4HvIlCY2JEjo6ZJIZuPZUIupO3anPmttQrS05meu+KOEJLF81Hjns439xijV9uDNfLEYLXRDyXep/DujjX/HMulJ+ZQHz+BgfNRh2yS/RcHf8QzwFdoz+RBDjxP1fUf3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJPltdRS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y+oGx7PPIriFpBm6rjtqjyxsSZ8rSEtjZ88YEVLmiNImNct2mhiczPZvOpGIQXxH7+xJXKiCycCTIH6OqndZBuQ1u0KE/aDKnmR/xtFvU5kc92lwIJpdEHog2Lp6VGx577cbIgpHCBFaCzTy9ZR0NMJj4goECq3PTiksY3zn2/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UoqMGGMq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJPltdRS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B075C4CEF8;
-	Mon,  4 Aug 2025 00:29:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UoqMGGMq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521D0C4CEF9;
+	Mon,  4 Aug 2025 00:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267350;
-	bh=aTPv+xjAr6TJo90MCp9pMjW1VnsjCB9dZW4cIZXjwSY=;
+	s=k20201202; t=1754267352;
+	bh=7M06c9i6jttEbYev5rW+GxpX144x7L0u7eR4g5iVWd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJPltdRSNcGaiBMBUXPrRo98wTijte3jNT/D16RvqhiVlwp1hGdlXo53MOLsSkdL6
-	 xG7frT8SpaagO/sj7CBZxhq9yBNDdmbSvawqXqtuI93lNfJBP4OZbJt/0Chdp+vNsD
-	 +lNlTm0fuyTYBv+dauVzzwzF1VdOmDnDE8Ai9jmVQPoTGQtA7W1O5a6GvE41C1w6xl
-	 oJxe2lYWaH1TPm/PcoqhGwuXQlTPgOrDPooWeM9uhSWQU19ip5a8oRU0Z784KPk5MZ
-	 8NysbejRdDN7Jkg8061Z8kYbibRxIZBqP0T19vtLMok5RJcRdAPTzWRqWEw/yR9KCO
-	 Jmk4UfIC7aqfg==
+	b=UoqMGGMqVUVh+6sfq00ybRC0t+lpV7Sigb7L7xsnuWGIyDH42/44XMv+kETmlwXH/
+	 JtHMWrW8/w+vhcVAnzWYQyoIEQJX+eYjp6enI+vVLeAlHDx4yrdcpwRkk9YNv2PObX
+	 g06y2S1oKP3hYc/+RANXwMEhFJvE+z+GmAm1zYdmeTvkLecGHM6BMNxCHhlx9OKhXi
+	 LLLjxsVTm1M1BYkC5g1yunNFhLMv+FBnU47wn7xTSR2p00gYX4YjL3S/5aS1yy/3iH
+	 Guy/QZCUH4Et8SWkOKg3bZPLaKs7UNsbEe1HLw2ayY/oTa7jYNzXYBHjaYsJhZebug
+	 w5maHqW9Bo66Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lars@metafoo.de,
-	Michael.Hennerich@analog.com
-Subject: [PATCH AUTOSEL 6.15 31/80] iio: adc: ad_sigma_delta: don't overallocate scan buffer
-Date: Sun,  3 Aug 2025 20:26:58 -0400
-Message-Id: <20250804002747.3617039-31-sashal@kernel.org>
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 32/80] gpio: tps65912: check the return value of regmap_update_bits()
+Date: Sun,  3 Aug 2025 20:26:59 -0400
+Message-Id: <20250804002747.3617039-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -48,25 +46,20 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: David Lechner <dlechner@baylibre.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 5a2f15c5a8e017d0951e6dc62aa7b5b634f56881 ]
+[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
 
-Fix overallocating the size of the scan buffer by converting bits to
-bytes. The size is meant to be in bytes, so scanbits needs to be
-divided by 8.
+regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver.
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250701-iio-adc-ad7173-add-spi-offload-support-v3-1-42abb83e3dac@baylibre.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -74,61 +67,75 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit fixes a clear memory overallocation bug in the
-ad_sigma_delta ADC driver that has been present since kernel v5.19. The
-analysis shows:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-1. **Bug Description**: The code incorrectly calculates buffer size by
-   treating `storagebits` (which is in bits) as if it were in bytes. The
-   `storagebits` field in `struct iio_scan_type` represents the number
-   of bits needed to store a sample, typically 8, 16, 24, or 32 bits.
+1. **Bug Fix with Real Impact**: The commit fixes a bug where the return
+   value of `regmap_update_bits()` in `tps65912_gpio_direction_output()`
+   is not checked (line 54-55 in the original code). This could lead to
+   silent failures where the GPIO initial value is not set correctly,
+   but the function continues to configure the direction, potentially
+   leaving the GPIO in an inconsistent state.
 
-2. **Impact**: The bug causes the driver to allocate 8x more memory than
-   needed. For example:
-   - If `storagebits = 16` (2 bytes per sample) and `slot = 4`
-   - Buggy calculation: `ALIGN(4 * 16, 8) = 64 bytes`
-   - Correct calculation: `ALIGN(4 * 16 / 8, 8) = 8 bytes`
+2. **Consistency with Driver Pattern**: The driver already checks return
+   values of `regmap_update_bits()` in other functions:
+   - `tps65912_gpio_direction_input()` (line 44) properly returns the
+     result
+   - The second `regmap_update_bits()` call in
+     `tps65912_gpio_direction_output()` (line 57) also returns the
+     result
+   - `tps65912_gpio_get_direction()` checks the return value of
+     `regmap_read()`
 
-   This wastes kernel memory and could potentially lead to memory
-exhaustion in systems with many IIO devices.
+3. **Small and Contained Fix**: The patch is minimal - it only adds:
+   - An `int ret` variable declaration
+   - Captures the return value of the first `regmap_update_bits()` call
+   - Adds an error check that returns early if the operation failed
 
-3. **Fix Quality**: The fix is minimal and correct - simply dividing by
-   8 to convert bits to bytes. This is consistent with how `storagebits`
-   is used throughout the IIO subsystem, as evidenced by the grep
-   results showing `sizeof(u32) * 8` assignments.
+4. **No Side Effects**: This change doesn't introduce any new
+   functionality or alter the existing behavior when operations succeed.
+   It only adds proper error handling that was missing.
 
-4. **Affected Versions**: The bug was introduced in commit 8bea9af887de4
-   ("iio: adc: ad_sigma_delta: Add sequencer support") which first
-   appeared in v5.19 and is present in all releases since then (v5.19,
-   v6.0, v6.1, v6.10, v6.11).
+5. **Hardware Communication Reliability**: The TPS65912 is a PMIC (Power
+   Management IC) that communicates over I2C/SPI. Hardware communication
+   can fail due to various reasons (bus errors, device issues), and not
+   checking return values can lead to incorrect GPIO states which could
+   affect system stability or connected peripherals.
 
-5. **Stable Criteria Met**:
-   - ✓ Fixes a real bug (memory overallocation)
-   - ✓ Small, contained fix (single line change)
-   - ✓ No architectural changes
-   - ✓ Low risk of regression
-   - ✓ Bug affects users (wastes memory)
-   - ✓ Clear and obvious fix
+6. **Follows Kernel Best Practices**: The kernel coding standards
+   require checking return values of functions that can fail, especially
+   for hardware operations. This fix brings the code in line with those
+   standards.
 
-The commit should be backported to all stable kernels from v5.19 onwards
-to fix this memory waste issue in the industrial I/O subsystem.
+The commit message clearly indicates this is a bug fix
+("regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver"), making it a perfect candidate for stable
+backporting as it improves driver reliability without any risk of
+regression.
 
- drivers/iio/adc/ad_sigma_delta.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-tps65912.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
-index 4c5f8d29a559..6b3ef7ef403e 100644
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -489,7 +489,7 @@ static int ad_sd_buffer_postenable(struct iio_dev *indio_dev)
- 			return ret;
- 	}
+diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
+index fab771cb6a87..bac757c191c2 100644
+--- a/drivers/gpio/gpio-tps65912.c
++++ b/drivers/gpio/gpio-tps65912.c
+@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
+ 					  unsigned offset, int value)
+ {
+ 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
++	int ret;
  
--	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits, 8);
-+	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits / 8, 8);
- 	samples_buf_size += sizeof(int64_t);
- 	samples_buf = devm_krealloc(&sigma_delta->spi->dev, sigma_delta->samples_buf,
- 				    samples_buf_size, GFP_KERNEL);
+ 	/* Set the initial value */
+-	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+-			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
++				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	if (ret)
++		return ret;
+ 
+ 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+ 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
 -- 
 2.39.5
 
