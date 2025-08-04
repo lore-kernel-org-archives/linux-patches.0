@@ -1,51 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF28813B5A9;
-	Mon,  4 Aug 2025 00:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637F913B5A9;
+	Mon,  4 Aug 2025 00:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267390; cv=none; b=qScVdttauyoAoxdpHfFtcK0JZ0Xw6RtmUV6ps8ajVB5shGVrRWa51Uzp6RHGrWca53PtDsur3En2vAtXFVWllugQJAEuPTEIzYdxyvXBnIrlWbOfcE6PHqj/aXs0my73GmaSoQgGo5cHtPxzcyLKUrYMeW/UYL0EkP+zaFzZAc4=
+	t=1754267392; cv=none; b=F9Dz2l64GtPyozMvvGEeg05YpCAR0xbN/AFYwDBcuwbQGWExGOKZXoZ8zchHlpeKLC3kkUOsjaEOXpNdOA5TKyTHEge56pJ7QWJ0aF0qVBvyhfS8U5iH8Idr+IlKkvyIeDg3eQ5Kk0L16y136pmiGMiiyiRNROIJ8AUOddwa05g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267390; c=relaxed/simple;
-	bh=91WQJzO0/8B1MAGCDa6vdYWD9+ywd2CT1zwdvugA6oc=;
+	s=arc-20240116; t=1754267392; c=relaxed/simple;
+	bh=Uc9EBAVZwmoaPxZJPpgW3Ltv9yh0rdtJrmC4OXA0/04=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=uHIyeNwYa8RM/9Cqmc5Zu+6BkR5HXdc/eNho9Hde7sjx1sPqFOf/I9CoEIN59DWHHR5fjk72S0gAKaHeOS0Cz8fSLUNByuN8/3KpgQFsuI2wf8Sj8Ov0c+IrcczAQR4hOsPqlcuGh9YxecIDK+68aDKfLq1tH2YQxvG0A17ZeqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WPTdXtb7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eInGfyA9/RvJWD26eGtYMPX7er16DqZkICYxI0yoUVo5HLQvaF/BQpGPRtiuFNknvtV6jZUE9riDTWKf44EugvCeRigJXjgbCO9pVqr47DOupGHIgajt5XilJvarZCqKh3r23JCodybkS4LNYWE1z7X6oX8tuC9T7/68cnO81g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oz75oLPO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WPTdXtb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D3BC4CEEB;
-	Mon,  4 Aug 2025 00:29:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oz75oLPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029B2C4CEEB;
+	Mon,  4 Aug 2025 00:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267390;
-	bh=91WQJzO0/8B1MAGCDa6vdYWD9+ywd2CT1zwdvugA6oc=;
+	s=k20201202; t=1754267392;
+	bh=Uc9EBAVZwmoaPxZJPpgW3Ltv9yh0rdtJrmC4OXA0/04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WPTdXtb7f2jNzQSWNnN9vCnsNTrWpceAiMYVaWKDAjBZMCNjFlNO2kJGtg5G8dK9e
-	 9bT+FsBlUXKEWdw3CoVbpmKqTZ6ZEKuiOs8FM0xFTKK5QMqjkyictthlec6IK+DapK
-	 l5kJxJprYPD/uZmBFfRsnidaleXp9juBOFYRsqnx+kUTYsmKf4fd0ZruZOgGZMgbQk
-	 rPp3OW0iW/cvF5C1cMvBMe/UcpQqOP7UK4xRcYJYj2KtEAu5tCsPMifgAUCD/7Svg2
-	 wncEGs5uyfH+Bb2rHIGVv0d0lycoJGWL43cWMQzaRKkAf79xt4SxSnNUwoPL7ttHmu
-	 CABkrGvgdQp/Q==
+	b=Oz75oLPOEYzhzYVLWELFjKStuXMd8gF1RjxvExST3K296ppfWefyacpu4taSRZTs5
+	 APbTDCWpTC69Wx7poFlRkXIPbjw+JKyqINtzDDJeqtKHB84m0nBRPWvOqm4igXgP0l
+	 EaqFGc53l3mSMSZPoX5PQzJ0yGRUMTkghq3pwPYnLr/YF2tGIKyy8R5WYZHUeLu4Ob
+	 DFPSljn9m53KbDpglzMfXdgf/qPQmGSKSanvUUGALSA1OoNwRYZUDK9txpekQxRJPd
+	 ocrc1Y6bRhLDMKrlogQD9BNxnoo9cUEUagcO9IVAcEq7EG8Niz4N/1OSwB19+KMdeu
+	 +LvCqOomqyrDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Breno Leitao <leitao@debian.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Biju Das <biju.das.jz@bp.renesas.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	ira.weiny@intel.com,
-	dave.jiang@intel.com,
-	Jonathan.Cameron@huawei.com,
-	Smita.KoralahalliChannabasappa@amd.com,
-	xueshuai@linux.alibaba.com,
-	mingo@kernel.org,
-	peterz@infradead.org,
-	bp@alien8.de,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 47/80] ACPI: APEI: GHES: add TAINT_MACHINE_CHECK on GHES panic path
-Date: Sun,  3 Aug 2025 20:27:14 -0400
-Message-Id: <20250804002747.3617039-47-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 48/80] irqchip/renesas-rzv2h: Enable SKIP_SET_WAKE and MASK_ON_SUSPEND
+Date: Sun,  3 Aug 2025 20:27:15 -0400
+Message-Id: <20250804002747.3617039-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -60,91 +51,142 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 4734c8b46b901cff2feda8b82abc710b65dc31c1 ]
+[ Upstream commit de2942828e7670526289f098df7e50b112e8ff1e ]
 
-When a GHES (Generic Hardware Error Source) triggers a panic, add the
-TAINT_MACHINE_CHECK taint flag to the kernel. This explicitly marks the
-kernel as tainted due to a machine check event, improving diagnostics
-and post-mortem analysis. The taint is set with LOCKDEP_STILL_OK to
-indicate lockdep remains valid.
+The interrupt controller found on RZ/G3E doesn't provide any facility to
+configure the wakeup sources. That's the reason why the driver lacks the
+irq_set_wake() callback for the interrupt chip.
 
-At large scale deployment, this helps to quickly determine panics that
-are coming due to hardware failures.
+But this prevent to properly enter power management states like "suspend to
+idle".
 
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20250702-add_tain-v1-1-9187b10914b9@debian.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Enable the flags IRQCHIP_SKIP_SET_WAKE and IRQCHIP_MASK_ON_SUSPEND so the
+interrupt suspend logic can handle the chip correctly.
+
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/all/20250701105923.52151-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of this commit, here is my assessment:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a real diagnostic issue**: The commit adds the
-   TAINT_MACHINE_CHECK flag when GHES (Generic Hardware Error Source)
-   triggers a panic. This is important for post-mortem analysis at
-   scale, as explicitly stated in the commit message: "At large scale
-   deployment, this helps to quickly determine panics that are coming
-   due to hardware failures."
+## Summary
+This commit fixes a real bug where the Renesas RZ/G3E interrupt
+controller prevents the system from properly entering power management
+states like "suspend to idle" due to missing irqchip flags.
 
-2. **Small and contained change**: The patch adds only a single line of
-   code (`add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);`) in the
-   `__ghes_panic()` function at drivers/acpi/apei/ghes.c:1091. This
-   meets the stable kernel rule of being under 100 lines.
+## Detailed Analysis
 
-3. **Obviously correct**: The change follows established kernel
-   patterns. Looking at the grep results, other machine check handlers
-   already use this same pattern:
-   - arch/x86/kernel/cpu/mce/core.c:1640
-   - arch/powerpc/kernel/mce.c:332
-   - arch/x86/kernel/cpu/mce/p5.c:40
-   - arch/x86/kernel/cpu/mce/winchip.c:24
+### 1. **Bug Fix Nature**
+The commit clearly fixes a functional bug as stated in the commit
+message:
+- "But this prevent to properly enter power management states like
+  'suspend to idle'"
+- The interrupt controller lacks an `irq_set_wake()` callback, which is
+  necessary for proper suspend/resume functionality
 
-4. **No architectural changes**: This is purely a diagnostic improvement
-   that adds taint information without changing any functionality or
-   behavior of the GHES panic path.
+### 2. **Small and Contained Change**
+The code change is minimal and well-contained:
+```c
+.flags = IRQCHIP_SET_TYPE_MASKED,
+```
+changed to:
+```c
+.flags = IRQCHIP_MASK_ON_SUSPEND |
+         IRQCHIP_SET_TYPE_MASKED |
+         IRQCHIP_SKIP_SET_WAKE,
+```
 
-5. **Minimal risk**: The change uses LOCKDEP_STILL_OK flag, indicating
-   that lockdep remains valid after the taint, which is the safer option
-   compared to LOCKDEP_NOW_UNRELIABLE used in some other machine check
-   paths.
+This is a simple addition of two flags to the interrupt chip structure.
 
-6. **Real benefit for users**: For organizations running Linux at scale,
-   being able to quickly identify hardware-related panics through the
-   taint flag provides significant operational value for triaging
-   issues.
+### 3. **Clear Understanding of Flags**
+From the kernel documentation in include/linux/irq.h:
+- **IRQCHIP_MASK_ON_SUSPEND**: "Mask non wake irqs in the suspend path"
+  - This ensures interrupts that shouldn't wake the system are properly
+  masked during suspend
+- **IRQCHIP_SKIP_SET_WAKE**: "Skip chip.irq_set_wake(), for this irq
+  chip" - This tells the kernel to skip calling the non-existent
+  irq_set_wake() callback
 
-The commit meets all the stable kernel criteria: it's small, obviously
-correct, fixes a real diagnostic limitation that affects users
-(especially at scale), and has been reviewed by Tony Luck who is a
-recognized maintainer in the RAS (Reliability, Availability, and
-Serviceability) subsystem.
+### 4. **Pattern Consistency**
+Looking at the similar Renesas driver (irq-renesas-rzg2l.c:446-448), we
+can see the same flags are used:
+```c
+.flags = IRQCHIP_MASK_ON_SUSPEND |
+         IRQCHIP_SET_TYPE_MASKED |
+         IRQCHIP_SKIP_SET_WAKE,
+```
+This shows it's a well-established pattern for Renesas interrupt
+controllers that lack wakeup source configuration.
 
- drivers/acpi/apei/ghes.c | 2 ++
- 1 file changed, 2 insertions(+)
+### 5. **No Side Effects**
+The change only adds flags that:
+- Enable proper masking of interrupts during suspend (preventing
+  spurious interrupts)
+- Tell the kernel to skip calling a non-existent function
+- No functional changes beyond fixing the suspend issue
+- No API changes or new features
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index fe9bd27367ee..ce9b8e8a5d09 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -1099,6 +1099,8 @@ static void __ghes_panic(struct ghes *ghes,
+### 6. **Affects Users**
+This bug directly affects users trying to use power management features
+on RZ/G3E hardware. Without this fix, the system cannot properly enter
+suspend states, which impacts:
+- Power consumption
+- Battery life (on battery-powered devices)
+- System reliability during suspend/resume cycles
+
+### 7. **Low Risk**
+The change has minimal risk of regression because:
+- It only adds standard irqchip flags that are well-tested in the kernel
+- The same flags are used in other similar drivers
+- It doesn't modify any existing logic, just adds proper flag
+  configuration
+- The flags only affect suspend/resume paths, not normal operation
+
+### 8. **Driver Maturity**
+While this is a relatively new driver (added in 2024), the fix addresses
+a clear oversight in the initial implementation. The driver is already
+in mainline, so systems using this hardware need this fix for proper
+operation.
+
+## Conclusion
+This commit meets all the criteria for stable backporting:
+- Fixes a real bug that affects users
+- Minimal, well-understood change
+- No architectural changes or new features
+- Low risk of regression
+- Follows established patterns in similar drivers
+
+The fix enables proper power management functionality on affected
+hardware, which is important for system operation and user experience.
+
+ drivers/irqchip/irq-renesas-rzv2h.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/irqchip/irq-renesas-rzv2h.c b/drivers/irqchip/irq-renesas-rzv2h.c
+index 0f0fd7d4dfdf..f1f7869b49cb 100644
+--- a/drivers/irqchip/irq-renesas-rzv2h.c
++++ b/drivers/irqchip/irq-renesas-rzv2h.c
+@@ -394,7 +394,9 @@ static const struct irq_chip rzv2h_icu_chip = {
+ 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
+ 	.irq_set_type		= rzv2h_icu_set_type,
+ 	.irq_set_affinity	= irq_chip_set_affinity_parent,
+-	.flags			= IRQCHIP_SET_TYPE_MASKED,
++	.flags			= IRQCHIP_MASK_ON_SUSPEND |
++				  IRQCHIP_SET_TYPE_MASKED |
++				  IRQCHIP_SKIP_SET_WAKE,
+ };
  
- 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
- 
-+	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
-+
- 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
- 
- 	if (!panic_timeout)
+ static int rzv2h_icu_alloc(struct irq_domain *domain, unsigned int virq, unsigned int nr_irqs,
 -- 
 2.39.5
 
