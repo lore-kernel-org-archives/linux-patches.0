@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E9B4594A;
-	Mon,  4 Aug 2025 00:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C47E4594A;
+	Mon,  4 Aug 2025 00:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268199; cv=none; b=AUj3PraDk7I2puGL5kKyN5+oRjfTyWbsaoJh3AtFeFwTzWzgFTBxHghTOfb6dTeLnGTdXmNfCMAHqlbX2yhbavVpz5/OPM6T8dyTrBF/VdhV3nS0s4AIm3OnD41jICIpLhWreclTAe7Dz1LDs0B82b+MeEg6sRFN86DisthvST4=
+	t=1754268202; cv=none; b=XeknnQOo12H3/JdSTIGzfmFy01WQzVi3DOrHCxORf7uDk/T7gTlZMNxqBKZZ3e7m/H8SJuusclUt9PgkvYZMEkR8EUVgTL3MgwrZYKECLIdBb616sdPZao9l8lnuMU5Ii6EAo1nb5uche6orYchtvfCG5LYF0P3RJVjny4Q6yng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268199; c=relaxed/simple;
-	bh=jyOGt09bXYyCumgnCz4plWf2GHwdPAVTXyniUp0mf1M=;
+	s=arc-20240116; t=1754268202; c=relaxed/simple;
+	bh=TilJTCxGBdtOBi1isqvuF30wuJZZVLcwTqC77lLW9lg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JvYah6t9bBAq1tsSQK/rmef5xviWNYw8iO00qbGqaPze0KxPxATLsXt/RR+gHIfIbzpC6JzR9qD1sWKrJNUEhAGlullnYYxdlvPrrhV5yMbc4Qw1C/8CwUVryr8lCIPU3wdxzmZYGhqeZ4I2YXqFf5XOUYb2j45GIa65TQTB6hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHJTWXa+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efanwqcYFdNgz4CEJbLQQ2gnjSYd52cL3MsoMLmwWhup7tAm1JuGV0Zrvos4deQXMccvScw7a4+Gl6qbltk1rpUnHcz2n0fDUKWbm5Ak4jHZp1Z80hsjw+oomK4ytK99xMCgdVUxgmzPtEi2y9sBFoHs4r8HAX5jPtj6LtPIi2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6E5IhWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHJTWXa+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F70BC4CEF0;
-	Mon,  4 Aug 2025 00:43:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6E5IhWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64508C4CEF0;
+	Mon,  4 Aug 2025 00:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268198;
-	bh=jyOGt09bXYyCumgnCz4plWf2GHwdPAVTXyniUp0mf1M=;
+	s=k20201202; t=1754268201;
+	bh=TilJTCxGBdtOBi1isqvuF30wuJZZVLcwTqC77lLW9lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHJTWXa+Aa6Vh5Y1GHXW0pVR+xuwHNLNouCmWbgSvh5VVNzUSFR88eaegHbIQJTu+
-	 S4KePx56P77uyKu4z/biWNcE9mIs+ntGOlrEFWOPx5IiQ2ZGehU5+6e0M/lyEGUkbc
-	 9y84OS9CEAxSk5RFMxGtCwVWy2+tz+oaWlRINu9ue3iXARGg5Q+dpfp+ETGfpcBFhU
-	 mLh4cxc50G5wa560l9i1xcfBmTwO63/3ov64ycHkQ5zAyYsPaT1ch9h3xngGbiOmIs
-	 4kHKA2pfQwQG4bJHksZb6d/cclQRnQjFWygn/Rr5Q2tQeVU2+0RfVCpYff6AQj4rMq
-	 BHrnjRMF8Y8YA==
+	b=H6E5IhWlmTR/x+f7I09exJ9dJV+iYlCC9Eg5lC/JOfsrqp1y82vXL75OXwyqTFnIe
+	 oPH7uDEmDYdWUQSGD9fhj1dj55IXXKfFJZ1SQY2+C8PFIXYc+7RvtOhIZMuf4C5FMp
+	 7b4uPMmyBQSaPV3HZ3LEpQHwF0k2iVpVZbfxIO3adSuP3VZjRk9Tu4Hkan/uqTdd/4
+	 bILdQzmlvm+pA6YA62jXeU+ccmMMxggX7iPPghguPu5gnJzW+Rp+HLKYTpwpMvapz1
+	 e7PPogmByib5rQPocGPFb/Uq9i0EJWNC3SEzUuxjfF4ZrwuNDVdFVYu5h0D1ocxpDB
+	 5LFs0z28jwncQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Oliver Neukum <oneukum@suse.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andriy.shevchenko@linux.intel.com,
-	perex@perex.cz,
-	phasta@kernel.org
-Subject: [PATCH AUTOSEL 5.4 21/28] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
-Date: Sun,  3 Aug 2025 20:42:20 -0400
-Message-Id: <20250804004227.3630243-21-sashal@kernel.org>
+	thomas.weissschuh@linutronix.de,
+	rdunlap@infradead.org,
+	linux@treblig.org
+Subject: [PATCH AUTOSEL 5.4 22/28] usb: core: usb_submit_urb: downgrade type check
+Date: Sun,  3 Aug 2025 20:42:21 -0400
+Message-Id: <20250804004227.3630243-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004227.3630243-1-sashal@kernel.org>
 References: <20250804004227.3630243-1-sashal@kernel.org>
@@ -52,99 +53,89 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.296
 Content-Transfer-Encoding: 8bit
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
+[ Upstream commit 503bbde34cc3dd2acd231f277ba70c3f9ed22e59 ]
 
-code mistakenly used a hardcoded index (codec[1]) instead of
-iterating, over the codec array using the loop variable i.
-Use codec[i] instead of codec[1] to match the loop iteration.
+Checking for the endpoint type is no reason for a WARN, as that can
+cause a reboot. A driver not checking the endpoint type must not cause a
+reboot, as there is just no point in this.  We cannot prevent a device
+from doing something incorrect as a reaction to a transfer. Hence
+warning for a mere assumption being wrong is not sensible.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250612122149.2559724-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+Based on my analysis of this commit, here is my determination:
 
-This commit should be backported to stable kernel trees. Here's the
-extensive explanation:
+**Backport Status: YES**
 
-## Bug Analysis
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-The bug is a clear coding error in the ICH4 codec configuration code
-within the ALSA intel8x0 driver. Looking at the code change:
+1. **Fixes a real issue that affects users**: The commit addresses a
+   problem where a `dev_WARN()` can cause system reboots when
+   `panic_on_warn` is enabled. This is a serious issue because a driver
+   bug (not checking endpoint types properly) should not be able to
+   crash the entire system.
 
-```c
-- tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+ tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
-```
+2. **Small and contained fix**: The change is minimal - it only replaces
+   `dev_WARN()` with `dev_warn_once()` on line 503 of
+   drivers/usb/core/urb.c. This is a one-line change that doesn't affect
+   any other functionality.
 
-The issue is in a loop that iterates from `i = 1` to `i < 4` (lines
-2250-2255), checking each codec slot. However, the original code
-hardcoded `codec[1]` instead of using the loop variable `codec[i]`. This
-means:
+3. **Clear side effects**: The only behavioral change is that:
+   - The warning will no longer trigger a kernel panic when
+     `panic_on_warn` is set
+   - The warning will only be printed once instead of potentially
+     multiple times
+   - No backtrace will be generated
 
-1. **The loop was pointless** - it would always use codec[1] regardless
-   of which iteration found a valid codec
-2. **Incorrect codec configuration** - If codec[2] or codec[3] were the
-   valid codec (and codec[1] was NULL), the code would still try to
-   access codec[1], potentially causing:
-   - Null pointer dereference if codec[1] is NULL
-   - Wrong codec configuration if codec[1] exists but isn't the intended
-     one
+4. **No architectural changes**: This is a simple logging level change
+   that doesn't modify any USB subsystem architecture or functionality.
 
-## Impact Assessment
+5. **Affects critical kernel subsystem**: While USB is a critical
+   subsystem, this change actually makes it more stable by preventing
+   potential system crashes.
 
-This bug affects:
-- **Hardware**: Intel ICH4 (Intel I/O Controller Hub 4) chipsets only
-- **Functionality**: AC'97 codec configuration for multiple SDIN (Serial
-  Data In) paths
-- **When triggered**: When using ICH4 with multiple codecs where the
-  second valid codec is not in slot 1
+6. **Follows stable tree rules**: This is clearly a bugfix that improves
+   system stability. The commit message explicitly states that "A driver
+   not checking the endpoint type must not cause a reboot" - this is a
+   stability improvement that prevents denial-of-service scenarios.
 
-## Backport Suitability
+7. **Similar fixes in the kernel**: There's precedent for this type of
+   fix, as shown by commit 281cb9d65a95 ("bnxt_en: Make PTP timestamp
+   HWRM more silent") which made a similar conversion from
+   `netdev_WARN_ONCE()` to `netdev_warn_once()` for the same reason.
 
-This commit meets all criteria for stable backporting:
+The key insight from the code is that `dev_WARN()` calls `WARN()` which
+can trigger a kernel panic if `panic_on_warn` is set. This means a
+malicious or buggy USB device could potentially crash the system just by
+triggering this warning. Converting to `dev_warn_once()` maintains the
+diagnostic value while removing the crash risk.
 
-1. **Fixes a real bug**: Clear array indexing error that can cause
-   incorrect hardware configuration or crashes
-2. **Small and contained**: Single line change, exactly 1 insertion and
-   1 deletion
-3. **No side effects**: The fix simply corrects the loop to work as
-   originally intended
-4. **No architectural changes**: Pure bug fix with no API/ABI changes
-5. **Critical subsystem**: ALSA sound drivers are important for user
-   experience
-6. **Long-standing bug**: The code has been incorrect since the initial
-   git import (2005), making it important to fix in all maintained
-   kernels
-7. **Clear fix**: The correction is obvious - using the loop variable
-   instead of a hardcoded index
-
-The bug has existed since the kernel's initial git import in 2005
-(commit 1da177e4c3f4), meaning it affects all kernel versions and should
-be backported to all stable trees that still receive updates.
-
- sound/pci/intel8x0.c | 2 +-
+ drivers/usb/core/urb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
-index 5150e8d38975..87a23a4660e8 100644
---- a/sound/pci/intel8x0.c
-+++ b/sound/pci/intel8x0.c
-@@ -2285,7 +2285,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
- 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
- 			for (i = 1; i < 4; i++) {
- 				if (pcm->r[0].codec[i]) {
--					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
- 					break;
- 				}
- 			}
+diff --git a/drivers/usb/core/urb.c b/drivers/usb/core/urb.c
+index 850d0fffe1c6..e60f4ef06e3d 100644
+--- a/drivers/usb/core/urb.c
++++ b/drivers/usb/core/urb.c
+@@ -490,7 +490,7 @@ int usb_submit_urb(struct urb *urb, gfp_t mem_flags)
+ 
+ 	/* Check that the pipe's type matches the endpoint's type */
+ 	if (usb_pipe_type_check(urb->dev, urb->pipe))
+-		dev_WARN(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
++		dev_warn_once(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
+ 			usb_pipetype(urb->pipe), pipetypes[xfertype]);
+ 
+ 	/* Check against a simple/standard policy */
 -- 
 2.39.5
 
