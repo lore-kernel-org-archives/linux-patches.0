@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DA117A310;
-	Mon,  4 Aug 2025 00:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7880176FB1;
+	Mon,  4 Aug 2025 00:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267205; cv=none; b=mDfIks344lL7WNbM0/nvRGRMu+qSVm7lXk0B77YcMaDHNrQUlgQQSe1X7GcSq6zj48YSCSSmQOm9VpdDMT9g4RXyvx3mv/XnLesbS9Fp0snNdE+YaI8N95IxQi4ebulo4QRBbkAp6DLjoIwXQVKM1B8o9L3zwjvDu97LS8rjsqY=
+	t=1754267207; cv=none; b=odt6Po8e2BdSssk89/K76cWpjko4qauQLLvCUD3hB/QJlT5jkrYZlMKaeDJUysSbsq5NJgGrsD7rtgSycRvzpCmu3EhBV71mvFzP74xFxeaamuZQLwTOrZEGBu8m5VqKZWdBe9XJvbMxH3fJ/UhBGvO2ZnKrjB9EcVkKO+8KENM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267205; c=relaxed/simple;
-	bh=s2/rlHHWGgfkIJwDCOvKo4CQOlSCHBQ1/r4At5fcDvQ=;
+	s=arc-20240116; t=1754267207; c=relaxed/simple;
+	bh=6qXWJfM5tOuygGzZfFYbhsCKA+rGbu/F3OzOAuvgZXs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EABxMZdIc888IHgqrGzH0OP/ghw3banWRGuO7zD+VCsWmCMHR/RhG0FQ1Y8RJjUiQ0dacbZydQ4rG++MI/Fev0pVTNWzQdcRoTvyjt3NhKv07RQnKeFMuoedadifxUerSUqgfA1y9vMO/aHoCyAvFED8DpBwqIzCZNpvjj3dXtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A0ywWmuv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pNfDEvlWDn4pud4Ubp5oo5hVT6yEzoRlRyHagQ6eUVeu5xfcE1ucazLGSlSJgk6Z5zkVI02Qtvz58bg97tHTCO6LDaGcr+38o5FEVjGzNdQ1OTwRO7bqHIuCOX4s7QfwrKA/ryR+WwSjZYD57i7qAjSWGu774xSfBFQXHKpq/SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAJJ78cE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A0ywWmuv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269B1C4CEEB;
-	Mon,  4 Aug 2025 00:26:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAJJ78cE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5AAC4CEF8;
+	Mon,  4 Aug 2025 00:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267205;
-	bh=s2/rlHHWGgfkIJwDCOvKo4CQOlSCHBQ1/r4At5fcDvQ=;
+	s=k20201202; t=1754267207;
+	bh=6qXWJfM5tOuygGzZfFYbhsCKA+rGbu/F3OzOAuvgZXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0ywWmuv4LS3ugpAnhXpelwVFwBcJo20bV/uuXGEpgc1i+yYsjLyo2GAuU/Qu2pvt
-	 /dqfkJ1+Twc0W1jgz+MsWjibbdOnJzzCqtS+nl1xRjxHHz/uDV1Gk5XBRTC+p2XzhP
-	 vDlBzojhsKRQBPJiQIklSWXswX/1L+bB62SvaPXXTd/qfrrwbvzPVkrkGcKx2g5NE2
-	 MjYEupoKWRH4m5FRp6RwuVTR8EOLW9Jet4GtrneVNT2GFtk2DAxqSm0Kqoj2dCHYvR
-	 e3hT4ZQGzwFkSmuBFrcU7gs/xQkb00BL9o3MmsUFqXb5a0luhDQvO4pxl0wNZ1Mvlh
-	 dSbCQ6LR+bqKA==
+	b=eAJJ78cEQRtwDUe9EEWuYE8akqZYVEMng+ngx5dX55GqFEBxvrpsy9uywShUPAvEQ
+	 rGjkvkH1RF77raYllNv4fauv09NX5+nC8Cvmto9iM0qTw9cHtxSRhgA5jTeAR99zgV
+	 YACSoLjc1qdHVLyKH2hq/l7cIIVBJZY6xSoR2qWBjvAUvCDK4hnT69V95G5YG0hbNC
+	 DoF84/+FXBC/agjUqnGUKq/a92PKAmVLB8flTE3zN14dR+2zvjKcBd2eW2ilx+tspQ
+	 Oews1mUDrwDTJhfkczmjsfu3k74f4Z+SP6o0B7soHDcoJG4XFpEQla/xT4UXGnaHfz
+	 dG6MskAngw6ag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: George Gaidarov <gdgaidarov+lkml@gmail.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Borislav Petkov <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jbaron@akamai.com,
-	linux-edac@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 62/85] EDAC/ie31200: Enable support for Core i5-14600 and i7-14700
-Date: Sun,  3 Aug 2025 20:23:11 -0400
-Message-Id: <20250804002335.3613254-62-sashal@kernel.org>
+	tglx@linutronix.de,
+	peterz@infradead.org,
+	jpoimboe@kernel.org
+Subject: [PATCH AUTOSEL 6.16 63/85] x86/bugs: Avoid warning when overriding return thunk
+Date: Sun,  3 Aug 2025 20:23:12 -0400
+Message-Id: <20250804002335.3613254-63-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -53,91 +52,122 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: George Gaidarov <gdgaidarov+lkml@gmail.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit 493f9c930e5ff72b3508755b45488d1ae2c9650e ]
+[ Upstream commit 9f85fdb9fc5a1bd308a10a0a7d7e34f2712ba58b ]
 
-Device ID '0xa740' is shared by i7-14700, i7-14700K, and i7-14700T.
-Device ID '0xa704' is shared by i5-14600, i5-14600K, and i5-14600T.
+The purpose of the warning is to prevent an unexpected change to the return
+thunk mitigation. However, there are legitimate cases where the return
+thunk is intentionally set more than once. For example, ITS and SRSO both
+can set the return thunk after retbleed has set it. In both the cases
+retbleed is still mitigated.
 
-Tested locally on my i7-14700K.
+Replace the warning with an info about the active return thunk.
 
-Signed-off-by: George Gaidarov <gdgaidarov+lkml@gmail.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20250529162933.1228735-1-gdgaidarov+lkml@gmail.com
+Link: https://lore.kernel.org/20250611-eibrs-fix-v4-3-5ff86cac6c61@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Device ID Addition Only**: This commit adds exactly two new PCI
-   device IDs (`0xa740` and `0xa704`) to enable EDAC (Error Detection
-   and Correction) support for Intel Core i5-14600 and i7-14700
-   processors. According to the stable kernel rules at
-   Documentation/process/stable-kernel-rules.rst:15, patches that "just
-   add a device ID" are explicitly allowed in stable trees.
+## Key Reasons for Backporting:
 
-2. **Minimal and Safe Change**: The patch is extremely small (4 lines of
-   actual code change), adding only:
-   - Two `#define` statements for the new device IDs
-   - Two entries to the `ie31200_pci_tbl[]` array that map these IDs to
-     the existing `rpl_s_cfg` configuration
+### 1. **Fixes a Real User-Visible Issue**
+The code change shows that the original warning was triggering in
+legitimate scenarios:
+```c
+- if (x86_return_thunk != __x86_return_thunk)
+- pr_warn("x86/bugs: return thunk changed\n");
+```
+This warning would appear in kernel logs whenever multiple CPU
+vulnerability mitigations interact, which is a normal and expected
+behavior. The false positive warnings could:
+- Cause unnecessary alarm for system administrators
+- Clutter kernel logs with misleading information
+- Potentially mask real issues by creating noise
 
-3. **No Functional Changes**: The commit doesn't introduce any new
-   functionality, algorithms, or modify existing behavior. It simply
-   extends hardware support using the already-tested Raptor Lake-S
-   configuration (`rpl_s_cfg`) for these new processor variants.
+### 2. **Small, Contained Change**
+The commit is minimal and focused:
+- Only modifies 3 lines of functional code
+- Changes are confined to a single function (`set_return_thunk()`)
+- Simply replaces a conditional warning with an unconditional info
+  message:
+```c
++       pr_info("active return thunk: %ps\n", thunk);
+```
 
-4. **Tested Hardware**: The commit message indicates "Tested locally on
-   my i7-14700K", showing the change has been verified on actual
-   hardware.
+### 3. **No Risk of Regression**
+The change is safe because:
+- It doesn't modify any security logic or mitigation behavior
+- The function still sets the return thunk exactly as before
+- The new info message provides better visibility into which mitigation
+  is active
+- The `%ps` format specifier safely prints the function symbol name
 
-5. **Pattern of Similar Commits**: Looking at the driver's history,
-   similar hardware enablement commits have been regularly added (e.g.,
-   commits `180f091224a0`, `021681830e41`, `05a61c6cb631`), following
-   the same pattern of adding device IDs for new processor variants.
+### 4. **Addresses Security Mitigation Interactions**
+The commit message explicitly states that "ITS and SRSO both can set the
+return thunk after retbleed has set it" and that "retbleed is still
+mitigated." This is important for stable kernels because:
+- Multiple CVE mitigations (Retbleed, SRSO, ITS) need to coexist
+- The warning was incorrectly flagging legitimate mitigation sequences
+- Stable kernels need these mitigations to work together without false
+  alarms
 
-6. **User Benefit**: Without this patch, users with these specific Intel
-   processors cannot use EDAC functionality to detect and report memory
-   errors, which is an important reliability feature for systems using
-   ECC memory.
+### 5. **Part of Critical Security Infrastructure**
+The x86/bugs subsystem handles CPU vulnerability mitigations for:
+- CVE-2023-20569 (SRSO)
+- CVE-2024-28956 (ITS)
+- Retbleed vulnerabilities
+These are critical security features that need to function correctly in
+stable kernels.
 
-The commit perfectly fits the stable tree criteria of being a simple
-device ID addition that enables existing, tested functionality for new
-hardware variants without any risk of regression to existing systems.
+### 6. **Improves Operational Visibility**
+The new info message (`pr_info("active return thunk: %ps\n", thunk);`)
+actually improves debugging and system monitoring by:
+- Showing which specific return thunk is currently active
+- Providing better audit trail for security mitigation changes
+- Using proper function symbol printing with `%ps`
 
- drivers/edac/ie31200_edac.c | 4 ++++
- 1 file changed, 4 insertions(+)
+## Conclusion:
+This commit meets all the criteria for stable backporting:
+- Fixes a real issue (false positive warnings)
+- Minimal risk (3-line change, no logic modifications)
+- Improves system behavior without introducing new features
+- Addresses interaction between critical security mitigations
+- Makes the kernel more reliable and less confusing for operators
 
-diff --git a/drivers/edac/ie31200_edac.c b/drivers/edac/ie31200_edac.c
-index a53612be4b2f..6aac6672ba38 100644
---- a/drivers/edac/ie31200_edac.c
-+++ b/drivers/edac/ie31200_edac.c
-@@ -91,6 +91,8 @@
- #define PCI_DEVICE_ID_INTEL_IE31200_RPL_S_2	0x4640
- #define PCI_DEVICE_ID_INTEL_IE31200_RPL_S_3	0x4630
- #define PCI_DEVICE_ID_INTEL_IE31200_RPL_S_4	0xa700
-+#define PCI_DEVICE_ID_INTEL_IE31200_RPL_S_5	0xa740
-+#define PCI_DEVICE_ID_INTEL_IE31200_RPL_S_6	0xa704
+The change is particularly important for stable kernels that need to
+support multiple CPU vulnerability mitigations simultaneously without
+generating misleading warnings.
+
+ arch/x86/kernel/cpu/bugs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index f4d3abb12317..ea7f94438254 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -115,10 +115,9 @@ void (*x86_return_thunk)(void) __ro_after_init = __x86_return_thunk;
  
- /* Alder Lake-S */
- #define PCI_DEVICE_ID_INTEL_IE31200_ADL_S_1	0x4660
-@@ -740,6 +742,8 @@ static const struct pci_device_id ie31200_pci_tbl[] = {
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_RPL_S_2), (kernel_ulong_t)&rpl_s_cfg},
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_RPL_S_3), (kernel_ulong_t)&rpl_s_cfg},
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_RPL_S_4), (kernel_ulong_t)&rpl_s_cfg},
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_RPL_S_5), (kernel_ulong_t)&rpl_s_cfg},
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_RPL_S_6), (kernel_ulong_t)&rpl_s_cfg},
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_IE31200_ADL_S_1), (kernel_ulong_t)&rpl_s_cfg},
- 	{ 0, } /* 0 terminated list. */
- };
+ static void __init set_return_thunk(void *thunk)
+ {
+-	if (x86_return_thunk != __x86_return_thunk)
+-		pr_warn("x86/bugs: return thunk changed\n");
+-
+ 	x86_return_thunk = thunk;
++
++	pr_info("active return thunk: %ps\n", thunk);
+ }
+ 
+ /* Update SPEC_CTRL MSR and its cached copy unconditionally */
 -- 
 2.39.5
 
