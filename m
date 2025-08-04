@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218033A8F7;
-	Mon,  4 Aug 2025 00:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7ED18A6B0;
+	Mon,  4 Aug 2025 00:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267422; cv=none; b=ZZSHXEsy1XrmsikZzdBfCAb3/UwDFOiugirg5ke060BsVeRwt4m6Rop22SyYmyGrBvNItmRnf/5XgaSPN2FW5L8TH+ZNbwgX4H+GVN2FyaFjsztovVI5NGpaZ2vauZYdOc4j+8HMOlbSmonQ6TB7JpT1mSkmtZxvwSesPU/gZZU=
+	t=1754267425; cv=none; b=RzgOv3+Vw0iehzkMzUWQRE510o9yWYa45HO5U/NE01AQc6esUZWsbDqoogd6o8MF+eNWnMX4iJ7bkaja/LgmzjFT5QULV1hLLO2ySszlSBFNF/8h3Mt9aur9/2ZSszT85kgCrj4+GFWWQBCq990UmxxCBDV+Kxw27u/w0GA5/xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267422; c=relaxed/simple;
-	bh=SlFiCbJqCwwiH8zN6swVJIeIFnzwPa4ZhinIix2iI9w=;
+	s=arc-20240116; t=1754267425; c=relaxed/simple;
+	bh=W7zUhCOQzhEZ2PcN7+1ovJLqnIQBlX2Bao9RzjH2YR0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Zwe0O4EEY2xc+6NGTw+TQv78QbmVMHOSRPanQ9i0dIl4fwlEbU12t1m50fiondn6BeYNWeAFp48LFlTM/6EA78cPdY1hghr0STT7zqs973aZq19Xn2gOBrhrbBbckSveleqqBiCKE2NWIzQsXOXGl/HZX4tru4QNAISNMyqdL20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DY6eaDfu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E1/14YFDx8GFjY0mMh7OBY/8LsU4KqY+QJsUVEBuzUnZnzYIRpwEGQNEa784dKpyClbIdf9rtxL06mpLrPK8phhA7gTTC5+XT2k72onmVR0ppFdKiveUgLwmWB2P+9FaQiXRdVo3cqKNDXx9pRNARP03YnllES1EkCqfy2iFf8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nc+rGZQe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DY6eaDfu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C80C4CEF0;
-	Mon,  4 Aug 2025 00:30:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nc+rGZQe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A500C4CEEB;
+	Mon,  4 Aug 2025 00:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267422;
-	bh=SlFiCbJqCwwiH8zN6swVJIeIFnzwPa4ZhinIix2iI9w=;
+	s=k20201202; t=1754267425;
+	bh=W7zUhCOQzhEZ2PcN7+1ovJLqnIQBlX2Bao9RzjH2YR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DY6eaDfue/5kCQ6HnOqlfvgLbdrX8WHiqD/OHf8MBLAV7my/eMEeyXGK/RFdk5xyS
-	 nuqOlaXRKhjaNx35kGwHSrRsSE6ATsz/lsVkeV6mV49XkxObNbCS1EcqvD00ioXbkn
-	 Z7mQzsfL8lGPOGCtaovxG/3yt+Jy3Sn7D8+P5tUS1SetyXD977Ka93xCWsIeiaMaDo
-	 +6+jTXAlo7I4chTnf0+bUnkGAo/QADczBwuaVd7vrhSJM+NQDV1/eOUp1ZggUeQ4S2
-	 GIEXAPNh1zclP4AkYihu+3UTqREGM/K35oUzzZas67ynNf2sTdsfZ2S0SzblR6sCgi
-	 arXPpP2pnIOnw==
+	b=Nc+rGZQeT2f36qeWdb3MWEUr76LdTV8PKLZhUI9s5J2sr5A3SiUNV0vJFCtHvQim7
+	 6pfmi/ejhP5nE1t72cBbTyy+jdICqWRnDmvHPLDS6j6ePCZpk7kqTTgt5mZ5/eM71j
+	 3cTqBy/hINWoPyaplxJsChiHj7ZNa+wTitEtcbu1i/GJwERFrTphi9bekBVdpI+ZXP
+	 7s7hccS+ZYSawbPb7sHsbBd6JvdZ7sqt+c5Q3+QWIThzaSAT7cjLmxLv4AHT8TAgYL
+	 ELJwHDpsL0tdBhwCT/mFX6WhNRIBLEBs/X5UAcPGdgqaEmuSAYilqMY0QO5hVIF1M/
+	 7oWaE4Km0+i9w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>,
+Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	tiwai@suse.de,
-	kuninori.morimoto.gx@renesas.com,
-	raag.jadav@intel.com,
-	ckeepax@opensource.cirrus.com
-Subject: [PATCH AUTOSEL 6.15 60/80] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
-Date: Sun,  3 Aug 2025 20:27:27 -0400
-Message-Id: <20250804002747.3617039-60-sashal@kernel.org>
+	phasta@kernel.org,
+	perex@perex.cz,
+	andriy.shevchenko@linux.intel.com
+Subject: [PATCH AUTOSEL 6.15 61/80] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
+Date: Sun,  3 Aug 2025 20:27:28 -0400
+Message-Id: <20250804002747.3617039-61-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -52,114 +52,99 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
+[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
 
-We currently log parse failures for ELD data and some disconnection events
-as errors without rate limiting. These log messages can be triggered very
-frequently in some situations, especially ELD parsing when there is nothing
-connected to a HDMI port which will generate:
+code mistakenly used a hardcoded index (codec[1]) instead of
+iterating, over the codec array using the loop variable i.
+Use codec[i] instead of codec[1] to match the loop iteration.
 
-hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
-
-While there's doubtless work that could be done on reducing the number of
-connection notification callbacks it's possible these may be legitimately
-generated by poor quality physical connections so let's use rate limiting
-to mitigate the log spam for the parse errors and lower the severity for
-disconnect logging to debug level.
-
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
-This commit is a good candidate for backporting to stable kernel trees
-for the following reasons:
+This commit should be backported to stable kernel trees. Here's the
+extensive explanation:
 
-1. **Fixes a real user-facing bug**: The commit addresses log spam
-   issues that can fill system logs with repeated error messages. When
-   no HDMI display is connected, the driver continuously logs "HDMI:
-   Unknown ELD version 0" errors, which can consume disk space and make
-   logs difficult to analyze.
+## Bug Analysis
 
-2. **Small and contained fix**: The changes are minimal and focused:
-   - Changes `dev_err()` to `dev_err_ratelimited()` in two locations
-     within `hdac_hdmi_parse_eld()` (lines 1233-1234 and 1242-1243)
-   - Changes `dev_err()` to `dev_dbg()` for disconnect messages in
-     `hdac_hdmi_present_sense()` (lines 1302-1303)
-   - Total of just 3 logging statement modifications
+The bug is a clear coding error in the ICH4 codec configuration code
+within the ALSA intel8x0 driver. Looking at the code change:
 
-3. **No functional changes**: The commit only modifies logging behavior
-   without changing any driver logic, state management, or hardware
-   interaction. This minimizes regression risk.
+```c
+- tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
++ tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
+```
 
-4. **Affects a common use case**: The issue occurs when HDMI ports are
-   unconnected, which is a normal operating condition for many systems.
-   Users may have HDMI ports they never use, or may frequently
-   plug/unplug monitors.
+The issue is in a loop that iterates from `i = 1` to `i < 4` (lines
+2250-2255), checking each codec slot. However, the original code
+hardcoded `codec[1]` instead of using the loop variable `codec[i]`. This
+means:
 
-5. **No architectural changes**: The fix doesn't introduce new features
-   or modify the driver's architecture. It simply rate-limits existing
-   error messages and downgrades one message's severity.
+1. **The loop was pointless** - it would always use codec[1] regardless
+   of which iteration found a valid codec
+2. **Incorrect codec configuration** - If codec[2] or codec[3] were the
+   valid codec (and codec[1] was NULL), the code would still try to
+   access codec[1], potentially causing:
+   - Null pointer dereference if codec[1] is NULL
+   - Wrong codec configuration if codec[1] exists but isn't the intended
+     one
 
-6. **Clear problem and solution**: The commit message clearly describes
-   the issue (log spam from ELD parsing failures) and the
-   straightforward solution (rate limiting and severity adjustment).
+## Impact Assessment
 
-The specific code changes show:
-- In `hdac_hdmi_parse_eld()`: Rate-limiting prevents flooding logs when
-  ELD data is invalid/unavailable
-- In `hdac_hdmi_present_sense()`: Downgrading disconnect messages from
-  error to debug level is appropriate since disconnection is a normal
-  event, not an error condition
+This bug affects:
+- **Hardware**: Intel ICH4 (Intel I/O Controller Hub 4) chipsets only
+- **Functionality**: AC'97 codec configuration for multiple SDIN (Serial
+  Data In) paths
+- **When triggered**: When using ICH4 with multiple codecs where the
+  second valid codec is not in slot 1
 
-This meets the stable kernel criteria of being a simple fix for an
-annoying bug that affects users without introducing new risks.
+## Backport Suitability
 
- sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+This commit meets all criteria for stable backporting:
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index 1139a2754ca3..056d98154682 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -1232,7 +1232,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
- 						>> DRM_ELD_VER_SHIFT;
- 
- 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
--		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
-+		dev_err_ratelimited(&hdev->dev,
-+				    "HDMI: Unknown ELD version %d\n", ver);
- 		return -EINVAL;
- 	}
- 
-@@ -1240,7 +1241,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
- 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
- 
- 	if (mnl > ELD_MAX_MNL) {
--		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
-+		dev_err_ratelimited(&hdev->dev,
-+				    "HDMI: MNL Invalid %d\n", mnl);
- 		return -EINVAL;
- 	}
- 
-@@ -1299,8 +1301,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
- 
- 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
- 
--		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
--						__func__, pin->nid, port->id);
-+		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
-+			__func__, pin->nid, port->id);
- 
- 		/*
- 		 * PCMs are not registered during device probe, so don't
+1. **Fixes a real bug**: Clear array indexing error that can cause
+   incorrect hardware configuration or crashes
+2. **Small and contained**: Single line change, exactly 1 insertion and
+   1 deletion
+3. **No side effects**: The fix simply corrects the loop to work as
+   originally intended
+4. **No architectural changes**: Pure bug fix with no API/ABI changes
+5. **Critical subsystem**: ALSA sound drivers are important for user
+   experience
+6. **Long-standing bug**: The code has been incorrect since the initial
+   git import (2005), making it important to fix in all maintained
+   kernels
+7. **Clear fix**: The correction is obvious - using the loop variable
+   instead of a hardcoded index
+
+The bug has existed since the kernel's initial git import in 2005
+(commit 1da177e4c3f4), meaning it affects all kernel versions and should
+be backported to all stable trees that still receive updates.
+
+ sound/pci/intel8x0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
+index e4bb99f71c2c..95f0bd2e1532 100644
+--- a/sound/pci/intel8x0.c
++++ b/sound/pci/intel8x0.c
+@@ -2249,7 +2249,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
+ 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
+ 			for (i = 1; i < 4; i++) {
+ 				if (pcm->r[0].codec[i]) {
+-					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
++					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
+ 					break;
+ 				}
+ 			}
 -- 
 2.39.5
 
