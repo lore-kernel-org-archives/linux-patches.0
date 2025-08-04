@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03ED76026;
-	Mon,  4 Aug 2025 00:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BE5176FB1;
+	Mon,  4 Aug 2025 00:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267098; cv=none; b=V+hkBYU8yDmgabZ+SVHRaMKoL343hd8jaWKKp32cbOymkaGRhsDKWPfZzmBxSHBlvZt1Uc3VGmHc9pD+WW7Pk3DxuoWfSCN+lrde6MGq0ymGriNG79gRH5gOlK8S13tukY8PH2TIKqpt/DPdcBqe8/WZfLLBWGpOFfcb9kEaIJo=
+	t=1754267099; cv=none; b=kf7lfueQCvM6czpgKCUblMX/A5srtQdR2tseM2D6Ui9HmFMnbU+BDeduev1IvAhGmZ28L2QXwKH43BIWd+TG1M02Xe1/kestWN4ZsEqnJvkKVGw/utxYzgavRLqb7zg8szHkoSNJVcK3J+9ojSU/rPOYRlD4F9GaCabTtDW9cns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267098; c=relaxed/simple;
-	bh=UnQSs95JYVI0B+A70FNW1tGIgLBZbavwLHlTWIc81ig=;
+	s=arc-20240116; t=1754267099; c=relaxed/simple;
+	bh=xfIDBkosaUm8UJ4nUT5Fdx0QMC4jhRR/FYER00pacDk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=aE5b87dg1wYCzVGbY8ZV8wI1ca+IqXbXM/kFEjqiJyGbtZXVLEvlHmPKxplkrl/ew6uXzx7NSz7l3zW6SN+LWIuhggYWqtoJYACTDDWtOHSGN8ZQdxl1JwcJ5E37Q5C4r6Qyq44HlTUW7nlPgCVdin7EY/IUmuUIaJFfWsC5Uyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DL6gJzvz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YWO71xL1awzGoCYQi3+NZAGstO+m5rn2jRNrwwycpkbgeOZj6A9qJcZrPdS04WVJcbdf3re6lxAI2JTF1QRBUHqzSxouhLs3yha0lvCKvpI3R90JItMpb1rI2etz6lT+XfqtJct44dNB87M4WFm2ohnUzRWmXID0/NMZkihSOeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W8BSbS9C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DL6gJzvz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C82DC4CEF8;
-	Mon,  4 Aug 2025 00:24:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W8BSbS9C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8660FC4CEF9;
+	Mon,  4 Aug 2025 00:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267097;
-	bh=UnQSs95JYVI0B+A70FNW1tGIgLBZbavwLHlTWIc81ig=;
+	s=k20201202; t=1754267099;
+	bh=xfIDBkosaUm8UJ4nUT5Fdx0QMC4jhRR/FYER00pacDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DL6gJzvzUAbDR17/RmQVG35KuJ3RX4wy4NA9pR0HalDTPhDPtn4xG2yXyciUWEj0T
-	 WKC3X+2Gt32u5ibEQ3NfauIzfmX42lJgQgCavLW5RsrrhKdozAx21eVBL7eWbsiZMj
-	 5LPvkJnX+Nuj0+CqUg/1T8RPo9F1UB7m/RYE/E5uK/8llI+awTSLR3dByu8tPAqIF4
-	 F9rcvXH+7MAPhrcxj2eb1x1IzmNEhJmbnIcY+VJVOpsHA+mUAhaYG8Xhv8rNtXZGkC
-	 mQuUtl6bJ5Ycuo6YORao1owYWsBeuWztVh5VPuXq7QgUGFnbOzVK1uO5blbkOk43QT
-	 r11OQBGgPbpMg==
+	b=W8BSbS9CetuK6EXLmyA1oIzeRrbdPucCG02a3dfoFGycw/e7ZGaM1AWkxqxKuaMai
+	 FOmAWeqPLvQqzhfP3pCdKVWoE3JE1ESWJ7WeehK54xfT7WhzWwtXmxPzd++NQNHR00
+	 NXckVB95w7OdmobhbHb5/e92Rp8DTwvwCXlYv2G3S5gaxaX3B9Nf4wVHP1hAZZnS9Q
+	 cexjYlWLFoJCzbqTTXa4jJsIUB+YC+kYJaxFuUwM4TXOpQ99R+4Bivkr6G0y/RP64+
+	 9LOV5DU4rSgBLjABw3reGFElnGb6h6u2E5rMZ9ZkojDAy4l/wSp74M5xsejuuHRcpB
+	 de46p9hCQ675Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li RongQing <lirongqing@baidu.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Alexander Kochetkov <al.kochet@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>,
-	srinivas.pandruvada@linux.intel.com,
-	lenb@kernel.org,
-	rafael@kernel.org,
-	viresh.kumar@linaro.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 25/85] cpufreq: intel_pstate: Add Granite Rapids support in no-HWP mode
-Date: Sun,  3 Aug 2025 20:22:34 -0400
-Message-Id: <20250804002335.3613254-25-sashal@kernel.org>
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.16 26/85] ARM: rockchip: fix kernel hang during smp initialization
+Date: Sun,  3 Aug 2025 20:22:35 -0400
+Message-Id: <20250804002335.3613254-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -54,98 +51,124 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Alexander Kochetkov <al.kochet@gmail.com>
 
-[ Upstream commit fc64e0421598aaa87d61184f6777b52614a095be ]
+[ Upstream commit 7cdb433bb44cdc87dc5260cdf15bf03cc1cd1814 ]
 
-Users may disable HWP in firmware, in which case intel_pstate
-wouldn't load unless the CPU model is explicitly supported.
+In order to bring up secondary CPUs main CPU write trampoline
+code to SRAM. The trampoline code is written while secondary
+CPUs are powered on (at least that true for RK3188 CPU).
+Sometimes that leads to kernel hang. Probably because secondary
+CPU execute trampoline code while kernel doesn't expect.
 
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20250623105601.3924-1-lirongqing@baidu.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The patch moves SRAM initialization step to the point where all
+secondary CPUs are powered down.
+
+That fixes rarely hangs on RK3188:
+[    0.091568] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.091996] rockchip_smp_prepare_cpus: ncores 4
+
+Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
+Link: https://lore.kernel.org/r/20250703140453.1273027-1-al.kochet@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of the commit and the code context, here's my
+determination:
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's the
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-**Nature of the Change:**
-The commit adds support for Intel Granite Rapids processors (both D and
-X variants) in the intel_pstate driver when Hardware P-states (HWP) is
-disabled in firmware. This is a hardware enablement patch that adds two
-new CPU model IDs to existing lists:
-- `INTEL_GRANITERAPIDS_D` and `INTEL_GRANITERAPIDS_X` are added to
-  `intel_pstate_cpu_ids[]` table
+1. **Fixes a real bug affecting users**: The commit explicitly mentions
+   that it "fixes rarely hangs on RK3188" during SMP initialization.
+   This is a critical boot-time issue that prevents the system from
+   functioning properly.
 
-**Why This Is a Good Backport Candidate:**
+2. **Small and contained fix**: The change is minimal - it only moves
+   the SRAM initialization code (`rockchip_smp_prepare_sram()`) to
+   execute after all secondary CPUs are powered down. The code movement
+   is straightforward:
+   - Lines 281-285 (old location) are moved to lines 321-325 (new
+     location)
+   - The fix is contained within a single function
+     (`rockchip_smp_prepare_cpus()`)
 
-1. **Fixes a Real User-Facing Issue**: Without this patch, users who
-   have Granite Rapids CPUs with HWP disabled in firmware cannot use the
-   intel_pstate driver at all. The commit message explicitly states
-   "intel_pstate wouldn't load unless the CPU model is explicitly
-   supported." This means affected systems would fall back to less
-   efficient CPU frequency scaling drivers, significantly impacting
-   performance and power efficiency.
+3. **Clear root cause**: The commit message explains the race condition
+   clearly - secondary CPUs may execute trampoline code while it's being
+   written to SRAM, causing unpredictable behavior and hangs.
 
-2. **Minimal and Safe Change**: The patch only adds two lines to an
-   existing CPU ID table:
-  ```c
-  +       X86_MATCH(INTEL_GRANITERAPIDS_D,        core_funcs),
-  +       X86_MATCH(INTEL_GRANITERAPIDS_X,        core_funcs),
-  ```
-  These entries follow the exact same pattern as all other CPU entries
-  and use the standard `core_funcs` handler, which is already used by
-  many other Intel CPU models.
+4. **No architectural changes**: This is purely a timing/ordering fix
+   that doesn't introduce new features or change the architecture of the
+   code.
 
-3. **No Architectural Changes**: The commit doesn't introduce any new
-   features, modify existing logic, or change any kernel interfaces.
-   It's purely a hardware enablement patch that extends existing
-   functionality to new hardware.
+5. **Critical subsystem**: SMP initialization is a critical kernel
+   subsystem. A hang during boot makes the system unusable, which is a
+   severe issue for affected users.
 
-4. **Low Risk of Regression**:
-   - The change is contained entirely within CPU model detection tables
-   - It only affects systems with the specific Granite Rapids CPU models
-   - Uses the well-tested `core_funcs` implementation already used by
-     Sapphire Rapids, Emerald Rapids, and other server CPUs
-   - The code path is only triggered on systems with these specific CPUs
+6. **Platform-specific fix**: The change only affects Rockchip ARM
+   platforms (specifically those with Cortex-A9 CPUs like RK3188),
+   limiting the scope of potential regressions.
 
-5. **Follows Established Pattern**: Looking at the surrounding code,
-   Granite Rapids entries were already present in the
-   `intel_pstate_cpu_oob_ids[]` table (for out-of-band control),
-   indicating this is completing support that was partially added
-   previously.
+7. **Follows stable tree rules**: The fix addresses an important bug
+   (boot hang), is small and self-contained, has minimal risk of
+   regression, and doesn't introduce new features.
 
-6. **Important for Server Deployments**: Granite Rapids is a server CPU
-   platform, and enterprise users often disable HWP for specific
-   workload requirements or compatibility reasons. Without this patch,
-   they lose access to the intel_pstate driver entirely.
+The key insight from the code analysis is that the original code had a
+clear race condition where:
+1. Secondary CPUs were powered on (lines 287-288 in the original)
+2. Trampoline code was written to SRAM (line 282 in the original)
+3. Secondary CPUs could potentially execute incomplete/corrupted
+   trampoline code
 
-The commit meets all the criteria for stable backporting: it fixes a
-real bug (driver fails to load on supported hardware), the fix is
-minimal and contained, there's no risk to existing systems, and it
-provides important functionality for affected users.
+The fix ensures all secondary CPUs are powered down (lines 321-323)
+before writing the trampoline code to SRAM (lines 321-325 in the new
+version), eliminating the race condition.
 
- drivers/cpufreq/intel_pstate.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/mach-rockchip/platsmp.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 64587d318267..1782b29dc595 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2775,6 +2775,8 @@ static const struct x86_cpu_id intel_pstate_cpu_ids[] = {
- 	X86_MATCH(INTEL_TIGERLAKE,		core_funcs),
- 	X86_MATCH(INTEL_SAPPHIRERAPIDS_X,	core_funcs),
- 	X86_MATCH(INTEL_EMERALDRAPIDS_X,	core_funcs),
-+	X86_MATCH(INTEL_GRANITERAPIDS_D,	core_funcs),
-+	X86_MATCH(INTEL_GRANITERAPIDS_X,	core_funcs),
- 	{}
- };
- MODULE_DEVICE_TABLE(x86cpu, intel_pstate_cpu_ids);
+diff --git a/arch/arm/mach-rockchip/platsmp.c b/arch/arm/mach-rockchip/platsmp.c
+index 36915a073c23..f432d22bfed8 100644
+--- a/arch/arm/mach-rockchip/platsmp.c
++++ b/arch/arm/mach-rockchip/platsmp.c
+@@ -279,11 +279,6 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
+ 	}
+ 
+ 	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
+-		if (rockchip_smp_prepare_sram(node)) {
+-			of_node_put(node);
+-			return;
+-		}
+-
+ 		/* enable the SCU power domain */
+ 		pmu_set_power_domain(PMU_PWRDN_SCU, true);
+ 
+@@ -316,11 +311,19 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
+ 		asm ("mrc p15, 1, %0, c9, c0, 2\n" : "=r" (l2ctlr));
+ 		ncores = ((l2ctlr >> 24) & 0x3) + 1;
+ 	}
+-	of_node_put(node);
+ 
+ 	/* Make sure that all cores except the first are really off */
+ 	for (i = 1; i < ncores; i++)
+ 		pmu_set_power_domain(0 + i, false);
++
++	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
++		if (rockchip_smp_prepare_sram(node)) {
++			of_node_put(node);
++			return;
++		}
++	}
++
++	of_node_put(node);
+ }
+ 
+ static void __init rk3036_smp_prepare_cpus(unsigned int max_cpus)
 -- 
 2.39.5
 
