@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C389329A2;
-	Mon,  4 Aug 2025 00:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C187080C02;
+	Mon,  4 Aug 2025 00:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267261; cv=none; b=rcP7v8nOYda+qZehQUMW7e77og5eGJY/mqeIJMO65zdAz0ogpG0ZZusLRUZDaVDDpKsJtVTrw9PsCrPY73q1LicbbGW9Nw5y9WlU+T/fgRdCV2ZST5abFZLp/h5S8Q9aLV+4iHu7XWJqumWY5mB/3CTWY8RvBm++OKk/Fv/VrgU=
+	t=1754267263; cv=none; b=TitdLM0eVHlyv7PIOvko6ck2Gu1AB0+732xsbtWPqsYTl2UYoY4jZjDXTo5JBgpCaVigSEyjvg9FYYpDdXnaGqAxQVnaW+pTqPYg5co0Cvvx0EZvJQlm6mr6CKx2rv6wXaj7lIYolVBbptfexYXRxeHp9PrfaCpzw3Cfj2DeY+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267261; c=relaxed/simple;
-	bh=gSAvcfQnGfkdZ1blGp/WG3UsF1bLnPIjK+fk8e3G8PA=;
+	s=arc-20240116; t=1754267263; c=relaxed/simple;
+	bh=pkj9jXsedV3+eTmu8VaaY/DUPNtmzIg9MJ/ISzjv740=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tlpXC8pjXASGCQslbU5+9bTQb5nwfRdp4EhE43sQxmwGlPWgZcIjzXHj4EG3VMa6FA6plZYLiB+B+9TpTCKhgtZm9Ng1B0QOA/q1gePnN0tjZmo3kye6RLOMBNg5S41sOWWXan4ZwoHm0e+uNUqK1E+KmT8+5mCuk1Be5MM0zfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FkJCqRcj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3cdaLsldXUjgIN5BZaCufA5/y3y/JvGJsV72v36PIZbPyOsD0VbxXUjPqz1CIiqQPdvfPpH/ISQpBxX6wNG6dmiBNg9BKH93rHEXDBZOYpMQDxxQ9LTMTIOumSVN17cvBAaYOravc1dcpinHK9LcRHlPDyCdGzxCPIpuFCIEpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jmHc/U/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FkJCqRcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522A6C4CEFB;
-	Mon,  4 Aug 2025 00:27:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jmHc/U/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7ADC4CEEB;
+	Mon,  4 Aug 2025 00:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267261;
-	bh=gSAvcfQnGfkdZ1blGp/WG3UsF1bLnPIjK+fk8e3G8PA=;
+	s=k20201202; t=1754267263;
+	bh=pkj9jXsedV3+eTmu8VaaY/DUPNtmzIg9MJ/ISzjv740=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FkJCqRcj54Hj4iwZBA/nQ38UOZ7w9RrgddLtVyUizxt+ymiL4KphajwUoR73fWhH3
-	 nIDGbRaZHqBcDXlQOBXnxxSZAcpj0KMHULZCLSCIcwFwqap/0zb8cKuej/JrIIHpPi
-	 whq78pBmU4zdmt3d9H/syP7UT0DUMtKLY9ilKan/sJA+MmvrQFflD606SXCf7dimrG
-	 8SUgOY0Yw0q6DMgx3JPZlkfuxs5UGrxRhtmCavZwmwxNytHjHZWa3SdWmbHS/nQ3M+
-	 rqWxBJg3JVED6gLMDnOJbUreDDtGftFwWsxW+oMbzCafLU45d/O4VD5Ai+Qbjbz0oZ
-	 9r+jETI/7gFWg==
+	b=jmHc/U/ATarKvsfAOtiwTneCRq9JMHpEQ/c0TXp8/x4truKXOXTvu5C6N/IbTEmdL
+	 ZSlRtjv5GerR6GY3CeNnNsWokQme/6yD8X0GCYZ4ssiv3uRLJDAjlsXm7kvCTufYSb
+	 xsBfRIXeaOCQAedSzlzzDh0Ov2TUtZlVyS0J8t+TU2IwaT59zUYxqnPPGWCzcMsYRQ
+	 seJNNdBgc+GGSznYhld+5ygLnUWc5X/WcP7f2Pm8sC8VDR1NJXNAUMCvPcgxxKZRwk
+	 W0P6PkQpbS4l3ukdkTdY7GgwSEU9A9smRuNtrKhryzqhWxuIJlK0f97hkboHB28klv
+	 Jys6s+uOm4w7Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xinxin Wan <xinxin.wan@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	oder_chiou@realtek.com
-Subject: [PATCH AUTOSEL 6.16 84/85] ASoC: codecs: rt5640: Retry DEVICE_ID verification
-Date: Sun,  3 Aug 2025 20:23:33 -0400
-Message-Id: <20250804002335.3613254-84-sashal@kernel.org>
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 85/85] ASoC: qcom: use drvdata instead of component to keep id
+Date: Sun,  3 Aug 2025 20:23:34 -0400
+Message-Id: <20250804002335.3613254-85-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -47,119 +47,192 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Xinxin Wan <xinxin.wan@intel.com>
+From: Srinivas Kandagatla <srini@kernel.org>
 
-[ Upstream commit 19f971057b2d7b99c80530ec1052b45de236a8da ]
+[ Upstream commit 8167f4f42572818fa8153be2b03e4c2120846603 ]
 
-To be more resilient to codec-detection failures when the hardware
-powers on slowly, add retry mechanism to the device verification check.
-Similar pattern is found throughout a number of Realtek codecs. Our
-tests show that 60ms delay is sufficient to address readiness issues on
-rt5640 chip.
+Qcom lpass is using component->id to keep DAI ID (A).
 
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Xinxin Wan <xinxin.wan@intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250530142120.2944095-3-cezary.rojewski@intel.com
+(S)	static int lpass_platform_pcmops_open(
+				sruct snd_soc_component *component,
+				struct snd_pcm_substream *substream)
+	{			                          ^^^^^^^^^(B0)
+		...
+(B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
+(B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
+		...
+(B3)		unsigned int dai_id = cpu_dai->driver->id;
+
+(A)		component->id = dai_id;
+		...
+	}
+
+This driver can get dai_id from substream (B0 - B3).
+In this driver, below functions get dai_id from component->id (A).
+
+(X)	lpass_platform_pcmops_suspend()
+(Y)	lpass_platform_pcmops_resume()
+(Z)	lpass_platform_copy()
+
+Here, (Z) can get it from substream (B0 - B3), don't need to use
+component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
+from component->id (A), because there is no substream (B0) in function
+parameter.
+
+But, component->id (A) itself should not be used for such purpose.
+It is intilialized at snd_soc_component_initialize(), and parsed its ID
+(= component->id) from device name (a).
+
+	int snd_soc_component_initialize(...)
+	{
+		...
+		if (!component->name) {
+(a)			component->name = fmt_single_name(dev, &component->id);
+			...                                     ^^^^^^^^^^^^^
+		}
+		...
+	}
+
+Unfortunately, current code is broken to start with.
+
+There are many regmaps that the driver cares about, however its only
+managing one (either dp or i2s) in component suspend/resume path.
+
+I2S regmap is mandatory however other regmaps are setup based on flags
+like "hdmi_port_enable" and "codec_dma_enable".
+
+Correct thing for suspend/resume path to handle is by checking these
+flags, instead of using component->id.
+
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87a56ouuob.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis of the Commit
+**1. Fixes a Real Bug with User Impact:**
+- The driver was misusing `component->id` to store DAI ID information,
+  overwriting the ASoC framework's intended use of this field
+- This caused incomplete suspend/resume handling - only one regmap
+  (either HDMI or I2S) was being handled instead of both when needed
+- Users would experience audio failures after suspend/resume cycles,
+  especially on systems with both HDMI and I2S audio interfaces
 
-### 1. Bug Fix Nature
-This commit fixes a real-world hardware detection issue where the RT5640
-codec device ID verification fails on systems where the hardware powers
-on slowly. The failure results in the driver returning `-ENODEV` and the
-audio codec not being initialized, causing complete audio failure.
+**2. Clear Architectural Violation Being Fixed:**
+The commit message and code analysis show that `component->id` is
+initialized by the ASoC framework during
+`snd_soc_component_initialize()` based on device name parsing. The
+driver was incorrectly overwriting this value with DAI ID, breaking the
+abstraction layer between driver and framework.
 
-### 2. Small and Contained Change
-The fix is minimal and highly contained:
-- Only adds 3 lines of code
-- The change is isolated to the probe function's device ID verification
-  logic
-- No architectural changes or new features introduced
-- The retry logic is simple: if initial ID read doesn't match, wait
-  60-100ms and retry once
+**3. Limited Scope and Low Risk:**
+- Changes are confined to 3 functions in a single file (`lpass-
+  platform.c`)
+- The fix replaces the problematic `component->id` usage with proper
+  flag checking (`drvdata->hdmi_port_enable`)
+- No API changes or new features added
+- The author (Srinivas Kandagatla) is an experienced ASoC maintainer
 
-### 3. Clear Purpose with No Major Side Effects
-The code change:
-```c
-regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+if (val != RT5640_DEVICE_ID) {
-+    usleep_range(60000, 100000);
-+    regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+}
-```
-- Only adds a single retry with delay if the first read fails
-- The delay (60-100ms) is reasonable for probe-time initialization
-- No impact on normal operation when hardware is ready
+**4. Improves Suspend/Resume Reliability:**
+The fix ensures both HDMI and I2S regmaps are properly handled during
+suspend/resume based on actual driver capabilities rather than an
+incorrectly stored ID. This makes power management more robust and
+predictable.
 
-### 4. Follows Established Pattern
-The commit message mentions "Similar pattern is found throughout a
-number of Realtek codecs," and the probe function already contains a
-400ms delay after enabling LDO1 (line 3004), showing that power-on
-delays are expected for this hardware.
+**5. Long-Standing Issue:**
+The problematic code has existed since late 2020 (commits b1824968221c
+and 8d1bfc04c974), affecting multiple kernel versions and potentially
+many Qualcomm-based devices in the field.
 
-### 5. Minimal Risk of Regression
-- The retry only occurs when device ID verification would have failed
-  anyway
-- In the worst case, it adds a 60-100ms delay to failed probe attempts
-- Systems where the codec is ready immediately continue to work without
-  delay
-- The pattern is conservative: only one retry attempt
+**Backport Recommendation:**
+Should be backported to all stable kernels from 5.10 onwards that
+contain the original problematic commits. This is a medium-high priority
+fix that improves audio subsystem reliability without introducing new
+risks.
 
-### 6. Important User Impact
-Without this fix, affected systems experience:
-- Complete audio failure on boot
-- No audio codec detection
-- Requires manual intervention or multiple reboots to get audio working
+ sound/soc/qcom/lpass-platform.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-### 7. Stable Tree Suitability
-This fix meets all stable kernel criteria:
-- Fixes a real bug affecting users
-- Minimal change with clear purpose
-- No new features or APIs
-- Low risk of introducing new issues
-- Self-contained within a single driver
-
-The commit represents a classic hardware quirk fix that improves
-reliability without adding complexity, making it an ideal candidate for
-stable backport.
-
- sound/soc/codecs/rt5640.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
-index 21a18012b4c0..55881a5669e2 100644
---- a/sound/soc/codecs/rt5640.c
-+++ b/sound/soc/codecs/rt5640.c
-@@ -3013,6 +3013,11 @@ static int rt5640_i2c_probe(struct i2c_client *i2c)
- 	}
+diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+index 9946f12254b3..b456e096f138 100644
+--- a/sound/soc/qcom/lpass-platform.c
++++ b/sound/soc/qcom/lpass-platform.c
+@@ -202,7 +202,6 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
+ 	struct regmap *map;
+ 	unsigned int dai_id = cpu_dai->driver->id;
  
- 	regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
-+	if (val != RT5640_DEVICE_ID) {
-+		usleep_range(60000, 100000);
-+		regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
+-	component->id = dai_id;
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+@@ -1190,13 +1189,14 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
+ {
+ 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+ 	struct regmap *map;
+-	unsigned int dai_id = component->id;
+ 
+-	if (dai_id == LPASS_DP_RX)
++	if (drvdata->hdmi_port_enable) {
+ 		map = drvdata->hdmiif_map;
+-	else
+-		map = drvdata->lpaif_map;
++		regcache_cache_only(map, true);
++		regcache_mark_dirty(map);
 +	}
+ 
++	map = drvdata->lpaif_map;
+ 	regcache_cache_only(map, true);
+ 	regcache_mark_dirty(map);
+ 
+@@ -1207,14 +1207,19 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
+ {
+ 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+ 	struct regmap *map;
+-	unsigned int dai_id = component->id;
++	int ret;
+ 
+-	if (dai_id == LPASS_DP_RX)
++	if (drvdata->hdmi_port_enable) {
+ 		map = drvdata->hdmiif_map;
+-	else
+-		map = drvdata->lpaif_map;
++		regcache_cache_only(map, false);
++		ret = regcache_sync(map);
++		if (ret)
++			return ret;
++	}
+ 
++	map = drvdata->lpaif_map;
+ 	regcache_cache_only(map, false);
 +
- 	if (val != RT5640_DEVICE_ID) {
- 		dev_err(&i2c->dev,
- 			"Device with ID register %#x is not rt5640/39\n", val);
+ 	return regcache_sync(map);
+ }
+ 
+@@ -1224,7 +1229,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
+ 			       unsigned long bytes)
+ {
+ 	struct snd_pcm_runtime *rt = substream->runtime;
+-	unsigned int dai_id = component->id;
++	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
++	unsigned int dai_id = cpu_dai->driver->id;
+ 	int ret = 0;
+ 
+ 	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
 -- 
 2.39.5
 
