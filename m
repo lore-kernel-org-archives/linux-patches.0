@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27281FDD;
-	Mon,  4 Aug 2025 00:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983DF1FDD;
+	Mon,  4 Aug 2025 00:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267962; cv=none; b=XytPhb3TeWIZzHBxguuhNvD/Tgm5u+9GChAmuGfyKIwYOg5Kovxmp53M08nz8BzLq6mZvEcl9B5AG5UPvK5qN5ZuTW+OGeyOA+9B2rmROfavAg4zzXv6WsHu8arpgoChWbsbGbVxhWs3i18xbZezoqBUdrxusLfdZ5IWUUInpgI=
+	t=1754267963; cv=none; b=H5jUlM1r+m78NiJtARY16qMOOnBsMgZcosCcLI6JllfC5liULiWPSXl51PXvhZqG1d3mzf+4ox4l/UXX6Zvseh/m9Qy75LjhC8wby3WAcfOy/MddPLKbTpYbJGPgBRyhtspaYR76uSS3ntxj8ZE7FUz74aok0rHn1Ht8MMWZoi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267962; c=relaxed/simple;
-	bh=EmwIn8yPAs/Pd7o5rJuRYCENvfZYU49E6gb1YFvXVrk=;
+	s=arc-20240116; t=1754267963; c=relaxed/simple;
+	bh=arPe6twis9HzduYRJnjIEKHrcLYUxob73bWuW3sZoZA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=piqb2o9+lVC13agFoWEusOY/ePaGJoeWRHWeCbcG+PYwbR5UtinXKSev1jo9XoL9dJqzW9YvZn/fz7qqIdL/w1eMKiKBR8yhmFrZGDD5vMyXWUmz1p8PkYFg7FE6mrMvGTLCC/Gs7h99lggSk55xg0vzwXf3lRD6gP7OtLwR8Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WvQFbo+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwbCihAgDkt0Bq65memv5JyVYZ+U780SrJbmRS36Kp7wEKyRuU+pYcNnTF6FxF5+kSJb+YWXu+IITp0A88ZscscXNsZdJHwwcySuDRFrRXs975W58xiCnL/AvjNZzpvnZxyiNyEg5/nkCpwrjem3k223so7IhNmq1orOVuqPZvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGLCS8mB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WvQFbo+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CDFC4CEF0;
-	Mon,  4 Aug 2025 00:39:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGLCS8mB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0EAC4CEEB;
+	Mon,  4 Aug 2025 00:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267961;
-	bh=EmwIn8yPAs/Pd7o5rJuRYCENvfZYU49E6gb1YFvXVrk=;
+	s=k20201202; t=1754267963;
+	bh=arPe6twis9HzduYRJnjIEKHrcLYUxob73bWuW3sZoZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvQFbo+PYVLUF5yMtXkx0LRkBECR6lOsJZpI727+QHtu9mc072IIRpfM5A1GtzvRD
-	 Z13BR+ooABIa+Da0MOr4HjeKD05cjT68BKcljTM92zXmVlvEq8/Wtg+Cc6lbSgsecW
-	 gDRhk0JwE6IIffAn7qjd7d0iCIFiLEfgQLs9ikukwCurOTIxQm1Kthy6U+7je5Aavh
-	 z5Yz6JPqIR7wxa6CpD0fR3fuY4cFJH5Yz4B3fy3CAZ1+UQBuJNMroy2Z9k/gh8BhnQ
-	 3FTdukNeagXv6PyYEf0lrJMHw0M1u6sGLrdRxsZ9c7OhIzhYHd7xixauQfV1XOWkrk
-	 DSFUvQLbgn32A==
+	b=RGLCS8mBXAUd7F2EcmIwNxeDgPN7tVf0LYuh7d+yeKo+5fFx3VWrVgt8EUykciYB0
+	 /0sRQRVozaSqnkt5375X1DiSWATTubPEE0Tv8iQNlTIp8u5ZYFxv4VRqo/JxJJR342
+	 HhIu4S2GO5ZMYOQdc1OHN3NX+JXglWAcBb1eG01h1rND6dY4hfr3/odWpqtAXRlbmK
+	 jn3Iqw2xvXvuqsuUuiSpAiEsPTTc5+iICNcAOf6TKnc7vSOBUq59T0qY8HBlkk9fxL
+	 k1LGhXr02vwj3wsZZ2OJ54pezMutUg5e9o9te9SaSNPWSqKxt9qpsG0KKDnjDRjnt7
+	 E3BEDT0g3AHMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	Borislav Petkov <bp@alien8.de>,
+Cc: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	michal.simek@amd.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-edac@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 13/44] EDAC/synopsys: Clear the ECC counters on init
-Date: Sun,  3 Aug 2025 20:38:18 -0400
-Message-Id: <20250804003849.3627024-13-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 14/44] ASoC: soc-dapm: set bias_level if snd_soc_dapm_set_bias_level() was successed
+Date: Sun,  3 Aug 2025 20:38:19 -0400
+Message-Id: <20250804003849.3627024-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -50,269 +49,125 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit b1dc7f097b78eb8d25b071ead2384b07a549692b ]
+[ Upstream commit f40ecc2743652c0b0f19935f81baf57c601eb7f0 ]
 
-Clear the ECC error and counter registers during initialization/probe to avoid
-reporting stale errors that may have occurred before EDAC registration.
+ASoC has 2 functions to set bias level.
+	(A) snd_soc_dapm_force_bias_level()
+	(B) snd_soc_dapm_set_bias_level()
 
-For that, unify the Zynq and ZynqMP ECC state reading paths and simplify the
-code.
+snd_soc_dapm_force_bias_level() (A) will set dapm->bias_level (a) if
+successed.
 
-  [ bp: Massage commit message.
-    Fix an -Wsometimes-uninitialized warning as reported by
-    Reported-by: kernel test robot <lkp@intel.com>
-    Closes: https://lore.kernel.org/oe-kbuild-all/202507141048.obUv3ZUm-lkp@intel.com ]
+(A)	int snd_soc_dapm_force_bias_level(...)
+	{
+		...
+		if (ret == 0)
+(a)			dapm->bias_level = level;
+		...
+	}
 
-Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250713050753.7042-1-shubhrajyoti.datta@amd.com
+snd_soc_dapm_set_bias_level() (B) is also a function that sets bias_level.
+It will call snd_soc_dapm_force_bias_level() (A) inside, but doesn't
+set dapm->bias_level by itself. One note is that (A) might not be called.
+
+(B)	static int snd_soc_dapm_set_bias_level(...)
+	{
+		...
+		ret = snd_soc_card_set_bias_level(...);
+		...
+		if (dapm != &card->dapm)
+(A)			ret = snd_soc_dapm_force_bias_level(...);
+		...
+		ret = snd_soc_card_set_bias_level_post(...);
+		...
+	}
+
+dapm->bias_level will be set if (A) was called, but might not be set
+if (B) was called, even though it calles set_bias_level() function.
+
+We should set dapm->bias_level if we calls
+snd_soc_dapm_set_bias_level() (B), too.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87qzyn4g4h.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis, here's my assessment:
+
 **Backport Status: YES**
 
-This commit is suitable for backporting to stable kernel trees based on
-the following analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Bug Fix Nature
-The commit fixes a clear bug where the EDAC driver could report stale
-ECC errors from before the driver was initialized. This is evident from
-the commit message: "Clear the ECC error and counter registers during
-initialization/probe to avoid reporting stale errors that may have
-occurred before EDAC registration."
+1. **Bug Fix**: This is a clear bug fix that addresses an inconsistency
+   in bias level management. The commit message clearly explains that
+   `snd_soc_dapm_set_bias_level()` doesn't always update
+   `dapm->bias_level`, particularly when dealing with card-level DAPM
+   contexts where `snd_soc_dapm_force_bias_level()` is not called.
 
-## Code Changes Analysis
+2. **Small and Contained**: The fix is minimal - it only adds 4 lines of
+   code:
+  ```c
+  /* success */
+  if (ret == 0)
+  snd_soc_dapm_init_bias_level(dapm, level);
+  ```
+  This ensures that `dapm->bias_level` is always updated when the bias
+  level change succeeds.
 
-1. **Problem Being Fixed**:
-   - The driver wasn't clearing ECC error counters during initialization
-   - This could lead to false error reports from pre-boot or pre-driver-
-     load errors
-   - Users could see incorrect ECC error counts that don't reflect
-     actual runtime errors
+3. **Important Correctness Issue**: The inconsistency could lead to
+   incorrect bias level tracking, which affects power management
+   decisions in the ASoC subsystem. Code that checks `dapm->bias_level`
+   (as shown in lines like `if (dapm->bias_level == SND_SOC_BIAS_ON)`)
+   may make wrong decisions if the bias level isn't properly tracked.
 
-2. **Solution Implementation**:
-   - The patch consolidates the ECC state checking into a single
-     `get_ecc_state()` function
-   - Adds counter clearing logic for both Zynq and ZynqMP platforms:
-     ```c
-     // For Zynq:
-     clearval = ECC_CTRL_CLR_CE_ERR | ECC_CTRL_CLR_UE_ERR;
-     writel(clearval, priv->baseaddr + ECC_CTRL_OFST);
-     writel(0x0, priv->baseaddr + ECC_CTRL_OFST);
+4. **No Architectural Changes**: This is a straightforward fix that
+   doesn't introduce new features or change the architecture. It simply
+   ensures consistent behavior between the two bias level setting
+   functions.
 
-     // For ZynqMP:
-     clearval = readl(priv->baseaddr + ECC_CLR_OFST) |
-     ECC_CTRL_CLR_CE_ERR | ECC_CTRL_CLR_CE_ERRCNT |
-     ECC_CTRL_CLR_UE_ERR | ECC_CTRL_CLR_UE_ERRCNT;
-     writel(clearval, priv->baseaddr + ECC_CLR_OFST);
-     ```
+5. **Low Risk**: The change only affects the success path (when `ret ==
+   0`) and uses an existing inline function
+   `snd_soc_dapm_init_bias_level()` that simply sets `dapm->bias_level =
+   level`. This is the same operation that
+   `snd_soc_dapm_force_bias_level()` performs on success.
 
-3. **Scope and Risk Assessment**:
-   - Changes are confined to the synopsys_edac driver
-   - No API changes or interface modifications
-   - The refactoring simplifies code by removing duplicate
-     `zynq_get_ecc_state()` and `zynqmp_get_ecc_state()` functions
-   - Adds platform type enum for cleaner platform identification
-   - Risk is minimal as it only affects initialization path
+6. **Affects User-Facing Functionality**: Incorrect bias level tracking
+   can lead to power management issues, potentially causing audio
+   devices to not power up/down correctly, which directly impacts users.
 
-4. **Stable Tree Criteria Compliance**:
-   - ✓ Fixes a real bug (stale error reporting)
-   - ✓ Small and contained changes (~150 lines)
-   - ✓ No new features added
-   - ✓ No architectural changes
-   - ✓ Low regression risk
-   - ✓ Clear fix for a specific problem
+The commit fixes a real bug where the DAPM bias level state could become
+out of sync with the actual hardware state, particularly for card-level
+DAPM contexts. This is exactly the type of bug fix that stable kernels
+should include - it's small, targeted, fixes a real issue, and has
+minimal risk of introducing regressions.
 
-5. **Additional Evidence**:
-   - The maintainer (Borislav Petkov) accepted and massaged the patch
-   - Fixed a compiler warning caught by kernel test robot
-   - The bug could affect production systems by showing false ECC errors
+ sound/soc/soc-dapm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-This is a textbook example of a stable-worthy patch: it fixes a specific
-bug (stale ECC error reporting) with minimal, focused changes that don't
-introduce new functionality or risk.
-
- drivers/edac/synopsys_edac.c | 97 +++++++++++++++++-------------------
- 1 file changed, 46 insertions(+), 51 deletions(-)
-
-diff --git a/drivers/edac/synopsys_edac.c b/drivers/edac/synopsys_edac.c
-index e8ddb029f10d..cbc40f57b27b 100644
---- a/drivers/edac/synopsys_edac.c
-+++ b/drivers/edac/synopsys_edac.c
-@@ -346,20 +346,26 @@ struct synps_edac_priv {
- #endif
- };
+diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
+index 538d84f1c29f..469ffc31068e 100644
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -742,6 +742,10 @@ static int snd_soc_dapm_set_bias_level(struct snd_soc_dapm_context *dapm,
+ out:
+ 	trace_snd_soc_bias_level_done(card, level);
  
-+enum synps_platform_type {
-+	ZYNQ,
-+	ZYNQMP,
-+	SYNPS,
-+};
++	/* success */
++	if (ret == 0)
++		snd_soc_dapm_init_bias_level(dapm, level);
 +
- /**
-  * struct synps_platform_data -  synps platform data structure.
-+ * @platform:		Identifies the target hardware platform
-  * @get_error_info:	Get EDAC error info.
-  * @get_mtype:		Get mtype.
-  * @get_dtype:		Get dtype.
-- * @get_ecc_state:	Get ECC state.
-  * @get_mem_info:	Get EDAC memory info
-  * @quirks:		To differentiate IPs.
-  */
- struct synps_platform_data {
-+	enum synps_platform_type platform;
- 	int (*get_error_info)(struct synps_edac_priv *priv);
- 	enum mem_type (*get_mtype)(const void __iomem *base);
- 	enum dev_type (*get_dtype)(const void __iomem *base);
--	bool (*get_ecc_state)(void __iomem *base);
- #ifdef CONFIG_EDAC_DEBUG
- 	u64 (*get_mem_info)(struct synps_edac_priv *priv);
- #endif
-@@ -734,51 +740,38 @@ static enum dev_type zynqmp_get_dtype(const void __iomem *base)
- 	return dt;
+ 	return ret;
  }
  
--/**
-- * zynq_get_ecc_state - Return the controller ECC enable/disable status.
-- * @base:	DDR memory controller base address.
-- *
-- * Get the ECC enable/disable status of the controller.
-- *
-- * Return: true if enabled, otherwise false.
-- */
--static bool zynq_get_ecc_state(void __iomem *base)
-+static bool get_ecc_state(struct synps_edac_priv *priv)
- {
-+	u32 ecctype, clearval;
- 	enum dev_type dt;
--	u32 ecctype;
--
--	dt = zynq_get_dtype(base);
--	if (dt == DEV_UNKNOWN)
--		return false;
- 
--	ecctype = readl(base + SCRUB_OFST) & SCRUB_MODE_MASK;
--	if ((ecctype == SCRUB_MODE_SECDED) && (dt == DEV_X2))
--		return true;
--
--	return false;
--}
--
--/**
-- * zynqmp_get_ecc_state - Return the controller ECC enable/disable status.
-- * @base:	DDR memory controller base address.
-- *
-- * Get the ECC enable/disable status for the controller.
-- *
-- * Return: a ECC status boolean i.e true/false - enabled/disabled.
-- */
--static bool zynqmp_get_ecc_state(void __iomem *base)
--{
--	enum dev_type dt;
--	u32 ecctype;
--
--	dt = zynqmp_get_dtype(base);
--	if (dt == DEV_UNKNOWN)
--		return false;
--
--	ecctype = readl(base + ECC_CFG0_OFST) & SCRUB_MODE_MASK;
--	if ((ecctype == SCRUB_MODE_SECDED) &&
--	    ((dt == DEV_X2) || (dt == DEV_X4) || (dt == DEV_X8)))
--		return true;
-+	if (priv->p_data->platform == ZYNQ) {
-+		dt = zynq_get_dtype(priv->baseaddr);
-+		if (dt == DEV_UNKNOWN)
-+			return false;
-+
-+		ecctype = readl(priv->baseaddr + SCRUB_OFST) & SCRUB_MODE_MASK;
-+		if (ecctype == SCRUB_MODE_SECDED && dt == DEV_X2) {
-+			clearval = ECC_CTRL_CLR_CE_ERR | ECC_CTRL_CLR_UE_ERR;
-+			writel(clearval, priv->baseaddr + ECC_CTRL_OFST);
-+			writel(0x0, priv->baseaddr + ECC_CTRL_OFST);
-+			return true;
-+		}
-+	} else {
-+		dt = zynqmp_get_dtype(priv->baseaddr);
-+		if (dt == DEV_UNKNOWN)
-+			return false;
-+
-+		ecctype = readl(priv->baseaddr + ECC_CFG0_OFST) & SCRUB_MODE_MASK;
-+		if (ecctype == SCRUB_MODE_SECDED &&
-+		    (dt == DEV_X2 || dt == DEV_X4 || dt == DEV_X8)) {
-+			clearval = readl(priv->baseaddr + ECC_CLR_OFST) |
-+			ECC_CTRL_CLR_CE_ERR | ECC_CTRL_CLR_CE_ERRCNT |
-+			ECC_CTRL_CLR_UE_ERR | ECC_CTRL_CLR_UE_ERRCNT;
-+			writel(clearval, priv->baseaddr + ECC_CLR_OFST);
-+			return true;
-+		}
-+	}
- 
- 	return false;
- }
-@@ -948,18 +941,18 @@ static int setup_irq(struct mem_ctl_info *mci,
- }
- 
- static const struct synps_platform_data zynq_edac_def = {
-+	.platform = ZYNQ,
- 	.get_error_info	= zynq_get_error_info,
- 	.get_mtype	= zynq_get_mtype,
- 	.get_dtype	= zynq_get_dtype,
--	.get_ecc_state	= zynq_get_ecc_state,
- 	.quirks		= 0,
- };
- 
- static const struct synps_platform_data zynqmp_edac_def = {
-+	.platform = ZYNQMP,
- 	.get_error_info	= zynqmp_get_error_info,
- 	.get_mtype	= zynqmp_get_mtype,
- 	.get_dtype	= zynqmp_get_dtype,
--	.get_ecc_state	= zynqmp_get_ecc_state,
- #ifdef CONFIG_EDAC_DEBUG
- 	.get_mem_info	= zynqmp_get_mem_info,
- #endif
-@@ -971,10 +964,10 @@ static const struct synps_platform_data zynqmp_edac_def = {
- };
- 
- static const struct synps_platform_data synopsys_edac_def = {
-+	.platform = SYNPS,
- 	.get_error_info	= zynqmp_get_error_info,
- 	.get_mtype	= zynqmp_get_mtype,
- 	.get_dtype	= zynqmp_get_dtype,
--	.get_ecc_state	= zynqmp_get_ecc_state,
- 	.quirks         = (DDR_ECC_INTR_SUPPORT | DDR_ECC_INTR_SELF_CLEAR
- #ifdef CONFIG_EDAC_DEBUG
- 			  | DDR_ECC_DATA_POISON_SUPPORT
-@@ -1406,10 +1399,6 @@ static int mc_probe(struct platform_device *pdev)
- 	if (!p_data)
- 		return -ENODEV;
- 
--	if (!p_data->get_ecc_state(baseaddr)) {
--		edac_printk(KERN_INFO, EDAC_MC, "ECC not enabled\n");
--		return -ENXIO;
--	}
- 
- 	layers[0].type = EDAC_MC_LAYER_CHIP_SELECT;
- 	layers[0].size = SYNPS_EDAC_NR_CSROWS;
-@@ -1429,6 +1418,12 @@ static int mc_probe(struct platform_device *pdev)
- 	priv = mci->pvt_info;
- 	priv->baseaddr = baseaddr;
- 	priv->p_data = p_data;
-+	if (!get_ecc_state(priv)) {
-+		edac_printk(KERN_INFO, EDAC_MC, "ECC not enabled\n");
-+		rc = -ENODEV;
-+		goto free_edac_mc;
-+	}
-+
- 	spin_lock_init(&priv->reglock);
- 
- 	mc_init(mci, pdev);
 -- 
 2.39.5
 
