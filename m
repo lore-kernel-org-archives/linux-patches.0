@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B784E1D555;
-	Mon,  4 Aug 2025 00:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DACD1FDD;
+	Mon,  4 Aug 2025 00:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267976; cv=none; b=JiC0VgrRoRPVZnqrr1bfZOv+k4GM8xu5wbjIEo/ozFs/tL4ETcbUeE7k/+21rOQcjdRdyQbNT8Jy9PGbPGiH5ao9VVTifZ4HtqAL/tyoNgAVlK+K1Rv0DfN1LcNIIwMwG6sOt9+I+xdSlcd0xmuVFqtSwsTKBHx5pNOjvDoB+0k=
+	t=1754267979; cv=none; b=H8WYn/c5L0gOEmn+rGE5vUTwGjQb4FUih74nnhEEiNtQR7pGOXkUuBfmB5ZRYFz+JQ5hxsF/ZfQY2gydafCaqO0AviQe7NSDq2mpDuxKToDVUFfJ2/4gAqb4EiAGLk6l2MK/10MU2EKpqyQQcU48iq3esGzAtxM1VOCBKjUxn8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267976; c=relaxed/simple;
-	bh=5fT2R4pTTADu3dHSazqtQcTZ50GGTqQePYe5IJhbyo8=;
+	s=arc-20240116; t=1754267979; c=relaxed/simple;
+	bh=PpBau8v62RpHB08pG6eLjarnZyi4UNO0F29qg72ImxM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rX4F3kqFm3fIhS9f9rgH8s+NtkLC1vAQKrdeIGctIz+RKyFfvUNp+w/O0Cc7tRxkkZ3vujasOCA98xkCsC3Jx4WDqFFeqG/zFsQzBpDgnM9SUFIe4h6Or5ciUNb6OxojkYDmLYZhPnrIglotb8aY6RzVh5Q04sqI+oUv8vFshO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1njtAsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYr2fFFO5AsSUbKgQnG5e6jt2kDHG4yte9FIKu/ZArcmekZ5hank3OvvJHCqRFRIEevAt6xKu50YFl0KRyyPdasiWW6r60NuK4dLpzyeRO0W4wcttF/XxzyilS8ygHgURqVeD2+h1e2jmSixCcU3kQut5WJxZHx62LE0hVK1pHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JQhdmrKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1njtAsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5037DC4CEF8;
-	Mon,  4 Aug 2025 00:39:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JQhdmrKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FC8C4CEF8;
+	Mon,  4 Aug 2025 00:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267976;
-	bh=5fT2R4pTTADu3dHSazqtQcTZ50GGTqQePYe5IJhbyo8=;
+	s=k20201202; t=1754267978;
+	bh=PpBau8v62RpHB08pG6eLjarnZyi4UNO0F29qg72ImxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y1njtAsc7sARMVRTq2nqkARK5hz2U76uy7eCFCMpZlGC7aRMtbp6QafyaTdnDS5i1
-	 qrA4Hb7+JjQ2aSz1A7Qy3mx15gg3t7VM8a2+P5/dcB8kAhIin1x+jDkLyakg4oqyfS
-	 BTV1M3KHCNdUp+kBkO8a5lZ+BkQFTgYCtGNe4dh1UoOTLIwbPLLCpaxPEyPxqObl9a
-	 6DJgDVorpkl3yUAD+v1YTAoJRHmXrno5e56GTfVmE1mV540nKIpPZi7N8ujWKEy92V
-	 iOP25Re76HNut0Jc6BHdyec7qXG301J0TOb/lLcZO5B9kBGJnHMnXoNxrFe+lxwyQQ
-	 TTlICwQHSV7JQ==
+	b=JQhdmrKOP1HHxUXb9DmRoS3Bu6L/Nze8FfMIqW7dfwwF3iPVohm3gJC5dC42tap6T
+	 DkXDQqq5z+Kl4J07SthKnDI1rKk1tBn3QHpKhU5l9SsyGEbkSPaFvKttjpiU6ahRRt
+	 hIIVHolUh3kFgaiMQy8ulGiObf0+pyNsxX+0h3rrRah2Cz1Erxu/J4vd/gPIFTp759
+	 mpnxedz5cUHuY3q5XsngSfUX6gpTNnuoezVEUPmFBqJoPgbQSFdj4Y2W9i1OdtHRk1
+	 NQlwRplhvPTiUm6MramhI98Cnogn9fLvYJrQVf8KUrOhDNWcNyTxpVIPAhiRxC2NWC
+	 h6NWSg89GhchA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhu Qiyu <qiyuzhu2@amd.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
 	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 20/44] ACPI: PRM: Reduce unnecessary printing to avoid user confusion
-Date: Sun,  3 Aug 2025 20:38:25 -0400
-Message-Id: <20250804003849.3627024-20-sashal@kernel.org>
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 21/44] PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()
+Date: Sun,  3 Aug 2025 20:38:26 -0400
+Message-Id: <20250804003849.3627024-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -51,139 +51,93 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Qiyu <qiyuzhu2@amd.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 3db5648c4d608b5483470efc1da9780b081242dd ]
+[ Upstream commit 89d9cec3b1e9c49bae9375a2db6dc49bc7468af0 ]
 
-Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
-handler and context") introduced non-essential printing "Failed to find
-VA for GUID: xxxx, PA: 0x0" which may confuse users to think that
-something wrong is going on while it is not the case.
+Clear power.needs_force_resume in pm_runtime_reinit() in case it has
+been set by pm_runtime_force_suspend() invoked from a driver remove
+callback.
 
-According to the PRM Spec Section 4.1.2 [1], both static data buffer
-address and ACPI parameter buffer address may be NULL if they are not
-needed, so there is no need to print out the "Failed to find VA ... "
-in those cases.
-
-Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
-Signed-off-by: Zhu Qiyu <qiyuzhu2@amd.com>
-Link: https://patch.msgid.link/20250704014104.82524-1-qiyuzhu2@amd.com
-[ rjw: Edits in new comments, subject and changelog ]
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/9495163.CDJkKcVGEf@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit is a clear bugfix that should be backported to stable kernel
+trees for the following reasons:
 
-## Bug Fix for User-Visible Issue
-The commit fixes false warning messages that were confusing users. The
-original commit 088984c8d54c (which was already backported to stable
-with "Cc: All applicable <stable@vger.kernel.org>") introduced an
-unconditional warning in `efi_pa_va_lookup()`:
+1. **It fixes a real bug**: The commit addresses a specific issue where
+   `power.needs_force_resume` flag is not cleared in
+   `pm_runtime_reinit()` when a device is removed. If a driver calls
+   `pm_runtime_force_suspend()` from its remove callback (which sets
+   `needs_force_resume = 1`), this flag remains set even after the
+   device is removed and potentially re-probed.
 
-```c
-pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
-```
+2. **The fix is minimal and contained**: The change adds just 5 lines of
+   code (including comments) to clear a single flag. The modification
+   is:
+  ```c
+  dev->power.needs_force_resume = false;
+  ```
+  This is a very low-risk change that only affects the specific
+  condition being fixed.
 
-This warning was printed even when the physical address (PA) was
-legitimately 0/NULL, which according to the PRM specification is valid
-for both `static_data_buffer_address` and `acpi_param_buffer_address`
-when they are not needed.
+3. **It prevents state leakage**: Looking at the code flow:
+   - `pm_runtime_force_suspend()` sets `dev->power.needs_force_resume =
+     1` (line in runtime.c)
+   - When a driver is removed, `pm_runtime_remove()` calls
+     `pm_runtime_reinit()`
+   - Without this fix, if the device is re-probed, it would still have
+     `needs_force_resume = 1` from the previous instance
+   - This could lead to incorrect PM runtime behavior where
+     `pm_runtime_force_resume()` would incorrectly think it needs to
+     resume a device that was never suspended in the current probe cycle
 
-## Small and Contained Fix
-The fix is minimal and surgical:
-1. Removes the unconditional warning from `efi_pa_va_lookup()`
-2. Adds conditional warnings only when addresses are non-zero but lookup
-   fails:
-   - For handler_addr: warns if lookup fails (this should never be zero)
-   - For static_data_buffer_addr: only warns if
-     `handler_info->static_data_buffer_address` is non-zero but lookup
-     fails
-   - For acpi_param_buffer_addr: only warns if
-     `handler_info->acpi_param_buffer_address` is non-zero but lookup
-     fails
+4. **Related to previous stable fixes**: The git history shows a
+   previous commit `c745253e2a69` ("PM: runtime: Fix unpaired parent
+   child_count for force_resume") was already marked for stable (4.16+),
+   indicating that issues with the `needs_force_resume` flag have been
+   problematic enough to warrant stable backports.
 
-## Regression Fix
-Since the problematic commit 088984c8d54c has been backported to v6.12
-stable kernels, this fix addresses a regression in stable trees where
-users are seeing confusing warning messages for legitimate NULL
-addresses.
+5. **Clear bug scenario**: The commit message describes a specific
+   scenario where this happens - when `pm_runtime_force_suspend()` is
+   called from a driver remove callback. This is a legitimate use case
+   where drivers want to ensure devices are suspended before removal.
 
-## Low Risk
-The change:
-- Does not modify any functional behavior
-- Only adjusts when warning messages are printed
-- Has no architectural changes or side effects
-- Is confined to the ACPI PRM subsystem
+6. **No architectural changes**: This is purely a bugfix that clears a
+   flag that should have been cleared during reinitialization. It
+   doesn't introduce new features or change any APIs.
 
-## Clear Benefit
-The fix eliminates user confusion from false warnings while maintaining
-proper warnings for actual error conditions (when a non-zero address
-fails lookup).
+The fix ensures proper PM runtime state management across device removal
+and re-probing cycles, which is important for system stability and
+correct power management behavior.
 
-Given that the original problematic commit is in stable kernels and this
-is a targeted fix for that regression with minimal risk, it clearly
-meets the stable backporting criteria.
+ drivers/base/power/runtime.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
- drivers/acpi/prmt.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index 890c74c52beb..6290ed84c595 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -85,8 +85,6 @@ static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 35e1a090ef90..26ea7f5c8d42 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1714,6 +1714,11 @@ void pm_runtime_reinit(struct device *dev)
+ 				pm_runtime_put(dev->parent);
  		}
  	}
- 
--	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
--
- 	return 0;
++	/*
++	 * Clear power.needs_force_resume in case it has been set by
++	 * pm_runtime_force_suspend() invoked from a driver remove callback.
++	 */
++	dev->power.needs_force_resume = false;
  }
  
-@@ -142,13 +140,37 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
-+		/*
-+		 * Print a warning message if handler_addr is zero which is not expected to
-+		 * ever happen.
-+		 */
-+		if (unlikely(!th->handler_addr))
-+			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->handler_address);
- 
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
-+		/*
-+		 * According to the PRM specification, static_data_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->static_data_buffer_addr && handler_info->static_data_buffer_address))
-+			pr_warn("Failed to find VA of static data buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->static_data_buffer_address);
- 
- 		th->acpi_param_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
- 
-+		/*
-+		 * According to the PRM specification, acpi_param_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->acpi_param_buffer_addr && handler_info->acpi_param_buffer_address))
-+			pr_warn("Failed to find VA of acpi param buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->acpi_param_buffer_address);
-+
- 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
- 
- 	return 0;
+ /**
 -- 
 2.39.5
 
