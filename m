@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A301A18CBE1;
-	Mon,  4 Aug 2025 00:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94D038D;
+	Mon,  4 Aug 2025 00:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267799; cv=none; b=KabNN3wdb4Hv2U1rwL14RrDjOg59zERhnMjwShy+M1olsoIjKieLFGS5f38x1/tci9I8DVtIboHYIg+YzLocmbD9w7WzcfEHiWc7vFz6roaggMC62dslH4Gi6UnHaThVZpzY3XB1vhHTchOTrUtnCIzhNm0Nz3FZVhKBcykwBHU=
+	t=1754267801; cv=none; b=ssQ7AORva0MhiyiJ2wRhrTwqx7/0WXWtmhXkPqsjnSVkpQuRM+l8PriAr/jcPKOQYkAt0Zjbn6gLHXfbEXE6K8BB3dpE6HTCvjWvezNH0/IO2uU2F410lnDb1HJhnN0ip3w1P4D4XktjglSv8l6BcB7m38DkSzjygH+TMJLLr74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267799; c=relaxed/simple;
-	bh=fHAaocERp0YyMO0m6xZVOjH5fnGKNvGMKTFMKsUKMPQ=;
+	s=arc-20240116; t=1754267801; c=relaxed/simple;
+	bh=7aOpEpMk6gX74mbh3uC/4H+xB6yscOGZrOkoaql2YZs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tFbLlEjDq+N6GPtX5mv8fOha+pT/pLB01ByV6fS7cD+VFJ/qYy28RCBXz2Kbf5Exapuc/MM4oj2vWMlwvjKWyP/3pGwxOOvXDWEFiOwQWwlojfhKDmOB/uvvI6Zi98cfdGQ2ZK4Rot+bxEjRLN35PISJZwqp6CzK/NxZGemq7cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DmD6fIxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P8/212l8JqHmOy7ETGoOFyRxSaonjp73l0x2C56noAXmk4dno8Vucx1zqKiRK4sbMcqYBf3DvY3IqIn8jJLLWj82HnTUSdYEkdhC+AEvNpu2i6Rb6LMyGo8Fur9TWfqR9ClYBun9VwM9RPjE5rRLpe+6hCqrbF43hE9Slv+jHls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5Lmr7vQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DmD6fIxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AACFC4CEF8;
-	Mon,  4 Aug 2025 00:36:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5Lmr7vQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE933C4CEEB;
+	Mon,  4 Aug 2025 00:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267797;
-	bh=fHAaocERp0YyMO0m6xZVOjH5fnGKNvGMKTFMKsUKMPQ=;
+	s=k20201202; t=1754267801;
+	bh=7aOpEpMk6gX74mbh3uC/4H+xB6yscOGZrOkoaql2YZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmD6fIxrVS43CFpHPvyvnxI33AsfJYvz+2jI7AY7LyGaIWwZwNcxF3LlR7hCBaTzZ
-	 sfy6In+XNEjoLw3GMmCT+cUBElYUTt9DcC+hTeMrtSfNQ6Vrfp7BGMBfdPjUiWVmDE
-	 cJiGT4oUDD3j6exDBVpd5BDhX++pckB9AGpXNWogULYzxMEQ2xsLFZBhBnkOxVPKQn
-	 X/p0IXcWuhoYniZa2aH1M74cQ52f3kv/G9/YKkeCyLI0CnG6+NoCWw67ky1lLwUPf+
-	 55of5o9cDE28v/GUAGt4hqLM53LIMxdWNKs3Ry/3EUk9pJyqhlP6mEOWa8UlJas0as
-	 JVJxNYA8bn8Aw==
+	b=a5Lmr7vQewI29xxGh7X1w8c2T1AwmzvHKddpmhS0J9wTaR4f/b9FjYlEv3sJ9KvdP
+	 9j6QzvvcYw2+/runZQc9fVqU18REfUk5HK45ZfcxJcoOyQoLKo9yU9XH5RKbjP2z8H
+	 juo7UyHSvghGACRQTzTLZ3gLCnr8ZK0Mm0dE8V5pmlEYWoliwXOZM8YzrAMGR82vlV
+	 6eIs+KDL1FL0J1uGvMDv/06lSL2ijE/HGiEsEr97p1D2flPfpE4aT2QbRX1sI1vsT0
+	 z8d0y8BJjwuVHyu364DRVA9VP/LZFiVgbvijBeiYvs7G3D0Zvgtn0XBpjka/o4JWOD
+	 chN7O9TqaoEJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Santos <Jonathan.Santos@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Michael.Hennerich@analog.com,
-	lars@metafoo.de,
-	linux-iio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 57/59] iio: adc: ad7768-1: Ensure SYNC_IN pulse minimum timing requirement
-Date: Sun,  3 Aug 2025 20:34:11 -0400
-Message-Id: <20250804003413.3622950-57-sashal@kernel.org>
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 59/59] ASoC: qcom: use drvdata instead of component to keep id
+Date: Sun,  3 Aug 2025 20:34:13 -0400
+Message-Id: <20250804003413.3622950-59-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -49,141 +47,192 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Santos <Jonathan.Santos@analog.com>
+From: Srinivas Kandagatla <srini@kernel.org>
 
-[ Upstream commit 7e54d932873d91a55d1b89b7389876d78aeeab32 ]
+[ Upstream commit 8167f4f42572818fa8153be2b03e4c2120846603 ]
 
-The SYNC_IN pulse width must be at least 1.5 x Tmclk, corresponding to
-~2.5 µs at the lowest supported MCLK frequency. Add a 3 µs delay to
-ensure reliable synchronization timing even for the worst-case scenario.
+Qcom lpass is using component->id to keep DAI ID (A).
 
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/d3ee92a533cd1207cf5c5cc4d7bdbb5c6c267f68.1749063024.git.Jonathan.Santos@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+(S)	static int lpass_platform_pcmops_open(
+				sruct snd_soc_component *component,
+				struct snd_pcm_substream *substream)
+	{			                          ^^^^^^^^^(B0)
+		...
+(B1)		struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
+(B2)		struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
+		...
+(B3)		unsigned int dai_id = cpu_dai->driver->id;
+
+(A)		component->id = dai_id;
+		...
+	}
+
+This driver can get dai_id from substream (B0 - B3).
+In this driver, below functions get dai_id from component->id (A).
+
+(X)	lpass_platform_pcmops_suspend()
+(Y)	lpass_platform_pcmops_resume()
+(Z)	lpass_platform_copy()
+
+Here, (Z) can get it from substream (B0 - B3), don't need to use
+component->id (A). On suspend/resume (X)(Y), dai_id can only be obtained
+from component->id (A), because there is no substream (B0) in function
+parameter.
+
+But, component->id (A) itself should not be used for such purpose.
+It is intilialized at snd_soc_component_initialize(), and parsed its ID
+(= component->id) from device name (a).
+
+	int snd_soc_component_initialize(...)
+	{
+		...
+		if (!component->name) {
+(a)			component->name = fmt_single_name(dev, &component->id);
+			...                                     ^^^^^^^^^^^^^
+		}
+		...
+	}
+
+Unfortunately, current code is broken to start with.
+
+There are many regmaps that the driver cares about, however its only
+managing one (either dp or i2s) in component suspend/resume path.
+
+I2S regmap is mandatory however other regmaps are setup based on flags
+like "hdmi_port_enable" and "codec_dma_enable".
+
+Correct thing for suspend/resume path to handle is by checking these
+flags, instead of using component->id.
+
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Suggested-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87a56ouuob.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-**1. Bug Fix Nature:**
-The commit fixes a timing violation bug where the SYNC_IN pulse width
-was not meeting the hardware's minimum timing requirement. According to
-the datasheet (as noted in the commit), the SYNC_IN pulse must be at
-least 1.5 × Tmclk (MCLK period). Without the proper delay, the
-synchronization pulse may be too short, especially at lower MCLK
-frequencies, causing unreliable synchronization.
+**1. Fixes a Real Bug with User Impact:**
+- The driver was misusing `component->id` to store DAI ID information,
+  overwriting the ASoC framework's intended use of this field
+- This caused incomplete suspend/resume handling - only one regmap
+  (either HDMI or I2S) was being handled instead of both when needed
+- Users would experience audio failures after suspend/resume cycles,
+  especially on systems with both HDMI and I2S audio interfaces
 
-**2. Specific Code Analysis:**
+**2. Clear Architectural Violation Being Fixed:**
+The commit message and code analysis show that `component->id` is
+initialized by the ASoC framework during
+`snd_soc_component_initialize()` based on device name parsing. The
+driver was incorrectly overwriting this value with DAI ID, breaking the
+abstraction layer between driver and framework.
 
-The original code had a critical timing issue:
-```c
-gpiod_set_value(st->gpio_sync_in, 1);
-gpiod_set_value(st->gpio_sync_in, 0);
-```
+**3. Limited Scope and Low Risk:**
+- Changes are confined to 3 functions in a single file (`lpass-
+  platform.c`)
+- The fix replaces the problematic `component->id` usage with proper
+  flag checking (`drvdata->hdmi_port_enable`)
+- No API changes or new features added
+- The author (Srinivas Kandagatla) is an experienced ASoC maintainer
 
-This creates a pulse with essentially zero width (just the GPIO toggle
-time), which violates the hardware specification. The fix adds:
-- A new dedicated function `ad7768_send_sync_pulse()` that ensures
-  proper timing
-- Uses `gpiod_set_value_cansleep()` instead of `gpiod_set_value()` for
-  better reliability
-- Adds a 3 µs delay using `fsleep(3)` to guarantee the minimum pulse
-  width
+**4. Improves Suspend/Resume Reliability:**
+The fix ensures both HDMI and I2S regmaps are properly handled during
+suspend/resume based on actual driver capabilities rather than an
+incorrectly stored ID. This makes power management more robust and
+predictable.
 
-**3. Impact Analysis:**
-- **User Impact**: Without this fix, users may experience unreliable ADC
-  synchronization, particularly when changing filter decimation rates or
-  when operating at lower MCLK frequencies (0.6 MHz)
-- **Worst Case**: At 0.6 MHz, Tmclk = 1.67 µs, requiring a minimum pulse
-  width of 2.5 µs. The original code provides essentially 0 µs
-- **Data Integrity**: Improper synchronization can lead to incorrect ADC
-  readings or timing issues in multi-device setups
+**5. Long-Standing Issue:**
+The problematic code has existed since late 2020 (commits b1824968221c
+and 8d1bfc04c974), affecting multiple kernel versions and potentially
+many Qualcomm-based devices in the field.
 
-**4. Risk Assessment:**
-- **Low Risk**: The change is minimal and contained - it only adds a 3
-  µs delay and switches to the cansleep GPIO variant
-- **No API Changes**: The fix is internal to the driver with no external
-  interface changes
-- **Conservative Fix**: The 3 µs delay provides margin above the 2.5 µs
-  worst-case requirement
+**Backport Recommendation:**
+Should be backported to all stable kernels from 5.10 onwards that
+contain the original problematic commits. This is a medium-high priority
+fix that improves audio subsystem reliability without introducing new
+risks.
 
-**5. Stable Kernel Criteria:**
-✓ Fixes a real bug that affects users (timing violation)
-✓ Small, contained change (adds one function, modifies one call site)
-✓ No new features or architectural changes
-✓ Minimal risk of regression
-✓ Clear hardware specification violation being fixed
+ sound/soc/qcom/lpass-platform.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-**6. Supporting Evidence:**
-- The driver has had multiple previous fixes backported (as seen in git
-  log with "Fixes:" tags)
-- Similar timing-related fixes are commonly backported for hardware
-  drivers
-- The AD7768-1 is an active production part used in data acquisition
-  systems where reliability is critical
-
-The commit meets all stable kernel criteria for backporting - it's a
-clear bug fix for a hardware timing violation that could cause
-unreliable operation, implemented with minimal changes and low
-regression risk.
-
- drivers/iio/adc/ad7768-1.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
-index 967f06cd3f94..e147eaf1a3b1 100644
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -203,6 +203,24 @@ static int ad7768_spi_reg_write(struct ad7768_state *st,
- 	return spi_write(st->spi, st->data.d8, 2);
- }
+diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+index f918d9e16dc0..f342bc4b3a14 100644
+--- a/sound/soc/qcom/lpass-platform.c
++++ b/sound/soc/qcom/lpass-platform.c
+@@ -201,7 +201,6 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
+ 	struct regmap *map;
+ 	unsigned int dai_id = cpu_dai->driver->id;
  
-+static int ad7768_send_sync_pulse(struct ad7768_state *st)
-+{
-+	/*
-+	 * The datasheet specifies a minimum SYNC_IN pulse width of 1.5 × Tmclk,
-+	 * where Tmclk is the MCLK period. The supported MCLK frequencies range
-+	 * from 0.6 MHz to 17 MHz, which corresponds to a minimum SYNC_IN pulse
-+	 * width of approximately 2.5 µs in the worst-case scenario (0.6 MHz).
-+	 *
-+	 * Add a delay to ensure the pulse width is always sufficient to
-+	 * trigger synchronization.
-+	 */
-+	gpiod_set_value_cansleep(st->gpio_sync_in, 1);
-+	fsleep(3);
-+	gpiod_set_value_cansleep(st->gpio_sync_in, 0);
-+
-+	return 0;
-+}
-+
- static int ad7768_set_mode(struct ad7768_state *st,
- 			   enum ad7768_conv_mode mode)
+-	component->id = dai_id;
+ 	data = kzalloc(sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+@@ -1189,13 +1188,14 @@ static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
  {
-@@ -288,10 +306,7 @@ static int ad7768_set_dig_fil(struct ad7768_state *st,
- 		return ret;
+ 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+ 	struct regmap *map;
+-	unsigned int dai_id = component->id;
  
- 	/* A sync-in pulse is required every time the filter dec rate changes */
--	gpiod_set_value(st->gpio_sync_in, 1);
--	gpiod_set_value(st->gpio_sync_in, 0);
--
--	return 0;
-+	return ad7768_send_sync_pulse(st);
+-	if (dai_id == LPASS_DP_RX)
++	if (drvdata->hdmi_port_enable) {
+ 		map = drvdata->hdmiif_map;
+-	else
+-		map = drvdata->lpaif_map;
++		regcache_cache_only(map, true);
++		regcache_mark_dirty(map);
++	}
+ 
++	map = drvdata->lpaif_map;
+ 	regcache_cache_only(map, true);
+ 	regcache_mark_dirty(map);
+ 
+@@ -1206,14 +1206,19 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
+ {
+ 	struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+ 	struct regmap *map;
+-	unsigned int dai_id = component->id;
++	int ret;
+ 
+-	if (dai_id == LPASS_DP_RX)
++	if (drvdata->hdmi_port_enable) {
+ 		map = drvdata->hdmiif_map;
+-	else
+-		map = drvdata->lpaif_map;
++		regcache_cache_only(map, false);
++		ret = regcache_sync(map);
++		if (ret)
++			return ret;
++	}
+ 
++	map = drvdata->lpaif_map;
+ 	regcache_cache_only(map, false);
++
+ 	return regcache_sync(map);
  }
  
- static int ad7768_set_freq(struct ad7768_state *st,
+@@ -1223,7 +1228,9 @@ static int lpass_platform_copy(struct snd_soc_component *component,
+ 			       unsigned long bytes)
+ {
+ 	struct snd_pcm_runtime *rt = substream->runtime;
+-	unsigned int dai_id = component->id;
++	struct snd_soc_pcm_runtime *soc_runtime = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(soc_runtime, 0);
++	unsigned int dai_id = cpu_dai->driver->id;
+ 	int ret = 0;
+ 
+ 	void __iomem *dma_buf = (void __iomem *) (rt->dma_area + pos +
 -- 
 2.39.5
 
