@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D4A1C4A0A;
-	Mon,  4 Aug 2025 00:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D9619AD90;
+	Mon,  4 Aug 2025 00:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267164; cv=none; b=o/XN4aypx0ygCoNZR56JaBTdz5uCsW6qj6k+EOIxOTiXxvtLaL53LvD5dK5CSOGPaWaCOp/isQoPmjX+Zf+iQC33x/yABnVUtpIGcXP7DdlunDCYtIjFXxfejwQ9+tVDHGjw7XhAMw1HwI9oyvDUzdq/eLfdPbrDwGqSqvzSXX0=
+	t=1754267165; cv=none; b=QFgwcGIW+zqJsGzw7RV/1ISm5xFFBrYQC0JEjjA4KwJLvjKZfDDee4YA1NQmeFaf2CaDKx6YI+F2kCCczPMn0S7pTpayiRe6pGpXbju1CwVoiqaj7QH2o8czIHyIp8i2BbqDDiQZfRJIpYvyJvLVecL7t+YQcAncwNrlmf2UHdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267164; c=relaxed/simple;
-	bh=J7qFGFcMPKpm55AeOyrg7ZjRLyIwt4NAnCgTRZRLxhQ=;
+	s=arc-20240116; t=1754267165; c=relaxed/simple;
+	bh=YnbkvnmtNLvjCP8IyfHoAyXB8ez09+84Y28R1X7smsM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VTmOJ4y10MXuz688pX6HBD/heBJSxnR7GhdFoxRm/FK9yTkm/tXSpvLo3fD8toilF00ap3EnAOEC+kC2JZI0nnxFyRTvo8GtgcJ6rTLVBGwRBhKC+bQKHVh3hliRWRubQ28ekBU158GzDX+cbgXlwACNHHijhcZ5XmXX6vozeKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oqqack9x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P7220x8+Q7QOP0awgljb+c7d2Nq8LD/l1PywJGPQP/GZAZPsg/9aJodXF7FYQtEeA1Wt/ZKUMhjTOSxMNcqUVwmfCTyipRPXuoE4Y4EK4OfYNHq0/vYokQfGErs3KRGg7ddApgCHpNIIHmxGoXZlTX5aowHEaUdSdGBWg5PoFvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b2ZLnKtj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oqqack9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8F7C4CEEB;
-	Mon,  4 Aug 2025 00:26:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b2ZLnKtj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F0CC4CEEB;
+	Mon,  4 Aug 2025 00:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267164;
-	bh=J7qFGFcMPKpm55AeOyrg7ZjRLyIwt4NAnCgTRZRLxhQ=;
+	s=k20201202; t=1754267165;
+	bh=YnbkvnmtNLvjCP8IyfHoAyXB8ez09+84Y28R1X7smsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oqqack9xZXo2m5wJkaSbR0qztNL35vJjOyBjglCNGym++DHJ8p4BPkGydLbuvG9b0
-	 0nN6kD0z2z1PY35I7QVhhrC52/bJqFz1C31Ta/7H6A9miOz5nw/yIZfqqxo+4VoT4h
-	 aIbkykkekNAWByZSrZ1BhAUZOddsUtjnptt1dzMwz7Dzegzx0AcfFBLAehtDCwqj81
-	 Rsxu8zkOdx86AT4K+2x5yUsJ/anGAs3MOdsAc/OjAwYJMMuFWhK4nYu2mZynGmXQHc
-	 4EnZxHxUZ08s2Kg76GnnW2ojwdT3Si+6rioIvZdBi4V88NYcu8U8tHFm+GfNoJZF5r
-	 11dpuQ9/1Uoww==
+	b=b2ZLnKtjweBStLmuOJHGf2/rLmuXlQ5HrsDqYWBOqSGp0otpXWZe6YdpaFxd3e2aa
+	 2fHkXBQKsAspwKrmHTjfFESnO0lANlTgc2XelHy4a/UjuXsKjh5RTaRv8Lr7uuZnsh
+	 RE2/gkcmyXw/dBrlnGKWBCcNXoU3Dn49bqKTTzRYRG8rI/s8YzXXtCdYKm2MQiIPic
+	 e5WR7c4gBQA5Xa04ymqtU5j/g1Q2EiXN+Qvn74qdJPXoD+wL2fEXcGa58mwBXEu6wy
+	 PqpbsB0hUzV/xFMACLXP8ZSh7tn8KdoBZH3uG/yP/H3CrVW4/acObwbFw+uYEVQDGu
+	 CUvkAA6TwRZ/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eliav Farber <farbere@amazon.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	mingo@kernel.org,
-	tglx@linutronix.de,
-	giometti@enneenne.com,
-	calvin@wbinvd.org,
-	bastien.curutchet@bootlin.com
-Subject: [PATCH AUTOSEL 6.16 51/85] pps: clients: gpio: fix interrupt handling order in remove path
-Date: Sun,  3 Aug 2025 20:23:00 -0400
-Message-Id: <20250804002335.3613254-51-sashal@kernel.org>
+Cc: Peter Robinson <pbrobinson@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.16 52/85] reset: brcmstb: Enable reset drivers for ARCH_BCM2835
+Date: Sun,  3 Aug 2025 20:23:01 -0400
+Message-Id: <20250804002335.3613254-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -52,112 +48,135 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eliav Farber <farbere@amazon.com>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
+[ Upstream commit 1d99f92f71b6b4b2eee776562c991428490f71ef ]
 
-The interrupt handler in pps_gpio_probe() is registered after calling
-pps_register_source() using devm_request_irq(). However, in the
-corresponding remove function, pps_unregister_source() is called before
-the IRQ is freed, since devm-managed resources are released after the
-remove function completes.
+The BRCMSTB and BRCMSTB_RESCAL reset drivers are also
+used in the BCM2712, AKA the RPi5. The RPi platforms
+have typically used the ARCH_BCM2835, and the PCIe
+support for this SoC can use this config which depends
+on these drivers so enable building them when just that
+arch option is enabled to ensure the platform works as
+expected.
 
-This creates a potential race condition where an interrupt may occur
-after the PPS source is unregistered but before the handler is removed,
-possibly leading to a kernel panic.
-
-To prevent this, switch from devm-managed IRQ registration to manual
-management by using request_irq() and calling free_irq() explicitly in
-the remove path before unregistering the PPS source. This ensures the
-interrupt handler is safely removed before deactivating the PPS source.
-
-Signed-off-by: Eliav Farber <farbere@amazon.com>
-Link: https://lore.kernel.org/r/20250527053355.37185-1-farbere@amazon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20250630175301.846082-1-pbrobinson@gmail.com
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the surrounding context, here is
-my assessment:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a Real Bug**: The commit addresses a genuine race condition
-   where an interrupt can occur after the PPS source is unregistered but
-   before the IRQ handler is freed. This can lead to a kernel panic - a
-   serious stability issue that affects users.
+## Analysis of the Commit
 
-2. **Clear Race Condition Pattern**: The code shows the problematic
-   ordering:
-   - In probe: `pps_register_source()` → `devm_request_irq()`
-   - In remove: `pps_unregister_source()` → (implicit devm cleanup frees
-     IRQ)
+### 1. **Nature of the Change**
+The commit makes a simple Kconfig dependency update to enable two
+existing reset controller drivers (`RESET_BRCMSTB` and
+`RESET_BRCMSTB_RESCAL`) for the `ARCH_BCM2835` platform. The changes
+are:
+- Lines 54-55: Adds `ARCH_BCM2835` to the depends and default lines for
+  `RESET_BRCMSTB`
+- Lines 63-64: Adds `ARCH_BCM2835` to the depends and default lines for
+  `RESET_BRCMSTB_RESCAL`
+- Line 67: Updates the help text to mention BCM2712 alongside BCM7216
 
-   This creates a window where the hardware can generate an interrupt
-after the PPS source is gone but before the handler is removed, causing
-the handler to access freed memory.
+### 2. **This is a Bug Fix**
+This commit fixes a configuration bug where the Raspberry Pi 5 (BCM2712)
+platform, which uses `ARCH_BCM2835`, cannot properly enable critical
+reset controllers needed for PCIe functionality. Without this fix, users
+building kernels for RPi5 with just `ARCH_BCM2835` enabled would have
+non-functional PCIe support.
 
-3. **Minimal and Contained Fix**: The change is small and focused:
-   - Changes `devm_request_irq()` to `request_irq()`
-   - Adds explicit `free_irq()` call before `pps_unregister_source()`
-   - Only 3 lines of functional code changes
-   - No new features or architectural changes
+### 3. **Minimal and Contained Change**
+The commit is extremely minimal - it only modifies 6 lines in a single
+Kconfig file. It doesn't touch any C code, doesn't change any logic, and
+only updates build configuration dependencies. This is the ideal type of
+change for stable backporting.
 
-4. **Similar to Other Stable Fixes**: This follows a common pattern seen
-   in other drivers where devm resource ordering causes issues in
-   removal paths. The kernel has many similar fixes for CAN drivers,
-   network drivers, and other subsystems that have been backported to
-   stable.
+### 4. **No Side Effects**
+The change has no negative side effects:
+- It only enables building existing drivers for an additional platform
+- The drivers themselves are already tested and working (used by BRCMSTB
+  platforms)
+- The change is additive - it doesn't remove or modify existing
+  functionality
+- No API/ABI changes
 
-5. **Low Risk of Regression**: The change is straightforward and doesn't
-   modify the driver's functionality - it only fixes the resource
-   cleanup ordering. The manual IRQ management is a well-established
-   pattern.
+### 5. **Platform-Specific Fix**
+While the change is platform-specific (Raspberry Pi 5/BCM2712), it's
+important because:
+- RPi platforms are widely used
+- PCIe support is critical functionality
+- The fix enables existing, tested code to be built for a platform that
+  needs it
 
-6. **Affects User-Visible Stability**: A kernel panic during device
-   removal/module unload is a serious issue that can affect system
-   stability, especially in environments where PPS devices might be
-   dynamically added/removed or during system shutdown.
+### 6. **Clear Hardware Support Issue**
+From the commit message, this addresses a real hardware support issue
+where the BCM2712 (RPi5) SoC reuses the same reset controller IP blocks
+as other Broadcom STB SoCs but couldn't enable them due to missing
+Kconfig dependencies.
 
-The commit message clearly describes the problem, the root cause, and
-the solution. The fix is conservative and follows established kernel
-patterns for fixing devm ordering issues. This is exactly the type of
-bug fix that stable kernel rules recommend for backporting.
+### 7. **Low Risk**
+The risk of regression is essentially zero because:
+- Only affects kernel builds that explicitly enable `ARCH_BCM2835`
+- Doesn't change behavior for existing platforms
+- The drivers being enabled are mature and already in use
 
- drivers/pps/clients/pps-gpio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+### 8. **Follows Stable Rules**
+This perfectly fits the stable kernel criteria:
+- Fixes a real bug (missing hardware support)
+- Obviously correct (just adding platform to existing dependency)
+- Small change (6 lines)
+- Already tested (has Acked-by from Broadcom maintainer)
 
-diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-index 47d9891de368..935da68610c7 100644
---- a/drivers/pps/clients/pps-gpio.c
-+++ b/drivers/pps/clients/pps-gpio.c
-@@ -210,8 +210,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
- 	}
+The commit enables essential functionality (PCIe support via reset
+controllers) for a popular platform (Raspberry Pi 5) through a minimal,
+risk-free configuration change. This is exactly the type of fix that
+should be backported to ensure stable kernels properly support current
+hardware.
+
+ drivers/reset/Kconfig | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
+index d85be5899da6..ec8c953cb73d 100644
+--- a/drivers/reset/Kconfig
++++ b/drivers/reset/Kconfig
+@@ -51,8 +51,8 @@ config RESET_BERLIN
  
- 	/* register IRQ interrupt handler */
--	ret = devm_request_irq(dev, data->irq, pps_gpio_irq_handler,
--			get_irqf_trigger_flags(data), data->info.name, data);
-+	ret = request_irq(data->irq, pps_gpio_irq_handler,
-+			  get_irqf_trigger_flags(data), data->info.name, data);
- 	if (ret) {
- 		pps_unregister_source(data->pps);
- 		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
-@@ -228,6 +228,7 @@ static void pps_gpio_remove(struct platform_device *pdev)
- {
- 	struct pps_gpio_device_data *data = platform_get_drvdata(pdev);
+ config RESET_BRCMSTB
+ 	tristate "Broadcom STB reset controller"
+-	depends on ARCH_BRCMSTB || COMPILE_TEST
+-	default ARCH_BRCMSTB
++	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
++	default ARCH_BRCMSTB || ARCH_BCM2835
+ 	help
+ 	  This enables the reset controller driver for Broadcom STB SoCs using
+ 	  a SUN_TOP_CTRL_SW_INIT style controller.
+@@ -60,11 +60,11 @@ config RESET_BRCMSTB
+ config RESET_BRCMSTB_RESCAL
+ 	tristate "Broadcom STB RESCAL reset controller"
+ 	depends on HAS_IOMEM
+-	depends on ARCH_BRCMSTB || COMPILE_TEST
+-	default ARCH_BRCMSTB
++	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
++	default ARCH_BRCMSTB || ARCH_BCM2835
+ 	help
+ 	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1 on
+-	  BCM7216.
++	  BCM7216 or the BCM2712.
  
-+	free_irq(data->irq, data);
- 	pps_unregister_source(data->pps);
- 	timer_delete_sync(&data->echo_timer);
- 	/* reset echo pin in any case */
+ config RESET_EYEQ
+ 	bool "Mobileye EyeQ reset controller"
 -- 
 2.39.5
 
