@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A8C189513;
-	Mon,  4 Aug 2025 00:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9E0184540;
+	Mon,  4 Aug 2025 00:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267376; cv=none; b=dl7J4hInRkWXl2QDdRDTAbcNzpDIxHNm+hyimTHowHk7vcZoDh01ulbv3W5hXpUKd0qQKAYOuH83viCwzqR28EQ1bcpd5qZNhDlVHHZN+YObwm/p3tzCk9fyxIBsfV+kwaL7U7f9yod13QKjTcvvCRjoOhlySr97r/54TgEW2vI=
+	t=1754267378; cv=none; b=cIcKSfaQKoMFl4v/IUjqYd16+QNxRlLHCo1CUlLlLEjKlfmaHpiBz2zCwONUt/eMD4hr1JpjLhKSnH8Rtj1oBPyfdyzbXm+BH0xAi8A+J2xgiO1CK1joNgrVh7Xz9gdckMpC9bqNk9j+glAmQN2rLfXC6fr9iuia2NRbl1gbmQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267376; c=relaxed/simple;
-	bh=QQ79Abnpntk4VU9t+XbECoQ57gcRz4sZ+1B+d44ja1k=;
+	s=arc-20240116; t=1754267378; c=relaxed/simple;
+	bh=F/opdC7XAeIX/vSD6P+jEMz9cPLI1pBDqk5sc2AYObY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dtXGFnvHxn9AnRvfL8HAGb9rWZ7Z+TobNdGIg0sJ1Afag0FXXZvK8/AKuDjMlZRlceG0+PKFFg9m3dytpp5YwFAER5PxJiyZL1DKEwoiEh5fACQONAZ56B8Te4ANSrKTPS11iHFDLuMrT7rdilbm2z1m29WTawUppQetE3m+hf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CIOvLPMY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tcuccdAsltQQr5UqOUbngJdFmn+b4aiOhTkhakBrvO3bM9q/MNRkxmX37DIdcUZMiCUqHglbRtJ4UA5x3hP0/GMaYzQUHmdQN0ktewKP7rQaJJAcHznJ2rqHMOKqvf+2V6ZG6SlEgpa1YAcRamyFGM+dh6TUrQrpmLTmw4qDbAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p45fbY90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CIOvLPMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9980C4CEEB;
-	Mon,  4 Aug 2025 00:29:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p45fbY90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062DDC4CEEB;
+	Mon,  4 Aug 2025 00:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267376;
-	bh=QQ79Abnpntk4VU9t+XbECoQ57gcRz4sZ+1B+d44ja1k=;
+	s=k20201202; t=1754267378;
+	bh=F/opdC7XAeIX/vSD6P+jEMz9cPLI1pBDqk5sc2AYObY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIOvLPMYJTrbdkypJxCXlIITsIBnSGzKb76h0wxIk6srTlw0mUYYZdAXhCqXpwCQk
-	 Ga6DAbME3z2kb8UPdLPQ0ADACBOyTwjDVhRdTas9TfTvSkEZ9bO39TDW1f/UmjFRiO
-	 g/o9or5eKKe+lKxKPAkYIbhTwneGVoGvofWXbq1FrujhxKYBJcfL1LIWwN/lz/v0gf
-	 YoblbIQvTORAqxP+DHxUKS0kDVbr0Iddh9S79GknysvDmIbf3Rj97uzDXI78yq3Drb
-	 09iKqZ6aip70p6+F70OKR8tO14XFil8KMzd7FFAN5k+0BdSnhX/rL6Tse3PRfO2YNc
-	 umIFZ2TMjRRTw==
+	b=p45fbY90ZSmPF5puOGJkyOfkK+wM+zdcPSam9GiSwu3AU6fq9GOoO8Qn3ybweg/7K
+	 7DQCRzQoYyl7ScbdRUA35Teqs85bkQztXV90tOxrBncep49uHkYrCR4vPDGo6XfQvk
+	 br4yTK89TOFO8kcb12tjWw08u+sCRzPu9lRBJ7YBZ2AMWCUZ3uO5hHlNyNufSbxNnz
+	 ymn/5/VPEpV9c2pPWOFpGP5WXRS9H1UPMmK4DM/yrrkAWVHrAWBklBZH1gUOyy9ktA
+	 qUE2WqruchjjTRd9tsWWB+AKlocOA85zdJkHW4rQ4ZrEDy2W3+MDeH4cxqdlRlthw5
+	 tZj4uQyrV0CHQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: GalaxySnail <me@glxys.nl>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	peterz@infradead.org,
-	sakari.ailus@linux.intel.com,
-	simont@opensource.cirrus.com,
-	broonie@kernel.org,
-	kuninori.morimoto.gx@renesas.com
-Subject: [PATCH AUTOSEL 6.15 41/80] ALSA: hda: add MODULE_FIRMWARE for cs35l41/cs35l56
-Date: Sun,  3 Aug 2025 20:27:08 -0400
-Message-Id: <20250804002747.3617039-41-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 42/80] PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()
+Date: Sun,  3 Aug 2025 20:27:09 -0400
+Message-Id: <20250804002747.3617039-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -56,99 +51,93 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: GalaxySnail <me@glxys.nl>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 6eda9429501508196001845998bb8c73307d311a ]
+[ Upstream commit 89d9cec3b1e9c49bae9375a2db6dc49bc7468af0 ]
 
-add firmware information in the .modinfo section, so that userspace
-tools can find out firmware required by cs35l41/cs35l56 kernel module
+Clear power.needs_force_resume in pm_runtime_reinit() in case it has
+been set by pm_runtime_force_suspend() invoked from a driver remove
+callback.
 
-Signed-off-by: GalaxySnail <me@glxys.nl>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250624101716.2365302-2-me@glxys.nl
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/9495163.CDJkKcVGEf@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, I can now provide a determination on whether this
-commit should be backported:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit is a clear bugfix that should be backported to stable kernel
+trees for the following reasons:
 
-1. **Fixes a real user-facing issue**: The commit adds MODULE_FIRMWARE
-   declarations that are essential for userspace tools (like initramfs
-   builders, dracut, mkinitcpio) to automatically detect and include
-   required firmware files. Without these declarations, systems may fail
-   to boot or have non-functional audio after kernel updates.
+1. **It fixes a real bug**: The commit addresses a specific issue where
+   `power.needs_force_resume` flag is not cleared in
+   `pm_runtime_reinit()` when a device is removed. If a driver calls
+   `pm_runtime_force_suspend()` from its remove callback (which sets
+   `needs_force_resume = 1`), this flag remains set even after the
+   device is removed and potentially re-probed.
 
-2. **Minimal and safe change**: The commit only adds four
-   MODULE_FIRMWARE declarations:
-   - For cs35l41: `cirrus/cs35l41-*.wmfw` and `cirrus/cs35l41-*.bin`
-   - For cs35l56: `cirrus/cs35l54-*.wmfw`, `cirrus/cs35l54-*.bin`,
-     `cirrus/cs35l56-*.wmfw`, and `cirrus/cs35l56-*.bin`
-
-   These are simple metadata additions that don't change any code logic
-or behavior.
-
-3. **No risk of regression**: MODULE_FIRMWARE macros only add
-   information to the module's .modinfo section. They don't affect
-   runtime behavior, only help userspace tools identify firmware
-   dependencies.
-
-4. **Clear firmware loading requirement**: The code analysis shows these
-   drivers do load firmware files with patterns matching the declared
-   MODULE_FIRMWARE entries. In cs35l41_hda.c:
+2. **The fix is minimal and contained**: The change adds just 5 lines of
+   code (including comments) to clear a single flag. The modification
+   is:
   ```c
-  *filename = kasprintf(GFP_KERNEL, "cirrus/%s-%s-%s.%s", CS35L41_PART,
-  dsp_name, cs35l41_hda_fw_ids[cs35l41->firmware_type],
-  filetype);
+  dev->power.needs_force_resume = false;
   ```
-  Where CS35L41_PART is "cs35l41" and filetype can be "wmfw" or "bin".
+  This is a very low-risk change that only affects the specific
+  condition being fixed.
 
-5. **Follows established patterns**: Other HDA codec drivers (like
-   patch_ca0132.c) already use MODULE_FIRMWARE declarations for their
-   firmware files.
+3. **It prevents state leakage**: Looking at the code flow:
+   - `pm_runtime_force_suspend()` sets `dev->power.needs_force_resume =
+     1` (line in runtime.c)
+   - When a driver is removed, `pm_runtime_remove()` calls
+     `pm_runtime_reinit()`
+   - Without this fix, if the device is re-probed, it would still have
+     `needs_force_resume = 1` from the previous instance
+   - This could lead to incorrect PM runtime behavior where
+     `pm_runtime_force_resume()` would incorrectly think it needs to
+     resume a device that was never suspended in the current probe cycle
 
-6. **Prevents boot failures**: Without proper firmware inclusion in
-   initramfs, systems with these audio codecs may experience boot
-   failures or missing audio functionality, especially when the root
-   filesystem is encrypted or on a network device.
+4. **Related to previous stable fixes**: The git history shows a
+   previous commit `c745253e2a69` ("PM: runtime: Fix unpaired parent
+   child_count for force_resume") was already marked for stable (4.16+),
+   indicating that issues with the `needs_force_resume` flag have been
+   problematic enough to warrant stable backports.
 
-The commit is a straightforward bug fix that ensures proper firmware
-dependency tracking for cs35l41 and cs35l56 HDA audio codecs, making it
-an ideal candidate for stable backporting.
+5. **Clear bug scenario**: The commit message describes a specific
+   scenario where this happens - when `pm_runtime_force_suspend()` is
+   called from a driver remove callback. This is a legitimate use case
+   where drivers want to ensure devices are suspended before removal.
 
- sound/pci/hda/cs35l41_hda.c | 2 ++
- sound/pci/hda/cs35l56_hda.c | 4 ++++
- 2 files changed, 6 insertions(+)
+6. **No architectural changes**: This is purely a bugfix that clears a
+   flag that should have been cleared during reinitialization. It
+   doesn't introduce new features or change any APIs.
 
-diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
-index 5dc021976c79..4397630496fd 100644
---- a/sound/pci/hda/cs35l41_hda.c
-+++ b/sound/pci/hda/cs35l41_hda.c
-@@ -2060,3 +2060,5 @@ MODULE_IMPORT_NS("SND_SOC_CS_AMP_LIB");
- MODULE_AUTHOR("Lucas Tanure, Cirrus Logic Inc, <tanureal@opensource.cirrus.com>");
- MODULE_LICENSE("GPL");
- MODULE_IMPORT_NS("FW_CS_DSP");
-+MODULE_FIRMWARE("cirrus/cs35l41-*.wmfw");
-+MODULE_FIRMWARE("cirrus/cs35l41-*.bin");
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 235d22049aa9..b9f17e44a75e 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -1124,3 +1124,7 @@ MODULE_IMPORT_NS("SND_SOC_CS_AMP_LIB");
- MODULE_AUTHOR("Richard Fitzgerald <rf@opensource.cirrus.com>");
- MODULE_AUTHOR("Simon Trimmer <simont@opensource.cirrus.com>");
- MODULE_LICENSE("GPL");
-+MODULE_FIRMWARE("cirrus/cs35l54-*.wmfw");
-+MODULE_FIRMWARE("cirrus/cs35l54-*.bin");
-+MODULE_FIRMWARE("cirrus/cs35l56-*.wmfw");
-+MODULE_FIRMWARE("cirrus/cs35l56-*.bin");
+The fix ensures proper PM runtime state management across device removal
+and re-probing cycles, which is important for system stability and
+correct power management behavior.
+
+ drivers/base/power/runtime.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index c55a7c70bc1a..1ef26216f971 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1854,6 +1854,11 @@ void pm_runtime_reinit(struct device *dev)
+ 				pm_runtime_put(dev->parent);
+ 		}
+ 	}
++	/*
++	 * Clear power.needs_force_resume in case it has been set by
++	 * pm_runtime_force_suspend() invoked from a driver remove callback.
++	 */
++	dev->power.needs_force_resume = false;
+ }
+ 
+ /**
 -- 
 2.39.5
 
