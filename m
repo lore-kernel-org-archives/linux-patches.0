@@ -1,35 +1,35 @@
 Received: from smtpcmd02101.aruba.it (smtpcmd02101.aruba.it [62.149.158.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B19154BF5
-	for <patches@lists.linux.dev>; Mon,  4 Aug 2025 06:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4283E23645D
+	for <patches@lists.linux.dev>; Mon,  4 Aug 2025 06:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.149.158.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754290716; cv=none; b=bUjpg+ZX4FrmQGSBLTb8kXRPHq201WHpqqOXEv/rDnIyp+mdKZ+P1XXf+LZPRPT1Le5upLHs/laW/0VayNwU6RxNriTk3Ab0b7Bthy/GhiZh+zAon9wNBN2iD1J+2FpJkkCrZyx/d/JGHzVSEvbL6ZR6m3pJkWnNt4ajQGa42yo=
+	t=1754290734; cv=none; b=OzWfeRFz04ddoAp9Y3TwgD0zdKjCoMncgNjhn00ludVMSfWvxIQyg2kCUpmFFkYs3ZUjRtn299+EyRpXEMQYj2ORkMkiHC2D7yxO9nVflvCMytWJLHD6qsuQb8hA+oM197Rd0EmfQYuraYat6LWHWjmw0o7r5/AgGADt5Px+c3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754290716; c=relaxed/simple;
-	bh=k3YM9tQ2l2o1U6LBLDVZO2fu1leT0T+RaubNE/2o0vs=;
+	s=arc-20240116; t=1754290734; c=relaxed/simple;
+	bh=1tnUJk0x0AY0ea5Yo/YXecQ/sBKAdalqKRByDlal6mE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rYZQTeLBIMtyx7k3uejfpU39euPYd/Z4Co/RK4oqkv8ULvQ8FlX1z7guU7eAVQTW7iaNvVtrZBBgUAxcKosQ3Z/pBEXciWNiaTVtjmef2827lXcUxzj7laXTRwQ7T0+wT5eG9aJl/Aa+Yw/3ZYx1DU0IfTvXu3Qg7Op5CJ9Entw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=enneenne.com; spf=pass smtp.mailfrom=enneenne.com; dkim=pass (2048-bit key) header.d=aruba.it header.i=@aruba.it header.b=GLaJPQ00; arc=none smtp.client-ip=62.149.158.101
+	 In-Reply-To:Content-Type; b=kqfs5dEN+bITp+pZKVEU2+kvuIouloDqiLGviID8UXYEz6ay3Vr8FHLfet1rRvoKTI4F3CtR64siBEJB8tXzXFaCw1hdpv7zFgv4jIi8xDGMtKdDxxmDSmO+DmvO8enn78jiv4odpoR1MNcqJzRt77PGECSp5lYCzLoSqFwhK/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=enneenne.com; spf=pass smtp.mailfrom=enneenne.com; dkim=pass (2048-bit key) header.d=aruba.it header.i=@aruba.it header.b=ZPXgwkYG; arc=none smtp.client-ip=62.149.158.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=enneenne.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=enneenne.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aruba.it header.i=@aruba.it header.b="GLaJPQ00"
+	dkim=pass (2048-bit key) header.d=aruba.it header.i=@aruba.it header.b="ZPXgwkYG"
 Received: from [192.168.1.57] ([79.0.204.227])
 	by Aruba SMTP with ESMTPSA
-	id ip6RumBNeloieip6Ru0GWE; Mon, 04 Aug 2025 08:55:24 +0200
+	id ip6tumBfyloieip6tu0Gjc; Mon, 04 Aug 2025 08:55:51 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aruba.it; s=a1;
-	t=1754290524; bh=k3YM9tQ2l2o1U6LBLDVZO2fu1leT0T+RaubNE/2o0vs=;
+	t=1754290551; bh=1tnUJk0x0AY0ea5Yo/YXecQ/sBKAdalqKRByDlal6mE=;
 	h=Date:MIME-Version:Subject:To:From:Content-Type;
-	b=GLaJPQ00hRZe9umbjapte10b4OILapAYyGPIWRm905I6cZW/4F4rxWJulMKYbmEl7
-	 lJiEc4jiRK9VHA/nUKCHMCnN2nM5mgvEz0/+rHAX+0j+fBJmTbE1blfIRttFRo4J/S
-	 TJxoIKT1CdSZGqxYLzax+2/6Bt8jXfa7+CjTrJAWbye3Q36fbXHPuumwJTGMuA14t7
-	 OclPymOwl2yX8owd0utAezr0/RLd7rsk7G4KglVfb7icBjJD18qtEmorU2yQ44ls5T
-	 TrhgaYoXka7b0N732zCc8bJMLoF/wvvQIi36ZvRTok0NDKPd17ripdvcGH+OY6zQwl
-	 zo4/75iInjmAA==
-Message-ID: <f6960b65-6c87-48e6-b7cb-6472f99ccfb4@enneenne.com>
-Date: Mon, 4 Aug 2025 08:55:22 +0200
+	b=ZPXgwkYG/6ycg3OwNR8kX/TsJ30KwaHqWm6laxkP39WkrCrt3GKoI4g+ds9PXfVNZ
+	 brPjHn5q+bmR/03MuXtwX1Vb74QKow2H5LPbVRVPzNBGL2LImf7ewc/RXeyDxDVOks
+	 YWHpgG7XcbTzyolcjHw071u01H06P0LNC95Ga1hchoU+57m1stX7pgazfGC8xIHeUo
+	 Ci56ETVIOy9+uaeaOdiex9hw/NyLKE6O2UKS0hQpcOSr0WEdvUyhTIwuPSF2MwcVmZ
+	 T2igtQkUL+TJ7g1DwBvPDM1OdOU+X2v4zlNeJsdRBIRJg0ik9CHL8ySWUjGtqIXwSh
+	 eocqus/+VlUHg==
+Message-ID: <b25129fe-2614-4d2f-9c4c-371b7691aa3b@enneenne.com>
+Date: Mon, 4 Aug 2025 08:55:49 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,26 +37,26 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.16 51/85] pps: clients: gpio: fix interrupt
+Subject: Re: [PATCH AUTOSEL 6.15 50/80] pps: clients: gpio: fix interrupt
  handling order in remove path
 Content-Language: en-US
 To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
  stable@vger.kernel.org
 Cc: Eliav Farber <farbere@amazon.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>, mingo@kernel.org,
- tglx@linutronix.de, calvin@wbinvd.org, bastien.curutchet@bootlin.com
-References: <20250804002335.3613254-1-sashal@kernel.org>
- <20250804002335.3613254-51-sashal@kernel.org>
+ tglx@linutronix.de, bastien.curutchet@bootlin.com, calvin@wbinvd.org
+References: <20250804002747.3617039-1-sashal@kernel.org>
+ <20250804002747.3617039-50-sashal@kernel.org>
 From: Rodolfo Giometti <giometti@enneenne.com>
-In-Reply-To: <20250804002335.3613254-51-sashal@kernel.org>
+In-Reply-To: <20250804002747.3617039-50-sashal@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfFduN5NoswrjmZlAJKsmFntt/bfFVR5uxbEl9r2kHDnuDauZn8dxu1CkvEXra7IOzZQIf8mQVgAq+s2A4mQeSOhH38tqgG6UoT5DI70GM6rBNhyOC/2T
- B1Hn/RIKfozwA2h//YxbLwuEF8lAoYIBApbvv1uEHtfq578AB0iKJK5Sq/HpUWR/VQGvlDGT8ajTPftn/6bvyzaj16FTBUNdWLwiyAIHmLyA60urbngoUOt/
- w5Y7d+QbO0nRCB47WCtlcyFdt/J1TVfvFuQWCJmJwY5SXl3reFuhfNiApwKZPhe+nGsDetONFN2N2Qm9z3LR8s1hVauw+XEZ/UKdBjjlsHQBN+ZpuVSyoJkI
- o0ONhW6epLI5Xf9P6HFAgkWWu85863wwNbEjZnpLjQaLPBYDeFrOYX4+G+7vEpLxRuyXrCLTr7yQfRR6X7hHxI9SuHdL+DFtefgpcbTYqS1tphPiMyk=
+X-CMAE-Envelope: MS4xfM1rViYKyhzk1C64KxmkEvJ+v4fCTorUJKp2KHQB1i1BRonfhzyJQ9oS5UroQxA46ZreMptf1norU8QaS/BWbTXRWqLX8cMg/90sPgFCSR3VusLLEnLm
+ 9LEQt0u8W1XO+gIhUpBqPI8j029NE5DGNrA1dtxQi0j6wqhBHBNl5TV8phJf8/4AkwUe1eHYIHj1T8D2uRfacXwj+L33QkbtkyNYoIXqsQOvifJ9gQKhGihb
+ T4WGaaMeZOkm68Y2aLuCw1f+XGJuI2kodhdHNzerqelqT5j8wunBBbq47cT5xfJGd+gBZjUzehHHha9TZgQBXIoTIk3pNygwAXvQKrIVE3ZxG3FeB4pixjuS
+ XscWzKqUDdsb8rG0/tpVb+VK60y80BhWr2TTMcvu9B9OvTN6dXDrycV7pYmsHv+uhNu0vvwN3RmpU1rxUObeYoNS6uF5Kr3I9G5PDD5BIX+sVrlgjGw=
 
-On 04/08/25 02:23, Sasha Levin wrote:
+On 04/08/25 02:27, Sasha Levin wrote:
 > From: Eliav Farber <farbere@amazon.com>
 > 
 > [ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
@@ -141,7 +141,7 @@ Signed-off-by: Rodolfo Giometti <giometti@enneenne.com>
 >   1 file changed, 3 insertions(+), 2 deletions(-)
 > 
 > diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-> index 47d9891de368..935da68610c7 100644
+> index 374ceefd6f2a..2866636b0554 100644
 > --- a/drivers/pps/clients/pps-gpio.c
 > +++ b/drivers/pps/clients/pps-gpio.c
 > @@ -210,8 +210,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
