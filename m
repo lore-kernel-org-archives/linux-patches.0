@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFCA1BEF7E;
-	Mon,  4 Aug 2025 00:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16AA2AE8E;
+	Mon,  4 Aug 2025 00:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268192; cv=none; b=L3d3d9jCdxiKfdCIERc5UerisfPrtcF5dOs/hJN0jvvvpYExiZHUvEKFl1GUohR5N3PQk7CaE+lOoSUv3OS1m5zaWIVWGwyagmlL1jS4JcFcV9wRc/2cuTCl7mJv1ZjZCdymg3G5MlMVH6GThYXsScEvUCsrjjI3nLoKi8cOtyE=
+	t=1754268195; cv=none; b=i4xv6iKUpBydQQPehrReIAfGZLyDXjb9UaQg2NteXo7QAbwXZpssjugX4S8sQYD0B6purMvMdDVPDHoJlgg2lQAuByzsgp4eje0QQThlGBvKaICJQ0kS1RxbU7w59ttY2C1ib0c+A7iuMJ6H4nI90ll2q62PMi+og93hgeMq6QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268192; c=relaxed/simple;
-	bh=HzxCbHnFy59R7EYAoBGGUAFtjzBUvg7VTOus3XOM8tw=;
+	s=arc-20240116; t=1754268195; c=relaxed/simple;
+	bh=tVA6Ow9jO6kbsj49CBOJBSYXNnGCEgE9k2fNGIj3SvI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fcPuIHGqpaKZlcVSRGpOWIO3UUljtMLBfTdpcBMloC9e6gcUENt2mBPyRI0UDehbrZfoJqqJBqWUPAhEuAU3VaTxubDDN4tTNUQDw7PVPfFC2pHUydCPnbMdqYNrDSQOOXFzP6odBkKZT+sBqkuWLei/7tor9h/o8fe/5KyaZ5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eSZsyOHH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUpiBTdUO0C9UcJAzeX1dJ05JBS0MxJjbJN+dmHsLx1hr0h/G8qx33SwB+NerIVz+YBGgw5X0RieMqrA7LYXS2f0103L6paYppffUkbftVRsjf5EDtvb21PbAet2KCQe2y8K86FytpGe1phbgtdNul+gdpognHkbgoo06KTyCaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1ncCs5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eSZsyOHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2948C4CEEB;
-	Mon,  4 Aug 2025 00:43:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1ncCs5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9F7C4CEF0;
+	Mon,  4 Aug 2025 00:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268192;
-	bh=HzxCbHnFy59R7EYAoBGGUAFtjzBUvg7VTOus3XOM8tw=;
+	s=k20201202; t=1754268195;
+	bh=tVA6Ow9jO6kbsj49CBOJBSYXNnGCEgE9k2fNGIj3SvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSZsyOHHglTTmKLjK+IE0NU1CFvQYUR0YZM6SsxaGTOzjZe1wLiN/97wI/LmWWJVP
-	 rM/Tkkgtj7ZAdJ8nTLESCqM9xBQSmhX10+QhgmIavw/jq9M7qhRaT9aebFa60SNkYz
-	 TMRXwZIJI/EK8CLPxHK+R4hHQ6t6KKfNdPzUw9I6mJup1mPQbxcq32akzFoL8ynwNd
-	 uYnJ5zH7bUCkw8TFOZvnqRcfVlmI3zmcDwLt4l7MPhU3MhjETg1zwJsEOsFqh9UuUV
-	 hLY+aIyJqg2hEQ0wRI3Jd+VarR0SK7/owNCpXgWeHoOTA2Br0iOuqNoSKIGGRFE6HL
-	 fg8ACoKYpZLAw==
+	b=F1ncCs5J/L2Ln3jQfixR2siIa/OyZRWjkWwa3Eww5s0FYxMgYhdbyL9lW42EE3aeV
+	 Dvw42wFhe8/EVdfDuX/SKSpzQ12HIX9K2aUEp4IneLNrDtVh9xO0m7P5NieLy0hTmO
+	 vMzi0/P9YVVk7SR7kZAq6VcyXoAxMGgtlNsZxSqABRhlVC+/nq7nGT6LK7UQzJ8BnX
+	 5eCBlTkurgO1Jjmx8xOe/ZX9YUvaKIk2ksZiVpTsl4lIgKCHjUQLC/oUp8wPsT63J4
+	 5I7+QZLlXtoIW1b5/hmekl2uyNFHKsQfQBrgQ7ghZsT+N+iklW2V//RWwGKQy0HkWS
+	 U4mkPmfEFeB6A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ulf Hansson <ulf.hansson@linaro.org>,
-	Avri Altman <avri.altman@sandisk.com>,
-	Ricky Wu <ricky_wu@realtek.com>,
+Cc: Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	wsa+renesas@sang-engineering.com,
-	chenhuacai@kernel.org,
-	viro@zeniv.linux.org.uk,
-	u.kleine-koenig@baylibre.com,
-	nathan@kernel.org,
-	zhoubinbin@loongson.cn
-Subject: [PATCH AUTOSEL 5.4 19/28] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
-Date: Sun,  3 Aug 2025 20:42:18 -0400
-Message-Id: <20250804004227.3630243-19-sashal@kernel.org>
+	tiwai@suse.de,
+	raag.jadav@intel.com,
+	kuninori.morimoto.gx@renesas.com,
+	ckeepax@opensource.cirrus.com
+Subject: [PATCH AUTOSEL 5.4 20/28] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
+Date: Sun,  3 Aug 2025 20:42:19 -0400
+Message-Id: <20250804004227.3630243-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004227.3630243-1-sashal@kernel.org>
 References: <20250804004227.3630243-1-sashal@kernel.org>
@@ -56,114 +52,114 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.296
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
+[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
 
-In the error path of sd_set_power_mode() we don't update host->power_mode,
-which could lead to an imbalance of the runtime PM usage count. Fix this by
-always updating host->power_mode.
+We currently log parse failures for ELD data and some disconnection events
+as errors without rate limiting. These log messages can be triggered very
+frequently in some situations, especially ELD parsing when there is nothing
+connected to a HDMI port which will generate:
 
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Ricky Wu <ricky_wu@realtek.com>
-Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
+hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
+
+While there's doubtless work that could be done on reducing the number of
+connection notification callbacks it's possible these may be legitimately
+generated by poor quality physical connections so let's use rate limiting
+to mitigate the log spam for the parse errors and lower the severity for
+disconnect logging to debug level.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit is a good candidate for backporting to stable kernel trees
+for the following reasons:
 
-## Bug Analysis
+1. **Fixes a real user-facing bug**: The commit addresses log spam
+   issues that can fill system logs with repeated error messages. When
+   no HDMI display is connected, the driver continuously logs "HDMI:
+   Unknown ELD version 0" errors, which can consume disk space and make
+   logs difficult to analyze.
 
-The commit fixes a **runtime PM reference counting bug** in the
-`sd_set_power_mode()` function. The issue is in the error handling path:
+2. **Small and contained fix**: The changes are minimal and focused:
+   - Changes `dev_err()` to `dev_err_ratelimited()` in two locations
+     within `hdac_hdmi_parse_eld()` (lines 1233-1234 and 1242-1243)
+   - Changes `dev_err()` to `dev_dbg()` for disconnect messages in
+     `hdac_hdmi_present_sense()` (lines 1302-1303)
+   - Total of just 3 logging statement modifications
 
-### Original Code Problem:
-```c
-if (power_mode == MMC_POWER_OFF) {
-    err = sd_power_off(host);
-    pm_runtime_put_noidle(sdmmc_dev(host));
-} else {
-    pm_runtime_get_noresume(sdmmc_dev(host));
-    err = sd_power_on(host);
-}
+3. **No functional changes**: The commit only modifies logging behavior
+   without changing any driver logic, state management, or hardware
+   interaction. This minimizes regression risk.
 
-if (!err)
-    host->power_mode = power_mode;  // Only updated on success
-```
+4. **Affects a common use case**: The issue occurs when HDMI ports are
+   unconnected, which is a normal operating condition for many systems.
+   Users may have HDMI ports they never use, or may frequently
+   plug/unplug monitors.
 
-### The Bug:
-1. When transitioning to `MMC_POWER_OFF`, the code calls
-   `pm_runtime_put_noidle()` **regardless** of whether `sd_power_off()`
-   succeeded
-2. When transitioning to `MMC_POWER_ON`, the code calls
-   `pm_runtime_get_noresume()` **before** calling `sd_power_on()`
-3. However, `host->power_mode` is only updated if there's no error
+5. **No architectural changes**: The fix doesn't introduce new features
+   or modify the driver's architecture. It simply rate-limits existing
+   error messages and downgrades one message's severity.
 
-This creates a **runtime PM reference count imbalance** because:
-- If `sd_power_off()` fails, the runtime PM reference is still
-  decremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_ON`)
-- If `sd_power_on()` fails, the runtime PM reference is still
-  incremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_OFF`)
-- The early return check `if (power_mode == host->power_mode)` at the
-  beginning of the function will prevent future attempts to fix the
-  power state, leaving the runtime PM count permanently imbalanced
+6. **Clear problem and solution**: The commit message clearly describes
+   the issue (log spam from ELD parsing failures) and the
+   straightforward solution (rate limiting and severity adjustment).
 
-## Why This Is Suitable for Stable:
+The specific code changes show:
+- In `hdac_hdmi_parse_eld()`: Rate-limiting prevents flooding logs when
+  ELD data is invalid/unavailable
+- In `hdac_hdmi_present_sense()`: Downgrading disconnect messages from
+  error to debug level is appropriate since disconnection is a normal
+  event, not an error condition
 
-1. **Fixes a real bug**: Runtime PM reference count imbalances can lead
-   to:
-   - Device staying powered when it should be suspended
-   - Device being suspended when it should be active
-   - Power management failures
-   - Potential system hangs or crashes
+This meets the stable kernel criteria of being a simple fix for an
+annoying bug that affects users without introducing new risks.
 
-2. **Minimal change**: The fix is a simple one-liner that always updates
-   `host->power_mode` regardless of error status
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-3. **Low regression risk**:
-   - The change doesn't introduce new functionality
-   - It doesn't alter the control flow
-   - It simply ensures state consistency
-
-4. **Clear bug fix**: This is not a feature addition or optimization -
-   it's fixing incorrect error handling that violates runtime PM rules
-
-5. **Affects users**: This bug can manifest in real-world scenarios when
-   SD card power operations fail, particularly with flaky hardware or
-   during system stress
-
-6. **Subsystem contained**: The fix is limited to a single MMC host
-   driver and doesn't affect core kernel infrastructure
-
-The commit follows stable kernel rules by being a minimal, targeted fix
-for a real bug that can affect system stability and power management.
-
- drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 3261560bede4..581bec5c4caf 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1038,9 +1038,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
- 		err = sd_power_on(host);
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 78d5b4d31bb6..71d13b413418 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1231,7 +1231,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 						>> DRM_ELD_VER_SHIFT;
+ 
+ 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
+-		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: Unknown ELD version %d\n", ver);
+ 		return -EINVAL;
  	}
  
--	if (!err)
--		host->power_mode = power_mode;
--
-+	host->power_mode = power_mode;
- 	return err;
- }
+@@ -1239,7 +1240,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
  
+ 	if (mnl > ELD_MAX_MNL) {
+-		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: MNL Invalid %d\n", mnl);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1293,8 +1295,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
+ 
+ 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
+ 
+-		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
+-						__func__, pin->nid, port->id);
++		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
++			__func__, pin->nid, port->id);
+ 
+ 		/*
+ 		 * PCMs are not registered during device probe, so don't
 -- 
 2.39.5
 
