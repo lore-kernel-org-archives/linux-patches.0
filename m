@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFB4153BE9;
-	Mon,  4 Aug 2025 00:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E5C29A2;
+	Mon,  4 Aug 2025 00:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267257; cv=none; b=iStoMAdw9uCPD7j982bYgbyzKLDE7YPPY0ocRs+sDyc2C7lEy6dqrxueOTJwiEmkvSNMfoV8TRILMtpkXHm6an3V9nTC0Ir8nrVNATfymxzJk9aAXHOEe9pIRJOR3PsPzlQypXN8UR/yzBZSEBgavOeW2sT61HyI6m27zoIcE+Q=
+	t=1754267259; cv=none; b=ekDYC9eiKo0s2p3SviPRp7nNAMmA7H0v/KG2nDoOj9oexdy6IrUs7qXLQLli8EeISv5uLmvKJZhdi8j9J9OtkEFOOJwBosUknugr+5OHKooXzTd+5JzwD40J/mV3Zg4RBcKGLK8eClx2pbtgbcRCBJX61VEtUosu4agSCejw3ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267257; c=relaxed/simple;
-	bh=WIHa5Bj60IgcwpeunvhDdokDUUUF5WpAesNKR/sYKgM=;
+	s=arc-20240116; t=1754267259; c=relaxed/simple;
+	bh=tCKE/jA1qylJwaEvES7Y4AcGWLhQZiDXUqhBGYPNcF0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nowYbsmpfrWsykHJh1eakKz2VP+Wkv2NWeZHwgzqPyKsN3f6tSYaQbLzPyz2U/SQpDF7/wthL0/C43ArUeskR5S/AR4aDY4cJ1GYGQVuzZOTSE2Wxw0myNFQWL3ZqfS/IskOwi5f70MSsD+3dLibILvZ6xHncZdh34yfqboMXzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZAJ5+x+9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZacDbK6WmeShdCyF59fPlL5J/fyuVXaIRDgromLSxWK25L2eycc9Fiwt8Q9w2A6aeGEg8Mnn/foWwCRZWBNcPlonbVRzOdlcIcfkCW4RHSNFWSOll3YPDDQlzU1QI2iXtUgjEMd84OUSyNNiVAbHrDQqNpzWWkapI2DxN7/hS1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b2d4MePr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZAJ5+x+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E21C4CEEB;
-	Mon,  4 Aug 2025 00:27:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b2d4MePr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107D7C4CEF0;
+	Mon,  4 Aug 2025 00:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267257;
-	bh=WIHa5Bj60IgcwpeunvhDdokDUUUF5WpAesNKR/sYKgM=;
+	s=k20201202; t=1754267259;
+	bh=tCKE/jA1qylJwaEvES7Y4AcGWLhQZiDXUqhBGYPNcF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAJ5+x+9ZXrU04bfY0puwC1Jlm+4bHz8b1tAAYlueauhJydiBtNWSRTGpVs2vw7rg
-	 2gE9wwiWToT6DQP++VbqJQtOAiOvRiSsrSV+lGHbWUQSqorZVkfNo67bmTCO4x49qM
-	 nWWpbGZrRLuONvdMeoxkaG0Ma63ZelMXSCdxetvopJh/X0ov93ny2sLCXZ+dqr5mmL
-	 MYCy7d4G4rbvvTQEkMH3mb60kthEs3q0jWe2taM2pwVbO4NL9s/VFOU/l2DblyVfvl
-	 eVGerMpFoTIgp6rVbjvQu8C0gBiStPhKzxZamsQylwdB6bVySTneSwh3LCZcNn8xtg
-	 1pwncCuTjkfLg==
+	b=b2d4MePr9/YbmRQmisfAHP7CC49j8D6R5jNBZoynx7Am2xS92UCJsGBowl61zQlR/
+	 gO154XMzrburLRpx5cLrTrTGgiXB4zXWQESAFJN7qikZQ0MznjSf3BsS16vDzfJLB1
+	 NKOnLnuSaXJbAYZiQCKmvnFrqjcI8nZpAkWP+ybRpOAp0ouchPf+Ak/eJLYxrEVgvW
+	 hT1g7BLPZ6YC8FyKmIfZ73gAMD8AohxVDwLRmiUu8I+aHPJx5TT/ScBt7nW7FbcFDa
+	 gVY0lZ3njKWXmtVAC9Vo2Q2HKLG8YhoSxDkfA8lJiRyOFLrLTBqd7G7lAj2nXkbO1A
+	 xyqiWT9EcShVA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Jonathan Santos <Jonathan.Santos@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lina+kernel@asahilina.net,
-	livvy@base.nu,
-	franta-linux@frantovo.cz,
-	sstistrup@gmail.com,
-	s@srd.tw
-Subject: [PATCH AUTOSEL 6.16 82/85] ALSA: usb-audio: Avoid precedence issues in mixer_quirks macros
-Date: Sun,  3 Aug 2025 20:23:31 -0400
-Message-Id: <20250804002335.3613254-82-sashal@kernel.org>
+	lars@metafoo.de,
+	Michael.Hennerich@analog.com,
+	linux-iio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 83/85] iio: adc: ad7768-1: Ensure SYNC_IN pulse minimum timing requirement
+Date: Sun,  3 Aug 2025 20:23:32 -0400
+Message-Id: <20250804002335.3613254-83-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -49,118 +49,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Jonathan Santos <Jonathan.Santos@analog.com>
 
-[ Upstream commit fd3ab72e42e9871a9902b945a2bf8bb87b49c718 ]
+[ Upstream commit 7e54d932873d91a55d1b89b7389876d78aeeab32 ]
 
-Fix all macro related issues identified by checkpatch.pl:
+The SYNC_IN pulse width must be at least 1.5 x Tmclk, corresponding to
+~2.5 µs at the lowest supported MCLK frequency. Add a 3 µs delay to
+ensure reliable synchronization timing even for the worst-case scenario.
 
-  CHECK: Macro argument 'x' may be better as '(x)' to avoid precedence issues
-
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-3-1a821463b632@collabora.com
+Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/d3ee92a533cd1207cf5c5cc4d7bdbb5c6c267f68.1749063024.git.Jonathan.Santos@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees. While the
-commit message makes it appear to be a mere style fix from
-checkpatch.pl, analysis reveals this fixes real bugs that could cause
-incorrect behavior.
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-**Critical Analysis:**
+**1. Bug Fix Nature:**
+The commit fixes a timing violation bug where the SYNC_IN pulse width
+was not meeting the hardware's minimum timing requirement. According to
+the datasheet (as noted in the commit), the SYNC_IN pulse must be at
+least 1.5 × Tmclk (MCLK period). Without the proper delay, the
+synchronization pulse may be too short, especially at lower MCLK
+frequencies, causing unreliable synchronization.
 
-1. **Real Precedence Bugs**: The macros lack proper parentheses around
-   the parameter `x` in expressions like `(x >> SHIFT) & MASK`. Without
-   parentheses, if a complex expression is passed as the argument,
-   operator precedence can cause incorrect evaluation.
+**2. Specific Code Analysis:**
 
-2. **Concrete Example of Bug**: The most concerning usage is at line
-   2357 in the RME driver:
-  ```c
-  freq <<= SND_RME_CLK_FREQMUL(status1);
-  ```
-  If `status1` were ever replaced with an expression like `status1 |
-  0x100000`, the macro would evaluate incorrectly:
-   - Without fix: `(status1 | 0x100000 >> 18) & 0x7` evaluates as
-     `(status1 | (0x100000 >> 18)) & 0x7`
-   - With fix: `((status1 | 0x100000) >> 18) & 0x7` evaluates correctly
+The original code had a critical timing issue:
+```c
+gpiod_set_value(st->gpio_sync_in, 1);
+gpiod_set_value(st->gpio_sync_in, 0);
+```
 
-3. **Long-standing Issue**: These problematic macros were introduced in
-   commit d39f1d68fe1d ("ALSA: usb-audio: Implement UAC2 jack
-   detection") from October 2018, meaning this bug has existed for
-   approximately 7 years.
+This creates a pulse with essentially zero width (just the GPIO toggle
+time), which violates the hardware specification. The fix adds:
+- A new dedicated function `ad7768_send_sync_pulse()` that ensures
+  proper timing
+- Uses `gpiod_set_value_cansleep()` instead of `gpiod_set_value()` for
+  better reliability
+- Adds a 3 µs delay using `fsleep(3)` to guarantee the minimum pulse
+  width
 
-4. **Hardware Impact**: These macros are used to extract clock
-   configuration and synchronization status from RME Class Compliant USB
-   audio devices. Incorrect calculations could lead to:
-   - Wrong frequency calculations
-   - Incorrect clock source detection
-   - Misreported synchronization status
+**3. Impact Analysis:**
+- **User Impact**: Without this fix, users may experience unreliable ADC
+  synchronization, particularly when changing filter decimation rates or
+  when operating at lower MCLK frequencies (0.6 MHz)
+- **Worst Case**: At 0.6 MHz, Tmclk = 1.67 µs, requiring a minimum pulse
+  width of 2.5 µs. The original code provides essentially 0 µs
+- **Data Integrity**: Improper synchronization can lead to incorrect ADC
+  readings or timing issues in multi-device setups
 
-5. **Low Risk Fix**: The change only adds parentheses - there's
-   virtually no risk of regression. The fix is minimal, obvious, and
-   correct.
+**4. Risk Assessment:**
+- **Low Risk**: The change is minimal and contained - it only adds a 3
+  µs delay and switches to the cansleep GPIO variant
+- **No API Changes**: The fix is internal to the driver with no external
+  interface changes
+- **Conservative Fix**: The 3 µs delay provides margin above the 2.5 µs
+  worst-case requirement
 
-6. **Stable Criteria Met**: This satisfies stable kernel requirements:
-   - Fixes a real bug (not just style)
-   - Small and contained change
-   - Cannot introduce new issues
-   - Affects hardware functionality
-   - Has been tested (merged upstream)
+**5. Stable Kernel Criteria:**
+✓ Fixes a real bug that affects users (timing violation)
+✓ Small, contained change (adds one function, modifies one call site)
+✓ No new features or architectural changes
+✓ Minimal risk of regression
+✓ Clear hardware specification violation being fixed
 
-The commit should be backported to all stable trees containing the
-original problematic code from 2018 onwards.
+**6. Supporting Evidence:**
+- The driver has had multiple previous fixes backported (as seen in git
+  log with "Fixes:" tags)
+- Similar timing-related fixes are commonly backported for hardware
+  drivers
+- The AD7768-1 is an active production part used in data acquisition
+  systems where reliability is critical
 
- sound/usb/mixer_quirks.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+The commit meets all stable kernel criteria for backporting - it's a
+clear bug fix for a hardware timing violation that could cause
+unreliable operation, implemented with minimal changes and low
+regression risk.
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index aad205df93b2..d0efb3dd8675 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -2153,15 +2153,15 @@ static int dell_dock_mixer_init(struct usb_mixer_interface *mixer)
- #define SND_RME_CLK_FREQMUL_SHIFT		18
- #define SND_RME_CLK_FREQMUL_MASK		0x7
- #define SND_RME_CLK_SYSTEM(x) \
--	((x >> SND_RME_CLK_SYSTEM_SHIFT) & SND_RME_CLK_SYSTEM_MASK)
-+	(((x) >> SND_RME_CLK_SYSTEM_SHIFT) & SND_RME_CLK_SYSTEM_MASK)
- #define SND_RME_CLK_AES(x) \
--	((x >> SND_RME_CLK_AES_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
-+	(((x) >> SND_RME_CLK_AES_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
- #define SND_RME_CLK_SPDIF(x) \
--	((x >> SND_RME_CLK_SPDIF_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
-+	(((x) >> SND_RME_CLK_SPDIF_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
- #define SND_RME_CLK_SYNC(x) \
--	((x >> SND_RME_CLK_SYNC_SHIFT) & SND_RME_CLK_SYNC_MASK)
-+	(((x) >> SND_RME_CLK_SYNC_SHIFT) & SND_RME_CLK_SYNC_MASK)
- #define SND_RME_CLK_FREQMUL(x) \
--	((x >> SND_RME_CLK_FREQMUL_SHIFT) & SND_RME_CLK_FREQMUL_MASK)
-+	(((x) >> SND_RME_CLK_FREQMUL_SHIFT) & SND_RME_CLK_FREQMUL_MASK)
- #define SND_RME_CLK_AES_LOCK			0x1
- #define SND_RME_CLK_AES_SYNC			0x4
- #define SND_RME_CLK_SPDIF_LOCK			0x2
-@@ -2170,9 +2170,9 @@ static int dell_dock_mixer_init(struct usb_mixer_interface *mixer)
- #define SND_RME_SPDIF_FORMAT_SHIFT		5
- #define SND_RME_BINARY_MASK			0x1
- #define SND_RME_SPDIF_IF(x) \
--	((x >> SND_RME_SPDIF_IF_SHIFT) & SND_RME_BINARY_MASK)
-+	(((x) >> SND_RME_SPDIF_IF_SHIFT) & SND_RME_BINARY_MASK)
- #define SND_RME_SPDIF_FORMAT(x) \
--	((x >> SND_RME_SPDIF_FORMAT_SHIFT) & SND_RME_BINARY_MASK)
-+	(((x) >> SND_RME_SPDIF_FORMAT_SHIFT) & SND_RME_BINARY_MASK)
+ drivers/iio/adc/ad7768-1.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
+index 51134023534a..8b414a102864 100644
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -252,6 +252,24 @@ static const struct regmap_config ad7768_regmap24_config = {
+ 	.max_register = AD7768_REG24_COEFF_DATA,
+ };
  
- static const u32 snd_rme_rate_table[] = {
- 	32000, 44100, 48000, 50000,
++static int ad7768_send_sync_pulse(struct ad7768_state *st)
++{
++	/*
++	 * The datasheet specifies a minimum SYNC_IN pulse width of 1.5 × Tmclk,
++	 * where Tmclk is the MCLK period. The supported MCLK frequencies range
++	 * from 0.6 MHz to 17 MHz, which corresponds to a minimum SYNC_IN pulse
++	 * width of approximately 2.5 µs in the worst-case scenario (0.6 MHz).
++	 *
++	 * Add a delay to ensure the pulse width is always sufficient to
++	 * trigger synchronization.
++	 */
++	gpiod_set_value_cansleep(st->gpio_sync_in, 1);
++	fsleep(3);
++	gpiod_set_value_cansleep(st->gpio_sync_in, 0);
++
++	return 0;
++}
++
+ static int ad7768_set_mode(struct ad7768_state *st,
+ 			   enum ad7768_conv_mode mode)
+ {
+@@ -339,10 +357,7 @@ static int ad7768_set_dig_fil(struct ad7768_state *st,
+ 		return ret;
+ 
+ 	/* A sync-in pulse is required every time the filter dec rate changes */
+-	gpiod_set_value(st->gpio_sync_in, 1);
+-	gpiod_set_value(st->gpio_sync_in, 0);
+-
+-	return 0;
++	return ad7768_send_sync_pulse(st);
+ }
+ 
+ static int ad7768_set_freq(struct ad7768_state *st,
 -- 
 2.39.5
 
