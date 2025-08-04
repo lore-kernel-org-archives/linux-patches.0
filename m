@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C462C190;
-	Mon,  4 Aug 2025 00:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490391DE3BB;
+	Mon,  4 Aug 2025 00:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267448; cv=none; b=KN4JL5XwICxxXCMxKVoHLAasg6/XlEIkgOIV/GQQWVNeCl++Mx3g4k9GsbbQsTytXxBzwJ4NewPYrFvx5o8ce7AGtibY4fmXDYpebzJgD9Ew9olYVdbMTsFVEi7NsOs33mixp+sprni+rPWBDTEObicIphIZo56o1HdtCotO4MY=
+	t=1754267451; cv=none; b=YnLf+qH90ip/aC6Mx3TgqlYBIyJCUAVrbEvb8BRo95vFP5QM3BhaeJ0KewatTv8FJNrLglgDzY6+u4pdxfPp8LBHKUwiCix3dBpKdHzpQjOHLrQXTWZiz5qE2MPaSztEvl0pKOQNIj0BA8z9g3AjH7RgPJrshUXKScdLBKvThLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267448; c=relaxed/simple;
-	bh=bfLHrI+KHBL420kB9LvWPzH5vg3kP5L2x0mod4WtyLQ=;
+	s=arc-20240116; t=1754267451; c=relaxed/simple;
+	bh=c2+mqsFgTr/4k91XA1KSm9C9W++CrNEM1EGVhoym5qA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jtOVV3vLGhtWRSg6xwicpn6eesFxWdxEBHEE8hAmO0GDAWohZLckX7pJkjLrNPH53RqKkmSYkiR9bZTCVuFfN3t4KOpWRVfyoMJ4mQZi9Lwz8JzDkgaB8mYGNsF2KUF1Wf1lJ9pVvBa5ImnxT4j1HmLb50YZo1vA6KNNgeYh1kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sl93khdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z6S9Q/gsaGQMAq6Dv6ceKI+x58iavJexvzTTOyKCAt6SeOfaJv/9plEsWXy1YaQt3UWzG0g+Bj+hDZSUwQdDWFfs5O3JYyKqsxwKFxaxci4QU/1QNe6/48GOGxzXQ1+Qr9JnkPYgW1ObIy/Y6QuIFJCkSVhcif6CU8zCR3GcxhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTzXhZre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sl93khdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECE0C4CEEB;
-	Mon,  4 Aug 2025 00:30:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTzXhZre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8415C4CEF0;
+	Mon,  4 Aug 2025 00:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267448;
-	bh=bfLHrI+KHBL420kB9LvWPzH5vg3kP5L2x0mod4WtyLQ=;
+	s=k20201202; t=1754267451;
+	bh=c2+mqsFgTr/4k91XA1KSm9C9W++CrNEM1EGVhoym5qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sl93khdJTo3Tchn0N73IuduQx7IFsH90c6N2LoSxWPAMLglJZ78rNMytJIntNhHm1
-	 qb5w20rVy7r7ntytmY17BDPNc8RzMwpExvX5xCrn50as9kDdR8oxi+VoYaxMLdkd5+
-	 wDceKIAUY+G3oVsr8V6Tnum6wa9xv0xd8w5XZx/AX1RkFTOdtuhV5oZc/8MvGoDsr8
-	 iKQYhi+7F7qwCankU7b9uPf9lvSFRVYmQfmXhPvsDIx3GAz0Ur+wlFvYokZRHnj44U
-	 fCnK/U4zltn84p5rsJoVuPAxmbh23DYREwlNNGfU+8f7c7P+H6dOWlaOAJ+JMJxUIu
-	 jUNmjY921eqBw==
+	b=XTzXhZre7wabS+AI0RSYpZvq3KniyJU3WpbPEFdzug3IjXK24zizNTgoa31LOoBZI
+	 fcCEWmSQXYisxFrFnDgGy1PgbH462vmZMQ9i2gNsFDQA9CuEmem50VZYl8erExipqw
+	 3uslOi/aAwzF2swPDM93OJJU3DBHefQ+iVjgjKXOVd8MszVJqSrIDZaUATnDkUzXEP
+	 D2IVdVMIsi1iEuM6xrsPxkzj8Xf+8GN1aLWaDY+L2+8TJvIPjJqK7pQN+NOyxY+R7M
+	 5NBYoI/XtkdgIUk0bA50G5H9sjFNyyP+YdL68VYT34PaVUtIOBSOs5/PFDUGVy8/cS
+	 23wMCDviYLJqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: "Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	michal.simek@amd.com,
-	linux-usb@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.15 69/80] usb: dwc3: xilinx: add shutdown callback
-Date: Sun,  3 Aug 2025 20:27:36 -0400
-Message-Id: <20250804002747.3617039-69-sashal@kernel.org>
+	herongguang@linux.alibaba.com,
+	wangfushuai@baidu.com
+Subject: [PATCH AUTOSEL 6.15 70/80] pm: cpupower: Fix the snapshot-order of tsc,mperf, clock in mperf_stop()
+Date: Sun,  3 Aug 2025 20:27:37 -0400
+Message-Id: <20250804002747.3617039-70-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -51,33 +49,25 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: "Gautham R. Shenoy" <gautham.shenoy@amd.com>
 
-[ Upstream commit 70627bf82e36e61c40c3315e1206e4ea4c02e668 ]
+[ Upstream commit cda7ac8ce7de84cf32a3871ba5f318aa3b79381e ]
 
-Adds a shutdown callback to ensure that the XHCI stack is properly
-shutdown in reboot/shutdown path.
+In the function mperf_start(), mperf_monitor snapshots the time, tsc
+and finally the aperf,mperf MSRs. However, this order of snapshotting
+in is reversed in mperf_stop(). As a result, the C0 residency (which
+is computed as delta_mperf * 100 / delta_tsc) is under-reported on
+CPUs that is 100% busy.
 
-In kexec flow, kernel_restart_prepare() performs actions necessary
-to prepare the system for a restart and invokes device_shutdown. To
-ensure proper shutdown attach the dwc3 shutdown implementation which
-mirrors the remove method.
+Fix this by snapshotting time, tsc and then aperf,mperf in
+mperf_stop() in the same order as in mperf_start().
 
-$ kexec -e
-
-<snip>
-xhci-hcd xhci-hcd.0.auto: remove, state 1
-usb usb1: USB disconnect, device number 1
-usb 1-1: USB disconnect, device number 6
-xhci-hcd xhci-hcd.0.auto: USB bus 1 deregistered
-kexec_core: Starting new kernel
-
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/1748977771-714153-1-git-send-email-radhey.shyam.pandey@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250612122355.19629-2-gautham.shenoy@amd.com
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -85,80 +75,66 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Analysis of the Commit
+1. **Clear bug fix with user impact**: The commit fixes a calculation
+   bug in the cpupower tool where C0 residency (processor active time)
+   is under-reported on 100% busy CPUs. This directly affects users
+   monitoring CPU performance and power states.
 
-### 1. **Bug Fix Nature**
-This commit fixes a real bug where the USB XHCI stack is not properly
-shut down during kexec operations. The commit message explicitly shows
-the issue - when `kexec -e` is executed, the XHCI controller is removed
-but without a proper shutdown sequence, which can lead to:
-- Memory corruption if the controller continues DMA operations
-- System instability during kexec transitions
-- Potential crashes after kexec
+2. **Simple and contained fix**: The change is minimal - it only
+   reorders three function calls in `mperf_stop()` to match the order in
+   `mperf_start()`:
+   - Before: `mperf_measure_stats()` → `mperf_get_tsc()` →
+     `clock_gettime()`
+   - After: `clock_gettime()` → `mperf_get_tsc()` →
+     `mperf_measure_stats()`
 
-### 2. **Simple and Contained Fix**
-The code change is minimal and low-risk:
-```diff
-+       .shutdown       = dwc3_xlnx_remove,
-```
-It simply reuses the existing `dwc3_xlnx_remove` function as the
-shutdown callback. This is a common pattern in kernel drivers.
+3. **Low risk of regression**: The fix simply ensures consistent
+   snapshot ordering between start and stop measurements. This is a
+   logical correction that aligns the measurement methodology without
+   introducing new functionality.
 
-### 3. **Follows Established Pattern**
-My analysis shows this follows an established pattern in the dwc3 driver
-family:
-- `dwc3-of-simple.c` uses its remove function for shutdown
-- `dwc3-rtk.c` has a dedicated shutdown function that calls similar
-  cleanup
-- The recent Tegra XUSB commit (3a3be3a1ebf0) added a shutdown callback
-  for similar reasons (preventing SMMU-related crashes)
+4. **Clear root cause**: The bug occurs because the reversed snapshot
+   order causes timing skew in the C0 residency calculation
+   (`delta_mperf * 100 / delta_tsc`). When snapshots are taken in
+   different orders at start vs stop, the time windows don't align
+   properly, leading to incorrect calculations.
 
-### 4. **Clear Side Effects**
-The `dwc3_xlnx_remove` function performs standard cleanup:
-- Depopulates child devices (`of_platform_depopulate`)
-- Disables and unprepares clocks
-- Manages runtime PM state
+5. **Affects monitoring tool accuracy**: While this is a userspace tool
+   bug rather than a kernel bug, cpupower is an important diagnostic
+   tool shipped with the kernel. Incorrect C0 residency reporting could
+   mislead system administrators and developers analyzing CPU
+   performance.
 
-These are all safe operations for shutdown context.
+6. **No architectural changes**: The fix doesn't change any data
+   structures, APIs, or fundamental behavior - it simply corrects the
+   measurement sequence.
 
-### 5. **Meets Stable Criteria**
-- **Fixes a real bug**: Prevents potential system instability during
-  kexec
-- **Small change**: Single line addition
-- **Low risk**: Reuses existing, tested code path
-- **No new features**: Pure bug fix
-- **Clear benefit**: Improves system reliability during reboot/kexec
-  operations
+The commit meets stable tree criteria as it fixes a real bug affecting
+users, is minimal in scope, and has very low risk of introducing new
+issues.
 
-### 6. **Similar Issues in Other Drivers**
-The pattern of missing shutdown callbacks causing issues during
-kexec/reboot is well-documented in the kernel, particularly for devices
-that perform DMA operations.
+ tools/power/cpupower/utils/idle_monitor/mperf_monitor.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-The fix ensures proper hardware shutdown sequence during system
-reboot/shutdown, preventing the USB controller from accessing memory
-after the system has started transitioning to a new kernel or shutting
-down. This is especially important for systems using kexec for fast
-reboots or crash dump collection.
-
- drivers/usb/dwc3/dwc3-xilinx.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/usb/dwc3/dwc3-xilinx.c b/drivers/usb/dwc3/dwc3-xilinx.c
-index 4ca7f6240d07..09c3c5c226ab 100644
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -422,6 +422,7 @@ static const struct dev_pm_ops dwc3_xlnx_dev_pm_ops = {
- static struct platform_driver dwc3_xlnx_driver = {
- 	.probe		= dwc3_xlnx_probe,
- 	.remove		= dwc3_xlnx_remove,
-+	.shutdown	= dwc3_xlnx_remove,
- 	.driver		= {
- 		.name		= "dwc3-xilinx",
- 		.of_match_table	= dwc3_xlnx_of_match,
+diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+index 73b6b10cbdd2..5ae02c3d5b64 100644
+--- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+@@ -240,9 +240,9 @@ static int mperf_stop(void)
+ 	int cpu;
+ 
+ 	for (cpu = 0; cpu < cpu_count; cpu++) {
+-		mperf_measure_stats(cpu);
+-		mperf_get_tsc(&tsc_at_measure_end[cpu]);
+ 		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
++		mperf_get_tsc(&tsc_at_measure_end[cpu]);
++		mperf_measure_stats(cpu);
+ 	}
+ 
+ 	return 0;
 -- 
 2.39.5
 
