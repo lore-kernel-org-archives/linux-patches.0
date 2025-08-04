@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399421C84C6;
-	Mon,  4 Aug 2025 00:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE0A1B983F;
+	Mon,  4 Aug 2025 00:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267702; cv=none; b=N85a5jVtwSWefYlxr8JQ/T+bfQxHPBUgtXtfT/BP2tOAYjDB3OclhzckvN0W7ysXkuu/xPb6pogO0Zy4e6N1ZyeZ3uj6gihxhjyav5mJVjpbtxsjxmTsuLmcxU4LaS9Ft4Sb+7acmcE9hCcVB34Usw2HC0ZxD2KPGMQq3a98oNw=
+	t=1754267704; cv=none; b=SYOuy6ACVSmZCcnps4ekRbwW8IWeeoZJrGuNl81+PyEkbyYv1Vf84bLrJ9Zk85T72n0bvZmMq/tuYH7o/xAwZht9rbDac7Ykj8p11CvZ6XU4q3q2KAau9qJ/Jr9GEWGKR7GtX7YUGCBLnjOGEJJEuVzk8kSiD7Wjksfzl8FcR0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267702; c=relaxed/simple;
-	bh=2EONpSVZSXw+lupe5xfgule2AwMcGVJhY7EA1AKzZfo=;
+	s=arc-20240116; t=1754267704; c=relaxed/simple;
+	bh=JXfLgUDoHsDqFpeG+J4W5zABe9QDaRGMdNF1WCd2mjo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iIqDOK7Wr6C/H2y1HNw2KXOUnFrfIEA6f8NibWjdM3lkOH8rG1gcyBlNaF5jlihfGhWhWdI/T6h1a5SfqbxeUmuUWksbQhzSGKlT3TGRFgvEQfGVcwJvngx+RpPFTUC7lvvZZ0qUjgh1wiJHMfRxSHeRFkdBBgAAZrh8WAt/Jj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=un/FEueV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b+JCcmVg6Tf4FOZ/YtHm/9s28JAA8sjzcYqp3eVb8kOa8ReXQ3nCu5Puh7fDX7OlAbHtY90VYfrEs86OjhmvPCOm6Nm/2bbhoyCQUyoUYaKWdfTM5phYAxnKliVbIzQoL3f9fsjKhrZZ6TLRZuofXm1ngg/OdhSGaHFlQnahArU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JPJpvSa+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="un/FEueV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5C9C4CEFE;
-	Mon,  4 Aug 2025 00:35:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JPJpvSa+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97046C4CEF0;
+	Mon,  4 Aug 2025 00:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267702;
-	bh=2EONpSVZSXw+lupe5xfgule2AwMcGVJhY7EA1AKzZfo=;
+	s=k20201202; t=1754267704;
+	bh=JXfLgUDoHsDqFpeG+J4W5zABe9QDaRGMdNF1WCd2mjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=un/FEueV1aryAanGVrz+EJOEobhtbFEPTgqOmvDAbRe+P4x5uu6+uNL2h2HYJ7ibM
-	 lZioCp8tUTfMLY4fVBvi1EAnx43Eoe3Cu5+4U5KqIXGH1vh7R5UWVm8CVcrMooAw1e
-	 OJc2jaCJ+gKh1JotyfgrdO1fnKDIs5A8TcG46it/JKzEqxfaeFE7q+OBGjoWDIe2Wz
-	 PIew0wBJ777wjVe3J3VOCv+s0tvg2ouvKU+mHMEZmugTXwYIiJQ3kIfdU9YUP5QEXH
-	 WyImcA3cqQNEpZ1eDa029xEdnvOHkwIuIBRrPZlD1ZDLdSA5J2TBt2Fi3Wer5RBIGK
-	 FQLgC1huTI75w==
+	b=JPJpvSa+K7PWcQfyZ8mHOrEoRPy/1u0H1b3Ouizknx7EGGr3Ukusv4C2s6rKd0Vl2
+	 LJS6rL7QzGh82VDodPpAHx/dQzcK6tJWo8eUO6gZNmb3z/RStkX46YhY0NXZV6pfOt
+	 8A053NfYjFVOo73ImLp2Tv3xstld1h6CKpx5bgeX+7pgpMTpIBW9m9dyC7p4Pczw+K
+	 HfFcFe0U8Ifv0IJGypl3uNim8mPNEM7DCGR4fpVxsFDtd9aQyGAt75HIzjWBASi69/
+	 MCLwfwuq1Kp9uu07DnttA8rjEOsacaDqAdkmm/egSAh+lQiTeyDYI32kzpbwBRxIvV
+	 QKhOrhUd/PgDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Willy Tarreau <w@1wt.eu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.6 20/59] tools/nolibc: define time_t in terms of __kernel_old_time_t
-Date: Sun,  3 Aug 2025 20:33:34 -0400
-Message-Id: <20250804003413.3622950-20-sashal@kernel.org>
+Cc: David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>,
+	lars@metafoo.de,
+	Michael.Hennerich@analog.com
+Subject: [PATCH AUTOSEL 6.6 21/59] iio: adc: ad_sigma_delta: don't overallocate scan buffer
+Date: Sun,  3 Aug 2025 20:33:35 -0400
+Message-Id: <20250804003413.3622950-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -50,99 +54,81 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit d5094bcb5bfdfea2cf0de8aaf77cc65db56cbdb5 ]
+[ Upstream commit 5a2f15c5a8e017d0951e6dc62aa7b5b634f56881 ]
 
-Nolibc assumes that the kernel ABI is using a time values that are as
-large as a long integer. For most ABIs this holds true.
-But for x32 this is not correct, as it uses 32bit longs but 64bit times.
+Fix overallocating the size of the scan buffer by converting bits to
+bytes. The size is meant to be in bytes, so scanbits needs to be
+divided by 8.
 
-Also the 'struct stat' implementation of nolibc relies on timespec::tv_sec
-and time_t being the same type. While timespec::tv_sec comes from the
-kernel and is of type __kernel_old_time_t, time_t is defined within nolibc.
-
-Switch to the __kernel_old_time_t to always get the correct type.
-
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20250712-nolibc-x32-v1-1-6d81cb798710@weissschuh.net
-Acked-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250701-iio-adc-ad7173-add-spi-offload-support-v3-1-42abb83e3dac@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of this commit, here is my assessment:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit fixes a clear memory overallocation bug in the
+ad_sigma_delta ADC driver that has been present since kernel v5.19. The
+analysis shows:
 
-1. **Bug Fix**: This fixes a real ABI compatibility bug where nolibc
-   incorrectly assumes `time_t` is always the same size as `long`. On
-   x32 architecture (x86-64 with 32-bit pointers), `long` is 32-bit but
-   kernel time values are 64-bit, causing type mismatches.
+1. **Bug Description**: The code incorrectly calculates buffer size by
+   treating `storagebits` (which is in bits) as if it were in bytes. The
+   `storagebits` field in `struct iio_scan_type` represents the number
+   of bits needed to store a sample, typically 8, 16, 24, or 32 bits.
 
-2. **Clear Impact**: The commit message clearly explains the issue - the
-   `struct stat` implementation in nolibc relies on `timespec::tv_sec`
-   and `time_t` being the same type. Looking at the code:
-   - In `/include/uapi/linux/time.h:12`, `struct timespec` uses
-     `__kernel_old_time_t tv_sec`
-   - In the original nolibc code at `tools/include/nolibc/std.h:30`,
-     `time_t` was defined as `signed long`
-   - In `tools/include/nolibc/types.h:183-185`, the stat structure uses
-     unions that expect `time_t` and `struct timespec` members to be
-     compatible
+2. **Impact**: The bug causes the driver to allocate 8x more memory than
+   needed. For example:
+   - If `storagebits = 16` (2 bytes per sample) and `slot = 4`
+   - Buggy calculation: `ALIGN(4 * 16, 8) = 64 bytes`
+   - Correct calculation: `ALIGN(4 * 16 / 8, 8) = 8 bytes`
 
-3. **Small and Contained Fix**: The change is minimal - just changing
-   one typedef from `signed long` to `__kernel_old_time_t` and adding
-   the necessary include. This is exactly the kind of focused fix
-   suitable for stable.
+   This wastes kernel memory and could potentially lead to memory
+exhaustion in systems with many IIO devices.
 
-4. **No Feature Changes**: This doesn't add new functionality or change
-   the API - it just corrects the type definition to match what the
-   kernel actually uses.
+3. **Fix Quality**: The fix is minimal and correct - simply dividing by
+   8 to convert bits to bytes. This is consistent with how `storagebits`
+   is used throughout the IIO subsystem, as evidenced by the grep
+   results showing `sizeof(u32) * 8` assignments.
 
-5. **Low Risk**: The change uses the kernel's own type definition
-   (`__kernel_old_time_t`) which is already defined as `__kernel_long_t`
-   in the generic case, so for most architectures this is a no-op. It
-   only changes behavior on architectures like x32 where it's actually
-   needed.
+4. **Affected Versions**: The bug was introduced in commit 8bea9af887de4
+   ("iio: adc: ad_sigma_delta: Add sequencer support") which first
+   appeared in v5.19 and is present in all releases since then (v5.19,
+   v6.0, v6.1, v6.10, v6.11).
 
-6. **Prevents Runtime Failures**: Without this fix, nolibc programs on
-   x32 would have incorrect stat structures where time fields don't
-   align properly with kernel expectations, potentially causing data
-   corruption or incorrect time values.
+5. **Stable Criteria Met**:
+   - ✓ Fixes a real bug (memory overallocation)
+   - ✓ Small, contained fix (single line change)
+   - ✓ No architectural changes
+   - ✓ Low risk of regression
+   - ✓ Bug affects users (wastes memory)
+   - ✓ Clear and obvious fix
 
-The commit follows stable kernel rules by fixing an important bug with
-minimal changes and low regression risk. It's a clear correctness fix
-for a specific architecture compatibility issue.
+The commit should be backported to all stable kernels from v5.19 onwards
+to fix this memory waste issue in the industrial I/O subsystem.
 
- tools/include/nolibc/std.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ad_sigma_delta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/std.h b/tools/include/nolibc/std.h
-index 933bc0be7e1c..a9d8b5b51f37 100644
---- a/tools/include/nolibc/std.h
-+++ b/tools/include/nolibc/std.h
-@@ -20,6 +20,8 @@
+diff --git a/drivers/iio/adc/ad_sigma_delta.c b/drivers/iio/adc/ad_sigma_delta.c
+index 533667eefe41..71e775a10a91 100644
+--- a/drivers/iio/adc/ad_sigma_delta.c
++++ b/drivers/iio/adc/ad_sigma_delta.c
+@@ -378,7 +378,7 @@ static int ad_sd_buffer_postenable(struct iio_dev *indio_dev)
+ 			return ret;
+ 	}
  
- #include "stdint.h"
- 
-+#include <linux/types.h>
-+
- /* those are commonly provided by sys/types.h */
- typedef unsigned int          dev_t;
- typedef unsigned long         ino_t;
-@@ -31,6 +33,6 @@ typedef unsigned long       nlink_t;
- typedef   signed long         off_t;
- typedef   signed long     blksize_t;
- typedef   signed long      blkcnt_t;
--typedef   signed long        time_t;
-+typedef __kernel_old_time_t  time_t;
- 
- #endif /* _NOLIBC_STD_H */
+-	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits, 8);
++	samples_buf_size = ALIGN(slot * indio_dev->channels[0].scan_type.storagebits / 8, 8);
+ 	samples_buf_size += sizeof(int64_t);
+ 	samples_buf = devm_krealloc(&sigma_delta->spi->dev, sigma_delta->samples_buf,
+ 				    samples_buf_size, GFP_KERNEL);
 -- 
 2.39.5
 
