@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26111BD01D;
-	Mon,  4 Aug 2025 00:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A914A1FDD;
+	Mon,  4 Aug 2025 00:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267598; cv=none; b=lvRXYnVVD4iCNhI17z6f6jYLB2OnYVUG8iisX6fTSjaDESnpkcMmSxFeyhQOG/GU9q3AH88COwpxG3jgiOdQDfS0UjDYWL45Ylg55YzOYoJP8M1BSOCSrOxwhS1ORvqj3lx2t67RBGjvaJB2SO6g8/KG7guYwBZCNqY+UNmK/kM=
+	t=1754267600; cv=none; b=tWaZWamMLQbh4PSsbub0TSGNAk3aVho+SSPwK/zF8zaAYKulfoHnWvn07frYetHjlQkLXAXeqi6ldatT0QuRhpcD8Or8d7U2UDe9px0kKMKxTN9HZAsMn966diM471kDczMCvAkyVSR9sFAq6UYp2AoAQeMCaS7O7PeskkNNEfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267598; c=relaxed/simple;
-	bh=BlnwAVW5Mve+BHdXE35MrFQj4dTIDggRhXuf9aeq1cg=;
+	s=arc-20240116; t=1754267600; c=relaxed/simple;
+	bh=VDG96WUR7a9/KnRv7tQwTaApcizWL4OOQ4tjRZlcC9Y=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Yr2MwGh/PZf0kBu8kp1Fi0Am1w+zqmz1GgjzQXXPQK1/87FLpGnMyKoEZTGUUTNIUFnskMo3YPn9i4KDDKyrooefP7gtxsNH35DlTM5krErRaXxnTfZibn9rqkT9IwGfj3cPAL0UTs+xA2L4cFA63H0tmCsw3A/a699LmPdT1S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BmtqOcjr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YFi33r7GresxBywxB8xrQMXYdLF8QptyFsUeO5jrsRE1PYml9lDHyqv0f/fFAh9urfernkWPosZg6movUOII/8Ax9t1k22LX8WYjeTb2wdACMgnT4uPxgbTD3CXeXG8pHI4UDKWrE8iBt3jJClCVX/SImpR5Yz8h080IltVOa40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YtS1Do51; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BmtqOcjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C78C4CEEB;
-	Mon,  4 Aug 2025 00:33:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YtS1Do51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2B4C4CEEB;
+	Mon,  4 Aug 2025 00:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267598;
-	bh=BlnwAVW5Mve+BHdXE35MrFQj4dTIDggRhXuf9aeq1cg=;
+	s=k20201202; t=1754267600;
+	bh=VDG96WUR7a9/KnRv7tQwTaApcizWL4OOQ4tjRZlcC9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BmtqOcjrZ6GrXgG2INyfGHnyLmmul/B9YsOZkXGJGq3P5Le+8ZScs+UQ2fztPSFEr
-	 GYACfHtBdbZ1YMfYsfVYy0/ci7B+PynvRg/NzqnLNsq+sEBdOvJEleHvR8uq4vXJvE
-	 nBL7gsUjO3vD5DWavm3uO8dKw8z6K3C1+3TBTSScEvfCzSRjgbL5Hfd/vYN25guB7N
-	 +UBKkd6OxOB2T2xyJIZmWUGye1pIGXhYjt2ktJRxLre+enQ+N6AxZOfHT/vfaaVCan
-	 rMqIBs8OYY8HcNf1yWk6CCjmCntd64vSQxHkn1/5vj5JfhH6mNkBYRl0E629FOMA2u
-	 TGhlRBnHPUPTg==
+	b=YtS1Do51BtdhkHgGfER1zV8t2fPAU56DgnqVMiJMnKX/xA27YC0C8+mzEAEXbC7wp
+	 dXiQ1+9oeQiKvX1ifefe1bkIfeNgHMSUXEsNajdnjJ+Qcu2e5mUlSEj51gMin7AA5E
+	 mpvzblCzb8AyxOxMTKn/pe6UQV+vch4MmPZI6v5H3L90H/BYw5+c+nh858x4q5ohbv
+	 qRQsXCep+orRhAiiKIW9R6nuGdeAgKtjG7pRly9Tb/rRF/33ndc1jE/gzX8/XyPCrx
+	 B6ZFC7kppoNmHCBL1/PmF3ieyX2mnheGs2zaIBY5+gFRwG3qVeBI8A1c7l5z9CiS5x
+	 UDjhkQemPJfOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>,
-	Joakim Zhang <joakim.zhang@cixtech.com>,
+Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Borislav Petkov <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>,
-	thorsten.blum@linux.dev,
-	vulab@iscas.ac.cn,
-	linux@treblig.org,
-	Julia.Lawall@inria.fr
-Subject: [PATCH AUTOSEL 6.12 49/69] ALSA: hda: Disable jack polling at shutdown
-Date: Sun,  3 Aug 2025 20:30:59 -0400
-Message-Id: <20250804003119.3620476-49-sashal@kernel.org>
+	tglx@linutronix.de,
+	peterz@infradead.org,
+	jpoimboe@kernel.org
+Subject: [PATCH AUTOSEL 6.12 50/69] x86/bugs: Avoid warning when overriding return thunk
+Date: Sun,  3 Aug 2025 20:31:00 -0400
+Message-Id: <20250804003119.3620476-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -53,104 +52,122 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit 1adcbdf54f76e1004bdf71df4eb1888c26e7ad06 ]
+[ Upstream commit 9f85fdb9fc5a1bd308a10a0a7d7e34f2712ba58b ]
 
-Although the jack polling is canceled at shutdown in
-snd_hda_codec_shutdown(), it might be still re-triggered when the work
-is being processed at cancel_delayed_work_sync() call.  This may
-result in the unexpected hardware access that should have been already
-disabled.
+The purpose of the warning is to prevent an unexpected change to the return
+thunk mitigation. However, there are legitimate cases where the return
+thunk is intentionally set more than once. For example, ITS and SRSO both
+can set the return thunk after retbleed has set it. In both the cases
+retbleed is still mitigated.
 
-For assuring to stop the jack polling, clear codec->jackpoll_interval
-at shutdown.
+Replace the warning with an info about the active return thunk.
 
-Reported-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Closes: https://lore.kernel.org/20250619020844.2974160-4-joakim.zhang@cixtech.com
-Tested-by: Joakim Zhang <joakim.zhang@cixtech.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250623131437.10670-2-tiwai@suse.de
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250611-eibrs-fix-v4-3-5ff86cac6c61@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Bug Fix Analysis
+## Key Reasons for Backporting:
 
-The commit fixes a **race condition** during codec shutdown where jack
-polling work could be re-triggered even after attempting to cancel it.
-This is evident from the commit message: "it might be still re-triggered
-when the work is being processed at cancel_delayed_work_sync() call."
-
-The race condition occurs because:
-1. `cancel_delayed_work_sync()` waits for the current work to complete
-2. While waiting, if the work function (`hda_jackpoll_work`) is
-   executing, it checks `codec->jackpoll_interval` at line 635 of the
-   original code
-3. If `jackpoll_interval` is still non-zero, the work reschedules itself
-   with `schedule_delayed_work(&codec->jackpoll_work,
-   codec->jackpoll_interval)` at line 641
-4. This creates a situation where hardware access occurs after shutdown
-   has supposedly completed
-
-## Code Change Analysis
-
-The fix is **minimal and surgical** - just one line added:
+### 1. **Fixes a Real User-Visible Issue**
+The code change shows that the original warning was triggering in
+legitimate scenarios:
 ```c
-codec->jackpoll_interval = 0; /* don't poll any longer */
+- if (x86_return_thunk != __x86_return_thunk)
+- pr_warn("x86/bugs: return thunk changed\n");
+```
+This warning would appear in kernel logs whenever multiple CPU
+vulnerability mitigations interact, which is a normal and expected
+behavior. The false positive warnings could:
+- Cause unnecessary alarm for system administrators
+- Clutter kernel logs with misleading information
+- Potentially mask real issues by creating noise
+
+### 2. **Small, Contained Change**
+The commit is minimal and focused:
+- Only modifies 3 lines of functional code
+- Changes are confined to a single function (`set_return_thunk()`)
+- Simply replaces a conditional warning with an unconditional info
+  message:
+```c
++       pr_info("active return thunk: %ps\n", thunk);
 ```
 
-This is placed **before** the `cancel_delayed_work_sync()` call,
-ensuring that even if the work function is currently running, it won't
-reschedule itself because the interval check at the beginning of
-`hda_jackpoll_work()` will fail.
+### 3. **No Risk of Regression**
+The change is safe because:
+- It doesn't modify any security logic or mitigation behavior
+- The function still sets the return thunk exactly as before
+- The new info message provides better visibility into which mitigation
+  is active
+- The `%ps` format specifier safely prints the function symbol name
 
-## Impact Assessment
+### 4. **Addresses Security Mitigation Interactions**
+The commit message explicitly states that "ITS and SRSO both can set the
+return thunk after retbleed has set it" and that "retbleed is still
+mitigated." This is important for stable kernels because:
+- Multiple CVE mitigations (Retbleed, SRSO, ITS) need to coexist
+- The warning was incorrectly flagging legitimate mitigation sequences
+- Stable kernels need these mitigations to work together without false
+  alarms
 
-1. **User-visible bug**: Yes - unexpected hardware access during
-   shutdown can cause system hangs, crashes, or hardware-related issues
-2. **Fix size**: Extremely small - single line addition
-3. **Risk assessment**: Very low - setting a value to 0 before canceling
-   work is a safe operation
-4. **Subsystem criticality**: ALSA HD-Audio is widely used, but this
-   specific fix is in the shutdown path
-5. **Testing**: The commit has been tested by the reporter (Joakim
-   Zhang)
+### 5. **Part of Critical Security Infrastructure**
+The x86/bugs subsystem handles CPU vulnerability mitigations for:
+- CVE-2023-20569 (SRSO)
+- CVE-2024-28956 (ITS)
+- Retbleed vulnerabilities
+These are critical security features that need to function correctly in
+stable kernels.
 
-## Stable Tree Criteria
+### 6. **Improves Operational Visibility**
+The new info message (`pr_info("active return thunk: %ps\n", thunk);`)
+actually improves debugging and system monitoring by:
+- Showing which specific return thunk is currently active
+- Providing better audit trail for security mitigation changes
+- Using proper function symbol printing with `%ps`
 
-This commit meets stable tree requirements:
-- Fixes a real bug (race condition causing unexpected hardware access)
-- Minimal change (1 line)
-- Clear fix with obvious correctness
-- No new features or architectural changes
-- Only affects the shutdown path, limiting scope
-- Has been tested by the bug reporter
+## Conclusion:
+This commit meets all the criteria for stable backporting:
+- Fixes a real issue (false positive warnings)
+- Minimal risk (3-line change, no logic modifications)
+- Improves system behavior without introducing new features
+- Addresses interaction between critical security mitigations
+- Makes the kernel more reliable and less confusing for operators
 
-The fix prevents potential system instability during shutdown, making it
-an important candidate for stable backporting.
+The change is particularly important for stable kernels that need to
+support multiple CPU vulnerability mitigations simultaneously without
+generating misleading warnings.
 
- sound/pci/hda/hda_codec.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/cpu/bugs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index cb3bba7eed4f..db2487cfd5da 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -3038,6 +3038,7 @@ void snd_hda_codec_shutdown(struct hda_codec *codec)
- 	if (!codec->core.registered)
- 		return;
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index c2c7b76d953f..31b4b73e5405 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -71,10 +71,9 @@ void (*x86_return_thunk)(void) __ro_after_init = __x86_return_thunk;
  
-+	codec->jackpoll_interval = 0; /* don't poll any longer */
- 	cancel_delayed_work_sync(&codec->jackpoll_work);
- 	list_for_each_entry(cpcm, &codec->pcm_list_head, list)
- 		snd_pcm_suspend_all(cpcm->pcm);
+ static void __init set_return_thunk(void *thunk)
+ {
+-	if (x86_return_thunk != __x86_return_thunk)
+-		pr_warn("x86/bugs: return thunk changed\n");
+-
+ 	x86_return_thunk = thunk;
++
++	pr_info("active return thunk: %ps\n", thunk);
+ }
+ 
+ /* Update SPEC_CTRL MSR and its cached copy unconditionally */
 -- 
 2.39.5
 
