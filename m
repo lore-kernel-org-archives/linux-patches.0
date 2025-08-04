@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69B61D8E10;
-	Mon,  4 Aug 2025 00:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAB03D69;
+	Mon,  4 Aug 2025 00:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268046; cv=none; b=MfeEwh8ycvgdGSJds6Yz4A/gIhrv0OlUlw48QbmLgqxYRhkkbGCfJ+P5Z5nBHlvncNIGAkDEN1+mjtLgSXf6X9r60Z55w5nGv9N7DC6PBipDDCWcQIqbxJaDX+ekvjfnU3HFWmJRro10QjdSgXgY3i1n6UN25R67cam4obS0Y+U=
+	t=1754268050; cv=none; b=hsrpgJVTOcpzIBLeFKDtZKjizC/b6SCC/4HyjybfWIX37TffCPfSuy8ioJoGsd42vD8Fck6jY4hKaHBJegy1IeKFb24p2KfWcKXl9fRs43VEJmaLv7ubo7/Gm8TquNeQd0bsuDEeKfDtSGDvATHJBtVWIjt6BbRLgJ7s3geFC7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268046; c=relaxed/simple;
-	bh=vBn3MXBrxxIb8iyaV6KJc9uk6Goc9/9jm2HSmLduvf0=;
+	s=arc-20240116; t=1754268050; c=relaxed/simple;
+	bh=1KUE5bxIJPdQBz/e5JfdWEef4SoYwPSb7HUyr5wZdBM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rWKYunQViu86o/TQRkix1rvWZKU8fqRxyhJSpj1YjBM5XpuW2XbFbUhvlmTVTQLYpw2PubLnSUqAhWPbUO7cGUqGCBPq7V8K8+Qb7jpleVY1i0dlzmyZTKw5hLj2mrLLuPQs9Bf+qlAmWSi/H81yx+GaQrZjCJQ80J7OpPj9imY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d5euAZrK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r9U3djJW+c5mNhfeky9nQjDLCgbFsByQcITXo93vtyCrKsDcvLa9WG0fHpvr/crGeonC0TWxI0nmnWAbcsTzBfNWoVoESl593ry5QC7IPkJFMQIavECtQ5qBi9tyzaKib4qvjTR957eDoYqiQDNWeFWC/TYH19rUBYyYc+BVJ0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y48QPi7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d5euAZrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4E9C4CEF8;
-	Mon,  4 Aug 2025 00:40:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y48QPi7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6FBC4CEEB;
+	Mon,  4 Aug 2025 00:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268046;
-	bh=vBn3MXBrxxIb8iyaV6KJc9uk6Goc9/9jm2HSmLduvf0=;
+	s=k20201202; t=1754268050;
+	bh=1KUE5bxIJPdQBz/e5JfdWEef4SoYwPSb7HUyr5wZdBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5euAZrKyDYyzQDMuYVn2HTgVEdnD/e+yadrKBWRYlp1nagqU8jMHLCyAWOPDMJYz
-	 uTIeTmuX9C5wozPRF2qQSzwBu7EJqXyf/5aIRvYDp9jhSZ0yAIysrM/lmVK34sdkVJ
-	 rLB/jdvJEOzskALQ/nBJ4Wiha6g1cJQqeR1pCWUf8tFaiMR8ZMGcGUyvgvlnNTWuo6
-	 A+p812VEECUdhuqtKFdOX+zoPY6tAJVDEmUAVPX3dRKplxK1UMHdmkQu5Z8AEASW72
-	 31U6ClTDxRKLncvOYpOeoTBmXqzfIt/9v29pnCacRPwAjvtojI04OCUegEuCUorffv
-	 Azeh6ueLPd70w==
+	b=Y48QPi7yj3EOsloSvEqkO+MaM3Jbbtab2zUqa+hyNLi+mr76VcM/ITBStGPU+++EY
+	 aAWmc6IGLzHI0J/6mgVIHm7IktwV5gYXa5/Me66dHltIIO0SmtyfLj3Wb9wsXD8Jgg
+	 yKY0DRXaexSun37OZ6oNscBM9lEh52S/tFeV6genDYrYvKfXl8xalHLPAdlw4Rq8qt
+	 fWCSXs1KcZfdsEV6oHiIO+i6Atl016Fc5RpZOj4gfo1cQAPxZw9ed4JOK2dVKUKZZE
+	 4wGYLICqsBPUneeTSVJc6sNiWqmqMKjxUHxGptMKyEXT8zgjuB6cSBXRalWkjRgaaQ
+	 T/Oe/h/bS24QA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Prashant Malani <pmalani@google.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+Cc: Cynthia Huang <cynthia@andestech.com>,
+	Ben Zong-You Xie <ben717@andestech.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 02/39] cpufreq: CPPC: Mark driver with NEED_UPDATE_LIMITS flag
-Date: Sun,  3 Aug 2025 20:40:04 -0400
-Message-Id: <20250804004041.3628812-2-sashal@kernel.org>
+	paul.walmsley@sifive.com,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 5.10 03/39] selftests/futex: Define SYS_futex on 32-bit architectures with 64-bit time_t
+Date: Sun,  3 Aug 2025 20:40:05 -0400
+Message-Id: <20250804004041.3628812-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004041.3628812-1-sashal@kernel.org>
 References: <20250804004041.3628812-1-sashal@kernel.org>
@@ -52,31 +55,22 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.10.240
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Malani <pmalani@google.com>
+From: Cynthia Huang <cynthia@andestech.com>
 
-[ Upstream commit 0a1416a49e63c320f6e6c1c8d07e1b58c0d4a3f3 ]
+[ Upstream commit 04850819c65c8242072818655d4341e70ae998b5 ]
 
-AMU counters on certain CPPC-based platforms tend to yield inaccurate
-delivered performance measurements on systems that are idle/mostly idle.
-This results in an inaccurate frequency being stored by cpufreq in its
-policy structure when the CPU is brought online. [1]
+The kernel does not provide sys_futex() on 32-bit architectures that do not
+support 32-bit time representations, such as riscv32.
 
-Consequently, if the userspace governor tries to set the frequency to a
-new value, there is a possibility that it would be the erroneous value
-stored earlier. In such a scenario, cpufreq would assume that the
-requested frequency has already been set and return early, resulting in
-the correct/new frequency request never making it to the hardware.
+As a result, glibc cannot define SYS_futex, causing compilation failures in
+tests that rely on this syscall. Define SYS_futex as SYS_futex_time64 in
+such cases to ensure successful compilation and compatibility.
 
-Since the operating frequency is liable to this sort of inconsistency,
-mark the CPPC driver with CPUFREQ_NEED_UPDATE_LIMITS so that it is always
-invoked when a target frequency update is requested.
-
-Link: https://lore.kernel.org/linux-pm/20250619000925.415528-3-pmalani@google.com/ [1]
-Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Prashant Malani <pmalani@google.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20250722055611.130574-2-pmalani@google.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Cynthia Huang <cynthia@andestech.com>
+Signed-off-by: Ben Zong-You Xie <ben717@andestech.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/all/20250710103630.3156130-1-ben717@andestech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -84,92 +78,77 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Code Change Analysis
+1. **Fixes a real compilation failure bug**: The commit addresses a
+   build failure in kernel selftests on 32-bit architectures with 64-bit
+   time_t, specifically riscv32. This prevents the futex selftests from
+   compiling on these architectures, which is a functional bug that
+   affects testing infrastructure.
 
-The change is minimal and focused - it only adds the
-`CPUFREQ_NEED_UPDATE_LIMITS` flag to the cppc_cpufreq_driver struct:
+2. **Simple and contained fix**: The change is minimal - it only adds a
+   conditional preprocessor definition that maps `SYS_futex` to
+   `SYS_futex_time64` when the former is not defined but the latter is.
+   The fix is:
+  ```c
+  #if !defined(SYS_futex) && defined(SYS_futex_time64)
+  #define SYS_futex SYS_futex_time64
+  #endif
+  ```
 
-```c
-- .flags = CPUFREQ_CONST_LOOPS,
-+ .flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
-```
+3. **No risk of regression**: The change is guarded by preprocessor
+   conditionals that only activate when `SYS_futex` is not defined AND
+   `SYS_futex_time64` is defined. This means it has zero impact on
+   architectures where `SYS_futex` is already defined, ensuring no
+   regressions on existing systems.
 
-This single-line change modifies the driver flags in
-drivers/cpufreq/cppc_cpufreq.c:928.
+4. **Affects kernel testing infrastructure**: While this is in the
+   selftests directory and not core kernel code, having working
+   selftests is critical for kernel stability and quality assurance. The
+   futex selftests are important for validating futex functionality
+   across different architectures.
 
-## Bug Being Fixed
+5. **Addresses Y2038 compatibility**: This fix is part of the broader
+   Y2038 compatibility effort where 32-bit architectures are
+   transitioning to 64-bit time_t. As more 32-bit architectures adopt
+   64-bit time_t, this fix becomes increasingly important.
 
-The commit addresses a real bug where:
+6. **Clear problem and solution**: The commit message clearly explains
+   the issue (glibc cannot define SYS_futex on certain architectures)
+   and provides a clean solution that maintains compatibility.
 
-1. **AMU counters on CPPC platforms provide inaccurate measurements**
-   when systems are idle/mostly idle
-2. **This causes cpufreq to store incorrect frequency values** in its
-   policy structure during CPU online
-3. **Userspace frequency changes fail silently** because cpufreq's early
-   return optimization (`if (target_freq == policy->cur)`) prevents the
-   hardware from receiving the correct frequency request
+The fix follows stable kernel rules by being a minimal change that fixes
+an important bug without introducing new features or architectural
+changes. It's confined to the testing infrastructure and has clear
+boundaries with no side effects beyond enabling compilation of the futex
+selftests on affected architectures.
 
-The bug manifests as userspace being unable to set CPU frequencies
-correctly on affected CPPC platforms, which is a functional regression
-that impacts power management and performance.
+ tools/testing/selftests/futex/include/futextest.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-## Why This Qualifies for Stable
-
-1. **Fixes a real bug**: The issue prevents proper CPU frequency scaling
-   on CPPC-based platforms, affecting power management functionality
-
-2. **Minimal risk**: The change is extremely small (one flag addition)
-   and well-contained to the CPPC driver
-
-3. **Clear fix semantics**: The `CPUFREQ_NEED_UPDATE_LIMITS` flag is an
-   established mechanism (introduced in commit 1c534352f47f)
-   specifically designed for this scenario where drivers need frequency
-   updates even when target_freq == policy->cur
-
-4. **Similar precedent**: Other cpufreq drivers (intel_pstate, amd-
-   pstate) already use this flag for similar reasons, showing it's a
-   proven solution
-
-5. **No architectural changes**: This doesn't introduce new features or
-   change kernel architecture - it simply ensures the driver behaves
-   correctly
-
-6. **Recent related fixes**: The git history shows ongoing work to fix
-   CPPC feedback counter issues (e.g., commit c47195631960), indicating
-   this is part of stabilizing CPPC functionality
-
-## Impact Assessment
-
-- **Affected systems**: CPPC-based platforms with AMU counters that
-  exhibit the idle measurement issue
-- **Risk**: Very low - the flag only bypasses an optimization when
-  needed, forcing frequency updates to reach hardware
-- **Testing**: The change has been acked by the cpufreq maintainer
-  (Viresh Kumar) and suggested by the PM subsystem maintainer (Rafael J.
-  Wysocki)
-
-The commit follows stable tree rules by fixing an important bug with
-minimal changes and low regression risk.
-
- drivers/cpufreq/cppc_cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index f29e8d0553a8..17e712651090 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -396,7 +396,7 @@ static int cppc_cpufreq_set_boost(struct cpufreq_policy *policy, int state)
- }
+diff --git a/tools/testing/selftests/futex/include/futextest.h b/tools/testing/selftests/futex/include/futextest.h
+index ddbcfc9b7bac..7a5fd1d5355e 100644
+--- a/tools/testing/selftests/futex/include/futextest.h
++++ b/tools/testing/selftests/futex/include/futextest.h
+@@ -47,6 +47,17 @@ typedef volatile u_int32_t futex_t;
+ 					 FUTEX_PRIVATE_FLAG)
+ #endif
  
- static struct cpufreq_driver cppc_cpufreq_driver = {
--	.flags = CPUFREQ_CONST_LOOPS,
-+	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
- 	.verify = cppc_verify_policy,
- 	.target = cppc_cpufreq_set_target,
- 	.get = cppc_cpufreq_get_rate,
++/*
++ * SYS_futex is expected from system C library, in glibc some 32-bit
++ * architectures (e.g. RV32) are using 64-bit time_t, therefore it doesn't have
++ * SYS_futex defined but just SYS_futex_time64. Define SYS_futex as
++ * SYS_futex_time64 in this situation to ensure the compilation and the
++ * compatibility.
++ */
++#if !defined(SYS_futex) && defined(SYS_futex_time64)
++#define SYS_futex SYS_futex_time64
++#endif
++
+ /**
+  * futex() - SYS_futex syscall wrapper
+  * @uaddr:	address of first futex
 -- 
 2.39.5
 
