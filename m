@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88D52A1AA;
-	Mon,  4 Aug 2025 00:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D1A2A1AA;
+	Mon,  4 Aug 2025 00:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267883; cv=none; b=s2mA4VklCqSPZd/wmO9HAbvGdhx7NgJ6XfmP40iP1Z5vDijj7HpCWV2xUhkMyljv7kl3i0/QmWKrouQEHyi98S2iAlrFcHjDypBHYLX1eycp335Gm+AV/FGbRFGrBaXffvAjqSN8kayPfOmm9/Mk19I29hwAmf5tUPDL8njqHxs=
+	t=1754267886; cv=none; b=K8fnfRoPNrjQpSR959auoDLIvuY6l37KHBgnJZQjfxKyLysJ8LiO17aPsQWtOemEHoR/5iKsKUCLyZPwcH5gXYdGaNStltqbXuapsdvi1wIKyTOSDTvCy/wQIaHxhrpkdynspAbA8q1P+NSmrB5tgT68I6+3bsPUF4701pOXbbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267883; c=relaxed/simple;
-	bh=XRJt11bek56Xpcbi3Da9OAYJZm5UOeRti/JjuMKh7FQ=;
+	s=arc-20240116; t=1754267886; c=relaxed/simple;
+	bh=xg7x0LkZ0+s0ebzVC2lLQbf7NJ2JiALaJl2hAnriv+k=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ayu0NQW1ci8W5qNb5NBWcrk/RnyszSaougfLvyAenU65OUDzShXJUn/ian8NKtp28ZRFqSYlkt9bnr6be5blECvACxXaL5rOjq0jF1WNAYCbp4TkeRGeJZHXqMGTx9Ja5FfvuqV8I/rVUtOW0y6adXn3mTH81yjBCqPzSQ3spJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RRU1zFVo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4yNvCnDJLHVzKdNDYhupkTuyEOn4Qh/GHJzTYfz/0WQHf1ws1f56AryQob1TSVoLPViWR1XBxDus+f0urWgZ79vqMMMdLmKBUVliB6Z5lbmPs6e/Pyuj9WNom8bwVdW0pXvf18hltueg5nAerROGRUYIh7qjwyMW1y7eP/vnPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oZPORWZf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RRU1zFVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1065DC4CEF0;
-	Mon,  4 Aug 2025 00:38:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oZPORWZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48867C4CEF0;
+	Mon,  4 Aug 2025 00:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267882;
-	bh=XRJt11bek56Xpcbi3Da9OAYJZm5UOeRti/JjuMKh7FQ=;
+	s=k20201202; t=1754267885;
+	bh=xg7x0LkZ0+s0ebzVC2lLQbf7NJ2JiALaJl2hAnriv+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RRU1zFVocop4kr9N9SXkSdeT4OPW1Zk956UVq6BXRvScEF7lLhVCDWvHPll7BMOCf
-	 7MVssvx/nJxAJq9IQB5zRGQrkGFuMoql+Bo6qhy1PN71wKjmtbUa162xZtq9ftwN3c
-	 5CAmIdTgG7y7xZYFXOmhyA/kVCFwe7/qGNrCAB2XT9CkjZfC7rns48ukpf8ytdjk0W
-	 MP2+/GCFjfPcofkAZ/FXvrj+XhzTSUi0M8v2oNwOMB2zkiT4dGkHRCb6k1SViUzUo2
-	 Y4EG24ba9rjnFU4GQuy+hi/nfFP/AHANAmHpIMXWC+xGC5R5lfUWsU8/lHuPspxzpR
-	 Cuwy/w+UbUbcg==
+	b=oZPORWZfYhoOSpuITaHOX+riC1YYRjBXSXbo7VgaS+8Xhodn3sqf9Ne+C4j0jNT5F
+	 njAXwlcAiqJdfFHbJE6XEFRH4f2kCFZLm1qvRmxwxh4E5zCY382EkTVMMnUrglyLfM
+	 yrVbBdnTsUg4hkCtrCIQ7iU6o5yV2sHYDBhKN9bGp3p9o7xJpwz8wW7s2/tLuPORSj
+	 hPBvNMKsowOpeSN7D4QYya0VfFohZb2sCnCp0lwQmlKfWEVJs376ThQgoJQ4S0C20W
+	 sOe6D97k9VAJbujIWfZCq2PL3be/ZRmCN6oxuDQJrw6++GaTK138JNAHvITSXvao+K
+	 X+OJcGT52QUfw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ulf Hansson <ulf.hansson@linaro.org>,
-	Avri Altman <avri.altman@sandisk.com>,
-	Ricky Wu <ricky_wu@realtek.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
+	Joakim Zhang <joakim.zhang@cixtech.com>,
 	Sasha Levin <sashal@kernel.org>,
-	zhoubinbin@loongson.cn,
-	wsa+renesas@sang-engineering.com,
-	viro@zeniv.linux.org.uk,
-	nathan@kernel.org,
-	u.kleine-koenig@baylibre.com
-Subject: [PATCH AUTOSEL 6.1 34/51] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
-Date: Sun,  3 Aug 2025 20:36:26 -0400
-Message-Id: <20250804003643.3625204-34-sashal@kernel.org>
+	Julia.Lawall@inria.fr,
+	vulab@iscas.ac.cn,
+	thorsten.blum@linux.dev,
+	linux@treblig.org
+Subject: [PATCH AUTOSEL 6.1 35/51] ALSA: hda: Handle the jack polling always via a work
+Date: Sun,  3 Aug 2025 20:36:27 -0400
+Message-Id: <20250804003643.3625204-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003643.3625204-1-sashal@kernel.org>
 References: <20250804003643.3625204-1-sashal@kernel.org>
@@ -55,18 +53,35 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.147
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
+[ Upstream commit 5f7e54b23e4d253eff3b10b12d6fa92d28d7dddc ]
 
-In the error path of sd_set_power_mode() we don't update host->power_mode,
-which could lead to an imbalance of the runtime PM usage count. Fix this by
-always updating host->power_mode.
+We used to call directly hda_jackpoll_work() from a couple of places
+for updating the jack and notify to user-space, but this makes rather
+the code flow fragile.  Namely, because of those direct calls,
+hda_jackpoll_work() uses snd_hda_power_up_pm() and *_down_pm() calls
+instead of the standard snd_hda_power_up() and *_down() calls.  The
+latter pair assures the runtime PM resume sync, so it can avoid the
+race against the PM callbacks gracefully, while the former pair may
+continue if called concurrently, hence it may race (by design).
 
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Ricky Wu <ricky_wu@realtek.com>
-Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
+In this patch, we change the call pattern of hda_jackpoll_work(); now
+all callers are replaced with the standard snd_hda_jack_report_sync()
+and the additional schedule_delayed_work().
+
+Since hda_jackpoll_work() is called only from the associated work,
+it's always outside the PM code path, and we can safely use
+snd_hda_power_up() and *_down() there instead.  This allows us to
+remove the racy check of power-state in hda_jackpoll_work(), as well
+as the tricky cancel_delayed_work() and rescheduling at
+hda_codec_runtime_suspend().
+
+Reported-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Closes: https://lore.kernel.org/20250619020844.2974160-1-joakim.zhang@cixtech.com
+Tested-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250623131437.10670-4-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,92 +92,153 @@ LLM Generated explanations, may be completely bogus:
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Bug Analysis
+## Key Reasons for Backporting:
 
-The commit fixes a **runtime PM reference counting bug** in the
-`sd_set_power_mode()` function. The issue is in the error handling path:
+### 1. **Fixes a Real Race Condition Bug**
+The commit addresses a race condition in the HDA (High Definition Audio)
+jack polling mechanism. The race occurs because:
+- Direct calls to `hda_jackpoll_work()` used `snd_hda_power_up_pm()`
+  instead of `snd_hda_power_up()`
+- The `*_pm()` variants don't provide runtime PM resume synchronization
+- This allows concurrent execution and races with PM callbacks
 
-### Original Code Problem:
-```c
-if (power_mode == MMC_POWER_OFF) {
-    err = sd_power_off(host);
-    pm_runtime_put_noidle(sdmmc_dev(host));
-} else {
-    pm_runtime_get_noresume(sdmmc_dev(host));
-    err = sd_power_on(host);
-}
+### 2. **Bug Reported and Tested by Users**
+- Reported-by: Joakim Zhang with a specific bug report
+- Tested-by: Joakim Zhang confirming the fix works
+- This indicates real-world impact on users
 
-if (!err)
-    host->power_mode = power_mode;  // Only updated on success
-```
+### 3. **Small and Contained Fix**
+The patch statistics show:
+- Only 1 file changed: `sound/pci/hda/hda_codec.c`
+- 41 lines changed (14 insertions, 27 deletions)
+- Net reduction in code complexity
+- Changes are localized to jack polling logic
 
-### The Bug:
-1. When transitioning to `MMC_POWER_OFF`, the code calls
-   `pm_runtime_put_noidle()` **regardless** of whether `sd_power_off()`
-   succeeded
-2. When transitioning to `MMC_POWER_ON`, the code calls
-   `pm_runtime_get_noresume()` **before** calling `sd_power_on()`
-3. However, `host->power_mode` is only updated if there's no error
+### 4. **Fixes Without Adding Features**
+The commit purely fixes the race condition by:
+- Removing direct calls to `hda_jackpoll_work()`
+- Always scheduling work via `schedule_delayed_work()`
+- Switching from `snd_hda_power_up_pm()` to safer `snd_hda_power_up()`
+- Removing the racy `cancel_delayed_work_sync()` in suspend path
 
-This creates a **runtime PM reference count imbalance** because:
-- If `sd_power_off()` fails, the runtime PM reference is still
-  decremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_ON`)
-- If `sd_power_on()` fails, the runtime PM reference is still
-  incremented, but `host->power_mode` remains at its previous value
-  (likely `MMC_POWER_OFF`)
-- The early return check `if (power_mode == host->power_mode)` at the
-  beginning of the function will prevent future attempts to fix the
-  power state, leaving the runtime PM count permanently imbalanced
+### 5. **Follows Stable Tree Criteria**
+- **Important bug fix**: Race conditions in power management can cause
+  system instability
+- **Minimal risk**: Changes are well-contained to jack polling logic
+- **No architectural changes**: Just refactors the calling pattern
+- **Clear improvement**: Removes racy code patterns
 
-## Why This Is Suitable for Stable:
+### 6. **Critical Subsystem**
+The HDA audio subsystem is critical for many systems, and race
+conditions in PM paths can lead to:
+- Audio device failures after suspend/resume
+- Potential system hangs during PM transitions
+- Unpredictable behavior in jack detection
 
-1. **Fixes a real bug**: Runtime PM reference count imbalances can lead
-   to:
-   - Device staying powered when it should be suspended
-   - Device being suspended when it should be active
-   - Power management failures
-   - Potential system hangs or crashes
+### 7. **Simplifies Code**
+The fix actually simplifies the code by:
+- Removing the complex power state check: `if (!codec->jackpoll_interval
+  && snd_hdac_is_power_on(&codec->core))`
+- Eliminating the tricky `cancel_delayed_work()` in suspend
+- Making the work scheduling pattern consistent
 
-2. **Minimal change**: The fix is a simple one-liner that always updates
-   `host->power_mode` regardless of error status
+The commit message clearly explains the race condition mechanism and the
+fix approach. The change pattern shows careful consideration of PM
+synchronization issues, which are notoriously difficult to debug in
+production systems. This is exactly the type of bug fix that stable
+kernels should include to prevent hard-to-reproduce issues in deployed
+systems.
 
-3. **Low regression risk**:
-   - The change doesn't introduce new functionality
-   - It doesn't alter the control flow
-   - It simply ensures state consistency
+ sound/pci/hda/hda_codec.c | 41 +++++++++++++--------------------------
+ 1 file changed, 14 insertions(+), 27 deletions(-)
 
-4. **Clear bug fix**: This is not a feature addition or optimization -
-   it's fixing incorrect error handling that violates runtime PM rules
-
-5. **Affects users**: This bug can manifest in real-world scenarios when
-   SD card power operations fail, particularly with flaky hardware or
-   during system stress
-
-6. **Subsystem contained**: The fix is limited to a single MMC host
-   driver and doesn't affect core kernel infrastructure
-
-The commit follows stable kernel rules by being a minimal, targeted fix
-for a real bug that can affect system stability and power management.
-
- drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 2c650cd58693..c5a6bbc06953 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1032,9 +1032,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
- 		err = sd_power_on(host);
- 	}
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index 9d7d99b584fe..94b3732e6cb2 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -641,24 +641,16 @@ static void hda_jackpoll_work(struct work_struct *work)
+ 	struct hda_codec *codec =
+ 		container_of(work, struct hda_codec, jackpoll_work.work);
  
--	if (!err)
--		host->power_mode = power_mode;
+-	/* for non-polling trigger: we need nothing if already powered on */
+-	if (!codec->jackpoll_interval && snd_hdac_is_power_on(&codec->core))
++	if (!codec->jackpoll_interval)
+ 		return;
+ 
+ 	/* the power-up/down sequence triggers the runtime resume */
+-	snd_hda_power_up_pm(codec);
++	snd_hda_power_up(codec);
+ 	/* update jacks manually if polling is required, too */
+-	if (codec->jackpoll_interval) {
+-		snd_hda_jack_set_dirty_all(codec);
+-		snd_hda_jack_poll_all(codec);
+-	}
+-	snd_hda_power_down_pm(codec);
 -
-+	host->power_mode = power_mode;
- 	return err;
+-	if (!codec->jackpoll_interval)
+-		return;
+-
+-	schedule_delayed_work(&codec->jackpoll_work,
+-			      codec->jackpoll_interval);
++	snd_hda_jack_set_dirty_all(codec);
++	snd_hda_jack_poll_all(codec);
++	schedule_delayed_work(&codec->jackpoll_work, codec->jackpoll_interval);
++	snd_hda_power_down(codec);
  }
  
+ /* release all pincfg lists */
+@@ -2922,12 +2914,12 @@ static void hda_call_codec_resume(struct hda_codec *codec)
+ 		snd_hda_regmap_sync(codec);
+ 	}
+ 
+-	if (codec->jackpoll_interval)
+-		hda_jackpoll_work(&codec->jackpoll_work.work);
+-	else
+-		snd_hda_jack_report_sync(codec);
++	snd_hda_jack_report_sync(codec);
+ 	codec->core.dev.power.power_state = PMSG_ON;
+ 	snd_hdac_leave_pm(&codec->core);
++	if (codec->jackpoll_interval)
++		schedule_delayed_work(&codec->jackpoll_work,
++				      codec->jackpoll_interval);
+ }
+ 
+ static int hda_codec_runtime_suspend(struct device *dev)
+@@ -2939,8 +2931,6 @@ static int hda_codec_runtime_suspend(struct device *dev)
+ 	if (!codec->card)
+ 		return 0;
+ 
+-	cancel_delayed_work_sync(&codec->jackpoll_work);
+-
+ 	state = hda_call_codec_suspend(codec);
+ 	if (codec->link_down_at_suspend ||
+ 	    (codec_has_clkstop(codec) && codec_has_epss(codec) &&
+@@ -2948,10 +2938,6 @@ static int hda_codec_runtime_suspend(struct device *dev)
+ 		snd_hdac_codec_link_down(&codec->core);
+ 	snd_hda_codec_display_power(codec, false);
+ 
+-	if (codec->bus->jackpoll_in_suspend &&
+-		(dev->power.power_state.event != PM_EVENT_SUSPEND))
+-		schedule_delayed_work(&codec->jackpoll_work,
+-					codec->jackpoll_interval);
+ 	return 0;
+ }
+ 
+@@ -3120,10 +3106,11 @@ int snd_hda_codec_build_controls(struct hda_codec *codec)
+ 	if (err < 0)
+ 		return err;
+ 
++	snd_hda_jack_report_sync(codec); /* call at the last init point */
+ 	if (codec->jackpoll_interval)
+-		hda_jackpoll_work(&codec->jackpoll_work.work);
+-	else
+-		snd_hda_jack_report_sync(codec); /* call at the last init point */
++		schedule_delayed_work(&codec->jackpoll_work,
++				      codec->jackpoll_interval);
++
+ 	sync_power_up_states(codec);
+ 	return 0;
+ }
 -- 
 2.39.5
 
