@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CFF1519A0;
-	Mon,  4 Aug 2025 00:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4981519A0;
+	Mon,  4 Aug 2025 00:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268164; cv=none; b=jScDeS6q8FFeoJbPI4fY7mcY8RiI1bMd8Lsyn2CKeeMkrt1Jh64eRlf6IDMVntgBEU+HBEVhoiGoercfuEaZqff5+9FspznY7LNwOmlo9Sag9CRFxLGe1G2v8RWs/YSGx1pVpQJ1UsxYbKhB3RH1K/pyMOzfagUQOb/o4dK4O7k=
+	t=1754268166; cv=none; b=ZPV+t1eGo1nivZK8i9RLLah4kdhoryxzLV4qkqN3MBeK9Gve6aqw/D8IbpkV56GhX6Yjoj5v9+Sk3VQijipQ+btIEsnRax1/wMApmxIAHuSoTjXfxOdZWIBCf3LLB0OWkSr6Z7UF4fUJsofXR3iy17tczt4uHR74ri9XD0wuSEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268164; c=relaxed/simple;
-	bh=wlvN4G6THNBJauj78AKnpFuRQ1tqa6N0fpjk14w/vKI=;
+	s=arc-20240116; t=1754268166; c=relaxed/simple;
+	bh=dljcmrZyQ6cYAqyndDCAPMnqOk7KaindJMW7AjvhsCY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mqy2bglW0Zm5f3ckp1S3ja+qA0eJ/ADPFVXIVH3r5FVabEXrdHUU+U/A1rqpD0Vu50rcV+F5zX9LF+O3zb8VecgPFaktm0ovEqiXeKcr0+W17N1CM45Yq8lx59Zwjs6/SFasmwX5kbg2sxudTMaD/y4N3OXRgVy6J+N93scXIGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uhmk+El5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QRKxjN5+Ym8TZQQbeWfn7c565t5M64W/VtFDd1MhA9gIn/eWJNjDa+sJmLJPLpNvr/AbvbrDuXiEPVHfcGi6G9hKlfzZ/Ulss4nU1FmvM+c0XPwPDK6oovBaFPKzOg3r/mJtZxWNi3fNm4WmxgVCujbQgjNFHkwndaJ5BZ02F1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n3DFI8wk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uhmk+El5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30216C4CEEB;
-	Mon,  4 Aug 2025 00:42:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n3DFI8wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AB6C4CEF0;
+	Mon,  4 Aug 2025 00:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268164;
-	bh=wlvN4G6THNBJauj78AKnpFuRQ1tqa6N0fpjk14w/vKI=;
+	s=k20201202; t=1754268166;
+	bh=dljcmrZyQ6cYAqyndDCAPMnqOk7KaindJMW7AjvhsCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhmk+El5DR2wrp1NiFVUQkfNb0kJE24Vw1HlZKtk6iYdGtz20v69YmpzBZylrh/2u
-	 OzaPUZZG9oJsgxlzaXfTyR9lYOKiIBlbmvSm845vQZ+KGba4EDfeKbo7g05Nb2js1D
-	 spuZA/8pfZGc2rYlVD6Kj8sHzwcGy9yBN+fnBdEWg+57tiz6e1CKGrS1p77oVoggC1
-	 01Ev3Lxj14KL+Api179OBRAsV7H/vSVFeW3F0vu+L0aVcEGeepPLHQnnOMj3coAPeh
-	 JEgpV7BJuHk1fkPyyli7BF0YlFkGfvQBU6NAvvYS5DB22xpg2yjazRVj+JWNv4YKVi
-	 1aw+cCAhwedXQ==
+	b=n3DFI8wkLpAN9t0hhcLOtM0LtvjY1C3idybm1mkVBBmMtwssCN94M4tYEky3Ti5mO
+	 zBk2bj+1STZhVbpmxToYT5ic0QPRoOPM+b+LyAfFJ7LBLqA/e6h5QR05uEG6FOKnAV
+	 XA0AB4CKKwb17oSl1IqR4Ewa45d6/u7M4T8ZpA8PKxbSjy27n3vwWaPzmbAg7cpsU6
+	 7tFB7TtmZ6wQOtB49mzaRj1V/fKGMbgdWswzQSyKKYO8aKHcj9vPM6EFeSI6Td+hGi
+	 g5tQc474EzbcSqpRJrFbWRvvyfEiqg8q1slxF0AkWVxmj3jgI/X0ncdtAvw5sWvZdT
+	 62wmWkhzg24bw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 07/28] usb: xhci: Avoid showing errors during surprise removal
-Date: Sun,  3 Aug 2025 20:42:06 -0400
-Message-Id: <20250804004227.3630243-7-sashal@kernel.org>
+	rafael@kernel.org,
+	viresh.kumar@linaro.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 08/28] cpufreq: Exit governor when failed to start old governor
+Date: Sun,  3 Aug 2025 20:42:07 -0400
+Message-Id: <20250804004227.3630243-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004227.3630243-1-sashal@kernel.org>
 References: <20250804004227.3630243-1-sashal@kernel.org>
@@ -50,106 +50,126 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.296
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit 4b9c60e440525b729ac5f071e00bcee12e0a7e84 ]
+[ Upstream commit 0ae204405095abfbc2d694ee0fbb49bcbbe55c57 ]
 
-When a USB4 dock is unplugged from a system it won't respond to ring
-events. The PCI core handles the surprise removal event and notifies
-all PCI drivers. The XHCI PCI driver sets a flag that the device is
-being removed as well.
+Detect the result of starting old governor in cpufreq_set_policy(). If it
+fails, exit the governor and clear policy->governor.
 
-When that flag is set don't show messages in the cleanup path for
-marking the controller dead.
-
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/20250709104145.2348017-5-zhenglifeng1@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze this commit properly:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Fixes a user-visible issue**: The commit addresses spurious error
-   messages that appear when USB4 docks are unplugged. The original code
-   shows `xhci_err(xhci, "xHCI host controller not responding, assume
-   dead\n")` even during expected surprise removals, which can confuse
-   users and fill system logs unnecessarily.
+## Bug Analysis
 
-2. **Small and contained fix**: The change is minimal - it only adds a
-   local `notify` variable and conditionalizes two operations based on
-   whether the device is being removed:
-   - The error message printing (line 1384 → lines 1379-1381)
-   - The `usb_hc_died()` notification (reusing the same condition)
+The commit fixes a **resource leak and inconsistent state bug** in the
+cpufreq governor switching code. Looking at the code changes in
+`cpufreq_set_policy()`:
 
-3. **No architectural changes**: This is a simple behavioral fix that
-   doesn't modify any data structures, APIs, or core functionality. It
-   merely suppresses error messages during an expected removal scenario.
+### The Bug:
+In the original code (lines 2716-2721), when switching governors fails
+and we need to restore the old governor:
+```c
+if (old_gov) {
+    policy->governor = old_gov;
+    if (cpufreq_init_governor(policy))
+        policy->governor = NULL;
+    else
+        cpufreq_start_governor(policy);  // Bug: no error handling here
+}
+```
 
-4. **Clear bug fix**: The commit clearly fixes an issue where error
-   messages are shown during normal USB4 dock removal operations. When
-   `XHCI_STATE_REMOVING` is set (indicating PCI removal is in progress),
-   the error message is now suppressed since it's an expected condition.
+If `cpufreq_start_governor()` fails, the code doesn't handle the error.
+This leaves the system in an **inconsistent state** where:
+1. The governor is initialized (`cpufreq_init_governor` succeeded)
+2. But the governor failed to start (`cpufreq_start_governor` failed)
+3. The policy still points to a non-functional governor
+4. Resources allocated during `cpufreq_init_governor` are **leaked**
+   (module reference count, governor's init() allocations)
 
-5. **Low risk of regression**: The change only affects logging behavior
-   and maintains the same functional flow. The `usb_hc_died()` call was
-   already conditional on `!XHCI_STATE_REMOVING`, so this commit just
-   applies the same logic to the error message.
+### The Fix:
+```c
+if (cpufreq_init_governor(policy)) {
+    policy->governor = NULL;
+} else if (cpufreq_start_governor(policy)) {
+    cpufreq_exit_governor(policy);  // NEW: Clean up on failure
+    policy->governor = NULL;        // NEW: Clear the governor pointer
+}
+```
 
-6. **Improves user experience**: USB4/Thunderbolt docks are increasingly
-   common, and users frequently unplug them. Avoiding spurious error
-   messages during normal operations is important for user experience
-   and log clarity.
+## Why This Should Be Backported:
 
-The commit follows stable tree rules by being a minimal fix for a real
-issue that affects users, without introducing new features or making
-risky changes to core functionality.
+1. **Fixes a Real Bug**: This addresses a resource leak where
+   `cpufreq_init_governor()` acquires resources (notably
+   `try_module_get()` at line 2442 and potential governor->init()
+   allocations) that aren't cleaned up if `cpufreq_start_governor()`
+   fails.
 
- drivers/usb/host/xhci-ring.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+2. **Small and Contained Fix**: The change is minimal - just 4 lines
+   modified to add proper error handling. It doesn't change any APIs or
+   introduce new functionality.
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 71b17a00d3ed..47326fb8b1fc 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -973,12 +973,15 @@ static void xhci_kill_endpoint_urbs(struct xhci_hcd *xhci,
-  */
- void xhci_hc_died(struct xhci_hcd *xhci)
- {
-+	bool notify;
- 	int i, j;
- 
- 	if (xhci->xhc_state & XHCI_STATE_DYING)
- 		return;
- 
--	xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
-+	notify = !(xhci->xhc_state & XHCI_STATE_REMOVING);
-+	if (notify)
-+		xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
- 	xhci->xhc_state |= XHCI_STATE_DYING;
- 
- 	xhci_cleanup_command_queue(xhci);
-@@ -992,7 +995,7 @@ void xhci_hc_died(struct xhci_hcd *xhci)
+3. **Prevents System Instability**: Leaving the cpufreq subsystem in an
+   inconsistent state (initialized but not started governor) could lead
+   to:
+   - Module reference count leaks
+   - Memory leaks from governor init allocations
+   - Potential crashes if the partially-initialized governor is accessed
+     later
+
+4. **Error Path Fix**: This is clearly an error handling path that was
+   incorrectly implemented. The pattern of calling
+   `cpufreq_exit_governor()` after a failed `cpufreq_start_governor()`
+   is already used elsewhere in the code (line 2711).
+
+5. **No Architectural Changes**: The fix simply adds missing cleanup
+   code in an error path. It doesn't change the normal operation flow or
+   introduce new features.
+
+6. **Critical Subsystem**: The cpufreq subsystem is critical for power
+   management and system stability. Bugs here can affect system
+   reliability.
+
+The commit follows the stable kernel rules perfectly - it's a clear bug
+fix that prevents resource leaks and system instability, with minimal
+risk of regression since it only affects an error path that was already
+broken.
+
+ drivers/cpufreq/cpufreq.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 2a2fea6743aa..0bb17bb615f5 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2482,10 +2482,12 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
+ 	pr_debug("starting governor %s failed\n", policy->governor->name);
+ 	if (old_gov) {
+ 		policy->governor = old_gov;
+-		if (cpufreq_init_governor(policy))
++		if (cpufreq_init_governor(policy)) {
+ 			policy->governor = NULL;
+-		else
+-			cpufreq_start_governor(policy);
++		} else if (cpufreq_start_governor(policy)) {
++			cpufreq_exit_governor(policy);
++			policy->governor = NULL;
++		}
  	}
  
- 	/* inform usb core hc died if PCI remove isn't already handling it */
--	if (!(xhci->xhc_state & XHCI_STATE_REMOVING))
-+	if (notify)
- 		usb_hc_died(xhci_to_hcd(xhci));
- }
- 
+ 	return ret;
 -- 
 2.39.5
 
