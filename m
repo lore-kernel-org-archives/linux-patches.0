@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54FA15A8;
-	Mon,  4 Aug 2025 00:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C95C15A8;
+	Mon,  4 Aug 2025 00:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268177; cv=none; b=YFwLirYJNnI1j8HrHSFotf0HY2x4VO88h+xKiGQpJocLMM4hwyDeMqM5CtHtVOGkiYYla/A3/2+HP7Ey+8I4jqMeWTPQ98hyuFPPXDsTpSxXJR96XjtTDvK0qQgfGujP13YHn01ZrNyvLsXsFrGHboAWEMlAosL7WcVet4LUl/w=
+	t=1754268179; cv=none; b=JW6MJR8UquCXli+vFjpO5lbgOu99j78h/9Xr1jYpW+jlOaOR12J+J9hg8U6ikGEYhoVu4smw1Qc5xplvAtC1WCvhRdbk7CXMlnurv87QJmcU3SRIJksKNSvf7PPJwpRgdcrYIpPl3dhbP70piyRlFBuOTkhi6Y3o8JKwx5o9vP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268177; c=relaxed/simple;
-	bh=ELAeTw2zEfwH/8m1xz9tAYXOFKbb8aXuGJPA0+FmpPg=;
+	s=arc-20240116; t=1754268179; c=relaxed/simple;
+	bh=Ocw9mSuJmrBghlUl0i7EmtkvcRwW95PrxHa/ffOmmnw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IFenPIeTXRDOgotzbnatmgu270Enflh3Bai4+KJEaACY2DKykBXRrBYgAhJYNia+m+4/sQ100uVMGIvGgcRflZzG7o5c8G4w9yv7ORoQ1TWxZ3LPV8tBozAOIs8gmqDhZz7aTPpCSuo5JQSJmlDEpeEr6/a3Ic/YEt8TnTN7vo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aa4m4rUo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=em0tsEM+VokcUAcN2lhFLts6WvZys7gqDpgcyd1rIO6x6PZOyYQidJOqkVMxfzodV1eoQbZB8HN6ulSggatG+NPmhRFJa+gy6KvIkJu6Qq+8nqv3G68D7Evd0uY3uckUhBpZTahLEJ+wvZJEfbAtnmPoWfWxPVftuQg9YKpMQGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B1JPy556; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aa4m4rUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CAC1C4CEEB;
-	Mon,  4 Aug 2025 00:42:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B1JPy556"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D81C4CEEB;
+	Mon,  4 Aug 2025 00:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268177;
-	bh=ELAeTw2zEfwH/8m1xz9tAYXOFKbb8aXuGJPA0+FmpPg=;
+	s=k20201202; t=1754268179;
+	bh=Ocw9mSuJmrBghlUl0i7EmtkvcRwW95PrxHa/ffOmmnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aa4m4rUo0AhaQuF+JA6eF43D1KIuhAf+b3SGCgKVxKoXF9swE0pIa/8WpjYxxhvdg
-	 sEfPNsgXdf7O5pH3GZY/HOKQ55+PYPZq7tFi8zC3lxXU2HJRSKYYK/DOvJkunIPRjc
-	 jn6hL+66EWQtkr6NYX+NGIHnZHgtBWiOAQGz4T8M+2H0UYpzpjBy4XuP2o/Vrs/tLv
-	 pDSVLZdQLkzjfvCWAeUVJDa2y1Duo4QQdArK5MEYk2+/aM1gi01CbStB1ub+dAMa0M
-	 8hq3fe8bAyhVxaN6ZDq/z3XZKK+ua5CqsZPeqdgzEoCuLccknXWGyx79nUnxr7csW0
-	 z8GQqjtlUZnVg==
+	b=B1JPy556GXDZpG+78NzMXJjbAxQlBYPgQTtmrSGuRYJZgaHsCFoYpVGeJ8ogcCMnl
+	 go+mR49TBaR4OUCXTVCbfX1FPOzio163pZfFR5PPkDvMIDnleK5OcWygyXYk9J9JuO
+	 QFdOJvRfaSWNsSGBi8Lt/nTK5YNzpF7/O1w5Bjq4WgK3zsbrUQ0XwN8lHa03mSAzP/
+	 WURy2kI4Nm5H5hDoT2x7RebMF6EHlJ177wEy47VZy6ZXHjBFOsjs8VZyy+4saTzzHa
+	 8o7Ec++oHUExmpfyP6HE4XWTlOHPQ4Cw3R9vdo6zLoyzEJTV9Y3w6d8e6N1ogaW4h2
+	 W0VJFWImkFnhA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.4 13/28] selftests: tracing: Use mutex_unlock for testing glob filter
-Date: Sun,  3 Aug 2025 20:42:12 -0400
-Message-Id: <20250804004227.3630243-13-sashal@kernel.org>
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 14/28] PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()
+Date: Sun,  3 Aug 2025 20:42:13 -0400
+Message-Id: <20250804004227.3630243-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004227.3630243-1-sashal@kernel.org>
 References: <20250804004227.3630243-1-sashal@kernel.org>
@@ -50,84 +51,93 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.296
 Content-Transfer-Encoding: 8bit
 
-From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a089bb2822a49b0c5777a8936f82c1f8629231fb ]
+[ Upstream commit 89d9cec3b1e9c49bae9375a2db6dc49bc7468af0 ]
 
-Since commit c5b6ababd21a ("locking/mutex: implement
-mutex_trylock_nested") makes mutex_trylock() as an inlined
-function if CONFIG_DEBUG_LOCK_ALLOC=y, we can not use
-mutex_trylock() for testing the glob filter of ftrace.
+Clear power.needs_force_resume in pm_runtime_reinit() in case it has
+been set by pm_runtime_force_suspend() invoked from a driver remove
+callback.
 
-Use mutex_unlock instead.
-
-Link: https://lore.kernel.org/r/175151680309.2149615.9795104805153538717.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/9495163.CDJkKcVGEf@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Status: YES
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit is a clear bugfix that should be backported to stable kernel
+trees for the following reasons:
 
-1. **It fixes a test regression**: The commit c5b6ababd21a changed
-   mutex_trylock() from being a regular function to an inline macro when
-   CONFIG_DEBUG_LOCK_ALLOC=y. This broke the ftrace glob filter selftest
-   that was trying to match functions with the pattern `mutex*try*`.
-   Since mutex_trylock is no longer a regular function symbol in certain
-   configurations, the test would fail.
+1. **It fixes a real bug**: The commit addresses a specific issue where
+   `power.needs_force_resume` flag is not cleared in
+   `pm_runtime_reinit()` when a device is removed. If a driver calls
+   `pm_runtime_force_suspend()` from its remove callback (which sets
+   `needs_force_resume = 1`), this flag remains set even after the
+   device is removed and potentially re-probed.
 
-2. **Simple and contained fix**: The change is minimal - it simply
-   replaces the test pattern from `mutex*try*` to `mutex*unl*` on line
-   32. This is a one-line change that:
-   - Changes the glob pattern from matching mutex_trylock functions to
-     mutex_unlock functions
-   - Maintains the same test logic and purpose (testing glob pattern
-     matching)
-   - mutex_unlock remains a regular function symbol regardless of
-     CONFIG_DEBUG_LOCK_ALLOC
+2. **The fix is minimal and contained**: The change adds just 5 lines of
+   code (including comments) to clear a single flag. The modification
+   is:
+  ```c
+  dev->power.needs_force_resume = false;
+  ```
+  This is a very low-risk change that only affects the specific
+  condition being fixed.
 
-3. **No functional changes to kernel code**: This only affects a
-   selftest, not any kernel functionality. The risk of regression is
-   zero for normal kernel operation.
+3. **It prevents state leakage**: Looking at the code flow:
+   - `pm_runtime_force_suspend()` sets `dev->power.needs_force_resume =
+     1` (line in runtime.c)
+   - When a driver is removed, `pm_runtime_remove()` calls
+     `pm_runtime_reinit()`
+   - Without this fix, if the device is re-probed, it would still have
+     `needs_force_resume = 1` from the previous instance
+   - This could lead to incorrect PM runtime behavior where
+     `pm_runtime_force_resume()` would incorrectly think it needs to
+     resume a device that was never suspended in the current probe cycle
 
-4. **Test reliability**: Without this fix, the ftrace selftest suite
-   would fail on kernels built with CONFIG_DEBUG_LOCK_ALLOC=y after
-   commit c5b6ababd21a is applied. This could:
-   - Cause false test failures in CI/CD pipelines
-   - Make it harder to detect real ftrace issues
-   - Confuse developers running the test suite
+4. **Related to previous stable fixes**: The git history shows a
+   previous commit `c745253e2a69` ("PM: runtime: Fix unpaired parent
+   child_count for force_resume") was already marked for stable (4.16+),
+   indicating that issues with the `needs_force_resume` flag have been
+   problematic enough to warrant stable backports.
 
-5. **Clear dependency**: The commit message explicitly states this is
-   needed "Since commit c5b6ababd21a" which indicates this is a direct
-   fix for a known regression introduced by that specific commit.
+5. **Clear bug scenario**: The commit message describes a specific
+   scenario where this happens - when `pm_runtime_force_suspend()` is
+   called from a driver remove callback. This is a legitimate use case
+   where drivers want to ensure devices are suspended before removal.
 
-The change is exactly the type that stable rules recommend: it fixes a
-clear bug (test regression), is minimal in scope, has no risk of
-breaking functionality, and maintains test coverage for an important
-kernel feature (ftrace glob filtering).
+6. **No architectural changes**: This is purely a bugfix that clears a
+   flag that should have been cleared during reinitialization. It
+   doesn't introduce new features or change any APIs.
 
- .../testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc  | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The fix ensures proper PM runtime state management across device removal
+and re-probing cycles, which is important for system stability and
+correct power management behavior.
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-index f4e92afab14b..9a7b7c62cbd9 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-@@ -33,7 +33,7 @@ ftrace_filter_check 'schedule*' '^schedule.*$'
- ftrace_filter_check '*pin*lock' '.*pin.*lock$'
+ drivers/base/power/runtime.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 7fa231076ad5..7d362b38f2e8 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1698,6 +1698,11 @@ void pm_runtime_reinit(struct device *dev)
+ 				pm_runtime_put(dev->parent);
+ 		}
+ 	}
++	/*
++	 * Clear power.needs_force_resume in case it has been set by
++	 * pm_runtime_force_suspend() invoked from a driver remove callback.
++	 */
++	dev->power.needs_force_resume = false;
+ }
  
- # filter by start*mid*
--ftrace_filter_check 'mutex*try*' '^mutex.*try.*'
-+ftrace_filter_check 'mutex*unl*' '^mutex.*unl.*'
- 
- # Advanced full-glob matching feature is recently supported.
- # Skip the tests if we are sure the kernel does not support it.
+ /**
 -- 
 2.39.5
 
