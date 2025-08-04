@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6521953BB;
-	Mon,  4 Aug 2025 00:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5977C1A5B8D;
+	Mon,  4 Aug 2025 00:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267217; cv=none; b=SU8XsZlnzTBj/asvHjQINyID/QYL0gU+hJa8uzXVxsDT8EMPltb3utEIU+uQOPGcWSL7Lv4rlXWrIp7ZJ36t/PYSd1jV56aP2TW6nIBYtzX4TpU+Z5Hsd9aSGeiWJdawU/Bk3iSFI2Coi9hGrVlwK9Hb2xOjIou03OjPjQAQ1aU=
+	t=1754267219; cv=none; b=hf6KN7UspbVgKLWPzM9m02zQZCXlRNgxot8MoIpmeren2rFaa7iQM3Rnh7hx0ff8BPxh4+oXj3WIcuJSmpuQ7reL+1ha9ReXzNibZrkb6EWVxKMs2WlRk8/ZM0CmLs5CGhawBVsf8AAtQYNfko/GBTVnaHVcOc4ozXFNg+c43rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267217; c=relaxed/simple;
-	bh=ILa5ZfgqrPlkncC8c94V2KPQ9zh6+csI8lmsrBllFis=;
+	s=arc-20240116; t=1754267219; c=relaxed/simple;
+	bh=qand33AF2c8BlSP2DOKpERG1tl7shJx9uVEWXGqQE4I=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VHrnQN6w1VIGWmFQFTkVWOuKM8Nf69ITSkeRbqxxKwC4EFfMcocrbPWQp4LuiUL1MZfIdwEb67upafYHkUxX79vcTfgvdtS0vZIQylfoBuVGavW3XmWYuq/hsLPEPYs6OHItyjm92Maf9REnGwuxXW0oOKBwYaQZX4Hci8+0LOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z03sz03V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KSPLgHL25hNqFXMrQF0CcYpM5G5ZSu0VzW0g/aqymEZ+P3jDtNJJZ4a4vWxx6zwSf7rK964kfhAo4V9nOKBEhKXoQ3lyK6ycdDoXb+PKhy783NDqBncR1aBY6lAovUF4HPAHC5SephEml0Er0jY31IJD3fpXCuhrKjgvlcvCOUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J6iLqdbh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z03sz03V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1CCC4CEEB;
-	Mon,  4 Aug 2025 00:26:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J6iLqdbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AF1C4CEEB;
+	Mon,  4 Aug 2025 00:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267216;
-	bh=ILa5ZfgqrPlkncC8c94V2KPQ9zh6+csI8lmsrBllFis=;
+	s=k20201202; t=1754267219;
+	bh=qand33AF2c8BlSP2DOKpERG1tl7shJx9uVEWXGqQE4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z03sz03V/EYVh60dSYp/XNYxy4AJq4s7kNeuGLR+p5yurZ56sHXvxkntTUBT6ZVcG
-	 2yVEP0fhofc0xgZhpaL9Kl6A+KGwggOdLk5xmRkvqnKgtpR+tUtbZ8cT3hyR75k/zV
-	 locBTe79gSS5mXlnVyIndqIlE6fH7j+TK+EYcyp3HSTaMULBc3kp0VKcr2oqv4tRC/
-	 cv0JWWWuLalyTnKV/G+xGufMs6KY2atHldndsRmar7R6r66u//b2mlrD5o9EeC0P2R
-	 D1/HgtjRhZJRvs0D2iaQpBXdrVB/bHbxw/ssFvDLkFr/yrwhKw3fgtI746F50Lrgg3
-	 Qq3yURs1j+jrQ==
+	b=J6iLqdbh0MhuTvTaq3c+Evs0ia9dZzsWeMNmtsA3zGx0v6U5oPoJt4F11JIT8Bkij
+	 r5lcaM73hMgO1AzS4a+RgYOrBlR6LjOJZ/WEv/dGe8CXvFjO6BNcKR+Nrv6zKSQk7v
+	 vzK/2MbkCLE3QdCxg13kpB3AKU7Qyhslzr8Mn1DCFtP8RIOqF2ghPjzF9ZcbF5qUE/
+	 z/nPZg5iX/xQMdlIyMzLN/31t7vk4IZWdpkvic3q0JgNuDqNU0Gm62rYH+FOOIWECO
+	 DQT54sKgg/s9r72MpL5jnx7yWZqquuuuT35TIJT6YcrVM1MR92woZY16qnzSAYy3dQ
+	 fqgPaKc18vEvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Markus Stockhausen <markus.stockhausen@gmx.de>,
-	Sebastian Gottschall <s.gottschall@dd-wrt.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tsbogend@alpha.franken.de,
-	linux-mips@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 67/85] irqchip/mips-gic: Allow forced affinity
-Date: Sun,  3 Aug 2025 20:23:16 -0400
-Message-Id: <20250804002335.3613254-67-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	yung-chuan.liao@linux.intel.com,
+	daniel.baluta@nxp.com,
+	sound-open-firmware@alsa-project.org
+Subject: [PATCH AUTOSEL 6.16 68/85] ASoC: SOF: topology: Parse the dapm_widget_tokens in case of DSPless mode
+Date: Sun,  3 Aug 2025 20:23:17 -0400
+Message-Id: <20250804002335.3613254-68-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -53,113 +55,110 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Markus Stockhausen <markus.stockhausen@gmx.de>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 2250db8628a0d8293ad2e0671138b848a185fba1 ]
+[ Upstream commit 6b3cb7f4341cbf62d41ccf6ea906dbe66be8aa3d ]
 
-Devices of the Realtek MIPS Otto platform use the official rtl-otto-timer
-as clock event generator and CPU clocksource. It is registered for each CPU
-startup via cpuhp_setup_state() and forces the affinity of the clockevent
-interrupts to the appropriate CPU via irq_force_affinity().
+Parsing the dapm_widget_tokens is also needed for DSPless mode as it is
+setting the snd_soc_dapm_widget.no_wname_in_kcontrol_name flag for the
+kcontrol creation from DAPM widgets.
+Without that flag set, the following warnings might appear because of long
+control names:
+ALSA: Control name 'eqiir.2.1 Post Mixer Analog Playback IIR Eq bytes' truncated to 'eqiir.2.1 Post Mixer Analog Playback IIR Eq'
+ALSA: Control name 'eqfir.2.1 Post Mixer Analog Playback FIR Eq bytes' truncated to 'eqfir.2.1 Post Mixer Analog Playback FIR Eq'
+ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC bytes' truncated to 'drc.2.1 Post Mixer Analog Playback DRC byte'
+ALSA: Control name 'drc.2.1 Post Mixer Analog Playback DRC switch' truncated to 'drc.2.1 Post Mixer Analog Playback DRC swit'
+ALSA: Control name 'gain.15.1 Pre Mixer Deepbuffer HDA Analog Volume' truncated to 'gain.15.1 Pre Mixer Deepbuffer HDA Analog V'
 
-On the "smaller" devices with a vendor specific interrupt controller
-(supported by irq-realtek-rtl) the registration works fine. The "larger"
-RTL931x series is based on a MIPS interAptiv dual core with a MIPS GIC
-controller. Interrupt routing setup is cancelled because gic_set_affinity()
-does not accept the current (not yet online) CPU as a target.
-
-Relax the checks by evaluating the force parameter that is provided for
-exactly this purpose like in other drivers. With this the affinity can be
-set as follows:
-
- - force = false: allow to set affinity to any online cpu
- - force = true:  allow to set affinity to any cpu
-
-Co-developed-by: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Signed-off-by: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Signed-off-by: Markus Stockhausen <markus.stockhausen@gmx.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250621054952.380374-1-markus.stockhausen@gmx.de
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://patch.msgid.link/20250619102640.12068-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
-
-Based on my analysis of the commit, here is my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a real bug affecting users**: The commit fixes a specific
-   issue where clockevent interrupt affinity setup fails on Realtek
-   RTL931x devices with MIPS GIC controllers. Without this fix, the
-   timer registration during CPU hotplug fails because
-   `gic_set_affinity()` rejects setting affinity to CPUs that are not
-   yet online.
+1. **Bug Fix**: This commit fixes a functional bug in DSPless mode where
+   control names are being truncated due to excessive length. The
+   warnings shown in the commit message indicate real issues that affect
+   user-visible behavior:
+   - "Control name 'eqiir.2.1 Post Mixer Analog Playback IIR Eq bytes'
+     truncated..."
+   - Multiple similar truncation warnings for various audio controls
 
-2. **Small and contained fix**: The change is minimal - it only adds 4
-   lines of code to properly handle the `force` parameter that was
-   already being passed but ignored. The logic change is
-   straightforward:
-   - When `force=false`: Use existing behavior (only allow online CPUs)
-   - When `force=true`: Allow any CPU in the mask
+2. **Small and Contained Fix**: The code change is minimal and
+   localized:
+   - Adds only ~10 lines of code to parse `dapm_widget_tokens` in the
+     `sof_dspless_widget_ready()` function
+   - Simply moves existing token parsing logic that was already present
+     in the regular SOF mode (line 1438) to also execute in DSPless mode
+   - No architectural changes or new features introduced
 
-3. **Follows established patterns**: The commit shows that multiple
-   other timer drivers (`timer-rtl-otto.c`, `timer-tegra.c`,
-   `exynos_mct.c`, etc.) use `irq_force_affinity()` during CPU hotplug,
-   which eventually calls the chip's `set_affinity` handler with
-   `force=true`. The MIPS GIC driver was incorrectly ignoring this
-   parameter.
+3. **Low Risk**: The change has minimal regression risk:
+   - Only affects DSPless mode operation, not the standard DSP mode
+   - Reuses existing, tested parsing code (`sof_parse_tokens` with
+     `dapm_widget_tokens`)
+   - The token being parsed (`SOF_TKN_COMP_NO_WNAME_IN_KCONTROL_NAME`)
+     sets a flag that prevents widget names from being included in
+     control names, thus avoiding the truncation
 
-4. **No architectural changes**: This is purely a bug fix that makes the
-   MIPS GIC driver honor the existing `force` parameter semantics. It
-   doesn't introduce new features or change any architecture.
+4. **Clear Root Cause**: The issue occurs because without parsing these
+   tokens, the `no_wname_in_kcontrol_name` flag in `snd_soc_dapm_widget`
+   (line 542 in soc-dapm.h) isn't set, causing ALSA to create overly
+   long control names that exceed the 44-character limit and get
+   truncated.
 
-5. **Clear use case**: The commit message clearly explains that this
-   affects real hardware (Realtek RTL931x series) and prevents proper
-   timer initialization during CPU hotplug, which is a fundamental
-   kernel operation.
+5. **Part of DSPless Mode Support**: DSPless mode is an important
+   feature that allows audio to work without DSP firmware, and this
+   fixes a user-visible issue (truncated control names) in that mode.
+   The git history shows multiple DSPless-related fixes have been
+   backported before (e.g., commit ef0128afa165).
 
-6. **Low regression risk**: The change only affects behavior when
-   `force=true` is explicitly passed, which is specifically for CPU
-   hotplug scenarios. Normal interrupt affinity operations (with
-   `force=false`) remain unchanged.
+The commit follows stable tree rules by fixing an important bug with
+minimal changes and low risk of regression.
 
-7. **Aligns with kernel conventions**: The kernel documentation for
-   `irq_force_affinity()` explicitly states it's "Solely for low level
-   cpu hotplug code, where we need to make per cpu interrupts affine
-   before the cpu becomes online." This commit makes the MIPS GIC driver
-   comply with this intended behavior.
+ sound/soc/sof/topology.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-The fix is essential for proper operation of affected hardware and
-follows the stable kernel criteria of being a important bugfix with
-minimal risk.
-
- drivers/irqchip/irq-mips-gic.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/irqchip/irq-mips-gic.c b/drivers/irqchip/irq-mips-gic.c
-index 34e8d09c12a0..19a57c5e2b2e 100644
---- a/drivers/irqchip/irq-mips-gic.c
-+++ b/drivers/irqchip/irq-mips-gic.c
-@@ -375,9 +375,13 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *cpumask,
- 	/*
- 	 * The GIC specifies that we can only route an interrupt to one VP(E),
- 	 * ie. CPU in Linux parlance, at a time. Therefore we always route to
--	 * the first online CPU in the mask.
-+	 * the first forced or online CPU in the mask.
- 	 */
--	cpu = cpumask_first_and(cpumask, cpu_online_mask);
-+	if (force)
-+		cpu = cpumask_first(cpumask);
-+	else
-+		cpu = cpumask_first_and(cpumask, cpu_online_mask);
+diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
+index d612d693efc3..b6d5c8024f8c 100644
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -2378,14 +2378,25 @@ static int sof_dspless_widget_ready(struct snd_soc_component *scomp, int index,
+ 				    struct snd_soc_dapm_widget *w,
+ 				    struct snd_soc_tplg_dapm_widget *tw)
+ {
++	struct snd_soc_tplg_private *priv = &tw->priv;
++	int ret;
 +
- 	if (cpu >= NR_CPUS)
- 		return -EINVAL;
++	/* for snd_soc_dapm_widget.no_wname_in_kcontrol_name */
++	ret = sof_parse_tokens(scomp, w, dapm_widget_tokens,
++			       ARRAY_SIZE(dapm_widget_tokens),
++			       priv->array, le32_to_cpu(priv->size));
++	if (ret < 0) {
++		dev_err(scomp->dev, "failed to parse dapm widget tokens for %s\n",
++			w->name);
++		return ret;
++	}
++
+ 	if (WIDGET_IS_DAI(w->id)) {
+ 		static const struct sof_topology_token dai_tokens[] = {
+ 			{SOF_TKN_DAI_TYPE, SND_SOC_TPLG_TUPLE_TYPE_STRING, get_token_dai_type, 0}};
+ 		struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
+-		struct snd_soc_tplg_private *priv = &tw->priv;
+ 		struct snd_sof_widget *swidget;
+ 		struct snd_sof_dai *sdai;
+-		int ret;
  
+ 		swidget = kzalloc(sizeof(*swidget), GFP_KERNEL);
+ 		if (!swidget)
 -- 
 2.39.5
 
