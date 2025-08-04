@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24E29A2;
-	Mon,  4 Aug 2025 00:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF16529A2;
+	Mon,  4 Aug 2025 00:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267745; cv=none; b=QQ2ZIC5HD7EOGNP8wEaVtbLtJz2IlcbKoMHjmdSqcqPhg2YT7bgo4pIolf03RK45ddrKTHk7k0iZddw4NswhxbhR+vCX5+mUDco7qspMtlTJGXBRo5R7/fg5CMMiOVLca+ynbpgPvWs8/TCcP3c78v/orz0vnxMXxflR8F8fvbE=
+	t=1754267749; cv=none; b=s5yCu7FNeTe82ci5TdftBj4VZ0YNk3FuRmyosM5RDkSFiYLDe2NbP65+iO38JqUwQz0eqSfOmZUmp159n/QeTFJUYrGn3jDcEe240QF3DM2X6n42iLL4HbwiSt6D87NcErkJhvZj+yNILGXfuA8jYcKtVh2KWADM5RNlxFwYjXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267745; c=relaxed/simple;
-	bh=kkHAZeFw4dRNZRA86dnW/JqBE9zDOKMdxTvc7kbFfrw=;
+	s=arc-20240116; t=1754267749; c=relaxed/simple;
+	bh=C+u2mqJOM5XQbmB7T7u2roWtxqe1DkHxKj+MEew7qeA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bDLXmygtXC+rhf2PuLmnzNwzVG8eXq08X55qHEG5RFv2fXeiMIZhqE2e9yJKpk643m3a7C0cpKkn8HEdBru7xkrNjVk0vTrNwMBa+jGB+Lay0xXkjqM+PFVwkQvzGN8vdnlo0kjtyxVBxMQM3W2VLBubgCmcASxhGLGrx9z+mCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O0HPKdgP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XrwtLWt2xw2BVznZMuVfCwKgivBp8KcfbA3v0xFv2bj1QO6gVyvDTch1wSFQruFSnI+0W/TJhJ/pwHbaMtfMBwj8UpcR+gG6CxAR9k48ZlGVHEE2lNgImGxcBOvHUd32U1vr27DfG4LEV3qqiDWjS/TRxUuOux0W6EUP3UCdVKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GCKkhvHX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O0HPKdgP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D6AC4CEEB;
-	Mon,  4 Aug 2025 00:35:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GCKkhvHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7A0C4CEF0;
+	Mon,  4 Aug 2025 00:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267745;
-	bh=kkHAZeFw4dRNZRA86dnW/JqBE9zDOKMdxTvc7kbFfrw=;
+	s=k20201202; t=1754267748;
+	bh=C+u2mqJOM5XQbmB7T7u2roWtxqe1DkHxKj+MEew7qeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0HPKdgPfQaVH2EMaVFtQ3SQs2PzZ4+SfXXuCGvUTWMN9Ml7x46NI11RTQjtqcQo8
-	 2mrvNdFrWIwX8GvTTnIowH5LZAeSudPPbtOu84lJ3FUzyAXlLexLbjDJzyyrx618BX
-	 CyKQ+D3Sw0y066e2JThdHCe5xKcH49x7EIRkppPWO7IzY1DZijhG/gPbvqwJ8RhtrH
-	 vnBO3al6FFhlJU/bB2sa0pp/DXok7hf3MQGYh34k8n5YxrC5DgP47MMGNsKlTndNzS
-	 0loFMrOz99n9mA0LfHqam5aQ/pfjuVZKb/oDuARgEzhbqBwWmxwPnICEfe4vBPSFHa
-	 BAVWWzYR7xU/g==
+	b=GCKkhvHXL0UZtWYaGiVG4/qutAEb9K+NAOZHGckbMzG5CvJtSpBO38IjMSiwOuVrQ
+	 xVjGFy8PWSiJ00lYmLtVYUKK6e+zANOHFnruBQAqMHziPZ97OBr4Pnry0cAWmyIR84
+	 G1HL45vRniztj5Ct77dDOmAHGnpZNQkjJBju/nM4r4cE6MMYhjuYD828Po4fo0vR4v
+	 SAI1cWnJxr00hWJEJW4NaJAHXNOVq4Ezi9zvBw8BvdLxmT8bpRIFHmhIl9FmOfMJs0
+	 q8+jHy5Zxk787WH3qpdZGNWRjpzZ0ry8GqDzJhQfIqUiTz+5iliPi4IlxHiwpKWtm9
+	 pnSOZm7NJOvlg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans de Goede <hansg@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Ulf Hansson <ulf.hansson@linaro.org>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Ricky Wu <ricky_wu@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alexander.usyskin@intel.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 38/59] mei: bus: Check for still connected devices in mei_cl_bus_dev_release()
-Date: Sun,  3 Aug 2025 20:33:52 -0400
-Message-Id: <20250804003413.3622950-38-sashal@kernel.org>
+	wsa+renesas@sang-engineering.com,
+	zhoubinbin@loongson.cn,
+	viro@zeniv.linux.org.uk,
+	u.kleine-koenig@baylibre.com,
+	nathan@kernel.org
+Subject: [PATCH AUTOSEL 6.6 39/59] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
+Date: Sun,  3 Aug 2025 20:33:53 -0400
+Message-Id: <20250804003413.3622950-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -49,27 +53,20 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hansg@kernel.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 35e8a426b16adbecae7a4e0e3c00fc8d0273db53 ]
+[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
 
-mei_cl_bus_dev_release() also frees the mei-client (struct mei_cl)
-belonging to the device being released.
+In the error path of sd_set_power_mode() we don't update host->power_mode,
+which could lead to an imbalance of the runtime PM usage count. Fix this by
+always updating host->power_mode.
 
-If there are bugs like the just fixed bug in the ACE/CSI2 mei drivers,
-the mei-client being freed might still be part of the mei_device's
-file_list and iterating over this list after the freeing will then trigger
-a use-afer-free bug.
-
-Add a check to mei_cl_bus_dev_release() to make sure that the to-be-freed
-mei-client is not on the mei_device's file_list.
-
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://lore.kernel.org/r/20250623085052.12347-11-hansg@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Ricky Wu <ricky_wu@realtek.com>
+Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,100 +77,92 @@ LLM Generated explanations, may be completely bogus:
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Security Impact Analysis
+## Bug Analysis
 
-The commit adds a defensive check to detect use-after-free
-vulnerabilities in the MEI (Management Engine Interface) subsystem. The
-code change is minimal but addresses a serious security issue:
+The commit fixes a **runtime PM reference counting bug** in the
+`sd_set_power_mode()` function. The issue is in the error handling path:
 
+### Original Code Problem:
 ```c
-+       struct mei_device *mdev = cldev->cl->dev;
-+       struct mei_cl *cl;
-+
-+       list_for_each_entry(cl, &mdev->file_list, link)
-+               WARN_ON(cl == cldev->cl);
-+
-        kfree(cldev->cl);
+if (power_mode == MMC_POWER_OFF) {
+    err = sd_power_off(host);
+    pm_runtime_put_noidle(sdmmc_dev(host));
+} else {
+    pm_runtime_get_noresume(sdmmc_dev(host));
+    err = sd_power_on(host);
+}
+
+if (!err)
+    host->power_mode = power_mode;  // Only updated on success
 ```
 
-## Why This Is a Critical Backport Candidate
+### The Bug:
+1. When transitioning to `MMC_POWER_OFF`, the code calls
+   `pm_runtime_put_noidle()` **regardless** of whether `sd_power_off()`
+   succeeded
+2. When transitioning to `MMC_POWER_ON`, the code calls
+   `pm_runtime_get_noresume()` **before** calling `sd_power_on()`
+3. However, `host->power_mode` is only updated if there's no error
 
-1. **Use-After-Free Prevention**: The commit addresses a classic memory
-   corruption bug. When `mei_cl_bus_dev_release()` frees the mei-client
-   structure via `kfree(cldev->cl)`, if that client is still on the
-   `mei_device->file_list`, any subsequent iteration over that list will
-   access freed memory, potentially leading to:
-   - Kernel crashes
-   - Information disclosure
-   - Arbitrary code execution with kernel privileges
+This creates a **runtime PM reference count imbalance** because:
+- If `sd_power_off()` fails, the runtime PM reference is still
+  decremented, but `host->power_mode` remains at its previous value
+  (likely `MMC_POWER_ON`)
+- If `sd_power_on()` fails, the runtime PM reference is still
+  incremented, but `host->power_mode` remains at its previous value
+  (likely `MMC_POWER_OFF`)
+- The early return check `if (power_mode == host->power_mode)` at the
+  beginning of the function will prevent future attempts to fix the
+  power state, leaving the runtime PM count permanently imbalanced
 
-2. **Widespread Hardware Impact**: MEI is present on virtually all
-   modern Intel systems with Management Engine, making this a broadly
-   applicable fix affecting millions of devices.
+## Why This Is Suitable for Stable:
 
-3. **Low Risk, High Value**: The change adds only 6 lines of defensive
-   code that:
-   - Doesn't modify any existing logic flow
-   - Only adds a warning mechanism
-   - Has zero performance impact
-   - Cannot introduce regressions
+1. **Fixes a real bug**: Runtime PM reference count imbalances can lead
+   to:
+   - Device staying powered when it should be suspended
+   - Device being suspended when it should be active
+   - Power management failures
+   - Potential system hangs or crashes
 
-4. **Security Context**: The commit message references "just fixed bug
-   in the ACE/CSI2 mei drivers," indicating this is addressing real-
-   world vulnerabilities already discovered in MEI client drivers. This
-   suggests similar bugs may exist in other MEI drivers.
+2. **Minimal change**: The fix is a simple one-liner that always updates
+   `host->power_mode` regardless of error status
 
-5. **Stable Kernel Criteria Compliance**:
-   - ✓ Fixes a serious bug (security vulnerability)
-   - ✓ Minimal change (6 lines)
-   - ✓ No new features
-   - ✓ Obvious correctness
-   - ✓ Already tested (signed-off by maintainer Greg KH)
+3. **Low regression risk**:
+   - The change doesn't introduce new functionality
+   - It doesn't alter the control flow
+   - It simply ensures state consistency
 
-## Technical Details
+4. **Clear bug fix**: This is not a feature addition or optimization -
+   it's fixing incorrect error handling that violates runtime PM rules
 
-The fix works by iterating through `mdev->file_list` before freeing
-`cldev->cl` and issuing a `WARN_ON()` if the to-be-freed client is still
-in the list. This serves as an early warning system to catch driver bugs
-before they cause memory corruption.
+5. **Affects users**: This bug can manifest in real-world scenarios when
+   SD card power operations fail, particularly with flaky hardware or
+   during system stress
 
-## Recommendation
+6. **Subsystem contained**: The fix is limited to a single MMC host
+   driver and doesn't affect core kernel infrastructure
 
-This should be backported to all currently maintained stable kernel
-branches (6.1.x, 6.6.x, 6.12.x) with priority given to LTS kernels. The
-combination of:
-- Security impact (use-after-free in kernel space)
-- Wide hardware coverage (Intel MEI)
-- Minimal risk (detection-only change)
-- Real-world bug evidence (ACE/CSI2 drivers)
+The commit follows stable kernel rules by being a minimal, targeted fix
+for a real bug that can affect system stability and power management.
 
-Makes this an ideal stable backport candidate that meets all the
-criteria for inclusion in stable kernels.
+ drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
- drivers/misc/mei/bus.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/misc/mei/bus.c b/drivers/misc/mei/bus.c
-index 2e65ce6bdec7..b94cf7393fad 100644
---- a/drivers/misc/mei/bus.c
-+++ b/drivers/misc/mei/bus.c
-@@ -1269,10 +1269,16 @@ static void mei_dev_bus_put(struct mei_device *bus)
- static void mei_cl_bus_dev_release(struct device *dev)
- {
- 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
-+	struct mei_device *mdev = cldev->cl->dev;
-+	struct mei_cl *cl;
+diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
+index ded9b6849e35..90ea92bbdb2c 100644
+--- a/drivers/mmc/host/rtsx_usb_sdmmc.c
++++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
+@@ -1032,9 +1032,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
+ 		err = sd_power_on(host);
+ 	}
  
- 	mei_cl_flush_queues(cldev->cl, NULL);
- 	mei_me_cl_put(cldev->me_cl);
- 	mei_dev_bus_put(cldev->bus);
-+
-+	list_for_each_entry(cl, &mdev->file_list, link)
-+		WARN_ON(cl == cldev->cl);
-+
- 	kfree(cldev->cl);
- 	kfree(cldev);
+-	if (!err)
+-		host->power_mode = power_mode;
+-
++	host->power_mode = power_mode;
+ 	return err;
  }
+ 
 -- 
 2.39.5
 
