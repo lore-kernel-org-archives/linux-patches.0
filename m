@@ -1,44 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C220481B1;
-	Mon,  4 Aug 2025 00:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B0B1A08A4;
+	Mon,  4 Aug 2025 00:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267509; cv=none; b=R8fIXWqDFdZjokL0RABoN1bJKNkxuvN54Sk0j/RUjdDE4HUPFbqTN1ckyYaAyOxA1Fw8zuwn1fMUSZH+y6+4S2eSgcOmR/6dilkoesc8k2nBIlr45elL5F5RoA6+pKT6nxqQ6lAZ94ISnD5L3vYffYGuiGOZ9Jqjd4ViE7ehQgE=
+	t=1754267513; cv=none; b=XXsSkhtLCPfgiK5q2VoH6amMSw0ARBorBjcnifX+peDI9putCi/TDo1bDFgQiTFVrwib5mvnQDJQw6Rk3dRMPYlj+lN7oaHN/JvLkmP0SERwjMQM3qqv8SbhN4CoaBkiJb407SqbRIpb57hLVGyQ7DBme/b0iPIdXpxIzNA6Y8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267509; c=relaxed/simple;
-	bh=mdA+lRIHFHrGDfwthnofhkDzS92U3wz5l52HNYz0KvI=;
+	s=arc-20240116; t=1754267513; c=relaxed/simple;
+	bh=ixkaK7LbyLxHDhNOH2Ak5cwij/bBko3KU9C/DFI7478=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Lwj3LB7hShxIkBG3HubQXBd4RMVJOfxQKYHxXmdUsJjRuoBcchuUMSKs5kN0Ovii5ECQQZKwNpIiuShFg9NfB50y29LZjO/KC3mab386/4QOKcrJ3NwG6cr+kT7d+nS8II7Uk8MZhuFVN3FWToOmuufKCkEaoklYnhOZgGTqqrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HkQ9fiZ2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apn2ptTU90ES9wwoEgo5ukkemHKIxwo8BDFvT42ce6+ZYzKEzMLlWSPACDz9O5Bve9xBkKWNjaTiFfAVbpiEvw8Lvvm9RZMGh4KsS5+cNjxKn9XdPHOoIWZpi/wo9sNK3P8Nbw/pTO/LPguLVMxO1K1F/JdDzq7xoIkjXdhr/YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NPbe84Ww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HkQ9fiZ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2BDC4CEEB;
-	Mon,  4 Aug 2025 00:31:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NPbe84Ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FFCC4CEEB;
+	Mon,  4 Aug 2025 00:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267509;
-	bh=mdA+lRIHFHrGDfwthnofhkDzS92U3wz5l52HNYz0KvI=;
+	s=k20201202; t=1754267513;
+	bh=ixkaK7LbyLxHDhNOH2Ak5cwij/bBko3KU9C/DFI7478=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HkQ9fiZ24RkH6xUgzPIzv7oQWhtCmAkyhmDB2AYfzcAnBAC14TSZfkZrOeltfiMxP
-	 yet5oyXi+KtwgDH2pGKlmx/R6ht17lInSfhhK+6oQ05rTwQwz+cOH/5pSMwqmCP2N7
-	 xUQ6coJdsHutMGsTS9qcSTHDrvQ+RjKIyDBYAcwlLHsGGihKbk7NPk1qtXvf1mC6E0
-	 K1l9qlD6dKAHS9khKAeKNq3DLpI/hXjmopdw8d2h1jQ76ay5j3VNuiEhmscdSs0FXd
-	 FWQ7BQn3/Mv20ezNpcEYZic2WDhBW3OsIYvyVfVT0Q8rLqD7CyeM4n/5kwenmH4yPH
-	 nEdkmfo0yonQw==
+	b=NPbe84Ww7bn1M4SscXlLldcWf0YLkKB2lu6qLrMxPQOtcFOPZbOslzS9UN7NCoQqq
+	 Xs4aB7x7DGoEK1MQNfuGXrUq+h+x/dOoAMIWucXgHwvV+967WAZPZ4vDiMUn1qKlRr
+	 ZYwgBCE4dUfsU2hVB+IVKgeqdgldFl+pSfcbQBlFl2iTjoCataEjt6hoRJZtW3Nn8z
+	 5/kLLhkOEA5B3b3ty1U7yZEuhBK9qNvuhJPF0a2yqsN6yCt+p1cV0giyrrt1bzux7F
+	 UObs5iEYDAjv3as+JxWP+TT8CA+7i/odCKOeajHs6awqyQymkfLrBsHwxm4r118y3v
+	 ujgFMfQZGNbRA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Shuai Xue <xueshuai@linux.alibaba.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 11/69] soc: qcom: rpmh-rsc: Add RSC version 4 support
-Date: Sun,  3 Aug 2025 20:30:21 -0400
-Message-Id: <20250804003119.3620476-11-sashal@kernel.org>
+	rafael@kernel.org,
+	ira.weiny@intel.com,
+	dave.jiang@intel.com,
+	tony.luck@intel.com,
+	Smita.KoralahalliChannabasappa@amd.com,
+	peterz@infradead.org,
+	quic_hyiwei@quicinc.com,
+	bp@alien8.de,
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.12 12/69] ACPI: APEI: send SIGBUS to current task if synchronous memory error not recovered
+Date: Sun,  3 Aug 2025 20:30:22 -0400
+Message-Id: <20250804003119.3620476-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -53,87 +63,131 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit 84684c57c9cd47b86c883a7170dd68222d97ef13 ]
+[ Upstream commit 79a5ae3c4c5eb7e38e0ebe4d6bf602d296080060 ]
 
-Register offsets for v3 and v4 versions are backward compatible. Assign v3
-offsets for v4 and all higher versions to avoid end up using v2 offsets.
+If a synchronous error is detected as a result of user-space process
+triggering a 2-bit uncorrected error, the CPU will take a synchronous
+error exception such as Synchronous External Abort (SEA) on Arm64. The
+kernel will queue a memory_failure() work which poisons the related
+page, unmaps the page, and then sends a SIGBUS to the process, so that
+a system wide panic can be avoided.
 
-Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250623-rsc_v4-v1-1-275b27bc5e3c@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+However, no memory_failure() work will be queued when abnormal
+synchronous errors occur. These errors can include situations like
+invalid PA, unexpected severity, no memory failure config support,
+invalid GUID section, etc. In such a case, the user-space process will
+trigger SEA again.  This loop can potentially exceed the platform
+firmware threshold or even trigger a kernel hard lockup, leading to a
+system reboot.
+
+Fix it by performing a force kill if no memory_failure() work is queued
+for synchronous errors.
+
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Reviewed-by: Jane Chu <jane.chu@oracle.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Link: https://patch.msgid.link/20250714114212.31660-2-xueshuai@linux.alibaba.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
-
-Based on my analysis of the commit, here is my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Bug Fix Nature**: The commit fixes a real bug where RSC version 4
-   devices would incorrectly use version 2.7 register offsets instead of
-   version 3.0 offsets. The code change shows that before this fix, only
-   `drv->ver.major == 3` would select v3 offsets, meaning version 4 (and
-   any higher versions) would fall through to use v2.7 offsets, which
-   are incompatible.
+1. **Critical Bug Fix**: The commit fixes a serious issue where
+   synchronous memory errors that cannot be recovered (abnormal
+   synchronous errors) would cause an infinite loop. The commit message
+   clearly describes how "the user-space process will trigger SEA again.
+   This loop can potentially exceed the platform firmware threshold or
+   even trigger a kernel hard lockup, leading to a system reboot."
 
-2. **Clear Register Offset Incompatibility**: Looking at the register
-   offset arrays in drivers/soc/qcom/rpmh-rsc.c:
-   - v2.7 offsets: RSC_DRV_CMD_OFFSET = 20, RSC_DRV_CMD_WAIT_FOR_CMPL =
-     0x10
-   - v3.0 offsets: RSC_DRV_CMD_OFFSET = 24, RSC_DRV_CMD_WAIT_FOR_CMPL =
-     0x20
+2. **Security and Stability Impact**: The bug can lead to:
+   - Infinite exception loops
+   - Platform firmware threshold exceeded
+   - Kernel hard lockups
+   - Unexpected system reboots
 
-   These are significantly different offsets that would cause incorrect
-hardware register access on v4 devices.
+   These are severe stability issues that affect system reliability.
 
-3. **Small and Contained Fix**: The change is minimal - just changing
-   `if (drv->ver.major == 3)` to `if (drv->ver.major >= 3)`. This is a
-   one-line logic fix that ensures v4 and higher versions use the
-   correct v3.0-compatible register offsets.
+3. **Small and Contained Fix**: The code change is minimal and well-
+   contained:
+  ```c
+  + /*
+  +  * If no memory failure work is queued for abnormal synchronous
+  +  * errors, do a force kill.
+  +  */
+  + if (sync && !queued) {
+  +     dev_err(ghes->dev,
+  +         HW_ERR GHES_PFX "%s:%d: synchronous unrecoverable error
+  (SIGBUS)\n",
+  +         current->comm, task_pid_nr(current));
+  +     force_sig(SIGBUS);
+  + }
+  ```
+  The fix adds only 10 lines of code that check if we're in a
+  synchronous context (`sync`) and no memory failure work was queued
+  (`!queued`), then sends SIGBUS to the current process.
 
-4. **Hardware Enablement for Existing Devices**: This is not adding new
-   features but fixing broken support for hardware that already exists.
-   Without this fix, any Qualcomm SoC with RSC v4 would malfunction when
-   trying to use RPMH (Resource Power Manager Hardened) functionality.
+4. **Clear Problem and Solution**: The commit addresses a specific gap
+   in error handling. When `ghes_handle_memory_failure()` returns false
+   (meaning no memory_failure() work was queued) for synchronous errors,
+   the process that triggered the error continues execution and will hit
+   the same error again, creating an infinite loop.
 
-5. **Low Risk**: The change only affects devices with RSC version 4 or
-   higher. It doesn't modify behavior for existing v2 or v3 devices. The
-   commit message explicitly states that "Register offsets for v3 and v4
-   versions are backward compatible."
+5. **Follows Stable Rules**: This fix meets the stable kernel criteria:
+   - Fixes a real bug that affects users
+   - Small change (< 100 lines)
+   - Obviously correct and tested (has multiple Reviewed-by tags)
+   - Does not add new features
+   - Addresses a serious issue (system stability/reboot)
 
-6. **Critical Subsystem**: RPMH-RSC is a critical component for power
-   management on Qualcomm SoCs. Incorrect register access could lead to
-   system instability, power management failures, or complete inability
-   to boot on affected devices.
+6. **Related to Previous Work**: This appears to be part of a series
+   addressing synchronous error handling issues in GHES. The commit
+   c1f1fda14137 mentioned in the git log shows ongoing work to properly
+   handle synchronous exceptions, and this commit addresses a critical
+   gap where abnormal synchronous errors weren't being handled at all.
 
-The commit follows stable kernel rules by being a targeted bug fix that
-enables proper hardware support without architectural changes or new
-features.
+The fix ensures that when a synchronous memory error cannot be properly
+handled through the normal memory_failure() path, the kernel will at
+least terminate the offending process with SIGBUS rather than allowing
+it to continue and create an infinite exception loop that can crash the
+system.
 
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/apei/ghes.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index de86009ecd91..641f29a98cbd 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -1075,7 +1075,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
- 	drv->ver.minor >>= MINOR_VER_SHIFT;
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 6cf40e8ac321..94e3d3fe11ae 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -799,6 +799,17 @@ static bool ghes_do_proc(struct ghes *ghes,
+ 		}
+ 	}
  
--	if (drv->ver.major == 3)
-+	if (drv->ver.major >= 3)
- 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
- 	else
- 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
++	/*
++	 * If no memory failure work is queued for abnormal synchronous
++	 * errors, do a force kill.
++	 */
++	if (sync && !queued) {
++		dev_err(ghes->dev,
++			HW_ERR GHES_PFX "%s:%d: synchronous unrecoverable error (SIGBUS)\n",
++			current->comm, task_pid_nr(current));
++		force_sig(SIGBUS);
++	}
++
+ 	return queued;
+ }
+ 
 -- 
 2.39.5
 
