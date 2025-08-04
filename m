@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A911F19307F;
-	Mon,  4 Aug 2025 00:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2525712DDA1;
+	Mon,  4 Aug 2025 00:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267081; cv=none; b=LKZsBzKxI4KGGu4kGAFmzHnEmON50YQ1k2/JtNJrpmShg6ciOUQH53+nhOS6FeiMo3SKlWe9rFSUsGtdM3wJjiC4fkCvy2hVvlMoLji8jo5NSwqxDoag3Vydk3UtpPJsOfcItw7IN9UaTtM7oD7xoww8KWNoyNipEaGwQxsU6SA=
+	t=1754267084; cv=none; b=aPVXqRZG4VvQ5jb0zg1Nwu9Ky50ChS1NdeQcmfZw7ho7vkP9lewcclIjGlcWQbJD9kSgkzRx/EteJerOOB8I9iYEbXLhvYkuKctB2G3JisYreYzHCGihPI9cgFHk9KApBlVwqGtK85BNVN8Wz/Ji43uE9r6hUNNV1IFfX8dXVL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267081; c=relaxed/simple;
-	bh=5+VGatyAyn0VYzmKC+9QVp6Me0hrtlbLXliosSpLPOI=;
+	s=arc-20240116; t=1754267084; c=relaxed/simple;
+	bh=tV8mOr2kNygU7VxJZSE6t/MNb+JDz0pMHgh4pTga0Ms=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ovGQgonh9DhmSDrS1zqVZwZ+ZgiUqH/Y549hc/Dd0iK3bistexqykDUtTuGNf4CwmKs3xlQ8x6XJi42AmvKxDhsCgUTpofFMfvvgXp+t0Fpa0HH5Plr0zYvVyD2UdCcI1SM/gSsk9cIs3wZxO6jriWsAqCALg4c1vGoGOVYtxn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iS0xP6W1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aThfm21uajXGjCoxS+jGeHMUGet1FnAaiJTRClAhDj5kYvK3gjIC46nF5X5yVt4fibgcVQHrHlqeDvgN2iky9WPUF4j89hJFJLT4/jD6f+wfh1LT4j9gD461qaA8jGPCW/QmotTsx/gh/wLrqnHYxIdluPRDaqnEqKmE+mQtbfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nzwqRDkH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iS0xP6W1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73949C4CEEB;
-	Mon,  4 Aug 2025 00:24:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nzwqRDkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FA4C4CEF0;
+	Mon,  4 Aug 2025 00:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267081;
-	bh=5+VGatyAyn0VYzmKC+9QVp6Me0hrtlbLXliosSpLPOI=;
+	s=k20201202; t=1754267084;
+	bh=tV8mOr2kNygU7VxJZSE6t/MNb+JDz0pMHgh4pTga0Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iS0xP6W1g43KXUf14c3WvFumDmPiTua0xZeqqO+RkwLcZWasJ2FLk78sOK5FLBkmy
-	 Z4in6VYxfzz3mt4j6cV9PrQvqEOFMSVoIBBMFwxo1dmdMsbIS8dHRcr8hzvmh4t1ez
-	 L9TwAlFUtrr/OMH6TXBhVdv5i1PgoQd6nwYi5HKgsa3Wtqm53jttoj0jF/gHIL8tWQ
-	 e/DT76G0Q82Bq/cny2OciUNbIkNnQAaZFPRVqwoyYyZUzEVd7psD9CN2w+XXmdwQaI
-	 H2+iwjjREGDaJZ/QWFlupNxug6MaOdBuek/w+P6xIlW/JQ8ToxvgZVd3IpUS5TnFoN
-	 93HxSqLidEwCw==
+	b=nzwqRDkH+uHQamETtw+eJd8AwZ4TyxE3P9A0K6YciHavY7tOl+gI+nF9SyTVQe+A/
+	 cookXtrqBAbbWgX0Rue2skTJMuhzQJhWWbVwjIatzSAVT9atK1I86C90M5767klCZe
+	 S5xUDdeunWRrgngr66Aq/8pWg1RkLmUlMsOadqWS8dZhRiqU1yUFV3dyLx186oIDmu
+	 +P/nfJZcGeVubQskfcon3W7CwaRXtejlXFoGebShIDvqjVOfQETk9pCX2/CrhMcai7
+	 lyv29Y87A1q/xNjagYaWm3qxYYtdWB+kYHmKgZrL0zk0+HoPKATQvM9J2mR+NjVClK
+	 nDleagGyMMMMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Binbin Zhou <zhoubinbin@loongson.cn>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+Cc: Jameson Thies <jthies@google.com>,
+	Benson Leung <bleung@chromium.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	zhuyinbo@loongson.cn,
-	linus.walleij@linaro.org,
-	brgl@bgdev.pl,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 19/85] gpio: loongson-64bit: Extend GPIO irq support
-Date: Sun,  3 Aug 2025 20:22:28 -0400
-Message-Id: <20250804002335.3613254-19-sashal@kernel.org>
+	abhishekpandit@chromium.org,
+	ukaszb@chromium.org,
+	akuchynski@chromium.org,
+	chrome-platform@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.16 20/85] usb: typec: ucsi: Add poll_cci operation to cros_ec_ucsi
+Date: Sun,  3 Aug 2025 20:22:29 -0400
+Message-Id: <20250804002335.3613254-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -55,129 +54,86 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Binbin Zhou <zhoubinbin@loongson.cn>
+From: Jameson Thies <jthies@google.com>
 
-[ Upstream commit 27cb8f702eb789f97f7a8bd5a91d76c65a937b2f ]
+[ Upstream commit 300386d117a98961fc1d612d1f1a61997d731b8a ]
 
-Add the interrupt enable register offset (inten_offset) so that GPIO
-interrupts can be enabled normally on more models.
+cros_ec_ucsi fails to allocate a UCSI instance in it's probe function
+because it does not define all operations checked by ucsi_create.
+Update cros_ec_ucsi operations to use the same function for read_cci
+and poll_cci.
 
-According to the latest interface specifications, the definition of GPIO
-interrupts in ACPI is similar to that in FDT. The GPIO interrupts are
-listed one by one according to the GPIO number, and the corresponding
-interrupt number can be obtained directly through the GPIO number
-specified by the consumer.
-
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/r/20250714064542.2276247-1-zhoubinbin@loongson.cn
-[Bartosz: tweaked the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Jameson Thies <jthies@google.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://lore.kernel.org/r/20250711202033.2201305-1-jthies@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I understand the timeline:
+1. The cros_ec_ucsi driver was added on 2024-12-31
+2. The poll_cci requirement was added on 2025-02-17 (after the
+   cros_ec_ucsi driver was already in the kernel)
+3. This broke the cros_ec_ucsi driver because it didn't have the
+   poll_cci operation defined
+
 **Backport Status: YES**
 
-This commit is suitable for backporting to stable kernel trees for the
-following reasons:
+This commit fixes a regression where the cros_ec_ucsi driver fails to
+allocate a UCSI instance during probe because it lacks the poll_cci
+operation that became mandatory in commit 976e7e9bdc77 ("acpi: typec:
+ucsi: Introduce a ->poll_cci method").
 
-1. **Fixes a bug affecting users**: The commit addresses a functional
-   issue where GPIO interrupts cannot be enabled properly on several
-   Loongson models (ls2k2000, ls3a5000, ls7a, ls7a2000). Looking at the
-   code in `loongson_gpio_to_irq()` (lines 120-136), the function relies
-   on `chip_data->inten_offset` being set to properly enable interrupts.
-   Without this offset, the conditional check at line 167 (`if
-   (lgpio->chip_data->inten_offset)`) prevents the `to_irq` callback
-   from being registered, effectively breaking GPIO interrupt
-   functionality.
+The commit meets all criteria for stable backporting:
 
-2. **Small and contained fix**: The changes are minimal - only adding
-   the missing `inten_offset` values to existing chip data structures.
-   The patch adds 4 lines:
-   - Line 225: `.inten_offset = 0x14,` for ls2k2000_data0
-   - Line 233: `.inten_offset = 0x30,` for ls2k2000_data1
-   - Line 249: `.inten_offset = 0x14,` for ls3a5000_data
-   - Line 257: `.inten_offset = 0xb00,` for ls7a_data
-   - Line 266: `.inten_offset = 0xb00,` for ls7a2000_data0
-   - Line 284: `.inten_offset = 0x14,` for ls3a6000_data
+1. **Fixes a real bug**: The driver completely fails to probe without
+   this fix, preventing ChromeOS EC-based UCSI devices from working at
+   all. The error occurs in ucsi_create() at
+   drivers/usb/typec/ucsi/ucsi.c:1933 where it checks for the presence
+   of all required operations including poll_cci.
 
-3. **No architectural changes**: This is a simple data fix that adds
-   missing hardware register offsets. It doesn't change any logic, APIs,
-   or introduce new features.
+2. **Small and contained change**: The fix is minimal - it only adds one
+   line to the operations structure (`.poll_cci = cros_ucsi_read_cci,`),
+   reusing the existing read_cci implementation which is appropriate for
+   this driver.
 
-4. **Low regression risk**: The change only affects the specific
-   Loongson models mentioned and only enables functionality that was
-   previously broken. It cannot break existing working configurations
-   since it only adds missing data.
+3. **No side effects**: The change simply allows the driver to pass the
+   operations validation check. Using the same function for both
+   read_cci and poll_cci is the correct approach for drivers that don't
+   have the ACPI-specific sync issues that prompted the poll_cci split.
 
-5. **Hardware enablement fix**: This is essentially a hardware
-   enablement bug fix that allows proper interrupt handling on affected
-   Loongson platforms. Without this fix, GPIO interrupts are completely
-   non-functional on these chips.
+4. **Fixes a regression**: This is fixing a regression introduced by
+   commit 976e7e9bdc77, which itself was marked for stable. Any stable
+   kernel that includes 976e7e9bdc77 but not this fix will have a broken
+   cros_ec_ucsi driver.
 
-The commit follows stable tree rules by being a clear bug fix with
-minimal changes and low risk. The fact that other similar chip data
-structures already had `inten_offset` defined (like ls2k_data,
-ls2k0500_data0/1) shows this was an oversight that needed correction.
+5. **Clear fix relationship**: The commit message clearly identifies the
+   problem (ucsi_create fails due to missing operation) and the solution
+   is straightforward.
 
- drivers/gpio/gpio-loongson-64bit.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+This should be backported to any stable kernel that includes both:
+- commit f1a2241778d9 ("usb: typec: ucsi: Implement ChromeOS UCSI
+  driver")
+- commit 976e7e9bdc77 ("acpi: typec: ucsi: Introduce a ->poll_cci
+  method")
 
-diff --git a/drivers/gpio/gpio-loongson-64bit.c b/drivers/gpio/gpio-loongson-64bit.c
-index 70a01c5b8ad1..add09971d26a 100644
---- a/drivers/gpio/gpio-loongson-64bit.c
-+++ b/drivers/gpio/gpio-loongson-64bit.c
-@@ -222,6 +222,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data0 = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0xc,
- 	.out_offset = 0x8,
-+	.inten_offset = 0x14,
- };
- 
- static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data1 = {
-@@ -230,6 +231,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data1 = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0x20,
- 	.out_offset = 0x10,
-+	.inten_offset = 0x30,
- };
- 
- static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data2 = {
-@@ -246,6 +248,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls3a5000_data = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0xc,
- 	.out_offset = 0x8,
-+	.inten_offset = 0x14,
- };
- 
- static const struct loongson_gpio_chip_data loongson_gpio_ls7a_data = {
-@@ -254,6 +257,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls7a_data = {
- 	.conf_offset = 0x800,
- 	.in_offset = 0xa00,
- 	.out_offset = 0x900,
-+	.inten_offset = 0xb00,
- };
- 
- /* LS7A2000 chipset GPIO */
-@@ -263,6 +267,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls7a2000_data0 = {
- 	.conf_offset = 0x800,
- 	.in_offset = 0xa00,
- 	.out_offset = 0x900,
-+	.inten_offset = 0xb00,
- };
- 
- /* LS7A2000 ACPI GPIO */
-@@ -281,6 +286,7 @@ static const struct loongson_gpio_chip_data loongson_gpio_ls3a6000_data = {
- 	.conf_offset = 0x0,
- 	.in_offset = 0xc,
- 	.out_offset = 0x8,
-+	.inten_offset = 0x14,
- };
- 
- static const struct of_device_id loongson_gpio_of_match[] = {
+ drivers/usb/typec/ucsi/cros_ec_ucsi.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/usb/typec/ucsi/cros_ec_ucsi.c b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
+index 4ec1c6d22310..eed2a7d0ebc6 100644
+--- a/drivers/usb/typec/ucsi/cros_ec_ucsi.c
++++ b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
+@@ -137,6 +137,7 @@ static int cros_ucsi_sync_control(struct ucsi *ucsi, u64 cmd, u32 *cci,
+ static const struct ucsi_operations cros_ucsi_ops = {
+ 	.read_version = cros_ucsi_read_version,
+ 	.read_cci = cros_ucsi_read_cci,
++	.poll_cci = cros_ucsi_read_cci,
+ 	.read_message_in = cros_ucsi_read_message_in,
+ 	.async_control = cros_ucsi_async_control,
+ 	.sync_control = cros_ucsi_sync_control,
 -- 
 2.39.5
 
