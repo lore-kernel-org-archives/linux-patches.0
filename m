@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D9619AD90;
-	Mon,  4 Aug 2025 00:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEB112FF69;
+	Mon,  4 Aug 2025 00:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267165; cv=none; b=QFgwcGIW+zqJsGzw7RV/1ISm5xFFBrYQC0JEjjA4KwJLvjKZfDDee4YA1NQmeFaf2CaDKx6YI+F2kCCczPMn0S7pTpayiRe6pGpXbju1CwVoiqaj7QH2o8czIHyIp8i2BbqDDiQZfRJIpYvyJvLVecL7t+YQcAncwNrlmf2UHdQ=
+	t=1754267168; cv=none; b=gh0BkaMdLyMqdK4vpWyW40IqEtRAY8dxNSMuI0dbIRGF9PTQgYSSGZfmuKo6GepPlziNb3hyroJ00ff1XRTaaIbAGAevq2BA5lswFCV8osHgSaQAiSQwH8onuJxIrNP5Nf9sBIjKZl0DeO2MnyXXpPCIxKo0lXsqpgg256iaG7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267165; c=relaxed/simple;
-	bh=YnbkvnmtNLvjCP8IyfHoAyXB8ez09+84Y28R1X7smsM=;
+	s=arc-20240116; t=1754267168; c=relaxed/simple;
+	bh=swTZ1CegOsW3PbwQOV/KPcDl8K6aCmADC2VNGJgX7XY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=P7220x8+Q7QOP0awgljb+c7d2Nq8LD/l1PywJGPQP/GZAZPsg/9aJodXF7FYQtEeA1Wt/ZKUMhjTOSxMNcqUVwmfCTyipRPXuoE4Y4EK4OfYNHq0/vYokQfGErs3KRGg7ddApgCHpNIIHmxGoXZlTX5aowHEaUdSdGBWg5PoFvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b2ZLnKtj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tTq7xzT0hR+2uiLa/Lg7ayIIEKasI+wCEafN0ANEHqbxb8OjWRWV2npT71DsuZ3S9ijB6kWliLtPBtDDhkzF9Pux8WpdD1D9Rs4zQ4c+Db9TW9Y8n+1DzaXVZEs/okZ6scHncDrSU39aufAY6aARfrv/RRalgJUHFUIv47Xk6rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=babcwdvy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b2ZLnKtj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F0CC4CEEB;
-	Mon,  4 Aug 2025 00:26:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="babcwdvy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6CCC4CEEB;
+	Mon,  4 Aug 2025 00:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267165;
-	bh=YnbkvnmtNLvjCP8IyfHoAyXB8ez09+84Y28R1X7smsM=;
+	s=k20201202; t=1754267168;
+	bh=swTZ1CegOsW3PbwQOV/KPcDl8K6aCmADC2VNGJgX7XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2ZLnKtjweBStLmuOJHGf2/rLmuXlQ5HrsDqYWBOqSGp0otpXWZe6YdpaFxd3e2aa
-	 2fHkXBQKsAspwKrmHTjfFESnO0lANlTgc2XelHy4a/UjuXsKjh5RTaRv8Lr7uuZnsh
-	 RE2/gkcmyXw/dBrlnGKWBCcNXoU3Dn49bqKTTzRYRG8rI/s8YzXXtCdYKm2MQiIPic
-	 e5WR7c4gBQA5Xa04ymqtU5j/g1Q2EiXN+Qvn74qdJPXoD+wL2fEXcGa58mwBXEu6wy
-	 PqpbsB0hUzV/xFMACLXP8ZSh7tn8KdoBZH3uG/yP/H3CrVW4/acObwbFw+uYEVQDGu
-	 CUvkAA6TwRZ/w==
+	b=babcwdvyL0nAPlM45wENBAUz71i+bQSoT9AVmFYhwdtKNUgHWN5oo11eU+Nk4RbVa
+	 qbRICy+HAq4dX3FZuCxuYmtKAZLQzp85ikJEwZ5/JNoV+K/xqfxX/u6K7GkVx/UQ1g
+	 /q7f1oeNxwkWqJFhkloTwfSIX8SVrrB6DaFb71md25+nkzHve9+T3hdODkkXhIa40M
+	 ZxP6ylsyhYETgA04aY2MDCMTCMPUExIP+y9lTE0r3GXYtoc3Z+YEgr0LXfa0Qq0or+
+	 nFkXHweZrhfaAsTkHejb5W0UyhnWXVFMGJ55+inojAPHpFsO5ukQ8AxRQUWzft2Wsr
+	 vlTgq52IOfp5Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Robinson <pbrobinson@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.16 52/85] reset: brcmstb: Enable reset drivers for ARCH_BCM2835
-Date: Sun,  3 Aug 2025 20:23:01 -0400
-Message-Id: <20250804002335.3613254-52-sashal@kernel.org>
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	mstrozek@opensource.cirrus.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com
+Subject: [PATCH AUTOSEL 6.16 53/85] ASoC: SDCA: Add flag for unused IRQs
+Date: Sun,  3 Aug 2025 20:23:02 -0400
+Message-Id: <20250804002335.3613254-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -50,133 +56,112 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Peter Robinson <pbrobinson@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 1d99f92f71b6b4b2eee776562c991428490f71ef ]
+[ Upstream commit 775f5729b47d8737f4f98e0141f61b3358245398 ]
 
-The BRCMSTB and BRCMSTB_RESCAL reset drivers are also
-used in the BCM2712, AKA the RPi5. The RPi platforms
-have typically used the ARCH_BCM2835, and the PCIe
-support for this SoC can use this config which depends
-on these drivers so enable building them when just that
-arch option is enabled to ensure the platform works as
-expected.
+Zero is a valid SDCA IRQ interrupt position so add a special value to
+indicate that the IRQ is not used.
 
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20250630175301.846082-1-pbrobinson@gmail.com
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20250624122844.2761627-6-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I have a complete picture of the issue. Let me provide my analysis:
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit fixes a subtle but important bug in the SDCA (Smart Digital
+Class-D Amplifier) subsystem's interrupt handling. Here's why this
+should be backported:
 
-## Analysis of the Commit
+1. **It fixes a real bug**: Without this change, when the `mipi-sdca-
+   control-interrupt-position` property is missing from the device
+   tree/ACPI, the `control->interrupt_position` field remains
+   uninitialized (even though memory is zero-initialized with
+   `devm_kcalloc`, it's still 0). Since 0 is a valid interrupt position
+   in SDCA, this causes the code to incorrectly treat controls without
+   interrupts as having interrupt position 0.
 
-### 1. **Nature of the Change**
-The commit makes a simple Kconfig dependency update to enable two
-existing reset controller drivers (`RESET_BRCMSTB` and
-`RESET_BRCMSTB_RESCAL`) for the `ARCH_BCM2835` platform. The changes
-are:
-- Lines 54-55: Adds `ARCH_BCM2835` to the depends and default lines for
-  `RESET_BRCMSTB`
-- Lines 63-64: Adds `ARCH_BCM2835` to the depends and default lines for
-  `RESET_BRCMSTB_RESCAL`
-- Line 67: Updates the help text to mention BCM2712 alongside BCM7216
+2. **The bug has functional impact**: Looking at the interrupt handling
+   code in `sdca_irq_populate()` (added in commit b126394d9ec6), it
+   checks:
+  ```c
+  if (irq == SDCA_NO_INTERRUPT) {
+  continue;
+  }
+  ```
+  Without this fix, controls that should have no interrupt (property
+  missing) would be incorrectly processed as having interrupt position
+  0, potentially causing:
+   - Incorrect interrupt registration
+   - Conflicts with legitimate interrupt position 0 handlers
+   - Runtime errors when the interrupt framework tries to handle non-
+     existent interrupts
 
-### 2. **This is a Bug Fix**
-This commit fixes a configuration bug where the Raspberry Pi 5 (BCM2712)
-platform, which uses `ARCH_BCM2835`, cannot properly enable critical
-reset controllers needed for PCIe functionality. Without this fix, users
-building kernels for RPi5 with just `ARCH_BCM2835` enabled would have
-non-functional PCIe support.
+3. **The fix is minimal and safe**: The change simply adds:
+  ```c
+  else
+  control->interrupt_position = SDCA_NO_INTERRUPT;
+  ```
+  This ensures that when the interrupt position property is missing, the
+  field is explicitly set to -1 (SDCA_NO_INTERRUPT) instead of remaining
+  0.
 
-### 3. **Minimal and Contained Change**
-The commit is extremely minimal - it only modifies 6 lines in a single
-Kconfig file. It doesn't touch any C code, doesn't change any logic, and
-only updates build configuration dependencies. This is the ideal type of
-change for stable backporting.
+4. **It follows stable tree rules**:
+   - Fixes a clear bug (uninitialized/incorrectly initialized field)
+   - Small, contained change (2 lines added)
+   - No architectural changes or new features
+   - Low risk of regression
+   - Only affects SDCA subsystem
 
-### 4. **No Side Effects**
-The change has no negative side effects:
-- It only enables building existing drivers for an additional platform
-- The drivers themselves are already tested and working (used by BRCMSTB
-  platforms)
-- The change is additive - it doesn't remove or modify existing
-  functionality
-- No API/ABI changes
+5. **The bug exists in stable kernels**: The interrupt handling code
+   that depends on this distinction was added in commit b126394d9ec6
+   ("ASoC: SDCA: Generic interrupt support"), so any stable kernel that
+   includes that commit needs this fix.
 
-### 5. **Platform-Specific Fix**
-While the change is platform-specific (Raspberry Pi 5/BCM2712), it's
-important because:
-- RPi platforms are widely used
-- PCIe support is critical functionality
-- The fix enables existing, tested code to be built for a platform that
-  needs it
+The commit message clearly states the problem: "Zero is a valid SDCA IRQ
+interrupt position so add a special value to indicate that the IRQ is
+not used." This is a classic initialization bug where the absence of a
+value (property not present) needs to be distinguished from a valid zero
+value.
 
-### 6. **Clear Hardware Support Issue**
-From the commit message, this addresses a real hardware support issue
-where the BCM2712 (RPi5) SoC reuses the same reset controller IP blocks
-as other Broadcom STB SoCs but couldn't enable them due to missing
-Kconfig dependencies.
+ include/sound/sdca_function.h   | 2 ++
+ sound/soc/sdca/sdca_functions.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-### 7. **Low Risk**
-The risk of regression is essentially zero because:
-- Only affects kernel builds that explicitly enable `ARCH_BCM2835`
-- Doesn't change behavior for existing platforms
-- The drivers being enabled are mature and already in use
-
-### 8. **Follows Stable Rules**
-This perfectly fits the stable kernel criteria:
-- Fixes a real bug (missing hardware support)
-- Obviously correct (just adding platform to existing dependency)
-- Small change (6 lines)
-- Already tested (has Acked-by from Broadcom maintainer)
-
-The commit enables essential functionality (PCIe support via reset
-controllers) for a popular platform (Raspberry Pi 5) through a minimal,
-risk-free configuration change. This is exactly the type of fix that
-should be backported to ensure stable kernels properly support current
-hardware.
-
- drivers/reset/Kconfig | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-index d85be5899da6..ec8c953cb73d 100644
---- a/drivers/reset/Kconfig
-+++ b/drivers/reset/Kconfig
-@@ -51,8 +51,8 @@ config RESET_BERLIN
+diff --git a/include/sound/sdca_function.h b/include/sound/sdca_function.h
+index eaedb54a8322..b43bda42eeca 100644
+--- a/include/sound/sdca_function.h
++++ b/include/sound/sdca_function.h
+@@ -16,6 +16,8 @@ struct device;
+ struct sdca_entity;
+ struct sdca_function_desc;
  
- config RESET_BRCMSTB
- 	tristate "Broadcom STB reset controller"
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the reset controller driver for Broadcom STB SoCs using
- 	  a SUN_TOP_CTRL_SW_INIT style controller.
-@@ -60,11 +60,11 @@ config RESET_BRCMSTB
- config RESET_BRCMSTB_RESCAL
- 	tristate "Broadcom STB RESCAL reset controller"
- 	depends on HAS_IOMEM
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1 on
--	  BCM7216.
-+	  BCM7216 or the BCM2712.
++#define SDCA_NO_INTERRUPT -1
++
+ /*
+  * The addressing space for SDCA relies on 7 bits for Entities, so a
+  * maximum of 128 Entities per function can be represented.
+diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
+index de213a69e0da..dd503acc0c77 100644
+--- a/sound/soc/sdca/sdca_functions.c
++++ b/sound/soc/sdca/sdca_functions.c
+@@ -911,6 +911,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
+ 				       &tmp);
+ 	if (!ret)
+ 		control->interrupt_position = tmp;
++	else
++		control->interrupt_position = SDCA_NO_INTERRUPT;
  
- config RESET_EYEQ
- 	bool "Mobileye EyeQ reset controller"
+ 	control->label = find_sdca_control_label(dev, entity, control);
+ 	if (!control->label)
 -- 
 2.39.5
 
