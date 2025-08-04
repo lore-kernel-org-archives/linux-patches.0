@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11551D555;
-	Mon,  4 Aug 2025 00:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9733F3BBF2;
+	Mon,  4 Aug 2025 00:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267456; cv=none; b=oHt6/0DNOGzgjG+6Yk+E+qLAONx01TfoLKtV2wj4CW5KePO3QxHZDO/w4uWhRqZ7I7/yrkC50LM0l44lu7aD5sEnONRNu7n6Lrm+w/CGV1yXcQIp9ffWvCiFnBnWPyGVWf7PYJ+7asf+xq+PisiA0n7ydzQsfZcocu9cktgg2CY=
+	t=1754267458; cv=none; b=JLHeESc80VlkFEgcEcbs/61jiw1zefVuzjD3yRNLZJPLrTaKCycwu/CkmGGTwpumO7lHDYwQYfIeUoMp3sYIt6uOJXe8Cnib9eRzYsXYyE7bE3sXd8NAZeWaIokDUY8Livm2ik95RmSx9Y/jCiKSYT6dLUjoRaHqLc0ackSTkqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267456; c=relaxed/simple;
-	bh=xx+cMnBca5FdB4NqdtJoNYBKpU8YHM9fYDGzhuRR+d8=;
+	s=arc-20240116; t=1754267458; c=relaxed/simple;
+	bh=Vys4hZ4CaOTN5EhKO7hIcE8auGxGFvLTfuWycbT4Cko=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=MWJb1VgEkGYoZPRs0Xc0GknOnQ35/DR9XYxGY8QMuM9ChkQs3XS3xHRRvbrxZLPNOEsdTXmkIPz2MHhfHIxfsr1Li8K9+5ssQoEpfsSHiGgsLOyQj1S2UCgrcOPZPMXcglkrEju3VfZQpN4jpm9q766/H9lleRYv3YEKNXfXKPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bQepLoqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KyhhipTWGhUznG8OqHd2K5rygLeyosj4NoHSnC8Qp/V+VAjo2tIXb0YiNLMxajTAiVWmiTbhpli1DGr/Zk1dvfxqKXfCMzUgkp34DIP33YVJoB8lG8h8YPBwGw8HtPgtWtw4rC0HCOPUKSBI1pNOsqm6fRwoakPc3S/HcXegtfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I291du3H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bQepLoqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A51C4CEEB;
-	Mon,  4 Aug 2025 00:30:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I291du3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C02EC4CEF8;
+	Mon,  4 Aug 2025 00:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267456;
-	bh=xx+cMnBca5FdB4NqdtJoNYBKpU8YHM9fYDGzhuRR+d8=;
+	s=k20201202; t=1754267458;
+	bh=Vys4hZ4CaOTN5EhKO7hIcE8auGxGFvLTfuWycbT4Cko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQepLoqoTX6AnRimfVE1VElwIatzzEBg/H1U+ifxc6WI10FozKwwODg8OmxDVK5ra
-	 kAMaWM5PvJsQ5Xuy02SqWwoKqFz++0YW8I//GPwaYQxXLjyHPRDiNUV/rUlffqAiao
-	 HANr6nS0W7d1xFPdWUXhImXF1bfZL9veqiPNYIpAsbnElGtG5HO21QWG+aY/Bz9JsL
-	 rKstBUXh+2iZZzSS0T8o3XGp5Idzh1/thpIVL9s1dzRUCjsxgwoLd6MBountQ8JcNw
-	 imv/yjwL4wQi6jjGxT91oR6UxOVBdE3VXVs2fuLpaVnQKFR/nuVJiYqilVySHzq1TB
-	 uE22euzbfMrIg==
+	b=I291du3HMiSrJZMjvg3fLzP0S/y7svvc8SYOI3Ghdy6cKfx8JPJzbwMcNwRLv7HvU
+	 rW023F4S6vUt+CeeUACpdr+h4J/JAV1PQQLQn0tpYQXmTSrhjXDod5hj4kAGDHd3lq
+	 WxKU8SaKkz8oCbequq7f0Y/tmCNsFjp3yhrIUp0KNpkThPe3C93dDwzdhjOx6RF1Xh
+	 CV+m6NhEFS3Q65C/bTNLtC7Ku4E5G3FLbxKueBE0w1q5wLkOP+zfHhtD92npzJ40Sy
+	 J02k/Z6iUvhnmOPih+iT/fUvhDHvr7E0dspi1S5JqI+l9ZpRJi6Wrovdhe6emNKs/q
+	 lAg2ldzCblROw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Kees Cook <kees@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 72/80] soc: qcom: mdt_loader: Actually use the e_phoff
-Date: Sun,  3 Aug 2025 20:27:39 -0400
-Message-Id: <20250804002747.3617039-72-sashal@kernel.org>
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 73/80] platform/x86: thinkpad_acpi: Handle KCOV __init vs inline mismatches
+Date: Sun,  3 Aug 2025 20:27:40 -0400
+Message-Id: <20250804002747.3617039-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -47,135 +46,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 47e339cac89143709e84a3b71ba8bd9b2fdd2368 ]
+[ Upstream commit 6418a8504187dc7f5b6f9d0649c03e362cb0664b ]
 
-Rather than relying/assuming that the tools generating the firmware
-places the program headers immediately following the ELF header, use
-e_phoff as intended to find the program headers.
+When KCOV is enabled all functions get instrumented, unless the
+__no_sanitize_coverage attribute is used. To prepare for
+__no_sanitize_coverage being applied to __init functions[1], we have
+to handle differences in how GCC's inline optimizations get resolved.
+For thinkpad_acpi routines, this means forcing two functions to be
+inline with __always_inline.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250610-mdt-loader-validation-and-fixes-v2-3-f7073e9ab899@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/lkml/20250523043935.2009972-11-kees@kernel.org/ [1]
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20250529181831.work.439-kees@kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and code changes, I can now provide
-my assessment:
+**YES**
 
-**Backport Status: YES**
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Detailed Analysis
 
-1. **Bug Fix**: The commit fixes a genuine bug where the code was
-   incorrectly assuming that program headers immediately follow the ELF
-   header instead of using the `e_phoff` (ELF header's program header
-   offset) field. This is a clear violation of the ELF specification.
+### Nature of the Change
+The commit modifies two functions in
+`drivers/platform/x86/lenovo/thinkpad_acpi.c`:
+- `tpacpi_is_lenovo()`: Changed from `static inline` to `static
+  __always_inline`
+- `tpacpi_is_ibm()`: Changed from `static inline` to `static
+  __always_inline`
 
-2. **Security Implications**: The bug could lead to incorrect parsing of
-   firmware files, potentially causing:
-   - Out-of-bounds memory access if `e_phoff` points to a location
-     beyond `sizeof(ehdr)`
-   - Loading incorrect data as program headers
-   - Firmware loading failures or crashes in Qualcomm devices
+Both functions are marked with `__init` and are simple one-line
+functions that check the vendor ID.
 
-3. **Minimal Risk**: The fix is simple and contained - it changes 4
-   lines in the same pattern:
-  ```c
-   - phdrs = (struct elf32_phdr *)(ehdr + 1);
-   + phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
-   ```
+### Root Cause
+This is a build fix addressing a subtle interaction between:
+1. KCOV kernel coverage instrumentation
+2. GCC's inline optimization heuristics
+3. Linux kernel's __init section handling
 
-4. **Affects Multiple Functions**: The bug affects critical firmware
-   loading functions:
-   - `qcom_mdt_get_size()` - calculates memory requirements
-   - `qcom_mdt_read_metadata()` - reads firmware metadata for
-     authentication
-   - `qcom_mdt_pas_init()` - initializes firmware loading
-   - `qcom_mdt_bins_are_split()` - determines firmware structure
-   - `__qcom_mdt_load()` - performs actual firmware loading
+When KCOV is enabled, all functions get instrumented unless marked with
+`__no_sanitize_coverage`. The commit message indicates this is
+preparation for applying `__no_sanitize_coverage` to `__init` functions.
+The problem occurs because:
 
-5. **Real-World Impact**: This affects Qualcomm device firmware loading,
-   which is used in many Android devices and embedded systems. Incorrect
-   firmware loading could lead to device failures.
+1. With KCOV instrumentation, GCC may inline these functions into
+   `__init` callers
+2. Without KCOV instrumentation (when `__no_sanitize_coverage` is
+   applied), GCC's heuristics change and it may decide NOT to inline
+   them
+3. This creates a section mismatch where `__init` code calls
+   non-`__init` functions, causing build warnings/errors
 
-6. **Clear Fix**: The commit message clearly explains the issue and the
-   fix follows ELF specification standards by properly using `e_phoff`
-   instead of making assumptions about file layout.
+### Why This Qualifies for Stable Backport
 
-7. **Stable Tree Criteria Met**:
-   - Fixes a real bug that affects users
-   - Small, self-contained change
-   - No architectural changes
-   - Low risk of regression
-   - Important for device stability
+1. **Fixes a Real Bug**: This addresses legitimate build failures when
+   `CONFIG_KCOV=y` is enabled, which affects:
+   - Kernel developers doing coverage testing
+   - CI/CD systems running kernel tests
+   - Distribution builders enabling KCOV for testing
 
-The fix ensures proper ELF parsing according to specification and
-prevents potential security issues from incorrect memory access during
-firmware loading on Qualcomm platforms.
+2. **Minimal Risk**: The change is extremely conservative:
+   - Only changes inline hints from `inline` to `__always_inline`
+   - No functional changes whatsoever
+   - Affects only two simple getter functions
+   - Cannot introduce runtime regressions
 
- drivers/soc/qcom/mdt_loader.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+3. **Small and Contained**: The patch touches only 2 lines in a single
+   file, making it easy to review and backport
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index b2c0fb55d4ae..44589d10b15b 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -83,7 +83,7 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
- 	int i;
+4. **Part of Broader Fix**: This is part of a kernel-wide effort to fix
+   KCOV-related build issues, with similar fixes across multiple
+   architectures and subsystems
+
+5. **Build Infrastructure**: Stable kernels need to maintain
+   buildability with various configurations, including KCOV-enabled
+   builds for testing
+
+### Specific Code Impact
+Looking at the changed functions:
+```c
+-static inline bool __pure __init tpacpi_is_lenovo(void)
++static __always_inline bool __pure __init tpacpi_is_lenovo(void)
+ {
+        return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
+ }
+
+-static inline bool __pure __init tpacpi_is_ibm(void)
++static __always_inline bool __pure __init tpacpi_is_ibm(void)
+ {
+        return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
+ }
+```
+
+These are trivial getter functions that absolutely should be inlined.
+Using `__always_inline` ensures consistent behavior regardless of KCOV
+configuration, preventing section mismatch warnings.
+
+### Conclusion
+This is a textbook example of a stable-appropriate fix: it solves a real
+build problem, has zero functional impact, is minimal in scope, and has
+essentially no risk of causing regressions. It should be backported to
+stable kernels that support KCOV (4.6+) to maintain build compatibility
+with coverage testing configurations.
+
+ drivers/platform/x86/thinkpad_acpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index 657625dd60a0..dc1fc069fed9 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -558,12 +558,12 @@ static unsigned long __init tpacpi_check_quirks(
+ 	return 0;
+ }
  
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
+-static inline bool __pure __init tpacpi_is_lenovo(void)
++static __always_inline bool __pure __init tpacpi_is_lenovo(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
+ }
  
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
-@@ -135,7 +135,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
- 	void *data;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	if (ehdr->e_phnum < 2)
- 		return ERR_PTR(-EINVAL);
-@@ -215,7 +215,7 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 	int i;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
-@@ -270,7 +270,7 @@ static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char *fw_na
- 	int i;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		/*
-@@ -312,7 +312,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 
- 	is_split = qcom_mdt_bins_are_split(fw, fw_name);
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
+-static inline bool __pure __init tpacpi_is_ibm(void)
++static __always_inline bool __pure __init tpacpi_is_ibm(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
+ }
 -- 
 2.39.5
 
