@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924FC12C544;
-	Mon,  4 Aug 2025 00:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE6819E81F;
+	Mon,  4 Aug 2025 00:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267359; cv=none; b=G56ENuXi/EWv6OHSA0xLdknb5Xg0AvGdPFZr3zCk+FuxfudSf+VPdi3PL5sDN7vlNPdmw840Ld6kz77BlbBPXoWoAArm+rm7DSpDClEfWLbfqmvraEAPM9TiP/jmh308d2cbfzkdbil9z3YoEp/KlqaLO0rr/+2iOPULFnMDPYk=
+	t=1754267360; cv=none; b=S5/WlNO3jNoeevMtCI9rjUyZpVRnrALIK+MXDQfoae42sDOpnSWTXG7kOfBFMBZxTK2LKvN4TvrC9MSqNtNzIs8eGmpZBad6E29AAjVo2E8JMJ66iDimu918rea2Xp6YnpGEKRA85mZUapA2YtMKOJGlGP62IMsDFnC4vBN/MJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267359; c=relaxed/simple;
-	bh=F90JFq2DA2hyVOvaTR4oDxz+L1hPDd0NDSpOfIUY/Ww=;
+	s=arc-20240116; t=1754267360; c=relaxed/simple;
+	bh=9UMiUf1MBn+wDvZ8oHtCiFOAIjMQ1Ucmj6kDwvuEGVg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UrXJuFbJhgz8ygHqiJo8ER4PdpjHHO1NoPT3LTGqCU3FSk121dNViZoIEt4xBRRlKADeQlFiXzbr5h3jCo42mplFy5uEBOtVHDsceiI13yBj9A2bNwwOBOK71/HMgfnHonUqolSG4lHXZSekkKHJyB3d1lrDb2oFIeGm030z/Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=apHlnnyC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qKpCNSW2hQJh88QMWGsN2KhHAKaSFT5fFOpyWvpbIpxpSHk3jjAibVmIuHFtzPk0t1WYgt8fVIJ4V5ZBar6Efb+IHy1a4d8S9xxzK9YDUxc8Zy9v6O2NtDXgonq9GB+yH31WtHbxUZvFpx7r+R5mLxKlXNnIsNVbGZcs/eTYvZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tL+yWW5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apHlnnyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F72CC4CEF0;
-	Mon,  4 Aug 2025 00:29:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tL+yWW5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727DBC4CEEB;
+	Mon,  4 Aug 2025 00:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267357;
-	bh=F90JFq2DA2hyVOvaTR4oDxz+L1hPDd0NDSpOfIUY/Ww=;
+	s=k20201202; t=1754267360;
+	bh=9UMiUf1MBn+wDvZ8oHtCiFOAIjMQ1Ucmj6kDwvuEGVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apHlnnyC9TLgBg7GI1Fz3Xx2UYWUX+e8ZRu0QXGqSSiQHUvbXMcWiAJ8qg9t2PD1F
-	 molk5jN6/lyuG21Ia9fKp+QEbkmMQumZM4vX2pYQEk9MVXa/4J08IQga+SWycc7Ond
-	 uKnWm7U3AYo8qjBOiJtWiPdTQMemCia0KV46fhDyl2SXur1UAJ4KexLpC2gGl8hpsv
-	 QTbR2u8L3v/5/Ofep1gP/xCpper7KQOBYqZWbM/yGEVbC/DT+qVJ5meAy79ZzNizce
-	 ire+Fmaio5JLNhAzbd/de17wriglRCVeWZzSqPh/tlsnzd5ef2ehbncZOVcKfEmBvg
-	 iNZnyAFbuQOJQ==
+	b=tL+yWW5lKlEJq5LLOn+OWGwcfUooPIMlfDwe2+xX8nn3aGEVS3FFTAtWsyQCJWco8
+	 3NiMynYQWSPMXcJFzykwqoihCIH3CDkNIdVA76+UpynGY8EecULqAnz4LGl5VVqHaq
+	 bD0IoW6RJ3C0hAYN5cjl2TfP5behLLKmgZmeClpXgcAjjSebo1f3QfoE0rsM3UMu+6
+	 PF2BxejXuIuvL2PThXk+VzoIyG5dgRg1apwW5xlO95L/zcFYzWktZn0A4AvSGIUozx
+	 HImikGq/XZwEaKLyKvxb8JtgxtQzjAVJVXOdvsMwJLJsMsWLOzlQCKgKzSXFtL4XVh
+	 +w4iTW+BZbtvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aaron Kling <webgeek1234@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 34/80] ARM: tegra: Use I/O memcpy to write to IRAM
-Date: Sun,  3 Aug 2025 20:27:01 -0400
-Message-Id: <20250804002747.3617039-34-sashal@kernel.org>
+	nathan@kernel.org,
+	tglozar@redhat.com,
+	rostedt@goodmis.org,
+	jolsa@kernel.org,
+	charlie@rivosinc.com,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.15 35/80] tools/build: Fix s390(x) cross-compilation with clang
+Date: Sun,  3 Aug 2025 20:27:02 -0400
+Message-Id: <20250804002747.3617039-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -48,89 +50,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 398e67e0f5ae04b29bcc9cbf342e339fe9d3f6f1 ]
+[ Upstream commit a40f0cdce78be8a559ee8a85c908049c65a410b2 ]
 
-Kasan crashes the kernel trying to check boundaries when using the
-normal memcpy.
+The heuristic to derive a clang target triple from a GCC one does not work
+for s390. GCC uses "s390-linux" while clang expects "s390x-linux" or
+"powerz-linux".
 
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://lore.kernel.org/r/20250522-mach-tegra-kasan-v1-1-419041b8addb@gmail.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Add an explicit override.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://lore.kernel.org/r/20250620-tools-cross-s390-v2-1-ecda886e00e5@linutronix.de
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of this commit, here's my determination:
+Now let me understand better what the issue is. Based on my analysis:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit fixes a critical cross-compilation issue where the heuristic
+to derive a clang target triple from a GCC one fails for s390
+architecture. Here's my detailed analysis:
 
-1. **Fixes a real crash/bug**: The commit fixes a KASAN (Kernel Address
-   Sanitizer) crash that occurs when using regular `memcpy()` to write
-   to IRAM (Internal RAM). This is a functional bug that causes kernel
-   crashes when KASAN is enabled.
+## Analysis of Code Changes:
 
-2. **Small and contained fix**: The change is minimal - it simply
-   replaces `memcpy()` with `memcpy_toio()` on line 66 of arch/arm/mach-
-   tegra/reset.c. This is a one-line change that doesn't alter any logic
-   or introduce new features.
+The patch modifies `tools/scripts/Makefile.include` by adding two lines
+after line 104:
+```makefile
+CLANG_CROSS_FLAGS := --target=$(notdir $(CROSS_COMPILE:%-=%))
++CLANG_TARGET := $(notdir $(CROSS_COMPILE:%-=%))
++CLANG_TARGET := $(subst s390-linux,s390x-linux,$(CLANG_TARGET))
++CLANG_CROSS_FLAGS := --target=$(CLANG_TARGET)
+```
 
-3. **Follows proper I/O memory access patterns**: The fix is technically
-   correct. According to the kernel documentation in
-   Documentation/driver-api/device-io.rst, I/O memory regions (which
-   IRAM is mapped as via `IO_ADDRESS()`) should be accessed using
-   I/O-specific functions like `memcpy_toio()` rather than regular
-   `memcpy()`. The documentation explicitly states: "Do not use memset
-   or memcpy on IO addresses; they are not guaranteed to copy data in
-   order."
+## Key Findings:
 
-4. **No architectural changes**: The commit doesn't introduce any
-   architectural changes or new functionality. It's purely a bug fix
-   that corrects improper memory access.
+1. **Bug Type**: This fixes a build failure when cross-compiling kernel
+   tools for s390 architecture using clang.
 
-5. **Minimal risk of regression**: Since this change only affects how
-   data is copied to IRAM during the Tegra CPU reset handler
-   initialization, and uses the proper kernel API for I/O memory access,
-   the risk of introducing new issues is very low.
+2. **Root Cause**: GCC uses "s390-linux" as the target triple while
+   clang expects "s390x-linux" or "systemz-linux". The existing
+   heuristic that derives the clang target from the GCC cross-compiler
+   prefix fails for s390.
 
-6. **Platform-specific but important**: While this fix is specific to
-   ARM Tegra platforms, it fixes a crash that would affect any Tegra
-   system running with KASAN enabled. This is important for developers
-   and users who rely on KASAN for debugging.
+3. **Similar Fixes Already Present**: I found that other parts of the
+   kernel already handle this incompatibility:
+   - `tools/testing/selftests/nolibc/Makefile:` converts s390-linux to
+     systemz-linux
+   - `tools/include/nolibc/Makefile:` converts s390-linux to systemz-
+     linux
+   - `scripts/Makefile.clang:` directly uses s390x-linux-gnu
 
-The fact that `iram_base` is obtained through `IO_ADDRESS()` macro
-clearly indicates this is I/O mapped memory that requires I/O-specific
-accessors. KASAN correctly identified this misuse and crashed to prevent
-potential issues. The fix properly uses `memcpy_toio()` which is
-designed for copying to I/O memory regions and won't trigger KASAN
-checks for regular memory access.
+4. **Impact**: Without this fix, cross-compilation of kernel tools for
+   s390 using clang will fail, affecting:
+   - Developers building tools for s390 systems
+   - CI/CD pipelines that cross-compile for multiple architectures
+   - Distribution builders who need to build kernel tools
 
- arch/arm/mach-tegra/reset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+5. **Risk Assessment**:
+   - The change is minimal and isolated to the build system
+   - It only affects the clang target selection logic
+   - No runtime behavior changes
+   - Similar transformations are already proven in other makefiles
 
-diff --git a/arch/arm/mach-tegra/reset.c b/arch/arm/mach-tegra/reset.c
-index d5c805adf7a8..ea706fac6358 100644
---- a/arch/arm/mach-tegra/reset.c
-+++ b/arch/arm/mach-tegra/reset.c
-@@ -63,7 +63,7 @@ static void __init tegra_cpu_reset_handler_enable(void)
- 	BUG_ON(is_enabled);
- 	BUG_ON(tegra_cpu_reset_handler_size > TEGRA_IRAM_RESET_HANDLER_SIZE);
- 
--	memcpy(iram_base, (void *)__tegra_cpu_reset_handler_start,
-+	memcpy_toio(iram_base, (void *)__tegra_cpu_reset_handler_start,
- 			tegra_cpu_reset_handler_size);
- 
- 	err = call_firmware_op(set_cpu_boot_addr, 0, reset_address);
+6. **Stable Tree Criteria**:
+   - ✓ Fixes a real bug that affects users (build failure)
+   - ✓ Small and contained fix (2 lines)
+   - ✓ No side effects beyond fixing the issue
+   - ✓ No architectural changes
+   - ✓ Only touches build infrastructure
+   - ✓ Minimal risk of regression
+
+This is a clear candidate for stable backporting as it fixes a concrete
+build failure with minimal risk.
+
+ tools/scripts/Makefile.include | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/tools/scripts/Makefile.include b/tools/scripts/Makefile.include
+index 5158250988ce..ded48263dd5e 100644
+--- a/tools/scripts/Makefile.include
++++ b/tools/scripts/Makefile.include
+@@ -101,7 +101,9 @@ else ifneq ($(CROSS_COMPILE),)
+ # Allow userspace to override CLANG_CROSS_FLAGS to specify their own
+ # sysroots and flags or to avoid the GCC call in pure Clang builds.
+ ifeq ($(CLANG_CROSS_FLAGS),)
+-CLANG_CROSS_FLAGS := --target=$(notdir $(CROSS_COMPILE:%-=%))
++CLANG_TARGET := $(notdir $(CROSS_COMPILE:%-=%))
++CLANG_TARGET := $(subst s390-linux,s390x-linux,$(CLANG_TARGET))
++CLANG_CROSS_FLAGS := --target=$(CLANG_TARGET)
+ GCC_TOOLCHAIN_DIR := $(dir $(shell which $(CROSS_COMPILE)gcc 2>/dev/null))
+ ifneq ($(GCC_TOOLCHAIN_DIR),)
+ CLANG_CROSS_FLAGS += --prefix=$(GCC_TOOLCHAIN_DIR)$(notdir $(CROSS_COMPILE))
 -- 
 2.39.5
 
