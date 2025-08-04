@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957BB1FDD;
-	Mon,  4 Aug 2025 00:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F2A1DE4E5;
+	Mon,  4 Aug 2025 00:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267557; cv=none; b=Qfp1MkNhl/p1Zgeb+8s1nihsNvSWfMuUen4VAm7oAtnIBINUV6S6WT/vv9t/vNjmBeTCzEBK8SXvTZEsaDb+OPeck+/C4v47pVUUsn0POZMJvkMIdwZ85mDmbqmR1Gpx0CE0CUKWqyQ5FyKE1j90Xjz/xjN5F4uOOPjAQBOf6DA=
+	t=1754267558; cv=none; b=N4Fu0kaDKz3XMLqPGO28i6QjtI8ci5Q9uChQONoxZCOwD2PNGxIbjc0UwlZ8cXTy3oLxlMmN3h9jmhA24p9hvrSDpt5YwdANrQ0YzuH9Nf6s+2ckDEqpf3FwHMLkxiAO6wEh/HZPpkO/KSATqCh5LRT2+6N5ksNxRKg1Ac9qj/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267557; c=relaxed/simple;
-	bh=JxkoWGjRIeBhg6g/b62/nOUvvYKsN6/cJNsLmyZ80x0=;
+	s=arc-20240116; t=1754267558; c=relaxed/simple;
+	bh=oYzjt0pBPUFIGVDHgd1Ww6Ch3t3p6kCVfPtoExsa0k0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LFqcBzskqiU3BpsEf03fxzqJiUPDjeVsXoEHq//w5f7Fu7HtEvrojr3wdML1cDogwtRjL5RKZ6KyGonwvzr/OMTpC4oWy9WqbwZ8h+b62WzBnipZ2Jr4nOyxZZS3QBtya+i0S/ttDt72JU685ZpvJ29yQmMpScRwmBRzvW4BjB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CL7SvOIA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oacDOjjCDb+WynFYjE94dU/GHuD3/W8HgT4iyirgQwNj6Q0f5R05XOOwXYjdPhc2h6Au5pV6WwJf7t8HfhtodpbbxucGCu13BFJStoze+cH9nM7cZ8YHJ5m6iX1WgUSjEo9oE+8b+oH65Tj1sKRfL9qymto58WmlAnqTrTE9JqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E7qsViun; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CL7SvOIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA168C4CEF0;
-	Mon,  4 Aug 2025 00:32:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E7qsViun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26FFC4CEEB;
+	Mon,  4 Aug 2025 00:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267556;
-	bh=JxkoWGjRIeBhg6g/b62/nOUvvYKsN6/cJNsLmyZ80x0=;
+	s=k20201202; t=1754267557;
+	bh=oYzjt0pBPUFIGVDHgd1Ww6Ch3t3p6kCVfPtoExsa0k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CL7SvOIAiBy3h6okYnAYwCi4ladcaIJH0sDxvgDPyJQCkF/p/UxOyJY0kEm8y3f6p
-	 t1ce2j3s/riecX9cGBe731fl2AW7FYVV3EV4yveE/6jRyiXqaV6TBaapWQT0W9EODJ
-	 0bojYJCXKmqi51+O1Nry9U7EB7+Bl6kDcm0e220kPO5w9hHXSBFR9MXS8tlFts+DCK
-	 pUuJqxAQbi2uLS5138OgNGCto55rrN4Mwf8pSFBTZs0XAtb7SCg8olJJR0foWViDbH
-	 wRahVTVpe5jGAFwlMpLpMQ1rS+8cQ263EZCv6PP2EUW0lOMCwGtdAHVtrwW5qjqiaN
-	 oxPbYdNx6gMZA==
+	b=E7qsViunp9RYD0YmCwq0o69pEQS0r76MSD9AbE241mUku9/q7Qy+6yrlYlV1077gi
+	 D6jDmtJsWCDyX4RL/6BALCmBLmDhEtC5eE1ke9C5o5FUsNbyjlS2GVI0rsrztW7VIT
+	 MdZKXvNBp/HALlSKggKsQ3KJDtExl69MEA0AxHG4WcWyn4YK963VXtfJNjIYv4iCGs
+	 myOyYkE2WkSDQNrB2qy7em7oiG8nuapT8Sa0PWU6TFO1+OK/ETt5PhUwmkzhngILI2
+	 5YUN30tRIOwPGJyonjv4XH5J91JIorMz+ZU1pRvgofSW8tOkYDRJ0RP3uzm4AcfR97
+	 AHnP/jzadFkpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhu Qiyu <qiyuzhu2@amd.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Peng Fan <peng.fan@nxp.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 31/69] ACPI: PRM: Reduce unnecessary printing to avoid user confusion
-Date: Sun,  3 Aug 2025 20:30:41 -0400
-Message-Id: <20250804003119.3620476-31-sashal@kernel.org>
+	arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.12 32/69] firmware: arm_scmi: power_control: Ensure SCMI_SYSPOWER_IDLE is set early during resume
+Date: Sun,  3 Aug 2025 20:30:42 -0400
+Message-Id: <20250804003119.3620476-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -51,139 +51,166 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Qiyu <qiyuzhu2@amd.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 3db5648c4d608b5483470efc1da9780b081242dd ]
+[ Upstream commit 9a0658d3991e6c82df87584b253454842f22f965 ]
 
-Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
-handler and context") introduced non-essential printing "Failed to find
-VA for GUID: xxxx, PA: 0x0" which may confuse users to think that
-something wrong is going on while it is not the case.
+Fix a race condition where a second suspend notification from another
+SCMI agent wakes the system before SCMI_SYSPOWER_IDLE is set, leading
+to ignored suspend requests. This is due to interrupts triggering early
+execution of `scmi_userspace_notifier()` before the SCMI state is updated.
 
-According to the PRM Spec Section 4.1.2 [1], both static data buffer
-address and ACPI parameter buffer address may be NULL if they are not
-needed, so there is no need to print out the "Failed to find VA ... "
-in those cases.
+To resolve this, set SCMI_SYSPOWER_IDLE earlier in the device resume
+path, prior to `thaw_processes()`. This ensures the SCMI state is
+correct when the notifier runs, allowing the system to suspend again
+as expected.
 
-Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
-Signed-off-by: Zhu Qiyu <qiyuzhu2@amd.com>
-Link: https://patch.msgid.link/20250704014104.82524-1-qiyuzhu2@amd.com
-[ rjw: Edits in new comments, subject and changelog ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+On some platforms using SCMI, SCP cannot distinguish between CPU idle
+and suspend since both result in cluster power-off. By explicitly setting
+the idle state early, the Linux SCMI agent can correctly re-suspend in
+response to external notifications.
+
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Message-Id: <20250704-scmi-pm-v2-2-9316cec2f9cc@nxp.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Bug Fix for User-Visible Issue
-The commit fixes false warning messages that were confusing users. The
-original commit 088984c8d54c (which was already backported to stable
-with "Cc: All applicable <stable@vger.kernel.org>") introduced an
-unconditional warning in `efi_pa_va_lookup()`:
+## 1. Bug Fix Nature
 
-```c
-pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
-```
+The commit fixes a clear race condition bug that affects system
+suspend/resume functionality on SCMI-based platforms. Looking at the
+code changes:
 
-This warning was printed even when the physical address (PA) was
-legitimately 0/NULL, which according to the PRM specification is valid
-for both `static_data_buffer_address` and `acpi_param_buffer_address`
-when they are not needed.
+- **Original bug** (lines 325-333 in original code): The
+  `scmi_suspend_work_func` sets `sc->state = SCMI_SYSPOWER_IDLE` AFTER
+  `pm_suspend()` returns
+- **Race condition**: If another SCMI agent sends a suspend notification
+  while the system is resuming (after `pm_suspend()` returns but before
+  `SCMI_SYSPOWER_IDLE` is set), the `scmi_userspace_notifier` (line 305)
+  will see the state is still `SCMI_SYSPOWER_IN_PROGRESS` and ignore the
+  new suspend request
+- **Impact**: The system fails to re-suspend when it should, breaking
+  power management functionality
 
-## Small and Contained Fix
-The fix is minimal and surgical:
-1. Removes the unconditional warning from `efi_pa_va_lookup()`
-2. Adds conditional warnings only when addresses are non-zero but lookup
-   fails:
-   - For handler_addr: warns if lookup fails (this should never be zero)
-   - For static_data_buffer_addr: only warns if
-     `handler_info->static_data_buffer_address` is non-zero but lookup
-     fails
-   - For acpi_param_buffer_addr: only warns if
-     `handler_info->acpi_param_buffer_address` is non-zero but lookup
-     fails
+## 2. Fix is Small and Contained
 
-## Regression Fix
-Since the problematic commit 088984c8d54c has been backported to v6.12
-stable kernels, this fix addresses a regression in stable trees where
-users are seeing confusing warning messages for legitimate NULL
-addresses.
+The fix is minimal and well-contained:
+- Adds PM ops structure with only a resume callback
+- Moves the state reset from work function to PM resume callback
+- Total change is about 20 lines of code
+- No API changes or architectural modifications
 
-## Low Risk
-The change:
-- Does not modify any functional behavior
-- Only adjusts when warning messages are printed
-- Has no architectural changes or side effects
-- Is confined to the ACPI PRM subsystem
+## 3. Clear User Impact
 
-## Clear Benefit
-The fix eliminates user confusion from false warnings while maintaining
-proper warnings for actual error conditions (when a non-zero address
-fails lookup).
+The commit message explicitly states this affects real platforms: "On
+some platforms using SCMI, SCP cannot distinguish between CPU idle and
+suspend since both result in cluster power-off." This indicates actual
+hardware is affected by this bug.
 
-Given that the original problematic commit is in stable kernels and this
-is a targeted fix for that regression with minimal risk, it clearly
-meets the stable backporting criteria.
+## 4. Low Risk of Regression
 
- drivers/acpi/prmt.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+The changes are:
+- Limited to the SCMI power control driver
+- Only modifies the timing of when `SCMI_SYSPOWER_IDLE` is set
+- Uses standard PM callbacks (`dev_pm_ops`)
+- No changes to core logic or protocol handling
 
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index e549914a636c..be033bbb126a 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -85,8 +85,6 @@ static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
- 		}
- 	}
+## 5. Follows Stable Criteria
+
+The fix meets stable kernel criteria:
+- Fixes a real bug (race condition in suspend/resume)
+- Small, focused change (~20 lines)
+- Already tested and merged upstream
+- Clear explanation of the problem and solution
+- No new features added
+
+## 6. Technical Correctness
+
+The fix is technically sound:
+- Setting `SCMI_SYSPOWER_IDLE` in the PM resume callback ensures it
+  happens before `thaw_processes()` completes
+- This guarantees the state is correct when interrupts are re-enabled
+  and the notifier can run
+- The use of `dev_set_drvdata()` and `dev_get_drvdata()` properly passes
+  the context to the PM callback
+
+This is a textbook example of a stable-worthy commit: it fixes a
+specific race condition bug with minimal code changes and clear impact
+on affected systems.
+
+ .../firmware/arm_scmi/scmi_power_control.c    | 22 ++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/firmware/arm_scmi/scmi_power_control.c b/drivers/firmware/arm_scmi/scmi_power_control.c
+index 21f467a92942..ab0cee0d4bec 100644
+--- a/drivers/firmware/arm_scmi/scmi_power_control.c
++++ b/drivers/firmware/arm_scmi/scmi_power_control.c
+@@ -46,6 +46,7 @@
+ #include <linux/math.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
++#include <linux/pm.h>
+ #include <linux/printk.h>
+ #include <linux/reboot.h>
+ #include <linux/scmi_protocol.h>
+@@ -324,12 +325,7 @@ static int scmi_userspace_notifier(struct notifier_block *nb,
  
--	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
+ static void scmi_suspend_work_func(struct work_struct *work)
+ {
+-	struct scmi_syspower_conf *sc =
+-		container_of(work, struct scmi_syspower_conf, suspend_work);
 -
- 	return 0;
+ 	pm_suspend(PM_SUSPEND_MEM);
+-
+-	sc->state = SCMI_SYSPOWER_IDLE;
  }
  
-@@ -154,13 +152,37 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
-+		/*
-+		 * Print a warning message if handler_addr is zero which is not expected to
-+		 * ever happen.
-+		 */
-+		if (unlikely(!th->handler_addr))
-+			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->handler_address);
+ static int scmi_syspower_probe(struct scmi_device *sdev)
+@@ -354,6 +350,7 @@ static int scmi_syspower_probe(struct scmi_device *sdev)
+ 	sc->required_transition = SCMI_SYSTEM_MAX;
+ 	sc->userspace_nb.notifier_call = &scmi_userspace_notifier;
+ 	sc->dev = &sdev->dev;
++	dev_set_drvdata(&sdev->dev, sc);
  
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
-+		/*
-+		 * According to the PRM specification, static_data_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->static_data_buffer_addr && handler_info->static_data_buffer_address))
-+			pr_warn("Failed to find VA of static data buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->static_data_buffer_address);
+ 	INIT_WORK(&sc->suspend_work, scmi_suspend_work_func);
  
- 		th->acpi_param_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
+@@ -363,6 +360,18 @@ static int scmi_syspower_probe(struct scmi_device *sdev)
+ 						       NULL, &sc->userspace_nb);
+ }
  
-+		/*
-+		 * According to the PRM specification, acpi_param_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->acpi_param_buffer_addr && handler_info->acpi_param_buffer_address))
-+			pr_warn("Failed to find VA of acpi param buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->acpi_param_buffer_address);
++static int scmi_system_power_resume(struct device *dev)
++{
++	struct scmi_syspower_conf *sc = dev_get_drvdata(dev);
 +
- 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
++	sc->state = SCMI_SYSPOWER_IDLE;
++	return 0;
++}
++
++static const struct dev_pm_ops scmi_system_power_pmops = {
++	SET_SYSTEM_SLEEP_PM_OPS(NULL, scmi_system_power_resume)
++};
++
+ static const struct scmi_device_id scmi_id_table[] = {
+ 	{ SCMI_PROTOCOL_SYSTEM, "syspower" },
+ 	{ },
+@@ -370,6 +379,9 @@ static const struct scmi_device_id scmi_id_table[] = {
+ MODULE_DEVICE_TABLE(scmi, scmi_id_table);
  
- 	return 0;
+ static struct scmi_driver scmi_system_power_driver = {
++	.driver	= {
++		.pm = &scmi_system_power_pmops,
++	},
+ 	.name = "scmi-system-power",
+ 	.probe = scmi_syspower_probe,
+ 	.id_table = scmi_id_table,
 -- 
 2.39.5
 
