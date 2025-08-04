@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0963BBF2;
-	Mon,  4 Aug 2025 00:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B396215A8;
+	Mon,  4 Aug 2025 00:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267516; cv=none; b=C1NImbHFVx0cnD7aeV8c0Hl03npaeOdjt7dU/YxXmHAz3WxCt/ikfkZ0n2saMvMvnHgP1ZMe+4oGdrcucHEmDel9BUoGbmZ9/daq/p7CzVAhAzmQoeM4pOA8WjXdeyRuA7sGGmZvB8Q9SFhuJ9hCytkiTpugw/PCyhTqefZYlGg=
+	t=1754267519; cv=none; b=fKCVJqLxumDxix8nOFzSbOm/Okqjn1vkVh/4v5lCI/jln70zh2RsjX3earMg14kR46S0U7Mf7XBn7Xc1kGFz31J4KZLKcupmVK+eyH27y2j3glBKCFoK+DrGxEoT31Z3oMMtRleZaNg8fhiyk2TmQ2vDElMYd4h8n/bqqxeRIMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267516; c=relaxed/simple;
-	bh=vREE2ZkoWyaTaUVs2JMVo7lnPN/4F9kvPw8m1RUlj1s=;
+	s=arc-20240116; t=1754267519; c=relaxed/simple;
+	bh=N5C90kP997xdiI2NjRwXCsSFjrsArUe09K7rB+aKgac=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Fbd4jn63hm7Lto9seluVZoQoMlQ1LJexzuzvVZEeqnHQhwrgnseO7DIudK5eO4YqdZxrgmCqwLZ1BXIs4CNlWu4f28Ff708ZBOrkmSrwLFp039YsOfx7UJx0MG/LBPd8AGEU/2+EEhh/NfjGd0DoHE3JQHNXe8NRwHcgXqP8K3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pc7uC9Ev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=M3IJp6hE0+DBNE4d0GUbZD/sVle1bY8Ud3TjIOxxi1NbpRyFmraZHX130xFClIo1pL5sF/HwXagcOvP918ogs6v/UsabraL9gdtVLnvgAGDi2kuuxQ+4KbsioMPVFVIl46BPRnJ7vxkKO8lJWxqcRJFmdfzi1/P9YZG3Q9nePT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FyShjCbh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pc7uC9Ev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376A6C4CEF0;
-	Mon,  4 Aug 2025 00:31:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FyShjCbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A90C4CEEB;
+	Mon,  4 Aug 2025 00:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267516;
-	bh=vREE2ZkoWyaTaUVs2JMVo7lnPN/4F9kvPw8m1RUlj1s=;
+	s=k20201202; t=1754267519;
+	bh=N5C90kP997xdiI2NjRwXCsSFjrsArUe09K7rB+aKgac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pc7uC9Ev6c/xW1J9d8JF4iFVa24Mt7xPDjUgnouDSDFIddlR+0yf5sJhN7QiKbAfo
-	 3NPefosHqsxp2DzFxYk9Nzlcr9vaFSk/iekj+Kk+8mX6ZPYzOHsj4d9eIjCWjbHW8c
-	 jtfL0qfWHl12Z8r5lu0eWuLRi/B+a58XR4YuxzClvMLybukJzllyxkJCPCU4qrX518
-	 p8VLPXcgdq+rNfNmNFn2BFh7Ze7aG2WFKvB5tlyRjntjHqOU58vZzHcQg6L9Jw8ZqX
-	 2ZzfHBDOuhp6CgURsbOx5DQx3UmBO8fkN7dk+vbo36Jm8Q3vSF2q59jcSfDKqIKE6L
-	 qySgf21LWdOCA==
+	b=FyShjCbhWTfD6Adl7XiCOOU9ZRhhmctmTd/Sc5Yj3wirKLjcaGX2ZGmrFQPSyms2g
+	 LodB1SEXMBt2zZKjb3xTQ0Uja9532ajX/OQA3w8E3IAYdODezicio4gsjx7jBpLyUl
+	 LERD69mS0VRW4jVLcOdqbO7TsbTYrOa+CJbJRu0YrjbEHSlw1/ySrGOTQ1IpwY75/Y
+	 kGlm3ekcX6cwwawV8YfumxMUNtbP+AOtmcKdyS9ihhvfyG20n5GJdUl2FI/cDSFxvE
+	 EluEDUBQlD6LCTeJJbRlF68+Q6mqhQSW+ATYUo/VTiMJ6ZvPrJuiqLbtooJWQ+hLfn
+	 wId9rQ4XIuLIw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hiago De Franco <hiago.franco@toradex.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+Cc: =?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andersson@kernel.org,
-	shawnguo@kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.12 13/69] remoteproc: imx_rproc: skip clock enable when M-core is managed by the SCU
-Date: Sun,  3 Aug 2025 20:30:23 -0400
-Message-Id: <20250804003119.3620476-13-sashal@kernel.org>
+	heikki.krogerus@linux.intel.com,
+	krzysztof.kozlowski@linaro.org,
+	amitsd@google.com
+Subject: [PATCH AUTOSEL 6.12 14/69] usb: typec: tcpm/tcpci_maxim: fix irq wake usage
+Date: Sun,  3 Aug 2025 20:30:24 -0400
+Message-Id: <20250804003119.3620476-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003119.3620476-1-sashal@kernel.org>
 References: <20250804003119.3620476-1-sashal@kernel.org>
@@ -51,118 +48,168 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.12.41
 Content-Transfer-Encoding: 8bit
 
-From: Hiago De Franco <hiago.franco@toradex.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 496deecb020d14ba89ba7084fbc3024f91687023 ]
+[ Upstream commit 31611223fb34a3e9320cdfc4f4395072a13ea78e ]
 
-For the i.MX8X and i.MX8 family SoCs, when the Cortex-M core is powered
-up and started by the Cortex-A core using the bootloader (e.g., via the
-U-Boot bootaux command), both M-core and Linux run within the same SCFW
-(System Controller Firmware) partition. With that, Linux has permission
-to control the M-core.
+This driver calls enable_irq_wake() during probe() unconditionally, and
+never issues the required corresponding disable_irq_wake() to disable
+hardware interrupt wakeup signals.
 
-But once the M-core is started by the bootloader, the SCFW automatically
-enables its clock and sets the clock rate. If Linux later attempts to
-enable the same clock via clk_prepare_enable(), the SCFW returns a
-'LOCKED' error, as the clock is already configured by the SCFW. This
-causes the probe function in imx_rproc.c to fail, leading to the M-core
-power domain being shut down while the core is still running. This
-results in a fault from the SCU (System Controller Unit) and triggers a
-system reset.
+Additionally, whether or not a device should wake-up the system is
+meant to be a policy decision based on sysfs (.../power/wakeup) in the
+first place.
 
-To address this issue, ignore handling the clk for i.MX8X and i.MX8
-M-core, as SCFW already takes care of enabling and configuring the
-clock.
+Update the driver to use the standard approach to enable/disable IRQ
+wake during the suspend/resume callbacks. This solves both issues
+described above.
 
-Suggested-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Hiago De Franco <hiago.franco@toradex.com>
-Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Link: https://lore.kernel.org/r/20250629172512.14857-3-hiagofranco@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20250707-max77759-irq-wake-v1-1-d367f633e4bc@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
-
-Based on my analysis, I can now provide a definitive answer:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Critical bug fix preventing system reset**: The commit fixes a
-   serious issue where the probe function failure causes the M-core
-   power domain to be shut down while the core is still running,
-   resulting in a fault from the SCU and triggering a system reset. This
-   is a severe user-impacting bug that can cause unexpected system
-   reboots.
+1. **Clear Bug Fix**: The commit fixes a resource management bug where
+   `enable_irq_wake()` is called during probe without a corresponding
+   `disable_irq_wake()`. This violates the kernel's IRQ wake API usage
+   requirements, leading to:
+   - Resource leak in the IRQ subsystem
+   - Incorrect wake behavior that cannot be controlled via sysfs
+   - Potential system power management issues
 
-2. **Minimal and contained change**: The fix is very simple - it just
-   adds `|| dcfg->method == IMX_RPROC_SCU_API` to an existing condition
-   in the `imx_rproc_clk_enable()` function. This is a one-line change
-   that only affects the clock handling logic for i.MX8X and i.MX8
-   family SoCs when using SCU API method.
+2. **Small and Contained Change**: The fix is minimal and well-
+   contained:
+   - Removes the problematic `max_tcpci_init_alert()` function
+   - Moves IRQ request directly into probe
+   - Adds proper suspend/resume callbacks with correct
+     `enable_irq_wake()`/`disable_irq_wake()` pairing
+   - Total change is about 40 lines of straightforward code
 
-3. **Clear root cause**: The commit message clearly explains the issue -
-   when the M-core is started by the bootloader, the SCFW automatically
-   enables its clock. If Linux later attempts to enable the same clock,
-   SCFW returns a 'LOCKED' error, causing probe failure and subsequent
-   power domain shutdown while the core is running.
+3. **Low Risk of Regression**:
+   - The change follows established kernel patterns for IRQ wake
+     handling in PM callbacks
+   - Similar patterns exist in other USB Type-C drivers (e.g., fusb302.c
+     uses suspend/resume for IRQ wake)
+   - The fix only affects power management behavior, not core
+     functionality
+   - Uses `device_may_wakeup()` to properly check policy before enabling
+     wake
 
-4. **No architectural changes**: This is purely a bug fix that doesn't
-   introduce new features or change the driver architecture. It simply
-   skips clock operations for a specific configuration where the clock
-   is already managed by the SCFW.
+4. **Clear Impact on Users**:
+   - Without this fix, devices cannot properly control wake-on-USB-C
+     events through sysfs
+   - The unconditional `enable_irq_wake()` means the device will always
+     wake the system on USB-C events, regardless of user preference
+   - This affects power consumption and battery life on systems with USB
+     Type-C
 
-5. **Platform-specific fix with no regression risk**: The change only
-   affects i.MX8X and i.MX8 platforms using the SCU API method
-   (`IMX_RPROC_SCU_API`). Other platforms and methods are unaffected,
-   minimizing the risk of regression.
+5. **No Architectural Changes**: The commit:
+   - Doesn't introduce new features
+   - Doesn't change any APIs or interfaces
+   - Simply fixes incorrect usage of existing kernel APIs
+   - Maintains backward compatibility
 
-6. **Prevents data corruption/loss**: System resets caused by this bug
-   could potentially lead to data loss or corruption, making this fix
-   important for system stability.
+The commit message clearly explains the problem and solution, the code
+changes are minimal and correct, and it fixes a real bug that affects
+system power management behavior. This is exactly the type of fix that
+stable kernels should receive.
 
-The specific code change in `imx_rproc_clk_enable()` at line 1033 simply
-extends the existing check from:
-```c
-if (dcfg->method == IMX_RPROC_NONE)
-```
-to:
-```c
-if (dcfg->method == IMX_RPROC_NONE || dcfg->method == IMX_RPROC_SCU_API)
-```
+ drivers/usb/typec/tcpm/tcpci_maxim_core.c | 46 +++++++++++++++--------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
-This ensures that for SCU-managed cores, Linux doesn't attempt to enable
-clocks that are already controlled by the SCFW, preventing the probe
-failure and subsequent system reset.
-
- drivers/remoteproc/imx_rproc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 800015ff7ff9..cc3f5b7fe9dd 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -1029,8 +1029,8 @@ static int imx_rproc_clk_enable(struct imx_rproc *priv)
- 	struct device *dev = priv->dev;
- 	int ret;
+diff --git a/drivers/usb/typec/tcpm/tcpci_maxim_core.c b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
+index 648311f5e3cf..eeaf79e97261 100644
+--- a/drivers/usb/typec/tcpm/tcpci_maxim_core.c
++++ b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
+@@ -421,21 +421,6 @@ static irqreturn_t max_tcpci_isr(int irq, void *dev_id)
+ 	return IRQ_WAKE_THREAD;
+ }
  
--	/* Remote core is not under control of Linux */
--	if (dcfg->method == IMX_RPROC_NONE)
-+	/* Remote core is not under control of Linux or it is managed by SCU API */
-+	if (dcfg->method == IMX_RPROC_NONE || dcfg->method == IMX_RPROC_SCU_API)
- 		return 0;
+-static int max_tcpci_init_alert(struct max_tcpci_chip *chip, struct i2c_client *client)
+-{
+-	int ret;
+-
+-	ret = devm_request_threaded_irq(chip->dev, client->irq, max_tcpci_isr, max_tcpci_irq,
+-					(IRQF_TRIGGER_LOW | IRQF_ONESHOT), dev_name(chip->dev),
+-					chip);
+-
+-	if (ret < 0)
+-		return ret;
+-
+-	enable_irq_wake(client->irq);
+-	return 0;
+-}
+-
+ static int max_tcpci_start_toggling(struct tcpci *tcpci, struct tcpci_data *tdata,
+ 				    enum typec_cc_status cc)
+ {
+@@ -532,7 +517,9 @@ static int max_tcpci_probe(struct i2c_client *client)
  
- 	priv->clk = devm_clk_get(dev, NULL);
+ 	chip->port = tcpci_get_tcpm_port(chip->tcpci);
+ 
+-	ret = max_tcpci_init_alert(chip, client);
++	ret = devm_request_threaded_irq(&client->dev, client->irq, max_tcpci_isr, max_tcpci_irq,
++					(IRQF_TRIGGER_LOW | IRQF_ONESHOT), dev_name(chip->dev),
++					chip);
+ 	if (ret < 0)
+ 		return dev_err_probe(&client->dev, ret,
+ 				     "IRQ initialization failed\n");
+@@ -541,6 +528,32 @@ static int max_tcpci_probe(struct i2c_client *client)
+ 	return 0;
+ }
+ 
++#ifdef CONFIG_PM_SLEEP
++static int max_tcpci_resume(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++	int ret = 0;
++
++	if (client->irq && device_may_wakeup(dev))
++		ret = disable_irq_wake(client->irq);
++
++	return ret;
++}
++
++static int max_tcpci_suspend(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++	int ret = 0;
++
++	if (client->irq && device_may_wakeup(dev))
++		ret = enable_irq_wake(client->irq);
++
++	return ret;
++}
++#endif /* CONFIG_PM_SLEEP */
++
++static SIMPLE_DEV_PM_OPS(max_tcpci_pm_ops, max_tcpci_suspend, max_tcpci_resume);
++
+ static const struct i2c_device_id max_tcpci_id[] = {
+ 	{ "maxtcpc" },
+ 	{ }
+@@ -559,6 +572,7 @@ static struct i2c_driver max_tcpci_i2c_driver = {
+ 	.driver = {
+ 		.name = "maxtcpc",
+ 		.of_match_table = of_match_ptr(max_tcpci_of_match),
++		.pm = &max_tcpci_pm_ops,
+ 	},
+ 	.probe = max_tcpci_probe,
+ 	.id_table = max_tcpci_id,
 -- 
 2.39.5
 
