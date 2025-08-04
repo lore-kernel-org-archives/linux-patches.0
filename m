@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3041BCA0E;
-	Mon,  4 Aug 2025 00:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079A81A9B24;
+	Mon,  4 Aug 2025 00:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267676; cv=none; b=BTZwSF8N52Z1eK54OUj9OWZz1N3UVz2yJyFZA7OKPM3UQ1DpBWjPuULcRpl2oLgNVa69HJJDTWEXnC57oTYD8Nh55sE2ZQ3OCwAxreQGEnqRH4G3A+77VaSuI4t1pLMEL/0Wk5bCaVqG3FeYsvpaGxMerPMu2fGO2tcIVYJrjAc=
+	t=1754267679; cv=none; b=tBA3Oh8VWc1SSenmfqOhxLyJ6/266sq/vwoorQNeavAs97C2u1+/nAvhz5NJoP0xzx9csihmTRbUOcNO1O92gS9e70qhtU7EaEINxUajcn8MeBcFbFDh3RRA1fcvYoucuaAhnHvTrhOc2UPwclTlVeROxOrFPLTD0I6J9Z4YvnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267676; c=relaxed/simple;
-	bh=Gq4AiJfFpGAL7SIpICYLx1aL/ANPXjj8wQ7zQ+HpKZQ=;
+	s=arc-20240116; t=1754267679; c=relaxed/simple;
+	bh=gQRiOasqt4jxi0FZ0QniXxEQL7+2N9LFpcQShaLxtos=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PaMCEm+X7DgT5e1x0l2QcUb6ztjqPeofgkVRyYqOlze4if6MlMsgnjKgTPfGtUFmYgZXdm9pAzbRXh8dBKesdCxRDQHbLITaC1X6uC+n4u4n7wY60N4yxwwDiNc5QfZJr/g4Tfx9kp4RHoNMuAj3cu+73umlVaNmvDMoc8t3kf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEgAo3xg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gk7cz50b0B99giKe81KrrBhgreFMTAzIYyPD2vYlfA+GNPo6n1LWSX/XENTgrwbGNaJtHukixDlwz0Y07LuoIUbff9fz+jYg3a9vC9L9F3W8C2yaMzq2VbUWct1SxCaIyO9gyBXiOBRZSvpwmjVDt/c+vtXC77bjHhh0XDiW31c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=StybLaKI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEgAo3xg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE42C4CEF9;
-	Mon,  4 Aug 2025 00:34:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="StybLaKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFECC4CEFA;
+	Mon,  4 Aug 2025 00:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267676;
-	bh=Gq4AiJfFpGAL7SIpICYLx1aL/ANPXjj8wQ7zQ+HpKZQ=;
+	s=k20201202; t=1754267678;
+	bh=gQRiOasqt4jxi0FZ0QniXxEQL7+2N9LFpcQShaLxtos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEgAo3xgp2pk0EgCNfvSWduKA9wm2les62xbKTSBbHP5aSxlOTneiIBN0PKIFdr8W
-	 hnY1t+ABGIMXID7V2ywRyUtb0pvYMRTycEfMxbfkdCGd8mrW6RHwFipWQZUAAUHovk
-	 jVssSZNN5dWkZ+FSGAoN9lHh41lsGogwlYyHUsawrr5FqQ+HsK4Q6RM5e7Dv05ToWk
-	 8GI/p5CZvQgHioo3Vm7Tk/gU6MpaH/aE7zwxZf7iNbT9gJfNd3fqBDAJvgeqEbeaeF
-	 9BNHNZJtW9CheF9j4djHpXVZkTWPv68rdKlWbMvHto0dqgC+LmbyjpcHfxNRNQThRg
-	 8iCJ5GCDqMyMw==
+	b=StybLaKIgwO6sI01M2BBdtDJt4kQEf0+8K9dh5M17LxjmVxFDjkKiintBVGBD3BeB
+	 0kF0pHRitvFozFQ4erHeVBpZOTcnp/FsMD7vesRu8X8cvU965E+AUryd2f1ZttxR9c
+	 2Eu3IPSxBEOF7J1Z3n2ZYe7zy/xfuIEQR1YIDHbmNPJdQURuRoWglf64EevMAVLGhz
+	 UuYa0ypQX5PzSeujtpbjTfKWVThw00TDHapLwYG4uZwMfX2PmNcaYktgLq7DZy7gil
+	 2e8ZZnfjyd6X4HxcXB1IP+/oOkppBvb3ISVRRJ9rIOUSedlkXx/KNRGZAHfA2NDSbC
+	 GmgVAXCaJCqBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.6 09/59] usb: xhci: Avoid showing errors during surprise removal
-Date: Sun,  3 Aug 2025 20:33:23 -0400
-Message-Id: <20250804003413.3622950-9-sashal@kernel.org>
+	konradybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 10/59] soc: qcom: rpmh-rsc: Add RSC version 4 support
+Date: Sun,  3 Aug 2025 20:33:24 -0400
+Message-Id: <20250804003413.3622950-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -50,106 +51,89 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-[ Upstream commit 4b9c60e440525b729ac5f071e00bcee12e0a7e84 ]
+[ Upstream commit 84684c57c9cd47b86c883a7170dd68222d97ef13 ]
 
-When a USB4 dock is unplugged from a system it won't respond to ring
-events. The PCI core handles the surprise removal event and notifies
-all PCI drivers. The XHCI PCI driver sets a flag that the device is
-being removed as well.
+Register offsets for v3 and v4 versions are backward compatible. Assign v3
+offsets for v4 and all higher versions to avoid end up using v2 offsets.
 
-When that flag is set don't show messages in the cleanup path for
-marking the controller dead.
-
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250623-rsc_v4-v1-1-275b27bc5e3c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze this commit properly:
+Based on my analysis of the commit, here is my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a user-visible issue**: The commit addresses spurious error
-   messages that appear when USB4 docks are unplugged. The original code
-   shows `xhci_err(xhci, "xHCI host controller not responding, assume
-   dead\n")` even during expected surprise removals, which can confuse
-   users and fill system logs unnecessarily.
+1. **Bug Fix Nature**: The commit fixes a real bug where RSC version 4
+   devices would incorrectly use version 2.7 register offsets instead of
+   version 3.0 offsets. The code change shows that before this fix, only
+   `drv->ver.major == 3` would select v3 offsets, meaning version 4 (and
+   any higher versions) would fall through to use v2.7 offsets, which
+   are incompatible.
 
-2. **Small and contained fix**: The change is minimal - it only adds a
-   local `notify` variable and conditionalizes two operations based on
-   whether the device is being removed:
-   - The error message printing (line 1384 → lines 1379-1381)
-   - The `usb_hc_died()` notification (reusing the same condition)
+2. **Clear Register Offset Incompatibility**: Looking at the register
+   offset arrays in drivers/soc/qcom/rpmh-rsc.c:
+   - v2.7 offsets: RSC_DRV_CMD_OFFSET = 20, RSC_DRV_CMD_WAIT_FOR_CMPL =
+     0x10
+   - v3.0 offsets: RSC_DRV_CMD_OFFSET = 24, RSC_DRV_CMD_WAIT_FOR_CMPL =
+     0x20
 
-3. **No architectural changes**: This is a simple behavioral fix that
-   doesn't modify any data structures, APIs, or core functionality. It
-   merely suppresses error messages during an expected removal scenario.
+   These are significantly different offsets that would cause incorrect
+hardware register access on v4 devices.
 
-4. **Clear bug fix**: The commit clearly fixes an issue where error
-   messages are shown during normal USB4 dock removal operations. When
-   `XHCI_STATE_REMOVING` is set (indicating PCI removal is in progress),
-   the error message is now suppressed since it's an expected condition.
+3. **Small and Contained Fix**: The change is minimal - just changing
+   `if (drv->ver.major == 3)` to `if (drv->ver.major >= 3)`. This is a
+   one-line logic fix that ensures v4 and higher versions use the
+   correct v3.0-compatible register offsets.
 
-5. **Low risk of regression**: The change only affects logging behavior
-   and maintains the same functional flow. The `usb_hc_died()` call was
-   already conditional on `!XHCI_STATE_REMOVING`, so this commit just
-   applies the same logic to the error message.
+4. **Hardware Enablement for Existing Devices**: This is not adding new
+   features but fixing broken support for hardware that already exists.
+   Without this fix, any Qualcomm SoC with RSC v4 would malfunction when
+   trying to use RPMH (Resource Power Manager Hardened) functionality.
 
-6. **Improves user experience**: USB4/Thunderbolt docks are increasingly
-   common, and users frequently unplug them. Avoiding spurious error
-   messages during normal operations is important for user experience
-   and log clarity.
+5. **Low Risk**: The change only affects devices with RSC version 4 or
+   higher. It doesn't modify behavior for existing v2 or v3 devices. The
+   commit message explicitly states that "Register offsets for v3 and v4
+   versions are backward compatible."
 
-The commit follows stable tree rules by being a minimal fix for a real
-issue that affects users, without introducing new features or making
-risky changes to core functionality.
+6. **Critical Subsystem**: RPMH-RSC is a critical component for power
+   management on Qualcomm SoCs. Incorrect register access could lead to
+   system instability, power management failures, or complete inability
+   to boot on affected devices.
 
- drivers/usb/host/xhci-ring.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+The commit follows stable kernel rules by being a targeted bug fix that
+enables proper hardware support without architectural changes or new
+features.
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index c6d89b51c678..2a74a47a1c76 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1338,12 +1338,15 @@ static void xhci_kill_endpoint_urbs(struct xhci_hcd *xhci,
-  */
- void xhci_hc_died(struct xhci_hcd *xhci)
- {
-+	bool notify;
- 	int i, j;
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index dfc2d4e38fa9..163a58eb02e0 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1075,7 +1075,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
+ 	drv->ver.minor >>= MINOR_VER_SHIFT;
  
- 	if (xhci->xhc_state & XHCI_STATE_DYING)
- 		return;
- 
--	xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
-+	notify = !(xhci->xhc_state & XHCI_STATE_REMOVING);
-+	if (notify)
-+		xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
- 	xhci->xhc_state |= XHCI_STATE_DYING;
- 
- 	xhci_cleanup_command_queue(xhci);
-@@ -1357,7 +1360,7 @@ void xhci_hc_died(struct xhci_hcd *xhci)
- 	}
- 
- 	/* inform usb core hc died if PCI remove isn't already handling it */
--	if (!(xhci->xhc_state & XHCI_STATE_REMOVING))
-+	if (notify)
- 		usb_hc_died(xhci_to_hcd(xhci));
- }
- 
+-	if (drv->ver.major == 3)
++	if (drv->ver.major >= 3)
+ 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
+ 	else
+ 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
 -- 
 2.39.5
 
