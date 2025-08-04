@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B35B1D86D6;
-	Mon,  4 Aug 2025 00:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEB62AE8E;
+	Mon,  4 Aug 2025 00:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268021; cv=none; b=K/QEySnOAieWiO7843o3uID2ow4VVb6H1vHW6pH1XLC97Qy8Bop84QGbcoGPOwSSHMUBJ9fU0MiltSFzqlTVxvaCoQtN5sl5URor+ZWBCaI+JdmAr0IezDH7YM6705dkhjIxv8HcLXtVzb+IM0a1n8bRv3rcicQhH+KwGNdOcO8=
+	t=1754268023; cv=none; b=RALxIkw55VTZMBC739JCMSrwHz2T98Yp0Epp3+Pyo8l1hPlVnfJhvkUBY6y7xB1hwn5FMLZYG0XmGXCnrErG87EuuQrYMByUpY0sO+xFSaXjjDHC1549aoIx6LPUDJXmwTOWaOLV6YN0A63C9T7xrJ4Pz61SlZWQGiSc/OgJGu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268021; c=relaxed/simple;
-	bh=mKs5js1KFTQCFSdcCwpm0zYrDEHeDicLewjv+Co+4T8=;
+	s=arc-20240116; t=1754268023; c=relaxed/simple;
+	bh=tGv7lZ6ovb/m9IXwsatOQMJbfZPCbnWkovD9COEoVa4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OXn/PKJAZTuLPAdD/A4xT2pk6NsWzPJavuM9Ti/FXjGkdxhYC0rWYkOWfie25/cEiXsJ4iKg254pJh5V6kLKd3ZG6vqThFzmOZJ/u1sP/49yxNgj8uw6RqTvcLxQjWJm+yWW5PKWBCzwEaEbDAemP0eLNH4XYxi4Xwnt0PV//Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HhDd225J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qJCCFqWWIKH1/mbNWNAYjtwo0Cdwcr5DFdXZTTe8VZS/5frcJp/acJkbUQ0EYfgIgCqw6Tq2yKLLKBnC7Xw3WGwKOaEf7KXe3pJTJSKoQnMsAjMSAN83N7htqpX/gFfICJhHvIRuW84Rt1AFj4wD5b3K4bTBiHJJI7EMn396dCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsgsdJVX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HhDd225J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E0FC4CEEB;
-	Mon,  4 Aug 2025 00:40:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsgsdJVX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8391C4CEF0;
+	Mon,  4 Aug 2025 00:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268021;
-	bh=mKs5js1KFTQCFSdcCwpm0zYrDEHeDicLewjv+Co+4T8=;
+	s=k20201202; t=1754268022;
+	bh=tGv7lZ6ovb/m9IXwsatOQMJbfZPCbnWkovD9COEoVa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhDd225Jj8DdNk4PRmtyvaZIb/iqWQCgZVJlC6QFnpskpmNGLvVteQaYMhnYx2mUC
-	 WDdMWTC6Y+MZrdIrSnhx23J7Af1mhzHGU/IOwOR5Eg7/ly6NkKuj5WD4SO0YU3CHEX
-	 m/FITJfpZ+feVLTYNXLWjx2ti6535rK+rpXGrVIsUFp5PthZ0gwRyp5dT9sR3uwo+V
-	 Kf1AT87NVV6eCTmWafP6ugNpmwcXLWMh0/LiL8+V1ol8CEuuEuIe0/RzWsQKT8pP3c
-	 /YGmV6/Qly9LunxF8c/YrObsPXMV3DfnVQPuHPuMonOTzcApuwUstJvRTSn5vJieU9
-	 QnuH6teX/5UpQ==
+	b=tsgsdJVXKzVeWnNUQQDr64SpE/dwMvoNmmicfEFo1Qy1jcqiPuRVzshfitVv+1f7O
+	 qxhIf9U1NILBRh4pjCHAA8EluaU3507dPB75g7mQWDFToMpPL4RA1vImeL+6gl9bpT
+	 ZrcDYKR75fI0jmU26NUQOfYnI0JKd4VlaxMwXCHUwk5Ileu4CYrjBQPJnAu5OeReOl
+	 9zJshBQY2f4LwNZQauNsg03y9/uIGKNFXx7fvjwxe/bcJHT+QghsE0b11bPTJPqMp5
+	 xqJJ+MQMDHkkAITOfxLHWquHhGpFeMFR/m1Qkc2MDfZgR6JaikVky1sfjno8Gb7peZ
+	 4tb+/Ro3uqEZQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+Cc: Kees Cook <kees@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	herongguang@linux.alibaba.com,
-	wangfushuai@baidu.com
-Subject: [PATCH AUTOSEL 5.15 37/44] pm: cpupower: Fix the snapshot-order of tsc,mperf, clock in mperf_stop()
-Date: Sun,  3 Aug 2025 20:38:42 -0400
-Message-Id: <20250804003849.3627024-37-sashal@kernel.org>
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 38/44] platform/x86: thinkpad_acpi: Handle KCOV __init vs inline mismatches
+Date: Sun,  3 Aug 2025 20:38:43 -0400
+Message-Id: <20250804003849.3627024-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -46,95 +46,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Gautham R. Shenoy" <gautham.shenoy@amd.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit cda7ac8ce7de84cf32a3871ba5f318aa3b79381e ]
+[ Upstream commit 6418a8504187dc7f5b6f9d0649c03e362cb0664b ]
 
-In the function mperf_start(), mperf_monitor snapshots the time, tsc
-and finally the aperf,mperf MSRs. However, this order of snapshotting
-in is reversed in mperf_stop(). As a result, the C0 residency (which
-is computed as delta_mperf * 100 / delta_tsc) is under-reported on
-CPUs that is 100% busy.
+When KCOV is enabled all functions get instrumented, unless the
+__no_sanitize_coverage attribute is used. To prepare for
+__no_sanitize_coverage being applied to __init functions[1], we have
+to handle differences in how GCC's inline optimizations get resolved.
+For thinkpad_acpi routines, this means forcing two functions to be
+inline with __always_inline.
 
-Fix this by snapshotting time, tsc and then aperf,mperf in
-mperf_stop() in the same order as in mperf_start().
-
-Link: https://lore.kernel.org/r/20250612122355.19629-2-gautham.shenoy@amd.com
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/lkml/20250523043935.2009972-11-kees@kernel.org/ [1]
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20250529181831.work.439-kees@kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Clear bug fix with user impact**: The commit fixes a calculation
-   bug in the cpupower tool where C0 residency (processor active time)
-   is under-reported on 100% busy CPUs. This directly affects users
-   monitoring CPU performance and power states.
+## Detailed Analysis
 
-2. **Simple and contained fix**: The change is minimal - it only
-   reorders three function calls in `mperf_stop()` to match the order in
-   `mperf_start()`:
-   - Before: `mperf_measure_stats()` → `mperf_get_tsc()` →
-     `clock_gettime()`
-   - After: `clock_gettime()` → `mperf_get_tsc()` →
-     `mperf_measure_stats()`
+### Nature of the Change
+The commit modifies two functions in
+`drivers/platform/x86/lenovo/thinkpad_acpi.c`:
+- `tpacpi_is_lenovo()`: Changed from `static inline` to `static
+  __always_inline`
+- `tpacpi_is_ibm()`: Changed from `static inline` to `static
+  __always_inline`
 
-3. **Low risk of regression**: The fix simply ensures consistent
-   snapshot ordering between start and stop measurements. This is a
-   logical correction that aligns the measurement methodology without
-   introducing new functionality.
+Both functions are marked with `__init` and are simple one-line
+functions that check the vendor ID.
 
-4. **Clear root cause**: The bug occurs because the reversed snapshot
-   order causes timing skew in the C0 residency calculation
-   (`delta_mperf * 100 / delta_tsc`). When snapshots are taken in
-   different orders at start vs stop, the time windows don't align
-   properly, leading to incorrect calculations.
+### Root Cause
+This is a build fix addressing a subtle interaction between:
+1. KCOV kernel coverage instrumentation
+2. GCC's inline optimization heuristics
+3. Linux kernel's __init section handling
 
-5. **Affects monitoring tool accuracy**: While this is a userspace tool
-   bug rather than a kernel bug, cpupower is an important diagnostic
-   tool shipped with the kernel. Incorrect C0 residency reporting could
-   mislead system administrators and developers analyzing CPU
-   performance.
+When KCOV is enabled, all functions get instrumented unless marked with
+`__no_sanitize_coverage`. The commit message indicates this is
+preparation for applying `__no_sanitize_coverage` to `__init` functions.
+The problem occurs because:
 
-6. **No architectural changes**: The fix doesn't change any data
-   structures, APIs, or fundamental behavior - it simply corrects the
-   measurement sequence.
+1. With KCOV instrumentation, GCC may inline these functions into
+   `__init` callers
+2. Without KCOV instrumentation (when `__no_sanitize_coverage` is
+   applied), GCC's heuristics change and it may decide NOT to inline
+   them
+3. This creates a section mismatch where `__init` code calls
+   non-`__init` functions, causing build warnings/errors
 
-The commit meets stable tree criteria as it fixes a real bug affecting
-users, is minimal in scope, and has very low risk of introducing new
-issues.
+### Why This Qualifies for Stable Backport
 
- tools/power/cpupower/utils/idle_monitor/mperf_monitor.c | 4 ++--
+1. **Fixes a Real Bug**: This addresses legitimate build failures when
+   `CONFIG_KCOV=y` is enabled, which affects:
+   - Kernel developers doing coverage testing
+   - CI/CD systems running kernel tests
+   - Distribution builders enabling KCOV for testing
+
+2. **Minimal Risk**: The change is extremely conservative:
+   - Only changes inline hints from `inline` to `__always_inline`
+   - No functional changes whatsoever
+   - Affects only two simple getter functions
+   - Cannot introduce runtime regressions
+
+3. **Small and Contained**: The patch touches only 2 lines in a single
+   file, making it easy to review and backport
+
+4. **Part of Broader Fix**: This is part of a kernel-wide effort to fix
+   KCOV-related build issues, with similar fixes across multiple
+   architectures and subsystems
+
+5. **Build Infrastructure**: Stable kernels need to maintain
+   buildability with various configurations, including KCOV-enabled
+   builds for testing
+
+### Specific Code Impact
+Looking at the changed functions:
+```c
+-static inline bool __pure __init tpacpi_is_lenovo(void)
++static __always_inline bool __pure __init tpacpi_is_lenovo(void)
+ {
+        return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
+ }
+
+-static inline bool __pure __init tpacpi_is_ibm(void)
++static __always_inline bool __pure __init tpacpi_is_ibm(void)
+ {
+        return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
+ }
+```
+
+These are trivial getter functions that absolutely should be inlined.
+Using `__always_inline` ensures consistent behavior regardless of KCOV
+configuration, preventing section mismatch warnings.
+
+### Conclusion
+This is a textbook example of a stable-appropriate fix: it solves a real
+build problem, has zero functional impact, is minimal in scope, and has
+essentially no risk of causing regressions. It should be backported to
+stable kernels that support KCOV (4.6+) to maintain build compatibility
+with coverage testing configurations.
+
+ drivers/platform/x86/thinkpad_acpi.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index 08a399b0be28..6ab9139f16af 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -240,9 +240,9 @@ static int mperf_stop(void)
- 	int cpu;
- 
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
--		mperf_measure_stats(cpu);
--		mperf_get_tsc(&tsc_at_measure_end[cpu]);
- 		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
-+		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+		mperf_measure_stats(cpu);
- 	}
- 
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index 9b700a3ad7b2..89a8e074c16d 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -523,12 +523,12 @@ static unsigned long __init tpacpi_check_quirks(
  	return 0;
+ }
+ 
+-static inline bool __pure __init tpacpi_is_lenovo(void)
++static __always_inline bool __pure __init tpacpi_is_lenovo(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
+ }
+ 
+-static inline bool __pure __init tpacpi_is_ibm(void)
++static __always_inline bool __pure __init tpacpi_is_ibm(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
+ }
 -- 
 2.39.5
 
