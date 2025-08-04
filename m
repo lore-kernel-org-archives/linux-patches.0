@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2613BC3F;
-	Mon,  4 Aug 2025 00:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E7629A2;
+	Mon,  4 Aug 2025 00:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267152; cv=none; b=VpDhRRoP5zlnQWUbQ9/PN/Un+tF8nJaf1rCKQOjufUiS9pCSgZPEpQCSFdUFdYot2rK8/TA8VWz/cRjdG4NSP+YFpZEaaOGRs0v58ongmBuUGYJEu4jH5no/Jy78R+4IInZGUjDUMZ8RBWREi38hbr049JMiCki90FPFoAZ9WYc=
+	t=1754267156; cv=none; b=AHNq4+Rtq0Dzhen18dbm/XojK6DXkm55/IdeC//i33qQB9+P05+qllv1JFQZvzsXUTNfP6ytN2EJNfaQB6+6ez0932oI1ELudmG3y1XErzT+VhrDIuWQBHuURa+Bh+Kn/nJVW5hjY/Odf9NJHZXpgXGTGElD7ZPX83O9j3DKZuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267152; c=relaxed/simple;
-	bh=J8Zba48K/6djBfyNq57K3MwDNOBVNV4gc1PYL4eYzUI=;
+	s=arc-20240116; t=1754267156; c=relaxed/simple;
+	bh=VrHrl1OyVIYZ/kAm3OW6zJXl6SIGsW6QETUiRfTi5dI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UL73sOt8eHjb6L8FOgUtBZRghoBNkeQl7DWGbgDI0EjeJF/m7dQHQJKMzovNVxtBmZIfh5z+HUCa8510/ua2QKCRM4giVDGla2jiI6GFjWbwWIVUUQ418WOCAJXlTabHAhFtpLIulGmF1EVz6IdjzotFiojoYU8FqiTWIb7CpyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GN0cArAT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLc8qD90O6M65XJJ4R8HYeKUdeg95VDeCoAV1tFXHwai5I7pof3g/AXdE5vPUzfSrOhD0jxQwkdPLJ0n7kjn0MZtn3Xn2/1atrgkJiEnwB4MhkQR5Hd1vWD3Ieyu1gyMqMDA0HWTmW53yuP4OV7hl5UPBY7+bc4CEtYL7FPG+O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=enK1i2hZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GN0cArAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FB2C4CEEB;
-	Mon,  4 Aug 2025 00:25:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="enK1i2hZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34DFC4CEEB;
+	Mon,  4 Aug 2025 00:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267152;
-	bh=J8Zba48K/6djBfyNq57K3MwDNOBVNV4gc1PYL4eYzUI=;
+	s=k20201202; t=1754267156;
+	bh=VrHrl1OyVIYZ/kAm3OW6zJXl6SIGsW6QETUiRfTi5dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GN0cArATEdCs9l/WDTXgUSsw7OQyk5eEBcNXJ4iqMYLo9QeA+DT+VRJLOstI1yG3s
-	 52hSxBTwmCS7v/SjuF8YcHAOUjj6EYjTmT6apGYSl2qU3A5t9w/SmY6+eljfWiRUHO
-	 o/kAB8Fx4+u0bdxjAsRWltmxdT97nIilSeZYRV2d4QxU3Ipp3w6i/y5ee8pBQ+5zvB
-	 pIbLUcuEEeUP8Q3l2sJZx3utG+WsB100uI1Jx9/S71XXrMT9yuB+2IIrGLP+JRDaQs
-	 7t/9jqQik8WtCqIEmHDJNL8EPSNpCjQQ7fz3M/pc3GUlpHRT2E9EE5dJqtp6u5Vzs1
-	 6J/qiOFGXYHtw==
+	b=enK1i2hZNZWfxoctznup3gVRBo5vbWTvLz7p2yYjc9BjRxJfS+ms3YW+2Hh4YOFWu
+	 SofVKeHOK/Piubh6zKN7JAaHfJ6PXtURx3+SbqOm5tiyyBfmG48EAd2cBOwAdS9Tmx
+	 8BgIGKi8DyJEj6pQ6/hfRhACPiTP6f0Czpzhd66tXVPK9NvD4r4U/MxITL0GufdzGs
+	 af33dYblpZq4PZSq2ivlH67MyrhyLQk31nYqg1Tm7iUfdIAlA0i6mYTmJNmOKK1E/J
+	 Yn9FG+ezYFWKyeW2LBlv+IBvQwDv1ozWYtYyWr0Ok7L31LDLjpQfOtiEUSnvFpErcu
+	 cJRDIUTRGs1FA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sarthak Garg <quic_sartgarg@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+Cc: Breno Leitao <leitao@debian.org>,
+	Tony Luck <tony.luck@intel.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-mmc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16 47/85] mmc: sdhci-msm: Ensure SD card power isn't ON when card removed
-Date: Sun,  3 Aug 2025 20:22:56 -0400
-Message-Id: <20250804002335.3613254-47-sashal@kernel.org>
+	rafael@kernel.org,
+	dave.jiang@intel.com,
+	ira.weiny@intel.com,
+	xueshuai@linux.alibaba.com,
+	Smita.KoralahalliChannabasappa@amd.com,
+	mingo@kernel.org,
+	quic_hyiwei@quicinc.com,
+	bp@alien8.de,
+	peterz@infradead.org,
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16 48/85] ACPI: APEI: GHES: add TAINT_MACHINE_CHECK on GHES panic path
+Date: Sun,  3 Aug 2025 20:22:57 -0400
+Message-Id: <20250804002335.3613254-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002335.3613254-1-sashal@kernel.org>
 References: <20250804002335.3613254-1-sashal@kernel.org>
@@ -52,125 +60,91 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit db58532188ebf51d52b1d7693d9e94c76b926e9f ]
+[ Upstream commit 4734c8b46b901cff2feda8b82abc710b65dc31c1 ]
 
-Many mobile phones feature multi-card tray designs, where the same
-tray is used for both SD and SIM cards. If the SD card is placed
-at the outermost location in the tray, the SIM card may come in
-contact with SD card power-supply while removing the tray, possibly
-resulting in SIM damage.
+When a GHES (Generic Hardware Error Source) triggers a panic, add the
+TAINT_MACHINE_CHECK taint flag to the kernel. This explicitly marks the
+kernel as tainted due to a machine check event, improving diagnostics
+and post-mortem analysis. The taint is set with LOCKDEP_STILL_OK to
+indicate lockdep remains valid.
 
-To prevent that, make sure the SD card is really inserted by reading
-the Card Detect pin state. If it's not, turn off the power in
-sdhci_msm_check_power_status() and also set the BUS_FAIL power state
-on the controller as part of pwr_irq handling for BUS_ON request.
+At large scale deployment, this helps to quickly determine panics that
+are coming due to hardware failures.
 
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250701100659.3310386-1-quic_sartgarg@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20250702-add_tain-v1-1-9187b10914b9@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
+
+Based on my analysis of this commit, here is my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Hardware Damage Prevention**: This is a critical safety fix that
-   prevents potential hardware damage to SIM cards. The commit message
-   clearly describes a real-world scenario where SD card power can
-   damage SIM cards in multi-card tray designs when the tray is removed.
-   This is a serious hardware safety issue that affects end users'
-   devices.
+1. **Fixes a real diagnostic issue**: The commit adds the
+   TAINT_MACHINE_CHECK flag when GHES (Generic Hardware Error Source)
+   triggers a panic. This is important for post-mortem analysis at
+   scale, as explicitly stated in the commit message: "At large scale
+   deployment, this helps to quickly determine panics that are coming
+   due to hardware failures."
 
-2. **Bug Fix Nature**: The commit fixes a specific bug where SD card
-   power remains ON even when the card is physically removed. The code
-   changes show two key additions:
-   - In `sdhci_msm_check_power_status()`: Added check at lines 1625-1629
-     that turns off power (writes 0 to SDHCI_POWER_CONTROL) when card is
-     not detected (`!mmc->ops->get_cd(mmc)`)
-   - In `sdhci_msm_handle_pwr_irq()`: Added check at lines 1689-1694
-     that sets BUS_FAIL state when attempting to power on the bus while
-     card is not present
+2. **Small and contained change**: The patch adds only a single line of
+   code (`add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);`) in the
+   `__ghes_panic()` function at drivers/acpi/apei/ghes.c:1091. This
+   meets the stable kernel rule of being under 100 lines.
 
-3. **Small and Contained Fix**: The changes are minimal and well-
-   contained:
-   - Only 13 lines of actual code changes
-   - Changes are localized to the sdhci-msm driver
-   - No architectural changes or new features
-   - Simple logic additions that check card presence before power
-     operations
+3. **Obviously correct**: The change follows established kernel
+   patterns. Looking at the grep results, other machine check handlers
+   already use this same pattern:
+   - arch/x86/kernel/cpu/mce/core.c:1640
+   - arch/powerpc/kernel/mce.c:332
+   - arch/x86/kernel/cpu/mce/p5.c:40
+   - arch/x86/kernel/cpu/mce/winchip.c:24
 
-4. **Low Risk of Regression**: The fix adds defensive checks that only
-   activate when:
-   - A card is physically not present (detected via get_cd)
-   - Power operations are being performed
-   - This doesn't affect normal operation when cards are properly
-     inserted
+4. **No architectural changes**: This is purely a diagnostic improvement
+   that adds taint information without changing any functionality or
+   behavior of the GHES panic path.
 
-5. **Platform-Specific Critical Fix**: This affects Qualcomm MSM-based
-   devices which are widely used in mobile phones. The multi-card tray
-   design mentioned is common in many smartphones, making this a
-   widespread potential issue.
+5. **Minimal risk**: The change uses LOCKDEP_STILL_OK flag, indicating
+   that lockdep remains valid after the taint, which is the safer option
+   compared to LOCKDEP_NOW_UNRELIABLE used in some other machine check
+   paths.
 
-6. **Clear Problem and Solution**: The commit has a clear problem
-   statement (SIM damage from SD power) and a straightforward solution
-   (turn off power when card is removed). This makes it easy to verify
-   the fix is correct.
+6. **Real benefit for users**: For organizations running Linux at scale,
+   being able to quickly identify hardware-related panics through the
+   taint flag provides significant operational value for triaging
+   issues.
 
-The commit follows stable tree rules perfectly - it's a important bugfix
-that prevents hardware damage, has minimal code changes, doesn't
-introduce new features, and has very low regression risk. This is
-exactly the type of safety-critical fix that stable kernels should
-include.
+The commit meets all the stable kernel criteria: it's small, obviously
+correct, fixes a real diagnostic limitation that affects users
+(especially at scale), and has been reviewed by Tony Luck who is a
+recognized maintainer in the RAS (Reliability, Availability, and
+Serviceability) subsystem.
 
- drivers/mmc/host/sdhci-msm.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/acpi/apei/ghes.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 66c0d1ba2a33..bc6ca49652f8 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1564,6 +1564,7 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	struct mmc_host *mmc = host->mmc;
- 	bool done = false;
- 	u32 val = SWITCHABLE_SIGNALING_VOLTAGE;
- 	const struct sdhci_msm_offset *msm_offset =
-@@ -1621,6 +1622,12 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
- 				 "%s: pwr_irq for req: (%d) timed out\n",
- 				 mmc_hostname(host->mmc), req_type);
- 	}
-+
-+	if ((req_type & REQ_BUS_ON) && mmc->card && !mmc->ops->get_cd(mmc)) {
-+		sdhci_writeb(host, 0, SDHCI_POWER_CONTROL);
-+		host->pwr = 0;
-+	}
-+
- 	pr_debug("%s: %s: request %d done\n", mmc_hostname(host->mmc),
- 			__func__, req_type);
- }
-@@ -1679,6 +1686,13 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
- 		udelay(10);
- 	}
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 281a0a2f6730..bda33a0f0a01 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -1099,6 +1099,8 @@ static void __ghes_panic(struct ghes *ghes,
  
-+	if ((irq_status & CORE_PWRCTL_BUS_ON) && mmc->card &&
-+	    !mmc->ops->get_cd(mmc)) {
-+		msm_host_writel(msm_host, CORE_PWRCTL_BUS_FAIL, host,
-+				msm_offset->core_pwrctl_ctl);
-+		return;
-+	}
+ 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
+ 
++	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
 +
- 	/* Handle BUS ON/OFF*/
- 	if (irq_status & CORE_PWRCTL_BUS_ON) {
- 		pwr_state = REQ_BUS_ON;
+ 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
+ 
+ 	if (!panic_timeout)
 -- 
 2.39.5
 
