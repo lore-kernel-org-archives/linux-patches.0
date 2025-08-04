@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2C87260B;
-	Mon,  4 Aug 2025 00:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5808C1E0E14;
+	Mon,  4 Aug 2025 00:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754268168; cv=none; b=HqJ38OVLyTP74VnkFTeZL4PSdB5TSBy3l8ThHnGOjc0o8NB3ecp2n8QB1ZV/dXaMRkctKCJmcooNuxMJc2IiTlRxpvjsmN2OAcMhhAvTUcAlt3UHmT3CfhIH98qrUII310BiOFFJvS8SbCutMztn6fTQ3o/4s4fMMFvPJOtLS+o=
+	t=1754268170; cv=none; b=HTnIxJ3ieUaoavVO4aEOrNwPgEN2dNSzn1erl4c8DFlhxd06uY7J9jBdP44Th4mAjv3x/jnnv1RqEPAQ+Q3wQx+pFJWuaajSDzStPlYpiey0ydzCiu0FvNAPzfffiG8QWSKfVjSp2jLOoaey/cRNC9DgjztVsnh4sCF0R7Cflig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754268168; c=relaxed/simple;
-	bh=rTsx42W5SiwWDpG7IMWgRXoMjBrRNUczQMcOZD6svUc=;
+	s=arc-20240116; t=1754268170; c=relaxed/simple;
+	bh=hsfThi6DMIpLblPkuo8wfBtD+YC/NpXZOHHxBGMZ04s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=MGS07mO1KI8rJcAvBrDWqSkx36Z0Lzl2mzKLUacrhF8ED17mINqBcfZIzKfKl+S4kuFrwr27Yh0A+Ejo2RKJZEMOcvl1u6jXMq4G54Nxl94Tl/EvJ36BN3Ph8cOitLPp/WUISAGXKrcH9s3tTWjAF1rVUlu/F3DXeGU06gqtF/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zsx/CnUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k7vWNhVBHEixeD2lDtZcdIYI4huRn5cE09Qtg7So92dfqWIRXwCOWLlqwmEc8aWq157/82zlL3a/7o4vR24QtDiPFQSvzVG4uBHezdL5/Sg7tFr9ry2qomQSPLDReh5fGMezeD6DhFg5frCjf481SXeN+1Yh+z3LdAExRKdDxbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IKfVjH/H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zsx/CnUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D0AC4CEF8;
-	Mon,  4 Aug 2025 00:42:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IKfVjH/H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0044AC4CEEB;
+	Mon,  4 Aug 2025 00:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754268168;
-	bh=rTsx42W5SiwWDpG7IMWgRXoMjBrRNUczQMcOZD6svUc=;
+	s=k20201202; t=1754268170;
+	bh=hsfThi6DMIpLblPkuo8wfBtD+YC/NpXZOHHxBGMZ04s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zsx/CnUbtPwLxAkhPQzlURtkzd6GA9+ja62qfSHYOGBZFqVDx+s0NkOiDMjYBz7EC
-	 ru2kAewf+KNvJSfocUowoNTcT5BWC3Wx9uYDwAX7ikefl8FVUV1LY8AW2CJbKGUtx3
-	 Mc5cLmyiOIMocL+X+u/hBSOT47OmroLbZYk9XcKLY87Zg+Gcx09tzIHA7lmcH2ol2m
-	 y4qfp/AMzTdMXkKFDJOSyyUTMdEAhN1XSaM4mctKtsya+/0eKrAGKsl8+OKT+EUjlL
-	 LlMB1ogEG4B8IH8lHky7X0WV39pXSStGQyI9MkEKbBGJ0TsrGBuVXnBMAcoqR2ojZg
-	 +zJaw98+2THgg==
+	b=IKfVjH/HSv/fdMwGoM0actImudPCfET18OEESirYqhpcbN+sbOOUvvXQsWTytMfev
+	 bM4nJP//T1nYZ4QF7SyuIJ5RksNei6EALR2CLcZQDaYn118ypPlS9z5BUfxPyEa0SK
+	 DuhfqpYu0ZaV/X7Q4cpzXlMTpiv9hswipjlbVMy+B9/MeMrKEJ7Ye79L759FcldfD2
+	 3boPxTtG3nzXlmcVirEqdggJFDW1Nxq0EBpHAVHJxbXcSNLhkZqWK19euPDKchR57m
+	 Y2EyO8s5ur+pIlWfryynEKe2365w5TUIzAg6flt+D2m13I9cAYVImpNrq0NKJYErGL
+	 jZ708w+PrVGQQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexander Kochetkov <al.kochet@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+Cc: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.4 09/28] ARM: rockchip: fix kernel hang during smp initialization
-Date: Sun,  3 Aug 2025 20:42:08 -0400
-Message-Id: <20250804004227.3630243-9-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 10/28] ASoC: soc-dapm: set bias_level if snd_soc_dapm_set_bias_level() was successed
+Date: Sun,  3 Aug 2025 20:42:09 -0400
+Message-Id: <20250804004227.3630243-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804004227.3630243-1-sashal@kernel.org>
 References: <20250804004227.3630243-1-sashal@kernel.org>
@@ -51,124 +51,123 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.4.296
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Kochetkov <al.kochet@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 7cdb433bb44cdc87dc5260cdf15bf03cc1cd1814 ]
+[ Upstream commit f40ecc2743652c0b0f19935f81baf57c601eb7f0 ]
 
-In order to bring up secondary CPUs main CPU write trampoline
-code to SRAM. The trampoline code is written while secondary
-CPUs are powered on (at least that true for RK3188 CPU).
-Sometimes that leads to kernel hang. Probably because secondary
-CPU execute trampoline code while kernel doesn't expect.
+ASoC has 2 functions to set bias level.
+	(A) snd_soc_dapm_force_bias_level()
+	(B) snd_soc_dapm_set_bias_level()
 
-The patch moves SRAM initialization step to the point where all
-secondary CPUs are powered down.
+snd_soc_dapm_force_bias_level() (A) will set dapm->bias_level (a) if
+successed.
 
-That fixes rarely hangs on RK3188:
-[    0.091568] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
-[    0.091996] rockchip_smp_prepare_cpus: ncores 4
+(A)	int snd_soc_dapm_force_bias_level(...)
+	{
+		...
+		if (ret == 0)
+(a)			dapm->bias_level = level;
+		...
+	}
 
-Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
-Link: https://lore.kernel.org/r/20250703140453.1273027-1-al.kochet@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+snd_soc_dapm_set_bias_level() (B) is also a function that sets bias_level.
+It will call snd_soc_dapm_force_bias_level() (A) inside, but doesn't
+set dapm->bias_level by itself. One note is that (A) might not be called.
+
+(B)	static int snd_soc_dapm_set_bias_level(...)
+	{
+		...
+		ret = snd_soc_card_set_bias_level(...);
+		...
+		if (dapm != &card->dapm)
+(A)			ret = snd_soc_dapm_force_bias_level(...);
+		...
+		ret = snd_soc_card_set_bias_level_post(...);
+		...
+	}
+
+dapm->bias_level will be set if (A) was called, but might not be set
+if (B) was called, even though it calles set_bias_level() function.
+
+We should set dapm->bias_level if we calls
+snd_soc_dapm_set_bias_level() (B), too.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87qzyn4g4h.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the code context, here's my
-determination:
+Based on my analysis, here's my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a real bug affecting users**: The commit explicitly mentions
-   that it "fixes rarely hangs on RK3188" during SMP initialization.
-   This is a critical boot-time issue that prevents the system from
-   functioning properly.
+1. **Bug Fix**: This is a clear bug fix that addresses an inconsistency
+   in bias level management. The commit message clearly explains that
+   `snd_soc_dapm_set_bias_level()` doesn't always update
+   `dapm->bias_level`, particularly when dealing with card-level DAPM
+   contexts where `snd_soc_dapm_force_bias_level()` is not called.
 
-2. **Small and contained fix**: The change is minimal - it only moves
-   the SRAM initialization code (`rockchip_smp_prepare_sram()`) to
-   execute after all secondary CPUs are powered down. The code movement
-   is straightforward:
-   - Lines 281-285 (old location) are moved to lines 321-325 (new
-     location)
-   - The fix is contained within a single function
-     (`rockchip_smp_prepare_cpus()`)
+2. **Small and Contained**: The fix is minimal - it only adds 4 lines of
+   code:
+  ```c
+  /* success */
+  if (ret == 0)
+  snd_soc_dapm_init_bias_level(dapm, level);
+  ```
+  This ensures that `dapm->bias_level` is always updated when the bias
+  level change succeeds.
 
-3. **Clear root cause**: The commit message explains the race condition
-   clearly - secondary CPUs may execute trampoline code while it's being
-   written to SRAM, causing unpredictable behavior and hangs.
+3. **Important Correctness Issue**: The inconsistency could lead to
+   incorrect bias level tracking, which affects power management
+   decisions in the ASoC subsystem. Code that checks `dapm->bias_level`
+   (as shown in lines like `if (dapm->bias_level == SND_SOC_BIAS_ON)`)
+   may make wrong decisions if the bias level isn't properly tracked.
 
-4. **No architectural changes**: This is purely a timing/ordering fix
-   that doesn't introduce new features or change the architecture of the
-   code.
+4. **No Architectural Changes**: This is a straightforward fix that
+   doesn't introduce new features or change the architecture. It simply
+   ensures consistent behavior between the two bias level setting
+   functions.
 
-5. **Critical subsystem**: SMP initialization is a critical kernel
-   subsystem. A hang during boot makes the system unusable, which is a
-   severe issue for affected users.
+5. **Low Risk**: The change only affects the success path (when `ret ==
+   0`) and uses an existing inline function
+   `snd_soc_dapm_init_bias_level()` that simply sets `dapm->bias_level =
+   level`. This is the same operation that
+   `snd_soc_dapm_force_bias_level()` performs on success.
 
-6. **Platform-specific fix**: The change only affects Rockchip ARM
-   platforms (specifically those with Cortex-A9 CPUs like RK3188),
-   limiting the scope of potential regressions.
+6. **Affects User-Facing Functionality**: Incorrect bias level tracking
+   can lead to power management issues, potentially causing audio
+   devices to not power up/down correctly, which directly impacts users.
 
-7. **Follows stable tree rules**: The fix addresses an important bug
-   (boot hang), is small and self-contained, has minimal risk of
-   regression, and doesn't introduce new features.
+The commit fixes a real bug where the DAPM bias level state could become
+out of sync with the actual hardware state, particularly for card-level
+DAPM contexts. This is exactly the type of bug fix that stable kernels
+should include - it's small, targeted, fixes a real issue, and has
+minimal risk of introducing regressions.
 
-The key insight from the code analysis is that the original code had a
-clear race condition where:
-1. Secondary CPUs were powered on (lines 287-288 in the original)
-2. Trampoline code was written to SRAM (line 282 in the original)
-3. Secondary CPUs could potentially execute incomplete/corrupted
-   trampoline code
+ sound/soc/soc-dapm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-The fix ensures all secondary CPUs are powered down (lines 321-323)
-before writing the trampoline code to SRAM (lines 321-325 in the new
-version), eliminating the race condition.
-
- arch/arm/mach-rockchip/platsmp.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm/mach-rockchip/platsmp.c b/arch/arm/mach-rockchip/platsmp.c
-index 649e0a54784c..246a525d1d26 100644
---- a/arch/arm/mach-rockchip/platsmp.c
-+++ b/arch/arm/mach-rockchip/platsmp.c
-@@ -279,11 +279,6 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
- 	}
+diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
+index 9f764d92469e..6142ce468c3b 100644
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -741,6 +741,10 @@ static int snd_soc_dapm_set_bias_level(struct snd_soc_dapm_context *dapm,
+ out:
+ 	trace_snd_soc_bias_level_done(card, level);
  
- 	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
--		if (rockchip_smp_prepare_sram(node)) {
--			of_node_put(node);
--			return;
--		}
--
- 		/* enable the SCU power domain */
- 		pmu_set_power_domain(PMU_PWRDN_SCU, true);
- 
-@@ -316,11 +311,19 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
- 		asm ("mrc p15, 1, %0, c9, c0, 2\n" : "=r" (l2ctlr));
- 		ncores = ((l2ctlr >> 24) & 0x3) + 1;
- 	}
--	of_node_put(node);
- 
- 	/* Make sure that all cores except the first are really off */
- 	for (i = 1; i < ncores; i++)
- 		pmu_set_power_domain(0 + i, false);
++	/* success */
++	if (ret == 0)
++		snd_soc_dapm_init_bias_level(dapm, level);
 +
-+	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
-+		if (rockchip_smp_prepare_sram(node)) {
-+			of_node_put(node);
-+			return;
-+		}
-+	}
-+
-+	of_node_put(node);
+ 	return ret;
  }
  
- static void __init rk3036_smp_prepare_cpus(unsigned int max_cpus)
 -- 
 2.39.5
 
