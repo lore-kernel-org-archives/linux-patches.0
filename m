@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB492BD11;
-	Mon,  4 Aug 2025 00:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A664217B50A;
+	Mon,  4 Aug 2025 00:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267722; cv=none; b=iKCAsyJajKmL4I9h+j2sOPTngb3uHDbZZgec+B+yda57QvDFRNB583GupVSR5DDJnxHZb5jBbh3dxPHeJ2J4xQxdIgJNSX72sZS0EsMCtMBsXWB3ot+pVo70w5gqYHVJrvzKVDc3G/9DEMS+eM4DTmFWXqOqRU+ydTascHLirkc=
+	t=1754267724; cv=none; b=EjGO1ihCPUB9OHj11I83ImhHgmnMkOD0oVaq0aVuYcKU4+52J+RNfdCD4OvdF//rs95VOwIJ9U39HAwSv+Oc4uw1E+k7ipbc8i69coW8mIW8hRfD9qFs3BdE0jnl+seaJ9eitGrCIB5BW1WLxB6YOmImQ1U+mFZIHS6rCBssBoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267722; c=relaxed/simple;
-	bh=fegMuF5UZ/Spn63p/x4of6NBHssIbAf2BJWJP0OC5JQ=;
+	s=arc-20240116; t=1754267724; c=relaxed/simple;
+	bh=BN8kZ8Y+B12gMTrSYteS+/K7vPe0rB5qyJJ/x93Y9GA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YWqQ5jIANS1ObF0mFpwRrnZee8yqNuE6xGhlPlSmGjjslQAwbbtZZk1fKEcVduhBt8vXlbG1G4SD5DoiMeAj585WyCZ+Ff++FdpI4ruhwkEKVk48Ubdh30umGTTsq92T+DDe+9EwxBWjzmp4LN+ERdUP91r4ILcLrNlYimInTkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CnzxTNez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SlUsw0DJ7XCCa6mTucy7t5HVm/Lwq4kO4DtKAKZ55FzAe+2VyJy11tWsQY3FYEqTe+f1hWaTMbRBE7FRsz7z4dAss/b7stv3s+bzGJA99R6XS2u8KHYT2WkDISYtsD4TGCrsXg+k2TlCIrD+7NXXdLK2WVtA0KswMX2qkbnt7Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QT7h+xBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CnzxTNez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7382C4CEEB;
-	Mon,  4 Aug 2025 00:35:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QT7h+xBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E7DC4CEF0;
+	Mon,  4 Aug 2025 00:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267722;
-	bh=fegMuF5UZ/Spn63p/x4of6NBHssIbAf2BJWJP0OC5JQ=;
+	s=k20201202; t=1754267724;
+	bh=BN8kZ8Y+B12gMTrSYteS+/K7vPe0rB5qyJJ/x93Y9GA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CnzxTNezJ8jkigDXPfiI/sR5uozqjSSGR8HXpcAQVDY8ZTWnKDQH17hy30JtBVMD4
-	 SR+rcKqwzkq4GWQdFTdTRNqWrjjdWqNhD60OifS/GTtN+qMVKETWcjHvBz8YlwFqZk
-	 zrndHQ63CHJ+dln1JDQnCou5G024tWQ5vhkrWv6r+F35N6vvi26arWpsh5wqKtLdru
-	 X90oAyBv7LPhhfuaFvTNXekZS/6pD/SycLbr/QBNwoHQMGdtVFuzyCNOI/Co0yi7M0
-	 k36FTxqrvwMJZAM0yuUfDVtvMfidW2scc7scNloM39bitVVywFNuLfcQzruQ9d/DSM
-	 qnifa/tplEWhA==
+	b=QT7h+xBURv6JhpGxmomLz5P7tSQ9Nc5SQW/dfIT4veofC/n+UgBk2yqtYohjJRzXr
+	 qdCNas7+knxPCPw+bmycmgc3sP75VNAfcnwc5yM9e6MlU4cLs7RZJDzHvb9sNAeL8m
+	 mBj9CY9POrw5yZsR+zROT0HYj4E9hmNKeTckR+iKu2w6iRk0YwCTQsbVg0eddIDec5
+	 BzqFiqLsCHu53078FOkBQ/x6A/l/tpJTL22bnmP1o/R8mb7IcJdzmkQD6+Nl2U5u28
+	 py3FdtqOKXyaPDb9q7+uhTtm871OmhUVZfi/bARGOj5YEK7d9IOrnO3upFPaAN+zU4
+	 xoe8otOzKso7w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nylon Chen <nylon.chen@sifive.com>,
-	Zong Li <zong.li@sifive.com>,
-	Vincent Chen <vincent.chen@sifive.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	paul.walmsley@sifive.com,
-	samuel.holland@sifive.com,
-	linux-pwm@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.6 28/59] pwm: sifive: Fix PWM algorithm and clarify inverted compare behavior
-Date: Sun,  3 Aug 2025 20:33:42 -0400
-Message-Id: <20250804003413.3622950-28-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 29/59] PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()
+Date: Sun,  3 Aug 2025 20:33:43 -0400
+Message-Id: <20250804003413.3622950-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -50,35 +46,23 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Nylon Chen <nylon.chen@sifive.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 7dbc4432ea6bf9d709391eb57f1e9fb44e99845a ]
+[ Upstream commit 89d9cec3b1e9c49bae9375a2db6dc49bc7468af0 ]
 
-The `frac` variable represents the pulse inactive time, and the result
-of this algorithm is the pulse active time. Therefore, we must reverse
-the result.
+Clear power.needs_force_resume in pm_runtime_reinit() in case it has
+been set by pm_runtime_force_suspend() invoked from a driver remove
+callback.
 
-Although the SiFive Reference Manual states "pwms >= pwmcmpX -> HIGH",
-the hardware behavior is inverted due to a fixed XNOR with 0. As a result,
-the pwmcmp register actually defines the low (inactive) portion of the pulse.
-
-The reference is SiFive FU740-C000 Manual[0]
-
-Link: https://sifive.cdn.prismic.io/sifive/1a82e600-1f93-4f41-b2d8-86ed8b16acba_fu740-c000-manual-v1p6.pdf [0]
-
-Co-developed-by: Zong Li <zong.li@sifive.com>
-Signed-off-by: Zong Li <zong.li@sifive.com>
-Co-developed-by: Vincent Chen <vincent.chen@sifive.com>
-Signed-off-by: Vincent Chen <vincent.chen@sifive.com>
-Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
-Link: https://lore.kernel.org/r/20250529035341.51736-3-nylon.chen@sifive.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://patch.msgid.link/9495163.CDJkKcVGEf@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -86,162 +70,74 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit is a clear bugfix that should be backported to stable kernel
+trees for the following reasons:
 
-## Critical Bug Fix Analysis
+1. **It fixes a real bug**: The commit addresses a specific issue where
+   `power.needs_force_resume` flag is not cleared in
+   `pm_runtime_reinit()` when a device is removed. If a driver calls
+   `pm_runtime_force_suspend()` from its remove callback (which sets
+   `needs_force_resume = 1`), this flag remains set even after the
+   device is removed and potentially re-probed.
 
-1. **The commit fixes a significant functional bug** - The PWM algorithm
-   was fundamentally broken:
-   - The `frac` variable was incorrectly used (lines 158-161 in
-     original, now 168-171)
-   - The driver was writing the duty cycle value directly to PWMCMP
-     register (line 193), but the hardware actually expects the
-     **inactive** (low) time
-   - This results in inverted PWM output behavior where users get the
-     opposite duty cycle from what they request
+2. **The fix is minimal and contained**: The change adds just 5 lines of
+   code (including comments) to clear a single flag. The modification
+   is:
+  ```c
+  dev->power.needs_force_resume = false;
+  ```
+  This is a very low-risk change that only affects the specific
+  condition being fixed.
 
-2. **Hardware behavior discrepancy** - The commit reveals and fixes a
-   critical mismatch between documentation and actual hardware:
-   - The documentation states "pwms >= pwmcmpX -> HIGH"
-   - But the hardware has a hard-tied XNOR with 0 that inverts this
-     behavior
-   - The driver now correctly compensates for this hardware quirk
+3. **It prevents state leakage**: Looking at the code flow:
+   - `pm_runtime_force_suspend()` sets `dev->power.needs_force_resume =
+     1` (line in runtime.c)
+   - When a driver is removed, `pm_runtime_remove()` calls
+     `pm_runtime_reinit()`
+   - Without this fix, if the device is re-probed, it would still have
+     `needs_force_resume = 1` from the previous instance
+   - This could lead to incorrect PM runtime behavior where
+     `pm_runtime_force_resume()` would incorrectly think it needs to
+     resume a device that was never suspended in the current probe cycle
 
-3. **User-visible impact**:
-   - **In `pwm_sifive_get_state()`**: The driver now correctly inverts
-     the value read from hardware (lines 115->122-126)
-   - **In `pwm_sifive_apply()`**: The driver now inverts the duty cycle
-     before writing to hardware (lines 162->171)
-   - **Polarity change**: Changed from `PWM_POLARITY_INVERSED` to
-     `PWM_POLARITY_NORMAL` (lines 126->137, 142->152)
-   - **Documentation fix**: Updated comment from "cannot generate 100%
-     duty" to "cannot generate 0% duty" (lines 11->27, 160->170)
+4. **Related to previous stable fixes**: The git history shows a
+   previous commit `c745253e2a69` ("PM: runtime: Fix unpaired parent
+   child_count for force_resume") was already marked for stable (4.16+),
+   indicating that issues with the `needs_force_resume` flag have been
+   problematic enough to warrant stable backports.
 
-4. **The fix is relatively small and contained**:
-   - Changes are isolated to the PWM algorithm logic
-   - No architectural changes or new features
-   - Simple mathematical inversion: `duty = (1U << PWM_SIFIVE_CMPWIDTH)
-     - 1 - inactive`
+5. **Clear bug scenario**: The commit message describes a specific
+   scenario where this happens - when `pm_runtime_force_suspend()` is
+   called from a driver remove callback. This is a legitimate use case
+   where drivers want to ensure devices are suspended before removal.
 
-5. **No risky side effects**:
-   - The change is straightforward and mathematically correct
-   - Doesn't affect other subsystems
-   - Maintains the same register interface
+6. **No architectural changes**: This is purely a bugfix that clears a
+   flag that should have been cleared during reinitialization. It
+   doesn't introduce new features or change any APIs.
 
-6. **Affects all SiFive PWM users**:
-   - Any system using SiFive FU540 or FU740 SoCs would have incorrect
-     PWM output
-   - This includes various RISC-V development boards and embedded
-     systems
-   - Users would get inverted duty cycles, potentially breaking motor
-     controls, LED dimming, etc.
+The fix ensures proper PM runtime state management across device removal
+and re-probing cycles, which is important for system stability and
+correct power management behavior.
 
-7. **Clear documentation reference**:
-   - The commit references the official SiFive FU740-C000 Manual
-   - Provides clear explanation of the hardware behavior mismatch
+ drivers/base/power/runtime.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-The bug causes PWM outputs to be inverted from user expectations, which
-is a significant functional issue that would affect any system relying
-on proper PWM behavior for motor control, LED dimming, or other PWM-
-dependent functionality. The fix is clean, minimal, and addresses a
-clear hardware/software mismatch that exists in production systems.
-
- drivers/pwm/pwm-sifive.c | 39 +++++++++++++++++++++++++++++++--------
- 1 file changed, 31 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
-index eabddb7c7820..2e6253c671df 100644
---- a/drivers/pwm/pwm-sifive.c
-+++ b/drivers/pwm/pwm-sifive.c
-@@ -4,11 +4,28 @@
-  * For SiFive's PWM IP block documentation please refer Chapter 14 of
-  * Reference Manual : https://static.dev.sifive.com/FU540-C000-v1.0.pdf
-  *
-+ * PWM output inversion: According to the SiFive Reference manual
-+ * the output of each comparator is high whenever the value of pwms is
-+ * greater than or equal to the corresponding pwmcmpX[Reference Manual].
-+ *
-+ * Figure 29 in the same manual shows that the pwmcmpXcenter bit is
-+ * hard-tied to 0 (XNOR), which effectively inverts the comparison so that
-+ * the output goes HIGH when  `pwms < pwmcmpX`.
-+ *
-+ * In other words, each pwmcmp register actually defines the **inactive**
-+ * (low) period of the pulse, not the active time exactly opposite to what
-+ * the documentation text implies.
-+ *
-+ * To compensate, this driver always **inverts** the duty value when reading
-+ * or writing pwmcmp registers , so that users interact with a conventional
-+ * **active-high** PWM interface.
-+ *
-+ *
-  * Limitations:
-  * - When changing both duty cycle and period, we cannot prevent in
-  *   software that the output might produce a period with mixed
-  *   settings (new period length and old duty cycle).
-- * - The hardware cannot generate a 100% duty cycle.
-+ * - The hardware cannot generate a 0% duty cycle.
-  * - The hardware generates only inverted output.
-  */
- #include <linux/clk.h>
-@@ -110,9 +127,14 @@ static int pwm_sifive_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 				struct pwm_state *state)
- {
- 	struct pwm_sifive_ddata *ddata = pwm_sifive_chip_to_ddata(chip);
--	u32 duty, val;
-+	u32 duty, val, inactive;
- 
--	duty = readl(ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
-+	inactive = readl(ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
-+	/*
-+	 * PWM hardware uses 'inactive' counts in pwmcmp, so invert to get actual duty.
-+	 * Here, 'inactive' is the low time and we compute duty as max_count - inactive.
-+	 */
-+	duty = (1U << PWM_SIFIVE_CMPWIDTH) - 1 - inactive;
- 
- 	state->enabled = duty > 0;
- 
-@@ -123,7 +145,7 @@ static int pwm_sifive_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 	state->period = ddata->real_period;
- 	state->duty_cycle =
- 		(u64)duty * ddata->real_period >> PWM_SIFIVE_CMPWIDTH;
--	state->polarity = PWM_POLARITY_INVERSED;
-+	state->polarity = PWM_POLARITY_NORMAL;
- 
- 	return 0;
- }
-@@ -137,9 +159,9 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	unsigned long long num;
- 	bool enabled;
- 	int ret = 0;
--	u32 frac;
-+	u32 frac, inactive;
- 
--	if (state->polarity != PWM_POLARITY_INVERSED)
-+	if (state->polarity != PWM_POLARITY_NORMAL)
- 		return -EINVAL;
- 
- 	cur_state = pwm->state;
-@@ -157,8 +179,9 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	 */
- 	num = (u64)duty_cycle * (1U << PWM_SIFIVE_CMPWIDTH);
- 	frac = DIV64_U64_ROUND_CLOSEST(num, state->period);
--	/* The hardware cannot generate a 100% duty cycle */
-+	/* The hardware cannot generate a 0% duty cycle */
- 	frac = min(frac, (1U << PWM_SIFIVE_CMPWIDTH) - 1);
-+	inactive = (1U << PWM_SIFIVE_CMPWIDTH) - 1 - frac;
- 
- 	mutex_lock(&ddata->lock);
- 	if (state->period != ddata->approx_period) {
-@@ -190,7 +213,7 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 0d43bf5b6cec..d89439e3605a 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1754,6 +1754,11 @@ void pm_runtime_reinit(struct device *dev)
+ 				pm_runtime_put(dev->parent);
  		}
  	}
++	/*
++	 * Clear power.needs_force_resume in case it has been set by
++	 * pm_runtime_force_suspend() invoked from a driver remove callback.
++	 */
++	dev->power.needs_force_resume = false;
+ }
  
--	writel(frac, ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
-+	writel(inactive, ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
- 
- 	if (!state->enabled)
- 		clk_disable(ddata->clk);
+ /**
 -- 
 2.39.5
 
