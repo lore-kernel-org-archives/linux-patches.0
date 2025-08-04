@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F50119DFA2;
-	Mon,  4 Aug 2025 00:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D29C19DFA2;
+	Mon,  4 Aug 2025 00:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267778; cv=none; b=FxpRNG998Wm3q174UZCe/DIY3+d0P66K2ySjtl700TJi8eLodkIV/IW2Rjd/bHR9g6JlS3I1QIg/1MVg1n/2VJeXTWNco4KBYLq6AA0CWwqMucM6HmDn8HxT/TfzcJ27Q39yNaa37LtZYEU/eX0LmPyh8ax1vE4anep3BC+R43s=
+	t=1754267780; cv=none; b=bDWGhH69vv3UGjjZk/HhPJ1FPBhvn3TgGni1mLghin3MPB7ull0PJimE3rb0w2t2IbK347J+bIEqWJY1IMQzWCl8VLHzjulXuO+zNtz5zoPBu0GmHOJyzJiR5vmkMXksXqJxL1FCgVtIONFfPrj181AMZ+4pTvlOxk2yWLyMNkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267778; c=relaxed/simple;
-	bh=mKs5js1KFTQCFSdcCwpm0zYrDEHeDicLewjv+Co+4T8=;
+	s=arc-20240116; t=1754267780; c=relaxed/simple;
+	bh=HTCii5Oo+4Bro4IEOEsAfVVoexcXbMFm6hDvC+3p5/4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fHHW3m8rr//LsoDq5YjhnmbQz5K9KY5teEMN60m56maeJqYI13ilOfI+zVm8gwC07bbPytmx+A4kLLHwtKBt/ECCPEdMc8nfrzTuX4eoorCy9oLmmREJ/NcWubH76x/yUblgTQO6P71Ctys2XTJPGyArss7eRtfStsiZn4jMeYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rYmFe1FW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WBU1CpeODHVB30K7vyo211fTfbY1je+dVec1+OE6/0lxQvuCR30quFKFjQhmxdFefEviwAgHKQv+5sH1SirvSWKGNE5/J0+RxVJa6FtghyJJCyGTgFce4TIlwnhLmxLSwE4V63rM4mPGAg+hrpogiO6wRBX2fjZxTKDOe/cgw/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVIL0uGB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rYmFe1FW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895B3C4CEF8;
-	Mon,  4 Aug 2025 00:36:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVIL0uGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878C9C4CEEB;
+	Mon,  4 Aug 2025 00:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267776;
-	bh=mKs5js1KFTQCFSdcCwpm0zYrDEHeDicLewjv+Co+4T8=;
+	s=k20201202; t=1754267780;
+	bh=HTCii5Oo+4Bro4IEOEsAfVVoexcXbMFm6hDvC+3p5/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rYmFe1FWMMTDVMdWwmX9NDcK+6OhmWUKi2dlXJWGo8eczJvgbhnAwvfe/j8cXY9D1
-	 HoMI4p/GyXE6AY+at+mNMjbYomX7FYNtgucU59ulztPN6x3s2GRhMJQrFwSuE0p2J+
-	 E0Eh94vdmnLXewbBsXG3co6gSeZNIsmme4lLInhYwR0e2xgSGQuiPn0T/ZBiizgH5T
-	 PSYiwsxsftaBd6xqaSG6EihDr9fhhZuk+oExhqvuMBd9tOX75uOQFU6FKZC45Ax9Ri
-	 QMMCRPrIEOgInKoSttRCQG7kp5L9g9Olxxb7ZrhOBtQgzeCpen0lZS6l786PdjskDQ
-	 70QAGQmze94+w==
+	b=hVIL0uGBrlyUt8F+O4YzsBZXXw4pf9AO4QLqofbbXIjUOnr4CXso0sGwL+c0ncmBY
+	 8Vv/BHNxOMfP2WH4lxxFDdUVhhVsM821ABYoA3K5qaW/BVeifSZ99drTZCqnXJY9HO
+	 DcLbQqlf8iZN0VjjPIVTZvt/1JIsPqmZLodmqo3iWSOFzJYHZnnQ9TWatGtW1bThOT
+	 WVEWhQz5Pm0ryJkNozlKd59HQ9UttmiY7Z4QYm9vDAXC/GODFjr3cf68jOrcxA5vQv
+	 XpgvAt8jVIfv9+SkMah99jPob7NarX+MNnLl/sllY84f5t+kZ2ZslMx91w5jJyuP0Q
+	 rraVgBdMtb7xg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+Cc: =?UTF-8?q?Krzysztof=20Ha=C5=82asa?= <khalasa@piap.pl>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	herongguang@linux.alibaba.com,
-	wangfushuai@baidu.com
-Subject: [PATCH AUTOSEL 6.6 49/59] pm: cpupower: Fix the snapshot-order of tsc,mperf, clock in mperf_stop()
-Date: Sun,  3 Aug 2025 20:34:03 -0400
-Message-Id: <20250804003413.3622950-49-sashal@kernel.org>
+	shawnguo@kernel.org,
+	peng.fan@nxp.com,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.6 50/59] imx8m-blk-ctrl: set ISI panic write hurry level
+Date: Sun,  3 Aug 2025 20:34:04 -0400
+Message-Id: <20250804003413.3622950-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -46,95 +48,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Gautham R. Shenoy" <gautham.shenoy@amd.com>
+From: Krzysztof Hałasa <khalasa@piap.pl>
 
-[ Upstream commit cda7ac8ce7de84cf32a3871ba5f318aa3b79381e ]
+[ Upstream commit c01fba0b4869cada5403fffff416cd1675dba078 ]
 
-In the function mperf_start(), mperf_monitor snapshots the time, tsc
-and finally the aperf,mperf MSRs. However, this order of snapshotting
-in is reversed in mperf_stop(). As a result, the C0 residency (which
-is computed as delta_mperf * 100 / delta_tsc) is under-reported on
-CPUs that is 100% busy.
+Apparently, ISI needs cache settings similar to LCDIF.
+Otherwise we get artefacts in the image.
+Tested on i.MX8MP.
 
-Fix this by snapshotting time, tsc and then aperf,mperf in
-mperf_stop() in the same order as in mperf_start().
-
-Link: https://lore.kernel.org/r/20250612122355.19629-2-gautham.shenoy@amd.com
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Krzysztof Hałasa <khalasa@piap.pl>
+Link: https://lore.kernel.org/r/m3ldr69lsw.fsf@t19.piap.pl
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
+
+Based on my analysis of the commit and the surrounding code:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Clear bug fix with user impact**: The commit fixes a calculation
-   bug in the cpupower tool where C0 residency (processor active time)
-   is under-reported on 100% busy CPUs. This directly affects users
-   monitoring CPU performance and power states.
+1. **Fixes a real user-visible bug**: The commit fixes image artifacts
+   in the ISI (Image Sensor Interface) on i.MX8MP. This is a functional
+   bug that affects users of camera/image capture functionality.
 
-2. **Simple and contained fix**: The change is minimal - it only
-   reorders three function calls in `mperf_stop()` to match the order in
-   `mperf_start()`:
-   - Before: `mperf_measure_stats()` → `mperf_get_tsc()` →
-     `clock_gettime()`
-   - After: `clock_gettime()` → `mperf_get_tsc()` →
-     `mperf_measure_stats()`
+2. **Small and contained change**: The fix adds only 10 lines of code
+   that set ISI panic write hurry levels in the
+   `imx8mp_media_power_notifier` function. It's a minimal change
+   confined to the i.MX8MP media block controller.
 
-3. **Low risk of regression**: The fix simply ensures consistent
-   snapshot ordering between start and stop measurements. This is a
-   logical correction that aligns the measurement methodology without
-   introducing new functionality.
+3. **Follows established pattern**: The fix mirrors the existing LCDIF
+   panic read hurry level fix (commit 06a9a229b159) that was already
+   applied for display FIFO underflow issues. The ISI needs similar
+   cache settings to prevent artifacts.
 
-4. **Clear root cause**: The bug occurs because the reversed snapshot
-   order causes timing skew in the C0 residency calculation
-   (`delta_mperf * 100 / delta_tsc`). When snapshots are taken in
-   different orders at start vs stop, the time windows don't align
-   properly, leading to incorrect calculations.
+4. **Hardware-specific fix**: The change only affects i.MX8MP hardware
+   and is guarded by the platform-specific power notifier function,
+   minimizing risk to other platforms.
 
-5. **Affects monitoring tool accuracy**: While this is a userspace tool
-   bug rather than a kernel bug, cpupower is an important diagnostic
-   tool shipped with the kernel. Incorrect C0 residency reporting could
-   mislead system administrators and developers analyzing CPU
-   performance.
+5. **Clear problem and solution**: The commit message clearly states the
+   problem (image artifacts) and the solution (setting ISI panic write
+   hurry levels similar to LCDIF), making it a straightforward hardware
+   configuration fix.
 
-6. **No architectural changes**: The fix doesn't change any data
-   structures, APIs, or fundamental behavior - it simply corrects the
-   measurement sequence.
+6. **No architectural changes**: This is purely a hardware register
+   configuration change during power-on sequences, not introducing new
+   features or changing kernel architecture.
 
-The commit meets stable tree criteria as it fixes a real bug affecting
-users, is minimal in scope, and has very low risk of introducing new
-issues.
+The fix addresses a hardware-specific issue where the ISI (Image Sensor
+Interface) needs proper cache/priority settings to avoid image
+artifacts, similar to how the LCDIF (display interface) needs such
+settings to avoid display FIFO underflow. This is an important fix for
+anyone using camera functionality on i.MX8MP platforms.
 
- tools/power/cpupower/utils/idle_monitor/mperf_monitor.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index 08a399b0be28..6ab9139f16af 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -240,9 +240,9 @@ static int mperf_stop(void)
- 	int cpu;
+diff --git a/drivers/pmdomain/imx/imx8m-blk-ctrl.c b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+index cc5ef6e2f0a8..0dfaf1d14035 100644
+--- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+@@ -664,6 +664,11 @@ static const struct imx8m_blk_ctrl_data imx8mn_disp_blk_ctl_dev_data = {
+ #define  LCDIF_1_RD_HURRY	GENMASK(15, 13)
+ #define  LCDIF_0_RD_HURRY	GENMASK(12, 10)
  
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
--		mperf_measure_stats(cpu);
--		mperf_get_tsc(&tsc_at_measure_end[cpu]);
- 		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
-+		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+		mperf_measure_stats(cpu);
++#define ISI_CACHE_CTRL		0x50
++#define  ISI_V_WR_HURRY		GENMASK(28, 26)
++#define  ISI_U_WR_HURRY		GENMASK(25, 23)
++#define  ISI_Y_WR_HURRY		GENMASK(22, 20)
++
+ static int imx8mp_media_power_notifier(struct notifier_block *nb,
+ 				unsigned long action, void *data)
+ {
+@@ -693,6 +698,11 @@ static int imx8mp_media_power_notifier(struct notifier_block *nb,
+ 		regmap_set_bits(bc->regmap, LCDIF_ARCACHE_CTRL,
+ 				FIELD_PREP(LCDIF_1_RD_HURRY, 7) |
+ 				FIELD_PREP(LCDIF_0_RD_HURRY, 7));
++		/* Same here for ISI */
++		regmap_set_bits(bc->regmap, ISI_CACHE_CTRL,
++				FIELD_PREP(ISI_V_WR_HURRY, 7) |
++				FIELD_PREP(ISI_U_WR_HURRY, 7) |
++				FIELD_PREP(ISI_Y_WR_HURRY, 7));
  	}
  
- 	return 0;
+ 	return NOTIFY_OK;
 -- 
 2.39.5
 
