@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7471C549F;
-	Mon,  4 Aug 2025 00:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD521C549F;
+	Mon,  4 Aug 2025 00:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267856; cv=none; b=geesBSgbJKUCGmJMvBp80XPE1vwMHg2xxUZ2/4S/OLLLZ827cTRZR98vla0nlBT+SUVtw4ypW/xLLipAlBlCz/rfK3NTPSAW04kA7hTLUQ2P3TqmzFwOdBSBCCgnStk1KfzLj6Aa3VmVN2smVPxWMQGu6yeNK2W06lXJebb2BVk=
+	t=1754267859; cv=none; b=IvQmV6XT7xX9RPWhriGkfLuoflNZxV9ZNpiciTTwaW5POvB3rwoPM2wpj6Z1aCAnBtUnbq2ayi1qu9vWzimhaHFNDItnqBthEn4YXnRhn9EG/lPJs/WnZ5++qvJBfxyuKuKDujs3DPXcclMWbkEl4jaXghGajkqNVofB/bb5pO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267856; c=relaxed/simple;
-	bh=9pKxRtep6EtStNPbYP+ARYdOs9PWjvAh1I3OkH3w7Tk=;
+	s=arc-20240116; t=1754267859; c=relaxed/simple;
+	bh=txRPniFTRLZVu8VM82rwbrs8l8vLsWoAuoYnAth+f5s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Cy1JK21Bax71A577KIF8xucJ+wSDboSO9NVgPSFceCPJ+n9IwscXqvMKA14r4Hvap0iQIy6B8W+cYfa9aSXZh3QcARr678YlJziy22I5BV4Mr2KcaJLJPw7lc5PsHZjDPE+jrmGsWQ9BrraJOhb27LSy25RvqUUJNsgVNLVdQbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cw0XOTtR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NIJ+m0e1SUDTVUjsEhOTD+Lx3XGcKu9unV5qfygpXpn3HNgrYmmYX/w0HMentZxr9BwHh68yuT0p7jJukexCRa7w2roDA4pLdL+IEPNtBZzUXwsWUxVhg7mCqcKiMZUOc0aySH9Qij3pj3u32filOWelYBec8Bp2mfO0NaJCLPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GZy/PS5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cw0XOTtR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314EFC4CEF8;
-	Mon,  4 Aug 2025 00:37:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GZy/PS5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB4FC4CEF0;
+	Mon,  4 Aug 2025 00:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267856;
-	bh=9pKxRtep6EtStNPbYP+ARYdOs9PWjvAh1I3OkH3w7Tk=;
+	s=k20201202; t=1754267858;
+	bh=txRPniFTRLZVu8VM82rwbrs8l8vLsWoAuoYnAth+f5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cw0XOTtRiT4eKD5AcwRVBBjBHlv8AVD/3mi72qJ31LwrRnaeGPU3wEQe8oF7tIVOT
-	 6z1A+RGl5KUbQ7EBlMz4iCAbguepUD2z+ammAcBZAazQMqtl/nEBGkAsBasHuW7Shi
-	 7FJEA5VhgfqFRlJ2sm73IWE3I3k1CCGBEMmG4KMbQJ6Fe+zOhk1rzGGrf9wCcDVwGg
-	 H4VpZJtCNmNIk1Hvo4sB3SN0WqVKOfq0Ebc6K3xItIk3IyG0fsXoC0HkyxBFjlmkra
-	 XEbgl+9qfadCkU0SdAIbGUrh/ikzhNZC7qGl1LRWq8Wtp/Nze3KzmMadX/gIUeQ9iI
-	 39AE6xT6/QOdA==
+	b=GZy/PS5yXFFe4mR8YclpC4J45IiyqQsMclIpK+XdyWJUeQsEdP3zOp2covKo6Ar3h
+	 ncs5lg6umIG+Yg2EdUkgv/OaqcngzFilL4CSHnGglqXeJqqJUFVEIx3Nlhwipr7eVw
+	 vaBcs6f9UrnTCAp/2N1B/0TUW2JsC6u34hJtYNgFYxdTNifCH2cCpPZs7ikrnzo9vu
+	 QWKcynGWRXmMUDXsH1pPmy38wiXzg5H+0Ex8Snh9Jc9qvKPMpGIHAhgX0w/0byXnho
+	 DpE3NPkc0wQG7+0sc+M7IEdjJDrHdO+famsMliSr0q1IE0dFO2Kp3ASq31YvR3ldNH
+	 fhQuzDzshBi5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhu Qiyu <qiyuzhu2@amd.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Nylon Chen <nylon.chen@sifive.com>,
+	Zong Li <zong.li@sifive.com>,
+	Vincent Chen <vincent.chen@sifive.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.1 23/51] ACPI: PRM: Reduce unnecessary printing to avoid user confusion
-Date: Sun,  3 Aug 2025 20:36:15 -0400
-Message-Id: <20250804003643.3625204-23-sashal@kernel.org>
+	paul.walmsley@sifive.com,
+	samuel.holland@sifive.com,
+	linux-pwm@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.1 24/51] pwm: sifive: Fix PWM algorithm and clarify inverted compare behavior
+Date: Sun,  3 Aug 2025 20:36:16 -0400
+Message-Id: <20250804003643.3625204-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003643.3625204-1-sashal@kernel.org>
 References: <20250804003643.3625204-1-sashal@kernel.org>
@@ -46,144 +50,198 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.147
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Qiyu <qiyuzhu2@amd.com>
+From: Nylon Chen <nylon.chen@sifive.com>
 
-[ Upstream commit 3db5648c4d608b5483470efc1da9780b081242dd ]
+[ Upstream commit 7dbc4432ea6bf9d709391eb57f1e9fb44e99845a ]
 
-Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
-handler and context") introduced non-essential printing "Failed to find
-VA for GUID: xxxx, PA: 0x0" which may confuse users to think that
-something wrong is going on while it is not the case.
+The `frac` variable represents the pulse inactive time, and the result
+of this algorithm is the pulse active time. Therefore, we must reverse
+the result.
 
-According to the PRM Spec Section 4.1.2 [1], both static data buffer
-address and ACPI parameter buffer address may be NULL if they are not
-needed, so there is no need to print out the "Failed to find VA ... "
-in those cases.
+Although the SiFive Reference Manual states "pwms >= pwmcmpX -> HIGH",
+the hardware behavior is inverted due to a fixed XNOR with 0. As a result,
+the pwmcmp register actually defines the low (inactive) portion of the pulse.
 
-Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
-Signed-off-by: Zhu Qiyu <qiyuzhu2@amd.com>
-Link: https://patch.msgid.link/20250704014104.82524-1-qiyuzhu2@amd.com
-[ rjw: Edits in new comments, subject and changelog ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The reference is SiFive FU740-C000 Manual[0]
+
+Link: https://sifive.cdn.prismic.io/sifive/1a82e600-1f93-4f41-b2d8-86ed8b16acba_fu740-c000-manual-v1p6.pdf [0]
+
+Co-developed-by: Zong Li <zong.li@sifive.com>
+Signed-off-by: Zong Li <zong.li@sifive.com>
+Co-developed-by: Vincent Chen <vincent.chen@sifive.com>
+Signed-off-by: Vincent Chen <vincent.chen@sifive.com>
+Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
+Link: https://lore.kernel.org/r/20250529035341.51736-3-nylon.chen@sifive.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-## Bug Fix for User-Visible Issue
-The commit fixes false warning messages that were confusing users. The
-original commit 088984c8d54c (which was already backported to stable
-with "Cc: All applicable <stable@vger.kernel.org>") introduced an
-unconditional warning in `efi_pa_va_lookup()`:
+## Critical Bug Fix Analysis
 
-```c
-pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
-```
+1. **The commit fixes a significant functional bug** - The PWM algorithm
+   was fundamentally broken:
+   - The `frac` variable was incorrectly used (lines 158-161 in
+     original, now 168-171)
+   - The driver was writing the duty cycle value directly to PWMCMP
+     register (line 193), but the hardware actually expects the
+     **inactive** (low) time
+   - This results in inverted PWM output behavior where users get the
+     opposite duty cycle from what they request
 
-This warning was printed even when the physical address (PA) was
-legitimately 0/NULL, which according to the PRM specification is valid
-for both `static_data_buffer_address` and `acpi_param_buffer_address`
-when they are not needed.
+2. **Hardware behavior discrepancy** - The commit reveals and fixes a
+   critical mismatch between documentation and actual hardware:
+   - The documentation states "pwms >= pwmcmpX -> HIGH"
+   - But the hardware has a hard-tied XNOR with 0 that inverts this
+     behavior
+   - The driver now correctly compensates for this hardware quirk
 
-## Small and Contained Fix
-The fix is minimal and surgical:
-1. Removes the unconditional warning from `efi_pa_va_lookup()`
-2. Adds conditional warnings only when addresses are non-zero but lookup
-   fails:
-   - For handler_addr: warns if lookup fails (this should never be zero)
-   - For static_data_buffer_addr: only warns if
-     `handler_info->static_data_buffer_address` is non-zero but lookup
-     fails
-   - For acpi_param_buffer_addr: only warns if
-     `handler_info->acpi_param_buffer_address` is non-zero but lookup
-     fails
+3. **User-visible impact**:
+   - **In `pwm_sifive_get_state()`**: The driver now correctly inverts
+     the value read from hardware (lines 115->122-126)
+   - **In `pwm_sifive_apply()`**: The driver now inverts the duty cycle
+     before writing to hardware (lines 162->171)
+   - **Polarity change**: Changed from `PWM_POLARITY_INVERSED` to
+     `PWM_POLARITY_NORMAL` (lines 126->137, 142->152)
+   - **Documentation fix**: Updated comment from "cannot generate 100%
+     duty" to "cannot generate 0% duty" (lines 11->27, 160->170)
 
-## Regression Fix
-Since the problematic commit 088984c8d54c has been backported to v6.12
-stable kernels, this fix addresses a regression in stable trees where
-users are seeing confusing warning messages for legitimate NULL
-addresses.
+4. **The fix is relatively small and contained**:
+   - Changes are isolated to the PWM algorithm logic
+   - No architectural changes or new features
+   - Simple mathematical inversion: `duty = (1U << PWM_SIFIVE_CMPWIDTH)
+     - 1 - inactive`
 
-## Low Risk
-The change:
-- Does not modify any functional behavior
-- Only adjusts when warning messages are printed
-- Has no architectural changes or side effects
-- Is confined to the ACPI PRM subsystem
+5. **No risky side effects**:
+   - The change is straightforward and mathematically correct
+   - Doesn't affect other subsystems
+   - Maintains the same register interface
 
-## Clear Benefit
-The fix eliminates user confusion from false warnings while maintaining
-proper warnings for actual error conditions (when a non-zero address
-fails lookup).
+6. **Affects all SiFive PWM users**:
+   - Any system using SiFive FU540 or FU740 SoCs would have incorrect
+     PWM output
+   - This includes various RISC-V development boards and embedded
+     systems
+   - Users would get inverted duty cycles, potentially breaking motor
+     controls, LED dimming, etc.
 
-Given that the original problematic commit is in stable kernels and this
-is a targeted fix for that regression with minimal risk, it clearly
-meets the stable backporting criteria.
+7. **Clear documentation reference**:
+   - The commit references the official SiFive FU740-C000 Manual
+   - Provides clear explanation of the hardware behavior mismatch
 
- drivers/acpi/prmt.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+The bug causes PWM outputs to be inverted from user expectations, which
+is a significant functional issue that would affect any system relying
+on proper PWM behavior for motor control, LED dimming, or other PWM-
+dependent functionality. The fix is clean, minimal, and addresses a
+clear hardware/software mismatch that exists in production systems.
 
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index 7747ca4168ab..215ca8d60616 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -85,8 +85,6 @@ static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
+ drivers/pwm/pwm-sifive.c | 39 +++++++++++++++++++++++++++++++--------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
+index 393a4b97fc19..e87b16e10daa 100644
+--- a/drivers/pwm/pwm-sifive.c
++++ b/drivers/pwm/pwm-sifive.c
+@@ -4,11 +4,28 @@
+  * For SiFive's PWM IP block documentation please refer Chapter 14 of
+  * Reference Manual : https://static.dev.sifive.com/FU540-C000-v1.0.pdf
+  *
++ * PWM output inversion: According to the SiFive Reference manual
++ * the output of each comparator is high whenever the value of pwms is
++ * greater than or equal to the corresponding pwmcmpX[Reference Manual].
++ *
++ * Figure 29 in the same manual shows that the pwmcmpXcenter bit is
++ * hard-tied to 0 (XNOR), which effectively inverts the comparison so that
++ * the output goes HIGH when  `pwms < pwmcmpX`.
++ *
++ * In other words, each pwmcmp register actually defines the **inactive**
++ * (low) period of the pulse, not the active time exactly opposite to what
++ * the documentation text implies.
++ *
++ * To compensate, this driver always **inverts** the duty value when reading
++ * or writing pwmcmp registers , so that users interact with a conventional
++ * **active-high** PWM interface.
++ *
++ *
+  * Limitations:
+  * - When changing both duty cycle and period, we cannot prevent in
+  *   software that the output might produce a period with mixed
+  *   settings (new period length and old duty cycle).
+- * - The hardware cannot generate a 100% duty cycle.
++ * - The hardware cannot generate a 0% duty cycle.
+  * - The hardware generates only inverted output.
+  */
+ #include <linux/clk.h>
+@@ -109,9 +126,14 @@ static int pwm_sifive_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+ 				struct pwm_state *state)
+ {
+ 	struct pwm_sifive_ddata *ddata = pwm_sifive_chip_to_ddata(chip);
+-	u32 duty, val;
++	u32 duty, val, inactive;
+ 
+-	duty = readl(ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
++	inactive = readl(ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
++	/*
++	 * PWM hardware uses 'inactive' counts in pwmcmp, so invert to get actual duty.
++	 * Here, 'inactive' is the low time and we compute duty as max_count - inactive.
++	 */
++	duty = (1U << PWM_SIFIVE_CMPWIDTH) - 1 - inactive;
+ 
+ 	state->enabled = duty > 0;
+ 
+@@ -122,7 +144,7 @@ static int pwm_sifive_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	state->period = ddata->real_period;
+ 	state->duty_cycle =
+ 		(u64)duty * ddata->real_period >> PWM_SIFIVE_CMPWIDTH;
+-	state->polarity = PWM_POLARITY_INVERSED;
++	state->polarity = PWM_POLARITY_NORMAL;
+ 
+ 	return 0;
+ }
+@@ -136,9 +158,9 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	unsigned long long num;
+ 	bool enabled;
+ 	int ret = 0;
+-	u32 frac;
++	u32 frac, inactive;
+ 
+-	if (state->polarity != PWM_POLARITY_INVERSED)
++	if (state->polarity != PWM_POLARITY_NORMAL)
+ 		return -EINVAL;
+ 
+ 	cur_state = pwm->state;
+@@ -156,8 +178,9 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	 */
+ 	num = (u64)duty_cycle * (1U << PWM_SIFIVE_CMPWIDTH);
+ 	frac = DIV64_U64_ROUND_CLOSEST(num, state->period);
+-	/* The hardware cannot generate a 100% duty cycle */
++	/* The hardware cannot generate a 0% duty cycle */
+ 	frac = min(frac, (1U << PWM_SIFIVE_CMPWIDTH) - 1);
++	inactive = (1U << PWM_SIFIVE_CMPWIDTH) - 1 - frac;
+ 
+ 	mutex_lock(&ddata->lock);
+ 	if (state->period != ddata->approx_period) {
+@@ -189,7 +212,7 @@ static int pwm_sifive_apply(struct pwm_chip *chip, struct pwm_device *pwm,
  		}
  	}
  
--	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
--
- 	return 0;
- }
+-	writel(frac, ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
++	writel(inactive, ddata->regs + PWM_SIFIVE_PWMCMP(pwm->hwpwm));
  
-@@ -154,13 +152,37 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
-+		/*
-+		 * Print a warning message if handler_addr is zero which is not expected to
-+		 * ever happen.
-+		 */
-+		if (unlikely(!th->handler_addr))
-+			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->handler_address);
- 
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
-+		/*
-+		 * According to the PRM specification, static_data_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->static_data_buffer_addr && handler_info->static_data_buffer_address))
-+			pr_warn("Failed to find VA of static data buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->static_data_buffer_address);
- 
- 		th->acpi_param_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
- 
-+		/*
-+		 * According to the PRM specification, acpi_param_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->acpi_param_buffer_addr && handler_info->acpi_param_buffer_address))
-+			pr_warn("Failed to find VA of acpi param buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->acpi_param_buffer_address);
-+
- 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
- 
- 	return 0;
+ 	if (!state->enabled)
+ 		clk_disable(ddata->clk);
 -- 
 2.39.5
 
