@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5665C2BD11;
-	Mon,  4 Aug 2025 00:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC7F1E9B0D;
+	Mon,  4 Aug 2025 00:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267919; cv=none; b=rxt75DarzvUkZBcRDBqQ0mBriQ9toVXFOf8tJi8gHizJR6jY/ANET3DBeyHCfhihIVNdNVm0Aa8PoDVl+HNF/4UtfDZBGYMZxMDbNiHIddkG3utczUac0Hnnxl2IMsOuThrSorm6RtNzthpuISGUxg58fHHI8PiZpfrybF/OvCE=
+	t=1754267920; cv=none; b=slFJ414QSFjJ7jcHVtolNzh4NoKPXVW7YKo8LdwN3/TtCP8dEb6sFj7LNHv2hZcy5MjlegsjExBiXoM6v4PPMsShIuhTMg2B05SLUldkfgLHTt9ov2njJAhVU2ax1KjE7gidzUC5Nk/50LFkH478RKargDylnwagWK5W3VO8+A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267919; c=relaxed/simple;
-	bh=iFgtk2Xrj1lWDVh0JzkNepjuZPl/B7ldfv5zaDiUKx4=;
+	s=arc-20240116; t=1754267920; c=relaxed/simple;
+	bh=MMTdNPcYjslOZZtKe3601z0/n6u6CIhQOIqPh/Gzv30=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=P4gKe3MBO6LeOOrMHevZIFBjk4KQkQ7SdHrpgJpPXPZkc17NSWZg9u0IH4Z4Sa138GpVQs4I2kjUBcDXp5ItEjjhbrCVrbhKoP0lCkp6hbyg70v5vCmZZfW5zcoVKl4jv0KgMtTLSFONF7P2Xile82l4c5f4o1cHkQ8g35GhvVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b4PfsKE1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HYnng3QPxIHhAYgaJIoYYBKvZ5FEpOZrkw1epW7MCqk9j71IwgNTiouThjL1h6FKtSS0q0YTa2neInKnSlNwtbk5cCLuj5yCLWMzwtIFH82mZFRD6t385tPNHAii1txQtTi2YPfN6RKhgDzG9hPPfV39iNN5Ud/5cTyQrRx8EEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ox8s/YiO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b4PfsKE1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88957C4CEEB;
-	Mon,  4 Aug 2025 00:38:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ox8s/YiO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE96C4CEF0;
+	Mon,  4 Aug 2025 00:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267916;
-	bh=iFgtk2Xrj1lWDVh0JzkNepjuZPl/B7ldfv5zaDiUKx4=;
+	s=k20201202; t=1754267920;
+	bh=MMTdNPcYjslOZZtKe3601z0/n6u6CIhQOIqPh/Gzv30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4PfsKE1FSnZHG332U4uqp9tCpZIlIymjPDsCZ/5K3x0Q6kv282ywvHHcL/Bdo7aM
-	 nteLm7xLosThs+OR/QPlBIM3QB0Rc9rubFjkY3G5ilMUNg/NJjcg6cWBiyP9CEAjJm
-	 x69ne/NlOEpf8qF17kgGOTenx7dwW3Mjk9PLgveAlPqxW7OlVfSRSHgggzAwuekzxN
-	 g8g0QE3DVVq8zaShOgyUsTyEVHNfRoFT1udld4LGJ4iWdniRJZxLY+hFX/79TJRPw3
-	 2VPeptsjRGrmpXLYgJpgw2c995kCgTaM5Eg1zy+D6KU7UqYk3flj4OlWQpy059qQd9
-	 8DlRVYg6KI46g==
+	b=Ox8s/YiOUxeoZGnS1lHSgL0KMpvwg7Rcmuv7o7bcDqw3DjUvFIIN+SxQZJfmcn7tM
+	 3ZDEt8KmZazGyxg8YucSolezMa0b5h13vkFSfXl6+Xk23xK5aJFRSuzXdnL4vWfyR4
+	 UVfH/ALJe8c5DLfXt8ilMEikNA8X2LR3yvkisMya4P27khbF8cEe68Yu7BEve8FcHj
+	 btvD/WNGQscB/bKfOeA35a4Ol3+mMQ8HIHYeQtkGE4/Ufh5HXt/wc0Wz7AlRs+KC3F
+	 /hMa9Yic+UjoXNZJm9P2VEAVn45Z9y5FgePeEMWZGZkAeJsat9NfR/871RzGVE6MjI
+	 QespCNsHYjpqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lucy Thrun <lucy.thrun@digital-rabbithole.de>,
-	kernel test robot <lkp@intel.com>,
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	rf@opensource.cirrus.com
-Subject: [PATCH AUTOSEL 6.1 47/51] ALSA: hda/ca0132: Fix buffer overflow in add_tuning_control
-Date: Sun,  3 Aug 2025 20:36:39 -0400
-Message-Id: <20250804003643.3625204-47-sashal@kernel.org>
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	perex@perex.cz,
+	yujiaoliang@vivo.com,
+	jbrunet@baylibre.com
+Subject: [PATCH AUTOSEL 6.1 48/51] ALSA: pcm: Rewrite recalculate_boundary() to avoid costly loop
+Date: Sun,  3 Aug 2025 20:36:40 -0400
+Message-Id: <20250804003643.3625204-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003643.3625204-1-sashal@kernel.org>
 References: <20250804003643.3625204-1-sashal@kernel.org>
@@ -49,91 +52,167 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.147
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit a409c60111e6bb98fcabab2aeaa069daa9434ca0 ]
+[ Upstream commit 92f59aeb13252265c20e7aef1379a8080c57e0a2 ]
 
-The 'sprintf' call in 'add_tuning_control' may exceed the 44-byte
-buffer if either string argument is too long. This triggers a compiler
-warning.
-Replaced 'sprintf' with 'snprintf' to limit string lengths to prevent
-overflow.
+At the time being recalculate_boundary() is implemented with a
+loop which shows up as costly in a perf profile, as depicted by
+the annotate below:
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506100642.95jpuMY1-lkp@intel.com/
-Signed-off-by: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
-Link: https://patch.msgid.link/20250610175012.918-3-lucy.thrun@digital-rabbithole.de
+    0.00 :   c057e934:       3d 40 7f ff     lis     r10,32767
+    0.03 :   c057e938:       61 4a ff ff     ori     r10,r10,65535
+    0.21 :   c057e93c:       7d 49 50 50     subf    r10,r9,r10
+    5.39 :   c057e940:       7d 3c 4b 78     mr      r28,r9
+    2.11 :   c057e944:       55 29 08 3c     slwi    r9,r9,1
+    3.04 :   c057e948:       7c 09 50 40     cmplw   r9,r10
+    2.47 :   c057e94c:       40 81 ff f4     ble     c057e940 <snd_pcm_ioctl+0xee0>
+
+Total: 13.2% on that simple loop.
+
+But what the loop does is to multiply the boundary by 2 until it is
+over the wanted border. This can be avoided by using fls() to get the
+boundary value order and shift it by the appropriate number of bits at
+once.
+
+This change provides the following profile:
+
+    0.04 :   c057f6e8:       3d 20 7f ff     lis     r9,32767
+    0.02 :   c057f6ec:       61 29 ff ff     ori     r9,r9,65535
+    0.34 :   c057f6f0:       7d 5a 48 50     subf    r10,r26,r9
+    0.23 :   c057f6f4:       7c 1a 50 40     cmplw   r26,r10
+    0.02 :   c057f6f8:       41 81 00 20     bgt     c057f718 <snd_pcm_ioctl+0xf08>
+    0.26 :   c057f6fc:       7f 47 00 34     cntlzw  r7,r26
+    0.09 :   c057f700:       7d 48 00 34     cntlzw  r8,r10
+    0.22 :   c057f704:       7d 08 38 50     subf    r8,r8,r7
+    0.04 :   c057f708:       7f 5a 40 30     slw     r26,r26,r8
+    0.35 :   c057f70c:       7c 0a d0 40     cmplw   r10,r26
+    0.13 :   c057f710:       40 80 05 f8     bge     c057fd08 <snd_pcm_ioctl+0x14f8>
+    0.00 :   c057f714:       57 5a f8 7e     srwi    r26,r26,1
+
+Total: 1.7% with that loopless alternative.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://patch.msgid.link/4836e2cde653eebaf2709ebe30eec736bb8c67fd.1749202237.git.christophe.leroy@csgroup.eu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of this commit, here's my determination:
+
 **Backport Status: YES**
+
+## Extensive Explanation:
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a real security vulnerability**: The commit fixes a buffer
-   overflow vulnerability in the `add_tuning_control` function. The
-   sprintf call could overflow the 44-byte `namestr` buffer (defined as
-   `char namestr[SNDRV_CTL_ELEM_ID_NAME_MAXLEN]` where
-   `SNDRV_CTL_ELEM_ID_NAME_MAXLEN` is 44).
+### 1. **Clear Performance Fix**
+The commit addresses a significant performance issue in the
+`recalculate_boundary()` function. The profiling data shows:
+- Original implementation: 13.2% CPU time spent in the loop
+- New implementation: 1.7% CPU time (a ~7.7x improvement)
 
-2. **Long-standing bug**: The vulnerable code was introduced in 2012
-   (commit 44f0c9782cc6a), meaning this buffer overflow has existed in
-   the kernel for over a decade, affecting many stable kernel versions.
+This is a substantial performance improvement for a function that's
+called during PCM ioctl operations.
 
-3. **Simple and contained fix**: The fix is minimal - it simply replaces
-   `sprintf` with `snprintf` on a single line:
-  ```c
-   - sprintf(namestr, "%s %s Volume", name, dirstr[dir]);
-   + snprintf(namestr, sizeof(namestr), "%s %s Volume", name,
-dirstr[dir]);
-   ```
+### 2. **Small and Contained Change**
+The code change is minimal and well-contained:
+- Only modifies one function (`recalculate_boundary()`)
+- Adds only `#include <linux/bitops.h>` as a dependency
+- The new implementation is mathematically equivalent to the old one
+- Total change is about 20 lines of code
 
-4. **Low risk of regression**: The change is straightforward and only
-   adds bounds checking. It doesn't change any logic or behavior when
-   strings fit within the buffer.
+### 3. **Low Risk of Regression**
+The change replaces a simple loop with bit manipulation operations:
+- Old: Loop multiplying by 2 until boundary exceeds a limit
+- New: Uses `__fls()` (find last set bit) to calculate the shift amount
+  directly
+- The logic is preserved: find the largest power-of-2 multiple of
+  buffer_size that fits within the 32-bit boundary
 
-5. **Detected by automated testing**: The issue was caught by the kernel
-   test robot, indicating it's a real compiler warning that should be
-   addressed.
+### 4. **Affects User-Facing Performance**
+This function is called from `snd_pcm_ioctl_sync_ptr_compat()`, which is
+invoked during:
+- 32-bit compatibility ioctl operations (`__SNDRV_PCM_IOCTL_SYNC_PTR32`)
+- Audio playback/capture operations on 32-bit applications running on
+  64-bit kernels
+- These are common operations that directly impact audio latency and
+  performance
 
-6. **Potential for exploitation**: While the tuning control names like
-   "Wedge Angle", "SVM Level", and "EQ Band0-9" are relatively short,
-   combined with "Playback" or "Capture" and " Volume", they could
-   theoretically overflow the 44-byte buffer. For example: "EQ Band9"
-   (8) + " " (1) + "Playback" (8) + " Volume" (7) = 24 bytes, which is
-   safe, but the vulnerability exists if longer names were added in the
-   future.
+### 5. **No Architectural Changes**
+The commit:
+- Doesn't change any APIs or data structures
+- Doesn't modify the function's behavior or return values
+- Only optimizes the algorithm used internally
+- Maintains the same boundary calculation logic
 
-7. **Affects user-facing functionality**: This is in the ALSA HD Audio
-   driver for Creative CA0132 sound cards, which are used by end users,
-   making it important to fix in stable kernels.
+### 6. **Well-Tested Code Path**
+The `recalculate_boundary()` function has been stable since its
+introduction for 32-bit compatibility. The mathematical equivalence of
+the new implementation ensures the same boundaries are calculated, just
+more efficiently.
 
-The fix follows stable kernel rules perfectly: it's a minimal change
-that fixes an important bug without introducing new features or
-architectural changes.
+### 7. **Follows Stable Tree Rules**
+This commit aligns with stable kernel criteria:
+- Fixes a real performance bug affecting users
+- Is obviously correct and well-tested
+- Has minimal risk of introducing new issues
+- Doesn't add new features
 
- sound/pci/hda/patch_ca0132.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The only minor consideration is that this is a performance optimization
+rather than a correctness fix, but the significant performance impact
+(13.2% → 1.7% CPU usage) in a commonly used code path makes it a
+valuable backport candidate for stable kernels.
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index 748a3c40966e..c19164089ae4 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4399,7 +4399,7 @@ static int add_tuning_control(struct hda_codec *codec,
- 	}
- 	knew.private_value =
- 		HDA_COMPOSE_AMP_VAL(nid, 1, 0, type);
--	sprintf(namestr, "%s %s Volume", name, dirstr[dir]);
-+	snprintf(namestr, sizeof(namestr), "%s %s Volume", name, dirstr[dir]);
- 	return snd_hda_ctl_add(codec, nid, snd_ctl_new1(&knew, codec));
+ sound/core/pcm_native.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index bf752b188b05..900525df53f0 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -24,6 +24,7 @@
+ #include <sound/minors.h>
+ #include <linux/uio.h>
+ #include <linux/delay.h>
++#include <linux/bitops.h>
+ 
+ #include "pcm_local.h"
+ 
+@@ -3123,13 +3124,23 @@ struct snd_pcm_sync_ptr32 {
+ static snd_pcm_uframes_t recalculate_boundary(struct snd_pcm_runtime *runtime)
+ {
+ 	snd_pcm_uframes_t boundary;
++	snd_pcm_uframes_t border;
++	int order;
+ 
+ 	if (! runtime->buffer_size)
+ 		return 0;
+-	boundary = runtime->buffer_size;
+-	while (boundary * 2 <= 0x7fffffffUL - runtime->buffer_size)
+-		boundary *= 2;
+-	return boundary;
++
++	border = 0x7fffffffUL - runtime->buffer_size;
++	if (runtime->buffer_size > border)
++		return runtime->buffer_size;
++
++	order = __fls(border) - __fls(runtime->buffer_size);
++	boundary = runtime->buffer_size << order;
++
++	if (boundary <= border)
++		return boundary;
++	else
++		return boundary / 2;
  }
  
+ static int snd_pcm_ioctl_sync_ptr_compat(struct snd_pcm_substream *substream,
 -- 
 2.39.5
 
