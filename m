@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4C629A2;
-	Mon,  4 Aug 2025 00:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC51929A2;
+	Mon,  4 Aug 2025 00:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267330; cv=none; b=gv7iYJuutpo/TIpgz7k3BnjWWu5pbh3DE1BMzfYMx1H8m05VfIr5CUID/zwq7KwBqZsrt+33LkeVPlZKukrGie6rDWZSpVuEB4mOmI/tvEihG1ly7dZYR8pP0t9Ps8yj0AQ8e4WW7j3HZpYZzwkJykFfdTlPtM/nUEH4aENRbUs=
+	t=1754267333; cv=none; b=CuGP0tXxU1TLHakA3pLvSKPO1BMq6hmgxr0gO1CpTSObZXTK2e08di57O88G9I2masO/KRTbMrf2i8xopdrEQ+2Hc/5smKQL/s1xTxr/nQlyR4YWyfRZ8SlcU5PJsCtF667IymUHrkpiptuJX4n7b04iFZ7AFcgxZHxF7unq+AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267330; c=relaxed/simple;
-	bh=3HHaeLBK49tBcY9lCECJOjwEAEESTf5rVhQqzAT56yY=;
+	s=arc-20240116; t=1754267333; c=relaxed/simple;
+	bh=Z9Q/IX48zM4LaR3KBMe4N/HBMaW0O4skYQf3C9G+5Sw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GcIAaOrMbJODYdCdnzte9f4qh8XAT5I+rBfIPszCKOAKnvpZp8tgCz6fc3vS8MteY24Vk/SgEzcjDAGaGW5GjCXFB7Rz4JJCqctClBEDgneBmQA5tdV+5oZf5XT9ajPFpHpmjdkmFaJuX51GduEUYhbndSX9bW3Xi/izqjZ+VzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vGWQ+Og7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERqLCccNzl6UTMhv3G7CavyizXXx1josi/hR/ZBPlfrpuBcXUZC2aypMD6Xo7Tq1O3C+6yFkkw0xTx9ttuymG5mTBvX8TSx89TRLPXTL/0CrAkOGNOdNmcgNaewUzFWn0WY2TIh4l+FVkX21N8QioSMNMP28ynujiBSSNp7ezYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F9WrawEP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vGWQ+Og7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871B1C4CEF0;
-	Mon,  4 Aug 2025 00:28:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F9WrawEP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386AAC4CEF0;
+	Mon,  4 Aug 2025 00:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267330;
-	bh=3HHaeLBK49tBcY9lCECJOjwEAEESTf5rVhQqzAT56yY=;
+	s=k20201202; t=1754267332;
+	bh=Z9Q/IX48zM4LaR3KBMe4N/HBMaW0O4skYQf3C9G+5Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGWQ+Og7hNt9aW+v52YgD6VrUOUTBe/Bb+jmf1/X4xM4/pZxYPfTPOnBJ9lkkcWBz
-	 Pyi9xU+ILD1c91BgJXJGS1i+Dz2IPqMlHYQ3cogYJoMrt4VFterV8lIWQUYL/Bnfn+
-	 vXlBjL4hWr1Poseh0efLdhmCNyupAN6pdCvOJ1/FIxnJV5rHy9hXuxeHtA5UV3GUVw
-	 xjixHlOnIm0Gwaav8CTFb51P32deKC7+c0CJGfXAB3UgRLF5eQbGdBTDwfjjbwSveK
-	 WFyYG/F15WVylxCWUXCaBlIgek1s/e/bmjLHUVVeU367uAxlmUXTrJaJZP4jCcynqk
-	 1X7A5Tb4Wwsxw==
+	b=F9WrawEPAkmfMUnLrtJyOP1zijaeWsatqGlJk2NWBjs61qlECgtL6k/yE6U5kAXb4
+	 E7AjzZL6a3ld6LN1FseTUPmYxqjM2hS+6BjL8UwPimPrx+AtNLlfshwQwyuT/vgEfK
+	 u7Dogx3jArz1HTCL/PGHgW/EotQuEVragxvbXhD3mjip9Tj/E2Ytwk5xk40vK1CgAv
+	 7KlDKZ6w1cFiYoD8vw1DTT1aWskKaWvyMSKgZD+DIgQiqvY+XKAyktJfcix2iiFDY2
+	 VKJFHOy2gTtqAav3+kpq/sizfJ4f1No8rRggKOE2gHJ0sqCT1JoicElbESPPSB7Gw8
+	 RvohgyczOsGiQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Guillaume La Roque <glaroque@baylibre.com>,
-	Nishanth Menon <nm@ti.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.15 21/80] pmdomain: ti: Select PM_GENERIC_DOMAINS
-Date: Sun,  3 Aug 2025 20:26:48 -0400
-Message-Id: <20250804002747.3617039-21-sashal@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 22/80] gpio: wcd934x: check the return value of regmap_update_bits()
+Date: Sun,  3 Aug 2025 20:26:49 -0400
+Message-Id: <20250804002747.3617039-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -50,85 +51,92 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume La Roque <glaroque@baylibre.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit fcddcb7e8f38a40db99f87a962c5d0a153a76566 ]
+[ Upstream commit ff0f0d7c6587e38c308be9905e36f86e98fb9c1f ]
 
-Select PM_GENERIC_DOMAINS instead of depending on it to ensure
-it is always enabled when TI_SCI_PM_DOMAINS is selected.
-Since PM_GENERIC_DOMAINS is an implicit symbol, it can only be enabled
-through 'select' and cannot be explicitly enabled in configuration.
-This simplifies the dependency chain and prevents build issues
+regmap_update_bits() can fail so check its return value in
+wcd_gpio_direction_output() for consistency with the rest of the code
+and propagate any errors.
 
-Signed-off-by: Guillaume La Roque <glaroque@baylibre.com>
-Reviewed-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20250715-depspmdomain-v2-1-6f0eda3ce824@baylibre.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250709-gpiochip-set-rv-gpio-remaining-v1-2-b8950f69618d@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Let me analyze based on what I can see from the provided diff:
+Based on my analysis, here's my determination:
 
-**Backport Status: YES**
+**YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a build configuration issue**: The commit message explicitly
-   states this change "prevents build issues". The problem is that
-   PM_GENERIC_DOMAINS is an implicit symbol that cannot be explicitly
-   enabled by users in configuration menus. Using "depends on" creates a
-   circular dependency problem where users cannot enable
-   TI_SCI_PM_DOMAINS because they cannot manually enable
-   PM_GENERIC_DOMAINS.
+1. **It fixes a real bug**: The `wcd_gpio_direction_output()` function
+   in drivers/gpio/gpio-wcd934x.c was not checking the return value of
+   the first `regmap_update_bits()` call (lines 50-51 in the original
+   code). This could lead to silent failures where the GPIO direction
+   register update fails, but the function continues to update the value
+   register, potentially leaving the GPIO in an inconsistent state.
 
-2. **Small and contained fix**: The change is minimal - it only modifies
-   one line in a Kconfig file, changing from `depends on
-   PM_GENERIC_DOMAINS` to `select PM_GENERIC_DOMAINS if PM`. This is a
-   low-risk change that only affects the configuration system.
+2. **The fix is minimal and contained**: The change is very small - it
+   only adds 4 lines of code to check the return value and propagate the
+   error. This minimizes the risk of introducing regressions.
 
-3. **Follows established patterns**: The code shows that other
-   subsystems handle PM_GENERIC_DOMAINS the same way. From my search
-   results, I can see that drivers like QCOM_GDSC, AMD GPU drivers, and
-   others use `select PM_GENERIC_DOMAINS if PM` rather than `depends on
-   PM_GENERIC_DOMAINS`.
+3. **Consistency with the rest of the driver**: Looking at the code,
+   other functions in the same driver already properly check regmap
+   operation return values:
+   - `wcd_gpio_get_direction()` checks the return value of
+     `regmap_read()` at line 27-29
+   - `wcd_gpio_direction_input()` already returns the result of
+     `regmap_update_bits()` directly
 
-4. **Prevents user-facing issues**: Without this fix, users trying to
-   enable TI_SCI_PM_DOMAINS would face a confusing situation where the
-   option might not be available in menuconfig because they cannot
-   satisfy the dependency on PM_GENERIC_DOMAINS (since it's an implicit
-   symbol).
+4. **Consistency with other GPIO drivers**: My examination of other GPIO
+   drivers (gpio-lp87565.c, gpio-lp873x.c, gpio-tps65912.c, gpio-
+   adp5585.c) shows that properly checking return values from regmap
+   operations in `direction_output` functions is the standard practice.
 
-5. **No architectural changes**: This is purely a Kconfig dependency fix
-   that doesn't change any runtime behavior or introduce new features.
-   It only fixes the configuration logic.
+5. **Potential for real-world impact**: The WCD934x is an audio codec
+   used in Qualcomm SoCs like SDM845. A failure to properly set GPIO
+   direction could cause issues with audio functionality or other
+   peripherals connected through these GPIOs. The bug could manifest as
+   intermittent failures that are hard to debug.
 
-6. **Platform-specific fix**: This only affects TI SoC configurations
-   and has no impact on other architectures or subsystems, minimizing
-   the risk of regression.
+6. **No architectural changes**: The commit doesn't introduce new
+   features or change any APIs. It's purely a bug fix that adds proper
+   error handling.
 
-The commit follows stable tree rules by fixing an important
-configuration/build issue with minimal risk and no new features or
-architectural changes.
+7. **Clear bug pattern**: The pattern of not checking the first regmap
+   operation but checking (returning) the second one suggests this was
+   an oversight rather than intentional behavior.
 
- drivers/pmdomain/ti/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The commit follows stable kernel rules by being a clear bug fix that
+addresses a potential reliability issue without introducing new
+functionality or making architectural changes.
 
-diff --git a/drivers/pmdomain/ti/Kconfig b/drivers/pmdomain/ti/Kconfig
-index 67c608bf7ed0..5386b362a7ab 100644
---- a/drivers/pmdomain/ti/Kconfig
-+++ b/drivers/pmdomain/ti/Kconfig
-@@ -10,7 +10,7 @@ if SOC_TI
- config TI_SCI_PM_DOMAINS
- 	tristate "TI SCI PM Domains Driver"
- 	depends on TI_SCI_PROTOCOL
--	depends on PM_GENERIC_DOMAINS
-+	select PM_GENERIC_DOMAINS if PM
- 	help
- 	  Generic power domain implementation for TI device implementing
- 	  the TI SCI protocol.
+ drivers/gpio/gpio-wcd934x.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
+index 2bba27b13947..cfa7b0a50c8e 100644
+--- a/drivers/gpio/gpio-wcd934x.c
++++ b/drivers/gpio/gpio-wcd934x.c
+@@ -46,9 +46,12 @@ static int wcd_gpio_direction_output(struct gpio_chip *chip, unsigned int pin,
+ 				     int val)
+ {
+ 	struct wcd_gpio_data *data = gpiochip_get_data(chip);
++	int ret;
+ 
+-	regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
+-			   WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
++	ret = regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
++				 WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
++	if (ret)
++		return ret;
+ 
+ 	return regmap_update_bits(data->map, WCD_REG_VAL_CTL_OFFSET,
+ 				  WCD_PIN_MASK(pin),
 -- 
 2.39.5
 
