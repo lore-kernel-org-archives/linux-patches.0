@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57531F4703;
-	Mon,  4 Aug 2025 00:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F5E1F1527;
+	Mon,  4 Aug 2025 00:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267995; cv=none; b=ZDc6CqTYdq5UsjPnFRGPsYnH6qGPcfMXXJXuPhPzBSeSgomLp8AWBuFGRb8UtOQaXCnzPPJHpEqXgRZprKeRs4CTcgSteCDUZCl8JiF4EP0VXxQ7M44kxxtkGXvHGFEJmGrG00OHeJNnn478uT0/uYbTxIoncWw/e7JP6y8bzR4=
+	t=1754267999; cv=none; b=WoVEKuMoZzFWDHDqaJA8H7JUA+D6AoZib8LM3X6fCC7ZEM7J6E8GAFtj+/Upr9nIWYXNR98yMSwE9UOzDmjfgVnCQvSbr99ixwrzgWPrd1FEgbBCyHId0UWIgnj5el2plCnTnrrH8B+gLeSUpofJsgu9vxgd8ew6Ugc89pEn2H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267995; c=relaxed/simple;
-	bh=sK+WTN7oh81tSWW6K2wvlz3g5Yin9pmjz+vgi94Uhhc=;
+	s=arc-20240116; t=1754267999; c=relaxed/simple;
+	bh=NBfkoVspTHZgH1II3lTp35ypMdHlo7/HLcXJdZrIzsY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Vp59tRwGo2G8EAdioQtnGDP8i5lFPy+opUTCLJ6nZSIsQEsK2u+qCRowNWBM7DV9eRVxCez5+T2fO9v/8iqWPJeaThVDZ8K84oOPdbUiHSIF3Pr9LO5cQT5vcE+OZtACzghwFIBMs+2EJ1i1BMsfXa9CjShEOuwuwO6Nx7yQ16M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aT8lB2Mr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bFYZYLfhaoWUFP79IdSYkDxsW9Hyz2IAHW1LLfpbrvNa7uBH+FGhm7AfIiuKMp6Oq84+U8FycsG5H8bBMI6CVVQfkdYrPSmsgSzkfrgm85WYLSwa2Ev6jvseFNrStPCeWozmR3fGJhwgxcZSrPbDo744U0yOl3tSVzDPrf6wcJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HEd9EG2S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aT8lB2Mr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CF5C4CEEB;
-	Mon,  4 Aug 2025 00:39:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HEd9EG2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9381EC4CEF0;
+	Mon,  4 Aug 2025 00:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267995;
-	bh=sK+WTN7oh81tSWW6K2wvlz3g5Yin9pmjz+vgi94Uhhc=;
+	s=k20201202; t=1754267999;
+	bh=NBfkoVspTHZgH1II3lTp35ypMdHlo7/HLcXJdZrIzsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aT8lB2MrYZEFqihyMGEEJ/thNGRkOBVZ0x6GPDoyqlK0Yt5KoTydfNkzFP71fzRzE
-	 wjT91IED04qU55Q7OdXrZtKlvyYOJBZRgDb/tm/AhSBYfNBFNCwISbXPKbK4OAOH0c
-	 BOg23Hi1rOH/P5V5Hds3JvHgG5YKZzEtpUmcaxCokTVzSUpnmHcw0jWPas2MJHS8g/
-	 KzpQQz4wscErW/4N9yG9AeTg7Dxha780p6ZH/L/je1dJjXPpFlQBGBcLbAonM2VGcw
-	 P5OAVKnNb+mFg2R8j9DjVf3eB0XNJLAKIlL7Hfy0N2uopetA2fzu0XWkdGAZzW98k7
-	 PyzOPHfugU3IQ==
+	b=HEd9EG2SG7YqfIqRJKvX7rXKmqRk71g5417AOmHgtGVj/4h5c0dVUd9L70ghiU5y1
+	 ZtaECJDEMc76kmiuOnQtgD5taWZG3P/RFQpcITGfh7KHkQRQgYHfqQHOE3+1AO2M1x
+	 aPwP83XUzGEqm4W1C6xEUHAgB/Z4oWUN5lK9BXAWxrc2Nk8fqrvFGQFo7q62wrK/+M
+	 toP6ynxbWh5f1k5eGqugMNL8cvGTaiFzvVQdvNYZqfDl+6Vs+nX7S1RSi5eJE0Mvaq
+	 PZggRxcrtPsOKDuNdIEk4thB03OwKp1UgobScjQeqqBQFuWrzhIf9HubQzJ4y5/YxL
+	 2/6i4qnOAik0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Robinson <pbrobinson@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 5.15 28/44] reset: brcmstb: Enable reset drivers for ARCH_BCM2835
-Date: Sun,  3 Aug 2025 20:38:33 -0400
-Message-Id: <20250804003849.3627024-28-sashal@kernel.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Ricky Wu <ricky_wu@realtek.com>,
+	Sasha Levin <sashal@kernel.org>,
+	zhoubinbin@loongson.cn,
+	u.kleine-koenig@baylibre.com,
+	nathan@kernel.org,
+	viro@zeniv.linux.org.uk
+Subject: [PATCH AUTOSEL 5.15 29/44] mmc: rtsx_usb_sdmmc: Fix error-path in sd_set_power_mode()
+Date: Sun,  3 Aug 2025 20:38:34 -0400
+Message-Id: <20250804003849.3627024-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -50,133 +54,114 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
 Content-Transfer-Encoding: 8bit
 
-From: Peter Robinson <pbrobinson@gmail.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 1d99f92f71b6b4b2eee776562c991428490f71ef ]
+[ Upstream commit 47a255f7d2eabee06cfbf5b1c2379749442fd01d ]
 
-The BRCMSTB and BRCMSTB_RESCAL reset drivers are also
-used in the BCM2712, AKA the RPi5. The RPi platforms
-have typically used the ARCH_BCM2835, and the PCIe
-support for this SoC can use this config which depends
-on these drivers so enable building them when just that
-arch option is enabled to ensure the platform works as
-expected.
+In the error path of sd_set_power_mode() we don't update host->power_mode,
+which could lead to an imbalance of the runtime PM usage count. Fix this by
+always updating host->power_mode.
 
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20250630175301.846082-1-pbrobinson@gmail.com
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Ricky Wu <ricky_wu@realtek.com>
+Link: https://lore.kernel.org/r/20250610111633.504366-2-ulf.hansson@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Analysis of the Commit
+## Bug Analysis
 
-### 1. **Nature of the Change**
-The commit makes a simple Kconfig dependency update to enable two
-existing reset controller drivers (`RESET_BRCMSTB` and
-`RESET_BRCMSTB_RESCAL`) for the `ARCH_BCM2835` platform. The changes
-are:
-- Lines 54-55: Adds `ARCH_BCM2835` to the depends and default lines for
-  `RESET_BRCMSTB`
-- Lines 63-64: Adds `ARCH_BCM2835` to the depends and default lines for
-  `RESET_BRCMSTB_RESCAL`
-- Line 67: Updates the help text to mention BCM2712 alongside BCM7216
+The commit fixes a **runtime PM reference counting bug** in the
+`sd_set_power_mode()` function. The issue is in the error handling path:
 
-### 2. **This is a Bug Fix**
-This commit fixes a configuration bug where the Raspberry Pi 5 (BCM2712)
-platform, which uses `ARCH_BCM2835`, cannot properly enable critical
-reset controllers needed for PCIe functionality. Without this fix, users
-building kernels for RPi5 with just `ARCH_BCM2835` enabled would have
-non-functional PCIe support.
+### Original Code Problem:
+```c
+if (power_mode == MMC_POWER_OFF) {
+    err = sd_power_off(host);
+    pm_runtime_put_noidle(sdmmc_dev(host));
+} else {
+    pm_runtime_get_noresume(sdmmc_dev(host));
+    err = sd_power_on(host);
+}
 
-### 3. **Minimal and Contained Change**
-The commit is extremely minimal - it only modifies 6 lines in a single
-Kconfig file. It doesn't touch any C code, doesn't change any logic, and
-only updates build configuration dependencies. This is the ideal type of
-change for stable backporting.
+if (!err)
+    host->power_mode = power_mode;  // Only updated on success
+```
 
-### 4. **No Side Effects**
-The change has no negative side effects:
-- It only enables building existing drivers for an additional platform
-- The drivers themselves are already tested and working (used by BRCMSTB
-  platforms)
-- The change is additive - it doesn't remove or modify existing
-  functionality
-- No API/ABI changes
+### The Bug:
+1. When transitioning to `MMC_POWER_OFF`, the code calls
+   `pm_runtime_put_noidle()` **regardless** of whether `sd_power_off()`
+   succeeded
+2. When transitioning to `MMC_POWER_ON`, the code calls
+   `pm_runtime_get_noresume()` **before** calling `sd_power_on()`
+3. However, `host->power_mode` is only updated if there's no error
 
-### 5. **Platform-Specific Fix**
-While the change is platform-specific (Raspberry Pi 5/BCM2712), it's
-important because:
-- RPi platforms are widely used
-- PCIe support is critical functionality
-- The fix enables existing, tested code to be built for a platform that
-  needs it
+This creates a **runtime PM reference count imbalance** because:
+- If `sd_power_off()` fails, the runtime PM reference is still
+  decremented, but `host->power_mode` remains at its previous value
+  (likely `MMC_POWER_ON`)
+- If `sd_power_on()` fails, the runtime PM reference is still
+  incremented, but `host->power_mode` remains at its previous value
+  (likely `MMC_POWER_OFF`)
+- The early return check `if (power_mode == host->power_mode)` at the
+  beginning of the function will prevent future attempts to fix the
+  power state, leaving the runtime PM count permanently imbalanced
 
-### 6. **Clear Hardware Support Issue**
-From the commit message, this addresses a real hardware support issue
-where the BCM2712 (RPi5) SoC reuses the same reset controller IP blocks
-as other Broadcom STB SoCs but couldn't enable them due to missing
-Kconfig dependencies.
+## Why This Is Suitable for Stable:
 
-### 7. **Low Risk**
-The risk of regression is essentially zero because:
-- Only affects kernel builds that explicitly enable `ARCH_BCM2835`
-- Doesn't change behavior for existing platforms
-- The drivers being enabled are mature and already in use
+1. **Fixes a real bug**: Runtime PM reference count imbalances can lead
+   to:
+   - Device staying powered when it should be suspended
+   - Device being suspended when it should be active
+   - Power management failures
+   - Potential system hangs or crashes
 
-### 8. **Follows Stable Rules**
-This perfectly fits the stable kernel criteria:
-- Fixes a real bug (missing hardware support)
-- Obviously correct (just adding platform to existing dependency)
-- Small change (6 lines)
-- Already tested (has Acked-by from Broadcom maintainer)
+2. **Minimal change**: The fix is a simple one-liner that always updates
+   `host->power_mode` regardless of error status
 
-The commit enables essential functionality (PCIe support via reset
-controllers) for a popular platform (Raspberry Pi 5) through a minimal,
-risk-free configuration change. This is exactly the type of fix that
-should be backported to ensure stable kernels properly support current
-hardware.
+3. **Low regression risk**:
+   - The change doesn't introduce new functionality
+   - It doesn't alter the control flow
+   - It simply ensures state consistency
 
- drivers/reset/Kconfig | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+4. **Clear bug fix**: This is not a feature addition or optimization -
+   it's fixing incorrect error handling that violates runtime PM rules
 
-diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-index b0056ae5d463..d1bc691b2900 100644
---- a/drivers/reset/Kconfig
-+++ b/drivers/reset/Kconfig
-@@ -51,8 +51,8 @@ config RESET_BERLIN
+5. **Affects users**: This bug can manifest in real-world scenarios when
+   SD card power operations fail, particularly with flaky hardware or
+   during system stress
+
+6. **Subsystem contained**: The fix is limited to a single MMC host
+   driver and doesn't affect core kernel infrastructure
+
+The commit follows stable kernel rules by being a minimal, targeted fix
+for a real bug that can affect system stability and power management.
+
+ drivers/mmc/host/rtsx_usb_sdmmc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
+index 1be3a355f10d..ab7023d956eb 100644
+--- a/drivers/mmc/host/rtsx_usb_sdmmc.c
++++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
+@@ -1032,9 +1032,7 @@ static int sd_set_power_mode(struct rtsx_usb_sdmmc *host,
+ 		err = sd_power_on(host);
+ 	}
  
- config RESET_BRCMSTB
- 	tristate "Broadcom STB reset controller"
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the reset controller driver for Broadcom STB SoCs using
- 	  a SUN_TOP_CTRL_SW_INIT style controller.
-@@ -60,11 +60,11 @@ config RESET_BRCMSTB
- config RESET_BRCMSTB_RESCAL
- 	bool "Broadcom STB RESCAL reset controller"
- 	depends on HAS_IOMEM
--	depends on ARCH_BRCMSTB || COMPILE_TEST
--	default ARCH_BRCMSTB
-+	depends on ARCH_BRCMSTB || ARCH_BCM2835 || COMPILE_TEST
-+	default ARCH_BRCMSTB || ARCH_BCM2835
- 	help
- 	  This enables the RESCAL reset controller for SATA, PCIe0, or PCIe1 on
--	  BCM7216.
-+	  BCM7216 or the BCM2712.
+-	if (!err)
+-		host->power_mode = power_mode;
+-
++	host->power_mode = power_mode;
+ 	return err;
+ }
  
- config RESET_HSDK
- 	bool "Synopsys HSDK Reset Driver"
 -- 
 2.39.5
 
