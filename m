@@ -1,86 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246BD1482E8;
-	Mon,  4 Aug 2025 11:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2AA26B955;
+	Mon,  4 Aug 2025 13:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754307374; cv=none; b=hlG7fKrrsVmP9jDihj8fWGBpAWF4FdrEjs5JY8YpB4dWneY5oPDfMg5l+YlAEZ7dlnxy2Ottg9G16jTpIivP9dREWOYNrMXzwzfK6bBDngXc5s62oZ5yDbya7LuD9maaW5Mv0tndnhI2PHsDuerOtfQVsZV65j4QeNiZo68eZYs=
+	t=1754314042; cv=none; b=d3+QMeH0GlFJYCn1BNS8j41gDlmvIjX6OsBO4SYZpQnTk+hTx9cx982wi0N+To41QDTS91V9igwtU2UWzk1bSHDq7E40Nw1bA0D6qtL0DwAGIYpJjZMcccYif+ULjpiriFohUTNozBDYMgw6lMuG3G4m1z9sz+ws9s075vCs2dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754307374; c=relaxed/simple;
-	bh=ORG0wB/M4qMPDcT6cKOR1scPbgPHW2A9accXiG563rw=;
+	s=arc-20240116; t=1754314042; c=relaxed/simple;
+	bh=0HpcXxVZIlcEaVB1NIukOwjT1SSDL2dg2xYzNVFQc9w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JLbuYqDzTVy2JZ3hfHS7hmZgiLIQB8wzGJ7/u9wxSvoHe2er5aVMznKWi0DFTfooZeQZ+jxW1dD9oNyeR46kwcwVwZWl/aJgKXptmZ12kHwqj7RM3/cLxngy1FkAnNUZVdKbbrkVJyC8YroWTOgYIRx4r74CJLQaqZfrj+jTLEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FNZX1GHY; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=us9KS9EillxyVDCvzyHpulI44/IW75208XZAeLiHJgwuaYrxCf7cknEoB7RMn2UFhN2dvqDInLUuLJez5ZAJKiQVgbeDQP4Atg6q6UQtVDjSO6WTwRP8zcPCKS7bt3w9AIWP8UdLoofsKUc1+G2MGBVYaPH+CmX12+lc38Hi7ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b4B75eB+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FNZX1GHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1118BC4CEE7;
-	Mon,  4 Aug 2025 11:36:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b4B75eB+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1FBC4CEE7;
+	Mon,  4 Aug 2025 13:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754307373;
-	bh=ORG0wB/M4qMPDcT6cKOR1scPbgPHW2A9accXiG563rw=;
+	s=k20201202; t=1754314041;
+	bh=0HpcXxVZIlcEaVB1NIukOwjT1SSDL2dg2xYzNVFQc9w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FNZX1GHYkBkAHJyRfdcYtr2JK8aAVzMAuMZ4YDnMEz2mpkqa2+wYQSm/WwW+BnZQV
-	 riqmS99JoZr+TZh2mmbidswQPpH8V+lqsiCHx50R4ZgJ3hcbF0JPyWMEEM7DmX3UNA
-	 bYivMIkd++IfQQbmg/yUtXOPMQaKPrtPuqDqx9yGLO3zdzrnex/mFN1CsTeBIi2/gJ
-	 NIIMP9BCjvLEtGSYAmnTrIEqgLfLaUVRwiPjhu+EenUeAx8MHllYKVqn88JUywdsb7
-	 0ObusQVi8A4Q/oC2Po9584ydQxJ7Kkw75gmk9UEmDar+916p+sYHmgOrJdavRoqQXi
-	 m93GQ1UP2C0aA==
-Date: Mon, 4 Aug 2025 12:36:08 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
+	b=b4B75eB+imckBwOM7aVBIuKE25ep/01n0T6A9iHBEI1lGT/k1tOQAiro/SUYXTNOf
+	 gF57RRMZmybPQDkZ5zp2UvBQhkwhkOYRdZw490b7RzSCG7Fdr/bOqwZFOVFTNMFs+j
+	 H6QJxcKN4tyRNKmqpNBMM2tjUrDPMaQCrnmvNMn1QnBgD4Z9Mh6EP7YSbHRVZ20cyG
+	 NYxYtSN8ZlGCat07jXLIhHEJGSZaZgHggmxBGI1ZV1slvsQc8Q6UaKy80RgKrNPsJn
+	 snSzkDiBA3lPt4HGaVRkM1HmW+pCwWfB2pXj4TD68CHICZtWRJUmN3sANzvznt4nLZ
+	 oIcDJhLyHCc1A==
+Date: Mon, 4 Aug 2025 09:27:19 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
 Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Romain Gantois <romain.gantois@bootlin.com>, lgirdwood@gmail.com,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.16 09/85] regulator: core: repeat voltage
- setting request for stepped regulators
-Message-ID: <38852b6e-20b3-43fc-90d7-29d10fd90abe@sirena.org.uk>
-References: <20250804002335.3613254-1-sashal@kernel.org>
- <20250804002335.3613254-9-sashal@kernel.org>
+	Nylon Chen <nylon.chen@sifive.com>, Zong Li <zong.li@sifive.com>,
+	Vincent Chen <vincent.chen@sifive.com>, paul.walmsley@sifive.com,
+	samuel.holland@sifive.com, linux-pwm@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH AUTOSEL 6.6 28/59] pwm: sifive: Fix PWM algorithm and
+ clarify inverted compare behavior
+Message-ID: <aJC1N93BVEVZjnWp@lappy>
+References: <20250804003413.3622950-1-sashal@kernel.org>
+ <20250804003413.3622950-28-sashal@kernel.org>
+ <xgy4dio2oqwqow7k5nlbf2vgrx63ptmtsi533wad7pfa3v23tk@nzrkhb2nytpb>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="urprXkXJYhHv3HO9"
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20250804002335.3613254-9-sashal@kernel.org>
-X-Cookie: Shading within a garment may occur.
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xgy4dio2oqwqow7k5nlbf2vgrx63ptmtsi533wad7pfa3v23tk@nzrkhb2nytpb>
 
+On Mon, Aug 04, 2025 at 12:45:24PM +0200, Uwe Kleine-König wrote:
+>Hello,
+>
+>On Sun, Aug 03, 2025 at 08:33:42PM -0400, Sasha Levin wrote:
+>> From: Nylon Chen <nylon.chen@sifive.com>
+>>
+>> [ Upstream commit 7dbc4432ea6bf9d709391eb57f1e9fb44e99845a ]
+>>
+>> The `frac` variable represents the pulse inactive time, and the result
+>> of this algorithm is the pulse active time. Therefore, we must reverse
+>> the result.
+>>
+>> Although the SiFive Reference Manual states "pwms >= pwmcmpX -> HIGH",
+>> the hardware behavior is inverted due to a fixed XNOR with 0. As a result,
+>> the pwmcmp register actually defines the low (inactive) portion of the pulse.
+>>
+>> The reference is SiFive FU740-C000 Manual[0]
+>>
+>> Link: https://sifive.cdn.prismic.io/sifive/1a82e600-1f93-4f41-b2d8-86ed8b16acba_fu740-c000-manual-v1p6.pdf [0]
+>>
+>> Co-developed-by: Zong Li <zong.li@sifive.com>
+>> Signed-off-by: Zong Li <zong.li@sifive.com>
+>> Co-developed-by: Vincent Chen <vincent.chen@sifive.com>
+>> Signed-off-by: Vincent Chen <vincent.chen@sifive.com>
+>> Signed-off-by: Nylon Chen <nylon.chen@sifive.com>
+>> Link: https://lore.kernel.org/r/20250529035341.51736-3-nylon.chen@sifive.com
+>> Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>
+>Please drop this patch from your queue, see
+>https://lore.kernel.org/all/52ycm5nf2jrxdmdmcijz57xhm2twspjmmiign6zq6rp3d5wt6t@tq5w47fmiwgg/
+>for the rationale.
 
---urprXkXJYhHv3HO9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Will do.
 
-On Sun, Aug 03, 2025 at 08:22:18PM -0400, Sasha Levin wrote:
-> From: Romain Gantois <romain.gantois@bootlin.com>
->=20
-> [ Upstream commit d511206dc7443120637efd9cfa3ab06a26da33dd ]
->=20
-> The regulator_set_voltage() function may exhibit unexpected behavior if t=
-he
-> target regulator has a maximum voltage step constraint. With such a
-> constraint, the regulator core may clamp the requested voltage to a lesser
-> value, to ensure that the voltage delta stays under the specified limit.
+>This is the fourth mail of this type I'm writing. For the future: Is it
+>enough to raise these concerns once only and maybe even make it easier
+>on your end, too? If so, should I better pick the oldest or the newest
+>base version series to reply?
 
-This needs a followup fix which isn't in mainline yet.
+Sorry about that. Just replying to just one of the mails (really doesn't
+matter which) would work.
 
---urprXkXJYhHv3HO9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiQmygACgkQJNaLcl1U
-h9BMIgf9HW0/kKMoykG2Dbv3Ea4j6lUxwMpw8a8fBsijjTqQTmBJgTCgleg9K0bJ
-mM5xErzQ8SgnxHI31KehY075h87gotpTsIavVahhjtaaLrNbHlbNymPK7uupw5Ot
-IekJw+pP2PyhOabVg5jPMEJVJ2XxN0Np5PVvLWr4Fk7tMdLOQtrA40/y7XptOG2u
-Mf4PzY2RXSIV9gvS3LUJmV7sT+IBSYGKXMCzIytu0b4sIgCQJsXURdtZa77JmhR6
-9K8/KWPgjDPIXhIVFzffJvuA/8IGMeQczrrZ5720tfwx2J9TK86q9qnMNjsd3byh
-WSTm2EpDgyNflhRA26O4DYCeQ53KKA==
-=DqHh
------END PGP SIGNATURE-----
-
---urprXkXJYhHv3HO9--
+-- 
+Thanks,
+Sasha
