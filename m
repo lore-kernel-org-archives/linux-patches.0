@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEB31C84C6;
-	Mon,  4 Aug 2025 00:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDA876026;
+	Mon,  4 Aug 2025 00:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267763; cv=none; b=jIIEWXas0j45NjPdvzklHvdf7B8awLDe+JMax/CtRLT/KzHHLJyO1UevUXYpBEQehrtl32+r/p0g0h7W5yTzFGdYKKbC20EVMUReq2LA5ucY++T3zeynYtIy6gjuwAdA3xPtGfhNzeUDiFp5dbbmrtRJMNc2O7nw/9L7Khd1zDU=
+	t=1754267765; cv=none; b=R0TMXq5WXmEFElNjmHPSpWY8KufgKpApPOlenyquPH8+4dvNA7cbp/1eQL8ikOJQRr62LAlqcEfcQkpS6G73/RiPID/CKGUd9tGO5kjmz0bGVOjORYjqvonIUB44DK76LakosXWlar5Ico2ka0YU01EQTQbHXFonDB9A/7dTBHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267763; c=relaxed/simple;
-	bh=hM2El6kLeGG84eWywD5wv95MNabg9xjPSmTF3hzVyzI=;
+	s=arc-20240116; t=1754267765; c=relaxed/simple;
+	bh=vbh4GpXZcx2X0YV3CjuMGxZHG7VeEMehl135fiBF5eI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pU58HOtrsSwMxIrYgVRMGMih53NYFwldpi1nvHq2035YdRKnhZ046ewpeqtgVg2L0QbQkwBwQ3PirzXn6ai9FMav6CBtNqx7DLj8E7eWZJ5l8sz7bkXseEFowJhfYmMMNoI2kgHBxXG41pGJkCsiK376Y6SZd/BiU8EN6lRfRI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g4SBhwgb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VSg0MkL6vGcMDGyuXaeufMxFGq+MFZQtiZEAZThXdy8ArrkjoLto8+1qZpfPQ4hRtpOAfCdzG/DveOjKov7Gk/47SaELLzxJntMBIRgEbiux852mJfYl/4/dNDLmJfuoXvlfvBA0opXWPMRJJw9IdtDPjoKmhvuguMaWiB6u0Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IU7ih+2i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g4SBhwgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F141C4CEF0;
-	Mon,  4 Aug 2025 00:36:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IU7ih+2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3CAC4CEEB;
+	Mon,  4 Aug 2025 00:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267762;
-	bh=hM2El6kLeGG84eWywD5wv95MNabg9xjPSmTF3hzVyzI=;
+	s=k20201202; t=1754267765;
+	bh=vbh4GpXZcx2X0YV3CjuMGxZHG7VeEMehl135fiBF5eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g4SBhwgbXFFm5ai1hpCjJv4zoMBE0i7P5mCFHltkUFI6DKSrv7c4IqoWAyKXJ9VTf
-	 ei/s3/D5Z7gHd+kk1sbmGNsTWHIlD2SwC/BIF0gD9uNxG0z/GkDWoFyrseHE3+gqhx
-	 3zaHnP4eZ2uHGlxes3lJLZouD6fH11ci0g11J4eZSZv2cWp301JfRqUurzpKEO6qXH
-	 nE621S7XakTbrdMP5k3j6PqIREBVpCn32x9Eul3htp8tJGqTBKFH9122prLCTGWlL6
-	 I6DigTGcuqdRIrOpeghdNkyMz+5OEzkj8uK/WI+ILwxf0XLJcD9pBoYb3+RRK11fsj
-	 GNoFm0QBjEvTQ==
+	b=IU7ih+2iJXX/KrNk4lU8HzZUAtQALhaoMqVVMuLyeq6ycC7oPuhWpgQsZBSs1ysNO
+	 2VSJfjJf5z4wRwxCCKnSARn1q74sMnkXb8TDnXwO2s86Ls9S6tM4Yn19Nl2aLDarfm
+	 vreWqmk02mHYOAjeK2qP6YK8u2cFrvHqG9aZlETVAMdGSUXrq7iSe4HW3dnlGnyA8j
+	 Rl8/teFyJC0iIiwwOtxz3UI7FADGR7kcaRp7pmW4frhyn+qXgXznCEC/Bv++XAEgj3
+	 B7QbHYIj7wA43KWN81FOMsCSLE+0HRmj7o/h2HIaEdwOcP9tbCgopnDUlblkscYdDJ
+	 BmuCW44YXe2ZA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	andriy.shevchenko@linux.intel.com,
-	perex@perex.cz,
-	phasta@kernel.org
-Subject: [PATCH AUTOSEL 6.6 44/59] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
-Date: Sun,  3 Aug 2025 20:33:58 -0400
-Message-Id: <20250804003413.3622950-44-sashal@kernel.org>
+	lgirdwood@gmail.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.6 45/59] ASoC: core: Check for rtd == NULL in snd_soc_remove_pcm_runtime()
+Date: Sun,  3 Aug 2025 20:33:59 -0400
+Message-Id: <20250804003413.3622950-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003413.3622950-1-sashal@kernel.org>
 References: <20250804003413.3622950-1-sashal@kernel.org>
@@ -52,17 +55,25 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.6.101
 Content-Transfer-Encoding: 8bit
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
+[ Upstream commit 2d91cb261cac6d885954b8f5da28b5c176c18131 ]
 
-code mistakenly used a hardcoded index (codec[1]) instead of
-iterating, over the codec array using the loop variable i.
-Use codec[i] instead of codec[1] to match the loop iteration.
+snd_soc_remove_pcm_runtime() might be called with rtd == NULL which will
+leads to null pointer dereference.
+This was reproduced with topology loading and marking a link as ignore
+due to missing hardware component on the system.
+On module removal the soc_tplg_remove_link() would call
+snd_soc_remove_pcm_runtime() with rtd == NULL since the link was ignored,
+no runtime was created.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20250619084222.559-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,81 +81,60 @@ LLM Generated explanations, may be completely bogus:
 
 **YES**
 
-This commit should be backported to stable kernel trees. Here's the
-extensive explanation:
+This commit should be backported to stable kernel trees. The analysis
+reveals this is a critical NULL pointer dereference fix that prevents
+kernel crashes.
 
-## Bug Analysis
+**Key reasons for backporting:**
 
-The bug is a clear coding error in the ICH4 codec configuration code
-within the ALSA intel8x0 driver. Looking at the code change:
-
+1. **Fixes a Real Crash**: The commit adds a NULL check to prevent a
+   kernel panic that occurs when `snd_soc_remove_pcm_runtime()` is
+   called with `rtd == NULL`. The code change shows this clearly:
 ```c
-- tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+ tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
++   if (!rtd)
++       return;
 ```
+Without this check, the subsequent line
+`snd_soc_card_remove_dai_link(card, rtd->dai_link)` would dereference
+NULL.
 
-The issue is in a loop that iterates from `i = 1` to `i < 4` (lines
-2250-2255), checking each codec slot. However, the original code
-hardcoded `codec[1]` instead of using the loop variable `codec[i]`. This
-means:
+2. **Minimal and Safe Fix**: The change is extremely small (3 lines) and
+   defensive - it simply adds a NULL check with early return. This
+   follows the stable kernel rule of minimal, contained fixes.
 
-1. **The loop was pointless** - it would always use codec[1] regardless
-   of which iteration found a valid codec
-2. **Incorrect codec configuration** - If codec[2] or codec[3] were the
-   valid codec (and codec[1] was NULL), the code would still try to
-   access codec[1], potentially causing:
-   - Null pointer dereference if codec[1] is NULL
-   - Wrong codec configuration if codec[1] exists but isn't the intended
-     one
+3. **Affects Production Systems**: The commit message indicates this
+   occurs during topology loading when hardware components are missing -
+   a real-world scenario. The issue manifests on module removal when
+   `soc_tplg_remove_link()` calls the function with NULL.
 
-## Impact Assessment
+4. **Well-Reviewed**: The commit has 5 Reviewed-by tags from Intel ASoC
+   maintainers, indicating thorough review and consensus on the fix.
 
-This bug affects:
-- **Hardware**: Intel ICH4 (Intel I/O Controller Hub 4) chipsets only
-- **Functionality**: AC'97 codec configuration for multiple SDIN (Serial
-  Data In) paths
-- **When triggered**: When using ICH4 with multiple codecs where the
-  second valid codec is not in slot 1
+5. **No Side Effects**: The fix has no architectural changes or new
+   features - it purely adds defensive programming to prevent crashes.
+   The function already had EXPORT_SYMBOL_GPL, indicating it's part of
+   the kernel API that could be called from various contexts.
 
-## Backport Suitability
+This is exactly the type of commit stable trees want: a small, obvious
+fix for a real crash scenario with no risk of regression.
 
-This commit meets all criteria for stable backporting:
+ sound/soc/soc-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-1. **Fixes a real bug**: Clear array indexing error that can cause
-   incorrect hardware configuration or crashes
-2. **Small and contained**: Single line change, exactly 1 insertion and
-   1 deletion
-3. **No side effects**: The fix simply corrects the loop to work as
-   originally intended
-4. **No architectural changes**: Pure bug fix with no API/ABI changes
-5. **Critical subsystem**: ALSA sound drivers are important for user
-   experience
-6. **Long-standing bug**: The code has been incorrect since the initial
-   git import (2005), making it important to fix in all maintained
-   kernels
-7. **Clear fix**: The correction is obvious - using the loop variable
-   instead of a hardcoded index
-
-The bug has existed since the kernel's initial git import in 2005
-(commit 1da177e4c3f4), meaning it affects all kernel versions and should
-be backported to all stable trees that still receive updates.
-
- sound/pci/intel8x0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
-index ae285c0a629c..f3df6fe2b7f1 100644
---- a/sound/pci/intel8x0.c
-+++ b/sound/pci/intel8x0.c
-@@ -2252,7 +2252,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
- 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
- 			for (i = 1; i < 4; i++) {
- 				if (pcm->r[0].codec[i]) {
--					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
- 					break;
- 				}
- 			}
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index 7eea70eea68b..dc95b6f41555 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -1025,6 +1025,9 @@ static int soc_dai_link_sanity_check(struct snd_soc_card *card,
+ void snd_soc_remove_pcm_runtime(struct snd_soc_card *card,
+ 				struct snd_soc_pcm_runtime *rtd)
+ {
++	if (!rtd)
++		return;
++
+ 	lockdep_assert_held(&client_mutex);
+ 
+ 	/*
 -- 
 2.39.5
 
