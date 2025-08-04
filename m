@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D070D1FDD;
-	Mon,  4 Aug 2025 00:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12421FDD;
+	Mon,  4 Aug 2025 00:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267971; cv=none; b=bxfSASWMlTABDAYQOi0e5zBY40Aax2XSfLawbhTHqksYxCbw8UigFVb5VtmuoxzUM4l9qsLwTeujC3ApOARrdebvjNLbdS93AJ+OaUMilu4iXMdT8/Z5xbUu5dzpZU8IU6p1E69mlK2y3ZiRUv8n2VD3gcdKF2RCZ1DzowHJDTU=
+	t=1754267974; cv=none; b=P/DZdZvshkd6qX0DrmX4weCuDBN0fJfgvCl6NTXVOjUzt5qFtKVTugjooZ1sPg0qlhXcw5+LjVJr3mLEDkVxc/jfoyq8M3TwMOrdFpSPXn6zxgTmNzbrQM9LWz3kJFg0skyxQkQ7lDfG02Fwntlv+IR2Kr8LrQvQgPCD9RfJcns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267971; c=relaxed/simple;
-	bh=F90JFq2DA2hyVOvaTR4oDxz+L1hPDd0NDSpOfIUY/Ww=;
+	s=arc-20240116; t=1754267974; c=relaxed/simple;
+	bh=W+PRbtbPnTzXG7tuyl6D0vdO7SIw853bgOwQRTxjMYQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rWjUVTfuDJSRInBnTeyOIlYhIUPPvIxaq2CmgDOL3GpocB0vcOnrvDOV7kwYb57clVFHhMt8k7GqTqNmHM4wn1RDr8WzmL4bObbvfIm98u+HWJJAYFRVkWNsacCGV/CQG84mQ5LqvB8sxJj9dKkYpICYRhVFWaHdVIVKQWWZSas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TlAaQL2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N3psg3XlEgIruZWJUxMGAgYJdl5k5cl8ba8XW0/oRinWtIDkA+1bq8F4NxxVZ0//zHso4h26BVZ2KgmvdiLPonhiZks6GXvINpetbj1M9Hf/qW3i5GRuyuyZQ9G+LaZh+afg+EFsmzVQdiNb1Jebip+QqBckLUiz5er1GWSVpDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K2hw7W6X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TlAaQL2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3726BC4CEEB;
-	Mon,  4 Aug 2025 00:39:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K2hw7W6X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835B1C4CEF0;
+	Mon,  4 Aug 2025 00:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267971;
-	bh=F90JFq2DA2hyVOvaTR4oDxz+L1hPDd0NDSpOfIUY/Ww=;
+	s=k20201202; t=1754267974;
+	bh=W+PRbtbPnTzXG7tuyl6D0vdO7SIw853bgOwQRTxjMYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TlAaQL2xnLhVzmmeosn2dFahbFk82Ul7KptwtINRaeilAuuLke2tY9/oAxOVcG8OJ
-	 0gDSh0GvI7l6h/TrdlyTle5AvqytvuQ2CFk3GR4lFh94bi7Mur3oU2lwEfcGmCVup0
-	 z72NbaiTFxuzrbWjd1csGKwlhc1hC9aQ4unaDbPZ9qqJr5r0P8MMZEAmNX5Ci6e0qj
-	 GPNjJJR7W7/PLWF5T8e9m8QfRst724HQJL1Vyf88DZsAOcI9a8X9rPfW/ADknvdZkt
-	 f+UyDAY0VnDveZUTpSijEus635QYCziq0EkI6yn9brfVre3Lh4YuC+9QfEGpKPsP8o
-	 9IpbLFp38pkZQ==
+	b=K2hw7W6X7hld3tIl8lZTSepIRiE3utLqSHnO40O0tGaUaPKhPGPcP0NXFTCIauXAS
+	 aovZ2x/huqx9ax+v4jAqJRLBXsGfMb0NQpsinvmLSx+empgFOPFQ6ga6heRDm29qR3
+	 b6sjq07xyj4YN3Bn3oJURJUfI5bkkikG0rVO97ffRn5mvcPFnEeZkAkPfpMu0fb0G2
+	 ATW0j4PkJd2Hh7lXacsrTrGrGvOP+cLxcy/pwViec/LPCBXQkmWpLiQc1ce0l+raXS
+	 hSISL9X6pzbVOZ3fq+2iSFfoQHY98LHl3ukepkTB4n9p1B6Ek6mbX2YA5jjkNmZAC2
+	 5RCWN9pTUt0Ug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aaron Kling <webgeek1234@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 18/44] ARM: tegra: Use I/O memcpy to write to IRAM
-Date: Sun,  3 Aug 2025 20:38:23 -0400
-Message-Id: <20250804003849.3627024-18-sashal@kernel.org>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 19/44] selftests: tracing: Use mutex_unlock for testing glob filter
+Date: Sun,  3 Aug 2025 20:38:24 -0400
+Message-Id: <20250804003849.3627024-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -53,84 +50,84 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit 398e67e0f5ae04b29bcc9cbf342e339fe9d3f6f1 ]
+[ Upstream commit a089bb2822a49b0c5777a8936f82c1f8629231fb ]
 
-Kasan crashes the kernel trying to check boundaries when using the
-normal memcpy.
+Since commit c5b6ababd21a ("locking/mutex: implement
+mutex_trylock_nested") makes mutex_trylock() as an inlined
+function if CONFIG_DEBUG_LOCK_ALLOC=y, we can not use
+mutex_trylock() for testing the glob filter of ftrace.
 
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://lore.kernel.org/r/20250522-mach-tegra-kasan-v1-1-419041b8addb@gmail.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Use mutex_unlock instead.
+
+Link: https://lore.kernel.org/r/175151680309.2149615.9795104805153538717.stgit@mhiramat.tok.corp.google.com
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of this commit, here's my determination:
-
-**Backport Status: YES**
+## Backport Status: YES
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a real crash/bug**: The commit fixes a KASAN (Kernel Address
-   Sanitizer) crash that occurs when using regular `memcpy()` to write
-   to IRAM (Internal RAM). This is a functional bug that causes kernel
-   crashes when KASAN is enabled.
+1. **It fixes a test regression**: The commit c5b6ababd21a changed
+   mutex_trylock() from being a regular function to an inline macro when
+   CONFIG_DEBUG_LOCK_ALLOC=y. This broke the ftrace glob filter selftest
+   that was trying to match functions with the pattern `mutex*try*`.
+   Since mutex_trylock is no longer a regular function symbol in certain
+   configurations, the test would fail.
 
-2. **Small and contained fix**: The change is minimal - it simply
-   replaces `memcpy()` with `memcpy_toio()` on line 66 of arch/arm/mach-
-   tegra/reset.c. This is a one-line change that doesn't alter any logic
-   or introduce new features.
+2. **Simple and contained fix**: The change is minimal - it simply
+   replaces the test pattern from `mutex*try*` to `mutex*unl*` on line
+   32. This is a one-line change that:
+   - Changes the glob pattern from matching mutex_trylock functions to
+     mutex_unlock functions
+   - Maintains the same test logic and purpose (testing glob pattern
+     matching)
+   - mutex_unlock remains a regular function symbol regardless of
+     CONFIG_DEBUG_LOCK_ALLOC
 
-3. **Follows proper I/O memory access patterns**: The fix is technically
-   correct. According to the kernel documentation in
-   Documentation/driver-api/device-io.rst, I/O memory regions (which
-   IRAM is mapped as via `IO_ADDRESS()`) should be accessed using
-   I/O-specific functions like `memcpy_toio()` rather than regular
-   `memcpy()`. The documentation explicitly states: "Do not use memset
-   or memcpy on IO addresses; they are not guaranteed to copy data in
-   order."
+3. **No functional changes to kernel code**: This only affects a
+   selftest, not any kernel functionality. The risk of regression is
+   zero for normal kernel operation.
 
-4. **No architectural changes**: The commit doesn't introduce any
-   architectural changes or new functionality. It's purely a bug fix
-   that corrects improper memory access.
+4. **Test reliability**: Without this fix, the ftrace selftest suite
+   would fail on kernels built with CONFIG_DEBUG_LOCK_ALLOC=y after
+   commit c5b6ababd21a is applied. This could:
+   - Cause false test failures in CI/CD pipelines
+   - Make it harder to detect real ftrace issues
+   - Confuse developers running the test suite
 
-5. **Minimal risk of regression**: Since this change only affects how
-   data is copied to IRAM during the Tegra CPU reset handler
-   initialization, and uses the proper kernel API for I/O memory access,
-   the risk of introducing new issues is very low.
+5. **Clear dependency**: The commit message explicitly states this is
+   needed "Since commit c5b6ababd21a" which indicates this is a direct
+   fix for a known regression introduced by that specific commit.
 
-6. **Platform-specific but important**: While this fix is specific to
-   ARM Tegra platforms, it fixes a crash that would affect any Tegra
-   system running with KASAN enabled. This is important for developers
-   and users who rely on KASAN for debugging.
+The change is exactly the type that stable rules recommend: it fixes a
+clear bug (test regression), is minimal in scope, has no risk of
+breaking functionality, and maintains test coverage for an important
+kernel feature (ftrace glob filtering).
 
-The fact that `iram_base` is obtained through `IO_ADDRESS()` macro
-clearly indicates this is I/O mapped memory that requires I/O-specific
-accessors. KASAN correctly identified this misuse and crashed to prevent
-potential issues. The fix properly uses `memcpy_toio()` which is
-designed for copying to I/O memory regions and won't trigger KASAN
-checks for regular memory access.
-
- arch/arm/mach-tegra/reset.c | 2 +-
+ .../testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc  | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-tegra/reset.c b/arch/arm/mach-tegra/reset.c
-index d5c805adf7a8..ea706fac6358 100644
---- a/arch/arm/mach-tegra/reset.c
-+++ b/arch/arm/mach-tegra/reset.c
-@@ -63,7 +63,7 @@ static void __init tegra_cpu_reset_handler_enable(void)
- 	BUG_ON(is_enabled);
- 	BUG_ON(tegra_cpu_reset_handler_size > TEGRA_IRAM_RESET_HANDLER_SIZE);
+diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
+index 4b994b6df5ac..ed81eaf2afd6 100644
+--- a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
++++ b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
+@@ -29,7 +29,7 @@ ftrace_filter_check 'schedule*' '^schedule.*$'
+ ftrace_filter_check '*pin*lock' '.*pin.*lock$'
  
--	memcpy(iram_base, (void *)__tegra_cpu_reset_handler_start,
-+	memcpy_toio(iram_base, (void *)__tegra_cpu_reset_handler_start,
- 			tegra_cpu_reset_handler_size);
+ # filter by start*mid*
+-ftrace_filter_check 'mutex*try*' '^mutex.*try.*'
++ftrace_filter_check 'mutex*unl*' '^mutex.*unl.*'
  
- 	err = call_firmware_op(set_cpu_boot_addr, 0, reset_address);
+ # Advanced full-glob matching feature is recently supported.
+ # Skip the tests if we are sure the kernel does not support it.
 -- 
 2.39.5
 
