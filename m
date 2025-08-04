@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9061FDD;
-	Mon,  4 Aug 2025 00:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E511FDD;
+	Mon,  4 Aug 2025 00:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267951; cv=none; b=hdPA9++Peai84zsQoYAK+Napf7A3gBkPVK/IN56FDOqBEGPCw/C9+mQe2DUQpu75D6P7maXUvlujS4ha3JBbeH9Uh/3bv7WnvnONKGFy2Y3T7ejSMMWFFxiTxW2lhLd0LaDp4AuxlhQf9waA74D8Siu8n/Hnwd5mqO0AuRxNF+w=
+	t=1754267953; cv=none; b=OvqDZ5v6Wpl3RocJ3xmrUUjMhxd2vMfnn/maOvDXDbPy4LXJOQ4/IOu1s+PvMeWeYKerUWC0kxkipBDKPhnw7o0I1Wbu9+iLtDxrI9/m7QrBk0qef/XmO6F5OwalgbdXSYS72ZP7B0K+lxLsyijt7lYD96aERvDvnK/IcNoC2RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267951; c=relaxed/simple;
-	bh=DqqTV1WmFC6RRLL+my8R40SnnbGnQ6X4Or9dsHzJHm0=;
+	s=arc-20240116; t=1754267953; c=relaxed/simple;
+	bh=8eZUrqzetqGBCjKnX1dwDPFNLSNpgksz0bneRQqIx+I=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kh9k8BUs0MmHBf4yMvkDSuVgf0aM1FUc6QzlUBcFNMA7D6uaXLk5RRcI16Oa4soG28buBo4Iku6vSI/wg3a1bHpz3oNDt7nPjFwFfrOzsMsP87cttizsi3HtWYU7qgiVp0H9h7/z5UUhlp7xNfvuDeJP0lqYbKrDJb8EgeS81uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bf/aB/RX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r4V9p0l23NJltnT1U2wW48HApXd4EAOLpBx66SE0WlUO2k5VDBhoWFebzx2Jmq28/G4AefA9sPIG8MtDtT0qBjarroAX+zPiSK+6PmnkiTZq4crh4WIHXlNfoaehiiYWJXy51DhfU6GzBlB4HBxlkhkkunSLZYneybhxiMQA8vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnF9oeoU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bf/aB/RX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8777C4CEEB;
-	Mon,  4 Aug 2025 00:39:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnF9oeoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF88EC4CEF0;
+	Mon,  4 Aug 2025 00:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267951;
-	bh=DqqTV1WmFC6RRLL+my8R40SnnbGnQ6X4Or9dsHzJHm0=;
+	s=k20201202; t=1754267953;
+	bh=8eZUrqzetqGBCjKnX1dwDPFNLSNpgksz0bneRQqIx+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bf/aB/RXXG3bo9w9x+byNFXag6raqES8JOcZLGt1uvAJfGV818X4GSr20tZL+no9/
-	 eare/+Ojd2uEwzmJVm/rnNNwQvHUAKphpVJIy/ANEhDxXxWy3mDEExEFN+WuaytG6E
-	 MHZJIrQ7FZj2n1az9V+eCPLcPZuZ1zfDDQaWB52ScY6O+uiciYjxURxmnVz5G3cyXM
-	 TcSq480uNdvEFE6kKmadjRB6anAB9SPT8ZYWW55v9ZJvyrP+2M9jKt/XhQZNsXdbVs
-	 chPoel4VFSF68jEsKZI5tX2eJvKHUoqC6Im9tFbS/AkvXv9O03COvcra/lPQoF0Gs8
-	 CAbak56eh58HA==
+	b=GnF9oeoUOvWEgCevON/ACWB1ye6VDm04Pa1/7Xr5zfWkeetVHojmCN+xjqH0BHZhL
+	 XcOrfppgF4V3yA1uroELteH4T29f55ZHDO/y/GfpP7ytyzUFi/vLPC783mJYrd4T1H
+	 XJPzlefYLGPCDbvaksiudHfTIZn/OHkPg/2LFfs7Ki0akYgxFeGpwWXuyvFpMHoSfh
+	 zl4zjd4E3q7xsZzoXblWYqQSv2si87hIiG/wyDv37u3M2ZJ0SsW956Bqj70pGE1D/B
+	 qT74clGkPn17khnMKB8gX/kaRIhXUu82HJHEcAF5XOug9umZPNAJeXl4KUsUA2hhon
+	 oIt+IbnJhhTdg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 08/44] usb: xhci: Avoid showing errors during surprise removal
-Date: Sun,  3 Aug 2025 20:38:13 -0400
-Message-Id: <20250804003849.3627024-8-sashal@kernel.org>
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.15 09/44] gpio: wcd934x: check the return value of regmap_update_bits()
+Date: Sun,  3 Aug 2025 20:38:14 -0400
+Message-Id: <20250804003849.3627024-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003849.3627024-1-sashal@kernel.org>
 References: <20250804003849.3627024-1-sashal@kernel.org>
@@ -50,106 +49,94 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 5.15.189
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 4b9c60e440525b729ac5f071e00bcee12e0a7e84 ]
+[ Upstream commit ff0f0d7c6587e38c308be9905e36f86e98fb9c1f ]
 
-When a USB4 dock is unplugged from a system it won't respond to ring
-events. The PCI core handles the surprise removal event and notifies
-all PCI drivers. The XHCI PCI driver sets a flag that the device is
-being removed as well.
+regmap_update_bits() can fail so check its return value in
+wcd_gpio_direction_output() for consistency with the rest of the code
+and propagate any errors.
 
-When that flag is set don't show messages in the cleanup path for
-marking the controller dead.
-
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250709-gpiochip-set-rv-gpio-remaining-v1-2-b8950f69618d@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze this commit properly:
+Based on my analysis, here's my determination:
 
-**Backport Status: YES**
+**YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a user-visible issue**: The commit addresses spurious error
-   messages that appear when USB4 docks are unplugged. The original code
-   shows `xhci_err(xhci, "xHCI host controller not responding, assume
-   dead\n")` even during expected surprise removals, which can confuse
-   users and fill system logs unnecessarily.
+1. **It fixes a real bug**: The `wcd_gpio_direction_output()` function
+   in drivers/gpio/gpio-wcd934x.c was not checking the return value of
+   the first `regmap_update_bits()` call (lines 50-51 in the original
+   code). This could lead to silent failures where the GPIO direction
+   register update fails, but the function continues to update the value
+   register, potentially leaving the GPIO in an inconsistent state.
 
-2. **Small and contained fix**: The change is minimal - it only adds a
-   local `notify` variable and conditionalizes two operations based on
-   whether the device is being removed:
-   - The error message printing (line 1384 → lines 1379-1381)
-   - The `usb_hc_died()` notification (reusing the same condition)
+2. **The fix is minimal and contained**: The change is very small - it
+   only adds 4 lines of code to check the return value and propagate the
+   error. This minimizes the risk of introducing regressions.
 
-3. **No architectural changes**: This is a simple behavioral fix that
-   doesn't modify any data structures, APIs, or core functionality. It
-   merely suppresses error messages during an expected removal scenario.
+3. **Consistency with the rest of the driver**: Looking at the code,
+   other functions in the same driver already properly check regmap
+   operation return values:
+   - `wcd_gpio_get_direction()` checks the return value of
+     `regmap_read()` at line 27-29
+   - `wcd_gpio_direction_input()` already returns the result of
+     `regmap_update_bits()` directly
 
-4. **Clear bug fix**: The commit clearly fixes an issue where error
-   messages are shown during normal USB4 dock removal operations. When
-   `XHCI_STATE_REMOVING` is set (indicating PCI removal is in progress),
-   the error message is now suppressed since it's an expected condition.
+4. **Consistency with other GPIO drivers**: My examination of other GPIO
+   drivers (gpio-lp87565.c, gpio-lp873x.c, gpio-tps65912.c, gpio-
+   adp5585.c) shows that properly checking return values from regmap
+   operations in `direction_output` functions is the standard practice.
 
-5. **Low risk of regression**: The change only affects logging behavior
-   and maintains the same functional flow. The `usb_hc_died()` call was
-   already conditional on `!XHCI_STATE_REMOVING`, so this commit just
-   applies the same logic to the error message.
+5. **Potential for real-world impact**: The WCD934x is an audio codec
+   used in Qualcomm SoCs like SDM845. A failure to properly set GPIO
+   direction could cause issues with audio functionality or other
+   peripherals connected through these GPIOs. The bug could manifest as
+   intermittent failures that are hard to debug.
 
-6. **Improves user experience**: USB4/Thunderbolt docks are increasingly
-   common, and users frequently unplug them. Avoiding spurious error
-   messages during normal operations is important for user experience
-   and log clarity.
+6. **No architectural changes**: The commit doesn't introduce new
+   features or change any APIs. It's purely a bug fix that adds proper
+   error handling.
 
-The commit follows stable tree rules by being a minimal fix for a real
-issue that affects users, without introducing new features or making
-risky changes to core functionality.
+7. **Clear bug pattern**: The pattern of not checking the first regmap
+   operation but checking (returning) the second one suggests this was
+   an oversight rather than intentional behavior.
 
- drivers/usb/host/xhci-ring.c | 7 +++++--
+The commit follows stable kernel rules by being a clear bug fix that
+addresses a potential reliability issue without introducing new
+functionality or making architectural changes.
+
+ drivers/gpio/gpio-wcd934x.c | 7 +++++--
  1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 626f02605192..d56740af8160 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1297,12 +1297,15 @@ static void xhci_kill_endpoint_urbs(struct xhci_hcd *xhci,
-  */
- void xhci_hc_died(struct xhci_hcd *xhci)
+diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
+index 97e6caedf1f3..c00968ce7a56 100644
+--- a/drivers/gpio/gpio-wcd934x.c
++++ b/drivers/gpio/gpio-wcd934x.c
+@@ -45,9 +45,12 @@ static int wcd_gpio_direction_output(struct gpio_chip *chip, unsigned int pin,
+ 				     int val)
  {
-+	bool notify;
- 	int i, j;
+ 	struct wcd_gpio_data *data = gpiochip_get_data(chip);
++	int ret;
  
- 	if (xhci->xhc_state & XHCI_STATE_DYING)
- 		return;
+-	regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
+-			   WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
++	ret = regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
++				 WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
++	if (ret)
++		return ret;
  
--	xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
-+	notify = !(xhci->xhc_state & XHCI_STATE_REMOVING);
-+	if (notify)
-+		xhci_err(xhci, "xHCI host controller not responding, assume dead\n");
- 	xhci->xhc_state |= XHCI_STATE_DYING;
- 
- 	xhci_cleanup_command_queue(xhci);
-@@ -1316,7 +1319,7 @@ void xhci_hc_died(struct xhci_hcd *xhci)
- 	}
- 
- 	/* inform usb core hc died if PCI remove isn't already handling it */
--	if (!(xhci->xhc_state & XHCI_STATE_REMOVING))
-+	if (notify)
- 		usb_hc_died(xhci_to_hcd(xhci));
- }
- 
+ 	return regmap_update_bits(data->map, WCD_REG_VAL_CTL_OFFSET,
+ 				  WCD_PIN_MASK(pin),
 -- 
 2.39.5
 
