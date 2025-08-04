@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58141481DD;
-	Mon,  4 Aug 2025 00:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A073279F2;
+	Mon,  4 Aug 2025 00:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267280; cv=none; b=RVHwTUK2dRA60vO7k5yiW0u1H5R2SIPBwZUxhWmiPw/9ZwJdezjTcejE4UXFG9WVqZWZz8XS9Vhcd4aoQaKPEeDci4tq7E8BobWZWQKYo7b/donnbRpdpSV/KoFABnsHN2GYTaZQPA0O4xSZde7aIGjxXhwi23bIdiSgkmyh6+8=
+	t=1754267282; cv=none; b=quQolAvQ7zG5xhWLFkECzgl5FKLAyhRudRur1wf4UY5RYI9XSZBheJoRpiAMaKV79PGas5wrEB0hWjnIeLzcJoQF12xaN/kxGl/ShMJpFVmUvPl2B7XYXblsnQBUdInU+IQIl3rZbHIrZMMMhxMzZf4LeCJ2VARKY9MHU8sYo4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267280; c=relaxed/simple;
-	bh=MVYERXRYEmAzADDBO7PTJjCByP1qg4y7LfqCnncXkG0=;
+	s=arc-20240116; t=1754267282; c=relaxed/simple;
+	bh=wMC8u6S930szpMT1zlayPBjEMT0xjyBbU0JfwvLXesE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V/oCuqlYvKaspbOdkDZ7k+OH14jYMBkIqEl0TwDOjoed1eek2SoC2qr03Qhj+6IfNdiiR74TpevK4lwK8/oam1KKHSVOc3DqM1D263FCMsqA28XtFAB5K5ixGcNwRfoTLatTRNep/MFopLMGDJC+gALqtkQbMDO77xTtQFOFlws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q6Qa6fB6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VeOhz5RkXlaaNGWcYry6x/v2XtnF7O6Dv4jSE6B5qVlzyPcjZlbgenNuDYqXCirB1ZZuBgXvLzPXFGKLMpCcCKlRCGTncG4MAoKAl6Ym3So8kCQBdwEYmKtLNnV5Z8Uk3Dbd9U23IHIuXn8BegeZSTYjuDsvDxKlhtKPqEslhZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lhAImmS8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q6Qa6fB6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04CFC4CEEB;
-	Mon,  4 Aug 2025 00:27:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lhAImmS8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02EAC4CEF8;
+	Mon,  4 Aug 2025 00:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267280;
-	bh=MVYERXRYEmAzADDBO7PTJjCByP1qg4y7LfqCnncXkG0=;
+	s=k20201202; t=1754267282;
+	bh=wMC8u6S930szpMT1zlayPBjEMT0xjyBbU0JfwvLXesE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6Qa6fB6zCHJqgnvAtLkxJvISByx2zfWEZGZkQOFqFyx9uH1lwAOH4EvzULD0OhtC
-	 CN1XViuvDXyn55pj4NOpoPD5Fr8Cfp0aLOXJnSYZ4HP0oVKYcXiQ0IhUPVH1K5O1xt
-	 voj6DrCFZTmzR5q6DmfkqwH4V0OBSD8P8TV6Mzwq0D8uOgINQGy8R1hfHEmM/dIad5
-	 z3vFFmypj8G13cocd1mqWM85Q6UlOCZ6ZZd4TcKEEya70nLhN3RRSdlzgq5j9bJHg6
-	 xvnVbX+5c6L+sz0HMxWRFwlzZLRQ9L1kI0WIDjnLFPU5vYPRqRR6/5AkmWSJnZnyCW
-	 6C1uIlQs9ZLLQ==
+	b=lhAImmS8cNwvHZ4iLSN04sShty+ST4d0E13rd3r7zhgLJ4QyaMbXiHwZr7oDakQZO
+	 //x9XHhihA87XogIQuf5KdrgCHCS3outgtJIU2CTLzdmNbe9IpdOOhgcJicgMCpT5w
+	 X1HsZ1bHncLvlFULArcutegRrfT2esChUQX8F7DU4Ij4PrvIaPmus26Vx0onawQITf
+	 iHKFwYcR+iRddDQZokWUtu53Xybr+HWkjgy4jn7e2CXJxtFeymLy4/EtP3n0DkQW0t
+	 2aLSVDBuCLjtWzNQU9o6/6hTQBH0JRnm4MVhFy1GOaL2z8sCdHElaXw3BI9kpd7O76
+	 TsUkWXgqcmuLw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Adam Berglund <adam.f.berglund@hotmail.com>,
-	Hans de Goede <hansg@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Prashant Malani <pmalani@google.com>,
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 03/80] platform/x86/amd: pmc: Add Lenovo Yoga 6 13ALC6 to pmc quirk list
-Date: Sun,  3 Aug 2025 20:26:30 -0400
-Message-Id: <20250804002747.3617039-3-sashal@kernel.org>
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 04/80] cpufreq: CPPC: Mark driver with NEED_UPDATE_LIMITS flag
+Date: Sun,  3 Aug 2025 20:26:31 -0400
+Message-Id: <20250804002747.3617039-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804002747.3617039-1-sashal@kernel.org>
 References: <20250804002747.3617039-1-sashal@kernel.org>
@@ -48,118 +47,129 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.15.9
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Prashant Malani <pmalani@google.com>
 
-[ Upstream commit 4ff3aeb664f7dfe824ba91ffb0b203397a8d431e ]
+[ Upstream commit 0a1416a49e63c320f6e6c1c8d07e1b58c0d4a3f3 ]
 
-The Lenovo Yoga 6 13ACL6 82ND has a similar BIOS problem as other Lenovo
-laptops from that vintage that causes a rather long resume from suspend.
+AMU counters on certain CPPC-based platforms tend to yield inaccurate
+delivered performance measurements on systems that are idle/mostly idle.
+This results in an inaccurate frequency being stored by cpufreq in its
+policy structure when the CPU is brought online. [1]
 
-Add it to the quirk list that manipulates the scratch register to avoid
-the issue.
+Consequently, if the userspace governor tries to set the frequency to a
+new value, there is a possibility that it would be the erroneous value
+stored earlier. In such a scenario, cpufreq would assume that the
+requested frequency has already been set and return early, resulting in
+the correct/new frequency request never making it to the hardware.
 
-Reported-by: Adam Berglund <adam.f.berglund@hotmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4434
-Tested-by: Adam Berglund <adam.f.berglund@hotmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Link: https://lore.kernel.org/r/20250718172307.1928744-1-superm1@kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Since the operating frequency is liable to this sort of inconsistency,
+mark the CPPC driver with CPUFREQ_NEED_UPDATE_LIMITS so that it is always
+invoked when a target frequency update is requested.
+
+Link: https://lore.kernel.org/linux-pm/20250619000925.415528-3-pmalani@google.com/ [1]
+Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Prashant Malani <pmalani@google.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20250722055611.130574-2-pmalani@google.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## Backport Justification
+## Code Change Analysis
 
-1. **Fixes a real user-impacting bug**: The commit addresses a BIOS
-   firmware bug that causes "rather long resume from suspend" on the
-   Lenovo Yoga 6 13ALC6 laptop. This is a significant usability issue
-   that affects users of this specific hardware model during
-   suspend/resume operations.
+The change is minimal and focused - it only adds the
+`CPUFREQ_NEED_UPDATE_LIMITS` flag to the cppc_cpufreq_driver struct:
 
-2. **Minimal and contained change**: The patch simply adds 8 lines to an
-   existing DMI quirk table (lines 193-201 in the diff). It adds one new
-   entry:
-  ```c
-  {
-  .ident = "Lenovo Yoga 6 13ALC6",
-  .driver_data = &quirk_s2idle_bug,
-  .matches = {
-  DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-  DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
-  }
-  },
-  ```
+```c
+- .flags = CPUFREQ_CONST_LOOPS,
++ .flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
+```
 
-3. **Follows established pattern**: The fix uses the exact same
-   mechanism (`quirk_s2idle_bug`) that's already applied to 20+ other
-   Lenovo laptops in the same file. The workaround manipulates a scratch
-   register (FCH_PM_SCRATCH) to skip a problematic SMI handler during
-   suspend-to-idle resume, as documented in the comment at lines
-   241-248.
+This single-line change modifies the driver flags in
+drivers/cpufreq/cppc_cpufreq.c:928.
 
-4. **No architectural changes**: This is purely a device-specific quirk
-   addition to an existing quirk framework. No new functionality is
-   introduced, no APIs are changed, and no kernel subsystem architecture
-   is modified.
+## Bug Being Fixed
 
-5. **Low regression risk**: The change only affects systems that match
-   the specific DMI strings (LENOVO board vendor + 82ND product name).
-   It cannot affect any other hardware.
+The commit addresses a real bug where:
 
-6. **Tested by reporter**: The commit message indicates "Tested-by: Adam
-   Berglund" who was also the reporter of the issue, confirming the fix
-   works on the affected hardware.
+1. **AMU counters on CPPC platforms provide inaccurate measurements**
+   when systems are idle/mostly idle
+2. **This causes cpufreq to store incorrect frequency values** in its
+   policy structure during CPU online
+3. **Userspace frequency changes fail silently** because cpufreq's early
+   return optimization (`if (target_freq == policy->cur)`) prevents the
+   hardware from receiving the correct frequency request
 
-7. **Follows stable tree rules**: This is exactly the type of commit
-   that stable trees want:
-   - Fixes a real bug (long resume times)
-   - Minimal change (8 lines)
-   - Hardware-specific fix with no broader impact
-   - Already tested on affected hardware
+The bug manifests as userspace being unable to set CPU frequencies
+correctly on affected CPPC platforms, which is a functional regression
+that impacts power management and performance.
 
-The issue being fixed is documented at
-https://gitlab.freedesktop.org/drm/amd/-/issues/4434, and the workaround
-applies the same proven fix that's been working for numerous other
-Lenovo models with similar BIOS issues related to suspend-to-idle resume
-performance when IOMMU is enabled for NVMe devices.
+## Why This Qualifies for Stable
 
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+1. **Fixes a real bug**: The issue prevents proper CPU frequency scaling
+   on CPPC-based platforms, affecting power management functionality
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 7ed12c1d3b34..04686ae1e976 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -189,6 +189,15 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
- 		}
- 	},
-+	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
-+	{
-+		.ident = "Lenovo Yoga 6 13ALC6",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
-+		}
-+	},
- 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
- 	{
- 		.ident = "HP Laptop 15s-eq2xxx",
+2. **Minimal risk**: The change is extremely small (one flag addition)
+   and well-contained to the CPPC driver
+
+3. **Clear fix semantics**: The `CPUFREQ_NEED_UPDATE_LIMITS` flag is an
+   established mechanism (introduced in commit 1c534352f47f)
+   specifically designed for this scenario where drivers need frequency
+   updates even when target_freq == policy->cur
+
+4. **Similar precedent**: Other cpufreq drivers (intel_pstate, amd-
+   pstate) already use this flag for similar reasons, showing it's a
+   proven solution
+
+5. **No architectural changes**: This doesn't introduce new features or
+   change kernel architecture - it simply ensures the driver behaves
+   correctly
+
+6. **Recent related fixes**: The git history shows ongoing work to fix
+   CPPC feedback counter issues (e.g., commit c47195631960), indicating
+   this is part of stabilizing CPPC functionality
+
+## Impact Assessment
+
+- **Affected systems**: CPPC-based platforms with AMU counters that
+  exhibit the idle measurement issue
+- **Risk**: Very low - the flag only bypasses an optimization when
+  needed, forcing frequency updates to reach hardware
+- **Testing**: The change has been acked by the cpufreq maintainer
+  (Viresh Kumar) and suggested by the PM subsystem maintainer (Rafael J.
+  Wysocki)
+
+The commit follows stable tree rules by fixing an important bug with
+minimal changes and low regression risk.
+
+ drivers/cpufreq/cppc_cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index cb93f00bafdb..156c1e516cc8 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -816,7 +816,7 @@ static struct freq_attr *cppc_cpufreq_attr[] = {
+ };
+ 
+ static struct cpufreq_driver cppc_cpufreq_driver = {
+-	.flags = CPUFREQ_CONST_LOOPS,
++	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
+ 	.verify = cppc_verify_policy,
+ 	.target = cppc_cpufreq_set_target,
+ 	.get = cppc_cpufreq_get_rate,
 -- 
 2.39.5
 
