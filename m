@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62251D555;
-	Mon,  4 Aug 2025 00:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8EB1F4169;
+	Mon,  4 Aug 2025 00:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754267891; cv=none; b=gQm7A+GikJmOWhsQzWw34t5Bz9F5bAAaQzsMMq/+yENKEzv00EuwGRXt9LC4Gq9IN9M8YtK8zRBoEcwBOikPv1TvtZu3rwdgyBgaJYBagh7DBPj18lolzSUD0dBRPglaegcK6BWdPODAyKeRTabbv87VtGlEqruex82A7hY9PVk=
+	t=1754267893; cv=none; b=aW18mETTn4Y8xfrhqvDoyKiJf3XTsEKip3pmqarDbbLY8j79zv+YnGFbhrSZbQB8h4SdV8CJAbcQ/X1ZcZ4Kg0dtz10Vkpk+zwm+sGcTp89LNZtJa5ZQcE94i45ECcY97IflPgIakrMap4850++n2HMiDMDNL7Wh/CiQyx9pvFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754267891; c=relaxed/simple;
-	bh=7jOxGQL+XSsldXxXtC42tGxapvtM4rv2TvXoxlaVrW4=;
+	s=arc-20240116; t=1754267893; c=relaxed/simple;
+	bh=T7840R2hOHUWvpZekHTN1ob2stvoMO3vKzL232xGFXU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rcuCbOr2UdWwO4YeMngNi2hbmQ7Cn5FnRJInGEcfi84+M95GMb1UKXj6ry7F5NFNSebbOzAstgFnZZlzSEIOQpXgRj/3f7VOvuZp4RUDcNb21IvT2IXYPacuqzFq1W85Rh2WZlCbcnkOVCOhVe2mUHQenj9Y9Px22x3q/2rTo6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bZDHGx2J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzqokagEKf6Y9gEYOQEW678pm0tfrWKX0ARmXxVfqx0z5VkChkVbUa7Sd1Bj10mAOKVy7wgZCNcgZZXleQjSh20v++sLjEVSnecG5apEtmG1vzDDr+3XmFDVkf+tuEICFz2ok8NwDYk6TzPZk38vfqXDGee8jTO2dn6R5ugnrW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LwJjrJCe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bZDHGx2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54085C4CEF0;
-	Mon,  4 Aug 2025 00:38:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LwJjrJCe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A932C4CEEB;
+	Mon,  4 Aug 2025 00:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754267890;
-	bh=7jOxGQL+XSsldXxXtC42tGxapvtM4rv2TvXoxlaVrW4=;
+	s=k20201202; t=1754267893;
+	bh=T7840R2hOHUWvpZekHTN1ob2stvoMO3vKzL232xGFXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZDHGx2JBESBooinAPUXCYWM0EwePsPcFSqqODc3q+URs4CJpy4ejgh48I9+TZw8j
-	 PzM4gUug14adltCWw4v1kbAMbmYBa3HSnQ7jh1JbiUHtOzErFxQSnv5qYgSIqXp3/B
-	 NMeKrA6Dr+zMhg80KtAXJKbJbP5Mih5l4uZCIB0/4+I41YH/+kM6dFZ9U9IUs30Sv/
-	 1QyKzjFe9VxLK1INk3o5IOcYN4r7zav/1xRXosGCpOoJ8g0oU3c5/94/EjV80m70QS
-	 GkpYJj4bP8x6LD5keGBCpCxefmGpcvHkhdIum5pQ2jRxH+uMbprNnRATACHE4bIHmN
-	 ydzfayxYrLF3A==
+	b=LwJjrJCeFKvk2/ZTqPiArIchYDae7IAjyYR3HTTNN2eZdKXS5prN5IfBAOI4P/ef7
+	 +Mn45yVK8qsgLGyDBwvPg8BxXTFfhn/tmwDhWoY/2PLZVYzFichkJJkZAw1lkrybcX
+	 IbUZ9YAPXCegriF4QW3iKAwgputpivUJwfBESzArzI+/8mk8TSEQszCoQPb8L0+uJE
+	 WUrCbi809N/eTMWhmodHpqCiRLoHCNP4aukkWinG5q4qLhjwKTWwEibtF4kJQKe3te
+	 R94FALP4lDeB1nwfeCOXctckGgZxmkZNPKulsTIxpfQDSBKsO7LdRmvwSsR99FxrnR
+	 geBM6aLAZROgQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Borislav Petkov <bp@alien8.de>,
+Cc: Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@linutronix.de,
-	peterz@infradead.org,
-	jpoimboe@kernel.org
-Subject: [PATCH AUTOSEL 6.1 37/51] x86/bugs: Avoid warning when overriding return thunk
-Date: Sun,  3 Aug 2025 20:36:29 -0400
-Message-Id: <20250804003643.3625204-37-sashal@kernel.org>
+	tiwai@suse.de,
+	kuninori.morimoto.gx@renesas.com,
+	ckeepax@opensource.cirrus.com,
+	raag.jadav@intel.com
+Subject: [PATCH AUTOSEL 6.1 38/51] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
+Date: Sun,  3 Aug 2025 20:36:30 -0400
+Message-Id: <20250804003643.3625204-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250804003643.3625204-1-sashal@kernel.org>
 References: <20250804003643.3625204-1-sashal@kernel.org>
@@ -52,122 +52,114 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.1.147
 Content-Transfer-Encoding: 8bit
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 9f85fdb9fc5a1bd308a10a0a7d7e34f2712ba58b ]
+[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
 
-The purpose of the warning is to prevent an unexpected change to the return
-thunk mitigation. However, there are legitimate cases where the return
-thunk is intentionally set more than once. For example, ITS and SRSO both
-can set the return thunk after retbleed has set it. In both the cases
-retbleed is still mitigated.
+We currently log parse failures for ELD data and some disconnection events
+as errors without rate limiting. These log messages can be triggered very
+frequently in some situations, especially ELD parsing when there is nothing
+connected to a HDMI port which will generate:
 
-Replace the warning with an info about the active return thunk.
+hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
 
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250611-eibrs-fix-v4-3-5ff86cac6c61@linux.intel.com
+While there's doubtless work that could be done on reducing the number of
+connection notification callbacks it's possible these may be legitimately
+generated by poor quality physical connections so let's use rate limiting
+to mitigate the log spam for the parse errors and lower the severity for
+disconnect logging to debug level.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit is a good candidate for backporting to stable kernel trees
+for the following reasons:
 
-## Key Reasons for Backporting:
+1. **Fixes a real user-facing bug**: The commit addresses log spam
+   issues that can fill system logs with repeated error messages. When
+   no HDMI display is connected, the driver continuously logs "HDMI:
+   Unknown ELD version 0" errors, which can consume disk space and make
+   logs difficult to analyze.
 
-### 1. **Fixes a Real User-Visible Issue**
-The code change shows that the original warning was triggering in
-legitimate scenarios:
-```c
-- if (x86_return_thunk != __x86_return_thunk)
-- pr_warn("x86/bugs: return thunk changed\n");
-```
-This warning would appear in kernel logs whenever multiple CPU
-vulnerability mitigations interact, which is a normal and expected
-behavior. The false positive warnings could:
-- Cause unnecessary alarm for system administrators
-- Clutter kernel logs with misleading information
-- Potentially mask real issues by creating noise
+2. **Small and contained fix**: The changes are minimal and focused:
+   - Changes `dev_err()` to `dev_err_ratelimited()` in two locations
+     within `hdac_hdmi_parse_eld()` (lines 1233-1234 and 1242-1243)
+   - Changes `dev_err()` to `dev_dbg()` for disconnect messages in
+     `hdac_hdmi_present_sense()` (lines 1302-1303)
+   - Total of just 3 logging statement modifications
 
-### 2. **Small, Contained Change**
-The commit is minimal and focused:
-- Only modifies 3 lines of functional code
-- Changes are confined to a single function (`set_return_thunk()`)
-- Simply replaces a conditional warning with an unconditional info
-  message:
-```c
-+       pr_info("active return thunk: %ps\n", thunk);
-```
+3. **No functional changes**: The commit only modifies logging behavior
+   without changing any driver logic, state management, or hardware
+   interaction. This minimizes regression risk.
 
-### 3. **No Risk of Regression**
-The change is safe because:
-- It doesn't modify any security logic or mitigation behavior
-- The function still sets the return thunk exactly as before
-- The new info message provides better visibility into which mitigation
-  is active
-- The `%ps` format specifier safely prints the function symbol name
+4. **Affects a common use case**: The issue occurs when HDMI ports are
+   unconnected, which is a normal operating condition for many systems.
+   Users may have HDMI ports they never use, or may frequently
+   plug/unplug monitors.
 
-### 4. **Addresses Security Mitigation Interactions**
-The commit message explicitly states that "ITS and SRSO both can set the
-return thunk after retbleed has set it" and that "retbleed is still
-mitigated." This is important for stable kernels because:
-- Multiple CVE mitigations (Retbleed, SRSO, ITS) need to coexist
-- The warning was incorrectly flagging legitimate mitigation sequences
-- Stable kernels need these mitigations to work together without false
-  alarms
+5. **No architectural changes**: The fix doesn't introduce new features
+   or modify the driver's architecture. It simply rate-limits existing
+   error messages and downgrades one message's severity.
 
-### 5. **Part of Critical Security Infrastructure**
-The x86/bugs subsystem handles CPU vulnerability mitigations for:
-- CVE-2023-20569 (SRSO)
-- CVE-2024-28956 (ITS)
-- Retbleed vulnerabilities
-These are critical security features that need to function correctly in
-stable kernels.
+6. **Clear problem and solution**: The commit message clearly describes
+   the issue (log spam from ELD parsing failures) and the
+   straightforward solution (rate limiting and severity adjustment).
 
-### 6. **Improves Operational Visibility**
-The new info message (`pr_info("active return thunk: %ps\n", thunk);`)
-actually improves debugging and system monitoring by:
-- Showing which specific return thunk is currently active
-- Providing better audit trail for security mitigation changes
-- Using proper function symbol printing with `%ps`
+The specific code changes show:
+- In `hdac_hdmi_parse_eld()`: Rate-limiting prevents flooding logs when
+  ELD data is invalid/unavailable
+- In `hdac_hdmi_present_sense()`: Downgrading disconnect messages from
+  error to debug level is appropriate since disconnection is a normal
+  event, not an error condition
 
-## Conclusion:
-This commit meets all the criteria for stable backporting:
-- Fixes a real issue (false positive warnings)
-- Minimal risk (3-line change, no logic modifications)
-- Improves system behavior without introducing new features
-- Addresses interaction between critical security mitigations
-- Makes the kernel more reliable and less confusing for operators
+This meets the stable kernel criteria of being a simple fix for an
+annoying bug that affects users without introducing new risks.
 
-The change is particularly important for stable kernels that need to
-support multiple CPU vulnerability mitigations simultaneously without
-generating misleading warnings.
+ sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
- arch/x86/kernel/cpu/bugs.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index dba5262e1509..4fbb5b15ab75 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -70,10 +70,9 @@ void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index d8e83150ea28..90baca4c2b4d 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -1230,7 +1230,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 						>> DRM_ELD_VER_SHIFT;
  
- static void __init set_return_thunk(void *thunk)
- {
--	if (x86_return_thunk != __x86_return_thunk)
--		pr_warn("x86/bugs: return thunk changed\n");
--
- 	x86_return_thunk = thunk;
-+
-+	pr_info("active return thunk: %ps\n", thunk);
- }
+ 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
+-		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: Unknown ELD version %d\n", ver);
+ 		return -EINVAL;
+ 	}
  
- /* Update SPEC_CTRL MSR and its cached copy unconditionally */
+@@ -1238,7 +1239,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
+ 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
+ 
+ 	if (mnl > ELD_MAX_MNL) {
+-		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
++		dev_err_ratelimited(&hdev->dev,
++				    "HDMI: MNL Invalid %d\n", mnl);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1297,8 +1299,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
+ 
+ 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
+ 
+-		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
+-						__func__, pin->nid, port->id);
++		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
++			__func__, pin->nid, port->id);
+ 
+ 		/*
+ 		 * PCMs are not registered during device probe, so don't
 -- 
 2.39.5
 
