@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09C82472B7;
-	Tue,  5 Aug 2025 13:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D5BE55B;
+	Tue,  5 Aug 2025 13:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399528; cv=none; b=iC6I+xrYj8Q12iJ8OJ6czRcvC9c4zJqFEJ/+yrg/Fxy6EEUaworoyu81YWMxCvacc1mpm1fJu21+PIk/lotbSx/S4EPA8jGhfRp1ZS4OVdxGzsLFp3ymNoNpXGVI+eiHMyE94wDc4Ga3eS9i7RutPwbBeI9nm3iCS/hbRoeAELc=
+	t=1754399531; cv=none; b=dgJC8FH0tMrtNDNp5SaQPaLx0OA7CvQ/tfqscHODUtvlQc5LtMIrSUez4NBTDv5w3utZnDNvQABRfK1pJM8V48t8nmCnrdWraxdoT2gm690EV1PqA5VwwAicROtdpSNwD4wcwYc/DTJPAEdPZ0BumNk/VWH05+6aR3zt7134wes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399528; c=relaxed/simple;
-	bh=5WXJAbD73Lfwp4U4OxR1suGOHLB52pORe0bKhk/O6R0=;
+	s=arc-20240116; t=1754399531; c=relaxed/simple;
+	bh=a0lQpsk/xS1ajJ18OrE+G9s9LSxPGNbwa6Dhcq4b3s8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=daKAiwx+uyXumdxzW7Cgb49/hi+/Z2DYTEYXj0HcXOs/gfM96dycwH7zQoY6mr7McJ80OqSAxarIZgMCy9Yjz4T5ZjHsvqynmmMZKheZ7cTVmNbAxMuOKz4XqlBvoFoIslv7vE1fOBF7TEYzDCXMT5Ei++kOJmgfth7IMbnWkNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f2DoxTBE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LAGja557j2VZbYosUND1/EbntSc2svugcmJoiU83pB3+daZyEufYtjRPVJQxpP66lK+vHSQ3t0xl50ePTgZkMVLh2qs0GdFUQftcWEbV7LrDI33rGg8Wf+uXHL5PdcBlYImaK96EnjzQ1G2NSMwMpDJhV6aYBQeF0xJKOA5VuM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=medRtpDS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f2DoxTBE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68827C4CEF0;
-	Tue,  5 Aug 2025 13:12:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="medRtpDS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CBFC4CEF7;
+	Tue,  5 Aug 2025 13:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399528;
-	bh=5WXJAbD73Lfwp4U4OxR1suGOHLB52pORe0bKhk/O6R0=;
+	s=k20201202; t=1754399531;
+	bh=a0lQpsk/xS1ajJ18OrE+G9s9LSxPGNbwa6Dhcq4b3s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2DoxTBEK4GY2UyE7oLyXr6f4mIxXY1v7uN9Rn/UTzpxC7fkmv4oLV+qIOqmR4frT
-	 Hx3QSvMkWnVePSRkbmN/HL+dAGd8tk3nonj076ts74JpGXy6c0uRF0ITtaeV/xlglX
-	 twoQppEBu4elGG/ltPH/nj9TKFn8IfwENref9cLk6impF1MzwZGcNVd8UbEnN0RuXh
-	 7s+upSf+9Ig3Zc7BSb7XUS+w7SIHEr3lsOW3BJZQKRmJaaZ7veP/8NvIQZAfYpHBmr
-	 CpFy4b9AwctuJKlgDxIwOarFZa46ZGJgQOKfuXVlA/J4m1h2PKV1hMjr4692R8OvCZ
-	 AqAARXIvIYBMg==
+	b=medRtpDS2eTudlvWUqRKPl4mRPionel5HQnTTm2URRrwBlQZilO21j/4IGNyaf3tu
+	 I9RY2+PjQK9UQV5Isc6wQ0+YB6iNXanIZWjDUOY+fZMVlDE4Dx2MVv8D78DDRm/JJ/
+	 fwHDOTxY1zKhC2kUmhP0HAsx6HxZNvQ6PnT+TBqky4HExpmmBFu/pTZS4esKewVNBd
+	 up9ca4XXSxZ+ur13vtwOe/T3Dz+m14IamGifm7D0jKcBUHitVfvc27ScYSyvFFxBid
+	 c8cx1TKDE2CHuArNEzwxzLU5DGTrJA1ySVSRtinONPbZk8fMXozEuWJuvCCdsZwq3+
+	 O5y5dBFe6D4ww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Yury Norov [NVIDIA]" <yury.norov@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: Bharat Bhushan <bbhushan2@marvell.com>,
+	Srujana Challa <schalla@marvell.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	dennis.dalessandro@cornelisnetworks.com,
-	linux-rdma@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.4] RDMA: hfi1: fix possible divide-by-zero in find_hw_thread_mask()
-Date: Tue,  5 Aug 2025 09:09:37 -0400
-Message-Id: <20250805130945.471732-62-sashal@kernel.org>
+	saikrishnag@marvell.com,
+	linux@treblig.org,
+	sbhatta@marvell.com,
+	krzysztof.kozlowski@linaro.org
+Subject: [PATCH AUTOSEL 6.16-5.15] crypto: octeontx2 - add timeout for load_fvc completion poll
+Date: Tue,  5 Aug 2025 09:09:38 -0400
+Message-Id: <20250805130945.471732-63-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -52,145 +55,125 @@ X-stable-base: Linux 6.16
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Yury Norov [NVIDIA]" <yury.norov@gmail.com>
+From: Bharat Bhushan <bbhushan2@marvell.com>
 
-[ Upstream commit 59f7d2138591ef8f0e4e4ab5f1ab674e8181ad3a ]
+[ Upstream commit 2157e50f65d2030f07ea27ef7ac4cfba772e98ac ]
 
-The function divides number of online CPUs by num_core_siblings, and
-later checks the divider by zero. This implies a possibility to get
-and divide-by-zero runtime error. Fix it by moving the check prior to
-division. This also helps to save one indentation level.
+Adds timeout to exit from possible infinite loop, which polls
+on CPT instruction(load_fvc) completion.
 
-Signed-off-by: Yury Norov [NVIDIA] <yury.norov@gmail.com>
-Link: https://patch.msgid.link/20250604193947.11834-3-yury.norov@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Srujana Challa <schalla@marvell.com>
+Signed-off-by: Bharat Bhushan <bbhushan2@marvell.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+Let me look at the exact code changes from the diff provided:
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+**YES**
+
+This commit should be backported to stable kernel trees for the
+following reasons:
 
 ## Bug Fix Analysis
 
-The commit fixes a **genuine divide-by-zero bug** in the
-`find_hw_thread_mask()` function. The code changes show:
-
-1. **Original bug**: The division `num_cores_per_socket =
-   node_affinity.num_online_cpus / affinity->num_core_siblings /
-   node_affinity.num_online_nodes` occurs at lines 967-969 BEFORE
-   checking if `num_core_siblings > 0` at line 972.
-
-2. **The fix**: Moves the check `if (affinity->num_core_siblings == 0)
-   return;` to line 973-974 (in the new code) BEFORE the division
-   operation, preventing the divide-by-zero.
-
-## When the Bug Can Trigger
-
-The `num_core_siblings` value is initialized as:
+1. **Critical Bug Fixed**: The commit fixes a **potential infinite
+   loop** in the `otx2_cpt_discover_eng_capabilities()` function. The
+   original code had:
 ```c
-cpumask_weight(topology_sibling_cpumask(cpumask_first(&node_affinity.pro
-c.mask)))
+while (lfs->ops->cpt_get_compcode(result) ==
+OTX2_CPT_COMPLETION_CODE_INIT)
+    cpu_relax();
 ```
+This loop could spin forever if the hardware fails to respond or gets
+stuck.
 
-This can be 0 in several real-world scenarios:
-- Single-core systems without SMT/hyperthreading
-- Systems where SMT is disabled at runtime
-- Virtualized environments with unusual CPU topology
-- Certain ARM or other architectures where topology_sibling_cpumask()
-  returns empty
+2. **Real-World Impact**: An infinite loop in kernel space is a severe
+   issue that can:
+   - Cause system hangs/freezes
+   - Make the CPU core unresponsive
+   - Prevent proper driver initialization
+   - Lead to denial of service conditions
 
-## Stable Kernel Criteria Met
+3. **Simple and Contained Fix**: The patch adds:
+   - A timeout counter (10000 iterations with 1μs delay = 10ms timeout)
+   - Proper error handling with `-ENODEV` return
+   - Clear warning message to help diagnose hardware issues
+   - Proper cleanup path (`error_no_response` label)
 
-1. **Fixes a real bug**: ✓ - Prevents kernel divide-by-zero crash
-2. **Small and contained**: ✓ - Only 20 lines changed in one function
-3. **No side effects**: ✓ - Early return preserves existing behavior
-   when num_core_siblings==0
-4. **No architectural changes**: ✓ - Simple defensive programming fix
-5. **Clear bug fix**: ✓ - Not a feature or optimization
-6. **Low regression risk**: ✓ - Only adds safety check, doesn't change
-   logic
+4. **Minimal Risk**: The changes are:
+   - Limited to a single function
+   - Only add timeout logic without changing the core functionality
+   - Include proper error handling and resource cleanup
+   - Don't introduce new features or architectural changes
 
-## Impact Assessment
+5. **Hardware Interaction Context**: This function polls hardware for
+   completion of a CPT (cryptographic processor) instruction. Hardware
+   polling without timeouts is a classic source of kernel hangs,
+   especially when:
+   - Hardware malfunctions
+   - Firmware issues occur
+   - Power management transitions happen
+   - PCIe communication errors occur
 
-- **Severity**: Medium-High - Can cause kernel panic on affected systems
-- **Affected systems**: HFI1 InfiniBand hardware on systems with
-  specific CPU configurations
-- **User impact**: System crash when loading HFI1 driver on vulnerable
-  configurations
+6. **Stable Tree Criteria Met**:
+   - ✓ Fixes a real bug (infinite loop)
+   - ✓ Small change (~20 lines)
+   - ✓ No new features added
+   - ✓ Low regression risk
+   - ✓ Fixes a potential system stability issue
 
-The commit message clearly states "fix possible divide-by-zero" and the
-code change unambiguously moves a zero-check before a division operation
-that uses that value as divisor. This is a textbook example of a bug fix
-that should be backported to stable kernels to prevent crashes on
-systems with certain CPU topologies.
+The timeout value of 10ms (10000 × 1μs) is reasonable for hardware
+polling operations, providing sufficient time for normal operations
+while preventing indefinite hangs in error conditions.
 
- drivers/infiniband/hw/hfi1/affinity.c | 44 +++++++++++++++------------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ .../crypto/marvell/octeontx2/otx2_cptpf_ucode.c  | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/affinity.c b/drivers/infiniband/hw/hfi1/affinity.c
-index 7ead8746b79b..f2c530ab85a5 100644
---- a/drivers/infiniband/hw/hfi1/affinity.c
-+++ b/drivers/infiniband/hw/hfi1/affinity.c
-@@ -964,31 +964,35 @@ static void find_hw_thread_mask(uint hw_thread_no, cpumask_var_t hw_thread_mask,
- 				struct hfi1_affinity_node_list *affinity)
- {
- 	int possible, curr_cpu, i;
--	uint num_cores_per_socket = node_affinity.num_online_cpus /
-+	uint num_cores_per_socket;
-+
-+	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
-+
-+	if (affinity->num_core_siblings == 0)
-+		return;
-+
-+	num_cores_per_socket = node_affinity.num_online_cpus /
- 					affinity->num_core_siblings /
- 						node_affinity.num_online_nodes;
+diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
+index 78367849c3d5..9095dea2748d 100644
+--- a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
++++ b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
+@@ -1494,6 +1494,7 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
+ 	dma_addr_t rptr_baddr;
+ 	struct pci_dev *pdev;
+ 	u32 len, compl_rlen;
++	int timeout = 10000;
+ 	int ret, etype;
+ 	void *rptr;
  
--	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
--	if (affinity->num_core_siblings > 0) {
--		/* Removing other siblings not needed for now */
--		possible = cpumask_weight(hw_thread_mask);
--		curr_cpu = cpumask_first(hw_thread_mask);
--		for (i = 0;
--		     i < num_cores_per_socket * node_affinity.num_online_nodes;
--		     i++)
--			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
--
--		for (; i < possible; i++) {
--			cpumask_clear_cpu(curr_cpu, hw_thread_mask);
--			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
--		}
-+	/* Removing other siblings not needed for now */
-+	possible = cpumask_weight(hw_thread_mask);
-+	curr_cpu = cpumask_first(hw_thread_mask);
-+	for (i = 0;
-+	     i < num_cores_per_socket * node_affinity.num_online_nodes;
-+	     i++)
-+		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+@@ -1554,16 +1555,27 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
+ 							 etype);
+ 		otx2_cpt_fill_inst(&inst, &iq_cmd, rptr_baddr);
+ 		lfs->ops->send_cmd(&inst, 1, &cptpf->lfs.lf[0]);
++		timeout = 10000;
  
--		/* Identifying correct HW threads within physical cores */
--		cpumask_shift_left(hw_thread_mask, hw_thread_mask,
--				   num_cores_per_socket *
--				   node_affinity.num_online_nodes *
--				   hw_thread_no);
-+	for (; i < possible; i++) {
-+		cpumask_clear_cpu(curr_cpu, hw_thread_mask);
-+		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+ 		while (lfs->ops->cpt_get_compcode(result) ==
+-						OTX2_CPT_COMPLETION_CODE_INIT)
++						OTX2_CPT_COMPLETION_CODE_INIT) {
+ 			cpu_relax();
++			udelay(1);
++			timeout--;
++			if (!timeout) {
++				ret = -ENODEV;
++				cptpf->is_eng_caps_discovered = false;
++				dev_warn(&pdev->dev, "Timeout on CPT load_fvc completion poll\n");
++				goto error_no_response;
++			}
++		}
+ 
+ 		cptpf->eng_caps[etype].u = be64_to_cpup(rptr);
  	}
-+
-+	/* Identifying correct HW threads within physical cores */
-+	cpumask_shift_left(hw_thread_mask, hw_thread_mask,
-+			   num_cores_per_socket *
-+			   node_affinity.num_online_nodes *
-+			   hw_thread_no);
- }
+-	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
+ 	cptpf->is_eng_caps_discovered = true;
  
- int hfi1_get_proc_affinity(int node)
++error_no_response:
++	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
+ free_result:
+ 	kfree(result);
+ lf_cleanup:
 -- 
 2.39.5
 
