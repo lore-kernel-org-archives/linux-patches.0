@@ -1,46 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C2A2472B7;
-	Tue,  5 Aug 2025 13:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2B62472B7;
+	Tue,  5 Aug 2025 13:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399522; cv=none; b=hBM1uqixAfSPKR2/qdN+69tmbaqsq23vAL+58vRiMbb5QGNg2lh6rjHwMIX9JvkMBVbkc/9mxk3shfFtv+Cqhv8F3XLuXIsxF+53/apM8Ou/Kk8xt++5+IQl/chfMwdVKZ5WOvFgTPD/+yuBkxlJ8iTdSdjqY8N3n+wrz71D8jw=
+	t=1754399527; cv=none; b=QfQwm4TgtMAv3YrAPm228jWeO1IOW0mNC7h655PLfUH1zv+6yZ+LlKBpIaJKo+2nfxGmsPU16kbRETpsVoLOngckdGeub+E2xbFtyPIRUmahGFGrnJjpxTwCwSNaYg3vU3Vj3+QtBu2sMtKklegWIZx5TivBsyvA6Z8GlDXHVtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399522; c=relaxed/simple;
-	bh=JLR7knPcYjEDtXFlGhqz4++ofr2Y/Icxu/xtWDVSxZM=;
+	s=arc-20240116; t=1754399527; c=relaxed/simple;
+	bh=YC+Fd3kvTd5WWP5HdO2ctXRPf5Z79sTkJw+IqsD8cbA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kZW07oQnYqnzB5V9PfxnvYCifvOpR/mFjuWG4UUw8x7RNt4Q5En1HesSdlrzvDKTWSoQGzgf+JDwCWl3or5fjJSAnpnQhZY5GTE+c/Kh3B3bv4tU8ReCOIgYXqPLg1ImhIepchx6SXkkwxyCstKldn9OYRP6JjMgx2nHw6FfjNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l8ZI86RX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cJMOQsPpqYCgv1XFhdMOqHD9bvRgcQFlW9Y7yNnuMCmnsw9bcpfchJS6UCyEvf9lvRTLfXeEk3l9InhSHf8rRJYZBs0AiAoiiJkmZ8OcdVV5Icew39EcYyup+veXkHVgY8i9vjgQfRUJGgYoLRgT2SbkgEJgm29x6pV5QSLV4J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUVxrHfw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l8ZI86RX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A1AC4CEF0;
-	Tue,  5 Aug 2025 13:12:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUVxrHfw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE68C4CEF4;
+	Tue,  5 Aug 2025 13:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399522;
-	bh=JLR7knPcYjEDtXFlGhqz4++ofr2Y/Icxu/xtWDVSxZM=;
+	s=k20201202; t=1754399526;
+	bh=YC+Fd3kvTd5WWP5HdO2ctXRPf5Z79sTkJw+IqsD8cbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l8ZI86RX9tF4njFWA/wlWPmG1sJStRJ2mhPMZuBY/QcWFy4e8jOnss1q8b7csCfeK
-	 YvQfwAB6eALeld4RTjG0F64knXeHE186pj0/B2R9hwE+qKImZ5u+mwVuMhVTO73gEL
-	 vIvkhCxlq7MKlOzj8CojFe3OzValIUFBadfNwOwST8Kms9yZJx5fap1W5aB1FAZXZz
-	 KAFqxG4Nb9EivcFIciiJMGqQdYMxXrioBxkcxnN+c4Ep02Qmf2jTZFfCB7NCNNcp7R
-	 1g6SsFrnzq5fAcINk17dwK8Fxj12xSLEvGVwCALh3l2lHOgjKtYDlBmJKFunSrnjx+
-	 i4DsEaprP+qhQ==
+	b=OUVxrHfwwooA8Q5reB8fWJRvpSwxA819fmMTBHmwLbQeaktfbmVxLc/YAoa/Qa56F
+	 U7brLcS1HuZo0+n8sCLxDM9hqNguX0Gd1Q/pGXXGb2hBu+OeXf+3ZW+yd/kFai3MMl
+	 4v99tXYwrDY6+TUtp6p/JIZSKuNlneR0EHDwSgMLiyjIT1lbiyXrQudcRcVLfQY3u3
+	 mltCOoPw170tNfNk3K/Y6W4CPWAt3jkcluGMw1dcee9JdYIniZCmmybKL6zxyS4d1/
+	 dmg9zpHG7tZ/Nzx2Zao8dvMeNmzL71r/BFy2Dy08GuctTDu0KZtiz9yuoVpncjKfaa
+	 dk2PrUHbT+Xwg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pei Xiao <xiaopei01@kylinos.cn>,
-	Thierry Reding <treding@nvidia.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+Cc: Roman Li <Roman.Li@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pdeschrijver@nvidia.com,
-	pgaikwad@nvidia.com,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.6] clk: tegra: periph: Fix error handling and resolve unsigned compare warning
-Date: Tue,  5 Aug 2025 09:09:35 -0400
-Message-Id: <20250805130945.471732-60-sashal@kernel.org>
+	dillon.varone@amd.com,
+	alex.hung@amd.com,
+	alvin.lee2@amd.com,
+	PeiChen.Huang@amd.com,
+	michael.strauss@amd.com,
+	srinivasan.shanmugam@amd.com,
+	ryanseto@amd.com,
+	yan.li@amd.com,
+	ethan@ethancedwards.com,
+	linux@treblig.org
+Subject: [PATCH AUTOSEL 6.16-6.12] drm/amd/display: Disable dsc_power_gate for dcn314 by default
+Date: Tue,  5 Aug 2025 09:09:36 -0400
+Message-Id: <20250805130945.471732-61-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -55,109 +62,97 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Roman Li <Roman.Li@amd.com>
 
-[ Upstream commit 2dc2ca9000eea2eb749f658196204cb84d4306f7 ]
+[ Upstream commit 02f3ec53177243d32ee8b6f8ba99136d7887ee3a ]
 
-./drivers/clk/tegra/clk-periph.c:59:5-9: WARNING:
-	Unsigned expression compared with zero: rate < 0
+[Why]
+"REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line"
+warnings seen after resuming from s2idle.
+DCN314 has issues with DSC power gating that cause REG_WAIT timeouts
+when attempting to power down DSC blocks.
 
-The unsigned long 'rate' variable caused:
-- Incorrect handling of negative errors
-- Compile warning: "Unsigned expression compared with zero"
+[How]
+Disable dsc_power_gate for dcn314 by default.
 
-Fix by changing to long type and adding req->rate cast.
-
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://lore.kernel.org/r/79c7f01e29876c612e90d6d0157fb1572ca8b3fb.1752046270.git.xiaopei01@kylinos.cn
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The return type is indeed `long`, which can represent negative error
-codes. Now let me verify the proposed fix addresses this issue correctly
-by looking at the patch again and understanding the cast:
-
-The fix changes:
-1. `unsigned long rate` to `long rate` - This allows the variable to
-   hold negative values
-2. Adds a cast when assigning to `req->rate`: `req->rate = (unsigned
-   long)rate` - This is safe because we only do this assignment after
-   checking that rate is not negative
+Based on my analysis of the commit and examination of the Linux kernel
+codebase, here is my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **It fixes a real bug** that was introduced in v6.10 (commit
-   4d78bd80cef7): The original code declares `rate` as `unsigned long`
-   while `div_ops->round_rate()` returns a `long` that can be negative
-   to indicate errors. The comparison `if (rate < 0)` on line 59 will
-   never be true for an unsigned variable, causing error conditions from
-   the underlying clock driver to be ignored and potentially passed as
-   valid (very large) rate values.
+1. **Clear Bug Fix**: The commit addresses a specific bug - "REG_WAIT
+   timeout 1us * 1000 tries" warnings that occur after resuming from
+   s2idle (suspend-to-idle). This is a user-visible issue that affects
+   system stability during power management operations.
 
-2. **The fix is minimal and contained**: The change only modifies two
-   lines - changing the variable type from `unsigned long` to `long` and
-   adding an explicit cast when assigning to `req->rate`. This is a
-   surgical fix that doesn't alter the logic or introduce new features.
+2. **Small and Contained Change**: The fix is minimal - it only adds a
+   single line `disable_dsc_power_gate = true` to the debug_defaults_drv
+   structure in
+   `/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c`.
+   This is a low-risk configuration change.
 
-3. **Low risk of regression**: The fix properly handles the error case
-   that was being missed before. The cast to `unsigned long` when
-   assigning to `req->rate` is safe because it only happens after
-   verifying the rate is not negative. This maintains compatibility with
-   the existing API while fixing the error handling.
+3. **Hardware-Specific Workaround**: The change is specifically targeted
+   at DCN314 hardware which has known issues with DSC (Display Stream
+   Compression) power gating. The commit message clearly states "DCN314
+   has issues with DSC power gating that cause REG_WAIT timeouts when
+   attempting to power down DSC blocks."
 
-4. **Affects a critical subsystem**: Clock drivers are fundamental to
-   system operation. Incorrect error handling in clock rate calculations
-   could lead to system instability, incorrect clock frequencies being
-   set, or error conditions being silently ignored.
+4. **No Feature Addition**: This is purely a bug fix/workaround - it
+   disables a problematic power management feature rather than adding
+   new functionality.
 
-5. **The bug has clear symptoms**: The commit message mentions both a
-   compile-time warning ("Unsigned expression compared with zero") and
-   incorrect runtime behavior (error values not being properly handled).
-   This makes it easy to verify the fix addresses real issues.
+5. **Power Management Bug**: Issues that affect suspend/resume
+   functionality are particularly important for stable kernels as they
+   directly impact user experience and system reliability.
 
-6. **Applies to currently supported stable kernels**: The bug was
-   introduced in v6.10, which is still within the stable kernel
-   maintenance window. The fix should be backported to v6.10.y stable
-   series to ensure proper error handling in Tegra peripheral clock
-   operations.
+6. **Existing Framework**: The `disable_dsc_power_gate` flag already
+   exists in the codebase (defined in
+   `/drivers/gpu/drm/amd/display/dc/dc.h`) and is checked in multiple
+   places like `dcn31_hwseq.c` and `dcn20_hwseq.c`. This commit just
+   sets the flag for DCN314 specifically.
 
-The commit perfectly aligns with stable kernel criteria: it fixes a
-clear bug without adding features or making architectural changes, and
-the risk of introducing new issues is minimal given the straightforward
-nature of the fix.
+7. **Minimal Risk of Regression**: Setting this flag only affects DSC
+   power gating behavior on DCN314 hardware. The worst case would be
+   slightly higher power consumption when DSC blocks are not in use,
+   which is acceptable compared to system instability during resume.
 
- drivers/clk/tegra/clk-periph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+8. **Clear Testing**: The commit has been reviewed by Nicholas
+   Kazlauskas and tested by Daniel Wheeler, indicating proper
+   validation.
 
-diff --git a/drivers/clk/tegra/clk-periph.c b/drivers/clk/tegra/clk-periph.c
-index 0626650a7011..c9fc52a36fce 100644
---- a/drivers/clk/tegra/clk-periph.c
-+++ b/drivers/clk/tegra/clk-periph.c
-@@ -51,7 +51,7 @@ static int clk_periph_determine_rate(struct clk_hw *hw,
- 	struct tegra_clk_periph *periph = to_clk_periph(hw);
- 	const struct clk_ops *div_ops = periph->div_ops;
- 	struct clk_hw *div_hw = &periph->divider.hw;
--	unsigned long rate;
-+	long rate;
+This is exactly the type of hardware-specific bug fix that stable
+kernels should include - it fixes a real problem affecting users with
+minimal risk and without introducing new features or architectural
+changes.
+
+ drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
+index 8383e2e59be5..eed64b05bc60 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
+@@ -926,6 +926,7 @@ static const struct dc_debug_options debug_defaults_drv = {
+ 	.seamless_boot_odm_combine = true,
+ 	.enable_legacy_fast_update = true,
+ 	.using_dml2 = false,
++	.disable_dsc_power_gate = true,
+ };
  
- 	__clk_hw_set_clk(div_hw, hw);
- 
-@@ -59,7 +59,7 @@ static int clk_periph_determine_rate(struct clk_hw *hw,
- 	if (rate < 0)
- 		return rate;
- 
--	req->rate = rate;
-+	req->rate = (unsigned long)rate;
- 	return 0;
- }
- 
+ static const struct dc_panel_config panel_config_defaults = {
 -- 
 2.39.5
 
