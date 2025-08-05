@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233722737F8;
-	Tue,  5 Aug 2025 13:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E8E2737F8;
+	Tue,  5 Aug 2025 13:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399468; cv=none; b=eQU1EMpS+pmHliXcIE+6kAHYXL2n5TRtZZbgjqTEtJm1GwfUA15FvvzcVg0xc6ewaUOUJQPs5iXJeniBYw6FIMOPL0f0KpQNWh6dhxMmeh+Utmx5TF4Jp6dn90oXLnLC+hy9pCqevWXgQhxqUPZYUDCAOK+fQ7FM2LFYLg1M5MY=
+	t=1754399470; cv=none; b=mFBAiVy4rNfzNAcu70rGyKZz4Q5JRFeWpL1uR8bapcm5FFJum6xUjaR22QxlTvAlTbptMyb9/i/9BOiHKYuSQD2o3a7l0AS2ZNb1FsCWMPSdAHNZTz3/JxkfFowwI5tVnEC2Ptj4agIBlQVlQ97N3B78ihdL2uuDZ1poYgUz1tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399468; c=relaxed/simple;
-	bh=mRdXlyaVgEfR7OWk3t/3Qh77MsdYzNNqgku4AEMnXIc=;
+	s=arc-20240116; t=1754399470; c=relaxed/simple;
+	bh=oZf+e2ws7aIyKk6p8FsCGM33W6e66Bu+o3PoG4ccLd0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UDNL3fA5bJWA8nvztdyklXxbo8XAJhAAFKXrJTmiTKR+ffVWggugkMPq34pnqvj4KQ6KgU6CTI3aQm7l8bMJjXgFFeA8aaLpGRrdA7vDbwCu5QIR7eg7h+KZjCTNumIwxAytJNnISMIYzgLhbPAY2Lbl+yw/0sjgS626RKbovM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A/TdBr0f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DCG0T0GwshwWn6DrUTI4rdiPgd7+AXkdbDWIO4qyiBeJWfh2mmerAiQC9bm4lgTN/2CE3FHcXGubSTI9H4RD+xaRJSJrWs++nLgBSInZJDQSWKYoov5+JUP7kSybDkKB/rL8vzHEJkEp3T0Wwk88T8TsjJ47V5F/EXGrhVuoeZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bSEHeW06; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A/TdBr0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC93C4CEF0;
-	Tue,  5 Aug 2025 13:11:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bSEHeW06"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543D0C4CEF9;
+	Tue,  5 Aug 2025 13:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399468;
-	bh=mRdXlyaVgEfR7OWk3t/3Qh77MsdYzNNqgku4AEMnXIc=;
+	s=k20201202; t=1754399470;
+	bh=oZf+e2ws7aIyKk6p8FsCGM33W6e66Bu+o3PoG4ccLd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/TdBr0fyFSACJUo8w8l4WBk0pjWP1FVjdUpLJsI63lOTuLslZ1wVEA/o2eqiJXp6
-	 iXQ1Edm5pUC2oXCoJsb1rLuIJk1dL60SbgQlO5QgAbR9kyuGquxEJOvh1yit1Kbkus
-	 kO4MUKJxwB/wwPjWXw/eaPPeMhbwc81qNO6XdpnolaRgF97fhfrazbDA9+AGQwSijG
-	 +VmH93cHJzmOzEFbX+BNZzLPeeuarr/guJXAj5bbtAsGkwZt0QZAxz3/IPYszvmjm+
-	 wSzDqt8aSIdtUgxnVFyjMkdbDAbCTknzZ/PT1720H8HIv0gy/5kdR+TIJYfWpRxBXM
-	 zhC7FYTGsqjYQ==
+	b=bSEHeW06eP9gb+AmXUTv3HH2Z3MimEG0BHI5RnbP37/lH+ZtPacd3qJ+uqqwNgOaM
+	 Yj3psesqstBgKGb6wSKkjtofKSIsCWAYLqRuWoqhBf0VfKHK91JRVHCCW+oK3+CiVV
+	 je4ixpx65nxegoJJpyKVxUfz9mnbCTytpV+iGfN2/hJGe7jHM/Twvuidp6LZI1HT3Q
+	 S9OD0rqvzD8Yu3zsfXjMa0X7GfnJ9OllqEbwB0DouIwwYTXsG/3dTQDvLvhKomazVn
+	 S6GsRfljn4Tz2gULovVJavVPYEs71Rtp1KqiYR1YlUkZim7m7NvVU+oj3EYD1d+FDe
+	 PI0ot8o/D4mmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Will Deacon <will@kernel.org>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S . Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	stefanha@redhat.com,
-	jasowang@redhat.com,
-	kvm@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.1] vsock/virtio: Resize receive buffers so that each SKB fits in a 4K page
-Date: Tue,  5 Aug 2025 09:09:12 -0400
-Message-Id: <20250805130945.471732-37-sashal@kernel.org>
+Cc: Shiji Yang <yangshiji66@outlook.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.16-6.1] MIPS: lantiq: falcon: sysctrl: fix request memory check logic
+Date: Tue,  5 Aug 2025 09:09:13 -0400
+Message-Id: <20250805130945.471732-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -55,118 +49,138 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Will Deacon <will@kernel.org>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit 03a92f036a04fed2b00d69f5f46f1a486e70dc5c ]
+[ Upstream commit 9c9a7ff9882fc6ba7d2f4050697e8bb80383e8dc ]
 
-When allocating receive buffers for the vsock virtio RX virtqueue, an
-SKB is allocated with a 4140 data payload (the 44-byte packet header +
-VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE). Even when factoring in the SKB
-overhead, the resulting 8KiB allocation thanks to the rounding in
-kmalloc_reserve() is wasteful (~3700 unusable bytes) and results in a
-higher-order page allocation on systems with 4KiB pages just for the
-sake of a few hundred bytes of packet data.
+request_mem_region() will return NULL instead of error code
+when the memory request fails. Therefore, we should check if
+the return value is non-zero instead of less than zero. In
+this way, this patch also fixes the build warnings:
 
-Limit the vsock virtio RX buffers to 4KiB per SKB, resulting in much
-better memory utilisation and removing the need to allocate higher-order
-pages entirely.
+arch/mips/lantiq/falcon/sysctrl.c:214:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
+  214 |                                 res_status.name) < 0) ||
+      |                                                  ^
+arch/mips/lantiq/falcon/sysctrl.c:216:47: error: ordered comparison of pointer with integer zero [-Werror=extra]
+  216 |                                 res_ebu.name) < 0) ||
+      |                                               ^
+arch/mips/lantiq/falcon/sysctrl.c:219:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
+  219 |                                 res_sys[0].name) < 0) ||
+      |                                                  ^
+arch/mips/lantiq/falcon/sysctrl.c:222:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
+  222 |                                 res_sys[1].name) < 0) ||
+      |                                                  ^
+arch/mips/lantiq/falcon/sysctrl.c:225:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
+  225 |                                 res_sys[2].name) < 0))
+      |
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Message-Id: <20250717090116.11987-5-will@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Let me analyze what we know about this commit:
+**YES**
 
-**Backport Status: YES**
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit is a good candidate for stable backporting based on the
-following analysis:
+## Bug Fix Nature
 
-## Reasons for backporting:
+This commit fixes a **genuine logic error** in the error checking of
+`request_mem_region()` calls. The function returns a pointer
+(specifically `struct resource *`) on success and NULL on failure, not
+an error code. The original code was incorrectly checking if the return
+value was `< 0`, which is inappropriate for pointer comparisons.
 
-1. **Memory efficiency fix**: The commit addresses a significant memory
-   waste issue where ~3700 bytes out of 8KiB allocations were unusable.
-   This is a ~46% memory waste for every RX buffer allocation.
+## Specific Code Analysis
 
-2. **Avoids higher-order page allocations**: The original code forces
-   the kernel to allocate higher-order pages (8KiB) on systems with 4KiB
-   pages, which can lead to:
-   - Memory fragmentation issues
-   - Allocation failures under memory pressure
-   - Degraded system performance
+1. **Original broken code** (lines 213-225 in the diff):
+   - Used `< 0` comparison with pointer return values
+   - This is fundamentally wrong as `request_mem_region()` returns
+     `struct resource *` or NULL
+   - The broken check would never trigger because pointers are unsigned
+     values
 
-3. **Simple, contained fix**: The change is minimal and well-contained:
-   - Changes `VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE` from a hardcoded 4096 to
-     `SKB_WITH_OVERHEAD(1024 * 4)`
-   - Removes the addition of `VIRTIO_VSOCK_SKB_HEADROOM` in
-     `virtio_vsock_rx_fill()`
-   - The SKB_WITH_OVERHEAD macro (defined as `((X) -
-     SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))`) ensures the
-     entire SKB fits in a 4K page
+2. **Fixed code**:
+   - Correctly checks for NULL by negating the return value
+     (`!request_mem_region(...)`)
+   - This properly detects when memory region requests fail
 
-4. **No functional changes**: This is purely an optimization that:
-   - Doesn't change the protocol behavior
-   - Doesn't introduce new features
-   - Maintains backward compatibility
-   - Only affects memory allocation patterns
+## Impact Assessment
 
-5. **Clear performance benefit**: This provides immediate benefits to
-   all vsock users by:
-   - Reducing memory consumption by ~46% per RX buffer
-   - Eliminating pressure on higher-order page allocations
-   - Improving overall system memory efficiency
+1. **Functional Impact**: The bug could lead to the kernel continuing
+   execution even when critical memory regions couldn't be reserved,
+   potentially causing:
+   - Resource conflicts
+   - System instability on Lantiq Falcon MIPS platforms
+   - Unpredictable behavior when accessing unreserved memory regions
 
-6. **Low risk**: The change is straightforward with minimal risk of
-   regression:
-   - The logic remains the same
-   - Only the buffer sizing calculation changes
-   - Has been reviewed by the vsock maintainer (Stefano Garzarella)
+2. **Build Impact**: The commit also fixes compiler warnings with
+   `-Werror=extra`, which could break builds with strict warning
+   settings
 
-The commit meets all the stable tree criteria: it fixes a real problem
-(memory waste and higher-order allocations), is minimal in scope,
-doesn't introduce new features, and has clear benefits with low risk of
-regression.
+3. **Scope**: The fix is:
+   - Small and contained (only changes error checking logic)
+   - Architecture-specific (MIPS Lantiq Falcon)
+   - Low risk of introducing regressions
+   - Simple logical correction without algorithmic changes
 
- include/linux/virtio_vsock.h     | 7 ++++++-
- net/vmw_vsock/virtio_transport.c | 2 +-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+## Stable Tree Criteria
 
-diff --git a/include/linux/virtio_vsock.h b/include/linux/virtio_vsock.h
-index 36fb3edfa403..6c00687539cf 100644
---- a/include/linux/virtio_vsock.h
-+++ b/include/linux/virtio_vsock.h
-@@ -111,7 +111,12 @@ static inline size_t virtio_vsock_skb_len(struct sk_buff *skb)
- 	return (size_t)(skb_end_pointer(skb) - skb->head);
- }
+This commit meets key stable tree requirements:
+- **Fixes a real bug**: Incorrect error handling that could lead to
+  system issues
+- **Small change**: Only modifies the comparison logic, no structural
+  changes
+- **Clear fix**: The correction is obvious and verifiable
+- **No new features**: Pure bug fix
+- **Minimal risk**: The fix is straightforward and correct
+- **Important for affected systems**: Lantiq Falcon platforms need
+  proper resource management
+
+The commit is an ideal candidate for stable backporting as it fixes a
+clear programming error that affects system stability without
+introducing complexity or risk.
+
+ arch/mips/lantiq/falcon/sysctrl.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
+
+diff --git a/arch/mips/lantiq/falcon/sysctrl.c b/arch/mips/lantiq/falcon/sysctrl.c
+index 1187729d8cbb..357543996ee6 100644
+--- a/arch/mips/lantiq/falcon/sysctrl.c
++++ b/arch/mips/lantiq/falcon/sysctrl.c
+@@ -214,19 +214,16 @@ void __init ltq_soc_init(void)
+ 	of_node_put(np_syseth);
+ 	of_node_put(np_sysgpe);
  
--#define VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE	(1024 * 4)
-+/* Dimension the RX SKB so that the entire thing fits exactly into
-+ * a single 4KiB page. This avoids wasting memory due to alloc_skb()
-+ * rounding up to the next page order and also means that we
-+ * don't leave higher-order pages sitting around in the RX queue.
-+ */
-+#define VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE	SKB_WITH_OVERHEAD(1024 * 4)
- #define VIRTIO_VSOCK_MAX_BUF_SIZE		0xFFFFFFFFUL
- #define VIRTIO_VSOCK_MAX_PKT_BUF_SIZE		(1024 * 64)
+-	if ((request_mem_region(res_status.start, resource_size(&res_status),
+-				res_status.name) < 0) ||
+-		(request_mem_region(res_ebu.start, resource_size(&res_ebu),
+-				res_ebu.name) < 0) ||
+-		(request_mem_region(res_sys[0].start,
+-				resource_size(&res_sys[0]),
+-				res_sys[0].name) < 0) ||
+-		(request_mem_region(res_sys[1].start,
+-				resource_size(&res_sys[1]),
+-				res_sys[1].name) < 0) ||
+-		(request_mem_region(res_sys[2].start,
+-				resource_size(&res_sys[2]),
+-				res_sys[2].name) < 0))
++	if ((!request_mem_region(res_status.start, resource_size(&res_status),
++				 res_status.name)) ||
++	    (!request_mem_region(res_ebu.start, resource_size(&res_ebu),
++				 res_ebu.name)) ||
++	    (!request_mem_region(res_sys[0].start, resource_size(&res_sys[0]),
++				 res_sys[0].name)) ||
++	    (!request_mem_region(res_sys[1].start, resource_size(&res_sys[1]),
++				 res_sys[1].name)) ||
++	    (!request_mem_region(res_sys[2].start, resource_size(&res_sys[2]),
++				 res_sys[2].name)))
+ 		pr_err("Failed to request core resources");
  
-diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c
-index f0e48e6911fc..f01f9e878106 100644
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -307,7 +307,7 @@ virtio_transport_cancel_pkt(struct vsock_sock *vsk)
- 
- static void virtio_vsock_rx_fill(struct virtio_vsock *vsock)
- {
--	int total_len = VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE + VIRTIO_VSOCK_SKB_HEADROOM;
-+	int total_len = VIRTIO_VSOCK_DEFAULT_RX_BUF_SIZE;
- 	struct scatterlist pkt, *p;
- 	struct virtqueue *vq;
- 	struct sk_buff *skb;
+ 	status_membase = ioremap(res_status.start,
 -- 
 2.39.5
 
