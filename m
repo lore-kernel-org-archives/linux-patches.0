@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54BE2472B7;
-	Tue,  5 Aug 2025 13:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FD627467D;
+	Tue,  5 Aug 2025 13:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399517; cv=none; b=GUrSxl6tMnkPcCN7yAeeAEe06/l/x14pzG6H9CKRsoqFbj9LDFb+7vkmjku31E9RMzejLcTyS5Ge0eKiYosZtjL41qQg3hZPf4voHClosAzm4/aMT4zI9ylxHdfeV6w5pw/ZnTJ76H4cU75fsNEHXgxJ+6N7M14bGs1bAi4iWqQ=
+	t=1754399520; cv=none; b=HJGvnQptD6zzSBF4a08UL0PoTsoYx0dN+PqoELx+W34qsFDDlIaUx4CY3maXN80nStduqTfhNEc5HUKSnGwJb+yTaCWoBC8qQV8tKqp0Nrdeazry+7IU+p7Tw8A8Vam7SOspLd3gn4Vjd1LHq79O4XNFCPRjDTW4WW8O3oatAeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399517; c=relaxed/simple;
-	bh=uCGVy5vRCBk3vj4eapHNW2dgJlB7TzlfE0TWQs3S208=;
+	s=arc-20240116; t=1754399520; c=relaxed/simple;
+	bh=G30icMWKligdm4rxiwBEu77y6DCF8r1SkJgxI7mqJcY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SWgP48H6dwhNhptMlSUf6c0vUFvlRz1i92O9fwBPn65LyRxzGGifxtC44wwHBBC/JoYtZoWqCRM2g3mM0URtl+MPCpjegSegjkfetXN/AmvTJTG8P34mJgYSkBdR89f6PJ4bBwpZ8i1JgHFjQzAdVK4LAAM1B3zo4o19CvI+Br8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bf5sbeBO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LOwCuyc1DRY3dppPmRayRySSF+co3g8khkrw8Pg3Tl6YeETukZO7D+eOcIhGjE3S2Pxzp+QV/55j69EMkGwj9vk4dIHWu4CLQAnK/YLNf1+HtGAAgOPE/gEC/JHCqgS+zdcMHke6zEpA1TvqyYsZj+LqnOTzvUnI2XwasehY1Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b8gUxI89; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bf5sbeBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902A9C4CEF4;
-	Tue,  5 Aug 2025 13:11:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b8gUxI89"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52499C4CEF0;
+	Tue,  5 Aug 2025 13:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399517;
-	bh=uCGVy5vRCBk3vj4eapHNW2dgJlB7TzlfE0TWQs3S208=;
+	s=k20201202; t=1754399520;
+	bh=G30icMWKligdm4rxiwBEu77y6DCF8r1SkJgxI7mqJcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bf5sbeBO1OXNZkQsqRlq48Aex+3bDco8L19FGPMpID2n892K/DJXi2JfZv/A8a4pv
-	 dPU/IVK9ILEyw3kd2ZXvzNqXWA3ptgYbsBPefun7vfATO1dnqq1aig6D8oXHECfZZ+
-	 K0oeA/IGJGE668pnu8Vi0R8umbEKrJyn+KkshuRmv8NPpTfKT4ke1x1DDtdD3Eaxjq
-	 BxgC3ST7yScQXBAVECepDJglv2BB+a/v2vvfvJmSBjdHBxIZJYg/mi6M2SmIw+NXl5
-	 Zkvuwtu4hnfTtpvaLhPikOBLZtoWEQckdJ2/1iZ9J7ww07UW5V2sCwIZkoijhvTVWe
-	 I8edkxv/KoCWQ==
+	b=b8gUxI89iTZY585tV6CRrJinpRw/RwYN10j4A/GyfrEZYY/wb6xBTcCokTWVMjhnd
+	 w9UCTKcACkEGjhSJBlLH1AsWvHk5wpv3LSXRb+dmumzD2l1akLDRdrOj0yOiVV/UG1
+	 QjEAk8629TADCwRiiU2jcbJKX7ajlLgfaUjw5X4XTyjxNAs4lxfOkJC4oSVgBY4Njr
+	 b9ud7AWKasjWLQmhTjAnuMMPXbWGrptrXvBJKIyXtaQfhciIqs1qKMZz6jZpM2oWhk
+	 p2uGVDgnXqQjRLuOs2o5Ici23hENbL2Hk8H39KnYZtYVcPhD4C71+NpgGojeL3dqLU
+	 YFWHHZFBqKKag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Marc Zyngier <maz@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	yung-chuan.liao@linux.intel.com,
-	linux-sound@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.12] soundwire: amd: cancel pending slave status handling workqueue during remove sequence
-Date: Tue,  5 Aug 2025 09:09:33 -0400
-Message-Id: <20250805130945.471732-58-sashal@kernel.org>
+	toan@os.amperecomputing.com,
+	kwilczynski@kernel.org,
+	mani@kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.16-6.6] PCI: xgene-msi: Resend an MSI racing with itself on a different CPU
+Date: Tue,  5 Aug 2025 09:09:34 -0400
+Message-Id: <20250805130945.471732-59-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -52,109 +56,103 @@ X-stable-base: Linux 6.16
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit f93b697ed98e3c85d1973ea170d4f4e7a6b2b45d ]
+[ Upstream commit 3cc8f625e4c6a0e9f936da6b94166e62e387fe1d ]
 
-During remove sequence, cancel the pending slave status update workqueue.
+Since changing the affinity of an MSI really is about changing
+the target address and that it isn't possible to mask an individual
+MSI, it is completely possible for an interrupt to race with itself,
+usually resulting in a lost interrupt.
 
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20250530054447.1645807-4-Vijendar.Mukunda@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Paper over the design blunder by informing the core code of this
+sad state of affairs.
+
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20250708173404.1278635-11-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Status: YES
+**Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's the
-extensive analysis:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-### 1. **Bug Fix Nature**
-This commit fixes a potential **use-after-free (UAF)** vulnerability
-during driver removal. The workqueue `amd_sdw_work` (initialized at line
-1074 in `amd_sdw_manager_probe()`) can be scheduled by interrupts (line
-946 in the interrupt handler). Without cancelling this work during
-removal, the following race condition can occur:
+## Key Evidence for Backporting:
 
-- **CPU 0**: Driver removal begins, calls `amd_sdw_manager_remove()`
-- **CPU 1**: Interrupt arrives, schedules `amd_sdw_work`
-- **CPU 0**: Continues removal, frees the `amd_sdw_manager` structure
-  via `sdw_bus_master_delete()`
-- **CPU 1**: Work handler executes, accesses freed memory → **UAF**
+1. **Fixes a Real Bug - Lost Interrupts**: The commit addresses a race
+   condition where MSI interrupts can be lost when CPU affinity changes
+   occur. The commit message explicitly states this results in "a lost
+   interrupt" which is a serious issue that can cause system malfunction
+   or hangs.
 
-### 2. **Small and Contained Fix**
-The fix is minimal - just one line adding
-`cancel_work_sync(&amd_manager->amd_sdw_work)` at the right place in the
-removal sequence. This is placed:
-- After `pm_runtime_disable()` (ensures no new runtime PM operations)
-- Before `amd_disable_sdw_interrupts()` (ensures work can complete if
-  running)
-- Before any cleanup/freeing operations
+2. **Minimal and Contained Change**: The fix consists of a single line
+   addition:
+  ```c
+  irqd_set_resend_when_in_progress(irq_get_irq_data(virq));
+  ```
+  This is an extremely small, targeted fix that only affects the xgene-
+  msi driver's interrupt allocation path.
 
-### 3. **Common Pattern in Driver Code**
-This follows an established pattern seen across the kernel. The recent
-commit 984836621aad ("spi: mpc52xx: Add cancel_work_sync before module
-remove") fixed an identical issue. The soundwire cadence driver also
-uses `cancel_work_sync()` in similar contexts (line 1259 in
-cadence_master.c).
+3. **Part of a Broader Fix Pattern**: This commit follows the same
+   pattern established for other interrupt controllers:
+   - Commit 9c15eeb5362c4 introduced this mechanism for fasteoi handlers
+     in 2023
+   - Commit 2c9e7f857400 extended it to handle_simple_irq() flow
+   - This commit applies the same proven workaround to the xgene-msi
+     driver
 
-### 4. **Part of a Broader Fix Series**
-This commit is part of a series addressing multiple issues in the AMD
-soundwire driver:
-- Commit 86a4371b7697 fixed slave alert handling after link down
-  (already includes `cancel_work_sync()` in suspend paths)
-- This commit extends the fix to the removal path, ensuring complete
-  coverage
+4. **Addresses Hardware Design Limitation**: The commit message
+   describes this as papering over a "design blunder" - the hardware
+   inability to mask individual MSIs combined with affinity changes
+   creates an unavoidable race condition. This is not a new feature but
+   a critical workaround for existing hardware defects.
 
-### 5. **Real-World Impact**
-The commit message from the related fix (86a4371b7697) shows actual
-error logs from systems experiencing issues:
-```
-soundwire sdw-master-0-0: trf on Slave 1 failed:-110 read addr 0 count 1
-rt722-sdca sdw:0:0:025d:0722:01: SDW_DP0_INT recheck read failed:-110
-```
-These errors occur when the workqueue tries to access hardware after
-it's been disabled/freed.
+5. **History of Race Conditions in This Driver**: The xgene-msi driver
+   has had race condition issues before (commit a93c00e5f975 fixed a
+   different race in 2021), indicating this subsystem needs these types
+   of fixes for stability.
 
-### 6. **No Architectural Changes**
-This is a pure bug fix with no feature additions or architectural
-changes. It simply ensures proper cleanup ordering during driver
-removal.
+6. **No Architecture Changes**: The fix uses existing kernel
+   infrastructure (irqd_set_resend_when_in_progress) without introducing
+   new APIs or changing kernel architecture.
 
-### 7. **Minimal Risk**
-The `cancel_work_sync()` call is safe and standard practice. It waits
-for any pending work to complete and prevents new work from being
-scheduled. There's no risk of introducing new bugs or changing behavior
-- it only prevents a race condition.
+7. **Low Risk of Regression**: The change only affects the specific
+   xgene-msi driver and only adds a resend mechanism when interrupts are
+   already in progress - it doesn't change the normal interrupt handling
+   path.
 
-### 8. **Critical for System Stability**
-Use-after-free bugs can lead to:
-- Kernel crashes/panics
-- Security vulnerabilities (potential for exploitation)
-- System instability during module unload/reload
-- Issues during system shutdown/reboot
+## Stable Tree Criteria Met:
+- ✅ Fixes a real bug (lost interrupts)
+- ✅ Small change (1 line)
+- ✅ Not a new feature
+- ✅ Isolated to specific driver
+- ✅ Uses established kernel mechanisms
+- ✅ Addresses hardware limitation that affects deployed systems
 
-The fix prevents these issues in production systems using AMD soundwire
-hardware, particularly important for laptops and systems with audio
-peripherals that may be dynamically loaded/unloaded.
+The fix prevents interrupt loss during CPU affinity changes on X-Gene
+MSI controllers, which is exactly the type of bug fix that stable
+kernels should receive to maintain system reliability.
 
- drivers/soundwire/amd_manager.c | 1 +
+ drivers/pci/controller/pci-xgene-msi.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
-index 3b335d6eaa94..7ed9c8c0b4c8 100644
---- a/drivers/soundwire/amd_manager.c
-+++ b/drivers/soundwire/amd_manager.c
-@@ -1074,6 +1074,7 @@ static void amd_sdw_manager_remove(struct platform_device *pdev)
- 	int ret;
+diff --git a/drivers/pci/controller/pci-xgene-msi.c b/drivers/pci/controller/pci-xgene-msi.c
+index b05ec8b0bb93..50647fa14e69 100644
+--- a/drivers/pci/controller/pci-xgene-msi.c
++++ b/drivers/pci/controller/pci-xgene-msi.c
+@@ -200,6 +200,7 @@ static int xgene_irq_domain_alloc(struct irq_domain *domain, unsigned int virq,
+ 	irq_domain_set_info(domain, virq, msi_irq,
+ 			    &xgene_msi_bottom_irq_chip, domain->host_data,
+ 			    handle_simple_irq, NULL, NULL);
++	irqd_set_resend_when_in_progress(irq_get_irq_data(virq));
  
- 	pm_runtime_disable(&pdev->dev);
-+	cancel_work_sync(&amd_manager->amd_sdw_work);
- 	amd_disable_sdw_interrupts(amd_manager);
- 	sdw_bus_master_delete(&amd_manager->bus);
- 	ret = amd_disable_sdw_manager(amd_manager);
+ 	return 0;
+ }
 -- 
 2.39.5
 
