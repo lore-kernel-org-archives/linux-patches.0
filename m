@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26877272E5E;
-	Tue,  5 Aug 2025 13:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F892737EF;
+	Tue,  5 Aug 2025 13:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399457; cv=none; b=HPCYSHC7RoqVoLUCROCbZvrmKbR2Z3k9/iQhzdB7fA/MejvyPrTjdvNQWu2QCM2XzOoHkLMTwY9gA26ocHvj7WV4zbgj/M3fi/qEKkWxcoTJjJVppxZmDk62ex9Uru3H3LxeKVHSNow4W6Hcg1SiZCRrcqeNJrE4u7l1COHus2U=
+	t=1754399459; cv=none; b=egAjpwkoT2O82mEA5Fri4sjfCbNSzSG6AvnAvMuIDbZ41dJ1YyfoQCHhCToVvXgjfSxGZfev1HKSbe9oYZWKeV/2pzaAR283cZZ+os2I/0zYsJyTqA3XZNsO8tFGDJUqY9+Aw6CVjECt2J5zTpgc72cvmglDLnjlqACnXqtcTdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399457; c=relaxed/simple;
-	bh=M5ollJwl+snM7Hh61RefnyShnCbCwSzQ1DNbZc2gfZM=;
+	s=arc-20240116; t=1754399459; c=relaxed/simple;
+	bh=QskGx90TLZ/5pqOHB+wiX359YHfKw0zfYQpYucfOY3o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VAT8Q5RFNpP/eVfMSZAVbjrQnoKQjVkkC2Sv8aLLcLIlyQdYsr9gQ6qEIQZB/fbLZ/yagJzpY6KUKUUnrVnUxFt2eYFo9U7Hj+gR8xv0oEa7RTvVi82E42HWbADpJQUPAdQrnW1+k8bzwxSctYlXDs6A72uJo7FjujXQBYgCeiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uqnu1dYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bAS0NlbbSCpxB10thPRverjgRx863yNynpSpay2UDVXyBkxChTWE2BobQYHSw4NJ1ex2AgNgjKRideRT4kTpFQLRrSajYb3cZNuE+3FwHUGyB/bRNCogEq2EgvZS72+A96Pmch4w9hIqwgkZUroaReYN/3zkZ1mx0dMB1ZgFY+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LdwAM3bU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uqnu1dYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54829C4CEF0;
-	Tue,  5 Aug 2025 13:10:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LdwAM3bU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE29C4CEFA;
+	Tue,  5 Aug 2025 13:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399457;
-	bh=M5ollJwl+snM7Hh61RefnyShnCbCwSzQ1DNbZc2gfZM=;
+	s=k20201202; t=1754399459;
+	bh=QskGx90TLZ/5pqOHB+wiX359YHfKw0zfYQpYucfOY3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uqnu1dYdB8ngCdKj6B8mv6FOLOwXAGhlSqo3S8RL78qm0XtLdBW5It6i5FWfaGUDC
-	 KfgrvWywSXh1+c2TuGF6XKpaWtXho40Z/pexA8EN2HJIF4L3GfhSLSNKWFDM9dI8t1
-	 4fySi/LUSOk+LZZS5rzVBpmMB/vlNCU4m1kqS7JkmTdbyaHEOizLQX2Baf8AVpmryD
-	 jmm2epSB4YfAgZ6ge1ecb1+vtlJsd6BLtHoSkDiETCV8doggAh3+CTNNRNEatMN9sC
-	 uQUowIpe1CnZo75hhbSxD0fll+b53SjX/wlpDduZjOJFXtxmveCsKIwv2CG/i1edZz
-	 pVS5mYPKb5M0A==
+	b=LdwAM3bUC/15rEWjQoDUmbJuK+KflxbdIqjXlsNfiqDYT6wCimXaSI0QCmnVlcLzg
+	 TC7XWcNfjkklEy/XK5TZlc32stdgNY6CemK+pd3yU191eDrRSIXZ3leL0cvtSIuJdM
+	 HaQuLp5mvvlNjX5Szb0PKDe2jTCUBe5uOHiYCEuCI5McnWbVcHZfSMGdTNVSWY8Dnz
+	 44OsKu3793J2oOF6JdsRqXanvBbtT6CqXGp1vl7SJYPUwhOEt64jji4DOXTE7oJhbZ
+	 xPnTnOWbNm2RrrNCsjBlgWUbvtvOWRa4WVQNS8I2wH/0iYSjXEK+8vUInepixGo5e0
+	 skrUdcveMSv4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
+Cc: Valmantas Paliksa <walmis@gmail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.15] media: iris: Add handling for corrupt and drop frames
-Date: Tue,  5 Aug 2025 09:09:07 -0400
-Message-Id: <20250805130945.471732-32-sashal@kernel.org>
+	heiko@sntech.de,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.16-6.15] phy: rockchip-pcie: Enable all four lanes if required
+Date: Tue,  5 Aug 2025 09:09:08 -0400
+Message-Id: <20250805130945.471732-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -55,166 +55,115 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Valmantas Paliksa <walmis@gmail.com>
 
-[ Upstream commit b791dcfcba3a0c46fb3e2decab31d2340c5dc313 ]
+[ Upstream commit c3fe7071e196e25789ecf90dbc9e8491a98884d7 ]
 
-Firmware attach DATACORRUPT/DROP buffer flags for the frames which
-needs to be dropped, handle it by setting VB2_BUF_STATE_ERROR for these
-buffers before calling buf_done.
+Current code enables only Lane 0 because pwr_cnt will be incremented on
+first call to the function. Let's reorder the enablement code to enable
+all 4 lanes through GRF.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on sa8775p-ride
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+
+Signed-off-by: Valmantas Paliksa <walmis@gmail.com>
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/16b610aab34e069fd31d9f57260c10df2a968f80.1751322015.git.geraldogabriel@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me analyze what this patch actually does more carefully:
+**Backport Status: YES**
 
-**YES**
+This commit fixes a significant bug in the Rockchip PCIe PHY driver
+where only Lane 0 was being enabled instead of all required lanes.
+Here's my detailed analysis:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Bug Description
+The original code had a critical logic error in
+`rockchip_pcie_phy_power_on()`. The lane enable operation (writing to
+`pcie_laneoff` register) was placed AFTER the `pwr_cnt++` check at line
+170. Since `pwr_cnt` is a reference counter that tracks how many times
+the PHY has been powered on, the first call would increment it from 0 to
+1 and continue with initialization. However, subsequent calls for other
+lanes (Lane 1, 2, 3) would hit the early return at line 171 (`goto
+err_out`), preventing those lanes from being enabled.
 
-## Bug Fix Analysis:
+## The Fix
+The commit moves the lane enable operation (lines 184-188 in original)
+to BEFORE the `pwr_cnt++` check. This ensures that each lane gets
+properly enabled through the GRF (General Register File) regardless of
+the power reference count state.
 
-1. **Clear Bug Fix**: The commit fixes a handling issue where the
-   firmware signals corrupt or dropped frames via
-   `HFI_BUFFERFLAG_DATACORRUPT` and `HFI_BUFFERFLAG_DROP_FRAME` flags,
-   but the driver was not properly handling these error conditions.
+## Why This Should Be Backported
 
-2. **Data Corruption Prevention**: Without this fix, corrupt video
-   frames marked by the firmware would be passed to userspace as valid
-   data, potentially causing:
-   - Display of corrupted video frames
-   - Application crashes when processing invalid data
-   - Incorrect timestamp/sequence handling
+1. **Fixes a Real Bug**: This fixes a functional bug where PCIe devices
+   requiring multiple lanes (x2, x4 configurations) would only have Lane
+   0 enabled, severely impacting performance or causing complete failure
+   to operate.
 
-3. **Minimal and Contained Changes**: The fix is very small and
-   targeted:
-   - Adds two flag definitions (`HFI_BUFFERFLAG_DATACORRUPT`,
-     `HFI_BUFFERFLAG_DROP_FRAME`)
-   - Modifies error handling path to properly set `VB2_BUF_STATE_ERROR`
-   - Clears payload and timestamp for error frames
-   - Returns early to avoid incorrect state updates
+2. **Small and Contained Fix**: The change is minimal - just reordering
+   5 lines of code within a single function. No architectural changes or
+   new features are introduced.
 
-4. **No Architectural Changes**: The patch only fixes error handling
-   logic without changing any APIs, data structures, or architectural
-   design.
+3. **Low Risk**: The fix simply ensures the lane enable register write
+   happens for all lanes, which was clearly the original intent. The
+   moved code block remains identical.
 
-5. **Low Risk of Regression**: The changes are defensive - they only
-   affect frames already marked as corrupt/dropped by firmware, not the
-   normal video processing path.
+4. **Hardware Functionality Impact**: PCIe lane configuration is
+   critical for proper hardware operation. Devices expecting x4 links
+   but only getting x1 would experience significant performance
+   degradation (75% bandwidth loss).
 
-6. **Important User Impact**: Video playback/recording with corrupt
-   frames is a visible user-facing issue that affects quality of
-   service.
+5. **Clear Root Cause**: The bug mechanism is straightforward - the
+   reference counter was preventing lanes 1-3 from being configured due
+   to early return.
 
-## Specific Code Analysis:
+6. **No Side Effects**: The change doesn't introduce new behavior, it
+   just fixes the existing broken behavior to work as originally
+   intended.
 
-The key fix in `iris_buffer.c`:
-```c
-if (buf->flags & V4L2_BUF_FLAG_ERROR) {
-    state = VB2_BUF_STATE_ERROR;
-    vb2_set_plane_payload(vb2, 0, 0);  // Clear payload
-    vb2->timestamp = 0;                 // Clear timestamp
-    v4l2_m2m_buf_done(vbuf, state);
-    return 0;                           // Early return
-}
-```
+This is exactly the type of bug fix that stable kernels should receive -
+it's a clear functional regression fix with minimal code changes and low
+risk of introducing new issues.
 
-And in `iris_hfi_gen1_response.c`:
-```c
-if (hfi_flags & HFI_BUFFERFLAG_DATACORRUPT)
-    flags |= V4L2_BUF_FLAG_ERROR;
+ drivers/phy/rockchip/phy-rockchip-pcie.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-if (hfi_flags & HFI_BUFFERFLAG_DROP_FRAME)
-    flags |= V4L2_BUF_FLAG_ERROR;
-```
-
-This ensures corrupt frames are properly marked as errors and handled
-appropriately rather than being passed as valid data.
-
-## Note on Driver Maturity:
-While the iris driver is very new (introduced in February 2025), this
-makes the fix even more important for stable backporting as it addresses
-a fundamental error handling issue in a newly deployed driver that users
-may encounter immediately upon adoption.
-
- drivers/media/platform/qcom/iris/iris_buffer.c        | 11 ++++++++---
- .../media/platform/qcom/iris/iris_hfi_gen1_defines.h  |  2 ++
- .../media/platform/qcom/iris/iris_hfi_gen1_response.c |  6 ++++++
- 3 files changed, 16 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-index e5c5a564fcb8..7dd5730a867a 100644
---- a/drivers/media/platform/qcom/iris/iris_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-@@ -593,10 +593,13 @@ int iris_vb2_buffer_done(struct iris_inst *inst, struct iris_buffer *buf)
+diff --git a/drivers/phy/rockchip/phy-rockchip-pcie.c b/drivers/phy/rockchip/phy-rockchip-pcie.c
+index 63e88abc66c6..4e2dfd01adf2 100644
+--- a/drivers/phy/rockchip/phy-rockchip-pcie.c
++++ b/drivers/phy/rockchip/phy-rockchip-pcie.c
+@@ -159,6 +159,12 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
  
- 	vb2 = &vbuf->vb2_buf;
+ 	guard(mutex)(&rk_phy->pcie_mutex);
  
--	if (buf->flags & V4L2_BUF_FLAG_ERROR)
-+	if (buf->flags & V4L2_BUF_FLAG_ERROR) {
- 		state = VB2_BUF_STATE_ERROR;
--	else
--		state = VB2_BUF_STATE_DONE;
-+		vb2_set_plane_payload(vb2, 0, 0);
-+		vb2->timestamp = 0;
-+		v4l2_m2m_buf_done(vbuf, state);
-+		return 0;
-+	}
- 
- 	vbuf->flags |= buf->flags;
- 
-@@ -616,6 +619,8 @@ int iris_vb2_buffer_done(struct iris_inst *inst, struct iris_buffer *buf)
- 			v4l2_m2m_mark_stopped(m2m_ctx);
- 		}
++	regmap_write(rk_phy->reg_base,
++		     rk_phy->phy_data->pcie_laneoff,
++		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
++				   PHY_LANE_IDLE_MASK,
++				   PHY_LANE_IDLE_A_SHIFT + inst->index));
++
+ 	if (rk_phy->pwr_cnt++) {
+ 		return 0;
  	}
-+
-+	state = VB2_BUF_STATE_DONE;
- 	vb2->timestamp = buf->timestamp;
- 	v4l2_m2m_buf_done(vbuf, state);
+@@ -175,12 +181,6 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
+ 				   PHY_CFG_ADDR_MASK,
+ 				   PHY_CFG_ADDR_SHIFT));
  
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-index 9f246816a286..93b5f838c290 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-@@ -117,6 +117,8 @@
- #define HFI_FRAME_NOTCODED				0x7f002000
- #define HFI_FRAME_YUV					0x7f004000
- #define HFI_UNUSED_PICT					0x10000000
-+#define HFI_BUFFERFLAG_DATACORRUPT			0x00000008
-+#define HFI_BUFFERFLAG_DROP_FRAME			0x20000000
- 
- struct hfi_pkt_hdr {
- 	u32 size;
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-index b72d503dd740..91d95eed68aa 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-@@ -481,6 +481,12 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
- 	buf->attr |= BUF_ATTR_DEQUEUED;
- 	buf->attr |= BUF_ATTR_BUFFER_DONE;
- 
-+	if (hfi_flags & HFI_BUFFERFLAG_DATACORRUPT)
-+		flags |= V4L2_BUF_FLAG_ERROR;
-+
-+	if (hfi_flags & HFI_BUFFERFLAG_DROP_FRAME)
-+		flags |= V4L2_BUF_FLAG_ERROR;
-+
- 	buf->flags |= flags;
- 
- 	iris_vb2_buffer_done(inst, buf);
+-	regmap_write(rk_phy->reg_base,
+-		     rk_phy->phy_data->pcie_laneoff,
+-		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
+-				   PHY_LANE_IDLE_MASK,
+-				   PHY_LANE_IDLE_A_SHIFT + inst->index));
+-
+ 	/*
+ 	 * No documented timeout value for phy operation below,
+ 	 * so we make it large enough here. And we use loop-break
 -- 
 2.39.5
 
