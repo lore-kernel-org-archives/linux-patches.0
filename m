@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8444A2749DA;
-	Tue,  5 Aug 2025 13:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DDC2749DF;
+	Tue,  5 Aug 2025 13:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399407; cv=none; b=iOqEu5Qy5hQxOZACjyqtUFD1k3sikDOa1U3/QIQW5EMBIR3lCHPeJmh5cdw0jKMjlm9HKT6QlN4sbnJB+oDbLC8r4lCYS6yP66Wd6gkA5zxkpRwvnyJLGh7bG/DRARHvPMIDcSyiNtrxz2Y46YSiCqI60XEnXcqBMYdvrpRBtv0=
+	t=1754399409; cv=none; b=rTKLtWX2of9IjN6j/+yEul4wCa2lTNX38XcOBOqIfs5zrxoECp5qcuqdyzz/VpkdZEOYxI3Fw1NaxCe9zG80VrB6T8PyyzBTi7FfRwu++mx8MSBdADhX2wkHmWgB+gLAZB27s3wyYzKypmzpSLhknMCYz5VrWPfVwvoA2zqhCJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399407; c=relaxed/simple;
-	bh=mM1PN7qys62gLBy3sxKygh7hbsoeeNkZqeyBgBr51CY=;
+	s=arc-20240116; t=1754399409; c=relaxed/simple;
+	bh=bP8A5HC3XzwMZvbd9AW/OCXUgb7BGmbP61vbl4smCKI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kGhffHtNHZM8U9hjoCuC0+Z92ZFDG15BTLr/ks0/f0Br1pLVf3Em/kL7aHudKEZ7kzOrgwgW6yl1t/Zlgmd3Pi7s4Uq519O7vJ90zrZCXlL4o6O942w9M1JXxYsObGVOai0wc6FXtdU5jCXzafGQb+sR5k6Pf9Y61h9eyDRhpG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZobDmXg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOP5LAa6pkSgbKa0uqLvGhvglrqQwUTvBi285tfXnPhy0N9WZbQWzVrIVqxnfURRVgfEt3e58+4rLGtY2Of0gQQ/uQf3Vtm0B9AKF9M5PGYKpOX0NUjGCxs5IKPRbYHH6bTt+auRwmZsxsHCuupkTT/197w17zjhKQRMq3CMXPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VuU6Ttpu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aZobDmXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948C5C4CEF0;
-	Tue,  5 Aug 2025 13:10:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VuU6Ttpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1893C4CEF4;
+	Tue,  5 Aug 2025 13:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399407;
-	bh=mM1PN7qys62gLBy3sxKygh7hbsoeeNkZqeyBgBr51CY=;
+	s=k20201202; t=1754399409;
+	bh=bP8A5HC3XzwMZvbd9AW/OCXUgb7BGmbP61vbl4smCKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZobDmXg83uj4dBvBBNpUvOQ7oTFWsMsFOvC2hr6iGJttmw/gC5emVKO4+Z9B7We4
-	 pXLAM69Pu40dmhahfKoXNBIFr3vJlFajPhM9M7tJvFrBBdu5dwcsm7xzCtvkIgPx8A
-	 /CgWjkBMXOaf/EQk+rYWVXMf7CnISOMkaqAV/9HvmqRFMf5bNDGArD1KTP57zpvvl7
-	 tqRzTpz5vtcqDa6OHc+xJvQtt/GYSD/Ddwl9DMTfJeMigWpM9HB0GFHdbrqtWS9YWs
-	 N44lXf8GpdU688/Of+nU0W0mKs3fd84nmwFdm8mTuZL8cX9LAHAxr561oKgmePp2HC
-	 /SwutT36fM7IQ==
+	b=VuU6TtpuMqScl+idpC+L99AxRHnlt0cYVSdPw9CV8BMwyThdZ9URw6fZmSQYJLbqE
+	 1EB0ogcYE46TToaapVhxCrM/9UkSTEF0TQWcBH6bi7ZX9kyeOM576GTsjWKkFR4UP+
+	 1UgTAYU3kim9/GzeL7T/q50YMudEsn11waq17fQS18AO9iLY3P/KstzgSkc1aDbTjk
+	 9IecUxH5tHgVHmIcbf3ZenrVPAaDj2KANAR/Fqk83T7fq9xr8rnOpLiT0Bsj+cdWQT
+	 XJTJQSiUJ55b31UeZRS1DPPdehuTLiI7wVA6eGWdQiSPE/1KFda2ooMqVMFGTycv4s
+	 8ROAABjTJjubw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: chenchangcheng <chenchangcheng@kylinos.cn>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Zhiqi Song <songzhiqi1@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.4] media: uvcvideo: Fix bandwidth issue for Alcor camera
-Date: Tue,  5 Aug 2025 09:08:44 -0400
-Message-Id: <20250805130945.471732-9-sashal@kernel.org>
+	liulongfang@huawei.com,
+	linux-crypto@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.15] crypto: hisilicon/hpre - fix dma unmap sequence
+Date: Tue,  5 Aug 2025 09:08:45 -0400
+Message-Id: <20250805130945.471732-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -53,109 +52,136 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: chenchangcheng <chenchangcheng@kylinos.cn>
+From: Zhiqi Song <songzhiqi1@huawei.com>
 
-[ Upstream commit 9764401bf6f8a20eb11c2e78470f20fee91a9ea7 ]
+[ Upstream commit 982fd1a74de63c388c060e4fa6f7fbd088d6d02e ]
 
-Some broken device return wrong dwMaxPayloadTransferSize fields as
-follows:
+Perform DMA unmapping operations before processing data.
+Otherwise, there may be unsynchronized data accessed by
+the CPU when the SWIOTLB is enabled.
 
-[  218.632537] uvcvideo: Device requested 2752512 B/frame bandwidth.
-[  218.632598] uvcvideo: No fast enough alt setting for requested bandwidth.
-
-When dwMaxPayloadTransferSize is greater than maxpsize, it will prevent
-the camera from starting. So use the bandwidth of maxpsize.
-
-Signed-off-by: chenchangcheng <chenchangcheng@kylinos.cn>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250510061803.811433-1-ccc194101@163.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the surrounding code context,
-here is my determination:
+**Backport Status: YES**
 
-**YES**
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Critical Bug Fix Nature
 
-1. **Fixes a real user-impacting bug**: The commit fixes a bandwidth
-   issue that prevents certain USB cameras (specifically Alcor cameras)
-   from starting. As shown in the commit message, devices can request
-   unrealistic bandwidth values (2752512 B/frame), which causes the "No
-   fast enough alt setting for requested bandwidth" error at line 2080
-   in uvc_video.c, preventing the camera from functioning.
+This commit fixes a critical **data coherency bug** that occurs when
+SWIOTLB (Software I/O Translation Lookaside Buffer) is enabled. The bug
+involves accessing DMA-mapped memory after processing data but before
+unmapping it, which violates DMA API usage rules and can lead to:
 
-2. **Small and contained fix**: The change is minimal - it adds only 8
-   lines of code that perform a simple bounds check. When
-   `dwMaxPayloadTransferSize` exceeds `stream->maxpsize`, it caps the
-   value to the maximum packet size. This is a defensive programming
-   approach that doesn't change any core functionality.
+1. **Data corruption** - CPU may access stale/unsynchronized data
+2. **Security implications** - Potential exposure of sensitive
+   cryptographic material
+3. **System instability** - Especially on systems with IOMMU or SWIOTLB
+   enabled
 
-3. **Low regression risk**: The fix is conservative and only triggers
-   when:
-   - The interface has multiple alternate settings
-     (`stream->intf->num_altsetting > 1`)
-   - The requested payload size exceeds the endpoint's maximum packet
-     size
-   - It simply clamps the value rather than rejecting it, allowing the
-     device to work with reduced bandwidth
+## Specific Code Analysis
 
-4. **Follows established pattern**: The code already has similar
-   workarounds for broken devices (e.g., the Chicony device fix at lines
-   226-227 that masks invalid bandwidth values). This fix follows the
-   same philosophy of working around non-compliant hardware.
+### In `hpre_ecdh_cb()` (lines 1476-1502):
 
-5. **Hardware compatibility issue**: This fixes compatibility with
-   specific hardware (Alcor cameras) that would otherwise be completely
-   non-functional. Hardware compatibility fixes are typically good
-   candidates for stable backports as they enable users to use their
-   existing hardware.
+**Before the fix:**
+```c
+p = sg_virt(areq->dst);  // Line 1494 - Accessing DMA-mapped memory
+memmove(p, p + ctx->key_sz - curve_sz, curve_sz);  // Line 1495 -
+Processing data
+memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);  // Line
+1496
 
-6. **Clear problem and solution**: The issue is well-defined (devices
-   returning wrong `dwMaxPayloadTransferSize`), and the solution is
-   straightforward (cap to the actual maximum packet size). The warning
-   message also provides visibility into when this workaround is
-   applied.
+hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);  // Line 1498
+- DMA unmap happens here
+```
 
-7. **No architectural changes**: The fix doesn't introduce new features
-   or change the driver architecture. It's purely a workaround for non-
-   compliant hardware, similar to other quirks already present in the
-   UVC driver.
+**After the fix:**
+```c
+/* Do unmap before data processing */
+hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);  // DMA unmap
+first
 
-The commit meets the stable kernel criteria of fixing an important bug
-(camera not working) with minimal risk and without introducing new
-features or architectural changes.
+p = sg_virt(areq->dst);  // Now safe to access memory
+memmove(p, p + ctx->key_sz - curve_sz, curve_sz);
+memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);
+```
 
- drivers/media/usb/uvc/uvc_video.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+### In `hpre_curve25519_cb()` (lines 1795-1820):
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index e3567aeb0007..11769a1832d2 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -262,6 +262,15 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
+Similar issue where `hpre_key_to_big_end(sg_virt(areq->dst),
+CURVE25519_KEY_SIZE)` was called before DMA unmapping.
+
+## Why This Qualifies for Stable
+
+1. **Clear Bug Fix**: This fixes a definitive bug in DMA API usage that
+   violates kernel DMA coherency rules
+2. **Small and Contained**: The fix is minimal - just reordering
+   function calls in two callback functions
+3. **No New Features**: Pure bug fix with no feature additions
+4. **Low Risk**: Simple reordering of operations with no algorithmic
+   changes
+5. **Affects Real Users**: Systems with SWIOTLB enabled (common in
+   virtualized environments and systems with >4GB RAM on 32-bit
+   architectures)
+6. **Subsystem Impact**: Confined to HiSilicon HPRE crypto driver
+   callbacks
+
+## Technical Severity
+
+The bug is particularly severe because:
+- SWIOTLB bounce buffers may contain stale data when accessed before DMA
+  unmapping
+- This affects cryptographic operations (ECDH and Curve25519), where
+  data integrity is critical
+- The issue manifests silently as data corruption rather than crashes,
+  making it hard to detect
+
+The fix follows proper DMA API usage patterns by ensuring DMA unmapping
+(which includes cache synchronization) occurs before CPU accesses the
+memory, preventing any coherency issues.
+
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index 61b5e1c5d019..1550c3818383 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -1491,11 +1491,13 @@ static void hpre_ecdh_cb(struct hpre_ctx *ctx, void *resp)
+ 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
+ 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
  
- 		ctrl->dwMaxPayloadTransferSize = bandwidth;
- 	}
++	/* Do unmap before data processing */
++	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
 +
-+	if (stream->intf->num_altsetting > 1 &&
-+	    ctrl->dwMaxPayloadTransferSize > stream->maxpsize) {
-+		dev_warn_ratelimited(&stream->intf->dev,
-+				     "UVC non compliance: the max payload transmission size (%u) exceeds the size of the ep max packet (%u). Using the max size.\n",
-+				     ctrl->dwMaxPayloadTransferSize,
-+				     stream->maxpsize);
-+		ctrl->dwMaxPayloadTransferSize = stream->maxpsize;
-+	}
- }
+ 	p = sg_virt(areq->dst);
+ 	memmove(p, p + ctx->key_sz - curve_sz, curve_sz);
+ 	memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);
  
- static size_t uvc_video_ctrl_size(struct uvc_streaming *stream)
+-	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
+ 	kpp_request_complete(areq, ret);
+ 
+ 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
+@@ -1808,9 +1810,11 @@ static void hpre_curve25519_cb(struct hpre_ctx *ctx, void *resp)
+ 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
+ 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
+ 
++	/* Do unmap before data processing */
++	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
++
+ 	hpre_key_to_big_end(sg_virt(areq->dst), CURVE25519_KEY_SIZE);
+ 
+-	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
+ 	kpp_request_complete(areq, ret);
+ 
+ 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
 -- 
 2.39.5
 
