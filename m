@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6CE21146C;
-	Tue,  5 Aug 2025 13:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAD72472B7;
+	Tue,  5 Aug 2025 13:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399534; cv=none; b=Ijjxv9Bh7o/RcZxPLzEzBKapOCZe+96HKPUiHBvHTTBbF7oBjuA9JjdVno67qHzqOKn+fAm04NHwPpdMijxQPpKxrLWyuYoS7I3yb7RrD8GmIkLhv+PVlBmjer4t5Ttdiu1iTVsmep2sqL7HHwGT31s139zyT++17cyGuP04+ZI=
+	t=1754399537; cv=none; b=OVcaPIduiRRvv7PXo5QLBbpkMquzDvCNyCL+wTFzXqspglk5h/kTD6N8BGRtVxU8Nkmsz9w7tYq2gJ8VMQ1seEYH+8bWLO3CpHsrsYRxAq0mM6842DqeZnOOHjCBCO2r9K3jFankgPMUvHq4mVvWHrcKnOg0HEZ/G9xMTSTW86A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399534; c=relaxed/simple;
-	bh=K0B0wmFt8B/msOHiP3rD2mNLmCrvReFg4m/49vbj8Uw=;
+	s=arc-20240116; t=1754399537; c=relaxed/simple;
+	bh=NUDxVI/ISSo7xW/2JfZ2/zNDbv9vF3Z/iUsO8DaozCA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fjZzLBvh9wuDNvdp7jFiTCTcH9J2eaQZXIuY+N+Ly0LnkiAIfQAccUYNtgVezTFnKitXn6eRmol02Rd0sLpDymROjxqV0ywMbFGcuCkhLESIaL+Y8IqQgtKJrlpwAGcjmO85R4gX3n9at6YGgAVVMkA4IWmzSztKooYnmy8jOg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BUOzlLul; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHoFd2FGkFdMWrbXEdNuN1bBOZBK1zItX57YlJ2zZDORjfLrQI0oRUvvEer/JiuEZQHKDYFhdzTZrQEK5NSphEu8JMK20CKhY8EIdHDwtCJ/IwkD7CRepYBWzK/t9gLHZ5lDTAXCInUfJhevnthH3xuX7EKQEkeL1MTonjjp620=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LoCxYMiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BUOzlLul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561D2C4AF09;
-	Tue,  5 Aug 2025 13:12:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LoCxYMiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C4CC4CEF0;
+	Tue,  5 Aug 2025 13:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399533;
-	bh=K0B0wmFt8B/msOHiP3rD2mNLmCrvReFg4m/49vbj8Uw=;
+	s=k20201202; t=1754399537;
+	bh=NUDxVI/ISSo7xW/2JfZ2/zNDbv9vF3Z/iUsO8DaozCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUOzlLul8o6q80qTzuywppaQLtOZ6eAKjpT5U2EvX5GTENJ1h3i+u7bV+3RsrptPP
-	 A+hv2hGPr3TO7bDYo/xg1bjggxusedXt/3IawF7k77izjNyaTZ51+OudcOjnSaoAw7
-	 b9Lg1/cN+d5XyEBaGOwNVjMfL/nctjP9H48wGPhoD7USYO9t2mDkBn4pL+ClutHA1B
-	 b7KnYQDdqPULD2a8sJ4vdgZ89Tie4pO88/rIRjKjHontp+uesekKT0kAu68MKDSTyB
-	 8npgE677mlvU8AQNeCwbk/hgoYys+1APouXzkpXsrBNcVPKB9XYuwGPYSLlSSzfRv8
-	 johdOHfu5Qj9g==
+	b=LoCxYMiFUTi5Ova91KVzRECPSwaBuHyuTITkDI71QBTDcvj3nAU4qLsahtD5dyvLr
+	 fB8z94SMCjbQ/aCDEDp5doQCC3R6Kwm99G/C535pK1x+gHVZSSdkjKfKavoyqmpe6v
+	 BLrMeGPkuvMo/55g4JBzXQ0nTbSMxsPzuOJGeUVfnJU0TZFKrzuBZjIebdLD5yLg00
+	 KlsIB8a5LL6MTyc7+9EMmu99IlV7I9Lm54WeN6FzZ4po1jEGhFF8tssuUf2eHmQeIE
+	 0goiE6iWRHfy2o3E2upUi1ehq/0V8FhHVq4lZufX0PyEjpwHeQE14ThT/T7faatwFO
+	 GuXNzWBPg5diw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Abel Vesa <abel.vesa@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+Cc: Daniel Scally <dan.scally@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	sre@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.6] power: supply: qcom_battmgr: Add lithium-polymer entry
-Date: Tue,  5 Aug 2025 09:09:39 -0400
-Message-Id: <20250805130945.471732-64-sashal@kernel.org>
+	hverkuil@kernel.org,
+	hansg@kernel.org,
+	ribalda@chromium.org,
+	mchehab+huawei@kernel.org,
+	dongcheng.yan@intel.com,
+	peterz@infradead.org
+Subject: [PATCH AUTOSEL 6.16-6.12] media: ipu-bridge: Add _HID for OV5670
+Date: Tue,  5 Aug 2025 09:09:40 -0400
+Message-Id: <20250805130945.471732-65-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -53,95 +56,112 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Daniel Scally <dan.scally@ideasonboard.com>
 
-[ Upstream commit 202ac22b8e2e015e6c196fd8113f3d2a62dd1afc ]
+[ Upstream commit 484f8bec3ddb453321ef0b8621c25de6ce3d0302 ]
 
-On some Dell XPS 13 (9345) variants, the battery used is lithium-polymer
-based. Currently, this is reported as unknown technology due to the entry
-missing.
+The OV5670 is found on Dell 7212 tablets paired with an IPU3 ISP
+and needs to be connected by the ipu-bridge. Add it to the list
+of supported devices.
 
-[ 4083.135325] Unknown battery technology 'LIP'
-
-Add another check for lithium-polymer in the technology parsing callback
-and return that instead of unknown.
-
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250523-psy-qcom-battmgr-add-lipo-entry-v1-1-938c20a43a25@linaro.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, here is my determination:
+Based on my analysis, here's my determination:
 
 **Backport Status: YES**
+
+## Extensive Explanation:
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Fixes a real user-visible bug**: The commit addresses a specific
-   bug where lithium-polymer batteries are incorrectly reported as
-   "Unknown battery technology" with the error message `Unknown battery
-   technology 'LIP'`. This affects real hardware (Dell XPS 13 9345
-   variants) and causes incorrect battery technology reporting to
-   userspace.
+### 1. **Hardware Enablement Fix**
+The commit adds missing ACPI HID (`INT3479`) for the OV5670 sensor to
+the IPU bridge supported sensors list. This is a clear hardware
+enablement fix that makes the Dell 7212 tablet's camera functional.
+Without this entry, the OV5670 sensor on these tablets would not be
+properly connected through the IPU bridge, rendering the camera non-
+functional.
 
-2. **Small and contained fix**: The change is minimal - it adds just 2
-   lines of code:
-  ```c
-  if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
-  return POWER_SUPPLY_TECHNOLOGY_LIPO;
-  ```
-  This is well within the 100-line limit for stable patches.
+### 2. **Simple and Contained Change**
+The code change is minimal and low-risk:
+- It adds exactly one line to a static array:
+  `IPU_SENSOR_CONFIG("INT3479", 1, 422400000)`
+- The change follows the existing pattern in the array
+- It maintains the alphabetical sorting as required by the comment
+  ("Please keep the list sorted by ACPI HID")
+- The position between `INT3474` and `INT347A` is correct alphabetically
 
-3. **Obviously correct**: The fix is straightforward and follows the
-   existing pattern in the code. It simply adds recognition for "LIP"
-   chemistry strings, similar to how "LIO" is already handled for
-   lithium-ion batteries. The `POWER_SUPPLY_TECHNOLOGY_LIPO` constant
-   already exists in the kernel's power supply framework.
+### 3. **Existing Driver Support**
+The OV5670 sensor driver already exists in the kernel
+(`drivers/media/i2c/ov5670.c`) and already recognizes the `INT3479` ACPI
+HID, as evidenced by:
+```c
+static const struct acpi_device_id ov5670_acpi_ids[] = {
+    { "INT3479" },
+    { /* sentinel */ }
+};
+```
+This means the sensor driver is ready, but the IPU bridge was missing
+the connection configuration.
 
-4. **No architectural changes or new features**: This is purely a bug
-   fix that enables proper recognition of an existing battery technology
-   type. It doesn't introduce new functionality or change any APIs.
+### 4. **Pattern of Similar Fixes**
+Looking at the commit history of `ipu-bridge.c`, there's a clear pattern
+of adding sensor HIDs as hardware enablement fixes:
+- `ec86a04bedb1` added ov01a10 for Dell XPS 9315
+- `0065b9374633` added GalaxyCore GC0310
+- `440de616e76e` added HIDs from out-of-tree IPU6 driver
 
-5. **Low regression risk**: The change only affects systems that report
-   "LIP" battery chemistry. Systems with other battery chemistries
-   remain unaffected. The fix follows the exact same pattern as the
-   existing lithium-ion handling.
+These types of commits are typically backported as they fix broken
+hardware functionality.
 
-6. **Affects supported hardware**: The qcom_battmgr driver has been in
-   the kernel since v6.3, and this fix is needed for proper battery
-   reporting on Dell XPS 13 9345 devices using Qualcomm platforms with
-   lithium-polymer batteries.
+### 5. **No Architectural Changes**
+The commit:
+- Does not introduce new features
+- Does not change any APIs or interfaces
+- Does not modify existing functionality
+- Simply adds configuration data to enable already-supported hardware
 
-7. **Meets stable kernel rules**: According to
-   Documentation/process/stable-kernel-rules.rst, this qualifies as it
-   "fixes a real bug that bothers people" - specifically incorrect
-   battery technology reporting that could affect power management
-   decisions and user-facing battery information.
+### 6. **User Impact**
+Without this fix, users with Dell 7212 tablets running stable kernels
+would have non-functional cameras, which is a significant usability
+issue. The fix enables basic hardware functionality that users expect to
+work.
 
-The commit is an ideal candidate for stable backporting as it fixes a
-clear bug with minimal code changes and virtually no risk of regression.
+### 7. **Minimal Risk**
+The change cannot cause regressions for existing hardware because:
+- It only adds a new entry to the array
+- The entry is only used when matching the specific `INT3479` HID
+- If the hardware isn't present, the entry is simply ignored
+- The link frequency value (422400000) appears reasonable compared to
+  other OV sensors
 
- drivers/power/supply/qcom_battmgr.c | 2 ++
+This is exactly the type of commit that stable kernel rules encourage: a
+small, contained fix that enables broken hardware without risk of
+regression.
+
+ drivers/media/pci/intel/ipu-bridge.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index fe27676fbc7c..2d50830610e9 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -981,6 +981,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
- {
- 	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
- 		return POWER_SUPPLY_TECHNOLOGY_LION;
-+	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
-+		return POWER_SUPPLY_TECHNOLOGY_LIPO;
- 
- 	pr_err("Unknown battery technology '%s'\n", chemistry);
- 	return POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
+diff --git a/drivers/media/pci/intel/ipu-bridge.c b/drivers/media/pci/intel/ipu-bridge.c
+index 83e682e1a4b7..73560c2c67c1 100644
+--- a/drivers/media/pci/intel/ipu-bridge.c
++++ b/drivers/media/pci/intel/ipu-bridge.c
+@@ -60,6 +60,8 @@ static const struct ipu_sensor_config ipu_supported_sensors[] = {
+ 	IPU_SENSOR_CONFIG("INT33BE", 1, 419200000),
+ 	/* Omnivision OV2740 */
+ 	IPU_SENSOR_CONFIG("INT3474", 1, 180000000),
++	/* Omnivision OV5670 */
++	IPU_SENSOR_CONFIG("INT3479", 1, 422400000),
+ 	/* Omnivision OV8865 */
+ 	IPU_SENSOR_CONFIG("INT347A", 1, 360000000),
+ 	/* Omnivision OV7251 */
 -- 
 2.39.5
 
