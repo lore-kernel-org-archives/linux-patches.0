@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2875A2B9B7;
-	Tue,  5 Aug 2025 13:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3A52B9B7;
+	Tue,  5 Aug 2025 13:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399393; cv=none; b=FfjQTXDPHvpIzN6jtgTjtX+VBZgCpenDLkpKLyD0zeE/mZZqsN4kImqEF6qMGp3iRNAzWrzhwIacY4+35OeFOA/DVgMdcFr+sOyDe6cXPcoPczUrhWVJn8Mo5TiHiW1N25nO/6U+Kc2NgQCD69o6wo1pLY/bBAHezHZTeu302h4=
+	t=1754399395; cv=none; b=D71LWj7FhCD7DMIVv6GMGqV+SsVE/hrhpOdYWAbVipfK5c6njE9Qnxbkk9+rRLuEMaxcNdQ1WgJeKD07ZM4mG+CmRCqPJ77uyG91T0m8m1MP2ucS0JLpc70dQKjwRaBG5lrCT6D0r1gg+A1xt6djEq6VpBOltKbA/C3k7/wyP9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399393; c=relaxed/simple;
-	bh=t+sWXRf3aOSnZSbG3popf7O5jm6HgLRtEitNREh/jGw=;
+	s=arc-20240116; t=1754399395; c=relaxed/simple;
+	bh=LfKbFTBPnzgytpkU5tg4y4KPR2bD6qhAJApDeT2+Qxs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BDgjvKA0qbXOHJrZENH1MgxOX9hacXwAsjTLlhIa/zYWDFhLHbvjR5qLgrorOys84V9h7VHqELGKbzaAKcfh6QcEZn8WZMdgiseNSwcoreAdPcpILi2cXh07uC2prEuro37PXRV28yGJlbxVec6bgvhYqOy41X0/H6h6gjj78jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L7GxOmVS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oh50taueUw6USpC9SBIgABrrm+sjiBWnTrWAmGCDGaf9b5Zre72SWaT9eJaRAha6s2yDp3sQV2uHSIqRYj+oaDJRCfoACvXL1vgZbZaXIi4sR0iPogp3PIVXcsATs+Otzu6uahpeevT5WIgrehZEfPmk0q0XIEyVDjv33uk+Lkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XtMsc4Ou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L7GxOmVS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF6AC4CEF7;
-	Tue,  5 Aug 2025 13:09:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtMsc4Ou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F75C4CEF0;
+	Tue,  5 Aug 2025 13:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399392;
-	bh=t+sWXRf3aOSnZSbG3popf7O5jm6HgLRtEitNREh/jGw=;
+	s=k20201202; t=1754399394;
+	bh=LfKbFTBPnzgytpkU5tg4y4KPR2bD6qhAJApDeT2+Qxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7GxOmVS8S0MzIgrznfFnygm96KdNeQwAUQRk/7VZDTvP4h/ZhjQgR5EbhSVP+BVx
-	 2jwpIigAKCY9T2h6sNpHIm7bEOvEoGG6uYzv6TQO3SBTQScNR/jGp+plsIzZm98GML
-	 keLAJNJwth/t8zH1+Fewy3ptl2MOMSYtVmpHeJePSbjsjTXwhyqAhV/imcs+HgXFJM
-	 133mEwVztdZQLkxxyzcAbNQAKOs+32vcQopllMZVzC6xoAttJ5wJkiVarLtwWQP+OB
-	 kOj456A6wbtZCjqIlBNg22qfKsykVIXQdRc+pDtTv90Sg3qCJEoTuEs7B7r9B0lOrO
-	 IvEGd2VWh7MMw==
+	b=XtMsc4Ou9IaAphSnljnMPo+spFH6K66FAyKchIpcPgf36QTAmlRn6/2CooL7L8LeP
+	 1onBPZO+eZp2RPZg3v7kqLBBNxiwFuEy2ZVUhBQIzI6swLFESc9Vg8ppXTwC6JfHCg
+	 dyvrmUqYWyzjR5qJkIqngoIGcVJE7d22T1bsGQj8F7lHm7e9WuJG9i5S0kAJGiReQw
+	 +BNUQuT2bsR8p4t7XYkII1lmtKIAmXiDzIICzncbEgxlb8Wch44HYZnbSyM9uTy8VD
+	 QP79tnp9Di9mVvyNwyiCguwx93f6It4pRQzUlE4ZidWJ6d9i7T5lezg5bG+bHG8KMC
+	 qaOpWEfjObglg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johan Adolfsson <johan.adolfsson@axis.com>,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+Cc: jackysliu <1972843537@qq.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pavel@kernel.org,
-	linux-leds@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.10] leds: leds-lp50xx: Handle reg to get correct multi_index
-Date: Tue,  5 Aug 2025 09:08:38 -0400
-Message-Id: <20250805130945.471732-3-sashal@kernel.org>
+	anil.gurumurthy@qlogic.com,
+	sudarsana.kalluru@qlogic.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] scsi: bfa: Double-free fix
+Date: Tue,  5 Aug 2025 09:08:39 -0400
+Message-Id: <20250805130945.471732-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -52,31 +52,23 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Johan Adolfsson <johan.adolfsson@axis.com>
+From: jackysliu <1972843537@qq.com>
 
-[ Upstream commit 2e84a5e5374232e6f356ce5c079a5658d7e4af2c ]
+[ Upstream commit add4c4850363d7c1b72e8fce9ccb21fdd2cf5dc9 ]
 
-mc_subled used for multi_index needs well defined array indexes,
-to guarantee the desired result, use reg for that.
+When the bfad_im_probe() function fails during initialization, the memory
+pointed to by bfad->im is freed without setting bfad->im to NULL.
 
-If devicetree child nodes is processed in random or reverse order
-you may end up with multi_index "blue green red" instead of the expected
-"red green blue".
-If user space apps uses multi_index to deduce how to control the leds
-they would most likely be broken without this patch if devicetree
-processing is reversed (which it appears to be).
+Subsequently, during driver uninstallation, when the state machine enters
+the bfad_sm_stopping state and calls the bfad_im_probe_undo() function,
+it attempts to free the memory pointed to by bfad->im again, thereby
+triggering a double-free vulnerability.
 
-arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-fuji.dts has reg set
-but I don't see how it can have worked without this change.
+Set bfad->im to NULL if probing fails.
 
-If reg is not set, an error is returned,
-If reg is out of range, an error is returned.
-reg within led child nodes starts with 0, to map to the iout in each bank.
-
-Signed-off-by: Johan Adolfsson <johan.adolfsson@axis.com>
-Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Link: https://lore.kernel.org/r/20250617-led-fix-v7-1-cdbe8efc88fa@axis.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: jackysliu <1972843537@qq.com>
+Link: https://lore.kernel.org/r/tencent_3BB950D6D2D470976F55FC879206DE0B9A09@qq.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -87,105 +79,77 @@ LLM Generated explanations, may be completely bogus:
 This commit is a clear candidate for backporting to stable kernel trees.
 Here's my extensive analysis:
 
-## Bug Fix Nature
+## Bug Analysis
 
-The commit fixes a **real bug** where LED ordering could be incorrect
-when device tree child nodes are processed in random or reverse order.
-Looking at the code changes:
+The commit fixes a **critical double-free vulnerability** in the BFA
+(Brocade Fibre Channel Adapter) SCSI driver. The issue occurs in the
+following scenario:
 
-1. **Before the fix** (line 487 in original):
-  ```c
-  mc_led_info[num_colors].color_index = color_id;
-  ```
-  The code was using `num_colors` as the array index, which simply
-  increments for each LED found, regardless of the intended order.
+1. During driver initialization, `bfad_im_probe()` allocates memory for
+   `bfad->im` (line 700: `im = kzalloc(sizeof(struct bfad_im_s),
+   GFP_KERNEL)`)
+2. The pointer is assigned to `bfad->im` (line 704: `bfad->im = im`)
+3. If `bfad_thread_workq()` fails (line 707), the function frees the
+   memory (line 708: `kfree(im)`) but **fails to set `bfad->im = NULL`**
+4. Later, during driver uninstallation, when the state machine enters
+   `bfad_sm_stopping` state, it calls `bfad_im_probe_undo()` (line 714
+   in bfad.c)
+5. `bfad_im_probe_undo()` checks `if (bfad->im)` (line 720) and since
+   the pointer wasn't nulled, it attempts to free the already-freed
+   memory again (line 722: `kfree(bfad->im)`)
 
-2. **After the fix**:
-  ```c
-  mc_led_info[multi_index].color_index = color_id;
-  ```
-  The code now correctly uses the `reg` property value as the index,
-  ensuring deterministic LED ordering.
+## Why This Should Be Backported
 
-## Impact on Users
+1. **Security Impact**: Double-free vulnerabilities can lead to memory
+   corruption, system crashes, and potentially be exploited for
+   privilege escalation. This is a real security issue.
 
-This bug has **significant user-visible impact**:
-- User space applications relying on `multi_index` to control LEDs would
-  break if device tree processing order changes
-- The commit message explicitly states: "If user space apps uses
-  multi_index to deduce how to control the leds they would most likely
-  be broken"
-- Could result in "blue green red" ordering instead of expected "red
-  green blue"
+2. **Simple Fix**: The fix is minimal - just a single line addition
+   (`bfad->im = NULL;`) after the `kfree(im)` call. This follows the
+   exact same pattern already used in `bfad_im_probe_undo()` where after
+   freeing, the pointer is set to NULL (line 723).
 
-## Fix Characteristics
+3. **Clear Bug**: The bug is straightforward - the code inconsistently
+   handles the cleanup path. The fix makes it consistent with the
+   cleanup function's expectations.
 
-The fix meets stable tree criteria:
-1. **Small and contained**: Only ~13 lines of actual logic change
-2. **No new features**: Simply ensures correct array indexing
-3. **Low regression risk**: Adds proper validation (bounds checking for
-   `multi_index`)
-4. **Clear bug fix**: Not a refactoring or optimization
+4. **Limited Scope**: The change is confined to error handling in a
+   single function (`bfad_im_probe()`). It doesn't modify any normal
+   operation paths or introduce new features.
 
-## Additional Safety
+5. **Low Risk**: Setting a pointer to NULL after freeing is a standard
+   defensive programming practice with essentially zero risk of
+   regression.
 
-The patch adds important safety checks:
-- Requires `reg` property to be set (returns -EINVAL if missing)
-- Validates `reg` is within bounds (`< LP50XX_LEDS_PER_MODULE` which is
-  3)
-- These checks prevent array out-of-bounds access
+6. **Affects Users**: Any system using Brocade Fibre Channel adapters
+   could hit this issue if the driver initialization fails (e.g., due to
+   memory allocation failure in `bfad_thread_workq()`).
 
-## Real-world Impact
+7. **Follows Stable Rules**: The commit:
+   - Fixes a real bug (double-free vulnerability)
+   - Is small and contained (1 line change)
+   - Has clear causality
+   - Doesn't introduce new features
+   - Has minimal risk of causing regressions
 
-The commit message mentions that `arch/arm/boot/dts/aspeed/aspeed-bmc-
-facebook-fuji.dts` has reg set but wouldn't work correctly without this
-fix, indicating this affects real hardware in production.
+The commit follows the Linux stable kernel rules perfectly - it's a
+small, obvious fix for a real bug that could affect users in production
+environments.
 
-## Stable Tree Rules Compliance
+ drivers/scsi/bfa/bfad_im.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-This fix adheres to stable kernel rules:
-- Fixes a real bug affecting users
-- Minimal change with clear boundaries
-- No architectural changes
-- Confined to a single driver subsystem (leds-lp50xx)
-- Adds necessary error checking that was missing
-
-The bug could cause unpredictable LED behavior depending on device tree
-parsing order, which is exactly the type of issue stable kernels should
-address.
-
- drivers/leds/leds-lp50xx.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/leds/leds-lp50xx.c b/drivers/leds/leds-lp50xx.c
-index 02cb1565a9fb..94f8ef6b482c 100644
---- a/drivers/leds/leds-lp50xx.c
-+++ b/drivers/leds/leds-lp50xx.c
-@@ -476,6 +476,7 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
- 			return -ENOMEM;
+diff --git a/drivers/scsi/bfa/bfad_im.c b/drivers/scsi/bfa/bfad_im.c
+index a719a18f0fbc..f56e008ee52b 100644
+--- a/drivers/scsi/bfa/bfad_im.c
++++ b/drivers/scsi/bfa/bfad_im.c
+@@ -706,6 +706,7 @@ bfad_im_probe(struct bfad_s *bfad)
  
- 		fwnode_for_each_child_node(child, led_node) {
-+			int multi_index;
- 			ret = fwnode_property_read_u32(led_node, "color",
- 						       &color_id);
- 			if (ret) {
-@@ -483,8 +484,16 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
- 				dev_err(priv->dev, "Cannot read color\n");
- 				return ret;
- 			}
-+			ret = fwnode_property_read_u32(led_node, "reg", &multi_index);
-+			if (ret != 0) {
-+				dev_err(priv->dev, "reg must be set\n");
-+				return -EINVAL;
-+			} else if (multi_index >= LP50XX_LEDS_PER_MODULE) {
-+				dev_err(priv->dev, "reg %i out of range\n", multi_index);
-+				return -EINVAL;
-+			}
- 
--			mc_led_info[num_colors].color_index = color_id;
-+			mc_led_info[multi_index].color_index = color_id;
- 			num_colors++;
- 		}
+ 	if (bfad_thread_workq(bfad) != BFA_STATUS_OK) {
+ 		kfree(im);
++		bfad->im = NULL;
+ 		return BFA_STATUS_FAILED;
+ 	}
  
 -- 
 2.39.5
