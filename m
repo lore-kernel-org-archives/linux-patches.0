@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1722749CF;
-	Tue,  5 Aug 2025 13:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED72275113;
+	Tue,  5 Aug 2025 13:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399488; cv=none; b=CU8lvK/BHjcveskmY+Wy08xeKoWRbJPW89bCGSsFuf/zN3G8QKyvifzv2+1uVzQCYtTT2HoM6XP1SGSz5UmEc4uu6TWPFEy2Va2+qAcfNE6+R90Ltrbvu1li8tsCtagjojRFapHsSVs/iHVobJwjUQaQUfstvyWvGIxz5pK/Cug=
+	t=1754399489; cv=none; b=m3pmnLBxkGlXHRPOsGc2Z6BpFi3xU+3JwL7ugEW45HQIf8ICM8eHYaoVtw/fBfq0XbHH95WEmVgrQbfkqCB1gSqj6WGjUvsguRIRhwWQAl7B704xi2ryoFs5QSu1S+8qKA3TJM14anE8rpEFD4beRFEXOUOS0ZevJ7e29b4MvGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399488; c=relaxed/simple;
-	bh=EfBkt+MghfOjvtpqGjuyCDnn+Jg2bBYSq+HLaw+7kzs=;
+	s=arc-20240116; t=1754399489; c=relaxed/simple;
+	bh=KMS29EiNpnbCgqRgh25+DaqhzCFR2obHthy2cidYnWE=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NziaOTdAmnya1z6AcjhFPd0D2OYK+5DICPit6pR3qeIcWv6f6KSts3NyfWwTSEM1dM/GPnfp/XMhtkuQ6ovPa3JcOM7+JRlqU1IhiAaG5JkZ3fAbSsvqYA8FmPMLpL72f+g26kWc5gB6xaIwqz0l4hvrB3ievpTGpcgfqWVhPTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B8sP84fB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=txorKgPgN6nk2MBvfcRjFQVNM2zf7DA4Ps7qBkY9Gr58/4RfM6nfY3kIIl3WE5c92r7U8yiZHrfnIDSSc80vqWZcHZSpVrYgt/4F0qsLIc+AezBSp6Emx6CYwdMfPeCRfEUf5ND1/oba5aDqdjOUwPrKCi2ULMqrWGOiIIBZJZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PuiTd3RY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B8sP84fB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7195C4CEF0;
-	Tue,  5 Aug 2025 13:11:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PuiTd3RY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A2DC4CEF0;
+	Tue,  5 Aug 2025 13:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399488;
-	bh=EfBkt+MghfOjvtpqGjuyCDnn+Jg2bBYSq+HLaw+7kzs=;
+	s=k20201202; t=1754399489;
+	bh=KMS29EiNpnbCgqRgh25+DaqhzCFR2obHthy2cidYnWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8sP84fB320gJuf1c6VArzeTvcP0G4lQXnvv/DeHp4ZZGN/ryJ5bLUWJzwFNA7aJv
-	 wTWhVVv8SFNDbZFRp2hVtKJOMW9wG+XbMR8AKd/Daps8tcAneIDhLq48V7z0sJ7EBq
-	 v5/DeLbkulo0bYRwyGkbWmFGh4X7sLcSKc2OIFK69shUuu9a8BhDeCYojsXrQag77N
-	 kUhKv2jR3Cm1RbTDJS/g9q27EV3AdnJcfhq2qN1/M+GbahiOdwrJ/zU3OtEX+TRNy/
-	 Wtk5FHFxUDKdI582eIKnDSgg1oGhR/ueApMwQS8ud+yWlidprNM28tCjpJtfuD9THg
-	 SbshLwu/EqQgw==
+	b=PuiTd3RYI0pZJ99nnhxkHHHfLe+GWN6mbF28059plJBcJ1VgQSKNn7YAB9UVnQSgX
+	 XURN0qP7SJeaZx8LDm7sbNtaiH6oeLTTfhDkBo4FmQn+ym+jJIXpoTlM4sSjkK/K2q
+	 C3vICUybb55sg1FPWuxypdGVVnem00HuYxlhe5wqAkt/O1ps/IfqoBTRi8d5OmUy8U
+	 UkSGKu1YotqoE9S13AOUD/TlJq4SLNjmZMJk4ZSYxl2K3e4hQDcgLhGcQytxgOJC/3
+	 Uu9+6rvWPqcmetM36b72uvlOPU8SRqnlRKc9KPJeu3KzqhpMs5epinhw+iqkRBzNRj
+	 MKLWgmS92guhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
+Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	kees@kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.15] sphinx: kernel_abi: fix performance regression with O=<dir>
-Date: Tue,  5 Aug 2025 09:09:21 -0400
-Message-Id: <20250805130945.471732-46-sashal@kernel.org>
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] media: tc358743: Return an appropriate colorspace from tc358743_set_fmt
+Date: Tue,  5 Aug 2025 09:09:22 -0400
+Message-Id: <20250805130945.471732-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -49,160 +48,177 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 2b16b71a05a7f056221751b906c13f8809656b1f ]
+[ Upstream commit 377cc006a364dfdab2f3f221cfad63a9265200b8 ]
 
-The logic there which adds a dependency note to Sphinx cache
-is not taking into account that the build dir may not be
-the source dir. This causes a performance regression:
+When calling tc358743_set_fmt, the code was calling tc358743_get_fmt
+to choose a valid format. However that sets the colorspace
+based on information read back from the chip, not the colour
+format requested.
 
-$ time make O=/tmp/foo SPHINXDIRS=admin-guide htmldocs
+The result was that if you called try or set format for UYVY
+when the current format was RGB3 then you would get told SRGB,
+and try RGB3 when current was UYVY and you would get told
+SMPTE170M.
 
-	[OUTDATED]
-	Added: set()
-	Changed: {'abi-obsolete', 'abi-removed', 'abi-stable-files', 'abi-obsolete-files', 'abi-stable', 'abi', 'abi-removed-files', 'abi-testing-files', 'abi-testing', 'gpio/index', 'gpio/obsolete'}
-	Removed: set()
-	All docs count: 385
-	Found docs count: 385
+The value programmed in the VI_REP register for the colorspace
+is always set by this driver, therefore there is no need to read
+back the value, and never set to REC709.
+Return the colorspace based on the format set/tried instead.
 
-	real    0m11,324s
-	user    0m15,783s
-	sys     0m1,164s
-
-To get the root cause of the problem (ABI files reported as changed),
-I used this changeset:
-
-	diff --git a/Documentation/conf.py b/Documentation/conf.py
-	index e8766e689c1b..ab486623bd8b 100644
-	--- a/Documentation/conf.py
-	+++ b/Documentation/conf.py
-	@@ -571,3 +571,16 @@ def setup(app):
-	     """Patterns need to be updated at init time on older Sphinx versions"""
-
-	     app.connect('config-inited', update_patterns)
-	+    app.connect('env-get-outdated', on_outdated)
-	+
-	+def on_outdated(app, env, added, changed, removed):
-	+    """Track cache outdated due to added/changed/removed files"""
-	+    print("\n[OUTDATED]")
-	+    print(f"Added: {added}")
-	+    print(f"Changed: {changed}")
-	+    print(f"Removed: {removed}")
-	+    print(f"All docs count: {len(env.all_docs)}")
-	+    print(f"Found docs count: {len(env.found_docs)}")
-	+
-	+    # Just return what we have
-	+    return added | changed | removed
-
-Reported-by: Akira Yokosawa <akiyks@gmail.com>
-Closes: https://lore.kernel.org/linux-doc/c174f7c5-ec21-4eae-b1c3-f643cca90d9d@gmail.com/
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Tested-by: Akira Yokosawa <akiyks@gmail.com>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/e25673d87357457bc54ee863e97ff8f75956580d.1752752211.git.mchehab+huawei@kernel.org
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now, let me understand the actual bug better. The issue is that when
-building with `O=<dir>`, the `f` variable contains a relative path from
-the source tree, but when we use `os.path.abspath(f)`, it resolves
-relative to the current working directory (which is the build
-directory), not the source tree. This causes Sphinx to think files have
-changed when they haven't.
-
 **Backport Status: YES**
 
-## Extensive Explanation:
-
-This commit is a strong candidate for backporting to stable kernel trees
+This commit is a good candidate for backporting to stable kernel trees
 for the following reasons:
 
-### 1. **Clear Bug Fix for Performance Regression**
-The commit fixes a concrete performance regression in the documentation
-build system when using out-of-tree builds (`O=<dir>`). The commit
-message shows the issue causes unnecessary rebuilds with a ~11 second
-penalty due to incorrectly tracking file dependencies.
+## Bug Fix Analysis
 
-### 2. **Small and Contained Change**
-The code change is minimal and focused - only 4 lines are modified:
-- Line 149-150 (old): `env.note_dependency(os.path.abspath(f))`
-- Line 150-152 (new): Adds a proper path construction and file existence
-  check
+1. **Clear Bug Being Fixed**: The commit fixes an incorrect colorspace
+   reporting bug in the tc358743 HDMI-to-CSI bridge driver. When calling
+   `tc358743_set_fmt()` to set/try a format, the function was
+   incorrectly returning the colorspace based on the *current* hardware
+   state (read from VI_REP register) rather than the colorspace
+   appropriate for the *requested* format.
 
-The fix correctly constructs the absolute path by joining `srctree` with
-the relative path `f`, ensuring the dependency tracking works correctly
-regardless of build directory location.
+2. **User-Visible Impact**: This bug causes incorrect colorspace
+   metadata to be reported to userspace applications:
+   - Requesting UYVY format when current is RGB would incorrectly report
+     SRGB colorspace
+   - Requesting RGB format when current is UYVY would incorrectly report
+     SMPTE170M colorspace
+   - This affects video capture applications that rely on correct
+     colorspace information for proper color processing
 
-### 3. **Root Cause is Clear**
-The bug occurs because `os.path.abspath(f)` resolves relative paths from
-the current working directory (the build directory when using `O=`), not
-from the source tree. This causes Sphinx to track non-existent or wrong
-file paths as dependencies, leading to false positives in change
-detection.
+## Code Analysis
 
-### 4. **No Architectural Changes**
-This is a straightforward bugfix that:
-- Doesn't introduce new features
-- Doesn't change any APIs or interfaces
-- Only fixes incorrect path resolution logic
-- Adds a defensive file existence check
+3. **Small and Contained Fix**: The change is minimal and well-
+   contained:
+   - Adds a simple helper function `tc358743_g_colorspace()` that maps
+     format codes to appropriate colorspaces
+   - Removes the problematic register read (`i2c_rd8(sd, VI_REP)`) from
+     `tc358743_get_fmt()`
+   - Updates both `tc358743_get_fmt()` and `tc358743_set_fmt()` to use
+     the helper function
+   - Total change is about 40 lines with clear logic
 
-### 5. **Affects Common Use Case**
-Out-of-tree builds with `O=<dir>` are a common workflow in kernel
-development, especially for:
-- CI/CD systems
-- Clean builds
-- Testing multiple configurations
-- Keeping source trees pristine
+4. **No Architectural Changes**: The fix doesn't introduce any new
+   features or change the driver architecture - it simply corrects the
+   colorspace reporting logic to be consistent and predictable.
 
-### 6. **Low Risk of Regression**
-The change:
-- Only affects documentation builds
-- Adds a safety check (`os.path.isfile()`) that prevents tracking non-
-  existent files
-- The logic is more correct than before (properly resolving paths
-  relative to source tree)
-- Has been tested by the reporter (Akira Yokosawa)
+5. **Low Risk of Regression**:
+   - The driver always writes the VI_REP register value itself in
+     `tc358743_set_csi_color_space()` (lines 690-691 for UYVY, 702-703
+     for RGB)
+   - The commit message correctly notes "The value programmed in the
+     VI_REP register for the colorspace is always set by this driver"
+   - The new implementation is simpler and more predictable than reading
+     back hardware state
+   - The colorspace mapping (RGB→SRGB, UYVY→SMPTE170M) is standard and
+     correct
 
-### 7. **Meets Stable Criteria**
-According to stable kernel rules, this fix:
-- Fixes a real bug that users hit (performance regression in
-  documentation builds)
-- Is obviously correct and tested
-- Is small (under 100 lines)
-- Fixes only one thing
-- Has no dependencies on other changes
+6. **No Side Effects**: The change only affects the colorspace field
+   reporting and doesn't modify any hardware programming, timing
+   configuration, or data flow.
 
-The commit directly addresses a performance issue that affects kernel
-documentation builds, making it slower and less efficient when using
-out-of-tree builds. This is the type of bug fix that stable kernels
-should receive to maintain quality and performance for users who build
-documentation.
+7. **Subsystem Isolation**: The tc358743 is a specific HDMI-to-CSI
+   bridge chip driver that's relatively isolated from core kernel
+   functionality. Changes here won't affect system stability.
 
- Documentation/sphinx/kernel_abi.py | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+The commit meets stable kernel criteria as it fixes a real bug that
+affects userspace applications without introducing new features or risky
+changes. The fix is simple, correct, and unlikely to cause regressions.
 
-diff --git a/Documentation/sphinx/kernel_abi.py b/Documentation/sphinx/kernel_abi.py
-index db6f0380de94..4c4375201b9e 100644
---- a/Documentation/sphinx/kernel_abi.py
-+++ b/Documentation/sphinx/kernel_abi.py
-@@ -146,8 +146,10 @@ class KernelCmd(Directive):
-                 n += 1
+ drivers/media/i2c/tc358743.c | 44 ++++++++++++++----------------------
+ 1 file changed, 17 insertions(+), 27 deletions(-)
+
+diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
+index 8c269e28fd5f..0bf6481dd0d9 100644
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -1708,12 +1708,23 @@ static int tc358743_enum_mbus_code(struct v4l2_subdev *sd,
+ 	return 0;
+ }
  
-             if f != old_f:
--                # Add the file to Sphinx build dependencies
--                env.note_dependency(os.path.abspath(f))
-+                # Add the file to Sphinx build dependencies if the file exists
-+                fname = os.path.join(srctree, f)
-+                if os.path.isfile(fname):
-+                    env.note_dependency(fname)
++static u32 tc358743_g_colorspace(u32 code)
++{
++	switch (code) {
++	case MEDIA_BUS_FMT_RGB888_1X24:
++		return V4L2_COLORSPACE_SRGB;
++	case MEDIA_BUS_FMT_UYVY8_1X16:
++		return V4L2_COLORSPACE_SMPTE170M;
++	default:
++		return 0;
++	}
++}
++
+ static int tc358743_get_fmt(struct v4l2_subdev *sd,
+ 		struct v4l2_subdev_state *sd_state,
+ 		struct v4l2_subdev_format *format)
+ {
+ 	struct tc358743_state *state = to_state(sd);
+-	u8 vi_rep = i2c_rd8(sd, VI_REP);
  
-                 old_f = f
+ 	if (format->pad != 0)
+ 		return -EINVAL;
+@@ -1723,23 +1734,7 @@ static int tc358743_get_fmt(struct v4l2_subdev *sd,
+ 	format->format.height = state->timings.bt.height;
+ 	format->format.field = V4L2_FIELD_NONE;
+ 
+-	switch (vi_rep & MASK_VOUT_COLOR_SEL) {
+-	case MASK_VOUT_COLOR_RGB_FULL:
+-	case MASK_VOUT_COLOR_RGB_LIMITED:
+-		format->format.colorspace = V4L2_COLORSPACE_SRGB;
+-		break;
+-	case MASK_VOUT_COLOR_601_YCBCR_LIMITED:
+-	case MASK_VOUT_COLOR_601_YCBCR_FULL:
+-		format->format.colorspace = V4L2_COLORSPACE_SMPTE170M;
+-		break;
+-	case MASK_VOUT_COLOR_709_YCBCR_FULL:
+-	case MASK_VOUT_COLOR_709_YCBCR_LIMITED:
+-		format->format.colorspace = V4L2_COLORSPACE_REC709;
+-		break;
+-	default:
+-		format->format.colorspace = 0;
+-		break;
+-	}
++	format->format.colorspace = tc358743_g_colorspace(format->format.code);
+ 
+ 	return 0;
+ }
+@@ -1753,19 +1748,14 @@ static int tc358743_set_fmt(struct v4l2_subdev *sd,
+ 	u32 code = format->format.code; /* is overwritten by get_fmt */
+ 	int ret = tc358743_get_fmt(sd, sd_state, format);
+ 
+-	format->format.code = code;
++	if (code == MEDIA_BUS_FMT_RGB888_1X24 ||
++	    code == MEDIA_BUS_FMT_UYVY8_1X16)
++		format->format.code = code;
++	format->format.colorspace = tc358743_g_colorspace(format->format.code);
+ 
+ 	if (ret)
+ 		return ret;
+ 
+-	switch (code) {
+-	case MEDIA_BUS_FMT_RGB888_1X24:
+-	case MEDIA_BUS_FMT_UYVY8_1X16:
+-		break;
+-	default:
+-		return -EINVAL;
+-	}
+-
+ 	if (format->which == V4L2_SUBDEV_FORMAT_TRY)
+ 		return 0;
  
 -- 
 2.39.5
