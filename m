@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F892737EF;
-	Tue,  5 Aug 2025 13:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3362737E7;
+	Tue,  5 Aug 2025 13:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399459; cv=none; b=egAjpwkoT2O82mEA5Fri4sjfCbNSzSG6AvnAvMuIDbZ41dJ1YyfoQCHhCToVvXgjfSxGZfev1HKSbe9oYZWKeV/2pzaAR283cZZ+os2I/0zYsJyTqA3XZNsO8tFGDJUqY9+Aw6CVjECt2J5zTpgc72cvmglDLnjlqACnXqtcTdw=
+	t=1754399461; cv=none; b=J9sE6i1lrtkJwuI0ekt5tRWJAHIh8vzxY5uQSNiME3IySn/AQCRkVE3kFZ5Tt3Ga1F9yL0/JbZSzwni+QjFXQ/lET+JSp751OlgFeVPQtrm8klfUMCnSppETTrn2hXQ5PWZ2Pzs/m8Bc6ec1dFe8idNJfE4e+Rlbr3tKLI5UuCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399459; c=relaxed/simple;
-	bh=QskGx90TLZ/5pqOHB+wiX359YHfKw0zfYQpYucfOY3o=;
+	s=arc-20240116; t=1754399461; c=relaxed/simple;
+	bh=DdvEbqBqA1HOPxq3rnYuvqPczayzOQ3TI0Xd1OOEko8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bAS0NlbbSCpxB10thPRverjgRx863yNynpSpay2UDVXyBkxChTWE2BobQYHSw4NJ1ex2AgNgjKRideRT4kTpFQLRrSajYb3cZNuE+3FwHUGyB/bRNCogEq2EgvZS72+A96Pmch4w9hIqwgkZUroaReYN/3zkZ1mx0dMB1ZgFY+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LdwAM3bU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bY6KbMoSQWu4/6u5EmnoyeemK8e0TKrJioHjr9Saw+WBIy4p84tgQhkaf5N5zF+KCOquZi4j8/AkBqqnoo+PRFq4nyd4gm6fED951IH3VzCi8qyWjSlsLdkDcMCHpNFFM+87vvgEFrP7uiKjR3DLHPvF3hXY3yPwdlXbMQXnkcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vQh8ayeM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LdwAM3bU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE29C4CEFA;
-	Tue,  5 Aug 2025 13:10:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vQh8ayeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA364C4CEF7;
+	Tue,  5 Aug 2025 13:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399459;
-	bh=QskGx90TLZ/5pqOHB+wiX359YHfKw0zfYQpYucfOY3o=;
+	s=k20201202; t=1754399461;
+	bh=DdvEbqBqA1HOPxq3rnYuvqPczayzOQ3TI0Xd1OOEko8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdwAM3bUC/15rEWjQoDUmbJuK+KflxbdIqjXlsNfiqDYT6wCimXaSI0QCmnVlcLzg
-	 TC7XWcNfjkklEy/XK5TZlc32stdgNY6CemK+pd3yU191eDrRSIXZ3leL0cvtSIuJdM
-	 HaQuLp5mvvlNjX5Szb0PKDe2jTCUBe5uOHiYCEuCI5McnWbVcHZfSMGdTNVSWY8Dnz
-	 44OsKu3793J2oOF6JdsRqXanvBbtT6CqXGp1vl7SJYPUwhOEt64jji4DOXTE7oJhbZ
-	 xPnTnOWbNm2RrrNCsjBlgWUbvtvOWRa4WVQNS8I2wH/0iYSjXEK+8vUInepixGo5e0
-	 skrUdcveMSv4Q==
+	b=vQh8ayeMN+8nuo/4pyF2hWCBDgIX6I8oMLsWAetuvgFCVW4AwxuXUpQ750mJv4tzW
+	 2eZ2QdUK5/zlnZO1TwHllZoKPJum/XX65zMc9eVA5E6duE5kFTjs5VRnbPe+fZ0jxV
+	 Moy9Jacc6AgTVf1i1FLz842AhPRSAxKPdNpwWeCFUqi6JOOJW58JSq3L08fwyw3LM0
+	 Mmul17hMLFII2XuvCMDu/ZWEqggul5LZ2QahpiDmFteVkFuQQvXj698kYngVOYm6ig
+	 kae9/hn/bbmgn94FsWlpu8k97P5iZ+imImSGPv0BYDgl5vuldzdL3NzNvxCW71OdXq
+	 8ROieH0bxlniQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Valmantas Paliksa <walmis@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>,
-	heiko@sntech.de,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.16-6.15] phy: rockchip-pcie: Enable all four lanes if required
-Date: Tue,  5 Aug 2025 09:09:08 -0400
-Message-Id: <20250805130945.471732-33-sashal@kernel.org>
+	linux-watchdog@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] watchdog: dw_wdt: Fix default timeout
+Date: Tue,  5 Aug 2025 09:09:09 -0400
+Message-Id: <20250805130945.471732-34-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -55,115 +51,113 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Valmantas Paliksa <walmis@gmail.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit c3fe7071e196e25789ecf90dbc9e8491a98884d7 ]
+[ Upstream commit ac3dbb91e0167d017f44701dd51c1efe30d0c256 ]
 
-Current code enables only Lane 0 because pwr_cnt will be incremented on
-first call to the function. Let's reorder the enablement code to enable
-all 4 lanes through GRF.
+The Synopsys Watchdog driver sets the default timeout to 30 seconds,
+but on some devices this is not a valid timeout. E.g. on RK3588 the
+actual timeout being used is 44 seconds instead.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Once the watchdog is started the value is updated accordingly, but
+it would be better to expose a sensible timeout to userspace without
+the need to first start the watchdog.
 
-Signed-off-by: Valmantas Paliksa <walmis@gmail.com>
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/16b610aab34e069fd31d9f57260c10df2a968f80.1751322015.git.geraldogabriel@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20250717-dw-wdt-fix-initial-timeout-v1-1-86dc864d48dd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of the commit, here's my assessment:
+
 **Backport Status: YES**
 
-This commit fixes a significant bug in the Rockchip PCIe PHY driver
-where only Lane 0 was being enabled instead of all required lanes.
-Here's my detailed analysis:
+## Extensive Explanation:
 
-## Bug Description
-The original code had a critical logic error in
-`rockchip_pcie_phy_power_on()`. The lane enable operation (writing to
-`pcie_laneoff` register) was placed AFTER the `pwr_cnt++` check at line
-170. Since `pwr_cnt` is a reference counter that tracks how many times
-the PHY has been powered on, the first call would increment it from 0 to
-1 and continue with initialization. However, subsequent calls for other
-lanes (Lane 1, 2, 3) would hit the early return at line 171 (`goto
-err_out`), preventing those lanes from being enabled.
+This commit is a clear bugfix that should be backported to stable kernel
+trees for the following reasons:
 
-## The Fix
-The commit moves the lane enable operation (lines 184-188 in original)
-to BEFORE the `pwr_cnt++` check. This ensures that each lane gets
-properly enabled through the GRF (General Register File) regardless of
-the power reference count state.
+### 1. **It fixes a real user-visible bug**
+The commit addresses a problem where the watchdog driver exposes an
+incorrect timeout value (30 seconds) to userspace when that value is not
+actually valid for the hardware. On RK3588 specifically, the hardware
+uses 44 seconds instead of the requested 30 seconds, creating a
+discrepancy between what userspace sees and what the hardware actually
+does.
 
-## Why This Should Be Backported
+### 2. **The fix is minimal and contained**
+The change adds only two lines of code:
+```c
++               /* Limit timeout value to hardware constraints. */
++               dw_wdt_set_timeout(wdd, wdd->timeout);
+```
+This simply calls the existing `dw_wdt_set_timeout()` function during
+initialization to ensure the timeout value is properly validated and
+adjusted to hardware constraints before the watchdog is registered with
+the kernel.
 
-1. **Fixes a Real Bug**: This fixes a functional bug where PCIe devices
-   requiring multiple lanes (x2, x4 configurations) would only have Lane
-   0 enabled, severely impacting performance or causing complete failure
-   to operate.
+### 3. **No architectural changes or new features**
+The commit doesn't introduce any new functionality or change the
+driver's architecture. It merely ensures that the existing timeout
+validation logic (which was already being called when the watchdog
+starts) is also applied during initialization.
 
-2. **Small and Contained Fix**: The change is minimal - just reordering
-   5 lines of code within a single function. No architectural changes or
-   new features are introduced.
+### 4. **Low risk of regression**
+The `dw_wdt_set_timeout()` function is already being called in other
+code paths (when the watchdog is started, when timeout is changed). This
+commit just ensures it's also called during probe to validate the
+initial timeout. The function itself uses `dw_wdt_find_best_top()` to
+find a valid hardware timeout value that's closest to the requested
+value.
 
-3. **Low Risk**: The fix simply ensures the lane enable register write
-   happens for all lanes, which was clearly the original intent. The
-   moved code block remains identical.
+### 5. **Affects user-facing behavior**
+Without this fix, userspace applications that query the watchdog timeout
+before starting it will get an incorrect value (30 seconds) that doesn't
+match what the hardware will actually use (e.g., 44 seconds on RK3588).
+This could lead to incorrect assumptions about watchdog behavior in
+monitoring and recovery systems.
 
-4. **Hardware Functionality Impact**: PCIe lane configuration is
-   critical for proper hardware operation. Devices expecting x4 links
-   but only getting x1 would experience significant performance
-   degradation (75% bandwidth loss).
+### 6. **The fix follows established patterns**
+The commit message notes "it would be better to expose a sensible
+timeout to userspace without the need to first start the watchdog" -
+this is a reasonable expectation that userspace should have accurate
+information about hardware settings without needing to activate the
+hardware first.
 
-5. **Clear Root Cause**: The bug mechanism is straightforward - the
-   reference counter was preventing lanes 1-3 from being configured due
-   to early return.
+### 7. **Subsystem maintainer review**
+The commit has been reviewed by Guenter Roeck (the watchdog subsystem
+maintainer) and signed off by both subsystem maintainers, indicating
+it's a proper fix that they consider important.
 
-6. **No Side Effects**: The change doesn't introduce new behavior, it
-   just fixes the existing broken behavior to work as originally
-   intended.
+The fix ensures that the watchdog timeout value exposed to userspace
+through sysfs and ioctl interfaces accurately reflects the hardware's
+actual timeout capability from the moment the driver is loaded, rather
+than showing an incorrect default value until the watchdog is started.
+This is particularly important for systems that need to make decisions
+based on watchdog capabilities before actually starting the watchdog
+timer.
 
-This is exactly the type of bug fix that stable kernels should receive -
-it's a clear functional regression fix with minimal code changes and low
-risk of introducing new issues.
+ drivers/watchdog/dw_wdt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- drivers/phy/rockchip/phy-rockchip-pcie.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/phy/rockchip/phy-rockchip-pcie.c b/drivers/phy/rockchip/phy-rockchip-pcie.c
-index 63e88abc66c6..4e2dfd01adf2 100644
---- a/drivers/phy/rockchip/phy-rockchip-pcie.c
-+++ b/drivers/phy/rockchip/phy-rockchip-pcie.c
-@@ -159,6 +159,12 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
- 
- 	guard(mutex)(&rk_phy->pcie_mutex);
- 
-+	regmap_write(rk_phy->reg_base,
-+		     rk_phy->phy_data->pcie_laneoff,
-+		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
-+				   PHY_LANE_IDLE_MASK,
-+				   PHY_LANE_IDLE_A_SHIFT + inst->index));
-+
- 	if (rk_phy->pwr_cnt++) {
- 		return 0;
+diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
+index 26efca9ae0e7..c3fbb6068c52 100644
+--- a/drivers/watchdog/dw_wdt.c
++++ b/drivers/watchdog/dw_wdt.c
+@@ -644,6 +644,8 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+ 	} else {
+ 		wdd->timeout = DW_WDT_DEFAULT_SECONDS;
+ 		watchdog_init_timeout(wdd, 0, dev);
++		/* Limit timeout value to hardware constraints. */
++		dw_wdt_set_timeout(wdd, wdd->timeout);
  	}
-@@ -175,12 +181,6 @@ static int rockchip_pcie_phy_power_on(struct phy *phy)
- 				   PHY_CFG_ADDR_MASK,
- 				   PHY_CFG_ADDR_SHIFT));
  
--	regmap_write(rk_phy->reg_base,
--		     rk_phy->phy_data->pcie_laneoff,
--		     HIWORD_UPDATE(!PHY_LANE_IDLE_OFF,
--				   PHY_LANE_IDLE_MASK,
--				   PHY_LANE_IDLE_A_SHIFT + inst->index));
--
- 	/*
- 	 * No documented timeout value for phy operation below,
- 	 * so we make it large enough here. And we use loop-break
+ 	platform_set_drvdata(pdev, dw_wdt);
 -- 
 2.39.5
 
