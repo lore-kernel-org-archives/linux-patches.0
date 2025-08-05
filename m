@@ -1,188 +1,140 @@
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2071.outbound.protection.outlook.com [40.107.212.71])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA2623FC52;
-	Tue,  5 Aug 2025 12:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.71
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754397404; cv=fail; b=Kg17GIdalf2gZZARgST5cLDJV0D9kQZpihxVppFYR+mqX8JGelrKSCYIvnirDi7Yht2bYBOFAcnvAMEU8RIXwHbfiRduy0KBwMrBFGmlQKVNY+R/BNuIfT9a48c5Pl13HAk1gE9+XilFgJo6ZQFZ3F2X//SvVL/L3FA3BaqXf6s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754397404; c=relaxed/simple;
-	bh=SzQG/lAyMg9aq+YD6zaokzq1J4IUrfN5HvTXaR3Ejuk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=DzlDFV+c6Ia4K6AH0zXr3GrNPQ1SDNwjYlkl3pcOW5krgks8Qvr206GQyV2WlIqtV3utP64NtaQqgkU+LyYP9pwQ0WtLhhSPW96ousqXX5WcChhWVKC9OJD+fGj/nTiqIbCSmzd0CYjeeyIBdwbCdanJNC+2T+I6bqNc8k51maw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Qf+k7uui; arc=fail smtp.client-ip=40.107.212.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2639F2B9B7;
+	Tue,  5 Aug 2025 13:09:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754399389; cv=none; b=ZRKjokesOs0HBI44tF1QSGgZ+RXRdEJ/SuI9KJZ2gO6gqs4tM92KRhqHJz4EdZXWed2JQTLk8ATiDGBdgpC8I64coqf1tV0IGu6mt9K4UwnKeRGnydlfyvlZAe0YDiI9QLq2YOOmgVqrw3nErWBrl96il4jFZU1WRVIpm9d+24Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754399389; c=relaxed/simple;
+	bh=MqDN7xUWTd4Ww+dv13mq9KzDQ9G6fwr4yZInmW0+5rM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=SvAAwsQFKMYMJRbr+1sn4HgQ6UJi4UKKtAOzFtJKjB+X5T6vVGQvwHeY+IArQWHFFJm6aTUc2igCIfk/TDf1FqaZjWku02/q0tyfquZq5kJ/qMcHu1uhzplPGbT7/xr3meixsveQNra77COnDx2I583jBUpXoZOqx8dd99JWRO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FBxgtV10; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Qf+k7uui"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eYhq4V/F77/aTZeueQjNhXBUdxbs7KRpljTCrrn/Y+fOFG8sWnfcRrmjv3r7c6A5JxXm7338IVjb4zUxlwYzuZrC7aePlXJwBAqlkjAweQOFu5vbo2bSDGnEMbnO8sB9tS5coJ2o2UTtunW9fK+dZlJkGuNu1dexOiYL1BZAM+H4GF+oHc3OavRJnWjERfXzk1+fb8bQ4Z1P8t1zo03ryxvPnULZWdL/IhJqy39W5w0RCKUh6TjLyCuKGwjDFEeq7qtwZH8xjlkXgwC7XgAAooO9A9YoXQLrNpkC9WsnrRrDmBmbDHJi1/9HD2oyJnaNEsqtnPeMckaLw5zxJ7Lc8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7b9tGelX3ibZD9aTjf9DZWrQxRp7Q5qwRpfEZ3/CI5A=;
- b=h8pYoUZ9zfjqLJh2490PVKp72kTwzw5sjyzp3SkULV3V3kqU2CCnmR6GAdH7DIWcCeM/m2qLLr7Ka1rXQvHQTh0E67FKLQqrGwyP0Q6OltG+5KzYQ6MiX1bobsdBIBeydhd+1Pj/uA1Yv4OO/QfhpwqBBKWS4sF78x7P7dOcpwPUl4wtpW0ZzPgaFMzkDxH8WCJJXSSPhFx++tDQgS70buzUQa9AImB7QfVMRlKhK2I0eV4daoNghdJbOJXDCnIV9U4tMXYYF0Xe8bVA7/HGA/HszCWJS7nJOtsNQvt9ljwHnFULRjaRQhfKiAHzZX11B25ycl01miAidAQBuYlAsA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7b9tGelX3ibZD9aTjf9DZWrQxRp7Q5qwRpfEZ3/CI5A=;
- b=Qf+k7uuig59HGgJcjJsVju0jrxLKzTLIVky/QzBnj1AhVOsalFUlWPYdhHHuDG3nzk73rrTrEIjawUBI0ZTFgYupGl7EOYqtHK0hSTADATfUM5PwcLRsUcET06pBwDLjGG+ZwsfT2B5jssXKEHls7lcCOO46spP9xEeAP5s22Xp999ndK7L72RkjGmQHPBPRZPbZboqZ5qvlmm33+TNF9030MBZtqPv4i7skUDyTLCu5R543r+ieP2/xcAnzF5CtJeJLMxgkQ9/FhuokUDa6vRqTDli3mkgnc4vfN8VWWc8bZREj9Wgo+o8NiuqKlo19txbfvfip5J/afcpMUCeL7A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by DM4PR12MB5865.namprd12.prod.outlook.com (2603:10b6:8:64::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.13; Tue, 5 Aug
- 2025 12:36:39 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.9009.013; Tue, 5 Aug 2025
- 12:36:38 +0000
-Date: Tue, 5 Aug 2025 09:35:55 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Ethan Zhao <etzhao1900@gmail.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
-	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
-	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
-	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-Subject: Re: [PATCH v2 00/16] Fix incorrect iommu_groups with PCIe ACS
-Message-ID: <20250805123555.GI184255@nvidia.com>
-References: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
- <20250802151816.GC184255@nvidia.com>
- <1684792a-97d6-4383-a0d2-f342e69c91ff@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1684792a-97d6-4383-a0d2-f342e69c91ff@gmail.com>
-X-ClientProxiedBy: YT1PR01CA0066.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:2e::35) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FBxgtV10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30B3C4CEF0;
+	Tue,  5 Aug 2025 13:09:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754399388;
+	bh=MqDN7xUWTd4Ww+dv13mq9KzDQ9G6fwr4yZInmW0+5rM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=FBxgtV10qzcPYTL8syXlyw/QS0y6CfT69/+CT6iab1En79k8eQFham00oYVbw+mLi
+	 q0wVikflsks34hxVRvn803O2FUCKXzu9CFmHPNiJqra9ZjQnxB5W97o3/mO3uJD4wp
+	 mVswq3lKN2lliGP91kucyB+IfDiyD70h9HyK+9BgWIjMTFvyOciuKupvRvuHpTuj4I
+	 /fwAzKsiPhvd2tIRwzMllCTMFg8X5mudv9o4r3Q6n5XKiAzm7d/eC83k8XYxHA9dNQ
+	 PtUvJkJ2gzB/yjJy/uDnHm4tWB9r9tZiXB7niZLQWD2t7GDR3IU4QBPJVUk//icjD1
+	 jSPSv6ADpgVzw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Chen-Yu Tsai <wens@csie.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.6] mfd: axp20x: Set explicit ID for AXP313 regulator
+Date: Tue,  5 Aug 2025 09:08:36 -0400
+Message-Id: <20250805130945.471732-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DM4PR12MB5865:EE_
-X-MS-Office365-Filtering-Correlation-Id: 41152671-191a-4860-e7a7-08ddd41ca356
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?/HKbRV0r6sKg1XBqeCCcWYQ3q+zOSwJVd2zEgAu/Hz6TH0j6xpp3kBUZLoGI?=
- =?us-ascii?Q?VAc9y403OkZEPd3yK0f793Q/XQaAoUfC9xZp4jlfM6muRmkwX8+hScUckYGm?=
- =?us-ascii?Q?EEMAc91pemU6NC6fqMJqOREMAcTJL5CqH5+VdS+kwI5FsnIvlntyybHWgAhp?=
- =?us-ascii?Q?MldGau67+FcvWVsJpbzLziZwKO3Rj9BzJ7dP8MSe1OZm4uRkL1FK9Wo9FIry?=
- =?us-ascii?Q?WJTTkQRVcJl6bPNjimczN/aEEubSorqpvm6k+azQGlsiK2cYP50XUO+aoZQF?=
- =?us-ascii?Q?LhQDaoCg0Xxx3gmAZHcY71LJubJFwZd2beXHbZaQB0PXCRfBCZ9jDMiAIIHy?=
- =?us-ascii?Q?1ulH8QmAL4bvc88f32L1ExOJfM/N7ksux9SwgVQzbm21AdbBjvDpM8S+u8ak?=
- =?us-ascii?Q?1pXIUpKyGMU5v90IRPgE3ysrwx5vsyt/SgMwn9UG4W3msT/Ben8Q0ti6e4wr?=
- =?us-ascii?Q?qqRAHSw5WnnDe5a7bGZbwqA8eVsDBehz/a8CCruC1E/I9KJIGD0TnNsKKE5y?=
- =?us-ascii?Q?221NEdeKqrFXfqqzBwR98Bkf/K6qJgPBK6p0QYcxb4SV9BWlmwyqyLaSYjWi?=
- =?us-ascii?Q?L3WrrLd+F5mdKoi5BE/68zP0YxOASDfgWZMdPWId56vC4MX9ep+9v430051d?=
- =?us-ascii?Q?br58Vzobt7EnnahHMRWd3cquVqMXol/mXfRcgB2Z8J0Z0s35VEZZWEiVy5QI?=
- =?us-ascii?Q?qmSAblT9X6Rl1mQV/GR+vDKbh+pxagOAVolth/0alIc4WZRyoqooMm2NuWAL?=
- =?us-ascii?Q?iwvqxBZdHPQPZhtK0sqq6Ed2aBum8du9I7SP14oytlMwklJhReXNoeA8VJvS?=
- =?us-ascii?Q?4IPN2MbQHcHghVzh24hX/u5yhJPFbmF2Y5xjPztenvuyr190OjXxVdbU2NIV?=
- =?us-ascii?Q?YhTl+8MioeJmH6Fx32Rw/A8iPI8zkZJH4Koo2nwv42fyv31xirQZ+MFu2g6t?=
- =?us-ascii?Q?uJSzUkClQWctBmp6IXr+UhX3v9oOv0DCXsUNyJ978S0Fflvb8nXTkhekMJzR?=
- =?us-ascii?Q?ssfy76h6K+JEg8bCaB2kVtV8PXNC3uyEDyQGe3DCPImp6aWQ2Vq2QCBPr7XQ?=
- =?us-ascii?Q?G1u3NMINaeScRaDzYybU55GOpekizO+FGOL8aYNBy9NFZy5/LWwrOgA+rnKp?=
- =?us-ascii?Q?iO9l/AV7A4MuMBlBpAzuj72uAqXqhRyCagz6PSaGEFn/a6W++ebVRxXswCEe?=
- =?us-ascii?Q?KY7IMcjX1EAYan15u9QnAzLzHj/jMfX4ZtJgZFQ/Nbmgs7OwoIW4Et27KP36?=
- =?us-ascii?Q?1+xGLM5E+0nBcin7wDLxEinurKpMD3vjNWB49n/BRJWg1AJij2bkQ2ZN9QNx?=
- =?us-ascii?Q?zPzNnW4oO9L8N63cBaayQE/CKW8Q4fKKDPZ0qpWmsmD1PiAtC3OoLALTRH+9?=
- =?us-ascii?Q?wwPqW9T48GgUelCE0M0dIy3I+GtbNUaJGQUOLIm/luz/wLOYcg=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Py62G13DBG53sQVd+cfzKqM6/WZI8BYHx+y2kZf/DoRp6Ua2i373HJlzPf3b?=
- =?us-ascii?Q?qSOsuKoL6tTaCDXgzkzXQA7EZp1u6q/NIfp/kvtrl2u+kKzv0WNBUKd3eESX?=
- =?us-ascii?Q?740icyTW20h998Giu3NOF2Dp+4R8P+8QBAH/1luFSSKKWWvtUPg+uH9cSvxd?=
- =?us-ascii?Q?YhNxhT4n5CeM2wdrTrZGcaHR8mPd/Ok+61x9GRvNQp7zteUru3SXfaPamMHh?=
- =?us-ascii?Q?1zn/u7DKwbhKWg/An2qUS3KEROywZZbBFnd9LZ760B+syDOGK5Mbo7ns4nuU?=
- =?us-ascii?Q?fC2ckSZX5UkPyzu5fash9Z4kHdJ1HXuTqOZQ8p1+2s4lE08lrLnIsHtNp1j9?=
- =?us-ascii?Q?wSbf/o/SjwTbvFHNYNEfz8EC1bzAxfrvVw/Lm0fOBtpwsKKLNEsyuPwmoT3l?=
- =?us-ascii?Q?bhfS68nY1O7IhHkz5IcW1DdDErr1WZxx80/JeUZCAHW0oneAEMVBl05jBROI?=
- =?us-ascii?Q?kDGGZNtR6ULxZZdepPDL5dDKVVZUPu/eD6aqj9Qmt/9sYmeDtC8xLM1PilCn?=
- =?us-ascii?Q?6zyzQMmoS8KlB9J2EN9BizNQoBq+wAlaJDGl37odPlobeDmU21Msw83Hs+Dr?=
- =?us-ascii?Q?Y4Krjoc4y4rRh+c/qXWOeGSGUiL1caKXgQsx0puVsWtH9bjibnz5+WeosZE0?=
- =?us-ascii?Q?4Aq1IzKDZjwyhoWfVGQkdjMahwsNG/iD8ZzJUSstIf0hKq/6F8t3DQdilTpx?=
- =?us-ascii?Q?Co2ecph91kWnXoccn718hPpVA9fUDo/p0tuyg74SQVubccS/1+nQ/vDwcJbV?=
- =?us-ascii?Q?/4cpYK9MHmKV1FscNkljpvZLLlsGfIFXxjfdVjdGAqP9Ijb1iutFOyFMjX7S?=
- =?us-ascii?Q?m6V0AAxoSgvDDYqiduIbS2eJXYhrDOYjtkaxWGqtN0Tun9nQ/kftWCJwmonr?=
- =?us-ascii?Q?D1VCPXfaRJQ/gutLbfZqK8Sz0pQTynCp/c20wyzxdxhndFUo4RImCNQs7UJ4?=
- =?us-ascii?Q?1h8KPyRZgZiK3FQQRrRienjlOZ3Phg+0PiqS/Bse6kBTDc90ZldxpL9Cj47n?=
- =?us-ascii?Q?RTkL/wbF4RaBFcXclk4LGiBX1sKDHvD/gg3ZnzV5GDcV+sqqNqgPo8QUq1eA?=
- =?us-ascii?Q?dk5U97HpFwR/puvmWO0+90aKttGInzJVFfkHyHSaGKl3jycb+J1Wxqjp46Nh?=
- =?us-ascii?Q?6Q6qVWIc+6fCj4SiWmxi85ZQLVoS3//lboU4QRSZMc+zCofUPzcgP5fnmLl9?=
- =?us-ascii?Q?q9VuOyfe7IgT7fAtmdb4gkCpQcKhZV1j0W6cLI5NJ4hRdKoPZ91qYKyt7Fzi?=
- =?us-ascii?Q?1TR2lM0P/Lqb6ZbOiavMSJJeOD2pLGPKjeo+zlzhzVo6+grWZf0nxlIIQMwb?=
- =?us-ascii?Q?5kfemypdezY0Xb1FzbnEUk37h9wenOrEAxRrHeceix36x0KfOwSLx7wbcIAA?=
- =?us-ascii?Q?pvpH4ejW8X12r2v5U1Vk2efcUiI6XizlDSek50+b24dcjTe/Opa1xBeZY/Ky?=
- =?us-ascii?Q?QlFq895z5v7Tl6fDT21qT7Lo+gDRdEgYJCBb0VLyMpoNj+FYjlsZbex/lLMb?=
- =?us-ascii?Q?O8QWugwlcWzNA9gJ8hz5XzmJG8pAzrvWegXW7DMR5avJA9BKM2TW0YiT29gZ?=
- =?us-ascii?Q?Ue73N2g6cN7GnOpNMeI=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41152671-191a-4860-e7a7-08ddd41ca356
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2025 12:36:37.5659
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wozsQFr5iMSZanPd/l3dTqHCODNwkVp6Or/WcVx8E4irnJx8KQ9yIjOhxjRUPf6t
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5865
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.16
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 05, 2025 at 11:43:29AM +0800, Ethan Zhao wrote:
-> 
-> 
-> On 8/2/2025 11:18 PM, Jason Gunthorpe wrote:
-> > On Sat, Aug 02, 2025 at 09:45:08AM +0800, Ethan Zhao wrote:
-> > > 
-> > > 
-> > > On 7/9/2025 10:52 PM, Jason Gunthorpe wrote:
-> > > > The series patches have extensive descriptions as to the problem and
-> > > > solution, but in short the ACS flags are not analyzed according to the
-> > > > spec to form the iommu_groups that VFIO is expecting for security.
-> > > > 
-> > > > ACS is an egress control only. For a path the ACS flags on each hop only
-> > > > effect what other devices the TLP is allowed to reach. It does not prevent
-> > > > other devices from reaching into this path.
-> > 
-> > > Perhaps I was a little confused here, the egress control vector on the
-> > 
-> > Linux does not support egress control vector. Enabling that is a
-> > different project and we would indeed need to introduce different
-> > logic.
-> My understanding, iommu has no logic yet to handle the egress control
-> vector configuration case, 
+From: Chen-Yu Tsai <wens@csie.org>
 
-We don't support it at all. If some FW leaves it configured then it
-will work at the PCI level but Linux has no awarness of what it is
-doing.
+[ Upstream commit 88828c7e940dd45d139ad4a39d702b23840a37c5 ]
 
-Arguably Linux should disable it on boot, but we don't..
+On newer boards featuring the A523 SoC, the AXP323 (related to the
+AXP313) is paired with the AXP717 and serves as a secondary PMIC
+providing additional regulator outputs. However the MFD cells are all
+registered with PLATFORM_DEVID_NONE, which causes the regulator cells
+to conflict with each other.
 
-> The static groups were created according to
-> FW DRDB tables, 
+Commit e37ec3218870 ("mfd: axp20x: Allow multiple regulators") attempted
+to fix this by switching to PLATFORM_DEVID_AUTO so that the device names
+would all be different, however that broke IIO channel mapping, which is
+also tied to the device names. As a result the change was later reverted.
 
-?? iommu_groups have nothing to do with FW tables.
+Instead, here we attempt to make sure the AXP313/AXP323 regulator cell
+does not conflict by explicitly giving it an ID number. This was
+previously done for the AXP809+AXP806 pair used with the A80 SoC.
 
-> also not the case handled by notifiers for Hot-plug events
-> (BUS_NOTIFY_ADD_DEVICE etc).
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20250619173207.3367126-1-wens@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-This is handled.
+LLM Generated explanations, may be completely bogus:
 
-Jason
+Based on my analysis, here's my assessment:
+
+**Backport Status: YES**
+
+This commit is suitable for backporting to stable kernel trees for the
+following reasons:
+
+1. **Fixes a real bug**: The commit addresses a device naming conflict
+   issue when using AXP313/AXP323 PMICs alongside AXP717 as a secondary
+   PMIC. Without this fix, the kernel produces a sysfs duplicate
+   filename error and fails to properly register the secondary regulator
+   device.
+
+2. **Small and contained change**: The fix is minimal - it only changes
+   one line of code from `MFD_CELL_NAME("axp20x-regulator")` to
+   `MFD_CELL_BASIC("axp20x-regulator", NULL, NULL, 0, 1)`, which
+   explicitly sets an ID of 1 for the AXP313 regulator cell.
+
+3. **Follows established pattern**: The commit follows an existing
+   pattern already used in the same driver for the AXP806 PMIC (lines
+   1173-1174 in axp806_cells), which also sets an explicit ID (2) to
+   avoid conflicts when paired with AXP809.
+
+4. **Minimal risk of regression**: The change only affects AXP313/AXP323
+   devices and doesn't touch other PMIC configurations. The explicit ID
+   assignment is a safe approach that doesn't break existing IIO channel
+   mappings (which was the problem with the previous PLATFORM_DEVID_AUTO
+   approach mentioned in the commit message).
+
+5. **Clear problem and solution**: The commit message clearly explains
+   the issue (sysfs duplicate filename error) and references the history
+   of previous attempts to fix similar issues (commit e37ec3218870 and
+   its revert). The solution is targeted and doesn't introduce
+   architectural changes.
+
+6. **Hardware enablement fix**: This fix enables proper functioning of
+   boards with the A523 SoC that use dual PMIC configurations (AXP323 +
+   AXP717), which would otherwise fail to initialize properly.
+
+The commit meets the stable tree criteria of being an important bugfix
+with minimal risk and contained scope. It fixes a specific hardware
+configuration issue without introducing new features or making broad
+architectural changes.
+
+ drivers/mfd/axp20x.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
+index e9914e8a29a3..25c639b348cd 100644
+--- a/drivers/mfd/axp20x.c
++++ b/drivers/mfd/axp20x.c
+@@ -1053,7 +1053,8 @@ static const struct mfd_cell axp152_cells[] = {
+ };
+ 
+ static struct mfd_cell axp313a_cells[] = {
+-	MFD_CELL_NAME("axp20x-regulator"),
++	/* AXP323 is sometimes paired with AXP717 as sub-PMIC */
++	MFD_CELL_BASIC("axp20x-regulator", NULL, NULL, 0, 1),
+ 	MFD_CELL_RES("axp313a-pek", axp313a_pek_resources),
+ };
+ 
+-- 
+2.39.5
+
