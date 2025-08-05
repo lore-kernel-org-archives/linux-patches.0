@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F44273D9B;
-	Tue,  5 Aug 2025 13:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2245A274B4B;
+	Tue,  5 Aug 2025 13:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399447; cv=none; b=iMW9gXTdrZPkLhGRMIHKTC3uwsVFIRXl4X8ZPdoqr2H/Jy56rjw203U9nQA/MchyK3DxNIwOyg/MNDZJ9gKGSmE2iHOPr2vlqjsoeM0uSRZbVQxxrbBkFbJLIViuJgfUKa9UbevMiEzUqljoC9RaatYaHFo1lii0ogKjXlem95Y=
+	t=1754399449; cv=none; b=q7glrEnYstYOxMtuLJOFfXWxnKrmT8wkSaY60Jd6ML2UO+ChSbIGhTd/IsoYf1tdpfdpKzcgPEX3zz+i9hnnsoBw03u9bNPYUHCB0Gly9cTWQ1f0Gv3rWvIJlzYg+i/mua/1JAn/qCDiVc3MZXRe4JwtgwkuMorh/65nKX9t2lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399447; c=relaxed/simple;
-	bh=SboLkP/xv0ZgpchhQrQe9OpKHIvyJ1C7ejc3PrCsQco=;
+	s=arc-20240116; t=1754399449; c=relaxed/simple;
+	bh=LZGLItp07dcwe7VHSIu5FA/hpY/wckqr1tY+RSkuAUg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HOwLiGwL7udbhhj8yMLWE3mOPnSOZa1KSCOIULjHXudIMk5ru2JqvBUKe34eT4RX8rQmQJWMbnwxJnU0QasnJTdYt5jHmrh4m5OJstbH3t9rwpq1d5p7zFlY+JRl7u9oCHV4U1Mj+167gx9sFqfL1R4OnxwQi6XwsloF5Tk/xeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NVWWAZHD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U7WZhmLBitXPfZ56/Wz/eJ2E+R7Wpp/rPts/DvsjnSSVOd8SUYA10//BitYD4Cjumfr813Ls9CLdSFEFH41op079kHDj4ae59MsJXq0JV/N/OzyC29P7SX1ZUF7C8ab9NcjM0NGddHbB7xDclEHWJS7nuQ5b/kJ5vjE7kDfINkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UZkycmS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NVWWAZHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023E4C4CEF4;
-	Tue,  5 Aug 2025 13:10:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UZkycmS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3764C4CEF0;
+	Tue,  5 Aug 2025 13:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399447;
-	bh=SboLkP/xv0ZgpchhQrQe9OpKHIvyJ1C7ejc3PrCsQco=;
+	s=k20201202; t=1754399449;
+	bh=LZGLItp07dcwe7VHSIu5FA/hpY/wckqr1tY+RSkuAUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NVWWAZHD4kQtEG2vQYXGwvlDIKjL+tCBWS2udRlce6WgjL8xMJRYsGmz4QLO+9y6N
-	 Wm3LWEio8//8z7ZkYl59eJeonuF+L24U2Hg6pO0etAq8UvgAVa7rP8tb7E1G4ruLI6
-	 wr08khHHDxLJm9BPmMiG1YM6YYr9Qx+flUSubRNcUtFG331ebhuvpvjGef/iIU/rY9
-	 PU8DM34IR9WT7AvlywzUdXGzAATzsTX0I9dt6yCuZQJ1B4CKFJgBfyEYrB3Xm7enhm
-	 yALUWFCDh9m7stDMZUSvZCQt0P7vm4NjQZge5zDOQuz277Zm4B7d8YcI2jYSHMRMjP
-	 +frCtuh4+9dHw==
+	b=UZkycmS91Sz+b6SgUJArkZ00NGHuAJvKsl4L9+szmyl7IKj9AWYjgMON0IszoyQsw
+	 VwJXS8+hGGBlA3jqL+jjrAPWBHFiBZ4kBMC6h/vaPrpluy9hRQxXjWs8a715zQSgY1
+	 6MoidscbtpFpzeMQv/aN+u6h/OhJRdtVfyp0Wv0XKGBTvWX3DA3mQFVdgoH+cCEDPB
+	 8j3F+K9C+FrhEFI6f+kbEruQw3aRGK0LG2cHIqJnNzfNQyAn9+IjKxiGJqAkilqib4
+	 nAuUFmOHSvoI3ByiTLp7GtMADVvKkWjGObATB7LFq98vNVJBuI5wcEv/9C0LEif4ex
+	 cG+eVXWIGNhsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Guo <alexguo1023@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Francisco Gutierrez <frankramirez@google.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	algonell@gmail.com,
-	hverkuil@kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.4] media: dvb-frontends: dib7090p: fix null-ptr-deref in dib7090p_rw_on_apb()
-Date: Tue,  5 Aug 2025 09:09:02 -0400
-Message-Id: <20250805130945.471732-27-sashal@kernel.org>
+	jinpu.wang@cloud.ionos.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.15] scsi: pm80xx: Free allocated tags after failure
+Date: Tue,  5 Aug 2025 09:09:03 -0400
+Message-Id: <20250805130945.471732-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -49,113 +50,109 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Guo <alexguo1023@gmail.com>
+From: Francisco Gutierrez <frankramirez@google.com>
 
-[ Upstream commit ce5cac69b2edac3e3246fee03e8f4c2a1075238b ]
+[ Upstream commit 258a0a19621793b811356fc9d1849f950629d669 ]
 
-In dib7090p_rw_on_apb, msg is controlled by user. When msg[0].buf is null and
-msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing
-msg[0].buf[2] without sanity check, null pointer deref would happen. We add
-check on msg[0].len to prevent crash. Similar issue occurs when access
-msg[1].buf[0] and msg[1].buf[1].
+This change frees resources after an error is detected.
 
-Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
-
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-Link: https://lore.kernel.org/r/20250616013231.730221-1-alexguo1023@gmail.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Francisco Gutierrez <frankramirez@google.com>
+Link: https://lore.kernel.org/r/20250617210443.989058-1-frankramirez@google.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**YES**
+**Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Security Bug Fix
-This commit fixes a **null pointer dereference vulnerability** that can
-be triggered by user-controlled input through the I2C subsystem. The
-vulnerability occurs in `dib7090p_rw_on_apb()` when:
+## Bug Fix Analysis
 
-1. **Write path (num == 1)**: The code accesses `msg[0].buf[1]` and
-   `msg[0].buf[2]` without checking if `msg[0].len >= 3`:
-  ```c
-  dib7000p_write_word(state, apb_address, ((msg[0].buf[1] << 8) |
-  (msg[0].buf[2])));
-  ```
+1. **Clear Resource Leak Bug**: The commit fixes a resource leak where
+   tags allocated via `pm8001_tag_alloc()` are not freed when
+   `pm8001_mpi_build_cmd()` fails. Looking at the code:
+   - In `pm80xx_chip_phy_start_req()` at line 4652-4656, a tag is
+     allocated
+   - If `pm8001_mpi_build_cmd()` fails (returns error), the function
+     returns directly without freeing the allocated tag
+   - The same pattern exists in `pm80xx_chip_phy_stop_req()`
 
-2. **Read path (num != 1)**: The code accesses `msg[1].buf[0]` and
-   `msg[1].buf[1]` without checking if `msg[1].len >= 2`:
-  ```c
-  msg[1].buf[0] = (word >> 8) & 0xff;
-  msg[1].buf[1] = (word) & 0xff;
-  ```
+2. **Actual Runtime Impact**: The `pm8001_mpi_build_cmd()` function can
+   fail with `-ENOMEM` when no free MPI buffers are available (as shown
+   in the function implementation). This is a realistic failure scenario
+   under memory pressure or high I/O load, making this a real-world bug.
 
-## User-Controlled Attack Vector
-The `msg` parameter comes from user-space through the I2C ioctl
-interface, making this a **user-triggerable vulnerability**. A malicious
-or buggy application can pass:
-- `msg[0].buf = NULL` with `msg[0].len = 0`
-- Or a valid buffer with insufficient length
+3. **Resource Exhaustion Risk**: The driver uses a limited tag pool
+   (PM8001_RESERVE_SLOT tags). Each leaked tag reduces the available
+   pool, potentially leading to:
+   - Tag exhaustion over time
+   - Inability to issue new PHY start/stop commands
+   - Degraded SCSI controller functionality
 
-This would cause the kernel to dereference memory beyond the allocated
-buffer or dereference NULL, leading to a kernel crash or potential
-privilege escalation.
+4. **Consistent Pattern Fix**: The codebase already has established
+   patterns for properly freeing tags on error paths, as evidenced by:
+   - Multiple existing instances where `pm8001_tag_free()` is called
+     after `pm8001_mpi_build_cmd()` failures
+   - Previous similar fix in commit c13e73317458 for tag leaks in
+     `OPC_INB_SET_CONTROLLER_CONFIG` command
 
-## Minimal and Contained Fix
-The fix is:
-- **Small**: Only adds 4 lines of bounds checking
-- **Contained**: Changes are limited to a single function
-- **Low risk**: Simply returns `-EOPNOTSUPP` when buffer lengths are
-  insufficient
-- **No architectural changes**: Pure defensive programming addition
+5. **Small and Contained Fix**: The changes are minimal (4 lines added
+   in total), localized to two functions, and follow existing error
+   handling patterns in the driver. This minimizes regression risk.
 
-## Follows Established Pattern
-The commit references a similar fix (`0ed554fd769a`) for the same class
-of vulnerability in `az6027_i2c_xfer()`, which was already accepted and
-likely backported. This shows:
-- The issue is recognized as security-relevant
-- The fix pattern is established and tested
-- Multiple DVB drivers have this vulnerability class
+6. **No New Features or Architecture Changes**: The commit purely fixes
+   a resource leak without introducing new functionality or changing
+   driver behavior.
 
-## Meets Stable Criteria
-According to stable tree rules, this commit:
-- ✅ Fixes a real bug (null-ptr-deref crash)
-- ✅ Is small and self-contained (4 lines added)
-- ✅ Has minimal risk of regression (defensive checks only)
-- ✅ Addresses a security issue (user-triggerable kernel crash)
-- ✅ No new features or architectural changes
+7. **Maintainer Acknowledgment**: The fix is acknowledged by the
+   subsystem maintainer (Jack Wang), indicating it's a legitimate issue
+   that needed addressing.
 
-The vulnerability allows unprivileged users with access to DVB devices
-to crash the kernel, making it a significant security issue that
-warrants backporting to all maintained stable kernels that contain the
-vulnerable code.
+The fix aligns perfectly with stable kernel criteria - it's a clear bug
+fix for a resource leak that can impact system stability over time, with
+minimal code changes and low regression risk.
 
- drivers/media/dvb-frontends/dib7000p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/pm8001/pm80xx_hwi.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index b40daf242046..360a2d7dd3ed 100644
---- a/drivers/media/dvb-frontends/dib7000p.c
-+++ b/drivers/media/dvb-frontends/dib7000p.c
-@@ -2256,8 +2256,12 @@ static int dib7090p_rw_on_apb(struct i2c_adapter *i2c_adap,
- 	u16 word;
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index 5b373c53c036..c4074f062d93 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -4677,8 +4677,12 @@ pm80xx_chip_phy_start_req(struct pm8001_hba_info *pm8001_ha, u8 phy_id)
+ 		&pm8001_ha->phy[phy_id].dev_sas_addr, SAS_ADDR_SIZE);
+ 	payload.sas_identify.phy_id = phy_id;
  
- 	if (num == 1) {		/* write */
-+		if (msg[0].len < 3)
-+			return -EOPNOTSUPP;
- 		dib7000p_write_word(state, apb_address, ((msg[0].buf[1] << 8) | (msg[0].buf[2])));
- 	} else {
-+		if (msg[1].len < 2)
-+			return -EOPNOTSUPP;
- 		word = dib7000p_read_word(state, apb_address);
- 		msg[1].buf[0] = (word >> 8) & 0xff;
- 		msg[1].buf[1] = (word) & 0xff;
+-	return pm8001_mpi_build_cmd(pm8001_ha, 0, opcode, &payload,
++	ret = pm8001_mpi_build_cmd(pm8001_ha, 0, opcode, &payload,
+ 				    sizeof(payload), 0);
++	if (ret < 0)
++		pm8001_tag_free(pm8001_ha, tag);
++
++	return ret;
+ }
+ 
+ /**
+@@ -4704,8 +4708,12 @@ static int pm80xx_chip_phy_stop_req(struct pm8001_hba_info *pm8001_ha,
+ 	payload.tag = cpu_to_le32(tag);
+ 	payload.phy_id = cpu_to_le32(phy_id);
+ 
+-	return pm8001_mpi_build_cmd(pm8001_ha, 0, opcode, &payload,
++	ret = pm8001_mpi_build_cmd(pm8001_ha, 0, opcode, &payload,
+ 				    sizeof(payload), 0);
++	if (ret < 0)
++		pm8001_tag_free(pm8001_ha, tag);
++
++	return ret;
+ }
+ 
+ /*
 -- 
 2.39.5
 
