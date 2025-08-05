@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E74B2749F8;
-	Tue,  5 Aug 2025 13:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A067276056;
+	Tue,  5 Aug 2025 13:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399438; cv=none; b=DwwYPlCdSWDLtWOZSXd+Av/TyX8G7EzCzYqUHN5zkrMTotOYZhNVd6wi0owPF4vEn76WkFoVo86Uum9uU+hWRf3j1AbVLxoKVHAsklxU7uBmQ2MTdaD4DItJXKL9cVUYrnlWD/Z1Uuh/WwP1KFmZ04xFe+OGYgMRPPCEkQIYdIU=
+	t=1754399438; cv=none; b=uhlRNReoD0N6UFTzE4/FgvWfzu6x4cWMPYYuF9SvnMmIzG84oIfxxemvAbRxrKMzL0Y9EUJCDLPm9gYZwHMMpbc3pkwQyNvrQXqNip1p8T4yqHmBLnP+n3vRwZHEDC0f17svnV4IG6H/fpnx/E0vXnwAAdSyKZQLCVEmurKvjKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754399438; c=relaxed/simple;
-	bh=Wpa1Pd2sU1RyHS8bDSx//SJZnplORfSm5q5SQzW4zZ8=;
+	bh=z7LNaQ4tyu216+74LWSLJMCyamCBabku8nxlOeWGwdQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YsoEzWXS3M7s1qCLiwTu/8mrQwrnIvUf/H1TQwaNLyr0GAgcEyWPxNmel2FFETETGhHrXQwqhGzbSqfcJSHH2mIuPaI8SzRCslwc0BoCNZyMnNjCBjsDhPsgLueIieO+u3B/05kpSdyF+OixaiWo0wj1OBvLGFU+fQHtiehQSrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p0zgwUWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fNnW0UhxP1AacXmjW0gVrzicslX3JBYA8RDD6NuVvLf6j7mZYXf56af7NIJfXElEMj8eNmWccr9GE4g6W5bfza1w7NgA2OTsSONgvLkIHTmJDv2fVKjcsluDpfVbAJBlDVZRIAIMHarbqOg3jGA/EfLvPR7LJkZHSZk6RGKqxLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PDzG3Zc1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p0zgwUWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF9FC4CEF0;
-	Tue,  5 Aug 2025 13:10:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PDzG3Zc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DF8C4CEF4;
+	Tue,  5 Aug 2025 13:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399436;
-	bh=Wpa1Pd2sU1RyHS8bDSx//SJZnplORfSm5q5SQzW4zZ8=;
+	s=k20201202; t=1754399438;
+	bh=z7LNaQ4tyu216+74LWSLJMCyamCBabku8nxlOeWGwdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0zgwUWFKdw/S0dbQHUnTLum31JbfRbSlOyUnnRs9EFjJrjN7TUHMi2y99lE3HH4R
-	 mOaGGTaoAQ3IDxL6Q9pG0cRQrfyIAD8R0STNcladtowbVQV0tgiDJDCKmT7AFlVnSM
-	 2hoUALR+WIYPdAr0OBMHmAEQjNLvfFVUukc3XsTpoCgD1OqlBTEDp5Ubb2qjvWGRaB
-	 5ZQp8Uu4ps2IxT/mS/ZBIFQTKuaF7z/W3s1EyvAvEh2CBRKbge5npfELF+pAh3p2yu
-	 S82erzS71ZCTr3N/JqYnHBdJaSvkwUxDvz2/Ep01I5RAUHIpisVnmJTOyXMcMCHlUk
-	 EX/qV2X5uVGUg==
+	b=PDzG3Zc1C11ZY1BIV0xQJ96T9Bxl0KL13XlE8r/nBub5kvkCVaqZOFVna6Kxns2OF
+	 nWqTaQiMlq7JcoKk62hIpktlNairDppcDA6LL3igDUEmV3L3uv6ytuEVVm0zgDn6/5
+	 OysAkuUG60Q6CIc57GCRxlXQZRp0Ub3t7fOYw4eTCrwbqCRRpnCjOYwKbhIfb1vjYc
+	 FfqJt9yep1+t8Zsx/06MAu0BvejqMFrpGYDJ47C3tRgwahVZw7cIwLp8C7d/p0t/AZ
+	 0rdqKD6Sl9qVVlkMxj8uvtGZ2qM7Lj94N8fZZ9X86nmdKWzRoer0ntQBpAZ9sPp4iZ
+	 ZsFx4Tkm5wyxQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Yi <yi.zhang@huawei.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Joseph Qi <jiangqi903@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Ts'o <tytso@mit.edu>,
+Cc: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>,
-	adilger.kernel@dilger.ca,
-	linux-ext4@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16] ext4: limit the maximum folio order
-Date: Tue,  5 Aug 2025 09:08:57 -0400
-Message-Id: <20250805130945.471732-22-sashal@kernel.org>
+	devel@lists.orangefs.org
+Subject: [PATCH AUTOSEL 6.16-5.4] fs/orangefs: use snprintf() instead of sprintf()
+Date: Tue,  5 Aug 2025 09:08:58 -0400
+Message-Id: <20250805130945.471732-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -55,173 +50,128 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
 
-[ Upstream commit b12f423d598fd874df9ecfb2436789d582fda8e6 ]
+[ Upstream commit cdfa1304657d6f23be8fd2bb0516380a3c89034e ]
 
-In environments with a page size of 64KB, the maximum size of a folio
-can reach up to 128MB. Consequently, during the write-back of folios,
-the 'rsv_blocks' will be overestimated to 1,577, which can make
-pressure on the journal space where the journal is small. This can
-easily exceed the limit of a single transaction. Besides, an excessively
-large folio is meaningless and will instead increase the overhead of
-traversing the bhs within the folio. Therefore, limit the maximum order
-of a folio to 2048 filesystem blocks.
+sprintf() is discouraged for use with bounded destination buffers
+as it does not prevent buffer overflows when the formatted output
+exceeds the destination buffer size. snprintf() is a safer
+alternative as it limits the number of bytes written and ensures
+NUL-termination.
 
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Reported-by: Joseph Qi <jiangqi903@gmail.com>
-Closes: https://lore.kernel.org/linux-ext4/CA+G9fYsyYQ3ZL4xaSg1-Tt5Evto7Zd+hgNWZEa9cQLbahA1+xg@mail.gmail.com/
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Tested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250707140814.542883-12-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Replace sprintf() with snprintf() for copying the debug string
+into a temporary buffer, using ORANGEFS_MAX_DEBUG_STRING_LEN as
+the maximum size to ensure safe formatting and prevent memory
+corruption in edge cases.
+
+EDIT: After this patch sat on linux-next for a few days, Dan
+Carpenter saw it and suggested that I use scnprintf instead of
+snprintf. I made the change and retested.
+
+Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis, I can now provide a determination on whether this
+commit should be backported.
+
 **Backport Status: YES**
+
+## Extensive Explanation:
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix Nature
-The commit fixes a critical issue where ext4 could exhaust journal space
-on systems with 64KB page sizes. The commit message explicitly states:
-"Consequently, during the write-back of folios, the 'rsv_blocks' will be
-overestimated to 1,577, which can make pressure on the journal space
-where the journal is small. This can easily exceed the limit of a single
-transaction."
+### 1. **Security Fix for Potential Buffer Overflow**
+The code change addresses a classic buffer overflow vulnerability in
+`/home/sasha/linux/fs/orangefs/orangefs-debugfs.c:357`. The original
+code uses `sprintf()` to copy data from `file->private_data` into a
+heap-allocated buffer of fixed size (`ORANGEFS_MAX_DEBUG_STRING_LEN` =
+2048 bytes). The problematic line:
+```c
+sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
+```
 
-## Real-World Impact
-1. **Reported by multiple users**: The commit includes two Reported-by
-   tags and a Closes link to a bug report, indicating this is affecting
-   real users in production environments
-2. **Specific environment failure**: The issue manifests on systems with
-   64KB page sizes (common on ARM64 systems), where large folios can
-   reach 128MB, causing journal transaction limits to be exceeded
+### 2. **Real Security Impact**
+- The `file->private_data` is set to `inode->i_private` in
+  `orangefs_debug_open()` (line 331)
+- This points to either `k_buffer` or `c_buffer` which are static
+  buffers defined with `ORANGEFS_MAX_DEBUG_STRING_LEN`
+- While these buffers are also bounded to the same size, using
+  `sprintf()` without bounds checking is inherently unsafe as it trusts
+  that the source data is properly null-terminated and within expected
+  bounds
+- If the source buffer gets corrupted or manipulated (e.g., through
+  other vulnerabilities), `sprintf()` could write beyond the allocated
+  buffer
 
-## Minimal and Safe Fix
-The fix is clean and contained:
-1. **Limited scope**: Changes only affect folio order calculation for
-   ext4 filesystems
-2. **Conservative approach**: Limits maximum folio order to 2048
-   filesystem blocks using the formula `(11 + (i)->i_blkbits -
-   PAGE_SHIFT)`
-3. **Function refactoring**: Converts `ext4_should_enable_large_folio()`
-   from public to static and introduces `ext4_set_inode_mapping_order()`
-   as a wrapper, maintaining clean interfaces
+### 3. **Recent History of Similar Issues**
+The git history shows a very recent OOB (out-of-bounds) fix in the same
+file (commit `2b84a231910c` - "orangefs: fix a oob in
+orangefs_debug_write") that was already backported to stable. This
+indicates:
+- The OrangeFS debugfs code has had boundary checking issues
+- Security researchers (syzbot) are actively finding issues in this
+  subsystem
+- The maintainers are actively fixing security issues
 
-## Code Analysis
-The changes show:
-- Introduction of `EXT4_MAX_PAGECACHE_ORDER()` macro that caps folio
-  size
-- New function `ext4_set_inode_mapping_order()` using
-  `mapping_set_folio_order_range()` instead of the previous
-  `mapping_set_large_folios()`
-- Updates to both inode allocation (fs/ext4/ialloc.c) and inode
-  retrieval (fs/ext4/inode.c) paths
+### 4. **Simple and Contained Fix**
+The change is minimal and low-risk:
+- Single line change from `sprintf()` to `scnprintf()`
+- The fix is contained to one function in the debugfs interface
+- No architectural changes or new features added
+- The `scnprintf()` function guarantees null-termination and prevents
+  buffer overflow by limiting writes to the specified size
 
-## Stability Considerations
-1. **No new features**: This is purely a bug fix that prevents journal
-   exhaustion
-2. **Backward compatible**: The change doesn't break existing
-   functionality
-3. **Tested**: Has "Tested-by" tag from Joseph Qi
-4. **Reviewed**: Has "Reviewed-by" tag from Jan Kara (experienced
-   filesystem maintainer)
+### 5. **Follows Stable Tree Rules**
+- **Important bugfix**: Prevents potential memory corruption/security
+  vulnerability
+- **Minimal risk**: Simple function substitution with well-understood
+  semantics
+- **Small change**: Single line modification
+- **No new features**: Pure safety improvement
+- **Confined to subsystem**: Only affects OrangeFS debugfs interface
 
-## Timeline Context
-The large folio support was recently enabled in ext4 (commit
-7ac67301e82f from May 2025), and this fix addresses a
-regression/oversight in that implementation for systems with large page
-sizes. This makes it critical to backport alongside or shortly after the
-large folio enablement if that feature is backported.
+### 6. **Best Practice Security Hardening**
+The commit message explicitly states this is a security hardening
+measure following modern kernel coding standards. The kernel community
+has been systematically replacing unsafe string functions (`sprintf`,
+`strcpy`, etc.) with their bounded equivalents (`snprintf`/`scnprintf`,
+`strncpy`, etc.) to eliminate entire classes of vulnerabilities.
 
-The fix prevents potential filesystem hangs or write failures on
-affected systems, making it an important stability fix for stable
-kernels.
+### 7. **Evolution from snprintf to scnprintf**
+The commit message notes that after review, the patch was updated from
+`snprintf()` to `scnprintf()`. This is important because `scnprintf()`
+returns the actual number of bytes written (excluding the terminating
+null), while `snprintf()` returns the number of bytes that would have
+been written if there was enough space. This makes `scnprintf()` the
+correct choice for the subsequent `simple_read_from_buffer()` call which
+needs the actual written length.
 
- fs/ext4/ext4.h   |  2 +-
- fs/ext4/ialloc.c |  3 +--
- fs/ext4/inode.c  | 22 +++++++++++++++++++---
- 3 files changed, 21 insertions(+), 6 deletions(-)
+This commit represents a proactive security hardening that eliminates a
+potential attack vector in the OrangeFS filesystem debugfs interface,
+making it an excellent candidate for stable backporting.
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 18373de980f2..fe3366e98493 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3020,7 +3020,7 @@ int ext4_walk_page_buffers(handle_t *handle,
- 				     struct buffer_head *bh));
- int do_journal_get_write_access(handle_t *handle, struct inode *inode,
- 				struct buffer_head *bh);
--bool ext4_should_enable_large_folio(struct inode *inode);
-+void ext4_set_inode_mapping_order(struct inode *inode);
- #define FALL_BACK_TO_NONDELALLOC 1
- #define CONVERT_INLINE_DATA	 2
+ fs/orangefs/orangefs-debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index f7095c91660c..e463d3c73533 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -396,7 +396,7 @@ static ssize_t orangefs_debug_read(struct file *file,
+ 		goto out;
  
-diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index 79aa3df8d019..df4051613b29 100644
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -1335,8 +1335,7 @@ struct inode *__ext4_new_inode(struct mnt_idmap *idmap,
- 		}
- 	}
+ 	mutex_lock(&orangefs_debug_lock);
+-	sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
++	sprintf_ret = scnprintf(buf, ORANGEFS_MAX_DEBUG_STRING_LEN, "%s", (char *)file->private_data);
+ 	mutex_unlock(&orangefs_debug_lock);
  
--	if (ext4_should_enable_large_folio(inode))
--		mapping_set_large_folios(inode->i_mapping);
-+	ext4_set_inode_mapping_order(inode);
- 
- 	ext4_update_inode_fsync_trans(handle, inode, 1);
- 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index be9a4cba35fd..4f4fa62a3bff 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5106,7 +5106,7 @@ static int check_igot_inode(struct inode *inode, ext4_iget_flags flags,
- 	return -EFSCORRUPTED;
- }
- 
--bool ext4_should_enable_large_folio(struct inode *inode)
-+static bool ext4_should_enable_large_folio(struct inode *inode)
- {
- 	struct super_block *sb = inode->i_sb;
- 
-@@ -5123,6 +5123,22 @@ bool ext4_should_enable_large_folio(struct inode *inode)
- 	return true;
- }
- 
-+/*
-+ * Limit the maximum folio order to 2048 blocks to prevent overestimation
-+ * of reserve handle credits during the folio writeback in environments
-+ * where the PAGE_SIZE exceeds 4KB.
-+ */
-+#define EXT4_MAX_PAGECACHE_ORDER(i)		\
-+		umin(MAX_PAGECACHE_ORDER, (11 + (i)->i_blkbits - PAGE_SHIFT))
-+void ext4_set_inode_mapping_order(struct inode *inode)
-+{
-+	if (!ext4_should_enable_large_folio(inode))
-+		return;
-+
-+	mapping_set_folio_order_range(inode->i_mapping, 0,
-+				      EXT4_MAX_PAGECACHE_ORDER(inode));
-+}
-+
- struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 			  ext4_iget_flags flags, const char *function,
- 			  unsigned int line)
-@@ -5440,8 +5456,8 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 		ret = -EFSCORRUPTED;
- 		goto bad_inode;
- 	}
--	if (ext4_should_enable_large_folio(inode))
--		mapping_set_large_folios(inode->i_mapping);
-+
-+	ext4_set_inode_mapping_order(inode);
- 
- 	ret = check_igot_inode(inode, flags, function, line);
- 	/*
+ 	read_ret = simple_read_from_buffer(ubuf, count, ppos, buf, sprintf_ret);
 -- 
 2.39.5
 
