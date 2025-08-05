@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C012749E8;
-	Tue,  5 Aug 2025 13:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C612275AE6;
+	Tue,  5 Aug 2025 13:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399493; cv=none; b=aIzu2eP4Tz7r90/zbC9ZOWLq8SRTMOyrbGqQhEpoWDTXeSjwIrAGHtnGfEXd+VlK+PuFhK6zbdcY7BeL11u/ns9ttPgz+3aqjpzmpYptTCZlGH9PaI7truAtfP0QzjRygZHhpOixJWdLEjes2679JlzLPoX94IasXLubxGI9EpA=
+	t=1754399494; cv=none; b=W8KUbrD0UgxsLZtVcnA2X2ioM018lWVqomDI6HdKt7Kud3CyLfQsXlf+McgWV+rP4y+GWxWrPe32bqs9Fl+yzdYCSNj0qDHLjZ1TOTZtxnikYwdcNGqoytJEdebC9/Bfz+lF2wmvcR1OYkXj3+dZbBokB2lQcc1LUbI1sbgRNvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399493; c=relaxed/simple;
-	bh=4z2qpKUdOQ4fdDj9nxJ/UhoEg8OJIDaBILPpKXEc2jY=;
+	s=arc-20240116; t=1754399494; c=relaxed/simple;
+	bh=9H17uJLfuVnidCS+gWRXYJKkHr1eMHymYRNlRa11BOg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=iv0QrIK4ZXi5d5oYoYU25t3FWrVS11QEpSVKZECuuExZVMhh68xxZU+YoEqfYchxDKBVqlzDjwhsAU6kqAIzHXwkEbt3p/wSJrq8uOxS7e1o1NXbT/GmGrWlvX2T31fBgBfusqc2CxzDj25NACMLaO/MiQfUeWJELpA4/Tg43BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cb6GlrJe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nlsj3Tt925EiWCKuSd5AJrBDPaU4VOI+TQVaVHjJKhT4/0+xoOcGOWbN5deTjTlx3ZxbiEiSbSyCKJx55yOeL6fdM20ONrQqsKeJskBe5FQsbAJnLR9BLgYgf5V9nhjSMrdCgzlwPgcF8YwqBJAG3gFrm5Lpauo5hG8YhVPKmzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a4dpR8h9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cb6GlrJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50783C4CEF0;
-	Tue,  5 Aug 2025 13:11:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a4dpR8h9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A710C4CEF0;
+	Tue,  5 Aug 2025 13:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399492;
-	bh=4z2qpKUdOQ4fdDj9nxJ/UhoEg8OJIDaBILPpKXEc2jY=;
+	s=k20201202; t=1754399494;
+	bh=9H17uJLfuVnidCS+gWRXYJKkHr1eMHymYRNlRa11BOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cb6GlrJeqMrveHteiL8bzs6sZIvk2NQ9EIBkS6YGRDGz5JACc0kAqMFfVNcmq14Kt
-	 0h3NKS8SMkY96kjLu75ijCd1kZ+yCfW8TZb2epUuwuiXoLoHK0eiLzJPlShb6bAEh6
-	 vCcskMxe+qVv4v1SvvdM/3cvx4aL5BiDVLaBi8H2/48pvirUPJPhV3xEz4JperucNX
-	 Gp7jZ7kHoAhJzOBEBnzzE0LJUXJcomQ8dGd1L6QFTvwDqawwi5dQFeK67Q6B5Dt4Gt
-	 0QyqSjQnmxN/A79VioK5Nwk75H7VNJEPCovouytdYQreFcx/6tnBXZK9pbKc1gRmeb
-	 w3Az+2iiTQsrQ==
+	b=a4dpR8h91NEfQjjTthyqk6j2sBw3TGNdfoMFsJNfJrQ2aatuG61Wr7osj49M9A2tS
+	 HQAkwESAulLCYd88kCZtXmjWsEIcb5Py/fXoYW8tpqfQWnzDNJ4fVCxBvIMx/tMnzW
+	 D6jJILjsnkvIr7Rhe9Q+YjOAFrIY2CRVzdPVuEZ7PTiKf0FxhBCqE3WKE0qhJqkIp/
+	 YKNeqMhpnYC4pIW6Sip4WqLzmCtmiA07R2zBIjJ8ZOrgc5JxUZAnxRXsTCLgGMLCp0
+	 9bwWJYqq65DmbydcXYBmAWqccE2tamb7OGSHZUhNKhYeBCZtVi3ymHFKz6/bkfBWKm
+	 ss0mHR0YkB1FQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	chiahsuan.chung@amd.com,
-	roman.li@amd.com
-Subject: [PATCH AUTOSEL 6.16-6.6] drm/amd/display: Avoid configuring PSR granularity if PSR-SU not supported
-Date: Tue,  5 Aug 2025 09:09:23 -0400
-Message-Id: <20250805130945.471732-48-sashal@kernel.org>
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] media: tc358743: Increase FIFO trigger level to 374
+Date: Tue,  5 Aug 2025 09:09:24 -0400
+Message-Id: <20250805130945.471732-49-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -54,122 +50,111 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit a5ce8695d6d1b40d6960d2d298b579042c158f25 ]
+[ Upstream commit 86addd25314a1e77dbdcfddfeed0bab2f27da0e2 ]
 
-[Why]
-If PSR-SU is disabled on the link, then configuring su_y granularity in
-mod_power_calc_psr_configs() can lead to assertions in
-psr_su_set_dsc_slice_height().
+The existing fixed value of 16 worked for UYVY 720P60 over
+2 lanes at 594MHz, or UYVY 1080P60 over 4 lanes. (RGB888
+1080P60 needs 6 lanes at 594MHz).
+It doesn't allow for lower resolutions to work as the FIFO
+underflows.
 
-[How]
-Check the PSR version in amdgpu_dm_link_setup_psr() to determine whether
-or not to configure granularity.
+374 is required for 1080P24 or 1080P30 UYVY over 2 lanes @
+972Mbit/s, but >374 means that the FIFO underflows on 1080P50
+UYVY over 2 lanes @ 972Mbit/s.
 
-Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Whilst it would be nice to compute it, the required information
+isn't published by Toshiba.
+
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a clear understanding of the issue. Let me analyze the
-commit:
-
-## Analysis Summary
+Based on my analysis of the commit and the kernel repository, here is my
+assessment:
 
 **Backport Status: YES**
 
-## Extensive Explanation
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-This commit fixes a bug that can cause assertions (kernel
-warnings/panics) in AMD display driver code when PSR (Panel Self
-Refresh) is enabled on systems that don't support PSR-SU (Selective
-Update).
+1. **Bug Fix for Real Hardware Issues**: The commit fixes a concrete bug
+   where the tc358743 HDMI-to-CSI2 bridge experiences FIFO underflows
+   with certain video resolutions. The old hardcoded value of 16 causes
+   failures with lower resolutions (1080P24, 1080P30) and different lane
+   configurations, making the hardware unusable in these modes.
 
-### The Bug Being Fixed:
+2. **Small and Contained Change**: The fix is minimal - it only changes
+   a single value from 16 to 374 and adds explanatory comments. The
+   change is confined to the probe function's initialization code and
+   doesn't modify any complex logic or introduce new features.
 
-1. **Root Cause**: In `amdgpu_dm_link_setup_psr()`, the function
-   `mod_power_calc_psr_configs()` is called for any PSR version (line
-   113), which sets `psr_config->su_y_granularity` from DPCD
-   capabilities (line 926 in power_helpers.c).
+3. **No Architectural Changes**: This is a simple parameter adjustment
+   that doesn't alter the driver's architecture or introduce new
+   subsystems. It only modifies the FIFO trigger threshold value written
+   to the hardware register (FIFOCTL).
 
-2. **The Problem**: Even when PSR-SU is not supported (PSR version 1),
-   `psr_su_set_dsc_slice_height()` was being called unconditionally
-   (line 122). This function contains an assertion check at lines
-   968-970 that validates:
-  ```c
-  if (config->su_y_granularity &&
-  (slice_height % config->su_y_granularity)) {
-  ASSERT(0);
-  return false;
-  }
-  ```
+4. **Clear Problem and Solution**: The commit message clearly explains:
+   - The old value (16) worked only for specific configurations (720P60
+     2-lane, 1080P60 4-lane at 594MHz)
+   - It failed for lower resolutions due to FIFO underflows
+   - The new value (374) fixes these issues while maintaining
+     compatibility with the original working modes
 
-3. **Impact**: When PSR version 1 (non-SU) is active but
-   `su_y_granularity` is non-zero from DPCD caps, the assertion
-   triggers, potentially causing system instability or crashes.
+5. **Hardware Compatibility Fix**: This is a hardware compatibility fix
+   for the Toshiba TC358743 HDMI-to-CSI2 bridge chip. Users with this
+   hardware trying to use affected video modes would experience failures
+   without this fix.
 
-### The Fix:
+6. **Low Risk of Regression**: The change increases the FIFO threshold
+   from a very conservative value (16) to a more appropriate one (374).
+   The commit message indicates this value was tested with multiple
+   configurations and represents a sweet spot that works for both low
+   and high resolution modes.
 
-The commit adds a simple version check to only call
-`psr_su_set_dsc_slice_height()` when PSR-SU (DC_PSR_VERSION_SU_1) is
-actually supported:
+7. **Affects End Users**: Without this fix, users cannot use certain
+   common video formats (1080P24/30) with this hardware, which directly
+   impacts functionality.
 
-```c
-if (link->psr_settings.psr_version == DC_PSR_VERSION_SU_1) {
-    if (!psr_su_set_dsc_slice_height(dc, link, stream, &psr_config))
-        return false;
-}
-```
+The commit follows stable tree rules by being a minimal bugfix that
+resolves a real hardware issue without introducing new features or
+making risky changes. The fact that it's simply adjusting a hardware
+register value to fix FIFO underflow issues makes it an ideal candidate
+for stable backporting.
 
-### Why This Should Be Backported:
+ drivers/media/i2c/tc358743.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-1. **Bug Fix**: This fixes a real bug that causes assertions/warnings in
-   production systems
-2. **Small and Contained**: The fix is minimal - just adding a version
-   check around an existing function call
-3. **No Architectural Changes**: This doesn't introduce new features or
-   change architecture
-4. **Prevents System Instability**: Assertions in kernel code can lead
-   to panics or unstable behavior
-5. **Clear Regression Prevention**: Systems with PSR version 1 that have
-   non-zero su_y_granularity values from their panel DPCD would hit this
-   assertion
-6. **Limited Scope**: Only affects AMD GPU display driver PSR
-   functionality
-7. **Safe Fix**: The change only adds a guard to prevent calling PSR-SU
-   specific code when PSR-SU is not supported - this is clearly the
-   correct behavior
-
-The commit follows stable kernel rules perfectly - it's a targeted bug
-fix that prevents potential system crashes without introducing new
-functionality or risks.
-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
-index f984cb0cb889..ff7b867ae98b 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c
-@@ -119,8 +119,10 @@ bool amdgpu_dm_link_setup_psr(struct dc_stream_state *stream)
- 		psr_config.allow_multi_disp_optimizations =
- 			(amdgpu_dc_feature_mask & DC_PSR_ALLOW_MULTI_DISP_OPT);
- 
--		if (!psr_su_set_dsc_slice_height(dc, link, stream, &psr_config))
--			return false;
-+		if (link->psr_settings.psr_version == DC_PSR_VERSION_SU_1) {
-+			if (!psr_su_set_dsc_slice_height(dc, link, stream, &psr_config))
-+				return false;
-+		}
- 
- 		ret = dc_link_setup_psr(link, stream, &psr_config, &psr_context);
- 
+diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
+index 0bf6481dd0d9..1c7546d2ada4 100644
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -1979,8 +1979,19 @@ static int tc358743_probe_of(struct tc358743_state *state)
+ 	state->pdata.refclk_hz = clk_get_rate(refclk);
+ 	state->pdata.ddc5v_delay = DDC5V_DELAY_100_MS;
+ 	state->pdata.enable_hdcp = false;
+-	/* A FIFO level of 16 should be enough for 2-lane 720p60 at 594 MHz. */
+-	state->pdata.fifo_level = 16;
++	/*
++	 * Ideally the FIFO trigger level should be set based on the input and
++	 * output data rates, but the calculations required are buried in
++	 * Toshiba's register settings spreadsheet.
++	 * A value of 16 works with a 594Mbps data rate for 720p60 (using 2
++	 * lanes) and 1080p60 (using 4 lanes), but fails when the data rate
++	 * is increased, or a lower pixel clock is used that result in CSI
++	 * reading out faster than the data is arriving.
++	 *
++	 * A value of 374 works with both those modes at 594Mbps, and with most
++	 * modes on 972Mbps.
++	 */
++	state->pdata.fifo_level = 374;
+ 	/*
+ 	 * The PLL input clock is obtained by dividing refclk by pll_prd.
+ 	 * It must be between 6 MHz and 40 MHz, lower frequency is better.
 -- 
 2.39.5
 
