@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E1C2749E8;
-	Tue,  5 Aug 2025 13:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAAC275B0E;
+	Tue,  5 Aug 2025 13:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399498; cv=none; b=Xidse4tS0PMixQjMSgPt4Spk5xsV6z+WpRLdTVlCXAIQofe7BQYTx4hoKD/rCySvGhnY34o0gKX54rEJSla88VniAbpc8D8Q2Y4ULYorLKmqAOWSx2K1JTHOAnJ0/w5540j2W4ab0yNGYuG78G2Dgjn3Qthh7MCCvNIR6Y11Jx0=
+	t=1754399501; cv=none; b=QxZkbW55WQH6mDlBU1RcW845nxH2TgnGpTLsKchBjtLDREEFR6VRcjtzV9j2mkbnGcwGY2zJ2XBTyT6IJv9MQ0KDFNp4+bARU4xIYjbZcaYMeyAznayZ24I4enpsOeiDv+8Hr80pd3ycjNkWbc3NcIhZhSdXj+tVecVGtSHeMtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399498; c=relaxed/simple;
-	bh=29x8TnAnP+R3c6a0dRVh3yLd0srO63UnLQAfwhxj40k=;
+	s=arc-20240116; t=1754399501; c=relaxed/simple;
+	bh=0xtrlarNGIWrm9wSK4aAU0pwBHqJXMqapeh/WXq+Ffw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OFlMrT1puZQLWkY7/Hhzm+Eh5udxwHElsfF9qAQL/2ks52wfCYxsodPTyY8O6yS/QyETCr2tnku5/c+SWVB9kQvFHiwDpbKfADYRnLROw9sUNlPLbbAB7E0kIMrtI4qAxXmOUZOlZOgypBmAgCQr8L3nKVyBTmtKgDzzDqizVdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FIRW/zlR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j7HUNKqLGJBd3x6Vro9AiUbwr+3STtYnbQ6ad7icIskWkEQqs+UpzhR+47Y5Ry0j4p22Cxd3aDUR0SYxY8VdCadISCInlVBGnUG75N9wBYXCrYGgQhESmoaph/ghKYDPegX9Ob9kiq0CqSUMIcQTm6fCb8ZyRiZq5q4enoISi/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1Wvxjma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FIRW/zlR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23FFC4CEF0;
-	Tue,  5 Aug 2025 13:11:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1Wvxjma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E4EC4CEF7;
+	Tue,  5 Aug 2025 13:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399497;
-	bh=29x8TnAnP+R3c6a0dRVh3yLd0srO63UnLQAfwhxj40k=;
+	s=k20201202; t=1754399501;
+	bh=0xtrlarNGIWrm9wSK4aAU0pwBHqJXMqapeh/WXq+Ffw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIRW/zlRhtZQXXBHAljGSC1adcoSFAOADxJcTeA3Tr3iy13M5D+X0XVWUgHugKSiG
-	 IIJm5xGXFp6MglyqAPTolXI+DTu4dQYm6/jE7zHShI9L0ckksfYAo6v3nvOuj3i2QJ
-	 w68gp+3/4IY9EZGc10ida8Bv+RtDPSx9aUXdAKMHWuddi3F+OEO/ZKKQ0YtljjD9Yz
-	 4NCrXdJc4NNdEPzb3sUIkdIXiF9yOLR8of6LR0Ap2g7ya6vIJfCdn+ceH34YFwZ6wI
-	 WhjbwxnNRZsLmYUEIg9lYSmDsLR9vNMMRuFhAY157JS5Yg4Q3JxMq3UxnuMU5LzJsT
-	 J3FV4sHU3RlpA==
+	b=F1WvxjmaqBwowu9TNZSd/Ig6mIyb6ojToA9juX32U5lHmv1Xq+xPO/f1jYwUe1c1P
+	 G2ilmb0FWLRT07rSeNKRYHn5D+sNkJ3OUcRBjomcqmUEEJGKrVQ93ldlO0hxJmg6JN
+	 qBtt3xZR5aiRjokhUNUpxz50TyC5M0dl1TNjErTHAmURJgRn9kXEAaEsVPCjmGfC9n
+	 nIGp0zBI3r54dElZUtyUgkWsbhnXGPtvXPAqLQ96GEu+pdI35+rqyZDC/n3ZYxtFPm
+	 iUrAcwNwDaLBFO/2MruwQPC18lEgy1Jfh0N8yI3l15pjyYSvcOABLzwNIUPNNnLRd9
+	 9NoPkjFWg/wTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lizhi Xu <lizhi.xu@windriver.com>,
-	syzbot+6e516bb515d93230bc7b@syzkaller.appspotmail.com,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	shaggy@kernel.org,
-	brauner@kernel.org,
-	willy@infradead.org,
-	josef@toxicpanda.com,
-	kovalev@altlinux.org,
-	chentaotao@didiglobal.com,
-	jfs-discussion@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.16-5.4] jfs: truncate good inode pages when hard link is 0
-Date: Tue,  5 Aug 2025 09:09:25 -0400
-Message-Id: <20250805130945.471732-50-sashal@kernel.org>
+	hverkuil@kernel.org,
+	nicolas.dufresne@collabora.com,
+	laurent.pinchart@ideasonboard.com,
+	jonas@kwiboo.se,
+	m.szyprowski@samsung.com,
+	mehdi.djait@linux.intel.com
+Subject: [PATCH AUTOSEL 6.16-5.15] media: v4l2-common: Reduce warnings about missing V4L2_CID_LINK_FREQ control
+Date: Tue,  5 Aug 2025 09:09:26 -0400
+Message-Id: <20250805130945.471732-51-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -52,108 +51,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit 2d91b3765cd05016335cd5df5e5c6a29708ec058 ]
+[ Upstream commit 5a0abb8909b9dcf347fce1d201ac6686ac33fd64 ]
 
-The fileset value of the inode copy from the disk by the reproducer is
-AGGR_RESERVED_I. When executing evict, its hard link number is 0, so its
-inode pages are not truncated. This causes the bugon to be triggered when
-executing clear_inode() because nrpages is greater than 0.
+When operating a pipeline with a missing V4L2_CID_LINK_FREQ control this
+two line warning is printed each time the pipeline is started. Reduce
+this excessive logging by only warning once for the missing control.
 
-Reported-by: syzbot+6e516bb515d93230bc7b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6e516bb515d93230bc7b
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I understand the issue. Every time a V4L2 pipeline is started (which
+happens when streaming begins), the `cio2_hw_init()` function is called,
+which eventually calls `v4l2_get_link_freq()`. If the V4L2_CID_LINK_FREQ
+control is not present, it prints two warning messages. This happens
+EVERY time streaming starts, which can be frequent in normal camera
+operation.
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees based on the
-following extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Critical Bug Fix Nature
+1. **It fixes a user-visible annoyance/bug**: The commit addresses
+   excessive logging that occurs every time a V4L2 pipeline is started
+   when the V4L2_CID_LINK_FREQ control is missing. These two-line
+   warnings are printed on each pipeline start (during `start_streaming`
+   operations), which can happen frequently during normal camera usage,
+   leading to log spam.
 
-This commit fixes a kernel BUG_ON() crash that can be triggered in
-production systems. Looking at the code changes and commit message:
+2. **The fix is minimal and safe**: The change is extremely simple - it
+   only replaces `pr_warn()` with `pr_warn_once()` for two warning
+   messages. This change:
+   - Has zero functional impact on the driver operation
+   - Only affects logging behavior
+   - Cannot introduce regressions in functionality
+   - Is confined to two lines of code
 
-1. **The Bug**: When JFS evicts an inode with `fileset ==
-   AGGR_RESERVED_I` and hard link count of 0, the inode pages were not
-   being truncated. This leads to a BUG_ON() trigger in `clear_inode()`
-   at fs/inode.c when checking `BUG_ON(inode->i_data.nrpages)`.
+3. **Clear bug fix, not a feature**: This is purely a bug fix that
+   reduces excessive logging. It doesn't add new features or change
+   architectural behavior. The warnings were introduced in commit
+   67012d97df931 (Feb 2021) and have been causing log spam since then.
 
-2. **Root Cause**: The original code only called
-   `truncate_inode_pages_final()` for inodes with `fileset ==
-   FILESYSTEM_I`, missing other fileset types like `AGGR_RESERVED_I`.
-   This left pages in memory when they should have been freed.
+4. **Affects real users**: The warning occurs in common V4L2 camera
+   drivers (ipu3-cio2, ipu6-isys-csi2, mei_csi, rcar-csi2, etc.)
+   whenever they start streaming and the transmitter driver hasn't
+   implemented V4L2_CID_LINK_FREQ control. Many camera sensors don't
+   implement this control, making this a widespread issue.
 
-## Fix Characteristics
+5. **Follows stable kernel rules**: According to stable kernel rules,
+   patches that fix "annoying" issues that affect users are candidates
+   for backporting. Log spam that occurs on every camera stream start
+   definitely qualifies as an annoying issue.
 
-The fix is ideal for stable backporting:
+The commit is a perfect candidate for stable backporting - it's a
+trivial, safe fix for a real user-facing issue that has been present in
+the kernel for several years.
 
-1. **Minimal and Contained**: The change is just moving one line of code
-   - `truncate_inode_pages_final(&inode->i_data)` is moved outside the
-   `if (JFS_IP(inode)->fileset == FILESYSTEM_I)` condition block,
-   ensuring it runs for ALL inodes with 0 hard links, not just
-   FILESYSTEM_I inodes.
+ drivers/media/v4l2-core/v4l2-common.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-2. **Low Risk**: The change ensures proper cleanup for all inode types
-   during eviction, which is the expected behavior. The function
-   `truncate_inode_pages_final()` is safe to call for any inode being
-   evicted with no links.
-
-3. **Clear Bug Report**: This fixes a syzbot-reported crash with a
-   reproducible test case
-   (syzbot+6e516bb515d93230bc7b@syzkaller.appspotmail.com).
-
-## Impact Analysis
-
-- **User Impact**: Without this fix, users can experience kernel
-  panics/crashes when specific JFS inode conditions occur
-- **Security**: Prevents potential denial-of-service through triggerable
-  BUG_ON()
-- **Regression Risk**: Minimal - the change ensures proper cleanup that
-  should have been happening all along
-
-## Historical Context
-
-Looking at related commits:
-- Similar eviction-related fixes have been backported (e.g.,
-  e0e1958f4c36 "jfs: fix uaf in jfs_evict_inode")
-- JFS has had multiple stability fixes in the eviction path that were
-  deemed stable-worthy
-- The subsystem maintainer (Dave Kleikamp) signed off on this fix
-
-The commit clearly meets stable kernel criteria: it fixes a real bug
-that causes system crashes, the fix is minimal and correct, and there's
-no risk of introducing new features or architectural changes.
-
- fs/jfs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/fs/jfs/inode.c b/fs/jfs/inode.c
-index 60fc92dee24d..81e6b18e81e1 100644
---- a/fs/jfs/inode.c
-+++ b/fs/jfs/inode.c
-@@ -145,9 +145,9 @@ void jfs_evict_inode(struct inode *inode)
- 	if (!inode->i_nlink && !is_bad_inode(inode)) {
- 		dquot_initialize(inode);
+diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
+index bd160a8c9efe..e1fc8fe43b74 100644
+--- a/drivers/media/v4l2-core/v4l2-common.c
++++ b/drivers/media/v4l2-core/v4l2-common.c
+@@ -505,10 +505,10 @@ s64 __v4l2_get_link_freq_ctrl(struct v4l2_ctrl_handler *handler,
  
-+		truncate_inode_pages_final(&inode->i_data);
- 		if (JFS_IP(inode)->fileset == FILESYSTEM_I) {
- 			struct inode *ipimap = JFS_SBI(inode->i_sb)->ipimap;
--			truncate_inode_pages_final(&inode->i_data);
+ 		freq = div_u64(v4l2_ctrl_g_ctrl_int64(ctrl) * mul, div);
  
- 			if (test_cflag(COMMIT_Freewmap, inode))
- 				jfs_free_zero_link(inode);
+-		pr_warn("%s: Link frequency estimated using pixel rate: result might be inaccurate\n",
+-			__func__);
+-		pr_warn("%s: Consider implementing support for V4L2_CID_LINK_FREQ in the transmitter driver\n",
+-			__func__);
++		pr_warn_once("%s: Link frequency estimated using pixel rate: result might be inaccurate\n",
++			     __func__);
++		pr_warn_once("%s: Consider implementing support for V4L2_CID_LINK_FREQ in the transmitter driver\n",
++			     __func__);
+ 	}
+ 
+ 	return freq > 0 ? freq : -EINVAL;
 -- 
 2.39.5
 
