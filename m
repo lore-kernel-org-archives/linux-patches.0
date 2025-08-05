@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB3D273D8A;
-	Tue,  5 Aug 2025 13:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2875A2B9B7;
+	Tue,  5 Aug 2025 13:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399391; cv=none; b=s2EvtF80fK+XdyfY0/nNt5K9yHfw1zBYNHatQ8ooSbT2TfneH3kNPfNDCqnR9uzVtOS2fU1iO/FaNL+4vpYTzGgjx41OtIKTk7Vy7BL6WHdqx6ZFqZovf0u21+qUD72IlD4jBqYiR11xJn9CaBycgsdkwPHeX1dwLb7xHstYoks=
+	t=1754399393; cv=none; b=FfjQTXDPHvpIzN6jtgTjtX+VBZgCpenDLkpKLyD0zeE/mZZqsN4kImqEF6qMGp3iRNAzWrzhwIacY4+35OeFOA/DVgMdcFr+sOyDe6cXPcoPczUrhWVJn8Mo5TiHiW1N25nO/6U+Kc2NgQCD69o6wo1pLY/bBAHezHZTeu302h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399391; c=relaxed/simple;
-	bh=fOHaPe9slU/CMDtJdHv7D2kYdV1d+04k91CrqWpFzoc=;
+	s=arc-20240116; t=1754399393; c=relaxed/simple;
+	bh=t+sWXRf3aOSnZSbG3popf7O5jm6HgLRtEitNREh/jGw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YMchWT8igWVB2iHXi4Iac3f1l03+3jEhCt66rUax74fd/sc/ZEXpzm2f0JBTnV7IMvJHXhrHmLjKKOG3MVLX2JURA4e0SvjF5G8grgkFz3Vd7Wg7SwgaD5rORTPQeECcWeu+zTYA0nKLasA+e2G0iH/I6suYvjcNT481z0xHDUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gSWv/+ng; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDgjvKA0qbXOHJrZENH1MgxOX9hacXwAsjTLlhIa/zYWDFhLHbvjR5qLgrorOys84V9h7VHqELGKbzaAKcfh6QcEZn8WZMdgiseNSwcoreAdPcpILi2cXh07uC2prEuro37PXRV28yGJlbxVec6bgvhYqOy41X0/H6h6gjj78jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L7GxOmVS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gSWv/+ng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E8BC4CEF4;
-	Tue,  5 Aug 2025 13:09:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L7GxOmVS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF6AC4CEF7;
+	Tue,  5 Aug 2025 13:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399390;
-	bh=fOHaPe9slU/CMDtJdHv7D2kYdV1d+04k91CrqWpFzoc=;
+	s=k20201202; t=1754399392;
+	bh=t+sWXRf3aOSnZSbG3popf7O5jm6HgLRtEitNREh/jGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSWv/+ngWUMZyPhJJEBMKZ1KeyYdKoVPVU9jhGUhziDCtgxMJhzPLLg/I5zVfxQRA
-	 NMEbrn4vtqt4hzL5GYXIrM/TbiusqXIeR+CesuppUMQaE7Pacp2i2igF9gtkNAO7Ma
-	 ZIfq1IKtzzhxBS5XBDaHSKVzY5wb9iZrcTLVxe+PIuBptGiFreb2cruUjTmGAgtvZX
-	 eaCp78zq6uY7q742SmdOeeJYeYuMi1MNfeUd+b1r7cmryvpGrdxQtsNXRpp1i60sAC
-	 0nf9NIFU7Vscso9laP9RWt4tGN6m7aP67qJg3tycCeeX7p8K5VCs54M8dQZsvz+qGJ
-	 StKS3/JywZXIw==
+	b=L7GxOmVS8S0MzIgrznfFnygm96KdNeQwAUQRk/7VZDTvP4h/ZhjQgR5EbhSVP+BVx
+	 2jwpIigAKCY9T2h6sNpHIm7bEOvEoGG6uYzv6TQO3SBTQScNR/jGp+plsIzZm98GML
+	 keLAJNJwth/t8zH1+Fewy3ptl2MOMSYtVmpHeJePSbjsjTXwhyqAhV/imcs+HgXFJM
+	 133mEwVztdZQLkxxyzcAbNQAKOs+32vcQopllMZVzC6xoAttJ5wJkiVarLtwWQP+OB
+	 kOj456A6wbtZCjqIlBNg22qfKsykVIXQdRc+pDtTv90Sg3qCJEoTuEs7B7r9B0lOrO
+	 IvEGd2VWh7MMw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shiji Yang <yangshiji66@outlook.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.16-5.4] MIPS: vpe-mt: add missing prototypes for vpe_{alloc,start,stop,free}
-Date: Tue,  5 Aug 2025 09:08:37 -0400
-Message-Id: <20250805130945.471732-2-sashal@kernel.org>
+Cc: Johan Adolfsson <johan.adolfsson@axis.com>,
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	pavel@kernel.org,
+	linux-leds@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.10] leds: leds-lp50xx: Handle reg to get correct multi_index
+Date: Tue,  5 Aug 2025 09:08:38 -0400
+Message-Id: <20250805130945.471732-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -49,99 +52,141 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: Johan Adolfsson <johan.adolfsson@axis.com>
 
-[ Upstream commit 844615dd0f2d95c018ec66b943e08af22b62aff3 ]
+[ Upstream commit 2e84a5e5374232e6f356ce5c079a5658d7e4af2c ]
 
-These functions are exported but their prototypes are not defined.
-This patch adds the missing function prototypes to fix the following
-compilation warnings:
+mc_subled used for multi_index needs well defined array indexes,
+to guarantee the desired result, use reg for that.
 
-arch/mips/kernel/vpe-mt.c:180:7: error: no previous prototype for 'vpe_alloc' [-Werror=missing-prototypes]
-  180 | void *vpe_alloc(void)
-      |       ^~~~~~~~~
-arch/mips/kernel/vpe-mt.c:198:5: error: no previous prototype for 'vpe_start' [-Werror=missing-prototypes]
-  198 | int vpe_start(void *vpe, unsigned long start)
-      |     ^~~~~~~~~
-arch/mips/kernel/vpe-mt.c:208:5: error: no previous prototype for 'vpe_stop' [-Werror=missing-prototypes]
-  208 | int vpe_stop(void *vpe)
-      |     ^~~~~~~~
-arch/mips/kernel/vpe-mt.c:229:5: error: no previous prototype for 'vpe_free' [-Werror=missing-prototypes]
-  229 | int vpe_free(void *vpe)
-      |     ^~~~~~~~
+If devicetree child nodes is processed in random or reverse order
+you may end up with multi_index "blue green red" instead of the expected
+"red green blue".
+If user space apps uses multi_index to deduce how to control the leds
+they would most likely be broken without this patch if devicetree
+processing is reversed (which it appears to be).
 
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-fuji.dts has reg set
+but I don't see how it can have worked without this change.
+
+If reg is not set, an error is returned,
+If reg is out of range, an error is returned.
+reg within led child nodes starts with 0, to map to the iout in each bank.
+
+Signed-off-by: Johan Adolfsson <johan.adolfsson@axis.com>
+Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Link: https://lore.kernel.org/r/20250617-led-fix-v7-1-cdbe8efc88fa@axis.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, here is my assessment:
-
 **Backport Status: YES**
 
-This commit is suitable for backporting to stable kernel trees for the
-following reasons:
+This commit is a clear candidate for backporting to stable kernel trees.
+Here's my extensive analysis:
 
-1. **Fixes a compilation warning/error**: The commit addresses missing
-   function prototype warnings that can cause build failures when
-   compiling with `-Werror=missing-prototypes`. This is a build fix that
-   prevents compilation issues.
+## Bug Fix Nature
 
-2. **Minimal and contained change**: The patch only adds function
-   prototypes to a header file (`arch/mips/include/asm/vpe.h`). It
-   doesn't modify any actual implementation code, making it extremely
-   low-risk.
+The commit fixes a **real bug** where LED ordering could be incorrect
+when device tree child nodes are processed in random or reverse order.
+Looking at the code changes:
 
-3. **No functional changes**: The functions (`vpe_alloc`, `vpe_start`,
-   `vpe_stop`, `vpe_free`) already exist and are exported via
-   `EXPORT_SYMBOL()` in `arch/mips/kernel/vpe-mt.c`. The patch merely
-   adds the missing declarations to the header file.
+1. **Before the fix** (line 487 in original):
+  ```c
+  mc_led_info[num_colors].color_index = color_id;
+  ```
+  The code was using `num_colors` as the array index, which simply
+  increments for each LED found, regardless of the intended order.
 
-4. **Properly guarded with CONFIG**: The prototypes are correctly
-   wrapped with `#ifdef CONFIG_MIPS_VPE_LOADER_MT`, matching the build
-   configuration where these functions are compiled.
+2. **After the fix**:
+  ```c
+  mc_led_info[multi_index].color_index = color_id;
+  ```
+  The code now correctly uses the `reg` property value as the index,
+  ensuring deterministic LED ordering.
 
-5. **Clear bug fix**: This addresses a specific issue where exported
-   functions lack proper prototypes, which violates C standards and
-   causes legitimate compiler warnings. The functions are already being
-   exported (lines 192, 202, 223, 258 in vpe-mt.c show `EXPORT_SYMBOL`
-   calls) but their prototypes were missing from the header.
+## Impact on Users
 
-6. **No risk of regression**: Since this only adds function declarations
-   that match existing function definitions, there's virtually no risk
-   of introducing new bugs or changing behavior.
+This bug has **significant user-visible impact**:
+- User space applications relying on `multi_index` to control LEDs would
+  break if device tree processing order changes
+- The commit message explicitly states: "If user space apps uses
+  multi_index to deduce how to control the leds they would most likely
+  be broken"
+- Could result in "blue green red" ordering instead of expected "red
+  green blue"
 
-7. **Follows stable kernel rules**: This is a clear bug fix (missing
-   prototypes for exported symbols) that is self-contained and doesn't
-   introduce new features or architectural changes.
+## Fix Characteristics
 
-The commit fixes a legitimate issue where functions are exported for use
-by other modules but their prototypes aren't declared in the header
-file, which can lead to build failures and potential issues with
-function signature mismatches.
+The fix meets stable tree criteria:
+1. **Small and contained**: Only ~13 lines of actual logic change
+2. **No new features**: Simply ensures correct array indexing
+3. **Low regression risk**: Adds proper validation (bounds checking for
+   `multi_index`)
+4. **Clear bug fix**: Not a refactoring or optimization
 
- arch/mips/include/asm/vpe.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+## Additional Safety
 
-diff --git a/arch/mips/include/asm/vpe.h b/arch/mips/include/asm/vpe.h
-index 61fd4d0aeda4..c0769dc4b853 100644
---- a/arch/mips/include/asm/vpe.h
-+++ b/arch/mips/include/asm/vpe.h
-@@ -119,4 +119,12 @@ void cleanup_tc(struct tc *tc);
+The patch adds important safety checks:
+- Requires `reg` property to be set (returns -EINVAL if missing)
+- Validates `reg` is within bounds (`< LP50XX_LEDS_PER_MODULE` which is
+  3)
+- These checks prevent array out-of-bounds access
+
+## Real-world Impact
+
+The commit message mentions that `arch/arm/boot/dts/aspeed/aspeed-bmc-
+facebook-fuji.dts` has reg set but wouldn't work correctly without this
+fix, indicating this affects real hardware in production.
+
+## Stable Tree Rules Compliance
+
+This fix adheres to stable kernel rules:
+- Fixes a real bug affecting users
+- Minimal change with clear boundaries
+- No architectural changes
+- Confined to a single driver subsystem (leds-lp50xx)
+- Adds necessary error checking that was missing
+
+The bug could cause unpredictable LED behavior depending on device tree
+parsing order, which is exactly the type of issue stable kernels should
+address.
+
+ drivers/leds/leds-lp50xx.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/leds/leds-lp50xx.c b/drivers/leds/leds-lp50xx.c
+index 02cb1565a9fb..94f8ef6b482c 100644
+--- a/drivers/leds/leds-lp50xx.c
++++ b/drivers/leds/leds-lp50xx.c
+@@ -476,6 +476,7 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
+ 			return -ENOMEM;
  
- int __init vpe_module_init(void);
- void __exit vpe_module_exit(void);
-+
-+#ifdef CONFIG_MIPS_VPE_LOADER_MT
-+void *vpe_alloc(void);
-+int vpe_start(void *vpe, unsigned long start);
-+int vpe_stop(void *vpe);
-+int vpe_free(void *vpe);
-+#endif /* CONFIG_MIPS_VPE_LOADER_MT */
-+
- #endif /* _ASM_VPE_H */
+ 		fwnode_for_each_child_node(child, led_node) {
++			int multi_index;
+ 			ret = fwnode_property_read_u32(led_node, "color",
+ 						       &color_id);
+ 			if (ret) {
+@@ -483,8 +484,16 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
+ 				dev_err(priv->dev, "Cannot read color\n");
+ 				return ret;
+ 			}
++			ret = fwnode_property_read_u32(led_node, "reg", &multi_index);
++			if (ret != 0) {
++				dev_err(priv->dev, "reg must be set\n");
++				return -EINVAL;
++			} else if (multi_index >= LP50XX_LEDS_PER_MODULE) {
++				dev_err(priv->dev, "reg %i out of range\n", multi_index);
++				return -EINVAL;
++			}
+ 
+-			mc_led_info[num_colors].color_index = color_id;
++			mc_led_info[multi_index].color_index = color_id;
+ 			num_colors++;
+ 		}
+ 
 -- 
 2.39.5
 
