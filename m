@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E73E55B;
-	Tue,  5 Aug 2025 13:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7906E55B;
+	Tue,  5 Aug 2025 13:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399539; cv=none; b=q0UZIYKLX3eO26ELRX2/ERb3WNExfD8s74x9LFL/53i0v1usERnZ6+rakXeIFvmuhOsBJQGY5oEgIy83ZmHo3HK1BuaLnqdS0flVijpAFbfzKqfrbSVeFjp9gWEvUIAq9GqtTQ8/90F2umTjeEnIj704cAcXqLQ8hbjcXvn/oC4=
+	t=1754399541; cv=none; b=pDcXqpUvaKacEHlAUk0+C1goqo+x/yPTUJHf1x3utdteF1Hwy/mE1ACqep+F3342dzACzOxuCcFZOyn1uRDaSCwx61/Uy/7suz0Uvk5D9L2mfH4iaMdKmRecrdxvSVaqVrfb1bIilTbEeRZWZh+Ak6Ozr+S0k0Nr24ahWY2Pi14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399539; c=relaxed/simple;
-	bh=8e1gwNPqga90z0UONejDocvKxDOeqc1OeIg4FdgdU2A=;
+	s=arc-20240116; t=1754399541; c=relaxed/simple;
+	bh=xofx+KMLIBQGqB1MOViKVV4hJQlyQWhXr0UmZzMSNsU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=goJSfVFECOV6VAOHjMVl1m2X7eob68hfPyx+gIG7YTobQTX64/6OAVUERAHPqaQJg/hxtd6S8JfPubC7tGBit5S0Dbi/DPAGHzIz7Mc2OH/Zg8Q85xBbVVFraLb5c+w3LfszC8xAhFwGFU091XOgZiuHKVZ9vsvpwIuM8nByR00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IssPLLXi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SlieCboo+UKjIae+pykJPUcoauLTn6L1E3z063c6mwWVm21/7+wSM3YRrbfL+5GZnUpCL6uoWWnTCJZcNqiRKOBByOi5U4IrB4QsnBTO1a7Tv606QtT/VvUOs5D0zXlpc6wnltw9JJLUQpvNHyrfCbWU7/jySzyq7S4o6d+q/6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVVdoJHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IssPLLXi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75DEC4CEF4;
-	Tue,  5 Aug 2025 13:12:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVVdoJHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AB8C4CEF4;
+	Tue,  5 Aug 2025 13:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399539;
-	bh=8e1gwNPqga90z0UONejDocvKxDOeqc1OeIg4FdgdU2A=;
+	s=k20201202; t=1754399541;
+	bh=xofx+KMLIBQGqB1MOViKVV4hJQlyQWhXr0UmZzMSNsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IssPLLXibfZwK5cUiHehNMIud8TGsXMPDnXYcojge3gmh9J1x+Kqat620aZTbHX3R
-	 FzsMI//OIPw3SqX1nc5an2dDNdH6r3ses3YmqgvhF32HaTlyUZQ8V+tHu89VSPcbpT
-	 NfozBKL7IaJcUAirtdfpRPOIK9KwQnv0chwH9D855PeZTJavkYYcTjwboLxGMd8eAP
-	 vWZChHhcIED06aoLJhlx76As4LkDEjDE1vMDI7WT5zfDJyPwjXyH2Fgh6j6/UGvDAc
-	 QMa4mOhNAvjzwC47C5inVxEsg9f5spxKHPhIY5z8O+z/tAKUfT/H9gijsmPS1v49o9
-	 hybp4Jt7X5vEQ==
+	b=GVVdoJHRW/7edtJGu0+Z1z8K670CQuimUxzTsRxztjkEbrRgbVvU3aPnSoZHtYCAg
+	 wHcYY2599odYQxWYZbKPbWr1mAJwHFIURkrCf8AmAViZ64eS97VMT/L2qewJp7kVAb
+	 5pj/s8thgX8F3uZpgHvt2QZdtkhzabBv/AXVYdDsSrt1/FhcLCRU8L3kT7KWeGCVBW
+	 qOhacEbEc01W3kiUFTNAJIFfG9MG3Jg14Hf1g1du+Bg6dBKui2LWLylOfnPM75CBsb
+	 pmvpoNUN44balnXOJZfbq1Xq4pcTrNHQBuQns9VDZZNY2hxaQJqnnckgo4lui0QpMM
+	 QNiC99uUVOjBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Michal Wilczynski <m.wilczynski@samsung.com>,
+	Drew Fustini <drew@pdp7.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.12] media: hi556: Fix reset GPIO timings
-Date: Tue,  5 Aug 2025 09:09:41 -0400
-Message-Id: <20250805130945.471732-66-sashal@kernel.org>
+	fustini@kernel.org,
+	guoren@kernel.org,
+	wefu@redhat.com,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.16-6.12] clk: thead: Mark essential bus clocks as CLK_IGNORE_UNUSED
+Date: Tue,  5 Aug 2025 09:09:42 -0400
+Message-Id: <20250805130945.471732-67-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -51,108 +54,126 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Michal Wilczynski <m.wilczynski@samsung.com>
 
-[ Upstream commit 99f2211a9d89fe34b3fa847fd7a4475171406cd0 ]
+[ Upstream commit 0370395d45ca6dd53bb931978f0e91ac8dd6f1c5 ]
 
-probe() requests the reset GPIO to be set to high when getting it.
-Immeditately after this hi556_resume() is called and sets the GPIO low.
+Probing peripherals in the AON and PERI domains, such as the PVT thermal
+sensor and the PWM controller, can lead to boot hangs or unresponsive
+devices on the LPi4A board. The root cause is that their parent bus
+clocks ('CLK_CPU2AON_X2H' and the 'CLK_PERISYS_APB' clocks) are
+automatically gated by the kernel's power-saving mechanisms when the bus
+is perceived as idle.
 
-If the GPIO was low before requesting it this will result in the GPIO
-only very briefly spiking high and the sensor not being properly reset.
-The same problem also happens on back to back runtime suspend + resume.
+Alternative solutions were investigated, including modeling the parent
+bus in the Device Tree with 'simple-pm-bus' or refactoring the clock
+driver's parentage. The 'simple-pm-bus' approach is not viable due to
+the lack of defined bus address ranges in the hardware manual and its
+creation of improper dependencies on the 'pm_runtime' API for consumer
+drivers.
 
-Fix this by adding a sleep of 2 ms in hi556_resume() before setting
-the GPIO low (if there is a reset GPIO).
+Therefore, applying the'`CLK_IGNORE_UNUSED' flag directly to the
+essential bus clocks is the most direct and targeted fix. This prevents
+the kernel from auto-gating these buses and ensures peripherals remain
+accessible.
 
-The final sleep is kept unconditional, because if there is e.g. no reset
-GPIO but a controllable clock then the sensor also needs some time after
-enabling the clock.
+This change fixes the boot hang associated with the PVT sensor and
+resolves the functional issues with the PWM controller.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Link: https://lore.kernel.org/all/9e8a12db-236d-474c-b110-b3be96edf057@samsung.com/ [1]
+
+Reviewed-by: Drew Fustini <drew@pdp7.com>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
+Signed-off-by: Drew Fustini <drew@pdp7.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
-
-## Analysis
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-### 1. **Fixes a Real Hardware Initialization Bug**
-The commit addresses a timing race condition in the hi556 camera sensor
-driver where:
-- In `hi556_probe()`, the reset GPIO is requested with `GPIOD_OUT_HIGH`
-  (line 1352-1353)
-- Immediately after, `hi556_resume()` is called (line 1376) which sets
-  the GPIO low
-- This results in the GPIO only briefly spiking high, preventing proper
-  sensor reset
+## Analysis of the Commit
 
-### 2. **Clear User-Visible Impact**
-The bug causes:
-- Sensor initialization failures when the GPIO was previously low
-- Runtime suspend/resume failures on back-to-back operations
-- Camera sensor not working properly due to inadequate reset timing
+### 1. **Fixes a Real Bug Affecting Users**
+The commit explicitly states it fixes:
+- **Boot hangs** when probing peripherals in AON and PERI domains
+- **Unresponsive devices** on the LPi4A board
+- Functional issues with the PWM controller
 
-### 3. **Small and Contained Fix**
-The change is minimal and surgical:
-- Adds only 3 lines of code (a conditional check and a 2ms delay)
-- Changes are confined to the `hi556_resume()` function
-- No architectural changes or new features introduced
+These are critical user-facing issues that meet the stable tree criteria
+under rule #15: "It fixes a problem like an oops, a hang, data
+corruption..."
 
-### 4. **Low Risk of Regression**
-- The fix only adds a delay when a reset GPIO is present
-- The unconditional 5ms delay at the end is preserved
-- The change follows standard practice for hardware reset timing
-  requirements
-- Only affects systems with the hi556 sensor that have a reset GPIO
-  configured
+### 2. **Small and Contained Change**
+The code change is minimal - only 4 lines modified:
+- Line 795: Adds `CLK_IGNORE_UNUSED` flag to `cpu2aon_x2h_clk`
+- Line 799: Adds `CLK_IGNORE_UNUSED` flag to `perisys_apb1_hclk`
 
-### 5. **Affects Recently Added Functionality**
-The reset GPIO support was added relatively recently (commit
-860f262dd0dd from April 2024), and this fix corrects a bug in that
-implementation. Systems using this feature would benefit from the fix.
+This is well under the 100-line limit for stable patches.
 
-### 6. **Follows Stable Kernel Rules**
-The commit:
-- Fixes a real bug that affects users
-- Is small (under 100 lines)
-- Has been tested (signed off by multiple maintainers)
-- Doesn't add new features
-- Has minimal risk of causing new issues
+### 3. **Clear Root Cause and Targeted Fix**
+The commit message provides excellent technical justification:
+- Parent bus clocks are being auto-gated when perceived as idle
+- This causes peripherals (PVT sensor, PWM controller) to become
+  inaccessible
+- Alternative solutions were investigated but deemed unsuitable
+- The `CLK_IGNORE_UNUSED` flag is the most direct and targeted solution
 
-The timing issue this fixes is a classic hardware initialization race
-condition that would cause sporadic camera failures, making it an
-important fix for systems using the hi556 sensor with GPIO reset
-control.
+### 4. **Builds on Previous Stable Fix**
+Looking at commit 037705e94bf6 ("clk: thead: Add CLK_IGNORE_UNUSED to
+fix TH1520 boot"), there's already precedent for applying
+`CLK_IGNORE_UNUSED` flags to this driver to fix boot issues. That commit
+added the flag to 4 other clocks with a `Fixes:` tag, indicating it was
+considered stable-worthy.
 
- drivers/media/i2c/hi556.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+### 5. **Hardware-Specific Quirk**
+This is addressing a hardware-specific issue with the T-Head TH1520 SoC
+where essential bus clocks cannot be safely gated. This falls under the
+stable rule for "hardware quirk" fixes.
 
-diff --git a/drivers/media/i2c/hi556.c b/drivers/media/i2c/hi556.c
-index aed258211b8a..d3cc65b67855 100644
---- a/drivers/media/i2c/hi556.c
-+++ b/drivers/media/i2c/hi556.c
-@@ -1321,7 +1321,12 @@ static int hi556_resume(struct device *dev)
- 		return ret;
- 	}
- 
--	gpiod_set_value_cansleep(hi556->reset_gpio, 0);
-+	if (hi556->reset_gpio) {
-+		/* Assert reset for at least 2ms on back to back off-on */
-+		usleep_range(2000, 2200);
-+		gpiod_set_value_cansleep(hi556->reset_gpio, 0);
-+	}
-+
- 	usleep_range(5000, 5500);
- 	return 0;
- }
+### 6. **Low Risk of Regression**
+The change only affects two specific clocks on a specific SoC (TH1520).
+The flag simply prevents the kernel from disabling these clocks - it
+doesn't change clock rates, parentage, or any other behavior. This
+minimizes regression risk for users of this hardware.
+
+### 7. **Reviewed and Acked**
+The commit has been:
+- Reviewed-by: Drew Fustini (maintainer familiar with the hardware)
+- Acked-by: Stephen Boyd (clock subsystem maintainer)
+
+This indicates proper review from domain experts.
+
+The commit meets all stable kernel criteria: it fixes real bugs (boot
+hangs), is minimal in scope (4 lines), addresses a hardware quirk, has
+low regression risk, and has been properly reviewed by maintainers.
+
+ drivers/clk/thead/clk-th1520-ap.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
+index ebfb1d59401d..cf7f6bd428a0 100644
+--- a/drivers/clk/thead/clk-th1520-ap.c
++++ b/drivers/clk/thead/clk-th1520-ap.c
+@@ -792,11 +792,12 @@ static CCU_GATE(CLK_AON2CPU_A2X, aon2cpu_a2x_clk, "aon2cpu-a2x", axi4_cpusys2_ac
+ 		0x134, BIT(8), 0);
+ static CCU_GATE(CLK_X2X_CPUSYS, x2x_cpusys_clk, "x2x-cpusys", axi4_cpusys2_aclk_pd,
+ 		0x134, BIT(7), 0);
+-static CCU_GATE(CLK_CPU2AON_X2H, cpu2aon_x2h_clk, "cpu2aon-x2h", axi_aclk_pd, 0x138, BIT(8), 0);
++static CCU_GATE(CLK_CPU2AON_X2H, cpu2aon_x2h_clk, "cpu2aon-x2h", axi_aclk_pd,
++		0x138, BIT(8), CLK_IGNORE_UNUSED);
+ static CCU_GATE(CLK_CPU2PERI_X2H, cpu2peri_x2h_clk, "cpu2peri-x2h", axi4_cpusys2_aclk_pd,
+ 		0x140, BIT(9), CLK_IGNORE_UNUSED);
+ static CCU_GATE(CLK_PERISYS_APB1_HCLK, perisys_apb1_hclk, "perisys-apb1-hclk", perisys_ahb_hclk_pd,
+-		0x150, BIT(9), 0);
++		0x150, BIT(9), CLK_IGNORE_UNUSED);
+ static CCU_GATE(CLK_PERISYS_APB2_HCLK, perisys_apb2_hclk, "perisys-apb2-hclk", perisys_ahb_hclk_pd,
+ 		0x150, BIT(10), CLK_IGNORE_UNUSED);
+ static CCU_GATE(CLK_PERISYS_APB3_HCLK, perisys_apb3_hclk, "perisys-apb3-hclk", perisys_ahb_hclk_pd,
 -- 
 2.39.5
 
