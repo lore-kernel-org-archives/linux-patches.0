@@ -1,119 +1,73 @@
-Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482E52E36E7;
-	Tue,  5 Aug 2025 03:43:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.67
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754365418; cv=none; b=qvWjnSdr86YcBSmbb/4y8SqeRAspXmpHVIJit/I3+OysysH+Xl457xKxQNfiKgLAqwhZVwYAMwL++dnHQg6jQr7BJ+/FjtavzXEHxxxuaX3cv3IhXS1woAWmljFkEbX4H8juTh46IUsryi2q6XJJH0O4mxrExt4HFMwDNnarlYY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754365418; c=relaxed/simple;
-	bh=ZniYHKY8QuSd7kXt4f9NMukHnaBfrOkk5MNpA7EfaWg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kSCmo8qd5G9VKfHgr+bwHTR9Ayvha7g+SkjZzqhEkO5otn/64WSXVvBVkpCYSRP751JdqqseE8weTL6YRAGh+3u3q+tN8aMEszaav4TQQHrj2851aNACkdOuuwEElPko1as6uaq2FrgzfaDIURmOnXNKAbe2jyvKbrWuvi7x/Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=chLuxORT; arc=none smtp.client-ip=209.85.218.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504ECA927;
+	Tue,  5 Aug 2025 04:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754368809; cv=pass; b=S96GfBh/WQFV1FIYBa7gl8D2tdoXi2OlyxE4ZXkZOoQ4av97pP3nyGohACGoDOQzWkRl3+AZ08fU8JXIutaol5IJKf+MoxumL6KdbtNWH/6VkqJNgZFxXX0uj7jxpeIzl46fiLNkf23MzG1IVQwsbg8TdnQETrz55hkO5u87ix8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754368809; c=relaxed/simple;
+	bh=vx4DftUwwXSdyzbwHUzTA5ckOdfuuDc8ELVLhPGqGxg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gM5Vrt1Tvtj/RUHrbeGvLDgBEa/IKTU8IeH88mRQcBoc2r7NxYMt+hMJt69xnV4Bi3zvsum7eRqoGmvZBflLmhFlbFL/IOJuALwTXovtX/sLX3krj0DDdMKWo7Nv29dL5n+pym+9iU49VHeg92XnDG9Ou2uNdGQglb5YpUZiVdI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=aaKWUQIS; arc=pass smtp.client-ip=136.143.188.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="chLuxORT"
-Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-af91a6b7a06so900846666b.2;
-        Mon, 04 Aug 2025 20:43:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754365416; x=1754970216; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8WbAm5nExTQIfe1sqlUAgj5NdK4GQb4TTe8phjhgS70=;
-        b=chLuxORTaltKP+PS1DOjUrnv579w3M7jxQvmDORR5GObqBzLi7nv769GLpu7D20p9Y
-         Pyw4C/mjctmoo3P+vT1APXGrqfomDHMqqAPr95E9iZOGwEXSz9EXKHk6aajPo4zU8isv
-         5e6gq8f1oDR7C1IaBW5sHfITNu0NQccj5JyEaQ0/QXhuBMlB7ZW/FI4fT79BsDGsxeXY
-         yfJr7rfWOAN3+Bgri+C8R82SU052OwtQvh9XgFf1ZTNPwjIQ7Xr2/m4ThscdST4gpYM7
-         7UUpRH4PYRCFZQ1Pss/GzVJzKJJLbxCZe4MsTkVlnt4ktQEYygAPr3rveuKUAN1gi+Xs
-         SR5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754365416; x=1754970216;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8WbAm5nExTQIfe1sqlUAgj5NdK4GQb4TTe8phjhgS70=;
-        b=xBRRvZmUTCQndWkb8mHUT3G0ZcnmmsHfMsxNY+OnaFO0xb+7pABEF74CpU1tqTTP++
-         blK2kdLlVztwxRbSiHi1UkBouYbZd3Sm+phPnXNzGt+3pi0aFRZbjUCShcV2HC9/ZON7
-         wA5gDPgGXTCz+Gams8BMU4kzi8OPLtOdm0HeUpBM5fi89hOersyOlHtddbSV+ZIIgCi1
-         7b4pyMg6e1pH/iRIbFkoRLCoIIXclr0tmPd2umD5ge3JTt9WKKa3o0RpD/hg7SOi+yS1
-         eSaZhgV29UemWPgcdW+mfQ9zskc/+SHayzKxWPcM36/nNvcypa4N5eHpiJK9aW31fzRi
-         iOGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUWGmJAMa54qNtJtW3T1u8fHeNi6YfwK9SmG8VgvMpg1uwm5eXRjp0l6TJcZV2H0iD+Qrz0TKaGAA==@lists.linux.dev, AJvYcCVvE/E3K/98UNPSG0yfLvU6SiTYuQwvIXu5lNDjdZxp6xUMMlbo+cFy3JIM0yAXAGbXG8Rw6A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzHPV/9URInPhkUKAaR890U8IxnQhILQ8uJewznYKG/15wzLWSB
-	vkkPiDfKvXKEwD5I1L0URNQqE4F73yrT//G5cNiL6D8I4rOClks+4Bun
-X-Gm-Gg: ASbGncuUt6JGZhsDZemnAOvpGB7UbnMttI5xiDoGaciHqG53vOpt7Sa+KVfWy740lhv
-	RU1caa1LRunaHvcV9ZnQ8WKwFcHP/Zrqcw70wmKCgEOApXS35RHPFLdXENq8N0gcwNub+xq6TN/
-	7iNGoUchTJ19TXgnjM279O4TN+VTZsS2oWUABclrhc9S0l18Ow5Lp6OnkQewT5eofv1IIyb5i5k
-	L015HPFCgSJ8vCJ2+JQCWe4aSV8pQOjx2/JJYuH7J19HnuTPVKgfg0zspGZp3owmv3+5jOzHCr5
-	85id6XkEkYQK5BO4jgEr1vZgK/1Q0Is4xcN6QEJ7I4v5a3PDphzyw9t2hjXWyobULEHEPKXuJgV
-	NDQf0mip75fyWPyng0A/ZJBSZGUK28NqjKK/qPjOTXH7pSJYdfjMdxYD8h+0srMiyUCjzo3c5CU
-	4sGyZO9M+1n8eovQkLFije4Sr8VDf5zo+7NFo=
-X-Google-Smtp-Source: AGHT+IEjmKLsdjb2ZjdT33M1Kp092lXe481aQZe89Govc26G8aNvSHe8HQJ6UUJmTxXI+6BFVbhvGw==
-X-Received: by 2002:a17:907:6d04:b0:ae0:d804:236a with SMTP id a640c23a62f3a-af93ffcaddemr1330563966b.3.1754365415456;
-        Mon, 04 Aug 2025 20:43:35 -0700 (PDT)
-Received: from [26.26.26.1] (ec2-3-126-215-244.eu-central-1.compute.amazonaws.com. [3.126.215.244])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91ee3c1f7sm772698966b.68.2025.08.04.20.43.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Aug 2025 20:43:34 -0700 (PDT)
-Message-ID: <1684792a-97d6-4383-a0d2-f342e69c91ff@gmail.com>
-Date: Tue, 5 Aug 2025 11:43:29 +0800
+	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="aaKWUQIS"
+ARC-Seal: i=1; a=rsa-sha256; t=1754368802; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=hLL0XtTgNsR8WSE4fXNd1z2CdzJur7opUEr/SkPBUDDjlSulSvT94VODsNgGwIr2vUkgbfytas4n4P6BWlxZrKIN1TyYe/FZ5I/nfO1wvhXOL7bI4nTFQpOFY2GNwjQW+YMx2aaOqT8GweRrYdb3qVtBN4zJfYvb4SFz1C4IPC8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1754368802; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=vx4DftUwwXSdyzbwHUzTA5ckOdfuuDc8ELVLhPGqGxg=; 
+	b=UpvdkMFGqv+nhsXyiFujsJoqZCSbBgiheBx8kZTsfhLF6atD18y9Ml+LhjjwFk0VoiQl2y6Qes0sSVRnK1eRKp1GqQ13soGeDnzyQ22HjQ8u+A/Q5hth/ly4LAExzwQAfoLKokpt/x921EnVP24nyK9iRkKTNtxahDoHyemy6DQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohomail.com;
+	spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
+	dmarc=pass header.from=<safinaskar@zohomail.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1754368802;
+	s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
+	bh=vx4DftUwwXSdyzbwHUzTA5ckOdfuuDc8ELVLhPGqGxg=;
+	b=aaKWUQISpExcEcVMiW+kAhc7F6a1dWnwPT9BUxCJLsNRimeGL2AE1BNh2uO+Zgra
+	alSRc7jHjW1rAWNOoiQMSg9J7i0rhAgkY9V1YwCAX26KkNCFRNZhhX70QORFZ8OeSzM
+	j3dDY7xpi/35SQxegkFNWmmQskXGJcMYlr+FoAfc=
+Received: by mx.zohomail.com with SMTPS id 1754368798702522.0385252595497;
+	Mon, 4 Aug 2025 21:39:58 -0700 (PDT)
+From: Askar Safin <safinaskar@zohomail.com>
+To: jgg@nvidia.com
+Cc: alex.williamson@redhat.com,
+	baolu.lu@linux.intel.com,
+	bhelgaas@google.com,
+	galshalom@nvidia.com,
+	iommu@lists.linux.dev,
+	joro@8bytes.org,
+	jroedel@suse.de,
+	kevin.tian@intel.com,
+	kvm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	maorg@nvidia.com,
+	patches@lists.linux.dev,
+	robin.murphy@arm.com,
+	tdave@nvidia.com,
+	tony.zhu@intel.com,
+	will@kernel.org
+Subject: Re: [PATCH v2 15/16] PCI: Check ACS DSP/USP redirect bits in pci_enable_pasid()
+Date: Tue,  5 Aug 2025 07:39:48 +0300
+Message-ID: <20250805043948.97938-1-safinaskar@zohomail.com>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <15-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+References: <15-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/16] Fix incorrect iommu_groups with PCIe ACS
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
- Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
- tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
- <20250802151816.GC184255@nvidia.com>
-Content-Language: en-US
-From: Ethan Zhao <etzhao1900@gmail.com>
-In-Reply-To: <20250802151816.GC184255@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Feedback-ID: rr08011227836b5a84cbec9309bce67830000009930723b1a51d76665429b8f21e634aea6d8b917e42cdb7ee:zu080112276350d1e42093adc1218a592a000051016fedef33d9f8d9d25fa5d589293ff61c022154552f52f8:rf0801122cabce9c8de7e03eff3770245c0000d597922cdc6364a109d4e084b3f192b48cf8a9a71bfb944dc2bee1c2cc69:ZohoMail
+X-ZohoMailClient: External
 
-
-
-On 8/2/2025 11:18 PM, Jason Gunthorpe wrote:
-> On Sat, Aug 02, 2025 at 09:45:08AM +0800, Ethan Zhao wrote:
->>
->>
->> On 7/9/2025 10:52 PM, Jason Gunthorpe wrote:
->>> The series patches have extensive descriptions as to the problem and
->>> solution, but in short the ACS flags are not analyzed according to the
->>> spec to form the iommu_groups that VFIO is expecting for security.
->>>
->>> ACS is an egress control only. For a path the ACS flags on each hop only
->>> effect what other devices the TLP is allowed to reach. It does not prevent
->>> other devices from reaching into this path.
-> 
->> Perhaps I was a little confused here, the egress control vector on the
-> 
-> Linux does not support egress control vector. Enabling that is a
-> different project and we would indeed need to introduce different
-> logic.
-My understanding, iommu has no logic yet to handle the egress control
-vector configuration case, the static groups were created according to
-FW DRDB tables, also not the case handled by notifiers for Hot-plug
-events (BUS_NOTIFY_ADD_DEVICE etc). iommu groups need some kind of {
-add, remove etc } per egress control vector configuration operation.
-
-Thanks,
-Ethan>
-> Jason
-
+"interpretation" should be, not "interpritation"
