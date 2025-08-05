@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92845271A9A;
-	Tue,  5 Aug 2025 13:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1722749CF;
+	Tue,  5 Aug 2025 13:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399485; cv=none; b=HGse+VYOlrv5NKEDgL130jINWsrQLIsBDuOKF31dvHfbFBRpNifPlC7Y6yNZy9ckNji3yzM4G28PG3SST9G/dQwFc3KGEEx6MffzhpunSWbQpqqMMAeU0GM5ig+fYLKzN/n+saCbGOOyrr7uSt5mcVXnc2MO+QOyA/KUOcbakeM=
+	t=1754399488; cv=none; b=CU8lvK/BHjcveskmY+Wy08xeKoWRbJPW89bCGSsFuf/zN3G8QKyvifzv2+1uVzQCYtTT2HoM6XP1SGSz5UmEc4uu6TWPFEy2Va2+qAcfNE6+R90Ltrbvu1li8tsCtagjojRFapHsSVs/iHVobJwjUQaQUfstvyWvGIxz5pK/Cug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399485; c=relaxed/simple;
-	bh=druAkP7ErkwowYteDJD9VVOW9WOr0v88MkQOAoddKV8=;
+	s=arc-20240116; t=1754399488; c=relaxed/simple;
+	bh=EfBkt+MghfOjvtpqGjuyCDnn+Jg2bBYSq+HLaw+7kzs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=aXutGK3EI6g0Wl2kEfqYJTUErsh1rXLuga9hcb1W/IFxWDBeounp6lmb6jdc/ifJmR1EwL6FqsS2ogKoBuENfGomA+5iyEkQyMomnXIbjHc+jjZa4+waG4AitL69skCOMWnJOfbRFICGnTllCu+WQS+u0/frD5xYOxJhQqNL1wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gdRa/AQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NziaOTdAmnya1z6AcjhFPd0D2OYK+5DICPit6pR3qeIcWv6f6KSts3NyfWwTSEM1dM/GPnfp/XMhtkuQ6ovPa3JcOM7+JRlqU1IhiAaG5JkZ3fAbSsvqYA8FmPMLpL72f+g26kWc5gB6xaIwqz0l4hvrB3ievpTGpcgfqWVhPTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B8sP84fB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gdRa/AQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE76C4CEF4;
-	Tue,  5 Aug 2025 13:11:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B8sP84fB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7195C4CEF0;
+	Tue,  5 Aug 2025 13:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399485;
-	bh=druAkP7ErkwowYteDJD9VVOW9WOr0v88MkQOAoddKV8=;
+	s=k20201202; t=1754399488;
+	bh=EfBkt+MghfOjvtpqGjuyCDnn+Jg2bBYSq+HLaw+7kzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdRa/AQYz5n2gH1736g7YxHRwuEBeZafCSQT3m2rJTa/JVn+4e9HQ9bz9rVNqUwGL
-	 D+sD3Ci01GrGMQCULM14szALPAaF4T1C7BQRJ5/eLlYlaLPpOke1IDli96Y72PYgsL
-	 akrmA7yKxJ+2H2hTdaAHfAb2CaeOpakiILSKfysqpKJmwg1IvfQVFMhJ0x7APOj7df
-	 v+F3dYVyVqsjmU9KRzZtgJqFImp8iYZh1YDOHXyMrfN/l4VHOzZCNKkhT4jFdcKuQr
-	 WWDq5zAbDSgiALH9zQW2go3FBb5wex7odyBcfEcTJ0tFKeZ9JYYHCCDzYxNvGwDWRL
-	 hhj5WtNWZerLQ==
+	b=B8sP84fB320gJuf1c6VArzeTvcP0G4lQXnvv/DeHp4ZZGN/ryJ5bLUWJzwFNA7aJv
+	 wTWhVVv8SFNDbZFRp2hVtKJOMW9wG+XbMR8AKd/Daps8tcAneIDhLq48V7z0sJ7EBq
+	 v5/DeLbkulo0bYRwyGkbWmFGh4X7sLcSKc2OIFK69shUuu9a8BhDeCYojsXrQag77N
+	 kUhKv2jR3Cm1RbTDJS/g9q27EV3AdnJcfhq2qN1/M+GbahiOdwrJ/zU3OtEX+TRNy/
+	 Wtk5FHFxUDKdI582eIKnDSgg1oGhR/ueApMwQS8ud+yWlidprNM28tCjpJtfuD9THg
+	 SbshLwu/EqQgw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yongzhen Zhang <zhangyongzhen@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Akira Yokosawa <akiyks@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>,
-	simona@ffwll.ch,
-	tzimmermann@suse.de,
-	lee@kernel.org,
-	m.masimov@mt-integration.ru,
-	linux@weissschuh.net
-Subject: [PATCH AUTOSEL 6.16-6.1] fbdev: fix potential buffer overflow in do_register_framebuffer()
-Date: Tue,  5 Aug 2025 09:09:20 -0400
-Message-Id: <20250805130945.471732-45-sashal@kernel.org>
+	kees@kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.15] sphinx: kernel_abi: fix performance regression with O=<dir>
+Date: Tue,  5 Aug 2025 09:09:21 -0400
+Message-Id: <20250805130945.471732-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -54,91 +51,158 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 523b84dc7ccea9c4d79126d6ed1cf9033cf83b05 ]
+[ Upstream commit 2b16b71a05a7f056221751b906c13f8809656b1f ]
 
-The current implementation may lead to buffer overflow when:
-1.  Unregistration creates NULL gaps in registered_fb[]
-2.  All array slots become occupied despite num_registered_fb < FB_MAX
-3.  The registration loop exceeds array bounds
+The logic there which adds a dependency note to Sphinx cache
+is not taking into account that the build dir may not be
+the source dir. This causes a performance regression:
 
-Add boundary check to prevent registered_fb[FB_MAX] access.
+$ time make O=/tmp/foo SPHINXDIRS=admin-guide htmldocs
 
-Signed-off-by: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+	[OUTDATED]
+	Added: set()
+	Changed: {'abi-obsolete', 'abi-removed', 'abi-stable-files', 'abi-obsolete-files', 'abi-stable', 'abi', 'abi-removed-files', 'abi-testing-files', 'abi-testing', 'gpio/index', 'gpio/obsolete'}
+	Removed: set()
+	All docs count: 385
+	Found docs count: 385
+
+	real    0m11,324s
+	user    0m15,783s
+	sys     0m1,164s
+
+To get the root cause of the problem (ABI files reported as changed),
+I used this changeset:
+
+	diff --git a/Documentation/conf.py b/Documentation/conf.py
+	index e8766e689c1b..ab486623bd8b 100644
+	--- a/Documentation/conf.py
+	+++ b/Documentation/conf.py
+	@@ -571,3 +571,16 @@ def setup(app):
+	     """Patterns need to be updated at init time on older Sphinx versions"""
+
+	     app.connect('config-inited', update_patterns)
+	+    app.connect('env-get-outdated', on_outdated)
+	+
+	+def on_outdated(app, env, added, changed, removed):
+	+    """Track cache outdated due to added/changed/removed files"""
+	+    print("\n[OUTDATED]")
+	+    print(f"Added: {added}")
+	+    print(f"Changed: {changed}")
+	+    print(f"Removed: {removed}")
+	+    print(f"All docs count: {len(env.all_docs)}")
+	+    print(f"Found docs count: {len(env.found_docs)}")
+	+
+	+    # Just return what we have
+	+    return added | changed | removed
+
+Reported-by: Akira Yokosawa <akiyks@gmail.com>
+Closes: https://lore.kernel.org/linux-doc/c174f7c5-ec21-4eae-b1c3-f643cca90d9d@gmail.com/
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Tested-by: Akira Yokosawa <akiyks@gmail.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/e25673d87357457bc54ee863e97ff8f75956580d.1752752211.git.mchehab+huawei@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now, let me understand the actual bug better. The issue is that when
+building with `O=<dir>`, the `f` variable contains a relative path from
+the source tree, but when we use `os.path.abspath(f)`, it resolves
+relative to the current working directory (which is the build
+directory), not the source tree. This causes Sphinx to think files have
+changed when they haven't.
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Extensive Explanation:
 
-## Critical Bug Fix
-The patch fixes a legitimate **buffer overflow vulnerability** in the
-framebuffer registration code. The vulnerability occurs when:
+This commit is a strong candidate for backporting to stable kernel trees
+for the following reasons:
 
-1. **Array bounds violation**: After the loop at lines 448-450 searches
-   for an empty slot in `registered_fb[]`, the variable `i` could equal
-   `FB_MAX` (32) if no empty slot is found
-2. **Out-of-bounds access**: Without the added check, line 460
-   (`fb_info->node = i`) and line 499 (`registered_fb[i] = fb_info`)
-   would access `registered_fb[FB_MAX]`, which is beyond the array
-   bounds (array indices are 0-31)
+### 1. **Clear Bug Fix for Performance Regression**
+The commit fixes a concrete performance regression in the documentation
+build system when using out-of-tree builds (`O=<dir>`). The commit
+message shows the issue causes unnecessary rebuilds with a ~11 second
+penalty due to incorrectly tracking file dependencies.
 
-## Security Impact
-This is a **security-relevant fix** that prevents potential kernel
-memory corruption:
-- Writing to `registered_fb[FB_MAX]` at line 499 would corrupt memory
-  beyond the array
-- This could lead to system crashes, unpredictable behavior, or
-  potentially be exploited for privilege escalation
+### 2. **Small and Contained Change**
+The code change is minimal and focused - only 4 lines are modified:
+- Line 149-150 (old): `env.note_dependency(os.path.abspath(f))`
+- Line 150-152 (new): Adds a proper path construction and file existence
+  check
 
-## Meets Stable Criteria
-The fix perfectly aligns with stable tree requirements:
-- **Small and contained**: Only 3 lines added (the check and return
-  statement)
-- **No feature changes**: Pure bug fix with no functional changes
-- **Minimal regression risk**: The added check is defensive and cannot
-  break existing functionality
-- **Clear bug fix**: Addresses a specific, well-defined issue
+The fix correctly constructs the absolute path by joining `srctree` with
+the relative path `f`, ensuring the dependency tracking works correctly
+regardless of build directory location.
 
-## Code Analysis
-The vulnerability scenario is real and can occur when:
-1. The system has gaps in `registered_fb[]` due to framebuffer
-   unregistration (line 545 in `do_unregister_framebuffer` sets slots to
-   NULL)
-2. The condition `num_registered_fb < FB_MAX` passes (line 445) but all
-   32 slots happen to be occupied with non-contiguous registrations
-3. The loop finds no empty slot, leaving `i = FB_MAX`
+### 3. **Root Cause is Clear**
+The bug occurs because `os.path.abspath(f)` resolves relative paths from
+the current working directory (the build directory when using `O=`), not
+from the source tree. This causes Sphinx to track non-existent or wrong
+file paths as dependencies, leading to false positives in change
+detection.
 
-The fix adds a crucial boundary check at the right location, immediately
-after the search loop, preventing any possibility of out-of-bounds
-access.
+### 4. **No Architectural Changes**
+This is a straightforward bugfix that:
+- Doesn't introduce new features
+- Doesn't change any APIs or interfaces
+- Only fixes incorrect path resolution logic
+- Adds a defensive file existence check
 
-This is exactly the type of fix that should be backported to stable
-kernels - it addresses a real security vulnerability with minimal code
-change and zero risk of introducing new issues.
+### 5. **Affects Common Use Case**
+Out-of-tree builds with `O=<dir>` are a common workflow in kernel
+development, especially for:
+- CI/CD systems
+- Clean builds
+- Testing multiple configurations
+- Keeping source trees pristine
 
- drivers/video/fbdev/core/fbmem.c | 3 +++
- 1 file changed, 3 insertions(+)
+### 6. **Low Risk of Regression**
+The change:
+- Only affects documentation builds
+- Adds a safety check (`os.path.isfile()`) that prevents tracking non-
+  existent files
+- The logic is more correct than before (properly resolving paths
+  relative to source tree)
+- Has been tested by the reporter (Akira Yokosawa)
 
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index dfcf5e4d1d4c..53f1719b1ae1 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -449,6 +449,9 @@ static int do_register_framebuffer(struct fb_info *fb_info)
- 		if (!registered_fb[i])
- 			break;
+### 7. **Meets Stable Criteria**
+According to stable kernel rules, this fix:
+- Fixes a real bug that users hit (performance regression in
+  documentation builds)
+- Is obviously correct and tested
+- Is small (under 100 lines)
+- Fixes only one thing
+- Has no dependencies on other changes
+
+The commit directly addresses a performance issue that affects kernel
+documentation builds, making it slower and less efficient when using
+out-of-tree builds. This is the type of bug fix that stable kernels
+should receive to maintain quality and performance for users who build
+documentation.
+
+ Documentation/sphinx/kernel_abi.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/sphinx/kernel_abi.py b/Documentation/sphinx/kernel_abi.py
+index db6f0380de94..4c4375201b9e 100644
+--- a/Documentation/sphinx/kernel_abi.py
++++ b/Documentation/sphinx/kernel_abi.py
+@@ -146,8 +146,10 @@ class KernelCmd(Directive):
+                 n += 1
  
-+	if (i >= FB_MAX)
-+		return -ENXIO;
-+
- 	if (!fb_info->modelist.prev || !fb_info->modelist.next)
- 		INIT_LIST_HEAD(&fb_info->modelist);
+             if f != old_f:
+-                # Add the file to Sphinx build dependencies
+-                env.note_dependency(os.path.abspath(f))
++                # Add the file to Sphinx build dependencies if the file exists
++                fname = os.path.join(srctree, f)
++                if os.path.isfile(fname):
++                    env.note_dependency(fname)
+ 
+                 old_f = f
  
 -- 
 2.39.5
