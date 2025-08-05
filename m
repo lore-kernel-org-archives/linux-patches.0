@@ -1,176 +1,116 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2052.outbound.protection.outlook.com [40.107.94.52])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D6F2E3718;
-	Tue,  5 Aug 2025 14:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754404990; cv=fail; b=bSEwgb0EaF/IC+IGlXDoitI4IA2EfVgcFzUS/E4pG4Q9GxmwEgMT2SpyQgKAP0nlvpQwyR6GFgYHZ+M1C12wMFrxd1MB//aPA2jaB2mL2wSgJSVxoAbUliPrp1kol2jaKV7cKXsRKbNqr92M6BlqCq9dkdp45fXt0TVFsTx4VWM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754404990; c=relaxed/simple;
-	bh=nDr+CZmP1uAigeS0dPouof627wwajN+4Bazu9QKKh6A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Zpmn16fwTVi9lePg0CPNlMm+CPmKvSCQewyA7rHARO1je8BptiOADgXESctXyCHCs7aJ5LaYfG0TGkyh2CmGT5U11Kg6K4sEYti3LC3f5WBEyhdbTx9djXf2QeJfK/Vqgp4UVdFBH0HqYGC8gVL/KWZuFa6FWpLL47L/c4WwfhE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=L/VMV/EQ; arc=fail smtp.client-ip=40.107.94.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D51529899A;
+	Tue,  5 Aug 2025 18:09:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754417384; cv=none; b=EcdwcDZpKgk7+KuRs+ltUrxUc7mrXOAwLuOogqYQ32Y5bNQdErUS42/DLP+QvAao01NKfCaTl119xZ2ULDOOVdZZn8vKYLcuZe+xUqbHD9CZNTUo11gFfT0LX20FghK6Md4z3sNB5rNSOj3iAxue6M4wkjw/xGkafUw5ULQAdrU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754417384; c=relaxed/simple;
+	bh=CQ4211YH7bOUvS0w3ZcUchCGKPBUdDufL+8k2O3J26k=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mJ8xEjGaXMjd751+aezD1SprIUdNCcTIpno656PAdFvMXB3HwXWkg2Ivt3Ahnl2JfYq92ALkqRUbGHQa3BVBL5YIN4H3Pja5g7dXQaIwhSruzGohMdzdxSdGvAuQVmOvwJPoD4yk/a/kzC/aWVUbGpUXFydyaGx/jgAKkUH9AsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PfJbvBnS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="L/VMV/EQ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sLXQHq8KY1FqBs6tzJv/8AIgfx1ttg/WWX5tpovH5OSIbJAfTMGYjavkadr3XDAOflL7yTsMgNN1NoWOMB47HYXWZozizbPETn0tU/P9YK35itq9LQX+w1SZiwYskl6uCcXZ6ok60FHZBauzTIoB6P6zGxX2jUstg8Z7nM/vLDj4x8fB3aCdkOoMMhDuaXRut3kVQI1uw49k5EXXpFEfs/R5tGjNezjrydLpJKjHizdeUZiaApvzx2A+xBHDBQyYqKJaGwrKqEQII3Wpv+SbYsNbrNFCK3qkbAj+arWrD2VTD+XjTyazVmCPIiR4IS/rTsPZO0kd44H9XTsPcD++MQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HvN+85QxWFMuT+rr50ET0blaF9HOia8Lrf21nGMW10U=;
- b=Zzt3xs+5aGtf1pmA/fp6TeMKqu5E1UTJduGeJiF8CIT8yTRfeghw+9afELUEOKHClukeTQe6992jp4hU3pJCJmVZ3T+go3u3GSESuYaIPIAVkj5AVX6L4q6GPyjpq9mgzZB8AJX7sVx47kJvlFBS+PiLDwkEBs0NPcZAcmbPWW6P5E5VkbaslZaYZFdQIUg7AlzEbotf3fzXEkeCsoxvJl8BzUDQw3f6ZlexkzovfpnfLPBHgjuUj/fK4ncWCDMTqo2STLud05oxHVTQ3W54He0tozbTyz0gsrLoncvArPdgj1aOlaR0f0MWeXqqaJY4lLXusO6NNgGlwdpR3o6zNA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HvN+85QxWFMuT+rr50ET0blaF9HOia8Lrf21nGMW10U=;
- b=L/VMV/EQFWypxZnO7kFT03JgREJ4bVrOh/serCb98K1n0va0LMLKsVqw1mVFgDRBEB4GSmRKO1kD+xmZXEgSQksDFL/wu5CAmOcWQ67YwLbiPM7JLoOZyp3VXOvCOAQO8WMVVF5KmJbtB/95GAHem2iPbazy5iv/7UMTkvrrw6QwMtrHt8/LH5nYOIMJU+AMOklCXjuO4c8wnclkVjOHreHDtLlbdBkD4RYjEQUHQ3CXeQSI5q/P1V+zh8cTT0Bif4h9fTZGMY2ePfGWae3X2rBI+TD29IGBH1gU7MLwNKvLI/n6s2Thq3HqeTnAzu7qlC89MphZH59/E4HvUmXoxA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by SA3PR12MB9226.namprd12.prod.outlook.com (2603:10b6:806:396::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.14; Tue, 5 Aug
- 2025 14:43:02 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.9009.013; Tue, 5 Aug 2025
- 14:43:02 +0000
-Date: Tue, 5 Aug 2025 11:43:01 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Ethan Zhao <etzhao1900@gmail.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
-	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
-	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
-	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-Subject: Re: [PATCH v2 00/16] Fix incorrect iommu_groups with PCIe ACS
-Message-ID: <20250805144301.GO184255@nvidia.com>
-References: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
- <20250802151816.GC184255@nvidia.com>
- <1684792a-97d6-4383-a0d2-f342e69c91ff@gmail.com>
- <20250805123555.GI184255@nvidia.com>
- <964c8225-d3fc-4b60-9ee5-999e08837988@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <964c8225-d3fc-4b60-9ee5-999e08837988@gmail.com>
-X-ClientProxiedBy: YT4PR01CA0121.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:d5::9) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PfJbvBnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A345CC4CEF8;
+	Tue,  5 Aug 2025 18:09:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754417383;
+	bh=CQ4211YH7bOUvS0w3ZcUchCGKPBUdDufL+8k2O3J26k=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=PfJbvBnSrP5rOAkboOaaCIsUhWoV2w3ZmgbTYzuyYvGKrfuhgJIoo50Gx+cc1oL9U
+	 FlDWCTmPg6Jm42XZSHPH8e27kD/PfauwNQgWdfebDDsYpd2CqWYoJkWUUFvbpoNvgZ
+	 4bcmb0IBl9juSVM5ROKJCHJVlm9FPLL9ljpRsDRnYzbTphx+WHT5RxwzCgE3YIo+j8
+	 fZOJeXcP605ltX3o2lYkwqWdonu83Ot+uygxLMjwke3FhxZUoYCCEXL4vo486VFreF
+	 pHesL1ye5xlTSUcqynUsqv9XCxk4xdiZVc66sieGUmmfkurfr7X4FMLywR4qAQwpMo
+	 X/Z+Z1cacIl0w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1ujM6X-004F3q-5r;
+	Tue, 05 Aug 2025 19:09:41 +0100
+Date: Tue, 05 Aug 2025 19:09:40 +0100
+Message-ID: <877bzhtzbv.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	toan@os.amperecomputing.com,
+	kwilczynski@kernel.org,
+	mani@kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH AUTOSEL 6.16-6.6] PCI: xgene-msi: Resend an MSI racing with itself on a different CPU
+In-Reply-To: <aJIOP1GO8LumDZOJ@lappy>
+References: <20250805130945.471732-1-sashal@kernel.org>
+	<20250805130945.471732-59-sashal@kernel.org>
+	<86fre5aoqz.wl-maz@kernel.org>
+	<aJIOP1GO8LumDZOJ@lappy>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SA3PR12MB9226:EE_
-X-MS-Office365-Filtering-Correlation-Id: f794ea32-f1e9-4da1-e44d-08ddd42e6164
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?H+hVgMpN2q16s/9RXQ4vKMx8tO8yM/POyDe0drI7z+dZ/06dEZ4lD892zVuT?=
- =?us-ascii?Q?7Z1Lscurn9pHckY+0C5qssulBWHrB0+gbrKKH1ve0KFBfYIYq6RZoa4z47hG?=
- =?us-ascii?Q?D5sRjxv5239nf0Pjq4n2oWhFpX3H/BChCZM74kLRqj4CBr5VsVRj3O8xYlQd?=
- =?us-ascii?Q?0vgv4+PsYNHBv1G0KnylGbv1nbiWz5afyD2+Rtz1HLmaZlt7wGSpJXFnDAuG?=
- =?us-ascii?Q?IbIADvQISITPA3R6SdRZ0IYklv4MviX9var6phDk1bG1hFQp6eKpT9eA7hOl?=
- =?us-ascii?Q?Nsyz7bw35LTtRlNK7V9ANmte8DWkEWBy0ubLGfM6L3bVO2l6JHfk/DGVXbmD?=
- =?us-ascii?Q?sFhPPiUfhkrVsCWJBbquv+vIcI+wZk+MWjr+MeAuqlefdh8UA0CJPUAA0quZ?=
- =?us-ascii?Q?IKcjVArcAtQy0djml/ZdKbWDB2m/4KNDKvAhWc9dz9BWWTGbZMNsPWpAll/A?=
- =?us-ascii?Q?INOXo9AapfXt97plgt3GnVk8SA4Lhbruo8zSUu7ts8TP/aJArX2nunmT02qX?=
- =?us-ascii?Q?dFPIZ/XIesbfkn5NK6fhQSiELJC0PzRUv90J6BvYtLhU8TwLijprtysXSm+R?=
- =?us-ascii?Q?V9g0oZ5vcgXKnQmBBjmCctMl5fFUjySs8RCNHpsOsxlxU7SU3+b1jLVLPChr?=
- =?us-ascii?Q?vQ/1SOL/BeNWLUQ4t8XHNJyT/ztfVlp/I7Q9cC8+CArDoMEUMHMNRQNfvWOQ?=
- =?us-ascii?Q?bxlb/YLZvCo5mfXTPp+xR2TPMQaUY6Dqn4aHCG1jLB0xfEI0be2xXNn1QBel?=
- =?us-ascii?Q?mp2guxAsjrnmULcpgczgAp3VZetbyX4MmQ0uvCNNBdM4LMZpdqoIChCVSSj5?=
- =?us-ascii?Q?M+JwihdBJp64vMocCbgSEFOabVOzm9aEDuqAYI3m0T0WzJtQ1atozdlfnV2F?=
- =?us-ascii?Q?4C62wwvi3xo7UUImxkDaiVOcxlFMzZQLxjEqIqS9jUPMtlRWdpEjW+t/AyJA?=
- =?us-ascii?Q?cQHk4aJEDpJ64YBFgR+rR2yAeIOLyd5ajkCj/WOIbfMe9dpL5JCaMjIbowi7?=
- =?us-ascii?Q?phtw0M9h2WjfDahhD9fNA3jsXckAm/NxU+5RyC4x9HhotuIHkpIXXi9h8Z0o?=
- =?us-ascii?Q?L2G6F91GS4MckZbfkYgCKxiQUWU37Cm+nIu/IN5RuwpSH6fDrCRQ6IP7bVJl?=
- =?us-ascii?Q?pKVSVIvZirraMgJvbuMk8KgaPUE9UJ3JJYIdkRbmfRiOPBF9b5/n5aqS8x3U?=
- =?us-ascii?Q?nJ0sBiyPFqa2Ra/2ZIjdtbH7HJp9k7yHA6zFMj/EBicsRR/tbXPxxgctm95H?=
- =?us-ascii?Q?3AaA7oPpS4ZZfjGBzlfmJpWh361ehbK5gP/wEVMGDPXPAaeGAe2EIzhIVAEq?=
- =?us-ascii?Q?YNtyHk1bBlpaDgKC4NpKdZKiSnk9idh3BdCjzy6ODw5RobOEc2xVJUNjDM4Z?=
- =?us-ascii?Q?lwlXTJRli1CmCyElffWTU93D5clgzw+F8ubpaGGAs9aMdXtV6VcqcscoRVeC?=
- =?us-ascii?Q?o0EBPP8LJm0=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?y6Ydz8sI8sxzFa10irYt2cyMvRflgRS2Z1/zIg5rOJkQLpyqHEN6rz/5fztC?=
- =?us-ascii?Q?h493we6dSh7Tt9Py11L/a4Ae+mPna+X7sV1TCmgUZ/4qG5mZ9t+tICGniT65?=
- =?us-ascii?Q?cAxPb3GflSYTqRkLsgMTIcFCBk84T8imNhZC4CJsyVhou7iRfvoqyPAkaSvF?=
- =?us-ascii?Q?JmMpQpqYsIcF7XsGtbRjwmddvjghE7WIqs2oDTzt8ZPMbGjWv4wFYqlVl74C?=
- =?us-ascii?Q?vJ8Z9caMT4LdSo2ouG5Y393PvMbUnGI2J/GSV8iD0OXvxzLzkr8/Yrp4mC7m?=
- =?us-ascii?Q?7B1UPrUS+v0dI7tfzdiAbpDpuepXucPARfo3BEWqP/ziUtPu1glIlwV0yLV/?=
- =?us-ascii?Q?VgBEXO3+eHhIdkMz0lxLx0k88/Yr4BjgGXVRlqNI99bywxNapW/OArAXVOQ2?=
- =?us-ascii?Q?P8jpXH5d5fJN8CmgMSdphR2oogJo9qLg1Qc0PrNI0ZAQJRAhhDG3WFMsgW1z?=
- =?us-ascii?Q?8uQqCH3ixUbyn0Aoebrg6eHtF64PRiD+pKNKrLZVdmu9Y12BJE7dm/pmCMFA?=
- =?us-ascii?Q?FxsY+scI83zBhf9tUCHoKGLqRE+RAFMxBB87yf4vtUqrKtUwLQjnKsoW77zx?=
- =?us-ascii?Q?OMvJZIQpW1flOoGsQjbX11zs221nM6qCt9a1LilsUzYHctcE7kWtVbvU/DNU?=
- =?us-ascii?Q?bW/0JO3LE68oLKpMKXLapgrmlSXLjccTr7WcdO7m6rNTolQMwYKeQFXKN0mF?=
- =?us-ascii?Q?am3u7GdPO3RZAzwQbRs1EXMoxy9JbQe3f/LDnKgv8W6mnIZBiD9uIbV+AvU1?=
- =?us-ascii?Q?KTF5SJ++piDFEWF4psrs95LeGgOeFCB80PDgpDdIF6Ym3RcUanL9AR5EEfRJ?=
- =?us-ascii?Q?QP3uT3L5jcvjvTctzB65hpXr999qxNl7SdcnhljDqdAhVuwH8j6446XoMZk6?=
- =?us-ascii?Q?bHsLZmwYemvLfMZCSjbzAlDrVpV7mVEwP3omWXx/RJtRYH6uoExvf/CxxCQ2?=
- =?us-ascii?Q?P0gSqz08KXW69H5EAaGXGhx6jov6wQ3rnvQezEGtRDyImDcKuMiKR6way+i0?=
- =?us-ascii?Q?+eEZKTIlFRtmRZqAW/DjhcVwe2BM3R89OFbpmmkKqJLmC2pbwlv6+39Fqr+1?=
- =?us-ascii?Q?SgumzKSXMq1UIWCDNblQByOajjR3P+73Vo4ygVx4Sh8HdZoaHW/UZxlMsMNI?=
- =?us-ascii?Q?kVOXwaZNU6Z94Wnr7D/FDLaQEDWxRI8IKAhSVSVUaQvGQ0XSHv4t24XTcbn1?=
- =?us-ascii?Q?7RKOlmZgJ23DhcLnFE5T7vkZsBudxBhuzaUaPmgWPxZSL+r231hFweykrahp?=
- =?us-ascii?Q?wCmSBXlADE7FmXAL00MPk5tSK8keGyIwGUZWDJX2c0VHvs7plLry8NgP+5Xh?=
- =?us-ascii?Q?OV41FNYXFCzdUKtT6IPNfrcvetFlLJLxJlt/+PSKZQHgvu4v3mNEZMGp1kzV?=
- =?us-ascii?Q?LwG1eFJdkxrhb3GjoA/YEk8FUJd2AfFdoyVr5wwuhbp7JriDyxyWtEvusfm8?=
- =?us-ascii?Q?44+bobcxHh93jtH1/jSOIWgxzJWcs+WYOCZBcPf6qGLdqxuULDvI/aEWJbSe?=
- =?us-ascii?Q?P98uMxaij2lEhhqUB2cpK/6fPJqRePN2nD9p6w/eY0stOslCtNreaoKp8tE2?=
- =?us-ascii?Q?Syi38rhHNadJPp1DZ/I=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f794ea32-f1e9-4da1-e44d-08ddd42e6164
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2025 14:43:02.5654
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QGURlaS8ukbx26JJDrXffA2fxFvJ4zd89qiZFYBqZEF9wLhqcdjv6Owh+lr8aEMp
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9226
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashal@kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, lpieralisi@kernel.org, bhelgaas@google.com, toan@os.amperecomputing.com, kwilczynski@kernel.org, mani@kernel.org, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Tue, Aug 05, 2025 at 10:41:03PM +0800, Ethan Zhao wrote:
-
-> > > My understanding, iommu has no logic yet to handle the egress control
-> > > vector configuration case,
+On Tue, 05 Aug 2025 14:59:27 +0100,
+Sasha Levin <sashal@kernel.org> wrote:
+> 
+> On Tue, Aug 05, 2025 at 02:20:52PM +0100, Marc Zyngier wrote:
+> > On Tue, 05 Aug 2025 14:09:34 +0100,
+> > Sasha Levin <sashal@kernel.org> wrote:
+> >> 
+> >> From: Marc Zyngier <maz@kernel.org>
+> >> 
+> >> [ Upstream commit 3cc8f625e4c6a0e9f936da6b94166e62e387fe1d ]
+> >> 
+> >> Since changing the affinity of an MSI really is about changing
+> >> the target address and that it isn't possible to mask an individual
+> >> MSI, it is completely possible for an interrupt to race with itself,
+> >> usually resulting in a lost interrupt.
+> >> 
+> >> Paper over the design blunder by informing the core code of this
+> >> sad state of affairs.
+> >> 
+> >> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> >> Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+> >> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+> >> Link: https://lore.kernel.org/r/20250708173404.1278635-11-maz@kernel.org
+> >> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> >> ---
+> >> 
+> >> LLM Generated explanations, may be completely bogus:
 > > 
-> > We don't support it at all. If some FW leaves it configured then it
-> > will work at the PCI level but Linux has no awarness of what it is
-> > doing.
-> > 
-> > Arguably Linux should disable it on boot, but we don't..
-> linux tool like setpci could access PCIe configuration raw data, so
-> does to the ACS control bits. that is boring.
+> > s/may be//. It is an amusing read though, specially when quoting
+> > totally unrelated patches, so thumbs up for the comical value.
+> 
+> Yeah, it's still very much at the "junior engineer" level
 
-Any change to ACS after boot is "not supported" - iommu groups are one
-time only using boot config only. If someone wants to customize ACS
-they need to use the new config_acs kernel parameter.
+It's not, and that's the main issue. A junior engineer would get into
+the rabbit hole of backporting too much, as they would be unable to
+separate the essential logic from the surrounding fluff. There would
+be a lot of noise, but it would be OK.
 
-> > > The static groups were created according to
-> > > FW DRDB tables,
-> > 
-> > ?? iommu_groups have nothing to do with FW tables.
-> Sorry, typo, ACPI drhd table.
+Your "thing" is very much at the "Senior Marketroid" level, in the
+sense that it manages to drag some semi-relevant information from
+various sources, and condenses it into an advertisement for snake oil.
 
-Same answer, AFAIK FW tables have no effect on iommu_groups
+I think I know who which of the two I want to work with.
 
-Jason
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
