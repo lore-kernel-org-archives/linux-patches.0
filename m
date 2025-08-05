@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC5A273D6C;
-	Tue,  5 Aug 2025 13:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6061D274B22;
+	Tue,  5 Aug 2025 13:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399511; cv=none; b=YEzN0Ck6KAcvUJJPptDlmd4d3i70U4kIadxC8b2w7rTkn1X14Cyxt5IinvjzNhn+TDWrMv6CMajiC1GEAJOCJvYBPwlgFdD6+lvi+LrmXn90iGJ/s3iwabrCNChLKKpMygzNFTO1RVVS/uZHaFK7zHp8CGeQQA66e5rDCSB25K8=
+	t=1754399513; cv=none; b=V5X5eFhQdwGnCjAWfkELD0rzscVX3H0ZuXvmtabPwehoc60F22R8IXEGRflgSVbyEdfXuB8nIXG4Tae3YwS8BCsuGlmB4xeyn5t/VthaEUkhBKrpRouin/hXeAZKS/YvO4eJXi9pfHUNHqQA6UGHVL+Wira0akPjr2fza1Osaks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399511; c=relaxed/simple;
-	bh=PPnXgEutaQ4qB1mw4M4MoqHg4W5+iTeMyKlv84ojGMY=;
+	s=arc-20240116; t=1754399513; c=relaxed/simple;
+	bh=6uIb4nkt7xiCZha/sR4CrJA8W+MSMbEi2oBzsmeitns=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ChRT4CHvWNGX+FOXDUjWnxTHD6WMbbOFzPnrjkP+BFb0pEk2gGdennIR/GoKqlVCLBxhrQp/H37P84Bw8vPA3Fmid4kyybXvih2HXUiIYkeEdL1ZjsyrZ3pqLGIz+4vd746YggfSKuLvOI0rNiaenpxjjJ7UkcHtl4wcb3xikMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oY9z4Tb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbVxkXE3oAlyj9iD3IhehoaLzGF9521ZdH+VLXQqEp1lJdu4GXPtqP0ni2iNOtaar/Au69f75adJDMMeEA/DmRKzJ+tIPdXpn1x4o5iYE1mR3A1vcakwegpJ3v/9L2STMmxudf9ZTsm1Z/cMKtTeCdOekYpQQ//NUnxfnKQ1IDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KeX1sK3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oY9z4Tb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057DDC4CEF0;
-	Tue,  5 Aug 2025 13:11:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KeX1sK3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF1DC4CEF0;
+	Tue,  5 Aug 2025 13:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399510;
-	bh=PPnXgEutaQ4qB1mw4M4MoqHg4W5+iTeMyKlv84ojGMY=;
+	s=k20201202; t=1754399513;
+	bh=6uIb4nkt7xiCZha/sR4CrJA8W+MSMbEi2oBzsmeitns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oY9z4Tb1wNLB6/t/2YvKHleTBDYQ2ulpKhxezNvnPE+21BrDcvqn00JbX/GRezKAA
-	 jy9I5SaDqJh38/F7fahYBY6zOvnbggnz7Zt/tqPLwZknxR2Xm2W/eNK2RdCrSFiPqF
-	 06jhRu3iBLywhL5tJFk/4+yxYMV3BVsZSYzd2rw2ddZ7Zn9E+j9UP5spPXnp6TWjLD
-	 vwvzmWgR+HSV9pzQnHq8tBAldIjit1nTPrj38Qz3ddcRRLYerWVDHatqIk/Hxv2yew
-	 ff3vTOO57lS+LaH4mZ+bU5Ex3zQLplCLw0vcsb4/NzIf2xQumbh7pRqmmnO4m6hXaM
-	 rOfctIsB7zJQg==
+	b=KeX1sK3h0rXSPGVMpJAdsn6m2XI0pq+kNt3XS+WvFS8q7YUzIvyJtTTN/vEUY6EP4
+	 R7JdMyl2fnzbhNh+LM9Kosgv5TxPY6Oy/dPcQZ/ZKABvL3gpISaGrhwy8tw72yoUf5
+	 wei7norbf3FdgiT09AwKTtDsiyR98OAker4so698QmPYOo3rESYFfjfB/Ekp27h/pX
+	 TMJyuBkbaoichp8AFQOWksK+7G5GsTGz/qKMxok1EgxMSFj1bkWZGrKtTp00CSUR5n
+	 Ryv2x5+M6ULCuYIz2bNZiZjYPssK9m1b20XIbcFZJZB2rZIo6LUnIWgw88QZY7w2gU
+	 5GMB6bb6RmOfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Leon Romanovsky <leon@kernel.org>,
+Cc: Showrya M N <showrya@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	cmeiohas@nvidia.com,
-	michaelgur@nvidia.com,
-	kalesh-anakkur.purayil@broadcom.com,
-	mbloch@nvidia.com,
-	parav@nvidia.com,
-	qianqiang.liu@163.com,
-	phaddad@nvidia.com
-Subject: [PATCH AUTOSEL 6.16-5.10] RDMA/core: reduce stack using in nldev_stat_get_doit()
-Date: Tue,  5 Aug 2025 09:09:30 -0400
-Message-Id: <20250805130945.471732-55-sashal@kernel.org>
+	lduncan@suse.com,
+	michael.christie@oracle.com,
+	James.Bottomley@HansenPartnership.com,
+	open-iscsi@googlegroups.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] scsi: libiscsi: Initialize iscsi_conn->dd_data only if memory is allocated
+Date: Tue,  5 Aug 2025 09:09:31 -0400
+Message-Id: <20250805130945.471732-56-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -56,146 +56,128 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Showrya M N <showrya@chelsio.com>
 
-[ Upstream commit 43163f4c30f94d2103c948a247cdf2cda5068ca7 ]
+[ Upstream commit 3ea3a256ed81f95ab0f3281a0e234b01a9cae605 ]
 
-In the s390 defconfig, gcc-10 and earlier end up inlining three functions
-into nldev_stat_get_doit(), and each of them uses some 600 bytes of stack.
+In case of an ib_fast_reg_mr allocation failure during iSER setup, the
+machine hits a panic because iscsi_conn->dd_data is initialized
+unconditionally, even when no memory is allocated (dd_size == 0).  This
+leads invalid pointer dereference during connection teardown.
 
-The result is a function with an overly large stack frame and a warning:
+Fix by setting iscsi_conn->dd_data only if memory is actually allocated.
 
-drivers/infiniband/core/nldev.c:2466:1: error: the frame size of 1720 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
+Panic trace:
+------------
+ iser: iser_create_fastreg_desc: Failed to allocate ib_fast_reg_mr err=-12
+ iser: iser_alloc_rx_descriptors: failed allocating rx descriptors / data buffers
+ BUG: unable to handle page fault for address: fffffffffffffff8
+ RIP: 0010:swake_up_locked.part.5+0xa/0x40
+ Call Trace:
+  complete+0x31/0x40
+  iscsi_iser_conn_stop+0x88/0xb0 [ib_iser]
+  iscsi_stop_conn+0x66/0xc0 [scsi_transport_iscsi]
+  iscsi_if_stop_conn+0x14a/0x150 [scsi_transport_iscsi]
+  iscsi_if_rx+0x1135/0x1834 [scsi_transport_iscsi]
+  ? netlink_lookup+0x12f/0x1b0
+  ? netlink_deliver_tap+0x2c/0x200
+  netlink_unicast+0x1ab/0x280
+  netlink_sendmsg+0x257/0x4f0
+  ? _copy_from_user+0x29/0x60
+  sock_sendmsg+0x5f/0x70
 
-Mark the three functions noinline_for_stack to prevent this, ensuring
-that only one copy of the nlattr array is on the stack of each function.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250620113335.3776965-1-arnd@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Showrya M N <showrya@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Link: https://lore.kernel.org/r/20250627112329.19763-1-showrya@chelsio.com
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I see the pattern clearly! When `iscsi_alloc_conn` is called with
+`dd_size = 0`:
+- It allocates only `sizeof(*conn)` (no extra space)
+- It sets `conn->dd_data = NULL` (because dd_size is 0, the condition
+  `if (dd_size)` is false)
+
+But in the original code in `iscsi_conn_setup()`, it was unconditionally
+setting:
+```c
+conn->dd_data = cls_conn->dd_data + sizeof(*conn);
+```
+
+This would set `conn->dd_data` to point past the allocated memory when
+`dd_size = 0`, leading to the panic when the iSER driver tries to
+dereference it in `iscsi_iser_conn_stop()`.
+
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should definitely be backported to stable kernel trees for
+the following reasons:
 
-## Bug Being Fixed
+1. **Critical Bug Fix**: This fixes a kernel panic/crash that occurs
+   during iSCSI/iSER connection teardown when memory allocation fails.
+   The panic trace shows a page fault at address `fffffffffffffff8`,
+   which is clearly an invalid pointer dereference.
 
-The commit fixes a **real compilation error** that occurs on s390
-architecture with gcc-10 and earlier compilers. The error message shows:
-```
-drivers/infiniband/core/nldev.c:2466:1: error: the frame size of 1720
-bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
-```
+2. **Real-World Impact**: The bug triggers when `ib_fast_reg_mr`
+   allocation fails during iSER setup, which can happen under memory
+   pressure. This leads to a system crash during error recovery, turning
+   a recoverable allocation failure into a fatal kernel panic.
 
-This is a build failure that prevents the kernel from compiling on s390
-systems, which is a significant issue affecting users.
+3. **Small and Contained Fix**: The fix is minimal - just adding a
+   single conditional check:
+  ```c
+  if (dd_size)
+  conn->dd_data = cls_conn->dd_data + sizeof(*conn);
+  ```
+  This only affects the initialization path when `dd_size = 0`.
 
-## Nature of the Fix
+4. **No Architectural Changes**: This is a straightforward bug fix that
+   doesn't introduce new features or change any architecture. It simply
+   prevents setting an invalid pointer when no driver-specific data is
+   allocated.
 
-The fix is extremely minimal and safe:
-1. **Three functions are marked with `noinline_for_stack`**:
-   - `res_get_common_doit()`
-   - `stat_get_doit_default_counter()`
-   - `stat_get_doit_qp()`
+5. **Clear Root Cause**: The issue is well-understood: when drivers like
+   iSER pass `dd_size = 0` to `iscsi_conn_setup()`, the code was
+   unconditionally calculating a pointer past the allocated memory.
+   During teardown, accessing this invalid pointer causes the panic.
 
-2. **No functional changes**: The code logic remains identical - only
-   the compiler optimization behavior is modified to prevent inlining.
+6. **Minimal Risk**: The change only affects the case where `dd_size =
+   0`, which is specifically the iSER driver's usage pattern. Other
+   drivers that pass non-zero `dd_size` values are unaffected.
 
-3. **Stack usage optimization**: Each function uses ~600 bytes of stack
-   (likely from large `struct nlattr` arrays). When inlined into
-   `nldev_stat_get_doit()`, this causes cumulative stack usage of 1720
-   bytes, exceeding s390's 1280-byte limit.
+7. **Follows Stable Rules**: This meets all stable kernel criteria:
+   - Fixes a real bug that users can hit
+   - Fix is already upstream (has proper sign-offs and review)
+   - Small change (2 lines)
+   - Obviously correct
+   - Doesn't add new features
 
-## Code Analysis
+The commit prevents a kernel panic during error handling in the
+iSCSI/iSER subsystem, making it an important stability fix that should
+be backported to all maintained stable kernels that include the iSER
+driver.
 
-Looking at
-`/home/sasha/linux/drivers/infiniband/core/nldev.c:2438-2466`, the
-`nldev_stat_get_doit()` function calls three helper functions:
-- Line 2450: `stat_get_doit_default_counter()`
-- Line 2454: `stat_get_doit_qp()`
-- Line 2457: `res_get_common_doit()`
+ drivers/scsi/libiscsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Each function declares `struct nlattr *tb[RDMA_NLDEV_ATTR_MAX]` which is
-a large stack array. The `noinline_for_stack` attribute ensures these
-arrays aren't all allocated on the same stack frame.
-
-## Stable Tree Criteria
-
-This commit meets multiple stable tree criteria:
-1. **Fixes a real bug**: Build failure on s390 architecture
-2. **Minimal change**: Only adds compiler hints, no logic changes
-3. **Low regression risk**: Cannot introduce functional regressions
-4. **Architecture-specific fix**: Critical for s390 builds
-5. **Clear problem/solution**: Well-documented issue with
-   straightforward fix
-
-## Additional Considerations
-
-- The fix is platform-agnostic despite being triggered on s390, making
-  it safe for all architectures
-- Similar patterns (`noinline_for_stack`) are used throughout the kernel
-  for stack optimization
-- The commit message clearly documents the problem and solution
-- No new features or architectural changes are introduced
-
-This is an ideal stable backport candidate - it fixes a real compilation
-issue with zero functional risk.
-
- drivers/infiniband/core/nldev.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index a872643e8039..e9b7a6419291 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -1469,10 +1469,11 @@ static const struct nldev_fill_res_entry fill_entries[RDMA_RESTRACK_MAX] = {
+diff --git a/drivers/scsi/libiscsi.c b/drivers/scsi/libiscsi.c
+index 392d57e054db..c9f410c50978 100644
+--- a/drivers/scsi/libiscsi.c
++++ b/drivers/scsi/libiscsi.c
+@@ -3185,7 +3185,8 @@ iscsi_conn_setup(struct iscsi_cls_session *cls_session, int dd_size,
+ 		return NULL;
+ 	conn = cls_conn->dd_data;
  
- };
- 
--static int res_get_common_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
--			       struct netlink_ext_ack *extack,
--			       enum rdma_restrack_type res_type,
--			       res_fill_func_t fill_func)
-+static noinline_for_stack int
-+res_get_common_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
-+		    struct netlink_ext_ack *extack,
-+		    enum rdma_restrack_type res_type,
-+		    res_fill_func_t fill_func)
- {
- 	const struct nldev_fill_res_entry *fe = &fill_entries[res_type];
- 	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
-@@ -2263,10 +2264,10 @@ static int nldev_stat_del_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	return ret;
- }
- 
--static int stat_get_doit_default_counter(struct sk_buff *skb,
--					 struct nlmsghdr *nlh,
--					 struct netlink_ext_ack *extack,
--					 struct nlattr *tb[])
-+static noinline_for_stack int
-+stat_get_doit_default_counter(struct sk_buff *skb, struct nlmsghdr *nlh,
-+			      struct netlink_ext_ack *extack,
-+			      struct nlattr *tb[])
- {
- 	struct rdma_hw_stats *stats;
- 	struct nlattr *table_attr;
-@@ -2356,8 +2357,9 @@ static int stat_get_doit_default_counter(struct sk_buff *skb,
- 	return ret;
- }
- 
--static int stat_get_doit_qp(struct sk_buff *skb, struct nlmsghdr *nlh,
--			    struct netlink_ext_ack *extack, struct nlattr *tb[])
-+static noinline_for_stack int
-+stat_get_doit_qp(struct sk_buff *skb, struct nlmsghdr *nlh,
-+		 struct netlink_ext_ack *extack, struct nlattr *tb[])
- 
- {
- 	static enum rdma_nl_counter_mode mode;
+-	conn->dd_data = cls_conn->dd_data + sizeof(*conn);
++	if (dd_size)
++		conn->dd_data = cls_conn->dd_data + sizeof(*conn);
+ 	conn->session = session;
+ 	conn->cls_conn = cls_conn;
+ 	conn->c_stage = ISCSI_CONN_INITIAL_STAGE;
 -- 
 2.39.5
 
