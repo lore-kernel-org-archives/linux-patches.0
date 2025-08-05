@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189752727ED;
-	Tue,  5 Aug 2025 13:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BE6272E5E;
+	Tue,  5 Aug 2025 13:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399451; cv=none; b=h1zEacqKJrqZbn5JUrGkZHI/7AE1JjPmR1oMibpk50Ju9xWIyCj8t/zrYH3XdvWvsB7TRSMLCN9//RDCS9bmfM7j4xwF/gg8iWzMec3+Nk/YnTnExudsGNDp0Gb3kkp+Wz8Qw/2nvAsGkn2YWmKq2qm4TxbbfgVeWHw39adC+/k=
+	t=1754399453; cv=none; b=FOnbLAfAui02WVj8nE1IfA1V/FMAdN32k7ggu8dQPCDq6Vd4xQ7D+8ECtRSO9HLYv12hH8EIGDwRLvDb7e0BYd0RReV08pypdi4gZ51/8NdFemiGd4tI6lv3UbV9r6qghdfHM4/8JRGHdANnUi+yRmDhhznINIs6O+likKHsbCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399451; c=relaxed/simple;
-	bh=h5ekgn5hXqvCDBbs3x7HLBwTL0Kln0Mi1jfQN529SGU=;
+	s=arc-20240116; t=1754399453; c=relaxed/simple;
+	bh=j5u24uhVQLHf+S8xNAy3nBdm5k+ydqhyZOb99ig2Rdw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=a/JuGQ009LAQ5S5ZJl3Bc3VKXbqZz8sS8u04YU2tUWnG3axdUJ5iod7QYtFrQ8g1iX6gRnHDeW5oGZyn9ow8sx4R4PMlw5OdxOh0dhuGwHOzSTB/AgfFmaQgvc9hg/cQBVCuLh44QInGvGAriIbBdYrjPHcMPeD7RnG6TyuGF30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5YKuO2W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Igq9yV/K6oxGuuHnG4SoLYZNyMfxzqspAMrzgwm5rmGL2IW7w4ScdjI69zdAZg3eTtF0ya2UzI23q2FHyP3C0Ftk+py9bGcGVW7+6H5w4/S2ABeqV1PoL1/WKCSYYMvtzFtiP0RKW70EkBEKVOHNMfXJfIsOin49Tk3HozxpRIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NdcMfShv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5YKuO2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40C3C4CEF7;
-	Tue,  5 Aug 2025 13:10:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NdcMfShv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB99C4CEF0;
+	Tue,  5 Aug 2025 13:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399451;
-	bh=h5ekgn5hXqvCDBbs3x7HLBwTL0Kln0Mi1jfQN529SGU=;
+	s=k20201202; t=1754399452;
+	bh=j5u24uhVQLHf+S8xNAy3nBdm5k+ydqhyZOb99ig2Rdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5YKuO2WvXbePO4P+ZRr/Xzl6WUo6Yu4KGoLmemVodgB2Y0I/o46/9utWS6HlqWfB
-	 VWjmbpQLLgDgsD5C4+WX/9eVieJ2pgHCjtz0Ci2M7vhHI3jR9yOothYFT1YX0jSdNF
-	 0K+odx4OfRNHt2Y+RCHJ9djOZxBffXNwi6iQo5WGezzmLleuK9hhUu4wisOsdkrMHv
-	 LTlxuw9NFJKcInXKZrZLi8dU9g7LJ4LLpKdmr+0pJmxJ6aKLn6KTzX1nalBw8/04Kf
-	 HqDmEfRdgWh/P/Fu/+0T67Pyaplf37dTZ9afxn0TP+1CI0kiiB8iGTiZMloe/svCga
-	 WIMAIq1rsOMJg==
+	b=NdcMfShvWaHNkpX1qvUjawDhgGlqOif7Ksgv0b+OYWKAzrjIzJF8lMEUNikkXdVvJ
+	 QI2FEn+QoFkCjkbBoM+VUh0msbSS10Zl5SGB15AdlPJD5h7M0YTY+qDX68vinm6dC5
+	 CHOULSYzRzUIEfiVpFCGiSZcBNPTWzpz+HgDKhQ3ONE49xDGNvuaBQzypegrr7u9Yp
+	 /v+OiCmZ97TLJXgANOWKZtBooTcMlU2C7lmvb6cUfUfJ8IrxrYWeRyASQcaIyS8/V0
+	 6uuEcfoxBgeLv8R+fwEN5B4/L5tPOcT6WwSAsUr8eZ31GLujeI18XwvmPs6Q6OMQGD
+	 Xvhc/Z+Sj5PHA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Chen <chenl311@chinatelecom.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.15] HID: rate-limit hid_warn to prevent log flooding
-Date: Tue,  5 Aug 2025 09:09:04 -0400
-Message-Id: <20250805130945.471732-29-sashal@kernel.org>
+	sylvain.petinot@foss.st.com,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] media: i2c: vd55g1: Setup sensor external clock before patching
+Date: Tue,  5 Aug 2025 09:09:05 -0400
+Message-Id: <20250805130945.471732-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -50,26 +50,20 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Chen <chenl311@chinatelecom.cn>
+From: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
 
-[ Upstream commit 4051ead99888f101be92c7ce90d2de09aac6fd1c ]
+[ Upstream commit df2f8fd91bde57d5d5aca6adddf7e988f2e8c60e ]
 
-Syzkaller can create many uhid devices that trigger
-repeated warnings like:
+Proper clock configuration is required to advance through FSM states.
+Prior than this having a different clock value than default sensor's
+value was used (12 MHz) could prevent the sensor from booting.
 
-  "hid-generic xxxx: unknown main item tag 0x0"
-
-These messages can flood the system log, especially if a crash occurs
-(e.g., with a slow UART console, leading to soft lockups). To mitigate
-this, convert `hid_warn()` to use `dev_warn_ratelimited()`.
-
-This helps reduce log noise and improves system stability under fuzzing
-or faulty device scenarios.
-
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,94 +74,84 @@ LLM Generated explanations, may be completely bogus:
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix for System Stability Issue
+## Bug Fix Analysis
 
-This commit addresses a **real system stability problem** that can lead
-to soft lockups under specific conditions. The code changes show that
-when malformed HID devices (either intentionally via fuzzing tools like
-syzkaller or faulty hardware) send invalid data, the kernel can generate
-excessive warning messages that flood the system log.
+1. **Critical Boot Issue**: The commit fixes a sensor initialization
+   failure where the sensor could fail to boot if a non-default clock
+   frequency was used. The commit message explicitly states: "Prior than
+   this having a different clock value than default sensor's value was
+   used (12 MHz) could prevent the sensor from booting."
 
-## Specific Code Analysis:
+2. **Clear Root Cause**: The issue is a timing/sequencing problem where
+   the external clock must be configured BEFORE the patch is applied to
+   allow proper FSM (Finite State Machine) state transitions. The commit
+   message states: "Proper clock configuration is required to advance
+   through FSM states."
 
-1. **Location of the fix** (drivers/hid/hid-core.c:661-663): The
-   warnings are generated in the HID parser's main item processing
-   function when encountering unknown or reserved tags:
-  ```c
-  hid_warn(parser->device, "reserved main item tag 0x%x\n", item->tag);
-  hid_warn(parser->device, "unknown main item tag 0x%x\n", item->tag);
-  ```
+3. **Small and Contained Fix**: The fix is minimal - it simply moves one
+   line of code (`vd55g1_write(sensor, VD55G1_REG_EXT_CLOCK,
+   sensor->xclk_freq, &ret);`) from the streaming enable function to the
+   power-on sequence, specifically between sensor detection and
+   patching.
 
-2. **Simple and contained change**: The fix only:
-   - Adds a new `hid_warn_ratelimited` macro in include/linux/hid.h
-   - Replaces two `hid_warn` calls with `hid_warn_ratelimited` calls
-   - Total change is just 6 lines (4 insertions, 2 modifications)
+## Code Analysis
 
-3. **No architectural changes**: This is a straightforward substitution
-   that uses the existing kernel infrastructure (`dev_warn_ratelimited`)
-   which is already widely used throughout the kernel.
+Looking at the code changes:
+- **REMOVED** from `vd55g1_enable_streams()` at line 1040 (after power-
+  on)
+- **ADDED** to `vd55g1_power_on()` at line 1614 (after detect, before
+  patch)
 
-## Meets Stable Kernel Criteria:
+The new sequence in `vd55g1_power_on()` becomes:
+1. Enable power/clock → FSM state: READY_TO_BOOT
+2. `vd55g1_detect()` - verify sensor ID
+3. **NEW: Configure external clock** ← Critical for FSM advancement
+4. `vd55g1_patch()` - apply firmware patch
+5. Wait for FSM state: SW_STBY
 
-1. **Fixes a real bug**: The commit explicitly mentions that excessive
-   logging can cause "soft lockups" especially with slow UART consoles -
-   this is a serious stability issue that affects real users.
+## Stable Criteria Met
 
-2. **Security implications**: The commit mentions syzkaller (kernel
-   fuzzer) can trigger this, and uhid devices can be created by
-   unprivileged users in many configurations, making this a potential
-   DoS vector.
+1. **Fixes a real bug**: Yes - sensor initialization failure with non-
+   default clocks
+2. **Small change**: Yes - single line moved between functions
+3. **No new features**: Correct - just fixes sequencing
+4. **Low regression risk**: Yes - moves existing code to proper location
+5. **Hardware enablement**: Fixes broken hardware initialization for
+   VD55G1 sensor
+6. **Recently added driver**: The driver was added in April 2025 (commit
+   e56616d7b23c), making this an early fix for a new driver that likely
+   needs to work properly in stable kernels
 
-3. **Minimal risk**: Rate-limiting warnings has virtually no risk of
-   regression - it doesn't change any functional behavior, only reduces
-   log output frequency.
+The fix addresses a fundamental initialization issue that would prevent
+the sensor from working with any clock frequency other than the default
+12 MHz, making it a critical fix for proper hardware support.
 
-4. **Already proven pattern**: Similar rate-limiting fixes have been
-   applied in the HID subsystem before (e.g., commit e93363f716a2 for
-   Nintendo controller) and throughout the kernel for log flooding
-   issues.
+ drivers/media/i2c/vd55g1.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-5. **Clear reproducibility**: The issue is triggered by malformed HID
-   devices sending invalid item tags, which can happen with faulty
-   hardware or intentional fuzzing.
-
-The commit follows the stable kernel rules perfectly: it's a small,
-obvious fix for a real problem that improves system stability without
-introducing new features or making risky changes.
-
- drivers/hid/hid-core.c | 4 ++--
- include/linux/hid.h    | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index b31b8a2fd540..a110d1965447 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -659,9 +659,9 @@ static int hid_parser_main(struct hid_parser *parser, struct hid_item *item)
- 	default:
- 		if (item->tag >= HID_MAIN_ITEM_TAG_RESERVED_MIN &&
- 			item->tag <= HID_MAIN_ITEM_TAG_RESERVED_MAX)
--			hid_warn(parser->device, "reserved main item tag 0x%x\n", item->tag);
-+			hid_warn_ratelimited(parser->device, "reserved main item tag 0x%x\n", item->tag);
- 		else
--			hid_warn(parser->device, "unknown main item tag 0x%x\n", item->tag);
-+			hid_warn_ratelimited(parser->device, "unknown main item tag 0x%x\n", item->tag);
- 		ret = 0;
+diff --git a/drivers/media/i2c/vd55g1.c b/drivers/media/i2c/vd55g1.c
+index 25e2fc88a036..8552ce75e1aa 100644
+--- a/drivers/media/i2c/vd55g1.c
++++ b/drivers/media/i2c/vd55g1.c
+@@ -1038,8 +1038,6 @@ static int vd55g1_enable_streams(struct v4l2_subdev *sd,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	vd55g1_write(sensor, VD55G1_REG_EXT_CLOCK, sensor->xclk_freq, &ret);
+-
+ 	/* Configure output */
+ 	vd55g1_write(sensor, VD55G1_REG_MIPI_DATA_RATE,
+ 		     sensor->mipi_rate, &ret);
+@@ -1613,6 +1611,9 @@ static int vd55g1_power_on(struct device *dev)
+ 		goto disable_clock;
  	}
  
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 568a9d8c749b..7f260e0e2049 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1239,6 +1239,8 @@ void hid_quirks_exit(__u16 bus);
- 	dev_notice(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_warn(hid, fmt, ...)				\
- 	dev_warn(&(hid)->dev, fmt, ##__VA_ARGS__)
-+#define hid_warn_ratelimited(hid, fmt, ...)				\
-+	dev_warn_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_info(hid, fmt, ...)				\
- 	dev_info(&(hid)->dev, fmt, ##__VA_ARGS__)
- #define hid_dbg(hid, fmt, ...)				\
++	/* Setup clock now to advance through system FSM states */
++	vd55g1_write(sensor, VD55G1_REG_EXT_CLOCK, sensor->xclk_freq, &ret);
++
+ 	ret = vd55g1_patch(sensor);
+ 	if (ret) {
+ 		dev_err(dev, "Sensor patch failed %d\n", ret);
 -- 
 2.39.5
 
