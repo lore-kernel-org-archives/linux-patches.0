@@ -1,53 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2B62472B7;
-	Tue,  5 Aug 2025 13:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09C82472B7;
+	Tue,  5 Aug 2025 13:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399527; cv=none; b=QfQwm4TgtMAv3YrAPm228jWeO1IOW0mNC7h655PLfUH1zv+6yZ+LlKBpIaJKo+2nfxGmsPU16kbRETpsVoLOngckdGeub+E2xbFtyPIRUmahGFGrnJjpxTwCwSNaYg3vU3Vj3+QtBu2sMtKklegWIZx5TivBsyvA6Z8GlDXHVtM=
+	t=1754399528; cv=none; b=iC6I+xrYj8Q12iJ8OJ6czRcvC9c4zJqFEJ/+yrg/Fxy6EEUaworoyu81YWMxCvacc1mpm1fJu21+PIk/lotbSx/S4EPA8jGhfRp1ZS4OVdxGzsLFp3ymNoNpXGVI+eiHMyE94wDc4Ga3eS9i7RutPwbBeI9nm3iCS/hbRoeAELc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399527; c=relaxed/simple;
-	bh=YC+Fd3kvTd5WWP5HdO2ctXRPf5Z79sTkJw+IqsD8cbA=;
+	s=arc-20240116; t=1754399528; c=relaxed/simple;
+	bh=5WXJAbD73Lfwp4U4OxR1suGOHLB52pORe0bKhk/O6R0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cJMOQsPpqYCgv1XFhdMOqHD9bvRgcQFlW9Y7yNnuMCmnsw9bcpfchJS6UCyEvf9lvRTLfXeEk3l9InhSHf8rRJYZBs0AiAoiiJkmZ8OcdVV5Icew39EcYyup+veXkHVgY8i9vjgQfRUJGgYoLRgT2SbkgEJgm29x6pV5QSLV4J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUVxrHfw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=daKAiwx+uyXumdxzW7Cgb49/hi+/Z2DYTEYXj0HcXOs/gfM96dycwH7zQoY6mr7McJ80OqSAxarIZgMCy9Yjz4T5ZjHsvqynmmMZKheZ7cTVmNbAxMuOKz4XqlBvoFoIslv7vE1fOBF7TEYzDCXMT5Ei++kOJmgfth7IMbnWkNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f2DoxTBE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUVxrHfw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE68C4CEF4;
-	Tue,  5 Aug 2025 13:12:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f2DoxTBE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68827C4CEF0;
+	Tue,  5 Aug 2025 13:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399526;
-	bh=YC+Fd3kvTd5WWP5HdO2ctXRPf5Z79sTkJw+IqsD8cbA=;
+	s=k20201202; t=1754399528;
+	bh=5WXJAbD73Lfwp4U4OxR1suGOHLB52pORe0bKhk/O6R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUVxrHfwwooA8Q5reB8fWJRvpSwxA819fmMTBHmwLbQeaktfbmVxLc/YAoa/Qa56F
-	 U7brLcS1HuZo0+n8sCLxDM9hqNguX0Gd1Q/pGXXGb2hBu+OeXf+3ZW+yd/kFai3MMl
-	 4v99tXYwrDY6+TUtp6p/JIZSKuNlneR0EHDwSgMLiyjIT1lbiyXrQudcRcVLfQY3u3
-	 mltCOoPw170tNfNk3K/Y6W4CPWAt3jkcluGMw1dcee9JdYIniZCmmybKL6zxyS4d1/
-	 dmg9zpHG7tZ/Nzx2Zao8dvMeNmzL71r/BFy2Dy08GuctTDu0KZtiz9yuoVpncjKfaa
-	 dk2PrUHbT+Xwg==
+	b=f2DoxTBEK4GY2UyE7oLyXr6f4mIxXY1v7uN9Rn/UTzpxC7fkmv4oLV+qIOqmR4frT
+	 Hx3QSvMkWnVePSRkbmN/HL+dAGd8tk3nonj076ts74JpGXy6c0uRF0ITtaeV/xlglX
+	 twoQppEBu4elGG/ltPH/nj9TKFn8IfwENref9cLk6impF1MzwZGcNVd8UbEnN0RuXh
+	 7s+upSf+9Ig3Zc7BSb7XUS+w7SIHEr3lsOW3BJZQKRmJaaZ7veP/8NvIQZAfYpHBmr
+	 CpFy4b9AwctuJKlgDxIwOarFZa46ZGJgQOKfuXVlA/J4m1h2PKV1hMjr4692R8OvCZ
+	 AqAARXIvIYBMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Roman Li <Roman.Li@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: "Yury Norov [NVIDIA]" <yury.norov@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	dillon.varone@amd.com,
-	alex.hung@amd.com,
-	alvin.lee2@amd.com,
-	PeiChen.Huang@amd.com,
-	michael.strauss@amd.com,
-	srinivasan.shanmugam@amd.com,
-	ryanseto@amd.com,
-	yan.li@amd.com,
-	ethan@ethancedwards.com,
-	linux@treblig.org
-Subject: [PATCH AUTOSEL 6.16-6.12] drm/amd/display: Disable dsc_power_gate for dcn314 by default
-Date: Tue,  5 Aug 2025 09:09:36 -0400
-Message-Id: <20250805130945.471732-61-sashal@kernel.org>
+	dennis.dalessandro@cornelisnetworks.com,
+	linux-rdma@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] RDMA: hfi1: fix possible divide-by-zero in find_hw_thread_mask()
+Date: Tue,  5 Aug 2025 09:09:37 -0400
+Message-Id: <20250805130945.471732-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -60,99 +49,148 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roman Li <Roman.Li@amd.com>
+From: "Yury Norov [NVIDIA]" <yury.norov@gmail.com>
 
-[ Upstream commit 02f3ec53177243d32ee8b6f8ba99136d7887ee3a ]
+[ Upstream commit 59f7d2138591ef8f0e4e4ab5f1ab674e8181ad3a ]
 
-[Why]
-"REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line"
-warnings seen after resuming from s2idle.
-DCN314 has issues with DSC power gating that cause REG_WAIT timeouts
-when attempting to power down DSC blocks.
+The function divides number of online CPUs by num_core_siblings, and
+later checks the divider by zero. This implies a possibility to get
+and divide-by-zero runtime error. Fix it by moving the check prior to
+division. This also helps to save one indentation level.
 
-[How]
-Disable dsc_power_gate for dcn314 by default.
-
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Roman Li <Roman.Li@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yury Norov [NVIDIA] <yury.norov@gmail.com>
+Link: https://patch.msgid.link/20250604193947.11834-3-yury.norov@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and examination of the Linux kernel
-codebase, here is my assessment:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Clear Bug Fix**: The commit addresses a specific bug - "REG_WAIT
-   timeout 1us * 1000 tries" warnings that occur after resuming from
-   s2idle (suspend-to-idle). This is a user-visible issue that affects
-   system stability during power management operations.
+## Bug Fix Analysis
 
-2. **Small and Contained Change**: The fix is minimal - it only adds a
-   single line `disable_dsc_power_gate = true` to the debug_defaults_drv
-   structure in
-   `/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c`.
-   This is a low-risk configuration change.
+The commit fixes a **genuine divide-by-zero bug** in the
+`find_hw_thread_mask()` function. The code changes show:
 
-3. **Hardware-Specific Workaround**: The change is specifically targeted
-   at DCN314 hardware which has known issues with DSC (Display Stream
-   Compression) power gating. The commit message clearly states "DCN314
-   has issues with DSC power gating that cause REG_WAIT timeouts when
-   attempting to power down DSC blocks."
+1. **Original bug**: The division `num_cores_per_socket =
+   node_affinity.num_online_cpus / affinity->num_core_siblings /
+   node_affinity.num_online_nodes` occurs at lines 967-969 BEFORE
+   checking if `num_core_siblings > 0` at line 972.
 
-4. **No Feature Addition**: This is purely a bug fix/workaround - it
-   disables a problematic power management feature rather than adding
-   new functionality.
+2. **The fix**: Moves the check `if (affinity->num_core_siblings == 0)
+   return;` to line 973-974 (in the new code) BEFORE the division
+   operation, preventing the divide-by-zero.
 
-5. **Power Management Bug**: Issues that affect suspend/resume
-   functionality are particularly important for stable kernels as they
-   directly impact user experience and system reliability.
+## When the Bug Can Trigger
 
-6. **Existing Framework**: The `disable_dsc_power_gate` flag already
-   exists in the codebase (defined in
-   `/drivers/gpu/drm/amd/display/dc/dc.h`) and is checked in multiple
-   places like `dcn31_hwseq.c` and `dcn20_hwseq.c`. This commit just
-   sets the flag for DCN314 specifically.
+The `num_core_siblings` value is initialized as:
+```c
+cpumask_weight(topology_sibling_cpumask(cpumask_first(&node_affinity.pro
+c.mask)))
+```
 
-7. **Minimal Risk of Regression**: Setting this flag only affects DSC
-   power gating behavior on DCN314 hardware. The worst case would be
-   slightly higher power consumption when DSC blocks are not in use,
-   which is acceptable compared to system instability during resume.
+This can be 0 in several real-world scenarios:
+- Single-core systems without SMT/hyperthreading
+- Systems where SMT is disabled at runtime
+- Virtualized environments with unusual CPU topology
+- Certain ARM or other architectures where topology_sibling_cpumask()
+  returns empty
 
-8. **Clear Testing**: The commit has been reviewed by Nicholas
-   Kazlauskas and tested by Daniel Wheeler, indicating proper
-   validation.
+## Stable Kernel Criteria Met
 
-This is exactly the type of hardware-specific bug fix that stable
-kernels should include - it fixes a real problem affecting users with
-minimal risk and without introducing new features or architectural
-changes.
+1. **Fixes a real bug**: ✓ - Prevents kernel divide-by-zero crash
+2. **Small and contained**: ✓ - Only 20 lines changed in one function
+3. **No side effects**: ✓ - Early return preserves existing behavior
+   when num_core_siblings==0
+4. **No architectural changes**: ✓ - Simple defensive programming fix
+5. **Clear bug fix**: ✓ - Not a feature or optimization
+6. **Low regression risk**: ✓ - Only adds safety check, doesn't change
+   logic
 
- drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c | 1 +
- 1 file changed, 1 insertion(+)
+## Impact Assessment
 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
-index 8383e2e59be5..eed64b05bc60 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn314/dcn314_resource.c
-@@ -926,6 +926,7 @@ static const struct dc_debug_options debug_defaults_drv = {
- 	.seamless_boot_odm_combine = true,
- 	.enable_legacy_fast_update = true,
- 	.using_dml2 = false,
-+	.disable_dsc_power_gate = true,
- };
+- **Severity**: Medium-High - Can cause kernel panic on affected systems
+- **Affected systems**: HFI1 InfiniBand hardware on systems with
+  specific CPU configurations
+- **User impact**: System crash when loading HFI1 driver on vulnerable
+  configurations
+
+The commit message clearly states "fix possible divide-by-zero" and the
+code change unambiguously moves a zero-check before a division operation
+that uses that value as divisor. This is a textbook example of a bug fix
+that should be backported to stable kernels to prevent crashes on
+systems with certain CPU topologies.
+
+ drivers/infiniband/hw/hfi1/affinity.c | 44 +++++++++++++++------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/infiniband/hw/hfi1/affinity.c b/drivers/infiniband/hw/hfi1/affinity.c
+index 7ead8746b79b..f2c530ab85a5 100644
+--- a/drivers/infiniband/hw/hfi1/affinity.c
++++ b/drivers/infiniband/hw/hfi1/affinity.c
+@@ -964,31 +964,35 @@ static void find_hw_thread_mask(uint hw_thread_no, cpumask_var_t hw_thread_mask,
+ 				struct hfi1_affinity_node_list *affinity)
+ {
+ 	int possible, curr_cpu, i;
+-	uint num_cores_per_socket = node_affinity.num_online_cpus /
++	uint num_cores_per_socket;
++
++	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
++
++	if (affinity->num_core_siblings == 0)
++		return;
++
++	num_cores_per_socket = node_affinity.num_online_cpus /
+ 					affinity->num_core_siblings /
+ 						node_affinity.num_online_nodes;
  
- static const struct dc_panel_config panel_config_defaults = {
+-	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
+-	if (affinity->num_core_siblings > 0) {
+-		/* Removing other siblings not needed for now */
+-		possible = cpumask_weight(hw_thread_mask);
+-		curr_cpu = cpumask_first(hw_thread_mask);
+-		for (i = 0;
+-		     i < num_cores_per_socket * node_affinity.num_online_nodes;
+-		     i++)
+-			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+-
+-		for (; i < possible; i++) {
+-			cpumask_clear_cpu(curr_cpu, hw_thread_mask);
+-			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+-		}
++	/* Removing other siblings not needed for now */
++	possible = cpumask_weight(hw_thread_mask);
++	curr_cpu = cpumask_first(hw_thread_mask);
++	for (i = 0;
++	     i < num_cores_per_socket * node_affinity.num_online_nodes;
++	     i++)
++		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+ 
+-		/* Identifying correct HW threads within physical cores */
+-		cpumask_shift_left(hw_thread_mask, hw_thread_mask,
+-				   num_cores_per_socket *
+-				   node_affinity.num_online_nodes *
+-				   hw_thread_no);
++	for (; i < possible; i++) {
++		cpumask_clear_cpu(curr_cpu, hw_thread_mask);
++		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+ 	}
++
++	/* Identifying correct HW threads within physical cores */
++	cpumask_shift_left(hw_thread_mask, hw_thread_mask,
++			   num_cores_per_socket *
++			   node_affinity.num_online_nodes *
++			   hw_thread_no);
+ }
+ 
+ int hfi1_get_proc_affinity(int node)
 -- 
 2.39.5
 
