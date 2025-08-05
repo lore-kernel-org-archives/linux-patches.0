@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAAC275B0E;
-	Tue,  5 Aug 2025 13:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFAD273D6C;
+	Tue,  5 Aug 2025 13:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399501; cv=none; b=QxZkbW55WQH6mDlBU1RcW845nxH2TgnGpTLsKchBjtLDREEFR6VRcjtzV9j2mkbnGcwGY2zJ2XBTyT6IJv9MQ0KDFNp4+bARU4xIYjbZcaYMeyAznayZ24I4enpsOeiDv+8Hr80pd3ycjNkWbc3NcIhZhSdXj+tVecVGtSHeMtE=
+	t=1754399503; cv=none; b=X0IAaoCN8oEtUoaeUKYZ2cKLPmzpquZXXYgtNpEEHD8tq1IW213ub0K59lUprzc58H4QPFDYLFiFI+pP/laXJpKh51T1kiJWIaDNLe7PUd1O7vXtRnHPkMx0EqO7SERq2Fl4EU+vPdjvCSqpNwZw8bft/ia1/kepecQ5weeIXqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399501; c=relaxed/simple;
-	bh=0xtrlarNGIWrm9wSK4aAU0pwBHqJXMqapeh/WXq+Ffw=;
+	s=arc-20240116; t=1754399503; c=relaxed/simple;
+	bh=dSsKft6R8Ur2qdOcK2P58eAK0xJaJB/wuxX5XnU1Ktg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j7HUNKqLGJBd3x6Vro9AiUbwr+3STtYnbQ6ad7icIskWkEQqs+UpzhR+47Y5Ry0j4p22Cxd3aDUR0SYxY8VdCadISCInlVBGnUG75N9wBYXCrYGgQhESmoaph/ghKYDPegX9Ob9kiq0CqSUMIcQTm6fCb8ZyRiZq5q4enoISi/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1Wvxjma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QB6ZWqViZXENCjgfE6aQfP2iklZtyBUD5q5NKu5BJmeu5tGw2p5QPkBpbmucyHVWjQaMczRq0HLlVjWdcgFmi0YG5p7vpSw47WU/ETPAXkXl6GDirKZWroRGb14Ur/i4pvre5oxrs+ieGwcl3EWbaZ9XvbZ1dZeoo6n59AWpgc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NGBm2yp/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1Wvxjma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E4EC4CEF7;
-	Tue,  5 Aug 2025 13:11:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NGBm2yp/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEA9C4CEFE;
+	Tue,  5 Aug 2025 13:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399501;
-	bh=0xtrlarNGIWrm9wSK4aAU0pwBHqJXMqapeh/WXq+Ffw=;
+	s=k20201202; t=1754399503;
+	bh=dSsKft6R8Ur2qdOcK2P58eAK0xJaJB/wuxX5XnU1Ktg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F1WvxjmaqBwowu9TNZSd/Ig6mIyb6ojToA9juX32U5lHmv1Xq+xPO/f1jYwUe1c1P
-	 G2ilmb0FWLRT07rSeNKRYHn5D+sNkJ3OUcRBjomcqmUEEJGKrVQ93ldlO0hxJmg6JN
-	 qBtt3xZR5aiRjokhUNUpxz50TyC5M0dl1TNjErTHAmURJgRn9kXEAaEsVPCjmGfC9n
-	 nIGp0zBI3r54dElZUtyUgkWsbhnXGPtvXPAqLQ96GEu+pdI35+rqyZDC/n3ZYxtFPm
-	 iUrAcwNwDaLBFO/2MruwQPC18lEgy1Jfh0N8yI3l15pjyYSvcOABLzwNIUPNNnLRd9
-	 9NoPkjFWg/wTA==
+	b=NGBm2yp/TA7x/KtUo7ySEXK8aBVficvdSnm4NxBpBV37xVQPMMvkWhm6A1BPEpQwu
+	 XMGnaqW7vnpw54jxYBcMCRbQjHKwd1bnn3eoh23eT1xWMu0XHf1qQF9Dm0HGA6ltT9
+	 ZtkuqRBsko5HSwdteOhChQ47X9DlL0D2tdm5ZTNaeqIvs9oB0GvIxt7RVKrd2sUk7K
+	 uhD37NngEXGe9SJix2FpxeWwG4tE0gBl7GEe9B3iSQd/+Y5WTeeCcsejEAwvRSg+mq
+	 1bvrv1WfWJpZGqC8R9NAs6yNsovb+cCGJEuWD/AFUlo7KPnzxnvUpLMHTjdb2RAUmJ
+	 F+V7JXD/61IOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+Cc: Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hverkuil@kernel.org,
-	nicolas.dufresne@collabora.com,
-	laurent.pinchart@ideasonboard.com,
-	jonas@kwiboo.se,
-	m.szyprowski@samsung.com,
-	mehdi.djait@linux.intel.com
-Subject: [PATCH AUTOSEL 6.16-5.15] media: v4l2-common: Reduce warnings about missing V4L2_CID_LINK_FREQ control
-Date: Tue,  5 Aug 2025 09:09:26 -0400
-Message-Id: <20250805130945.471732-51-sashal@kernel.org>
+	mcoquelin.stm32@gmail.com,
+	alexandre.torgue@foss.st.com,
+	dmaengine@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.16-6.1] dmaengine: stm32-dma: configure next sg only if there are more than 2 sgs
+Date: Tue,  5 Aug 2025 09:09:27 -0400
+Message-Id: <20250805130945.471732-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -51,97 +49,129 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 5a0abb8909b9dcf347fce1d201ac6686ac33fd64 ]
+[ Upstream commit e19bdbaa31082b43dab1d936e20efcebc30aa73d ]
 
-When operating a pipeline with a missing V4L2_CID_LINK_FREQ control this
-two line warning is printed each time the pipeline is started. Reduce
-this excessive logging by only warning once for the missing control.
+DMA operates in Double Buffer Mode (DBM) when the transfer is cyclic and
+there are at least two periods.
+When DBM is enabled, the DMA toggles between two memory targets (SxM0AR and
+SxM1AR), indicated by the SxSCR.CT bit (Current Target).
+There is no need to update the next memory address if two periods are
+configured, as SxM0AR and SxM1AR are already properly set up before the
+transfer begins in the stm32_dma_start_transfer() function.
+This avoids unnecessary updates to SxM0AR/SxM1AR, thereby preventing
+potential Transfer Errors. Specifically, when the channel is enabled,
+SxM0AR and SxM1AR can only be written if SxSCR.CT=1 and SxSCR.CT=0,
+respectively. Otherwise, a Transfer Error interrupt is triggered, and the
+stream is automatically disabled.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20250624-stm32_dma_dbm_fix-v1-1-337c40d6c93e@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I understand the issue. Every time a V4L2 pipeline is started (which
-happens when streaming begins), the `cio2_hw_init()` function is called,
-which eventually calls `v4l2_get_link_freq()`. If the V4L2_CID_LINK_FREQ
-control is not present, it prints two warning messages. This happens
-EVERY time streaming starts, which can be frequent in normal camera
-operation.
+Based on my comprehensive analysis of the commit and the STM32 DMA
+driver code, here's my assessment:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's an
+extensive explanation based on the code analysis:
 
-1. **It fixes a user-visible annoyance/bug**: The commit addresses
-   excessive logging that occurs every time a V4L2 pipeline is started
-   when the V4L2_CID_LINK_FREQ control is missing. These two-line
-   warnings are printed on each pipeline start (during `start_streaming`
-   operations), which can happen frequently during normal camera usage,
-   leading to log spam.
+## Bug Being Fixed
 
-2. **The fix is minimal and safe**: The change is extremely simple - it
-   only replaces `pr_warn()` with `pr_warn_once()` for two warning
-   messages. This change:
-   - Has zero functional impact on the driver operation
-   - Only affects logging behavior
-   - Cannot introduce regressions in functionality
-   - Is confined to two lines of code
+The commit fixes a **Transfer Error interrupt** issue in the STM32 DMA
+driver when operating in Double Buffer Mode (DBM) with exactly two
+periods. The bug manifests as follows:
 
-3. **Clear bug fix, not a feature**: This is purely a bug fix that
-   reduces excessive logging. It doesn't add new features or change
-   architectural behavior. The warnings were introduced in commit
-   67012d97df931 (Feb 2021) and have been causing log spam since then.
+1. **The Problem**: When DBM is enabled with exactly 2 scatter-gather
+   segments (periods), the driver was unnecessarily calling
+   `stm32_dma_configure_next_sg()` in the interrupt handler (line 748 of
+   stm32_dma_handle_chan_done).
 
-4. **Affects real users**: The warning occurs in common V4L2 camera
-   drivers (ipu3-cio2, ipu6-isys-csi2, mei_csi, rcar-csi2, etc.)
-   whenever they start streaming and the transmitter driver hasn't
-   implemented V4L2_CID_LINK_FREQ control. Many camera sensors don't
-   implement this control, making this a widespread issue.
+2. **Hardware Constraint**: As explained in the commit message, when the
+   channel is enabled, the memory address registers (SxM0AR and SxM1AR)
+   can only be written when specific conditions are met:
+   - SxM0AR can only be written when CT (Current Target) = 1
+   - SxM1AR can only be written when CT = 0
+   - Writing at the wrong time triggers a Transfer Error interrupt
 
-5. **Follows stable kernel rules**: According to stable kernel rules,
-   patches that fix "annoying" issues that affect users are candidates
-   for backporting. Log spam that occurs on every camera stream start
-   definitely qualifies as an annoying issue.
+3. **The Fix**: The simple addition of `&& chan->desc->num_sgs > 2`
+   condition prevents unnecessary updates when there are exactly 2
+   periods, as the hardware automatically toggles between the two pre-
+   configured buffers.
 
-The commit is a perfect candidate for stable backporting - it's a
-trivial, safe fix for a real user-facing issue that has been present in
-the kernel for several years.
+## Why This Is a Good Backport Candidate
 
- drivers/media/v4l2-core/v4l2-common.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+1. **Clear Bug Fix**: This fixes a specific hardware-related bug that
+   causes Transfer Error interrupts, which can disrupt DMA operations
+   and potentially cause system instability.
 
-diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
-index bd160a8c9efe..e1fc8fe43b74 100644
---- a/drivers/media/v4l2-core/v4l2-common.c
-+++ b/drivers/media/v4l2-core/v4l2-common.c
-@@ -505,10 +505,10 @@ s64 __v4l2_get_link_freq_ctrl(struct v4l2_ctrl_handler *handler,
- 
- 		freq = div_u64(v4l2_ctrl_g_ctrl_int64(ctrl) * mul, div);
- 
--		pr_warn("%s: Link frequency estimated using pixel rate: result might be inaccurate\n",
--			__func__);
--		pr_warn("%s: Consider implementing support for V4L2_CID_LINK_FREQ in the transmitter driver\n",
--			__func__);
-+		pr_warn_once("%s: Link frequency estimated using pixel rate: result might be inaccurate\n",
-+			     __func__);
-+		pr_warn_once("%s: Consider implementing support for V4L2_CID_LINK_FREQ in the transmitter driver\n",
-+			     __func__);
- 	}
- 
- 	return freq > 0 ? freq : -EINVAL;
+2. **Minimal and Safe Change**: The fix is a single-line conditional
+   check that adds `&& chan->desc->num_sgs > 2` to line 747. This is:
+   - Very small in scope (1 line change)
+   - Low risk of regression
+   - Only affects the specific case of DBM with 2 periods
+
+3. **Hardware-Specific Fix**: The change addresses a specific STM32 DMA
+   hardware behavior documented in the reference manual, making it
+   necessary for proper operation on affected hardware.
+
+4. **No Architectural Changes**: The commit doesn't introduce new
+   features or change the driver's architecture - it simply prevents an
+   unnecessary operation that violates hardware constraints.
+
+5. **Production Impact**: Transfer Error interrupts can cause DMA
+   streams to be automatically disabled (as mentioned in the commit
+   message), leading to data transfer failures in production systems
+   using cyclic DMA with 2 periods.
+
+6. **Clear Error Path**: Looking at the interrupt handler (lines
+   804-809), unhandled status bits including TEI (Transfer Error
+   Interrupt) result in error messages and potential channel disabling,
+   which this fix prevents.
+
+## Code Analysis Confirms the Fix
+
+From the code analysis:
+- Line 1207 shows DBM is enabled for multi-period cyclic transfers
+- Lines 593-595 show initial setup correctly configures both SM0AR and
+  SM1AR
+- Line 606 shows `stm32_dma_configure_next_sg()` is called during
+  initial transfer setup
+- The problematic line 748 (now 747) was updating memory addresses
+  unnecessarily for 2-period DBM transfers
+
+The fix ensures that for 2-period DBM transfers, the hardware's
+automatic toggling mechanism is used without software intervention,
+preventing Transfer Error interrupts while maintaining correct operation
+for transfers with more than 2 periods.
+
+ drivers/dma/stm32/stm32-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/stm32/stm32-dma.c b/drivers/dma/stm32/stm32-dma.c
+index 917f8e922373..0e39f99bce8b 100644
+--- a/drivers/dma/stm32/stm32-dma.c
++++ b/drivers/dma/stm32/stm32-dma.c
+@@ -744,7 +744,7 @@ static void stm32_dma_handle_chan_done(struct stm32_dma_chan *chan, u32 scr)
+ 		/* cyclic while CIRC/DBM disable => post resume reconfiguration needed */
+ 		if (!(scr & (STM32_DMA_SCR_CIRC | STM32_DMA_SCR_DBM)))
+ 			stm32_dma_post_resume_reconfigure(chan);
+-		else if (scr & STM32_DMA_SCR_DBM)
++		else if (scr & STM32_DMA_SCR_DBM && chan->desc->num_sgs > 2)
+ 			stm32_dma_configure_next_sg(chan);
+ 	} else {
+ 		chan->busy = false;
 -- 
 2.39.5
 
