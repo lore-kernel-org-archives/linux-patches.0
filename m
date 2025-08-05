@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79814212B1E;
-	Tue,  5 Aug 2025 13:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54BE2472B7;
+	Tue,  5 Aug 2025 13:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399516; cv=none; b=Hm5rp1laWAE4V0hwsqYBtZI8ePPBV43hrVhjw69spCx5qps/rJYZx9+qJDyvEDO47Rm+UO1VZu2IrWfZvXYWFKkNuioNjUdRI2Io6vtgITKlG6A50dcS0+mXnIHOStiOVbmcn0rxg9IcUz6dczvk9BX5fMsB6QNEVNfQxEuj31s=
+	t=1754399517; cv=none; b=GUrSxl6tMnkPcCN7yAeeAEe06/l/x14pzG6H9CKRsoqFbj9LDFb+7vkmjku31E9RMzejLcTyS5Ge0eKiYosZtjL41qQg3hZPf4voHClosAzm4/aMT4zI9ylxHdfeV6w5pw/ZnTJ76H4cU75fsNEHXgxJ+6N7M14bGs1bAi4iWqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399516; c=relaxed/simple;
-	bh=jzi2FC7mmbIbmlVizEfFy8AzvvyKvnPvpJez4ydDDx8=;
+	s=arc-20240116; t=1754399517; c=relaxed/simple;
+	bh=uCGVy5vRCBk3vj4eapHNW2dgJlB7TzlfE0TWQs3S208=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QFmxbvBcxlz6DqyiLUXo8n7kzKObjpj0UwY45ceeAMmjkqIQzecnbnp6XviQvIpRmie5r6poJTQU3WPOyNxP1TMbibQ9KranK3swFXTEmHGMZoyZgLhnAf6TLmz87eejZT5FTIwAFFs4JvlMmXzxMZTZ/BW0VwAZ1LHYXV4HbKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nZoccqtR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SWgP48H6dwhNhptMlSUf6c0vUFvlRz1i92O9fwBPn65LyRxzGGifxtC44wwHBBC/JoYtZoWqCRM2g3mM0URtl+MPCpjegSegjkfetXN/AmvTJTG8P34mJgYSkBdR89f6PJ4bBwpZ8i1JgHFjQzAdVK4LAAM1B3zo4o19CvI+Br8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bf5sbeBO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nZoccqtR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BBFC4CEF0;
-	Tue,  5 Aug 2025 13:11:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bf5sbeBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902A9C4CEF4;
+	Tue,  5 Aug 2025 13:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399516;
-	bh=jzi2FC7mmbIbmlVizEfFy8AzvvyKvnPvpJez4ydDDx8=;
+	s=k20201202; t=1754399517;
+	bh=uCGVy5vRCBk3vj4eapHNW2dgJlB7TzlfE0TWQs3S208=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZoccqtR1MlHfBg34zxqt8Dpk7BGRKtQBcU3Mn/evVmwz2yJRiNwpZhPQPz9LwAgv
-	 vKU6/OcmEb8iiq555aLOdQis2Fa/A/YKQ9bcZCYAUnFW5c/lG59D3rsej60ojK2IYK
-	 A/nQW72yh8pJMMLnqUuL8kRdWGKHgrc1hYeJuohcThjsqmXiAPpQp+m+/A3QbpCauf
-	 lI68akoblJL0q90W2ev1nUxnjBPq3a96/H19l+nW7zaphGri6PjhXVEAejdoLOklOT
-	 bfCZ8VsbCPIdoIqK6hUTVboIZqlPeuS3zjhIYV0Se3xhEOIhYprLSc49lT7LJb1TrJ
-	 DOWf1lPeHxfJg==
+	b=bf5sbeBO1OXNZkQsqRlq48Aex+3bDco8L19FGPMpID2n892K/DJXi2JfZv/A8a4pv
+	 dPU/IVK9ILEyw3kd2ZXvzNqXWA3ptgYbsBPefun7vfATO1dnqq1aig6D8oXHECfZZ+
+	 K0oeA/IGJGE668pnu8Vi0R8umbEKrJyn+KkshuRmv8NPpTfKT4ke1x1DDtdD3Eaxjq
+	 BxgC3ST7yScQXBAVECepDJglv2BB+a/v2vvfvJmSBjdHBxIZJYg/mi6M2SmIw+NXl5
+	 Zkvuwtu4hnfTtpvaLhPikOBLZtoWEQckdJ2/1iZ9J7ww07UW5V2sCwIZkoijhvTVWe
+	 I8edkxv/KoCWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Guo <alexguo1023@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hverkuil@kernel.org,
-	algonell@gmail.com
-Subject: [PATCH AUTOSEL 6.16-5.4] media: dvb-frontends: w7090p: fix null-ptr-deref in w7090p_tuner_write_serpar and w7090p_tuner_read_serpar
-Date: Tue,  5 Aug 2025 09:09:32 -0400
-Message-Id: <20250805130945.471732-57-sashal@kernel.org>
+	yung-chuan.liao@linux.intel.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.12] soundwire: amd: cancel pending slave status handling workqueue during remove sequence
+Date: Tue,  5 Aug 2025 09:09:33 -0400
+Message-Id: <20250805130945.471732-58-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -49,118 +49,112 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Guo <alexguo1023@gmail.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit ed0234c8458b3149f15e496b48a1c9874dd24a1b ]
+[ Upstream commit f93b697ed98e3c85d1973ea170d4f4e7a6b2b45d ]
 
-In w7090p_tuner_write_serpar, msg is controlled by user. When msg[0].buf is null and msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing msg[0].buf[2] without sanity check, null pointer deref would happen. We add
-check on msg[0].len to prevent crash.
+During remove sequence, cancel the pending slave status update workqueue.
 
-Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
-
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-Link: https://lore.kernel.org/r/20250616013353.738790-1-alexguo1023@gmail.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20250530054447.1645807-4-Vijendar.Mukunda@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+## Backport Status: YES
 
-This commit should be backported to stable kernel trees. Here's my
+This commit should be backported to stable kernel trees. Here's the
 extensive analysis:
 
-## Security Impact Analysis
+### 1. **Bug Fix Nature**
+This commit fixes a potential **use-after-free (UAF)** vulnerability
+during driver removal. The workqueue `amd_sdw_work` (initialized at line
+1074 in `amd_sdw_manager_probe()`) can be scheduled by interrupts (line
+946 in the interrupt handler). Without cancelling this work during
+removal, the following race condition can occur:
 
-This commit fixes a **critical null pointer dereference vulnerability**
-in the DVB frontend driver that can be triggered by user-controlled
-input through the I2C interface. The vulnerability exists in two
-functions:
-
-1. **w7090p_tuner_write_serpar()** - Lines 2196, 2205 in the original
-   code access `msg[0].buf[0]`, `msg[0].buf[1]`, and `msg[0].buf[2]`
-   without checking if `msg[0].len >= 3`
-
-2. **w7090p_tuner_read_serpar()** - Lines 2215, 2234-2235 in the
-   original code access `msg[0].buf[0]` and `msg[1].buf[0-1]` without
-   checking buffer lengths
-
-## Why This Qualifies for Stable Backport
-
-### 1. **Fixes a Real Security Bug**
-- The commit addresses a genuine null pointer dereference that can cause
-  kernel crashes
-- The vulnerability is triggered through user-controlled I2C messages,
-  making it exploitable
-- Similar to CVE-class vulnerabilities in other DVB drivers (referenced
-  commit 0ed554fd769a)
+- **CPU 0**: Driver removal begins, calls `amd_sdw_manager_remove()`
+- **CPU 1**: Interrupt arrives, schedules `amd_sdw_work`
+- **CPU 0**: Continues removal, frees the `amd_sdw_manager` structure
+  via `sdw_bus_master_delete()`
+- **CPU 1**: Work handler executes, accesses freed memory → **UAF**
 
 ### 2. **Small and Contained Fix**
-- Only 4 lines of actual code changes (2 check additions)
-- Well under the 100-line limit for stable patches
-- Changes are isolated to two specific functions with no architectural
-  modifications
+The fix is minimal - just one line adding
+`cancel_work_sync(&amd_manager->amd_sdw_work)` at the right place in the
+removal sequence. This is placed:
+- After `pm_runtime_disable()` (ensures no new runtime PM operations)
+- Before `amd_disable_sdw_interrupts()` (ensures work can complete if
+  running)
+- Before any cleanup/freeing operations
 
-### 3. **Obviously Correct**
-- The fix adds simple boundary checks before array access: `if
-  (msg[0].len < 3)` and `if (msg[0].len < 1 || msg[1].len < 2)`
-- Returns `-EOPNOTSUPP` when buffers are too small, preventing the
-  dereference
-- Pattern matches other similar fixes in the DVB subsystem
+### 3. **Common Pattern in Driver Code**
+This follows an established pattern seen across the kernel. The recent
+commit 984836621aad ("spi: mpc52xx: Add cancel_work_sync before module
+remove") fixed an identical issue. The soundwire cadence driver also
+uses `cancel_work_sync()` in similar contexts (line 1259 in
+cadence_master.c).
 
-### 4. **User Impact**
-- Without this fix, malicious or malformed I2C messages can crash the
-  kernel
-- Affects users of DVB tuner hardware using the dib7000p frontend
-- Could be exploited locally by any process with I2C device access
+### 4. **Part of a Broader Fix Series**
+This commit is part of a series addressing multiple issues in the AMD
+soundwire driver:
+- Commit 86a4371b7697 fixed slave alert handling after link down
+  (already includes `cancel_work_sync()` in suspend paths)
+- This commit extends the fix to the removal path, ensuring complete
+  coverage
 
-### 5. **Precedent from Similar Fixes**
-- The commit message references a nearly identical fix (commit
-  0ed554fd769a) for the az6027 driver
-- Multiple similar null-ptr-deref fixes have been backported to stable
-  for DVB drivers
-- This represents a known pattern of vulnerabilities in DVB I2C message
-  handling
+### 5. **Real-World Impact**
+The commit message from the related fix (86a4371b7697) shows actual
+error logs from systems experiencing issues:
+```
+soundwire sdw-master-0-0: trf on Slave 1 failed:-110 read addr 0 count 1
+rt722-sdca sdw:0:0:025d:0722:01: SDW_DP0_INT recheck read failed:-110
+```
+These errors occur when the workqueue tries to access hardware after
+it's been disabled/freed.
 
-### 6. **No Risk of Regression**
-- The added checks are defensive and only reject invalid inputs that
-  would have crashed
-- Does not change any existing valid code paths
-- Returns standard error codes that callers already handle
+### 6. **No Architectural Changes**
+This is a pure bug fix with no feature additions or architectural
+changes. It simply ensures proper cleanup ordering during driver
+removal.
 
-The vulnerability allows local attackers with I2C device access to
-trigger kernel crashes by sending specially crafted messages with null
-buffers but non-zero lengths. The fix is minimal, correct, and follows
-established patterns for similar vulnerabilities in the DVB subsystem.
+### 7. **Minimal Risk**
+The `cancel_work_sync()` call is safe and standard practice. It waits
+for any pending work to complete and prevents new work from being
+scheduled. There's no risk of introducing new bugs or changing behavior
+- it only prevents a race condition.
 
- drivers/media/dvb-frontends/dib7000p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+### 8. **Critical for System Stability**
+Use-after-free bugs can lead to:
+- Kernel crashes/panics
+- Security vulnerabilities (potential for exploitation)
+- System instability during module unload/reload
+- Issues during system shutdown/reboot
 
-diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index 360a2d7dd3ed..7d3a994b7cc4 100644
---- a/drivers/media/dvb-frontends/dib7000p.c
-+++ b/drivers/media/dvb-frontends/dib7000p.c
-@@ -2193,6 +2193,8 @@ static int w7090p_tuner_write_serpar(struct i2c_adapter *i2c_adap, struct i2c_ms
- 	struct dib7000p_state *state = i2c_get_adapdata(i2c_adap);
- 	u8 n_overflow = 1;
- 	u16 i = 1000;
-+	if (msg[0].len < 3)
-+		return -EOPNOTSUPP;
- 	u16 serpar_num = msg[0].buf[0];
+The fix prevents these issues in production systems using AMD soundwire
+hardware, particularly important for laptops and systems with audio
+peripherals that may be dynamically loaded/unloaded.
+
+ drivers/soundwire/amd_manager.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
+index 3b335d6eaa94..7ed9c8c0b4c8 100644
+--- a/drivers/soundwire/amd_manager.c
++++ b/drivers/soundwire/amd_manager.c
+@@ -1074,6 +1074,7 @@ static void amd_sdw_manager_remove(struct platform_device *pdev)
+ 	int ret;
  
- 	while (n_overflow == 1 && i) {
-@@ -2212,6 +2214,8 @@ static int w7090p_tuner_read_serpar(struct i2c_adapter *i2c_adap, struct i2c_msg
- 	struct dib7000p_state *state = i2c_get_adapdata(i2c_adap);
- 	u8 n_overflow = 1, n_empty = 1;
- 	u16 i = 1000;
-+	if (msg[0].len < 1 || msg[1].len < 2)
-+		return -EOPNOTSUPP;
- 	u16 serpar_num = msg[0].buf[0];
- 	u16 read_word;
- 
+ 	pm_runtime_disable(&pdev->dev);
++	cancel_work_sync(&amd_manager->amd_sdw_work);
+ 	amd_disable_sdw_interrupts(amd_manager);
+ 	sdw_bus_master_delete(&amd_manager->bus);
+ 	ret = amd_disable_sdw_manager(amd_manager);
 -- 
 2.39.5
 
