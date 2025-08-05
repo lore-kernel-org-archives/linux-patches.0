@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848622727FA;
-	Tue,  5 Aug 2025 13:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FE2273D73;
+	Tue,  5 Aug 2025 13:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399403; cv=none; b=PbuCLPSSD1/ZQi3PFA1oSTWJBUFptV2mGHOWujOMhgbblJNwcJYtTolZnkE4192RJZBwYmBP4qHUP8iWqjQVUatmuSE5YU0Tp5SlmfV1e/7Db+/6frDrpW9cTct/n8aNY9MP6iWt9SgyYgYHkABypby11fd4fwYXbswXhvWFXhQ=
+	t=1754399405; cv=none; b=Y8tepjYhWBT7uN7M+pEKNdgKbpW++DgP/8dU2TRo/BO23lu33WnKG1guP7fYFEBMtQGKaMkIasfdFRncrO3yMe8Jlpee8sGtzeykN8qd41Cl3j2x/bfPN6Eiygo9vE810GTEvTMVCpoJzrUksxg6XUvceJOCzW9+sbX5eWk5KdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399403; c=relaxed/simple;
-	bh=j7U811MvCczKTPp55NF7aXier6/JUb9EwI1J0Ri83Gg=;
+	s=arc-20240116; t=1754399405; c=relaxed/simple;
+	bh=2QzGg5eGZSoxkyagSZYkTDZKCbtQQT2cOhvRCRD2NH4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eHqkQaMsNE++s/DuRS5nfC91sXC78qmLINzmGUqVuNP6bIBx3YtRt01MsMtPrkadKxZ0wn0wkIFJYzgTeYAXhGCXzs5KevtoCiEjqKD2DN0GUUSXZOwKNA93IlYfaGpe418uqtMRzFBlg4tEQwLHI5t4fe0PGFwrodYrVahg6z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PXegbcCQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p+CAnZ1HAgVbJqu4Cxo/q9h6Hav8LKG/TJQy8SxwjQXw00lAW3XlelhyCYI3i1aioP6f9GU4Mhzo8Rg/9b1vipuv5f5NvCki1PZ33HZjHVIzg7y6T9gtLRhBswSVa96GGMHQ10iIac2ps5Ykp0YAWmbZJudc7Bmczx5YGSbM7hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2E5P7Hx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PXegbcCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4F3C4CEF0;
-	Tue,  5 Aug 2025 13:10:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2E5P7Hx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C27C4CEF7;
+	Tue,  5 Aug 2025 13:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399403;
-	bh=j7U811MvCczKTPp55NF7aXier6/JUb9EwI1J0Ri83Gg=;
+	s=k20201202; t=1754399404;
+	bh=2QzGg5eGZSoxkyagSZYkTDZKCbtQQT2cOhvRCRD2NH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXegbcCQ2G0703osutbs6z8KjMDuVP3o9t8QXaN1TjpoaRtfu6ilLPqDoZoqaZhow
-	 2IZmF6wdTwo6PImNx2GBRF/7QxLAg+0V7HIbR3uwtz5ivW0yYXQRaWf2yp6Kxev6JN
-	 FmgwuJirhWvg5Z+vxCcZS+YgtTKcrguOgyjn+3EXINm6bWV8aKDMnmkcMgj8LaiZFO
-	 9QIdOWFSgm5Vs1rYnexe0x6W2cytxJ/wq9BkB8Frx3IxsRvsn1ci7qzYSbniEFYpra
-	 GhddW1USILHWdqqvgeNtBRVNThtEEKnYlkRhNATxgnnIEJMlu6KWackTAS7C2CXZ8t
-	 8NoSnDthFgrmA==
+	b=X2E5P7HxhrVUCq5aijb1hLbF1quz8a4Q1mtga8Yqjf7fOl5jKse1dzhd0vwBOPmhK
+	 cvs65bTok+u/PASL4WQDyOBYxRJdXWoWVgKk+J/hGJQwZ6HiCVlcEafqc4sxHRRZMZ
+	 EjHtwCSWM948ojemKopzXIpFAqBhmRS84nWPuByYPsjpPj7p2e4KmUM20lz6zYVc6Y
+	 WIQakhJJHo5EpnRKwYs32/kgwskjMWHhmYrnvOqvyUlT12OIrT9VE/qFjGkTEfXANm
+	 IyAH+LbORbTCVK1LUY2UJfnMwgRjDUFWYLJeCR7pGH0lXAiDL0/xoeZOC1NFvYW24/
+	 jcqVkWG9+aO4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	heiko@sntech.de,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.16-6.6] phy: rockchip-pcie: Properly disable TEST_WRITE strobe signal
-Date: Tue,  5 Aug 2025 09:08:42 -0400
-Message-Id: <20250805130945.471732-7-sashal@kernel.org>
+	yung-chuan.liao@linux.intel.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.6] soundwire: Move handle_nested_irq outside of sdw_dev_lock
+Date: Tue,  5 Aug 2025 09:08:43 -0400
+Message-Id: <20250805130945.471732-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -54,108 +52,129 @@ X-stable-base: Linux 6.16
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 25facbabc3fc33c794ad09d73f73268c0f8cbc7d ]
+[ Upstream commit ccb7bb13c00bcc3178d270da052635c56148bc16 ]
 
-pcie_conf is used to touch TEST_WRITE strobe signal. This signal should
-be enabled, a little time waited, and then disabled. Current code clearly
-was copy-pasted and never disables the strobe signal. Adjust the define.
-While at it, remove PHY_CFG_RD_MASK which has been unused since
-64cdc0360811 ("phy: rockchip-pcie: remove unused phy_rd_cfg function").
+The sdw_dev_lock protects the SoundWire driver callbacks against
+the probed flag, which is used to skip the callbacks if the
+driver gets removed. For more information see commit bd29c00edd0a
+("soundwire: revisit driver bind/unbind and callbacks").
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Link: https://lore.kernel.org/r/d514d5d5627680caafa8b7548cbdfee4307f5440.1751322015.git.geraldogabriel@gmail.com
+However, this lock is a frequent source of mutex inversions.
+Many audio operations eventually hit the hardware resulting in a
+SoundWire callback, this means that typically the driver has the
+locking order ALSA/ASoC locks -> sdw_dev_lock. Conversely, the IRQ
+comes in directly from the SoundWire hardware, but then will often
+want to access ALSA/ASoC, such as updating something in DAPM or
+an ALSA control. This gives the other lock order sdw_dev_lock ->
+ALSA/ASoC locks.
+
+When the IRQ handling was initially added to SoundWire this was
+through a callback mechanism. As such it required being covered by
+the lock because the callbacks are part of the sdw_driver structure
+and are thus present regardless of if the driver is currently
+probed.
+
+Since then a newer mechanism using the IRQ framework has been
+added, which is currently covered by the same lock but this isn't
+actually required. Handlers for the IRQ framework are registered in
+probe and should by released during remove, thus the IRQ framework
+will have already unbound the IRQ before the slave driver is
+removed. Avoid the aforementioned mutex inversion by moving the
+handle_nested_irq call outside of the sdw_dev_lock.
+
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20250609143041.495049-3-ckeepax@opensource.cirrus.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Backport Status: YES
+**Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-### Bug Analysis
-The commit fixes a clear programming bug where `PHY_CFG_WR_DISABLE` was
-incorrectly defined as `1` instead of `0`. Looking at the code in
-`phy_wr_cfg()` function (lines 100-120), the sequence is:
-1. Write data and address to the configuration register
-2. Wait 1 microsecond
-3. Enable the TEST_WRITE strobe signal by writing `PHY_CFG_WR_ENABLE`
-   (value 1)
-4. Wait 1 microsecond
-5. Intended to disable the strobe signal with `PHY_CFG_WR_DISABLE`
+## Bug Fix Nature
+The commit fixes a **real deadlock/mutex inversion issue** that affects
+production systems. The code changes show that `handle_nested_irq()` is
+moved outside the `sdw_dev_lock` mutex protection (lines 1756-1757 moved
+before line 1759), which resolves a lock ordering problem:
+- **Lock order A**: ALSA/ASoC locks → sdw_dev_lock (during normal audio
+  operations)
+- **Lock order B**: sdw_dev_lock → ALSA/ASoC locks (during IRQ handling)
 
-However, since both `PHY_CFG_WR_ENABLE` and `PHY_CFG_WR_DISABLE` were
-defined as `1`, the strobe signal was never actually disabled. This
-means the PHY configuration writes were leaving the strobe signal
-permanently enabled, which is incorrect hardware programming.
+This ABBA deadlock pattern can cause system hangs in real-world usage.
 
-### Impact Assessment
-1. **Real bug affecting users**: This is a functional bug that affects
-   all Rockchip PCIe PHY operations. The strobe signal being left
-   enabled could cause:
-   - Incorrect PHY configuration behavior
-   - Potential power consumption issues
-   - Possible hardware state corruption
-   - Unpredictable PCIe link behavior
+## Small and Contained Fix
+The actual code change is minimal - just **moving 2 lines of code** (the
+`handle_nested_irq()` call) from inside the mutex-protected region to
+outside it. This is a surgical fix that:
+- Only affects the IRQ handling path in `sdw_handle_slave_alerts()`
+- Doesn't change any logic or add new features
+- Has clear boundaries within the SoundWire subsystem
 
-2. **Small and contained fix**: The change is minimal - just changing
-   one define from `1` to `0`. This is exactly the type of targeted fix
-   suitable for stable.
+## Safe to Move Outside Lock
+The commit message explains why this is safe: The IRQ framework ensures
+handlers are unregistered during device removal **before** the driver is
+unbound. This means:
+1. The IRQ handler registration happens in probe
+2. The IRQ handler unregistration happens in remove
+3. The `sdw_dev_lock` protects the `probed` flag and driver callbacks
+4. Since the IRQ framework guarantees the handler is gone before remove
+   completes, there's no race condition
 
-3. **Clear correctness**: The fix is obviously correct - a disable
-   operation should use value `0`, not `1`. The bug appears to be a
-   copy-paste error from the initial driver introduction in 2016 (commit
-   fcffee3d54fca).
+## History Shows Lock Issues are Common
+The git history reveals multiple mutex/deadlock fixes in SoundWire:
+- `a4857d1afdd1`: Fixed deadlock with ordered master_list
+- `bd29c00edd0a`: Major rework of locking for bind/unbind (the commit
+  that introduced sdw_dev_lock)
+- Multiple other lock-related fixes
 
-4. **Long-standing issue**: This bug has existed since the driver was
-   first introduced in 2016, affecting all kernel versions with this
-   driver.
+This indicates the locking in SoundWire has been problematic and fixes
+are important for stability.
 
-5. **No architectural changes**: The fix doesn't introduce new features
-   or change the driver architecture - it simply corrects an incorrect
-   constant value.
+## Follows Stable Rules
+✓ Fixes a real bug (deadlock)
+✓ Minimal change (2 lines moved)
+✓ No new features
+✓ Low regression risk
+✓ Clear explanation of why it's safe
+✓ Fixes an issue introduced by earlier changes (when IRQ framework
+support was added in commit `12a95123bfe1`)
 
-6. **Low regression risk**: Changing the disable value from 1 to 0 is
-   the correct behavior according to typical hardware programming
-   patterns. The risk of regression is minimal since this fixes
-   incorrect behavior rather than changing working functionality.
+The commit is a textbook example of a stable-appropriate fix: it
+resolves a real deadlock issue with minimal code changes and clear
+safety justification.
 
-### Additional Context
-The commit also removes the unused `PHY_CFG_RD_MASK` define as cleanup,
-which was left over from commit 64cdc0360811. This is harmless cleanup
-that doesn't affect the backport decision.
+ drivers/soundwire/bus.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-The commit message clearly describes the issue: the TEST_WRITE strobe
-signal should follow a pattern of enable→wait→disable, but the current
-code never actually disables it due to the incorrect define value.
-
-This meets all the criteria for stable backports: it fixes a real bug,
-is small and self-contained, has minimal risk, and corrects clearly
-incorrect behavior that has been present since driver introduction.
-
- drivers/phy/rockchip/phy-rockchip-pcie.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/phy/rockchip/phy-rockchip-pcie.c b/drivers/phy/rockchip/phy-rockchip-pcie.c
-index bd44af36c67a..63e88abc66c6 100644
---- a/drivers/phy/rockchip/phy-rockchip-pcie.c
-+++ b/drivers/phy/rockchip/phy-rockchip-pcie.c
-@@ -30,9 +30,8 @@
- #define PHY_CFG_ADDR_SHIFT    1
- #define PHY_CFG_DATA_MASK     0xf
- #define PHY_CFG_ADDR_MASK     0x3f
--#define PHY_CFG_RD_MASK       0x3ff
- #define PHY_CFG_WR_ENABLE     1
--#define PHY_CFG_WR_DISABLE    1
-+#define PHY_CFG_WR_DISABLE    0
- #define PHY_CFG_WR_SHIFT      0
- #define PHY_CFG_WR_MASK       1
- #define PHY_CFG_PLL_LOCK      0x10
+diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
+index 68db4b67a86f..4fd5cac799c5 100644
+--- a/drivers/soundwire/bus.c
++++ b/drivers/soundwire/bus.c
+@@ -1753,15 +1753,15 @@ static int sdw_handle_slave_alerts(struct sdw_slave *slave)
+ 
+ 		/* Update the Slave driver */
+ 		if (slave_notify) {
++			if (slave->prop.use_domain_irq && slave->irq)
++				handle_nested_irq(slave->irq);
++
+ 			mutex_lock(&slave->sdw_dev_lock);
+ 
+ 			if (slave->probed) {
+ 				struct device *dev = &slave->dev;
+ 				struct sdw_driver *drv = drv_to_sdw_driver(dev->driver);
+ 
+-				if (slave->prop.use_domain_irq && slave->irq)
+-					handle_nested_irq(slave->irq);
+-
+ 				if (drv->ops && drv->ops->interrupt_callback) {
+ 					slave_intr.sdca_cascade = sdca_cascade;
+ 					slave_intr.control_port = clear;
 -- 
 2.39.5
 
