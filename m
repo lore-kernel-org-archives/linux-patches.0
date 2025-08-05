@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DDC2749DF;
-	Tue,  5 Aug 2025 13:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289A9272E5A;
+	Tue,  5 Aug 2025 13:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399409; cv=none; b=rTKLtWX2of9IjN6j/+yEul4wCa2lTNX38XcOBOqIfs5zrxoECp5qcuqdyzz/VpkdZEOYxI3Fw1NaxCe9zG80VrB6T8PyyzBTi7FfRwu++mx8MSBdADhX2wkHmWgB+gLAZB27s3wyYzKypmzpSLhknMCYz5VrWPfVwvoA2zqhCJ8=
+	t=1754399411; cv=none; b=b5e83C+Hz3XRuJpHRyh8A/1a9nIiWEPVtiBUQ1hnc6NdVfk7TG+7SiZhGGm0nV16vRV7/YcxsucU5rjZcpkymBnE/2O9AuXop1tQyGt8fLI5OFz0tsuGGC52hIbL5H+Ol7syDcCcni/gp/tvl+s7e6wgBTqkEZEojGjEj4nTheM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399409; c=relaxed/simple;
-	bh=bP8A5HC3XzwMZvbd9AW/OCXUgb7BGmbP61vbl4smCKI=;
+	s=arc-20240116; t=1754399411; c=relaxed/simple;
+	bh=Hk/f3ywqEdhAhUrmndY5pDG1upxEFn3WT+xr2WLPPpQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DOP5LAa6pkSgbKa0uqLvGhvglrqQwUTvBi285tfXnPhy0N9WZbQWzVrIVqxnfURRVgfEt3e58+4rLGtY2Of0gQQ/uQf3Vtm0B9AKF9M5PGYKpOX0NUjGCxs5IKPRbYHH6bTt+auRwmZsxsHCuupkTT/197w17zjhKQRMq3CMXPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VuU6Ttpu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I8BwEfRsdZUFhF5YqWsjYZFk0zUTYQaYa3db9Qjmb/Gpq7b9uairkrWMnc8Ej3vtxAJWg8vV3j5Yjk3eRGR+ZdeL4aUkzINBmuJAgcPVthcetbTrt2dQHfE65wIFoh9wIAhGAObj3o6UK+8VRg11t3Gd5f2jBiFLG5z0RNMefdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tC16lZN/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VuU6Ttpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1893C4CEF4;
-	Tue,  5 Aug 2025 13:10:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tC16lZN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E13C4CEF7;
+	Tue,  5 Aug 2025 13:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399409;
-	bh=bP8A5HC3XzwMZvbd9AW/OCXUgb7BGmbP61vbl4smCKI=;
+	s=k20201202; t=1754399411;
+	bh=Hk/f3ywqEdhAhUrmndY5pDG1upxEFn3WT+xr2WLPPpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuU6TtpuMqScl+idpC+L99AxRHnlt0cYVSdPw9CV8BMwyThdZ9URw6fZmSQYJLbqE
-	 1EB0ogcYE46TToaapVhxCrM/9UkSTEF0TQWcBH6bi7ZX9kyeOM576GTsjWKkFR4UP+
-	 1UgTAYU3kim9/GzeL7T/q50YMudEsn11waq17fQS18AO9iLY3P/KstzgSkc1aDbTjk
-	 9IecUxH5tHgVHmIcbf3ZenrVPAaDj2KANAR/Fqk83T7fq9xr8rnOpLiT0Bsj+cdWQT
-	 XJTJQSiUJ55b31UeZRS1DPPdehuTLiI7wVA6eGWdQiSPE/1KFda2ooMqVMFGTycv4s
-	 8ROAABjTJjubw==
+	b=tC16lZN/LHBid3HG5aRcQSNjgViMRL4L3NBEoOXcJPaSO2FgTY7g7zgh6IGbJkFJL
+	 MIAJV9R6dSq0a15hLFKNLEysfC8MC/v+un9McqvNDyFGOFQOG5V8G8besnQvrjP76V
+	 I1RELFuHd6cEOH891p1Y7ObifpUw56LgnW+wk+okZg+drDJVQYDDurb15bmuHepsDU
+	 XnczcspzZ/Wqz5DtQETenQjQcu/np9pycSFvZLfktcsxBk2FshMN+ZqU2pEVeDO+eA
+	 CvusvkkPPiH/WO8Cdzv5mqxoS351mWOG5eKNUEDv9JmsRpJSCpxtr2GTpMClzUdsTn
+	 /Rafjz/7kfzKg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhiqi Song <songzhiqi1@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	liulongfang@huawei.com,
-	linux-crypto@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.15] crypto: hisilicon/hpre - fix dma unmap sequence
-Date: Tue,  5 Aug 2025 09:08:45 -0400
-Message-Id: <20250805130945.471732-10-sashal@kernel.org>
+	yung-chuan.liao@linux.intel.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.6] soundwire: amd: serialize amd manager resume sequence during pm_prepare
+Date: Tue,  5 Aug 2025 09:08:46 -0400
+Message-Id: <20250805130945.471732-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -52,17 +51,20 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Zhiqi Song <songzhiqi1@huawei.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 982fd1a74de63c388c060e4fa6f7fbd088d6d02e ]
+[ Upstream commit 03837341790039d6f1cbf7a1ae7dfa2cb77ef0a4 ]
 
-Perform DMA unmapping operations before processing data.
-Otherwise, there may be unsynchronized data accessed by
-the CPU when the SWIOTLB is enabled.
+During pm_prepare callback, pm_request_resume() delays SoundWire manager D0
+entry sequence. Synchronize runtime resume sequence for amd_manager
+instance prior to invoking child devices resume sequence for both the amd
+power modes(ClockStop Mode and Power off mode).
+Change the power_mode_mask check and use pm_runtime_resume() in
+amd_pm_prepare() callback.
 
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20250530054447.1645807-3-Vijendar.Mukunda@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,118 +72,79 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Critical Bug Fix Nature
+## Bug Fix Nature
+The commit fixes a critical synchronization issue in the AMD SoundWire
+driver's power management sequence. The original code used
+`pm_request_resume()` which is asynchronous, leading to race conditions
+where the manager device might not be fully resumed before child devices
+start their resume sequence. This causes:
+1. Missing device alerts on AMD platforms
+2. Race conditions during system resume
+3. Potential communication failures between the SoundWire manager and
+   peripheral devices
 
-This commit fixes a critical **data coherency bug** that occurs when
-SWIOTLB (Software I/O Translation Lookaside Buffer) is enabled. The bug
-involves accessing DMA-mapped memory after processing data but before
-unmapping it, which violates DMA API usage rules and can lead to:
+## Code Analysis
 
-1. **Data corruption** - CPU may access stale/unsynchronized data
-2. **Security implications** - Potential exposure of sensitive
-   cryptographic material
-3. **System instability** - Especially on systems with IOMMU or SWIOTLB
-   enabled
+1. **Critical Fix**: The change from `pm_request_resume()` to
+   `pm_runtime_resume()` ensures synchronous resume operation,
+   eliminating race conditions. This is similar to Intel's fix (commit
+   6f4867fa5760) which addressed the same class of issue.
 
-## Specific Code Analysis
+2. **Expanded Scope**: The condition change from `(power_mode_mask &
+   AMD_SDW_CLK_STOP_MODE)` to just `(power_mode_mask)` ensures the fix
+   applies to both power modes:
+   - AMD_SDW_CLK_STOP_MODE (value 1): Clock stop mode
+   - AMD_SDW_POWER_OFF_MODE (value 2): Power off mode
 
-### In `hpre_ecdh_cb()` (lines 1476-1502):
+   This ensures proper synchronization for all power management
+scenarios, not just clock stop mode.
 
-**Before the fix:**
-```c
-p = sg_virt(areq->dst);  // Line 1494 - Accessing DMA-mapped memory
-memmove(p, p + ctx->key_sz - curve_sz, curve_sz);  // Line 1495 -
-Processing data
-memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);  // Line
-1496
+3. **Small and Contained**: The fix is minimal (3 lines changed) and
+   localized to the `amd_pm_prepare()` function, reducing regression
+   risk.
 
-hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);  // Line 1498
-- DMA unmap happens here
-```
+4. **Clear Bug Symptoms**: The commit message explicitly states the
+   observed bug: "device alerts are missing without pm_prepare on AMD
+   platforms" - a user-visible problem affecting SoundWire
+   functionality.
 
-**After the fix:**
-```c
-/* Do unmap before data processing */
-hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);  // DMA unmap
-first
+5. **No Architectural Changes**: This is purely a bug fix that corrects
+   the synchronization mechanism without introducing new features or
+   changing the driver architecture.
 
-p = sg_virt(areq->dst);  // Now safe to access memory
-memmove(p, p + ctx->key_sz - curve_sz, curve_sz);
-memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);
-```
+6. **Subsystem Pattern**: This follows an established pattern in the
+   SoundWire subsystem where Intel had a similar issue and fix,
+   indicating this is a known class of bugs that should be addressed in
+   stable kernels.
 
-### In `hpre_curve25519_cb()` (lines 1795-1820):
+The commit meets all stable kernel criteria: it fixes a real bug
+affecting users, is minimal in scope, has low regression risk, and
+doesn't introduce new functionality.
 
-Similar issue where `hpre_key_to_big_end(sg_virt(areq->dst),
-CURVE25519_KEY_SIZE)` was called before DMA unmapping.
+ drivers/soundwire/amd_manager.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-## Why This Qualifies for Stable
-
-1. **Clear Bug Fix**: This fixes a definitive bug in DMA API usage that
-   violates kernel DMA coherency rules
-2. **Small and Contained**: The fix is minimal - just reordering
-   function calls in two callback functions
-3. **No New Features**: Pure bug fix with no feature additions
-4. **Low Risk**: Simple reordering of operations with no algorithmic
-   changes
-5. **Affects Real Users**: Systems with SWIOTLB enabled (common in
-   virtualized environments and systems with >4GB RAM on 32-bit
-   architectures)
-6. **Subsystem Impact**: Confined to HiSilicon HPRE crypto driver
-   callbacks
-
-## Technical Severity
-
-The bug is particularly severe because:
-- SWIOTLB bounce buffers may contain stale data when accessed before DMA
-  unmapping
-- This affects cryptographic operations (ECDH and Curve25519), where
-  data integrity is critical
-- The issue manifests silently as data corruption rather than crashes,
-  making it hard to detect
-
-The fix follows proper DMA API usage patterns by ensuring DMA unmapping
-(which includes cache synchronization) occurs before CPU accesses the
-memory, preventing any coherency issues.
-
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index 61b5e1c5d019..1550c3818383 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -1491,11 +1491,13 @@ static void hpre_ecdh_cb(struct hpre_ctx *ctx, void *resp)
- 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
- 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
- 
-+	/* Do unmap before data processing */
-+	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
-+
- 	p = sg_virt(areq->dst);
- 	memmove(p, p + ctx->key_sz - curve_sz, curve_sz);
- 	memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);
- 
--	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
- 	kpp_request_complete(areq, ret);
- 
- 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
-@@ -1808,9 +1810,11 @@ static void hpre_curve25519_cb(struct hpre_ctx *ctx, void *resp)
- 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
- 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
- 
-+	/* Do unmap before data processing */
-+	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
-+
- 	hpre_key_to_big_end(sg_virt(areq->dst), CURVE25519_KEY_SIZE);
- 
--	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
- 	kpp_request_complete(areq, ret);
- 
- 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
+diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
+index 7a671a786197..3b335d6eaa94 100644
+--- a/drivers/soundwire/amd_manager.c
++++ b/drivers/soundwire/amd_manager.c
+@@ -1178,10 +1178,10 @@ static int __maybe_unused amd_pm_prepare(struct device *dev)
+ 	 * device is not in runtime suspend state, observed that device alerts are missing
+ 	 * without pm_prepare on AMD platforms in clockstop mode0.
+ 	 */
+-	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
+-		ret = pm_request_resume(dev);
++	if (amd_manager->power_mode_mask) {
++		ret = pm_runtime_resume(dev);
+ 		if (ret < 0) {
+-			dev_err(bus->dev, "pm_request_resume failed: %d\n", ret);
++			dev_err(bus->dev, "pm_runtime_resume failed: %d\n", ret);
+ 			return 0;
+ 		}
+ 	}
 -- 
 2.39.5
 
