@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FE2273D73;
-	Tue,  5 Aug 2025 13:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8444A2749DA;
+	Tue,  5 Aug 2025 13:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399405; cv=none; b=Y8tepjYhWBT7uN7M+pEKNdgKbpW++DgP/8dU2TRo/BO23lu33WnKG1guP7fYFEBMtQGKaMkIasfdFRncrO3yMe8Jlpee8sGtzeykN8qd41Cl3j2x/bfPN6Eiygo9vE810GTEvTMVCpoJzrUksxg6XUvceJOCzW9+sbX5eWk5KdU=
+	t=1754399407; cv=none; b=iOqEu5Qy5hQxOZACjyqtUFD1k3sikDOa1U3/QIQW5EMBIR3lCHPeJmh5cdw0jKMjlm9HKT6QlN4sbnJB+oDbLC8r4lCYS6yP66Wd6gkA5zxkpRwvnyJLGh7bG/DRARHvPMIDcSyiNtrxz2Y46YSiCqI60XEnXcqBMYdvrpRBtv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399405; c=relaxed/simple;
-	bh=2QzGg5eGZSoxkyagSZYkTDZKCbtQQT2cOhvRCRD2NH4=;
+	s=arc-20240116; t=1754399407; c=relaxed/simple;
+	bh=mM1PN7qys62gLBy3sxKygh7hbsoeeNkZqeyBgBr51CY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p+CAnZ1HAgVbJqu4Cxo/q9h6Hav8LKG/TJQy8SxwjQXw00lAW3XlelhyCYI3i1aioP6f9GU4Mhzo8Rg/9b1vipuv5f5NvCki1PZ33HZjHVIzg7y6T9gtLRhBswSVa96GGMHQ10iIac2ps5Ykp0YAWmbZJudc7Bmczx5YGSbM7hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2E5P7Hx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kGhffHtNHZM8U9hjoCuC0+Z92ZFDG15BTLr/ks0/f0Br1pLVf3Em/kL7aHudKEZ7kzOrgwgW6yl1t/Zlgmd3Pi7s4Uq519O7vJ90zrZCXlL4o6O942w9M1JXxYsObGVOai0wc6FXtdU5jCXzafGQb+sR5k6Pf9Y61h9eyDRhpG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZobDmXg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2E5P7Hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C27C4CEF7;
-	Tue,  5 Aug 2025 13:10:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aZobDmXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948C5C4CEF0;
+	Tue,  5 Aug 2025 13:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399404;
-	bh=2QzGg5eGZSoxkyagSZYkTDZKCbtQQT2cOhvRCRD2NH4=;
+	s=k20201202; t=1754399407;
+	bh=mM1PN7qys62gLBy3sxKygh7hbsoeeNkZqeyBgBr51CY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2E5P7HxhrVUCq5aijb1hLbF1quz8a4Q1mtga8Yqjf7fOl5jKse1dzhd0vwBOPmhK
-	 cvs65bTok+u/PASL4WQDyOBYxRJdXWoWVgKk+J/hGJQwZ6HiCVlcEafqc4sxHRRZMZ
-	 EjHtwCSWM948ojemKopzXIpFAqBhmRS84nWPuByYPsjpPj7p2e4KmUM20lz6zYVc6Y
-	 WIQakhJJHo5EpnRKwYs32/kgwskjMWHhmYrnvOqvyUlT12OIrT9VE/qFjGkTEfXANm
-	 IyAH+LbORbTCVK1LUY2UJfnMwgRjDUFWYLJeCR7pGH0lXAiDL0/xoeZOC1NFvYW24/
-	 jcqVkWG9+aO4Q==
+	b=aZobDmXg83uj4dBvBBNpUvOQ7oTFWsMsFOvC2hr6iGJttmw/gC5emVKO4+Z9B7We4
+	 pXLAM69Pu40dmhahfKoXNBIFr3vJlFajPhM9M7tJvFrBBdu5dwcsm7xzCtvkIgPx8A
+	 /CgWjkBMXOaf/EQk+rYWVXMf7CnISOMkaqAV/9HvmqRFMf5bNDGArD1KTP57zpvvl7
+	 tqRzTpz5vtcqDa6OHc+xJvQtt/GYSD/Ddwl9DMTfJeMigWpM9HB0GFHdbrqtWS9YWs
+	 N44lXf8GpdU688/Of+nU0W0mKs3fd84nmwFdm8mTuZL8cX9LAHAxr561oKgmePp2HC
+	 /SwutT36fM7IQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: chenchangcheng <chenchangcheng@kylinos.cn>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>,
-	yung-chuan.liao@linux.intel.com,
-	linux-sound@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.6] soundwire: Move handle_nested_irq outside of sdw_dev_lock
-Date: Tue,  5 Aug 2025 09:08:43 -0400
-Message-Id: <20250805130945.471732-8-sashal@kernel.org>
+	hansg@kernel.org,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] media: uvcvideo: Fix bandwidth issue for Alcor camera
+Date: Tue,  5 Aug 2025 09:08:44 -0400
+Message-Id: <20250805130945.471732-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -49,132 +51,111 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: chenchangcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit ccb7bb13c00bcc3178d270da052635c56148bc16 ]
+[ Upstream commit 9764401bf6f8a20eb11c2e78470f20fee91a9ea7 ]
 
-The sdw_dev_lock protects the SoundWire driver callbacks against
-the probed flag, which is used to skip the callbacks if the
-driver gets removed. For more information see commit bd29c00edd0a
-("soundwire: revisit driver bind/unbind and callbacks").
+Some broken device return wrong dwMaxPayloadTransferSize fields as
+follows:
 
-However, this lock is a frequent source of mutex inversions.
-Many audio operations eventually hit the hardware resulting in a
-SoundWire callback, this means that typically the driver has the
-locking order ALSA/ASoC locks -> sdw_dev_lock. Conversely, the IRQ
-comes in directly from the SoundWire hardware, but then will often
-want to access ALSA/ASoC, such as updating something in DAPM or
-an ALSA control. This gives the other lock order sdw_dev_lock ->
-ALSA/ASoC locks.
+[  218.632537] uvcvideo: Device requested 2752512 B/frame bandwidth.
+[  218.632598] uvcvideo: No fast enough alt setting for requested bandwidth.
 
-When the IRQ handling was initially added to SoundWire this was
-through a callback mechanism. As such it required being covered by
-the lock because the callbacks are part of the sdw_driver structure
-and are thus present regardless of if the driver is currently
-probed.
+When dwMaxPayloadTransferSize is greater than maxpsize, it will prevent
+the camera from starting. So use the bandwidth of maxpsize.
 
-Since then a newer mechanism using the IRQ framework has been
-added, which is currently covered by the same lock but this isn't
-actually required. Handlers for the IRQ framework are registered in
-probe and should by released during remove, thus the IRQ framework
-will have already unbound the IRQ before the slave driver is
-removed. Avoid the aforementioned mutex inversion by moving the
-handle_nested_irq call outside of the sdw_dev_lock.
-
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20250609143041.495049-3-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: chenchangcheng <chenchangcheng@kylinos.cn>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250510061803.811433-1-ccc194101@163.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+Based on my analysis of the commit and the surrounding code context,
+here is my determination:
+
+**YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix Nature
-The commit fixes a **real deadlock/mutex inversion issue** that affects
-production systems. The code changes show that `handle_nested_irq()` is
-moved outside the `sdw_dev_lock` mutex protection (lines 1756-1757 moved
-before line 1759), which resolves a lock ordering problem:
-- **Lock order A**: ALSA/ASoC locks → sdw_dev_lock (during normal audio
-  operations)
-- **Lock order B**: sdw_dev_lock → ALSA/ASoC locks (during IRQ handling)
+1. **Fixes a real user-impacting bug**: The commit fixes a bandwidth
+   issue that prevents certain USB cameras (specifically Alcor cameras)
+   from starting. As shown in the commit message, devices can request
+   unrealistic bandwidth values (2752512 B/frame), which causes the "No
+   fast enough alt setting for requested bandwidth" error at line 2080
+   in uvc_video.c, preventing the camera from functioning.
 
-This ABBA deadlock pattern can cause system hangs in real-world usage.
+2. **Small and contained fix**: The change is minimal - it adds only 8
+   lines of code that perform a simple bounds check. When
+   `dwMaxPayloadTransferSize` exceeds `stream->maxpsize`, it caps the
+   value to the maximum packet size. This is a defensive programming
+   approach that doesn't change any core functionality.
 
-## Small and Contained Fix
-The actual code change is minimal - just **moving 2 lines of code** (the
-`handle_nested_irq()` call) from inside the mutex-protected region to
-outside it. This is a surgical fix that:
-- Only affects the IRQ handling path in `sdw_handle_slave_alerts()`
-- Doesn't change any logic or add new features
-- Has clear boundaries within the SoundWire subsystem
+3. **Low regression risk**: The fix is conservative and only triggers
+   when:
+   - The interface has multiple alternate settings
+     (`stream->intf->num_altsetting > 1`)
+   - The requested payload size exceeds the endpoint's maximum packet
+     size
+   - It simply clamps the value rather than rejecting it, allowing the
+     device to work with reduced bandwidth
 
-## Safe to Move Outside Lock
-The commit message explains why this is safe: The IRQ framework ensures
-handlers are unregistered during device removal **before** the driver is
-unbound. This means:
-1. The IRQ handler registration happens in probe
-2. The IRQ handler unregistration happens in remove
-3. The `sdw_dev_lock` protects the `probed` flag and driver callbacks
-4. Since the IRQ framework guarantees the handler is gone before remove
-   completes, there's no race condition
+4. **Follows established pattern**: The code already has similar
+   workarounds for broken devices (e.g., the Chicony device fix at lines
+   226-227 that masks invalid bandwidth values). This fix follows the
+   same philosophy of working around non-compliant hardware.
 
-## History Shows Lock Issues are Common
-The git history reveals multiple mutex/deadlock fixes in SoundWire:
-- `a4857d1afdd1`: Fixed deadlock with ordered master_list
-- `bd29c00edd0a`: Major rework of locking for bind/unbind (the commit
-  that introduced sdw_dev_lock)
-- Multiple other lock-related fixes
+5. **Hardware compatibility issue**: This fixes compatibility with
+   specific hardware (Alcor cameras) that would otherwise be completely
+   non-functional. Hardware compatibility fixes are typically good
+   candidates for stable backports as they enable users to use their
+   existing hardware.
 
-This indicates the locking in SoundWire has been problematic and fixes
-are important for stability.
+6. **Clear problem and solution**: The issue is well-defined (devices
+   returning wrong `dwMaxPayloadTransferSize`), and the solution is
+   straightforward (cap to the actual maximum packet size). The warning
+   message also provides visibility into when this workaround is
+   applied.
 
-## Follows Stable Rules
-✓ Fixes a real bug (deadlock)
-✓ Minimal change (2 lines moved)
-✓ No new features
-✓ Low regression risk
-✓ Clear explanation of why it's safe
-✓ Fixes an issue introduced by earlier changes (when IRQ framework
-support was added in commit `12a95123bfe1`)
+7. **No architectural changes**: The fix doesn't introduce new features
+   or change the driver architecture. It's purely a workaround for non-
+   compliant hardware, similar to other quirks already present in the
+   UVC driver.
 
-The commit is a textbook example of a stable-appropriate fix: it
-resolves a real deadlock issue with minimal code changes and clear
-safety justification.
+The commit meets the stable kernel criteria of fixing an important bug
+(camera not working) with minimal risk and without introducing new
+features or architectural changes.
 
- drivers/soundwire/bus.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
-index 68db4b67a86f..4fd5cac799c5 100644
---- a/drivers/soundwire/bus.c
-+++ b/drivers/soundwire/bus.c
-@@ -1753,15 +1753,15 @@ static int sdw_handle_slave_alerts(struct sdw_slave *slave)
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index e3567aeb0007..11769a1832d2 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -262,6 +262,15 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
  
- 		/* Update the Slave driver */
- 		if (slave_notify) {
-+			if (slave->prop.use_domain_irq && slave->irq)
-+				handle_nested_irq(slave->irq);
+ 		ctrl->dwMaxPayloadTransferSize = bandwidth;
+ 	}
 +
- 			mutex_lock(&slave->sdw_dev_lock);
++	if (stream->intf->num_altsetting > 1 &&
++	    ctrl->dwMaxPayloadTransferSize > stream->maxpsize) {
++		dev_warn_ratelimited(&stream->intf->dev,
++				     "UVC non compliance: the max payload transmission size (%u) exceeds the size of the ep max packet (%u). Using the max size.\n",
++				     ctrl->dwMaxPayloadTransferSize,
++				     stream->maxpsize);
++		ctrl->dwMaxPayloadTransferSize = stream->maxpsize;
++	}
+ }
  
- 			if (slave->probed) {
- 				struct device *dev = &slave->dev;
- 				struct sdw_driver *drv = drv_to_sdw_driver(dev->driver);
- 
--				if (slave->prop.use_domain_irq && slave->irq)
--					handle_nested_irq(slave->irq);
--
- 				if (drv->ops && drv->ops->interrupt_callback) {
- 					slave_intr.sdca_cascade = sdca_cascade;
- 					slave_intr.control_port = clear;
+ static size_t uvc_video_ctrl_size(struct uvc_streaming *stream)
 -- 
 2.39.5
 
