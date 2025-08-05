@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFAD273D6C;
-	Tue,  5 Aug 2025 13:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85957276049;
+	Tue,  5 Aug 2025 13:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399503; cv=none; b=X0IAaoCN8oEtUoaeUKYZ2cKLPmzpquZXXYgtNpEEHD8tq1IW213ub0K59lUprzc58H4QPFDYLFiFI+pP/laXJpKh51T1kiJWIaDNLe7PUd1O7vXtRnHPkMx0EqO7SERq2Fl4EU+vPdjvCSqpNwZw8bft/ia1/kepecQ5weeIXqk=
+	t=1754399505; cv=none; b=mSpoAdyG5GlCobR4k+qgRXVdAnqBDL5+libugDbsukN8RqdIDeCHZivuebc7NJ3JWgQfXnIQ+AxCK+iGoFf3aEnAFnD2YF2k+k4aEn22ihqOqr28drpWThhk+l1VDlwuGGDtWXwxjub9YTec0nXRpl2oWoXhhloaJErRK3Wh1dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399503; c=relaxed/simple;
-	bh=dSsKft6R8Ur2qdOcK2P58eAK0xJaJB/wuxX5XnU1Ktg=;
+	s=arc-20240116; t=1754399505; c=relaxed/simple;
+	bh=XlRRW7J0SgjweNCzL6+/uPhiEFwo+fUWbFL65dx6opk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QB6ZWqViZXENCjgfE6aQfP2iklZtyBUD5q5NKu5BJmeu5tGw2p5QPkBpbmucyHVWjQaMczRq0HLlVjWdcgFmi0YG5p7vpSw47WU/ETPAXkXl6GDirKZWroRGb14Ur/i4pvre5oxrs+ieGwcl3EWbaZ9XvbZ1dZeoo6n59AWpgc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NGBm2yp/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tnO5JtMGWBHiYUbldfKEKeRE0nDcgOnE5psijiiKIuuJeM0GrKvdbO1uPmOsN0SJdkaqXSKSAi8h8mgvee4/EleFyUAln+mbWr4ufRZx0K5+IbU9KYcDnkrYfr5/ESZ/Su93JAhcyG7FDTKvnr9rUyaptZotS7Xm+tlwDCraDKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xlcxum7L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NGBm2yp/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEA9C4CEFE;
-	Tue,  5 Aug 2025 13:11:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xlcxum7L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4009C4CEF4;
+	Tue,  5 Aug 2025 13:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399503;
-	bh=dSsKft6R8Ur2qdOcK2P58eAK0xJaJB/wuxX5XnU1Ktg=;
+	s=k20201202; t=1754399505;
+	bh=XlRRW7J0SgjweNCzL6+/uPhiEFwo+fUWbFL65dx6opk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGBm2yp/TA7x/KtUo7ySEXK8aBVficvdSnm4NxBpBV37xVQPMMvkWhm6A1BPEpQwu
-	 XMGnaqW7vnpw54jxYBcMCRbQjHKwd1bnn3eoh23eT1xWMu0XHf1qQF9Dm0HGA6ltT9
-	 ZtkuqRBsko5HSwdteOhChQ47X9DlL0D2tdm5ZTNaeqIvs9oB0GvIxt7RVKrd2sUk7K
-	 uhD37NngEXGe9SJix2FpxeWwG4tE0gBl7GEe9B3iSQd/+Y5WTeeCcsejEAwvRSg+mq
-	 1bvrv1WfWJpZGqC8R9NAs6yNsovb+cCGJEuWD/AFUlo7KPnzxnvUpLMHTjdb2RAUmJ
-	 F+V7JXD/61IOw==
+	b=Xlcxum7L01NhQLbSMnfnyWbFy3INzpQRclcNfT42K3vVDD6x1VtCXXhKnjE6ek+vb
+	 l3BXTcwOAsLpoBWSzMzyQP5rHowopGhagAkD9t9psnrECcGwL25bnNBlQiVG+e8+Lc
+	 WvkYxVVFJwLOx8xoxW59TOnpndAHAEvcMS0cN8HdjD4rVbOaav9p2ZR60wxlXGADFa
+	 6TBCmbWW+6XfzoV0pYfZFLlIgnLo+bQvbu92lfqrQdqhDMvnnUIsH7I/IWi+xdjMTt
+	 iZ6zI8cWDfVu8vtFgLIBp/pkxVYpQZNyj4ohQTL1GIw5dhKQesKq+jCSo8bBOXPert
+	 JX+k/shqI2eDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Shravya KN <shravya.k-n@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com,
-	dmaengine@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.16-6.1] dmaengine: stm32-dma: configure next sg only if there are more than 2 sgs
-Date: Tue,  5 Aug 2025 09:09:27 -0400
-Message-Id: <20250805130945.471732-52-sashal@kernel.org>
+	selvin.xavier@broadcom.com,
+	linux-rdma@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.12] RDMA/bnxt_re: Fix size of uverbs_copy_to() in BNXT_RE_METHOD_GET_TOGGLE_MEM
+Date: Tue,  5 Aug 2025 09:09:28 -0400
+Message-Id: <20250805130945.471732-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -54,124 +53,82 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit e19bdbaa31082b43dab1d936e20efcebc30aa73d ]
+[ Upstream commit 09d231ab569ca97478445ccc1ad44ab026de39b1 ]
 
-DMA operates in Double Buffer Mode (DBM) when the transfer is cyclic and
-there are at least two periods.
-When DBM is enabled, the DMA toggles between two memory targets (SxM0AR and
-SxM1AR), indicated by the SxSCR.CT bit (Current Target).
-There is no need to update the next memory address if two periods are
-configured, as SxM0AR and SxM1AR are already properly set up before the
-transfer begins in the stm32_dma_start_transfer() function.
-This avoids unnecessary updates to SxM0AR/SxM1AR, thereby preventing
-potential Transfer Errors. Specifically, when the channel is enabled,
-SxM0AR and SxM1AR can only be written if SxSCR.CT=1 and SxSCR.CT=0,
-respectively. Otherwise, a Transfer Error interrupt is triggered, and the
-stream is automatically disabled.
+Since both "length" and "offset" are of type u32, there is
+no functional issue here.
 
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://lore.kernel.org/r/20250624-stm32_dma_dbm_fix-v1-1-337c40d6c93e@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Link: https://patch.msgid.link/20250704043857.19158-2-kalesh-anakkur.purayil@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my comprehensive analysis of the commit and the STM32 DMA
-driver code, here's my assessment:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's an
-extensive explanation based on the code analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Bug Being Fixed
+1. **Clear Bug Fix**: The commit fixes a genuine copy-paste error where
+   `sizeof(length)` was incorrectly used instead of `sizeof(offset)`
+   when copying the offset value to userspace in line 4749. This bug has
+   been present since the code was introduced in commit 9b0a7a2cb87d9
+   (December 2023).
 
-The commit fixes a **Transfer Error interrupt** issue in the STM32 DMA
-driver when operating in Double Buffer Mode (DBM) with exactly two
-periods. The bug manifests as follows:
+2. **Potential Functional Impact**: While the commit message states "no
+   functional issue" because both `length` and `offset` are u32 types
+   (and thus have the same size), this is still a correctness issue that
+   should be fixed. The bug could become problematic if:
+   - The types are changed in the future
+   - Compiler optimizations or static analysis tools get confused
+   - It sets a bad precedent for similar code patterns
 
-1. **The Problem**: When DBM is enabled with exactly 2 scatter-gather
-   segments (periods), the driver was unnecessarily calling
-   `stm32_dma_configure_next_sg()` in the interrupt handler (line 748 of
-   stm32_dma_handle_chan_done).
+3. **Small and Contained Fix**: This is a one-line change that simply
+   corrects the sizeof() argument from `sizeof(length)` to
+   `sizeof(offset)`. The change is minimal, easy to verify, and has zero
+   risk of introducing regressions.
 
-2. **Hardware Constraint**: As explained in the commit message, when the
-   channel is enabled, the memory address registers (SxM0AR and SxM1AR)
-   can only be written when specific conditions are met:
-   - SxM0AR can only be written when CT (Current Target) = 1
-   - SxM1AR can only be written when CT = 0
-   - Writing at the wrong time triggers a Transfer Error interrupt
+4. **Affects User-Kernel Interface**: The buggy code is in the
+   `uverbs_copy_to()` function which copies data to userspace through
+   the RDMA uverbs interface. This is part of the user-kernel ABI for
+   the Broadcom NetXtreme-E RoCE driver, making correctness particularly
+   important.
 
-3. **The Fix**: The simple addition of `&& chan->desc->num_sgs > 2`
-   condition prevents unnecessary updates when there are exactly 2
-   periods, as the hardware automatically toggles between the two pre-
-   configured buffers.
+5. **Recently Introduced Bug**: The bug was introduced relatively
+   recently (December 2023), meaning it could affect stable kernels from
+   6.8 onwards. Backporting ensures all affected stable versions get the
+   fix.
 
-## Why This Is a Good Backport Candidate
+6. **No Architecture Changes**: This is purely a bug fix with no feature
+   additions or architectural changes. It simply corrects an obvious
+   typo in the sizeof() operator usage.
 
-1. **Clear Bug Fix**: This fixes a specific hardware-related bug that
-   causes Transfer Error interrupts, which can disrupt DMA operations
-   and potentially cause system instability.
+The commit meets all the stable tree criteria: it fixes a real bug (even
+if currently benign), is minimal in scope, has no side effects, and
+carries essentially zero risk of regression.
 
-2. **Minimal and Safe Change**: The fix is a single-line conditional
-   check that adds `&& chan->desc->num_sgs > 2` to line 747. This is:
-   - Very small in scope (1 line change)
-   - Low risk of regression
-   - Only affects the specific case of DBM with 2 periods
-
-3. **Hardware-Specific Fix**: The change addresses a specific STM32 DMA
-   hardware behavior documented in the reference manual, making it
-   necessary for proper operation on affected hardware.
-
-4. **No Architectural Changes**: The commit doesn't introduce new
-   features or change the driver's architecture - it simply prevents an
-   unnecessary operation that violates hardware constraints.
-
-5. **Production Impact**: Transfer Error interrupts can cause DMA
-   streams to be automatically disabled (as mentioned in the commit
-   message), leading to data transfer failures in production systems
-   using cyclic DMA with 2 periods.
-
-6. **Clear Error Path**: Looking at the interrupt handler (lines
-   804-809), unhandled status bits including TEI (Transfer Error
-   Interrupt) result in error messages and potential channel disabling,
-   which this fix prevents.
-
-## Code Analysis Confirms the Fix
-
-From the code analysis:
-- Line 1207 shows DBM is enabled for multi-period cyclic transfers
-- Lines 593-595 show initial setup correctly configures both SM0AR and
-  SM1AR
-- Line 606 shows `stm32_dma_configure_next_sg()` is called during
-  initial transfer setup
-- The problematic line 748 (now 747) was updating memory addresses
-  unnecessarily for 2-period DBM transfers
-
-The fix ensures that for 2-period DBM transfers, the hardware's
-automatic toggling mechanism is used without software intervention,
-preventing Transfer Error interrupts while maintaining correct operation
-for transfers with more than 2 periods.
-
- drivers/dma/stm32/stm32-dma.c | 2 +-
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/stm32/stm32-dma.c b/drivers/dma/stm32/stm32-dma.c
-index 917f8e922373..0e39f99bce8b 100644
---- a/drivers/dma/stm32/stm32-dma.c
-+++ b/drivers/dma/stm32/stm32-dma.c
-@@ -744,7 +744,7 @@ static void stm32_dma_handle_chan_done(struct stm32_dma_chan *chan, u32 scr)
- 		/* cyclic while CIRC/DBM disable => post resume reconfiguration needed */
- 		if (!(scr & (STM32_DMA_SCR_CIRC | STM32_DMA_SCR_DBM)))
- 			stm32_dma_post_resume_reconfigure(chan);
--		else if (scr & STM32_DMA_SCR_DBM)
-+		else if (scr & STM32_DMA_SCR_DBM && chan->desc->num_sgs > 2)
- 			stm32_dma_configure_next_sg(chan);
- 	} else {
- 		chan->busy = false;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 063801384b2b..3a627acb82ce 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -4738,7 +4738,7 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD_GET_TOGGLE_MEM)(struct uverbs_attr_bund
+ 		return err;
+ 
+ 	err = uverbs_copy_to(attrs, BNXT_RE_TOGGLE_MEM_MMAP_OFFSET,
+-			     &offset, sizeof(length));
++			     &offset, sizeof(offset));
+ 	if (err)
+ 		return err;
+ 
 -- 
 2.39.5
 
