@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B2D2737F8;
-	Tue,  5 Aug 2025 13:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58583271A9A;
+	Tue,  5 Aug 2025 13:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399474; cv=none; b=EsEzhES896Yt3dR7NTW0+EWZRVm3C9CHwSctHZ3ODcOxeGQLfJ1cuTjQ+qzAxdegHA2F11LuurgjRKih/pHYUGQQv4f/dT9y+1cxFBBA9cC1a+6xwrHDTkCZucVfLxXW3mtMhfphC5yjbwtPlT501odZaluwL5av5z3PB9XLPws=
+	t=1754399476; cv=none; b=edlrWMN7W2yfn91N3dMkTkEQqTmJseheDuuzWvyRYLWdCQ4ozzAkTI3C8a5afilur18PfQKwJ5LYS/rm9icPO76UkgNTKA/6vpN6iLcyze3q9dwuH8WlT/uOe0D6LRYKYVg79bltkjicdcRaraMnfAc69Pi6brSlelCegzWDkQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399474; c=relaxed/simple;
-	bh=lbmu52mQsEOM7YkZBqzjp0Bsh/rk+t6yvibjKNf9z+U=;
+	s=arc-20240116; t=1754399476; c=relaxed/simple;
+	bh=fzM22NNYKBHcQXd2Lt8k68FlPhKjT9XZzR42GkvN4+U=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JMhsrd5d97mUTYW+tPyZ0osNDeBHhYEUoAYcLbb4PiE8SuTRYQ5eyAhcCImDnLrVaFdaIYgxd4hQ1NDIL82pCv2utWg/YESBu6emZSfR5a/q0+UHWOa/Xxn6QbXa2bGE/gZiLI5OGvoI+YI6iVpVqhaksYPJgOGtyU7Ax52jspk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s/y9i0ic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UF/xksm8TbEG/2PzkHNPZjKk8LymDPlSL5VwCE/VHZ43Wg4YTywSC0xDV2XTbSsX3X/S5auY7SVoNt+hHxtZWEupdWDQKiyN4C8SRfOeH/0W1UuF3uAq8YlKeZqfDrmWVaE1yPujlI/diMGx25BhDDSQBIAbS24D3I+ixt/s6XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kPiPLX6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s/y9i0ic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75811C4CEF4;
-	Tue,  5 Aug 2025 13:11:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kPiPLX6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2D3C4CEF7;
+	Tue,  5 Aug 2025 13:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399474;
-	bh=lbmu52mQsEOM7YkZBqzjp0Bsh/rk+t6yvibjKNf9z+U=;
+	s=k20201202; t=1754399475;
+	bh=fzM22NNYKBHcQXd2Lt8k68FlPhKjT9XZzR42GkvN4+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/y9i0icGi5aOrKq6adKO3YmQ4MMyxXjfdxbUL/tT9MNT7/fxLgnHY1X1A7JKIz75
-	 fXIVH/JQFMbnsYSfabnTPLk69iopFD7ZWTT1Qvup/E+jF3nF5OW+h1uLIMEx6sNspI
-	 g6dQwbpQ1fXeKDBfb4dKtVMkb6xpm9beOddWv7pz8wpVdDHLdWNB2apaLONl1vpVen
-	 M3KB/V3WmbmdCd1dED49C63lTHS41leH+CjWMJErFfrE0N4hLL3ELsOfQzqJ/S1Hl3
-	 LlBGNRDh0fVu/evl8evtRYhbuf+fLs02gHCkq9uO+4SJth0bsIxuXPIL1zy0ZoZdRo
-	 t8vyFL99FC85g==
+	b=kPiPLX6CKsQZEnvX/altmzt+ve9KLD873FiPESG6mbN/BzGUbtkzVUkzQl4dzeAb2
+	 x6zATDASSlg0IYZz3VMwrG0op7vfIWI/SiRPZUc8yADyVfloA01MpYGpEcRTIAGTRF
+	 WVUdhF0LezCUG9bI3FK9leK5EF3NVO1ooSjUXUH/MXh6Rg1AXx5sZ2zIICyMrfQlTV
+	 thV93py1Gbv88+EjOFJEJ380BuCSCyFLw0k3pHvbXQrUuBgZLzx49rCnv489bseu4y
+	 n7pIEcHqE7nooq/AxjXSpYuCG3hIKKgpbdjug1PlIdilt111PD1Jb4BYc4EGC+023u
+	 5nj7sE0/uvOGQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Damien Le Moal <dlemoal@kernel.org>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
+Cc: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>,
-	sathya.prakash@broadcom.com,
-	kashyap.desai@broadcom.com,
-	sumit.saxena@broadcom.com,
-	sreekanth.reddy@broadcom.com,
-	mpi3mr-linuxdrv.pdl@broadcom.com,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.1] scsi: mpi3mr: Correctly handle ATA device errors
-Date: Tue,  5 Aug 2025 09:09:15 -0400
-Message-Id: <20250805130945.471732-40-sashal@kernel.org>
+	linux-renesas-soc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.12] clk: renesas: rzg2l: Postpone updating priv->clks[]
+Date: Tue,  5 Aug 2025 09:09:16 -0400
+Message-Id: <20250805130945.471732-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -56,41 +50,20 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 04caad5a7ba86e830d04750417a15bad8ac2613c ]
+[ Upstream commit 2f96afdffad4ef74e3c511207058c41c54a2d014 ]
 
-With the ATA error model, an NCQ command failure always triggers an abort
-(termination) of all NCQ commands queued on the device. In such case, the
-SAT or the host must handle the failed command according to the command
-sense data and immediately retry all other NCQ commands that were aborted
-due to the failed NCQ command.
+Since the sibling data is filled after the priv->clks[] array entry is
+populated, the first clock that is probed and has a sibling will
+temporarily behave as its own sibling until its actual sibling is
+populated. To avoid any issues, postpone updating priv->clks[] until after
+the sibling is populated.
 
-For SAS HBAs controlled by the mpi3mr driver, NCQ command aborts are not
-handled by the HBA SAT and sent back to the host, with an ioc log
-information equal to 0x31080000 (IOC_LOGINFO_PREFIX_PL with the PL code
-PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR). The function
-mpi3mr_process_op_reply_desc() always forces a retry of commands
-terminated with the status MPI3_IOCSTATUS_SCSI_IOC_TERMINATED using the
-SCSI result DID_SOFT_ERROR, regardless of the ioc_loginfo for the
-command. This correctly forces the retry of collateral NCQ abort
-commands, but with the retry counter for the command being incremented.
-If a command to an ATA device is subject to too many retries due to other
-NCQ commands failing (e.g. read commands trying to access unreadable
-sectors), the collateral NCQ abort commands may be terminated with an
-error as they run out of retries. This violates the SAT specification and
-causes hard-to-debug command errors.
-
-Solve this issue by modifying the handling of the
-MPI3_IOCSTATUS_SCSI_IOC_TERMINATED status to check if a command is for an
-ATA device and if the command ioc_loginfo indicates an NCQ collateral
-abort. If that is the case, force the command retry using the SCSI result
-DID_IMM_RETRY to avoid incrementing the command retry count.
-
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250606052747.742998-2-dlemoal@kernel.org
-Tested-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250514090415.4098534-2-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -98,140 +71,87 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit fixes a legitimate race condition bug in the Renesas RZ/G2L
+clock driver that affects coupled clock handling. Here's my detailed
+analysis:
 
-## Critical Bug Fix for ATA NCQ Command Handling
+## Bug Description
+The commit fixes a timing issue where `priv->clks[id]` was being
+populated BEFORE the sibling relationship was established for coupled
+clocks. This creates a race condition window where:
 
-This commit fixes a **data integrity and reliability issue** affecting
-ATA devices connected through mpi3mr SAS HBAs when NCQ (Native Command
-Queuing) commands fail.
+1. When the first coupled clock is registered, it gets added to
+   `priv->clks[]` immediately
+2. The `rzg2l_mod_clock_get_sibling()` function iterates through
+   registered clocks looking for siblings
+3. If the first clock looks for its sibling before the sibling is
+   registered, it will find itself (since it's already in
+   `priv->clks[]`)
+4. This causes the clock to temporarily act as its own sibling until the
+   actual sibling is registered
 
-### The Bug Being Fixed
+## Impact Analysis
+- **User-visible bug**: Yes - This can cause incorrect clock behavior
+  for coupled clocks (e.g., AXI and CHI clocks that share control bits)
+- **Data corruption potential**: Possible - Incorrect clock handling
+  could lead to hardware state inconsistencies
+- **Security impact**: Low - No direct security implications
+- **Regression risk**: Minimal - The fix simply reorders operations
+  without changing logic
 
-The code change addresses a specific failure mode where:
+## Fix Characteristics
+The fix is:
+- **Small and contained**: Only 4 lines moved within the same function
+- **Low risk**: Simply postpones updating `priv->clks[id]` until after
+  sibling setup
+- **Clear improvement**: Eliminates a race condition window
+- **No new features**: Pure bugfix
+- **No architectural changes**: Just reordering of operations
 
-1. **NCQ Command Collateral Aborts**: When one NCQ command fails on an
-   ATA device, the SATA specification requires ALL other NCQ commands to
-   be aborted and retried
-2. **Current Broken Behavior**: The driver was treating these collateral
-   aborts with `DID_SOFT_ERROR`, which increments retry counters
-3. **Cascading Failures**: Innocent NCQ commands that were collaterally
-   aborted could exhaust their retry limits and fail permanently, even
-   though they had no actual errors
+## Stable Kernel Criteria
+This commit meets stable kernel backporting criteria because it:
+1. Fixes a real bug that affects users (coupled clock handling race
+   condition)
+2. Is minimal and self-contained (4-line change)
+3. Has low regression risk (simple reordering)
+4. Fixes incorrect hardware state handling
+5. Has been reviewed by subsystem maintainer (Geert Uytterhoeven)
 
-### Code Analysis
+The coupled clocks feature was introduced in commit 32897e6fff19 (Sep
+2021), so this fix would be relevant for any stable kernel that includes
+that feature. The bug has existed since the coupled clocks support was
+added, making this an important fix for stable kernels using RZ/G2L
+SoCs.
 
-The key change in `mpi3mr_process_op_reply_desc()` at line 3432-3433:
+ drivers/clk/renesas/rzg2l-cpg.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-**Before:**
-```c
-case MPI3_IOCSTATUS_SCSI_IOC_TERMINATED:
-    scmd->result = DID_SOFT_ERROR << 16;
-    break;
-```
-
-**After:**
-```c
-case MPI3_IOCSTATUS_SCSI_IOC_TERMINATED:
-    if (ioc_loginfo == IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR) {
-        WARN_ON_ONCE(xfer_count != 0);
-        scmd->result = DID_IMM_RETRY << 16;
-    } else {
-        scmd->result = DID_SOFT_ERROR << 16;
-    }
-    break;
-```
-
-The new code:
-- Checks for the specific log info code `0x31080000` that indicates an
-  NCQ collateral abort
-- Uses `DID_IMM_RETRY` instead of `DID_SOFT_ERROR` for these specific
-  cases
-- `DID_IMM_RETRY` retries the command immediately WITHOUT incrementing
-  the retry counter
-- Adds a `WARN_ON_ONCE` sanity check that no data was transferred
-
-### Why This Qualifies for Stable
-
-1. **Fixes Real User-Impacting Bug**: This fixes command failures that
-   shouldn't happen - healthy I/O operations failing due to retry
-   exhaustion when they were only collateral damage
-
-2. **Data Integrity Risk**: Commands that should succeed but fail due to
-   retry exhaustion can lead to:
-   - Application errors
-   - Filesystem corruption risks
-   - Database consistency issues
-
-3. **Minimal and Contained Fix**:
-   - Only 11 lines of actual code change
-   - Confined to one specific error path
-   - Only affects ATA devices with specific error condition
-   - Maintains existing behavior for all other cases
-
-4. **Follows Stable Rules**:
-   - Fixes a bug that users can hit
-   - Small, targeted change
-   - No new features added
-   - No architectural changes
-   - Low regression risk
-
-5. **Clear Technical Merit**:
-   - The commit message explicitly references SAT specification
-     compliance
-   - Has a `Tested-by` tag from another developer
-   - The logic is sound - NCQ collateral aborts are not real failures
-
-6. **Hardware Compatibility**: This affects common SATA devices
-   connected to enterprise SAS controllers, a configuration used in many
-   production systems
-
-The change is conservative, well-tested, and fixes a specification
-compliance issue that can cause spurious command failures in production
-environments.
-
- drivers/scsi/mpi3mr/mpi3mr_os.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index ce444efd859e..87983ea4e06e 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -49,6 +49,13 @@ static void mpi3mr_send_event_ack(struct mpi3mr_ioc *mrioc, u8 event,
+diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
+index a8628f64a03b..c87ad5a972b7 100644
+--- a/drivers/clk/renesas/rzg2l-cpg.c
++++ b/drivers/clk/renesas/rzg2l-cpg.c
+@@ -1389,10 +1389,6 @@ rzg2l_cpg_register_mod_clk(const struct rzg2l_mod_clk *mod,
+ 		goto fail;
+ 	}
  
- #define MPI3_EVENT_WAIT_FOR_DEVICES_TO_REFRESH	(0xFFFE)
+-	clk = clock->hw.clk;
+-	dev_dbg(dev, "Module clock %pC at %lu Hz\n", clk, clk_get_rate(clk));
+-	priv->clks[id] = clk;
+-
+ 	if (mod->is_coupled) {
+ 		struct mstp_clock *sibling;
  
-+/*
-+ * SAS Log info code for a NCQ collateral abort after an NCQ error:
-+ * IOC_LOGINFO_PREFIX_PL | PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR
-+ * See: drivers/message/fusion/lsi/mpi_log_sas.h
-+ */
-+#define IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR	0x31080000
+@@ -1404,6 +1400,10 @@ rzg2l_cpg_register_mod_clk(const struct rzg2l_mod_clk *mod,
+ 		}
+ 	}
+ 
++	clk = clock->hw.clk;
++	dev_dbg(dev, "Module clock %pC at %lu Hz\n", clk, clk_get_rate(clk));
++	priv->clks[id] = clk;
 +
- /**
-  * mpi3mr_host_tag_for_scmd - Get host tag for a scmd
-  * @mrioc: Adapter instance reference
-@@ -3430,7 +3437,18 @@ void mpi3mr_process_op_reply_desc(struct mpi3mr_ioc *mrioc,
- 		scmd->result = DID_NO_CONNECT << 16;
- 		break;
- 	case MPI3_IOCSTATUS_SCSI_IOC_TERMINATED:
--		scmd->result = DID_SOFT_ERROR << 16;
-+		if (ioc_loginfo == IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR) {
-+			/*
-+			 * This is a ATA NCQ command aborted due to another NCQ
-+			 * command failure. We must retry this command
-+			 * immediately but without incrementing its retry
-+			 * counter.
-+			 */
-+			WARN_ON_ONCE(xfer_count != 0);
-+			scmd->result = DID_IMM_RETRY << 16;
-+		} else {
-+			scmd->result = DID_SOFT_ERROR << 16;
-+		}
- 		break;
- 	case MPI3_IOCSTATUS_SCSI_TASK_TERMINATED:
- 	case MPI3_IOCSTATUS_SCSI_EXT_TERMINATED:
+ 	return;
+ 
+ fail:
 -- 
 2.39.5
 
