@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A067276056;
-	Tue,  5 Aug 2025 13:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD91F274651;
+	Tue,  5 Aug 2025 13:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399438; cv=none; b=uhlRNReoD0N6UFTzE4/FgvWfzu6x4cWMPYYuF9SvnMmIzG84oIfxxemvAbRxrKMzL0Y9EUJCDLPm9gYZwHMMpbc3pkwQyNvrQXqNip1p8T4yqHmBLnP+n3vRwZHEDC0f17svnV4IG6H/fpnx/E0vXnwAAdSyKZQLCVEmurKvjKA=
+	t=1754399440; cv=none; b=dv5pwDDUaGd3LCDQcwRBAbc6lTKx8XVq9rGOGS9Ebx0NxO9JuMJjsUm4u/VS5e/yDhvAMqY0lMS8j3tLCdKyHnm4MjSgzhoIXM7nr7cr9d1e3filusVZPh7Slc+8qgA5AKaPWxKIedN+89Kbl6p4JhE026tEfJT7lYx1jPoCCgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399438; c=relaxed/simple;
-	bh=z7LNaQ4tyu216+74LWSLJMCyamCBabku8nxlOeWGwdQ=;
+	s=arc-20240116; t=1754399440; c=relaxed/simple;
+	bh=1LBmXEsIk7i9eIwYyb7QaDcW9pHu4+ceXg9aRHN09jo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=fNnW0UhxP1AacXmjW0gVrzicslX3JBYA8RDD6NuVvLf6j7mZYXf56af7NIJfXElEMj8eNmWccr9GE4g6W5bfza1w7NgA2OTsSONgvLkIHTmJDv2fVKjcsluDpfVbAJBlDVZRIAIMHarbqOg3jGA/EfLvPR7LJkZHSZk6RGKqxLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PDzG3Zc1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j8mkrMufSB+lBfDEzwJoM6afTvJAuBBFIXsILNAy4FW//C6Jp+5V2N8XYbWwDeQ2rPDoe1LNATNHvwOzCMFWx7Yh1D/x0KSD+vABDzwvQrj63gFCWAAXBsnaCsZ8rmckF6+jqfRj+fWkVTrG/aBpF7oZMlHg0r+kvp4qu739e8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g7LGdBaO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PDzG3Zc1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DF8C4CEF4;
-	Tue,  5 Aug 2025 13:10:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g7LGdBaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E77C4CEF0;
+	Tue,  5 Aug 2025 13:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399438;
-	bh=z7LNaQ4tyu216+74LWSLJMCyamCBabku8nxlOeWGwdQ=;
+	s=k20201202; t=1754399440;
+	bh=1LBmXEsIk7i9eIwYyb7QaDcW9pHu4+ceXg9aRHN09jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDzG3Zc1C11ZY1BIV0xQJ96T9Bxl0KL13XlE8r/nBub5kvkCVaqZOFVna6Kxns2OF
-	 nWqTaQiMlq7JcoKk62hIpktlNairDppcDA6LL3igDUEmV3L3uv6ytuEVVm0zgDn6/5
-	 OysAkuUG60Q6CIc57GCRxlXQZRp0Ub3t7fOYw4eTCrwbqCRRpnCjOYwKbhIfb1vjYc
-	 FfqJt9yep1+t8Zsx/06MAu0BvejqMFrpGYDJ47C3tRgwahVZw7cIwLp8C7d/p0t/AZ
-	 0rdqKD6Sl9qVVlkMxj8uvtGZ2qM7Lj94N8fZZ9X86nmdKWzRoer0ntQBpAZ9sPp4iZ
-	 ZsFx4Tkm5wyxQ==
+	b=g7LGdBaOvL0ycDUg+3IlqV2BbwBYo7NINcocrmgbIHPZ+wCr+A7GgWl7BcDWoWrbk
+	 OPHKAPtETB+yod/au8inzw84m910dFKIrFD15dSU/70h8b/KorORjNEcEz2c/e1Q0I
+	 tJ7DVJ8wE1oaevylN4l+eNI3lTT8OV4uWIvKk3Br7inFM5SltpoWFXWT4PrbqFviQV
+	 1pKIsCeNn8xCV7gdJmkoXX8tj0+/n3JtZUtFjHFOXy9XA4JnEXjnl0D9wvGl2ZE8U4
+	 psH+6X+KgH9Ojm94/HcR3Vzy9XdA6JDo8u1D4FUJcfj9tmXLWXphwX0F0eYdqeUzyJ
+	 YdlwHnizKx3Xw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+Cc: John Ernberg <john.ernberg@actia.se>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	devel@lists.orangefs.org
-Subject: [PATCH AUTOSEL 6.16-5.4] fs/orangefs: use snprintf() instead of sprintf()
-Date: Tue,  5 Aug 2025 09:08:58 -0400
-Message-Id: <20250805130945.471732-23-sashal@kernel.org>
+	horia.geanta@nxp.com,
+	pankaj.gupta@nxp.com,
+	gaurav.jain@nxp.com,
+	linux-crypto@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] crypto: caam - Support iMX8QXP and variants thereof
+Date: Tue,  5 Aug 2025 09:08:59 -0400
+Message-Id: <20250805130945.471732-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -50,34 +55,32 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+From: John Ernberg <john.ernberg@actia.se>
 
-[ Upstream commit cdfa1304657d6f23be8fd2bb0516380a3c89034e ]
+[ Upstream commit ac8aff0035fa58e53b39bd565ad6422a90ccdc87 ]
 
-sprintf() is discouraged for use with bounded destination buffers
-as it does not prevent buffer overflows when the formatted output
-exceeds the destination buffer size. snprintf() is a safer
-alternative as it limits the number of bytes written and ensures
-NUL-termination.
+The iMX8QXP (and variants such as the QX, DX, DXP) all identify as iMX8QXP.
 
-Replace sprintf() with snprintf() for copying the debug string
-into a temporary buffer, using ORANGEFS_MAX_DEBUG_STRING_LEN as
-the maximum size to ensure safe formatting and prevent memory
-corruption in edge cases.
+They have the exact same restrictions as the supported iMX8QM introduced
+at commit 61bb8db6f682 ("crypto: caam - Add support for i.MX8QM")
 
-EDIT: After this patch sat on linux-next for a few days, Dan
-Carpenter saw it and suggested that I use scnprintf instead of
-snprintf. I made the change and retested.
+Loosen the check a little bit with a wildcard to also match the iMX8QXP
+and its variants.
 
-Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Signed-off-by: John Ernberg <john.ernberg@actia.se>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, I can now provide a determination on whether this
-commit should be backported.
+Great! The code uses `glob_match()` for pattern matching, which means
+wildcards like `*` are supported. Now I have all the information needed
+to analyze this commit.
+
+## Analysis Summary:
 
 **Backport Status: YES**
 
@@ -86,92 +89,82 @@ commit should be backported.
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-### 1. **Security Fix for Potential Buffer Overflow**
-The code change addresses a classic buffer overflow vulnerability in
-`/home/sasha/linux/fs/orangefs/orangefs-debugfs.c:357`. The original
-code uses `sprintf()` to copy data from `file->private_data` into a
-heap-allocated buffer of fixed size (`ORANGEFS_MAX_DEBUG_STRING_LEN` =
-2048 bytes). The problematic line:
+### 1. **Bug Fix Nature**
+This is clearly a bug fix, not a new feature. The iMX8QXP and its
+variants (QX, DX, DXP) are existing hardware that should have been
+supported but weren't due to an overly restrictive string matching
+pattern. The commit message explicitly states these variants "all
+identify as iMX8QXP" but were not being recognized by the CAAM driver.
+
+### 2. **Small and Contained Change**
+The change is minimal - only a single line modification from:
 ```c
-sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
+{ .soc_id = "i.MX8QM", .data = &caam_imx8ulp_data },
+```
+to:
+```c
+{ .soc_id = "i.MX8Q*", .data = &caam_imx8ulp_data },
 ```
 
-### 2. **Real Security Impact**
-- The `file->private_data` is set to `inode->i_private` in
-  `orangefs_debug_open()` (line 331)
-- This points to either `k_buffer` or `c_buffer` which are static
-  buffers defined with `ORANGEFS_MAX_DEBUG_STRING_LEN`
-- While these buffers are also bounded to the same size, using
-  `sprintf()` without bounds checking is inherently unsafe as it trusts
-  that the source data is properly null-terminated and within expected
-  bounds
-- If the source buffer gets corrupted or manipulated (e.g., through
-  other vulnerabilities), `sprintf()` could write beyond the allocated
-  buffer
+This is a low-risk change that only affects the pattern matching for SoC
+identification.
 
-### 3. **Recent History of Similar Issues**
-The git history shows a very recent OOB (out-of-bounds) fix in the same
-file (commit `2b84a231910c` - "orangefs: fix a oob in
-orangefs_debug_write") that was already backported to stable. This
-indicates:
-- The OrangeFS debugfs code has had boundary checking issues
-- Security researchers (syzbot) are actively finding issues in this
-  subsystem
-- The maintainers are actively fixing security issues
+### 3. **Hardware Enablement Fix**
+Looking at the firmware driver code
+(`/home/sasha/linux/drivers/firmware/imx/imx-scu-soc.c`), we can see
+that iMX8QXP is identified with ID 0x2 and returns the string
+"i.MX8QXP". Without this fix, CAAM crypto hardware acceleration is
+completely non-functional on these SoCs because the driver fails to
+match the SoC ID.
 
-### 4. **Simple and Contained Fix**
-The change is minimal and low-risk:
-- Single line change from `sprintf()` to `scnprintf()`
-- The fix is contained to one function in the debugfs interface
-- No architectural changes or new features added
-- The `scnprintf()` function guarantees null-termination and prevents
-  buffer overflow by limiting writes to the specified size
+### 4. **Same Configuration as iMX8QM**
+The commit correctly reuses `caam_imx8ulp_data` which is an empty
+structure, meaning these SoCs have special handling where:
+- CAAM clocks are managed automatically by hardware (not by Linux)
+- Linux doesn't have access to the CAAM controller's register page
+This is the same configuration used for iMX8QM (added in commit
+61bb8db6f682), confirming that iMX8QXP variants have identical
+requirements.
 
-### 5. **Follows Stable Tree Rules**
-- **Important bugfix**: Prevents potential memory corruption/security
-  vulnerability
-- **Minimal risk**: Simple function substitution with well-understood
-  semantics
-- **Small change**: Single line modification
-- **No new features**: Pure safety improvement
-- **Confined to subsystem**: Only affects OrangeFS debugfs interface
+### 5. **No Architectural Changes**
+The change doesn't introduce any new functionality, APIs, or
+architectural modifications. It simply extends existing pattern matching
+to include variants that should have been supported from the beginning.
 
-### 6. **Best Practice Security Hardening**
-The commit message explicitly states this is a security hardening
-measure following modern kernel coding standards. The kernel community
-has been systematically replacing unsafe string functions (`sprintf`,
-`strcpy`, etc.) with their bounded equivalents (`snprintf`/`scnprintf`,
-`strncpy`, etc.) to eliminate entire classes of vulnerabilities.
+### 6. **User Impact**
+Without this fix, users of iMX8QXP, iMX8QX, iMX8DX, and iMX8DXP SoCs
+cannot use hardware crypto acceleration through CAAM, which is a
+significant functionality loss for these platforms. The crypto subsystem
+would fall back to software implementations, resulting in degraded
+performance for cryptographic operations.
 
-### 7. **Evolution from snprintf to scnprintf**
-The commit message notes that after review, the patch was updated from
-`snprintf()` to `scnprintf()`. This is important because `scnprintf()`
-returns the actual number of bytes written (excluding the terminating
-null), while `snprintf()` returns the number of bytes that would have
-been written if there was enough space. This makes `scnprintf()` the
-correct choice for the subsequent `simple_read_from_buffer()` call which
-needs the actual written length.
+### 7. **Wildcard Pattern is Safe**
+The use of "i.MX8Q*" wildcard is appropriate here because:
+- It matches both iMX8QM (existing) and iMX8QXP variants (new)
+- The glob_match() function in the kernel properly handles this pattern
+- Both SoC families have identical CAAM requirements (no clock control,
+  no register page access)
 
-This commit represents a proactive security hardening that eliminates a
-potential attack vector in the OrangeFS filesystem debugfs interface,
-making it an excellent candidate for stable backporting.
+This is a textbook example of a stable-appropriate fix: it corrects a
+clear oversight that prevents hardware from working properly, with
+minimal code change and risk.
 
- fs/orangefs/orangefs-debugfs.c | 2 +-
+ drivers/crypto/caam/ctrl.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index f7095c91660c..e463d3c73533 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -396,7 +396,7 @@ static ssize_t orangefs_debug_read(struct file *file,
- 		goto out;
- 
- 	mutex_lock(&orangefs_debug_lock);
--	sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
-+	sprintf_ret = scnprintf(buf, ORANGEFS_MAX_DEBUG_STRING_LEN, "%s", (char *)file->private_data);
- 	mutex_unlock(&orangefs_debug_lock);
- 
- 	read_ret = simple_read_from_buffer(ubuf, count, ppos, buf, sprintf_ret);
+diff --git a/drivers/crypto/caam/ctrl.c b/drivers/crypto/caam/ctrl.c
+index 38ff931059b4..9cd5e3d54d9d 100644
+--- a/drivers/crypto/caam/ctrl.c
++++ b/drivers/crypto/caam/ctrl.c
+@@ -573,7 +573,7 @@ static const struct soc_device_attribute caam_imx_soc_table[] = {
+ 	{ .soc_id = "i.MX7*",  .data = &caam_imx7_data },
+ 	{ .soc_id = "i.MX8M*", .data = &caam_imx7_data },
+ 	{ .soc_id = "i.MX8ULP", .data = &caam_imx8ulp_data },
+-	{ .soc_id = "i.MX8QM", .data = &caam_imx8ulp_data },
++	{ .soc_id = "i.MX8Q*", .data = &caam_imx8ulp_data },
+ 	{ .soc_id = "VF*",     .data = &caam_vf610_data },
+ 	{ .family = "Freescale i.MX" },
+ 	{ /* sentinel */ }
 -- 
 2.39.5
 
