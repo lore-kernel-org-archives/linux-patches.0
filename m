@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D5BE55B;
-	Tue,  5 Aug 2025 13:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6CE21146C;
+	Tue,  5 Aug 2025 13:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754399531; cv=none; b=dgJC8FH0tMrtNDNp5SaQPaLx0OA7CvQ/tfqscHODUtvlQc5LtMIrSUez4NBTDv5w3utZnDNvQABRfK1pJM8V48t8nmCnrdWraxdoT2gm690EV1PqA5VwwAicROtdpSNwD4wcwYc/DTJPAEdPZ0BumNk/VWH05+6aR3zt7134wes=
+	t=1754399534; cv=none; b=Ijjxv9Bh7o/RcZxPLzEzBKapOCZe+96HKPUiHBvHTTBbF7oBjuA9JjdVno67qHzqOKn+fAm04NHwPpdMijxQPpKxrLWyuYoS7I3yb7RrD8GmIkLhv+PVlBmjer4t5Ttdiu1iTVsmep2sqL7HHwGT31s139zyT++17cyGuP04+ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754399531; c=relaxed/simple;
-	bh=a0lQpsk/xS1ajJ18OrE+G9s9LSxPGNbwa6Dhcq4b3s8=;
+	s=arc-20240116; t=1754399534; c=relaxed/simple;
+	bh=K0B0wmFt8B/msOHiP3rD2mNLmCrvReFg4m/49vbj8Uw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LAGja557j2VZbYosUND1/EbntSc2svugcmJoiU83pB3+daZyEufYtjRPVJQxpP66lK+vHSQ3t0xl50ePTgZkMVLh2qs0GdFUQftcWEbV7LrDI33rGg8Wf+uXHL5PdcBlYImaK96EnjzQ1G2NSMwMpDJhV6aYBQeF0xJKOA5VuM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=medRtpDS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjZzLBvh9wuDNvdp7jFiTCTcH9J2eaQZXIuY+N+Ly0LnkiAIfQAccUYNtgVezTFnKitXn6eRmol02Rd0sLpDymROjxqV0ywMbFGcuCkhLESIaL+Y8IqQgtKJrlpwAGcjmO85R4gX3n9at6YGgAVVMkA4IWmzSztKooYnmy8jOg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BUOzlLul; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="medRtpDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CBFC4CEF7;
-	Tue,  5 Aug 2025 13:12:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BUOzlLul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561D2C4AF09;
+	Tue,  5 Aug 2025 13:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754399531;
-	bh=a0lQpsk/xS1ajJ18OrE+G9s9LSxPGNbwa6Dhcq4b3s8=;
+	s=k20201202; t=1754399533;
+	bh=K0B0wmFt8B/msOHiP3rD2mNLmCrvReFg4m/49vbj8Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=medRtpDS2eTudlvWUqRKPl4mRPionel5HQnTTm2URRrwBlQZilO21j/4IGNyaf3tu
-	 I9RY2+PjQK9UQV5Isc6wQ0+YB6iNXanIZWjDUOY+fZMVlDE4Dx2MVv8D78DDRm/JJ/
-	 fwHDOTxY1zKhC2kUmhP0HAsx6HxZNvQ6PnT+TBqky4HExpmmBFu/pTZS4esKewVNBd
-	 up9ca4XXSxZ+ur13vtwOe/T3Dz+m14IamGifm7D0jKcBUHitVfvc27ScYSyvFFxBid
-	 c8cx1TKDE2CHuArNEzwxzLU5DGTrJA1ySVSRtinONPbZk8fMXozEuWJuvCCdsZwq3+
-	 O5y5dBFe6D4ww==
+	b=BUOzlLul8o6q80qTzuywppaQLtOZ6eAKjpT5U2EvX5GTENJ1h3i+u7bV+3RsrptPP
+	 A+hv2hGPr3TO7bDYo/xg1bjggxusedXt/3IawF7k77izjNyaTZ51+OudcOjnSaoAw7
+	 b9Lg1/cN+d5XyEBaGOwNVjMfL/nctjP9H48wGPhoD7USYO9t2mDkBn4pL+ClutHA1B
+	 b7KnYQDdqPULD2a8sJ4vdgZ89Tie4pO88/rIRjKjHontp+uesekKT0kAu68MKDSTyB
+	 8npgE677mlvU8AQNeCwbk/hgoYys+1APouXzkpXsrBNcVPKB9XYuwGPYSLlSSzfRv8
+	 johdOHfu5Qj9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bharat Bhushan <bbhushan2@marvell.com>,
-	Srujana Challa <schalla@marvell.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+Cc: Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	saikrishnag@marvell.com,
-	linux@treblig.org,
-	sbhatta@marvell.com,
-	krzysztof.kozlowski@linaro.org
-Subject: [PATCH AUTOSEL 6.16-5.15] crypto: octeontx2 - add timeout for load_fvc completion poll
-Date: Tue,  5 Aug 2025 09:09:38 -0400
-Message-Id: <20250805130945.471732-63-sashal@kernel.org>
+	sre@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.6] power: supply: qcom_battmgr: Add lithium-polymer entry
+Date: Tue,  5 Aug 2025 09:09:39 -0400
+Message-Id: <20250805130945.471732-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250805130945.471732-1-sashal@kernel.org>
 References: <20250805130945.471732-1-sashal@kernel.org>
@@ -52,128 +51,97 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bharat Bhushan <bbhushan2@marvell.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit 2157e50f65d2030f07ea27ef7ac4cfba772e98ac ]
+[ Upstream commit 202ac22b8e2e015e6c196fd8113f3d2a62dd1afc ]
 
-Adds timeout to exit from possible infinite loop, which polls
-on CPT instruction(load_fvc) completion.
+On some Dell XPS 13 (9345) variants, the battery used is lithium-polymer
+based. Currently, this is reported as unknown technology due to the entry
+missing.
 
-Signed-off-by: Srujana Challa <schalla@marvell.com>
-Signed-off-by: Bharat Bhushan <bbhushan2@marvell.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ 4083.135325] Unknown battery technology 'LIP'
+
+Add another check for lithium-polymer in the technology parsing callback
+and return that instead of unknown.
+
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250523-psy-qcom-battmgr-add-lipo-entry-v1-1-938c20a43a25@linaro.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Let me look at the exact code changes from the diff provided:
+Based on my analysis, here is my determination:
 
-**YES**
+**Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix Analysis
+1. **Fixes a real user-visible bug**: The commit addresses a specific
+   bug where lithium-polymer batteries are incorrectly reported as
+   "Unknown battery technology" with the error message `Unknown battery
+   technology 'LIP'`. This affects real hardware (Dell XPS 13 9345
+   variants) and causes incorrect battery technology reporting to
+   userspace.
 
-1. **Critical Bug Fixed**: The commit fixes a **potential infinite
-   loop** in the `otx2_cpt_discover_eng_capabilities()` function. The
-   original code had:
-```c
-while (lfs->ops->cpt_get_compcode(result) ==
-OTX2_CPT_COMPLETION_CODE_INIT)
-    cpu_relax();
-```
-This loop could spin forever if the hardware fails to respond or gets
-stuck.
+2. **Small and contained fix**: The change is minimal - it adds just 2
+   lines of code:
+  ```c
+  if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
+  return POWER_SUPPLY_TECHNOLOGY_LIPO;
+  ```
+  This is well within the 100-line limit for stable patches.
 
-2. **Real-World Impact**: An infinite loop in kernel space is a severe
-   issue that can:
-   - Cause system hangs/freezes
-   - Make the CPU core unresponsive
-   - Prevent proper driver initialization
-   - Lead to denial of service conditions
+3. **Obviously correct**: The fix is straightforward and follows the
+   existing pattern in the code. It simply adds recognition for "LIP"
+   chemistry strings, similar to how "LIO" is already handled for
+   lithium-ion batteries. The `POWER_SUPPLY_TECHNOLOGY_LIPO` constant
+   already exists in the kernel's power supply framework.
 
-3. **Simple and Contained Fix**: The patch adds:
-   - A timeout counter (10000 iterations with 1μs delay = 10ms timeout)
-   - Proper error handling with `-ENODEV` return
-   - Clear warning message to help diagnose hardware issues
-   - Proper cleanup path (`error_no_response` label)
+4. **No architectural changes or new features**: This is purely a bug
+   fix that enables proper recognition of an existing battery technology
+   type. It doesn't introduce new functionality or change any APIs.
 
-4. **Minimal Risk**: The changes are:
-   - Limited to a single function
-   - Only add timeout logic without changing the core functionality
-   - Include proper error handling and resource cleanup
-   - Don't introduce new features or architectural changes
+5. **Low regression risk**: The change only affects systems that report
+   "LIP" battery chemistry. Systems with other battery chemistries
+   remain unaffected. The fix follows the exact same pattern as the
+   existing lithium-ion handling.
 
-5. **Hardware Interaction Context**: This function polls hardware for
-   completion of a CPT (cryptographic processor) instruction. Hardware
-   polling without timeouts is a classic source of kernel hangs,
-   especially when:
-   - Hardware malfunctions
-   - Firmware issues occur
-   - Power management transitions happen
-   - PCIe communication errors occur
+6. **Affects supported hardware**: The qcom_battmgr driver has been in
+   the kernel since v6.3, and this fix is needed for proper battery
+   reporting on Dell XPS 13 9345 devices using Qualcomm platforms with
+   lithium-polymer batteries.
 
-6. **Stable Tree Criteria Met**:
-   - ✓ Fixes a real bug (infinite loop)
-   - ✓ Small change (~20 lines)
-   - ✓ No new features added
-   - ✓ Low regression risk
-   - ✓ Fixes a potential system stability issue
+7. **Meets stable kernel rules**: According to
+   Documentation/process/stable-kernel-rules.rst, this qualifies as it
+   "fixes a real bug that bothers people" - specifically incorrect
+   battery technology reporting that could affect power management
+   decisions and user-facing battery information.
 
-The timeout value of 10ms (10000 × 1μs) is reasonable for hardware
-polling operations, providing sufficient time for normal operations
-while preventing indefinite hangs in error conditions.
+The commit is an ideal candidate for stable backporting as it fixes a
+clear bug with minimal code changes and virtually no risk of regression.
 
- .../crypto/marvell/octeontx2/otx2_cptpf_ucode.c  | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/power/supply/qcom_battmgr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-index 78367849c3d5..9095dea2748d 100644
---- a/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-+++ b/drivers/crypto/marvell/octeontx2/otx2_cptpf_ucode.c
-@@ -1494,6 +1494,7 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
- 	dma_addr_t rptr_baddr;
- 	struct pci_dev *pdev;
- 	u32 len, compl_rlen;
-+	int timeout = 10000;
- 	int ret, etype;
- 	void *rptr;
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index fe27676fbc7c..2d50830610e9 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -981,6 +981,8 @@ static unsigned int qcom_battmgr_sc8280xp_parse_technology(const char *chemistry
+ {
+ 	if (!strncmp(chemistry, "LIO", BATTMGR_CHEMISTRY_LEN))
+ 		return POWER_SUPPLY_TECHNOLOGY_LION;
++	if (!strncmp(chemistry, "LIP", BATTMGR_CHEMISTRY_LEN))
++		return POWER_SUPPLY_TECHNOLOGY_LIPO;
  
-@@ -1554,16 +1555,27 @@ int otx2_cpt_discover_eng_capabilities(struct otx2_cptpf_dev *cptpf)
- 							 etype);
- 		otx2_cpt_fill_inst(&inst, &iq_cmd, rptr_baddr);
- 		lfs->ops->send_cmd(&inst, 1, &cptpf->lfs.lf[0]);
-+		timeout = 10000;
- 
- 		while (lfs->ops->cpt_get_compcode(result) ==
--						OTX2_CPT_COMPLETION_CODE_INIT)
-+						OTX2_CPT_COMPLETION_CODE_INIT) {
- 			cpu_relax();
-+			udelay(1);
-+			timeout--;
-+			if (!timeout) {
-+				ret = -ENODEV;
-+				cptpf->is_eng_caps_discovered = false;
-+				dev_warn(&pdev->dev, "Timeout on CPT load_fvc completion poll\n");
-+				goto error_no_response;
-+			}
-+		}
- 
- 		cptpf->eng_caps[etype].u = be64_to_cpup(rptr);
- 	}
--	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
- 	cptpf->is_eng_caps_discovered = true;
- 
-+error_no_response:
-+	dma_unmap_single(&pdev->dev, rptr_baddr, len, DMA_BIDIRECTIONAL);
- free_result:
- 	kfree(result);
- lf_cleanup:
+ 	pr_err("Unknown battery technology '%s'\n", chemistry);
+ 	return POWER_SUPPLY_TECHNOLOGY_UNKNOWN;
 -- 
 2.39.5
 
