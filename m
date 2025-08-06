@@ -1,116 +1,132 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f68.google.com (mail-ed1-f68.google.com [209.85.208.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D51529899A;
-	Tue,  5 Aug 2025 18:09:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F922AD32;
+	Wed,  6 Aug 2025 02:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754417384; cv=none; b=EcdwcDZpKgk7+KuRs+ltUrxUc7mrXOAwLuOogqYQ32Y5bNQdErUS42/DLP+QvAao01NKfCaTl119xZ2ULDOOVdZZn8vKYLcuZe+xUqbHD9CZNTUo11gFfT0LX20FghK6Md4z3sNB5rNSOj3iAxue6M4wkjw/xGkafUw5ULQAdrU=
+	t=1754446988; cv=none; b=BD0lATL8jOp+tVkFfQgYx9rEsgLEQMEWUSI3qYT8wCDQZlD5nxXcOx8E0JxM+zzbAeX3zC5hIZFKJEYHOV6yoBc6vtNZfPT1hyvfsrQgLRqVN+MBWvCmOJANEfa31qI5dg2hUwfbNKPGHmwXDp3XYoCZXnKSBZxc+wOlcoLwiPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754417384; c=relaxed/simple;
-	bh=CQ4211YH7bOUvS0w3ZcUchCGKPBUdDufL+8k2O3J26k=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mJ8xEjGaXMjd751+aezD1SprIUdNCcTIpno656PAdFvMXB3HwXWkg2Ivt3Ahnl2JfYq92ALkqRUbGHQa3BVBL5YIN4H3Pja5g7dXQaIwhSruzGohMdzdxSdGvAuQVmOvwJPoD4yk/a/kzC/aWVUbGpUXFydyaGx/jgAKkUH9AsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PfJbvBnS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754446988; c=relaxed/simple;
+	bh=fj4IR7+zswA7sqkD0tTyy/4FI+cv+hYYunOLbsBKvbw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bjSZN02EirdvvbOsBlvabHib/iEnmUoE6t8Ldg0DoPL8Bp2AVI6mMwVvj4hmwJOXY+E2xhvjwRGxjp8dSsEJ1Fpu6kU4+oxwokuGqX3Yjx62DL3pvZmoEZPNIphicE1AAbb+1hHDtb41FfooeN5hBmn43GckFsEDw75+A42DgTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mdm2Z/eL; arc=none smtp.client-ip=209.85.208.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PfJbvBnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A345CC4CEF8;
-	Tue,  5 Aug 2025 18:09:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754417383;
-	bh=CQ4211YH7bOUvS0w3ZcUchCGKPBUdDufL+8k2O3J26k=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=PfJbvBnSrP5rOAkboOaaCIsUhWoV2w3ZmgbTYzuyYvGKrfuhgJIoo50Gx+cc1oL9U
-	 FlDWCTmPg6Jm42XZSHPH8e27kD/PfauwNQgWdfebDDsYpd2CqWYoJkWUUFvbpoNvgZ
-	 4bcmb0IBl9juSVM5ROKJCHJVlm9FPLL9ljpRsDRnYzbTphx+WHT5RxwzCgE3YIo+j8
-	 fZOJeXcP605ltX3o2lYkwqWdonu83Ot+uygxLMjwke3FhxZUoYCCEXL4vo486VFreF
-	 pHesL1ye5xlTSUcqynUsqv9XCxk4xdiZVc66sieGUmmfkurfr7X4FMLywR4qAQwpMo
-	 X/Z+Z1cacIl0w==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <maz@kernel.org>)
-	id 1ujM6X-004F3q-5r;
-	Tue, 05 Aug 2025 19:09:41 +0100
-Date: Tue, 05 Aug 2025 19:09:40 +0100
-Message-ID: <877bzhtzbv.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	toan@os.amperecomputing.com,
-	kwilczynski@kernel.org,
-	mani@kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH AUTOSEL 6.16-6.6] PCI: xgene-msi: Resend an MSI racing with itself on a different CPU
-In-Reply-To: <aJIOP1GO8LumDZOJ@lappy>
-References: <20250805130945.471732-1-sashal@kernel.org>
-	<20250805130945.471732-59-sashal@kernel.org>
-	<86fre5aoqz.wl-maz@kernel.org>
-	<aJIOP1GO8LumDZOJ@lappy>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mdm2Z/eL"
+Received: by mail-ed1-f68.google.com with SMTP id 4fb4d7f45d1cf-61571192c3aso6555349a12.2;
+        Tue, 05 Aug 2025 19:23:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754446984; x=1755051784; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WV3i2vsHD5Tto+kS9SXpnp5IN5CWgKxnV0XYONltTEI=;
+        b=Mdm2Z/eLHK/yiZcWxgH7B98RErVW7bpYSmV5bIzXPG/3M/yXjnnwBCXg4vzlM7owxX
+         NanDFrVW12lF24KZbL12MGvGoTDpm+yq91k+zikMqUxpn6kQfjzuUjKPYvoAxKL59p9T
+         0g4DYNxLgBEHFpAhFYAXd1RY5Ugt79SK14QQuHAZ3bcee5TAiWF3zJD25gxviXyEAtew
+         w7C2Taw0yAuCYGF5x55b0b5oQYavOZZ4w0ipjARqM5ZMrR7rV71VN+1t2uarsmlOqgWu
+         zXvzxADEy12VPEAGi4qHTRclJW8FN9u43N5aUbI89X4TFVcHnKAsJABLcKLpYwi/bjOJ
+         HgwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754446984; x=1755051784;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WV3i2vsHD5Tto+kS9SXpnp5IN5CWgKxnV0XYONltTEI=;
+        b=NTO9y31mgirNq3fZugnRhvSBCUJS6V6GIVw+GX5x+e7ZGM9xTQ2kg1mvc6rK/8acca
+         CDBkx9adH81NRH2GmyLXB54JEHjquBOuHMId1Vc5WBs3pa+Tz4WW1eaO1fNUghlbFm+F
+         DLeSZ0KypIi/YI8nVGysPpcFzf18aobYheMJGCeEiJIvYo98+YC7YoEOab+yw3I6neSe
+         rbj5mZVdpYM87g4JIBo38QGVuOKlDAMpw4tmQPNJJTh2i4qJO0WBXf02cmHQYgV0byRq
+         rE1fh4tHJ+M3Omj185t3/dJj1VCp0vg1yh7OX/Blt6z0kE5F/E5QweYXuB2f8gFC0P+g
+         ycUg==
+X-Forwarded-Encrypted: i=1; AJvYcCVZy4aGM1h30iLjRWcgNPa5D28UN4tfzZt9vVoTHGp2vw96AfGk8fRpVX0MQanTmfkWqRtqLg==@lists.linux.dev, AJvYcCXa5ZyABmsEUzx+92O3AUwwY4HY5+uFb/PwUK5rstl8Mx2esYzLVjIFe/Ix52xdNBqpU4RqNdqj6w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzW9Jw5f+Fcg7Ky2FnE3vUJXwoorbwcSuJ7UcN/0o5bUC0Z/s09
+	Hd5l+A+ZapYLFlPKBh7WRDNKIFmPWhTiQ9a8BdQRMTXYKyvr7hSlukn9
+X-Gm-Gg: ASbGncuaUSqu8MwIr1DvybTgVec7skQdopIU/Q7X1N/l/NSsMJOIkyeqtEosdfeGHeQ
+	QMXwL8WzWHFqOTLbcJxdJeTs9aK3b9+j88QyqvlHonJ+6dYUXRDDRQY4YgZvL/dmlwoWJa6HZCi
+	uvDGo+bOarjwU2yh5ikwq3c/8htIxLvE5KZI7tO9nfTcCCbo5cHI4R3ph8eI48lDeoptz8/RsX4
+	woZz20WAfaPZklmJQZA8np+UmefIW+QLrYZedFlfjpvzjtB5Bbxv+UcMHPURN5D/xqMKRf+b9dC
+	E8Ypc+mdu/pKrFhhTykR6y6Q/7zwb4dIwKZTTkp1tIKWNNPN38L6p9U72SJHGC6kYOAQ0vEQslW
+	FJ43EWptwDXrEz86XyS/ahj4JY9hF6EA2+NF/PFbDRrYxYU5PrUd8cisazWT0ljYsImA9vpHt8s
+	PgPUmMJVWOAFJWtSS/l1wZ6Zy9hys=
+X-Google-Smtp-Source: AGHT+IHZJL3Gcs1UE3cxSDIkmf9wQXNttiL49vH8U6oL/UasUEDh5LoNJkxUN1wHF0UudVM2Mn4IhQ==
+X-Received: by 2002:a17:907:6096:b0:af4:148:e51f with SMTP id a640c23a62f3a-af992a37d1fmr59140566b.2.1754446984286;
+        Tue, 05 Aug 2025 19:23:04 -0700 (PDT)
+Received: from [26.26.26.1] (95.112.207.35.bc.googleusercontent.com. [35.207.112.95])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a2437desm1012205966b.127.2025.08.05.19.22.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Aug 2025 19:23:03 -0700 (PDT)
+Message-ID: <6ca56de5-01df-4636-9c6a-666ccc10b7ff@gmail.com>
+Date: Wed, 6 Aug 2025 10:22:58 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashal@kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, lpieralisi@kernel.org, bhelgaas@google.com, toan@os.amperecomputing.com, kwilczynski@kernel.org, mani@kernel.org, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/16] Fix incorrect iommu_groups with PCIe ACS
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
+ Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+ kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+ tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+References: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+ <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
+ <20250802151816.GC184255@nvidia.com>
+ <1684792a-97d6-4383-a0d2-f342e69c91ff@gmail.com>
+ <20250805123555.GI184255@nvidia.com>
+ <964c8225-d3fc-4b60-9ee5-999e08837988@gmail.com>
+ <20250805144301.GO184255@nvidia.com>
+Content-Language: en-US
+From: Ethan Zhao <etzhao1900@gmail.com>
+In-Reply-To: <20250805144301.GO184255@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 05 Aug 2025 14:59:27 +0100,
-Sasha Levin <sashal@kernel.org> wrote:
+
+
+On 8/5/2025 10:43 PM, Jason Gunthorpe wrote:
+> On Tue, Aug 05, 2025 at 10:41:03PM +0800, Ethan Zhao wrote:
 > 
-> On Tue, Aug 05, 2025 at 02:20:52PM +0100, Marc Zyngier wrote:
-> > On Tue, 05 Aug 2025 14:09:34 +0100,
-> > Sasha Levin <sashal@kernel.org> wrote:
-> >> 
-> >> From: Marc Zyngier <maz@kernel.org>
-> >> 
-> >> [ Upstream commit 3cc8f625e4c6a0e9f936da6b94166e62e387fe1d ]
-> >> 
-> >> Since changing the affinity of an MSI really is about changing
-> >> the target address and that it isn't possible to mask an individual
-> >> MSI, it is completely possible for an interrupt to race with itself,
-> >> usually resulting in a lost interrupt.
-> >> 
-> >> Paper over the design blunder by informing the core code of this
-> >> sad state of affairs.
-> >> 
-> >> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> >> Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-> >> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-> >> Link: https://lore.kernel.org/r/20250708173404.1278635-11-maz@kernel.org
-> >> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> >> ---
-> >> 
-> >> LLM Generated explanations, may be completely bogus:
-> > 
-> > s/may be//. It is an amusing read though, specially when quoting
-> > totally unrelated patches, so thumbs up for the comical value.
+>>>> My understanding, iommu has no logic yet to handle the egress control
+>>>> vector configuration case,
+>>>
+>>> We don't support it at all. If some FW leaves it configured then it
+>>> will work at the PCI level but Linux has no awarness of what it is
+>>> doing.
+>>>
+>>> Arguably Linux should disable it on boot, but we don't..
+>> linux tool like setpci could access PCIe configuration raw data, so
+>> does to the ACS control bits. that is boring.
 > 
-> Yeah, it's still very much at the "junior engineer" level
+> Any change to ACS after boot is "not supported" - iommu groups are one
+> time only using boot config only. If someone wants to customize ACS
+> they need to use the new config_acs kernel parameter.
+That would leave ACS to boot time configuration only. Linux never
+limits tools to access(write) hardware directly even it could do that.
+Would it be better to have interception/configure-able policy for such
+hardware access behavior in kernel like what hypervisor does to MSR etc ?
+> 
+>>>> The static groups were created according to
+>>>> FW DRDB tables,
+>>>
+>>> ?? iommu_groups have nothing to do with FW tables.
+>> Sorry, typo, ACPI drhd table.
+> 
+> Same answer, AFAIK FW tables have no effect on iommu_groups 
+My understanding, FW tables are part of the description about device 
+topology and iommu-device relationship. did I really misunderstand
+something ?
 
-It's not, and that's the main issue. A junior engineer would get into
-the rabbit hole of backporting too much, as they would be unable to
-separate the essential logic from the surrounding fluff. There would
-be a lot of noise, but it would be OK.
+Thanks,
+Ethan >
+> Jason
 
-Your "thing" is very much at the "Senior Marketroid" level, in the
-sense that it manages to drag some semi-relevant information from
-various sources, and condenses it into an advertisement for snake oil.
-
-I think I know who which of the two I want to work with.
-
-	M.
-
--- 
-Jazz isn't dead. It just smells funny.
