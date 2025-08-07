@@ -1,55 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6691FBE80
-	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 18:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF482E370A;
+	Thu,  7 Aug 2025 21:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754591671; cv=none; b=P64OUHcOe1k2yxIotCDIsOGD+AZ/59Zkw856bp8ozk54URFiNAJ1P59zdTUw6CuBu/7REXnqZDKebf+PvilSheU+J/SFcaVKBnd0LzQH1aNvH2PcRc2s6DpSszPYMiMy07BLqAeWfwD+LU5yV7cHfX4h/q1sFWkhKJ3xu0vzs90=
+	t=1754602597; cv=none; b=m/2ojEI3zlx311y9dHra8QUnQ0uq62iOlsTlB+dFjRyTpO+7DKRz7jjTDO36hItdTOimxmJyJBocmREMaLGPRHJDEpxf4QxHuPgQZh4J0LqubWjHlIz5AbDKfu2I6dbLoNSwkkhArO6cRxH8lIUkpfIiNCe99uRBaucBte3k2uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754591671; c=relaxed/simple;
-	bh=qomyOJlP8+fFRS3e8TnUEJQ752WmzYy9drpK/3qTeCI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pj9FcoBPZtq0FuUngqgFPB7JWmwy8O4P1idr/+PEl9TRTH252+48LfHQlW9X4z9rq+DEBAjJM8D1DLwNHHDSJ5w3798DB3oNGOYV/2ic0/NCetuSOULhXxyzddhQo/9E1i1jT8sfGFEoyzlQOOVmwSzaMnokkPWP3yTeCY+6NMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qQvnrPoZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754602597; c=relaxed/simple;
+	bh=tUwmAkc0BRax/F/1mqhQobRKhACAzjEdHbZ1NnCs6/U=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=e3e9Ocgp19WH+5t6UBLmrFea6AtVZ0t4HXcbyxMupczv3K/TWzXPHlV7D7KnYMcnM6lsMMs3TZoEYFlfwj7AbJodvyoII0gv/HIpoEcTwWssVWg+UdFfldMp33DjmKv/k3ymEg0QuMEOqxvGH5RMFk45ga6mxT+myH5jKcEg15A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2tGZJeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qQvnrPoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97800C4CEEB;
-	Thu,  7 Aug 2025 18:34:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2tGZJeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4E6C4CEEB;
+	Thu,  7 Aug 2025 21:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754591670;
-	bh=qomyOJlP8+fFRS3e8TnUEJQ752WmzYy9drpK/3qTeCI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qQvnrPoZJgAP95w0F59+ZhvMha/tl1ph/pabCPphlbWtUHlACCXYD6lDbVk/y+ODC
-	 bmWfFayWLcwngK+YbCLOEf71+Gr4EsA7hSSpgMYICRgAxtl/f/GsL1ivXSeaiKRSer
-	 2p7MF87y2nSzw29WOi/guBIANGLd1SOVKM8RugGW2qVWg0ObcKdoR6gi+5tVjGR1s8
-	 qeu+4lVtW0sUfcSL539KheGBHHKJp8pW1ab3Wn8z6T54jtiHPdrv8zQafxCE7LAXc4
-	 5jG+Uf4l0yT0RdeAeLhHYltLv1i1ljCEsmIj+x22xY+Ayg07rL3qVDiHR8dQiJDlh6
-	 C8jMxQp/wE7+w==
-Date: Thu, 7 Aug 2025 11:34:28 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Kundan Kumar <kundan.kumar@samsung.com>
-Cc: patches@lists.linux.dev
-Subject: Re: [PATCH v2 00/15] Test patch Parallelizing filesystem writeback
-Message-ID: <aJTxtFMk_HOJMioP@bombadil.infradead.org>
-References: <CGME20250807045740epcas5p4cdec49f07b86acf2eea832890393d256@epcas5p4.samsung.com>
- <20250807045706.2848-1-kundan.kumar@samsung.com>
+	s=k20201202; t=1754602596;
+	bh=tUwmAkc0BRax/F/1mqhQobRKhACAzjEdHbZ1NnCs6/U=;
+	h=From:Date:Subject:To:Cc:From;
+	b=X2tGZJeYhMMsvygEOa69O8xBM9b1+OCVmtFGwOqaqJYuHj8CL12krOGTltv82cjyw
+	 DCEt9FV3xE1WuGRd+/NhFwUdaSHRJDR6W9WL10Ex6Aya3QICPpJt1yoRQEnCOgKfwb
+	 XliWF0pAW1BrcjspziGyHUlMDkGEtitNfIXkIWYc+TrQn/THF2Ryep9XTGYaStjVnh
+	 udp8M5ATamGEpT7u7pISjCqR1geLrwLX3MZq9YWQziOyvqB0BUtJHEIIk7lXP1mu+V
+	 b5VhCL8M0Chs6pv3glF6TO88GV2s8vTJsRb13LhN5vx8wUz0gQk75Uiv6mqlzQPGSp
+	 FlL5aNDti4Zsw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 07 Aug 2025 14:36:28 -0700
+Subject: [PATCH] hardening: Require clang 20.1.0 for __counted_by
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250807045706.2848-1-kundan.kumar@samsung.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250807-fix-counted_by-clang-19-v1-1-902c86c1d515@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFsclWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDCwNz3bTMCt3k/NK8ktSU+KRK3eQcoCJdQ0tdE3ODFFPjNEvjxEQDJaD
+ ugqJUoFKwydGxtbUAMY4gcmkAAAA=
+X-Change-ID: 20250807-fix-counted_by-clang-19-470d53f93aa0
+To: Kees Cook <kees@kernel.org>, 
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>
+Cc: linux-hardening@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2288; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=tUwmAkc0BRax/F/1mqhQobRKhACAzjEdHbZ1NnCs6/U=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBlTZZIyZjzPKm5Zf+nC/7+nA5Qrss4VfS3I9pi+N96BS
+ +3vwq8iHaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAiZ1oY/ork1xgrmhTtFAne
+ PdNu45nyTTMExNSLJewfTjg7J/j1k2OMDDvaqrfEbrtq/a33YlSwb07JbK3S+61qpXfOrj5YzPs
+ 7kR0A
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Thanks, I pushed this out for testing under the branch on my linux
-kernel.org repo
+After an innocuous change in -next that modified a structure that
+contains __counted_by, clang-19 start crashing when building certain
+files in drivers/gpu/drm/xe. When assertions are enabled, the more
+descriptive failure is:
 
-20250807-migrate-folios-stats-pw
+  clang: clang/lib/AST/RecordLayoutBuilder.cpp:3335: const ASTRecordLayout &clang::ASTContext::getASTRecordLayout(const RecordDecl *) const: Assertion `D && "Cannot get layout of forward declarations!"' failed.
 
-I added my migration stats before this so to help enable testing of
-that.
+According to a reverse bisect, a tangential change to the LLVM IR
+generation phase of clang during the LLVM 20 development cycle [1]
+resolves this problem. Bump the version of clang that enables
+CONFIG_CC_HAS_COUNTED_BY to 20.1.0 to ensure that this issue cannot be
+hit.
 
-  Luis
+Link: https://github.com/llvm/llvm-project/commit/160fb1121cdf703c3ef5e61fb26c5659eb581489 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+Should this be marked for stable? If this makes 6.17 final, I think we
+are fine for mainline and newer but I wonder if a patch that adds
+__counted_by to a structure would ever be backported and expose this
+problem there.
+---
+ init/Kconfig | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/init/Kconfig b/init/Kconfig
+index af4c2f085455..a2675ee1ef8c 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -117,10 +117,11 @@ config CC_HAS_NO_PROFILE_FN_ATTR
+ 
+ config CC_HAS_COUNTED_BY
+ 	bool
+-	# clang needs to be at least 19.1.3 to avoid __bdos miscalculations
+-	# https://github.com/llvm/llvm-project/pull/110497
+-	# https://github.com/llvm/llvm-project/pull/112636
+-	default y if CC_IS_CLANG && CLANG_VERSION >= 190103
++	# clang needs to be at least 20.1.0 to avoid potential crashes
++	# when building structures that contain __counted_by
++	# https://github.com/ClangBuiltLinux/linux/issues/2114
++	# https://github.com/llvm/llvm-project/commit/160fb1121cdf703c3ef5e61fb26c5659eb581489
++	default y if CC_IS_CLANG && CLANG_VERSION >= 200100
+ 	# supported since gcc 15.1.0
+ 	# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108896
+ 	default y if CC_IS_GCC && GCC_VERSION >= 150100
+
+---
+base-commit: f627b51aaa041cba715b59026cf2d9cb1476c7ed
+change-id: 20250807-fix-counted_by-clang-19-470d53f93aa0
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
+
