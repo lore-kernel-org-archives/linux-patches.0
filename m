@@ -1,55 +1,55 @@
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
+Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B352733993
-	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 04:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7330633993
+	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 04:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754542709; cv=none; b=F7/xOY5ylvU3/V6PUkKdFoeTa1qCQ4lmGjuvhiDPAelABNfWOhMoMQPdh6F1v6EgnlRrCODon5WfHmt3y/AxBMquE6qtbYFQ+nTejzAVfuSgkBKZhKQZqdGExmFt5DWSr6CigBd9l4ZGddBqXKiOA9gHrEompl+/QT4mGathUbw=
+	t=1754542712; cv=none; b=gM1CxcPez0lEyrMwAOXHg0/7IOPZ6nybrjuXMgQ8KkeOYEq5YHzJUc4278T71NJWLncWAePQTAy+TVrp4ucdaysFPFavY56ux2dBr/MfaQv3E2q75TMYvET/Hu09Bqlc2oL/n9eAfQ8wXGZMiGiGIc5/pF52yo0+D6RzxZaW1Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754542709; c=relaxed/simple;
-	bh=uST/0Z4WyrCa6m+ay/OtP5+I15YQGzYPvPpx+OqNUfI=;
+	s=arc-20240116; t=1754542712; c=relaxed/simple;
+	bh=LTtIF7RL41r4cfiERgvJPvwaO0ymvpUyM7RsZGDymAI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:MIME-Version:
-	 Content-Type:References; b=rxoe9ljyhhKZH1T5boT3hlnc+CVDyI88zSdOUfzf/9G2Sle86RAnWqlaSLE94MYBu4Ov/+gaeWLrBLtkKT0ZjXlBQYVEovO17+XKuAMSdHE8vk7u6UYv9XOP6TtfUPJ+Y2M7RegevNVzOM7uULWuuZPBXNq4Nn+4Ht3v5HlUfko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=WvxoaAem; arc=none smtp.client-ip=203.254.224.25
+	 Content-Type:References; b=oiMLgnYA1Ax5FVXoVN5HkSEqKmbIDYGLN+gxpfcnLMbRK6jwce2UXQ3UbnFCUNpaf0J3IIfrbjVz+2WXALbFXMIB0wG3e+/5BuXxU6balmU08EAsypOjVlGwg4NU1UbnrOYPaVBd3l+esoEk9Izk41iUoYGG04Dxc4CaHbwzxUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=XSXFt5Ti; arc=none smtp.client-ip=203.254.224.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="WvxoaAem"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="XSXFt5Ti"
 Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20250807045826epoutp024532196f2450fb7e23c29e43c28f81a2~ZY0uOiDs_2611226112epoutp02Q
-	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 04:58:26 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20250807045826epoutp024532196f2450fb7e23c29e43c28f81a2~ZY0uOiDs_2611226112epoutp02Q
+	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20250807045828epoutp04341aa79b7a6c9cb5b77da5f610a03920~ZY0wnLijn1312513125epoutp04O
+	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 04:58:28 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20250807045828epoutp04341aa79b7a6c9cb5b77da5f610a03920~ZY0wnLijn1312513125epoutp04O
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1754542706;
-	bh=dw8aukTtZ/zLtcfpP/Loa8IeVui1SjSnxag81j1Oaf4=;
+	s=mail20170921; t=1754542708;
+	bh=NkE5+7gk5cDdpEamuT7ffTsUoBrqke3u2KcHUXLV8q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvxoaAemqCjyvJtcCcMdIQGU0wt5MUVp9OgF86ojLuUM5hRDUH2NKdmNVVNGcfuta
-	 jwT+fZ475DsAknZiPxKlqc2RzFWwFPoeOPR3+klH/Hn/cLJaXSphsDzLorgTw4rbrj
-	 Ca1aVllfpwsb+ugSyItjlShwVyvHwtCpMABMRsJI=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
-	20250807045825epcas5p43a63de918e6d24939292c2c4d1b7d970~ZY0tygi2Z0196301963epcas5p4f;
-	Thu,  7 Aug 2025 04:58:25 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.92]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4byFKq5Rfbz2SSKd; Thu,  7 Aug
-	2025 04:58:23 +0000 (GMT)
+	b=XSXFt5Ti5j1jUSSniJ6M7F8zKqZeSYEPpSpfAQf20jnh8CQkgBD1POGcUp3iNPq43
+	 rQ0ksptw5aeXB2C7NPq8wSxIxXTb3QOcq/N7bilcQsP0ZFWZEid/PEl3IxjTmHCocB
+	 8zrLEM7tVNa60c3NePaFYRLkWBZ74iBhWDO58XN8=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+	20250807045827epcas5p145ea62504acc21d1030e249106d2e51e~ZY0wFCcQq1327913279epcas5p10;
+	Thu,  7 Aug 2025 04:58:27 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.93]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4byFKt6v0Nz3hhT8; Thu,  7 Aug
+	2025 04:58:26 +0000 (GMT)
 Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
-	20250807045815epcas5p306d778d3c2e774a27423d6077595712b~ZY0kC_7RK0168901689epcas5p3c;
-	Thu,  7 Aug 2025 04:58:15 +0000 (GMT)
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20250807045818epcas5p1d3c078b67a8c79e70a89cd6d8a8d30b2~ZY0nlUdz71327913279epcas5p1m;
+	Thu,  7 Aug 2025 04:58:18 +0000 (GMT)
 Received: from localhost.localdomain (unknown [107.99.41.245]) by
 	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250807045814epsmtip1aa4549d6c1cbea287cf2edd2612aa648~ZY0jdFqx81580815808epsmtip1M;
-	Thu,  7 Aug 2025 04:58:14 +0000 (GMT)
+	20250807045818epsmtip1a6ba8b3395c94862f73d08f14642fb45~ZY0m-XMXW1051310513epsmtip1w;
+	Thu,  7 Aug 2025 04:58:18 +0000 (GMT)
 From: Kundan Kumar <kundan.kumar@samsung.com>
 To: mcgrof@kernel.org
 Cc: patches@lists.linux.dev, Kundan Kumar <kundan.kumar@samsung.com>, Anuj
 	Gupta <anuj20.g@samsung.com>
-Subject: [PATCH v2 05/15] writeback: modify bdi_writeback search logic to
- search across all wb ctxs
-Date: Thu,  7 Aug 2025 10:26:56 +0530
-Message-Id: <20250807045706.2848-6-kundan.kumar@samsung.com>
+Subject: [PATCH v2 06/15] writeback: invoke all writeback contexts for
+ flusher and dirtytime writeback
+Date: Thu,  7 Aug 2025 10:26:57 +0530
+Message-Id: <20250807045706.2848-7-kundan.kumar@samsung.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20250807045706.2848-1-kundan.kumar@samsung.com>
 Precedence: bulk
@@ -59,53 +59,69 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250807045815epcas5p306d778d3c2e774a27423d6077595712b
+X-CMS-MailID: 20250807045818epcas5p1d3c078b67a8c79e70a89cd6d8a8d30b2
 X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250807045815epcas5p306d778d3c2e774a27423d6077595712b
+X-CMS-RootMailID: 20250807045818epcas5p1d3c078b67a8c79e70a89cd6d8a8d30b2
 References: <20250807045706.2848-1-kundan.kumar@samsung.com>
-	<CGME20250807045815epcas5p306d778d3c2e774a27423d6077595712b@epcas5p3.samsung.com>
+	<CGME20250807045818epcas5p1d3c078b67a8c79e70a89cd6d8a8d30b2@epcas5p1.samsung.com>
 
-Since we have multiple cgwb per bdi, embedded in writeback_ctx now, we
-iterate over all of them to find the associated writeback.
+Modify flusher and dirtytime logic to iterate through all the writeback
+contexts.
 
 Signed-off-by: Kundan Kumar <kundan.kumar@samsung.com>
 Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
 ---
- fs/fs-writeback.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/fs-writeback.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index e065cd606b80..60c7c912c7f3 100644
+index 60c7c912c7f3..1df8dd7af048 100644
 --- a/fs/fs-writeback.c
 +++ b/fs/fs-writeback.c
-@@ -1090,7 +1090,8 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
+@@ -2389,12 +2389,14 @@ static void __wakeup_flusher_threads_bdi(struct backing_dev_info *bdi,
+ 					 enum wb_reason reason)
+ {
+ 	struct bdi_writeback *wb;
++	struct bdi_writeback_ctx *bdi_wb_ctx;
+ 
+ 	if (!bdi_has_dirty_io(bdi))
+ 		return;
+ 
+-	list_for_each_entry_rcu(wb, &bdi->wb_ctx[0]->wb_list, bdi_node)
+-		wb_start_writeback(wb, reason);
++	for_each_bdi_wb_ctx(bdi, bdi_wb_ctx)
++		list_for_each_entry_rcu(wb, &bdi_wb_ctx->wb_list, bdi_node)
++			wb_start_writeback(wb, reason);
+ }
+ 
+ void wakeup_flusher_threads_bdi(struct backing_dev_info *bdi,
+@@ -2444,15 +2446,17 @@ static DECLARE_DELAYED_WORK(dirtytime_work, wakeup_dirtytime_writeback);
+ static void wakeup_dirtytime_writeback(struct work_struct *w)
  {
  	struct backing_dev_info *bdi;
- 	struct cgroup_subsys_state *memcg_css;
--	struct bdi_writeback *wb;
-+	struct bdi_writeback *wb = NULL;
 +	struct bdi_writeback_ctx *bdi_wb_ctx;
- 	struct wb_writeback_work *work;
- 	unsigned long dirty;
- 	int ret;
-@@ -1114,7 +1115,11 @@ int cgroup_writeback_by_id(u64 bdi_id, int memcg_id,
- 	 * And find the associated wb.  If the wb isn't there already
- 	 * there's nothing to flush, don't create one.
- 	 */
--	wb = wb_get_lookup(bdi->wb_ctx[0], memcg_css);
-+	for_each_bdi_wb_ctx(bdi, bdi_wb_ctx) {
-+		wb = wb_get_lookup(bdi_wb_ctx, memcg_css);
-+		if (wb)
-+			break;
-+	}
- 	if (!wb) {
- 		ret = -ENOENT;
- 		goto out_css_put;
+ 
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(bdi, &bdi_list, bdi_list) {
+ 		struct bdi_writeback *wb;
+ 
+-		list_for_each_entry_rcu(wb, &bdi->wb_ctx[0]->wb_list,
+-					bdi_node)
+-			if (!list_empty(&wb->b_dirty_time))
+-				wb_wakeup(wb);
++		for_each_bdi_wb_ctx(bdi, bdi_wb_ctx)
++			list_for_each_entry_rcu(wb, &bdi_wb_ctx->wb_list,
++						bdi_node)
++				if (!list_empty(&wb->b_dirty_time))
++					wb_wakeup(wb);
+ 	}
+ 	rcu_read_unlock();
+ 	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
 -- 
 2.25.1
 
