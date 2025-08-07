@@ -1,165 +1,204 @@
-Received: from mail-ej1-f67.google.com (mail-ej1-f67.google.com [209.85.218.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D86A2AE68;
-	Thu,  7 Aug 2025 01:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69B933993
+	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 04:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754530589; cv=none; b=D7GDEnRodKmlNn/FUD7kWZ4M17wCVKI9KSEO5ab+W1JputPmBOUrE2YNNKRh6wsRj4TpTqSsC9MFHYTWyJ9+fXnlvjjdUMDWfqNuK1VZiquenpjVt7GZ7niJlNL78Rv6jF4Tmhp0VYdMIzIVJoc3hk5xEH+nhpX+4wKgPPmmlZs=
+	t=1754542691; cv=none; b=IhgRy8CHxF8tUSCK4XGBAakwb671c5mJEM46lTnh6rvU6QOY3fZyOWIB4+RECQ3X76qk6jktPj5i0dCeHJE5ywycT2YmSs6LD2dGQnP3yvC9duwqBrHeI6lLmpy7H8c6EW9AlsnItdWFDfX6xa3Q8x0Zkw40a6uRAhr2GfXFYc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754530589; c=relaxed/simple;
-	bh=a3Fwgr9HGewiEAduBxs0Dv6nwj8SDOTnY0RCt9EnMRI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nib7bguLVWYdBD62mC/zS0/Zu1gVRTLb7/qbJvmaGbcwmvmr0w41sSLR910cGrM61iJ/USPTI6AdC5FOZ8A9q7ZeB8e2ocMOi4UVE3U12/I2BeXXkkqKVU4Fiw8utmdFSprTZhf1EDgbj6egtZnIKa3gikonaIMCNd60Nm3W3fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ww+wwCgU; arc=none smtp.client-ip=209.85.218.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1754542691; c=relaxed/simple;
+	bh=r1e0AQy+sit6owrwTi5PY/XGnzYaf8FR1YK7fLwLllA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 References; b=AN8HN8mG9mzgdS+GGl5t1jlifBSs9bRva3Z9F965XEAVEX7uyLuW01AIfJ4jMIRtwj9UXABr/aagF0xuLS9UYrz5m2ZvZ+9lFK2hj9zdjQbArj1AyPbpznCu63LfyKTXTwJXkCxAKOvtZM3Jwdj+EC8GNQXrewBrZ30uiZK5fOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=HM9C/RZ7; arc=none smtp.client-ip=203.254.224.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ww+wwCgU"
-Received: by mail-ej1-f67.google.com with SMTP id a640c23a62f3a-af925cbd73aso87179666b.1;
-        Wed, 06 Aug 2025 18:36:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754530586; x=1755135386; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EvZyBa0d9zwF8Krdg127Vc4ZSyy75NCS6IjPrZt0iNc=;
-        b=Ww+wwCgUGDYdkNS9DLVRepfnBg0VMRzYjKTbc5BnWCXzKwCP0RQmBayXlq1oDgNLj9
-         DAso3/UP+0RA1RA7nzSItpACNnQhJjx21g/m/KoMzCwwVE5zYjtRn3/Zu04M3I3Pw0ek
-         FCBqHkpUCmKgOC12u5WapKAVrRuDWxAJO4MNPFUHs9CmWvByaN0W+1Xr8OyeZ0rIvKoH
-         cu2ooHb6JrC9TAcI2gVpviEyvmcYrmu4nzdBB0vfFJHjK3FCTGAY1vY/3QdyDMF6itRG
-         Z9PT3hn2Ogy2qY167Xr+VXPu45HKi6Y8fNLtO6C5ZmixKl/1XbWp0wFhKs4mqNX9Q0Oh
-         Ivdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754530586; x=1755135386;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EvZyBa0d9zwF8Krdg127Vc4ZSyy75NCS6IjPrZt0iNc=;
-        b=fu1DPHa+u4+zOBwWkUDM/SVhgCmUAYOajbndJ05tV3Rs5caBACNAls29C+2xAQou7B
-         alDRQj/ievTQQBz+i2cYjUiSNqnmU/3Iu2XpyV3AHppcTzOMB2GeCOQvYCKkINLTp4g/
-         9H3zYU5GNNB8ds3FLOkkKrw41Np91HJk90oaYw9+JuhjyT5my2huuooLJR8UdJC70eSS
-         zC1MzkW/MR9gsswkYLC4GnIF+74o+Djir+Zsz1Zn2d1mZNkya7x78WPhJXudTQmF9SiU
-         FOxZvQ9qCPKqnB78OHERE5qMNM2mPOOjfeNChVBuj5fXz00QlS/QrZOzx3KYksIi3tWx
-         82YA==
-X-Forwarded-Encrypted: i=1; AJvYcCVV+pBUSb9eBk2i4O8rOuqh0S1Zne0bXAF8p2nza7xiMaidcXsfnGWxWgvaP21nxBw0CL5RQC8V2Q==@lists.linux.dev, AJvYcCX3AIDQl/wiSYB5MmGaDKXpsVkWbvTPxUOoXB58gVYxYZeP+gTqB6XQrhyi/sVRqV5A6Wx3hQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxF5EjICHDmeHWC24FBEco/4r/Ah00LEYyOB4PnM2JHDb7J3pbr
-	ltwa6jfmYLZsZ0qinRMFQGb5VFpEYfs5pXYMAaRkBcijF8Uqzbg0t6Xs
-X-Gm-Gg: ASbGncsWVpDi6TNAZnJpj4dWqM+EZc03a1XnZ1vKzJYkRF+enaF+Uo3uceLjH94exW7
-	1r7kf2T8osdAxQqbasjOxE8wzpq0sHXBrs41k8tJWMEhV14aiiUH7zEaY98ExoSVL4kat1NePf/
-	FgivYYA3PjLNnk/odF6W4LKj0agBmRo+29rkLvQW1xWzlMo3Fwa3q55dutbldaTpfRwQuLhn9Qr
-	nPw8ap/tvVP3OZlYsmtTcoOZyoC156uAUzx1NYHutjfSwxugMyADJv97mGwUYakhmHEhlII0sw1
-	U+gsedX7UEcRlsTYPtVcLz6KsBW+l160ycGI+4/A/51OPVSzf74K7Pdmg+W5qa/Ik/rmdx7z5qx
-	I3DAriaLT0DDeRQIjAcD1IgVsVm8UvMtEP5sWknMOeW/Jc7gx61uJm8veVbY6k7JWMxBRssXPNE
-	iw3xQ9K+SPYqlmeO855zOixURLqUE=
-X-Google-Smtp-Source: AGHT+IHtu3Fkk1LgLkO8BsEW8NZyBGoH77/DdhJoytkr88G9xzLy08mBwjZkN1IvATcmUxPs/i4fgg==
-X-Received: by 2002:a17:906:6a1f:b0:af9:4fa9:b104 with SMTP id a640c23a62f3a-af99045bbcamr492652366b.45.1754530586329;
-        Wed, 06 Aug 2025 18:36:26 -0700 (PDT)
-Received: from [26.26.26.1] (95.112.207.35.bc.googleusercontent.com. [35.207.112.95])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af91a0a3cecsm1201335566b.53.2025.08.06.18.36.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Aug 2025 18:36:25 -0700 (PDT)
-Message-ID: <3035b903-66c8-4fbe-8921-562e953143b4@gmail.com>
-Date: Thu, 7 Aug 2025 09:36:18 +0800
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="HM9C/RZ7"
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20250807045800epoutp012626bc5fbaee898632d7bcccbfad2b36~ZY0WfW5BA1937019370epoutp01K
+	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 04:58:00 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20250807045800epoutp012626bc5fbaee898632d7bcccbfad2b36~ZY0WfW5BA1937019370epoutp01K
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1754542680;
+	bh=TC2X9up+BbeYi7E39j8KbJ1NkMc3ShamjPrzoIvspko=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=HM9C/RZ7oL8fa1C4YIZ/9yzJpV71Km1VRGRR2i4cMNQkRghIvsiHEIe3Tem1gIObB
+	 NjP+LaHHv+wB8eavALWjkeFw/L4VOT+kRpPGHkggom1V1tfE6Zy9j+0Q4c/54pQk8+
+	 f+s7jK4YtRJ1gSgq6PRR6e2opp6uOhH2TZb6zoW0=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+	20250807045800epcas5p24b599575b3e68e80f485c93dcfad1bbe~ZY0WOvDTw3181431814epcas5p2T;
+	Thu,  7 Aug 2025 04:58:00 +0000 (GMT)
+Received: from epcas5p3.samsung.com (unknown [182.195.38.94]) by
+	epsnrtp03.localdomain (Postfix) with ESMTP id 4byFKM1bCVz3hhT8; Thu,  7 Aug
+	2025 04:57:59 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+	20250807045740epcas5p4cdec49f07b86acf2eea832890393d256~ZY0EGj8dm1537115371epcas5p4x;
+	Thu,  7 Aug 2025 04:57:40 +0000 (GMT)
+Received: from localhost.localdomain (unknown [107.99.41.245]) by
+	epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20250807045740epsmtip112e9a706072727b3c0416e14b6925fd1~ZY0DmtXp-1637916379epsmtip1q;
+	Thu,  7 Aug 2025 04:57:40 +0000 (GMT)
+From: Kundan Kumar <kundan.kumar@samsung.com>
+To: mcgrof@kernel.org
+Cc: patches@lists.linux.dev, Kundan Kumar <kundan.kumar@samsung.com>
+Subject: [PATCH v2 00/15] Test patch Parallelizing filesystem writeback
+Date: Thu,  7 Aug 2025 10:26:51 +0530
+Message-Id: <20250807045706.2848-1-kundan.kumar@samsung.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/16] Fix incorrect iommu_groups with PCIe ACS
-To: Baolu Lu <baolu.lu@linux.intel.com>, Jason Gunthorpe <jgg@nvidia.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
- Alex Williamson <alex.williamson@redhat.com>, galshalom@nvidia.com,
- Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
- tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
- <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
- <20250802151816.GC184255@nvidia.com>
- <1684792a-97d6-4383-a0d2-f342e69c91ff@gmail.com>
- <20250805123555.GI184255@nvidia.com>
- <964c8225-d3fc-4b60-9ee5-999e08837988@gmail.com>
- <20250805144301.GO184255@nvidia.com>
- <6ca56de5-01df-4636-9c6a-666ccc10b7ff@gmail.com>
- <3abaf43b-0b81-46e9-a313-0120d30541cc@linux.intel.com>
-Content-Language: en-US
-From: Ethan Zhao <etzhao1900@gmail.com>
-In-Reply-To: <3abaf43b-0b81-46e9-a313-0120d30541cc@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20250807045740epcas5p4cdec49f07b86acf2eea832890393d256
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250807045740epcas5p4cdec49f07b86acf2eea832890393d256
+References: <CGME20250807045740epcas5p4cdec49f07b86acf2eea832890393d256@epcas5p4.samsung.com>
 
+** Test patch do not review **
 
+Currently, pagecache writeback is performed by a single thread. Inodes
+are added to a dirty list, and delayed writeback is triggered. The single
+writeback thread then iterates through the dirty inode list, and executes
+the writeback.
 
-On 8/6/2025 10:41 AM, Baolu Lu wrote:
-> On 8/6/25 10:22, Ethan Zhao wrote:
->> On 8/5/2025 10:43 PM, Jason Gunthorpe wrote:
->>> On Tue, Aug 05, 2025 at 10:41:03PM +0800, Ethan Zhao wrote:
->>>
->>>>>> My understanding, iommu has no logic yet to handle the egress control
->>>>>> vector configuration case,
->>>>>
->>>>> We don't support it at all. If some FW leaves it configured then it
->>>>> will work at the PCI level but Linux has no awarness of what it is
->>>>> doing.
->>>>>
->>>>> Arguably Linux should disable it on boot, but we don't..
->>>> linux tool like setpci could access PCIe configuration raw data, so
->>>> does to the ACS control bits. that is boring.
->>>
->>> Any change to ACS after boot is "not supported" - iommu groups are one
->>> time only using boot config only. If someone wants to customize ACS
->>> they need to use the new config_acs kernel parameter.
->> That would leave ACS to boot time configuration only. Linux never
->> limits tools to access(write) hardware directly even it could do that.
->> Would it be better to have interception/configure-able policy for such
->> hardware access behavior in kernel like what hypervisor does to MSR etc ?
-> 
-> A root user could even clear the BME or MSE bits of a device's PCIe
-> configuration space, even if the device is already bound to a driver and
-> operating normally. I don't think there's a mechanism to prevent that
-pci tools such setpci accesses PCIe device configuration space via sysfs
-interface, it has default write/read rights setting to root users, that 
-is one point could control the root permission.
+This series parallelizes the writeback by allowing multiple writeback
+contexts per backing device (bdi). These writebacks contexts are executed
+as separate, independent threads, improving overall parallelism.
 
-PCIe device configuration space was mapped into CPU address space via
-ECAM by calling ioremap to setup CPU page table, the PTE has permission
-control bits for read/wirte/cache etc. this is another point to control.
+Design Overview
+================
+Following Jan Kara's suggestion [1], we have introduced a new bdi
+writeback context within the backing_dev_info structure. Specifically,
+we have created a new structure, bdi_writeback_context, which contains
+its own set of members for each writeback context.
 
-Legacy PCI device configuration space was accessed via 0xCF8/0xCFC 
-ioport operation, there is point to intercept.
+struct bdi_writeback_ctx {
+        struct bdi_writeback wb;
+        struct list_head wb_list; /* list of all wbs */
+        struct radix_tree_root cgwb_tree;
+        struct rw_semaphore wb_switch_rwsem;
+        wait_queue_head_t wb_waitq;
+};
 
-To prevent device from DMA to configuration space, the same IOMMU 
-pagetable PTE could be setup to control the access.
+There can be multiple writeback contexts in a bdi, which helps in
+achieving writeback parallelism.
 
-> from happening, besides permission enforcement. I believe that the same
-> applies to the ACS control.
-> 
->>>
->>>>>> The static groups were created according to
->>>>>> FW DRDB tables,
->>>>>
->>>>> ?? iommu_groups have nothing to do with FW tables.
->>>> Sorry, typo, ACPI drhd table.
->>>
->>> Same answer, AFAIK FW tables have no effect on iommu_groups 
->> My understanding, FW tables are part of the description about device 
->> topology and iommu-device relationship. did I really misunderstand
->> something ?
-> 
-> The ACPI/DMAR table describes the platform's IOMMU topology, not the
-> device topology, which is described by the PCI bus. So, the firmware
-> table doesn't impact the iommu_group.
+struct backing_dev_info {
+...
+        int nr_wb_ctx;
+        struct bdi_writeback_ctx **wb_ctx;
+...
+};
 
-I remember drhd table list the iommus and the device belong to them.
-but kernel still needs to traverse PCIe topology to make up iommu_groups.
+FS geometry and filesystem fragmentation
+========================================
+The community was concerned that parallelizing writeback would impact
+delayed allocation and increase filesystem fragmentation.
+Our analysis of XFS delayed allocation behavior showed that merging of
+extents occurs within a specific inode. Earlier experiments with multiple
+writeback contexts [2] resulted in increased fragmentation due to the
+same inode being processed by different threads.
 
+To address this, we now affine an inode to a specific writeback context
+ensuring that delayed allocation works effectively.
 
-Thanks,
-Ethan>
-> Thanks,
-> baolu
+Number of writeback contexts
+============================
+As suggested by Christoph we have provided a sysfs interface to change
+the number of writebacks. Also we plan to keep the number as 1 for
+spinning disk.
+
+IOPS and throughput
+===================
+We see significant improvement in IOPS across several filesystem on both
+PMEM and NVMe devices.
+
+Performance gains:
+  - On PMEM:
+        Base XFS                : 544 MiB/s
+        Parallel Writeback XFS  : 1015 MiB/s  (+86%)
+        Base EXT4               : 536 MiB/s
+        Parallel Writeback EXT4 : 1047 MiB/s  (+95%)
+
+  - On NVMe:
+        Base XFS                : 651 MiB/s
+        Parallel Writeback XFS  : 808 MiB/s  (+24%)
+        Base EXT4               : 494 MiB/s
+        Parallel Writeback EXT4 : 797 MiB/s  (+61%)
+
+We also see that there is no increase in filesystem fragmentation
+# of extents:
+  - On XFS (on PMEM):
+        Base XFS                : 1964
+        Parallel Writeback XFS  : 1384
+
+  - On EXT4 (on PMEM):
+        Base EXT4               : 21
+        Parallel Writeback EXT4 : 11
+
+We also plan to see the impact on other filesystems.
+
+[1] Jan Kara suggestion :
+https://lore.kernel.org/all/gamxtewl5yzg4xwu7lpp7obhp44xh344swvvf7tmbiknvbd3ww@jowphz4h4zmb/
+[2] Writeback using unaffined N (# of CPUs) threads :
+https://lore.kernel.org/all/20250414102824.9901-1-kundan.kumar@samsung.com/
+
+Changes since v1:
+ - Added sysfs entry to change the number of writebacks for a bdi
+ - Added a filesystem interface to fetch 64 bit inode numbers
+ - Made common helpers to contain writeback specific changes, which were
+   affecting f2fs, fuse, gfs2 and nfs
+ - Changed name from wb_ctx_arr to wb_ctx
+
+Kundan Kumar (15):
+  writeback: add infra for parallel writeback
+  writeback: add support to initialize and free multiple writeback ctxs
+  writeback: link bdi_writeback to its corresponding bdi_writeback_ctx
+  writeback: affine inode to a writeback ctx within a bdi
+  writeback: modify bdi_writeback search logic to search across all wb
+    ctxs
+  writeback: invoke all writeback contexts for flusher and dirtytime
+    writeback
+  writeback: modify sync related functions to iterate over all writeback
+    contexts
+  writeback: add support to collect stats for all writeback ctxs
+  f2fs: add support in f2fs to handle multiple writeback contexts
+  fuse: add support for multiple writeback contexts in fuse
+  gfs2: add support in gfs2 to handle multiple writeback contexts
+  nfs: add support in nfs to handle multiple writeback contexts
+  writeback: set the num of writeback contexts to number of online cpus
+  writeback: segregated allocation and free of writeback contexts
+  writeback: added support to change the number of writebacks using a
+    sysfs attribute
+
+ fs/f2fs/node.c                   |   4 +-
+ fs/f2fs/segment.h                |   2 +-
+ fs/fs-writeback.c                | 148 ++++++++-----
+ fs/fuse/file.c                   |   8 +-
+ fs/gfs2/super.c                  |   2 +-
+ fs/nfs/internal.h                |   2 +-
+ fs/nfs/write.c                   |   4 +-
+ fs/super.c                       |  23 ++
+ fs/xfs/xfs_super.c               |  12 ++
+ include/linux/backing-dev-defs.h |  32 +--
+ include/linux/backing-dev.h      |  77 +++++--
+ include/linux/fs.h               |   3 +-
+ mm/backing-dev.c                 | 349 ++++++++++++++++++++++++-------
+ mm/page-writeback.c              |  13 +-
+ 14 files changed, 513 insertions(+), 166 deletions(-)
+
+-- 
+2.25.1
 
