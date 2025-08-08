@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532841C861E;
-	Fri,  8 Aug 2025 17:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190E927FB37;
+	Fri,  8 Aug 2025 17:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754674913; cv=none; b=eMXqMcNVdeunIJOx1uE5/rX2b3+AU8Gh0lryZqzqTdFgKQJP85J9i9P3ICsyaHDFw1g5bMtaO8RmaTA2KwcAZjVGEigs58vLL5uwMbzSPVTC6qmUAIPgqMR5KdgvZLC1e+Y+730XQoDzcSQHvS+v5Wxm2Z2Grl7i1f2cGkYNsJQ=
+	t=1754674915; cv=none; b=MIU75HsimrS9s6tvpjouSCt/PKWaPNWF187nNtdnJEJmr6LIOa0HwnffMwF2SHCw4KNKJh7U5kKyrd8l8oXz9+CcWWJ25UPgvZzj6StMjZpIDJMNfSpcLLbJ6pRwCL4YgJ3vW0M7SD0zNMiZtM3tHJSk1UbKKsrIE7hkUrroJ0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754674913; c=relaxed/simple;
-	bh=GqM4uijE/cryD8lWClhsosZUeGz28VWZUOgODuiBkFk=;
+	s=arc-20240116; t=1754674915; c=relaxed/simple;
+	bh=OrNO/MW+Q9zgW84uqpK2ZHIApda6IPbI7dmJd4IKDz4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YlD/kQtMlpo0FzX8EVRONGXKpoDVjNQ2dko6e1XpCfUuJ9yFRNajNr50NCoJSHEmRSNpvThupux1uqVsY0RiqvP0UscvD5TPamHD8wQ87mTqxkQFUgm4hfkOn79ZYejj2jG2S440YNb8LspHM2c6lPAWgJdq75l46x69x0dwTaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G1vf0W7v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7Qt4fO8cq4b+2mzBMwKJw/Q67s8s+AFHcMuNJWU8JyvevCP1vmHFdZcVtS7eYbV5peYo8MnqGdHgwd/Sft6sDRyl05twHAVNSeIM7qhc7L1nRw28IfuYtZ7/wn024PTTnjLRESuN5zzUh+tLyM2yJyxZYByzF5FbQXSZJbfuAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dbVglvpa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G1vf0W7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862A2C4CEF0;
-	Fri,  8 Aug 2025 17:41:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dbVglvpa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87259C4CEED;
+	Fri,  8 Aug 2025 17:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754674912;
-	bh=GqM4uijE/cryD8lWClhsosZUeGz28VWZUOgODuiBkFk=;
+	s=k20201202; t=1754674914;
+	bh=OrNO/MW+Q9zgW84uqpK2ZHIApda6IPbI7dmJd4IKDz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1vf0W7v6sguhmymEimUd9BSuk+sn6ofzjXnU02YJl7oV9cnwtiwTXl64qc8MrOvx
-	 3sESbLZVy+pAL5waDn+6pZ+8kdLBhQ+uMp0Ejc+MGoiNsbyyvBqgiE7/iViN8cA0I3
-	 RGOvGLdqOANQccTl/OM++XUB3sTkAoTjUz17qPLwpa7jomSRSTeXnrPodziwgGs36V
-	 2rZs3ZKOvMMRfGW8HRpQoogMhDKxWVQuOvT0M+/Sll5mwjbIMo5flWgsjMZX3ZfdFn
-	 tMT0lKpSLnlwG+IdFj4OPJfC2dmq+K7RscLao6YqBYI460JIfNyQrpV//I0nIIcXN6
-	 hCJYcB2SFL4SA==
+	b=dbVglvpaIXuQhCDS1Fg7X7xFuGHaF/LDkhYDUBhdBZ9WC6MAA52CTUjdklHPWYph+
+	 StHETMZ48qIztL3GzbBWrfbt6XD4Jw+ghh6NReL/oMpMBMaK2nWjxYDxI0aRdQQUkD
+	 htZOiKiWs69zgoiYAdirnDfHDO8dcPgc4TPQVsVXGlcWB0Rax50UO3MJK8I63jdfUT
+	 exHcaRs94m03iCfWCLnn8vC7pXLJkq3YjwgWDtNmXHAAe2yXK9IkZcRXCOGGt6UHMx
+	 A/qIdZqCxZO6/hTVS/65LfX2MjwzFfi5B8Q0H5cARCtov+Ph9/khUlaOWGNKi1Fmkt
+	 9glyzjYGBo8/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "fangzhong.zhou" <myth5@myth5.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>,
-	westeri@kernel.org,
-	linux-i2c@vger.kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.10] i2c: Force DLL0945 touchpad i2c freq to 100khz
-Date: Fri,  8 Aug 2025 13:41:43 -0400
-Message-Id: <20250808174146.1272242-3-sashal@kernel.org>
+Cc: John Ogness <john.ogness@linutronix.de>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.16-6.12] printk: nbcon: Allow reacquire during panic
+Date: Fri,  8 Aug 2025 13:41:44 -0400
+Message-Id: <20250808174146.1272242-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250808174146.1272242-1-sashal@kernel.org>
 References: <20250808174146.1272242-1-sashal@kernel.org>
@@ -52,20 +50,38 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: "fangzhong.zhou" <myth5@myth5.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit 0b7c9528facdb5a73ad78fea86d2e95a6c48dbc4 ]
+[ Upstream commit 571c1ea91a73db56bd94054fabecd0f070dc90db ]
 
-This patch fixes an issue where the touchpad cursor movement becomes
-slow on the Dell Precision 5560. Force the touchpad freq to 100khz
-as a workaround.
+If a console printer is interrupted during panic, it will never
+be able to reacquire ownership in order to perform and cleanup.
+That in itself is not a problem, since the non-panic CPU will
+simply quiesce in an endless loop within nbcon_reacquire_nobuf().
 
-Tested on Dell Precision 5560 with 6.14 to 6.14.6. Cursor movement
-is now smooth and responsive.
+However, in this state, platforms that do not support a true NMI
+to interrupt the quiesced CPU will not be able to shutdown that
+CPU from within panic(). This then causes problems for such as
+being unable to load and run a kdump kernel.
 
-Signed-off-by: fangzhong.zhou <myth5@myth5.com>
-[wsa: kept sorting and removed unnecessary parts from commit msg]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fix this by allowing non-panic CPUs to reacquire ownership using
+a direct acquire. Then the non-panic CPUs can successfullyl exit
+the nbcon_reacquire_nobuf() loop and the console driver can
+perform any necessary cleanup. But more importantly, the CPU is
+no longer quiesced and is free to process any interrupts
+necessary for panic() to shutdown the CPU.
+
+All other forms of acquire are still not allowed for non-panic
+CPUs since it is safer to have them avoid gaining console
+ownership that is not strictly necessary.
+
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Closes: https://lore.kernel.org/r/SN6PR02MB4157A4C5E8CB219A75263A17D46DA@SN6PR02MB4157.namprd02.prod.outlook.com
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/20250606185549.900611-1-john.ogness@linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,84 +92,236 @@ LLM Generated explanations, may be completely bogus:
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Analysis Supporting Backport:
+## Bug Fix for Critical System Functionality
 
-### 1. **Fixes a Real User-Visible Bug**
-The commit fixes a specific hardware malfunction where the touchpad
-cursor movement becomes slow on Dell Precision 5560 laptops. This is a
-concrete usability issue that affects end users' ability to use their
-hardware properly.
+1. **Fixes a real bug affecting kdump functionality**: The commit
+   addresses a specific problem where platforms without true NMI support
+   cannot properly shutdown CPUs during panic, preventing kdump kernels
+   from loading. This is a critical debugging and recovery feature that
+   many production systems rely on.
 
-### 2. **Minimal and Contained Change**
-The change is extremely minimal - it only adds a single line `{
-"DLL0945", 0 },` to an existing array
-`i2c_acpi_force_100khz_device_ids[]`. This is a purely additive change
-that:
-- Doesn't modify any existing logic
-- Only affects devices with the specific ACPI ID "DLL0945"
-- Cannot cause regressions on other hardware
+2. **Clear regression/breakage scenario**: The commit message clearly
+   describes how the current behavior causes non-panic CPUs to get stuck
+   in an endless loop in `nbcon_reacquire_nobuf()`, preventing proper
+   CPU shutdown during panic. This is a functional regression that
+   affects system reliability.
 
-### 3. **Follows Established Pattern**
-The code shows this is a well-established pattern for hardware quirks:
-- The `i2c_acpi_force_100khz_device_ids[]` array already exists with the
-  same purpose
-- A nearly identical fix was just added for ELAN06FA touchpad (commit
-  bfd74cd1fbc0)
-- Similar quirk arrays exist for forcing 400KHz
-  (i2c_acpi_force_400khz_device_ids)
-- Previous similar fixes have been marked for stable (e.g., commit
-  7574c0db2e68 for Silead touchscreens included `Cc: stable@kernel.org`)
+## Safe and Contained Fix
 
-### 4. **Hardware-Specific Workaround**
-This is a hardware-specific workaround that:
-- Only triggers for Dell devices with the DLL0945 touchpad
-- Forces I2C bus speed to 100KHz to work around a hardware/firmware
-  issue
-- Has been tested on the affected hardware (Dell Precision 5560 with
-  kernels 6.14 to 6.14.6)
+3. **Minimal and targeted change**: The fix is confined to the nbcon
+   (new console) subsystem, specifically modifying only the acquire
+   logic to allow reacquire during panic. The diff shows only 41
+   insertions and 22 deletions, mostly adding a `is_reacquire` parameter
+   to existing functions.
 
-### 5. **No Architecture Changes**
-The commit:
-- Uses existing infrastructure (the quirk array mechanism)
-- Doesn't introduce new features
-- Doesn't change any APIs or interfaces
-- Simply adds one more device ID to an existing workaround list
+4. **No architectural changes**: The commit doesn't introduce new
+   features or change the fundamental design. It merely adjusts the
+   existing acquire logic to handle a specific edge case during panic.
 
-### 6. **Low Risk of Regression**
-The change has minimal regression risk because:
-- It only affects devices with the specific ACPI ID
-- The mechanism is already proven with other devices
-- The fix is isolated to I2C bus speed negotiation for one specific
-  touchpad model
-- If the device ID doesn't match, the code path is never executed
+5. **Conservative approach**: The fix maintains safety by:
+   - Only allowing direct reacquire for non-panic CPUs (not all acquire
+     types)
+   - Preserving the check for `unsafe_takeover` state
+   - Keeping all other panic-time restrictions in place
 
-### 7. **Consistent with Stable Kernel Rules**
-This fix aligns perfectly with stable kernel criteria:
-- Fixes a real bug that bothers users (slow touchpad cursor)
-- Is obviously correct and tested
-- Is small (1 line addition)
-- Doesn't add new features
-- Fixes only one specific issue
+## Well-Tested and Reviewed
 
-The commit follows the exact same pattern as previous touchpad I2C
-frequency quirks that have been successfully backported to stable
-kernels, making it a clear candidate for stable tree inclusion.
+6. **Proper testing and review**: The commit has been:
+   - Reported by Michael Kelley with a specific reproducer
+   - Reviewed by Petr Mladek (printk maintainer)
+   - Tested by the original reporter
+   - Already included upstream (commit
+     571c1ea91a73db56bd94054fabecd0f070dc90db)
 
- drivers/i2c/i2c-core-acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+## Code Analysis
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index d2499f302b50..f43067f6797e 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -370,6 +370,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
- 	 * the device works without issues on Windows at what is expected to be
- 	 * a 400KHz frequency. The root cause of the issue is not known.
+The key changes in `nbcon_context_try_acquire_direct()`:
+```c
+-static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
+- struct nbcon_state *cur)
++static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
++                                           struct nbcon_state *cur,
+bool is_reacquire)
+```
+
+And the critical logic change:
+```c
+-if (other_cpu_in_panic())
++if (other_cpu_in_panic() &&
++    (!is_reacquire || cur->unsafe_takeover)) {
+     return -EPERM;
++}
+```
+
+This allows reacquire during panic only when it's a genuine reacquire
+attempt and no unsafe takeover has occurred, which is a safe and
+necessary exception to handle the described bug.
+
+The commit follows stable kernel rules by fixing an important bug with
+minimal risk and without introducing new features.
+
+ kernel/printk/nbcon.c | 63 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 41 insertions(+), 22 deletions(-)
+
+diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
+index fd12efcc4aed..e7a3af81b173 100644
+--- a/kernel/printk/nbcon.c
++++ b/kernel/printk/nbcon.c
+@@ -214,8 +214,9 @@ static void nbcon_seq_try_update(struct nbcon_context *ctxt, u64 new_seq)
+ 
+ /**
+  * nbcon_context_try_acquire_direct - Try to acquire directly
+- * @ctxt:	The context of the caller
+- * @cur:	The current console state
++ * @ctxt:		The context of the caller
++ * @cur:		The current console state
++ * @is_reacquire:	This acquire is a reacquire
+  *
+  * Acquire the console when it is released. Also acquire the console when
+  * the current owner has a lower priority and the console is in a safe state.
+@@ -225,17 +226,17 @@ static void nbcon_seq_try_update(struct nbcon_context *ctxt, u64 new_seq)
+  *
+  * Errors:
+  *
+- *	-EPERM:		A panic is in progress and this is not the panic CPU.
+- *			Or the current owner or waiter has the same or higher
+- *			priority. No acquire method can be successful in
+- *			this case.
++ *	-EPERM:		A panic is in progress and this is neither the panic
++ *			CPU nor is this a reacquire. Or the current owner or
++ *			waiter has the same or higher priority. No acquire
++ *			method can be successful in these cases.
+  *
+  *	-EBUSY:		The current owner has a lower priority but the console
+  *			in an unsafe state. The caller should try using
+  *			the handover acquire method.
+  */
+ static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
+-					    struct nbcon_state *cur)
++					    struct nbcon_state *cur, bool is_reacquire)
+ {
+ 	unsigned int cpu = smp_processor_id();
+ 	struct console *con = ctxt->console;
+@@ -243,14 +244,20 @@ static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
+ 
+ 	do {
+ 		/*
+-		 * Panic does not imply that the console is owned. However, it
+-		 * is critical that non-panic CPUs during panic are unable to
+-		 * acquire ownership in order to satisfy the assumptions of
+-		 * nbcon_waiter_matches(). In particular, the assumption that
+-		 * lower priorities are ignored during panic.
++		 * Panic does not imply that the console is owned. However,
++		 * since all non-panic CPUs are stopped during panic(), it
++		 * is safer to have them avoid gaining console ownership.
++		 *
++		 * If this acquire is a reacquire (and an unsafe takeover
++		 * has not previously occurred) then it is allowed to attempt
++		 * a direct acquire in panic. This gives console drivers an
++		 * opportunity to perform any necessary cleanup if they were
++		 * interrupted by the panic CPU while printing.
+ 		 */
+-		if (other_cpu_in_panic())
++		if (other_cpu_in_panic() &&
++		    (!is_reacquire || cur->unsafe_takeover)) {
+ 			return -EPERM;
++		}
+ 
+ 		if (ctxt->prio <= cur->prio || ctxt->prio <= cur->req_prio)
+ 			return -EPERM;
+@@ -301,8 +308,9 @@ static bool nbcon_waiter_matches(struct nbcon_state *cur, int expected_prio)
+ 	 * Event #1 implies this context is EMERGENCY.
+ 	 * Event #2 implies the new context is PANIC.
+ 	 * Event #3 occurs when panic() has flushed the console.
+-	 * Events #4 and #5 are not possible due to the other_cpu_in_panic()
+-	 * check in nbcon_context_try_acquire_direct().
++	 * Event #4 occurs when a non-panic CPU reacquires.
++	 * Event #5 is not possible due to the other_cpu_in_panic() check
++	 *          in nbcon_context_try_acquire_handover().
  	 */
-+	{ "DLL0945", 0 },
- 	{ "ELAN06FA", 0 },
- 	{}
- };
+ 
+ 	return (cur->req_prio == expected_prio);
+@@ -431,6 +439,16 @@ static int nbcon_context_try_acquire_handover(struct nbcon_context *ctxt,
+ 	WARN_ON_ONCE(ctxt->prio <= cur->prio || ctxt->prio <= cur->req_prio);
+ 	WARN_ON_ONCE(!cur->unsafe);
+ 
++	/*
++	 * Panic does not imply that the console is owned. However, it
++	 * is critical that non-panic CPUs during panic are unable to
++	 * wait for a handover in order to satisfy the assumptions of
++	 * nbcon_waiter_matches(). In particular, the assumption that
++	 * lower priorities are ignored during panic.
++	 */
++	if (other_cpu_in_panic())
++		return -EPERM;
++
+ 	/* Handover is not possible on the same CPU. */
+ 	if (cur->cpu == cpu)
+ 		return -EBUSY;
+@@ -558,7 +576,8 @@ static struct printk_buffers panic_nbcon_pbufs;
+ 
+ /**
+  * nbcon_context_try_acquire - Try to acquire nbcon console
+- * @ctxt:	The context of the caller
++ * @ctxt:		The context of the caller
++ * @is_reacquire:	This acquire is a reacquire
+  *
+  * Context:	Under @ctxt->con->device_lock() or local_irq_save().
+  * Return:	True if the console was acquired. False otherwise.
+@@ -568,7 +587,7 @@ static struct printk_buffers panic_nbcon_pbufs;
+  * in an unsafe state. Otherwise, on success the caller may assume
+  * the console is not in an unsafe state.
+  */
+-static bool nbcon_context_try_acquire(struct nbcon_context *ctxt)
++static bool nbcon_context_try_acquire(struct nbcon_context *ctxt, bool is_reacquire)
+ {
+ 	unsigned int cpu = smp_processor_id();
+ 	struct console *con = ctxt->console;
+@@ -577,7 +596,7 @@ static bool nbcon_context_try_acquire(struct nbcon_context *ctxt)
+ 
+ 	nbcon_state_read(con, &cur);
+ try_again:
+-	err = nbcon_context_try_acquire_direct(ctxt, &cur);
++	err = nbcon_context_try_acquire_direct(ctxt, &cur, is_reacquire);
+ 	if (err != -EBUSY)
+ 		goto out;
+ 
+@@ -913,7 +932,7 @@ void nbcon_reacquire_nobuf(struct nbcon_write_context *wctxt)
+ {
+ 	struct nbcon_context *ctxt = &ACCESS_PRIVATE(wctxt, ctxt);
+ 
+-	while (!nbcon_context_try_acquire(ctxt))
++	while (!nbcon_context_try_acquire(ctxt, true))
+ 		cpu_relax();
+ 
+ 	nbcon_write_context_set_buf(wctxt, NULL, 0);
+@@ -1101,7 +1120,7 @@ static bool nbcon_emit_one(struct nbcon_write_context *wctxt, bool use_atomic)
+ 		cant_migrate();
+ 	}
+ 
+-	if (!nbcon_context_try_acquire(ctxt))
++	if (!nbcon_context_try_acquire(ctxt, false))
+ 		goto out;
+ 
+ 	/*
+@@ -1486,7 +1505,7 @@ static int __nbcon_atomic_flush_pending_con(struct console *con, u64 stop_seq,
+ 	ctxt->prio			= nbcon_get_default_prio();
+ 	ctxt->allow_unsafe_takeover	= allow_unsafe_takeover;
+ 
+-	if (!nbcon_context_try_acquire(ctxt))
++	if (!nbcon_context_try_acquire(ctxt, false))
+ 		return -EPERM;
+ 
+ 	while (nbcon_seq_read(con) < stop_seq) {
+@@ -1762,7 +1781,7 @@ bool nbcon_device_try_acquire(struct console *con)
+ 	ctxt->console	= con;
+ 	ctxt->prio	= NBCON_PRIO_NORMAL;
+ 
+-	if (!nbcon_context_try_acquire(ctxt))
++	if (!nbcon_context_try_acquire(ctxt, false))
+ 		return false;
+ 
+ 	if (!nbcon_context_enter_unsafe(ctxt))
 -- 
 2.39.5
 
