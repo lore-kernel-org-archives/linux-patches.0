@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1E81D61BB;
-	Fri,  8 Aug 2025 15:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FDE283FF4;
+	Fri,  8 Aug 2025 15:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754667078; cv=none; b=l9guhYvgULxf3GIdWoMBf8gjbSvCGcAIKrRjYte7k81lbEspi1CbSfXScpAx5yHGyPQtg0uIbcFLQY0QrEJErvMBK6ZaWgnkEewLYBBLavUKlB3OJcM71vvI6KFvsB27Fs7sO0Y94ZecmMfAtEqZQvxveroFABiYF+wnwRXaqeo=
+	t=1754667081; cv=none; b=NN6qGSj0qHdhk8ilT97pcrjYTRR8HXUJzhsiNAJEKTBmEEUUQADc1vbSMKKUfnRN8oP104E57Zb1Km+3iiyUf8+ed/vJvaQQyC/eu+2QsLZOht2EZ3MKYF8AtMf/toNTMzOJVTLeRbljBBb0XNdCLDLFTuU2AyqL2J5Bw02+z/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754667078; c=relaxed/simple;
-	bh=s7yEPYEJ4nywSUhC4VyVeBBQPUEYxS3k3UwaRBV14tA=;
+	s=arc-20240116; t=1754667081; c=relaxed/simple;
+	bh=X1AhUCKCUNMHG7AhrYCMyABgRQsIbWAveiaYKrESRr4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hC3G9lysdV6orKOItPk4Ai/Epn2yrGXroFvDE4QiPsHuKWn2+Ag00SD+mR3u8HDucp29bXA+Vad4n4IObs6WsH1O60vDLnVy8S113Kq/UMSmTx2v+2ajp5+fwGiG48hk+0gTHxMQ4AM+aVf+7ijEXRxDxfxxBCzr3smBEUv8nug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+u5IKPN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y0vsHCPtMwewSDghqCBqssn8r6MMz6eMPlRX9D3/vW07+L0W2weh8MCmVsignPLP2xvi/X0UhgKZk/1E9WZl0SojFJ8B0WujE8tgTrKmxHgm0I7fOBl+8icdpG1z8s3XVyUvFO9qXS3vvI4QQzWYb2NmsW9GsYZ+2LYfZp/QgQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J5nfC4Lj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+u5IKPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FE0C4CEF6;
-	Fri,  8 Aug 2025 15:31:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J5nfC4Lj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8BCC4CEF7;
+	Fri,  8 Aug 2025 15:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754667078;
-	bh=s7yEPYEJ4nywSUhC4VyVeBBQPUEYxS3k3UwaRBV14tA=;
+	s=k20201202; t=1754667080;
+	bh=X1AhUCKCUNMHG7AhrYCMyABgRQsIbWAveiaYKrESRr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+u5IKPNXIiSvvbD/hNseUwAy0jc2yIp0rtGeH2p1XlU13CEmVERVDYk9tZmA1ZW5
-	 KDSVdcMOs+bFc6r8vsOkK941roFPE+fDw0k5vWZLVvZ3G4HgXMh1rAv2cvbwrNDjj1
-	 0FlHkMzwwiGIHVkGjM4plkNfdLsTBx1fSWQqTDirvvDKGWdv6gijOdI+bcnkcyL6Hr
-	 rSdLgNo0zI10d/bxwPanjBlAfdsit+rPLW8jJG7xRHYpbCGv/dxc3WB/Atgo+yrSJy
-	 RLYdW5m1PvhLnH3mmHILYOvE2vGPvoZWIM5ezVjf+QrBWwHgP4hxq6LaLANzSN476/
-	 j81oMNZ1eEMnA==
+	b=J5nfC4Ljhus24QE2bfM1Dm2iP4Bk9knUapLab7O69YwOX/LnpRGMdjXVFCSEJxnaS
+	 MPS19Tylqt/p09uRBM6DuR8KeuRNBwFyChp7ewvL/MGur6KMri9PC+WleJypfwY9mf
+	 aoEtPOYSa05kB+atwvz3CIV7L6gGuxTWiFPpMLfOwtLkwfIOTKHGjM5baVT8f3HG65
+	 kS7YHzQcvE1R0yhbZxLecboaZdTW4BhJ8b6IQ2G7CcoMJH8IXWoA6qxrp2F4t6asNG
+	 /BLZop+d8PCJxRKBgT0hHFnVPuQB3X/dM0zWhckyXcWTwc+zf2tCPmma94+Iu4O6ij
+	 r0GF9GgpmilQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mateusz Guzik <mjguzik@gmail.com>,
-	John Johansen <john.johansen@canonical.com>,
+Cc: Timothy Pearson <tpearson@raptorengineering.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rdunlap@infradead.org,
-	ryan.lee@canonical.com,
-	linux@treblig.org
-Subject: [PATCH AUTOSEL 6.16-6.1] apparmor: use the condition in AA_BUG_FMT even with debug disabled
-Date: Fri,  8 Aug 2025 11:30:50 -0400
-Message-Id: <20250808153054.1250675-10-sashal@kernel.org>
+	mahesh@linux.ibm.com,
+	linuxppc-dev@lists.ozlabs.org
+Subject: [PATCH AUTOSEL 6.16-6.6] powerpc/eeh: Make EEH driver device hotplug safe
+Date: Fri,  8 Aug 2025 11:30:51 -0400
+Message-Id: <20250808153054.1250675-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250808153054.1250675-1-sashal@kernel.org>
 References: <20250808153054.1250675-1-sashal@kernel.org>
@@ -47,93 +47,317 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Mateusz Guzik <mjguzik@gmail.com>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-[ Upstream commit 67e370aa7f968f6a4f3573ed61a77b36d1b26475 ]
+[ Upstream commit 1010b4c012b0d78dfb9d3132b49aa2ef024a07a7 ]
 
-This follows the established practice and fixes a build failure for me:
-security/apparmor/file.c: In function ‘__file_sock_perm’:
-security/apparmor/file.c:544:24: error: unused variable ‘sock’ [-Werror=unused-variable]
-  544 |         struct socket *sock = (struct socket *) file->private_data;
-      |                        ^~~~
+Multiple race conditions existed between the PCIe hotplug driver and the
+EEH driver, leading to a variety of kernel oopses of the same general
+nature:
 
-Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+<pcie device unplug>
+<eeh driver trigger>
+<hotplug removal trigger>
+<pcie tree reconfiguration>
+<eeh recovery next step>
+<oops in EEH driver bus iteration loop>
+
+A second class of oops is also seen when the underlying bus disappears
+during device recovery.
+
+Refactor the EEH module to be PCI rescan and remove safe.  Also clean
+up a few minor formatting / readability issues.
+
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/1334208367.1359861.1752615503144.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **It fixes a real build failure**: The commit message clearly states
-   it fixes a build failure with `-Werror=unused-variable`. When
-   `CONFIG_SECURITY_APPARMOR_DEBUG_ASSERTS` is disabled, the
-   `AA_BUG_FMT` macro becomes just `no_printk(fmt, ##args)`, which
-   doesn't evaluate the condition `X`. This causes the `sock` variable
-   in `__file_sock_perm()` to be unused, triggering a compiler warning
-   that becomes an error with `-Werror`.
+## 1. **Critical Bug Fix for Race Conditions**
+The commit explicitly fixes "Multiple race conditions" between the PCIe
+hotplug driver and the EEH (Enhanced Error Handling) driver that lead to
+kernel oopses. These are serious kernel crashes that can cause system
+instability or complete system failure.
 
-2. **The fix is minimal and contained**: The change only modifies the
-   `AA_BUG_FMT` macro definition when debug is disabled, adding
-   `BUILD_BUG_ON_INVALID(X)` which forces the compiler to evaluate the
-   condition without generating any runtime code. This is a well-
-   established pattern in the kernel (as seen in `VM_BUG_ON` and similar
-   macros in `include/linux/mmdebug.h`).
+## 2. **Clear Bug Symptoms Described**
+The commit message describes two classes of kernel oopses:
+- Race conditions during concurrent PCIe device unplug and EEH recovery
+  operations
+- Crashes when the underlying bus disappears during device recovery
 
-3. **No functional changes or side effects**: The fix doesn't change any
-   runtime behavior. `BUILD_BUG_ON_INVALID(e)` is defined as
-   `((void)(sizeof((__force long)(e))))` which only evaluates the
-   expression at compile time to ensure it's valid, without generating
-   any code.
+These are real-world stability issues that affect system reliability.
 
-4. **Follows established kernel patterns**: The commit message states
-   "This follows the established practice," and indeed, examining other
-   kernel debug macros like `VM_BUG_ON` shows they use the exact same
-   pattern - using `BUILD_BUG_ON_INVALID` when debug is disabled to
-   ensure the condition is still evaluated by the compiler.
+## 3. **Focused Fix with Clear Scope**
+The changes are focused on making the EEH driver "PCI rescan and remove
+safe" by properly coordinating locking around critical sections. The key
+changes include:
 
-5. **Low risk**: This is a compile-time only change that prevents build
-   failures. It cannot introduce runtime regressions since it generates
-   no runtime code.
+- Moving `pci_lock_rescan_remove()` calls to protect larger critical
+  sections in `eeh_handle_normal_event()` and
+  `eeh_handle_special_event()`
+- Removing scattered lock/unlock pairs from individual functions like
+  `eeh_pe_report_edev()` and `eeh_reset_device()`
+- Adding proper NULL checks (e.g., checking if `edev->pdev` exists
+  before dereferencing in `eeh_bridge_check_link()`)
+- Adding `*result = PCI_ERS_RESULT_DISCONNECT` when no device is found
 
-6. **Affects a security subsystem**: AppArmor is a security module, and
-   build failures in security code can prevent users from building
-   kernels with their desired security configuration.
+## 4. **Minimal Risk of Regression**
+The changes are:
+- Confined to the PowerPC EEH subsystem
+- Primarily involve moving existing locking to broader scopes
+- Add defensive NULL checks
+- Don't introduce new features or change architecture
 
-The commit is a classic example of a safe, minimal fix that resolves a
-real problem without introducing new risks, making it an ideal candidate
-for stable backporting.
+## 5. **Follows Stable Kernel Rules**
+This fix meets the stable kernel criteria:
+- Fixes a real bug (kernel oopses)
+- Has been tested (signed off by multiple maintainers)
+- Is self-contained to a specific subsystem
+- Doesn't add new features
+- Has clear bug symptoms that users experience
 
- security/apparmor/include/lib.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+## 6. **Critical for PowerPC Server Systems**
+EEH is crucial for PowerPC server systems' reliability, especially in
+environments with PCIe hotplug operations. The race conditions can lead
+to unexpected downtime in production systems.
 
-diff --git a/security/apparmor/include/lib.h b/security/apparmor/include/lib.h
-index f11a0db7f51d..e83f45e936a7 100644
---- a/security/apparmor/include/lib.h
-+++ b/security/apparmor/include/lib.h
-@@ -48,7 +48,11 @@ extern struct aa_dfa *stacksplitdfa;
- #define AA_BUG_FMT(X, fmt, args...)					\
- 	WARN((X), "AppArmor WARN %s: (" #X "): " fmt, __func__, ##args)
- #else
--#define AA_BUG_FMT(X, fmt, args...) no_printk(fmt, ##args)
-+#define AA_BUG_FMT(X, fmt, args...)					\
-+	do {								\
-+		BUILD_BUG_ON_INVALID(X);				\
-+		no_printk(fmt, ##args);					\
-+	} while (0)
- #endif
+The refactoring to consolidate the locking at higher levels (in the main
+event handlers) rather than scattered throughout the code makes the
+locking strategy clearer and reduces the chance of deadlocks or missed
+locking, which is a good defensive programming practice for stable
+kernels.
+
+ arch/powerpc/kernel/eeh_driver.c | 48 +++++++++++++++++++++-----------
+ arch/powerpc/kernel/eeh_pe.c     | 10 ++++---
+ 2 files changed, 38 insertions(+), 20 deletions(-)
+
+diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
+index 7efe04c68f0f..dd50de91c438 100644
+--- a/arch/powerpc/kernel/eeh_driver.c
++++ b/arch/powerpc/kernel/eeh_driver.c
+@@ -257,13 +257,12 @@ static void eeh_pe_report_edev(struct eeh_dev *edev, eeh_report_fn fn,
+ 	struct pci_driver *driver;
+ 	enum pci_ers_result new_result;
  
- #define AA_ERROR(fmt, args...)						\
+-	pci_lock_rescan_remove();
+ 	pdev = edev->pdev;
+ 	if (pdev)
+ 		get_device(&pdev->dev);
+-	pci_unlock_rescan_remove();
+ 	if (!pdev) {
+ 		eeh_edev_info(edev, "no device");
++		*result = PCI_ERS_RESULT_DISCONNECT;
+ 		return;
+ 	}
+ 	device_lock(&pdev->dev);
+@@ -304,8 +303,9 @@ static void eeh_pe_report(const char *name, struct eeh_pe *root,
+ 	struct eeh_dev *edev, *tmp;
+ 
+ 	pr_info("EEH: Beginning: '%s'\n", name);
+-	eeh_for_each_pe(root, pe) eeh_pe_for_each_dev(pe, edev, tmp)
+-		eeh_pe_report_edev(edev, fn, result);
++	eeh_for_each_pe(root, pe)
++		eeh_pe_for_each_dev(pe, edev, tmp)
++			eeh_pe_report_edev(edev, fn, result);
+ 	if (result)
+ 		pr_info("EEH: Finished:'%s' with aggregate recovery state:'%s'\n",
+ 			name, pci_ers_result_name(*result));
+@@ -383,6 +383,8 @@ static void eeh_dev_restore_state(struct eeh_dev *edev, void *userdata)
+ 	if (!edev)
+ 		return;
+ 
++	pci_lock_rescan_remove();
++
+ 	/*
+ 	 * The content in the config space isn't saved because
+ 	 * the blocked config space on some adapters. We have
+@@ -393,14 +395,19 @@ static void eeh_dev_restore_state(struct eeh_dev *edev, void *userdata)
+ 		if (list_is_last(&edev->entry, &edev->pe->edevs))
+ 			eeh_pe_restore_bars(edev->pe);
+ 
++		pci_unlock_rescan_remove();
+ 		return;
+ 	}
+ 
+ 	pdev = eeh_dev_to_pci_dev(edev);
+-	if (!pdev)
++	if (!pdev) {
++		pci_unlock_rescan_remove();
+ 		return;
++	}
+ 
+ 	pci_restore_state(pdev);
++
++	pci_unlock_rescan_remove();
+ }
+ 
+ /**
+@@ -647,9 +654,7 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	if (any_passed || driver_eeh_aware || (pe->type & EEH_PE_VF)) {
+ 		eeh_pe_dev_traverse(pe, eeh_rmv_device, rmv_data);
+ 	} else {
+-		pci_lock_rescan_remove();
+ 		pci_hp_remove_devices(bus);
+-		pci_unlock_rescan_remove();
+ 	}
+ 
+ 	/*
+@@ -665,8 +670,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	if (rc)
+ 		return rc;
+ 
+-	pci_lock_rescan_remove();
+-
+ 	/* Restore PE */
+ 	eeh_ops->configure_bridge(pe);
+ 	eeh_pe_restore_bars(pe);
+@@ -674,7 +677,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	/* Clear frozen state */
+ 	rc = eeh_clear_pe_frozen_state(pe, false);
+ 	if (rc) {
+-		pci_unlock_rescan_remove();
+ 		return rc;
+ 	}
+ 
+@@ -709,7 +711,6 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
+ 	pe->tstamp = tstamp;
+ 	pe->freeze_count = cnt;
+ 
+-	pci_unlock_rescan_remove();
+ 	return 0;
+ }
+ 
+@@ -843,10 +844,13 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
+ 		{LIST_HEAD_INIT(rmv_data.removed_vf_list), 0};
+ 	int devices = 0;
+ 
++	pci_lock_rescan_remove();
++
+ 	bus = eeh_pe_bus_get(pe);
+ 	if (!bus) {
+ 		pr_err("%s: Cannot find PCI bus for PHB#%x-PE#%x\n",
+ 			__func__, pe->phb->global_number, pe->addr);
++		pci_unlock_rescan_remove();
+ 		return;
+ 	}
+ 
+@@ -1094,10 +1098,15 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
+ 		eeh_pe_state_clear(pe, EEH_PE_PRI_BUS, true);
+ 		eeh_pe_dev_mode_mark(pe, EEH_DEV_REMOVED);
+ 
+-		pci_lock_rescan_remove();
+-		pci_hp_remove_devices(bus);
+-		pci_unlock_rescan_remove();
++		bus = eeh_pe_bus_get(pe);
++		if (bus)
++			pci_hp_remove_devices(bus);
++		else
++			pr_err("%s: PCI bus for PHB#%x-PE#%x disappeared\n",
++				__func__, pe->phb->global_number, pe->addr);
++
+ 		/* The passed PE should no longer be used */
++		pci_unlock_rescan_remove();
+ 		return;
+ 	}
+ 
+@@ -1114,6 +1123,8 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
+ 			eeh_clear_slot_attention(edev->pdev);
+ 
+ 	eeh_pe_state_clear(pe, EEH_PE_RECOVERING, true);
++
++	pci_unlock_rescan_remove();
+ }
+ 
+ /**
+@@ -1132,6 +1143,7 @@ void eeh_handle_special_event(void)
+ 	unsigned long flags;
+ 	int rc;
+ 
++	pci_lock_rescan_remove();
+ 
+ 	do {
+ 		rc = eeh_ops->next_error(&pe);
+@@ -1171,10 +1183,12 @@ void eeh_handle_special_event(void)
+ 
+ 			break;
+ 		case EEH_NEXT_ERR_NONE:
++			pci_unlock_rescan_remove();
+ 			return;
+ 		default:
+ 			pr_warn("%s: Invalid value %d from next_error()\n",
+ 				__func__, rc);
++			pci_unlock_rescan_remove();
+ 			return;
+ 		}
+ 
+@@ -1186,7 +1200,9 @@ void eeh_handle_special_event(void)
+ 		if (rc == EEH_NEXT_ERR_FROZEN_PE ||
+ 		    rc == EEH_NEXT_ERR_FENCED_PHB) {
+ 			eeh_pe_state_mark(pe, EEH_PE_RECOVERING);
++			pci_unlock_rescan_remove();
+ 			eeh_handle_normal_event(pe);
++			pci_lock_rescan_remove();
+ 		} else {
+ 			eeh_for_each_pe(pe, tmp_pe)
+ 				eeh_pe_for_each_dev(tmp_pe, edev, tmp_edev)
+@@ -1199,7 +1215,6 @@ void eeh_handle_special_event(void)
+ 				eeh_report_failure, NULL);
+ 			eeh_set_channel_state(pe, pci_channel_io_perm_failure);
+ 
+-			pci_lock_rescan_remove();
+ 			list_for_each_entry(hose, &hose_list, list_node) {
+ 				phb_pe = eeh_phb_pe_get(hose);
+ 				if (!phb_pe ||
+@@ -1218,7 +1233,6 @@ void eeh_handle_special_event(void)
+ 				}
+ 				pci_hp_remove_devices(bus);
+ 			}
+-			pci_unlock_rescan_remove();
+ 		}
+ 
+ 		/*
+@@ -1228,4 +1242,6 @@ void eeh_handle_special_event(void)
+ 		if (rc == EEH_NEXT_ERR_DEAD_IOC)
+ 			break;
+ 	} while (rc != EEH_NEXT_ERR_NONE);
++
++	pci_unlock_rescan_remove();
+ }
+diff --git a/arch/powerpc/kernel/eeh_pe.c b/arch/powerpc/kernel/eeh_pe.c
+index d283d281d28e..e740101fadf3 100644
+--- a/arch/powerpc/kernel/eeh_pe.c
++++ b/arch/powerpc/kernel/eeh_pe.c
+@@ -671,10 +671,12 @@ static void eeh_bridge_check_link(struct eeh_dev *edev)
+ 	eeh_ops->write_config(edev, cap + PCI_EXP_LNKCTL, 2, val);
+ 
+ 	/* Check link */
+-	if (!edev->pdev->link_active_reporting) {
+-		eeh_edev_dbg(edev, "No link reporting capability\n");
+-		msleep(1000);
+-		return;
++	if (edev->pdev) {
++		if (!edev->pdev->link_active_reporting) {
++			eeh_edev_dbg(edev, "No link reporting capability\n");
++			msleep(1000);
++			return;
++		}
+ 	}
+ 
+ 	/* Wait the link is up until timeout (5s) */
 -- 
 2.39.5
 
