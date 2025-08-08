@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190E927FB37;
-	Fri,  8 Aug 2025 17:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD54E1DE4EC;
+	Fri,  8 Aug 2025 17:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754674915; cv=none; b=MIU75HsimrS9s6tvpjouSCt/PKWaPNWF187nNtdnJEJmr6LIOa0HwnffMwF2SHCw4KNKJh7U5kKyrd8l8oXz9+CcWWJ25UPgvZzj6StMjZpIDJMNfSpcLLbJ6pRwCL4YgJ3vW0M7SD0zNMiZtM3tHJSk1UbKKsrIE7hkUrroJ0k=
+	t=1754674916; cv=none; b=gDqzU7W/3uktVFjQMp8bDPwC6hw0c5Vjo2bdHjZVbTEQViawVa+SyTc0ASp6dYqx606rvg7EnxH+sasY7hLcdg9iyvwzlrTolE4+8OjhZrUQv3sERjxTHSbYZ6F9vyUlNmChbXaBSQ0irc0QF120gLpY9XQcwKnDVjauMCnzMPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754674915; c=relaxed/simple;
-	bh=OrNO/MW+Q9zgW84uqpK2ZHIApda6IPbI7dmJd4IKDz4=;
+	s=arc-20240116; t=1754674916; c=relaxed/simple;
+	bh=kEWlOktnyZwjJKz+hmcULA3mO6mETSHAMPCejDarDQs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=l7Qt4fO8cq4b+2mzBMwKJw/Q67s8s+AFHcMuNJWU8JyvevCP1vmHFdZcVtS7eYbV5peYo8MnqGdHgwd/Sft6sDRyl05twHAVNSeIM7qhc7L1nRw28IfuYtZ7/wn024PTTnjLRESuN5zzUh+tLyM2yJyxZYByzF5FbQXSZJbfuAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dbVglvpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SsgQ+qfVMisIc6/bmFiDL+Aw6NFa05XAL+GeC9Ve8jFVf4zJBUrbmFLALuCnTZvnXj+z9tPfue39M01kSCWK0gN938JtdsSOGCZkmX4blBG+OZ5QpSTUF/bXK08waEwiYYs2hrYMc+e3n8deIFMGmB11YRh0dVIdCcBZSwW6D2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mUhFzcCD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dbVglvpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87259C4CEED;
-	Fri,  8 Aug 2025 17:41:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mUhFzcCD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3688BC4CEF6;
+	Fri,  8 Aug 2025 17:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754674914;
-	bh=OrNO/MW+Q9zgW84uqpK2ZHIApda6IPbI7dmJd4IKDz4=;
+	s=k20201202; t=1754674916;
+	bh=kEWlOktnyZwjJKz+hmcULA3mO6mETSHAMPCejDarDQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbVglvpaIXuQhCDS1Fg7X7xFuGHaF/LDkhYDUBhdBZ9WC6MAA52CTUjdklHPWYph+
-	 StHETMZ48qIztL3GzbBWrfbt6XD4Jw+ghh6NReL/oMpMBMaK2nWjxYDxI0aRdQQUkD
-	 htZOiKiWs69zgoiYAdirnDfHDO8dcPgc4TPQVsVXGlcWB0Rax50UO3MJK8I63jdfUT
-	 exHcaRs94m03iCfWCLnn8vC7pXLJkq3YjwgWDtNmXHAAe2yXK9IkZcRXCOGGt6UHMx
-	 A/qIdZqCxZO6/hTVS/65LfX2MjwzFfi5B8Q0H5cARCtov+Ph9/khUlaOWGNKi1Fmkt
-	 9glyzjYGBo8/w==
+	b=mUhFzcCD7G2QkXOE766f0sw9V9xk2OXkVNNS0YeAqdn7rk/+TPE+yl5I1L7m78wgd
+	 aadLNJqrBQuuo8/lSY1mhXmI/P8QgYR0XPqQsof1x2s1ZczYRxKKs+CsboPvxHI8we
+	 sG/KQz9KZL6hcmLkMB/Svw7c25DcNjBdLzUytLgVfFyhx47VUkbAELOkxzqfmkcOvP
+	 qGeTADVj0YQkU1Xd1T9enDNGJHbAI4rUWbXypxPGWjWcC7g66s75cY8OxIQpn6ctZ9
+	 bP8/i2nVvjJc6ZVA6Ellu6b3iLY102YwatT8Yi7hNa0RzQg6EvtG/0SI01a49WVqRg
+	 wVNokwX7LvIEA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Ogness <john.ogness@linutronix.de>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.16-6.12] printk: nbcon: Allow reacquire during panic
-Date: Fri,  8 Aug 2025 13:41:44 -0400
-Message-Id: <20250808174146.1272242-4-sashal@kernel.org>
+Cc: Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-f2fs-devel@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.16] f2fs: handle nat.blkaddr corruption in f2fs_get_node_info()
+Date: Fri,  8 Aug 2025 13:41:45 -0400
+Message-Id: <20250808174146.1272242-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250808174146.1272242-1-sashal@kernel.org>
 References: <20250808174146.1272242-1-sashal@kernel.org>
@@ -50,278 +50,173 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 571c1ea91a73db56bd94054fabecd0f070dc90db ]
+[ Upstream commit 1773f63d108b1b9b9d053d8c95f8300c556f93b8 ]
 
-If a console printer is interrupted during panic, it will never
-be able to reacquire ownership in order to perform and cleanup.
-That in itself is not a problem, since the non-panic CPU will
-simply quiesce in an endless loop within nbcon_reacquire_nobuf().
+F2FS-fs (dm-55): access invalid blkaddr:972878540
+Call trace:
+ dump_backtrace+0xec/0x128
+ show_stack+0x18/0x28
+ dump_stack_lvl+0x40/0x88
+ dump_stack+0x18/0x24
+ __f2fs_is_valid_blkaddr+0x360/0x3b4
+ f2fs_is_valid_blkaddr+0x10/0x20
+ f2fs_get_node_info+0x21c/0x60c
+ __write_node_page+0x15c/0x734
+ f2fs_sync_node_pages+0x4f8/0x700
+ f2fs_write_checkpoint+0x4a8/0x99c
+ __checkpoint_and_complete_reqs+0x7c/0x20c
+ issue_checkpoint_thread+0x4c/0xd8
+ kthread+0x11c/0x1b0
+ ret_from_fork+0x10/0x20
 
-However, in this state, platforms that do not support a true NMI
-to interrupt the quiesced CPU will not be able to shutdown that
-CPU from within panic(). This then causes problems for such as
-being unable to load and run a kdump kernel.
+If nat.blkaddr is corrupted, during checkpoint, f2fs_sync_node_pages()
+will loop to flush node page w/ corrupted nat.blkaddr.
 
-Fix this by allowing non-panic CPUs to reacquire ownership using
-a direct acquire. Then the non-panic CPUs can successfullyl exit
-the nbcon_reacquire_nobuf() loop and the console driver can
-perform any necessary cleanup. But more importantly, the CPU is
-no longer quiesced and is free to process any interrupts
-necessary for panic() to shutdown the CPU.
+Although, it tags SBI_NEED_FSCK, checkpoint can not persist it due
+to deadloop.
 
-All other forms of acquire are still not allowed for non-panic
-CPUs since it is safer to have them avoid gaining console
-ownership that is not strictly necessary.
+Let's call f2fs_handle_error(, ERROR_INCONSISTENT_NAT) to record such
+error into superblock, it expects fsck can detect the error and repair
+inconsistent nat.blkaddr after device reboot.
 
-Reported-by: Michael Kelley <mhklinux@outlook.com>
-Closes: https://lore.kernel.org/r/SN6PR02MB4157A4C5E8CB219A75263A17D46DA@SN6PR02MB4157.namprd02.prod.outlook.com
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20250606185549.900611-1-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Note that, let's add sanity check in f2fs_get_node_info() to detect
+in-memory nat.blkaddr inconsistency, but only if CONFIG_F2FS_CHECK_FS
+is enabled.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
+
+Based on my analysis of the commit, here is my assessment:
 
 **Backport Status: YES**
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-## Bug Fix for Critical System Functionality
+1. **Critical Bug Fix**: This fixes a **deadloop/infinite loop
+   condition** that can occur during checkpoint operations when NAT
+   (Node Address Table) entries have corrupted block addresses. The
+   commit message clearly shows a real-world stack trace where
+   `f2fs_sync_node_pages()` enters an infinite loop trying to flush
+   nodes with corrupted nat.blkaddr during checkpoint.
 
-1. **Fixes a real bug affecting kdump functionality**: The commit
-   addresses a specific problem where platforms without true NMI support
-   cannot properly shutdown CPUs during panic, preventing kdump kernels
-   from loading. This is a critical debugging and recovery feature that
-   many production systems rely on.
+2. **Data Integrity and System Availability**: The deadloop prevents the
+   checkpoint from completing, which means:
+   - The filesystem cannot persist the `SBI_NEED_FSCK` flag that would
+     trigger repair on next mount
+   - The system may hang or become unresponsive during checkpoint
+     operations
+   - Filesystem metadata corruption cannot be properly handled
 
-2. **Clear regression/breakage scenario**: The commit message clearly
-   describes how the current behavior causes non-panic CPUs to get stuck
-   in an endless loop in `nbcon_reacquire_nobuf()`, preventing proper
-   CPU shutdown during panic. This is a functional regression that
-   affects system reliability.
+3. **Small and Contained Fix**: The patch is relatively small (21
+   insertions, 8 deletions) and focused on a single function
+   `f2fs_get_node_info()`. The changes are:
+   - Move the sanity check earlier in the code path
+   - Add proper error handling with `f2fs_handle_error()` and
+     `ERROR_INCONSISTENT_NAT`
+   - Return `-EFSCORRUPTED` instead of `-EFAULT` for better error
+     semantics
+   - Add conditional caching logic to avoid caching corrupted entries
 
-## Safe and Contained Fix
+4. **Low Risk of Regression**:
+   - The main sanity check logic already existed but was incomplete
+   - The new error handling path only triggers when corruption is
+     detected
+   - The CONFIG_F2FS_CHECK_FS conditional check adds extra validation
+     only when debugging is enabled
+   - The change doesn't alter normal operation flow for valid NAT
+     entries
 
-3. **Minimal and targeted change**: The fix is confined to the nbcon
-   (new console) subsystem, specifically modifying only the acquire
-   logic to allow reacquire during panic. The diff shows only 41
-   insertions and 22 deletions, mostly adding a `is_reacquire` parameter
-   to existing functions.
+5. **Follows Stable Rules**: This fix meets stable kernel criteria:
+   - Fixes a real bug that users have hit (stack trace provided)
+   - The fix is minimal and targeted
+   - No new features are introduced
+   - The risk of regression is low
 
-4. **No architectural changes**: The commit doesn't introduce new
-   features or change the fundamental design. It merely adjusts the
-   existing acquire logic to handle a specific edge case during panic.
+6. **Corruption Handling**: The commit properly handles filesystem
+   corruption by:
+   - Setting the `SBI_NEED_FSCK` flag
+   - Recording the error in the superblock via `f2fs_handle_error()`
+   - Providing detailed error logging for debugging
+   - Returning appropriate error codes to prevent further damage
 
-5. **Conservative approach**: The fix maintains safety by:
-   - Only allowing direct reacquire for non-panic CPUs (not all acquire
-     types)
-   - Preserving the check for `unsafe_takeover` state
-   - Keeping all other panic-time restrictions in place
+The deadloop condition this fixes is particularly severe as it can make
+the system unresponsive and prevent proper error recovery, making this
+an important candidate for stable backporting.
 
-## Well-Tested and Reviewed
+ fs/f2fs/node.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-6. **Proper testing and review**: The commit has been:
-   - Reported by Michael Kelley with a specific reproducer
-   - Reviewed by Petr Mladek (printk maintainer)
-   - Tested by the original reporter
-   - Already included upstream (commit
-     571c1ea91a73db56bd94054fabecd0f070dc90db)
-
-## Code Analysis
-
-The key changes in `nbcon_context_try_acquire_direct()`:
-```c
--static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
-- struct nbcon_state *cur)
-+static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
-+                                           struct nbcon_state *cur,
-bool is_reacquire)
-```
-
-And the critical logic change:
-```c
--if (other_cpu_in_panic())
-+if (other_cpu_in_panic() &&
-+    (!is_reacquire || cur->unsafe_takeover)) {
-     return -EPERM;
-+}
-```
-
-This allows reacquire during panic only when it's a genuine reacquire
-attempt and no unsafe takeover has occurred, which is a safe and
-necessary exception to handle the described bug.
-
-The commit follows stable kernel rules by fixing an important bug with
-minimal risk and without introducing new features.
-
- kernel/printk/nbcon.c | 63 ++++++++++++++++++++++++++++---------------
- 1 file changed, 41 insertions(+), 22 deletions(-)
-
-diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
-index fd12efcc4aed..e7a3af81b173 100644
---- a/kernel/printk/nbcon.c
-+++ b/kernel/printk/nbcon.c
-@@ -214,8 +214,9 @@ static void nbcon_seq_try_update(struct nbcon_context *ctxt, u64 new_seq)
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index bfe104db284e..2fd287f2bca4 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -555,8 +555,8 @@ int f2fs_get_node_info(struct f2fs_sb_info *sbi, nid_t nid,
+ 	struct f2fs_nat_entry ne;
+ 	struct nat_entry *e;
+ 	pgoff_t index;
+-	block_t blkaddr;
+ 	int i;
++	bool need_cache = true;
  
- /**
-  * nbcon_context_try_acquire_direct - Try to acquire directly
-- * @ctxt:	The context of the caller
-- * @cur:	The current console state
-+ * @ctxt:		The context of the caller
-+ * @cur:		The current console state
-+ * @is_reacquire:	This acquire is a reacquire
-  *
-  * Acquire the console when it is released. Also acquire the console when
-  * the current owner has a lower priority and the console is in a safe state.
-@@ -225,17 +226,17 @@ static void nbcon_seq_try_update(struct nbcon_context *ctxt, u64 new_seq)
-  *
-  * Errors:
-  *
-- *	-EPERM:		A panic is in progress and this is not the panic CPU.
-- *			Or the current owner or waiter has the same or higher
-- *			priority. No acquire method can be successful in
-- *			this case.
-+ *	-EPERM:		A panic is in progress and this is neither the panic
-+ *			CPU nor is this a reacquire. Or the current owner or
-+ *			waiter has the same or higher priority. No acquire
-+ *			method can be successful in these cases.
-  *
-  *	-EBUSY:		The current owner has a lower priority but the console
-  *			in an unsafe state. The caller should try using
-  *			the handover acquire method.
-  */
- static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
--					    struct nbcon_state *cur)
-+					    struct nbcon_state *cur, bool is_reacquire)
- {
- 	unsigned int cpu = smp_processor_id();
- 	struct console *con = ctxt->console;
-@@ -243,14 +244,20 @@ static int nbcon_context_try_acquire_direct(struct nbcon_context *ctxt,
- 
- 	do {
- 		/*
--		 * Panic does not imply that the console is owned. However, it
--		 * is critical that non-panic CPUs during panic are unable to
--		 * acquire ownership in order to satisfy the assumptions of
--		 * nbcon_waiter_matches(). In particular, the assumption that
--		 * lower priorities are ignored during panic.
-+		 * Panic does not imply that the console is owned. However,
-+		 * since all non-panic CPUs are stopped during panic(), it
-+		 * is safer to have them avoid gaining console ownership.
-+		 *
-+		 * If this acquire is a reacquire (and an unsafe takeover
-+		 * has not previously occurred) then it is allowed to attempt
-+		 * a direct acquire in panic. This gives console drivers an
-+		 * opportunity to perform any necessary cleanup if they were
-+		 * interrupted by the panic CPU while printing.
- 		 */
--		if (other_cpu_in_panic())
-+		if (other_cpu_in_panic() &&
-+		    (!is_reacquire || cur->unsafe_takeover)) {
- 			return -EPERM;
+ 	ni->flag = 0;
+ 	ni->nid = nid;
+@@ -569,6 +569,10 @@ int f2fs_get_node_info(struct f2fs_sb_info *sbi, nid_t nid,
+ 		ni->blk_addr = nat_get_blkaddr(e);
+ 		ni->version = nat_get_version(e);
+ 		f2fs_up_read(&nm_i->nat_tree_lock);
++		if (IS_ENABLED(CONFIG_F2FS_CHECK_FS)) {
++			need_cache = false;
++			goto sanity_check;
 +		}
- 
- 		if (ctxt->prio <= cur->prio || ctxt->prio <= cur->req_prio)
- 			return -EPERM;
-@@ -301,8 +308,9 @@ static bool nbcon_waiter_matches(struct nbcon_state *cur, int expected_prio)
- 	 * Event #1 implies this context is EMERGENCY.
- 	 * Event #2 implies the new context is PANIC.
- 	 * Event #3 occurs when panic() has flushed the console.
--	 * Events #4 and #5 are not possible due to the other_cpu_in_panic()
--	 * check in nbcon_context_try_acquire_direct().
-+	 * Event #4 occurs when a non-panic CPU reacquires.
-+	 * Event #5 is not possible due to the other_cpu_in_panic() check
-+	 *          in nbcon_context_try_acquire_handover().
- 	 */
- 
- 	return (cur->req_prio == expected_prio);
-@@ -431,6 +439,16 @@ static int nbcon_context_try_acquire_handover(struct nbcon_context *ctxt,
- 	WARN_ON_ONCE(ctxt->prio <= cur->prio || ctxt->prio <= cur->req_prio);
- 	WARN_ON_ONCE(!cur->unsafe);
- 
-+	/*
-+	 * Panic does not imply that the console is owned. However, it
-+	 * is critical that non-panic CPUs during panic are unable to
-+	 * wait for a handover in order to satisfy the assumptions of
-+	 * nbcon_waiter_matches(). In particular, the assumption that
-+	 * lower priorities are ignored during panic.
-+	 */
-+	if (other_cpu_in_panic())
-+		return -EPERM;
-+
- 	/* Handover is not possible on the same CPU. */
- 	if (cur->cpu == cpu)
- 		return -EBUSY;
-@@ -558,7 +576,8 @@ static struct printk_buffers panic_nbcon_pbufs;
- 
- /**
-  * nbcon_context_try_acquire - Try to acquire nbcon console
-- * @ctxt:	The context of the caller
-+ * @ctxt:		The context of the caller
-+ * @is_reacquire:	This acquire is a reacquire
-  *
-  * Context:	Under @ctxt->con->device_lock() or local_irq_save().
-  * Return:	True if the console was acquired. False otherwise.
-@@ -568,7 +587,7 @@ static struct printk_buffers panic_nbcon_pbufs;
-  * in an unsafe state. Otherwise, on success the caller may assume
-  * the console is not in an unsafe state.
-  */
--static bool nbcon_context_try_acquire(struct nbcon_context *ctxt)
-+static bool nbcon_context_try_acquire(struct nbcon_context *ctxt, bool is_reacquire)
- {
- 	unsigned int cpu = smp_processor_id();
- 	struct console *con = ctxt->console;
-@@ -577,7 +596,7 @@ static bool nbcon_context_try_acquire(struct nbcon_context *ctxt)
- 
- 	nbcon_state_read(con, &cur);
- try_again:
--	err = nbcon_context_try_acquire_direct(ctxt, &cur);
-+	err = nbcon_context_try_acquire_direct(ctxt, &cur, is_reacquire);
- 	if (err != -EBUSY)
- 		goto out;
- 
-@@ -913,7 +932,7 @@ void nbcon_reacquire_nobuf(struct nbcon_write_context *wctxt)
- {
- 	struct nbcon_context *ctxt = &ACCESS_PRIVATE(wctxt, ctxt);
- 
--	while (!nbcon_context_try_acquire(ctxt))
-+	while (!nbcon_context_try_acquire(ctxt, true))
- 		cpu_relax();
- 
- 	nbcon_write_context_set_buf(wctxt, NULL, 0);
-@@ -1101,7 +1120,7 @@ static bool nbcon_emit_one(struct nbcon_write_context *wctxt, bool use_atomic)
- 		cant_migrate();
+ 		return 0;
  	}
  
--	if (!nbcon_context_try_acquire(ctxt))
-+	if (!nbcon_context_try_acquire(ctxt, false))
- 		goto out;
+@@ -594,7 +598,7 @@ int f2fs_get_node_info(struct f2fs_sb_info *sbi, nid_t nid,
+ 	up_read(&curseg->journal_rwsem);
+ 	if (i >= 0) {
+ 		f2fs_up_read(&nm_i->nat_tree_lock);
+-		goto cache;
++		goto sanity_check;
+ 	}
  
- 	/*
-@@ -1486,7 +1505,7 @@ static int __nbcon_atomic_flush_pending_con(struct console *con, u64 stop_seq,
- 	ctxt->prio			= nbcon_get_default_prio();
- 	ctxt->allow_unsafe_takeover	= allow_unsafe_takeover;
+ 	/* Fill node_info from nat page */
+@@ -609,14 +613,23 @@ int f2fs_get_node_info(struct f2fs_sb_info *sbi, nid_t nid,
+ 	ne = nat_blk->entries[nid - start_nid];
+ 	node_info_from_raw_nat(ni, &ne);
+ 	f2fs_folio_put(folio, true);
+-cache:
+-	blkaddr = le32_to_cpu(ne.block_addr);
+-	if (__is_valid_data_blkaddr(blkaddr) &&
+-		!f2fs_is_valid_blkaddr(sbi, blkaddr, DATA_GENERIC_ENHANCE))
+-		return -EFAULT;
++sanity_check:
++	if (__is_valid_data_blkaddr(ni->blk_addr) &&
++		!f2fs_is_valid_blkaddr(sbi, ni->blk_addr,
++					DATA_GENERIC_ENHANCE)) {
++		set_sbi_flag(sbi, SBI_NEED_FSCK);
++		f2fs_err_ratelimited(sbi,
++			"f2fs_get_node_info of %pS: inconsistent nat entry, "
++			"ino:%u, nid:%u, blkaddr:%u, ver:%u, flag:%u",
++			__builtin_return_address(0),
++			ni->ino, ni->nid, ni->blk_addr, ni->version, ni->flag);
++		f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
++		return -EFSCORRUPTED;
++	}
  
--	if (!nbcon_context_try_acquire(ctxt))
-+	if (!nbcon_context_try_acquire(ctxt, false))
- 		return -EPERM;
+ 	/* cache nat entry */
+-	cache_nat_entry(sbi, nid, &ne);
++	if (need_cache)
++		cache_nat_entry(sbi, nid, &ne);
+ 	return 0;
+ }
  
- 	while (nbcon_seq_read(con) < stop_seq) {
-@@ -1762,7 +1781,7 @@ bool nbcon_device_try_acquire(struct console *con)
- 	ctxt->console	= con;
- 	ctxt->prio	= NBCON_PRIO_NORMAL;
- 
--	if (!nbcon_context_try_acquire(ctxt))
-+	if (!nbcon_context_try_acquire(ctxt, false))
- 		return false;
- 
- 	if (!nbcon_context_enter_unsafe(ctxt))
 -- 
 2.39.5
 
