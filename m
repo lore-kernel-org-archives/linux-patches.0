@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5869D145329;
-	Fri,  8 Aug 2025 15:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7447A145329;
+	Fri,  8 Aug 2025 15:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754667062; cv=none; b=D7kSEFiVG3h6VJQNaM7K/cc3bGJ4aGolu5hXJL4zTOirR/y5xudPYg27cYCd0rCDqp6AYFy8qRicomkk+nM6zDlOS+fYlj4DCLL7lmEp2UcwJOEaRT2wFnm4+kVqDS+fA2jghb4E0SwCnkt7fv3eVVchLAFxmg26zX9DpmmGNDU=
+	t=1754667064; cv=none; b=Iib6JFZHgDjf8gFVtOk7fj/KT+RwXXry9M3SN0l6hRwBIB7EBV0i2JtRhmiHDbT+l9AF2X9zfVDNZjI3ePSre2oTi0AsBYiiuR2kG613go3ejK1qBwLDIgIgtLeSpHAThRMCsulMVkqJc5N/s5ijomxgSypNd3byAYtG61NeKm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754667062; c=relaxed/simple;
-	bh=wt0FNFAHEcf0j/VNLa2xVguUWhtRBeXnNUOEOW+wyN8=;
+	s=arc-20240116; t=1754667064; c=relaxed/simple;
+	bh=ST4oh74nXSw2f0tanvoma6I/+x9/jUIiZOYhL7iEFTM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ntpn1UepP2yOwdnWscEYJCmhyzqN4eHCRbQJX3dTvWyOET++6iLzrs3LBjlzo6VlCezEpUZY6cTTSkr0Zy5wOzSugHBtoYnWY8U6Z7g9HhUxo5VIleb1E6na4NuJepSQlO+v07SFE18AphU95qpSWhv6YWt9meCsS75jZOUH7A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PihYqGlk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cXqiDBsCDAdb7nuO3jdYVnbeYJP8aqd8Zr6R83gmg0NcODWw771hPnpPOH513I3Pk/2SsU5H/yqsMgLqxSqWeTgbaPx2NJyPaq6f74O7Wf3SuBlU7naqBc/h0CiBL6U6yvVxGlzYF7++68c/BGsXwayHvp0Rl1KLzU+QTqubpik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jc2ubues; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PihYqGlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAE4C4CEF6;
-	Fri,  8 Aug 2025 15:31:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jc2ubues"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC35C4CEED;
+	Fri,  8 Aug 2025 15:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754667061;
-	bh=wt0FNFAHEcf0j/VNLa2xVguUWhtRBeXnNUOEOW+wyN8=;
+	s=k20201202; t=1754667064;
+	bh=ST4oh74nXSw2f0tanvoma6I/+x9/jUIiZOYhL7iEFTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PihYqGlktwwRoha9pks4oShj6KwQF4YV4GmScSxdDlTpYrxvDkSi8gJwQ9XCtqpL7
-	 ILcywGWzObhfS0e8q83eFsHfw0wrI+ON4sOMhcM2FSgbwFkceJRPdIo5pUCV7hdpd9
-	 mumG59GhHjta5iREjcK1ARvCoTIxMoS0vpdiqNGNJiAYonYa0Je4aDRf3+VLkurEc9
-	 eIEfDERovlAtco/0oqJzAMOWkSf/5XPth6qyVwg4nqGz9wdlhXsw+ub5C3Cch2zVtj
-	 t/pz2HftufUcWQnAQPudhsLUQV5uj02KJaP4DttKOhEsrd8Soma62/yARLnCMBX8aq
-	 7BJcF2tfzwFMg==
+	b=Jc2ubuesfByhEv5TceChFPJpOeMvEh5a/vvP1Hks4g/4i7FkXXcI+x/szCf0/D21R
+	 z5M1pB5uofUj1vo4ELMwPYt3rEf9nnOtEOSEUnaBedtDx6DnApp3D3faSN5Ih2iYVv
+	 apClDgmAlBgNo2Pva8Aoz5zOrrvhDKoeOCvp7RyueP78DpM0oqsLGvzq+tRXGKk33H
+	 n2ZBaT+I66mobVpxWh2yO69hjyNtkKvEUPYD2g78efgYVCvAsQt29+jD9BhKGBTYSE
+	 UgLeb41gVIDq1Rsk1kw2pBIWrZLK8UoHBG1kIYiNrPJYlLzNyXX3nn3N6v3pGb0Yei
+	 p4ZSKAWaN3+Uw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-i3c@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.16-5.4] i3c: don't fail if GETHDRCAP is unsupported
-Date: Fri,  8 Aug 2025 11:30:43 -0400
-Message-Id: <20250808153054.1250675-3-sashal@kernel.org>
+	agk@redhat.com,
+	snitzer@kernel.org,
+	dm-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.16-5.10] dm-mpath: don't print the "loaded" message if registering fails
+Date: Fri,  8 Aug 2025 11:30:44 -0400
+Message-Id: <20250808153054.1250675-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250808153054.1250675-1-sashal@kernel.org>
 References: <20250808153054.1250675-1-sashal@kernel.org>
@@ -51,94 +51,148 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 447270cdb41b1c8c3621bb14b93a6749f942556e ]
+[ Upstream commit 6e11952a6abc4641dc8ae63f01b318b31b44e8db ]
 
-'I3C_BCR_HDR_CAP' is still spec v1.0 and has been renamed to 'advanced
-capabilities' in v1.1 onwards. The ST pressure sensor LPS22DF does not
-have HDR, but has the 'advanced cap' bit set. The core still wants to
-get additional information using the CCC 'GETHDRCAP' (or GETCAPS in v1.1
-onwards). Not all controllers support this CCC and will notify the upper
-layers about it. For instantiating the device, we can ignore this
-unsupported CCC as standard communication will work. Without this patch,
-the device will not be instantiated at all.
+If dm_register_path_selector, don't print the "version X loaded" message.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250704204524.6124-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the surrounding code, here's my
-assessment:
-
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit is a clear candidate for backporting to stable kernel trees.
+Here's my extensive analysis:
 
-1. **Fixes a real bug that prevents device instantiation**: The commit
-   message clearly states that "Without this patch, the device will not
-   be instantiated at all." This is a concrete functionality issue where
-   legitimate I3C devices (like the ST pressure sensor LPS22DF) cannot
-   be used with controllers that don't support the GETHDRCAP CCC
-   command.
+## Bug Analysis
 
-2. **Small and contained fix**: The change is minimal - only 2 lines
-   changed:
-   - Line 1441: Changed from `if (ret)` to `if (ret && ret !=
-     -ENOTSUPP)`
-   - This allows the function to continue when GETHDRCAP returns
-     -ENOTSUPP instead of failing
+The commit fixes a logic error in the error handling of four device-
+mapper path selector modules. Looking at the code changes:
 
-3. **Clear regression prevention**: The fix prevents device
-   initialization failure for hardware combinations that should work.
-   The I3C spec evolved from v1.0 to v1.1, and this handles backward
-   compatibility gracefully.
+1. **Original buggy behavior**: When `dm_register_path_selector()` fails
+   (returns r < 0), the code would:
+   - Print "register failed" error message
+   - **Continue to print "version X loaded" message**
+   - Return the error code
 
-4. **No architectural changes**: This is a simple error handling
-   adjustment that doesn't change any core functionality or introduce
-   new features.
+2. **Fixed behavior**: When registration fails:
+   - Print "register failed" error message
+   - **Return immediately with the error code**
+   - Skip the misleading "loaded" message
 
-5. **Fixes interoperability issue**: The commit addresses a real-world
-   hardware compatibility problem between certain I3C controllers and
-   devices, which is exactly the type of bug that stable kernels should
-   fix.
+## Why This Should Be Backported
 
-6. **Low risk of regression**: The change only affects the error path
-   when GETHDRCAP fails with -ENOTSUPP. It doesn't change behavior for
-   successful cases or other error conditions.
+1. **Clear Bug Fix**: This is a straightforward bug fix that corrects
+   misleading log messages. When module registration fails, it
+   incorrectly reports success with "version X loaded".
 
-7. **Follows stable rules**:
-   - It's obviously correct (treats unsupported CCC as non-fatal)
-   - It's tiny (2-line change)
-   - Fixes one specific issue
-   - Fixes a real bug that prevents hardware from working
+2. **Small and Contained**: The fix is minimal - just adding an early
+   return statement in four similar init functions:
+   - `dm_hst_init()` in dm-ps-historical-service-time.c
+   - `dm_ql_init()` in dm-ps-queue-length.c
+   - `dm_rr_init()` in dm-ps-round-robin.c
+   - `dm_st_init()` in dm-ps-service-time.c
 
-The commit allows I3C device initialization to proceed even when the
-controller doesn't support the GETHDRCAP command, which is reasonable
-since HDR capabilities are optional and standard I3C communication will
-still work without them.
+3. **No Side Effects**: The change only affects error path behavior and
+   logging. It doesn't introduce new functionality or change any
+   successful operation paths.
 
- drivers/i3c/master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+4. **User-Visible Issue**: This fixes a user-visible problem where
+   system logs would incorrectly indicate a module loaded successfully
+   when it actually failed.
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index fd81871609d9..e53c69d24873 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1439,7 +1439,7 @@ static int i3c_master_retrieve_dev_info(struct i3c_dev_desc *dev)
+5. **Consistent Pattern**: All four files have the identical bug and
+   identical fix, showing this is a systematic issue that should be
+   addressed.
+
+6. **Low Risk**: The change is trivial - adding an early return on
+   error. There's virtually no risk of regression since:
+   - It only changes behavior when registration already failed
+   - The function already returns the error code at the end
+   - This just makes it return earlier without printing the misleading
+     message
+
+7. **Affects Core Subsystem**: Device-mapper is a critical storage
+   subsystem, and accurate error reporting is important for system
+   administrators debugging storage issues.
+
+The commit perfectly fits stable kernel criteria: it's a small, obvious
+fix for a real bug that affects users (through misleading log messages),
+with minimal risk of introducing new problems.
+
+ drivers/md/dm-ps-historical-service-time.c | 4 +++-
+ drivers/md/dm-ps-queue-length.c            | 4 +++-
+ drivers/md/dm-ps-round-robin.c             | 4 +++-
+ drivers/md/dm-ps-service-time.c            | 4 +++-
+ 4 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/md/dm-ps-historical-service-time.c b/drivers/md/dm-ps-historical-service-time.c
+index b49e10d76d03..2c8626a83de4 100644
+--- a/drivers/md/dm-ps-historical-service-time.c
++++ b/drivers/md/dm-ps-historical-service-time.c
+@@ -541,8 +541,10 @@ static int __init dm_hst_init(void)
+ {
+ 	int r = dm_register_path_selector(&hst_ps);
  
- 	if (dev->info.bcr & I3C_BCR_HDR_CAP) {
- 		ret = i3c_master_gethdrcap_locked(master, &dev->info);
--		if (ret)
-+		if (ret && ret != -ENOTSUPP)
- 			return ret;
- 	}
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " HST_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-queue-length.c b/drivers/md/dm-ps-queue-length.c
+index e305f05ad1e5..eb543e6431e0 100644
+--- a/drivers/md/dm-ps-queue-length.c
++++ b/drivers/md/dm-ps-queue-length.c
+@@ -260,8 +260,10 @@ static int __init dm_ql_init(void)
+ {
+ 	int r = dm_register_path_selector(&ql_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " QL_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-round-robin.c b/drivers/md/dm-ps-round-robin.c
+index d1745b123dc1..66a15ac0c22c 100644
+--- a/drivers/md/dm-ps-round-robin.c
++++ b/drivers/md/dm-ps-round-robin.c
+@@ -220,8 +220,10 @@ static int __init dm_rr_init(void)
+ {
+ 	int r = dm_register_path_selector(&rr_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " RR_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-service-time.c b/drivers/md/dm-ps-service-time.c
+index 969d31c40272..f8c43aecdb27 100644
+--- a/drivers/md/dm-ps-service-time.c
++++ b/drivers/md/dm-ps-service-time.c
+@@ -341,8 +341,10 @@ static int __init dm_st_init(void)
+ {
+ 	int r = dm_register_path_selector(&st_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " ST_VERSION " loaded");
  
 -- 
 2.39.5
