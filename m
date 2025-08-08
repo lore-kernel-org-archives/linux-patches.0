@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526D7284694;
-	Fri,  8 Aug 2025 15:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B5F284B51;
+	Fri,  8 Aug 2025 15:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754667066; cv=none; b=TLU6B65mVmMPEAWQzyRqTdnPeMgsPZWz0Xa45XwLlK9oIHgk/9NLFgV8kQ5x+IcIAC802FxTPSgoaQTBL8A5DwCYASl6J2L1nxfdTOgmg6Se6kyBituyRCF83WDRWc+LA97CFHr49MPeyd2xct6kHbFw5XL38Jea1UkyjiuUQR8=
+	t=1754667068; cv=none; b=cX2XiIOcDYzj+yVc2hqH6MYRasBeeXGiNyBLunZJYlE4dx6OGj3JpZdjzAjMX+L1zTf9vctAKx1ZJHaLwHFinegm+awKYe4H0w03t4xgjVhZo49y+yz0awcNGX8JPNstdnd4cjEb7BJLuMhRghLVGWDn1mfsvPtC8w4nKh4Oz2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754667066; c=relaxed/simple;
-	bh=aSv7IfuSV2DGNVTwjun7tcNqDuSb6Q6Tn95zAy0hwfs=;
+	s=arc-20240116; t=1754667068; c=relaxed/simple;
+	bh=uvXvdqCtcDLr9TJV+3JSLTg+Qsmj24HevLK5HBH2JNQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=It/EDM2EAj0wPHb8iw9RbgnhPShaGKbea+GPFXpR4Gi0B+lwsmMkyFVHxOzMJHzPFHQZVvTpyrI6IQVkXk9v/uer1f8rSxOwY2RzWlEkVbopAqz5Y3E17hFHJF/FGtk/UU3o/JoQV8DFfLp/wpQyrUfo3EP1bvcjNXs6aZWqb4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jxLYtShJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tu8pKGhzza5EisaMBMkbrdq2FEfAq3ivovTG8lPBkLHWp0fV0KKphna33/ASuL1w9bOQ6oahgQ7TVMEsrrZWCYjXNzic8kGrwL8Y+FOqQSNDikoSnhUGjDOyeEPEsJI/ylAjZ+1BD2kQwOPv1wy9wM38j5sc6sUmbX0CfDZskpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YtH5F5g7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jxLYtShJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45BDC4CEF4;
-	Fri,  8 Aug 2025 15:31:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YtH5F5g7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC29AC4CEED;
+	Fri,  8 Aug 2025 15:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754667066;
-	bh=aSv7IfuSV2DGNVTwjun7tcNqDuSb6Q6Tn95zAy0hwfs=;
+	s=k20201202; t=1754667068;
+	bh=uvXvdqCtcDLr9TJV+3JSLTg+Qsmj24HevLK5HBH2JNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxLYtShJXI5QEYTAaZCvGGOMhlejzdCmTy9XEMqtOJtt++4Cw0dbM7n40RRLfRtsi
-	 fOF/j9kS8kHKcjx+a9nMfrQMpLKNgul3BryZRKKuxhYescmjNqHgjN8oD2WafTB6nZ
-	 tkC8tfqSY6HVeLHKRzGBuhMFppvTJvKvj3Q9qKZwumPJ9X4SRxNmRBqGiBYdl+z2eV
-	 4OpEtfky9aynXUKY3Yjp+CbQUVhKnQr6IIxS1214NcBWS1hzy2N2ttgYDOEVeNNIHm
-	 hvQ3ezRZf8VycB9bC/EGqgCTruwfDbg8kKNSNIHSIsLAbnoQ8HN3jVm2U7B2951eWA
-	 jZn2q0KUTAkcw==
+	b=YtH5F5g7f2l+hwMXj4nn7vWmfIJf8VJpscmPf33Rl3+Ozb83Bk+RG3oDaZObqvwq7
+	 wEJN+bvWBJ3oC61U3EDC75upXLJ6saOcvrVP29C0qw7hARTQ8Bi531ZpZ/RUygPE2f
+	 FNaoM5uRjCe77hTdmXEv3Xlyx+Cd0UwWS7Oz4jOjad8aT+yhRQAktUhnj+X57q+jL8
+	 lSaJeWs/7WbNmgK2NsACJnzhedlE88ugW5SWR5O5QnuuBDKOD+XG094xpAtqisMWLw
+	 oxPw56Jw/nzR7roxCREfzufutDKMg40QqPDzriVu8CJ5+EBEFE/EZd1H7jf27TjNCv
+	 nyjPiXmHVwDmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	kernel test robot <lkp@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-rtc@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.10] rtc: ds1307: handle oscillator stop flag (OSF) for ds1341
-Date: Fri,  8 Aug 2025 11:30:45 -0400
-Message-Id: <20250808153054.1250675-5-sashal@kernel.org>
+	linux-i3c@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.16-5.4] i3c: add missing include to internal header
+Date: Fri,  8 Aug 2025 11:30:46 -0400
+Message-Id: <20250808153054.1250675-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250808153054.1250675-1-sashal@kernel.org>
 References: <20250808153054.1250675-1-sashal@kernel.org>
@@ -52,26 +52,24 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 523923cfd5d622b8f4ba893fdaf29fa6adeb8c3e ]
+[ Upstream commit 3b661ca549b9e5bb11d0bc97ada6110aac3282d2 ]
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+LKP found a random config which failed to build because IO accessors
+were not defined:
 
-This change expands the oscillator stop flag (OSF) handling that has
-already been implemented for some chips to the ds1341 chip (DS1341 and
-DS1342 share a datasheet). This handling manages the validity of the RTC
-data in .read_time and .set_time based on the OSF.
+   In file included from drivers/i3c/master.c:21:
+   drivers/i3c/internals.h: In function 'i3c_writel_fifo':
+>> drivers/i3c/internals.h:35:9: error: implicit declaration of function 'writesl' [-Werror=implicit-function-declaration]
 
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-3-git-send-email-meaganlloyd@linux.microsoft.com
+Add the proper header to where the IO accessors are used.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507150208.BZDzzJ5E-lkp@intel.com/
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250717120046.9022-2-wsa+renesas@sang-engineering.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -83,83 +81,63 @@ LLM Generated explanations, may be completely bogus:
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-1. **Bug Fix**: This commit fixes a real bug where the DS1341/DS1342 RTC
-   can report invalid time data after power loss without properly
-   checking the oscillator stop flag (OSF). The commit message clearly
-   describes the problem: "In some power loss situations, our
-   supercapacitor-backed DS1342 RTC comes up with either an
-   unpredictable future time or the default 01/01/00."
+1. **Fixes a real build failure**: The commit fixes an actual
+   compilation error where `writesl` function is used without including
+   the proper header (`<linux/io.h>`). This is a concrete build
+   regression that prevents kernel compilation in certain
+   configurations.
 
-2. **Data Corruption Prevention**: Without this fix, systems using
-   DS1341/DS1342 RTCs can have incorrect system time after power loss,
-   which could lead to data corruption, incorrect timestamps, or system
-   malfunction. This is particularly critical for systems using
-   CONFIG_RTC_HCTOSYS.
+2. **Minimal and safe change**: The fix is extremely simple - it only
+   adds a single `#include <linux/io.h>` line to the internals.h header
+   file. This is a one-line change with virtually no risk of introducing
+   regressions.
 
-3. **Minimal Risk**: The change is very small and contained - it only
-   adds OSF handling for the ds1341 chip type in two switch statements
-   (ds1307_get_time:282-287 and ds1307_set_time:380-383). The pattern
-   exactly follows the existing OSF handling already implemented for
-   ds_1338, ds_1340, and ds_1388 chips.
+3. **Detected by kernel test robot**: The issue was found by the Linux
+   Kernel Test Robot (LKP), indicating it affects real-world build
+   configurations that are tested regularly. The error message shows:
+  ```
+  drivers/i3c/internals.h:35:9: error: implicit declaration of function
+  'writesl'
+  ```
 
-4. **Established Pattern**: The commit follows an established pattern in
-   the driver. Looking at the code, OSF handling is already implemented
-   for:
-   - ds_1338: Uses DS1338_BIT_OSF in DS1307_REG_CONTROL
-   - ds_1340: Uses DS1340_BIT_OSF in DS1340_REG_FLAG
-   - ds_1388: Uses DS1388_BIT_OSF in DS1388_REG_FLAG
-   - And now ds_1341: Uses DS1337_BIT_OSF in DS1337_REG_STATUS
+4. **Affects core I3C infrastructure**: The internals.h header is
+   included by core I3C files (master.c and device.c), so a build
+   failure here can prevent the entire I3C subsystem from compiling.
 
-5. **No New Features**: This is purely a bug fix - it doesn't add any
-   new functionality, just ensures existing functionality (reading valid
-   time) works correctly after power loss.
+5. **Recent regression**: Looking at the git history, the
+   `i3c_writel_fifo()` and `i3c_readl_fifo()` functions were recently
+   added in commit 733b439375b4, and are already being used by I3C
+   controller drivers (dw-i3c-master.c and cdns-i3c-master.c as shown in
+   commits 6e055b1fb2fc and c20d3fa70491). This missing include is a
+   regression that breaks builds after these recent changes.
 
-6. **Previous Similar Fixes**: The git history shows similar OSF fixes
-   have been made before, such as commit f471b05f76e4 ("rtc: ds1307:
-   Clear OSF flag on DS1388 when setting time"), indicating this is a
-   known class of issues that needs fixing.
+6. **Clear stable backport criteria**: This meets the stable kernel
+   rules perfectly:
+   - It fixes a real bug (build failure)
+   - It's obviously correct (missing include for used functions)
+   - It's a minimal change (1 line)
+   - No new features or architectural changes
+   - Zero risk of functional regression
 
-7. **Hardware-Specific Fix**: This only affects systems with
-   DS1341/DS1342 RTCs, so there's no risk to systems using other RTC
-   chips. The change is guarded by the chip type check.
+The commit is a textbook example of what should be backported to stable
+trees - a simple, obvious fix for a build regression with no side
+effects.
 
-The commit meets all the criteria for stable backporting: it fixes a
-real bug that affects users, the fix is small and self-contained, it
-doesn't introduce new features or architectural changes, and follows
-established patterns in the codebase.
+ drivers/i3c/internals.h | 1 +
+ 1 file changed, 1 insertion(+)
 
- drivers/rtc/rtc-ds1307.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index 5efbe69bf5ca..7a60e5ca2b8a 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -279,6 +279,13 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 		if (tmp & DS1340_BIT_OSF)
- 			return -EINVAL;
- 		break;
-+	case ds_1341:
-+		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
-+		if (ret)
-+			return ret;
-+		if (tmp & DS1337_BIT_OSF)
-+			return -EINVAL;
-+		break;
- 	case ds_1388:
- 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
- 		if (ret)
-@@ -377,6 +384,10 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
- 		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
- 				   DS1340_BIT_OSF, 0);
- 		break;
-+	case ds_1341:
-+		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
-+				   DS1337_BIT_OSF, 0);
-+		break;
- 	case ds_1388:
- 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
- 				   DS1388_BIT_OSF, 0);
+diff --git a/drivers/i3c/internals.h b/drivers/i3c/internals.h
+index 433f6088b7ce..ce04aa4f269e 100644
+--- a/drivers/i3c/internals.h
++++ b/drivers/i3c/internals.h
+@@ -9,6 +9,7 @@
+ #define I3C_INTERNALS_H
+ 
+ #include <linux/i3c/master.h>
++#include <linux/io.h>
+ 
+ void i3c_bus_normaluse_lock(struct i3c_bus *bus);
+ void i3c_bus_normaluse_unlock(struct i3c_bus *bus);
 -- 
 2.39.5
 
