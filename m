@@ -1,152 +1,168 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E763021CA1C
-	for <patches@lists.linux.dev>; Thu,  7 Aug 2025 22:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0464A78F39;
+	Fri,  8 Aug 2025 07:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754604741; cv=none; b=EqtysZbElbuqfUf007qLCTO62MEy6R2PIVVgSbr1ijV4COkjbSrTkRkMSafVtnUH8vhJ+SVLJ8AYeBJb7+AE+iexj9AGYCGUPp971yz2dbRb0GuhvJkS/4bF1D3MGbUjweBXY1Ae0yY+rI/kHxhmUPk+f/pYdUotVzMWDinVX7c=
+	t=1754639784; cv=none; b=KjYKbmCeemk66LeOj4aIc4rDTtZq6GLSBlGQ5v6p5W/RuW6jTQ5ryIRMl40kHwaG5nsoRPe+luav5R+E8KLLxlKrywv5YSjO2jOdZd0+Rh/Cd2YK/gq+3k2Yd3qyW1HLZttMP4V4r1Vlo08FQ3mpS2D27ZPrfVF1IvoV7aBlk94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754604741; c=relaxed/simple;
-	bh=qlVM8CkTZMg669S/Ns0vKD+hb/qHNknFkrDMmeEEhEY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dpSPWVv0byE9v9HDVT4Ufqyz7LBeSedJ9nsjLMWQGFJY7if5e5Vct6RngKrj8U3nMvUxy8JEWA1jIKrNtKJAa3VeQtFFJiryLYaSRSZbOa/Iu02NtmibMxTYK8/alZXLQsaXl4qf/d+QASVbSiJjJ7vCueeuIO+5LqmQsMh7jmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ksneTJKr; arc=none smtp.client-ip=209.85.217.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1754639784; c=relaxed/simple;
+	bh=eH0NyDPZql4wCTz3i6PHT+N8D4o8WobMpqdwAmhOD8o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Rw+dSYtK0OEs71GShE757r3v2yZ44kzMC6+Uj+ErpphlA2BXNwOsxGx2wjpkLIpc2L4mBAsWf+XAOECp0c3JS4EQDJTzvp7vQO3oyXaXwS+Y25dRxe42hV5XeCbWYhK4W/3skSmyKJZBmH9dNgt8Abfr8Ohs9cuBLcMSe/MeVyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XGIHFppd; arc=none smtp.client-ip=209.85.128.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ksneTJKr"
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-4fc18de8e1bso508125137.0
-        for <patches@lists.linux.dev>; Thu, 07 Aug 2025 15:12:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XGIHFppd"
+Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-459e20ec1d9so17561175e9.3;
+        Fri, 08 Aug 2025 00:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1754604738; x=1755209538; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hTjFQN82cwVeM4ZQvGBqCFZVTMn8cacbLuxP2Do1hio=;
-        b=ksneTJKrRnVnQBYdyTENCEVUq1KKBe+y9P40mkGpBuEINcaFg8OEoCLv3yOJPw/tid
-         xw9N1zgmO0Cr5ruUjNibkfWi15G+TwPkysoDg+FgZKRKZ7x5ienC2eG4dmT/suUMYMCS
-         /s7w4zzKXYTBNWy6Qf/N3E7a1WwRHT4CU7h4ma0EqB7qI93TwnxAJ3S5BBwDGw8dMnd5
-         8ndp8TB5F9l1wpqpgY9Zhr3jZsHiOsTQ2FzZORBledC/Q3kkSnKsXJdzWOCvpOZGv2WN
-         Fjm12uuV1SlRNOF2fgkwjDd48Az9NnqiIgdx98ZQWi6TsrObxsSYFhknnv7RWn2TtueD
-         jY5A==
+        d=gmail.com; s=20230601; t=1754639781; x=1755244581; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=g47/JQMYnoJFt8X2Gyr00t3GiLF5ts7OyvZLVgHeWbk=;
+        b=XGIHFppd0qydbsvIzE0Qtf6TD1xCi5liGFpBUw2tlK5/kZWWNkDUb9sIES2edk5ItP
+         ry0uoSrXQCzRIN6A5doKamBRVBJojBbDi8R4gg/Y+SYFkTqkqMGIHUx/lSquDT1W1dIo
+         d6AZ9x0kh2zrLEQ+ATLzRBRxVyLActYm6jf4eDUPJHYyWg+CFT+lxO0gZol7e4mdsYic
+         TLgdrBUCEmONHdSEhyo/24RZDr0FSxfBbJOjCZ5Dil0C8BNxzHynCyQXO+yh1MZV49K1
+         moVO84TLsbuvrIyCDqLFJAP6HYiaqbtDjqMk9fTJrxvnQqG+ioFNv04RXgu+4n+7/WLP
+         cYhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754604738; x=1755209538;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hTjFQN82cwVeM4ZQvGBqCFZVTMn8cacbLuxP2Do1hio=;
-        b=dg8LnX/6jLDRVVznLxXRNUN4ZwsZ1IcH6u83y0n5r1dnSI0Ctt8VK3YDuRt9r4IqcZ
-         9L9DRQxMM29UMnoWMnXTPLLAsGfECg9u/2KSmt8lUF2FUOd2zh7m3gwvpD3osXEIdzCU
-         T72PwzR5vDOQ1zkDi5kVOgy02lgNMCF6I8mTZWXFK6FT0w0ClGIJcITPjJdcrEnW5WhM
-         qx1KYT4cS0AlJDfgZotjkl8bUTvPp3JCTEQpQvH9LEZxr1eECFwnwbd25+1tiAE2TE0Q
-         Al23kkRvdLOfQLDShk3fsCOQ7iOhv8kFNuEqyetQd5LJKdN2k5r4AQfpVAKIheTTVMD/
-         Rg4g==
-X-Forwarded-Encrypted: i=1; AJvYcCXR6K4UHEYgvwzSL35Z5Jyj4L3ObQ0uI624mArrfU9PgJtjsEOLctNKuF2ARrpDdHM5nU5mVEem@lists.linux.dev
-X-Gm-Message-State: AOJu0YycL8BJtPdsN5xZE0+VT8BfVF1VrK88D3DdLTJu3V13W2JE/jfN
-	GQqG0zLm2scM8SBhYY71OpuaHrXgQucwN/GroEvvh6F4X7zdnfWws9qDBhzLFcvOFL8XgkQF0Ss
-	Zt/S4LsBjhA9is6ZT+pa8z72kc66OC8h94cdD9jcr
-X-Gm-Gg: ASbGncvm3c/seHd7zU4YvAQBRUyT5vCotyZ/KVpyMCRHyVWGHDn+ky0m67ICFqAHRxG
-	AwiaTnBWF/BEZaYN+P6DZ0oWj1nTXMN0I9FF8L6n85LA+wOJRK1uykzjMFgoRnV99d/9wepyBc1
-	LT8kUAZuikmj+Mad++vKzwyCPiiCpXrxHxblX5FePueKvNGQLnk03rRZiqmgiSjHUQMtgr/OKdn
-	R7pBCW7lLX4QZk8h5fvwPlA8xwztWrF888=
-X-Google-Smtp-Source: AGHT+IEYFGr//L1F66PSo/HzzBCZ90AvQWOXuRI6gktcJUFA02QiCFgkPiLDUKRHn6BALGhSzkBYiT/d+GRH+TAj6a8=
-X-Received: by 2002:a67:e710:0:b0:4f9:d929:8558 with SMTP id
- ada2fe7eead31-5060d7b0262mr340444137.10.1754604737443; Thu, 07 Aug 2025
- 15:12:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1754639781; x=1755244581;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g47/JQMYnoJFt8X2Gyr00t3GiLF5ts7OyvZLVgHeWbk=;
+        b=BfJDBcyjfbTeDbhdGQQm5bGE1SWyJK7Ah+8c+LVRkC1EVsCEdS/max6X5cRVlY+pHA
+         S0paFVn47MSgcCDBMCtTgQpeI+BLdULhQn1TDL4tdVYKOzgg1841gbE4gz5IptUqv04J
+         Z2FHHjV7dmFLoJ5NdQw9xtJskAyLIoANYIxI4R2bqU78DbBlhV1vL2eCKdubLVwSsrUG
+         pe1cs3HbgHG20DDmVCQfiV+FMrcWoViegRxmao+AhcZq/u0gHdk8iGVrWkY/5PayCdV3
+         mhk1xkHvm556bfQVgJUftDBBa3xF0l+eXhYLSGEnYLpdmjHqBE1P/5KPlmaY0At/HH39
+         58Eg==
+X-Forwarded-Encrypted: i=1; AJvYcCVBD0T9cNx4F+rtmx4F2JE2i3U5ivcIbreYAOpjbBfvibNMJ6NSknLYUoogpZ3Hk+bDBf5yeu2nbA==@lists.linux.dev, AJvYcCX//4JB7CYDfufqU5ZKkVCKm98OshDPA6G5DQMcWJlVQOtMl8w62DrwgjKacYItRGKpPV/L2w==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwKc6b23An/gFxTZCZtfseZ9sJqdhvL4CmogsW5GBYfLZ36/cw5
+	qdPgepsPRIH32sy6+hvZ+Jd04UCJETyPZldId6JRbFLUEIVwX4ahJgWO
+X-Gm-Gg: ASbGnct7xsJL5mqINJaNZ8XPcVjnRVNXkFC6syKNYNdX17vwdAloJr3SooSTHAnKwzm
+	22OjCVjsbJ1AUVe9Wwhns3ou7Bg9+46453HklQ18IzLhl1IcJNiOBaGPGVCQKtCYL1R8WUfT8B/
+	XAeoBBtYIhVrP2Rxh+jl3mZeEBVf5EvOCSYyYj6p6XO1Mdttt6ZiALpYNl9rawPsLVALBvzA6pq
+	JUBtvv5ncdqx9X0RCDTeMxBZewxI0bbhFBLHuIku2Pd4TlVciWaid1KIs407L3c7XQRKQ519ftZ
+	jVJcej7d7/WF6xFuGOxIRoaSFhnfp90aABxqNj8Qy3QBCdICP3PFFDGBezXSOO+7XJSyMyjBl3j
+	/RKNkhn4E8/EaK0JjFHDIFaGvRvNvy0lTwlgOaUlWwhfdp1bnqhI6fCwDr03WFQjZnrvvxmwYsO
+	tQ8ZPqierSfIVSlegV1GObqKpq5ZaWauV0lA==
+X-Google-Smtp-Source: AGHT+IEBs27Uy9PNJpjOLnJbY5yuC13GxO0mFq67O2Xv2B5Lc++fQpKDmSg1kZHFuBQVQnQHeW4qhw==
+X-Received: by 2002:a05:600c:524a:b0:456:1204:e7e6 with SMTP id 5b1f17b1804b1-459f4f517dbmr14242675e9.11.1754639781007;
+        Fri, 08 Aug 2025 00:56:21 -0700 (PDT)
+Received: from [26.26.26.1] (ec2-3-72-134-22.eu-central-1.compute.amazonaws.com. [3.72.134.22])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b79c3bf956sm30081041f8f.24.2025.08.08.00.56.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Aug 2025 00:56:20 -0700 (PDT)
+Message-ID: <c6b5067e-8ae4-44f6-83de-f098761608ba@gmail.com>
+Date: Fri, 8 Aug 2025 15:56:13 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250807-fix-counted_by-clang-19-v1-1-902c86c1d515@kernel.org>
-In-Reply-To: <20250807-fix-counted_by-clang-19-v1-1-902c86c1d515@kernel.org>
-From: Justin Stitt <justinstitt@google.com>
-Date: Thu, 7 Aug 2025 15:12:06 -0700
-X-Gm-Features: Ac12FXyAGlTv67GNm7hvR62c2Q7kwHSr8jwLhWy08UJpC4Mp2yOrNOga1MEvl64
-Message-ID: <CAFhGd8pkSP9JTVnBzn7-Cm6JMtj-qBAgLMBP1JhLtt4unkruZQ@mail.gmail.com>
-Subject: Re: [PATCH] hardening: Require clang 20.1.0 for __counted_by
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
-	Bill Wendling <morbo@google.com>, linux-hardening@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/16] Fix incorrect iommu_groups with PCIe ACS
+To: Baolu Lu <baolu.lu@linux.intel.com>, Jason Gunthorpe <jgg@nvidia.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+ Alex Williamson <alex.williamson@redhat.com>, galshalom@nvidia.com,
+ Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+ kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+ tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+References: <0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com>
+ <a692448d-48b8-4af3-bf88-2cc913a145ca@gmail.com>
+ <20250802151816.GC184255@nvidia.com>
+ <1684792a-97d6-4383-a0d2-f342e69c91ff@gmail.com>
+ <20250805123555.GI184255@nvidia.com>
+ <964c8225-d3fc-4b60-9ee5-999e08837988@gmail.com>
+ <20250805144301.GO184255@nvidia.com>
+ <6ca56de5-01df-4636-9c6a-666ccc10b7ff@gmail.com>
+ <3abaf43b-0b81-46e9-a313-0120d30541cc@linux.intel.com>
+Content-Language: en-US
+From: Ethan Zhao <etzhao1900@gmail.com>
+In-Reply-To: <3abaf43b-0b81-46e9-a313-0120d30541cc@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
 
-On Thu, Aug 7, 2025 at 2:36=E2=80=AFPM Nathan Chancellor <nathan@kernel.org=
-> wrote:
->
-> After an innocuous change in -next that modified a structure that
-> contains __counted_by, clang-19 start crashing when building certain
-> files in drivers/gpu/drm/xe. When assertions are enabled, the more
-> descriptive failure is:
 
-Since this is just now breaking builds, it is OK to bump up the
-minimum compiler version just in time.
+On 8/6/2025 10:41 AM, Baolu Lu wrote:
+> On 8/6/25 10:22, Ethan Zhao wrote:
+>> On 8/5/2025 10:43 PM, Jason Gunthorpe wrote:
+>>> On Tue, Aug 05, 2025 at 10:41:03PM +0800, Ethan Zhao wrote:
+>>>
+>>>>>> My understanding, iommu has no logic yet to handle the egress control
+>>>>>> vector configuration case,
+>>>>>
+>>>>> We don't support it at all. If some FW leaves it configured then it
+>>>>> will work at the PCI level but Linux has no awarness of what it is
+>>>>> doing.
+>>>>>
+>>>>> Arguably Linux should disable it on boot, but we don't..
+>>>> linux tool like setpci could access PCIe configuration raw data, so
+>>>> does to the ACS control bits. that is boring.
+>>>
+>>> Any change to ACS after boot is "not supported" - iommu groups are one
+>>> time only using boot config only. If someone wants to customize ACS
+>>> they need to use the new config_acs kernel parameter.
+>> That would leave ACS to boot time configuration only. Linux never
+>> limits tools to access(write) hardware directly even it could do that.
+>> Would it be better to have interception/configure-able policy for such
+>> hardware access behavior in kernel like what hypervisor does to MSR etc ?
+> 
+> A root user could even clear the BME or MSE bits of a device's PCIe
+> configuration space, even if the device is already bound to a driver and
+> operating normally. I don't think there's a mechanism to prevent that
+> from happening, besides permission enforcement. I believe that the same
+> applies to the ACS control.
+> 
+>>>
+>>>>>> The static groups were created according to
+>>>>>> FW DRDB tables,
+>>>>>
+>>>>> ?? iommu_groups have nothing to do with FW tables.
+>>>> Sorry, typo, ACPI drhd table.
+>>>
+>>> Same answer, AFAIK FW tables have no effect on iommu_groups 
+>> My understanding, FW tables are part of the description about device 
+>> topology and iommu-device relationship. did I really misunderstand
+>> something ?
+> 
+> The ACPI/DMAR table describes the platform's IOMMU topology, not the
+> device topology, which is described by the PCI bus. So, the firmware
+> table doesn't impact the iommu_group.
+There is kernel lockdown lsm works via kernel parameter lockdown=
+{integrity | confidentiality},
 
-For future travelers, the "innocuous change" popped up in -next as
-Commit 535c445eb94c ("drm/xe: Add dependency scheduler for GT TLB
-invalidations to bind queues"). I am not sure why the additional
-struct member caused this crash but it seems like Bill's clang patch
-solved it -- so I won't look into it any further.
+"If set to integrity, kernel features that allow userland to modify the 
+running kernel are disabled. If set to confidentiality, kernel features 
+that allow userland to extract confidential information from the kernel
+are also disabled. "
 
->
->   clang: clang/lib/AST/RecordLayoutBuilder.cpp:3335: const ASTRecordLayou=
-t &clang::ASTContext::getASTRecordLayout(const RecordDecl *) const: Asserti=
-on `D && "Cannot get layout of forward declarations!"' failed.
->
-> According to a reverse bisect, a tangential change to the LLVM IR
-> generation phase of clang during the LLVM 20 development cycle [1]
-> resolves this problem. Bump the version of clang that enables
-> CONFIG_CC_HAS_COUNTED_BY to 20.1.0 to ensure that this issue cannot be
-> hit.
->
-> Link: https://github.com/llvm/llvm-project/commit/160fb1121cdf703c3ef5e61=
-fb26c5659eb581489 [1]
+It also works for PCIe configuration space directly access from 
+userland, but the levels of configuration granularity is coarse, can't 
+configure kernel to only prevent PCI device from accessing from userland.
 
-Reviewed-by: Justin Stitt <justinstitt@google.com>
+The design and implementation is structured and the granularity is fine-
+grained, it is easy to extended and add new kernel parameter to only
+lockdown PCI device configuration space access.
 
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> Should this be marked for stable? If this makes 6.17 final, I think we
-> are fine for mainline and newer but I wonder if a patch that adds
-> __counted_by to a structure would ever be backported and expose this
-> problem there.
-> ---
->  init/Kconfig | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/init/Kconfig b/init/Kconfig
-> index af4c2f085455..a2675ee1ef8c 100644
-> --- a/init/Kconfig
-> +++ b/init/Kconfig
-> @@ -117,10 +117,11 @@ config CC_HAS_NO_PROFILE_FN_ATTR
->
->  config CC_HAS_COUNTED_BY
->         bool
-> -       # clang needs to be at least 19.1.3 to avoid __bdos miscalculatio=
-ns
-> -       # https://github.com/llvm/llvm-project/pull/110497
-> -       # https://github.com/llvm/llvm-project/pull/112636
-> -       default y if CC_IS_CLANG && CLANG_VERSION >=3D 190103
-> +       # clang needs to be at least 20.1.0 to avoid potential crashes
-> +       # when building structures that contain __counted_by
-> +       # https://github.com/ClangBuiltLinux/linux/issues/2114
-> +       # https://github.com/llvm/llvm-project/commit/160fb1121cdf703c3ef=
-5e61fb26c5659eb581489
-> +       default y if CC_IS_CLANG && CLANG_VERSION >=3D 200100
->         # supported since gcc 15.1.0
->         # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D108896
->         default y if CC_IS_GCC && GCC_VERSION >=3D 150100
->
-> ---
-> base-commit: f627b51aaa041cba715b59026cf2d9cb1476c7ed
-> change-id: 20250807-fix-counted_by-clang-19-470d53f93aa0
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+[LOCKDOWN_PCI_ACCESS] = "direct PCI access"
+
+Thanks,
+Ethan
+
+
+
+> 
+> Thanks,
+> baolu
+
