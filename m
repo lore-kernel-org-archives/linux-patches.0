@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7447A145329;
-	Fri,  8 Aug 2025 15:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526D7284694;
+	Fri,  8 Aug 2025 15:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754667064; cv=none; b=Iib6JFZHgDjf8gFVtOk7fj/KT+RwXXry9M3SN0l6hRwBIB7EBV0i2JtRhmiHDbT+l9AF2X9zfVDNZjI3ePSre2oTi0AsBYiiuR2kG613go3ejK1qBwLDIgIgtLeSpHAThRMCsulMVkqJc5N/s5ijomxgSypNd3byAYtG61NeKm0=
+	t=1754667066; cv=none; b=TLU6B65mVmMPEAWQzyRqTdnPeMgsPZWz0Xa45XwLlK9oIHgk/9NLFgV8kQ5x+IcIAC802FxTPSgoaQTBL8A5DwCYASl6J2L1nxfdTOgmg6Se6kyBituyRCF83WDRWc+LA97CFHr49MPeyd2xct6kHbFw5XL38Jea1UkyjiuUQR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754667064; c=relaxed/simple;
-	bh=ST4oh74nXSw2f0tanvoma6I/+x9/jUIiZOYhL7iEFTM=;
+	s=arc-20240116; t=1754667066; c=relaxed/simple;
+	bh=aSv7IfuSV2DGNVTwjun7tcNqDuSb6Q6Tn95zAy0hwfs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cXqiDBsCDAdb7nuO3jdYVnbeYJP8aqd8Zr6R83gmg0NcODWw771hPnpPOH513I3Pk/2SsU5H/yqsMgLqxSqWeTgbaPx2NJyPaq6f74O7Wf3SuBlU7naqBc/h0CiBL6U6yvVxGlzYF7++68c/BGsXwayHvp0Rl1KLzU+QTqubpik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jc2ubues; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=It/EDM2EAj0wPHb8iw9RbgnhPShaGKbea+GPFXpR4Gi0B+lwsmMkyFVHxOzMJHzPFHQZVvTpyrI6IQVkXk9v/uer1f8rSxOwY2RzWlEkVbopAqz5Y3E17hFHJF/FGtk/UU3o/JoQV8DFfLp/wpQyrUfo3EP1bvcjNXs6aZWqb4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jxLYtShJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jc2ubues"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC35C4CEED;
-	Fri,  8 Aug 2025 15:31:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jxLYtShJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45BDC4CEF4;
+	Fri,  8 Aug 2025 15:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754667064;
-	bh=ST4oh74nXSw2f0tanvoma6I/+x9/jUIiZOYhL7iEFTM=;
+	s=k20201202; t=1754667066;
+	bh=aSv7IfuSV2DGNVTwjun7tcNqDuSb6Q6Tn95zAy0hwfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jc2ubuesfByhEv5TceChFPJpOeMvEh5a/vvP1Hks4g/4i7FkXXcI+x/szCf0/D21R
-	 z5M1pB5uofUj1vo4ELMwPYt3rEf9nnOtEOSEUnaBedtDx6DnApp3D3faSN5Ih2iYVv
-	 apClDgmAlBgNo2Pva8Aoz5zOrrvhDKoeOCvp7RyueP78DpM0oqsLGvzq+tRXGKk33H
-	 n2ZBaT+I66mobVpxWh2yO69hjyNtkKvEUPYD2g78efgYVCvAsQt29+jD9BhKGBTYSE
-	 UgLeb41gVIDq1Rsk1kw2pBIWrZLK8UoHBG1kIYiNrPJYlLzNyXX3nn3N6v3pGb0Yei
-	 p4ZSKAWaN3+Uw==
+	b=jxLYtShJXI5QEYTAaZCvGGOMhlejzdCmTy9XEMqtOJtt++4Cw0dbM7n40RRLfRtsi
+	 fOF/j9kS8kHKcjx+a9nMfrQMpLKNgul3BryZRKKuxhYescmjNqHgjN8oD2WafTB6nZ
+	 tkC8tfqSY6HVeLHKRzGBuhMFppvTJvKvj3Q9qKZwumPJ9X4SRxNmRBqGiBYdl+z2eV
+	 4OpEtfky9aynXUKY3Yjp+CbQUVhKnQr6IIxS1214NcBWS1hzy2N2ttgYDOEVeNNIHm
+	 hvQ3ezRZf8VycB9bC/EGqgCTruwfDbg8kKNSNIHSIsLAbnoQ8HN3jVm2U7B2951eWA
+	 jZn2q0KUTAkcw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mikulas Patocka <mpatocka@redhat.com>,
+Cc: Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
+	Tyler Hicks <code@tyhicks.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	agk@redhat.com,
-	snitzer@kernel.org,
-	dm-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.16-5.10] dm-mpath: don't print the "loaded" message if registering fails
-Date: Fri,  8 Aug 2025 11:30:44 -0400
-Message-Id: <20250808153054.1250675-4-sashal@kernel.org>
+	linux-rtc@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.10] rtc: ds1307: handle oscillator stop flag (OSF) for ds1341
+Date: Fri,  8 Aug 2025 11:30:45 -0400
+Message-Id: <20250808153054.1250675-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250808153054.1250675-1-sashal@kernel.org>
 References: <20250808153054.1250675-1-sashal@kernel.org>
@@ -51,13 +52,27 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
 
-[ Upstream commit 6e11952a6abc4641dc8ae63f01b318b31b44e8db ]
+[ Upstream commit 523923cfd5d622b8f4ba893fdaf29fa6adeb8c3e ]
 
-If dm_register_path_selector, don't print the "version X loaded" message.
+In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
+kernel time as long as rtc_read_time() succeeds. In some power loss
+situations, our supercapacitor-backed DS1342 RTC comes up with either an
+unpredictable future time or the default 01/01/00 from the datasheet.
+The oscillator stop flag (OSF) is set in these scenarios due to the
+power loss and can be used to determine the validity of the RTC data.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+This change expands the oscillator stop flag (OSF) handling that has
+already been implemented for some chips to the ds1341 chip (DS1341 and
+DS1342 share a datasheet). This handling manages the validity of the RTC
+data in .read_time and .set_time based on the OSF.
+
+Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+Reviewed-by: Tyler Hicks <code@tyhicks.com>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://lore.kernel.org/r/1749665656-30108-3-git-send-email-meaganlloyd@linux.microsoft.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -65,135 +80,86 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit is a clear candidate for backporting to stable kernel trees.
-Here's my extensive analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Bug Analysis
+1. **Bug Fix**: This commit fixes a real bug where the DS1341/DS1342 RTC
+   can report invalid time data after power loss without properly
+   checking the oscillator stop flag (OSF). The commit message clearly
+   describes the problem: "In some power loss situations, our
+   supercapacitor-backed DS1342 RTC comes up with either an
+   unpredictable future time or the default 01/01/00."
 
-The commit fixes a logic error in the error handling of four device-
-mapper path selector modules. Looking at the code changes:
+2. **Data Corruption Prevention**: Without this fix, systems using
+   DS1341/DS1342 RTCs can have incorrect system time after power loss,
+   which could lead to data corruption, incorrect timestamps, or system
+   malfunction. This is particularly critical for systems using
+   CONFIG_RTC_HCTOSYS.
 
-1. **Original buggy behavior**: When `dm_register_path_selector()` fails
-   (returns r < 0), the code would:
-   - Print "register failed" error message
-   - **Continue to print "version X loaded" message**
-   - Return the error code
+3. **Minimal Risk**: The change is very small and contained - it only
+   adds OSF handling for the ds1341 chip type in two switch statements
+   (ds1307_get_time:282-287 and ds1307_set_time:380-383). The pattern
+   exactly follows the existing OSF handling already implemented for
+   ds_1338, ds_1340, and ds_1388 chips.
 
-2. **Fixed behavior**: When registration fails:
-   - Print "register failed" error message
-   - **Return immediately with the error code**
-   - Skip the misleading "loaded" message
+4. **Established Pattern**: The commit follows an established pattern in
+   the driver. Looking at the code, OSF handling is already implemented
+   for:
+   - ds_1338: Uses DS1338_BIT_OSF in DS1307_REG_CONTROL
+   - ds_1340: Uses DS1340_BIT_OSF in DS1340_REG_FLAG
+   - ds_1388: Uses DS1388_BIT_OSF in DS1388_REG_FLAG
+   - And now ds_1341: Uses DS1337_BIT_OSF in DS1337_REG_STATUS
 
-## Why This Should Be Backported
+5. **No New Features**: This is purely a bug fix - it doesn't add any
+   new functionality, just ensures existing functionality (reading valid
+   time) works correctly after power loss.
 
-1. **Clear Bug Fix**: This is a straightforward bug fix that corrects
-   misleading log messages. When module registration fails, it
-   incorrectly reports success with "version X loaded".
+6. **Previous Similar Fixes**: The git history shows similar OSF fixes
+   have been made before, such as commit f471b05f76e4 ("rtc: ds1307:
+   Clear OSF flag on DS1388 when setting time"), indicating this is a
+   known class of issues that needs fixing.
 
-2. **Small and Contained**: The fix is minimal - just adding an early
-   return statement in four similar init functions:
-   - `dm_hst_init()` in dm-ps-historical-service-time.c
-   - `dm_ql_init()` in dm-ps-queue-length.c
-   - `dm_rr_init()` in dm-ps-round-robin.c
-   - `dm_st_init()` in dm-ps-service-time.c
+7. **Hardware-Specific Fix**: This only affects systems with
+   DS1341/DS1342 RTCs, so there's no risk to systems using other RTC
+   chips. The change is guarded by the chip type check.
 
-3. **No Side Effects**: The change only affects error path behavior and
-   logging. It doesn't introduce new functionality or change any
-   successful operation paths.
+The commit meets all the criteria for stable backporting: it fixes a
+real bug that affects users, the fix is small and self-contained, it
+doesn't introduce new features or architectural changes, and follows
+established patterns in the codebase.
 
-4. **User-Visible Issue**: This fixes a user-visible problem where
-   system logs would incorrectly indicate a module loaded successfully
-   when it actually failed.
+ drivers/rtc/rtc-ds1307.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-5. **Consistent Pattern**: All four files have the identical bug and
-   identical fix, showing this is a systematic issue that should be
-   addressed.
-
-6. **Low Risk**: The change is trivial - adding an early return on
-   error. There's virtually no risk of regression since:
-   - It only changes behavior when registration already failed
-   - The function already returns the error code at the end
-   - This just makes it return earlier without printing the misleading
-     message
-
-7. **Affects Core Subsystem**: Device-mapper is a critical storage
-   subsystem, and accurate error reporting is important for system
-   administrators debugging storage issues.
-
-The commit perfectly fits stable kernel criteria: it's a small, obvious
-fix for a real bug that affects users (through misleading log messages),
-with minimal risk of introducing new problems.
-
- drivers/md/dm-ps-historical-service-time.c | 4 +++-
- drivers/md/dm-ps-queue-length.c            | 4 +++-
- drivers/md/dm-ps-round-robin.c             | 4 +++-
- drivers/md/dm-ps-service-time.c            | 4 +++-
- 4 files changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/md/dm-ps-historical-service-time.c b/drivers/md/dm-ps-historical-service-time.c
-index b49e10d76d03..2c8626a83de4 100644
---- a/drivers/md/dm-ps-historical-service-time.c
-+++ b/drivers/md/dm-ps-historical-service-time.c
-@@ -541,8 +541,10 @@ static int __init dm_hst_init(void)
- {
- 	int r = dm_register_path_selector(&hst_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " HST_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-queue-length.c b/drivers/md/dm-ps-queue-length.c
-index e305f05ad1e5..eb543e6431e0 100644
---- a/drivers/md/dm-ps-queue-length.c
-+++ b/drivers/md/dm-ps-queue-length.c
-@@ -260,8 +260,10 @@ static int __init dm_ql_init(void)
- {
- 	int r = dm_register_path_selector(&ql_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " QL_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-round-robin.c b/drivers/md/dm-ps-round-robin.c
-index d1745b123dc1..66a15ac0c22c 100644
---- a/drivers/md/dm-ps-round-robin.c
-+++ b/drivers/md/dm-ps-round-robin.c
-@@ -220,8 +220,10 @@ static int __init dm_rr_init(void)
- {
- 	int r = dm_register_path_selector(&rr_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " RR_VERSION " loaded");
- 
-diff --git a/drivers/md/dm-ps-service-time.c b/drivers/md/dm-ps-service-time.c
-index 969d31c40272..f8c43aecdb27 100644
---- a/drivers/md/dm-ps-service-time.c
-+++ b/drivers/md/dm-ps-service-time.c
-@@ -341,8 +341,10 @@ static int __init dm_st_init(void)
- {
- 	int r = dm_register_path_selector(&st_ps);
- 
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		return r;
-+	}
- 
- 	DMINFO("version " ST_VERSION " loaded");
- 
+diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
+index 5efbe69bf5ca..7a60e5ca2b8a 100644
+--- a/drivers/rtc/rtc-ds1307.c
++++ b/drivers/rtc/rtc-ds1307.c
+@@ -279,6 +279,13 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
+ 		if (tmp & DS1340_BIT_OSF)
+ 			return -EINVAL;
+ 		break;
++	case ds_1341:
++		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
++		if (ret)
++			return ret;
++		if (tmp & DS1337_BIT_OSF)
++			return -EINVAL;
++		break;
+ 	case ds_1388:
+ 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
+ 		if (ret)
+@@ -377,6 +384,10 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
+ 		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
+ 				   DS1340_BIT_OSF, 0);
+ 		break;
++	case ds_1341:
++		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
++				   DS1337_BIT_OSF, 0);
++		break;
+ 	case ds_1388:
+ 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
+ 				   DS1388_BIT_OSF, 0);
 -- 
 2.39.5
 
