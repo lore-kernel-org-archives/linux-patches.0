@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3651D4C9F;
-	Sun, 10 Aug 2025 00:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4276101DE;
+	Sun, 10 Aug 2025 00:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785285; cv=none; b=KwxM1cDEIEUmyhViQXpGhY1Clwjk27WTsBZx2LcZY8zrU2E2GSX4EJzxTl3e0zeVtzCAaNGlUEIujenibVQyWjJIsw+HvLMhOQ7yzTB5WdUFPK54kCMM2BFOYIZXpHAiToP5/i2i7pcIVPmOA/EhcjwgP5R8De4KBSiACU77XG4=
+	t=1754785286; cv=none; b=tcc3Dvpj7VCl0RjkxHN2cmYuQRWcJcqkCkHMjasFg8nVy1Tj1Udo6JOK/xSUImo2GeFy5vGUjDWf/DqiKC4PUD/tFtmoT/ZmGwwS+NlsBKjp4VZ9kdHc/qCeyo/bfuUVgiRWZAkedXtvs5F0+izd+nHEOECRp7QvjannXHxVNes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785285; c=relaxed/simple;
-	bh=jeoA254isR7T1Cz0HSUWsDyvPf9kVzICJGvd3hDuKrg=;
+	s=arc-20240116; t=1754785286; c=relaxed/simple;
+	bh=SP3/KX0uSNQDWiSQiUfwjPe2lFiJ1PaPCjw4UaLPynw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BzGLjOQu+ccfm46W2WbXzax2rwIu1qif4eHudZz8Kzd+fk8cXy43X0vInd4YIS4zcskrXN9MNyHTZEscKGLsaNgp5JBIz31O3ieCDS97uq3qXYZDfZ/kFBKdnZPHt5sfebccxcrKY7pz4DUMu7+om1VUYtiwo31fg6GRdKIpr3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=joVhhOzf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SS+b6DH7W7xRXm5vBj+z73b4X4xqRMnMeQyqBU7EuYCkBxnQJdnmosKV5C5QBjMIrN5ytTJqKbuCikMe3KjM7y+mms2aWM6Cb2ju2DEouR2K8hOf9TOhi/oFXc1SBxoDUlzZLh1W6V5QckYayAXPYg2noapW1tZ/eU6PrlkhNEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rH1O4I6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="joVhhOzf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993E8C4CEE7;
-	Sun, 10 Aug 2025 00:21:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rH1O4I6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534D5C4CEF1;
+	Sun, 10 Aug 2025 00:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754785284;
-	bh=jeoA254isR7T1Cz0HSUWsDyvPf9kVzICJGvd3hDuKrg=;
+	s=k20201202; t=1754785286;
+	bh=SP3/KX0uSNQDWiSQiUfwjPe2lFiJ1PaPCjw4UaLPynw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=joVhhOzfl8ab1+JO+HcOGkiGy5KGHzljy5I4q+YZ5lFpdzeD8KPd1N/84G9omzlAZ
-	 vhLad59SCAlQ8RSUtqNJYNSfReQNv5y7ivef//qxRf4GOuqwU9pkuD5NIsE6vHtISS
-	 DJFhh5fTIFK34YDjSMflY0oCXIc6eyCVGfHpqHFcJNZwSgPtru39sWj+0K2b7wUWS7
-	 hsc43uDtdnxEUoe3YBM666OEKLG9ltULwUJ3LaF9YvbXDc38AzLXogWLJ9vdVHJ9uX
-	 zrMeBtGvfsH1Fy1xi8v3uZ9bcJC3MjdQR+pe6vl14OeHfUXu2DQ7tdppoaIWKRNraM
-	 DD7XKag3/PwpQ==
+	b=rH1O4I6OSex9DxV6baafmCSHdoUCf5hhSfrVB7+eDpNE1zPYQc8g5Q4a/NwTWGBMB
+	 Mx4x4CytvjN8X7Syq7A8pn7WHL0eECnfi7DPEuJfwvISND0s+BmXncBXdzkz9/POJH
+	 Zxsofug46bncrslj5aOLSZuN+51cZvsl6+dodLo6bR28LXu2JtdHNj/VQRaVmOS2V9
+	 W1FLRzLfH7ajF+P+kBlGeZvM7IJKeCew77Fe8mF09nCusfIL2dySTNQyvN3eG58VOF
+	 HfA8G4ddRCNtQ+3hmRSZpS9GEEdKNj67CdFMOVuKQAP8VoMVcvCPTSp+dSrXnHOD5d
+	 Nq3iXgtSUq9qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
+Cc: Artem Sadovnikov <a.sadovnikov@ispras.ru>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	James.Bottomley@HansenPartnership.com,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.4] scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans
-Date: Sat,  9 Aug 2025 20:20:57 -0400
-Message-Id: <20250810002104.1545396-8-sashal@kernel.org>
+	kvm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.1] vfio/mlx5: fix possible overflow in tracking max message size
+Date: Sat,  9 Aug 2025 20:20:58 -0400
+Message-Id: <20250810002104.1545396-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810002104.1545396-1-sashal@kernel.org>
 References: <20250810002104.1545396-1-sashal@kernel.org>
@@ -51,215 +51,103 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Artem Sadovnikov <a.sadovnikov@ispras.ru>
 
-[ Upstream commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a ]
+[ Upstream commit b3060198483bac43ec113c62ae3837076f61f5de ]
 
-sas_user_scan() did not fully process wildcard channel scans
-(SCAN_WILD_CARD) when a transport-specific user_scan() callback was
-present. Only channel 0 would be scanned via user_scan(), while the
-remaining channels were skipped, potentially missing devices.
+MLX cap pg_track_log_max_msg_size consists of 5 bits, value of which is
+used as power of 2 for max_msg_size. This can lead to multiplication
+overflow between max_msg_size (u32) and integer constant, and afterwards
+incorrect value is being written to rq_size.
 
-user_scan() invokes updated sas_user_scan() for channel 0, and if
-successful, iteratively scans remaining channels (1 to
-shost->max_channel) via scsi_scan_host_selected().  This ensures complete
-wildcard scanning without affecting transport-specific scanning behavior.
+Fix this issue by extending integer constant to u64 type.
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20250624061649.17990-1-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Suggested-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Artem Sadovnikov <a.sadovnikov@ispras.ru>
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://lore.kernel.org/r/20250701144017.2410-2-a.sadovnikov@ispras.ru
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
-This commit should be backported to stable kernel trees. Here's my
-detailed analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-## Bug Fix Analysis
+## Critical Integer Overflow Bug Fix
 
-This commit fixes a **functional bug** in the SAS transport layer where
-wildcard channel scans (`SCAN_WILD_CARD`) were not working correctly
-when a transport-specific `user_scan()` callback was present. The bug
-manifested as:
+1. **Clear Bug with Security Implications**: The commit fixes a critical
+   integer overflow bug in the VFIO MLX5 driver. When `log_max_msg_size`
+   reaches its maximum value (31, as it's a 5-bit field), the
+   calculation `4 * max_msg_size` causes an integer overflow:
+   - `max_msg_size = (1ULL << 31) = 2147483648 (0x80000000)`
+   - `4 * max_msg_size` overflows to 0 when calculated as u32 * int
+   - This results in `rq_size` being incorrectly set, potentially to 0
+     or a very small value
 
-1. **Incomplete device discovery**: When performing wildcard scans, only
-   channel 0 devices would be scanned via the SAS-specific
-   `sas_user_scan()`, while channels 1 through `max_channel` were
-   completely skipped.
-2. **Missing devices**: This could result in SAS devices on non-zero
-   channels not being discovered during rescans, which is a serious
-   issue for storage management.
+2. **Introduced by Recent Code**: The vulnerable code was introduced in
+   commit 9c7c5430bca36 ("vfio/mlx5: Align the page tracking max message
+   size with the device capability") from December 2024, which itself
+   has a Fixes tag for commit 79c3cf279926 from 2022. This indicates the
+   affected code exists in stable kernels.
 
-## Code Changes Analysis
+3. **Simple and Contained Fix**: The fix is minimal - just changing `4`
+   to `4ULL` in two places to ensure 64-bit arithmetic:
+  ```c
+   - if (rq_size < 4 * max_msg_size)
+   - rq_size = 4 * max_msg_size;
+   + if (rq_size < 4ULL * max_msg_size)
+   +     rq_size = 4ULL * max_msg_size;
+   ```
 
-The fix involves two key changes:
+4. **Affects User-Visible Functionality**: This bug affects VFIO device
+   passthrough for MLX5 devices, specifically the page tracking
+   functionality used for live migration. An incorrect `rq_size` could
+   lead to:
+   - Failed QP (Queue Pair) creation
+   - Memory corruption
+   - System instability during VM migration
 
-1. **Export of `scsi_scan_host_selected()`** in
-   `drivers/scsi/scsi_scan.c:1902`:
-   - This makes the function available to transport modules
-   - Simple one-line addition: `EXPORT_SYMBOL(scsi_scan_host_selected);`
+5. **Low Risk of Regression**: The change only affects the calculation
+   precision by ensuring 64-bit arithmetic. It doesn't change any logic,
+   APIs, or data structures.
 
-2. **Rewrite of `sas_user_scan()` logic** in
-   `drivers/scsi/scsi_transport_sas.c`:
-   - Refactored to handle three cases properly:
-     - Channel 0: Scan SAS-specific devices only
-     - `SCAN_WILD_CARD`: First scan channel 0 SAS devices, then iterate
-       through channels 1 to `max_channel` using
-       `scsi_scan_host_selected()`
-     - Other channels: Delegate to `scsi_scan_host_selected()`
-   - The new code properly handles multi-channel configurations
+6. **Found by Verification Tools**: The bug was discovered by the Linux
+   Verification Center using SVACE static analysis, indicating it's a
+   real issue that could be triggered in practice.
 
-## Stable Backport Criteria
+7. **Reviewed by Maintainers**: The fix was suggested by the VFIO
+   maintainer (Alex Williamson) and reviewed by the MLX5 driver
+   maintainer (Yishai Hadas), showing consensus on the solution.
 
-This commit meets the stable kernel criteria:
+The commit meets all criteria for stable backporting: it fixes a real
+bug that affects users, the fix is small and contained, there's minimal
+risk of regression, and it addresses a potential security/stability
+issue in virtualization infrastructure.
 
-1. **Fixes a real bug**: The inability to discover devices on non-zero
-   channels during wildcard scans is a clear functional bug that affects
-   users.
+ drivers/vfio/pci/mlx5/cmd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-2. **Small and contained**: The changes are limited to:
-   - One export symbol addition
-   - One function rewrite in the SAS transport layer
-   - Total diff is relatively small (~100 lines)
-
-3. **No architectural changes**: This is a targeted fix that doesn't
-   change any kernel subsystem architecture or APIs.
-
-4. **Low regression risk**:
-   - The changes are confined to the SCSI SAS transport subsystem
-   - The fix preserves existing behavior for non-wildcard scans
-   - Error handling paths remain intact
-
-5. **Important for users**: Multi-channel SAS configurations are common
-   in enterprise storage systems, and the ability to properly rescan all
-   channels is critical for:
-   - Hot-plug scenarios
-   - Device recovery after errors
-   - Storage management operations
-
-## Additional Context
-
-Looking at the commit history, there have been previous issues with SAS
-scanning (e.g., commit e9dedc13bb11 "scsi: hisi_sas: Fix rescan after
-deleting a disk"), indicating this is an area where proper functioning
-is critical and has had issues before.
-
-The fix is straightforward and correct - it ensures that wildcard scans
-actually scan all channels as intended, not just channel 0. This is
-essential functionality that should work correctly in stable kernels.
-
- drivers/scsi/scsi_scan.c          |  2 +-
- drivers/scsi/scsi_transport_sas.c | 60 ++++++++++++++++++++++++-------
- 2 files changed, 49 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index 4833b8fe251b..396fcf194b6b 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1899,7 +1899,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
+diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
+index 5b919a0b2524..a92b095b90f6 100644
+--- a/drivers/vfio/pci/mlx5/cmd.c
++++ b/drivers/vfio/pci/mlx5/cmd.c
+@@ -1523,8 +1523,8 @@ int mlx5vf_start_page_tracker(struct vfio_device *vdev,
+ 	log_max_msg_size = MLX5_CAP_ADV_VIRTUALIZATION(mdev, pg_track_log_max_msg_size);
+ 	max_msg_size = (1ULL << log_max_msg_size);
+ 	/* The RQ must hold at least 4 WQEs/messages for successful QP creation */
+-	if (rq_size < 4 * max_msg_size)
+-		rq_size = 4 * max_msg_size;
++	if (rq_size < 4ULL * max_msg_size)
++		rq_size = 4ULL * max_msg_size;
  
- 	return 0;
- }
--
-+EXPORT_SYMBOL(scsi_scan_host_selected);
- static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
- {
- 	struct scsi_device *sdev;
-diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
-index 351b028ef893..d69c7c444a31 100644
---- a/drivers/scsi/scsi_transport_sas.c
-+++ b/drivers/scsi/scsi_transport_sas.c
-@@ -40,6 +40,8 @@
- #include <scsi/scsi_transport_sas.h>
- 
- #include "scsi_sas_internal.h"
-+#include "scsi_priv.h"
-+
- struct sas_host_attrs {
- 	struct list_head rphy_list;
- 	struct mutex lock;
-@@ -1683,32 +1685,66 @@ int scsi_is_sas_rphy(const struct device *dev)
- }
- EXPORT_SYMBOL(scsi_is_sas_rphy);
- 
--
--/*
-- * SCSI scan helper
-- */
--
--static int sas_user_scan(struct Scsi_Host *shost, uint channel,
--		uint id, u64 lun)
-+static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
- {
- 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
- 	struct sas_rphy *rphy;
- 
--	mutex_lock(&sas_host->lock);
- 	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
- 		if (rphy->identify.device_type != SAS_END_DEVICE ||
- 		    rphy->scsi_target_id == -1)
- 			continue;
- 
--		if ((channel == SCAN_WILD_CARD || channel == 0) &&
--		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
-+		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
- 			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
- 					 lun, SCSI_SCAN_MANUAL);
- 		}
- 	}
--	mutex_unlock(&sas_host->lock);
-+}
- 
--	return 0;
-+/*
-+ * SCSI scan helper
-+ */
-+
-+static int sas_user_scan(struct Scsi_Host *shost, uint channel,
-+		uint id, u64 lun)
-+{
-+	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
-+	int res = 0;
-+	int i;
-+
-+	switch (channel) {
-+	case 0:
-+		mutex_lock(&sas_host->lock);
-+		scan_channel_zero(shost, id, lun);
-+		mutex_unlock(&sas_host->lock);
-+		break;
-+
-+	case SCAN_WILD_CARD:
-+		mutex_lock(&sas_host->lock);
-+		scan_channel_zero(shost, id, lun);
-+		mutex_unlock(&sas_host->lock);
-+
-+		for (i = 1; i <= shost->max_channel; i++) {
-+			res = scsi_scan_host_selected(shost, i, id, lun,
-+						      SCSI_SCAN_MANUAL);
-+			if (res)
-+				goto exit_scan;
-+		}
-+		break;
-+
-+	default:
-+		if (channel < shost->max_channel) {
-+			res = scsi_scan_host_selected(shost, channel, id, lun,
-+						      SCSI_SCAN_MANUAL);
-+		} else {
-+			res = -EINVAL;
-+		}
-+		break;
-+	}
-+
-+exit_scan:
-+	return res;
- }
- 
- 
+ 	memset(tracker, 0, sizeof(*tracker));
+ 	tracker->uar = mlx5_get_uars_page(mdev);
 -- 
 2.39.5
 
