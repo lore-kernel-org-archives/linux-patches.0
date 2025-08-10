@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63088274671;
-	Sun, 10 Aug 2025 16:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B1326CE3A;
+	Sun, 10 Aug 2025 16:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754844758; cv=none; b=paPSNwovsujWCcKiCbWEidBTTYCoKEvyKWOtZkw/wcQgdEYr8s7ZDKV5dEuE7tYEOX9r7KLYfijEB8q5YMsaRjtGYlYV+4K7rJ0JYik9WpRU38+ZaG951m40fJCAoTZ9HEpcp7ANPPuw3asFseNwI7bGCadgmRd0NBwFP6RR8ZI=
+	t=1754844760; cv=none; b=i6cQtCl76AUStXX2uxVv9lvBzEN7dP/UY3vi6NnW/ywDCX3tsN4nPpIYBkzUOx7e37CR28kQ0t8ROZdTqfEIkWOowTvhjEZggpiMk9AnivHIXC/2w174BeNAppRe3MBQLr5/gTlq2BJ8D3CkMP1ZlXjQQ7kQtZoaQ1zCdtAnrqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754844758; c=relaxed/simple;
-	bh=aHB3HA7K3wggr9AyGBS4hmBYQjS32W9W6zgZ7uHwisg=;
+	s=arc-20240116; t=1754844760; c=relaxed/simple;
+	bh=MnCNRV8NseshZqcVAz5rGV17eUoHutGZV/rur5kVCQA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CAB9qm1IWpYvjkxsSFtds5jd/kcHf8Bn8hQMR3+dd7arIiStkOBV9sLp/+fDxdVMnFUcuFMXZggbnrXa649SImnxmEP2sL77Q1TBgyUgxEk1Lr7GFmSeAEDpcx0X/npqdHsgzKE32mcjQShMgp1zarIRsLmWH998LnPs514v5rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iROwhm/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDRrPFbwWdMbzjJvJe0HkzWrOK0+fhOpZZZ4ECBSCBSqnB8LzmjKp7WPs25gZVF09y7NMxm0fEyxl3KKy9Y9eRSf6wSGHpmh/FreKCjyS3Nb7EBEqpwPgwX12fVRyWFgX+TulCEuKO9fCe4mwam6lAEhL80lRK6GXQ1YmsK8ivI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hDFNhDnm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iROwhm/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85DBC4CEEB;
-	Sun, 10 Aug 2025 16:52:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hDFNhDnm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D183C4CEEB;
+	Sun, 10 Aug 2025 16:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754844758;
-	bh=aHB3HA7K3wggr9AyGBS4hmBYQjS32W9W6zgZ7uHwisg=;
+	s=k20201202; t=1754844760;
+	bh=MnCNRV8NseshZqcVAz5rGV17eUoHutGZV/rur5kVCQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iROwhm/jo0/qyUeuKx/Trc5HxH+qmzZj7kXVvLABfTn2qis8uuK/vjoMpdhpKXYFY
-	 aCCEfpZ12oJtHLbFkiXQfSPAkweAc2JU9gF4+KsjOSMg0CYsyq32cN1Kv2gJOs5bQQ
-	 /NyInfVmOQpeMdGWIRtVRQ1hxpTGYiciZkmxhCRIQ0hCT5PLhqPrg3bQJjaT00w9Yc
-	 kwXe8/cLp45WeBf6a+7FLVcnM3vhQhlsGytP7uESDO3iaWaCiPTV/tlU7CVZS0bYuV
-	 gKLbTSsEzFcQhLQ0qFR+5n5K/UEiQGk8LgiOqasMcAwQeNTFptGDp7phnbxgiOIHyJ
-	 Ct9jqbH2lpVng==
+	b=hDFNhDnms2v51fTMJ5USIwCG6bq12Gxj4lYpsQEw0XYsXdiNFLhgGi0m4w7wQ/zkO
+	 E6+Tjv5txIVNCjErjL9Z/AS4Srb2Nl7irt5s7QzKNwk0xkiRPpg6WiAeg0n9RYIylx
+	 j3uxeh9r6sda7MimlK6tehtPJ9Wg2s+PGW5InKWlfoHjYCAWJuLgBEdvE5oOheNbOV
+	 bUE/SMeURmlKXk8uJp70Y+2/b1shODWSLU1phVDHhXhhnUj/XPWMs5n1DOrOQEYsch
+	 veYwrhY7rX5O6ZrKGl1MebrwF4vyWXrmLEVs9QvTcg8ai62ZNKAyBp6lrxk1sSLupB
+	 MzIbM9zzlbALg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Calvin Owens <calvin@wbinvd.org>,
-	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
-	Len Brown <len.brown@intel.com>,
+Cc: Elad Nachman <enachman@marvell.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lenb@kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.12] tools/power turbostat: Fix build with musl
-Date: Sun, 10 Aug 2025 12:51:54 -0400
-Message-Id: <20250810165158.1888206-12-sashal@kernel.org>
+	andrew@lunn.ch,
+	gregory.clement@bootlin.com,
+	sebastian.hesselbarth@gmail.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] irqchip/mvebu-gicp: Clear pending interrupts on init
+Date: Sun, 10 Aug 2025 12:51:55 -0400
+Message-Id: <20250810165158.1888206-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810165158.1888206-1-sashal@kernel.org>
 References: <20250810165158.1888206-1-sashal@kernel.org>
@@ -52,23 +54,20 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Elad Nachman <enachman@marvell.com>
 
-[ Upstream commit 6ea0ec1b958a84aff9f03fb0ae4613a4d5bed3ea ]
+[ Upstream commit 3c3d7dbab2c70a4bca47634d564bf659351c05ca ]
 
-turbostat.c: In function 'parse_int_file':
-    turbostat.c:5567:19: error: 'PATH_MAX' undeclared (first use in this function)
-     5567 |         char path[PATH_MAX];
-          |                   ^~~~~~~~
+When a kexec'ed kernel boots up, there might be stale unhandled interrupts
+pending in the interrupt controller. These are delivered as spurious
+interrupts once the boot CPU enables interrupts.
 
-    turbostat.c: In function 'probe_graphics':
-    turbostat.c:6787:19: error: 'PATH_MAX' undeclared (first use in this function)
-     6787 |         char path[PATH_MAX];
-          |                   ^~~~~~~~
+Clear all pending interrupts when the driver is initialized to prevent
+these spurious interrupts from locking the CPU in an endless loop.
 
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Reviewed-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Elad Nachman <enachman@marvell.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250803102548.669682-2-enachman@marvell.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,65 +75,112 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-1. **Clear Build Fix**: This is a straightforward build fix that
-   addresses compilation failures when building turbostat with musl
-   libc. The error messages in the commit clearly show `PATH_MAX` is
-   undeclared, which prevents the tool from compiling.
+## Reasons for Backporting:
 
-2. **Minimal and Safe Change**: The fix is extremely minimal - it only
-   adds a single include directive (`#include <limits.h>`) at line 70 of
-   turbostat.c. This is a standard POSIX header that defines `PATH_MAX`
-   and other system limits.
+### 1. **Fixes a Real Bug Affecting Users**
+The commit addresses a concrete issue where stale, unhandled interrupts
+from before a kexec can cause spurious interrupts that lock the CPU in
+an endless loop. This is a serious functionality bug that can prevent
+systems from booting properly after kexec.
 
-3. **No Functional Changes**: The commit doesn't change any logic or
-   behavior - it simply ensures the code compiles correctly by including
-   the necessary header file that defines `PATH_MAX`.
+### 2. **Small and Contained Fix**
+The change is minimal and surgical:
+- Only adds 9 lines of functional code
+- The fix is self-contained within the probe function
+- Simply clears pending interrupts by writing to the
+  GICP_CLRSPI_NSR_OFFSET register for all 64 possible interrupts
+- Uses standard kernel APIs (ioremap/iounmap)
 
-4. **Affects User Tools**: While turbostat is a userspace tool (not
-   kernel code), it's an important power monitoring utility that's part
-   of the kernel source tree. Users building kernel tools with musl libc
-   (common in embedded systems, Alpine Linux, etc.) would be unable to
-   build this tool without this fix.
+### 3. **Low Risk of Regression**
+- The clearing operation only happens once during driver initialization
+- If ioremap fails, it's handled gracefully with an error message but
+  doesn't fail the probe
+- The clearing loop writes to a register specifically designed for
+  clearing interrupts (GICP_CLRSPI_NSR_OFFSET)
+- This is a write-only operation that doesn't affect normal interrupt
+  handling flow
 
-5. **Cross-Platform Compatibility**: The issue affects systems using
-   musl libc instead of glibc. With glibc, `PATH_MAX` might be defined
-   through indirect includes, but musl requires explicit inclusion of
-   `<limits.h>`. This fix improves portability.
+### 4. **Follows Established Pattern**
+Similar fixes for spurious/pending interrupts have been backported in
+other interrupt controllers:
+- commit 28e89cdac648 ("irqchip/renesas-rzv2h: Prevent TINT spurious
+  interrupt") - marked with Cc: stable@vger.kernel.org
+- commit 853a6030303f ("irqchip/renesas-rzg2l: Prevent spurious
+  interrupts when setting trigger type")
 
-6. **No Risk of Regression**: Adding the `<limits.h>` include has zero
-   risk of breaking existing functionality. The header is standard and
-   the constant `PATH_MAX` is used in at least 4 places in the code
-   (lines 5641, 6870, 7481, 7537) where character arrays are declared.
+### 5. **Critical for Kexec Functionality**
+Kexec is an important feature for:
+- Crash dump collection (kdump)
+- Fast reboot scenarios
+- System recovery
+This fix ensures these use cases work reliably on Marvell platforms
+using the GICP interrupt controller.
 
-7. **Follows Stable Rules**: This perfectly fits the stable kernel
-   criteria:
-   - Fixes a real bug (build failure)
-   - Obviously correct (standard header inclusion)
-   - Already tested (has sign-offs and review)
-   - Small change (1 line)
-   - No new features or architectural changes
+### 6. **No Architectural Changes**
+The fix doesn't introduce:
+- New features or capabilities
+- Changes to existing APIs or interfaces
+- Modifications to interrupt handling logic
+- Any structural changes to the driver
 
-The commit is an ideal candidate for stable backporting as it fixes a
-concrete build issue with minimal risk and maximum benefit for users of
-alternative libc implementations.
+### 7. **Clear Problem Statement**
+The commit message clearly describes:
+- The problem scenario (kexec with pending interrupts)
+- The symptom (CPU locked in endless loop)
+- The solution (clear all pending interrupts on init)
 
- tools/power/x86/turbostat/turbostat.c | 1 +
- 1 file changed, 1 insertion(+)
+## Code Analysis:
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index bf011c2847f2..46ee85216373 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -67,6 +67,7 @@
- #include <stdbool.h>
- #include <assert.h>
- #include <linux/kernel.h>
-+#include <limits.h>
+The added code (lines 240-247 in the patched version):
+```c
+base = ioremap(gicp->res->start, gicp->res->end - gicp->res->start);
+if (IS_ERR(base)) {
+    dev_err(&pdev->dev, "ioremap() failed. Unable to clear pending
+interrupts.\n");
+} else {
+    for (i = 0; i < 64; i++)
+        writel(i, base + GICP_CLRSPI_NSR_OFFSET);
+    iounmap(base);
+}
+```
+
+This is a defensive programming approach that ensures system stability
+without affecting normal operation, making it an ideal candidate for
+stable backport.
+
+ drivers/irqchip/irq-mvebu-gicp.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/irqchip/irq-mvebu-gicp.c b/drivers/irqchip/irq-mvebu-gicp.c
+index d3232d6d8dce..fd85c845e015 100644
+--- a/drivers/irqchip/irq-mvebu-gicp.c
++++ b/drivers/irqchip/irq-mvebu-gicp.c
+@@ -177,6 +177,7 @@ static int mvebu_gicp_probe(struct platform_device *pdev)
+ 		.ops	= &gicp_domain_ops,
+ 	};
+ 	struct mvebu_gicp *gicp;
++	void __iomem *base;
+ 	int ret, i;
  
- #define UNUSED(x) (void)(x)
+ 	gicp = devm_kzalloc(&pdev->dev, sizeof(*gicp), GFP_KERNEL);
+@@ -236,6 +237,15 @@ static int mvebu_gicp_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
+ 
++	base = ioremap(gicp->res->start, gicp->res->end - gicp->res->start);
++	if (IS_ERR(base)) {
++		dev_err(&pdev->dev, "ioremap() failed. Unable to clear pending interrupts.\n");
++	} else {
++		for (i = 0; i < 64; i++)
++			writel(i, base + GICP_CLRSPI_NSR_OFFSET);
++		iounmap(base);
++	}
++
+ 	return msi_create_parent_irq_domain(&info, &gicp_msi_parent_ops) ? 0 : -ENOMEM;
+ }
  
 -- 
 2.39.5
