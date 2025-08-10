@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19805F9EC;
-	Sun, 10 Aug 2025 00:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3651D4C9F;
+	Sun, 10 Aug 2025 00:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785283; cv=none; b=N4hCEepK7yUBOX10dckX7gJOCABxvPkUrVvzNfxliscl4fpeFRb947kOzIsbnabojbGna3Od5+hTqRatfPvWmUA/qE4pICs2KuOOkJ0drEnzA2oE1z8074CsW35x5S/AZcRZs7CFGFIfsNVR0ClxI3Can6sQKmthVQH9vJabN7A=
+	t=1754785285; cv=none; b=KwxM1cDEIEUmyhViQXpGhY1Clwjk27WTsBZx2LcZY8zrU2E2GSX4EJzxTl3e0zeVtzCAaNGlUEIujenibVQyWjJIsw+HvLMhOQ7yzTB5WdUFPK54kCMM2BFOYIZXpHAiToP5/i2i7pcIVPmOA/EhcjwgP5R8De4KBSiACU77XG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785283; c=relaxed/simple;
-	bh=vvMEKSPcs/Kfso+hEel2t2m1IIAZhDU+t6R5SqXw/+0=;
+	s=arc-20240116; t=1754785285; c=relaxed/simple;
+	bh=jeoA254isR7T1Cz0HSUWsDyvPf9kVzICJGvd3hDuKrg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Ieg4pS7ADefjOOJokNU6Ah129UaXU7Ps+OJ4bVMM7IM7vfgBilQsPZeGZz101N7B8+jKqPu3O4xJk4iW7kpQjU+aj6/Ow/kDmYJOD0gmbf/UW1HXOIYmymZoeu06Rg8zDviA1kOBmaIGcRVs+upP+byZKNFYUpctcL1kLB+inBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U5voVvUM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BzGLjOQu+ccfm46W2WbXzax2rwIu1qif4eHudZz8Kzd+fk8cXy43X0vInd4YIS4zcskrXN9MNyHTZEscKGLsaNgp5JBIz31O3ieCDS97uq3qXYZDfZ/kFBKdnZPHt5sfebccxcrKY7pz4DUMu7+om1VUYtiwo31fg6GRdKIpr3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=joVhhOzf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U5voVvUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DA0C4CEE7;
-	Sun, 10 Aug 2025 00:21:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="joVhhOzf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993E8C4CEE7;
+	Sun, 10 Aug 2025 00:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754785283;
-	bh=vvMEKSPcs/Kfso+hEel2t2m1IIAZhDU+t6R5SqXw/+0=;
+	s=k20201202; t=1754785284;
+	bh=jeoA254isR7T1Cz0HSUWsDyvPf9kVzICJGvd3hDuKrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U5voVvUMAucV5Q97uSqkLTP8F/DLGL9QnHv/hNyGhHackIBH+aAKmNVXZPlEM8gvo
-	 o8B9qwSUwxaZYXGOwVT6w7Z0cBW0pxIxMfe9KkrXe1VOfx9cQsYZQm6tl3JdAGocCK
-	 S1cbBCCaVfOPEOy+mlgGfugq1KM0ZcdTIuRovVXwyL0P83Cif9wvdMldv0qln1P7Ve
-	 UfBg/0oWvfG3rtREHXls0zgCTSPHqaUljwX5A5ssPWQk3xzhiSFRGdkRk8c0L1s11N
-	 YGrfq5GFPgSVpBQPE2ufEimtN0iI/A18WoqoPUqeKGAYGbHzjAx/Ayfx6cwI+NVqat
-	 VxMdhRdgTdUUw==
+	b=joVhhOzfl8ab1+JO+HcOGkiGy5KGHzljy5I4q+YZ5lFpdzeD8KPd1N/84G9omzlAZ
+	 vhLad59SCAlQ8RSUtqNJYNSfReQNv5y7ivef//qxRf4GOuqwU9pkuD5NIsE6vHtISS
+	 DJFhh5fTIFK34YDjSMflY0oCXIc6eyCVGfHpqHFcJNZwSgPtru39sWj+0K2b7wUWS7
+	 hsc43uDtdnxEUoe3YBM666OEKLG9ltULwUJ3LaF9YvbXDc38AzLXogWLJ9vdVHJ9uX
+	 zrMeBtGvfsH1Fy1xi8v3uZ9bcJC3MjdQR+pe6vl14OeHfUXu2DQ7tdppoaIWKRNraM
+	 DD7XKag3/PwpQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Corey Minyard <corey@minyard.net>,
-	kernel test robot <lkp@intel.com>,
+Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	openipmi-developer@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.16-5.4] ipmi: Fix strcpy source and destination the same
-Date: Sat,  9 Aug 2025 20:20:56 -0400
-Message-Id: <20250810002104.1545396-7-sashal@kernel.org>
+	James.Bottomley@HansenPartnership.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans
+Date: Sat,  9 Aug 2025 20:20:57 -0400
+Message-Id: <20250810002104.1545396-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810002104.1545396-1-sashal@kernel.org>
 References: <20250810002104.1545396-1-sashal@kernel.org>
@@ -50,17 +51,23 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <corey@minyard.net>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 8ffcb7560b4a15faf821df95e3ab532b2b020f8c ]
+[ Upstream commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a ]
 
-The source and destination of some strcpy operations was the same.
-Split out the part of the operations that needed to be done for those
-particular calls so the unnecessary copy wasn't done.
+sas_user_scan() did not fully process wildcard channel scans
+(SCAN_WILD_CARD) when a transport-specific user_scan() callback was
+present. Only channel 0 would be scanned via user_scan(), while the
+remaining channels were skipped, potentially missing devices.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506140756.EFXXvIP4-lkp@intel.com/
-Signed-off-by: Corey Minyard <corey@minyard.net>
+user_scan() invokes updated sas_user_scan() for channel 0, and if
+successful, iteratively scans remaining channels (1 to
+shost->max_channel) via scsi_scan_host_selected().  This ensures complete
+wildcard scanning without affecting transport-specific scanning behavior.
+
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20250624061649.17990-1-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -68,198 +75,191 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit is an excellent candidate for backporting to stable kernel
-trees. Here's my extensive analysis:
+This commit should be backported to stable kernel trees. Here's my
+detailed analysis:
 
-## Bug Description and Impact
+## Bug Fix Analysis
 
-The commit fixes a critical bug where `strcpy()` operations were copying
-a string to itself (source and destination being the same). Looking at
-the original code:
+This commit fixes a **functional bug** in the SAS transport layer where
+wildcard channel scans (`SCAN_WILD_CARD`) were not working correctly
+when a transport-specific `user_scan()` callback was present. The bug
+manifested as:
 
-1. In `action_op()` at line 1213: `strcpy(action, inval);` - but when
-   called from `ipmi_wdog_init()` line 1294 with `action_op(action,
-   NULL)`, the first parameter `action` is passed, and if validation
-   passes, it copies `action` to itself.
+1. **Incomplete device discovery**: When performing wildcard scans, only
+   channel 0 devices would be scanned via the SAS-specific
+   `sas_user_scan()`, while channels 1 through `max_channel` were
+   completely skipped.
+2. **Missing devices**: This could result in SAS devices on non-zero
+   channels not being discovered during rescans, which is a serious
+   issue for storage management.
 
-2. Similar issues in `preaction_op()` line 1237 and `preop_op()` line
-   1257 when called from initialization.
+## Code Changes Analysis
 
-This undefined behavior could lead to:
-- Memory corruption
-- Unpredictable watchdog behavior during initialization
-- Potential system instability in the IPMI watchdog subsystem
+The fix involves two key changes:
 
-## Fix Analysis
+1. **Export of `scsi_scan_host_selected()`** in
+   `drivers/scsi/scsi_scan.c:1902`:
+   - This makes the function available to transport modules
+   - Simple one-line addition: `EXPORT_SYMBOL(scsi_scan_host_selected);`
 
-The fix properly refactors the code by:
-1. Creating separate `*_set_val()` functions that only validate and set
-   the value variables
-2. Modifying the original functions to use these new helpers
-3. In `ipmi_wdog_init()`, directly calling the `*_set_val()` functions
-   for validation without the problematic strcpy
+2. **Rewrite of `sas_user_scan()` logic** in
+   `drivers/scsi/scsi_transport_sas.c`:
+   - Refactored to handle three cases properly:
+     - Channel 0: Scan SAS-specific devices only
+     - `SCAN_WILD_CARD`: First scan channel 0 SAS devices, then iterate
+       through channels 1 to `max_channel` using
+       `scsi_scan_host_selected()`
+     - Other channels: Delegate to `scsi_scan_host_selected()`
+   - The new code properly handles multi-channel configurations
 
-This is a minimal, targeted fix that:
-- Doesn't introduce new features
-- Maintains existing functionality
-- Only restructures code to eliminate undefined behavior
-- Has clear boundaries within the IPMI watchdog driver
+## Stable Backport Criteria
 
-## Stable Tree Criteria Met
+This commit meets the stable kernel criteria:
 
-1. **Fixes a real bug**: Yes - strcpy with same source/destination is
-   undefined behavior
-2. **Small and contained**: Yes - changes are limited to one file and
-   involve straightforward refactoring
-3. **No major architectural changes**: Correct - only refactors existing
-   functions
-4. **Minimal regression risk**: Yes - the logic remains identical, just
-   properly separated
-5. **Critical subsystem**: IPMI watchdog is important for system
-   reliability and recovery
-6. **Automated detection**: The bug was found by kernel test robot,
-   indicating it's a real issue
+1. **Fixes a real bug**: The inability to discover devices on non-zero
+   channels during wildcard scans is a clear functional bug that affects
+   users.
 
-## Additional Evidence
+2. **Small and contained**: The changes are limited to:
+   - One export symbol addition
+   - One function rewrite in the SAS transport layer
+   - Total diff is relatively small (~100 lines)
 
-- The commit was reported by the kernel test robot with a specific bug
-  report link
-- The fix is defensive programming that eliminates undefined behavior
-- IPMI watchdog is used in production servers for system recovery
-- The bug could manifest differently across compilers/architectures
+3. **No architectural changes**: This is a targeted fix that doesn't
+   change any kernel subsystem architecture or APIs.
 
-This meets all stable kernel criteria for backporting as it fixes a
-concrete bug with minimal risk.
+4. **Low regression risk**:
+   - The changes are confined to the SCSI SAS transport subsystem
+   - The fix preserves existing behavior for non-wildcard scans
+   - Error handling paths remain intact
 
- drivers/char/ipmi/ipmi_watchdog.c | 59 ++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 17 deletions(-)
+5. **Important for users**: Multi-channel SAS configurations are common
+   in enterprise storage systems, and the ability to properly rescan all
+   channels is critical for:
+   - Hot-plug scenarios
+   - Device recovery after errors
+   - Storage management operations
 
-diff --git a/drivers/char/ipmi/ipmi_watchdog.c b/drivers/char/ipmi/ipmi_watchdog.c
-index ab759b492fdd..a013ddbf1466 100644
---- a/drivers/char/ipmi/ipmi_watchdog.c
-+++ b/drivers/char/ipmi/ipmi_watchdog.c
-@@ -1146,14 +1146,8 @@ static struct ipmi_smi_watcher smi_watcher = {
- 	.smi_gone = ipmi_smi_gone
- };
+## Additional Context
+
+Looking at the commit history, there have been previous issues with SAS
+scanning (e.g., commit e9dedc13bb11 "scsi: hisi_sas: Fix rescan after
+deleting a disk"), indicating this is an area where proper functioning
+is critical and has had issues before.
+
+The fix is straightforward and correct - it ensures that wildcard scans
+actually scan all channels as intended, not just channel 0. This is
+essential functionality that should work correctly in stable kernels.
+
+ drivers/scsi/scsi_scan.c          |  2 +-
+ drivers/scsi/scsi_transport_sas.c | 60 ++++++++++++++++++++++++-------
+ 2 files changed, 49 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
+index 4833b8fe251b..396fcf194b6b 100644
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -1899,7 +1899,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
  
--static int action_op(const char *inval, char *outval)
-+static int action_op_set_val(const char *inval)
- {
--	if (outval)
--		strcpy(outval, action);
+ 	return 0;
+ }
 -
--	if (!inval)
--		return 0;
++EXPORT_SYMBOL(scsi_scan_host_selected);
+ static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
+ {
+ 	struct scsi_device *sdev;
+diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
+index 351b028ef893..d69c7c444a31 100644
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -40,6 +40,8 @@
+ #include <scsi/scsi_transport_sas.h>
+ 
+ #include "scsi_sas_internal.h"
++#include "scsi_priv.h"
++
+ struct sas_host_attrs {
+ 	struct list_head rphy_list;
+ 	struct mutex lock;
+@@ -1683,32 +1685,66 @@ int scsi_is_sas_rphy(const struct device *dev)
+ }
+ EXPORT_SYMBOL(scsi_is_sas_rphy);
+ 
 -
- 	if (strcmp(inval, "reset") == 0)
- 		action_val = WDOG_TIMEOUT_RESET;
- 	else if (strcmp(inval, "none") == 0)
-@@ -1164,18 +1158,26 @@ static int action_op(const char *inval, char *outval)
- 		action_val = WDOG_TIMEOUT_POWER_DOWN;
- 	else
- 		return -EINVAL;
--	strcpy(action, inval);
- 	return 0;
- }
- 
--static int preaction_op(const char *inval, char *outval)
-+static int action_op(const char *inval, char *outval)
+-/*
+- * SCSI scan helper
+- */
+-
+-static int sas_user_scan(struct Scsi_Host *shost, uint channel,
+-		uint id, u64 lun)
++static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
  {
-+	int rv;
-+
- 	if (outval)
--		strcpy(outval, preaction);
-+		strcpy(outval, action);
+ 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+ 	struct sas_rphy *rphy;
  
- 	if (!inval)
- 		return 0;
-+	rv = action_op_set_val(inval);
-+	if (!rv)
-+		strcpy(action, inval);
-+	return rv;
+-	mutex_lock(&sas_host->lock);
+ 	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
+ 		if (rphy->identify.device_type != SAS_END_DEVICE ||
+ 		    rphy->scsi_target_id == -1)
+ 			continue;
+ 
+-		if ((channel == SCAN_WILD_CARD || channel == 0) &&
+-		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
++		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
+ 			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
+ 					 lun, SCSI_SCAN_MANUAL);
+ 		}
+ 	}
+-	mutex_unlock(&sas_host->lock);
 +}
  
-+static int preaction_op_set_val(const char *inval)
+-	return 0;
++/*
++ * SCSI scan helper
++ */
++
++static int sas_user_scan(struct Scsi_Host *shost, uint channel,
++		uint id, u64 lun)
 +{
- 	if (strcmp(inval, "pre_none") == 0)
- 		preaction_val = WDOG_PRETIMEOUT_NONE;
- 	else if (strcmp(inval, "pre_smi") == 0)
-@@ -1188,18 +1190,26 @@ static int preaction_op(const char *inval, char *outval)
- 		preaction_val = WDOG_PRETIMEOUT_MSG_INT;
- 	else
- 		return -EINVAL;
--	strcpy(preaction, inval);
- 	return 0;
++	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
++	int res = 0;
++	int i;
++
++	switch (channel) {
++	case 0:
++		mutex_lock(&sas_host->lock);
++		scan_channel_zero(shost, id, lun);
++		mutex_unlock(&sas_host->lock);
++		break;
++
++	case SCAN_WILD_CARD:
++		mutex_lock(&sas_host->lock);
++		scan_channel_zero(shost, id, lun);
++		mutex_unlock(&sas_host->lock);
++
++		for (i = 1; i <= shost->max_channel; i++) {
++			res = scsi_scan_host_selected(shost, i, id, lun,
++						      SCSI_SCAN_MANUAL);
++			if (res)
++				goto exit_scan;
++		}
++		break;
++
++	default:
++		if (channel < shost->max_channel) {
++			res = scsi_scan_host_selected(shost, channel, id, lun,
++						      SCSI_SCAN_MANUAL);
++		} else {
++			res = -EINVAL;
++		}
++		break;
++	}
++
++exit_scan:
++	return res;
  }
  
--static int preop_op(const char *inval, char *outval)
-+static int preaction_op(const char *inval, char *outval)
- {
-+	int rv;
-+
- 	if (outval)
--		strcpy(outval, preop);
-+		strcpy(outval, preaction);
  
- 	if (!inval)
- 		return 0;
-+	rv = preaction_op_set_val(inval);
-+	if (!rv)
-+		strcpy(preaction, inval);
-+	return 0;
-+}
- 
-+static int preop_op_set_val(const char *inval)
-+{
- 	if (strcmp(inval, "preop_none") == 0)
- 		preop_val = WDOG_PREOP_NONE;
- 	else if (strcmp(inval, "preop_panic") == 0)
-@@ -1208,7 +1218,22 @@ static int preop_op(const char *inval, char *outval)
- 		preop_val = WDOG_PREOP_GIVE_DATA;
- 	else
- 		return -EINVAL;
--	strcpy(preop, inval);
-+	return 0;
-+}
-+
-+static int preop_op(const char *inval, char *outval)
-+{
-+	int rv;
-+
-+	if (outval)
-+		strcpy(outval, preop);
-+
-+	if (!inval)
-+		return 0;
-+
-+	rv = preop_op_set_val(inval);
-+	if (!rv)
-+		strcpy(preop, inval);
- 	return 0;
- }
- 
-@@ -1245,18 +1270,18 @@ static int __init ipmi_wdog_init(void)
- {
- 	int rv;
- 
--	if (action_op(action, NULL)) {
-+	if (action_op_set_val(action)) {
- 		action_op("reset", NULL);
- 		pr_info("Unknown action '%s', defaulting to reset\n", action);
- 	}
- 
--	if (preaction_op(preaction, NULL)) {
-+	if (preaction_op_set_val(preaction)) {
- 		preaction_op("pre_none", NULL);
- 		pr_info("Unknown preaction '%s', defaulting to none\n",
- 			preaction);
- 	}
- 
--	if (preop_op(preop, NULL)) {
-+	if (preop_op_set_val(preop)) {
- 		preop_op("preop_none", NULL);
- 		pr_info("Unknown preop '%s', defaulting to none\n", preop);
- 	}
 -- 
 2.39.5
 
