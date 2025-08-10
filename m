@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B7A25A33F;
-	Sun, 10 Aug 2025 16:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36392243958;
+	Sun, 10 Aug 2025 16:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754844754; cv=none; b=qjCEf1/SXhLtFOChFqk8+trp11/4I0EDq3sW1xRIlX4VwanPPIfpOXRDSyUUvwr8xX2c+JhNfPgZmLoG+/EHB407jGgUzs+r/q3x46qMZq6vM64RF4jy7c+SVTE/wctgAuqbz778vNEywZ/59I6c21pHSIfaT53PI9QJjlAA47w=
+	t=1754844756; cv=none; b=hCS6NihL/hR7dQh2cEk2BbgMu5AQwOhA4C38/6JYQq7bPwd2N0MhN5hDH1dJIGrTek2No1tC3ZlytGhjE1hr0HT2macw6bzsQPi+SL+p7HDQlgh4X4T6+LzMtNF9eQOH4Ty93+htJbmoRk++jH2PpJ5HiWMGNm/eaF5a+Azz+Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754844754; c=relaxed/simple;
-	bh=rBzUwhenI+n09cbRZheI4PXmhLTa4L9oOkW6C5OZSpw=;
+	s=arc-20240116; t=1754844756; c=relaxed/simple;
+	bh=Rc9gcte61KO2vI3yv5oPqQK/jrE1EmDqiOIuzeZCDoI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=eJwjJ+nlxiuXBj6kKKOKKaBVEpbtF0gHD73UtKiF6kccXkmZwqY6BCeEhJa8e1whaFjq4/Lxg/2ca/BQh1CXUZAEtRtYdPYmAgVVS4gaMKzfI/LvYu2hxJWE0/zAFAt94ePD/L0cS1xstUSjd9RJqb2ZeFNb7ynfK3dtO7miXEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KBD2WHC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5EjFW6phKzHQ5DD4ZQaBlSnKUsGcLEKe3Gi0quPg5G78WnthRFc60qDp1w09jfTRMOamEb8w+bDEetdINV/Zk/0DFi7vlT4Cofhcjkez/LmOFs1GCiRSWYaX5NQYhP9E/5LnzmS6lKP3fbctBW4Wn3ZR5+1NbIrQq4lKh87Lzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTCoucGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KBD2WHC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48ACC4CEEB;
-	Sun, 10 Aug 2025 16:52:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WTCoucGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD5EC4CEF7;
+	Sun, 10 Aug 2025 16:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754844753;
-	bh=rBzUwhenI+n09cbRZheI4PXmhLTa4L9oOkW6C5OZSpw=;
+	s=k20201202; t=1754844756;
+	bh=Rc9gcte61KO2vI3yv5oPqQK/jrE1EmDqiOIuzeZCDoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBD2WHC8N09vHWATB01WsqsZ9dVVheAwiUpYoHJERDdPl29G603poPWKWKsY68j0s
-	 QWFG5WqbBIMXjQaLsA9XcEweg+61tdfQQkuSQqiuM6noqL38+XbAX1SAMBS/IRQUWN
-	 66OmfRrh8A4SK582AnR4mjeYfQR4vn0V1Jnb/aBQj0wfD8RG7AXRnkCeHs4k0aMxO1
-	 jmr3QPeoi2wiEvUttNYm+JBmim2xQDbW8SPj3cK8orITf1bro5KcH0WTuJLnFJdTgH
-	 V+2XOMOcvFwMWlXDfKwyFO1KkDmd6vtpWa+oaALaekH2QGVwUMTHnOOQoEUg5u6yWb
-	 501JmcoJbMfQA==
+	b=WTCoucGeQzSFRfmxbbXSg+HO6FY0UMLpE8MEn+6NH/bbWOkNgcfe8/l3Dmenocmwo
+	 q2d5D+NISd9VHIMwN2diPT7X4xFhjj6OmDvDb9BKzpbQeY1lgVzt5Ey89yMo7HERy/
+	 rs2j7VQtAvablpTwchQsANXcGzkMSK+Y81/TBR1YxvL8bfsmtTNklztnNu3SEgRS9O
+	 lu3en5VxbPPSBKgedNWG/vOiIfZz/K7sS5hyCUKZvYJrNpYb6Xv71jCKmzT9xYqTeZ
+	 cDv14qee2rLsujZcizRGWKkRNB7R7B20RU9ZQIHtgbnYe+Y6yizqKHmnoaUXpVkUQn
+	 6MRMXLeriZwVQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Jakubek <peterjakubek@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Mark Brown <broonie@kernel.org>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>,
-	yung-chuan.liao@linux.intel.com,
-	liam.r.girdwood@intel.com,
-	peter.ujfalusi@linux.intel.com,
-	ranjani.sridharan@linux.intel.com,
-	Vijendar.Mukunda@amd.com,
-	ckeepax@opensource.cirrus.com,
-	simont@opensource.cirrus.com,
-	rf@opensource.cirrus.com,
-	mstrozek@opensource.cirrus.com,
-	deep_harsora@dell.com
-Subject: [PATCH AUTOSEL 6.16-6.15] ASoC: Intel: sof_sdw: Add quirk for Alienware Area 51 (2025) 0CCC SKU
-Date: Sun, 10 Aug 2025 12:51:52 -0400
-Message-Id: <20250810165158.1888206-10-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] regmap: irq: Free the regmap-irq mutex
+Date: Sun, 10 Aug 2025 12:51:53 -0400
+Message-Id: <20250810165158.1888206-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810165158.1888206-1-sashal@kernel.org>
 References: <20250810165158.1888206-1-sashal@kernel.org>
@@ -59,118 +50,160 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Peter Jakubek <peterjakubek@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 1b03391d073dad748636a1ad9668b837cce58265 ]
+[ Upstream commit 1da33858af6250184d2ef907494d698af03283de ]
 
-Add DMI quirk entry for Alienware systems with SKU "0CCC" to enable
-proper speaker codec configuration (SOC_SDW_CODEC_SPKR).
+We do not currently free the mutex allocated by regmap-irq, do so.
 
-This system requires the same audio configuration as some existing Dell systems.
-Without this patch, the laptop's speakers and microphone will not work.
-
-Signed-off-by: Peter Jakubek <peterjakubek@gmail.com>
-Link: https://patch.msgid.link/20250731172104.2009007-1-peterjakubek@gmail.com
+Tested-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250731-regmap-irq-nesting-v1-1-98b4d1bf20f0@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now, let me analyze the commit for backport suitability:
-
 **Backport Status: YES**
 
-## Extensive Analysis:
+This commit fixes a resource leak bug where a mutex allocated with
+`mutex_init()` in `regmap_add_irq_chip_fwnode()` was never properly
+freed with `mutex_destroy()`. This is a clear memory/resource leak that
+has existed since the mutex was first introduced in 2011 (commit
+f8beab2bb611).
 
-This commit should be backported to stable kernel trees based on the
-following detailed analysis:
+**Key reasons for backporting:**
 
-### 1. **Hardware Enablement Fix**
-The commit adds a DMI quirk entry for the Alienware Area 51 (2025) with
-SKU "0CCC" to enable proper speaker codec configuration. The commit
-message explicitly states: "Without this patch, the laptop's speakers
-and microphone will not work." This is a clear hardware functionality
-fix where audio devices are completely non-functional without this
-patch.
+1. **Clear bug fix**: The commit fixes a resource leak where
+   `mutex_init(&d->lock)` at line 804 allocates mutex resources but they
+   were never freed. The fix adds corresponding
+   `mutex_destroy(&d->lock)` calls in both error paths and the cleanup
+   function.
 
-### 2. **Minimal and Contained Change**
-The code change is extremely minimal - it adds exactly 8 lines to the
-`sof_sdw_quirk_table[]` array:
-```c
-+       {
-+               .callback = sof_sdw_quirk_cb,
-+               .matches = {
-+                       DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
-+                       DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCC")
-+               },
-+               .driver_data = (void *)(SOC_SDW_CODEC_SPKR),
-+       },
-```
+2. **Long-standing issue**: This bug has existed since 2011 when the
+   mutex was first introduced, affecting all stable kernels that include
+   the regmap-irq subsystem.
 
-### 3. **Follows Established Pattern**
-The change follows the exact same pattern as numerous other
-Dell/Alienware system quirks already in the file. Looking at lines
-694-742 in the same file, we can see identical entries for Dell systems
-with different SKUs (0CF1, 0CF3, 0CF4, 0CF5, etc.), all using the same
-`SOC_SDW_CODEC_SPKR` flag.
+3. **Small and contained change**: The patch only adds two
+   `mutex_destroy()` calls:
+   - One in the error path (`err_mutex:` label) at line 935
+   - One in `regmap_del_irq_chip()` at line 1031
 
-### 4. **Zero Risk of Regression**
-The quirk only activates when the DMI system matches exactly "Alienware"
-vendor and SKU "0CCC". This makes it impossible to affect any other
-systems. The `SOC_SDW_CODEC_SPKR` flag (defined in
-`/home/sasha/linux/include/sound/soc_sdw_utils.h` as BIT(15)) enables
-codec internal speaker support, which is a well-tested configuration
-used by many other systems.
+4. **No behavioral changes**: The fix only ensures proper cleanup; it
+   doesn't change any functional behavior or introduce new features.
 
-### 5. **Similar Commits Are Routinely Backported**
-Recent git history shows numerous similar quirk additions for Dell and
-Lenovo systems (commits like d859923faeca, af23d38caae5, 60f1c71ec874)
-that add DMI quirks for audio hardware enablement. These types of
-hardware enablement fixes are regularly accepted into stable trees.
+5. **Low regression risk**: Adding `mutex_destroy()` calls is a standard
+   cleanup operation that carries minimal risk. The patch also properly
+   adjusts error handling labels (changing `goto err_alloc` to `goto
+   err_mutex` after mutex initialization).
 
-### 6. **User Impact**
-Without this patch, users of the Alienware Area 51 (2025) laptop have
-completely non-functional audio (no speakers, no microphone). This
-severely impacts the usability of the device and would force users to
-use external audio devices or compile custom kernels.
+6. **Affects widely-used subsystem**: The regmap-irq framework is used
+   by many drivers across the kernel for interrupt handling, making this
+   fix broadly beneficial.
 
-### 7. **No Architectural Changes**
-The commit makes no architectural changes, adds no new features, and
-simply extends an existing quirk table with a new hardware ID. It uses
-existing, well-tested infrastructure (DMI matching and
-SOC_SDW_CODEC_SPKR flag).
+The commit follows stable kernel rules perfectly - it's a small, obvious
+fix for a real bug with minimal risk of regression. While not a critical
+security issue or crash fix, resource leaks are valid stable candidates,
+especially in widely-used infrastructure code like regmap.
 
-### Conclusion:
-This is a textbook example of a commit that should be backported to
-stable kernels. It fixes a real hardware issue (non-functional audio),
-has zero regression risk due to exact DMI matching, follows established
-patterns, and is minimal in scope. The fix enables basic functionality
-for affected hardware without any possibility of impacting other
-systems.
+ drivers/base/regmap/regmap-irq.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
- sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 504887505e68..c576ec5527f9 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -741,6 +741,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
- 	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCC")
-+		},
-+		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
-+	},
- 	/* Pantherlake devices*/
- 	{
- 		.callback = sof_sdw_quirk_cb,
+diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
+index d1585f073776..4aac12d38215 100644
+--- a/drivers/base/regmap/regmap-irq.c
++++ b/drivers/base/regmap/regmap-irq.c
+@@ -816,7 +816,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 						     d->mask_buf[i],
+ 						     chip->irq_drv_data);
+ 			if (ret)
+-				goto err_alloc;
++				goto err_mutex;
+ 		}
+ 
+ 		if (chip->mask_base && !chip->handle_mask_sync) {
+@@ -827,7 +827,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret) {
+ 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 
+@@ -838,7 +838,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret) {
+ 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 
+@@ -855,7 +855,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret != 0) {
+ 				dev_err(map->dev, "Failed to read IRQ status: %d\n",
+ 					ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 
+@@ -879,7 +879,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret != 0) {
+ 				dev_err(map->dev, "Failed to ack 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 	}
+@@ -901,7 +901,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			if (ret != 0) {
+ 				dev_err(map->dev, "Failed to set masks in 0x%x: %d\n",
+ 					reg, ret);
+-				goto err_alloc;
++				goto err_mutex;
+ 			}
+ 		}
+ 	}
+@@ -910,7 +910,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 	if (chip->status_is_level) {
+ 		ret = read_irq_data(d);
+ 		if (ret < 0)
+-			goto err_alloc;
++			goto err_mutex;
+ 
+ 		memcpy(d->prev_status_buf, d->status_buf,
+ 		       array_size(d->chip->num_regs, sizeof(d->prev_status_buf[0])));
+@@ -918,7 +918,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 
+ 	ret = regmap_irq_create_domain(fwnode, irq_base, chip, d);
+ 	if (ret)
+-		goto err_alloc;
++		goto err_mutex;
+ 
+ 	ret = request_threaded_irq(irq, NULL, regmap_irq_thread,
+ 				   irq_flags | IRQF_ONESHOT,
+@@ -935,6 +935,8 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 
+ err_domain:
+ 	/* Should really dispose of the domain but... */
++err_mutex:
++	mutex_destroy(&d->lock);
+ err_alloc:
+ 	kfree(d->type_buf);
+ 	kfree(d->type_buf_def);
+@@ -1027,6 +1029,7 @@ void regmap_del_irq_chip(int irq, struct regmap_irq_chip_data *d)
+ 			kfree(d->config_buf[i]);
+ 		kfree(d->config_buf);
+ 	}
++	mutex_destroy(&d->lock);
+ 	kfree(d);
+ }
+ EXPORT_SYMBOL_GPL(regmap_del_irq_chip);
 -- 
 2.39.5
 
