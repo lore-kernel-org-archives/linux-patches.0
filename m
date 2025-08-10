@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6E28F40;
-	Sun, 10 Aug 2025 00:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7B68F40;
+	Sun, 10 Aug 2025 00:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785294; cv=none; b=bAsbxHQl986YKFA9TL3o9EaM0DkTC5VhG4iePO+KtLivISrmCMDb5btgozfdngW8b9a91BZ60nIZOhCVv2Ht0bEg1yHgcIbhws3DODTt1ONpYAhLYnw0ICRXxL2qO+H4tiwa/0FzWfUB9xFgSYB2CvSaHscS6UZgQgTFD6s0lsc=
+	t=1754785296; cv=none; b=IhJYsOsLeCmiw7i7HUhnVziaKf0ndWP/XxEwYmbKP9A/3vjp9I1n0Ud14Yr092wMy03ge0Q3xG5O7T/9kezfMpfLI7/RdtiUB1r2Q96kc9BEEG6KOIVMFrikwzwRA5CKytBJ8vcEJkyEzjaAZI4nPjLGd3DJjL76g24JJBXJSqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785294; c=relaxed/simple;
-	bh=78QzPlzaBG01dmRGq5FOYkDlmNnMxuwrIq23STEu7HU=;
+	s=arc-20240116; t=1754785296; c=relaxed/simple;
+	bh=oxbFC8LpeOtA7fHqzIDtkJBaA/dia+1GofAqcvEpL8o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Dg2scFc+2racU2i6GzSf2QiE+H56J4cX4fAHCqEY424dqecoHrzL+z8edMQqVhCWzu2zzv9eB5uoJCcAOVe1lDjlql7A+0+dI/iiu42q4tVYoewNN2TugMDmLsmJyejLXbs7HJqp8PZdU5whr673mIYdJVmclsAX99dmTmFjVPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DBcDRdcW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kk7UHu2pHh1OnUoq/R4S+1HDWU6AewtYbR5gwezMuuZmD37+M/5bISiOHZxnrAdAXmcTlvNMfTDAwBxj6mSnSy4zyqvJ562YEOOZ6hMrvXYyis5w6xQZ6fea3k3i19AIf2bPevbNC5v1aB3PqTaAGH0YRrks4HLoJI410CX/AuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sSez/7yU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBcDRdcW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416F0C4CEF1;
-	Sun, 10 Aug 2025 00:21:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sSez/7yU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03514C4CEE7;
+	Sun, 10 Aug 2025 00:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754785294;
-	bh=78QzPlzaBG01dmRGq5FOYkDlmNnMxuwrIq23STEu7HU=;
+	s=k20201202; t=1754785296;
+	bh=oxbFC8LpeOtA7fHqzIDtkJBaA/dia+1GofAqcvEpL8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBcDRdcW9dy3yWlnaWyij968W7RddLtzfsga+7NCWOhO2buKSScFUz91eafoJYm29
-	 gPpZJ/U5QoiNtX2RCWPawywrJ1/frXrcNNO7712AigCmOydjT2Zcw5BbQpu918yIbU
-	 EKTGrdnENdvR1bRXijDxNEyR4rnhwsRVuZUYJi5feNmd57WwYYh0ZtaH69cY0WJ9Dg
-	 VxxXSn+oAOqUlS/1AFB6GMdGevAxHF0MK2P9WjtD9Nbk9RVMD5Fn/2eYEHufAwFP7h
-	 fImYcizfqZyAetFuAhLMoTMEMnTtLL/10qKf8l5izeqc6H6GbX/Eopx+GTp6nWqSmf
-	 nrU46aKg+w9Ig==
+	b=sSez/7yU8bXOeMwMYXDYpCPguSdYR+krOp0FUnPi2586/vJgTDx3BLsytNczSxfD/
+	 hDoRqN26JsKUVdves38CJi+i0SjdyeJ3KiCM6qn/SZUsYANl0H9bxiV56eN6Y5QjYh
+	 LoF72yLG6HpOrNAoQP0hbIBVoPHXCV1T921vaxtqTuARA0qsUMD9A+L3UpOjxA5loQ
+	 2lhBjGhQOpr1Pdxv47q5O5GNtSf14aEJ2smGESyo6P9UVNNCLzzNp6DgSNkyoH6vla
+	 fMsdh+T+zY2k5lOrvVK8toRTIwbo80nRmVZiLNuYW2JEBu2DijTcWZoWchMlgZiDrx
+	 8Tx1g9k8GIUDw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Keith Busch <kbusch@kernel.org>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
+Cc: Breno Leitao <leitao@debian.org>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>,
-	kvm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.15] vfio/type1: conditional rescheduling while pinning
-Date: Sat,  9 Aug 2025 20:21:01 -0400
-Message-Id: <20250810002104.1545396-12-sashal@kernel.org>
+	openipmi-developer@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.16-5.4] ipmi: Use dev_warn_ratelimited() for incorrect message warnings
+Date: Sat,  9 Aug 2025 20:21:02 -0400
+Message-Id: <20250810002104.1545396-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810002104.1545396-1-sashal@kernel.org>
 References: <20250810002104.1545396-1-sashal@kernel.org>
@@ -51,49 +50,21 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit b1779e4f209c7ff7e32f3c79d69bca4e3a3a68b6 ]
+[ Upstream commit ec50ec378e3fd83bde9b3d622ceac3509a60b6b5 ]
 
-A large DMA mapping request can loop through dma address pinning for
-many pages. In cases where THP can not be used, the repeated vmf_insert_pfn can
-be costly, so let the task reschedule as need to prevent CPU stalls. Failure to
-do so has potential harmful side effects, like increased memory pressure
-as unrelated rcu tasks are unable to make their reclaim callbacks and
-result in OOM conditions.
+During BMC firmware upgrades on live systems, the ipmi_msghandler
+generates excessive "BMC returned incorrect response" warnings
+while the BMC is temporarily offline. This can flood system logs
+in large deployments.
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:   36-....: (20999 ticks this GP) idle=b01c/1/0x4000000000000000 softirq=35839/35839 fqs=3538
- rcu:            hardirqs   softirqs   csw/system
- rcu:    number:        0        107            0
- rcu:   cputime:       50          0        10446   ==> 10556(ms)
- rcu:   (t=21075 jiffies g=377761 q=204059 ncpus=384)
-...
-  <TASK>
-  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
-  ? walk_system_ram_range+0x63/0x120
-  ? walk_system_ram_range+0x46/0x120
-  ? pgprot_writethrough+0x20/0x20
-  lookup_memtype+0x67/0xf0
-  track_pfn_insert+0x20/0x40
-  vmf_insert_pfn_prot+0x88/0x140
-  vfio_pci_mmap_huge_fault+0xf9/0x1b0 [vfio_pci_core]
-  __do_fault+0x28/0x1b0
-  handle_mm_fault+0xef1/0x2560
-  fixup_user_fault+0xf5/0x270
-  vaddr_get_pfns+0x169/0x2f0 [vfio_iommu_type1]
-  vfio_pin_pages_remote+0x162/0x8e0 [vfio_iommu_type1]
-  vfio_iommu_type1_ioctl+0x1121/0x1810 [vfio_iommu_type1]
-  ? futex_wake+0x1c1/0x260
-  x64_sys_call+0x234/0x17a0
-  do_syscall_64+0x63/0x130
-  ? exc_page_fault+0x63/0x130
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Replace dev_warn() with dev_warn_ratelimited() to throttle these
+warnings and prevent log spam during BMC maintenance operations.
 
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/r/20250715184622.3561598-1-kbusch@meta.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Message-ID: <20250710-ipmi_ratelimit-v1-1-6d417015ebe9@debian.org>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -101,103 +72,78 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit is an excellent candidate for backporting to stable kernel
+trees for the following reasons:
 
-## Bug Fix Nature
+1. **Fixes a Real User-Impacting Bug**: The commit addresses log
+   flooding during BMC firmware upgrades or when BMC is temporarily
+   offline. This is a practical operational issue that affects
+   production systems, especially in large deployments where BMC
+   maintenance is routine.
 
-The commit fixes a critical CPU stall issue that can lead to system
-instability. The RCU stall trace in the commit message shows:
-- A 21-second RCU stall (`t=21075 jiffies`)
-- Over 10 seconds of CPU time consumed (`cputime: 10556ms`)
-- The stall originates from `vfio_pin_pages_remote()` during large DMA
-  mapping operations
+2. **Minimal and Safe Change**: The change is trivial - simply replacing
+   `dev_warn()` with `dev_warn_ratelimited()`. This is:
+   - A single-line change
+   - Uses well-established kernel infrastructure (ratelimited logging)
+   - Has no functional impact on the IPMI driver's operation
+   - Cannot introduce regressions in driver functionality
 
-This is a serious bug that affects system reliability and can cascade
-into OOM conditions as mentioned: "increased memory pressure as
-unrelated rcu tasks are unable to make their reclaim callbacks and
-result in OOM conditions."
+3. **Clear Problem Statement**: The commit message clearly describes a
+   specific scenario (BMC firmware upgrades) where excessive "BMC
+   returned incorrect response" warnings flood system logs. This is a
+   documented, reproducible issue.
 
-## Code Change Analysis
+4. **Follows Established Pattern**: The kernel already has precedent for
+   this type of fix. Commit ca8c1c53b03b ("ipmi: rate limit ipmi
+   smi_event failure message") from kernel v5.15 made similar changes to
+   address log flooding in the same subsystem, and that was successfully
+   integrated into stable trees.
 
-The fix is minimal and well-contained:
-1. **Single line addition**: The patch adds only `cond_resched()` call
-   at line 654 (after the comment block)
-2. **Strategic placement**: Positioned at the beginning of the batch
-   refill loop, before `vaddr_get_pfns()` is called
-3. **Clear comment**: The 5-line comment explains exactly why the
-   reschedule is needed
+5. **Low Risk**: The change only affects logging behavior, not the
+   actual handling of IPMI messages. The error path (goto
+   return_unspecified) remains unchanged, maintaining the same error
+   handling logic.
 
-```c
-+                       /*
-+                        * Large mappings may take a while to repeatedly
-refill
-+                        * the batch, so conditionally relinquish the
-CPU when
-+                        * needed to avoid stalls.
-+                        */
-+                       cond_resched();
-```
+6. **Addresses Operational Concerns**: In production environments with
+   many servers, BMC maintenance is common. Without rate limiting, logs
+   can grow excessively, potentially:
+   - Filling up disk space
+   - Making real issues harder to spot
+   - Degrading system performance due to excessive logging I/O
 
-## Stability and Safety
+7. **Code Context Shows Repeated Condition**: Looking at the code path
+   (lines 4604-4615), this warning triggers when the BMC response
+   doesn't match the expected NetFN and Command. During BMC firmware
+   updates or reboots, this mismatch can occur repeatedly until the BMC
+   comes back online, making rate limiting essential.
 
-1. **Low risk**: `cond_resched()` is a standard kernel primitive that
-   only yields CPU if needed
-2. **Already used pattern**: My search shows vfio_iommu_type1.c already
-   uses `cond_resched()` in other places, confirming this is an
-   established pattern
-3. **No functional changes**: The fix doesn't alter the logic of DMA
-   pinning, it just prevents monopolizing the CPU
-4. **Reviewed by RCU maintainer**: Paul E. McKenney's review adds
-   credibility to the fix
+The change meets all criteria for stable backporting: it fixes a bug
+affecting users, is small and contained, has minimal risk of regression,
+and addresses a clear operational problem without introducing new
+features or architectural changes.
 
-## Stable Tree Criteria Compliance
+ drivers/char/ipmi/ipmi_msghandler.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Per stable-kernel-rules.rst, this meets the criteria:
-- **Fixes a real bug**: CPU stalls and potential OOM are serious issues
-- **Small change**: Single line addition with comment
-- **Obviously correct**: Standard solution for long-running loops
-- **Already tested**: Has been in mainline and reviewed by experts
-- **No new features**: Pure bug fix, no functionality addition
-
-## Impact Assessment
-
-The bug affects systems performing large DMA mappings through VFIO,
-particularly when Transparent Huge Pages (THP) cannot be used. This is
-common in:
-- Virtual machine device passthrough
-- GPU/accelerator passthrough scenarios
-- Large memory pinning operations
-
-Without this fix, affected systems can experience:
-- RCU stalls leading to system unresponsiveness
-- Memory pressure and OOM kills
-- Performance degradation for unrelated tasks
-
-The fix prevents these issues with negligible overhead (conditional
-reschedule only when needed).
-
- drivers/vfio/vfio_iommu_type1.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 1136d7ac6b59..f8d68fe77b41 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -647,6 +647,13 @@ static long vfio_pin_pages_remote(struct vfio_dma *dma, unsigned long vaddr,
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 064944ae9fdc..8e9050f99e9e 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -4607,10 +4607,10 @@ static int handle_one_recv_msg(struct ipmi_smi *intf,
+ 		 * The NetFN and Command in the response is not even
+ 		 * marginally correct.
+ 		 */
+-		dev_warn(intf->si_dev,
+-			 "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
+-			 (msg->data[0] >> 2) | 1, msg->data[1],
+-			 msg->rsp[0] >> 2, msg->rsp[1]);
++		dev_warn_ratelimited(intf->si_dev,
++				     "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
++				     (msg->data[0] >> 2) | 1, msg->data[1],
++				     msg->rsp[0] >> 2, msg->rsp[1]);
  
- 	while (npage) {
- 		if (!batch->size) {
-+			/*
-+			 * Large mappings may take a while to repeatedly refill
-+			 * the batch, so conditionally relinquish the CPU when
-+			 * needed to avoid stalls.
-+			 */
-+			cond_resched();
-+
- 			/* Empty batch, so refill it. */
- 			ret = vaddr_get_pfns(mm, vaddr, npage, dma->prot,
- 					     &pfn, batch);
+ 		goto return_unspecified;
+ 	}
 -- 
 2.39.5
 
