@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A596FD531;
-	Sun, 10 Aug 2025 00:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7482DB640;
+	Sun, 10 Aug 2025 00:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785280; cv=none; b=Wqtw8pYuqZD/Fs5hnG+3bcVadA1SRimxBnvH7ADW3/E7JtGar0d0xgYJDYknnVfYxFYjUZK+NLaO2LsFx7ZM6iYH0dooOQ/UcUkIjpSCYDNZbGY6jMa4nXJAlA1YHXiH0FULss8q5YyHBNAnaODmLhNha5gpXUx4ChNLLLkkEww=
+	t=1754785281; cv=none; b=IRZY/+A4Uo0jrh6PEO9sr9X75hRsyRivp6cvdUifJTDIl5Gi3fFNVChb4YnJkD1FuaLo9iss4MuRDN+3xGlw48/4V2kx7nd2aW4e4qZY1q1Q0c9iMnZidnwowbT7bXtpe2MGjvsFMKV0YKVyFoI4kOV44jkPUEMXAkbHtcKy8HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785280; c=relaxed/simple;
-	bh=kvw9MIoi08amuc4ML79U48/Eg8y2wvOuuFGYohZdYP0=;
+	s=arc-20240116; t=1754785281; c=relaxed/simple;
+	bh=b+Wx5qsCI9nVtIdtHwKmoyGGopfCJx5c/5WGFR/T4Ag=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ihyE8TfvHgHUvLMwi8dZPrg1IU0Ts3fdcktKHGHbMz/Ai7SCFulKMg7oDiYVZCKr1qGo1wDz9SuLgauGspKCQBhOqwXhh1yF7CS1pUHZ0PKlmCJijCIdA1ODlnnpJRPMQa9I6luVTwW8fhnUsdiRdU45OF/xUozwpoKGyorQE+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tcn01sUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGjHFm2dATVzPuGxF46oRCM/GzPuXLOzwcIjU8EouEY1vx1EIDOTOTrbYMIiH10lZvs70356ehkKPwdRAIAC77rb6HFvgMPYeuw6etRIssUZbJPzCJewv/snK0WnjSDF8sDJPomB/h+zxivPtGCxygr7nWwyQ+r7YkrbCnJPF90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZXNGXP+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tcn01sUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D82C4CEF4;
-	Sun, 10 Aug 2025 00:21:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZXNGXP+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B00C4CEE7;
+	Sun, 10 Aug 2025 00:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754785279;
-	bh=kvw9MIoi08amuc4ML79U48/Eg8y2wvOuuFGYohZdYP0=;
+	s=k20201202; t=1754785281;
+	bh=b+Wx5qsCI9nVtIdtHwKmoyGGopfCJx5c/5WGFR/T4Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tcn01sURMl5Uzy20EP+AYqWEVAnObr2DViwmIm4nbtY5Xvb51J6nkbdcftbv0T1mT
-	 ScVAVtyzkWDrG5v1StdwIaaESoBSLEFzOsiBlATNmeSED5v21n1Q70QqqGfHO5cqJy
-	 ww+53bhT9xZbGjrTCptkXnwIqWqLUkc7CFonlY4t+8FxD+rsAoqUW3rJccut0KK+Iz
-	 jP+X0Mukn2TfEf4sKw4Z4EI8lTFmmkwZg19sQyO8tJRhwFAXn5RMIyHeHes3eV2WY3
-	 Qi5EQC5WYA6wFOxLw3tUNdDf57si0h7OlUuadHpxvggPqtdzKTo21u43NXG3VthcdZ
-	 FeXc8GEmrlmgw==
+	b=ZXNGXP+PQZyLuXrPGfUttmyYc1/FKQfHZaZiQ9P/tJpDu+dVNLHmy5o5ORC/XfP+Q
+	 2YLjcXy6d/AUBBnvqBsdJQjjiUEyiyFHscfyi/0BXtxjUEJcMrR85C2rJiTpG0XQIm
+	 FGoGcE8GtqClTO2bbioQOoAWN0TsctyhG2oPXBZUw3Mo2EmGFBqD72DncZ37oZxomv
+	 SocwngshKLvTKtIOvluv2SmdR9sd/51G6JrJJC0cFopfBN9fRPZZMEQnmNppLRW1si
+	 iECbZVInsCLFi2BtPqMkZHoV2Rad4xYbR3lb6H7fKd/Ga/q4vIgn8TWDaq4WklhMRc
+	 +AlG7r04SWrQw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
+Cc: Maurizio Lombardi <mlombard@redhat.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	"Martin K . Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kbuild@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.4] kconfig: gconf: fix potential memory leak in renderer_edited()
-Date: Sat,  9 Aug 2025 20:20:54 -0400
-Message-Id: <20250810002104.1545396-5-sashal@kernel.org>
+	linux-scsi@vger.kernel.org,
+	target-devel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.15] scsi: target: core: Generate correct identifiers for PR OUT transport IDs
+Date: Sat,  9 Aug 2025 20:20:55 -0400
+Message-Id: <20250810002104.1545396-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810002104.1545396-1-sashal@kernel.org>
 References: <20250810002104.1545396-1-sashal@kernel.org>
@@ -48,115 +50,313 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit f72ed4c6a375e52a3f4b75615e4a89d29d8acea7 ]
+[ Upstream commit 6e0f6aa44b68335df404a2df955055f416b5f2aa ]
 
-If gtk_tree_model_get_iter() fails, gtk_tree_path_free() is not called.
+Fix target_parse_pr_out_transport_id() to return a string representing
+the transport ID in a human-readable format (e.g., naa.xxxxxxxx...)  for
+various SCSI protocol types (SAS, FCP, SRP, SBP).
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Previously, the function returned a pointer to the raw binary buffer,
+which was incorrectly compared against human-readable strings, causing
+comparisons to fail.  Now, the function writes a properly formatted
+string into a buffer provided by the caller.  The output format depends
+on the transport protocol:
+
+* SAS: 64-bit identifier, "naa." prefix.
+* FCP: 64-bit identifier, colon separated values.
+* SBP: 64-bit identifier, no prefix.
+* SRP: 128-bit identifier, "0x" prefix.
+* iSCSI: IQN string.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20250714133738.11054-1-mlombard@redhat.com
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and examination of the code, here is
-my assessment:
-
 **Backport Status: YES**
 
-## Extensive Analysis:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-### 1. **Nature of the Bug**
-The commit fixes a clear memory leak in the `renderer_edited()` function
-in scripts/kconfig/gconf.c. The function allocates a GtkTreePath object
-using `gtk_tree_path_new_from_string()` at line 782, but if
-`gtk_tree_model_get_iter()` fails on line 788, the function returns
-early without calling `gtk_tree_path_free()`, causing a memory leak.
+## Bug Fix Nature
 
-### 2. **Bug Impact**
-- **Resource leak**: Every time a user attempts to edit a value in the
-  GTK-based kernel configuration tool (gconfig) and the operation fails
-  to get the iterator, memory is leaked.
-- **User-facing impact**: While gconfig is not used by all kernel users,
-  those who do use it for configuring the kernel could experience memory
-  leaks during interactive configuration sessions.
-- **Accumulation potential**: In a long configuration session with
-  multiple failed edits, these leaks could accumulate.
+This commit fixes a **critical functional bug** in the SCSI target
+subsystem's Persistent Reservation (PR) handling. The bug causes PR
+operations to fail when comparing transport IDs, which is a core
+functionality for SCSI target implementations.
 
-### 3. **Fix Analysis**
-The fix is minimal and straightforward:
-- Changes the early `return` to a `goto free` statement
-- Adds a `free:` label before the existing `gtk_tree_path_free(path)`
-  call
-- This ensures the allocated path is always freed, whether the function
-  succeeds or fails
+## Technical Analysis of the Bug
 
-### 4. **Risk Assessment**
-- **Minimal risk**: The change only affects the error path and ensures
-  proper cleanup
-- **No functional changes**: The fix doesn't alter any program logic, it
-  only adds proper resource cleanup
-- **Well-contained**: The change is limited to a single function in the
-  gconfig tool
-- **Standard pattern**: Using goto for cleanup is a common and accepted
-  pattern in kernel code
+1. **Original Problem**: The function
+   `target_parse_pr_out_transport_id()` was returning a pointer to raw
+   binary data (`buf + offset`) instead of a human-readable string
+   representation. This raw binary data was then incorrectly compared
+   against human-readable string formats in callers.
 
-### 5. **Stable Tree Criteria Compliance**
-The commit meets stable tree requirements:
-- ✓ Fixes a real bug (memory leak)
-- ✓ Small and contained (2 lines changed)
-- ✓ No new features or architectural changes
-- ✓ Clear and obvious correctness
-- ✓ Minimal regression risk
+2. **Impact on Functionality**:
+   - In `core_scsi3_decode_spec_i_port()` at line 1610-1611, the code
+     calls `__core_tpg_get_initiator_node_acl(tmp_tpg, i_str)` where
+     `i_str` was previously pointing to binary data
+   - The function `__core_tpg_get_initiator_node_acl()` expects a human-
+     readable initiator string (like "naa.1234567890abcdef" for SAS)
+   - This mismatch would cause the lookup to fail, breaking PR
+     operations
 
-### 6. **Historical Context**
-Looking at the git history, there have been multiple memory leak fixes
-in the kconfig subsystem (e.g., commits a409fc1463d6, ae1eff0349f2,
-fbac5977d81c), indicating this is an area where such fixes are
-considered important and regularly backported.
+3. **Protocols Affected**: The bug affects multiple SCSI transport
+   protocols:
+   - SAS (SCSI_PROTOCOL_SAS)
+   - Fibre Channel (SCSI_PROTOCOL_FCP)
+   - SRP (SCSI_PROTOCOL_SRP)
+   - SBP (SCSI_PROTOCOL_SBP)
+   - iSCSI (SCSI_PROTOCOL_ISCSI)
 
-### 7. **Code Pattern Analysis**
-Examining other uses of `gtk_tree_model_get_iter()` in the same file
-shows that other call sites don't have this issue because they either:
-- Don't allocate resources before the call (lines 902, 962, 1015)
-- Or are in different contexts where the path is managed differently
+## Fix Implementation
 
-This makes the fix in `renderer_edited()` particularly important as it's
-the only place with this specific leak pattern.
+The fix properly converts binary transport IDs to their expected string
+formats:
+- **SAS**: Converts 8 bytes to "naa.XXXXXXXXXXXX" format
+- **FCP**: Converts to colon-separated format using `%8phC`
+- **SRP**: Converts 16 bytes to "0x" prefixed hex string
+- **SBP**: Converts to plain hex string
+- **iSCSI**: Already handled strings correctly, but API updated for
+  consistency
 
-The commit should be backported to stable kernels to ensure users of the
-gconfig tool don't experience memory leaks during kernel configuration
-sessions.
+## Stable Backport Criteria
 
- scripts/kconfig/gconf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This commit meets several key stable tree criteria:
 
-diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
-index abe4cfe66b14..0caf0ced13df 100644
---- a/scripts/kconfig/gconf.c
-+++ b/scripts/kconfig/gconf.c
-@@ -748,7 +748,7 @@ static void renderer_edited(GtkCellRendererText * cell,
- 	struct symbol *sym;
- 
- 	if (!gtk_tree_model_get_iter(model2, &iter, path))
--		return;
-+		goto free;
- 
- 	gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
- 	sym = menu->sym;
-@@ -760,6 +760,7 @@ static void renderer_edited(GtkCellRendererText * cell,
- 
- 	update_tree(&rootmenu, NULL);
- 
-+free:
- 	gtk_tree_path_free(path);
+1. **Fixes a Real Bug**: Yes - PR operations would fail for non-iSCSI
+   transports
+2. **Small and Contained**: The fix is localized to transport ID parsing
+   functions
+3. **No New Features**: Only fixes existing functionality
+4. **Minimal Risk**: Changes are straightforward format conversions
+5. **Important for Users**: PR is a critical feature for enterprise
+   storage environments
+6. **No Architectural Changes**: Simple bug fix without design changes
+
+## Additional Evidence
+
+Looking at the commit history, there have been other PR-related fixes
+recently (e.g., `d8ab68bdb294` fixing a NULL pointer dereference),
+indicating this is an actively maintained critical subsystem where bugs
+need to be fixed in stable kernels.
+
+The fact that this went unnoticed suggests it affects less common code
+paths, but when triggered, it would completely break PR functionality
+for affected transport types - a serious issue for production storage
+systems relying on persistent reservations for cluster coordination.
+
+ drivers/target/target_core_fabric_lib.c | 63 +++++++++++++++++++------
+ drivers/target/target_core_internal.h   |  4 +-
+ drivers/target/target_core_pr.c         | 18 +++----
+ 3 files changed, 60 insertions(+), 25 deletions(-)
+
+diff --git a/drivers/target/target_core_fabric_lib.c b/drivers/target/target_core_fabric_lib.c
+index 43f47e3aa448..ec7bc6e30228 100644
+--- a/drivers/target/target_core_fabric_lib.c
++++ b/drivers/target/target_core_fabric_lib.c
+@@ -257,11 +257,41 @@ static int iscsi_get_pr_transport_id_len(
+ 	return len;
  }
  
+-static char *iscsi_parse_pr_out_transport_id(
++static void sas_parse_pr_out_transport_id(char *buf, char *i_str)
++{
++	char hex[17] = {};
++
++	bin2hex(hex, buf + 4, 8);
++	snprintf(i_str, TRANSPORT_IQN_LEN, "naa.%s", hex);
++}
++
++static void srp_parse_pr_out_transport_id(char *buf, char *i_str)
++{
++	char hex[33] = {};
++
++	bin2hex(hex, buf + 8, 16);
++	snprintf(i_str, TRANSPORT_IQN_LEN, "0x%s", hex);
++}
++
++static void fcp_parse_pr_out_transport_id(char *buf, char *i_str)
++{
++	snprintf(i_str, TRANSPORT_IQN_LEN, "%8phC", buf + 8);
++}
++
++static void sbp_parse_pr_out_transport_id(char *buf, char *i_str)
++{
++	char hex[17] = {};
++
++	bin2hex(hex, buf + 8, 8);
++	snprintf(i_str, TRANSPORT_IQN_LEN, "%s", hex);
++}
++
++static bool iscsi_parse_pr_out_transport_id(
+ 	struct se_portal_group *se_tpg,
+ 	char *buf,
+ 	u32 *out_tid_len,
+-	char **port_nexus_ptr)
++	char **port_nexus_ptr,
++	char *i_str)
+ {
+ 	char *p;
+ 	int i;
+@@ -282,7 +312,7 @@ static char *iscsi_parse_pr_out_transport_id(
+ 	if ((format_code != 0x00) && (format_code != 0x40)) {
+ 		pr_err("Illegal format code: 0x%02x for iSCSI"
+ 			" Initiator Transport ID\n", format_code);
+-		return NULL;
++		return false;
+ 	}
+ 	/*
+ 	 * If the caller wants the TransportID Length, we set that value for the
+@@ -306,7 +336,7 @@ static char *iscsi_parse_pr_out_transport_id(
+ 			pr_err("Unable to locate \",i,0x\" separator"
+ 				" for Initiator port identifier: %s\n",
+ 				&buf[4]);
+-			return NULL;
++			return false;
+ 		}
+ 		*p = '\0'; /* Terminate iSCSI Name */
+ 		p += 5; /* Skip over ",i,0x" separator */
+@@ -339,7 +369,8 @@ static char *iscsi_parse_pr_out_transport_id(
+ 	} else
+ 		*port_nexus_ptr = NULL;
+ 
+-	return &buf[4];
++	strscpy(i_str, &buf[4], TRANSPORT_IQN_LEN);
++	return true;
+ }
+ 
+ int target_get_pr_transport_id_len(struct se_node_acl *nacl,
+@@ -387,33 +418,35 @@ int target_get_pr_transport_id(struct se_node_acl *nacl,
+ 	}
+ }
+ 
+-const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
+-		char *buf, u32 *out_tid_len, char **port_nexus_ptr)
++bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
++		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str)
+ {
+-	u32 offset;
+-
+ 	switch (tpg->proto_id) {
+ 	case SCSI_PROTOCOL_SAS:
+ 		/*
+ 		 * Assume the FORMAT CODE 00b from spc4r17, 7.5.4.7 TransportID
+ 		 * for initiator ports using SCSI over SAS Serial SCSI Protocol.
+ 		 */
+-		offset = 4;
++		sas_parse_pr_out_transport_id(buf, i_str);
+ 		break;
+-	case SCSI_PROTOCOL_SBP:
+ 	case SCSI_PROTOCOL_SRP:
++		srp_parse_pr_out_transport_id(buf, i_str);
++		break;
+ 	case SCSI_PROTOCOL_FCP:
+-		offset = 8;
++		fcp_parse_pr_out_transport_id(buf, i_str);
++		break;
++	case SCSI_PROTOCOL_SBP:
++		sbp_parse_pr_out_transport_id(buf, i_str);
+ 		break;
+ 	case SCSI_PROTOCOL_ISCSI:
+ 		return iscsi_parse_pr_out_transport_id(tpg, buf, out_tid_len,
+-					port_nexus_ptr);
++					port_nexus_ptr, i_str);
+ 	default:
+ 		pr_err("Unknown proto_id: 0x%02x\n", tpg->proto_id);
+-		return NULL;
++		return false;
+ 	}
+ 
+ 	*port_nexus_ptr = NULL;
+ 	*out_tid_len = 24;
+-	return buf + offset;
++	return true;
+ }
+diff --git a/drivers/target/target_core_internal.h b/drivers/target/target_core_internal.h
+index 408be26d2e9b..20aab1f50565 100644
+--- a/drivers/target/target_core_internal.h
++++ b/drivers/target/target_core_internal.h
+@@ -103,8 +103,8 @@ int	target_get_pr_transport_id_len(struct se_node_acl *nacl,
+ int	target_get_pr_transport_id(struct se_node_acl *nacl,
+ 		struct t10_pr_registration *pr_reg, int *format_code,
+ 		unsigned char *buf);
+-const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
+-		char *buf, u32 *out_tid_len, char **port_nexus_ptr);
++bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
++		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str);
+ 
+ /* target_core_hba.c */
+ struct se_hba *core_alloc_hba(const char *, u32, u32);
+diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
+index 70905805cb17..83e172c92238 100644
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -1478,11 +1478,12 @@ core_scsi3_decode_spec_i_port(
+ 	LIST_HEAD(tid_dest_list);
+ 	struct pr_transport_id_holder *tidh_new, *tidh, *tidh_tmp;
+ 	unsigned char *buf, *ptr, proto_ident;
+-	const unsigned char *i_str = NULL;
++	unsigned char i_str[TRANSPORT_IQN_LEN];
+ 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN];
+ 	sense_reason_t ret;
+ 	u32 tpdl, tid_len = 0;
+ 	u32 dest_rtpi = 0;
++	bool tid_found;
+ 
+ 	/*
+ 	 * Allocate a struct pr_transport_id_holder and setup the
+@@ -1571,9 +1572,9 @@ core_scsi3_decode_spec_i_port(
+ 			dest_rtpi = tmp_lun->lun_tpg->tpg_rtpi;
+ 
+ 			iport_ptr = NULL;
+-			i_str = target_parse_pr_out_transport_id(tmp_tpg,
+-					ptr, &tid_len, &iport_ptr);
+-			if (!i_str)
++			tid_found = target_parse_pr_out_transport_id(tmp_tpg,
++					ptr, &tid_len, &iport_ptr, i_str);
++			if (!tid_found)
+ 				continue;
+ 			/*
+ 			 * Determine if this SCSI device server requires that
+@@ -3153,13 +3154,14 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
+ 	struct t10_pr_registration *pr_reg, *pr_res_holder, *dest_pr_reg;
+ 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
+ 	unsigned char *buf;
+-	const unsigned char *initiator_str;
++	unsigned char initiator_str[TRANSPORT_IQN_LEN];
+ 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN] = { };
+ 	u32 tid_len, tmp_tid_len;
+ 	int new_reg = 0, type, scope, matching_iname;
+ 	sense_reason_t ret;
+ 	unsigned short rtpi;
+ 	unsigned char proto_ident;
++	bool tid_found;
+ 
+ 	if (!se_sess || !se_lun) {
+ 		pr_err("SPC-3 PR: se_sess || struct se_lun is NULL!\n");
+@@ -3278,9 +3280,9 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
+ 		ret = TCM_INVALID_PARAMETER_LIST;
+ 		goto out;
+ 	}
+-	initiator_str = target_parse_pr_out_transport_id(dest_se_tpg,
+-			&buf[24], &tmp_tid_len, &iport_ptr);
+-	if (!initiator_str) {
++	tid_found = target_parse_pr_out_transport_id(dest_se_tpg,
++			&buf[24], &tmp_tid_len, &iport_ptr, initiator_str);
++	if (!tid_found) {
+ 		pr_err("SPC-3 PR REGISTER_AND_MOVE: Unable to locate"
+ 			" initiator_str from Transport ID\n");
+ 		ret = TCM_INVALID_PARAMETER_LIST;
 -- 
 2.39.5
 
