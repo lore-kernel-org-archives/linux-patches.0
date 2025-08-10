@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B00272E54;
-	Sun, 10 Aug 2025 16:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B7C2033A;
+	Sun, 10 Aug 2025 16:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754844738; cv=none; b=IHn6TK+SYT8zlJGpVTmHKlBvitxrJc+OMp6nZjHsYKaUCMfqOC0fO5UxdnrqZFQVmhVayQl2qMPHkNF3T4V0+ygZG5M3Uls+SDHXwYlFJ3t+DEaWYui3fzhqbISOMIxYQ1o4Z5vckgMwYFznww1s2OpCfQPAuKftJEC05mrQZ24=
+	t=1754844740; cv=none; b=lQkR0lLvqzbU4944SLhnyIAof9IzazebAOVmXD8M7v3dz4agefHz8sKYsYleV3jLD02DuNT/BUO0TaKTfGY+9wrQWeQS40LNhIYkRyF2GYTY0ydzaAh9EktX68Qldwgk6kG3+zDS8/xZr4eC0jnFVzYqwXEZsl1suqzwS1vfO1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754844738; c=relaxed/simple;
-	bh=SOqAd6GSoq3jfNfyFntbJVMfeCR8Kes0pVVn6yUAE6Q=;
+	s=arc-20240116; t=1754844740; c=relaxed/simple;
+	bh=s/pK8Jeo0x08FnfOtGR6JaLs6DEzam/VqTyKpT6ENw0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cPAKkx2TYbPOV7qpVQvCd+uY9N6q+pXOgE7P276xjygvFsZJFxZ6zFfapu/dXXf5QyNrjXFByle4btKZcWtuz1UmvJ4HM/RhaK91VRmdjxblQQctrM3Vv9DB+t5YarqkvPv1RArTsP4Ky6yX62GPj9HGrZahHkK6POX4bDFRIik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fdUR/8ad; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZSWuuxrVQCMwFFSUMN9/Vesw0aRBb7vqa+b4QSFOkvP5ZAPHXMXanT9ZcEgP6Dm8PHGtpMx1YXk3tHrWhxRlss2NQYq30OsufiBuwXdgMsm7YupavSb6PcfV1M5G1WF9CKAVJueJg8NvyDdMkB19r/3H5WBbZnw4ov+7AD5v0Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MuaGxnt9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fdUR/8ad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E12C4CEF7;
-	Sun, 10 Aug 2025 16:52:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MuaGxnt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155B0C4CEF8;
+	Sun, 10 Aug 2025 16:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754844735;
-	bh=SOqAd6GSoq3jfNfyFntbJVMfeCR8Kes0pVVn6yUAE6Q=;
+	s=k20201202; t=1754844737;
+	bh=s/pK8Jeo0x08FnfOtGR6JaLs6DEzam/VqTyKpT6ENw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdUR/8adHusZ7znXZgEtaJgkw4VknIh4lE5q6Z6acZ0OSYpyoR8qLLizgpj98ZoPE
-	 gly5Q3EsT5jsBYz8ucO+4Uj/uK9yAa0QulALQArzLZ1eJiKgRmXkROIRmc8yCth5Vj
-	 7EmtkQqgPnJBKq54yYjjOj/wxhkE1dxeHBpscDaXlzSBgW7beWr1kQAIEAFbSKNqil
-	 hJTzVOa+q1UAkPj36MpOOS7ySRfavWbhoYmSqTrY5rb66Otbfz4YrsnHC3hQu/hCUa
-	 7JgShRfvOb711zmUgqtFVmZxItXQWjbkX15uXcmsr8w6G+roR43OSHHUWRb/Dv+KsN
-	 Uj5//s/YBoKfg==
+	b=MuaGxnt9NJWAGVxCrq/zEqGr86wGLng/REiAXzSZDTx1a9PD1nC+WTzK3PhdgTdS3
+	 hPdl2HtR7Kzhkx19/7n6IoWM73NYhYS//Jk6gNF4s9q3lNd4xEfZVH2+aoXGWSQzMO
+	 11pYQMNSeHDDyxCGtbKrJJ7TPrB3wTeKUxdMeuIacviO1LlJ+OSBPZt1y865hQaQ4o
+	 vkgjL3RwAHAappgoKJL1wqxGAXJhdJeSIgX8cPZw/IurK/g+MR9mKn9nxDjsUWmqb+
+	 IzVUETiZzbhXQQQ7OA0GTvLqHm6ZNrpaE+DTq8qfmfFU6uNr0HOK38u/eavx4zDSaj
+	 SbR9FLlEVjPag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Stefan Metzmacher <metze@samba.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	liam.r.girdwood@linux.intel.com,
-	phasta@kernel.org,
-	tiwai@suse.de,
-	sakari.ailus@linux.intel.com
-Subject: [PATCH AUTOSEL 6.16-6.1] ASoC: Intel: avs: Fix uninitialized pointer error in probe()
-Date: Sun, 10 Aug 2025 12:51:47 -0400
-Message-Id: <20250810165158.1888206-5-sashal@kernel.org>
+	sfrench@samba.org
+Subject: [PATCH AUTOSEL 6.16-6.12] smb: client: don't call init_waitqueue_head(&info->conn_wait) twice in _smbd_get_connection
+Date: Sun, 10 Aug 2025 12:51:48 -0400
+Message-Id: <20250810165158.1888206-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810165158.1888206-1-sashal@kernel.org>
 References: <20250810165158.1888206-1-sashal@kernel.org>
@@ -49,126 +50,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 11f74f48c14c1f4fe16541900ea5944c42e30ccf ]
+[ Upstream commit 550a194c5998e4e77affc6235e80d3766dc2d27e ]
 
-If pcim_request_all_regions() fails, error path operates on
-uninitialized 'bus' pointer. Found out by Coverity static analyzer.
+It is already called long before we may hit this cleanup code path.
 
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20250730124906.351798-1-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis, I can now provide a comprehensive answer about
+whether this commit should be backported.
+
 **Backport Status: YES**
 
-## Extensive Analysis:
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-This commit is an excellent candidate for backporting to stable kernel
-trees based on the following analysis:
+## Analysis of the Bug Fix
 
-### 1. **Clear Bug Fix for Uninitialized Pointer Access**
-The commit fixes a serious bug where an uninitialized `bus` pointer
-could be dereferenced in error paths. Looking at the original code flow:
-- Line 427: `struct hdac_bus *bus;` declares the pointer without
-  initialization
-- Line 455-457: If `pcim_request_all_regions()` fails and returns an
-  error, the function returns immediately
-- **Critical Issue**: At this point, `bus` has never been initialized
-  (line 459 `bus = &adev->base.core;` would not be reached)
-- However, any error handling code that tries to use `bus` would crash
-  with a null/uninitialized pointer dereference
+1. **Clear Bug Identification**: The commit fixes a redundant
+   initialization bug where `init_waitqueue_head(&info->conn_wait)` is
+   called twice in the error path:
+   - First initialization at line 1630 (in the normal flow)
+   - Second redundant initialization at line 1696 (in the
+     `negotiation_failed` error path)
 
-### 2. **Minimal and Contained Fix**
-The fix is extremely simple and surgical:
-- Moves one line of code (`bus = &adev->base.core;`) from after the
-  `pcim_request_all_regions()` call to immediately after `adev`
-  allocation
-- This ensures `bus` is properly initialized before any potential error
-  path that might use it
-- The change is only 2 lines (one deletion, one addition in a different
-  location)
+2. **Bug Impact**: While calling `init_waitqueue_head()` twice on the
+   same wait queue is not catastrophic, it is incorrect and could
+   potentially cause issues:
+   - The wait queue is already initialized and potentially in use (via
+     `wait_event()` at line 1639-1642)
+   - Re-initializing a wait queue that might have waiters or be in an
+     intermediate state could lead to subtle synchronization issues
+   - This violates the kernel's initialization patterns and could mask
+     other bugs
 
-### 3. **No Functional Changes or Side Effects**
-- The fix doesn't change any logic or behavior in the success path
-- It merely ensures proper initialization order to prevent crashes
-- No new features or architectural changes are introduced
-- The initialization still happens at the same logical point in the flow
-  (after `adev` is allocated and `avs_bus_init` succeeds)
+3. **Fix Characteristics**:
+   - **Minimal and Contained**: The fix is a single-line removal of
+     redundant code
+   - **Low Risk**: Removing a redundant initialization cannot introduce
+     new bugs
+   - **Clear Intent**: The commit message clearly states the issue and
+     the fix
+   - **No Feature Changes**: This is purely a bug fix with no functional
+     changes
 
-### 4. **Found by Static Analysis**
-The commit message explicitly states this was "Found out by Coverity
-static analyzer", which indicates:
-- This is a real potential crash/security issue identified by automated
-  tooling
-- Static analyzers are good at finding these initialization order bugs
-- The bug might be difficult to trigger in practice but represents a
-  real vulnerability
+4. **Code Flow Analysis**:
+   - At line 1630, `info->conn_wait` is properly initialized before
+     `rdma_connect()`
+   - The wait queue is then used at line 1639-1642 with
+     `wait_event_interruptible_timeout()`
+   - If `smbd_negotiate()` fails (line 1672-1675), the code jumps to
+     `negotiation_failed`
+   - The redundant re-initialization at line 1696 happens AFTER the wait
+     queue has already been used
+   - This could potentially corrupt any pending waiters or internal
+     state
 
-### 5. **Affects Critical Audio Subsystem**
-This is in the Intel AVS (Audio Voice Speech) driver probe function,
-which:
-- Is part of system initialization for Intel audio hardware
-- A crash here could prevent audio subsystem from initializing
-- Could affect system stability on affected Intel platforms
+5. **Historical Context**:
+   - Both `init_waitqueue_head()` calls were present since the initial
+     commit (f198186aa9bbd from 2017)
+   - This appears to be an original coding error that has persisted
+   - The error path likely wasn't thoroughly tested or reviewed
 
-### 6. **Clear Stable Tree Criteria Met**
-This commit meets multiple stable kernel criteria:
-- ✅ Fixes a real bug (uninitialized pointer dereference)
-- ✅ Minimal change (2 lines moved)
-- ✅ No new features
-- ✅ Low risk of regression (initialization order fix)
-- ✅ Could cause crashes/oops in error conditions
-- ✅ Found by static analysis (indicates real issue)
+6. **Stable Tree Criteria Met**:
+   - ✅ Fixes a real bug (redundant initialization that could cause
+     issues)
+   - ✅ Small change (single line removal)
+   - ✅ Obviously correct (removing duplicate initialization)
+   - ✅ No risk of regression (removing redundant code)
+   - ✅ Already tested (merged into mainline)
 
-### 7. **Error Path Vulnerability**
-While the bug only manifests in error conditions (when
-`pcim_request_all_regions()` fails), error path bugs are particularly
-important to fix because:
-- They can be triggered by resource exhaustion or hardware issues
-- They can potentially be exploited for denial of service
-- They make debugging other issues more difficult when the error handler
-  itself crashes
+The commit satisfies all stable kernel criteria for backporting: it's a
+simple, obvious fix for a real bug with minimal risk of introducing
+regressions.
 
-This is a textbook example of a commit that should be backported to
-stable trees - it fixes a clear bug with minimal risk and no functional
-changes.
+ fs/smb/client/smbdirect.c | 1 -
+ 1 file changed, 1 deletion(-)
 
- sound/soc/intel/avs/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/sound/soc/intel/avs/core.c b/sound/soc/intel/avs/core.c
-index ec1b3f55cb5c..d45e9279df27 100644
---- a/sound/soc/intel/avs/core.c
-+++ b/sound/soc/intel/avs/core.c
-@@ -446,6 +446,8 @@ static int avs_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
- 	adev = devm_kzalloc(dev, sizeof(*adev), GFP_KERNEL);
- 	if (!adev)
- 		return -ENOMEM;
-+	bus = &adev->base.core;
-+
- 	ret = avs_bus_init(adev, pci, id);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to init avs bus: %d\n", ret);
-@@ -456,7 +458,6 @@ static int avs_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
- 	if (ret < 0)
- 		return ret;
- 
--	bus = &adev->base.core;
- 	bus->addr = pci_resource_start(pci, 0);
- 	bus->remap_addr = pci_ioremap_bar(pci, 0);
- 	if (!bus->remap_addr) {
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index 754e94a0e07f..75142c391d0c 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1735,7 +1735,6 @@ static struct smbd_connection *_smbd_get_connection(
+ 	cancel_delayed_work_sync(&info->idle_timer_work);
+ 	destroy_caches_and_workqueue(info);
+ 	sc->status = SMBDIRECT_SOCKET_NEGOTIATE_FAILED;
+-	init_waitqueue_head(&info->conn_wait);
+ 	rdma_disconnect(sc->rdma.cm_id);
+ 	wait_event(info->conn_wait,
+ 		sc->status == SMBDIRECT_SOCKET_DISCONNECTED);
 -- 
 2.39.5
 
