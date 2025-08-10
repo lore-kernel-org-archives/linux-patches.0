@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7482DB640;
-	Sun, 10 Aug 2025 00:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19805F9EC;
+	Sun, 10 Aug 2025 00:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785281; cv=none; b=IRZY/+A4Uo0jrh6PEO9sr9X75hRsyRivp6cvdUifJTDIl5Gi3fFNVChb4YnJkD1FuaLo9iss4MuRDN+3xGlw48/4V2kx7nd2aW4e4qZY1q1Q0c9iMnZidnwowbT7bXtpe2MGjvsFMKV0YKVyFoI4kOV44jkPUEMXAkbHtcKy8HQ=
+	t=1754785283; cv=none; b=N4hCEepK7yUBOX10dckX7gJOCABxvPkUrVvzNfxliscl4fpeFRb947kOzIsbnabojbGna3Od5+hTqRatfPvWmUA/qE4pICs2KuOOkJ0drEnzA2oE1z8074CsW35x5S/AZcRZs7CFGFIfsNVR0ClxI3Can6sQKmthVQH9vJabN7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785281; c=relaxed/simple;
-	bh=b+Wx5qsCI9nVtIdtHwKmoyGGopfCJx5c/5WGFR/T4Ag=;
+	s=arc-20240116; t=1754785283; c=relaxed/simple;
+	bh=vvMEKSPcs/Kfso+hEel2t2m1IIAZhDU+t6R5SqXw/+0=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=NGjHFm2dATVzPuGxF46oRCM/GzPuXLOzwcIjU8EouEY1vx1EIDOTOTrbYMIiH10lZvs70356ehkKPwdRAIAC77rb6HFvgMPYeuw6etRIssUZbJPzCJewv/snK0WnjSDF8sDJPomB/h+zxivPtGCxygr7nWwyQ+r7YkrbCnJPF90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZXNGXP+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ieg4pS7ADefjOOJokNU6Ah129UaXU7Ps+OJ4bVMM7IM7vfgBilQsPZeGZz101N7B8+jKqPu3O4xJk4iW7kpQjU+aj6/Ow/kDmYJOD0gmbf/UW1HXOIYmymZoeu06Rg8zDviA1kOBmaIGcRVs+upP+byZKNFYUpctcL1kLB+inBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U5voVvUM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZXNGXP+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B00C4CEE7;
-	Sun, 10 Aug 2025 00:21:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U5voVvUM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DA0C4CEE7;
+	Sun, 10 Aug 2025 00:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754785281;
-	bh=b+Wx5qsCI9nVtIdtHwKmoyGGopfCJx5c/5WGFR/T4Ag=;
+	s=k20201202; t=1754785283;
+	bh=vvMEKSPcs/Kfso+hEel2t2m1IIAZhDU+t6R5SqXw/+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXNGXP+PQZyLuXrPGfUttmyYc1/FKQfHZaZiQ9P/tJpDu+dVNLHmy5o5ORC/XfP+Q
-	 2YLjcXy6d/AUBBnvqBsdJQjjiUEyiyFHscfyi/0BXtxjUEJcMrR85C2rJiTpG0XQIm
-	 FGoGcE8GtqClTO2bbioQOoAWN0TsctyhG2oPXBZUw3Mo2EmGFBqD72DncZ37oZxomv
-	 SocwngshKLvTKtIOvluv2SmdR9sd/51G6JrJJC0cFopfBN9fRPZZMEQnmNppLRW1si
-	 iECbZVInsCLFi2BtPqMkZHoV2Rad4xYbR3lb6H7fKd/Ga/q4vIgn8TWDaq4WklhMRc
-	 +AlG7r04SWrQw==
+	b=U5voVvUMAucV5Q97uSqkLTP8F/DLGL9QnHv/hNyGhHackIBH+aAKmNVXZPlEM8gvo
+	 o8B9qwSUwxaZYXGOwVT6w7Z0cBW0pxIxMfe9KkrXe1VOfx9cQsYZQm6tl3JdAGocCK
+	 S1cbBCCaVfOPEOy+mlgGfugq1KM0ZcdTIuRovVXwyL0P83Cif9wvdMldv0qln1P7Ve
+	 UfBg/0oWvfG3rtREHXls0zgCTSPHqaUljwX5A5ssPWQk3xzhiSFRGdkRk8c0L1s11N
+	 YGrfq5GFPgSVpBQPE2ufEimtN0iI/A18WoqoPUqeKGAYGbHzjAx/Ayfx6cwI+NVqat
+	 VxMdhRdgTdUUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maurizio Lombardi <mlombard@redhat.com>,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
+Cc: Corey Minyard <corey@minyard.net>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-scsi@vger.kernel.org,
-	target-devel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.15] scsi: target: core: Generate correct identifiers for PR OUT transport IDs
-Date: Sat,  9 Aug 2025 20:20:55 -0400
-Message-Id: <20250810002104.1545396-6-sashal@kernel.org>
+	openipmi-developer@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.16-5.4] ipmi: Fix strcpy source and destination the same
+Date: Sat,  9 Aug 2025 20:20:56 -0400
+Message-Id: <20250810002104.1545396-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810002104.1545396-1-sashal@kernel.org>
 References: <20250810002104.1545396-1-sashal@kernel.org>
@@ -52,30 +50,17 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Corey Minyard <corey@minyard.net>
 
-[ Upstream commit 6e0f6aa44b68335df404a2df955055f416b5f2aa ]
+[ Upstream commit 8ffcb7560b4a15faf821df95e3ab532b2b020f8c ]
 
-Fix target_parse_pr_out_transport_id() to return a string representing
-the transport ID in a human-readable format (e.g., naa.xxxxxxxx...)  for
-various SCSI protocol types (SAS, FCP, SRP, SBP).
+The source and destination of some strcpy operations was the same.
+Split out the part of the operations that needed to be done for those
+particular calls so the unnecessary copy wasn't done.
 
-Previously, the function returned a pointer to the raw binary buffer,
-which was incorrectly compared against human-readable strings, causing
-comparisons to fail.  Now, the function writes a properly formatted
-string into a buffer provided by the caller.  The output format depends
-on the transport protocol:
-
-* SAS: 64-bit identifier, "naa." prefix.
-* FCP: 64-bit identifier, colon separated values.
-* SBP: 64-bit identifier, no prefix.
-* SRP: 128-bit identifier, "0x" prefix.
-* iSCSI: IQN string.
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Link: https://lore.kernel.org/r/20250714133738.11054-1-mlombard@redhat.com
-Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506140756.EFXXvIP4-lkp@intel.com/
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -83,280 +68,198 @@ LLM Generated explanations, may be completely bogus:
 
 **Backport Status: YES**
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+This commit is an excellent candidate for backporting to stable kernel
+trees. Here's my extensive analysis:
 
-## Bug Fix Nature
+## Bug Description and Impact
 
-This commit fixes a **critical functional bug** in the SCSI target
-subsystem's Persistent Reservation (PR) handling. The bug causes PR
-operations to fail when comparing transport IDs, which is a core
-functionality for SCSI target implementations.
+The commit fixes a critical bug where `strcpy()` operations were copying
+a string to itself (source and destination being the same). Looking at
+the original code:
 
-## Technical Analysis of the Bug
+1. In `action_op()` at line 1213: `strcpy(action, inval);` - but when
+   called from `ipmi_wdog_init()` line 1294 with `action_op(action,
+   NULL)`, the first parameter `action` is passed, and if validation
+   passes, it copies `action` to itself.
 
-1. **Original Problem**: The function
-   `target_parse_pr_out_transport_id()` was returning a pointer to raw
-   binary data (`buf + offset`) instead of a human-readable string
-   representation. This raw binary data was then incorrectly compared
-   against human-readable string formats in callers.
+2. Similar issues in `preaction_op()` line 1237 and `preop_op()` line
+   1257 when called from initialization.
 
-2. **Impact on Functionality**:
-   - In `core_scsi3_decode_spec_i_port()` at line 1610-1611, the code
-     calls `__core_tpg_get_initiator_node_acl(tmp_tpg, i_str)` where
-     `i_str` was previously pointing to binary data
-   - The function `__core_tpg_get_initiator_node_acl()` expects a human-
-     readable initiator string (like "naa.1234567890abcdef" for SAS)
-   - This mismatch would cause the lookup to fail, breaking PR
-     operations
+This undefined behavior could lead to:
+- Memory corruption
+- Unpredictable watchdog behavior during initialization
+- Potential system instability in the IPMI watchdog subsystem
 
-3. **Protocols Affected**: The bug affects multiple SCSI transport
-   protocols:
-   - SAS (SCSI_PROTOCOL_SAS)
-   - Fibre Channel (SCSI_PROTOCOL_FCP)
-   - SRP (SCSI_PROTOCOL_SRP)
-   - SBP (SCSI_PROTOCOL_SBP)
-   - iSCSI (SCSI_PROTOCOL_ISCSI)
+## Fix Analysis
 
-## Fix Implementation
+The fix properly refactors the code by:
+1. Creating separate `*_set_val()` functions that only validate and set
+   the value variables
+2. Modifying the original functions to use these new helpers
+3. In `ipmi_wdog_init()`, directly calling the `*_set_val()` functions
+   for validation without the problematic strcpy
 
-The fix properly converts binary transport IDs to their expected string
-formats:
-- **SAS**: Converts 8 bytes to "naa.XXXXXXXXXXXX" format
-- **FCP**: Converts to colon-separated format using `%8phC`
-- **SRP**: Converts 16 bytes to "0x" prefixed hex string
-- **SBP**: Converts to plain hex string
-- **iSCSI**: Already handled strings correctly, but API updated for
-  consistency
+This is a minimal, targeted fix that:
+- Doesn't introduce new features
+- Maintains existing functionality
+- Only restructures code to eliminate undefined behavior
+- Has clear boundaries within the IPMI watchdog driver
 
-## Stable Backport Criteria
+## Stable Tree Criteria Met
 
-This commit meets several key stable tree criteria:
-
-1. **Fixes a Real Bug**: Yes - PR operations would fail for non-iSCSI
-   transports
-2. **Small and Contained**: The fix is localized to transport ID parsing
+1. **Fixes a real bug**: Yes - strcpy with same source/destination is
+   undefined behavior
+2. **Small and contained**: Yes - changes are limited to one file and
+   involve straightforward refactoring
+3. **No major architectural changes**: Correct - only refactors existing
    functions
-3. **No New Features**: Only fixes existing functionality
-4. **Minimal Risk**: Changes are straightforward format conversions
-5. **Important for Users**: PR is a critical feature for enterprise
-   storage environments
-6. **No Architectural Changes**: Simple bug fix without design changes
+4. **Minimal regression risk**: Yes - the logic remains identical, just
+   properly separated
+5. **Critical subsystem**: IPMI watchdog is important for system
+   reliability and recovery
+6. **Automated detection**: The bug was found by kernel test robot,
+   indicating it's a real issue
 
 ## Additional Evidence
 
-Looking at the commit history, there have been other PR-related fixes
-recently (e.g., `d8ab68bdb294` fixing a NULL pointer dereference),
-indicating this is an actively maintained critical subsystem where bugs
-need to be fixed in stable kernels.
+- The commit was reported by the kernel test robot with a specific bug
+  report link
+- The fix is defensive programming that eliminates undefined behavior
+- IPMI watchdog is used in production servers for system recovery
+- The bug could manifest differently across compilers/architectures
 
-The fact that this went unnoticed suggests it affects less common code
-paths, but when triggered, it would completely break PR functionality
-for affected transport types - a serious issue for production storage
-systems relying on persistent reservations for cluster coordination.
+This meets all stable kernel criteria for backporting as it fixes a
+concrete bug with minimal risk.
 
- drivers/target/target_core_fabric_lib.c | 63 +++++++++++++++++++------
- drivers/target/target_core_internal.h   |  4 +-
- drivers/target/target_core_pr.c         | 18 +++----
- 3 files changed, 60 insertions(+), 25 deletions(-)
+ drivers/char/ipmi/ipmi_watchdog.c | 59 ++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/target/target_core_fabric_lib.c b/drivers/target/target_core_fabric_lib.c
-index 43f47e3aa448..ec7bc6e30228 100644
---- a/drivers/target/target_core_fabric_lib.c
-+++ b/drivers/target/target_core_fabric_lib.c
-@@ -257,11 +257,41 @@ static int iscsi_get_pr_transport_id_len(
- 	return len;
- }
+diff --git a/drivers/char/ipmi/ipmi_watchdog.c b/drivers/char/ipmi/ipmi_watchdog.c
+index ab759b492fdd..a013ddbf1466 100644
+--- a/drivers/char/ipmi/ipmi_watchdog.c
++++ b/drivers/char/ipmi/ipmi_watchdog.c
+@@ -1146,14 +1146,8 @@ static struct ipmi_smi_watcher smi_watcher = {
+ 	.smi_gone = ipmi_smi_gone
+ };
  
--static char *iscsi_parse_pr_out_transport_id(
-+static void sas_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	char hex[17] = {};
-+
-+	bin2hex(hex, buf + 4, 8);
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "naa.%s", hex);
-+}
-+
-+static void srp_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	char hex[33] = {};
-+
-+	bin2hex(hex, buf + 8, 16);
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "0x%s", hex);
-+}
-+
-+static void fcp_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "%8phC", buf + 8);
-+}
-+
-+static void sbp_parse_pr_out_transport_id(char *buf, char *i_str)
-+{
-+	char hex[17] = {};
-+
-+	bin2hex(hex, buf + 8, 8);
-+	snprintf(i_str, TRANSPORT_IQN_LEN, "%s", hex);
-+}
-+
-+static bool iscsi_parse_pr_out_transport_id(
- 	struct se_portal_group *se_tpg,
- 	char *buf,
- 	u32 *out_tid_len,
--	char **port_nexus_ptr)
-+	char **port_nexus_ptr,
-+	char *i_str)
+-static int action_op(const char *inval, char *outval)
++static int action_op_set_val(const char *inval)
  {
- 	char *p;
- 	int i;
-@@ -282,7 +312,7 @@ static char *iscsi_parse_pr_out_transport_id(
- 	if ((format_code != 0x00) && (format_code != 0x40)) {
- 		pr_err("Illegal format code: 0x%02x for iSCSI"
- 			" Initiator Transport ID\n", format_code);
--		return NULL;
-+		return false;
- 	}
- 	/*
- 	 * If the caller wants the TransportID Length, we set that value for the
-@@ -306,7 +336,7 @@ static char *iscsi_parse_pr_out_transport_id(
- 			pr_err("Unable to locate \",i,0x\" separator"
- 				" for Initiator port identifier: %s\n",
- 				&buf[4]);
--			return NULL;
-+			return false;
- 		}
- 		*p = '\0'; /* Terminate iSCSI Name */
- 		p += 5; /* Skip over ",i,0x" separator */
-@@ -339,7 +369,8 @@ static char *iscsi_parse_pr_out_transport_id(
- 	} else
- 		*port_nexus_ptr = NULL;
- 
--	return &buf[4];
-+	strscpy(i_str, &buf[4], TRANSPORT_IQN_LEN);
-+	return true;
- }
- 
- int target_get_pr_transport_id_len(struct se_node_acl *nacl,
-@@ -387,33 +418,35 @@ int target_get_pr_transport_id(struct se_node_acl *nacl,
- 	}
- }
- 
--const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
--		char *buf, u32 *out_tid_len, char **port_nexus_ptr)
-+bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
-+		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str)
- {
--	u32 offset;
+-	if (outval)
+-		strcpy(outval, action);
 -
- 	switch (tpg->proto_id) {
- 	case SCSI_PROTOCOL_SAS:
- 		/*
- 		 * Assume the FORMAT CODE 00b from spc4r17, 7.5.4.7 TransportID
- 		 * for initiator ports using SCSI over SAS Serial SCSI Protocol.
- 		 */
--		offset = 4;
-+		sas_parse_pr_out_transport_id(buf, i_str);
- 		break;
--	case SCSI_PROTOCOL_SBP:
- 	case SCSI_PROTOCOL_SRP:
-+		srp_parse_pr_out_transport_id(buf, i_str);
-+		break;
- 	case SCSI_PROTOCOL_FCP:
--		offset = 8;
-+		fcp_parse_pr_out_transport_id(buf, i_str);
-+		break;
-+	case SCSI_PROTOCOL_SBP:
-+		sbp_parse_pr_out_transport_id(buf, i_str);
- 		break;
- 	case SCSI_PROTOCOL_ISCSI:
- 		return iscsi_parse_pr_out_transport_id(tpg, buf, out_tid_len,
--					port_nexus_ptr);
-+					port_nexus_ptr, i_str);
- 	default:
- 		pr_err("Unknown proto_id: 0x%02x\n", tpg->proto_id);
--		return NULL;
-+		return false;
- 	}
- 
- 	*port_nexus_ptr = NULL;
- 	*out_tid_len = 24;
--	return buf + offset;
-+	return true;
+-	if (!inval)
+-		return 0;
+-
+ 	if (strcmp(inval, "reset") == 0)
+ 		action_val = WDOG_TIMEOUT_RESET;
+ 	else if (strcmp(inval, "none") == 0)
+@@ -1164,18 +1158,26 @@ static int action_op(const char *inval, char *outval)
+ 		action_val = WDOG_TIMEOUT_POWER_DOWN;
+ 	else
+ 		return -EINVAL;
+-	strcpy(action, inval);
+ 	return 0;
  }
-diff --git a/drivers/target/target_core_internal.h b/drivers/target/target_core_internal.h
-index 408be26d2e9b..20aab1f50565 100644
---- a/drivers/target/target_core_internal.h
-+++ b/drivers/target/target_core_internal.h
-@@ -103,8 +103,8 @@ int	target_get_pr_transport_id_len(struct se_node_acl *nacl,
- int	target_get_pr_transport_id(struct se_node_acl *nacl,
- 		struct t10_pr_registration *pr_reg, int *format_code,
- 		unsigned char *buf);
--const char *target_parse_pr_out_transport_id(struct se_portal_group *tpg,
--		char *buf, u32 *out_tid_len, char **port_nexus_ptr);
-+bool target_parse_pr_out_transport_id(struct se_portal_group *tpg,
-+		char *buf, u32 *out_tid_len, char **port_nexus_ptr, char *i_str);
  
- /* target_core_hba.c */
- struct se_hba *core_alloc_hba(const char *, u32, u32);
-diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
-index 70905805cb17..83e172c92238 100644
---- a/drivers/target/target_core_pr.c
-+++ b/drivers/target/target_core_pr.c
-@@ -1478,11 +1478,12 @@ core_scsi3_decode_spec_i_port(
- 	LIST_HEAD(tid_dest_list);
- 	struct pr_transport_id_holder *tidh_new, *tidh, *tidh_tmp;
- 	unsigned char *buf, *ptr, proto_ident;
--	const unsigned char *i_str = NULL;
-+	unsigned char i_str[TRANSPORT_IQN_LEN];
- 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN];
- 	sense_reason_t ret;
- 	u32 tpdl, tid_len = 0;
- 	u32 dest_rtpi = 0;
-+	bool tid_found;
+-static int preaction_op(const char *inval, char *outval)
++static int action_op(const char *inval, char *outval)
+ {
++	int rv;
++
+ 	if (outval)
+-		strcpy(outval, preaction);
++		strcpy(outval, action);
  
- 	/*
- 	 * Allocate a struct pr_transport_id_holder and setup the
-@@ -1571,9 +1572,9 @@ core_scsi3_decode_spec_i_port(
- 			dest_rtpi = tmp_lun->lun_tpg->tpg_rtpi;
+ 	if (!inval)
+ 		return 0;
++	rv = action_op_set_val(inval);
++	if (!rv)
++		strcpy(action, inval);
++	return rv;
++}
  
- 			iport_ptr = NULL;
--			i_str = target_parse_pr_out_transport_id(tmp_tpg,
--					ptr, &tid_len, &iport_ptr);
--			if (!i_str)
-+			tid_found = target_parse_pr_out_transport_id(tmp_tpg,
-+					ptr, &tid_len, &iport_ptr, i_str);
-+			if (!tid_found)
- 				continue;
- 			/*
- 			 * Determine if this SCSI device server requires that
-@@ -3153,13 +3154,14 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
- 	struct t10_pr_registration *pr_reg, *pr_res_holder, *dest_pr_reg;
- 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
- 	unsigned char *buf;
--	const unsigned char *initiator_str;
-+	unsigned char initiator_str[TRANSPORT_IQN_LEN];
- 	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN] = { };
- 	u32 tid_len, tmp_tid_len;
- 	int new_reg = 0, type, scope, matching_iname;
- 	sense_reason_t ret;
- 	unsigned short rtpi;
- 	unsigned char proto_ident;
-+	bool tid_found;
++static int preaction_op_set_val(const char *inval)
++{
+ 	if (strcmp(inval, "pre_none") == 0)
+ 		preaction_val = WDOG_PRETIMEOUT_NONE;
+ 	else if (strcmp(inval, "pre_smi") == 0)
+@@ -1188,18 +1190,26 @@ static int preaction_op(const char *inval, char *outval)
+ 		preaction_val = WDOG_PRETIMEOUT_MSG_INT;
+ 	else
+ 		return -EINVAL;
+-	strcpy(preaction, inval);
+ 	return 0;
+ }
  
- 	if (!se_sess || !se_lun) {
- 		pr_err("SPC-3 PR: se_sess || struct se_lun is NULL!\n");
-@@ -3278,9 +3280,9 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
- 		ret = TCM_INVALID_PARAMETER_LIST;
- 		goto out;
+-static int preop_op(const char *inval, char *outval)
++static int preaction_op(const char *inval, char *outval)
+ {
++	int rv;
++
+ 	if (outval)
+-		strcpy(outval, preop);
++		strcpy(outval, preaction);
+ 
+ 	if (!inval)
+ 		return 0;
++	rv = preaction_op_set_val(inval);
++	if (!rv)
++		strcpy(preaction, inval);
++	return 0;
++}
+ 
++static int preop_op_set_val(const char *inval)
++{
+ 	if (strcmp(inval, "preop_none") == 0)
+ 		preop_val = WDOG_PREOP_NONE;
+ 	else if (strcmp(inval, "preop_panic") == 0)
+@@ -1208,7 +1218,22 @@ static int preop_op(const char *inval, char *outval)
+ 		preop_val = WDOG_PREOP_GIVE_DATA;
+ 	else
+ 		return -EINVAL;
+-	strcpy(preop, inval);
++	return 0;
++}
++
++static int preop_op(const char *inval, char *outval)
++{
++	int rv;
++
++	if (outval)
++		strcpy(outval, preop);
++
++	if (!inval)
++		return 0;
++
++	rv = preop_op_set_val(inval);
++	if (!rv)
++		strcpy(preop, inval);
+ 	return 0;
+ }
+ 
+@@ -1245,18 +1270,18 @@ static int __init ipmi_wdog_init(void)
+ {
+ 	int rv;
+ 
+-	if (action_op(action, NULL)) {
++	if (action_op_set_val(action)) {
+ 		action_op("reset", NULL);
+ 		pr_info("Unknown action '%s', defaulting to reset\n", action);
  	}
--	initiator_str = target_parse_pr_out_transport_id(dest_se_tpg,
--			&buf[24], &tmp_tid_len, &iport_ptr);
--	if (!initiator_str) {
-+	tid_found = target_parse_pr_out_transport_id(dest_se_tpg,
-+			&buf[24], &tmp_tid_len, &iport_ptr, initiator_str);
-+	if (!tid_found) {
- 		pr_err("SPC-3 PR REGISTER_AND_MOVE: Unable to locate"
- 			" initiator_str from Transport ID\n");
- 		ret = TCM_INVALID_PARAMETER_LIST;
+ 
+-	if (preaction_op(preaction, NULL)) {
++	if (preaction_op_set_val(preaction)) {
+ 		preaction_op("pre_none", NULL);
+ 		pr_info("Unknown preaction '%s', defaulting to none\n",
+ 			preaction);
+ 	}
+ 
+-	if (preop_op(preop, NULL)) {
++	if (preop_op_set_val(preop)) {
+ 		preop_op("preop_none", NULL);
+ 		pr_info("Unknown preop '%s', defaulting to none\n", preop);
+ 	}
 -- 
 2.39.5
 
