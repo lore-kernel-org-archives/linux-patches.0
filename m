@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B854F4FA;
-	Sun, 10 Aug 2025 00:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6E28F40;
+	Sun, 10 Aug 2025 00:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785293; cv=none; b=dzIHvm0hvsIl0Ro8l7vjY7gVAuRRYS9P1v/5cnx2kUKdpnn4mFdK17DFulVdgxge/WO/Xj7SAoCx2Uo2bC2b0+mTh9kkc+8s1Sh/rxbuHX0pk28pyRQJFD57N9MVvJFIxB/fhZfc0RQ4iS2Mb+EV1TX1dVnMcv6DHssomlENyWk=
+	t=1754785294; cv=none; b=bAsbxHQl986YKFA9TL3o9EaM0DkTC5VhG4iePO+KtLivISrmCMDb5btgozfdngW8b9a91BZ60nIZOhCVv2Ht0bEg1yHgcIbhws3DODTt1ONpYAhLYnw0ICRXxL2qO+H4tiwa/0FzWfUB9xFgSYB2CvSaHscS6UZgQgTFD6s0lsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785293; c=relaxed/simple;
-	bh=enjBsSaY8yffWMcQ9pQLyf6MKpmvqMYV6EXlKpqf3yM=;
+	s=arc-20240116; t=1754785294; c=relaxed/simple;
+	bh=78QzPlzaBG01dmRGq5FOYkDlmNnMxuwrIq23STEu7HU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UnChTUAd/REGbzKp8Mj4+gT/uGRYCFQRSCWBxONVRBWSEFNf//rE7yAoECrbO8aT6eVdj48bt9I/zAjZK05XJTT4d1u1kagy1fT40tQwqsBk8basiBDZzwK7gFlaRHzeGt+GynMu37fWf+PKXAjTZUuMOQCdeZ/T2Txxfxxxtek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=peIOaEL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dg2scFc+2racU2i6GzSf2QiE+H56J4cX4fAHCqEY424dqecoHrzL+z8edMQqVhCWzu2zzv9eB5uoJCcAOVe1lDjlql7A+0+dI/iiu42q4tVYoewNN2TugMDmLsmJyejLXbs7HJqp8PZdU5whr673mIYdJVmclsAX99dmTmFjVPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DBcDRdcW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="peIOaEL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943B7C4CEF1;
-	Sun, 10 Aug 2025 00:21:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBcDRdcW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416F0C4CEF1;
+	Sun, 10 Aug 2025 00:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754785292;
-	bh=enjBsSaY8yffWMcQ9pQLyf6MKpmvqMYV6EXlKpqf3yM=;
+	s=k20201202; t=1754785294;
+	bh=78QzPlzaBG01dmRGq5FOYkDlmNnMxuwrIq23STEu7HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peIOaEL3ogynqUMQ0cVHORHAyQIZiyE4hVzFQDI4g+GVpiohYLsYjp9o58x6PQUWq
-	 e/XMWpNy1zuc+Tpw07tdu7RiUDum6etlbcVMk/FsymnwEueEtoH8uoXtFGDTVwiIHg
-	 sun82qNKlO6SUL3NWQH7l7jO/KSudRXzzaHwOL10x4dy9QBB1IaNJPsTtUfUsd7XQg
-	 gBxpqgRjWE984PLIwlkciod4oCemPc7mSeLPPLzGqYl8w0rLGE0A+zatIRqjJcd4uP
-	 QD1Wvdr7BoWYWhy0KF424x3/N45amn6f1mSZNRGBFGJ0YMPx92TMfCujwrxyaiVrS5
-	 DguHk/vT/hkIg==
+	b=DBcDRdcW9dy3yWlnaWyij968W7RddLtzfsga+7NCWOhO2buKSScFUz91eafoJYm29
+	 gPpZJ/U5QoiNtX2RCWPawywrJ1/frXrcNNO7712AigCmOydjT2Zcw5BbQpu918yIbU
+	 EKTGrdnENdvR1bRXijDxNEyR4rnhwsRVuZUYJi5feNmd57WwYYh0ZtaH69cY0WJ9Dg
+	 VxxXSn+oAOqUlS/1AFB6GMdGevAxHF0MK2P9WjtD9Nbk9RVMD5Fn/2eYEHufAwFP7h
+	 fImYcizfqZyAetFuAhLMoTMEMnTtLL/10qKf8l5izeqc6H6GbX/Eopx+GTp6nWqSmf
+	 nrU46aKg+w9Ig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Suchit Karunakaran <suchitkarunakaran@gmail.com>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.16-5.4] kconfig: lxdialog: replace strcpy() with strncpy() in inputbox.c
-Date: Sat,  9 Aug 2025 20:21:00 -0400
-Message-Id: <20250810002104.1545396-11-sashal@kernel.org>
+Cc: Keith Busch <kbusch@kernel.org>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	kvm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.15] vfio/type1: conditional rescheduling while pinning
+Date: Sat,  9 Aug 2025 20:21:01 -0400
+Message-Id: <20250810002104.1545396-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810002104.1545396-1-sashal@kernel.org>
 References: <20250810002104.1545396-1-sashal@kernel.org>
@@ -50,103 +51,153 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Suchit Karunakaran <suchitkarunakaran@gmail.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 5ac726653a1029a2eccba93bbe59e01fc9725828 ]
+[ Upstream commit b1779e4f209c7ff7e32f3c79d69bca4e3a3a68b6 ]
 
-strcpy() performs no bounds checking and can lead to buffer overflows if
-the input string exceeds the destination buffer size. This patch replaces
-it with strncpy(), and null terminates the input string.
+A large DMA mapping request can loop through dma address pinning for
+many pages. In cases where THP can not be used, the repeated vmf_insert_pfn can
+be costly, so let the task reschedule as need to prevent CPU stalls. Failure to
+do so has potential harmful side effects, like increased memory pressure
+as unrelated rcu tasks are unable to make their reclaim callbacks and
+result in OOM conditions.
 
-Signed-off-by: Suchit Karunakaran <suchitkarunakaran@gmail.com>
-Reviewed-by: Nicolas Schier <nicolas.schier@linux.dev>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+ rcu: INFO: rcu_sched self-detected stall on CPU
+ rcu:   36-....: (20999 ticks this GP) idle=b01c/1/0x4000000000000000 softirq=35839/35839 fqs=3538
+ rcu:            hardirqs   softirqs   csw/system
+ rcu:    number:        0        107            0
+ rcu:   cputime:       50          0        10446   ==> 10556(ms)
+ rcu:   (t=21075 jiffies g=377761 q=204059 ncpus=384)
+...
+  <TASK>
+  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
+  ? walk_system_ram_range+0x63/0x120
+  ? walk_system_ram_range+0x46/0x120
+  ? pgprot_writethrough+0x20/0x20
+  lookup_memtype+0x67/0xf0
+  track_pfn_insert+0x20/0x40
+  vmf_insert_pfn_prot+0x88/0x140
+  vfio_pci_mmap_huge_fault+0xf9/0x1b0 [vfio_pci_core]
+  __do_fault+0x28/0x1b0
+  handle_mm_fault+0xef1/0x2560
+  fixup_user_fault+0xf5/0x270
+  vaddr_get_pfns+0x169/0x2f0 [vfio_iommu_type1]
+  vfio_pin_pages_remote+0x162/0x8e0 [vfio_iommu_type1]
+  vfio_iommu_type1_ioctl+0x1121/0x1810 [vfio_iommu_type1]
+  ? futex_wake+0x1c1/0x260
+  x64_sys_call+0x234/0x17a0
+  do_syscall_64+0x63/0x130
+  ? exc_page_fault+0x63/0x130
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/20250715184622.3561598-1-kbusch@meta.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis of the commit and the code context I was able to
-examine, here's my assessment:
-
 **Backport Status: YES**
 
-## Extensive Explanation:
+This commit should be backported to stable kernel trees. Here's my
+extensive analysis:
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+## Bug Fix Nature
 
-### 1. **Security Bug Fix**
-The commit fixes a potential buffer overflow vulnerability in the
-kconfig lxdialog inputbox code. Looking at the code changes:
-- The original code uses `strcpy(instr, init)` at line 43 without any
-  bounds checking
-- `instr` points to `dialog_input_result` which is defined as `char
-  dialog_input_result[MAX_LEN + 1]` (line 11)
-- From dialog.h, `MAX_LEN` is defined as 2048 (line 25)
-- If `init` string exceeds 2048 characters, it would overflow the buffer
+The commit fixes a critical CPU stall issue that can lead to system
+instability. The RCU stall trace in the commit message shows:
+- A 21-second RCU stall (`t=21075 jiffies`)
+- Over 10 seconds of CPU time consumed (`cputime: 10556ms`)
+- The stall originates from `vfio_pin_pages_remote()` during large DMA
+  mapping operations
 
-### 2. **Simple and Contained Fix**
-The fix is minimal and straightforward:
+This is a serious bug that affects system reliability and can cascade
+into OOM conditions as mentioned: "increased memory pressure as
+unrelated rcu tasks are unable to make their reclaim callbacks and
+result in OOM conditions."
+
+## Code Change Analysis
+
+The fix is minimal and well-contained:
+1. **Single line addition**: The patch adds only `cond_resched()` call
+   at line 654 (after the comment block)
+2. **Strategic placement**: Positioned at the beginning of the batch
+   refill loop, before `vaddr_get_pfns()` is called
+3. **Clear comment**: The 5-line comment explains exactly why the
+   reschedule is needed
+
 ```c
-- else
-- strcpy(instr, init);
-+       else {
-+               strncpy(instr, init, sizeof(dialog_input_result) - 1);
-+               instr[sizeof(dialog_input_result) - 1] = '\0';
-+       }
++                       /*
++                        * Large mappings may take a while to repeatedly
+refill
++                        * the batch, so conditionally relinquish the
+CPU when
++                        * needed to avoid stalls.
++                        */
++                       cond_resched();
 ```
-- Replaces unsafe `strcpy()` with bounded `strncpy()`
-- Properly null-terminates the string to prevent unterminated string
-  issues
-- Uses `sizeof(dialog_input_result) - 1` to ensure proper bounds
 
-### 3. **Low Risk of Regression**
-- The change is localized to a single function in the kconfig tool
-- It doesn't alter the logic flow, only makes the string copy safer
-- The kconfig lxdialog is used during kernel configuration, not runtime
-  kernel code
-- The fix maintains the same functionality while adding safety
+## Stability and Safety
 
-### 4. **Meets Stable Criteria**
-According to stable kernel rules, this commit qualifies because it:
-- Fixes a real bug (buffer overflow vulnerability)
-- Is obviously correct and tested (has review from Nicolas Schier)
-- Is small (only 4 lines changed)
-- Doesn't add new features or change architecture
-- Has no functional side effects beyond the security fix
+1. **Low risk**: `cond_resched()` is a standard kernel primitive that
+   only yields CPU if needed
+2. **Already used pattern**: My search shows vfio_iommu_type1.c already
+   uses `cond_resched()` in other places, confirming this is an
+   established pattern
+3. **No functional changes**: The fix doesn't alter the logic of DMA
+   pinning, it just prevents monopolizing the CPU
+4. **Reviewed by RCU maintainer**: Paul E. McKenney's review adds
+   credibility to the fix
 
-### 5. **Potential Security Impact**
-While this is in the build tools rather than runtime kernel code, buffer
-overflows in build tools can still be exploited:
-- Could be triggered by malicious Kconfig files
-- Could affect kernel developers or automated build systems
-- Even build-time vulnerabilities should be fixed in stable trees
+## Stable Tree Criteria Compliance
 
-The commit is a textbook example of a security fix that should be
-backported - it's small, focused, fixes a clear vulnerability, and has
-minimal risk of causing regressions.
+Per stable-kernel-rules.rst, this meets the criteria:
+- **Fixes a real bug**: CPU stalls and potential OOM are serious issues
+- **Small change**: Single line addition with comment
+- **Obviously correct**: Standard solution for long-running loops
+- **Already tested**: Has been in mainline and reviewed by experts
+- **No new features**: Pure bug fix, no functionality addition
 
- scripts/kconfig/lxdialog/inputbox.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+## Impact Assessment
 
-diff --git a/scripts/kconfig/lxdialog/inputbox.c b/scripts/kconfig/lxdialog/inputbox.c
-index 3c6e24b20f5b..5e4a131724f2 100644
---- a/scripts/kconfig/lxdialog/inputbox.c
-+++ b/scripts/kconfig/lxdialog/inputbox.c
-@@ -39,8 +39,10 @@ int dialog_inputbox(const char *title, const char *prompt, int height, int width
+The bug affects systems performing large DMA mappings through VFIO,
+particularly when Transparent Huge Pages (THP) cannot be used. This is
+common in:
+- Virtual machine device passthrough
+- GPU/accelerator passthrough scenarios
+- Large memory pinning operations
+
+Without this fix, affected systems can experience:
+- RCU stalls leading to system unresponsiveness
+- Memory pressure and OOM kills
+- Performance degradation for unrelated tasks
+
+The fix prevents these issues with negligible overhead (conditional
+reschedule only when needed).
+
+ drivers/vfio/vfio_iommu_type1.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index 1136d7ac6b59..f8d68fe77b41 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -647,6 +647,13 @@ static long vfio_pin_pages_remote(struct vfio_dma *dma, unsigned long vaddr,
  
- 	if (!init)
- 		instr[0] = '\0';
--	else
--		strcpy(instr, init);
-+	else {
-+		strncpy(instr, init, sizeof(dialog_input_result) - 1);
-+		instr[sizeof(dialog_input_result) - 1] = '\0';
-+	}
- 
- do_resize:
- 	if (getmaxy(stdscr) <= (height - INPUTBOX_HEIGHT_MIN))
+ 	while (npage) {
+ 		if (!batch->size) {
++			/*
++			 * Large mappings may take a while to repeatedly refill
++			 * the batch, so conditionally relinquish the CPU when
++			 * needed to avoid stalls.
++			 */
++			cond_resched();
++
+ 			/* Empty batch, so refill it. */
+ 			ret = vaddr_get_pfns(mm, vaddr, npage, dma->prot,
+ 					     &pfn, batch);
 -- 
 2.39.5
 
