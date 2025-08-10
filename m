@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67741B95B;
-	Sun, 10 Aug 2025 00:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B854F4FA;
+	Sun, 10 Aug 2025 00:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754785290; cv=none; b=aM4rOLcgbMMTKuARbGXDqwiT6g27Wxri7Pgp5ExAq5peSp87yoLmrK+I2BAoLz7qoIPPUYpaiMCcNdgW0kOHsnp/L24vjTSpoOkcku3HUFSoxYJCcLb2yi70Bp94uXtBn0spGp0SUk8noCzQa+Qj24PNrqFDGq2eIK6ke1PEREU=
+	t=1754785293; cv=none; b=dzIHvm0hvsIl0Ro8l7vjY7gVAuRRYS9P1v/5cnx2kUKdpnn4mFdK17DFulVdgxge/WO/Xj7SAoCx2Uo2bC2b0+mTh9kkc+8s1Sh/rxbuHX0pk28pyRQJFD57N9MVvJFIxB/fhZfc0RQ4iS2Mb+EV1TX1dVnMcv6DHssomlENyWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754785290; c=relaxed/simple;
-	bh=9xzGAtpdNWcvjhR24Iy0bjkoFB8aCfSn9+it/U6QrsU=;
+	s=arc-20240116; t=1754785293; c=relaxed/simple;
+	bh=enjBsSaY8yffWMcQ9pQLyf6MKpmvqMYV6EXlKpqf3yM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IVlPB2ruiRTA7P1GZUoySnCxrNZSwvgDTdSyHvcZugVlP7gmQmqAKoW+Y84QfkVjzGDDAxBYmDeA4wNU1M5yl9xjmOOgwkgFnBTCSFutveayaG5tg6fZlz0XU8W8/CSpbFc+nCoSUjHg2YzoH2jEDIKS9lsjJQ/PT1ua33qdPAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D5xt4tWU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UnChTUAd/REGbzKp8Mj4+gT/uGRYCFQRSCWBxONVRBWSEFNf//rE7yAoECrbO8aT6eVdj48bt9I/zAjZK05XJTT4d1u1kagy1fT40tQwqsBk8basiBDZzwK7gFlaRHzeGt+GynMu37fWf+PKXAjTZUuMOQCdeZ/T2Txxfxxxtek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=peIOaEL3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D5xt4tWU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC956C4CEF1;
-	Sun, 10 Aug 2025 00:21:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="peIOaEL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943B7C4CEF1;
+	Sun, 10 Aug 2025 00:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754785290;
-	bh=9xzGAtpdNWcvjhR24Iy0bjkoFB8aCfSn9+it/U6QrsU=;
+	s=k20201202; t=1754785292;
+	bh=enjBsSaY8yffWMcQ9pQLyf6MKpmvqMYV6EXlKpqf3yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5xt4tWU8f41YFzXmTbE847jBw3EdZC/XoD2/BbUm9RlUksAi1gLC55YaBEUNH2CQ
-	 8sEkCry1QjGSx8/Pj0mVG8c5FuqJV/eZOwoqoEn8X+npzaBlpMc8ZeLZ1CU7sLKnZ1
-	 F5uHaALvxjKEJtF9xvHRKKNpSlF+hWdhQJTYxbSlXqDUGuv9ccBgp5M2kFtqxbhqGI
-	 DctqHDdb1Jq+zg82S/ThSE3lcHSJbAyLS89oPvDA9gYZft85lw6pWY153dFPATkQ+0
-	 D5WlgobdDBgp5p1IhuCaIyfkg4dIilRQAuofIokk9B7X23+t9FgSCIjEPh4yt4aMK5
-	 AMginQf7RqXGQ==
+	b=peIOaEL3ogynqUMQ0cVHORHAyQIZiyE4hVzFQDI4g+GVpiohYLsYjp9o58x6PQUWq
+	 e/XMWpNy1zuc+Tpw07tdu7RiUDum6etlbcVMk/FsymnwEueEtoH8uoXtFGDTVwiIHg
+	 sun82qNKlO6SUL3NWQH7l7jO/KSudRXzzaHwOL10x4dy9QBB1IaNJPsTtUfUsd7XQg
+	 gBxpqgRjWE984PLIwlkciod4oCemPc7mSeLPPLzGqYl8w0rLGE0A+zatIRqjJcd4uP
+	 QD1Wvdr7BoWYWhy0KF424x3/N45amn6f1mSZNRGBFGJ0YMPx92TMfCujwrxyaiVrS5
+	 DguHk/vT/hkIg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shankari Anand <shankari.ak0208@gmail.com>,
+Cc: Suchit Karunakaran <suchitkarunakaran@gmail.com>,
+	Nicolas Schier <nicolas.schier@linux.dev>,
 	Masahiro Yamada <masahiroy@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Nicolas Schier <n.schier@avm.de>,
-	Sasha Levin <sashal@kernel.org>,
-	nicolas.schier@linux.dev,
-	thorsten.blum@linux.dev,
-	linux-kbuild@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.4] kconfig: nconf: Ensure null termination where strncpy is used
-Date: Sat,  9 Aug 2025 20:20:59 -0400
-Message-Id: <20250810002104.1545396-10-sashal@kernel.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.16-5.4] kconfig: lxdialog: replace strcpy() with strncpy() in inputbox.c
+Date: Sat,  9 Aug 2025 20:21:00 -0400
+Message-Id: <20250810002104.1545396-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810002104.1545396-1-sashal@kernel.org>
 References: <20250810002104.1545396-1-sashal@kernel.org>
@@ -54,113 +50,103 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
 Content-Transfer-Encoding: 8bit
 
-From: Shankari Anand <shankari.ak0208@gmail.com>
+From: Suchit Karunakaran <suchitkarunakaran@gmail.com>
 
-[ Upstream commit f468992936894c9ce3b1659cf38c230d33b77a16 ]
+[ Upstream commit 5ac726653a1029a2eccba93bbe59e01fc9725828 ]
 
-strncpy() does not guarantee null-termination if the source string is
-longer than the destination buffer.
+strcpy() performs no bounds checking and can lead to buffer overflows if
+the input string exceeds the destination buffer size. This patch replaces
+it with strncpy(), and null terminates the input string.
 
-Ensure the buffer is explicitly null-terminated to prevent potential
-string overflows or undefined behavior.
-
-Signed-off-by: Shankari Anand <shankari.ak0208@gmail.com>
+Signed-off-by: Suchit Karunakaran <suchitkarunakaran@gmail.com>
+Reviewed-by: Nicolas Schier <nicolas.schier@linux.dev>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Nicolas Schier <n.schier@avm.de>
-Acked-by: Nicolas Schier <n.schier@avm.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Based on my analysis of the commit and the code context I was able to
+examine, here's my assessment:
+
 **Backport Status: YES**
 
-This commit is a clear security/safety fix that should be backported to
-stable kernel trees. Here's my detailed analysis:
+## Extensive Explanation:
 
-## Code Changes Analysis
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-The commit adds explicit null termination after `strncpy()` calls in two
-locations:
+### 1. **Security Bug Fix**
+The commit fixes a potential buffer overflow vulnerability in the
+kconfig lxdialog inputbox code. Looking at the code changes:
+- The original code uses `strcpy(instr, init)` at line 43 without any
+  bounds checking
+- `instr` points to `dialog_input_result` which is defined as `char
+  dialog_input_result[MAX_LEN + 1]` (line 11)
+- From dialog.h, `MAX_LEN` is defined as 2048 (line 25)
+- If `init` string exceeds 2048 characters, it would overflow the buffer
 
-1. **scripts/kconfig/nconf.c** (line ~596):
-   - After copying with `strncpy(k_menu_items[index].str, tmp_str,
-     sizeof(k_menu_items[index].str))`
-   - Adds: `k_menu_items[index].str[sizeof(k_menu_items[index].str) - 1]
-     = '\0';`
+### 2. **Simple and Contained Fix**
+The fix is minimal and straightforward:
+```c
+- else
+- strcpy(instr, init);
++       else {
++               strncpy(instr, init, sizeof(dialog_input_result) - 1);
++               instr[sizeof(dialog_input_result) - 1] = '\0';
++       }
+```
+- Replaces unsafe `strcpy()` with bounded `strncpy()`
+- Properly null-terminates the string to prevent unterminated string
+  issues
+- Uses `sizeof(dialog_input_result) - 1` to ensure proper bounds
 
-2. **scripts/kconfig/nconf.gui.c** (line ~361):
-   - After copying with `strncpy(result, init, *result_len)`
-   - Adds: `result[*result_len - 1] = '\0';`
+### 3. **Low Risk of Regression**
+- The change is localized to a single function in the kconfig tool
+- It doesn't alter the logic flow, only makes the string copy safer
+- The kconfig lxdialog is used during kernel configuration, not runtime
+  kernel code
+- The fix maintains the same functionality while adding safety
 
-## Why This Should Be Backported
+### 4. **Meets Stable Criteria**
+According to stable kernel rules, this commit qualifies because it:
+- Fixes a real bug (buffer overflow vulnerability)
+- Is obviously correct and tested (has review from Nicolas Schier)
+- Is small (only 4 lines changed)
+- Doesn't add new features or change architecture
+- Has no functional side effects beyond the security fix
 
-1. **Bug Fix**: This fixes a genuine security issue where `strncpy()`
-   does not guarantee null-termination if the source string equals or
-   exceeds the destination buffer size. This can lead to:
-   - Buffer overruns when the string is later used
-   - Information disclosure (reading past buffer boundaries)
-   - Potential crashes or undefined behavior
+### 5. **Potential Security Impact**
+While this is in the build tools rather than runtime kernel code, buffer
+overflows in build tools can still be exploited:
+- Could be triggered by malicious Kconfig files
+- Could affect kernel developers or automated build systems
+- Even build-time vulnerabilities should be fixed in stable trees
 
-2. **Small and Contained**: The fix is minimal - just two single-line
-   additions that ensure null termination. No architectural changes or
-   new features.
+The commit is a textbook example of a security fix that should be
+backported - it's small, focused, fixes a clear vulnerability, and has
+minimal risk of causing regressions.
 
-3. **Low Risk**: The changes are straightforward defensive programming
-   practices that cannot introduce regressions. They only ensure strings
-   are properly terminated.
+ scripts/kconfig/lxdialog/inputbox.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-4. **Security Impact**: String handling bugs are a common source of
-   security vulnerabilities. While kconfig tools are build-time
-   utilities (not runtime kernel code), they process user-provided
-   configuration data and should handle strings safely.
-
-5. **Meets Stable Criteria**:
-   - Fixes a real bug (improper string termination)
-   - Minimal change (2 lines added)
-   - Obviously correct (standard C string safety practice)
-   - No new functionality
-
-6. **Testing**: The commit has been tested by multiple developers (Randy
-   Dunlap, Nicolas Schier) and acked by them, indicating confidence in
-   the fix.
-
-The defensive null-termination pattern after `strncpy()` is a well-
-established best practice in C programming to prevent string-related
-bugs. This type of fix is exactly what stable kernels should include to
-improve reliability and security without introducing new risks.
-
- scripts/kconfig/nconf.c     | 2 ++
- scripts/kconfig/nconf.gui.c | 1 +
- 2 files changed, 3 insertions(+)
-
-diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
-index c0b2dabf6c89..ae1fe5f60327 100644
---- a/scripts/kconfig/nconf.c
-+++ b/scripts/kconfig/nconf.c
-@@ -593,6 +593,8 @@ static void item_add_str(const char *fmt, ...)
- 		tmp_str,
- 		sizeof(k_menu_items[index].str));
+diff --git a/scripts/kconfig/lxdialog/inputbox.c b/scripts/kconfig/lxdialog/inputbox.c
+index 3c6e24b20f5b..5e4a131724f2 100644
+--- a/scripts/kconfig/lxdialog/inputbox.c
++++ b/scripts/kconfig/lxdialog/inputbox.c
+@@ -39,8 +39,10 @@ int dialog_inputbox(const char *title, const char *prompt, int height, int width
  
-+	k_menu_items[index].str[sizeof(k_menu_items[index].str) - 1] = '\0';
-+
- 	free_item(curses_menu_items[index]);
- 	curses_menu_items[index] = new_item(
- 			k_menu_items[index].str,
-diff --git a/scripts/kconfig/nconf.gui.c b/scripts/kconfig/nconf.gui.c
-index 4bfdf8ac2a9a..7206437e784a 100644
---- a/scripts/kconfig/nconf.gui.c
-+++ b/scripts/kconfig/nconf.gui.c
-@@ -359,6 +359,7 @@ int dialog_inputbox(WINDOW *main_window,
- 	x = (columns-win_cols)/2;
+ 	if (!init)
+ 		instr[0] = '\0';
+-	else
+-		strcpy(instr, init);
++	else {
++		strncpy(instr, init, sizeof(dialog_input_result) - 1);
++		instr[sizeof(dialog_input_result) - 1] = '\0';
++	}
  
- 	strncpy(result, init, *result_len);
-+	result[*result_len - 1] = '\0';
- 
- 	/* create the windows */
- 	win = newwin(win_lines, win_cols, y, x);
+ do_resize:
+ 	if (getmaxy(stdscr) <= (height - INPUTBOX_HEIGHT_MIN))
 -- 
 2.39.5
 
