@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630E318C933;
-	Sun, 10 Aug 2025 16:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F3D18C933;
+	Sun, 10 Aug 2025 16:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754844722; cv=none; b=YT6jpJtbJY+p8ay63QwlVRo2/cGQofXaqNVAAad+ph4D/lDwFyChhkbuEiD09T00d1/aaqxM1N1ENMqs/93XnJrFDAqU791aqityLhRaeqVmHuvkLUATm0+lwJPcZkVKVShv6Ft+jGcZN+PLARamA3hJqWgVn6yJgUkGQJRB7t8=
+	t=1754844724; cv=none; b=nV0kuv6jhSXp96xhSrITq1VEpQ5P0WsM2jNePsp8fr51bpJVZy9n+BUcjYq9PX+Oxa+Qmzwefh83gK3lpZHGSw9un1SLserA5S+OOkpBHd/394JkE7nLrItackattiPpih3053x4DRgfdinA2Go8d30RpN2VZEBKb7jfXBdUn+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754844722; c=relaxed/simple;
-	bh=5+1OgXBWikGfNfHsB4wmJv6tgGDqZu9/PnzXxMeunkQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=unuq+xR3BhdpZiitIeZZoEbVfBtfjF9xc/7vAr/aCO2+WrgvTQj35t9OTcsTLFCqL+nZMVilh3yn5f2Mk+JvMmix30ZwaIVavWRSb91PjpbdfnIqYNRhCGRhVxtMRisiuTKb7hzJbacDtuiOFR/eDFb7OFwrVnln/UCh6a5CIDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NlQYaWMl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754844724; c=relaxed/simple;
+	bh=0kd2zYwRTda4FihBBRspceYznCtza6GKQbvNmK08HWc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OaNXCOGn+/bcsxysPO8ai20xpc6n2x3RsUKq0F68HFU7Tj5vqVq0btogreGue6MOnkl1ykHMbkz7IRWt1Crw/jUoxohqV41YP70rHnCsCpS5yIEWvV5ApiqeKw6rCGYz5Q6E4azNyjGA7LqGkIuY0gVGY79JsTP8rVMT7bGwYmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EyMj0IGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NlQYaWMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9445C4CEEB;
-	Sun, 10 Aug 2025 16:52:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EyMj0IGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1998C4CEEB;
+	Sun, 10 Aug 2025 16:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754844722;
-	bh=5+1OgXBWikGfNfHsB4wmJv6tgGDqZu9/PnzXxMeunkQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=NlQYaWMlmFpolWHrnZ1R2FFoqoRoIb6qh7OqItMjD5vlwKa1B6FFdZXRsueEULYT5
-	 VOHHs3+8zKeW6dsigo7A3T1l3Mj5bz2D8hooI6qKMFq9d3P5f8W5pgTYzHwBL/Nssh
-	 HaSU7Pr1F28ARpsTaoisjDKCtiSpGo3SlpLDFkT+gd2+o5N9qEwurZ/9hF8qCw8/Wl
-	 WFkwpY9kEUCUl/QGapnJC2AWyPqXzF9GToBdu6aMW8YiHroxctIg9bnm3jtSAaD+ge
-	 DeUMrioaw/MLMDTKP9l/zDLK2NWWE6zuw1R5TBWsELJCoq2h33OuF+l8pVQbVO+DHk
-	 A2PoAGpnEDjNA==
+	s=k20201202; t=1754844724;
+	bh=0kd2zYwRTda4FihBBRspceYznCtza6GKQbvNmK08HWc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EyMj0IGHtIwROT9KA1i0p6OySYvlcqGnW8mKgGEZ0hfQHuzP191SFoYzXd9lBH55N
+	 YcDQkua32NZn6wHlGtc1tdP12CnM6gRS3kJ++xUSu4RyVS6B/eIUOTJjVnT/Ay6UJd
+	 GBSgeQ5rMkTd3oYIr+jLfYXM3zLBBCacvVVqFFPmpJgzJJaoRmw2c2zCgKqt8hM5WD
+	 NWSb37g3UCoVBsd72iP3e1CGIEFR6LSrrGGzm82F8V4KjNS8Ld3tsYoVOJ2oMCDKT5
+	 5lolibOL6o+JxHDR2dJRNHDxEtCFejxZnjwcizdbdv9MYC7hMOr9RN4PJYfp1njPfb
+	 9QSNEkqLgQ4mw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Garry <john.g.garry@oracle.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K . Petersen" <martin.petersen@oracle.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Len Brown <len.brown@intel.com>,
+	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.10] block: avoid possible overflow for chunk_sectors check in blk_stack_limits()
-Date: Sun, 10 Aug 2025 12:51:43 -0400
-Message-Id: <20250810165158.1888206-1-sashal@kernel.org>
+	lenb@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-6.12] tools/power turbostat: Handle non-root legacy-uncore sysfs permissions
+Date: Sun, 10 Aug 2025 12:51:44 -0400
+Message-Id: <20250810165158.1888206-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250810165158.1888206-1-sashal@kernel.org>
+References: <20250810165158.1888206-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,111 +50,129 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Garry <john.g.garry@oracle.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 448dfecc7ff807822ecd47a5c052acedca7d09e8 ]
+[ Upstream commit e60a13bcef206795d3ddf82f130fe8f570176d06 ]
 
-In blk_stack_limits(), we check that the t->chunk_sectors value is a
-multiple of the t->physical_block_size value.
+/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/
+may be readable by all, but
+/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/current_freq_khz
+may be readable only by root.
 
-However, by finding the chunk_sectors value in bytes, we may overflow
-the unsigned int which holds chunk_sectors, so change the check to be
-based on sectors.
+Non-root turbostat users see complaints in this scenario.
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250729091448.1691334-2-john.g.garry@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fail probe of the interface if we can't read current_freq_khz.
+
+Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+Original-patch-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+Now I have a clear understanding of the issue and fix. Let me analyze
+the code change:
 
-## Extensive Analysis
+## Backport Status: **YES**
+
+## Extensive Analysis:
 
 This commit should be backported to stable kernel trees for the
 following reasons:
 
-### 1. **It fixes a real integer overflow bug**
-The original code performs `(t->chunk_sectors << 9)` which can cause an
-integer overflow. Since both `chunk_sectors` and `physical_block_size`
-are `unsigned int` (32-bit), when `chunk_sectors` is larger than
-8,388,607 (2^23 - 1), shifting it left by 9 bits (multiplying by 512)
-will overflow the 32-bit unsigned integer. This overflow can lead to
-incorrect alignment checks.
+### 1. **Bug Fix for Real User Issue**
+The commit fixes a specific bug where non-root users of turbostat
+encounter errors when the sysfs permissions are inconsistent. As stated
+in the commit message:
+- The directory
+  `/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/` may
+  be readable by all users
+- But the file `current_freq_khz` within that directory may only be
+  readable by root
+- This causes turbostat to fail with complaints for non-root users
 
-### 2. **The fix is minimal and contained**
-The change is a single-line modification that replaces:
+### 2. **Simple and Contained Fix**
+The code change is minimal and focused:
 ```c
-if ((t->chunk_sectors << 9) & (t->physical_block_size - 1))
+// Before: Only checked if the directory was readable
+if (access(path_base, R_OK))
+    continue;
+
+// After: Check if the actual file we need (current_freq_khz) is
+readable
+sprintf(path, "%s/current_freq_khz", path_base);
+if (access(path, R_OK))
+    continue;
 ```
-with:
+
+The fix simply moves the permission check from the directory to the
+actual file that will be read later (line 6763-6765 in the original code
+reads `current_freq_khz`).
+
+### 3. **Follows Established Pattern**
+Looking at the `probe_intel_uncore_frequency_cluster()` function (line
+6776), it already checks the specific file permission:
 ```c
-if (t->chunk_sectors % (t->physical_block_size >> SECTOR_SHIFT))
+if (access("/sys/devices/system/cpu/intel_uncore_frequency/uncore00/curr
+ent_freq_khz", R_OK))
+    return;
 ```
+This fix makes the legacy function consistent with the cluster
+function's approach.
 
-This mathematically equivalent check avoids the overflow by dividing
-`physical_block_size` by the sector size (512 bytes) instead of
-multiplying `chunk_sectors` by 512.
+### 4. **No Risk of Regression**
+- The change only affects the probing logic - if the file cannot be
+  read, the function simply skips that uncore frequency entry
+- This is better than the current behavior where it would try to read
+  the file anyway and fail with errors
+- The fix maintains backward compatibility - systems where the file is
+  readable continue to work as before
 
-### 3. **It's a correctness issue in critical block layer code**
-The `blk_stack_limits()` function is fundamental to the block layer's
-device stacking functionality, used by MD, DM, and other stacked block
-devices. An overflow here could lead to:
-- Incorrect alignment detection
-- Improper chunk_sectors being cleared when it shouldn't be
-- Potential data corruption or I/O errors in stacked block devices
+### 5. **Userspace Tool Fix**
+This is a fix for a userspace tool (turbostat) in the tools/ directory,
+not kernel code, making it even safer to backport as it cannot cause
+kernel instability.
 
-### 4. **The fix has low regression risk**
-- The new calculation is mathematically equivalent to the intended check
-- It only changes how the comparison is performed, not the logic
-- The fix has been reviewed by multiple maintainers (Hannes Reinecke,
-  Martin K. Petersen, Damien Le Moal)
-- No new features or architectural changes are introduced
+### 6. **Clear Problem and Solution**
+- The problem is well-defined and reported by a real user (Artem
+  Bityutskiy)
+- The solution is straightforward and logical
+- The fix prevents error messages that would confuse users running
+  turbostat without root privileges
 
-### 5. **Real-world impact potential**
-Modern storage devices can have large chunk sizes. For example:
-- NVMe devices with large zones could have chunk_sectors approaching or
-  exceeding the overflow threshold
-- RAID configurations with large stripe sizes
-- This becomes more likely as storage devices grow in capacity and
-  complexity
+### 7. **Meets Stable Criteria**
+According to stable kernel rules, this fix:
+- Fixes a real bug that affects users ✓
+- Is small and contained (2 line change) ✓
+- Has minimal risk of introducing new issues ✓
+- Doesn't introduce new features ✓
+- Doesn't make architectural changes ✓
 
-### 6. **Follows stable kernel criteria**
-According to stable kernel rules, this qualifies because it:
-- Fixes a bug that users can potentially hit
-- Is obviously correct and tested
-- Is small (single line change)
-- Fixes only one thing
-- Has no dependencies on other patches
+The commit improves the robustness of turbostat when dealing with
+permission inconsistencies in sysfs, which is a reasonable scenario that
+can occur in production systems with specific security configurations.
 
-The commit message clearly describes the problem (overflow in unsigned
-int) and the solution (changing the check to avoid overflow). The fix
-maintains the same semantic meaning while being overflow-safe, making it
-an ideal candidate for stable backporting.
+ tools/power/x86/turbostat/turbostat.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- block/blk-settings.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index a000daafbfb4..88890e904320 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -779,7 +779,7 @@ int blk_stack_limits(struct queue_limits *t, struct queue_limits *b,
- 	}
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 5230e072e414..bf011c2847f2 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -6740,7 +6740,8 @@ static void probe_intel_uncore_frequency_legacy(void)
+ 			sprintf(path_base, "/sys/devices/system/cpu/intel_uncore_frequency/package_%02d_die_%02d", i,
+ 				j);
  
- 	/* chunk_sectors a multiple of the physical block size? */
--	if ((t->chunk_sectors << 9) & (t->physical_block_size - 1)) {
-+	if (t->chunk_sectors % (t->physical_block_size >> SECTOR_SHIFT)) {
- 		t->chunk_sectors = 0;
- 		t->flags |= BLK_FLAG_MISALIGNED;
- 		ret = -1;
+-			if (access(path_base, R_OK))
++			sprintf(path, "%s/current_freq_khz", path_base);
++			if (access(path, R_OK))
+ 				continue;
+ 
+ 			BIC_PRESENT(BIC_UNCORE_MHZ);
 -- 
 2.39.5
 
