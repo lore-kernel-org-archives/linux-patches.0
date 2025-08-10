@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F3D18C933;
-	Sun, 10 Aug 2025 16:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3599B2033A;
+	Sun, 10 Aug 2025 16:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754844724; cv=none; b=nV0kuv6jhSXp96xhSrITq1VEpQ5P0WsM2jNePsp8fr51bpJVZy9n+BUcjYq9PX+Oxa+Qmzwefh83gK3lpZHGSw9un1SLserA5S+OOkpBHd/394JkE7nLrItackattiPpih3053x4DRgfdinA2Go8d30RpN2VZEBKb7jfXBdUn+s=
+	t=1754844729; cv=none; b=kuQNGrYBbznGHMLt/8bagqZwmDu4vPvLj4g8hbGYTvRSnxuf/qMUosZm0SC3Mhu3k/1WD54voNeQU787x23nRv2ETxUZKvjwzbHAdGNKLv6nVDacLARVGnxB5DKqtPsNtZb0BDb7n6jg08KgnQWhwfx/gvAqVp18ewflW6OTZ2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754844724; c=relaxed/simple;
-	bh=0kd2zYwRTda4FihBBRspceYznCtza6GKQbvNmK08HWc=;
+	s=arc-20240116; t=1754844729; c=relaxed/simple;
+	bh=L9KPac7qbj01D8Q0OrvieImoMBmqsEqasmSOnMt/ceg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OaNXCOGn+/bcsxysPO8ai20xpc6n2x3RsUKq0F68HFU7Tj5vqVq0btogreGue6MOnkl1ykHMbkz7IRWt1Crw/jUoxohqV41YP70rHnCsCpS5yIEWvV5ApiqeKw6rCGYz5Q6E4azNyjGA7LqGkIuY0gVGY79JsTP8rVMT7bGwYmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EyMj0IGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DPennFBlp68DjhE2QibyHv6jPdrfycdWnlMc93iALpp4VkiPNcsBCkTGwMWvVGkqDErCOKzLyd7E4mKbE9kgRbhPJTtoc6NHSbj4cHbRwR9swUt/qwZUdpm5k/Civ5PBFLRzY8VD7MxLgaCuNahg4zGFc5wxsLxyXjdLVd2USF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WJDc2mS1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EyMj0IGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1998C4CEEB;
-	Sun, 10 Aug 2025 16:52:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WJDc2mS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF72C4CEEB;
+	Sun, 10 Aug 2025 16:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754844724;
-	bh=0kd2zYwRTda4FihBBRspceYznCtza6GKQbvNmK08HWc=;
+	s=k20201202; t=1754844728;
+	bh=L9KPac7qbj01D8Q0OrvieImoMBmqsEqasmSOnMt/ceg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EyMj0IGHtIwROT9KA1i0p6OySYvlcqGnW8mKgGEZ0hfQHuzP191SFoYzXd9lBH55N
-	 YcDQkua32NZn6wHlGtc1tdP12CnM6gRS3kJ++xUSu4RyVS6B/eIUOTJjVnT/Ay6UJd
-	 GBSgeQ5rMkTd3oYIr+jLfYXM3zLBBCacvVVqFFPmpJgzJJaoRmw2c2zCgKqt8hM5WD
-	 NWSb37g3UCoVBsd72iP3e1CGIEFR6LSrrGGzm82F8V4KjNS8Ld3tsYoVOJ2oMCDKT5
-	 5lolibOL6o+JxHDR2dJRNHDxEtCFejxZnjwcizdbdv9MYC7hMOr9RN4PJYfp1njPfb
-	 9QSNEkqLgQ4mw==
+	b=WJDc2mS120vsD1DTueG9POrJt/7pwy10AIq2Ubm5egYCGHtB4LkpHGYQ96SeM57Ej
+	 TScJXszyxkq3ghB3SN/v7bOp/At4aTWRvnaPPP5bZNyYWmd4apWJY/r11dlvcX9/zu
+	 FezTzvmOM0M8n4zfTupO3trGS7KD2cN8PHzl8Izu/e405ss8xbaOYQH0hlZUz2MsYv
+	 FbIdUpft6Lp1y85f7aGIcG3xD/mILPjy7aHKr45Fzec17Cnj0vewB7ogl78/2oFPX1
+	 +iucwVyo1bUQsmxmgUBlJWsJKr/+mMg299BrIXCkXGaoHweS4cn5q6sGfmy3hNrZOa
+	 YM6Ir4yu2JOSA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Len Brown <len.brown@intel.com>,
-	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
+Cc: Thomas Croft <thomasmcft@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lenb@kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-6.12] tools/power turbostat: Handle non-root legacy-uncore sysfs permissions
-Date: Sun, 10 Aug 2025 12:51:44 -0400
-Message-Id: <20250810165158.1888206-2-sashal@kernel.org>
+	kailang@realtek.com,
+	sbinding@opensource.cirrus.com,
+	chris.chiu@canonical.com,
+	simont@opensource.cirrus.com,
+	josh@joshuagrisham.com
+Subject: [PATCH AUTOSEL 6.16-6.12] ALSA: hda/realtek: add LG gram 16Z90R-A to alc269 fixup table
+Date: Sun, 10 Aug 2025 12:51:45 -0400
+Message-Id: <20250810165158.1888206-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250810165158.1888206-1-sashal@kernel.org>
 References: <20250810165158.1888206-1-sashal@kernel.org>
@@ -50,129 +52,105 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Len Brown <len.brown@intel.com>
+From: Thomas Croft <thomasmcft@gmail.com>
 
-[ Upstream commit e60a13bcef206795d3ddf82f130fe8f570176d06 ]
+[ Upstream commit dbe05428c4e54068a86e7e02405f3b30b1d2b3dd ]
 
-/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/
-may be readable by all, but
-/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/current_freq_khz
-may be readable only by root.
+Several months ago, Joshua Grisham submitted a patch [1]
+for several ALC298 based sound cards.
 
-Non-root turbostat users see complaints in this scenario.
+The entry for the LG gram 16 in the alc269_fixup_tbl only matches the
+Subsystem ID for the 16Z90R-Q and 16Z90R-K models [2]. My 16Z90R-A has a
+different Subsystem ID [3]. I'm not sure why these IDs differ, but I
+speculate it's due to the NVIDIA GPU included in the 16Z90R-A model that
+isn't present in the other models.
 
-Fail probe of the interface if we can't read current_freq_khz.
+I applied the patch to the latest Arch Linux kernel and the card was
+initialized as expected.
 
-Reported-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Original-patch-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+[1]: https://lore.kernel.org/linux-sound/20240909193000.838815-1-josh@joshuagrisham.com/
+[2]: https://linux-hardware.org/?id=pci:8086-51ca-1854-0488
+[3]: https://linux-hardware.org/?id=pci:8086-51ca-1854-0489
+
+Signed-off-by: Thomas Croft <thomasmcft@gmail.com>
+Link: https://patch.msgid.link/20250804151457.134761-2-thomasmcft@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a clear understanding of the issue and fix. Let me analyze
-the code change:
+**Backport Status: YES**
 
-## Backport Status: **YES**
+This commit is a strong candidate for backporting to stable kernel trees
+for the following reasons:
 
-## Extensive Analysis:
+## Analysis of the Commit
 
-This commit should be backported to stable kernel trees for the
-following reasons:
+### 1. **Bug Fix Nature**
+This commit fixes a hardware enablement issue where the LG gram 16Z90R-A
+laptop's audio hardware was not properly initialized. The existing quirk
+table entry only covered subsystem IDs 0x0488 (for 16Z90R-Q and 16Z90R-K
+models) but missed ID 0x0489 (for the 16Z90R-A model with NVIDIA GPU).
 
-### 1. **Bug Fix for Real User Issue**
-The commit fixes a specific bug where non-root users of turbostat
-encounter errors when the sysfs permissions are inconsistent. As stated
-in the commit message:
-- The directory
-  `/sys/devices/system/cpu/intel_uncore_frequency/package_X_die_Y/` may
-  be readable by all users
-- But the file `current_freq_khz` within that directory may only be
-  readable by root
-- This causes turbostat to fail with complaints for non-root users
-
-### 2. **Simple and Contained Fix**
-The code change is minimal and focused:
+### 2. **Minimal and Contained Change**
+The change is extremely minimal - it adds exactly **one line** to the
+quirk table:
 ```c
-// Before: Only checked if the directory was readable
-if (access(path_base, R_OK))
-    continue;
-
-// After: Check if the actual file we need (current_freq_khz) is
-readable
-sprintf(path, "%s/current_freq_khz", path_base);
-if (access(path, R_OK))
-    continue;
+SND_PCI_QUIRK(0x1854, 0x0489, "LG gram 16 (16Z90R-A)",
+ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
 ```
 
-The fix simply moves the permission check from the directory to the
-actual file that will be read later (line 6763-6765 in the original code
-reads `current_freq_khz`).
+### 3. **Low Risk of Regression**
+- The change only affects devices with the specific PCI subsystem ID
+  (0x1854:0x0489)
+- It reuses an existing, proven fixup
+  (`ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS`) that's already used for similar
+  LG gram models
+- The fixup function `alc298_fixup_samsung_amp_v2_4_amps` initializes
+  speaker amplifiers, which is critical for proper audio output
+- No architectural changes or new features are introduced
 
-### 3. **Follows Established Pattern**
-Looking at the `probe_intel_uncore_frequency_cluster()` function (line
-6776), it already checks the specific file permission:
-```c
-if (access("/sys/devices/system/cpu/intel_uncore_frequency/uncore00/curr
-ent_freq_khz", R_OK))
-    return;
-```
-This fix makes the legacy function consistent with the cluster
-function's approach.
+### 4. **User Impact**
+Without this fix, users of the LG gram 16Z90R-A laptop experience:
+- Non-functional or improperly initialized audio hardware
+- Potential inability to use speakers or headphones correctly
+- Poor user experience requiring manual workarounds
 
-### 4. **No Risk of Regression**
-- The change only affects the probing logic - if the file cannot be
-  read, the function simply skips that uncore frequency entry
-- This is better than the current behavior where it would try to read
-  the file anyway and fail with errors
-- The fix maintains backward compatibility - systems where the file is
-  readable continue to work as before
+### 5. **Proven Solution**
+- The commit message indicates the patch was tested on Arch Linux kernel
+- The fixup is identical to what's used for other 16Z90R variants
+  (0x0488) and 17ZD90R (0x048a)
+- The Samsung amp v2 with 4 amplifiers initialization is a known working
+  solution for this hardware family
 
-### 5. **Userspace Tool Fix**
-This is a fix for a userspace tool (turbostat) in the tools/ directory,
-not kernel code, making it even safer to backport as it cannot cause
-kernel instability.
+### 6. **Hardware Enablement**
+This is a classic hardware enablement fix that allows existing kernel
+functionality to work with a specific hardware variant. Such fixes are
+routinely backported to stable kernels to ensure hardware compatibility.
 
-### 6. **Clear Problem and Solution**
-- The problem is well-defined and reported by a real user (Artem
-  Bityutskiy)
-- The solution is straightforward and logical
-- The fix prevents error messages that would confuse users running
-  turbostat without root privileges
+The commit follows stable kernel criteria perfectly: it's a small,
+targeted fix for a real hardware issue that affects users, with minimal
+risk of introducing regressions since it only activates for one specific
+hardware ID.
 
-### 7. **Meets Stable Criteria**
-According to stable kernel rules, this fix:
-- Fixes a real bug that affects users ✓
-- Is small and contained (2 line change) ✓
-- Has minimal risk of introducing new issues ✓
-- Doesn't introduce new features ✓
-- Doesn't make architectural changes ✓
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-The commit improves the robustness of turbostat when dealing with
-permission inconsistencies in sysfs, which is a reasonable scenario that
-can occur in production systems with specific security configurations.
-
- tools/power/x86/turbostat/turbostat.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 5230e072e414..bf011c2847f2 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -6740,7 +6740,8 @@ static void probe_intel_uncore_frequency_legacy(void)
- 			sprintf(path_base, "/sys/devices/system/cpu/intel_uncore_frequency/package_%02d_die_%02d", i,
- 				j);
- 
--			if (access(path_base, R_OK))
-+			sprintf(path, "%s/current_freq_khz", path_base);
-+			if (access(path, R_OK))
- 				continue;
- 
- 			BIC_PRESENT(BIC_UNCORE_MHZ);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 2627e2f49316..8544fbd816fc 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11398,6 +11398,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1854, 0x0440, "LG CQ6", ALC256_FIXUP_HEADPHONE_AMP_VOL),
+ 	SND_PCI_QUIRK(0x1854, 0x0441, "LG CQ6 AIO", ALC256_FIXUP_HEADPHONE_AMP_VOL),
+ 	SND_PCI_QUIRK(0x1854, 0x0488, "LG gram 16 (16Z90R)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
++	SND_PCI_QUIRK(0x1854, 0x0489, "LG gram 16 (16Z90R-A)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
+ 	SND_PCI_QUIRK(0x1854, 0x048a, "LG gram 17 (17ZD90R)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
+ 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
+ 	SND_PCI_QUIRK(0x19e5, 0x320f, "Huawei WRT-WX9 ", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
 -- 
 2.39.5
 
