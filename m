@@ -1,47 +1,44 @@
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B725F1DE2A0
-	for <patches@lists.linux.dev>; Mon, 11 Aug 2025 05:14:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1A41A314B;
+	Mon, 11 Aug 2025 14:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754889261; cv=none; b=Tdg7jVm5VOCkT/bn0+yNIHSvT7zCGdoIZEV9TMed81KFfrJBUYuoBaw3Pg+4B5N2KkcYP9CChqjdupHqCxuktHuM+TyHRKFxaclBJvcEwYuey/OL5Tl2Nb3axOm/tQrWT8AV14DCnQ3m9+wxPj8z6RNpCV6KNZ0q16Z9ojB9ov8=
+	t=1754921306; cv=none; b=JM+kykrNHL5Tpji1xMszHGZcf/Wn1xK4FXwnRuoQHi3hUZ4aggEHkboB7NDouTTaibPvdDMncweIVTR2jUVYuTV5SCaHKGp6ufiIqCZGKQ3PFYAFvsl1KmLWr7rKpg7KJZyNIvbeNehzRac3Fgts/MdSUhN6xaGfNaZHWtXGXkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754889261; c=relaxed/simple;
-	bh=1DVpCgKZtMGDlHlBBsbZMIuw9zI4dYhPvEqP5k7blkU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cGgafoiItCJPOoD4twUNX7+AytykWEmFFkfk0Ri5aq2I/9E1c9evMiMf+iRKv9UvXfI8tM/VqtFlilujUkxbq/u07bS/JjlOtTTECt5I0AjYQCHvYQBDk9QbnMZ3m+RcOOPQBzT8zhijmmAHj0v4ttRtNZFXoMYwtKYOLrt5MDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyphar.com; spf=pass smtp.mailfrom=cyphar.com; dkim=pass (2048-bit key) header.d=cyphar.com header.i=@cyphar.com header.b=QnYsJ6TQ; arc=none smtp.client-ip=80.241.56.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=cyphar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cyphar.com
+	s=arc-20240116; t=1754921306; c=relaxed/simple;
+	bh=HGN8ywaENQf9F+hB5Ui43d4vB2fUp6slqVPWEkCXdEY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UlYBs3Oe6cW3GNQMov6cNJP/Fe412lUxa0+N52fVLizcee3BGixe4HThrzM0ib5WEhXvmLWrQVgh9xYguF4Ag2Ed3+dbxmY5rC6kah2EMLPhtB9qvmrSwBoWwsbzfKkid6uGrwVKlosKYxsnnOMuzT6pb56iocydJx5CULh68rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G/qI0wiI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cyphar.com header.i=@cyphar.com header.b="QnYsJ6TQ"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4c0jV93420z9tR6;
-	Mon, 11 Aug 2025 07:14:09 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cyphar.com; s=MBO0001;
-	t=1754889249;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WtaV5i7VdJo7E0LZgBAs5NAGIr5JvgxFQc8tGpnZeeY=;
-	b=QnYsJ6TQmab719SAJGG8kUyhER0KNqw6jTRs+zdKQzkRFsUeIzkAb9pWjwfs6VIeQvwG18
-	w+nUo9L+UH1mC817FcqaYgKCS8BNNfEir3eQKvbUAROLLTrsHWRKmsM9f0adLYTpZO2wq3
-	14oF/8oP2niyf6zY81hdZk4q4KxQCeR7nWKWeoqCW8sLKLuVFDDbChGfP4Dc01AoRBi9BK
-	cSQ8lIXx/5Qo5aV6KzuA5W+vVGGH2sO3DH/d9AIF4XeUMuyWPX1dgzI/tG6oteSH5H248a
-	A3XMUTPMkFtbhoIQZffhCIy6+thoytZR7Y2C8D6Zd4k7mNFFR9sN+8uD7l+ZhQ==
-Date: Mon, 11 Aug 2025 15:13:56 +1000
-From: Aleksa Sarai <cyphar@cyphar.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G/qI0wiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D79C4CEED;
+	Mon, 11 Aug 2025 14:08:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754921305;
+	bh=HGN8ywaENQf9F+hB5Ui43d4vB2fUp6slqVPWEkCXdEY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=G/qI0wiIkCSD4DJBwkLBvRcUNbMNoRUx1flA9hVC2M7sCTsdWsLe1qn6WicKrxACr
+	 VvpD/OynAgGf3BmmDkpzbJnxmqci0ICxbUxv/UWtLqs+rYLeVG3WYqSB8BF+sT0Fks
+	 zgr8QgWAi9yoShSjqrDLc/+rEYxKz5MmPg6yYW0HKCnU+wr7THNb4JpqVomW+M3e2Y
+	 vcGxsb2B7+BfL5GbtcfF95VZuVDAj7D1yfBE+L1yLo65SS+lZpbPjKDkVgC3OAzWWd
+	 xk2P2kUhRPm6ot/KpJ5cbvj0RaLxgVvh5lneqyOctHUUVMcivg1ZfTTV1vQEwx1wCF
+	 A0YLR3JZzV4pA==
+From: Christian Brauner <brauner@kernel.org>
 To: Askar Safin <safinaskar@zohomail.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, linux-fsdevel@vger.kernel.org, 
-	David Howells <dhowells@redhat.com>, patches@lists.linux.dev
-Subject: Re: [PATCH] vfs: fs/namespace.c: remove ms_flags argument from
- do_remount
-Message-ID: <2025-08-11.1754889104-proper-butch-stone-vagabond-Dm6UAJ@cyphar.com>
+Cc: Christian Brauner <brauner@kernel.org>,
+	linux-fsdevel@vger.kernel.org,
+	David Howells <dhowells@redhat.com>,
+	patches@lists.linux.dev,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>
+Subject: Re: [PATCH] vfs: fs/namespace.c: remove ms_flags argument from do_remount
+Date: Mon, 11 Aug 2025 16:08:14 +0200
+Message-ID: <20250811-regie-wandlung-afa613e3853f@brauner>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250811045444.1813009-1-safinaskar@zohomail.com>
 References: <20250811045444.1813009-1-safinaskar@zohomail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -49,88 +46,30 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="obbhnswi4kpf73bp"
-Content-Disposition: inline
-In-Reply-To: <20250811045444.1813009-1-safinaskar@zohomail.com>
+Content-Type: text/plain; charset="utf-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=881; i=brauner@kernel.org; h=from:subject:message-id; bh=HGN8ywaENQf9F+hB5Ui43d4vB2fUp6slqVPWEkCXdEY=; b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTM/BnKeGW6eEPVt3viaxZPzjNiv+sql/e44+lvng35A Wmlr9MbOkpZGMS4GGTFFFkc2k3C5ZbzVGw2ytSAmcPKBDKEgYtTACbi0crwv9zBVEKN1TlqhqLM 7+Unb92XOVnU7iK/sUXjXtahOOHsfob/WRU22m7vHl0znzB9pnt89py7unrb3l6+szB7w5nQpZ3 p3AA=
+X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Transfer-Encoding: 8bit
 
-
---obbhnswi4kpf73bp
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH] vfs: fs/namespace.c: remove ms_flags argument from
- do_remount
-MIME-Version: 1.0
-
-On 2025-08-11, Askar Safin <safinaskar@zohomail.com> wrote:
+On Mon, 11 Aug 2025 04:52:23 +0000, Askar Safin wrote:
 > ...because it is not used
+> 
+> 
 
-Doing some spelunking, this usage was removed in commit 43f5e655eff7e,
-when David split out the (MS_REMOUNT|MS_BIND) handling. As such, maybe
-this deserves a
+Applied to the vfs-6.18.misc branch of the vfs/vfs.git tree.
+Patches in the vfs-6.18.misc branch should appear in linux-next soon.
 
-Fixed: 43f5e655eff7 ("vfs: Separate changing mount flags full remount")
+Please report any outstanding bugs that were missed during review in a
+new review to the original patch series allowing us to drop it.
 
-=2E..?
+It's encouraged to provide Acked-bys and Reviewed-bys even though the
+patch has now been applied. If possible patch trailers will be updated.
 
-And feel free to take my
+Note that commit hashes shown below are subject to change due to rebase,
+trailer updates or similar. If in doubt, please check the listed branch.
 
-Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+tree:   https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git
+branch: vfs-6.18.misc
 
-Thanks!
-
-> Signed-off-by: Askar Safin <safinaskar@zohomail.com>
-> ---
->  fs/namespace.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/fs/namespace.c b/fs/namespace.c
-> index ddfd4457d338..dbc773b36d49 100644
-> --- a/fs/namespace.c
-> +++ b/fs/namespace.c
-> @@ -3279,7 +3279,7 @@ static int do_reconfigure_mnt(struct path *path, un=
-signed int mnt_flags)
->   * If you've mounted a non-root directory somewhere and want to do remou=
-nt
->   * on it - tough luck.
->   */
-> -static int do_remount(struct path *path, int ms_flags, int sb_flags,
-> +static int do_remount(struct path *path, int sb_flags,
->  		      int mnt_flags, void *data)
->  {
->  	int err;
-> @@ -4109,7 +4109,7 @@ int path_mount(const char *dev_name, struct path *p=
-ath,
->  	if ((flags & (MS_REMOUNT | MS_BIND)) =3D=3D (MS_REMOUNT | MS_BIND))
->  		return do_reconfigure_mnt(path, mnt_flags);
->  	if (flags & MS_REMOUNT)
-> -		return do_remount(path, flags, sb_flags, mnt_flags, data_page);
-> +		return do_remount(path, sb_flags, mnt_flags, data_page);
->  	if (flags & MS_BIND)
->  		return do_loopback(path, dev_name, flags & MS_REC);
->  	if (flags & (MS_SHARED | MS_PRIVATE | MS_SLAVE | MS_UNBINDABLE))
-> --=20
-> 2.47.2
->=20
->=20
-
---=20
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-https://www.cyphar.com/
-
---obbhnswi4kpf73bp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJEEABYKADkWIQS2TklVsp+j1GPyqQYol/rSt+lEbwUCaJl8FBsUgAAAAAAEAA5t
-YW51MiwyLjUrMS4xMSwyLDIACgkQKJf60rfpRG/xuQEA8aE/yEvjxUNkcZsFLWZi
-vmJB7e+Sf0ZaysQKFGe9bOUA/A8w9Fzi3XxE+yS2bj24+7RCHSyuAzgF4cY7KsaJ
-v9EL
-=/xFk
------END PGP SIGNATURE-----
-
---obbhnswi4kpf73bp--
+[1/1] vfs: fs/namespace.c: remove ms_flags argument from do_remount
+      https://git.kernel.org/vfs/vfs/c/59f67bb635a8
