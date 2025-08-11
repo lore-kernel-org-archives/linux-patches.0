@@ -1,156 +1,161 @@
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2056.outbound.protection.outlook.com [40.107.100.56])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC861F4C8C;
-	Mon, 11 Aug 2025 21:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.56
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754947303; cv=fail; b=DcGdggeedWydGucWPu79GL+geyOi2ApvFRPh9mFFZ3DwyFq566AXIgQUOjSDORGzxUvGFL1c5s1ekVyrBbi+hwgK0lZaSBH5BHzCezR1rhDftJn6uEQwPiuI3+wA+KWwR6llrvCCQV+t10ULamzKq3kdPV5HV4THHKaYp9yDT5A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754947303; c=relaxed/simple;
-	bh=zbwoY0nl+MbSIlOsqSk3E3rQxMdQIcVwr0H+pI6Xk8M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=XQy0M+fOcCNAAwwiP559xWKZOeX+KLEgNwrucd0eTqR8kZLOtZXhOQ05mhh+iKpQs5lVB7h0QaiUEgHnWQDm665m9hv4Mp5QJ5IhIjSot22yGA7omCyJgb6RiLIIP4Kuwe36/mNPCOaNTcNZYmYlhcSAzOM44gVlvjOXDEGsu5I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=oKbgVwde; arc=fail smtp.client-ip=40.107.100.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDD8214A78
+	for <patches@lists.linux.dev>; Mon, 11 Aug 2025 21:36:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1754948162; cv=none; b=XGDQ4U6MdqxgjMhstKD2pnPCStl91h4VS27ItcHn5O5OThS6GHWNuHlDHEPOD0JWQrEdLi0VxHbQA2rWu+CjKWmTyp5ohTWpJGpOesyufcqL1ll60nanVOalCRosNyQhTC/cqK72dqqJUmsDyLBVm7XrMIGJV9uobVCEQCeeXzc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1754948162; c=relaxed/simple;
+	bh=Td5Y69wZ/vqDs+pwAUfa4E8sns/AAfWGCvdYmRZ+mCU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UQ5V/wgrlTJ8Oe/7nrMf0ngHU0Ww4hwBv05L0bIJMYpujJ2P5kSQxUXu3HCYz6ovgKN4gkQMnrCt6mKVfc0KTOj+pkWTCa5c+RY4MhGHdSLsZrsXRGFNNwBYRBYWM5Ge9cQOqlUJUK1n/yJv+j3C1CyW5/h6cJsJkHKNAzSciJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OUVpraiN; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="oKbgVwde"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z+N8ogEpefp81ESm58VfgZQuRqkU3HltIp4W43ZFcnhMPz1tgtx0M+MPf1OCXhtur2CujARNZJrSbeI0mJaNb8WnZoHi8YSCXPodINqJyalClpwhjeLFUmjMlBsz8302P6dbrvGdqrLK+irtQqQ3N4DgbP3PCeR4+RjhlHQ3lPFnDt2jFvFmtHSsQIDdaBv5SJeKFX10bcqNHYPUVGy0fVOtPH7MOVedKRpiXYgf63oqx+SOgeaNtZLt62mJeq59rFs/EnA64MZGMk5xn9wO8qe8x5b1k03nMScsGrFZCEIyUgXs1HKu5tBnqjJhc6u/8ArTJm5HWR57I0oKYSh7/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zbwoY0nl+MbSIlOsqSk3E3rQxMdQIcVwr0H+pI6Xk8M=;
- b=ho7qDEsSDIQbKLaDbY1iusVHIvQ7TVb59Y5bhWfPqC0/pH1NFNJX5/DyTgewmfgi7v7Nr+28DnTEIlfLkIkd7fFUsGDNYU5d89ntpVg+6AcieePrbMronJDht0uf5f26miY8emoy1ZNPu1zuXFtKVugEA3ErnkL6AqMabyL+JMl5yyqCKWIW9tGMLe8E8g48ll5RYsTLYT97NoFZaCxgqgw8KdFqcyUxC9nGle4uT/wZ4nQ4FBp+iY867Hd6wOmYks0ilJv/1JX71Wg41udwB6JvOKmTLzYj1aMZ+PzuWLXYW9xi8JnjMiYJIgw7//wLOZiccvYnCXpLeQ2c2vdCJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zbwoY0nl+MbSIlOsqSk3E3rQxMdQIcVwr0H+pI6Xk8M=;
- b=oKbgVwdedy+OhBBZry4qLRTe77Ddfql5uRjUHjUqvdzoxQDPEXAR7QhL9TzCPY8D+s3ePCR8ip5P0lRinuIj1I7+nEfGCP24ir5sPMI/vA80Mpa/rJf7RXcWCrZ5CmCKoEFw8sQ6ubfF4sOs+7zBrcI3PqgAaeV4w5Jpkc/tLnwuAwYpy7VT7fGYzKuZtIIaW8uLunLUX7U/jCUW0G7ojaPn3ZeS9yxnp83O+pfRaoAwYVOuB8312Ft/poXVPmZeuzdkWZDsuWrwujO1Y+/yoX5PvLLJrc80Safl14f+hq+ho7DYQ+NW/xWbC7LARSr/GdmoaaR2v+EAkWs7/924AA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by SJ2PR12MB8847.namprd12.prod.outlook.com (2603:10b6:a03:546::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.21; Mon, 11 Aug
- 2025 21:21:38 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.9009.018; Mon, 11 Aug 2025
- 21:21:37 +0000
-Date: Mon, 11 Aug 2025 18:21:36 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Baolu Lu <baolu.lu@linux.intel.com>
-Cc: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Kevin Tian <kevin.tian@intel.com>,
-	patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>,
-	Wei Wang <wei.w.wang@intel.com>
-Subject: Re: [PATCH 1/9] iommu/pages: Add support for a incoherent IOMMU page
- walker
-Message-ID: <20250811212136.GA599426@nvidia.com>
-References: <1-v1-bdb01ffac49c+be-iommu_pt_vtd_jgg@nvidia.com>
- <00c5972b-a5d9-4604-aea6-cc0d8e2601a0@linux.intel.com>
- <20250729223240.GC82395@nvidia.com>
- <e94c33e4-7ef3-4777-aa28-852f4a013580@linux.intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e94c33e4-7ef3-4777-aa28-852f4a013580@linux.intel.com>
-X-ClientProxiedBy: YT4PR01CA0122.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:d5::13) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OUVpraiN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1754948161; x=1786484161;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Td5Y69wZ/vqDs+pwAUfa4E8sns/AAfWGCvdYmRZ+mCU=;
+  b=OUVpraiNfjH65hu/E4gxA5029gJSdu2UWhpUCU2tpZ8RjzxfRU18y8r3
+   tjjiK9wWO1eGXNLe/PhaBUewBhNqvEB8WewEsQLM+NtIXn0iYR+ngAoI2
+   d8CqsplHCtGCFHx7gqXf4XFPSG6xXpuchIGbSnf2TnXYPY0pXUXZJTzL2
+   Xt7IGYtWisRWoqHkGESzVAC0iTHsjzs/ZBDV+Fan7rt2Hfg9EbYhYpPAK
+   IB8Qt4e5PKy9hyurilwNLZWqls3DbTY//l5dpjlUfwVIIqLpSVM6iV708
+   VqcPnkOoXLokmVmNOSoR+xuBDs5Sb1KWyghMiTZHqvqJvarC5Y6BSodli
+   A==;
+X-CSE-ConnectionGUID: 2edOjk0MSDyFHmUu+Onu4g==
+X-CSE-MsgGUID: XJdczAUtS7+gzVVN579VtQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11518"; a="56928250"
+X-IronPort-AV: E=Sophos;i="6.17,284,1747724400"; 
+   d="scan'208";a="56928250"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2025 14:33:57 -0700
+X-CSE-ConnectionGUID: QkRI21NpR6+402jaftRBFA==
+X-CSE-MsgGUID: UQP9UUmJQlSxyxiIhbTHOg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,284,1747724400"; 
+   d="scan'208";a="189696396"
+Received: from puneetse-mobl.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.229])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2025 14:33:56 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: x86@kernel.org
+Cc: Peter Zijlstra <peterz@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] x86/cpu: Rename and move CPU model entry for Diamond Rapids
+Date: Mon, 11 Aug 2025 14:33:45 -0700
+Message-ID: <20250811213345.7029-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SJ2PR12MB8847:EE_
-X-MS-Office365-Filtering-Correlation-Id: 84969a6b-d048-4590-f9b0-08ddd91d0e60
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?aVZobXXyMyYZCQ4Chz9ni4NVJqBp9McK6ba0V9dLZ+goSxUZz1/8TXHZPuIC?=
- =?us-ascii?Q?Me8Np7GlOEymH1l15au0C76CnXHSKiYcoGffT27FIVHFN0fcrvxBzut9igs0?=
- =?us-ascii?Q?naxbZngly1o7aW/qOOA1LQQ6yzWCrMt4frevuNyUOI1qRZeL0ko3+QzGeSGu?=
- =?us-ascii?Q?K7FdTnLSRbdIU+DJpf4jP0uHyki7/PZw7Valx2w/uI3oP/mupS7Dq+DA5Ksw?=
- =?us-ascii?Q?0ToOQdTwGvhF3FVrJWbBsCs6rFlWLtrRoymuUsNX/Dg3OzmX1yy38u0R9OWt?=
- =?us-ascii?Q?NNIDoMXiUrX/TNoznWeWj4Q1FccDK7KAfiRA0e3ulWOBlifwz1zfW1gUl31f?=
- =?us-ascii?Q?UFoFjsmshUoKWE/0VhM6JELQ09xeCWwbfm1hI3s2Wmz3lHEWDhMdQJoaDMP1?=
- =?us-ascii?Q?4hcch39BSLIFROLcpW3euKipn2zujW+/GjFGrDEXJf3xijTAe+bXp5WIqtR1?=
- =?us-ascii?Q?GqxnDjHRFPcWs0vKkdxmDg3JmVGP2Blkauh92z+MUbr3cEafEeVA7EoBDUf1?=
- =?us-ascii?Q?QnkpDLgdqCf3x0cyg1C8qWCuyOIlz/YbqdmWImiHSBVG2yMROoJLxjUFRjk5?=
- =?us-ascii?Q?L/sw392BbA5/tnXZJ9o3WHIYD44SV+zl+AuGWcq1u4E/L0eC5esj2oe8XTjZ?=
- =?us-ascii?Q?UvejsgP5v07KMB18Eub/68BB6uVjsz6ZXuvwieUSswA9uJYMzj3KXiatNbU5?=
- =?us-ascii?Q?fO2Bckd1NcT5AYqgSxKyqpTPIBNaChcJ5gx20YxJJ/Bm+Z4WoiKFJ/ci2w5q?=
- =?us-ascii?Q?5dTGRohtP0CHhA843cFqbxV3814dJghkAPE7vTv1XdOryWtk9yaRb9t6tVW2?=
- =?us-ascii?Q?EEldnapYE/KLWnJ+yDnKMnUVBAHA32l68aIf0GOpIn+7xD6TtMEZ/fLmiF6q?=
- =?us-ascii?Q?E4kz3gJ2BjDBN1pqXrl1eB3DkV2Y9CgoStTMBenpsicDg2UWPdWGnjWta/jS?=
- =?us-ascii?Q?T8LZS6i9XpY4MNOWjd8K3mdE48un5BPnjzpJpo39MF7N0MgPopBmG0BB85tx?=
- =?us-ascii?Q?+CB7ZX/i43m/VOsJs2vhhrO6xFh27zivaKirRXrAdv+vavrdeY3Ev9suALgz?=
- =?us-ascii?Q?zXBH/PRxYaTj3uKwxScHEftl3z98wOniX4P72JQQraT4HVlEs3k2SYtAnqD7?=
- =?us-ascii?Q?Iv9Oz8KK8bL+3RC87wWDIIErdgO4vkIh6eni2yoR6z/jStJQXMHdtSejQh6k?=
- =?us-ascii?Q?WUhssaP1hbvxVkZjekYLH9QPk+VXyOqna+jdhBHx0UFYJnWD1mlULDGOUGP4?=
- =?us-ascii?Q?ZxAdl5kXLI3VlyqjsLf15RdhUkgQqqVOr9Qhgnje8G37EHZW40mZkaDvc/6a?=
- =?us-ascii?Q?DZnirGtGGszX5Dr2beQnvrxHlKH2WsXTbfdMN4Z/qA8JmWAaSp0skDUU8/jL?=
- =?us-ascii?Q?bWc+pCXGQoBNPFjRXgIqtXEUuI2FPNAJGLDqxBkUk3yfDLkcCrpQW65D8fmD?=
- =?us-ascii?Q?EO16FO7Xhxg=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?P9ZMe68xn33k8/EKxkhb3c3Z79NWdrgWz2FdB2iJzimW3/WBSupN/OeU/ep+?=
- =?us-ascii?Q?7hesjBB0+psItC7gDeKtTYtQjqD2F+TAFDM0cvN07v4ng6nrgym2Cf6hlHiW?=
- =?us-ascii?Q?SxVWdzZvwwNgd+C170zaEiB+RuJwCjq5dpry8zXnEzY4oEM7Be6XYW2DZ1B4?=
- =?us-ascii?Q?AmBmESjDAPpNtz7y0u/UceKDycIGHwrAaZ6WVp6RfAQ2pOpuLZOvjLrPAFnA?=
- =?us-ascii?Q?gUhdGhgI12b8eeUcYsh6/SBrXJZK/kT/3oOFFALcLK6+H8gCUjfuPscs3qmY?=
- =?us-ascii?Q?iGPQwmLgwAPMf/trovoGRc834iIuI2J7dP2lhBKt9dv4cL16qgyS+zu3kMS7?=
- =?us-ascii?Q?+S2SRylzbBu0O+DY2d+y2jRfjOOdB4SbLnopzknTU+TqxnuKgkLkEmwDCiHa?=
- =?us-ascii?Q?oM6fflK2gMP0zklqgWDKFjT4J0R+KuWTrHh6PXA0vDwFTSQfjMEYF/dxX97N?=
- =?us-ascii?Q?TzLbmhJd8zKVfamKRi5V5fJBEIb27Urwje/O3ksx9rW/pkx2O3ztrt10L9yA?=
- =?us-ascii?Q?bdzgmVTTM935iqpEjeTyHt16DrMH0RS2tBbVNqgGTFNE6kctuieo5nubKa92?=
- =?us-ascii?Q?8RujjNMR8al/DKW/lbDIdynfRKxIGm+Fnmyxj8UmAPJN8xuQMsEb4QmSrEs8?=
- =?us-ascii?Q?HEdu0ad4rNigAyuk8Dsj3aclhBcmWJd+EUXfSMCFV9K9UiyoeT9q3bLFp/P+?=
- =?us-ascii?Q?/RBXNWWT1GnSexhod0H1f3UVI+zqF3CCtej8+7mCED9UR5uJR3Mghh5AL73K?=
- =?us-ascii?Q?Eh9M4I4Dh0Jpck2a+aZG6BTgaDOOKdy/Mp46TFdAvmbIyLH07e+hjYXby6oV?=
- =?us-ascii?Q?jVKQ6s02T3VtfLTYch0ZMdO1Gaz6wkaVq3nY686XTyPfNBL2yVa0QgpyAN/q?=
- =?us-ascii?Q?Lj4hxhZdumWPFiCJQEYGRfKomJ3FMexkEC4Gib9Rag0hPuoILvoV2ooe1RV6?=
- =?us-ascii?Q?W0JvW5bvrbfSUIjT01usnAP8xldTennj/wfV8LbYXxrbIau29AI85HabWI6G?=
- =?us-ascii?Q?eUqmtOgFDY3QGkrk8tF3qGDW3jkI9O+CHVTSW3D3iuWbqFlUPIli7y7FuIn5?=
- =?us-ascii?Q?17tyjVj86Ff/reGFl2I3OGtgVdJ8bf8GpjcTBg1WfXk6g8gro/ZfK6WablfI?=
- =?us-ascii?Q?+0ErHoR2Iu6txci3MwuYfqP52Q7XR4qJqYXZYfVCEnjUYS5OVTABFQ1HOVUF?=
- =?us-ascii?Q?BCZ1lwpp/TGPhfe+D1Xd47DKJRzOBj8Wg1LRL1DKCXYMNWLDG1xrw/QoSdNy?=
- =?us-ascii?Q?VFvHdO2TRSK79HLMbhpAc/VsFgGuzVjye12I2bsfhPODO/yCmtE4cSrLaS/B?=
- =?us-ascii?Q?ENmox2uAHl7DbNOmnVgNvoHbEJj2TINgPW0+dJTf9C9Rz2yompM2Nx816PWG?=
- =?us-ascii?Q?1MRkLHu/OW6MMWDs9eSFACjEJUF0K4e7IonD35zW8WqhmonHf+qXAIiNRP3r?=
- =?us-ascii?Q?rlFyO/CvT89rl4wVwcI1GMnoL3gyKWRtc6FiSUPPFLUk+XwybEHQriXD7Ul+?=
- =?us-ascii?Q?Ihia0O3TnZVuGIYaGu/k87xnjEti+mMaIs9sTjRF3FSrLwy0mVgymgiW6C8f?=
- =?us-ascii?Q?299xI/YS3wOq2YT6Ihs=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 84969a6b-d048-4590-f9b0-08ddd91d0e60
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2025 21:21:37.8134
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EYmOeBis4JSKG4kWd/IWBk/kKRTqKex7i4BBAG3wlYxvOiBQr3gh5BBLhEJpYJvj
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8847
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 30, 2025 at 09:49:08AM +0800, Baolu Lu wrote:
+This model was added as INTEL_PANTHERCOVE_X (based on the name of the
+core) with a comment that the platform name is Diamond Rapids. It was
+also placed at the end of the file in a new section for family 19
+processors.
 
-> I was just thinking about that: this field overlays struct page, so it
-> makes more sense to clear it before repurposing it. It's fine as long as
-> there's no functionality issue.
+This is different from previous naming. Andrew Cooper complained.
+PeterZ agreed and posted a patch[1] to fix the name and move it in
+sequence with other Xeon servers. But without a commit description or
+sign-off the patch wasn't ever applied.
 
-According to the comment on struct page only page->mapping needs to be
-zeroed before freeing, index should be fine..
+Patch updated to cover one additional use of the #define by turbostat
+and to change the "Family 6" comment to also list 18 and 19 since new
+models in these families are mixed in with family 6.
 
-Jason
+Link: https://lore.kernel.org/all/20250214130205.GK14028@noisy.programming.kicks-ass.net/ # [1]
+
+Originally-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/include/asm/intel-family.h                        | 7 +++----
+ .../platform/x86/intel/speed_select_if/isst_if_common.c    | 2 +-
+ drivers/platform/x86/intel/tpmi_power_domains.c            | 2 +-
+ tools/power/x86/turbostat/turbostat.c                      | 2 +-
+ 4 files changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
+index e345dbdf933e..f32a0eca2ae5 100644
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -51,7 +51,7 @@
+ #define INTEL_PENTIUM_MMX		IFM(5, 0x04) /* P55C */
+ #define INTEL_QUARK_X1000		IFM(5, 0x09) /* Quark X1000 SoC */
+ 
+-/* Family 6 */
++/* Family 6, 18, 19 */
+ #define INTEL_PENTIUM_PRO		IFM(6, 0x01)
+ #define INTEL_PENTIUM_II_KLAMATH	IFM(6, 0x03)
+ #define INTEL_PENTIUM_III_DESCHUTES	IFM(6, 0x05)
+@@ -126,6 +126,8 @@
+ #define INTEL_GRANITERAPIDS_X		IFM(6, 0xAD) /* Redwood Cove */
+ #define INTEL_GRANITERAPIDS_D		IFM(6, 0xAE)
+ 
++#define INTEL_DIAMONDRAPIDS_X		IFM(19, 0x01) /* Panther Cove */
++
+ #define INTEL_BARTLETTLAKE		IFM(6, 0xD7) /* Raptor Cove */
+ 
+ /* "Hybrid" Processors (P-Core/E-Core) */
+@@ -203,9 +205,6 @@
+ #define INTEL_P4_PRESCOTT_2M		IFM(15, 0x04)
+ #define INTEL_P4_CEDARMILL		IFM(15, 0x06) /* Also Xeon Dempsey */
+ 
+-/* Family 19 */
+-#define INTEL_PANTHERCOVE_X		IFM(19, 0x01) /* Diamond Rapids */
+-
+ /*
+  * Intel CPU core types
+  *
+diff --git a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
+index 71e104a068e9..7449873c3d40 100644
+--- a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
+@@ -790,7 +790,7 @@ static const struct x86_cpu_id isst_cpu_ids[] = {
+ 	X86_MATCH_VFM(INTEL_GRANITERAPIDS_X,	SST_HPM_SUPPORTED),
+ 	X86_MATCH_VFM(INTEL_ICELAKE_D,		0),
+ 	X86_MATCH_VFM(INTEL_ICELAKE_X,		0),
+-	X86_MATCH_VFM(INTEL_PANTHERCOVE_X,	SST_HPM_SUPPORTED),
++	X86_MATCH_VFM(INTEL_DIAMONDRAPIDS_X,	SST_HPM_SUPPORTED),
+ 	X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X,	0),
+ 	X86_MATCH_VFM(INTEL_SKYLAKE_X,		SST_MBOX_SUPPORTED),
+ 	{}
+diff --git a/drivers/platform/x86/intel/tpmi_power_domains.c b/drivers/platform/x86/intel/tpmi_power_domains.c
+index 9d8247bb9cfa..e8d103782d64 100644
+--- a/drivers/platform/x86/intel/tpmi_power_domains.c
++++ b/drivers/platform/x86/intel/tpmi_power_domains.c
+@@ -85,7 +85,7 @@ static const struct x86_cpu_id tpmi_cpu_ids[] = {
+ 	X86_MATCH_VFM(INTEL_ATOM_CRESTMONT,	NULL),
+ 	X86_MATCH_VFM(INTEL_ATOM_DARKMONT_X,	NULL),
+ 	X86_MATCH_VFM(INTEL_GRANITERAPIDS_D,	NULL),
+-	X86_MATCH_VFM(INTEL_PANTHERCOVE_X,	NULL),
++	X86_MATCH_VFM(INTEL_DIAMONDRAPIDS_X,	NULL),
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(x86cpu, tpmi_cpu_ids);
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 72a280e7a9d5..47eb2d4d13a5 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1195,7 +1195,7 @@ static const struct platform_data turbostat_pdata[] = {
+ 	{ INTEL_EMERALDRAPIDS_X, &spr_features },
+ 	{ INTEL_GRANITERAPIDS_X, &spr_features },
+ 	{ INTEL_GRANITERAPIDS_D, &spr_features },
+-	{ INTEL_PANTHERCOVE_X, &dmr_features },
++	{ INTEL_DIAMONDRAPIDS_X, &dmr_features },
+ 	{ INTEL_LAKEFIELD, &cnl_features },
+ 	{ INTEL_ALDERLAKE, &adl_features },
+ 	{ INTEL_ALDERLAKE_L, &adl_features },
+-- 
+2.50.1
+
