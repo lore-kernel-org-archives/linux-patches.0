@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8FE2E426B
-	for <patches@lists.linux.dev>; Mon, 11 Aug 2025 18:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BEB2E3B14
+	for <patches@lists.linux.dev>; Mon, 11 Aug 2025 18:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754936268; cv=none; b=mqxOZa6wL42ULD3jqFDmCwBu7Qiczfjatz26JXNcZG9YfhPAfgpWcxycjG3JYvIv4Y39vcnYAaN0BPHJyLy/y6EmT3rTp/eopBAQwTJrbURdI6H736MIoe+EJGZ0BijnG6E/bYeI6usibEDvJ0CIZl+Kdnq2NEEWBhc46mLWYwg=
+	t=1754936269; cv=none; b=f1VVkPqUQBP/OJMTmBkh5xfgIE80ObtHpM24a/f5s3tGky6wAu9eoXcAwL9D/2KLVOmFnhDRnCqq3CEtEfHrNjj14RRfucagZ+ewxYuJ8I404GEqV8KsZ6LLQvhaiuteH3chrIgLTdQucIZEbCSnCqEQFiy4LtXKqTateAUygNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754936268; c=relaxed/simple;
-	bh=ssZTE+z9V//W/s5k1s1ZiZYrrJ05FU0h4Tp1p6ePZS0=;
+	s=arc-20240116; t=1754936269; c=relaxed/simple;
+	bh=ISWJubg+Z8gzEXFfg1gd+vXjO/Geh6wfJL0ida/t5SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tl/2eH6+0/JKHG6FViXnzomKdla6h8niJxRQ9Scw32vEoPJfzY1ALEcBLC+mjrc+/TQf1k4WTAC5x4oZWZJCKu9wp7v5TCpg8JZHzWlQeHPJOEAlFqCsCtXOGOh8zcSbHbPrnA5Dd95p2ocaZOOonW87fqNUjLy/2DajInZpUeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kacmu8yH; arc=none smtp.client-ip=198.175.65.13
+	 MIME-Version; b=GOqUolv79T/J9Pwrw2ja2SnRv21X9wSGAZ1fPL80tL5xFXscasacrZd7ZbM3yt5gD1uhACddzJWh0kq/iIQaUwjA8wnkN3NyAdLW2jwsKgHBr6Y1y1hA8WFYcICyc0i/LpjwixMtoL6G2mzO4fEMAAuxGRsctdGZZY+lJ0IDqxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UwxXFjta; arc=none smtp.client-ip=198.175.65.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kacmu8yH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UwxXFjta"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1754936267; x=1786472267;
+  t=1754936266; x=1786472266;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=ssZTE+z9V//W/s5k1s1ZiZYrrJ05FU0h4Tp1p6ePZS0=;
-  b=kacmu8yHNIaJbYrY8s+F/YIvcwpw8jAM4dkJ1z1HD15juDbAJkzj/uTi
-   LJ7OEOjdRW8YDs1GLqejhIvwlPGSgw4ux0dYyMaJTYUCko+8vE+jVzuQE
-   QmIqrLldomZN2xsLmQaN4rFQ2pCxn0+ovpmmjmQCh+BP602PrdaQpaNtE
-   l0TJC2scA2P4MhWxYXF0qSCqnhHl+x5aDFgz657r/ApUiBewW14MDQhe9
-   rBHQzdMBCVPzsDobl8LO4ETKaoyqqb8xts/U5Cp/CIGvUmeA2zQz3xUlc
-   NyxHS+TSG2nhI3UEPjYYXeg1Hc+AETWG6Kl3L2bJ6csPGixGEp8WkgPxe
+  bh=ISWJubg+Z8gzEXFfg1gd+vXjO/Geh6wfJL0ida/t5SQ=;
+  b=UwxXFjtasctdyG7fr17WN54Z8wA+6Fh8qzMW917zf0nqhgfzdl/8ugZn
+   ut4IP5iinQ6LgVM8ZfMEiTm7KhPmqL0+h+//LiSeH7Z3L+Qjg8IvfTppE
+   t/Cel/ytCNeNAVcqtsCu/0tvJMA0vWKhS8b6lHC26IH5BVX8l83ooirGy
+   X3sOMFBvhPqC/qneblFP8fM8QRbLoNLmrmiARcaSGFO0knqm+yU5qKHva
+   BHK3x0nn6MoDby4SVzXasZM1qQqbuNXmw8vXvf4AvIbgi37j1Weixy5/8
+   D681VX6r8k7gApmiVdNQKfncZPnMGknedHm5XFoJzYJ1Xjs7z2/EgPeLx
    g==;
-X-CSE-ConnectionGUID: AW7jBEqUQva2BV6B2XoaQA==
-X-CSE-MsgGUID: fvUwJDjpRJqFV7nA4Qbokw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11518"; a="68277466"
+X-CSE-ConnectionGUID: 15Zr9Id+QrmK3QKHEk96MA==
+X-CSE-MsgGUID: enN66GfkQve2Bt8UGV77JA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11518"; a="68277441"
 X-IronPort-AV: E=Sophos;i="6.17,278,1747724400"; 
-   d="scan'208";a="68277466"
+   d="scan'208";a="68277441"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
   by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2025 11:17:27 -0700
-X-CSE-ConnectionGUID: pEyZBfZtSMapvlXkxpcvew==
-X-CSE-MsgGUID: gz6+gE8VQuajB3dcFaYXDg==
+X-CSE-ConnectionGUID: aHeaqpjtRgK24ypppLxpQQ==
+X-CSE-MsgGUID: 6nG6ElQWSgOwsbpXVNCFDQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.17,278,1747724400"; 
-   d="scan'208";a="196825694"
+   d="scan'208";a="196825675"
 Received: from puneetse-mobl.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.229])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2025 11:17:26 -0700
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2025 11:17:25 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v8 24/32] x86/resctrl: Add energy/perf choices to rdt boot option
-Date: Mon, 11 Aug 2025 11:16:58 -0700
-Message-ID: <20250811181709.6241-25-tony.luck@intel.com>
+Subject: [PATCH v8 19/32] x86/resctrl: Complete telemetry event enumeration
+Date: Mon, 11 Aug 2025 11:16:53 -0700
+Message-ID: <20250811181709.6241-20-tony.luck@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250811181709.6241-1-tony.luck@intel.com>
 References: <20250811181709.6241-1-tony.luck@intel.com>
@@ -72,108 +72,171 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Legacy resctrl features are enumerated by X86_FEATURE_* flags. These
-may be overridden by quirks to disable features in the case of errata.
+Counters for telemetry events are in MMIO space. Each telemetry_region
+structure returned in the pmt_feature_group returned from OOBMSM contains
+the base MMIO address for the counters.
 
-Users can use kernel command line options to either disable a feature,
-or to force enable a feature that was disabled by a quirk.
+There may be multiple aggregators per package. Scan all the
+telemetry_region structures again and save the number of regions together
+with a flex array of the MMIO addresses for each region indexed by
+package id.
 
-Provide similar functionality for hardware features that do not have an
-X86_FEATURE_* flag.
+Completed structure for each event group looks like this:
 
-Unlike other features that are tied to X86_FEATURE_* flags, these must be
-queried by name. Add rdt_is_feature_enabled() to check whether quirks
-or kernel command line have disabled a feature. Just like the legacy
-features the command line enable overrides quirk disable.
+             +---------------------+---------------------+
+pkginfo** -->|pkginfo[package ID 0]|pkginfo[package ID 1]|
+             +---------------------+---------------------+
+                        |                     |
+                        v                     v
+                +--------------------+    +--------------------+
+                |struct pkg_mmio_info|    |struct pkg_mmio_info|
+                +--------------------+    +--------------------+
+                |num_regions = M     |    |num_regions = N     |
+                |  addrs[0]          |    |  addrs[0]          |
+                |  addrs[1]          |    |  addrs[1]          |
+                |    ...             |    |    ...             |
+                |  addrs[M-1]        |    |  addrs[N-1]        |
+                +--------------------+    +--------------------+
+
+Build a list (active_event_groups) of all the event groups that
+were successfully enabled. Use it to clean up in intel_aet_exit().
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- .../admin-guide/kernel-parameters.txt         |  2 +-
- arch/x86/kernel/cpu/resctrl/internal.h        |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c            | 30 +++++++++++++++++++
- 3 files changed, 33 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 76 ++++++++++++++++++++++++-
+ 1 file changed, 75 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 747a55abf494..b600e1b47b0c 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -6154,7 +6154,7 @@
- 	rdt=		[HW,X86,RDT]
- 			Turn on/off individual RDT features. List is:
- 			cmt, mbmtotal, mbmlocal, l3cat, l3cdp, l2cat, l2cdp,
--			mba, smba, bmec.
-+			mba, smba, bmec, energy, perf.
- 			E.g. to turn on cmt and turn off mba use:
- 				rdt=cmt,!mba
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index 09043d36e08c..151e4b56ab36 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -19,23 +19,43 @@
  
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index cd911591625f..e76b5e35351b 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -177,6 +177,8 @@ void __init intel_rdt_mbm_apply_quirk(void);
+ #include "internal.h"
  
- void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
- 
-+bool rdt_is_feature_enabled(char *name);
++/**
++ * struct pkg_mmio_info - MMIO address information for one event group of a package.
++ * @num_regions:	Number of telemetry regions on this package.
++ * @addrs:		Array of MMIO addresses, one per telemetry region on this package.
++ *
++ * Provides convenient access to all MMIO addresses of one event group
++ * for one package. Used when reading event data on a package.
++ */
++struct pkg_mmio_info {
++	unsigned int	num_regions;
++	void __iomem	*addrs[] __counted_by(num_regions);
++};
 +
- #ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
- bool intel_aet_get_events(void);
- void __exit intel_aet_exit(void);
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 7a0d81b4c230..d151aabe2b93 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -760,6 +760,8 @@ enum {
- 	RDT_FLAG_MBA,
- 	RDT_FLAG_SMBA,
- 	RDT_FLAG_BMEC,
-+	RDT_FLAG_ENERGY,
-+	RDT_FLAG_PERF,
+ /**
+  * struct event_group - All information about a group of telemetry events.
+  * @pfg:		Points to the aggregated telemetry space information
+  *			within the OOBMSM driver that contains data for all
+  *			telemetry regions.
++ * @list:		Member of active_event_groups.
++ * @pkginfo:		Per-package MMIO addresses of telemetry regions belonging to this group.
+  * @guid:		Unique number per XML description file.
+  * @mmio_size:		Number of bytes of MMIO registers for this group.
+  */
+ struct event_group {
+ 	/* Data fields for additional structures to manage this group. */
+ 	struct pmt_feature_group	*pfg;
++	struct list_head		list;
++	struct pkg_mmio_info		**pkginfo;
+ 
+ 	/* Remaining fields initialized from XML file. */
+ 	u32				guid;
+ 	size_t				mmio_size;
  };
  
- #define RDT_OPT(idx, n, f)	\
-@@ -785,6 +787,8 @@ static struct rdt_options rdt_options[]  __ro_after_init = {
- 	RDT_OPT(RDT_FLAG_MBA,	    "mba",	X86_FEATURE_MBA),
- 	RDT_OPT(RDT_FLAG_SMBA,	    "smba",	X86_FEATURE_SMBA),
- 	RDT_OPT(RDT_FLAG_BMEC,	    "bmec",	X86_FEATURE_BMEC),
-+	RDT_OPT(RDT_FLAG_ENERGY,    "energy",	0),
-+	RDT_OPT(RDT_FLAG_PERF,	    "perf",	0),
- };
- #define NUM_RDT_OPTIONS ARRAY_SIZE(rdt_options)
++/* All successfully enabled event groups */
++static LIST_HEAD(active_event_groups);
++
+ #define XML_MMIO_SIZE(num_rmids, num_events, num_extra_status) \
+ 		      (((num_rmids) * (num_events) + (num_extra_status)) * sizeof(u64))
  
-@@ -834,6 +838,32 @@ bool rdt_cpu_has(int flag)
- 	return ret;
+@@ -82,15 +102,32 @@ static bool skip_this_region(struct telemetry_region *tr, struct event_group *e)
+ 	return false;
  }
  
-+/*
-+ * Hardware features that do not have X86_FEATURE_* bits.
-+ * There is no "hardware does not support this at all" case.
-+ * Assume that the caller has already determined that hardware
-+ * support is present and just needs to check if the feature has been
-+ * disabled by a quirk that has not been overridden by a command
-+ * line option.
-+ */
-+bool rdt_is_feature_enabled(char *name)
++static void free_pkg_mmio_info(struct pkg_mmio_info **mmi)
 +{
-+	struct rdt_options *o;
-+	bool ret = true;
++	int num_pkgs = topology_max_packages();
 +
-+	for (o = rdt_options; o < &rdt_options[NUM_RDT_OPTIONS]; o++) {
-+		if (!strcmp(name, o->name)) {
-+			if (o->force_off)
-+				ret = false;
-+			if (o->force_on)
-+				ret = true;
-+			break;
-+		}
-+	}
++	if (!mmi)
++		return;
 +
-+	return ret;
++	for (int i = 0; i < num_pkgs; i++)
++		kfree(mmi[i]);
++	kfree(mmi);
 +}
 +
- bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt)
++DEFINE_FREE(pkg_mmio_info, struct pkg_mmio_info **, free_pkg_mmio_info(_T))
++
+ /*
+  * Discover events from one pmt_feature_group.
+  * 1) Count how many usable telemetry regions per package.
+- * 2...) To be continued.
++ * 2) Allocate per-package structures and populate with MMIO
++ *    addresses of the telemetry regions.
+  */
+ static int discover_events(struct event_group *e, struct pmt_feature_group *p)
  {
- 	if (!rdt_cpu_has(X86_FEATURE_BMEC))
++	struct pkg_mmio_info **pkginfo __free(pkg_mmio_info) = NULL;
+ 	int *pkgcounts __free(kfree) = NULL;
+ 	struct telemetry_region *tr;
++	struct pkg_mmio_info *mmi;
+ 	int num_pkgs;
+ 
+ 	num_pkgs = topology_max_packages();
+@@ -112,6 +149,34 @@ static int discover_events(struct event_group *e, struct pmt_feature_group *p)
+ 	if (!pkgcounts)
+ 		return -ENODEV;
+ 
++	/* Allocate array for per-package struct pkg_mmio_info data */
++	pkginfo = kcalloc(num_pkgs, sizeof(*pkginfo), GFP_KERNEL);
++	if (!pkginfo)
++		return -ENOMEM;
++
++	/*
++	 * Allocate per-package pkg_mmio_info structures and initialize
++	 * count of telemetry_regions in each one.
++	 */
++	for (int i = 0; i < num_pkgs; i++) {
++		pkginfo[i] = kzalloc(struct_size(pkginfo[i], addrs, pkgcounts[i]), GFP_KERNEL);
++		if (!pkginfo[i])
++			return -ENOMEM;
++		pkginfo[i]->num_regions = pkgcounts[i];
++	}
++
++	/* Save MMIO address(es) for each telemetry region in per-package structures */
++	for (int i = 0; i < p->count; i++) {
++		tr = &p->regions[i];
++		if (skip_this_region(tr, e))
++			continue;
++		mmi = pkginfo[tr->plat_info.package_id];
++		mmi->addrs[--pkgcounts[tr->plat_info.package_id]] = tr->addr;
++	}
++	e->pkginfo = no_free_ptr(pkginfo);
++
++	list_add(&e->list, &active_event_groups);
++
+ 	return 0;
+ }
+ 
+@@ -169,4 +234,13 @@ bool intel_aet_get_events(void)
+ 
+ void __exit intel_aet_exit(void)
+ {
++	struct event_group *evg, *tmp;
++
++	list_for_each_entry_safe(evg, tmp, &active_event_groups, list) {
++		intel_pmt_put_feature_group(evg->pfg);
++		evg->pfg = NULL;
++		free_pkg_mmio_info(evg->pkginfo);
++		evg->pkginfo = NULL;
++		list_del(&evg->list);
++	}
+ }
 -- 
 2.50.1
 
