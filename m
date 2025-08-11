@@ -1,174 +1,150 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD42149C51
-	for <patches@lists.linux.dev>; Mon, 11 Aug 2025 16:46:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B1F2E0923
+	for <patches@lists.linux.dev>; Mon, 11 Aug 2025 18:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754930774; cv=none; b=kW3+ye1nxZzWaY6BbJRl85vB88Fs+grJLC6WS8Z8UwyxqofouIn/yTGNTUvn5ZyXWTz+Go3E5RlvaTJ6eRoFtjHi/XDrZwBf200BpiL1xVgwf9oXkHxoXOlPyIvlSfBsU2yEJvIJcY40BWFQ55ZCR0R84Ut+p1qzAsRSCSGvFvE=
+	t=1754936252; cv=none; b=n37gaUs5T/Jo2jsmNBQFHidbU1ZwATXfWBm4v9XPx39/uR13juxGWhUv1LrQYb7owwU5i6QWM3dhwTywgTUYXs7RYjhoy0DOfbyNGMgj/Lbg6uRArHKC2pTWC64M5TqgXbKGZjrRYiIdRCAFK9s60n1whtyirAOm/ieWDOLxmLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754930774; c=relaxed/simple;
-	bh=TojhoG5KQm0Zil3KXj/3MOaNIR3JBkiN+pJfmevoilM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NNHwp90yHEYslSwaugP4nnN/5zhqr7qX5SknHooGv0OyrqKUUk0UdemychowlOWiCs6+3hefeZDs0Y748YEkDY2r5I9nhs3KDZMCqQQuVpC7yXGKzUMYHauFf4nTyyJWU9cpNVcna/GLfnkClnpMw6Z/GVdk75yVCSnor0xk2MM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=IzINKJcA; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1754936252; c=relaxed/simple;
+	bh=cuuTo5sNTseROX6Fc5025NznVenN1rKXjVTNonpnXq0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CTOKv2A8wW2DxXtexRm/mLcPCqfqv8kE8OIag/5VKcWHB0lGXgb9QZS6LQkCJCzMqPV/wpdASj0UBXnyx/OvhOc/zRs2w2BIfT7bbXKJzOYL0dgd668ADw8uFAU0MUEznqL5AAZ9yhPiEophYVi+FlJ/3deK/RbkGu1osswzZqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CkzKyMQD; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="IzINKJcA"
-Received: from [100.65.64.136] (unknown [20.236.11.69])
-	by linux.microsoft.com (Postfix) with ESMTPSA id D2938211826D;
-	Mon, 11 Aug 2025 09:46:07 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D2938211826D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1754930768;
-	bh=5t1P3VptPd0i00bkc3V2cUTaDzWFAwGZvBlqZNNm6/E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IzINKJcA+veFAgczYNDsuMmCg/WXyQU8ibzIkFmrqHx4oBH7KHea9Jocl85CohfTu
-	 lBOQ4BOzX2v3V/TnM6ws1tfXQX7VRvjJDX7UfUQd9MIcrCVF41MYpq7RQErNd1N7TM
-	 0i4G/li+2rCMZnS2hxMtaA7iATJt4yNJlofCTzks=
-Message-ID: <51eda58a-0c5e-4e0f-ae1f-87147fd8453c@linux.microsoft.com>
-Date: Mon, 11 Aug 2025 09:46:07 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CkzKyMQD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1754936251; x=1786472251;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=cuuTo5sNTseROX6Fc5025NznVenN1rKXjVTNonpnXq0=;
+  b=CkzKyMQDGovH0QhHn1CLQzWrLTHNXRFLfRTlED9Sc+60seHWtEC3ayjW
+   KQIGVCujVIsfkUx5xkRZLcdwwRFXGHPeyqTJhgMYsyWAwIdGkJg06HI8s
+   mE7y4bG4p+t5gHC7nqy0B1LQrvN2DgaQOnuQy06xvh9w/h3WJbs4BAX0P
+   gdcfz2hbyoeXtqZVnZ/q3NbA/S/nMI5XRHN2isdUe2PKVKHydw9pd46qF
+   3J4LEAdttxz1baxNUeFszwK4E6T6Ke7QPAYpASi2WsYtuMAhe291t2eJq
+   Mlj0Hpnso83ri3cZRgt8Letm3pzdCmUbeCGzCGAMm/LE2Zi0XPvdAWBz7
+   A==;
+X-CSE-ConnectionGUID: rZQEzpNCTi+JpJAU57BK9w==
+X-CSE-MsgGUID: YvbsKo82TKCedyiXjVTnLQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11518"; a="68277344"
+X-IronPort-AV: E=Sophos;i="6.17,278,1747724400"; 
+   d="scan'208";a="68277344"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2025 11:17:26 -0700
+X-CSE-ConnectionGUID: s5kNTx0gTFOFvhSLU8COdg==
+X-CSE-MsgGUID: RSKYOJVcS+OIca5O2wX+Yg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,278,1747724400"; 
+   d="scan'208";a="196825618"
+Received: from puneetse-mobl.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.229])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Aug 2025 11:17:22 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Anil Keshavamurthy <anil.s.keshavamurthy@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v8 03/32] x86/resctrl: Remove 'rdt_mon_features' global variable
+Date: Mon, 11 Aug 2025 11:16:37 -0700
+Message-ID: <20250811181709.6241-4-tony.luck@intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250811181709.6241-1-tony.luck@intel.com>
+References: <20250811181709.6241-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.16-5.10] rtc: ds1307: handle oscillator stop
- flag (OSF) for ds1341
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
- stable@vger.kernel.org
-Cc: Tyler Hicks <code@tyhicks.com>, Rodolfo Giometti <giometti@enneenne.com>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>, linux-rtc@vger.kernel.org
-References: <20250808153054.1250675-1-sashal@kernel.org>
- <20250808153054.1250675-5-sashal@kernel.org>
-Content-Language: en-US
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-In-Reply-To: <20250808153054.1250675-5-sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/8/2025 8:30 AM, Sasha Levin wrote:
-> From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
->
-> [ Upstream commit 523923cfd5d622b8f4ba893fdaf29fa6adeb8c3e ]
+rdt_mon_features is used as a bitmask of enabled monitor events. A monitor
+event's status is now maintained in mon_evt::enabled with all monitor
+events' mon_evt structures found in the filesystem's mon_event_all[] array.
 
-Hi Sasha,
+Remove the remaining uses of rdt_mon_features.
 
-Without the first patch of the series, the OSF bit will get cleared in probe, so for it to meaningfully handle an invalid RTC, we'll need to take the first patch too.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ arch/x86/include/asm/resctrl.h        | 1 -
+ arch/x86/kernel/cpu/resctrl/core.c    | 9 +++++----
+ arch/x86/kernel/cpu/resctrl/monitor.c | 5 -----
+ 3 files changed, 5 insertions(+), 10 deletions(-)
 
-The upstream commit is 48458654659c9c2e149c211d86637f1592470da5
+diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
+index b1dd5d6b87db..575f8408a9e7 100644
+--- a/arch/x86/include/asm/resctrl.h
++++ b/arch/x86/include/asm/resctrl.h
+@@ -44,7 +44,6 @@ DECLARE_PER_CPU(struct resctrl_pqr_state, pqr_state);
+ 
+ extern bool rdt_alloc_capable;
+ extern bool rdt_mon_capable;
+-extern unsigned int rdt_mon_features;
+ 
+ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
+ DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 1a319ce9328c..5d14f9a14eda 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -863,21 +863,22 @@ static __init bool get_rdt_alloc_resources(void)
+ static __init bool get_rdt_mon_resources(void)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++	bool ret = false;
+ 
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+ 		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID);
+-		rdt_mon_features |= (1 << QOS_L3_OCCUP_EVENT_ID);
++		ret = true;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID);
+-		rdt_mon_features |= (1 << QOS_L3_MBM_TOTAL_EVENT_ID);
++		ret = true;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID);
+-		rdt_mon_features |= (1 << QOS_L3_MBM_LOCAL_EVENT_ID);
++		ret = true;
+ 	}
+ 
+-	if (!rdt_mon_features)
++	if (!ret)
+ 		return false;
+ 
+ 	return !rdt_get_mon_l3_config(r);
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 61d38517e2bf..07f8ab097cbe 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -31,11 +31,6 @@
+  */
+ bool rdt_mon_capable;
+ 
+-/*
+- * Global to indicate which monitoring events are enabled.
+- */
+-unsigned int rdt_mon_features;
+-
+ #define CF(cf)	((unsigned long)(1048576 * (cf) + 0.5))
+ 
+ static int snc_nodes_per_l3_cache = 1;
+-- 
+2.50.1
 
-https://lore.kernel.org/r/1749665656-30108-2-git-send-email-meaganlloyd@linux.microsoft.com
-
-It removes the clear of the OSF status flag in probe in the shared ds_1337, ds_1339, ds_1341, ds_3231 switch case block.
-
-Thank you,
-
-Meagan
-
->
-> In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-> kernel time as long as rtc_read_time() succeeds. In some power loss
-> situations, our supercapacitor-backed DS1342 RTC comes up with either an
-> unpredictable future time or the default 01/01/00 from the datasheet.
-> The oscillator stop flag (OSF) is set in these scenarios due to the
-> power loss and can be used to determine the validity of the RTC data.
->
-> This change expands the oscillator stop flag (OSF) handling that has
-> already been implemented for some chips to the ds1341 chip (DS1341 and
-> DS1342 share a datasheet). This handling manages the validity of the RTC
-> data in .read_time and .set_time based on the OSF.
->
-> Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-> Reviewed-by: Tyler Hicks <code@tyhicks.com>
-> Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-> Link: https://lore.kernel.org/r/1749665656-30108-3-git-send-email-meaganlloyd@linux.microsoft.com
-> Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->
-> LLM Generated explanations, may be completely bogus:
->
-> **Backport Status: YES**
->
-> This commit should be backported to stable kernel trees for the
-> following reasons:
->
-> 1. **Bug Fix**: This commit fixes a real bug where the DS1341/DS1342 RTC
->    can report invalid time data after power loss without properly
->    checking the oscillator stop flag (OSF). The commit message clearly
->    describes the problem: "In some power loss situations, our
->    supercapacitor-backed DS1342 RTC comes up with either an
->    unpredictable future time or the default 01/01/00."
->
-> 2. **Data Corruption Prevention**: Without this fix, systems using
->    DS1341/DS1342 RTCs can have incorrect system time after power loss,
->    which could lead to data corruption, incorrect timestamps, or system
->    malfunction. This is particularly critical for systems using
->    CONFIG_RTC_HCTOSYS.
->
-> 3. **Minimal Risk**: The change is very small and contained - it only
->    adds OSF handling for the ds1341 chip type in two switch statements
->    (ds1307_get_time:282-287 and ds1307_set_time:380-383). The pattern
->    exactly follows the existing OSF handling already implemented for
->    ds_1338, ds_1340, and ds_1388 chips.
->
-> 4. **Established Pattern**: The commit follows an established pattern in
->    the driver. Looking at the code, OSF handling is already implemented
->    for:
->    - ds_1338: Uses DS1338_BIT_OSF in DS1307_REG_CONTROL
->    - ds_1340: Uses DS1340_BIT_OSF in DS1340_REG_FLAG
->    - ds_1388: Uses DS1388_BIT_OSF in DS1388_REG_FLAG
->    - And now ds_1341: Uses DS1337_BIT_OSF in DS1337_REG_STATUS
->
-> 5. **No New Features**: This is purely a bug fix - it doesn't add any
->    new functionality, just ensures existing functionality (reading valid
->    time) works correctly after power loss.
->
-> 6. **Previous Similar Fixes**: The git history shows similar OSF fixes
->    have been made before, such as commit f471b05f76e4 ("rtc: ds1307:
->    Clear OSF flag on DS1388 when setting time"), indicating this is a
->    known class of issues that needs fixing.
->
-> 7. **Hardware-Specific Fix**: This only affects systems with
->    DS1341/DS1342 RTCs, so there's no risk to systems using other RTC
->    chips. The change is guarded by the chip type check.
->
-> The commit meets all the criteria for stable backporting: it fixes a
-> real bug that affects users, the fix is small and self-contained, it
-> doesn't introduce new features or architectural changes, and follows
-> established patterns in the codebase.
->
->  drivers/rtc/rtc-ds1307.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-> index 5efbe69bf5ca..7a60e5ca2b8a 100644
-> --- a/drivers/rtc/rtc-ds1307.c
-> +++ b/drivers/rtc/rtc-ds1307.c
-> @@ -279,6 +279,13 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
->  		if (tmp & DS1340_BIT_OSF)
->  			return -EINVAL;
->  		break;
-> +	case ds_1341:
-> +		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
-> +		if (ret)
-> +			return ret;
-> +		if (tmp & DS1337_BIT_OSF)
-> +			return -EINVAL;
-> +		break;
->  	case ds_1388:
->  		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
->  		if (ret)
-> @@ -377,6 +384,10 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
->  		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
->  				   DS1340_BIT_OSF, 0);
->  		break;
-> +	case ds_1341:
-> +		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
-> +				   DS1337_BIT_OSF, 0);
-> +		break;
->  	case ds_1388:
->  		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
->  				   DS1388_BIT_OSF, 0);
