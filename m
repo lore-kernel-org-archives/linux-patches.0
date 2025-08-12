@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D4021C187;
-	Tue, 12 Aug 2025 19:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C8326FA77;
+	Tue, 12 Aug 2025 19:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025662; cv=none; b=KoAGcYNZeCYdGdVnqVxudfcCCAz+9HE2FZRQ31TGEIWFYWK5AkJqNoE3aIiJI5UqxcG/b+UDreGyzT0Ia1J++ayOUzBRMTyV+dNxCVaKkLVX4aMt6HZEdsdLzrPUs3VJNg61+YxJgyJIwFVD62VSkVE+CowCv3kWqE2SFILWGCM=
+	t=1755025665; cv=none; b=CPBjT37hbWySB4swdpXiz1CRODQh9utGIY3Ag+hgPfmocot4Ghkk6X7daC2J8CKHEPA4797U1/H4BvwNRNhoiotlAn7Y6lT03r2mT+TKZ/dfZz7LsVuaH3UkxWjlCHY4DX9+YzpHa95PYQD6pWycnIOVFzmvt5KmicX0busT1Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025662; c=relaxed/simple;
-	bh=HeTKE57juOfO9UGjdwikkKl9Zf4iiuK7E//UWrQ5lt4=;
+	s=arc-20240116; t=1755025665; c=relaxed/simple;
+	bh=LAlQltpdzOkDnswoqzFjLQd5lQY3YJkyc+6qjNN1LjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwO0OIlOFAtuxf2I2lMrD29Sn7agoGo9lHqZL8uEnOLq/C5agE9d0Hg3AKi1yEnEwRXN59xTsw0WUos2Ig6VBsXSOi8abpkfD6o4UhSW5YG8zdrSeT25c94r22dJvT4Bl/CceYWBvOFE4rVDFWaGvko8TnuAZhT5fQokF7oTNoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKupqL88; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NH7gb7FxMEay5+iZuO65IKA/Ft8DnBq2i8ZXbLe4JgOxwIQ824NF3Opy/RemlhSWvxCeKoEdDEUwztWJ1B/WpPjZcWSJlK5tWwL1qUUUSORa3ZNCIDB+fIAhzmsoB/WrDv3GsTvaGDpazKnpLRKcO17JV7Ef1jv1fhdNiQg5Nmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbMGjo0R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKupqL88"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95E9C4CEF0;
-	Tue, 12 Aug 2025 19:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbMGjo0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6C3C4CEF0;
+	Tue, 12 Aug 2025 19:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025662;
-	bh=HeTKE57juOfO9UGjdwikkKl9Zf4iiuK7E//UWrQ5lt4=;
+	s=korg; t=1755025665;
+	bh=LAlQltpdzOkDnswoqzFjLQd5lQY3YJkyc+6qjNN1LjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKupqL88AtCt5WtfTPxx0nFEmd0WQQW9bXJjGOywDh1p5DxK2GdI2zKuVDgR9u1MO
-	 lMzeVdUX0rzfTxoC9HM7dbVxCuR+dRmQl5OTnyleuFumbkftnfFV9d7OybJhz/xE+/
-	 jqhGwMhwHyFVEw4SCCOTv1nD+keG0DYo7K96OXTg=
+	b=BbMGjo0RFTXJPFKEExS1uTLTp024qQ4NDMbAFWkvs0oF76A92aVe7eg8QN6kGQVxg
+	 cn0fFVpdKzC3APwTRBjCTIugpkF4FdR41+PTD06Dy5s1V/yKbpf+2mvKU6H5CU+f/H
+	 BcQdTegjoyojtL6FHi2c3oLfq3e7FW0qQ1JrwYUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Fushuai Wang <wangfushuai@baidu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 106/480] bpf, ktls: Fix data corruption when using bpf_msg_pop_data() in ktls
-Date: Tue, 12 Aug 2025 19:45:14 +0200
-Message-ID: <20250812174401.849491878@linuxfoundation.org>
+Subject: [PATCH 6.15 107/480] selftests/bpf: fix signedness bug in redir_partial()
+Date: Tue, 12 Aug 2025 19:45:15 +0200
+Message-ID: <20250812174401.893387016@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -54,57 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-[ Upstream commit 178f6a5c8cb3b6be1602de0964cd440243f493c9 ]
+[ Upstream commit 6a4bd31f680a1d1cf06492fe6dc4f08da09769e6 ]
 
-When sending plaintext data, we initially calculated the corresponding
-ciphertext length. However, if we later reduced the plaintext data length
-via socket policy, we failed to recalculate the ciphertext length.
+When xsend() returns -1 (error), the check 'n < sizeof(buf)' incorrectly
+treats it as success due to unsigned promotion. Explicitly check for -1
+first.
 
-This results in transmitting buffers containing uninitialized data during
-ciphertext transmission.
-
-This causes uninitialized bytes to be appended after a complete
-"Application Data" packet, leading to errors on the receiving end when
-parsing TLS record.
-
-Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
-Reported-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/bpf/20250609020910.397930-2-jiayuan.chen@linux.dev
+Fixes: a4b7193d8efd ("selftests/bpf: Add sockmap test for redirecting partial skb data")
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Link: https://lore.kernel.org/r/20250612084208.27722-1-wangfushuai@baidu.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/sockmap_listen.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index fc88e34b7f33..549d1ea01a72 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -872,6 +872,19 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
- 		delta = msg->sg.size;
- 		psock->eval = sk_psock_msg_verdict(sk, psock, msg);
- 		delta -= msg->sg.size;
-+
-+		if ((s32)delta > 0) {
-+			/* It indicates that we executed bpf_msg_pop_data(),
-+			 * causing the plaintext data size to decrease.
-+			 * Therefore the encrypted data size also needs to
-+			 * correspondingly decrease. We only need to subtract
-+			 * delta to calculate the new ciphertext length since
-+			 * ktls does not support block encryption.
-+			 */
-+			struct sk_msg *enc = &ctx->open_rec->msg_encrypted;
-+
-+			sk_msg_trim(sk, enc, enc->sg.size - delta);
-+		}
- 	}
- 	if (msg->cork_bytes && msg->cork_bytes > msg->sg.size &&
- 	    !enospc && !full_record) {
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+index 4ee1148d22be..1cfed83156b0 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+@@ -924,6 +924,8 @@ static void redir_partial(int family, int sotype, int sock_map, int parser_map)
+ 		goto close;
+ 
+ 	n = xsend(c1, buf, sizeof(buf), 0);
++	if (n == -1)
++		goto close;
+ 	if (n < sizeof(buf))
+ 		FAIL("incomplete write");
+ 
 -- 
 2.39.5
 
