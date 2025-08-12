@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607EB26A0EB;
-	Tue, 12 Aug 2025 18:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D95761FFE;
+	Tue, 12 Aug 2025 18:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023745; cv=none; b=GjfGfZ9tBhHbCH6z/fHmZNdflfPkrpMzMEthIvLgJ4J8ZcZa+Tyal/ldThRy7v4GLBfduE82w0PyEYz9AbNjyvQkik/i3htAzj51leCAIw1y0XFJgzeHnSI4cv6IUXr7UzrN+Y/1OZ3aTKkZS1BGcr4wTcd0xT4Nxo0NtKEz2Gw=
+	t=1755023748; cv=none; b=dh/EXrHPNRsKgpBe1VZPI6awbCEzV3nxVfC7whWbbhZx2JwgXzujP0Qi9imOu2Hc9Wjajazf5/kRh26ZtjywDzCn6Oxpx5VW1ADYJCEXn0zQ840/rpDnHL6d1kcymR0iCAwTImhubodMtcDJVBT8UApEhmshboOjdBL62kah5pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023745; c=relaxed/simple;
-	bh=dwJcXpVPdgKzCJJehrNm+mM22XynnYAWYN/P73G1QqU=;
+	s=arc-20240116; t=1755023748; c=relaxed/simple;
+	bh=0W/wXZk5n+3jpkga1XcjdYTYICu5I2Yqw/TRIRZ0A/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pX5taKEpMJOdWjCRnZa1EcnY9k18GzZb2sQKbIfg0iNaU9DdUNwhntn3ZymrEvqUN0Jk6ujgJQsCQg2NpgV0FUq5ZhUEX77D1pf0jnb0bUITpzkOpTiNUpNFag2jaGooaREp9d7o5sGjbCY5S7J0LVj25AnMy5NMyx4+GuaI91Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/E9airV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bq/UfdmTaRdfGsH+HPngpDlpK2yu2z7zJSMqzxuf7rNgNDT94Tw/j8pCrE3L/peLmycctO68o9ZTtOvDjuExUr0IXYEp5StadFXEYHLkNjA2PrbN7keNWO3cQ+mrkPazB6gUkC68VPvXuTNKYYEWGgq9AaFy1DnwEJckdH6X3Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZtmgu8l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/E9airV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C353FC4CEF0;
-	Tue, 12 Aug 2025 18:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZtmgu8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3F9C4CEF0;
+	Tue, 12 Aug 2025 18:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023745;
-	bh=dwJcXpVPdgKzCJJehrNm+mM22XynnYAWYN/P73G1QqU=;
+	s=korg; t=1755023748;
+	bh=0W/wXZk5n+3jpkga1XcjdYTYICu5I2Yqw/TRIRZ0A/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/E9airVXs5Pir/3CQe2f2dM7Wr0kmfOgsvtiCKAzl4Ds1VRCfSPP5qTYXLF8eTaq
-	 5zBrNaUdRdYosKZ1gEimkvyhVp5CGQJwqtfrLJzaAyMOcn4iJp56Gn21fyV3Nm367B
-	 Kp9ST2LkTLBWRNyITJ+rJ/E6ElAF49x8cdC2YH7Y=
+	b=AZtmgu8lMnninONTXWEjjZLfP04eEyNKYguCb1EHHVeOsR/D8uXKV2huDYmvxRjvx
+	 f/yz78Pzu55xJEgTQT6L5fkPmTo9nh44EFJuq7LUnDp1trspWUlpB8vjUQZhRaGzTj
+	 wBoBEX2BoDPl6sNx9veH5ipAI+/U5zPOg4X1TxrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 136/627] drm/panthor: Add missing explicit padding in drm_panthor_gpu_info
-Date: Tue, 12 Aug 2025 19:27:11 +0200
-Message-ID: <20250812173424.478785217@linuxfoundation.org>
+Subject: [PATCH 6.16 137/627] wifi: rtw89: mcc: prevent shift wrapping in rtw89_core_mlsr_switch()
+Date: Tue, 12 Aug 2025 19:27:12 +0200
+Message-ID: <20250812173424.514777256@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -47,62 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 95cbab48782bf62e4093837dc15ac6133902c12f ]
+[ Upstream commit 53cf488927a0f79968f9c03c4d1e00d2a79731c3 ]
 
-drm_panthor_gpu_info::shader_present is currently automatically offset
-by 4 byte to meet Arm's 32-bit/64-bit field alignment rules, but those
-constraints don't stand on 32-bit x86 and cause a mismatch when running
-an x86 binary in a user emulated environment like FEX. It's also
-generally agreed that uAPIs should explicitly pad their struct fields,
-which we originally intended to do, but a mistake slipped through during
-the submission process, leading drm_panthor_gpu_info::shader_present to
-be misaligned.
+The "link_id" value comes from the user via debugfs.  If it's larger
+than BITS_PER_LONG then that would result in shift wrapping and
+potentially an out of bounds access later.  In fact, we can limit it
+to IEEE80211_MLD_MAX_NUM_LINKS (15).
 
-This uAPI change doesn't break any of the existing users of panthor
-which are either arm32 or arm64 where the 64-bit alignment of
-u64 fields is already enforced a the compiler level.
+Fortunately, only root can write to debugfs files so the security
+impact is minimal.
 
-Changes in v2:
-- Rename the garbage field into pad0 and adjust the comment accordingly
-- Add Liviu's A-b
-
-Changes in v3:
-- Add R-bs
-
-Fixes: 0f25e493a246 ("drm/panthor: Add uAPI")
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20250606080932.4140010-2-boris.brezillon@collabora.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 9dd85e739ce0 ("wifi: rtw89: debug: add mlo_mode dbgfs")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/aDbFFkX09K7FrL9h@stanley.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/drm/panthor_drm.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw89/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/drm/panthor_drm.h b/include/uapi/drm/panthor_drm.h
-index ad9a70afea6c..3a76c4f2882b 100644
---- a/include/uapi/drm/panthor_drm.h
-+++ b/include/uapi/drm/panthor_drm.h
-@@ -296,6 +296,9 @@ struct drm_panthor_gpu_info {
- 	/** @as_present: Bitmask encoding the number of address-space exposed by the MMU. */
- 	__u32 as_present;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 49447668cbf3..3604a8e15df0 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -5239,7 +5239,8 @@ int rtw89_core_mlsr_switch(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif,
+ 	if (unlikely(!ieee80211_vif_is_mld(vif)))
+ 		return -EOPNOTSUPP;
  
-+	/** @pad0: MBZ. */
-+	__u32 pad0;
-+
- 	/** @shader_present: Bitmask encoding the shader cores exposed by the GPU. */
- 	__u64 shader_present;
- 
+-	if (unlikely(!(usable_links & BIT(link_id)))) {
++	if (unlikely(link_id >= IEEE80211_MLD_MAX_NUM_LINKS ||
++		     !(usable_links & BIT(link_id)))) {
+ 		rtw89_warn(rtwdev, "%s: link id %u is not usable\n", __func__,
+ 			   link_id);
+ 		return -ENOLINK;
 -- 
 2.39.5
 
