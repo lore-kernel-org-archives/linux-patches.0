@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DEE2FD1AD;
-	Tue, 12 Aug 2025 18:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D802FD1AD;
+	Tue, 12 Aug 2025 18:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023205; cv=none; b=AL4MtUov/cWTdR7HPoEmDdvAiEDaNoMP+hKL138Q+itGkaS2BjFzF7kWzBPOecVb+FiJ7K/HsojoHHToQDhjHGo3tGnyXTtw+pjOu5sjlc87Z2FT+kY4Zu0wMJtcWXi2AEqKwynTGxlJ5Aw4oafNDF/yVkX8CRZUnwN/ibSOymI=
+	t=1755023208; cv=none; b=J2C1uKpE5fBLhF9gqEiy5hFAPhEJV4uzhNoZ4c77AvBx37WKnjmKhXrlOzFoKfvqpBe3wKtoKAlldytYphUj4XtMcYYPZF7602OWn0rWPX4WpSwvTqNgTVt8Lq5HVbCtNO6xmmPCw30kRSUeNyPzE1yshEZl2BpCaylwa98HoKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023205; c=relaxed/simple;
-	bh=7SQ8mWmWzFboR4H96JUdn61ODIUTejArVsB6byE4dNE=;
+	s=arc-20240116; t=1755023208; c=relaxed/simple;
+	bh=HUbwfTRMOsEabjP7GxE+gfihq0/FGxj6rUUpTJ8z2yw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evWfIUlZQCQUVxmd0UrVL2RY3megBQD4NEYjvjrxVcSjx832fuArK3x1Dvty0u45QcJgTM63z84iEddIWXbEhaWeYTWBAkrrOPjJ5LwOnFZ03rlPywhsbpBl3W0nVQK33nwanxxyVMLIjM9edwMZQzJhpmumGgmySnnUVqHeNaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofuPwwvw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NRcdpeNVu4a10j22gVQadgaeS0/JCCWpLwpHRLf5sjvTRQmtumjvzE1zUILkzJC8qnXlSerPIC847jxSA9yO55HFgvQwNp6LiFsNvgyBmGywz4l5Tl8c3VkUYD66F9twMy69waw9xHN+ajf7bqgFrbaUvUsEozwOSxPm0sZyFoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvgcfmFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofuPwwvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9DBC4CEF0;
-	Tue, 12 Aug 2025 18:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvgcfmFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7A8C4CEF1;
+	Tue, 12 Aug 2025 18:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023205;
-	bh=7SQ8mWmWzFboR4H96JUdn61ODIUTejArVsB6byE4dNE=;
+	s=korg; t=1755023208;
+	bh=HUbwfTRMOsEabjP7GxE+gfihq0/FGxj6rUUpTJ8z2yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofuPwwvwjYxUHUCvS/F+P9Ny/shN1YxU4Dxwmf07IcNzQ3e5oFy10eitNzJ5E4Sat
-	 MKz5QEL/Aa/7SEsEqf/NkzxElJhmINnhgFPRUipg5xt3ZEAWdtkIVqNrRhZfXlFINO
-	 XDSBO6WGA9JqXhlP+s32RkMIIW2PMN16Z7NFDkEY=
+	b=XvgcfmFVDWO5gNyfdVyFoMBbVxaGyWlmA4mtPOVhXx0cr3zKg7/o62svvazDrkIKf
+	 27iQPY+rncaEjOt5bg/YaXKg13+b15vklKMy8STARuhwi4xsVvRwh6rUSJZ+qXBdQ5
+	 YoHMMvigLnumqBevJMkR0LXGj8ai+ju0QOMC686I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a91fcdbd2698f99db8f4@syzkaller.appspotmail.com,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 012/627] Revert "fs/ntfs3: Replace inode_trylock with inode_lock"
-Date: Tue, 12 Aug 2025 19:25:07 +0200
-Message-ID: <20250812173419.791229146@linuxfoundation.org>
+Subject: [PATCH 6.16 013/627] block: mtip32xx: Fix usage of dma_map_sg()
+Date: Tue, 12 Aug 2025 19:25:08 +0200
+Message-ID: <20250812173419.827838469@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,43 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit a49f0abd8959048af18c6c690b065eb0d65b2d21 ]
+[ Upstream commit 8e1fab9cccc7b806b0cffdceabb09b310b83b553 ]
 
-This reverts commit 69505fe98f198ee813898cbcaf6770949636430b.
+The dma_map_sg() can fail and, in case of failure, returns 0.  If it
+fails, mtip_hw_submit_io() returns an error.
 
-Initially, conditional lock acquisition was removed to fix an xfstest bug
-that was observed during internal testing. The deadlock reported by syzbot
-is resolved by reintroducing conditional acquisition. The xfstest bug no
-longer occurs on kernel version 6.16-rc1 during internal testing. I
-assume that changes in other modules may have contributed to this.
+The dma_unmap_sg() requires the nents parameter to be the same as the
+one passed to dma_map_sg(). This patch saves the nents in
+command->scatter_ents.
 
-Fixes: 69505fe98f19 ("fs/ntfs3: Replace inode_trylock with inode_lock")
-Reported-by: syzbot+a91fcdbd2698f99db8f4@syzkaller.appspotmail.com
-Suggested-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 88523a61558a ("block: Add driver for Micron RealSSD pcie flash cards")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250627121123.203731-2-fourier.thomas@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/block/mtip32xx/mtip32xx.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 1e99a35691cd..4dc8d7eb0901 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -310,7 +310,10 @@ static int ntfs_file_mmap(struct file *file, struct vm_area_struct *vma)
- 		}
+diff --git a/drivers/block/mtip32xx/mtip32xx.c b/drivers/block/mtip32xx/mtip32xx.c
+index 66ce6b81c7d9..8fc7761397bd 100644
+--- a/drivers/block/mtip32xx/mtip32xx.c
++++ b/drivers/block/mtip32xx/mtip32xx.c
+@@ -2040,11 +2040,12 @@ static int mtip_hw_ioctl(struct driver_data *dd, unsigned int cmd,
+  * @dir      Direction (read or write)
+  *
+  * return value
+- *	None
++ *	0	The IO completed successfully.
++ *	-ENOMEM	The DMA mapping failed.
+  */
+-static void mtip_hw_submit_io(struct driver_data *dd, struct request *rq,
+-			      struct mtip_cmd *command,
+-			      struct blk_mq_hw_ctx *hctx)
++static int mtip_hw_submit_io(struct driver_data *dd, struct request *rq,
++			     struct mtip_cmd *command,
++			     struct blk_mq_hw_ctx *hctx)
+ {
+ 	struct mtip_cmd_hdr *hdr =
+ 		dd->port->command_list + sizeof(struct mtip_cmd_hdr) * rq->tag;
+@@ -2056,12 +2057,14 @@ static void mtip_hw_submit_io(struct driver_data *dd, struct request *rq,
+ 	unsigned int nents;
  
- 		if (ni->i_valid < to) {
--			inode_lock(inode);
-+			if (!inode_trylock(inode)) {
-+				err = -EAGAIN;
-+				goto out;
-+			}
- 			err = ntfs_extend_initialized_size(file, ni,
- 							   ni->i_valid, to);
- 			inode_unlock(inode);
+ 	/* Map the scatter list for DMA access */
+-	nents = blk_rq_map_sg(rq, command->sg);
+-	nents = dma_map_sg(&dd->pdev->dev, command->sg, nents, dma_dir);
++	command->scatter_ents = blk_rq_map_sg(rq, command->sg);
++	nents = dma_map_sg(&dd->pdev->dev, command->sg,
++			   command->scatter_ents, dma_dir);
++	if (!nents)
++		return -ENOMEM;
+ 
+-	prefetch(&port->flags);
+ 
+-	command->scatter_ents = nents;
++	prefetch(&port->flags);
+ 
+ 	/*
+ 	 * The number of retries for this command before it is
+@@ -2112,11 +2115,13 @@ static void mtip_hw_submit_io(struct driver_data *dd, struct request *rq,
+ 	if (unlikely(port->flags & MTIP_PF_PAUSE_IO)) {
+ 		set_bit(rq->tag, port->cmds_to_issue);
+ 		set_bit(MTIP_PF_ISSUE_CMDS_BIT, &port->flags);
+-		return;
++		return 0;
+ 	}
+ 
+ 	/* Issue the command to the hardware */
+ 	mtip_issue_ncq_command(port, rq->tag);
++
++	return 0;
+ }
+ 
+ /*
+@@ -3315,7 +3320,9 @@ static blk_status_t mtip_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 
+ 	blk_mq_start_request(rq);
+ 
+-	mtip_hw_submit_io(dd, rq, cmd, hctx);
++	if (mtip_hw_submit_io(dd, rq, cmd, hctx))
++		return BLK_STS_IOERR;
++
+ 	return BLK_STS_OK;
+ }
+ 
 -- 
 2.39.5
 
