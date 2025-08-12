@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603F961FFE;
-	Tue, 12 Aug 2025 18:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306152E4248;
+	Tue, 12 Aug 2025 18:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023183; cv=none; b=gHUXt9KETJNzcgOm5PUrLjxWED7eQY8K2ED+QO847jWE2WjYkUbS+AkKw4AJENibHqr6LQVLRs3T5J2tbRbN2hcZJ3CyDdFu5GUQcim4MDwLmn80dSdHHME67h/XG/ciGeQV3N1Tkd/FNZCuAy+/Gkq1zQ+emIOzSM4oX+6tnuI=
+	t=1755023186; cv=none; b=CakkKeFS/746aLrVLulm5qYGeiSttLg8ouZbsYWYVLw+7fsOGrXkbcuuhl2sA4T5adVHYwk4RKrvWqUHB24PrJHVTV5clU9DcM6sCSmq/jn8ABn9LqZdJdEaQ3qQNZUBulJ/auD2Mi1rD128jz1zCVM9Mzx3N9HinrLDWNmj+Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023183; c=relaxed/simple;
-	bh=5gQ+en5/HXJp16egaus4InteHj0M212Bk2F54VdYH5Y=;
+	s=arc-20240116; t=1755023186; c=relaxed/simple;
+	bh=ORqbNgUob5MQDscsY75IALIRQRJglIfz0tz+2G3PBNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEPVeiEoDs2+nI2bFRqkUEvvdoRk6WqJqh7spDs9EVGZE0R3l4/eZF5rrZr8vs+kMbIgyAd/XBxft2PNv1JDBF1ARCOsc3kbYB6R1VkmR2axUHtNRlTYMaj6AjNiXLB9bi+QcIT62E1CwslSuthv+sG32iyPbda1Kz76yz/ttn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjJddG9p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=awpM9cBsKcQZpYuhdUqoage85CG4y4MXztIXDsQXwhrQcsvhrc0JnOxqEt0juh8HZd6JQnVZxBc+9nX6XeB+AWDb9m8xDW+D7As7jMnHSBNSQDUtQRP3U5c4Sua2dYVIxzheWzO+D/Eoa4OLA7OhTTG4c+YdWicovO6eo+VnHM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPEQCPXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjJddG9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D77C4CEF0;
-	Tue, 12 Aug 2025 18:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPEQCPXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8053C4CEF0;
+	Tue, 12 Aug 2025 18:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023182;
-	bh=5gQ+en5/HXJp16egaus4InteHj0M212Bk2F54VdYH5Y=;
+	s=korg; t=1755023186;
+	bh=ORqbNgUob5MQDscsY75IALIRQRJglIfz0tz+2G3PBNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjJddG9pJpK8vwgZBvcQ7x4WEuRyL1ElRtHaJOdpTMt3baPSsLO9N14tbT7UkMwTv
-	 uKkSBrTb67tGoV0URZRU3s/SCDA0eFwrDWbCqPVOnsoplNKyun7I41vhwfDnOSMHex
-	 dnY8TGMHvpZ378Tqn4Vr4i8lG3UNjvhD1ENm9Fdk=
+	b=aPEQCPXWNv7XRyb+5n9/v3LEbx1WesUkae9sApox4pAAw0XYLoKVnGkONTO1tfuYB
+	 cRER2vFZ+pVM9X/nFBbeJG+dzXANVA11Omm9fOy7uy37YQm/7iALv6GHPrDKujhsAA
+	 bkPGS2zEtoLDlQcfLKNs5wjMyxGsHwV4lgIwUjZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Subject: [PATCH 6.12 360/369] s390/mm: Remove possible false-positive warning in pte_free_defer()
-Date: Tue, 12 Aug 2025 19:30:57 +0200
-Message-ID: <20250812173030.228840513@linuxfoundation.org>
+	stable@kernel.org,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.12 361/369] MIPS: mm: tlb-r4k: Uniquify TLB entries on init
+Date: Tue, 12 Aug 2025 19:30:58 +0200
+Message-ID: <20250812173030.266802651@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,56 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 5647f61ad9171e8f025558ed6dc5702c56a33ba3 upstream.
+commit 35ad7e181541aa5757f9f316768d3e64403ec843 upstream.
 
-Commit 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing
-page") added a warning to pte_free_defer(), on our request. It was meant
-to warn if this would ever be reached for KVM guest mappings, because
-the page table would be freed w/o a gmap_unlink(). THP mappings are not
-allowed for KVM guests on s390, so this should never happen.
+Hardware or bootloader will initialize TLB entries to any value, which
+may collide with kernel's UNIQUE_ENTRYHI value. On MIPS microAptiv/M5150
+family of cores this will trigger machine check exception and cause boot
+failure. On M5150 simulation this could happen 7 times out of 1000 boots.
 
-However, it is possible that the warning is triggered in a valid case as
-false-positive.
+Replace local_flush_tlb_all() with r4k_tlb_uniquify() which probes each
+TLB ENTRIHI unique value for collisions before it's written, and in case
+of collision try a different ASID.
 
-s390_enable_sie() takes the mmap_lock, marks all VMAs as VM_NOHUGEPAGE and
-splits possibly existing THP guest mappings. mm->context.has_pgste is set
-to 1 before that, to prevent races with the mm_has_pgste() check in
-MADV_HUGEPAGE.
-
-khugepaged drops the mmap_lock for file mappings and might run in parallel,
-before a vma is marked VM_NOHUGEPAGE, but after mm->context.has_pgste was
-set to 1. If it finds file mappings to collapse, it will eventually call
-pte_free_defer(). This will trigger the warning, but it is a valid case
-because gmap is not yet set up, and the THP mappings will be split again.
-
-Therefore, remove the warning and the comment.
-
-Fixes: 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing page")
-Cc: <stable@vger.kernel.org> # 6.6+
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: stable@kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/pgalloc.c |    5 -----
- 1 file changed, 5 deletions(-)
+ arch/mips/mm/tlb-r4k.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
---- a/arch/s390/mm/pgalloc.c
-+++ b/arch/s390/mm/pgalloc.c
-@@ -219,11 +219,6 @@ void pte_free_defer(struct mm_struct *mm
- 	struct ptdesc *ptdesc = virt_to_ptdesc(pgtable);
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -508,6 +508,60 @@ static int __init set_ntlb(char *str)
  
- 	call_rcu(&ptdesc->pt_rcu_head, pte_free_now);
--	/*
--	 * THPs are not allowed for KVM guests. Warn if pgste ever reaches here.
--	 * Turn to the generic pte_free_defer() version once gmap is removed.
--	 */
--	WARN_ON_ONCE(mm_has_pgste(mm));
+ __setup("ntlb=", set_ntlb);
+ 
++/* Initialise all TLB entries with unique values */
++static void r4k_tlb_uniquify(void)
++{
++	int entry = num_wired_entries();
++
++	htw_stop();
++	write_c0_entrylo0(0);
++	write_c0_entrylo1(0);
++
++	while (entry < current_cpu_data.tlbsize) {
++		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
++		unsigned long asid = 0;
++		int idx;
++
++		/* Skip wired MMID to make ginvt_mmid work */
++		if (cpu_has_mmid)
++			asid = MMID_KERNEL_WIRED + 1;
++
++		/* Check for match before using UNIQUE_ENTRYHI */
++		do {
++			if (cpu_has_mmid) {
++				write_c0_memorymapid(asid);
++				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
++			} else {
++				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
++			}
++			mtc0_tlbw_hazard();
++			tlb_probe();
++			tlb_probe_hazard();
++			idx = read_c0_index();
++			/* No match or match is on current entry */
++			if (idx < 0 || idx == entry)
++				break;
++			/*
++			 * If we hit a match, we need to try again with
++			 * a different ASID.
++			 */
++			asid++;
++		} while (asid < asid_mask);
++
++		if (idx >= 0 && idx != entry)
++			panic("Unable to uniquify TLB entry %d", idx);
++
++		write_c0_index(entry);
++		mtc0_tlbw_hazard();
++		tlb_write_indexed();
++		entry++;
++	}
++
++	tlbw_use_hazard();
++	htw_start();
++	flush_micro_tlb();
++}
++
+ /*
+  * Configure TLB (for init or after a CPU has been powered off).
+  */
+@@ -547,7 +601,7 @@ static void r4k_tlb_configure(void)
+ 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
+ 
+ 	/* From this point on the ARC firmware is dead.	 */
+-	local_flush_tlb_all();
++	r4k_tlb_uniquify();
+ 
+ 	/* Did I tell you that ARC SUCKS?  */
  }
- #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
- 
 
 
