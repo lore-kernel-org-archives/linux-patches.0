@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD7B3F9D2;
-	Tue, 12 Aug 2025 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A28C3F9D2;
+	Tue, 12 Aug 2025 18:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022336; cv=none; b=c+rDL71/OwLGS0+8Nm5KFc/G48Sx49Gyaw8rNKqqtUC8YBsBPyCp8JkfDxqKGjunhUWVDEaDHVlISL4VogkyMV17UKGgCVqjf/cd6guNpezSmhqEo2y25eM4jKv9EJ1P3RzBvkZ0C3ZKlYNY/DdRk5VMa0kjGVXhl/Hjes3VT8g=
+	t=1755022339; cv=none; b=QsLZEBTQYvxjQhXPej9RO6mQHAiwMQXO2V6ypORdz5R8jyi85U4DZ448H7Cl7GUVdURwtLKNMXj0TQB1oSy5y4AIIdYSYG6Fry/K4O6Ls3NjJBfwNQ4U5B/2EwbyQSI93T3oxtbutLNi7O0t24uILb1wjzMh4wAgIebP/+KOwm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022336; c=relaxed/simple;
-	bh=93lYzAFBDxHYT7frN73aW7qIN4jRnS0t9DS/q111dWk=;
+	s=arc-20240116; t=1755022339; c=relaxed/simple;
+	bh=a9xPuAXRrM38jt4+YR+FwsmBuVUeXTlZIGjJz1QcJho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K83FKfJGD+OhN3tqIKD5FCBmJ2VbIJKGfk7XQgD6fy4kz9tsDeULUXD7cgIcEHr0ZiqWFo4cOq4jUiy5zktZOsCdprEkOUv2cGXlf3uZCI0vsewES9gFxzNv6Bns64WkX9WCCsKuvBZuf8418TJ+nZrvfI9vpPo2D0O4fOciwns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tefhoiZc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dXeO/glxeyqjn7j8yPMpYJSFqq5iAauDEY5SPyH5CY9vfLDQyeb+Xg+pWkn8BaeHvNqrROGK6s+JBzLUBTOei2sMy8szvHlOQhEFK6AD7nzuCe+jH5KWdNAjmfrKFDsMekOYlZdQj4eyeEPpItshzlF5eEe1PQ0d54tO9gYS97Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lty3mfo0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tefhoiZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88BE6C4CEF0;
-	Tue, 12 Aug 2025 18:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lty3mfo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B5DC4CEF0;
+	Tue, 12 Aug 2025 18:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022336;
-	bh=93lYzAFBDxHYT7frN73aW7qIN4jRnS0t9DS/q111dWk=;
+	s=korg; t=1755022339;
+	bh=a9xPuAXRrM38jt4+YR+FwsmBuVUeXTlZIGjJz1QcJho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tefhoiZchdyTB5J7NJ3zIJEHU1gYN1jLcRy+P1UXGi8xVLpKGvCcy5/dLalozEVvn
-	 fBRdMXct7kORpf9xNubtd3jd1rEajzJJXY93I1okbBgomygYz5dtBlbHGbEJ6ObRaI
-	 0HKbk4dH7Z8ssux7rGnzPizMsyZZz4E7U25/1sPg=
+	b=Lty3mfo0oMZSzIH9HYBwPnn0fKF1Oh54Qg9gGQYV2HVCE7HcxcI0tqoVL1cXJDXIx
+	 qxoNwWzK4DRjP8cswejvaKG5nxMY5Px40a+yd2YwiBCSRtKF/EqT4YGwLcVDa3Fr5w
+	 5qkEwnZfyFxbh0vZKPd71BBbzFTl22OhHkPnfHX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/369] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
-Date: Tue, 12 Aug 2025 19:27:02 +0200
-Message-ID: <20250812173019.475648248@linuxfoundation.org>
+Subject: [PATCH 6.12 126/369] wifi: mac80211: Write cnt before copying in ieee80211_copy_rnr_beacon()
+Date: Tue, 12 Aug 2025 19:27:03 +0200
+Message-ID: <20250812173019.512151398@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -52,62 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 579bf8037b70b644a674c126a32bbb2212cf5c21 ]
+[ Upstream commit a37192c432adaec9e8ef29e4ddb319ea2f443aa6 ]
 
-After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
-IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
-got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
+While I caught the need for setting cnt early in nl80211_parse_rnr_elems()
+in the original annotation of struct cfg80211_rnr_elems with __counted_by,
+I missed a similar pattern in ieee80211_copy_rnr_beacon(). Fix this by
+moving the cnt assignment to before the loop.
 
-Because of this, as part of the scan request handler for the P2P Discovery,
-vif struct used for adding the Probe Request P2P IE in firmware got changed
-from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
-So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
-requests frames and the other P2P peers were unable to discover this device
-causing a regression on the P2P feature.
-
-To fix this, while setting the P2P IE in firmware, properly use the vif of
-the P2P discovery wdev on which the driver received the P2P scan request.
-This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
-is completed.
-
-Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20250626050706.7271-1-gokulkumar.sivakumar@infineon.com
+Fixes: 7b6d7087031b ("wifi: cfg80211: Annotate struct cfg80211_rnr_elems with __counted_by")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/20250721182521.work.540-kees@kernel.org
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mac80211/cfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 349aa3439502..708a4e2ad839 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1541,10 +1541,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
- 		return -EAGAIN;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index cf2b8a05c338..a72c1d9edb4a 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1078,13 +1078,13 @@ ieee80211_copy_rnr_beacon(u8 *pos, struct cfg80211_rnr_elems *dst,
+ {
+ 	int i, offset = 0;
+ 
++	dst->cnt = src->cnt;
+ 	for (i = 0; i < src->cnt; i++) {
+ 		memcpy(pos + offset, src->elem[i].data, src->elem[i].len);
+ 		dst->elem[i].len = src->elem[i].len;
+ 		dst->elem[i].data = pos + offset;
+ 		offset += dst->elem[i].len;
  	}
+-	dst->cnt = src->cnt;
  
--	/* If scan req comes for p2p0, send it over primary I/F */
--	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
--		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
--
- 	brcmf_dbg(SCAN, "START ESCAN\n");
- 
- 	cfg->scan_request = request;
-@@ -1560,6 +1556,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
- 	if (err)
- 		goto scan_out;
- 
-+	/* If scan req comes for p2p0, send it over primary I/F */
-+	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
-+		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
-+
- 	err = brcmf_do_escan(vif->ifp, request);
- 	if (err)
- 		goto scan_out;
+ 	return offset;
+ }
 -- 
 2.39.5
 
