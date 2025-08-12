@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E88F27604E;
-	Tue, 12 Aug 2025 19:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAC03D994;
+	Tue, 12 Aug 2025 19:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025415; cv=none; b=sCR0sEInJgWGkO8WPEzPD8WBxEn7etRUjrbr21ikYq3yeGXb32uOYWYgYP0fVgFUOsobOnNURSJK61fu/5k9fatobLnDx77wBrATskZ/Oo4RFpG/cMDh6rqO08e0gX6w/3I50JQ/Ef5DfAgK3KDHxZIH7rw1nBwS54gU07tg1o0=
+	t=1755025419; cv=none; b=ZY8vp7q90KrSzh0fZB5zHhFkTzjvRh6l0adrK9ZOiUnQaQzaCrw2Z+oVCwFPfuIqf6A06O060ldwTSoqBUUPBFC49Cnuz5aX/2Q05fIsKohbwA0a84qpeasynh1yx+VRxKn/tfhabqFfKdDtgnE3Cp81hsWB4UW1MUm2ON6WVNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025415; c=relaxed/simple;
-	bh=K1ZKoF4zPud5y9hyxdSSTo3bHcGoxF2BVEt/+qGNLDQ=;
+	s=arc-20240116; t=1755025419; c=relaxed/simple;
+	bh=4vYhter+oBS2OS9hvnjTZ4u//ldXBcw2UHSeeAw2SvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0PGfnWt//vIyarhg63b2HO7y8maSBp3IgnzXzSXAMEo8M6hPL819IZ9efKxiU0mwp65dzd9X3AiIQ32xzu7G1xIGSce1Jx7PSH3VhkZjU1n5ZLXTcXuz0p5xl0xYZtpLL4+k+khWPagwpz1npv1xBqxJTCJWJI44n+ZSAqP1u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HN8sgNgH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o3RtNFvuSjLjA7FLwDv3m+3S0zfI5g5KMURuZyIGvu0A7DD64o95Y3CSmZbLa5Hq3/SqqMHHQraLLAaaQ5BY8ocN2jOPTDcLklwnp6I/qOIPuQ+65tJ8yD3wScg7lUMJH8ALgTuMAJ5QKRbwwJt8Kwa3lVHj+bRRQET1BslEnEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNlCuoxq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HN8sgNgH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3FD2C4CEF0;
-	Tue, 12 Aug 2025 19:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNlCuoxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557F0C4CEF0;
+	Tue, 12 Aug 2025 19:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025415;
-	bh=K1ZKoF4zPud5y9hyxdSSTo3bHcGoxF2BVEt/+qGNLDQ=;
+	s=korg; t=1755025418;
+	bh=4vYhter+oBS2OS9hvnjTZ4u//ldXBcw2UHSeeAw2SvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HN8sgNgH9bHG4SAghSnVABfIh7s7+4DOMk5SxHy88yTOVQaD5WfPg4T2uOJ3a5UAW
-	 KYfT9ILNWNpR8zUcec9ubOOq6vif7b7njNCpq4iOngfm2YZ6CrofdTazSWivYWYDsP
-	 +Qj9dK0C4Oirb5NWaJHLKeuuqtcDn+wCKYFe4FcM=
+	b=vNlCuoxqYSqXlyLWrO94wgNMQtxgBixOW20USfDsmUWLAAOwSGPvGodbwjRu7hcUW
+	 HwC4iAt2Pz90DoxNMkccSPgQzBiiOipPLcIGLmNtmJj2VOAJrmk6SDroxgsH1zQ3dk
+	 bSF/6/i9sNFDH56zmqPt1xdBEXCEKAkOOv/irAgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.15 033/480] arm64: dts: freescale: imx93-tqma9352: Limit BUCK2 to 600mV
-Date: Tue, 12 Aug 2025 19:44:01 +0200
-Message-ID: <20250812174358.753402431@linuxfoundation.org>
+Subject: [PATCH 6.15 034/480] selftests: Fix errno checking in syscall_user_dispatch test
+Date: Tue, 12 Aug 2025 19:44:02 +0200
+Message-ID: <20250812174358.797756884@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812174357.281828096@linuxfoundation.org>
 References: <20250812174357.281828096@linuxfoundation.org>
@@ -52,48 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Dmitry Vyukov <dvyukov@google.com>
 
-[ Upstream commit 696a4c325fad8af95da6a9d797766d1613831622 ]
+[ Upstream commit b89732c8c8357487185f260a723a060b3476144e ]
 
-TQMa9352 is only using LPDDR4X, so the BUCK2 regulator should be fixed
-at 600MV.
+Successful syscalls don't change errno, so checking errno is wrong
+to ensure that a syscall has failed. For example for the following
+sequence:
 
-Fixes: d2858e6bd36c ("arm64: dts: freescale: imx93-tqma9352: Add PMIC node")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Acked-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x0, 0xff, 0);
+	EXPECT_EQ(EINVAL, errno);
+	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x0, 0x0, &sel);
+	EXPECT_EQ(EINVAL, errno);
+
+only the first syscall may fail and set errno, but the second may succeed
+and keep errno intact, and the check will falsely pass.
+Or if errno happened to be EINVAL before, even the first check may falsely
+pass.
+
+Also use EXPECT/ASSERT consistently. Currently there is an inconsistent mix
+without obvious reasons for usage of one or another.
+
+Fixes: 179ef035992e ("selftests: Add kselftest for syscall user dispatch")
+Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/af6a04dbfef9af8570f5bab43e3ef1416b62699a.1747839857.git.dvyukov@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../syscall_user_dispatch/sud_test.c          | 50 +++++++++----------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
-index 2cabdae24227..09385b058664 100644
---- a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: (GPL-2.0-or-later OR MIT)
- /*
-- * Copyright (c) 2022 TQ-Systems GmbH <linux@ew.tq-group.com>,
-+ * Copyright (c) 2022-2025 TQ-Systems GmbH <linux@ew.tq-group.com>,
-  * D-82229 Seefeld, Germany.
-  * Author: Markus Niebel
-  */
-@@ -110,11 +110,11 @@ buck1: BUCK1 {
- 				regulator-ramp-delay = <3125>;
- 			};
+diff --git a/tools/testing/selftests/syscall_user_dispatch/sud_test.c b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
+index d975a6767329..48cf01aeec3e 100644
+--- a/tools/testing/selftests/syscall_user_dispatch/sud_test.c
++++ b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
+@@ -79,6 +79,21 @@ TEST_SIGNAL(dispatch_trigger_sigsys, SIGSYS)
+ 	}
+ }
  
--			/* V_DDRQ - 1.1 LPDDR4 or 0.6 LPDDR4X */
-+			/* V_DDRQ - 0.6 V for LPDDR4X */
- 			buck2: BUCK2 {
- 				regulator-name = "BUCK2";
- 				regulator-min-microvolt = <600000>;
--				regulator-max-microvolt = <1100000>;
-+				regulator-max-microvolt = <600000>;
- 				regulator-boot-on;
- 				regulator-always-on;
- 				regulator-ramp-delay = <3125>;
++static void prctl_valid(struct __test_metadata *_metadata,
++			unsigned long op, unsigned long off,
++			unsigned long size, void *sel)
++{
++	EXPECT_EQ(0, prctl(PR_SET_SYSCALL_USER_DISPATCH, op, off, size, sel));
++}
++
++static void prctl_invalid(struct __test_metadata *_metadata,
++			  unsigned long op, unsigned long off,
++			  unsigned long size, void *sel, int err)
++{
++	EXPECT_EQ(-1, prctl(PR_SET_SYSCALL_USER_DISPATCH, op, off, size, sel));
++	EXPECT_EQ(err, errno);
++}
++
+ TEST(bad_prctl_param)
+ {
+ 	char sel = SYSCALL_DISPATCH_FILTER_ALLOW;
+@@ -86,57 +101,42 @@ TEST(bad_prctl_param)
+ 
+ 	/* Invalid op */
+ 	op = -1;
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0, 0, &sel);
+-	ASSERT_EQ(EINVAL, errno);
++	prctl_invalid(_metadata, op, 0, 0, &sel, EINVAL);
+ 
+ 	/* PR_SYS_DISPATCH_OFF */
+ 	op = PR_SYS_DISPATCH_OFF;
+ 
+ 	/* offset != 0 */
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x1, 0x0, 0);
+-	EXPECT_EQ(EINVAL, errno);
++	prctl_invalid(_metadata, op, 0x1, 0x0, 0, EINVAL);
+ 
+ 	/* len != 0 */
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x0, 0xff, 0);
+-	EXPECT_EQ(EINVAL, errno);
++	prctl_invalid(_metadata, op, 0x0, 0xff, 0, EINVAL);
+ 
+ 	/* sel != NULL */
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x0, 0x0, &sel);
+-	EXPECT_EQ(EINVAL, errno);
++	prctl_invalid(_metadata, op, 0x0, 0x0, &sel, EINVAL);
+ 
+ 	/* Valid parameter */
+-	errno = 0;
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x0, 0x0, 0x0);
+-	EXPECT_EQ(0, errno);
++	prctl_valid(_metadata, op, 0x0, 0x0, 0x0);
+ 
+ 	/* PR_SYS_DISPATCH_ON */
+ 	op = PR_SYS_DISPATCH_ON;
+ 
+ 	/* Dispatcher region is bad (offset > 0 && len == 0) */
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x1, 0x0, &sel);
+-	EXPECT_EQ(EINVAL, errno);
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, -1L, 0x0, &sel);
+-	EXPECT_EQ(EINVAL, errno);
++	prctl_invalid(_metadata, op, 0x1, 0x0, &sel, EINVAL);
++	prctl_invalid(_metadata, op, -1L, 0x0, &sel, EINVAL);
+ 
+ 	/* Invalid selector */
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, op, 0x0, 0x1, (void *) -1);
+-	ASSERT_EQ(EFAULT, errno);
++	prctl_invalid(_metadata, op, 0x0, 0x1, (void *) -1, EFAULT);
+ 
+ 	/*
+ 	 * Dispatcher range overflows unsigned long
+ 	 */
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, PR_SYS_DISPATCH_ON, 1, -1L, &sel);
+-	ASSERT_EQ(EINVAL, errno) {
+-		TH_LOG("Should reject bad syscall range");
+-	}
++	prctl_invalid(_metadata, PR_SYS_DISPATCH_ON, 1, -1L, &sel, EINVAL);
+ 
+ 	/*
+ 	 * Allowed range overflows usigned long
+ 	 */
+-	prctl(PR_SET_SYSCALL_USER_DISPATCH, PR_SYS_DISPATCH_ON, -1L, 0x1, &sel);
+-	ASSERT_EQ(EINVAL, errno) {
+-		TH_LOG("Should reject bad syscall range");
+-	}
++	prctl_invalid(_metadata, PR_SYS_DISPATCH_ON, -1L, 0x1, &sel, EINVAL);
+ }
+ 
+ /*
 -- 
 2.39.5
 
