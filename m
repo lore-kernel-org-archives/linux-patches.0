@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487B52FF14E;
-	Tue, 12 Aug 2025 18:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95BC2FE571;
+	Tue, 12 Aug 2025 18:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024040; cv=none; b=EIZ0AdfrwcqaZ3nXtG9gKPa3VMSc/WJRKW6UssKeJafvMGrJpoHxjQUpIge5Q6VbUUgB3qfz/pBQ9M2b2bdSFhAaXskKsNtGQwFvhD4G1uNrayq/hLEO8TvA+zL49pM7NTiXemn9QOfUlxpIUya+BhHmZcMKpxsZKzOUD1ujTJo=
+	t=1755024043; cv=none; b=m7q3Yk3L6yI9pSJfaRiuTa7lTTPJZgeJdzd0U0yizVVbizMqggOjtS4BCWNO8GDBkCtRVjTAdV7Jy94AKElrgUkyLQCzIRUophwWx72gZqjNdn52RWmClRqwK2pM0NB9q030DR3fYjamtV2ajWC8nDQVrHMUIcks5lqwjlaCor4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024040; c=relaxed/simple;
-	bh=QSpr2f7nqT782foikYQgSSnlTo5gKxttAMBkTQ0Gyfg=;
+	s=arc-20240116; t=1755024043; c=relaxed/simple;
+	bh=0EUm9J9D94tPi1uwVTKXTwzg6Y42cYUoOAxm59aRdsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skof885YudHfU5bDlgCzHMfwKNxZdeDQCdEEWVIC5aO49gUDnsbVpv7GMMpAb2IsuM+vs9dZEMJMzpuYU40Zsemf00FK14cjOiOVtOJnGgZ9fmKSBcF2IxvtoZve1ylwElFGTpukx9vw6+nvFex6llX+wrtC+W9/Y/31WptfZh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jx3AE7IP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NznYmUpZkDas17Nj1Cerg45iLqxsUvlpCFC0wjzGpNkD1Cd0+mugb9yKtenR+Pz9OFd5fO/s/CdL8dtgo9DkisF6JxuNGETUaj2l5fUcMLDzVZepNTzHOvfuynpWHed7lfQi8Y9KunKmy8tPrXf1NkUaUi4YnZY1qOmWERyUxm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZEigW3t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jx3AE7IP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95ED0C4CEF1;
-	Tue, 12 Aug 2025 18:40:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZEigW3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17690C4CEF0;
+	Tue, 12 Aug 2025 18:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024040;
-	bh=QSpr2f7nqT782foikYQgSSnlTo5gKxttAMBkTQ0Gyfg=;
+	s=korg; t=1755024043;
+	bh=0EUm9J9D94tPi1uwVTKXTwzg6Y42cYUoOAxm59aRdsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jx3AE7IP8j14GNlGWd5KagMhAaCYDlxB4CO6bMlvjTA5zoOzStWnxbY6BrmU/FFic
-	 YCwlhpXga6rBKihghj7VA4FIK7MTxC/ml98wyiTVGYii6tQHyptsLZ7jH/jX2MYoCS
-	 bEA/be+Zw+9A7xeuTNNSPkhGyu3VI+D0T0YWS+jQ=
+	b=LZEigW3t6ts5/E42QQw4UUDvpjuk1JZAYrWqokxpHB1MwDoNoGfYLF2UrOMTbyj1s
+	 j/0eIJ5+Im/YW5haYsUOM1EklmrpUqsY1xaxNRq2EHfu85vhiCgAdZmnk5Fjlsxsqh
+	 Ih2kzyUPPP+J/62zickuFt771Uulwd9eRG2Q/2Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	syzbot+ac3c79181f6aecc5120c@syzkaller.appspotmail.com,
+	Ivan Pravdin <ipravdin.official@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 256/627] Bluetooth: hci_sync: fix double free in hci_discovery_filter_clear()
-Date: Tue, 12 Aug 2025 19:29:11 +0200
-Message-ID: <20250812173429.056571426@linuxfoundation.org>
+Subject: [PATCH 6.16 257/627] Bluetooth: hci_devcd_dump: fix out-of-bounds via dev_coredumpv
+Date: Tue, 12 Aug 2025 19:29:12 +0200
+Message-ID: <20250812173429.094146491@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -51,112 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Ivan Pravdin <ipravdin.official@gmail.com>
 
-[ Upstream commit 2935e556850e9c94d7a00adf14d3cd7fe406ac03 ]
+[ Upstream commit 7af4d7b53502286c6cf946d397ab183e76d14820 ]
 
-Function 'hci_discovery_filter_clear()' frees 'uuids' array and then
-sets it to NULL. There is a tiny chance of the following race:
+Currently both dev_coredumpv and skb_put_data in hci_devcd_dump use
+hdev->dump.head. However, dev_coredumpv can free the buffer. From
+dev_coredumpm_timeout documentation, which is used by dev_coredumpv:
 
-'hci_cmd_sync_work()'
+    > Creates a new device coredump for the given device. If a previous one hasn't
+    > been read yet, the new coredump is discarded. The data lifetime is determined
+    > by the device coredump framework and when it is no longer needed the @free
+    > function will be called to free the data.
 
- 'update_passive_scan_sync()'
+If the data has not been read by the userspace yet, dev_coredumpv will
+discard new buffer, freeing hdev->dump.head. This leads to
+vmalloc-out-of-bounds error when skb_put_data tries to access
+hdev->dump.head.
 
-   'hci_update_passive_scan_sync()'
+A crash report from syzbot illustrates this:
 
-     'hci_discovery_filter_clear()'
-       kfree(uuids);
+    ==================================================================
+    BUG: KASAN: vmalloc-out-of-bounds in skb_put_data
+    include/linux/skbuff.h:2752 [inline]
+    BUG: KASAN: vmalloc-out-of-bounds in hci_devcd_dump+0x142/0x240
+    net/bluetooth/coredump.c:258
+    Read of size 140 at addr ffffc90004ed5000 by task kworker/u9:2/5844
 
-       <-------------------------preempted-------------------------------->
-                                           'start_service_discovery()'
+    CPU: 1 UID: 0 PID: 5844 Comm: kworker/u9:2 Not tainted
+    6.14.0-syzkaller-10892-g4e82c87058f4 #0 PREEMPT(full)
+    Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS
+    Google 02/12/2025
+    Workqueue: hci0 hci_devcd_timeout
+    Call Trace:
+     <TASK>
+     __dump_stack lib/dump_stack.c:94 [inline]
+     dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+     print_address_description mm/kasan/report.c:408 [inline]
+     print_report+0xc3/0x670 mm/kasan/report.c:521
+     kasan_report+0xe0/0x110 mm/kasan/report.c:634
+     check_region_inline mm/kasan/generic.c:183 [inline]
+     kasan_check_range+0xef/0x1a0 mm/kasan/generic.c:189
+     __asan_memcpy+0x23/0x60 mm/kasan/shadow.c:105
+     skb_put_data include/linux/skbuff.h:2752 [inline]
+     hci_devcd_dump+0x142/0x240 net/bluetooth/coredump.c:258
+     hci_devcd_timeout+0xb5/0x2e0 net/bluetooth/coredump.c:413
+     process_one_work+0x9cc/0x1b70 kernel/workqueue.c:3238
+     process_scheduled_works kernel/workqueue.c:3319 [inline]
+     worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
+     kthread+0x3c2/0x780 kernel/kthread.c:464
+     ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:153
+     ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+     </TASK>
 
-                                             'hci_discovery_filter_clear()'
-                                               kfree(uuids); // DOUBLE FREE
+    The buggy address ffffc90004ed5000 belongs to a vmalloc virtual mapping
+    Memory state around the buggy address:
+     ffffc90004ed4f00: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+     ffffc90004ed4f80: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+    >ffffc90004ed5000: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+                       ^
+     ffffc90004ed5080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+     ffffc90004ed5100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+    ==================================================================
 
-       <-------------------------preempted-------------------------------->
+To avoid this issue, reorder dev_coredumpv to be called after
+skb_put_data that does not free the data.
 
-      uuids = NULL;
-
-To fix it let's add locking around 'kfree()' call and NULL pointer
-assignment. Otherwise the following backtrace fires:
-
-[ ] ------------[ cut here ]------------
-[ ] kernel BUG at mm/slub.c:547!
-[ ] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-[ ] CPU: 3 UID: 0 PID: 246 Comm: bluetoothd Tainted: G O 6.12.19-kernel #1
-[ ] Tainted: [O]=OOT_MODULE
-[ ] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[ ] pc : __slab_free+0xf8/0x348
-[ ] lr : __slab_free+0x48/0x348
-...
-[ ] Call trace:
-[ ]  __slab_free+0xf8/0x348
-[ ]  kfree+0x164/0x27c
-[ ]  start_service_discovery+0x1d0/0x2c0
-[ ]  hci_sock_sendmsg+0x518/0x924
-[ ]  __sock_sendmsg+0x54/0x60
-[ ]  sock_write_iter+0x98/0xf8
-[ ]  do_iter_readv_writev+0xe4/0x1c8
-[ ]  vfs_writev+0x128/0x2b0
-[ ]  do_writev+0xfc/0x118
-[ ]  __arm64_sys_writev+0x20/0x2c
-[ ]  invoke_syscall+0x68/0xf0
-[ ]  el0_svc_common.constprop.0+0x40/0xe0
-[ ]  do_el0_svc+0x1c/0x28
-[ ]  el0_svc+0x30/0xd0
-[ ]  el0t_64_sync_handler+0x100/0x12c
-[ ]  el0t_64_sync+0x194/0x198
-[ ] Code: 8b0002e6 eb17031f 54fffbe1 d503201f (d4210000)
-[ ] ---[ end trace 0000000000000000 ]---
-
-Fixes: ad383c2c65a5 ("Bluetooth: hci_sync: Enable advertising when LL privacy is enabled")
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reported-by: syzbot+ac3c79181f6aecc5120c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ac3c79181f6aecc5120c
+Fixes: b257e02ecc46 ("HCI: coredump: Log devcd dumps into the monitor")
+Tested-by: syzbot+ac3c79181f6aecc5120c@syzkaller.appspotmail.com
+Signed-off-by: Ivan Pravdin <ipravdin.official@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/bluetooth/coredump.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index f79f59e67114..c371dadc6fa3 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -29,6 +29,7 @@
- #include <linux/idr.h>
- #include <linux/leds.h>
- #include <linux/rculist.h>
-+#include <linux/spinlock.h>
- #include <linux/srcu.h>
+diff --git a/net/bluetooth/coredump.c b/net/bluetooth/coredump.c
+index 819eacb38762..720cb79adf96 100644
+--- a/net/bluetooth/coredump.c
++++ b/net/bluetooth/coredump.c
+@@ -249,15 +249,15 @@ static void hci_devcd_dump(struct hci_dev *hdev)
  
- #include <net/bluetooth/hci.h>
-@@ -94,6 +95,7 @@ struct discovery_state {
- 	u16			uuid_count;
- 	u8			(*uuids)[16];
- 	unsigned long		name_resolve_timeout;
-+	spinlock_t		lock;
- };
+ 	size = hdev->dump.tail - hdev->dump.head;
  
- #define SUSPEND_NOTIFIER_TIMEOUT	msecs_to_jiffies(2000) /* 2 seconds */
-@@ -889,6 +891,7 @@ static inline void iso_recv(struct hci_conn *hcon, struct sk_buff *skb,
- 
- static inline void discovery_init(struct hci_dev *hdev)
- {
-+	spin_lock_init(&hdev->discovery.lock);
- 	hdev->discovery.state = DISCOVERY_STOPPED;
- 	INIT_LIST_HEAD(&hdev->discovery.all);
- 	INIT_LIST_HEAD(&hdev->discovery.unknown);
-@@ -903,8 +906,11 @@ static inline void hci_discovery_filter_clear(struct hci_dev *hdev)
- 	hdev->discovery.report_invalid_rssi = true;
- 	hdev->discovery.rssi = HCI_RSSI_INVALID;
- 	hdev->discovery.uuid_count = 0;
+-	/* Emit a devcoredump with the available data */
+-	dev_coredumpv(&hdev->dev, hdev->dump.head, size, GFP_KERNEL);
+-
+ 	/* Send a copy to monitor as a diagnostic packet */
+ 	skb = bt_skb_alloc(size, GFP_ATOMIC);
+ 	if (skb) {
+ 		skb_put_data(skb, hdev->dump.head, size);
+ 		hci_recv_diag(hdev, skb);
+ 	}
 +
-+	spin_lock(&hdev->discovery.lock);
- 	kfree(hdev->discovery.uuids);
- 	hdev->discovery.uuids = NULL;
-+	spin_unlock(&hdev->discovery.lock);
++	/* Emit a devcoredump with the available data */
++	dev_coredumpv(&hdev->dev, hdev->dump.head, size, GFP_KERNEL);
  }
  
- bool hci_discovery_active(struct hci_dev *hdev);
+ static void hci_devcd_handle_pkt_complete(struct hci_dev *hdev,
 -- 
 2.39.5
 
