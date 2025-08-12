@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57008282E1;
-	Tue, 12 Aug 2025 18:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81165282E1;
+	Tue, 12 Aug 2025 18:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022315; cv=none; b=T727RjSzVgZLUi09APbYsDOdMMwiHMc+5osrxNQX3Z6u7hge2QRJnds56s5BKYNId3iB6a3LNv209GKBmXBnFvdMYrJAorUEKwq2UKXX/dGyq9X6cAaOWNH3c268MHfBQhk1VYl0MaPNbw/atHf1l2XkgrQNv8+NVnG24YZqCck=
+	t=1755022318; cv=none; b=PFKOcQ399VnbgziNr1HZr0cWCbPZTvhTxs4HjQ+kNMwAgcUAsN2XQ/tdK7WfJjZMraKJbzXJQ6VURjEnGh2hOab+FBE0Ol2E/sOq58FB2QXmG/g8buaT4FVzrs9WEivrpzSzYvjVGRinmili+JvAtTpgNQvskQRSjAmao0y1vns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022315; c=relaxed/simple;
-	bh=9wims1xd4F51PdGXEkzeuOChxQHp0eqnWdR6Bj/Jwmw=;
+	s=arc-20240116; t=1755022318; c=relaxed/simple;
+	bh=VN28Gm3i1hpkoEUXtscDPunf59SKow4+LjvBufrdOw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rqQ0OeLd4jEu+dglPJTdzB4vyV6XKCYQAuNdSSNWujNtnWpteja7ZIx6tjuH8s4wyrW3ojPxZlMeXiKoS7vWciF3TBTNAr6ThGvNn0L/Pj4AbCH3jGZJD/fcXOTTMl8Iz6nmjwUZg+e3WcTujEAh7Qoccs003ruZPK46fQww6jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Scd3tuon; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SvNOxXwJ2tfNJ7xjwVfhbbU7fLXElyvFszxXP+UfM4eZXcAnjqo4j9BAlq9oICANHFuOzsApUFJFFm/3W8tqtcYYSBTYJFXmEwjPjfwo8nZD/WHbNuN2MpqwhhwVprPwjYF1WDdzJ8mWcxOywgfjWJMRcoG32ZOmAXP09nO7+E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LuokAG0z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Scd3tuon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4398C4CEF0;
-	Tue, 12 Aug 2025 18:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuokAG0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AF5C4CEF0;
+	Tue, 12 Aug 2025 18:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022315;
-	bh=9wims1xd4F51PdGXEkzeuOChxQHp0eqnWdR6Bj/Jwmw=;
+	s=korg; t=1755022318;
+	bh=VN28Gm3i1hpkoEUXtscDPunf59SKow4+LjvBufrdOw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Scd3tuon7Uf9Mv+bRVPinDHoq18pSH0frmVYxCVrOg4jo+oukZg6UGugWQUnjeUid
-	 J18bNELU4FPYtobnvukm3NPcvknZcqs5Q4ULCxQKSLL64FEUT1NxaWEpTMcbXdwLhv
-	 ECbI3dwlqQHO1fZ2OBR1cfppPUItqkKnCJYSP0s4=
+	b=LuokAG0z88ksyuKT6Rtk39fPgEB0bUbR0yNIrwslkfC9LtUmodJUiYj6ujZ/0qLrH
+	 +/dZDkndTDG9svwqRuV2bWuSooQkEWgodEkWUBY6LN5EraHLMQK9b9wwW0T4Xv8W0z
+	 1oAlgTLMP9IT7Pj+8YCoWmwJrnu6s2GJHAMXqcOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <Alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/369] wifi: mac80211: Do not schedule stopped TXQs
-Date: Tue, 12 Aug 2025 19:26:57 +0200
-Message-ID: <20250812173019.279695711@linuxfoundation.org>
+Subject: [PATCH 6.12 103/369] net/sched: Restrict conditions for adding duplicating netems to qdisc tree
+Date: Tue, 12 Aug 2025 19:26:40 +0200
+Message-ID: <20250812173018.648743432@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,47 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Wetzel <Alexander@wetzel-home.de>
+From: William Liu <will@willsroot.io>
 
-[ Upstream commit 11e3e22fa533f5d7cf04e32343b05a27eda3c7a5 ]
+[ Upstream commit ec8e0e3d7adef940cdf9475e2352c0680189d14e ]
 
-Ignore TXQs with the flag IEEE80211_TXQ_STOP when scheduling a queue.
+netem_enqueue's duplication prevention logic breaks when a netem
+resides in a qdisc tree with other netems - this can lead to a
+soft lockup and OOM loop in netem_dequeue, as seen in [1].
+Ensure that a duplicating netem cannot exist in a tree with other
+netems.
 
-The flag is only set after all fragments have been dequeued and won't
-allow dequeueing other frames as long as the flag is set.
+Previous approaches suggested in discussions in chronological order:
 
-For drivers using ieee80211_txq_schedule_start() this prevents an
-loop trying to push the queued frames while IEEE80211_TXQ_STOP is set:
+1) Track duplication status or ttl in the sk_buff struct. Considered
+too specific a use case to extend such a struct, though this would
+be a resilient fix and address other previous and potential future
+DOS bugs like the one described in loopy fun [2].
 
-After setting IEEE80211_TXQ_STOP the driver will call
-ieee80211_return_txq(). Which calls __ieee80211_schedule_txq(), detects
-that there sill are frames in the queue and immediately restarts the
-stopped TXQ. Which can't dequeue any frame and thus starts over the loop.
+2) Restrict netem_enqueue recursion depth like in act_mirred with a
+per cpu variable. However, netem_dequeue can call enqueue on its
+child, and the depth restriction could be bypassed if the child is a
+netem.
 
-Signed-off-by: Alexander Wetzel <Alexander@wetzel-home.de>
-Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
-Link: https://patch.msgid.link/20250717162547.94582-2-Alexander@wetzel-home.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+3) Use the same approach as in 2, but add metadata in netem_skb_cb
+to handle the netem_dequeue case and track a packet's involvement
+in duplication. This is an overly complex approach, and Jamal
+notes that the skb cb can be overwritten to circumvent this
+safeguard.
+
+4) Prevent the addition of a netem to a qdisc tree if its ancestral
+path contains a netem. However, filters and actions can cause a
+packet to change paths when re-enqueued to the root from netem
+duplication, leading us to the current solution: prevent a
+duplicating netem from inhabiting the same tree as other netems.
+
+[1] https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/
+[2] https://lwn.net/Articles/719297/
+
+Fixes: 0afb51e72855 ("[PKT_SCHED]: netem: reinsert for duplication")
+Reported-by: William Liu <will@willsroot.io>
+Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
+Signed-off-by: William Liu <will@willsroot.io>
+Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20250708164141.875402-1-will@willsroot.io
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/sch_netem.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 00c309e7768e..0386810be520 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4106,7 +4106,9 @@ void __ieee80211_schedule_txq(struct ieee80211_hw *hw,
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 68a08f6d1fbc..2270547b51df 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -972,6 +972,41 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ 	return 0;
+ }
  
- 	spin_lock_bh(&local->active_txq_lock[txq->ac]);
++static const struct Qdisc_class_ops netem_class_ops;
++
++static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
++			       struct netlink_ext_ack *extack)
++{
++	struct Qdisc *root, *q;
++	unsigned int i;
++
++	root = qdisc_root_sleeping(sch);
++
++	if (sch != root && root->ops->cl_ops == &netem_class_ops) {
++		if (duplicates ||
++		    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
++			goto err;
++	}
++
++	if (!qdisc_dev(root))
++		return 0;
++
++	hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
++		if (sch != q && q->ops->cl_ops == &netem_class_ops) {
++			if (duplicates ||
++			    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
++				goto err;
++		}
++	}
++
++	return 0;
++
++err:
++	NL_SET_ERR_MSG(extack,
++		       "netem: cannot mix duplicating netems with other netems in tree");
++	return -EINVAL;
++}
++
+ /* Parse netlink message to set options */
+ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 			struct netlink_ext_ack *extack)
+@@ -1030,6 +1065,11 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	q->gap = qopt->gap;
+ 	q->counter = 0;
+ 	q->loss = qopt->loss;
++
++	ret = check_netem_in_tree(sch, qopt->duplicate, extack);
++	if (ret)
++		goto unlock;
++
+ 	q->duplicate = qopt->duplicate;
  
--	has_queue = force || txq_has_queue(txq);
-+	has_queue = force ||
-+		    (!test_bit(IEEE80211_TXQ_STOP, &txqi->flags) &&
-+		     txq_has_queue(txq));
- 	if (list_empty(&txqi->schedule_order) &&
- 	    (has_queue || ieee80211_txq_keep_active(txqi))) {
- 		/* If airtime accounting is active, always enqueue STAs at the
+ 	/* for compatibility with earlier versions.
 -- 
 2.39.5
 
