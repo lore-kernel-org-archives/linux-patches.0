@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CC2268C73;
-	Tue, 12 Aug 2025 17:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E04F2FE56E;
+	Tue, 12 Aug 2025 17:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021159; cv=none; b=q5K64h1XygdChTeLdC+pcUpjPIPMya2TqAQY17eMdVKmXtISb6QC52egrcnKcpp1Az+dbvLDtXd0sgAcBrfd0pg1RMdeLuw4ZimV8OigneuCRoDmZdMb5jhWWvJIJE2sEZAVwMFmUoynEBpY/S8sOAyWGKfh5OjfNG6hEomKHfs=
+	t=1755021162; cv=none; b=Mvkkqw+07SVqe/a59ipu54KecW4OD0xWR/HMWg9imeCRpJXmX6cVHWz/twK67qM2Cwzd6oKI5B7JSbkxQBh6sV4VOerWuuy6ofI4GTS40UqZCJFf/KyNArw5A502gkxYZC0ITLWZegbFU2yEvnpdr0PSsIu6umKD0fJ65ipDf0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021159; c=relaxed/simple;
-	bh=S+CybYyzWljWJPabMtp37UUWKGDqa+inT/VIdTuoLYM=;
+	s=arc-20240116; t=1755021162; c=relaxed/simple;
+	bh=kPNH982fIpBDQVF23RqlMK5Vglmmq2eF4qCV5I7r7Ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CmvaKODxBqg7kXJA9rF83KTSF/kxX9scRC/WIDuECTV4giuuOcDDDFsguf4Z1WKocLyEJzpTqZlgBuvXYXi7ScmAN+QatZpfdSFJvch1lw914LUBdN2BU4MxAsRoTdjwJjvmOi3zv55NDwdajd3tl05HvOd6kVsuZIr1b2nnkt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDFFg2lL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+yIaQ7zBgikJBSx2nVQ84BtK1TNLWqY+A/RLCWZIv6+RL/NMmT1i4sdP/3NAhs5dJ0QV/Y1lfYuoM3LYzaBKKYRvRTupEHGvtDw4I0ECQ9lhutmE7766hGf5BGZSgpZh68aufvijsN0GW9ykv4Rvvx0a2fV6z98p64s7UwZ3/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9zG7+Mv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDFFg2lL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE56C4CEF0;
-	Tue, 12 Aug 2025 17:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9zG7+Mv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01760C4CEF1;
+	Tue, 12 Aug 2025 17:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021159;
-	bh=S+CybYyzWljWJPabMtp37UUWKGDqa+inT/VIdTuoLYM=;
+	s=korg; t=1755021162;
+	bh=kPNH982fIpBDQVF23RqlMK5Vglmmq2eF4qCV5I7r7Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDFFg2lLUtrau1PfK1PKh0+bYYZ1VnUEgCCEnviFhfrbTIV8R+B8EEkTyEhm8hNEw
-	 72CKVs3q65xHmSZenthCGLR5lenTyGqHV8EE8zPyAt3doYrYkEQOpACM2WBPQE0qko
-	 NLXxynaULcwbRnoVTdp0HdBpnrwXnG1cUHW+5x50=
+	b=M9zG7+MvBGKuGRCDbYnHqyKPC7bsFUmvafiFJlF/HybV2p+5PKD3sbHnLLB46fEmt
+	 shmKCf62qC3awZrLAuJeNmPikTRCQC0jkPOlUxgEhFLFNg/3rOEutsaIsWvIaa8qK6
+	 AIiCLU5ySlhgLwX5bvOkuHYKSMxU2xHKMiAgSR+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Wang Liang <wangliang74@huawei.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/262] netfilter: nf_tables: Drop dead code from fill_*_info routines
-Date: Tue, 12 Aug 2025 19:27:39 +0200
-Message-ID: <20250812172956.045415374@linuxfoundation.org>
+Subject: [PATCH 6.1 223/253] net: drop UFO packets in udp_rcv_segment()
+Date: Tue, 12 Aug 2025 19:30:11 +0200
+Message-ID: <20250812172958.324151496@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +49,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit 8080357a8c6cf4905bbd8969412c19d34be3395e ]
+[ Upstream commit d46e51f1c78b9ab9323610feb14238d06d46d519 ]
 
-This practically reverts commit 28339b21a365 ("netfilter: nf_tables: do
-not send complete notification of deletions"): The feature was never
-effective, due to prior modification of 'event' variable the conditional
-early return never happened.
+When sending a packet with virtio_net_hdr to tun device, if the gso_type
+in virtio_net_hdr is SKB_GSO_UDP and the gso_size is less than udphdr
+size, below crash may happen.
 
-User space also relies upon the current behaviour, so better reintroduce
-the shortened deletion notifications once it is fixed.
+  ------------[ cut here ]------------
+  kernel BUG at net/core/skbuff.c:4572!
+  Oops: invalid opcode: 0000 [#1] SMP NOPTI
+  CPU: 0 UID: 0 PID: 62 Comm: mytest Not tainted 6.16.0-rc7 #203 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:skb_pull_rcsum+0x8e/0xa0
+  Code: 00 00 5b c3 cc cc cc cc 8b 93 88 00 00 00 f7 da e8 37 44 38 00 f7 d8 89 83 88 00 00 00 48 8b 83 c8 00 00 00 5b c3 cc cc cc cc <0f> 0b 0f 0b 66 66 2e 0f 1f 84 00 000
+  RSP: 0018:ffffc900001fba38 EFLAGS: 00000297
+  RAX: 0000000000000004 RBX: ffff8880040c1000 RCX: ffffc900001fb948
+  RDX: ffff888003e6d700 RSI: 0000000000000008 RDI: ffff88800411a062
+  RBP: ffff8880040c1000 R08: 0000000000000000 R09: 0000000000000001
+  R10: ffff888003606c00 R11: 0000000000000001 R12: 0000000000000000
+  R13: ffff888004060900 R14: ffff888004050000 R15: ffff888004060900
+  FS:  000000002406d3c0(0000) GS:ffff888084a19000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000020000040 CR3: 0000000004007000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   udp_queue_rcv_one_skb+0x176/0x4b0 net/ipv4/udp.c:2445
+   udp_queue_rcv_skb+0x155/0x1f0 net/ipv4/udp.c:2475
+   udp_unicast_rcv_skb+0x71/0x90 net/ipv4/udp.c:2626
+   __udp4_lib_rcv+0x433/0xb00 net/ipv4/udp.c:2690
+   ip_protocol_deliver_rcu+0xa6/0x160 net/ipv4/ip_input.c:205
+   ip_local_deliver_finish+0x72/0x90 net/ipv4/ip_input.c:233
+   ip_sublist_rcv_finish+0x5f/0x70 net/ipv4/ip_input.c:579
+   ip_sublist_rcv+0x122/0x1b0 net/ipv4/ip_input.c:636
+   ip_list_rcv+0xf7/0x130 net/ipv4/ip_input.c:670
+   __netif_receive_skb_list_core+0x21d/0x240 net/core/dev.c:6067
+   netif_receive_skb_list_internal+0x186/0x2b0 net/core/dev.c:6210
+   napi_complete_done+0x78/0x180 net/core/dev.c:6580
+   tun_get_user+0xa63/0x1120 drivers/net/tun.c:1909
+   tun_chr_write_iter+0x65/0xb0 drivers/net/tun.c:1984
+   vfs_write+0x300/0x420 fs/read_write.c:593
+   ksys_write+0x60/0xd0 fs/read_write.c:686
+   do_syscall_64+0x50/0x1c0 arch/x86/entry/syscall_64.c:63
+   </TASK>
 
-Fixes: 28339b21a365 ("netfilter: nf_tables: do not send complete notification of deletions")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+To trigger gso segment in udp_queue_rcv_skb(), we should also set option
+UDP_ENCAP_ESPINUDP to enable udp_sk(sk)->encap_rcv. When the encap_rcv
+hook return 1 in udp_queue_rcv_one_skb(), udp_csum_pull_header() will try
+to pull udphdr, but the skb size has been segmented to gso size, which
+leads to this crash.
+
+Previous commit cf329aa42b66 ("udp: cope with UDP GRO packet misdirection")
+introduces segmentation in UDP receive path only for GRO, which was never
+intended to be used for UFO, so drop UFO packets in udp_rcv_segment().
+
+Link: https://lore.kernel.org/netdev/20250724083005.3918375-1-wangliang74@huawei.com/
+Link: https://lore.kernel.org/netdev/20250729123907.3318425-1-wangliang74@huawei.com/
+Fixes: cf329aa42b66 ("udp: cope with UDP GRO packet misdirection")
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250730101458.3470788-1-wangliang74@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 25 -------------------------
- 1 file changed, 25 deletions(-)
+ include/net/udp.h | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 18ae39cf4188..c9582f008983 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -979,11 +979,6 @@ static int nf_tables_fill_table_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_TABLE_PAD))
- 		goto nla_put_failure;
+diff --git a/include/net/udp.h b/include/net/udp.h
+index fa4cdbe55552..aba442bd1439 100644
+--- a/include/net/udp.h
++++ b/include/net/udp.h
+@@ -460,6 +460,16 @@ static inline struct sk_buff *udp_rcv_segment(struct sock *sk,
+ {
+ 	netdev_features_t features = NETIF_F_SG;
+ 	struct sk_buff *segs;
++	int drop_count;
++
++	/*
++	 * Segmentation in UDP receive path is only for UDP GRO, drop udp
++	 * fragmentation offload (UFO) packets.
++	 */
++	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP) {
++		drop_count = 1;
++		goto drop;
++	}
  
--	if (event == NFT_MSG_DELTABLE) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
+ 	/* Avoid csum recalculation by skb_segment unless userspace explicitly
+ 	 * asks for the final checksum values
+@@ -483,16 +493,18 @@ static inline struct sk_buff *udp_rcv_segment(struct sock *sk,
+ 	 */
+ 	segs = __skb_gso_segment(skb, features, false);
+ 	if (IS_ERR_OR_NULL(segs)) {
+-		int segs_nr = skb_shinfo(skb)->gso_segs;
 -
- 	if (nla_put_be32(skb, NFTA_TABLE_FLAGS,
- 			 htonl(table->flags & NFT_TABLE_F_MASK)))
- 		goto nla_put_failure;
-@@ -1827,11 +1822,6 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_CHAIN_PAD))
- 		goto nla_put_failure;
+-		atomic_add(segs_nr, &sk->sk_drops);
+-		SNMP_ADD_STATS(__UDPX_MIB(sk, ipv4), UDP_MIB_INERRORS, segs_nr);
+-		kfree_skb(skb);
+-		return NULL;
++		drop_count = skb_shinfo(skb)->gso_segs;
++		goto drop;
+ 	}
  
--	if (event == NFT_MSG_DELCHAIN && !hook_list) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nft_is_base_chain(chain)) {
- 		const struct nft_base_chain *basechain = nft_base_chain(chain);
- 		struct nft_stats __percpu *stats;
-@@ -4584,11 +4574,6 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
- 			 NFTA_SET_PAD))
- 		goto nla_put_failure;
+ 	consume_skb(skb);
+ 	return segs;
++
++drop:
++	atomic_add(drop_count, &sk->sk_drops);
++	SNMP_ADD_STATS(__UDPX_MIB(sk, ipv4), UDP_MIB_INERRORS, drop_count);
++	kfree_skb(skb);
++	return NULL;
+ }
  
--	if (event == NFT_MSG_DELSET) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (set->flags != 0)
- 		if (nla_put_be32(skb, NFTA_SET_FLAGS, htonl(set->flags)))
- 			goto nla_put_failure;
-@@ -7828,11 +7813,6 @@ static int nf_tables_fill_obj_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_OBJ_PAD))
- 		goto nla_put_failure;
- 
--	if (event == NFT_MSG_DELOBJ) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nla_put_be32(skb, NFTA_OBJ_TYPE, htonl(obj->ops->type->type)) ||
- 	    nla_put_be32(skb, NFTA_OBJ_USE, htonl(obj->use)) ||
- 	    nft_object_dump(skb, NFTA_OBJ_DATA, obj, reset))
-@@ -8851,11 +8831,6 @@ static int nf_tables_fill_flowtable_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_FLOWTABLE_PAD))
- 		goto nla_put_failure;
- 
--	if (event == NFT_MSG_DELFLOWTABLE && !hook_list) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nla_put_be32(skb, NFTA_FLOWTABLE_USE, htonl(flowtable->use)) ||
- 	    nla_put_be32(skb, NFTA_FLOWTABLE_FLAGS, htonl(flowtable->data.flags)))
- 		goto nla_put_failure;
+ static inline void udp_post_segment_fix_csum(struct sk_buff *skb)
 -- 
 2.39.5
 
