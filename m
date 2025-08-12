@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3C81C8621;
-	Tue, 12 Aug 2025 18:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BB51EF38C;
+	Tue, 12 Aug 2025 18:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755022107; cv=none; b=WSRbmUTE5/0QCvL66qxSaA1lPVLLzf3Cz6niBKcgkbM78RduC34Rbe2Jgpu+FhGvWA0I6Vw/bmbWHQyxYY5ylUQ3F+z2icUqQcLWH8A29M52Ynty9yc1ss8jZ58kcPqsEUyVKg1wmcht5X4q+eeOiwphM8AbnnMvaFm0cNzShoE=
+	t=1755022110; cv=none; b=DG5Kxfvl++oa79oT6aylaYh9vys02YIXiYuFoG4ABig1zxWdLF1rPY6Oad3wwemVXSTGynWk9w/BLixHhyIatA5DaHx0dYEPMuX5uvP8XrcgpftWDNsN7MbsNWojy+g3bhV1E3R0CIyxJE5BHy/Tcwr3lTfjg0f22d2c95/pX/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755022107; c=relaxed/simple;
-	bh=ckCacWJfVj7BxSUxVIvFDOXWaGgvlGVrlN7Km3A+Zos=;
+	s=arc-20240116; t=1755022110; c=relaxed/simple;
+	bh=vy2cBem9Mq7rVc+rXHvryRr7gWOtGfhYpoVgjB/nuZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBzRQZtj1QV5l+a0LNFKv7M/n92jrxASSTn3pT4Br7nWpRVNrsk/NUZiPDkbJS7aI3KFBjnPoAVWZ8aqoP6XZe1qeOqCCbLihyVzTk7iSSMsDjw3e6uy/v+49Qz7fzksVbaszPztsX4xWaO8ZyDoxNf+dZruV2Qos4cJev4fC2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4Fe1vlC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jMILzqjX/ZPV4fzZEpRfdAInevalhHveWwvE7iNV0M2ZwVaZunfe2lmurtIEou/8+7KXmvVwcK1PIjWPzdzoxS89cNFqWDRTkt1Hxta9DRH22Y5ZEZXHI2H8B+hvC41JAyDyEwOmlNNWWRM1CT3Ho4N24C34hDQ+yNOHdNiO584=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjNtR10K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4Fe1vlC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5E4C4CEF6;
-	Tue, 12 Aug 2025 18:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjNtR10K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11587C4CEF8;
+	Tue, 12 Aug 2025 18:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755022107;
-	bh=ckCacWJfVj7BxSUxVIvFDOXWaGgvlGVrlN7Km3A+Zos=;
+	s=korg; t=1755022110;
+	bh=vy2cBem9Mq7rVc+rXHvryRr7gWOtGfhYpoVgjB/nuZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4Fe1vlCc46AsWYTuDw/VckGVA9ninBfapx+/JmavYI4WKY4KBebG+0ikPwN0leGZ
-	 dgAbS27LAece1AxWjSTCCz8FzC1W/AjGyWgg7kVjQebB0dxEE5Qdw5YIOwS/doaQE6
-	 TvDTGJhbwC5AMhOx2rWUHrytkij7T6vESdbrp93c=
+	b=AjNtR10KJzdzOeqN0bn+N9bwrmfhxK/bUfuhv6QqTKuIDTL25pePGjxnrrfezGTh2
+	 i426N5T40+suKC7kieNn1dYDnzj95NYtmyMMpj7rL8PQcCLLYRB1SiEQaMMLoXx7cj
+	 UNZJK01h6F0Qlcf7YPh2ljqVP8kfGMMOea1VMOc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Shashank Balaji <shashank.mahadasyam@sony.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/369] cpufreq: intel_pstate: Always use HWP_DESIRED_PERF in passive mode
-Date: Tue, 12 Aug 2025 19:25:54 +0200
-Message-ID: <20250812173016.908543576@linuxfoundation.org>
+Subject: [PATCH 6.12 058/369] cpufreq: Initialize cpufreq-based frequency-invariance later
+Date: Tue, 12 Aug 2025 19:25:55 +0200
+Message-ID: <20250812173016.945002786@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173014.736537091@linuxfoundation.org>
 References: <20250812173014.736537091@linuxfoundation.org>
@@ -51,49 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit 1cefe495cacba5fb0417da3a75a1a76e3546d176 ]
+[ Upstream commit 2a6c727387062a2ea79eb6cf5004820cb1b0afe2 ]
 
-In the passive mode, intel_cpufreq_update_pstate() sets HWP_MIN_PERF in
-accordance with the target frequency to ensure delivering adequate
-performance, but it sets HWP_DESIRED_PERF to 0, so the processor has no
-indication that the desired performance level is actually equal to the
-floor one.  This may cause it to choose a performance point way above
-the desired level.
+The cpufreq-based invariance is enabled in cpufreq_register_driver(),
+but never disabled after registration fails. Move the invariance
+initialization to where all other initializations have been successfully
+done to solve this problem.
 
-Moreover, this is inconsistent with intel_cpufreq_adjust_perf() which
-actually sets HWP_DESIRED_PERF in accordance with the target performance
-value.
-
-Address this by adjusting intel_cpufreq_update_pstate() to pass
-target_pstate as both the minimum and the desired performance levels
-to intel_cpufreq_hwp_update().
-
-Fixes: a365ab6b9dfb ("cpufreq: intel_pstate: Implement the ->adjust_perf() callback")
+Fixes: 874f63531064 ("cpufreq: report whether cpufreq supports Frequency Invariance (FI)")
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/20250709104145.2348017-2-zhenglifeng1@huawei.com
+[ rjw: New subject ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Shashank Balaji <shashank.mahadasyam@sony.com>
-Link: https://patch.msgid.link/6173276.lOV4Wx5bFT@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cpufreq.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 54e7310454cc..b86372aa341d 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -3128,8 +3128,8 @@ static int intel_cpufreq_update_pstate(struct cpufreq_policy *policy,
- 		int max_pstate = policy->strict_target ?
- 					target_pstate : cpu->max_perf_ratio;
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 1f52bced4c29..df3c8daede26 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2961,15 +2961,6 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	cpufreq_driver = driver_data;
+ 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
  
--		intel_cpufreq_hwp_update(cpu, target_pstate, max_pstate, 0,
--					 fast_switch);
-+		intel_cpufreq_hwp_update(cpu, target_pstate, max_pstate,
-+					 target_pstate, fast_switch);
- 	} else if (target_pstate != old_pstate) {
- 		intel_cpufreq_perf_ctl_update(cpu, target_pstate, fast_switch);
- 	}
+-	/*
+-	 * Mark support for the scheduler's frequency invariance engine for
+-	 * drivers that implement target(), target_index() or fast_switch().
+-	 */
+-	if (!cpufreq_driver->setpolicy) {
+-		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
+-		pr_debug("supports frequency invariance");
+-	}
+-
+ 	if (driver_data->setpolicy)
+ 		driver_data->flags |= CPUFREQ_CONST_LOOPS;
+ 
+@@ -3000,6 +2991,15 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	hp_online = ret;
+ 	ret = 0;
+ 
++	/*
++	 * Mark support for the scheduler's frequency invariance engine for
++	 * drivers that implement target(), target_index() or fast_switch().
++	 */
++	if (!cpufreq_driver->setpolicy) {
++		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
++		pr_debug("supports frequency invariance");
++	}
++
+ 	pr_debug("driver %s up and running\n", driver_data->name);
+ 	goto out;
+ 
 -- 
 2.39.5
 
