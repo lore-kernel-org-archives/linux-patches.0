@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5BC2E7BD4;
-	Tue, 12 Aug 2025 18:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B46F2FE579;
+	Tue, 12 Aug 2025 18:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755023245; cv=none; b=Q5q1MIgYqqvZVrey7BXb4pkqzoWYohVAkb3Xt32iqYmUanpQV0Y5ovmkZHbTjwVPONA85XLx/tKInyFAGXFZcwnhlP2QGFjN+2lNDox3kg4qRzb0B/olEQhYfFSTO5X+5wY+i8i+3vqIqAebaHopvsD2wNXZvS/an7fO959HJVo=
+	t=1755023248; cv=none; b=hRttsirkQMevEMyLDMeX4yHuNV/UcVWIi0OvMmqq5pmeVy/l8DQf54fwZsbqbghdfBZb857MPlnItN6wn9ty1GMkEBaOi9tL/qAMqZ8P2/XfU0p/8Lt2n55a5cH6l9te87tnbS42ZbDrYKFbrQBftwQDEUoPf8Gfc02Chykc6Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755023245; c=relaxed/simple;
-	bh=lnxadOWVv8xpr8z0FVu2GCFBkD9yL4UpZQuvIQMQcsg=;
+	s=arc-20240116; t=1755023248; c=relaxed/simple;
+	bh=T8qByBb1ZyHc4CfMwR7aetdZG9aiSjU2zW2ehIR8QUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mAu250W4jGn3GV112BTKHIjWy6P6Sxa9ouGLCCxZrot7eVDzHMCvtP5C85t6CfCZYILsS8vMMKVVWWu2w7AkTAqKWnH613w74Y8QAyfR8HSXcBcnkDrr4aPl8h6P9THUarlifOEW6mRkJFgKiUX6ptHA5Upi2F3fgzwb9qzXJw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrPDiUlt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RHAWXtSVyXURiqmijMJuOOcEPPzZhfa7q98g64IYeWClejWXVzv/cRqfvYdD2o3MIlK/zxKxg0MAYamVCy/J4pl/4GLvbbTB8YTNhi7pN1Ti5V4VgYW39U/XAjepSxD7/zLLnVy5HHmEbx7yTgl9S5qS05W7NgIUYVwiW+JCGLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaPpzSAC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrPDiUlt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42C1C4CEF1;
-	Tue, 12 Aug 2025 18:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaPpzSAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0CEC4CEF1;
+	Tue, 12 Aug 2025 18:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755023245;
-	bh=lnxadOWVv8xpr8z0FVu2GCFBkD9yL4UpZQuvIQMQcsg=;
+	s=korg; t=1755023248;
+	bh=T8qByBb1ZyHc4CfMwR7aetdZG9aiSjU2zW2ehIR8QUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrPDiUltkmoA/R1efkIcTe4zlLU+hByzT5JV6jHFnAceQG71UqKHK+B3nqSphPEf1
-	 AkooMZl7G+4uHE0CJNK/xNYbVFOM7h5jfYLpUmOh+RnsbXhabtaaY+GwS6cSDx33Rx
-	 tTS2pcPXwTed3HC416AD30vSVBLD0g2kxiNq2lXU=
+	b=RaPpzSACv+4qdqpSoRyb+7MqBs01hcnTMHGcrajisp6f0v7GL+P7nZoyUllhHLcC1
+	 8pLWNgDQ6XHLzmDicQJayfZBQ9V+GGZBy5tlmIeUnGN5NL7QqRNAmCb+8lQ0edq5P0
+	 jm/651v1fI/8r2Pt9qT6y0JIooXTvWs8sZ9Eon/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RubenKelevra <rubenkelevra@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 003/627] fs_context: fix parameter name in infofc() macro
-Date: Tue, 12 Aug 2025 19:24:58 +0200
-Message-ID: <20250812173419.445566584@linuxfoundation.org>
+Subject: [PATCH 6.16 004/627] selftests/landlock: Fix readlink check
+Date: Tue, 12 Aug 2025 19:24:59 +0200
+Message-ID: <20250812173419.487053566@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -52,37 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RubenKelevra <rubenkelevra@gmail.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit ffaf1bf3737f706e4e9be876de4bc3c8fc578091 ]
+[ Upstream commit 94a7ce26428d3a7ceb46c503ed726160578b9fcc ]
 
-The macro takes a parameter called "p" but references "fc" internally.
-This happens to compile as long as callers pass a variable named fc,
-but breaks otherwise. Rename the first parameter to “fc” to match the
-usage and to be consistent with warnfc() / errorfc().
+The audit_init_filter_exe() helper incorrectly checks the readlink(2)
+error because an unsigned integer is used to store the result.  Use a
+signed integer for this check.
 
-Fixes: a3ff937b33d9 ("prefix-handling analogues of errorf() and friends")
-Signed-off-by: RubenKelevra <rubenkelevra@gmail.com>
-Link: https://lore.kernel.org/20250617230927.1790401-1-rubenkelevra@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/aDbFwyZ_fM-IO7sC@stanley.mountain
+Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
+Reviewed-by: Günther Noack <gnoack@google.com>
+Link: https://lore.kernel.org/r/20250528144426.1709063-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fs_context.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/landlock/audit.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/fs_context.h b/include/linux/fs_context.h
-index a19e4bd32e4d..7773eb870039 100644
---- a/include/linux/fs_context.h
-+++ b/include/linux/fs_context.h
-@@ -200,7 +200,7 @@ void logfc(struct fc_log *log, const char *prefix, char level, const char *fmt,
-  */
- #define infof(fc, fmt, ...) __logfc(fc, 'i', fmt, ## __VA_ARGS__)
- #define info_plog(p, fmt, ...) __plog(p, 'i', fmt, ## __VA_ARGS__)
--#define infofc(p, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
-+#define infofc(fc, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
+diff --git a/tools/testing/selftests/landlock/audit.h b/tools/testing/selftests/landlock/audit.h
+index 18a6014920b5..b16986aa6442 100644
+--- a/tools/testing/selftests/landlock/audit.h
++++ b/tools/testing/selftests/landlock/audit.h
+@@ -403,11 +403,12 @@ static int audit_init_filter_exe(struct audit_filter *filter, const char *path)
+ 	/* It is assume that there is not already filtering rules. */
+ 	filter->record_type = AUDIT_EXE;
+ 	if (!path) {
+-		filter->exe_len = readlink("/proc/self/exe", filter->exe,
+-					   sizeof(filter->exe) - 1);
+-		if (filter->exe_len < 0)
++		int ret = readlink("/proc/self/exe", filter->exe,
++				   sizeof(filter->exe) - 1);
++		if (ret < 0)
+ 			return -errno;
  
- /**
-  * warnf - Store supplementary warning message
++		filter->exe_len = ret;
+ 		return 0;
+ 	}
+ 
 -- 
 2.39.5
 
