@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5C03FE7;
-	Tue, 12 Aug 2025 19:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E91A26FA77;
+	Tue, 12 Aug 2025 19:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755025244; cv=none; b=R6eo0PlCYwcltUtz6kvZXa8po5zWRU5G6r1YpLDDsXO7fiteUVtaT78XT4YsRScSeZkqswXhRR2/OvkEBd537tJ0x7wwkwLCvxEaZCtLsappzIorRfptF9YNUA+fTYjKjlMybiQrlSUBTZExeD8I2OOP1OoURxsZ7RNaWppUERc=
+	t=1755025248; cv=none; b=Ftv+pvrBtlHk651TkjgGgLf7BCF8ErfDqE72xZWJ2dPRj5+y3rAZjD96wAWV8qTBvH7ETOGznOxbiPXLdMMT5UbKvJQuUBCIP3jpZ+xo8YBWn0cyh/Mj2T4eq8e7mkjD4LhEdSNWivZzElwC6was4lcIquwf+aeI5iib5bASAWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755025244; c=relaxed/simple;
-	bh=52vVsZmN49O0NKzsA02ObLZuVCJcGPTxuQ4yOZ6FTng=;
+	s=arc-20240116; t=1755025248; c=relaxed/simple;
+	bh=VDc1WCd57fNLtcrjTxHzKrZrlHz7RJyR6jtSfgxakiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sN8u4GQ25w/IzAHouExYpS5HohS4zTeP9lpa6m1bOjWRrIv//2vfe/UOBRs2cdGE6LbN+qAE+3TtXjh7T+7t4jNDeFVi+HzDidJxFLtZIPnOY5f8cvVmlAr6+nUxnNOVVVFD7A0UBbvj2p9uxujp7u71z6OEsFDhxY1HIv+J/60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cx7yiqnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EcKA5TehoQyuLQovkFofTFahBj3PDNrZJOZrDu321ieI9DO12D/iLmdXmJNWeWXt/maN5XvpzwHQ/y9JSfgT1U7Kanib7cr0hcNHp1fibOgDy2Q+572MiJnPT3hXgZv26UcXIQg1hM4T1R13ltb9SmO6S80StNv9U6yZQeER/Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZBi53o/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cx7yiqnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29134C4CEF0;
-	Tue, 12 Aug 2025 19:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZBi53o/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80630C4CEF0;
+	Tue, 12 Aug 2025 19:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755025244;
-	bh=52vVsZmN49O0NKzsA02ObLZuVCJcGPTxuQ4yOZ6FTng=;
+	s=korg; t=1755025248;
+	bh=VDc1WCd57fNLtcrjTxHzKrZrlHz7RJyR6jtSfgxakiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cx7yiqnWBkOd2IJ5upkeQ0yoEPdErRA72KcE98xjd1Bhetf+SY0xwHHJ8k56xbhQA
-	 UZmUOT8KjOtnDaDM0oz9eNH9SX1DvtwlGDRyIoBXxTWaQrmX9NJBSniS5dDGR0vTwo
-	 WqQwQOtjIjn+h/+HqC4sO7WxYBE76AyceKkVmNBw=
+	b=pZBi53o/Og9TmxMamHPIlE+mDa86Uiq4bkJQ7R2AfIC8CtnfF3L7ierrj7znvh/LR
+	 dDv9jAy0379Bjl1anVqcf+l1EdBXDJkSfAf+EyJf4nENmMUcelOFzqkyadchAZ3GSs
+	 SwWqZCt4XZtJiHyXBvsrPka7910JCzvZKBFZxXx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Bill Wendling <morbo@google.com>,
-	Jerome Glisse <jglisse@redhat.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Baoquan He <bhe@redhat.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kairui Song <kasong@tencent.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 612/627] mm/hmm: move pmd_to_hmm_pfn_flags() to the respective #ifdeffery
-Date: Tue, 12 Aug 2025 19:35:07 +0200
-Message-ID: <20250812173455.163390608@linuxfoundation.org>
+Subject: [PATCH 6.16 613/627] mm: swap: correctly use maxpages in swapon syscall to avoid potential deadloop
+Date: Tue, 12 Aug 2025 19:35:08 +0200
+Message-ID: <20250812173455.204050577@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -56,56 +53,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 188cb385bbf04d486df3e52f28c47b3961f5f0c0 upstream.
+commit 255116c5b0fa2145ede28c2f7b248df5e73834d1 upstream.
 
-When pmd_to_hmm_pfn_flags() is unused, it prevents kernel builds with
-clang, `make W=1` and CONFIG_TRANSPARENT_HUGEPAGE=n:
+We use maxpages from read_swap_header() to initialize swap_info_struct,
+however the maxpages might be reduced in setup_swap_extents() and the
+si->max is assigned with the reduced maxpages from the
+setup_swap_extents().
 
-  mm/hmm.c:186:29: warning: unused function 'pmd_to_hmm_pfn_flags' [-Wunused-function]
+Obviously, this could lead to memory waste as we allocated memory based on
+larger maxpages, besides, this could lead to a potential deadloop as
+following:
 
-Fix this by moving the function to the respective existing ifdeffery
-for its the only user.
+1) When calling setup_clusters() with larger maxpages, unavailable
+   pages within range [si->max, larger maxpages) are not accounted with
+   inc_cluster_info_page().  As a result, these pages are assumed
+   available but can not be allocated.  The cluster contains these pages
+   can be moved to frag_clusters list after it's all available pages were
+   allocated.
 
-See also:
+2) When the cluster mentioned in 1) is the only cluster in
+   frag_clusters list, cluster_alloc_swap_entry() assume order 0
+   allocation will never failed and will enter a deadloop by keep trying
+   to allocate page from the only cluster in frag_clusters which contains
+   no actually available page.
 
-  6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
+Call setup_swap_extents() to get the final maxpages before
+swap_info_struct initialization to fix the issue.
 
-Link: https://lkml.kernel.org/r/20250710082403.664093-1-andriy.shevchenko@linux.intel.com
-Fixes: 992de9a8b751 ("mm/hmm: allow to mirror vma of a file on a DAX backed filesystem")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
+After this change, span will include badblocks and will become large
+value which I think is correct value:
+In summary, there are two kinds of swapfile_activate operations.
+
+1. Filesystem style: Treat all blocks logical continuity and find
+   usable physical extents in logical range.  In this way, si->pages will
+   be actual usable physical blocks and span will be "1 + highest_block -
+   lowest_block".
+
+2. Block device style: Treat all blocks physically continue and only
+   one single extent is added.  In this way, si->pages will be si->max and
+   span will be "si->pages - 1".  Actually, si->pages and si->max is only
+   used in block device style and span value is set with si->pages.  As a
+   result, span value in block device style will become a larger value as
+   you mentioned.
+
+I think larger value is correct based on:
+
+1. Span value in filesystem style is "1 + highest_block -
+   lowest_block" which is the range cover all possible phisical blocks
+   including the badblocks.
+
+2. For block device style, si->pages is the actual usable block number
+   and is already in pr_info.  The original span value before this patch
+   is also refer to usable block number which is redundant in pr_info.
+
+[shikemeng@huaweicloud.com: ensure si->pages == si->max - 1 after setup_swap_extents()]
+  Link: https://lkml.kernel.org/r/20250522122554.12209-3-shikemeng@huaweicloud.com
+  Link: https://lkml.kernel.org/r/20250718065139.61989-1-shikemeng@huaweicloud.com
+Link: https://lkml.kernel.org/r/20250522122554.12209-3-shikemeng@huaweicloud.com
+Fixes: 661383c6111a ("mm: swap: relaim the cached parts that got scanned")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Baoquan He <bhe@redhat.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kairui Song <kasong@tencent.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hmm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/swapfile.c |   53 ++++++++++++++++++++++++++---------------------------
+ 1 file changed, 26 insertions(+), 27 deletions(-)
 
---- a/mm/hmm.c
-+++ b/mm/hmm.c
-@@ -183,6 +183,7 @@ static inline unsigned long hmm_pfn_flag
- 	return order << HMM_PFN_ORDER_SHIFT;
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -3141,43 +3141,30 @@ static unsigned long read_swap_header(st
+ 	return maxpages;
  }
  
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- static inline unsigned long pmd_to_hmm_pfn_flags(struct hmm_range *range,
- 						 pmd_t pmd)
+-static int setup_swap_map_and_extents(struct swap_info_struct *si,
+-					union swap_header *swap_header,
+-					unsigned char *swap_map,
+-					unsigned long maxpages,
+-					sector_t *span)
++static int setup_swap_map(struct swap_info_struct *si,
++			  union swap_header *swap_header,
++			  unsigned char *swap_map,
++			  unsigned long maxpages)
  {
-@@ -193,7 +194,6 @@ static inline unsigned long pmd_to_hmm_p
- 	       hmm_pfn_flags_order(PMD_SHIFT - PAGE_SHIFT);
+-	unsigned int nr_good_pages;
+ 	unsigned long i;
+-	int nr_extents;
+-
+-	nr_good_pages = maxpages - 1;	/* omit header page */
+ 
++	swap_map[0] = SWAP_MAP_BAD; /* omit header page */
+ 	for (i = 0; i < swap_header->info.nr_badpages; i++) {
+ 		unsigned int page_nr = swap_header->info.badpages[i];
+ 		if (page_nr == 0 || page_nr > swap_header->info.last_page)
+ 			return -EINVAL;
+ 		if (page_nr < maxpages) {
+ 			swap_map[page_nr] = SWAP_MAP_BAD;
+-			nr_good_pages--;
++			si->pages--;
+ 		}
+ 	}
+ 
+-	if (nr_good_pages) {
+-		swap_map[0] = SWAP_MAP_BAD;
+-		si->max = maxpages;
+-		si->pages = nr_good_pages;
+-		nr_extents = setup_swap_extents(si, span);
+-		if (nr_extents < 0)
+-			return nr_extents;
+-		nr_good_pages = si->pages;
+-	}
+-	if (!nr_good_pages) {
++	if (!si->pages) {
+ 		pr_warn("Empty swap-file\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	return nr_extents;
++	return 0;
  }
  
--#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- static int hmm_vma_handle_pmd(struct mm_walk *walk, unsigned long addr,
- 			      unsigned long end, unsigned long hmm_pfns[],
- 			      pmd_t pmd)
+ #define SWAP_CLUSTER_INFO_COLS						\
+@@ -3217,7 +3204,7 @@ static struct swap_cluster_info *setup_c
+ 	 * Mark unusable pages as unavailable. The clusters aren't
+ 	 * marked free yet, so no list operations are involved yet.
+ 	 *
+-	 * See setup_swap_map_and_extents(): header page, bad pages,
++	 * See setup_swap_map(): header page, bad pages,
+ 	 * and the EOF part of the last cluster.
+ 	 */
+ 	inc_cluster_info_page(si, cluster_info, 0);
+@@ -3363,6 +3350,21 @@ SYSCALL_DEFINE2(swapon, const char __use
+ 		goto bad_swap_unlock_inode;
+ 	}
+ 
++	si->max = maxpages;
++	si->pages = maxpages - 1;
++	nr_extents = setup_swap_extents(si, &span);
++	if (nr_extents < 0) {
++		error = nr_extents;
++		goto bad_swap_unlock_inode;
++	}
++	if (si->pages != si->max - 1) {
++		pr_err("swap:%u != (max:%u - 1)\n", si->pages, si->max);
++		error = -EINVAL;
++		goto bad_swap_unlock_inode;
++	}
++
++	maxpages = si->max;
++
+ 	/* OK, set up the swap map and apply the bad block list */
+ 	swap_map = vzalloc(maxpages);
+ 	if (!swap_map) {
+@@ -3374,12 +3376,9 @@ SYSCALL_DEFINE2(swapon, const char __use
+ 	if (error)
+ 		goto bad_swap_unlock_inode;
+ 
+-	nr_extents = setup_swap_map_and_extents(si, swap_header, swap_map,
+-						maxpages, &span);
+-	if (unlikely(nr_extents < 0)) {
+-		error = nr_extents;
++	error = setup_swap_map(si, swap_header, swap_map, maxpages);
++	if (error)
+ 		goto bad_swap_unlock_inode;
+-	}
+ 
+ 	/*
+ 	 * Use kvmalloc_array instead of bitmap_zalloc as the allocation order might
 
 
