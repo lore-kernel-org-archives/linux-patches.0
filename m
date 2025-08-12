@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14DD2FF174;
-	Tue, 12 Aug 2025 18:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26052FF148;
+	Tue, 12 Aug 2025 18:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755024978; cv=none; b=nTgWlUqWyBYfaBdkHvqfvb/c7dg/C3/yfCqK+A5Cf9asB25NokUFhkbPMCmN0r6kaKeSnwW7Too3lhOjEzqI5v8QZH6BP9wj4qEeP8RccgLdqTFA8qOYE8iTItCHPEEW9Y6lfeDNUu6/wBih0+LJDlhkQ6bRkDwr31RwfYx8o4I=
+	t=1755024981; cv=none; b=eEX+Zf9tS6wvopkWZMqIr2HH73mlEQSnyikai5UaK+E6mVh/I7z4MkG9qo61xJv40e36H5YbKeKaSsxqXP3K1yafMIdJdojpAwShhTXrbhafYf1UgQPG6/xemKf4mu0Z+yYmL3F0a6++bF44OjriF9cClu8jscPqO94I0p/4cfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755024978; c=relaxed/simple;
-	bh=sEZcqH9BN4Uys7vFQFeESRirRckTgRBvwttgAUtxh3I=;
+	s=arc-20240116; t=1755024981; c=relaxed/simple;
+	bh=m8kaBMR7fDofVDZ1Bms4Ihek0KI6Ikf46TA2BrB2yrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smWB3mzGPifsfaO2CmSXjWxwfk49emLpjKFnKcx7dUaclf3uNzvSBkZIrbGUFVxFYxHbnl0yIcKjE8TLyRBLAfuk4M/ttpRgra5fkAgh6bo3lVJ6OiARx6nKDyajYE3jmDeel/NlG9EciU7+1yQvhWTxdMkSYctn0HY2701kJaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYLwjld+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aMbS0m3CaA0VMTs3PWK5bp+6jWhHS2Yj+KI4QlSJHJyOam9iCh5YoWPgqXnjYC31+GUC2BUeRJDBABEZIuVqE9LjTHFKX2IEDE9fWgneSg+aadGJjR+vtearqkBVBt4JItQJ2bLAvoWuaYMYlZ0dpvTbKQpsA6Xxwh5QIj34FcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAz7oZbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYLwjld+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D682C4CEF0;
-	Tue, 12 Aug 2025 18:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAz7oZbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4942CC4CEF0;
+	Tue, 12 Aug 2025 18:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755024978;
-	bh=sEZcqH9BN4Uys7vFQFeESRirRckTgRBvwttgAUtxh3I=;
+	s=korg; t=1755024981;
+	bh=m8kaBMR7fDofVDZ1Bms4Ihek0KI6Ikf46TA2BrB2yrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYLwjld+ei8yOtzMmOpNMQm7ytCJn4UNsIFVOdZwRCcu4nCpioerMhJjd5QOPyz7t
-	 QQmua6Xf1O8d1KAXar4ypfftFj3Y694tAr+9xCkQ+fgxtQq13Mn3ZKAowi0aPcjEot
-	 K2fhG/rMq+1H70mP/NDgjGphUirqdUYlC3yDY22E=
+	b=SAz7oZbS0jhPFQVECl2rlTZfcPzzi/MHXQGJunN7cy3Tb0w4nZRAGVRQwc4V6zi0h
+	 uHk/8mW5LwduovItJtR9DmYmVrGSytRrhlgkVtQNQekHBycbWy5xBpcoeuqQDE59oP
+	 ecwflDdc3a3S19kDnEq5l5DI8kB6jkq3MvgfUUkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Wang Liang <wangliang74@huawei.com>,
-	Willem de Bruijn <willemb@google.com>,
+	syzbot+398e1ee4ca2cac05fddb@syzkaller.appspotmail.com,
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 534/627] net: drop UFO packets in udp_rcv_segment()
-Date: Tue, 12 Aug 2025 19:33:49 +0200
-Message-ID: <20250812173452.227862586@linuxfoundation.org>
+Subject: [PATCH 6.16 535/627] net/sched: taprio: enforce minimum value for picos_per_byte
+Date: Tue, 12 Aug 2025 19:33:50 +0200
+Message-ID: <20250812173452.264782867@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250812173419.303046420@linuxfoundation.org>
 References: <20250812173419.303046420@linuxfoundation.org>
@@ -53,120 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Takamitsu Iwai <takamitz@amazon.co.jp>
 
-[ Upstream commit d46e51f1c78b9ab9323610feb14238d06d46d519 ]
+[ Upstream commit ae8508b25def57982493c48694ef135973bfabe0 ]
 
-When sending a packet with virtio_net_hdr to tun device, if the gso_type
-in virtio_net_hdr is SKB_GSO_UDP and the gso_size is less than udphdr
-size, below crash may happen.
+Syzbot reported a WARNING in taprio_get_start_time().
 
-  ------------[ cut here ]------------
-  kernel BUG at net/core/skbuff.c:4572!
-  Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  CPU: 0 UID: 0 PID: 62 Comm: mytest Not tainted 6.16.0-rc7 #203 PREEMPT(voluntary)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:skb_pull_rcsum+0x8e/0xa0
-  Code: 00 00 5b c3 cc cc cc cc 8b 93 88 00 00 00 f7 da e8 37 44 38 00 f7 d8 89 83 88 00 00 00 48 8b 83 c8 00 00 00 5b c3 cc cc cc cc <0f> 0b 0f 0b 66 66 2e 0f 1f 84 00 000
-  RSP: 0018:ffffc900001fba38 EFLAGS: 00000297
-  RAX: 0000000000000004 RBX: ffff8880040c1000 RCX: ffffc900001fb948
-  RDX: ffff888003e6d700 RSI: 0000000000000008 RDI: ffff88800411a062
-  RBP: ffff8880040c1000 R08: 0000000000000000 R09: 0000000000000001
-  R10: ffff888003606c00 R11: 0000000000000001 R12: 0000000000000000
-  R13: ffff888004060900 R14: ffff888004050000 R15: ffff888004060900
-  FS:  000000002406d3c0(0000) GS:ffff888084a19000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000020000040 CR3: 0000000004007000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   udp_queue_rcv_one_skb+0x176/0x4b0 net/ipv4/udp.c:2445
-   udp_queue_rcv_skb+0x155/0x1f0 net/ipv4/udp.c:2475
-   udp_unicast_rcv_skb+0x71/0x90 net/ipv4/udp.c:2626
-   __udp4_lib_rcv+0x433/0xb00 net/ipv4/udp.c:2690
-   ip_protocol_deliver_rcu+0xa6/0x160 net/ipv4/ip_input.c:205
-   ip_local_deliver_finish+0x72/0x90 net/ipv4/ip_input.c:233
-   ip_sublist_rcv_finish+0x5f/0x70 net/ipv4/ip_input.c:579
-   ip_sublist_rcv+0x122/0x1b0 net/ipv4/ip_input.c:636
-   ip_list_rcv+0xf7/0x130 net/ipv4/ip_input.c:670
-   __netif_receive_skb_list_core+0x21d/0x240 net/core/dev.c:6067
-   netif_receive_skb_list_internal+0x186/0x2b0 net/core/dev.c:6210
-   napi_complete_done+0x78/0x180 net/core/dev.c:6580
-   tun_get_user+0xa63/0x1120 drivers/net/tun.c:1909
-   tun_chr_write_iter+0x65/0xb0 drivers/net/tun.c:1984
-   vfs_write+0x300/0x420 fs/read_write.c:593
-   ksys_write+0x60/0xd0 fs/read_write.c:686
-   do_syscall_64+0x50/0x1c0 arch/x86/entry/syscall_64.c:63
-   </TASK>
+When link speed is 470,589 or greater, q->picos_per_byte becomes too
+small, causing length_to_duration(q, ETH_ZLEN) to return zero.
 
-To trigger gso segment in udp_queue_rcv_skb(), we should also set option
-UDP_ENCAP_ESPINUDP to enable udp_sk(sk)->encap_rcv. When the encap_rcv
-hook return 1 in udp_queue_rcv_one_skb(), udp_csum_pull_header() will try
-to pull udphdr, but the skb size has been segmented to gso size, which
-leads to this crash.
+This zero value leads to validation failures in fill_sched_entry() and
+parse_taprio_schedule(), allowing arbitrary values to be assigned to
+entry->interval and cycle_time. As a result, sched->cycle can become zero.
 
-Previous commit cf329aa42b66 ("udp: cope with UDP GRO packet misdirection")
-introduces segmentation in UDP receive path only for GRO, which was never
-intended to be used for UFO, so drop UFO packets in udp_rcv_segment().
+Since SPEED_800000 is the largest defined speed in
+include/uapi/linux/ethtool.h, this issue can occur in realistic scenarios.
 
-Link: https://lore.kernel.org/netdev/20250724083005.3918375-1-wangliang74@huawei.com/
-Link: https://lore.kernel.org/netdev/20250729123907.3318425-1-wangliang74@huawei.com/
-Fixes: cf329aa42b66 ("udp: cope with UDP GRO packet misdirection")
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250730101458.3470788-1-wangliang74@huawei.com
+To ensure length_to_duration() returns a non-zero value for minimum-sized
+Ethernet frames (ETH_ZLEN = 60), picos_per_byte must be at least 17
+(60 * 17 > PSEC_PER_NSEC which is 1000).
+
+This patch enforces a minimum value of 17 for picos_per_byte when the
+calculated value would be lower, and adds a warning message to inform
+users that scheduling accuracy may be affected at very high link speeds.
+
+Fixes: fb66df20a720 ("net/sched: taprio: extend minimum interval restriction to entire cycle too")
+Reported-by: syzbot+398e1ee4ca2cac05fddb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=398e1ee4ca2cac05fddb
+Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
+Link: https://patch.msgid.link/20250728173149.45585-1-takamitz@amazon.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/udp.h | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ net/sched/sch_taprio.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/udp.h b/include/net/udp.h
-index a772510b2aa5..7a4524243b19 100644
---- a/include/net/udp.h
-+++ b/include/net/udp.h
-@@ -587,6 +587,16 @@ static inline struct sk_buff *udp_rcv_segment(struct sock *sk,
- {
- 	netdev_features_t features = NETIF_F_SG;
- 	struct sk_buff *segs;
-+	int drop_count;
-+
-+	/*
-+	 * Segmentation in UDP receive path is only for UDP GRO, drop udp
-+	 * fragmentation offload (UFO) packets.
-+	 */
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP) {
-+		drop_count = 1;
-+		goto drop;
-+	}
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 2b14c81a87e5..85d84f39e220 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -43,6 +43,11 @@ static struct static_key_false taprio_have_working_mqprio;
+ #define TAPRIO_SUPPORTED_FLAGS \
+ 	(TCA_TAPRIO_ATTR_FLAG_TXTIME_ASSIST | TCA_TAPRIO_ATTR_FLAG_FULL_OFFLOAD)
+ #define TAPRIO_FLAGS_INVALID U32_MAX
++/* Minimum value for picos_per_byte to ensure non-zero duration
++ * for minimum-sized Ethernet frames (ETH_ZLEN = 60).
++ * 60 * 17 > PSEC_PER_NSEC (1000)
++ */
++#define TAPRIO_PICOS_PER_BYTE_MIN 17
  
- 	/* Avoid csum recalculation by skb_segment unless userspace explicitly
- 	 * asks for the final checksum values
-@@ -610,16 +620,18 @@ static inline struct sk_buff *udp_rcv_segment(struct sock *sk,
- 	 */
- 	segs = __skb_gso_segment(skb, features, false);
- 	if (IS_ERR_OR_NULL(segs)) {
--		int segs_nr = skb_shinfo(skb)->gso_segs;
--
--		atomic_add(segs_nr, &sk->sk_drops);
--		SNMP_ADD_STATS(__UDPX_MIB(sk, ipv4), UDP_MIB_INERRORS, segs_nr);
--		kfree_skb(skb);
--		return NULL;
-+		drop_count = skb_shinfo(skb)->gso_segs;
-+		goto drop;
- 	}
- 
- 	consume_skb(skb);
- 	return segs;
-+
-+drop:
-+	atomic_add(drop_count, &sk->sk_drops);
-+	SNMP_ADD_STATS(__UDPX_MIB(sk, ipv4), UDP_MIB_INERRORS, drop_count);
-+	kfree_skb(skb);
-+	return NULL;
+ struct sched_entry {
+ 	/* Durations between this GCL entry and the GCL entry where the
+@@ -1284,7 +1289,8 @@ static void taprio_start_sched(struct Qdisc *sch,
  }
  
- static inline void udp_post_segment_fix_csum(struct sk_buff *skb)
+ static void taprio_set_picos_per_byte(struct net_device *dev,
+-				      struct taprio_sched *q)
++				      struct taprio_sched *q,
++				      struct netlink_ext_ack *extack)
+ {
+ 	struct ethtool_link_ksettings ecmd;
+ 	int speed = SPEED_10;
+@@ -1300,6 +1306,15 @@ static void taprio_set_picos_per_byte(struct net_device *dev,
+ 
+ skip:
+ 	picos_per_byte = (USEC_PER_SEC * 8) / speed;
++	if (picos_per_byte < TAPRIO_PICOS_PER_BYTE_MIN) {
++		if (!extack)
++			pr_warn("Link speed %d is too high. Schedule may be inaccurate.\n",
++				speed);
++		NL_SET_ERR_MSG_FMT_MOD(extack,
++				       "Link speed %d is too high. Schedule may be inaccurate.",
++				       speed);
++		picos_per_byte = TAPRIO_PICOS_PER_BYTE_MIN;
++	}
+ 
+ 	atomic64_set(&q->picos_per_byte, picos_per_byte);
+ 	netdev_dbg(dev, "taprio: set %s's picos_per_byte to: %lld, linkspeed: %d\n",
+@@ -1324,7 +1339,7 @@ static int taprio_dev_notifier(struct notifier_block *nb, unsigned long event,
+ 		if (dev != qdisc_dev(q->root))
+ 			continue;
+ 
+-		taprio_set_picos_per_byte(dev, q);
++		taprio_set_picos_per_byte(dev, q, NULL);
+ 
+ 		stab = rtnl_dereference(q->root->stab);
+ 
+@@ -1848,7 +1863,7 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
+ 	q->flags = taprio_flags;
+ 
+ 	/* Needed for length_to_duration() during netlink attribute parsing */
+-	taprio_set_picos_per_byte(dev, q);
++	taprio_set_picos_per_byte(dev, q, extack);
+ 
+ 	err = taprio_parse_mqprio_opt(dev, mqprio, extack, q->flags);
+ 	if (err < 0)
 -- 
 2.39.5
 
