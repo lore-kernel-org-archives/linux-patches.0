@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780F5257435;
-	Tue, 12 Aug 2025 17:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D310A279915;
+	Tue, 12 Aug 2025 17:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755021007; cv=none; b=gpmcVK4MpcPGo0rxBCYWhLkVSEpO0ImIiPJInQ62YeeiI7ccm9FJkMmOlj9MAOVcEfw47Icl3IDfeZ/A7cEYsmMvlkimm99oIsfobZjAZbFJ1rIegX/hwGFzkvgujQ+/NLWpmu2LvLVoOLq8MgrGIkGcUUxOxMszAl7QgItqhEI=
+	t=1755021010; cv=none; b=KEk1rStwI71xLKQxI63Ta1e9IRLhJA0DGWDaQ/qNNgn2mmPoy2Mz1FYSaGYeHd8obr1P8S8EIqh3dwVwX1McQTOwrLk54cJpnMOU1dUXEHUoLvyYAb08jYZRphjDyhWNgvVBtKs7898GV4p3yXElXXPrWRwypKnzWTxdV+FN4rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755021007; c=relaxed/simple;
-	bh=b8qAHLcjRSwLA8VzTaTfV8m74IU+R10UXv9Ht5yHksk=;
+	s=arc-20240116; t=1755021010; c=relaxed/simple;
+	bh=y6xHAnwf9FPzsf5pUWCEqdxZGFbnEqq4lQuxcmP/1I0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7TtB5h71pCvj5VZVyiUIOfuZdIuwL7aob7e1G2XM+5/RTj0k3xNYiDyvo2YlERUmFqaiyQkiFUY4Caz8YSEILPysTaEFXunsn2lk9NsOtL3r+VRZ58pP455+H0jx0A901/bbhtXMLv0CyXGqMge/rf9+lx0uw5kWMlo+1W1blU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdxGwQpS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GYp1cAYzVEKsTJbQFE+aRlekJzfLe22r2THqmEk3/PkzlNjLXBXhNYQauXEG5TTo2EARZhWOLJ2QDTBcIs2DPMU44+YAj4E4OE5Y8Q6zJCuO+Rnqdj+n051agLWXyVhHff6GBIyrllFqbxuy4ny7SeLMFkV/gkeXQ7oliL+hXsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSFqRgS+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdxGwQpS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D25C4CEF0;
-	Tue, 12 Aug 2025 17:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSFqRgS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE8EC4CEF0;
+	Tue, 12 Aug 2025 17:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1755021007;
-	bh=b8qAHLcjRSwLA8VzTaTfV8m74IU+R10UXv9Ht5yHksk=;
+	s=korg; t=1755021010;
+	bh=y6xHAnwf9FPzsf5pUWCEqdxZGFbnEqq4lQuxcmP/1I0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdxGwQpSZaLFJoSRNFowHAwyueoNJROJLuC+/0Yy14Xvz9jxOTod6xMzWEm6XdSJw
-	 sc3m4F2wFTEK7Rhlb5a085RSaXWLQoXOVdefgwcDUoWui/EeHnOSHuXlEk3kyN4xty
-	 E/2eucpuPfKveEe9slkOdUommMnY9MmAsWYfp4Zo=
+	b=FSFqRgS+DNERQiQgs+nNsV3s4yoe2OYa4UIH1s+cSR/JppBu2cyvNn6rI+UvYuVnZ
+	 QTpfjqZi7BShycDSaEIrEK6KVJhRNLqm2IvhyZzC7sB5X9t5P3YTSZDTSF4ma0yjot
+	 CZP+B97gSwPr7XO18TTXWkdXH/v2J0Wtub5n3NYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/262] bpf, sockmap: Fix psock incorrectly pointing to sk
-Date: Tue, 12 Aug 2025 19:27:17 +0200
-Message-ID: <20250812172955.065410793@linuxfoundation.org>
+Subject: [PATCH 6.1 199/253] f2fs: fix to calculate dirty data during has_not_enough_free_secs()
+Date: Tue, 12 Aug 2025 19:29:47 +0200
+Message-ID: <20250812172957.277130025@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250812172952.959106058@linuxfoundation.org>
-References: <20250812172952.959106058@linuxfoundation.org>
+In-Reply-To: <20250812172948.675299901@linuxfoundation.org>
+References: <20250812172948.675299901@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 76be5fae32febb1fdb848ba09f78c4b2c76cb337 ]
+[ Upstream commit e194e140ab7de2ce2782e64b9e086a43ca6ff4f2 ]
 
-We observed an issue from the latest selftest: sockmap_redir where
-sk_psock(psock->sk) != psock in the backlog. The root cause is the special
-behavior in sockmap_redir - it frequently performs map_update() and
-map_delete() on the same socket. During map_update(), we create a new
-psock and during map_delete(), we eventually free the psock via rcu_work
-in sk_psock_drop(). However, pending workqueues might still exist and not
-be processed yet. If users immediately perform another map_update(), a new
-psock will be allocated for the same sk, resulting in two psocks pointing
-to the same sk.
+In lfs mode, dirty data needs OPU, we'd better calculate lower_p and
+upper_p w/ them during has_not_enough_free_secs(), otherwise we may
+encounter out-of-space issue due to we missed to reclaim enough
+free section w/ foreground gc.
 
-When the pending workqueue is later triggered, it uses the old psock to
-access sk for I/O operations, which is incorrect.
-
-Timing Diagram:
-
-cpu0                        cpu1
-
-map_update(sk):
-    sk->psock = psock1
-    psock1->sk = sk
-map_delete(sk):
-   rcu_work_free(psock1)
-
-map_update(sk):
-    sk->psock = psock2
-    psock2->sk = sk
-                            workqueue:
-                                wakeup with psock1, but the sk of psock1
-                                doesn't belong to psock1
-rcu_handler:
-    clean psock1
-    free(psock1)
-
-Previously, we used reference counting to address the concurrency issue
-between backlog and sock_map_close(). This logic remains necessary as it
-prevents the sk from being freed while processing the backlog. But this
-patch prevents pending backlogs from using a psock after it has been
-stopped.
-
-Note: We cannot call cancel_delayed_work_sync() in map_delete() since this
-might be invoked in BPF context by BPF helper, and the function may sleep.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20250609025908.79331-1-jiayuan.chen@linux.dev
+Fixes: 36abef4e796d ("f2fs: introduce mode=lfs mount option")
+Cc: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/segment.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index c3169e1e6352..6225547808a6 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -655,6 +655,13 @@ static void sk_psock_backlog(struct work_struct *work)
- 	bool ingress;
- 	int ret;
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index 3f1d6cdd4ae0..20d4387c661d 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -625,8 +625,7 @@ static inline void __get_secs_required(struct f2fs_sb_info *sbi,
+ 	unsigned int dent_blocks = total_dent_blocks % CAP_BLKS_PER_SEC(sbi);
+ 	unsigned int data_blocks = 0;
  
-+	/* If sk is quickly removed from the map and then added back, the old
-+	 * psock should not be scheduled, because there are now two psocks
-+	 * pointing to the same sk.
-+	 */
-+	if (!sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED))
-+		return;
-+
- 	/* Increment the psock refcnt to synchronize with close(fd) path in
- 	 * sock_map_close(), ensuring we wait for backlog thread completion
- 	 * before sk_socket freed. If refcnt increment fails, it indicates
+-	if (f2fs_lfs_mode(sbi) &&
+-		unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED))) {
++	if (f2fs_lfs_mode(sbi)) {
+ 		total_data_blocks = get_pages(sbi, F2FS_DIRTY_DATA);
+ 		data_secs = total_data_blocks / CAP_BLKS_PER_SEC(sbi);
+ 		data_blocks = total_data_blocks % CAP_BLKS_PER_SEC(sbi);
 -- 
 2.39.5
 
